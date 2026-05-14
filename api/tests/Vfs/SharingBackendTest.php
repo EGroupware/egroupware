@@ -27,7 +27,6 @@ class SharingBackendTest extends SharingBase
 {
 	protected function setUp() : void
 	{
-		$this->markTestSkipped('Skipping for now, more work needed');
 	}
 	
 	/**
@@ -89,6 +88,9 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemReadonly()
 	{
+		$this->markTestSkipped('Skipping for now, more work needed');
+		return;
+
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = Vfs::get_home_dir() . '/filesystem_share/';
 
@@ -108,6 +110,9 @@ class SharingBackendTest extends SharingBase
 	 */
 	public function testFilesystemWritable()
 	{
+		$this->markTestSkipped('Skipping for now, more work needed');
+		return;
+
 		// Don't add to files list or it deletes the folder from filesystem
 		$dir = Vfs::get_home_dir() . '/filesystem_share/';
 

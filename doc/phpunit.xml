@@ -34,7 +34,6 @@
             <exclude>../api</exclude>
 
             <!-- Not properly working yet -->
-            <exclude>../admin</exclude>
             <exclude>../collabora</exclude>
             <exclude>../infolog</exclude>
             <exclude>../policy</exclude>

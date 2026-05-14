@@ -29,7 +29,7 @@ class AnonymousSharingTest extends SharingBase
 
 	protected function setUp() : void
 	{
-		$this->markTestSkipped('Skipping for now, more work needed');
+
 	}
 
 	protected function tearDown() : void
@@ -91,6 +91,8 @@ class AnonymousSharingTest extends SharingBase
 	 */
 	public function testTwoShares()
 	{
+		$this->markTestSkipped('Skipping for now, more work needed');
+		return;
 		// This may fail if your egw file location is different between command line and nginx
 
 		// TEST SETUP
