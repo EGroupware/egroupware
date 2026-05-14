@@ -715,7 +715,10 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 */
 		async validate(skipManual = false)
 		{
-			return validate(this, skipManual).then(() => this.requestUpdate());
+			return validate(this, skipManual).then(() =>
+			{
+				this.requestUpdate();
+			});
 		}
 
 		set_validation_error(err : string | false)
