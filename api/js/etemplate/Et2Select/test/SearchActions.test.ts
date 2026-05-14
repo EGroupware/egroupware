@@ -33,6 +33,18 @@ const options = [
 	<SelectOption>{value: "2", label: "Option 2"}
 ];
 
+async function activateOptions(select : Et2Select)
+{
+	// Et2Select defers rendering the full <sl-option> list until user interaction
+	// (_optionsActivated=true) to keep initial render cheap. These tests assert the complete
+	// option set in the DOM, so we force that state and wait for both Lit update cycles.
+	// TODO: Tests could be rewritten to work around / with the non-rendered options
+	(select as any)._optionsActivated = true;
+	select.requestUpdate("_optionsActivated");
+	await elementUpdated(select);
+	await select.updateComplete;
+}
+
 async function before()
 {
 	// This stuff because otherwise Et2Select isn't actually loaded when testing
@@ -74,6 +86,7 @@ describe("Search actions", () =>
 		const change = sinon.spy();
 		let element = <Et2Select>container.getWidgetById('select');
 		element.onchange = change;
+		await activateOptions(element);
 
 		await elementUpdated(element);
 		const option = element.select.querySelector("[value='two']");
@@ -117,6 +130,7 @@ describe("Trigger search", () =>
 		sinon.stub(element, "egw").returns(window.egw);
 
 		await element.updateComplete;
+		await activateOptions(element);
 		await element._searchInputNode.updateComplete;
 		await elementUpdated(element);
 	});
@@ -224,6 +238,7 @@ describe("Search results", () =>
 		sinon.stub(element, "egw").returns(window.egw);
 
 		await element.updateComplete;
+		await activateOptions(element);
 		await element._searchInputNode.updateComplete;
 		await elementUpdated(element);
 	});

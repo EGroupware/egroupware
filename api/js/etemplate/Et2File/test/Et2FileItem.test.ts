@@ -94,7 +94,7 @@ describe("Et2FileItem", () =>
 
 		const sizeElement = el.shadowRoot?.querySelector(".file-item__label__size");
 		assert.ok(sizeElement);
-		assert.ok(sizeElement?.shadowRoot?.textContent?.includes("1 kB"));
+		assert.equal(sizeElement?.getAttribute("value"), "1000");
 	});
 
 	// Test case: Check if the component applies "hidden" class & attribute when hidden property is true

@@ -44,6 +44,11 @@ class ResumableStub
 		this.files = this.files.filter(f => f.uniqueIdentifier !== file.uniqueIdentifier);
 	}
 
+	getFromUniqueIdentifier(uniqueIdentifier)
+	{
+		return this.files.find(f => f.uniqueIdentifier === uniqueIdentifier);
+	}
+
 	on(event, callback)
 	{
 		this.events[event] = callback;

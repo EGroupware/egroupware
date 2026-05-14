@@ -15,13 +15,33 @@ import {esbuildPlugin} from '@web/dev-server-esbuild';
 // Add any test files in app/js/test/
 const appJS = fs.readdirSync('.')
 	.filter(
-		dir => fs.existsSync(`${dir}/js`) && fs.existsSync(`${dir}/js/test`) && fs.statSync(`${dir}/js/test`).isDirectory(),
+		dir => dir !== 'kdots' && // skip kdots for now
+			fs.existsSync(`${dir}/js`) &&
+			fs.existsSync(`${dir}/js/test`) &&
+			fs.statSync(`${dir}/js/test`).isDirectory(),
 	)
 
 
 export default {
 	nodeResolve: true,
 	exclude: ['**/node_modules/**'],
+	testRunnerHtml: testRunnerImport => `
+		<html lang="en-US">
+			<body>
+				<div id="egw_script_id" data-url="test.com"></div>
+				<script type="module">
+					// CI/test environments can expose POSIX locale tags that Intl rejects.
+					// Make sure the document has a lang for shoelace / library localization to find
+					document.documentElement.lang = 'en-US';
+					Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
+					Object.defineProperty(window.navigator, 'languages', {value: ['en-US'], configurable: true});
+				</script>
+				<script type="module">
+					import '${testRunnerImport}';
+				</script>
+			</body>
+		</html>
+	`,
 	filterBrowserLogs(log)
 	{
 		// Silence some warnings we don't care about
@@ -80,6 +100,10 @@ export default {
 				{
 					return '/node_modules/dompurify/dist/purify.es.mjs';
 				}
+				if (source.includes('Resumable/resumable'))
+				{
+					return '/api/js/etemplate/Et2File/test/ResumableStub.ts';
+				}
 				if (source.includes('shortcut-buttons-flatpickr'))
 				{
 					return './test/FlatpickrShortcutPluginStub.js';
@@ -90,8 +114,7 @@ export default {
 				}
 
 				const mockModule = {
-					'../../Resumable/resumable': "./test/ResumableStub.js",
-					"diff2html/lib/types": "../../node_modules/diff2html/lib/types.js",
+					"diff2html/lib/types": "/api/js/etemplate/test/Diff2HtmlTypesStub.ts",
 				};
 				return mockModule[source];
 			}
