@@ -48,6 +48,7 @@ class CalDAVImportTest extends CalDAVTest
 	public static function setUpBeforeClass() : void
 	{
 		parent::setUpBeforeClass();
+		self::loginForCaldav($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 		$data = [];
 		self::createUser(self::OTHER_USER, $data);
 	}

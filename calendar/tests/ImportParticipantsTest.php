@@ -29,7 +29,10 @@ class ImportParticipantsTest extends \EGroupware\Api\AppTest
 	{
 		// Not sure what's going on here, but the tests run fine independantly but not as part of the suite.
 		// Some other test may be damaging the session, tearDownAfterClass() lets them run.
-		parent::tearDownAfterClass();
+		if (!empty($GLOBALS['egw']) && is_object($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			parent::tearDownAfterClass();
+		}
 		parent::setUpBeforeClass();
 
 	}

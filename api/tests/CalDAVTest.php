@@ -421,7 +421,7 @@ abstract class CalDAVTest extends TestCase
 		static $setup=null;
 		if (!isset($setup))
 		{
-			if (!isset($_REQUEST['domain']))
+			if (empty($_REQUEST['domain']))
 			{
 				$_REQUEST['domain'] = $GLOBALS['EGW_DOMAIN'] ?? 'default';
 			}
@@ -437,6 +437,32 @@ abstract class CalDAVTest extends TestCase
 			if (file_exists(__DIR__ . '/../../header.inc.php'))
 			{
 				include_once(__DIR__ . '/../../header.inc.php');
+			}
+			// api/src/loader.php can unset $GLOBALS['egw_domain'] for security.
+			// CalDAV test helpers still need DB connection details to create fixture users.
+			if (empty($GLOBALS['egw_domain'][$_REQUEST['domain']]['db_host']) &&
+				($header = @file_get_contents(__DIR__ . '/../../header.inc.php')))
+			{
+				$domain_pattern = "/\\\$GLOBALS\\['egw_domain'\\]\\['([^']+)'\\]\\s*=\\s*array\\((.*?)\\);/s";
+				if (preg_match_all($domain_pattern, $header, $domains, PREG_SET_ORDER))
+				{
+					foreach($domains as $domain_match)
+					{
+						$domain = $domain_match[1];
+						$values = [];
+						if (preg_match_all("/'([^']+)'\\s*=>\\s*'((?:\\\\'|[^'])*)'/", $domain_match[2], $pairs, PREG_SET_ORDER))
+						{
+							foreach($pairs as $pair)
+							{
+								$values[$pair[1]] = str_replace("\\'", "'", $pair[2]);
+							}
+						}
+						if (!empty($values))
+						{
+							$GLOBALS['egw_domain'][$domain] = $values;
+						}
+					}
+				}
 			}
 			// Some setup / account code paths (eg. push token generation) require an install_id
 			// in egw_info['server'], which may not yet be populated in CLI test bootstrap.
