@@ -270,6 +270,7 @@ class mail_sieve
 						break;
 				}
 				$content['anyof'] = $rules['anyof'] != 0?1:0;
+				$content['tokenized'] = !empty($rules['tokenized']) ? 1 : 0;
 			}
 			else // Adding new rule
 			{
@@ -277,6 +278,8 @@ class mail_sieve
 				$newRulePriority = count($this->rules)*2+1;
 				$newRules ['priority'] = $newRulePriority;
 				$newRules ['status'] = 'ENABLED';
+				// Default 'tokenized' to the user's last choice (persistent preference)
+				$newRules ['tokenized'] = (int)($GLOBALS['egw_info']['user']['preferences']['mail']['sieve_last_tokenized'] ?? 0);
 				$readonlys = array(
 					'button[delete]' => 'true',
 					);
@@ -333,6 +336,13 @@ class mail_sieve
 						if( $newRule['anyof'] )    { $newRule['flg'] += 4; }
 						if( $newRule['keep'] )     { $newRule['flg'] += 8; }
 						if( $newRule['regexp'] )   { $newRule['flg'] += 128; }
+						if( !empty($newRule['tokenized']) ) { $newRule['flg'] += 256; }
+
+						// Persist the user's last 'tokenized' choice so the next new rule
+						// inherits it as default (per-user preference, survives logout).
+						$GLOBALS['egw']->preferences->add('mail', 'sieve_last_tokenized',
+							!empty($newRule['tokenized']) ? 1 : 0, 'user');
+						$GLOBALS['egw']->preferences->save_repository(true, 'user');
 
 						if (!empty($newRule['field']) && $newRule['comparator'] !== 'contains' && !preg_match('/^[0-9]+/', $newRule['field_val']))
 						{
