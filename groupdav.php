@@ -22,7 +22,7 @@ use EGroupware\Api;
 
 // check we either have a session cookie, or an Authorization header, otherwise directly return 401 Unauthorized
 if (!preg_match('#/groupdav.php/openapi.json($|\?)#', $_SERVER['REQUEST_URI']) &&
-	empty($_COOKIE['sessionid']) && empty($_SERVER['PHP_AUTH_DIGEST']))
+	empty($_COOKIE['sessionid']) && empty($_SERVER['HTTP_AUTHORIZATION']))
 {
 	error_log($_SERVER['REQUEST_METHOD'].' '.(empty($_SERVER['HTTPS']) ? 'http://' : 'https://').$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'].
 		(isset($_SERVER['HTTP_AUTHORIZATION']) ? ': Authorization: '.$_SERVER['HTTP_AUTHORIZATION'] : ': sessionid='.($_COOKIE['sessionid']??'NULL')).
