@@ -32,12 +32,6 @@
 
             <!-- Already done under "Api" testsuite -->
             <exclude>../api</exclude>
-
-            <!-- Not properly working yet -->
-            <exclude>../collabora</exclude>
-            <exclude>../policy</exclude>
-            <exclude>../stylite</exclude>
-            <exclude>../invoices</exclude>
 		</testsuite>
     </testsuites>
 </phpunit>
