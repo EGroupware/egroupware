@@ -2263,7 +2263,7 @@ class calendar_bo
 	 *
 	 * @param array|int|string $entry array with event or cal_id, or cal_id:recur_date for virtual exceptions
 	 * @param string &$schedule_tag=null on return schedule-tag (egw_cal.cal_id:egw_cal.cal_etag, no participant modifications!)
-	 * @return string|boolean string with etag or false
+	 * @return ?string string with etag or null
 	 */
 	function get_etag($entry, &$schedule_tag=null)
 	{
@@ -2304,7 +2304,7 @@ class calendar_bo
 	 * @param int|string|array $user integer user-id or array of user-id's to use, defaults to the current user
 	 * @param string $filter ='owner' all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 * @param boolean $master_only =false only check recurance master (egw_cal_user.recur_date=0)
-	 * @return integer
+	 * @return integer TS in server-time
 	 */
 	public function get_ctag($user, $filter='owner', $master_only=false)
 	{
@@ -2313,7 +2313,11 @@ class calendar_bo
 		// resolve users to add memberships for users and members for groups
 		$users = $this->resolve_users($user);
 		$ctag = $users ? $this->so->get_ctag($users, $filter == 'owner', $master_only) : 0;	// no rights, return 0 as ctag (otherwise we get SQL error!)
-
+		// ctag is by definition a TS
+		if (is_a($ctag, 'DateTimeInterface'))
+		{
+			$ctag = Api\DateTime::user2server($ctag, 'ts');
+		}
 		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter', $master_only) = $ctag = ".date('Y-m-d H:i:s',$ctag)." took ".(microtime(true)-$startime)." secs");
 		return $ctag;
 	}
