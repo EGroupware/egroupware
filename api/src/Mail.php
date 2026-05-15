@@ -2251,15 +2251,20 @@ class Mail
 				case 'BYDATE':
 				case 'QUICK':
 				case 'QUICKWITHCC':
-					$imapSearchFilter->headerText('SUBJECT', $_criterias['string'], $not=false);
-					//$imapSearchFilter->charset('UTF-8');
-					$imapFilter2 = new Horde_Imap_Client_Search_Query();
-					$imapFilter2->charset('UTF-8');
-					if($this->isSentFolder($_folder)) {
-						$imapFilter2->headerText('TO', $_criterias['string'], $not=false);
-					} else {
-						$imapFilter2->headerText('FROM', $_criterias['string'], $not=false);
-					}
+					$imapSearchFilter = self::buildTokenizedSearch($_criterias['string'], static function($term, $not)
+					{
+						$q = new Horde_Imap_Client_Search_Query();
+						$q->charset('UTF-8');
+						$q->headerText('SUBJECT', $term, $not);
+						return $q;
+					});
+					$imapFilter2 = self::buildTokenizedSearch($_criterias['string'], function($term, $not) use ($_folder)
+					{
+						$q = new Horde_Imap_Client_Search_Query();
+						$q->charset('UTF-8');
+						$q->headerText($this->isSentFolder($_folder) ? 'TO' : 'FROM', $term, $not);
+						return $q;
+					});
 					if ($_supportsOrInQuery)
 					{
 						$imapSearchFilter->orSearch($imapFilter2);
@@ -2270,9 +2275,13 @@ class Mail
 					}
 					if ($_supportsOrInQuery && $criteria=='QUICKWITHCC')
 					{
-						$imapFilter3 = new Horde_Imap_Client_Search_Query();
-						$imapFilter3->charset('UTF-8');
-						$imapFilter3->headerText('CC', $_criterias['string'], $not=false);
+						$imapFilter3 = self::buildTokenizedSearch($_criterias['string'], static function($term, $not)
+						{
+							$q = new Horde_Imap_Client_Search_Query();
+							$q->charset('UTF-8');
+							$q->headerText('CC', $term, $not);
+							return $q;
+						});
 						$imapSearchFilter->orSearch($imapFilter3);
 					}
 					$queryValid = true;
@@ -2293,7 +2302,6 @@ class Mail
 						$_criterias['string']=$numberinBytes;
 					}
 					$imapSearchFilter->size( $_criterias['string'], ($criteria=='LARGER'?true:false), $not=false);
-					//$imapSearchFilter->charset('UTF-8');
 					$queryValid = true;
 					break;
 				case 'FROM':
@@ -2301,29 +2309,27 @@ class Mail
 				case 'CC':
 				case 'BCC':
 				case 'SUBJECT':
-					$tokenized = self::buildTokenizedSearch($_criterias['string'],
-						function($term, $not) use ($criteria) {
-							$q = new Horde_Imap_Client_Search_Query();
-							$q->charset('UTF-8');
-							$q->headerText($criteria, $term, $not);
-							return $q;
-						});
+					$tokenized = self::buildTokenizedSearch($_criterias['string'], static function($term, $not) use ($criteria)
+					{
+						$q = new Horde_Imap_Client_Search_Query();
+						$q->charset('UTF-8');
+						$q->headerText($criteria, $term, $not);
+						return $q;
+					});
 					if ($tokenized !== null) $imapSearchFilter->andSearch($tokenized);
-					//$imapSearchFilter->charset('UTF-8');
 					$queryValid = true;
 					break;
 				case 'BODY':
 				case 'TEXT':
 					$bodyOnly = ($criteria === 'BODY');
-					$tokenized = self::buildTokenizedSearch($_criterias['string'],
-						function($term, $not) use ($bodyOnly) {
-							$q = new Horde_Imap_Client_Search_Query();
-							$q->charset('UTF-8');
-							$q->text($term, $bodyOnly, $not);
-							return $q;
-						});
+					$tokenized = self::buildTokenizedSearch($_criterias['string'], static function($term, $not) use ($bodyOnly)
+					{
+						$q = new Horde_Imap_Client_Search_Query();
+						$q->charset('UTF-8');
+						$q->text($term, $bodyOnly, $not);
+						return $q;
+					});
 					if ($tokenized !== null) $imapSearchFilter->andSearch($tokenized);
-					//$imapSearchFilter->charset('UTF-8');
 					$queryValid = true;
 					break;
 				case 'SINCE':
