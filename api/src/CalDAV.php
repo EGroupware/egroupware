@@ -1468,7 +1468,8 @@ class CalDAV extends HTTP_WebDAV_Server
 
 		echo "</body>\n</html>\n";
 
-		return true;
+		// as not mimetype is set, GET handler will use application/octet-stream, returning 200 Ok avoids that
+		return '200 Ok';
 	}
 
 	/**
