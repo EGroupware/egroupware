@@ -1,3 +1,7 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*) Achtung: Eine Weiterleitung an mehr als 4 E-Mail-Adressen funktioniert bei den manchen Mail-Servern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie bitte Ihren Administrator.
+(leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
+(no subject)	mail	de	(Kein Betreff)
+(not connected)	mail	de	(nicht verbunden)
 %1 attachments	mail	de	%1 Anhänge
 %1 for all users	mail	de	%1 für alle Benutzer
 %1 has been added to blacklisted email addresses	mail	de	%1 wurde als E-Mail-Adresse zur Blacklist hinzugefügt
@@ -7,10 +11,6 @@
 %1 is not writable by you!	mail	de	%1 ist nicht beschreibbar für Sie!
 %1 mails selected	mail	de	%1 E-Mail(s) ausgewählt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	de	%1 benötigt die Sieve Erweiterung %2, versuchen Sie statt dessen %3 oder eine höhere Anzahl von Tagen.
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	de	(*) Achtung: Eine Weiterleitung an mehr als 4 E-Mail-Adressen funktioniert bei den manchen Mail-Servern nicht. Daher ist das als Limit zur Eingabe festgelegt. Für weitere Informationen kontaktieren sie bitte Ihren Administrator.
-(leave empty for no quota)	mail	de	(Leer lassen, um einen die Begrenzung zu deaktivieren)
-(no subject)	mail	de	(Kein Betreff)
-(not connected)	mail	de	(nicht verbunden)
 account editable by user	mail	de	Benutzer kann dieses Konto bearbeiten
 acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffsrechte konnten nicht gelesen werden!
 acl rights retrieved successfully	mail	de	Zugriffsrechte erfolgreich gelesen
@@ -242,10 +242,10 @@ files	mail	de	Anhang
 flag / unflag	mail	de	Markieren
 flag or unflag a mail	mail	de	Markierung setzten oder entfernen
 flagged	mail	de	Markiert
+flagged / unflagged	mail	de	Markierung
 flagged %1 messages as %2 in %3	mail	de	%1 Nachricht(en) wurden als "%2" in %3 markiert.
 flagged %1 messages as flagged in %2	mail	de	%1 Nachricht(en) markiert in %2
 flagged %1 messages as unflagged in %2	mail	de	Bei %1 Nachricht(en) wurde die Markierung in %2 entfernt
-flagged / unflagged	mail	de	Markierung
 folder	mail	de	Ordner
 folder %1 %2 failed because of %3!	mail	de	Ordner %1 %2 fehlgeschlagen, da %3!
 folder %1 %2 failed!	mail	de	Ordner %1 %2 fehlgeschlagen!
@@ -328,6 +328,7 @@ junk folder	mail	de	Ordner für Spam-Nachrichten
 keep a copy	mail	de	Eine Kopie behalten
 keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht im Posteingang behalten
 kilobytes	mail	de	Kilobyte
+last used signature	mail	de	Zuletzt benutzte Signatur
 later	mail	de	Später
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
@@ -663,6 +664,7 @@ upload files...	mail	de	Anhang
 use default timeout (20 seconds)	mail	de	verwende Standard Timeout (20 Sekunden)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	de	Reguläre Ausdrücke verwenden (siehe https://en.wikipedia.org/wiki/Regular_expression)
 use source as displayed, if applicable	mail	de	Format wie E-Mail-Anzeige
+use tokenised search syntax (+word required, -word forbidden, "..." literal phrase; same as the egroupware search box)	mail	de	Verwendet Token-basierte Suchsyntax (+Wort erforderlich, -Wort ausgeschlossen, "..." als wörtliche Phrase; entspricht dem Suchfeld von EGroupware)
 use username+password from current user	mail	de	Verwendet Benutzername+Passwort des angemeldeten Benutzers
 use wizard to detect or verify configuration	mail	de	Benutze Assistent um die Konfiguration zu erstellen und/oder zu verifizieren
 vacation messages with start and end date require an admin account to be set!	mail	de	Um zeitgesteuerte Abwesenheitsnachrichten zu aktivieren, benötigen Sie den Admin-Benutzer des Mail-Server. Diesen können Sie unter Posteingang-Server eintragen!
@@ -686,8 +688,9 @@ when deleting messages	mail	de	Wenn Nachrichten gelöscht werden
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	de	Dürfen E-Mail in dem gleichen Fenster angezeigt werden, oder wünschen Sie nur jede E-Mail ein neues Fenster
 when saving messages as item of a different app	mail	de	Wählen Sie das Format zur Konvertierung von E-Mails in andere Anwendungen aus. Beispielsweise das Speichern von E-Mails als InfoLog. Wir empfehlen .eml, um die original E-Mail zu erhalten und darauf zu antworten.
 when sending messages	mail	de	Wenn Nachrichten versendet werden
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse)
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse)
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	de	Mit welcher Mail Identität (Signatur) wollen Sie starten. Für persönliche Konten benutzen wir immer die erste persönliche Signatur.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten
 whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen auf der Domain-Whitelist, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht
