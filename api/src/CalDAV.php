@@ -14,6 +14,7 @@
 namespace EGroupware\Api;
 
 use EGroupware\Api\CalDAV\Handler;
+use EGroupware\Api\CalDAV\OpenAPI;
 use EGroupware\Api\CalDAV\Principals;
 
 // explicit import non-namespaced classes
@@ -1190,6 +1191,12 @@ class CalDAV extends HTTP_WebDAV_Server
 			'other' => [],
 			'root' => ['name' => null],
 		);
+
+		// implement default number of matches from OpenAPI configuration, if nothing is specified in the request
+		if (!isset($_GET['nresults']))
+		{
+			$_GET['nresults'] = OpenAPI::defaultMatches();
+		}
 
 		// sync-collection report via GET parameter sync-token
 		if (isset($_GET['sync-token']))

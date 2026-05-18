@@ -1,3 +1,6 @@
+-  type	admin	en	- type
+(de)activate mail accounts	admin	en	(de)Activate mail accounts
+(no subject)	admin	en	(no subject)
 %1 %2 rights for %3 on %4 to %5	admin	en	%1 %2 rights for %3 on %4 to %5
 %1 access to other data	admin	en	%1 access to other data
 %1 accounts being activated	admin	en	%1 accounts being activated
@@ -21,9 +24,6 @@
 %1 successful	admin	en	%1 successful
 %1 token %2.	admin	en	%1 token %2.
 %1 user %2	admin	en	%1 user %2
-(de)activate mail accounts	admin	en	(de)Activate mail accounts
-(no subject)	admin	en	(no subject)
--  type	admin	en	- type
 1 year	admin	en	1 year
 2 month	admin	en	2 month
 2 weeks	admin	en	2 weeks
@@ -35,10 +35,10 @@ access control	admin	en	Access control
 access to %1 data by others	admin	en	Access to %1 data by others
 access token revoked.	admin	en	Access token revoked.
 account	admin	en	Account
+account '%1' deleted.	admin	en	Account '%1' deleted.
 account "%1" has no email address --> not notified!	admin	en	Account "%1" has no email address --> not notified!
 account "%1" has no plaintext password!	admin	en	Account "%1" has NO plaintext password!
 account %1 %2	admin	en	Account %1 %2
-account '%1' deleted.	admin	en	Account '%1' deleted.
 account active	admin	en	Account active
 account deleted.	admin	en	Account deleted.
 account has been created	common	en	Account has been created.
@@ -105,7 +105,9 @@ all applications of the user	admin	en	All applications of the user
 all groups	admin	en	All groups
 all records and account information will be lost!	admin	en	All records and account information will be lost!
 all users	admin	en	All users
+allow	admin	en	Allow
 allow anonymous access to this app	admin	en	Allow anonymous access to this app
+allow or deny	admin	en	allow or deny
 allow remote administration from following install id's (comma separated)	admin	en	Allow remote administration from following install ID's, comma separated.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	en	Allow the user to store his password under 'Security & Passwords' for SingleSignOn.
 allow user to set 'remember me' token	admin	en	Allow user to set 'Remember me' token
@@ -178,8 +180,8 @@ cancel changes	admin	en	Cancel changes
 cancel testjob!	admin	en	Cancel test job!
 cancel this scheduled command	admin	en	Cancel this scheduled command
 categories list	admin	en	Categories list
-category %1 has been saved !	admin	en	Category %1 has been saved!
 category '%1' deleted	admin	en	Category '%1' deleted
+category %1 has been saved !	admin	en	Category %1 has been saved!
 category deleted.	admin	en	Category deleted.
 category list	admin	en	Category list
 category saved.	admin	en	Category saved.
@@ -271,6 +273,8 @@ debug	admin	en	Debug
 default	admin	en	Default
 default file system space per user	admin	en	Default file system space per user
 default file system space per user/group ?	admin	en	Default file system space per user/group?
+default matches	admin	en	Default matches
+default number of matches, if no limit is specified in the request	admin	en	default number of matches, if no limit is specified in the request
 default of currently	admin	en	default of currently
 deinstall crontab	admin	en	Deinstall crontab
 delete account	admin	en	Delete account
@@ -297,6 +301,7 @@ delete this user	admin	en	Delete this user
 deleted	admin	en	deleted
 deletes this field	admin	en	Deletes this field
 deliver extern	admin	en	Deliver extern
+deny	admin	en	Deny
 deny access	admin	en	Deny access
 deny access to access log	admin	en	Deny access to access log
 deny access to application registery	admin	en	Deny access to application registery
@@ -382,10 +387,10 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	en	Enter some random text for app_session \nencryption, requires mcrypt
 enter the background color for the login page	admin	en	Enter the background colour for the login page
 enter the background color for the site title	admin	en	Enter the background colour for the site title
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	en	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.\nExamples: /files, E:\FILES
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	en	Enter the full path for temporary files.\nExamples: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	en	Enter the full path for users and group files.\nExamples: /files, E:\FILES
+enter the full path for users and group files.<br>examples: /files, e:files	admin	en	Enter the full path for users and group files.\nExamples: /files, E:\FILES
 enter the hostname of the machine on which this server is running	admin	en	Enter the host name of the machine on which this server is running
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	en	Enter the location of EGroupware's URL.\nExample: https://egw.domain.com/egroupware or /egroupware\n<b>No trailing slash</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	en	Enter the search string. To show all entries, empty this field and press the SUBMIT button again
@@ -406,8 +411,8 @@ entries owned by the user:	admin	en	Entries owned by the user:
 entry saved	admin	en	Entry saved
 error canceling timer, maybe there's none set !!!	admin	en	Error canceling timer, maybe there's none set!
 error changing the password for %1 !!!	admin	en	Error changing the password for %1!
-error connecting to imap server. %s : %s.	admin	en	Error connecting to IMAP server. %s : %s.
 error connecting to imap server: [%s] %s.	admin	en	Error connecting to IMAP server: [%s] %s.
+error connecting to imap server. %s : %s.	admin	en	Error connecting to IMAP server. %s : %s.
 error deleting entry!	admin	en	Error deleting entry!
 error deleting log entry!	admin	en	Error deleting log entry!
 error revoking token!	admin	en	Error revoking token!
@@ -418,9 +423,9 @@ error saving the entry!!!	admin	en	Error saving the entry!
 error saving to db:	admin	en	Error saving to DB:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	en	Error setting timer, wrong syntax or maybe there's one already running!
 error storing token!	admin	en	Error storing token!
-error! no appname found	admin	en	Error: No app name found!
 error, no username!	admin	en	Error, no username!
 error: %1 not found or other error !!!	admin	en	Error: %1 not found or other error!
+error! no appname found	admin	en	Error: No app name found!
 event details follow	admin	en	Event Details follow
 exists	admin	en	Exists
 expired	admin	en	Expired
@@ -465,10 +470,10 @@ global options	admin	en	Global options
 go directly to admin menu, returning here the next time you click on administration.	admin	en	Go directly to admin menu, returning here the next time you click on administration.
 governmental: incl. state or municipal authorities or services	admin	en	Governmental: incl. state or municipal authorities or services
 grant	admin	en	Grant
+group ?	admin	en	Group?
+group '%1' deleted.	admin	en	Group '%1' deleted.
 group #%1 must have negative sign!	admin	en	Group #%1 must have negative sign!
 group %1 %2	admin	en	Group %1 %2
-group '%1' deleted.	admin	en	Group '%1' deleted.
-group ?	admin	en	Group?
 group csv export	admin	en	Group CSV export
 group csv import	admin	en	Group CSV import
 group excepted from above export limit (admins are always excepted)	admin	en	Group excepted from above export limit (admins are always excepted)
@@ -671,6 +676,7 @@ one hour	admin	en	One hour
 one month	admin	en	One month
 one week	admin	en	One week
 only below displayed information is directly submitted to %s.	admin	en	Only below displayed information is directly submitted to %s.
+openapi configuration	admin	en	OpenAPI configuration
 operating system	admin	en	Operating system
 order	admin	en	Order
 organisation	admin	en	Organisation
@@ -694,6 +700,7 @@ peer server list	admin	en	Peer server list
 peer servers	admin	en	Peer servers
 percent of users that logged out	admin	en	Percent of users that logged out
 periodic	admin	en	Periodic
+perl regular expression	admin	en	Perl regular expression
 permission denied	admin	en	Permission denied
 permission denied !!!	admin	en	Permission denied!
 permission denied!!!	admin	en	Permission denied!
@@ -888,6 +895,7 @@ token created.	admin	en	Token created.
 token not found!	admin	en	Token not found!
 token revoked.	admin	en	Token revoked.
 token saved.	admin	en	Token saved.
+tools / operationids	admin	en	Tools / operationIds
 top	admin	en	Top
 total of %1 accounts deleted.	admin	en	Total of %1 accounts deleted.
 total of %1 id's changed.	admin	en	Total of %1 ID's changed.
@@ -945,12 +953,13 @@ user for smtp-authentication (leave it empty if no auth required)	admin	en	User 
 user groups	admin	en	User groups
 user hidden from non-admins.	admin	en	User hidden for non-admins
 user-agent	admin	en	User-Agent
+user-agent regular expression	admin	en	User-Agent regular expression
 userdata	admin	en	User data
 userid@domain eg. u1234@domain	admin	en	UserId@domain eg. u1234@domain
 username (standard)	admin	en	Username (standard)
 username specified below for all	admin	en	Username specified below for all
-username/password defined by admin	admin	en	Username / Password defined by admin
 username@domainname (virtual mail manager)	admin	en	username@domainname (Virtual MAIL ManaGeR)
+username/password defined by admin	admin	en	Username / Password defined by admin
 users can define their own emailaccounts	admin	en	Users can define their own email accounts
 users can define their own identities	admin	en	Users can define their own identities
 users can define their own signatures	admin	en	Users can define their own signatures

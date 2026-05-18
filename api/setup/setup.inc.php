@@ -142,3 +142,4 @@ $setup_info['groupdav']['author'] = $setup_info['groupdav']['maintainer'] = arra
 $setup_info['groupdav']['license'] = 'GPL';
 $setup_info['groupdav']['hooks']['preferences']	= 'EGroupware\\Api\\CalDAV\\Hooks::menus';
 $setup_info['groupdav']['hooks']['settings']	= 'EGroupware\\Api\\CalDAV\\Hooks::settings';
+$setup_info['groupdav']['hooks']['admin']       = 'EGroupware\\Api\\CalDAV\\Hooks::adminHook';

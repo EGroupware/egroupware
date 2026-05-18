@@ -78,6 +78,11 @@ class ApiHandler extends Api\CalDAV\Handler
 			{
 				$ident_id = $matches[2] ?? null ?: self::defaultIdentity($user);
 				$do_compose = (bool)($matches[3] ?? false);
+				// check if sending mail is allowed for the current user-agent
+				if (!Api\CalDAV\OpenAPI::checkOperationId(($do_compose ? 'launchMailCompose' : 'sendMail').($matches[2]??null ? 'For' : ''), $_SERVER['HTTP_USER_AGENT']))
+				{
+					throw new \Exception("$path is NOT available for this user-agent ($_SERVER[HTTP_USER_AGENT])!", 403);
+				}
 				if (!($data = json_decode($options['content'], true)))
 				{
 					throw new \Exception('Error decoding JSON: '.json_last_error_msg(), 422);

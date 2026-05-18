@@ -166,4 +166,19 @@ pre.tail { background-color: white; padding-left: 5px; margin-left: 5px; }
 		$tail = new Api\Json\Tail($filename);
 		$GLOBALS['egw']->framework->render($tail->show(str_replace('!', '/', $matches[1])),false,false);
 	}
+
+	/**
+	 * Hooks to show CalDAV/CardDAV/REST-API App configuration
+	 *
+	 * @param string|array $args hook args
+	 */
+	public static function adminHook($args)
+	{
+		if ($GLOBALS['egw_info']['user']['apps']['admin'])
+		{
+			display_section($appname='groupdav', [
+				'OpenAPI configuration' => Api\Egw::link('/index.php','menuaction=api.EGroupware\\Api\\CalDAV\\OpenAPI.configuration&ajax=true'),
+			]);
+		}
+	}
 }

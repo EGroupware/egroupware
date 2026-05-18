@@ -23,6 +23,13 @@ use BenMorel\OpenApiSchemaToJsonSchema\Options;
 class OpenAPI
 {
 	/**
+	 * Methods callable via menuaction
+	 */
+	public $public_functions = [
+		'configuration' => true,
+	];
+
+	/**
 	 * Scan directory for app-specific JSON files and merge them into a single OpenAPI spec
 	 *
 	 * @param bool $inline_parameters true: replace parameter references with the actual data
@@ -309,6 +316,139 @@ class OpenAPI
 			$object = $object[$part];
 		}
 		return $object;
+	}
+
+	/**
+	 * Open WebUI User-Agent regular expression
+	 */
+	const OPENWEBUI_USER_AGENT = '#^Python/[0-9.]+ aiohttp/[0-9.]+$#';
+
+	/**
+	 * OpenAPI configuration
+	 *
+	 * @param ?array $content
+	 */
+	public static function configuration(?array $content=null): void
+	{
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
+		if (!isset($content) || !is_array($content))
+		{
+			$content = ['config' => Api\Config::read('caldav')['openapi'] ?? self::defaultConfig()];
+		}
+		elseif (!empty($content['button']) || !empty($content['config']['delete']))
+		{
+			$button = key($content['button']??[])??'delete';
+			$delete = key($content['config']['delete'] ?? []);
+			unset($content['button']);
+			$content['config'] = array_values(array_filter($content['config'], static fn($row) => !empty($row['user-agent']??null) || !empty($row['regexp']??null)));
+			switch ($button)
+			{
+				case 'save':
+				case 'apply':
+					foreach($content['config'] as $n => $row)
+					{
+						preg_match($row['regexp'], '');
+						if (preg_last_error() !== PREG_NO_ERROR)
+						{
+							Api\Etemplate::set_validation_error('config['.++$n.'][regexp]', lang('Invalid regular expression').': '.preg_last_error_msg());
+							break 2;
+						}
+					}
+					Api\Config::save_value('openapi', $content['config'], 'caldav');
+					Api\Framework::message('Configuration saved.');
+					if ($button == 'apply') break;
+					// fall-through
+				case 'cancel':
+					Api\Framework::redirect_link('/index.php', 'menuaction=admin.admin_ui.index&ajax=true');
+					break;
+				case 'delete':
+					unset($content['config'][$delete-1]);
+					$content['config'] = array_values($content['config'] ?? []);
+					break;
+			}
+		}
+		// account for 1 header-rows and one empty row below
+		array_unshift($content['config'], false);
+		$content['config'][] = ['user-agent' => ''];
+
+		$etemplate = new Api\Etemplate('api.openapi-config');
+		$etemplate->exec('api.'.self::class.'.configuration', $content, [
+			'operationIds' => self::operationIds(),
+		]);
+	}
+
+	/**
+	 * Return default configuration, if config has not been saved
+	 *
+	 * @return array[]
+	 */
+	public static function defaultConfig()
+	{
+		return [
+			[
+				'user-agent' => 'Open WebUI',
+				'regexp' => self::OPENWEBUI_USER_AGENT,
+				'allow' => '',
+				'operationIds' => ['sendMail', 'sendMailFor'],
+				'default-matches' => 5,
+			],
+		];
+	}
+
+	/**
+	 * Get the user-agent specific configuration
+	 *
+	 * @param ?string $user_agent default current user-agent
+	 * @return array|null values for keys "allow", "operationIds" and "default-matches"
+	 */
+	public static function getUserAgentConfig(?string $user_agent=null) : ?array
+	{
+		if (empty($user_agent))
+		{
+			$user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+		}
+		foreach(Api\Config::read('caldav')['openapi'] ?? self::defaultConfig() as $config)
+		{
+			if (preg_match($config['regexp'], $user_agent))
+			{
+				return $config;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Check if given operationId is allowed for the user-agent
+	 *
+	 * @param string $operationId
+	 * @param string|null $user_agent
+	 * @return bool
+	 */
+	public static function checkOperationId(string $operationId, ?string $user_agent=null) : bool
+	{
+		if (!($config = self::getUserAgentConfig($user_agent)))
+		{
+			return true;
+		}
+		return in_array($operationId, $config['operationIds'] ?? []) === (bool)($config['allow']??false);
+	}
+
+	/**
+	 * Get default number of matches for given user-agent
+	 *
+	 * @param string|null $user_agent
+	 * @return int|null null if no limit is configured
+	 */
+	public static function defaultMatches(?string $user_agent=null) : ?int
+	{
+		if (!($config = self::getUserAgentConfig($user_agent)))
+		{
+			return null;
+		}
+		return isset($config['default-matches']) && $config['default-matches'] !== '' ? (int)$config['default-matches'] : null;
 	}
 }
 
