@@ -155,7 +155,7 @@ class calendar_uiforms extends calendar_ui
 			$ts = new Api\DateTime();
 			$ts->setUser();
 			$start = new Api\DateTime(array(
-				'full' => isset($_GET['date']) && (int) $_GET['date'] ? (int) $_GET['date'] : $this->date,
+										  'full' => isset($_GET['date']) ? $this->parseUserInputDateTime($_GET['date']) : $this->date,
 				'hour' => (int) (isset($_GET['hour']) ? $_GET['hour'] : ($ts->format('H')+1)),
 				'minute' => (int) $_GET['minute'],
 									  ), Api\DateTime::$user_timezone);
@@ -1738,11 +1738,11 @@ class calendar_uiforms extends calendar_ui
 				{
 					if (empty($event['whole_day']))
 					{
-						$date = new Api\DateTime($_GET['date'], Api\DateTime::$user_timezone);
+						$date = $this->parseUserInputDateTime($_GET['date']);
 					}
 					else
 					{
-						$date = $this->bo->so->startOfDay(new Api\DateTime($_GET['date'], Api\DateTime::$user_timezone));
+						$date = $this->bo->so->startOfDay($this->parseUserInputDateTime($_GET['date']));
 						$date->setUser();
 					}
 					$event = $this->bo->read($cal_id, $date, true);
