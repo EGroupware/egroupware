@@ -49,6 +49,11 @@ class mail_compose
 		"plain"=>"plain",
 		"html"=>"html"
 	);
+	/**
+	 * our Dovecot limits Mails to 39MB overall,
+	 * so we assume a max attachment size of 38MB if nothing is set in Mail app config
+	 **/
+	static int $maxAttachmentSizeDefault =38;
 
 	/**
 	 * Instance of Mail
@@ -461,7 +466,9 @@ class mail_compose
 			foreach($_content['attachments'] as $file){
 				$size+=$file['size'];
 		}
-			$size_limit = Api\Config::read('mail')['attachment_limit_mb'] * 1024 * 1024;
+			$limit_mb = Api\Config::read('mail')['attachment_limit_mb'];
+			if(empty($limit_mb)) $limit_mb = self::$maxAttachmentSizeDefault;
+			$size_limit = $limit_mb * 1024 * 1024;
 			$suppressSigOnTop = true;
 			foreach ($_content['uploadForCompose'] as $i => &$upload)
 			{
@@ -488,7 +495,7 @@ class mail_compose
 					$this->preventAttachFilemode = true;
 					if (!$_content['filemode'] || $_content['filemode'] == Vfs\Sharing::ATTACH)
 					{
-						Framework::message(lang('The total size of the attachments exceeds the limit of %1 MB. Switched to download link', Api\Config::read('mail')['attachment_limit_mb']), 'warning');
+						Framework::message(lang('The total size of the attachments exceeds the limit of %1 MB. Switched to download link', $limit_mb), 'warning');
 						$_content['filemode'] = Vfs\Sharing::LINK;
 					}
 				}
