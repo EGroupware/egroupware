@@ -155,7 +155,7 @@ class calendar_uiforms extends calendar_ui
 			$ts = new Api\DateTime();
 			$ts->setUser();
 			$start = new Api\DateTime(array(
-										  'full' => isset($_GET['date']) ? $this->parseUserInputDateTime($_GET['date']) : $this->date,
+										  'full' => isset($_GET['date']) && (int)$_GET['date'] ? (int)$_GET['date'] : $this->date,
 				'hour' => (int) (isset($_GET['hour']) ? $_GET['hour'] : ($ts->format('H')+1)),
 				'minute' => (int) $_GET['minute'],
 									  ), Api\DateTime::$user_timezone);
