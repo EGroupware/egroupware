@@ -41,9 +41,10 @@ if (empty($GLOBALS['egw_info']))
 header('Access-Control-Allow-Origin: '.($GLOBALS['egw_info']['flags']['currentapp'] === 'login' ? '*' : rtrim(Api\Framework::getUrl('/'), '/')));
 
 // Open WebUI seems to have a problem with references in parameters --> inline all parameters
-$inline_parameters = preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#', $_SERVER['HTTP_USER_AGENT']);
+$inline_parameters = preg_match(Api\CalDAV\OpenAPI::OPENWEBUI_USER_AGENT, $_SERVER['HTTP_USER_AGENT']);
+$config = Api\CalDAV\OpenAPI::getUserAgentConfig($_SERVER['HTTP_USER_AGENT']);
 
-$json = Api\CalDAV\OpenAPI::scan($inline_parameters);
+$json = Api\CalDAV\OpenAPI::scan($inline_parameters, $config['operationIds'] ?? [], !($config['allow'] ?? false));
 
 $content = json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)."\n";
 $etag = '"'.md5($content).'"';
