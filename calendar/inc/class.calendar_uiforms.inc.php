@@ -468,13 +468,11 @@ class calendar_uiforms extends calendar_ui
 		else
 		{
 			// convert content => event
+			$event['start'] = $event['start'] instanceof Api\DateTime ? $event['start'] : new Api\DateTime($event['start']);
+			$event['end'] = $event['end'] instanceof Api\DateTime ? $event['end'] : new Api\DateTime($event['end']);
 			if ($content['whole_day'])
 			{
-				$event['start'] = $event['start'] instanceof Api\DateTime ?
-					clone $event['start'] : new Api\DateTime($event['start']);
 				$event['start']->setTime(0, 0, 0);
-				$event['end'] = $event['end'] instanceof Api\DateTime ?
-					clone $event['end'] : new Api\DateTime($event['end']);
 				$event['end']->setTime(23, 59, 59);
 			}
 			// some checks for recurrences, if you give a date, make it a weekly repeating event and visa versa
