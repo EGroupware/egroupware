@@ -262,8 +262,8 @@ export class EgwFrameworkApp extends LitElement
 					et._DOMContainer = null;
 				}
 			});
-			// Destroy application js
-			if(window.app[this.name] && window.app[this.name].destroy)
+			// Destroy application js if we removed the last one
+			if(!this.framework?.querySelector(`[name='${this.name}']`) && window.app[this.name] && window.app[this.name].destroy)
 			{
 				window.app[this.name].destroy();
 				delete window.app[this.name];	// really delete it, so new object get constructed and registered for push
@@ -738,7 +738,7 @@ export class EgwFrameworkApp extends LitElement
 
 	get framework() : EgwFramework
 	{
-		return this.closest("egw-framework");
+		return this.closest("egw-framework") ?? document?.querySelector("egw-framework");
 	}
 
 	get appName() : string
