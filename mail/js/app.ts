@@ -5537,7 +5537,7 @@ export class MailApp extends EgwApp
 
 			data.data.attachmentsBlock = _attachments;
 			data.data.attachmentsBlockTitle = _attachments.lenght;
-			egw.dataStoreUID(data.data.uid, data.data);
+			egw.dataStoreUID(selected[0], data.data);
 			this.mail_preview(selected, this.et2.getWidgetById('nm'));
 		}
 	}
