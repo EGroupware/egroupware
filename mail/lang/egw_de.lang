@@ -556,6 +556,7 @@ select or insert email address	mail	de	Wählen oder fügen Sie eine E-Mail-Adres
 selected	mail	de	ausgewählt.
 selected date range (with quicksearch)	mail	de	Datumsbereich (mit Schnellsuche)
 send a reject message:	mail	de	Ablehnungs-E-Mail senden:
+send attachments greater than given size as download link instead (in mb)	mail	de	Sende Anhänge als Link zum Herunterladen, wenn sie folgende Größe überschreiten (in MB)
 send files as	mail	de	Dateien versenden als
 send message and move to send folder (if configured)	mail	de	Versende Nachricht und kopiere diese in den konfigurierten Gesendet-Ordner
 send message pgp encrypted: requires keys from all recipients!	mail	de	Nachricht PGP-verschlüsselt senden: benötigt Schlüssel von allen Empfängern!
@@ -639,6 +640,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME-Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	de	Die Größe der Anhänge überschreitet %1 MB. Es wurde auf "Link zum Herunterladen" umgestellt.
 then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server konfiguriert.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.
@@ -688,8 +690,8 @@ when deleting messages	mail	de	Wenn Nachrichten gelöscht werden
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	de	Dürfen E-Mail in dem gleichen Fenster angezeigt werden, oder wünschen Sie nur jede E-Mail ein neues Fenster
 when saving messages as item of a different app	mail	de	Wählen Sie das Format zur Konvertierung von E-Mails in andere Anwendungen aus. Beispielsweise das Speichern von E-Mails als InfoLog. Wir empfehlen .eml, um die original E-Mail zu erhalten und darauf zu antworten.
 when sending messages	mail	de	Wenn Nachrichten versendet werden
-which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse)
+which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	de	Mit welcher Mail Identität (Signatur) wollen Sie starten. Für persönliche Konten benutzen wir immer die erste persönliche Signatur.
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten
 whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen auf der Domain-Whitelist, werden nicht als Spam markiert

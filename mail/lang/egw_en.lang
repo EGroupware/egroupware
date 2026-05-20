@@ -572,6 +572,7 @@ select or insert email address	mail	en	Select or insert email address
 selected	mail	en	selected.
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
 send a reject message:	mail	en	Send a reject message:
+send attachments greater than given size as download link instead (in mb)	mail	en	Send attachments greater than given size as download link instead (in MB)
 send files as	mail	en	Send files as
 send message and move to send folder (if configured)	mail	en	Send message and move to send folder (if configured)
 send message pgp encrypted: requires keys from all recipients!	mail	en	Send message PGP encrypted: requires keys from all recipients!
@@ -655,6 +656,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	en	The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?
 the mimeparser can not parse this message.	mail	en	The MIME parser can not parse this message.
 the rule with priority %1 successfully saved!	mail	en	The rule with priority %1 successfully saved!
+the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	en	The total size of the attachments exceeds the limit of %1 MB. Switched to download link
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store Sieve script, please check sieve_maxscriptsize option on your mailserver's config.
@@ -704,8 +706,8 @@ when deleting messages	mail	en	When deleting messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
 when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app.
 when sending messages	mail	en	When sending messages
-which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
+which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	en	Which mail identity (signature) do you want to start with. For personal we always use the first personal signature.
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whitelisted mails are not marked as spam	mail	en	Whitelisted emails are not marked as spam
@@ -714,8 +716,8 @@ with message:	mail	en	With message:
 wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 write	mail	en	write
-write (set or clear flags other than \seen and \deleted via store, also set them during append/copy)	mail	en	Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)
 write & delete	mail	en	write & delete
+write (set or clear flags other than \seen and \deleted via store, also set them during append/copy)	mail	en	Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)
 wrote	mail	en	wrote
 yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
