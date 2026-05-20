@@ -321,6 +321,20 @@ abstract class CalDAVTest extends TestCase
 	private static $created_users = [];
 
 	/**
+	 * Cached setup instance for CalDAV helper account / ACL operations.
+	 *
+	 * @var \setup|null
+	 */
+	private static $setup = null;
+
+	/**
+	 * Snapshot of globals touched by getSetup(), restored in tearDownAfterClass().
+	 *
+	 * @var array<string,mixed>|null
+	 */
+	private static $setup_global_snapshot = null;
+
+	/**
 	 * Create a user
 	 *
 	 * Created users are automatic deleted in tearDown() and can be passed to auth() or getClient() methods.
@@ -389,13 +403,16 @@ abstract class CalDAVTest extends TestCase
 	{
 		static::cleanupTrackedEvents();
 
-		$setup = self::getSetup();
-
-		foreach(self::$created_users as $account_lid => $data)
+		if(self::$setup && self::$created_users)
 		{
-//			if ($id) $setup->accounts->delete($data['id']);
-			unset(self::$created_users[$account_lid]);
+			foreach(self::$created_users as $account_lid => $data)
+			{
+				unset(self::$created_users[$account_lid]);
+			}
 		}
+		self::$created_users = [];
+		self::restoreSetupGlobals();
+		self::$setup = null;
 	}
 
 	/**
@@ -418,9 +435,10 @@ abstract class CalDAVTest extends TestCase
 	 */
 	private static function getSetup()
 	{
-		static $setup=null;
-		if (!isset($setup))
+		if(!isset(self::$setup))
 		{
+			self::snapshotSetupGlobals();
+
 			if (empty($_REQUEST['domain']))
 			{
 				$_REQUEST['domain'] = $GLOBALS['EGW_DOMAIN'] ?? 'default';
@@ -474,9 +492,61 @@ abstract class CalDAVTest extends TestCase
 					?? null;
 				$GLOBALS['egw_info']['server']['install_id'] = $header_install_id ?: md5(microtime(true).__FILE__);
 			}
-			$setup = new \setup();
+			self::$setup = new \setup();
 		}
-		return $setup;
+		return self::$setup;
+	}
+
+	/**
+	 * Snapshot globals likely to be changed while bootstrapping setup helpers.
+	 */
+	private static function snapshotSetupGlobals() : void
+	{
+		if(self::$setup_global_snapshot !== null)
+		{
+			return;
+		}
+		self::$setup_global_snapshot = [
+			'_REQUEST_domain'       => $_REQUEST['domain'] ?? null,
+			'_REQUEST_ConfigDomain' => $_REQUEST['ConfigDomain'] ?? null,
+			'egw_info'              => $GLOBALS['egw_info'] ?? null,
+		];
+	}
+
+	/**
+	 * Restore global state after setup helper use to avoid leaking into other tests.
+	 */
+	private static function restoreSetupGlobals() : void
+	{
+		if(self::$setup_global_snapshot === null)
+		{
+			return;
+		}
+		if(self::$setup_global_snapshot['_REQUEST_domain'] !== null)
+		{
+			$_REQUEST['domain'] = self::$setup_global_snapshot['_REQUEST_domain'];
+		}
+		else
+		{
+			unset($_REQUEST['domain']);
+		}
+		if(self::$setup_global_snapshot['_REQUEST_ConfigDomain'] !== null)
+		{
+			$_REQUEST['ConfigDomain'] = self::$setup_global_snapshot['_REQUEST_ConfigDomain'];
+		}
+		else
+		{
+			unset($_REQUEST['ConfigDomain']);
+		}
+		if(self::$setup_global_snapshot['egw_info'] !== null)
+		{
+			$GLOBALS['egw_info'] = self::$setup_global_snapshot['egw_info'];
+		}
+		else
+		{
+			unset($GLOBALS['egw_info']);
+		}
+		self::$setup_global_snapshot = null;
 	}
 
 	/**

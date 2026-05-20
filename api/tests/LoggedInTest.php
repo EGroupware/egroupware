@@ -56,28 +56,43 @@ abstract class LoggedInTest extends TestCase
 	{
 		try
 		{
-			// These globals pulled from the test config (phpunit.xml)
-			static::load_egw($GLOBALS['EGW_USER'],$GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
-
-			if($GLOBALS['egw']->db)
+			static::bootstrapEgwSession();
+			// Some suites mutate globals during teardown of prior classes. If we
+			// still fail sanity after bootstrap, perform one clean re-bootstrap.
+			if(!static::sanity_check())
 			{
-				$GLOBALS['egw']->db->connect();
+				static::tearDownAfterClass();
+				static::bootstrapEgwSession();
 			}
-			else
-			{
-				static::markTestSkipped('No $GLOBALS[egw]->db');
-				die();
-			}
-
-			// Re-init config, since it doesn't get handled by loading Egw
-			Api\Config::init_static();
-			Api\Vfs::init_static();
 		}
 		catch(Exception $e)
 		{
 			static::markTestSkipped('Unable to connect to Egroupware - ' . $e->getMessage());
 			return;
 		}
+	}
+
+	/**
+	 * Bootstrap Egw globals + DB connection for LoggedInTest descendants.
+	 */
+	protected static function bootstrapEgwSession() : void
+	{
+		// These globals pulled from the test config (phpunit.xml)
+		static::load_egw($GLOBALS['EGW_USER'],$GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
+
+		if($GLOBALS['egw']->db)
+		{
+			$GLOBALS['egw']->db->connect();
+		}
+		else
+		{
+			static::markTestSkipped('No $GLOBALS[egw]->db');
+			die();
+		}
+
+		// Re-init config, since it doesn't get handled by loading Egw
+		Api\Config::init_static();
+		Api\Vfs::init_static();
 	}
 
 	protected function assertPreConditions() : void
