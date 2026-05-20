@@ -261,7 +261,7 @@ class JsCalendar extends JsBase
 				'egroupware.org:completed' => $entry['info_datecompleted'] ?
 					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
 			] + self::Locations(['location' => $entry['info_location'] ?? null]) + [
-				'relatedTo' => self::relatedTo($entry['info_id_parent'], $entry['info_link_id'], $entry['info_id']),
+				'relatedTo' => self::relatedTo($entry['info_id_parent'] ?: 0, $entry['info_link_id'], $entry['info_id']),
 				'egroupware.org:customfields' => self::customfields($entry, 'infolog', Api\DateTime::$user_timezone->getName()),
 			];
 
