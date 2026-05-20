@@ -9,6 +9,7 @@
 namespace EGroupware\calendar;
 
 require_once realpath(__DIR__.'/../../api/tests/AppTest.php');
+require_once realpath(__DIR__.'/../../admin/inc/class.admin_cmd_delete_account.inc.php');
 
 use EGroupware\Api;
 
@@ -69,7 +70,14 @@ class RecurrenceExceptionTest extends \EGroupware\Api\AppTest
 		}
 		foreach($this->account_ids as $account_id)
 		{
-			$GLOBALS['egw']->accounts->delete($account_id);
+			try {
+				$command = new \admin_cmd_delete_account((int)$account_id, null, true);
+				$command->comment = 'Removing in tearDown for unit test ' . $this->name();
+				$command->run();
+			}
+			catch(\Throwable $e) {
+				// ignore cleanup failures in tearDown
+			}
 		}
 		parent::tearDown();
 	}

@@ -14,6 +14,7 @@ namespace EGroupware\Api;
 
 // so tests can run standalone
 require_once __DIR__.'/../src/loader/common.php';	// autoloader
+require_once __DIR__.'/../../admin/inc/class.admin_cmd_delete_account.inc.php';
 
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client, GuzzleHttp\RequestOptions;
@@ -407,6 +408,17 @@ abstract class CalDAVTest extends TestCase
 		{
 			foreach(self::$created_users as $account_lid => $data)
 			{
+				if (!empty($data['id']))
+				{
+					try {
+						$command = new \admin_cmd_delete_account((int)$data['id'], null, true);
+						$command->comment = 'Removing in tearDownAfterClass for '.static::class;
+						$command->run();
+					}
+					catch (\Throwable $e) {
+						// ignore cleanup failures to avoid masking original test result
+					}
+				}
 				unset(self::$created_users[$account_lid]);
 			}
 		}

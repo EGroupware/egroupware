@@ -48,7 +48,8 @@ class ImportParticipantsTest extends \EGroupware\Api\AppTest
 		$this->import = new \calendar_import_csv();
 		$this->import->bo = $this->bo;
 		$this->import->role_map = array_flip($this->bo->roles);
-		$this->import->status_map = array_flip($this->bo->verbose_status);
+		// Match production init(): status map keys are translated labels.
+		$this->import->status_map = array_flip(array_map('lang', $this->bo->verbose_status));
 
 		// Make parse_participants method accessable
 		$class = new \ReflectionClass($this->import);
