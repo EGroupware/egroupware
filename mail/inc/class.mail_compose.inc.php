@@ -53,7 +53,7 @@ class mail_compose
 	 * our Dovecot limits Mails to 39MB overall,
 	 * so we assume a max attachment size of 38MB if nothing is set in Mail app config
 	 **/
-	static int $maxAttachmentSizeDefault =38;
+	static int $maxAttachmentSizeDefault = 26;
 
 	/**
 	 * Instance of Mail
