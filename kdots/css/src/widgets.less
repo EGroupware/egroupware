@@ -8,11 +8,16 @@
 }
 // https://addons.mozilla.org/de/firefox/addon/languagetool has a lot of not defined custom elements
 // we do not want to make those visible so we revert our styling for undefined widget
-lt-card.lt-card{
+lt-card.lt-card,lt-div{
 	&,*{
-		background-image: none;
-		background-size: initial;
+		background-image: none !important;
+		background-size: initial !important;
 	}
+	//That language tool also shows some mirror element with display none but they override that somewhere in their styles
+	// it is full of question marks which we do not want to show
+}
+#popupMainDiv lt-mirror[style*="display: none;"] {
+  display: none !important;
 }
 
 /* Get nextmatch sizing more nicely without messing with dynheight */
