@@ -182,6 +182,7 @@ class ExceptionViaUIFormsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 		}
 		$save_payload['button'] = ['apply' => true];
 		$save_payload['title'] = ($save_payload['title'] ?? $master_before['title']) . ' (detached)';
+		$save_payload['non_blocking'] = true;
 		$save_payload['start'] = $save_payload['start'] instanceof Api\DateTime ?
 			clone $save_payload['start'] : new Api\DateTime($save_payload['start'], Api\DateTime::$user_timezone);
 		$save_payload['start']->modify('+2 hours');
@@ -224,25 +225,26 @@ class ExceptionViaUIFormsTest extends \EGroupware\Api\Etemplate\WidgetBaseTest
 
 		$related_ids = (array)$this->bo->so->get_related($master_after['uid']);
 		$detached = null;
-		foreach($related_ids as $related_id)
+		$exceptions = $this->bo->read(['cal_reference' => $cal_id], null, true);
+		foreach((array)$exceptions as $exception)
 		{
-			$related = $this->bo->read((int)$related_id);
-			if(!$related || (int)$related['reference'] !== $cal_id)
+			if(!$exception || (int)($exception['reference'] ?? 0) !== $cal_id)
 			{
 				continue;
 			}
-			if((int)Api\DateTime::to($related['recurrence'], 'ts') !== $selected_ts)
+			if((int)Api\DateTime::to($exception['recurrence'], 'ts') !== $selected_ts)
 			{
 				continue;
 			}
-			$detached = $related;
-			$this->event_ids[] = (int)$related['id'];
+			$detached = $exception;
+			$this->event_ids[] = (int)$exception['id'];
 			break;
 		}
 		$this->assertIsArray(
 			$detached,
 			'Detached exception event was not created'
 			. ' related_ids=' . json_encode($related_ids)
+			. ' exception_ids=' . json_encode(array_keys((array)$exceptions))
 			. ' save_state=' . json_encode($save_state)
 		);
 
