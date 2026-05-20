@@ -3088,6 +3088,10 @@ export class MailApp extends EgwApp
 					classes.forEach((className) =>
 					{
 						nmNode.classList.add(className)
+						if (className === "unseen"){
+							const img:Et2Image = nmNode.querySelector(".status_img");
+							if (img) img.src = egw.image("mail_unseen")
+						}
 					})
 					egw.dataStoreUID(data.msg[i], dataElem.data, true);
 
