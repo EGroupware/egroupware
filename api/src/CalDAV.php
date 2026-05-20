@@ -2507,7 +2507,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			// reconstruct headers
 			foreach($_SERVER as $name => $value)
 			{
-				list($type,$name) = explode('_',$name,2);
+				list($type,$name) = explode('_',$name,2)+[null,null];
 				if ($type == 'HTTP' || $type == 'CONTENT')
 				{
 					$content .= str_replace(' ','-',ucwords(strtolower(($type=='HTTP'?'':$type.' ').str_replace('_',' ',$name)))).

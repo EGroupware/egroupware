@@ -81,6 +81,7 @@ class OpenAPI
 			],
 		];
 
+		$operationIds = [];
 		foreach(scandir($base_dir = EGW_SERVER_ROOT.'/doc/openapi') as $file)
 		{
 			if (str_ends_with($file, ".json"))
@@ -93,7 +94,6 @@ class OpenAPI
 				}
 				$app_json = json_decode(file_get_contents($base_dir.'/'.$file), true);
 
-				$operationIds = [];
 				foreach($app_json['paths'] as $path => &$methods)
 				{
 					foreach($methods as $method => &$data)
@@ -127,7 +127,7 @@ class OpenAPI
 					}
 					if (!$methods)
 					{
-						unset($app_json['path'][$path]);
+						unset($app_json['paths'][$path]);
 					}
 				}
 				if ($inline_parameters)
@@ -279,7 +279,7 @@ class OpenAPI
 				}
 				if (!empty($method['requestBody']['required']))
 				{
-					if (($body = $method['requestBody']['content']['application/json-patch+json'] ?? $method['requestBody']['content']['application/json-patch+json'] ?? null) &&
+					if (($body = $method['requestBody']['content']['application/json-patch+json'] ?? $method['requestBody']['content']['application/json'] ?? null) &&
 						($ref = $body['schema']['$ref'] ?? null))
 					{
 						$json_schema = SchemaConverter::convertFromSchema((object)self::getReference($openapi, $ref), $options);
@@ -452,7 +452,7 @@ class OpenAPI
 	}
 }
 
-if (str_ends_with(__FILE__, $_SERVER['REQUEST_URI']))
+if (str_ends_with(__FILE__, $_SERVER['SCRIPT_NAME']))
 {
 	$GLOBALS['egw_info'] = [
 		'flags' => [
@@ -463,6 +463,6 @@ if (str_ends_with(__FILE__, $_SERVER['REQUEST_URI']))
 	require_once '../../../header.inc.php';
 
 	header('Content-type: application/json');
-	echo json_encode(OpenAPI::tools([], true, ['createContact']), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)."\n";
+	echo json_encode(OpenAPI::tools($_GET['operationIds'] ?? [], empty($_GET['operationIds'])), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)."\n";
 	exit;
 }
