@@ -77,6 +77,8 @@ abstract class LoggedInTest extends TestCase
 	 */
 	protected static function bootstrapEgwSession() : void
 	{
+		static::resetEgwGlobalsForBootstrap();
+
 		// These globals pulled from the test config (phpunit.xml)
 		static::load_egw($GLOBALS['EGW_USER'],$GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
 
@@ -92,7 +94,36 @@ abstract class LoggedInTest extends TestCase
 
 		// Re-init config, since it doesn't get handled by loading Egw
 		Api\Config::init_static();
+		// Rebuild Accounts singleton from current server config to avoid
+		// cross-suite leakage of backend/db capabilities.
+		$GLOBALS['egw']->accounts = new Api\Accounts($GLOBALS['egw_info']['server']);
 		Api\Vfs::init_static();
+	}
+
+	/**
+	 * Ensure load_egw() starts from a clean global state.
+	 *
+	 * Some non-LoggedIn suites leave an Egw instance in globals. load_egw() will
+	 * then reuse it instead of creating a fresh one, which can leak stale DB
+	 * capabilities between suites.
+	 */
+	protected static function resetEgwGlobalsForBootstrap() : void
+	{
+		if(!empty($GLOBALS['egw']) && is_object($GLOBALS['egw']))
+		{
+			if(!empty($GLOBALS['egw']->db))
+			{
+				$GLOBALS['egw']->db->disconnect();
+			}
+			unset($GLOBALS['egw']);
+		}
+		// Reset process-wide ADOdb handle so a fresh Db object can re-derive
+		// backend capabilities instead of inheriting stale static connection state.
+		Api\Db::$ADOdb = null;
+		unset($GLOBALS['egw_info']);
+		unset($GLOBALS['egw_setup']);
+		unset($GLOBALS['_SESSION']);
+		$_SESSION = [];
 	}
 
 	protected function assertPreConditions() : void
@@ -141,10 +172,12 @@ abstract class LoggedInTest extends TestCase
 			}
 			unset($GLOBALS['egw']);
 		}
+		Api\Db::$ADOdb = null;
 
 		Api\Session::egw_setcookie('sessionid');
 		Api\Session::egw_setcookie('kp3');
 		unset($GLOBALS['egw_info']);
+		unset($GLOBALS['egw_setup']);
 		unset($GLOBALS['_SESSION']);
 		$_SESSION = array();
 	}

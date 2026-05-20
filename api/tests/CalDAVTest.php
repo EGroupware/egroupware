@@ -411,8 +411,27 @@ abstract class CalDAVTest extends TestCase
 			}
 		}
 		self::$created_users = [];
+		self::resetSharedRuntimeState();
 		self::restoreSetupGlobals();
 		self::$setup = null;
+	}
+
+	/**
+	 * Reset process-wide API singletons/caches CalDAV helper paths can touch.
+	 */
+	private static function resetSharedRuntimeState() : void
+	{
+		// Reset Accounts singleton/caches to avoid cross-suite backend/capability leaks.
+		$accounts_instance = new \ReflectionProperty(\EGroupware\Api\Accounts::class, '_instance');
+		$accounts_instance->setAccessible(true);
+		$accounts_instance->setValue(null, null);
+
+		$accounts_cache = new \ReflectionProperty(\EGroupware\Api\Accounts::class, 'cache');
+		$accounts_cache->setAccessible(true);
+		$accounts_cache->setValue(null, []);
+
+		// Reset Link runtime caches/object instances used by query/title/file access helpers.
+		\EGroupware\Api\Link::init_static(true);
 	}
 
 	/**
@@ -510,6 +529,7 @@ abstract class CalDAVTest extends TestCase
 			'_REQUEST_domain'       => $_REQUEST['domain'] ?? null,
 			'_REQUEST_ConfigDomain' => $_REQUEST['ConfigDomain'] ?? null,
 			'egw_info'              => $GLOBALS['egw_info'] ?? null,
+			'egw_setup'             => $GLOBALS['egw_setup'] ?? null,
 		];
 	}
 
@@ -545,6 +565,14 @@ abstract class CalDAVTest extends TestCase
 		else
 		{
 			unset($GLOBALS['egw_info']);
+		}
+		if(self::$setup_global_snapshot['egw_setup'] !== null)
+		{
+			$GLOBALS['egw_setup'] = self::$setup_global_snapshot['egw_setup'];
+		}
+		else
+		{
+			unset($GLOBALS['egw_setup']);
 		}
 		self::$setup_global_snapshot = null;
 	}
