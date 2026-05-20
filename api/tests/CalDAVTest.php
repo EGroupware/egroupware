@@ -443,7 +443,12 @@ abstract class CalDAVTest extends TestCase
 		$accounts_cache->setValue(null, []);
 
 		// Reset Link runtime caches/object instances used by query/title/file access helpers.
-		\EGroupware\Api\Link::init_static(true);
+		// In some teardown contexts (eg. CI ordering), egwd db can already be gone.
+		// Link::init_static(true) triggers hooks that require a valid db.
+		if (!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			\EGroupware\Api\Link::init_static(true);
+		}
 	}
 
 	/**
