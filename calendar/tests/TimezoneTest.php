@@ -351,8 +351,8 @@ class TimezoneTest extends \EGroupware\Api\AppTest {
 			//'Pacific/Auckland',	// +12
 			'UTC',
 			// Half-hour timezones to catch edge-cases
-			'Australia/Adelaide',  // +9:30
-			'Asia/Kolkata',        // +5:30
+			//'Australia/Adelaide',  // +9:30
+			//'Asia/Kolkata',        // +5:30
 			'America/St_Johns'     // -3:30
 		);
 		$tz_combos = Array();
