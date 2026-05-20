@@ -813,9 +813,14 @@ body egw-app,
   background-image: url(../../node_modules/bootstrap-icons/icons/question-circle.svg);
 }
 lt-card.lt-card,
-lt-card.lt-card * {
-  background-image: none;
-  background-size: initial;
+lt-div,
+lt-card.lt-card *,
+lt-div * {
+  background-image: none !important;
+  background-size: initial !important;
+}
+#popupMainDiv lt-mirror[style*="display: none;"] {
+  display: none !important;
 }
 /* Get nextmatch sizing more nicely without messing with dynheight */
 div.et2_nextmatch {
