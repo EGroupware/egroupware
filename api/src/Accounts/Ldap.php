@@ -696,7 +696,7 @@ class Ldap
 				$data['account_passwd'] = Api\Auth::encrypt_ldap($data['account_passwd']);
 			}
 			$to_write['userpassword'] = $data['account_passwd'];
-			$to_write['shadowlastchange'] = round((time()-$utc_diff) / (24*3600));
+			$to_write['shadowlastchange'] = (int)round((time()-$utc_diff) / (24*3600));
 		}
 		// both status and expires are encoded in the single shadowexpire value in LDAP
 		// - if it's unset an account is enabled AND does never expire
@@ -706,15 +706,15 @@ class Ldap
 		$shadowexpire = ($data['account_expires']-$utc_diff) / (24*3600);
 
 		$to_write['shadowexpire'] = !$data['account_status'] ?
-			($data['account_expires'] != -1 && $data['account_expires'] < time() ? round($shadowexpire) : 0) :
-			($data['account_expires'] != -1 ? round($shadowexpire) : array());	// array() = unset value
+			($data['account_expires'] != -1 && $data['account_expires'] < time() ? (int)round($shadowexpire) : 0) :
+			($data['account_expires'] != -1 ? (int)round($shadowexpire) : array());	// array() = unset value
 
 		if ($new_entry && is_array($to_write['shadowexpire']) && !count($to_write['shadowexpire']))
 		{
 			unset($to_write['shadowexpire']);	// gives protocoll error otherwise
 		}
 		//error_log(__METHOD__.__LINE__.$data['account_lid'].'#'.$data['account_lastpwd_change'].'#');
-		if ($data['account_lastpwd_change']) $to_write['shadowlastchange'] = round(($data['account_lastpwd_change']-$utc_diff)/(24*3600));
+		if ($data['account_lastpwd_change']) $to_write['shadowlastchange'] = (int)round(($data['account_lastpwd_change']-$utc_diff)/(24*3600));
 		if ($data['mustchangepassword'] == 1 || isset($data['account_lastpwd_change']) && $data['account_lastpwd_change'] == 0)
 		{
 			$to_write['shadowlastchange'] = 0;
