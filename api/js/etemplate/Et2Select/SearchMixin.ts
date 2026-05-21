@@ -313,6 +313,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			this._handleSearchMouseDown = this._handleSearchMouseDown.bind(this);
 			this._handleEditKeyDown = this._handleEditKeyDown.bind(this);
 			this._handlePaste = this._handlePaste.bind(this);
+			this._handleSearchInput = this._handleSearchInput.bind(this);
 		}
 
 		connectedCallback()
@@ -493,7 +494,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 
 		protected _searchInputTemplate()
 		{
-			let edit = nothing;
+			let edit:TemplateResult|typeof nothing = nothing;
 			if(this.editModeEnabled)
 			{
 				edit = html`<input id="edit" type="text" part="input"
@@ -523,6 +524,7 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
                              @blur=${this._handleSearchBlur}
                              @sl-clear=${this._handleSearchClear}
                              @sl-change=${this._handleSearchChange}
+                             @sl-input=${this._handleSearchInput}
                 ></et2-textbox>
                 ${edit}
                 </div>
@@ -1080,11 +1082,38 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				return;
 			}
 
-			// Start the search automatically if they have enough letters
-			// -1 because we're in keyDown handler, and value is from _before_ this key was pressed
-			if(this._searchInputNode.value.length >= Et2WidgetWithSearch.MIN_CHARS - 1)
+			// Normal typing / paste / autocomplete is handled by _handleSearchInput(),
+			// because keydown sees the old value before the character or pasted text is inserted.
+		}
+
+		/**
+		 * Handle paste into the search input.
+		 * keydown fires before the pasted text lands in the input, so we
+		 * use a zero-delay setTimeout to read the value after the browser
+		 * has inserted the clipboard content.
+		 *
+		 * @param {ClipboardEvent} event
+		 * @protected
+		 */
+		protected _handleSearchInput(event : ClipboardEvent)
+		{
+			event.stopPropagation();
+
+			clearTimeout(this._searchTimeout);
+			this._activeControls?.classList.add("active");
+
+			const value = this._searchInputNode?.value ?? "";
+
+			if(value.length >= Et2WidgetWithSearch.MIN_CHARS)
 			{
-				this._searchTimeout = window.setTimeout(() => {this.startSearch()}, Et2WidgetWithSearch.SEARCH_TIMEOUT);
+				this._searchTimeout = window.setTimeout(() =>
+				{
+					this.startSearch();
+				}, Et2WidgetWithSearch.SEARCH_TIMEOUT);
+			}
+			else
+			{
+				this._clearResults();
 			}
 		}
 
