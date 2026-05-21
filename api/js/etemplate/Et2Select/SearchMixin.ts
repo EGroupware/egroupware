@@ -1087,15 +1087,14 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		}
 
 		/**
-		 * Handle paste into the search input.
-		 * keydown fires before the pasted text lands in the input, so we
-		 * use a zero-delay setTimeout to read the value after the browser
-		 * has inserted the clipboard content.
+		 * Handles the input event for the search functionality.
+		 * navigation Input is handled by _handleSearchKeyDown (Enter,escape,arrows)
 		 *
-		 * @param {ClipboardEvent} event
-		 * @protected
+		 *
+		 * @param {CustomEvent} event - The custom event (sl-input event) triggered by the search input field.
+		 * @return {void} This method does not return any value.
 		 */
-		protected _handleSearchInput(event : ClipboardEvent)
+		protected _handleSearchInput(event:CustomEvent): void
 		{
 			event.stopPropagation();
 

@@ -148,10 +148,10 @@ describe("Trigger search", () =>
 
 		// Send two keypresses, but we need to explicitly set the value
 		element._searchInputNode.value = "o";
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "o"}));
+		element._searchInputNode.dispatchEvent(new CustomEvent("sl-input"));
 		assert(searchSpy.notCalled);
 		element._searchInputNode.value = "on";
-		element._searchInputNode.dispatchEvent(new KeyboardEvent("keydown", {"key": "n"}));
+		element._searchInputNode.dispatchEvent(new CustomEvent("sl-input"));
 		assert(searchSpy.notCalled);
 
 		// Skip the timeout
