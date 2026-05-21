@@ -480,7 +480,7 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 				{
 					this.widgets[field_name] = et2_createWidget(type, attrs, this);
 					// Wrap Ai tools around htmlarea
-					if(type == "htmlarea" && !attrs.noAiTools)
+					if(type == "htmlarea" && !attrs.readonly && !attrs.noAiTools)
 					{
 						const legacy = this.widgets[field_name]
 						// @ts-ignore
