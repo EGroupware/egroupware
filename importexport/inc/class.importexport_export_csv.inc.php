@@ -478,7 +478,10 @@ class importexport_export_csv implements importexport_iface_export_record
 		}
 
 		static $cat_object;
-		if(is_null($cat_object)) $cat_object = new Api\Categories(false,$appname);
+		if(is_null($cat_object) || $cat_object->app_name != $appname)
+		{
+			$cat_object = new Api\Categories(false, $appname);
+		}
 		foreach((array)$fields['select-cat'] as $name) {
 			if($record->$name) {
 				$cats = array();
