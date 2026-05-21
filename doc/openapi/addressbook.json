@@ -453,7 +453,7 @@
         "schema": {
           "type": "string"
         },
-        "description": "Contact ID or UID"
+        "description": "Contact ID or UID (given as `id` parameter!)"
       },
       "props": {
         "name": "props[]",

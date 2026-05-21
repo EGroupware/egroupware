@@ -179,7 +179,7 @@ class OpenAPI
 	 * @param bool $deny
 	 * @return array|string
 	 */
-	public static function toolCall(string $operationId, array $params = [], array $operationIdFilter=[], bool $deny=false)
+	public static function toolCall(string $operationId, array $params = [], array $operationIdFilter=[], bool $deny=true)
 	{
 		// to not block on the session
 		$GLOBALS['egw']->session->commit_session();
@@ -187,7 +187,7 @@ class OpenAPI
 		try
 		{
 			// check if the tool-call is allowed
-			if (in_array($operationId, $operationIdFilter) !== $deny)
+			if (in_array($operationId, $operationIdFilter) === $deny)
 			{
 				throw new \Exception("Operation '$operationId' is NOT permitted!");
 			}
@@ -207,6 +207,11 @@ class OpenAPI
 							'Accept' => 'application/json',
 							'Prefer' => 'return=representation',
 						];
+						// handle GET parameters like filters[search]=... or props[]=... correct
+						if (in_array(strtolower($method), ['get', 'head', 'options', 'delete']))
+						{
+							$params = self::fixGetParameters($params);
+						}
 						$status = Api\CalDAV::runRequest($uri, $method, $params, $headers, $response, $response_headers);
 						if (($success = ((string)$status)[0] === '2' && !isset($response['error'])) && isset($response_headers['Location']))
 						{
@@ -232,6 +237,40 @@ class OpenAPI
 		return [
 			'error' => "Invalid operationId '$operationId'!",
 		];
+	}
+
+	/**
+	 * Convert params with square brackets like filters[search]=... or props[]=... to an array like $_GET / parsed GET parameters
+	 *
+	 * @param array $params
+	 * @return array
+	 */
+	protected static function fixGetParameters(array $params): array
+	{
+		foreach($params as $name => $value)
+		{
+			if (str_ends_with($name, '[]'))
+			{
+				$name = substr($name, 0, -2);
+				$params[$name] ??= [];
+				if (is_array($value))
+				{
+					$params[$name] = array_merge_recursive($params[$name], $value);
+				}
+				else
+				{
+					$params[$name][] = $value;
+				}
+				unset($params[$name]);
+			}
+			elseif (strpos($name, '[') !== false)
+			{
+				parse_str($name.'='.urlencode($value), $result);
+				$params = array_merge_recursive($params, $result);
+				unset($params[$name]);
+			}
+		}
+		return $params;
 	}
 
 	/**
@@ -270,6 +309,13 @@ class OpenAPI
 					foreach ($method['parameters'] as $parameter)
 					{
 						if (isset($parameter['in']) && $parameter['in'] === 'header') continue;
+						// convert some not existing schema like "datetime"
+						switch ($parameter['schema']['type']??null)
+						{
+							case 'datetime':
+								$parameter['schema'] = (object)['type' => 'string', 'format' => 'data-time', 'examples' => ['2026-05-16', '2026-05-16 12:00:00']];
+								break;
+						}
 						$tool['function']['parameters']['properties'][$parameter['name']] = ParameterConverter::convertFromParameter((object)(['schema' => (object)$parameter['schema']]+$parameter), $options);
 						if (!empty($parameter['required']))
 						{
@@ -463,6 +509,14 @@ if (str_ends_with(__FILE__, $_SERVER['SCRIPT_NAME']))
 	require_once '../../../header.inc.php';
 
 	header('Content-type: application/json');
-	echo json_encode(OpenAPI::tools($_GET['operationIds'] ?? [], empty($_GET['operationIds'])), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)."\n";
+	if (!empty($_GET['run']))
+	{
+		echo json_encode(OpenApi::toolCall($_GET['run'], array_diff_key($_GET, array_flip(['run']))), JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE);
+	}
+	else
+	{
+		echo json_encode(OpenAPI::tools($_GET['operationIds'] ?? $_GET['operationids'] ?? [], empty($_GET['operationIds'] ?? $_GET['operationids'])),
+				JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE)."\n";
+	}
 	exit;
 }

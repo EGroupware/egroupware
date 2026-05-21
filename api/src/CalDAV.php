@@ -2781,7 +2781,7 @@ class CalDAV extends HTTP_WebDAV_Server
 			[$key, $value] = preg_split('/:\s*/', $header, 2);
 			$response_headers[$key] = $value;
 		}
-		if (preg_match('#^application/([a-z]+\+)?json$#', $response_headers['Content-Type']))
+		if (preg_match('#^application/([a-z]+\+)?json($|;)#', $response_headers['Content-Type']))
 		{
 			$response = json_decode($response, true);
 		}
