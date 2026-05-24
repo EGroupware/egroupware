@@ -32,7 +32,7 @@ foreach(array(
 		array(
 			'config_app' => 'timesheet',
 			'config_name' => $name,
-			'config_value' => $value,
+			'config_value' => is_array($value) ? json_encode($value) : $value,
 		),array(
 			'config_app' => 'timesheet',
 			'config_name' => $name,
