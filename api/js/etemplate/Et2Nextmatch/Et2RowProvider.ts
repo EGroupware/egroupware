@@ -305,7 +305,6 @@ export class Et2RowProvider
 
 		const template = document.createElement("template");
 		const fragment = this._createFragmentFromXml(xml, attrMap, idState, true);
-		this._removeHiddenTemplateCells(fragment, columns, attrMap);
 		template.content.appendChild(fragment);
 
 		// Keep existing readonly behavior so row widgets render as display-only templates.
@@ -319,55 +318,6 @@ export class Et2RowProvider
 			xml,
 			attrMap
 		};
-	}
-
-	/**
-	 * Remove cells for columns resolved as hidden and keep attr map in sync.
-	 */
-	private _removeHiddenTemplateCells(
-		fragment : DocumentFragment,
-		columns : Et2DatagridColumn[],
-		attrMap : Record<string, Record<string, string>>
-	)
-	{
-		if(!columns.length)
-		{
-			return;
-		}
-
-		const root = fragment.firstElementChild;
-		if(!root)
-		{
-			return;
-		}
-
-		const cells = Array.from(root.children);
-		if(!cells.length)
-		{
-			return;
-		}
-
-		for(let index = Math.min(cells.length, columns.length) - 1; index >= 0; index--)
-		{
-			if(!this._isColumnHidden(columns[index]))
-			{
-				continue;
-			}
-
-			const cell = cells[index];
-			const ids = [
-				cell,
-				...Array.from(cell.querySelectorAll("[data-et2nm-id]"))
-			]
-				.map((element) => element.getAttribute("data-et2nm-id"))
-				.filter(Boolean);
-
-			for(const id of ids)
-			{
-				delete attrMap[id];
-			}
-			cell.remove();
-		}
 	}
 
 	/**
@@ -569,44 +519,6 @@ export class Et2RowProvider
 		}
 
 		return "col" + index;
-	}
-
-	/**
-	 * Evaluate column hidden state with array-manager expression support.
-	 */
-	private _isColumnHidden(column : Et2DatagridColumn) : boolean
-	{
-		if(!column)
-		{
-			return false;
-		}
-		const disabled = column.disabled;
-		if(typeof disabled === "boolean")
-		{
-			return disabled;
-		}
-		if(typeof disabled === "undefined" || disabled === null)
-		{
-			return false;
-		}
-		const expression = String(disabled).trim();
-		if(expression === "")
-		{
-			return false;
-		}
-		try
-		{
-			const mgr = this.host.getArrayMgr?.("content");
-			if(mgr && typeof mgr.parseBoolExpression === "function")
-			{
-				return !!mgr.parseBoolExpression(expression);
-			}
-		}
-		catch(e)
-		{
-		}
-		const normalized = expression.toLowerCase();
-		return normalized === "true" || normalized === "1";
 	}
 
 	/**

@@ -5,7 +5,10 @@ export interface Et2DatagridColumn
 	header?: Element;
 	width? : string;
 	minWidth? : string;
+	// Not allowed to be shown
 	disabled? : string | boolean;
+	// Not currently shown, but could be
+	hidden? : boolean;
 }
 
 export interface Et2DatagridTemplateData

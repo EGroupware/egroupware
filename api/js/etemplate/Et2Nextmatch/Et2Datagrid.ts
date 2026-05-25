@@ -6,6 +6,7 @@ import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import shoelace from "../Styles/shoelace";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
+import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import styles from "./Et2Datagrid.styles";
 import {virtualize, virtualizerRef} from "@lit-labs/virtualizer/virtualize.js";
 import {
@@ -32,48 +33,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			styles
 		];
 	}
-
-	/**
-	 * Visible column configuration, including sizing and optional hide expressions.
-	 */
-	@property({attribute: false})
-	columns : Et2DatagridColumn[] = [];
-
-	/**
-	 * Paging adapter used by infinite scroll to fetch additional rows from the server.
-	 */
-	@property({attribute: false})
-	dataProvider : Et2DatagridDataProvider | null = null;
-
-	/**
-	 * Prepared template and metadata used to render each row.
-	 */
-	@property({attribute: false})
-	templateData : Et2DatagridTemplateData | null = null;
-
-	/**
-	 * Maximum number of rows requested per page load.
-	 */
-	@property({type: Number})
-	pageSize : number = 50;
-
-	/**
-	 * Row selection behavior: `none`, `single`, or `multiple`.
-	 */
-	@property({type: String, attribute: "selection-mode"})
-	selectionMode : Et2DatagridSelectionMode = "multiple";
-
-	/**
-	 * Hide the column chooser action in the header when true.
-	 */
-	@property({type: Boolean})
-	noColumnSelection: boolean=false;
-
-	/**
-	 * External loading flag for configuration/template setup before first data render.
-	 */
-	@property({type: Boolean, attribute: "configuration-loading"})
-	configurationLoading : boolean = false;
 
 	/**
 	 * True while a fetch cycle is active, including initial and incremental page loads.
@@ -129,6 +88,48 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	@state()
 	private _pendingPlaceholderCount : number = 0;
 
+	/**
+	 * Visible column configuration, including sizing and optional hide expressions.
+	 */
+	@property({attribute: false})
+	columns : Et2DatagridColumn[] = [];
+
+	/**
+	 * Paging adapter used by infinite scroll to fetch additional rows from the server.
+	 */
+	@property({attribute: false})
+	dataProvider : Et2DatagridDataProvider | null = null;
+
+	/**
+	 * Prepared template and metadata used to render each row.
+	 */
+	@property({attribute: false})
+	templateData : Et2DatagridTemplateData | null = null;
+
+	/**
+	 * Maximum number of rows requested per page load.
+	 */
+	@property({type: Number})
+	pageSize : number = 50;
+
+	/**
+	 * Row selection behavior: `none`, `single`, or `multiple`.
+	 */
+	@property({type: String, attribute: "selection-mode"})
+	selectionMode : Et2DatagridSelectionMode = "multiple";
+
+	/**
+	 * Hide the column chooser action in the header when true.
+	 */
+	@property({type: Boolean})
+	noColumnSelection : boolean = false;
+
+	/**
+	 * External loading flag for configuration/template setup before first data render.
+	 */
+	@property({type: Boolean, attribute: "configuration-loading"})
+	configurationLoading : boolean = false;
+
 	/** Set of row ids already added, used to avoid duplicate render on incremental fetches. */
 	private displayedRowIds : Set<string> = new Set();
 	/** Set of selected row ids used to derive emitted selection payloads. */
@@ -151,6 +152,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _rowUpgradeBatchSize : number = 8;
 	/** Per-frame time budget (ms) for row widget upgrades to avoid long tasks on the main thread. */
 	private _rowUpgradeFrameBudgetMs : number = 8;
+	/** Stable source-order keys from template parsing; used to map row cells after column reordering. */
+	private _sourceColumnKeys : string[] = [];
 	private _restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
 
@@ -164,21 +167,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return  html`
 			<svg viewBox="0 0 100 100" width="100%" height="100%" preserveAspectRatio="none"
 				 xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-				<style>
-					.header {
-						fill: var(--sl-color-neutral-100, #e8e8e8);
-					}
+					<style>
+						.dg-loader__header {
+							fill: var(--sl-color-neutral-100, #e8e8e8);
+						}
 
-					.body {
-						fill: var(--sl-color-neutral-0, #ffffff);
-					}
+						.dg-loader__body {
+							fill: var(--sl-color-neutral-0, #ffffff);
+						}
 
-					.line {
-						stroke: var(--sl-color-neutral-200, rgba(0, 0, 0, 0.08));
-						stroke-width: 0.15;
-						vector-effect: non-scaling-stroke;
-					}
-				</style>
+						.dg-loader__line {
+							stroke: var(--sl-color-neutral-200, rgba(0, 0, 0, 0.08));
+							stroke-width: 0.15;
+							vector-effect: non-scaling-stroke;
+						}
+					</style>
 
 				<!-- Wipe animation
 				<defs>
@@ -197,13 +200,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				-->
 
 				<!-- background -->
-				<rect class="body" width="100%" height="100%"></rect>
+				<rect class="dg-loader__body" width="100%" height="100%"></rect>
 
 				<!-- header -->
-				<rect class="header" width="100%" height="6.5%"></rect>
+				<rect class="dg-loader__header" width="100%" height="6.5%"></rect>
 
 				<!-- 15 row separators -->
-				<g class="line">
+				<g class="dg-loader__line">
 					<line x1="0%" y1="12.9%" x2="100%" y2="12.9%"></line>
 					<line x1="0%" y1="19.3%" x2="100%" y2="19.3%"></line>
 					<line x1="0%" y1="25.7%" x2="100%" y2="25.7%"></line>
@@ -305,6 +308,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		super.updated(changedProperties);
 		if(changedProperties.has("templateData"))
 		{
+			// Capture source cell->column mapping before user reorders columns.
+			this._sourceColumnKeys = (this.templateData?.columns || this.columns || []).map((column) => String(column.key));
 			this._renderRowsIntoContainer(true);
 			this._ensureTableColSizes();
 		}
@@ -312,104 +317,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._renderRowsIntoContainer(true);
 			this._ensureTableColSizes();
+			this._applyColumnVisibilityToRenderedRows();
 		}
 		this._upgradeRenderedRows();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
 			this._focusRowByIndex(this.activeRowIndex, 10);
 		}
-	}
-
-	/**
-	 * Seed datagrid with preloaded rows and skip initial fetch.
-	 */
-	public setInitialRows(rows : any[])
-	{
-		const mappedRows = (rows || []).map((row, index) => ({
-			id: this._rowIdFor(row, index),
-			data: row
-		}));
-		this._clearRows();
-		this.rows = mappedRows;
-		this._rowsByIndex = mappedRows.slice();
-		this.loading = false;
-		this.fetching = false;
-		this.displayedRowIds = new Set(mappedRows.map((row) => row.id));
-		this.requestUpdate();
-	}
-
-	/**
-	 * Reset all grid runtime state including selection and fetch markers.
-	 */
-	public clear()
-	{
-		this._clearQueuedRequests();
-		this._clearRows();
-		this.total = null;
-		this.loading = false;
-		this.fetching = false;
-		this.fetchFailed = false;
-		this.fetchErrorMessage = "";
-		this._hasFetchedOnce = false;
-		this._pendingPlaceholderCount = 0;
-		this.selectedRowIds.clear();
-		this.anchorRowIndex = -1;
-		this.activeRowIndex = -1;
-		this.activeRowId = null;
-	}
-
-	/**
-	 * Clear current rows and load from first page.
-	 */
-	public async reload() : Promise<void>
-	{
-		this._clearQueuedRequests();
-		this._clearRows();
-		this.total = null;
-		this.fetchFailed = false;
-		this.fetchErrorMessage = "";
-		this._hasFetchedOnce = false;
-		this._pendingPlaceholderCount = 0;
-		await this.loadMore();
-	}
-
-	/**
-	 * Trigger next page load when allowed by current state.
-	 */
-	public loadMore()
-	{
-		if(!this.dataProvider || this.fetchFailed)
-		{
-			return;
-		}
-		if(this.fetching)
-		{
-			return;
-		}
-		const start = 0;
-		if(this.total !== null && start >= this.total)
-		{
-			return;
-		}
-		if(!this._hasMissingRowsInChunk(start))
-		{
-			return;
-		}
-		const requestedCount = this.total !== null
-		                       ? Math.max(0, Math.min(this.pageSize, this.total - start))
-		                       : this.pageSize;
-		if(requestedCount <= 0)
-		{
-			return;
-		}
-		const requestKey = this._requestKey(start, requestedCount);
-		if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
-		{
-			return;
-		}
-		this._queueRequest(start, requestedCount, requestKey);
-
-		this._scheduleQueuedRequestProcessing();
 	}
 
 	/**
@@ -461,8 +375,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				this._inFlightRequestKeys.delete(requestKey);
 			}
-			this.fetching = this._inFlightRequestKeys.size > 0;
-			this.loading = this._inFlightRequestKeys.size > 0;
+			this._syncLoadingFromInFlight();
 			return;
 		}
 
@@ -507,8 +420,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				this._inFlightRequestKeys.delete(requestKey);
 			}
-			this.fetching = this._inFlightRequestKeys.size > 0;
-			this.loading = this._inFlightRequestKeys.size > 0;
+			this._syncLoadingFromInFlight();
 			if(this.fetchFailed)
 			{
 				this.dispatchEvent(new CustomEvent("et2-loading-error", {bubbles: true, composed: true}));
@@ -545,6 +457,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			window.clearTimeout(this._queuedRequestTimer);
 			this._queuedRequestTimer = null;
 		}
+	}
+
+	/**
+	 * Keep loading flags consistent with in-flight request count.
+	 */
+	private _syncLoadingFromInFlight()
+	{
+		const hasInFlight = this._inFlightRequestKeys.size > 0;
+		this.fetching = hasInFlight;
+		this.loading = hasInFlight;
 	}
 
 	/**
@@ -724,6 +646,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				.map((column) => `<td>${String(this._getFieldValue(row.data, column.key) ?? "")}</td>`)
 				.join("");
 			this._markRowElement(tr, row, rowIndex);
+			this._applyColumnLayoutToRowElement(tr);
 			return tr;
 		}
 
@@ -752,6 +675,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		root.classList.add("loading");
 		this._markRowElement(root, row, rowIndex);
+		this._applyColumnLayoutToRowElement(root);
 		return root;
 	}
 
@@ -1199,16 +1123,35 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return false;
 		}
-		const disabled = column.disabled;
-		if(typeof disabled === "boolean")
-		{
-			return disabled;
-		}
-		if(typeof disabled === "undefined" || disabled === null)
+		return !!column.hidden || this._isColumnDisabled(column);
+	}
+
+	/**
+	 * Evaluate whether a column is disabled (not user-selectable in column chooser).
+	 */
+	private _isColumnDisabled(column : Et2DatagridColumn) : boolean
+	{
+		if(!column)
 		{
 			return false;
 		}
-		const expression = String(disabled).trim();
+		return this._resolveColumnBoolean(column.disabled);
+	}
+
+	/**
+	 * Resolve Nextmatch-style boolean/boolean-expression column flags.
+	 */
+	private _resolveColumnBoolean(value : unknown) : boolean
+	{
+		if(typeof value === "boolean")
+		{
+			return value;
+		}
+		if(typeof value === "undefined" || value === null)
+		{
+			return false;
+		}
+		const expression = String(value).trim();
 		if(expression === "")
 		{
 			return false;
@@ -1266,10 +1209,107 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _ensureTableColSizes()
 	{
-		const visibleColumns = this.columns.filter((column) => !this._isColumnHidden(column));
+		const visibleColumns = this._visibleColumns();
 		if(this._body)
 		{
 			this._body.style["--column-sizes"] = this._columnWidths(visibleColumns);
+		}
+	}
+
+	/**
+	 * Return columns that should be rendered, based on hidden/disabled state.
+	 */
+	private _visibleColumns() : Et2DatagridColumn[]
+	{
+		return (this.columns || []).filter((column) => !this._isColumnHidden(column));
+	}
+
+	/**
+	 * Toggle visibility for already-rendered cells without waiting for virtualizer to recycle rows.
+	 */
+	private _applyColumnVisibilityToRenderedRows()
+	{
+		const rows = Array.from(this._rowsBody?.querySelectorAll("tr") || []) as HTMLElement[];
+		if(!rows.length || !this.columns?.length)
+		{
+			return;
+		}
+		for(const row of rows)
+		{
+			this._applyColumnLayoutToRowElement(row);
+		}
+	}
+
+	/**
+	 * Align one row's cells with current column order + visibility.
+	 */
+	private _applyColumnLayoutToRowElement(row : HTMLElement)
+	{
+		if(row.classList.contains("dg-row-placeholder"))
+		{
+			return;
+		}
+		const cells = Array.from(row.children) as HTMLElement[];
+		if(!cells.length)
+		{
+			return;
+		}
+		const sourceKeys = this._sourceColumnKeys.length
+		                   ? this._sourceColumnKeys
+		                   : (this.columns || []).map((column) => String(column.key));
+		cells.forEach((cell, cellIndex) =>
+		{
+			const fallbackKey = sourceKeys[cellIndex] ?? "";
+			const key = cell.getAttribute("data-col-key") || fallbackKey;
+			if(key)
+			{
+				cell.setAttribute("data-col-key", key);
+			}
+		});
+		const keyToCells = new Map<string, HTMLElement[]>();
+		for(const cell of cells)
+		{
+			const key = cell.getAttribute("data-col-key") || "";
+			if(!keyToCells.has(key))
+			{
+				keyToCells.set(key, []);
+			}
+			keyToCells.get(key)!.push(cell);
+		}
+		const orderedCells : HTMLElement[] = [];
+		const usedCells = new Set<HTMLElement>();
+		for(const column of this.columns || [])
+		{
+			const key = String(column.key);
+			const columnCells = keyToCells.get(key);
+			if(!columnCells?.length)
+			{
+				continue;
+			}
+			for(const cell of columnCells)
+			{
+				usedCells.add(cell);
+				if(this._isColumnHidden(column))
+				{
+					cell.remove();
+					continue;
+				}
+				orderedCells.push(cell);
+			}
+		}
+		// Drop unmatched cells for performance; row rebuild on column changes
+		// restores them when needed.
+		for(const cell of cells)
+		{
+			if(usedCells.has(cell))
+			{
+				continue;
+			}
+			cell.remove();
+		}
+		for(const cell of orderedCells)
+		{
+			row.appendChild(cell);
 		}
 	}
 
@@ -1371,11 +1411,69 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	/**
 	 * Handle column selection action from the header button.
-	 * Intentionally left as extension point for nextmatch preferences integration.
 	 */
-	protected _handleColumnSelectionClick(event : MouseEvent) : void
+	protected async _handleColumnSelectionClick(event : MouseEvent) : Promise<void>
 	{
+		event?.preventDefault();
+		const columns = (this.columns || [])
+			.filter((column) => !this._isColumnDisabled(column))
+			.map((column) => ({
+				// Target sl-menu-item can't handle spaces in value
+				id: String(column.key).replaceAll(" ", "___"),
+				title: column.title,
+				caption: column.title,
+				widget: column.header?.cloneNode?.(true),
+				visibility: !this._isColumnHidden(column)
+			}));
 
+		const dialog = new Et2Dialog(this.egw());
+		const selector = document.createElement("et2-nextmatch-columnselection") as any;
+		selector.columns = columns;
+		dialog.appendChild(selector);
+		dialog.transformAttributes({
+			title: this.egw().lang("Select columns"),
+			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_column_selection.xet"),
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			isModal: true
+		});
+		document.body.appendChild(dialog);
+		const [buttonId] = await dialog.getComplete();
+		if(buttonId !== Et2Dialog.OK_BUTTON)
+		{
+			return;
+		}
+		const selectedOrder = (selector.value || []).map((value) => String(value).replaceAll("___", " "));
+		const selectedKeys = new Set(selectedOrder);
+		const byKey = new Map((this.columns || []).map((column) => [String(column.key), column]));
+		const selectedOrdered = selectedOrder
+			.map((key) => byKey.get(String(key)))
+			.filter(Boolean) as Et2DatagridColumn[];
+		let selectedCursor = 0;
+		this.columns = (this.columns || []).map((column) =>
+		{
+			const key = String(column.key);
+			if(selectedKeys.has(key) && selectedCursor < selectedOrdered.length)
+			{
+				const ordered = selectedOrdered[selectedCursor++];
+				return {
+					...ordered,
+					hidden: false
+				};
+			}
+			return {
+				...column,
+				hidden: true
+			};
+		});
+		// Apply track sizes and current rendered-row cell visibility immediately.
+		this._ensureTableColSizes();
+		this._applyColumnVisibilityToRenderedRows();
+		this.requestUpdate();
+		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: this.columns},
+			bubbles: true,
+			composed: true
+		}));
 	}
 
 	/**
@@ -1591,6 +1689,98 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Seed datagrid with preloaded rows and skip initial fetch.
+	 */
+	setInitialRows(rows : any[])
+	{
+		const mappedRows = (rows || []).map((row, index) => ({
+			id: this._rowIdFor(row, index),
+			data: row
+		}));
+		this._clearRows();
+		this.rows = mappedRows;
+		this._rowsByIndex = mappedRows.slice();
+		this.loading = false;
+		this.fetching = false;
+		this.displayedRowIds = new Set(mappedRows.map((row) => row.id));
+		this.requestUpdate();
+	}
+
+	/**
+	 * Reset all grid runtime state including selection and fetch markers.
+	 */
+	clear()
+	{
+		this._clearQueuedRequests();
+		this._clearRows();
+		this.total = null;
+		this.loading = false;
+		this.fetching = false;
+		this.fetchFailed = false;
+		this.fetchErrorMessage = "";
+		this._hasFetchedOnce = false;
+		this._pendingPlaceholderCount = 0;
+		this.selectedRowIds.clear();
+		this.anchorRowIndex = -1;
+		this.activeRowIndex = -1;
+		this.activeRowId = null;
+	}
+
+	/**
+	 * Clear current rows and load from first page.
+	 */
+	async reload() : Promise<void>
+	{
+		this._clearQueuedRequests();
+		this._clearRows();
+		this.total = null;
+		this.fetchFailed = false;
+		this.fetchErrorMessage = "";
+		this._hasFetchedOnce = false;
+		this._pendingPlaceholderCount = 0;
+		await this.loadMore();
+	}
+
+	/**
+	 * Trigger next page load when allowed by current state.
+	 */
+	loadMore()
+	{
+		if(!this.dataProvider || this.fetchFailed)
+		{
+			return;
+		}
+		if(this.fetching)
+		{
+			return;
+		}
+		const start = 0;
+		if(this.total !== null && start >= this.total)
+		{
+			return;
+		}
+		if(!this._hasMissingRowsInChunk(start))
+		{
+			return;
+		}
+		const requestedCount = this.total !== null
+		                       ? Math.max(0, Math.min(this.pageSize, this.total - start))
+		                       : this.pageSize;
+		if(requestedCount <= 0)
+		{
+			return;
+		}
+		const requestKey = this._requestKey(start, requestedCount);
+		if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+		{
+			return;
+		}
+		this._queueRequest(start, requestedCount, requestKey);
+
+		this._scheduleQueuedRequestProcessing();
+	}
+
+	/**
 	 * Extract slot-provided loader template HTML for state rendering fallback.
 	 */
 	private _loaderHtml() : string
@@ -1671,7 +1861,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			`)}
 			${this.noColumnSelection ? nothing : html`
 				<div class="dg-colselection">
-					<et2-button-icon image="list-task" label=${this.egw().lang("select columns")} @click=${this._handleColumnSelectClick}
+                    <et2-button-icon image="list-task" label=${this.egw().lang("select columns")}
+                                     @click=${this._handleColumnSelectionClick}
 									 noSubmit
 					></et2-button-icon>
 				</div>
@@ -1708,7 +1899,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	render()
 	{
-		const visibleColumns = this.columns.filter((column) => !this._isColumnHidden(column));
+		const visibleColumns = this._visibleColumns();
 		const headerTemplate = this._headerTemplate(visibleColumns);
 		const stateTemplate = this._stateTemplate();
 		const styles = {
