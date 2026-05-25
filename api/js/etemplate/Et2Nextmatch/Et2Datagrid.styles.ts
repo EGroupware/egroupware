@@ -17,6 +17,7 @@ export default css`
 		--column-sizes: '';
 		--column-count: 1;
 		--scrollbar-space: 15px;
+		--row-height: 3em;
 	}
 
 	.dg-header {
@@ -65,13 +66,13 @@ export default css`
 		grid-template-columns: var(--column-sizes, repeat( var(--column-count),1fr));
 		tbody {
 			display: grid;
-			grid-template-columns: subgrid;
+			grid-template-columns: var(--column-sizes, repeat(var(--column-count), 1fr));
 			grid-column: 1 / -1;
 			row-gap: var(--sl-spacing-2x-small);
 		}
 		tr {
 			display: grid;
-			grid-template-columns: subgrid;
+			grid-template-columns: var(--column-sizes, repeat(var(--column-count), 1fr));
 			grid-column: 1/-1;
 		}
 	}
@@ -87,8 +88,11 @@ export default css`
 		white-space: nowrap;
 	}
 	tbody > tr {
+		display: grid;
+		grid-template-columns: var(--column-sizes, repeat(var(--column-count), 1fr));
 		padding-bottom: var(--sl-spacing-2x-small);
 		outline: none;
+		width: 100%;
 		min-height: 3em;
 		border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 	}
@@ -97,7 +101,7 @@ export default css`
 		background: var(--sl-color-primary-50, #eef5ff);
 	}
 
-	tbody > tr:focus-visible {
+	tbody > tr.dg-row-active {
 		box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
 	}
 
@@ -105,6 +109,7 @@ export default css`
 	tbody th {
 		box-sizing: border-box;
 		padding: 0px var(--sl-spacing-x-small);
+		min-width: 0;
 		overflow: hidden;
 		text-overflow: ellipsis;
 	}
@@ -126,8 +131,13 @@ export default css`
 		border: 0;
 		height: 0;
 		min-height: 0 !important;
-		width: 1px;
+		width: 100%;
 		grid-column: 1 / -1;
+		background-image: repeating-linear-gradient(
+				0deg,
+				var(--sl-color-neutral-200, rgba(0, 0, 0, 0.08)), var(--sl-color-neutral-200, rgba(0, 0, 0, 0.08)) 1px,
+				var(--sl-color-neutral-50) 1px, var(--sl-color-neutral-50) var(--row-height, 3em)
+		);
 	}
 
 	.skeleton-row {

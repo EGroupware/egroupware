@@ -7,6 +7,7 @@ import shoelace from "../Styles/shoelace";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
 import styles from "./Et2Datagrid.styles";
+import {virtualize} from "@lit-labs/virtualizer/virtualize.js";
 import {
 	Et2DatagridColumn,
 	Et2DatagridDataProvider,
@@ -32,63 +33,127 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		];
 	}
 
+	/**
+	 * Visible column configuration, including sizing and optional hide expressions.
+	 */
 	@property({attribute: false})
 	columns : Et2DatagridColumn[] = [];
 
+	/**
+	 * Paging adapter used by infinite scroll to fetch additional rows from the server.
+	 */
 	@property({attribute: false})
 	dataProvider : Et2DatagridDataProvider | null = null;
 
+	/**
+	 * Prepared template and metadata used to render each row.
+	 */
 	@property({attribute: false})
 	templateData : Et2DatagridTemplateData | null = null;
 
+	/**
+	 * Maximum number of rows requested per page load.
+	 */
 	@property({type: Number})
 	pageSize : number = 50;
 
+	/**
+	 * Row selection behavior: `none`, `single`, or `multiple`.
+	 */
 	@property({type: String, attribute: "selection-mode"})
 	selectionMode : Et2DatagridSelectionMode = "multiple";
 
+	/**
+	 * Hide the column chooser action in the header when true.
+	 */
 	@property({type: Boolean})
 	noColumnSelection: boolean=false;
 
-	@property({type: Boolean, attribute: "require-template"})
-	requireTemplate : boolean = false;
-
+	/**
+	 * External loading flag for configuration/template setup before first data render.
+	 */
 	@property({type: Boolean, attribute: "configuration-loading"})
 	configurationLoading : boolean = false;
 
+	/**
+	 * True while a fetch cycle is active, including initial and incremental page loads.
+	 */
 	@state()
 	loading : boolean = false;
 
+	/**
+	 * Guard flag used to prevent overlapping `fetchPage()` calls.
+	 */
 	@state()
 	fetching : boolean = false;
 
+	/**
+	 * Total row count reported by provider, or `null` when unknown.
+	 */
 	@state()
 	total : number | null = null;
 
+	/**
+	 * Rows currently materialized in the DOM/in-memory list.
+	 */
 	@state()
 	rows : Et2DatagridRow[] = [];
 
 	@state()
+	private _rowsByIndex : Array<Et2DatagridRow | null> = [];
+
+	private _virtualIndexes : number[] = [];
+	private _virtualIndexesCount : number = -1;
+
+	/**
+	 * Error state set when the latest fetch failed.
+	 */
+	@state()
 	fetchFailed : boolean = false;
 
+	/**
+	 * Optional provider error message shown in error state.
+	 */
 	@state()
 	fetchErrorMessage : string = "";
 
+	/**
+	 * Tracks whether at least one fetch finished (success or error) for empty-state messaging.
+	 */
 	@state()
 	private _hasFetchedOnce : boolean = false;
 
+	/**
+	 * Number of skeleton placeholder rows reserved for in-flight requests.
+	 */
 	@state()
 	private _pendingPlaceholderCount : number = 0;
 
 	private observer : IntersectionObserver | null = null;
+	/** Set of row ids already added, used to avoid duplicate render on incremental fetches. */
 	private displayedRowIds : Set<string> = new Set();
+	/** Set of selected row ids used to derive emitted selection payloads. */
 	private selectedRowIds : Set<string> = new Set();
+	/** Anchor index for shift-range selection semantics. */
 	private anchorRowIndex : number = -1;
+	/** Keyboard/pointer active row index in currently loaded rows. */
 	private activeRowIndex : number = -1;
+	/** Active row id mirrored from `activeRowIndex` for event payload convenience. */
 	private activeRowId : string | null = null;
+	/** Effective row height used for virtual spacer size/prefetch calculations. */
 	private _rowHeightPx : number | null = null;
+	/** Locks row-height recalculation after first stable measurement pass. */
 	private _rowHeightLocked : boolean = false;
 	private _scrollListener : (() => void) | null = null;
+	private _inFlightRequestKeys : Set<string> = new Set();
+	private _queuedRequestTimer : number | null = null;
+	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
+	private _neededChunkStarts : Set<number> = new Set();
+	private _requestDispatchDelayMs : number = 100;
+	private _maxVisibleRequestWindow : number = 3;
+	private _rowUpgradeObserver : MutationObserver | null = null;
+	private _restoreFocusAfterRender : boolean = false;
+	private _lastPointerToggleSelect : boolean = false;
 
 
 	/**
@@ -187,6 +252,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return this.shadowRoot?.querySelector(".dg-body") as HTMLElement | null;
 	}
 
+	/**
+	 * Convenience accessor for virtual spacer block used to represent unloaded rows.
+	 */
 	private get _spacerBlock() : HTMLElement | null
 	{
 		return this.shadowRoot?.querySelector(".dg-row-spacer") as HTMLElement | null;
@@ -199,6 +267,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		super();
 		this._onTableClick = this._onTableClick.bind(this);
+		this._onTablePointerDown = this._onTablePointerDown.bind(this);
 		this._onTableKeydown = this._onTableKeydown.bind(this);
 		this._scrollListener = () => this._maybePrefetchOnScroll();
 	}
@@ -209,6 +278,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	disconnectedCallback()
 	{
 		this.observer?.disconnect();
+		this._rowUpgradeObserver?.disconnect();
+		this._rowUpgradeObserver = null;
 		if(this._body && this._scrollListener)
 		{
 			this._body.removeEventListener("scroll", this._scrollListener);
@@ -229,6 +300,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._body.addEventListener("scroll", this._scrollListener, {passive: true});
 		}
+		this._initRowUpgradeObserver();
 	}
 
 	/**
@@ -252,6 +324,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._renderRowsIntoContainer(true);
 			this._ensureTableColSizes();
 		}
+		this._upgradeRenderedRows();
+		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
+		{
+			this._focusRowByIndex(this.activeRowIndex, 10);
+		}
 		this._observeSentinel();
 	}
 
@@ -266,10 +343,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}));
 		this._clearRows();
 		this.rows = mappedRows;
+		this._rowsByIndex = mappedRows.slice();
 		this.loading = false;
 		this.fetching = false;
 		this.displayedRowIds = new Set(mappedRows.map((row) => row.id));
-		this._renderRowsIntoContainer(true);
+		this.requestUpdate();
 	}
 
 	/**
@@ -277,6 +355,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	public clear()
 	{
+		this._clearQueuedRequests();
 		this._clearRows();
 		this.total = null;
 		this.loading = false;
@@ -298,6 +377,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	public async reload() : Promise<void>
 	{
+		this._clearQueuedRequests();
 		this._clearRows();
 		this.total = null;
 		this.fetchFailed = false;
@@ -312,33 +392,78 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	public loadMore()
 	{
-		if(this.fetching || !this.dataProvider || this.fetchFailed)
+		if(!this.dataProvider || this.fetchFailed)
 		{
 			return;
 		}
-		const loadedCount = this.displayedRowIds.size;
-		const pendingCount = this._pendingPlaceholderCount;
-		if(this.total !== null && loadedCount + pendingCount >= this.total)
+		if(this.fetching)
 		{
 			return;
 		}
+		const starts = this._preferredChunkStarts();
+		for(const start of starts)
+		{
+			if(this.total !== null && start >= this.total)
+			{
+				continue;
+			}
+			if(!this._hasMissingRowsInChunk(start))
+			{
+				continue;
+			}
+			const requestedCount = this.total !== null
+			                       ? Math.max(0, Math.min(this.pageSize, this.total - start))
+			                       : this.pageSize;
+			if(requestedCount <= 0)
+			{
+				continue;
+			}
+			const requestKey = this._requestKey(start, requestedCount);
+			if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+			{
+				continue;
+			}
+			this._queueRequest(start, requestedCount, requestKey);
+		}
+		this._scheduleQueuedRequestProcessing();
+	}
 
-		const requestedCount = this.total !== null
-			? Math.max(0, Math.min(this.pageSize, this.total - loadedCount - pendingCount))
-			: this.pageSize;
-		if(requestedCount <= 0)
+	/**
+	 * Queue a chunk request once and reserve placeholder capacity for its expected rows.
+	 */
+	private _queueRequest(start : number, requestedCount : number, requestKey : string)
+	{
+		if(this._queuedRequests.has(requestKey) || this._inFlightRequestKeys.has(requestKey))
 		{
 			return;
 		}
-
-		// Insert placeholders before the network request so users see imminent row reservation immediately.
+		this._queuedRequests.set(requestKey, {start, requestedCount, requestKey});
 		this._pendingPlaceholderCount += requestedCount;
-		this._renderRowsIntoContainer();
+		this.requestUpdate();
+	}
 
-		window.setTimeout(() =>
+	/**
+	 * Debounce queued-request processing so fast scrolling can coalesce bursts.
+	 */
+	private _scheduleQueuedRequestProcessing()
+	{
+		if(this._queuedRequestTimer !== null)
 		{
-			this._fetchPage(loadedCount, requestedCount);
-		});
+			window.clearTimeout(this._queuedRequestTimer);
+		}
+		this._queuedRequestTimer = window.setTimeout(() =>
+		{
+			this._processQueuedRequests();
+		}, this._requestDispatchDelayMs);
+	}
+
+	/**
+	 * Build a deterministic key for one fetch request using range + provider query signature.
+	 */
+	private _requestKey(start : number, requestedCount : number) : string
+	{
+		const querySignature = this.dataProvider?.getQuerySignature?.() || "";
+		return `${start}:${requestedCount}:${querySignature}`;
 	}
 
 	/**
@@ -392,59 +517,72 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Request one page from provider and merge rows preserving uniqueness.
 	 */
-	private async _fetchPage(start : number, requestedCount : number = 0)
+	private async _fetchPage(start : number, requestedCount : number = 0, requestKey : string = "")
 	{
 		if(!this.dataProvider)
 		{
+			if(requestKey)
+			{
+				this._inFlightRequestKeys.delete(requestKey);
+			}
+			this.fetching = this._inFlightRequestKeys.size > 0;
+			this.loading = this._inFlightRequestKeys.size > 0;
 			return;
 		}
-		this.fetching = true;
-		this.loading = true;
-		this.dispatchEvent(new CustomEvent("et2-loading-start", {bubbles: true, composed: true}));
 
 		try
 		{
-			this._appendLoadingPlaceholders(this._rowsBody);
-			const response = await this.dataProvider.fetchPage(start, this.pageSize);
-			this.fetching = false;
-			this.loading = false;
+			const response = await this.dataProvider.fetchPage(start, requestedCount || this.pageSize);
 			this.fetchFailed = false;
 			this.fetchErrorMessage = "";
 			this._hasFetchedOnce = true;
-			if(requestedCount > 0)
-			{
-				this._pendingPlaceholderCount = Math.max(0, this._pendingPlaceholderCount - requestedCount);
-			}
 			if(typeof response.total !== "undefined")
 			{
 				this.total = response.total ?? null;
 			}
 
-			for(const row of response.rows || [])
+			for(let rowOffset = 0; rowOffset < (response.rows || []).length; rowOffset++)
 			{
+				const row = response.rows[rowOffset];
 				if(this.displayedRowIds.has(row.id))
 				{
 					continue;
 				}
 				this.displayedRowIds.add(row.id);
-				this.rows = [...this.rows, row];
+				const index = start + rowOffset;
+				this._rowsByIndex[index] = row;
 			}
-
-			this._renderRowsIntoContainer();
-			this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
+			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
 		}
 			catch(e)
 			{
-				this.fetching = false;
-				this.loading = false;
 				this.fetchFailed = true;
 				this._hasFetchedOnce = true;
-				this._pendingPlaceholderCount = 0;
 				// Store message so state template can surface meaningful diagnostics.
 				this.fetchErrorMessage = e?.message || "";
-				this._renderRowsIntoContainer();
+			}
+		finally
+		{
+			if(requestedCount > 0)
+			{
+				this._pendingPlaceholderCount = Math.max(0, this._pendingPlaceholderCount - requestedCount);
+			}
+			if(requestKey)
+			{
+				this._inFlightRequestKeys.delete(requestKey);
+			}
+			this.fetching = this._inFlightRequestKeys.size > 0;
+			this.loading = this._inFlightRequestKeys.size > 0;
+			if(this.fetchFailed)
+			{
 				this.dispatchEvent(new CustomEvent("et2-loading-error", {bubbles: true, composed: true}));
 			}
+			else if(!this.fetching)
+			{
+				this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
+			}
+			this.requestUpdate();
+		}
 		}
 
 	/**
@@ -453,12 +591,128 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _clearRows()
 	{
 		this.rows = [];
+		this._rowsByIndex = [];
 		this.displayedRowIds.clear();
 		this._pendingPlaceholderCount = 0;
-		if(this._rowsBody)
+		this._clearQueuedRequests();
+	}
+
+	/**
+	 * Drop queued (not yet dispatched) requests and clear any scheduled dispatch timer.
+	 */
+	private _clearQueuedRequests()
+	{
+		this._queuedRequests.clear();
+		if(this._queuedRequestTimer !== null)
 		{
-			this._rowsBody.innerHTML = "";
+			window.clearTimeout(this._queuedRequestTimer);
+			this._queuedRequestTimer = null;
 		}
+	}
+
+	/**
+	 * Dispatch only the most relevant queued chunk requests around current viewport.
+	 */
+	private _processQueuedRequests()
+	{
+		this._queuedRequestTimer = null;
+		if(!this._queuedRequests.size)
+		{
+			return;
+		}
+		const queueEntries = Array.from(this._queuedRequests.values());
+		// Keep only chunks still needed by currently rendered placeholders.
+		// This prevents firing stale requests the user has already scrolled past.
+		for(const entry of queueEntries)
+		{
+			if(this._neededChunkStarts.has(entry.start))
+			{
+				continue;
+			}
+			this._queuedRequests.delete(entry.requestKey);
+			this._pendingPlaceholderCount = Math.max(0, this._pendingPlaceholderCount - entry.requestedCount);
+		}
+		const currentStart = this._currentViewportChunkStart();
+		// Prioritize nearest chunk starts and cap dispatch width so we request
+		// current + adjacent ranges rather than flooding distant pages.
+		const selected = Array.from(this._queuedRequests.values())
+			.sort((a, b) =>
+			{
+				const distanceA = Math.abs(a.start - currentStart);
+				const distanceB = Math.abs(b.start - currentStart);
+				if(distanceA !== distanceB)
+				{
+					return distanceA - distanceB;
+				}
+				return a.start - b.start;
+			})
+			.slice(0, this._maxVisibleRequestWindow);
+		for(const entry of selected)
+		{
+			this._queuedRequests.delete(entry.requestKey);
+			this._inFlightRequestKeys.add(entry.requestKey);
+			this.fetching = true;
+			this.loading = true;
+			this.dispatchEvent(new CustomEvent("et2-loading-start", {bubbles: true, composed: true}));
+			this._fetchPage(entry.start, entry.requestedCount, entry.requestKey);
+		}
+		this._renderRowsIntoContainer();
+	}
+
+	/**
+	 * Return preferred chunk starts around viewport center: current, previous, next.
+	 */
+	private _preferredChunkStarts() : number[]
+	{
+		const starts : number[] = [];
+		const current = this._currentViewportChunkStart();
+		starts.push(current, Math.max(0, current - this.pageSize));
+		if(this.total !== null)
+		{
+			const maxStart = Math.max(0, this.total - this.pageSize);
+			starts.push(Math.min(maxStart, current + this.pageSize));
+		}
+		else
+		{
+			starts.push(current + this.pageSize);
+		}
+		return Array.from(new Set(starts));
+	}
+
+	/**
+	 * Map current viewport center position to aligned chunk start.
+	 */
+	private _currentViewportChunkStart() : number
+	{
+		const body = this._body;
+		const rowHeightPx = this._rowHeightPx ?? this._defaultRowHeightPx();
+		const center = body ? Math.max(0, Math.floor((body.scrollTop + (body.clientHeight / 2)) / rowHeightPx)) : 0;
+		if(this.total === null)
+		{
+			return Math.max(0, Math.floor(center / this.pageSize) * this.pageSize);
+		}
+		const maxStart = Math.max(0, this.total - this.pageSize);
+		return Math.max(0, Math.min(maxStart, Math.floor(center / this.pageSize) * this.pageSize));
+	}
+
+	/**
+	 * Check whether at least one row in a chunk has not been materialized yet.
+	 */
+	private _hasMissingRowsInChunk(start : number) : boolean
+	{
+		if(this.total === null)
+		{
+			return !this._rowsByIndex[start];
+		}
+		const end = Math.min(this.total, start + this.pageSize);
+		for(let index = start; index < end; index++)
+		{
+			if(!this._rowsByIndex[index])
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -467,38 +721,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _renderRowsIntoContainer(force : boolean = false)
 	{
-		const container = this._rowsBody;
-		if(!container)
-		{
-			return;
-		}
-		if(force)
-		{
-			container.innerHTML = "";
-		}
-		else
-		{
-			container.querySelectorAll("tr[data-et2dg-placeholder='1'], tr[data-et2dg-spacer='1']").forEach((row) => row.remove());
-		}
-
-		const existingIds = new Set(Array.from(container.querySelectorAll("tr[data-rowid]"))
-			.map((row) => row.getAttribute("data-rowid")));
-		for(let index = 0; index < this.rows.length; index++)
-		{
-			const row = this.rows[index];
-			if(!force && existingIds.has(row.id))
-			{
-				continue;
-			}
-			const rowElement = this._buildRowElement(row, index);
-			if(rowElement)
-			{
-				container.appendChild(rowElement);
-			}
-		}
-
-		this._appendVirtualSpacer(container);
-
 		if(this.activeRowIndex < 0 && this.rows.length)
 		{
 			// Keep keyboard navigation usable as soon as first row appears.
@@ -506,68 +728,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.activeRowId = this.rows[0].id;
 			this.anchorRowIndex = 0;
 		}
-		this._syncRowAccessibilityState();
-		this._lockRowHeightFromRenderedRows();
-		// After layout changes, check if we are already near the end and should prefetch immediately.
-		this._maybePrefetchOnScroll();
-	}
-
-	/**
-	 * Insert placeholder rows reserved for the currently pending page request.
-	 */
-	private _appendLoadingPlaceholders(container : HTMLElement)
-	{
-		if(this._pendingPlaceholderCount <= 0)
-		{
-			return;
-		}
-		const colCount = Math.max(1, this.columns.filter((column) => !this._isColumnHidden(column)).length);
-		const rowHeightPx = this._rowHeightPx ?? this._defaultRowHeightPx();
-		for(let i = 0; i < this._pendingPlaceholderCount; i++)
-		{
-			const tr = document.createElement("tr");
-			tr.setAttribute("data-et2dg-placeholder", "1");
-			tr.classList.add("dg-row-placeholder");
-			tr.setAttribute("aria-hidden", "true");
-
-			const td = document.createElement("td");
-			td.classList.add("dg-placeholder-cell");
-			td.innerHTML = `<sl-skeleton effect="sheen" style="width:100%"></sl-skeleton>`;
-			tr.appendChild(td);
-			container.insertBefore(tr, container.querySelector(".dg-row-spacer"));
-		}
-	}
-
-	/**
-	 * Add one spacer row so the scrollbar reflects total rows without rendering all unloaded rows.
-	 */
-	private _appendVirtualSpacer(container : HTMLElement)
-	{
-		let spacerHeight = 0;
-		if(this.total === null)
-		{
-			if(this._spacerBlock) this._spacerBlock.style.height = "0px";
-			return;
-		}
-		const remainingRows = Math.max(0, this.total - this.rows.length - this._pendingPlaceholderCount);
-		if(remainingRows <= 0)
-		{
-			if(this._spacerBlock) this._spacerBlock.style.height = "0px";
-			return;
-		}
-		const rowHeightPx = this._rowHeightPx ?? this._defaultRowHeightPx();
-		spacerHeight = Math.max(0, Math.round(remainingRows * rowHeightPx));
-		if(spacerHeight <= 0)
-		{
-			if(this._spacerBlock) this._spacerBlock.style.height = "0px";
-			return;
-		}
-
-		const spacerBlock=this._spacerBlock ?? document.createElement("div");
-		spacerBlock.classList.add("dg-row-spacer");
-		spacerBlock.setAttribute("aria-hidden", "true");
-		spacerBlock.style.height = `${spacerHeight}px`;
-		container.appendChild(spacerBlock);
+		this.requestUpdate();
 	}
 
 	/**
@@ -589,43 +750,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		return this._lengthToPx(candidate);
 	}
-
-	/**
-	 * Lock row height after first rows are rendered by averaging visible row heights.
-	 */
-	private _lockRowHeightFromRenderedRows()
-	{
-		if(this._rowHeightLocked || this.rows.length === 0)
-		{
-			return;
-		}
-		requestAnimationFrame(() =>
-		{
-			if(this._rowHeightLocked)
-			{
-				return;
-			}
-			const rows = Array.from(this._rowsBody?.querySelectorAll("tr[data-rowid]") || []) as HTMLElement[];
-			if(!rows.length)
-			{
-				return;
-			}
-			const heights = rows
-				.slice(0, Math.min(12, rows.length))
-				.map((row) => row.getBoundingClientRect().height)
-				.filter((height) => height > 0);
-			if(!heights.length)
-			{
-				return;
-			}
-			const avg = heights.reduce((sum, height) => sum + height, 0) / heights.length;
-			this._rowHeightPx = Math.max(1, avg);
-			this._rowHeightLocked = true;
-			// Re-render once so virtual spacer reflects measured height.
-			this._renderRowsIntoContainer();
-		});
-	}
-
 	/**
 	 * Convert simple CSS lengths to pixels for row-height calculation.
 	 */
@@ -670,21 +794,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _maybePrefetchOnScroll()
 	{
-		if(this.fetching || this._pendingPlaceholderCount > 0)
+		if(this._queuedRequests.size)
 		{
-			return;
-		}
-		const body = this._body;
-		if(!body)
-		{
-			return;
-		}
-		const rowHeightPx = this._rowHeightPx ?? this._defaultRowHeightPx();
-		const preloadDistance = Math.max(rowHeightPx * 8, 240);
-		const remaining = body.scrollHeight - body.scrollTop - body.clientHeight;
-		if(remaining <= preloadDistance)
-		{
-			this.loadMore();
+			this._scheduleQueuedRequestProcessing();
 		}
 	}
 
@@ -695,6 +807,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		const template = this.templateData?.rowTemplate;
 		const templateXml = this.templateData?.rowTemplateXml;
+
+		// Simple row fallback
 		if(!template && !templateXml)
 		{
 			const tr = document.createElement("tr");
@@ -722,6 +836,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return null;
 		}
 
+		// Fast, simple replacements
 		this._populateCloneWithRow(fragment, row.data);
 		const root = (fragment.firstElementChild || null) as HTMLElement | null;
 		if(!root)
@@ -730,20 +845,238 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		root.classList.add("loading");
 		this._markRowElement(root, row, rowIndex);
-		this._upgradeRowElements(root, row.data, rowIndex);
 		return root;
 	}
+
+	/**
+	 * Observe row DOM churn to upgrade widgets and recover row focus after virtualization swaps.
+	 */
+	private _initRowUpgradeObserver()
+	{
+		this._rowUpgradeObserver?.disconnect();
+		const rowsBody = this._rowsBody;
+		if(!rowsBody)
+		{
+			return;
+		}
+		this._rowUpgradeObserver = new MutationObserver(() =>
+		{
+			this._upgradeRenderedRows();
+			this._guardFocusAfterVirtualMutation();
+		});
+		this._rowUpgradeObserver.observe(rowsBody, {childList: true, subtree: true});
+	}
+
+	/**
+	 * Virtualizer can remove the currently focused row before the replacement row is mounted.
+	 * When that happens, keyboard events stop because focus leaves the grid entirely.
+	 * Keep focus anchored to `activeRowIndex` after DOM churn.
+	 */
+	private _guardFocusAfterVirtualMutation()
+	{
+		if(this.activeRowIndex < 0)
+		{
+			return;
+		}
+		const shadowActive = this.shadowRoot?.activeElement as HTMLElement | null;
+		const activeIsRow = !!shadowActive?.matches?.("tr[data-row-index]");
+		if(activeIsRow)
+		{
+			return;
+		}
+		this._restoreFocusAfterRender = true;
+		requestAnimationFrame(() =>
+		{
+			if(!this._restoreFocusAfterRender || this.activeRowIndex < 0)
+			{
+				return;
+			}
+			this._focusRowByIndex(this.activeRowIndex, 10, false);
+		});
+	}
+
+	/**
+	 * Render one virtual row by absolute index, using placeholder+fetch when data is missing.
+	 */
+	private _renderVirtualRow = (rowIndex : number) : TemplateResult =>
+	{
+		const row = this._rowsByIndex[rowIndex];
+		if(row)
+		{
+			const rowElement = this._buildRowElement(row, rowIndex);
+			return html`${unsafeHTML(rowElement?.outerHTML || "")}`;
+		}
+		const chunkStart = Math.floor(rowIndex / this.pageSize) * this.pageSize;
+		this._neededChunkStarts.add(chunkStart);
+		this._requestChunkForRowIndex(rowIndex);
+		const placeholderRowId = `placeholder:${rowIndex}`;
+		return html`
+            <tr
+                    class="dg-row-placeholder"
+                    data-et2dg-placeholder="1"
+                    data-row-index=${String(rowIndex)}
+                    data-row-id=${placeholderRowId}
+                    role="row"
+                    aria-rowindex=${String(rowIndex + 1)}
+                    aria-selected="false"
+                    tabindex=${rowIndex === this.activeRowIndex ? "0" : "-1"}
+            >
+                <td class="dg-placeholder-cell">
+                    ${this.templateData?.loaderTemplate ? html`${unsafeHTML(this._loaderHtml())}` : html`
+                        <sl-skeleton effect="sheen" style="width:100%"></sl-skeleton>`}
+                </td>
+            </tr>
+		`;
+	};
+
+	/**
+	 * Ensure the chunk owning `rowIndex` is queued for loading when rendered as a placeholder.
+	 */
+	private _requestChunkForRowIndex(rowIndex : number)
+	{
+		if(!this.dataProvider || this.fetchFailed || rowIndex < 0)
+		{
+			return;
+		}
+		if(this.total !== null && rowIndex >= this.total)
+		{
+			return;
+		}
+		const chunkStart = Math.floor(rowIndex / this.pageSize) * this.pageSize;
+		if(!this._hasMissingRowsInChunk(chunkStart))
+		{
+			return;
+		}
+		const requestedCount = this.total !== null
+		                       ? Math.max(0, Math.min(this.pageSize, this.total - chunkStart))
+		                       : this.pageSize;
+		if(requestedCount <= 0)
+		{
+			return;
+		}
+		const requestKey = this._requestKey(chunkStart, requestedCount);
+		if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+		{
+			return;
+		}
+		this._queueRequest(chunkStart, requestedCount, requestKey);
+		this._scheduleQueuedRequestProcessing();
+	}
+
+	/**
+	 * Maintain a stable [0..rowCount) index array for virtualize() without reallocating each render.
+	 */
+	private _getVirtualIndexes(rowCount : number) : number[]
+	{
+		if(this._virtualIndexesCount !== rowCount)
+		{
+			this._virtualIndexes = Array.from({length: rowCount}, (_v, index) => index);
+			this._virtualIndexesCount = rowCount;
+		}
+		return this._virtualIndexes;
+	}
+
+	/**
+	 * Provide stable keys for realized rows and deterministic keys for placeholders.
+	 */
+	private _virtualRowKey = (rowIndex : number) : string =>
+	{
+		const row = this._rowsByIndex[rowIndex];
+		if(row)
+		{
+			return this._dataStoreRowIdFor(row.id ?? rowIndex);
+		}
+		const querySignature = this.dataProvider?.getQuerySignature?.() || "";
+		return `placeholder:${querySignature}:${rowIndex}`;
+	};
 
 	/**
 	 * Stamp row-level accessibility and identity attributes.
 	 */
 	private _markRowElement(rowElement : HTMLElement, row : Et2DatagridRow, rowIndex : number)
 	{
+		const dataStoreRowId = this._dataStoreRowIdFor(row.id ?? rowIndex);
+		rowElement.classList.toggle("dg-row-active", row.id == this.activeRowId);
 		rowElement.setAttribute("role", "row");
-		rowElement.setAttribute("data-rowid", row.id);
+		rowElement.setAttribute("data-row-id", dataStoreRowId);
+		rowElement.setAttribute("data-row-index", String(rowIndex));
 		rowElement.setAttribute("aria-rowindex", String(rowIndex + 1));
 		rowElement.setAttribute("aria-selected", this.selectedRowIds.has(row.id) ? "true" : "false");
 		rowElement.tabIndex = rowIndex === this.activeRowIndex ? 0 : -1;
+	}
+
+	private _upgradeRenderedRows()
+	{
+		const rowElements = Array.from(this._rowsBody?.querySelectorAll("tr[data-row-id]") || []) as HTMLElement[];
+		for(const rowElement of rowElements)
+		{
+			// Skip already-upgraded instances for the same row identity.
+			const dataRowId = rowElement.getAttribute("data-row-id") || "";
+			const upgradedFor = rowElement.getAttribute("data-et2dg-upgraded-for") || "";
+			if(upgradedFor === dataRowId && dataRowId)
+			{
+				continue;
+			}
+			const rowIndex = parseInt(rowElement.getAttribute("data-row-index") || "-1", 10);
+			if(rowIndex < 0)
+			{
+				continue;
+			}
+			const row = this._rowsByIndex[rowIndex];
+			if(!row)
+			{
+				continue;
+			}
+			rowElement.classList.add("loading");
+			if(this._upgradeRowElements(rowElement, row.data, rowIndex))
+			{
+				rowElement.setAttribute("data-et2dg-upgraded-for", dataRowId);
+			}
+		}
+	}
+
+	/**
+	 * Resolve datastore ID prefix with provider override first, then app/name fallback.
+	 */
+	private _resolvedDataStorePrefix() : string
+	{
+		const fromProvider = this.dataProvider?.getDataStorePrefix?.()?.trim();
+		if(fromProvider)
+		{
+			return fromProvider;
+		}
+		const app = this.getInstanceManager?.()?.app || this.egw?.()?.app_name?.();
+		if(app)
+		{
+			return String(app);
+		}
+		const nextmatchId = (this.id || "").trim();
+		if(nextmatchId)
+		{
+			return nextmatchId;
+		}
+		return "row";
+	}
+
+	/**
+	 * Normalize arbitrary row identifiers for `data-row-id` usage.
+	 */
+	private _dataStoreRowIdFor(rowId : string | number) : string
+	{
+		return String(rowId ?? "");
+	}
+
+	/**
+	 * Strip known datastore prefix from `data-row-id` to recover provider row id.
+	 */
+	private _rowIdFromDataStoreRowId(dataStoreRowId : string) : string
+	{
+		const doubleColonPrefix = `${this._resolvedDataStorePrefix()}::`;
+		if(dataStoreRowId.startsWith(doubleColonPrefix))
+		{
+			return dataStoreRowId.slice(doubleColonPrefix.length);
+		}
+		return dataStoreRowId;
 	}
 
 	/**
@@ -762,6 +1095,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			let value = text.nodeValue || "";
 			if(!value) continue;
+			// If we get here, we should keep this method, otherwise get rid of the whole _popuplateCloneWithRow()
+			debugger;
 			value = value.replace(/\{([^}]+)\}/g, (_match, token) => String(this._getFieldValue(row, token) ?? ""));
 			value = value.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, token) => String(this._getFieldValue(row, token) ?? ""));
 			text.nodeValue = value;
@@ -772,68 +1107,78 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Upgrade and configure custom child widgets after row insertion.
 	 * This is deferred to keep scrolling/rendering responsive.
 	 */
-	private _upgradeRowElements(rowRoot : HTMLElement, rowData : any, rowIndex : number)
+	private _upgradeRowElements(rowRoot : HTMLElement, rowData : any, rowIndex : number) : boolean
 	{
 		const toUpgrade = Array.from(rowRoot.querySelectorAll("*")) as any[];
 		if(!toUpgrade.length)
 		{
-			return;
+			rowRoot.classList.remove("loading");
+			return true;
 		}
 
 		const mgrRowData = {};
 		mgrRowData[rowIndex] = rowData;
 		const mgr = this.getArrayMgr("content")?.openPerspective(this, mgrRowData, rowIndex);
-		// Use async boundary so DOM append completes before custom element upgrades run.
-		setTimeout(() =>
+		try
 		{
-			try
+			const ce = (window as any).customElements;
+			// Upgrade custom elements first so widget APIs exist before we call
+			// framework-specific attribute transformation hooks.
+			if(ce && typeof ce.upgrade === "function")
 			{
-				const ce = (window as any).customElements;
-				if(ce && typeof ce.upgrade === "function")
-				{
-					for(const element of toUpgrade)
-					{
-						try { ce.upgrade(element); } catch(e) {}
-					}
-				}
-
 				for(const element of toUpgrade)
 				{
 					try
 					{
-						const id = element.getAttribute?.("data-et2nm-id");
-						const stored = id ? this.templateData?.rowTemplateAttrMap?.[id] : null;
-						if(element.setArrayMgr && mgr)
-						{
-							element.setArrayMgr("content", mgr);
-						}
-						if(typeof element.transformAttributes === "function")
-						{
-							if(stored)
-							{
-								element.transformAttributes(stored);
-							}
-							else
-							{
-								const attrs : Record<string, string> = {};
-								for(let i = 0; i < element.attributes.length; i++)
-								{
-									attrs[element.attributes[i].name] = element.attributes[i].value;
-								}
-								element.transformAttributes(attrs);
-							}
-						}
+						ce.upgrade(element);
 					}
 					catch(e)
 					{
 					}
 				}
 			}
-			catch(e)
+
+			// Apply stored template attributes through each widget's transform hook
+			// so row-scoped values ($row.*) are expanded with the current row manager.
+			for(const element of toUpgrade)
 			{
+				try
+				{
+					const id = element.getAttribute?.("data-et2nm-id");
+					const stored = id ? this.templateData?.rowTemplateAttrMap?.[id] : null;
+					if(element.setArrayMgr && mgr)
+					{
+						element.setArrayMgr("content", mgr);
+					}
+					if(typeof element.transformAttributes === "function")
+					{
+						if(stored)
+						{
+							element.transformAttributes(stored);
+						}
+						else
+						{
+							const attrs : Record<string, string> = {};
+							for(let i = 0; i < element.attributes.length; i++)
+							{
+								attrs[element.attributes[i].name] = element.attributes[i].value;
+							}
+							element.transformAttributes(attrs);
+						}
+					}
+				}
+				catch(e)
+				{
+				}
 			}
+		}
+		catch(e)
+		{
 			rowRoot.classList.remove("loading");
-		}, 0);
+			return false;
+		}
+		rowRoot.classList.remove("loading");
+		return true;
 	}
 
 	/**
@@ -901,31 +1246,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Build inline style string for width/min-width constraints.
 	 */
-	private _colStyle(column : Et2DatagridColumn) : string
-	{
-		const styles : string[] = [];
-		if(column.width)
-		{
-			let width = String(column.width);
-			if(/^\d+$/.test(width))
-			{
-				width += "px";
-			}
-			styles.push("flex-basis: " + width);
-			styles.push("width: " + width);
-		}
-		if(column.minWidth)
-		{
-			let minWidth = String(column.minWidth);
-			if(/^\d+$/.test(minWidth))
-			{
-				minWidth += "px";
-			}
-			styles.push("min-width: " + minWidth);
-		}
-		return styles.join("; ");
-	}
-
+	/**
+	 * Build CSS grid track definitions from visible column widths.
+	 */
 	private _columnWidths(columns : Et2DatagridColumn[]) : string
 	{
 		let columnsWidths = [];
@@ -952,7 +1275,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _ensureTableColSizes()
 	{
 		const visibleColumns = this.columns.filter((column) => !this._isColumnHidden(column));
-		this._body.style['--column-sizes'] = this._columnWidths(visibleColumns);
+		if(this._body)
+		{
+			this._body.style["--column-sizes"] = this._columnWidths(visibleColumns);
+		}
 	}
 
 	/**
@@ -961,19 +1287,31 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _onTableClick(event : MouseEvent)
 	{
 		const target = event.target as HTMLElement | null;
-		const row = target?.closest("tr[data-rowid]") as HTMLElement | null;
+		const row = target?.closest("tr[data-row-id]") as HTMLElement | null;
 		if(!row)
 		{
 			return;
 		}
-		const rowId = row.getAttribute("data-rowid") || "";
-		const rowIndex = this.rows.findIndex((r) => r.id === rowId);
+		const rowIndex = parseInt(row.getAttribute("data-row-index") || "-1", 10);
 		if(rowIndex < 0)
 		{
 			return;
 		}
+		const rowData = this._rowsByIndex[rowIndex];
+		if(!rowData)
+		{
+			return;
+		}
+		const rowId = rowData.id;
 		this._moveActiveRow(rowIndex, true);
-		this._updateSelectionFromPointer(rowId, rowIndex, event);
+		const toggleFromPointer = this._lastPointerToggleSelect;
+		this._lastPointerToggleSelect = false;
+		this._updateSelectionFromPointer(rowId, rowIndex, event, toggleFromPointer);
+	}
+
+	private _onTablePointerDown(event : PointerEvent)
+	{
+		this._lastPointerToggleSelect = !!(event.ctrlKey || event.metaKey || event.getModifierState?.("Control") || event.getModifierState?.("Meta"));
 	}
 
 	/**
@@ -986,19 +1324,29 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		if(!this.rows.length)
+		if(!this._rowsByIndex.length && this.total === null)
 		{
 			return;
 		}
 
 		const pageStep = Math.max(1, Math.floor((this._body?.clientHeight || 0) / 44));
 		let nextIndex = this.activeRowIndex >= 0 ? this.activeRowIndex : 0;
+		const maxIndex = Math.max(0, (this.total ?? this._rowsByIndex.length) - 1);
 		if(key === "ArrowUp") nextIndex = Math.max(0, nextIndex - 1);
-		if(key === "ArrowDown") nextIndex = Math.min(this.rows.length - 1, nextIndex + 1);
+		if(key === "ArrowDown")
+		{
+			nextIndex = Math.min(maxIndex, nextIndex + 1);
+		}
 		if(key === "PageUp") nextIndex = Math.max(0, nextIndex - pageStep);
-		if(key === "PageDown") nextIndex = Math.min(this.rows.length - 1, nextIndex + pageStep);
+		if(key === "PageDown")
+		{
+			nextIndex = Math.min(maxIndex, nextIndex + pageStep);
+		}
 		if(key === "Home") nextIndex = 0;
-		if(key === "End") nextIndex = this.rows.length - 1;
+		if(key === "End")
+		{
+			nextIndex = maxIndex;
+		}
 
 		if(key === " " || key === "Spacebar")
 		{
@@ -1018,8 +1366,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 
+		// Prevent native page scroll on navigation keys; grid owns row navigation.
 		event.preventDefault();
 		const previous = this.activeRowIndex;
+		this._restoreFocusAfterRender = true;
 		this._moveActiveRow(nextIndex, true);
 		if(event.shiftKey && this.selectionMode === "multiple")
 		{
@@ -1027,6 +1377,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 	}
 
+	/**
+	 * Handle column selection action from the header button.
+	 * Intentionally left as extension point for nextmatch preferences integration.
+	 */
 	protected _handleColumnSelectionClick(event : MouseEvent) : void
 	{
 
@@ -1041,7 +1395,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const row = this.rows[this.activeRowIndex];
+		const row = this._rowsByIndex[this.activeRowIndex];
 		if(!row)
 		{
 			return;
@@ -1071,7 +1425,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Update selection model from pointer gesture semantics.
 	 */
-	private _updateSelectionFromPointer(rowId : string, rowIndex : number, event : MouseEvent)
+	private _updateSelectionFromPointer(rowId : string, rowIndex : number, event : MouseEvent, toggleFromPointer : boolean = false)
 	{
 		if(this.selectionMode === "none")
 		{
@@ -1092,7 +1446,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 
-		const toggle = event.ctrlKey || event.metaKey;
+		const toggle = event.ctrlKey || event.metaKey || toggleFromPointer;
 		if(toggle)
 		{
 			const next = new Set(this.selectedRowIds);
@@ -1130,9 +1484,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const next = new Set<string>();
 		for(let i = start; i <= end; i++)
 		{
-			if(this.rows[i])
+			if(this._rowsByIndex[i])
 			{
-				next.add(this.rows[i].id);
+				next.add(this._rowsByIndex[i].id);
 			}
 		}
 		this.selectedRowIds = next;
@@ -1145,12 +1499,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _moveActiveRow(index : number, focus : boolean)
 	{
-		if(index < 0 || index >= this.rows.length)
+		const maxIndex = Math.max(0, (this.total ?? this._rowsByIndex.length) - 1);
+		if(index < 0 || index > maxIndex)
 		{
 			return;
 		}
 		this.activeRowIndex = index;
-		this.activeRowId = this.rows[index].id;
+		this.activeRowId = this._rowsByIndex[index]?.id ?? null;
 		if(this.anchorRowIndex < 0)
 		{
 			this.anchorRowIndex = index;
@@ -1159,11 +1514,55 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 		if(focus)
 		{
-			const rowElement = (Array.from(this._rowsBody?.querySelectorAll("tr[data-rowid]") || []) as HTMLElement[])
-				.find((row) => row.getAttribute("data-rowid") === this.rows[index].id) || null;
-			rowElement?.focus();
-			rowElement?.scrollIntoView({block: "nearest"});
+			this._focusRowByIndex(index, 10);
 		}
+	}
+
+	/**
+	 * Focus row by absolute index, optionally scrolling it into view.
+	 */
+	private _focusRowByIndex(index : number, retries : number = 0, allowScroll : boolean = true)
+	{
+		const rowElement = (Array.from(this._rowsBody?.querySelectorAll("tr[data-row-index]") || []) as HTMLElement[])
+			.find((row) => parseInt(row.getAttribute("data-row-index") || "-1", 10) === index) || null;
+		if(rowElement)
+		{
+			// Use preventScroll so mutation-recovery focus does not hijack scrollbar drag.
+			// Explicit scrollIntoView stays opt-in via `allowScroll`.
+			rowElement.focus({preventScroll: true});
+			if(allowScroll)
+			{
+				rowElement.scrollIntoView({block: "nearest"});
+			}
+			if(this.shadowRoot?.activeElement === rowElement)
+			{
+				this._restoreFocusAfterRender = false;
+				return;
+			}
+			if(retries > 0)
+			{
+				requestAnimationFrame(() => this._focusRowByIndex(index, retries - 1, allowScroll));
+			}
+			return;
+		}
+		if(retries <= 0)
+		{
+			return;
+		}
+		const body = this._body;
+		if(body && allowScroll)
+		{
+			const rowHeightPx = this._rowHeightPx ?? this._defaultRowHeightPx();
+			const targetTop = Math.max(0, Math.floor(index * rowHeightPx));
+			const targetBottom = targetTop + Math.max(1, Math.floor(rowHeightPx));
+			const viewTop = body.scrollTop;
+			const viewBottom = viewTop + body.clientHeight;
+			if(targetTop < viewTop || targetBottom > viewBottom)
+			{
+				body.scrollTop = targetTop;
+			}
+		}
+		requestAnimationFrame(() => this._focusRowByIndex(index, retries - 1, allowScroll));
 	}
 
 	/**
@@ -1171,14 +1570,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _syncRowAccessibilityState()
 	{
-		const rowElements = Array.from(this._rowsBody?.querySelectorAll("tr[data-rowid]") || []) as HTMLElement[];
-		rowElements.forEach((rowElement, rowIndex) =>
+		const rowElements = Array.from(this._rowsBody?.querySelectorAll("tr[data-row-index]") || []) as HTMLElement[];
+		rowElements.forEach((rowElement) =>
 		{
-			const rowId = rowElement.getAttribute("data-rowid") || "";
+			const absoluteIndex = parseInt(rowElement.getAttribute("data-row-index") || "-1", 10);
+			const rowId = rowElement.getAttribute("data-row-id") || "";
 			rowElement.setAttribute("role", "row");
 			rowElement.setAttribute("aria-selected", this.selectedRowIds.has(rowId) ? "true" : "false");
-			rowElement.setAttribute("aria-rowindex", String(rowIndex + 1));
-			rowElement.tabIndex = rowIndex === this.activeRowIndex ? 0 : -1;
+			rowElement.setAttribute("aria-rowindex", String(Math.max(0, absoluteIndex) + 1));
+			rowElement.tabIndex = absoluteIndex === this.activeRowIndex ? 0 : -1;
+			rowElement.classList.toggle("dg-row-selected", this.selectedRowIds.has(rowId));
+			rowElement.classList.toggle("dg-row-active", rowId === this.activeRowId);
 
 			const cells = Array.from(rowElement.children) as HTMLElement[];
 			cells.forEach((cell, cellIndex) =>
@@ -1231,7 +1633,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const hasTemplate = !!this.templateData?.rowTemplate || this.columns.length > 0;
 		const hasRows = this.rows.length > 0 || this._pendingPlaceholderCount > 0 || (this.total !== null && this.total > 0);
 		const initialLoading = this.configurationLoading || (this.fetching && !hasRows);
-		const noTemplate = this.requireTemplate && !this.configurationLoading && !hasTemplate;
+		const noTemplate = !this.configurationLoading && !hasTemplate;
 		const fetchFailed = this.fetchFailed;
 		const noRows = !hasRows && !this.fetching && !fetchFailed && !noTemplate;
 
@@ -1277,6 +1679,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return null;
 	}
 
+	/**
+	 * Render the visible column header row (or fallback header slot).
+	 */
 	protected _headerTemplate(visibleColumns:Et2DatagridColumn[])
 	{
 		const columnsHeaders = html`
@@ -1324,19 +1729,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	render()
 	{
+		this._neededChunkStarts.clear();
 		const visibleColumns = this.columns.filter((column) => !this._isColumnHidden(column));
 		const headerTemplate = this._headerTemplate(visibleColumns);
 		const stateTemplate = this._stateTemplate();
 		const styles = {
 			'--column-count' : visibleColumns.length,
 			'--column-sizes' : this._columnWidths(visibleColumns),
+			'--row-height': this._rowHeightPx + 'px'
 		}
+		const rowCount = this.total ?? Math.max(this._rowsByIndex.length + this._pendingPlaceholderCount, this.rows.length);
+		const virtualIndexes = this._getVirtualIndexes(rowCount);
 		return html`
 			<div class="dg-root" style=${styleMap(styles)}>
 				<!-- Visible header for users -->
 				${headerTemplate}
 
-				<div class="dg-body">
+                <div class="dg-body">
 					${stateTemplate}
 
 					<table
@@ -1346,14 +1755,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						aria-colcount=${String(visibleColumns.length || this.columns.length || 1)}
 						aria-rowcount=${String(this.total ?? this.rows.length)}
 						?hidden=${!!stateTemplate}
+                        @keydown=${this._onTableKeydown}
+                        @pointerdown=${this._onTablePointerDown}
 						@click=${this._onTableClick}
-						@keydown=${this._onTableKeydown}
 					>
 						<!-- Accessible / sizing header -->
 						<thead>
 							${this._accessableHeaderTemplate(visibleColumns)}
 						</thead>
-						<tbody id="rows" role="rowgroup"></tbody>
+                        <tbody id="rows" role="rowgroup">
+                        ${virtualize({
+                            items: virtualIndexes,
+                            keyFunction: this._virtualRowKey,
+                            renderItem: this._renderVirtualRow
+                        })}
+                        </tbody>
 					</table>
 					<div id="sentinel" aria-hidden="true"></div>
 				</div>

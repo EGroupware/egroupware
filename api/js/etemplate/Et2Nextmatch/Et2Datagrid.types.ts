@@ -33,6 +33,8 @@ export interface Et2DatagridPageResult
 export interface Et2DatagridDataProvider
 {
 	fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>;
+	getQuerySignature?() : string;
+	getDataStorePrefix?() : string;
 }
 
 export interface Et2DatagridSelectionDetail

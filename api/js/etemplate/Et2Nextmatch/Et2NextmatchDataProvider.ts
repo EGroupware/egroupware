@@ -17,11 +17,56 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	private host : Et2NextmatchProviderHost;
 
 	/**
+	 * Deterministically serialize nested values so equivalent filter objects produce the same signature string.
+	 */
+	private _stableSerialize(value : any) : string
+	{
+		if(value === null || typeof value !== "object")
+		{
+			return JSON.stringify(value);
+		}
+		if(Array.isArray(value))
+		{
+			return `[${value.map((item) => this._stableSerialize(item)).join(",")}]`;
+		}
+		const keys = Object.keys(value).sort();
+		return `{${keys.map((key) => `${JSON.stringify(key)}:${this._stableSerialize(value[key])}`).join(",")}}`;
+	}
+
+	/**
+	 * Read active nextmatch filters from host/controller for fetch and dedupe identity.
+	 */
+	private _currentFilters() : Record<string, any>
+	{
+		const hostAny = this.host as any;
+		const filters = hostAny?.controller?._filters ?? hostAny?._filters ?? {};
+		return filters && typeof filters === "object" ? filters : {};
+	}
+
+	/**
 	 * @param host Nextmatch owner used to access egw data APIs and exec context.
 	 */
 	constructor(host : Et2NextmatchProviderHost)
 	{
 		this.host = host;
+	}
+
+	/**
+	 * Signature of active query context used by datagrid request deduplication.
+	 */
+	getQuerySignature() : string
+	{
+		return this._stableSerialize(this._currentFilters());
+	}
+
+	getDataStorePrefix() : string
+	{
+		const app = this.host.getInstanceManager?.()?.app || this.host.egw?.()?.app_name?.();
+		if(app)
+		{
+			return String(app);
+		}
+		return String(this.host.id || this.host.getAttribute("id") || "row");
 	}
 
 	/**
@@ -32,7 +77,8 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	{
 		const execId = this.host.getInstanceManager?.()?.etemplate_exec_id || "";
 		const widgetId = this.host.id || this.host.getAttribute("id") || "";
-		const context = {prefix: widgetId || "et2nextmatch"};
+		const context = {prefix: this.getDataStorePrefix()};
+		const filters = this._currentFilters();
 
 		return await new Promise((resolve, reject) =>
 		{
@@ -41,7 +87,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 				this.host.egw().dataFetch(
 					execId,
 					{start, num_rows: pageSize},
-					{},
+					filters,
 					widgetId,
 					(resp : any) =>
 					{

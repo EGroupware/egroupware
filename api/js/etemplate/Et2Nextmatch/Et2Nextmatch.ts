@@ -313,7 +313,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 					.columns=${this._columns}
 					.templateData=${this._templateData}
 					.dataProvider=${this._dataProvider}
-					.requireTemplate=${true}
 					.configurationLoading=${this._templateLoading}
 					selection-mode="multiple"
 				></et2-datagrid>
