@@ -53,7 +53,8 @@ export default css`
 
 	.dg-body {
 		flex: 1 1 auto;
-		overflow: auto;
+		overflow-y: auto;
+		overflow-x: hidden;
 		min-height: 0;
 		position: relative;
 		scrollbar-gutter: stable;
@@ -93,7 +94,7 @@ export default css`
 		padding-bottom: var(--sl-spacing-2x-small);
 		outline: none;
 		width: 100%;
-		min-height: 3em;
+		min-height: 4em;
 		border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 	}
 

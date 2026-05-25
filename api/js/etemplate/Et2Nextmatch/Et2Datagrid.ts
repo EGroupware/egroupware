@@ -7,7 +7,7 @@ import shoelace from "../Styles/shoelace";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
 import styles from "./Et2Datagrid.styles";
-import {virtualize} from "@lit-labs/virtualizer/virtualize.js";
+import {virtualize, virtualizerRef} from "@lit-labs/virtualizer/virtualize.js";
 import {
 	Et2DatagridColumn,
 	Et2DatagridDataProvider,
@@ -129,7 +129,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	@state()
 	private _pendingPlaceholderCount : number = 0;
 
-	private observer : IntersectionObserver | null = null;
 	/** Set of row ids already added, used to avoid duplicate render on incremental fetches. */
 	private displayedRowIds : Set<string> = new Set();
 	/** Set of selected row ids used to derive emitted selection payloads. */
@@ -140,18 +139,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private activeRowIndex : number = -1;
 	/** Active row id mirrored from `activeRowIndex` for event payload convenience. */
 	private activeRowId : string | null = null;
-	/** Effective row height used for virtual spacer size/prefetch calculations. */
-	private _rowHeightPx : number | null = null;
-	/** Locks row-height recalculation after first stable measurement pass. */
-	private _rowHeightLocked : boolean = false;
 	private _scrollListener : (() => void) | null = null;
 	private _inFlightRequestKeys : Set<string> = new Set();
 	private _queuedRequestTimer : number | null = null;
 	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
-	private _neededChunkStarts : Set<number> = new Set();
 	private _requestDispatchDelayMs : number = 100;
-	private _maxVisibleRequestWindow : number = 3;
 	private _rowUpgradeObserver : MutationObserver | null = null;
+	private _rowUpgradeQueue : HTMLElement[] = [];
+	private _rowUpgradeScheduled : boolean = false;
+	private _rowUpgradeFrameHandle : number | null = null;
+	private _rowUpgradeBatchSize : number = 8;
+	/** Per-frame time budget (ms) for row widget upgrades to avoid long tasks on the main thread. */
+	private _rowUpgradeFrameBudgetMs : number = 8;
 	private _restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
 
@@ -252,12 +251,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return this.shadowRoot?.querySelector(".dg-body") as HTMLElement | null;
 	}
 
-	/**
-	 * Convenience accessor for virtual spacer block used to represent unloaded rows.
-	 */
-	private get _spacerBlock() : HTMLElement | null
+	private get _virtualize()
 	{
-		return this.shadowRoot?.querySelector(".dg-row-spacer") as HTMLElement | null;
+		return this._rowsBody[virtualizerRef];
 	}
 
 	/**
@@ -273,13 +269,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Disconnect observer resources when component is detached.
+	 * Disconnect DOM listeners and queued async work when component is detached.
 	 */
 	disconnectedCallback()
 	{
-		this.observer?.disconnect();
 		this._rowUpgradeObserver?.disconnect();
 		this._rowUpgradeObserver = null;
+		this._clearRowUpgradeQueue();
 		if(this._body && this._scrollListener)
 		{
 			this._body.removeEventListener("scroll", this._scrollListener);
@@ -288,14 +284,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Start lazy-loading observer after first paint.
+	 * Finish one-time setup after first paint.
 	 */
 	firstUpdated(changedProperties : PropertyValues)
 	{
 		super.firstUpdated(changedProperties);
-		this._rowHeightPx = this._resolveTemplateRowHeightPx() ?? this._defaultRowHeightPx();
-		this._initObserver();
-		this._observeSentinel();
 		if(this._body && this._scrollListener)
 		{
 			this._body.addEventListener("scroll", this._scrollListener, {passive: true});
@@ -312,10 +305,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		super.updated(changedProperties);
 		if(changedProperties.has("templateData"))
 		{
-			if(!this._rowHeightLocked)
-			{
-				this._rowHeightPx = this._resolveTemplateRowHeightPx() ?? this._rowHeightPx ?? this._defaultRowHeightPx();
-			}
 			this._renderRowsIntoContainer(true);
 			this._ensureTableColSizes();
 		}
@@ -329,7 +318,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._focusRowByIndex(this.activeRowIndex, 10);
 		}
-		this._observeSentinel();
 	}
 
 	/**
@@ -364,8 +352,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.fetchErrorMessage = "";
 		this._hasFetchedOnce = false;
 		this._pendingPlaceholderCount = 0;
-		this._rowHeightLocked = false;
-		this._rowHeightPx = this._resolveTemplateRowHeightPx() ?? this._defaultRowHeightPx();
 		this.selectedRowIds.clear();
 		this.anchorRowIndex = -1;
 		this.activeRowIndex = -1;
@@ -400,31 +386,29 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const starts = this._preferredChunkStarts();
-		for(const start of starts)
+		const start = 0;
+		if(this.total !== null && start >= this.total)
 		{
-			if(this.total !== null && start >= this.total)
-			{
-				continue;
-			}
-			if(!this._hasMissingRowsInChunk(start))
-			{
-				continue;
-			}
-			const requestedCount = this.total !== null
-			                       ? Math.max(0, Math.min(this.pageSize, this.total - start))
-			                       : this.pageSize;
-			if(requestedCount <= 0)
-			{
-				continue;
-			}
-			const requestKey = this._requestKey(start, requestedCount);
-			if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
-			{
-				continue;
-			}
-			this._queueRequest(start, requestedCount, requestKey);
+			return;
 		}
+		if(!this._hasMissingRowsInChunk(start))
+		{
+			return;
+		}
+		const requestedCount = this.total !== null
+		                       ? Math.max(0, Math.min(this.pageSize, this.total - start))
+		                       : this.pageSize;
+		if(requestedCount <= 0)
+		{
+			return;
+		}
+		const requestKey = this._requestKey(start, requestedCount);
+		if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+		{
+			return;
+		}
+		this._queueRequest(start, requestedCount, requestKey);
+
 		this._scheduleQueuedRequestProcessing();
 	}
 
@@ -467,54 +451,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Observe bottom sentinel to drive infinite scroll.
-	 */
-	private _initObserver()
-	{
-		if(typeof IntersectionObserver === "undefined")
-		{
-			return;
-		}
-
-		const root = this.shadowRoot?.querySelector(".dg-body");
-		this.observer = new IntersectionObserver((entries) =>
-			{
-				for(const entry of entries)
-				{
-					if(entry.isIntersecting)
-					{
-						this.loadMore();
-					}
-				}
-			}, {
-				root: root as Element,
-				// Threshold 0 + positive bottom margin is more reliable for infinite scroll than tiny target ratios.
-				threshold: 0,
-				rootMargin: "0px 0px 160px 0px"
-			});
-	}
-
-	/**
-	 * Attach observer to current sentinel node.
-	 * We call this after updates because template diffs can replace DOM nodes.
-	 */
-	private _observeSentinel()
-	{
-		if(!this.observer)
-		{
-			return;
-		}
-		const sentinel = this.shadowRoot?.getElementById("sentinel");
-		if(!sentinel)
-		{
-			return;
-		}
-		this.observer.disconnect();
-		this.observer.observe(sentinel);
-		if(this._spacerBlock) this.observer.observe(this._spacerBlock);
-	}
-
-	/**
 	 * Request one page from provider and merge rows preserving uniqueness.
 	 */
 	private async _fetchPage(start : number, requestedCount : number = 0, requestKey : string = "")
@@ -554,13 +490,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
 		}
-			catch(e)
-			{
-				this.fetchFailed = true;
-				this._hasFetchedOnce = true;
-				// Store message so state template can surface meaningful diagnostics.
-				this.fetchErrorMessage = e?.message || "";
-			}
+		catch(e)
+		{
+			this.fetchFailed = true;
+			this._hasFetchedOnce = true;
+			// Store message so state template can surface meaningful diagnostics.
+			this.fetchErrorMessage = e?.message || "";
+		}
 		finally
 		{
 			if(requestedCount > 0)
@@ -595,6 +531,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.displayedRowIds.clear();
 		this._pendingPlaceholderCount = 0;
 		this._clearQueuedRequests();
+		this._clearRowUpgradeQueue();
 	}
 
 	/**
@@ -611,7 +548,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Dispatch only the most relevant queued chunk requests around current viewport.
+	 * Dispatch all queued chunk requests in FIFO snapshot order.
 	 */
 	private _processQueuedRequests()
 	{
@@ -620,33 +557,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const queueEntries = Array.from(this._queuedRequests.values());
-		// Keep only chunks still needed by currently rendered placeholders.
-		// This prevents firing stale requests the user has already scrolled past.
-		for(const entry of queueEntries)
-		{
-			if(this._neededChunkStarts.has(entry.start))
-			{
-				continue;
-			}
-			this._queuedRequests.delete(entry.requestKey);
-			this._pendingPlaceholderCount = Math.max(0, this._pendingPlaceholderCount - entry.requestedCount);
-		}
-		const currentStart = this._currentViewportChunkStart();
-		// Prioritize nearest chunk starts and cap dispatch width so we request
-		// current + adjacent ranges rather than flooding distant pages.
-		const selected = Array.from(this._queuedRequests.values())
-			.sort((a, b) =>
-			{
-				const distanceA = Math.abs(a.start - currentStart);
-				const distanceB = Math.abs(b.start - currentStart);
-				if(distanceA !== distanceB)
-				{
-					return distanceA - distanceB;
-				}
-				return a.start - b.start;
-			})
-			.slice(0, this._maxVisibleRequestWindow);
+		const selected = Array.from(this._queuedRequests.values());
 		for(const entry of selected)
 		{
 			this._queuedRequests.delete(entry.requestKey);
@@ -664,6 +575,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _preferredChunkStarts() : number[]
 	{
+		return [0];
+		// Predictive chunk loading
+		/*
 		const starts : number[] = [];
 		const current = this._currentViewportChunkStart();
 		starts.push(current, Math.max(0, current - this.pageSize));
@@ -677,6 +591,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			starts.push(current + this.pageSize);
 		}
 		return Array.from(new Set(starts));
+
+		 */
 	}
 
 	/**
@@ -685,7 +601,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _currentViewportChunkStart() : number
 	{
 		const body = this._body;
-		const rowHeightPx = this._rowHeightPx ?? this._defaultRowHeightPx();
 		const center = body ? Math.max(0, Math.floor((body.scrollTop + (body.clientHeight / 2)) / rowHeightPx)) : 0;
 		if(this.total === null)
 		{
@@ -780,14 +695,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return null;
 	}
 
-	/**
-	 * Default fallback row height used until template hints or real measurements are available.
-	 */
-	private _defaultRowHeightPx() : number
-	{
-		const base = parseFloat(getComputedStyle(this).fontSize || "16");
-		return base * 3;
-	}
 
 	/**
 	 * Prefetch when user is close to the end so additional rows appear without a visible wait at bottom.
@@ -907,7 +814,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return html`${unsafeHTML(rowElement?.outerHTML || "")}`;
 		}
 		const chunkStart = Math.floor(rowIndex / this.pageSize) * this.pageSize;
-		this._neededChunkStarts.add(chunkStart);
 		this._requestChunkForRowIndex(rowIndex);
 		const placeholderRowId = `placeholder:${rowIndex}`;
 		return html`
@@ -1027,11 +933,92 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				continue;
 			}
+			if(rowElement.getAttribute("data-et2dg-upgrade-queued") === "1")
+			{
+				continue;
+			}
+			rowElement.setAttribute("data-et2dg-upgrade-queued", "1");
+			this._rowUpgradeQueue.push(rowElement);
+		}
+		this._scheduleRowUpgradeQueue();
+	}
+
+	/**
+	 * Cancel queued/in-flight frame work for row upgrades.
+	 */
+	private _clearRowUpgradeQueue()
+	{
+		this._rowUpgradeQueue.length = 0;
+		this._rowUpgradeScheduled = false;
+		if(this._rowUpgradeFrameHandle !== null)
+		{
+			cancelAnimationFrame(this._rowUpgradeFrameHandle);
+			this._rowUpgradeFrameHandle = null;
+		}
+	}
+
+	/**
+	 * Schedule batched row upgrades on next frame to avoid long main-thread stalls.
+	 */
+	private _scheduleRowUpgradeQueue()
+	{
+		if(this._rowUpgradeScheduled)
+		{
+			return;
+		}
+		this._rowUpgradeScheduled = true;
+		this._rowUpgradeFrameHandle = requestAnimationFrame(() =>
+		{
+			this._rowUpgradeScheduled = false;
+			this._rowUpgradeFrameHandle = null;
+			this._processRowUpgradeQueue();
+		});
+	}
+
+	/**
+	 * Process a bounded number of row upgrades per frame so scroll/input remain responsive.
+	 */
+	private _processRowUpgradeQueue()
+	{
+		// Keep upgrade work under roughly half a 60fps frame (~16.7ms) so scrolling,
+		// input, and paint can still run in the same frame on typical hardware.
+		// 8ms is a pragmatic balance between throughput and UI responsiveness.
+		const budgetUntil = performance.now() + this._rowUpgradeFrameBudgetMs;
+		let processed = 0;
+		while(this._rowUpgradeQueue.length && processed < this._rowUpgradeBatchSize && performance.now() < budgetUntil)
+		{
+			const rowElement = this._rowUpgradeQueue.shift();
+			if(!rowElement || !rowElement.isConnected)
+			{
+				continue;
+			}
+			rowElement.removeAttribute("data-et2dg-upgrade-queued");
+			const dataRowId = rowElement.getAttribute("data-row-id") || "";
+			const upgradedFor = rowElement.getAttribute("data-et2dg-upgraded-for") || "";
+			if(upgradedFor === dataRowId && dataRowId)
+			{
+				continue;
+			}
+			const rowIndex = parseInt(rowElement.getAttribute("data-row-index") || "-1", 10);
+			if(rowIndex < 0)
+			{
+				continue;
+			}
+			const row = this._rowsByIndex[rowIndex];
+			if(!row)
+			{
+				continue;
+			}
 			rowElement.classList.add("loading");
 			if(this._upgradeRowElements(rowElement, row.data, rowIndex))
 			{
 				rowElement.setAttribute("data-et2dg-upgraded-for", dataRowId);
 			}
+			processed++;
+		}
+		if(this._rowUpgradeQueue.length)
+		{
+			this._scheduleRowUpgradeQueue();
 		}
 	}
 
@@ -1095,8 +1082,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			let value = text.nodeValue || "";
 			if(!value) continue;
-			// If we get here, we should keep this method, otherwise get rid of the whole _popuplateCloneWithRow()
-			debugger;
 			value = value.replace(/\{([^}]+)\}/g, (_match, token) => String(this._getFieldValue(row, token) ?? ""));
 			value = value.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, token) => String(this._getFieldValue(row, token) ?? ""));
 			text.nodeValue = value;
@@ -1251,21 +1236,28 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _columnWidths(columns : Et2DatagridColumn[]) : string
 	{
+		let count = 0;
 		let columnsWidths = [];
-		const leftovers = !columns.find(column => column.width.endsWith("%") || !column.width);
 		columns.forEach(column => {
+			let width = 'auto';
 			if(column.width)
 			{
-				let width = String(column.width);
+				width = String(column.width);
+				// Width is just a number - pixel size
 				if(/^\d+$/.test(width))
 				{
 					width += "px";
-					return columnsWidths.push(leftovers ? `minmax(${width}, 1fr)` : width);
+					count += parseInt(column.width);
 				}
-				return columnsWidths.push(`minmax(${width}, 1fr)`);
+				else
+				{
+					// Width is a percent, we'll let the browser allocate the leftover
+					// non-pixel space with fr
+					width = parseInt(width) + 'fr';
+				}
 			}
+			columnsWidths.push(column.minWidth ? `minmax(${column.minWidth}px, ${width})` : width);
 		});
-
 		return columnsWidths.join(" ");
 	}
 
@@ -1549,19 +1541,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const body = this._body;
-		if(body && allowScroll)
-		{
-			const rowHeightPx = this._rowHeightPx ?? this._defaultRowHeightPx();
-			const targetTop = Math.max(0, Math.floor(index * rowHeightPx));
-			const targetBottom = targetTop + Math.max(1, Math.floor(rowHeightPx));
-			const viewTop = body.scrollTop;
-			const viewBottom = viewTop + body.clientHeight;
-			if(targetTop < viewTop || targetBottom > viewBottom)
-			{
-				body.scrollTop = targetTop;
-			}
-		}
 		requestAnimationFrame(() => this._focusRowByIndex(index, retries - 1, allowScroll));
 	}
 
@@ -1729,14 +1708,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	render()
 	{
-		this._neededChunkStarts.clear();
 		const visibleColumns = this.columns.filter((column) => !this._isColumnHidden(column));
 		const headerTemplate = this._headerTemplate(visibleColumns);
 		const stateTemplate = this._stateTemplate();
 		const styles = {
 			'--column-count' : visibleColumns.length,
-			'--column-sizes' : this._columnWidths(visibleColumns),
-			'--row-height': this._rowHeightPx + 'px'
+			'--column-sizes': this._columnWidths(visibleColumns)
 		}
 		const rowCount = this.total ?? Math.max(this._rowsByIndex.length + this._pendingPlaceholderCount, this.rows.length);
 		const virtualIndexes = this._getVirtualIndexes(rowCount);
@@ -1771,7 +1748,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                         })}
                         </tbody>
 					</table>
-					<div id="sentinel" aria-hidden="true"></div>
 				</div>
 			</div>
 		`;
