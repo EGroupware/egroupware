@@ -17,27 +17,14 @@ import {
 	Et2DatagridSelectionMode,
 	Et2DatagridTemplateData
 } from "./Et2Datagrid.types";
+import {
+	Et2DatagridColumnManager,
+	Et2DatagridColumnResizeDragState
+} from "./Et2DatagridColumnManager";
+import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
-
-type Et2DatagridColumnUnit = "px" | "%" | "fr";
-type Et2DatagridColumnWidthKind = "pixel" | "relative";
-
-interface Et2DatagridResizeDragState
-{
-	columnIndex : number;
-	columnKey : string;
-	startWidthPx : number;
-	currentWidthPx : number;
-	totalVisibleWidthPx : number;
-	fixedWidthPx : number;
-	relativeWidthUnits : number;
-	minWidthPx : number;
-	maxWidthPx : number;
-	widthKind : Et2DatagridColumnWidthKind;
-	widthUnit : Et2DatagridColumnUnit;
-}
 
 @customElement("et2-datagrid")
 export class Et2Datagrid extends Et2Widget(LitElement)
@@ -186,8 +173,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
 	private _pendingOffscreenKeyboardNavigation : boolean = false;
-	private _columnResizeDrag : Et2DatagridResizeDragState | null = null;
+	private _columnResizeDrag : Et2DatagridColumnResizeDragState | null = null;
 	private _columnResizeHandles : HTMLElement[] = [];
+	private _columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
+	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
 
 
 	/**
@@ -1175,15 +1164,28 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Evaluate a Nextmatch boolean expression against current row/content context.
+	 *
+	 * Why this helper exists:
+	 * Column state logic is centralized in `Et2DatagridColumnState`, but expression
+	 * parsing still depends on the widget runtime (`getArrayMgr("content")`).
+	 */
+	private _parseColumnBooleanExpression(expression : string) : boolean
+	{
+		const mgr = this.getArrayMgr && this.getArrayMgr("content");
+		if(mgr && typeof mgr.parseBoolExpression === "function")
+		{
+			return !!mgr.parseBoolExpression(expression);
+		}
+		return false;
+	}
+
+	/**
 	 * Evaluate whether a column should be hidden (supports boolean and expression strings).
 	 */
 	private _isColumnHidden(column : Et2DatagridColumn) : boolean
 	{
-		if(!column)
-		{
-			return false;
-		}
-		return !!column.hidden || this._isColumnDisabled(column);
+		return this._columnState.isColumnHidden(column, this._parseColumnBooleanExpression.bind(this));
 	}
 
 	/**
@@ -1191,77 +1193,19 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _isColumnDisabled(column : Et2DatagridColumn) : boolean
 	{
-		if(!column)
-		{
-			return false;
-		}
-		return this._resolveColumnBoolean(column.disabled);
-	}
-
-	/**
-	 * Resolve Nextmatch-style boolean/boolean-expression column flags.
-	 */
-	private _resolveColumnBoolean(value : unknown) : boolean
-	{
-		if(typeof value === "boolean")
-		{
-			return value;
-		}
-		if(typeof value === "undefined" || value === null)
-		{
-			return false;
-		}
-		const expression = String(value).trim();
-		if(expression === "")
-		{
-			return false;
-		}
-		try
-		{
-			const mgr = this.getArrayMgr && this.getArrayMgr("content");
-			if(mgr && typeof mgr.parseBoolExpression === "function")
-			{
-				return !!mgr.parseBoolExpression(expression);
-			}
-		}
-		catch(e)
-		{
-		}
-		const normalized = expression.toLowerCase();
-		return normalized === "true" || normalized === "1";
+		return this._columnState.isColumnDisabled(column, this._parseColumnBooleanExpression.bind(this));
 	}
 
 	/**
 	 * Build CSS grid track definitions from visible column widths.
 	 */
 	private _columnWidthDescriptor(raw? : string) : {
-		kind : Et2DatagridColumnWidthKind;
-		unit : Et2DatagridColumnUnit;
+		kind : "pixel" | "relative";
+		unit : "px" | "%" | "fr";
 		value : number | null
 	}
 	{
-		if(!raw)
-		{
-			return {kind: "pixel", unit: "px", value: null};
-		}
-		const value = String(raw).trim().toLowerCase();
-		if(/^\d+(\.\d+)?%$/.test(value))
-		{
-			return {kind: "relative", unit: "%", value: parseFloat(value)};
-		}
-		if(/^\d+(\.\d+)?fr$/.test(value))
-		{
-			return {kind: "relative", unit: "fr", value: parseFloat(value)};
-		}
-		if(/^\d+(\.\d+)?px$/.test(value))
-		{
-			return {kind: "pixel", unit: "px", value: parseFloat(value)};
-		}
-		if(/^\d+(\.\d+)?$/.test(value))
-		{
-			return {kind: "pixel", unit: "px", value: parseFloat(value)};
-		}
-		return {kind: "pixel", unit: "px", value: null};
+		return this._columnManager.columnWidthDescriptor(raw);
 	}
 
 	/**
@@ -1269,16 +1213,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _normalizeColumnWidth(raw? : string) : string
 	{
-		const parsed = this._columnWidthDescriptor(raw);
-		if(parsed.value === null)
-		{
-			return "auto";
-		}
-		if(parsed.kind === "relative")
-		{
-			return `${parsed.value}fr`;
-		}
-		return `${parsed.value}px`;
+		return this._columnManager.normalizeColumnWidth(raw);
 	}
 
 	/**
@@ -1286,20 +1221,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _normalizeColumnLength(raw? : string) : string
 	{
-		if(!raw)
-		{
-			return "";
-		}
-		const value = String(raw).trim().toLowerCase();
-		if(/^\d+(\.\d+)?px$/.test(value))
-		{
-			return `${parseFloat(value)}px`;
-		}
-		if(/^\d+(\.\d+)?$/.test(value))
-		{
-			return `${parseFloat(value)}px`;
-		}
-		return value;
+		return this._columnManager.normalizeColumnLength(raw);
 	}
 
 	/**
@@ -1307,7 +1229,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _clamp(value : number, min : number, max : number) : number
 	{
-		return Math.max(min, Math.min(max, value));
+		return this._columnManager.clamp(value, min, max);
 	}
 
 	/**
@@ -1320,28 +1242,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		relativeWidthUnits : number
 	) : number | null
 	{
-		if(!raw)
-		{
-			return null;
-		}
-		const parsed = this._columnWidthDescriptor(raw);
-		if(parsed.value === null)
-		{
-			return null;
-		}
-		if(parsed.kind === "pixel")
-		{
-			return parsed.value;
-		}
-		if(parsed.unit === "%")
-		{
-			return totalVisibleWidthPx * (parsed.value / 100);
-		}
-		if(relativeWidthUnits > 0 && availableRelativeWidthPx > 0)
-		{
-			return availableRelativeWidthPx * (parsed.value / relativeWidthUnits);
-		}
-		return totalVisibleWidthPx * (parsed.value / 100);
+		return this._columnManager.columnLengthToPx(raw, totalVisibleWidthPx, availableRelativeWidthPx, relativeWidthUnits);
 	}
 
 	/**
@@ -1355,39 +1256,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		const headerColumns = Array.from(this.shadowRoot?.querySelectorAll(".dg-header .dg-col") || []) as HTMLElement[];
 		const totalVisibleWidthPx = headerColumns.reduce((sum, element) => sum + element.getBoundingClientRect().width, 0);
-		let fixedWidthPx = 0;
-		let relativeWidthUnits = 0;
-		for(const column of visibleColumns)
-		{
-			const parsed = this._columnWidthDescriptor(column.width);
-			if(parsed.value === null)
-			{
-				continue;
-			}
-			if(parsed.kind === "pixel")
-			{
-				fixedWidthPx += parsed.value;
-			}
-			else
-			{
-				relativeWidthUnits += parsed.value;
-			}
-		}
-		return {totalVisibleWidthPx, fixedWidthPx, relativeWidthUnits};
+		return this._columnManager.visibleColumnWidthMetrics(visibleColumns, totalVisibleWidthPx);
 	}
 
 	/**
 	 * Convert a numeric width into compact string representation.
 	 */
-	private _formatColumnWidthValue(value : number, unit : Et2DatagridColumnUnit) : string
+	private _formatColumnWidthValue(value : number, unit : "px" | "%" | "fr") : string
 	{
-		if(unit === "px")
-		{
-			return `${Math.max(1, Math.round(value))}px`;
-		}
-		const normalized = Number.isFinite(value) ? Math.max(0.001, value) : 0.001;
-		const compact = normalized.toFixed(3).replace(/\.?0+$/, "");
-		return `${compact}${unit}`;
+		return this._columnManager.formatColumnWidthValue(value, unit);
 	}
 
 	/**
@@ -1402,14 +1279,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	private _columnWidths(columns : Et2DatagridColumn[]) : string
 	{
-		const columnsWidths = [];
-		columns.forEach((column) =>
-		{
-			const width = this._normalizeColumnWidth(column.width);
-			const minWidth = this._normalizeColumnLength(column.minWidth);
-			columnsWidths.push(minWidth ? `minmax(${minWidth}, ${width})` : width);
-		});
-		return columnsWidths.join(" ");
+		return this._columnManager.columnWidths(columns);
 	}
 
 	/**
@@ -1575,136 +1445,19 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const desiredWidthPx = this._clamp(drag.currentWidthPx, drag.minWidthPx, drag.maxWidthPx);
-		const columns = [...(this.columns || [])];
-		const column = columns[drag.columnIndex];
-		const availableRelativeWidthPx = Math.max(1, drag.totalVisibleWidthPx - drag.fixedWidthPx);
-		const toColumnWidthString = (columnDef : Et2DatagridColumn, widthPx : number) : string =>
+		const committed = this._columnManager.commitResize(
+			this.columns || [],
+			this._visibleColumns(),
+			drag,
+			this._columnResizeFloorPx()
+		);
+		if(committed)
 		{
-			const descriptor = this._columnWidthDescriptor(columnDef.width);
-			if(descriptor.kind === "pixel")
-			{
-				return this._formatColumnWidthValue(widthPx, "px");
-			}
-			if(descriptor.unit === "%")
-			{
-				const percentValue = (widthPx / Math.max(1, drag.totalVisibleWidthPx)) * 100;
-				return this._formatColumnWidthValue(percentValue, "%");
-			}
-			const relativeValue = drag.relativeWidthUnits > 0
-			                      ? (widthPx * drag.relativeWidthUnits) / availableRelativeWidthPx
-			                      : (widthPx / Math.max(1, drag.totalVisibleWidthPx)) * 100;
-			return this._formatColumnWidthValue(relativeValue, descriptor.unit);
-		};
-		if(column && String(column.key || "") === drag.columnKey)
-		{
-			const resizeFloorPx = this._columnResizeFloorPx();
-			let finalWidthPx = desiredWidthPx;
-			const growthPx = Math.max(0, desiredWidthPx - drag.startWidthPx);
-			if(growthPx > 0)
-			{
-				const visibleColumns = this._visibleColumns();
-				const resizedVisibleIndex = visibleColumns.findIndex((visibleColumn) => this.columns.indexOf(visibleColumn) === drag.columnIndex);
-				const donors = resizedVisibleIndex >= 0 ? visibleColumns.slice(resizedVisibleIndex + 1) : [];
-				if(!donors.length)
-				{
-					finalWidthPx = desiredWidthPx;
-				}
-				else
-				{
-				const donorInfos : Array<{
-					index : number;
-					column : Et2DatagridColumn;
-					currentWidthPx : number;
-					capacityPx : number;
-					stolenPx : number;
-				}> = [];
-				for(const donorColumn of donors)
-				{
-					const donorIndex = this.columns.indexOf(donorColumn);
-					if(donorIndex < 0)
-					{
-						continue;
-					}
-					const donorCurrentWidthPx = this._columnLengthToPx(
-						donorColumn.width,
-						drag.totalVisibleWidthPx,
-						availableRelativeWidthPx,
-						drag.relativeWidthUnits
-					);
-					if(donorCurrentWidthPx === null)
-					{
-						continue;
-					}
-					const donorMinWidthPxRaw = this._columnLengthToPx(
-						donorColumn.minWidth,
-						drag.totalVisibleWidthPx,
-						availableRelativeWidthPx,
-						drag.relativeWidthUnits
-					);
-					const donorMinWidthPx = Math.max(1, resizeFloorPx, donorMinWidthPxRaw ?? 1);
-					const donorCapacityPx = Math.max(0, donorCurrentWidthPx - donorMinWidthPx);
-					if(donorCapacityPx <= 0)
-					{
-						continue;
-					}
-					donorInfos.push({
-						index: donorIndex,
-						column: donorColumn,
-						currentWidthPx: donorCurrentWidthPx,
-						capacityPx: donorCapacityPx,
-						stolenPx: 0
-					});
-				}
-				const totalDonorCapacityPx = donorInfos.reduce((sum, donor) => sum + donor.capacityPx, 0);
-				const stealTargetPx = Math.min(growthPx, totalDonorCapacityPx);
-				if(stealTargetPx > 0 && totalDonorCapacityPx > 0)
-				{
-					let assignedPx = 0;
-					for(const donor of donorInfos)
-					{
-						const sharePx = stealTargetPx * (donor.capacityPx / totalDonorCapacityPx);
-						donor.stolenPx = Math.min(donor.capacityPx, sharePx);
-						assignedPx += donor.stolenPx;
-					}
-					let remainingPx = Math.max(0, stealTargetPx - assignedPx);
-					for(const donor of donorInfos)
-					{
-						if(remainingPx <= 0)
-						{
-							break;
-						}
-						const extraCapacityPx = donor.capacityPx - donor.stolenPx;
-						if(extraCapacityPx <= 0)
-						{
-							continue;
-						}
-						const extraPx = Math.min(extraCapacityPx, remainingPx);
-						donor.stolenPx += extraPx;
-						remainingPx -= extraPx;
-					}
-				}
-				for(const donor of donorInfos)
-				{
-					const donorNextWidthPx = donor.currentWidthPx - donor.stolenPx;
-					columns[donor.index] = {
-						...columns[donor.index],
-						width: toColumnWidthString(donor.column, donorNextWidthPx)
-					};
-				}
-				const achievedGrowthPx = donorInfos.reduce((sum, donor) => sum + donor.stolenPx, 0);
-				finalWidthPx = drag.startWidthPx + achievedGrowthPx;
-				}
-			}
-			column.width = drag.widthKind === "relative"
-			               ? toColumnWidthString(column, finalWidthPx)
-			               : this._formatColumnWidthValue(finalWidthPx, "px");
-			columns[drag.columnIndex] = {...column};
-			this.columns = columns;
+			this.columns = committed.columns;
 			this.dispatchEvent(new CustomEvent("et2-columns-changed", {
 				detail: {
 					columns: this.columns,
-					column: columns[drag.columnIndex]
+					column: committed.resizedColumn
 				},
 				bubbles: true,
 				composed: true
@@ -1718,7 +1471,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _visibleColumns() : Et2DatagridColumn[]
 	{
-		return (this.columns || []).filter((column) => !this._isColumnHidden(column));
+		return this._columnState.visibleColumns(this.columns || [], this._parseColumnBooleanExpression.bind(this));
 	}
 
 	/**
@@ -1982,16 +1735,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	protected async _handleColumnSelectionClick(event : MouseEvent) : Promise<void>
 	{
 		event?.preventDefault();
-		const columns = (this.columns || [])
-			.filter((column) => !this._isColumnDisabled(column))
-			.map((column) => ({
-				// Target sl-menu-item can't handle spaces in value
-				id: String(column.key).replaceAll(" ", "___"),
-				title: column.title,
-				caption: column.title,
-				widget: column.header?.cloneNode?.(true),
-				visibility: !this._isColumnHidden(column)
-			}));
+		const columns = this._columnState.toSelectionItems(
+			this.columns || [],
+			this._parseColumnBooleanExpression.bind(this)
+		);
 
 		const dialog = new Et2Dialog(this.egw());
 		const selector = document.createElement("et2-nextmatch-columnselection") as any;
@@ -2009,29 +1756,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const selectedOrder = (selector.value || []).map((value) => String(value).replaceAll("___", " "));
-		const selectedKeys = new Set(selectedOrder);
-		const byKey = new Map((this.columns || []).map((column) => [String(column.key), column]));
-		const selectedOrdered = selectedOrder
-			.map((key) => byKey.get(String(key)))
-			.filter(Boolean) as Et2DatagridColumn[];
-		let selectedCursor = 0;
-		this.columns = (this.columns || []).map((column) =>
-		{
-			const key = String(column.key);
-			if(selectedKeys.has(key) && selectedCursor < selectedOrdered.length)
-			{
-				const ordered = selectedOrdered[selectedCursor++];
-				return {
-					...ordered,
-					hidden: false
-				};
-			}
-			return {
-				...column,
-				hidden: true
-			};
-		});
+		const selectedOrder = (selector.value || [])
+			.map((value) => this._columnState.decodeSelectionId(String(value)));
+		this.columns = this._columnState.applySelectionOrder(this.columns || [], selectedOrder);
 		// Apply track sizes and current rendered-row cell visibility immediately.
 		this._ensureTableColSizes();
 		this._applyColumnVisibilityToRenderedRows();
