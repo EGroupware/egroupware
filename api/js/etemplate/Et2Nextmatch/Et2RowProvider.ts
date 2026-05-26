@@ -148,11 +148,11 @@ export class Et2RowProvider
 	 */
 	fromSlots() : Et2DatagridTemplateData | null
 	{
-		const headerSource = this._getSlotContent("header") || this._getSlotContent("columns");
+		const headerSource = this._getSlotContent("columns");
 		const rowSource = this._getSlotContent("row");
-		const loaderSource = this._getSlotContent("loader") || this._getSlotContent("row-loader");
+		const loaderSource = this._getSlotContent("loader");
 
-		const columns = headerSource ? this._extractColumnsFromHeaderNode(headerSource) : [];
+		const columns = headerSource ? this._extractColumnsFromHeaderNode(this._resolveSlotHeaderElement(headerSource)) : [];
 		const rowElement = this._resolveSlotRowElement(rowSource);
 		const prepared = rowElement ? this._prepareRowTemplate(rowElement, columns) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
@@ -277,9 +277,7 @@ export class Et2RowProvider
 	 */
 	private _extractColumnsFromHeaderNode(headerNode : Element) : Et2DatagridColumn[]
 	{
-		const nodes = headerNode instanceof HTMLTemplateElement ?
-			Array.from(headerNode.content.children) :
-			(Array.from(headerNode.children).length ? Array.from(headerNode.children) : [headerNode]);
+		const nodes = this._headerColumnSourceNodes(headerNode);
 		const columns : Et2DatagridColumn[] = [];
 		nodes.forEach((node, index) =>
 		{
@@ -301,6 +299,42 @@ export class Et2RowProvider
 			columns.push(col);
 		});
 		return columns;
+	}
+
+	/**
+	 * Slot header can use any wrapper. Use wrapper contents as effective column source.
+	 */
+	private _resolveSlotHeaderElement(headerSource : Element) : Element
+	{
+		if(headerSource instanceof HTMLTemplateElement)
+		{
+			const first = headerSource.content.firstElementChild as Element | null;
+			return first || headerSource;
+		}
+		return headerSource;
+	}
+
+	/**
+	 * Resolve header column-source nodes from common wrappers (<tr>/<row>/<thead>) or generic containers.
+	 */
+	private _headerColumnSourceNodes(headerNode : Element) : Element[]
+	{
+		if(headerNode instanceof HTMLTemplateElement)
+		{
+			const children = Array.from(headerNode.content.children) as Element[];
+			if(children.length === 1 && ["tr", "row", "thead"].includes(children[0].tagName.toLowerCase()))
+			{
+				return Array.from(children[0].children) as Element[];
+			}
+			return children.length ? children : [headerNode];
+		}
+		const tag = headerNode.tagName.toLowerCase();
+		if(["tr", "row", "thead"].includes(tag))
+		{
+			return Array.from(headerNode.children) as Element[];
+		}
+		const children = Array.from(headerNode.children) as Element[];
+		return children.length ? children : [headerNode];
 	}
 
 	/**
@@ -405,10 +439,11 @@ export class Et2RowProvider
 			{
 				continue;
 			}
-			element.setAttribute(name, value);
-			if(recordAttributes && assignedId && value.includes("$"))
+			const normalizedValue = this._normalizeLegacyRowExpressionShorthand(value);
+			element.setAttribute(name, normalizedValue);
+			if(recordAttributes && assignedId && normalizedValue.includes("$"))
 			{
-				attrMap[assignedId][name] = value;
+				attrMap[assignedId][name] = normalizedValue;
 			}
 		}
 
@@ -416,11 +451,41 @@ export class Et2RowProvider
 	}
 
 	/**
+	 * Normalize legacy row-expression shorthand so Datagrid row context resolves it like classic Nextmatch.
+	 *
+	 * `$field` becomes `$row_cont[field]`, `${field}` becomes `${row}[field]`.
+	 * Already explicit row/content references are preserved.
+	 */
+	private _normalizeLegacyRowExpressionShorthand(value : string) : string
+	{
+		if(!value || value.indexOf("$") === -1)
+		{
+			return value;
+		}
+		let normalized = value;
+		normalized = normalized.replace(
+			/\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g,
+			(_match, token) => token === "row" ? "${row}" : "${row}[" + token + "]"
+		);
+		normalized = normalized.replace(
+			/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g,
+			(match, token) => ["row", "row_cont", "cont", "_cont"].includes(token) ? match : "$row_cont[" + token + "]"
+		);
+		return normalized;
+	}
+
+	/**
 	 * Normalize legacy <row> templates into proper table row markup.
 	 */
 	private _normalizeTemplateRowNode(rowNode : Element) : Element
 	{
-		if(!rowNode || rowNode.tagName.toLowerCase() !== "row")
+		if(!rowNode)
+		{
+			return rowNode;
+		}
+
+		const tagName = rowNode.tagName.toLowerCase();
+		if(tagName !== "row" && tagName !== "tr")
 		{
 			return rowNode.cloneNode(true) as Element;
 		}

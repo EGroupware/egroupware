@@ -23,6 +23,30 @@ import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 
+/**
+ * @summary Virtualized data grid for infinite rows with column sizing, selection, and lazy paging.
+ *
+ * @event et2-loading-start - Fired when one or more row fetch requests are dispatched.
+ * @event et2-loading-done - Fired when all in-flight row fetch requests complete successfully.
+ * @event et2-loading-error - Fired when a row fetch request fails.
+ * @event et2-selection-changed - Fired when row selection changes.
+ * @event et2-columns-changed - Fired when column order, width, or visibility changes.
+ *
+ * @csspart base - Root wrapper around the grid header and body.
+ * @csspart header - Visible column header row container.
+ * @csspart body - Scrollable container for state content and table.
+ * @csspart state - State message container (loading, empty, template missing, or fetch error).
+ * @csspart resize-helper - Helper bar shown while resizing a column.
+ * @csspart table - Internal table element with ARIA grid semantics.
+ * @csspart rows - Table body that hosts virtualized row content.
+ * @csspart column - A visible header column wrapper.
+ * @csspart column-selection - Column selection action container in the header.
+ *
+ * @cssproperty [--row-height=3em] - Estimated row height used for spacer rendering.
+ * @cssproperty [--column-sizes] - Grid-template column track definition used by header/body rows.
+ * @cssproperty [--column-count=1] - Column count fallback when explicit track sizes are not set.
+ * @cssproperty [--scrollbar-space=15px] - Reserved right-side space in header for body scrollbar alignment.
+ */
 @customElement("et2-datagrid")
 export class Et2Datagrid extends Et2Widget(LitElement)
 {
@@ -2293,7 +2317,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(initialLoading)
 		{
 			return html`
-				<div class="dg-state dg-state--loading">
+                <div class="dg-state dg-state--loading" part="state">
 					${this.templateData?.loaderTemplate
 			          ? html`${unsafeHTML(this._loaderHtml())}`
 			          : this._et2LoadingTemplate()}
@@ -2303,7 +2327,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(fetchFailed)
 		{
 			const message = this.fetchErrorMessage || this.egw().lang("Unable to load rows. Please try again.");
-			return html`<div class="dg-state dg-state--error">${this._et2ErrorTemplate(message)}</div>`;
+			return html`
+                <div class="dg-state dg-state--error" part="state">${this._et2ErrorTemplate(message)}</div>`;
 		}
 		if(noTemplate)
 		{
@@ -2342,7 +2367,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
             {
                 const columnIndex = this.columns.indexOf(column);
                 return html`
-                    <div class="dg-col" role="columnheader" title=${column.title} data-column-key=${column.key}>
+                    <div class="dg-col" part="column" role="columnheader" title=${column.title}
+                         data-column-key=${column.key}>
                         <div class="dg-col-inner">
 					${column.header ?? column.title}
                         </div>
@@ -2357,7 +2383,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                 `
             })}
 			${this.noColumnSelection ? nothing : html`
-				<div class="dg-colselection">
+                <div class="dg-colselection" part="column-selection">
                     <et2-button-icon image="list-task" label=${this.egw().lang("select columns")}
                                      @click=${this._handleColumnSelectionClick}
 									 noSubmit
@@ -2366,7 +2392,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			`}
 		`;
 		return html`
-			<div class="dg-header" role="rowgroup">
+            <div class="dg-header" part="header" role="rowgroup">
 				${visibleColumns.length > 0 ? columnsHeaders : 	html`<slot name="header"></slot>`}
 			</div>
 		`;
@@ -2406,20 +2432,20 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const rowCount = this.total ?? Math.max(this._rowsByIndex.length + this._pendingPlaceholderCount, this.rows.length);
 		const virtualIndexes = this._getVirtualIndexes(rowCount);
 		return html`
-			<div class="dg-root" style=${styleMap(styles)}>
+            <div class="dg-root" part="base" style=${styleMap(styles)}>
 				<!-- Visible header for users -->
 				${headerTemplate}
                 ${this._resizeHelperLeftPx === null || this._resizeHelperWidthPx === null ? nothing : html`
-                    <div class="dg-resize-helper" style=${styleMap({
+                    <div class="dg-resize-helper" part="resize-helper" style=${styleMap({
                         left: `${this._resizeHelperLeftPx}px`,
                         width: `${this._resizeHelperWidthPx}px`
                     })}></div>
                 `}
 
-                <div class="dg-body">
+                <div class="dg-body" part="body">
 					${stateTemplate}
-
 					<table
+                            part="table"
 						role="grid"
 						tabindex="-1"
 						aria-label=${this.getAttribute("aria-label") || this.getAttribute("label") || "Data grid"}
@@ -2435,7 +2461,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						<thead>
 							${this._accessableHeaderTemplate(visibleColumns)}
 						</thead>
-                        <tbody id="rows" role="rowgroup">
+                        <tbody id="rows" part="rows" role="rowgroup">
                         ${virtualize({
                             items: virtualIndexes,
                             keyFunction: this._virtualRowKey,

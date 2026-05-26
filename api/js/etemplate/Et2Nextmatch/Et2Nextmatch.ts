@@ -11,6 +11,24 @@ import "./Headers/Header";
 import "./Headers/SortableHeader";
 import styles from "./Et2Nextmatch.styles";
 
+/**
+ * @summary Nextmatch shows entries with filtering and context menu
+ *
+ * @event et2-loading-start - Re-emitted from the inner datagrid when row fetching starts.
+ * @event et2-loading-done - Re-emitted from the inner datagrid when all fetches complete.
+ * @event et2-loading-error - Re-emitted from the inner datagrid when a fetch fails.
+ * @event et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
+ * @event et2-columns-changed - Re-emitted from the inner datagrid when columns change.
+ *
+ * @slot header - Optional content rendered above the datagrid.
+ * @slot columns - Slotted column definition used to derive datagrid columns when `template` is not set.
+ * @slot row - Slotted row template used to render each datagrid row when `template` is not set.
+ * @slot loader - Optional slotted loader content shown while rows are loading.
+ *
+ * @csspart header - Wrapper for top header slot content rendered above the grid.
+ * @csspart grid - Internal `et2-datagrid` element.
+ * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
+ */
 @customElement("et2-nextmatch")
 export class Et2Nextmatch extends Et2Widget(LitElement)
 {
@@ -577,7 +595,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	render()
 	{
 		return html`
+				<div part="header"><slot name="header"></slot></div>
 				<et2-datagrid
+                        part="grid"
 					._parent=${this}
 					.columns=${this._columns}
 					.templateData=${this._templateData}
