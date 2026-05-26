@@ -277,8 +277,14 @@ export class Et2DatagridColumnManager
 		if(growthPx > 0)
 		{
 			const resizedVisibleIndex = visibleColumns.findIndex((visibleColumn) => columns.indexOf(visibleColumn) === drag.columnIndex);
-			const donors = resizedVisibleIndex >= 0 ? visibleColumns.slice(resizedVisibleIndex + 1) : [];
-			if(donors.length)
+			const rightSideDonors = resizedVisibleIndex >= 0 ? visibleColumns.slice(resizedVisibleIndex + 1) : [];
+			// Relative columns can donate from anywhere; pixel columns donate from the right only.
+			const allRelativeDonors = visibleColumns.filter((visibleColumn) =>
+			{
+				const visibleIndex = columns.indexOf(visibleColumn);
+				return visibleIndex !== drag.columnIndex && this.columnWidthDescriptor(visibleColumn.width).kind === "relative";
+			});
+			if(allRelativeDonors.length || rightSideDonors.length)
 			{
 				const donorInfos : Array<{
 					index : number;
@@ -286,8 +292,9 @@ export class Et2DatagridColumnManager
 					currentWidthPx : number;
 					capacityPx : number;
 					stolenPx : number;
+					widthKind : Et2DatagridColumnWidthKind;
 				}> = [];
-				for(const donorColumn of donors)
+				for(const donorColumn of [...allRelativeDonors, ...rightSideDonors])
 				{
 					const donorIndex = columns.indexOf(donorColumn);
 					if(donorIndex < 0)
@@ -316,27 +323,40 @@ export class Et2DatagridColumnManager
 					{
 						continue;
 					}
+					if(donorInfos.some((donor) => donor.index === donorIndex))
+					{
+						continue;
+					}
 					donorInfos.push({
 						index: donorIndex,
 						column: donorColumn,
 						currentWidthPx: donorCurrentWidthPx,
 						capacityPx: donorCapacityPx,
-						stolenPx: 0
+						stolenPx: 0,
+						widthKind: this.columnWidthDescriptor(donorColumn.width).kind
 					});
 				}
-				const totalDonorCapacityPx = donorInfos.reduce((sum, donor) => sum + donor.capacityPx, 0);
-				const stealTargetPx = Math.min(growthPx, totalDonorCapacityPx);
-				if(stealTargetPx > 0 && totalDonorCapacityPx > 0)
+				const distributeSteal = (pool : typeof donorInfos, targetPx : number) : number =>
 				{
-					let assignedPx = 0;
-					for(const donor of donorInfos)
+					if(targetPx <= 0 || !pool.length)
 					{
-						const sharePx = stealTargetPx * (donor.capacityPx / totalDonorCapacityPx);
+						return 0;
+					}
+					const totalCapacityPx = pool.reduce((sum, donor) => sum + donor.capacityPx, 0);
+					const stealTargetPx = Math.min(targetPx, totalCapacityPx);
+					if(stealTargetPx <= 0 || totalCapacityPx <= 0)
+					{
+						return 0;
+					}
+					let assignedPx = 0;
+					for(const donor of pool)
+					{
+						const sharePx = stealTargetPx * (donor.capacityPx / totalCapacityPx);
 						donor.stolenPx = Math.min(donor.capacityPx, sharePx);
 						assignedPx += donor.stolenPx;
 					}
 					let remainingPx = Math.max(0, stealTargetPx - assignedPx);
-					for(const donor of donorInfos)
+					for(const donor of pool)
 					{
 						if(remainingPx <= 0)
 						{
@@ -351,6 +371,14 @@ export class Et2DatagridColumnManager
 						donor.stolenPx += extraPx;
 						remainingPx -= extraPx;
 					}
+					return pool.reduce((sum, donor) => sum + donor.stolenPx, 0);
+				};
+				const relativeDonors = donorInfos.filter((donor) => donor.widthKind === "relative");
+				const pixelDonors = donorInfos.filter((donor) => donor.widthKind === "pixel");
+				let achievedGrowthPx = distributeSteal(relativeDonors, growthPx);
+				if(achievedGrowthPx < growthPx)
+				{
+					achievedGrowthPx += distributeSteal(pixelDonors, growthPx - achievedGrowthPx);
 				}
 				for(const donor of donorInfos)
 				{
@@ -359,7 +387,6 @@ export class Et2DatagridColumnManager
 						width: toColumnWidthString(donor.column, donor.currentWidthPx - donor.stolenPx)
 					};
 				}
-				const achievedGrowthPx = donorInfos.reduce((sum, donor) => sum + donor.stolenPx, 0);
 				finalWidthPx = drag.startWidthPx + achievedGrowthPx;
 			}
 		}

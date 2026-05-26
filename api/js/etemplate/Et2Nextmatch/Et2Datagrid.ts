@@ -425,7 +425,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return null;
 		}
-		return `${ownerPrefix}-${rowTemplateId}`;
+		return `${ownerPrefix}-${rowTemplateId}-prefs`;
 	}
 
 	/**
