@@ -18,6 +18,26 @@ import {
 	Et2DatagridTemplateData
 } from "./Et2Datagrid.types";
 import {styleMap} from "lit/directives/style-map.js";
+import interact from "@interactjs/interactjs";
+import type {InteractEvent} from "@interactjs/core/InteractEvent";
+
+type Et2DatagridColumnUnit = "px" | "%" | "fr";
+type Et2DatagridColumnWidthKind = "pixel" | "relative";
+
+interface Et2DatagridResizeDragState
+{
+	columnIndex : number;
+	columnKey : string;
+	startWidthPx : number;
+	currentWidthPx : number;
+	totalVisibleWidthPx : number;
+	fixedWidthPx : number;
+	relativeWidthUnits : number;
+	minWidthPx : number;
+	maxWidthPx : number;
+	widthKind : Et2DatagridColumnWidthKind;
+	widthUnit : Et2DatagridColumnUnit;
+}
 
 @customElement("et2-datagrid")
 export class Et2Datagrid extends Et2Widget(LitElement)
@@ -88,6 +108,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	@state()
 	private _pendingPlaceholderCount : number = 0;
 
+	@state()
+	private _resizeHelperLeftPx : number | null = null;
+
+	@state()
+	private _resizeHelperWidthPx : number | null = null;
+
 	/**
 	 * Visible column configuration, including sizing and optional hide expressions.
 	 */
@@ -157,6 +183,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
 	private _pendingOffscreenKeyboardNavigation : boolean = false;
+	private _columnResizeDrag : Et2DatagridResizeDragState | null = null;
+	private _columnResizeHandles : HTMLElement[] = [];
 
 
 	/**
@@ -277,6 +305,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._onTableClick = this._onTableClick.bind(this);
 		this._onTablePointerDown = this._onTablePointerDown.bind(this);
 		this._onTableKeydown = this._onTableKeydown.bind(this);
+		this._onColumnResizeStart = this._onColumnResizeStart.bind(this);
+		this._onColumnResizeMove = this._onColumnResizeMove.bind(this);
+		this._onColumnResizeEnd = this._onColumnResizeEnd.bind(this);
 		this._scrollListener = () => this._maybePrefetchOnScroll();
 	}
 
@@ -285,6 +316,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	disconnectedCallback()
 	{
+		this._teardownColumnResizeInteract();
+		this._clearColumnResizeDragState();
 		this._rowUpgradeObserver?.disconnect();
 		this._rowUpgradeObserver = null;
 		this._clearRowUpgradeQueue();
@@ -306,6 +339,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._body.addEventListener("scroll", this._scrollListener, {passive: true});
 		}
 		this._initRowUpgradeObserver();
+		this._setupColumnResizeInteract();
 	}
 
 	/**
@@ -333,6 +367,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._focusRowByIndex(this.activeRowIndex, 10);
 		}
+		this._setupColumnResizeInteract();
 	}
 
 	/**
@@ -1194,62 +1229,171 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Build inline style string for width/min-width constraints.
-	 */
-	/**
 	 * Build CSS grid track definitions from visible column widths.
 	 */
+	private _columnWidthDescriptor(raw? : string) : {
+		kind : Et2DatagridColumnWidthKind;
+		unit : Et2DatagridColumnUnit;
+		value : number | null
+	}
+	{
+		if(!raw)
+		{
+			return {kind: "pixel", unit: "px", value: null};
+		}
+		const value = String(raw).trim().toLowerCase();
+		if(/^\d+(\.\d+)?%$/.test(value))
+		{
+			return {kind: "relative", unit: "%", value: parseFloat(value)};
+		}
+		if(/^\d+(\.\d+)?fr$/.test(value))
+		{
+			return {kind: "relative", unit: "fr", value: parseFloat(value)};
+		}
+		if(/^\d+(\.\d+)?px$/.test(value))
+		{
+			return {kind: "pixel", unit: "px", value: parseFloat(value)};
+		}
+		if(/^\d+(\.\d+)?$/.test(value))
+		{
+			return {kind: "pixel", unit: "px", value: parseFloat(value)};
+		}
+		return {kind: "pixel", unit: "px", value: null};
+	}
+
+	/**
+	 * Normalize width to CSS grid units.
+	 */
+	private _normalizeColumnWidth(raw? : string) : string
+	{
+		const parsed = this._columnWidthDescriptor(raw);
+		if(parsed.value === null)
+		{
+			return "auto";
+		}
+		if(parsed.kind === "relative")
+		{
+			return `${parsed.value}fr`;
+		}
+		return `${parsed.value}px`;
+	}
+
+	/**
+	 * Normalize min/max width constraints to CSS lengths.
+	 */
+	private _normalizeColumnLength(raw? : string) : string
+	{
+		if(!raw)
+		{
+			return "";
+		}
+		const value = String(raw).trim().toLowerCase();
+		if(/^\d+(\.\d+)?px$/.test(value))
+		{
+			return `${parseFloat(value)}px`;
+		}
+		if(/^\d+(\.\d+)?$/.test(value))
+		{
+			return `${parseFloat(value)}px`;
+		}
+		return value;
+	}
+
+	/**
+	 * Clamp a numeric value between min and max boundaries.
+	 */
+	private _clamp(value : number, min : number, max : number) : number
+	{
+		return Math.max(min, Math.min(max, value));
+	}
+
+	/**
+	 * Convert a column length to pixels using current grid context.
+	 */
+	private _columnLengthToPx(
+		raw : string | undefined,
+		totalVisibleWidthPx : number,
+		availableRelativeWidthPx : number,
+		relativeWidthUnits : number
+	) : number | null
+	{
+		if(!raw)
+		{
+			return null;
+		}
+		const parsed = this._columnWidthDescriptor(raw);
+		if(parsed.value === null)
+		{
+			return null;
+		}
+		if(parsed.kind === "pixel")
+		{
+			return parsed.value;
+		}
+		if(parsed.unit === "%")
+		{
+			return totalVisibleWidthPx * (parsed.value / 100);
+		}
+		if(relativeWidthUnits > 0 && availableRelativeWidthPx > 0)
+		{
+			return availableRelativeWidthPx * (parsed.value / relativeWidthUnits);
+		}
+		return totalVisibleWidthPx * (parsed.value / 100);
+	}
+
+	/**
+	 * Build aggregate width metrics for visible columns.
+	 */
+	private _visibleColumnWidthMetrics(visibleColumns : Et2DatagridColumn[]) : {
+		totalVisibleWidthPx : number;
+		fixedWidthPx : number;
+		relativeWidthUnits : number;
+	}
+	{
+		const headerColumns = Array.from(this.shadowRoot?.querySelectorAll(".dg-header .dg-col") || []) as HTMLElement[];
+		const totalVisibleWidthPx = headerColumns.reduce((sum, element) => sum + element.getBoundingClientRect().width, 0);
+		let fixedWidthPx = 0;
+		let relativeWidthUnits = 0;
+		for(const column of visibleColumns)
+		{
+			const parsed = this._columnWidthDescriptor(column.width);
+			if(parsed.value === null)
+			{
+				continue;
+			}
+			if(parsed.kind === "pixel")
+			{
+				fixedWidthPx += parsed.value;
+			}
+			else
+			{
+				relativeWidthUnits += parsed.value;
+			}
+		}
+		return {totalVisibleWidthPx, fixedWidthPx, relativeWidthUnits};
+	}
+
+	/**
+	 * Convert a numeric width into compact string representation.
+	 */
+	private _formatColumnWidthValue(value : number, unit : Et2DatagridColumnUnit) : string
+	{
+		if(unit === "px")
+		{
+			return `${Math.max(1, Math.round(value))}px`;
+		}
+		const normalized = Number.isFinite(value) ? Math.max(0.001, value) : 0.001;
+		const compact = normalized.toFixed(3).replace(/\.?0+$/, "");
+		return `${compact}${unit}`;
+	}
+
 	private _columnWidths(columns : Et2DatagridColumn[]) : string
 	{
-		const normalizeWidth = (raw? : string) : string =>
-		{
-			if(!raw)
-			{
-				return "auto";
-			}
-			const value = String(raw).trim().toLowerCase();
-			if(/^\d+(\.\d+)?%$/.test(value))
-			{
-				return `${parseFloat(value)}fr`;
-			}
-			if(/^\d+(\.\d+)?px$/.test(value))
-			{
-				return `${parseFloat(value)}px`;
-			}
-			if(/^\d+(\.\d+)?$/.test(value))
-			{
-				return `${parseFloat(value)}px`;
-			}
-			if(/^\d+(\.\d+)?fr$/.test(value))
-			{
-				return `${parseFloat(value)}fr`;
-			}
-			return "auto";
-		};
-
-		const normalizeMinWidth = (raw? : string) : string =>
-		{
-			if(!raw)
-			{
-				return "";
-			}
-			const value = String(raw).trim().toLowerCase();
-			if(/^\d+(\.\d+)?px$/.test(value))
-			{
-				return `${parseFloat(value)}px`;
-			}
-			if(/^\d+(\.\d+)?$/.test(value))
-			{
-				return `${parseFloat(value)}px`;
-			}
-			return value;
-		};
-
 		const columnsWidths = [];
 		columns.forEach((column) =>
 		{
-			const width = normalizeWidth(column.width);
-			const minWidth = normalizeMinWidth(column.minWidth);
+			const width = this._normalizeColumnWidth(column.width);
+			const minWidth = this._normalizeColumnLength(column.minWidth);
 			columnsWidths.push(minWidth ? `minmax(${minWidth}, ${width})` : width);
 		});
 		return columnsWidths.join(" ");
@@ -1265,6 +1409,175 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._body.style["--column-sizes"] = this._columnWidths(visibleColumns);
 		}
+	}
+
+	/**
+	 * Remove interact.js handlers attached to previous resize handles.
+	 */
+	private _teardownColumnResizeInteract()
+	{
+		for(const handle of this._columnResizeHandles)
+		{
+			interact(handle).unset();
+		}
+		this._columnResizeHandles = [];
+	}
+
+	/**
+	 * Bind interact.js draggable listeners for current header resize handles.
+	 */
+	private _setupColumnResizeInteract()
+	{
+		const handles = Array.from(this.shadowRoot?.querySelectorAll(".dg-col-resize-handle") || []) as HTMLElement[];
+		if(!handles.length)
+		{
+			this._teardownColumnResizeInteract();
+			return;
+		}
+		const sameHandles =
+			handles.length === this._columnResizeHandles.length &&
+			handles.every((handle, index) => handle === this._columnResizeHandles[index]);
+		if(sameHandles)
+		{
+			return;
+		}
+		this._teardownColumnResizeInteract();
+		for(const handle of handles)
+		{
+			interact(handle)
+				.styleCursor(false)
+				.draggable({
+					startAxis: "x",
+					lockAxis: "x",
+					listeners: {
+						start: this._onColumnResizeStart,
+						move: this._onColumnResizeMove,
+						end: this._onColumnResizeEnd
+					}
+				});
+		}
+		this._columnResizeHandles = handles;
+	}
+
+	/**
+	 * Reset drag-resize temporary state.
+	 */
+	private _clearColumnResizeDragState()
+	{
+		this._columnResizeDrag = null;
+		this._resizeHelperLeftPx = null;
+		this._resizeHelperWidthPx = null;
+		this.classList.remove("dg-resizing");
+	}
+
+	/**
+	 * Begin header column resize drag by caching current column sizing context.
+	 */
+	private _onColumnResizeStart(event : InteractEvent)
+	{
+		const handle = event.target as HTMLElement | null;
+		const headerColumn = handle?.closest(".dg-col") as HTMLElement | null;
+		const root = this.shadowRoot?.querySelector(".dg-root") as HTMLElement | null;
+		const columnIndexRaw = handle?.getAttribute("data-column-index") || "";
+		const columnIndex = parseInt(columnIndexRaw, 10);
+		if(!handle || !headerColumn || !root || Number.isNaN(columnIndex) || !this.columns[columnIndex])
+		{
+			return;
+		}
+		const visibleColumns = this._visibleColumns();
+		const metrics = this._visibleColumnWidthMetrics(visibleColumns);
+		const availableRelativeWidthPx = Math.max(0, metrics.totalVisibleWidthPx - metrics.fixedWidthPx);
+		const column = this.columns[columnIndex];
+		const parsedWidth = this._columnWidthDescriptor(column.width);
+		const rootRect = root.getBoundingClientRect();
+		const headerColumnRect = headerColumn.getBoundingClientRect();
+		const startWidthPx = Math.max(1, headerColumnRect.width);
+		const minWidthPx = this._columnLengthToPx(
+			column.minWidth,
+			metrics.totalVisibleWidthPx,
+			availableRelativeWidthPx,
+			metrics.relativeWidthUnits
+		);
+		const maxWidthPx = this._columnLengthToPx(
+			column.maxWidth,
+			metrics.totalVisibleWidthPx,
+			availableRelativeWidthPx,
+			metrics.relativeWidthUnits
+		);
+		const min = Math.max(1, minWidthPx ?? 1);
+		const max = Math.max(min, maxWidthPx ?? Number.POSITIVE_INFINITY);
+		this._columnResizeDrag = {
+			columnIndex,
+			columnKey: String(column.key || ""),
+			startWidthPx,
+			currentWidthPx: startWidthPx,
+			totalVisibleWidthPx: metrics.totalVisibleWidthPx,
+			fixedWidthPx: metrics.fixedWidthPx,
+			relativeWidthUnits: metrics.relativeWidthUnits,
+			minWidthPx: min,
+			maxWidthPx: max,
+			widthKind: parsedWidth.kind,
+			widthUnit: parsedWidth.unit
+		};
+		this._resizeHelperLeftPx = headerColumnRect.left - rootRect.left;
+		this._resizeHelperWidthPx = startWidthPx;
+		this.classList.add("dg-resizing");
+	}
+
+	/**
+	 * Update helper position while dragging without applying live column size changes.
+	 */
+	private _onColumnResizeMove(event : InteractEvent)
+	{
+		const drag = this._columnResizeDrag;
+		if(!drag)
+		{
+			return;
+		}
+		const nextWidthPx = this._clamp(drag.currentWidthPx + event.dx, drag.minWidthPx, drag.maxWidthPx);
+		drag.currentWidthPx = nextWidthPx;
+		this._resizeHelperWidthPx = nextWidthPx;
+	}
+
+	/**
+	 * Commit resized width at drag end and preserve original width unit type.
+	 */
+	private _onColumnResizeEnd(_event : InteractEvent)
+	{
+		const drag = this._columnResizeDrag;
+		if(!drag)
+		{
+			return;
+		}
+		const finalWidthPx = this._clamp(drag.currentWidthPx, drag.minWidthPx, drag.maxWidthPx);
+		const columns = [...(this.columns || [])];
+		const column = columns[drag.columnIndex];
+		if(column && String(column.key || "") === drag.columnKey)
+		{
+			if(drag.widthKind === "relative")
+			{
+				const availableRelativeWidthPx = Math.max(1, drag.totalVisibleWidthPx - drag.fixedWidthPx);
+				const relativeUnitValue = drag.relativeWidthUnits > 0
+				                          ? (finalWidthPx * drag.relativeWidthUnits) / availableRelativeWidthPx
+				                          : (finalWidthPx / Math.max(1, drag.totalVisibleWidthPx)) * 100;
+				column.width = this._formatColumnWidthValue(relativeUnitValue, drag.widthUnit);
+			}
+			else
+			{
+				column.width = this._formatColumnWidthValue(finalWidthPx, "px");
+			}
+			columns[drag.columnIndex] = {...column};
+			this.columns = columns;
+			this.dispatchEvent(new CustomEvent("et2-columns-changed", {
+				detail: {
+					columns: this.columns,
+					column: columns[drag.columnIndex]
+				},
+				bubbles: true,
+				composed: true
+			}));
+		}
+		this._clearColumnResizeDragState();
 	}
 
 	/**
@@ -1979,11 +2292,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	protected _headerTemplate(visibleColumns:Et2DatagridColumn[])
 	{
 		const columnsHeaders = html`
-			${visibleColumns.map((column) => html`
-				<div class="dg-col" role="columnheader" title=${column.title}>
+            ${visibleColumns.map((column) =>
+            {
+                const columnIndex = this.columns.indexOf(column);
+                return html`
+                    <div class="dg-col" role="columnheader" title=${column.title} data-column-key=${column.key}>
+                        <div class="dg-col-inner">
 					${column.header ?? column.title}
-				</div>
-			`)}
+                        </div>
+                        <div
+                                class="dg-col-resize-handle"
+                                data-column-index=${String(columnIndex)}
+                                role="separator"
+                                aria-orientation="vertical"
+                                aria-label=${this.egw().lang("Resize column")}
+                        ></div>
+                    </div>
+                `
+            })}
 			${this.noColumnSelection ? nothing : html`
 				<div class="dg-colselection">
                     <et2-button-icon image="list-task" label=${this.egw().lang("select columns")}
@@ -2037,6 +2363,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			<div class="dg-root" style=${styleMap(styles)}>
 				<!-- Visible header for users -->
 				${headerTemplate}
+                ${this._resizeHelperLeftPx === null || this._resizeHelperWidthPx === null ? nothing : html`
+                    <div class="dg-resize-helper" style=${styleMap({
+                        left: `${this._resizeHelperLeftPx}px`,
+                        width: `${this._resizeHelperWidthPx}px`
+                    })}></div>
+                `}
 
                 <div class="dg-body">
 					${stateTemplate}

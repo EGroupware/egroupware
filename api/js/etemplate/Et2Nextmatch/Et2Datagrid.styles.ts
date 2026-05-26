@@ -10,6 +10,7 @@ export default css`
 	.dg-root {
 		display: flex;
 		flex-direction: column;
+		position: relative;
 		height: 100%;
 		min-height: 0;
 		border: none;
@@ -33,12 +34,46 @@ export default css`
 	}
 
 	.dg-col {
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
+		position: relative;
 		padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
 		border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
 		box-sizing: border-box;
+
+		/* Inner div lets us have clear space on the right edge of the column header */
+
+		.dg-col-inner {
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
+		}
+	}
+
+	.dg-col-resize-handle {
+		position: absolute;
+		top: 0;
+		right: calc(-1 * var(--sl-spacing-2x-small));
+		width: var(--sl-spacing-small);
+		height: 100%;
+		cursor: ew-resize;
+		touch-action: none;
+		z-index: 2;
+	}
+
+	:host(.dg-resizing),
+	:host(.dg-resizing) * {
+		cursor: ew-resize !important;
+		user-select: none;
+	}
+
+	.dg-resize-helper {
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		border: 1px solid var(--sl-color-primary-600, #2869db);
+		background: rgba(40, 105, 219, 0.15);
+		box-sizing: border-box;
+		pointer-events: none;
+		z-index: var(--sl-z-index-tooltip);
 	}
 	.dg-col:has(+ .dg-colselection) {
 		border-right: none;
@@ -49,6 +84,8 @@ export default css`
 		width: 18px;
 		padding:0;
 		justify-items: center;
+		/* Give it a background color in case insufficent space makes it overlap */
+		background-color: var(--sl-color-neutral-100);
 	}
 
 	.dg-body {

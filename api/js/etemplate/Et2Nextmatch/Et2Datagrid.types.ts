@@ -5,6 +5,7 @@ export interface Et2DatagridColumn
 	header?: Element;
 	width? : string;
 	minWidth? : string;
+	maxWidth? : string;
 	// Not allowed to be shown
 	disabled? : string | boolean;
 	// Not currently shown, but could be
