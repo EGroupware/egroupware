@@ -64,7 +64,8 @@ Deleting with `DELETE` requests is only possible, if the invoice has NOT been is
         "Modified": "2026-03-13T14:42:10",
         "Category": { "Categoryname": true },
         "Description": "jkhkjhl",
-        "Path": "/invoices/39"
+        "Path": "/invoices/39",
+        "egroupware.org:customfields"
     }
 }
 ```
@@ -106,6 +107,7 @@ Deleting with `DELETE` requests is only possible, if the invoice has NOT been is
 | BT-42              | Seller contact telephone                    | +++ `TelephoneUniversalCommunication`                                                                             |
 | BT-43              | Seller contact email                        | +++ `EmailURIUniversalCommunication`                                                                              |
 | BT-34              | Seller email                                | ++ `URIUniversalCommunication`                                                                                    |                                                                       |
+|                    | Sets seller information from addressbook    | ++ `ContactID`                                                                                                    |
 |                    |                                             |                                                                                                                   |
 | **Buyer**          |                                             | + `BuyerTradeParty`                                                                                               |               
 | BT-46              | Buyer ID                                    | ++ `ID`                                                                                                           |
@@ -124,6 +126,7 @@ Deleting with `DELETE` requests is only possible, if the invoice has NOT been is
 | BT-57              | Buyer contact telephone                     | +++ `TelephoneUniversalCommunication`                                                                             |
 | BT-58              | Buyer contact email                         | +++ `EmailURIUniversalCommunication`                                                                              |
 | BT-49              | Buyer email                                 | ++ `URIUniversalCommunication`                                                                                    |                                                                       |
+|                    | Sets buyer information from Addressbook     | ++ `ContactID`                                                                                                    |
 |                    |                                             |                                                                                                                   |
 | **OtherParties**   | See seller and buyer for attributes         | `/SupplyChainTradeTransaction/ApplicableHeaderTradeAgreement`                                                     |
 | BT-                | Invoicee                                    | + `InvoiceeTradeParty`                                                                                            |               
