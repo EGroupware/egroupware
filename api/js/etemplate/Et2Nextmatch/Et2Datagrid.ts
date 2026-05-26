@@ -114,6 +114,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	@state()
 	private _resizeHelperWidthPx : number | null = null;
 
+	@state()
+	private _resizeLimitState : "min" | "max" | null = null;
+
 	/**
 	 * Visible column configuration, including sizing and optional hide expressions.
 	 */
@@ -1387,6 +1390,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return `${compact}${unit}`;
 	}
 
+	/**
+	 * Hard lower bound for interactive column resizing/stealing.
+	 * This does not change configured minWidth semantics.
+	 */
+	private _columnResizeFloorPx() : number
+	{
+		const fontSizePx = parseFloat(getComputedStyle(this).fontSize || "16");
+		return Number.isFinite(fontSizePx) && fontSizePx > 0 ? fontSizePx : 16;
+	}
+
 	private _columnWidths(columns : Et2DatagridColumn[]) : string
 	{
 		const columnsWidths = [];
@@ -1467,7 +1480,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._columnResizeDrag = null;
 		this._resizeHelperLeftPx = null;
 		this._resizeHelperWidthPx = null;
+		this._resizeLimitState = null;
 		this.classList.remove("dg-resizing");
+		this.classList.remove("dg-resize-limit-min");
+		this.classList.remove("dg-resize-limit-max");
 	}
 
 	/**
@@ -1504,7 +1520,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			availableRelativeWidthPx,
 			metrics.relativeWidthUnits
 		);
-		const min = Math.max(1, minWidthPx ?? 1);
+		const min = Math.max(1, this._columnResizeFloorPx(), minWidthPx ?? 1);
 		const max = Math.max(min, maxWidthPx ?? Number.POSITIVE_INFINITY);
 		this._columnResizeDrag = {
 			columnIndex,
@@ -1521,6 +1537,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		};
 		this._resizeHelperLeftPx = headerColumnRect.left - rootRect.left;
 		this._resizeHelperWidthPx = startWidthPx;
+		this._resizeLimitState = null;
+		this.classList.remove("dg-resize-limit-min");
+		this.classList.remove("dg-resize-limit-max");
 		this.classList.add("dg-resizing");
 	}
 
@@ -1534,9 +1553,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const nextWidthPx = this._clamp(drag.currentWidthPx + event.dx, drag.minWidthPx, drag.maxWidthPx);
+		const requestedWidthPx = drag.currentWidthPx + event.dx;
+		const nextWidthPx = this._clamp(requestedWidthPx, drag.minWidthPx, drag.maxWidthPx);
 		drag.currentWidthPx = nextWidthPx;
 		this._resizeHelperWidthPx = nextWidthPx;
+		const limitState = requestedWidthPx < drag.minWidthPx ? "min"
+		                                                      : requestedWidthPx > drag.maxWidthPx ? "max"
+		                                                                                           : null;
+		this._resizeLimitState = limitState;
+		this.classList.toggle("dg-resize-limit-min", limitState === "min");
+		this.classList.toggle("dg-resize-limit-max", limitState === "max");
 	}
 
 	/**
@@ -1549,23 +1575,130 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const finalWidthPx = this._clamp(drag.currentWidthPx, drag.minWidthPx, drag.maxWidthPx);
+		const desiredWidthPx = this._clamp(drag.currentWidthPx, drag.minWidthPx, drag.maxWidthPx);
 		const columns = [...(this.columns || [])];
 		const column = columns[drag.columnIndex];
+		const availableRelativeWidthPx = Math.max(1, drag.totalVisibleWidthPx - drag.fixedWidthPx);
+		const toColumnWidthString = (columnDef : Et2DatagridColumn, widthPx : number) : string =>
+		{
+			const descriptor = this._columnWidthDescriptor(columnDef.width);
+			if(descriptor.kind === "pixel")
+			{
+				return this._formatColumnWidthValue(widthPx, "px");
+			}
+			if(descriptor.unit === "%")
+			{
+				const percentValue = (widthPx / Math.max(1, drag.totalVisibleWidthPx)) * 100;
+				return this._formatColumnWidthValue(percentValue, "%");
+			}
+			const relativeValue = drag.relativeWidthUnits > 0
+			                      ? (widthPx * drag.relativeWidthUnits) / availableRelativeWidthPx
+			                      : (widthPx / Math.max(1, drag.totalVisibleWidthPx)) * 100;
+			return this._formatColumnWidthValue(relativeValue, descriptor.unit);
+		};
 		if(column && String(column.key || "") === drag.columnKey)
 		{
-			if(drag.widthKind === "relative")
+			const resizeFloorPx = this._columnResizeFloorPx();
+			let finalWidthPx = desiredWidthPx;
+			const growthPx = Math.max(0, desiredWidthPx - drag.startWidthPx);
+			if(growthPx > 0)
 			{
-				const availableRelativeWidthPx = Math.max(1, drag.totalVisibleWidthPx - drag.fixedWidthPx);
-				const relativeUnitValue = drag.relativeWidthUnits > 0
-				                          ? (finalWidthPx * drag.relativeWidthUnits) / availableRelativeWidthPx
-				                          : (finalWidthPx / Math.max(1, drag.totalVisibleWidthPx)) * 100;
-				column.width = this._formatColumnWidthValue(relativeUnitValue, drag.widthUnit);
+				const visibleColumns = this._visibleColumns();
+				const resizedVisibleIndex = visibleColumns.findIndex((visibleColumn) => this.columns.indexOf(visibleColumn) === drag.columnIndex);
+				const donors = resizedVisibleIndex >= 0 ? visibleColumns.slice(resizedVisibleIndex + 1) : [];
+				if(!donors.length)
+				{
+					finalWidthPx = desiredWidthPx;
+				}
+				else
+				{
+				const donorInfos : Array<{
+					index : number;
+					column : Et2DatagridColumn;
+					currentWidthPx : number;
+					capacityPx : number;
+					stolenPx : number;
+				}> = [];
+				for(const donorColumn of donors)
+				{
+					const donorIndex = this.columns.indexOf(donorColumn);
+					if(donorIndex < 0)
+					{
+						continue;
+					}
+					const donorCurrentWidthPx = this._columnLengthToPx(
+						donorColumn.width,
+						drag.totalVisibleWidthPx,
+						availableRelativeWidthPx,
+						drag.relativeWidthUnits
+					);
+					if(donorCurrentWidthPx === null)
+					{
+						continue;
+					}
+					const donorMinWidthPxRaw = this._columnLengthToPx(
+						donorColumn.minWidth,
+						drag.totalVisibleWidthPx,
+						availableRelativeWidthPx,
+						drag.relativeWidthUnits
+					);
+					const donorMinWidthPx = Math.max(1, resizeFloorPx, donorMinWidthPxRaw ?? 1);
+					const donorCapacityPx = Math.max(0, donorCurrentWidthPx - donorMinWidthPx);
+					if(donorCapacityPx <= 0)
+					{
+						continue;
+					}
+					donorInfos.push({
+						index: donorIndex,
+						column: donorColumn,
+						currentWidthPx: donorCurrentWidthPx,
+						capacityPx: donorCapacityPx,
+						stolenPx: 0
+					});
+				}
+				const totalDonorCapacityPx = donorInfos.reduce((sum, donor) => sum + donor.capacityPx, 0);
+				const stealTargetPx = Math.min(growthPx, totalDonorCapacityPx);
+				if(stealTargetPx > 0 && totalDonorCapacityPx > 0)
+				{
+					let assignedPx = 0;
+					for(const donor of donorInfos)
+					{
+						const sharePx = stealTargetPx * (donor.capacityPx / totalDonorCapacityPx);
+						donor.stolenPx = Math.min(donor.capacityPx, sharePx);
+						assignedPx += donor.stolenPx;
+					}
+					let remainingPx = Math.max(0, stealTargetPx - assignedPx);
+					for(const donor of donorInfos)
+					{
+						if(remainingPx <= 0)
+						{
+							break;
+						}
+						const extraCapacityPx = donor.capacityPx - donor.stolenPx;
+						if(extraCapacityPx <= 0)
+						{
+							continue;
+						}
+						const extraPx = Math.min(extraCapacityPx, remainingPx);
+						donor.stolenPx += extraPx;
+						remainingPx -= extraPx;
+					}
+				}
+				for(const donor of donorInfos)
+				{
+					const donorNextWidthPx = donor.currentWidthPx - donor.stolenPx;
+					columns[donor.index] = {
+						...columns[donor.index],
+						width: toColumnWidthString(donor.column, donorNextWidthPx)
+					};
+				}
+				const achievedGrowthPx = donorInfos.reduce((sum, donor) => sum + donor.stolenPx, 0);
+				finalWidthPx = drag.startWidthPx + achievedGrowthPx;
+				}
 			}
-			else
-			{
-				column.width = this._formatColumnWidthValue(finalWidthPx, "px");
-			}
+			column.width = drag.widthKind === "relative"
+			               ? toColumnWidthString(column, finalWidthPx)
+			               : this._formatColumnWidthValue(finalWidthPx, "px");
 			columns[drag.columnIndex] = {...column};
 			this.columns = columns;
 			this.dispatchEvent(new CustomEvent("et2-columns-changed", {

@@ -65,6 +65,13 @@ export default css`
 		user-select: none;
 	}
 
+	:host(.dg-resizing.dg-resize-limit-min),
+	:host(.dg-resizing.dg-resize-limit-min) *,
+	:host(.dg-resizing.dg-resize-limit-max),
+	:host(.dg-resizing.dg-resize-limit-max) * {
+		cursor: not-allowed !important;
+	}
+
 	.dg-resize-helper {
 		position: absolute;
 		top: 0;
@@ -74,6 +81,11 @@ export default css`
 		box-sizing: border-box;
 		pointer-events: none;
 		z-index: var(--sl-z-index-tooltip);
+	}
+
+	:host(.dg-resize-limit-min) .dg-resize-helper,
+	:host(.dg-resize-limit-max) .dg-resize-helper {
+		border-right-color: var(--sl-color-danger-600);
 	}
 	.dg-col:has(+ .dg-colselection) {
 		border-right: none;
