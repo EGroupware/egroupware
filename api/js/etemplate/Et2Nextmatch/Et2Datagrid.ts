@@ -156,6 +156,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _sourceColumnKeys : string[] = [];
 	private _restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
+	private _pendingOffscreenKeyboardNavigation : boolean = false;
 
 
 	/**
@@ -254,6 +255,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return this.shadowRoot?.querySelector(".dg-body") as HTMLElement | null;
 	}
 
+	/**
+	 * Convenience accessor for focus fallback target that keeps keydown events routed to the grid.
+	 */
+	private get _gridTable() : HTMLElement | null
+	{
+		return this.shadowRoot?.querySelector("table[role='grid']") as HTMLElement | null;
+	}
+
 	private get _virtualize()
 	{
 		return this._rowsBody[virtualizerRef];
@@ -310,12 +319,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			// Capture source cell->column mapping before user reorders columns.
 			this._sourceColumnKeys = (this.templateData?.columns || this.columns || []).map((column) => String(column.key));
-			this._renderRowsIntoContainer(true);
+			this._reconcileRowRenderState();
 			this._ensureTableColSizes();
 		}
 		if(changedProperties.has("columns"))
 		{
-			this._renderRowsIntoContainer(true);
+			this._reconcileRowRenderState();
 			this._ensureTableColSizes();
 			this._applyColumnVisibilityToRenderedRows();
 		}
@@ -429,9 +438,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
 			}
-			this.requestUpdate();
+			this._reconcileRowRenderState();
 		}
-		}
+	}
 
 	/**
 	 * Clear rendered rows and related in-memory row id tracking.
@@ -489,47 +498,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.dispatchEvent(new CustomEvent("et2-loading-start", {bubbles: true, composed: true}));
 			this._fetchPage(entry.start, entry.requestedCount, entry.requestKey);
 		}
-		this._renderRowsIntoContainer();
-	}
-
-	/**
-	 * Return preferred chunk starts around viewport center: current, previous, next.
-	 */
-	private _preferredChunkStarts() : number[]
-	{
-		return [0];
-		// Predictive chunk loading
-		/*
-		const starts : number[] = [];
-		const current = this._currentViewportChunkStart();
-		starts.push(current, Math.max(0, current - this.pageSize));
-		if(this.total !== null)
-		{
-			const maxStart = Math.max(0, this.total - this.pageSize);
-			starts.push(Math.min(maxStart, current + this.pageSize));
-		}
-		else
-		{
-			starts.push(current + this.pageSize);
-		}
-		return Array.from(new Set(starts));
-
-		 */
-	}
-
-	/**
-	 * Map current viewport center position to aligned chunk start.
-	 */
-	private _currentViewportChunkStart() : number
-	{
-		const body = this._body;
-		const center = body ? Math.max(0, Math.floor((body.scrollTop + (body.clientHeight / 2)) / rowHeightPx)) : 0;
-		if(this.total === null)
-		{
-			return Math.max(0, Math.floor(center / this.pageSize) * this.pageSize);
-		}
-		const maxStart = Math.max(0, this.total - this.pageSize);
-		return Math.max(0, Math.min(maxStart, Math.floor(center / this.pageSize) * this.pageSize));
+		this._reconcileRowRenderState();
 	}
 
 	/**
@@ -553,10 +522,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Reconcile logical rows to physical DOM rows.
-	 * We manually patch tbody for predictable performance with large/incremental loads.
+	 * Reconcile grid-level row render state with current data.
+	 * Ensures an initial active row exists once rows are available, then schedules
+	 * a Lit render cycle (virtualizer-driven row DOM is rendered from template()).
 	 */
-	private _renderRowsIntoContainer(force : boolean = false)
+	private _reconcileRowRenderState()
 	{
 		if(this.activeRowIndex < 0 && this.rows.length)
 		{
@@ -623,10 +593,34 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _maybePrefetchOnScroll()
 	{
+		this._restoreRowFocusAfterScroll();
 		if(this._queuedRequests.size)
 		{
 			this._scheduleQueuedRequestProcessing();
 		}
+	}
+
+	/**
+	 * Keep keyboard navigation working when browser focus jumps to page container during mouse-wheel scrolling.
+	 */
+	private _restoreRowFocusAfterScroll()
+	{
+		if(this.activeRowIndex < 0)
+		{
+			return;
+		}
+		const shadowActive = this.shadowRoot?.activeElement as HTMLElement | null;
+		if(shadowActive)
+		{
+			return;
+		}
+		const active = document.activeElement as HTMLElement | null;
+		const tag = active?.tagName?.toLowerCase?.() || "";
+		if(active && active !== document.body && active !== this && tag !== "egw-app")
+		{
+			return;
+		}
+		this._focusRowByIndex(this.activeRowIndex, 2, false);
 	}
 
 	/**
@@ -715,6 +709,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		// Do not steal focus if the user intentionally moved to another interactive control.
+		const active = document.activeElement as HTMLElement | null;
+		const activeTag = active?.tagName?.toLowerCase?.() || "";
+		if(active && active !== document.body && active !== this && activeTag !== "egw-app")
+		{
+			return;
+		}
+		this._focusGridFallback();
 		this._restoreFocusAfterRender = true;
 		requestAnimationFrame(() =>
 		{
@@ -724,6 +726,26 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			this._focusRowByIndex(this.activeRowIndex, 10, false);
 		});
+	}
+
+	/**
+	 * Keep focus on the grid while virtualizer swaps row DOM so keyboard navigation remains active.
+	 */
+	private _focusGridFallback()
+	{
+		const table = this._gridTable;
+		if(!table)
+		{
+			return;
+		}
+		try
+		{
+			table.focus({preventScroll: true});
+		}
+		catch(e)
+		{
+			table.focus();
+		}
 	}
 
 	/**
@@ -1179,27 +1201,56 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _columnWidths(columns : Et2DatagridColumn[]) : string
 	{
-		let count = 0;
-		let columnsWidths = [];
-		columns.forEach(column => {
-			let width = 'auto';
-			if(column.width)
+		const normalizeWidth = (raw? : string) : string =>
+		{
+			if(!raw)
 			{
-				width = String(column.width);
-				// Width is just a number - pixel size
-				if(/^\d+$/.test(width))
-				{
-					width += "px";
-					count += parseInt(column.width);
-				}
-				else
-				{
-					// Width is a percent, we'll let the browser allocate the leftover
-					// non-pixel space with fr
-					width = parseInt(width) + 'fr';
-				}
+				return "auto";
 			}
-			columnsWidths.push(column.minWidth ? `minmax(${column.minWidth}px, ${width})` : width);
+			const value = String(raw).trim().toLowerCase();
+			if(/^\d+(\.\d+)?%$/.test(value))
+			{
+				return `${parseFloat(value)}fr`;
+			}
+			if(/^\d+(\.\d+)?px$/.test(value))
+			{
+				return `${parseFloat(value)}px`;
+			}
+			if(/^\d+(\.\d+)?$/.test(value))
+			{
+				return `${parseFloat(value)}px`;
+			}
+			if(/^\d+(\.\d+)?fr$/.test(value))
+			{
+				return `${parseFloat(value)}fr`;
+			}
+			return "auto";
+		};
+
+		const normalizeMinWidth = (raw? : string) : string =>
+		{
+			if(!raw)
+			{
+				return "";
+			}
+			const value = String(raw).trim().toLowerCase();
+			if(/^\d+(\.\d+)?px$/.test(value))
+			{
+				return `${parseFloat(value)}px`;
+			}
+			if(/^\d+(\.\d+)?$/.test(value))
+			{
+				return `${parseFloat(value)}px`;
+			}
+			return value;
+		};
+
+		const columnsWidths = [];
+		columns.forEach((column) =>
+		{
+			const width = normalizeWidth(column.width);
+			const minWidth = normalizeMinWidth(column.minWidth);
+			columnsWidths.push(minWidth ? `minmax(${minWidth}, ${width})` : width);
 		});
 		return columnsWidths.join(" ");
 	}
@@ -1360,6 +1411,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		if(["ArrowUp", "ArrowDown", "PageUp", "PageDown"].includes(key) &&
+			this.activeRowIndex >= 0 &&
+			this._hasRenderedRows() &&
+			!this._isRowIndexRendered(this.activeRowIndex))
+		{
+			event.preventDefault();
+			this._scrollActiveRowIntoViewThenReplayNavigation(key, event);
+			return;
+		}
 
 		const pageStep = Math.max(1, Math.floor((this._body?.clientHeight || 0) / 44));
 		let nextIndex = this.activeRowIndex >= 0 ? this.activeRowIndex : 0;
@@ -1406,6 +1466,67 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(event.shiftKey && this.selectionMode === "multiple")
 		{
 			this._selectRange(this.anchorRowIndex >= 0 ? this.anchorRowIndex : previous, nextIndex);
+		}
+	}
+
+	private _isRowIndexRendered(index : number) : boolean
+	{
+		if(index < 0)
+		{
+			return false;
+		}
+		return !!this._rowsBody?.querySelector(`tr[data-row-index="${index}"]`);
+	}
+
+	private _hasRenderedRows() : boolean
+	{
+		return !!this._rowsBody?.querySelector("tr[data-row-index]");
+	}
+
+	private async _scrollActiveRowIntoViewThenReplayNavigation(key : string, sourceEvent : KeyboardEvent)
+	{
+		if(this._pendingOffscreenKeyboardNavigation)
+		{
+			return;
+		}
+		this._pendingOffscreenKeyboardNavigation = true;
+		try
+		{
+			const activeIndex = this.activeRowIndex;
+			if(activeIndex < 0)
+			{
+				return;
+			}
+			const body = this._body;
+			if(body)
+			{
+				const rowHeight = this._rowHeightPx || 44;
+				const centeredTop = Math.max(0, Math.floor(activeIndex * rowHeight - body.clientHeight / 2));
+				body.scrollTop = centeredTop;
+			}
+			for(let i = 0; i < 24; i++)
+			{
+				await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+				await this.updateComplete;
+				if(this._isRowIndexRendered(activeIndex))
+				{
+					break;
+				}
+			}
+			if(!this._isRowIndexRendered(activeIndex))
+			{
+				return;
+			}
+			this._onTableKeydown(new KeyboardEvent("keydown", {
+				key,
+				shiftKey: sourceEvent.shiftKey,
+				ctrlKey: sourceEvent.ctrlKey,
+				metaKey: sourceEvent.metaKey
+			}));
+		}
+		finally
+		{
+			this._pendingOffscreenKeyboardNavigation = false;
 		}
 	}
 
@@ -1698,6 +1819,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			data: row
 		}));
 		this._clearRows();
+		this.selectedRowIds.clear();
+		this.anchorRowIndex = -1;
+		this.activeRowIndex = -1;
+		this.activeRowId = null;
 		this.rows = mappedRows;
 		this._rowsByIndex = mappedRows.slice();
 		this.loading = false;
@@ -1918,6 +2043,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 					<table
 						role="grid"
+						tabindex="-1"
 						aria-label=${this.getAttribute("aria-label") || this.getAttribute("label") || "Data grid"}
 						aria-multiselectable=${String(this.selectionMode === "multiple")}
 						aria-colcount=${String(visibleColumns.length || this.columns.length || 1)}
