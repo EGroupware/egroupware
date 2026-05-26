@@ -152,6 +152,7 @@ export class Et2RowProvider
 
 		return {
 			columns,
+			rowTemplateId: rowElement?.id || undefined,
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
@@ -193,6 +194,7 @@ export class Et2RowProvider
 
 		return {
 			columns,
+			rowTemplateId: tplRoot.getAttribute("id") || tplRoot.id || normalizedRowNode?.id || undefined,
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},

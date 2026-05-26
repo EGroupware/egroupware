@@ -17,10 +17,7 @@ import {
 	Et2DatagridSelectionMode,
 	Et2DatagridTemplateData
 } from "./Et2Datagrid.types";
-import {
-	Et2DatagridColumnManager,
-	Et2DatagridColumnResizeDragState
-} from "./Et2DatagridColumnManager";
+import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2DatagridColumnManager";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
@@ -146,6 +143,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	@property({type: Boolean, attribute: "configuration-loading"})
 	configurationLoading : boolean = false;
 
+	/**
+	 * Optional explicit preference key for persisted column state.
+	 * When omitted, datagrid derives key from owner component + row template id.
+	 */
+	@property({type: String, attribute: "column-preference-name"})
+	columnPreferenceName : string = "";
+
 	/** Set of row ids already added, used to avoid duplicate render on incremental fetches. */
 	private displayedRowIds : Set<string> = new Set();
 	/** Set of selected row ids used to derive emitted selection payloads. */
@@ -177,6 +181,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _columnResizeHandles : HTMLElement[] = [];
 	private _columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
+	private _loadedColumnPreferenceKey : string | null = null;
+	private _onColumnsChangedForPersistence : EventListener = () => this._persistColumnPreferences();
 
 
 	/**
@@ -301,6 +307,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._onColumnResizeMove = this._onColumnResizeMove.bind(this);
 		this._onColumnResizeEnd = this._onColumnResizeEnd.bind(this);
 		this._scrollListener = () => this._maybePrefetchOnScroll();
+		this._onColumnsChangedForPersistence = this._onColumnsChangedForPersistence.bind(this);
 	}
 
 	/**
@@ -317,6 +324,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._body.removeEventListener("scroll", this._scrollListener);
 		}
+		this.removeEventListener("et2-columns-changed", this._onColumnsChangedForPersistence);
 		super.disconnectedCallback();
 	}
 
@@ -326,6 +334,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	firstUpdated(changedProperties : PropertyValues)
 	{
 		super.firstUpdated(changedProperties);
+		this.addEventListener("et2-columns-changed", this._onColumnsChangedForPersistence);
 		if(this._body && this._scrollListener)
 		{
 			this._body.addEventListener("scroll", this._scrollListener, {passive: true});
@@ -354,12 +363,189 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._ensureTableColSizes();
 			this._applyColumnVisibilityToRenderedRows();
 		}
+		if(changedProperties.has("templateData") || changedProperties.has("columnPreferenceName"))
+		{
+			this._loadedColumnPreferenceKey = null;
+		}
+		this._loadColumnPreferencesIfNeeded();
 		this._upgradeRenderedRows();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
 			this._focusRowByIndex(this.activeRowIndex, 10);
 		}
 		this._setupColumnResizeInteract();
+	}
+
+	/**
+	 * Resolve owning component prefix for generated preference keys.
+	 */
+	private _columnPreferenceOwnerPrefix() : string | null
+	{
+		const rootHost = (this.getRootNode() as ShadowRoot)?.host as HTMLElement | undefined;
+		const ownerTag = String(rootHost?.localName || "").toLowerCase();
+		if(ownerTag.startsWith("et2-") && ownerTag !== "et2-datagrid")
+		{
+			return ownerTag.replace(/^et2-/, "");
+		}
+		return null;
+	}
+
+	/**
+	 * Resolve source row-template id used in generated preference keys.
+	 */
+	private _columnPreferenceTemplateId() : string | null
+	{
+		const fromTemplateData = String(this.templateData?.rowTemplateId || "").trim();
+		if(fromTemplateData)
+		{
+			return fromTemplateData;
+		}
+		const fromTemplateXml = String(this.templateData?.rowTemplateXml?.getAttribute?.("id") || this.templateData?.rowTemplateXml?.id || "").trim();
+		if(fromTemplateXml)
+		{
+			return fromTemplateXml;
+		}
+		const fromParentTemplate = String((this as any)._parent?.template || "").trim();
+		return fromParentTemplate || null;
+	}
+
+	/**
+	 * Resolve final preference key (custom override or generated default).
+	 */
+	private _columnPreferenceName() : string | null
+	{
+		const customKey = String(this.columnPreferenceName || "").trim();
+		if(customKey)
+		{
+			return customKey;
+		}
+		const ownerPrefix = this._columnPreferenceOwnerPrefix();
+		const rowTemplateId = this._columnPreferenceTemplateId();
+		if(!ownerPrefix || !rowTemplateId)
+		{
+			return null;
+		}
+		return `${ownerPrefix}-${rowTemplateId}`;
+	}
+
+	/**
+	 * Apply persisted column state once per resolved key.
+	 */
+	private _loadColumnPreferencesIfNeeded()
+	{
+		if(!this.columns?.length)
+		{
+			return;
+		}
+		const key = this._columnPreferenceName();
+		const app = this.egw()?.app_name?.();
+		if(!key || !app || this._loadedColumnPreferenceKey === key)
+		{
+			return;
+		}
+		let stored = null;
+		try
+		{
+			stored = this.egw()?.preference?.(key, app);
+		}
+		catch(e)
+		{
+			this._loadedColumnPreferenceKey = key;
+			return;
+		}
+		this._loadedColumnPreferenceKey = key;
+		if(!stored)
+		{
+			return;
+		}
+		if(typeof stored === "string")
+		{
+			try
+			{
+				stored = JSON.parse(stored);
+			}
+			catch(e)
+			{
+				return;
+			}
+		}
+		const entries = Array.isArray(stored?.columns) ? stored.columns : Array.isArray(stored) ? stored : [];
+		if(!entries.length)
+		{
+			return;
+		}
+		const orderByKey = new Map<string, number>();
+		const byKey = new Map<string, { width? : string; hidden? : boolean }>();
+		for(let i = 0; i < entries.length; i++)
+		{
+			const entry = entries[i];
+			const keyValue = String(entry?.key || "");
+			if(!keyValue)
+			{
+				continue;
+			}
+			orderByKey.set(keyValue, i);
+			byKey.set(keyValue, {
+				width: typeof entry?.width === "string" ? entry.width : undefined,
+				hidden: typeof entry?.hidden === "boolean" ? entry.hidden : undefined
+			});
+		}
+		const nextColumns = [...this.columns].sort((left, right) =>
+		{
+			const leftIndex = orderByKey.get(String(left.key));
+			const rightIndex = orderByKey.get(String(right.key));
+			if(typeof leftIndex === "number" && typeof rightIndex === "number")
+			{
+				return leftIndex - rightIndex;
+			}
+			if(typeof leftIndex === "number")
+			{
+				return -1;
+			}
+			if(typeof rightIndex === "number")
+			{
+				return 1;
+			}
+			return 0;
+		}).map((column) =>
+		{
+			const persisted = byKey.get(String(column.key));
+			if(!persisted)
+			{
+				return column;
+			}
+			return {
+				...column,
+				width: persisted.width ?? column.width,
+				hidden: typeof persisted.hidden === "boolean" ? persisted.hidden : column.hidden
+			};
+		});
+		this.columns = nextColumns;
+	}
+
+	/**
+	 * Persist current column state for later restore.
+	 */
+	private _persistColumnPreferences()
+	{
+		const key = this._columnPreferenceName();
+		const app = this.egw()?.app_name?.();
+		if(!key || !app)
+		{
+			return;
+		}
+		const value = (this.columns || []).map((column) => ({
+			key: String(column.key),
+			width: typeof column.width === "string" ? column.width : undefined,
+			hidden: !!column.hidden
+		}));
+		try
+		{
+			this.egw()?.set_preference?.(app, key, value);
+		}
+		catch(e)
+		{
+		}
 	}
 
 	/**

@@ -25,13 +25,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		];
 	}
 
-	/** Public rows data. Can be set directly or via setRows(). */
+	/** Initial rows data. Can be set directly or via setRows(). */
 	@property({type: Array})
 	rows : any[] = [];
 
 	/** Template name used to resolve columns and row layout. */
 	@property({type: String})
 	template : string = "";
+
+	/** Optional custom preference name for persisted datagrid column settings. */
+	@property({type: String, attribute: "column-preference-name"})
+	columnPreferenceName : string = "";
 
 	@state()
 	private _columns : Et2DatagridColumn[] = [];
@@ -312,6 +316,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 					._parent=${this}
 					.columns=${this._columns}
 					.templateData=${this._templateData}
+					.columnPreferenceName=${this.columnPreferenceName}
 					.dataProvider=${this._dataProvider}
 					.configurationLoading=${this._templateLoading}
 					selection-mode="multiple"
