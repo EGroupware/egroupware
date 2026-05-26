@@ -438,7 +438,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		const key = this._columnPreferenceName();
-		const app = this.egw()?.app_name?.();
+		const app = this.getInstanceManager?.()?.app || this.egw()?.app_name?.();
 		if(!key || !app || this._loadedColumnPreferenceKey === key)
 		{
 			return;
@@ -529,7 +529,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _persistColumnPreferences()
 	{
 		const key = this._columnPreferenceName();
-		const app = this.egw()?.app_name?.();
+		const app = this.getInstanceManager?.()?.app || this.egw()?.app_name?.();
 		if(!key || !app)
 		{
 			return;

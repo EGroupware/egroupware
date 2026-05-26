@@ -100,17 +100,29 @@ export class Et2RowProvider
 			}
 		}
 		finally
+		{
+			if(this._activeTemplate === tpl)
 			{
-				if(this._activeTemplate === tpl)
+				this._activeTemplate = null;
+			}
+			if(tpl)
+			{
+				// Wait a tick so teardown does not race pending widget initialization.
+				await tpl.updateComplete;
+				try
 				{
-					this._activeTemplate = null;
+					tpl.destroy();
 				}
-				if(tpl)
+				catch(e)
 				{
-					// Wait a tick so teardown does not race pending widget initialization.
-					await tpl.updateComplete;
-					try { tpl.destroy(); } catch(e) {}
-					try { tpl.remove(); } catch(e) {}
+				}
+				try
+				{
+					tpl.remove();
+				}
+				catch(e)
+				{
+				}
 			}
 		}
 

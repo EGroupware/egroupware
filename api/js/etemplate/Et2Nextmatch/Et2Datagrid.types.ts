@@ -14,7 +14,6 @@ export interface Et2DatagridColumn
 
 export interface Et2DatagridTemplateData
 {
-	columns : Et2DatagridColumn[];
 	/** Source template id used for persisted column preference keys. */
 	rowTemplateId? : string;
 	rowTemplate : HTMLTemplateElement | null;
@@ -22,6 +21,7 @@ export interface Et2DatagridTemplateData
 	rowTemplateAttrMap : Record<string, Record<string, string>>;
 	rowHeight?: number;
 	loaderTemplate : HTMLTemplateElement | null;
+	columns : Et2DatagridColumn[];
 }
 
 export interface Et2DatagridRow

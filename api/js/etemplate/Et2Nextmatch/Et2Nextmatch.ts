@@ -52,6 +52,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _rowProvider : Et2RowProvider;
 	private _dataProvider : Et2NextmatchDataProvider;
 	private _slotObserver : MutationObserver | null = null;
+	private _legacyColumnPreferenceApplied : Set<string> = new Set();
 
 	/**
 	 * Resolve the internal datagrid instance from shadow DOM.
@@ -298,11 +299,275 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _applyTemplateData(templateData : Et2DatagridTemplateData)
 	{
 		const columns = templateData.columns?.length ? templateData.columns : this._columns;
-		this._columns = columns || [];
+		this._columns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
 		this._templateData = {
 			...templateData,
 			columns: this._columns
 		};
+	}
+
+	/**
+	 * Apply legacy Nextmatch column preferences once per row-template id.
+	 *
+	 * Legacy keys:
+	 * - `nextmatch-<row_ID>` -> CSV of visible column keys
+	 * - `nextmatch-<row_ID>-size` -> JSON/object map `{ column_key: size }`
+	 *
+	 * This migration is legacy Nextmatch-specific compatibility behaviour
+	 */
+	private _applyLegacyNextmatchColumnPreferences(
+		columns : Et2DatagridColumn[],
+		templateData : Et2DatagridTemplateData
+	) : Et2DatagridColumn[]
+	{
+		const rowTemplateId = String(templateData?.rowTemplateId || "").trim();
+		if(!rowTemplateId || !columns.length)
+		{
+			return columns;
+		}
+		const preferenceBase = `nextmatch-${rowTemplateId}`;
+		if(this._legacyColumnPreferenceApplied.has(preferenceBase))
+		{
+			return columns;
+		}
+		this._legacyColumnPreferenceApplied.add(preferenceBase);
+
+		const app = String(this.getInstanceManager()?.app || this.egw()?.app_name?.() || "").trim();
+		if(!app)
+		{
+			return columns;
+		}
+
+		let storedVisibility : any = null;
+		let storedSizes : any = null;
+		try
+		{
+			storedVisibility = this.egw().preference(preferenceBase, app);
+			storedSizes = this.egw().preference(`${preferenceBase}-size`, app);
+		}
+		catch(e)
+		{
+			return columns;
+		}
+
+		const isLegacyVisibilityCsv = typeof storedVisibility === "string" &&
+			!storedVisibility.trim().startsWith("[") &&
+			!storedVisibility.trim().startsWith("{");
+		const visibleKeys = isLegacyVisibilityCsv
+		                    ? storedVisibility.split(",").map((value) => String(value).trim()).filter(Boolean)
+		                    : [];
+		const mappedVisibleKeys = this._mapLegacyVisibleKeysToCurrentColumns(visibleKeys, columns);
+
+		let nextColumns = [...columns];
+		if(mappedVisibleKeys.length)
+		{
+			nextColumns = this._applyLegacySelectionOrder(nextColumns, mappedVisibleKeys);
+		}
+
+		let widthMap : Record<string, any> = {};
+		if(typeof storedSizes === "string")
+		{
+			try
+			{
+				widthMap = JSON.parse(storedSizes);
+			}
+			catch(e)
+			{
+				widthMap = {};
+			}
+		}
+		else if(storedSizes && typeof storedSizes === "object")
+		{
+			widthMap = storedSizes;
+		}
+		nextColumns = nextColumns.map((column) =>
+		{
+			const key = String(column.key);
+			if(typeof widthMap[key] === "undefined")
+			{
+				return column;
+			}
+			return {
+				...column,
+				width: String(widthMap[key])
+			};
+		});
+
+		// Seed the new-format preference for datagrid persistence path.
+		/*
+		// TODO: When things stabilize, we can do this an delete the old preferences
+		if(visibleKeys.length || Object.keys(widthMap).length)
+		{
+			try
+			{
+				this.egw().set_preference(app, preferenceBase, nextColumns.map((column) => ({
+					key: String(column.key),
+					width: typeof column.width === "string" ? column.width : undefined,
+					hidden: !!column.hidden
+				})));
+			}
+			catch(e)
+			{
+			}
+		}
+
+		 */
+		return nextColumns;
+	}
+
+	/**
+	 * Apply selected-order visibility semantics used by legacy Nextmatch CSV preferences.
+	 */
+	private _applyLegacySelectionOrder(columns : Et2DatagridColumn[], selectedKeysInOrder : string[]) : Et2DatagridColumn[]
+	{
+		const selectedKeys = new Set(selectedKeysInOrder);
+		const byKey = new Map((columns || []).map((column) => [String(column.key), column]));
+		const selectedOrdered = selectedKeysInOrder
+			.map((key) => byKey.get(String(key)))
+			.filter(Boolean) as Et2DatagridColumn[];
+		let selectedCursor = 0;
+		return (columns || []).map((column) =>
+		{
+			const key = String(column.key);
+			if(selectedKeys.has(key) && selectedCursor < selectedOrdered.length)
+			{
+				const ordered = selectedOrdered[selectedCursor++];
+				return {
+					...ordered,
+					hidden: false
+				};
+			}
+			return {
+				...column,
+				hidden: true
+			};
+		});
+	}
+
+	/**
+	 * Map legacy Nextmatch visibility keys onto current datagrid column keys.
+	 *
+	 * Older preferences can contain expanded/duplicated composite keys or historic
+	 * custom-field markers (eg `#text`) that no longer match current column keys.
+	 */
+	private _mapLegacyVisibleKeysToCurrentColumns(legacyKeys : string[], columns : Et2DatagridColumn[]) : string[]
+	{
+		const currentKeys = (columns || []).map((column) => String(column.key || "")).filter(Boolean);
+		if(!legacyKeys.length || !currentKeys.length)
+		{
+			return [];
+		}
+		const currentKeySet = new Set(currentKeys);
+		const used = new Set<string>();
+		const mapped : string[] = [];
+		const currentNormalized = new Map<string, string[]>();
+		for(const key of currentKeys)
+		{
+			currentNormalized.set(key, this._normalizeLegacyColumnKeyTokens(key));
+		}
+
+		for(const legacyKeyRaw of legacyKeys)
+		{
+			const legacyKey = String(legacyKeyRaw || "").trim();
+			if(!legacyKey)
+			{
+				continue;
+			}
+			// Exact key match first.
+			if(currentKeySet.has(legacyKey) && !used.has(legacyKey))
+			{
+				mapped.push(legacyKey);
+				used.add(legacyKey);
+				continue;
+			}
+			// Historic custom-field placeholders map to `customfields` when available.
+			if(legacyKey.startsWith("#") && currentKeySet.has("customfields") && !used.has("customfields"))
+			{
+				mapped.push("customfields");
+				used.add("customfields");
+				continue;
+			}
+
+			const legacyTokens = this._normalizeLegacyColumnKeyTokens(legacyKey);
+			if(!legacyTokens.length)
+			{
+				continue;
+			}
+			let bestKey : string | null = null;
+			let bestScore = 0;
+			for(const currentKey of currentKeys)
+			{
+				if(used.has(currentKey))
+				{
+					continue;
+				}
+				const currentTokens = currentNormalized.get(currentKey) || [];
+				const score = this._legacyColumnKeySimilarityScore(legacyTokens, currentTokens);
+				if(score > bestScore)
+				{
+					bestScore = score;
+					bestKey = currentKey;
+				}
+			}
+			// Threshold tuned to prefer clearly-related composites only.
+			if(bestKey && bestScore >= 0.6)
+			{
+				mapped.push(bestKey);
+				used.add(bestKey);
+			}
+		}
+		return mapped;
+	}
+
+	/**
+	 * Tokenize and normalize legacy/current column keys for fuzzy matching.
+	 */
+	private _normalizeLegacyColumnKeyTokens(key : string) : string[]
+	{
+		const tokens = String(key || "")
+			.toLowerCase()
+			.replace(/^#+/, "")
+			.split(/[^a-z0-9]+/)
+			.filter(Boolean);
+		// Dedupe repeated runs and global repeats while preserving order.
+		const normalized : string[] = [];
+		for(const token of tokens)
+		{
+			if(normalized[normalized.length - 1] === token)
+			{
+				continue;
+			}
+			if(normalized.includes(token))
+			{
+				continue;
+			}
+			normalized.push(token);
+		}
+		return normalized;
+	}
+
+	/**
+	 * Similarity score for legacy/current key token lists.
+	 */
+	private _legacyColumnKeySimilarityScore(legacyTokens : string[], currentTokens : string[]) : number
+	{
+		if(!legacyTokens.length || !currentTokens.length)
+		{
+			return 0;
+		}
+		const currentSet = new Set(currentTokens);
+		let overlap = 0;
+		for(const token of legacyTokens)
+		{
+			if(currentSet.has(token))
+			{
+				overlap++;
+			}
+		}
+		const overlapRatio = overlap / Math.max(legacyTokens.length, currentTokens.length);
+		const legacyContainsCurrent = currentTokens.every((token) => legacyTokens.includes(token)) ? 0.35 : 0;
+		const currentContainsLegacy = legacyTokens.every((token) => currentTokens.includes(token)) ? 0.25 : 0;
+		return overlapRatio + legacyContainsCurrent + currentContainsLegacy;
 	}
 
 	/**
