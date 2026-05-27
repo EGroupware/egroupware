@@ -14,6 +14,21 @@ interface Et2RowProviderHost extends HTMLElement
  */
 export class Et2RowProvider
 {
+	private static readonly CATEGORY_CLASS_PLACEHOLDER_FIELDS = ["cat", "cat_id", "category", "info_cat"] as const;
+	private static readonly CATEGORY_CLASS_PLACEHOLDER_TOKENS : Set<string> = (() =>
+	{
+		const tokens = new Set<string>();
+		for(const field of Et2RowProvider.CATEGORY_CLASS_PLACEHOLDER_FIELDS)
+		{
+			tokens.add(`$${field}`);
+			tokens.add(`{${field}}`);
+			tokens.add(`$row.${field}`);
+			tokens.add(`\${row}[${field}]`);
+			tokens.add(`$row_cont[${field}]`);
+		}
+		return tokens;
+	})();
+
 	private host : Et2RowProviderHost;
 	private _templateLoadToken : number = 0;
 	private _activeTemplate : Et2Template | null = null;
@@ -24,6 +39,118 @@ export class Et2RowProvider
 	constructor(host : Et2RowProviderHost)
 	{
 		this.host = host;
+	}
+
+	static resolveSimpleRowPlaceholders(value : string, row : any, getFieldValue : (row : any, key : string) => any) : string
+	{
+		if(!value || value.indexOf("$") === -1 && value.indexOf("{") === -1)
+		{
+			return value;
+		}
+		let resolved = value;
+		resolved = resolved.replace(/\{([^}]+)\}/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
+		resolved = resolved.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
+		resolved = resolved.replace(/\$\{row\}\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
+		resolved = resolved.replace(/\$row_cont\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
+		resolved = resolved.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
+		return resolved;
+	}
+
+	static customizeRowRootAttributes(rowRoot : HTMLElement, row : any, getFieldValue : (row : any, key : string) => any)
+	{
+		const categoryIds = this._rowCategoryIds(row, getFieldValue);
+		for(const name of rowRoot.getAttributeNames())
+		{
+			const value = rowRoot.getAttribute(name);
+			if(value === null)
+			{
+				continue;
+			}
+			const resolved = name === "class"
+				? this._resolveRowRootClassValue(value, row, getFieldValue, categoryIds)
+				: this.resolveSimpleRowPlaceholders(value, row, getFieldValue);
+			if(resolved !== value)
+			{
+				rowRoot.setAttribute(name, resolved);
+			}
+		}
+	}
+
+	private static _resolveRowRootClassValue(
+		classValue : string,
+		row : any,
+		getFieldValue : (row : any, key : string) => any,
+		categoryIds : string[]
+	) : string
+	{
+		const classTokens = classValue.split(/\s+/).filter(Boolean);
+		if(!classTokens.length)
+		{
+			return "";
+		}
+		const normalized = new Set<string>();
+		for(const token of classTokens)
+		{
+			if(this._isCategoryClassPlaceholder(token))
+			{
+				if(categoryIds.length)
+				{
+					normalized.add("row_category");
+					for(const id of categoryIds)
+					{
+						normalized.add(`cat_${id}`);
+					}
+				}
+				continue;
+			}
+			const resolved = this.resolveSimpleRowPlaceholders(token, row, getFieldValue).trim();
+			if(resolved)
+			{
+				normalized.add(resolved);
+			}
+		}
+		return Array.from(normalized).join(" ");
+	}
+
+	private static _isCategoryClassPlaceholder(token : string) : boolean
+	{
+		return Et2RowProvider.CATEGORY_CLASS_PLACEHOLDER_TOKENS.has(token);
+	}
+
+	private static _rowCategoryIds(row : any, getFieldValue : (row : any, key : string) => any) : string[]
+	{
+		const candidates = [
+			row?.cat_id,
+			row?.info_cat,
+			row?.category,
+			row?.cat,
+			getFieldValue(row, "cat_id"),
+			getFieldValue(row, "info_cat"),
+			getFieldValue(row, "category"),
+			getFieldValue(row, "cat")
+		];
+		for(const value of candidates)
+		{
+			const ids = this._extractCategoryIds(value);
+			if(ids.length)
+			{
+				return ids;
+			}
+		}
+		return [];
+	}
+
+	private static _extractCategoryIds(raw : any) : string[]
+	{
+		const value = String(raw ?? "").trim();
+		if(!value)
+		{
+			return [];
+		}
+		return value
+			.split(",")
+			.map((part) => part.trim())
+			.filter((part) => /^\d+$/.test(part));
 	}
 
 	/**
@@ -152,7 +279,11 @@ export class Et2RowProvider
 		const rowSource = this._getSlotContent("row");
 		const loaderSource = this._getSlotContent("loader");
 
-		const columns = headerSource ? this._extractColumnsFromHeaderNode(this._resolveSlotHeaderElement(headerSource)) : [];
+		const resolvedHeader = headerSource ? this._resolveSlotHeaderElement(headerSource) : null;
+		const columnMeta = resolvedHeader ? this._extractSlotColumnMeta(resolvedHeader) : [];
+		const columns = resolvedHeader
+		                ? this._extractColumnsFromHeaderNode(resolvedHeader).map((column, index) => ({...columnMeta[index], ...column}))
+		                : [];
 		const rowElement = this._resolveSlotRowElement(rowSource);
 		const prepared = rowElement ? this._prepareRowTemplate(rowElement, columns) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
@@ -248,36 +379,16 @@ export class Et2RowProvider
 	}
 
 	/**
-	 * Apply persisted user width preferences.
-	 * Current preference path is kept for compatibility with existing Nextmatch behavior.
-	 */
-	private _applySavedWidths(columns : Et2DatagridColumn[])
-	{
-		try
-		{
-			const sizes = this.host.egw?.()?.preference("nextmatch-addressbook.index.rows-size", "addressbook");
-			if(sizes)
-			{
-				for(const col of columns)
-				{
-					if(typeof sizes[col.key] !== "undefined")
-					{
-						col.width = String(sizes[col.key]);
-					}
-				}
-			}
-		}
-		catch(e)
-		{
-		}
-	}
-
-	/**
 	 * Parse column definitions from header
 	 */
 	private _extractColumnsFromHeaderNode(headerNode : Element) : Et2DatagridColumn[]
 	{
-		const nodes = this._headerColumnSourceNodes(headerNode);
+		const nodes = this._headerColumnSourceNodes(headerNode)
+			.filter((node) =>
+			{
+				const tag = node.tagName.toLowerCase();
+				return tag !== "columns" && tag !== "column";
+			});
 		const columns : Et2DatagridColumn[] = [];
 		nodes.forEach((node, index) =>
 		{
@@ -286,10 +397,9 @@ export class Et2RowProvider
 				return;
 			}
 			const element = node as Element;
-			const widget = this.host.createElementFromNode(node);
 			const key = this._getColumnKey(element, index);
 			const title = this._extractHeaderTitle(element) || (element.textContent || element.getAttribute("title") || key).trim();
-			const col : Et2DatagridColumn = {key, title, header: widget};
+			const col : Et2DatagridColumn = {key, title, header: element};
 			const width = element.getAttribute("width") || element.getAttribute("data-width");
 			const minWidth = element.getAttribute("minWidth") || element.getAttribute("data-min-width");
 			const disabled = element.getAttribute("disabled");
@@ -299,6 +409,33 @@ export class Et2RowProvider
 			columns.push(col);
 		});
 		return columns;
+	}
+
+	/**
+	 * Read optional slotted <columns><column/></columns> metadata for width/minWidth/disabled.
+	 */
+	private _extractSlotColumnMeta(headerNode : Element) : Array<{
+		width? : string;
+		minWidth? : string;
+		disabled? : string
+	}>
+	{
+		let columnNodes : Element[] = [];
+		const tag = headerNode.tagName.toLowerCase();
+		if(tag === "columns")
+		{
+			columnNodes = Array.from(headerNode.children).filter((child) => child.tagName.toLowerCase() === "column") as Element[];
+		}
+		else
+		{
+			columnNodes = Array.from(headerNode.children) as Element[];
+		}
+		return columnNodes.map((column) => ({
+			// Width in parsed etemplates disappears into style, but it's still there when reading the raw template
+			width: column.getAttribute("width") || (column as HTMLElement).style.width || undefined,
+			minWidth: column.getAttribute("minWidth") || column.getAttribute("minwidth") || column.getAttribute("min-width") || undefined,
+			disabled: column.getAttribute("disabled") || undefined
+		}));
 	}
 
 	/**
@@ -568,11 +705,17 @@ export class Et2RowProvider
 		const tag = node.tagName.toLowerCase();
 		if(tag.includes("nextmatch"))
 		{
-			return (node.getAttribute("label") || node.getAttribute("emptyLabel") || node.getAttribute("title") || "").trim();
+			return (
+				// Node has already been read, maybe put into the DOM
+				(node as any).label || (node as any).emptyLabel ||
+				// Maybe reading raw template
+				node.getAttribute("label") || node.getAttribute("emptyLabel") || node.getAttribute("title") ||
+				""
+			).trim();
 		}
 
 		const labels = Array.from(node.querySelectorAll("*"))
-			.map((element) => (element.getAttribute("label") || element.getAttribute("emptyLabel") || element.getAttribute("title") || element.textContent||"").trim())
+			.map((element) => ((element as any).label || (element as any).emptyLabel || element.getAttribute("label") || element.getAttribute("emptyLabel") || element.getAttribute("title") || element.textContent || "").trim())
 			.filter(Boolean);
 
 		return [...new Set(labels)].join(" / ");
@@ -601,7 +744,7 @@ export class Et2RowProvider
 	}
 
 	/**
-	 * Return first node assigned to a named slot on the host.
+	 * Return the first node assigned to a named slot on the host.
 	 */
 	private _getSlotContent(name : string) : Element | null
 	{

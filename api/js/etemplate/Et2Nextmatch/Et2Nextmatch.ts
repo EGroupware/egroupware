@@ -4,7 +4,7 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Datagrid} from "./Et2Datagrid";
-import {Et2DatagridColumn, Et2DatagridTemplateData} from "./Et2Datagrid.types";
+import {Et2DatagridColumn, Et2DatagridRowCustomizeContext, Et2DatagridTemplateData} from "./Et2Datagrid.types";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import "./Headers/Header";
@@ -70,7 +70,27 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _rowProvider : Et2RowProvider;
 	private _dataProvider : Et2NextmatchDataProvider;
 	private _slotObserver : MutationObserver | null = null;
+	private _slotApplyInFlight : Promise<void> | null = null;
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
+	private _customizeDatagridRow = (context : Et2DatagridRowCustomizeContext) =>
+	{
+		const categoryClass = Array.from(context.rowElement.classList).find((name) => /^cat_\d+$/.test(name));
+		if(categoryClass)
+		{
+			const categoryId = categoryClass.slice(4);
+			context.metaCell.style.setProperty("--category-color", `var(--cat-${categoryId}-color)`);
+		}
+		else
+		{
+			context.metaCell.style.removeProperty("--category-color");
+		}
+		context.metaCell.setAttribute(
+			"part",
+			context.rowElement.classList.contains("row_category")
+				? "row-meta row-meta-category"
+				: "row-meta"
+		);
+	};
 
 	/**
 	 * Resolve the internal datagrid instance from shadow DOM.
@@ -128,7 +148,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 		else
 		{
-			this._applyTemplateFromSlots();
+			await this._applyTemplateFromSlots();
 		}
 
 		if(this.rows.length)
@@ -225,19 +245,44 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _initSlotObserver()
 	{
 		this._slotObserver?.disconnect();
-		this._slotObserver = new MutationObserver(() =>
+		this._slotObserver = new MutationObserver((records) =>
 		{
-			if(!this.template)
+			if(!this.template && this._hasAddedTemplateSlotNode(records))
 			{
 				this._applyTemplateFromSlots();
 			}
 		});
 		this._slotObserver.observe(this, {
 			childList: true,
-			subtree: true,
-			attributes: true,
-			attributeFilter: ["slot"]
+			subtree: true
 		});
+	}
+
+	/**
+	 * Return true only when an added node has one of the template-input slots.
+	 */
+	private _hasAddedTemplateSlotNode(records : MutationRecord[]) : boolean
+	{
+		for(const record of records)
+		{
+			if(record.type !== "childList")
+			{
+				continue;
+			}
+			for(const node of Array.from(record.addedNodes))
+			{
+				if(!(node instanceof Element))
+				{
+					continue;
+				}
+				const slotName = String(node.getAttribute("slot") || "").trim();
+				if(["header", "columns", "row", "loader"].includes(slotName))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -296,18 +341,63 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 
 	/**
 	 * Resolve row/column configuration from slotted markup.
-	 * Slot mode is synchronous, so we can clear loading state immediately.
+	 * Wait for slotted children to finish upgrades before parsing.
 	 */
-	private _applyTemplateFromSlots()
+	private async _applyTemplateFromSlots() : Promise<void>
 	{
-		this._templateLoading = false;
-		const templateData = this._rowProvider.fromSlots();
-		if(!templateData)
+		if(this._slotApplyInFlight)
 		{
-			this._templateData = null;
+			return this._slotApplyInFlight;
+		}
+		this._slotApplyInFlight = (async() =>
+		{
+			await this._waitForSlottedTemplateChildrenReady();
+			this._templateLoading = false;
+			const templateData = this._rowProvider.fromSlots();
+			if(!templateData)
+			{
+				this._templateData = null;
+				return;
+			}
+			this._applyTemplateData(templateData);
+		})().finally(() =>
+		{
+			this._slotApplyInFlight = null;
+		});
+		return this._slotApplyInFlight;
+	}
+
+	/**
+	 * Wait for slotted template nodes and their descendants to finish update cycles before parsing.
+	 */
+	private async _waitForSlottedTemplateChildrenReady() : Promise<void>
+	{
+		const slotNodes = Array.from(this.querySelectorAll("[slot='columns'], [slot='row'], [slot='loader']")) as Element[];
+		if(!slotNodes.length)
+		{
 			return;
 		}
-		this._applyTemplateData(templateData);
+		const waitables : Promise<any>[] = [];
+		for(const node of slotNodes)
+		{
+			const withUpdateComplete = node as any;
+			if(withUpdateComplete?.updateComplete && typeof withUpdateComplete.updateComplete.then === "function")
+			{
+				waitables.push(withUpdateComplete.updateComplete);
+			}
+			for(const child of Array.from(node.querySelectorAll("*")))
+			{
+				const updatable = child as any;
+				if(updatable?.updateComplete && typeof updatable.updateComplete.then === "function")
+				{
+					waitables.push(updatable.updateComplete);
+				}
+			}
+		}
+		if(waitables.length)
+		{
+			await Promise.allSettled(waitables);
+		}
 	}
 
 	/**
@@ -601,6 +691,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 					._parent=${this}
 					.columns=${this._columns}
 					.templateData=${this._templateData}
+					.rowCustomizer=${this._customizeDatagridRow}
 					.columnPreferenceName=${this.columnPreferenceName}
 					.dataProvider=${this._dataProvider}
 					.configurationLoading=${this._templateLoading}

@@ -1,12 +1,3 @@
-# Et2Nextmatch
-
-`et2-nextmatch` is a Nextmatch wrapper around `et2-datagrid`.
-It resolves columns and row rendering from either:
-
-- a named eTemplate row template (`template="app.index.rows"`), or
-- slotted template fragments (`slot="columns"` / `slot="row"` / etc.).
-
-It also keeps legacy Nextmatch column preferences compatible while using Datagrid persistence.
 
 ## Overview
 

@@ -146,7 +146,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	 */
 	protected rowTemplate(column) : TemplateResult
 	{
-		const isCustom = column.widget?.instanceOf(et2_nextmatch_customfields) || false;
+		const isCustom = column.widget?.instanceOf?.(et2_nextmatch_customfields) || false;
 		const alwaysOn = [et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS, et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT].indexOf(column.visibility) !== -1;
 
 		// Don't show disabled columns

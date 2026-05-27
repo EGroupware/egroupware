@@ -52,3 +52,13 @@ export interface Et2DatagridSelectionDetail
 }
 
 export type Et2DatagridSelectionMode = "none" | "single" | "multiple";
+
+export interface Et2DatagridRowCustomizeContext
+{
+	rowElement : HTMLElement;
+	rowData : any;
+	rowIndex : number;
+	metaCell : HTMLTableCellElement;
+}
+
+export type Et2DatagridRowCustomizer = (context : Et2DatagridRowCustomizeContext) => void;
