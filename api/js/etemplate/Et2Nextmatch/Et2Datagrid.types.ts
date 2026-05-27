@@ -53,12 +53,20 @@ export interface Et2DatagridSelectionDetail
 
 export type Et2DatagridSelectionMode = "none" | "single" | "multiple";
 
+/**
+ * Context object passed to row customizers for per-row presentation tweaks.
+ */
 export interface Et2DatagridRowCustomizeContext
 {
+	/** Row root element rendered by datagrid (usually `<tr>`). */
 	rowElement : HTMLElement;
+	/** Raw row data object for this row. */
 	rowData : any;
+	/** Absolute row index in the current virtualized dataset. */
 	rowIndex : number;
+	/** Leading metadata cell (column 0) for indicators/actions. */
 	metaCell : HTMLTableCellElement;
 }
 
+/** Hook for consumers to customize each row/meta-cell after row creation. */
 export type Et2DatagridRowCustomizer = (context : Et2DatagridRowCustomizeContext) => void;

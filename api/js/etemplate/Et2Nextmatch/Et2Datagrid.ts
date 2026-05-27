@@ -41,10 +41,13 @@ import type {InteractEvent} from "@interactjs/core/InteractEvent";
  * @csspart resize-helper - Helper bar shown while resizing a column.
  * @csspart table - Internal table element with ARIA grid semantics.
  * @csspart rows - Table body that hosts virtualized row content.
+ * @csspart meta-column - Leading header column used for row metadata indicators.
+ * @csspart row-meta - Leading per-row metadata cell (column 0), customizable by consumers.
  * @csspart column - A visible header column wrapper.
  * @csspart column-selection - Column selection action container in the header.
  *
  * @cssproperty [--row-height=3em] - Estimated row height used for spacer rendering.
+ * @cssproperty [--meta-column-width=0px] - Width of leading metadata column.
  * @cssproperty [--column-sizes] - Grid-template column track definition used by header/body rows.
  * @cssproperty [--column-count=1] - Column count fallback when explicit track sizes are not set.
  * @cssproperty [--scrollbar-space=15px] - Reserved right-side space in header for body scrollbar alignment.
@@ -139,6 +142,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	@property({attribute: false})
 	dataProvider : Et2DatagridDataProvider | null = null;
 
+	/**
+	 * Optional hook invoked for each realized row to customize row/meta-cell presentation.
+	 */
 	@property({attribute: false})
 	rowCustomizer : Et2DatagridRowCustomizer | null = null;
 

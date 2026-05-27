@@ -13,7 +13,7 @@ The row/header structure is read from that template and converted for `et2-datag
 
 ### Slotted Template Mode
 
-When `template` is not set, `et2-nextmatch` reads slotted child markup from its light DOM.
+(WIP) When `template` is not set, `et2-nextmatch` reads slotted child markup from its light DOM.
 
 ```xml
 <et2-nextmatch id="nm">
@@ -39,7 +39,7 @@ When `template` is not set, `et2-nextmatch` reads slotted child markup from its 
 
 ### Shared Template Details
 
-Full details for columns, rows, expression syntax, wrapper behavior, and loader slots are documented in:
+Full details for columns, rows, expression syntax, wrapper behaviour, and loader slots are documented in:
 
 - [Et2Datagrid.md](/var/www/egroupware/api/js/etemplate/Et2Nextmatch/Et2Datagrid.md)
 

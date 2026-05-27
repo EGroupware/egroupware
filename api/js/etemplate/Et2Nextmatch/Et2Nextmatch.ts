@@ -28,6 +28,7 @@ import styles from "./Et2Nextmatch.styles";
  * @csspart header - Wrapper for top header slot content rendered above the grid.
  * @csspart grid - Internal `et2-datagrid` element.
  * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
+ * @cssproperty [--meta-column-width=6px] - Width of leading metadata indicator column.
  */
 @customElement("et2-nextmatch")
 export class Et2Nextmatch extends Et2Widget(LitElement)
@@ -72,6 +73,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _slotObserver : MutationObserver | null = null;
 	private _slotApplyInFlight : Promise<void> | null = null;
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
+
+	/**
+	 * Nextmatch-specific row metadata styling hook.
+	 * Maps category classes to a style-ready `--category-color` on datagrid meta cell.
+	 */
 	private _customizeDatagridRow = (context : Et2DatagridRowCustomizeContext) =>
 	{
 		const categoryClass = Array.from(context.rowElement.classList).find((name) => /^cat_\d+$/.test(name));

@@ -25,7 +25,7 @@ When using `et2-nextmatch template="app.index.rows"`:
 
 ### From Slotted Templates
 
-When using slots (`template` attribute not set):
+(WIP) When using slots (`template` attribute not set):
 
 - Columns come from `slot="columns"`.
 - Any wrapper can carry the slot (`tr`, `div`, `et2-box`, etc.).
@@ -63,7 +63,7 @@ Common legacy patterns continue to work.
 
 ### From Slotted Templates
 
-Slotted row template comes from `slot="row"`.
+(WIP) Slotted row template comes from `slot="row"`.
 
 - Preferred wrapper: `<tr slot="row">`
 - Legacy wrapper: `<row slot="row">`
