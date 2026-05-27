@@ -427,6 +427,34 @@ Location: https://example.org/egroupware/groupdav.php/<username>/addressbook/123
 ```
 </details>
 
+#### All possible flat attributes for `ContactPatch`
+
+The following flat attributes are supported by the `ContactPatch` schema in
+`doc/openapi/addressbook.json` and can be used for `POST` (flat create) and
+`PATCH` (partial update):
+
+* `name`
+* `fullName`
+* `name/given`
+* `name/surname`
+* `organizations/org/name`
+* `organizations/org/unit`
+* `emails/work`
+* `emails/work/email`
+* `phones/tel_work`
+* `phones/tel_cell`
+* `addresses/work/locality`
+* `addresses/work/postcode`
+* `addresses/work/street`
+* `addresses/work/country`
+* `addresses/work/countryCode`
+* `online/url`
+* `notes/note`
+* `egroupware.org:customfields`
+* `egroupware.org:customfields/Test` (example key for a custom field)
+
+> To unset a field or complete object with PATCH, patch its value to `null`.
+
 #### **PUT**  requests with  a `Content-Type: application/json` header allow modifying single resources (requires to specify all attributes!)
 
 <details>

@@ -384,7 +384,7 @@
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Contact"
+                "$ref": "#/components/schemas/ContactPatch"
               }
             }
           }
@@ -648,6 +648,17 @@
         "type": "object",
         "description": "Partial update for a contact (all properties optional) or creating a new contact using a single flat object with json-path of Contact schema as attribute names. To unset a field, set its value to `null`.",
         "properties": {
+          "name": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NameComponent"
+            },
+            "description": "Name components (given, surname, etc.)"
+          },
+          "fullName": {
+            "type": "string",
+            "description": "Full name of the contact"
+          },
           "name/given": {
             "type": "string",
             "description": "Given or first name"
@@ -667,6 +678,10 @@
           "emails/work": {
             "type": "string"
           },
+          "emails/work/email": {
+            "type": "string",
+            "description": "Work email address"
+          },
           "phones/tel_work": {
             "type": "string",
             "description": "Phone number"
@@ -685,12 +700,28 @@
           "addresses/work/street": {
             "type": "string"
           },
+          "addresses/work/country": {
+            "type": "string",
+            "description": "Country name"
+          },
+          "addresses/work/countryCode": {
+            "type": "string",
+            "description": "ISO country code"
+          },
+          "online/url": {
+            "type": "string",
+            "description": "Primary website URL"
+          },
           "notes/note": {
             "type": "string"
           },
           "egroupware.org:customfields": {
             "type": "object",
             "additionalProperties": true
+          },
+          "egroupware.org:customfields/Test": {
+            "type": "string",
+            "description": "Example custom field key"
           }
         }
       },
