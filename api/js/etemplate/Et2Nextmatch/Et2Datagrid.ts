@@ -390,11 +390,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			// Capture source cell->column mapping before user reorders columns.
 			this._sourceColumnKeys = (this.templateData?.columns || this.columns || []).map((column) => String(column.key));
+			this._prepareVisibleHeaders();
 			this._reconcileRowRenderState();
 			this._ensureTableColSizes();
 		}
 		if(changedProperties.has("columns"))
 		{
+			this._prepareVisibleHeaders();
 			this._reconcileRowRenderState();
 			this._ensureTableColSizes();
 			this._applyColumnVisibilityToRenderedRows();
@@ -1230,7 +1232,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				continue;
 			}
 			rowElement.classList.add("loading");
-			if(this._upgradeRowElements(rowElement, row.data, rowIndex))
+			if(this._applyRowElementAttributes(rowElement, row.data, rowIndex))
 			{
 				rowElement.setAttribute("data-et2dg-upgraded-for", dataRowId);
 			}
@@ -1321,12 +1323,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Upgrade and configure custom child widgets after row insertion.
+	 * Apply row-scoped template attributes to child widgets after row insertion.
 	 * This is deferred to keep scrolling/rendering responsive.
 	 */
-	private _upgradeRowElements(rowRoot : HTMLElement, rowData : any, rowIndex : number) : boolean
+	private _applyRowElementAttributes(rowRoot : HTMLElement, rowData : any, rowIndex : number) : boolean
 	{
-		const toUpgrade = Array.from(rowRoot.querySelectorAll("*")) as any[];
+		const attrMap = this.templateData?.rowTemplateAttrMap || {};
+		const toUpgrade = Array.from(rowRoot.querySelectorAll("[data-et2nm-id]")) as any[];
 		if(!toUpgrade.length)
 		{
 			rowRoot.classList.remove("loading");
@@ -1338,25 +1341,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const mgr = this.getArrayMgr("content")?.openPerspective(this, mgrRowData, rowIndex);
 		try
 		{
-			const ce = (window as any).customElements;
-			// Upgrade custom elements first so widget APIs exist before we call
-			// framework-specific attribute transformation hooks.
-			if(ce && typeof ce.upgrade === "function")
-			{
-				for(const element of toUpgrade)
-				{
-					try
-					{
-						ce.upgrade(element);
-						// Check to see if we get here
-						debugger;
-					}
-					catch(e)
-					{
-					}
-				}
-			}
-
 			// Apply stored template attributes through each widget's transform hook
 			// so row-scoped values ($row.*) are expanded with the current row manager.
 			for(const element of toUpgrade)
@@ -1364,7 +1348,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				try
 				{
 					const id = element.getAttribute?.("data-et2nm-id");
-					const stored = id ? this.templateData?.rowTemplateAttrMap?.[id] : null;
+					const stored = id ? attrMap[id] : null;
 					if(element.setArrayMgr && mgr)
 					{
 						element.setArrayMgr("content", mgr);
@@ -1380,11 +1364,20 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				}
 				catch(e)
 				{
+					this.egw()?.debug?.("error", "Et2Datagrid: failed to apply row element attributes", {
+						rowIndex,
+						element: element?.tagName || "",
+						error: e
+					});
 				}
 			}
 		}
 		catch(e)
 		{
+			this.egw()?.debug?.("error", "Et2Datagrid: row attribute application failed", {
+				rowIndex,
+				error: e
+			});
 			rowRoot.classList.remove("loading");
 			return false;
 		}
@@ -2456,6 +2449,37 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				${visibleColumns.length > 0 ? columnsHeaders : 	html`<slot name="header"></slot>`}
 			</div>
 		`;
+	}
+
+	/**
+	 * Normalize visible custom header nodes once after structure changes.
+	 * Template parsing can provide non-HTMLElement XML nodes, so this phase also
+	 * normalizes them to real HTML elements before datagrid renders headers.
+	 */
+	private _prepareVisibleHeaders()
+	{
+		for(const column of this.columns || [])
+		{
+			const prepared = this._prepareHeaderNode(column.header);
+			if(prepared && prepared !== column.header)
+			{
+				column.header = prepared;
+			}
+		}
+	}
+
+	/**
+	 * Ensure headers use the widget creation pipeline when coming from XML nodes.
+	 */
+	private _prepareHeaderNode(header? : Element) : Element | null
+	{
+		if(!header)
+		{
+			return null;
+		}
+		return header instanceof HTMLElement
+			? header
+			: this.createElementFromNode(header, header.tagName.toLowerCase()) as unknown as Element;
 	}
 
 	/**

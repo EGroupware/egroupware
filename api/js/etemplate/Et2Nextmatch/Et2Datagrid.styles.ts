@@ -141,7 +141,6 @@ export default css`
 		tbody > tr {
 			display: grid;
 			grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
-			padding-bottom: var(--sl-spacing-2x-small);
 			outline: none;
 			width: 100%;
 			min-height: 4em;
