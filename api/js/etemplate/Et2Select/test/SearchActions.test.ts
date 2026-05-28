@@ -45,6 +45,14 @@ async function activateOptions(select : Et2Select)
 	await select.updateComplete;
 }
 
+function ensureSearchInputHasSelect(input : any)
+{
+	if(input && typeof input.select !== "function")
+	{
+		input.select = () => {};
+	}
+}
+
 async function before()
 {
 	// This stuff because otherwise Et2Select isn't actually loaded when testing
@@ -132,6 +140,7 @@ describe("Trigger search", () =>
 		await element.updateComplete;
 		await activateOptions(element);
 		await element._searchInputNode.updateComplete;
+		ensureSearchInputHasSelect(element._searchInputNode);
 		await elementUpdated(element);
 	});
 
@@ -240,6 +249,7 @@ describe("Search results", () =>
 		await element.updateComplete;
 		await activateOptions(element);
 		await element._searchInputNode.updateComplete;
+		ensureSearchInputHasSelect(element._searchInputNode);
 		await elementUpdated(element);
 	});
 

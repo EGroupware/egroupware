@@ -29,6 +29,10 @@ async function before(editable = true)
 	// Need to call loadFromXML() explicitly to read the options
 	element.loadFromXML(element);
 	element.value = "one";
+	if((element as any)._searchInputNode && typeof (element as any)._searchInputNode.select !== "function")
+	{
+		(element as any)._searchInputNode.select = () => {};
+	}
 
 	return element;
 }
