@@ -2236,6 +2236,46 @@
             "time": "2017-11-11T00:00:00+00:00"
         },
         {
+            "name": "egroupware/openid",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/EGroupware/openid.git",
+                "reference": "8554d1e7b26022430f2768e10a5fbd8f8706efb0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/8554d1e7b26022430f2768e10a5fbd8f8706efb0",
+                "reference": "8554d1e7b26022430f2768e10a5fbd8f8706efb0",
+                "shasum": ""
+            },
+            "require": {},
+            "require-dev": {},
+            "default-branch": true,
+            "type": "egroupware-app",
+            "autoload": {
+                "psr-4": {
+                    "EGroupware\\OpenID\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "Ralf Becker",
+                    "email": "rb@egroupware.org"
+                }
+            ],
+            "description": "EGroupware OpenID Connect / OAuth2 server",
+            "homepage": "https://www.egroupware.org/",
+            "support": {
+                "source": "https://github.com/EGroupware/openid/tree/master"
+            },
+            "time": "2026-04-23T07:28:30+00:00"
+        },
+        {
             "name": "egroupware/projectmanager",
             "version": "dev-master",
             "source": {
