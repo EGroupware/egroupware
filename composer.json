@@ -57,8 +57,8 @@
 		"sort-packages": true,
 		"allow-plugins": {
 			"composer/installers": true,
-			"simplesamlphp/composer-module-installer": true,
-			"oomphinc/composer-installers-extender": true
+			"oomphinc/composer-installers-extender": true,
+			"simplesamlphp/composer-module-installer": true
 		}
 	},
 	"require": {
@@ -121,14 +121,13 @@
 		"egroupware/translation": "^2.3.0",
 		"egroupware/url": "^2.3.0",
 		"egroupware/util": "^2.7.0",
-		"egroupware/webdav": "^0.4.0",
+		"egroupware/webdav": "^0.5.1",
 		"egroupware/xml_feed_parser": "^1.0.5",
 		"egroupware/z-push-dev": "2.5.0.1",
 		"giggsey/libphonenumber-for-php": "^9.0.17",
 		"guzzlehttp/guzzle": "^7.4.1",
 		"guzzlehttp/psr7": "^2.1.0",
 		"jumbojett/openid-connect-php": "^0.9.10",
-		"league/oauth2-server": "^7.4",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^2.0.1",
@@ -138,8 +137,7 @@
 		"phpseclib/phpseclib": "^3.0.34",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"robrichards/xmlseclibs": "^3.1.1",
-		"simplesamlphp/simplesamlphp": "^1.19.0",
-		"simplesamlphp/twig-configurable-i18n": "~2.3.3",
+		"simplesamlphp/simplesamlphp": "^2.5.0",
 		"tinymce/tinymce": "^5.10.8"
 	},
 	"require-dev": {

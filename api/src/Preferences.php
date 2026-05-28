@@ -973,6 +973,10 @@ class Preferences
 	 */
 	static function setlocale($category=LC_MESSAGES,$charset=null)
 	{
+		if (!extension_loaded('intl'))
+		{
+			return 'en';    // polyfill only supports "en"
+		}
 		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
 
