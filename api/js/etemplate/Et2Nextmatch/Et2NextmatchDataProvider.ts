@@ -4,8 +4,14 @@ interface Et2NextmatchProviderHost extends HTMLElement
 {
 	egw : Function;
 	getInstanceManager : Function;
+	getArrayMgr : (...args : any[]) => any;
+	getParent : (...args : any[]) => any;
+	getWidgetById : (id : string) => any;
+	activeFilters : Record<string, any>;
+	sortBy : (id : string, asc? : boolean, update? : boolean) => void;
 	id : string;
 	getAttribute : (name : string) => string | null;
+	applyFilters? : (set? : Record<string, any>, options? : { reload? : boolean }) => boolean;
 }
 
 /**
@@ -49,6 +55,77 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	constructor(host : Et2NextmatchProviderHost)
 	{
 		this.host = host;
+	}
+
+	/**
+	 * Process additional data Nextmatch sent such as new SelectOptions or flags.
+	 *
+	 * @private
+	 */
+	private _processAdditionalData(additionalData)
+	{
+		for(let i in additionalData)
+		{
+			if(Number.isInteger(i) || !i)
+			{
+				continue;
+			}
+			// Select options
+			if(i == 'sel_options')
+			{
+				const mgr = this.host.getArrayMgr(i);
+				let app_toolbar = this.host.closest('egw-app')?.querySelector('[slot="main-header"]') as any;
+				if(app_toolbar && app_toolbar.localName != "et2-template")
+				{
+					app_toolbar = app_toolbar?.querySelector("et2-template");
+				}
+				for(const id in additionalData.sel_options)
+				{
+					mgr.data[id] = additionalData.sel_options[id];
+					var select = this.host.getWidgetById(id);
+					if(select && select.set_select_options)
+					{
+						select.set_select_options(additionalData.sel_options[id]);
+					}
+					// Clear rowProvider internal cache so it uses new values
+					/*if(id == 'cat_id')
+					{
+						this.self._rowProvider.categories = null;
+					}*/
+					// update array mgr so select widgets in row also get refreshed options
+					this.host.getParent().getArrayMgr('sel_options').data[id] = additionalData.sel_options[id];
+					// update filterbox, app-toolbar widgets
+					[(this.host as any)._filterbox?.getWidgetById?.(id), app_toolbar?.getWidgetById?.(id)].forEach(widget =>
+					{
+						if(!widget)
+						{
+							return;
+						}
+						widget.set_select_options(additionalData.sel_options[id]);
+						widget.value = widget.value;	// not sure why this is necessary
+					});
+				}
+			}
+			// Sort order
+			else if(i === "order" && additionalData[i] !== this.host.activeFilters.order)
+			{
+				this.host.sortBy(additionalData[i], undefined, false);
+			}
+			// Filter values
+			else
+			{
+				const mgr = this.host.getArrayMgr('content');
+				mgr.data[i] = additionalData[i];
+
+				// It's not enough to just update the data, the widgets need to
+				// be updated too, if there are matching widgets.
+				const widget = this.host.getWidgetById(i);
+				if(widget && widget.set_value)
+				{
+					widget.set_value(mgr.getEntry(i));
+				}
+			}
+		}
 	}
 
 	/**
@@ -96,6 +173,9 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 							resolve({rows: [], total: null});
 							return;
 						}
+						// Extra data from nextmatch
+						this._processAdditionalData(resp.rows);
+
 						const order : string[] = Array.isArray(resp.order) ? resp.order : [];
 						if(!order.length)
 						{
@@ -106,12 +186,12 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 							return;
 						}
 
-							const rowsByIndex : Array<Et2DatagridRow | null> = new Array(order.length).fill(null);
-							let pending = order.length;
-							order.forEach((uid, index) =>
-							{
-								// dataRegisterUID can return out-of-order; capture by original position.
-								this.host.egw().dataRegisterUID(
+						const rowsByIndex : Array<Et2DatagridRow | null> = new Array(order.length).fill(null);
+						let pending = order.length;
+						order.forEach((uid, index) =>
+						{
+							// dataRegisterUID can return out-of-order; capture by original position.
+							this.host.egw().dataRegisterUID(
 								uid,
 								(data : any, resolvedUid : string) =>
 								{

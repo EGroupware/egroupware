@@ -298,9 +298,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 
 	/**
 	 * Legacy-compatible filter application entry point.
-	 * Merges updates into `activeFilters`, emits cancelable `et2-filter`, and reloads rows.
+	 * Merges updates into `activeFilters`, emits cancelable `et2-filter`, and reloads rows by default.
 	 */
-	applyFilters(set? : Record<string, any>)
+	applyFilters(set? : Record<string, any>, options? : { reload? : boolean })
 	{
 		if(!this._filters || typeof this._filters !== "object")
 		{
@@ -395,7 +395,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 
 		this._updateSortHeaderState();
-		this._datagrid?.reload();
+		if(options?.reload !== false)
+		{
+			this._datagrid?.reload();
+		}
 
 		return true;
 	}
