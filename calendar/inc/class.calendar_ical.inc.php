@@ -2720,12 +2720,9 @@ class calendar_ical extends calendar_boupdate
 						$vcardData['start'] = new DateTime($dtstart_ts, DateTime::$server_timezone);
 					}
 
-					// set event timezone from dtstart, if specified there
-					if(is_callable([$attributes['value'], 'getTimezone']))
-					{
-						$event['tzid'] = $attributes['value']->getTimezone()->getName();
-					}
-					else if(!empty($attributes['params']['TZID']) && !$isDate)
+					// set event timezone from DTSTART;TZID first (important for Windows TZIDs from Exchange),
+					// then fall back to timezone of parsed DateTime object
+					if(!empty($attributes['params']['TZID']) && !$isDate)
 					{
 						// import TZID, if PHP understands it (we only care about TZID of starttime,
 						// as we store only a TZID for the whole event)
@@ -2754,6 +2751,10 @@ class calendar_ical extends calendar_boupdate
 							$event['tzid'] = date_default_timezone_get();	// default to current timezone
 						}
 					}
+					elseif(is_callable([$attributes['value'], 'getTimezone']))
+					{
+						$event['tzid'] = $attributes['value']->getTimezone()->getName();
+					}
 					// if no timezone given and one is specified in class (never the case for CalDAV)
 					elseif ($this->tzid)
 					{
@@ -2769,6 +2770,22 @@ class calendar_ical extends calendar_boupdate
 					else
 					{
 						$event['tzid'] = Api\DateTime::$user_timezone->getName();
+					}
+					// If Horde parsed an unknown TZID DTSTART using current default timezone,
+					// reinterpret wall-clock time in resolved DTSTART;TZID timezone.
+					if(!$isDate && is_object($attributes['value']) && !empty($attributes['params']['TZID']) && !empty($event['tzid']))
+					{
+						try
+						{
+							$vcardData['start'] = new DateTime(
+								$attributes['value']->format('Y-m-d H:i:s'),
+								calendar_timezones::DateTimeZone($event['tzid'])
+							);
+						}
+						catch (Exception $e)
+						{
+							// keep parsed value if timezone reconstruction fails
+						}
 					}
 					break;
 
@@ -2790,6 +2807,22 @@ class calendar_ical extends calendar_boupdate
 						if($vcardData['end']->format('H:i:s') == '00:00:00' || isset($attributes['params']['VALUE']) && $attributes['params']['VALUE'] == 'DATE')
 						{
 							$vcardData['end']->sub(new DateInterval('PT1S'));
+						}
+					}
+					// If DTSTART/DTEND used an unmapped Windows TZID and Horde already parsed a DateTime
+					// in current default timezone, reinterpret DTEND wall-clock in DTSTART resolved event TZID.
+					if(!$isDate && is_object($attributes['value']) && !empty($attributes['params']['TZID']) && !empty($event['tzid']))
+					{
+						try
+						{
+							$vcardData['end'] = new DateTime(
+								$attributes['value']->format('Y-m-d H:i:s'),
+								calendar_timezones::DateTimeZone($event['tzid'])
+							);
+						}
+						catch (Exception $e)
+						{
+							// keep parsed value if timezone reconstruction fails
 						}
 					}
 					break;

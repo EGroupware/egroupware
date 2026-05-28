@@ -15,10 +15,11 @@ require_once realpath(__DIR__.'/../../api/tests/AppTest.php');	// Application te
 
 use Egroupware\Api;
 
-class RecurringImportTest extends \EGroupware\Api\AppTest
+class IcalImportTest extends \EGroupware\Api\AppTest
 {
 	const EVENT_UID = 'calendar-77761-recurring-anonymized';
 	const EVENT_FIXTURE = __DIR__.'/fixtures/recurring-import-anonymized.ics';
+	const EXCHANGE_TZID_FIXTURE = __DIR__.'/fixtures/exchange-2010-invalid-tzid.ics';
 
 	/**
 	 * @var \calendar_ical
@@ -100,5 +101,59 @@ class RecurringImportTest extends \EGroupware\Api\AppTest
 		$this->assertStringContainsString('RRULE:', $export);
 		$this->assertStringContainsString('FREQ=WEEKLY', $export);
 		$this->assertStringContainsString('BYDAY=TH', $export);
+	}
+
+	/**
+	 * Regression test for Exchange/Outlook Windows TZID values in DTSTART/DTEND.
+	 *
+	 * Setup:
+	 * - Force user timezone to Europe/Athens and server timezone to UTC.
+	 * - Import Exchange 2010 fixture with Windows TZID.
+	 *
+	 * Pass criteria:
+	 * - Event TZID is mapped to a canonical IANA timezone.
+	 * - Event wall-time in Europe/Athens reflects source timezone offset (+1 hour here).
+	 */
+	public function testImportWindowsTzidFromExchangeFixture()
+	{
+		$server_tz = $GLOBALS['egw_info']['server']['server_timezone'] ?? 'UTC';
+		$user_tz = $GLOBALS['egw_info']['user']['preferences']['common']['tz'] ?? 'UTC';
+
+		$GLOBALS['egw_info']['server']['server_timezone'] = 'UTC';
+		$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = 'Europe/Athens';
+		date_default_timezone_set('UTC');
+		Api\DateTime::init();
+
+		$ical = file_get_contents(self::EXCHANGE_TZID_FIXTURE);
+		$this->assertNotSame(false, $ical, 'Unable to load Exchange TZID fixture');
+
+		try
+		{
+			$cal_id = $this->ical_bo->importVCal($ical, -1, null, false, 0, '', $GLOBALS['egw_info']['user']['account_id']);
+			$this->assertNotFalse($cal_id, 'Import failed for Exchange TZID fixture');
+			$this->event_ids[] = (int)$cal_id;
+
+			$loaded = $this->ical_bo->read([(int)$cal_id], null, false, 'server');
+			$event = $loaded[(int)$cal_id];
+
+			$this->assertEquals('Europe/Berlin', $event['tzid'], 'Imported TZID mapping mismatch');
+			$this->assertEquals(
+				'18:00:00',
+				Api\DateTime::to(Api\DateTime::server2user($event['start']), 'H:i:s'),
+				'Unexpected start time in Europe/Athens'
+			);
+			$this->assertEquals(
+				'19:00:00',
+				Api\DateTime::to(Api\DateTime::server2user($event['end']), 'H:i:s'),
+				'Unexpected end time in Europe/Athens'
+			);
+		}
+		finally
+		{
+			$GLOBALS['egw_info']['server']['server_timezone'] = $server_tz;
+			$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = $user_tz;
+			date_default_timezone_set($server_tz);
+			Api\DateTime::init();
+		}
 	}
 }
