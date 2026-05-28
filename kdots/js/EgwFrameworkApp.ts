@@ -121,8 +121,15 @@ export class EgwFrameworkApp extends LitElement
 	@property({type: Function})
 	getNextmatch : () => et2_nextmatch = () : et2_nextmatch =>
 	{
-		// Look for a nextmatch by finding the DOM node by CSS class
 		let nm = null;
+		// Find the widget
+		nm = this.querySelector("et2-nextmatch");
+		if(nm)
+		{
+			return nm;
+		}
+
+		// Look for a nextmatch by finding the DOM node by CSS class
 		const nm_div = this.querySelector(".et2_nextmatch");
 		if(nm_div)
 		{

@@ -2477,9 +2477,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return null;
 		}
-		return header instanceof HTMLElement
-			? header
-			: this.createElementFromNode(header, header.tagName.toLowerCase()) as unknown as Element;
+		if(header instanceof HTMLElement)
+		{
+			return header;
+		}
+		// Legacy widget snuck in?
+		const domNode = (header as any).getDOMNode?.(this);
+		return domNode instanceof HTMLElement
+		       ? domNode
+		       : this.createElementFromNode(header, header.tagName?.toLowerCase()) as unknown as Element;
 	}
 
 	/**

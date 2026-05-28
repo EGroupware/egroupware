@@ -2776,19 +2776,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	 */
 	set_filter_template(template : string | Et2Template)
 	{
-		if(this._filterbox && Array.from(this._filterbox.querySelectorAll("et2-template")).filter(t => t == template || t.url == template).length > 0)
-		{
-			// Same thing
-			return;
-		}
-		if(this._filterbox)
-		{
-			this._filterbox.childNodes.forEach(n => n.remove());
-		}
-		if(!template)
-		{
-			return;
-		}
 		if(!this._filterbox)
 		{
 			this._filterbox = <Et2Filterbox><unknown>loadWebComponent("et2-filterbox", {
@@ -2814,31 +2801,15 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			// Nextmatch is a legacy widget, so if we don't set this it will be moved back by doLoadingFinished().
 			this._filterbox["_parent_node"] = this._filterbox.parentElement;
 		}
-		let filterTemplate = null;
-		// Load first, then append - don't wait
-		// This is not initially visible so we can wait a bit.  Waiting longer doesn't really help more, and will need
-		// more management to track it.
-		setTimeout(() =>
+		if(typeof (<any>this._filterbox).setFilterTemplate === "function")
 		{
-			if(typeof template == "string")
-			{
-				const is_url = template.match(/^(http|\/).*\.xet($|\?)/);
-				filterTemplate = <Et2Template><unknown>loadWebComponent("et2-template", {
-					id: 'filter-template',
-					template: is_url ? "" : template,
-					url: is_url ? template : "",
-				}, this._filterbox);
-			}
-			else if(template instanceof HTMLElement)
-			{
-				filterTemplate = template;
-			}
-
-			filterTemplate.load().then(() =>
-			{
-				this._filterbox.append(filterTemplate);
-			});
-		}, 100);
+			this._filterbox.setFilterTemplate(template);
+		}
+		else
+		{
+			// Compatibility fallback for stale generated JS not yet rebuilt.
+			(<any>this._filterbox).filterTemplate = template;
+		}
 	}
 
 	set_no_filter(bool, filter_name)

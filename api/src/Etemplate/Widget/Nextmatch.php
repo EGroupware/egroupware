@@ -274,8 +274,8 @@ class Nextmatch extends Etemplate\Widget
 		}
 		// check if we have a filter-template or need to generate one
 		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
-		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'] ?? null;
-		if($template_name === null && !array_key_exists('filter_template', $this->attrs))
+		$template_name = $value['filter_template'] ?? $this->attrs['filterTemplate'] ?? $this->attrs['filter_template'] ?? null;
+		if($template_name === null && !array_key_exists('filter_template', $this->attrs) && !array_key_exists('filterTemplate', $this->attrs))
 		{
 			$parts = explode('.', $rows_template);
 			// remove rows
@@ -348,6 +348,7 @@ class Nextmatch extends Etemplate\Widget
 		if($template_name)
 		{
 			self::setElementAttribute($this->id, "filter_template", $url ?? $template_name);
+			self::setElementAttribute($this->id, "filterTemplate", $url ?? $template_name);
 		}
 		// stop NM itself from generating search, filter(2) and cat_id widgets
 		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
@@ -1367,17 +1368,21 @@ class Nextmatch extends Etemplate\Widget
 		$old_param0 = $params[0];
 		$cname =& $params[0];
 		// Need this check or the headers will get involved too
-		if($this->type == 'nextmatch')
+		if(in_array($this->type, ['nextmatch', 'et2-nextmatch'], true))
 		{
 			parent::run($method_name, $params, $respect_disabled);
 			if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 
-			// Run on all the sub-templates
-			foreach(array('template', 'header_left', 'header_right', 'header_row') as $sub_template)
+			// et2-nextmatch sub-templates are super special and don't get processed server-side
+			if($this->type == 'nextmatch')
 			{
-				if (!empty($this->attrs[$sub_template]) && ($row_template = Template::instance($this->attrs[$sub_template])))
+				// Run on all the sub-templates
+				foreach(array('template', 'header_left', 'header_right', 'header_row') as $sub_template)
 				{
-					$row_template->run($method_name, $params, $respect_disabled);
+					if(!empty($this->attrs[$sub_template]) && ($row_template = Template::instance($this->attrs[$sub_template])))
+					{
+						$row_template->run($method_name, $params, $respect_disabled);
+					}
 				}
 			}
 		}

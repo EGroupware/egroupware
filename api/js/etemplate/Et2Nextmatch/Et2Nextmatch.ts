@@ -2,13 +2,21 @@ import {html, LitElement, PropertyValues} from "lit";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Datagrid} from "./Et2Datagrid";
 import {Et2DatagridColumn, Et2DatagridRowCustomizeContext, Et2DatagridTemplateData} from "./Et2Datagrid.types";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
+import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
+import {Et2Template} from "../Et2Template/Et2Template";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
+import {
+	ET2_NEXTMATCH_FILTER_EVENT,
+	ET2_NEXTMATCH_SORT_EVENT,
+	Et2NextmatchFilterEventDetail,
+	Et2NextmatchSortEventDetail
+} from "./Headers/events";
 import styles from "./Et2Nextmatch.styles";
 
 /**
@@ -17,6 +25,7 @@ import styles from "./Et2Nextmatch.styles";
  * @event et2-loading-start - Re-emitted from the inner datagrid when row fetching starts.
  * @event et2-loading-done - Re-emitted from the inner datagrid when all fetches complete.
  * @event et2-loading-error - Re-emitted from the inner datagrid when a fetch fails.
+ * @event et2-search-result - Legacy-compatible event emitted after fetch completion.
  * @event et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
  * @event et2-columns-changed - Re-emitted from the inner datagrid when columns change.
  *
@@ -56,6 +65,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	@property({type: String, attribute: "column-preference-name"})
 	columnPreferenceName : string = "";
 
+	/** Optional filter template source (template name, .xet URL, or template element). */
+	@property({attribute: false})
+	filterTemplate : string | Et2Template | HTMLElement | null = null;
+
 	@state()
 	private _columns : Et2DatagridColumn[] = [];
 
@@ -73,30 +86,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _slotObserver : MutationObserver | null = null;
 	private _slotApplyInFlight : Promise<void> | null = null;
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
-
-	/**
-	 * Nextmatch-specific row metadata styling hook.
-	 * Maps category classes to a style-ready `--category-color` on datagrid meta cell.
-	 */
-	private _customizeDatagridRow = (context : Et2DatagridRowCustomizeContext) =>
-	{
-		const categoryClass = Array.from(context.rowElement.classList).find((name) => /^cat_\d+$/.test(name));
-		if(categoryClass)
-		{
-			const categoryId = categoryClass.slice(4);
-			context.metaCell.style.setProperty("--category-color", `var(--cat-${categoryId}-color)`);
-		}
-		else
-		{
-			context.metaCell.style.removeProperty("--category-color");
-		}
-		context.metaCell.setAttribute(
-			"part",
-			context.rowElement.classList.contains("row_category")
-				? "row-meta row-meta-category"
-				: "row-meta"
-		);
-	};
+	private _filters : Record<string, any> = {col_filter: {}};
+	private _filterbox : Et2Filterbox | null = null;
 
 	/**
 	 * Resolve the internal datagrid instance from shadow DOM.
@@ -116,6 +107,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		super();
 		// Keep a runtime reference so module import stays
 		void Et2Datagrid;
+		if(!this._filters.col_filter || typeof this._filters.col_filter !== "object")
+		{
+			this._filters.col_filter = {};
+		}
 		this._rowProvider = new Et2RowProvider(this as any);
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
 	}
@@ -127,6 +122,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		super.connectedCallback();
 		this._initSlotObserver();
+		this.addEventListener(ET2_NEXTMATCH_SORT_EVENT, this._handleHeaderSortEvent as EventListener);
+		this.addEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
+		this.addEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 	}
 
 	/**
@@ -136,6 +134,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		this._slotObserver?.disconnect();
 		this._slotObserver = null;
+		this._filterbox?.remove();
+		this._filterbox = null;
+		this.removeEventListener(ET2_NEXTMATCH_SORT_EVENT, this._handleHeaderSortEvent as EventListener);
+		this.removeEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
+		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		super.disconnectedCallback();
 	}
 
@@ -185,6 +188,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 				this._applyTemplateFromSlots();
 			}
 		}
+		if(changedProperties.has("filterTemplate"))
+		{
+			this._applyFilterTemplate(this.filterTemplate);
+		}
 	}
 
 	/**
@@ -222,6 +229,215 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		this.rows = rows || [];
 		this._datagrid?.setInitialRows(this.rows);
+	}
+
+	/**
+	 * Create/attach filterbox once and return it.
+	 */
+	private _ensureFilterbox() : Et2Filterbox
+	{
+		if(this._filterbox)
+		{
+			return this._filterbox;
+		}
+		this._filterbox = <Et2Filterbox><unknown>loadWebComponent("et2-filterbox", {
+			exportparts: "filters",
+			slot: "filter",
+			autoapply: true,
+			originalWidgets: this.egw().preference("keep_nm_header", "common") || "replace"
+		}, this);
+		this._filterbox.nextmatch = <any>this;
+
+		const root = this.getRootNode() as ShadowRoot | Document;
+		let host : HTMLElement | null = root instanceof ShadowRoot ? root.host as HTMLElement : this.parentElement;
+		let filterParent : HTMLElement | null = host;
+		while(filterParent)
+		{
+			if(filterParent.shadowRoot?.querySelector("slot[name='filter']"))
+			{
+				break;
+			}
+			filterParent = filterParent.parentElement;
+		}
+		(filterParent || host?.closest("egw-app") || this.parentElement || this).append(this._filterbox);
+		return this._filterbox;
+	}
+
+	/**
+	 * Apply current `filterTemplate` source to the shared filterbox instance.
+	 */
+	private _applyFilterTemplate(template : string | Et2Template | HTMLElement | null)
+	{
+		if(!template && !this._filterbox)
+		{
+			return;
+		}
+		const filterbox = this._ensureFilterbox();
+		if(typeof (filterbox as any).setFilterTemplate === "function")
+		{
+			filterbox.setFilterTemplate(template);
+		}
+		else
+		{
+			// Compatibility fallback for stale generated JS not yet rebuilt.
+			(filterbox as any).filterTemplate = template;
+		}
+	}
+
+	/**
+	 * Legacy-compatible active filters accessor used by header/filter integrations.
+	 *
+	 * @deprecated Accessing filter state via this accessor is legacy compatibility.
+	 * Prefer event-driven updates (`applyFilters`, header filter/sort events) and
+	 * treat filter state as internal.
+	 */
+	get activeFilters() : Record<string, any>
+	{
+		return this._filters;
+	}
+
+	/**
+	 * Legacy-compatible filter application entry point.
+	 * Merges updates into `activeFilters`, emits cancelable `et2-filter`, and reloads rows.
+	 */
+	applyFilters(set? : Record<string, any>)
+	{
+		if(!this._filters || typeof this._filters !== "object")
+		{
+			this._filters = {col_filter: {}};
+		}
+		if(!this._filters.col_filter || typeof this._filters.col_filter !== "object")
+		{
+			this._filters.col_filter = {};
+		}
+		const activeFilters = this._filters;
+		const previousFilters = {
+			...activeFilters,
+			col_filter: {...(activeFilters.col_filter || {})},
+			sort: activeFilters.sort ? {...activeFilters.sort} : undefined
+		};
+		let changed = false;
+		if(typeof set !== "undefined" && typeof set === "object" && Object.keys(set).length === 0)
+		{
+			this._filters = {col_filter: {}};
+			activeFilters.col_filter = this._filters.col_filter;
+			changed = true;
+		}
+
+		if(typeof set === "object" && set !== null)
+		{
+			for(const key of Object.keys(set))
+			{
+				if(key === "col_filter")
+				{
+					const colFilter = set.col_filter;
+					if(colFilter === undefined || colFilter === null)
+					{
+						if(Object.keys(activeFilters.col_filter || {}).length)
+						{
+							changed = true;
+						}
+						activeFilters.col_filter = {};
+						continue;
+					}
+					for(const columnId of Object.keys(colFilter))
+					{
+						const nextValue = colFilter[columnId];
+						if(activeFilters.col_filter[columnId] !== nextValue)
+						{
+							changed = true;
+							if(nextValue)
+							{
+								activeFilters.col_filter[columnId] = nextValue;
+							}
+							else
+							{
+								delete activeFilters.col_filter[columnId];
+							}
+						}
+					}
+					continue;
+				}
+				if(activeFilters[key] !== set[key])
+				{
+					activeFilters[key] = set[key];
+					changed = true;
+				}
+			}
+		}
+		if(!changed)
+		{
+			return false;
+		}
+
+		const changeEvent = new CustomEvent("et2-filter", {
+			bubbles: true,
+			cancelable: true,
+			detail: {
+				oldFilters: previousFilters,
+				activeFilters,
+				nm: this
+			}
+		});
+		this.dispatchEvent(changeEvent);
+		if(changeEvent.defaultPrevented)
+		{
+			return false;
+		}
+		const eventFilters = changeEvent.detail?.activeFilters;
+		if(eventFilters && typeof eventFilters === "object" && eventFilters !== this._filters)
+		{
+			this._filters = eventFilters;
+		}
+		if(!this._filters.col_filter || typeof this._filters.col_filter !== "object")
+		{
+			this._filters.col_filter = {};
+		}
+
+		this._updateSortHeaderState();
+		this._datagrid?.reload();
+
+		return true;
+	}
+
+	/**
+	 * Legacy-compatible sorting helper used by sort headers and filterbox.
+	 */
+	sortBy(id : string, asc? : boolean, update : boolean = true)
+	{
+		if(!id)
+		{
+			return;
+		}
+		if(typeof asc === "undefined")
+		{
+			const filters = this._filters;
+			if(filters.sort?.id === id)
+			{
+				asc = !filters.sort.asc;
+			}
+			else
+			{
+				asc = true;
+			}
+		}
+		if(update !== false)
+		{
+			this.applyFilters({sort: {id, asc}});
+		}
+		else
+		{
+			this._filters.sort = {id, asc};
+			this._updateSortHeaderState();
+		}
+	}
+
+	resetSort()
+	{
+		if(typeof this._filters.sort !== "undefined")
+		{
+			this.applyFilters({sort: undefined});
+		}
 	}
 
 	/**
@@ -683,6 +899,131 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		const currentContainsLegacy = legacyTokens.every((token) => currentTokens.includes(token)) ? 0.25 : 0;
 		return overlapRatio + legacyContainsCurrent + currentContainsLegacy;
 	}
+
+
+	/**
+	 * Nextmatch-specific row metadata styling hook.
+	 * Maps category classes to a style-ready `--category-color` on datagrid meta cell.
+	 */
+	private _customizeDatagridRow = (context : Et2DatagridRowCustomizeContext) =>
+	{
+		const categoryClass = Array.from(context.rowElement.classList).find((name) => /^cat_\d+$/.test(name));
+		if(categoryClass)
+		{
+			const categoryId = categoryClass.slice(4);
+			context.metaCell.style.setProperty("--category-color", `var(--cat-${categoryId}-color)`);
+		}
+		else
+		{
+			context.metaCell.style.removeProperty("--category-color");
+		}
+		context.metaCell.setAttribute(
+			"part",
+			context.rowElement.classList.contains("row_category")
+			? "row-meta row-meta-category"
+			: "row-meta"
+		);
+	};
+
+	/**
+	 * Keep slotted sort headers in sync with currently active sort filter.
+	 */
+	private _updateSortHeaderState()
+	{
+		const sort = this._filters.sort;
+		const mode = sort?.asc === true ? "asc" : sort?.asc === false ? "desc" : "none";
+		Array.from(this.shadowRoot.querySelectorAll("et2-nextmatch-sortheader")).forEach((header : any) =>
+		{
+			const headerMode = sort?.id && header.id === sort.id ? mode : "none";
+			if(typeof header.setSortmode === "function")
+			{
+				header.setSortmode(headerMode);
+			}
+			else if(typeof header.set_sortmode === "function")
+			{
+				header.set_sortmode(headerMode);
+			}
+		});
+	}
+
+	/**
+	 * Resolve app-name used for legacy sort preference persistence.
+	 */
+	private _getAppName() : string
+	{
+		return String(this.getInstanceManager?.()?.app || this.egw()?.app_name?.() || "");
+	}
+
+	/**
+	 * Apply sort event from header widget after event bubbling is complete.
+	 */
+	private _handleHeaderSortEvent = (event : CustomEvent<Et2NextmatchSortEventDetail>) =>
+	{
+		queueMicrotask(() =>
+		{
+			if(event.defaultPrevented)
+			{
+				return;
+			}
+			const detail = event.detail || <Et2NextmatchSortEventDetail>{};
+			if(!detail.id)
+			{
+				return;
+			}
+			this.sortBy(detail.id, detail.asc, detail.update);
+			const appName = this._getAppName();
+			if(!appName || !this.template)
+			{
+				return;
+			}
+			try
+			{
+				this.egw().set_preference(appName, this.template + "_sort", this._filters.sort);
+			}
+			catch(e)
+			{
+			}
+		});
+	};
+
+	/**
+	 * Apply filter event from header widget after bubbling so listeners can cancel.
+	 */
+	private _handleHeaderFilterEvent = (event : CustomEvent<Et2NextmatchFilterEventDetail>) =>
+	{
+		queueMicrotask(() =>
+		{
+			if(event.defaultPrevented)
+			{
+				return;
+			}
+			const filters = event.detail?.filters;
+			if(!filters)
+			{
+				return;
+			}
+			this.applyFilters(filters);
+		});
+	};
+
+	/**
+	 * Emit legacy `et2-search-result` after datagrid finishes loading.
+	 */
+	private _handleLoadingDone = (event : Event) =>
+	{
+		const datagrid = this._datagrid;
+		if(!datagrid || !event.composedPath().includes(datagrid))
+		{
+			return;
+		}
+		this.dispatchEvent(new CustomEvent("et2-search-result", {
+			detail: {
+				total: String(datagrid.total ?? ""),
+				nextmatch: this
+			},
+			bubbles: true
+		}));
+	};
 
 	/**
 	 * Render the orchestration shell.

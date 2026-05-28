@@ -1,6 +1,7 @@
 import {egw} from "../../../jsapi/egw_global";
 import {et2_INextmatchHeader, et2_nextmatch} from "../../et2_extension_nextmatch";
 import {LitElement} from "lit";
+import {ET2_NEXTMATCH_FILTER_EVENT, Et2NextmatchFilterEventDetail} from "./events";
 
 // Export the Interface for TypeScript
 type Constructor<T = LitElement> = new (...args : any[]) => T;
@@ -46,15 +47,27 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 
 	handleChange(event)
 	{
-		if(typeof this.nextmatch == 'undefined')
-		{
-			// Not fully set up yet
-			return;
-		}
 		let col_filter = {};
 		col_filter[this.id] = this.value;
-		
-		this.nextmatch.applyFilters({col_filter: col_filter});
+
+		const filterEvent = new CustomEvent<Et2NextmatchFilterEventDetail>(ET2_NEXTMATCH_FILTER_EVENT, {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			detail: {
+				filters: {col_filter: col_filter}
+			}
+		});
+		this.dispatchEvent(filterEvent);
+		queueMicrotask(() =>
+		{
+			// Legacy fallback for pages still relying on direct nextmatch coupling.
+			if(filterEvent.defaultPrevented || !this.nextmatch)
+			{
+				return;
+			}
+			this.nextmatch?.applyFilters(filterEvent.detail.filters);
+		});
 	}
 
 	/**

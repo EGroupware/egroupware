@@ -3,6 +3,7 @@ import {property} from "lit/decorators/property.js";
 import {et2_INextmatchSortable} from "../../et2_extension_nextmatch";
 import {Et2NextmatchHeader} from "./Header";
 import {customElement} from "lit/decorators.js";
+import {ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "./events";
 
 type SortMode = "none" | "asc" | "desc";
 
@@ -120,27 +121,44 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 	 */
 	private _handleClick(event : MouseEvent)
 	{
-		if(this.disabled || !this.nextmatch)
+		if(this.disabled)
 		{
 			return false;
 		}
 		event.preventDefault();
-		event.stopPropagation();
 
 		const defaultAsc = String(this.sortmode || "").toUpperCase() !== "DESC";
-		this.nextmatch.sortBy(this.id, this._currentSortmode === "none" ? defaultAsc : undefined);
-
-		try
+		const sortEvent = new CustomEvent<Et2NextmatchSortEventDetail>(ET2_NEXTMATCH_SORT_EVENT, {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			detail: {
+				id: this.id,
+				asc: this._currentSortmode === "none" ? defaultAsc : undefined
+			}
+		});
+		this.dispatchEvent(sortEvent);
+		queueMicrotask(() =>
 		{
-			this.egw().set_preference(
-				this.nextmatch._get_appname(),
-				this.nextmatch.options.template + "_sort",
-				this.nextmatch.activeFilters["sort"]
-			);
-		}
-		catch(e)
-		{
-		}
+			// Legacy fallback: if no listener handled the event and we are attached to legacy nextmatch,
+			// apply the old direct sort behavior.
+			if(sortEvent.defaultPrevented || !this.nextmatch)
+			{
+				return;
+			}
+			this.nextmatch.sortBy(this.id, sortEvent.detail.asc, sortEvent.detail.update);
+			try
+			{
+				this.egw().set_preference(
+					this.nextmatch._get_appname(),
+					this.nextmatch.options.template + "_sort",
+					this.nextmatch.activeFilters["sort"]
+				);
+			}
+			catch(e)
+			{
+			}
+		});
 		return true;
 	}
 
