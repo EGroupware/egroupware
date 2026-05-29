@@ -21,6 +21,25 @@ const appJS = fs.readdirSync('.')
 			fs.statSync(`${dir}/js/test`).isDirectory(),
 	)
 
+const cliFileArgs = process.argv
+	.slice(2)
+	.filter(arg => arg && !arg.startsWith('-'));
+
+const defaultGroups =
+	[
+		{
+			name: 'api',
+			files: 'api/js/etemplate/**/test/*.test.ts'
+		}
+	].concat(
+		appJS.map(app =>
+		{
+			return {
+				name: app,
+				files: `${app}/js/**/*.test.ts`
+			}
+		})
+	);
 
 export default {
 	nodeResolve: true,
@@ -73,22 +92,7 @@ export default {
 		// Dependant on specific versions of shared libraries (libicuuc.so.66, latest is .67)
 		//playwrightLauncher({ product: 'webkit' }),
 	],
-	groups:
-		[
-			{
-				name: 'api',
-				files: 'api/js/etemplate/**/test/*.test.ts'
-			}
-		].concat(
-			appJS.map(app =>
-				{
-					return {
-						name: app,
-						files: `${app}/js/**/*.test.ts`
-					}
-				}
-			)
-		),
+	...(cliFileArgs.length ? {files: cliFileArgs} : {groups: defaultGroups}),
 
 	plugins: [
 		{
