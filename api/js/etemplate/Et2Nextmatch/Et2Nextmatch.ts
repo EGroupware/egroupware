@@ -32,12 +32,15 @@ import styles from "./Et2Nextmatch.styles";
  * @event et2-columns-changed - Re-emitted from the inner datagrid when columns change.
  *
  * @slot header - Optional content rendered above the datagrid.
+ * @slot footer - Optional content rendered below the datagrid.
  * @slot columns - Slotted column definition used to derive datagrid columns when `template` is not set.
  * @slot row - Slotted row template used to render each datagrid row when `template` is not set.
  * @slot loader - Optional slotted loader content shown while rows are loading.
+ * @slot noResults - Optional slotted empty-state content replacing default no-results alert.
  *
  * @csspart header - Wrapper for top header slot content rendered above the grid.
  * @csspart grid - Internal `et2-datagrid` element.
+ * @csspart footer - Wrapper for bottom slot content rendered below the grid.
  * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
  * @cssproperty [--meta-column-width=6px] - Width of leading metadata indicator column.
  */
@@ -70,6 +73,41 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	/** Optional filter template source (template name, .xet URL, or template element). */
 	@property({attribute: false})
 	filterTemplate : string | Et2Template | HTMLElement | null = null;
+
+	/**
+	 * Show A-Z letter search controls for filtering by leading character.
+	 * Mirrors legacy `lettersearch` nextmatch setting.
+	 */
+	@property({type: Boolean})
+	lettersearch : boolean = false;
+
+	/**
+	 * Current active letter search filter value.
+	 * `false` / empty means "all letters".
+	 */
+	@property({attribute: false})
+	searchletter : string | false = false;
+
+	/**
+	 * Optional override for empty-state headline text.
+	 * Mirrors legacy `placeholder` setting.
+	 */
+	@property({type: String})
+	placeholder : string = "";
+
+	/**
+	 * Optional list of action ids allowed for placeholder context menu.
+	 * Mirrors legacy `placeholder_actions` setting.
+	 */
+	@property({attribute: false})
+	placeholderActions : string[] = [];
+
+	/**
+	 * Optional list of custom filter attributes that should round-trip through nextmatch fetches.
+	 * Mirrors legacy `extra_attributes` setting.
+	 */
+	@property({attribute: false})
+	extraAttributes : string[] = [];
 
 	@state()
 	private _columns : Et2DatagridColumn[] = [];
@@ -130,7 +168,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.addEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.addEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.addEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
-		this.addEventListener("contextmenu", this._handleContextMenu as EventListener);
+		this.addEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.addEventListener("keydown", this._handleKeydown as EventListener);
 		this.addEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.addEventListener("pointermove", this._handlePointerMove as EventListener);
@@ -151,7 +189,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.removeEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.removeEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
-		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener);
+		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.removeEventListener("keydown", this._handleKeydown as EventListener);
 		this.removeEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.removeEventListener("pointermove", this._handlePointerMove as EventListener);
@@ -169,6 +207,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		if(settings && Object.keys(settings).length > 0)
 		{
 			Object.assign(attrs, settings);
+			// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
+			if(typeof attrs.placeholder_actions !== "undefined" && typeof attrs.placeholderActions === "undefined")
+			{
+				attrs.placeholderActions = attrs.placeholder_actions;
+			}
+			if(typeof attrs.extra_attributes !== "undefined" && typeof attrs.extraAttributes === "undefined")
+			{
+				attrs.extraAttributes = attrs.extra_attributes;
+			}
 		}
 		super.transformAttributes(attrs);
 	}
@@ -200,6 +247,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	async firstUpdated(changedProperties : PropertyValues)
 	{
 		super.firstUpdated(changedProperties);
+		this._normalizeLegacyCompatibilityProperties();
+		this._actionController.setPlaceholderActions(this.placeholderActions);
+		this._initializeExtraAttributeFilters();
 		this._loadRowsAttribute();
 
 		if(this.template)
@@ -242,6 +292,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		if(changedProperties.has("filterTemplate"))
 		{
 			this._applyFilterTemplate(this.filterTemplate);
+		}
+		if(changedProperties.has("searchletter"))
+		{
+			const nextValue = this.searchletter || false;
+			if(this._filters.searchletter !== nextValue)
+			{
+				this.applyFilters({searchletter: nextValue}, {reload: false});
+			}
+		}
+		if(changedProperties.has("placeholderActions"))
+		{
+			this._actionController.setPlaceholderActions(this.placeholderActions);
 		}
 	}
 
@@ -412,6 +474,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 				if(activeFilters[key] !== set[key])
 				{
 					activeFilters[key] = set[key];
+					if(key === "searchletter")
+					{
+						this.searchletter = set[key] || false;
+					}
 					changed = true;
 				}
 			}
@@ -453,6 +519,70 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 
 		return true;
+	}
+
+	/**
+	 * Parse and normalize legacy compatibility property shapes from template attributes/content.
+	 */
+	private _normalizeLegacyCompatibilityProperties()
+	{
+		if(typeof (this as any).placeholder_actions !== "undefined" && !this.placeholderActions.length)
+		{
+			this.placeholderActions = this._toStringArray((this as any).placeholder_actions);
+		}
+		else
+		{
+			this.placeholderActions = this._toStringArray(this.placeholderActions);
+		}
+		if(typeof (this as any).extra_attributes !== "undefined" && !this.extraAttributes.length)
+		{
+			this.extraAttributes = this._toStringArray((this as any).extra_attributes);
+		}
+		else
+		{
+			this.extraAttributes = this._toStringArray(this.extraAttributes);
+		}
+		this.searchletter = (this.searchletter || (this as any).searchletter || false) as string | false;
+		this.lettersearch = !!(this.lettersearch || (this as any).lettersearch);
+	}
+
+	/**
+	 * Seed additional custom attributes into active filters to preserve legacy request payloads.
+	 */
+	private _initializeExtraAttributeFilters()
+	{
+		for(const attribute of this.extraAttributes || [])
+		{
+			if(!attribute || typeof this._filters[attribute] !== "undefined")
+			{
+				continue;
+			}
+			const value = (this as any)[attribute];
+			if(typeof value !== "undefined")
+			{
+				this._filters[attribute] = value;
+			}
+		}
+		if(this.searchletter)
+		{
+			this._filters.searchletter = this.searchletter;
+		}
+	}
+
+	/**
+	 * Normalize CSV/array/string values into a compact array of string ids.
+	 */
+	private _toStringArray(value : unknown) : string[]
+	{
+		if(Array.isArray(value))
+		{
+			return value.map((item) => String(item || "").trim()).filter(Boolean);
+		}
+		if(typeof value === "string")
+		{
+			return value.split(",").map((item) => item.trim()).filter(Boolean);
+		}
+		return [];
 	}
 
 	/**
@@ -553,7 +683,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 					continue;
 				}
 				const slotName = String(node.getAttribute("slot") || "").trim();
-				if(["header", "columns", "row", "loader"].includes(slotName))
+				if(["header", "columns", "row", "loader", "noResults"].includes(slotName))
 				{
 					return true;
 				}
@@ -1092,11 +1222,139 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 
 	private _handleContextMenu = (event : MouseEvent) =>
 	{
+		// Developer abort context menu
+		if(event.ctrlKey)
+		{
+			return;
+		}
+		const placeholderStateElement = this._getPlaceholderStateElement(event);
+		const rowElement = this._getContextMenuRowElement(event);
+		if(!placeholderStateElement && !rowElement)
+		{
+			return;
+		}
+		// Capture-phase intercept to ensure exactly one popup flow runs.
+		event.preventDefault();
+		event.stopPropagation();
+		if(placeholderStateElement)
+		{
+			const configuredActions = this._actionController.getPlaceholderActionIds();
+			if(this._actionController.triggerPlaceholderPopup(event, configuredActions, placeholderStateElement))
+			{
+				return;
+			}
+		}
 		if(this._actionController.triggerPopupForRow(event))
 		{
-			event.preventDefault();
+			return;
 		}
 	};
+
+	/**
+	 * Resolve row element for context-menu event from composed path.
+	 */
+	private _getContextMenuRowElement(event : MouseEvent) : HTMLElement | null
+	{
+		const path = event.composedPath?.() || [];
+		for(const node of path)
+		{
+			if(node instanceof HTMLElement && node.closest?.("[data-row-id]"))
+			{
+				return node.closest("[data-row-id]") as HTMLElement;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * True when interaction target belongs to datagrid empty-state placeholder container.
+	 */
+	private _getPlaceholderStateElement(event : MouseEvent) : HTMLElement | null
+	{
+		const path = event.composedPath?.() || [];
+		for(const node of path)
+		{
+			if(node instanceof HTMLElement && node.classList.contains("dg-state"))
+			{
+				return node;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Render A-Z letter controls when explicitly enabled or when a letter filter is currently active.
+	 */
+	private _renderLetterSearch()
+	{
+		const currentLetter = String(this._filters.searchletter ?? this.searchletter ?? "");
+		if(!this.lettersearch && !currentLetter)
+		{
+			return null;
+		}
+		const letters = this.egw().lang("ABCDEFGHIJKLMNOPQRSTUVWXYZ").split("");
+		return html`
+            <div class="nextmatch_lettersearch">
+                ${letters.map((letter) => html`
+                    <button
+                            type="button"
+                            class=${`lettersearch ${letter === currentLetter ? "lettersearch_active" : ""}`}
+                            @click=${() => this.applyFilters({searchletter: letter || false})}
+                    >${letter}
+                    </button>
+                `)}
+                <button
+                        type="button"
+                        class=${`lettersearch ${!currentLetter ? "lettersearch_active" : ""}`}
+                        @click=${() => this.applyFilters({searchletter: false})}
+                >${this.egw().lang("all")}
+                </button>
+            </div>
+		`;
+	}
+
+	/**
+	 * Render Nextmatch default no-results template into datagrid's `noResults` slot.
+	 */
+	private _renderDefaultNoResults(actions : EgwAction[])
+	{
+		return html`
+            <sl-alert slot="noResults" variant="neutral" open>
+                <sl-icon slot="icon" name="inbox"></sl-icon>
+                <strong>${this.placeholder || this.egw().lang("No entries to display")}</strong>
+                ${actions.length > 0 ? html`
+                    <div class="nextmatch_placeholder_actions">
+                        ${actions.map((action) => html`
+                            <et2-button
+                                    class="nextmatch_placeholder_action"
+                                    noSubmit
+                                    .image=${action.iconUrl || action.id}
+                                    .label=${action.caption || action.id}
+                                    @click=${(event : MouseEvent) => this._handlePlaceholderActionClick(event, String(action.id))}
+                            ></et2-button>
+                        `)}
+                    </div>
+                ` : null}
+            </sl-alert>
+		`;
+	}
+
+	/**
+	 * Execute one placeholder action from inline loader-slot buttons.
+	 */
+	private _handlePlaceholderActionClick(event : MouseEvent, actionId : string)
+	{
+		if(!actionId)
+		{
+			return;
+		}
+		const stateElement = (event.currentTarget as HTMLElement | null)?.closest(".dg-state") as HTMLElement | null;
+		if(this._actionController.executePlaceholderAction(actionId, stateElement || this))
+		{
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	}
 
 	private _handleKeydown = (event : KeyboardEvent) =>
 	{
@@ -1132,8 +1390,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 */
 	render()
 	{
+		const hasSlottedNoResults = !!this.querySelector("[slot='noResults']");
+		const inlinePlaceholderActions : EgwAction[] = this._actionController
+			.getInlinePlaceholderActions();
 		return html`
 				<div part="header"><slot name="header"></slot></div>
+                ${this._renderLetterSearch()}
 				<et2-datagrid
                         part="grid"
 					._parent=${this}
@@ -1143,8 +1405,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 					.columnPreferenceName=${this.columnPreferenceName}
 					.dataProvider=${this._dataProvider}
 					.configurationLoading=${this._templateLoading}
+                        .emptyStateText=${this.placeholder}
 					selection-mode="multiple"
-				></et2-datagrid>
+                >
+                    ${hasSlottedNoResults
+                      ? html`
+                                <slot name="noResults" slot="noResults"></slot>`
+                      : this._renderDefaultNoResults(inlinePlaceholderActions)}
+                </et2-datagrid>
+                <div part="footer">
+                    <slot name="footer"></slot>
+                </div>
 		`;
 	}
 }

@@ -179,6 +179,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	configurationLoading : boolean = false;
 
 	/**
+	 * Optional replacement for the default empty-state headline text.
+	 * Keeps default empty-state template structure while allowing Nextmatch-level customization.
+	 */
+	@property({type: String, attribute: "empty-state-text"})
+	emptyStateText : string = "";
+
+	/**
 	 * Optional explicit preference key for persisted column state.
 	 * When omitted, datagrid derives key from owner component + row template id.
 	 */
@@ -2447,13 +2454,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		if(noRows)
 		{
+			const emptyStateText = this.emptyStateText || this.egw().lang("No entries to display");
 			return html`
 				<div class="dg-state" part="state">
-					<sl-alert variant="neutral" open>
-						<sl-icon slot="icon" name="inbox"></sl-icon>
-						<strong>${this.egw().lang("No entries to display")}</strong><br/>
-						${this._hasFetchedOnce ? this.egw().lang("No rows were returned.") : this.egw().lang("Waiting for rows.")}
-					</sl-alert>
+					<slot name="noResults">
+						<sl-alert variant="neutral" open>
+							<sl-icon slot="icon" name="inbox"></sl-icon>
+							<strong>${emptyStateText}</strong><br/>
+							${this._hasFetchedOnce ? this.egw().lang("No rows were returned.") : this.egw().lang("Waiting for rows.")}
+						</sl-alert>
+					</slot>
 				</div>
 			`;
 		}

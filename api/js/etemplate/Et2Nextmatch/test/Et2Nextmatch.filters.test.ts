@@ -213,4 +213,149 @@ describe("Et2Nextmatch header event handling", () =>
 		el.remove();
 	});
 
+	/**
+	 * Contract under test:
+	 * - Enabling `lettersearch` renders letter controls that update the searchletter filter.
+	 *
+	 * Setup strategy:
+	 * - Create nextmatch with `lettersearch=true`.
+	 * - Click one rendered letter button.
+	 *
+	 * Pass criteria:
+	 * - `activeFilters.searchletter` matches clicked letter.
+	 */
+	it("renders lettersearch and applies selected letter filter", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.lettersearch = true;
+		document.body.append(el);
+		await el.updateComplete;
+
+		const letterButton = el.shadowRoot?.querySelector(".nextmatch_lettersearch .lettersearch") as HTMLButtonElement | null;
+		assert.isNotNull(letterButton, "lettersearch should render when enabled");
+		const chosenLetter = letterButton?.textContent?.trim() || "A";
+		letterButton?.click();
+		await waitForBubblingHandlers();
+
+		assert.equal(el.activeFilters.searchletter, chosenLetter, "clicking a letter should apply searchletter filter");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - `placeholder` property is forwarded to datagrid empty-state text.
+	 *
+	 * Setup strategy:
+	 * - Set `placeholder` on nextmatch and inspect child datagrid property.
+	 *
+	 * Pass criteria:
+	 * - Datagrid `emptyStateText` equals configured placeholder text.
+	 */
+	it("maps placeholder text to datagrid empty state text property", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.placeholder = "Nothing here yet";
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
+		assert.equal(datagrid?.emptyStateText, "Nothing here yet", "placeholder should be passed to datagrid empty-state text");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Right-click on placeholder area routes configured `placeholderActions`
+	 *   to placeholder popup flow.
+	 *
+	 * Setup strategy:
+	 * - Stub action controller popup methods.
+	 * - Dispatch a contextmenu event from a `.dg-state` element.
+	 *
+	 * Pass criteria:
+	 * - Placeholder popup is called once with configured action ids.
+	 * - Event is prevented and row-popup path is not called.
+	 */
+	it("uses placeholderActions via action controller context popup on empty state", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.placeholderActions = ["add", "import_csv"];
+		document.body.append(el);
+		await el.updateComplete;
+
+		const triggerPlaceholderPopup = sinon.stub((el as any)._actionController, "triggerPlaceholderPopup").returns(true);
+		const triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(false);
+		const state = document.createElement("div");
+		state.className = "dg-state";
+		el.append(state);
+		const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+		state.dispatchEvent(event);
+		await waitForBubblingHandlers();
+
+		assert.isTrue(triggerPlaceholderPopup.calledOnce, "placeholder popup should be attempted");
+		assert.deepEqual(triggerPlaceholderPopup.firstCall.args[1], ["add", "import_csv"], "configured placeholderActions should be used");
+		assert.isTrue(event.defaultPrevented, "context menu should be prevented when placeholder popup opens");
+		assert.isFalse(triggerPopupForRow.called, "row popup should not run when placeholder popup handled event");
+
+		triggerPlaceholderPopup.restore();
+		triggerPopupForRow.restore();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - CSV string `placeholderActions` values are normalized to action-id arrays.
+	 *
+	 * Setup strategy:
+	 * - Set `placeholderActions` to `"add,import_csv"`.
+	 * - Dispatch contextmenu on `.dg-state` and inspect controller call args.
+	 *
+	 * Pass criteria:
+	 * - Placeholder popup receives `["add", "import_csv"]`.
+	 */
+	it("splits placeholderActions CSV string when configured as string", async() =>
+	{
+		const el = new Et2Nextmatch();
+		(el as any).placeholderActions = "add,import_csv";
+		document.body.append(el);
+		await el.updateComplete;
+
+		const triggerPlaceholderPopup = sinon.stub((el as any)._actionController, "triggerPlaceholderPopup").returns(true);
+		const triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(false);
+		const state = document.createElement("div");
+		state.className = "dg-state";
+		el.append(state);
+		const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+		state.dispatchEvent(event);
+		await waitForBubblingHandlers();
+
+		assert.isTrue(triggerPlaceholderPopup.calledOnce, "placeholder popup should be attempted");
+		assert.deepEqual(triggerPlaceholderPopup.firstCall.args[1], ["add", "import_csv"], "CSV placeholderActions should split to array");
+		triggerPlaceholderPopup.restore();
+		triggerPopupForRow.restore();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Configured `extra_attributes` initialize into active filter payload state.
+	 *
+	 * Setup strategy:
+	 * - Configure one extra attribute and matching property value on nextmatch.
+	 *
+	 * Pass criteria:
+	 * - `activeFilters` contains that attribute with expected value.
+	 */
+	it("seeds extra_attributes into active filters for fetch payloads", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.extraAttributes = ["selectedFolder"];
+		(el as any).selectedFolder = "INBOX";
+		document.body.append(el);
+		await el.updateComplete;
+
+		assert.equal(el.activeFilters.selectedFolder, "INBOX", "extra attribute should initialize in active filters");
+		el.remove();
+	});
+
 });

@@ -113,3 +113,18 @@ Example:
     </td>
 </tr>
 ```
+
+## No-Results Template
+
+Optional template shown when loading is complete and no rows are available:
+
+- Replaces the default no-results `<sl-alert>` entirely
+
+Example:
+
+```xml
+<sl-alert slot="noResults" variant="neutral" open>
+    <sl-icon slot="icon" name="inbox"></sl-icon>
+    <strong>This mailbox is empty</strong>
+</sl-alert>
+```

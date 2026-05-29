@@ -13,6 +13,8 @@ import type {Et2Nextmatch} from "./Et2Nextmatch";
 
 export class Et2NextmatchActionController
 {
+	private static readonly PLACEHOLDER_ACTION_OBJECT_ID = "__placeholder__";
+	private _placeholderActionIds : string[] = ["add"];
 	private host : Et2Nextmatch;
 	private selectedRowIds : string[] = [];
 	private allSelected : boolean = false;
@@ -53,6 +55,7 @@ export class Et2NextmatchActionController
 		this.actionManager.data = {
 			...data,
 			nextmatch: this.host,
+			nextmatchDisablePrebuild: true,
 			context: this.host.getInstanceManager()?.app_obj,
 			widget: this.host
 		};
@@ -130,12 +133,51 @@ export class Et2NextmatchActionController
 		}
 		const rect = row.rowElement.getBoundingClientRect();
 		return  rowObject.executeActionImplementation({
-			// Pass menu along to prevent recreation
-			menu: this.actionManager?.data?.menu ?? null,
 			event: contextEvent,
 			posx: rect.left + (rect.width / 2),
 			posy: rect.top + (rect.height / 2),
 			innerText: row.rowElement.textContent || ""
+		}, "popup", EGW_AO_EXEC_SELECTED);
+	}
+
+	/**
+	 * Open the Nextmatch action popup for empty-state placeholder interactions.
+	 * Placeholder actions are filtered to existing action ids (including first-level children)
+	 * and executed through the regular EGroupware action system.
+	 */
+	triggerPlaceholderPopup(contextEvent : Event, actionIds : string[] = [], anchorElement? : HTMLElement | null) : boolean
+	{
+		const target = anchorElement || (contextEvent.target as HTMLElement | null);
+		if(!target)
+		{
+			return false;
+		}
+		this.ensureActionManagers();
+		if(!this.objectManager)
+		{
+			return false;
+		}
+		const links = this._resolvePlaceholderActionLinks(actionIds);
+		if(!links.length)
+		{
+			return false;
+		}
+		const placeholderObject = this.ensurePlaceholderActionObject(target);
+		if(!placeholderObject)
+		{
+			return false;
+		}
+		placeholderObject.updateActionLinks(links);
+		placeholderObject.forceSelection();
+		const anchorRect = target.getBoundingClientRect();
+		const mouseEvent = contextEvent as MouseEvent;
+		const posx = typeof mouseEvent.clientX === "number" ? mouseEvent.clientX : anchorRect.left + (anchorRect.width / 2);
+		const posy = typeof mouseEvent.clientY === "number" ? mouseEvent.clientY : anchorRect.top + (anchorRect.height / 2);
+		return placeholderObject.executeActionImplementation({
+			event: contextEvent,
+			posx,
+			posy,
+			innerText: target.textContent || ""
 		}, "popup", EGW_AO_EXEC_SELECTED);
 	}
 
@@ -183,6 +225,114 @@ export class Et2NextmatchActionController
 		}
 		this.longPressPointerId = null;
 	};
+
+	/**
+	 * Set placeholder action ids from legacy CSV string or array value.
+	 * Empty input falls back to the default `["add"]`.
+	 */
+	setPlaceholderActions(actionIds : string[] | string | null | undefined)
+	{
+		let normalized : string[] = [];
+		if(Array.isArray(actionIds))
+		{
+			normalized = actionIds.map((id) => String(id || "").trim()).filter(Boolean);
+		}
+		else if(typeof actionIds === "string")
+		{
+			normalized = actionIds.split(",").map((id) => id.trim()).filter(Boolean);
+		}
+		this._placeholderActionIds = normalized.length ? normalized : ["add"];
+	}
+
+	/**
+	 * Get currently configured placeholder action ids, including controller defaults.
+	 */
+	getPlaceholderActionIds() : string[]
+	{
+		return [...this._placeholderActionIds];
+	}
+
+	/**
+	 * Resolve inline placeholder actions from configured ids.
+	 * If `add` has children, return the children entries instead of the add parent.
+	 */
+	getInlinePlaceholderActions() : EgwAction[]
+	{
+		this.ensureActionManagers();
+		if(!this.actionManager)
+		{
+			return [];
+		}
+		const requested = new Set(this._placeholderActionIds.map((id) => String(id || "").trim()).filter(Boolean));
+		if(!requested.size)
+		{
+			return [];
+		}
+		const resolved : EgwAction[] = [];
+		for(const actionId of requested)
+		{
+			const action = this.actionManager.getActionById?.(actionId);
+			if(!action)
+			{
+				continue;
+			}
+			if(actionId === "add" && Array.isArray(action.children) && action.children.length > 0)
+			{
+				for(const child of action.children)
+				{
+					if(!child?.id)
+					{
+						continue;
+					}
+					resolved.push(child);
+				}
+				continue;
+			}
+			resolved.push(action);
+		}
+		const seen = new Set<string>();
+		return resolved.filter((action) =>
+		{
+			const actionId = String(action?.id || "");
+			if(!actionId || seen.has(actionId))
+			{
+				return false;
+			}
+			seen.add(actionId);
+			return true;
+		});
+	}
+
+	/**
+	 * Execute one placeholder action immediately using Nextmatch default action handling.
+	 */
+	executePlaceholderAction(actionId : string, anchorElement : HTMLElement | null = null) : boolean
+	{
+		this.ensureActionManagers();
+		if(!this.actionManager || !actionId)
+		{
+			return false;
+		}
+		const action = this.actionManager.getActionById?.(actionId);
+		if(!action)
+		{
+			return false;
+		}
+		const placeholderObject = this.ensurePlaceholderActionObject(anchorElement || this.host);
+		if(!placeholderObject)
+		{
+			return false;
+		}
+		try
+		{
+			nm_action(action, [placeholderObject], placeholderObject, {ids: [], all: false});
+			return true;
+		}
+		catch(e)
+		{
+			return false;
+		}
+	}
 
 	destroy()
 	{
@@ -303,6 +453,60 @@ export class Et2NextmatchActionController
 			}
 		}
 		return links;
+	}
+
+	/**
+	 * Keep only placeholder action ids that are available in the current action tree.
+	 */
+	private _resolvePlaceholderActionLinks(actionIds : string[]) : string[]
+	{
+		const requested = new Set((actionIds || []).map((id) => String(id || "").trim()).filter(Boolean));
+		if(!requested.size)
+		{
+			return [];
+		}
+		const available : string[] = [];
+		for(const action of this.actionManager?.children || [])
+		{
+			if(action?.id && requested.has(action.id))
+			{
+				available.push(action.id);
+			}
+			for(const childId of Object.keys(action?.children || {}))
+			{
+				if(requested.has(childId))
+				{
+					available.push(childId);
+				}
+			}
+		}
+		return Array.from(new Set(available));
+	}
+
+	private ensurePlaceholderActionObject(anchorElement : HTMLElement) : EgwActionObject | null
+	{
+		if(!this.objectManager)
+		{
+			return null;
+		}
+		let placeholderObject = this.rowActionObjects.get(Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID) || null;
+		if(!placeholderObject)
+		{
+			const aoi = new egwActionApi.egwActionObjectInterface();
+			aoi.doGetDOMNode = () => anchorElement;
+			placeholderObject = this.objectManager.addObject(Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID, aoi);
+			if(!placeholderObject)
+			{
+				return null;
+			}
+			this.rowActionObjects.set(Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID, placeholderObject);
+		}
+		else
+		{
+			placeholderObject.iface.doGetDOMNode = () => anchorElement;
+			placeholderObject.setAOI(placeholderObject.iface);
+		}
+		return placeholderObject;
 	}
 
 	private findEventRow(event : Event) : { rowId : string; rowElement : HTMLElement } | null

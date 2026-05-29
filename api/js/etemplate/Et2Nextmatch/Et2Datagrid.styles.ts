@@ -210,10 +210,4 @@ export default css`
 		display: block;
 	}
 
-	#sentinel {
-		/* Keep a physical target for IntersectionObserver across browsers. */
-		display: block;
-		width: 100%;
-		height: 1px;
-	}
 `;
