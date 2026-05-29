@@ -47,7 +47,12 @@ Example:
 
 ## Rows
 
-Row rendering is driven by one row template plus row data objects.
+Row rendering is driven by a row template.  
+:::note
+
+* The row template is not given any server-side processing when the template is initially loaded.
+* Avoid legacy widgets in the row template.
+  :::
 
 Field expression support in row templates:
 

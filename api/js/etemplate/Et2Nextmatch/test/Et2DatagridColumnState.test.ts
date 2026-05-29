@@ -4,6 +4,17 @@ import {Et2DatagridColumn} from "../Et2Datagrid.types";
 
 describe("Et2DatagridColumnState", () =>
 {
+	/**
+	 * Contract under test:
+	 * - Column selection ids preserve keys containing spaces via reversible encoding.
+	 *
+	 * Setup strategy:
+	 * - Encode then decode a key containing spaces.
+	 *
+	 * Pass criteria:
+	 * - Encoded id replaces spaces.
+	 * - Decoded id matches original key exactly.
+	 */
 	it("maps chooser ids with space-safe encoding", () =>
 	{
 		const state = new Et2DatagridColumnState();
@@ -15,6 +26,16 @@ describe("Et2DatagridColumnState", () =>
 		assert.equal(decoded, key, "encoded chooser id should decode to original key");
 	});
 
+	/**
+	 * Contract under test:
+	 * - Visible column filtering excludes hidden and disabled columns.
+	 *
+	 * Setup strategy:
+	 * - Provide columns with hidden flag and multiple disabled value styles.
+	 *
+	 * Pass criteria:
+	 * - Only non-hidden, non-disabled column keys remain visible.
+	 */
 	it("filters visible columns from hidden and disabled flags", () =>
 	{
 		const state = new Et2DatagridColumnState();
@@ -22,20 +43,29 @@ describe("Et2DatagridColumnState", () =>
 			{key: "a", title: "A"},
 			{key: "b", title: "B", hidden: true},
 			{key: "c", title: "C", disabled: "true"},
-			{key: "d", title: "D", disabled: "@rule"}
+			{key: "d", title: "D", disabled: true},
+			{key: "f", title: "F", disabled: "1"}
 		];
-		const visible = state.visibleColumns(columns, (expression) =>
-		{
-			if(expression === "@rule")
-			{
-				return true;
-			}
-			throw new Error("fallback to local boolean handling");
-		});
+		const visible = state.visibleColumns(columns);
 
-		assert.deepEqual(visible.map((column) => column.key), ["a"], "only non-hidden and non-disabled columns should remain visible");
+		assert.deepEqual(
+			visible.map((column) => column.key),
+			["a"],
+			"visible columns should exclude hidden and disabled columns"
+		);
 	});
 
+	/**
+	 * Contract under test:
+	 * - Selection order mapping keeps selected keys in chooser order and hides unselected columns.
+	 *
+	 * Setup strategy:
+	 * - Apply a selection order that reorders two keys and omits one key.
+	 *
+	 * Pass criteria:
+	 * - Selected keys are visible in selected order slots.
+	 * - Unselected keys remain in-place but hidden.
+	 */
 	it("applies chooser order and hides unselected columns", () =>
 	{
 		const state = new Et2DatagridColumnState();

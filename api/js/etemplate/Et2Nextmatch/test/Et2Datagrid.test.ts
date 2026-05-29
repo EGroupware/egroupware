@@ -1,5 +1,6 @@
 import {assert} from "@open-wc/testing";
 import {Et2Datagrid} from "../Et2Datagrid";
+import {Et2RowProvider} from "../Et2RowProvider";
 
 const egw = {
 	lang: (label : string) => label,
@@ -13,7 +14,7 @@ egw.set_preference = (app : string, key : string, value : any) =>
 {
 	lastPreferenceCall = {app, key, value};
 };
-egw.app_name = () => "addressbook";
+egw.app_name = () => "test";
 
 window.egw = function() { return egw; } as any;
 Object.assign(window.egw, egw);
@@ -105,8 +106,8 @@ describe("Et2Datagrid row rendering", () =>
 		const rowTemplate = document.createElement("template");
 		rowTemplate.innerHTML = `
 			<tr>
-				<td><et2-dg-test-transform data-et2nm-id="w1" data-value="$row.label"></et2-dg-test-transform></td>
-				<td>$row.label</td>
+				<td><et2-dg-test-transform data-et2nm-id="w1" data-value="$label"></et2-dg-test-transform></td>
+				<td>$label</td>
 			</tr>
 		`;
 
@@ -138,13 +139,14 @@ describe("Et2Datagrid row rendering", () =>
 		);
 	});
 
-	it("supports legacy row shorthand expressions in template attributes", async() =>
+	it("supports modern and legacy row shorthand expressions in template attributes", async() =>
 	{
 		const el = new Et2Datagrid();
 		const rowTemplate = document.createElement("template");
 		rowTemplate.innerHTML = `
 			<tr class="$class $cat_id">
-				<td><et2-dg-test-transform data-et2nm-id="w1" data-value="\${note}"></et2-dg-test-transform></td>
+				<td><et2-dg-test-transform data-et2nm-id="w1" data-value="\${row}[note]"></et2-dg-test-transform></td>
+				<td><et2-dg-test-transform data-et2nm-id="w2" data-value="$note"></et2-dg-test-transform></td>
 			</tr>
 		`;
 
@@ -154,7 +156,8 @@ describe("Et2Datagrid row rendering", () =>
 			rowTemplate,
 			rowTemplateXml: null,
 			rowTemplateAttrMap: {
-				w1: {"data-value": "${note}"}
+				w1: {"data-value": "${row}[note]"},
+				w2: {"data-value": "$note"}
 			},
 			loaderTemplate: null
 		} as any;
@@ -171,8 +174,13 @@ describe("Et2Datagrid row rendering", () =>
 		const transformed = rowElement!.querySelector("et2-dg-test-transform") as HTMLElement | null;
 		assert.equal(
 			(transformed as any)?.lastTransformedAttrs?.["data-value"],
-			"${note}",
-			"legacy placeholder format should be passed through to widget transform"
+			"${row}[note]",
+			"modern ${row}[field] placeholder should be passed through to widget transform"
+		);
+		assert.equal(
+			Et2RowProvider.resolveSimpleRowPlaceholders("$note", row.data, (_rowData, key) => row.data[key]),
+			"Legacy note",
+			"modern $field placeholder should resolve to row field value"
 		);
 		assert.include(rowElement!.className, "primary", "`$class` should resolve from row content");
 		assert.include(rowElement!.className, "cat_3", "`$cat_id` should resolve into category class");
@@ -342,7 +350,7 @@ describe.skip("Et2Datagrid column preference keys", () =>
 	});
 });
 
-describe.skip("Et2Datagrid selection mode", () =>
+describe("Et2Datagrid selection mode", () =>
 {
 	it("starts with first row active but not selected", async() =>
 	{
@@ -619,9 +627,75 @@ describe.skip("Et2Datagrid selection mode", () =>
 
 		host.remove();
 	});
+
+	it("selects all rows with Ctrl+A in multiple mode", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = new Et2Datagrid();
+		el.style.height = "100%";
+		host.appendChild(el);
+		await el.updateComplete;
+
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.setInitialRows([
+			{id: "row-0", label: "Row 0"},
+			{id: "row-1", label: "Row 1"},
+			{id: "row-2", label: "Row 2"}
+		]);
+		el.total = 3;
+		el.selectionMode = "multiple";
+		await el.updateComplete;
+
+		const event = new KeyboardEvent("keydown", {key: "a", ctrlKey: true, cancelable: true});
+		(el as any)._onTableKeydown(event);
+
+		assert.isTrue(event.defaultPrevented, "Ctrl+A should prevent native browser select-all");
+		assert.isTrue(el.allSelected, "Ctrl+A should set allSelected");
+		assert.sameMembers(Array.from(el.selectedRowIds), ["row-0", "row-1", "row-2"], "Ctrl+A should select all rendered rows");
+
+		host.remove();
+	});
+
+	it("does not select all rows with Ctrl+A outside multiple mode", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = new Et2Datagrid();
+		el.style.height = "100%";
+		host.appendChild(el);
+		await el.updateComplete;
+
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.setInitialRows([
+			{id: "row-0", label: "Row 0"},
+			{id: "row-1", label: "Row 1"}
+		]);
+		el.total = 2;
+		el.selectionMode = "single";
+		el.selectedRowIds = new Set(["row-0"]);
+		await el.updateComplete;
+
+		const event = new KeyboardEvent("keydown", {key: "a", ctrlKey: true, cancelable: true});
+		(el as any)._onTableKeydown(event);
+
+		assert.isFalse(event.defaultPrevented, "Ctrl+A should not be intercepted outside multiple mode");
+		assert.isFalse(el.allSelected, "single mode should not set allSelected from Ctrl+A");
+		assert.sameMembers(Array.from(el.selectedRowIds), ["row-0"], "single mode selection should remain unchanged");
+
+		host.remove();
+	});
 });
 
-describe.skip("Et2Datagrid virtual height stability", () =>
+describe("Et2Datagrid virtual height stability", () =>
 {
 	it("keeps scroll height stable after replacing placeholders with fetched rows", async() =>
 	{
@@ -733,6 +807,60 @@ describe.skip("Et2Datagrid virtual height stability", () =>
 		await el.updateComplete;
 
 		assert.isTrue(calls.some((start) => start === 150), "missing deeper chunk should be requested");
+		host.remove();
+	});
+
+	it("requests rows when user scroll reaches unloaded chunk", async() =>
+	{
+		const calls : number[] = [];
+		const dataProvider = {
+			fetchPage: async(start : number, pageSize : number) =>
+			{
+				calls.push(start);
+				return {
+					total: 200,
+					rows: Array.from({length: pageSize}, (_v, index) => ({
+						id: `row-${start + index}`,
+						label: `Row ${start + index}`
+					}))
+				};
+			},
+			getQuerySignature: () => "scroll-requests-chunk"
+		};
+
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = new Et2Datagrid();
+		el.style.height = "100%";
+		host.appendChild(el);
+		await el.updateComplete;
+		(el as any)._requestDispatchDelayMs = 0;
+		(el as any)._rowHeightLocked = true;
+		(el as any)._rowHeightPx = 42;
+
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.pageSize = 50;
+		el.dataProvider = dataProvider as any;
+		el.setInitialRows(Array.from({length: 50}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+		el.total = 200;
+		(el as any)._reconcileRowRenderState();
+		await el.updateComplete;
+
+		assert.equal(calls.length, 0, "initial rendered chunk should not trigger fetch");
+
+		const body = el.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		assert.isNotNull(body, "grid body should exist");
+
+		// Simulate virtualization exposing a deeper row during scroll.
+		(el as any)._renderVirtualRow(160);
+		body.dispatchEvent(new Event("scroll"));
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
+		await el.updateComplete;
+
+		assert.isTrue(calls.some((start) => start === 150), "scrolling into unloaded area should request matching chunk");
 		host.remove();
 	});
 });

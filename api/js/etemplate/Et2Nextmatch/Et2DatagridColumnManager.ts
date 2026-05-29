@@ -65,21 +65,21 @@ export class Et2DatagridColumnManager
 			return {kind: "pixel", unit: "px", value: null};
 		}
 		const value = String(raw).trim().toLowerCase();
-		if(/^\d+(\.\d+)?%$/.test(value))
+		if(/^\d+%$/.test(value))
 		{
-			return {kind: "relative", unit: "%", value: parseFloat(value)};
+			return {kind: "relative", unit: "%", value: parseInt(value, 10)};
 		}
-		if(/^\d+(\.\d+)?fr$/.test(value))
+		if(/^\d+fr$/.test(value))
 		{
-			return {kind: "relative", unit: "fr", value: parseFloat(value)};
+			return {kind: "relative", unit: "fr", value: parseInt(value, 10)};
 		}
-		if(/^\d+(\.\d+)?px$/.test(value))
+		if(/^\d+px$/.test(value))
 		{
-			return {kind: "pixel", unit: "px", value: parseFloat(value)};
+			return {kind: "pixel", unit: "px", value: parseInt(value, 10)};
 		}
-		if(/^\d+(\.\d+)?$/.test(value))
+		if(/^\d+$/.test(value))
 		{
-			return {kind: "pixel", unit: "px", value: parseFloat(value)};
+			return {kind: "pixel", unit: "px", value: parseInt(value, 10)};
 		}
 		return {kind: "pixel", unit: "px", value: null};
 	}
@@ -115,13 +115,13 @@ export class Et2DatagridColumnManager
 			return "";
 		}
 		const value = String(raw).trim().toLowerCase();
-		if(/^\d+(\.\d+)?px$/.test(value))
+		if(/^\d+px$/.test(value))
 		{
-			return `${parseFloat(value)}px`;
+			return `${parseInt(value, 10)}px`;
 		}
-		if(/^\d+(\.\d+)?$/.test(value))
+		if(/^\d+$/.test(value))
 		{
-			return `${parseFloat(value)}px`;
+			return `${parseInt(value, 10)}px`;
 		}
 		return value;
 	}
@@ -157,17 +157,17 @@ export class Et2DatagridColumnManager
 		}
 		if(parsed.kind === "pixel")
 		{
-			return parsed.value;
+			return Math.max(0, Math.floor(parsed.value));
 		}
 		if(parsed.unit === "%")
 		{
-			return totalVisibleWidthPx * (parsed.value / 100);
+			return Math.max(0, Math.floor(totalVisibleWidthPx * (parsed.value / 100)));
 		}
 		if(relativeWidthUnits > 0 && availableRelativeWidthPx > 0)
 		{
-			return availableRelativeWidthPx * (parsed.value / relativeWidthUnits);
+			return Math.max(0, Math.floor(availableRelativeWidthPx * (parsed.value / relativeWidthUnits)));
 		}
-		return totalVisibleWidthPx * (parsed.value / 100);
+		return Math.max(0, Math.floor(totalVisibleWidthPx * (parsed.value / 100)));
 	}
 
 	/**
