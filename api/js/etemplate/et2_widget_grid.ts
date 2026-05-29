@@ -264,7 +264,7 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		let widget : et2_widget = this;
 		while(!nm && widget != this.getRoot())
 		{
-			nm = (widget.getType() == 'nextmatch');
+			nm = (widget.getType() == 'nextmatch' || widget.getType() == "et2-nextmatch");
 			widget = widget.getParent();
 		}
 
