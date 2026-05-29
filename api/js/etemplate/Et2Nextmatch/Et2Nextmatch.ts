@@ -7,8 +7,10 @@ import {Et2Datagrid} from "./Et2Datagrid";
 import {Et2DatagridColumn, Et2DatagridRowCustomizeContext, Et2DatagridTemplateData} from "./Et2Datagrid.types";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
+import {EgwAction} from "../../egw_action/EgwAction";
 import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
+import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
 import {
@@ -88,6 +90,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
 	private _filters : Record<string, any> = {col_filter: {}};
 	private _filterbox : Et2Filterbox | null = null;
+	private _actionController : Et2NextmatchActionController;
 
 	/**
 	 * Resolve the internal datagrid instance from shadow DOM.
@@ -113,6 +116,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 		this._rowProvider = new Et2RowProvider(this as any);
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
+		this._actionController = new Et2NextmatchActionController(this as any);
 	}
 
 	/**
@@ -125,6 +129,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.addEventListener(ET2_NEXTMATCH_SORT_EVENT, this._handleHeaderSortEvent as EventListener);
 		this.addEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.addEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
+		this.addEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.addEventListener("contextmenu", this._handleContextMenu as EventListener);
+		this.addEventListener("keydown", this._handleKeydown as EventListener);
+		this.addEventListener("pointerdown", this._handlePointerDown as EventListener);
+		this.addEventListener("pointermove", this._handlePointerMove as EventListener);
+		this.addEventListener("pointerup", this._cancelLongPress as EventListener);
+		this.addEventListener("pointercancel", this._cancelLongPress as EventListener);
 	}
 
 	/**
@@ -139,7 +150,42 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.removeEventListener(ET2_NEXTMATCH_SORT_EVENT, this._handleHeaderSortEvent as EventListener);
 		this.removeEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
+		this.removeEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener);
+		this.removeEventListener("keydown", this._handleKeydown as EventListener);
+		this.removeEventListener("pointerdown", this._handlePointerDown as EventListener);
+		this.removeEventListener("pointermove", this._handlePointerMove as EventListener);
+		this.removeEventListener("pointerup", this._cancelLongPress as EventListener);
+		this.removeEventListener("pointercancel", this._cancelLongPress as EventListener);
+		this._actionController.destroy();
 		super.disconnectedCallback();
+	}
+
+	transformAttributes(attrs)
+	{
+		// Process legacy 'settings' into properties
+		// We're before namespace creation here, so use attrs.id
+		const settings = this.getArrayMgr("content").getEntry(attrs.id || 'nm');
+		if(settings && Object.keys(settings).length > 0)
+		{
+			Object.assign(attrs, settings);
+		}
+		super.transformAttributes(attrs);
+	}
+
+	protected _initActions(actions : EgwAction[] | { [id : string] : object })
+	{
+		this._actionController.initActions(actions);
+	}
+
+	getSelection() : { ids : string[]; all : boolean }
+	{
+		return this._actionController.getSelection();
+	}
+
+	selectSingleRow(rowId : string)
+	{
+		this._datagrid?.selectSingleRow(rowId);
 	}
 
 	/**
@@ -395,6 +441,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 
 		this._updateSortHeaderState();
+		this._actionController.clearRowActionObjects();
 		if(options?.reload !== false)
 		{
 			this._datagrid?.reload();
@@ -1026,6 +1073,52 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			},
 			bubbles: true
 		}));
+	};
+
+	private _handleSelectionChanged = (event : CustomEvent<{ selectedRowIds? : string[]; activeRowId? : string }>) =>
+	{
+		const datagrid = this._datagrid;
+		if(!datagrid || !event.composedPath().includes(datagrid))
+		{
+			return;
+		}
+		this._actionController.handleSelectionChanged(event.detail || {});
+	};
+
+	private _handleContextMenu = (event : MouseEvent) =>
+	{
+		if(this._actionController.triggerPopupForRow(event))
+		{
+			event.preventDefault();
+		}
+	};
+
+	private _handleKeydown = (event : KeyboardEvent) =>
+	{
+		if(event.key !== "Enter")
+		{
+			return;
+		}
+		if(this._actionController.triggerPopupForRow(event))
+		{
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	};
+
+	private _handlePointerDown = (event : PointerEvent) =>
+	{
+		this._actionController.handlePointerDown(event);
+	};
+
+	private _handlePointerMove = (event : PointerEvent) =>
+	{
+		this._actionController.handlePointerMove(event);
+	};
+
+	private _cancelLongPress = (_event? : PointerEvent) =>
+	{
+		this._actionController.cancelLongPress();
 	};
 
 	/**

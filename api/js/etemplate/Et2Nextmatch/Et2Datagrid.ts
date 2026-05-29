@@ -2257,6 +2257,28 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Select exactly one row by id and synchronize visual/accessibility state.
+	 */
+	selectSingleRow(rowId : string)
+	{
+		if(!rowId || this.selectionMode === "none")
+		{
+			return;
+		}
+		const rowIndex = this._rowsByIndex.findIndex((row) => row.id === rowId);
+		if(rowIndex < 0)
+		{
+			return;
+		}
+		this.selectedRowIds = new Set([rowId]);
+		this.activeRowIndex = rowIndex;
+		this.activeRowId = rowId;
+		this.anchorRowIndex = rowIndex;
+		this._syncRowAccessibilityState();
+		this._emitSelectionChanged();
+	}
+
+	/**
 	 * Reset all grid runtime state including selection and fetch markers.
 	 */
 	clear()

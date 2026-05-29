@@ -138,7 +138,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			}
 			if(_selected[0].parent.manager.data.menu && _selected[0].parent.manager.data.menu !== menu)
 			{
-				_selected[0].parent.manager.data.menu.remove();
+				_selected[0].parent.manager.data.menu.remove?.();
 				_selected[0].parent.manager.data.menu = menu;
 			}
 
