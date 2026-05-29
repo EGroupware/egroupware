@@ -46,6 +46,7 @@ export interface Et2DatagridDataProvider
 export interface Et2DatagridSelectionDetail
 {
 	selectedRowIds : string[];
+	allSelected? : boolean;
 	selectedRows : any[];
 	activeRowId : string | null;
 	activeRowIndex : number;

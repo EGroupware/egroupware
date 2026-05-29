@@ -188,6 +188,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this._datagrid?.selectSingleRow(rowId);
 	}
 
+	selectAllRows()
+	{
+		this._datagrid?.selectAllRows();
+	}
+
 	/**
 	 * Initialize the widget from attributes/template and trigger first load.
 	 * We prefer showing provided rows immediately to keep first paint fast.
@@ -1075,7 +1080,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}));
 	};
 
-	private _handleSelectionChanged = (event : CustomEvent<{ selectedRowIds? : string[]; activeRowId? : string }>) =>
+	private _handleSelectionChanged = (event : CustomEvent<{ selectedRowIds? : string[]; activeRowId? : string; allSelected? : boolean }>) =>
 	{
 		const datagrid = this._datagrid;
 		if(!datagrid || !event.composedPath().includes(datagrid))

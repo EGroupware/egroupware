@@ -189,6 +189,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private displayedRowIds : Set<string> = new Set();
 	/** Set of selected row ids used to derive emitted selection payloads. */
 	private selectedRowIds : Set<string> = new Set();
+	private allSelected : boolean = false;
 	/** Anchor index for shift-range selection semantics. */
 	private anchorRowIndex : number = -1;
 	/** Keyboard/pointer active row index in currently loaded rows. */
@@ -1130,6 +1131,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		rowElement.setAttribute("data-row-index", String(rowIndex));
 		rowElement.setAttribute("aria-rowindex", String(rowIndex + 1));
 		rowElement.setAttribute("aria-selected", this.selectedRowIds.has(row.id) ? "true" : "false");
+		if(this.allSelected && !this.selectedRowIds.has(row.id))
+		{
+			rowElement.setAttribute("aria-selected", "true");
+		}
 		rowElement.tabIndex = rowIndex === this.activeRowIndex ? 0 : -1;
 	}
 
@@ -1902,6 +1907,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			if(this.selectionMode === "multiple")
 			{
 				event.preventDefault();
+				this.allSelected = true;
 				this.selectedRowIds = new Set(this.rows.map((row) => row.id));
 				this._syncRowAccessibilityState();
 				this._emitSelectionChanged();
@@ -2037,6 +2043,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 
+		this.allSelected = false;
 		if(this.selectionMode === "single")
 		{
 			this.selectedRowIds = new Set([row.id]);
@@ -2067,6 +2074,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		this.allSelected = false;
 		if(this.selectionMode === "single")
 		{
 			this.selectedRowIds = new Set([rowId]);
@@ -2115,6 +2123,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		this.allSelected = false;
 		const start = Math.min(startIndex, endIndex);
 		const end = Math.max(startIndex, endIndex);
 		const next = new Set<string>();
@@ -2200,9 +2209,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			const rowId = rowElement.getAttribute("data-row-id") || "";
 			rowElement.setAttribute("role", "row");
 			rowElement.setAttribute("aria-selected", this.selectedRowIds.has(rowId) ? "true" : "false");
+			if(this.allSelected && !this.selectedRowIds.has(rowId))
+			{
+				rowElement.setAttribute("aria-selected", "true");
+			}
 			rowElement.setAttribute("aria-rowindex", String(Math.max(0, absoluteIndex) + 1));
 			rowElement.tabIndex = absoluteIndex === this.activeRowIndex ? 0 : -1;
-			rowElement.classList.toggle("dg-row-selected", this.selectedRowIds.has(rowId));
+			rowElement.classList.toggle("dg-row-selected", this.allSelected || this.selectedRowIds.has(rowId));
 			rowElement.classList.toggle("dg-row-active", rowId === this.activeRowId);
 
 			const cells = Array.from(rowElement.children) as HTMLElement[];
@@ -2223,6 +2236,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const selectedRows = this.rows.filter((row) => this.selectedRowIds.has(row.id)).map((row) => row.data);
 		const detail : Et2DatagridSelectionDetail = {
 			selectedRowIds: Array.from(this.selectedRowIds),
+			allSelected: this.allSelected,
 			selectedRows,
 			activeRowId: this.activeRowId,
 			activeRowIndex: this.activeRowIndex
@@ -2245,6 +2259,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}));
 		this._clearRows();
 		this.selectedRowIds.clear();
+		this.allSelected = false;
 		this.anchorRowIndex = -1;
 		this.activeRowIndex = -1;
 		this.activeRowId = null;
@@ -2271,6 +2286,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		this.selectedRowIds = new Set([rowId]);
+		this.allSelected = false;
 		this.activeRowIndex = rowIndex;
 		this.activeRowId = rowId;
 		this.anchorRowIndex = rowIndex;
@@ -2293,6 +2309,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._hasFetchedOnce = false;
 		this._pendingPlaceholderCount = 0;
 		this.selectedRowIds.clear();
+		this.allSelected = false;
 		this.anchorRowIndex = -1;
 		this.activeRowIndex = -1;
 		this.activeRowId = null;
@@ -2310,7 +2327,20 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.fetchErrorMessage = "";
 		this._hasFetchedOnce = false;
 		this._pendingPlaceholderCount = 0;
+		this.allSelected = false;
 		await this.loadMore();
+	}
+
+	selectAllRows()
+	{
+		if(this.selectionMode !== "multiple")
+		{
+			return;
+		}
+		this.allSelected = true;
+		this.selectedRowIds = new Set(this.rows.map((row) => row.id));
+		this._syncRowAccessibilityState();
+		this._emitSelectionChanged();
 	}
 
 	/**
