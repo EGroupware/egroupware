@@ -2241,16 +2241,38 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "8554d1e7b26022430f2768e10a5fbd8f8706efb0"
+                "reference": "93f6c564c4ba1d8453128a2e8b36d437821219dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/8554d1e7b26022430f2768e10a5fbd8f8706efb0",
-                "reference": "8554d1e7b26022430f2768e10a5fbd8f8706efb0",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/93f6c564c4ba1d8453128a2e8b36d437821219dd",
+                "reference": "93f6c564c4ba1d8453128a2e8b36d437821219dd",
                 "shasum": ""
             },
-            "require": {},
-            "require-dev": {},
+            "require": {
+                "bnf/slim3-psr15": "^1.1",
+                "league/oauth2-server": "^7.4",
+                "monolog/monolog": "^1.24",
+                "php-middleware/log-http-messages": "^4.0",
+                "slim/slim": "^3.12.5",
+                "steverhoades/oauth2-openid-connect-server": "^1.0"
+            },
+            "replace": {
+                "bnf/slim3-psr15": "^1.1",
+                "league/oauth2-server": "^7.4",
+                "monolog/monolog": "^1.24",
+                "php-middleware/log-http-messages": "^4.0",
+                "slim/slim": "^3.12.5",
+                "steverhoades/oauth2-openid-connect-server": "^1.0"
+            },
+            "require-dev": {
+                "defuse/php-encryption": "^2.1",
+                "lcobucci/jwt": "^3.1",
+                "league/event": "^2.1",
+                "paragonie/random_compat": "^2.0",
+                "psr/http-message": "^1.0",
+                "zendframework/zend-diactoros": "^1.0"
+            },
             "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
@@ -2273,7 +2295,7 @@
             "support": {
                 "source": "https://github.com/EGroupware/openid/tree/master"
             },
-            "time": "2026-04-23T07:28:30+00:00"
+            "time": "2026-05-29T05:45:24+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -4338,7 +4360,7 @@
             "version": "2.0.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jquery/jquery.git",
+                "url": "git@github.com:jquery/jquery.git",
                 "reference": "f852e631ba85af7da4ad7594785e122504e7b233"
             },
             "dist": {
