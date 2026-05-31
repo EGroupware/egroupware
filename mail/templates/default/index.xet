@@ -185,7 +185,10 @@
                 <row class="$row_cont[class]">
                     <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
                                  lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
-                    <et2-image span="1" src="circle-filled" class="status_img bi"></et2-image>
+                    <et2-vbox class="status_icons">
+                            <et2-image src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
+                            <et2-image src="$row_cont[smime]" inline="true" class="bi"></et2-image>
+                    </et2-vbox>
                     <html id="${row}[attachments]"/>
                     <et2-vbox>
                         <et2-description id="${row}[subject]" noLang="1"></et2-description>
