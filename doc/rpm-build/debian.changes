@@ -1,3 +1,9 @@
+egroupware-docker (23.1.20260601) hardy; urgency=low
+
+  * Security release for 23.1: everyone still using 23.1 (not 26.x) is encuraged to update to it
+
+ -- Ralf Becker <rb@egroupware.org>  Mon, 01 Jun 2026 08:55:52 +0200
+
 egroupware-docker (23.1.20260224) hardy; urgency=low
 
   * SECURITY and maintenance release: everyone is strongly adviced to update to this release, or 26.2.20260224
