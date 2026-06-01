@@ -117,12 +117,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             }
 
 			let menu = null;
+			const managerData = _selected?.[0]?.parent?.manager?.data;
 			// Special handling for nextmatch context menu - reuse the same menu
-			if(!_target && !_context.menu && _selected[0].parent.manager.data.menu)
+			if(!_target && !_context.menu && managerData?.menu)
 			{
-				menu = _selected[0].parent.manager.data.menu
+				menu = managerData.menu;
 			}
-			if(this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
+			if(!menu && this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
 			{
 				menu = this._buildMenu(_links, _selected, _target);
 				menu.showAt(0, 0);
@@ -136,10 +137,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			{
 				menu.applyContext(_links, _selected, _target);
 			}
-			if(_selected[0].parent.manager.data.menu && _selected[0].parent.manager.data.menu !== menu)
+			if(!_target && !_context.menu && managerData)
 			{
-				_selected[0].parent.manager.data.menu.remove?.();
-				_selected[0].parent.manager.data.menu = menu;
+				if(managerData.menu && managerData.menu !== menu)
+				{
+					managerData.menu.remove?.();
+				}
+				managerData.menu = menu;
 			}
 
 			menu.showAt(_context.posx, _context.posy, true);
@@ -325,9 +329,18 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      * @returns {boolean}
      */
     private _registerContext = (_node, _callback, _context) => {
+		const nextmatchWidget = _context?.parent?.manager?.data?.nextmatch;
+		const isLegacyNextmatchWidget = !!nextmatchWidget &&
+			!(nextmatchWidget instanceof HTMLElement) &&
+			nextmatchWidget?._type === "nextmatch";
 
 		// Special handling for nextmatch: only build the menu once and just re-use it.
-		if(!_context.menu && _context.actionLinks && _context.parent?.manager?.data?.nextmatch && !_context.parent.manager.data.menu)
+		if(
+			!_context.menu &&
+			_context.actionLinks &&
+			isLegacyNextmatchWidget &&
+			!_context.parent.manager.data.menu
+		)
 		{
 			const actionLinks = _context.actionLinks;
 			const selectedContext = _context;

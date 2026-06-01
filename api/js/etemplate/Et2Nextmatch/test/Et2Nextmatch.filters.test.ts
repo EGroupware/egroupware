@@ -243,6 +243,29 @@ describe("Et2Nextmatch header event handling", () =>
 
 	/**
 	 * Contract under test:
+	 * - Letter-search controls stay hidden when neither `lettersearch` nor active `searchletter` is set.
+	 *
+	 * Setup strategy:
+	 * - Render nextmatch with default letter-search settings.
+	 *
+	 * Pass criteria:
+	 * - No `.nextmatch_lettersearch` element is rendered.
+	 */
+	it("does not render lettersearch when disabled and no active letter is set", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.lettersearch = false;
+		el.searchletter = false;
+		document.body.append(el);
+		await el.updateComplete;
+
+		const letterSearch = el.shadowRoot?.querySelector(".nextmatch_lettersearch");
+		assert.isNull(letterSearch, "lettersearch should not render by default");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - `placeholder` property is forwarded to datagrid empty-state text.
 	 *
 	 * Setup strategy:

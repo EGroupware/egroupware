@@ -55,7 +55,6 @@ export class Et2NextmatchActionController
 		this.actionManager.data = {
 			...data,
 			nextmatch: this.host,
-			nextmatchDisablePrebuild: true,
 			context: this.host.getInstanceManager()?.app_obj,
 			widget: this.host
 		};
@@ -157,8 +156,8 @@ export class Et2NextmatchActionController
 		{
 			return false;
 		}
-		const links = this._resolvePlaceholderActionLinks(actionIds);
-		if(!links.length)
+		const allowedLinks = this._resolvePlaceholderActionLinks(actionIds);
+		if(!allowedLinks.length)
 		{
 			return false;
 		}
@@ -167,7 +166,7 @@ export class Et2NextmatchActionController
 		{
 			return false;
 		}
-		placeholderObject.updateActionLinks(links);
+		placeholderObject.updateActionLinks(this._getPlaceholderContextLinks(allowedLinks));
 		placeholderObject.forceSelection();
 		const anchorRect = target.getBoundingClientRect();
 		const mouseEvent = contextEvent as MouseEvent;
@@ -481,6 +480,25 @@ export class Et2NextmatchActionController
 			}
 		}
 		return Array.from(new Set(available));
+	}
+
+	/**
+	 * Build a full popup-link map for placeholder context:
+	 * - all known popup actions stay in the menu tree
+	 * - only allowed placeholder actions are visible/enabled
+	 */
+	private _getPlaceholderContextLinks(allowedLinks : string[]) : {
+		actionId : string;
+		enabled : boolean;
+		visible : boolean
+	}[]
+	{
+		const allowed = new Set((allowedLinks || []).map((id) => String(id || "").trim()).filter(Boolean));
+		return this.getActionLinks().map((actionId) => ({
+			actionId,
+			enabled: allowed.has(actionId),
+			visible: allowed.has(actionId)
+		}));
 	}
 
 	private ensurePlaceholderActionObject(anchorElement : HTMLElement) : EgwActionObject | null
