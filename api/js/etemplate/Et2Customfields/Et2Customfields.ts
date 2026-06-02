@@ -10,9 +10,9 @@ import {customElement} from "lit/decorators/custom-element.js";
 @customElement("et2-customfields")
 export class Et2Customfields extends Et2CustomfieldsBase
 {
-	constructor(...args : any[])
+	constructor()
 	{
-		super(...args);
+		super();
 		this.mode = "customfields";
 	}
 }

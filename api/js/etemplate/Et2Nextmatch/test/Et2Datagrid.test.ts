@@ -3,20 +3,25 @@ import {html, LitElement} from "lit";
 import {Et2Datagrid} from "../Et2Datagrid";
 import datagridStyles from "../Et2Datagrid.styles.ts";
 import {Et2RowProvider} from "../Et2RowProvider";
+import {et2_arrayMgr} from "../../et2_core_arrayMgr";
+import {Et2CustomfieldsBase} from "../../Et2Customfields/Et2CustomfieldsBase";
+import "../../Et2Customfields/Et2CustomfieldsList";
+import "../../Et2Customfields/Et2CustomfieldsListRow";
 
 const egw = {
+	debug: () => {},
 	lang: (label : string) => label,
 	tooltipBind: () => {},
 	tooltipUnbind: () => {},
 	preference: () => null,
-	set_preference: () => {}
+	set_preference: () => {},
+	app_name: () => "addressbook"
 };
 let lastPreferenceCall : { app : string; key : string; value : any } | null = null;
 egw.set_preference = (app : string, key : string, value : any) =>
 {
 	lastPreferenceCall = {app, key, value};
 };
-egw.app_name = () => "test";
 
 window.egw = function() { return egw; } as any;
 Object.assign(window.egw, egw);
@@ -45,6 +50,38 @@ class Et2DatagridTestTransform extends HTMLElement
 if(!customElements.get("et2-dg-test-transform"))
 {
 	customElements.define("et2-dg-test-transform", Et2DatagridTestTransform);
+}
+
+class Et2DatagridMgrProbe extends HTMLElement
+{
+	private _mgrs : Record<string, any> = {};
+
+	setArrayMgrs(mgrs : Record<string, any>)
+	{
+		this._mgrs = mgrs;
+	}
+
+	setArrayMgr(name : string, mgr : any)
+	{
+		this._mgrs[name] = mgr;
+	}
+
+	transformAttributes(attrs : Record<string, string>)
+	{
+		const customfields = this._mgrs.modifications?.getRoot?.()?.getEntry("~custom_fields~", true)?.customfields || {};
+		const value = this._mgrs.content?.expandName?.(attrs["data-value"] || "");
+		this.setAttribute("data-fields", Object.keys(customfields).join(","));
+		this.setAttribute("data-value", String(value ?? ""));
+	}
+
+	loadFromXML()
+	{
+	}
+}
+
+if(!customElements.get("et2-dg-mgr-probe"))
+{
+	customElements.define("et2-dg-mgr-probe", Et2DatagridMgrProbe);
 }
 
 class Et2DatagridAlignmentFixture extends LitElement
@@ -239,6 +276,225 @@ describe("Et2Datagrid row rendering", () =>
 		);
 	});
 
+	/**
+	 * Contract: row binding must preserve shared array managers while replacing
+	 * only the content manager with the current row perspective.
+	 * Setup: probe widget reads customfield metadata from modifications and value
+	 * from row content.
+	 * Pass: both shared metadata and row-scoped value are available.
+	 */
+	it("preserves non-content array managers while applying row content perspective", () =>
+	{
+		const el = new Et2Datagrid();
+		el.setArrayMgr("content", new et2_arrayMgr({}));
+		el.setArrayMgr("modifications", new et2_arrayMgr({
+			"~custom_fields~": {
+				customfields: {
+					cf_text: {label: "Text", type: "text"}
+				}
+			}
+		}));
+
+		const provider = new Et2RowProvider(el as any);
+		el.columns = [{key: "customfields", title: "Custom fields", width: "1fr"}] as any;
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `
+			<td><et2-dg-mgr-probe data-value="$row_cont[#cf_text]"></et2-dg-mgr-probe></td>
+		`;
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template,
+			rowTemplateXml: prepared?.xml,
+			rowTemplateAttrMap: prepared?.attrMap || {},
+			loaderTemplate: null
+		} as any;
+
+		const row = {id: "row-0", data: {"#cf_text": "Row customfield value"}};
+		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		assert.isNotNull(rowElement, "row should be built from template");
+
+		const applied = (el as any)._applyRowElementAttributes(rowElement!, row.data, 0);
+		assert.isTrue(applied, "row template attributes should apply successfully");
+
+		const probe = rowElement!.querySelector("et2-dg-mgr-probe") as HTMLElement | null;
+		assert.equal(
+			probe?.getAttribute("data-fields"),
+			"cf_text",
+			"row widget should retain access to shared customfield metadata from modifications"
+		);
+		assert.equal(
+			probe?.getAttribute("data-value"),
+			"Row customfield value",
+			"row widget should still use row-scoped content for values"
+		);
+	});
+
+	/**
+	 * Contract: row templates may use et2-customfields-list, but datagrid rows
+	 * instantiate the lightweight et2-customfields-list-row implementation.
+	 * Setup: prepare a row template with an explicit et2-customfields-list tag.
+	 * Pass: the prepared template contains the row renderer and keeps row attributes.
+	 */
+	it("uses the lightweight row renderer for explicit et2 customfields-list rows", () =>
+	{
+		const host = document.createElement("et2-datagrid") as Et2Datagrid;
+		const provider = new Et2RowProvider(host);
+		const row = document.createElement("row");
+		row.innerHTML = `<et2-customfields-list id="$row" class="customfields"></et2-customfields-list>`;
+
+		const prepared = (provider as any)._prepareRowTemplate(row, []);
+		const list = prepared?.template.content.querySelector("et2-customfields-list-row") as HTMLElement | null;
+
+		assert.isNotNull(
+			list,
+			"explicit et2-customfields-list rows should use the lightweight datagrid row renderer"
+		);
+		assert.equal(
+			list?.getAttribute("id"),
+			"$row",
+			"row renderer should keep row-scoped id for later row-context transform"
+		);
+	});
+
+	/**
+	 * Contract: datagrid customfield rows receive shared metadata once from the
+	 * customfield source and row-specific values from top-level #field data.
+	 * Setup: build a row template containing et2-customfields-list without a header,
+	 * forcing the modifications-array fallback used by legacy templates.
+	 * Pass: only selected fields render and the value object contains visible #fields.
+	 */
+	it("hydrates datagrid row customfields once from shared metadata and displays row values", async() =>
+	{
+		const el = new Et2Datagrid();
+		el.setArrayMgr("content", new et2_arrayMgr({}));
+		el.setArrayMgr("modifications", new et2_arrayMgr({
+			"~custom_fields~": {
+				customfields: {
+					cf_text: {label: "Text", type: "text"},
+					cf_hidden: {label: "Hidden", type: "text"}
+				},
+				fields: {
+					cf_text: true,
+					cf_hidden: false
+				}
+			}
+		}));
+
+		const provider = new Et2RowProvider(el as any);
+		el.columns = [{key: "customfields", title: "Custom fields", width: "1fr"}] as any;
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `<td><et2-customfields-list class="customfields"></et2-customfields-list></td>`;
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template,
+			rowTemplateXml: prepared?.xml,
+			rowTemplateAttrMap: prepared?.attrMap || {},
+			loaderTemplate: null
+		} as any;
+
+		const row = {id: "row-0", data: {"#cf_text": "Row customfield value", "#cf_hidden": "Hidden value"}};
+		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		assert.isNotNull(rowElement, "row should be built from the customfields template");
+		document.body.appendChild(rowElement!);
+
+		try
+		{
+			const applied = (el as any)._applyRowElementAttributes(rowElement!, row.data, 0);
+			assert.isTrue(applied, "row customfields should initialize from row managers");
+
+			const list = rowElement!.querySelector("et2-customfields-list-row") as Et2CustomfieldsBase | null;
+			assert.isNotNull(list, "row should use the lightweight customfields renderer");
+			await list!.updateComplete;
+
+			assert.deepEqual(
+				list!.getVisibleFieldNames(),
+				["cf_text"],
+				"visible fields should come from shared customfield metadata, not row values"
+			);
+			assert.include(
+				list!.shadowRoot?.querySelector("[data-field='cf_text']")?.textContent || "",
+				"Row customfield value",
+				"visible customfield should display the current row value"
+			);
+			assert.deepEqual(
+				list!.value,
+				{"#cf_text": "Row customfield value"},
+				"row customfield values should include only visible selected customfields"
+			);
+			assert.isNull(
+				list!.shadowRoot?.querySelector("[data-field='cf_hidden']"),
+				"hidden customfield should not be rendered even when the row has a value"
+			);
+		}
+		finally
+		{
+			rowElement!.remove();
+		}
+	});
+
+	/**
+	 * Contract: selected customfield visibility comes from the owning customfield
+	 * header, not from row data or the widget's default fields object.
+	 * Setup: provide a customfield header with four fields and three selected.
+	 * Pass: the row renderer receives the same visibility map object from the header.
+	 */
+	it("applies selected customfield visibility from the header to row renderers", () =>
+	{
+		const el = new Et2Datagrid();
+		el.setArrayMgr("content", new et2_arrayMgr({}));
+		el.setArrayMgr("modifications", new et2_arrayMgr({
+			"~custom_fields~": {
+				customfields: {
+					cf_one: {label: "One", type: "text"},
+					cf_two: {label: "Two", type: "text"},
+					cf_three: {label: "Three", type: "text"},
+					cf_four: {label: "Four", type: "text"}
+				}
+			}
+		}));
+		const visibility = {
+			cf_one: true,
+			cf_two: true,
+			cf_three: true,
+			cf_four: false
+		};
+		const header = {
+			getCustomfieldVisibility: () => visibility,
+			getCustomfieldSelectionItems: () => Object.keys(visibility).map((name) => ({
+				name,
+				label: name,
+				visible: visibility[name]
+			}))
+		};
+		el.columns = [{key: "customfields", title: "Custom fields", header: header as any}] as any;
+
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `<div><et2-customfields-list class="customfields"></et2-customfields-list></div>`;
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template,
+			rowTemplateXml: prepared?.xml,
+			rowTemplateAttrMap: prepared?.attrMap || {},
+			loaderTemplate: null
+		} as any;
+
+		const row = {id: "row-0", data: {"#cf_one": "One", "#cf_two": "Two", "#cf_three": "Three", "#cf_four": "Four"}};
+		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		assert.isNotNull(rowElement, "row should be built from the customfields template");
+		assert.isTrue((el as any)._applyRowElementAttributes(rowElement!, row.data, 0));
+
+		const list = rowElement!.querySelector("et2-customfields-list-row") as Et2CustomfieldsBase | null;
+		assert.deepEqual(
+			list?.fields,
+			visibility,
+			"row renderer should use the header's full selected customfield visibility map"
+		);
+	});
+
 	it("supports modern and legacy row shorthand expressions in template attributes", async() =>
 	{
 		const el = new Et2Datagrid();
@@ -391,16 +647,14 @@ describe.skip("Et2Datagrid column sizing", () =>
 
 });
 
-describe.skip("Et2Datagrid column preference keys", () =>
+describe("Et2Datagrid column preference keys", () =>
 {
 	it("derives default key from owner tag and row template id", async() =>
 	{
 		lastPreferenceCall = null;
 		const host = document.createElement("et2-nextmatch");
 		const el = new Et2Datagrid();
-		host.appendChild(el);
-		document.body.appendChild(host);
-		await el.updateComplete;
+		host.attachShadow({mode: "open"}).appendChild(el);
 
 		el.templateData = {
 			columns: [{key: "a", title: "A", width: "1fr"}],
@@ -411,14 +665,11 @@ describe.skip("Et2Datagrid column preference keys", () =>
 			loaderTemplate: null
 		} as any;
 		el.columns = [{key: "a", title: "A", width: "1fr"}] as any;
-		await el.updateComplete;
-		el.dispatchEvent(new CustomEvent("et2-columns-changed", {detail: {columns: el.columns}, bubbles: true, composed: true}));
+		(el as any)._persistColumnPreferences();
 
 		assert.isNotNull(lastPreferenceCall, "preference should be saved on column change");
-		assert.equal(lastPreferenceCall!.key, "nextmatch-addressbook.index.rows", "default key should include owner prefix and row template id");
+		assert.equal(lastPreferenceCall!.key, "nextmatch-addressbook.index.rows-prefs", "default key should include owner prefix and row template id");
 		assert.equal(lastPreferenceCall!.app, "addressbook", "app name should come from egw app context");
-
-		host.remove();
 	});
 
 	it("uses explicit columnPreferenceName override when provided", async() =>
@@ -427,9 +678,7 @@ describe.skip("Et2Datagrid column preference keys", () =>
 		const host = document.createElement("et2-nextmatch");
 		const el = new Et2Datagrid();
 		el.columnPreferenceName = "my-custom-key";
-		host.appendChild(el);
-		document.body.appendChild(host);
-		await el.updateComplete;
+		host.attachShadow({mode: "open"}).appendChild(el);
 
 		el.templateData = {
 			columns: [{key: "a", title: "A", width: "1fr"}],
@@ -440,13 +689,10 @@ describe.skip("Et2Datagrid column preference keys", () =>
 			loaderTemplate: null
 		} as any;
 		el.columns = [{key: "a", title: "A", width: "1fr"}] as any;
-		await el.updateComplete;
-		el.dispatchEvent(new CustomEvent("et2-columns-changed", {detail: {columns: el.columns}, bubbles: true, composed: true}));
+		(el as any)._persistColumnPreferences();
 
 		assert.isNotNull(lastPreferenceCall, "preference should be saved on column change");
 		assert.equal(lastPreferenceCall!.key, "my-custom-key", "custom key override should take precedence");
-
-		host.remove();
 	});
 });
 

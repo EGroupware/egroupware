@@ -7,9 +7,9 @@ import {customElement} from "lit/decorators/custom-element.js";
 @customElement("et2-customfields-filters")
 export class Et2CustomfieldsFilters extends Et2CustomfieldsBase
 {
-	constructor(...args : any[])
+	constructor()
 	{
-		super(...args);
+		super();
 		this.mode = "customfields-filters";
 	}
 }

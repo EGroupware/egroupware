@@ -1,6 +1,7 @@
 import {assert, fixture, html} from "@open-wc/testing";
 import "../Et2Customfields";
 import "../Et2CustomfieldsList";
+import "../Et2CustomfieldsListRow";
 import "../Et2CustomfieldsFilters";
 import {Et2CustomfieldsBase} from "../Et2CustomfieldsBase";
 
@@ -37,6 +38,110 @@ describe("Et2Customfields webcomponents", () =>
 			{cf_text: true, cf_select: false, cf_private: true},
 			"list widget should preserve explicit visibility map"
 		);
+	});
+
+	/**
+	 * Contract: the full list widget keeps child widget instances stable when only
+	 * row values change.
+	 * Setup: render one visible text customfield, then replace value.
+	 * Pass: the same child widget instance displays the new value.
+	 */
+	it("renders list fields in shadow DOM and updates only row values", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+            <et2-customfields-list></et2-customfields-list>
+		`);
+		element.customfields = customfields;
+		element.fields = {cf_text: true, cf_select: false, cf_private: false};
+		element.value = {"#cf_text": "First row"};
+		await element.updateComplete;
+
+		const firstWidget = element.shadowRoot?.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
+		await (firstWidget as any)?.updateComplete;
+		assert.isNotNull(firstWidget, "customfields list should create field widgets in its shadow root");
+		assert.include(firstWidget?.textContent || "", "First row", "field widget should display the current row value");
+
+		element.value = {"#cf_text": "Second row"};
+		await element.updateComplete;
+
+		const secondWidget = element.shadowRoot?.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
+		await (secondWidget as any)?.updateComplete;
+		assert.strictEqual(secondWidget, firstWidget, "unchanged field definitions should keep the same widget instance");
+		assert.include(secondWidget?.textContent || "", "Second row", "row value changes should update the existing widget");
+	});
+
+	/**
+	 * Contract: customfield metadata controls the field list; row values alone do not.
+	 * Setup: assign only a row value and no customfield definitions.
+	 * Pass: no visible field names or field DOM nodes are created.
+	 */
+	it("does not derive the field list from row values", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+            <et2-customfields-list></et2-customfields-list>
+		`);
+		element.value = {"#cf_text": "Row value without metadata"};
+		await element.updateComplete;
+
+		assert.deepEqual(
+			element.getVisibleFieldNames(),
+			[],
+			"row values must not create customfield definitions; missing metadata is a setup problem"
+		);
+		assert.isNull(
+			element.shadowRoot?.querySelector("[data-field='cf_text']"),
+			"customfields list should remain empty until customfield metadata is supplied"
+		);
+	});
+
+	/**
+	 * Contract: the datagrid row renderer displays selected #customfield values as text.
+	 * Setup: assign one visible customfield plus a row-scoped #field value.
+	 * Pass: field text renders and no nested Et2 widget is created.
+	 */
+	it("renders datagrid row customfields without nested widgets", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+            <et2-customfields-list-row></et2-customfields-list-row>
+		`);
+		element.customfields = customfields;
+		element.fields = {cf_text: true, cf_select: false, cf_private: false};
+		element.value = {"#cf_text": "Fast row"};
+		await element.updateComplete;
+
+		assert.isNotNull(
+			element.shadowRoot?.querySelector("[data-field='cf_text']"),
+			"row renderer should render visible customfield values"
+		);
+		assert.isNull(
+			element.shadowRoot?.querySelector("et2-description"),
+			"row renderer should avoid nested Et2 widgets for datagrid performance"
+		);
+		assert.include(
+			element.shadowRoot?.querySelector("[data-field='cf_text']")?.textContent || "",
+			"Fast row",
+			"row renderer should display the current row value"
+		);
+	});
+
+	/**
+	 * Contract: datagrid row customfield values use only the supported #field key.
+	 * Setup: assign both unprefixed and prefixed values for the same field.
+	 * Pass: the rendered text comes from #field and ignores the unprefixed value.
+	 */
+	it("uses only prefixed customfield keys for datagrid row values", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields-list-row></et2-customfields-list-row>
+		`);
+		element.customfields = customfields;
+		element.fields = {cf_text: true};
+		element.value = {cf_text: "Unsupported", "#cf_text": "Supported"};
+		await element.updateComplete;
+
+		const text = element.shadowRoot?.querySelector("[data-field='cf_text']")?.textContent || "";
+		assert.include(text, "Supported", "row renderer should display #field values");
+		assert.notInclude(text, "Unsupported", "row renderer should ignore unprefixed field values");
 	});
 
 	it("applies mode-specific defaults for et2-customfields-filters", async() =>

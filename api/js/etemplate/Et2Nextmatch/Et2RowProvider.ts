@@ -1,6 +1,7 @@
-import {loadWebComponent} from "../Et2Widget/Et2Widget";
+import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2DatagridColumn, Et2DatagridTemplateData} from "./Et2Datagrid.types";
+import "../Et2Customfields/Et2CustomfieldsListRow";
 
 interface Et2RowProviderHost extends HTMLElement
 {
@@ -555,11 +556,25 @@ export class Et2RowProvider
 	) : Element
 	{
 		let tag = source.tagName.toLowerCase();
+		if(tag === "et2-customfields-list")
+		{
+			// Datagrid rows use a text-only renderer; the full list widget creates nested Et2 widgets.
+			tag = "et2-customfields-list-row";
+		}
 		if(typeof window.customElements.get(tag + "_ro") !== "undefined")
 		{
 			tag += "_ro";
 		}
-		const element = document.createElement(tag);
+		let element : HTMLElement | typeof Et2Widget;
+		if(typeof window.customElements.get(tag) !== "undefined")
+		{
+			// Try webComponent loader first
+			element = loadWebComponent(tag, source, null);
+		}
+		else
+		{
+			element = document.createElement(tag);
+		}
 
 		let assignedId : string | null = null;
 		if(recordAttributes)
@@ -569,6 +584,8 @@ export class Et2RowProvider
 			attrMap[assignedId] = {};
 		}
 
+		// Set static attributes through transformAttributes(), keeping row placeholders for row binding.
+		const staticAttrs : Record<string, string> = {};
 		for(const name of source.getAttributeNames())
 		{
 			const value = source.getAttribute(name);
@@ -582,7 +599,16 @@ export class Et2RowProvider
 			{
 				attrMap[assignedId][name] = normalizedValue;
 			}
+			else
+			{
+				staticAttrs[name] = value;
+			}
 		}
+		if(typeof element.transformAttributes === "function" && Object.keys(staticAttrs).length > 0)
+		{
+			element.transformAttributes?.(staticAttrs);
+		}
+
 
 		return element;
 	}

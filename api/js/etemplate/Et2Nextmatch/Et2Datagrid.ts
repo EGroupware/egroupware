@@ -21,9 +21,17 @@ import {
 import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2DatagridColumnManager";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
+import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
+
+interface Et2DatagridCustomfieldColumnState
+{
+	customfields : Record<string, any>;
+	visibility : Record<string, boolean> | null;
+	visibleFieldNames : string[];
+}
 
 /**
  * @summary Virtualized data grid for infinite rows with column sizing, selection, and lazy paging.
@@ -225,6 +233,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
 	private _pendingCustomfieldVisibilityByColumnKey : Map<string, Record<string, boolean>> = new Map();
+	private _customfieldColumnStateByKey : Map<string, Et2DatagridCustomfieldColumnState> = new Map();
 	private _loadedColumnPreferenceKey : string | null = null;
 	private _onColumnsChangedForPersistence : EventListener = () => this._persistColumnPreferences();
 	private _loggedMissingTemplateWarning : boolean = false;
@@ -406,6 +415,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(changedProperties.has("columns"))
 		{
 			this._prepareVisibleHeaders();
+			this._rebuildCustomfieldColumnStateCache();
 			this._reconcileRowRenderState();
 			this._ensureTableColSizes();
 			this._applyColumnVisibilityToRenderedRows();
@@ -629,6 +639,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		let changed = false;
 		for(const column of this.columns)
 		{
 			const key = String(column.key);
@@ -644,6 +655,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			header.setCustomfieldVisibility(pending);
 			this._pendingCustomfieldVisibilityByColumnKey.delete(key);
+			changed = true;
+		}
+		if(changed)
+		{
+			this._rebuildCustomfieldColumnStateCache();
 		}
 	}
 
@@ -1436,7 +1452,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _applyRowElementAttributes(rowRoot : HTMLElement, rowData : any, rowIndex : number) : boolean
 	{
 		const attrMap = this.templateData?.rowTemplateAttrMap || {};
-		const toUpgrade = Array.from(rowRoot.querySelectorAll("[data-et2nm-id]")) as any[];
+		const toUpgrade = [
+			...(rowRoot.hasAttribute("data-et2nm-id") ? [rowRoot] : []),
+			...Array.from(rowRoot.querySelectorAll("[data-et2nm-id]"))
+		] as any[];
 		if(!toUpgrade.length)
 		{
 			rowRoot.classList.remove("loading");
@@ -1445,7 +1464,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 		const mgrRowData = {};
 		mgrRowData[rowIndex] = rowData;
-		const mgr = this.getArrayMgr("content")?.openPerspective(this, mgrRowData, rowIndex);
+		const mgr = this.getArrayMgr("content")?.openPerspective(this as any, mgrRowData, rowIndex);
+		const mgrs : any = this.getArrayMgrs?.() || {};
+		if(mgr)
+		{
+			mgrs.content = mgr;
+		}
 		try
 		{
 			// Apply stored template attributes through each widget's transform hook
@@ -1456,6 +1480,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				{
 					const id = element.getAttribute?.("data-et2nm-id");
 					const stored = id ? attrMap[id] : null;
+					const isCustomfieldsRow = element.localName === "et2-customfields-list-row";
+					if(isCustomfieldsRow)
+					{
+						this._applyCustomfieldRowState(element, rowData);
+						continue;
+					}
+					if(element.setArrayMgrs)
+					{
+						element.setArrayMgrs(mgrs);
+					}
 					if(element.setArrayMgr && mgr)
 					{
 						element.setArrayMgr("content", mgr);
@@ -1466,7 +1500,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						{
 							continue;
 						}
-						element.transformAttributes(stored);
+						else
+						{
+							element.transformAttributes(stored);
+						}
 					}
 				}
 				catch(e)
@@ -1490,6 +1527,107 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		rowRoot.classList.remove("loading");
 		return true;
+	}
+
+	/**
+	 * Apply customfields row state directly from row data and the owning header.
+	 *
+	 * Object properties are not preserved when the row template is cloned, so each
+	 * physical row renderer needs its current value assigned. The expensive state
+	 * (metadata + selected field names) is cached per customfield column and reused
+	 * for every row to avoid header scans or generic array-manager transforms.
+	 */
+	private _applyCustomfieldRowState(element : any, rowData : any)
+	{
+		const columnState = this._customfieldColumnStateForRowElement(element);
+		const fallback = !columnState?.customfields
+			? this.getArrayMgr("modifications")?.getRoot?.()?.getEntry("~custom_fields~", true)
+			: null;
+		const customfields = columnState?.customfields || fallback?.customfields || element.customfields || {};
+		const visibility = columnState?.visibility || fallback?.fields || null;
+		if(customfields)
+		{
+			element.customfields = customfields;
+		}
+		if(visibility)
+		{
+			element.fields = visibility;
+		}
+		const fieldNames = columnState?.visibleFieldNames || (
+			visibility && Object.keys(visibility).length
+				? Object.keys(visibility).filter((name) => visibility[name] === true)
+				: Object.keys(customfields || {})
+		);
+		element.value = this._customfieldValuesFromRowData(
+			rowData,
+			fieldNames
+		);
+	}
+
+	private _customfieldValuesFromRowData(
+		rowData : any,
+		fieldNames : string[]
+	) : Record<string, any>
+	{
+		const value : Record<string, any> = {};
+		for(const fieldName of fieldNames)
+		{
+			const prefixedKey = CUSTOMFIELD_PREFIX + fieldName;
+			value[prefixedKey] = rowData && Object.prototype.hasOwnProperty.call(rowData, prefixedKey)
+				? rowData[prefixedKey]
+				: "";
+		}
+		return value;
+	}
+
+	/**
+	 * Resolve cached customfield state for the renderer's column.
+	 *
+	 * The fallback to the first cached customfield column supports legacy row
+	 * templates where the source cell does not expose a column key.
+	 */
+	private _customfieldColumnStateForRowElement(element : HTMLElement) : Et2DatagridCustomfieldColumnState | null
+	{
+		if(!this._customfieldColumnStateByKey.size)
+		{
+			this._rebuildCustomfieldColumnStateCache();
+		}
+		const cell = element.closest("td,th") as HTMLElement | null;
+		const columnKey = cell?.getAttribute("data-col-key") || "";
+		if(columnKey && this._customfieldColumnStateByKey.has(columnKey))
+		{
+			return this._customfieldColumnStateByKey.get(columnKey) || null;
+		}
+		return this._customfieldColumnStateByKey.values().next().value || null;
+	}
+
+	/**
+	 * Cache customfield metadata and selected field names from customfield headers.
+	 *
+	 * Rebuilt only when column/header state changes; row binding reads from this
+	 * map instead of recomputing visibility for every row.
+	 */
+	private _rebuildCustomfieldColumnStateCache()
+	{
+		this._customfieldColumnStateByKey.clear();
+		for(const column of this.columns || [])
+		{
+			const header = column.header as any;
+			if(!header || typeof header.getCustomfieldVisibility !== "function")
+			{
+				continue;
+			}
+			const customfields = header.customfields && typeof header.customfields === "object" ? header.customfields : {};
+			const visibility = header.getCustomfieldVisibility();
+			const visibleFieldNames = visibility && typeof visibility === "object" && Object.keys(visibility).length
+				? Object.keys(visibility).filter((name) => visibility[name] === true)
+				: Object.keys(customfields);
+			this._customfieldColumnStateByKey.set(String(column.key), {
+				customfields,
+				visibility: visibility && typeof visibility === "object" ? visibility : null,
+				visibleFieldNames
+			});
+		}
 	}
 
 	/**
@@ -1840,6 +1978,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		for(const row of rows)
 		{
 			this._applyColumnLayoutToRowElement(row);
+			const rowIndex = parseInt(row.getAttribute("data-row-index") || "-1", 10);
+			const rowData = rowIndex >= 0 ? this._rowsByIndex[rowIndex]?.data : null;
+			row.querySelectorAll("et2-customfields-list-row").forEach((element) =>
+			{
+				this._applyCustomfieldRowState(element as any, rowData);
+			});
 		}
 	}
 
@@ -2119,6 +2263,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const selectedOrder = (selector.value || [])
 			.map((value) => this._columnState.decodeSelectionId(String(value)));
 		this.columns = this._columnState.applySelectionOrder(this.columns || [], selectedOrder);
+		this._rebuildCustomfieldColumnStateCache();
 		// Apply track sizes and current rendered-row cell visibility immediately.
 		this._ensureTableColSizes();
 		this._applyColumnVisibilityToRenderedRows();
