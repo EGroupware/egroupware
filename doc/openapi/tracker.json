@@ -1,0 +1,1007 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware Tracker REST API",
+    "description": "REST API for managing tracker tickets (bug/issue tracker) and ticket replies/comments in EGroupware. Supports full CRUD operations, filtering by status, priority, queue, and assignee, plus synchronization via sync tokens.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "EGroupware GroupDAV/REST server"
+    }
+  ],
+  "security": [
+    { "basicAuth": [] },
+    { "bearerAuth": [] }
+  ],
+  "paths": {
+    "/tracker/": {
+      "get": {
+        "tags": ["Tracker"],
+        "operationId": "listTickets",
+        "summary": "List all tickets the current user has access to",
+        "description": "Returns all tracker tickets accessible to the current user. Supports filtering by status, priority, queue, and assignee. Use 'filters[search]' for full-text search across summary and description.",
+        "parameters": [
+          { "$ref": "#/components/parameters/props" },
+          { "$ref": "#/components/parameters/syncToken" },
+          { "$ref": "#/components/parameters/nresults" },
+          { "$ref": "#/components/parameters/filters_search" },
+          { "$ref": "#/components/parameters/filters_linked" },
+          { "$ref": "#/components/parameters/filters_status" },
+          { "$ref": "#/components/parameters/filters_priority" },
+          { "$ref": "#/components/parameters/filters_tracker" },
+          { "$ref": "#/components/parameters/filters_assigned" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of tickets",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TicketCollection" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "post": {
+        "tags": ["Tracker"],
+        "operationId": "createTicket",
+        "summary": "Create a new ticket for the current user",
+        "description": "Creates a new tracker ticket. Only 'summary' is required. The ticket is created in the first queue the user has access to unless 'tracker' (queue ID) is specified.",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string", "enum": ["return=representation"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Ticket" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new ticket, e.g. /egroupware/groupdav.php/admin/tracker/42",
+                "schema": { "type": "string", "format": "uri" }
+              },
+              "ETag": {
+                "description": "ETag of the new ticket",
+                "schema": { "type": "string" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Ticket" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/{username}/tracker/": {
+      "get": {
+        "tags": ["Tracker"],
+        "operationId": "listUserTickets",
+        "summary": "List all tickets for a given user",
+        "description": "Returns all tracker tickets created by the specified user. Supports the same filters as the current-user endpoint.",
+        "parameters": [
+          { "$ref": "#/components/parameters/username" },
+          { "$ref": "#/components/parameters/props" },
+          { "$ref": "#/components/parameters/syncToken" },
+          { "$ref": "#/components/parameters/nresults" },
+          { "$ref": "#/components/parameters/filters_search" },
+          { "$ref": "#/components/parameters/filters_linked" },
+          { "$ref": "#/components/parameters/filters_status" },
+          { "$ref": "#/components/parameters/filters_priority" },
+          { "$ref": "#/components/parameters/filters_tracker" },
+          { "$ref": "#/components/parameters/filters_assigned" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of tickets",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TicketCollection" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "post": {
+        "tags": ["Tracker"],
+        "operationId": "createUserTicket",
+        "summary": "Create a new ticket for a specific user",
+        "description": "Creates a new tracker ticket scoped to the given user's collection.",
+        "parameters": [
+          { "$ref": "#/components/parameters/username" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Ticket" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Ticket created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new ticket",
+                "schema": { "type": "string", "format": "uri" }
+              },
+              "ETag": {
+                "description": "ETag of the new ticket",
+                "schema": { "type": "string" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/tracker/{id}": {
+      "get": {
+        "tags": ["Tracker"],
+        "operationId": "getTicket",
+        "summary": "Get a single ticket",
+        "description": "Retrieves a single tracker ticket by its ID. Reply data is included in the optional 'replies' object keyed by reply ID when replies exist and are visible to the caller.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single ticket",
+            "headers": {
+              "ETag": {
+                "description": "ETag in format \"<id>:<modified-timestamp>\"",
+                "schema": { "type": "string" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Ticket" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Tracker"],
+        "operationId": "replaceTicket",
+        "summary": "Replace a ticket",
+        "description": "Replaces all writable attributes of a ticket. 'summary' is required. Read-only fields (id, created, creator, modifier, modified, closed) are silently ignored. Fields the user lacks permission to change (e.g. completion for non-assignees) are also silently skipped.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "ETag for optimistic concurrency control. Returns 412 if the ticket was modified since this ETag."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Ticket" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Ticket replaced" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "412": {
+            "description": "Precondition Failed — ETag mismatch (concurrent edit detected)"
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Tracker"],
+        "operationId": "updateTicket",
+        "summary": "Partially update a ticket",
+        "description": "Updates only the fields present in the request body. All other fields keep their current values. Fields the user lacks permission to change are silently skipped (not rejected). 'description' is always read-only on PATCH (settable only at creation).",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          },
+          {
+            "name": "If-Match",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string" },
+            "description": "ETag for optimistic concurrency control."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Partial ticket object — only the fields to update",
+                "properties": {
+                  "summary":    { "type": "string" },
+                  "status":     { "type": "string", "enum": ["Open", "Closed", "Pending", "Deleted"] },
+                  "priority":   { "type": "integer", "minimum": 1, "maximum": 9 },
+                  "completion": { "type": "integer", "minimum": 0, "maximum": 100 },
+                  "dueDate":    { "type": "string", "format": "date-time" },
+                  "assigned":   {
+                    "type": "array",
+                    "items": { "$ref": "#/components/schemas/AssignedUser" }
+                  },
+                  "private":    { "type": "boolean" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Ticket partially updated" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Tracker"],
+        "operationId": "deleteTicket",
+        "summary": "Delete a ticket",
+        "description": "Deletes a tracker ticket by ID.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": { "description": "Ticket deleted" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/tracker/{id}/replies/": {
+      "get": {
+        "tags": ["Tracker Replies"],
+        "operationId": "listReplies",
+        "summary": "List all replies for a ticket",
+        "description": "Returns all visible replies for the specified tracker ticket as an object keyed by reply ID.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A map of reply IDs to reply objects",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ReplyCollection" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "post": {
+        "tags": ["Tracker Replies"],
+        "operationId": "createReply",
+        "summary": "Create a reply on a ticket",
+        "description": "Adds a new reply/comment to the specified tracker ticket.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ReplyWrite" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Reply created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new reply, e.g. /egroupware/groupdav.php/admin/tracker/42/replies/101",
+                "schema": { "type": "string", "format": "uri" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/tracker/{id}/replies/{reply_id}": {
+      "get": {
+        "tags": ["Tracker Replies"],
+        "operationId": "getReply",
+        "summary": "Get a single reply",
+        "description": "Retrieves a single reply/comment by ticket ID and reply ID.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/reply_id" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json", "application/pretty+json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single reply",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Reply" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Tracker Replies"],
+        "operationId": "replaceReply",
+        "summary": "Replace a reply",
+        "description": "Fully replaces a reply. 'message' is required.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/reply_id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ReplyWrite" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Reply replaced" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Tracker Replies"],
+        "operationId": "updateReply",
+        "summary": "Partially update a reply",
+        "description": "Updates only the supplied reply fields.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/reply_id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ReplyPatch" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Reply updated" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Tracker Replies"],
+        "operationId": "deleteReply",
+        "summary": "Delete a reply",
+        "description": "Deletes a reply/comment from the specified tracker ticket.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/reply_id" }
+        ],
+        "responses": {
+          "204": { "description": "Reply deleted" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Authentication using EGroupware username and app-password."
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "HTTP Bearer Token Authentication using an OpenIDConnect/OAuth access token."
+      }
+    },
+    "schemas": {
+      "Ticket": {
+        "type": "object",
+        "required": ["summary"],
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Ticket"],
+            "description": "Always 'Ticket'. Ignored on write.",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique ticket ID. Auto-assigned on creation.",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "description": "One-line title of the ticket. Required on POST and PUT."
+          },
+          "description": {
+            "type": "string",
+            "description": "Full multi-line description. Settable only on creation (POST). Read-only on PATCH/PUT."
+          },
+          "tracker": {
+            "type": "integer",
+            "description": "Queue/category ID the ticket belongs to. Auto-set to the first available queue if omitted on POST."
+          },
+          "status": {
+            "type": "string",
+            "enum": ["Open", "Closed", "Pending", "Deleted"],
+            "description": "Ticket status. Custom per-queue statuses are also accepted and returned as their label string.",
+            "default": "Open"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 9,
+            "description": "Priority from 1 (lowest) to 9 (highest). Stock labels: 1=lowest, 5=medium, 9=highest.",
+            "default": 5
+          },
+          "completion": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100,
+            "description": "Percentage complete (0–100). Requires assignee or admin role to modify.",
+            "default": 0
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Start date in UTC ISO 8601 format, e.g. '2026-05-25T00:00:00Z'."
+          },
+          "dueDate": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Due date in UTC ISO 8601 format."
+          },
+          "closed": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Timestamp when the ticket was closed. Auto-set when status changes to Closed.",
+            "readOnly": true
+          },
+          "private": {
+            "type": "boolean",
+            "description": "When true the ticket is visible only to the creator and admins.",
+            "default": false
+          },
+          "category": {
+            "type": "string",
+            "description": "Category name or ID."
+          },
+          "version": {
+            "type": "string",
+            "description": "Version category name or ID (e.g. '1.0', 'v2.5')."
+          },
+          "creator": {
+            "type": "string",
+            "description": "Username of the ticket creator. Auto-set to authenticated user on POST.",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp in UTC. Auto-set on POST.",
+            "readOnly": true
+          },
+          "modified": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last modification timestamp in UTC. Auto-updated on every save.",
+            "readOnly": true
+          },
+          "modifier": {
+            "type": "string",
+            "description": "Username of the last modifier. Auto-set on every save.",
+            "readOnly": true
+          },
+          "assigned": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/AssignedUser" },
+            "description": "List of users assigned to this ticket."
+          },
+          "cc": {
+            "type": "string",
+            "description": "Comma-separated email addresses to CC on ticket notifications."
+          },
+          "group": {
+            "type": "string",
+            "description": "Responsible group name. Requires technician or admin role to change."
+          },
+          "egroupware.org:customfields": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Custom fields as a key/value map. Keys are the custom field names."
+          },
+          "replies": {
+            "type": "object",
+            "description": "Optional map of visible replies keyed by reply ID string.",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Reply"
+            },
+            "readOnly": true
+          },
+          "etag": {
+            "type": "string",
+            "description": "ETag in the format \"<id>:<modified-timestamp>\". Use with If-Match header for optimistic concurrency.",
+            "readOnly": true
+          }
+        },
+        "example": {
+          "@type": "Ticket",
+          "id": 42,
+          "summary": "Login page crashes on mobile",
+          "description": "Steps to reproduce:\n1. Open mobile browser\n2. Navigate to /login\n3. App crashes",
+          "tracker": 8,
+          "status": "Open",
+          "priority": 7,
+          "completion": 0,
+          "dueDate": "2026-06-01T00:00:00Z",
+          "private": false,
+          "creator": "admin",
+          "created": "2026-05-25T10:00:00Z",
+          "modified": "2026-05-25T11:30:00Z",
+          "modifier": "admin",
+          "assigned": [
+            { "uid": "urn:ietf:params:scim:schemas:core:2.0:User:john" }
+          ],
+          "group": "Admins",
+          "replies": {
+            "101": {
+              "@type": "Reply",
+              "id": 101,
+              "message": "Reproduced on mobile.",
+              "creator": "admin",
+              "created": "2026-05-25T12:00:00Z",
+              "restricted": false
+            }
+          },
+          "etag": "42:1748167200"
+        }
+      },
+      "Reply": {
+        "type": "object",
+        "properties": {
+          "@type": {
+            "type": "string",
+            "enum": ["Reply"],
+            "description": "Always 'Reply'.",
+            "readOnly": true
+          },
+          "id": {
+            "type": "integer",
+            "description": "Unique reply ID.",
+            "readOnly": true
+          },
+          "message": {
+            "type": "string",
+            "description": "Reply text."
+          },
+          "creator": {
+            "type": "string",
+            "description": "Username of the reply creator.",
+            "readOnly": true
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp in UTC.",
+            "readOnly": true
+          },
+          "restricted": {
+            "type": "boolean",
+            "description": "When true the reply is visible only to admins, technicians, and assignees.",
+            "default": false
+          }
+        },
+        "required": ["message"],
+        "example": {
+          "@type": "Reply",
+          "id": 101,
+          "message": "Can you provide more details?",
+          "creator": "admin",
+          "created": "2026-05-26T09:00:00Z",
+          "restricted": false
+        }
+      },
+      "ReplyWrite": {
+        "type": "object",
+        "required": ["message"],
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "Reply text."
+          },
+          "restricted": {
+            "type": "boolean",
+            "description": "When true the reply is visible only to admins, technicians, and assignees.",
+            "default": false
+          }
+        },
+        "example": {
+          "message": "Testing reply API",
+          "restricted": false
+        }
+      },
+      "ReplyPatch": {
+        "type": "object",
+        "description": "Partial reply object — only the fields to update.",
+        "properties": {
+          "message": {
+            "type": "string"
+          },
+          "restricted": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false,
+        "example": {
+          "message": "Updated reply text",
+          "restricted": true
+        }
+      },
+      "AssignedUser": {
+        "type": "object",
+        "required": ["uid"],
+        "properties": {
+          "uid": {
+            "type": "string",
+            "description": "SCIM user URN in the format 'urn:ietf:params:scim:schemas:core:2.0:User:{username}'",
+            "example": "urn:ietf:params:scim:schemas:core:2.0:User:john"
+          }
+        }
+      },
+      "TicketCollection": {
+        "type": "object",
+        "description": "Collection of tickets returned by list endpoints.",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "description": "Map of ticket paths to ticket objects (or null for deleted resources during sync).",
+            "additionalProperties": {
+              "oneOf": [
+                { "$ref": "#/components/schemas/Ticket" },
+                { "type": "null" }
+              ]
+            },
+            "example": {
+              "/admin/tracker/2": {
+                "@type": "Ticket",
+                "id": 2,
+                "summary": "Fix login crash",
+                "status": "Open",
+                "priority": 5,
+                "creator": "admin",
+                "created": "2026-05-20T15:55:24Z",
+                "etag": "2:1779293718",
+                "private": false
+              }
+            }
+          },
+          "more-results": {
+            "type": "boolean",
+            "description": "True if there are more results beyond the current page (nresults limit was hit)."
+          },
+          "sync-token": {
+            "type": "string",
+            "description": "Sync token to pass as 'sync-token' query parameter in the next request to receive only changes."
+          }
+        }
+      },
+      "ReplyCollection": {
+        "type": "object",
+        "description": "Map of reply IDs to reply objects.",
+        "additionalProperties": {
+          "$ref": "#/components/schemas/Reply"
+        },
+        "example": {
+          "101": {
+            "@type": "Reply",
+            "id": 101,
+            "message": "First reply",
+            "creator": "admin",
+            "created": "2026-05-26T09:00:00Z",
+            "restricted": false
+          }
+        }
+      }
+    },
+    "parameters": {
+      "username": {
+        "name": "username",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" },
+        "description": "EGroupware username (e.g. 'admin'). Scopes the collection to that user's tickets."
+      },
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" },
+        "description": "Numeric ticket ID"
+      },
+      "reply_id": {
+        "name": "reply_id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" },
+        "description": "Numeric reply ID"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "array", "items": { "type": "string" } },
+        "description": "DAV properties to return (e.g. props[]=getetag&props[]=displayname)",
+        "style": "form",
+        "explode": true
+      },
+      "syncToken": {
+        "name": "sync-token",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Sync token from a previous response to receive only changes since that point."
+      },
+      "nresults": {
+        "name": "nresults",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer" },
+        "description": "Maximum number of tickets to return."
+      },
+      "filters_search": {
+        "name": "filters[search]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Full-text search across ticket summary and description. Example: filters[search]=mobile+login"
+      },
+      "filters_linked": {
+        "name": "filters[linked]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Return tickets linked to a record in another app. Format: '<app>:<id>'. Example: filters[linked]=infolog:5"
+      },
+      "filters_status": {
+        "name": "filters[status]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": ["Open", "Closed", "Pending", "Deleted"]
+        },
+        "description": "Filter by ticket status. Custom queue statuses are also accepted."
+      },
+      "filters_priority": {
+        "name": "filters[priority]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer", "minimum": 1, "maximum": 9 },
+        "description": "Filter by priority (1=lowest, 9=highest). Example: filters[priority]=9"
+      },
+      "filters_tracker": {
+        "name": "filters[tracker]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer" },
+        "description": "Filter by queue/tracker category ID. Example: filters[tracker]=8"
+      },
+      "filters_assigned": {
+        "name": "filters[assigned]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Filter by assigned user — accepts a login name or numeric account ID. Example: filters[assigned]=john"
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized — missing or invalid credentials",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "integer", "example": 401 },
+                "message": { "type": "string", "example": "Unauthorized" }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found — ticket ID does not exist or the user has no access",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "integer", "example": 404 },
+                "message": { "type": "string", "example": "Not Found" }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad Request — invalid field value, unknown status string, or malformed JSON",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "integer", "example": 400 },
+                "message": { "type": "string", "example": "Invalid status 'InProgress'" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

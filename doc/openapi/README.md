@@ -26,6 +26,18 @@ Below is a quick‑ref cheat sheet of all the EGroupware‑powered functions. Ea
 | `replaceTask`                 | Full replacement                                             | Full task payload                                            |
 | `updateTask`                  | Patch a task                                                 | `status: completed`, etc.                                    |
 | `deleteTask`                  | Delete an infolog entry                                      | None                                                         |
+| `listTickets / listUserTickets` | List tracker tickets                                       | `Accept: application/json`, `filters[status]=Open`           |
+| `createTicket / createUserTicket` | Create a tracker ticket                                  | `summary`, `tracker`, `priority`, `assigned`, etc.           |
+| `getTicket`                   | Retrieve a single tracker ticket                             | `id`, `Accept: application/json`                             |
+| `replaceTicket`               | Full replacement of a tracker ticket                         | Full ticket payload                                          |
+| `updateTicket`                | Patch a tracker ticket                                       | `status`, `priority`, `assigned`, etc.                       |
+| `deleteTicket`                | Delete a tracker ticket                                      | `id`                                                         |
+| `listReplies`                 | List replies/comments for a tracker ticket                   | `id`, `Accept: application/json`                             |
+| `createReply`                 | Add a reply/comment to a tracker ticket                      | `id`, `message`, `restricted`                                |
+| `getReply`                    | Retrieve a single reply/comment                              | `id`, `reply_id`, `Accept: application/json`                 |
+| `replaceReply`                | Full replacement of a tracker reply                          | `id`, `reply_id`, `message`, `restricted`                    |
+| `updateReply`                 | Patch a tracker reply                                        | `id`, `reply_id`, changed fields                             |
+| `deleteReply`                 | Delete a tracker reply                                       | `id`, `reply_id`                                             |
 | `listMailAccounts`            | Get mail identities and signatures                           | `Accept: application/json`                                   |
 | `sendMail`                    | Send a plain text or HTML email through the default identity | `to`, `subject`, `body`, `cc`, `bcc`                         |
 | `sendMailFor`                 | Send email using a specific identity                         | Same as above, but via account ID                            |

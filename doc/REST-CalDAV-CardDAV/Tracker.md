@@ -31,11 +31,17 @@ https://example.egroupware.org/egroupware/groupdav.php/{user}/tracker/
 | Method | URL | Description |
 |--------|-----|-------------|
 | `GET` | `.../tracker/` | List all accessible tickets |
-| `GET` | `.../tracker/{id}` | Fetch a single ticket |
+| `GET` | `.../tracker/{id}` | Fetch a single ticket (includes all replies) |
 | `POST` | `.../tracker/` | Create a new ticket |
 | `PATCH` | `.../tracker/{id}` | Partial update (only supplied fields) |
 | `PUT` | `.../tracker/{id}` | Full replace |
 | `DELETE` | `.../tracker/{id}` | Delete a ticket |
+| `GET` | `.../tracker/{id}/replies/` | List all replies on a ticket |
+| `GET` | `.../tracker/{id}/replies/{reply_id}` | Fetch a single reply |
+| `POST` | `.../tracker/{id}/replies/` | Add a reply to a ticket |
+| `PUT` | `.../tracker/{id}/replies/{reply_id}` | Replace a reply |
+| `PATCH` | `.../tracker/{id}/replies/{reply_id}` | Partially update a reply |
+| `DELETE` | `.../tracker/{id}/replies/{reply_id}` | Delete a reply |
 
 ---
 
@@ -158,7 +164,8 @@ GET /egroupware/groupdav.php/{user}/tracker/{id}
 Accept: application/json
 ```
 
-Returns the full ticket object directly (not wrapped in `responses`).
+Returns the full ticket object directly (not wrapped in `responses`).  
+The response always includes a `replies` object whose keys are reply IDs (as strings).
 
 **Response `200 OK`:**
 
@@ -172,9 +179,30 @@ Returns the full ticket object directly (not wrapped in `responses`).
   "creator": "admin",
   "created": "2026-05-25T10:00:00Z",
   "private": false,
-  "etag": "42:1748167200"
+  "etag": "42:1748167200",
+  "replies": {
+    "101": {
+      "@type":      "Reply",
+      "id":         101,
+      "message":    "Reproduced on Chrome/Android. Assigning to mobile team.",
+      "creator":    "admin",
+      "created":    "2026-05-25T12:00:00Z",
+      "restricted": false
+    },
+    "102": {
+      "@type":      "Reply",
+      "id":         102,
+      "message":    "Internal note — only visible to staff.",
+      "creator":    "techuser",
+      "created":    "2026-05-25T13:30:00Z",
+      "restricted": true
+    }
+  }
 }
 ```
+
+If a ticket has no replies the `replies` key is absent.  
+Restricted replies (`"restricted": true`) are only included when the authenticated user is an admin, technician, or assignee of the queue.
 
 **Response headers:**
 
@@ -458,3 +486,249 @@ curl -sk -u "$AUTH" "$BASE/$ID" -X PATCH \
 # Delete
 curl -sk -u "$AUTH" "$BASE/$ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
 ```
+
+---
+
+## 14. Replies Sub-Resource
+
+Each ticket can have one or more **replies** (comments / notes). Replies appear as a child collection at `/tracker/{id}/replies/`.
+
+### Reply JSON Object
+
+```json
+{
+  "@type":      "Reply",
+  "id":         101,
+  "message":    "Can you provide more details?",
+  "creator":    "admin",
+  "created":    "2026-05-26T09:00:00Z",
+  "restricted": false
+}
+```
+
+| Field | Type | Writable | Description |
+|-------|------|----------|-------------|
+| `@type` | `"Reply"` | No | Always `"Reply"`. |
+| `id` | integer | No | Reply ID. Auto-assigned on POST. |
+| `message` | string | Yes | **Required on POST/PUT.** The reply text. |
+| `creator` | string | No | Auto-set to the authenticated user on creation. |
+| `created` | UTC datetime | No | Auto-set on creation. |
+| `restricted` | boolean | Yes | `true` = visible only to admins, technicians, and assignees. Default `false`. |
+
+### ACL rules
+
+| Operation | Who can perform it |
+|-----------|-------------------|
+| GET (read) | Anyone who can read the ticket (same as ticket read ACL) |
+| POST (create) | Anyone who can read the ticket (`TRACKER_USER` or higher) |
+| PUT/PATCH (update) | The reply's **creator** OR queue admin/technician |
+| DELETE | The reply's **creator** OR queue admin/technician |
+
+### List replies
+
+```
+GET /egroupware/groupdav.php/{user}/tracker/{id}/replies/
+Accept: application/json
+```
+
+Returns a JSON object whose keys are reply IDs (as strings):
+
+```json
+{
+  "101": { "@type": "Reply", "id": 101, "message": "First reply", "creator": "admin", "created": "2026-05-26T09:00:00Z", "restricted": false },
+  "102": { "@type": "Reply", "id": 102, "message": "Staff-only note", "creator": "techuser", "created": "2026-05-26T10:00:00Z", "restricted": true }
+}
+```
+
+### Fetch a single reply
+
+```
+GET /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+Accept: application/json
+```
+
+Returns the single Reply object or `404` if not found / not visible.
+
+### Create a reply (POST)
+
+```
+POST /egroupware/groupdav.php/{user}/tracker/{id}/replies/
+Content-Type: application/json
+```
+
+```json
+{ "message": "I can reproduce this. Working on a fix." }
+```
+
+Or with a restricted (staff-only) note:
+
+```json
+{ "message": "Internal: do NOT close yet — waiting for customer confirmation.", "restricted": true }
+```
+
+**Response `201 Created`:**
+
+```
+Location: /egroupware/groupdav.php/admin/tracker/42/replies/101
+```
+
+No body is returned. The new reply ID is in the `Location` header.
+
+### Update a reply (PUT / PATCH)
+
+```
+PUT  /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+PATCH /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+Content-Type: application/json
+```
+
+PUT replaces the reply fully (message required); PATCH applies only the supplied fields:
+
+```json
+{ "message": "Updated reply text." }
+```
+
+```json
+{ "restricted": true }
+```
+
+**Response `204 No Content`** — no body.
+
+### Delete a reply
+
+```
+DELETE /egroupware/groupdav.php/{user}/tracker/{id}/replies/{reply_id}
+```
+
+**Response `204 No Content`** — reply deleted.
+
+### curl examples — replies
+
+```bash
+BASE="https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker"
+AUTH="admin:YOUR_APP_PASSWORD"
+TICKET_ID=42
+
+# List all visible replies
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/" -H "Accept: application/json" | python3 -m json.tool
+
+# Add a public reply
+LOC=$(curl -si -u "$AUTH" "$BASE/$TICKET_ID/replies/" -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Working on a fix now."}' \
+  | grep -i "^location:" | tr -d '\r\n')
+REPLY_ID=$(echo "$LOC" | sed 's|.*/replies/||' | tr -d '/ \r\n')
+echo "Created reply ID=$REPLY_ID"
+
+# Fetch that reply
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -H "Accept: application/json"
+
+# Edit the reply text (PATCH)
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -X PATCH \
+  -H "Content-Type: application/json" \
+  -d '{"message":"Fixed in commit abc123."}' -w "PATCH: HTTP %{http_code}\n"
+
+# Delete the reply
+curl -sk -u "$AUTH" "$BASE/$TICKET_ID/replies/$REPLY_ID" -X DELETE -w "DELETE: HTTP %{http_code}\n"
+```
+
+---
+
+## 15. Attachments and Links
+
+Tickets and replies both support file attachments via EGroupware's **Links and Attachments** facility.  
+See [Links-and-attachments.md](Links-and-attachments.md) for the complete reference.
+
+### Ticket-level attachments
+
+Attachments on a ticket are accessed through the links sub-collection:
+
+```
+/egroupware/groupdav.php/{user}/tracker/{id}/links/
+```
+
+#### List attachments on a ticket
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/" \
+  -H "Accept: application/json" | python3 -m json.tool
+```
+
+#### Upload an attachment to a ticket (POST multipart)
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/" \
+  -X POST \
+  -F "file=@/path/to/screenshot.png;type=image/png" \
+  -i | grep -E "HTTP|Location"
+```
+
+#### Upload an attachment as raw bytes (PUT)
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/screenshot.png" \
+  -X PUT \
+  -H "Content-Type: image/png" \
+  --data-binary "@/path/to/screenshot.png" \
+  -w "HTTP %{http_code}\n"
+```
+
+#### Delete an attachment from a ticket
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  "https://personal.egroupware.org/egroupware/groupdav.php/admin/tracker/42/links/{link_id}" \
+  -X DELETE -w "HTTP %{http_code}\n"
+```
+
+### Reply-level attachments
+
+Replies store attachments via EGroupware's WebDAV VFS tree (not the `/links/` endpoint).  
+The WebDAV path for reply attachments is:
+
+```
+/egroupware/webdav.php/apps/tracker/{ticket_id}/comments/{reply_id}/
+```
+
+#### Upload a file to a reply via WebDAV
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  -X PUT \
+  -H "Content-Type: image/png" \
+  --data-binary "@/path/to/attachment.png" \
+  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/attachment.png" \
+  -w "HTTP %{http_code}\n"
+```
+
+#### List attachments on a reply
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  -X PROPFIND \
+  -H "Depth: 1" \
+  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/" \
+  -w "HTTP %{http_code}\n"
+```
+
+#### Download an attachment from a reply
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/attachment.png" \
+  -o attachment.png
+```
+
+#### Delete an attachment from a reply
+
+```bash
+curl -sk -u "admin:PASSWORD" \
+  -X DELETE \
+  "https://personal.egroupware.org/egroupware/webdav.php/apps/tracker/42/comments/101/attachment.png" \
+  -w "HTTP %{http_code}\n"
+```
+
+> **Tip:** EGroupware's WebDAV endpoint (`webdav.php`) supports the full WebDAV protocol (PROPFIND, PUT, GET, DELETE, MKCOL, COPY, MOVE). Clients such as `cadaver`, WinSCP, and macOS Finder can mount the VFS tree directly for drag-and-drop file management on both tickets and replies.
