@@ -13,6 +13,16 @@ export interface Et2DatagridColumnSelectionItem
 	caption : string;
 	widget : Node | null;
 	visibility : boolean;
+	customFields? : Et2DatagridCustomfieldSelectionItem[];
+	isCustomfields? : boolean;
+}
+
+export interface Et2DatagridCustomfieldSelectionItem
+{
+	id : string;
+	name : string;
+	caption : string;
+	visibility : boolean;
 }
 
 /**
@@ -126,7 +136,27 @@ export class Et2DatagridColumnState
 				title: column.title,
 				caption: column.title,
 				widget: column.header?.cloneNode?.(true) || null,
-				visibility: !this.isColumnHidden(column, parseExpression)
+				visibility: !this.isColumnHidden(column, parseExpression),
+				isCustomfields: typeof (column.header as any)?.getCustomfieldSelectionItems === "function",
+				customFields: (() =>
+				{
+					const header = column.header as any;
+					if(typeof header?.getCustomfieldSelectionItems !== "function")
+					{
+						return [];
+					}
+					const fields = header.getCustomfieldSelectionItems();
+					if(!Array.isArray(fields))
+					{
+						return [];
+					}
+					return fields.map((field : any) => ({
+						id: this.encodeSelectionId(String(field.name || "")),
+						name: String(field.name || ""),
+						caption: String(field.label || field.name || ""),
+						visibility: field.visible === true
+					})).filter((field) => field.name.length > 0);
+				})()
 			}));
 	}
 
@@ -138,13 +168,79 @@ export class Et2DatagridColumnState
 	 */
 	applySelectionOrder(columns : Et2DatagridColumn[], selectedKeysInOrder : string[]) : Et2DatagridColumn[]
 	{
-		const selectedKeys = new Set(selectedKeysInOrder);
 		const byKey = new Map((columns || []).map((column) => [String(column.key), column]));
-		const selectedOrdered = selectedKeysInOrder
+		const customfieldColumnsByFieldName = new Map<string, Set<string>>();
+		for(const column of columns || [])
+		{
+			const columnKey = String(column.key);
+			const header = column.header as any;
+			if(typeof header?.getCustomfieldSelectionItems !== "function")
+			{
+				continue;
+			}
+			const fields = header.getCustomfieldSelectionItems();
+			if(!Array.isArray(fields))
+			{
+				continue;
+			}
+			for(const field of fields)
+			{
+				const fieldName = String(field?.name || "");
+				if(!fieldName)
+				{
+					continue;
+				}
+				if(!customfieldColumnsByFieldName.has(fieldName))
+				{
+					customfieldColumnsByFieldName.set(fieldName, new Set());
+				}
+				customfieldColumnsByFieldName.get(fieldName)!.add(columnKey);
+			}
+		}
+
+		const selectedKeys = new Set<string>();
+		const selectedCustomfields = new Map<string, Set<string>>();
+		const orderedColumnKeys : string[] = [];
+		const orderedSeen = new Set<string>();
+
+		for(const selectedKey of selectedKeysInOrder || [])
+		{
+			if(byKey.has(selectedKey))
+			{
+				selectedKeys.add(selectedKey);
+				if(!orderedSeen.has(selectedKey))
+				{
+					orderedColumnKeys.push(selectedKey);
+					orderedSeen.add(selectedKey);
+				}
+				continue;
+			}
+			const customfieldColumns = customfieldColumnsByFieldName.get(selectedKey);
+			if(customfieldColumns && customfieldColumns.size)
+			{
+				for(const columnKey of customfieldColumns)
+				{
+					selectedKeys.add(columnKey);
+					if(!selectedCustomfields.has(columnKey))
+					{
+						selectedCustomfields.set(columnKey, new Set());
+					}
+					selectedCustomfields.get(columnKey)!.add(selectedKey);
+					if(!orderedSeen.has(columnKey))
+					{
+						orderedColumnKeys.push(columnKey);
+						orderedSeen.add(columnKey);
+					}
+				}
+				continue;
+			}
+		}
+
+		const selectedOrdered = orderedColumnKeys
 			.map((key) => byKey.get(String(key)))
 			.filter(Boolean) as Et2DatagridColumn[];
 		let selectedCursor = 0;
-		return (columns || []).map((column) =>
+		const nextColumns = (columns || []).map((column) =>
 		{
 			const key = String(column.key);
 			if(selectedKeys.has(key) && selectedCursor < selectedOrdered.length)
@@ -160,5 +256,36 @@ export class Et2DatagridColumnState
 				hidden: true
 			};
 		});
+
+		for(const column of nextColumns)
+		{
+			const key = String(column.key);
+			const header = column.header as any;
+			if(typeof header?.setCustomfieldVisibility !== "function" || typeof header?.getCustomfieldSelectionItems !== "function")
+			{
+				continue;
+			}
+			const selectedForColumn = selectedCustomfields.get(key);
+			if(!selectedForColumn)
+			{
+				continue;
+			}
+			const nextVisibility : Record<string, boolean> = {};
+			const knownFields = header.getCustomfieldSelectionItems();
+			if(Array.isArray(knownFields))
+			{
+				for(const field of knownFields)
+				{
+					const fieldName = String(field?.name || "");
+					if(!fieldName.length)
+					{
+						continue;
+					}
+					nextVisibility[fieldName] = selectedForColumn.has(fieldName);
+				}
+			}
+			header.setCustomfieldVisibility(nextVisibility);
+		}
+		return nextColumns;
 	}
 }

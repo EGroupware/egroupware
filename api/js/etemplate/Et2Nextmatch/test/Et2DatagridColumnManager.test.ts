@@ -2,8 +2,8 @@ import {assert} from "@open-wc/testing";
 import {
 	Et2DatagridColumnManager,
 	Et2DatagridColumnResizeDragState
-} from "../Et2DatagridColumnManager";
-import {Et2DatagridColumn} from "../Et2Datagrid.types";
+} from "../Et2DatagridColumnManager.ts";
+import {Et2DatagridColumn} from "../Et2Datagrid.types.ts";
 
 describe("Et2DatagridColumnManager", () =>
 {
@@ -33,20 +33,21 @@ describe("Et2DatagridColumnManager", () =>
 
 	/**
 	 * Contract under test:
-	 * - Decimal width definitions are rejected by width normalization.
+	 * - Decimal width definitions are accepted by width normalization.
 	 *
 	 * Setup strategy:
-	 * - Normalize decimal `px`, `%`, and `fr` width strings.
+	 * - Normalize decimal `px`, `%`, `fr`, and unitless width strings.
 	 *
 	 * Pass criteria:
-	 * - Each invalid decimal width maps to `auto`.
+	 * - Relative decimals keep relative tracks and pixel decimals keep pixel tracks.
 	 */
-	it("treats decimal width inputs as invalid and normalizes to auto", () =>
+	it("normalizes decimal width inputs without falling back to auto", () =>
 	{
 		const manager = new Et2DatagridColumnManager();
-		assert.equal(manager.normalizeColumnWidth("10.5px"), "auto", "decimal pixel widths should be rejected");
-		assert.equal(manager.normalizeColumnWidth("12.5%"), "auto", "decimal percentage widths should be rejected");
-		assert.equal(manager.normalizeColumnWidth("2.2fr"), "auto", "decimal fr widths should be rejected");
+		assert.equal(manager.normalizeColumnWidth("10.5px"), "10.5px", "decimal pixel widths should be preserved");
+		assert.equal(manager.normalizeColumnWidth("12.5%"), "12.5fr", "decimal percentage widths should normalize to fr");
+		assert.equal(manager.normalizeColumnWidth("2.2fr"), "2.2fr", "decimal fr widths should be preserved");
+		assert.equal(manager.normalizeColumnWidth("44.5"), "44.5px", "unitless decimal widths should normalize to px");
 	});
 
 	/**
@@ -242,5 +243,86 @@ describe("Et2DatagridColumnManager", () =>
 		assert.match(String(committed!.columns[0].width), /fr$/, "resized relative column should remain fr");
 		assert.match(String(committed!.columns[1].width), /fr$/, "relative donor should remain fr");
 		assert.match(String(committed!.columns[2].width), /px$/, "pixel donor should remain px");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Percentage columns keep percentage units after resize.
+	 *
+	 * Setup strategy:
+	 * - Resize a percentage column to a width that would otherwise be computed in pixels.
+	 *
+	 * Pass criteria:
+	 * - Resized percentage column persists rounded `%`, not `px` or `auto`.
+	 */
+	it("preserves percentage units after resize", () =>
+	{
+		const manager = new Et2DatagridColumnManager();
+		const columns : Et2DatagridColumn[] = [
+			{key: "a", title: "A", width: "33%"},
+			{key: "b", title: "B", width: "67%"}
+		];
+		const drag : Et2DatagridColumnResizeDragState = {
+			columnIndex: 0,
+			columnKey: "a",
+			startWidthPx: 100,
+			currentWidthPx: 125,
+			totalVisibleWidthPx: 300,
+			fixedWidthPx: 0,
+			relativeWidthUnits: 100,
+			minWidthPx: 16,
+			maxWidthPx: 1000,
+			widthKind: "relative",
+			widthUnit: "%"
+		};
+
+		const committed = manager.commitResize(columns, columns, drag, 16);
+		assert.isNotNull(committed, "percentage resize should commit");
+		assert.match(String(committed!.columns[0].width), /%$/, "resized percentage column should remain percentage");
+		assert.notEqual(committed!.columns[0].width, "auto", "resized percentage column should not become auto");
+		assert.notMatch(String(committed!.columns[0].width), /px$/, "resized percentage column should not become pixels");
+		assert.equal(
+			committed!.columns[0].width,
+			"42%",
+			"persisted percentage width should be rounded but keep its unit"
+		);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Proportional `fr` columns keep `fr` units after resize.
+	 *
+	 * Setup strategy:
+	 * - Resize an `fr` column using pixel drag math.
+	 *
+	 * Pass criteria:
+	 * - Resized proportional column persists rounded `fr`, not `px` or `auto`.
+	 */
+	it("preserves fr units after resize", () =>
+	{
+		const manager = new Et2DatagridColumnManager();
+		const columns : Et2DatagridColumn[] = [
+			{key: "a", title: "A", width: "1fr"},
+			{key: "b", title: "B", width: "2fr"}
+		];
+		const drag : Et2DatagridColumnResizeDragState = {
+			columnIndex: 0,
+			columnKey: "a",
+			startWidthPx: 100,
+			currentWidthPx: 150,
+			totalVisibleWidthPx: 300,
+			fixedWidthPx: 0,
+			relativeWidthUnits: 3,
+			minWidthPx: 16,
+			maxWidthPx: 1000,
+			widthKind: "relative",
+			widthUnit: "fr"
+		};
+
+		const committed = manager.commitResize(columns, columns, drag, 16);
+		assert.isNotNull(committed, "fr resize should commit");
+		assert.match(String(committed!.columns[0].width), /fr$/, "resized fr column should remain fr");
+		assert.notEqual(committed!.columns[0].width, "auto", "resized fr column should not become auto");
+		assert.notMatch(String(committed!.columns[0].width), /px$/, "resized fr column should not become pixels");
 	});
 });

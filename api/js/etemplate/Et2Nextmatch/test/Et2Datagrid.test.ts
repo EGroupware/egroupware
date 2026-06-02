@@ -1,5 +1,7 @@
 import {assert} from "@open-wc/testing";
+import {html, LitElement} from "lit";
 import {Et2Datagrid} from "../Et2Datagrid";
+import datagridStyles from "../Et2Datagrid.styles.ts";
 import {Et2RowProvider} from "../Et2RowProvider";
 
 const egw = {
@@ -43,6 +45,39 @@ class Et2DatagridTestTransform extends HTMLElement
 if(!customElements.get("et2-dg-test-transform"))
 {
 	customElements.define("et2-dg-test-transform", Et2DatagridTestTransform);
+}
+
+class Et2DatagridAlignmentFixture extends LitElement
+{
+	static styles = datagridStyles;
+
+	render()
+	{
+		return html`
+			<div class="dg-root" style="--meta-column-width: 24px; --column-sizes: 140px 1fr; --column-count: 2;">
+				<div class="dg-header">
+					<div class="dg-col dg-col--lead" data-column-key="name">Name</div>
+					<div class="dg-col" data-column-key="email">Email</div>
+				</div>
+				<div class="dg-body">
+					<table>
+						<tbody id="rows">
+							<tr data-row-id="row-0">
+								<td data-dg-meta-cell="1"></td>
+								<td data-col-key="name">Ada</td>
+								<td data-col-key="email">ada@example.test</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		`;
+	}
+}
+
+if(!customElements.get("et2-dg-alignment-fixture"))
+{
+	customElements.define("et2-dg-alignment-fixture", Et2DatagridAlignmentFixture);
 }
 
 let resizeObserverErrorHandler : ((event : ErrorEvent) => void) | null = null;
@@ -100,6 +135,71 @@ after(() =>
 
 describe("Et2Datagrid row rendering", () =>
 {
+	it("aligns visible headers with body cells when meta column has width", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "240px";
+		host.style.width = "500px";
+		document.body.appendChild(host);
+
+		const el = document.createElement("et2-dg-alignment-fixture") as Et2DatagridAlignmentFixture;
+		el.style.height = "100%";
+		host.appendChild(el);
+		await el.updateComplete;
+
+		const headerCell = el.shadowRoot!.querySelector(".dg-header .dg-col[data-column-key='name']") as HTMLElement | null;
+		const row = el.shadowRoot!.querySelector("[data-row-id]") as HTMLElement | null;
+		const bodyCell = el.shadowRoot!.querySelector("tbody [data-row-id] td[data-col-key='name']") as HTMLElement | null;
+		assert.isNotNull(row, "body row should render");
+		assert.isNotNull(headerCell, "first visible header should render");
+		assert.isNotNull(bodyCell, "first visible body cell should render");
+
+		const headerLeft = Math.round(headerCell!.getBoundingClientRect().left);
+		const bodyLeft = Math.round(bodyCell!.getBoundingClientRect().left);
+		assert.equal(
+			headerLeft,
+			bodyLeft,
+			"meta column width must not shift the first visible header away from its body cell"
+		);
+
+		host.remove();
+	});
+
+	it("replays pending customfield visibility when header becomes ready", () =>
+	{
+		const el = new Et2Datagrid();
+		const header : Record<string, any> = {};
+		el.columns = [
+			{key: "customfields", title: "Custom fields", header: header as any}
+		] as any;
+		(el as any)._pendingCustomfieldVisibilityByColumnKey.set("customfields", {cf_text: true, cf_private: false});
+
+		(el as any)._applyPendingCustomfieldHeaderVisibility();
+		assert.equal(
+			(el as any)._pendingCustomfieldVisibilityByColumnKey.size,
+			1,
+			"pending customfield visibility should remain queued until header API is available"
+		);
+
+		let applied : Record<string, boolean> | null = null;
+		header.setCustomfieldVisibility = (visibility : Record<string, boolean>) =>
+		{
+			applied = {...visibility};
+		};
+
+		(el as any)._applyPendingCustomfieldHeaderVisibility();
+		assert.deepEqual(
+			applied,
+			{cf_text: true, cf_private: false},
+			"queued visibility should be applied once header exposes setCustomfieldVisibility()"
+		);
+		assert.equal(
+			(el as any)._pendingCustomfieldVisibilityByColumnKey.size,
+			0,
+			"pending visibility queue should clear after successful replay"
+		);
+	});
+
 	it("applies transformed widget attributes and values for rendered rows", async() =>
 	{
 		const el = new Et2Datagrid();

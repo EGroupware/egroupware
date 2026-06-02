@@ -22,10 +22,11 @@ export default css`
 	}
 
 	.dg-header {
+		--sl-panel-background-color: var(--sl-color-neutral-100);
 		position: relative;
 		display: grid;
 		grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes);
-		background: var(--sl-color-neutral-100);
+		background: var(--sl-panel-background-color);
 		border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
 		align-items: stretch;
 		min-height: var(--sl-spacing-x-large);
@@ -49,7 +50,7 @@ export default css`
 	}
 
 	.dg-col--lead {
-		grid-column: 1 / span 2;
+		grid-column: 2;
 	}
 
 	.dg-col-resize-handle {

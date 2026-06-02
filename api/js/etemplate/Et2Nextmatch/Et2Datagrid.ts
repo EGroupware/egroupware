@@ -224,6 +224,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _columnResizeHandles : HTMLElement[] = [];
 	private _columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
+	private _pendingCustomfieldVisibilityByColumnKey : Map<string, Record<string, boolean>> = new Map();
 	private _loadedColumnPreferenceKey : string | null = null;
 	private _onColumnsChangedForPersistence : EventListener = () => this._persistColumnPreferences();
 	private _loggedMissingTemplateWarning : boolean = false;
@@ -414,6 +415,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._loadedColumnPreferenceKey = null;
 		}
 		this._loadColumnPreferencesIfNeeded();
+		this._applyPendingCustomfieldHeaderVisibility();
 		this._upgradeRenderedRows();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
@@ -515,13 +517,48 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				return;
 			}
 		}
-		const entries = Array.isArray(stored?.columns) ? stored.columns : Array.isArray(stored) ? stored : [];
+		const rawEntries = Array.isArray(stored?.columns) ? stored.columns : stored;
+		const entries = Array.isArray(rawEntries)
+			? rawEntries
+			: rawEntries && typeof rawEntries === "object"
+				? Object.keys(rawEntries)
+					.sort((left, right) =>
+					{
+						const leftNum = Number(left);
+						const rightNum = Number(right);
+						if(Number.isFinite(leftNum) && Number.isFinite(rightNum))
+						{
+							return leftNum - rightNum;
+						}
+						return left.localeCompare(right);
+					})
+					.map((key) => rawEntries[key])
+				: [];
 		if(!entries.length)
 		{
 			return;
 		}
+		this._pendingCustomfieldVisibilityByColumnKey.clear();
 		const orderByKey = new Map<string, number>();
-		const byKey = new Map<string, { width? : string; hidden? : boolean }>();
+		const byKey = new Map<string, { width? : string; hidden? : boolean; customFields? : string[] }>();
+		const toVisibilityMap = (visibleCustomfields : string[] = []) : Record<string, boolean> =>
+		{
+			return visibleCustomfields.reduce((result, name) =>
+			{
+				result[name] = true;
+				return result;
+			}, {} as Record<string, boolean>);
+		};
+		const normalizeVisibleCustomfields = (source : any) : string[] | undefined =>
+		{
+			if(Array.isArray(source))
+			{
+				return source
+					.map((name) => String(name || "").trim())
+					.filter(Boolean);
+			}
+			return undefined;
+		};
 		for(let i = 0; i < entries.length; i++)
 		{
 			const entry = entries[i];
@@ -533,7 +570,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			orderByKey.set(keyValue, i);
 			byKey.set(keyValue, {
 				width: typeof entry?.width === "string" ? entry.width : undefined,
-				hidden: typeof entry?.hidden === "boolean" ? entry.hidden : undefined
+				hidden: typeof entry?.hidden === "boolean" ? entry.hidden : undefined,
+				customFields: normalizeVisibleCustomfields(entry?.customFields)
 			});
 		}
 		const nextColumns = [...this.columns].sort((left, right) =>
@@ -560,6 +598,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				return column;
 			}
+			const header = column.header as any;
+			if(persisted.customFields && typeof header?.setCustomfieldVisibility === "function")
+			{
+				header.setCustomfieldVisibility(toVisibilityMap(persisted.customFields));
+			}
+			else if(persisted.customFields)
+			{
+				this._pendingCustomfieldVisibilityByColumnKey.set(
+					String(column.key),
+					toVisibilityMap(persisted.customFields)
+				);
+			}
 			return {
 				...column,
 				width: persisted.width ?? column.width,
@@ -567,6 +617,34 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			};
 		});
 		this.columns = nextColumns;
+	}
+
+	/**
+	 * Replay persisted customfield visibility for headers that were not yet ready
+	 * when preferences were first loaded.
+	 */
+	private _applyPendingCustomfieldHeaderVisibility()
+	{
+		if(!this._pendingCustomfieldVisibilityByColumnKey.size || !this.columns?.length)
+		{
+			return;
+		}
+		for(const column of this.columns)
+		{
+			const key = String(column.key);
+			const pending = this._pendingCustomfieldVisibilityByColumnKey.get(key);
+			if(!pending)
+			{
+				continue;
+			}
+			const header = column.header as any;
+			if(typeof header?.setCustomfieldVisibility !== "function")
+			{
+				continue;
+			}
+			header.setCustomfieldVisibility(pending);
+			this._pendingCustomfieldVisibilityByColumnKey.delete(key);
+		}
 	}
 
 	/**
@@ -583,7 +661,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const value = (this.columns || []).map((column) => ({
 			key: String(column.key),
 			width: typeof column.width === "string" ? column.width : undefined,
-			hidden: !!column.hidden
+			hidden: !!column.hidden,
+			/**
+			 * Persist only selected customfield names for clarity and compactness.
+			 */
+			customFields: (() =>
+			{
+				const header = column.header as any;
+				if(typeof header?.getCustomfieldVisibility !== "function")
+				{
+					return undefined;
+				}
+				const visibility = header.getCustomfieldVisibility();
+				if(!visibility || typeof visibility !== "object")
+				{
+					return undefined;
+				}
+				return Object.keys(visibility).filter((name) => visibility[name] === true);
+			})()
 		}));
 		try
 		{

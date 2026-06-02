@@ -65,21 +65,21 @@ export class Et2DatagridColumnManager
 			return {kind: "pixel", unit: "px", value: null};
 		}
 		const value = String(raw).trim().toLowerCase();
-		if(/^\d+%$/.test(value))
+		if(/^\d+(\.\d+)?%$/.test(value))
 		{
-			return {kind: "relative", unit: "%", value: parseInt(value, 10)};
+			return {kind: "relative", unit: "%", value: parseFloat(value)};
 		}
-		if(/^\d+fr$/.test(value))
+		if(/^\d+(\.\d+)?fr$/.test(value))
 		{
-			return {kind: "relative", unit: "fr", value: parseInt(value, 10)};
+			return {kind: "relative", unit: "fr", value: parseFloat(value)};
 		}
-		if(/^\d+px$/.test(value))
+		if(/^\d+(\.\d+)?px$/.test(value))
 		{
-			return {kind: "pixel", unit: "px", value: parseInt(value, 10)};
+			return {kind: "pixel", unit: "px", value: parseFloat(value)};
 		}
-		if(/^\d+$/.test(value))
+		if(/^\d+(\.\d+)?$/.test(value))
 		{
-			return {kind: "pixel", unit: "px", value: parseInt(value, 10)};
+			return {kind: "pixel", unit: "px", value: parseFloat(value)};
 		}
 		return {kind: "pixel", unit: "px", value: null};
 	}
@@ -213,9 +213,8 @@ export class Et2DatagridColumnManager
 		{
 			return `${Math.max(1, Math.round(value))}px`;
 		}
-		const normalized = Number.isFinite(value) ? Math.max(0.001, value) : 0.001;
-		const compact = normalized.toFixed(3).replace(/\.?0+$/, "");
-		return `${compact}${unit}`;
+		const normalized = Number.isFinite(value) ? Math.max(1, Math.round(value)) : 1;
+		return `${normalized}${unit}`;
 	}
 
 	/**

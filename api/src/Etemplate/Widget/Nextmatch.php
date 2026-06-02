@@ -127,6 +127,23 @@ class Nextmatch extends Etemplate\Widget
 		{
 			list($app) = explode('.', $this->attrs['template']);
 		}
+
+		// et2-nextmatch does not run row/header templates server-side, so preload customfields metadata
+		// only when the configured row template actually uses a customfields header.
+		$rows_template = $value['template'] ?? $this->attrs['template'] ?? $this->attrs['options'] ?? null;
+		if($this->type === 'et2-nextmatch' && $this->hasCustomfieldsHeader($rows_template) &&
+			empty(self::$request->modifications[Customfields::GLOBAL_VALS]['customfields']))
+		{
+			$cf_app = $app ?: ($GLOBALS['egw_info']['flags']['currentapp'] ?? null);
+			if($cf_app)
+			{
+				$cfs = new Customfields('<nextmatch-customfields app="' .
+										htmlspecialchars($cf_app, ENT_QUOTES, 'UTF-8') .
+										'"/>'
+				);
+				$cfs->beforeSendToClient($cname, $expand);
+			}
+		}
 		// Check for sort preference.  We only apply this on first load, so it can be changed
 		// First load is detected on a NOT set num_rows!
 		if(!isset($value['num_rows']) &&
@@ -141,9 +158,9 @@ class Nextmatch extends Etemplate\Widget
 			$value['num_rows'] = self::INITIAL_ROWS;
 		}
 
-		$value['rows'] = array();
 
 		$send_value = $value;
+		$value['rows'] = $send_value['rows'] = array();
 
 		// Check for a favorite in URL
 		if(!empty($_GET['favorite']) && !empty($value['favorites']))
@@ -841,6 +858,22 @@ class Nextmatch extends Etemplate\Widget
 			}
 		}
 		return $row;
+	}
+
+	/**
+	 * Check whether a row template contains a customfields header widget.
+	 *
+	 * @param string|null $template_name
+	 * @return bool
+	 */
+	private function hasCustomfieldsHeader(?string $template_name) : bool
+	{
+		if(!$template_name || !($template = Template::instance($template_name)))
+		{
+			return false;
+		}
+		return !empty($template->getElementsByType('nextmatch-customfields')) ||
+			!empty($template->getElementsByType('et2-nextmatch-header-customfields'));
 	}
 
 	/**

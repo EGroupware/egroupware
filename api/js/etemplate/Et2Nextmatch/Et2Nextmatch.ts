@@ -13,6 +13,7 @@ import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
+import "./Headers/CustomfieldsHeader";
 import {
 	ET2_NEXTMATCH_FILTER_EVENT,
 	ET2_NEXTMATCH_SORT_EVENT,
@@ -1127,6 +1128,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			else if(typeof header.set_sortmode === "function")
 			{
 				header.set_sortmode(headerMode);
+			}
+		});
+		Array.from(this.shadowRoot.querySelectorAll("et2-nextmatch-header-customfields")).forEach((header : any) =>
+		{
+			if(typeof header.setSortState === "function")
+			{
+				header.setSortState(sort?.id || null, mode);
 			}
 		});
 	}
