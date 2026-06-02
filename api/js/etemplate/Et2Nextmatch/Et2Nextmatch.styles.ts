@@ -2,9 +2,10 @@ import {css} from "lit";
 
 export default css`
 	:host {
-		display: block;
+		display: flex;
 		height: 100%;
 		min-height: 0;
+		flex-direction: column;
 	}
 
 	et2-datagrid {
