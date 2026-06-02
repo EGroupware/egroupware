@@ -382,8 +382,7 @@ class InfologApp extends EgwApp
 	 */
 	actionCallback(_action)
 	{
-		// Use glogal app.infolog instead of this, since confirm_delete() is called on app.infolog while actionCallback() uses etemplate.app_obj.infolog
-		egw.json("infolog.infolog_ui.ajax_action", [_action, app.infolog._action_ids, app.infolog._action_all]).sendRequest(true);
+		egw.json("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]).sendRequest(true);
 	}
 
 	/**
