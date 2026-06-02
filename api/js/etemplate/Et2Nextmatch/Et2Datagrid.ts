@@ -703,6 +703,25 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		catch(e)
 		{
 		}
+		// Persist in legacy format, some apps look for this
+		this.egw()?.set_preference?.(app, 'nextmatch-' + this._columnPreferenceTemplateId(), (this.columns || [])
+			.filter(c => !c.hidden)
+			.map((column) =>
+			{
+				const header = column.header as any;
+				if(typeof header?.getCustomfieldVisibility !== "function")
+				{
+					return column.key;
+				}
+				const visibility = header.getCustomfieldVisibility();
+				if(!visibility || typeof visibility !== "object")
+				{
+					return column.key;
+				}
+				return column.key + ',' + Object.keys(visibility).filter((name) => visibility[name] === true).map(k => CUSTOMFIELD_PREFIX + k).join(",");
+			})
+			.join(',')
+		);
 	}
 
 	/**
