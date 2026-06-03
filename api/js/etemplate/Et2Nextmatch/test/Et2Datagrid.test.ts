@@ -17,10 +17,10 @@ const egw = {
 	set_preference: () => {},
 	app_name: () => "addressbook"
 };
-let lastPreferenceCall : { app : string; key : string; value : any } | null = null;
+let preferenceCalls : { app : string; key : string; value : any }[] = [];
 egw.set_preference = (app : string, key : string, value : any) =>
 {
-	lastPreferenceCall = {app, key, value};
+	preferenceCalls.push({app, key, value});
 };
 
 window.egw = function() { return egw; } as any;
@@ -541,6 +541,72 @@ describe("Et2Datagrid row rendering", () =>
 		assert.include(rowElement!.className, "primary", "`$class` should resolve from row content");
 		assert.include(rowElement!.className, "cat_3", "`$cat_id` should resolve into category class");
 	});
+
+	/**
+	 * Contract: single-row refresh replaces loaded row data in place without a full reload.
+	 * Setup: seed one loaded row, stub provider refresh with updated data for the same row id.
+	 * Pass: loaded row data is replaced and selection remains on the same row id.
+	 */
+	it("applies a refreshed loaded row in place", async() =>
+	{
+		const el = new Et2Datagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.dataProvider = {
+			fetchPage: async() => ({rows: [], total: 1}),
+			getDataStorePrefix: () => "addressbook",
+			refresh: async() => ({
+				rows: [{id: "addressbook::row-1", data: {uid: "addressbook::row-1", label: "Updated row"}}],
+				removedRowIds: []
+			})
+		};
+		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
+		el.selectSingleRow("addressbook::row-1");
+
+		await el.refresh(["row-1"], "update" as any);
+
+		assert.equal(el.rows[0].data.label, "Updated row", "loaded row should be replaced with refreshed row data");
+		assert.deepEqual(
+			(el as any).selectedRowIds ? Array.from((el as any).selectedRowIds) : [],
+			["addressbook::row-1"],
+			"selection should remain anchored to the refreshed row id"
+		);
+	});
+
+	/**
+	 * Contract: add refresh prepends newly visible rows to the top of the loaded grid.
+	 * Setup: seed one loaded row, stub provider refresh with a different row id returned for add.
+	 * Pass: new row is inserted at index 0 and existing row selection stays on the same row id.
+	 */
+	it("prepends newly added rows during add refresh", async() =>
+	{
+		const el = new Et2Datagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.dataProvider = {
+			fetchPage: async() => ({rows: [], total: 2}),
+			getDataStorePrefix: () => "addressbook",
+			refresh: async() => ({
+				rows: [{id: "addressbook::row-2", data: {uid: "addressbook::row-2", label: "Inserted row"}}],
+				removedRowIds: []
+			})
+		};
+		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
+		el.total = 1;
+		el.selectSingleRow("addressbook::row-1");
+
+		await el.refresh(["row-2"], "add" as any);
+
+		assert.deepEqual(
+			el.rows.map((row) => row.id),
+			["addressbook::row-2", "addressbook::row-1"],
+			"newly added row should be prepended ahead of currently loaded rows"
+		);
+		assert.equal(el.rows[0].data.label, "Inserted row");
+		assert.equal((el as any).activeRowId, "addressbook::row-1", "active row should remain on the previously selected row");
+		assert.equal((el as any).anchorRowIndex, 1, "anchor row index should shift with prepended rows");
+		assert.equal(el.total, 2, "known total should grow when a new row is inserted locally");
+	});
 });
 
 describe.skip("Et2Datagrid keyboard navigation", () =>
@@ -651,7 +717,7 @@ describe("Et2Datagrid column preference keys", () =>
 {
 	it("derives default key from owner tag and row template id", async() =>
 	{
-		lastPreferenceCall = null;
+		preferenceCalls = [];
 		const host = document.createElement("et2-nextmatch");
 		const el = new Et2Datagrid();
 		host.attachShadow({mode: "open"}).appendChild(el);
@@ -667,14 +733,14 @@ describe("Et2Datagrid column preference keys", () =>
 		el.columns = [{key: "a", title: "A", width: "1fr"}] as any;
 		(el as any)._persistColumnPreferences();
 
-		assert.isNotNull(lastPreferenceCall, "preference should be saved on column change");
-		assert.equal(lastPreferenceCall!.key, "nextmatch-addressbook.index.rows-prefs", "default key should include owner prefix and row template id");
-		assert.equal(lastPreferenceCall!.app, "addressbook", "app name should come from egw app context");
+		const structuredPreference = preferenceCalls.find((call) => call.key === "nextmatch-addressbook.index.rows-prefs");
+		assert.isDefined(structuredPreference, "structured preference should be saved on column change");
+		assert.equal(structuredPreference!.app, "addressbook", "app name should come from egw app context");
 	});
 
 	it("uses explicit columnPreferenceName override when provided", async() =>
 	{
-		lastPreferenceCall = null;
+		preferenceCalls = [];
 		const host = document.createElement("et2-nextmatch");
 		const el = new Et2Datagrid();
 		el.columnPreferenceName = "my-custom-key";
@@ -691,8 +757,8 @@ describe("Et2Datagrid column preference keys", () =>
 		el.columns = [{key: "a", title: "A", width: "1fr"}] as any;
 		(el as any)._persistColumnPreferences();
 
-		assert.isNotNull(lastPreferenceCall, "preference should be saved on column change");
-		assert.equal(lastPreferenceCall!.key, "my-custom-key", "custom key override should take precedence");
+		const structuredPreference = preferenceCalls.find((call) => call.key === "my-custom-key");
+		assert.isDefined(structuredPreference, "custom key override should be used for structured preference");
 	});
 });
 

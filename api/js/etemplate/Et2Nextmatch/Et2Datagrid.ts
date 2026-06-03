@@ -12,11 +12,14 @@ import {virtualize, virtualizerRef} from "@lit-labs/virtualizer/virtualize.js";
 import {
 	Et2DatagridColumn,
 	Et2DatagridDataProvider,
+	Et2DatagridRefreshResult,
 	Et2DatagridRow,
 	Et2DatagridRowCustomizer,
 	Et2DatagridSelectionDetail,
 	Et2DatagridSelectionMode,
-	Et2DatagridTemplateData
+	Et2DatagridTemplateData,
+	Et2DatagridUpdateType,
+	Et2DatagridUpdateTypes
 } from "./Et2Datagrid.types";
 import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2DatagridColumnManager";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
@@ -674,6 +677,27 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		// Persist in legacy format, some apps look for this.
+		// Keep this compatibility write before the structured preference so the
+		// new datagrid preference remains the primary saved state.
+		this.egw()?.set_preference?.(app, 'nextmatch-' + this._columnPreferenceTemplateId(), (this.columns || [])
+			.filter(c => !c.hidden)
+			.map((column) =>
+			{
+				const header = column.header as any;
+				if(typeof header?.getCustomfieldVisibility !== "function")
+				{
+					return column.key;
+				}
+				const visibility = header.getCustomfieldVisibility();
+				if(!visibility || typeof visibility !== "object")
+				{
+					return column.key;
+				}
+				return column.key + ',' + Object.keys(visibility).filter((name) => visibility[name] === true).map(k => CUSTOMFIELD_PREFIX + k).join(",");
+			})
+			.join(',')
+		);
 		const value = (this.columns || []).map((column) => ({
 			key: String(column.key),
 			width: typeof column.width === "string" ? column.width : undefined,
@@ -703,25 +727,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		catch(e)
 		{
 		}
-		// Persist in legacy format, some apps look for this
-		this.egw()?.set_preference?.(app, 'nextmatch-' + this._columnPreferenceTemplateId(), (this.columns || [])
-			.filter(c => !c.hidden)
-			.map((column) =>
-			{
-				const header = column.header as any;
-				if(typeof header?.getCustomfieldVisibility !== "function")
-				{
-					return column.key;
-				}
-				const visibility = header.getCustomfieldVisibility();
-				if(!visibility || typeof visibility !== "object")
-				{
-					return column.key;
-				}
-				return column.key + ',' + Object.keys(visibility).filter((name) => visibility[name] === true).map(k => CUSTOMFIELD_PREFIX + k).join(",");
-			})
-			.join(',')
-		);
 	}
 
 	/**
@@ -1387,34 +1392,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Resolve datastore ID prefix with provider override first, then app/name fallback.
-	 */
-	private _resolvedDataStorePrefix() : string
-	{
-		const fromProvider = this.dataProvider?.getDataStorePrefix?.()?.trim();
-		if(fromProvider)
-		{
-			return fromProvider;
-		}
-		const app = this.getInstanceManager?.()?.app || this.egw?.()?.app_name?.();
-		if(app)
-		{
-			return String(app);
-		}
-		const nextmatchId = (this.id || "").trim();
-		if(nextmatchId)
-		{
-			return nextmatchId;
-		}
-		return "row";
-	}
-
-	/**
 	 * Normalize arbitrary row identifiers for `data-row-id` usage.
 	 */
-	private _dataStoreRowIdFor(rowId : string | number) : string
+	private _dataStoreRowIdFor(rowId : string | number, ensurePrefix : boolean = false) : string
 	{
-		return String(rowId ?? "");
+		return this.dataProvider.normalizeRowId(rowId, ensurePrefix);
 	}
 
 	/**
@@ -1422,12 +1404,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _rowIdFromDataStoreRowId(dataStoreRowId : string) : string
 	{
-		const doubleColonPrefix = `${this._resolvedDataStorePrefix()}::`;
-		if(dataStoreRowId.startsWith(doubleColonPrefix))
-		{
-			return dataStoreRowId.slice(doubleColonPrefix.length);
-		}
-		return dataStoreRowId;
+		return this.dataProvider.toProviderRowId(dataStoreRowId);
 	}
 
 	/**
@@ -2595,6 +2572,185 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._pendingPlaceholderCount = 0;
 		this.allSelected = false;
 		await this.loadMore();
+	}
+
+	/**
+	 * Apply a targeted row refresh without forcing a full grid reload.
+	 *
+	 * The provider decides which rows changed or disappeared; the datagrid only updates
+	 * rows it already has materialized locally.
+	 */
+	async refresh(row_ids : string[], type : Et2DatagridUpdateType) : Promise<void>
+	{
+		if(!this.dataProvider || this.fetchFailed)
+		{
+			return;
+		}
+		if(type === Et2DatagridUpdateTypes.DELETE)
+		{
+			// Delete is the one case we can satisfy entirely client-side.
+			if(this._removeRowsById(this._normalizeRefreshRowIds(row_ids)) > 0)
+			{
+				this._finalizeRefreshedRows();
+			}
+			return;
+		}
+		try
+		{
+			const response = await this.dataProvider.refresh(row_ids, type);
+			const changedRows = this._applyRefreshedRows(response, type);
+			if(changedRows)
+			{
+				this._finalizeRefreshedRows();
+			}
+		}
+		catch(e)
+		{
+			this.egw().debug("error", e.message);
+		}
+	}
+
+	/**
+	 * Normalize refresh ids to the same datastore uid format used internally by rendered rows.
+	 */
+	private _normalizeRefreshRowIds(rowIds : string[]) : string[]
+	{
+		return Array.from(new Set((rowIds || []).map((rowId) =>
+		{
+			return this._dataStoreRowIdFor(rowId, true);
+		}).filter(Boolean)));
+	}
+
+	/**
+	 * Merge provider refresh results into the currently loaded row set.
+	 *
+	 * Refresh updates replace loaded rows in place. `add` refreshes may also prepend newly
+	 * visible rows because Nextmatch semantics place new rows at the top of the grid.
+	 */
+	private _applyRefreshedRows(result : Et2DatagridRefreshResult, type : Et2DatagridUpdateType) : boolean
+	{
+		let changed = false;
+		const rowsById = new Map((result?.rows || []).map((row) => [row.id, row] as const));
+		const insertedRows : Et2DatagridRow[] = [];
+		if(rowsById.size)
+		{
+			for(let index = 0; index < this._rowsByIndex.length; index++)
+			{
+				const currentRow = this._rowsByIndex[index];
+				if(!currentRow)
+				{
+					continue;
+				}
+				const refreshedRow = rowsById.get(currentRow.id);
+				if(!refreshedRow)
+				{
+					continue;
+				}
+				// Preserve the row's current visual position and swap only its data payload.
+				this._rowsByIndex[index] = refreshedRow;
+				this.displayedRowIds.add(refreshedRow.id);
+				changed = true;
+			}
+			if(type === Et2DatagridUpdateTypes.ADD)
+			{
+				for(const row of result.rows || [])
+				{
+					if(this.displayedRowIds.has(row.id))
+					{
+						continue;
+					}
+					insertedRows.push(row);
+				}
+				if(insertedRows.length)
+				{
+					this._rowsByIndex.unshift(...insertedRows);
+					insertedRows.forEach((row) => this.displayedRowIds.add(row.id));
+					if(this.total !== null)
+					{
+						this.total += insertedRows.length;
+					}
+					if(this.anchorRowIndex >= 0)
+					{
+						this.anchorRowIndex += insertedRows.length;
+					}
+					changed = true;
+				}
+			}
+		}
+		if(this._removeRowsById(result?.removedRowIds || []) > 0)
+		{
+			changed = true;
+		}
+		if(changed)
+		{
+			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
+		}
+		return changed;
+	}
+
+	/**
+	 * Remove loaded rows by datastore uid and keep local row/selection counts consistent.
+	 */
+	private _removeRowsById(rowIds : string[]) : number
+	{
+		const ids = new Set((rowIds || []).filter(Boolean));
+		if(!ids.size)
+		{
+			return 0;
+		}
+		let removedCount = 0;
+		for(let index = this._rowsByIndex.length - 1; index >= 0; index--)
+		{
+			const row = this._rowsByIndex[index];
+			if(!row || !ids.has(row.id))
+			{
+				continue;
+			}
+			// Remove from all local row/selection indexes before the next render pass.
+			this._rowsByIndex.splice(index, 1);
+			this.displayedRowIds.delete(row.id);
+			this.selectedRowIds.delete(row.id);
+			removedCount++;
+		}
+		if(removedCount > 0 && this.total !== null)
+		{
+			this.total = Math.max(0, this.total - removedCount);
+		}
+		return removedCount;
+	}
+
+	/**
+	 * Reconcile selection, active row, and accessibility state after local row updates/removals.
+	 */
+	private _finalizeRefreshedRows()
+	{
+		if(this.activeRowId)
+		{
+			const activeIndex = this._rowsByIndex.findIndex((row) => row?.id === this.activeRowId);
+			if(activeIndex >= 0)
+			{
+				this.activeRowIndex = activeIndex;
+			}
+			else if(this._rowsByIndex.length)
+			{
+				// Active row disappeared; clamp to a nearby surviving row.
+				this.activeRowIndex = Math.min(Math.max(this.activeRowIndex, 0), this._rowsByIndex.length - 1);
+				this.activeRowId = this._rowsByIndex[this.activeRowIndex]?.id ?? null;
+			}
+			else
+			{
+				this.activeRowIndex = -1;
+				this.activeRowId = null;
+			}
+		}
+		if(this.anchorRowIndex >= this._rowsByIndex.length)
+		{
+			this.anchorRowIndex = this._rowsByIndex.length ? this._rowsByIndex.length - 1 : -1;
+		}
+		// Re-emit selection because refreshed/deleted rows may have changed selected row payloads.
+		this._syncRowAccessibilityState();
+		this._emitSelectionChanged();
+		this._reconcileRowRenderState();
 	}
 
 	selectAllRows()

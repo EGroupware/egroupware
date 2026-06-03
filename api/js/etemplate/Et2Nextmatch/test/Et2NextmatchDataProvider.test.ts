@@ -1,6 +1,26 @@
 import {assert} from "@open-wc/testing";
 import {Et2NextmatchDataProvider} from "../Et2NextmatchDataProvider";
 
+function createProviderHost(overrides : Record<string, any> = {}) : any
+{
+	const host = document.createElement("div") as any;
+	host.id = overrides.id ?? "nm-test";
+	host.activeFilters = overrides.activeFilters ?? {col_filter: {}};
+	host.sortBy = overrides.sortBy ?? (() => {});
+	host.getAttribute = overrides.getAttribute ?? (() => host.id);
+	host.getInstanceManager = overrides.getInstanceManager ?? (() => ({etemplate_exec_id: "exec-1", app: "addressbook"}));
+	host.getArrayMgr = overrides.getArrayMgr ?? (() => ({data: {}, getEntry: (key : string) => key}));
+	host.getParent = overrides.getParent ?? (() => ({getArrayMgr: () => ({data: {}})}));
+	host.getWidgetById = overrides.getWidgetById ?? (() => null);
+	host.closest = overrides.closest ?? (() => null);
+	host.egw = overrides.egw ?? (() => ({
+		app_name: () => "addressbook",
+		dataFetch: () => {},
+		dataRegisterUID: () => {}
+	}));
+	return host;
+}
+
 describe("Et2NextmatchDataProvider additional sel_options handling", () =>
 {
 	/**
@@ -25,48 +45,43 @@ describe("Et2NextmatchDataProvider additional sel_options handling", () =>
 			set_select_options: (options : any) => updatedOptions.push(options)
 		};
 
-		const host = document.createElement("div") as any;
-		host.id = "nm";
-		host.activeFilters = {col_filter: {}, filter: "legacy-selected-value"};
-		host.sortBy = () => {};
-		host.getAttribute = (name : string) => name === "id" ? "nm" : null;
-		host.getInstanceManager = () => ({etemplate_exec_id: "exec-1", app: "addressbook"});
-		host.getArrayMgr = (name : string) =>
-		{
-			if(name === "sel_options")
+		const host = createProviderHost({
+			id: "nm",
+			activeFilters: {col_filter: {}, filter: "legacy-selected-value"},
+			getAttribute: (name : string) => name === "id" ? "nm" : null,
+			getArrayMgr: (name : string) =>
 			{
+				if(name === "sel_options")
+				{
+					return {data: {}};
+				}
+				if(name === "content")
+				{
+					return {data: {}, getEntry: (key : string) => key};
+				}
 				return {data: {}};
-			}
-			if(name === "content")
-			{
-				return {data: {}, getEntry: (key : string) => key};
-			}
-			return {data: {}};
-		};
-		host.getParent = () => ({
-			getArrayMgr: () => ({data: {}})
-		});
-		host.getWidgetById = (id : string) => id === "filter" ? filterWidget : null;
-		host.closest = () => null;
-		host.egw = () => ({
-			app_name: () => "addressbook",
-			dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
-			{
-				dataFetchCalls++;
-				callback({
-					rows: {
-						sel_options: {
-							filter: {
-								"": "All addressbooks",
-								"17": "Current users"
-							}
-						}
-					},
-					order: [],
-					total: 0
-				});
 			},
-			dataRegisterUID: () => {}
+			getWidgetById: (id : string) => id === "filter" ? filterWidget : null,
+			egw: () => ({
+				app_name: () => "addressbook",
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					dataFetchCalls++;
+					callback({
+						rows: {
+							sel_options: {
+								filter: {
+									"": "All addressbooks",
+									"17": "Current users"
+								}
+							}
+						},
+						order: [],
+						total: 0
+					});
+				},
+				dataRegisterUID: () => {}
+			})
 		});
 
 		const provider = new Et2NextmatchDataProvider(host);
@@ -93,18 +108,18 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	 */
 	it("produces stable query signatures for equivalent filter objects", () =>
 	{
-		const hostA = document.createElement("div") as any;
-		hostA.id = "nm-a";
-		hostA.getAttribute = () => "nm-a";
-		hostA.getInstanceManager = () => ({app: "addressbook"});
-		hostA.egw = () => ({app_name: () => "addressbook"});
+		const hostA = createProviderHost({
+			id: "nm-a",
+			getInstanceManager: () => ({app: "addressbook"}),
+			egw: () => ({app_name: () => "addressbook"})
+		});
 		hostA._filters = {sort: {asc: true, id: "title"}, col_filter: {owner: "5", status: "open"}};
 
-		const hostB = document.createElement("div") as any;
-		hostB.id = "nm-b";
-		hostB.getAttribute = () => "nm-b";
-		hostB.getInstanceManager = () => ({app: "addressbook"});
-		hostB.egw = () => ({app_name: () => "addressbook"});
+		const hostB = createProviderHost({
+			id: "nm-b",
+			getInstanceManager: () => ({app: "addressbook"}),
+			egw: () => ({app_name: () => "addressbook"})
+		});
 		hostB._filters = {col_filter: {status: "open", owner: "5"}, sort: {id: "title", asc: true}};
 
 		const providerA = new Et2NextmatchDataProvider(hostA);
@@ -131,17 +146,9 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	 */
 	it("preserves server order even when UID registrations resolve out of order", async() =>
 	{
-		const host = document.createElement("div") as any;
-		host.id = "nm-order";
-		host.activeFilters = {col_filter: {}};
-		host.sortBy = () => {};
-		host.getAttribute = () => "nm-order";
-		host.getInstanceManager = () => ({etemplate_exec_id: "exec-1", app: "addressbook"});
-		host.getArrayMgr = () => ({data: {}, getEntry: (key : string) => key});
-		host.getParent = () => ({getArrayMgr: () => ({data: {}})});
-		host.getWidgetById = () => null;
-		host.closest = () => null;
-		host.egw = () => ({
+		const host = createProviderHost({
+			id: "nm-order",
+			egw: () => ({
 			app_name: () => "addressbook",
 			dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
 			{
@@ -159,6 +166,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 					callback({title: uid.toUpperCase()}, uid);
 				}, delays[uid] || 0);
 			}
+			})
 		});
 
 		const provider = new Et2NextmatchDataProvider(host);
@@ -184,20 +192,269 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	 */
 	it("uses app name for data-store prefix and falls back to widget id", () =>
 	{
-		const appHost = document.createElement("div") as any;
-		appHost.id = "nm-app";
-		appHost.getAttribute = () => "nm-app";
-		appHost.getInstanceManager = () => ({app: "calendar"});
-		appHost.egw = () => ({app_name: () => "addressbook"});
+		const appHost = createProviderHost({
+			id: "nm-app",
+			getInstanceManager: () => ({app: "calendar"}),
+			egw: () => ({app_name: () => "addressbook"})
+		});
 		const appProvider = new Et2NextmatchDataProvider(appHost);
 		assert.equal(appProvider.getDataStorePrefix(), "calendar", "instance app should be preferred for prefix");
 
-		const idHost = document.createElement("div") as any;
-		idHost.id = "nm-id";
-		idHost.getAttribute = (name : string) => name === "id" ? "nm-id" : null;
-		idHost.getInstanceManager = () => ({});
-		idHost.egw = () => ({app_name: () => ""});
+		const idHost = createProviderHost({
+			id: "nm-id",
+			getAttribute: (name : string) => name === "id" ? "nm-id" : null,
+			getInstanceManager: () => ({}),
+			egw: () => ({app_name: () => ""})
+		});
 		const idProvider = new Et2NextmatchDataProvider(idHost);
 		assert.equal(idProvider.getDataStorePrefix(), "nm-id", "host id should be fallback prefix when app is unavailable");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Duplicate concurrent refresh requests for the same row reuse one server fetch.
+	 *
+	 * Setup strategy:
+	 * - Stub `dataFetch()` to delay completion.
+	 * - Trigger two provider refreshes for the same bare row id before the first resolves.
+	 *
+	 * Pass criteria:
+	 * - Exactly one refresh fetch is issued.
+	 * - Both callers receive the same normalized row id.
+	 */
+	it("deduplicates concurrent refresh requests for the same row", async() =>
+	{
+		let fetchCalls = 0;
+		let releaseFetch : (() => void) | null = null;
+		const host = createProviderHost({
+			id: "nm-refresh-dedupe",
+			egw: () => ({
+			app_name: () => "addressbook",
+			dataGetUIDdata: (uid : string) => (window as any).__providerRefreshCache?.[uid],
+			dataFetch: (_execId, request, _filters, _widgetId, callback) =>
+			{
+				fetchCalls++;
+				releaseFetch = () =>
+				{
+					(window as any).__providerRefreshCache = {
+						"addressbook::42": {
+							timestamp: Date.now(),
+							data: {uid: "addressbook::42", title: "Updated title"}
+						}
+					};
+					callback({rows: {}, total: request.refresh?.length || 1});
+				};
+			},
+			dataRegisterUID: () => {}
+			})
+		});
+
+		(window as any).__providerRefreshCache = {};
+		const provider = new Et2NextmatchDataProvider(host);
+		const first = provider.refresh(["42"], "update");
+		const second = provider.refresh(["42"], "update");
+		assert.equal(fetchCalls, 1, "concurrent duplicate refreshes should share one fetch");
+
+		releaseFetch?.();
+		const [firstResult, secondResult] = await Promise.all([first, second]);
+		assert.deepEqual(firstResult.rows.map((row) => row.id), ["addressbook::42"]);
+		assert.deepEqual(secondResult.rows.map((row) => row.id), ["addressbook::42"]);
+
+		delete (window as any).__providerRefreshCache;
+	});
+
+	/**
+	 * Contract under test:
+	 * - Recently cached row data suppresses an immediate follow-up refresh fetch.
+	 *
+	 * Setup strategy:
+	 * - Seed `dataGetUIDdata()` with a fresh cache entry inside the dedupe window.
+	 * - Trigger a provider refresh for that row.
+	 *
+	 * Pass criteria:
+	 * - No server fetch is issued.
+	 * - Returned row comes straight from cache with normalized id.
+	 */
+	it("uses fresh cached row data to skip an immediate refresh fetch", async() =>
+	{
+		let fetchCalls = 0;
+		const host = createProviderHost({
+			id: "nm-refresh-cache",
+			getInstanceManager: () => ({etemplate_exec_id: "exec-1", app: "calendar"}),
+			egw: () => ({
+			app_name: () => "calendar",
+			dataGetUIDdata: (uid : string) => ({
+				timestamp: Date.now(),
+				data: {uid, title: "Fresh cached row"}
+			}),
+			dataFetch: () =>
+			{
+				fetchCalls++;
+			},
+			dataRegisterUID: () => {}
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		const result = await provider.refresh(["99"], "update");
+
+		assert.equal(fetchCalls, 0, "fresh cache entry should skip duplicate refresh fetch");
+		assert.deepEqual(result.rows.map((row) => row.id), ["calendar::99"]);
+		assert.equal(result.rows[0].data.title, "Fresh cached row");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Refresh forwards each CRUD-like update type to `dataFetch()` and returns cached row data when the row exists.
+	 *
+	 * Setup strategy:
+	 * - Run provider refresh once per update type with a stubbed cache and capture the request context.
+	 *
+	 * Pass criteria:
+	 * - Each request carries the expected `type`, bare refresh id, and prefix.
+	 * - Returned row ids are normalized datastore ids.
+	 */
+	(["add", "update", "edit", "delete"] as const).forEach((type) =>
+	{
+		it(`forwards ${type} refresh requests with provider context`, async() =>
+		{
+			const calls : any[] = [];
+			const cache : Record<string, any> = {};
+			const host = createProviderHost({
+				id: `nm-refresh-${type}`,
+				egw: () => ({
+					app_name: () => "addressbook",
+					dataGetUIDdata: (uid : string) => cache[uid] ?? null,
+					dataFetch: (execId, request, filters, widgetId, callback, context, rowIds) =>
+					{
+						calls.push({execId, request, filters, widgetId, context, rowIds});
+						cache["addressbook::42"] = {
+							timestamp: Date.now(),
+							data: {uid: "addressbook::42", title: `${type} row`}
+						};
+						callback({rows: {}, total: 1});
+					},
+					dataRegisterUID: () => {}
+				})
+			});
+
+			const provider = new Et2NextmatchDataProvider(host);
+			const result = await provider.refresh(["42"], type);
+
+			assert.lengthOf(calls, 1, "refresh should issue exactly one fetch");
+			assert.deepEqual(calls[0].request, {refresh: ["42"]});
+			assert.deepEqual(calls[0].context, {type, prefix: "addressbook"});
+			assert.deepEqual(calls[0].rowIds, ["42"]);
+			assert.deepEqual(result.rows.map((row) => row.id), ["addressbook::42"]);
+			assert.deepEqual(result.removedRowIds, []);
+		});
+	});
+
+	/**
+	 * Contract under test:
+	 * - Missing refresh targets are reported as removals when the server says the row no longer exists.
+	 *
+	 * Setup strategy:
+	 * - Return no cache entry after `dataFetch()` and a `total` of zero.
+	 *
+	 * Pass criteria:
+	 * - The row is not returned in `rows`.
+	 * - The normalized id is returned in `removedRowIds`.
+	 */
+	it("reports removed rows when refresh confirms the row no longer exists", async() =>
+	{
+		const host = createProviderHost({
+			id: "nm-refresh-missing",
+			egw: () => ({
+				app_name: () => "addressbook",
+				dataGetUIDdata: () => null,
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					callback({rows: {}, total: 0});
+				},
+				dataRegisterUID: () => {}
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		const result = await provider.refresh(["42"], "update");
+
+		assert.deepEqual(result.rows, []);
+		assert.deepEqual(result.removedRowIds, ["addressbook::42"]);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Unknown refresh totals fall back to cache presence instead of forcing a removal.
+	 *
+	 * Setup strategy:
+	 * - Omit `total` from the response but populate the cache with fresh row data.
+	 *
+	 * Pass criteria:
+	 * - The refreshed row is returned.
+	 * - No removal is emitted.
+	 */
+	it("uses cached row presence when refresh response omits total", async() =>
+	{
+		const host = createProviderHost({
+			id: "nm-refresh-no-total",
+			egw: () => ({
+				app_name: () => "addressbook",
+				dataGetUIDdata: (uid : string) => ({
+					timestamp: Date.now(),
+					data: {uid, title: "Cache-backed row"}
+				}),
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					callback({rows: {}});
+				},
+				dataRegisterUID: () => {}
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		const result = await provider.refresh(["42"], "update");
+
+		assert.deepEqual(result.rows.map((row) => row.id), ["addressbook::42"]);
+		assert.deepEqual(result.removedRowIds, []);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Multiple refresh ids merge cleanly into one response with data winning over removals.
+	 *
+	 * Setup strategy:
+	 * - Refresh one existing row and one missing row in a single provider call.
+	 *
+	 * Pass criteria:
+	 * - Existing row appears once in `rows`.
+	 * - Missing row appears once in `removedRowIds`.
+	 */
+	it("merges mixed refresh results across multiple row ids", async() =>
+	{
+		const cache : Record<string, any> = {
+			"addressbook::42": {
+				timestamp: Date.now(),
+				data: {uid: "addressbook::42", title: "Existing row"}
+			}
+		};
+		const host = createProviderHost({
+			id: "nm-refresh-multi",
+			egw: () => ({
+				app_name: () => "addressbook",
+				dataGetUIDdata: (uid : string) => cache[uid] ?? null,
+				dataFetch: (_execId, request, _filters, _widgetId, callback) =>
+				{
+					callback({rows: {}, total: request.refresh?.[0] === "42" ? 1 : 0});
+				},
+				dataRegisterUID: () => {}
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		const result = await provider.refresh(["42", "77"], "update");
+
+		assert.deepEqual(result.rows.map((row) => row.id), ["addressbook::42"]);
+		assert.deepEqual(result.removedRowIds, ["addressbook::77"]);
 	});
 });

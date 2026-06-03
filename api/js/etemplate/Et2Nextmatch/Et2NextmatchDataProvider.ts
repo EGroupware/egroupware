@@ -1,18 +1,12 @@
-import {Et2DatagridDataProvider, Et2DatagridPageResult, Et2DatagridRow} from "./Et2Datagrid.types";
-
-interface Et2NextmatchProviderHost extends HTMLElement
-{
-	egw : Function;
-	getInstanceManager : Function;
-	getArrayMgr : (...args : any[]) => any;
-	getParent : (...args : any[]) => any;
-	getWidgetById : (id : string) => any;
-	activeFilters : Record<string, any>;
-	sortBy : (id : string, asc? : boolean, update? : boolean) => void;
-	id : string;
-	getAttribute : (name : string) => string | null;
-	applyFilters? : (set? : Record<string, any>, options? : { reload? : boolean }) => boolean;
-}
+import {
+	Et2DatagridDataProvider,
+	Et2DatagridPageResult,
+	Et2DatagridRefreshResult,
+	Et2DatagridRow,
+	Et2DatagridUpdateType
+} from "./Et2Datagrid.types";
+import {Et2Nextmatch} from "./Et2Nextmatch";
+import {IegwData} from "../../jsapi/egw_global";
 
 /**
  * Nextmatch server adapter for Et2Datagrid.
@@ -20,7 +14,60 @@ interface Et2NextmatchProviderHost extends HTMLElement
  */
 export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 {
-	private host : Et2NextmatchProviderHost;
+	private host : Et2Nextmatch;
+	/** Short freshness window used to suppress immediate duplicate refreshes after push/server updates. */
+	private _refreshDedupWindowMs : number = 750;
+	/** Tracks one in-flight refresh promise per normalized row id so concurrent callers share one server request. */
+	private _inFlightRefreshes : Map<string, Promise<Et2DatagridRefreshResult>> = new Map();
+
+	private _requestContext()
+	{
+		return {
+			execId: this.host.getInstanceManager?.()?.etemplate_exec_id || "",
+			widgetId: this.host.id || this.host.getAttribute("id") || "",
+			filters: this._currentFilters()
+		};
+	}
+
+	/**
+	 * Normalize arbitrary refresh ids once at the provider boundary so fetch/dedupe/cache all
+	 * operate on the same datastore uid format.
+	 */
+	private _normalizeRefreshRowIds(rowIds : string[]) : string[]
+	{
+		return Array.from(new Set((rowIds || []).map((rowId) => this.normalizeRowId(rowId, true)).filter(Boolean)));
+	}
+
+	/**
+	 * Collapse per-row refresh responses into one datagrid result.
+	 *
+	 * Row data wins over removals for the same id because the final server state is "row exists".
+	 */
+	private _mergeRefreshResults(results : Et2DatagridRefreshResult[]) : Et2DatagridRefreshResult
+	{
+		const rowsById = new Map<string, Et2DatagridRow>();
+		const removedRowIds = new Set<string>();
+		for(const result of results)
+		{
+			for(const row of result.rows)
+			{
+				rowsById.set(row.id, row);
+				removedRowIds.delete(row.id);
+			}
+			for(const rowId of result.removedRowIds)
+			{
+				if(!rowsById.has(rowId))
+				{
+					removedRowIds.add(rowId);
+				}
+			}
+		}
+
+		return {
+			rows: Array.from(rowsById.values()),
+			removedRowIds: Array.from(removedRowIds)
+		};
+	}
 
 	/**
 	 * Deterministically serialize nested values so equivalent filter objects produce the same signature string.
@@ -52,7 +99,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	/**
 	 * @param host Nextmatch owner used to access egw data APIs and exec context.
 	 */
-	constructor(host : Et2NextmatchProviderHost)
+	constructor(host : Et2Nextmatch)
 	{
 		this.host = host;
 	}
@@ -147,15 +194,152 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	}
 
 	/**
+	 * Normalize arbitrary row identifiers to datastore uid format.
+	 */
+	normalizeRowId(rowId : string | number, ensurePrefix : boolean = false) : string
+	{
+		const normalized = String(rowId ?? "");
+		if(!ensurePrefix || !normalized)
+		{
+			return normalized;
+		}
+		const prefix = `${this.getDataStorePrefix()}::`;
+		return normalized.startsWith(prefix) ? normalized : `${prefix}${normalized}`;
+	}
+
+	/**
+	 * Strip the datastore prefix from a row id to recover the bare provider/server id.
+	 */
+	toProviderRowId(dataStoreRowId : string) : string
+	{
+		const normalized = String(dataStoreRowId || "");
+		const prefix = `${this.getDataStorePrefix()}::`;
+		return normalized.startsWith(prefix) ? normalized.slice(prefix.length) : normalized;
+	}
+
+	/**
+	 * Read one row from the egw UID cache and optionally enforce a max cache age.
+	 *
+	 * This lets refresh reuse data already written by `egw.dataFetch()` instead of rebuilding
+	 * row payloads manually in the provider.
+	 */
+	private _cachedRow(rowId : string, maxAgeMs : number = Number.POSITIVE_INFINITY) : Et2DatagridRow | null
+	{
+		const cached = this.host.egw().dataGetUIDdata?.(rowId) as IegwData | undefined;
+		if(!cached?.data)
+		{
+			return null;
+		}
+		if(Number.isFinite(maxAgeMs))
+		{
+			const timestamp = Number(cached.timestamp || 0);
+			if(!timestamp || (Date.now() - timestamp) > maxAgeMs)
+			{
+				return null;
+			}
+		}
+		return {
+			id: rowId,
+			data: cached.data
+		};
+	}
+
+	/**
+	 * Refresh exactly one row with cache-aware duplicate suppression.
+	 *
+	 * The flow is:
+	 * 1. Reuse a very recent cached row when push or a previous refresh already updated it.
+	 * 2. Reuse any in-flight refresh promise for the same row.
+	 * 3. Otherwise fetch the row once from the server, then read the final row data back from the egw cache.
+	 */
+	private async _refreshSingleRow(
+		rowId : string,
+		type : Et2DatagridUpdateType,
+		execId : string,
+		widgetId : string,
+		filters : Record<string, any>
+	) : Promise<Et2DatagridRefreshResult>
+	{
+		const normalizedId = this.normalizeRowId(rowId, true);
+		const freshCachedRow = this._cachedRow(normalizedId, this._refreshDedupWindowMs);
+		if(freshCachedRow)
+		{
+			// A recent push or refresh already populated the cache, so avoid another round-trip.
+			return {
+				rows: [freshCachedRow],
+				removedRowIds: []
+			};
+		}
+
+		const existingRefresh = this._inFlightRefreshes.get(normalizedId);
+		if(existingRefresh)
+		{
+			// Concurrent callers for the same row should observe the same result.
+			return existingRefresh;
+		}
+
+		const bareRowId = this.toProviderRowId(normalizedId);
+		const refreshPromise = new Promise<Et2DatagridRefreshResult>((resolve, reject) =>
+		{
+			try
+			{
+				this.host.egw().dataFetch(
+					execId,
+					{refresh: [bareRowId]},
+					filters,
+					widgetId,
+					(response : any) =>
+					{
+						if(!this.host.getParent())
+						{
+							// The owning template was torn down while the request was in flight.
+							resolve({rows: [], removedRowIds: []});
+							return;
+						}
+						if(response?.rows)
+						{
+							// Nextmatch may piggyback select options / filter state on refresh responses too.
+							this._processAdditionalData(response.rows);
+						}
+
+						// Row payload is already stored in the central egw cache by dataFetch().
+						const refreshedRow = this._cachedRow(normalizedId);
+						const rowExists = typeof response?.total === "number" ? response.total >= 1 : !!refreshedRow;
+						resolve(rowExists && refreshedRow ? {
+							rows: [refreshedRow],
+							removedRowIds: []
+						} : {
+							rows: [],
+							removedRowIds: [normalizedId]
+						});
+					},
+					{type, prefix: this.getDataStorePrefix()},
+					[bareRowId]
+				);
+			}
+			catch(e)
+			{
+				reject(e);
+			}
+		}).finally(() =>
+		{
+			// Only suppress duplicates while the request is active; later calls should re-check cache age again.
+			this._inFlightRefreshes.delete(normalizedId);
+		});
+
+		// Store before returning so near-simultaneous callers can join the same promise.
+		this._inFlightRefreshes.set(normalizedId, refreshPromise);
+		return refreshPromise;
+	}
+
+	/**
 	 * Fetch one page of rows through Nextmatch APIs and return normalized datagrid rows.
 	 * We preserve server order by resolving rows into an indexed array before emitting.
 	 */
 	async fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>
 	{
-		const execId = this.host.getInstanceManager?.()?.etemplate_exec_id || "";
-		const widgetId = this.host.id || this.host.getAttribute("id") || "";
+		const {execId, widgetId, filters} = this._requestContext();
 		const context = {prefix: this.getDataStorePrefix()};
-		const filters = this._currentFilters();
 
 		return await new Promise((resolve, reject) =>
 		{
@@ -223,5 +407,26 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 				reject(e);
 			}
 		});
+	}
+
+	/**
+	 * Refresh one or more rows and return normalized row updates/removals for the datagrid.
+	 *
+	 * The provider does not decide where refreshed rows belong in the visible grid; it only resolves
+	 * the latest row data and whether a row still exists.
+	 */
+	async refresh(row_ids : string[], type : Et2DatagridUpdateType) : Promise<Et2DatagridRefreshResult>
+	{
+		const {execId, widgetId, filters} = this._requestContext();
+		const normalizedIds = this._normalizeRefreshRowIds(row_ids);
+		if(!normalizedIds.length)
+		{
+			return {rows: [], removedRowIds: []};
+		}
+
+		const results = await Promise.all(
+			normalizedIds.map((rowId) => this._refreshSingleRow(rowId, type, execId, widgetId, filters))
+		);
+		return this._mergeRefreshResults(results);
 	}
 }

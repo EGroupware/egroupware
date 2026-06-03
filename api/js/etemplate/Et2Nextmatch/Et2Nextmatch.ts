@@ -4,7 +4,13 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Datagrid} from "./Et2Datagrid";
-import {Et2DatagridColumn, Et2DatagridRowCustomizeContext, Et2DatagridTemplateData} from "./Et2Datagrid.types";
+import {
+	Et2DatagridColumn,
+	Et2DatagridRowCustomizeContext,
+	Et2DatagridTemplateData,
+	Et2DatagridUpdateType,
+	Et2DatagridUpdateTypes
+} from "./Et2Datagrid.types";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
@@ -21,6 +27,7 @@ import {
 	Et2NextmatchSortEventDetail
 } from "./Headers/events";
 import styles from "./Et2Nextmatch.styles";
+import {egw} from "../../jsapi/egw_global";
 
 /**
  * @summary Nextmatch shows entries with filtering and context menu
@@ -90,15 +97,22 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	searchletter : string | false = false;
 
 	/**
+	 * Field / column that holds Modified date for entries.
+	 * Used for smart refresh.
+	 *
+	 * @type {string}
+	 */
+	@property({attribute: false})
+	modifiedDateField : string = "";
+
+	/**
 	 * Optional override for empty-state headline text.
-	 * Mirrors legacy `placeholder` setting.
 	 */
 	@property({type: String})
 	placeholder : string = "";
 
 	/**
 	 * Optional list of action ids allowed for placeholder context menu.
-	 * Mirrors legacy `placeholder_actions` setting.
 	 */
 	@property({attribute: false})
 	placeholderActions : string[] = [];
@@ -265,6 +279,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		if(this.rows.length)
 		{
 			this._datagrid?.setInitialRows(this.rows);
+			// No need to keep them
+			this.rows = [];
 		}
 		else
 		{
@@ -343,6 +359,94 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		this.rows = rows || [];
 		this._datagrid?.setInitialRows(this.rows);
+	}
+
+	/**
+	 * Refresh given rows for specified change
+	 *
+	 * Change type parameters allows for quicker refresh then complete server side reload:
+	 * - update: request modified data from given rows.  May be moved.
+	 * - update-in-place: update row, but do NOT move it, or refresh if uid does not exist
+	 * - edit: rows changed, but sorting may be affected.  Full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: put the new row in at the top, unless app says otherwise
+	 *
+	 * What actually happens also depends on a general preference "lazy-update":
+	 *	default/lazy:
+	 *  - add always on top
+	 *	- updates on top, if sorted by last modified, otherwise update-in-place
+	 *	- update-in-place is always in place!
+	 *
+	 *	exact:
+	 *	- add and update on top if sorted by last modified, otherwise full refresh
+	 *	- update-in-place is always in place!
+	 *
+	 * Nextmatch checks the application callback nm_refresh_index, which has a default implementation
+	 * in egw_app.nm_refresh_index().
+	 *
+	 * @param {string[]|string} _row_ids rows to refresh
+	 * @param {?string} _type "update-in-place", "update", "edit", "delete" or "add"
+	 *
+	 * @see jsapi.egw_refresh()
+	 * @see egw_app.nm_refresh_index()
+	 * @fires refresh
+	 */
+	public refresh(_row_ids : string[] | string, _type? : Et2DatagridUpdateType)
+	{
+		// Framework trying to refresh, but nextmatch not fully initialized
+		if(!this._datagrid || !this._dataProvider)
+		{
+			return;
+		}
+		// No specific rows, just refresh everything
+		if(typeof _row_ids == "undefined" || _row_ids === null)
+		{
+			// applyFilters() will dispatch events as appropriate
+			this.applyFilters();
+
+			// Trigger an event so Mail app code can act on it - only Mail listens for this
+			this.dispatchEvent(new CustomEvent("refresh", {
+				composed: true,
+				bubbles: true,
+			}));
+
+			return;
+		}
+
+		// Make sure we're dealing with arrays
+		_row_ids = this._toStringArray(_row_ids);
+
+		// Make some changes in what we're doing based on preference
+		let update_pref = egw.preference("lazy-update") || 'lazy';
+		if(_type == Et2DatagridUpdateTypes.UPDATE && !this._isSortedByModified())
+		{
+			_type = update_pref == "lazy" ? Et2DatagridUpdateTypes.UPDATE_IN_PLACE : Et2DatagridUpdateTypes.EDIT;
+		}
+		else if(update_pref == "exact" && _type == Et2DatagridUpdateTypes.ADD && !this._isSortedByModified())
+		{
+			_type = Et2DatagridUpdateTypes.EDIT;
+		}
+		if(_type == Et2DatagridUpdateTypes.ADD && !(update_pref == "lazy" || update_pref == "exact" && this._isSortedByModified()))
+		{
+			_type = Et2DatagridUpdateTypes.EDIT;
+		}
+		if(typeof _type == 'undefined')
+		{
+			_type = Et2DatagridUpdateTypes.EDIT;
+		}
+		if(update_pref == "exact" && !this._isSortedByModified())
+		{
+			_type = Et2DatagridUpdateTypes.EDIT;
+		}
+
+		this._datagrid.refresh(_row_ids, _type).then(() =>
+		{
+			// Trigger an event so Mail app code can act on it - only Mail listens for this
+			this.dispatchEvent(new CustomEvent("refresh", {
+				composed: true,
+				bubbles: true
+			}));
+		});
 	}
 
 	/**
@@ -1086,6 +1190,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		return overlapRatio + legacyContainsCurrent + currentContainsLegacy;
 	}
 
+	/**
+	 * Is this nextmatch currently sorted by "modified" date
+	 *
+	 * This is decided by the row_modified options passed from the server and the current sort order
+	 */
+	private _isSortedByModified()
+	{
+		let sort = this._filters.sort || "";
+		return sort?.id && sort.id == this.modifiedDateField && sort.asc == false;
+	}
 
 	/**
 	 * Nextmatch-specific row metadata styling hook.

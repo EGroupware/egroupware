@@ -36,11 +36,29 @@ export interface Et2DatagridPageResult
 	total? : number | null;
 }
 
+export interface Et2DatagridRefreshResult
+{
+	rows : Et2DatagridRow[];
+	removedRowIds : string[];
+}
+
+export const Et2DatagridUpdateTypes = {
+	UPDATE_IN_PLACE: "update-in-place",
+	UPDATE: "update",
+	EDIT: "edit",
+	DELETE: "delete",
+	ADD: "add",
+} as const;
+export type Et2DatagridUpdateType = typeof Et2DatagridUpdateTypes[keyof typeof Et2DatagridUpdateTypes];
 export interface Et2DatagridDataProvider
 {
 	fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>;
 	getQuerySignature?() : string;
 	getDataStorePrefix?() : string;
+	normalizeRowId(rowId : string | number, ensurePrefix? : boolean) : string;
+	toProviderRowId(dataStoreRowId : string) : string;
+
+	refresh(row_ids : string[], type : Et2DatagridUpdateType) : Promise<Et2DatagridRefreshResult>;
 }
 
 export interface Et2DatagridSelectionDetail

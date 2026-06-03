@@ -1411,6 +1411,11 @@ export class etemplate2
 			_widget.refresh(id, type);
 			refresh_done = true;
 		}, this, et2_nextmatch);
+		this._widgetContainer.querySelectorAll('et2-nextmatch').forEach((nm) =>
+		{
+			nm.refresh(id, type);
+			refresh_done = true;
+		});
 
 		return refresh_done;
 	}
