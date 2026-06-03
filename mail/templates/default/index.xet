@@ -185,10 +185,9 @@
                 <row class="$row_cont[class]">
                     <et2-lavatar contactId="email:$row_cont[address]" fname="$row_cont[lavatar][fname]"
                                  lname="$row_cont[lavatar][lname]" shape="rounded"></et2-lavatar>
-                    <et2-vbox class="status_icons">
-                            <et2-image src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
-                            <et2-image src="$row_cont[smime]" inline="true" class="bi"></et2-image>
-                    </et2-vbox>
+                    <et2-hbox class="status_icons">
+                        <et2-image src="$row_cont[status_icon]" class="status_img $row_cont[class]"></et2-image>
+                    </et2-hbox>
                     <html id="${row}[attachments]"/>
                     <et2-vbox>
                         <et2-description id="${row}[subject]" noLang="1"></et2-description>
@@ -203,7 +202,7 @@
                     <et2-url-email id="${row}[toaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
                     <et2-url-email id="${row}[fromaddress]" readonly="true" emailDisplay="preference"></et2-url-email>
                     <vfs-size align="right" id="${row}[size]" no_lang="1" readonly="true"/>
-                    <et2-image src="$row_cont[smime]" inline="true"></et2-image>
+                    <et2-image align="center" id="${row}[smime]" src="$row_cont[smime]" inline="true" class="horizontal_smime"></et2-image>
                 </row>
             </rows>
         </grid>
