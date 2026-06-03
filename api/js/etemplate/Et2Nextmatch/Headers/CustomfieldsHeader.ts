@@ -139,6 +139,15 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	private static readonly HYDRATION_RETRY_MAX = 8;
 
 	/**
+	 * Render nested sortheaders into light DOM so the owning Nextmatch/datagrid
+	 * can reflect single-column sort state without piercing another shadow root.
+	 */
+	protected createRenderRoot()
+	{
+		return this;
+	}
+
+	/**
 	 * Fill missing custom field settings from template modifications before Lit
 	 * applies attributes to the component.
 	 */
@@ -381,6 +390,62 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		`;
 	}
 
+	private _lightDomStylesTemplate()
+	{
+		return html`
+			<style>
+				et2-nextmatch-header-customfields {
+					display: block;
+					position: relative;
+				}
+				et2-nextmatch-header-customfields .label.et2_label_empty {
+					min-width: var(--sl-spacing-small);
+				}
+				et2-nextmatch-header-customfields .list {
+					width: 100%;
+					border-collapse: collapse;
+				}
+				et2-nextmatch-header-customfields .list td {
+					padding: 0;
+					vertical-align: top;
+				}
+				et2-nextmatch-header-customfields .field-header {
+					display: block;
+					width: 100%;
+				}
+				et2-nextmatch-header-customfields .list-clamp {
+					max-height: 5em;
+					overflow: hidden;
+				}
+				et2-nextmatch-header-customfields .overflow-caption {
+					display: block;
+					max-width: 100%;
+					white-space: nowrap;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+				et2-nextmatch-header-customfields .hover-list {
+					display: none;
+					position: absolute;
+					left: 0;
+					top: 100%;
+					min-width: 100%;
+					max-height: 16em;
+					overflow: auto;
+					padding: var(--sl-spacing-medium);
+					z-index: var(--sl-z-index-dropdown);
+					background: var(--sl-panel-background-color);
+					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+					box-shadow: var(--sl-shadow-large);
+				}
+				et2-nextmatch-header-customfields:hover .hover-list,
+				et2-nextmatch-header-customfields:focus-within .hover-list {
+					display: block;
+				}
+			</style>
+		`;
+	}
+
 	private _enableHeaderOverflow()
 	{
 		// The compact hover list needs to extend beyond the datagrid header cell.
@@ -417,28 +482,6 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		this._previousHeaderStyles = null;
 	}
 
-	/**
-	 * Reflect the active Nextmatch sort state into the rendered custom field
-	 * sort headers.
-	 */
-	setSortState(sortId : string | null, mode : "none" | "asc" | "desc")
-	{
-		const currentSortId = String(sortId || "");
-		const headers = Array.from(this.renderRoot.querySelectorAll("et2-nextmatch-sortheader")) as any[];
-		headers.forEach((header) =>
-		{
-			const headerMode = currentSortId && header.id === currentSortId ? mode : "none";
-			if(typeof header.setSortmode === "function")
-			{
-				header.setSortmode(headerMode);
-			}
-			else if(typeof header.set_sortmode === "function")
-			{
-				header.set_sortmode(headerMode);
-			}
-		});
-	}
-
 	render()
 	{
 		const fields = this.getCustomfieldSelectionItems().filter((field) => field.visible === true);
@@ -451,15 +494,18 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 			if(isOverflowed)
 			{
 				return html`
+					${this._lightDomStylesTemplate()}
 					<span class="overflow-caption">${this._overflowCaption()}</span>
 					<div class="hover-list">${list}</div>
 				`;
 			}
 			return html`
+				${this._lightDomStylesTemplate()}
 				<div class="list-clamp">${list}</div>
 			`;
 		}
 		return html`
+			${this._lightDomStylesTemplate()}
 			<span class="label ${this._overflowCaption() ? "" : "et2_label_empty"}">${this._overflowCaption()}</span>
 		`;
 	}

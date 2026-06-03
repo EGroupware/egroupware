@@ -1118,9 +1118,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		const sort = this._filters.sort;
 		const mode = sort?.asc === true ? "asc" : sort?.asc === false ? "desc" : "none";
-		Array.from(this.shadowRoot.querySelectorAll("et2-nextmatch-sortheader")).forEach((header : any) =>
+		const roots = [this.shadowRoot, this._datagrid?.shadowRoot].filter(Boolean) as ShadowRoot[];
+		const sortHeaders = roots.reduce((headers, root) =>
+			headers.concat(Array.from(root.querySelectorAll("et2-nextmatch-sortheader"))), [] as Element[]
+		);
+		sortHeaders.forEach((header : any) =>
 		{
-			const headerMode = sort?.id && header.id === sort.id ? mode : "none";
+			const headerId = String(header.getAttribute?.("id") || "");
+			const headerMode = sort?.id && headerId === sort.id ? mode : "none";
 			if(typeof header.setSortmode === "function")
 			{
 				header.setSortmode(headerMode);
@@ -1128,13 +1133,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			else if(typeof header.set_sortmode === "function")
 			{
 				header.set_sortmode(headerMode);
-			}
-		});
-		Array.from(this.shadowRoot.querySelectorAll("et2-nextmatch-header-customfields")).forEach((header : any) =>
-		{
-			if(typeof header.setSortState === "function")
-			{
-				header.setSortState(sort?.id || null, mode);
 			}
 		});
 	}

@@ -21,6 +21,7 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 			...super.styles,
 			css`
 				:host {
+					width: 100%;
 					cursor: pointer;
 					display: inline-block;
 					white-space: nowrap;
@@ -39,16 +40,7 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 				.nextmatch_sortheader--marker {
 					text-decoration: none;
 					margin-left: var(--sl-spacing-small);
-					font-size: var(--sl-font-size-large);
 					background-repeat: no-repeat;
-				}
-
-				.asc {
-					background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
-				}
-
-				.desc {
-					background-image: url(../../node_modules/bootstrap-icons/icons/caret-down-fill.svg);
 				}
 			`
 		];
@@ -116,6 +108,11 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 		this.requestUpdate();
 	}
 
+	private _sortId() : string
+	{
+		return String(this.getAttribute("id") || "");
+	}
+
 	/**
 	 * Trigger sort on click and persist sort preference like legacy header does.
 	 */
@@ -128,12 +125,13 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 		event.preventDefault();
 
 		const defaultAsc = String(this.sortmode || "").toUpperCase() !== "DESC";
+		const sortId = this._sortId();
 		const sortEvent = new CustomEvent<Et2NextmatchSortEventDetail>(ET2_NEXTMATCH_SORT_EVENT, {
 			bubbles: true,
 			composed: true,
 			cancelable: true,
 			detail: {
-				id: this.id,
+				id: sortId,
 				asc: this._currentSortmode === "none" ? defaultAsc : undefined
 			}
 		});
@@ -142,11 +140,15 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 		{
 			// Legacy fallback: if no listener handled the event and we are attached to legacy nextmatch,
 			// apply the old direct sort behavior.
-			if(sortEvent.defaultPrevented || !this.nextmatch)
+			if(sortEvent.defaultPrevented)
 			{
 				return;
 			}
-			this.nextmatch.sortBy(this.id, sortEvent.detail.asc, sortEvent.detail.update);
+			if(!this.nextmatch)
+			{
+				return;
+			}
+			this.nextmatch.sortBy(sortId, sortEvent.detail.asc, sortEvent.detail.update);
 			try
 			{
 				this.egw().set_preference(

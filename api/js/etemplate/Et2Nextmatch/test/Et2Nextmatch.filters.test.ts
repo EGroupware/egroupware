@@ -1,6 +1,7 @@
 import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT} from "../Headers/events";
+import "../Headers/CustomfieldsHeader";
 import * as sinon from "sinon";
 
 /**
@@ -39,6 +40,14 @@ const waitForBubblingHandlers = async() =>
 {
 	await Promise.resolve();
 	await Promise.resolve();
+};
+
+const sortableMode = (sortHeader : HTMLElement) =>
+{
+	const label = sortHeader.shadowRoot!.querySelector(".nextmatch_sortheader") as HTMLElement | null;
+	return label?.classList.contains("asc") ? "asc" :
+	       label?.classList.contains("desc") ? "desc" :
+	       "none";
 };
 
 describe("Et2Nextmatch header event handling", () =>
@@ -166,6 +175,66 @@ describe("Et2Nextmatch header event handling", () =>
 		await waitForBubblingHandlers();
 
 		assert.deepEqual(el.activeFilters.sort, {id: "title", asc: true}, "sort state should be applied");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Et2Nextmatch reflects a single active sort into sortheaders rendered by
+	 *   the internal datagrid shadow DOM.
+	 *
+	 * Setup strategy:
+	 * - Render Et2Nextmatch and manually place two sortable headers in the
+	 *   datagrid shadow root, matching where column headers are rendered.
+	 * - Set one active sort and call the internal reflection method.
+	 *
+	 * Pass criteria:
+	 * - Matching header is active.
+	 * - Non-matching sibling header is cleared to `none`.
+	 */
+	it("clears inactive datagrid sort headers when reflecting nextmatch sort state", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement & { shadowRoot : ShadowRoot };
+		assert.isNotNull(datagrid, "nextmatch should render datagrid");
+		const nameHeader = document.createElement("et2-nextmatch-sortheader") as HTMLElement;
+		nameHeader.setAttribute("id", "name");
+		const dateHeader = document.createElement("et2-nextmatch-sortheader") as HTMLElement;
+		dateHeader.setAttribute("id", "date");
+		const customfieldsHeader = document.createElement("et2-nextmatch-header-customfields") as any;
+		customfieldsHeader.customfields = {
+			cf_text: {label: "Text", type: "text"}
+		};
+		customfieldsHeader.fields = {
+			cf_text: true
+		};
+		datagrid.shadowRoot!.append(nameHeader, dateHeader, customfieldsHeader);
+		await customfieldsHeader.updateComplete;
+		const customfieldSortHeader = customfieldsHeader.querySelector("et2-nextmatch-sortheader") as HTMLElement | null;
+		assert.isNotNull(customfieldSortHeader, "customfield sort header should render in light DOM");
+		await (nameHeader as any).updateComplete;
+		await (dateHeader as any).updateComplete;
+		await (customfieldSortHeader as any).updateComplete;
+
+		(nameHeader as any).setSortmode("desc");
+		(dateHeader as any).setSortmode("asc");
+		(customfieldSortHeader as any).setSortmode("desc");
+		await (nameHeader as any).updateComplete;
+		await (dateHeader as any).updateComplete;
+		await (customfieldSortHeader as any).updateComplete;
+
+		(el as any)._filters.sort = {id: "date", asc: true};
+		(el as any)._updateSortHeaderState();
+		await (nameHeader as any).updateComplete;
+		await (dateHeader as any).updateComplete;
+		await (customfieldSortHeader as any).updateComplete;
+
+		assert.equal(sortableMode(dateHeader), "asc", "active datagrid sort header should reflect current sort");
+		assert.equal(sortableMode(nameHeader), "none", "inactive datagrid sort header should be cleared");
+		assert.equal(sortableMode(customfieldSortHeader!), "none", "inactive customfield sort header should be cleared");
 		el.remove();
 	});
 
