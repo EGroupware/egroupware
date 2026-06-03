@@ -304,6 +304,11 @@ pre {
   font-size: calc(1em + 2px);
   height: calc(1em + 2px);
 }
+#mail-index #mail-index_nm et2-image.horizontal_smime {
+  display: block;
+  width: calc(1em + 2px);
+  font-size: calc(1em + 2px);
+}
 /*
  influence the tree display and scrolling behavior
 */
@@ -1040,4 +1045,3 @@ tr.mailComposeJQueryReplyto {
   padding: var(--sl-spacing-medium) 0;
   flex-grow: 0;
 }
-/*# sourceMappingURL=app.css.map */
