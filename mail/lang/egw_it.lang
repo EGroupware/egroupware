@@ -663,6 +663,7 @@ upload files...	mail	it	Carica file ...
 use default timeout (20 seconds)	mail	it	Usa il timeout predefinito (20 secondi)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	it	Usa espressioni regolari (v. wikipedia per informazioni sulle espressioni regolari POSIX)
 use source as displayed, if applicable	mail	it	Usa le sorgenti come mostrate, se applicabile
+use tokenised search syntax (+word required, -word forbidden, "..." literal phrase; same as the egroupware search box)	mail	it	Usa la sintassi di ricerca tokenizzata (+parola obbligatoria, -parola esclusa, "..." frase letterale; come nella casella di ricerca di EGroupware)
 use username+password from current user	mail	it	Utilizza nome utente+password dell'utente attuale
 use wizard to detect or verify configuration	mail	it	Usa la procedura guidata oppure verifica la connessione
 vacation messages with start and end date require an admin account to be set!	mail	it	Messaggi di ferie con data inizio e fine, richiedono l'impostazione di un account amministrativo!
