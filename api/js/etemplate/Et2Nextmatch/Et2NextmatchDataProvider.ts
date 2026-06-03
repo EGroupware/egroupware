@@ -15,8 +15,6 @@ import {IegwData} from "../../jsapi/egw_global";
 export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 {
 	private host : Et2Nextmatch;
-	/** Short freshness window used to suppress immediate duplicate refreshes after push/server updates. */
-	private _refreshDedupWindowMs : number = 750;
 	/** Tracks one in-flight refresh promise per normalized row id so concurrent callers share one server request. */
 	private _inFlightRefreshes : Map<string, Promise<Et2DatagridRefreshResult>> = new Map();
 
@@ -218,25 +216,17 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	}
 
 	/**
-	 * Read one row from the egw UID cache and optionally enforce a max cache age.
+	 * Read one row from the egw UID cache.
 	 *
-	 * This lets refresh reuse data already written by `egw.dataFetch()` instead of rebuilding
-	 * row payloads manually in the provider.
+	 * Refresh reads its final row payload back from the central cache after `egw.dataFetch()`
+	 * updates it, instead of rebuilding row payloads in the provider.
 	 */
-	private _cachedRow(rowId : string, maxAgeMs : number = Number.POSITIVE_INFINITY) : Et2DatagridRow | null
+	private _cachedRow(rowId : string) : Et2DatagridRow | null
 	{
 		const cached = this.host.egw().dataGetUIDdata?.(rowId) as IegwData | undefined;
 		if(!cached?.data)
 		{
 			return null;
-		}
-		if(Number.isFinite(maxAgeMs))
-		{
-			const timestamp = Number(cached.timestamp || 0);
-			if(!timestamp || (Date.now() - timestamp) > maxAgeMs)
-			{
-				return null;
-			}
 		}
 		return {
 			id: rowId,
@@ -245,12 +235,12 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	}
 
 	/**
-	 * Refresh exactly one row with cache-aware duplicate suppression.
+	 * Refresh exactly one row.
 	 *
 	 * The flow is:
-	 * 1. Reuse a very recent cached row when push or a previous refresh already updated it.
-	 * 2. Reuse any in-flight refresh promise for the same row.
-	 * 3. Otherwise fetch the row once from the server, then read the final row data back from the egw cache.
+	 * 1. Reuse any in-flight refresh promise for the same row.
+	 * 2. Otherwise fetch the row once from the server.
+	 * 3. Read the final row data back from the egw cache populated by `egw.dataFetch()`.
 	 */
 	private async _refreshSingleRow(
 		rowId : string,
@@ -261,16 +251,6 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	) : Promise<Et2DatagridRefreshResult>
 	{
 		const normalizedId = this.normalizeRowId(rowId, true);
-		const freshCachedRow = this._cachedRow(normalizedId, this._refreshDedupWindowMs);
-		if(freshCachedRow)
-		{
-			// A recent push or refresh already populated the cache, so avoid another round-trip.
-			return {
-				rows: [freshCachedRow],
-				removedRowIds: []
-			};
-		}
-
 		const existingRefresh = this._inFlightRefreshes.get(normalizedId);
 		if(existingRefresh)
 		{
@@ -323,7 +303,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 			}
 		}).finally(() =>
 		{
-			// Only suppress duplicates while the request is active; later calls should re-check cache age again.
+			// Only suppress duplicates while the request is active; later refreshes should fetch again.
 			this._inFlightRefreshes.delete(normalizedId);
 		});
 

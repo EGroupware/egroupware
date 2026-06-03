@@ -26,6 +26,29 @@ egw.set_preference = (app : string, key : string, value : any) =>
 window.egw = function() { return egw; } as any;
 Object.assign(window.egw, egw);
 
+function createDatagridDataProvider(overrides : Record<string, any> = {}, prefix : string = "addressbook")
+{
+	return {
+		fetchPage: async() => ({rows: [], total: 0}),
+		getDataStorePrefix: () => prefix,
+		normalizeRowId: (rowId : string | number, ensurePrefix? : boolean) =>
+		{
+			const normalized = String(rowId ?? "");
+			return ensurePrefix && !normalized.startsWith(`${prefix}::`) ? `${prefix}::${normalized}` : normalized;
+		},
+		toProviderRowId: (rowId : string) => rowId.replace(new RegExp(`^${prefix}::`), ""),
+		refresh: async() => ({rows: [], removedRowIds: []}),
+		...overrides
+	};
+}
+
+function createDatagrid() : Et2Datagrid
+{
+	const el = new Et2Datagrid();
+	el.dataProvider = createDatagridDataProvider() as any;
+	return el;
+}
+
 class Et2DatagridTestTransform extends HTMLElement
 {
 	private _mgr : any;
@@ -204,7 +227,7 @@ describe("Et2Datagrid row rendering", () =>
 
 	it("replays pending customfield visibility when header becomes ready", () =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		const header : Record<string, any> = {};
 		el.columns = [
 			{key: "customfields", title: "Custom fields", header: header as any}
@@ -239,7 +262,7 @@ describe("Et2Datagrid row rendering", () =>
 
 	it("applies transformed widget attributes and values for rendered rows", async() =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		const rowTemplate = document.createElement("template");
 		rowTemplate.innerHTML = `
 			<tr>
@@ -285,7 +308,7 @@ describe("Et2Datagrid row rendering", () =>
 	 */
 	it("preserves non-content array managers while applying row content perspective", () =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.setArrayMgr("content", new et2_arrayMgr({}));
 		el.setArrayMgr("modifications", new et2_arrayMgr({
 			"~custom_fields~": {
@@ -366,7 +389,7 @@ describe("Et2Datagrid row rendering", () =>
 	 */
 	it("hydrates datagrid row customfields once from shared metadata and displays row values", async() =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.setArrayMgr("content", new et2_arrayMgr({}));
 		el.setArrayMgr("modifications", new et2_arrayMgr({
 			"~custom_fields~": {
@@ -442,7 +465,7 @@ describe("Et2Datagrid row rendering", () =>
 	 */
 	it("applies selected customfield visibility from the header to row renderers", () =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.setArrayMgr("content", new et2_arrayMgr({}));
 		el.setArrayMgr("modifications", new et2_arrayMgr({
 			"~custom_fields~": {
@@ -497,7 +520,7 @@ describe("Et2Datagrid row rendering", () =>
 
 	it("supports modern and legacy row shorthand expressions in template attributes", async() =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		const rowTemplate = document.createElement("template");
 		rowTemplate.innerHTML = `
 			<tr class="$class $cat_id">
@@ -549,27 +572,39 @@ describe("Et2Datagrid row rendering", () =>
 	 */
 	it("applies a refreshed loaded row in place", async() =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
+		let pulsedRowIds : string[] = [];
+		const renderedRow = document.createElement("tr");
 		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
 		el.templateData = {columns: el.columns} as any;
-		el.dataProvider = {
+		(el as any)._scheduleRenderedRowPulse = (rowIds : string[]) =>
+		{
+			pulsedRowIds = rowIds;
+			renderedRow.classList.add("dg-row--refreshed");
+		};
+		el.dataProvider = createDatagridDataProvider({
 			fetchPage: async() => ({rows: [], total: 1}),
-			getDataStorePrefix: () => "addressbook",
 			refresh: async() => ({
 				rows: [{id: "addressbook::row-1", data: {uid: "addressbook::row-1", label: "Updated row"}}],
 				removedRowIds: []
 			})
-		};
+		}) as any;
 		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
 		el.selectSingleRow("addressbook::row-1");
 
 		await el.refresh(["row-1"], "update" as any);
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
 
 		assert.equal(el.rows[0].data.label, "Updated row", "loaded row should be replaced with refreshed row data");
 		assert.deepEqual(
 			(el as any).selectedRowIds ? Array.from((el as any).selectedRowIds) : [],
 			["addressbook::row-1"],
 			"selection should remain anchored to the refreshed row id"
+		);
+		assert.deepEqual(pulsedRowIds, ["addressbook::row-1"], "refresh should schedule a pulse for the updated row");
+		assert.isTrue(
+			renderedRow.classList.contains("dg-row--refreshed"),
+			"visible refreshed rows should receive the refreshed state class"
 		);
 	});
 
@@ -580,22 +615,29 @@ describe("Et2Datagrid row rendering", () =>
 	 */
 	it("prepends newly added rows during add refresh", async() =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
+		let pulsedRowIds : string[] = [];
+		const renderedRow = document.createElement("tr");
 		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
 		el.templateData = {columns: el.columns} as any;
-		el.dataProvider = {
+		(el as any)._scheduleRenderedRowPulse = (rowIds : string[]) =>
+		{
+			pulsedRowIds = rowIds;
+			renderedRow.classList.add("dg-row--refreshed");
+		};
+		el.dataProvider = createDatagridDataProvider({
 			fetchPage: async() => ({rows: [], total: 2}),
-			getDataStorePrefix: () => "addressbook",
 			refresh: async() => ({
 				rows: [{id: "addressbook::row-2", data: {uid: "addressbook::row-2", label: "Inserted row"}}],
 				removedRowIds: []
 			})
-		};
+		}) as any;
 		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
 		el.total = 1;
 		el.selectSingleRow("addressbook::row-1");
 
 		await el.refresh(["row-2"], "add" as any);
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
 
 		assert.deepEqual(
 			el.rows.map((row) => row.id),
@@ -606,6 +648,11 @@ describe("Et2Datagrid row rendering", () =>
 		assert.equal((el as any).activeRowId, "addressbook::row-1", "active row should remain on the previously selected row");
 		assert.equal((el as any).anchorRowIndex, 1, "anchor row index should shift with prepended rows");
 		assert.equal(el.total, 2, "known total should grow when a new row is inserted locally");
+		assert.deepEqual(pulsedRowIds, ["addressbook::row-2"], "add refresh should schedule a pulse for the inserted row");
+		assert.isTrue(
+			renderedRow.classList.contains("dg-row--refreshed"),
+			"visible added rows should receive the refreshed state class"
+		);
 	});
 });
 
@@ -613,7 +660,7 @@ describe.skip("Et2Datagrid keyboard navigation", () =>
 {
 	it("advances active row with ArrowDown in virtualized data", async() =>
 	{
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
 		el.templateData = {columns: el.columns} as any;
 		el.setInitialRows(Array.from({length: 200}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
@@ -637,7 +684,7 @@ describe.skip("Et2Datagrid column sizing", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -664,7 +711,7 @@ describe.skip("Et2Datagrid column sizing", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -691,7 +738,7 @@ describe.skip("Et2Datagrid column sizing", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -719,7 +766,7 @@ describe("Et2Datagrid column preference keys", () =>
 	{
 		preferenceCalls = [];
 		const host = document.createElement("et2-nextmatch");
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		host.attachShadow({mode: "open"}).appendChild(el);
 
 		el.templateData = {
@@ -742,7 +789,7 @@ describe("Et2Datagrid column preference keys", () =>
 	{
 		preferenceCalls = [];
 		const host = document.createElement("et2-nextmatch");
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.columnPreferenceName = "my-custom-key";
 		host.attachShadow({mode: "open"}).appendChild(el);
 
@@ -771,7 +818,7 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -808,7 +855,7 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -844,7 +891,7 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -889,7 +936,7 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -945,14 +992,14 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
 		(el as any)._requestDispatchDelayMs = 0;
 
 		let fetchCalls = 0;
-		el.dataProvider = {
+		el.dataProvider = createDatagridDataProvider({
 			fetchPage: async(start : number, pageSize : number) =>
 			{
 				fetchCalls++;
@@ -965,7 +1012,7 @@ describe("Et2Datagrid selection mode", () =>
 				};
 			},
 			getQuerySignature: () => "selection-fetch-no-initial"
-		} as any;
+		}) as any;
 
 		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
 		el.templateData = {columns: el.columns} as any;
@@ -1001,7 +1048,7 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1047,7 +1094,7 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1080,7 +1127,7 @@ describe("Et2Datagrid selection mode", () =>
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1112,20 +1159,20 @@ describe("Et2Datagrid virtual height stability", () =>
 	it("keeps scroll height stable after replacing placeholders with fetched rows", async() =>
 	{
 		let resolvePage : ((value : any) => void) | null = null;
-		const dataProvider = {
+		const dataProvider = createDatagridDataProvider({
 			fetchPage: () => new Promise((resolve) =>
 			{
 				resolvePage = resolve;
 			}),
 			getQuerySignature: () => "height-stability"
-		};
+		});
 
 		const host = document.createElement("div");
 		host.style.height = "360px";
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1170,7 +1217,7 @@ describe("Et2Datagrid virtual height stability", () =>
 	it("requests deeper chunks when rows in a later chunk are needed", async() =>
 	{
 		const calls : number[] = [];
-		const dataProvider = {
+		const dataProvider = createDatagridDataProvider({
 			fetchPage: async(start : number, pageSize : number) =>
 			{
 				calls.push(start);
@@ -1183,14 +1230,14 @@ describe("Et2Datagrid virtual height stability", () =>
 				};
 			},
 			getQuerySignature: () => "replace-stale-pending"
-		};
+		});
 
 		const host = document.createElement("div");
 		host.style.height = "360px";
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1225,7 +1272,7 @@ describe("Et2Datagrid virtual height stability", () =>
 	it("requests rows when user scroll reaches unloaded chunk", async() =>
 	{
 		const calls : number[] = [];
-		const dataProvider = {
+		const dataProvider = createDatagridDataProvider({
 			fetchPage: async(start : number, pageSize : number) =>
 			{
 				calls.push(start);
@@ -1238,14 +1285,14 @@ describe("Et2Datagrid virtual height stability", () =>
 				};
 			},
 			getQuerySignature: () => "scroll-requests-chunk"
-		};
+		});
 
 		const host = document.createElement("div");
 		host.style.height = "360px";
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1282,7 +1329,7 @@ describe.skip("Et2Datagrid data loading", () =>
 	it("does not request rows when there are sufficient rows provided initially", async() =>
 	{
 		let fetchCalls = 0;
-		const dataProvider = {
+		const dataProvider = createDatagridDataProvider({
 			fetchPage: async() =>
 			{
 				fetchCalls++;
@@ -1292,14 +1339,14 @@ describe.skip("Et2Datagrid data loading", () =>
 				};
 			},
 			getQuerySignature: () => "sufficient-initial-rows"
-		};
+		});
 
 		const host = document.createElement("div");
 		host.style.height = "360px";
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1326,7 +1373,7 @@ describe.skip("Et2Datagrid data loading", () =>
 	it("does not request rows when initial rows equal total rows even if viewport has extra space", async() =>
 	{
 		let fetchCalls = 0;
-		const dataProvider = {
+		const dataProvider = createDatagridDataProvider({
 			fetchPage: async() =>
 			{
 				fetchCalls++;
@@ -1336,14 +1383,14 @@ describe.skip("Et2Datagrid data loading", () =>
 				};
 			},
 			getQuerySignature: () => "initial-equals-total"
-		};
+		});
 
 		const host = document.createElement("div");
 		host.style.height = "360px";
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;
@@ -1372,7 +1419,7 @@ describe.skip("Et2Datagrid data loading", () =>
 	it("requests rows when there are no preloaded rows", async() =>
 	{
 		let fetchCalls = 0;
-		const dataProvider = {
+		const dataProvider = createDatagridDataProvider({
 			fetchPage: async(start : number, pageSize : number) =>
 			{
 				fetchCalls++;
@@ -1385,14 +1432,14 @@ describe.skip("Et2Datagrid data loading", () =>
 				};
 			},
 			getQuerySignature: () => "no-preloaded-rows"
-		};
+		});
 
 		const host = document.createElement("div");
 		host.style.height = "360px";
 		host.style.width = "800px";
 		document.body.appendChild(host);
 
-		const el = new Et2Datagrid();
+		const el = createDatagrid();
 		el.style.height = "100%";
 		host.appendChild(el);
 		await el.updateComplete;

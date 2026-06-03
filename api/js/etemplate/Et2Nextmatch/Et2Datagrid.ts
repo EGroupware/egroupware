@@ -104,6 +104,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	@state()
 	private _rowsByIndex : Array<Et2DatagridRow | null> = [];
+	private _rowRenderVersionById : Map<string, number> = new Map();
+	private _refreshPulseTimersByElement : Map<HTMLElement, number> = new Map();
+	private _refreshPulseDurationMs : number = 5000;
 
 	private _virtualIndexes : number[] = [];
 	private _virtualIndexesCount : number = -1;
@@ -381,6 +384,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._body.removeEventListener("scroll", this._scrollListener);
 		}
+		this._clearRefreshPulseTimers();
 		this.removeEventListener("et2-columns-changed", this._onColumnsChangedForPersistence);
 		super.disconnectedCallback();
 	}
@@ -843,6 +847,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		this.rows = [];
 		this._rowsByIndex = [];
+		this._rowRenderVersionById.clear();
 		this.displayedRowIds.clear();
 		this._pendingPlaceholderCount = 0;
 		this._clearQueuedRequests();
@@ -1255,7 +1260,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const row = this._rowsByIndex[rowIndex];
 		if(row)
 		{
-			return this._dataStoreRowIdFor(row.id ?? rowIndex);
+			const rowId = String(row.id ?? rowIndex);
+			const version = this._rowRenderVersionById.get(rowId) || 0;
+			return `${this._dataStoreRowIdFor(rowId)}:${version}`;
 		}
 		const querySignature = this.dataProvider?.getQuerySignature?.() || "";
 		return `placeholder:${querySignature}:${rowIndex}`;
@@ -1278,6 +1285,68 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			rowElement.setAttribute("aria-selected", "true");
 		}
 		rowElement.tabIndex = rowIndex === this.activeRowIndex ? 0 : -1;
+	}
+
+	private _clearRefreshPulseTimers()
+	{
+		for(const timerId of this._refreshPulseTimersByElement.values())
+		{
+			window.clearTimeout(timerId);
+		}
+		this._refreshPulseTimersByElement.clear();
+	}
+
+	/**
+	 * Pulse only the rows that are currently rendered after a refresh merge completes.
+	 *
+	 * We intentionally do not persist this state by row id. If a row is off-screen when the
+	 * refresh happens, replaying the effect later would not reflect when the change occurred.
+	 */
+	private _pulseRenderedRows(rowIds : string[]) : void
+	{
+		const normalizedRowIds = Array.from(new Set((rowIds || []).filter(Boolean)));
+		if(!normalizedRowIds.length)
+		{
+			return;
+		}
+		for(const rowId of normalizedRowIds)
+		{
+			const renderedRow = this._findRenderedRowElement(rowId);
+			if(!renderedRow)
+			{
+				continue;
+			}
+			const existingTimer = this._refreshPulseTimersByElement.get(renderedRow);
+			if(existingTimer)
+			{
+				window.clearTimeout(existingTimer);
+			}
+			renderedRow.classList.remove("dg-row--refreshed");
+			// Restart the CSS animation when the same visible row refreshes repeatedly.
+			void renderedRow.offsetWidth;
+			renderedRow.classList.add("dg-row--refreshed");
+			this._refreshPulseTimersByElement.set(renderedRow, window.setTimeout(() =>
+			{
+				renderedRow.classList.remove("dg-row--refreshed");
+				this._refreshPulseTimersByElement.delete(renderedRow);
+			}, this._refreshPulseDurationMs));
+		}
+	}
+
+	private _scheduleRenderedRowPulse(rowIds : string[])
+	{
+		const normalizedRowIds = Array.from(new Set((rowIds || []).filter(Boolean)));
+		if(!normalizedRowIds.length)
+		{
+			return;
+		}
+		void this.updateComplete.then(() => this._pulseRenderedRows(normalizedRowIds));
+	}
+
+	private _findRenderedRowElement(rowId : string) : HTMLElement | null
+	{
+		const dataStoreRowId = this._dataStoreRowIdFor(rowId);
+		return this._rowsBody?.querySelector(`[data-row-id="${CSS.escape(dataStoreRowId)}"]`) as HTMLElement | null;
 	}
 
 	private _upgradeRenderedRows()
@@ -2632,6 +2701,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		let changed = false;
 		const rowsById = new Map((result?.rows || []).map((row) => [row.id, row] as const));
 		const insertedRows : Et2DatagridRow[] = [];
+		const pulsedRowIds : string[] = [];
 		if(rowsById.size)
 		{
 			for(let index = 0; index < this._rowsByIndex.length; index++)
@@ -2649,6 +2719,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				// Preserve the row's current visual position and swap only its data payload.
 				this._rowsByIndex[index] = refreshedRow;
 				this.displayedRowIds.add(refreshedRow.id);
+				this._rowRenderVersionById.set(refreshedRow.id, (this._rowRenderVersionById.get(refreshedRow.id) || 0) + 1);
+				pulsedRowIds.push(refreshedRow.id);
 				changed = true;
 			}
 			if(type === Et2DatagridUpdateTypes.ADD)
@@ -2664,7 +2736,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				if(insertedRows.length)
 				{
 					this._rowsByIndex.unshift(...insertedRows);
-					insertedRows.forEach((row) => this.displayedRowIds.add(row.id));
+					insertedRows.forEach((row) =>
+					{
+						this.displayedRowIds.add(row.id);
+						this._rowRenderVersionById.set(row.id, (this._rowRenderVersionById.get(row.id) || 0) + 1);
+					});
+					pulsedRowIds.push(...insertedRows.map((row) => row.id));
 					if(this.total !== null)
 					{
 						this.total += insertedRows.length;
@@ -2684,6 +2761,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(changed)
 		{
 			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
+			this._scheduleRenderedRowPulse(pulsedRowIds);
 		}
 		return changed;
 	}
@@ -2709,6 +2787,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			// Remove from all local row/selection indexes before the next render pass.
 			this._rowsByIndex.splice(index, 1);
 			this.displayedRowIds.delete(row.id);
+			this._rowRenderVersionById.delete(row.id);
 			this.selectedRowIds.delete(row.id);
 			removedCount++;
 		}

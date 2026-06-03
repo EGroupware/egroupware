@@ -265,19 +265,20 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 
 	/**
 	 * Contract under test:
-	 * - Recently cached row data suppresses an immediate follow-up refresh fetch.
+	 * - Explicit refresh still fetches the server even when the local cache already has row data.
 	 *
 	 * Setup strategy:
-	 * - Seed `dataGetUIDdata()` with a fresh cache entry inside the dedupe window.
-	 * - Trigger a provider refresh for that row.
+	 * - Seed `dataGetUIDdata()` with an existing cache entry.
+	 * - Trigger a provider refresh and let `dataFetch()` overwrite the cached row data.
 	 *
 	 * Pass criteria:
-	 * - No server fetch is issued.
-	 * - Returned row comes straight from cache with normalized id.
+	 * - One server fetch is issued.
+	 * - Returned row comes from the refreshed cache payload, not the stale prefetch snapshot.
 	 */
-	it("uses fresh cached row data to skip an immediate refresh fetch", async() =>
+	it("fetches explicit refreshes even when a cached row already exists", async() =>
 	{
 		let fetchCalls = 0;
+		let cachedTitle = "Fresh cached row";
 		const host = createProviderHost({
 			id: "nm-refresh-cache",
 			getInstanceManager: () => ({etemplate_exec_id: "exec-1", app: "calendar"}),
@@ -285,11 +286,13 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 			app_name: () => "calendar",
 			dataGetUIDdata: (uid : string) => ({
 				timestamp: Date.now(),
-				data: {uid, title: "Fresh cached row"}
+				data: {uid, title: cachedTitle}
 			}),
-			dataFetch: () =>
+			dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
 			{
 				fetchCalls++;
+				cachedTitle = "Fetched row";
+				callback({rows: {}, total: 1});
 			},
 			dataRegisterUID: () => {}
 			})
@@ -298,9 +301,9 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		const provider = new Et2NextmatchDataProvider(host);
 		const result = await provider.refresh(["99"], "update");
 
-		assert.equal(fetchCalls, 0, "fresh cache entry should skip duplicate refresh fetch");
+		assert.equal(fetchCalls, 1, "explicit refresh should fetch even when cache already has the row");
 		assert.deepEqual(result.rows.map((row) => row.id), ["calendar::99"]);
-		assert.equal(result.rows[0].data.title, "Fresh cached row");
+		assert.equal(result.rows[0].data.title, "Fetched row");
 	});
 
 	/**

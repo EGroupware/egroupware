@@ -156,6 +156,10 @@ export default css`
 			box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
 		}
 
+		tbody > [data-row-id].dg-row--refreshed {
+			animation: dg-row-refresh-pulse 5s ease-out forwards;
+		}
+
 		tbody td,
 		tbody th {
 			box-sizing: border-box;
@@ -174,6 +178,18 @@ export default css`
 
 	.dg-row-placeholder {
 		background: transparent;
+	}
+
+	@keyframes dg-row-refresh-pulse {
+		0% {
+			background-color: color-mix(in srgb, var(--sl-color-warning-200) 0%, transparent);
+		}
+		15% {
+			background-color: var(--sl-color-warning-200);
+		}
+		100% {
+			background-color: color-mix(in srgb, var(--sl-color-warning-200) 35%, transparent);
+		}
 	}
 
 	.dg-placeholder-cell {
