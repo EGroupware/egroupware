@@ -295,6 +295,48 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Double-click on a row executes the default popup action instead of selecting row text.
+	 *
+	 * Setup strategy:
+	 * - Render a lightweight row in the component shadow root.
+	 * - Stub row default-action trigger on the action controller.
+	 * - Dispatch cancelable `dblclick` from row text.
+	 *
+	 * Pass criteria:
+	 * - Controller default-action path is invoked once.
+	 * - Browser default is prevented for the double-click.
+	 */
+	it("routes row double-click to the default action handler", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const row = document.createElement("div");
+		row.setAttribute("data-row-id", "row::dbl");
+		const text = document.createElement("span");
+		text.textContent = "Double click me";
+		row.append(text);
+		el.shadowRoot?.append(row);
+
+		const triggerDefaultActionForRow = sinon.stub((el as any)._actionController, "triggerDefaultActionForRow").returns(true);
+		const event = new MouseEvent("dblclick", {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			button: 0
+		});
+		text.dispatchEvent(event);
+
+		assert.isTrue(triggerDefaultActionForRow.calledOnce, "double-click should execute row default action");
+		assert.isTrue(event.defaultPrevented, "double-click should suppress native text-selection behavior");
+
+		triggerDefaultActionForRow.restore();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - Long-press on touch/pen triggers context popup after delay.
 	 *
 	 * Setup strategy:
@@ -327,6 +369,52 @@ describe("Et2Nextmatch action setup", () =>
 			triggerPopupForRow.restore();
 			clock.restore();
 		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Mouse-triggered row popup uses pointer coordinates instead of row center.
+	 *
+	 * Setup strategy:
+	 * - Stub row lookup/object creation on the action controller.
+	 * - Dispatch `contextmenu` carrying client coordinates.
+	 *
+	 * Pass criteria:
+	 * - Popup implementation receives the original mouse x/y values.
+	 */
+	it("opens row popup at the mouse cursor position", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const controller : any = (el as any)._actionController;
+		const row = document.createElement("div");
+		row.setAttribute("data-row-id", "row::cursor");
+		const fakeRowObject = {
+			forceSelection: sinon.spy(),
+			executeActionImplementation: sinon.stub().returns(true)
+		};
+
+		sinon.stub(controller, "findEventRow").returns({rowId: "row::cursor", rowElement: row});
+		sinon.stub(controller, "ensureRowActionObject").returns(fakeRowObject);
+
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			clientX: 123,
+			clientY: 234
+		}));
+
+		const context = fakeRowObject.executeActionImplementation.firstCall.args[0];
+		assert.instanceOf(context.event, MouseEvent, "popup context should keep the source mouse event");
+		assert.equal(context.posx, 123, "popup should use mouse X for placement");
+		assert.equal(context.posy, 234, "popup should use mouse Y for placement");
+		assert.equal(context.innerText, "", "popup context should still include row text");
+
+		(controller.findEventRow as sinon.SinonStub).restore();
+		(controller.ensureRowActionObject as sinon.SinonStub).restore();
+		el.remove();
 	});
 
 	/**

@@ -122,21 +122,31 @@ export class Et2NextmatchActionController
 		{
 			return false;
 		}
-		rowObject.forceSelection();
-		const rowAlreadySelected = this.allSelected || this.selectedRowIds.includes(row.rowId);
-		if(!rowAlreadySelected)
-		{
-			this.host.selectSingleRow?.(row.rowId);
-			this.allSelected = false;
-			this.selectedRowIds = [row.rowId];
-		}
+		this._selectActionRow(row.rowId, rowObject);
 		const rect = row.rowElement.getBoundingClientRect();
+		const mouseEvent = contextEvent as MouseEvent;
 		return  rowObject.executeActionImplementation({
 			event: contextEvent,
-			posx: rect.left + (rect.width / 2),
-			posy: rect.top + (rect.height / 2),
+			posx: typeof mouseEvent.clientX === "number" ? mouseEvent.clientX : rect.left + (rect.width / 2),
+			posy: typeof mouseEvent.clientY === "number" ? mouseEvent.clientY : rect.top + (rect.height / 2),
 			innerText: row.rowElement.textContent || ""
 		}, "popup", EGW_AO_EXEC_SELECTED);
+	}
+
+	triggerDefaultActionForRow(contextEvent : Event) : boolean
+	{
+		const row = this.findEventRow(contextEvent);
+		if(!row)
+		{
+			return false;
+		}
+		const rowObject = this.ensureRowActionObject(row.rowId, row.rowElement);
+		if(!rowObject)
+		{
+			return false;
+		}
+		this._selectActionRow(row.rowId, rowObject);
+		return rowObject.executeActionImplementation("default", "popup", EGW_AO_EXEC_SELECTED);
 	}
 
 	/**
@@ -438,6 +448,19 @@ export class Et2NextmatchActionController
 			rowObject.updateActionLinks(this.getActionLinks());
 		}
 		return rowObject;
+	}
+
+	private _selectActionRow(rowId : string, rowObject : EgwActionObject)
+	{
+		rowObject.forceSelection();
+		const rowAlreadySelected = this.allSelected || this.selectedRowIds.includes(rowId);
+		if(rowAlreadySelected)
+		{
+			return;
+		}
+		this.host.selectSingleRow?.(rowId);
+		this.allSelected = false;
+		this.selectedRowIds = [rowId];
 	}
 
 	private getActionLinks() : string[]

@@ -184,6 +184,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.addEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.addEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
 		this.addEventListener("contextmenu", this._handleContextMenu as EventListener, true);
+		this.addEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.addEventListener("keydown", this._handleKeydown as EventListener);
 		this.addEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.addEventListener("pointermove", this._handlePointerMove as EventListener);
@@ -205,6 +206,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.removeEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
 		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener, true);
+		this.removeEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.removeEventListener("keydown", this._handleKeydown as EventListener);
 		this.removeEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.removeEventListener("pointermove", this._handlePointerMove as EventListener);
@@ -1370,6 +1372,27 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		}
 	};
 
+	private _handleDoubleClick = (event : MouseEvent) =>
+	{
+		if(event.defaultPrevented || event.button !== 0)
+		{
+			return;
+		}
+		if(this._isInteractiveRowEventTarget(event))
+		{
+			return;
+		}
+		const rowElement = this._getContextMenuRowElement(event);
+		if(!rowElement)
+		{
+			return;
+		}
+		event.preventDefault();
+		event.stopPropagation();
+		window.getSelection?.()?.removeAllRanges?.();
+		this._actionController.triggerDefaultActionForRow(event);
+	};
+
 	/**
 	 * Resolve row element for context-menu event from composed path.
 	 */
@@ -1384,6 +1407,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			}
 		}
 		return null;
+	}
+
+	private _isInteractiveRowEventTarget(event : MouseEvent) : boolean
+	{
+		const rowElement = this._getContextMenuRowElement(event);
+		const target = event.target as HTMLElement | null;
+		const link = target?.closest?.("a");
+		if(!rowElement || !link)
+		{
+			return false;
+		}
+		return rowElement.contains(link);
 	}
 
 	/**
