@@ -101,6 +101,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         }
 
         this._context = _context;
+		const useAutoPaste = this._shouldUseAutoPaste();
         if (typeof _context == "object" && typeof _context.keyEvent == "object") {
             return this._handleKeyPress(_context.keyEvent, _selected, _links, _target);
         } else if (_context != "default") {
@@ -123,11 +124,6 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			{
 				menu = managerData.menu;
 			}
-			if(!menu && this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
-			{
-				menu = this._buildMenu(_links, _selected, _target);
-				menu.showAt(0, 0);
-			}
 			if(!menu)
 			{
 				menu = this._buildMenu(_links, _selected, _target);
@@ -135,6 +131,10 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			}
 			else
 			{
+				if(useAutoPaste)
+				{
+					this._addCopyPaste(_links, _selected);
+				}
 				menu.applyContext(_links, _selected, _target);
 			}
 			if(!_target && !_context.menu && managerData)
@@ -578,7 +578,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         const tree = {"root": []};
 
         // Automatically add in Drag & Drop actions
-		if(this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
+		if(this._shouldUseAutoPaste())
 		{
             this._addCopyPaste(_links, _selected);
         }
@@ -605,6 +605,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
         return menu;
     };
+
+	private _shouldUseAutoPaste = () =>
+	{
+		return this.auto_paste &&
+			!window.egwIsMobile() &&
+			(!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/));
+	};
 
     _getPageXY = function getPageXY(event) {
         // document.body.scrollTop does not work in IE
