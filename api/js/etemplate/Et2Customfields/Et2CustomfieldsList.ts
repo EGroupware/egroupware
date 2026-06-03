@@ -56,6 +56,15 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 	}
 
 	/**
+	 * Field widgets are intentionally rendered into light DOM so legacy widget
+	 * lookup, validation, and event paths can see the generated child widgets.
+	 */
+	protected createRenderRoot()
+	{
+		return this;
+	}
+
+	/**
 	 * Read values by the supported row/content key first, with unprefixed lookup
 	 * retained for non-row list contexts that assign value directly.
 	 */
@@ -115,10 +124,42 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 		`;
 	}
 
+	private _lightDomStylesTemplate()
+	{
+		return html`
+			<style>
+				et2-customfields-list {
+					display: block;
+				}
+
+				et2-customfields-list .customfields-list {
+					display: flex;
+					flex-direction: column;
+					gap: var(--sl-spacing-2x-small, 0.25rem);
+				}
+
+				et2-customfields-list .customfields-list__field {
+					display: flex;
+					align-items: center;
+					min-width: 0;
+				}
+
+				et2-customfields-list .customfields-list__field[hidden] {
+					display: none;
+				}
+
+				et2-customfields-list .customfields-list__field > * {
+					min-width: 0;
+				}
+			</style>
+		`;
+	}
+
 	render()
 	{
 		const fields = this.getVisibleFieldNames();
 		return html`
+			${this._lightDomStylesTemplate()}
 			<div class="customfields-list" part="base">
 				${repeat(fields, (fieldName) => fieldName, (fieldName) =>
 				{

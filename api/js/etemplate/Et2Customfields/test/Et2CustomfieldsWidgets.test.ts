@@ -41,12 +41,13 @@ describe("Et2Customfields webcomponents", () =>
 	});
 
 	/**
-	 * Contract: the full list widget keeps child widget instances stable when only
-	 * row values change.
+	 * Contract: the full list widget renders child field widgets in light DOM and
+	 * keeps child widget instances stable when only row values change.
 	 * Setup: render one visible text customfield, then replace value.
-	 * Pass: the same child widget instance displays the new value.
+	 * Pass: the child widget is not in shadow DOM and the same instance displays
+	 * the new value.
 	 */
-	it("renders list fields in shadow DOM and updates only row values", async() =>
+	it("renders list field widgets in light DOM and updates only row values", async() =>
 	{
 		const element = await fixture<Et2CustomfieldsBase>(html`
             <et2-customfields-list></et2-customfields-list>
@@ -56,15 +57,16 @@ describe("Et2Customfields webcomponents", () =>
 		element.value = {"#cf_text": "First row"};
 		await element.updateComplete;
 
-		const firstWidget = element.shadowRoot?.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
+		const firstWidget = element.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
 		await (firstWidget as any)?.updateComplete;
-		assert.isNotNull(firstWidget, "customfields list should create field widgets in its shadow root");
+		assert.isNull(element.shadowRoot, "customfields list should render into light DOM");
+		assert.isNotNull(firstWidget, "customfields list should create field widgets in its light DOM");
 		assert.include(firstWidget?.textContent || "", "First row", "field widget should display the current row value");
 
 		element.value = {"#cf_text": "Second row"};
 		await element.updateComplete;
 
-		const secondWidget = element.shadowRoot?.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
+		const secondWidget = element.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
 		await (secondWidget as any)?.updateComplete;
 		assert.strictEqual(secondWidget, firstWidget, "unchanged field definitions should keep the same widget instance");
 		assert.include(secondWidget?.textContent || "", "Second row", "row value changes should update the existing widget");
@@ -89,7 +91,7 @@ describe("Et2Customfields webcomponents", () =>
 			"row values must not create customfield definitions; missing metadata is a setup problem"
 		);
 		assert.isNull(
-			element.shadowRoot?.querySelector("[data-field='cf_text']"),
+			element.querySelector("[data-field='cf_text']"),
 			"customfields list should remain empty until customfield metadata is supplied"
 		);
 	});

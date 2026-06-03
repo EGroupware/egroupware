@@ -92,7 +92,7 @@ export function mergeCustomfieldSettingsFromSources(
 /**
  * Shared customfield filtering/visibility state used by widgets and nextmatch header.
  *
- * It intentionally mirrors legacy `et2_extension_customfields` filtering behavior
+ * It intentionally mirrors legacy `et2_extension_customfields` filtering behaviour
  * for field visibility decisions, but exposes clear plain-object state.
  */
 export class Et2CustomfieldsController
