@@ -135,7 +135,7 @@ class Url extends Etemplate\Widget
 			{
 				$value = substr($value,0,(int) $this->attrs['maxlength']);
 			}
-			if ($this->attrs['preg'] && !preg_match($this->attrs['preg'],$value))
+			if ((string)$value !== '' && $this->attrs['preg'] && !preg_match($this->attrs['preg'],$value))
 			{
 				switch($this->type)
 				{
