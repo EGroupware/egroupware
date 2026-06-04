@@ -3,7 +3,7 @@
 
 namespace EGroupware\Infolog;
 
-require_once __DIR__ . '/../../projectmanager/tests/TemplateTest.php';
+require_once EGW_SERVER_ROOT . '/projectmanager/tests/TemplateTest.php';
 
 use EGroupware\Api\Link;
 
