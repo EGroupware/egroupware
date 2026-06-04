@@ -51,7 +51,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 // parse arguments
 $verbose = $use_prerelease = $run_git = $continue_on_error = false;
-$composer_args = ['--ignore-platform-reqs','--no-plugins'];    // EGroupware requires php 8.1+, but some (fixed) dependencies require 7.4
+$composer_args = ['--ignore-platform-reqs'];    // EGroupware requires php 8.1+, but some (fixed) dependencies require 7.4
 
 $argv = $_SERVER['argv'];
 $cmd  = array_shift($argv);

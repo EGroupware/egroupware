@@ -57,8 +57,9 @@
 		"sort-packages": true,
 		"allow-plugins": {
 			"composer/installers": true,
-			"simplesamlphp/composer-module-installer": true,
-			"oomphinc/composer-installers-extender": true
+			"oomphinc/composer-installers-extender": true,
+			"simplesamlphp/composer-module-installer": false,
+			"simplesamlphp/composer-xmlprovider-installer": false
 		}
 	},
 	"require": {
