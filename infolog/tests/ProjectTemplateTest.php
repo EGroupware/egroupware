@@ -3,28 +3,7 @@
 
 namespace EGroupware\Infolog;
 
-$infolog_tests_dir = realpath(__DIR__) ?: __DIR__;
-$projectmanager_template_test = dirname($infolog_tests_dir, 2) . '/projectmanager/tests/TemplateTest.php';
-if (!is_file($projectmanager_template_test))
-{
-	$debug = array(
-		'__DIR__' => __DIR__,
-		'realpath(__DIR__)' => realpath(__DIR__) ?: false,
-		'dirname(__DIR__, 2)' => dirname(__DIR__, 2),
-		'dirname(realpath(__DIR__), 2)' => dirname($infolog_tests_dir, 2),
-		'EGW_SERVER_ROOT' => defined('EGW_SERVER_ROOT') ? EGW_SERVER_ROOT : null,
-		'getcwd()' => getcwd(),
-		'candidate' => $projectmanager_template_test,
-		'is_dir(/var/www/projectmanager)' => is_dir('/var/www/projectmanager'),
-		'realpath(/var/www/projectmanager)' => realpath('/var/www/projectmanager') ?: false,
-		'is_dir(/var/www/egroupware/projectmanager)' => is_dir('/var/www/egroupware/projectmanager'),
-		'realpath(/var/www/egroupware/projectmanager)' => realpath('/var/www/egroupware/projectmanager') ?: false,
-		'/var/www entries' => is_dir('/var/www') ? array_values(array_diff(scandir('/var/www'), array('.', '..'))) : null,
-		'repo root entries' => is_dir(dirname($infolog_tests_dir, 2)) ? array_values(array_diff(scandir(dirname($infolog_tests_dir, 2)), array('.', '..'))) : null,
-	);
-	throw new \RuntimeException('Unable to locate projectmanager TemplateTest.php: ' . json_encode($debug));
-}
-require_once $projectmanager_template_test;
+require_once realpath(__DIR__.'/../../projectmanager/tests/TemplateTest.php');
 
 use EGroupware\Api\Link;
 
