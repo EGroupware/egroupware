@@ -124,26 +124,78 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	@property({attribute: false})
 	extraAttributes : string[] = [];
 
-	@state()
-	private _columns : Et2DatagridColumn[] = [];
-
+	/**
+	 * Prepared row template and metadata currently bound into the datagrid.
+	 */
 	@state()
 	private _templateData : Et2DatagridTemplateData | null = null;
 
+	/**
+	 * True while a named template is being resolved asynchronously.
+	 */
 	@state()
 	private _templateLoading : boolean = false;
 
+	/**
+	 * Monotonic token used to ignore stale async template-load completions.
+	 */
 	private _templateLoadToken : number = 0;
+
+	/**
+	 * Template name currently associated with `_templateLoadPromise`.
+	 */
 	private _templateLoadingName : string | null = null;
+
+	/**
+	 * Shared in-flight promise for the current named-template resolution.
+	 */
 	private _templateLoadPromise : Promise<void> | null = null;
+
+	/**
+	 * Builds datagrid row/column configuration from template names or slots.
+	 */
 	private _rowProvider : Et2RowProvider;
+
+	/**
+	 * Translates current filter/template state into datagrid fetch requests.
+	 */
 	private _dataProvider : Et2NextmatchDataProvider;
+
+	/**
+	 * Watches slot content so slot-driven templates can be reparsed on changes.
+	 */
 	private _slotObserver : MutationObserver | null = null;
+
+	/**
+	 * Shared in-flight promise for slot-based template parsing.
+	 */
 	private _slotApplyInFlight : Promise<void> | null = null;
+
+	/**
+	 * Tracks which legacy column-preference keys were already migrated once.
+	 */
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
+
+	/**
+	 * Active nextmatch filter payload mirrored for legacy integrations and fetches.
+	 */
 	private _filters : Record<string, any> = {col_filter: {}};
+
+	/**
+	 * Lazily created shared filterbox instance attached near the host app shell.
+	 */
 	private _filterbox : Et2Filterbox | null = null;
+
+	/**
+	 * Bridges selection, context actions, and drag/drop into the egw_action system.
+	 */
 	private _actionController : Et2NextmatchActionController;
+
+	/**
+	 * Deduplicates deprecation warnings so each legacy API warns only once per session.
+	 */
+	private static _deprecationWarnings : Set<string> = new Set();
+
 
 	/**
 	 * Resolve the internal datagrid instance from shadow DOM.
@@ -155,9 +207,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Build helper collaborators once.
-	 * They are stateful and reused for the lifetime of the component.
+	 * Current column definitions passed through to the datagrid.
+	 * Before a real template is parsed this can come from a placeholder templateData.
 	 */
+	private get _currentColumns() : Et2DatagridColumn[]
+	{
+		return this._templateData?.columns || [];
+	}
+
 	constructor()
 	{
 		super();
@@ -167,6 +224,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			this._filters.col_filter = {};
 		}
+		/**
+		 * Build helper collaborators once.
+		 * They are stateful and reused for the lifetime of the component.
+		 */
 		this._rowProvider = new Et2RowProvider(this as any);
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
 		this._actionController = new Et2NextmatchActionController(this as any);
@@ -226,14 +287,36 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		if(settings && Object.keys(settings).length > 0)
 		{
 			Object.assign(attrs, settings);
-			// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
-			if(typeof attrs.placeholder_actions !== "undefined" && typeof attrs.placeholderActions === "undefined")
+		}
+		// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
+		for(const [modernKey, legacyKey] of [
+			["placeholderActions", "placeholder_actions"],
+			["extraAttributes", "extra_attributes"]
+		] as const)
+		{
+			const value = attrs[modernKey] ?? attrs[legacyKey];
+			if(typeof value !== "undefined")
 			{
-				attrs.placeholderActions = attrs.placeholder_actions;
+				attrs[modernKey] = this._toStringArray(value);
 			}
-			if(typeof attrs.extra_attributes !== "undefined" && typeof attrs.extraAttributes === "undefined")
+		}
+		if(typeof attrs.searchletter !== "undefined")
+		{
+			attrs.searchletter = attrs.searchletter || false;
+		}
+		if(typeof attrs.lettersearch !== "undefined")
+		{
+			attrs.lettersearch = !!attrs.lettersearch;
+		}
+		const rowsSource = typeof attrs.rows !== "undefined" ? attrs.rows : this.getAttribute("rows");
+		if(typeof rowsSource === "string")
+		{
+			try
 			{
-				attrs.extraAttributes = attrs.extra_attributes;
+				attrs.rows = JSON.parse(rowsSource);
+			}
+			catch(e)
+			{
 			}
 		}
 		super.transformAttributes(attrs);
@@ -266,10 +349,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	async firstUpdated(changedProperties : PropertyValues)
 	{
 		super.firstUpdated(changedProperties);
-		this._normalizeLegacyCompatibilityProperties();
 		this._actionController.setPlaceholderActions(this.placeholderActions);
 		this._initializeExtraAttributeFilters();
-		this._loadRowsAttribute();
 
 		if(this.template)
 		{
@@ -344,16 +425,21 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 */
 	setColumns(columns : Array<string | { key : string; title : string }>)
 	{
-		this._columns = (columns || []).map((column, index) =>
+		const nextColumns = (columns || []).map((column, index) =>
 			typeof column === "string" ? {key: "col" + index, title: column} : column
 		);
-		if(this._templateData)
-		{
-			this._templateData = {
+		this._templateData = this._templateData
+			? {
 				...this._templateData,
-				columns: this._columns
+				columns: nextColumns
+			}
+			: {
+				rowTemplate: null,
+				rowTemplateXml: null,
+				rowTemplateAttrMap: {},
+				loaderTemplate: null,
+				columns: nextColumns
 			};
-		}
 	}
 
 	/**
@@ -364,6 +450,60 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	{
 		this.rows = rows || [];
 		this._datagrid?.setInitialRows(this.rows);
+	}
+
+	/**
+	 * Legacy nextmatch value shape used by favorites and app state restore.
+	 */
+	get value() : Record<string, any>
+	{
+		const value = {
+			...this.activeFilters
+		};
+		const selectcols = this._currentColumns
+			.filter((column) => !column.hidden)
+			.map((column) => String(column.key || ""))
+			.filter(Boolean);
+		if(selectcols.length)
+		{
+			value["selectcols"] = selectcols;
+		}
+		return value;
+	}
+
+	/**
+	 * Legacy nextmatch state accessor used by favorites and app state restore.
+	 * @deprecated Use `value` instead.
+	 */
+	getValue() : Record<string, any>
+	{
+		this._warnDeprecatedOnce("getValue", "Et2Nextmatch.getValue() is deprecated, use `value` instead");
+		return this.value;
+	}
+
+	/**
+	 * Legacy visible-column setter used by favorites and app state restore.
+	 * @deprecated Use `setColumns()` instead.
+	 */
+	set_columns(column_list : string[], _trigger_update = false)
+	{
+		this._warnDeprecatedOnce("set_columns", "Et2Nextmatch.set_columns() is deprecated, use `setColumns()` instead");
+		const requestedColumns = this._toStringArray(column_list);
+		if(!requestedColumns.length)
+		{
+			return;
+		}
+		const currentColumns = this._currentColumns;
+		if(!currentColumns.length)
+		{
+			return;
+		}
+		const requestedKeys = new Set(requestedColumns);
+		const nextColumns = currentColumns.map((column) => ({
+			...column,
+			hidden: !requestedKeys.has(String(column.key || ""))
+		}));
+		this.setColumns(nextColumns);
 	}
 
 	/**
@@ -525,6 +665,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 */
 	applyFilters(set? : Record<string, any>, options? : { reload? : boolean })
 	{
+		let changed = false;
 		if(!this._filters || typeof this._filters !== "object")
 		{
 			this._filters = {col_filter: {}};
@@ -533,19 +674,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			this._filters.col_filter = {};
 		}
+		if(typeof set !== "undefined" && typeof set === "object" && Object.keys(set).length === 0)
+		{
+			this._filters = {col_filter: {}};
+			changed = true;
+		}
 		const activeFilters = this._filters;
 		const previousFilters = {
 			...activeFilters,
 			col_filter: {...(activeFilters.col_filter || {})},
 			sort: activeFilters.sort ? {...activeFilters.sort} : undefined
 		};
-		let changed = false;
-		if(typeof set !== "undefined" && typeof set === "object" && Object.keys(set).length === 0)
-		{
-			this._filters = {col_filter: {}};
-			activeFilters.col_filter = this._filters.col_filter;
-			changed = true;
-		}
 
 		if(typeof set === "object" && set !== null)
 		{
@@ -632,31 +771,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Parse and normalize legacy compatibility property shapes from template attributes/content.
-	 */
-	private _normalizeLegacyCompatibilityProperties()
-	{
-		if(typeof (this as any).placeholder_actions !== "undefined" && !this.placeholderActions.length)
-		{
-			this.placeholderActions = this._toStringArray((this as any).placeholder_actions);
-		}
-		else
-		{
-			this.placeholderActions = this._toStringArray(this.placeholderActions);
-		}
-		if(typeof (this as any).extra_attributes !== "undefined" && !this.extraAttributes.length)
-		{
-			this.extraAttributes = this._toStringArray((this as any).extra_attributes);
-		}
-		else
-		{
-			this.extraAttributes = this._toStringArray(this.extraAttributes);
-		}
-		this.searchletter = (this.searchletter || (this as any).searchletter || false) as string | false;
-		this.lettersearch = !!(this.lettersearch || (this as any).lettersearch);
-	}
-
-	/**
 	 * Seed additional custom attributes into active filters to preserve legacy request payloads.
 	 */
 	private _initializeExtraAttributeFilters()
@@ -736,23 +850,25 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Parse optional JSON rows attribute.
-	 * This keeps backwards compatibility with existing template-driven usage.
+	 * Change the row template
+	 * @param {string} template_name
+	 * @deprecated Set `.template` instead, wait for updateComplete
 	 */
-	private _loadRowsAttribute()
+	set_template(template_name : string)
 	{
-		const rowsAttribute = this.getAttribute("rows");
-		if(!rowsAttribute)
+		this.template = template_name;
+		this._warnDeprecatedOnce("set_template", "Et2Nextmatch.set_template is deprecated, use `nm.template='...'`");
+		return this.updateComplete;
+	}
+
+	private _warnDeprecatedOnce(method : string, message : string)
+	{
+		if(Et2Nextmatch._deprecationWarnings.has(method))
 		{
 			return;
 		}
-		try
-		{
-			this.rows = JSON.parse(rowsAttribute);
-		}
-		catch(e)
-		{
-		}
+		Et2Nextmatch._deprecationWarnings.add(method);
+		console.warn(message);
 	}
 
 	/**
@@ -923,11 +1039,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 */
 	private _applyTemplateData(templateData : Et2DatagridTemplateData)
 	{
-		const columns = templateData.columns?.length ? templateData.columns : this._columns;
-		this._columns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
+		const columns = templateData.columns?.length ? templateData.columns : this._currentColumns;
+		const nextColumns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
 		this._templateData = {
 			...templateData,
-			columns: this._columns
+			columns: nextColumns
 		};
 	}
 
@@ -1563,7 +1679,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 				<et2-datagrid
                         part="grid"
 					._parent=${this}
-					.columns=${this._columns}
+					.columns=${this._currentColumns}
 					.templateData=${this._templateData}
 					.rowCustomizer=${this._customizeDatagridRow}
 					.columnPreferenceName=${this.columnPreferenceName}

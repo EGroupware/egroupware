@@ -656,7 +656,7 @@ describe("Et2Datagrid row rendering", () =>
 	});
 });
 
-describe.skip("Et2Datagrid keyboard navigation", () =>
+describe("Et2Datagrid keyboard navigation", () =>
 {
 	it("advances active row with ArrowDown in virtualized data", async() =>
 	{
@@ -675,7 +675,7 @@ describe.skip("Et2Datagrid keyboard navigation", () =>
 
 });
 
-describe.skip("Et2Datagrid column sizing", () =>
+describe("Et2Datagrid column sizing", () =>
 {
 	it("keeps static pixel column widths in CSS grid tracks", async() =>
 	{
@@ -1324,7 +1324,7 @@ describe("Et2Datagrid virtual height stability", () =>
 	});
 });
 
-describe.skip("Et2Datagrid data loading", () =>
+describe("Et2Datagrid data loading", () =>
 {
 	it("does not request rows when there are sufficient rows provided initially", async() =>
 	{

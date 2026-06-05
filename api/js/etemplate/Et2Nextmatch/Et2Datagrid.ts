@@ -241,6 +241,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _pendingCustomfieldVisibilityByColumnKey : Map<string, Record<string, boolean>> = new Map();
 	private _customfieldColumnStateByKey : Map<string, Et2DatagridCustomfieldColumnState> = new Map();
 	private _loadedColumnPreferenceKey : string | null = null;
+	private _postRenderStructureSyncNeeded : boolean = false;
 	private _onColumnsChangedForPersistence : EventListener = () => this._persistColumnPreferences();
 	private _loggedMissingTemplateWarning : boolean = false;
 
@@ -405,33 +406,52 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Apply structure-affecting state before render so Lit can absorb it in the current cycle.
+	 */
+	protected willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate(changedProperties);
+		if(changedProperties.has("templateData") || changedProperties.has("columnPreferenceName"))
+		{
+			this._loadedColumnPreferenceKey = null;
+		}
+		const columnsBeforePreferenceLoad = this.columns;
+		if(changedProperties.has("templateData") || changedProperties.has("columns") || changedProperties.has("columnPreferenceName"))
+		{
+			this._loadColumnPreferencesIfNeeded();
+		}
+		const columnsChanged = changedProperties.has("columns") || this.columns !== columnsBeforePreferenceLoad;
+		const structureChanged = changedProperties.has("templateData") || columnsChanged;
+		if(changedProperties.has("templateData"))
+		{
+			// Capture source cell->column mapping before user reorders columns.
+			this._sourceColumnKeys = (this.templateData?.columns || this.columns || []).map((column) => String(column.key));
+		}
+		if(structureChanged)
+		{
+			this._prepareVisibleHeaders();
+			this._reconcileRowRenderState(false);
+			this._postRenderStructureSyncNeeded = true;
+		}
+		if(columnsChanged)
+		{
+			this._rebuildCustomfieldColumnStateCache();
+		}
+	}
+
+	/**
 	 * Re-render physical row DOM when structure-defining inputs change.
 	 * We rebuild rows here because template/column changes alter generated markup.
 	 */
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
-		if(changedProperties.has("templateData"))
+		if(this._postRenderStructureSyncNeeded)
 		{
-			// Capture source cell->column mapping before user reorders columns.
-			this._sourceColumnKeys = (this.templateData?.columns || this.columns || []).map((column) => String(column.key));
-			this._prepareVisibleHeaders();
-			this._reconcileRowRenderState();
-			this._ensureTableColSizes();
-		}
-		if(changedProperties.has("columns"))
-		{
-			this._prepareVisibleHeaders();
-			this._rebuildCustomfieldColumnStateCache();
-			this._reconcileRowRenderState();
 			this._ensureTableColSizes();
 			this._applyColumnVisibilityToRenderedRows();
+			this._postRenderStructureSyncNeeded = false;
 		}
-		if(changedProperties.has("templateData") || changedProperties.has("columnPreferenceName"))
-		{
-			this._loadedColumnPreferenceKey = null;
-		}
-		this._loadColumnPreferencesIfNeeded();
 		this._applyPendingCustomfieldHeaderVisibility();
 		this._upgradeRenderedRows();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
@@ -922,10 +942,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	/**
 	 * Reconcile grid-level row render state with current data.
-	 * Ensures an initial active row exists once rows are available, then schedules
-	 * a Lit render cycle (virtualizer-driven row DOM is rendered from template()).
+	 * Ensures an initial active row exists once rows are available, optionally
+	 * scheduling a Lit render cycle when this runs outside the normal lifecycle.
 	 */
-	private _reconcileRowRenderState()
+	private _reconcileRowRenderState(requestRender : boolean = true)
 	{
 		if(this.activeRowIndex < 0 && this.rows.length)
 		{
@@ -934,7 +954,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.activeRowId = this.rows[0].id;
 			this.anchorRowIndex = 0;
 		}
-		this.requestUpdate();
+		if(requestRender)
+		{
+			this.requestUpdate();
+		}
 	}
 
 	/**

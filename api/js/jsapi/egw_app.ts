@@ -15,6 +15,7 @@ import type {Et2Template} from "../etemplate/Et2Template/Et2Template";
 import {et2_nextmatch} from "../etemplate/et2_extension_nextmatch";
 import {et2_createWidget} from "../etemplate/et2_core_widget";
 import type {IegwAppLocal} from "./egw_global";
+import {egw_getFramework} from "./egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_valueWidget} from "../etemplate/et2_core_valueWidget";
 import {fetchAll, nm_action} from "../etemplate/et2_extension_nextmatch_actions";
@@ -33,7 +34,7 @@ import {Et2ButtonIcon} from "../etemplate/Et2Button/Et2ButtonIcon";
 import type {Et2Select} from "../etemplate/Et2Select/Et2Select";
 import {Et2FavoritesMenu} from "../etemplate/Et2Favorites/Et2FavoritesMenu";
 import {Favorite} from "../etemplate/Et2Favorites/Favorite";
-import {egw_getFramework} from "./egw_global";
+import {Et2Nextmatch} from "../etemplate/Et2Nextmatch/Et2Nextmatch";
 
 /**
  * Type for push-message
@@ -760,30 +761,39 @@ export abstract class EgwApp
 		// Try and find a nextmatch widget, and set its filters
 		var nextmatched = false;
 		var et2 = template ? etemplate2.getByTemplate(template) : etemplate2.getByApplication(this.appname);
+		const nmSetState = (nm) =>
+		{
+			// Firefox has trouble with spaces in search
+			if(state.state && state.state.search)
+			{
+				state.state.search = unescape(state.state.search);
+			}
+
+			// Apply
+			if(state.state && state.state.sort && state.state.sort.id)
+			{
+				nm.sortBy(state.state.sort.id, state.state.sort.asc, false);
+			}
+			else
+			{
+				// Not using resetSort() to avoid the extra applyFilters() call
+				nm.sortBy(undefined, undefined, false);
+			}
+			nm.applyFilters(state.state || state.filter || {});
+			if(state.state && state.state.selectcols)
+			{
+				// Make sure it's a real array, not an object, then set cols
+				nm.set_columns(jQuery.extend([], state.state.selectcols));
+			}
+			nextmatched = true;
+		}
 		for(var i = 0; i < et2.length; i++)
 		{
+			et2[i].widgetContainer.querySelectorAll("et2-nextmatch")
+				.forEach(nmSetState);
 			et2[i].widgetContainer.iterateOver(function(_widget)
 			{
-				// Firefox has trouble with spaces in search
-				if(state.state && state.state.search) state.state.search = unescape(state.state.search);
-
-				// Apply
-				if(state.state && state.state.sort && state.state.sort.id)
-				{
-					_widget.sortBy(state.state.sort.id, state.state.sort.asc, false);
-				}
-				else
-				{
-					// Not using resetSort() to avoid the extra applyFilters() call
-					_widget.sortBy(undefined, undefined, false);
-				}
-				_widget.applyFilters(state.state || state.filter || {});
-				if(state.state && state.state.selectcols)
-				{
-					// Make sure it's a real array, not an object, then set cols
-					_widget.set_columns(jQuery.extend([], state.state.selectcols));
-				}
-				nextmatched = true;
+				nmSetState(_widget);
 			}, this, et2_nextmatch);
 			if(nextmatched) return false;
 		}
@@ -826,6 +836,7 @@ export abstract class EgwApp
 		var et2 = etemplate2.getByApplication(this.appname);
 		for(var i = 0; i < et2.length; i++)
 		{
+			state = (<Et2Nextmatch>et2[i].widgetContainer.querySelector("et2-nextmatch"))?.value;
 			et2[i].widgetContainer.iterateOver(function(_widget)
 			{
 				state = _widget.getValue();

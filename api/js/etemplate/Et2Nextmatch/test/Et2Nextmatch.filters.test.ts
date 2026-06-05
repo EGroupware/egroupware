@@ -450,4 +450,39 @@ describe("Et2Nextmatch header event handling", () =>
 		el.remove();
 	});
 
+	it("provides deprecated getValue and set_columns compatibility", async() =>
+	{
+		const el = new Et2Nextmatch();
+		(Et2Nextmatch as any)._deprecationWarnings?.clear?.();
+		const warn = sinon.stub(console, "warn");
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "owner", title: "Owner"} as any
+		]);
+		el.applyFilters({
+			search: "term",
+			col_filter: {owner: "5"}
+		}, {reload: false});
+
+		const value = el.value;
+		assert.deepEqual(value.selectcols, ["title", "owner"], "value getter should expose visible column keys");
+		assert.equal(value.search, "term", "value getter should include active filter state");
+		assert.equal(value.col_filter.owner, "5", "value getter should include column filter state");
+
+		assert.deepEqual(el.getValue(), value, "getValue should proxy the deprecated state accessor to value");
+
+		el.set_columns(["owner"]);
+		assert.deepEqual(
+			(el as any)._columns.map((column) => ({key: column.key, hidden: !!column.hidden})),
+			[
+				{key: "title", hidden: true},
+				{key: "owner", hidden: false}
+			],
+			"set_columns should only change visibility on already defined columns"
+		);
+		assert.isAtLeast(warn.callCount, 2, "deprecated compatibility methods should warn");
+
+		warn.restore();
+	});
+
 });
