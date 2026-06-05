@@ -13,23 +13,74 @@ import {egw} from "../jsapi/egw_global";
 import {EgwActionObjectInterface} from "./EgwActionObjectInterface";
 import {EGW_AO_STATE_DRAGGING} from "./egw_action_constants";
 
+const getSharedDragState = () =>
+{
+	if(!(window as any).__egwActionDnDState)
+	{
+		(window as any).__egwActionDnDState = {
+			draggedNode: null as HTMLElement | null
+		};
+	}
+	return (window as any).__egwActionDnDState as { draggedNode : HTMLElement | null };
+};
+
 export class EgwDragActionImplementation implements EgwActionImplementation {
     type = "drag";
     helper: HTMLDivElement = null;
     ddTypes: any[] = [];
     selected: any[] = [];
+
+	/**
+	 * Resolve delegated drag listeners to the actual dragged action object and source node.
+	 */
+	private resolveDragTarget = (_listenerNode, _event, _aoi, _context) =>
+	{
+		let targetData = null;
+		if(typeof _listenerNode?.findActionTarget == "function")
+		{
+			targetData = _listenerNode.findActionTarget(_event);
+		}
+		const actionObject = targetData?.action ?? _context;
+		const sourceNode = targetData?.target ?? _listenerNode;
+		const sourceAOI = actionObject?.iface ?? _aoi;
+		return {
+			actionObject,
+			sourceNode,
+			sourceAOI
+		};
+	};
+
+	/**
+	 * Clear drag state from the real source node, including shadow-dom backed rows.
+	 */
+	private clearDraggedSourceNode = (_node) =>
+	{
+		const sharedState = getSharedDragState();
+		const node = _node || sharedState.draggedNode;
+		if(sharedState.draggedNode === node)
+		{
+			sharedState.draggedNode = null;
+		}
+		if(!node)
+		{
+			return;
+		}
+		node.classList?.remove('drag--moving');
+		node.removeAttribute?.('data-egwActionObjID');
+	};
+
     defaultDDHelper: (_selected) => HTMLDivElement = (_selected) => {
         // Table containing clone of rows
         const table: HTMLTableElement = (document.createElement("table"));
         table.classList.add('egwGridView_grid', 'et2_egw_action_ddHelper_row');
-        // tr element to use as last row to show 'more ...' label
-        const moreRow: HTMLTableRowElement = (document.createElement('tr'))
-        moreRow.classList.add('et2_egw_action_ddHelper_moreRow');
         // Main div helper container
         const div: HTMLDivElement = (document.createElement("div"));
         div.append(table);
+		div.style.overflow = "hidden";
+		table.style.overflow = "hidden";
 
         let rows = [];
+		let hasGridRows = false;
         // Maximum number of rows to show
         let maxRows = 3;
         // item label
@@ -44,6 +95,7 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
         // in _selected object
         const pseudoNumRows = (_selected[0]?._context?._selectionMgr?._selectAll) ?
             _selected[0]._context?._selectionMgr?._total : _selected.length;
+		div.classList.add(pseudoNumRows > 1 ? "et2_egw_action_ddHelper--multi" : "et2_egw_action_ddHelper--single");
 
 		// Clone nodes but use copy webComponent properties
 		const carefulClone = (node, skip_text = false) =>
@@ -79,6 +131,72 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 			return clone;
 		}
 
+		const copyStyleValue = (target : HTMLElement, source : HTMLElement, property : string) =>
+		{
+			const value = window.getComputedStyle(source).getPropertyValue(property)?.trim();
+			if(value)
+			{
+				target.style.setProperty(property, value);
+			}
+		};
+
+		const applyDatagridHelperLayout = (sourceRow : HTMLElement, clonedRow : HTMLElement) =>
+		{
+			const sourceStyle = window.getComputedStyle(sourceRow);
+			// Measure against the realized row and its grid containers so the helper
+			// keeps the correct track layout but can still be capped for usability.
+			const layoutSources = [
+				sourceRow,
+				sourceRow.closest(".dg-root") as HTMLElement | null,
+				sourceRow.closest(".dg-body") as HTMLElement | null,
+				sourceRow.closest("table") as HTMLElement | null
+			].filter(Boolean) as HTMLElement[];
+			const helperWidth = Math.max(...layoutSources.map((source) =>
+			{
+				const rectWidth = source.getBoundingClientRect?.().width || 0;
+				return Math.max(rectWidth, source.scrollWidth || 0, source.clientWidth || 0);
+			}), 0);
+			const maxHelperWidth = Math.min(window.innerWidth * 0.72, 400);
+			const appliedHelperWidth = helperWidth > 0 ? Math.min(helperWidth, maxHelperWidth) : 0;
+
+			clonedRow.style.display = sourceStyle.display;
+			clonedRow.style.boxSizing = sourceStyle.boxSizing;
+			clonedRow.style.alignItems = sourceStyle.alignItems;
+			clonedRow.style.gridTemplateColumns = sourceStyle.gridTemplateColumns;
+			clonedRow.style.transform = "none";
+			clonedRow.style.translate = "none";
+			clonedRow.style.position = "static";
+			clonedRow.style.top = "0";
+			clonedRow.style.left = "0";
+			clonedRow.style.right = "auto";
+			clonedRow.style.bottom = "auto";
+			clonedRow.classList.remove("drag--moving", "drop-hover", "draggedOver", "dg-row-active", "dg-row--refreshed");
+
+			for(const source of layoutSources)
+			{
+				copyStyleValue(table, source, "--column-sizes");
+				copyStyleValue(table, source, "--column-count");
+				copyStyleValue(table, source, "--meta-column-width");
+				copyStyleValue(clonedRow, source, "--column-sizes");
+				copyStyleValue(clonedRow, source, "--column-count");
+				copyStyleValue(clonedRow, source, "--meta-column-width");
+			}
+
+			if(appliedHelperWidth > 0)
+			{
+				const helperWidthPx = `${Math.ceil(appliedHelperWidth)}px`;
+				clonedRow.style.width = helperWidthPx;
+				clonedRow.style.minWidth = helperWidthPx;
+				clonedRow.style.maxWidth = helperWidthPx;
+				table.style.width = helperWidthPx;
+				table.style.minWidth = helperWidthPx;
+				table.style.maxWidth = helperWidthPx;
+				div.style.width = helperWidthPx;
+				div.style.minWidth = helperWidthPx;
+				div.style.maxWidth = helperWidthPx;
+			}
+		};
+
 		for(const egwActionObject of _selected)
 		{
 			let rowNode = egwActionObject.iface.getDOMNode();
@@ -89,30 +207,35 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 			const row : Node = carefulClone(rowNode);
 			if(row)
 			{
+				if(rowNode instanceof HTMLElement && row instanceof HTMLElement)
+				{
+					hasGridRows ||= !!rowNode.closest(".egwGridView_grid, .dg-root, .dg-body");
+					applyDatagridHelperLayout(rowNode, row);
+				}
 				rows.push(row);
 				table.append(row);
 			}
             index++;
             if (index == maxRows) {
-                // Label to show number of items
-                const spanCnt = (document.createElement('span'))
-                spanCnt.classList.add('et2_egw_action_ddHelper_itemsCnt')
-                div.append(spanCnt);
-
-                spanCnt.textContent = (pseudoNumRows + ' ' + itemLabel);
-                // Number of not shown rows
-                const restRows = pseudoNumRows - maxRows;
-                if (restRows > 0) {
-                    moreRow.textContent = egw.lang(`${pseudoNumRows - maxRows} more ${itemLabel} selected ...`);
-                }
-                table.append(moreRow);
                 break;
             }
         }
 
+		if(pseudoNumRows > 1)
+		{
+			const spanCnt = (document.createElement('span'))
+			spanCnt.classList.add('et2_egw_action_ddHelper_itemsCnt')
+			spanCnt.textContent = `${pseudoNumRows} ${itemLabel}`;
+			div.append(spanCnt);
+		}
+
+		if(hasGridRows)
+		{
+			div.classList.add("et2_egw_action_ddHelper--grid");
+		}
+
         const text = (document.createElement('div'))
         text.classList.add('et2_egw_action_ddHelper_tip');
-        div.append(text);
 
         // Add notice of Ctrl key, if supported
         if ('draggable' in document.createElement('span') &&
@@ -126,6 +249,7 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             {
                 text.textContent=(egw.lang('Note: If you drag out these selected rows to desktop only the first selected row will be downloaded.', itemLabel));
             }
+			div.append(text);
         }
 // Final html DOM return as helper structure
         return div;
@@ -133,8 +257,22 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 
     registerAction: (_actionObjectInterface: EgwActionObjectInterface, _triggerCallback: Function, _context: any) => boolean = (_aoi, _callback, _context) => {
         const node = _aoi.getDOMNode() && _aoi.getDOMNode()[0] ? _aoi.getDOMNode()[0] : _aoi.getDOMNode();
+		let parentNode = null;
+		const delegated = typeof (node as any)?.findActionTarget == "function";
+		if(typeof _context.findActionTargetHandler !== "undefined" && typeof _context.findActionTargetHandler?.iface?.getWidget == "function")
+		{
+			parentNode = _context.findActionTargetHandler.iface.getWidget();
+		}
+		if(!_aoi.findActionTargetHandler && parentNode && typeof parentNode.findActionTarget == "function")
+		{
+			_aoi.findActionTargetHandler = parentNode;
+		}
 
         if (node) {
+			if(parentNode && node !== parentNode)
+			{
+				return false;
+			}
 			if(typeof _aoi.handlers == "undefined")
 			{
 				_aoi.handlers = {};
@@ -171,37 +309,36 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
             //jQuery(node).off("mousedown",egwPreventSelect)
             //et2_dataview_view_aoi binds mousedown event in et2_dataview_rowAOI to "egwPreventSelect" function from egw_action_common via addEventListener
             //node.removeEventListener("mousedown",egwPreventSelect)
-			const mousedown = (event) =>
+			if(!delegated)
 			{
-                if (_context.isSelection(event)) {
-                    node.setAttribute("draggable", false);
-                } else if (event.which != 3) {
-                    document.getSelection().removeAllRanges();
-                }
-			};
-			node.addEventListener("mousedown", mousedown)
-			_aoi.handlers[this.type].push({type: 'mousedown', listener: mousedown});
-
-			const mouseup = (event) =>
-			{
-				node.setAttribute("draggable", true);
-
-				// Set cursor back to auto. Seems FF can't handle cursor reversion
-				document.body.style.cursor = 'auto'
-			};
-			node.addEventListener("mouseup", mouseup)
-			_aoi.handlers[this.type].push({type: 'mousedown', listener: mousedown});
-
-
-            node.setAttribute('draggable', true);
-            const ai = this
-            const dragstart = function (event) {
-
-				let dragActionObject = _context;
-				if(this.findActionTarget)
+				const mousedown = (event) =>
 				{
-					dragActionObject = this.findActionTarget(event).action ?? _context;
-				}
+	                if (_context.isSelection(event)) {
+	                    node.setAttribute("draggable", false);
+	                } else if (event.which != 3) {
+	                    document.getSelection().removeAllRanges();
+	                }
+				};
+				node.addEventListener("mousedown", mousedown)
+				_aoi.handlers[this.type].push({type: 'mousedown', listener: mousedown});
+
+				const mouseup = (_event) =>
+				{
+					node.setAttribute("draggable", true);
+
+					// Set cursor back to auto. Seems FF can't handle cursor reversion
+					document.body.style.cursor = 'auto'
+				};
+				node.addEventListener("mouseup", mouseup)
+				_aoi.handlers[this.type].push({type: 'mouseup', listener: mouseup});
+
+	            node.setAttribute('draggable', true);
+			}
+            const ai = this
+			const dragstart = function (event) {
+				const resolved = ai.resolveDragTarget(this, event, _aoi, _context);
+				const dragActionObject = resolved.actionObject;
+				const sourceNode = resolved.sourceNode ?? this;
 
 				// The helper function is called before the start function
                 // is evoked. Call the given callback function. The callback
@@ -272,7 +409,8 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 				{
 					item.iface?.setState(ai.selected[0].iface.getState() | EGW_AO_STATE_DRAGGING);
 				});
-                this.classList.add('drag--moving');
+                sourceNode.classList.add('drag--moving');
+				getSharedDragState().draggedNode = sourceNode;
 
                 event.dataTransfer.setData('application/json', JSON.stringify(data))
 
@@ -301,16 +439,16 @@ export class EgwDragActionImplementation implements EgwActionImplementation {
 					});
 				});
 
-				this.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
+				sourceNode.setAttribute('data-egwActionObjID', JSON.stringify(data.selected));
             };
 
             const dragend = (_) => {
                 const helper = document.querySelector('.et2_egw_action_ddHelper');
                 if (helper) helper.remove();
-                const draggable = document.querySelector('.drag--moving');
-                if (draggable) draggable.classList.remove('drag--moving');
+                const draggable = getSharedDragState().draggedNode || document.querySelector('.drag--moving');
+                if (draggable) ai.clearDraggedSourceNode(draggable);
                 // cleanup drop hover class from all other DOMs if there's still anything left
-                Array.from(document.getElementsByClassName('et2dropzone drop-hover')).forEach(_i=>{_i.classList.remove('drop-hover')})
+                Array.from(document.querySelectorAll('.drop-hover')).forEach(_i=>{_i.classList.remove('drop-hover')})
 				// Clean up selected
 				ai.selected = [];
 			};

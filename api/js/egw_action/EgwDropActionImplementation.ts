@@ -14,11 +14,67 @@ import {egw_getObjectManager} from "./egw_action";
 import {getPopupImplementation} from "./EgwPopupActionImplementation";
 import {EgwActionObject} from "./EgwActionObject";
 
+const getSharedDragState = () =>
+{
+	if(!(window as any).__egwActionDnDState)
+	{
+		(window as any).__egwActionDnDState = {
+			draggedNode: null as HTMLElement | null
+		};
+	}
+	return (window as any).__egwActionDnDState as { draggedNode : HTMLElement | null };
+};
+
 export class EgwDropActionImplementation implements EgwActionImplementation {
     type: string = "drop";
     //keeps track of current drop element where dragged item's entered.
     // it's necessary for dragenter/dragleave issue correction.
     private currentDropEl = null
+
+	/**
+	 * Clear helper, hover and drag-source state after completed or aborted drops.
+	 */
+	private cleanupDragState = () =>
+	{
+		const helper = this.getHelperDOM();
+		if(helper)
+		{
+			helper.remove();
+		}
+		const dragged = this.getTheDraggedDOM();
+		dragged?.classList.remove('drag--moving');
+		dragged?.removeAttribute?.('data-egwActionObjID');
+		this.currentDropEl?.classList?.remove('drop-hover', 'draggedOver');
+		this.currentDropEl = null;
+		Array.from(document.querySelectorAll('.drop-hover, .draggedOver')).forEach(_i =>
+		{
+			_i.classList.remove('drop-hover', 'draggedOver');
+		});
+	}
+
+	/**
+	 * Resolve delegated drop listeners to the actual hovered row/action object.
+	 */
+	private resolveDropTarget = (_listenerNode, _event, _aoi, _context) =>
+	{
+		let targetData = null;
+		if(typeof _listenerNode?.findActionTarget == "function")
+		{
+			targetData = _listenerNode.findActionTarget(_event);
+		}
+		else if(_aoi.findActionTargetHandler && typeof _aoi.findActionTargetHandler.findActionTarget === "function")
+		{
+			targetData = _aoi.findActionTargetHandler.findActionTarget(_event);
+		}
+		const actionObject = targetData?.action ?? _context;
+		const targetNode = targetData?.target ?? _listenerNode;
+		const resolvedAOI = actionObject?.iface ?? _aoi;
+		return {
+			actionObject,
+			targetNode,
+			resolvedAOI
+		};
+	}
 
 
 	registerAction : (_actionObjectInterface : any, _triggerCallback : Function, _context : EgwActionObject) => boolean = (_aoi, _callback, _context) =>
@@ -42,6 +98,10 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
 		if(node)
 		{
+			if(parentNode && node !== parentNode)
+			{
+				return false;
+			}
 			if(typeof _aoi.handlers == "undefined")
 			{
 				_aoi.handlers = {};
@@ -59,25 +119,46 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
             };
 
             const dragenter = function (event) {
+				const resolved = self.resolveDropTarget(this, event, _aoi, _context);
+				const targetNode = resolved.targetNode ?? event.currentTarget;
+				const targetAOI = resolved.resolvedAOI;
+				if(event.target != targetNode && event.composedPath?.().includes(targetNode))
+				{
+					event.stopPropagation();
+					if(targetNode.classList.contains("drop-hover"))
+					{
+						return false;
+					}
+				}
 				// don't trigger dragenter if we are entering the drag element
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
-                if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this) || this == self.currentDropEl) return;
+				if(!self.getTheDraggedDOM())
+				{
+					return;
+				}
+				if(self.isTheDraggedDOM(targetNode))
+				{
+					if(self.currentDropEl)
+					{
+						self.currentDropEl.classList.remove('drop-hover', 'draggedOver');
+						self.currentDropEl = null;
+					}
+					return;
+				}
+				if(targetNode == self.currentDropEl)
+				{
+					return;
+				}
 
 				// stop the event from being fired for its children
 				event.stopPropagation();
 				event.preventDefault();
 
-				if(_aoi.findActionTargetHandler && typeof _aoi.findActionTargetHandler.findActionTarget === "function")
+				if(self.currentDropEl && self.currentDropEl !== targetNode)
 				{
-					// Bubbling up to parent
-					const parentData = _aoi.findActionTargetHandler.findActionTarget(event);
-					self.currentDropEl = parentData.target ?? event.currentTarget;
-					_aoi = parentData.action.iface ?? _aoi;
+					self.currentDropEl.classList.remove('drop-hover', 'draggedOver');
 				}
-				else
-				{
-					self.currentDropEl = event.currentTarget;
-				}
+				self.currentDropEl = targetNode;
                 event.dataTransfer.dropEffect = 'link';
 
                 const data = {
@@ -85,14 +166,9 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                     ui: self.getTheDraggedData()
                 };
 
-                _aoi.triggerEvent(EGW_AI_DRAG_ENTER, data);
+				targetAOI.triggerEvent(EGW_AI_DRAG_ENTER, data);
 
-                // cleanup drop hover class from all other DOMs if there's still anything left
-                Array.from(document.getElementsByClassName('et2dropzone drop-hover')).forEach(_i => {
-                    _i.classList.remove('drop-hover')
-                })
-
-                this.classList.add('drop-hover');
+				targetNode.classList.add('drop-hover');
 
                 return false;
             };
@@ -102,23 +178,18 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
                 if (!self.getTheDraggedDOM()) return;
 
-				let dropActionObject = _context;
+				const resolved = self.resolveDropTarget(this, event, _aoi, _context);
+				const dropActionObject = resolved.actionObject;
+				const targetNode = resolved.targetNode ?? event.currentTarget;
+				const targetAOI = resolved.resolvedAOI;
 				const helper = self.getHelperDOM();
 
                 // remove the hover class
-                this.classList.remove('drop-hover');
+				targetNode.classList.remove('drop-hover', 'draggedOver');
 
-				if(this.findActionTarget)
+				if(self.isTheDraggedDOM(targetNode))
 				{
-					dropActionObject = this.findActionTarget(event).action ?? _context;
-				}
-				else if(self.isTheDraggedDOM(this))
-				{
-					// clean up the helper dom
-					if(helper)
-					{
-						helper.remove();
-					}
+					self.cleanupDragState();
 					return;
 				}
 
@@ -128,10 +199,9 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
 
 				let data = JSON.parse(event.dataTransfer.getData('application/json'));
 
-				if(!self.isAccepted(data, dropActionObject, _callback, undefined))
+				if(!self.isAccepted(data, dropActionObject, _callback, this))
 				{
-                    // clean up the helper dom
-                    if (helper) helper.remove();
+					self.cleanupDragState();
                     return;
                 }
 
@@ -207,25 +277,30 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                 // Set cursor back to auto. Seems FF can't handle cursor reversion
                 jQuery('body').css({cursor: 'auto'});
 
-                _aoi.triggerEvent(EGW_AI_DRAG_OUT, {event: event, ui: self.getTheDraggedData()});
+				targetAOI.triggerEvent(EGW_AI_DRAG_OUT, {event: event, ui: self.getTheDraggedData()});
 
-                // clean up the helper dom
-                if (helper) helper.remove();
-                self.getTheDraggedDOM().classList.remove('drag--moving');
+				self.cleanupDragState();
             };
 
             const dragleave = function (event) {
                 event.stopImmediatePropagation();
+				const resolved = self.resolveDropTarget(this, event, _aoi, _context);
+				const targetNode = resolved.targetNode ?? event.currentTarget;
+				const targetAOI = resolved.resolvedAOI;
+				if(event.target != targetNode && event.composedPath?.().includes(targetNode))
+				{
+					event.stopPropagation();
+					if(self.currentDropEl == targetNode || targetNode.classList.contains("drop-hover"))
+					{
+						return false;
+					}
+				}
 
                 // don't trigger dragleave if we are leaving the drag element
                 // don't go further if the dragged element is no there (happens when a none et2 dragged element is being dragged)
-                if (!self.getTheDraggedDOM() || self.isTheDraggedDOM(this)) return;
-
-				if(_aoi.findActionTargetHandler && typeof _aoi.findActionTargetHandler.findActionTarget === "function")
+				if(!self.getTheDraggedDOM() || self.isTheDraggedDOM(targetNode))
 				{
-					// Bubbling up to parent
-					const parentData = _aoi.getWidget().findActionTarget(event);
-					_aoi = parentData?.action?.iface ?? _aoi;
+					return;
 				}
 
 				const data = {
@@ -233,9 +308,13 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
                     ui: self.getTheDraggedData()
                 };
 
-                _aoi.triggerEvent(EGW_AI_DRAG_OUT, data);
+				targetAOI.triggerEvent(EGW_AI_DRAG_OUT, data);
 
-                this.classList.remove('drop-hover');
+				targetNode.classList.remove('drop-hover', 'draggedOver');
+				if(self.currentDropEl == targetNode)
+				{
+					self.currentDropEl = null;
+				}
 
                 event.preventDefault();
                 return false;
@@ -298,7 +377,7 @@ export class EgwDropActionImplementation implements EgwActionImplementation {
     }
 
     getTheDraggedDOM = function () {
-        return document.querySelector('.drag--moving');
+		return getSharedDragState().draggedNode || document.querySelector('.drag--moving');
     }
 
     getHelperDOM = function () {

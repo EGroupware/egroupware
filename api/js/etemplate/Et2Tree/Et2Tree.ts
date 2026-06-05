@@ -1382,6 +1382,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			// NOTE: FLAT object structure under the tree ActionObject to avoid nested selection
 			action = this.widget_object.addObject(target.id, this.widget_object.iface)
 			action._context = target;
+			action.findActionTargetHandler = this.widget_object;
 			action.setSelected = (set) =>
 			{
 				target.action_selected = set;
@@ -1391,6 +1392,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			// Required to get dropped accepted, but also re-binds
 			action.updateActionLinks(this._get_action_links(this.actions));
 		}
+		action.findActionTargetHandler = this.widget_object;
 		// This is just the action system, which we override
 		this.widget_object.setAllSelected(false);
 		// This will affect action system & DOM, but not our internal value
