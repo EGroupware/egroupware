@@ -25,6 +25,50 @@ type FakeAction = {
 	execute : (senders : any[], target? : any) => any;
 };
 
+const makeFakeRowObject = (overrides : Record<string, any> = {}) =>
+{
+	const rowObject : any = {
+		id: "",
+		iface: {
+			getDOMNode: () => null
+		},
+		parent: {
+			updateSelectedChildren: () => {},
+			updateFocusedChild: () => {}
+		},
+		updateActionLinks: () => {},
+		executeActionImplementation: () => true,
+		forceSelection: () => {},
+		setSelected: () => {},
+		setFocused: () => {},
+		setAOI(nextAoi : any)
+		{
+			this.iface = nextAoi;
+		},
+		unregisterActions: () => {},
+		getContainerRoot: () => ({
+			getSelectedObjects: () => [],
+			setAllSelected: () => {}
+		})
+	};
+	return Object.assign(rowObject, overrides);
+};
+
+const makeFakeObjectManager = (factory? : (rowId : string, aoi : any) => any) =>
+({
+	flags: 0,
+	addObject: (rowId : string, aoi : any) =>
+	{
+		const rowObject = factory?.(rowId, aoi) || makeFakeRowObject({id: rowId});
+		rowObject.id = rowId;
+		rowObject.iface = aoi;
+		return rowObject;
+	},
+	setAOI: () => {},
+	updateActionLinks: () => {},
+	unregisterActions: () => {}
+});
+
 describe("Et2Nextmatch action setup", () =>
 {
 	/**
@@ -42,7 +86,6 @@ describe("Et2Nextmatch action setup", () =>
 	it("links popup action onto row object when context menu is requested", async() =>
 	{
 		const linkedActions : string[] = [];
-		let fakeRowObject : any = null;
 		const fakeActionManager = {
 			children: [] as FakeAction[],
 			data: {},
@@ -63,41 +106,29 @@ describe("Et2Nextmatch action setup", () =>
 			},
 			setDefaultExecute: () => {}
 		};
-		const fakeObjectContainer = {
-			flags: 0,
-			addObject: (_rowId : string, _aoi : any) =>
-			{
-				fakeRowObject = {
-					updateActionLinks: (links : string[]) => linkedActions.splice(0, linkedActions.length, ...links),
-					executeActionImplementation: () => true,
-					forceSelection: () => {},
-					setSelected: () => {},
-					setFocused: () => {}
-				};
-				return fakeRowObject;
-			}
-		};
-		const el = new Et2Nextmatch();
-		el.id = "nm_actions";
-		document.body.append(el);
-		await el.updateComplete;
-		const controller = (el as any)._actionController;
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_actions",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
 		controller.actionManager = fakeActionManager;
-		controller.objectManager = fakeObjectContainer;
+		controller.objectManager = makeFakeObjectManager((rowId) => makeFakeRowObject({
+			id: rowId,
+			updateActionLinks: (links : string[]) => linkedActions.splice(0, linkedActions.length, ...links)
+		}));
 
-		el.actions = {
+		controller.initActions({
 			open: {
 				type: "popup",
 				caption: "Open"
 			}
-		};
+		});
 		const row = document.createElement("div");
 		row.setAttribute("data-row-id", "row::1");
-		el.shadowRoot?.append(row);
-		row.dispatchEvent(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
+		controller.findEventRow = () => ({rowId: "row::1", rowElement: row});
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
 
 		assert.deepEqual(linkedActions, ["open"], "popup action id should be linked to row action object");
-		el.remove();
 	});
 
 	/**
@@ -131,58 +162,47 @@ describe("Et2Nextmatch action setup", () =>
 			},
 			setDefaultExecute: () => {}
 		};
-		const fakeObjectContainer = {
-			flags: 0,
-			addObject: (rowId : string, _aoi : any) =>
-			{
-				const rowObject = {
-					id: rowId,
-					links: [] as string[],
-					updateActionLinks(links : string[])
-					{
-						this.links = links;
-					},
-					executeActionImplementation()
-					{
-						const actionId = this.links[0];
-						const action = fakeActionManager.children.find((child) => child.id === actionId);
-						if(!action)
-						{
-							return false;
-						}
-						action.execute([this], this);
-						return true;
-					},
-					forceSelection: () => {},
-					setSelected: () => {},
-					setFocused: () => {}
-				};
-				return rowObject;
-			}
-		};
-		const el = new Et2Nextmatch();
-		el.id = "nm_actions_execute";
-		document.body.append(el);
-		await el.updateComplete;
-		const controller = (el as any)._actionController;
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_actions_execute",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
 		controller.actionManager = fakeActionManager;
-		controller.objectManager = fakeObjectContainer;
+		controller.objectManager = makeFakeObjectManager((rowId) =>
+		{
+			const rowObject = makeFakeRowObject({id: rowId, links: [] as string[]});
+			rowObject.updateActionLinks = function(links : string[])
+			{
+				this.links = links;
+			};
+			rowObject.executeActionImplementation = function()
+			{
+				const actionId = this.links[0];
+				const action = fakeActionManager.children.find((child) => child.id === actionId);
+				if(!action)
+				{
+					return false;
+				}
+				action.execute([this], this);
+				return true;
+			};
+			return rowObject;
+		});
 
-		el.actions = {
+		controller.initActions({
 			open: {
 				type: "popup",
 				caption: "Open",
 				onExecute: (_action, senders) => executedRowIds.push(senders?.[0]?.id || "")
 			}
-		};
+		});
 
 		const row = document.createElement("div");
 		row.setAttribute("data-row-id", "row::7");
-		el.shadowRoot?.append(row);
-		row.dispatchEvent(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
+		controller.findEventRow = () => ({rowId: "row::7", rowElement: row});
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
 
 		assert.deepEqual(executedRowIds, ["row::7"], "popup handler should receive selected sender row");
-		el.remove();
 	});
 
 	/**
@@ -563,7 +583,7 @@ describe("Et2Nextmatch action setup", () =>
 		controller.actionManager = {
 			children: [{id: "open"}, {id: "add"}]
 		};
-		controller.objectManager = {};
+		controller.objectManager = makeFakeObjectManager();
 		const resolvePlaceholderActionLinks = sinon.stub(controller, "_resolvePlaceholderActionLinks").returns(["add"]);
 		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
 
@@ -582,5 +602,226 @@ describe("Et2Nextmatch action setup", () =>
 		ensurePlaceholderActionObject.restore();
 		state.remove();
 		el.remove();
+	});
+
+	it("binds delegated drag target resolution on the datagrid rows container", () =>
+	{
+		const host = document.createElement("div");
+		const hostShadow = host.attachShadow({mode: "open"});
+		const datagrid = document.createElement("et2-datagrid");
+		const datagridShadow = datagrid.attachShadow({mode: "open"});
+		const rows = document.createElement("tbody");
+		rows.id = "rows";
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "row::drag");
+		rows.append(row);
+		datagridShadow.append(rows);
+		hostShadow.append(datagrid);
+
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drag_rows",
+			shadowRoot: hostShadow,
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {
+			children: [{id: "egw_link_drag", type: "drag"}]
+		};
+		controller.objectManager = {
+			flags: 0,
+			setAOI: sinon.spy(),
+			updateActionLinks: sinon.spy()
+		};
+
+		controller.syncDragDropRegistration();
+
+		assert.isFunction((rows as any).findActionTarget, "rows container should expose findActionTarget for drag/drop");
+	});
+
+	it("normalizes bare row ids through the data provider for drag/drop target resolution", () =>
+	{
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "7");
+		let addedRowId = "";
+		let fakeRowObject : any = null;
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drag_target",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"}),
+			_dataProvider: {
+				normalizeRowId: (rowId : string, ensurePrefix : boolean) => ensurePrefix ? `addressbook::${rowId}` : rowId
+			}
+		} as any);
+		controller.actionManager = {children: []};
+		controller.objectManager = makeFakeObjectManager((rowId : string) =>
+		{
+			addedRowId = rowId;
+			fakeRowObject = makeFakeRowObject({id: rowId, updateActionLinks: () => {}});
+			return fakeRowObject;
+		});
+
+		const target = controller.findActionTarget({
+			composedPath: () => [row]
+		} as any);
+
+		assert.equal(addedRowId, "addressbook::7", "row action objects should use normalized provider ids");
+		assert.strictEqual(target.target, row, "resolved drag/drop target should be the matching rendered row");
+		assert.strictEqual(target.action, fakeRowObject, "resolved drag/drop action should be the lazily created row action object");
+	});
+
+	it("resolves drag/drop rows from the datagrid shadow root when composedPath stops at tbody", () =>
+	{
+		const host = document.createElement("div");
+		const hostShadow = host.attachShadow({mode: "open"});
+		const datagrid = document.createElement("et2-datagrid");
+		const datagridShadow = datagrid.attachShadow({mode: "open"});
+		const rows = document.createElement("tbody");
+		rows.id = "rows";
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "row::shadow");
+		rows.append(row);
+		datagridShadow.append(rows);
+		hostShadow.append(datagrid);
+
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_shadow_drag_target",
+			shadowRoot: hostShadow,
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {children: []};
+		controller.objectManager = makeFakeObjectManager(() => makeFakeRowObject({id: "row::shadow", updateActionLinks: () => {}}));
+		controller.getDeepElementFromPoint = () => row;
+
+		const target = controller.findActionTarget({
+			composedPath: () => [rows],
+			clientX: 12,
+			clientY: 24
+		} as any);
+
+		assert.strictEqual(target.target, row, "shadow-root point lookup should recover the dragged row");
+	});
+
+	it("arms a nextmatch row as draggable on plain mouse pointerdown", () =>
+	{
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "addressbook::1");
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_prepare_drag",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {children: [{id: "egw_link_drag", type: "drag"}]};
+		controller.findEventRow = () => ({rowId: "addressbook::1", rowElement: row});
+
+		controller.handlePointerDown(new PointerEvent("pointerdown", {
+			pointerType: "mouse",
+			button: 0,
+			bubbles: true
+		}));
+
+		assert.isTrue(row.draggable, "plain mouse pointerdown should arm the row as draggable before dragstart");
+		controller.clearPreparedDragRow();
+		assert.isFalse(row.draggable, "prepared row should be cleared after pointer cleanup");
+	});
+
+	it("does not arm a nextmatch row as draggable without a drag action", () =>
+	{
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "addressbook::1");
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_prepare_drag_none",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {children: []};
+		controller.findEventRow = () => ({rowId: "addressbook::1", rowElement: row});
+
+		controller.handlePointerDown(new PointerEvent("pointerdown", {
+			pointerType: "mouse",
+			button: 0,
+			bubbles: true
+		}));
+
+		assert.isFalse(row.draggable, "row should stay non-draggable when no drag action is linked");
+	});
+
+	it("does not auto-register drop support without a drop action", () =>
+	{
+		const host = document.createElement("div");
+		const hostShadow = host.attachShadow({mode: "open"});
+		const datagrid = document.createElement("et2-datagrid");
+		const datagridShadow = datagrid.attachShadow({mode: "open"});
+		const rows = document.createElement("tbody");
+		rows.id = "rows";
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "row::drop");
+		rows.append(row);
+		datagridShadow.append(rows);
+		hostShadow.append(datagrid);
+
+		const addAction = sinon.spy();
+		const objectManager = {
+			flags: 0,
+			setAOI: sinon.spy(),
+			updateActionLinks: sinon.spy(),
+			unregisterActions: sinon.spy()
+		};
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drop_none",
+			shadowRoot: hostShadow,
+			egw: () => ({
+				...egwStub,
+				link_get_registry: () => null
+			}),
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {
+			children: [],
+			getActionById: () => null,
+			addAction
+		};
+		controller.objectManager = objectManager;
+
+		controller.syncDragDropRegistration();
+
+		assert.isTrue(objectManager.updateActionLinks.calledOnce, "rows container should still be synchronized with the action system");
+		assert.deepEqual(objectManager.updateActionLinks.firstCall.args[0], [], "no drop links should be registered when no drop action exists");
+		assert.isFalse(addAction.called, "controller should not synthesize drop actions when drop support is unavailable");
+	});
+
+	it("materializes visible selected rows into action objects for multi-row drag helpers", () =>
+	{
+		const rows = document.createElement("tbody");
+		const rowOne = document.createElement("tr");
+		rowOne.setAttribute("data-row-id", "addressbook::1");
+		const rowTwo = document.createElement("tr");
+		rowTwo.setAttribute("data-row-id", "addressbook::2");
+		rows.append(rowOne, rowTwo);
+
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_selection_materialize",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.getRowsBody = () => rows;
+		const ensureRowActionObject = sinon.stub();
+		controller.ensureRowActionObject = ensureRowActionObject.callsFake((rowId : string) => ({
+			id: rowId,
+			setSelected: sinon.spy(),
+			setFocused: sinon.spy()
+		}));
+
+		controller.handleSelectionChanged({
+			selectedRowIds: ["addressbook::1", "addressbook::2"],
+			activeRowId: "addressbook::2",
+			allSelected: false
+		});
+
+		assert.sameMembers(
+			ensureRowActionObject.getCalls().map((call) => call.args[0]),
+			["addressbook::1", "addressbook::2"],
+			"visible selected rows should get action objects during selection sync"
+		);
 	});
 });

@@ -190,6 +190,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.addEventListener("pointermove", this._handlePointerMove as EventListener);
 		this.addEventListener("pointerup", this._cancelLongPress as EventListener);
 		this.addEventListener("pointercancel", this._cancelLongPress as EventListener);
+		this.addEventListener("dragend", this._cancelLongPress as EventListener, true);
 	}
 
 	/**
@@ -212,6 +213,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this.removeEventListener("pointermove", this._handlePointerMove as EventListener);
 		this.removeEventListener("pointerup", this._cancelLongPress as EventListener);
 		this.removeEventListener("pointercancel", this._cancelLongPress as EventListener);
+		this.removeEventListener("dragend", this._cancelLongPress as EventListener, true);
 		this._actionController.destroy();
 		super.disconnectedCallback();
 	}
@@ -324,6 +326,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			this._actionController.setPlaceholderActions(this.placeholderActions);
 		}
+		this._actionController.syncDragDropRegistration();
 	}
 
 	/**
@@ -1225,6 +1228,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			? "row-meta row-meta-category"
 			: "row-meta"
 		);
+		this._actionController.customizeRowElement(context.rowElement);
 	};
 
 	/**
@@ -1256,7 +1260,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	/**
 	 * Resolve app-name used for legacy sort preference persistence.
 	 */
-	private _getAppName() : string
+	_getAppName() : string
 	{
 		return String(this.getInstanceManager?.()?.app || this.egw()?.app_name?.() || "");
 	}
@@ -1330,6 +1334,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			},
 			bubbles: true
 		}));
+		this._actionController.syncDragDropRegistration();
 	};
 
 	private _handleSelectionChanged = (event : CustomEvent<{ selectedRowIds? : string[]; activeRowId? : string; allSelected? : boolean }>) =>
@@ -1534,8 +1539,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		this._actionController.handlePointerMove(event);
 	};
 
-	private _cancelLongPress = (_event? : PointerEvent) =>
+	/**
+	 * Reset any pending touch long-press state and clear rows that were armed for drag.
+	 */
+	private _cancelLongPress = (_event? : Event) =>
 	{
+		this._actionController.clearPreparedDragRow();
 		this._actionController.cancelLongPress();
 	};
 

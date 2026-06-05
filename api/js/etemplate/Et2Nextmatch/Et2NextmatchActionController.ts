@@ -1,16 +1,198 @@
 import {EgwAction} from "../../egw_action/EgwAction";
 import {EgwActionManager} from "../../egw_action/EgwActionManager";
 import {EgwActionObject} from "../../egw_action/EgwActionObject";
+import type {EgwActionObjectInterface} from "../../egw_action/EgwActionObjectInterface";
 import {EgwActionObjectManager} from "../../egw_action/EgwActionObjectManager";
+import {egwSetBit} from "../../egw_action/egw_action_common";
 import * as egwActionApi from "../../egw_action/egw_action";
 import {
+	EGW_AI_DRAG,
+	EGW_AI_DRAG_ENTER,
+	EGW_AI_DRAG_OUT,
 	EGW_AO_EXEC_SELECTED,
 	EGW_AO_FLAG_DEFAULT_FOCUS,
-	EGW_AO_FLAG_IS_CONTAINER
+	EGW_AO_FLAG_IS_CONTAINER,
+	EGW_AO_STATE_VISIBLE
 } from "../../egw_action/egw_action_constants";
 import {nm_action} from "../et2_extension_nextmatch_actions";
 import type {Et2Nextmatch} from "./Et2Nextmatch";
 
+/**
+ * Minimal AOI base used by Et2Nextmatch.
+ *
+ * The legacy lowercase `egwActionObjectInterface` wrapper is deprecated. Nextmatch
+ * only needs a small subset of the default behaviour, so the DnD helpers implement
+ * the typed interface directly here instead of inheriting the compatibility class.
+ */
+abstract class Et2NextmatchBaseAOI implements EgwActionObjectInterface
+{
+	_state = EGW_AO_STATE_VISIBLE;
+	handlers = {};
+	stateChangeCallback : Function = null;
+	stateChangeContext : any = null;
+	reconnectActionsCallback : Function = null;
+	reconnectActionsContext : any = null;
+
+	setStateChangeCallback(_callback : Function, _context : any) : void
+	{
+		this.stateChangeCallback = _callback;
+		this.stateChangeContext = _context;
+	}
+
+	setReconnectActionsCallback(_callback : Function, _context : any) : void
+	{
+		this.reconnectActionsCallback = _callback;
+		this.reconnectActionsContext = _context;
+	}
+
+	reconnectActions() : void
+	{
+		this.reconnectActionsCallback?.call(this.reconnectActionsContext);
+	}
+
+	updateState(_stateBit : number, _set : boolean, _shiftState : boolean) : void
+	{
+		const newState = egwSetBit(this._state, _stateBit, _set);
+		this._state = this.stateChangeCallback
+		              ? this.stateChangeCallback.call(this.stateChangeContext, newState, _stateBit, _shiftState)
+		              : newState;
+	}
+
+	getDOMNode() : HTMLElement | null
+	{
+		return this.doGetDOMNode();
+	}
+
+	setState(_state : number) : void
+	{
+		this._state = _state;
+	}
+
+	getState() : number
+	{
+		return this._state;
+	}
+
+	triggerEvent(_event : any, _data : any) : boolean
+	{
+		return this.doTriggerEvent(_event, _data);
+	}
+
+	makeVisible() : void
+	{
+		this.doMakeVisible();
+	}
+
+	protected doMakeVisible() : void
+	{
+	}
+
+	protected abstract doGetDOMNode() : HTMLElement | null;
+
+	protected abstract doTriggerEvent(_event : any, _data : any) : boolean;
+}
+
+/**
+ * Container-level AOI that lets the existing action framework resolve drag/drop
+ * targets against rendered datagrid rows instead of the rows wrapper element.
+ */
+class Et2NextmatchDragDropAOI extends Et2NextmatchBaseAOI
+{
+	private controller : Et2NextmatchActionController;
+	private node : HTMLElement | null = null;
+	public findActionTargetHandler : Et2NextmatchActionController;
+
+	constructor(controller : Et2NextmatchActionController, node : HTMLElement | null = null)
+	{
+		super();
+		this.controller = controller;
+		this.findActionTargetHandler = controller;
+		this.bindNode(node);
+	}
+
+	bindNode(node : HTMLElement | null)
+	{
+		if(this.node && (this.node as any).findActionTarget === this.controller.findActionTarget)
+		{
+			delete (this.node as any).findActionTarget;
+		}
+		this.node = node;
+		if(this.node)
+		{
+			(this.node as any).findActionTarget = this.controller.findActionTarget;
+		}
+	}
+
+	doGetDOMNode()
+	{
+		return this.node;
+	}
+
+	getWidget()
+	{
+		return this.node;
+	}
+
+	doTriggerEvent(egwEvent : number, data : any)
+	{
+		const domEvent = data?.event ?? data;
+		const targetData = this.controller.findActionTarget(domEvent);
+		if(!targetData.target)
+		{
+			if(egwEvent === EGW_AI_DRAG_OUT)
+			{
+				this.controller.clearDropHover();
+			}
+			return true;
+		}
+		if(egwEvent === EGW_AI_DRAG_ENTER)
+		{
+			this.controller.setDropHover(targetData.target);
+		}
+		else if(egwEvent === EGW_AI_DRAG_OUT)
+		{
+			this.controller.clearDropHover(targetData.target);
+		}
+		else if(egwEvent === EGW_AI_DRAG)
+		{
+			targetData.action?.setSelected(true);
+		}
+		return true;
+	}
+}
+
+/**
+ * Row AOI for rendered datagrid rows.
+ *
+ * Nextmatch rows do not need custom action-event handling at the AOI level, but
+ * they do need a concrete DOM binding for the action framework.
+ */
+class Et2NextmatchRowAOI extends Et2NextmatchBaseAOI
+{
+	private node : HTMLElement;
+
+	constructor(node : HTMLElement)
+	{
+		super();
+		this.node = node;
+	}
+
+	protected doGetDOMNode() : HTMLElement
+	{
+		return this.node;
+	}
+
+	protected doTriggerEvent() : boolean
+	{
+		return false;
+	}
+}
+
+/**
+ * Bridges Et2Nextmatch row rendering and selection state into the
+ * `egw_action` system so popup, drag, drop and placeholder actions can reuse the
+ * existing action implementations.
+ */
 export class Et2NextmatchActionController
 {
 	private static readonly PLACEHOLDER_ACTION_OBJECT_ID = "__placeholder__";
@@ -27,6 +209,9 @@ export class Et2NextmatchActionController
 	private longPressStartY : number = 0;
 	private readonly longPressDelayMs : number = 550;
 	private readonly longPressMoveThresholdPx : number = 8;
+	private dragDropAOI : Et2NextmatchDragDropAOI | null = null;
+	private dropHoverRow : HTMLElement | null = null;
+	private preparedDragRow : HTMLElement | null = null;
 
 	constructor(host : Et2Nextmatch)
 	{
@@ -50,7 +235,7 @@ export class Et2NextmatchActionController
 		{
 			return;
 		}
-		this.actionManager.updateActions(actions, this.host.egw().appName);
+		this.actionManager.updateActions(actions, this.getAppName());
 		const data = this.actionManager.data || {};
 		this.actionManager.data = {
 			...data,
@@ -73,6 +258,7 @@ export class Et2NextmatchActionController
 		{
 			this.host.selectAllRows?.();
 		});
+		this.syncDragDropRegistration();
 	}
 
 	getSelection() : { ids : string[]; all : boolean }
@@ -103,10 +289,39 @@ export class Et2NextmatchActionController
 		this.allSelected = !!detail?.allSelected;
 		const selectedSet = new Set(this.selectedRowIds);
 		const activeRowId = String(detail?.activeRowId || "");
+		this.materializeVisibleSelectedRows(selectedSet, activeRowId);
 		for(const [rowId, rowObject] of this.rowActionObjects.entries())
 		{
 			rowObject.setSelected(this.allSelected || selectedSet.has(rowId));
 			rowObject.setFocused(rowId === activeRowId);
+		}
+	}
+
+	/**
+	 * Keep the action system's selected-object list aligned with rendered datagrid rows.
+	 */
+	private materializeVisibleSelectedRows(selectedSet : Set<string>, activeRowId : string)
+	{
+		const rowsBody = this.getRowsBody();
+		if(!rowsBody)
+		{
+			return;
+		}
+		const rowIds = this.allSelected
+		               ? Array.from(rowsBody.querySelectorAll("[data-row-id]"))
+						   .map((row) => this.getActionRowId(row as HTMLElement))
+						   .filter(Boolean) as string[]
+		               : Array.from(selectedSet);
+		for(const rowId of rowIds)
+		{
+			const rowElement = rowsBody.querySelector(`[data-row-id="${CSS.escape(rowId)}"]`) as HTMLElement | null;
+			if(!rowElement)
+			{
+				continue;
+			}
+			const rowObject = this.ensureRowActionObject(rowId, rowElement);
+			rowObject?.setSelected(this.allSelected || selectedSet.has(rowId));
+			rowObject?.setFocused(rowId === activeRowId);
 		}
 	}
 
@@ -192,6 +407,10 @@ export class Et2NextmatchActionController
 
 	handlePointerDown(event : PointerEvent)
 	{
+		if(event.pointerType === "mouse")
+		{
+			this.prepareDragRow(event);
+		}
 		if(event.pointerType !== "touch" && event.pointerType !== "pen")
 		{
 			return;
@@ -233,6 +452,19 @@ export class Et2NextmatchActionController
 			this.longPressTimer = null;
 		}
 		this.longPressPointerId = null;
+	};
+
+	/**
+	 * Native drag is armed on pointerdown and must be cleared again once the
+	 * gesture completes or is canceled.
+	 */
+	clearPreparedDragRow = () =>
+	{
+		if(this.preparedDragRow)
+		{
+			this.preparedDragRow.draggable = false;
+			this.preparedDragRow = null;
+		}
 	};
 
 	/**
@@ -345,13 +577,109 @@ export class Et2NextmatchActionController
 
 	destroy()
 	{
+		this.clearPreparedDragRow();
 		this.cancelLongPress();
+		this.clearDropHover();
+		this.dragDropAOI?.bindNode(null);
 		this.clearRowActionObjects();
+	}
+
+	syncDragDropRegistration()
+	{
+		this.ensureActionManagers();
+		this.initLinkDragDropActions();
+		const rowsBody = this.getRowsBody();
+		if(!this.objectManager)
+		{
+			this.dragDropAOI?.bindNode(null);
+			return;
+		}
+		if(!rowsBody)
+		{
+			this.dragDropAOI?.bindNode(null);
+			return;
+		}
+		if(!this.dragDropAOI)
+		{
+			this.dragDropAOI = new Et2NextmatchDragDropAOI(this, rowsBody);
+		}
+		else
+		{
+			this.dragDropAOI.bindNode(rowsBody);
+		}
+		this.objectManager.unregisterActions?.();
+		this.objectManager.setAOI(this.dragDropAOI);
+		this.objectManager.updateActionLinks(this.getActionLinks());
+		for(const rowObject of this.rowActionObjects.values())
+		{
+			if(rowObject.id === Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID)
+			{
+				continue;
+			}
+			rowObject.updateActionLinks(this.getActionLinks());
+		}
+		this.cleanupDetachedRowActionObjects();
+	}
+
+	customizeRowElement(rowElement : HTMLElement)
+	{
+		if(!rowElement)
+		{
+			return;
+		}
+		const rowId = this.getActionRowId(rowElement);
+		if(!rowId || !this.rowActionObjects.has(rowId))
+		{
+			return;
+		}
+		this.ensureRowActionObject(rowId, rowElement);
+	}
+
+	findActionTarget = (event : Event) : { target : HTMLElement | null; action : EgwActionObject | null } =>
+	{
+		const row = this.findEventRow(event);
+		if(!row)
+		{
+			return {target: null, action: null};
+		}
+		const rowObject = this.ensureRowActionObject(row.rowId, row.rowElement);
+		return {target: row.rowElement, action: rowObject};
+	};
+
+	setDropHover(rowElement : HTMLElement | null)
+	{
+		if(this.dropHoverRow && this.dropHoverRow !== rowElement)
+		{
+			this.dropHoverRow.classList.remove("draggedOver", "drop-hover");
+		}
+		this.dropHoverRow = rowElement;
+		if(rowElement)
+		{
+			rowElement.classList.add("draggedOver", "drop-hover");
+		}
+	}
+
+	clearDropHover(rowElement? : HTMLElement | null)
+	{
+		if(rowElement)
+		{
+			rowElement.classList.remove("draggedOver", "drop-hover");
+			if(this.dropHoverRow === rowElement)
+			{
+				this.dropHoverRow = null;
+			}
+			return;
+		}
+		if(this.dropHoverRow)
+		{
+			this.dropHoverRow.classList.remove("draggedOver", "drop-hover");
+			this.dropHoverRow = null;
+		}
 	}
 
 	private ensureActionManagers()
 	{
-		const appName = this.host.getInstanceManager()?.app || this.host.egw().appName;
+		const appName = this.getAppName() || this.host.egw().appName;
 		const uid = this.host.id || this.host.getInstanceManager()?.uniqueId || this.host.egw().uid?.();
 		if(!uid)
 		{
@@ -431,20 +759,39 @@ export class Et2NextmatchActionController
 		let rowObject = this.rowActionObjects.get(rowId) || null;
 		if(!rowObject)
 		{
-			const aoi = new egwActionApi.egwActionObjectInterface();
-			aoi.doGetDOMNode = () => rowElement;
+			const aoi = this.createRowActionObjectInterface(rowElement);
 			rowObject = this.objectManager.addObject(rowId, aoi);
 			if(!rowObject)
 			{
 				return null;
 			}
+			rowObject._context = rowElement;
+			rowObject.findActionTargetHandler = this.objectManager;
+			rowObject.setSelected = (selected : boolean) =>
+			{
+				(rowObject as any)._actionSelected = !!selected;
+				rowObject.parent?.updateSelectedChildren(rowObject, !!selected);
+			};
+			rowObject.getSelected = () => !!(rowObject as any)._actionSelected;
+			rowObject.setFocused = (focused : boolean) =>
+			{
+				(rowObject as any)._actionFocused = !!focused;
+				rowObject.parent?.updateFocusedChild?.(rowObject, !!focused);
+			};
+			rowObject.getFocused = () => !!(rowObject as any)._actionFocused;
 			rowObject.updateActionLinks(this.getActionLinks());
 			this.rowActionObjects.set(rowId, rowObject);
 		}
 		else
 		{
-			rowObject.iface.doGetDOMNode = () => rowElement;
-			rowObject.setAOI(rowObject.iface);
+			const currentNode = rowObject.iface?.getDOMNode?.();
+			if(currentNode !== rowElement)
+			{
+				rowObject.unregisterActions?.();
+				rowObject.setAOI(this.createRowActionObjectInterface(rowElement));
+			}
+			rowObject._context = rowElement;
+			rowObject.findActionTargetHandler = this.objectManager;
 			rowObject.updateActionLinks(this.getActionLinks());
 		}
 		return rowObject;
@@ -475,6 +822,155 @@ export class Et2NextmatchActionController
 			}
 		}
 		return links;
+	}
+
+	private hasDragActions() : boolean
+	{
+		return (this.actionManager?.children || []).some((child) => child?.type === "drag");
+	}
+
+	private getRowsBody() : HTMLElement | null
+	{
+		return this.host.shadowRoot?.querySelector("et2-datagrid")?.shadowRoot?.getElementById("rows") as HTMLElement | null;
+	}
+
+	private cleanupDetachedRowActionObjects()
+	{
+		for(const [rowId, rowObject] of this.rowActionObjects.entries())
+		{
+			if(rowId === Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID)
+			{
+				continue;
+			}
+			const rowElement = rowObject._context as HTMLElement | null;
+			if(rowElement?.isConnected)
+			{
+				continue;
+			}
+			rowObject.remove?.();
+			this.rowActionObjects.delete(rowId);
+		}
+	}
+
+	private createRowActionObjectInterface(rowElement : HTMLElement)
+	{
+		return new Et2NextmatchRowAOI(rowElement);
+	}
+
+	/**
+	 * Resolve the app name used by action-manager registration and legacy callbacks.
+	 */
+	private getAppName() : string
+	{
+		return typeof (this.host as any)._getAppName === "function"
+		       ? String((this.host as any)._getAppName() || "")
+		       : String(this.host.getInstanceManager?.()?.app || this.host.egw()?.app_name?.() || "");
+	}
+
+	/**
+	 * Arm the currently pointed row as the native drag source without disturbing
+	 * selection, keyboard navigation or context menu gestures.
+	 */
+	private prepareDragRow(event : PointerEvent)
+	{
+		this.clearPreparedDragRow();
+		if(event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
+		{
+			return;
+		}
+		if(!this.hasDragActions())
+		{
+			return;
+		}
+		const target = event.target as HTMLElement | null;
+		if(target?.closest?.("a,button,input,select,textarea,label,[contenteditable=''],[contenteditable='true']"))
+		{
+			return;
+		}
+		const row = this.findEventRow(event);
+		if(!row?.rowElement)
+		{
+			return;
+		}
+		row.rowElement.draggable = true;
+		this.preparedDragRow = row.rowElement;
+	}
+
+	private initLinkDragDropActions()
+	{
+		const mgr = this.actionManager;
+		if(!mgr?.addAction)
+		{
+			return;
+		}
+		let dropAction = mgr.getActionById?.("egw_link_drop");
+		let dragAction = mgr.getActionById?.("egw_link_drag");
+		let dropCancel = mgr.getActionById?.("egw_cancel_drop");
+		const dataProvider = (this.host as any)._dataProvider;
+		const dataStorePrefix = dataProvider?.getDataStorePrefix?.() || this.host.getInstanceManager()?.app || this.host.egw().appName;
+		if(!this.host.egw().link_get_registry?.(dataStorePrefix, "query") ||
+			this.host.egw().link_get_registry?.(dataStorePrefix, "title"))
+		{
+			return;
+		}
+		if(!dropCancel)
+		{
+			dropCancel = mgr.addAction("drop", "egw_cancel_drop", this.host.egw().lang("Cancel"), this.host.egw().image("cancel"), function() {}, true);
+			dropCancel?.set_group?.("99");
+			if(Array.isArray(dropCancel?.acceptedTypes))
+			{
+				dropCancel.acceptedTypes = dropCancel.acceptedTypes.concat(Object.keys(this.host.egw().user?.("apps") || {}).concat(["link", "file"]));
+			}
+		}
+		if(!dropAction)
+		{
+			dropAction = mgr.addAction("drop", "egw_link_drop", this.host.egw().lang("Create link"), this.host.egw().image("link"), (action, source, dropped) =>
+			{
+				const links = [];
+				for(let i = 0; i < source.length; i++)
+				{
+					if(!source[i]?.id)
+					{
+						continue;
+					}
+					const id = source[i].id.split("::");
+					links.push({app: id[0] === "filemanager" ? "link" : id[0], id: id[1]});
+				}
+				if(!links.length || !dropped?.id)
+				{
+					return;
+				}
+				this.host.egw().json(
+					"EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
+					dropped.id.split("::").concat([links]),
+					(result) =>
+					{
+						if(!result)
+						{
+							return;
+						}
+						for(const child of (this.objectManager as any)?.selectedChildren || [])
+						{
+							this.host.refresh(child.id, "update");
+						}
+						this.host.egw().message?.("Linked");
+						this.host.refresh(dropped.id, "update");
+					},
+					this,
+					true,
+					this
+				).sendRequest();
+			}, true);
+		}
+		if(Array.isArray(dropAction?.acceptedTypes) && !dropAction.acceptedTypes.includes("link"))
+		{
+			dropAction.acceptedTypes.push("link");
+		}
+		if(!dragAction)
+		{
+			dragAction = mgr.addAction("drag", "egw_link_drag", this.host.egw().lang("link"), "link", () => null, true);
+		}
+		dragAction?.set_dragType?.("link");
 	}
 
 	/**
@@ -533,23 +1029,26 @@ export class Et2NextmatchActionController
 		let placeholderObject = this.rowActionObjects.get(Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID) || null;
 		if(!placeholderObject)
 		{
-			const aoi = new egwActionApi.egwActionObjectInterface();
-			aoi.doGetDOMNode = () => anchorElement;
-			placeholderObject = this.objectManager.addObject(Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID, aoi);
+			placeholderObject = this.objectManager.addObject(
+				Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID,
+				this.createRowActionObjectInterface(anchorElement)
+			);
 			if(!placeholderObject)
 			{
 				return null;
 			}
 			this.rowActionObjects.set(Et2NextmatchActionController.PLACEHOLDER_ACTION_OBJECT_ID, placeholderObject);
 		}
-		else
+		else if(placeholderObject.iface?.getDOMNode?.() !== anchorElement)
 		{
-			placeholderObject.iface.doGetDOMNode = () => anchorElement;
-			placeholderObject.setAOI(placeholderObject.iface);
+			placeholderObject.setAOI(this.createRowActionObjectInterface(anchorElement));
 		}
 		return placeholderObject;
 	}
 
+	/**
+	 * Resolve the rendered row for native drag/drop and popup events.
+	 */
 	private findEventRow(event : Event) : { rowId : string; rowElement : HTMLElement } | null
 	{
 		const path = event.composedPath?.() || [];
@@ -564,16 +1063,104 @@ export class Et2NextmatchActionController
 			{
 				continue;
 			}
-			const rowId = String(row.getAttribute("data-row-id") || "");
+			const rowId = this.getActionRowId(row);
 			if(rowId)
 			{
 				return {rowId, rowElement: row};
 			}
 		}
+		const rowFromPoint = this.findRowElementFromPoint(event as DragEvent);
+		const rowId = rowFromPoint ? this.getActionRowId(rowFromPoint) : "";
+		if(rowFromPoint && rowId)
+		{
+			return {rowId, rowElement: rowFromPoint};
+		}
 		return null;
+	}
+
+	/**
+	 * Drag events crossing the shadow boundary may only surface the rows container.
+	 * Fall back to point-based lookup inside the datagrid shadow root in that case.
+	 */
+	private findRowElementFromPoint(event : DragEvent) : HTMLElement | null
+	{
+		if(typeof event.clientX !== "number" || typeof event.clientY !== "number")
+		{
+			return null;
+		}
+		const rowsBody = this.getRowsBody();
+		if(!rowsBody)
+		{
+			return null;
+		}
+		const deepTarget = this.getDeepElementFromPoint(rowsBody.getRootNode() as Document | ShadowRoot, event.clientX, event.clientY);
+		const deepRow = deepTarget?.closest?.("[data-row-id]") as HTMLElement | null;
+		if(deepRow)
+		{
+			return deepRow;
+		}
+		const rows = Array.from(rowsBody.querySelectorAll("[data-row-id]")) as HTMLElement[];
+		for(const row of rows)
+		{
+			const rect = row.getBoundingClientRect();
+			if(
+				event.clientX >= rect.left && event.clientX <= rect.right &&
+				event.clientY >= rect.top && event.clientY <= rect.bottom
+			)
+			{
+				return row;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Recursively resolve the deepest element reachable via elementFromPoint(),
+	 * including nested shadow roots.
+	 */
+	private getDeepElementFromPoint(root : Document | ShadowRoot, x : number, y : number) : HTMLElement | null
+	{
+		const elementFromPoint = typeof (root as any).elementFromPoint === "function"
+		                         ? (root as any).elementFromPoint.bind(root)
+		                         : document.elementFromPoint.bind(document);
+		let element = elementFromPoint(x, y) as HTMLElement | null;
+		while(element?.shadowRoot)
+		{
+			const nested = element.shadowRoot.elementFromPoint?.(x, y) as HTMLElement | null;
+			if(!nested || nested === element)
+			{
+				break;
+			}
+			element = nested;
+		}
+		return element;
+	}
+
+	/**
+	 * Normalize the datagrid row id back to the provider/action-system id.
+	 */
+	private getActionRowId(rowElement : HTMLElement) : string
+	{
+		const rawRowId = String(rowElement.getAttribute("data-row-id") || "");
+		if(!rawRowId)
+		{
+			return "";
+		}
+		if(rawRowId.includes("::"))
+		{
+			return rawRowId;
+		}
+		return (this.host as any)._dataProvider?.normalizeRowId?.(rawRowId, true) || rawRowId;
 	}
 }
 
+/**
+ * Resolve action/object-manager getters from either the module API or the legacy
+ * window globals.
+ *
+ * The module exports are preferred, while the global functions remain as a
+ * compatibility fallback for mixed legacy/modern loading contexts.
+ */
 export function resolveActionApiGetters(moduleApi : any, windowApi : any) : {
 	getActionManager : Function | null;
 	getObjectManager : Function | null;

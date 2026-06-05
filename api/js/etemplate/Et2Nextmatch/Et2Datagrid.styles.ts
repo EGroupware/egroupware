@@ -160,6 +160,11 @@ export default css`
 			animation: dg-row-refresh-pulse 5s ease-out forwards;
 		}
 
+		tbody > [data-row-id].drop-hover {
+			background: var(--sl-color-primary-100);
+			box-shadow: var(--sl-shadow-large);
+		}
+
 		tbody td,
 		tbody th {
 			box-sizing: border-box;
