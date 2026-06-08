@@ -118,6 +118,16 @@ class Jmap
 	 */
 	function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null, int $follow=3)
 	{
+		// Stalwart (v0.16.8) chokes on escaped slashes in method names like 'SieveScript/get'
+		if (is_array($body))
+		{
+			$body = json_encode($body, JSON_UNESCAPED_SLASHES);
+
+			if (!array_filter($header, fn ($value) => str_starts_with($value, 'Content-Type:')))
+			{
+				$header[] = 'Content-Type: application/json';
+			}
+		}
 		return api($url, $method, $body, $header, $response_header, $follow);
 	}
 
@@ -204,7 +214,7 @@ class Jmap
 	 * @param bool $emulate true: emulate multiple methodCalls, false: send them in one call to the server
 	 * @return array response
 	 */
-	public function jmapCall(array $methodCalls, $using='urn:ietf:params:jmap:mail', bool $emulate=true)
+	public function jmapCall(array $methodCalls, $using='urn:ietf:params:jmap:mail', bool $emulate=false)
 	{
 		if (!$emulate || count($methodCalls) === 1)
 		{

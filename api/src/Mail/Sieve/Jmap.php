@@ -36,6 +36,11 @@ class Jmap implements Connection
 	protected $jmap;
 
 	/**
+	 * Using parameter for JMAP Sieve calls
+	 */
+	const USING = ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:sieve"];
+
+	/**
 	 * Constructor
 	 *
 	 * @param array|Mail\Imap\Jmap $params =[] JMAP object or params array to instantiate it
@@ -65,18 +70,25 @@ class Jmap implements Connection
 	{
 		$scripts = [];
 		$activeScript = null;
-		$list = $this->jmap->jmapCall([
-			['SieveScript/get', [
-				'accountId' => $this->jmap->accountId,
-			], "0"],
-		])['methodResponses'][0][1]['list'];
-		foreach($list as $script)
+		try
 		{
-			$scripts[] = $script['name'];
-			if ($script['isActive'])
+			$list = $this->jmap->jmapCall([
+				['SieveScript/get', [
+					'accountId' => $this->jmap->accountId,
+				], "0"],
+			], self::USING)['methodResponses'][0][1]['list'];
+			foreach ($list as $script)
 			{
-				$activeScript = $script['name'];
+				$scripts[] = $script['name'];
+				if ($script['isActive'])
+				{
+					$activeScript = $script['name'];
+				}
 			}
+		}
+		catch (\Exception $e) {
+			// ignore not existing script
+			$list = [];
 		}
 		return [$scripts, $activeScript, $list];
 	}
@@ -193,10 +205,10 @@ class Jmap implements Connection
 				] + ($makeactive ? [
 					'onSuccessActivateScript' => '#A'
 				] : []), "0"],
-			]);
-			if (empty($response2['methodResponses'][0][1]['created']['A']['name']) ||
-				$response2['methodResponses'][0][1]['created']['A']['name'] !== $scriptname ||
-				$makeactive && empty($response2[0][1]['created']['A']['isActive']))
+			], self::USING);
+			if (isset($response2['methodResponses'][0][1]['created']['A']['name']) &&
+					$response2['methodResponses'][0][1]['created']['A']['name'] !== $scriptname ||
+				$makeactive && empty($response2['methodResponses'][0][1]['created']['A']['isActive']))
 			{
 				throw new \Exception('Error uploading '.$scriptname.': '.json_encode($response2));
 			}
@@ -214,7 +226,7 @@ class Jmap implements Connection
 						] : []),
 					],
 				], "0"],
-			]);
+			], self::USING);
 			if (empty($response2['methodResponses'][0][1]['updated'][$found['id']]['blobId']) ||
 				// the returned blobId is for some reason not the one updated, ignoring it for now
 				// $response2['methodResponses'][0][1]['updated'][$found['id']]['blobId'] !== $response['blobId'] ||
@@ -247,7 +259,7 @@ class Jmap implements Connection
 					'accountId' => $this->jmap->accountId,
 					'destroy' => $script['blobId']
 				], '6'],
-			]);
+			], self::USING);
 		}
 	}
 
