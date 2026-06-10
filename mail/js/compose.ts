@@ -627,8 +627,8 @@ export class MailCompose
 	 */
 	setToggle(_action)
 	{
-		var widget = this.et2?.getWidgetById(_action.id) || this.app.et2.getWidgetById(_action.id);
-		if (widget && typeof _action.checkbox != 'undefined' && _action.checkbox)
+		const widget = this.et2?.getWidgetById(_action.id) || this.app?.et2?.getWidgetById(_action.id);
+		if (widget && _action?.checkbox)
 		{
 			widget.set_value(_action.checked?"on":"off");
 		}

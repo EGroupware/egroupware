@@ -6,13 +6,11 @@
         <et2-vbox class="mailCompose mailComposeHeaderSection">
             <et2-vfs-select-dialog class="$cont[vfsNotAvailable] compose_egw_icons" title="Attach files" path="~" buttonLabel="" id="selectFromVFSForCompose" multiple="true" onchange="app.mail.compose.vfsUpload"/>
             <et2-hbox class="mail-compose_toolbar_assist" width="100%">
-				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple="true" progress="attachments" onFinish="app.mail.compose.uploadFinish" onStart="app.mail.compose.uploadStart" id="uploadForCompose" drop_target ="mail-compose"/>
+				<file class="mail-compose_fileselector" statustext="Select file to attach to message" multiple="true" progress="attachments" onFinish="app.mail.compose.uploadFinish" onStart="app.mail.compose.uploadStart" id="uploadForCompose" drop_target="mail-compose"/>
 				<et2-checkbox  statustext="check to save as infolog on send" id="to_infolog" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to save as tracker entry on send" id="to_tracker" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to save as calendar event on send" id="to_calendar" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-checkbox  statustext="check to receive a notification when the message is read (note: not all clients support this and/or the receiver may not authorize the notification)" id="disposition" selectedValue="on" unselectedValue="off" ></et2-checkbox>
-				<et2-checkbox  statustext="check to sign the message on send" id="smime_sign" selectedValue="on" unselectedValue="off" ></et2-checkbox>
-				<et2-checkbox  statustext="check to encrypt the message on send" id="smime_encrypt" selectedValue="on" unselectedValue="off" ></et2-checkbox>
 				<et2-password  id="smime_passphrase"></et2-password>
 				<et2-select  id="priority"></et2-select>
 				<et2-vbox class="expanderFirstRow">

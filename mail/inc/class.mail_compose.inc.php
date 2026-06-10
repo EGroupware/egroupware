@@ -391,9 +391,14 @@ class mail_compose
 				if (isset($_GET['smime_type'])) $smime_type = $_GET['smime_type'];
 				// pre set smime_sign and smime_encrypt actions if the original
 				// message is smime.
-				$_content['smime_sign'] = $smime_type == (Mail\Smime::TYPE_SIGN ||
-					$smime_type == Mail\Smime::TYPE_SIGN_ENCRYPT) ? 'on' : 'off';
-				$_content['smime_encrypt'] = ($smime_type == Mail\Smime::TYPE_ENCRYPT) ? 'on' : 'off';
+				if (!is_array($_content['composeToolbar']))
+				{
+					$_content['composeToolbar'] = empty($_content['composeToolbar']) ? [] :
+						(json_decode($_content['composeToolbar']) ?? ['action' => $_content['composeToolbar']]);
+				}
+				$_content['composeToolbar']['smime_sign'] = ($smime_type == Mail\Smime::TYPE_SIGN ||
+					$smime_type == Mail\Smime::TYPE_SIGN_ENCRYPT);
+				$_content['composeToolbar']['smime_encrypt'] = ($smime_type == Mail\Smime::TYPE_ENCRYPT);
 			}
 
 			$actionToProcess = $_GET['from'];
@@ -3116,8 +3121,8 @@ class mail_compose
 		$this->sessionData['to_tracker'] = $_formData['composeToolbar']['to_tracker'];
 		$this->sessionData['to_calendar'] = $_formData['composeToolbar']['to_calendar'];
 		$this->sessionData['attachments']  = $_formData['attachments'];
-		$this->sessionData['smime_sign']  = $_formData['smime_sign'];
-		$this->sessionData['smime_encrypt']  = $_formData['smime_encrypt'];
+		$this->sessionData['smime_sign']  = $_formData['composeToolbar']['smime_sign'];
+		$this->sessionData['smime_encrypt']  = $_formData['composeToolbar']['smime_encrypt'];
 
 		if (isset($_formData['lastDrafted']) && !empty($_formData['lastDrafted']))
 		{
@@ -3311,11 +3316,12 @@ class mail_compose
 			return false;
 		}
 		// SMIME SIGN/ENCRYPTION
-		if ($_formData['smime_sign'] == 'on' || $_formData['smime_encrypt'] == 'on' )
+		//boolean flags for smime_sign and smime_encrypt are stored in sessionData
+		if ($this->sessionData['smime_sign'] || $this->sessionData['smime_encrypt'])
 		{
 			$recipients = array_merge($_formData['to'], (array) $_formData['cc'], (array) $_formData['bcc']);
 			try	{
-				if ($_formData['smime_sign'] == 'on')
+				if ($this->sessionData['smime_sign'])
 				{
 					if (!empty($_formData['smime_passphrase']))
 					{
@@ -3328,7 +3334,7 @@ class mail_compose
 					}
 					$smime_success = $this->_encrypt(
 						$mail,
-						$_formData['smime_encrypt'] == 'on'? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
+						$this->sessionData['smime_encrypt']? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
 						Mail::stripRFC822Addresses($recipients),
 						$identity['ident_email'],
 						$_formData['smime_passphrase']
@@ -3343,7 +3349,7 @@ class mail_compose
 						return false;
 					}
 				}
-				elseif ($_formData['smime_sign'] == 'off' && $_formData['smime_encrypt'] == 'on')
+				elseif (!$this->sessionData['smime_sign'] && $this->sessionData['smime_encrypt'])
 				{
 					$smime_success =  $this->_encrypt(
 						$mail,

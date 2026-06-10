@@ -341,13 +341,13 @@ export class MailApp extends EgwApp
 				this.compose.setEtemplate(this.et2);
 				const composeToolbar = this.et2.getWidgetById('composeToolbar');
 				// set smime values in the toolbar assist to the initial values of the toolbar
-				try{
-				this.et2.getWidgetById('smime_sign').value = composeToolbar.getWidgetById('smime_sign').value;
-				this.et2.getWidgetById('smime_encrypt').value = composeToolbar.getWidgetById('smime_encrypt').value;}
-				catch (e)
-				{
-					egw.debug("warn","could not set initial values for compose toolbar helper")
-				}
+				// try{
+				// this.et2.getWidgetById('smime_sign').value = composeToolbar.getWidgetById('smime_sign').value;
+				// this.et2.getWidgetById('smime_encrypt').value = composeToolbar.getWidgetById('smime_encrypt').value;}
+				// catch (e)
+				// {
+				// 	egw.debug("warn","could not set initial values for compose toolbar helper")
+				// }
 				if (composeToolbar?.getWidgetById('pgp')?.value ||
 					this.et2.getArrayMgr('content').data.mail_plaintext &&
 						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
@@ -1051,7 +1051,7 @@ export class MailApp extends EgwApp
 		};
 
 		// We only handle one for everything but forward
-		settings.id = (typeof _elems == 'undefined'?'':_elems[0].id);
+		settings.id = ((typeof _elems == 'undefined'|| _elems.length == 0)?'':_elems[0].id);
 		var content = egw.dataGetUIDdata(settings.id);
 		if (content) settings.smime_type = content.data['smime'];
 		switch(_action.id)
@@ -5467,7 +5467,8 @@ export class MailApp extends EgwApp
 					const pass = self.et2.getWidgetById('smime_passphrase');
 					pass.set_value(_value.value);
 					const toolbar = self.et2.getWidgetById('composeToolbar');
-					toolbar.value = 'send';
+					if(typeof toolbar.value==="object")toolbar.value.action = 'send'
+					else toolbar.value = {action:'send'};
 					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
 					self.compose.submitAction(false);
 				}
@@ -5485,7 +5486,7 @@ export class MailApp extends EgwApp
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
-		});
+		},undefined);
 		document.body.append(dialog);
 	}
 
