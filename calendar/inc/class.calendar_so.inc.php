@@ -2500,7 +2500,8 @@ ORDER BY cal_user_type, cal_usre_id
 				$set += $where;
 				try
 				{
-					$ret = $this->db->insert($this->user_table, $set, false, __LINE__, __FILE__, 'calendar');
+					$this->db->insert($this->user_table, $set, false, __LINE__, __FILE__, 'calendar');
+					$ret = $this->db->affected_rows();
 				}
 				catch (\Throwable $e)
 				{
