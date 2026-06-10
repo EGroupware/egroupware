@@ -836,7 +836,7 @@ export abstract class EgwApp
 		var et2 = etemplate2.getByApplication(this.appname);
 		for(var i = 0; i < et2.length; i++)
 		{
-			state = (<Et2Nextmatch>et2[i].widgetContainer.querySelector("et2-nextmatch"))?.value;
+			Object.assign(state, (<Et2Nextmatch>et2[i].widgetContainer.querySelector("et2-nextmatch"))?.value ?? {});
 			et2[i].widgetContainer.iterateOver(function(_widget)
 			{
 				state = _widget.getValue();
