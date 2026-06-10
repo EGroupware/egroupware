@@ -833,6 +833,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		}
 	}
 
-	return Et2InputWidgetClass as Constructor & T;
+	return Et2InputWidgetClass as unknown as Constructor<Et2InputWidgetInterface> & Constructor<Et2InputWidgetClass> & T;
 }
 export const Et2InputWidget = dedupeMixin(Et2InputWidgetMixin);

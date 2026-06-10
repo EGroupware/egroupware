@@ -363,5 +363,8 @@ export const Et2WidgetWithSelectMixin = <T extends Constructor<LitElement>>(supe
 		}
 	}
 
-	return Et2WidgetWithSelect as unknown as Constructor<SearchMixinInterface> & Et2InputWidgetInterface & LitElement & T;
+	return Et2WidgetWithSelect as unknown as
+		Constructor<Et2InputWidgetInterface & SearchMixinInterface<any, any>> &
+		Constructor<Et2WidgetWithSelect> &
+		T;
 }
