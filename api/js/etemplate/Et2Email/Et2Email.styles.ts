@@ -2,9 +2,9 @@ import {css} from 'lit';
 
 export default css`
 	:host([open]) {
-		/* Handles z-index issues with toolbar of html editor on the page*/
+		/* Keep the active email field above adjacent editor chrome such as TinyMCE toolbars. */
 		position: relative;
-		z-index: 2;
+		z-index: var(--sl-z-index-dropdown);
 	}
 
 	.form-control-input {
@@ -14,8 +14,8 @@ export default css`
 	}
     
     .form-control-input:has(sl-popup[active]) {
-        /*This is needed in Safari for the dropdown to show over other inputs */
-        z-index: 2;
+		/* Safari needs the popup wrapper promoted into the same stacking layer. */
+		z-index: var(--sl-z-index-dropdown, 2);
     }
 
 	.email .email__combobox {
