@@ -384,7 +384,7 @@
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/ContactPatch"
+                "$ref": "#/components/schemas/Contact"
               }
             }
           }
@@ -635,8 +635,10 @@
           },
           "egroupware.org:customfields": {
             "type": "object",
-            "additionalProperties": true,
-            "description": "Vendor-specific custom fields"
+            "additionalProperties": {
+              "$ref": "#/components/schemas/CustomField"
+            },
+            "description": "Vendor-specific custom fields, keyed by their user-/admin-defined name. On read each value is a `CustomField` object carrying the field's type information and actual value."
           },
           "egroupware.org:assistant": {
             "type": "string",
@@ -648,24 +650,25 @@
         "type": "object",
         "description": "Partial update for a contact (all properties optional) or creating a new contact using a single flat object with json-path of Contact schema as attribute names. To unset a field, set its value to `null`.",
         "properties": {
-          "name": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NameComponent"
-            },
-            "description": "Name components (given, surname, etc.)"
-          },
-          "fullName": {
+          "name/title": {
             "type": "string",
-            "description": "Full name of the contact"
+            "description": "Honorific prefix/title (was `prefix`)"
           },
           "name/given": {
             "type": "string",
             "description": "Given or first name"
           },
+          "name/given2": {
+            "type": "string",
+            "description": "Additional/middle name (was `additional`)"
+          },
           "name/surname": {
             "type": "string",
             "description": "Surname or family name"
+          },
+          "name/credential": {
+            "type": "string",
+            "description": "Honorific suffix/credential (was `suffix`)"
           },
           "organizations/org/name": {
             "type": "string",
@@ -676,19 +679,48 @@
             "description": "Organisation unit"
           },
           "emails/work": {
-            "type": "string"
-          },
-          "emails/work/email": {
             "type": "string",
             "description": "Work email address"
           },
           "phones/tel_work": {
             "type": "string",
-            "description": "Phone number"
+            "description": "Work phone number"
           },
           "phones/tel_cell": {
             "type": "string",
             "description": "Mobile/cell-phone number"
+          },
+          "phones/tel_fax": {
+            "type": "string",
+            "description": "Work fax number"
+          },
+          "phones/tel_assistent": {
+            "type": "string",
+            "description": "Assistant phone number"
+          },
+          "phones/tel_car": {
+            "type": "string",
+            "description": "Car phone number"
+          },
+          "phones/tel_pager": {
+            "type": "string",
+            "description": "Pager number"
+          },
+          "phones/tel_home": {
+            "type": "string",
+            "description": "Private/home phone number"
+          },
+          "phones/tel_fax_home": {
+            "type": "string",
+            "description": "Private/home fax number"
+          },
+          "phones/tel_cell_private": {
+            "type": "string",
+            "description": "Private mobile/cell-phone number"
+          },
+          "phones/tel_other": {
+            "type": "string",
+            "description": "Other phone number"
           },
           "addresses/work/locality": {
             "type": "string",
@@ -717,12 +749,40 @@
           },
           "egroupware.org:customfields": {
             "type": "object",
-            "additionalProperties": true
-          },
-          "egroupware.org:customfields/Test": {
-            "type": "string",
-            "description": "Example custom field key"
+            "additionalProperties": true,
+            "description": "Custom fields keyed by their user-/admin-defined name (configured under Admin >> Custom fields). For create/update only send the custom-field name and its value, either nested as `{\"<name>\": <value>}` or flat as `egroupware.org:customfields/<name>`. On read each entry is returned as a `CustomField` object (see schema).",
+            "example": {
+              "MyField": "some value"
+            }
           }
+        }
+      },
+      "CustomField": {
+        "type": "object",
+        "description": "A single custom field. Custom-field names are user-/admin-defined (configured under Admin >> Custom fields). For create/update (flat POST or PATCH) send only the custom-field name with its value, e.g. `\"egroupware.org:customfields/<name>\": <value>`. On read an object is returned carrying the field's `type`, `label` and always a `value` attribute holding the actual value.",
+        "required": ["value"],
+        "properties": {
+          "value": {
+            "description": "The actual value of the custom field. Its JSON type depends on the custom-field's `type` (e.g. string, number or array for `select`)."
+          },
+          "type": {
+            "type": "string",
+            "description": "Data type of the custom field, e.g. `text`, `int`, `float`, `date-time`, `select` (read-only)."
+          },
+          "label": {
+            "type": "string",
+            "description": "Translated label of the custom field (read-only)."
+          },
+          "values": {
+            "type": "object",
+            "additionalProperties": true,
+            "description": "Allowed options for a `select`-type custom field, keyed by option value (read-only)."
+          }
+        },
+        "example": {
+          "value": "some value",
+          "type": "text",
+          "label": "My custom field"
         }
       },
       "NameComponent": {
