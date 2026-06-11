@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "acbbe583756d8a0509ca829ae238098e",
+    "content-hash": "26c184e8ff019a7f15001dfc1ede8d13",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -9531,63 +9531,6 @@
                 }
             ],
             "time": "2026-05-25T06:06:12+00:00"
-        },
-        {
-            "name": "tinymce/tinymce",
-            "version": "5.10.9",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/tinymce/tinymce-dist.git",
-                "reference": "e5650a256f8941a0593ec0b9d3c435f20f1d4245"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/e5650a256f8941a0593ec0b9d3c435f20f1d4245",
-                "reference": "e5650a256f8941a0593ec0b9d3c435f20f1d4245",
-                "shasum": ""
-            },
-            "type": "component",
-            "extra": {
-                "component": {
-                    "files": [
-                        "tinymce.min.js",
-                        "plugins/*/plugin.min.js",
-                        "themes/*/theme.min.js",
-                        "skins/**",
-                        "icons/*/icons.min.js"
-                    ],
-                    "scripts": [
-                        "tinymce.js",
-                        "plugins/*/plugin.js",
-                        "themes/*/theme.js",
-                        "themes/*/icons.js"
-                    ]
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "LGPL-2.1-only"
-            ],
-            "description": "Web based JavaScript HTML WYSIWYG editor control.",
-            "homepage": "https://www.tiny.cloud/",
-            "keywords": [
-                "contenteditable",
-                "editing",
-                "html",
-                "javascript",
-                "rich editor",
-                "rich text",
-                "rich text editor",
-                "richtext",
-                "rte",
-                "text",
-                "tinymce",
-                "wysiwyg"
-            ],
-            "support": {
-                "source": "https://github.com/tinymce/tinymce-dist/tree/5.10.9"
-            },
-            "time": "2023-11-15T00:42:08+00:00"
         },
         {
             "name": "twig/intl-extra",

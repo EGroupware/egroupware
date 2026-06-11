@@ -17,7 +17,7 @@ const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // unconditional of legacy add et2- prefix to this widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|link|link-[a-z]+|favorites))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|link|link-[a-z]+|favorites|htmlarea))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
@@ -484,7 +484,7 @@ function send_template()
 		}
 
 		// wrap et2-textarea and htmlarea in et2-ai, if not already done or noAiTools attribute is set truish
-		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<(et2-textarea|htmlarea)\s(.*?)\s*/?>(</\2>)?#s', function ($matches)
+		$str = preg_replace_callback('#(<et2-ai[^>]*>\n?)?\s*<(et2-textarea|et2-htmlarea|htmlarea)\s(.*?)\s*/?>(</\2>)?#s', function ($matches)
 		{
 			$attrs = parseAttrs($matches[3]);
 			$noAiTools = $attrs['noAiTools'] ?? 'false';
@@ -536,6 +536,33 @@ function send_template()
 					if ($name === 'parent_node') $parts[1] = 'Id';  // we can not use DOM property parentNode --> parentId
 					$attrs[array_shift($parts).implode('', array_map('ucfirst', $parts))] = $value;
 					unset($attrs[$name]);
+				}
+			}
+
+			// Legacy htmlarea used positive booleans for toolbar / menubar / statusbar, while
+			// the web component uses inverse `no*` booleans. Translate only plain
+			// boolean values and leave string toolbar/menu configuration intact.
+			if ($matches[1] === 'et2' && $matches[2] === 'htmlarea')
+			{
+				if (isset($attrs['toolbar']) && in_array($attrs['toolbar'], ['true', 'false'], true))
+				{
+					$attrs['noToolbar'] = $attrs['toolbar'] === 'true' ? 'false' : 'true';
+					unset($attrs['toolbar']);
+				}
+				if (isset($attrs['menubar']) && in_array($attrs['menubar'], ['true', 'false'], true))
+				{
+					$attrs['noMenubar'] = $attrs['menubar'] === 'true' ? 'false' : 'true';
+					unset($attrs['menubar']);
+				}
+				if(isset($attrs['statusbar']) && in_array($attrs['statusbar'], ['true', 'false'], true))
+				{
+					$attrs['noStatusbar'] = $attrs['statusbar'] === 'true' ? 'false' : 'true';
+					unset($attrs['statusbar']);
+				}
+				if (isset($attrs['expandToolbar']) && in_array($attrs['expandToolbar'], ['true', 'false'], true))
+				{
+					$attrs['toolbarMode'] = 'wrap';
+					unset($attrs['expandToolbar']);
 				}
 			}
 

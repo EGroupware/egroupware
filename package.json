@@ -87,6 +87,7 @@
     "@lit-labs/virtualizer": "^2.1.1",
     "@rollup/plugin-commonjs": "^24.0.1",
     "@shoelace-style/shoelace": "2.20.1",
+    "@tinymce/tinymce-webcomponent": "^2.4.0",
     "@types/jquery": "^3.5.29",
     "blueimp-gallery": "^3.4.0",
     "bootstrap-icons": "^1.11.3",
@@ -99,7 +100,8 @@
     "lit": "^2.7.5",
     "lit-flatpickr": "^0.3.0",
     "shortcut-buttons-flatpickr": "^0.4.0",
-    "sortablejs": "^1.14.0"
+    "sortablejs": "^1.14.0",
+    "tinymce": "^8.6.0"
   },
   "engines": {
     "node": ">=14.0.0"

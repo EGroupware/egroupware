@@ -71,7 +71,6 @@ module.exports = function (eleventyConfig)
 		"../../vendor/bower-asset/jquery/dist/jquery.min.js": "assets/scripts/vendor/bower-asset/jquery/dist/jquery.min.js",
 		"../../vendor/bower-asset/cropper/dist/cropper.min.js": "assets/scripts/vendor/bower-asset/cropper/dist/cropper.min.js",
 		"../../vendor/bower-asset/diff2html/dist/diff2html.min.js": "assets/scripts/vendor/bower-asset/diff2html/dist/diff2html.min.js",
-		"../../vendor/tinymce/tinymce/tinymce.min.js": "assets/scripts/vendor/tinymce/tinymce/tinymce.min.js",
 	})
 
 	// Etemplate2

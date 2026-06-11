@@ -4,9 +4,9 @@ import {customElement, property} from "lit/decorators.js";
 import {AiAssistantController, AiStatus} from "./AiAssistantController";
 import styles from "./Et2Ai.styles";
 import {Et2Widget} from "../Et2Widget/Et2Widget";
+import type {Et2HtmlArea} from "../Et2HtmlArea/Et2HtmlArea";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {map} from "lit/directives/map.js";
-import type {et2_htmlarea} from "../et2_widget_htmlarea";
 import {classMap} from "lit/directives/class-map.js";
 import {Et2SelectWidgets, StaticOptions} from "../Et2Select/StaticOptions";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
@@ -49,6 +49,8 @@ const defaultActions : AiAction[] = [
 	{label: "Insert before", target: "self", mode: "prepend"},
 	{label: "Insert after", target: "self", mode: "append"}
 ];
+
+const AI_TOOLS_ICON_SVG = `<svg version="1.1" x="0px" y="0px" width="24px" height="24px" viewBox="0 0 52.235 52.235" xmlns="http://www.w3.org/2000/svg"><path fill="#2a7fff" d="m 44.609098,7.6741616 c -10.186,-10.212 -26.720001,-10.237 -36.9340005,-0.053 -10.214,10.1850004 -10.238,26.7230004 -0.056,36.9370004 10.1859995,10.215 26.7280005,10.236 36.9370005,0.051 10.214,-10.184 10.24,-26.718 0.053,-36.9350004 z"/><path fill="#ffffff" d="m 42.998608,19.043391 c -0.750587,-0.01202 -1.475021,0.27557 -2.012901,0.799221 l -1.018474,0.98311 6.891675,7.115174 1.01423,-0.984526 c 1.125981,-1.089201 1.155686,-2.87436 0.06648,-4.000339 l -2.954985,-3.049763 c -0.521001,-0.54101 -1.236435,-0.851624 -1.987439,-0.862875 z m -4.045605,2.765442 -10.549691,10.217276 -2.03412,1.966221 1.95349,2.018558 0.01414,0.01556 2.953575,3.04835 1.966221,2.032703 2.034117,-1.966221 10.552523,-10.217274 z m -15.122923,14.646223 -2.652277,9.459081 9.539708,-2.348149 z"/><path fill="#ffffff" d="M 14.413756,12.949708 A 13.632117,13.632117 0 0 1 1.8323691,25.892111 13.632117,13.632117 0 0 1 14.425038,38.604366 h 0.02933 a 13.632117,13.632117 0 0 1 12.504676,-12.67841 v -0.02031 A 13.632117,13.632117 0 0 1 14.434063,12.949708 Z"/><path fill="#ffffff" d="m 28.075899,3.1356602 a 10.273809,10.273809 0 0 1 -9.48193,9.7540068 10.273809,10.273809 0 0 1 9.490432,9.580558 h 0.02211 a 10.273809,10.273809 0 0 1 9.424113,-9.55505 v -0.0153 A 10.273809,10.273809 0 0 1 28.091208,3.135659 Z"/></svg>`;
 
 
 /**
@@ -141,7 +143,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 	/* Watch children to keep our size up to date */
 	private targetResizeObserver : ResizeObserver;
 	/* HTMLArea needs special handling */
-	private _htmlAreaTarget : et2_htmlarea;
+	private _htmlAreaTarget : Et2HtmlArea;
 
 	/* For faking progress bar */
 	private _progressTimer : number | null = null;
@@ -217,16 +219,17 @@ export class Et2Ai extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Overridden to deal with grabbing legacy HTML Editor before it initializes
+	 * Overridden to grab Et2HtmlArea before it initializes so we can extend the
+	 * TinyMCE toolbar.
 	 * @param {Promise<any>[]} promises
 	 * @protected
 	 */
 	protected loadingFinished(promises : Promise<any>[])
 	{
-		// Use constructor to check for legacy et2_htmlarea without importing it
-		if(this.getChildren()[0]?.constructor?.name === "et2_htmlarea")
+		const target = this.getChildren()[0] as HTMLElement | undefined;
+		if(target?.tagName === "ET2-HTMLAREA")
 		{
-			this._adoptHTMLAreaTarget(<et2_htmlarea>this.getChildren()[0]);
+			this._adoptHTMLAreaTarget(target as unknown as Et2HtmlArea);
 		}
 		super.loadingFinished(promises);
 	}
@@ -498,7 +501,6 @@ export class Et2Ai extends Et2Widget(LitElement)
 	{
 		if(this._htmlAreaTarget)
 		{
-			// @ts-ignore
 			return this._htmlAreaTarget;
 		}
 		const slot : HTMLSlotElement = this.shadowRoot?.querySelector("slot:not([name])");
@@ -536,14 +538,9 @@ export class Et2Ai extends Et2Widget(LitElement)
 	/**
 	 * Adopt an HTMLArea element and add Ai bits to it
 	 */
-	protected _adoptHTMLAreaTarget(target : et2_htmlarea)
+	protected _adoptHTMLAreaTarget(target : Et2HtmlArea)
 	{
-		// Turn off autosizing
-		target.options.resize_ratio = "0";
-		target.options.height = "";
-
-		// If et2_htmlarea is in ascii mode, don't do anything else
-		if((target?.mode ?? target.options.mode) == "ascii" || this.uiDisabled)
+		if(target?.mode === "ascii" || this.uiDisabled)
 		{
 			return;
 		}
@@ -551,19 +548,10 @@ export class Et2Ai extends Et2Widget(LitElement)
 		this.ai.isHTML = true;
 		this._htmlAreaTarget = target;
 		this.classList.add("et2-ai--has-html-target");
-
-		// @ts-ignore
-		const originalExtended = target._extendedSettings.bind(target);
-		const setup = (editor) =>
+		target.addToolbarItem("aitoolsPrompts");
+		target.registerEditorSetupHook("et2-ai", (editor) =>
 		{
-			// Run original _extendedSettings()
-			// @ts-ignore
-			const original = originalExtended();
-			typeof original["setup"] == "function" && original["setup"](editor);
-
-			// See https://www.tiny.cloud/docs/tinymce/latest/custom-toolbarbuttons/
-			editor.ui.registry.addIcon("aitools", "<et2-image src='aitools/navbar'></et2-image>");
-			// Add prompts as menu actions
+			editor.ui.registry.addIcon("aitools", AI_TOOLS_ICON_SVG);
 			editor.ui.registry.addMenuButton("aitoolsPrompts", {
 				tooltip: this.egw().lang("AI Tools"),
 				icon: "aitools",
@@ -572,17 +560,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 					callback(this.prompts.map(p => this._promptToTinyMenu(p)));
 				}
 			});
-		};
-		// @ts-ignore monkey patching with no restore
-		target._extendedSettings = () =>
-		{
-			const original = originalExtended();
-			return Object.assign(original, {
-				height: "100%",
-				toolbar: (original.toolbar || "") + " | aitoolsPrompts",
-				setup: setup
-			});
-		}
+		});
 	}
 
 	protected _promptToTinyMenu(prompt : AiPrompt)

@@ -82,14 +82,17 @@ class HtmlArea extends Etemplate\Widget
 	);
 
 	/**
-	 * List of exisitng toolbar actions
+	 * List of existing toolbar actions.
+	 *
+	 * Keep the server-side preference/config options aligned with the current
+	 * toolbar identifiers.
 	 * @var array
 	 */
 	public static $toolbar_list = [
 		'undo', 'redo', 'bold', 'italic', 'underline', 'strikethrough', 'forecolor', 'backcolor',
 		'link', 'alignleft', 'aligncenter', 'alignright', 'alignjustify',
 		'numlist', 'bullist', 'outdent', 'indent', 'ltr', 'rtl','pastetext',
-		'removeformat', 'code', 'image', 'searchreplace','formatselect', 'fontselect', 'fontsizeselect', 'fullscreen', 'table'
+		'removeformat', 'code', 'image', 'searchreplace', 'blocks', 'fontfamily', 'fontsize', 'fullscreen', 'table'
 	];
 
 	/**
@@ -97,7 +100,7 @@ class HtmlArea extends Etemplate\Widget
 	 * @var array
 	 */
 	public static $toolbar_default_list = [
-		'undo', 'redo','formatselect', 'fontselect', 'fontsizeselect',
+		'undo', 'redo', 'blocks', 'fontfamily', 'fontsize',
 		'bold' ,'italic', 'underline', 'removeformat', 'forecolor', 'backcolor', 'alignleft',
 		'aligncenter', 'alignright', 'alignjustify', 'numlist', 'bullist', 'outdent',
 		'indent', 'link', 'image', 'pastetext', 'table'
@@ -144,6 +147,11 @@ class HtmlArea extends Etemplate\Widget
 	public function beforeSendToClient($cname)
 	{
 		$form_name = self::form_name($cname, $this->id);
+
+		if (($this->attrs['mode'] ?? '') !== 'ascii')
+		{
+			Api\Framework::includeJS('/node_modules/tinymce/tinymce.min.js');
+		}
 
 		// Blindly turn on AI tools without regard to parent node
 		$ai = new Ai('<et2-ai>');

@@ -19,7 +19,7 @@ export default css`
     }
 
 	.et2-ai {
-		width: 99%;
+		width: 100%;
 		height: 100%;
 		position: relative;
 		align-items: stretch;
