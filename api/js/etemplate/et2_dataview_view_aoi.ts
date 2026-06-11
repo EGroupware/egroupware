@@ -70,6 +70,19 @@ export function et2_dataview_rowAOI(_node)
 	 * @param {object} _params
 	 */
 	var selectHandler = function(e, _params) {
+		// A click event is also fired after dragging to select text.
+		// 	Do not turn that into row selection and row focus, because Firefox
+		// 	clears the text selection when focus is moved to the table row.
+		// In general selecting text(e.g. to copy it) should not trigger a row selection
+		const selection = window.getSelection?.();
+		if (!egwIsMobile() &&
+			selection &&
+			!selection.isCollapsed &&
+			selection.toString().length > 0)
+		{
+			return;
+		}
+
 		// Reset the focus so that keyboard navigation will work properly
 		// after the element has been clicked
 		egwUnfocus();
