@@ -1,4 +1,4 @@
-import {Et2Htmlarea} from "Et2Htmlarea/Et2HtmlArea";
+import {Et2HtmlArea} from "./Et2HtmlArea/Et2HtmlArea";
 
 /**
  * @deprecated use Et2HtmlArea

@@ -249,7 +249,16 @@ body, p, div {
   font-family: $font_family;
   font-size: $font_size;
   line-height: 1.4;
+}
+p {
   margin: 1rem 0;
+  margin-block: 1rem;
+  margin-inline: 0;
+}
+div {
+  margin: 0 !important;
+  margin-block: 0 !important;
+  margin-inline: 0 !important;
 }
 body {
   margin: 1rem;

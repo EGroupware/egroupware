@@ -1,5 +1,5 @@
 /**
- * EGroupware eTemplate2 - HTML area widget (WebComponent skeleton)
+ * EGroupware eTemplate2 - HTML area widget
  *
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  * @package etemplate
@@ -11,14 +11,28 @@
 import {css, html, LitElement, nothing, PropertyValues} from "lit";
 import {ifDefined} from "lit/directives/if-defined.js";
 import {classMap} from "lit/directives/class-map.js";
+import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {query} from "lit/decorators/query.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {Et2VfsSelectDialog, type FileInfo} from "../Et2Vfs/Et2VfsSelectDialog";
 import {loadWebComponent} from "../Et2Widget/Et2Widget";
-import {egw} from "../../jsapi/egw_global";
-import tinymce, {type Editor as TinyMceEditor, type RawEditorOptions} from "tinymce";
+import "tinymce";
+import type {Editor as TinyMceEditor, RawEditorOptions, TinyMCE} from "tinymce";
+import {
+	BLOCK_FORMATS,
+	editorContentStyle,
+	htmlAreaFormats,
+	type HtmlAreaMode,
+	LANGUAGE_CODE as HTMLAREA_LANGUAGE_CODE,
+	menubarFromPreference,
+	NPM_PLUGIN_SET as HTMLAREA_NPM_PLUGIN_SET,
+	normalizeFormatBlock,
+	paragraphStyles,
+	requestedToolbarSetting,
+	toolbarForMode
+} from "./Et2HtmlAreaConfig";
 import "tinymce/icons/default";
 import "tinymce/themes/silver";
 import "tinymce/models/dom";
@@ -47,8 +61,7 @@ import "tinymce/plugins/visualblocks";
 import "tinymce/plugins/visualchars";
 import "tinymce/plugins/wordcount";
 import "@tinymce/tinymce-webcomponent";
-
-type HtmlAreaMode = "" | "ascii" | "simple" | "extended" | "advanced";
+import "./Et2HtmlAreaReadonly";
 
 type TinyMceConfig = RawEditorOptions;
 type TinyMceUploadHandler = NonNullable<TinyMceConfig["images_upload_handler"]>;
@@ -60,7 +73,7 @@ type TinyMceCallbackBridge = Record<string, {
 }>;
 const TINYMCE_POPUP_SINK_STYLE_ID = "egw-et2-htmlarea-popup-sink-style";
 
-tinymce.overrideDefaults({
+window.tinymce.overrideDefaults({
 	license_key: "gpl"
 });
 
@@ -68,6 +81,7 @@ declare global
 {
 	interface Window
 	{
+		tinymce : TinyMCE;
 		/**
 		 * TinyMCE web-component integration bridge.
 		 *
@@ -103,113 +117,6 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
 @customElement("et2-htmlarea")
 export class Et2HtmlArea extends Et2InputWidget(LitElement)
 {
-	static readonly DEFAULT_MENUBAR = "file edit insert view format table tools help";
-	static readonly TOOLBAR_SIMPLE = "undo redo | blocks fontfamily fontsize | bold italic underline removeformat forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image pastetext | table";
-	static readonly TOOLBAR_EXTENDED = "fontfamily fontsize | bold italic underline strikethrough forecolor backcolor | link | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent | removeformat | image | fullscreen | table";
-	static readonly TOOLBAR_ADVANCED = "undo redo | blocks | fontfamily fontsize | bold italic underline strikethrough forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent ltr rtl | removeformat code | link image pastetext | searchreplace | fullscreen | table";
-	static readonly TOOLBAR_LIST = [
-		"undo",
-		"redo",
-		"blocks",
-		"fontfamily",
-		"fontsize",
-		"bold",
-		"italic",
-		"strikethrough",
-		"forecolor",
-		"backcolor",
-		"link",
-		"alignleft",
-		"aligncenter",
-		"alignright",
-		"alignjustify",
-		"numlist",
-		"bullist",
-		"outdent",
-		"indent",
-		"ltr",
-		"rtl",
-		"removeformat",
-		"code",
-		"image",
-		"searchreplace",
-		"fullscreen",
-		"table"
-	];
-	static readonly TOOLBAR_ITEM_ALIASES : Record<string, string> = {
-		formatselect: "blocks",
-		fontselect: "fontfamily",
-		fontsizeselect: "fontsize"
-	};
-	/**
-	 * Legacy htmlarea requested plugins from client-side config, not from a
-	 * server-side preference. TinyMCE 8 now absorbs several of those features
-	 * into core, so this list contains only the GPL community plugins that still
-	 * need explicit bundling and activation from `node_modules/tinymce/plugins`.
-	 */
-	static readonly NPM_PLUGIN_SET = [
-		"searchreplace",
-		"autolink",
-		"directionality",
-		"visualblocks",
-		"visualchars",
-		"image",
-		"link",
-		"media",
-		"fullscreen",
-		"codesample",
-		"table",
-		"charmap",
-		"pagebreak",
-		"nonbreaking",
-		"anchor",
-		"insertdatetime",
-		"advlist",
-		"lists",
-		"wordcount",
-		"help",
-		"code"
-	].join(" ");
-
-	static readonly LANGUAGE_CODE : Record<string, string> = {
-		bg: "bg_BG",
-		ca: "ca",
-		cs: "cs",
-		da: "da",
-		de: "de",
-		en: "en",
-		el: "el",
-		"es-es": "es",
-		et: "et",
-		eu: "eu",
-		fa: "fa_IR",
-		fi: "fi",
-		fr: "fr_FR",
-		hr: "hr",
-		hu: "hu_HU",
-		id: "id",
-		it: "it",
-		ja: "ja",
-		ko: "ko_KR",
-		lt: "lt",
-		lv: "lv",
-		nl: "nl",
-		no: "nb_NO",
-		pl: "pl",
-		pt: "pt_PT",
-		"pt-br": "pt_BR",
-		ru: "ru",
-		sk: "sk",
-		sl: "sl_SI",
-		sv: "sv_SE",
-		th: "th_TH",
-		tr: "tr_TR",
-		uk: "en_GB",
-		vi: "vi_VN",
-		zh: "zh_CN",
-		"zh-tw": "zh_TW"
-	};
-
 	static get styles()
 	{
 		return [
@@ -261,6 +168,14 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 					resize: vertical;
 					font: inherit;
 				}
+
+				.htmlarea__readonly {
+					flex: 1 1 auto;
+					min-height: 0;
+					min-width: 0;
+					overflow-wrap: anywhere;
+					white-space: pre-wrap;
+				}
 			`
 		];
 	}
@@ -300,7 +215,8 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	width = "";
 
 	/**
-	 * Url to upload images dragged in or id of link_to widget to it's vfs upload. Can also be just a name for which content array contains a path to upload the picture.
+	 * URL to upload dragged or pasted images, or the id of a link_to-style
+	 * widget whose VFS path should receive the upload.
 	 */
 	@property({type: String, attribute: "image-upload"})
 	imageUpload = "";
@@ -356,12 +272,6 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	 */
 	@property({type: Boolean, attribute: "apply-default-font"})
 	applyDefaultFont = false;
-
-	/**
-	 * The endpoint for AI Tools, if set enabled the menu.
-	 */
-	@property({type: String})
-	endpoint = "";
 
 	/**
 	 * Placeholder text shown when the editor is empty.
@@ -455,7 +365,10 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 
 	set toolbar_mode(value : string)
 	{
-		this.toolbarMode = value;
+		if(["floating", "sliding", "scrolling", "wrap"].includes(value))
+		{
+			this.toolbarMode = value as typeof this.toolbarMode;
+		}
 	}
 
 	private _tinyMceEditor : TinyMceEditor | null = null;
@@ -498,7 +411,13 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 		{
 			this._syncValueToEditor();
 		}
-		if(changedProperties.has("readonly") && this._tinyMceEditor?.mode)
+		if(changedProperties.has("readonly") && this.readonly)
+		{
+			this._removePublishedConfig();
+			this._removePublishedCallbacks();
+			this._tinyMceEditor = null;
+		}
+		else if(changedProperties.has("readonly") && this._tinyMceEditor?.mode)
 		{
 			this._tinyMceEditor.mode.set(this.readonly ? "readonly" : "design");
 		}
@@ -551,9 +470,9 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 		return super.getValue(submit_value);
 	}
 
-	getInputNode()
+	getInputNode() : HTMLInputElement
 	{
-		return this._isAsciiMode ? this._textareaElement : this._editorElement;
+		return (this._isAsciiMode ? this._textareaElement : this._editorElement) as unknown as HTMLInputElement;
 	}
 
 	async focus()
@@ -631,67 +550,31 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 
 	protected get _contentCss() : string
 	{
+		const api = this.egw();
 		const darkmode = document.documentElement?.dataset?.darkmode ?? "0";
 		const prefs = btoa([
-			egw.preference("rte_font", "common"),
-			egw.preference("rte_font_size", "common"),
-			egw.preference("rte_font_unit", "common")
+			api.preference("rte_font", "common"),
+			api.preference("rte_font_size", "common"),
+			api.preference("rte_font_unit", "common")
 		].join("::"));
 
-		return `${egw.webserverUrl}/api/tinymce.php?darkmode=${darkmode}&${prefs}`;
+		return `${api.webserverUrl}/api/tinymce.php?darkmode=${darkmode}&${prefs}`;
 	}
 
 	protected get _languageCode() : string
 	{
-		const language = String(egw.preference("lang", "common") || "en").toLowerCase();
-		return Et2HtmlArea.LANGUAGE_CODE[language] || "en";
+		const language = String(this.egw().preference("lang", "common") || "en").toLowerCase();
+		return HTMLAREA_LANGUAGE_CODE[language] || "en";
 	}
 
-	/**
-	 * Legacy `rte_formatblock=customparagraph` used Enter for line breaks and
-	 * Shift+Enter for paragraphs. TinyMCE now models that as `invert`.
-	 */
-	protected get _newlineBehavior() : TinyMceConfig["newline_behavior"]
+	protected get _defaultFormatBlock() : string
 	{
-		return egw.preference("rte_formatblock", "common") === "customparagraph" ? "invert" : "default";
+		return normalizeFormatBlock(this.egw().preference("rte_formatblock", "common"));
 	}
 
 	protected get _toolbar() : string | false
 	{
-		let toolbar : string | false;
-		switch(this._normalizedMode)
-		{
-			case "advanced":
-				toolbar = Et2HtmlArea.TOOLBAR_ADVANCED;
-				break;
-			case "extended":
-				toolbar = Et2HtmlArea.TOOLBAR_EXTENDED;
-				break;
-			case "ascii":
-				toolbar = "";
-				break;
-			case "simple":
-				toolbar = Et2HtmlArea.TOOLBAR_SIMPLE;
-				break;
-			default:
-				if(this.noToolbar)
-				{
-					toolbar = false;
-					break;
-				}
-				toolbar = this._requestedToolbarSetting ?
-					this._toolbarFromSetting(this._requestedToolbarSetting) :
-					Et2HtmlArea.TOOLBAR_SIMPLE;
-				break;
-		}
-
-		if(toolbar === false || this._toolbarItems.size === 0)
-		{
-			return toolbar;
-		}
-
-		const extraItems = [...this._toolbarItems].join(" ");
-		return toolbar ? `${toolbar} | ${extraItems}` : extraItems;
+		return toolbarForMode(this._normalizedMode, this._requestedToolbarSetting, this.noToolbar, [...this._toolbarItems]);
 	}
 
 	/**
@@ -700,66 +583,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	 */
 	protected get _requestedToolbarSetting() : string
 	{
-		if(this.noToolbar)
-		{
-			return "";
-		}
-
-		const preference = egw.preference("rte_toolbar", "common");
-		if(Array.isArray(preference))
-		{
-			return preference.join(",");
-		}
-		if(preference && typeof preference === "object")
-		{
-			return Object.values(preference).join(",");
-		}
-
-		return typeof preference === "string" ? preference : "";
-	}
-
-	/**
-	 * Legacy toolbar settings may be a comma-separated action list instead of a
-	 * native TinyMCE toolbar string. Support both forms during migration.
-	 */
-	protected _toolbarFromSetting(toolbar : string) : string
-	{
-		if(toolbar.includes("|"))
-		{
-			const normalizedToolbar = toolbar
-				.split(/\s+/)
-				.map(item => Et2HtmlArea.TOOLBAR_ITEM_ALIASES[item] || item)
-				.join(" ");
-
-			return normalizedToolbar.includes("false") ? "" : normalizedToolbar;
-		}
-
-		const actions = toolbar
-			.split(",")
-			.map(action => action.trim())
-			.map(action => Et2HtmlArea.TOOLBAR_ITEM_ALIASES[action] || action)
-			.filter(Boolean);
-
-		if(actions.length === 0)
-		{
-			return Et2HtmlArea.TOOLBAR_SIMPLE;
-		}
-
-		const disabledActions = Et2HtmlArea.TOOLBAR_LIST.filter(action => !actions.includes(action));
-		let filteredToolbar = Et2HtmlArea.TOOLBAR_ADVANCED;
-
-		disabledActions.forEach(action =>
-		{
-			filteredToolbar = filteredToolbar.replace(new RegExp(`\\b${action}\\b`, "g"), "");
-		});
-
-		filteredToolbar = filteredToolbar
-			.split("|")
-			.map(group => group.trim().replace(/\s+/g, " "))
-			.filter(Boolean)
-			.join(" | ");
-
-		return filteredToolbar || Et2HtmlArea.TOOLBAR_SIMPLE;
+		return requestedToolbarSetting(this.egw().preference("rte_toolbar", "common"), this.noToolbar);
 	}
 
 	/**
@@ -771,15 +595,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	 */
 	protected get _menubar() : string | false
 	{
-		const preference = egw.preference("rte_menubar", "common");
-		if(typeof preference === "undefined" || preference === null)
-		{
-			return this.noMenubar ? false : Et2HtmlArea.DEFAULT_MENUBAR;
-		}
-
-		return Boolean(parseInt(String(preference), 10)) && !this.noMenubar ?
-		       Et2HtmlArea.DEFAULT_MENUBAR :
-		       false;
+		return menubarFromPreference(this.egw().preference("rte_menubar", "common"), this.noMenubar);
 	}
 
 	/**
@@ -962,7 +778,8 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 
 		this._wrapTextNodes();
 
-		const fontFamily = String(egw.preference("rte_font", "common") || "arial, helvetica, sans-serif");
+		const api = this.egw();
+		const styles = paragraphStyles(api.preference.bind(api));
 		editArea.querySelectorAll(
 			'h1:not([style*="font-family"]),h2:not([style*="font-family"]),h3:not([style*="font-family"]),' +
 			'h4:not([style*="font-family"]),h5:not([style*="font-family"]),h6:not([style*="font-family"]),' +
@@ -970,16 +787,15 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			'blockquote:not([style*="font-family"]),td:not([style*="font-family"]),th:not([style*="font-family"])'
 		).forEach(elem =>
 		{
-			(elem as HTMLElement).style.fontFamily = fontFamily;
+			(elem as HTMLElement).style.fontFamily = styles["font-family"];
 		});
 
-		const fontSize = `${egw.preference("rte_font_size", "common") || "10"}${egw.preference("rte_font_unit", "common") || "pt"}`;
 		editArea.querySelectorAll(
 			'div:not([style*="font-size"]),li:not([style*="font-size"]),p:not([style*="font-size"]),' +
 			'blockquote:not([style*="font-size"]),td:not([style*="font-size"]),th:not([style*="font-size"])'
 		).forEach(elem =>
 		{
-			(elem as HTMLElement).style.fontSize = fontSize;
+			(elem as HTMLElement).style.fontSize = styles["font-size"];
 		});
 
 		return true;
@@ -995,26 +811,20 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	 */
 	protected _getTinyMceConfig() : TinyMceConfig
 	{
+		const api = this.egw();
 		const config : TinyMceConfig = {
-			base_url: `${egw.webserverUrl}/node_modules/tinymce`,
+			base_url: `${api.webserverUrl}/node_modules/tinymce`,
 			body_id: `${this.dom_id}_htmlarea`,
 			browser_spellcheck: true,
+			block_formats: BLOCK_FORMATS,
+			content_style: editorContentStyle(api.preference.bind(api)),
 			convert_urls: false,
-			formats: {
-				// setting p (and below also the preferred formatblock) to the user's font and -size preference
-				p: {
-					block: 'p', styles: {
-						"font-family": (<string>egw.preference('rte_font', 'common') || 'arial, helvetica, sans-serif'),
-						"font-size": (<string>egw.preference('rte_font_size', 'common') || '10') +
-							(<string>egw.preference('rte_font_unit', 'common') || 'pt')
-					}
-				},
-			},
+			// setting p (and below also the preferred formatblock) to the user's font and -size preference
+			formats: htmlAreaFormats(api.preference.bind(api)),
 			license_key: "gpl",
 			language: this._languageCode,
 			language_url: this._languageCode === "en" ? undefined :
-			              `${egw.webserverUrl}/api/js/tinymce/langs/${this._languageCode}.js`,
-			newline_behavior: this._newlineBehavior,
+			              `${api.webserverUrl}/api/js/tinymce/langs/${this._languageCode}.js`,
 			noneditable_class: "mceNonEditable",
 			paste_data_images: true,
 			contextmenu: false,
@@ -1029,21 +839,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			valid_children: this.validChildren
 		};
 
-		this._applyLegacyCompatibilityConfig(config);
-
 		return config;
-	}
-
-	/**
-	 * Compatibility bridge for legacy htmlarea options that still need to map
-	 * onto TinyMCE's config object during the migration.
-	 */
-	protected _applyLegacyCompatibilityConfig(config : TinyMceConfig)
-	{
-		if(this.applyDefaultFont)
-		{
-			config.content_style = `body { font-family: ${egw.preference("rte_font", "common")}; font-size: ${egw.preference("rte_font_size", "common")}${egw.preference("rte_font_unit", "common")}; }`;
-		}
 	}
 
 	/**
@@ -1057,7 +853,8 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	 */
 	protected _getImageUploadUrl() : string
 	{
-		const base = egw.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload");
+		const api = this.egw();
+		const base = api.ajaxUrl("EGroupware\\Api\\Etemplate\\Widget\\Vfs::ajax_htmlarea_upload");
 		const requestId = this.getInstanceManager()?.etemplate_exec_id;
 
 		if(this.imageUpload && this.imageUpload[0] !== "/" && !this.imageUpload.startsWith("http"))
@@ -1112,10 +909,10 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			       this.egw().lang("Select file"),
 			mime: isImage ? "image/" : isMedia ? /^(audio|video)\//i : "",
 			open: true
-		}, this) as Et2VfsSelectDialog;
+		}, this) as unknown as Et2VfsSelectDialog;
 
 		this._raiseDialogAboveTinyMce(dialog);
-		document.body.append(dialog);
+		document.body.append(dialog as unknown as Node);
 		await dialog.show();
 
 		try
@@ -1128,7 +925,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			}
 
 			const file = dialog.fileInfo(path) as FileInfo | undefined;
-			const url = file?.downloadUrl ? `${egw.webserverUrl}${file.downloadUrl}` : "";
+			const url = file?.downloadUrl ? `${this.egw().webserverUrl}${file.downloadUrl}` : "";
 			if(!url)
 			{
 				return;
@@ -1165,22 +962,24 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			return {};
 		}
 
+		const label = file.label;
+
 		if(meta.filetype === "image")
 		{
 			return {
-				alt: file.name,
-				title: file.name
+				alt: label,
+				title: label
 			};
 		}
 		if(meta.filetype === "file")
 		{
 			return {
-				text: file.name,
-				title: file.name
+				text: label,
+				title: label
 			};
 		}
 		return {
-			title: file.name
+			title: label
 		};
 	}
 
@@ -1198,6 +997,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 		{
 			this._ensurePopupSinkStyles();
 			this._syncValueToEditor();
+			this._applyDefaultFormatBlock(editor);
 			if(!this._tinymceResolved)
 			{
 				this._resolveTinymce?.([editor]);
@@ -1216,6 +1016,12 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			this.dispatchEvent(new FocusEvent("focus", {bubbles: true, composed: true}));
 		});
 		editor.on("blur", () => this._queueHostBlur());
+	}
+
+	protected _applyDefaultFormatBlock(editor : TinyMceEditor)
+	{
+		editor.formatter.apply(this._defaultFormatBlock);
+		editor.nodeChanged();
 	}
 
 	/**
@@ -1372,6 +1178,17 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	 */
 	protected _renderEditor()
 	{
+		if(this.readonly)
+		{
+			const value = this.value ?? "";
+
+			return html`
+                <div part="readonly-content" class="htmlarea__readonly">
+                    ${this._isAsciiMode ? html`${value}` : unsafeHTML(value)}
+                </div>
+			`;
+		}
+
 		if(this._isAsciiMode)
 		{
 			return html`
@@ -1398,7 +1215,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
                     toolbar="${this._toolbar === false ? "false" : this._toolbar}"
                     menubar="${this._menubar === false ? "false" : this._menubar}"
                     statusbar="${String(!this.noStatusbar)}"
-                    plugins="${Et2HtmlArea.NPM_PLUGIN_SET}"
+                    plugins="${HTMLAREA_NPM_PLUGIN_SET}"
                     content_css="${this._contentCss}"
                     promotion="false"
                     resize="false"
