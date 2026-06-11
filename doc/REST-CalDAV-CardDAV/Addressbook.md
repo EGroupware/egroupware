@@ -433,16 +433,24 @@ The following flat attributes are supported by the `ContactPatch` schema in
 `doc/openapi/addressbook.json` and can be used for `POST` (flat create) and
 `PATCH` (partial update):
 
-* `name`
-* `fullName`
+* `name/title`
 * `name/given`
+* `name/given2`
 * `name/surname`
+* `name/credential`
 * `organizations/org/name`
 * `organizations/org/unit`
 * `emails/work`
-* `emails/work/email`
 * `phones/tel_work`
 * `phones/tel_cell`
+* `phones/tel_fax`
+* `phones/tel_assistent`
+* `phones/tel_car`
+* `phones/tel_pager`
+* `phones/tel_home`
+* `phones/tel_fax_home`
+* `phones/tel_cell_private`
+* `phones/tel_other`
 * `addresses/work/locality`
 * `addresses/work/postcode`
 * `addresses/work/street`
@@ -450,9 +458,10 @@ The following flat attributes are supported by the `ContactPatch` schema in
 * `addresses/work/countryCode`
 * `online/url`
 * `notes/note`
-* `egroupware.org:customfields`
-* `egroupware.org:customfields/Test` (example key for a custom field)
+* `egroupware.org:customfields/<name>` — custom fields are user-/admin-defined; for create/update send only the custom-field name and its value (see the `CustomField` schema for the object returned on read)
 
+> `fullName` is constructed from the `name/*` components and is read-only, so it is not part of `ContactPatch`.
+>
 > To unset a field or complete object with PATCH, patch its value to `null`.
 
 #### **PUT**  requests with  a `Content-Type: application/json` header allow modifying single resources (requires to specify all attributes!)
