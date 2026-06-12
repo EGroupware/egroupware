@@ -817,6 +817,8 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			body_id: `${this.dom_id}_htmlarea`,
 			browser_spellcheck: true,
 			block_formats: BLOCK_FORMATS,
+			// fix exiting a list with return get you to p, even if div (small paragraph) is selected
+			forced_root_block: this._defaultFormatBlock === 'div' ? 'div' : 'p',
 			content_style: editorContentStyle(api.preference.bind(api)),
 			convert_urls: false,
 			// setting p (and below also the preferred formatblock) to the user's font and -size preference
