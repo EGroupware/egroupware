@@ -59,6 +59,50 @@ path, or external URL when the upload destination needs to be explicit.
 TinyMCE's image, media, and file dialogs use the EGroupware VFS picker unless a
 custom `filePickerCallback` property is assigned.
 
+### Submit-time Formatting
+
+Set `apply-default-font` when saved markup needs to carry the user's preferred
+font and size inline, such as mail compose content that may be read by clients
+that strip editor CSS. The normalization happens during `getValue(true)`, so it
+affects submitted rich-text content rather than the live editor appearance.
+
+### Custom Toolbar Buttons
+
+Integrations can extend the TinyMCE toolbar without reaching through the legacy
+`editor` property. Add the toolbar item name with `addToolbarItem()`, then
+register the TinyMCE UI in `registerEditorSetupHook()`. TinyMCE documents the
+available toolbar button APIs in its
+[custom toolbar buttons documentation](https://www.tiny.cloud/docs/tinymce/latest/custom-toolbarbuttons/).
+
+The hook must be registered before TinyMCE finishes initializing. If an
+integration wraps or creates the htmlarea, call these methods as soon as the
+`Et2HtmlArea` instance is available.
+
+```ts
+import type {Et2HtmlArea} from "./Et2HtmlArea";
+
+function addInsertGreetingButton(htmlarea : Et2HtmlArea)
+{
+	htmlarea.addToolbarItem("insertGreeting");
+	htmlarea.registerEditorSetupHook("example-greeting-button", editor =>
+	{
+		editor.ui.registry.addButton("insertGreeting", {
+			text: "Greeting",
+			tooltip: "Insert greeting",
+			onAction: () =>
+			{
+				editor.insertContent("<p>Hello</p>");
+			}
+		});
+	});
+}
+```
+
+Use a stable, integration-specific key for `registerEditorSetupHook()` so it can
+be replaced or removed later with `unregisterEditorSetupHook()`. The toolbar
+item name passed to `addToolbarItem()` must match the TinyMCE control name
+registered with `editor.ui.registry`.
+
 # Legacy Compatibility
 
 The component keeps a small compatibility bridge while older integrations move

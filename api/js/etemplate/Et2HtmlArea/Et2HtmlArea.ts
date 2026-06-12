@@ -27,8 +27,8 @@ import {
 	type HtmlAreaMode,
 	LANGUAGE_CODE as HTMLAREA_LANGUAGE_CODE,
 	menubarFromPreference,
-	NPM_PLUGIN_SET as HTMLAREA_NPM_PLUGIN_SET,
 	normalizeFormatBlock,
+	NPM_PLUGIN_SET as HTMLAREA_NPM_PLUGIN_SET,
 	paragraphStyles,
 	requestedToolbarSetting,
 	toolbarForMode
@@ -113,6 +113,20 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
  * integrates with EGroupware upload and language preferences, and exposes a
  * small extension surface for editor-specific integrations such as custom
  * toolbar buttons.
+ *
+ * @link https://www.tiny.cloud/docs/tinymce/latest/webcomponent-ref/ TinyMCE Web Component reference.
+ *
+ * @slot label - The editor's label. Alternatively, use the `label` attribute.
+ * @slot help-text - Text that describes how to use the editor. Alternatively, use the `statustext` attribute.
+ *
+ * @event input - Emitted when user input changes the editor value.
+ * @event change - Emitted when the user commits an editor value change.
+ * @event focus - Emitted when the editor receives focus.
+ * @event blur - Emitted when focus leaves the editor, including TinyMCE chrome and dialogs.
+ *
+ * @csspart form-control - The form control wrapper containing label, editor, and help text.
+ * @csspart form-control-input - The editor wrapper.
+ * @csspart readonly-content - The readonly value container when `readonly` is set.
  */
 @customElement("et2-htmlarea")
 export class Et2HtmlArea extends Et2InputWidget(LitElement)
