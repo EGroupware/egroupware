@@ -38,7 +38,7 @@
 					<et2-select id="ident_email_alias" span="all"></et2-select>
 				</row>
 				<row>
-					<htmlarea expand_toolbar="false" id="ident_signature" span="all"/>
+                    <htmlarea id="ident_signature" span="all"/>
 				</row>
 			</rows>
 		</grid>
