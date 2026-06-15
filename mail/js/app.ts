@@ -3075,29 +3075,13 @@ export class MailApp extends EgwApp
 					{
 						if (item.id === this.mail_currentlyFocussed) return item
 					});
-				const nmNode: HTMLElement = nmRow.iface.getDOMNode();
-				if (Object.keys(flags).length === 0)
-				{
-					//only the class attribute in data has changed, so
-					//we do not need to trigger the nm callbacks we can just
-					//update local Storage and set the classes und the nm row
+				const nmNode : HTMLElement = nmRow?.iface.getDOMNode();
 
-					classes.forEach((className) =>
-					{
-						nmNode.classList.add(className)
-						if (className === "unseen"){
-							const img:Et2Image = nmNode.querySelector(".status_img");
-							if (img) img.src = egw.image("mail_unseen")
-						}
-					})
-					egw.dataStoreUID(data.msg[i], dataElem.data, true);
+				//only the class attribute in data has changed, so
+				//we do not need to trigger the nm callbacks we can just
+				//update local Storage and set the classes und the nm row
+				egw.dataStoreUID(data.msg[i], dataElem.data);
 
-
-				} else
-				{
-
-					egw.dataStoreUID(data.msg[i], dataElem.data);
-				}
 				//set or remove the flag in the DOM since it can no longer come from the server because we do not trigger a full reload
 				//this needs to happen after egw.dataStoreUID since that triggers a redrawing of the row
 				if (flags['flagged'] == 'flagged')
