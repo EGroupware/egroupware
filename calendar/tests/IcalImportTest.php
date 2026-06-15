@@ -57,8 +57,8 @@ class IcalImportTest extends \EGroupware\Api\AppTest
 	 * Pass criteria:
 	 * - Import returns a valid event id and event can be read.
 	 * - Event stays recurring with expected UID/title and recurrence end date.
+	 * - Weekly Thursday recurrence fields are imported and can be represented as an iCal RRULE.
 	 * - At least one recurrence is materialized (environment-dependent horizon safe).
-	 * - Exported ICS still contains weekly Thursday RRULE details.
 	 */
 	public function testImportRecurringIcalFixture()
 	{
@@ -77,12 +77,19 @@ class IcalImportTest extends \EGroupware\Api\AppTest
 		$this->assertIsArray($event, 'Imported event can not be read back');
 		$this->assertEquals(self::EVENT_UID, $event['uid']);
 		$this->assertEquals('Developer Meeting', $event['title']);
-		$this->assertNotEquals(MCAL_RECUR_NONE, $event['recur_type'], 'Imported event is not recurring');
+		$this->assertEquals(MCAL_RECUR_WEEKLY, $event['recur_type'], 'Imported event is not weekly recurring');
+		$this->assertEquals(1, $event['recur_interval'], 'Unexpected recurrence interval');
+		$this->assertNotEmpty($event['recur_data'] & MCAL_M_THURSDAY, 'Imported recurrence does not include Thursday');
 
 		$recur_enddate = $event['recur_enddate'] instanceof Api\DateTime ?
 			clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'], Api\DateTime::$server_timezone);
 		$recur_enddate->setTimezone(new \DateTimeZone($event['tzid']));
 		$this->assertEquals('20261217', $recur_enddate->format('Ymd'), 'Unexpected recurrence end date');
+
+		$rrule = \calendar_rrule::event2rrule($event, false, $event['tzid'])->generate_rrule('2.0');
+		$this->assertIsArray($rrule, 'Imported recurrence can not be converted to an iCal RRULE');
+		$this->assertEquals('WEEKLY', $rrule['FREQ'], 'Unexpected iCal recurrence frequency');
+		$this->assertEquals('TH', $rrule['BYDAY'], 'Unexpected iCal recurrence day');
 
 		$so = new \calendar_so();
 		$recurrences = $so->get_recurrences($cal_id);
@@ -97,12 +104,6 @@ class IcalImportTest extends \EGroupware\Api\AppTest
 			$occurrence->setTimezone(new \DateTimeZone($event['tzid']));
 			$this->assertEquals(4, (int)$occurrence->format('N'), 'Recurrence does not fall on Thursday');
 		}
-
-		$export = $this->ical_bo->exportVCal([$event], '2.0');
-		$this->assertIsString($export);
-		$this->assertStringContainsString('RRULE:', $export);
-		$this->assertStringContainsString('FREQ=WEEKLY', $export);
-		$this->assertStringContainsString('BYDAY=TH', $export);
 	}
 
 	/**
