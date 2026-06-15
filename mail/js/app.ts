@@ -394,9 +394,6 @@ export class MailApp extends EgwApp
 					{
 						textAreaWidget.tinymce.then(()=>
 						{
-							// Clear explicit height so browser can manage it
-							textAreaWidget.tinymce_container.style.height = "";
-
 							if (textAreaWidget.editor)
 							{
 								jQuery(textAreaWidget.editor.iframeElement.contentWindow.document).on('dragenter', function ()
