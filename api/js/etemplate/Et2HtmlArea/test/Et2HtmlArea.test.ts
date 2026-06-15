@@ -339,6 +339,34 @@ describe("Et2HtmlArea default rich text mode", () =>
 			"Readonly ASCII text should render markup as literal text"
 		);
 	});
+
+	it("does not push editor-originated content back into TinyMCE on update", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`
+			<et2-htmlarea></et2-htmlarea>
+		`);
+		const editorContent = "<p><a href=\"https://example.org\">https://example.org</a></p>";
+		const setContent = sinon.spy();
+		const editor = {
+			getContent: () => editorContent,
+			setContent
+		};
+
+		(element as any)._tinyMceEditor = editor;
+		(element as any)._syncValueFromEditor(false);
+		await element.updateComplete;
+
+		assert.equal(element.value, editorContent, "Editor input should still update the widget value");
+		assert.isFalse(
+			setContent.called,
+			"Editor-originated value updates should not call setContent and reset the caret"
+		);
+
+		element.value = "<p>External update</p>";
+		await element.updateComplete;
+
+		assert.isTrue(setContent.calledOnceWith("<p>External update</p>"), "External value updates should still sync into TinyMCE");
+	});
 });
 
 describe("Et2HtmlAreaReadonly", () =>

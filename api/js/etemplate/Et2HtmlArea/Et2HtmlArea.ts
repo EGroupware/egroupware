@@ -388,7 +388,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	private _tinyMceEditor : TinyMceEditor | null = null;
 	private _resolveTinymce : ((editor : TinyMceEditor[]) => void) | null = null;
 	private _tinymceResolved = false;
-	private _syncingFromEditor = false;
+	private _valueFromEditor : string | undefined;
 	private _pendingBlurTimeout : number | null = null;
 	private _editorSetupHooks = new Map<string, TinyMceSetupHook>();
 	private _toolbarItems = new Set<string>();
@@ -421,9 +421,15 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	{
 		super.updated(changedProperties);
 
-		if(changedProperties.has("value") && !this._syncingFromEditor)
+		if(changedProperties.has("value"))
 		{
-			this._syncValueToEditor();
+			const valueFromEditor = this._valueFromEditor;
+			this._valueFromEditor = undefined;
+
+			if(valueFromEditor === undefined || valueFromEditor !== this.value)
+			{
+				this._syncValueToEditor();
+			}
 		}
 		if(changedProperties.has("readonly") && this.readonly)
 		{
@@ -1129,11 +1135,10 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			return;
 		}
 
-		this._syncingFromEditor = true;
+		this._valueFromEditor = nextValue;
 		const oldValue = this.value;
 		this.value = nextValue;
 		this.requestUpdate("value", oldValue);
-		this._syncingFromEditor = false;
 
 		this.dispatchEvent(new Event("input", {bubbles: true, composed: true}));
 		if(dispatchChange)
