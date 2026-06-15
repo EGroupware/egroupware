@@ -1611,7 +1611,10 @@ class StreamWrapper extends Api\Db\Pdo implements Vfs\StreamWrapperIface
 		$inst = new static();
 		if (!($stat = $inst->url_stat($path, STREAM_URL_STAT_QUIET)))
 		{
-			error_log(__METHOD__.__LINE__.' '.array2string($path).' not found!');
+			if(self::LOG_LEVEL > 1)
+			{
+				error_log(__METHOD__ . __LINE__ . ' ' . array2string($path) . ' not found!');
+			}
 			return false;	// not found
 		}
 		$eacls = array();

@@ -308,6 +308,11 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * JMAP push subscription types to request
+	 */
+	const SUBSCRIBTION_TYPES = ['Email', 'Mailbox'];
+
+	/**
 	 * Enable push notifications for the current connection and given account_id
 	 *
 	 * @param ?int $account_id =null 0=everyone on the instance
@@ -319,16 +324,24 @@ class Jmap extends Mail\Imap
 		try {
 			if (!$this->jmap) $this->jmap = $this->jmapClient();
 			$client_id = $this->jmapClientId($this->acc_id, $account_id ?: $GLOBALS['egw_info']['user']['account_id'], true)['client_id'];
-			if (!array_filter($this->jmap->getPushSubscriptions()['list']??[], static function(array $pushSubscription) use ($client_id)
+			$expires = (new Api\DateTime('+2days', new \DateTimeZone('UTC')))->format('Y-m-dTH:i:s\Z');
+			if (!($subscriptions=array_filter($this->jmap->getPushSubscriptions()['list']??[], static function(array $pushSubscription) use ($client_id)
 			{
-				return $pushSubscription['deviceClientId'] === $client_id && !empty($pushSubscription['verificationCode']);
-			}))
+				return $pushSubscription['deviceClientId'] === $client_id;
+			})))
 			{
 				$url = Api\Framework::getUrl(Api\Framework::link('/api/jmapPush.php', [
 					'acc_id' => $this->acc_id,
 					'account_id' => $account_id ?: $GLOBALS['egw_info']['user']['account_id'],
 				]));
-				$subscription_id = $this->jmap->createPushSubscription($client_id, $url, null, null, $this->jmap_sessionState)['id'];
+				$subscription_id = $this->jmap->createPushSubscription($client_id, $url, self::SUBSCRIBTION_TYPES, $expires, $this->jmap_sessionState)['id'];
+			}
+			// check the subscription is about to expire --> renew/extend it
+			elseif ((new Api\DateTime($subscriptions[0]['expires'])) < (new Api\DateTime('+1day')))
+			{
+				$this->jmap->updatePushSubscription($subscriptions[0]['id'], [
+					'expires' => $expires,
+				]);
 			}
 
 			// get states to calculate changes
@@ -570,6 +583,8 @@ class Jmap extends Mail\Imap
 
 	/**
 	 * Convert Message-ID to IMAP UID
+	 *
+	 * Requires indexing of headers to be switched on in Stalwart v0.16: Settings > Search in WebUI
 	 *
 	 * @param string $messageId
 	 * @param string $folderId

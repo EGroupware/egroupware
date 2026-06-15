@@ -101,6 +101,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         }
 
         this._context = _context;
+		const useAutoPaste = this._shouldUseAutoPaste();
         if (typeof _context == "object" && typeof _context.keyEvent == "object") {
             return this._handleKeyPress(_context.keyEvent, _selected, _links, _target);
         } else if (_context != "default") {
@@ -117,15 +118,11 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             }
 
 			let menu = null;
+			const managerData = _selected?.[0]?.parent?.manager?.data;
 			// Special handling for nextmatch context menu - reuse the same menu
-			if(!_target && !_context.menu && _selected[0].parent.manager.data.menu)
+			if(!_target && !_context.menu && managerData?.menu)
 			{
-				menu = _selected[0].parent.manager.data.menu
-			}
-			if(this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
-			{
-				menu = this._buildMenu(_links, _selected, _target);
-				menu.showAt(0, 0);
+				menu = managerData.menu;
 			}
 			if(!menu)
 			{
@@ -134,12 +131,19 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			}
 			else
 			{
+				if(useAutoPaste)
+				{
+					this._addCopyPaste(_links, _selected);
+				}
 				menu.applyContext(_links, _selected, _target);
 			}
-			if(_selected[0].parent.manager.data.menu && _selected[0].parent.manager.data.menu !== menu)
+			if(!_target && !_context.menu && managerData)
 			{
-				_selected[0].parent.manager.data.menu.remove();
-				_selected[0].parent.manager.data.menu = menu;
+				if(managerData.menu && managerData.menu !== menu)
+				{
+					managerData.menu.remove?.();
+				}
+				managerData.menu = menu;
 			}
 
 			menu.showAt(_context.posx, _context.posy, true);
@@ -325,9 +329,18 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
      * @returns {boolean}
      */
     private _registerContext = (_node, _callback, _context) => {
+		const nextmatchWidget = _context?.parent?.manager?.data?.nextmatch;
+		const isLegacyNextmatchWidget = !!nextmatchWidget &&
+			!(nextmatchWidget instanceof HTMLElement) &&
+			nextmatchWidget?._type === "nextmatch";
 
 		// Special handling for nextmatch: only build the menu once and just re-use it.
-		if(!_context.menu && _context.actionLinks && _context.parent?.manager?.data?.nextmatch && !_context.parent.manager.data.menu)
+		if(
+			!_context.menu &&
+			_context.actionLinks &&
+			isLegacyNextmatchWidget &&
+			!_context.parent.manager.data.menu
+		)
 		{
 			const actionLinks = _context.actionLinks;
 			const selectedContext = _context;
@@ -565,7 +578,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         const tree = {"root": []};
 
         // Automatically add in Drag & Drop actions
-		if(this.auto_paste && !window.egwIsMobile() && (!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/)))
+		if(this._shouldUseAutoPaste())
 		{
             this._addCopyPaste(_links, _selected);
         }
@@ -592,6 +605,13 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
         return menu;
     };
+
+	private _shouldUseAutoPaste = () =>
+	{
+		return this.auto_paste &&
+			!window.egwIsMobile() &&
+			(!this._context?.event || this._context?.event && !this._context.event?.type.match(/touch/));
+	};
 
     _getPageXY = function getPageXY(event) {
         // document.body.scrollTop does not work in IE

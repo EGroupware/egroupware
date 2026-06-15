@@ -114,6 +114,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	et	Superkasutaja
 superuser (root)	filemanager	et	Superkasutaja (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	et	Dokument võib sisaldada paigutusi nagu {{%3}}, mis asendatakse andmetega (%1täielik loetelu paigutuste nimedest%2).
+the requested path %1 is not available.	filemanager	et	Soovitud aadress %1 ei ole kättesaadav!
 up	filemanager	et	üles
 username for webdav and smb, use $user for name of logged in user	filemanager	et	WebDAV ja SMB puhul kasutajanimi, kasuta $user sisselogitud kasutaja nime
 vfs mounts and versioning	common	et	VFS-ühendused ja versioonimine

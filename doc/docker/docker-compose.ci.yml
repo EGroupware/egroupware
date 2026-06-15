@@ -18,10 +18,9 @@ services:
     # Override name to avoid potential conflicts with dev containers
     container_name: egwci-egroupware-db
     restart: "no"
-
   nginx:
-    deploy:
-      replicas: 0
+    volumes:
+      - ${EGW_CI_ROOT}/doc/docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
 
   push:
     deploy:

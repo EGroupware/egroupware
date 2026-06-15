@@ -24,6 +24,18 @@ if (!class_exists('\PHPUnit\Framework\TestCase') && class_exists('\PHPUnit_Frame
 // Needed to let Cache work
 $GLOBALS['egw_info']['server']['temp_dir'] = '/tmp';
 $GLOBALS['egw_info']['server']['install_id'] = 'PHPUnit test';
+// In CI/testing, align server webserver_url with EGW_URL when provided.
+if (($egw_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null)))
+{
+	$path = parse_url($egw_url, PHP_URL_PATH);
+	$GLOBALS['egw_info']['server']['webserver_url'] = $path ?: $egw_url;
+}
+// Optional CI-only switch to disable custom push backends (eg. swoolepush)
+// during PHPUnit runs to avoid network retries/backoff impacting runtime.
+if ((string)getenv('EGW_DISABLE_PUSH_BACKENDS') === '1')
+{
+	\EGroupware\Api\Hooks::disable('push-backends');
+}
 // setting a working session.save_path
 if (ini_get('session.save_handler') === 'files' && !is_writable(ini_get('session.save_path')) &&
 	is_dir('/tmp') && is_writable('/tmp'))
@@ -37,6 +49,8 @@ if (!isset($_SERVER['HTTP_HOST']) && $GLOBALS['EGW_DOMAIN'] !== 'default')
 }
 
 // Symlink api/src/fixtures/apps/* to root
+// Fixture app install should not try to control host webserver services in CI/CLI.
+putenv('EGW_START_WEBSERVER=');
 foreach(scandir($path=__DIR__.'/../api/tests/fixtures/apps') as $app)
 {
 	if (is_dir($path.'/'.$app) && @file_exists($path.'/'.$app.'/setup/setup.inc.php')/* &&

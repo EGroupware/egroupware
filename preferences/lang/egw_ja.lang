@@ -25,6 +25,7 @@ code is required	preferences	ja	コードが必要
 color	preferences	ja	色
 country	preferences	ja	国
 custom login box color, defaults to above color darkened	common	ja	ログイン・ボックスの色。
+custom login box text color, defaults to white	preferences	ja	ログインボックスのテキスト色をカスタマイズできます。デフォルトは白です。
 custom sidebar menu active color, defaults to above color darkened	common	ja	サイドバー・メニューのアクティブ色。
 date format	preferences	ja	日付書式
 default	preferences	ja	既定値
@@ -150,6 +151,7 @@ uppercase letters	preferences	ja	大文字
 use default	preferences	ja	既定を使用
 use first %1 letters from username	preferences	ja	ユーザー名の最初の %1 文字を使用
 use initials from first and last name	preferences	ja	姓と名のイニシャルを使う
+used instead of the application color.	preferences	ja	アプリケーションの色ではなく、この色が使用されます。
 users choice	preferences	ja	ユーザ選択
 what to display for an avatar, if there is no photo	preferences	ja	写真がない場合、アバターに何を表示するか
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ja	ホームやログアウト・ボタンをアプリケーションのようにトップバーに表示します。

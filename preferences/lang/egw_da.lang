@@ -15,6 +15,7 @@ code is invalid	preferences	da	Koden er ugyldig
 code is required	preferences	da	Koden er påkrævet
 color	preferences	da	Farve
 country	preferences	da	Land
+custom login box text color, defaults to white	preferences	da	Brugerdefineret tekstfarve i login-feltet, standardfarven er hvid
 dark mode theme	preferences	da	Tema i mørk tilstand
 date format	preferences	da	Dato format
 default	preferences	da	standard
@@ -100,6 +101,7 @@ time format	preferences	da	Tidsformat
 use default	preferences	da	Brug standard
 use first %1 letters from username	preferences	da	Brug de første %1 bogstaver fra brugernavnet
 use initials from first and last name	preferences	da	Brug initialer fra for- og efternavn
+used instead of the application color.	preferences	da	Anvendes i stedet for programmets standardfarve.
 users choice	preferences	da	Brugerens valg
 what to display for an avatar, if there is no photo	preferences	da	Hvad der skal vises som avatar, hvis der ikke er noget foto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	da	Hvis du siger ja, bliver hjem og logout knapperne vist som applikationer i hoved applikations linien.

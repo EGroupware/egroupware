@@ -88,6 +88,7 @@ class Script
 		$anyofbit = 4;
 		$keepbit = 8;
 		$regexbit = 128;
+		$tokenizedbit = 256;
 
 		if (!isset($this->name)){
 			$this->errstr = 'retrieveRules: no script name specified';
@@ -176,6 +177,7 @@ class Script
 						$rule['anyof']		= ($bits[8] & $anyofbit);
 						$rule['keep']		= ($bits[8] & $keepbit);
 						$rule['regexp']		= ($bits[8] & $regexbit);
+						$rule['tokenized']	= ($bits[8] & $tokenizedbit);
 						$rule['bodytransform'] = ($bits[12]??null);
 						$rule['field_bodytransform'] = ($bits[13]??null);
 						$rule['ctype'] = ($bits[14]??null);
@@ -322,11 +324,24 @@ class Script
 										$newruletext .= 'not ';
 										$rule['from'] = preg_replace("/^\s*!/","",$rule['from']);
 								}
-								$match = ':contains';
-								if (preg_match("/\*|\?/", $rule['from'])) $match = ':matches';
-								if ($rule['regexp']) $match = ':regex';
-								$newruletext .= "address " . $match . " [\"From\"]";
-								$newruletext .= " \"" . addslashes($rule['from']) . "\"";
+								// Tokenized mode: only when the explicit 'tokenized' flag is set
+								// AND regex is off AND value has no wildcards. Existing rules without
+								// the flag keep their historical behaviour verbatim.
+								if (!empty($rule['tokenized']) && !$rule['regexp']
+									&& !preg_match("/\*|\?/", $rule['from']))
+								{
+									$newruletext .= self::buildTokenizedSieveTest($rule['from'],
+										function($term, $not) {
+											$prefix = $not ? 'not ' : '';
+											return $prefix . 'address :contains ["From"] "' . addslashes($term) . '"';
+										});
+								} else {
+									$match = ':contains';
+									if (preg_match("/\*|\?/", $rule['from'])) $match = ':matches';
+									if ($rule['regexp']) $match = ':regex';
+									$newruletext .= "address " . $match . " [\"From\"]";
+									$newruletext .= " \"" . addslashes($rule['from']) . "\"";
+								}
 								$started = 1;
 						}
 						if ($rule['to']) {
@@ -335,11 +350,21 @@ class Script
 										$newruletext .= 'not ';
 										$rule['to'] = preg_replace("/^\s*!/","",$rule['to']);
 								}
-								$match = ':contains';
-								if (preg_match("/\*|\?/", $rule['to'])) $match = ':matches';
-								if ($rule['regexp']) $match = ':regex';
-								$newruletext .= "address " . $match . " [\"To\",\"TO\",\"Cc\",\"CC\"]";
-								$newruletext .= " \"" . addslashes($rule['to']) . "\"";
+								if (!empty($rule['tokenized']) && !$rule['regexp']
+									&& !preg_match("/\*|\?/", $rule['to']))
+								{
+									$newruletext .= self::buildTokenizedSieveTest($rule['to'],
+										function($term, $not) {
+											$prefix = $not ? 'not ' : '';
+											return $prefix . 'address :contains ["To","TO","Cc","CC"] "' . addslashes($term) . '"';
+										});
+								} else {
+									$match = ':contains';
+									if (preg_match("/\*|\?/", $rule['to'])) $match = ':matches';
+									if ($rule['regexp']) $match = ':regex';
+									$newruletext .= "address " . $match . " [\"To\",\"TO\",\"Cc\",\"CC\"]";
+									$newruletext .= " \"" . addslashes($rule['to']) . "\"";
+								}
 								$started = 1;
 						}
 						if ($rule['subject']) {
@@ -348,11 +373,21 @@ class Script
 										$newruletext .= 'not ';
 										$rule['subject'] = preg_replace("/^\s*!/","",$rule['subject']);
 								}
-								$match = ':contains';
-								if (preg_match("/\*|\?/", $rule['subject'])) $match = ':matches';
-								if ($rule['regexp']) $match = ':regex';
-								$newruletext .= "header " . $match . " \"subject\"";
-								$newruletext .= " \"" . addslashes($rule['subject']) . "\"";
+								if (!empty($rule['tokenized']) && !$rule['regexp']
+									&& !preg_match("/\*|\?/", $rule['subject']))
+								{
+									$newruletext .= self::buildTokenizedSieveTest($rule['subject'],
+										function($term, $not) {
+											$prefix = $not ? 'not ' : '';
+											return $prefix . 'header :contains "subject" "' . addslashes($term) . '"';
+										});
+								} else {
+									$match = ':contains';
+									if (preg_match("/\*|\?/", $rule['subject'])) $match = ':matches';
+									if ($rule['regexp']) $match = ':regex';
+									$newruletext .= "header " . $match . " \"subject\"";
+									$newruletext .= " \"" . addslashes($rule['subject']) . "\"";
+								}
 								$started = 1;
 						}
 						if ($rule['field'] && $rule['field_val']) {
@@ -362,31 +397,45 @@ class Script
 										$rule['field_val'] = preg_replace("/^\s*!/","",$rule['field_val']);
 								}
 								$end = '';
-								if (empty($rule['comparator']) || $rule['comparator'] === 'contains')
+								$isContainsMode = empty($rule['comparator']) || $rule['comparator'] === 'contains';
+								if ($isContainsMode && !empty($rule['tokenized']) && !$rule['regexp']
+									&& !preg_match("/\*|\?/", $rule['field_val']))
 								{
-									$match = ':contains';
-									if (preg_match("/\*|\?/", $rule['field_val'])) $match = ':matches';
-									if ($rule['regexp']) $match = ':regex';
+									$headerName = $rule['field'];
+									$newruletext .= self::buildTokenizedSieveTest($rule['field_val'],
+										function($term, $not) use ($headerName) {
+											$prefix = $not ? 'not ' : '';
+											return $prefix . 'header :contains "' . addslashes($headerName) . '" "' . addslashes($term) . '"';
+										});
 								}
 								else
 								{
-									$match = ':value "'.$rule['comparator'].'" :comparator "i;ascii-numeric"';
-									// i;ascii-numeric only accounts for unsigned integers,
-									// negative numbers are always evaluated as positiv infinity,
-									// --> we have to check for the value starting with a minus
-									if (in_array($rule['comparator'], ['gt', 'ge']))
+									if ($isContainsMode)
 									{
-										$newruletext .= 'allof (not header :matches "'.addslashes($rule['field']).'" "-*", ';
-										$end = ')';
+										$match = ':contains';
+										if (preg_match("/\*|\?/", $rule['field_val'])) $match = ':matches';
+										if ($rule['regexp']) $match = ':regex';
 									}
-									elseif (in_array($rule['comparator'], ['lt', 'le']))
+									else
 									{
-										$newruletext .= 'anyof (header :matches "'.addslashes($rule['field']).'" "-*", ';
-										$end = ')';
+										$match = ':value "'.$rule['comparator'].'" :comparator "i;ascii-numeric"';
+										// i;ascii-numeric only accounts for unsigned integers,
+										// negative numbers are always evaluated as positiv infinity,
+										// --> we have to check for the value starting with a minus
+										if (in_array($rule['comparator'], ['gt', 'ge']))
+										{
+											$newruletext .= 'allof (not header :matches "'.addslashes($rule['field']).'" "-*", ';
+											$end = ')';
+										}
+										elseif (in_array($rule['comparator'], ['lt', 'le']))
+										{
+											$newruletext .= 'anyof (header :matches "'.addslashes($rule['field']).'" "-*", ';
+											$end = ')';
+										}
 									}
+									$newruletext .= "header " . $match . " \"" . addslashes($rule['field']) . "\"";
+									$newruletext .= " \"" . addslashes($rule['field_val']) . "\"".$end;
 								}
-								$newruletext .= "header " . $match . " \"" . addslashes($rule['field']) . "\"";
-								$newruletext .= " \"" . addslashes($rule['field_val']) . "\"".$end;
 								$started = 1;
 						}
 						if ($rule['size']) {
@@ -400,11 +449,22 @@ class Script
 							if (!empty($rule['field_bodytransform'])){
 								if ($started) $newruletext .= ", ";
 								$btransform	= " :raw ";
-								$match = ' :contains';
 								if ($rule['bodytransform'])	$btransform = " :text ";
-								if (preg_match("/\*|\?/", $rule['field_bodytransform'])) $match = ':matches';
-								if ($rule['regexp']) $match = ':regex';
-								$newruletext .= "body " . $btransform . $match . " \"" . $rule['field_bodytransform'] . "\"";
+								if (!empty($rule['tokenized']) && !$rule['regexp']
+									&& !preg_match("/\*|\?/", $rule['field_bodytransform']))
+								{
+									$bt = $btransform;
+									$newruletext .= self::buildTokenizedSieveTest($rule['field_bodytransform'],
+										function($term, $not) use ($bt) {
+											$prefix = $not ? 'not ' : '';
+											return $prefix . 'body' . $bt . ':contains "' . addslashes($term) . '"';
+										});
+								} else {
+									$match = ' :contains';
+									if (preg_match("/\*|\?/", $rule['field_bodytransform'])) $match = ':matches';
+									if ($rule['regexp']) $match = ':regex';
+									$newruletext .= "body " . $btransform . $match . " \"" . $rule['field_bodytransform'] . "\"";
+								}
 								$started = 1;
 
 							}
@@ -799,5 +859,101 @@ class Script
 		}
 
 		return true;
+	}
+
+	/**
+	 * Tokenize a free-text filter value honouring the EGroupware search syntax,
+	 * and emit a Sieve test (single or composite allof/anyof/not group).
+	 *
+	 * This helper is only called for rules where the explicit 'tokenized' flag
+	 * is set (third search mode, alongside wildcards and regex). Existing rules
+	 * without the flag use the historical contiguous-substring :contains test.
+	 *
+	 * Supported syntax (matches Addressbook/Calendar/InfoLog conventions, and
+	 * the tokenised IMAP search builder in api/src/Mail.php):
+	 *   foo bar       -> anyof (test(foo), test(bar))   [OR, default for whitespace]
+	 *   foo or bar    -> anyof (test(foo), test(bar))
+	 *   foo and bar   -> allof (test(foo), test(bar))
+	 *   foo +bar      -> allof (test(foo), test(bar))   [required]
+	 *   foo -bar      -> allof (test(foo), not test(bar))   [forbidden]
+	 *   "foo bar"     -> single quoted phrase as one token (preserved verbatim)
+	 *
+	 * @param string $value   raw user input from the filter field
+	 * @param callable $factory  function(string $term, bool $not): string
+	 *                            emits ONE complete Sieve test for $term
+	 * @return string  the Sieve test (single or composite), suitable for joining
+	 *                 with ", " inside an outer allof/anyof. Empty when $value empty.
+	 */
+	static function buildTokenizedSieveTest($value, callable $factory)
+	{
+		$value = trim((string)$value);
+		if ($value === '') return '';
+
+		$tokens = self::parseSieveTokens($value);
+		if (empty($tokens)) return '';
+
+		$items = array();
+		$nextOp = 'anyof';   // EGW default for whitespace-separated tokens
+		foreach ($tokens as $tok)
+		{
+			$lower = strtolower($tok);
+			if ($lower === 'and') { $nextOp = 'allof'; continue; }
+			if ($lower === 'or')  { $nextOp = 'anyof'; continue; }
+
+			$negate = false;
+			$term = $tok;
+			if (strlen($tok) > 1)
+			{
+				if ($tok[0] === '+') { $term = substr($tok, 1); $nextOp = 'allof'; }
+				elseif ($tok[0] === '-') { $term = substr($tok, 1); $nextOp = 'allof'; $negate = true; }
+			}
+			if ($term === '') continue;
+			$items[] = array('op' => $nextOp, 'term' => $term, 'not' => $negate);
+			$nextOp = 'anyof';
+		}
+		if (empty($items)) return '';
+
+		if (count($items) === 1)
+		{
+			return $factory($items[0]['term'], $items[0]['not']);
+		}
+
+		$hasAnd = false; $hasOr = false;
+		foreach ($items as $it) { if ($it['op'] === 'allof') $hasAnd = true; else $hasOr = true; }
+
+		$subtests = array();
+		foreach ($items as $it) { $subtests[] = $factory($it['term'], $it['not']); }
+
+		if ($hasAnd && !$hasOr) return 'allof (' . implode(', ', $subtests) . ')';
+		if ($hasOr && !$hasAnd) return 'anyof (' . implode(', ', $subtests) . ')';
+
+		$combined = $subtests[0];
+		for ($i = 1, $n = count($items); $i < $n; $i++)
+		{
+			$op = $items[$i]['op'];
+			$combined = $op . ' (' . $combined . ', ' . $subtests[$i] . ')';
+		}
+		return $combined;
+	}
+
+	/**
+	 * Split a filter value into tokens, preserving quoted phrases as single tokens.
+	 *
+	 * @param string $string
+	 * @return array list of token strings (without their surrounding quotes)
+	 */
+	static function parseSieveTokens($string)
+	{
+		$tokens = array();
+		if (preg_match_all('/"([^"]*)"|\'([^\']*)\'|(\S+)/u', $string, $m, PREG_SET_ORDER))
+		{
+			foreach ($m as $match)
+			{
+				if (isset($match[1]) && $match[1] !== '') $tokens[] = $match[1];
+				elseif (isset($match[2]) && $match[2] !== '') $tokens[] = $match[2];
+				elseif (isset($match[3]) && $match[3] !== '') $tokens[] = $match[3];
+			}
+		}
+		return $tokens;
 	}
 }

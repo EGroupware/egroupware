@@ -41,6 +41,9 @@ import './Et2Button/Et2ButtonTimestamper';
 import './Et2Button/Et2ButtonToggle';
 import './Et2Checkbox/Et2Checkbox';
 import './Et2Checkbox/Et2CheckboxReadonly';
+import './Et2Customfields/Et2Customfields';
+import './Et2Customfields/Et2CustomfieldsList';
+import './Et2Customfields/Et2CustomfieldsFilters';
 import './Et2Date/Et2Date';
 import './Et2Date/Et2DateDuration';
 import './Et2Date/Et2DateDurationReadonly';
@@ -65,6 +68,7 @@ import './Et2Favorites/Et2FavoritesMenu';
 import './Et2File/Et2File';
 import './Et2File/Et2FileItem';
 import './Et2Filterbox/Et2Filterbox';
+import './Et2HtmlArea/Et2HtmlArea';
 import './Et2Image/Et2Image';
 import './Et2Image/Et2AppIcon';
 import './Et2Avatar/Et2LAvatar';
@@ -76,7 +80,10 @@ import './Et2Link/Et2LinkList';
 import './Et2Link/Et2LinkSearch';
 import './Et2Link/Et2LinkString';
 import './Et2Link/Et2LinkTo';
+import './Et2Nextmatch/Et2Nextmatch';
 import './Et2Nextmatch/ColumnSelection';
+import './Et2Nextmatch/Headers/Header';
+import './Et2Nextmatch/Headers/SortableHeader';
 import './Et2Nextmatch/Headers/AccountFilterHeader';
 import './Et2Nextmatch/Headers/CustomFilterHeader';
 import './Et2Nextmatch/Headers/EntryHeader';
@@ -143,7 +150,6 @@ import './et2_widget_dialog';
 import './et2_widget_diff';
 import './et2_widget_styles';
 import './et2_widget_html';
-import './et2_widget_htmlarea';
 import './et2_widget_taglist';
 import './et2_widget_toolbar';
 import './et2_widget_historylog';
@@ -1405,6 +1411,11 @@ export class etemplate2
 			_widget.refresh(id, type);
 			refresh_done = true;
 		}, this, et2_nextmatch);
+		this._widgetContainer.querySelectorAll('et2-nextmatch').forEach((nm) =>
+		{
+			nm.refresh(id, type);
+			refresh_done = true;
+		});
 
 		return refresh_done;
 	}

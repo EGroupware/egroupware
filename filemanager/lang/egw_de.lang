@@ -1,7 +1,7 @@
 %1 already exists as a file	filemanager	de	%1 existiert schon als Datei
 %1 already mounted on %2!	filemanager	de	%1 bereits auf %2 gemounted!
 %1 directories and %2 files copied.	filemanager	de	%1 Ordner und %2 Dateien kopiert
-%1 directories and %2 files deleted.	filemanager	de	%1 Ordner und %2 Dateien gelöscht
+%1 directories and %2 files deleted.	filemanager	de	%1 Ordner und %2 Datei(en) gelöscht.
 %1 elements linked.	filemanager	de	%1 Elemente verknüpft
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	de	%1 Fehler beim Kopieren (%2 Ordner und %3 Dateien kopiert)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	de	%1 Fehler beim Löschen (%2 Ordner und %3 Dateien gelöscht)!
@@ -309,7 +309,7 @@ tag to mark positions for address labels	filemanager	de	Symbol um die Position v
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	de	Die Vorgabe für das Anfangsordner ist Ihr persönlicher Ordner. Die Vorgabe wird verwendet, wenn Sie hier nichts eintragen, der Pfad nicht existiert oder Ihnen die notwendigen Zugriffsrechte fehlen
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	de	Das Dokument kann Platzhalter wie {{%3}} enthalten, diese werden mit den entsprechenden Daten ersetzt (%1Liste der Platzhalter%2)
 the following document-types are supported:	filemanager	de	Die folgenden Dokumenttypen werden unterstützt:
-the requested path %1 is not available.	filemanager	de	Der angeforderte Ordnerpfad %1 steht nicht zur Verfügung
+the requested path %1 is not available.	filemanager	de	Der angeforderte Ordnerpfad %1 steht nicht zur Verfügung!
 the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	de	Die hochgeladene Datei ist nur für die Person sichtbar, die Ihnen diese Dateien zur Verfügung gestellt hat, nicht für Sie selbst oder andere Personen die diesen Sharing Link kennen.
 there's already a directory with that name!	filemanager	de	Es gibt bereits ein Ordner mit diesem Namen!
 there's already a file with that name!	filemanager	de	Es gibt bereits eine Datei mit diesem Namen!

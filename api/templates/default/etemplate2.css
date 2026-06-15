@@ -2358,6 +2358,11 @@ ul[id$='favorites_popup_state'] span.filter_value {
     background: hsl(from var(--selection-color) h s l /0.7) !important;
 }
 
+.et2_nextmatch .egwGridView_grid tr.draggedOver td,
+.et2_nextmatch .egwGridView_grid tr.drop-hover td {
+	background: hsl(from var(--selection-color) h s l /0.5) !important;
+}
+
 /* Nextmatch tiled view */
 .et2_nextmatch .egwGridView_grid tr.tile {
     display: inline-block;
@@ -3174,6 +3179,7 @@ div.et2_egw_action_ddHelper {
     z-index: -100;
     position: relative;
 	max-width: fit-content;
+	overflow: hidden;
 }
 
 /* The last div which shows Ctrl tip to user*/
@@ -3201,13 +3207,11 @@ div.et2_egw_action_ddHelper et2-avatar, div.et2_egw_action_ddHelper et2-lavatar 
 	flex-grow: 0;
 	--size: 2em;
 }
-table.et2_egw_action_ddHelper_row tr {
-    background: none;
-    max-height: 20px;
-}
 
 /* Apply to all displayed rows in order to get same result*/
-table.et2_egw_action_ddHelper_row > *, table.et2_egw_action_ddHelper_row .innerContainer {
+table.et2_egw_action_ddHelper_row td,
+table.et2_egw_action_ddHelper_row th,
+table.et2_egw_action_ddHelper_row .innerContainer {
     white-space: nowrap !important;
 	max-height: 2em;
     overflow: hidden;
@@ -3220,21 +3224,85 @@ table.et2_egw_action_ddHelper_row img {
     height: 15px !important;
 }
 
-/* Last row of items which shows the number of more items*/
-tr.et2_egw_action_ddHelper_moreRow {
+div.et2_egw_action_ddHelper_tip:empty {
+	display: none;
+}
 
+div.et2_egw_action_ddHelper--grid {
+	position: relative;
+	overflow: hidden;
+	max-width: fit-content;
+	box-sizing: border-box;
+	border: var(--sl-panel-border-width) solid rgba(0, 0, 0, 0.72);
+	border-radius: 0;
+	background-color: hsl(from var(--selection-color) h s l / 0.22);
+	box-shadow: var(--sl-shadow-large);
+	pointer-events: none;
+}
+
+div.et2_egw_action_ddHelper--grid::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	width: 7rem;
+	z-index: 3;
+	pointer-events: none;
+	background: linear-gradient(to right, hsl(from var(--selection-color) h s l / 0), hsl(from var(--selection-color) h s l / 0.22) 72%);
+}
+
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row {
+	display: block;
+	width: 100%;
+	max-width: none;
+	border: none;
+	background-color: hsl(from var(--selection-color) h s l / 0.22);
+	box-shadow: none;
+	border-collapse: collapse;
+	position: relative;
+	z-index: 1;
+}
+
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row tr {
+	background: transparent !important;
+	min-height: 2.2em;
+}
+
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row td,
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row th,
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row .innerContainer {
+	min-width: 0;
+	max-width: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap !important;
+}
+
+div.et2_egw_action_ddHelper--grid div.et2_egw_action_ddHelper_tip:empty {
+	display: none;
+}
+
+div.et2_egw_action_ddHelper--grid.et2_egw_action_ddHelper--multi table.et2_egw_action_ddHelper_row {
+	opacity: 0.88;
 }
 
 /* The big total item counter*/
-span.et2_egw_action_ddHelper_itemsCnt {
-    background: transparent;
-    position: absolute;
-    left: 20px;
-    top: 8%;
-    font-size: 367%;
-    color: rgba(255, 255, 255, 1);
-    text-align: center;
-    font-weight: bold;
+div.et2_egw_action_ddHelper--grid span.et2_egw_action_ddHelper_itemsCnt {
+	background: transparent;
+	position: absolute;
+	left: 24px;
+	top: 12px;
+	font-size: 3.2rem;
+	line-height: 0.92;
+	color: var(--sl-color-neutral-0);
+	text-align: left;
+	font-weight: bold;
+	letter-spacing: -0.04em;
+	text-shadow: 0 2px 10px rgba(0, 0, 0, 0.28);
+	z-index: 2;
+	pointer-events: none;
+	white-space: nowrap;
 }
 
 

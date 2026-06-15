@@ -15,7 +15,7 @@ admin disabled exporting	importexport	pt-br	Exportação desativado Administrado
 all encodings	importexport	pt-br	Todas as codificações
 all users	importexport	pt-br	Todos usuários
 allowed users	importexport	pt-br	Usuários permitidos
-automatically created by importexport	importexport	pt-br	Automaticamente criado por importar/exportar
+automatically created by importexport	importexport	pt-br	Automaticamente criado por Importar / Exportar
 basic csv import	importexport	pt-br	Importação CSV Básico
 change allowed users	importexport	pt-br	Alterar usuários permitidos
 change owner when updating	importexport	pt-br	Alterar o proprietário ao atualizar
@@ -54,7 +54,7 @@ export data as	importexport	pt-br	Exportar dados como
 export definition to use for nextmatch export	preferences	pt-br	Definição Exportar para usar para exportação NextMatch
 export spreadsheet	importexport	pt-br	Exportar planilha
 exported	importexport	pt-br	exportado
-extra charsets for import / export	importexport	pt-br	Charsets extra para importação / exportação
+extra charsets for import / export	importexport	pt-br	Charsets extra para Importação / Exportação
 extra encodings	importexport	pt-br	Codificações extras
 false	importexport	pt-br	falso
 field labels	importexport	pt-br	Rótulos de campo
@@ -97,8 +97,7 @@ previous	importexport	pt-br	anterior
 problems during import:	importexport	pt-br	Problemas durante a importação:
 save as definition	importexport	pt-br	Salvar como definição
 schedule	common	pt-br	agendar
-schedule import / export	common	pt-br	Importação Calendário | exportação
-schedule import | export	importexport	pt-br	Importação Calendário | exportação
+schedule import / export	common	pt-br	Calendário Importação | Exportação
 schedule not found	importexport	pt-br	Agenda não encontrada.
 schedule times are server time!  currently %s.	importexport	pt-br	Agenda vezes são tempo servidor! Atualmente% s.
 select definition	importexport	pt-br	Selecionar definição

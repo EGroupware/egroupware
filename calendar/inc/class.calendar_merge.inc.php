@@ -88,9 +88,11 @@ class calendar_merge extends Api\Storage\Merge
 
 		// Register table plugins
 		$this->table_plugins['participant'] = 'participant';
+		$day = new Api\DateTime('today', Api\DateTime::$user_timezone);
 		for($i = 0; $i < 7; $i++)
 		{
-			$this->table_plugins[date('l', strtotime("+$i days"))] = 'day_plugin';
+			if($i) $day->modify('+1 day');
+			$this->table_plugins[$day->format('l')] = 'day_plugin';
 		}
 		for($i = 1; $i <= 31; $i++)
 		{
@@ -298,7 +300,7 @@ class calendar_merge extends Api\Storage\Merge
 		$n = 0;
 		foreach($events as $event)
 		{
-			$event_id = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date'] : '');
+			$event_id = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date']->format('ts') : '');
 			if($this->ids && !in_array($event_id, $this->ids)) continue;
 			$values = $this->calendar_replacements($event, sprintf($prefix, ++$n), $content);
 			if(is_array($id) && $id['start'])
@@ -339,8 +341,20 @@ class calendar_merge extends Api\Storage\Merge
 		{
 			$event = $id;
 		}
+		if(!is_array($event))
+		{
+			$event = array();
+		}
+		$event += array(
+			'id' => '',
+			'start' => null,
+			'end' => null,
+			'participants' => array(),
+			'owner' => null,
+		);
 
-		$record = new calendar_egw_record($event['id']);
+		$record = new calendar_egw_record();
+		$record->set_record($event);
 
 		// Convert to human friendly values
 		$types = calendar_egw_record::$types;
@@ -353,7 +367,7 @@ class calendar_merge extends Api\Storage\Merge
 		}
 
 		$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_id' . '$$'] = $event['id'];
-		foreach($this->bo->event2array($event) as $name => $data)
+		foreach((array)$this->bo->event2array($event) as $name => $data)
 		{
 			if (substr($name,-4) == 'date') $name = substr($name,0,-4);
 			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_' . $name . '$$'] = is_array($data['data']) ? implode(', ', $data['data']) : $data['data'];
@@ -393,22 +407,33 @@ class calendar_merge extends Api\Storage\Merge
 		}
 		foreach(array('start', 'end') as $what)
 		{
+			$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
+			$has_dates = $event['start'] instanceof Api\DateTime && $event['end'] instanceof Api\DateTime;
+			$date_prefix = $has_dates && $event['start']->format('Ymd') != $event['end']->format('Ymd') ?
+				$GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' ' : '';
 			foreach(array(
 						'date' => $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'],
 						'day'  => 'l',
-						'time' => (date('Ymd', $event['start']) != date('Ymd', $event['end']) ? $GLOBALS['egw_info']['user']['preferences']['common']['dateformat'] . ' ' : '') . ($GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i'),
+						'time' => $date_prefix . $time_format,
 					) as $name => $format)
 			{
-				$value = Api\DateTime::to($event[$what], $format);
-				if($format == 'l')
+				$value = $has_dates ? Api\DateTime::to($event[$what], $format) : '';
+				if($format == 'l' && $value !== '')
 				{
 					$value = lang($value);
 				}
 				$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_' . $what . $name . '$$'] = $value;
 			}
 		}
-		$duration = ($event['end'] - $event['start']) / 60;
-		$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_duration$$'] = floor($duration / 60) . lang('h') . ($duration % 60 ? $duration % 60 : '');
+		if($event['start'] instanceof Api\DateTime && $event['end'] instanceof Api\DateTime)
+		{
+			$duration = ((int)$event['end']->format('ts') - (int)$event['start']->format('ts')) / 60;
+			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_duration$$'] = floor($duration / 60) . lang('h') . ($duration % 60 ? $duration % 60 : '');
+		}
+		else
+		{
+			$replacements['$$' . ($prefix ? $prefix . '/' : '') . 'calendar_duration$$'] = '';
+		}
 
 		// Add in contact stuff for owner
 		if(strpos($content, '$$calendar_owner/') !== null && ($user = $GLOBALS['egw']->accounts->id2name($event['owner'], 'person_id')))
@@ -447,7 +472,7 @@ class calendar_merge extends Api\Storage\Merge
 
 		$emails = array();
 		$event = array(
-			'participants' => $record->participants
+			'participants' => (array)$record->participants
 		);
 		$this->bo->enum_groups($event);
 		foreach($event['participants'] as $uid => $status)
@@ -489,7 +514,7 @@ class calendar_merge extends Api\Storage\Merge
 		$placeholder = '$$' . ($prefix ? $prefix . '/' : '') . 'participant_summary$$';
 
 		// No summary for 1 participant
-		if(count($record->participants) < 2)
+		if(count((array)$record->participants) < 2)
 		{
 			$replacements[$placeholder] = '';
 		}
@@ -497,10 +522,10 @@ class calendar_merge extends Api\Storage\Merge
 		$participant_status = array('A' => 0, 'R' => 0, 'T' => 0, 'U' => 0, 'D' => 0);
 		$status_label = array('A' => 'accepted', 'R' => 'rejected', 'T' => 'tentative', 'U' => 'unknown',
 							  'D' => 'delegated');
-		$participant_summary = count($record->participants) . ' ' . lang('Participants') . ': ';
+		$participant_summary = count((array)$record->participants) . ' ' . lang('Participants') . ': ';
 		$status_totals = [];
 
-		foreach($record->participants as $uid => $status)
+		foreach((array)$record->participants as $uid => $status)
 		{
 			$participant_status[substr($status, 0, 1)]++;
 		}
@@ -522,7 +547,7 @@ class calendar_merge extends Api\Storage\Merge
 	 *
 	 * Use:
 	 * $$table/Monday$$ $$starttime$$ $$title$$ $$endtable$$
-	 * The day of the week may be language specific (date('l')).
+	 * The day of the week may be language specific.
 	 *
 	 * @param string $plugin (Monday-Sunday)
 	 * @param int/array date or date range
@@ -538,16 +563,20 @@ class calendar_merge extends Api\Storage\Merge
 			// List of IDs
 			if($date[0]['start'])
 			{
-				$id = array('start' => PHP_INT_MAX, 'end' => 0);
+				$id = array('start' => null, 'end' => null);
 				foreach($date as $event)
 				{
-					if($event['start'] && $event['start'] < $id['start'])
+					if (empty($event['start']) || empty($event['end'])) continue;
+
+					$event_start = clone $event['start'];
+					$event_end = clone $event['end'];
+					if(!$id['start'] || $event_start < $id['start'])
 					{
-						$id['start'] = $event['start'];
+						$id['start'] = $event_start;
 					}
-					if($event['end'] && $event['end'] > $id['end'])
+					if(!$id['end'] || $event_end > $id['end'])
 					{
-						$id['end'] = $event['end'];
+						$id['end'] = $event_end;
 					}
 				}
 				$date = $id;
@@ -555,23 +584,34 @@ class calendar_merge extends Api\Storage\Merge
 			else
 			{
 				$event = $this->bo->read(is_array($date) ? $date['id'] : $date, is_array($date) ? $date['recur_date'] : null);
-				if(date('l', $event['start']) != $plugin)
+				$event_start = clone $event['start'];
+				if($event_start->format('l') != $plugin)
 				{
 					return array();
 				}
-				$date = $event['start'];
+				$date = $event_start;
 			}
 		}
 
-		$_date = new Api\DateTime(['start'] ? $date['start'] : $date);
+		$is_range = is_array($date) && isset($date['start'], $date['end']);
+		$_date = $is_range ?
+			($date['start'] instanceof Api\DateTime ? clone $date['start'] : new Api\DateTime($date['start'])) :
+			($date instanceof Api\DateTime ? clone $date : new Api\DateTime($date));
 		if($days[$_date->format('Ymd')][$plugin])
 		{
 			return $days[$_date->format('Ymd')][$plugin][$n];
 		}
 
+		$range_start = $is_range ?
+			($date['start'] instanceof Api\DateTime ? clone $date['start'] : new Api\DateTime($date['start'])) :
+			(clone $_date)->setTime(0, 0, 0);
+		$range_end = $is_range ?
+			($date['end'] instanceof Api\DateTime ? clone $date['end'] : new Api\DateTime($date['end'])) :
+			(clone $_date)->setTime(23, 59, 59);
+
 		$events = $this->bo->search($this->query + array(
-										'start'    => $date['end'] ? $date['start'] : mktime(0, 0, 0, date('m', $_date), date('d', $_date), date('Y', $_date)),
-										'end'      => $date['end'] ? $date['end'] : mktime(23, 59, 59, date('m', $_date), date('d', $_date), date('Y', $_date)),
+										'start'    => $range_start,
+										'end'      => $range_end,
 										'offset'   => 0,
 										'num_rows' => 20,
 										'order'    => 'cal_start',
@@ -585,26 +625,32 @@ class calendar_merge extends Api\Storage\Merge
 		$time_format = $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i';
 		foreach($events as $day => $list)
 		{
+			$day_date = new Api\DateTime($day);
+			$day_name = $day_date->format('l');
 			foreach($list as $event)
 			{
-				$event_id = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date'] : '');
+				$event_id = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date']->format('ts') : '');
 				if($this->ids && !in_array($event_id, $this->ids))
 				{
 					continue;
 				}
+
 				$start = Api\DateTime::to($event['start'], 'array');
 				$end = Api\DateTime::to($event['end'], 'array');
+				$event_start = $event['start'];
+				$event_end = $event['end'];
 				$replacements = $this->calendar_replacements($event);
 				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day'])
 				{
-					$dow = date('l', $event['start']);
+					$dow = $event_start->format('l');
 				}
 				else
 				{
-					$dow = date('l', strtotime($day));
+					$start_time = $day == $event_start->format('Ymd') ? $event_start : (clone $day_date)->setTime(0, 0, 1);
+					$end_time = $day == $event_end->format('Ymd') ? $event_end : (clone $day_date)->setTime(23, 59, 59);
 					// Fancy date+time formatting for multi-day events
-					$replacements['$$calendar_starttime$$'] = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0, 0, 0, 0, 0, 1));
-					$replacements['$$calendar_endtime$$'] = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23, 59, 59, 0, 0, 0));
+					$replacements['$$calendar_starttime$$'] = $start_time->format($time_format);
+					$replacements['$$calendar_endtime$$'] = $end_time->format($time_format);
 				}
 
 				$days[$_date->format('Ymd')][$dow][] = $replacements;
@@ -612,24 +658,24 @@ class calendar_merge extends Api\Storage\Merge
 			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false)
 			{
 				$date_marker = array(
-					'$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)),
-					'$$day/name$$' => lang(date('l', strtotime($day)))
+					'$$day/date$$' => $day_date->format($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']),
+					'$$day/name$$' => lang($day_name)
 				);
-				if(!is_array($days[$_date->format('Ymd')][date('l', strtotime($day))]))
+				if(!is_array($days[$_date->format('Ymd')][$day_name]))
 				{
 					$blank = $this->calendar_replacements(array());
 					foreach($blank as &$value)
 					{
 						$value = '';
 					}
-					$days[$_date->format('Ymd')][date('l', strtotime($day))][] = $blank;
+					$days[$_date->format('Ymd')][$day_name][] = $blank;
 				}
-				$days[$_date->format('Ymd')][date('l', strtotime($day))][0] += $date_marker;
+				$days[$_date->format('Ymd')][$day_name][0] += $date_marker;
 			}
 			// Add in birthdays
 			if(strpos($repeat, 'day/birthdays') !== false)
 			{
-				$days[$_date->format('Ymd')][date('l', strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
+				$days[$_date->format('Ymd')][$day_name][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
 			}
 		}
 		return $days[$_date->format('Ymd')][$plugin][0];
@@ -668,16 +714,17 @@ class calendar_merge extends Api\Storage\Merge
 		}
 		else
 		{
-			$date = strtotime($plugin);
+			$date = (int)Api\DateTime::to($plugin, 'ts');
 		}
 		if($type == 'day' && is_array($id) && !$id['start'])
 		{
 			$event = $this->bo->read(is_array($id) ? $id['id'] : $id, is_array($id) ? $id['recur_date'] : null);
-			if($which && date('d', $event['start']) != $which)
+			$event_start = $event['start'];
+			if($which && $event_start->format('d') != $which)
 			{
 				return array();
 			}
-			if(date('Ymd', $date) != date('Ymd', $event['start']))
+			if(Api\DateTime::to($date, 'Ymd') != $event_start->format('Ymd'))
 			{
 				return array();
 			}
@@ -686,11 +733,14 @@ class calendar_merge extends Api\Storage\Merge
 
 		// Use start for cache, in case of multiple months
 		$_date = $id['start'] ? $id['start'] : $date;
-		if($days[date('Ymd', $_date)][$plugin]) return $days[date('Ymd', $_date)][$plugin][$n];
+		$cache_date = Api\DateTime::to($_date, 'Ymd');
+		if($days[$cache_date][$plugin]) return $days[$cache_date][$plugin][$n];
+		$end_date = new Api\DateTime($date);
+		$end_date->setTime(23, 59, 59);
 
 		$events = $this->bo->search($this->query + array(
 										'start'    => $date,
-										'end'      => mktime(23, 59, 59, date('m', $date), date('d', $date), date('Y', $date)),
+										'end'      => $end_date,
 										'offset'   => 0,
 										'num_rows' => 20,
 										'order'    => 'cal_start',
@@ -706,7 +756,7 @@ class calendar_merge extends Api\Storage\Merge
 		{
 			foreach($list as $event)
 			{
-				$event_id = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date'] : '');
+				$event_id = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date']->format('ts') : '');
 				if($this->ids && !in_array($event_id, $this->ids))
 				{
 					continue;
@@ -716,40 +766,46 @@ class calendar_merge extends Api\Storage\Merge
 				$replacements = $this->calendar_replacements($event);
 				if($start['year'] == $end['year'] && $start['month'] == $end['month'] && $start['day'] == $end['day'])
 				{
-					//$dow = date('l',$event['start']);
+					// no special handling for single-day events
 				}
 				else
 				{
+					$day_date = new Api\DateTime($day);
+					$event_start = $event['start'];
+					$event_end = $event['end'];
+					$start_time = $day == $event_start->format('Ymd') ? $event_start : (clone $day_date)->setTime(0, 0, 1);
+					$end_time = $day == $event_end->format('Ymd') ? $event_end : (clone $day_date)->setTime(23, 59, 59);
 					// Fancy date+time formatting for multi-day events
-					$replacements['$$calendar_starttime$$'] = date($time_format, $day == date('Ymd', $event['start']) ? $event['start'] : mktime(0, 0, 0, 0, 0, 1));
-					$replacements['$$calendar_endtime$$'] = date($time_format, $day == date('Ymd', $event['end']) ? $event['end'] : mktime(23, 59, 59, 0, 0, 0));
+					$replacements['$$calendar_starttime$$'] = $start_time->format($time_format);
+					$replacements['$$calendar_endtime$$'] = $end_time->format($time_format);
 				}
-				$days[date('Ymd', $_date)][$plugin][] = $replacements;
+				$days[$cache_date][$plugin][] = $replacements;
 			}
 			if(strpos($repeat, 'day/date') !== false || strpos($repeat, 'day/name') !== false)
 			{
+				$day_date = new Api\DateTime($day);
 				$date_marker = array(
-					'$$day/date$$' => date($GLOBALS['egw_info']['user']['preferences']['common']['dateformat'], strtotime($day)),
-					'$$day/name$$' => lang(date('l', strtotime($day)))
+					'$$day/date$$' => $day_date->format($GLOBALS['egw_info']['user']['preferences']['common']['dateformat']),
+					'$$day/name$$' => lang($day_date->format('l'))
 				);
-				if(!is_array($days[date('Ymd', $_date)][$plugin]))
+				if(!is_array($days[$cache_date][$plugin]))
 				{
 					$blank = $this->calendar_replacements(array());
 					foreach($blank as &$value)
 					{
 						$value = '';
 					}
-					$days[date('Ymd', $_date)][$plugin][] = $blank;
+					$days[$cache_date][$plugin][] = $blank;
 				}
-				$days[date('Ymd', $_date)][$plugin][0] += $date_marker;
+				$days[$cache_date][$plugin][0] += $date_marker;
 			}
 			// Add in birthdays
 			if(strpos($repeat, 'day/birthdays') !== false)
 			{
-				$days[date('Ymd', $_date)][date('l', strtotime($day))][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
+				$days[$cache_date][(new Api\DateTime($day))->format('l')][0]['$$day/birthdays$$'] = $this->get_birthdays($day);
 			}
 		}
-		return $days[date('Ymd', $_date)][$plugin][0];
+		return $days[$cache_date][$plugin][0];
 	}
 
 	/**
@@ -961,20 +1017,21 @@ class calendar_merge extends Api\Storage\Merge
 			// Keep ids for future use
 			if($event['id'])
 			{
-				$this->ids[] = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date'] : '');
+				$this->ids[] = $event['id'] . ($event['recur_date'] ? ':' . $event['recur_date']->format('ts') : '');
 			}
 		}
 		// Check a start was found
 		if($limits['start'] == PHP_INT_MAX)
 		{
-			// Start of today
-			$limits['start'] = mktime(0, 0, 0);
+			$today = new Api\DateTime('today', Api\DateTime::$user_timezone);
+			$limits['start'] = $today->format('ts');
 		}
 		// Check an end was found
 		if($limits['end'] == 0)
 		{
-			// End of today
-			$limits['end'] = mktime(25, 59, 59);
+			$today = new Api\DateTime('today', Api\DateTime::$user_timezone);
+			$today->setTime(23, 59, 59);
+			$limits['end'] = $today->format('ts');
 		}
 		$limits['start'] = new Api\DateTime($limits['start']);
 		$limits['end'] = new Api\DateTime($limits['end']);
@@ -1127,9 +1184,11 @@ class calendar_merge extends Api\Storage\Merge
 		echo '<tr style="vertical-align:top"><td colspan="2"><table >';
 		echo '<tr><td><h3>' . lang('Day of week tables') . ":</h3></td></tr>";
 		$days = array();
+		$day = new Api\DateTime('today', Api\DateTime::$user_timezone);
 		for($i = 0; $i < 7; $i++)
 		{
-			$days[date('N', strtotime("+$i days"))] = date('l', strtotime("+$i days"));
+			if($i) $day->modify('+1 day');
+			$days[$day->format('N')] = $day->format('l');
 		}
 		ksort($days);
 		foreach($days as $day)

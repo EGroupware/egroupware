@@ -27,6 +27,12 @@ class ImportParticipantsTest extends \EGroupware\Api\AppTest
 
 	public static function setUpBeforeClass() : void
 	{
+		// Not sure what's going on here, but the tests run fine independantly but not as part of the suite.
+		// Some other test may be damaging the session, tearDownAfterClass() lets them run.
+		if (!empty($GLOBALS['egw']) && is_object($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			parent::tearDownAfterClass();
+		}
 		parent::setUpBeforeClass();
 
 	}
@@ -42,7 +48,8 @@ class ImportParticipantsTest extends \EGroupware\Api\AppTest
 		$this->import = new \calendar_import_csv();
 		$this->import->bo = $this->bo;
 		$this->import->role_map = array_flip($this->bo->roles);
-		$this->import->status_map = array_flip($this->bo->verbose_status);
+		// Match production init(): status map keys are translated labels.
+		$this->import->status_map = array_flip(array_map('lang', $this->bo->verbose_status));
 
 		// Make parse_participants method accessable
 		$class = new \ReflectionClass($this->import);

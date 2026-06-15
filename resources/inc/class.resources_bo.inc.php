@@ -737,14 +737,14 @@ class resources_bo
 					$this->bocal = new calendar_bo();
 				}
 				$start = new Api\DateTime($cal_info['start']);
-				$startarr= getdate($start->format('ts'));
+				$end = $cal_info['end'] ?: new Api\DateTime($cal_info['start']);
 				if (isset($cal_info['whole_day']) && $cal_info['whole_day']) {
-					$startarr['hour'] = $startarr['minute'] = 0;
-					$start = new Api\DateTime($startarr);
-					$end = $start->format('ts') + 86399;
-				} else {
-					$start = $start->format('ts');
-					$end = $start + (int)$cal_info['duration'];
+					$start->setTime(0, 0, 0);
+					$end->setTime(23, 59, 59);
+				}
+				elseif(!isset($cal_info['end']) && $cal_info['duration'])
+				{
+					$end = $end->modify('+ ' . (int)$cal_info['duration'] . ' seconds');
 				}
 
 				// search events matching our timestamps

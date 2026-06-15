@@ -70,7 +70,7 @@ as an alternative you can %1download a mysql dump%2 and import it manually into 
 at start of the event	calendar	fr	au début de l'événement
 attention	calendar	fr	Attention
 automatic update	calendar	fr	Mise à jour automatique
-automatically purge old events after	admin	fr	Purger autoamatiquement les anciens événement après
+automatically purge old events after	admin	fr	Purger automatiquement les événements après le délais indiqué ?
 available for the first entry inside each day of week or daily table inside the selected range:	calendar	fr	Disponible pour la première entrée sur chaque jour de la semaine ou sur la vue en tableau dans la sélection :
 back half a month	calendar	fr	15 jours dans le passé
 back one month	calendar	fr	Un mois dans le passé
@@ -188,7 +188,7 @@ displayed view	calendar	fr	Vue affichée
 displays this calendar view on the home page (page you get when you enter egroupware or click on the home page icon)?	calendar	fr	Afficher cette vue de calendrier dans l'accueil, la page par défaut lors de l'entrée dans eGrouware ou bien lorsque vous cliquer sur l'icône Accueil ?
 distribution list	calendar	fr	Liste de distribution
 do not import conflicting events	calendar	fr	Ne pas importer les événements en conflit
-do not include events of group members	calendar	fr	Ne pas inclure les événements des membres du groupe.
+do not include events of group members	calendar	fr	Masquer les évènements issus d'une invitation de groupe
 do not notify externals (non-users) about this event	calendar	fr	Ne PAS notifier les adresses externes (sans compte utilisateur) à propos de cet événement
 do you really want to change the start of this series? if you do, the original series will be terminated as of %1 and a new series for the future reflecting your changes will be created.	calendar	fr	Confirmez-vous vouloir changer le début de cette série ?  Si oui, la série d'origine sera terminée à %1 et une nouvelle série sera créée dans le futur pour prendre en compte vos changements.
 do you want a weekview with or without weekend?	calendar	fr	Voulez-vous voir les semaines avec ou sans week-end ?
@@ -223,6 +223,7 @@ enddate	calendar	fr	Date de fin
 enddate / -time of the meeting, eg. for more then one day	calendar	fr	Date/heure de fin de la réunion, c'est-à-dire pour plus d'une journée
 enddate of the export	calendar	fr	Date de la fin de l'exportation
 ends	calendar	fr	Finit
+entries	calendar	fr	entrées
 error adding the alarm	calendar	fr	Erreur lors de l'ajout de l'alarme
 error notifying %1	calendar	fr	Erreur de notification de %1
 error saving the event!	calendar	fr	Erreur à l'enregistrement de cet événement !
@@ -299,8 +300,8 @@ groupmember(s) %1 not included, because you have no access.	calendar	fr	Les memb
 groups: other users can always be invited, only groups require an invite grant	admin	fr	Groupes : les autres utilisateurs peuvent toujours être invités, seuls les groupes nécessitent une confirmation d'invitation
 h	calendar	fr	h
 here is your requested alarm.	calendar	fr	Voici l'alarme que vous avez demandé.
-hide private events	calendar	fr	Cacher les événements privés
-hide private infos	calendar	fr	Cacher les info privées
+hide private events	calendar	fr	Masquer les événements privés
+hide private infos	calendar	fr	Masquer les infos des évènements privées
 high priority	calendar	fr	Priorité haute
 history	calendar	fr	Historique
 history logging	admin	fr	Enregistrement de l'historique
@@ -411,7 +412,7 @@ no automatic purging	admin	fr	Aucune purge automatique
 no events found	calendar	fr	Aucun événement trouvé.
 no filter	calendar	fr	Pas de filtre
 no matches found	calendar	fr	Aucune occurence trouvée.
-no meeting requests	calendar	fr	Pas les demandes de rendez-vous
+no meeting requests	calendar	fr	Masquer les invitations sans réponse
 no owner selected	calendar	fr	Pas de propriétaire sélectionné.
 no preview for ical	calendar	fr	Aucune prévisualisation pour iCal
 no recurrence	calendar	fr	Pas de récurrence
@@ -438,6 +439,7 @@ number of resources to be booked	calendar	fr	Nombre de ressources à réserver
 number of weeks to show	calendar	fr	Nombre de semaines à afficher
 observance rule	calendar	fr	Règle d'observation
 occurence	calendar	fr	Occurence
+old fixed definition	calendar	fr	Ancienne définition fixe
 old startdate	calendar	fr	Ancienne date de début
 olddate	calendar	fr	Date d'origine
 on %1 %2 %3 your meeting request for %4	calendar	fr	Le %1 %2 %3 votre demande de réunion pour %4
@@ -449,7 +451,7 @@ on time change of more than 4 hours too	calendar	fr	Sur le changement de temps d
 one month	calendar	fr	Un mois
 one week	calendar	fr	Une semaine
 one year	calendar	fr	Un an
-only group-events	calendar	fr	Uniquement les evts de groupe
+only group-events	calendar	fr	Masquer les évènements de groupes
 only recurrences until %1 (excluding) have been checked!	calendar	fr	Seul les récurrences jusqu'au %1 (à l'exclusion) ont été sélectionnés !
 only supported by a few fully conformant clients (eg. from apple). if you have to enter a url, it will most likly not be suppored!	calendar	fr	Supporté uniquement par des clients pleinement conforme (par exemple, ceux d'Apple). Si vous avez à rentrer une URL, ceci n'est probablement pas supporté !
 only the initial date of that recurring event is checked!	calendar	fr	Seule la première date de cet événement récurrent est vérifiée
@@ -460,7 +462,7 @@ organizer	calendar	fr	Organisateur
 otherwise, changes to the title, description, ... or new participants will not be transferred to exceptions that have already been created.	calendar	fr	Sinon, les modifications apportées au titre, à la description, ... ou aux nouveaux participants ne seront pas transférées aux exceptions déjà créées.
 output unit	calendar	fr	Unité de sortie
 overlap holiday	calendar	fr	Jour fériés chevauchant
-owner too	calendar	fr	Aussi les "propriétaires"
+owner too	calendar	fr	Pas rejetés + Propriétaire seulement
 participant names by type	calendar	fr	Nom des participants par type
 participant table	calendar	fr	Tableau des participants
 participants	calendar	fr	Participants
@@ -558,11 +560,11 @@ should the planner display an empty row for users or categories without any appo
 should the status of the event-participants (accept, reject, ...) be shown in brackets after each participants name ?	calendar	fr	Le statut de chaque participant à l'événement (accepté, rejeté, ...) doit-il être montré entre crochets après le nom de chaque participant ?
 show %1 from %2	calendar	fr	Afficher %1 à partir de %2
 show a calendar title	calendar	fr	Afficher un titre de calendrier
-show all events, as if they were private	calendar	fr	Afficher tous les événements comme s'ils étaient privés
-show all status incl. rejected events	calendar	fr	Afficher tous les statuts y compris les événements rejetés
-show all status, but rejected	calendar	fr	Afficher tous les statuts, sauf les rejetés.
-show all status, but unknown	calendar	fr	Afficher tous les statuts, sauf les "pas de réponse"
-show also events just owned by selected user	calendar	fr	Afficher aussi les événements dont l'utilisateur est seulement propriétaire
+show all events, as if they were private	calendar	fr	Afficher tous les événements en masquant les infos de ceux marqués comme privés (tel que les autres utilisateurs les voient)
+show all status incl. rejected events	calendar	fr	Afficher tous les évènements, y compris ceux qui ont été rejetés
+show all status, but rejected	calendar	fr	Afficher tous les évènements non refusés
+show all status, but unknown	calendar	fr	Afficher tous les évènements traités et masquer tous ceux restés sans réponse
+show also events just owned by selected user	calendar	fr	Afficher les événements pas rejetés ainsi que ceux créés sans y participer ( uniquement propriétaire )
 show birthdays as all day non-blocking events as well as via mouseover of the date.	calendar	fr	S'affiche comme un événement non bloquant toute la journée ainsi qu'au passage de la souris sur la date.
 show birthdays as events	calendar	fr	Afficher comme événements
 show birthdays from addressbook	admin	fr	Afficher tous les anniversaires du carnet d'adresses
@@ -571,7 +573,7 @@ show events that have been deleted	calendar	fr	Afficher les événements qui ont
 show list of upcoming events	calendar	fr	Afficher la liste des événements à venir
 show only accepted events	calendar	fr	Afficher seulement les événements acceptés.
 show only delegated events	calendar	fr	Afficher seulement les événements délégués.
-show only events flagged as public, (not checked as private)	calendar	fr	Afficher uniquement les événements marqués comme public (ie. non marqués comme privés)
+show only events flagged as public, (not checked as private)	calendar	fr	Afficher uniquement les événements qui ne sont pas marqués comme privés
 show only invitations, not yet accepted or rejected	calendar	fr	Afficher seulement les invitations non confirmées ou non rejetés
 show only rejected events	calendar	fr	Afficher seulement les événements rejetés.
 show only tentative accepted events	calendar	fr	Afficher seulement les événements en "tentative".
@@ -712,6 +714,7 @@ which view to show on home page	calendar	fr	Quelle vue afficher dans l'accueil ?
 while selecting up to x users day- and weekview is not consolidated (5 is used when not set)	admin	fr	Nombre minimum d'utilisateur pour afficher la vue journalière et multi-semaine en consolidée. 5 par défaut.
 whole day	calendar	fr	Journée entière
 with credentials included	calendar	fr	Avec les droits inclus
+wk	calendar	fr	Sem
 work day ends on	calendar	fr	La journée de travail finit à
 work day starts on	calendar	fr	La journée de travail démarre à
 workday	calendar	fr	Jour ouvré

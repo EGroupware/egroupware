@@ -8,7 +8,7 @@
 		<et2-hbox  disabled="@no_add_alarm" height="35">
 			<et2-button  label="Add new alarm" id="button[add_alarm]" image="add"></et2-button>
 			<et2-select  statustext="" id="new_alarm[options]" onchange="app.calendar.alarm_custom_date"></et2-select>
-			<et2-date-time  id="new_alarm[date]" class="calendar_alarm_date_display"></et2-date-time>
+            <et2-date-time id="new_alarm[date]" class="calendar_alarm_date_display" dataFormat="object"></et2-date-time>
 			<et2-select  statustext="Select who should get the alarm" label="for" id="new_alarm[owner]" noLang="1"></et2-select>
 		</et2-hbox>
         <grid id="alarm" width="100%">
@@ -112,7 +112,7 @@
 				</row>
 				<row height="12">
 					<et2-description  for="recur_enddate" value="End date"></et2-description>
-					<et2-date  statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate"></et2-date>
+                    <et2-date statustext="repeat the event until which date (empty means unlimited)" id="recur_enddate" dataFormat="object"></et2-date>
 					<et2-description  for="tzid" value="Timezone"></et2-description>
 					<et2-select-timezone  statustext="Timezone in which recurrences have identical time" id="tzid"></et2-select-timezone>
 					<et2-label></et2-label>
@@ -135,7 +135,7 @@
 							</rows>
 						</grid>
 						<et2-hbox>
-							<et2-date-time id="recur_rdate" placement="top"></et2-date-time>
+                            <et2-date-time id="recur_rdate" placement="top" dataFormat="object"></et2-date-time>
 							<et2-button id="button[add_rdate]" image="add" statustext="Add recurrence"></et2-button>
 						</et2-hbox>
 					</et2-vbox>
@@ -203,10 +203,10 @@
 				</row>
 				<row class="dialogHeader2">
                     <et2-description  for="start" value="Start"></et2-description>
-                    <et2-date-time  id="start" class="required" onchange="app.calendar.edit_start_change" span="2" required="1"></et2-date-time>
+                    <et2-date-time id="start" class="required" onchange="app.calendar.edit_start_change" span="2" required="1" dataFormat="object"></et2-date-time>
                     <et2-description  for="duration" value="Duration" id="calendar_edit_duration"></et2-description>
                     <et2-select  statustext="Duration of the meeting" id="duration" onchange="app.calendar.set_enddate_visibility" noLang="1" emptyLabel="Use end date"></et2-select>
-                    <et2-date-time  id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true"></et2-date-time>
+                    <et2-date-time id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true" dataFormat="object"></et2-date-time>
                 </row>
                 <row class="dialogHeader2">
                     <et2-label  value="Options"></et2-label>

@@ -855,7 +855,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				$contact['owner'] = $user;
 			}
 			// check if default addressbook is synced and not Api\Accounts, if not use (always synced) personal addressbook
-			elseif(!$this->bo->default_addressbook || !in_array($this->bo->default_addressbook,$this->home_set_pref))
+			// for JSON/REST requests skip the home_set_pref check — always honour the user's configured default addressbook
+			elseif(!$this->bo->default_addressbook || (!$is_json && !in_array($this->bo->default_addressbook,$this->home_set_pref)))
 			{
 				$contact['owner'] = $GLOBALS['egw_info']['user']['account_id'];
 			}

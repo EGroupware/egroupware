@@ -23,6 +23,7 @@ all subfolders will be deleted too, and all messages in all affected folders wil
 allow external images from listed domains	mail	fi	Salli ulkoiset kuvat luetelluista verkkotunnuksista
 allow images from external sources in html emails	mail	fi	Salli kuvat HTML sähköposteissa
 allow images from listed domains in html emails	mail	fi	Salli listattujen verkkotunnusten kuvat HTML-sähköposteissa.
+allow users to create further identities	mail	fi	Salli käyttäjien luoda uusia identiteettejä
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	fi	Käyttäjä voi lukea, kirjoittaa ja luoda kansioita ja sähköposteja, lähettää niihin viestejä, liittää niihin viestejä ja poistaa viestejä.
 always allow external sources from %1	mail	fi	Salli aina ulkoiset lähteet osoitteesta %1
 always respond / auto-responder	mail	fi	Vastaa aina / automaattinen vastaus
@@ -72,6 +73,8 @@ convert only mail to item (ignore possible attachments)	mail	fi	Muunna vain säh
 copied %1 message(s) from %2 to %3	mail	fi	Kopioitu %1 viesti(t) %2:sta %3:een.
 copy to	mail	fi	Kopio
 cross account forward attachment is not allowed!	mail	fi	Tilin rajat ylittävä eteenpäin kiinnittäminen ei ole sallittua!
+default identity for compose	mail	fi	Oletusidentiteetti viestin kirjoittamista varten
+default signature	mail	fi	Oletusallekirjoitus
 default sorting order	mail	fi	Oletus lajittelujärjestys
 default toolbar actions shown in mail's html editor	mail	fi	HTML-editorin työkalupalkissa sähköpostia laadittaessa käytössä olevat toiminnot
 default value for remembering s/mime passphrase in minutes	mail	fi	S/MIME-salasanan muistamisen oletusarvo minuutteina
@@ -160,6 +163,7 @@ header	mail	fi	Otsikko
 header lines	mail	fi	Ylätunnisterivit
 hide from	mail	fi	Piilota Lähettäjä
 high priority	mail	fi	Korkea prioriteetti
+how should the available information on identities be displayed	admin	fi	Miten identiteettejä koskevat tiedot tulisi näyttää
 how to forward messages	mail	fi	Kuinka viestejä välitetään
 html	mail	fi	HTML
 ident name	mail	fi	Tunnuksen nimi
@@ -167,6 +171,7 @@ ident name email	mail	fi	Tunnuksen nimi [Sähköposti]
 ident name organization email	mail	fi	Tunnuksen nimi Organisaatio [Sähköposti]
 identity	mail	fi	Identiteetti
 identity label	mail	fi	Tunnisteen etiketti
+identity+signature	mail	fi	Identiteetti + allekirjoitus
 if	mail	fi	JOS
 if different from email address	mail	fi	Jos eri kuin sähköpostiosoite
 if mail header	mail	fi	jos postin ylätunniste
@@ -194,6 +199,7 @@ junk folder	mail	fi	Roskapostikansio
 keep a copy	mail	fi	Säilytä kopio
 keep a copy of the message in your inbox	mail	fi	Pidä kopio viestistä Inboxissa
 kilobytes	mail	fi	Kilotavu(a)
+last used signature	mail	fi	Viimeksi käytetty allekirjoitus
 later	mail	fi	Jälkeen
 learning as ham (not spam) failed because of %1	mail	fi	Learning as ham (ei roskapostia) epäonnistui, koska %1
 learning as spam failed because of %1	mail	fi	Oppiminen roskapostina epäonnistui %1:n takia
@@ -268,6 +274,7 @@ organization | real name email	mail	fi	Organisaatio | Oikea nimi [Sähköposti]
 original message	mail	fi	Alkuperäinen viesti
 outbox	mail	fi	Lähtevä postilaatikko
 permission denied	mail	fi	Pääsy estetty
+personal signature	mail	fi	Henkilökohtainen allekirjoitus
 please configure access to an existing individual imap account.	mail	fi	Konfiguroi jo olemassaolevan IMAP sähköpostitilisi asetukset.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fi	Määritä S/MIME-varmenne Encryption-välilehdellä, joka sijaitsee Muokkaa tiliä -valintaikkunassa.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fi	Ota yhteyttä järjestelmänvalvojaan varmistaaksesi, tukeeko palvelimesi palvelinpuolen suodatinsääntöjä ja miten ne otetaan käyttöön EGroupwaressa aktiiviselle tilillesi (%1), jonka tunnus on %2.
@@ -406,6 +413,7 @@ when deleting messages	mail	fi	Kun poistetaan viestejä
 when sending messages	mail	fi	Kun lähetetään viestejä
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	fi	Minkä kansioiden (Lähetetyt-kansion lisäksi) tulisi käyttää Sent Folder View Schemaa
 which folders - in general - should not be automatically created, if not existing	mail	fi	Mitä kansioita -yleisesti ottaen - EI pitäisi automaattisesti luoda, jos ne eivät ole jo olemassa
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	fi	Millä sähköpostitunnuksella (allekirjoituksella) haluat aloittaa.\n”Henkilökohtainen allekirjoitus” -kohdassa käytetään aina ensimmäistä henkilökohtaista allekirjoitusta.
 write	mail	fi	Kirjoita
 write & delete	mail	fi	kirjoita & poista
 wrote	mail	fi	Kirjoitettu

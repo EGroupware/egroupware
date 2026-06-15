@@ -118,6 +118,8 @@ current folder	mail	nl	huidige map
 current subject	mail	nl	Huidig onderwerp
 currently:	mail	nl	Momenteel:
 deactive	mail	nl	Niet actief
+default identity for compose	mail	nl	Standaardidentiteit voor het opstellen van e-mails
+default signature	mail	nl	Standaardhandtekening
 default sorting order	mail	nl	Standaard volgorde
 default toolbar actions shown in mail's html editor	mail	nl	Functies ingeschakeld in de HTML editor werkbalk bij het samenstellen van een e-mail
 default value for remembering s/mime passphrase in minutes	mail	nl	Standaardwaarde voor onthouden S/MIME wachtwoord in minuten
@@ -308,6 +310,7 @@ junk folder	mail	nl	Junk map
 keep a copy	mail	nl	Een kopie bewaren
 keep a copy of the message in your inbox	mail	nl	Bewaar een kopie van het bericht in uw inbox
 kilobytes	mail	nl	kilobytes
+last used signature	mail	nl	Laatst gebruikte handtekening
 later	mail	nl	Later
 learning as ham (not spam) failed because of %1	mail	nl	Leren als ham (geen spam) mislukt vanwege %1
 learning as spam failed because of %1	mail	nl	Leren als spam mislukt vanwege %1
@@ -408,6 +411,7 @@ organization | real name email	mail	nl	Organisatie | Echte naam [Email]
 original message	mail	nl	Origineel bericht
 outbox	mail	nl	Postvak UIT
 permission denied	mail	nl	Toestemming geweigerd
+personal signature	mail	nl	Persoonlijke handtekening
 please configure access to an existing individual imap account.	mail	nl	Configureer alstublieft toegang tot een bestaand IMAP account
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	nl	Configureer uw S/MIME-certificaat op het tabblad Encryptie in het dialoogvenster Account bewerken.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	nl	Neem contact op met uw administrateur om na te gaan of uw server filter op regels wordt ondersteund, en hoe u deze in EGroupware moet activeren voor uw actieve account (%1) met ID: %2.
@@ -639,6 +643,7 @@ when saving messages as item of a different app	mail	nl	Als berichten bewaard wo
 when sending messages	mail	nl	Wanneer berichten worden verzonden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	nl	Welke mappen (behalve de Verzenden map) moeten getoond worden bij gebruik van het schema van de verzend mappen
 which folders - in general - should not be automatically created, if not existing	mail	nl	Welke mappen - Algemeen - moeten niet automatisch aangemaakt worden als ze niet bestaan
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	nl	Met welke e-mailidentiteit (handtekening) wilt u beginnen?\nBij “Persoonlijke handtekening” gebruiken we altijd de eerste persoonlijke handtekening.
 which method to use when forwarding a message	mail	nl	Welke methode gebruiken wanneer een berciht wordt doorgestuurd
 with message:	mail	nl	Met bericht:
 writable sharing requires epl version!	mail	nl	Schrijfbaar delen vereist EPL versie!

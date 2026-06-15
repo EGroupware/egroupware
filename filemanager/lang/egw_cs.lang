@@ -1,7 +1,7 @@
 %1 already exists as a file	filemanager	cs	%1 již existuje jako soubor
 %1 already mounted on %2!	filemanager	cs	%1 již bylo připojeno na %2!
 %1 directories and %2 files copied.	filemanager	cs	Zkopírováno %1 adresářů a %2 souborů
-%1 directories and %2 files deleted.	filemanager	cs	Smazáno %1 adresářů a %2 souborů
+%1 directories and %2 files deleted.	filemanager	cs	Bylo odstraněno %1 adresářů a %2 souborů.
 %1 elements linked.	filemanager	cs	Odkazy na %1 položek vytvořeny.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	cs	Během kopírování došlo k %1 chybám (zkopírováno %2 adresářů a %3 souborů)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	cs	Během mazání došlo k %1 chybám (smazáno %2 adresářů a %3 souborů)!
@@ -309,7 +309,7 @@ tag to mark positions for address labels	filemanager	cs	Značka pro vyznačení 
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	cs	Výchozí startovní složka je Vaše osobní. Je použita v případě, kdy položku nevyplníte, zadaná cesta neexistuje nebo pro ní nemáte přístupová oprávnění.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	cs	Dokument může obsahovat zástupné znaky jako {{%3}}, které budou nahrazeny daty (%1full list of placeholder names%2).
 the following document-types are supported:	filemanager	cs	Podporovány jsou následující typy dokumentů:
-the requested path %1 is not available.	filemanager	cs	Požadovaná cesta %1 není k dispozici.
+the requested path %1 is not available.	filemanager	cs	Požadovaná cesta %1 není k dispozici!
 the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	cs	Nahraný soubor je viditelný pouze pro osobu, která s vámi tyto soubory sdílí, nikoli pro vás nebo jiné osoby, které znají tento odkaz pro sdílení.
 there's already a directory with that name!	filemanager	cs	Adresář s tímto názvem již existuje!
 there's already a file with that name!	filemanager	cs	Soubor s tímto názvem již existuje!

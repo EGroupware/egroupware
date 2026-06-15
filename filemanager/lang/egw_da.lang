@@ -154,6 +154,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	da	Superbruger
 superuser (root)	filemanager	da	Superbruger (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	da	Dokumentet kan indeholde pladsholdere som {{%3}}, der skal erstattes med data (%1fuld liste over pladsholdernavne%2).
+the requested path %1 is not available.	filemanager	da	Den anmodede sti %1 er ikke tilgængelig!
 total files	filemanager	da	Antal filer
 ui mode	filemanager	da	Standard værktøjslinje
 unused space	filemanager	da	Ubrugt plads

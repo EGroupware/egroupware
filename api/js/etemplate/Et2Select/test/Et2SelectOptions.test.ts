@@ -29,6 +29,18 @@ let options = [
 	<SelectOption>{value: "1", label: "Option 1"},
 	<SelectOption>{value: "2", label: "Option 2"}
 ];
+
+async function activateOptions(select : Et2Select)
+{
+	// Et2Select defers rendering the full <sl-option> list until user interaction
+	// (_optionsActivated=true) to keep initial render cheap. These tests assert the complete
+	// option set in the DOM, so we force that state and wait for both Lit update cycles.
+	// TODO: Tests could be rewritten to work around / with the non-rendered options
+	(select as any)._optionsActivated = true;
+	select.requestUpdate("_optionsActivated");
+	await elementUpdated(select);
+	await select.updateComplete;
+}
 describe("Select widget", () =>
 {
 	beforeEach(async() =>
@@ -65,6 +77,7 @@ describe("Select widget", () =>
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
 			await element.updateComplete;
+			await activateOptions(element);
 
 			/** TESTING **/
 			assert.isNotNull(element.select.querySelector("[value='option']"), "Missing template option");
@@ -84,6 +97,7 @@ describe("Select widget", () =>
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
 			await element.updateComplete;
+			await activateOptions(element);
 
 			/** TESTING **/
 			assert.equal(element.select.querySelectorAll("sl-option").length, 2);
@@ -104,6 +118,7 @@ describe("Select widget", () =>
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
 			await element.updateComplete;
+			await activateOptions(element);
 
 			/** TESTING **/
 			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
@@ -124,6 +139,7 @@ describe("Select widget", () =>
 			// wait for asychronous changes to the DOM
 			await elementUpdated(element);
 			await element.updateComplete;
+			await activateOptions(element);
 
 			/** TESTING **/
 			assert.equal(element.select.querySelectorAll("sl-option").length, 10);
@@ -147,6 +163,7 @@ describe("Select widget", () =>
 			await elementUpdated(container);
 			element = <Et2Select>container.getWidgetById('select');
 			await element.updateComplete;
+			await activateOptions(element);
 
 			/** TESTING **/
 			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);
@@ -170,6 +187,7 @@ describe("Select widget", () =>
 			element.loadFromXML(element);
 			await elementUpdated(element);
 			await element.updateComplete;
+			await activateOptions(element);
 
 			/** TESTING **/
 			let option_keys = Object.values(element.select.querySelectorAll("sl-option")).map(o => o.value);

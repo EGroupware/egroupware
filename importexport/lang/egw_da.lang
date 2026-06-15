@@ -4,6 +4,7 @@ addressbook csv import	importexport	da	CSV-import af adressebog
 addressbook vcard import	importexport	da	Import af adressebog vCard
 admin disabled exporting	importexport	da	Administrator har deaktiveret eksport.
 all users	importexport	da	Alle brugere
+automatically created by importexport	importexport	da	Oprettet automatisk af Import | Eksport
 change allowed users	importexport	da	Ændre tilladte brugere
 change owner when updating	importexport	da	Skift ejer ved opdatering
 changed	importexport	da	Ændret
@@ -16,11 +17,14 @@ delete files after import	importexport	da	Slet filer efter import
 deleted	importexport	da	slettet
 execute	importexport	da	Eksekvere
 export	importexport	da	Exporter
+extra charsets for import / export	importexport	da	Ekstra tegnsæt til Import | Eksport
 finish	importexport	da	færdig
 general	preferences	da	Generelt
 import	importexport	da	Importer
+importexport	common	da	Import / Eksport
 next run	importexport	da	Næste kørsel
 preview	importexport	da	Snig vis
 previous	importexport	da	tidligere
+schedule import / export	common	da	Planlæg Import | Eksport
 translation	importexport	da	Oversættelse
 use default	importexport	da	Brug standard

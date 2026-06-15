@@ -272,7 +272,7 @@ insert timestamp into description field	infolog	en	Insert timestamp into descrip
 invalid filename	infolog	en	Invalid file name.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	en	Invalid owner ID: %1. Used %2 instead.
 invalid status for entry type %1.	infolog	en	Invalid status for entry type %1.
-label<br>helptext	infolog	en	Label<br>Helptext
+label<br>helptext	infolog	en	Label\nHelptext
 last changed	infolog	en	Last changed
 last modified	infolog	en	Last modified
 leave blank to get the used time calculated by timesheet entries	infolog	en	Leave blank to get the used time calculated by Time Sheet entries
@@ -358,7 +358,7 @@ owner, responsible	infolog	en	Owner, Responsible
 parent	infolog	en	Parent
 parent infolog	infolog	en	Parent InfoLog
 participants for scheduling an appointment	infolog	en	Participants for scheduling an appointment
-path on (web-)serverside<br>eg. /var/samba/share	infolog	en	Path on (web-)serverside<br>eg. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	en	Path on (web-)serverside\neg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	en	Path to user and group files HAS TO BE OUTSIDE of the web servers document root!
 pattern for search in addressbook	infolog	en	Pattern for search in addressbook
 pattern for search in projects	infolog	en	Pattern for search in projects
@@ -415,7 +415,7 @@ responsible user, priority	infolog	en	Responsible user, priority
 returns a list / search for records.	infolog	en	Returns a list / search for records.
 rights for the responsible	infolog	en	Rights for the responsible
 rows	infolog	en	Rows
-same as infolog list	infolog	en	Same as Infolog list
+same as infolog list	infolog	en	Same as InfoLog list
 same day	infolog	en	Same day
 save	infolog	en	Save
 saves the changes made and leaves	infolog	en	Saves the changes and leaves
@@ -433,7 +433,7 @@ select a responsible user: a person you want to delegate this task	infolog	en	Se
 select a typ to edit it's status-values or delete it	infolog	en	Select a type to edit it's status values or delete it
 select an app to search in	infolog	en	Select application to search in
 select an entry to link with	infolog	en	Select an entry to link with
-select if crm view should use the same value for (no) details like infolog or always no or details	infolog	en	Select if CRM view should use the same value for (no) details like Infolog or always no or details
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	en	Select if CRM view should use the same value for (no) details like Infolog or always no or details.
 select multiple contacts for a further action	infolog	en	Select multiple contacts for a further action
 select new category	infolog	en	Select new category
 select to filter by owner	infolog	en	Select to filter by owner

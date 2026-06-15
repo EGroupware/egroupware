@@ -155,6 +155,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	no	Superbruker
 superuser (root)	filemanager	no	Superbruker (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	no	Dokumentet kan inneholde plassholdere som {{%3}}, som skal erstattes med dataene (%1full liste over plassholdernavn%2).
+the requested path %1 is not available.	filemanager	no	Den angitte banen %1 er ikke tilgjengelig!
 total files	filemanager	no	Totalt antall filer
 unused space	filemanager	no	Ubrukt område
 up	filemanager	no	Opp

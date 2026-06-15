@@ -1,7 +1,7 @@
 %1 already exists as a file	filemanager	pt-br	%1 já existe como um arquivo
 %1 already mounted on %2!	filemanager	pt-br	%1 já montada sobre %2!
 %1 directories and %2 files copied.	filemanager	pt-br	%1 diretórios e %2 arquivos copiados.
-%1 directories and %2 files deleted.	filemanager	pt-br	%1 diretórios e %2 arquivos removidos.
+%1 directories and %2 files deleted.	filemanager	pt-br	%1 diretórios e %2 arquivo(s) excluídos.
 %1 elements linked.	filemanager	pt-br	% 1 elementos ligados.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	pt-br	%1 erros copiando (%2 diretórios e %3 arquivos copiados)!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	pt-br	%1 erros removendo (%2 diretórios e %3 arquivos removidos)!
@@ -267,7 +267,7 @@ superuser (root)	filemanager	pt-br	Superusuário (root)
 symlink to %1 created.	filemanager	pt-br	Symlink para% 1 criado.
 tag to mark positions for address labels	filemanager	pt-br	Tag para marcar posições para etiquetas de endereço
 the following document-types are supported:	filemanager	pt-br	Os seguintes tipos de documentos são suportados:
-the requested path %1 is not available.	filemanager	pt-br	O caminho solicitado %1 não está disponível.
+the requested path %1 is not available.	filemanager	pt-br	O caminho solicitado %1 não está disponível!
 there's already a directory with that name!	filemanager	pt-br	Já existe um diretório com esse nome!
 there's already a file with that name!	filemanager	pt-br	Já existe um arquivo com esse nome!
 to overwrite the existing file store again.	filemanager	pt-br	Para substituir o existente filestore novamente

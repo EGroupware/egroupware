@@ -21,6 +21,7 @@ all my email addresses	mail	pl	wszystkie moje adresy e-mail
 all of	mail	pl	wszystkie z
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	pl	Wszystkie podfoldery również zostaną usunięte, a wszystkie wiadomości we wszystkich dotkniętych folderach zostaną utracone
 allow images from external sources in html emails	mail	pl	Zezwalaj na wyświetlanie obrazkow z zewnętrznych serwerów w wiadomościach HTML.
+allow users to create further identities	mail	pl	Zezwól użytkownikom na tworzenie kolejnych tożsamości
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	pl	Umożliwia użytkownikowi odczytywanie, zapisywanie i tworzenie folderów i wiadomości e-mail, wysyłanie do nich wiadomości, dołączanie do nich wiadomości i usuwanie wiadomości
 always respond / auto-responder	mail	pl	Zawsze odpowiadaj / autoresponder
 always show html emails	mail	pl	Zawsze pokazuj maile napisane w HTML
@@ -63,6 +64,8 @@ copied %1 message(s) from %2 to %3	mail	pl	Skopiowano %1 wiadomości z %2 do %3.
 copy to	mail	pl	Kopiuj do
 cross account forward attachment is not allowed!	mail	pl	Dołączanie do konta forward jest zabronione!
 current subject	mail	pl	Aktualny temat
+default identity for compose	mail	pl	Domyślna tożsamość do tworzenia wiadomości
+default signature	mail	pl	Domyślny podpis
 default sorting order	mail	pl	Domyślny porządek sortowania
 default toolbar actions shown in mail's html editor	mail	pl	Funkcje włączone w pasku narzędzi edytora HTML podczas tworzenia wiadomości e-mail
 default value for remembering s/mime passphrase in minutes	mail	pl	Domyślna wartość pamiętania hasła S/MIME w minutach
@@ -154,6 +157,7 @@ header	mail	pl	Nagłówek
 header lines	mail	pl	Linie nagłówka
 hide from	mail	pl	Ukryj Od
 high priority	mail	pl	Wysoki priorytet
+how should the available information on identities be displayed	admin	pl	W jaki sposób mają być wyświetlane dostępne informacje o tożsamościach
 how to forward messages	mail	pl	Sposób przekazywania wiadomości
 html	mail	pl	HTML
 html mode	mail	pl	Tryb HTML
@@ -162,6 +166,7 @@ ident name email	mail	pl	Nazwa identyfikatora [Email]
 ident name organization email	mail	pl	Nazwa identyfikatora Organizacja [Email]
 identity	mail	pl	Tożsamość
 identity label	mail	pl	Etykieta tożsamości
+identity+signature	mail	pl	Tożsamość + podpis
 if	mail	pl	JEŻELI
 if different from email address	mail	pl	Jeśli inny niż adres e-mail
 if mail header	mail	pl	jeżeli nagłówek wiadomości
@@ -189,6 +194,7 @@ junk folder	mail	pl	Folder śmieci
 keep a copy	mail	pl	Behold en kopi
 keep a copy of the message in your inbox	mail	pl	Zachowaj kopię wiadomości w folderze ODEBRANE
 kilobytes	mail	pl	kilobajtów
+last used signature	mail	pl	Ostatnio używany podpis
 later	mail	pl	Później
 learning as ham (not spam) failed because of %1	mail	pl	Uczenie się jako szynka (nie spam) nie powiodło się z powodu %1
 learning as spam failed because of %1	mail	pl	Nauka jako spam nie powiodła się z powodu %1
@@ -264,6 +270,7 @@ organization | real name email	mail	pl	Organizacja | Prawdziwa nazwa [Email]
 original message	mail	pl	Oryginalna wiadomość
 outbox	mail	pl	Skrzynka nadawcza
 permission denied	mail	pl	Dostęp zabroniony
+personal signature	mail	pl	Podpis osobisty
 please configure access to an existing individual imap account.	mail	pl	Proszę skonfigurować dostęp do istniejącego konta IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pl	Skonfiguruj certyfikat S/MIME w zakładce Szyfrowanie znajdującej się w oknie dialogowym Edytuj konto.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pl	Skontaktuj się z administratorem, aby sprawdzić, czy serwer obsługuje reguły filtrowania po stronie serwera i jak włączyć je w EGroupware dla aktywnego konta (%1) z ID: %2.
@@ -398,6 +405,7 @@ what to do when you delete a message	mail	pl	Co zrobić po usunięciu wiadomośc
 when deleting messages	mail	pl	Gdy usuwasz wiadomość
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	pl	które foldery (oprócz Wysłane) powinny być wyświetlone z użyciem schematy folderu "Wysłane"
 which folders - in general - should not be automatically created, if not existing	mail	pl	które foldery - ogólnie - nie powinny być automatycznie tworzone jeśli nie istnieją
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	pl	Od której tożsamości (podpisu) chcesz zacząć?\nW przypadku opcji „Podpis osobisty” zawsze używamy pierwszego podpisu osobistego.
 whole message	mail	pl	Cała wiadomość
 write	mail	pl	Zapisz
 write & delete	mail	pl	zapisz i usuń

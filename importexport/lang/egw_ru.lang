@@ -106,7 +106,6 @@ problems during import:	importexport	ru	Проблемы при импорте:
 save as definition	importexport	ru	Сохранить как определение
 schedule	common	ru	Расписание
 schedule import / export	common	ru	Расписание импорта|экспорта
-schedule import | export	importexport	ru	Импорт | экспорт расписания
 schedule not found	importexport	ru	Расписание не найдено.
 schedule times are server time!  currently %s.	importexport	ru	Время расписания соответствует времени  сервера!  Текущее %s.
 select definition	importexport	ru	Выбор определения

@@ -21,6 +21,7 @@ all my email addresses	mail	hu	minden e-mail címem
 all of	mail	hu	összes innnen
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	hu	Az összes almappa is törlődik, és az összes érintett mappában lévő összes üzenet elveszik.
 allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben.
+allow users to create further identities	mail	hu	Lehetővé teszi a felhasználók számára további identitások létrehozását
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	hu	Lehetővé teszi a felhasználó számára, hogy mappákat és leveleket olvasson, írjon és hozzon létre, hozzászóljon, üzeneteket csatoljon hozzájuk és üzeneteket töröljön.
 always respond / auto-responder	mail	hu	Mindig válaszolni / automatikus válaszadó
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
@@ -67,6 +68,8 @@ copied %1 message(s) from %2 to %3	mail	hu	%1 üzenet(ek) átmásolása %2-ből 
 copy to	mail	hu	Másold ide:
 cross account forward attachment is not allowed!	mail	hu	Kereszt számla előre csatolása nem megengedett!
 current subject	mail	hu	Jelenlegi téma
+default identity for compose	mail	hu	Alapértelmezett identitás az üzenetíráshoz
+default signature	mail	hu	Alapértelmezett aláírás
 default sorting order	mail	hu	Alapértelmezett rendezési sor
 default toolbar actions shown in mail's html editor	mail	hu	A HTML-szerkesztő eszköztárban e-mail készítésekor engedélyezett funkciók
 default value for remembering s/mime passphrase in minutes	mail	hu	Az S/MIME jelszó megjegyzésére szolgáló alapértelmezett érték percekben
@@ -157,6 +160,7 @@ header	mail	hu	Fejléc
 header lines	mail	hu	Email fejléce
 hide from	mail	hu	Elrejteni Tőle
 high priority	mail	hu	Kiemelt prioritás
+how should the available information on identities be displayed	admin	hu	Hogyan jelenjenek meg az identitásokkal kapcsolatos elérhető információk
 how to forward messages	mail	hu	Üzenet továbbítás módja
 html	mail	hu	HTML
 ident name	mail	hu	Azonosító neve
@@ -164,6 +168,7 @@ ident name email	mail	hu	Azonosító neve [Email]
 ident name organization email	mail	hu	Azonosító neve Szervezet [Email]
 identity	mail	hu	Azonosító
 identity label	mail	hu	Azonosító címke
+identity+signature	mail	hu	Identitás+Aláírás
 if	mail	hu	HA
 if different from email address	mail	hu	Ha eltér az
 if mail header	mail	hu	ha a levél fejléce
@@ -188,6 +193,7 @@ junk folder	mail	hu	Szemét mappa
 keep a copy	mail	hu	Megtartani egy másolatot
 keep a copy of the message in your inbox	mail	hu	Másolat megőrzése a Bejövő postafiókban
 kilobytes	mail	hu	kilobájt
+last used signature	mail	hu	Legutóbb használt aláírás
 later	mail	hu	Később
 learning as ham (not spam) failed because of %1	mail	hu	A sonkaként (nem spamként) való tanulás sikertelen a %1 miatt
 learning as spam failed because of %1	mail	hu	A spamként való tanulás %1 miatt nem sikerült
@@ -263,6 +269,7 @@ organization | real name email	mail	hu	Szervezet | Valódi név [Email]
 original message	mail	hu	Eredeti üzenet
 outbox	mail	hu	Kimenő postaláda
 permission denied	mail	hu	Hozzáférés megtagadva
+personal signature	mail	hu	Személyes aláírás
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	hu	Kérjük, konfigurálja az S/MIME tanúsítványt a Fiók szerkesztése párbeszédpanelen található Titkosítás fülön.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	hu	Kérjük, forduljon a rendszergazdához, hogy ellenőrizze, támogatja-e a szerver a szerveroldali szűrőszabályokat, és hogyan engedélyezheti azokat az EGroupware-ben az Ön aktív fiókja (%1) számára az ID: %2 azonosítóval.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	hu	Kérjük, lépjen kapcsolatba a rendszergazdával annak ellenőrzéséhez, hogy a kiszolgáló támogatja-e a kiszolgálói holidaymessages-t, és hogyan engedélyezheti azokat az EGroupware-ben az ID: %2 azonosítóval rendelkező aktív fiókja (%1) számára.
@@ -393,6 +400,7 @@ what to do when you delete a message	mail	hu	Mi a teendő, ha töröl egy üzene
 when deleting messages	mail	hu	Üzenet törlése esetén
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve
 which folders - in general - should not be automatically created, if not existing	mail	hu	melyik mappa ne legyen automatikusan létrehozva
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	hu	Melyik e-mail identitással (aláírással) szeretne kezdeni?\nA „Személyes aláírás” esetén mindig az első személyes aláírást használjuk.
 write	mail	hu	Írás
 write & delete	mail	hu	írás és törlés
 wrote	mail	hu	írta

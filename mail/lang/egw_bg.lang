@@ -128,6 +128,8 @@ current folder	mail	bg	текуща папка
 current subject	mail	bg	текуща тема
 currently:	mail	bg	Понастоящем:
 deactive	mail	bg	Деактивиране
+default identity for compose	mail	bg	Стандартна идентичност за създаване на писмо
+default signature	mail	bg	Стандартен подпис
 default sorting order	mail	bg	Подреждане по подразбиране
 default toolbar actions shown in mail's html editor	mail	bg	Функции, активирани в лентата с инструменти на редактора HTML при съставяне на имейл
 default value for remembering s/mime passphrase in minutes	mail	bg	Стойност по подразбиране за запомняне на S/MIME паролата в минути
@@ -327,6 +329,7 @@ junk folder	mail	bg	Папка с нежелани файлове
 keep a copy	mail	bg	Запазване на копие
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
 kilobytes	mail	bg	килобайта
+last used signature	mail	bg	Последно използван подпис
 later	mail	bg	По-късно
 learning as ham (not spam) failed because of %1	mail	bg	Ученето като хам (не спам) се провали заради %1
 learning as spam failed because of %1	mail	bg	Ученето като спам се е провалило поради %1
@@ -403,6 +406,7 @@ organization | real name email	mail	bg	Организация | Истинско
 original message	mail	bg	Оригинално съобщение
 outbox	mail	bg	Изходяща поща
 permission denied	mail	bg	Не е позволено
+personal signature	mail	bg	Личен подпис
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	bg	Моля, конфигурирайте сертификата си S/MIME в раздела Encryption (Шифроване), намиращ се в диалоговия прозорец за редактиране на акаунта.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	bg	Моля, свържете се с вашия администратор, за да потвърдите дали сървърът ви поддържа филтърни правила на сървъра и как да ги активирате в EGroupware за вашия активен акаунт (%1) с ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	bg	Моля, свържете се с Вашия администратор, за да потвърдите дали Вашият сървър поддържа съобщения за ваканция от страна на сървъра и как да ги активирате в EGroupware за Вашия активен акаунт (%1) с ID: %2.
@@ -536,6 +540,7 @@ view header lines	mail	bg	Заглавна част (Header)
 what to do when you delete a message	mail	bg	Какво да правите, когато изтривате съобщение.
 when deleting messages	mail	bg	При изтриване на съобщения
 which folders - in general - should not be automatically created, if not existing	mail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	bg	С коя пощенска идентичност (подпис) искате да започнете.\nЗа „Личен подпис“ винаги използваме първия личен подпис.
 write & delete	mail	bg	Записване и изтриване
 wrote	mail	bg	написа
 you can select what info to be displayed on email tag	mail	bg	Можете да изберете каква информация да се показва на имейл тага.

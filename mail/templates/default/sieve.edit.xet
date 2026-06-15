@@ -139,6 +139,9 @@
 				<row>
 					<et2-checkbox  label="Use regular expressions (see wikipedia for information on POSIX regular expressions)" id="regexp"></et2-checkbox>
 				</row>
+				<row>
+					<et2-checkbox  label="Use tokenised search syntax (+word required, -word forbidden, &quot;...&quot; literal phrase; same as the EGroupware search box)" id="tokenized"></et2-checkbox>
+				</row>
 				<row class="dialogFooterToolbar">
 					<et2-hbox  width="100%">
 						<et2-button  statustext="Saves this rule" label="Save" id="button[save]"></et2-button>

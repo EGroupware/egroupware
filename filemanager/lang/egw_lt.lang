@@ -98,6 +98,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	lt	Supervartotojas
 superuser (root)	filemanager	lt	Supervartotojas (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	lt	Dokumente gali būti tokios vietos žymės kaip {{%3}}, kurios bus pakeistos duomenimis (%1pilnas vietos žymės pavadinimų sąrašas%2).
+the requested path %1 is not available.	filemanager	lt	Nurodyto kelio %1 nerasta!
 username for webdav and smb, use $user for name of logged in user	filemanager	lt	Vartotojo vardas WebDAV ir SMB, naudokite $user kaip prisijungusio vartotojo vardą
 vfs mounts and versioning	common	lt	VFS prijungimas ir versijų nustatymas
 webdavs: mount egroupware or *cloud shares	filemanager	lt	WebDAV: prijungti „EGroupware“ arba „*Cloud“ akcijas

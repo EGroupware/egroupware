@@ -9,6 +9,7 @@ and its members	timesheet	de	Und die Mitglieder
 applies the changes	timesheet	de	Änderungen durchführen
 apply the action on the whole query, not only the shown timesheets!!!	timesheet	de	Wendet den Befehl auf die gesamte Abfrage an, NICHT nur die angezeigten Stundenzettel!!
 ask to start and stop working time with session	timesheet	de	Aufforderung zum Starten und Stoppen der Arbeitszeit mit Sitzung?
+billable	timesheet	de	abrechenbar
 both: allow to use projectmanager and free project-names	admin	de	Beides: verwende Projektmanager und freie Projektnamen
 by	timesheet	de	von
 category for 'working time'	admin	de	Kategorie für 'Arbeitszeit'

@@ -127,6 +127,23 @@ class Nextmatch extends Etemplate\Widget
 		{
 			list($app) = explode('.', $this->attrs['template']);
 		}
+
+		// et2-nextmatch does not run row/header templates server-side, so preload customfields metadata
+		// only when the configured row template actually uses a customfields header.
+		$rows_template = $value['template'] ?? $this->attrs['template'] ?? $this->attrs['options'] ?? null;
+		if($this->type === 'et2-nextmatch' && $this->hasCustomfieldsHeader($rows_template) &&
+			empty(self::$request->modifications[Customfields::GLOBAL_VALS]['customfields']))
+		{
+			$cf_app = $app ?: ($GLOBALS['egw_info']['flags']['currentapp'] ?? null);
+			if($cf_app)
+			{
+				$cfs = new Customfields('<nextmatch-customfields app="' .
+										htmlspecialchars($cf_app, ENT_QUOTES, 'UTF-8') .
+										'"/>'
+				);
+				$cfs->beforeSendToClient($cname, $expand);
+			}
+		}
 		// Check for sort preference.  We only apply this on first load, so it can be changed
 		// First load is detected on a NOT set num_rows!
 		if(!isset($value['num_rows']) &&
@@ -141,9 +158,9 @@ class Nextmatch extends Etemplate\Widget
 			$value['num_rows'] = self::INITIAL_ROWS;
 		}
 
-		$value['rows'] = array();
 
 		$send_value = $value;
+		$value['rows'] = $send_value['rows'] = array();
 
 		// Check for a favorite in URL
 		if(!empty($_GET['favorite']) && !empty($value['favorites']))
@@ -274,8 +291,8 @@ class Nextmatch extends Etemplate\Widget
 		}
 		// check if we have a filter-template or need to generate one
 		$rows_template = isset($value['template']) ? $value['template'] : ($this->attrs['template'] ?? $this->attrs['options'] ?? null);
-		$template_name = $value['filter_template'] ?? $this->attrs['filter_template'] ?? null;
-		if($template_name === null && !array_key_exists('filter_template', $this->attrs))
+		$template_name = $value['filter_template'] ?? $this->attrs['filterTemplate'] ?? $this->attrs['filter_template'] ?? null;
+		if($template_name === null && !array_key_exists('filter_template', $this->attrs) && !array_key_exists('filterTemplate', $this->attrs))
 		{
 			$parts = explode('.', $rows_template);
 			// remove rows
@@ -348,6 +365,7 @@ class Nextmatch extends Etemplate\Widget
 		if($template_name)
 		{
 			self::setElementAttribute($this->id, "filter_template", $url ?? $template_name);
+			self::setElementAttribute($this->id, "filterTemplate", $url ?? $template_name);
 		}
 		// stop NM itself from generating search, filter(2) and cat_id widgets
 		foreach(['search', 'filter', 'filter2', 'cat_id'] as $key)
@@ -840,6 +858,22 @@ class Nextmatch extends Etemplate\Widget
 			}
 		}
 		return $row;
+	}
+
+	/**
+	 * Check whether a row template contains a customfields header widget.
+	 *
+	 * @param string|null $template_name
+	 * @return bool
+	 */
+	private function hasCustomfieldsHeader(?string $template_name) : bool
+	{
+		if(!$template_name || !($template = Template::instance($template_name)))
+		{
+			return false;
+		}
+		return !empty($template->getElementsByType('nextmatch-customfields')) ||
+			!empty($template->getElementsByType('et2-nextmatch-header-customfields'));
 	}
 
 	/**
@@ -1367,17 +1401,21 @@ class Nextmatch extends Etemplate\Widget
 		$old_param0 = $params[0];
 		$cname =& $params[0];
 		// Need this check or the headers will get involved too
-		if($this->type == 'nextmatch')
+		if(in_array($this->type, ['nextmatch', 'et2-nextmatch'], true))
 		{
 			parent::run($method_name, $params, $respect_disabled);
 			if ($this->id) $cname = self::form_name($cname, $this->id, $params[1]);
 
-			// Run on all the sub-templates
-			foreach(array('template', 'header_left', 'header_right', 'header_row') as $sub_template)
+			// et2-nextmatch sub-templates are super special and don't get processed server-side
+			if($this->type == 'nextmatch')
 			{
-				if (!empty($this->attrs[$sub_template]) && ($row_template = Template::instance($this->attrs[$sub_template])))
+				// Run on all the sub-templates
+				foreach(array('template', 'header_left', 'header_right', 'header_row') as $sub_template)
 				{
-					$row_template->run($method_name, $params, $respect_disabled);
+					if(!empty($this->attrs[$sub_template]) && ($row_template = Template::instance($this->attrs[$sub_template])))
+					{
+						$row_template->run($method_name, $params, $respect_disabled);
+					}
 				}
 			}
 		}

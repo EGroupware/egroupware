@@ -309,7 +309,7 @@ tag to mark positions for address labels	filemanager	es-es	Etiqueta para marcar 
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	es-es	La carpeta predeterminada es su carpeta personal. Si se deja en blanco, no existe la ruta o no tiene los permisos necesarios, se usa la predeterminada.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	es-es	El documento puede contener un marcador como {{%3}}, para sustituirlo con los datos (%1lista completa de nombres de marcadores%2).
 the following document-types are supported:	filemanager	es-es	Los siguientes tipos de documentos están soportados:
-the requested path %1 is not available.	filemanager	es-es	La ruta solicitada %1 no está disponible.
+the requested path %1 is not available.	filemanager	es-es	La ruta solicitada %1 no está disponible!
 the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	es-es	Il file caricato è visibile solo alla persona che lo condivide con voi, non a voi stessi o ad altre persone che conoscono il link di condivisione.
 there's already a directory with that name!	filemanager	es-es	¡Ya existe un directorio con ese nombre!
 there's already a file with that name!	filemanager	es-es	¡Ya existe un fichero con ese nombre!

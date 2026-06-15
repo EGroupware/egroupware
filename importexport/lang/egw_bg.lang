@@ -111,7 +111,6 @@ problems during import:	importexport	bg	Проблеми по време на и
 save as definition	importexport	bg	Запазване като определение
 schedule	common	bg	Програма (График)
 schedule import / export	common	bg	Програма Импорт | Експорт
-schedule import | export	importexport	bg	Програма Импорт | Експорт
 schedule not found	importexport	bg	Програмата не е намерена.
 schedule times are server time!  currently %s.	importexport	bg	Времената на графика са време за сървър! В момента %s.
 select definition	importexport	bg	Изберете дефиниция

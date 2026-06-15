@@ -47,6 +47,7 @@ describe("Et2AI widget basics", () =>
 	it("selecting a prompt triggers AI run", async() =>
 	{
 		const el = await createEl();
+		el.prompts = [{id: "prompt-1", label: "Prompt 1"}];
 		await el.updateComplete;
 
 		const run = sinon.stub((el as any).ai, "run").resolves();

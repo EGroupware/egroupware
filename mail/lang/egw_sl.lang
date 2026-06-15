@@ -128,6 +128,8 @@ current folder	mail	sl	trenutna mapa
 current subject	mail	sl	Trenutna tema
 currently:	mail	sl	Trenutno:
 deactive	mail	sl	Neaktiven
+default identity for compose	mail	sl	Privzeta identiteta za pisanje sporočil
+default signature	mail	sl	Privzeti podpis
 default sorting order	mail	sl	Privzet način razvrščanja
 default toolbar actions shown in mail's html editor	mail	sl	Funkcije, omogočene v orodni vrstici urejevalnika HTML pri sestavljanju e-pošte
 default value for remembering s/mime passphrase in minutes	mail	sl	Privzeta vrednost za pomnjenje gesla S/MIME v minutah
@@ -328,6 +330,7 @@ junk folder	mail	sl	Neželena mapa
 keep a copy	mail	sl	Ohrani kopijo
 keep a copy of the message in your inbox	mail	sl	Obdrži kopijo sporočila v mapi Prejeto
 kilobytes	mail	sl	Kilobajtov
+last used signature	mail	sl	Zadnji uporabljeni podpis
 later	mail	sl	Pozneje
 learning as ham (not spam) failed because of %1	mail	sl	Učenje kot ham (ni vsiljena pošta) ni uspelo zaradi %1
 learning as spam failed because of %1	mail	sl	Učenje kot spam ni uspelo zaradi %1
@@ -434,6 +437,7 @@ original message	mail	sl	Izvirno sporočilo
 outbox	mail	sl	V pošiljanju
 password protect	mail	sl	zaščita z geslom
 permission denied	mail	sl	Dostop zavrnjen
+personal signature	mail	sl	Osebni podpis
 please configure access to an existing individual imap account.	mail	sl	Nastavite dostop do obstoječega računa IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sl	Konfigurirajte svoj S/MIME potrdilo na kartici Šifriranje, ki se nahaja v pogovornem oknu Urejanje računa.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sl	Obrnite se na skrbnika, da potrdite, ali vaš strežnik podpira filtre za strežnike in kako jih omogočite v programu EGroupware za vaš aktivni račun (%1) z ID: %2.
@@ -688,6 +692,7 @@ when saving messages as item of a different app	mail	sl	Pri shranjevanju sporoč
 when sending messages	mail	sl	Pri pošiljanju sporočil
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
 which folders - in general - should not be automatically created, if not existing	mail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	sl	S katero identiteto (podpisom) želite začeti.\nPri »Osebni podpis« vedno uporabimo prvi osebni podpis.
 which method to use when forwarding a message	mail	sl	Katero metodo uporabite pri posredovanju sporočila
 whitelisted mails are not marked as spam	mail	sl	Sporočila z belim seznamom niso označena kot vsiljena pošta
 whole message	mail	sl	Celotno sporočilo

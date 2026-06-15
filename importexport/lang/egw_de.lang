@@ -115,7 +115,6 @@ problems during import:	importexport	de	Schwierigkeiten während des Imports:
 save as definition	importexport	de	Als Definition speichern
 schedule	common	de	Zeitplan
 schedule import / export	common	de	Zeitplan für Import/Export
-schedule import | export	importexport	de	Zeitplan für Import/Export
 schedule not found	importexport	de	Kein Zeitplan gefunden
 schedule times are server time!  currently %s.	importexport	de	Zeitgesteuerter Import bezieht sich auf die Serverzeit. Aktuell %s.
 select definition	importexport	de	Definition auswählen

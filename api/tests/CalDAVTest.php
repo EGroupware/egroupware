@@ -14,6 +14,7 @@ namespace EGroupware\Api;
 
 // so tests can run standalone
 require_once __DIR__.'/../src/loader/common.php';	// autoloader
+require_once __DIR__.'/../../admin/inc/class.admin_cmd_delete_account.inc.php';
 
 use PHPUnit\Framework\TestCase;
 use GuzzleHttp\Client, GuzzleHttp\RequestOptions;
@@ -42,12 +43,33 @@ abstract class CalDAVTest extends TestCase
 	 */
 	protected function url($path='/')
 	{
+		return $this->getCaldavBaseUrl() . $path;
+	}
+
+	/**
+	 * Get CalDAV base URL with optional local overrides
+	 *
+	 * Override order:
+	 * 1) EGW_CALDAV_BASE environment or phpunit var
+	 * 2) EGW_URL environment or phpunit var (+ /groupdav.php)
+	 * 3) self::CALDAV_BASE (with EGW_DOMAIN localhost replacement for legacy behavior)
+	 *
+	 * @return string
+	 */
+	protected function getCaldavBaseUrl()
+	{
+		$egw_url = getenv('EGW_URL') ?: ($_ENV['EGW_URL'] ?? null) ?: ($GLOBALS['EGW_URL'] ?? null);
+		if(!empty($egw_url))
+		{
+			return rtrim($egw_url, '/') . '/groupdav.php';
+		}
+
 		$base = self::CALDAV_BASE;
 		if (!empty($GLOBALS['EGW_DOMAIN']) && $GLOBALS['EGW_DOMAIN'] !== 'default')
 		{
 			$base = str_replace('localhost', $GLOBALS['EGW_DOMAIN'], $base);
 		}
-		return $base.$path;
+		return rtrim($base, '/');
 	}
 
 	/**
@@ -58,11 +80,28 @@ abstract class CalDAVTest extends TestCase
 	 */
 	protected $client_options = [
 		RequestOptions::HTTP_ERRORS => false,	// return all HTTP status, not throwing exceptions
+		// Prevent CI hangs from indefinite network waits if CalDAV endpoint is unreachable/stalled.
+		RequestOptions::CONNECT_TIMEOUT => 5,
+		RequestOptions::TIMEOUT         => 10,
 		RequestOptions::HEADERS => [
 			'Cookie' => 'XDEBUG_SESSION=PHPSTORM',
 			//'User-Agent' => 'CalDAVSynchronizer',
 		],
 	];
+
+	/**
+	 * Tracked calendar IDs keyed by test class.
+	 *
+	 * @var array<string,int[]>
+	 */
+	private static $tracked_cal_ids = [];
+
+	/**
+	 * Tracked event UIDs keyed by test class.
+	 *
+	 * @var array<string,string[]>
+	 */
+	private static $tracked_uids = [];
 
 	/**
 	 * Get HTTP client for tests
@@ -85,6 +124,166 @@ abstract class CalDAVTest extends TestCase
 	}
 
 	/**
+	 * Organizer account_lid from phpunit config.
+	 */
+	protected function organizerLid() : string
+	{
+		return $GLOBALS['EGW_USER'];
+	}
+
+	/**
+	 * Organizer email used in iCal payload.
+	 */
+	protected function organizerMail() : string
+	{
+		return !empty($GLOBALS['egw_info']['user']['account_email']) ?
+			$GLOBALS['egw_info']['user']['account_email'] :
+			$this->organizerLid().'@example.org';
+	}
+
+	/**
+	 * Build event URL in a specific user's calendar.
+	 */
+	protected function eventUrlFor(string $user, string $uid) : string
+	{
+		return '/'.$user.'/calendar/'.$uid.'.ics';
+	}
+
+	/**
+	 * Extract numeric cal_id from ETag header and track it for cleanup.
+	 */
+	protected function addCalendarID($response) : int
+	{
+		$etag = $response->getHeader('ETag')[0] ?? '';
+		$array = explode(':', trim($etag, '[]"'));
+		$cal_id = !empty($array[0]) ? (int)$array[0] : 0;
+		if($cal_id > 0)
+		{
+			self::trackCalId($cal_id);
+		}
+		return $cal_id;
+	}
+
+	/**
+	 * Generate unique test UID and track it for cleanup.
+	 */
+	protected function makeUid(string $prefix) : string
+	{
+		$stamp = (new \DateTimeImmutable('now', new \DateTimeZone('UTC')))->format('YmdHis');
+		$uid = $prefix.'-'.$stamp.'-'.bin2hex(random_bytes(2));
+		self::trackUid($uid);
+		return $uid;
+	}
+
+	/**
+	 * Create event in organizer calendar via CalDAV PUT.
+	 */
+	protected function putEvent(string $uid, string $ical, ?string $user=null) : int
+	{
+		$user = $user ?: $this->organizerLid();
+		$response = $this->getClient($user)->put($this->url($this->eventUrlFor($user, $uid)), [
+			RequestOptions::HEADERS => [
+				'Content-Type' => 'text/calendar',
+				'Prefer' => 'return=representation',
+			],
+			RequestOptions::BODY => $ical,
+		]);
+		$this->assertHttpStatus([200, 201], $response);
+		return $this->addCalendarID($response);
+	}
+
+	protected function getEventIcal(string $uid, ?string $user=null) : string
+	{
+		$user = $user ?: $this->organizerLid();
+		$response = $this->getClient($user)->get($this->url($this->eventUrlFor($user, $uid)));
+		$this->assertHttpStatus(200, $response);
+		return (string)$response->getBody();
+	}
+
+	protected function unfoldIcal(string $ical) : string
+	{
+		return preg_replace("/\r\n[ \t]/", '', $ical);
+	}
+
+	/**
+	 * Return full VEVENT block containing a given RECURRENCE-ID.
+	 */
+	protected function exceptionBlock(string $ical, string $recurrence_id) : string
+	{
+		$pattern = "/BEGIN:VEVENT\r\n(?:(?!BEGIN:VEVENT).)*RECURRENCE-ID:" .
+			preg_quote($recurrence_id, '/') .
+			"(?:(?!BEGIN:VEVENT).)*END:VEVENT/s";
+		if (preg_match($pattern, $ical, $matches))
+		{
+			return $matches[0];
+		}
+		return '';
+	}
+
+	protected function renderFixture(string $fixture_file, array $tokens) : string
+	{
+		$template = file_get_contents($fixture_file);
+		$this->assertNotFalse($template, "Unable to load fixture $fixture_file");
+		return strtr($template, $tokens);
+	}
+
+	/**
+	 * Track event cal_id for current test class.
+	 */
+	protected static function trackCalId(int $cal_id) : void
+	{
+		$class = static::class;
+		if (!isset(self::$tracked_cal_ids[$class]))
+		{
+			self::$tracked_cal_ids[$class] = [];
+		}
+		self::$tracked_cal_ids[$class][] = $cal_id;
+	}
+
+	/**
+	 * Track event UID for current test class.
+	 */
+	protected static function trackUid(string $uid) : void
+	{
+		$class = static::class;
+		if (!isset(self::$tracked_uids[$class]))
+		{
+			self::$tracked_uids[$class] = [];
+		}
+		self::$tracked_uids[$class][] = $uid;
+	}
+
+	/**
+	 * Cleanup tracked cal_ids and UIDs for current test class.
+	 */
+	protected static function cleanupTrackedEvents() : void
+	{
+		$class = static::class;
+		$cal_ids = self::$tracked_cal_ids[$class] ?? [];
+		$uids = self::$tracked_uids[$class] ?? [];
+
+		if(!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			$so = new \calendar_so();
+			foreach(array_unique($cal_ids) as $cal_id)
+			{
+				if((int)$cal_id > 0)
+				{
+					$so->delete((int)$cal_id);
+				}
+			}
+			foreach(array_unique($uids) as $uid)
+			{
+				foreach(array_keys($so->read($uid) ?: []) as $cal_id)
+				{
+					$so->delete((int)$cal_id);
+				}
+			}
+		}
+		unset(self::$tracked_cal_ids[$class], self::$tracked_uids[$class]);
+	}
+
+	/**
 	 * Create a number of users with optional ACL rights too
 	 *
 	 * Example with boss granting secretary full rights on his calendar, plus one other user:
@@ -102,7 +301,7 @@ abstract class CalDAVTest extends TestCase
 	 * @param string $app app to create the rights for, default "calendar"
 	 * @throws \Exception
 	 */
-	protected function createUsersACL(array &$users, $app='calendar')
+	protected static function createUsersACL(array &$users, $app = 'calendar')
 	{
 		foreach($users as $user => $data)
 		{
@@ -121,6 +320,20 @@ abstract class CalDAVTest extends TestCase
 	 * @var array $account_lid => array with other data pairs
 	 */
 	private static $created_users = [];
+
+	/**
+	 * Cached setup instance for CalDAV helper account / ACL operations.
+	 *
+	 * @var \setup|null
+	 */
+	private static $setup = null;
+
+	/**
+	 * Snapshot of globals touched by getSetup(), restored in tearDownAfterClass().
+	 *
+	 * @var array<string,mixed>|null
+	 */
+	private static $setup_global_snapshot = null;
 
 	/**
 	 * Create a user
@@ -189,12 +402,52 @@ abstract class CalDAVTest extends TestCase
 	 */
 	public static function tearDownAfterClass() : void
 	{
-		$setup = self::getSetup();
+		static::cleanupTrackedEvents();
 
-		foreach(self::$created_users as $account_lid => $data)
+		if(self::$setup && self::$created_users)
 		{
-//			if ($id) $setup->accounts->delete($data['id']);
-			unset(self::$created_users[$account_lid]);
+			foreach(self::$created_users as $account_lid => $data)
+			{
+				if (!empty($data['id']))
+				{
+					try {
+						$command = new \admin_cmd_delete_account((int)$data['id'], null, true);
+						$command->comment = 'Removing in tearDownAfterClass for '.static::class;
+						$command->run();
+					}
+					catch (\Throwable $e) {
+						// ignore cleanup failures to avoid masking original test result
+					}
+				}
+				unset(self::$created_users[$account_lid]);
+			}
+		}
+		self::$created_users = [];
+		self::resetSharedRuntimeState();
+		self::restoreSetupGlobals();
+		self::$setup = null;
+	}
+
+	/**
+	 * Reset process-wide API singletons/caches CalDAV helper paths can touch.
+	 */
+	private static function resetSharedRuntimeState() : void
+	{
+		// Reset Accounts singleton/caches to avoid cross-suite backend/capability leaks.
+		$accounts_instance = new \ReflectionProperty(\EGroupware\Api\Accounts::class, '_instance');
+		$accounts_instance->setAccessible(true);
+		$accounts_instance->setValue(null, null);
+
+		$accounts_cache = new \ReflectionProperty(\EGroupware\Api\Accounts::class, 'cache');
+		$accounts_cache->setAccessible(true);
+		$accounts_cache->setValue(null, []);
+
+		// Reset Link runtime caches/object instances used by query/title/file access helpers.
+		// In some teardown contexts (eg. CI ordering), egwd db can already be gone.
+		// Link::init_static(true) triggers hooks that require a valid db.
+		if (!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			\EGroupware\Api\Link::init_static(true);
 		}
 	}
 
@@ -218,10 +471,11 @@ abstract class CalDAVTest extends TestCase
 	 */
 	private static function getSetup()
 	{
-		static $setup=null;
-		if (!isset($setup))
+		if(!isset(self::$setup))
 		{
-			if (!isset($_REQUEST['domain']))
+			self::snapshotSetupGlobals();
+
+			if (empty($_REQUEST['domain']))
 			{
 				$_REQUEST['domain'] = $GLOBALS['EGW_DOMAIN'] ?? 'default';
 			}
@@ -238,9 +492,106 @@ abstract class CalDAVTest extends TestCase
 			{
 				include_once(__DIR__ . '/../../header.inc.php');
 			}
-			$setup = new \setup();
+			// api/src/loader.php can unset $GLOBALS['egw_domain'] for security.
+			// CalDAV test helpers still need DB connection details to create fixture users.
+			if (empty($GLOBALS['egw_domain'][$_REQUEST['domain']]['db_host']) &&
+				($header = @file_get_contents(__DIR__ . '/../../header.inc.php')))
+			{
+				$domain_pattern = "/\\\$GLOBALS\\['egw_domain'\\]\\['([^']+)'\\]\\s*=\\s*array\\((.*?)\\);/s";
+				if (preg_match_all($domain_pattern, $header, $domains, PREG_SET_ORDER))
+				{
+					foreach($domains as $domain_match)
+					{
+						$domain = $domain_match[1];
+						$values = [];
+						if (preg_match_all("/'([^']+)'\\s*=>\\s*'((?:\\\\'|[^'])*)'/", $domain_match[2], $pairs, PREG_SET_ORDER))
+						{
+							foreach($pairs as $pair)
+							{
+								$values[$pair[1]] = str_replace("\\'", "'", $pair[2]);
+							}
+						}
+						if (!empty($values))
+						{
+							$GLOBALS['egw_domain'][$domain] = $values;
+						}
+					}
+				}
+			}
+			// Some setup / account code paths (eg. push token generation) require an install_id
+			// in egw_info['server'], which may not yet be populated in CLI test bootstrap.
+			if (empty($GLOBALS['egw_info']['server']['install_id']))
+			{
+				$domain = $_REQUEST['domain'] ?? 'default';
+				$header_install_id = $GLOBALS['egw_domain'][$domain]['server']['install_id']
+					?? $GLOBALS['egw_info']['server']['install_id']
+					?? null;
+				$GLOBALS['egw_info']['server']['install_id'] = $header_install_id ?: md5(microtime(true).__FILE__);
+			}
+			self::$setup = new \setup();
 		}
-		return $setup;
+		return self::$setup;
+	}
+
+	/**
+	 * Snapshot globals likely to be changed while bootstrapping setup helpers.
+	 */
+	private static function snapshotSetupGlobals() : void
+	{
+		if(self::$setup_global_snapshot !== null)
+		{
+			return;
+		}
+		self::$setup_global_snapshot = [
+			'_REQUEST_domain'       => $_REQUEST['domain'] ?? null,
+			'_REQUEST_ConfigDomain' => $_REQUEST['ConfigDomain'] ?? null,
+			'egw_info'              => $GLOBALS['egw_info'] ?? null,
+			'egw_setup'             => $GLOBALS['egw_setup'] ?? null,
+		];
+	}
+
+	/**
+	 * Restore global state after setup helper use to avoid leaking into other tests.
+	 */
+	private static function restoreSetupGlobals() : void
+	{
+		if(self::$setup_global_snapshot === null)
+		{
+			return;
+		}
+		if(self::$setup_global_snapshot['_REQUEST_domain'] !== null)
+		{
+			$_REQUEST['domain'] = self::$setup_global_snapshot['_REQUEST_domain'];
+		}
+		else
+		{
+			unset($_REQUEST['domain']);
+		}
+		if(self::$setup_global_snapshot['_REQUEST_ConfigDomain'] !== null)
+		{
+			$_REQUEST['ConfigDomain'] = self::$setup_global_snapshot['_REQUEST_ConfigDomain'];
+		}
+		else
+		{
+			unset($_REQUEST['ConfigDomain']);
+		}
+		if(self::$setup_global_snapshot['egw_info'] !== null)
+		{
+			$GLOBALS['egw_info'] = self::$setup_global_snapshot['egw_info'];
+		}
+		else
+		{
+			unset($GLOBALS['egw_info']);
+		}
+		if(self::$setup_global_snapshot['egw_setup'] !== null)
+		{
+			$GLOBALS['egw_setup'] = self::$setup_global_snapshot['egw_setup'];
+		}
+		else
+		{
+			unset($GLOBALS['egw_setup']);
+		}
+		self::$setup_global_snapshot = null;
 	}
 
 	/**

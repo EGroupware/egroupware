@@ -106,6 +106,8 @@ current folder	mail	pt-br	pasta atual
 current subject	mail	pt-br	Assunto atual
 currently:	mail	pt-br	Atualmente:
 deactive	mail	pt-br	Desativado
+default identity for compose	mail	pt-br	Identidade padrão para redigir mensagens
+default signature	mail	pt-br	Assinatura padrão
 default sorting order	mail	pt-br	Ordem padrão de classificação
 default toolbar actions shown in mail's html editor	mail	pt-br	Funções habilitadas na barra de ferramentas do editor HTML ao compor um e-mail
 default value for remembering s/mime passphrase in minutes	mail	pt-br	Valor padrão para lembrar a senha S/MIME em minutos
@@ -228,6 +230,7 @@ high	mail	pt-br	Alto
 high priority	mail	pt-br	Alta prioridade
 hostname or ip	mail	pt-br	Nome do host ou IP
 how often to check with the server for new mail	mail	pt-br	Com que frequência verificar se há novos e-mails no servidor
+how should the available information on identities be displayed	admin	pt-br	Como as informações disponíveis sobre as identidades devem ser exibidas
 how to forward messages	mail	pt-br	Como encaminhar mensagens
 html	mail	pt-br	HTML
 html mode	mail	pt-br	Modo HTML
@@ -236,6 +239,7 @@ ident name email	mail	pt-br	Nome de identificação [E-mail]
 ident name organization email	mail	pt-br	Nome do usuário Nome do usuário Organização [E-mail]
 identity	mail	pt-br	Identificar
 identity label	mail	pt-br	Etiqueta de identidade
+identity+signature	mail	pt-br	Identidade + Assinatura
 if	mail	pt-br	SE
 if different from email address	mail	pt-br	Se for diferente do endereço de e-mail
 if mail header	mail	pt-br	se cabeçalho de e-mail
@@ -262,6 +266,7 @@ junk folder	mail	pt-br	Pasta de lixo
 keep a copy	mail	pt-br	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt-br	Manter uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt-br	Kbytes
+last used signature	mail	pt-br	Última assinatura usada
 later	mail	pt-br	Depois
 learning as ham (not spam) failed because of %1	mail	pt-br	O aprendizado como ham (não spam) falhou por causa de %1
 learning as spam failed because of %1	mail	pt-br	O aprendizado como spam falhou por causa de %1
@@ -335,6 +340,7 @@ organization | real name email	mail	pt-br	Organização | Nome real [E-mail]
 original message	mail	pt-br	Mensagem original
 outbox	mail	pt-br	Caixa de saída
 permission denied	mail	pt-br	Permissão negada
+personal signature	mail	pt-br	Assinatura pessoal
 please configure access to an existing individual imap account.	mail	pt-br	Configure o acesso a uma conta IMAP individual existente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt-br	Configure seu certificado S/MIME na guia Encryption (Criptografia) localizada na caixa de diálogo Edit Account (Editar conta).
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt-br	Entre em contato com o administrador para validar se o servidor suporta regras de filtragem no servidor e como ativá-las no EGroupware para sua conta ativa (%1) com ID: %2.
@@ -474,6 +480,7 @@ validate selected addresses on submit:	mail	pt-br	Validar endereços selecionado
 view header lines	mail	pt-br	Exibir linhas de cabeçalho
 what to do when you delete a message	mail	pt-br	O que fazer quando você exclui uma mensagem.
 when deleting messages	mail	pt-br	Ao remover mensagens
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	pt-br	Com qual identidade de e-mail (assinatura) você deseja começar?\nPara “Assinatura pessoal”, sempre usamos a primeira assinatura pessoal.
 write	mail	pt-br	Gravar
 write & delete	mail	pt-br	escrever e excluir
 wrote	mail	pt-br	escreveu

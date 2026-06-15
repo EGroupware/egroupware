@@ -118,7 +118,12 @@ class preferences_hooks
 		}
 		if (empty($lang)) $lang = 'en';
 		list(,$country) = explode('-',$lang);
-		if (empty($country) && class_exists('Locale')) $country = Locale::getRegion(Locale::getDefault());
+		try {
+			if (empty($country) && class_exists('Locale')) $country = Locale::getRegion(Locale::getDefault());
+		}
+		catch (Exception $e) {
+			// ignore exception from Locale polyfill not implementing getRegion
+		}
 		if (empty($country)) $country = 'de';
 
 		// check for old rte_font_size pref including px and split it in size and unit

@@ -168,11 +168,65 @@
         }
       }
     },
-    "/mail/{id}/compose": {
+    "/mail/compose": {
       "post": {
         "tags": ["Mail"],
         "operationId": "launchMailCompose",
         "summary": "Launch compose window",
+        "description": "Launches an interactive compose window.",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendMailRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Compose window request sent successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SuccessResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User is not online",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/mail/{id}/compose": {
+      "post": {
+        "tags": ["Mail"],
+        "operationId": "launchMailComposeFor",
+        "summary": "Launch compose window for a specific identity",
         "description": "Launches an interactive compose window for the specified mail identity.",
         "parameters": [
           {

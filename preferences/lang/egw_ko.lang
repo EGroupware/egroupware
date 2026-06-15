@@ -14,6 +14,7 @@ code is invalid	preferences	ko	코드가 유효하지 않습니다
 code is required	preferences	ko	코드가 필요합니다
 color	preferences	ko	색
 country	preferences	ko	국가
+custom login box text color, defaults to white	preferences	ko	로그인 상자 텍스트 색상을 사용자 지정할 수 있으며, 기본값은 흰색입니다.
 date format	preferences	ko	날짜 형식
 default	preferences	ko	기본
 default preferences	preferences	ko	기본 환경설정
@@ -88,6 +89,7 @@ time format	preferences	ko	시간 형식
 use default	preferences	ko	기본 사용
 use first %1 letters from username	preferences	ko	사용자 이름에서 첫 %1글자 사용
 use initials from first and last name	preferences	ko	이름과 성에서 이니셜 사용
+used instead of the application color.	preferences	ko	애플리케이션의 기본 색상 대신 사용됩니다.
 users choice	preferences	ko	사용자 선택
 what to display for an avatar, if there is no photo	preferences	ko	사진이 없는 경우 아바타에 표시할 내용
 which currency symbol or name should be used in egroupware.	preferences	ko	EGroupware에서 사용할 현금단위의 이름이나 기호는 어떤것으로 할까요

@@ -37,6 +37,7 @@ One can use the following URLs relative (!) to https://example.org/egroupware/gr
 - `/projectmanager/`   REST API only
 - `/invoices/`   REST API only
 - `/rag/`   REST API only
+- `/tracker/`   REST API only
 
 Shared addressbooks or calendars are only shown in the users home-set, if he subscribed to it via his CalDAV preferences!
 
@@ -57,6 +58,7 @@ from the data of an `allprop` PROPFIND, allow browsing CalDAV/CardDAV tree with 
 - [ViDoTeach](https://github.com/EGroupware/smallpart/blob/master/doc/REST-API.md)
 - [ProjectManager](https://github.com/EGroupware/projectmanager/blob/master/doc/REST-API.md)
 - [RAG](https://github.com/EGroupware/rag/blob/master/doc/REST-API.md)
+- [Tracker](Tracker.md)
 - [Invoices](Invoices.md) (EPL only)
 - [Links and attachments](Links-and-attachments.md)
   * linking application entries to other application entries
@@ -84,6 +86,7 @@ Following RFCs / drafts used/planned for JSON encoding of resources
 - [X] Mail
   - [ ] querying received mails
 - [X] relatedTo, links and attachments, see [links sub-collection to add attachments and links to other application-entries](Links-and-attachments.md)
+- [X] Tracker
 - [X] ProjectManager: only projects itself are currently supported
   - [ ] add, update & delete project-members
   - [ ] add, update & delete project-elements

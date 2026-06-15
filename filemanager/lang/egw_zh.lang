@@ -188,6 +188,7 @@ start search	filemanager	zh	开始搜索
 superuser	filemanager	zh	超级用户
 superuser (root)	filemanager	zh	超级用户（root）
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	zh	文件可以包含占位符，如 {{%3}}，并用数据替换（占位符名称 %1 完整列表%2）。
+the requested path %1 is not available.	filemanager	zh	请求的路径 %1 不可用！
 total files	filemanager	zh	全部文件
 unused space	filemanager	zh	可用空间
 up	filemanager	zh	向上

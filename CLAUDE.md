@@ -1,0 +1,1 @@
+Read and follow `AGENTS.md`. It is the canonical instruction source for this repository.

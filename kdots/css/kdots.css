@@ -924,6 +924,10 @@ div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected {
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.selected.focused {
   background-color: hsl(from var(--selection-color) h s l / 0.7) !important;
 }
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.draggedOver td,
+div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table tr.drop-hover td {
+  background-color: hsl(from var(--selection-color) h s l / 0.5) !important;
+}
 div.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea table.egwGridView_grid {
   /* Visually hidden accessible header */
 }
@@ -1261,6 +1265,88 @@ et2-toolbar[slot="main-header"]::part(list),
   display: none;
 }
 /*** END WIDGETS ***/
+/*** Action styling ***/
+div.et2_egw_action_ddHelper--grid {
+  --et2-action-dd-helper-background-color: hsl(from var(--selection-color) h s l / 0.8);
+  position: relative;
+  overflow: hidden;
+  max-width: fit-content;
+  box-sizing: border-box;
+  border: var(--sl-panel-border-width) solid hsl(from var(--sl-color-neutral-1000) h s l / 0.72);
+  border-radius: 0;
+  background-color: var(--et2-action-dd-helper-background-color);
+  box-shadow: var(--sl-shadow-large);
+  pointer-events: none;
+  /* Fade clipped columns out instead of ending on a hard cut. */
+}
+div.et2_egw_action_ddHelper--grid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 7rem;
+  z-index: 3;
+  pointer-events: none;
+  background: linear-gradient(to right, hsl(from var(--selection-color) h s l / 0), var(--et2-action-dd-helper-background-color) 72%);
+}
+div.et2_egw_action_ddHelper--grid .et2_egw_action_ddHelper_tip:empty {
+  display: none;
+}
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row {
+  display: block;
+  width: 100%;
+  max-width: none;
+  border: none;
+  background-color: var(--et2-action-dd-helper-background-color);
+  box-shadow: none;
+  border-collapse: collapse;
+  position: relative;
+  z-index: 1;
+}
+div.et2_egw_action_ddHelper--grid et2-avatar,
+div.et2_egw_action_ddHelper--grid et2-lavatar {
+  flex-grow: 0;
+  --size: 2em;
+}
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row tr {
+  background: transparent !important;
+  min-height: 2.2em;
+  padding-block: var(--sl-spacing-x-small);
+}
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row td,
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row th,
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row .innerContainer {
+  min-width: 0;
+  max-width: none;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap !important;
+}
+div.et2_egw_action_ddHelper--grid table.et2_egw_action_ddHelper_row img {
+  width: 15px !important;
+  height: 15px !important;
+}
+div.et2_egw_action_ddHelper--grid.et2_egw_action_ddHelper--multi table.et2_egw_action_ddHelper_row {
+  opacity: 0.88;
+}
+div.et2_egw_action_ddHelper--grid .et2_egw_action_ddHelper_itemsCnt {
+  position: absolute;
+  left: calc(var(--sl-spacing-large) + var(--sl-spacing-2x-small));
+  top: var(--sl-spacing-small);
+  z-index: 2;
+  pointer-events: none;
+  background: transparent;
+  color: var(--sl-color-neutral-0);
+  font-size: 3.2rem;
+  font-weight: bold;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  text-align: left;
+  text-shadow: 0 2px 10px hsl(from var(--sl-color-neutral-1000) h s l / 0.28);
+  white-space: nowrap;
+}
+/*** End action styling ***/
 html:not(.desktop) html * {
   touch-action: auto;
   -webkit-overflow-scrolling: touch;

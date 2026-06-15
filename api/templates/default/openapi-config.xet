@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<overlay>
+    <template id="api.openapi-config" template="" lang="" group="0" version="19.1.001">
+        <grid width="100%" id="config">
+            <columns>
+                <column width="10%"/>
+                <column width="20%"/>
+                <column width="100"/>
+                <column width="50%"/>
+                <column width="100"/>
+                <column width="50"/>
+            </columns>
+            <rows>
+                <row class="th" part="header">
+                    <et2-description value="Application"></et2-description>
+                    <et2-description value="User-Agent regular expression"></et2-description>
+                    <et2-description value="allow or deny"></et2-description>
+                    <et2-description value="Tools / operationIds"></et2-description>
+                    <et2-description value="Default matches"></et2-description>
+                    <et2-description value=""></et2-description>
+                </row>
+                <row>
+                    <et2-textbox id="{$row}[user-agent]" placeholder="Name"></et2-textbox>
+                    <et2-textbox id="{$row}[regexp]" placeholder="Perl regular expression"></et2-textbox>
+                    <et2-select id="{$row}[allow]">
+                        <option value="">Deny</option>
+                        <option value="1">Allow</option>
+                    </et2-select>
+                    <et2-select id="{$row}[operationIds]" multiple="true" placeholder="Select..."></et2-select>
+                    <et2-number id="{$row}[default-matches]" statustext="default number of matches, if no limit is specified in the request"></et2-number>
+                    <et2-button-icon id="delete[$row]" image="delete" statustext="Delete this row"
+                        onclick="Et2Dialog.confirm(widget,'Delete this row','Delete')"></et2-button-icon>
+                </row>
+            </rows>
+        </grid>
+        <et2-hbox span="all">
+            <et2-button id="button[save]" label="Save"></et2-button>
+            <et2-button id="button[apply]" label="Apply"></et2-button>
+            <et2-button id="button[cancel]" label="Cancel"></et2-button>
+        </et2-hbox>
+    </template>
+</overlay>

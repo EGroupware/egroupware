@@ -115,7 +115,6 @@ problems during import:	importexport	fr	Problèmes pendant l'import :
 save as definition	importexport	fr	Sauvegarder comme une définition
 schedule	common	fr	Planification
 schedule import / export	common	fr	Planifier l'import | export
-schedule import | export	importexport	fr	Planifier import | export
 schedule not found	importexport	fr	Planification non trouvée.
 schedule times are server time!  currently %s.	importexport	fr	La planification se base sur le temps du serveur ! Actuellement il est  %s.
 select definition	importexport	fr	Sélectionner une définition

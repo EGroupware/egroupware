@@ -5,10 +5,8 @@ import {css, html, LitElement, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {repeat} from "lit/directives/repeat.js";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
-import {et2_nextmatch_customfields} from "../et2_extension_nextmatch";
 import shoelace from "../Styles/shoelace";
 import {et2_dataview_column} from "../et2_dataview_model_columns";
-import {et2_customfields_list} from "../et2_extension_customfields";
 import Sortable from "sortablejs/modular/sortable.complete.esm";
 import {SlMenuItem} from "@shoelace-style/shoelace";
 import {Et2Select} from "../Et2Select/Et2Select";
@@ -146,7 +144,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	 */
 	protected rowTemplate(column) : TemplateResult
 	{
-		const isCustom = column.widget?.instanceOf(et2_nextmatch_customfields) || false;
+		const isCustom = column.isCustomfields === true || (Array.isArray(column.customFields) && column.customFields.length > 0);
 		const alwaysOn = [et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS, et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT].indexOf(column.visibility) !== -1;
 
 		// Don't show disabled columns
@@ -165,7 +163,8 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                     class="${classMap({
                         select_row: true,
                         custom_fields: isCustom,
-                        column: column.widget
+						custom_field: column.customField === true,
+                        column: !column.customField
                     })}">
                 <sl-icon slot="prefix" name="grip-vertical"></sl-icon>
                 ${column.caption}
@@ -184,21 +183,20 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	 */
 	protected customFieldsTemplate(column) : TemplateResult
 	{
-		// Custom fields get listed separately
-		let widget = column.widget;
-		if(jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields))
+		const customFields = Array.isArray(column.customFields) ? column.customFields : [];
+		if(!customFields.length)
 		{
-			// No customfields defined, don't show column
 			return html``;
 		}
 		return html`
             <sl-divider></sl-divider>
-            ${repeat(Object.values(widget.customfields), (field) => field.name, (field) =>
+            ${repeat(customFields, (field) => field.name, (field) =>
             {
                 return this.rowTemplate({
-                    id: et2_customfields_list.PREFIX + field.name,
-                    caption: field.label,
-                    visibility: (widget.fields[field.name] ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : false)
+                    id: field.id,
+                    caption: field.caption,
+                    visibility: (field.visibility ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : false),
+					customField: true
 
                 });
             })}
@@ -223,21 +221,17 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 
 		this.sort?.toArray().forEach((val) =>
 		{
-			let column = this.__columns.find((col) => col.id == val);
 			let menuItem = <SlMenuItem>this.shadowRoot.querySelector("[value='" + val + "']");
-			if(column && menuItem)
+			if(menuItem)
 			{
 				if(menuItem.checked)
 				{
 					value.push(val);
 				}
-				if(column.widget?.customfields)
+				menuItem.querySelectorAll(":scope > .custom_field[value][checked]").forEach((cf : SlMenuItem) =>
 				{
-					menuItem.querySelectorAll("[value][checked]").forEach((cf : SlMenuItem) =>
-					{
-						value.push(cf.value.replaceAll("___", " "));
-					})
-				}
+					value.push(cf.value.replaceAll("___", " "));
+				});
 			}
 		});
 

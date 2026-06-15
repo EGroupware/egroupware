@@ -126,14 +126,22 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	public function testAddProjectToExisting()
 	{
 		// Saving the infolog should try to send a notification
+		$track_call = 0;
 		$this->bo->tracking->expects($this->exactly(2))
-                ->method('track')
-				->withConsecutive(
-				// First call - creation
-						[$this->callback(function ($subject) { return is_null($subject['pm_status']); })],
-						// Second call - after setting project
-						[$this->callback(function ($subject) { return $subject['pm_id'] == $this->pm_id; })]
-				);
+			->method('track')
+			->willReturnCallback(function ($subject) use (&$track_call)
+			{
+				if($track_call === 0)
+				{
+					$this->assertNull($subject['pm_status']);
+				}
+				elseif($track_call === 1)
+				{
+					$this->assertEquals($this->pm_id, $subject['pm_id']);
+				}
+				$track_call++;
+				return true;
+			});
 
 		$info = $this->getTestInfolog();
 
@@ -173,14 +181,22 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	public function testAddProjectViaLink()
 	{
 		// Saving the infolog should try to send a notification
+		$track_call = 0;
 		$this->bo->tracking->expects($this->exactly(2))
-                ->method('track')
-				->withConsecutive(
-				// First call - creation
-						[$this->callback(function ($subject) { return is_null($subject['pm_status']); })],
-						// Second call - after setting project
-						[$this->callback(function ($subject) { return $subject['pm_id'] == $this->pm_id; })]
-				);
+			->method('track')
+			->willReturnCallback(function ($subject) use (&$track_call)
+			{
+				if($track_call === 0)
+				{
+					$this->assertNull($subject['pm_status']);
+				}
+				elseif($track_call === 1)
+				{
+					$this->assertEquals($this->pm_id, $subject['pm_id']);
+				}
+				$track_call++;
+				return true;
+			});
 
 		$info = $this->getTestInfolog();
 
@@ -347,8 +363,11 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	{
 		// Saving the infolog should try to send a notification
 		$this->bo->tracking->expects($this->once())
-                ->method('track')
-				->will($this->returnCallback(function($subject) { return $subject['pm_id'] == $this->pm_id;}));
+			->method('track')
+			->willReturnCallback(function ($subject)
+			{
+				return $subject['pm_id'] == $this->pm_id;
+			});
 
 		$info = $this->getTestInfolog();
 
@@ -388,8 +407,11 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	{
 		// Saving the infolog should try to send a notification
 		$this->bo->tracking->expects($this->exactly(2))
-                ->method('track')
-				->will($this->returnCallback(function($subject) { return $subject['pm_id'] == $this->pm_id;}));
+			->method('track')
+			->willReturnCallback(function ($subject)
+			{
+				return $subject['pm_id'] == $this->pm_id;
+			});
 
 		$info = $this->getTestInfolog();
 
@@ -530,14 +552,22 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	public function testClearProject()
 	{
 		// Saving the infolog should try to send a notification
+		$track_call = 0;
 		$this->bo->tracking->expects($this->exactly(2))
-                ->method('track')
-				->withConsecutive(
-					// First call - set the project
-					[$this->callback(function($subject) { return $subject['pm_id'] == $this->pm_id;})],
-					// Second call - clear the project
-					[$this->callback(function($subject) { return is_null($subject['pm_status']);})]
-				);
+			->method('track')
+			->willReturnCallback(function ($subject) use (&$track_call)
+			{
+				if($track_call === 0)
+				{
+					$this->assertEquals($this->pm_id, $subject['pm_id']);
+				}
+				elseif($track_call === 1)
+				{
+					$this->assertNull($subject['pm_status']);
+				}
+				$track_call++;
+				return true;
+			});
 
 		$info = $this->getTestInfolog();
 
@@ -604,14 +634,22 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	public function testClearContact()
 	{
 		// Saving the infolog should try to send a notification
+		$track_call = 0;
 		$this->bo->tracking->expects($this->exactly(2))
-                ->method('track')
-				->withConsecutive(
-					// First call - set the project
-					[$this->callback(function($subject) { return $subject['pm_id'] == $this->pm_id;})],
-					// Second call - clear the project
-					[$this->callback(function($subject) { return is_null($subject['pm_status']);})]
-				);
+			->method('track')
+			->willReturnCallback(function ($subject) use (&$track_call)
+			{
+				if($track_call === 0)
+				{
+					$this->assertEquals($this->pm_id, $subject['pm_id']);
+				}
+				elseif($track_call === 1)
+				{
+					$this->assertNull($subject['pm_status']);
+				}
+				$track_call++;
+				return true;
+			});
 
 		$info = $this->getTestInfolog();
 

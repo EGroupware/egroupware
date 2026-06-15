@@ -10,10 +10,14 @@
 accept	infolog	tr	Kabul et
 added	infolog	tr	Eklendi
 addressbook placeholders available	infolog	tr	Adres defteri yer tutucuları mevcut
+all links and attachments	infolog	tr	Tüm bağlantılar ve ekler
 all other %1 fields are valid	infolog	tr	Diğer tüm %1 alanları geçerlidir
 allow to save entries with due date in the past	infolog	tr	Son tarihi geçmişte olan girişleri kaydetmeye izin verin
 always show them	infolog	tr	Her zaman göster onlara
+always use details for crm	infolog	tr	CRM için her zaman ayrıntıları kullan
+always use no details for crm	infolog	tr	CRM için her zaman ayrıntıları kullanma
 application mail expected but got: %1	infolog	tr	Başvuru e-postası bekleniyordu ancak alındı: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	tr	Eylemi yalnızca gösterilen girişlere DEĞİL, sorgunun tamamına uygulayın!
 archived too	infolog	tr	Arşivlendi de
 automatically check 'do not notify' for these types	infolog	tr	Bu türler için 'Bildirme' seçeneğini otomatik olarak işaretleyin
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	tr	Takvimde diğer InfoLog türlerini göstermek veya yalnızca görevleri göstermek gibi sınırlamalar yapmak için kullanılabilir.
@@ -22,6 +26,7 @@ cancel	infolog	tr	İptal
 change	infolog	tr	Değiştir
 change responsible	infolog	tr	Sorumlu değişikliği
 check to set startday	infolog	tr	Başlangıç gününü ayarlamak için kontrol edin
+close this entry and all listed sub-entries	infolog	tr	Bu girişi ve listelenen tüm alt girişleri kapat
 configuration	infolog	tr	Ayarlar
 contact	infolog	tr	İletişim
 contact cf	infolog	tr	İletişim CF
@@ -177,12 +182,14 @@ respect timesheet run and read permissions for time totals	infolog	tr	Zaman topl
 responsible open and upcoming	infolog	tr	Sorumlu açık ve yaklaşan
 rights for the responsible	infolog	tr	Sorumlular için haklar
 rows	infolog	tr	Sıralar
+same as infolog list	infolog	tr	InfoLog listesiyle aynı
 same day	infolog	tr	Aynı gün
 schedule appointment	infolog	tr	Randevu planlayın
 search for:	infolog	tr	Arama yap:
 second parameter for preg_replace	infolog	tr	preg_replace için ikinci parametre
 select a price	infolog	tr	Bir fiyat seçin
 select a project	infolog	tr	Bir proje seçin
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	tr	CRM görünümünün ayrıntılar (yok) konusunda InfoLog ile aynı değeri mi, yoksa her zaman “ayrıntıları kullanma” mı yoksa “ayrıntıları kullan” seçeneğini mi kullanacağını seçin.
 select multiple contacts for a further action	infolog	tr	Diğer işlemler için birden fazla kişi seçin
 select new category	infolog	tr	Yeni kategori seçin
 select users or groups	infolog	tr	Kullanıcıları veya grupları seçme

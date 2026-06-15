@@ -842,7 +842,8 @@ class calendar_rrule implements Iterator
 		if (!is_array($event)  || !isset($event['tzid'])) return false;
 		if (!$to_tz) $to_tz = $event['tzid'];
 		$timestamp_tz = $usertime ? Api\DateTime::$user_timezone : Api\DateTime::$server_timezone;
-		$time = is_a($event['start'],'DateTime') ? $event['start'] : new Api\DateTime($event['start'],$timestamp_tz);
+		// Never mutate caller data when building the rule.
+		$time = is_a($event['start'],'DateTime') ? clone $event['start'] : new Api\DateTime($event['start'],$timestamp_tz);
 
 		if (!isset(self::$tz_cache[$to_tz]))
 		{
@@ -855,13 +856,17 @@ class calendar_rrule implements Iterator
 
 		if ($event['recur_enddate'])
 		{
-			$enddate = is_a($event['recur_enddate'],'DateTime') ? clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'],$timestamp_tz);
+			$enddate = is_a($event['recur_enddate'], 'DateTime') ? clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'], $timestamp_tz);
 
 			// Check to see if switching timezones changes the date, we'll need to adjust for that
 			$enddate_event_timezone = clone $enddate;
 			$enddate->setTimezone($timestamp_tz);
 			$delta = (int)$enddate_event_timezone->format('z') - (int)$enddate->format('z');
-			$enddate->add("$delta days");
+			if($delta)
+			{
+				$enddate->add("$delta days");
+			}
+
 
 			$end = is_a($event['end'],'DateTime') ? clone $event['end'] : new Api\DateTime($event['end'],$timestamp_tz);
 			$end->setTimezone($enddate->getTimezone());
@@ -1148,7 +1153,7 @@ class calendar_rrule implements Iterator
 				}
 				else	// no day given, use the day of dtstart
 				{
-					$vcardData['recur_data'] |= 1 << (int)date('w',$vcardData['start']);
+					$vcardData['recur_data'] |= 1 << (int)$vcardData['start']->format('w');
 					$vcardData['recur_type'] = self::WEEKLY;
 				}
 				if ($days)

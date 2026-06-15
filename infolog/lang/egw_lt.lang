@@ -6,16 +6,21 @@
 %1 entries %2, %3 failed.	infolog	lt	%1 įrašai %2, %3 nepavyko.
 (and children) deleted	infolog	lt	(ir vaikai) ištrinti.
 addressbook placeholders available	infolog	lt	Galimos adresų knygelės vietos žymos
+all links and attachments	infolog	lt	Visos nuorodos ir priedai
 all other %1 fields are valid	infolog	lt	Visi kiti %1 laukai galioja
 allow to save entries with due date in the past	infolog	lt	Leisti išsaugoti įrašus, kurių terminai yra praėję
 always show them	infolog	lt	Visada juos rodyti
+always use details for crm	infolog	lt	CRM sistemoje visada naudoti išsamią informaciją
+always use no details for crm	infolog	lt	CRM sistemoje visada nenaudoti išsamios informacijos
 application mail expected but got: %1	infolog	lt	Paraiškos el. pašto laukiama, bet gauta: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	lt	Taikykite veiksmą visam užklausos rezultatui, NE tik rodomiems įrašams!
 archived too	infolog	lt	Taip pat archyvuota
 automatically check 'do not notify' for these types	infolog	lt	Automatiškai pažymėti "Nepranešti" šiems tipams
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	lt	Gali būti naudojama, norint kalendoriuje rodyti daugiau InfoLog tipų arba apriboti, pvz., rodyti tik užduotis.
 can not return an exact number of rows and therefore hides the count.	admin	lt	Negali grąžinti tikslaus eilučių skaičiaus, todėl paslepia skaičių.
 change	infolog	lt	Keisti
 change responsible	infolog	lt	Atsakingas už pokytį
+close this entry and all listed sub-entries	infolog	lt	Uždaryti šį įrašą ir visus išvardytus poįrašius
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	lt	Dvitaškiu (:) atskirtas laukų pavadinimų sąrašas, kurį reikia naudoti, jei reikšmė yra tuščia, arba sumuoti
 contact cf	infolog	lt	Susisiekite su CF
 convert to a ticket	infolog	lt	Konvertuoti į bilietą
@@ -175,6 +180,7 @@ schedule appointment	infolog	lt	Suplanuoti susitikimą
 second parameter for preg_replace	infolog	lt	Antrasis preg_replace parametras
 select a price	infolog	lt	Pasirinkite kainą
 select a project	infolog	lt	Pasirinkite projektą
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	lt	Pasirinkite, ar CRM peržiūroje turėtų būti naudojama ta pati reikšmė dėl išsamios informacijos (arba jos nebuvimo), kaip „InfoLog“, ar visada nenaudoti išsamios informacijos.
 select multiple contacts for a further action	infolog	lt	Pasirinkite kelis kontaktus tolesniems veiksmams
 select new category	infolog	lt	Pasirinkite naują kategoriją
 select users or groups	infolog	lt	Pasirinkite naudotojus arba grupes

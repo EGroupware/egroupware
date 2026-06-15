@@ -281,6 +281,12 @@ class addressbook_ui extends addressbook_bo
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
+			// Set main header
+			$_content['main_header']['toolbar'] = array(
+				'filter'  => $content['nm']['filter'] ?? '',
+				'cat_id'  => $content['nm']['cat_id'] ?? '',
+				'filter2' => $content['nm']['filter2'] ?? '',
+			);
 			// set template and value for grouped views here, in case of reload
 			if (!empty($content['nm']['grouped_view']))
 			{

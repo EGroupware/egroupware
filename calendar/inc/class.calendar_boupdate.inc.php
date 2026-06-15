@@ -13,6 +13,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Acl;
+use EGroupware\Api\DateTime;
 use EGroupware\Api\Link;
 
 // types of messsages send by calendar_boupdate::send_update
@@ -369,7 +370,7 @@ class calendar_boupdate extends calendar_bo
 		}
 		else
 		{
-			$recurences = array(new Api\DateTime((int)$event['start']));
+			$recurences = array(clone $event['start']);
 		}
 		$checked_excluding = null;
 		$max_checked = $GLOBALS['egw_info']['server']['conflict_max_checked'];
@@ -378,8 +379,8 @@ class calendar_boupdate extends calendar_bo
 			$max_check_time = 3.0;
 		}
 		$checked = 0;
-		$start = microtime(true);
-		$duration = Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts');
+		$check_started = microtime(true);
+		$duration = $event['start']->diff($event['end']);
 		// as floating, whole-day events are defined as whole-day in user timezone (in fact in every TZ!), but they are
 		// always stored in server-timezone, we have to account for the difference, to not miss conflicts!
 		$start_tz_diff = Api\DateTime::$server_timezone->getOffset(new Api\DateTime($event['start'])) -
@@ -387,30 +388,44 @@ class calendar_boupdate extends calendar_bo
 		// might be different from $start_tz_diff, if TZ transition is during the event
 		$end_tz_diff = Api\DateTime::$server_timezone->getOffset(new Api\DateTime($event['end'])) -
 			Api\DateTime::$user_timezone->getOffset(new Api\DateTime($event['end']));
+		$now_user = new DateTime($this->now_su, DateTime::$user_timezone);
+		$horizon = new DateTime($this->config['horizont'], DateTime::$server_timezone);
+		$horizon->setUser();
+		$duration_seconds = self::duration2seconds($duration);
 		foreach($recurences as $date)
 		{
-			$startts = $date->format('ts');
+			$recurrence_start = clone $date;
+			$end = clone $recurrence_start;
+			$end->add($duration);
 
 			// skip past events or recurrences
-			if ($startts+$duration < $this->now_su) continue;
+			if($end < $now_user)
+			{
+				continue;
+			}
 
 			// abort check if configured limits are exceeded
 			if ($event['recur_type'] &&
 				(++$checked > $max_checked && $max_checked > 0 || // maximum number of checked recurrences exceeded
-				microtime(true) > $start+$max_check_time ||	// max check time exceeded
-				$startts > $this->config['horizont']))	// we are behind horizon for which recurrences are rendered
+					microtime(true) > $check_started + $max_check_time ||    // max check time exceeded
+					$recurrence_start > $horizon))    // we are behind horizon for which recurrences are rendered
 			{
 				if ($this->debug > 2 || $this->debug == 'conflicts')
 				{
 					$this->debug_message(__METHOD__.'() conflict check limited to %1 recurrences, %2 seconds, until (excluding) %3',
-						$checked, microtime(true)-$start, $date);
+					                     $checked, microtime(true) - $check_started, $date
+					);
 				}
 				$checked_excluding = $date;
 				break;
 			}
+			$search_start = clone $recurrence_start;
+			$search_start->modify(sprintf('%+d seconds', -abs($start_tz_diff)));
+			$search_end = clone $recurrence_start;
+			$search_end->modify(sprintf('%+d seconds', $duration_seconds + abs($end_tz_diff)));
 			$overlapping_events =& $this->search(array(
-				'start' => $startts-abs($start_tz_diff),
-				'end'   => $startts+$duration+abs($end_tz_diff),
+													 'start' => $search_start,
+				                                     'end'   => $search_end,
 				'users' => $users,
 				'ignore_acl' => true,	// otherwise we get only events readable by the user
 				'enum_groups' => true,	// otherwise group-events would not block time
@@ -421,7 +436,7 @@ class calendar_boupdate extends calendar_bo
 			));
 			if ($this->debug > 2 || $this->debug == 'conflicts')
 			{
-				$this->debug_message(__METHOD__.'() checking for potential overlapping events for users %1 from %2 to %3',false,$users,$startts,$startts+$duration);
+				$this->debug_message(__METHOD__ . '() checking for potential overlapping events for users %1 from %2 to %3', false, $users, $recurrence_start, $search_end);
 			}
 			foreach((array) $overlapping_events as $k => $overlap)
 			{
@@ -432,7 +447,7 @@ class calendar_boupdate extends calendar_bo
 					continue;
 				}
 				// check if event is really blocking, as whole-day events use floating time and might NOT block in user's timezone
-				if ($overlap['end'] <= $startts || $overlap['start'] >= $startts+$duration)
+				if($overlap['end'] <= $recurrence_start || $overlap['start'] >= $end)
 				{
 					continue;
 				}
@@ -475,7 +490,7 @@ class calendar_boupdate extends calendar_bo
 					{
 						$this->debug_message(__METHOD__.'() conflicts with the following participants found %1',false,$common_parts);
 					}
-					$conflicts[$overlap['id'].'-'.$this->date2ts($overlap['start'])] =& $overlapping_events[$k];
+					$conflicts[$overlap['id'] . '-' . self::date2dbkey($overlap['start'])] =& $overlapping_events[$k];
 				}
 			}
 		}
@@ -488,7 +503,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				foreach((array)$possible_quantity_conflicts[$uid] as $conflict)
 				{
-					$conflicts[$conflict['id'].'-'.$this->date2ts($conflict['start'])] =& $possible_quantity_conflicts[$k];
+					$conflicts[$conflict['id'] . '-' . self::date2dbkey($conflict['start'])] =& $conflict;
 				}
 			}
 		}
@@ -587,6 +602,7 @@ class calendar_boupdate extends calendar_bo
 	function check4update($new_event, $old_event, int $notify_max_recurrences=3)
 	{
 		$modified = $added = $deleted = array();
+		$event_length = $new_event['start']->diff($new_event['end']);
 
 		//echo "<p>calendar_boupdate::check4update() new participants = ".print_r($new_event['participants'],true).", old participants =".print_r($old_event['participants'],true)."</p>\n";
 		foreach(['start','end','tz_id','owner','category','priority','public','title','description','location',
@@ -598,35 +614,41 @@ class calendar_boupdate extends calendar_bo
 				switch($field)
 				{
 					case 'recur_exception':
-						foreach ($added_exceptions=array_diff($new_event[$field]??[],$old_event[$field]??[]) as $key => $recurrence)
+						foreach($added_exceptions = self::dateDiff($new_event[$field] ?? [], $old_event[$field] ?? []) as $key => $recurrence)
 						{
 							if ($this->read($new_event['uid'], $recurrence))
 							{
 								unset($added_exceptions[$key]);
 								continue;   // explicit exception --> no need to notify, already done for the exception itself
 							}
+							$recurrence_time = $recurrence instanceof DateTime ? clone $recurrence : new DateTime($recurrence, DateTime::$user_timezone);
+							$recurrence_end = clone $recurrence_time;
+							$recurrence_end->add($event_length);
 							// send a cancel for each RECURRENCE-ID
 							$this->send_update(MSG_DELETED, $new_event['participants'], [
-									'recurrence' => $recurrence,
-									'start' => $recurrence,
-									'end' => $recurrence + $new_event['end'] - $new_event['start'],
+															  'recurrence' => $recurrence_time,
+								                              'start'      => $recurrence_time,
+								                              'end'        => $recurrence_end,
 								]+$new_event);
 							// limit number of notifications to the first N recurrences
 							if (++$n >= $notify_max_recurrences) break;
 						}
 						$n = 0;
-						foreach($removed_exceptions=array_diff($old_event[$field]??[],$new_event[$field]??[]) as $key => $recurrence)
+						foreach($removed_exceptions = self::dateDiff($old_event[$field] ?? [], $new_event[$field] ?? []) as $key => $recurrence)
 						{
 							if ($this->read($new_event['uid'], $recurrence))
 							{
 								unset($removed_exceptions[$key]);
 								continue;   // explicit exception --> no need to notify, already done for the exception itself
 							}
+							$recurrence_time = $recurrence instanceof DateTime ? clone $recurrence : new DateTime($recurrence, DateTime::$user_timezone);
+							$recurrence_end = clone $recurrence_time;
+							$recurrence_end->add($event_length);
 							// send an add for each RECURRENCE-ID
 							$this->send_update(MSG_ADDED, $new_event['participants'], null, [
-									'recurrence' => $recurrence,
-									'start' => $recurrence,
-									'end' => $recurrence + $new_event['end'] - $new_event['start'],
+															'recurrence' => $recurrence_time,
+								                            'start'      => $recurrence_time,
+								                            'end'        => $recurrence_end,
 								]+$new_event);
 							// limit number of notifications to the first N recurrences
 							if (++$n >= $notify_max_recurrences) break;
@@ -634,13 +656,16 @@ class calendar_boupdate extends calendar_bo
 						continue 2;
 
 					case 'recur_rdates':
-						foreach(array_diff($new_event[$field]??[],$old_event[$field]??[]) as $recurrence)
+						foreach(self::dateDiff($new_event[$field] ?? [], $old_event[$field] ?? []) as $recurrence)
 						{
+							$recurrence_time = $recurrence instanceof DateTime ? clone $recurrence : new DateTime($recurrence, DateTime::$user_timezone);
+							$recurrence_end = clone $recurrence_time;
+							$recurrence_end->add($event_length);
 							// send an add for each RECURRENCE-ID
 							$this->send_update(MSG_ADDED, $new_event['participants'], null, [
-									'recurrence' => $recurrence,
-									'start' => $recurrence,
-									'end' => $recurrence + $new_event['end'] - $new_event['start'],
+															'recurrence' => $recurrence_time,
+								                            'start'      => $recurrence_time,
+								                            'end'        => $recurrence_end,
 								]+$new_event);
 							// limit number of notifications to the first N recurrences
 							if (++$n >= $notify_max_recurrences) break;
@@ -768,8 +793,19 @@ class calendar_boupdate extends calendar_bo
 				default:
 					if (is_array($new_event) && is_array($old_event))
 					{
-						$diff = max(abs(self::date2ts($old_event['start']??null)-self::date2ts($new_event['start']??null)),
-							abs(self::date2ts($old_event['end']??null)-self::date2ts($new_event['end']??null)));
+						$old_start = ($old_event['start'] ?? null) instanceof DateTime ? $old_event['start'] : new DateTime($old_event['start'] ?? 0, DateTime::$server_timezone);
+						$new_start = ($new_event['start'] ?? null) instanceof DateTime ? $new_event['start'] : new DateTime($new_event['start'] ?? 0, DateTime::$server_timezone);
+						$old_end = ($old_event['end'] ?? null) instanceof DateTime ? $old_event['end'] : new DateTime($old_event['end'] ?? 0, DateTime::$server_timezone);
+						$new_end = ($new_event['end'] ?? null) instanceof DateTime ? $new_event['end'] : new DateTime($new_event['end'] ?? 0, DateTime::$server_timezone);
+						$start_diff = abs(self::duration2seconds(
+							$old_start->diff($new_start)
+						)
+						);
+						$end_diff = abs(self::duration2seconds(
+							$old_end->diff($new_end)
+						)
+						);
+						$diff = max($start_diff, $end_diff);
 						$check = $ru == 'time_change_4h' ? 4 * 60 * 60 - 1 : 0;
 						if ($msg_type == MSG_MODIFIED && ($diff > $check ||
 							// also notify if recurrences where added or removed
@@ -948,11 +984,13 @@ class calendar_boupdate extends calendar_bo
 	 */
 	public function eventInFuture(array $event, int $grace_time=10) : bool
 	{
+		$threshold = new DateTime($this->now_su, DateTime::$user_timezone);
+		$threshold->modify(sprintf('%+d seconds', -$grace_time));
 		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
-			return empty($event['recur_enddate']) || $event['recur_enddate'] > $this->now_su - $grace_time;
+			return empty($event['recur_enddate']) || $event['recur_enddate'] > $threshold;
 		}
-		return $event['end'] > $this->now_su - $grace_time;
+		return $event['end'] > $threshold;
 	}
 
 	/**
@@ -987,8 +1025,11 @@ class calendar_boupdate extends calendar_bo
 			// ignore events in the past (give a tolerance of 10 seconds for the script)
 			if ($new_event && !$this->eventInFuture($new_event) || !$new_event && $old_event && !$this->eventInFuture($old_event))
 			{
+				$now_minus_grace = new DateTime($this->now_su, DateTime::$user_timezone);
+				$now_minus_grace->modify('-10 seconds');
 				error_log(__METHOD__ . "($msg_type, " . json_encode($to_notify) . ", ...,  " . json_encode($new_event) . ", ...) --> ignoring event in the past: start=" .
-					date('Y-m-d H:i:s', ($new_event ?: $old_event)['start']) . " < " . date('Y-m-d H:i:s', $this->now_su - 10));
+						  Api\DateTime::to(($new_event ?: $old_event)['start'], 'Y-m-d H:i:s') . " < " . $now_minus_grace->format('Y-m-d H:i:s')
+				);
 				return False;
 			}
 			// check if default timezone is set correctly to server-timezone (ical-parser messes with it!!!)
@@ -1067,7 +1108,8 @@ class calendar_boupdate extends calendar_bo
 
 			// Event is passed in user time, make sure that's taken into account for date calculations
 			$user_prefs = $GLOBALS['egw_info']['user']['preferences'];
-			$date = new Api\DateTime('now', new DateTimeZone($user_prefs['common']['tz']));
+			$date = new Api\DateTime('now', DateTime::$server_timezone);
+			$date->setTimezone(new DateTimeZone($user_prefs['common']['tz']));
 			$startdate = new Api\DateTime($event['start'], new DateTimeZone($user_prefs['common']['tz']));
 			$enddate = new Api\DateTime($event['end'], new DateTimeZone($user_prefs['common']['tz']));
 			$modified = new Api\DateTime($event['modified'], new DateTimeZone($user_prefs['common']['tz']));
@@ -1465,7 +1507,9 @@ class calendar_boupdate extends calendar_bo
 		//echo "<p>bocalendar::send_alarm("; print_r($alarm); echo ")</p>\n";
 		$GLOBALS['egw_info']['user']['account_id'] = $this->owner = $alarm['owner'];
 
-		$event_time_user = Api\DateTime::server2user($alarm['time'] + $alarm['offset']);	// alarm[time] is in server-time, read requires user-time
+		$event_time_user = new DateTime($alarm['time'], DateTime::$server_timezone);    // alarm[time] is in server-time, read requires user-time
+		$event_time_user->modify(sprintf('%+d seconds', $alarm['offset']));
+		$event_time_user->setUser();
 		if (!$alarm['owner'] || !$alarm['cal_id'] || !($event = $this->read($alarm['cal_id'],$event_time_user)) ||
 			!empty($event['deleted']))  // no processing of alarms for deleted events
 		{
@@ -1490,9 +1534,13 @@ class calendar_boupdate extends calendar_bo
 		$ret = $this->_send_update(MSG_ALARM, $to_notify, $event, False, $alarm['owner'], $alarm);
 
 		// create a new alarm for recuring events for the next event, if one exists
-		if (!empty($event['recur_type']) && ($event = $this->read($alarm['cal_id'],$event_time_user+1)))
+		$next_event_time = clone $event_time_user;
+		$next_event_time->modify('+1 second');
+		if(!empty($event['recur_type']) && ($event = $this->read($alarm['cal_id'], $next_event_time)))
 		{
-			$alarm['time'] = $this->date2ts($event['start']) - $alarm['offset'];
+			$alarm_time = clone $event['start'];
+			$alarm_time->modify(sprintf('%+d seconds', -$alarm['offset']));
+			$alarm['time'] = $alarm_time;
 			unset($alarm['times']);
 			unset($alarm['next']);
 			unset($alarm['keep_time']);	// need to remove the keep_time, as otherwise the alarm would be deleted automatically
@@ -1534,7 +1582,7 @@ class calendar_boupdate extends calendar_bo
 			// recur_enddate is always stored with 1s less than the actual time --> add it here again
 			if ($old_event && !empty($old_event['recur_enddate']))
 			{
-				++$old_event['recur_enddate'];
+				$old_event['recur_enddate']->modify('+1 second');
 			}
 		}
 		else
@@ -1548,8 +1596,19 @@ class calendar_boupdate extends calendar_bo
 		// set recur-enddate/range-end to real end-date of last recurrence
 		if (!empty($event['recur_type']) && (!empty($event['recur_enddate']) || $event['recur_type'] == calendar_rrule::RDATE) && $event['start'])
 		{
-			$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
-			$event['recur_enddate']->setTime(23,59,59);
+			if(!empty($event['whole_day']))
+			{
+				$event['recur_enddate'] = new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
+				$event['recur_enddate']->setTime(23, 59, 59);
+			}
+			else
+			{
+				$event_tz = calendar_timezones::DateTimeZone($event['tzid']);
+				$recur_enddate = $event['recur_enddate'] instanceof Api\DateTime ?
+					clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'], Api\DateTime::$user_timezone);
+				$recur_enddate->setTimezone(Api\DateTime::$user_timezone);
+				$event['recur_enddate'] = new Api\DateTime($recur_enddate->format('Y-m-d 23:59:59'), $event_tz);
+			}
 			$rrule = calendar_rrule::event2rrule($event, true, Api\DateTime::$user_timezone->getName());
 			$rrule->rewind();
 			$enddate = $rrule->current();
@@ -1561,19 +1620,43 @@ class calendar_boupdate extends calendar_bo
 			while ($rrule->validDate($event['whole_day']) && ($enddate = $occurrence));
 			if ($enddate)
 			{
-				$enddate->modify(($event['end'] - $event['start']).' second');
-				$event['recur_enddate'] = $enddate->format('ts');
+				$enddate->add($event['start']->diff($event['end']));
+				$event['recur_enddate'] = $enddate;
 			}
 			//error_log(__METHOD__."($event[title]) start=".Api\DateTime::to($event['start'],'string').', end='.Api\DateTime::to($event['end'],'string').', range_end='.Api\DateTime::to($event['recur_enddate'],'string'));
 		}
 
 		$save_event = $event;
+		// Keep a user-time snapshot for set_recurrences().
+		// DateTime objects are references, so we need to clone them before
+		// converting $event timestamps to server timezone below.
+		foreach(array('start', 'end', 'recur_enddate', 'recurrence') as $name)
+		{
+			if(($save_event[$name] ?? null) instanceof Api\DateTime)
+			{
+				$save_event[$name] = clone $save_event[$name];
+			}
+		}
+		foreach(array('recur_exception', 'recur_rdates') as $name)
+		{
+			if(!is_array($save_event[$name] ?? null))
+			{
+				continue;
+			}
+			foreach($save_event[$name] as $n => $date)
+			{
+				if($date instanceof Api\DateTime)
+				{
+					$save_event[$name][$n] = clone $date;
+				}
+			}
+		}
 		if ($event['whole_day'])
 		{
 			if (!empty($event['start']))
 			{
 				$time = $this->so->startOfDay(new Api\DateTime($event['start'], Api\DateTime::$user_timezone));
-				$event['start'] = Api\DateTime::to($time, 'ts');
+				$event['start'] = $time;
 				$save_event['start'] = $time;
 			}
 			if (!empty($event['end']))
@@ -1582,13 +1665,13 @@ class calendar_boupdate extends calendar_bo
 				// before calling startOfDay to NOT lose one day
 				$time = $this->so->startOfDay((new Api\DateTime($event['end'], Api\DateTime::$user_timezone))->add('60seconds'));
 				$time->add('-1second');
-				$event['end'] = Api\DateTime::to($time, 'ts');
+				$event['end'] = $time;
 				$save_event['end'] = $time;
 			}
 			if (!empty($event['recurrence']))
 			{
 				$time = $this->so->startOfDay(new Api\DateTime($event['recurrence'], Api\DateTime::$user_timezone));
-				$event['recurrence'] = Api\DateTime::to($time, 'ts');
+				$event['recurrence'] = $time;
 			}
 			if (!empty($event['recur_enddate']))
 			{
@@ -1617,8 +1700,11 @@ class calendar_boupdate extends calendar_bo
 		// we run all dates through date2ts, to adjust to server-time and the possible date-formats
 		foreach(array_merge($timestamps, $this->getCfTtimestamps()) as $ts)
 		{
-			// we convert here from user-time to timestamps in server-time!
-			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2ts($event[$ts],true) : 0;
+			// we convert here from user-time to server-time!
+			if(isset($event[$ts]))
+			{
+				$event[$ts] = $event[$ts] ? ($event[$ts] instanceof Api\DateTime ? $event[$ts]->setServer() : new Api\DateTime($event[$ts], Api\DateTime::$user_timezone)->setServer()) : 0;
+			}
 		}
 		// convert tzid name to integer tz_id, of set user default
 		if (empty($event['tzid']) || !($event['tz_id'] = calendar_timezones::tz2id($event['tzid'])))
@@ -1634,11 +1720,11 @@ class calendar_boupdate extends calendar_bo
 				if ($event['whole_day'])
 				{
 					// we use so->startOfDay(new Api\DateTime($time, Api\DateTime::$user_time)) as we not yet converted to server-time!
-					$date = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone))->format('server');
+					$date = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone))->setServer();
 				}
 				else
 				{
-					$date = $this->date2ts($date,true);
+					$date = ($date instanceof DateTime ? $date : new DateTime($date, DateTime::$user_timezone))->setServer();
 				}
 			}
 			unset($date);
@@ -1653,7 +1739,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				if(!empty($alarm['time']))
 				{
-					$alarm['time'] = $this->date2ts($alarm['time'], true);    // user to server-time
+					$alarm['time'] = $alarm['time']->setServer();
 				}
 
 				// remove alarms belonging to no longer existing or rejected participants
@@ -1683,8 +1769,11 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (!isset($event['alarm'][$id]))
 				{
-					$alarm['time'] = $event['start'] - $alarm['offset'];
-					if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
+					$alarm['time'] = new DateTime($event['start'], DateTime::$server_timezone)->modify("- {$alarm['offset']} seconds");
+					if($alarm['time'] < new DateTime('now', DateTime::$server_timezone))
+					{
+						calendar_so::shift_alarm($event, $alarm);
+					}
 						// remove (not store) alarms belonging to not longer existing or rejected participants
 					$status = isset($event['participants']) ? $event['participants'][$alarm['owner']] :
 						$old_event['participants'][$alarm['owner']];
@@ -1703,15 +1792,17 @@ class calendar_boupdate extends calendar_bo
 		}
 
 		// you should always update modification time (ctag depends on it!)
+		$now = new DateTime('now', DateTime::$server_timezone);
 		if ($updateTS)
 		{
-			$event['modified'] = $save_event['modified'] = $this->now;
+			$event['modified'] = $save_event['modified'] = clone $now;
 			$event['modifier'] = $save_event['modifier'] = $this->user;
 		}
 
-		if (empty($event['id']) && (!isset($event['created']) || $event['created'] > $this->now))
+		if(empty($event['id']) && (!isset($event['created']) ||
+				($event['created'] instanceof DateTime ? $event['created'] : new DateTime($event['created'], DateTime::$user_timezone))->setServer() > $now))
 		{
-			$event['created'] = $save_event['created'] = $this->now;
+			$event['created'] = $save_event['created'] = clone $now;
 			$event['creator'] = $save_event['creator'] = $this->user;
 		}
 		$set_recurrences = !$old_event ? false :
@@ -1723,7 +1814,10 @@ class calendar_boupdate extends calendar_bo
 		{
 			$save_event['id'] = $cal_id;
 			// unset participants to enforce the default stati for all added recurrences
-			$this->set_recurrences(array_diff_key($save_event, ['participants'=>true]), $set_recurrences_start);
+			$this->set_recurrences(
+				array_diff_key($save_event, ['participants' => true]),
+				$set_recurrences_start ? new DateTime($set_recurrences_start, DateTime::$server_timezone)->setUser() : null
+			);
 		}
 
 		// create links for new participants from addressbook, if configured
@@ -1747,17 +1841,15 @@ class calendar_boupdate extends calendar_bo
 			$event['id'] = $cal_id;
 			$save_event['id'] = $cal_id;
 		}
-		// recur_enddate is inconsistent/sometimes 1s less than the actual time --> add it here again
-		if (isset($save_event['recur_enddate']) && is_int($save_event['recur_enddate']) && ($save_event['recur_enddate'] & 1))
-		{
-			++$save_event['recur_enddate'];
-		}
 		// convert all timestamps in $save_event to server-time
 		// This is done here to avoid damaging the actual event when saving, but the old event is in server-time
 		foreach ($timestamps as $ts)
 		{
-			// we convert here from user-time to timestamps in server-time!
-			if (isset($save_event[$ts])) $save_event[$ts] = $save_event[$ts] ? calendar_bo::date2ts($save_event[$ts], true) : 0;
+			// we convert here from user-time to server-time DateTime
+			if(isset($save_event[$ts]))
+			{
+				$save_event[$ts] = $save_event[$ts] ? (($save_event[$ts] instanceof DateTime ? $save_event[$ts] : new DateTime($save_event[$ts], DateTime::$user_timezone))->setServer()) : 0;
+			}
 		}
 		// same for recurrence-exceptions and -dates
 		foreach(['recur_exception', 'recur_rdates'] as $name)
@@ -1767,11 +1859,11 @@ class calendar_boupdate extends calendar_bo
 			{
 				if ($save_event['whole_day'])
 				{
-					$date = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone))->format('server');
+					$date = $this->so->startOfDay(new Api\DateTime($date, Api\DateTime::$user_timezone))->setServer();
 				}
 				else
 				{
-					$date = $this->date2ts($date,true);
+					$date = ($date instanceof DateTime ? $date : new DateTime($date, DateTime::$user_timezone))->setServer();
 				}
 			}
 		}
@@ -1986,9 +2078,10 @@ class calendar_boupdate extends calendar_bo
 				"($cal_id, $uid, $status, $recur_date)\n",3,$this->logfile);
 		}
 		$old_event = $this->read($cal_id, $recur_date, $ignore_acl, 'server');
-		if (($Ok = $this->so->set_status($cal_id,is_numeric($uid)?'u':$uid[0],
-				is_numeric($uid)?$uid:substr($uid,1),$status,
-				$recur_date?$this->date2ts($recur_date,true):0,$role)))
+		if(($Ok = $this->so->set_status($cal_id, is_numeric($uid) ? 'u' : $uid[0],
+		                                is_numeric($uid) ? $uid : substr($uid, 1), $status,
+		                                $recur_date ? Api\DateTime::user2server($recur_date, 'ts') : 0, $role
+		)))
 		{
 			if ($status == 'R')	// remove alarms belonging to rejected participants
 			{
@@ -2086,7 +2179,7 @@ class calendar_boupdate extends calendar_bo
 	 * @param int &$exceptions_kept=null on return number of kept exceptions
 	 * @return boolean true on success, false on error (usually permission denied)
 	 */
-	function delete($cal_id, $recur_date=0, $ignore_acl=false, $skip_notification=false,
+	function delete($cal_id, DateTime|int|null $recur_date = 0, $ignore_acl = false, $skip_notification = false,
 		$delete_exceptions=true, &$exceptions_kept=null)
 	{
 		//error_log(__METHOD__."(cal_id=$cal_id, recur_date=$recur_date, ignore_acl=$ignore_acl, skip_notifications=$skip_notification)");
@@ -2119,7 +2212,7 @@ class calendar_boupdate extends calendar_bo
 				// mark all links to the event as deleted, but keep them
 				Link::unlink(0,'calendar',$cal_id,'','','',true);
 
-				$event['deleted'] = $this->now;
+				$event['deleted'] = new DateTime('now', DateTime::$server_timezone);
 				$this->save($event, $ignore_acl);
 				// Actually delete alarms
 				$this->so->delete_alarm($cal_id);
@@ -2149,26 +2242,37 @@ class calendar_boupdate extends calendar_bo
 		}
 		else	// delete an exception
 		{
+			$recur_date = $recur_date instanceof DateTime ? clone $recur_date : new DateTime($recur_date, DateTime::$user_timezone);
 			// check if deleted recurrance has alarms (because it's the next recurrance) --> move it to next recurrance
 			if ($event['alarm'])
 			{
 				$next_recurrance = null;
 				foreach($event['alarm'] as &$alarm)
 				{
-					if (($alarm['time'] == $recur_date) || ($alarm['time']+$alarm['offset'] == $recur_date))
+					$alarm_time = $alarm['time'] instanceof DateTime ? clone $alarm['time'] : new DateTime($alarm['time'], DateTime::$server_timezone);
+					$alarm_event_time = clone $alarm_time;
+					$alarm_event_time->modify(sprintf('%+d seconds', $alarm['offset']));
+					$alarm_event_time->setUser();
+					if($alarm_event_time == $recur_date)
 					{
 						//error_log(__METHOD__.__LINE__.'->'.array2string($recur_date));
 						//error_log(__METHOD__.__LINE__.array2string($event));
 						if (is_null($next_recurrance))
 						{
-							$checkdate = $recur_date;
-							//if ($alarm['time']+$alarm['offset'] == $recur_date) $checkdate = $recur_date + $alarm['offset'];
-							if (($e = $this->read($cal_id,$checkdate+1)))
+							$checkdate = clone $recur_date;
+							$checkdate->modify('+1 second');
+							if(($e = $this->read($cal_id, $checkdate)))
 							{
-								$next_recurrance = $this->date2ts($e['start']);
+								$next_recurrance = clone $e['start'];
 							}
 						}
-						$alarm['time'] = $this->date2ts($next_recurrance, true);	// user to server-time
+						if($next_recurrance)
+						{
+							$alarm_time = clone $next_recurrance;
+							$alarm_time->setServer();
+							$alarm_time->modify(sprintf('%+d seconds', -$alarm['offset']));
+							$alarm['time'] = Api\DateTime::to($alarm_time, 'ts');
+						}
 						$alarm['cal_id'] = $cal_id;
 						unset($alarm['times']);
 						unset($alarm['next']);
@@ -2177,7 +2281,7 @@ class calendar_boupdate extends calendar_bo
 				}
 			}
 			// need to read series master, as otherwise existing exceptions will be lost!
-			$recur_date = $this->date2ts($event['start']);
+			$recur_date = clone $event['start'];
 			//if ($event['alarm']) $alarmbuffer = $event['alarm'];
 			$event = $this->read($cal_id);
 			//if (isset($alarmbuffer)) $event['alarm'] = $alarmbuffer;
@@ -2187,7 +2291,9 @@ class calendar_boupdate extends calendar_bo
 			// for "real" push, need to push delete of recurrence
 			if (!Api\Json\Push::onlyFallback() && $skip_notification !== "NOPUSH")
 			{
-				Api\Link::notify_update('calendar', $cal_id.':'.$recur_date, $event, 'delete');
+				$recur_date_id = clone $recur_date;
+				$recur_date_id->setServer();
+				Api\Link::notify_update('calendar', $cal_id . ':' . $recur_date_id->format('ts'), $event, 'delete');
 			}
 		}
 		if ($event['reference'])
@@ -2221,7 +2327,7 @@ class calendar_boupdate extends calendar_bo
 		$details['participants'] = $details['participants'] ? implode("\n",$details['participants']) : '';
 
 		$event_arr['link']['field'] = lang('URL');
-		$eventStart_arr = $this->date2array($event['start']); // give this as 'date' to the link to pick the right recurrence for the participants state
+		$eventStart_arr = Api\DateTime::to($event['start'], 'array'); // give this as 'date' to the link to pick the right recurrence for the participants state
 		$link = $GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit&cal_id='.$event['id'].'&date='.$eventStart_arr['full'].'&no_popup=1&ajax=true';
 		// if url is only a path, try guessing the rest ;-)
 		if ($link[0] == '/') $link = Api\Framework::getUrl($link);
@@ -2287,12 +2393,12 @@ class calendar_boupdate extends calendar_bo
 
 		$var['startdate'] = Array(
 			'field'	=> lang('Start Date/Time'),
-			'data'	=> $this->format_date($event['start']),
+			'data' => Api\DateTime::to($event['start']),
 		);
 
 		$var['enddate'] = Array(
 			'field'	=> lang('End Date/Time'),
-			'data'	=> $this->format_date($event['end']),
+			'data' => Api\DateTime::to($event['end']),
 		);
 
 		$pri = Array(
@@ -2313,7 +2419,7 @@ class calendar_boupdate extends calendar_bo
 
 		$var['updated'] = Array(
 			'field'	=> lang('Updated'),
-			'data'	=> $this->format_date($event['modtime'] ?? null).', '.Api\Accounts::username($event['modifier'])
+			'data' => Api\DateTime::to($event['modtime'] ?? null) . ', ' . Api\Accounts::username($event['modifier'])
 		);
 
 		$var['access'] = Array(
@@ -2367,13 +2473,14 @@ class calendar_boupdate extends calendar_bo
 			echo "<p>error opening '$this->log_file' !!!</p>\n";
 			return false;
 		}
-		fwrite($f,$type.': '.Api\Accounts::username($this->user).': '.date('r')."\n");
+		fwrite($f, $type . ': ' . Api\Accounts::username($this->user) . ': ' . (new DateTime('now', DateTime::$server_timezone))->format('r') . "\n");
 		fwrite($f,"Time: time to save / saved time read back / old time before save\n");
 		foreach(array('start','end') as $name)
 		{
-			fwrite($f,$name.': '.(isset($event2save[$name]) ? $this->format_date($event2save[$name]) : 'not set').' / '.
-				$this->format_date($event_saved[$name]) .' / '.
-				(is_null($old_event) ? 'no old event' : $this->format_date($old_event[$name]))."\n");
+			fwrite($f, $name . ': ' . (isset($event2save[$name]) ? Api\DateTime::to($event2save[$name]) : 'not set') . ' / ' .
+					 Api\DateTime::to($event_saved[$name]) . ' / ' .
+					 (is_null($old_event) ? 'no old event' : Api\DateTime::to($old_event[$name])) . "\n"
+			);
 		}
 		foreach(array('event2save','event_saved','old_event') as $name)
 		{
@@ -2411,7 +2518,6 @@ class calendar_boupdate extends calendar_bo
 			{
 				throw new Api\Exception\WrongParameter('$instance_date must be integer or Api\DateTime!');
 			}
-			$instance_date = $instance_date->format('ts');
 		}
 
 		foreach($event['alarm'] as &$alarm)
@@ -2420,10 +2526,16 @@ class calendar_boupdate extends calendar_bo
 			{
 				calendar_so::shift_alarm($event, $alarm, $instance_date);
 			}
-			else if ($alarm['time'] !== $time->format('ts') - $alarm['offset'])
+			else
 			{
-				$alarm['time'] = $time->format('ts') - $alarm['offset'];
-				$this->save_alarm($event['id'], $alarm, true, $ignore_acl);
+				$alarm_time = $alarm['time'] instanceof DateTime ? clone $alarm['time'] : new DateTime($alarm['time'], DateTime::$server_timezone);
+				$target_time = clone $time;
+				$target_time->modify(sprintf('%+d seconds', -$alarm['offset']));
+				if($alarm_time != $target_time)
+				{
+					$alarm['time'] = $target_time;
+					$this->save_alarm($event['id'], $alarm, true, $ignore_acl);
+				}
 			}
 		}
 	}
@@ -2444,7 +2556,7 @@ class calendar_boupdate extends calendar_bo
 			//echo "<p>no rights to save the alarm=".print_r($alarm,true)." to event($cal_id)</p>";
 			return false;	// no rights to add the alarm
 		}
-		$alarm['time'] = $this->date2ts($alarm['time'],true);	// user to server-time
+		$alarm['time'] = Api\DateTime::user2server($alarm['time'], 'ts');    // user to server-time
 
 		return $this->so->save_alarm($cal_id, $alarm, $update_modified);
 	}
@@ -2566,14 +2678,27 @@ class calendar_boupdate extends calendar_bo
 	{
 		$matchingEvents = array();
 		$query = array();
+		$event_start_ts = isset($event['start']) ? Api\DateTime::to($event['start'], 'ts') : null;
+		$event_end_ts = isset($event['end']) ? Api\DateTime::to($event['end'], 'ts') : null;
+		$event_recurrence_ts = !empty($event['recurrence']) ? Api\DateTime::to($event['recurrence'], 'ts') : 0;
+		$event['recurrence'] = $event['recurrence'] ?? null;
+		$has_exception = static function(array $exceptions, int $recurrence_ts): bool
+		{
+			foreach ($exceptions as $exception)
+			{
+				if ((int)Api\DateTime::to($exception, 'server') === $recurrence_ts)
+				{
+					return true;
+				}
+			}
+			return false;
+		};
 
 		if ($this->log)
 		{
 			error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
 				"($filter)[EVENT]:" . array2string($event)."\n",3,$this->logfile);
 		}
-
-		if (!isset($event['recurrence'])) $event['recurrence'] = 0;
 
 		if ($filter == 'master')
 		{
@@ -2590,7 +2715,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				$query[] = 'recur_type IS NULL';
 			}
-			$query['cal_recurrence'] = $event['recurrence'];
+			$query['cal_recurrence'] = $event_recurrence_ts;
 		}
 
 		if ($event['id'])
@@ -2618,13 +2743,12 @@ class calendar_boupdate extends calendar_bo
 					{
 						$matchingEvents[] = $egwEvent['id']; // we found the event
 					}
-					elseif (empty($event['recur_type']) &&
-								$event['recurrence'] != 0)
+					elseif(empty($event['recur_type']) && $event_recurrence_ts != 0)
 					{
 						$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
-						if (in_array($event['recurrence'], $exceptions))
+						if($has_exception($exceptions, $event_recurrence_ts))
 						{
-							$matchingEvents[] = $egwEvent['id'] . ':' . (int)$event['recurrence'];
+							$matchingEvents[] = $egwEvent['id'] . ':' . $event_recurrence_ts;
 						}
 					}
 				} elseif ($filter != 'master' && ($filter == 'exact' ||
@@ -2707,25 +2831,25 @@ class calendar_boupdate extends calendar_bo
 				}
 
 				// check length with some tolerance
-				$length = $event['end'] - $event['start'] - $delta;
+				$length = $event_end_ts - $event_start_ts - $delta;
 				$query[] = ('(cal_end-cal_start)>' . $length);
 				$length += 2 * $delta;
 				$query[] = ('(cal_end-cal_start)<' . $length);
-				$query[] = ('cal_start>' . ($event['start'] - 86400));
-				$query[] = ('cal_start<' . ($event['start'] + 86400));
+				$query[] = ('cal_start>' . ($event_start_ts - 86400));
+				$query[] = ('cal_start<' . ($event_start_ts + 86400));
 			}
 			elseif (isset($event['start']))
 			{
 				if ($filter == 'relax')
 				{
-					$query[] = ('cal_start>' . ($event['start'] - 3600));
-					$query[] = ('cal_start<' . ($event['start'] + 3600));
+					$query[] = ('cal_start>' . ($event_start_ts - 3600));
+					$query[] = ('cal_start<' . ($event_start_ts + 3600));
 				}
 				else
 				{
 					// we accept a tiny tolerance
-					$query[] = ('cal_start>' . ($event['start'] - 2));
-					$query[] = ('cal_start<' . ($event['start'] + 2));
+					$query[] = ('cal_start>' . ($event_start_ts - 2));
+					$query[] = ('cal_start<' . ($event_start_ts + 2));
 				}
 			}
 			if ($filter == 'relax')
@@ -2835,7 +2959,7 @@ class calendar_boupdate extends calendar_bo
 						}
 						continue;
 					}
-					elseif ($egwEvent['recurrence'] == $event['recurrence'])
+					elseif($egwEvent['recurrence'] == $event_recurrence_ts)
 					{
 						// We found an exact match
 						$matchingEvents = array($egwEvent['id']);
@@ -2843,13 +2967,13 @@ class calendar_boupdate extends calendar_bo
 					}
 					if (!empty($egwEvent['recur_type']) &&
 						empty($event['recur_type']) &&
-							!$egwEvent['recurrence'] && $event['recurrence'])
+						!$egwEvent['recurrence'] && $event_recurrence_ts)
 					{
 						$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid']);
-						if (in_array($event['recurrence'], $exceptions))
+						if($has_exception($exceptions, $event_recurrence_ts))
 						{
 							// We found a pseudo exception
-							$matchingEvents = array($egwEvent['id'] . ':' . (int)$event['recurrence']);
+							$matchingEvents = array($egwEvent['id'] . ':' . $event_recurrence_ts);
 							break;
 						}
 					}
@@ -2862,7 +2986,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (empty($event['whole_day']))
 				{
-					if (abs($event['end'] - $egwEvent['end']) >= 120)
+					if(abs(Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($egwEvent['end'], 'ts')) >= 120)
 					{
 						if ($this->log)
 						{
@@ -2987,7 +3111,7 @@ class calendar_boupdate extends calendar_bo
 				if (!empty($egwEvent['recur_type']))
 				{
 					// We found a pseudo Exception
-					$pseudos[] = $egwEvent['id'] . ':' . $event['start'];
+					$pseudos[] = $egwEvent['id'] . ':' . Api\DateTime::to($event['start'], 'ts');
 					continue;
 				}
 			}
@@ -2995,14 +3119,15 @@ class calendar_boupdate extends calendar_bo
 			{
 				// check exceptions
 				// $exceptions[$remote_ts] = $egw_ts
-				$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['$tzid'], 0, 0, 'map');
+				$exceptions = $this->so->get_recurrence_exceptions($egwEvent, $event['tzid'], null, null, 'map');
 				if (is_array($event['recur_exception']))
 				{
 					foreach ($event['recur_exception'] as $key => $day)
 					{
-						if (isset($exceptions[$day]))
+						$day_key = Api\DateTime::to($day, DateTime::DATABASE);
+						if(isset($exceptions[$day_key]))
 						{
-							unset($exceptions[$day]);
+							unset($exceptions[$day_key]);
 						}
 						else
 						{
@@ -3029,14 +3154,20 @@ class calendar_boupdate extends calendar_bo
 				// check recurrence information
 				foreach (array('recur_type', 'recur_interval', 'recur_enddate') as $key)
 				{
-					if (isset($event[$key])
-							&& $event[$key] != $egwEvent[$key])
+					if(!isset($event[$key]))
+					{
+						continue;
+					}
+					$event_value = $key === 'recur_enddate' ? Api\DateTime::to($event[$key], 'ts') : $event[$key];
+					$egw_value = $key === 'recur_enddate' ? Api\DateTime::to($egwEvent[$key], 'ts') : $egwEvent[$key];
+					if($event_value != $egw_value)
 					{
 						if ($this->log)
 						{
-							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
-								"() events[$key] differ: " . $event[$key] .
-								' <> ' . $egwEvent[$key]."\n",3,$this->logfile);
+							error_log(__FILE__ . '[' . __LINE__ . '] ' . __METHOD__ .
+									  "() events[$key] differ: " . $event_value .
+									  ' <> ' . $egw_value . "\n", 3, $this->logfile
+							);
 						}
 						continue 2;
 					}
@@ -3106,7 +3237,7 @@ class calendar_boupdate extends calendar_bo
 				$type = 'SERIES-PSEUDO-EXCEPTION';
 				$wasPseudo = true;
 				list($eventID, $date) = explode(':', $eventID);
-				$recur_date = $this->date2usertime($date);
+				$recur_date = Api\DateTime::server2user($date, 'ts');
 				$stored_event = $this->read($eventID, $recur_date, false, 'server');
 				$master_event = $this->read($eventID, 0, false, 'server');
 				$recurrence_event = $stored_event;
@@ -3152,7 +3283,8 @@ class calendar_boupdate extends calendar_bo
 						$type = 'SERIES-PSEUDO-EXCEPTION'; // could also be a real one
 						$recurrence_event = $master_event;
 						$recurrence_event['start'] = $event['recurrence'];
-						$recurrence_event['end'] -= $master_event['start'] - $event['recurrence'];
+						$recurrence_event['end'] = clone $event['recurrence'];
+						$recurrence_event['end']->add($master_event['start']->diff($master_event['end']));
 						break;
 					}
 					elseif (in_array($event['start'], $master_event['recur_exception']))
@@ -3160,7 +3292,8 @@ class calendar_boupdate extends calendar_bo
 						$type='SERIES-PSEUDO-EXCEPTION'; // new pseudo exception?
 						$recurrence_event = $master_event;
 						$recurrence_event['start'] = $event['start'];
-						$recurrence_event['end'] -= $master_event['start'] - $event['start'];
+						$recurrence_event['end'] = clone $event['start'];
+						$recurrence_event['end']->add($master_event['start']->diff($master_event['end']));
 						break;
 					}
 					else
@@ -3171,7 +3304,8 @@ class calendar_boupdate extends calendar_bo
 						$egw_rrule->current = clone $egw_rrule->time;
 						while ($egw_rrule->valid())
 						{
-							$occurrence = Api\DateTime::to($egw_rrule->current(), 'server');
+							$occurrence = clone $egw_rrule->current();
+							$occurrence->setServer();
 							if ($this->log)
 							{
 								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__.
@@ -3184,7 +3318,8 @@ class calendar_boupdate extends calendar_bo
 								$recurrence_event = $master_event;
 								// Update the event's recurrence too
 								$recurrence_event['start'] = $event['recurrence'] = $occurrence;
-								$recurrence_event['end'] -= $master_event['start'] - $occurrence;
+								$recurrence_event['end'] = clone $occurrence;
+								$recurrence_event['end']->add($master_event['start']->diff($master_event['end']));
 								break 2;
 							}
 							if (isset($event['recurrence']) && $event['recurrence'] == $occurrence)
@@ -3263,7 +3398,47 @@ class calendar_boupdate extends calendar_bo
 		);
     }
 
-    /**
+	/**
+	 * Convert DateInterval to signed seconds.
+	 */
+	protected static function duration2seconds(DateInterval $duration) : int
+	{
+		$seconds = (($duration->days * 24 + $duration->h) * 60 + $duration->i) * 60 + $duration->s;
+		return $duration->invert ? -$seconds : $seconds;
+	}
+
+	/**
+	 * Build stable date array key in server timezone and DB format.
+	 */
+	protected static function date2dbkey($date) : string
+	{
+		$date = $date instanceof DateTime ? clone $date : new DateTime($date, DateTime::$server_timezone);
+		$date->setServer();
+		return $date->format(DateTime::DATABASE);
+	}
+
+	/**
+	 * Diff for date arrays supporting DateTime values.
+	 */
+	protected static function dateDiff(array $left, array $right) : array
+	{
+		$right_keys = array();
+		foreach($right as $value)
+		{
+			$right_keys[self::date2dbkey($value)] = true;
+		}
+		$diff = array();
+		foreach($left as $value)
+		{
+			if(!isset($right_keys[self::date2dbkey($value)]))
+			{
+				$diff[] = $value;
+			}
+		}
+		return $diff;
+	}
+
+	/**
      * Translates all timestamps for a given event from server-time to user-time.
      * The update() and save() methods expect timestamps in user-time.
      * @param &$event	the event we are working on
@@ -3271,18 +3446,29 @@ class calendar_boupdate extends calendar_bo
      */
     function server2usertime (&$event)
     {
-		// we run all dates through date2usertime, to adjust to user-time
-		foreach(array('start','end','recur_enddate','recurrence') as $ts)
+		// we run all dates through to adjust to user-time
+		foreach(array('start', 'end', 'recur_enddate', 'recurrence', 'modified') as $ts)
 		{
-			// we convert here from server-time to timestamps in user-time!
-			if (isset($event[$ts])) $event[$ts] = $event[$ts] ? $this->date2usertime($event[$ts]) : 0;
+			// we convert here from server-time to user-time!
+			if(isset($event[$ts]) && $event[$ts])
+			{
+				if(!($event[$ts] instanceof Api\DateTime))
+				{
+					$event[$ts] = new Api\DateTime($event[$ts], Api\DateTime::$server_timezone);
+				}
+				$event[$ts]->setTimezone(Api\DateTime::$user_timezone);
+			}
 		}
 		// same with the recur exceptions and rdates
 	    foreach(['recur_exception', 'recur_rdates'] as $name)
 		{
 			foreach($event[$name] ?? [] as $n => $date)
 			{
-				$event[$name][$n] = $this->date2usertime($date);
+				if(!($date instanceof Api\DateTime))
+				{
+					$date = new Api\DateTime($date, Api\DateTime::$server_timezone);
+				}
+				$event[$name][$n] = $date->setTimezone(Api\DateTime::$user_timezone);
 			}
 		}
 		// same with the alarms
@@ -3290,7 +3476,11 @@ class calendar_boupdate extends calendar_bo
 		{
 			foreach($event['alarm'] as $id => $alarm)
 			{
-				$event['alarm'][$id]['time'] = $this->date2usertime($alarm['time'] ?? null);
+				if(!($alarm['time'] instanceof Api\DateTime))
+				{
+					$alarm['time'] = new Api\DateTime($alarm['time'], Api\DateTime::$server_timezone);
+				}
+				$event['alarm'][$id]['time'] = $alarm['time']->setTimezone(Api\DateTime::$user_timezone);
 			}
 		}
     }
@@ -3306,7 +3496,9 @@ class calendar_boupdate extends calendar_bo
 	{
 		if (is_numeric($age) && $age > 0)	// just make sure bogus values dont delete everything
 		{
-			$this->so->purge(time() - 365*24*3600*(float)$age);
+			$cutoff = new DateTime('now', DateTime::$server_timezone);
+			$cutoff->modify(sprintf('-%s days', 365 * (float)$age));
+			$this->so->purge($cutoff);
 		}
 	}
 
@@ -3325,13 +3517,18 @@ class calendar_boupdate extends calendar_bo
 	{
 		// Event passed is still in user time at this point, convert to servertime for
 		// comparison, but don't modify it in event
-		if(!$old_event || !is_array($old_event) || $this->date2ts($event['start'],true) == $old_event['start'])
+		if(!$old_event || !is_array($old_event) || !$event['start'])
+		{
+			return false;
+		}
+		$event_start = (clone $event['start'])->setServer();
+		if($event_start == $old_event['start'])
 		{
 			return false;
 		}
 
 		$status_reset = false;
-		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
+		$sameday = $old_event['start']->format('Ymd') == $event['start']->format('Ymd');
 		foreach((array)$event['participants'] as $uid => $status)
 		{
 			$q = $r = null;

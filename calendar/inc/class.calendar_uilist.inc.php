@@ -325,7 +325,9 @@ class calendar_uilist extends calendar_ui
 				break;
 			case 'custom':
 				$this->first = $search_params['start'] = Api\DateTime::to($params['startdate'],'ts');
-				$this->last  = $search_params['end'] = strtotime('+1 day', $this->bo->date2ts($params['enddate']))-1;
+				$end = new Api\DateTime($params['enddate']);
+				$end->setTime(23, 59, 59);
+				$this->last  = $search_params['end'] = $end->format('ts');
 				$label = $this->bo->long_date($this->first,$this->last);
 				break;
 			case 'today':
@@ -497,10 +499,18 @@ class calendar_uilist extends calendar_ui
 				$event['app_id'] .= ':'.Api\DateTime::to($event['recur_date'] ? $event['recur_date'] : $event['start'],'ts');
 			}
 
-			// Format start and end with timezone
+			// Format start/end only if still raw values.  to_client() already emits ET2 strings.
 			foreach(array('start','end') as $time)
 			{
-				$event[$time] = Api\DateTime::to($event[$time],'Y-m-d\TH:i:s\Z');
+				if($event[$time] instanceof Api\DateTime)
+				{
+					$event[$time]->setUser();
+					$event[$time] = $event[$time]->format(Api\DateTime::ET2);
+				}
+				elseif(is_int($event[$time]))
+				{
+					$event[$time] = Api\DateTime::server2user($event[$time], Api\DateTime::ET2);
+				}
 			}
 
 			$rows[] = $event;
@@ -632,7 +642,7 @@ class calendar_uilist extends calendar_ui
 			$readonlys = null;
 			$this->get_rows($query,$checked,$readonlys,!in_array($action,array('ical','document')));	   // true = only return the id's
 			// Get rid of any extras (rows that aren't events)
-			if(in_array($action,array('ical','document')))
+			if(in_array($action, array('ical', 'document', 'delete')))
 			{
 				foreach($checked as $key => $event)
 				{
@@ -708,7 +718,7 @@ class calendar_uilist extends calendar_ui
 				$app_id = $matches[2];
 				$id = null;
 			}
-			else
+			elseif(is_string($id))
 			{
 				list($id,$recur_date) = explode(':',$id);
 			}
@@ -719,7 +729,7 @@ class calendar_uilist extends calendar_ui
 					if($settings == 'series')
 					{
 						// Delete the whole thing
-						$recur_date = 0;
+						$recur_date = null;
 					}
 					if ($id && $this->bo->delete($id, $recur_date,false,$skip_notification))
 					{
@@ -729,7 +739,7 @@ class calendar_uilist extends calendar_ui
 							// If there are multiple events in a series selected, the next one could purge
 							foreach($checked as $key => $c_id)
 							{
-								list($c_id,$recur_date) = explode(':',$c_id);
+								list($c_id, $recur_date) = explode(':', is_string($c_id) ? $c_id : $c_id['row_id']);
 								if($c_id == $id)
 								{
 									unset($checked[$key]);
@@ -908,18 +918,20 @@ class calendar_uilist extends calendar_ui
 			switch($nm['filter'])
 			{
 				case 'after':
-					$checked['start'] = $nm['startdate'] ? $nm['startdate'] : strtotime('today');
+					$checked['start'] = $nm['startdate'] ? $nm['startdate'] : Api\DateTime::to('today', 'ts');
 					break;
 				case 'before':
-					$checked['end'] = $nm['enddate'] ? $nm['enddate'] : strtotime('tomorrow');
+					$end = new Api\DateTime('today');
+					$end->modify('+1 day');
+					$checked['end'] = $nm['enddate'] ? $nm['enddate'] : $end->format('ts');
 					break;
 				case 'custom':
 					$checked['start'] = $nm['startdate'];
 					$checked['end'] = $nm['enddate'];
 					break;
 				default:
-					$date = date_create_from_format('Ymd',$this->date);
-					$checked['start']= $date->format('U');
+					$date = new Api\DateTime($this->date);
+					$checked['start']= $date->format('ts');
 			}
 		}
 		return $checked;

@@ -10,6 +10,7 @@
  */
 
 use EGroupware\Api;
+use EGroupware\Api\DateTime;
 use EGroupware\Api\Link;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Egw;
@@ -147,17 +148,17 @@ class calendar_uiforms extends calendar_ui
 
 		if(isset($_GET['start']))
 		{
-			$start = Api\DateTime::to($_GET['start'], 'ts');
+			$start = $this->parseUserInputDateTime($_GET['start']);
 		}
 		else
 		{
 			$ts = new Api\DateTime();
 			$ts->setUser();
-			$start = $this->bo->date2ts(array(
-				'full' => isset($_GET['date']) && (int) $_GET['date'] ? (int) $_GET['date'] : $this->date,
+			$start = new Api\DateTime(array(
+										  'full' => isset($_GET['date']) && (int)$_GET['date'] ? (int)$_GET['date'] : $this->date,
 				'hour' => (int) (isset($_GET['hour']) ? $_GET['hour'] : ($ts->format('H')+1)),
 				'minute' => (int) $_GET['minute'],
-			));
+									  ), Api\DateTime::$user_timezone);
 		}
 		//echo "<p>_GET[date]=$_GET[date], _GET[hour]=$_GET[hour], _GET[minute]=$_GET[minute], this->date=$this->date ==> start=$start=".date('Y-m-d H:i',$start)."</p>\n";
 
@@ -223,12 +224,13 @@ class calendar_uiforms extends calendar_ui
 		$duration = isset($_GET['duration']) ? (int)$_GET['duration'] : (int) $this->bo->cal_prefs['defaultlength']*60;
 		if(isset($_GET['end']))
 		{
-			$end = Api\DateTime::to($_GET['end'], 'ts');
-			$duration = $end - $start;
+			$end = $this->parseUserInputDateTime($_GET['end']);
+			$duration = $end->getTimestamp() - $start->getTimestamp();
 		}
 		else
 		{
-			$end = $start + $duration;
+			$end = clone $start;
+			$end->modify(($duration >= 0 ? '+' : '') . $duration . ' seconds');
 		}
 		$whole_day = ($duration + 60 == DAY_s);
 
@@ -242,7 +244,7 @@ class calendar_uiforms extends calendar_ui
 			$alarms[1] = array(
 				'default' => 1,
 				'offset'  => $offset,
-				'time'    => $start - $offset,
+				'time' => (clone $start)->modify('-' . $offset . ' seconds'),
 				'all'     => $this->cal_prefs['default-alarm-for'] === 'all',
 				'owner'   => $owner,
 				'id'      => 1,
@@ -254,7 +256,7 @@ class calendar_uiforms extends calendar_ui
 			$offset = 5 * 60;
 			$alarms[1+count($alarms)] =  array(
 				'offset' => $offset,
-				'time'   => $start - $offset,
+				'time' => (clone $start)->modify('-' . $offset . ' seconds'),
 				'all'    => true,
 				'owner'  => $owner,
 				'id'	=> 2,
@@ -316,10 +318,20 @@ class calendar_uiforms extends calendar_ui
 		if (!empty($content['recur_exception']['delete_exception']))
 		{
 			$date = key($content['recur_exception']['delete_exception']);
-			// eT2 converts time to
-			if (!is_numeric($date)) $date = Api\DateTime::to (str_replace('Z','', $date), 'ts');
+			$date_et2 = is_numeric($date) ?
+				Api\DateTime::to($date, Api\DateTime::ET2) :
+				$this->parseUserInputDateTime($date)->format(Api\DateTime::ET2);
 			unset($content['recur_exception']['delete_exception']);
-			if (($key = array_search($date,$content['recur_exception'])) !== false)
+			$key = false;
+			foreach((array)$content['recur_exception'] as $k => $exception_date)
+			{
+				if(Api\DateTime::to($exception_date, Api\DateTime::ET2) === $date_et2)
+				{
+					$key = $k;
+					break;
+				}
+			}
+			if($key !== false)
 			{
 				// propagate the exception to a single event
 				$recur_exceptions = $this->bo->so->get_related($content['uid']);
@@ -340,10 +352,21 @@ class calendar_uiforms extends calendar_ui
 		if (!empty($content['recur_rdates']['delete_rdate']))
 		{
 			$date = key($content['recur_rdates']['delete_rdate']);
-			// eT2 converts time to
-			if (!is_numeric($date)) $date = Api\DateTime::to(str_replace('Z', '', $date), 'ts');
+			$date_ts = is_numeric($date) ? (int)$date : (int)$this->parseUserInputDateTime($date)->format('ts');
+			$date_et2 = is_numeric($date) ?
+				Api\DateTime::to($date, Api\DateTime::ET2) :
+				$this->parseUserInputDateTime($date)->format(Api\DateTime::ET2);
 			unset($content['recur_rdates']['delete_rdate']);
-			if (($key = array_search($date, $content['recur_rdates'])) !== false)
+			$key = false;
+			foreach((array)$content['recur_rdates'] as $k => $rdate)
+			{
+				if(Api\DateTime::to($rdate, Api\DateTime::ET2) === $date_et2)
+				{
+					$key = $k;
+					break;
+				}
+			}
+			if($key !== false)
 			{
 				// if this is an initial edit, simply remove the rdate
 				if (empty($content['id']))
@@ -352,9 +375,12 @@ class calendar_uiforms extends calendar_ui
 					$content['recur_rdates'] = array_values($content['recur_rdates']);
 				}
 				// otherwise add the recurrence as (deleted) exception
-				elseif (!in_array($date, $content['recur_exception']))
+				elseif(!array_filter((array)$content['recur_exception'], static function ($exception_date) use ($date_et2)
 				{
-					$content['recur_exception'][] = $date;
+					return Api\DateTime::to($exception_date, Api\DateTime::ET2) === $date_et2;
+				}))
+				{
+					$content['recur_exception'][] = new DateTime($date_ts, DateTime::$user_timezone);
 				}
 			}
 		}
@@ -381,14 +407,16 @@ class calendar_uiforms extends calendar_ui
 				unset($content['alarm'][$id]);
 			}
 		}
-		if($content['end'] && $content['start'] >= $content['end'])
+		if($content['end'] && Api\DateTime::to($content['start'], 'ts') >= Api\DateTime::to($content['end'], 'ts'))
 		{
 			unset($content['end']);
 			$content['duration'] = $this->bo->cal_prefs['defaultlength']*60;
 		}
 		if ($content['duration'])
 		{
-			$content['end'] = $content['start'] + $content['duration'];
+			$content['end'] = $content['start'] instanceof Api\DateTime ?
+				clone $content['start'] : new Api\DateTime($content['start'], Api\DateTime::$server_timezone);
+			$content['end']->modify(($content['duration'] >= 0 ? '+' : '') . $content['duration'] . ' seconds');
 		}
 		// fix default alarm for a new (whole day) event, to be according to default-alarm(-wholeday) pref
 		if ($content['alarm'][1]['default'])
@@ -401,9 +429,9 @@ class calendar_uiforms extends calendar_ui
 			else
 			{
 				$content['alarm'][1]['offset'] = $offset = 60 * $def_alarm;
-				$content['start'] = $this->bo->date2array($content['start']);
-				$content['start'][1]['time'] = $this->bo->date2ts($content['start']) - $offset;
-				$content['start'] = $this->bo->date2ts($content['start']);
+				$alarm_start = $content['start'] instanceof Api\DateTime ?
+					clone $content['start'] : new Api\DateTime($content['start'], Api\DateTime::$server_timezone);
+				$content['alarm'][1]['time'] = $alarm_start->modify('-' . $offset . ' seconds');
 			}
 		}
 		else if ($content['cal_id'] && count($content['alarm']) > 0 && current($content['alarm'])['default'] &&
@@ -418,8 +446,10 @@ class calendar_uiforms extends calendar_ui
 			$offset = 60 * $def_alarm;
 			array_unshift($content['alarm'], array(
 				'default' => 1,
-				'offset' => $offset ,
-				'time'   => $content['start'] - $offset,
+				'offset' => $offset,
+				'time'   => ($content['start'] instanceof Api\DateTime ?
+					clone $content['start'] : new Api\DateTime($content['start'], Api\DateTime::$server_timezone))
+					->modify('-' . $offset . ' seconds'),
 				'all'    => false,
 				'owner'  => 0,
 				'id'	=> 1
@@ -438,20 +468,18 @@ class calendar_uiforms extends calendar_ui
 		else
 		{
 			// convert content => event
+			$event['start'] = $event['start'] instanceof Api\DateTime ? $event['start'] : new Api\DateTime($event['start']);
+			$event['end'] = $event['end'] instanceof Api\DateTime ? $event['end'] : new Api\DateTime($event['end']);
 			if ($content['whole_day'])
 			{
-				$event['start'] = $this->bo->date2array($event['start']);
-				$event['start']['hour'] = $event['start']['minute'] = 0; unset($event['start']['raw']);
-				$event['start'] = $this->bo->date2ts($event['start']);
-				$event['end'] = $this->bo->date2array($event['end']);
-				$event['end']['hour'] = 23; $event['end']['minute'] = $event['end']['second'] = 59; unset($event['end']['raw']);
-				$event['end'] = $this->bo->date2ts($event['end']);
+				$event['start']->setTime(0, 0, 0);
+				$event['end']->setTime(23, 59, 59);
 			}
 			// some checks for recurrences, if you give a date, make it a weekly repeating event and visa versa
 			if ($event['recur_type'] == MCAL_RECUR_NONE && $event['recur_data']) $event['recur_type'] = MCAL_RECUR_WEEKLY;
 			if ($event['recur_type'] == MCAL_RECUR_WEEKLY && !$event['recur_data'])
 			{
-				$event['recur_data'] = 1 << (int)date('w',$event['start']);
+				$event['recur_data'] = 1 << (int)Api\DateTime::to($event['start'], 'w');
 			}
 			if ($event['recur_type'] != MCAL_RECUR_NONE && !isset($event['recur_enddate']))
 			{
@@ -694,11 +722,15 @@ class calendar_uiforms extends calendar_ui
 			break;
 
 		case 'add_rdate':
-			if (!empty($event['recur_rdate']) && array_search($event['recur_rdate'], (array)$event['recur_rdates']) === false)
+			$recur_rdate_exists = array_filter((array)$event['recur_rdates'], static function ($rdate) use ($event)
+			{
+				return Api\DateTime::to($rdate, Api\DateTime::ET2) === Api\DateTime::to($event['recur_rdate'], Api\DateTime::ET2);
+			});
+			if(!empty($event['recur_rdate']) && !$recur_rdate_exists)
 			{
 				$event['recur_rdates'][] = $event['recur_rdate'];
 				usort($event['recur_rdates'], static function($a, $b) {
-					return $a <=> $b;
+					return (int)Api\DateTime::to($a, 'server') <=> (int)Api\DateTime::to($b, 'server');
 				});
 				$msg = lang('Added recurrence on %1.', Api\DateTime::to($event['recur_rdate']));
 			}
@@ -781,25 +813,29 @@ class calendar_uiforms extends calendar_ui
 		case 'print':
 		case 'apply':
 		case 'infolog':
+			$event_start_ts = (int)Api\DateTime::to($event['start'], 'ts');
+			$event_end_ts = (int)Api\DateTime::to($event['end'], 'ts');
+			$event_recur_end_ts = !empty($event['recur_enddate']) ? (int)Api\DateTime::to($event['recur_enddate'], 'ts') : 0;
 			if ($event['id'] && !$this->bo->check_perms(Acl::EDIT,$event))
 			{
 				$msg = lang('Permission denied');
 				$button = '';
 				break;
 			}
-			if ($event['start'] > $event['end'])
+			if($event_start_ts > $event_end_ts)
 			{
 				$msg = lang('Error: Starttime has to be before the endtime !!!');
 				$button = '';
 				break;
 			}
-			if ($event['recur_type'] != MCAL_RECUR_NONE && $event['recur_enddate'] && $event['start'] > $event['recur_enddate'])
+			if($event['recur_type'] != MCAL_RECUR_NONE && $event_recur_end_ts && $event_start_ts > $event_recur_end_ts)
 			{
 				$msg = lang('repetition').': '.lang('Error: Starttime has to be before the endtime !!!');
 				$button = '';
 				break;
 			}
-			if ($event['recur_type'] != MCAL_RECUR_NONE && $event['end']-$event['start'] > calendar_rrule::recurrence_interval($event['recur_type'], $event['recur_interval']))
+			$event_duration = $event_end_ts - $event_start_ts;
+			if($event['recur_type'] != MCAL_RECUR_NONE && $event_duration > calendar_rrule::recurrence_interval($event['recur_type'], $event['recur_interval']))
 			{
 				$msg = lang('Error: Duration of event longer then recurrence interval!');
 				$button = '';
@@ -832,20 +868,21 @@ class calendar_uiforms extends calendar_ui
 				$conflicts = $this->bo->update($event,$ignore_conflicts,true,false,true,$messages,$content['no_notifications']??null);
 				if (!is_array($conflicts) && $conflicts)
 				{
+					$edit_single_ts = (int)Api\DateTime::to($content['edit_single'], 'ts');
 					// now we need to add the original start as recur-execption to the series
 					$recur_event = $this->bo->read($event['reference']);
-					$recur_event['recur_exception'][] = $content['edit_single'];
+					$recur_event['recur_exception'][] = $edit_single_ts;
 					// check if we need to move the alarms, because they are next on that exception
 					foreach($recur_event['alarm'] as $id => $alarm)
 					{
-						if ($alarm['time'] == $content['edit_single'] - $alarm['offset'])
+						if((int)Api\DateTime::to($alarm['time'], 'ts') == $edit_single_ts - $alarm['offset'])
 						{
 							$rrule = calendar_rrule::event2rrule($recur_event, true);
 							foreach ($rrule as $time)
 							{
-								if ($content['edit_single'] < $time->format('ts'))
+								if($edit_single_ts < $time->format('ts'))
 								{
-									$alarm['time'] = $time->format('ts') - $alarm['offset'];
+									$alarm['time'] = (clone $time)->modify(sprintf('%+d seconds', -$alarm['offset']));
 									$this->bo->save_alarm($event['reference'], $alarm);
 									break;
 								}
@@ -886,23 +923,27 @@ class calendar_uiforms extends calendar_ui
 			{
 				if (($old_event = $this->bo->read($event['id'])))
 				{
+					$event_start_ts = (int)Api\DateTime::to($event['start'], 'ts');
+					$event_end_ts = (int)Api\DateTime::to($event['end'], 'ts');
+					$old_event_start_ts = (int)Api\DateTime::to($old_event['start'], 'ts');
+					$old_event_end_ts = (int)Api\DateTime::to($old_event['end'], 'ts');
 					if ($event['recur_type'] != MCAL_RECUR_NONE)
 					{
 						$update_type = 'edit';
 
 						// we edit a existing series event
-						if ($event['start'] != $old_event['start'] ||
+						if($event_start_ts != $old_event_start_ts ||
 							$event['whole_day'] != $old_event['whole_day'] ||
-							$event['end'] != $old_event['end'])
+							$event_end_ts != $old_event_end_ts)
 						{
 							// calculate offset against old series start or clicked recurrance,
 							// depending on which is smaller
-							$offset = $event['start'] - $old_event['start'];
-							if (abs($offset) > abs($off2 = $event['start'] - $event['actual_date']))
+							$offset = $event_start_ts - $old_event_start_ts;
+							if(abs($offset) > abs($off2 = $event_start_ts - (int)Api\DateTime::to($event['actual_date'], 'ts')))
 							{
 								$offset = $off2;
 							}
-							$msg = $this->_break_recurring($event, $old_event, $event['actual_date'] + $offset,$content['no_notifications']);
+							$msg = $this->_break_recurring($event, $old_event, (int)Api\DateTime::to($event['actual_date'], 'ts') + $offset, $content['no_notifications']);
 							if($msg)
 							{
 								$noerror = false;
@@ -911,8 +952,8 @@ class calendar_uiforms extends calendar_ui
 					}
 					else
 					{
-						if ($old_event['start'] != $event['start'] ||
-							$old_event['end'] != $event['end'] ||
+						if($old_event_start_ts != $event_start_ts ||
+							$old_event_end_ts != $event_end_ts ||
 							$event['whole_day'] != $old_event['whole_day'])
 						{
 							// check if we need to move the alarms, because they are relative
@@ -922,7 +963,8 @@ class calendar_uiforms extends calendar_ui
 				}
 				// Update alarm (default alarm or set alarm before change start date)
 				// for new event.
-				elseif (is_array($event['alarm']) && ($event['alarm'][1]['time'] + $event['alarm'][1]['offset'] != $event['start']))
+				elseif(is_array($event['alarm']) &&
+					((int)Api\DateTime::to($event['alarm'][1]['time'], 'ts') + $event['alarm'][1]['offset'] != (int)Api\DateTime::to($event['start'], 'ts')))
 				{
 					$this->bo->check_move_alarms($event);
 				}
@@ -955,7 +997,7 @@ class calendar_uiforms extends calendar_ui
 
 			// Event spans multiple days, need an edit to make sure they all get updated
 			// We could check old date, as removing from days could still be an update
-			if(date('Ymd', $event['start']) != date('Ymd', $event['end']))
+			if(Api\DateTime::to($event['start'], 'Ymd') != Api\DateTime::to($event['end'], 'Ymd'))
 			{
 				$update_type = 'edit';
 			}
@@ -982,20 +1024,23 @@ class calendar_uiforms extends calendar_ui
 					$update_type = 'edit';
 					foreach ((array)$old_event['alarms'] as $alarm)
 					{
+						$alarm_time_ts = (int)Api\DateTime::to($alarm['time'], 'ts');
 						// check if alarms still needed in old event, if not delete it
-						$event_time = $alarm['time'] + $alarm['offset'];
+						$event_time = $alarm_time_ts + $alarm['offset'];
 						if ($event_time >= $this->bo->now_su)
 						{
 							$this->bo->delete_alarm($alarm['id']);
 						}
-						$alarm['time'] += $offset;
+						$shifted_alarm_time_ts = $alarm_time_ts + $offset;
 						unset($alarm['id']);
 						// if alarm would be in the past (eg. event moved back) --> move to next possible recurrence
-						if ($alarm['time'] < $this->bo->now_su)
+						if($shifted_alarm_time_ts < $this->bo->now_su)
 						{
 							if (($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su+$alarm['offset'], true)))
 							{
-								$alarm['time'] =  $next_occurrence['start'] - $alarm['offset'];
+								$alarm['time'] = $next_occurrence['start'] instanceof Api\DateTime ?
+									clone $next_occurrence['start'] : new Api\DateTime($next_occurrence['start'], Api\DateTime::$server_timezone);
+								$alarm['time']->modify(sprintf('%+d seconds', -$alarm['offset']));
 							}
 							else
 							{
@@ -1003,9 +1048,15 @@ class calendar_uiforms extends calendar_ui
 							}
 						}
 						// alarm is currently on a previous recurrence --> set for first recurrence of new series
-						elseif ($event_time < $event['start'])
+						elseif($event_time < (int)Api\DateTime::to($event['start'], 'ts'))
 						{
-							$alarm['time'] =  $event['start'] - $alarm['offset'];
+							$alarm['time'] = $event['start'] instanceof Api\DateTime ?
+								clone $event['start'] : new Api\DateTime($event['start'], Api\DateTime::$server_timezone);
+							$alarm['time']->modify(sprintf('%+d seconds', -$alarm['offset']));
+						}
+						else
+						{
+							$alarm['time'] = new Api\DateTime($shifted_alarm_time_ts, Api\DateTime::$server_timezone);
 						}
 						if ($alarm)
 						{
@@ -1022,9 +1073,11 @@ class calendar_uiforms extends calendar_ui
 					));
 					foreach ((array)$events as $exception)
 					{
-						if ($exception['recurrence'] > $this->bo->now_su)
+						if((int)Api\DateTime::to($exception['recurrence'], 'ts') > $this->bo->now_su)
 						{
-							$exception['recurrence'] += $offset;
+							$exception['recurrence'] = $exception['recurrence'] instanceof Api\DateTime ?
+								clone $exception['recurrence'] : new Api\DateTime($exception['recurrence'], Api\DateTime::$user_timezone);
+							$exception['recurrence']->modify(sprintf('%+d seconds', $offset));
 							$exception['reference'] = $event['id'];
 							$exception['uid'] = $event['uid'];
 							$msg = null;
@@ -1099,14 +1152,21 @@ class calendar_uiforms extends calendar_ui
 			break;
 
 		case 'add_alarm':
-			$time = $content['start'];
-			$offset = $time - $content['new_alarm']['date'];
+			$time = (int)Api\DateTime::to($content['start'], 'ts');
+			$new_alarm_time = $content['new_alarm']['date'] instanceof Api\DateTime ?
+				clone $content['new_alarm']['date'] : $this->parseUserInputDateTime($content['new_alarm']['date']);
+			$new_alarm_time_ts = (int)$new_alarm_time->format('ts');
+			$offset = $time - $new_alarm_time_ts;
 			if ($event['recur_type'] != MCAL_RECUR_NONE &&
 				($next_occurrence = $this->bo->read($event['id'], $this->bo->now_su + $offset, true)) &&
-				$time < $next_occurrence['start'])
+				$time < (int)Api\DateTime::to($next_occurrence['start'], 'ts'))
 			{
-				$content['new_alarm']['date'] = $next_occurrence['start'] - $offset;
+				$new_alarm_time = $next_occurrence['start'] instanceof Api\DateTime ?
+					clone $next_occurrence['start'] : new Api\DateTime($next_occurrence['start'], Api\DateTime::$server_timezone);
+				$new_alarm_time->modify(sprintf('%+d seconds', -$offset));
+				$new_alarm_time_ts = (int)$new_alarm_time->format('ts');
 			}
+			$content['new_alarm']['date'] = $new_alarm_time;
 			// Avoid duplicates
 			foreach($content['alarm'] as $key => $alarm)
 			{
@@ -1122,11 +1182,11 @@ class calendar_uiforms extends calendar_ui
 			{
 				$alarm = array(
 					'offset' => $offset,
-					'time'   => $content['new_alarm']['date'],
+					'time' => $new_alarm_time,
 					'all'    => !$content['new_alarm']['owner'],
 					'owner'  => $content['new_alarm']['owner'] ? $content['new_alarm']['owner'] : $this->user,
 				);
-				if ($alarm['time'] < $this->bo->now_su)
+				if($new_alarm_time_ts < $this->bo->now_su)
 				{
 					$msg = lang("Can't add alarms in the past !!!");
 				}
@@ -1213,10 +1273,22 @@ class calendar_uiforms extends calendar_ui
 		// In some cases where the user makes the first day an exception, actual_date may be missing
 		$preserv['actual_date'] = $preserv['actual_date'] ? $preserv['actual_date'] : $event['start'];
 
-		$event['end'] += $preserv['actual_date'] - $event['start'];
+		$start = $event['start'] instanceof Api\DateTime ?
+			clone $event['start'] : new Api\DateTime($event['start'], Api\DateTime::$server_timezone);
+		$end = $event['end'] instanceof Api\DateTime ?
+			clone $event['end'] : new Api\DateTime($event['end'], Api\DateTime::$server_timezone);
+		$actual = $preserv['actual_date'] instanceof Api\DateTime ?
+			clone $preserv['actual_date'] : new Api\DateTime($preserv['actual_date'], Api\DateTime::$server_timezone);
+
+		$duration = $end->getTimestamp() - $start->getTimestamp();
+		$new_end = clone $actual;
+		$new_end->modify(($duration >= 0 ? '+' : '') . $duration . ' seconds');
+		$event['end'] = $new_end;
+
 		$event['reference'] = $preserv['reference'] = $event['id'];
-		$event['recurrence'] = $preserv['recurrence'] = $preserv['actual_date'];
-		$event['start'] = $preserv['edit_single'] = $preserv['actual_date'];
+		$event['recurrence'] = $preserv['recurrence'] = clone $actual;
+		$event['start'] = clone $actual;
+		$preserv['edit_single'] = $actual->format('ts');
 		$event['recur_type'] = MCAL_RECUR_NONE;
 		foreach(array('recur_enddate','recur_interval','recur_exception','recur_data', 'recur_rdates') as $name)
 		{
@@ -1278,11 +1350,14 @@ class calendar_uiforms extends calendar_ui
 	function _break_recurring(&$event, $old_event, $as_of_date = null, $no_notifications = true)
 	{
 		$msg = false;
+		$now_ts = Api\DateTime::to('now', 'ts');
 
 		if(!$as_of_date )
 		{
-			$as_of_date = time();
+			$as_of_date = $now_ts;
 		}
+		$as_of_date = $as_of_date instanceof Api\DateTime ?
+			clone $as_of_date : new Api\DateTime($as_of_date, Api\DateTime::$server_timezone);
 
 		//error_log(__METHOD__ . Api\DateTime::to($old_event['start']) . ' -> '. Api\DateTime::to($event['start']) . ' as of ' . Api\DateTime::to($as_of_date));
 
@@ -1295,15 +1370,19 @@ class calendar_uiforms extends calendar_ui
 		// Hold on to this in case something goes wrong
 		$orig_event = $event;
 
-		$offset = $event['start'] - $old_event['start'];
-		$duration = $event['duration'] ? $event['duration'] : $event['end'] - $event['start'];
+		$event_start_ts = (int)Api\DateTime::to($event['start'], 'ts');
+		$event_end_ts = (int)Api\DateTime::to($event['end'], 'ts');
+		$old_event_start_ts = (int)Api\DateTime::to($old_event['start'], 'ts');
+		$old_event_end_ts = (int)Api\DateTime::to($old_event['end'], 'ts');
+		$offset = $event_start_ts - $old_event_start_ts;
+		$duration = $event['duration'] ? $event['duration'] : $event_end_ts - $event_start_ts;
 
 		// base start-date of new series on actual / clicked date
-		$event['start'] = $as_of_date ;
+		$event['start'] = clone $as_of_date;
 
 		if (Api\DateTime::to($old_event['start'],'Ymd') < Api\DateTime::to($as_of_date,'Ymd') ||
 			// Adjust for requested date in the past
-			Api\DateTime::to($as_of_date,'ts') < time()
+			Api\DateTime::to($as_of_date, 'ts') < $now_ts
 		)
 		{
 			// copy event by unsetting the id(s)
@@ -1322,37 +1401,44 @@ class calendar_uiforms extends calendar_ui
 				$occurrence = $rriter->current();
 			}
 			while ($rriter->valid()  && (
-				Api\DateTime::to($occurrence, 'ts') <= time() ||
+				Api\DateTime::to($occurrence, 'ts') <= $now_ts ||
 				Api\DateTime::to($occurrence, 'Ymd') < Api\DateTime::to($as_of_date,'Ymd')
 			) && ($last = $occurrence));
 
 
 			// Make sure as_of_date is still valid, may have to move forward
-			if(Api\DateTime::to($as_of_date,'ts') < Api\DateTime::to($last,'ts') ||
+			if(Api\DateTime::to($as_of_date, 'ts') < Api\DateTime::to($last, 'ts') ||
 				Api\DateTime::to($as_of_date, 'Ymd') == Api\DateTime::to($last, 'Ymd'))
 			{
-				$event['start'] = Api\DateTime::to($rriter->current(),'ts') + $offset;
+				$event['start'] = clone $rriter->current();
+				$event['start']->modify(($offset >= 0 ? '+' : '') . $offset . ' seconds');
 			}
 
 			//error_log(__METHOD__ ." Series should end at " . Api\DateTime::to($last) . " New series starts at " . Api\DateTime::to($event['start']));
-			if ($duration)
+			if($duration)
 			{
-				$event['end'] = $event['start'] + $duration;
+				$event['end'] = clone $event['start'];
+				$event['end']->modify(($duration >= 0 ? '+' : '') . $duration . ' seconds');
 			}
-			elseif($event['end'] < $event['start'])
+			elseif($event_end_ts < $event_start_ts)
 			{
-				$event['end'] = $old_event['end'] - $old_event['start'] + $event['start'];
+				$event['end'] = clone $event['start'];
+				$event['end']->modify(($old_event_end_ts - $old_event_start_ts >= 0 ? '+' : '') .
+									  ($old_event_end_ts - $old_event_start_ts) . ' seconds'
+				);
 			}
 			//error_log(__LINE__.": event[start]=$event[start]=".Api\DateTime::to($event['start']).", duration={$duration}, event[end]=$event[end]=".Api\DateTime::to($event['end']).", offset=$offset\n");
 
 			$event['participants'] = $old_event['participants'];
 			foreach ($old_event['recur_exception'] as $key => $exdate)
 			{
-				if ($exdate > Api\DateTime::to($last,'ts'))
+				if((int)Api\DateTime::to($exdate, 'ts') > (int)Api\DateTime::to($last, 'ts'))
 				{
 					//error_log("Moved exception on " . Api\DateTime::to($exdate));
 					unset($old_event['recur_exception'][$key]);
-					$event['recur_exception'][$key] += $offset;
+					$event['recur_exception'][$key] = $event['recur_exception'][$key] instanceof Api\DateTime ?
+						clone $event['recur_exception'][$key] : new Api\DateTime($event['recur_exception'][$key], Api\DateTime::$user_timezone);
+					$event['recur_exception'][$key]->modify(sprintf('%+d seconds', $offset));
 				}
 				else
 				{
@@ -1361,7 +1447,7 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 			$last->setTime(0, 0, 0);
-			$old_event['recur_enddate'] = Api\DateTime::to($last, 'ts');
+			$old_event['recur_enddate'] = clone $last;
 			$dummy = null;
 			if (!$this->bo->update($old_event,true,true,false,true,$dummy, $no_notifications))
 			{
@@ -1374,7 +1460,6 @@ class calendar_uiforms extends calendar_ui
 				$event = $orig_event;
 			}
 		}
-		$event['start'] = Api\DateTime::to($event['start'],'ts');
 		return $msg;
 	}
 
@@ -1605,8 +1690,9 @@ class calendar_uiforms extends calendar_ui
 						$msg = lang('%1 events in iCal file, only first one imported and displayed!', count($events));
 						$msg_type = 'notice';	// no not hide automatic
 					}
-					// as icaltoegw returns timestamps in server-time, we have to convert them here to user-time
-					$this->bo->db2data($events, 'ts');
+					// as icaltoegw returns timestamps in server-time, convert to DateTime and then to user-time
+					$this->bo->db2data($events);
+					$this->bo->data2user($events);
 
 					$event = array_shift($events);
 					if (($existing_event = $this->bo->read($event['uid'])))
@@ -1650,11 +1736,11 @@ class calendar_uiforms extends calendar_ui
 				{
 					if (empty($event['whole_day']))
 					{
-						$date = $_GET['date'];
+						$date = $this->parseUserInputDateTime($_GET['date']);
 					}
 					else
 					{
-						$date = $this->bo->so->startOfDay(new Api\DateTime($_GET['date'], Api\DateTime::$user_timezone));
+						$date = $this->bo->so->startOfDay($this->parseUserInputDateTime($_GET['date']));
 						$date->setUser();
 					}
 					$event = $this->bo->read($cal_id, $date, true);
@@ -1670,12 +1756,18 @@ class calendar_uiforms extends calendar_ui
 				}
 			}
 			// set new start and end if given by $_GET
-			if(isset($_GET['start'])) { $event['start'] = Api\DateTime::to($_GET['start'],'ts'); }
-			if(isset($_GET['end'])) { $event['end'] = Api\DateTime::to($_GET['end'],'ts'); }
+			if(isset($_GET['start']))
+			{
+				$event['start'] = $this->parseUserInputDateTime($_GET['start']);
+			}
+			if(isset($_GET['end']))
+			{
+				$event['end'] = $this->parseUserInputDateTime($_GET['end']);
+			}
 			if(isset($_GET['non_blocking'])) { $event['non_blocking'] = (bool)$_GET['non_blocking']; }
 			// check if the event is the whole day
-			$start = $this->bo->date2array($event['start']);
-			$end = $this->bo->date2array($event['end']);
+			$start = Api\DateTime::to($event['start'], 'array');
+			$end = Api\DateTime::to($event['end'], 'array');
 			$event['whole_day'] = !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
 
 			$link_to_id = $event['id'];
@@ -1713,6 +1805,28 @@ class calendar_uiforms extends calendar_ui
 		if (!isset($event['videoconference']) && !empty($event['##videoconference']))
 		{
 			$event['videoconference'] = !empty($event['##videoconference']);
+		}
+		// Normalize recurrence lists for template rendering / JSON transport
+		foreach(['recur_exception', 'recur_rdates'] as $name)
+		{
+			if (!is_array($event[$name] ?? null))
+			{
+				continue;
+			}
+			foreach ($event[$name] as $k => $date)
+			{
+				if ($date instanceof Api\DateTime)
+				{
+					continue;
+				}
+				$time = new Api\DateTime($date, Api\DateTime::$server_timezone);
+				if (!empty($event['whole_day']))
+				{
+					$time = $this->bo->so->startOfDay($time, $event['tzid']);
+				}
+				$time->setUser();
+				$event[$name][$k] = $time;
+			}
 		}
 
 		$etpl = new Etemplate();
@@ -1766,7 +1880,7 @@ class calendar_uiforms extends calendar_ui
 			'query_delete_exceptions' => (int)($event['recur_type'] && $event['recur_exception']),
 		));
 		Framework::message($msg, $msg_type);
-		$content['duration'] = $content['end'] - $content['start'];
+		$content['duration'] = (int)Api\DateTime::to($content['end'], 'ts') - (int)Api\DateTime::to($content['start'], 'ts');
 		if (isset($this->durations[$content['duration']])) $content['end'] = '';
 
 		$readonlys = $content['participants'] = $preserv['participants'] = array();
@@ -1803,7 +1917,8 @@ class calendar_uiforms extends calendar_ui
 				}
 				$alarm['all'] = (int) $alarm['all'];
 				// fix alarm time in case of alread run alarms, where the time will be their keep_time / when they will be cleaned up otherwise
-				$alarm['time'] = $event['start'] - $alarm['offset'];
+				$alarm['time'] = DateTimeImmutable::createFromMutable($event['start'])
+				                                  ->modify('-' . $alarm['offset'] . ' seconds');
 				$after = false;
 				if($alarm['offset'] < 0)
 				{
@@ -1895,7 +2010,8 @@ class calendar_uiforms extends calendar_ui
 		{
 			$readonlys['action'] = true;
 		}
-		if (!($readonlys['button[exception]'] = !$this->bo->check_perms(Acl::EDIT,$event) || $event['recur_type'] == MCAL_RECUR_NONE || ($event['recur_enddate'] &&$event['start'] > $event['recur_enddate'])))
+		if(!($readonlys['button[exception]'] = !$this->bo->check_perms(Acl::EDIT, $event) || $event['recur_type'] == MCAL_RECUR_NONE ||
+			($event['recur_enddate'] && (int)Api\DateTime::to($event['start'], 'ts') > (int)Api\DateTime::to($event['recur_enddate'], 'ts'))))
 		{
 			$content['exception_label'] = lang('Add %1', $this->bo->long_date(max($preserved['actual_date'], $event['start'])));
 		}
@@ -2419,7 +2535,8 @@ class calendar_uiforms extends calendar_ui
 					if ($event['recurrence'] && !$event['old']['reference'] && ($recur_event = $this->bo->read($event['id'])))
 					{
 						// first we need to add the exception to the recurrence master
-						$recur_event['recur_exception'][] = $event['recurrence'];
+						$recur_event['recur_exception'][] = $event['recurrence'] instanceof DateTime ?
+							clone $event['recurrence'] : new DateTime($event['recurrence'], DateTime::$user_timezone);
 						// check if we need to move the alarms, because they are next on that exception
 						$this->bo->check_move_alarms($recur_event, null, $event['recurrence'], !empty($event['extern_organizer']));
 						unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
@@ -2577,6 +2694,30 @@ class calendar_uiforms extends calendar_ui
 		// only compare certain fields, taking account unset, null or '' values
 		$event = array_intersect_key(array_diff($_event, [null, ''])+array('recur_exception'=>array()), array_flip($keys_to_check));
 		$old = array_intersect_key(array_diff($_old, [null, '']), array_flip($keys_to_check));
+		foreach(['start', 'end'] as $name)
+		{
+			if(isset($event[$name]) && !($event[$name] instanceof Api\DateTime))
+			{
+				$event[$name] = new Api\DateTime($event[$name]);
+			}
+			if(isset($old[$name]) && !($old[$name] instanceof Api\DateTime))
+			{
+				$old[$name] = new Api\DateTime($old[$name]);
+			}
+		}
+		$event_cmp = $event;
+		$old_cmp = $old;
+		foreach(['start', 'end'] as $name)
+		{
+			if(isset($event_cmp[$name]))
+			{
+				$event_cmp[$name] = $event_cmp[$name]->getTimestamp();
+			}
+			if(isset($old_cmp[$name]))
+			{
+				$old_cmp[$name] = $old_cmp[$name]->getTimestamp();
+			}
+		}
 
 		// keep the status of existing participants (users)
 		foreach($old['participants'] as $uid => $status)
@@ -2587,7 +2728,14 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
-		$changes = array_diff_assoc($event, $old);
+		$changes = array_diff_assoc($event_cmp, $old_cmp);
+		foreach(['start', 'end'] as $name)
+		{
+			if(isset($changes[$name]) && isset($event[$name]) && $event[$name] instanceof Api\DateTime)
+			{
+				$changes[$name] = clone $event[$name];
+			}
+		}
 
 		if (!($changes['recure'] = array_values(array_filter(array_keys($changes), static function($name)
 		{
@@ -2598,15 +2746,18 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		// if start changed, make old start-time available to template
-		if (isset($changes['start']) && $_event['start'] != $changes['start'])
+		if(isset($changes['start']))
 		{
-			$_event['old_start'] = $changes['start'];
+			$_event['old_start'] = isset($old['start']) ? clone $old['start'] : null;
 		}
 		// if we have an explicit exception, always report that as a change from the regular recurrence
-		elseif (!empty($_event['recurrence']) && empty($_event['recur_type']) && $_event['recurrence'] != $_event['start'])
+		elseif(!empty($_event['recurrence']) && empty($_event['recur_type']) &&
+			(int)Api\DateTime::to($_event['recurrence'], 'ts') != (int)Api\DateTime::to($_event['start'], 'ts'))
 		{
-			$_event['old_start'] = $changes['start'] = $_event['recurrence'];
-			$changes['end'] = $_event['recurrence'] + $_event['end']-$_event['start'];
+			$changes['start'] = $_event['old_start'] = $_event['recurrence'] instanceof Api\DateTime ?
+				clone $_event['recurrence'] : new Api\DateTime($_event['recurrence'], Api\DateTime::$server_timezone);
+			$changes['end'] = clone $changes['start'];
+			$changes['end']->modify(((int)Api\DateTime::to($_event['end'], 'ts') - (int)Api\DateTime::to($_event['start'], 'ts')) . ' seconds');
 		}
 
 		return $changes;
@@ -2699,32 +2850,29 @@ class calendar_uiforms extends calendar_ui
 		$response = Api\Json\Response::get();
 		//$response->addAlert(__METHOD__.'('.array2string($edit_content).')');
 
-		// convert start/end date-time values to timestamps
 		foreach(array('start', 'end') as $name)
 		{
-			if (!empty($edit_content[$name]))
+			if(!empty($edit_content[$name]) && !($edit_content[$name] instanceof Api\DateTime))
 			{
-				$date = new Api\DateTime($edit_content[$name]);
-				$edit_content[$name] = $date->format('ts');
+				$edit_content[$name] = new Api\DateTime($edit_content[$name]);
 			}
 		}
 
 		if ($edit_content['duration'])
 		{
-			$edit_content['end'] = $edit_content['start'] + $edit_content['duration'];
+			$edit_content['end'] = clone $edit_content['start'];
+			$edit_content['end']->modify(($edit_content['duration'] >= 0 ? '+' : '') . $edit_content['duration'] . ' seconds');
 		}
 		if ($edit_content['whole_day'])
 		{
-			$arr = $this->bo->date2array($edit_content['start']);
-			$arr['hour'] = $arr['minute'] = $arr['second'] = 0; unset($arr['raw']);
-			$edit_content['start'] = $this->bo->date2ts($arr);
-			$earr = $this->bo->date2array($edit_content['end']);
-			$earr['hour'] = 23; $earr['minute'] = $earr['second'] = 59; unset($earr['raw']);
-			$edit_content['end'] = $this->bo->date2ts($earr);
+			$edit_content['start']->setTime(0, 0, 0);
+			$edit_content['end']->setTime(23, 59, 59);
 		}
+		$start_ts = (int)Api\DateTime::to($edit_content['start'], 'ts');
+		$end_ts = (int)Api\DateTime::to($edit_content['end'], 'ts');
 		$content = array(
 			'start'    => $edit_content['start'],
-			'duration' => $edit_content['end'] - $edit_content['start'],
+			'duration' => $end_ts - $start_ts,
 			'end'      => $edit_content['end'],
 			'cal_id'   => $edit_content['id'],
 			'recur_type'   => $edit_content['recur_type'],
@@ -2797,8 +2945,8 @@ class calendar_uiforms extends calendar_ui
 			//widget we need to convert them from numbers to timestamps, only for the first time when we have template without content
 			$sTime = $content['start_time'];
 			$eTime = $content['end_time'];
-			$content['start_time'] = strtotime(((strlen($content['start_time'])<2)?("0".$content['start_time']):$content['start_time']).":00");
-			$content['end_time'] = strtotime(((strlen($content['end_time'])<2)?("0".$content['end_time']):$content['end_time']).":00");
+			$content['start_time'] = Api\DateTime::to(str_pad((string)$content['start_time'], 2, '0', STR_PAD_LEFT) . ':00', 'ts');
+			$content['end_time'] = Api\DateTime::to(str_pad((string)$content['end_time'], 2, '0', STR_PAD_LEFT) . ':00', 'ts');
 
 			// pick a searchwindow fitting the duration (search for a 10 day slot in a one week window never succeeds)
 			foreach(array_keys($sel_options['search_window']) as $window)
@@ -2812,7 +2960,12 @@ class calendar_uiforms extends calendar_ui
 		}
 		else
 		{
-			if (!$content['duration']) $content['duration'] = $content['end'] - $content['start'];
+			$start_ts = (int)Api\DateTime::to($content['start'], 'ts');
+			$end_ts = (int)Api\DateTime::to($content['end'], 'ts');
+			if(!$content['duration'])
+			{
+				$content['duration'] = $end_ts - $start_ts;
+			}
 			$weekds = 0;
 			foreach ($content['weekdays'] as &$wdays)
 			{
@@ -2828,7 +2981,14 @@ class calendar_uiforms extends calendar_ui
 		{
 			$content['msg'] .= lang('Only the initial date of that recurring event is checked!');
 		}
-		$content['freetime'] = $this->freetime($content['participants'],$content['start'],$content['start']+$content['search_window'],$content['duration'],$content['cal_id']);
+		$start_ts = isset($start_ts) ? $start_ts : (int)Api\DateTime::to($content['start'], 'ts');
+		$content['freetime'] = $this->freetime(
+			$content['participants'],
+			$start_ts,
+			$start_ts + (int)$content['search_window'],
+			$content['duration'],
+			$content['cal_id']
+		);
 		$content['freetime'] = $this->split_freetime_daywise($content['freetime'],$content['duration'],(is_array($content['weekdays'])?$weekds:$content['weekdays']),$sTime,$eTime,$sel_options);
 
 		$GLOBALS['egw_info']['flags']['app_header'] = lang('calendar') . ' - ' . lang('freetime search');
@@ -2966,10 +3126,10 @@ class calendar_uiforms extends calendar_ui
 		$n = 0;
 		foreach($freetime as $ft)
 		{
-			$adaybegin = $this->bo->date2array($ft['start']);
+			$adaybegin = Api\DateTime::to($ft['start'], 'array');
 			$adaybegin['hour'] = $adaybegin['minute'] = $adaybegin['second'] = 0;
 			unset($adaybegin['raw']);
-			$daybegin = $this->bo->date2ts($adaybegin);
+			$daybegin = Api\DateTime::to($adaybegin, 'ts');
 
 			for($t = $daybegin; $t < $ft['end']; $t += DAY_s,$daybegin += DAY_s)
 			{
@@ -3064,8 +3224,8 @@ class calendar_uiforms extends calendar_ui
 		if (!is_array($content))
 		{
 			$content = array(
-				'start' => $this->bo->date2ts($_REQUEST['start'] ? $_REQUEST['start'] : $this->date),
-				'end'   => $this->bo->date2ts($_REQUEST['end'] ? $_REQUEST['end'] : $this->date),
+				'start' => $this->parseUserInputDateTime($_REQUEST['start'] ? $_REQUEST['start'] : $this->date),
+				'end'   => $this->parseUserInputDateTime($_REQUEST['end'] ? $_REQUEST['end'] : $this->date),
 				'file'  => 'event.ics',
 				'version' => '2.0',
 			);
@@ -3293,9 +3453,12 @@ class calendar_uiforms extends calendar_ui
 			if($return) return;
 		}
 		$old_event=$event=$this->bo->read($eventId);
+		$event_start_ts = (int)Api\DateTime::to($event['start'], 'ts');
+		$event_end_ts = (int)Api\DateTime::to($event['end'], 'ts');
+		$old_event_start_ts = $event_start_ts;
 		if (!$durationT)
 		{
-			$duration=$event['end']-$event['start'];
+			$duration = $event_end_ts - $event_start_ts;
 		}
 		// Drag a normal event to whole day non-blocking
 		else if ($durationT == 'whole_day')
@@ -3303,7 +3466,7 @@ class calendar_uiforms extends calendar_ui
 			$event['whole_day'] = true;
 			$event['non_blocking'] = true;
 			// Make duration whole days, less 1 second
-			$duration = round(($event['end']-$event['start'])/DAY_s) * DAY_s - 1;
+			$duration = round(($event_end_ts - $event_start_ts) / DAY_s) * DAY_s - 1;
 		}
 		else
 		{
@@ -3333,7 +3496,8 @@ class calendar_uiforms extends calendar_ui
 			{
 				// now we need to add the original start as recur-execption to the series
 				$recur_event = $this->bo->read($event['reference']);
-				$recur_event['recur_exception'][] = $d->format('ts');
+				$recur_event['recur_exception'][] = clone $d;
+
 				// check if we need to move the alarms, because they are next on that exception
 				$this->bo->check_move_alarms($recur_event, null, $d);
 				unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
@@ -3349,21 +3513,24 @@ class calendar_uiforms extends calendar_ui
 			}
 		}
 
-		$d = new Api\DateTime($targetDateTime, Api\DateTime::$user_timezone);
-		$event['start'] = $d->format('ts');
-		$event['end'] = $event['start']+$duration;
+		$d = $this->parseUserInputDateTime($targetDateTime);
+		$event['start'] = clone $d;
+		$event['end'] = clone $event['start'];
+		$event['end']->modify(($duration >= 0 ? '+' : '') . $duration . ' seconds');
 
 		if ($event['recur_type'] != MCAL_RECUR_NONE && !$date && $seriesInstance)
 		{
 			// calculate offset against clicked recurrance,
 			// depending on which is smaller
 			$offset = Api\DateTime::to($targetDateTime,'ts') - Api\DateTime::to($seriesInstance,'ts');
-			$event['start'] = $old_event['start'] + $offset;
+			$event['start'] = $old_event['start'] instanceof Api\DateTime ?
+				clone $old_event['start'] : new Api\DateTime($old_event_start_ts, Api\DateTime::$server_timezone);
+			$event['start']->modify(($offset >= 0 ? '+' : '') . $offset . ' seconds');
 			$event['duration'] = $duration;
 
 			// We have a recurring event starting in the past -
 			// stop it & create a new one.
-			$this->_break_recurring($event, $old_event, $this->bo->date2ts($targetDateTime));
+			$this->_break_recurring($event, $old_event, $d);
 
 			// Can't handle conflict.  Just ignore it.
 			$ignore_conflicts = true;
@@ -3388,7 +3555,7 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		$status_reset_to_unknown = false;
-		$sameday = (date('Ymd', $old_event['start']) == date('Ymd', $event['start']));
+		$sameday = (Api\DateTime::to($old_event['start'], 'Ymd') == Api\DateTime::to($event['start'], 'Ymd'));
 
 		$message = false;
 		$conflicts=$this->bo->update($event,$ignore_conflicts, true, false, true, $message);
@@ -3409,17 +3576,18 @@ class calendar_uiforms extends calendar_ui
 				$response->call('egw.refresh', '','calendar',$event['id'],'edit');
 			}
 		}
-		else if ($conflicts)
+		else if($conflicts)
 		{
 			$response->call(
 				'egw_openWindowCentered2',
-				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
-					&cal_id='.$event['id']
-					.'&start='.$event['start']
-					.'&end='.$event['end']
-					.'&non_interactive=true'
-					.'&cancel_needs_refresh=true',
-				'',750,410);
+				$GLOBALS['egw_info']['server']['webserver_url'] . '/index.php?menuaction=calendar.calendar_uiforms.edit
+						&cal_id=' . $event['id']
+				. '&start=' . rawurlencode(Api\DateTime::to($event['start'], Api\DateTime::ET2))
+				. '&end=' . rawurlencode(Api\DateTime::to($event['end'], Api\DateTime::ET2))
+				. '&non_interactive=true'
+				. '&cancel_needs_refresh=true',
+				'', 750, 410
+			);
 		}
 		else if ($message)
 		{
@@ -3554,7 +3722,8 @@ class calendar_uiforms extends calendar_ui
 			{
 				// now we need to add the original start as recur-execption to the series
 				$recur_event = $this->bo->read($event['reference']);
-				$recur_event['recur_exception'][] = $d->format('ts');
+				$recur_event['recur_exception'][] = clone $d;
+
 				// check if we need to move the alarms, because they are next on that exception
 				$this->bo->check_move_alarms($recur_event, null, $d);
 				unset($recur_event['start']); unset($recur_event['end']);	// no update necessary
@@ -3582,21 +3751,22 @@ class calendar_uiforms extends calendar_ui
 
 		$response = Api\Json\Response::get();
 
-		if (is_array($conflicts) && $conflicts)
+		if(is_array($conflicts) && $conflicts)
 		{
 			// Save it anyway, was done with explicit user interaction,
 			// and if we don't we lose the invite
-			$this->bo->update($event,true);	// no conflict check here
-			$this->update_client($event['id'],$d);
+			$this->bo->update($event, true);    // no conflict check here
+			$this->update_client($event['id'], $d);
 			$response->call(
 				'egw_openWindowCentered2',
-				$GLOBALS['egw_info']['server']['webserver_url'].'/index.php?menuaction=calendar.calendar_uiforms.edit
-					&cal_id='.$event['id']
-					.'&start='.$event['start']
-					.'&end='.$event['end']
-					.'&non_interactive=true'
-					.'&cancel_needs_refresh=true',
-				'',750,410);
+				$GLOBALS['egw_info']['server']['webserver_url'] . '/index.php?menuaction=calendar.calendar_uiforms.edit
+						&cal_id=' . $event['id']
+				. '&start=' . rawurlencode(Api\DateTime::to($event['start'], Api\DateTime::ET2))
+				. '&end=' . rawurlencode(Api\DateTime::to($event['end'], Api\DateTime::ET2))
+				. '&non_interactive=true'
+				. '&cancel_needs_refresh=true',
+				'', 750, 410
+			);
 		}
 		else if ($message)
 		{
@@ -3889,5 +4059,37 @@ class calendar_uiforms extends calendar_ui
 		$tmpl->exec('calendar.calendar_uiforms.subscribe', $content, $sel_options, $readonlys, $content+[
 				'old_cat_id' => $content['cat_id'] ?? null,
 			], 2);
+	}
+
+	/**
+	 * Parse UI datetime input as user wall-clock time.
+	 *
+	 * UI can send values like "2026-05-05T07:08:09.000Z" where the timezone
+	 * suffix is not semantic. We therefore strip a trailing timezone suffix and
+	 * interpret the remaining local date-time in user timezone.
+	 *
+	 * @param mixed $value
+	 * @return Api\DateTime
+	 */
+	protected function parseUserInputDateTime($value) : Api\DateTime
+	{
+		if($value instanceof Api\DateTime)
+		{
+			$date = clone $value;
+			$date->setUser();
+			return $date;
+		}
+		if($value instanceof \DateTimeInterface)
+		{
+			return new Api\DateTime($value->format('Y-m-d H:i:s'), Api\DateTime::$user_timezone);
+		}
+		if(is_string($value))
+		{
+			$time = trim($value);
+			// strip trailing Z or numeric timezone offset, then parse in user timezone
+			$time = preg_replace('/([zZ]|[+\-]\d{2}:?\d{2})$/', '', $time);
+			return new Api\DateTime($time, Api\DateTime::$user_timezone);
+		}
+		return new Api\DateTime($value, Api\DateTime::$user_timezone);
 	}
 }

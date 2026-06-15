@@ -15,6 +15,7 @@ code is invalid	preferences	sv	Koden är ogiltig
 code is required	preferences	sv	Kod krävs
 color	preferences	sv	Färg
 country	preferences	sv	Land
+custom login box text color, defaults to white	preferences	sv	Anpassad textfärg i inloggningsrutan, standardinställningen är vit
 dark mode theme	preferences	sv	Tema för mörkt läge
 date format	preferences	sv	Datumformat
 default	preferences	sv	Standard
@@ -101,6 +102,7 @@ time format	preferences	sv	Tidformat
 use default	preferences	sv	Använd standard
 use first %1 letters from username	preferences	sv	Använd de första %1 bokstäverna i användarnamnet
 use initials from first and last name	preferences	sv	Använd initialer från för- och efternamn
+used instead of the application color.	preferences	sv	Används istället för programmets färg.
 users choice	preferences	sv	Användarnas val
 what to display for an avatar, if there is no photo	preferences	sv	Vad som ska visas för en avatar om det inte finns något foto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	sv	Om du väljer Ja, kommer hem och utloggnings knappar att visas i navigerings listen.

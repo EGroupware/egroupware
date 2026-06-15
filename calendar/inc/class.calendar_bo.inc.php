@@ -13,6 +13,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Acl;
+use EGroupware\Api\DateTime;
 use EGroupware\Api\Link;
 
 if (!defined('ACL_TYPE_IDENTIFER'))	// used to mark ACL-values for the debug_message methode
@@ -234,8 +235,10 @@ class calendar_bo
 		$this->common_prefs =& $GLOBALS['egw_info']['user']['preferences']['common'];
 		$this->cal_prefs =& $GLOBALS['egw_info']['user']['preferences']['calendar'];
 
-		$this->now = time();
-		$this->now_su = Api\DateTime::server2user($this->now,'ts');
+		$now = new DateTime('now', DateTime::$server_timezone);
+		$this->now = (int)$now->format('ts');
+		$now->setUser();
+		$this->now_su = (int)$now->format('ts');
 
 		$this->user = $GLOBALS['egw_info']['user']['account_id'];
 
@@ -638,13 +641,17 @@ class calendar_bo
 			$ret = false;
 			return $ret;
 		}
-		if (isset($params['start'])) $start = $this->date2ts($params['start']);
+		if(isset($params['start']))
+		{
+			$start = $params['start'] instanceof DateTime ? $params['start'] : new DateTime($params['start'], DateTime::$user_timezone);
+		}
 
 		if (isset($params['end']))
 		{
-			$end = $this->date2ts($params['end']);
+			$end = $params['end'] instanceof DateTime ? $params['end'] : new DateTime($params['end'], DateTime::$user_timezone);
 			$this->check_move_horizont($end);
 		}
+		$date_format = $params['date_format'] ?? 'ts';
 		$daywise = !isset($params['daywise']) ? False : !!$params['daywise'];
 		$params['enum_recuring'] = $enum_recuring = $daywise || !isset($params['enum_recuring']) || !!$params['enum_recuring'];
 		$cat_id = isset($params['cat_id']) ? $params['cat_id'] : 0;
@@ -662,16 +669,18 @@ class calendar_bo
 			$this->debug_message('calendar_bo::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, sql_filter=%11)',
 				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter']);
 		}
-		// date2ts(,true) converts to server time, db2data converts again to user-time
-		$events =& $this->so->search(isset($start) ? $this->date2ts($start,true) : null,isset($end) ? $this->date2ts($end,true) : null,
-			$users,$cat_id,$filter,$offset,(int)($params['num_rows']??0),$params,$remove_rejected_by_user);
+		$events =& $this->so->search($start, $end, $users, $cat_id, $filter, $offset, (int)($params['num_rows'] ?? 0), $params, $remove_rejected_by_user);
 
 		if (isset($params['cols']))
 		{
 			return $events;
 		}
 		$this->total = $this->so->total;
-		$this->db2data($events,isset($params['date_format']) ? $params['date_format'] : 'ts');
+		$this->db2data($events);
+		if($date_format !== 'server')
+		{
+			$this->data2user($events);
+		}
 
 		//echo "<p align=right>remove_rejected_by_user=$remove_rejected_by_user, filter=$filter, params[users]=".print_r($param['users'])."</p>\n";
 		foreach($events as $id => $event)
@@ -702,15 +711,16 @@ class calendar_bo
 				$this->debug_message('socalendar::search daywise sorting from %1 to %2 of %3',False,$start,$end,$events);
 			}
 			// create empty entries for each day in the reported time
-			for($ts = $start; $ts <= $end; $ts += DAY_s) // good enough for array creation, but see while loop below.
+			for($ts = clone $start; $ts <= $end; $ts->modify('+1 day')) // good enough for array creation, but see while loop below.
 			{
-				$daysEvents[$this->date2string($ts)] = array();
+				$daysEvents[$ts->format('Ymd')] = array();
 			}
+			$one_second = new DateInterval('PT1S');
 			foreach($events as $k => $event)
 			{
-				$e_start = max($this->date2ts($event['start']),$start);
+				$e_start = max($event['start'], $start);
 				// $event['end']['raw']-1 to allow events to end on a full hour/day without the need to enter it as minute=59
-				$e_end   = min($this->date2ts($event['end'])-1,$end);
+				$e_end = min(DateTimeImmutable::createFromMutable($event['end'])->sub($one_second), $end);
 
 				// add event to each day in the reported time
 				$ts = $e_start;
@@ -719,10 +729,10 @@ class calendar_bo
 				$ymd = null;
 				while ($ts <= $e_end)
 				{
-					$daysEvents[$ymd = $this->date2string($ts)][] =& $events[$k];
-					$ts = strtotime("+1 day",$ts);
+					$daysEvents[$ymd = $ts->format('Ymd')][] =& $events[$k];
+					$ts->modify('+1 day');
 				}
-				if ($ymd != ($last = $this->date2string($e_end)))
+				if($ymd != ($last = $e_end->format('Ymd')))
 				{
 					$daysEvents[$last][] =& $events[$k];
 				}
@@ -868,9 +878,11 @@ class calendar_bo
 		{
 			$this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2',true,$_new_horizont,(int)$this->config['horizont']);
 		}
-		$new_horizont = $this->date2ts($_new_horizont,true);	// now we are in server-time, where this function operates
+		$new_horizont = $_new_horizont instanceof DateTime ? clone $_new_horizont : new DateTime($_new_horizont, DateTime::$user_timezone);
+		$new_horizont->setServer();
+		$current_horizont = new DateTime($this->config['horizont'], DateTime::$server_timezone);
 
-		if ($new_horizont <= $this->config['horizont'])	// no move necessary
+		if($new_horizont <= $current_horizont)    // no move necessary
 		{
 			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 is bigger ==> nothing to do',true,$new_horizont,(int)$this->config['horizont']);
 			return;
@@ -880,18 +892,23 @@ class calendar_bo
 			$maxdays = abs($GLOBALS['egw_info']['server']['calendar_horizont']);
 		}
 		if (empty($maxdays)) $maxdays = 1000; // old default
-		if ($new_horizont > time()+$maxdays*DAY_s)		// some user tries to "look" more then the maximum number of days in the future
+		$now = new DateTime('now', DateTime::$server_timezone);
+		$max_horizont = clone $now;
+		$max_horizont->modify("+$maxdays days");
+		if($new_horizont > $max_horizont)        // some user tries to "look" more then the maximum number of days in the future
 		{
 			if ($this->debug == 'check_move_horizont') $this->debug_message('calendar_bo::check_move_horizont(%1) horizont=%2 new horizont more then %3 days from now --> ignoring it',true,$new_horizont,(int)$this->config['horizont'],$maxdays);
 			$this->warnings['horizont'] = lang('Requested date %1 outside allowed range of %2 days: recurring events obmitted!', Api\DateTime::to($new_horizont,true), $maxdays);
 			return;
 		}
-		if ($new_horizont < time()+31*DAY_s)
+		$min_horizont = clone $now;
+		$min_horizont->modify('+31 days');
+		if($new_horizont < $min_horizont)
 		{
-			$new_horizont = time()+31*DAY_s;
+			$new_horizont = $min_horizont;
 		}
-		$old_horizont = $this->config['horizont'];
-		$this->config['horizont'] = $new_horizont;
+		$old_horizont = new DateTime($this->config['horizont'], DateTime::$server_timezone);
+		$this->config['horizont'] = (int)$new_horizont->format('ts');
 
 		// create further recurrences for all recurring and not yet (at the old horizont) ended events
 		if (($recuring = $this->so->unfinished_recuring($old_horizont)))
@@ -904,7 +921,10 @@ class calendar_bo
 					$this->debug_message('calendar_bo::check_move_horizont(%1): calling set_recurrences(%2,%3)',true,$new_horizont,$event,$old_horizont);
 				}
 				// insert everything behind max(cal_start), which can be less then $old_horizont because of bugs in the past
-				$this->set_recurrences($event,Api\DateTime::server2user($recuring[$cal_id]+1));	// set_recurences operates in user-time!
+				$next_start = new DateTime($recuring[$cal_id], DateTime::$server_timezone);
+				$next_start->modify('+1 second');
+				$next_start->setUser();
+				$this->set_recurrences($event, $next_start);    // set_recurences operates in user-time!
 			}
 		}
 		// update the horizont
@@ -921,11 +941,16 @@ class calendar_bo
 	 * @param array $event
 	 * @param mixed $start =0 minimum start-time for new recurrences or !$start = since the start of the event
 	 */
-	function set_recurrences($event,$start=0)
+	function set_recurrences($event, DateTime|null $start = null)
 	{
 		if ($this->debug && ((int) $this->debug >= 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont'))
 		{
 			$this->debug_message('calendar_bo::set_recurrences(%1,%2)',true,$event,$start);
+		}
+		// $event is in USER time
+		if(!$start)
+		{
+			$start = new Api\DateTime($event['start'], Api\DateTime::$user_timezone);
 		}
 		// check if the caller gave us enough information and if not read it from the DB
 		if (!isset($event['participants']) || !isset($event['start']) || !isset($event['end']))
@@ -937,15 +962,14 @@ class calendar_bo
 			}
 			if (!isset($event['start']) || !isset($event['end']))
 			{
-				$event['start'] = $this->date2usertime($event_read['start']);
-				$event['end'] = $this->date2usertime($event_read['end']);
+				// so->read() gives dates in SERVER TIME
+				$event['start'] = new Api\DateTime($event_read['start'], Api\DateTime::$server_timezone);
+				$event['end'] = new Api\DateTime($event_read['end'], Api\DateTime::$server_timezone);
 			}
 		}
-		if (!$start) $start = $event['start'];
-
 		$events = array();
 
-		$this->insert_all_recurrences($event,$start,$this->date2usertime($this->config['horizont']),$events);
+		$this->insert_all_recurrences($event, $start, new DateTime($this->config['horizont'], Api\DateTime::$server_timezone)->setUser(), $events);
 
 		$exceptions = array();
 		foreach((array)$event['recur_exception'] as $exception)
@@ -956,19 +980,21 @@ class calendar_bo
 		{
 			// PERIOD
 			$is_exception = in_array(Api\DateTime::to($ev['start'], true), $exceptions);
-			$start = $this->date2ts($ev['start'],true);
 			if ($ev['whole_day'])
 			{
-				$start = new Api\DateTime($ev['start'], Api\DateTime::$server_timezone);
+				$start = clone $ev['start'];
+				$start->setServer();
 				$start->setTime(0,0,0);
-				$start = $start->format('server');
-				$time = $this->so->startOfDay(new Api\DateTime($ev['end'], Api\DateTime::$user_timezone));
-				$time->setTime(23, 59, 59);
-				$end = $this->date2ts($time,true);
+				$end = clone $ev['end'];
+				$end->setServer();
+				$end->setTime(23, 59, 59);
 			}
 			else
 			{
-				$end = $this->date2ts($ev['end'],true);
+				$start = clone $ev['start'];
+				$start->setUser();
+				$end = clone $ev['end'];
+				$end->setUser();
 			}
 			//error_log(__METHOD__."() start=".Api\DateTime::to($start).", is_exception=".array2string($is_exception));
 			$this->so->recurrence($ev['id'], $start, $end, $ev['participants'], $is_exception);
@@ -976,17 +1002,14 @@ class calendar_bo
 	}
 
 	/**
-	 * Convert data read from the db, e.g., convert server to user-time
+	 * Convert data read from the db to DateTime in server-time
 	 *
-	 * Make sure all timestamps coming from DB as string are converted to integer too,
-	 * to avoid misinterpretation by Api\DateTime as Ymd string.
+	 * Make sure all timestamps coming from DB as string are converted to DateTime
 	 *
 	 * @param array &$events array of event-arrays (reference)
-	 * @param $date_format ='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
 	 */
-	function db2data(&$events,$date_format='ts')
+	function db2data(array &$events) : void
 	{
-		if (!is_array($events)) echo "<p>calendar_bo::db2data(\$events,$date_format) \$events is no array<br />\n".function_backtrace()."</p>\n";
 		foreach ($events as &$event)
 		{
 			// convert timezone id of event to tzid (iCal id like 'Europe/Berlin')
@@ -994,78 +1017,81 @@ class calendar_bo
 			{
 				$event['tzid'] = Api\DateTime::$server_timezone->getName();
 			}
-			// database returns timestamps as string, convert them to integer
+			// database returns timestamps as string, convert them to DateTime
 			// to avoid misinterpretation by Api\DateTime as Ymd string
-			// (this will fail on 32bit systems for times > 2038!)
-			$event['start'] = (int)$event['start'];	// this is for isWholeDay(), which also calls Api\DateTime
-			$event['end'] = (int)$event['end'];
+			$event['start'] = new DateTime($event['start'], DateTime::$server_timezone);    // this is for isWholeDay(), which also calls Api\DateTime
+			$event['end'] = new DateTime($event['end'], DateTime::$server_timezone);
 			$event['whole_day'] = self::isWholeDay($event);
-			if ($event['whole_day'] && $date_format != 'server')
+			if($event['whole_day'])
 			{
 				// Adjust dates to user TZ
-				$stime = $this->so->startOfDay(new Api\DateTime((int)$event['start'], Api\DateTime::$server_timezone), $event['tzid']);
-				$event['start'] = Api\DateTime::to($stime, $date_format);
-				$time = $this->so->startOfDay(new Api\DateTime((int)$event['end'], Api\DateTime::$server_timezone), $event['tzid']);
+				$event['start'] = $this->so->startOfDay($event['start'], $event['tzid']);
+				$time = $this->so->startOfDay($event['end'], $event['tzid']);
 				$time->setTime(23, 59, 59);
-				$event['end'] = Api\DateTime::to($time, $date_format);
+				$event['end'] = $time;
 				if (!empty($event['recurrence']))
 				{
-					$time = $this->so->startOfDay(new Api\DateTime((int)$event['recurrence'], Api\DateTime::$server_timezone), $event['tzid']);
-					$event['recurrence'] = Api\DateTime::to($time, $date_format);
+					$event['recurrence'] = $this->so->startOfDay(new DateTime($event['recurrence'], Api\DateTime::$server_timezone), $event['tzid']);
 				}
 				if (!empty($event['recur_enddate']))
 				{
-					$time = $this->so->startOfDay(new Api\DateTime((int)$event['recur_enddate'], Api\DateTime::$server_timezone), $event['tzid']);
+					$time = $this->so->startOfDay(new Api\DateTime($event['recur_enddate'], Api\DateTime::$server_timezone), $event['tzid']);
 					$time->setTime(23, 59, 59);
-					$event['recur_enddate'] = Api\DateTime::to($time, $date_format);
-				}
-				$timestamps = array('modified','created','deleted');
-			}
-			else
-			{
-				$timestamps = array('start','end','modified','created','recur_enddate','recurrence','recur_date','deleted');
-			}
-			// we convert here from the server-time timestamps to user-time and (optional) to a different date-format!
-			foreach (array_merge($timestamps, $this->getCfTtimestamps()) as $ts)
-			{
-				if (!empty($event[$ts]))
-				{
-					try {
-						$event[$ts] = $this->date2usertime($event[$ts], $date_format);
-					}
-					catch(\Exception $e) {
-						// we log and ignore the broken timestamp, practically unset the field
-						_egw_log_exception(new Api\Exception($e->getMessage(), $e->getCode(), $e,
-							__METHOD__.'('.json_encode($event).", '$date_format') error converting timestamp '$ts'"));
-						unset($event[$ts]);
-					}
+					$event['recur_enddate'] = $time;
 				}
 			}
+
 			// same with the recurrence-exceptions and rdates
 			foreach(['recur_exception', 'recur_rdates'] as $name)
 			{
 				if (!is_array($event[$name] ?? null)) continue;
 				foreach($event[$name] as &$date)
 				{
-					if ($event['whole_day'] && $date_format != 'server')
+					if($event['whole_day'])
 					{
-						// Adjust dates to user TZ
-						$time = $this->so->startOfDay(new Api\DateTime((int)$date, Api\DateTime::$server_timezone), $event['tzid']);
-						$date = Api\DateTime::to($time, $date_format);
-					}
-					else
-					{
-						$date = $this->date2usertime((int)$date,$date_format);
+						$date = $this->so->startOfDay(new DateTime($date, DateTime::$server_timezone), $event['tzid']);
 					}
 				}
 			}
+
 			// same with the alarms
 			if (isset($event['alarm']) && is_array($event['alarm']))
 			{
 				foreach($event['alarm'] as &$alarm)
 				{
-					$alarm['time'] = $this->date2usertime((int)$alarm['time'],$date_format);
+					$alarm['time'] = $alarm['time'] instanceof DateTime ? $alarm['time'] : new DateTime($alarm['time'], DateTime::$server_timezone);
 				}
+			}
+		}
+	}
+
+	/**
+	 * Convert server-time DateTimes in events to user-time
+	 *
+	 * @param array &$events event rows as returned from db2data()
+	 */
+	function data2user(array &$events) : void
+	{
+		foreach($events as &$event)
+		{
+			$timestamps = !empty($event['whole_day']) ?
+				array('modified', 'created', 'recur_enddate', 'recurrence', 'recur_date', 'deleted') :
+				array('start', 'end', 'modified', 'created', 'recur_enddate', 'recurrence', 'recur_date', 'deleted');
+
+			foreach(array_merge($timestamps, $this->getCfTtimestamps()) as $name)
+			{
+				if($event[$name] === 0 || $event[$name] === '0')
+				{
+					$event[$name] = null;
+				}
+				if(!isset($event[$name]) || $event[$name] === '' || $event[$name] === null)
+				{
+					continue;
+				}
+
+				$event[$name] = $event[$name] instanceof DateTime ?
+					$event[$name] : new DateTime($event[$name], DateTime::$server_timezone);
+				$event[$name]->setUser();
 			}
 		}
 	}
@@ -1087,24 +1113,10 @@ class calendar_bo
 	}
 
 	/**
-	 * convert a date from server to user-time
-	 *
-	 * @param int $ts timestamp in server-time
-	 * @param string $date_format ='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in server-time, 'array'=array or string with date-format
-	 * @return mixed depending of $date_format
-	 */
-	function date2usertime($ts,$date_format='ts')
-	{
-		if (empty($ts) || $date_format == 'server') return $ts;
-
-		return Api\DateTime::server2user($ts,$date_format);
-	}
-
-	/**
 	 * Reads a calendar-entry
 	 *
 	 * @param int|array|string $ids id or array of id's of the entries to read, or string with a single uid
-	 * @param mixed $date =null date to specify a single event of a series
+	 * @param int|DateTime|null $date =null date to specify a single event of a series
 	 * @param boolean $ignore_acl should we ignore the acl, default False for a single id, true for multiple id's
 	 * @param string $date_format ='ts' date-formats: 'ts'=timestamp, 'server'=timestamp in servertime, 'array'=array, or string with date-format
 	 * @param array|int $clear_private_infos_users =null if not null, return events with self::ACL_FREEBUSY too,
@@ -1112,11 +1124,17 @@ class calendar_bo
 	 * @param boolean $read_recurrence =false true: read the exception, not the series master (only for recur_date && $ids='<uid>'!)
 	 * @return boolean|array event or array of id => event pairs, false if the acl-check went wrong, null if $ids not found
 	 */
-	function read($ids,$date=null, $ignore_acl=False, $date_format='ts', $clear_private_infos_users=null, $read_recurrence=false)
+	function read($ids, DateTime|int|null $date = null, $ignore_acl = False, $date_format = 'ts', $clear_private_infos_users = null, $read_recurrence = false)
 	{
 		if (!$ids) return false;
-
-		if ($date) $date = $this->date2ts($date);
+		if($date)
+		{
+			$date = $date instanceof DateTime ? $date : new DateTime($date);
+		}
+		else
+		{
+			$date = null;
+		}
 
 		$return = null;
 
@@ -1127,13 +1145,17 @@ class calendar_bo
 				self::$cached_event_date_format != $date_format || $read_recurrence ||
 				!empty(self::$cached_event['recur_type']) && self::$cached_event_date != $date)
 			{
-				$events = $this->so->read($ids,$date ? $this->date2ts($date,true) : 0, $read_recurrence);
+				$events = $this->so->read($ids, $date, $read_recurrence);
 
-				if ($events)
+				if($events)
 				{
-					$this->db2data($events,$date_format);
+					$this->db2data($events);
+					if($date_format !== 'server')
+					{
+						$this->data2user($events);
+					}
 
-					if (is_array($ids))
+					if(is_array($ids))
 					{
 						$return =& $events;
 					}
@@ -1170,39 +1192,52 @@ class calendar_bo
 	 * Recurrences get calculated by rrule iterator implemented in calendar_rrule class.
 	 *
 	 * @param array $event repeating event whos repetions should be inserted
-	 * @param mixed $start start-date
-	 * @param mixed $end end-date
+	 * @param DateTime $_start
+	 * @param DateTime $end end-date
 	 * @param array $events where the repetions get inserted
+	 * @throws Exception
 	 */
-	function insert_all_recurrences($event,$_start,$end,&$events)
+	function insert_all_recurrences($event, DateTime $start, DateTime $end, &$events)
 	{
 		if ((int) $this->debug >= 3 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_recurrences')
 		{
-			$this->debug_message(__METHOD__.'(%1,%2,%3,&$events)',true,$event,$_start,$end);
+			$this->debug_message(__METHOD__ . '(%1,%2,%3,&$events)', true, $event, $start, $end);
 		}
 		$end_in = $end;
 
-		$start = $this->date2ts($_start);
-		$event_start_ts = $this->date2ts($event['start']);
-		$event_length = $this->date2ts($event['end']) - $event_start_ts;	// we use a constant event-length, NOT a constant end-time!
+		$start = DateTimeImmutable::createFromMutable($start);
+		$event_length = $event['start']->diff($event['end']);    // we use a constant event-length, NOT a constant end-time!
 
 		// if $end is before recur_enddate, use it instead
-		if (!$event['recur_enddate'] || $this->date2ts($event['recur_enddate']) > $this->date2ts($end))
+		if(!$event['recur_enddate'] || $event['recur_enddate'] > $end)
 		{
 			//echo "<p>recur_enddate={$event['recur_enddate']}=".Api\DateTime::to($event['recur_enddate'])." > end=$end=".Api\DateTime::to($end)." --> using end instead of recur_enddate</p>\n";
 			// insert at least the event itself, if it's behind the horizont
-			$event['recur_enddate'] = $this->date2ts($end) < $this->date2ts($event['end']) ? $event['end'] : $end;
+			$event['recur_enddate'] = $end < $event['end'] ? $event['end'] : $end;
 		}
 		$event['recur_enddate'] = is_a($event['recur_enddate'],'DateTime') ?
 				$event['recur_enddate'] :
 				new Api\DateTime($event['recur_enddate'], calendar_timezones::DateTimeZone($event['tzid']));
+		if($event['whole_day'] && !empty($event['recur_enddate']))
+		{
+			$start_for_offset = $event['start'] instanceof DateTime ? clone $event['start'] : new Api\DateTime($event['start'], Api\DateTime::$server_timezone);
+			$user_start = clone $start_for_offset;
+			$user_start->setTimezone(Api\DateTime::$user_timezone);
+			$event_start = clone $start_for_offset;
+			$event_start->setTimezone(calendar_timezones::DateTimeZone($event['tzid']));
+			if((int)$user_start->format('Z') > (int)$event_start->format('Z'))
+			{
+				$event['recur_enddate']->modify('+1 day');
+			}
+		}
 
 		// unset exceptions, as we need to add them as recurrence too, but marked as exception
 		unset($event['recur_exception']);
 		// loop over all recurrences and insert them, if they are after $start
  		$rrule = calendar_rrule::event2rrule($event, !$event['whole_day'], // true = we operate in usertime, like the rest of calendar_bo
-			// For whole day events, just stay in server time
-			$event['whole_day'] ? Api\DateTime::$server_timezone->getName() : Api\DateTime::$user_timezone->getName()
+	                                                                       // For whole day events, just stay in server time.
+	                                                                       // Timed recurrences are defined in event timezone and converted to user timezone below.
+	                                         $event['whole_day'] ? Api\DateTime::$server_timezone->getName() : $event['tzid']
 		);
 		unset($event['recur_rdates']);
 		$event['recur_type'] = MCAL_RECUR_NONE;
@@ -1219,41 +1254,36 @@ class calendar_bo
 			{
 				$time->setUser();
 			}
-			if (($ts = $this->date2ts($time)) < $start-$event_length)
+			$rTime = clone $time;
+			if($rTime < $start->sub($event_length))
 			{
 				//echo "<p>".$time." --> ignored as $ts < $start-$event_length</p>\n";
 				continue;	// to early or original event (returned by iterator too)
 			}
 
-			$ts_end = $ts + $event_length;
+			$ts_end = clone $rTime;
+			$ts_end->add($event_length);
 			// adjust ts_end for whole day events in case it does not fit due to
 			// spans over summer/wintertime adjusted days
-			if($event['whole_day'] && ($arr_end = $this->date2array($ts_end)) &&
-				!($arr_end['hour'] == 23 && $arr_end['minute'] == 59 && $arr_end['second'] == 59))
+			if($event['whole_day'] && ($arr_end = $ts_end) &&
+				!($arr_end->format('H') == '23' && $arr_end->format('i') == '59' && $arr_end->format('s') == '59'))
 			{
-				$arr_end['hour'] = 23;
-				$arr_end['minute'] = 59;
-				$arr_end['second'] = 59;
-				$ts_end_guess = $this->date2ts($arr_end);
-				if($ts_end_guess - $ts_end > DAY_s/2)
+				$arr_end->setTime(23, 59, 59);
+				$half_day_ahead = DateTimeImmutable::createFromMutable($ts_end)->add(new DateInterval('PT12H'));
+				if($arr_end > $half_day_ahead)
 				{
-					$ts_end = $ts_end_guess - DAY_s; // $ts_end_guess was one day too far in the future
+					$arr_end->modify('-1 day'); // $arr_end was one day too far in the future
 				}
-				else
-				{
-					$ts_end = $ts_end_guess; // $ts_end_guess was ok
-				}
+				$ts_end = $arr_end;
 			}
 
-			$event['start'] = $ts;
+			$event['start'] = $rTime;
 			$event['end'] = $ts_end;
 			$events[] = $event;
 		}
 		if ($this->debug && ((int) $this->debug > 2 || $this->debug == 'set_recurrences' || $this->debug == 'check_move_horizont' || $this->debug == 'insert_all_recurrences'))
 		{
-			$event['start'] = $event_start_ts;
-			$event['end'] = $event_start_ts + $event_length;
-			$this->debug_message(__METHOD__.'(%1,start=%2,end=%3,events) events=%5',True,$event,$_start,$end_in,$events);
+			$this->debug_message(__METHOD__ . '(%1,start=%2,end=%3,events) events=%5', True, $event, $start, $end_in, $events);
 		}
 	}
 
@@ -1268,16 +1298,14 @@ class calendar_bo
 	{
 		$event_in = $event;
 		// calculate the new start- and end-time
-		$length_s = $this->date2ts($event['end']) - $this->date2ts($event['start']);
-		$event_start_arr = $this->date2array($event['start']);
+		$event_start = $event['start'] instanceof DateTime ? clone $event['start'] : new DateTime($event['start'], DateTime::$server_timezone);
+		$event_end = $event['end'] instanceof DateTime ? clone $event['end'] : new DateTime($event['end'], DateTime::$server_timezone);
+		$event_length = $event_start->diff($event_end);
 
-		$date_arr = $this->date2array((string) $date_ymd);
-		$date_arr['hour'] = $event_start_arr['hour'];
-		$date_arr['minute'] = $event_start_arr['minute'];
-		$date_arr['second'] = $event_start_arr['second'];
-		unset($date_arr['raw']);	// else date2ts would use it
-		$event['start'] = $this->date2ts($date_arr);
-		$event['end'] = $event['start'] + $length_s;
+		$event['start'] = new DateTime((string)$date_ymd, $event_start->getTimezone());
+		$event['start']->setTime((int)$event_start->format('H'), (int)$event_start->format('i'), (int)$event_start->format('s'));
+		$event['end'] = clone $event['start'];
+		$event['end']->add($event_length);
 
 		$events[] = $event;
 
@@ -1459,6 +1487,7 @@ class calendar_bo
 	 *	int already a timestamp
 	 *	array with keys 'second', 'minute', 'hour', 'day' or 'mday' (depricated !), 'month' and 'year'
 	 * @param boolean $user2server =False conversion between user- and server-time; default False == Off
+	 * @deprecated Use DateTime objects
 	 */
 	static function date2ts($date,$user2server=False)
 	{
@@ -1471,6 +1500,7 @@ class calendar_bo
 	 * @param mixed $date date to convert
 	 * @param boolean $server2user conversation between user- and server-time default False == Off
 	 * @return array with keys 'second', 'minute', 'hour', 'day', 'month', 'year', 'raw' (timestamp) and 'full' (Ymd-string)
+	 * @deprecated Use DateTime objects
 	 */
 	static function date2array($date,$server2user=False)
 	{
@@ -1484,6 +1514,8 @@ class calendar_bo
 	 * @param boolean $server2user conversation between user- and server-time default False == Off, not used if $format ends with \Z
 	 * @param string $format ='Ymd' format of the date to return, eg. 'Y-m-d\TH:i:sO' (2005-11-01T15:30:00+0100)
 	 * @return string date formatted according to $format
+	 *
+	 * @deprecated Use DateTime objects
 	 */
 	static function date2string($date,$server2user=False,$format='Ymd')
 	{
@@ -1496,6 +1528,8 @@ class calendar_bo
 	 * @param mixed $date integer timestamp or array with ('year','month',..,'second') to convert
 	 * @param string|boolean $format ='' default common_prefs[dateformat], common_prefs[timeformat], false=time only, true=date only
 	 * @return string the formated date (incl. time)
+	 *
+	 * @deprecated Use DateTime::to($date, $format)
 	 */
 	static function format_date($date,$format='')
 	{
@@ -1591,13 +1625,12 @@ class calendar_bo
 	 */
 	function long_date($_first,$last=0,$display_time=false,$display_day=false)
 	{
-		$first = $this->date2array($_first);
-		if ($last)
-		{
-			$last = $this->date2array($last);
-		}
+		$has_last = (bool)$last;
+		$first = Api\DateTime::to($_first, 'array');
+		$last = $has_last ? Api\DateTime::to($last, 'array') : $first;
 		$datefmt = $this->common_prefs['dateformat'];
 		$timefmt = $this->common_prefs['timeformat'] == 12 ? 'h:i a' : 'H:i';
+		$range = '';
 
 		$month_before_day = strtolower($datefmt[0]) == 'm' ||
 			strtolower($datefmt[2]) == 'm' && $datefmt[4] == 'd';
@@ -1612,7 +1645,7 @@ class calendar_bo
 			{
 				case 'd':
 					$range .= $first['day'] . ($datefmt[1] == '.' ? '.' : '');
-					if ($first['month'] != $last['month'] || $first['year'] != $last['year'])
+					if($has_last && ($first['month'] != $last['month'] || $first['year'] != $last['year']))
 					{
 						if (!$month_before_day)
 						{
@@ -1625,10 +1658,6 @@ class calendar_bo
 						if ($display_time)
 						{
 							$range .= ' '.date($timefmt,$first['raw']);
-						}
-						if (!$last)
-						{
-							return $range;
 						}
 						$range .= ' - ';
 
@@ -1648,7 +1677,15 @@ class calendar_bo
 						{
 							$range .= ' '.date($timefmt,$first['raw']);
 						}
+						if(!$has_last)
+						{
+							break;
+						}
 						$range .= ' - ';
+					}
+					if(!$has_last)
+					{
+						break;
 					}
 					$range .= ' ' . $last['day'] . ($datefmt[1] == '.' ? '.' : '');
 					break;
@@ -1664,13 +1701,13 @@ class calendar_bo
 					break;
 			}
 		}
-		if ($display_time && $last)
+		if($display_time && $has_last)
 		{
 			$range .= ' '.date($timefmt,$last['raw']);
 		}
 		if ($datefmt[4] == 'Y' && $datefmt[0] == 'm')
 		{
-			$range .= ', ' . $last['year'];
+			$range .= ', ' . ($has_last ? $last['year'] : $first['year']);
 		}
 		return $range;
 	}
@@ -1962,7 +1999,11 @@ class calendar_bo
 	 */
 	function read_holidays($year=0)
 	{
-		if (!$year) $year = (int) date('Y',$this->now_su);
+		if(!$year)
+		{
+			$now_su = new DateTime($this->now_su, DateTime::$user_timezone);
+			$year = (int)$now_su->format('Y');
+		}
 
 		$holidays = calendar_holidays::read(
 				!empty($GLOBALS['egw_info']['server']['ical_holiday_url']) ?
@@ -2055,7 +2096,7 @@ class calendar_bo
 				{
 					case 'end':
 					case 'modified':
-						$extra_fields [$val] = $this->format_date($event[$val]);
+					$extra_fields [$val] = $event[$val]->format();
 						break;
 					case 'participants':
 						foreach(array_keys((array)$event[$val]) as $key)
@@ -2076,9 +2117,12 @@ class calendar_bo
 				}
 			}
 			$str_fields = implode(', ',$extra_fields);
-			if (is_array($extra_fields)) return $this->format_date($event['start']) . ': ' . $event['title'] . ($str_fields? ', ' . $str_fields:'');
+			if(is_array($extra_fields))
+			{
+				return $event['start']->format(DateTIme::DATABASE) . ': ' . $event['title'] . ($str_fields ? ', ' . $str_fields : '');
+			}
 		}
-		return $this->format_date($event['start']) . ': ' . $event['title'];
+		return $event['start']->format(DateTIme::DATABASE) . ': ' . $event['title'];
 	}
 
 	/**
@@ -2205,10 +2249,10 @@ class calendar_bo
 	public static function isWholeDay($event)
 	{
 		// check if the event is the whole day
-		$start = self::date2array($event['start']);
-		$end = self::date2array($event['end']);
+		$start = $event['start'];
+		$end = $event['end'];
 
-		return !$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59;
+		return $start->format("H") == '00' && $start->format('i') == '00' && $end->format('H') == '23' && $end->format('i') == '59';
 	}
 
 	/**
@@ -2219,15 +2263,34 @@ class calendar_bo
 	 *
 	 * @param array|int|string $entry array with event or cal_id, or cal_id:recur_date for virtual exceptions
 	 * @param string &$schedule_tag=null on return schedule-tag (egw_cal.cal_id:egw_cal.cal_etag, no participant modifications!)
-	 * @return string|boolean string with etag or false
+	 * @return ?string string with etag or null
 	 */
 	function get_etag($entry, &$schedule_tag=null)
 	{
-		if (!is_array($entry))
-		{
-			list($id,$recur_date) = explode(':',$entry)+[null,null];
-			$entry = $this->read($id, $recur_date, true, 'server');
-		}
+			if (!is_array($entry))
+			{
+				list($id,$recur_date) = explode(':',$entry)+[null,null];
+				if ($recur_date === '' || $recur_date === null)
+				{
+					$recur_date = null;
+				}
+				elseif (is_numeric($recur_date))
+				{
+					$recur_date = (int)$recur_date;
+				}
+				else
+				{
+					try
+					{
+						$recur_date = (int)(new Api\DateTime($recur_date))->format('ts');
+					}
+					catch (\Throwable $e)
+					{
+						$recur_date = null;
+					}
+				}
+				$entry = $this->read($id, $recur_date, true, 'server');
+			}
 		$etag = $schedule_tag = $entry['id'].':'.$entry['etag'];
 		$etag .= ':'.Api\DateTime::user2server($entry['modified'], 'ts');
 
@@ -2241,7 +2304,7 @@ class calendar_bo
 	 * @param int|string|array $user integer user-id or array of user-id's to use, defaults to the current user
 	 * @param string $filter ='owner' all (not rejected), accepted, unknown, tentative, rejected or hideprivate
 	 * @param boolean $master_only =false only check recurance master (egw_cal_user.recur_date=0)
-	 * @return integer
+	 * @return integer TS in server-time
 	 */
 	public function get_ctag($user, $filter='owner', $master_only=false)
 	{
@@ -2250,7 +2313,11 @@ class calendar_bo
 		// resolve users to add memberships for users and members for groups
 		$users = $this->resolve_users($user);
 		$ctag = $users ? $this->so->get_ctag($users, $filter == 'owner', $master_only) : 0;	// no rights, return 0 as ctag (otherwise we get SQL error!)
-
+		// ctag is by definition a TS
+		if (is_a($ctag, 'DateTimeInterface'))
+		{
+			$ctag = Api\DateTime::user2server($ctag, 'ts');
+		}
 		if ($this->debug > 1) error_log(__METHOD__. "($user, '$filter', $master_only) = $ctag = ".date('Y-m-d H:i:s',$ctag)." took ".(microtime(true)-$startime)." secs");
 		return $ctag;
 	}
@@ -2325,9 +2392,19 @@ class calendar_bo
 			$set['ts_title'] = $this->link_title($event);
 			$set['start_time'] = Api\DateTime::to($event['start'],'H:i');
 			$set['ts_description'] = $event['description'];
-			if ($this->isWholeDay($event)) $event['end']++;	// whole day events are 1sec short
-			$set['ts_duration']	= ($event['end'] - $event['start']) / 60;
-			$set['ts_quantity'] = ($event['end'] - $event['start']) / 3600;
+			$duration_end = clone $event['end'];
+			if($this->isWholeDay($event))
+			{
+				$duration_end->add(new DateInterval('PT1S'));
+			}    // whole day events are 1sec short
+			$duration = $event['start']->diff($duration_end);
+			$duration_seconds = (($duration->days * 24 + $duration->h) * 60 + $duration->i) * 60 + $duration->s;
+			if($duration->invert)
+			{
+				$duration_seconds *= -1;
+			}
+			$set['ts_duration'] = $duration_seconds / 60;
+			$set['ts_quantity'] = $duration_seconds / 3600;
 			$set['end_time'] = null;	// unset end-time
 			$set['cat_id'] = (int)$event['category'];
 

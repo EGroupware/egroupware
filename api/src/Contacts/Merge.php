@@ -135,12 +135,12 @@ class Merge extends Api\Storage\Merge
 					'time' => $GLOBALS['egw_info']['user']['preferences']['common']['timeformat'] == 12 ? 'h:i a' : 'H:i',
 				) as $name => $format)
 				{
-					$value = $event[$what] ? date($format,$event[$what]) : '';
+					$value = $event[$what] ? Api\DateTime::to($event[$what], $format) : '';
 					if ($format == 'l') $value = lang($value);
 					$replacements['$$calendar/'.$n.'/'.$what.$name.'$$'] = $value;
 				}
 			}
-			$duration = ($event['end'] - $event['start'])/60;
+			$duration = (Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts')) / 60;
 			$replacements['$$calendar/'.$n.'/duration$$'] = floor($duration/60).lang('h').($duration%60 ? $duration%60 : '');
 
 			++$n;

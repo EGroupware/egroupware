@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	pt-br	Permitir salvar en
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pt-br	Permite configurar o status de um registro. Ex. marque um Apontamento com o Status finalizado quando esta estiver terminada. (Os valores dependem do tipo de registro).
 alternatives	infolog	pt-br	Alternativas
 always show them	infolog	pt-br	Sempre mostrá-los
+always use details for crm	infolog	pt-br	Sempre usar detalhes no CRM
+always use no details for crm	infolog	pt-br	Sempre usar “sem detalhes” no CRM
 application mail expected but got: %1	infolog	pt-br	E-mail do aplicativo esperado, mas recebido: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	pt-br	Aplique a ação em toda a consulta, NÃO apenas nas entradas mostradas!
 apply the changes	infolog	pt-br	Aplicar as alterações
@@ -266,7 +268,7 @@ insert timestamp into description field	infolog	pt-br	Insira o carimbo da hora n
 invalid filename	infolog	pt-br	Nome de arquivo inválido
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	pt-br	ID de proprietário inválido: %1. Usado %2 em seu lugar.
 invalid status for entry type %1.	infolog	pt-br	Status inválido para o tipo de entrada %1.
-label<br>helptext	infolog	pt-br	Etiqueta<br>Texto para ajuda
+label<br>helptext	infolog	pt-br	Etiqueta\nTexto para ajuda
 last changed	infolog	pt-br	Última alteração
 last modified	infolog	pt-br	Última modificação
 leave blank to get the used time calculated by timesheet entries	infolog	pt-br	Deixe em branco para obter o tempo utilizado calculado pelas entradas da Folha de Horas
@@ -350,7 +352,7 @@ owner, responsible	infolog	pt-br	Proprietário, Responsável
 parent	infolog	pt-br	Pai
 parent infolog	infolog	pt-br	Registro de informações dos pais
 participants for scheduling an appointment	infolog	pt-br	Participantes para agendamento de um compromisso
-path on (web-)serverside<br>eg. /var/samba/share	infolog	pt-br	Caminho (web-)serverside<br>ex. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	pt-br	Caminho (web-)serverside\nex. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	pt-br	O diretório para os arquivos de usuário ou grupo DEVE ESTAR FORA da raiz de documentos do servidor web!
 pattern for search in addressbook	infolog	pt-br	Padrão para pesquisa no catálogo de endereços
 pattern for search in projects	infolog	pt-br	Padrão para pesquisa em projetos
@@ -407,6 +409,7 @@ responsible user, priority	infolog	pt-br	Usuário responsável, prioridade
 returns a list / search for records.	infolog	pt-br	Retornar uma lista / pesquisar por registros.
 rights for the responsible	infolog	pt-br	Permissões para o responsável
 rows	infolog	pt-br	Fileiras
+same as infolog list	infolog	pt-br	Igual à lista do InfoLog
 same day	infolog	pt-br	Mesmo dia
 save	infolog	pt-br	Salvar
 saves the changes made and leaves	infolog	pt-br	Salvar as alterações realizadas e sair
@@ -424,6 +427,7 @@ select a responsible user: a person you want to delegate this task	infolog	pt-br
 select a typ to edit it's status-values or delete it	infolog	pt-br	Selecione um tipo para editar o valor do status ou apague-o
 select an app to search in	infolog	pt-br	Selecione em que aplicativo a pesquisa será feita
 select an entry to link with	infolog	pt-br	Selecione um registro para link
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	pt-br	Selecione se a visualização do CRM deve usar o mesmo valor para (sem) detalhes que o InfoLog ou sempre “sem detalhes”.
 select multiple contacts for a further action	infolog	pt-br	Selecione múltiplos contatos para ação posterior
 select new category	infolog	pt-br	Selecionar nova categoria
 select to filter by owner	infolog	pt-br	Selecione para filtrar por proprietário

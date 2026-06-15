@@ -88,7 +88,18 @@ export function nm_action(_action, _senders, _target, _ids)
 	let mgr = _action instanceof EgwActionManager ? _action : _action.getManager();
 
 	var url = '#';
-	if (typeof _action.data.url != 'undefined')
+	if (typeof _action.data.url != 'undefined' &&
+		_ids.all === true &&
+		_action.data.url.includes('active_filters') &&
+		_action.data.nextmatch &&
+		_action.data.nextmatch.activeFilters
+	){
+		//Include current nm filter in url
+		url = _action.data.url.replace(/(\$|%24)active_filters/,encodeURIComponent(JSON.stringify(_action.data.nextmatch.activeFilters)))
+			// Include select all flag too
+			.replace(/(\$|%24)select_all/,_ids.all);
+	}
+	else if (typeof _action.data.url != 'undefined' )
 	{
 		// Add selected IDs to url
 		url = _action.data.url.replace(/(\$|%24)id/,encodeURIComponent(ids))
@@ -131,7 +142,7 @@ export function nm_action(_action, _senders, _target, _ids)
 			// instead of GET. We create a temporary <Form> and will post emails.
 			// ** WebServers and other browsers also have url length limit:
 			// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
-			if (url.length > 2083)
+			if (url.length > 4000)
 			{
 				var $tmpForm = jQuery(document.createElement('form'));
 				var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});

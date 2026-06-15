@@ -124,6 +124,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	tr	Süper kullanıcı
 superuser (root)	filemanager	tr	Süper kullanıcı (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	tr	Belge, verilerle değiştirilecek {{%3}} gibi yer tutucu içerebilir (%1yer tutucu adlarının tam listesi%2).
+the requested path %1 is not available.	filemanager	tr	İstenen yol %1 mevcut değil!
 username for webdav and smb, use $user for name of logged in user	filemanager	tr	WebDAV ve SMB için kullanıcı adı, oturum açan kullanıcının adı için $user kullanın
 vfs mounts and versioning	common	tr	VFS bağlama ve sürüm oluşturma
 webdavs: mount egroupware or *cloud shares	filemanager	tr	WebDAV: EGroupware veya *Cloud paylaşımlarını bağlama

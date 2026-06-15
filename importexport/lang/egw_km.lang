@@ -71,7 +71,6 @@ false	importexport	km	មិនពិត
 field labels	importexport	km	ស្លាកសញ្ញាវាល
 field names	importexport	km	ឈ្មោះវាល
 fieldseperator	importexport	km	អ្នកបំបែកវាល
-filters	importexport	km	តម្រង
 finish	importexport	km	បញ្ចប់
 from definition	importexport	km	ពីនិយមន័យ
 from file	importexport	km	ពីឯកសារ
@@ -105,7 +104,6 @@ no matching records	importexport	km	មិនមានកំណត់ត្រ�
 no notifications	importexport	km	គ្មានការជូនដំណឹងទេ។
 no records selected	importexport	km	មិនបានជ្រើសរើសកំណត់ត្រាទេ!
 none found	importexport	km	រកមិនឃើញទេ។
-old fixed definition	preferences	km	និយមន័យចាស់ថេរ
 please select file to import	importexport	km	សូមជ្រើសរើសឯកសារដែលត្រូវនាំចូល
 plugin	importexport	km	កម្មវិធីជំនួយ
 preview	importexport	km	មើលជាមុន
@@ -115,7 +113,6 @@ problems during import:	importexport	km	បញ្ហាក្នុងពេល�
 save as definition	importexport	km	រក្សាទុកជានិយមន័យ
 schedule	common	km	កាលវិភាគ
 schedule import / export	common	km	កាលវិភាគនាំចូល | នាំចេញ
-schedule import | export	importexport	km	កាលវិភាគនាំចូល | នាំចេញ
 schedule not found	importexport	km	រកមិនឃើញកាលវិភាគទេ។
 schedule times are server time!  currently %s.	importexport	km	តារាងពេលវេលាគឺជាម៉ោងម៉ាស៊ីនមេ! បច្ចុប្បន្ន %s
 select definition	importexport	km	ជ្រើសរើសនិយមន័យ

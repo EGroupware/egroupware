@@ -178,7 +178,7 @@ infolog preferences	common	zh-tw	記事本設定
 infolog-fieldname	infolog	zh-tw	記事本 - 欄位名稱
 insert in document	infolog	zh-tw	插入文件
 invalid filename	infolog	zh-tw	錯誤的檔案名稱
-label<br>helptext	infolog	zh-tw	標籤<br>說明文字
+label<br>helptext	infolog	zh-tw	標籤\n說明文字
 last changed	infolog	zh-tw	最後修改
 last modified	infolog	zh-tw	最後修改
 leave it empty	infolog	zh-tw	保持空白
@@ -236,7 +236,7 @@ own open	infolog	zh-tw	開啟自己的
 own overdue	infolog	zh-tw	自己的過期
 own upcoming	infolog	zh-tw	自己的即將來臨
 parent	infolog	zh-tw	上一層
-path on (web-)serverside<br>eg. /var/samba/share	infolog	zh-tw	伺服器(網站-)路徑<br>例如/var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	zh-tw	伺服器(網站-)路徑\n例如/var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	zh-tw	使用者與群組檔案路徑必須在網站伺服器的網頁根目錄之外！
 pattern for search in addressbook	infolog	zh-tw	搜尋通訊錄的條件
 pattern for search in projects	infolog	zh-tw	搜尋專案的條件

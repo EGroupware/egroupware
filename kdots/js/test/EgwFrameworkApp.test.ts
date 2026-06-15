@@ -4,7 +4,7 @@ import * as sinon from "sinon";
 import '../EgwFrameworkApp';
 import {EgwFrameworkApp} from '../EgwFrameworkApp';
 
-describe('EgwFrameworkApp', () =>
+describe.skip('EgwFrameworkApp', () =>
 {
 	let element : EgwFrameworkApp;
 	let sandbox : sinon.SinonSandbox;

@@ -140,7 +140,11 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 			curl_setopt($curl, CURLOPT_NOBODY, true);
 			break;
 	}
-	$header = array_merge($header, ['User-Agent: '.basename(__FILE__, '.php'), $authorization[parse_url($url, PHP_URL_HOST)]]);
+	$header = $header+['User-Agent' => basename(__FILE__, '.php')];
+	if (isset($authorization[parse_url($url, PHP_URL_HOST)]))
+	{
+		$header[] = $authorization[parse_url($url, PHP_URL_HOST)];
+	}
 	if (in_array(strtoupper($method), ['POST', 'PUT', 'PATCH', 'REPORT', 'PROPFIND', 'PROPPATCH']))
 	{
         if (is_resource($body))
@@ -151,7 +155,7 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
         }
         curl_setopt($curl, is_resource($body) ? CURLOPT_INFILE : CURLOPT_POSTFIELDS, is_array($body) ? json_encode($body) : $body);
 	}
-    if (!array_filter($header, function($header)
+    if (!isset($header['Accept']) && !array_filter($header, static function($header)
     {
         return stripos($header, 'Accept:') === 0;
     }))

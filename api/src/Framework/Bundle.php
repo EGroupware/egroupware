@@ -310,8 +310,6 @@ class Bundle
 	static public $exclude = [
 		// api/js/jsapi/egw.js loaded via own tag, and we must not load it twice!
 		'api/js/jsapi/egw.js',
-		// TinyMCE is loaded separate before the bundle
-		'vendor/tinymce/tinymce/tinymce.min.js',
 		// CRM.js from addressbook is also used in infolog, so it can't be bundled with either!
 		'addressbook/js/CRM.js',
 	];

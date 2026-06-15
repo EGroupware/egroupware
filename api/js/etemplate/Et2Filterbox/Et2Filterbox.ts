@@ -20,7 +20,7 @@ import shoelace from "../Styles/shoelace";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_IInput} from "../et2_core_interfaces";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 
 /**
  * @summary A list of filters ( from a nextmatch )
@@ -77,6 +77,8 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	protected _groups : {
 		[nextmatch_id : string] : { [name : string] : { filters : Filter[], order : number, dataId? : string } }
 	} = {};
+	private _filterTemplateUpdateToken : number = 0;
+	private _activeFilterTemplate : HTMLElement | null = null;
 
 	constructor()
 	{
@@ -240,63 +242,81 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		// Found a nextmatch and there's no custom filter - autogenerate filters
 		if(this._nextmatch)
 		{
+			const nextmatchNode = typeof this._nextmatch.getDOMNode === "function" ? this._nextmatch.getDOMNode() : this._nextmatch;
 			// Don't bind now, nextmatch probably isn't loaded yet
 			// @ts-ignore template_promise is private, but et2_nextmatch doesn't have updateComplete()
 			(this._nextmatch.template_promise ?? Promise.resolve()).then(() => this.readNextmatchFilters());
 
-			this._nextmatch.getDOMNode().addEventListener("et2-filter", this.handleNextmatchFilter);
-			this._nextmatch.getDOMNode().classList.add("et2-filterbox--loaded");
+			nextmatchNode?.addEventListener?.("et2-filter", this.handleNextmatchFilter);
+			nextmatchNode?.classList?.add("et2-filterbox--loaded");
 		}
 	}
 
 	public async readNextmatchFilters()
 	{
+		const nextmatchNode = typeof this._nextmatch?.getDOMNode === "function" ? this._nextmatch.getDOMNode() : this._nextmatch;
+
 		// Wait for nextmatch widgets to finish or we'll miss settings
-		let waitForWebComponents = [];
-		this._nextmatch.getChildren().forEach((w) =>
+		const waitForWebComponents = [];
+		if(typeof this._nextmatch?.getChildren === "function")
 		{
-			// @ts-ignore
-			if(typeof w.updateComplete !== "undefined")
+			this._nextmatch.getChildren().forEach((w) =>
 			{
 				// @ts-ignore
-				waitForWebComponents.push(w.updateComplete)
-			}
-		});
+				if(typeof w.updateComplete !== "undefined")
+				{
+					// @ts-ignore
+					waitForWebComponents.push(w.updateComplete)
+				}
+			});
+		}
+		// @ts-ignore updateComplete exists on web components
+		else if(typeof this._nextmatch?.updateComplete !== "undefined")
+		{
+			// @ts-ignore
+			waitForWebComponents.push(this._nextmatch.updateComplete);
+		}
 		await Promise.all(waitForWebComponents);
 
-		// @ts-ignore header is private
-		this._nextmatch.header.header_div[0]
-			.querySelectorAll(".et2-input-widget")
-			.forEach((widget : HTMLElement) =>
-			{
-				this._adoptNextmatchWidget(widget);
-			});
+		if(this._nextmatch?.header?.header_div?.[0])
+		{
+			// @ts-ignore header is private
+			this._nextmatch.header.header_div[0]
+				.querySelectorAll(".et2-input-widget")
+				.forEach((widget : HTMLElement) =>
+				{
+					this._adoptNextmatchWidget(widget);
+				});
+		}
 
 		// Now for column headers
-		const filters = Array.from(this._nextmatch.getDOMNode().querySelectorAll("et2-nextmatch-header-filter, et2-nextmatch-header-account, et2-nextmatch-header-entry, et2-nextmatch-header-custom"));
+		const filters = Array.from(nextmatchNode?.querySelectorAll?.("et2-nextmatch-header-filter, et2-nextmatch-header-account, et2-nextmatch-header-entry, et2-nextmatch-header-custom") ?? []);
 		filters.forEach((widget : HTMLElement) =>
 		{
 			this._adoptNextmatchWidget(widget);
 		});
 
-		this._nextmatch.getDOMNode().classList.add("et2-filterbox--" + this.originalWidgets);
+		nextmatchNode?.classList?.add("et2-filterbox--" + this.originalWidgets);
 
-		// If the nextmatch has sub-headers and we didn't grab everything from them, mark the NM so we don't hide them
-		const subHeaders = ["header_left", "header_right", "header_row", "header2"];
-		subHeaders.forEach(subHeader =>
+		if(this._nextmatch?.options)
 		{
-			if(this._nextmatch.options[subHeader])
+			// If the nextmatch has sub-headers and we didn't grab everything from them, mark the NM so we don't hide them
+			const subHeaders = ["header_left", "header_right", "header_row", "header2"];
+			subHeaders.forEach(subHeader =>
 			{
-				const subTemplate = this._nextmatch.getWidgetById(this._nextmatch.options[subHeader]);
-				if(subTemplate && subTemplate.childElementCount > 0)
+				if(this._nextmatch.options[subHeader])
 				{
-					this._nextmatch.getDOMNode().classList.add("et2-filterbox--has-header");
+					const subTemplate = this._nextmatch.getWidgetById(this._nextmatch.options[subHeader]);
+					if(subTemplate && subTemplate.childElementCount > 0)
+					{
+						nextmatchNode?.classList?.add("et2-filterbox--has-header");
+					}
 				}
+			});
+			if(this._nextmatch.options.settings?.lettersearch)
+			{
+				nextmatchNode?.classList?.add("et2-filterbox--has-lettersearch");
 			}
-		});
-		if(this._nextmatch.options.settings.lettersearch)
-		{
-			this._nextmatch.getDOMNode().classList.add("et2-filterbox--has-lettersearch");
 		}
 		this.requestUpdate();
 	}
@@ -429,16 +449,87 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 
 	private handleSlotChange(event)
 	{
-		// What changed?
-		debugger;
+		// Slot content can be dynamic; trigger re-evaluation for value mapping.
+		this.requestUpdate();
 	}
+
+	/**
+	 * Public API used by nextmatch to apply a filter template source.
+	 *
+	 * @param template string template id/url or ready template element
+	 */
+	public setFilterTemplate(template : string | Et2Template | HTMLElement | null)
+	{
+		void this._setFilterTemplate(template);
+	}
+
+	/**
+	 * Apply a filter template from string/template element with deterministic race handling.
+	 *
+	 * We deliberately avoid timer-based waiting and use a monotonic token so only the
+	 * latest requested template can be attached.
+	 */
+	private async _setFilterTemplate(template : string | Et2Template | HTMLElement | null)
+	{
+		const updateToken = ++this._filterTemplateUpdateToken;
+		this._activeFilterTemplate?.remove();
+		this._activeFilterTemplate = null;
+
+		if(!template)
+		{
+			return;
+		}
+
+		let templateElement : HTMLElement | null = null;
+		if(typeof template === "string")
+		{
+			const isUrl = /^(http|\/).*\.xet($|\?)/.test(template);
+			templateElement = <Et2Template><unknown>loadWebComponent("et2-template", {
+				id: "filter-template",
+				template: isUrl ? "" : template,
+				url: isUrl ? template : ""
+			}, this);
+		}
+		else if(template instanceof HTMLElement)
+		{
+			templateElement = template;
+		}
+		if(!templateElement)
+		{
+			return;
+		}
+
+		const load = (templateElement as any).load;
+		if(typeof load === "function")
+		{
+			try
+			{
+				await load.call(templateElement);
+			}
+			catch(e)
+			{
+				if(updateToken === this._filterTemplateUpdateToken)
+				{
+					console.error(e);
+				}
+				return;
+			}
+		}
+		if(updateToken !== this._filterTemplateUpdateToken)
+		{
+			return;
+		}
+		this._activeFilterTemplate = templateElement;
+		this.append(templateElement);
+	}
+
 	render()
 	{
 		const hasLabelSlot = this.hasSlotController.test('label');
 		const hasHelpTextSlot = this.hasSlotController.test('help-text');
 		const hasLabel = this.label ? true : !!hasLabelSlot;
 		const hasHelpText = this.helpText ? true : !!hasHelpTextSlot;
-		const hasClearButton = this.clearable && !this.disabled && this.value.length > 0;
+		const hasClearButton = this.clearable && !this.disabled && Object.keys(this.value || {}).length > 0;
 
 		return html`
             <div

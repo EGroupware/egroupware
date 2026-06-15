@@ -86,7 +86,6 @@ problems during import:	importexport	es-es	Problemas durante la importación:
 save as definition	importexport	es-es	Guardar como definición
 schedule	common	es-es	Planificar
 schedule import / export	common	es-es	Planificar importación/exportación
-schedule import | export	importexport	es-es	Planificar importación/exportación
 schedule not found	importexport	es-es	No se encontró la planificación
 select definition	importexport	es-es	Seleccionar definición
 select plugin	importexport	es-es	Seleccionar plugin

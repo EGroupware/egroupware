@@ -172,6 +172,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	sv	Superanvändare
 superuser (root)	filemanager	sv	Superanvändare (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sv	Dokumentet kan innehålla platshållare som {{%3}}, som ska ersättas med data (%1full lista över platshållarnamn%2).
+the requested path %1 is not available.	filemanager	sv	Den begärda sökvägen %1 finns inte!
 total files	filemanager	sv	Totalt antal filer
 unused space	filemanager	sv	Ledigt utrymme
 up	filemanager	sv	Upp

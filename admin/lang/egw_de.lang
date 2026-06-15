@@ -1,3 +1,6 @@
+-  type	admin	de	-Typ
+(de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
+(no subject)	admin	de	(Kein Betreff)
 %1 %2 rights for %3 on %4 to %5	admin	de	%1 %2 Rechte für %3 auf %4 bis %5
 %1 access to other data	admin	de	Zugriffsrechte %1 auf Daten anderer
 %1 accounts being activated	admin	de	%1 Konten werden aktiviert
@@ -21,9 +24,6 @@
 %1 successful	admin	de	%1 erfolgreich
 %1 token %2.	admin	de	%1 Token %2.
 %1 user %2	admin	de	%1 Benutzer %2
-(de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
-(no subject)	admin	de	(Kein Betreff)
--  type	admin	de	-Typ
 1 year	admin	de	1 Jahr
 2 month	admin	de	2 Monate
 2 weeks	admin	de	2 Wochen
@@ -35,10 +35,10 @@ access control	admin	de	Zugriffsrechte
 access to %1 data by others	admin	de	Zugriffsrechte %1 durch andere
 access token revoked.	admin	de	Zugangstoken widerrufen.
 account	admin	de	Konto
+account '%1' deleted.	admin	de	Konto '%1' gelöscht.
 account "%1" has no email address --> not notified!	admin	de	Benutzer "%1" hat keine E-Mail-Adresse --> nicht benachrichtigt!
 account "%1" has no plaintext password!	admin	de	Benutzer "%1" hat kein Klartext-Passwort!
 account %1 %2	admin	de	Benutzerkonto %1 %2
-account '%1' deleted.	admin	de	Konto '%1' gelöscht.
 account active	admin	de	Konto aktiv
 account deleted.	admin	de	Mail-Konto gelöscht.
 account has been created	common	de	Konto wurde erstellt.
@@ -105,7 +105,9 @@ all applications of the user	admin	de	Alle Anwendungen des Benutzers
 all groups	admin	de	Alle Gruppen
 all records and account information will be lost!	admin	de	Alle Datensätze und Kontoinformationen sind dann verloren!
 all users	admin	de	Alle Benutzer
+allow	admin	de	Erlauben
 allow anonymous access to this app	admin	de	Anonymen Zugriff auf diese Anwendung zulassen
+allow or deny	admin	de	Erlauben oder Verbieten
 allow remote administration from following install id's (comma separated)	admin	de	Erlaube die Remote-Verwaltung durch folgende (Komma separierte) Installation-IDs.
 allow the user to store his password under 'security & passwords' for singlesignon.	admin	de	Erlaubt dem Benutzer sein Passwort unter 'Sicherheit & Passwort' für SingleSignOn zu speichern.
 allow user to set 'remember me' token	admin	de	Erlaube Benutzer ein "An mich erinnern" Token zu setzen
@@ -178,8 +180,8 @@ cancel changes	admin	de	Änderungen abbrechen
 cancel testjob!	admin	de	Test-Job abbrechen!
 cancel this scheduled command	admin	de	Diesen geplanten Befehl abbrechen
 categories list	admin	de	Liste der Kategorien
-category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert!
 category '%1' deleted	admin	de	Kategorie '%1' wurde gelöscht
+category %1 has been saved !	admin	de	Kategorie %1 wurde gespeichert!
 category deleted.	admin	de	Kategorie gelöscht.
 category list	admin	de	Kategorieliste
 category saved.	admin	de	Kategorie gespeichert.
@@ -271,6 +273,8 @@ debug	admin	de	Fehler suchen
 default	admin	de	Vorgabe
 default file system space per user	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer
 default file system space per user/group ?	admin	de	Vorgabewert für Dateisystemplatz pro Benutzer/Gruppe verwenden?
+default matches	admin	de	Vorgabe Treffer
+default number of matches, if no limit is specified in the request	admin	de	Vorgabe Anzahl Treffer, wenn in der Anfrage kein Limit angegeben wurde
 default of currently	admin	de	Vorgabe aktuell
 deinstall crontab	admin	de	Crontab deinstallieren
 delete account	admin	de	Benutzerkonto löschen
@@ -297,6 +301,7 @@ delete this user	admin	de	Benutzer löschen
 deleted	admin	de	gelöscht
 deletes this field	admin	de	Löscht dieses Feld
 deliver extern	admin	de	Extern ausliefern
+deny	admin	de	Verbieten
 deny access	admin	de	Zugriff verweigern
 deny access to access log	admin	de	Zugriff auf Zugangsprotokoll verbieten
 deny access to application registery	admin	de	Zugriff auf Anwendungsdatenbank verbieten
@@ -382,10 +387,10 @@ enter a passphrase if you would like to protect your private key by password.	ad
 enter some random text for app_session <br>encryption (requires mcrypt)	admin	de	Zufälligen Text für app_session\nVerschlüsselung (benötigt mcrypt)
 enter the background color for the login page	admin	de	Hintergrundfarbe für die Anmeldeseite
 enter the background color for the site title	admin	de	Hintergrundfarbe für den Titel der Installation
-enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.\nBeispiel: /tmp, C:\TEMP
 enter the full path for temporary files.<br>examples: /tmp, c:\temp	admin	de	Vollständiger Pfad für temporäre Dateien.\nBeispiel: /tmp, C:\TEMP
-enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.\nBeispiel: /files, E:\Files
+enter the full path for temporary files.<br>examples: /tmp, c:temp	admin	de	Vollständiger Pfad für temporäre Dateien.\nBeispiel: /tmp, C:\TEMP
 enter the full path for users and group files.<br>examples: /files, e:\files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.\nBeispiel: /files, E:\Files
+enter the full path for users and group files.<br>examples: /files, e:files	admin	de	Vollständiger Pfad für Benutzer- und Gruppen-Dateien.\nBeispiel: /files, E:\Files
 enter the hostname of the machine on which this server is running	admin	de	Hostname des Computers auf dem der Server läuft
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	de	URL zur EGroupware-Installation.\nBeispiel: https://egw.domain.com/egroupware or /egroupware\n<b>keinen nachfolgenden Slash /</b>
 enter the search string. to show all entries, empty this field and press the submit button again	admin	de	Geben Sie Ihren Suchbegriff ein. Um alle Einträge anzuzeigen geben Sie keinen Begriff ein und drücken Sie den Suchen-Knopf noch einmal
@@ -406,8 +411,8 @@ entries owned by the user:	admin	de	Einträge des Benutzers:
 entry saved	admin	de	Eintrag gespeichert
 error canceling timer, maybe there's none set !!!	admin	de	Fehler beim Abbrechen des Test-Jobs, eventuell läuft gar kein Job!
 error changing the password for %1 !!!	admin	de	Fehler beim Ändern des Passworts für %1!
-error connecting to imap server. %s : %s.	admin	de	Fehler beim Verbinden mit dem IMAP Server. %s : %s.
 error connecting to imap server: [%s] %s.	admin	de	Fehler beim Verbinden mit dem IMAP Server. [%s] %s.
+error connecting to imap server. %s : %s.	admin	de	Fehler beim Verbinden mit dem IMAP Server. %s : %s.
 error deleting entry!	admin	de	Fehler beim Löschen des Eintrags!
 error deleting log entry!	admin	de	Fehler beim Löschen des Protokolleintrags!
 error revoking token!	admin	de	Fehler beim Widerrufen des Token!
@@ -418,9 +423,9 @@ error saving the entry!!!	admin	de	Fehler beim Speichern!
 error saving to db:	admin	de	Fehler beim Speichern in der Datenbank:
 error setting timer, wrong syntax or maybe there's one already running !!!	admin	de	Fehler beim Starten des Test-Jobs, falsche Syntax oder es läuft schon einer!
 error storing token!	admin	de	Fehler beim Speichern des Token!
-error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden!
 error, no username!	admin	de	Fehler, kein Benutzername!
 error: %1 not found or other error !!!	admin	de	Fehler: %1 nicht gefunden oder anderer Fehler!
+error! no appname found	admin	de	Fehler: Kein Anwendungsname gefunden!
 event details follow	admin	de	Hier die Details des Termins
 exists	admin	de	Existiert
 expired	admin	de	Abgelaufen
@@ -465,10 +470,10 @@ global options	admin	de	Globale Optionen
 go directly to admin menu, returning here the next time you click on administration.	admin	de	Geht direkt zum Administrationsmenü, kehrt hier her zurück wenn Sie das nächste mal auf die Administration klicken.
 governmental: incl. state or municipal authorities or services	admin	de	Öffentlicher Dienst: Bundes-, Länder- oder städtische Behörden und Dienstleistungen
 grant	admin	de	Berechtigungen
+group ?	admin	de	Gruppe?
+group '%1' deleted.	admin	de	Gruppe '%1' wurde gelöscht.
 group #%1 must have negative sign!	admin	de	Benutzergruppe #%1 muss ein negatives Vorzeichen besitzen!
 group %1 %2	admin	de	Gruppe %1 %2
-group '%1' deleted.	admin	de	Gruppe '%1' wurde gelöscht.
-group ?	admin	de	Gruppe?
 group csv export	admin	de	CSV-Export von Gruppen
 group csv import	admin	de	CSV-Import von Gruppen
 group excepted from above export limit (admins are always excepted)	admin	de	Gruppen, die vom oben angegeben Exportlimit ausgenommen sind (Administratoren sind immer ausgenommen)
@@ -670,6 +675,7 @@ one hour	admin	de	Eine Stunde
 one month	admin	de	Ein Monat
 one week	admin	de	Eine Woche
 only below displayed information is directly submitted to %s.	admin	de	Nur die unterhalb angezeigte Information wird direkt zu %s übertragen.
+openapi configuration	admin	de	OpenAPI Konfiguration
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 organisation	admin	de	Organisation
@@ -693,6 +699,7 @@ peer server list	admin	de	Liste der Server im Verbund
 peer servers	admin	de	Server-Verbund
 percent of users that logged out	admin	de	Prozent der Benutzer, die sich korrekt abgemeldet haben
 periodic	admin	de	Periodisch
+perl regular expression	admin	de	Perl Regulärer Ausdruck
 permission denied	admin	de	Zugriff verweigert
 permission denied !!!	admin	de	Zugriff verweigert!
 permission denied!!!	admin	de	Zugriff verweigert!
@@ -886,6 +893,7 @@ token created.	admin	de	Token erzeugt.
 token not found!	admin	de	Token nicht gefunden!
 token revoked.	admin	de	Token widerrufen.
 token saved.	admin	de	Token gespeichert.
+tools / operationids	admin	de	Werkzeuge / operationIds
 top	admin	de	Oben
 total of %1 accounts deleted.	admin	de	Insgesamt %1 Benutzerkonten gelöscht.
 total of %1 id's changed.	admin	de	Die Gesamtanzahl von %1 IDs wurde geändert.
@@ -943,12 +951,13 @@ user for smtp-authentication (leave it empty if no auth required)	admin	de	Benut
 user groups	admin	de	Benutzergruppen
 user hidden from non-admins.	admin	de	Benutzer versteckt für Nicht-Administratoren
 user-agent	admin	de	Browser
+user-agent regular expression	admin	de	Browser User-Agent regulärer Ausdruck
 userdata	admin	de	Benutzerkonto
 userid@domain eg. u1234@domain	admin	de	UserId@domain z.B. u1234@domain
 username (standard)	admin	de	Benutzername (Standard)
 username specified below for all	admin	de	Unten angegebener Benutzername für alle
-username/password defined by admin	admin	de	Benutzername / Passwort vordefiniert
 username@domainname (virtual mail manager)	admin	de	Benutzername@Domänenname (Virtual MAIL ManaGeR)
+username/password defined by admin	admin	de	Benutzername / Passwort vordefiniert
 users can define their own emailaccounts	admin	de	Anwender können ihre eigenen Konten definieren
 users can define their own identities	admin	de	Anwender können ihre eigenen Identitäten definieren
 users can define their own signatures	admin	de	Anwender können ihre eigenen Signaturen definieren

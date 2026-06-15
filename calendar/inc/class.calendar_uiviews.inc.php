@@ -561,7 +561,10 @@ class calendar_uiviews extends calendar_ui
 			$start = new Api\DateTime($this->date);
 			$start->setWeekstart();
 			$this->first = $start->format('ts');
-			$this->last = strtotime("+$weeks weeks",$this->first) - 1;
+			$end = clone $start;
+			$end->add(new DateInterval("P{$weeks}W"));
+			$end->modify('-1 second');
+			$this->last = $end->format('ts');
 			$weekNavH = "$weeks weeks";
 			$navHeader = lang('Week').' '.$this->week_number($this->first).' - '.$this->week_number($this->last).': '.
 				$this->bo->long_date($this->first,$this->last);
@@ -653,7 +656,10 @@ class calendar_uiviews extends calendar_ui
 		if ($days <= 4)		// next 4 days view
 		{
 			$wd_start = $this->first = $this->bo->date2ts($this->date);
-			$this->last = strtotime("+$days days",$this->first) - 1;
+			$end = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
+			$end->add(new DateInterval("P{$days}D"));
+			$end->modify('-1 second');
+			$this->last = $end->format('ts');
 			$view = $days == 1 ? 'day' : 'day4';
 		}
 		else
@@ -666,14 +672,21 @@ class calendar_uiviews extends calendar_ui
 				switch($this->cal_prefs['weekdaystarts'])
 				{
 					case 'Saturday':
-						$this->first = strtotime("+2 days",$this->first);
+						$shift = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
+						$shift->modify('+2 days');
+						$this->first = $shift->format('ts');
 						break;
 					case 'Sunday':
-						$this->first = strtotime("+1 day",$this->first);
+						$shift = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
+						$shift->modify('+1 day');
+						$this->first = $shift->format('ts');
 						break;
 				}
 			}
-			$this->last = strtotime("+$days days",$this->first) - 1;
+			$end = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
+			$end->add(new DateInterval("P{$days}D"));
+			$end->modify('-1 second');
+			$this->last = $end->format('ts');
 			$view = 'week';
 		}
 
@@ -715,7 +728,13 @@ class calendar_uiviews extends calendar_ui
 		else
 		{
 			// Always do 7 days for a week so scrolling works properly
-			$this->last = ($days == 4 ? $this->last : $search_params['end'] = strtotime("+$days days",$this->first) - 1);
+			if($days != 4)
+			{
+				$end = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
+				$end->add(new DateInterval("P{$days}D"));
+				$end->modify('-1 second');
+				$this->last = $search_params['end'] = $end->format('ts');
+			}
 			if (count($users) == 1 || count($users) >= $this->cal_prefs['week_consolidate']	||// for more then X users, show all in one row
 				$days == 1 // Showing just 1 day
 			)

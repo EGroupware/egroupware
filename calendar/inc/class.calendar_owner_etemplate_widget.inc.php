@@ -213,12 +213,22 @@ class calendar_owner_etemplate_widget extends Etemplate\Widget\Taglist
 		$GLOBALS['egw']->session->commit_session();
 
 		$bo = new calendar_bo();
+		if(isset($search_options['exec']['start']) && !is_object($search_options['exec']['start']))
+		{
+			$search_options['exec']['start'] = new Api\DateTime(substr($search_options['exec']['start'], 0, -1));
+		}
+		if(isset($search_options['exec']['end']) && !is_object($search_options['exec']['end']))
+		{
+			$search_options['exec']['end'] = new Api\DateTime(substr($search_options['exec']['end'], 0, -1));
+		}
 
 		// Arbitrarily limited to 50 / resource
 		$options = array('start'  => 0, 'num_rows' => 50,
-						 // Filter accounts out of addressbook
-						 'filter' => array('account_id' => null)) +
+		                 // Filter accounts out of addressbook
+		                 'filter' => array('account_id' => null)) +
 			$search_options;
+
+
 		$results = array();
 		$is_admin = !empty($GLOBALS['egw_info']['user']['apps']['admin']);
 		$total = 0;

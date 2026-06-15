@@ -75,7 +75,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 		$this->fix_id($participant);
 
 		// Get test event
-		$event = $old_event = $this->get_event();
+		$old_event = $this->get_event();
+		$event = $this->cloneEvent($old_event);
 
 		// No change
 		$event['participant'] = $old_event['participant'] = $participant;
@@ -104,13 +105,14 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 		$participant[$this->account_id] = 'A';
 
 		// Get test event
-		$event = $old_event = $this->get_event();
+		$old_event = $this->get_event();
+		$event = $this->cloneEvent($old_event);
 		$event['owner'] = $old_event['owner'] = $this->account_id;
 		$event['participants'] = $old_event['participants'] = $participant;
 
 		// Forward 1 hour
-		$event['start'] += 3600;
-		$event['end'] += 3600;
+		$event['start']->modify('+1 hour');
+		$event['end']->modify('+1 hour');
 
 		// Set preference to only if start day changes, so no reset is done
 		$pref = array(
@@ -158,7 +160,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	public function testChangeUsesPreference($change_preference)
 	{
 		// Get test event
-		$event = $old_event = $this->get_event();
+		$old_event = $this->get_event();
+		$event = $this->cloneEvent($old_event);
 		$participant = $event['participants'] = $old_event['participants'] = array(
 			// Current user is never changed
 			$this->bo->user => 'A',
@@ -177,8 +180,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 		$pref_command->run();
 
 		// Forward 1 day
-		$event['start'] += 24*3600;
-		$event['end'] += 24*3600;
+		$event['start']->modify('+1 day');
+		$event['end']->modify('+1 day');
 
 		// Check & reset status
         $reset = $this->check_method->invokeArgs($this->bo, array(&$event, $old_event));
@@ -210,7 +213,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 	public function testResourceAvailability()
 	{
 		// Get test event
-		$event = $old_event = $this->get_event();
+		$old_event = $this->get_event();
+		$event = $this->cloneEvent($old_event);
 		$participant = $event['participants'] = $old_event['participants'] = array(
 			'r1' => 'A1',
 			'r2' => 'A1',
@@ -218,8 +222,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 
 		// Set a conflict on r2 - need a real event in the DB
 		$conflict = $this->get_event();
-		$conflict['start'] += 24 * 3600;
-		$conflict['end'] += 24 * 3600;
+		$conflict['start']->modify('+1 day');
+		$conflict['end']->modify('+1 day');
 		$conflict['participants']['r2'] = 'A1';
 
 		$this->event_ids[] = $this->bo->save($conflict);
@@ -235,8 +239,8 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 		$pref_command->run();
 
 		// Forward 1 day
-		$event['start'] += 24 * 3600;
-		$event['end'] += 24 * 3600;
+		$event['start']->modify('+1 day');
+		$event['end']->modify('+1 day');
 
 		// Check & reset status
 		$reset = $this->check_method->invokeArgs($this->bo, array(&$event, $old_event));
@@ -251,9 +255,21 @@ class ResetParticipantStatusTest extends \EGroupware\Api\AppTest
 		return array(
 			'title' => 'Test event for ' . $this->name(),
 			'owner' => $GLOBALS['egw_info']['user']['account_id'],
-			'start' => 1602324600,
-			'end'   => 1602328200
+			'start' => new Api\DateTime(1602324600, Api\DateTime::$server_timezone),
+			'end'   => new Api\DateTime(1602328200, Api\DateTime::$server_timezone),
 		);
+	}
+
+	protected function cloneEvent(array $event) : array
+	{
+		foreach (['start', 'end', 'recur_enddate', 'recurrence', 'created', 'modified', 'deleted'] as $name)
+		{
+			if (!empty($event[$name]) && $event[$name] instanceof Api\DateTime)
+			{
+				$event[$name] = clone $event[$name];
+			}
+		}
+		return $event;
 	}
 
 	protected function make_test_user()

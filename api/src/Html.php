@@ -436,17 +436,16 @@ class Html
 	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
 	* @param string $_executeJSAfterInit ='' Javascript to be executed after InstanceReady of CKEditor
 	* @return string the necessary html for the textarea
-	*/
+	 * @deprecated
+	 */
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
 		$_height='400px', $_width='100%',$_start_path='',$_purify=true, $_focusToBody=false, $_executeJSAfterInit='')
 	{
 		//not used anymore but defined in function signature
 		unset ($_options);
 
-		if (!self::htmlarea_availible() || $_mode == 'ascii')
-		{
-			return self::textarea($_name,$_content,'style="width: '.$_width.'; height: '.$_height.';" id="'.htmlspecialchars($_name).'"');
-		}
+		return self::textarea($_name, $_content, 'style="width: ' . $_width . '; height: ' . $_height . ';" id="' . htmlspecialchars($_name) . '"');
+
 
 		//include the ckeditor js file
 		Framework::includeJS('/vendor/tinymce/tinymce/tinymce.min.js');

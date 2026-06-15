@@ -6,6 +6,8 @@
 	bootstrap="phpunit_bootstrap.php"
 >
 	<php>
+        <!-- Local override without committing: EGW_URL="http://your-host/egroupware" vendor/bin/phpunit -c doc/phpunit.xml -->
+        <env name="EGW_URL" value="http://localhost/egroupware"/>
         <var name="EGW_DOMAIN" value="default" />
         <var name="EGW_USER" value="demo" />
         <var name="EGW_PASSWORD" value="guest" />
@@ -26,12 +28,10 @@
 	        </testsuite>
 		<testsuite name="Apps">
 			<!-- Apps with test directory -->
-            <!-- Skip these for now, though they do mostly work locally
 			<directory>../*/tests/</directory>
-			-->
 
-			<exclude>../api</exclude>
-            <exclude>../invoices</exclude>
+            <!-- Already done under "Api" testsuite -->
+            <exclude>../api</exclude>
 		</testsuite>
     </testsuites>
 </phpunit>

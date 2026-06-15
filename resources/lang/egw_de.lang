@@ -122,8 +122,8 @@ resource / accessories	resources	de	Ressource / Zubehör
 resource id	resources	de	Ressourcen ID
 resources	common	de	Ressourcen
 resources and accessories	resources	de	Ressourcen und Zubehör
-resources csv export	resources	de	CSV Export des Ressourcen-Moduls
-resources csv import	resources	de	CSV Import des Ressourcen-Moduls
+resources csv export	resources	de	CSV-Export des Ressourcen-Moduls
+resources csv import	resources	de	CSV-Import des Ressourcen-Moduls
 resources list	resources	de	Ressourcen Liste
 responsible:	resources	de	Verantwortlich:
 restored	resources	de	wiederhergestellt

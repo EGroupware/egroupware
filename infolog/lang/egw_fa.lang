@@ -144,7 +144,7 @@ infolog list	infolog	fa	فهرست کارها
 infolog preferences	common	fa	تنظیمات کارها
 infolog-fieldname	infolog	fa	ثبت اطلاعات - نام فیلد
 invalid filename	infolog	fa	نام پرونده نامعتبر
-label<br>helptext	infolog	fa	برچسب <br> متن راهنما
+label<br>helptext	infolog	fa	برچسب \n متن راهنما
 last changed	infolog	fa	آخرین تغییرات
 last modified	infolog	fa	آخرین تغییرات
 leave it empty	infolog	fa	خالی بگذارید

@@ -13,6 +13,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Acl;
+use EGroupware\Api\DateTime;
 
 /**
  * iCal import and export via Horde iCalendar classes
@@ -255,7 +256,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			$organizerURL = '';
 			$organizerCN = false;
-			$recurrence = $this->date2usertime($recur_date);
+			$recurrence = Api\DateTime::server2user($recur_date, 'ts');
 			$tzid = null;
 
 			if ((!is_array($event) || empty($event['tzid']) && ($event = $event['id'])) &&
@@ -337,10 +338,11 @@ class calendar_ical extends calendar_boupdate
 
 				if (!isset($this->supportedFields['participants']))
 				{
-					$days = $this->so->get_recurrence_exceptions($master, $tzid, 0, 0, 'tz_rrule');
-					if (isset($days[$recurrence]))
+					$days = $this->so->get_recurrence_exceptions($master, $tzid, null, null, 'tz_rrule');
+					$recurrence_key = Api\DateTime::to($recurrence, DateTime::DATABASE);
+					if (isset($days[$recurrence_key]))
 					{
-						$recurrence = $days[$recurrence]; // use remote representation
+						$recurrence = $days[$recurrence_key]; // use remote representation
 					}
 					else
 					{
@@ -356,13 +358,14 @@ class calendar_ical extends calendar_boupdate
 				}
 				else
 				{
-					$days = $this->so->get_recurrence_exceptions($master, $tzid, 0, 0, 'rrule');
+					$days = $this->so->get_recurrence_exceptions($master, $tzid, null, null, 'rrule');
 					if ($this->log)
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."()\n" .
 							array2string($days)."\n",3,$this->logfile);
 					}
-					$recurrence = $days[$recurrence]; // use remote representation
+					$recurrence_key = Api\DateTime::to($recurrence, DateTime::DATABASE);
+					$recurrence = $days[$recurrence_key]; // use remote representation
 				}
 				// force single event
 				foreach (array('recur_enddate','recur_interval','recur_exception','recur_rdates','recur_data','recur_date','id','etag') as $name)
@@ -400,7 +403,7 @@ class calendar_ical extends calendar_boupdate
 
 			if ($this->productManufacturer == 'sonyericsson')
 			{
-				$eventDST = date('I', $event['start']);
+				$eventDST = Api\DateTime::to($event['start'], 'I');
 				if ($eventDST)
 				{
 					$attributes['X-SONYERICSSON-DST'] = 4;
@@ -415,7 +418,7 @@ class calendar_ical extends calendar_boupdate
 				if (!in_array($this->productManufacturer,array('file','groupdav','full')))
 				{
 					$filter = isset($this->supportedFields['participants']) ? 'rrule' : 'tz_rrule';
-					$exceptions = $this->so->get_recurrence_exceptions($event, $tzid, 0, 0, $filter);
+					$exceptions = $this->so->get_recurrence_exceptions($event, $tzid, null, null, $filter);
 					if ($this->log)
 					{
 						error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(EXCEPTIONS)\n" .
@@ -684,7 +687,7 @@ class calendar_ical extends calendar_boupdate
 									// so if we set a timezone here, we have to remove the Z, see the hack at the end of this method
 									// Apple calendar on OS X 10.11.4 uses a timezone, so does Horde eg. for Recurrence-ID
 									$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
-									$event[$egwFieldName][$key] = self::getDateTime($ex_date->format('ts') + $ex_date->getOffset(), $tzid, $parameters[$icalFieldName]);
+									$event[$egwFieldName][$key] = self::getDateTime($ex_date, $tzid, $parameters[$icalFieldName]);
 								}
 							}
 							else
@@ -936,7 +939,7 @@ class calendar_ical extends calendar_boupdate
 			{
 				$attributes['LAST-MODIFIED'] = $event['modified'];
 			}
-			$attributes['DTSTAMP'] = time();
+			$attributes['DTSTAMP'] = Api\DateTime::to(new DateTime('now', DateTime::$server_timezone), 'ts');
 			foreach ((array)$event['alarm'] as $alarmData)
 			{
 				// skip over alarms that don't have the minimum required info
@@ -950,7 +953,9 @@ class calendar_ical extends calendar_boupdate
 
 				if ($alarmData['offset'])
 				{
-					$alarmData['time'] = Api\DateTime::to($event['start'], 'ts') - $alarmData['offset'];
+					$alarmData['time'] = $event['start'] instanceof DateTime ?
+						clone $event['start'] : new DateTime($event['start'], DateTime::$server_timezone);
+					$alarmData['time']->modify(sprintf('%+d seconds', -$alarmData['offset']));
 				}
 
 				$description = trim(preg_replace("/\r?\n?\\[[A-Z_]+:.*\\]/i", '', $event['description']));
@@ -1157,6 +1162,49 @@ class calendar_ical extends calendar_boupdate
 	}
 
 	/**
+	 * Stable array key for date values in server timezone.
+	 */
+	protected static function dateArrayKey($date) : string
+	{
+		$date = $date instanceof DateTime ? clone $date : new DateTime($date, DateTime::$server_timezone);
+		$date->setServer();
+		return $date->format(DateTime::DATABASE);
+	}
+
+	/**
+	 * Normalize event date fields to Api\DateTime.
+	 */
+	protected static function normalizeEventDates(array &$event) : void
+	{
+		foreach(['start', 'end', 'recur_enddate', 'recurrence', 'modified', 'created', 'deleted'] as $field)
+		{
+			if (!empty($event[$field]) && !($event[$field] instanceof DateTime))
+			{
+				$event[$field] = new DateTime($event[$field], DateTime::$server_timezone);
+			}
+		}
+		foreach(['recur_exception', 'recur_rdates'] as $field)
+		{
+			if (!is_array($event[$field] ?? null)) continue;
+			foreach($event[$field] as $key => $date)
+			{
+				if (!($date instanceof DateTime))
+				{
+					$event[$field][$key] = new DateTime($date, DateTime::$server_timezone);
+				}
+			}
+		}
+		if (!is_array($event['alarm'] ?? null)) return;
+		foreach($event['alarm'] as $id => $alarm)
+		{
+			if (!empty($alarm['time']) && !($alarm['time'] instanceof DateTime))
+			{
+				$event['alarm'][$id]['time'] = new DateTime($alarm['time'], DateTime::$server_timezone);
+			}
+		}
+	}
+
+	/**
 	 * Number of events imported in last call to importVCal
 	 *
 	 * @var int
@@ -1301,6 +1349,7 @@ class calendar_ical extends calendar_boupdate
 				$event_info = $this->get_event_info($event);
 			}
 
+			date_default_timezone_set($GLOBALS['egw_info']['server']['server_timezone']);
 			// common adjustments for existing events
 			if (is_array($event_info['stored_event']))
 			{
@@ -1642,25 +1691,29 @@ class calendar_ical extends calendar_boupdate
 					// remove all known pseudo exceptions and update the event
 					if ($event_info['acl_edit'])
 					{
-						$filter = isset($this->supportedFields['participants']) ? 'map' : 'tz_map';
-						$days = $this->so->get_recurrence_exceptions($event_info['stored_event'], $this->tzid, 0, 0, $filter);
-						if ($this->log)
+						if ($event_info['stored_event'])
 						{
-							error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(EXCEPTIONS MAPPING):\n" .
-								array2string($days)."\n",3,$this->logfile);
-						}
-						if (is_array($days))
-						{
-							$recur_exceptions = array();
-
-							foreach ($event['recur_exception'] as $recur_exception)
+							$filter = isset($this->supportedFields['participants']) ? 'map' : 'tz_map';
+							$days = $this->so->get_recurrence_exceptions($event_info['stored_event'], $this->tzid, null, null, $filter);
+							if ($this->log)
 							{
-								if (isset($days[$recur_exception]))
-								{
-									$recur_exceptions[] = $days[$recur_exception];
-								}
+								error_log(__FILE__.'['.__LINE__.'] '.__METHOD__."(EXCEPTIONS MAPPING):\n" .
+									array2string($days)."\n",3,$this->logfile);
 							}
-							$event['recur_exception'] = $recur_exceptions;
+							if (is_array($days))
+							{
+								$recur_exceptions = array();
+
+								foreach ($event['recur_exception'] as $recur_exception)
+								{
+									$recur_exception_key = Api\DateTime::to($recur_exception, DateTime::DATABASE);
+									if (isset($days[$recur_exception_key]))
+									{
+										$recur_exceptions[] = $days[$recur_exception_key];
+									}
+								}
+								$event['recur_exception'] = $recur_exceptions;
+							}
 						}
 
 						$event_to_store = $event; // prevent $event from being changed by the update method
@@ -1721,9 +1774,9 @@ class calendar_ical extends calendar_boupdate
 							}
 							else
 							{
-								$event_info['master_event']['recur_exception'] =
-									array_unique(array_merge($event_info['master_event']['recur_exception'],
-										array($event['recurrence'])));
+								$unique_timestamps = array_unique(array_map(fn($dt) => $dt->getTimestamp(),
+									array_merge($event_info['master_event']['recur_exception'], array($event['recurrence']))));
+								$event_info['master_event']['recur_exception'] = array_map(fn($ts) => new DateTime("@$ts"), $unique_timestamps);
 							}
 
 							$event['reference'] = $event_info['master_event']['id'];
@@ -1739,10 +1792,7 @@ class calendar_ical extends calendar_boupdate
 						$this->server2usertime($event_to_store);
 						$updated_id = $this->update($event_to_store, true,true,false,true,$msg,$skip_notification);
 						// Make sure it's marked as a recurrence exception, not an additional event
-						$this->so->recurrence($updated_id,
-											  Api\DateTime::to($event_to_store['start'], 'server'),
-											  Api\DateTime::to($event_to_store['end'], 'server'), [], true
-						);
+						$this->so->recurrence($updated_id, $event_to_store['start'], $event_to_store['end'], [], true);
 						unset($event_to_store);
 					}
 					break;
@@ -1813,7 +1863,7 @@ class calendar_ical extends calendar_boupdate
 					case 'SERIES-PSEUDO-EXCEPTION':
 						if (is_array($event_info['master_event'])) // status update requires a stored master event
 						{
-							$recurrence = $this->date2usertime($event['recurrence']);
+							$recurrence = DateTime::server2user($event['recurrence']);
 							if ($event_info['acl_edit'])
 							{
 								// update all participants if we have the right to do that
@@ -1982,8 +2032,17 @@ class calendar_ical extends calendar_boupdate
 			if (!$found)
 			{
 				$alarm['owner'] = $user;
-				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
-				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
+				if(!isset($alarm['time']))
+				{
+					$alarm['time'] = $event['start'] instanceof DateTime ?
+						clone $event['start'] : new DateTime($event['start'], DateTime::$server_timezone);
+					$alarm['time']->modify(sprintf('%+d seconds', -$alarm['offset']));
+				}
+				if (($alarm['time'] instanceof DateTime ? $alarm['time'] : new DateTime($alarm['time'], DateTime::$server_timezone))
+					< new DateTime('now', DateTime::$server_timezone))
+				{
+					calendar_so::shift_alarm($event, $alarm);
+				}
 				if ($this->debug) error_log(__METHOD__."() adding new alarm from client ".array2string($alarm));
 				if ($event['id'] || $master) $alarm['id'] = $this->save_alarm($event['id'] ?? $master['id'], $alarm);
 				// adding alarm to master to be found for further pseudo exceptions (it will be added to DB below)
@@ -1993,8 +2052,17 @@ class calendar_ical extends calendar_boupdate
 			// existing alarm --> update it
 			else
 			{
-				if (!isset($alarm['time'])) $alarm['time'] = $event['start'] - $alarm['offset'];
-				if ($alarm['time'] < time()) calendar_so::shift_alarm($event, $alarm);
+				if(!isset($alarm['time']))
+				{
+					$alarm['time'] = $event['start'] instanceof DateTime ?
+						clone $event['start'] : new DateTime($event['start'], DateTime::$server_timezone);
+					$alarm['time']->modify(sprintf('%+d seconds', -$alarm['offset']));
+				}
+				if (($alarm['time'] instanceof DateTime ? $alarm['time'] : new DateTime($alarm['time'], DateTime::$server_timezone))
+					< new DateTime('now', DateTime::$server_timezone))
+				{
+					calendar_so::shift_alarm($event, $alarm);
+				}
 				$alarm = array_merge($old_alarm, $alarm);
 				if ($this->debug) error_log(__METHOD__."() updating existing alarm from client ".array2string($alarm));
 				$alarm['id'] = $this->save_alarm($event['id'], $alarm);
@@ -2540,7 +2608,7 @@ class calendar_ical extends calendar_boupdate
 		if ($this->productManufacturer == '' && $this->productName == '' && !empty($event['recur_enddate']))
 		{
 			// syncevolution needs an adjusted recur_enddate
-			$event['recur_enddate'] = (int)$event['recur_enddate'] + 86400;
+			$event['recur_enddate']->modify('+1 day');
 		}
 		if ($event['recur_type'] != MCAL_RECUR_NONE)
 		{
@@ -2550,7 +2618,7 @@ class calendar_ical extends calendar_boupdate
 		if (Api\DateTime::to($event['start'], 'H:i:s') == '00:00:00' && Api\DateTime::to($event['end'], 'H:i:s') == '00:00:00')
 		{
 			// 'All day' event that ends at midnight the next day, avoid that
-			$event['end']--;
+			$event['end']->modify('-1 second');
 		}
 
 		// Remove videoconference link appended to description in calendar_groupdav->iCal()
@@ -2571,7 +2639,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			if (is_a($valarm, 'Horde_Icalendar_Valarm'))
 			{
-				self::valarm2egw($alarms, $valarm, $event['end'] - $event['start']);
+				self::valarm2egw($alarms, $valarm, Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts'));
 			}
 		}
 		$event['alarm'] = $alarms;
@@ -2641,11 +2709,20 @@ class calendar_ical extends calendar_boupdate
 					{
 						$event['whole_day'] = $isDate = true;
 					}
-					$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
-					$vcardData['start']	= $dtstart_ts;
+					if(is_object($attributes['value']))
+					{
+						$vcardData['start'] = $attributes['value'] instanceof DateTime ?
+							clone $attributes['value'] : new DateTime($attributes['value'], DateTime::$server_timezone);
+					}
+					else
+					{
+						$dtstart_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
+						$vcardData['start'] = new DateTime($dtstart_ts, DateTime::$server_timezone);
+					}
 
-					// set event timezone from dtstart, if specified there
-					if (!empty($attributes['params']['TZID']) && !$isDate)
+					// set event timezone from DTSTART;TZID first (important for Windows TZIDs from Exchange),
+					// then fall back to timezone of parsed DateTime object
+					if(!empty($attributes['params']['TZID']) && !$isDate)
 					{
 						// import TZID, if PHP understands it (we only care about TZID of starttime,
 						// as we store only a TZID for the whole event)
@@ -2674,6 +2751,10 @@ class calendar_ical extends calendar_boupdate
 							$event['tzid'] = date_default_timezone_get();	// default to current timezone
 						}
 					}
+					elseif(is_callable([$attributes['value'], 'getTimezone']))
+					{
+						$event['tzid'] = $attributes['value']->getTimezone()->getName();
+					}
 					// if no timezone given and one is specified in class (never the case for CalDAV)
 					elseif ($this->tzid)
 					{
@@ -2681,7 +2762,6 @@ class calendar_ical extends calendar_boupdate
 					}
 					// Horde seems not to distinguish between an explicit UTC time postfixed with Z and one without
 					// assuming for now UTC to pass CalDAVTester tests
-					// ToDo: fix Horde_Icalendar to return UTC for timestamp postfixed with Z
 					elseif (!$isDate)
 					{
 						$event['tzid'] = 'UTC';
@@ -2691,21 +2771,67 @@ class calendar_ical extends calendar_boupdate
 					{
 						$event['tzid'] = Api\DateTime::$user_timezone->getName();
 					}
+					// If Horde parsed an unknown TZID DTSTART using current default timezone,
+					// reinterpret wall-clock time in resolved DTSTART;TZID timezone.
+					if(!$isDate && is_object($attributes['value']) && !empty($attributes['params']['TZID']) && !empty($event['tzid']))
+					{
+						try
+						{
+							$vcardData['start'] = new DateTime(
+								$attributes['value']->format('Y-m-d H:i:s'),
+								calendar_timezones::DateTimeZone($event['tzid'])
+							);
+						}
+						catch (Exception $e)
+						{
+							// keep parsed value if timezone reconstruction fails
+						}
+					}
 					break;
 
 				case 'DTEND':
-					$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
-					if (date('H:i:s',$dtend_ts) == '00:00:00' || isset($attributes['params']['VALUE']) && $attributes['params']['VALUE'] == 'DATE')
+					if(is_object($attributes['value']))
 					{
-						$dtend_ts -= 1;
+						$vcardData['end'] = $attributes['value'] instanceof DateTime ?
+							clone $attributes['value'] : new DateTime($attributes['value'], DateTime::$server_timezone);
+						if($vcardData['end']->format('H:i:s') == '00:00:00')
+						{
+							$vcardData['end']->sub(new DateInterval('PT1S'));
+						}
 					}
-					$vcardData['end']	= $dtend_ts;
+					else
+					{
+						$dtend_ts = is_numeric($attributes['value']) ? $attributes['value'] : $this->date2ts($attributes['value']);
+						$vcardData['end'] = new DateTime($dtend_ts, DateTime::$server_timezone);
+
+						if($vcardData['end']->format('H:i:s') == '00:00:00' || isset($attributes['params']['VALUE']) && $attributes['params']['VALUE'] == 'DATE')
+						{
+							$vcardData['end']->sub(new DateInterval('PT1S'));
+						}
+					}
+					// If DTSTART/DTEND used an unmapped Windows TZID and Horde already parsed a DateTime
+					// in current default timezone, reinterpret DTEND wall-clock in DTSTART resolved event TZID.
+					if(!$isDate && is_object($attributes['value']) && !empty($attributes['params']['TZID']) && !empty($event['tzid']))
+					{
+						try
+						{
+							$vcardData['end'] = new DateTime(
+								$attributes['value']->format('Y-m-d H:i:s'),
+								calendar_timezones::DateTimeZone($event['tzid'])
+							);
+						}
+						catch (Exception $e)
+						{
+							// keep parsed value if timezone reconstruction fails
+						}
+					}
 					break;
 
 				case 'DURATION':	// clients can use DTSTART+DURATION, instead of DTSTART+DTEND
 					if (!isset($vcardData['end']))
 					{
-						$vcardData['end'] = $vcardData['start'] + $attributes['value'];
+						$vcardData['end'] = clone $vcardData['start'];
+						$vcardData['end']->modify(sprintf('%+d seconds', $attributes['value']));
 					}
 					else
 					{
@@ -2726,9 +2852,9 @@ class calendar_ical extends calendar_boupdate
 		// if neither duration nor dtend specified, default for dtstart as date is 1 day
 		if (!isset($vcardData['end']) && !$isDate)
 		{
-			$end = new Api\DateTime($vcardData['start']);
+			$end = clone $vcardData['start'];
 			$end->add('1 day');
-			$vcardData['end'] = $end->format('ts');
+			$vcardData['end'] = $end;
 		}
 		// lets see what we can get from the vcard
 		foreach ($component->getAllAttributes() as $attributes)
@@ -2744,7 +2870,7 @@ class calendar_ical extends calendar_boupdate
 				case 'AALARM':
 				case 'DALARM':
 					$alarmTime = $attributes['value'];
-					$alarms[$alarmTime] = array(
+					$alarms[self::dateArrayKey($alarmTime)] = array(
 						'time' => $alarmTime
 					);
 					break;
@@ -2767,8 +2893,9 @@ class calendar_ical extends calendar_boupdate
 				case 'X-RECURRENCE-ID':
 					if (is_array($attributes['value'])) // whole-day event recurrence-id is returned as array
 					{
-						$attributes['value'] = mktime(0, 0, 0,
-							$attributes['value']['month'], $attributes['value']['mday'], $attributes['value']['year']);
+						$attributes['value'] = (new DateTime('now', DateTime::$server_timezone))
+							->setDate($attributes['value']['year'], $attributes['value']['month'], $attributes['value']['mday'])
+							->setTime(0, 0, 0);
 					}
 					$vcardData['recurrence'] = $attributes['value'];
 					break;
@@ -2781,40 +2908,31 @@ class calendar_ical extends calendar_boupdate
 					if (!empty($vcardData['recur_enddate'])) self::check_fix_endate ($vcardData);
 					break;
 				case 'RDATE':
-					$hour = date('H', $vcardData['start']);
-					$minutes = date('i', $vcardData['start']);
-					$seconds = date('s', $vcardData['start']);
+					$hour = Api\DateTime::to($vcardData['start'], 'H');
+					$minutes = Api\DateTime::to($vcardData['start'], 'i');
+					$seconds = Api\DateTime::to($vcardData['start'], 's');
 					$vcardData['recur_type'] = calendar_rrule::RDATE;
 					$vcardData['recur_rdates'] = [];
 					foreach($attributes['values'] as $date)
 					{
 						// ToDo: use $date['period'], if set, to allow a different duration than end- - start-time
-						$vcardData['recur_rdates'][] = mktime(
-							$date['hour'] ?? $hour,
-							$date['minute'] ?? $minutes,
-							$date['second'] ?? $seconds,
-							$date['month'],
-							$date['mday'],
-							$date['year']
-						);
+						$vcardData['recur_rdates'][] = (new DateTime('now', DateTime::$server_timezone))
+							->setDate($date['year'], $date['month'], $date['mday'])
+							->setTime($date['hour'] ?? $hour, $date['minute'] ?? $minutes, $date['second'] ?? $seconds);
 					}
 					break;
 				case 'EXDATE':	// current Horde_Icalendar returns dates, no timestamps
 					if ($attributes['values'])
 					{
 						$days = array();
-						$hour = date('H', $vcardData['start']);
-						$minutes = date('i', $vcardData['start']);
-						$seconds = date('s', $vcardData['start']);
+						$hour = Api\DateTime::to($vcardData['start'], 'H');
+						$minutes = Api\DateTime::to($vcardData['start'], 'i');
+						$seconds = Api\DateTime::to($vcardData['start'], 's');
 						foreach ($attributes['values'] as $day)
 						{
-							$days[] = mktime(
-								$hour,
-								$minutes,
-								$seconds,
-								$day['month'],
-								$day['mday'],
-								$day['year']);
+							$days[] = (new DateTime('now', DateTime::$server_timezone))
+								->setDate($day['year'], $day['month'], $day['mday'])
+								->setTime($hour, $minutes, $seconds);
 						}
 						$vcardData['recur_exception'] = array_merge($vcardData['recur_exception'], $days);
 					}
@@ -3197,7 +3315,9 @@ class calendar_ical extends calendar_boupdate
 				$event['special'] = '1';
 				$event['non_blocking'] = 1;
 				// make it a whole day event for eGW
-				$vcardData['end'] = $vcardData['start'] + 86399;
+				$vcardData['end'] = clone $vcardData['start'];
+				$vcardData['end']->modify('+1 day');
+				$vcardData['end']->modify('-1 second');
 			}
 			elseif (strtolower($agendaEntryType) == 'event')
 			{
@@ -3248,6 +3368,7 @@ class calendar_ical extends calendar_boupdate
 				break;
 			}
 		}
+		self::normalizeEventDates($event);
 		if (!empty($event['recur_enddate']))
 		{
 			// reset recure_enddate to 00:00:00 on the last day
@@ -3263,8 +3384,11 @@ class calendar_ical extends calendar_boupdate
 				return false;
 			}
 			$last->setTime(0, 0, 0);
-			//error_log(__METHOD__."() rrule=$recurence --> ".array2string($rriter)." --> enddate=".array2string($last).'='.Api\DateTime::to($last, ''));
-			$event['recur_enddate'] = Api\DateTime::to($last, 'server');
+			// Keep the last recurrence day in event timezone, but store it as a user-time date
+			// so downstream normalization does not shift to the previous day for western user timezones.
+			$last_day = clone $last;
+			$last_day->setTimezone(calendar_timezones::DateTimeZone($event['tzid']));
+			$event['recur_enddate'] = new DateTime($last_day->format('Y-m-d 00:00:00'), DateTime::$user_timezone);
 		}
 		// translate COUNT into an enddate, as we only store enddates
 		elseif(!empty($event['recur_count']))
@@ -3281,7 +3405,7 @@ class calendar_ical extends calendar_boupdate
 				return false;
 			}
 			$last->setTime(0, 0, 0);
-			$event['recur_enddate'] = Api\DateTime::to($last, 'server');
+			$event['recur_enddate'] = $last;
 			unset($event['recur_count']);
 		}
 
@@ -3300,7 +3424,8 @@ class calendar_ical extends calendar_boupdate
 		// whole day events get one day in calendar_boupdate::save()
 		if (!isset($event['end']))
 		{
-			$event['end'] = $event['start'] + 60 * $this->cal_prefs['defaultlength'];
+			$event['end'] = clone $event['start'];
+			$event['end']->modify(sprintf('+%d minutes', (int)$this->cal_prefs['defaultlength']));
 		}
 
 		if ($this->calendarOwner) $event['owner'] = $this->calendarOwner;
@@ -3360,10 +3485,10 @@ class calendar_ical extends calendar_boupdate
 		$start = new Api\DateTime($vcardData['start']);
 		$start->setDate($end->format('Y'), $end->format('m'), $end->format('d'));
 
-		if ($end->format('ts') < $start->format('ts'))
+		if ($end < $start)
 		{
 			$end->modify('-1day');
-			$vcardData['recur_enddate'] = $end->format('ts');
+			$vcardData['recur_enddate'] = $end;
 			//error_log(__METHOD__."($vcardData[event_title]) fix recure_enddate to ".$end->format('Y-m-d H:i:s'));
 		}
 	}
@@ -3382,8 +3507,10 @@ class calendar_ical extends calendar_boupdate
 	 */
 	function freebusy($user, $end=null, $utc=true, $charset='UTF-8', $start=null, $method='PUBLISH', ?array $extra=null)
 	{
-		if (!$start) $start = time();	// default now
-		if (!$end) $end = time() + 100*DAY_s;	// default next 100 days
+		$start = $start instanceof DateTime ? clone $start :
+			($start ? new DateTime($start, DateTime::$server_timezone) : new DateTime('now', DateTime::$server_timezone));	// default now
+		$end = $end instanceof DateTime ? clone $end :
+			($end ? new DateTime($end, DateTime::$server_timezone) : (clone $start)->modify('+100 days'));	// default next 100 days
 
 		$vcal = new Horde_Icalendar;
 		$vcal->setAttribute('PRODID','-//EGroupware//NONSGML EGroupware Calendar '.$GLOBALS['egw_info']['apps']['calendar']['version'].'//'.
@@ -3394,15 +3521,15 @@ class calendar_ical extends calendar_boupdate
 		$vfreebusy = Horde_Icalendar::newComponent('VFREEBUSY',$vcal);
 
 		$attributes = array(
-			'DTSTAMP' => time(),
-			'DTSTART' => $this->date2ts($start,true),	// true = server-time
-			'DTEND' => $this->date2ts($end,true),	// true = server-time
+			'DTSTAMP' => Api\DateTime::to(new DateTime('now', DateTime::$server_timezone), 'ts'),
+			'DTSTART' => Api\DateTime::to($start, 'ts'),	// server-time
+			'DTEND' => Api\DateTime::to($end, 'ts'),	// server-time
 		);
 		if (!$utc)
 		{
-			foreach ($attributes as $attr => $value)
+			foreach (['DTSTAMP', 'DTSTART', 'DTEND'] as $attr)
 			{
-				$attributes[$attr] = date('Ymd\THis', $value);
+				$attributes[$attr] = (new DateTime($attributes[$attr], DateTime::$server_timezone))->format('Ymd\THis');
 			}
 		}
 		if (is_null($extra)) $extra = array(
@@ -3437,7 +3564,12 @@ class calendar_ical extends calendar_boupdate
 
 				// hack to fix end-time to be non-inclusive
 				// all-day events end in our data-model at 23:59:59 (of given TZ)
-				if (date('is', $event['end']) == '5959') ++$event['end'];
+				if(Api\DateTime::to($event['end'], 'is') == '5959')
+				{
+					$event['end'] = $event['end'] instanceof DateTime ?
+						(clone $event['end'])->modify('+1 second') :
+						(new DateTime($event['end'], DateTime::$server_timezone))->modify('+1 second');
+				}
 
 				$fbdata[$fbtype][] = $event;
 			}
@@ -3477,8 +3609,20 @@ class calendar_ical extends calendar_boupdate
 	 */
 	public function aggregate_periods(array $events, $start, $end)
 	{
+		$start = Api\DateTime::to($start, 'ts');
+		$end = Api\DateTime::to($end, 'ts');
+		$normalized_events = array();
+
+		foreach($events as $key => $event)
+		{
+			$normalized_events[$key] = array(
+				'start' => Api\DateTime::to($event['start'], 'ts'),
+				'end'   => Api\DateTime::to($event['end'], 'ts'),
+			);
+		}
+
 		// sort by start datetime
-		uasort($events, function($a, $b)
+		uasort($normalized_events, function ($a, $b)
 		{
 			$diff = $a['start'] - $b['start'];
 
@@ -3486,7 +3630,7 @@ class calendar_ical extends calendar_boupdate
 		});
 
 		$fbdata = array();
-		foreach($events as $event)
+		foreach($normalized_events as $event)
 		{
 			error_log(__METHOD__."(..., $start, $end) event[start]=$event[start], event[end]=$event[end], fbdata=".array2string($fbdata));
 			if ($event['end'] <= $start || $event['start'] >= $end) continue;

@@ -128,6 +128,8 @@ current folder	mail	de	Aktueller Ordner
 current subject	mail	de	Aktueller Betreff
 currently:	mail	de	Aktuell:
 deactive	mail	de	Deaktiviert
+default identity for compose	mail	de	Standardidentität für das Verfassen von E-Mails
+default signature	mail	de	Standard-Signatur
 default sorting order	mail	de	Wählen Sie die Standard-Sortierreihenfolge aus
 default toolbar actions shown in mail's html editor	mail	de	Aktivierte Funktionen in der HTML-Editor-Symbolleiste beim E-Mail verfassen
 default value for remembering s/mime passphrase in minutes	mail	de	Standardwert für die Erinnerung an die S/MIME-Passphrase in Minuten
@@ -328,7 +330,7 @@ junk folder	mail	de	Ordner für Spam-Nachrichten
 keep a copy	mail	de	Eine Kopie behalten
 keep a copy of the message in your inbox	mail	de	Eine Kopie der Nachricht im Posteingang behalten
 kilobytes	mail	de	Kilobyte
-last used signature	mail	de	Zuletzt benutzte Signatur
+last used signature	mail	de	Zuletzt verwendete Signatur
 later	mail	de	Später
 learning as ham (not spam) failed because of %1	mail	de	Als "gute E-Mail" (kein Spam) lernen fehlgeschlagen, da %1
 learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da %1
@@ -692,7 +694,11 @@ when saving messages as item of a different app	mail	de	Wählen Sie das Format z
 when sending messages	mail	de	Wenn Nachrichten versendet werden
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	de	Welche E-Mail-Ordner, zusätzlich zum Gesendet-Ordner, sollen im Anzeigenschema analog des Gesendet-Ordners dargestellt werden (Empfänger-Adresse, anstatt der Absender-Adresse)
 which folders - in general - should not be automatically created, if not existing	mail	de	Welche E-Mail-Ordner sollen generell NICHT automatisch angelegt werden, wenn Sie nicht existieren? Wählen Sie hier die Ordner aus, die NICHT von EGroupware automatisch angelegt werden dürfen
+<<<<<<< HEAD
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	de	Mit welcher Mail Identität (Signatur) wollen Sie starten. Für persönliche Konten benutzen wir immer die erste persönliche Signatur.
+=======
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	de	Mit welcher E-Mail-Identität (Signatur) möchten Sie beginnen?\nBei „Persönliche Signatur“ wird immer die erste persönliche Signatur verwendet.
+>>>>>>> 15e71053aa (latest translations from our translation server)
 which method to use when forwarding a message	mail	de	Wählen Sie die Methode zum Weiterleiten von Nachrichten
 whitelisted mails are not marked as spam	mail	de	E-Mail-Adressen auf der Domain-Whitelist, werden nicht als Spam markiert
 whole message	mail	de	gesamte Nachricht

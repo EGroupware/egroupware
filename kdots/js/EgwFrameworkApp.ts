@@ -121,8 +121,15 @@ export class EgwFrameworkApp extends LitElement
 	@property({type: Function})
 	getNextmatch : () => et2_nextmatch = () : et2_nextmatch =>
 	{
-		// Look for a nextmatch by finding the DOM node by CSS class
 		let nm = null;
+		// Find the widget
+		nm = this.querySelector("et2-nextmatch");
+		if(nm)
+		{
+			return nm;
+		}
+
+		// Look for a nextmatch by finding the DOM node by CSS class
 		const nm_div = this.querySelector(".et2_nextmatch");
 		if(nm_div)
 		{
@@ -486,7 +493,7 @@ export class EgwFrameworkApp extends LitElement
 				resolve(); // Don't reject — just proceed
 			}, 10000);
 		});
-		const loadPromises = nodes.map((node) =>
+		const loadPromises : Promise<any>[] = nodes.map((node) =>
 		{
 			if(node.localName == "iframe")
 			{
@@ -509,6 +516,9 @@ export class EgwFrameworkApp extends LitElement
 				return waitForEvent(node, "load")
 			}
 		});
+
+		this.leftSplitter && loadPromises.push(this.leftSplitter.updateComplete);
+		this.rightSplitter && loadPromises.push(this.rightSplitter.updateComplete);
 
 		return Promise.race([
 			Promise.any(loadPromises)
@@ -791,8 +801,8 @@ export class EgwFrameworkApp extends LitElement
 		{
 			// Left side has an additional slot above the favourites
 			hasContent = hasContent || this.hasSlotController?.test("left-top") ||
-				// Favourites work through egw_app class, so if it's not there, favourites won't work
-				this.features?.favorites && typeof window.app[this.name] !== "undefined";
+				// Favourites work through preferences asynchronously
+				this.features?.favorites
 		}
 		return hasContent;
 	}

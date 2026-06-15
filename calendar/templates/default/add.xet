@@ -17,10 +17,10 @@
 				</row>
 				<row class="dialogHeader2" height="28">
                     <et2-description for="start" value="Start" width="88"></et2-description>
-                    <et2-date-time id="start" onchange="app.calendar.edit_start_change" required="true"></et2-date-time>
+                    <et2-date-time id="start" onchange="app.calendar.edit_start_change" required="true" dataFormat="object"></et2-date-time>
                     <et2-description for="duration" value="Duration" id="calendar_edit_duration"></et2-description>
                     <et2-select statustext="Duration of the meeting" id="duration" onchange="app.calendar.set_enddate_visibility" noLang="1" emptyLabel="Use end date"></et2-select>
-                    <et2-date-time id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true"></et2-date-time>
+                    <et2-date-time id="end" onchange="app.calendar.edit_update_participant" freeMinuteEntry="true" dataFormat="object"></et2-date-time>
                 </row>
             </rows>
         </grid>

@@ -45,7 +45,7 @@
 	],
 	"config": {
 		"platform": {
-			"php": "7.4"
+			"php": "8.2"
 		},
 		"preferred-install": {
 			"egroupware/*": "source",
@@ -57,12 +57,13 @@
 		"sort-packages": true,
 		"allow-plugins": {
 			"composer/installers": true,
-			"simplesamlphp/composer-module-installer": true,
-			"oomphinc/composer-installers-extender": true
+			"oomphinc/composer-installers-extender": true,
+			"simplesamlphp/composer-module-installer": false,
+			"simplesamlphp/composer-xmlprovider-installer": false
 		}
 	},
 	"require": {
-		"php": ">=7.4,<=8.5",
+		"php": ">=8.2,<=8.5",
 		"ext-gd": "*",
 		"ext-json": "*",
 		"ext-mysqli": "*",
@@ -73,6 +74,7 @@
 		"ext-xsl": "*",
 		"adldap2/adldap2": "=4.0.4",
 		"async-aws/s3": "^2.0",
+		"benmorel/openapi-schema-to-json-schema": "^0.1.4",
 		"bigbluebutton/bigbluebutton-api-php": "^2.0",
 		"bower-asset/cropper": "2.3.*",
 		"bower-asset/jquery": "^1.12.4",
@@ -120,26 +122,23 @@
 		"egroupware/translation": "^2.3.0",
 		"egroupware/url": "^2.3.0",
 		"egroupware/util": "^2.7.0",
-		"egroupware/webdav": "^0.4.0",
+		"egroupware/webdav": "^0.5.1",
+		"egroupware/xml_feed_parser": "^1.0.5",
 		"egroupware/z-push-dev": "2.5.0.1",
 		"giggsey/libphonenumber-for-php": "^9.0.17",
 		"guzzlehttp/guzzle": "^7.4.1",
 		"guzzlehttp/psr7": "^2.1.0",
 		"jumbojett/openid-connect-php": "^0.9.10",
-		"league/oauth2-server": "^7.4",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^2.0.1",
 		"pear/auth_sasl": "*",
 		"pear/log": "*",
 		"pear/pear": "*",
-		"egroupware/xml_feed_parser": "^1.0.5",
 		"phpseclib/phpseclib": "^3.0.34",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"robrichards/xmlseclibs": "^3.1.1",
-		"simplesamlphp/simplesamlphp": "^1.19.0",
-		"simplesamlphp/twig-configurable-i18n": "~2.3.3",
-		"tinymce/tinymce": "^5.10.8"
+		"simplesamlphp/simplesamlphp": "^2.5.0"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^12.5.22"

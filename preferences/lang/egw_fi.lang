@@ -21,6 +21,7 @@ code is invalid	preferences	fi	Koodi on virheellinen
 code is required	preferences	fi	Koodi tarvitaan
 color	preferences	fi	Väri
 country	preferences	fi	Maa
+custom login box text color, defaults to white	preferences	fi	Kirjautumiskentän tekstin väri voidaan määrittää erikseen; oletusarvo on valkoinen
 dark mode theme	preferences	fi	Tumman tilan teema
 date format	preferences	fi	Päivämäärän muoto
 default	preferences	fi	Oletus
@@ -128,6 +129,7 @@ time format	preferences	fi	Ajan muoto
 use default	preferences	fi	Käytä oletusta
 use first %1 letters from username	preferences	fi	Käytä käyttäjätunnuksen ensimmäisiä %1-kirjaimia
 use initials from first and last name	preferences	fi	Käytä etu- ja sukunimen alkukirjaimia
+used instead of the application color.	preferences	fi	Käytetään sovelluksen värin sijaan.
 users choice	preferences	fi	Käyttäjän valinta
 what to display for an avatar, if there is no photo	preferences	fi	Mitä näytetään avatarina, jos kuvaa ei ole.
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	fi	Näytä Etusivu ja Poistu -kuvakkeet yläpalkissa.

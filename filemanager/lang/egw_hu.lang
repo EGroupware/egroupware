@@ -232,7 +232,7 @@ superuser (root)	filemanager	hu	Szuperfelhasználó (root)
 symlink to %1 created.	filemanager	hu	Symlink %1-hez létrehozva.
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	hu	Az alapértelmezett kezdőmappa a saját könyvtárad. Az alapértelmezett mappa lesz beállítva ha ez a mező üres, az elérési út nem létezik vagy nincs hozzáférésed.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	hu	A dokumentum tartalmazhat helyőrzőt, például {{%3}}, amelyet az adatokkal kell helyettesíteni (%1teljes lista a helyőrző nevekről%2).
-the requested path %1 is not available.	filemanager	hu	%1 elérési út nem létezik.
+the requested path %1 is not available.	filemanager	hu	%1 elérési út nem létezik!
 there's already a directory with that name!	filemanager	hu	A megadott néven már létezik egy mappa.
 there's already a file with that name!	filemanager	hu	A megadott néven már létezik egy file.
 to overwrite the existing file store again.	filemanager	hu	A létező file felülírásához válaszd a mentést ismét.

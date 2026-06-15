@@ -603,7 +603,10 @@ class admin_ui
 						if (!isset($parent[$path]))
 						{
 							$icon = $part == 'apps' ? Api\Image::find('api', 'home') :
-								(($i = Api\Image::find($part, 'navbar')) ? $i : Api\Image::find('api', 'nonav'));
+								(!empty($GLOBALS['egw_info']['apps'][$part]['icon']) ?
+									Api\Image::find($GLOBALS['egw_info']['apps'][$part]['icon_app'] ?? $part, $GLOBALS['egw_info']['apps'][$part]['icon']) :
+										(Api\Image::find($part, 'navbar') ?: Api\Image::find('api', 'nonav')));
+
 							if(!str_ends_with($icon, '.svg'))
 							{
 								$icon = Api\Image::find('api', 'navbar');

@@ -308,7 +308,7 @@ tag to mark positions for address labels	filemanager	sk	Značka pre označenie p
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sk	Predvolený štartovací priečinok vo vašom osobnom priečinku. Používa sa predvolený, ak ponecháte prázdne, cesta neexistuje alebo ak nemáte potrebné prístupové oprávnenia.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sk	Dokument môže obsahovať premennú, napr. {{%3}} ktorá sa nahradí údajmi (%1úplný zoznam názvov premenných%2).
 the following document-types are supported:	filemanager	sk	Podporované sú nasledovné typy dokumentov:
-the requested path %1 is not available.	filemanager	sk	Požadované cesta %1 nie je dostupná.
+the requested path %1 is not available.	filemanager	sk	Požadované cesta %1 nie je dostupná!
 the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	sk	Nahratý súbor je viditeľný iba pre osobu, ktorá s Vami zdieľa tieto súbory, nie pre Vás ani iných ľudí ktorí poznajú tento zdieľaný odkaz.
 there's already a directory with that name!	filemanager	sk	Priečinok s týmto názvom už existuje!
 there's already a file with that name!	filemanager	sk	Súbor s týmto menom už existuje!

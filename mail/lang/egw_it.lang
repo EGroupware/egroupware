@@ -128,6 +128,8 @@ current folder	mail	it	cartella corrente
 current subject	mail	it	Oggetto corrente
 currently:	mail	it	Al momento:
 deactive	mail	it	Disattiva
+default identity for compose	mail	it	Identità predefinita per la composizione dei messaggi
+default signature	mail	it	Firma predefinita
 default sorting order	mail	it	Ordinamento predefinito
 default toolbar actions shown in mail's html editor	mail	it	Funzioni abilitate nella barra degli strumenti dell'editor HTML durante la composizione di un'email
 default value for remembering s/mime passphrase in minutes	mail	it	Valore predefinito per la memorizzazione della passphrase S/MIME in minuti
@@ -328,6 +330,7 @@ junk folder	mail	it	Cartella mail spazzatura
 keep a copy	mail	it	Conserva una copia
 keep a copy of the message in your inbox	mail	it	Mantieni una copia del messaggio nella posta in arrivo
 kilobytes	mail	it	kilobyte
+last used signature	mail	it	Ultima firma utilizzata
 later	mail	it	Più tardi
 learning as ham (not spam) failed because of %1	mail	it	Apprendimento come Ham (non Spam) fallito a causa di %1
 learning as spam failed because of %1	mail	it	Apprendimento come Spam fallito a causa di %1
@@ -434,6 +437,7 @@ original message	mail	it	Messaggio originale
 outbox	mail	it	Posta in uscita
 password protect	mail	it	proteggi con password
 permission denied	mail	it	Permesso negato
+personal signature	mail	it	Firma personale
 please configure access to an existing individual imap account.	mail	it	Configura l'accesso ad un account IMAP esistente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	it	Per favore configurare il certificato S/MIME nel tab "Cifratura" che si trova nella finestra "modifica account".
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	it	Per favore contattare il proprio amministratore per validare il supporto di regole di filtri lato Server, e come abilitarli in EGroupware per il tuo account attivo (%1) con ID: %2.
@@ -663,6 +667,7 @@ upload files...	mail	it	Carica file ...
 use default timeout (20 seconds)	mail	it	Usa il timeout predefinito (20 secondi)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	it	Usa espressioni regolari (v. wikipedia per informazioni sulle espressioni regolari POSIX)
 use source as displayed, if applicable	mail	it	Usa le sorgenti come mostrate, se applicabile
+use tokenised search syntax (+word required, -word forbidden, "..." literal phrase; same as the egroupware search box)	mail	it	Usa la sintassi di ricerca tokenizzata (+parola obbligatoria, -parola esclusa, "..." frase letterale; come nella casella di ricerca di EGroupware)
 use username+password from current user	mail	it	Utilizza nome utente+password dell'utente attuale
 use wizard to detect or verify configuration	mail	it	Usa la procedura guidata oppure verifica la connessione
 vacation messages with start and end date require an admin account to be set!	mail	it	Messaggi di ferie con data inizio e fine, richiedono l'impostazione di un account amministrativo!
@@ -688,6 +693,7 @@ when saving messages as item of a different app	mail	it	quando si salvano messag
 when sending messages	mail	it	Quando si inviano messaggi
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	it	Quali cartelle oltre alla cartella della posta inviata dovrebbe essere mostrata usando lo schema di visualizzazione della posta inviata
 which folders - in general - should not be automatically created, if not existing	mail	it	Quali cartelle in generale non dovrebbero essere automaticamente create se non esistono
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	it	Con quale identità di posta (firma) desideri iniziare?\nPer la “Firma personale” viene sempre utilizzata la prima firma personale.
 which method to use when forwarding a message	mail	it	Quale metodo usare quando si inoltra un messaaggio
 whitelisted mails are not marked as spam	mail	it	I messaggi in whitelist non vengono segnati come spam
 whole message	mail	it	intero messaggio

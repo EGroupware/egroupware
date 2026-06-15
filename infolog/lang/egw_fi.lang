@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	fi	Salli tallentaa merki
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	fi	Salli tilan muokkaaminen, esim. tehtävän tehdyksi asettaminen, jos se on päättynyt (arvot riippuvat sisällön muodosta).
 alternatives	infolog	fi	Vaihtoehdot
 always show them	infolog	fi	Näytä ne aina
+always use details for crm	infolog	fi	Käytä aina yksityiskohtia CRM:ssä
+always use no details for crm	infolog	fi	Käytä aina ei yksityiskohtia CRM:ssä
 application mail expected but got: %1	infolog	fi	Hakemussähköpostia odotettiin mutta saatiin: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	fi	Lisää muutokset kaikkiin valttuihin, EI vain näkyvissä oleviin!
 apply the changes	infolog	fi	Hyväksy muutokset
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	fi	Lisää aikaleima kuvauskentt
 invalid filename	infolog	fi	Tiedostonimi ei kelpaa
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	fi	Virheellinen omistaja ID: %1. Käytetty sen sijaan %2.
 invalid status for entry type %1.	infolog	fi	Virheellinen tila tyypille %1.
-label<br>helptext	infolog	fi	Otsikko<br>Ohjeteksti
+label<br>helptext	infolog	fi	Otsikko\nOhjeteksti
 last changed	infolog	fi	Viimeksi muutettu
 last modified	infolog	fi	Viimeksi muokattu
 leave blank to get the used time calculated by timesheet entries	infolog	fi	Jätä tyhjäksi, jos haluat (kulutetun ajan) summan tulevan Ajanhallinnan merkinnöistä.
@@ -354,7 +356,7 @@ owner, responsible	infolog	fi	Omistaja, vastuuhenkilö
 parent	infolog	fi	Päämerkintä
 parent infolog	infolog	fi	Päämerkintä
 participants for scheduling an appointment	infolog	fi	Osallistujat ajanvarauksen suunnitteluun
-path on (web-)serverside<br>eg. /var/samba/share	infolog	fi	Polku (web-)palvelimella<br>esim. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	fi	Polku (web-)palvelimella\nesim. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	fi	Polku käyttäjän ja ryhmän tiedostoihin pitää olla palvelimen tiedostojuuren ULKOPUOLELLA!
 pattern for search in addressbook	infolog	fi	Osoitekirjan hakukuvio
 pattern for search in projects	infolog	fi	Kuvio hakua varten projekteissa
@@ -411,6 +413,7 @@ responsible user, priority	infolog	fi	Vastuuhenkilö, tärkeysaste
 returns a list / search for records.	infolog	fi	Palauttaa listan / haun arvoista
 rights for the responsible	infolog	fi	Vastuuhenkilön oikeudet
 rows	infolog	fi	Rivit
+same as infolog list	infolog	fi	Sama kuin InfoLog-luettelossa
 same day	infolog	fi	Samana päivänä
 save	infolog	fi	Tallenna
 saves the changes made and leaves	infolog	fi	Tallenna muutokset ja poistu
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	fi	Va
 select a typ to edit it's status-values or delete it	infolog	fi	Valitse tyyppi muokataksesi sen tilan arvoa tai poistaaksesi sen
 select an app to search in	infolog	fi	Valitse haettava sovellus
 select an entry to link with	infolog	fi	Valitse merkintä linkitettäväksi
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	fi	Valitse, käyttääkö CRM-näkymä samaa arvoa (ei) yksityiskohtien osalta kuin InfoLog vai aina ei yksityiskohtia tai yksityiskohtia.
 select multiple contacts for a further action	infolog	fi	Valitse useita merkintöjä
 select new category	infolog	fi	Valitse kategoria
 select to filter by owner	infolog	fi	Suodata omistajan mukaan

@@ -12,6 +12,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Acl;
+use EGroupware\Api\DateTime;
 use EGroupware\Api\Egw;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Framework;
@@ -709,7 +710,7 @@ class calendar_ui
 			$this->cal_prefs['saved_states']['cat_id']))
 		{
 			$filter_check = array(
-				'start'    => $event['start'] - 1,
+				'start' => DateTimeImmutable::createFromMutable($event['start'])->modify('-1 second'),
 				'users'    => $this->cal_prefs['saved_states']['owner'],
 				'cat_id'   => $this->cal_prefs['saved_states']['cat_id'],
 				'filter'   => $this->cal_prefs['saved_states']['status_filter'],
@@ -810,6 +811,8 @@ class calendar_ui
 			$event['class'] .= 'rowDeleted ';
 		}
 
+		$event['start']->setUser();
+		$event['end']->setUser();
 		$event['recure'] = $this->bo->recure2string($event);
 
 		if (empty($event['description'])) $event['description'] = ' ';	// no description screws the titles horz. alignment
@@ -886,7 +889,9 @@ class calendar_ui
 				));
 			}
 		}
-		$event['date'] = $this->bo->date2string($event['start']);
+		$event['date'] = $event['start']->format('Ymd');
+		$event['start'] = $event['start']->format(DateTime::ET2);
+		$event['end'] = $event['end']->format(DateTime::ET2);
 
 		// Change dates
 		foreach(calendar_egw_record::$types['date-time'] as $field)
@@ -894,6 +899,19 @@ class calendar_ui
 			if(is_int($event[$field]))
 			{
 				$event[$field] = Api\DateTime::to($event[$field], Api\DateTime::ET2);
+			}
+		}
+		// Recurrence arrays can contain DateTime objects and need explicit conversion
+		// before sending JSON data to the browser.
+		foreach(['recur_exception', 'recur_rdates'] as $field)
+		{
+			if (!is_array($event[$field] ?? null))
+			{
+				continue;
+			}
+			foreach ($event[$field] as $n => $date)
+			{
+				$event[$field][$n] = Api\DateTime::to($date, Api\DateTime::ET2);
 			}
 		}
 	}

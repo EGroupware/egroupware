@@ -1,5 +1,17 @@
 %1 application details	common	fr	Détails de l'application %1
+activate for a list of available applications	common	fr	Activer pour une liste des applications disponibles
 activate to show more colorful app icons in the open tabs. if unchecked they default to custom color lightened	common	fr	Activez cette option pour afficher des icônes d'application plus colorées dans les onglets ouverts. Si cette option n'est pas cochée, les icônes s'affichent par défaut dans une couleur personnalisée plus claire.
+app chooser icons	common	fr	Icônes
+app chooser icons + text	common	fr	Icônes & Textes
 application chooser style	common	fr	Style du sélecteur d'applications
+application list	common	fr	Liste des applications
+hide left area	common	fr	Cacher la zone de gauche
+open applications	common	fr	Ouvrir les applications
 reload %1	common	fr	Actualiser %1
 settings	kdots	fr	Paramètres
+should the app chooser contain only icons or also the application name e.g. if users are not familiar with the icons	kdots	fr	La sélection d'application doit contenir uniquement une icône ou aussi le nom de l'application
+show app icons in there app color	kdots	fr	Afficher les icônes avec leurs couleurs d'application
+show left area	common	fr	Afficher la zone de gauche
+sidebox	common	fr	Menu latéral
+skip to content	common	fr	Passer au contenu
+user profile	kdots	fr	Profil utilisateur

@@ -377,7 +377,11 @@ abstract class StreamWrapperBase extends LoggedInTest
 		// Try to remove if it's there already
 		if(Vfs::is_dir($test_base_dir))
 		{
-			$this->assertTrue(Vfs::rmdir($test_base_dir), "Could not remove existing test directory '$test_base_dir'");
+			Vfs::remove($test_base_dir);
+			$this->assertFalse(
+				Vfs::file_exists($test_base_dir),
+				"Could not remove existing test directory '$test_base_dir'"
+			);
 		}
 		$this->assertTrue(
 			Vfs::mkdir($test_base_dir),

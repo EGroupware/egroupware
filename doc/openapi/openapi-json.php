@@ -39,95 +39,12 @@ if (empty($GLOBALS['egw_info']))
 }
 // allow unauthenticated access from everywhere, e.g. to use Swagger Editor (https://editor.swagger.io/) to view it
 header('Access-Control-Allow-Origin: '.($GLOBALS['egw_info']['flags']['currentapp'] === 'login' ? '*' : rtrim(Api\Framework::getUrl('/'), '/')));
-$json = [
-	"openapi" => $_GET['openapi'] ?? "3.1.0",   // allow to set openapi version, as Swagger UI seems to choke on 3.1.x
-	"info" => [
-		"title" => "EGroupware API",
-		"description" => "Index of all EGroupware OpenAPI descriptions",
-		"version" => $GLOBALS['egw_info']['server']['versions']['maintenance_release'],
-	],
-	"servers" => [
-		[
-			"url" => Api\Framework::getUrl(Api\Framework::link("/groupdav.php")),
-			"description" => "EGroupware CalDAV/CardDAV/REST Server"
-		],
-	],
-	"security" => [
-		[
-			"basicAuth" => []
-		],
-		[
-			"bearerAuth" => []
-		],
-	],
-	"paths" => [],  // paths are added from separate app-specific JSON-files below
-	"components" => [
-		"securitySchemes" => [
-			"basicAuth" => [
-				"type" => "http",
-				"scheme" => "basic",
-				"description" => "HTTP Basic Authentication using EGroupware username and password (or app password)."
-			],
-			"bearerAuth" => [
-				"type" => "http",
-				"scheme" => "bearer",
-				"description" => "HTTP Bearer Token Authentication for API access with an OpenIDConnect/OAuth access token."
-			]
-		],
-		"parameters" => [], // parameters are added from separate app-specific JSON-files below
-		"schemas" => [],    // schemas are added from separate app-specific JSON-files below
-		"responses" => [],  // responses are added from separate app-specific JSON-files below
-	],
-];
 
-foreach(scandir(__DIR__) as $file)
-{
-	if (str_ends_with($file, ".json"))
-	{
-		// if we're authenticated only show API's of apps the user has access too or are independent of an app like "links.json"
-		if (isset($GLOBALS['egw_info']['apps'][$app=basename($file, '.json')]) &&
-			isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][$app]))
-		{
-			continue;
-		}
-		$app_json = json_decode(file_get_contents(__DIR__.'/'.$file), true);
-		// Open WebUI seems to have a problem with references in parameters --> inline all parameters
-		// ToDo: check other references like schemas
-		$inline_parameters = preg_match('#^Python/[0-9.]+ aiohttp/[0-9.]+$#', $_SERVER['HTTP_USER_AGENT']);
-		if ($inline_parameters)
-		{
-			$operationIds = [];
-			foreach($app_json['paths'] as $path => &$methods)
-			{
-				foreach($methods as $method => &$data)
-				{
-					if (empty($data['operationId']) || isset($operationIds[$data['operationId']]))
-					{
-						throw new \Exception("$method $path requires an unique operationId".
-							(isset($operationIds[$data['operationId']]) ? "('$data[operationId]' already used by ".$operationIds[$data['operationId']].')' : '').'!');
-					}
-					$operationIds[$data['operationId']] = $method.' '.$path;
-					foreach($data['parameters'] as &$parameter)
-					{
-						if (isset($parameter['$ref']) && str_starts_with($parameter['$ref'], '#/components/parameters/'))
-						{
-							if (!isset($app_json['components']['parameters'][$name = explode('/', $parameter['$ref'])[3] ?? '']))
-							{
-								throw new \Exception("$method $path: Parameter reference {$parameter['$ref']} not found!");
-							}
-							$parameter = $app_json['components']['parameters'][$name];
-						}
-					}
-				}
-			}
-			unset($app_json['parameters']);
-		}
-		$json['paths'] += $app_json['paths'] ?? [];
-		$json['components']['parameters'] += $app_json['components']['parameters'] ?? [];
-		$json['components']['schemas'] += $app_json['components']['schemas'] ?? [];
-		$json['components']['responses'] += $app_json['components']['responses'] ?? [];
-	}
-}
+// Open WebUI seems to have a problem with references in parameters --> inline all parameters
+$inline_parameters = preg_match(Api\CalDAV\OpenAPI::OPENWEBUI_USER_AGENT, $_SERVER['HTTP_USER_AGENT']);
+$config = Api\CalDAV\OpenAPI::getUserAgentConfig($_SERVER['HTTP_USER_AGENT']);
+
+$json = Api\CalDAV\OpenAPI::scan($inline_parameters, $config['operationIds'] ?? [], !($config['allow'] ?? false));
 
 $content = json_encode($json, JSON_PRETTY_PRINT|JSON_UNESCAPED_SLASHES)."\n";
 $etag = '"'.md5($content).'"';

@@ -16,6 +16,7 @@ code is invalid	preferences	id	Kode tidak valid
 code is required	preferences	id	Kode diperlukan
 color	preferences	id	Warna
 country	preferences	id	Negara
+custom login box text color, defaults to white	preferences	id	Warna teks kotak masuk kustom, secara default berwarna putih
 dark mode theme	preferences	id	Tema mode gelap
 date format	preferences	id	Format tanggal
 default	preferences	id	bawaan
@@ -103,6 +104,7 @@ time format	preferences	id	Format waktu
 use default	preferences	id	Gunakan bawaan
 use first %1 letters from username	preferences	id	Gunakan %1 huruf pertama dari nama pengguna
 use initials from first and last name	preferences	id	Gunakan inisial dari nama depan dan belakang
+used instead of the application color.	preferences	id	Digunakan sebagai pengganti warna aplikasi.
 users choice	preferences	id	Pilihan pengguna
 what to display for an avatar, if there is no photo	preferences	id	Apa yang akan ditampilkan untuk avatar, jika tidak ada foto
 which currency symbol or name should be used in egroupware.	preferences	id	Simbol atau nama matauang yang digunakan pada EGroupware.

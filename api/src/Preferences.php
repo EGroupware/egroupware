@@ -894,7 +894,8 @@ class Preferences
 				// we use two seemingly identical conditions (== and !array_diff_assoc()), as both are necessary
 				// to handle values like "" and "0" correctly (not skip updating the prefs)
 				if (!empty($old_prefs[$app]) && $old_prefs[$app] == $value &&
-					!array_diff_assoc($old_prefs[$app] ?? [], $value))
+					// array_diff_assoc() gives PHP Warning:  Array to string conversion, if values are arrays
+					!array_udiff_assoc($old_prefs[$app] ?? [], $value, static fn($a, $b) => $a != $b))
 				{
 					continue;
 				}
@@ -972,6 +973,10 @@ class Preferences
 	 */
 	static function setlocale($category=LC_MESSAGES,$charset=null)
 	{
+		if (!extension_loaded('intl'))
+		{
+			return 'en';    // polyfill only supports "en"
+		}
 		$lang = $GLOBALS['egw_info']['user']['preferences']['common']['lang'];
 		$country = $GLOBALS['egw_info']['user']['preferences']['common']['country'];
 
