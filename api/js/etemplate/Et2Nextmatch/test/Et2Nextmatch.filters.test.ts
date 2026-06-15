@@ -1,6 +1,6 @@
 import {assert} from "@open-wc/testing";
-import {Et2Nextmatch} from "../Et2Nextmatch.ts";
-import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT} from "../Headers/events.ts";
+import {Et2Nextmatch} from "../Et2Nextmatch";
+import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT} from "../Headers/events";
 import * as sinon from "sinon";
 
 /**

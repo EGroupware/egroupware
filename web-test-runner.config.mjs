@@ -44,7 +44,7 @@ const defaultGroups =
 export default {
 	nodeResolve: true,
 	exclude: ['**/node_modules/**'],
-	testRunnerHtml: testRunnerImport => `
+	testRunnerHtml: testRunnerImport => `<!doctype html>
 		<html lang="en-US">
 			<body>
 				<div id="egw_script_id" data-url="test.com"></div>
@@ -103,6 +103,14 @@ export default {
 				if (source === 'dompurify' || source.startsWith('dompurify/'))
 				{
 					return '/node_modules/dompurify/dist/purify.es.mjs';
+				}
+				if (source === 'tinymce')
+				{
+					return '/api/js/etemplate/Et2HtmlArea/test/TinyMceStub.ts';
+				}
+				if (source.startsWith('tinymce/'))
+				{
+					return '/api/js/etemplate/Et2HtmlArea/test/TinyMceSideEffectStub.ts';
 				}
 				if (source.includes('Resumable/resumable'))
 				{
