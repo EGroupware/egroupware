@@ -9,7 +9,7 @@ on:
 
 jobs:
   phpunit:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     env:
       EGW_DB_ROOT_PW: ciroot
@@ -352,8 +352,8 @@ jobs:
           $COMPOSE down -v --remove-orphans
 
   jstest:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
     env:
       EGW_DB_ROOT_PW: ciroot
       COMPOSE_PROJECT_NAME: egwci
@@ -396,27 +396,27 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: sources/package.json
+          node-version: 22
           cache: npm
           cache-dependency-path: sources/package-lock.json
 
       - name: Install npm dependencies
         run: npm ci
 
-      - name: Cache Playwright browsers
-        uses: actions/cache@v4
-        with:
-          path: ~/.cache/ms-playwright
-          key: playwright-${{ runner.os }}-${{ hashFiles('sources/package-lock.json') }}
-          restore-keys: |
-            playwright-${{ runner.os }}-
-
       - name: Install Playwright system dependencies
         run: npx playwright install-deps chromium firefox
 
-      - name: Install Playwright browsers
-        timeout-minutes: 15
-        run: npx playwright install chromium firefox
+      - name: Install Playwright Chromium
+        timeout-minutes: 10
+        env:
+          DEBUG: pw:install
+        run: npx playwright install chromium
+
+      - name: Install Playwright Firefox
+        timeout-minutes: 10
+        env:
+          DEBUG: pw:install
+        run: npx playwright install firefox
 
       - name: Run jstest
         run: npm run jstest
