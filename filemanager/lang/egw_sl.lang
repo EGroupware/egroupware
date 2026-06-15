@@ -308,7 +308,7 @@ tag to mark positions for address labels	filemanager	sl	Oznaka za označitev pol
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	sl	Privzeta začetna mapa je vaša osebna mapa. Če pustite to prazno ali vnesena pt ne obstaja ali nimate ustreznih pravic za dostop, bo uporabljena privzeta vrednost.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	sl	Dokument lahko vsebuje mesto, na primer {{%3}}, ki ga je treba zamenjati s podatki (%1 popoln seznam imen imenika %2).
 the following document-types are supported:	filemanager	sl	Podprte so naslednje vrste dokumentov:
-the requested path %1 is not available.	filemanager	sl	Pot %1 ni na voljo.
+the requested path %1 is not available.	filemanager	sl	Pot %1 ni na voljo!
 the uploaded file is only visible to the person sharing these files with you, not to yourself or other people knowing this sharing link.	filemanager	sl	Prenesena datoteka je vidna samo osebi, ki z vami deli te datoteke, ne pa tudi vam ali drugim osebam, ki poznajo to povezavo za deljenje.
 there's already a directory with that name!	filemanager	sl	Mapa s tem imenom že obstaja.
 there's already a file with that name!	filemanager	sl	Datoteka s tem imenom že obstaja!

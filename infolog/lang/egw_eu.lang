@@ -118,7 +118,7 @@ infolog list	infolog	eu	Egitekoen zerrenda
 infolog preferences	common	eu	Egitekoak hobespenak
 infolog-fieldname	infolog	eu	Egitekoak-Eremuaren izena
 invalid filename	infolog	eu	Fitxategiaren izenak ez du balio
-label<br>helptext	infolog	eu	Marka<br>laguntza testu
+label<br>helptext	infolog	eu	Marka\nlaguntza testu
 last changed	infolog	eu	Azken aldaketa
 last modified	infolog	eu	Azken aldaketa
 leave without saveing the entry	infolog	eu	sarrera gorde gabe utzi

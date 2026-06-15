@@ -158,6 +158,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	lv	Superlietotājs
 superuser (root)	filemanager	lv	Superlietotājs (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	lv	Dokumentā var būt vietvārdi, piemēram, {{%3}}, kas jāaizstāj ar datiem (%1pilns vietvārdu saraksts%2).
+the requested path %1 is not available.	filemanager	lv	Pieprasītais ceļš %1 nav pieejams!
 total files	filemanager	lv	Datnes kopā
 unused space	filemanager	lv	Brīva vieta
 up	filemanager	lv	Uz augšu

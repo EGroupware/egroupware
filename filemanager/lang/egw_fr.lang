@@ -299,7 +299,7 @@ show link to filemanagers basedirectory (/) in side box menu?	filemanager	fr	Aff
 size	filemanager	fr	Taille
 smb, webdavs and vfs require a username!	filemanager	fr	SMB, WebDAVs et VFS nécessitent un code utilisateur !
 smb: mount samba or windows fileserver shares	filemanager	fr	SMB : montage de partages Samba et Windows
-some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	fr	Certaines fonctionnalités nécessitent des autorisations superutilisateur. Veuillez vous connecter ici en tant que superutilisateur du gestionnaire de fichiers. Les utilisateurs autorisés sont définis dans la configuration.
+some functionalities require superuser permissions, please login here as filemanager superuser - allowed users are defined in setup.	filemanager	fr	Certaines fonctionnalités nécessitent des autorisations superutilisateur. Veuillez vous connecter ici en tant que superutilisateur du gestionnaire de fichiers. Les utilisateurs autorisés sont définis dans la configuration (setup).
 sqlfs statistics	filemanager	fr	Statistiques sqlFS
 start search	filemanager	fr	Début de la recherche
 startfolder	filemanager	fr	Dossier de début

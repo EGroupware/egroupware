@@ -16,6 +16,7 @@ change category	timesheet	fr	Changer la catégorie
 change owner when updating	timesheet	fr	Changer le propriétaire lors de la mise à jour
 changed category to %1	timesheet	fr	Changer la catégorie en %1
 changed status	timesheet	fr	Statut modifié.
+check all	timesheet	fr	Tout cocher
 choose 'creator' of imported data	timesheet	fr	Choisir le "créateur" des données importées.
 comment by %1 at %2:	timesheet	fr	Commentaire par %1 à %2:
 create a single 'working time' timesheet per	timesheet	fr	Créer une "Feuille de temps" unique par
@@ -82,7 +83,7 @@ last week	timesheet	fr	La semaine dernière
 last year	timesheet	fr	L'année dernière
 leave it empty for a full week	timesheet	fr	Laisser vide pour une semaine pleine
 leaves without saveing	timesheet	fr	Quitter sans enregistrer
-length<br>rows	timesheet	fr	Longueur<br>lignes
+length<br>rows	timesheet	fr	Longueur\nlignes
 link title	timesheet	fr	Lien vers le titre
 links	timesheet	fr	Liens
 links and attached files	timesheet	fr	Liens et fichiers attachés

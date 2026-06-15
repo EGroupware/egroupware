@@ -1,7 +1,7 @@
 %1 already exists as a file	filemanager	en	%1 already exists as a file.
 %1 already mounted on %2!	filemanager	en	%1 already mounted on %2!
 %1 directories and %2 files copied.	filemanager	en	%1 directories and %2 files copied.
-%1 directories and %2 files deleted.	filemanager	en	%1 directories and %2 files deleted.
+%1 directories and %2 files deleted.	filemanager	en	%1 directories and %2 file(s) deleted.
 %1 elements linked.	filemanager	en	%1 elements linked.
 %1 errors copying (%2 diretories and %3 files copied)!	filemanager	en	%1 errors copying, %2 directories and %3 files copied!
 %1 errors deleteting (%2 directories and %3 files deleted)!	filemanager	en	%1 errors deleting, %2 directories and %3 files deleted!

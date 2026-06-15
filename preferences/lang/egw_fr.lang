@@ -37,6 +37,7 @@ custom login box color, defaults to above color darkened	preferences	fr	Couleur 
 custom login box text color, defaults to white	preferences	fr	Couleur du bloc de connexion de la page principale. Blanche par défaut.
 custom sidebar menu active color, defaults to above color darkened	preferences	fr	Couleur de la sélection active sur le menu latéral, par défaut, plus sombre
 dark mode theme	preferences	fr	Thème du mode sombre
+data exchange settings	common	fr	Paramètres d'échange de données
 date format	preferences	fr	Format de date
 default	preferences	fr	Défaut
 default font	preferences	fr	Police par défaut
@@ -68,6 +69,7 @@ enter code to authenticate the actions below	preferences	fr	Entrez le code pour 
 enter code to verify correct setup	preferences	fr	Entrer le code pour vérifier le paramétrage
 enter your new password	preferences	fr	Entrez votre nouveau mot de passe
 enter your old password	preferences	fr	Entrez votre ancien mot de passe
+entry list headers	preferences	fr	Entêtes de lignes
 error	preferences	fr	Erreur
 failed to change password.	preferences	fr	Erreur lors du changement de mot de passe.
 failed to delete secret!	preferences	fr	Echec à la suppression de la clé secrète !

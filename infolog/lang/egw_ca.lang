@@ -151,7 +151,7 @@ infolog list	infolog	ca	Llista de Tasques i Notes
 infolog preferences	common	ca	Preferències de Tasques i Notes
 infolog-fieldname	infolog	ca	Tasques i Notes - Nom de Camp
 invalid filename	infolog	ca	El nom d'arxiu no és vàlid
-label<br>helptext	infolog	ca	Marca<br>Text d'ajuda
+label<br>helptext	infolog	ca	Marca\nText d'ajuda
 last changed	infolog	ca	Darrer canvi
 last modified	infolog	ca	Darrera modificació
 leave it empty	infolog	ca	deixa-ho buit
@@ -201,7 +201,7 @@ own open	infolog	ca	propi obert
 own overdue	infolog	ca	propi vençut
 own upcoming	infolog	ca	propi en camí
 parent	infolog	ca	Superior
-path on (web-)serverside<br>eg. /var/samba/share	infolog	ca	Ruta al servidor (web) <br>ex. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	ca	Ruta al servidor (web) \nex. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	ca	La ruta als arxius d'usuari i grups HA D'ESTAR FORA de l'estructura de directoris del servidor web!!
 pattern for search in addressbook	infolog	ca	patró a cercar a la Llibreta d'Adreces
 pattern for search in projects	infolog	ca	patró a cercar dins Projectes

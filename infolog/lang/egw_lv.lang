@@ -39,7 +39,10 @@ all other %1 fields are valid	infolog	lv	Visi pārējie %1 lauki ir derīgi
 allow to save entries with due date in the past	infolog	lv	Atļaut saglabāt ierakstus ar pagātnes termiņu
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	lv	ļauj uzstādīt ieraksta statusu, piem., uzstādi izdarīts uz Jādara, ja tas nav pabeigts(vērtības atkarīgas no ierakstu tipa)
 always show them	infolog	lv	Vienmēr tos parādīt
+always use details for crm	infolog	lv	CRM vienmēr izmantot informāciju
+always use no details for crm	infolog	lv	CRM vienmēr neizmantot informāciju
 application mail expected but got: %1	infolog	lv	Pieteikuma e-pasts gaidīts, bet saņemts: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	lv	Piemērot darbību visam vaicājumam, NEVIS tikai redzamajiem ierakstiem!
 apply the changes	infolog	lv	Lietot izmaiņas
 archive	infolog	lv	Arhīvs
 archived too	infolog	lv	Arhivēts arī
@@ -64,6 +67,7 @@ click here to create the link	infolog	lv	Noklikšķini šeit, lai izveidotu link
 click here to start the search	infolog	lv	Noklikšķini šeit, lai sāktu meklēšanu
 close	infolog	lv	Aizvērt
 close all	infolog	lv	Aizvērt visu
+close this entry and all listed sub-entries	infolog	lv	Aizvērt šo ierakstu un visus uzskaitītos apakšierakstus
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	lv	Ar divpunktu (:) atdalīts saraksts ar lauku nosaukumiem, ko izmantot, ja vērtība ir tukša, vai summēt.
 comment	infolog	lv	Komentārs
 completed	infolog	lv	Pabeigts
@@ -230,7 +234,7 @@ insert timestamp into description field	infolog	lv	Levietot laika zīmogu apraks
 invalid filename	infolog	lv	Nederīgs lauka nosaukums
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	lv	Nederīgs īpašnieka ID: %1. Tā vietā izmantojiet %2.
 invalid status for entry type %1.	infolog	lv	Nederīgs statuss ieraksta tipam %1.
-label<br>helptext	infolog	lv	Lezīme<br>Palīgteksts
+label<br>helptext	infolog	lv	Lezīme\nPalīgteksts
 last changed	infolog	lv	Pēdējo reizi mainīts
 last modified	infolog	lv	Pēdējo reizi pārveidots
 leave blank to get the used time calculated by timesheet entries	infolog	lv	Atstāt tukšu, lai iegūtu izmantoto laiku, kas aprēķināts pēc darba laika uzskaites ierakstiem
@@ -347,6 +351,7 @@ responsible user, priority	infolog	lv	Atbildīgais lietotājs, prioritāte
 returns a list / search for records.	infolog	lv	Atgriež sarakstu/ meklē ierakstus
 rights for the responsible	infolog	lv	Atbildīgā tiesības
 rows	infolog	lv	Rindas
+same as infolog list	infolog	lv	Tāpat kā InfoLog sarakstā
 same day	infolog	lv	Tā pati diena
 save	infolog	lv	Saglabāt
 saves the changes made and leaves	infolog	lv	Saglabā izdarītās izmaiņas un aiziet
@@ -364,6 +369,7 @@ select a responsible user: a person you want to delegate this task	infolog	lv	At
 select a typ to edit it's status-values or delete it	infolog	lv	Atzīmē tipu, lai rediģētu tā statusa vērtības vai izdzēs to
 select an app to search in	infolog	lv	Atzīmē aplikāciju, kurā meklēt
 select an entry to link with	infolog	lv	Atzīmē ierakstu, ar kuru saistīt
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	lv	Izvēlieties, vai CRM skatā informācijas (neizmantošanas) iestatījumam jābūt tādam pašam kā InfoLog, vai vienmēr jābūt „neizmantot” vai „izmantot”.
 select multiple contacts for a further action	infolog	lv	Vairāku kontaktu atlase turpmākai darbībai
 select new category	infolog	lv	Izvēlēties jaunu kategoriju
 select to filter by owner	infolog	lv	Atlasīt, lai filtrētu pēc īpašnieka

@@ -105,6 +105,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	ko	슈퍼유저
 superuser (root)	filemanager	ko	슈퍼유저 (루트)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	ko	문서에 데이터로 대체할 {{%3}}과 같은 자리 표시자를 포함할 수 있습니다(%1자리 표시자 이름의 전체 목록%2).
+the requested path %1 is not available.	filemanager	ko	요청하신 경로 %1을 찾을 수 없습니다!
 username for webdav and smb, use $user for name of logged in user	filemanager	ko	WebDAV 및 SMB의 사용자 이름, 로그인한 사용자의 이름에 $user 사용
 vfs mounts and versioning	common	ko	VFS 마운트 및 버전 관리
 webdavs: mount egroupware or *cloud shares	filemanager	ko	WebDAV: EGroupware 또는 *Cloud 공유 마운트

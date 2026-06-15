@@ -46,7 +46,7 @@ add:	infolog	de	Hinzufügen:
 added	infolog	de	Hinzugefügt
 addressbook placeholders available	infolog	de	Adressbuch-Platzhalter verfügbar
 all	infolog	de	Alle
-all links and attachments	infolog	de	alle Verknüpfungen und Anhänge
+all links and attachments	infolog	de	Alle Verknüpfungen und Anhänge
 all other %1 fields are valid	infolog	de	Alle anderen %1 Felder sind gültig
 all projects	infolog	de	Alle Projekte
 allow to save entries with due date in the past	infolog	de	Erlaubt speichern von Einträgen mit Fälligkeitsdatum in der Vergangenheit
@@ -272,7 +272,7 @@ insert timestamp into description field	infolog	de	Zeitstempel in das Beschreibu
 invalid filename	infolog	de	Ungültiger Dateiname.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	de	Ungültige Eigentümer-ID: %1. Verwenden Sie stattdessen %2.
 invalid status for entry type %1.	infolog	de	Ungültiger Status für den eingegebenen Typ %1.
-label<br>helptext	infolog	de	Beschriftung<br>Hilfetext
+label<br>helptext	infolog	de	Beschriftung\nHilfetext
 last changed	infolog	de	Letzte Änderung
 last modified	infolog	de	Zuletzt geändert
 leave blank to get the used time calculated by timesheet entries	infolog	de	Leer lassen um die Zeit nach den Stundenzetteln zu bekommen
@@ -358,7 +358,7 @@ owner, responsible	infolog	de	Besitzer, Verantwortlicher
 parent	infolog	de	Elterneintrag
 parent infolog	infolog	de	Übergeordneter InfoLog
 participants for scheduling an appointment	infolog	de	Teilnehmer für Termin planen
-path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server<br>z.B. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	de	Pfad auf (Web-)Server\nz.B. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	de	Pfad zu Benutzer- und Gruppen-Dateien MUSS AUSSERHALB des Wurzelverzeichnisses des Webservers (document-root) liegen!
 pattern for search in addressbook	infolog	de	Muster für Suche im Adressbuch
 pattern for search in projects	infolog	de	Muster für Suche in Projekten
@@ -415,7 +415,7 @@ responsible user, priority	infolog	de	Verantwortlicher, Priorität
 returns a list / search for records.	infolog	de	Liefert eine Liste von / sucht nach Datensätzen
 rights for the responsible	infolog	de	Rechte für den Verantwortlichen
 rows	infolog	de	Zeilen
-same as infolog list	infolog	de	Nutze CRM Ansicht identisch zu Infolog
+same as infolog list	infolog	de	Nutze CRM-Ansicht identisch zu InfoLog
 same day	infolog	de	Gleichen Tag
 save	infolog	de	Speichern
 saves the changes made and leaves	infolog	de	Speichert die Änderungen und beendet
@@ -450,14 +450,14 @@ should infolog show subtasks, -calls or -notes in the normal view or not. you ca
 should infolog show the links to other applications and/or the file-attachments in the infolog list (normal view when you enter infolog).	infolog	de	Soll InfoLog die Verknüpfungen zu anderen Anwendungen und/oder die Datei-Anhänge in der InfoLog-Liste (normale Ansicht wenn InfoLog aufgerufen wird) anzeigen.
 should infolog show up on the home screen and with which filter. works only if you dont selected an application for the home screen (in your preferences).	infolog	de	Soll InfoLog auf der Startseite angezeigt werden und mit welchem Filter. Funktioniert nur, wenn Sie keine (einzelne) Anwendung (in Ihren Einstellungen) für die Startseite ausgewählt haben.
 should infolog use full names (surname and familyname) or just the loginnames.	infolog	de	Soll InfoLog den vollen Namen (Vor- und Familienname) oder nur die Benutzerkennung verwenden.
-should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog Liste eine eindeutige Nummer anzeigen, die z.B. als Ticketnummer verwendet werden kann.
+should the infolog list show a unique numerical id, which can be used eg. as ticket id.	infolog	de	Soll die InfoLog-Liste eine eindeutige Nummer anzeigen, die z.B. als Ticketnummer verwendet werden kann.
 should the infolog list show the column "last modified".	infolog	de	Soll die InfoLog Liste die Spalte "Zuletzt geändert" anzeigen.
-should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
+should the infolog list show the percent done only for status ongoing or two separate icons.	infolog	de	Soll die InfoLog-Liste Prozent erledigt nur für den Status "in Arbeit" anzeigen oder zwei separate Icons.
 should this entry only be visible to you and people you grant privat access via the acl	infolog	de	Soll dieser Eintrag nur sichtbar sein für Sie und Personen, denen Sie privaten Zugriff über die Zugriffsberechtigungen erlaubt haben
 show a column for used and planned times in the list.	infolog	de	Zeige eine Spalte für benutzte und geplante Zeiten in der List.
 show a x if content equals this compare value, otherwise show nothing	infolog	de	Zeigt ein X an, wenn der Inhalt mit dem  Vergleichswert übereinstimmt, ansonsten erfolgt keine Anzeige
 show full usernames	infolog	de	Kompletten Benutzernamen anzeigen
-show in the infolog list	infolog	de	In der InfoLog Liste anzeigen
+show in the infolog list	infolog	de	In der InfoLog-Liste anzeigen
 show last modified	infolog	de	Zuletzt geändert anzeigen
 show status and percent done separate	infolog	de	Status und Prozent erledigt separat anzeigen
 show sub-entries	infolog	de	Untereinträge anzeigen
@@ -474,7 +474,7 @@ starting %1	infolog	de	Starte %1
 startrecord	infolog	de	Startdatensatz
 status ...	infolog	de	Status ...
 status, percent and date completed are always allowed.	infolog	de	Status, Prozent und Datum erledigt sind immer erlaubt.
-sub	infolog	de	Unter-<br>einträge
+sub	infolog	de	Unter-\neinträge
 sub-entries become subs of the parent or main entries, if there's no parent	infolog	de	Untereinträge gehören dann zum übergeordneten Eintrag oder werden Haupteinträge wenn es keinen übergeordneten gibt
 sub-entries will not be closed	infolog	de	Untereinträge werden nicht geschlossen
 sub-entry	infolog	de	Untereintrag

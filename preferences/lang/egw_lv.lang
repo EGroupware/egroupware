@@ -11,6 +11,7 @@ code is invalid	preferences	lv	Kods ir nederīgs
 code is required	preferences	lv	Kods ir obligāts
 color	preferences	lv	Krāsa
 country	preferences	lv	Valsts
+custom login box text color, defaults to white	preferences	lv	Pieslēgšanās laukā tekstu var iestatīt pēc izvēles; noklusējuma krāsa ir balta
 dark mode theme	preferences	lv	Tumšā režīma tēma
 date format	preferences	lv	Datuma formāts
 default	preferences	lv	noklusējums
@@ -86,6 +87,7 @@ time format	preferences	lv	Laika formāts
 use default	preferences	lv	Lietot noklusējumu
 use first %1 letters from username	preferences	lv	Izmantot pirmos %1 lietotājvārda burtus
 use initials from first and last name	preferences	lv	Izmantot iniciāļus no vārda un uzvārda
+used instead of the application color.	preferences	lv	Tiek izmantota vietā lietotnes krāsai.
 users choice	preferences	lv	Lietotāju izvēle
 what to display for an avatar, if there is no photo	preferences	lv	Ko rādīt avatāram, ja nav fotoattēla
 you can show the applications as icons only, icons with app-name or both.	preferences	lv	Tu vari parādīt aplikācijas tikai kā ikonas, ikonas ar aplikācijas nosaukumu vai abus

@@ -109,7 +109,6 @@ problems during import:	importexport	sl	Težave pri uvozu:
 save as definition	importexport	sl	Shrani kot definicijo
 schedule	common	sl	urnik
 schedule import / export	common	sl	Uvoz urnika | izvoz
-schedule import | export	importexport	sl	Uvoz urnika | izvoz
 schedule not found	importexport	sl	Urnik ni bil najden.
 schedule times are server time!  currently %s.	importexport	sl	Urnik časov je strežniški čas! Trenutno %s.
 select definition	importexport	sl	Izberi definicijo

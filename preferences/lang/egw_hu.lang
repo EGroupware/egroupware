@@ -14,6 +14,7 @@ code is invalid	preferences	hu	A kód érvénytelen
 code is required	preferences	hu	A kód szükséges
 color	preferences	hu	Szín
 country	preferences	hu	Ország/állam
+custom login box text color, defaults to white	preferences	hu	A bejelentkezési mező szövegének egyéni színe, alapértelmezés szerint fehér
 dark mode theme	preferences	hu	Sötét üzemmódú téma
 date format	preferences	hu	Dátum formátum
 default	preferences	hu	alapértelmezett
@@ -109,6 +110,7 @@ time format	preferences	hu	Időformátum
 use default	preferences	hu	Használja az alapértelmezettet
 use first %1 letters from username	preferences	hu	Használja a felhasználónév első %1 betűit
 use initials from first and last name	preferences	hu	Használja a kereszt- és vezetéknév kezdőbetűit
+used instead of the application color.	preferences	hu	Az alkalmazás színe helyett ez a szín kerül használatra.
 users choice	preferences	hu	Felhasználó választása
 what to display for an avatar, if there is no photo	preferences	hu	Mit jelenítsünk meg avatárként, ha nincs fotó
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	hu	Kezdőlap és Kilépés gombok megjelennek a navigációs panelen az alkalmazások között. Tipikusan a legelső és utolsó ikonok lesznek azok.

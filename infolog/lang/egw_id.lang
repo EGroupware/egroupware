@@ -51,7 +51,10 @@ all projects	infolog	id	Semua Proyek
 allow to save entries with due date in the past	infolog	id	Memungkinkan untuk menyimpan entri dengan tanggal jatuh tempo di masa lalu
 alternatives	infolog	id	Pengganti
 always show them	infolog	id	Selalu tampilkan
+always use details for crm	infolog	id	Selalu gunakan detail untuk CRM
+always use no details for crm	infolog	id	Selalu gunakan tanpa detail untuk CRM
 application mail expected but got: %1	infolog	id	Email aplikasi yang diharapkan namun tidak diterima: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	id	Terapkan tindakan ini pada seluruh kueri, BUKAN hanya entri yang ditampilkan!
 apply the changes	infolog	id	Terapkan perubahan
 archive	infolog	id	Arsip
 archived too	infolog	id	Diarsipkan juga
@@ -245,7 +248,7 @@ insert timestamp into description field	infolog	id	Menyisipkan stempel waktu ke 
 invalid filename	infolog	id	Nama berkas keliru.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	id	ID pemilik tidak valid: %1. Sebagai gantinya, gunakan %2.
 invalid status for entry type %1.	infolog	id	Status tidak valid untuk jenis entri %1.
-label<br>helptext	infolog	id	Label<br>Helptext
+label<br>helptext	infolog	id	Label\nHelptext
 last changed	infolog	id	Pengubahan terakhir
 last modified	infolog	id	Pengubahan terakhir
 leave blank to get the used time calculated by timesheet entries	infolog	id	Biarkan kosong agar waktu yang digunakan dihitung oleh entri lembar waktu
@@ -363,6 +366,7 @@ responsible overdue	infolog	id	Keterlambatan yang bertanggung jawab
 responsible upcoming	infolog	id	Bertanggung jawab akan datang
 rights for the responsible	infolog	id	Hak-hak untuk yang bertanggung jawab
 rows	infolog	id	Baris
+same as infolog list	infolog	id	Sama seperti daftar InfoLog
 same day	infolog	id	Hari yang sama
 save	infolog	id	Simpan
 saves the changes made and leaves	infolog	id	Simpan perubahan dan tinggalkan
@@ -376,6 +380,7 @@ select a category for this entry	infolog	id	Pilih kategori untuk entri ini
 select a price	infolog	id	Pilih harga
 select a priority for this task	infolog	id	Pilih prioritas untuk tugas ini
 select a project	infolog	id	Pilih proyek
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	id	Pilih apakah tampilan CRM harus menggunakan nilai yang sama untuk (tanpa) detail seperti InfoLog atau selalu tanpa detail.
 select multiple contacts for a further action	infolog	id	Pilih beberapa kontak untuk tindakan selanjutnya
 select new category	infolog	id	Pilih kategori baru
 select users or groups	infolog	id	Memilih pengguna atau grup

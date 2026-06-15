@@ -28,10 +28,14 @@
 a short subject for the entry	infolog	ro	Un subiect scurt pentru intrare
 abort without deleting	infolog	ro	Abandonarea fără ștergere
 addressbook placeholders available	infolog	ro	Carnet de adrese disponibile
+all links and attachments	infolog	ro	Toate linkurile și atașamentele
 all other %1 fields are valid	infolog	ro	Toate celelalte câmpuri %1 sunt valide
 allow to save entries with due date in the past	infolog	ro	Permiteți salvarea intrărilor cu data scadentă în trecut
 always show them	infolog	ro	Afișați-le întotdeauna
+always use details for crm	infolog	ro	Utilizați întotdeauna detaliile pentru CRM
+always use no details for crm	infolog	ro	Utilizați întotdeauna fără detalii pentru CRM
 application mail expected but got: %1	infolog	ro	E-mail de cerere așteptat, dar primit: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	ro	Aplicați acțiunea asupra întregii interogări, NU doar asupra intrărilor afișate!
 archived too	infolog	ro	Arhivat și el
 automatically check 'do not notify' for these types	infolog	ro	Bifați automat "Do not notify" pentru aceste tipuri de cereri
 can be used to show further infolog types in the calendar or limit it to show eg. only tasks.	infolog	ro	Poate fi utilizat pentru a afișa alte tipuri de InfoLog în calendar sau pentru a limita afișarea, de exemplu, numai la sarcini.
@@ -39,6 +43,7 @@ can not return an exact number of rows and therefore hides the count.	admin	ro	N
 change	infolog	ro	Modificare
 change responsible	infolog	ro	Schimbare responsabilă
 check to set startday	infolog	ro	Verificați pentru a seta ziua de început
+close this entry and all listed sub-entries	infolog	ro	Închideți această intrare și toate subintrările afișate
 colon (:) separated list of field names to use if value is empty or to sum up	infolog	ro	Listă de nume de câmpuri separate prin două puncte (:) care trebuie utilizate dacă valoarea este goală sau pentru a însuma
 contact cf	infolog	ro	Contact CF
 convert to a ticket	infolog	ro	Conversia într-un bilet
@@ -189,11 +194,13 @@ responsible open and upcoming	infolog	ro	Răspundeți de situațiile deschise ș
 responsible overdue	infolog	ro	Responsabil întârziat
 rights for the responsible	infolog	ro	Drepturile pentru responsabilul
 rows	infolog	ro	Rânduri
+same as infolog list	infolog	ro	La fel ca în lista InfoLog
 same day	infolog	ro	Aceeași zi
 schedule appointment	infolog	ro	Programare programare
 second parameter for preg_replace	infolog	ro	Al doilea parametru pentru preg_replace
 select a price	infolog	ro	Selectați un preț
 select a project	infolog	ro	Selectați un proiect
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	ro	Selectați dacă vizualizarea CRM trebuie să utilizeze aceeași valoare pentru (fără) detalii ca în InfoLog sau întotdeauna fără detalii.
 select multiple contacts for a further action	infolog	ro	Selectați mai multe contacte pentru o acțiune ulterioară.
 select new category	infolog	ro	Selectați o nouă categorie
 select users or groups	infolog	ro	Selectați utilizatori sau grupuri

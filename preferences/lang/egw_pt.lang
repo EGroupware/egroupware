@@ -15,6 +15,7 @@ code is invalid	preferences	pt	O código é inválido
 code is required	preferences	pt	O código é necessário
 color	preferences	pt	Cor
 country	preferences	pt	País
+custom login box text color, defaults to white	preferences	pt	Cor personalizada do texto da caixa de login; o padrão é branco
 dark mode theme	preferences	pt	Tema do modo negro
 date format	preferences	pt	Formato de data
 default	preferences	pt	por omissão
@@ -99,6 +100,7 @@ time format	preferences	pt	Formato do horário
 use default	preferences	pt	Utilizar definições por omissão
 use first %1 letters from username	preferences	pt	Utilizar as primeiras %1 letras do nome de utilizador
 use initials from first and last name	preferences	pt	Utilizar as iniciais do primeiro e último nome
+used instead of the application color.	preferences	pt	Utilizada em vez da cor da aplicação.
 users choice	preferences	pt	Personalizar...
 what to display for an avatar, if there is no photo	preferences	pt	O que mostrar para um avatar, se não houver uma foto
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	pt	Se responder "sim", os botões "página inicial" e "sair" serão apresentados como aplicações na barra principal de aplicações no topo da página.

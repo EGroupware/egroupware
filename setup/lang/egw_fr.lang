@@ -388,6 +388,7 @@ if you running this the first time, don't forget to manualy %1 !!!	setup	fr	Si v
 if you use only languages of the same charset (eg. western european ones) you dont need to set a system-charset!	setup	fr	Si vous utilisez des langues qui appartiennent aux mêmes jeux de caractères (exemple: Europe de l'ouest), vous n'avez pas besoin de définir le jeu de caractère au niveau du système
 image type selection order	setup	fr	Ordre de sélection de type d'image
 imap: admin user,password,emailadmin_imap(|_cyrus|_dovecot)	setup	fr	IMAP: Administrateur: compte,mot de passe,emailadmin_imap(|_cyrus|_dovecot)
+import aliases	setup	fr	Importer les alias
 import has been completed!	setup	fr	L'importation est terminée !
 include_path need to contain "." - the current directory	setup	fr	include_path doit contenir "." - le répertoire courant
 incremental import	setup	fr	Importation incrémentale

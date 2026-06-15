@@ -19,6 +19,7 @@ after reply, visible during compose	mail	lv	Pēc atbildes, redzams sastādīšan
 aliases+forwards	mail	lv	Aliases+Forwards
 all my email addresses	mail	lv	visas manas e-pasta adreses
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	lv	Tiks dzēstas arī visas apakšmapes, un visi ziņojumi visās attiecīgajās mapēs tiks zaudēti
+allow users to create further identities	mail	lv	Ļaut lietotājiem izveidot papildu identitātes
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	lv	Ļauj lietotājam lasīt, rakstīt un veidot mapes un e-pastus, ievietot tajās ziņojumus, pievienot tiem ziņojumus un dzēst ziņojumus
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
 always show notifiction	mail	lv	Vienmēr rādīt paziņojumu
@@ -54,6 +55,8 @@ copied %1 message(s) from %2 to %3	mail	lv	Nokopēts %1 ziņojums(-i) no %2 uz %
 copy to	mail	lv	Kopēt Uz:
 cross account forward attachment is not allowed!	mail	lv	Nav atļauts pievienot starpkonta priekšējo pielikumu!
 current subject	mail	lv	Pašreizējais temats
+default identity for compose	mail	lv	Noklusējuma identitāte vēstules sastādīšanai
+default signature	mail	lv	Noklusējuma paraksts
 default sorting order	mail	lv	Noklusētā kārtošanas secība
 default toolbar actions shown in mail's html editor	mail	lv	HTML redaktora rīkjoslā iespējotās funkcijas, veidojot e-pasta vēstuli
 default value for remembering s/mime passphrase in minutes	mail	lv	S/MIME paroles frāzes atcerēšanās noklusējuma vērtība minūtēs
@@ -122,11 +125,14 @@ handling of external http images / mixed content in mails	mail	lv	Ārējo http a
 header	mail	lv	Virsraksts
 header lines	mail	lv	Galvenes rindas
 hide from	mail	lv	Paslēpt No
+how should the available information on identities be displayed	admin	lv	Kā rādīt pieejamo informāciju par identitātēm
 html	mail	lv	HTML
 ident name	mail	lv	Identitātes nosaukums
 ident name email	mail	lv	Identitātes nosaukums [E-pasts]
 ident name organization email	mail	lv	Identitātes nosaukums Organizācija [E-pasts]
+identity	mail	lv	Identitāte
 identity label	mail	lv	Identitātes etiķete
+identity+signature	mail	lv	Identitāte + paraksts
 if	mail	lv	Ja
 if different from email address	mail	lv	Ja atšķiras no e-pasta adreses
 if mail header	mail	lv	ja e-pasta virsraksts
@@ -152,6 +158,7 @@ junk folder	mail	lv	Surogātpasta mape
 keep a copy	mail	lv	Saglabāt kopiju
 keep a copy of the message in your inbox	mail	lv	saglabājiet ziņojuma kopiju savā iesūtnē
 kilobytes	mail	lv	kb
+last used signature	mail	lv	Pēdējā izmantotā paraksta
 later	mail	lv	Vēlāk
 learning as ham (not spam) failed because of %1	mail	lv	Izmeklēšana kā šķipsnu (ne surogātpasta) neizdevās %1 dēļ
 learning as spam failed because of %1	mail	lv	Mācīšanās kā surogātpasts neizdevās %1 dēļ
@@ -214,6 +221,7 @@ organization | real name email	mail	lv	Organizācija | Īstais vārds [E-pasts]
 original message	mail	lv	Sākotnējā ziņa
 outbox	mail	lv	Iesūtne
 permission denied	mail	lv	Atļauja liegta
+personal signature	mail	lv	Personīgais paraksts
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lv	Lūdzu, konfigurējiet savu S/MIME sertifikātu Encryption cilnē, kas atrodas konta rediģēšanas dialoglodziņā.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lv	Lūdzu, sazinieties ar savu administratoru, lai pārliecinātos, vai jūsu serveris atbalsta servera filtrēšanas noteikumus un kā tos iespējot EGroupware aktīvajam kontam (%1) ar ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lv	Lūdzu, sazinieties ar savu administratoru, lai pārbaudītu, vai jūsu serveris atbalsta servera brīvdienu ziņojumus un kā tos iespējot EGroupware jūsu aktīvajam kontam (%1) ar ID: %2.
@@ -327,6 +335,7 @@ validate selected addresses on submit:	mail	lv	Apstiprināt izvēlētos adreses 
 view header lines	mail	lv	Skatīt virsraksta rindas
 what to do when you delete a message	mail	lv	Ko darīt, dzēšot ziņojumu.
 when deleting messages	mail	lv	Kad dzēš vēstules
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	lv	Ar kuru e-pasta identitāti (parakstu) vēlaties sākt?\nIzvēloties „Personīgais paraksts”, mēs vienmēr izmantojam pirmo personīgo parakstu.
 write	mail	lv	Rakstīt
 write & delete	mail	lv	rakstīt un dzēst
 wrote	mail	lv	rakstīja

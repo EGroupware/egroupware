@@ -15,6 +15,7 @@ adding %1 to whiltelisted email addresses failed because of %2	mail	no	Legge til
 all my email addresses	mail	no	alle mine e-postadresser
 all of	mail	no	alle av
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	no	Alle undermapper slettes også, og alle meldinger i alle berørte mapper vil gå tapt
+allow users to create further identities	mail	no	Tillat brukere å opprette flere identiteter
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	no	Tillater en bruker å lese, skrive og opprette mapper og e-poster, legge til meldinger i dem, legge til meldinger i dem og slette meldinger
 always respond / auto-responder	mail	no	Alltid svare / autosvar
 always show html emails	mail	no	Vis alltid HTML meldinger
@@ -52,6 +53,8 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	no	Konverter kun e-post til sak (ignorer eventuelle vedlegg)
 copied %1 message(s) from %2 to %3	mail	no	Kopierte %1 melding(er) fra %2 til %3.
 copy to	mail	no	Kopier til
+default identity for compose	mail	no	Standardidentitet for ny e-post
+default signature	mail	no	Standard signatur
 default sorting order	mail	no	Standard sortering
 defines what to show as identity label on mail folder header	common	no	Definerer hva som skal vises som identitetsmerke på e-postmappens overskrift. Merkene refererer til feltene i e-postkontoen.
 delete folder	mail	no	Slett Mappe
@@ -123,12 +126,15 @@ header	mail	no	Overskrift
 header lines	mail	no	Hodelinjer
 hide from	mail	no	Skjul Fra
 high priority	mail	no	Høy prioritet
+how should the available information on identities be displayed	admin	no	Hvordan skal den tilgjengelige informasjonen om identiteter vises
 html	mail	no	HTML
 html mode	mail	no	HTML-modus
 ident name	mail	no	Identnavn
 ident name email	mail	no	Identnavn [E-post]
 ident name organization email	mail	no	Identnavn Organisasjon [E-post]
+identity	mail	no	Identitet
 identity label	mail	no	Identitetsetikett
+identity+signature	mail	no	Identitet+Signatur
 if	mail	no	Dersom
 if different from email address	mail	no	Hvis forskjellig fra e-postadressen
 if mail header	mail	no	dersom meldingshodet
@@ -153,6 +159,7 @@ junk folder	mail	no	søppelpost mappe
 keep a copy	mail	no	Behold en kopi
 keep a copy of the message in your inbox	mail	no	behold en kopi av meldingen i din innboks
 kilobytes	mail	no	kilobytes
+last used signature	mail	no	Sist brukte signatur
 later	mail	no	Senere
 learning as ham (not spam) failed because of %1	mail	no	Læring som skinke (ikke spam) mislyktes på grunn av %1
 learning as spam failed because of %1	mail	no	Læring som spam mislyktes på grunn av %1
@@ -202,6 +209,7 @@ organization | real name email	mail	no	Organisasjon | Ekte navn [E-post]
 original message	mail	no	Opprinnelig melding
 outbox	mail	no	Utboks
 permission denied	mail	no	Ingen tilgang
+personal signature	mail	no	Personlig signatur
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	no	Konfigurer S/MIME-sertifikatet i kategorien Kryptering i dialogboksen Rediger konto.
 please select a address	mail	no	Vennligst velg en adresse
 please select the number of days to wait between responses	mail	no	Vennligst velg antall dager for vent melding tilbakemeldinger
@@ -302,6 +310,7 @@ validate selected addresses on submit:	mail	no	Bekreft valgte adresser ved sendi
 view header lines	mail	no	Vis overskriftslinjer
 what to do when you delete a message	mail	no	Hva du skal gjøre når du sletter en melding.
 when deleting messages	mail	no	Når du sletter meldinger
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	no	Hvilken e-postidentitet (signatur) ønsker du å starte med?\nFor «Personlig signatur» bruker vi alltid den første personlige signaturen.
 write	mail	no	Lagre
 write & delete	mail	no	skriv og slett
 wrote	mail	no	skrev

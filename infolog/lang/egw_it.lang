@@ -46,13 +46,15 @@ add:	infolog	it	Aggiungi:
 added	infolog	it	Aggiunto
 addressbook placeholders available	infolog	it	Variabili metasintattiche della rubrica disponibili
 all	infolog	it	Tutte
-all links and attachments	infolog	it	tutti i link links e gli allegati
+all links and attachments	infolog	it	Tutti i link links e gli allegati
 all other %1 fields are valid	infolog	it	Tutti gli altri %1 campi sono validi
 all projects	infolog	it	Tutti i progetti
 allow to save entries with due date in the past	infolog	it	Permetti di salvare voci con scadenza nel passato
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	it	Pemette di impostare lo stato di una voce, es. impostare completato un ToDo finito (i valori dipendono dal tipo di voce).
 alternatives	infolog	it	Alternative
 always show them	infolog	it	Mostra sempre
+always use details for crm	infolog	it	Utilizza sempre i dettagli per il CRM
+always use no details for crm	infolog	it	Utilizza sempre nessun dettaglio per il CRM
 application mail expected but got: %1	infolog	it	Si aspettava l'applicazione mail ma invece si ha: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	it	Applica l'azione su tutta la query, NON solo le voci visualizzate!
 apply the changes	infolog	it	Applica le modifiche
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	it	Inserisci timbro temporale al
 invalid filename	infolog	it	Nome di Campo non valido.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	it	ID proprietario non valido: %1. Potrebbe essere una traduzione errata del campo. Usare %2.
 invalid status for entry type %1.	infolog	it	Stato non valido per il tipo %1
-label<br>helptext	infolog	it	Etichetta<br>Testo di Help
+label<br>helptext	infolog	it	Etichetta\nTesto di Help
 last changed	infolog	it	Ultima modifica
 last modified	infolog	it	Ultima modifica
 leave blank to get the used time calculated by timesheet entries	infolog	it	Lascia vuoto per ottenere il tempo calcolato dalle voci di foglio ore
@@ -354,7 +356,7 @@ owner, responsible	infolog	it	Proprietario, Responsabile
 parent	infolog	it	Superiore
 parent infolog	infolog	it	Scheda attività padre
 participants for scheduling an appointment	infolog	it	Partecipanti per programmare un appuntamento
-path on (web-)serverside<br>eg. /var/samba/share	infolog	it	percorso lato (web)server<br>es. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	it	percorso lato (web)server\nes. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	it	Il path ai file utente e gruppo DEVE ESSERE ESTERNO alla directory principale del webserver!
 pattern for search in addressbook	infolog	it	Stringa da ricercare nella rubrica
 pattern for search in projects	infolog	it	Stringa da ricercare nei progetti
@@ -411,6 +413,7 @@ responsible user, priority	infolog	it	Responsabile utente, priorità
 returns a list / search for records.	infolog	it	Restituisce un elenco / cerca record.
 rights for the responsible	infolog	it	Diritti del responsabile
 rows	infolog	it	Righe
+same as infolog list	infolog	it	Come nell'elenco di InfoLog
 same day	infolog	it	Stesso giorno
 save	infolog	it	Salva
 saves the changes made and leaves	infolog	it	Salva i cambiamenti ed esci
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	it	Se
 select a typ to edit it's status-values or delete it	infolog	it	Seleziona un tipo per modificare il suo stato o cancellarlo
 select an app to search in	infolog	it	Seleziona un'applicazione un cui cercare
 select an entry to link with	infolog	it	Seleziona una voce da linkare con
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	it	Seleziona questa opzione se la vista del CRM deve utilizzare lo stesso valore per i dettagli (o la loro assenza) di InfoLog oppure impostare sempre “nessun dettaglio” o “dettagli”.
 select multiple contacts for a further action	infolog	it	Seleziona contatti multipli per azioni ulteriori
 select new category	infolog	it	Seleziona nuova categoria
 select to filter by owner	infolog	it	Seleziona per filtrare per proprietario

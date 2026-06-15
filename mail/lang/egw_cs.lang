@@ -119,6 +119,8 @@ current folder	mail	cs	Aktuální složka
 current subject	mail	cs	Aktuální téma
 currently:	mail	cs	Aktuálně:
 deactive	mail	cs	Deaktivovat
+default identity for compose	mail	cs	Výchozí identita pro psaní zpráv
+default signature	mail	cs	Výchozí podpis
 default sorting order	mail	cs	Výchozí třídění
 default toolbar actions shown in mail's html editor	mail	cs	Funkce povolené na panelu nástrojů editoru HTML při vytváření e-mailu
 default value for remembering s/mime passphrase in minutes	mail	cs	Výchozí hodnota pro zapamatování přístupové fráze S/MIME v minutách
@@ -318,6 +320,7 @@ junk folder	mail	cs	Složka nevyžádané pošty
 keep a copy	mail	cs	Ponechte si kopii
 keep a copy of the message in your inbox	mail	cs	Zachovat kopii zprávy ve vaší schránce
 kilobytes	mail	cs	kilobytů
+last used signature	mail	cs	Naposledy použitý podpis
 later	mail	cs	Později
 learning as ham (not spam) failed because of %1	mail	cs	Učení jako šunka (ne spam) se nezdařilo z důvodu %1
 learning as spam failed because of %1	mail	cs	Učení jako spam selhalo kvůli %1
@@ -424,6 +427,7 @@ original message	mail	cs	Původní zpráva
 outbox	mail	cs	Odeslaná pošta
 password protect	mail	cs	Chráněno heslem
 permission denied	mail	cs	Přístup zamítnut
+personal signature	mail	cs	Osobní podpis
 please configure access to an existing individual imap account.	mail	cs	Nakonfigurujte prosím přístup ke stávajícímu osobnímu IMAP účtu.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	cs	Nakonfigurujte prosím svůj certifikát S/MIME na kartě Šifrování v dialogovém okně Upravit účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje pravidla a jak je v EGroupware pro váš účet %1 s identifikací %2 povolit.
@@ -674,6 +678,7 @@ when saving messages as item of a different app	mail	cs	při uložení zprávy j
 when sending messages	mail	cs	Při odeslání zprávy
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	cs	Které složky (kromě složky Odeslané) by měly být zobrazeny za použití schématu pro zobrazení složky Odeslané
 which folders - in general - should not be automatically created, if not existing	mail	cs	Které složky by neměly být automaticky vytvářeny pokud neexistují
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	cs	S kterou e-mailovou identitou (podpisem) chcete začít.\nU možnosti „Osobní podpis“ se vždy použije první osobní podpis.
 which method to use when forwarding a message	mail	cs	Jakým způsobem přeposlat zprávu
 whole message	mail	cs	Všechny zprávy
 with message:	mail	cs	Se zprávou:

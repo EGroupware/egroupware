@@ -128,6 +128,8 @@ current folder	mail	sk	Aktuálny priečinok
 current subject	mail	sk	Aktuálny predmet
 currently:	mail	sk	Aktuálne:
 deactive	mail	sk	Deaktivovať
+default identity for compose	mail	sk	Predvolená identita pre písanie správ
+default signature	mail	sk	Predvolený podpis
 default sorting order	mail	sk	Predvolené triedenie
 default toolbar actions shown in mail's html editor	mail	sk	Funkcie povolené na paneli nástrojov editora HTML pri vytváraní e-mailu
 default value for remembering s/mime passphrase in minutes	mail	sk	Predvolená hodnota pre zapamätanie prístupovej frázy S/MIME v minútach
@@ -328,6 +330,7 @@ junk folder	mail	sk	Priečinok Spam
 keep a copy	mail	sk	Ponechať si kópiu
 keep a copy of the message in your inbox	mail	sk	Ponechať kópiu správy v priečinku Doručenej pošty
 kilobytes	mail	sk	kilobajtov
+last used signature	mail	sk	Naposledy použitý podpis
 later	mail	sk	Neskôr
 learning as ham (not spam) failed because of %1	mail	sk	Zapamätanie ako NIE nevyžiadanej správy zlyhalo z dôvodu: %1
 learning as spam failed because of %1	mail	sk	Zapamätanie ako nevyžiadanej správy zlyhalo z dôvodu: %1
@@ -434,6 +437,7 @@ original message	mail	sk	Pôvodná správa
 outbox	mail	sk	Odoslané správy
 password protect	mail	sk	chrániť heslom
 permission denied	mail	sk	Prístup bol odmietnutý
+personal signature	mail	sk	Osobný podpis
 please configure access to an existing individual imap account.	mail	sk	Prosím nakonfigurujte prístup k existujúcemu osobnému IMAP účtu.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sk	Prosím nastavte si svoj S/MIME certifikát v karte Šifrovanie v okne Upraviť účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sk	Prosím opýtajte sa svojho administrátora, či váš server podporuje filtrovanie na strane servera, a ako ich zapnúť v EGroupware pre váš aktívny účet (%1) s ID: %2.
@@ -688,6 +692,7 @@ when saving messages as item of a different app	mail	sk	Pri ukladaní správ ako
 when sending messages	mail	sk	Pri posielaní správ
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sk	Ktoré priečinky (popri priečinku Odoslané) sa majú zobrazovať pomocou schémy Zobrazenie Priečinka Odoslaných správ
 which folders - in general - should not be automatically created, if not existing	mail	sk	Ktoré priečinky - vo všeobecnosti - sa NEMAJÚ vytvárať automaticky, keď neexistujú
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	sk	S ktorou e-mailovou identitou (podpisom) chcete začať.\nV prípade „Osobného podpisu“ sa vždy používa prvý osobný podpis.
 which method to use when forwarding a message	mail	sk	Aká metóda sa má použiť pre preposielaní správy
 whitelisted mails are not marked as spam	mail	sk	E-mail z bielej listiny nebude označený ako Spam
 whole message	mail	sk	Celá správa

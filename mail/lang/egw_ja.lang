@@ -128,6 +128,8 @@ current folder	mail	ja	現在のフォルダ
 current subject	mail	ja	現在の件名
 currently:	mail	ja	現在値:
 deactive	mail	ja	無効化
+default identity for compose	mail	ja	作成時のデフォルトのID
+default signature	mail	ja	デフォルトの署名
 default sorting order	mail	ja	既定のソート順
 default toolbar actions shown in mail's html editor	mail	ja	メール作成時にHTMLエディタツールバーで有効になる機能
 default value for remembering s/mime passphrase in minutes	mail	ja	S/MIMEのパスフレーズを記憶する際のデフォルト値を分単位で設定可能
@@ -328,6 +330,7 @@ junk folder	mail	ja	ジャンク・フォルダ
 keep a copy	mail	ja	コピーを残す
 keep a copy of the message in your inbox	mail	ja	インボックスのメッセージのコピーを保持
 kilobytes	mail	ja	kB
+last used signature	mail	ja	最後に使用した署名
 later	mail	ja	後で
 learning as ham (not spam) failed because of %1	mail	ja	ハム（スパムでない）学習に失敗しました（%1）
 learning as spam failed because of %1	mail	ja	スパム学習に失敗しました（%1）
@@ -434,6 +437,7 @@ original message	mail	ja	オリジナルメッセージ
 outbox	mail	ja	送信ボックス
 password protect	mail	ja	パスワード保護
 permission denied	mail	ja	権限が拒否されました
+personal signature	mail	ja	個人用署名
 please configure access to an existing individual imap account.	mail	ja	個人用 IMAP アカウントを構成してください。
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	ja	アカウント編集ダイアログの暗号タブでS/MIME証明書を構成してください。
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	ja	サーバーがサーバー側フィルター・ルールに対応している場合は、アカウント %1（ID: %2）がフィルター機能をEGroupwaraから利用できるかどうか管理者にお問い合わせ下さい。
@@ -688,6 +692,7 @@ when saving messages as item of a different app	mail	ja	他のアプリケーシ
 when sending messages	mail	ja	メッセージ送信時の動作
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	ja	送信済みフォルダ表示スキーマで表示するフォルダ（送信済みフォルダに加えて）
 which folders - in general - should not be automatically created, if not existing	mail	ja	自動生成すべきでないフォルダ
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	ja	どのメールID（署名）から開始しますか？\n「個人用署名」を選択した場合、常に最初の個人用署名が使用されます。
 which method to use when forwarding a message	mail	ja	メッセージ転送方法
 whitelisted mails are not marked as spam	mail	ja	ホワイトリスト・メールはスパムとしない
 whole message	mail	ja	メッセージ全体

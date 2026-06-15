@@ -26,6 +26,7 @@ allow external images	mail	da	Tillad eksterne billeder
 allow external images from listed domains	mail	da	Tillad eksterne billeder fra listede domæner
 allow images from external sources in html emails	mail	da	Tillad billeder fra eksterne kilder i HTML-e-mails.
 allow images from listed domains in html emails	mail	da	Tillad billeder fra listede domæner i HTML-e-mails.
+allow users to create further identities	mail	da	Tillad brugere at oprette yderligere identiteter
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	da	Giver en bruger mulighed for at læse, skrive og oprette mapper og mails, sende til den, tilføje beskeder til den og slette beskeder.
 always allow external sources from %1	mail	da	Tillad altid eksterne kilder fra %1
 always respond / auto-responder	mail	da	Always respond / auto-responder
@@ -72,6 +73,8 @@ copied %1 message(s) from %2 to %3	mail	da	Kopierede %1 meddelelse(r) fra %2 til
 copy to	mail	da	Kopier til
 cross account forward attachment is not allowed!	mail	da	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
 current subject	mail	da	Nuværende emne
+default identity for compose	mail	da	Standardidentitet ved oprettelse af e-mail
+default signature	mail	da	Standardunderskrift
 default sorting order	mail	da	Standart soterings rækkefølge
 default toolbar actions shown in mail's html editor	mail	da	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
 default value for remembering s/mime passphrase in minutes	mail	da	Standardværdi for hukommelse af S/MIME-passphrase i minutter
@@ -144,11 +147,14 @@ header	mail	da	Overskrift
 header lines	mail	da	Overskriftslinjer
 hide from	mail	da	Skjul Fra
 high priority	mail	da	Høj prioritet
+how should the available information on identities be displayed	admin	da	Hvordan skal de tilgængelige oplysninger om identiteter vises
 html	mail	da	HTML
 ident name	mail	da	Ident navn
 ident name email	mail	da	Ident navn [E-mail]
 ident name organization email	mail	da	Identnavn Organisation [E-mail]
+identity	mail	da	Identitet
 identity label	mail	da	Identitetsmærke
+identity+signature	mail	da	Identitet+Signatur
 if	mail	da	HVIS
 if different from email address	mail	da	Hvis forskellig fra e-mail-adresse
 if mail header	mail	da	hvis e-mail-overskrift
@@ -174,6 +180,7 @@ junk folder	mail	da	Junk-mappe
 keep a copy	mail	da	Behold en kopi
 keep a copy of the message in your inbox	mail	da	Opbevar en kopi af beskeden i din indbakke
 kilobytes	mail	da	Kilobyte
+last used signature	mail	da	Senest anvendte underskrift
 later	mail	da	Senere
 learning as ham (not spam) failed because of %1	mail	da	Læring som skinke (ikke spam) mislykkedes på grund af %1
 learning as spam failed because of %1	mail	da	Læring som spam mislykkedes på grund af %1
@@ -239,6 +246,7 @@ organization | real name email	mail	da	Organisation | Rigtigt navn [E-mail]
 original message	mail	da	Original besked
 outbox	mail	da	Udbakke
 permission denied	mail	da	Adgang nægtet
+personal signature	mail	da	Personlig underskrift
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	da	Konfigurer dit S/MIME-certifikat under fanen Encryption i dialogboksen Rediger konto.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	da	Kontakt din administrator for at få bekræftet, om din server understøtter filterregler på serversiden, og hvordan du aktiverer dem i EGroupware for din aktive konto (%1) med ID:%2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	da	Kontakt din administrator for at få bekræftet, om din server understøtter feriemeddelelser, og hvordan du aktiverer dem i EGroupware for din aktive konto (%1) med ID:%2.
@@ -352,6 +360,7 @@ validate selected addresses on submit:	mail	da	Bekræft valgte adresser ved afse
 view header lines	mail	da	Vis overskriftslinjer
 what to do when you delete a message	mail	da	Hvad man skal gøre, når man sletter en besked.
 when deleting messages	mail	da	Når meddelser slettes
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	da	Hvilken mailidentitet (signatur) vil du starte med?\nVed »Personlig signatur« bruger vi altid den første personlige signatur.
 write	mail	da	Skriv
 write & delete	mail	da	skriv og slet
 wrote	mail	da	skrev

@@ -110,7 +110,6 @@ problems during import:	importexport	ja	Problems during import:
 save as definition	importexport	ja	定義ファイルとして保存
 schedule	common	ja	Schedule
 schedule import / export	common	ja	Schedule import | export
-schedule import | export	importexport	ja	Schedule import | export
 schedule not found	importexport	ja	Schedule not found.
 schedule times are server time!  currently %s.	importexport	ja	Schedule times are server time!  Currently %s.
 select definition	importexport	ja	定義ファイルを選択

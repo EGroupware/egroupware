@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	sl	Omogoči shranjevanje
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sl	Dovoli spreminjanje statusov zapisov, npr. določi Opravilo kot končano, če se konča (vrednost je odvisna od tipa vhoda).
 alternatives	infolog	sl	Alternativa
 always show them	infolog	sl	Vedno jih pokažite
+always use details for crm	infolog	sl	V CRM vedno uporabi podrobnosti
+always use no details for crm	infolog	sl	V CRM vedno uporabi brez podrobnosti
 application mail expected but got: %1	infolog	sl	Pričakovana prijava je bila priąeta: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	sl	Uporabite dejanje za celotno poizvedbo, NE samo prikazane vnose!
 apply the changes	infolog	sl	Uveljavi spremembe
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	sl	Vnesite časovni žig v opisn
 invalid filename	infolog	sl	Napačno ime datoteke
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	sl	Neveljaven ID lastnika: %1. Uporabil %2 namesto tega.
 invalid status for entry type %1.	infolog	sl	Neveljaven status za tip vnosa %1.
-label<br>helptext	infolog	sl	Oznaka<br>Pomoč
+label<br>helptext	infolog	sl	Oznaka\nPomoč
 last changed	infolog	sl	Zadnjič spremenjeno
 last modified	infolog	sl	Zadnjič prilagojeno
 leave blank to get the used time calculated by timesheet entries	infolog	sl	Pustite prazno, da dobite uporabljeni čas, izračunan s časovnimi vpisi
@@ -354,7 +356,7 @@ owner, responsible	infolog	sl	Lastnik, odgovoren
 parent	infolog	sl	Nadrejen
 parent infolog	infolog	sl	Nadrejen InfoLog
 participants for scheduling an appointment	infolog	sl	Udeleženci za načrtovanje sestanka
-path on (web-)serverside<br>eg. /var/samba/share	infolog	sl	Pot na (web-)stran strežnika<br>npr. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	sl	Pot na (web-)stran strežnika\nnpr. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sl	Pot do uporabnikov in skupine datotek MORA BITI ZUNAJ glavnega direktorija spletnega strežnika!
 pattern for search in addressbook	infolog	sl	Vzorec za iskanje v imeniku
 pattern for search in projects	infolog	sl	Vzorec za iskanje v projektih
@@ -411,6 +413,7 @@ responsible user, priority	infolog	sl	Odgovoren uporabnik, prioriteta
 returns a list / search for records.	infolog	sl	Vrne seznam / iskanje zapisov.
 rights for the responsible	infolog	sl	Pravice odgovornega
 rows	infolog	sl	Vrstice
+same as infolog list	infolog	sl	Enako kot seznam InfoLog
 same day	infolog	sl	Isti dan
 save	infolog	sl	Shrani
 saves the changes made and leaves	infolog	sl	Shrani spremembe in zapusti
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	sl	Iz
 select a typ to edit it's status-values or delete it	infolog	sl	Izberite tip za urejanje vrednosti statusa ali brisanje
 select an app to search in	infolog	sl	Izberite aplikacijo za iskanje
 select an entry to link with	infolog	sl	Izberite zapis s katerim želite povezati
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	sl	Izberite, ali naj pogled CRM uporablja enako vrednost za (brez) podrobnosti kot InfoLog ali vedno brez podrobnosti.
 select multiple contacts for a further action	infolog	sl	Izberite več stikov za nadaljnja dejanja
 select new category	infolog	sl	Izberite novo kategorijo
 select to filter by owner	infolog	sl	Izberite za filtriranje po lastniku

@@ -19,6 +19,7 @@ book this resource	resources	fr	Réserver cette ressource
 bookable	resources	fr	Réservable
 booking requests	resources	fr	Requêtes de réservation
 buy this article	resources	fr	Acheter cet article
+buy this resource	resources	fr	Acheter cette ressource
 buyable	resources	fr	Achetable
 category admin	resources	fr	Administrateur de catégorie
 category saved.	resources	fr	Catégorie sauvegardée.
@@ -41,8 +42,9 @@ delete selected resources	resources	fr	Supprimer les ressources selectionnées
 delete this entry	resources	fr	Supprimer cette entrée
 deleted	resources	fr	supprimé
 description (short)	resources	fr	Description (courte)
-direct booking permissions	resources	fr	Permissions directes de réservation
+direct booking permissions	resources	fr	Permissions directes de réservation des ressources de cette catégorie
 do you really want to delete this resource?	resources	fr	Souhaitez-vous vraiment supprimer cette ressource ?
+don't use vfs (this will need a symlink --> see readme)	resources	fr	Ne pas utiliser le VFS (cela va créer un lien symbolique ---> voir le README)
 edit this entry	resources	fr	Modifier cette entrée
 event start	resources	fr	Début de l'événement
 existing links	resources	fr	Liens existants
@@ -63,8 +65,8 @@ how many of this resource are usable	resources	fr	Combien sont utilisables
 how many of this resource exists	resources	fr	Combien en existe-t-il
 icon	resources	fr	Icône
 if you specify an export definition, it will be used when you export	resources	fr	Si vous spécifier un format d'export, il sera utilisé à l'export.
-implies booking permission	resources	fr	Implique la permission de lire le calendrier
-implies read permission	resources	fr	Implique la permission de lecture
+implies booking permission	resources	fr	Implique la permission de réservation (colonne précédente)
+implies read permission	resources	fr	Implique la permission d'afficher les ressources (colonne précédente)
 imports a list of resources from a csv file.	resources	fr	Importe une liste de ressources depuis un fichier csv
 information about storage	resources	fr	Informations sur le lieu
 informations about the location of resource	resources	fr	Informations sur le lieu de la ressource
@@ -106,8 +108,8 @@ prizeing information for booking or buying	resources	fr	Information de Prix  pou
 quantity	resources	fr	Quantité
 quantity of resource	resources	fr	Quantité de ressources
 quantity:	resources	fr	Quantité :
-read calendar permissions	resources	fr	Lire les permissions de calendrier
-read permissions	resources	fr	Permissions de lecture
+read calendar permissions	resources	fr	Permission de lire les calendriers (et réservations) des ressources de cette catégorie
+read permissions	resources	fr	Permissions d'afficher les ressources
 registration confirmed %1	resources	fr	Réservervation confirmée %1
 related links	resources	fr	Liens relatifs
 remove accessories before changing accessory of	resources	fr	Supprimer les accessoires avant de changer "accessoire de"
@@ -157,9 +159,10 @@ view calendar	resources	fr	Voir le calendrier
 view this entry	resources	fr	Voir cette entrée
 web-page of resource	resources	fr	Page web de la ressource
 web-site for this resource	resources	fr	Site web de cette ressource
+when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/unverricht)	resources	fr	Lorsque vous fusionnez des données vers des documents, ils seront stockés ici. Si aucun répertoire n'est indiqué, ils seront stocké sur votre dossier home.
 where to find this resource?	resources	fr	Ou trouver cette ressource ?
 which category does this resource belong to?	resources	fr	À quelle catégorie cette ressource appartient-elle?
-write permissions	resources	fr	Permissions d'écriture
+write permissions	resources	fr	Permissions d'ajouter,modifier ou supprimer des ressources de cette catégorie
 yes - delete accessories too	resources	fr	Oui, supprimer aussi les accessoires
 yes - un-delete accessories too	resources	fr	Oui, dé-supprimer aussi les accessoires
 yes, all users can ignore conflicts	resources	fr	Oui, tous les utilisateurs peuvent utiliser les conflits

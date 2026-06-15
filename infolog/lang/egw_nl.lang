@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	nl	Toestaan om items op 
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	nl	Toestaan de status van een InfoLog te wijzigen, bijv. een taak op status klaar zetten (waarden zijn onafhankelijk van InfoLog-type).
 alternatives	infolog	nl	Alternatieven
 always show them	infolog	nl	Altijd tonen
+always use details for crm	infolog	nl	Gebruik altijd details voor CRM
+always use no details for crm	infolog	nl	Gebruik altijd geen details voor CRM
 application mail expected but got: %1	infolog	nl	Sollicitatie-e-mail verwacht maar gekregen: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	nl	Pas de actie toe op de hele query, NIET alleen op de getoonde items!
 apply the changes	infolog	nl	De wijzigingen doorvoeren
@@ -258,7 +260,7 @@ insert timestamp into description field	infolog	nl	Tijdstempel invoegen in besch
 invalid filename	infolog	nl	Ongeldige bestandsnaam.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	nl	Ongeldig eigenaars-ID: %1. Gebruik %2 in plaats daarvan.
 invalid status for entry type %1.	infolog	nl	Ongeldige status voor invoertype %1.
-label<br>helptext	infolog	nl	Label<br/>Helptekst
+label<br>helptext	infolog	nl	Label\nHelptekst
 last changed	infolog	nl	Laatst gewijzigd
 last modified	infolog	nl	Laatst gewijzigd
 leave blank to get the used time calculated by timesheet entries	infolog	nl	Laat het leeg om de gebruikte tijd uit de urenregistratie te verkrijgen
@@ -343,7 +345,7 @@ owner, responsible	infolog	nl	Eigenaar, Verantwoordelijke
 parent	infolog	nl	Ouder
 parent infolog	infolog	nl	Ouder InfoLog
 participants for scheduling an appointment	infolog	nl	Deelnemers voor het plannen van een afspraak
-path on (web-)serverside<br>eg. /var/samba/share	infolog	nl	Pad aan de serverkant <br> bijv. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	nl	Pad aan de serverkant \n bijv. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	nl	Pad naar gebruiker- en groepsbestanden MOETEN BUITEN de documentendirectory zijn van de webserver's!
 pattern for search in addressbook	infolog	nl	Patroon voor zoeken in adresboek
 pattern for search in projects	infolog	nl	Patroon voor zoeken in projecten
@@ -400,6 +402,7 @@ responsible user, priority	infolog	nl	Verantwoordelijke gebruiker, prioriteit
 returns a list / search for records.	infolog	nl	Toont een lijst / zoek records
 rights for the responsible	infolog	nl	Rechten voor de verantwoordelijke
 rows	infolog	nl	Rijen
+same as infolog list	infolog	nl	Hetzelfde als de InfoLog-lijst
 same day	infolog	nl	Dezelfde dag
 save	infolog	nl	Opslaan
 saves the changes made and leaves	infolog	nl	Slaat wijzigingen op en verlaat het scherm
@@ -417,6 +420,7 @@ select a responsible user: a person you want to delegate this task	infolog	nl	Se
 select a typ to edit it's status-values or delete it	infolog	nl	Selecteer een type waarvan uw de statuswaarden wilt wijzigen of om te verwijderen
 select an app to search in	infolog	nl	Selecteer een applicatie om in te zoeken
 select an entry to link with	infolog	nl	Selecteer een InfoLog om mee te linken
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	nl	Selecteer of de CRM-weergave dezelfde waarde voor (geen) details moet gebruiken als InfoLog, of altijd geen details of altijd details.
 select multiple contacts for a further action	infolog	nl	Kies meerdere contacten voor verdere actie
 select new category	infolog	nl	Selecteer een nieuwe categorie
 select to filter by owner	infolog	nl	Selecteer om te filteren op eigenaar

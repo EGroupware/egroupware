@@ -42,7 +42,7 @@ import	importexport	cs	import
 import definitions	common	cs	Definice importu
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	cs	Importovat definice (Pozor: Stávající definice téhož jména budou přepsány!!!)
 imported	importexport	cs	Importováno
-importexport	common	cs	Import a export
+importexport	common	cs	Import / Export
 importexport wizard finished successfully!	importexport	cs	Průvodce aplikace ImportExport úspěšně dokončen!
 imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	cs	Importuje informace z CSV souboru. Jedná se o základní úroveň, program nic nedělá na vlastní pěst.
 load sample file	importexport	cs	Nahrát ukázkový soubor

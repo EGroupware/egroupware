@@ -7,6 +7,7 @@ code is invalid	preferences	el	Ο κωδικός είναι άκυρος
 code is required	preferences	el	Ο κωδικός απαιτείται
 color	preferences	el	Χρώμα
 country	preferences	el	Χώρα
+custom login box text color, defaults to white	preferences	el	Προσαρμογή χρώματος κειμένου στο πλαίσιο σύνδεσης, προεπιλεγμένο χρώμα: λευκό
 dark mode theme	preferences	el	Θέμα σκοτεινής λειτουργίας
 default	preferences	el	προκαθορισμένο
 default preferences	preferences	el	Προεπιλεγμένες προτιμήσεις
@@ -54,6 +55,7 @@ the two passwords are not the same	preferences	el	Τα δυο συνθηματι
 thousands separator is only used for displaying and not for editing numbers.	preferences	el	Η μορφή αριθμών μπορεί να ρυθμιστεί για την εμφάνιση των αριθμών.
 use first %1 letters from username	preferences	el	Χρησιμοποιήστε τα πρώτα %1 γράμματα από το όνομα χρήστη
 use initials from first and last name	preferences	el	Χρησιμοποιήστε τα αρχικά από το όνομα και το επώνυμο
+used instead of the application color.	preferences	el	Χρησιμοποιείται αντί του χρώματος της εφαρμογής.
 what to display for an avatar, if there is no photo	preferences	el	Τι να εμφανίζεται για ένα avatar, αν δεν υπάρχει φωτογραφία
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	el	Ποια κωδικοσελίδα θα πρέπει να χρησιμοποιέιται για την CSV εξαγωγή.Το προκαθορισμένο σύστημα ειναι η κωδικοσελίδα της εγκατάστασης του EGroupware.
 your preferences	preferences	el	Οι προτιμήσεις σας

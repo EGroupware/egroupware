@@ -115,7 +115,6 @@ problems during import:	importexport	it	Problemi durante l'importazione:
 save as definition	importexport	it	Salva come definizione
 schedule	common	it	Pianifica importazione | esportazione
 schedule import / export	common	it	Pianifica importazione | esportazione
-schedule import | export	importexport	it	Pianifica importazione | esportazione
 schedule not found	importexport	it	Pianificazione non trovata
 schedule times are server time!  currently %s.	importexport	it	Gli orari di pianificazine sono quelli del server! Attualmente sono le %s
 select definition	importexport	it	Seleziona definizione

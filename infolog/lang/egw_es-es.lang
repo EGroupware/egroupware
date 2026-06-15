@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	es-es	Permitir guardar e
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	es-es	Permite establecer el estado de una entrada, p.e. poner una tarea pendiente cono finalizada si está terminada (los valores dependen del tipo de entrada)
 alternatives	infolog	es-es	Alternativas
 always show them	infolog	es-es	Mostrarlas siempre
+always use details for crm	infolog	es-es	Utilizar siempre los detalles para CRM
+always use no details for crm	infolog	es-es	Utilizar siempre sin detalles para CRM
 application mail expected but got: %1	infolog	es-es	Correo electrónico de solicitud esperado pero recibido: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	es-es	¡Aplicar la acción a toda la consulta, NO sólo a las entradas mostradas!
 apply the changes	infolog	es-es	Aplicar los cambios
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	es-es	Insertar fecha y hora en e
 invalid filename	infolog	es-es	El nombre de archivo no es válido
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	es-es	El ID del propietario no es válido: %1. Puede ser una mala traducción del campo. Se ha usado %2 en su lugar.
 invalid status for entry type %1.	infolog	es-es	El estado no es válido para el tipo de entrada %1.
-label<br>helptext	infolog	es-es	Etiqueta<br>Texto de ayuda
+label<br>helptext	infolog	es-es	Etiqueta\nTexto de ayuda
 last changed	infolog	es-es	Último cambio
 last modified	infolog	es-es	Última modificación
 leave blank to get the used time calculated by timesheet entries	infolog	es-es	Dejar en blanco para conseguir el tiempo acumulado por las hojas de presencia
@@ -411,6 +413,7 @@ responsible user, priority	infolog	es-es	Usuario responsable, prioridad
 returns a list / search for records.	infolog	es-es	Devuelve una lista o busca registros.
 rights for the responsible	infolog	es-es	Derechos para el responsable
 rows	infolog	es-es	Filas
+same as infolog list	infolog	es-es	Igual que en la lista de InfoLog
 same day	infolog	es-es	El mismo día
 save	infolog	es-es	Guardar
 saves the changes made and leaves	infolog	es-es	Guarda los cambios realizados y sale
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	es-es
 select a typ to edit it's status-values or delete it	infolog	es-es	Seleccionar un tipo para editar sus valores de estado o eliminarlo
 select an app to search in	infolog	es-es	Seleccionar una aplicación en la que buscar
 select an entry to link with	infolog	es-es	Seleccionar una entrada a la que apunte un enlace
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	es-es	Selecciona si la vista de CRM debe utilizar el mismo valor para (sin) detalles que InfoLog, o si siempre debe mostrar «sin detalles» o «detalles».
 select multiple contacts for a further action	infolog	es-es	Seleccionar múltiples contactos para una acción posterior
 select new category	infolog	es-es	Seleccionar una categoría nueva
 select to filter by owner	infolog	es-es	seleccionar para filtrar por propietario

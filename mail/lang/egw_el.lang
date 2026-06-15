@@ -127,6 +127,8 @@ current folder	mail	el	Τρέχον φάκελος
 current subject	mail	el	Τρέχον θέμα
 currently:	mail	el	Αυτή τη στιγμή:
 deactive	mail	el	Απενεργοποίηση
+default identity for compose	mail	el	Προεπιλεγμένη ταυτότητα για σύνταξη μηνύματος
+default signature	mail	el	Προεπιλεγμένη υπογραφή
 default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
 default toolbar actions shown in mail's html editor	mail	el	Ενεργοποίηση λειτουργιών στη γραμμή εργαλείων του επεξεργαστή HTML κατά τη σύνταξη ενός email
 default value for remembering s/mime passphrase in minutes	mail	el	Προεπιλεγμένη τιμή σε λεπτά για την απομνημόνευση του κωδικού S/MIME
@@ -319,6 +321,7 @@ junk folder	mail	el	Φάκελος Junk
 keep a copy	mail	el	Διατήρηση αντιγράφου
 keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
 kilobytes	mail	el	kilobytes
+last used signature	mail	el	Τελευταία χρησιμοποιημένη υπογραφή
 later	mail	el	Αργότερα
 learning as ham (not spam) failed because of %1	mail	el	Η εκμάθηση ως ham (όχι spam) απέτυχε λόγω %1
 learning as spam failed because of %1	mail	el	Η εκμάθηση ως spam απέτυχε λόγω %1
@@ -417,6 +420,7 @@ original message	mail	el	Αρχικό μήνυμα
 outbox	mail	el	Εξερχόμενα
 password protect	mail	el	προστασία με συνθηματικό
 permission denied	mail	el	Άδεια απορρίπτεται
+personal signature	mail	el	Προσωπική υπογραφή
 please configure access to an existing individual imap account.	mail	el	Παρακαλούμε ρυθμίστε την πρόσβαση σε έναν υπάρχοντα μεμονωμένο λογαριασμό IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	el	Παρακαλούμε ρυθμίστε το πιστοποιητικό S/MIME στην καρτέλα Κρυπτογράφηση που βρίσκεται στο παράθυρο διαλόγου Επεξεργασία λογαριασμού.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	el	Παρακαλούμε επικοινωνήστε με τον διαχειριστή σας για να επιβεβαιώσετε αν ο διακομιστής σας υποστηρίζει κανόνες φίλτρων σε επίπεδο διακομιστή και πώς να τους ενεργοποιήσετε στο EGroupware για τον ενεργό λογαριασμό σας (%1) με ID: %2.
@@ -628,6 +632,7 @@ what to do when you delete a message	mail	el	Τι να συμβαίνει ότα
 what to do when you send a message	mail	el	Τι να συμβαίνει όταν στέλνετε ένα μήνυμα.
 when deleting messages	mail	el	όταν γίνεται διαγραφή μηνυμάτων
 when sending messages	mail	el	όταν στέλνονται μηνύματα
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	el	Με ποια ταυτότητα αλληλογραφίας (υπογραφή) θέλετε να ξεκινήσετε.\nΓια την «Προσωπική υπογραφή» χρησιμοποιούμε πάντα την πρώτη προσωπική υπογραφή.
 which method to use when forwarding a message	mail	el	Ποια μέθοδο να χρησιμοποιείται κατά την προώθηση μηνυμάτων
 whole message	mail	el	ολόκληρο μήνυμα
 with message:	mail	el	Με μήνυμα:

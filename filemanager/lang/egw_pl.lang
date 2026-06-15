@@ -237,7 +237,7 @@ symlink to %1 created.	filemanager	pl	Utworzono link do %1
 tag to mark positions for address labels	filemanager	pl	Zaznacz, aby oznaczyć pozycję dla etykiet adresu
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	pl	Domyślny folder startowy to twój folder osobisty. Domyślna wartość jest używana jeśli zostawisz to pole puste, ścieżka nie istnieje lub nie masz uprawnień
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	pl	Dokument może zawierać symbole zastępcze, takie jak {{%3}}, które zostaną zastąpione danymi (%1pełna lista nazw symboli zastępczych%2).
-the requested path %1 is not available.	filemanager	pl	Żądana ścieżka %1 nie jest dostępna
+the requested path %1 is not available.	filemanager	pl	Żądana ścieżka %1 nie jest dostępna!
 there's already a directory with that name!	filemanager	pl	Istnieje już katalog z tą nazwą
 there's already a file with that name!	filemanager	pl	Istnieje już plik z tą nazwą
 to overwrite the existing file store again.	filemanager	pl	Aby nadpisać istniejący plik zapisz go jeszcze raz.

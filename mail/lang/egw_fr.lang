@@ -129,6 +129,7 @@ current folder	mail	fr	Dossier actif
 current subject	mail	fr	Sujet actuel
 currently:	mail	fr	Actuellement :
 deactive	mail	fr	Désactiver
+default identity for compose	mail	fr	Identité par défaut pour la rédaction
 default signature	mail	fr	Signature par défaut
 default sorting order	mail	fr	Ordre de tri par défaut
 default toolbar actions shown in mail's html editor	mail	fr	Fonctions activées dans la barre d'outils de l'éditeur HTML lors de la composition d'un courriel

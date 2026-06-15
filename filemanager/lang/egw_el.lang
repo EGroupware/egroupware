@@ -187,6 +187,7 @@ start search	filemanager	el	Έναρξη αναζήτησης
 superuser	filemanager	el	Superuser
 superuser (root)	filemanager	el	Superuser (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	el	Dokument võib sisaldada paigutusi nagu {{%3}}, mis asendatakse andmetega (%1täielik loetelu paigutuste nimedest%2).
+the requested path %1 is not available.	filemanager	el	Η διαδρομή %1 που ζητήσατε δεν είναι διαθέσιμη!
 total files	filemanager	el	Συνολικά αρχεία
 unused space	filemanager	el	Αχρησιμοποίητο κενό
 up	filemanager	el	Πίσω

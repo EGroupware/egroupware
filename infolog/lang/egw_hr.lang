@@ -122,7 +122,7 @@ infolog list	infolog	hr	InfoLog lista
 infolog preferences	common	hr	InfoLog postavke
 infolog-fieldname	infolog	hr	Info Log-Ime polja
 invalid filename	infolog	hr	Nevažeće ime datoteke
-label<br>helptext	infolog	hr	Label<br>Helptext
+label<br>helptext	infolog	hr	Label\nHelptext
 last changed	infolog	hr	Zadnja promjena
 last modified	infolog	hr	Zadnja izmjena
 leave without saveing the entry	infolog	hr	napusti bez spremanja zapisa
@@ -163,7 +163,7 @@ own	infolog	hr	vlastiti
 own open	infolog	hr	otvori vlastiti
 own overdue	infolog	hr	prošao vlastiti rok
 own upcoming	infolog	hr	obnovljen vlastiti
-path on (web-)serverside<br>eg. /var/samba/share	infolog	hr	path on (web-)serverside<br>eg. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	hr	path on (web-)serverside\neg. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	hr	Path to user and group files HAS TO BE OUTSIDE of the webservers document-root!!!
 pattern for search in addressbook	infolog	hr	uzorak za pretragu adresara
 pattern for search in projects	infolog	hr	uzorak za pretragu projekata

@@ -13,6 +13,7 @@ are you sure?	preferences	uk	Ви впевнені?
 code is invalid	preferences	uk	Код недійсний
 code is required	preferences	uk	Потрібен код
 country	preferences	uk	Країна
+custom login box text color, defaults to white	preferences	uk	Колір тексту поля входу налаштовується окремо, за замовчуванням — білий
 dark mode theme	preferences	uk	Тема темного режиму
 date format	preferences	uk	Формат дати
 default	preferences	uk	По замовчуванню
@@ -92,6 +93,7 @@ time format	preferences	uk	Формат часу
 use default	preferences	uk	По замовченню
 use first %1 letters from username	preferences	uk	Використовувати перші %1 літери з імені користувача
 use initials from first and last name	preferences	uk	Використовувати ініціали з імені та прізвища
+used instead of the application color.	preferences	uk	Використовується замість кольору програми.
 users choice	preferences	uk	Вибір користувача
 what to display for an avatar, if there is no photo	preferences	uk	Що відображати на аватарці, якщо немає фото
 which currency symbol or name should be used in egroupware.	preferences	uk	Який символ валюти, або його назва має використовуватись в EGroupware.

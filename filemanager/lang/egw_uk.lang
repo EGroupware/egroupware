@@ -120,6 +120,7 @@ some functionalities require superuser permissions, please login here as fileman
 superuser	filemanager	uk	Суперкористувач
 superuser (root)	filemanager	uk	Суперкористувач (root)
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	uk	Документ може містити заповнювач типу {{%3}}, який буде замінено на дані (%1повний список назв заповнювачів%2).
+the requested path %1 is not available.	filemanager	uk	Запитаний шлях %1 недоступний!
 username for webdav and smb, use $user for name of logged in user	filemanager	uk	Ім'я користувача для WebDAV і SMB, використовуйте $user як ім'я користувача, що увійшов до системи
 vfs mounts and versioning	common	uk	Монтування VFS та керування версіями
 webdavs: mount egroupware or *cloud shares	filemanager	uk	WebDAV: змонтувати ресурси EGroupware або *Cloud

@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	fr	Permettre l'enregistr
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	fr	Permet de changer le statut d´une entrée, c'est-à-dire de spécifier une tâche à faire si elle est terminée (les valeurs dépendent du type d´entrée).
 alternatives	infolog	fr	Alternatives
 always show them	infolog	fr	Toujours afficher
+always use details for crm	infolog	fr	Utilisez toujours les informations détaillées pour le CRM
+always use no details for crm	infolog	fr	Toujours ne pas utiliser les détails pour le CRM
 application mail expected but got: %1	infolog	fr	Module email attendu mais %1
 apply the action on the whole query, not only the shown entries!!!	infolog	fr	Appliquer l'action sur toute la requête, PAS seulement sur les entrées montrées!
 apply the changes	infolog	fr	Appliquer les changements
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	fr	Insérer une ligne de temps d
 invalid filename	infolog	fr	Nom de fichier invalide
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	fr	ID de propriétaire invalide: %1. %2 utilisé à la place.
 invalid status for entry type %1.	infolog	fr	Statut invalide pour l'entrée de type %1.
-label<br>helptext	infolog	fr	Label<br>Texte d´aide
+label<br>helptext	infolog	fr	Label\nTexte d´aide
 last changed	infolog	fr	Dernière modification
 last modified	infolog	fr	Dernière modification
 leave blank to get the used time calculated by timesheet entries	infolog	fr	Laisser blanc pour que le temps utilisé soit calculé par les entrées dans les feuilles de temps
@@ -354,7 +356,7 @@ owner, responsible	infolog	fr	Propriétaire, Responsable
 parent	infolog	fr	Parent
 parent infolog	infolog	fr	Parent de l'InfoLog
 participants for scheduling an appointment	infolog	fr	Participants pour programmer une réunion
-path on (web-)serverside<br>eg. /var/samba/share	infolog	fr	Chemin côté (web)server<br>p.ex. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	fr	Chemin côté (web)server\np.ex. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	fr	Le chemin vers les fichiers utilisateurs et groupes DOIT FIGURER EN DEHORS du répertoire racine des serveurs Web !
 pattern for search in addressbook	infolog	fr	Chaîne de caractères à rechercher dans le carnet d'adresses
 pattern for search in projects	infolog	fr	Chaîne de caractères à rechercher dans les projets
@@ -411,6 +413,7 @@ responsible user, priority	infolog	fr	Responsable utilisateur, priorité
 returns a list / search for records.	infolog	fr	Retourne une liste / Recherche d´enregistrements.
 rights for the responsible	infolog	fr	Droits pour le responsable
 rows	infolog	fr	Lignes
+same as infolog list	infolog	fr	Identique à la liste InfoLog
 same day	infolog	fr	Même jour
 save	infolog	fr	Enregistrer
 saves the changes made and leaves	infolog	fr	Enregistre les modifications et quitte
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	fr	Ch
 select a typ to edit it's status-values or delete it	infolog	fr	Sélectionnez un type dont la valeur est à éditer ou effacez-le
 select an app to search in	infolog	fr	Choisissez une App dans laquelle rechercher
 select an entry to link with	infolog	fr	Choisissez une entrée à lier
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	fr	Sélectionnez cette option si la vue CRM doit utiliser la même valeur pour les détails (ou l'absence de détails) que l'InfoLog, ou toujours ne pas utiliser les détails.
 select multiple contacts for a further action	infolog	fr	Sélectionner des contacts multiples pour une prochaine action
 select new category	infolog	fr	Sélectionner une nouvelle catégorie
 select to filter by owner	infolog	fr	Filtrer par propriétaire

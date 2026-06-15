@@ -708,7 +708,7 @@ when saving messages as item of a different app	mail	en	When saving messages as 
 when sending messages	mail	en	When sending messages
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	en	Which mail identity (signature) do you want to start with. For personal we always use the first personal signature.
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	en	Which mail identity (signature) do you want to start with. For personal signature we always use the first personal signature.
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whitelisted mails are not marked as spam	mail	en	Whitelisted emails are not marked as spam
 whole message	mail	en	Whole message

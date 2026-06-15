@@ -101,6 +101,8 @@ cross account forward attachment is not allowed!	mail	pt	Não é permitido o env
 current subject	mail	pt	Assunto actual
 currently:	mail	pt	Atualmente:
 deactive	mail	pt	Desativado
+default identity for compose	mail	pt	Identidade predefinida para redigir mensagens
+default signature	mail	pt	Assinatura predefinida
 default sorting order	mail	pt	Ordenar por (por omissão)
 default toolbar actions shown in mail's html editor	mail	pt	Funções activadas na barra de ferramentas do editor HTML ao compor um e-mail
 default value for remembering s/mime passphrase in minutes	mail	pt	Valor por defeito para recordar a frase-chave S/MIME em minutos
@@ -241,6 +243,7 @@ high priority	mail	pt	Alta prioridade
 home page folders	mail	pt	pastas home page
 hostname or ip	mail	pt	Nome do host ou IP
 how often to check with the server for new mail	mail	pt	Quantas vezes a verificar com o servidor para novas mensagens
+how should the available information on identities be displayed	admin	pt	Como devem ser apresentadas as informações disponíveis sobre as identidades
 how to forward messages	mail	pt	Como encaminhar mensagens
 html	mail	pt	HTML
 html mode	mail	pt	Modo HTML
@@ -286,6 +289,7 @@ junk folder	mail	pt	Pasta de Lixo
 keep a copy	mail	pt	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt	Mantenha uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt	kilobytes
+last used signature	mail	pt	Última assinatura utilizada
 later	mail	pt	Lais tarde
 learning as ham (not spam) failed because of %1	mail	pt	A aprendizagem como correio não solicitado (não spam) falhou devido a %1
 learning as spam failed because of %1	mail	pt	A aprendizagem como spam falhou devido a %1
@@ -377,6 +381,7 @@ organization | real name email	mail	pt	Organização | Nome real [Email]
 original message	mail	pt	Mensagem original
 outbox	mail	pt	Caixa de saída
 permission denied	mail	pt	Permissão negada
+personal signature	mail	pt	Assinatura pessoal
 please configure access to an existing individual imap account.	mail	pt	Configure o acesso a uma conta IMAP individual existente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt	Configure o seu certificado S/MIME no separador Encriptação localizado na caixa de diálogo Editar conta.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt	Contacte o seu administrador para verificar se o seu servidor suporta regras de filtragem do lado do servidor e como activá-las no EGroupware para a sua conta ativa (%1) com ID: %2.
@@ -594,6 +599,7 @@ what to do when you send a message	mail	pt	O que fazer quando você envia uma me
 when deleting messages	mail	pt	Ao eliminar mensagens
 when saving messages as item of a different app	mail	pt	Ao salvar mensagens como um item de um aplicativo diferente
 when sending messages	mail	pt	Ao enviar mensagens
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	pt	Com que identidade de e-mail (assinatura) pretende começar?\nNo caso da «Assinatura pessoal», utilizamos sempre a primeira assinatura pessoal.
 which method to use when forwarding a message	mail	pt	Qual o método a ser usado ao encaminhar uma mensagem
 with message:	mail	pt	Com a mensagem:
 write	mail	pt	escrever

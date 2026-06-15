@@ -52,7 +52,10 @@ all projects	infolog	no	Alle prosjekter
 allow to save entries with due date in the past	infolog	no	Tillat å lagre oppføringer med forfallsdato i fortiden
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	no	Tillater å sette status på et innslag, f.eks sette Gjøremål til Ferdig (verdiene avhenger av innslagstype)
 always show them	infolog	no	Vis dem alltid
+always use details for crm	infolog	no	Bruk alltid detaljer i CRM
+always use no details for crm	infolog	no	Bruk alltid ingen detaljer i CRM
 application mail expected but got: %1	infolog	no	Forventet, men mottatt søknads-e-post: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	no	Bruk handlingen på hele søket, IKKE bare de viste oppføringene!
 apply the changes	infolog	no	Lagre endringene
 archive	infolog	no	Arkiver
 archived too	infolog	no	Arkivert også
@@ -252,7 +255,7 @@ insert in document	infolog	no	Sett inn i dokument
 insert timestamp into description field	infolog	no	Sett inn tidsstempel i beskrivelsesfeltet
 invalid filename	infolog	no	Ugyldig filnavn
 invalid status for entry type %1.	infolog	no	Ugyldig status for oppføringstype %1.
-label<br>helptext	infolog	no	Etikett<br>Hjelpetekst
+label<br>helptext	infolog	no	Etikett\nHjelpetekst
 last changed	infolog	no	Sist endret
 last modified	infolog	no	Sist endret
 leave blank to get the used time calculated by timesheet entries	infolog	no	La feltet stå tomt for å få beregnet brukstiden ut fra timelisteoppføringene.
@@ -335,7 +338,7 @@ owner, responsible	infolog	no	Eier, ansvarlig
 parent	infolog	no	Overordnet
 parent infolog	infolog	no	Overordnet InfoLog
 participants for scheduling an appointment	infolog	no	Deltakere for planlegging av en avtale
-path on (web-)serverside<br>eg. /var/samba/share	infolog	no	Sti på (web-)tjener<br>f.eks /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	no	Sti på (web-)tjener\nf.eks /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	no	Sti til bruker og gruppefiler. MÅ VÆRE UTENFOR web tjenerens dokument root!
 pattern for search in addressbook	infolog	no	Mønster for søk i adresseboken
 pattern for search in projects	infolog	no	Mønster for søk i prosjekter
@@ -383,6 +386,7 @@ responsible user, priority	infolog	no	Ansvarlig bruker, prioritet
 returns a list / search for records.	infolog	no	Viser en liste / søk etter rekker.
 rights for the responsible	infolog	no	Rettigheter for den ansvarlige
 rows	infolog	no	Rader
+same as infolog list	infolog	no	Samme som InfoLog-listen
 same day	infolog	no	Samme dag
 save	infolog	no	Lagre
 saves the changes made and leaves	infolog	no	Lagrer endringene og lukker
@@ -400,6 +404,7 @@ select a responsible user: a person you want to delegate this task	infolog	no	Ve
 select a typ to edit it's status-values or delete it	infolog	no	Velg en type for å endre status verdi eller slette
 select an app to search in	infolog	no	Velg applikasjon det skal søkes i
 select an entry to link with	infolog	no	Velg innslag som skal lenkes med
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	no	Velg om CRM-visningen skal bruke samme innstilling for (ingen) detaljer som InfoLog, eller alltid ingen eller detaljer.
 select multiple contacts for a further action	infolog	no	Velg flere kontakter for videre handling
 select new category	infolog	no	Velg ny kategori
 select to filter by owner	infolog	no	Velg å filtrere for eier

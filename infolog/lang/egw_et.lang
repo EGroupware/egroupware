@@ -51,7 +51,10 @@ all other %1 fields are valid	infolog	et	Kõik muud %1 väljad on kehtivad
 all projects	infolog	et	Kõik projektid
 allow to save entries with due date in the past	infolog	et	Luba salvestada kirjeid, mille tähtpäev on minevikus
 always show them	infolog	et	Näita neid alati
+always use details for crm	infolog	et	Kasuta CRM-is alati üksikasju
+always use no details for crm	infolog	et	Kasuta CRM-is alati üksikasju
 application mail expected but got: %1	infolog	et	Taotluse e-kiri oodatud, kuid sai: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	et	Kohalda toimingut kogu päringule, MITTE ainult kuvatud kirjetele!
 apply the changes	infolog	et	Rakenda muudatused
 archive	infolog	et	Arhiiv
 archived too	infolog	et	Ka arhiveeritud
@@ -229,7 +232,7 @@ insert timestamp into description field	infolog	et	Ajatempli sisestamine kirjeld
 invalid filename	infolog	et	Vigane failinimi
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	et	Vale omaniku ID: %1. Kasutage selle asemel %2.
 invalid status for entry type %1.	infolog	et	Kande tüübi %1 jaoks vale staatus.
-label<br>helptext	infolog	et	Silt<br>Abitekst
+label<br>helptext	infolog	et	Silt\nAbitekst
 last changed	infolog	et	Viimati vahetatud
 last modified	infolog	et	Viimati muudetud
 leave blank to get the used time calculated by timesheet entries	infolog	et	Jäta tühjaks, et saada kasutatud aeg arvutatud ajalehe kirjete järgi
@@ -320,6 +323,7 @@ responsible open	infolog	et	Vastutav avatud
 responsible open and upcoming	infolog	et	Vastutav avatud ja eelseisev
 responsible overdue	infolog	et	Vastutab üle tähtaja
 rows	infolog	et	Rid
+same as infolog list	infolog	et	Sama mis InfoLogi nimekirjas
 same day	infolog	et	Sama päev
 save	infolog	et	Salvesta
 schedule appointment	infolog	et	Plaani kohtumine
@@ -329,6 +333,7 @@ second parameter for preg_replace	infolog	et	Teine parameeter preg_replace jaoks
 select	infolog	et	Märgi
 select a price	infolog	et	Vali hind
 select a project	infolog	et	Vali Projekt
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	et	Vali, kas CRM-vaade peaks kasutama üksikasjade (puudumise) puhul sama väärtust nagu InfoLog või alati „ei“ või „üksikasjad“.
 select multiple contacts for a further action	infolog	et	Valige mitu kontakti täiendava tegevuse jaoks.
 select new category	infolog	et	Valige uus kategooria
 select users or groups	infolog	et	Valige kasutajad või rühmad

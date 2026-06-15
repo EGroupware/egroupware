@@ -109,7 +109,7 @@ infolog list	infolog	iw	Info-Log רשימה
 infolog preferences	common	iw	Info-Log עדיפויות
 infolog-fieldname	infolog	iw	Info-Log שם שדה
 invalid filename	infolog	iw	שם קובץ לא חוקי
-label<br>helptext	infolog	iw	תווית<br>קובץ עזרה
+label<br>helptext	infolog	iw	תווית\nקובץ עזרה
 last changed	infolog	iw	שונה לאחרונה
 last modified	infolog	iw	שונה לאחרונה
 leave without saveing the entry	infolog	iw	צא בלי לשמור את הרשומה
@@ -151,7 +151,7 @@ own open	infolog	iw	פתח את שלי
 own overdue	infolog	iw	זמנו עבר שלי
 own upcoming	infolog	iw	שלי בקרוב
 parent	infolog	iw	הורה
-path on (web-)serverside<br>eg. /var/samba/share	infolog	iw	(המסלול בצד השרת (הווב<br>
+path on (web-)serverside<br>eg. /var/samba/share	infolog	iw	(המסלול בצד השרת (הווב\n
 path to user and group files has to be outside of the webservers document-root!!!	infolog	iw	המסלול אל קבצי משתמשים/קבוצות חייב להיות מחוץ לשורש שרת הווב
 pattern for search in addressbook	infolog	iw	תבנית לחיפוש בספר כתובות
 pattern for search in projects	infolog	iw	תבנית לחיפוש בפרויקטים

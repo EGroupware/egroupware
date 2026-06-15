@@ -17,6 +17,7 @@ after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
 aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
 all my email addresses	mail	lt	visi mano el. pašto adresai
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	lt	Taip pat bus ištrinti visi pakatalogiai, o visos žinutės iš visų paveiktų aplankų bus prarastos.
+allow users to create further identities	mail	lt	Leisti vartotojams kurti naujus tapatybės profilius
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	lt	Leidžia naudotojui skaityti, rašyti ir kurti aplankus ir laiškus, rašyti į juos, pridėti prie jų pranešimus ir juos ištrinti
 always show notifiction	mail	lt	Visada rodyti pranešimą
 answered	mail	lt	Atsakyta
@@ -50,6 +51,8 @@ convert only mail to item (ignore possible attachments)	mail	lt	Konvertuoti tik 
 copied %1 message(s) from %2 to %3	mail	lt	Nukopijuotas %1 pranešimas (-ai) iš %2 į %3.
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
 current subject	mail	lt	Dabartinė tema
+default identity for compose	mail	lt	Numatytasis tapatybės profilis laiškams rašyti
+default signature	mail	lt	Numatytasis parašas
 default toolbar actions shown in mail's html editor	mail	lt	HTML redaktoriaus įrankių juostoje įjungtos funkcijos kuriant el. laišką
 default value for remembering s/mime passphrase in minutes	mail	lt	Numatytoji S/MIME slaptažodžio įsiminimo reikšmė minutėmis
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	lt	Nustato, ką rodyti kaip pridėto kontakto etiketę į To/Copy/Blind copy (Į / Kopijuoti / Akloji kopija) kuriant el. laišką. Numatytoji reikšmė yra vardas pavardė pavardė, o tuščia reiškia, kad įtraukiama viskas, kas įmanoma.
@@ -98,11 +101,14 @@ header	mail	lt	Antraštė
 header lines	mail	lt	Antraštės eilutės
 hide from	mail	lt	Paslėpti Nuo
 high priority	mail	lt	Aukštas prioritetas
+how should the available information on identities be displayed	admin	lt	Kaip turėtų būti rodomi turimi duomenys apie tapatybės profilius
 html	mail	lt	HTML
 ident name	mail	lt	Identifikatoriaus pavadinimas
 ident name email	mail	lt	Identifikatoriaus pavadinimas [El. paštas]
 ident name organization email	mail	lt	Identifikatoriaus pavadinimas Organizacija [El. paštas]
+identity	mail	lt	Tapatybės profilis
 identity label	mail	lt	Tapatybės ženklas
+identity+signature	mail	lt	Tapatybės profilis + parašas
 if different from email address	mail	lt	Jei skiriasi nuo el. pašto adreso
 if mail header	mail	lt	jei e-pašto antraštė
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lt	Jei norite matyti laiško peržiūrą vienu spustelėjimu ant temos, įjunkite šią funkciją.
@@ -127,6 +133,7 @@ junk folder	mail	lt	Šiukšlių aplankas
 keep a copy	mail	lt	Pasilikti kopiją
 keep a copy of the message in your inbox	mail	lt	Laikykite žinutės kopiją gautųjų laiškų dėžutėje
 kilobytes	mail	lt	kilobaitai
+last used signature	mail	lt	Paskutinis naudotas parašas
 later	mail	lt	Vėliau
 learning as ham (not spam) failed because of %1	mail	lt	Mokytis kaip šlamšto (ne šlamšto) nepavyko dėl %1
 learning as spam failed because of %1	mail	lt	Mokymasis kaip šlamštas nepavyko dėl %1
@@ -185,6 +192,7 @@ organisation	admin	lt	Organizacija
 organization | real name email	mail	lt	Organizacija | Tikrasis vardas [El. paštas]
 original message	mail	lt	Originali žinutė
 outbox	mail	lt	Gautų laiškų dėžutė
+personal signature	mail	lt	Asmeninis parašas
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lt	Sukonfigūruokite S/MIME sertifikatą paskyros redagavimo dialogo lange esančiame skirtuke Šifravimas.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lt	Susisiekite su administratoriumi, kad patikrintumėte, ar jūsų serveris palaiko serverio filtravimo taisykles ir kaip jas įjungti "EGroupware" aktyviajai paskyrai (%1) su ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lt	Susisiekite su administratoriumi, kad patvirtintumėte, ar jūsų serveris palaiko serverio atostogų pranešimus ir kaip juos įjungti "EGroupware" aktyvioje paskyroje (%1) su ID: %2.
@@ -281,6 +289,7 @@ validate addresses on submit:	mail	lt	Patvirtinkite adresus pateikdami:
 validate selected addresses on submit:	mail	lt	Patvirtinti pasirinktus adresus pateikiant:
 view header lines	mail	lt	Peržiūrėti antraštės eilutes
 what to do when you delete a message	mail	lt	Ką daryti ištrynus pranešimą.
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	lt	Kokiu tapatybės profiliu (parašu) norite pradėti?\nPasirinkus „Asmeninis parašas“, visada naudojamas pirmasis asmeninis parašas.
 write & delete	mail	lt	rašyti ir ištrinti
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lt	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.

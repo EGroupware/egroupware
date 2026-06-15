@@ -182,6 +182,7 @@ superuser (root)	filemanager	pt	Superutilizador (root)
 tag to mark positions for address labels	filemanager	pt	Tag para marcar posições para etiquetas de endereço
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	pt	O documento pode conter marcadores de posição como {{%3}}, a serem substituídos pelos dados (%1lista completa de nomes de marcadores de posição%2).
 the following document-types are supported:	filemanager	pt	Os seguintes tipos de documentos são suportados:
+the requested path %1 is not available.	filemanager	pt	O caminho solicitado %1 não está disponível!
 total files	filemanager	pt	Total de ficheiros
 unused space	filemanager	pt	Espaço Não Usado
 up	filemanager	pt	Acima

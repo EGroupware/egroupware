@@ -16,6 +16,7 @@ code is invalid	preferences	zh	代码无效
 code is required	preferences	zh	需要代码
 color	preferences	zh	颜色
 country	preferences	zh	国家
+custom login box text color, defaults to white	preferences	zh	自定义登录框文字颜色，默认颜色为白色
 dark mode theme	preferences	zh	黑暗模式主题
 date format	preferences	zh	日期格式
 default	preferences	zh	默认
@@ -109,6 +110,7 @@ time format	preferences	zh	时间格式
 use default	preferences	zh	使用默认值
 use first %1 letters from username	preferences	zh	使用用户名前 %1 个字母
 use initials from first and last name	preferences	zh	使用名字和姓氏的首字母
+used instead of the application color.	preferences	zh	此颜色将替代应用程序的默认颜色。
 users choice	preferences	zh	用户选择
 what to display for an avatar, if there is no photo	preferences	zh	如果没有照片，头像应如何显示
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	zh	如您选择'是'，'主页'和'注销'按钮将作为应用程序显示在顶部应用程序栏上。

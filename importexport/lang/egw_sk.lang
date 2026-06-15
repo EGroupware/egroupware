@@ -115,7 +115,6 @@ problems during import:	importexport	sk	Problémy počas importu:
 save as definition	importexport	sk	Uložiť ako definíciu
 schedule	common	sk	Plánovanie
 schedule import / export	common	sk	Plánovanie importu / exportu
-schedule import | export	importexport	sk	Naplánovať import | export
 schedule not found	importexport	sk	Plánovanie sa nenašlo.
 schedule times are server time!  currently %s.	importexport	sk	Plánované časy sú podľa času na serveri! Súčasný čas: %s.
 select definition	importexport	sk	Vybrať definíciu

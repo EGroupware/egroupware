@@ -270,7 +270,7 @@ tag to mark positions for address labels	filemanager	fi	Tägi osoitetarrojen sij
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	fi	Aloituskansioksi on oletuksena yksityinen kansiosi. Oletusta käytetään, jos tämä jätetään tyhjäksi, polkua ei löydy tai sinulla ei ole tarvittavia ACL-oikeuksia määrittelemääsi kansioon.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	fi	Tiedosto voi sisältää merkintöjä kuten {{%3}}, mihin syötetään haluttu tieto. %1Lista mahdollisista merkinnöistä%2
 the following document-types are supported:	filemanager	fi	Seuraavat tiedostotyypit ovat tuettuja:
-the requested path %1 is not available.	filemanager	fi	Polkua %1 ei löydy.
+the requested path %1 is not available.	filemanager	fi	Polkua %1 ei löydy!
 there's already a directory with that name!	filemanager	fi	Hakemiston nimi on jo käytössä!
 there's already a file with that name!	filemanager	fi	Tiedoston nimi on jo käytössä!
 to overwrite the existing file store again.	filemanager	fi	Kirjoita olemassaoleva tietostovarasto uudelleen.

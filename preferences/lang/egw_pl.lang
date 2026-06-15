@@ -16,6 +16,7 @@ code is invalid	preferences	pl	Kod jest nieprawidłowy
 code is required	preferences	pl	Kod jest wymagany
 color	preferences	pl	Kolor
 country	preferences	pl	Państwo
+custom login box text color, defaults to white	preferences	pl	Niestandardowy kolor tekstu w polu logowania; domyślnie biały
 dark mode theme	preferences	pl	Motyw trybu ciemnego
 date format	preferences	pl	Format daty
 default	preferences	pl	domyślne
@@ -115,6 +116,7 @@ time format	preferences	pl	Format czasu
 use default	preferences	pl	Domyślne
 use first %1 letters from username	preferences	pl	Użyj pierwszych %1 liter z nazwy użytkownika
 use initials from first and last name	preferences	pl	Użyj inicjałów z imienia i nazwiska
+used instead of the application color.	preferences	pl	Zastępuje kolor aplikacji.
 users choice	preferences	pl	Wybierają użytkownicy
 what to display for an avatar, if there is no photo	preferences	pl	Co wyświetlać jako awatar, jeśli nie ma zdjęcia
 which charset should be used for the csv export. the system default is the charset of this egroupware installation.	addressbook	pl	Jakiego zestawu znaków użyć przy eksporcie do CSV? Zestaw 'systemowy domyślny' jest zestawem wybrany w tej instalacji EGroupware.

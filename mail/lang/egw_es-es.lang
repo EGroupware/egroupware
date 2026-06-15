@@ -128,6 +128,8 @@ current folder	mail	es-es	carpeta actual
 current subject	mail	es-es	Asunto actual
 currently:	mail	es-es	Actualmente:
 deactive	mail	es-es	Desactivar
+default identity for compose	mail	es-es	Identidad predeterminada para redactar mensajes
+default signature	mail	es-es	Firma predeterminada
 default sorting order	mail	es-es	Modo de ordenar predeterminado
 default toolbar actions shown in mail's html editor	mail	es-es	Funciones habilitadas en la barra de herramientas del editor HTML al redactar un correo electrónico
 default value for remembering s/mime passphrase in minutes	mail	es-es	Valor predeterminado para recordar la frase de contraseña S/MIME en minutos
@@ -328,6 +330,7 @@ junk folder	mail	es-es	Carpeta de correo basura
 keep a copy	mail	es-es	Conserve una copia
 keep a copy of the message in your inbox	mail	es-es	Guardar una copia del mensaje en la bandeja de entrada
 kilobytes	mail	es-es	kilobytes
+last used signature	mail	es-es	Última firma utilizada
 later	mail	es-es	Más tarde
 learning as ham (not spam) failed because of %1	mail	es-es	El aprendizaje como ham (no spam) falló debido a %1
 learning as spam failed because of %1	mail	es-es	El aprendizaje como spam falló debido a %1
@@ -434,6 +437,7 @@ original message	mail	es-es	Mensaje original
 outbox	mail	es-es	Bandeja de salida
 password protect	mail	es-es	protegido por contraseña
 permission denied	mail	es-es	Permiso denegado
+personal signature	mail	es-es	Firma personal
 please configure access to an existing individual imap account.	mail	es-es	Por favor, configure el acceso a una cuenta individual IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	es-es	Por favor, configure su certificado S/MIME en la pestaña Cifrado del cuadro de diálogo Editar cuenta.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	es-es	Póngase en contacto con su administrador para comprobar si su servidor admite reglas de filtrado en el servidor y cómo habilitarlas en EGroupware para su cuenta activa (%1) con ID:%2.
@@ -688,6 +692,7 @@ when saving messages as item of a different app	mail	es-es	Al guardar mensajes c
 when sending messages	mail	es-es	Al enviar mensajes
 which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el equema de la vista de Enviados
 which folders - in general - should not be automatically created, if not existing	mail	es-es	qué carpetas, en general, NO deben crearse automáticamente si no existen
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	es-es	¿Con qué identidad de correo (firma) quieres empezar?\nEn el caso de las firmas personales, siempre utilizamos la primera firma personal.
 which method to use when forwarding a message	mail	es-es	Cuál método utilizar al reenviar un mensaje
 whitelisted mails are not marked as spam	mail	es-es	Los correos de la lista blanca no están marcados como spam
 whole message	mail	es-es	mensaje completo

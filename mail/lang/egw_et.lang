@@ -23,6 +23,7 @@ allow external images	mail	et	Lubage väliseid pilte
 allow external images from listed domains	mail	et	Lubage väliseid pilte loetletud domeenidest
 allow images from external sources in html emails	mail	et	Lubage HTML e-kirjades välistest allikatest pärinevate piltide kasutamine.
 allow images from listed domains in html emails	mail	et	Lubage loetelus olevate domeenide pilte HTML-meilides.
+allow users to create further identities	mail	et	Luba kasutajatel luua uusi identiteete
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	et	Võimaldab kasutajal lugeda, kirjutada ja luua kaustu ja kirju, postitada sinna, lisada sinna sõnumeid ja kustutada sõnumeid
 always allow external sources from %1	mail	et	Luba alati väliseid allikaid %1
 always respond / auto-responder	mail	et	Alati vastata / automaatne vastus
@@ -65,6 +66,8 @@ convert mail to item, attach its attachments and add raw message (message/rfc822
 convert only mail to item (ignore possible attachments)	mail	et	Konverteerida ainult e-kiri elemendiks (ignoreerida võimalikke manuseid)
 copied %1 message(s) from %2 to %3	mail	et	Kopeeritud %1 sõnum(id) %2-st %3-sse.
 cross account forward attachment is not allowed!	mail	et	Det er ikke tilladt at foretage en fremadrettet vedhæftning på tværs af konti!
+default identity for compose	mail	et	Vaikimisi identiteet kirja koostamiseks
+default signature	mail	et	Vaikimisi allkiri
 default sorting order	mail	et	Vaikimisi sorteerimise järjekord
 default toolbar actions shown in mail's html editor	mail	et	Funktioner aktiveret i HTML-redigeringens værktøjslinje, når du udarbejder en e-mail
 default value for remembering s/mime passphrase in minutes	mail	et	Standardværdi for hukommelse af S/MIME-passphrase i minutter
@@ -133,11 +136,14 @@ header	mail	et	Pealkiri
 header lines	mail	et	Pealkirja read
 hide from	mail	et	Peida Alates
 high priority	mail	et	Kõrge prioriteet
+how should the available information on identities be displayed	admin	et	Kuidas tuleks identiteetide kohta kättesaadavat teavet kuvada
 html	mail	et	HTML
 ident name	mail	et	Tunnuse nimi
 ident name email	mail	et	Ident name [Email]
 ident name organization email	mail	et	Ident name Organisatsioon [Email]
+identity	mail	et	Identiteet
 identity label	mail	et	Identiteedi silt
+identity+signature	mail	et	Identiteet+Allkiri
 if	mail	et	KUI
 if different from email address	mail	et	Kui see erineb e-posti aadressist
 if mail header	mail	et	kui e-posti pealkiri
@@ -160,6 +166,7 @@ junk folder	mail	et	Junkkaust
 keep a copy	mail	et	Säilitada koopia
 keep a copy of the message in your inbox	mail	et	Hoidke sõnumi koopia oma postkastis
 kilobytes	mail	et	kilobaidid
+last used signature	mail	et	Viimati kasutatud allkiri
 later	mail	et	Hiljem
 learning as ham (not spam) failed because of %1	mail	et	Learning as ham (mitte rämpsposti) ebaõnnestus, sest %1
 learning as spam failed because of %1	mail	et	Õppimine rämpspostina ebaõnnestus, sest %1
@@ -221,6 +228,7 @@ organization | real name email	mail	et	Organisatsioon | Tegelik nimi [E-post]
 original message	mail	et	Algne sõnum
 outbox	mail	et	Väljaminev postkast
 permission denied	mail	et	Õigused puuduvad
+personal signature	mail	et	Isiklik allkiri
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	et	Palun konfigureerige oma S/MIME-sertifikaat vahekaardil Encryption, mis asub dialoogis Muuda kontot.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	et	Palun võtke ühendust oma administraatoriga, et kontrollida, kas teie server toetab serveripoolseid filterreegleid ja kuidas neid EGroupware'is lubada teie aktiivse konto (%1) jaoks ID:%2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	et	Palun võtke ühendust oma administraatoriga, et kontrollida, kas teie server toetab serveripoolseid puhkussõnumeid ja kuidas neid EGroupware'is lubada teie aktiivse konto (%1) jaoks ID:%2.
@@ -323,6 +331,7 @@ validate addresses on submit:	mail	et	Kinnitage aadressid esitamisel:
 validate selected addresses on submit:	mail	et	Kinnita valitud aadressid saatmisel:
 view header lines	mail	et	Vaata pealkirja ridu
 what to do when you delete a message	mail	et	Mida teha sõnumi kustutamise korral.
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	et	Millise e-posti identiteediga (allkirjaga) soovite alustada.\nValiku „Isiklik allkiri” puhul kasutatakse alati esimest isiklikku allkirja.
 write	mail	et	Kirjuta
 write & delete	mail	et	kirjutamine ja kustutamine
 you can select what info to be displayed on email tag	mail	et	Saate valida, millist teavet kuvatakse e-posti sildil.

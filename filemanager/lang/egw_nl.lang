@@ -285,7 +285,7 @@ tag to mark positions for address labels	filemanager	nl	Tag om positie voor adre
 the default start folder is your personal folder. the default is used, if you leave this empty, the path does not exist or you lack the neccessary access permissions.	filemanager	nl	De standaard start folder is uw persoonlijke folder. De standaard wordt gebruikt indien u dit leeg laat, het pad niet bestaat of indien u onvoldoende toegangsrechten heeft.
 the document can contain placeholder like {{%3}}, to be replaced with the data (%1full list of placeholder names%2).	filemanager	nl	Het document kan een tijdelijke aanduiding als {{%3}} hebben, maar kan vervangen worden met data (%1 volledige lijst van tijdelijke aanduidingen %2)
 the following document-types are supported:	filemanager	nl	De volgende document types worden ondersteund
-the requested path %1 is not available.	filemanager	nl	Het aangevraagde pad %1 is niet beschikbaar.
+the requested path %1 is not available.	filemanager	nl	Het aangevraagde pad %1 is niet beschikbaar!
 there's already a directory with that name!	filemanager	nl	Er bestaat al een map met deze naam
 there's already a file with that name!	filemanager	nl	Er bestaat reeds een bestand met deze naam!
 to overwrite the existing file store again.	filemanager	nl	Om het bestaande bestand te overschrijven moet u het opnieuw opslaan.

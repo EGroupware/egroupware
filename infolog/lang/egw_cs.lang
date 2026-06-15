@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	cs	Povolit uložení zá
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	cs	Umožňuje nastavit stav záznamu, např. úkol jako dokončený, když je dořešen (hodnota závisí na typu záznamu)
 alternatives	infolog	cs	Alternativy
 always show them	infolog	cs	Vždy zobrazit
+always use details for crm	infolog	cs	V CRM vždy používat podrobnosti
+always use no details for crm	infolog	cs	V CRM vždy nepoužívat podrobnosti
 application mail expected but got: %1	infolog	cs	Předpokládalo se spuštění aplikace pro e-mail, ale výsledek je: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	cs	Použít akci na celý databázový dotaz, ne jen na zobrazené záznamy!
 apply the changes	infolog	cs	Použít změny
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	cs	Vložení časového razítka
 invalid filename	infolog	cs	Neplatné jméno souboru
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	cs	Nesprávná identifikace vlastníka: %1. Místo toho je použito %2.
 invalid status for entry type %1.	infolog	cs	Záznam typu %1 má nesprávný stav.
-label<br>helptext	infolog	cs	Označení<br>Text nápovědy
+label<br>helptext	infolog	cs	Označení\nText nápovědy
 last changed	infolog	cs	Naposledy změněno
 last modified	infolog	cs	Naposledy změněno
 leave blank to get the used time calculated by timesheet entries	infolog	cs	Ponechte prázdné, pro výpočet spotřebovaného času na základě pracovních výkazů
@@ -354,7 +356,7 @@ owner, responsible	infolog	cs	Vlastník, odpovědný
 parent	infolog	cs	Nadřazený
 parent infolog	infolog	cs	Nadřazený InfoLog
 participants for scheduling an appointment	infolog	cs	Účastníci pro plánování schůzky
-path on (web-)serverside<br>eg. /var/samba/share	infolog	cs	Cesta (umístění) na WWW serveru<br>např. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	cs	Cesta (umístění) na WWW serveru\nnapř. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	cs	Cesta k souborům uživatelů a skupin MUSÍ BÝT MIMO kořenovou složku dokumentů WWW serveru!
 pattern for search in addressbook	infolog	cs	Vzor pro vyhledávání v adresáři
 pattern for search in projects	infolog	cs	Vzor pro vyhledávání v projektech
@@ -411,6 +413,7 @@ responsible user, priority	infolog	cs	Odpovědný uživatel, priorita
 returns a list / search for records.	infolog	cs	Vrací seznam / vyhledání záznamů.
 rights for the responsible	infolog	cs	Práva pro odpovědnou osobu
 rows	infolog	cs	Ŕádky
+same as infolog list	infolog	cs	Stejně jako v seznamu InfoLog
 same day	infolog	cs	Stejný den
 save	infolog	cs	Uložit
 saves the changes made and leaves	infolog	cs	Uloží provedené změny a ukončí
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	cs	Vy
 select a typ to edit it's status-values or delete it	infolog	cs	Vyberte typ pro editaci jeho stavu, hodnot nebo pro smazání
 select an app to search in	infolog	cs	Vybrat aplikaci k prohledání
 select an entry to link with	infolog	cs	Vybrat záznam, na který se má odkazovat
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	cs	Zvolte, zda má zobrazení v CRM používat stejnou hodnotu pro (žádné) podrobnosti jako InfoLog, nebo vždy „žádné“ či „podrobnosti“.
 select multiple contacts for a further action	infolog	cs	Vybrat více kontaktů pro další akci
 select new category	infolog	cs	Vyberte novou kategorii
 select to filter by owner	infolog	cs	Vybrat pro filtrování dle vlastníka

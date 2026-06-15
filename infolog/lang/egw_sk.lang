@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	sk	Umožniť vytváranie
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sk	Umožňuje nastaviť stav záznamu, napr. nastaviť Úlohu ktorá sa má vykonať po ukončení (hodnoty závisia na type záznamu).
 alternatives	infolog	sk	Alternatívy
 always show them	infolog	sk	Vždy ich ukázať
+always use details for crm	infolog	sk	Vždy používať podrobnosti pre CRM
+always use no details for crm	infolog	sk	Vždy používať žiadne podrobnosti pre CRM
 application mail expected but got: %1	infolog	sk	Očakával som e-mail aplikácie no dostal som: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	sk	Vykonať akciu na celý výber, NIELEN na zobrazené položky!
 apply the changes	infolog	sk	Uplatniť zmeny
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	sk	Vložiť časovú pečiatku d
 invalid filename	infolog	sk	Chybný názov súboru
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	sk	Chybné ID používateľa: %1. Použil som radšej %2.
 invalid status for entry type %1.	infolog	sk	Chybný stav pre položku typu %1.
-label<br>helptext	infolog	sk	Označenie<br>Pomocný text
+label<br>helptext	infolog	sk	Označenie\nPomocný text
 last changed	infolog	sk	Posledná zmena
 last modified	infolog	sk	Naposledy upravil
 leave blank to get the used time calculated by timesheet entries	infolog	sk	Ak chcete, aby bol čas spočítaný na základe záznamov Harmonogramu, tak ponechajte prázdne
@@ -354,7 +356,7 @@ owner, responsible	infolog	sk	Vlastník, zodpovedný
 parent	infolog	sk	Rodič
 parent infolog	infolog	sk	Rodičovský Záznamník
 participants for scheduling an appointment	infolog	sk	Účastníci pre naplánovanie pozvania
-path on (web-)serverside<br>eg. /var/samba/share	infolog	sk	Cesta na strane (web-)servera <br>napr. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	sk	Cesta na strane (web-)servera \nnapr. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sk	Cesta k súborom používateľa a skupiny MUSÍ BYŤ MIMO document-root webservera!
 pattern for search in addressbook	infolog	sk	Vzor pre vyhľadávanie v adresári
 pattern for search in projects	infolog	sk	Vzor pre vyhľadávanie v projektoch
@@ -411,6 +413,7 @@ responsible user, priority	infolog	sk	Zodpovedný používateľ, priorita
 returns a list / search for records.	infolog	sk	Vráti zoznam / hľadanie záznamov.
 rights for the responsible	infolog	sk	Práva pre zodpovednú osobu
 rows	infolog	sk	Riadky
+same as infolog list	infolog	sk	Rovnako ako v zozname InfoLog
 same day	infolog	sk	V ten deň
 save	infolog	sk	Uložiť
 saves the changes made and leaves	infolog	sk	Uloží vykonané zmeny a odíde
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	sk	vy
 select a typ to edit it's status-values or delete it	infolog	sk	vyberte typ pre úpravu hodnôt stavov, alebo ho odstráňte
 select an app to search in	infolog	sk	Vyberte, v ktorej aplikácii chcete hľadať
 select an entry to link with	infolog	sk	Vyberte záznam na ktorý chcete vytvoriť odkaz
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	sk	Vyberte, či má zobrazenie CRM používať rovnakú hodnotu pre (žiadne) podrobnosti ako InfoLog, alebo vždy žiadne, alebo podrobnosti.
 select multiple contacts for a further action	infolog	sk	Vyberte viacero kontaktov pre ďalšiu akciu
 select new category	infolog	sk	Vyberte novú kategóriu
 select to filter by owner	infolog	sk	Filtrovanie podľa vlastníka

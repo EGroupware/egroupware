@@ -53,6 +53,8 @@ allow to save entries with due date in the past	infolog	sv	Tillåt att spara pos
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	sv	Tillåter statusändring på post, ex. Sätt uppgift till färdig när klar.
 alternatives	infolog	sv	Alternativ
 always show them	infolog	sv	Visa dem alltid
+always use details for crm	infolog	sv	Använd alltid detaljer för CRM
+always use no details for crm	infolog	sv	Använd alltid inga detaljer för CRM
 application mail expected but got: %1	infolog	sv	Ansökningsmail förväntat men fick: %1
 apply the action on the whole query, not only the shown entries!!!	infolog	sv	Tillämpa åtgärden på hela sökningen, INTE bara de poster som visas!
 apply the changes	infolog	sv	Spara ändringar
@@ -269,7 +271,7 @@ insert timestamp into description field	infolog	sv	Infoga tidsstämpel i beskriv
 invalid filename	infolog	sv	Ogiltigt filnamn.
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	sv	Ogiltigt ägar-ID: %1. Använd %2 istället.
 invalid status for entry type %1.	infolog	sv	Ogiltig status för posttyp %1.
-label<br>helptext	infolog	sv	Etikett<br>Hjälptext
+label<br>helptext	infolog	sv	Etikett\nHjälptext
 last changed	infolog	sv	Senaste ändring
 last modified	infolog	sv	Senast ändrad
 leave blank to get the used time calculated by timesheet entries	infolog	sv	Lämna tomt för att få den använda tiden beräknad genom tidrapportposter
@@ -354,7 +356,7 @@ owner, responsible	infolog	sv	Ägare, Ansvarig
 parent	infolog	sv	Förälder
 parent infolog	infolog	sv	Förälder InfoLog
 participants for scheduling an appointment	infolog	sv	Deltagare för schemaläggning av ett möte
-path on (web-)serverside<br>eg. /var/samba/share	infolog	sv	Sökväg på servern<br>ex. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	sv	Sökväg på servern\nex. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	sv	Sökväg till användar och grupp filer MÅSTE VARA UTANFÖR webbserverns dokument root!
 pattern for search in addressbook	infolog	sv	Mönster för sökning i adressbok
 pattern for search in projects	infolog	sv	Mönster för sökning i projekt
@@ -411,6 +413,7 @@ responsible user, priority	infolog	sv	Ansvarig användare, prioritet
 returns a list / search for records.	infolog	sv	Returnerar lista / sök poster.
 rights for the responsible	infolog	sv	Rättigheter åt den ansvarige
 rows	infolog	sv	Rader
+same as infolog list	infolog	sv	Samma som i InfoLog-listan
 same day	infolog	sv	Samma dag
 save	infolog	sv	Spara
 saves the changes made and leaves	infolog	sv	Spara ändringar och avsluta
@@ -428,6 +431,7 @@ select a responsible user: a person you want to delegate this task	infolog	sv	V�
 select a typ to edit it's status-values or delete it	infolog	sv	Välj typ att ändra eller radera
 select an app to search in	infolog	sv	Välj applikation att söka i
 select an entry to link with	infolog	sv	Välj post att länka med
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	sv	Välj om CRM-vyn ska använda samma inställning för (inga) detaljer som InfoLog, eller alltid inga detaljer.
 select multiple contacts for a further action	infolog	sv	Välj flera kontakter för åtgärd
 select new category	infolog	sv	Välj ny kategori
 select to filter by owner	infolog	sv	Välj för att sortera enl ägare

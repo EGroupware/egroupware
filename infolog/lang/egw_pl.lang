@@ -46,14 +46,17 @@ add:	infolog	pl	Dodaj:
 added	infolog	pl	Dodano
 addressbook placeholders available	infolog	pl	Książka adresowa dostępna
 all	infolog	pl	Wszystko
-all links and attachments	infolog	pl	wszystkie linki i załączniki
+all links and attachments	infolog	pl	Wszystkie linki i załączniki
 all other %1 fields are valid	infolog	pl	Wszystkie pozostałe pola %1 są prawidłowe
 all projects	infolog	pl	Wszystkie projekty
 allow to save entries with due date in the past	infolog	pl	Zezwalaj na zapisywanie wpisów z datą wymagalności w przeszłości
 allows to set the status of an entry, eg. set a todo to done if it's finished (values depend on entry-typ)	infolog	pl	Pozwala zmienić status wpisu, np. z Do Zrobienia na Wykonane (wartości zależą od typu wpisu)
 alternatives	infolog	pl	Alternatywy
 always show them	infolog	pl	Zawsze je pokazuj
+always use details for crm	infolog	pl	Zawsze używaj szczegółów w CRM
+always use no details for crm	infolog	pl	Zawsze nie używaj szczegółów w CRM
 application mail expected but got: %1	infolog	pl	Oczekiwano e-maila aplikacji, ale otrzymano: %1
+apply the action on the whole query, not only the shown entries!!!	infolog	pl	Zastosuj tę czynność do całego zapytania, a NIE tylko do wyświetlonych wpisów!
 apply the changes	infolog	pl	Zastosuj zmiany
 archive	infolog	pl	Archiwum
 archived too	infolog	pl	Również zarchiwizowane
@@ -262,7 +265,7 @@ insert in document	infolog	pl	Wstaw w dokumencie
 insert timestamp into description field	infolog	pl	Wstaw znacznik czasu do pola opisu
 invalid filename	infolog	pl	Niepoprawna nazwa pliku
 invalid owner id: %1.  might be a bad field translation.  used %2 instead.	infolog	pl	Nieprawidłowy identyfikator właściciela: %1. Zamiast tego użyto %2.
-label<br>helptext	infolog	pl	Etykieta<br>Tekst pomocy
+label<br>helptext	infolog	pl	Etykieta\nTekst pomocy
 last changed	infolog	pl	Ostatnia zmiana
 last modified	infolog	pl	Ostatnio modyfikowany
 leave blank to get the used time calculated by timesheet entries	infolog	pl	Pozostaw puste pole, aby czas pracy został obliczony na podstawie wpisów w arkuszu czasu pracy
@@ -346,7 +349,7 @@ owner, responsible	infolog	pl	Właściciel, Odpowiedzialny
 parent	infolog	pl	Nadrzędny
 parent infolog	infolog	pl	Nadrzędny InfoLog
 participants for scheduling an appointment	infolog	pl	Uczestnicy planujący spotkanie
-path on (web-)serverside<br>eg. /var/samba/share	infolog	pl	ścieżka na (web-)serwerze<br>np. /var/samba/Share
+path on (web-)serverside<br>eg. /var/samba/share	infolog	pl	ścieżka na (web-)serwerze\nnp. /var/samba/Share
 path to user and group files has to be outside of the webservers document-root!!!	infolog	pl	Ścieżka do użytkownika i grupy MUSI BYĆ POZA rootem dokumentów www (document-root)!
 pattern for search in addressbook	infolog	pl	Wzorzec wyszukiwania w książce adresowej
 pattern for search in projects	infolog	pl	Wzorzec wyszukiwania w projektach
@@ -396,6 +399,7 @@ responsible user, priority	infolog	pl	Osoba odpowiedzialna, priorytet
 returns a list / search for records.	infolog	pl	Pokazuje listę wyszukanych rekordów.
 rights for the responsible	infolog	pl	Uprawnienia do osoby odpowiedzialnej
 rows	infolog	pl	Wiersze
+same as infolog list	infolog	pl	Tak samo jak na liście InfoLog
 same day	infolog	pl	Ten sam dzień
 save	infolog	pl	Zapisz
 saves the changes made and leaves	infolog	pl	Zapisuje zmiany i wychodzi
@@ -413,6 +417,7 @@ select a responsible user: a person you want to delegate this task	infolog	pl	Wy
 select a typ to edit it's status-values or delete it	infolog	pl	Wybierz typ, którego statusy-wartości chcesz edytować lub skasować
 select an app to search in	infolog	pl	Wybierz Aplikację aby w niej szukać
 select an entry to link with	infolog	pl	Wybierz wpis z którym połączysz
+select if crm view should use the same value for (no) details like infolog or always no or details	infolog	pl	Wybierz, czy widok CRM ma stosować tę samą wartość dla (braku) szczegółów co InfoLog, czy zawsze brak szczegółów, czy też zawsze szczegóły.
 select multiple contacts for a further action	infolog	pl	Wybierz parę kontaktów dla następującej akcji
 select new category	infolog	pl	Wybierz nową kategorię
 select to filter by owner	infolog	pl	Wybierz aby sortować po właścicielu

@@ -21,6 +21,7 @@ aliases+forwards	mail	sv	Alias+Framåt
 all my email addresses	mail	sv	alla mina e-postadresser
 all of	mail	sv	Alla
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	sv	Alla undermappar raderas också och alla meddelanden i alla berörda mappar går förlorade
+allow users to create further identities	mail	sv	Tillåt användare att skapa ytterligare identiteter
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	sv	Tillåter en användare att läsa, skriva och skapa mappar och e-postmeddelanden, posta till dem, lägga till meddelanden till dem och radera meddelanden
 always show html emails	mail	sv	Visa alltid HTML e-post
 always show notifiction	mail	sv	Visar alltid meddelande
@@ -73,6 +74,8 @@ copy to	mail	sv	Kopiera
 create new account	mail	sv	Skapa nytt konto
 cross account forward attachment is not allowed!	mail	sv	Det är inte tillåtet att bifoga ett konto för korsändamål!
 current subject	mail	sv	Aktuellt ämne
+default identity for compose	mail	sv	Standardidentitet för att skriva meddelanden
+default signature	mail	sv	Standardsignatur
 default sorting order	mail	sv	Standard sorterings ordning
 default toolbar actions shown in mail's html editor	mail	sv	Funktioner som är aktiverade i HTML-redigerarens verktygsfält när du skriver ett e-postmeddelande
 default value for remembering s/mime passphrase in minutes	mail	sv	Standardvärde för att komma ihåg S/MIME-passfrasen i minuter
@@ -158,6 +161,7 @@ header	mail	sv	Rubrik
 header lines	mail	sv	Brevhuvud
 hide from	mail	sv	Dölj Från
 high priority	mail	sv	Hög prioritet
+how should the available information on identities be displayed	admin	sv	Hur ska den tillgängliga informationen om identiteter visas
 html	mail	sv	HTML
 html mode	mail	sv	HTML-läge
 ident name	mail	sv	Identnamn
@@ -165,6 +169,7 @@ ident name email	mail	sv	Identnamn [E-post]
 ident name organization email	mail	sv	Identnamn Organisation [E-post]
 identity	mail	sv	Identitet
 identity label	mail	sv	Identitetsetikett
+identity+signature	mail	sv	Identitet+Signatur
 if	mail	sv	OM
 if different from email address	mail	sv	Om annan än e-postadressen
 if mail header	mail	sv	om brevhuvud
@@ -192,6 +197,7 @@ junk folder	mail	sv	Mapp för skräppost
 keep a copy	mail	sv	Behåll en kopia
 keep a copy of the message in your inbox	mail	sv	Spara en kopia av brev i din Inkorg
 kilobytes	mail	sv	Kb
+last used signature	mail	sv	Senast använda signatur
 later	mail	sv	Senare
 learning as ham (not spam) failed because of %1	mail	sv	Inlärning som ham (inte spam) misslyckades på grund av %1
 learning as spam failed because of %1	mail	sv	Inlärning som spam misslyckades på grund av %1
@@ -265,6 +271,7 @@ organization | real name email	mail	sv	Organisation | Verkligt namn [E-post]
 original message	mail	sv	Ursprungligt meddelande
 outbox	mail	sv	Utkorg
 permission denied	mail	sv	Åtkomst nekad
+personal signature	mail	sv	Personlig signatur
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sv	Konfigurera ditt S/MIME-certifikat på fliken Kryptering i dialogrutan Redigera konto.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder filterregler på serversidan och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sv	Kontakta din administratör för att kontrollera om din server stöder semestermeddelanden på servern och hur du aktiverar dem i EGroupware för ditt aktiva konto (%1) med ID: %2.
@@ -396,6 +403,7 @@ validate selected addresses on submit:	mail	sv	Validera valda adresser vid inlä
 view header lines	mail	sv	Visa brevhuvudet
 what to do when you delete a message	mail	sv	Vad du ska göra när du tar bort ett meddelande.
 when deleting messages	mail	sv	Vid meddelande radering
+which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	sv	Vilken e-postidentitet (signatur) vill du börja med?\nFör ”Personlig signatur” använder vi alltid den första personliga signaturen.
 write	mail	sv	Skriv
 write & delete	mail	sv	skriva & radera
 wrote	mail	sv	Skrev

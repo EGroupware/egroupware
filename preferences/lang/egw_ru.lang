@@ -21,6 +21,7 @@ code is invalid	preferences	ru	Код недействителен
 code is required	preferences	ru	Код необходим
 color	preferences	ru	Цвет
 country	preferences	ru	Страна
+custom login box text color, defaults to white	preferences	ru	Цвет текста в поле входа (по умолчанию — белый)
 dark mode theme	preferences	ru	Темный режим темы
 date format	preferences	ru	Формат даты
 default	preferences	ru	по умолчанию
@@ -138,6 +139,7 @@ unit of displayed font sizes: either "px" as used eg. for web-pages or "pt" as u
 use default	preferences	ru	использовать по умолчанию
 use first %1 letters from username	preferences	ru	Используйте первые %1 букв из имени пользователя
 use initials from first and last name	preferences	ru	Использовать инициалы из имени и фамилии
+used instead of the application color.	preferences	ru	Используется вместо цвета приложения.
 users choice	preferences	ru	Выбор Пользователей
 what to display for an avatar, if there is no photo	preferences	ru	Что отображать в качестве аватара, если нет фотографии
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	preferences	ru	Если Вы ответите "да" кнопки Домой ии Выйти будут присутствовать как приложения в главно верхней панели приложений
