@@ -27,7 +27,6 @@ import {
 	Et2NextmatchSortEventDetail
 } from "./Headers/events";
 import styles from "./Et2Nextmatch.styles";
-import {egw} from "../../jsapi/egw_global";
 
 /**
  * @summary Nextmatch shows entries with filtering and context menu
@@ -377,6 +376,23 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 * React to template changes after initial render.
 	 * Template source is mutually exclusive: explicit template name wins over slots.
 	 */
+	protected willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate(changedProperties);
+		if(changedProperties.has("searchletter"))
+		{
+			const nextValue = this.searchletter || false;
+			if(this._filters.searchletter !== nextValue)
+			{
+				this._filters.searchletter = nextValue;
+			}
+		}
+	}
+
+	/**
+	 * React to template changes after initial render.
+	 * Template source is mutually exclusive: explicit template name wins over slots.
+	 */
 	protected updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
@@ -394,14 +410,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		if(changedProperties.has("filterTemplate"))
 		{
 			this._applyFilterTemplate(this.filterTemplate);
-		}
-		if(changedProperties.has("searchletter"))
-		{
-			const nextValue = this.searchletter || false;
-			if(this._filters.searchletter !== nextValue)
-			{
-				this.applyFilters({searchletter: nextValue}, {reload: false});
-			}
 		}
 		if(changedProperties.has("placeholderActions"))
 		{
@@ -562,7 +570,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		_row_ids = this._toStringArray(_row_ids);
 
 		// Make some changes in what we're doing based on preference
-		let update_pref = egw.preference("lazy-update") || 'lazy';
+		let update_pref = this.egw().preference("lazy-update") || 'lazy';
 		if(_type == Et2DatagridUpdateTypes.UPDATE && !this._isSortedByModified())
 		{
 			_type = update_pref == "lazy" ? Et2DatagridUpdateTypes.UPDATE_IN_PLACE : Et2DatagridUpdateTypes.EDIT;
@@ -1563,7 +1571,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 */
 	private _renderLetterSearch()
 	{
-		const currentLetter = String(this._filters.searchletter ?? this.searchletter ?? "");
+		const currentLetterValue = this._filters.searchletter || this.searchletter || "";
+		const currentLetter = typeof currentLetterValue === "string" ? currentLetterValue : "";
 		if(!this.lettersearch && !currentLetter)
 		{
 			return null;
