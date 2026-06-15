@@ -73,7 +73,7 @@ class IcalImportTest extends \EGroupware\Api\AppTest
 		$this->assertGreaterThan(0, $cal_id, 'Import did not return a valid cal_id');
 		$this->event_ids[] = $cal_id;
 
-		$event = $this->ical_bo->read($cal_id);
+		$event = $this->ical_bo->read($cal_id, null, false, 'server');
 		$this->assertIsArray($event, 'Imported event can not be read back');
 		$this->assertEquals(self::EVENT_UID, $event['uid']);
 		$this->assertEquals('Developer Meeting', $event['title']);
@@ -98,7 +98,7 @@ class IcalImportTest extends \EGroupware\Api\AppTest
 			$this->assertEquals(4, (int)$occurrence->format('N'), 'Recurrence does not fall on Thursday');
 		}
 
-		$export = $this->ical_bo->exportVCal($cal_id, '2.0');
+		$export = $this->ical_bo->exportVCal([$event], '2.0');
 		$this->assertIsString($export);
 		$this->assertStringContainsString('RRULE:', $export);
 		$this->assertStringContainsString('FREQ=WEEKLY', $export);
