@@ -353,41 +353,70 @@ jobs:
 
   jstest:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 30
+    env:
+      EGW_DB_ROOT_PW: ciroot
+      COMPOSE_PROJECT_NAME: egwci
+      EGW_CI_ROOT: ${{ github.workspace }}/sources
+      EGW_CI_DOCKER_DIR: ${{ github.workspace }}/sources/doc/docker
+      EGW_SRC_DIR: /var/www
+      EGW_CONFIG_USER: ""
+      EGW_CONFIG_PASSWD: ""
+      SYSOP_USER: ""
+      SYSOP_PASS: ""
+    defaults:
+      run:
+        shell: bash
+        working-directory: sources
     steps:
       - uses: actions/checkout@v4
         with:
           submodules: true
+          path: sources
 
       - name: Cache Composer downloads
         uses: actions/cache@v4
         with:
           path: ~/.composer/cache
-          key: composer-cache-${{ runner.os }}-${{ hashFiles('composer.lock') }}
+          key: composer-cache-${{ runner.os }}-${{ hashFiles('sources/composer.lock') }}
           restore-keys: |
             composer-cache-${{ runner.os }}-
 
-      - name: Install composer dependencies
+      - name: Install PHP dependencies in sources
         shell: bash
         run: |
           set -euo pipefail
           COMPOSER_CACHE_DIR="${HOME}/.composer/cache"
           docker run --rm --user "$(id -u):$(id -g)" \
             -v "${COMPOSER_CACHE_DIR}":/tmp/composer-cache \
-            -v "${GITHUB_WORKSPACE}":/app -w /app \
+            -v "${GITHUB_WORKSPACE}/sources":/app -w /app \
             -e COMPOSER_CACHE_DIR=/tmp/composer-cache \
             composer install --no-interaction --ignore-platform-reqs
 
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version-file: package.json
+          node-version-file: sources/package.json
+          cache: npm
+          cache-dependency-path: sources/package-lock.json
 
       - name: Install npm dependencies
         run: npm ci
 
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-${{ hashFiles('sources/package-lock.json') }}
+          restore-keys: |
+            playwright-${{ runner.os }}-
+
+      - name: Install Playwright system dependencies
+        run: npx playwright install-deps chromium firefox
+
       - name: Install Playwright browsers
-        run: npx playwright install --with-deps chromium firefox
+        timeout-minutes: 15
+        run: npx playwright install chromium firefox
 
       - name: Run jstest
         run: npm run jstest
