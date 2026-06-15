@@ -79,7 +79,9 @@ class IcalImportTest extends \EGroupware\Api\AppTest
 		$this->assertEquals('Developer Meeting', $event['title']);
 		$this->assertNotEquals(MCAL_RECUR_NONE, $event['recur_type'], 'Imported event is not recurring');
 
-		$recur_enddate = new Api\DateTime($event['recur_enddate']);
+		$recur_enddate = $event['recur_enddate'] instanceof Api\DateTime ?
+			clone $event['recur_enddate'] : new Api\DateTime($event['recur_enddate'], Api\DateTime::$server_timezone);
+		$recur_enddate->setTimezone(new \DateTimeZone($event['tzid']));
 		$this->assertEquals('20261217', $recur_enddate->format('Ymd'), 'Unexpected recurrence end date');
 
 		$so = new \calendar_so();
