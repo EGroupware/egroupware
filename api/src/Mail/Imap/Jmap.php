@@ -431,7 +431,7 @@ class Jmap extends Mail\Imap
 					{
 						if ($what === 'email')
 						{
-							$uid = $stalwart->messageId2uid($item['messageId'][0], key($item['mailboxIds']), $folder);
+							$uid = $stalwart->emailId2uid($item['id'], $item['messageId'][0], key($item['mailboxIds']), $folder);
 						}
 						elseif ($what === 'mailbox')
 						{
@@ -582,22 +582,31 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
-	 * Convert Message-ID to IMAP UID
+	 * Convert Stalwart/JMAP ID to IMAP UID
 	 *
-	 * Requires indexing of headers to be switched on in Stalwart v0.16: Settings > Search in WebUI
+	 * Using Message-ID indexing of headers to be switched on in Stalwart v0.16: Settings > Search in WebUI
 	 *
-	 * @param string $messageId
+	 * @param string $emailId JMAP ID
+	 * @param string $messageId Message-ID header, used only if NO Horde_Imap_Client_Search_Query->emailIds()
 	 * @param string $folderId
 	 * @param string|null &$folder =null folder name on return
 	 * @return ?int
+	 * @throws \Horde_Imap_Client_Exception
 	 */
-	protected function messageId2uid($messageId, string $folderId, ?string &$folder=null)
+	protected function emailId2uid(string $emailId, string $messageId, string $folderId, ?string &$folder=null)
 	{
 		$query = new \Horde_Imap_Client_Search_Query();
-		$query->headerText('Message-ID', $messageId);
+		if (method_exists($query, 'emailIds'))
+		{
+			$query->emailIds($emailId);
+		}
+		else
+		{
+			$query->headerText('Message-ID', $messageId);
+		}
 		foreach($this->search($folder=$this->jmap->folderId2path($folderId), $query) as $uid)
 		{
-			return (string)$uid;    // casting to (int) does NOT work / gives always 1!
+			return (int)(string)$uid ?: null;    // casting direct to (int) does NOT work / gives always 1!
 		}
 		return null;
 	}
