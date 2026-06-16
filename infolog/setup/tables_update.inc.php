@@ -1161,3 +1161,15 @@ function infolog_upgrade23_1()
 {
 	return $GLOBALS['setup_info']['infolog']['currentver'] = '26.1';
 }
+
+/**
+ * Fix NM column-selection preference for removed linked-widget
+ *
+ * @return string
+ */
+function infolog_upgrade26_1()
+{
+	Api\Preferences::change_preference('infolog', '/^nextmatch-/', fn($value) => str_replace('linked_', '', $value));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.001';
+}
