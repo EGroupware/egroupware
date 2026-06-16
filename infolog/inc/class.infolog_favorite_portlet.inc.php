@@ -53,6 +53,8 @@ class infolog_favorite_portlet extends home_favorite_portlet
 			'options-filter'      => $ui->filters,
 			// Allow add actions even when there's no rows
 			'placeholder_actions' => array(),
+			// Don't show the filter template
+			'filter_template' => false,
 		));
 	}
 
