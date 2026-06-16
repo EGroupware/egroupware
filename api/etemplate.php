@@ -498,7 +498,11 @@ function send_template()
 				$span = ' span="' . $attrs['span'] . '"';
 				unset($attrs['span']);
 			}
-			return "<et2-ai{$span}>$matches[0]</et2-ai>";
+			// remove height, so widget takes full height inside et2-ai
+			unset($attrs['height']);
+			$attrs = stringAttrs($attrs);
+			$tag = str_starts_with($matches[2], 'et2-') ? $matches[2] : 'et2-'.$matches[2];
+			return "<et2-ai{$span}><$tag $attrs></$tag></et2-ai>";
 		}, $str);
 
 		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
