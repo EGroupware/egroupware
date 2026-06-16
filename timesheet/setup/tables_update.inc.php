@@ -268,3 +268,16 @@ function timesheet_upgrade23_1_002()
 {
 	return $GLOBALS['setup_info']['timesheet']['currentver'] = '26.1';
 }
+
+/**
+ * Fix NM column-selection preference for removed linked-widget
+ *
+ * @return string
+ */
+function timesheet_upgrade26_1()
+{
+	Api\Preferences::change_preference('timesheet', '/^nextmatch-/',
+		fn($attr, $value, $owner, $prefs) => str_replace('linked_', '', $value));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.001';
+}
