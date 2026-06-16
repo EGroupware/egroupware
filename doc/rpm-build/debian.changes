@@ -1,3 +1,33 @@
+egroupware-docker (26.6.20260616) hardy; urgency=low
+
+  * THIS IS A SECURITY and maintenance RELEASE, everyone is encouraged to update to it ASAP
+  * TinyMCE: updated to latest version 8.6.0 because of [multiple high level XSS vulnerabilities](https://github.com/tinymce/tinymce/security)
+  * Addressbook: fix REST/JSON contact creation always using personal addressbook
+  * AiTools: allow to define prompts to run on specific triggers: entry added, updated or delete beside on context-menu
+  * AiTools: allow multiple tool calls (up to 5) per prompt e.g. to first search for a contact before creating it
+  * Api: fix categories from a linked application entry were missing when inserting into document
+  * Api: fix changing actions on nextmatch lost the copy/paste actions
+  * Calendar: fix handling for Exchange 2010 timezones
+  * Calendar: creating an exception with more than 20 (max matches preference) participants truncated the participants in the series
+  * Infolog: fix mobile template, so firefox can also render it
+  * Kdots: prevent closing a CRM tab from removing all addressbook javascript
+  * KnowledgeBase: needs [manual update/pull](https://github.com/EGroupware/egroupware/wiki/Running-own-apps-in-standard-Docker-installation#old-deprecated-apps-wiki-knowledgebase-), to be able to edit articles!
+  * Mail: fix horizontal view to also show items correctly
+  * Mail: enforce attachment size limit and switch to download link when exceeded; add config for attachment size limit
+  * Mail: marking a mail as read or unread (e.g. open it in preview) no longer requests a server response
+  * Mail: fix reply/forward status icon was missing
+  * Mail: enhance search to use OR (default), AND, + or - to combine search patterns, thanks to Gabriele from ATSrl
+  * Mail: marking a mail as read or unread (e.g. open it in preview) no longer requests a server response
+  * OpenAPI/REST-API: new configuration which operationIds to (not) show and number of matches for searches/list-requests e.g. for OpenWebUI
+  * RAG: close session while searching, so a slow or unresponsive Embedding does not block the user session
+  * Timesheet: new "billable..." pseudo filter showing all entries not invoiced or marked as not-to-invoice
+  * Timesheet: create status "not to invoice" and "invoiced" for use with Invoices app
+  * Invoices: create invoice from selected timesheets, infologs or tickets, (linked) timesheets get added as positions and set to invoiced
+  * LDAP/ADS: fix PHP 8.5 error: LDAP value must be of type string|int|bool, float given (stalling Univention installation)
+  * EPL: export whole (or parts of) VFS to a S3 bucket using the actual names/path
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 16 Jun 2026 19:48:24 +0200
+
 egroupware-docker (26.5.20260507) hardy; urgency=low
 
   * SECURITY and maintenance release: everyone is strongly adviced to update to this release
