@@ -81,6 +81,7 @@ before the event	calendar	de	Vor dem Termin
 birthday	calendar	de	Geburtstag
 birthdays	admin	de	Geburtstage
 birthdays only	calendar	de	Nur Geburtstage
+blocking	calendar	de	Blockierend
 both, holidays and birthdays	calendar	de	Beide, Feier- und Geburtstage
 busy	calendar	de	Belegt
 by	calendar	de	von

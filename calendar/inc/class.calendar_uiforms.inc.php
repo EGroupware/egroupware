@@ -3940,6 +3940,10 @@ class calendar_uiforms extends calendar_ui
 		$readonlys = [];
 		$sel_options =  [
 			'cat_id' => Api\CalDAV\Sync::listSubscriptions(),
+			'blocking' => [
+				'blocking'     => lang('blocking'),
+				'non_blocking' => lang('non blocking'),
+			],
 		];
 		// show first subscription
 		if (!is_array($content) && !empty($sel_options['cat_id']))
@@ -3955,6 +3959,12 @@ class calendar_uiforms extends calendar_ui
 		elseif (!empty($content['cat_id']) && $content['cat_id'] !== $content['old_cat_id'])
 		{
 			$content = Api\CalDAV\Sync::readSubscription($content['cat_id']);
+			// Existing subscriptions used non_blocking=true to force events non-blocking.
+			// Keep that setting visible in the new tri-state select.
+			if(!isset($content['blocking']) && !empty($content['non_blocking']))
+			{
+				$content['blocking'] = 'non_blocking';
+			}
 			// if last sync was NOT successful, show it now as an error
 			if (!empty($content['error_msg']))
 			{
@@ -3965,6 +3975,11 @@ class calendar_uiforms extends calendar_ui
 		{
 			$button = key($content['button'] ?? []);
 			unset($content['button'], $content['old_cat_id'], $content['error_msg'], $content['error_time'], $content['error_trace']);
+			if(array_key_exists('blocking', $content))
+			{
+				unset($content['non_blocking']);
+				$content['blocking'] = (string)$content['blocking'];
+			}
 			try
 			{
 				$caldav_client = new EGroupware\Api\CalDAV\Sync($content['url'],
@@ -3988,7 +4003,10 @@ class calendar_uiforms extends calendar_ui
 					case 'sync':
 						$content['sync_token'] = '';    // do a full sync, when called manually
 						$caldav_client->sync($content['sync_token'],
-							array_intersect_key($content, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
+						                     array_intersect_key($content, array_flip(['cat_id', 'participants',
+						                                                               'set_private', 'blocking',
+						                                                               'non_blocking']))
+						);
 						Api\CalDAV\Sync::writeSubscription($content);
 						Framework::message(lang('Subscription synced.'), 'success');
 						break;
