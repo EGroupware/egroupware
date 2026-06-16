@@ -811,6 +811,10 @@ class calendar_ui
 			$event['class'] .= 'rowDeleted ';
 		}
 
+		// v-- this should not be necessary
+		if (!is_object($event['start'])) $event['start'] = new Api\DateTime($event['start']);
+		if (!is_object($event['end'])) $event['end'] = new Api\DateTime($event['end']);
+		// ^-- this should not be necessary
 		$event['start']->setUser();
 		$event['end']->setUser();
 		$event['recure'] = $this->bo->recure2string($event);
