@@ -277,7 +277,7 @@ function timesheet_upgrade23_1_002()
 function timesheet_upgrade26_1()
 {
 	Api\Preferences::change_preference('timesheet', '/^nextmatch-/',
-		fn($attr, $value, $owner, $prefs) => str_replace('linked_', '', $value));
+		fn($attr, $value, $owner, $prefs) => is_string($value) ? str_replace('linked_', '', $value) : $value);
 
-	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.001';
+	return $GLOBALS['setup_info']['timesheet']['currentver'] = '26.1.001';
 }
