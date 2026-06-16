@@ -726,7 +726,7 @@ class calendar_uiviews extends calendar_ui
 				$end = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
 				$end->add(new DateInterval("P{$days}D"));
 				$end->modify('-1 second');
-				$this->last = $search_params['end'] = $end->format('ts');
+				$this->last = $search_params['end'] = $end;
 			}
 			if (count($users) == 1 || count($users) >= $this->cal_prefs['week_consolidate']	||// for more then X users, show all in one row
 				$days == 1 // Showing just 1 day
@@ -1021,9 +1021,8 @@ class calendar_uiviews extends calendar_ui
 				$extraRowsToAdd = 0;
 				foreach ($oneDayEvents as $num => $event)
 				{
-					$start = $this->bo->date2array($event['start']);
-					$end = $this->bo->date2array($event['end']);
-					if(!$start['hour'] && !$start['minute'] && $end['hour'] == 23 && $end['minute'] == 59)
+					if((int)$event['start']->format('H') === 0 && (int)$event['start']->format('i') === 0 &&
+						(int)$event['end']->format('H') === 23 && (int)$event['end']->format('i') === 59)
 					{
 						if($event['non_blocking'])
 						{
