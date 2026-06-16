@@ -1169,7 +1169,8 @@ function infolog_upgrade23_1()
  */
 function infolog_upgrade26_1()
 {
-	Api\Preferences::change_preference('infolog', '/^nextmatch-/', fn($value) => str_replace('linked_', '', $value));
+	Api\Preferences::change_preference('infolog', '/^nextmatch-/',
+		fn($attr, $value, $owner, $prefs) => str_replace('linked_', '', $value));
 
 	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.001';
 }
