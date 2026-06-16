@@ -655,38 +655,31 @@ class calendar_uiviews extends calendar_ui
 
 		if ($days <= 4)		// next 4 days view
 		{
-			$wd_start = $this->first = $this->bo->date2ts($this->date);
-			$end = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
-			$end->add(new DateInterval("P{$days}D"));
-			$end->modify('-1 second');
-			$this->last = $end->format('ts');
+			$this->first = new Api\DateTime($this->date);
+			$this->last = clone $this->first;
+			$this->last->add(new DateInterval("P{$days}D"));
+			$this->last->modify('-1 second');
 			$view = $days == 1 ? 'day' : 'day4';
 		}
 		else
 		{
-			$start = new Api\DateTime($this->date);
-			$start->setWeekstart();
-			$wd_start = $this->first = $start->format('ts');
+			$this->first = new Api\DateTime($this->date);
+			$this->first->setWeekstart();
 			if ($days <= 5)		// no weekend-days
 			{
 				switch($this->cal_prefs['weekdaystarts'])
 				{
 					case 'Saturday':
-						$shift = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
-						$shift->modify('+2 days');
-						$this->first = $shift->format('ts');
+						$this->first->modify('+2 days');
 						break;
 					case 'Sunday':
-						$shift = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
-						$shift->modify('+1 day');
-						$this->first = $shift->format('ts');
+						$this->first->modify('+1 day');
 						break;
 				}
 			}
-			$end = new Api\DateTime($this->first, Api\DateTime::$user_timezone);
-			$end->add(new DateInterval("P{$days}D"));
-			$end->modify('-1 second');
-			$this->last = $end->format('ts');
+			$this->last = clone $this->first;
+			$this->last->add(new DateInterval("P{$days}D"));
+			$this->last->modify('-1 second');
 			$view = 'week';
 		}
 
