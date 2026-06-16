@@ -1546,7 +1546,7 @@ class calendar_ical extends calendar_boupdate
 				unset($event['id']);
 				if ($caldav_name) $event['caldav_name'] = $caldav_name;
 				// set non blocking all day depending on the user setting
-				if (!empty($event['whole_day']) && $this->nonBlockingAllday)
+				if (!empty($event['whole_day']) && $this->nonBlockingAllday && !isset($event['non_blocking']))
 				{
 					$event['non_blocking'] = 1;
 				}

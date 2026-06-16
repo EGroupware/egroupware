@@ -315,6 +315,7 @@ EOT, $this->header([
 				if ($status === 404)
 				{
 					yield (string)$dav_children->href => null;
+					continue;
 				}
 				// iCloud does not send calendar-data, even if requested
 				if (!($ical = (string)$dav_children->propstat->prop->children(Api\CalDAV::CALDAV)->{'calendar-data'}))
@@ -386,7 +387,15 @@ EOT, $this->header([
 		{
 			$event['public'] = 0;
 		}
-		if (!empty($modifications['non_blocking']))
+		if(array_key_exists('blocking', $modifications))
+		{
+			if((string)$modifications['blocking'] !== '')
+			{
+				$event['non_blocking'] = $modifications['blocking'] === 'non_blocking' ? 1 : 0;
+			}
+		}
+		// Backward compatibility for subscriptions saved before the tri-state option.
+		elseif(!empty($modifications['non_blocking']))
 		{
 			$event['non_blocking'] = 1;
 		}
@@ -591,7 +600,9 @@ EOT, $this->header([
 		{
 			try {
 				$self = new self($data['url'], $data['user']??null, $data['password']??null, $data['sync_type']??null);
-				$self->sync($data['sync_token'], array_intersect_key($data, array_flip(['cat_id', 'participants', 'set_private', 'non_blocking'])));
+				$self->sync($data['sync_token'], array_intersect_key($data, array_flip(['cat_id', 'participants',
+				                                                                        'set_private', 'blocking',
+				                                                                        'non_blocking'])));
 				unset($data['error_time'], $data['error_msg'], $data['error_trace']);
 			}
 			catch (\Throwable $e) {
