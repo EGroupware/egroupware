@@ -723,7 +723,7 @@ class calendar_bo
 				$e_end = min(DateTimeImmutable::createFromMutable($event['end'])->sub($one_second), $end);
 
 				// add event to each day in the reported time
-				$ts = $e_start;
+				$ts = clone $e_start;
 				//  $ts += DAY_s in a 'for' loop does not work for daylight savings in week view
 				// because the day is longer than DAY_s: Fullday events will be added twice.
 				$ymd = null;

@@ -401,11 +401,6 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 				{
 					events.push(event);
 				}
-				else if(event)
-				{
-					// Got an ID that doesn't belong
-					event_ids.splice(i--, 1);
-				}
 			}));
 		}
 
