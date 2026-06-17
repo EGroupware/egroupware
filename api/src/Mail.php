@@ -7121,43 +7121,25 @@ class Mail
 					// do not change urls for absolute images (thanks to corvuscorax)
 					if (!str_starts_with($url, 'data:'))
 					{
-						$attachmentData['name'] = basename($url); // need to resolve all sort of url
-						if (($directory = dirname($url)) == '.') $directory = '';
-						$ext = pathinfo($attachmentData['name'], PATHINFO_EXTENSION);
-						$attachmentData['type'] = MimeMagic::ext2mime($ext);
-						if ( strlen($directory) > 1 && !str_ends_with($directory, '/')) { $directory .= '/'; }
-
 						//decode entities because tinymce encodes (e.g. Umlautes) them otherwise file can't be found.
-						$myUrl = html_entity_decode($directory.$attachmentData['name']);
+						$decoded_url = html_entity_decode($url);
 
-						if ($myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
-						{
-							$basedir = Framework::getUrl('/');
-						}
-						// use vfs instead of url containing webdav.php
-						// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
-						// webdav.php urls as vfs
-						if (str_contains($myUrl, '/webdav.php')) // we have a webdav link, so we build a vfs/sqlfs link of it.
-						{
-							Vfs::load_wrapper('vfs');
-							list(,$myUrl) = explode('/webdav.php',$myUrl,2);
-							$basedir = 'vfs://default';
-							$needTempFile = false;
-						}
-
-						// If it is an inline image url, we need to fetch the actuall attachment
-						// content and later on to be able to store its content as temp file
-						if ($mail_bo && str_contains($myUrl, '/index.php?menuaction=mail.mail_ui.displayImage'))
+						// If it is an inline image url, we need to fetch the actual attachment
+						// content to be able to store its content as temp file later.
+						if ($mail_bo && ($query = parse_url($decoded_url, PHP_URL_QUERY)))
 						{
 							$URI_params = array();
-							// Strips the url and store it into a temp for further procss
-							$tmp_url = html_entity_decode($myUrl);
-
-							parse_str(parse_url($tmp_url, PHP_URL_QUERY),$URI_params);
-							if ($URI_params['mailbox'] && $URI_params['uid'] && $URI_params['cid'])
+							parse_str($query, $URI_params);
+							if (($URI_params['menuaction'] ?? null) === 'mail.mail_ui.displayImage' &&
+								!empty($URI_params['mailbox']) && !empty($URI_params['uid']) && !empty($URI_params['cid']))
 							{
 								$mail_bo->reopen(base64_decode($URI_params['mailbox']));
-								$attachment = $mail_bo->getAttachmentByCID(base64_decode($URI_params['uid']), base64_decode($URI_params['cid']),base64_decode($URI_params['partID']),true);
+								$attachment = $mail_bo->getAttachmentByCID(
+									base64_decode($URI_params['uid']),
+									base64_decode($URI_params['cid']),
+									urldecode($URI_params['partID'] ?? ''),
+									true
+								);
 								$mail_bo->closeConnection();
 								if ($attachment)
 								{
@@ -7168,7 +7150,33 @@ class Mail
 							}
 						}
 
-						if ( $myUrl[0]!='/' && strlen($basedir) > 1 && !str_ends_with($basedir, '/')) { $basedir .= '/'; }
+						if (!$data)
+						{
+							$attachmentData['name'] = basename($url); // need to resolve all sort of url
+							if (($directory = dirname($url)) == '.') $directory = '';
+							$ext = pathinfo($attachmentData['name'], PATHINFO_EXTENSION);
+							$attachmentData['type'] = MimeMagic::ext2mime($ext);
+							if ( strlen($directory) > 1 && !str_ends_with($directory, '/')) { $directory .= '/'; }
+
+							$myUrl = html_entity_decode($directory.$attachmentData['name']);
+						}
+
+						if (!$data && $myUrl[0]=='/') // local path -> we only allow path's that are available via http/https (or vfs)
+						{
+							$basedir = Framework::getUrl('/');
+						}
+						// use vfs instead of url containing webdav.php
+						// ToDo: we should test if the webdav url is of our own scope, as we cannot handle foreign
+						// webdav.php urls as vfs
+						if (!$data && str_contains($myUrl, '/webdav.php')) // we have a webdav link, so we build a vfs/sqlfs link of it.
+						{
+							Vfs::load_wrapper('vfs');
+							list(,$myUrl) = explode('/webdav.php',$myUrl,2);
+							$basedir = 'vfs://default';
+							$needTempFile = false;
+						}
+
+						if (!$data && $myUrl[0]!='/' && strlen($basedir) > 1 && !str_ends_with($basedir, '/')) { $basedir .= '/'; }
 					}
 					if (str_starts_with($url, 'data:'))
 					{
