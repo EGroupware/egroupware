@@ -14,6 +14,10 @@ ucs=5.0
 while [ $# -gt 0 ]
 do
 	case "$1" in
+	  "--copy-app")
+	    copy_app=$2
+	    shift; shift
+	    ;;
 		"--packaging")
 			packaging=$2
 			shift; shift
@@ -26,10 +30,11 @@ do
 			debug=echo
 			shift
 			;;
-		"--help")
+	  *)
 			echo "Usage: release-appcenter [--packaging <YYYYmmdd>] [--postfix -docker] [--debug] [--help]"
 			echo "	--packaging specifiy packaging, default current date '$packaging'"
 			echo "	--postfix eg. '-docker' used to find old package to copy and appended to packaging"
+			echo "  --copy-app '5.0/egroupware=26.5.20260507' explicitly specify old version to copy"
 			echo "	--debug only echo out (modifying commands), does NOT execute them"
 			exit 0
 			;;
@@ -55,7 +60,7 @@ grep -q "$version.$packaging" $(dirname $0)/debian.changes || {
 }
 
 univention-appcenter-control list | tee /tmp/ucs-apps | egrep "$ucs/egroupware=$version.$packaging$postfix" || {
-	copy_app=$(cat /tmp/ucs-apps | egrep "$ucs/egroupware=$version\.[0-9.]+$postfix$" | tail -1)
+	[ -z "$copy_app" ] && copy_app=$(cat /tmp/ucs-apps | egrep "$ucs/egroupware=$version\.[0-9.]+$postfix$" | tail -1)
 	[ -z "$copy_app" ] && copy_app=$ucs/egroupware
 	$debug univention-appcenter-control new-version $copy_app $ucs/egroupware=$version.$packaging$postfix
 }
@@ -76,7 +81,8 @@ $debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$p
 univention-appcenter-control get $ucs/egroupware=$version.$packaging$postfix --json | jq -r .compose > /tmp/compose
 sed -i "" \
 	-e "s|image:.*docker.software-univention.de/egroupware-egroupware.*|image: download.egroupware.org/egroupware/epl:$version.$packaging|" \
-	-e "s|image:.*docker.software-univention.de/egroupware-push.*|image: phpswoole/swoole:php8.5-alpine|" \
+	-e "s|image:.*docker.software-univention.de/egroupware-db.*|image: mariadb:11.8|" \
+	-e "s|image:.*docker.software-univention.de/egroupware-push.*|image: phpswoole/swoole:latest-alpine|" \
 	-e "s|image:.*docker.software-univention.de/egroupware-nginx.*|image: nginx:stable-alpine|" \
 	/tmp/compose
 $debug univention-appcenter-control upload $ucs/egroupware=$version.$packaging$postfix /tmp/compose
