@@ -864,6 +864,10 @@ th table.et2_grid.et2_customfield_list{
     width: calc(100% - 20px);
 }
 
+/* Set a specific height for auto-sizing elements like et2-htmlarea.  TD will still autosize. */
+.et2_customfield_list tr td:nth-child(2) {
+	height: 1px;
+}
 /* Hide the upload button if desired, we still use the widget to show the selected file */
 .et2_customfield_list tr et2-vfs-upload.noUpload::part(button) {
 	display: none;

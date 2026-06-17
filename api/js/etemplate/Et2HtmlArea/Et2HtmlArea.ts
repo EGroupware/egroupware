@@ -140,8 +140,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 					display: flex;
 					flex-direction: column;
 					width: 100%;
-					min-height: 100px;
-					min-width: 0;
+					height: 100%;
 				}
 
 				.form-control {
@@ -150,15 +149,14 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 					flex-direction: column;
 					flex-wrap: nowrap;
 					flex: 1 1 auto;
-					min-height: 0;
 				}
 
 				.form-control-input {
 					display: flex;
 					flex-direction: column;
 					flex: 1 1 auto;
-					min-height: 0;
-					min-width: 0;
+					min-width: 40em;
+					min-height: 10em;
 				}
 
 				.form-control__help-text {
@@ -186,6 +184,14 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 					font: inherit;
 				}
 
+				.htmlarea__has-menu, .htmlarea__has-toolbar {
+					min-height: 15em;
+				}
+
+				.htmlarea__has-menu.htmlarea__has-toolbar {
+					min-height: 20em;
+				}
+				
 				.htmlarea__readonly {
 					flex: 1 1 auto;
 					min-height: 0;
@@ -1292,7 +1298,11 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
                     })}
             >
                 ${labelTemplate}
-                <div part="form-control-input" class="form-control-input">
+                <div part="form-control-input" class=${classMap({
+                    "form-control-input": true,
+                    "htmlarea__has-menu": this._menubar,
+                    "htmlarea__has-toolbar": this._toolbar
+                })}>
                     ${this._renderEditor()}
                 </div>
                 ${helpTextTemplate}
