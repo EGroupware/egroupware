@@ -587,6 +587,12 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 		return `${api.webserverUrl}/api/tinymce.php?darkmode=${darkmode}&${prefs}`;
 	}
 
+	protected get _skinUrl():string{
+		const api = this.egw();
+		const darkmode = document.documentElement?.dataset?.darkmode ?? "0";
+		return (api.webserverUrl+"/api/js/tinymce/skins/ui/egw"+((darkmode == "0")?"":"-dark"));
+	}
+
 	protected get _languageCode() : string
 	{
 		const language = String(this.egw().preference("lang", "common") || "en").toLowerCase();
@@ -1244,6 +1250,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
                     statusbar="${String(!this.noStatusbar)}"
                     plugins="${HTMLAREA_NPM_PLUGIN_SET}"
                     content_css="${this._contentCss}"
+                    skin_url="${this._skinUrl}"
                     promotion="false"
                     resize="false"
                     images_upload_handler=${ifDefined(this.imagesUploadHandler ? `${callbackPath}.imagesUploadHandler` : undefined)}
