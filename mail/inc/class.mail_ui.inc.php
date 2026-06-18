@@ -4192,7 +4192,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		//error_log(__METHOD__.__LINE__.array2string($_GET));
 		if (!$_messageID && !empty($_GET['_messageID'])) $_messageID = $_GET['_messageID'];
 		// stop execution right here, if we have no (valid) messageID
-		if (!$_messageID || !str_starts_with('mail::', $_messageID))
+		if (!$_messageID || !str_starts_with($_messageID, 'mail::'))
 		{
 			throw new InvalidArgumentException('missing, empty or invalid required _messageID GET parameter!');
 		}
