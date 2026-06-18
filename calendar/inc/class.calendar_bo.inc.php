@@ -969,7 +969,7 @@ class calendar_bo
 		}
 		$events = array();
 
-		$this->insert_all_recurrences($event, $start, new DateTime($this->config['horizont'], Api\DateTime::$server_timezone)->setUser(), $events);
+		$this->insert_all_recurrences($event, $start, (new DateTime($this->config['horizont'], Api\DateTime::$server_timezone))->setUser(), $events);
 
 		$exceptions = array();
 		foreach((array)$event['recur_exception'] as $exception)
