@@ -387,7 +387,7 @@ abstract class Merge
 					$formatted_placeholder = $contact["adr_{$adr}_postalcode"] . ' ' . $contact["adr_{$adr}_locality"];
 					break;
 			}
-			$replacements['$$adr_' . $adr . '_formatted$$'] = $formatted_placeholder;
+			$replacements[$this->prefix($prefix, 'adr_' . $adr . '_formatted', '$$')] = $formatted_placeholder;
 		}
 
 		// need to load all cfs for $ignore_acl=true
@@ -2077,6 +2077,12 @@ abstract class Merge
 		if(!$app || !$id || !$content)
 		{
 			return $replacements;
+		}
+
+		if($app == 'api-accounts')
+		{
+			$id = $GLOBALS['egw']->accounts->read($id)['person_id'];
+			return $this->contact_replacements($id, $prefix, false, $content);
 		}
 		if($app == 'addressbook')
 		{
