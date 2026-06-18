@@ -1055,7 +1055,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				return false;
 			}
 		}
-		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id,...) start=".Api\DateTime::to($event['start'], 'Y-m-d H:i:s').", recurrence=".(!empty($event['recurrence'])?Api\DateTime($event['recurrence'], 'Y-m-d H:i:s'):'');
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id,...) start=".Api\DateTime::to($event['start'], 'Y-m-d H:i:s').", recurrence=".(!empty($event['recurrence'])?Api\DateTime($event['recurrence'], 'Y-m-d H:i:s'):''));
 		foreach((array)$event['recur_exception'] as $ex)
 		{
 			ZLog::Write(LOGLEVEL_DEBUG, "exception=".Api\DateTime::to($ex, 'Y-m-d H:i:s'));
