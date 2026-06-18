@@ -81,8 +81,8 @@ class PutValidationAclTest extends RestBase
 	 *
 	 * Pass criteria:
 	 * - Foreign POST is denied with HTTP 403.
-	 * - The event does not show up in the owner's calendar (collection search by
-	 *   its unique title returns no responses).
+	 * - The event does not show up in the owner's calendar: a collection GET
+	 *   over the event's time-range does not return its unique title.
 	 */
 	public function testPostDeniedForForeignCalendarWithoutAcl()
 	{
@@ -94,13 +94,14 @@ class PutValidationAclTest extends RestBase
 		]);
 		$this->assertHttpStatus(403, $response);
 
-		// owner must not see an event with that unique title
+		// owner must not see an event with that unique title; query the time-range
+		// the fixture event would fall into (start 2030-01-01T20:00 Europe/Berlin)
 		$owner_collection = $this->getClient($this->ownerUser())->get($this->url($this->calendarCollection($this->ownerUser())), [
 			RequestOptions::HEADERS => $this->jsonHeaders(),
-			RequestOptions::QUERY => ['filters' => ['search' => $uid]],
+			RequestOptions::QUERY => ['filters' => ['start' => '20300101T000000Z', 'end' => '20300102T000000Z']],
 		]);
 		$this->assertHttpStatus(200, $owner_collection);
-		$this->assertEmpty($this->jsonDecode($owner_collection)['responses'] ?? [],
-			'Foreign event must not have been created in the owner calendar');
+		$titles = array_column(array_values($this->jsonDecode($owner_collection)['responses'] ?? []), 'title');
+		$this->assertNotContains($uid, $titles, 'Foreign event must not have been created in the owner calendar');
 	}
 }
