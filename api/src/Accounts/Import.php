@@ -1344,6 +1344,7 @@ class Import
 		{
 			return; // nothing to do
 		}
+		// error_log(__METHOD__."(".json_encode($data).")");
 		switch ($data['location'])
 		{
 			case 'addaccount':
@@ -1385,11 +1386,33 @@ class Import
 
 			case 'editaccountcontact':
 				$contacts = self::contactsFactory($config['account_import_source']);
-				// id is the uid for LDAP or ADS!
-				$contact = ['id' => $data['uid']]+ array_filter($data, fn($key) => !in_array($key, ['location']), ARRAY_FILTER_USE_KEY);
-				if (($error = $contacts->backendSave($contact)))
-				{
-					throw new \Exception('Error updating contact-data of account in '.$config['account_import_source'].': '.$error);
+				try {
+					// id is the uid for LDAP or ADS!
+					$contact = ['id' => $data['uid']]+ array_filter($data, fn($key) => !in_array($key, ['location']), ARRAY_FILTER_USE_KEY);
+					if (($error = $contacts->backendSave($contact)))
+					{
+						throw new \Exception('Error updating contact-data of account in '.$config['account_import_source'].': '.$error);
+					}
+				}
+				catch (Api\Exception\AssertionFailed $e) {
+					if (!str_ends_with($e->getMessage(), ' is NOT a valid GUID!'))
+					{
+						throw $e;
+					}
+					// trying to change a local contact or account into an AD account
+					// --> first create new AD account
+					self::hookEditAccount([
+						'location' => 'addaccount',
+					]+array_filter($data, fn($key) => str_starts_with($key, 'account_'), ARRAY_FILTER_USE_KEY));
+					if (!($uuid = Api\Accounts::getInstance()->id2name($data['account_id'], 'account_uuid')))
+					{
+						throw new \Exception('Error creating new account in '.$config['account_import_source']);
+					}
+					// --> rerun hook with correct uid/uuid
+					self::hookEditAccount([
+						'location' => 'editaccountcontact',
+						'uid' => $uuid,
+					]+$data);
 				}
 				break;
 
