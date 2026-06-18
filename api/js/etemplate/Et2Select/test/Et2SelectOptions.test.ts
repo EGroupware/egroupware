@@ -145,6 +145,26 @@ describe("Select widget", () =>
 			assert.equal(element.select.querySelectorAll("sl-option").length, 10);
 		});
 
+		it("updates static number options when range properties change", async() =>
+		{
+			const element = await fixture<Et2SelectNumber>(html`
+				<et2-select-number></et2-select-number>
+			`);
+			await activateOptions(element);
+
+			element.min = 2;
+			element.max = 6;
+			element.interval = 2;
+			element.suffix = " units";
+			await element.updateComplete;
+
+			const options = Array.from(element.select.querySelectorAll("sl-option"));
+			assert.deepEqual(options.map(option => option.value), ["2", "4", "6"],
+				"Range changes should regenerate option values");
+			assert.deepEqual(options.map(option => option.textContent.trim()), ["2 units**", "4 units**", "6 units**"],
+				"Suffix changes should regenerate option labels");
+		});
+
 		it("merges static options with sel_options", async() =>
 		{
 			/** SETUP **/

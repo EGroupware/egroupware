@@ -703,6 +703,16 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 		 *
 		 * @param  changedProperties
 		 */
+		willUpdate(changedProperties : PropertyValues)
+		{
+			super.willUpdate(changedProperties);
+
+			if(changedProperties.has("onclick"))
+			{
+				this.classList.toggle("et2_clickable", this.onclick != null && typeof this.onclick != "undefined");
+			}
+		}
+
 		updated(changedProperties : PropertyValues)
 		{
 			super.updated(changedProperties);
@@ -719,10 +729,6 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 				{
 					this.bindTooltip()
 				}
-			}
-			if(changedProperties.has("onclick"))
-			{
-				this.classList.toggle("et2_clickable", this.onclick != null && typeof this.onclick != "undefined");
 			}
 		}
 

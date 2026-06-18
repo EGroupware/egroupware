@@ -153,8 +153,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 	@state() searching = false;
 	@state() hasFocus = false;
-	@state() currentOption : SlOption;
-	@state() currentTag : Et2EmailTag;
+	protected currentOption : SlOption;
+	protected currentTag : Et2EmailTag;
 
 	/** If the select is limited to 1 row, we show the number of tags not visible */
 	@state() _tagsHidden = 0;
@@ -270,6 +270,10 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 			this.defaultValidators = (<Array<Validator>>this.defaultValidators).filter(v => !(v instanceof IsEmail));
 			this.defaultValidators.push(new IsEmail(this.allowPlaceholder));
 		}
+		if(changedProperties.has("allowDragAndDrop"))
+		{
+			this.classList.toggle("et2-sortable-email", this.allowDragAndDrop);
+		}
 	}
 
 	update(changedProperties : PropertyValues)
@@ -339,10 +343,8 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 
 		if(!this.allowDragAndDrop)
 		{
-			this.classList.remove("et2-sortable-email");
 			return;
 		}
-		this.classList.add("et2-sortable-email");
 		let pull : boolean | string = !this.disabled && !this.readonly;
 		if(this.readonly && !this.disabled)
 		{

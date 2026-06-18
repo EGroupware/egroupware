@@ -61,6 +61,22 @@ describe("Dialog widget basics", () =>
 
 		assert.equal(element.shadowRoot.querySelector("#title").textContent.trim(), "Title set");
 	});
+
+	it("preserves loaded template content when buttons change", async() =>
+	{
+		const contentNode = element.querySelector(".dialog_content");
+		const loadedContent = document.createElement("div");
+		loadedContent.id = "loaded-template-content";
+		contentNode.append(loadedContent);
+
+		element.buttons = Et2Dialog.BUTTONS_OK_CANCEL;
+		await elementUpdated(element);
+
+		assert.strictEqual(element.querySelector(".dialog_content"), contentNode,
+			"Button changes must keep the template container");
+		assert.strictEqual(element.querySelector("#loaded-template-content"), loadedContent,
+			"Button changes must not destroy loaded template content");
+	});
 });
 describe("Properties", async() =>
 {

@@ -744,7 +744,9 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 		}
 		if(changedProperties.has("buttons"))
 		{
-			//render(this._buttonsTemplate(), this);
+			// Button changes need the host to update its slots.  Do not re-render
+			// _contentTemplate() here: it owns the template container, and replacing
+			// that light DOM would destroy an already loaded legacy template.
 			this.requestUpdate();
 		}
 		if(changedProperties.has("width"))

@@ -37,14 +37,14 @@ export class Et2SelectNumber extends Et2StaticSelectMixin(Et2Select)
 		this.suffix = "";
 	}
 
-	updated(changedProperties : PropertyValues)
+	willUpdate(changedProperties : PropertyValues)
 	{
-		super.updated(changedProperties);
+		super.willUpdate(changedProperties);
 
-		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') || changedProperties.has('suffix'))
+		if(changedProperties.has('min') || changedProperties.has('max') || changedProperties.has('interval') ||
+			changedProperties.has('leading_zero') || changedProperties.has('suffix'))
 		{
 			this._static_options = StaticOptions.number(this);
-			this.requestUpdate("select_options");
 		}
 	}
 }

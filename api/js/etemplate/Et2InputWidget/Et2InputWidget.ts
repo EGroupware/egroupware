@@ -390,6 +390,17 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 		 *
 		 * @param changedProperties
 		 */
+		willUpdate(changedProperties : PropertyValues)
+		{
+			super.willUpdate(changedProperties);
+
+			if(changedProperties.has("value"))
+			{
+				// Base off this.value, not this.getValue(), to ignore readonly
+				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
+			}
+		}
+
 		updated(changedProperties : PropertyValues)
 		{
 			super.updated(changedProperties);
@@ -403,12 +414,6 @@ const Et2InputWidgetMixin = <T extends Constructor<LitElement>>(superclass : T) 
 				{
 					this.validators.push(new Required());
 				}
-			}
-
-			if(changedProperties.has("value"))
-			{
-				// Base off this.value, not this.getValue(), to ignore readonly
-				this.classList.toggle("hasValue", !(this.value == null || this.value == ""));
 			}
 
 			// pass aria-attributes to our input node
