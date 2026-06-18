@@ -669,7 +669,7 @@ class calendar_bo
 			$this->debug_message('calendar_bo::search(%1) start=%2, end=%3, daywise=%4, cat_id=%5, filter=%6, query=%7, offset=%8, num_rows=%9, order=%10, sql_filter=%11)',
 				True,$params,$start,$end,$daywise,$cat_id,$filter,$params['query'],$offset,(int)$params['num_rows'],$params['order'],$params['sql_filter']);
 		}
-		$events =& $this->so->search($start, $end, $users, $cat_id, $filter, $offset, (int)($params['num_rows'] ?? 0), $params, $remove_rejected_by_user);
+		$events =& $this->so->search($start??null, $end??null, $users, $cat_id, $filter, $offset, (int)($params['num_rows'] ?? 0), $params, $remove_rejected_by_user);
 
 		if (isset($params['cols']))
 		{
