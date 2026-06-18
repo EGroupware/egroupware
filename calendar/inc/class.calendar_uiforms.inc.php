@@ -3313,6 +3313,22 @@ class calendar_uiforms extends calendar_ui
 	{
 		$status = 'history_status';
 
+		// Timezones are logged as ID, select-timezone widget expects the name
+		$timezones = [-1 => 'UTC'];
+		foreach($GLOBALS['egw']->db->select(
+			calendar_timezones::TABLE,
+			['tz_id', 'tz_tzid'],
+			false,
+			__LINE__,
+			__FILE__,
+			false,
+			'ORDER BY tz_tzid',
+			'calendar'
+		) as $timezone)
+		{
+			$timezones[$timezone['tz_id']] = $timezone['tz_tzid'];
+		}
+
 		$content['history'] = array(
 			'id'    =>      $content['id'],
 			'app'   =>      'calendar',
@@ -3330,7 +3346,7 @@ class calendar_uiforms extends calendar_ui
 				'recur_exception'=> ['date-time'],
 				'recur_rdates' => ['date-time'],
 
-				'tz_id'        => 'select-timezone',
+				'tz_id' => $timezones,
 
 				// Participants
 				'participants'	=>	array(
