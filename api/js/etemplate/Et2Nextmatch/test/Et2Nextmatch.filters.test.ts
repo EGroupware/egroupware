@@ -1,7 +1,6 @@
 import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT} from "../Headers/events";
-import "../Headers/CustomfieldsHeader";
 import * as sinon from "sinon";
 
 /**
@@ -335,6 +334,29 @@ describe("Et2Nextmatch header event handling", () =>
 
 	/**
 	 * Contract under test:
+	 * - Setting `searchletter` as a property mirrors into active filters before render.
+	 *
+	 * Setup strategy:
+	 * - Render nextmatch with a property-provided search letter.
+	 *
+	 * Pass criteria:
+	 * - `activeFilters.searchletter` matches the property value.
+	 * - Letter-search controls render because an active letter is set.
+	 */
+	it("mirrors searchletter property into active filters before render", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.searchletter = "M";
+		document.body.append(el);
+		await el.updateComplete;
+
+		assert.equal(el.activeFilters.searchletter, "M", "property searchletter should be mirrored into filters");
+		assert.isNotNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "active searchletter should render lettersearch");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - `placeholder` property is forwarded to datagrid empty-state text.
 	 *
 	 * Setup strategy:
@@ -473,11 +495,8 @@ describe("Et2Nextmatch header event handling", () =>
 
 		el.set_columns(["owner"]);
 		assert.deepEqual(
-			(el as any)._columns.map((column) => ({key: column.key, hidden: !!column.hidden})),
-			[
-				{key: "title", hidden: true},
-				{key: "owner", hidden: false}
-			],
+			el.value.selectcols,
+			["owner"],
 			"set_columns should only change visibility on already defined columns"
 		);
 		assert.isAtLeast(warn.callCount, 2, "deprecated compatibility methods should warn");

@@ -1711,6 +1711,9 @@ class calendar_boupdate extends calendar_bo
 		{
 			$event['tz_id'] = calendar_timezones::tz2id($event['tzid'] = Api\DateTime::$user_timezone->getName());
 		}
+		// Keep the user-timezone used for history in sync with the values written to the database
+		$save_event['tzid'] = $event['tzid'];
+		$save_event['tz_id'] = $event['tz_id'];
 		// same for recurrence-exceptions and -dates
 		foreach(['recur_exception', 'recur_rdates'] as $name)
 		{

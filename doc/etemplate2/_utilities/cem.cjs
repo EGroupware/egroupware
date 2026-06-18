@@ -55,6 +55,11 @@ module.exports.getAllComponents = function ()
 	{
 		module.declarations?.forEach(declaration =>
 		{
+			if (declaration.customElement && !declaration.tagName)
+			{
+				return;
+			}
+
 			if (declaration.customElement)
 			{
 				// check if we have a Shoelace superclass

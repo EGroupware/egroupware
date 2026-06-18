@@ -185,6 +185,8 @@ export class Et2Tag extends Et2Widget(SlTag)
 				<et2-textbox value="${this.value}"
                              @sl-change=${this.handleChange}
                              @blur=${this.stopEdit}
+                             @focus=${e => e.stopPropagation()}
+                             @focusin=${e => e.stopPropagation()}
                              @mousedown=${e => e.stopPropagation()}
                              @click=${e => e.stopPropagation()}
                              @keydown=${this.handleKeyDown}
@@ -207,7 +209,6 @@ export class Et2Tag extends Et2Widget(SlTag)
 		{
 			event.stopPropagation();
 		}
-		this.getRootNode().host.hide()
 		this.isEditing = true;
 		this.setAttribute("contenteditable", "true");
 
@@ -218,7 +219,7 @@ export class Et2Tag extends Et2Widget(SlTag)
 			// This stops drag and drop from interfering with mouse edits
 			this._editNode.input.setAttribute("contenteditable", "true");
 
-			this._editNode.focus();
+			this._editNode.getInputNode()?.focus();
 		})
 	}
 
@@ -235,12 +236,8 @@ export class Et2Tag extends Et2Widget(SlTag)
 		{
 			return;
 		}
-		this.value = this.textContent = this._editNode.value.trim();
-		this.requestUpdate();
-		this.updateComplete.then(() =>
-		{
-			this.dispatchEvent(event);
-		})
+		this.value = this._editNode.value.trim();
+		this.dispatchEvent(event);
 	}
 
 	get _editNode() : Et2Textbox

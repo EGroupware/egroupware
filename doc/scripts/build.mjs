@@ -23,12 +23,30 @@ const cdndir = 'cdn';
 const sitedir = 'doc/dist/site';
 const spinner = ora({hideCursor: false}).start();
 const execPromise = util.promisify(exec);
+const eleventyReadyFile = path.join(sitedir, 'assets/search.json');
 let childProcess;
 let buildResults = [];
 
 const bundleDirectories = [outdir, 'doc/etemplate2/_data'];
 let packageData = JSON.parse(readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
 const egwVersion = JSON.stringify(packageData.version.toString());
+
+// Checks for classes that look like webComponents but don't have a tagName
+// We need to skip them to avoid breaking eleventy, but if it's an accident we want to know about it
+async function warnMissingTagNames()
+{
+	const manifest = JSON.parse(await fs.readFile(path.join(outdir, 'custom-elements.json'), 'utf-8'));
+	manifest.modules?.forEach(module =>
+	{
+		module.declarations?.forEach(declaration =>
+		{
+			if (declaration.customElement && !declaration.tagName)
+			{
+				console.warn(`Skipping custom element declaration without tagName: ${declaration.name} in ${module.path}`);
+			}
+		});
+	});
+}
 
 // Cleanup on exit
 process.on('SIGINT', handleCleanup);
@@ -48,6 +66,8 @@ async function buildTheDocs(watch = false)
 		const afterSignal = '[eleventy.after]';
 		const args = ['@11ty/eleventy', '--quiet'];
 		const output = [];
+		const errorOutput = [];
+		let settled = false;
 
 		if (watch)
 		{
@@ -57,37 +77,84 @@ async function buildTheDocs(watch = false)
 
 		// To debug use this in terminal: DEBUG=Eleventy* npx @11ty/eleventy
 		const child = spawn('npx', args, {
-			timeout: 60000, // 60s
-			stdio: 'pipe',
-			cwd: 'doc/etemplate2',
-			shell: true // for Windows
+			timeout: 120000,
+			stdio: watch ? 'inherit' : 'pipe',
+			cwd: 'doc/etemplate2'
 		});
 
-		child.stdout.on('data', data =>
+		if (!watch)
 		{
-			if (data.includes(afterSignal))
-			{
-				return;
-			} // don't log the signal
-			output.push(data.toString());
-		});
-
-		if (watch)
-		{
-			// The process doesn't terminate in watch mode so, before resolving, we listen for a known signal in stdout that
-			// tells us when the first build completes.
 			child.stdout.on('data', data =>
 			{
 				if (data.includes(afterSignal))
 				{
+					return;
+				} // don't log the signal
+				output.push(data.toString());
+			});
+
+			child.stderr.on('data', data =>
+			{
+				errorOutput.push(data.toString());
+			});
+		}
+
+		child.on('error', reject);
+
+		if (watch)
+		{
+			const started = Date.now();
+			const readyInterval = setInterval(async () =>
+			{
+				if (settled)
+				{
+					return;
+				}
+
+				try
+				{
+					await fs.access(eleventyReadyFile);
+					settled = true;
+					clearInterval(readyInterval);
 					resolve({child, output});
 				}
+				catch (e)
+				{
+					if (Date.now() - started > 120000)
+					{
+						settled = true;
+						clearInterval(readyInterval);
+						child.kill('SIGTERM');
+						reject(new Error(`Timed out waiting for ${eleventyReadyFile}`));
+					}
+				}
+			}, 500);
+
+			child.on('close', (code, signal) =>
+			{
+				if (settled)
+				{
+					return;
+				}
+				clearInterval(readyInterval);
+				const err = new Error(`Eleventy exited before the initial build completed with code ${code}, signal ${signal}`);
+				err.stdout = output.join('');
+				err.stderr = errorOutput.join('');
+				reject(err);
 			});
 		}
 		else
 		{
-			child.on('close', () =>
+			child.on('close', (code, signal) =>
 			{
+				if (code !== 0)
+				{
+					const err = new Error(`Eleventy exited with code ${code}, signal ${signal}`);
+					err.stdout = output.join('');
+					err.stderr = errorOutput.join('');
+					reject(err);
+					return;
+				}
 				resolve({child, output});
 			});
 		}
@@ -262,6 +329,7 @@ await nextTask('Generating component metadata', () =>
 		})
 	);
 });
+await warnMissingTagNames();
 /*
 await nextTask('Generating themes', () =>
 {
@@ -332,7 +400,7 @@ if (serve)
 		}
 
 		// Log output that comes later on
-		result.child.stdout.on('data', data =>
+		result.child.stdout?.on('data', data =>
 		{
 			console.log(data.toString());
 		});

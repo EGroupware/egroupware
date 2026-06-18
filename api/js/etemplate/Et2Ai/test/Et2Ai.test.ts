@@ -115,6 +115,29 @@ describe("Et2AI applying results", () =>
 		assert.equal(target.value, "AI result");
 	});
 
+	it("applies changes made to the result by an et2-ai-apply listener", async() =>
+	{
+		const el = await createApplyEl();
+		// The listener transforms the event payload; the transformed value must reach the target.
+		el.addEventListener("et2-ai-apply", (event : Event) =>
+		{
+			(event as CustomEvent).detail.result += " with signature";
+		});
+		el.activePrompt = {
+			id: "x",
+			label: "Test",
+			actions: [{target: "self"}]
+		};
+		await el.updateComplete;
+
+		const applyButton = el.shadowRoot!.querySelector('et2-button[part="apply-button"]') as HTMLElement;
+		applyButton.click();
+		await el.updateComplete;
+
+		const target = el.querySelector("input") as HTMLInputElement;
+		assert.equal(target.value, "AI result with signature");
+	});
+
 	it("respects preventDefault on apply event", async() =>
 	{
 		const el = await createApplyEl();

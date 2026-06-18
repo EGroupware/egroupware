@@ -127,6 +127,15 @@ class calendar_tracking extends Api\Storage\Tracking
 	 */
 	public function track(array $data, ?array $old=null, $user=null, $deleted=null, ?array $changed_fields=null, $skip_notification = false)
 	{
+		// We don't care about external customfields (start with ##) for history
+		if($changed_fields)
+		{
+			$changed_fields = array_filter(
+				$changed_fields,
+				static fn($name) => !str_starts_with($name, '##')
+			);
+		}
+
 		// Don't try to track dates on recurring events.
 		// It won't change for the base event, and any change to the time creates an exception
 		if(!empty($data['recur_type']))

@@ -387,6 +387,7 @@ export class Et2Ai extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		value = event.detail.result;
 		queueMicrotask(() => this.clearResult());
 
 		// Prompt has an actual function to deal with it
