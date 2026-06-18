@@ -1500,14 +1500,14 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		$bo = new calendar_boupdate();
 
-		// get array with orginal recurrences indexed by recurrence-id
+		// get array with original recurrences indexed by recurrence-id
 		$org_recurrences = $exceptions = array();
 		foreach(self::get_series($events[0]['uid'],$bo) as $k => $event)
 		{
 			if (!$k) $master = $event;
 			if ($event['recurrence'])
 			{
-				$org_recurrences[$event['recurrence']] = $event;
+				$org_recurrences[$event['recurrence']->getTimestamp()] = $event;
 			}
 		}
 
@@ -1523,7 +1523,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 
 			// from now on we deal with exceptions
-			$org_recurrence = isset($recurrence['recurrence']) ? $org_recurrences[$recurrence['recurrence']] : null;
+			$org_recurrence = isset($recurrence['recurrence']) ? $org_recurrences[$recurrence['recurrence']->getTimestamp()] : null;
 			if (isset($org_recurrence))	// already existing recurrence
 			{
 				//error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
@@ -1536,12 +1536,12 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$exceptions[] = $recurrence['recurrence'];
 				}
 				// remove recurrence to be able to detect deleted exceptions
-				unset($org_recurrences[$recurrence['recurrence']]);
+				unset($org_recurrences[$recurrence['recurrence']->getTimestamp()]);
 			}
 		}
 		$master['recur_exception'] = array_merge($exceptions, $master['recur_exception']);
 
-		// delete not longer existing recurrences
+		// delete no longer existing recurrences
 		foreach($org_recurrences as $org_recurrence)
 		{
 			if ($org_recurrence['id'] != $master['id'])	// non-virtual recurrence
