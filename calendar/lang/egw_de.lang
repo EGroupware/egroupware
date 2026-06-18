@@ -282,6 +282,7 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 freetime	calendar	de	Terminsuche
 freetime search	calendar	de	Terminsuche
 fri	calendar	de	Fr
+from file	calendar	de	entsprechend der Datei
 full description	calendar	de	vollständige Beschreibung
 full edit dialog	calendar	de	Vollständiger Bearbeitungsdialog
 fullname of person to notify	calendar	de	Name der zu benachrichtigenden Person
