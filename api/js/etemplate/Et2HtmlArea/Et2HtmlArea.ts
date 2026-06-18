@@ -71,7 +71,7 @@ type TinyMceCallbackBridge = Record<string, {
 	setup : NonNullable<TinyMceConfig["setup"]>;
 	imagesUploadHandler? : TinyMceUploadHandler;
 }>;
-const TINYMCE_POPUP_SINK_STYLE_ID = "egw-et2-htmlarea-popup-sink-style";
+const TINYMCE_SHADOW_DOW_STYLE_ID = "egw-et2-htmlarea-shadow-dom-style";
 
 window.tinymce.overrideDefaults({
 	license_key: "gpl"
@@ -154,6 +154,8 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 				}
 
 				.form-control-input {
+					display: flex;
+					flex-direction: column;
 					flex: 1 1 auto;
 					min-height: 0;
 					min-width: 0;
@@ -170,7 +172,8 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 
 				tinymce-editor,
 				textarea {
-					display: block;
+                    display: flex;
+                    flex-direction: column;
 					flex: 1 1 auto;
 					height: 100%;
 					min-height: 0;
@@ -625,20 +628,27 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	}
 
 	/**
-	 * TinyMCE's web component renders the popup sink inside its own shadow root.
+	 * Append specific styles to the <tinymce-editor> element shadow DOM
+	 *
+	 * 1. TinyMCE's web component renders the popup sink inside its own shadow root.
 	 * In split mode that sink still participates in tab-panel scrolling unless
 	 * we force it out of layout flow.
+	 *
+	 * 2. It also calculates the height of its iframe at the wrong time.
+	 * This is circumvented by making the <tinymce-editor> a flexbox (in get styles())
+	 * and letting application div grow
+	 * TODO we might want to move this into our skin since we can target the corresponding elements there directly without a <styles> tag inside the shadow DOM
 	 */
-	protected _ensurePopupSinkStyles()
+	protected _ensureShadowDomStyles()
 	{
 		const root = this._editorElement?.shadowRoot;
-		if(!root || root.getElementById(TINYMCE_POPUP_SINK_STYLE_ID))
+		if(!root || root.getElementById(TINYMCE_SHADOW_DOW_STYLE_ID))
 		{
 			return;
 		}
 
 		const style = document.createElement("style");
-		style.id = TINYMCE_POPUP_SINK_STYLE_ID;
+		style.id = TINYMCE_SHADOW_DOW_STYLE_ID;
 		style.textContent = `
 			.tox.tox-silver-popup-sink.tox-tinymce-aux {
 				position: fixed !important;
@@ -661,6 +671,15 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 			.tox.tox-silver-popup-sink.tox-tinymce-aux .tox-menu__label > * {
 				word-break: normal !important;
 				overflow-wrap: anywhere;
+			}
+		` +
+			//make sure the actual text input field has the full available height
+			// by making the parent div fill the flex space
+			`
+			.tox.tox-tinymce {
+				flex: 1 1 auto ;
+				height: auto ;
+				min-height: 0 ;
 			}
 		`;
 		root.append(style);
@@ -1023,7 +1042,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 		}
 		editor.on("init", () =>
 		{
-			this._ensurePopupSinkStyles();
+			this._ensureShadowDomStyles();
 			this._syncValueToEditor();
 			this._applyDefaultFormatBlock(editor);
 			if(!this._tinymceResolved)
