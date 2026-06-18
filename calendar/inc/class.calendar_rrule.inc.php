@@ -876,14 +876,14 @@ class calendar_rrule implements Iterator
 				$enddate->setTime(23,59,59);
 			}
 		}
-		if (is_array($event['recur_exception']))
+		if (!empty($event['recur_exception']))
 		{
 			foreach($event['recur_exception'] as $exception)
 			{
 				$exceptions[] = is_a($exception,'DateTime') ? $exception : new Api\DateTime($exception, $timestamp_tz);
 			}
 		}
-		if (is_array($event['recur_rdates']))
+		if (!empty($event['recur_rdates']))
 		{
 			foreach($event['recur_rdates'] as $rdate)
 			{
