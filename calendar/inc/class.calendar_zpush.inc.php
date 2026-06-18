@@ -1055,10 +1055,10 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				return false;
 			}
 		}
-		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id,...) start=$event[start]=".date('Y-m-d H:i:s',$event['start']).", recurrence=$event[recurrence]=".date('Y-m-d H:i:s',$event['recurrence']));
+		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id,...) start=".Api\DateTime::to($event['start'], 'Y-m-d H:i:s').", recurrence=".(!empty($event['recurrence'])?Api\DateTime($event['recurrence'], 'Y-m-d H:i:s'):'');
 		foreach((array)$event['recur_exception'] as $ex)
 		{
-			ZLog::Write(LOGLEVEL_DEBUG, "exception=$ex=".date('Y-m-d H:i:s',$ex));
+			ZLog::Write(LOGLEVEL_DEBUG, "exception=".Api\DateTime::to($ex, 'Y-m-d H:i:s'));
 		}
 		$message = new $class();
 
@@ -1081,13 +1081,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			'modified' => 'dtstamp',
 		) as $key => $attr)
 		{
-			if (!empty($event[$key])) $message->$attr = $event[$key];
+			if (!empty($event[$key])) $message->$attr = is_a($event[$key], '\DateTime') ?
+				Api\DateTime::user2server($event[$key], 'ts') : $event[$key];
 		}
 		if (($message->alldayevent = (int)calendar_bo::isWholeDay($event)))
 		{
 			// all-day-events in EGw are with time=00:00 in user- and not server-timezone, as used by ZPush
 			$message->starttime = Api\DateTime::user2server($message->starttime,'ts');
-			$message->endtime = Api\DateTime::user2server($message->endtime+1,'ts');    // EGw all-day-events are 1 sec shorter!
+			$message->endtime = Api\DateTime::user2server($message->endtime,'ts')+1;    // EGw all-day-events are 1 sec shorter!
 		}
 		// copying strings
 		foreach(array(
@@ -1240,7 +1241,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 					{
 						unset($event['recur_exception'][$key]);
 					}
-					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+					ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added exception ".Api\DateTime::to($exception_time, 'Y-m-d H:i:s').' '.array2string($exception));
 					$message->exceptions[] = $exception;
 				}
 				// add rest of exceptions as deleted
@@ -1252,7 +1253,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 						$exception = new SyncAppointmentException();	// exceptions seems to be full SyncAppointments, with only starttime required
 						$exception->deleted = 1;
 						$exception->exceptionstarttime = $exception_time;
-						ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added deleted exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+						ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added deleted exception ".Api\DateTime::to($exception_time, 'Y-m-d H:i:s').' '.array2string($exception));
 						$message->exceptions[] = $exception;
 					}
 				}
@@ -1266,7 +1267,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				$exception = $this->GetMessage($folderid, $event['id'].':'.$exception_time, $contentparameters);
 				$exception->deleted = 0;
 				$exception->exceptionstarttime = $exception_time;
-				ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added virtual exception ".date('Y-m-d H:i:s',$exception_time).' '.array2string($exception));
+				ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added virtual exception ".ApiDateTime::to($exception_time, 'Y-m-d H:i:s').' '.array2string($exception));
 				$message->exceptions[] = $exception;
 			}*/
 			//ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($id) message->exceptions=".array2string($message->exceptions));
