@@ -3185,8 +3185,9 @@ export class MailApp extends EgwApp
 	 */
 	mail_flagMessages(_flag, _elems,_isPopup)
 	{
-		//the "false" means do not send back a request response
-		const needsResponse = false;
+		//false means do not send back a request response
+		//if we selected only some mails the handling is done clientside already
+		const needsResponse = _elems.all;
 		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
 		//	.sendRequest(true);
 	}
