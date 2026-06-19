@@ -324,7 +324,7 @@ class Jmap extends Mail\Imap
 		try {
 			if (!$this->jmap) $this->jmap = $this->jmapClient();
 			$client_id = $this->jmapClientId($this->acc_id, $account_id ?: $GLOBALS['egw_info']['user']['account_id'], true)['client_id'];
-			$expires = (new Api\DateTime('+2days', new \DateTimeZone('UTC')))->format('Y-m-dTH:i:s\Z');
+			$expires = new Api\DateTime('+2days', new \DateTimeZone('UTC'));
 			if (!($subscriptions=array_filter($this->jmap->getPushSubscriptions()['list']??[], static function(array $pushSubscription) use ($client_id)
 			{
 				return $pushSubscription['deviceClientId'] === $client_id;
@@ -340,7 +340,7 @@ class Jmap extends Mail\Imap
 			elseif ((new Api\DateTime($subscriptions[0]['expires'])) < (new Api\DateTime('+1day')))
 			{
 				$this->jmap->updatePushSubscription($subscriptions[0]['id'], [
-					'expires' => $expires,
+					'expires' => $expires->format(Api\Mail\Jmap::DATETIME_UTC_FORMAT),
 				]);
 			}
 

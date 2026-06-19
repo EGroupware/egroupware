@@ -278,6 +278,8 @@ class Jmap
 		return $response['methodResponses'][0][1] ?? throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
 	}
 
+	const DATETIME_UTC_FORMAT = 'Y-m-d\\TH:i:s\\Z';
+
 	/**
 	 * Create a PushSubscription
 	 * -see https://github.com/jmapio/jmap/blob/master/spec/jmap/push.mdown
@@ -300,12 +302,12 @@ class Jmap
 	 * @param string $deviceClientId
 	 * @param string $url
 	 * @param array|null $types
-	 * @param DateTime|null &$expires
+	 * @param \DateTime|null &$expires
 	 * @param string|null &$sessionState
 	 * @return array with values for keys "id", "keys", "expires"
 	 * @throws Api\Exception
 	 */
-	public function createPushSubscription(string $deviceClientId, string $url, ?array $types=null, ?DateTime $expires=null, ?string &$sessionState=null)
+	public function createPushSubscription(string $deviceClientId, string $url, ?array $types=null, ?\DateTime $expires=null, ?string &$sessionState=null)
 	{
 		$id = md5($deviceClientId.$url);
 		$response = $this->jmapCall([[ "PushSubscription/set", [
@@ -314,7 +316,7 @@ class Jmap
 					'deviceClientId' => $deviceClientId,
 					'url' => $url,
 					'types' => $types,
-					'expires' => $expires ? $expires->format('YYYY-mm-ddThh:MM:ssZ') : null,
+					'expires' => $expires ? $expires->format(self::DATETIME_UTC_FORMAT) : null,
 				],
 			]
 		], "0"]]);
