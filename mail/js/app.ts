@@ -617,7 +617,10 @@ export class MailApp extends EgwApp
 			}
 			return;
 		}
-		(pushData.acl.flags || pushData.acl.keywords || []).forEach(flag => {
+		const flags = [...(pushData.acl.flags ?? []),
+			...(pushData.acl.keywords ?? [])];
+		(flags).forEach(flag =>
+		{
 			let unset = (pushData.acl.flags_old && pushData.acl.flags_old.indexOf(flag) > -1) ||
 				(pushData.acl.keywords_old && pushData.acl.keywords_old.indexOf(flag) > -1) ||
 				pushData.acl.event === 'FlagsClear';
@@ -3084,6 +3087,12 @@ export class MailApp extends EgwApp
 
 				//set or remove the flag in the DOM since it can no longer come from the server because we do not trigger a full reload
 				//this needs to happen after egw.dataStoreUID since that triggers a redrawing of the row
+				if (classes.includes("unseen"))
+				{
+					//image src usually comes from the server but can't anymore in this case so we set it directly
+					const img: Et2Image = nmNode.querySelector(".status_img");
+					if (img) img.src = egw.image("mail_unseen")
+				}
 				if (flags['flagged'] == 'flagged')
 				{
 					if (!nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage'))
@@ -3843,7 +3852,7 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().selectedChildren;
+			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().children;
 			for (let i = 0; i < _actionObjects['msg'].length; i++)
 			{
 				const mail_uid = _actionObjects['msg'][i];
@@ -3880,13 +3889,28 @@ export class MailApp extends EgwApp
 					//we do not need to trigger the nm callbacks we can just
 					//update local Storage and set the classes in the nm row directly
 					// the advantage is, that nm row does not need to be redrawn
+					let skipCallback = false
 					const action = actions.find(action =>
 					{
 						if (action.id === mail_uid) return action
 					});
-					const nmNode = action.iface.getDOMNode();
-					nmNode.classList.remove(_class)
-					egw.dataStoreUID(mail_uid, dataElem.data, true);
+					if (action)
+					{
+						try
+						{
+							const nmNode = action.iface.getDOMNode();
+							nmNode.classList.remove(_class);
+							//we found the nm DOM node and removed the class from it
+							// that means we don't need to trigger a nm redraw
+							//(the callback would trigger a redraw)
+							//(the callback would trigger a redraw)
+							skipCallback = true;
+						} catch (e)
+						{
+							skipCallback = false
+						}
+					}
+					egw.dataStoreUID(mail_uid, dataElem.data, skipCallback);
 				}
 			}
 		}
