@@ -47,7 +47,7 @@
     "grunt-contrib-cssmin": "^2.2.1",
     "jsdom": "^28.1.0",
     "lunr": "^2.3.9",
-    "markdown-it": "^14.1.1",
+    "markdown-it": "^14.2.0",
     "markdown-it-container": "^3.0.0",
     "markdown-it-ins": "^3.0.1",
     "markdown-it-kbd": "^2.2.2",
