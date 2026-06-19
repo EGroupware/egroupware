@@ -2861,6 +2861,14 @@ export class MailApp extends EgwApp
 		switch (_action.id)
 		{
 			case "delete":
+				//If in main Window (nm view) and we have no selection, do not try to
+				// delete anything
+				if (!this.egw.is_popup() && _elems.length === 0 && !_elems.all
+					&& !this.nm?.getSelection()?.all && this.nm?.getSelection()?.ids?.length === 0)
+				{
+					egw.debug('warn',"Tried to delete a mail when no mail was selected. NoOp!")
+					break
+				}
 				this.mail_callDelete(_action, _elems,rvMain);
 				break;
 			case "unlabel":
