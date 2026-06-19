@@ -59,7 +59,8 @@ Primary expectations:
 
 ## Coding standards
 
-See `doc/ai/coding-standards.md`.
+See `doc/etemplate2/pages/tutorials/web-component-authoring.md` for information on coding standards and best practices
+for webComponents.
 
 ## Testing
 
