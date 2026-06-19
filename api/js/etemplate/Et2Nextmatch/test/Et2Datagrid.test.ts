@@ -1269,7 +1269,7 @@ describe("Et2Datagrid virtual height stability", () =>
 		host.remove();
 	});
 
-	it("requests rows when user scroll reaches unloaded chunk", async() =>
+	it("requests more rows when user scrolls to unloaded chunk", async() =>
 	{
 		const calls : number[] = [];
 		const dataProvider = createDatagridDataProvider({
