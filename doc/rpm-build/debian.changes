@@ -1,3 +1,14 @@
+egroupware-docker (26.6.20260619) hardy; urgency=low
+
+  * Api/TinyMCE: fixed not usable editor in some places due to zero height
+  * Calendar/ActiveSync: fix stalled sync caused by Calendar using now DateTime objects instead of timestamps
+  * Calendar/CalDAV: fix stalled sync caused by Calendar using now DateTime objects instead of timestamps
+  * Calendar: External calendar subscription can now optionally force events blocking or non-blocking
+  * Mail: fix inline images lost (did not live as CID) through save as draft
+  * PHP: replace PHP 8.4 syntax stalling installation in PHP 8.2 and 8.3
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 19 Jun 2026 07:28:33 +0200
+
 egroupware-docker (26.6.20260616) hardy; urgency=low
 
   * THIS IS A SECURITY and maintenance RELEASE, everyone is encouraged to update to it ASAP
