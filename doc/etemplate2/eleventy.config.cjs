@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const lunr = require('lunr');
 const {capitalCase} = require('change-case');
-const {JSDOM} = require('jsdom');
 const {customElementsManifest, getAllComponents, getShoelaceVersion} = require('./_utilities/cem.cjs');
 const egwFlavoredMarkdown = require('./_utilities/markdown.cjs');
 const activeLinks = require('./_utilities/active-links.cjs');
@@ -34,8 +33,10 @@ fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
 // Put it here too, since addPassthroughCopy() ignores it
 fs.copyFileSync("../dist/custom-elements.json", "assets/custom-elements.json");
 
-module.exports = function (eleventyConfig)
+module.exports = async function (eleventyConfig)
 {
+	const {JSDOM} = await import('jsdom');
+
 	//
 	// Global data
 	//
