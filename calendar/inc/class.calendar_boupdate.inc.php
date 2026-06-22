@@ -1703,7 +1703,8 @@ class calendar_boupdate extends calendar_bo
 			// we convert here from user-time to server-time!
 			if(isset($event[$ts]))
 			{
-				$event[$ts] = $event[$ts] ? ($event[$ts] instanceof Api\DateTime ? $event[$ts]->setServer() : new Api\DateTime($event[$ts], Api\DateTime::$user_timezone)->setServer()) : 0;
+				$event[$ts] = $event[$ts] ? ($event[$ts] instanceof Api\DateTime ? $event[$ts]->setServer() :
+					(new Api\DateTime($event[$ts], Api\DateTime::$user_timezone))->setServer()) : 0;
 			}
 		}
 		// convert tzid name to integer tz_id, of set user default
@@ -1772,7 +1773,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (!isset($event['alarm'][$id]))
 				{
-					$alarm['time'] = new DateTime($event['start'], DateTime::$server_timezone)->modify("- {$alarm['offset']} seconds");
+					$alarm['time'] = (new DateTime($event['start'], DateTime::$server_timezone))->modify("- {$alarm['offset']} seconds");
 					if($alarm['time'] < new DateTime('now', DateTime::$server_timezone))
 					{
 						calendar_so::shift_alarm($event, $alarm);
@@ -1819,7 +1820,7 @@ class calendar_boupdate extends calendar_bo
 			// unset participants to enforce the default stati for all added recurrences
 			$this->set_recurrences(
 				array_diff_key($save_event, ['participants' => true]),
-				$set_recurrences_start ? new DateTime($set_recurrences_start, DateTime::$server_timezone)->setUser() : null
+				$set_recurrences_start ? (new DateTime($set_recurrences_start, DateTime::$server_timezone))->setUser() : null
 			);
 		}
 
