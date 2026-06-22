@@ -604,9 +604,10 @@ export class Et2RowProvider
 				staticAttrs[name] = value;
 			}
 		}
-		if(typeof element.transformAttributes === "function" && Object.keys(staticAttrs).length > 0)
+		const et2Element = element as HTMLElement & { transformAttributes? : (attrs : Record<string, string>) => void };
+		if(typeof et2Element.transformAttributes === "function" && Object.keys(staticAttrs).length > 0)
 		{
-			element.transformAttributes?.(staticAttrs);
+			et2Element.transformAttributes(staticAttrs);
 		}
 
 

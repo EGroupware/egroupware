@@ -1,6 +1,6 @@
 import {egw} from "../../../jsapi/egw_global";
 import {et2_INextmatchHeader, et2_nextmatch} from "../../et2_extension_nextmatch";
-import {LitElement} from "lit";
+import {LitElement, PropertyValues} from "lit";
 import {ET2_NEXTMATCH_FILTER_EVENT, Et2NextmatchFilterEventDetail} from "./events";
 
 // Export the Interface for TypeScript
@@ -16,6 +16,16 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 {
 	private nextmatch : et2_nextmatch;
 
+	willUpdate(changedProperties : PropertyValues)
+	{
+		super.willUpdate?.(changedProperties);
+	}
+
+	updated(changedProperties : PropertyValues)
+	{
+		super.updated?.(changedProperties);
+	}
+
 	/**
 	 * Override to add change handler
 	 *
@@ -24,10 +34,11 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 	{
 		super.connectedCallback();
 
+		const filter = this as any;
 		// Make sure there's an option for all
-		if(!this.emptyLabel && Array.isArray(this.select_options) && !this.select_options.find(o => o.value == ""))
+		if(!filter.emptyLabel && Array.isArray(filter.select_options) && !filter.select_options.find(o => o.value == ""))
 		{
-			this.emptyLabel = this.label ? this.label : egw.lang("All");
+			filter.emptyLabel = filter.label ? filter.label : egw.lang("All");
 		}
 
 		this.handleChange = this.handleChange.bind(this);
@@ -48,7 +59,7 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 	handleChange(event)
 	{
 		let col_filter = {};
-		col_filter[this.id] = this.value;
+		col_filter[this.id] = (this as any).value;
 
 		const filterEvent = new CustomEvent<Et2NextmatchFilterEventDetail>(ET2_NEXTMATCH_FILTER_EVENT, {
 			bubbles: true,
@@ -83,7 +94,7 @@ export const FilterMixin = <T extends Constructor>(superclass : T) => class exte
 		// Set current filter value from nextmatch settings
 		if(this.nextmatch.activeFilters.col_filter && this.nextmatch.activeFilters.col_filter[this.id])
 		{
-			this.set_value(this.nextmatch.activeFilters.col_filter[this.id]);
+			(this as any).set_value(this.nextmatch.activeFilters.col_filter[this.id]);
 		}
 	}
 }

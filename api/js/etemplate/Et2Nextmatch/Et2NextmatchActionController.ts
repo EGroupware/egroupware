@@ -99,7 +99,7 @@ class Et2NextmatchDragDropAOI extends Et2NextmatchBaseAOI
 {
 	private controller : Et2NextmatchActionController;
 	private node : HTMLElement | null = null;
-	public findActionTargetHandler : Et2NextmatchActionController;
+	findActionTargetHandler : Et2NextmatchActionController;
 
 	constructor(controller : Et2NextmatchActionController, node : HTMLElement | null = null)
 	{
@@ -684,7 +684,7 @@ export class Et2NextmatchActionController
 
 	private ensureActionManagers()
 	{
-		const appName = this.getAppName() || this.host.egw().appName;
+		const appName = this.getAppName() || this.host.egw().app_name?.();
 		const uid = this.host.id || this.host.getInstanceManager()?.uniqueId || this.host.egw().uid?.();
 		if(!uid)
 		{
@@ -1244,7 +1244,7 @@ export class Et2NextmatchActionController
 		let dragAction = mgr.getActionById?.("egw_link_drag");
 		let dropCancel = mgr.getActionById?.("egw_cancel_drop");
 		const dataProvider = (this.host as any)._dataProvider;
-		const dataStorePrefix = dataProvider?.getDataStorePrefix?.() || this.host.getInstanceManager()?.app || this.host.egw().appName;
+		const dataStorePrefix = dataProvider?.getDataStorePrefix?.() || this.host.getInstanceManager()?.app || this.host.egw().app_name?.();
 		if(!this.host.egw().link_get_registry?.(dataStorePrefix, "query") ||
 			this.host.egw().link_get_registry?.(dataStorePrefix, "title"))
 		{
@@ -1253,10 +1253,10 @@ export class Et2NextmatchActionController
 		if(!dropCancel)
 		{
 			dropCancel = mgr.addAction("drop", "egw_cancel_drop", this.host.egw().lang("Cancel"), this.host.egw().image("cancel"), function() {}, true);
-			dropCancel?.set_group?.("99");
-			if(Array.isArray(dropCancel?.acceptedTypes))
+			(dropCancel as any)?.set_group?.("99");
+			if(Array.isArray((dropCancel as any)?.acceptedTypes))
 			{
-				dropCancel.acceptedTypes = dropCancel.acceptedTypes.concat(Object.keys(this.host.egw().user?.("apps") || {}).concat(["link", "file"]));
+				(dropCancel as any).acceptedTypes = (dropCancel as any).acceptedTypes.concat(Object.keys(this.host.egw().user?.("apps") || {}).concat(["link", "file"]));
 			}
 		}
 		if(!dropAction)
@@ -1299,15 +1299,15 @@ export class Et2NextmatchActionController
 				).sendRequest();
 			}, true);
 		}
-		if(Array.isArray(dropAction?.acceptedTypes) && !dropAction.acceptedTypes.includes("link"))
+		if(Array.isArray((dropAction as any)?.acceptedTypes) && !(dropAction as any).acceptedTypes.includes("link"))
 		{
-			dropAction.acceptedTypes.push("link");
+			(dropAction as any).acceptedTypes.push("link");
 		}
 		if(!dragAction)
 		{
 			dragAction = mgr.addAction("drag", "egw_link_drag", this.host.egw().lang("link"), "link", () => null, true);
 		}
-		dragAction?.set_dragType?.("link");
+		(dragAction as any)?.set_dragType?.("link");
 	}
 
 	/**

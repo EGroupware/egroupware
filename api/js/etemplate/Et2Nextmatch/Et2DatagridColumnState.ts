@@ -38,7 +38,7 @@ export class Et2DatagridColumnState
 	 */
 	encodeSelectionId(key : string) : string
 	{
-		return String(key).replaceAll(" ", "___");
+		return String(key).split(" ").join("___");
 	}
 
 	/**
@@ -48,7 +48,7 @@ export class Et2DatagridColumnState
 	 */
 	decodeSelectionId(id : string) : string
 	{
-		return String(id).replaceAll("___", " ");
+		return String(id).split("___").join(" ");
 	}
 
 	/**

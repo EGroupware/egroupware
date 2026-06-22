@@ -2,15 +2,23 @@ import {css, html} from "lit";
 import {property} from "lit/decorators/property.js";
 import {et2_INextmatchSortable} from "../../et2_extension_nextmatch";
 import {Et2NextmatchHeader} from "./Header";
-import {customElement} from "lit/decorators.js";
+import {customElement} from "lit/decorators/custom-element.js";
 import {ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "./events";
 
 type SortMode = "none" | "asc" | "desc";
 
 /**
- * Sortable nextmatch header.
+ * @summary Sortable nextmatch header.
  *
  * This is the webComponent counterpart of legacy `et2_nextmatch_sortheader`.
+ * It emits `et2-nextmatch-sort` on user click and falls back to legacy direct
+ * sorting when no modern listener handles the event.
+ *
+ * @event {CustomEvent<Et2NextmatchSortEventDetail>} et2-nextmatch-sort - Emitted when the user activates the header.
+ *
+ * @csspart base - Sortable header label element.
+ * @csspart label - Sortable header label text.
+ * @csspart sort-indicator - Visual sort direction marker.
  */
 @customElement("et2-nextmatch-sortheader")
 export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et2_INextmatchSortable
@@ -59,33 +67,6 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 	private _currentSortmode : SortMode = "none";
 
 	/**
-	 * Bind click handling once.
-	 */
-	constructor(...args : any[])
-	{
-		super(...args);
-		this._handleClick = this._handleClick.bind(this);
-	}
-
-	/**
-	 * Attach click listener for triggering nextmatch sorting.
-	 */
-	connectedCallback()
-	{
-		super.connectedCallback();
-		this.addEventListener("click", this._handleClick);
-	}
-
-	/**
-	 * Remove click listener on detach.
-	 */
-	disconnectedCallback()
-	{
-		super.disconnectedCallback();
-		this.removeEventListener("click", this._handleClick);
-	}
-
-	/**
 	 * Legacy compatibility wrapper.
 	 * Legacy paths may call `set_sortmode()` before using the interface method.
 	 */
@@ -116,9 +97,9 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 	/**
 	 * Trigger sort on click and persist sort preference like legacy header does.
 	 */
-	private _handleClick(event : MouseEvent)
+	_handleClick(event : MouseEvent) : boolean
 	{
-		if(this.disabled)
+		if((this as any).disabled)
 		{
 			return false;
 		}
@@ -151,8 +132,8 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 			this.nextmatch.sortBy(sortId, sortEvent.detail.asc, sortEvent.detail.update);
 			try
 			{
-				this.egw().set_preference(
-					this.nextmatch._get_appname(),
+					this.egw().set_preference(
+					(this.nextmatch as any)._get_appname(),
 					this.nextmatch.options.template + "_sort",
 					this.nextmatch.activeFilters["sort"]
 				);
@@ -181,10 +162,11 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 		}
 
 		return html`
-            <span class="nextmatch_sortheader ${this._currentSortmode} ${this.label ? "" : "et2_label_empty"}">
+            <span class="nextmatch_sortheader ${this._currentSortmode} ${this.label ? "" : "et2_label_empty"}"
+                  part="base label">
 				${this.label || ""}
 			</span>
-            <span class="nextmatch_sortheader--marker ${indicator}"></span>
+            <span class="nextmatch_sortheader--marker ${indicator}" part="sort-indicator"></span>
 		`;
 	}
 }

@@ -70,9 +70,32 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	@property({type: Array})
 	rows : any[] = [];
 
-	/** Template name used to resolve columns and row layout. */
+	/**
+	 * Template name used to resolve columns and row layout.
+	 *
+	 * This uses a custom accessor instead of Lit's generated setter so template
+	 * changes can mark configuration loading synchronously before the next render.
+	 * Without that early flag, the child datagrid can render once with no
+	 * template data and log a false missing-template warning during initial load.
+	 */
 	@property({type: String})
-	template : string = "";
+	set template(value : string)
+	{
+		const oldValue = this.template;
+		const nextValue = value || "";
+		if(nextValue === oldValue)
+		{
+			return;
+		}
+		this._template = nextValue;
+		this._templateLoading = true;
+		this.requestUpdate("template", oldValue);
+	}
+
+	get template() : string
+	{
+		return this._template;
+	}
 
 	/** Optional custom preference name for persisted datagrid column settings. */
 	@property({type: String, attribute: "column-preference-name"})
@@ -153,11 +176,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	@state()
 	private _templateData : Et2DatagridTemplateData | null = null;
 
+	private _template : string = "";
+
 	/**
 	 * True while a named template is being resolved asynchronously.
 	 */
 	@state()
-	private _templateLoading : boolean = false;
+	private _templateLoading : boolean = true;
 
 	/**
 	 * Monotonic token used to ignore stale async template-load completions.
@@ -419,7 +444,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * React to template changes after initial render.
 	 * Template source is mutually exclusive: explicit template name wins over slots.
 	 */
-	protected willUpdate(changedProperties : PropertyValues)
+	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
 		if(changedProperties.has("searchletter"))
@@ -436,7 +461,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * React to template changes after initial render.
 	 * Template source is mutually exclusive: explicit template name wins over slots.
 	 */
-	protected updated(changedProperties : PropertyValues)
+	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
 		if(changedProperties.has("template"))

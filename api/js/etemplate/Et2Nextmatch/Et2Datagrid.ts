@@ -45,6 +45,9 @@ interface Et2DatagridCustomfieldColumnState
  * @event et2-selection-changed - Fired when row selection changes.
  * @event et2-columns-changed - Fired when column order, width, or visibility changes.
  *
+ * @slot header - Header content used when no column definitions are available.
+ * @slot noResults - Optional empty-state content shown when there are no rows.
+ *
  * @csspart base - Root wrapper around the grid header and body.
  * @csspart header - Visible column header row container.
  * @csspart body - Scrollable container for state content and table.
@@ -110,6 +113,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	private _virtualIndexes : number[] = [];
 	private _virtualIndexesCount : number = -1;
+	private _rowHeightPx : number = 44;
 
 	/**
 	 * Error state set when the latest fetch failed.
@@ -408,7 +412,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Apply structure-affecting state before render so Lit can absorb it in the current cycle.
 	 */
-	protected willUpdate(changedProperties : PropertyValues)
+	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
 		if(changedProperties.has("templateData") || changedProperties.has("columnPreferenceName"))

@@ -1,10 +1,15 @@
 import {et2_INextmatchHeader} from "../../et2_extension_nextmatch";
 import {FilterMixin} from "./FilterMixin";
 import {Et2LinkEntry} from "../../Et2Link/Et2LinkEntry";
+import {customElement} from "lit/decorators/custom-element.js";
 
 /**
- * Filter using a selected entry
+ * @summary Nextmatch entry filter header.
+ *
+ * Renders an entry picker and normalizes simple selected entries to the legacy
+ * `app:id` filter value expected by nextmatch.
  */
+@customElement("et2-nextmatch-header-entry")
 export class Et2EntryFilterHeader extends FilterMixin(Et2LinkEntry) implements et2_INextmatchHeader
 {
 
@@ -39,5 +44,3 @@ export class Et2EntryFilterHeader extends FilterMixin(Et2LinkEntry) implements e
 	}
 
 }
-
-customElements.define("et2-nextmatch-header-entry", Et2EntryFilterHeader);

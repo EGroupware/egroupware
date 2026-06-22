@@ -2,12 +2,15 @@ import {css, html, LitElement} from "lit";
 import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {et2_INextmatchHeader, et2_nextmatch} from "../../et2_extension_nextmatch";
-import {customElement} from "lit/decorators.js";
+import {customElement} from "lit/decorators/custom-element.js";
 
 /**
- * Plain nextmatch header caption.
+ * @summary Plain nextmatch header caption.
  *
  * This is the webComponent counterpart of legacy `et2_nextmatch_header`.
+ *
+ * @csspart base - Header caption element.
+ * @csspart label - Header label text.
  */
 @customElement("et2-nextmatch-header")
 export class Et2NextmatchHeader extends Et2Widget(LitElement) implements et2_INextmatchHeader
@@ -67,12 +70,7 @@ export class Et2NextmatchHeader extends Et2Widget(LitElement) implements et2_INe
 	render()
 	{
 		return html`
-			<span class="label ${this.label ? "" : "et2_label_empty"}">${this.label || ""}</span>
+			<span class="label ${this.label ? "" : "et2_label_empty"}" part="base label">${this.label || ""}</span>
 		`;
 	}
-}
-
-if(!window.customElements.get("et2-nextmatch-header"))
-{
-	window.customElements.define("et2-nextmatch-header", Et2NextmatchHeader);
 }

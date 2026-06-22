@@ -81,13 +81,13 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		}
 	}
 
-	private __columns = [];
+	private __columns : any[] = [];
 	private __autoRefresh : number | false = false;
 	private sort : Sortable;
 
 	constructor(...args : any[])
 	{
-		super(...args);
+		super();
 
 		this.handleSelectAll = this.handleSelectAll.bind(this);
 	}
@@ -129,7 +129,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		const apps = this.egw().user('apps');
 
 		return html`
-            ${this.__autoRefresh !== "false" ? autoRefresh : ''}
+            ${this.__autoRefresh !== false ? autoRefresh : ''}
             ${!apps['admin'] ? '' : html`
                 <et2-select id="default_preference" emptylabel="${this.egw().lang("Preference")}">
                 </et2-select>`
@@ -157,7 +157,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return html`
             <sl-menu-item
                     exportparts="label,prefix"
-                    value="${column.id.replaceAll(" ", "___")}"
+                    value="${String(column.id).split(" ").join("___")}"
                     type="checkbox"
                     ?checked=${alwaysOn || column.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
                     ?disabled=${alwaysOn}
@@ -185,8 +185,11 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	protected customFieldsTemplate(column) : TemplateResult
 	{
 		// Custom fields get listed separately
-		let widget = column.widget;
-		if(jQuery.isEmptyObject((<et2_nextmatch_customfields><unknown>widget).customfields))
+		let widget = column.widget as et2_nextmatch_customfields & {
+			customfields : Record<string, { name : string; label : string }>;
+			fields : Record<string, boolean>;
+		};
+		if(jQuery.isEmptyObject(widget.customfields))
 		{
 			// No customfields defined, don't show column
 			return html``;
@@ -217,6 +220,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		this.requestUpdate();
 	}
 
+	// @ts-expect-error Legacy input widget defines value as a property; this dialog proxy computes it from menu state.
 	get value()
 	{
 		let value = [];
@@ -235,7 +239,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				{
 					menuItem.querySelectorAll("[value][checked]").forEach((cf : SlMenuItem) =>
 					{
-						value.push(cf.value.replaceAll("___", " "));
+						value.push(cf.value.split("___").join(" "));
 					})
 				}
 			}

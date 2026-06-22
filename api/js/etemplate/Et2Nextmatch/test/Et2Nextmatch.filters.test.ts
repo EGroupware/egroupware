@@ -380,6 +380,49 @@ describe("Et2Nextmatch header event handling", () =>
 
 	/**
 	 * Contract under test:
+	 * - Nextmatch keeps the datagrid in configuration-loading state while an
+	 *   initial named row template is still resolving.
+	 *
+	 * Setup strategy:
+	 * - Configure a template name and hold the row-provider promise open during
+	 *   first render.
+	 *
+	 * Pass criteria:
+	 * - The child datagrid receives `configurationLoading=true`.
+	 * - The missing-template warning is not logged before template resolution
+	 *   completes.
+	 */
+	it("does not warn about missing row template while initial named template is loading", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.template = "addressbook.index.rows";
+		let resolveTemplate : (value : any) => void = () => {};
+		const templatePromise = new Promise((resolve) =>
+		{
+			resolveTemplate = resolve;
+		});
+		const fromTemplate = sinon.stub((el as any)._rowProvider, "fromTemplate").returns(templatePromise);
+		const debug = sinon.spy(egwStub, "debug");
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
+		await datagrid?.updateComplete;
+
+		assert.isTrue(datagrid?.configurationLoading, "datagrid should stay in configuration-loading state");
+		assert.isFalse(debug.getCalls().some((call) =>
+				(call.args as any[])[0] === "warn" && (call.args as any[])[1] === "Et2Datagrid: No row template configured"),
+			"missing-template warning should not be logged while template is loading");
+
+		resolveTemplate(null);
+		await Promise.resolve();
+		debug.restore();
+		fromTemplate.restore();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - Right-click on placeholder area routes configured `placeholderActions`
 	 *   to placeholder popup flow.
 	 *
