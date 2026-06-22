@@ -167,9 +167,9 @@ ${editorContentStyle(preferenceStub({
 	it("maps EGroupware language preferences to TinyMCE language codes", () =>
 	{
 		assert.equal(LANGUAGE_CODE.de, "de");
-		assert.equal(LANGUAGE_CODE["pt-br"], "pt_BR");
-		assert.equal(LANGUAGE_CODE.no, "nb_NO");
-		assert.equal(LANGUAGE_CODE.uk, "en_GB");
+		assert.equal(LANGUAGE_CODE["pt-br"], "pt-BR");
+		assert.equal(LANGUAGE_CODE.no, "nb-NO");
+		assert.equal(LANGUAGE_CODE.uk, "uk");
 	});
 
 	it("uses menubar preference unless explicitly disabled", () =>
