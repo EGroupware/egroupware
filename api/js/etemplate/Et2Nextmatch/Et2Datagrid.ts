@@ -2619,7 +2619,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const rowIndex = this._rowsByIndex.findIndex((row) => row.id === rowId);
+		const rowIndex = this._rowsByIndex.findIndex((row) => row?.id === rowId);
 		if(rowIndex < 0)
 		{
 			return;

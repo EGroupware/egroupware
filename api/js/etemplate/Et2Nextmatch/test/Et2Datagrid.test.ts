@@ -609,6 +609,31 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: selecting a visible row must tolerate sparse virtualized row state.
+	 * Setup: emulate a scrolled grid where earlier indexes are not loaded but the
+	 * last visible row is present in `_rowsByIndex`.
+	 * Pass: selecting the last row does not throw and active selection points to it.
+	 */
+	it("selects a loaded last row when virtualized row indexes contain gaps", () =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.rows = [{id: "addressbook::last", data: {label: "Last row"}}] as any;
+		(el as any)._rowsByIndex = [
+			undefined,
+			undefined,
+			{id: "addressbook::last", data: {label: "Last row"}}
+		];
+
+		assert.doesNotThrow(() => el.selectSingleRow("addressbook::last"),
+			"selecting sparse last row should not read id from undefined row slots");
+		assert.deepEqual(Array.from((el as any).selectedRowIds), ["addressbook::last"], "last row should be selected");
+		assert.equal((el as any).activeRowIndex, 2, "active row index should match sparse row position");
+		assert.equal((el as any).activeRowId, "addressbook::last", "active row id should match selected row");
+	});
+
+	/**
 	 * Contract: add refresh prepends newly visible rows to the top of the loaded grid.
 	 * Setup: seed one loaded row, stub provider refresh with a different row id returned for add.
 	 * Pass: new row is inserted at index 0 and existing row selection stays on the same row id.

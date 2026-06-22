@@ -18,6 +18,10 @@ const egwStub = {
 window.egw = function() { return egwStub; } as any;
 Object.assign(window.egw, egwStub);
 
+let resizeObserverErrorHandler : ((event : ErrorEvent) => void) | null = null;
+let resizeObserverRejectionHandler : ((event : PromiseRejectionEvent) => void) | null = null;
+let originalResizeObserver : typeof window.ResizeObserver | undefined;
+
 type FakeAction = {
 	id : string;
 	type : string;
@@ -69,8 +73,86 @@ const makeFakeObjectManager = (factory? : (rowId : string, aoi : any) => any) =>
 	unregisterActions: () => {}
 });
 
+const waitForDatagridRows = async(datagrid : any, expectedCount : number) =>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		if((datagrid?.rows?.length || 0) >= expectedCount)
+		{
+			return;
+		}
+		await Promise.resolve();
+		await datagrid?.updateComplete;
+	}
+};
+
+const waitForRenderedDatagridRow = async(datagrid : HTMLElement & { updateComplete? : Promise<unknown> }, rowId : string) : Promise<HTMLElement | null> =>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		const row = datagrid?.shadowRoot?.querySelector(`[data-row-id='${rowId}']`) as HTMLElement | null;
+		if(row)
+		{
+			return row;
+		}
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await datagrid?.updateComplete;
+	}
+	return null;
+};
+
 describe("Et2Nextmatch action setup", () =>
 {
+	before(() =>
+	{
+		originalResizeObserver = window.ResizeObserver;
+		class ResizeObserverStub
+		{
+			observe() {}
+			unobserve() {}
+			disconnect() {}
+		}
+		window.ResizeObserver = ResizeObserverStub as any;
+
+		resizeObserverErrorHandler = (event : ErrorEvent) =>
+		{
+			const message = String(event?.message || "");
+			if(message.includes("ResizeObserver loop completed with undelivered notifications"))
+			{
+				event.preventDefault();
+				event.stopImmediatePropagation?.();
+			}
+		};
+		window.addEventListener("error", resizeObserverErrorHandler);
+		resizeObserverRejectionHandler = (event : PromiseRejectionEvent) =>
+		{
+			const message = String((event?.reason && (event.reason.message || event.reason)) || "");
+			if(message.includes("ResizeObserver loop completed with undelivered notifications"))
+			{
+				event.preventDefault();
+			}
+		};
+		window.addEventListener("unhandledrejection", resizeObserverRejectionHandler);
+	});
+
+	after(() =>
+	{
+		if(resizeObserverErrorHandler)
+		{
+			window.removeEventListener("error", resizeObserverErrorHandler);
+			resizeObserverErrorHandler = null;
+		}
+		if(resizeObserverRejectionHandler)
+		{
+			window.removeEventListener("unhandledrejection", resizeObserverRejectionHandler);
+			resizeObserverRejectionHandler = null;
+		}
+		if(originalResizeObserver)
+		{
+			window.ResizeObserver = originalResizeObserver;
+		}
+	});
+
 	/**
 	 * Contract under test:
 	 * - Nextmatch action definitions are retained and linked to a row only when actions are triggered.
@@ -372,6 +454,193 @@ describe("Et2Nextmatch action setup", () =>
 
 		triggerPlaceholderPopup.restore();
 		triggerPopupForRow.restore();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Right-clicking a visible row after the addressbook named row template
+	 *   has loaded and the grid has been scrolled must not surface the datagrid
+	 *   missing-template warning.
+	 *
+	 * Setup strategy:
+	 * - Configure the same named template used by addressbook `index.xet`.
+	 * - Resolve template data and preload enough rows for a visible grid.
+	 * - Dispatch scroll and then a composed contextmenu event from a rendered row.
+	 *
+	 * Pass criteria:
+	 * - Rows are rendered before the contextmenu event.
+	 * - Row context-menu handling is invoked.
+	 * - `Et2Datagrid: No row template configured` is not logged.
+	 */
+	it("does not warn about missing row template when right-clicking a visible row after scroll", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setAttribute("template", "addressbook.index.rows");
+		el.rows = [{
+			id: "addressbook::1",
+			data: {name: "Contact 1"}
+		}];
+		const rowTemplate = document.createElement("template");
+		rowTemplate.innerHTML = `
+			<tr>
+				<td data-col-key="name"><span data-name="name"></span></td>
+			</tr>
+		`;
+		const fromTemplate = sinon.stub((el as any)._rowProvider, "fromTemplate").resolves({
+			rowTemplateId: "addressbook.index.rows",
+			rowTemplate,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns: [{key: "name", title: "Name"}]
+		});
+		let debug : sinon.SinonSpy | null = null;
+		let triggerPopupForRow : sinon.SinonStub | null = null;
+		try
+		{
+			debug = sinon.spy(egwStub, "debug");
+			document.body.append(el);
+			await el.updateComplete;
+			await el.updateComplete;
+
+			const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as HTMLElement & { updateComplete? : Promise<unknown> };
+			await datagrid?.updateComplete;
+			await waitForDatagridRows(datagrid, 1);
+			assert.isTrue(!!(datagrid as any)?.templateData?.rowTemplate, "row template should be loaded before right-click");
+			assert.equal((datagrid as any)?.rows?.length, 1, "datagrid should have row data before right-click");
+
+			const body = datagrid?.shadowRoot?.querySelector(".dg-body") as HTMLElement | null;
+			body!.scrollTop = 120;
+			body!.dispatchEvent(new Event("scroll", {bubbles: true, composed: true}));
+
+			const row = await waitForRenderedDatagridRow(datagrid, "addressbook::1");
+			assert.isNotNull(row, "a row should be visible before right-click");
+
+			triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(true);
+			const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+			row!.dispatchEvent(event);
+
+			assert.isTrue(triggerPopupForRow.calledOnce, "right-click should use row popup handling");
+			assert.isTrue(event.defaultPrevented, "row context menu should be intercepted");
+			assert.isFalse(debug!.getCalls().some((call) =>
+					(call.args as any[])[0] === "warn" && (call.args as any[])[1] === "Et2Datagrid: No row template configured"),
+				"missing-template warning should not be logged after rows are visible");
+		}
+		finally
+		{
+			triggerPopupForRow?.restore();
+			debug?.restore();
+			fromTemplate.restore();
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Right-clicking a row while the addressbook named row template is still
+	 *   loading must not surface the datagrid missing-template warning.
+	 *
+	 * Setup strategy:
+	 * - Configure the same named template used by addressbook `index.xet`.
+	 * - Keep row-template resolution pending during first render.
+	 * - Dispatch a composed contextmenu event from a datagrid row.
+	 *
+	 * Pass criteria:
+	 * - Row context-menu handling is invoked.
+	 * - `Et2Datagrid: No row template configured` is not logged before template
+	 *   resolution completes.
+	 */
+	it("does not warn about missing row template when right-clicking a row during initial template load", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.setAttribute("template", "addressbook.index.rows");
+		let resolveTemplate : (value : any) => void = () => {};
+		const templatePromise = new Promise((resolve) =>
+		{
+			resolveTemplate = resolve;
+		});
+		const fromTemplate = sinon.stub((el as any)._rowProvider, "fromTemplate").returns(templatePromise);
+		let debug : sinon.SinonSpy | null = null;
+		let triggerPopupForRow : sinon.SinonStub | null = null;
+		try
+		{
+			debug = sinon.spy(egwStub, "debug");
+			document.body.append(el);
+			await el.updateComplete;
+
+			const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as HTMLElement & { updateComplete? : Promise<unknown> };
+			await datagrid?.updateComplete;
+
+			const row = document.createElement("tr");
+			row.setAttribute("data-row-id", "addressbook::1");
+			datagrid?.shadowRoot?.append(row);
+			triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(true);
+			const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+			row.dispatchEvent(event);
+
+			assert.isTrue(triggerPopupForRow.calledOnce, "right-click should use row popup handling");
+			assert.isTrue(event.defaultPrevented, "row context menu should be intercepted");
+			assert.isFalse(debug!.getCalls().some((call) =>
+					(call.args as any[])[0] === "warn" && (call.args as any[])[1] === "Et2Datagrid: No row template configured"),
+				"missing-template warning should not be logged while row template is loading");
+		}
+		finally
+		{
+			resolveTemplate(null);
+			await Promise.resolve();
+			triggerPopupForRow?.restore();
+			debug?.restore();
+			fromTemplate.restore();
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Right-clicking the last visible row after scrolling must not throw when
+	 *   the datagrid's virtualized row index cache contains unloaded gaps.
+	 *
+	 * Setup strategy:
+	 * - Render a Nextmatch with a child datagrid.
+	 * - Emulate sparse datagrid row state with only the last row loaded.
+	 * - Dispatch contextmenu from that last row.
+	 *
+	 * Pass criteria:
+	 * - Contextmenu handling does not throw while selecting the action row.
+	 * - The last row is selected through the datagrid.
+	 */
+	it("selects sparse last row without throwing when right-clicked", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
+		datagrid.rows = [{id: "addressbook::last", data: {label: "Last row"}}];
+		datagrid._rowsByIndex = [
+			undefined,
+			undefined,
+			{id: "addressbook::last", data: {label: "Last row"}}
+		];
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "addressbook::last");
+		datagrid.shadowRoot?.append(row);
+		const controller : any = (el as any)._actionController;
+		const fakeRowObject = {
+			forceSelection: sinon.spy(),
+			executeActionImplementation: sinon.stub().returns(true)
+		};
+		const ensureRowActionObject = sinon.stub(controller, "ensureRowActionObject").returns(fakeRowObject);
+
+		const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+		assert.doesNotThrow(() => row.dispatchEvent(event),
+			"right-click on sparse last row should not throw while selecting it");
+		assert.deepEqual(Array.from(datagrid.selectedRowIds), ["addressbook::last"], "last row should be selected");
+		assert.equal(datagrid.activeRowIndex, 2, "selection should use sparse row index");
+		assert.isTrue(fakeRowObject.forceSelection.calledOnce, "action row should still be force-selected");
+
+		ensureRowActionObject.restore();
 		el.remove();
 	});
 
