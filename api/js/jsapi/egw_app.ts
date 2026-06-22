@@ -2233,18 +2233,18 @@ export abstract class EgwApp
 			}
 			egw.message('Failed to copy the link!');
 		};
-		jQuery("body").on("click", "[name=share_link]", copy_link_to_clipboard);
-		et2_createWidget("dialog", {
+		const dialog = loadWebComponent("et2-dialog", {
 			callback: function(button_id, value)
 			{
 				jQuery("body").off("click", "[name=share_link]", copy_link_to_clipboard);
 				return true;
 			},
-			title: _data.title ? _data.title : egw.lang("%1 Share Link", _data.writable ? egw.lang("Writable") : egw.lang("Readonly")),
+			title: _data.title ? _data.title : this.egw.lang("%1 Share Link", _data.writable ? this.egw.lang("Writable") : egw.lang("Readonly")),
 			template: _data.template,
 			width: 450,
 			value: {content: {"share_link": _data.share_link}}
-		});
+		}, this.et2);
+		document.body.append(dialog);
 	}
 
 	/**
