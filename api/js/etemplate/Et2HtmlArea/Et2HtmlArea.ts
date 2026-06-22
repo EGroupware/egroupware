@@ -593,7 +593,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	protected get _skinUrl():string{
 		const api = this.egw();
 		const darkmode = document.documentElement?.dataset?.darkmode ?? "0";
-		return (api.webserverUrl+"api/js/etemplate/Et2HtmlArea/skins/ui/egw"+((darkmode == "0")?"":"-dark"));
+		return (api.webserverUrl+"/api/js/etemplate/Et2HtmlArea/skins/ui/egw"+((darkmode == "0")?"":"-dark"));
 	}
 
 	protected get _languageCode() : string
