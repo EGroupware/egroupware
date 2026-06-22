@@ -1,3 +1,3 @@
-This is where language files should be placed.
+This are TinyMCE 8 translations, which are NOT included in the regular TinyMCE npm package.
 
-Please DO NOT translate these directly use this service: https://www.transifex.com/projects/p/tinymce/
+They are downloaded from https://www.tiny.cloud/get-tiny/language-packages/ and placed here.
