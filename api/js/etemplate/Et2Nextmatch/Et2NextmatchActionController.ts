@@ -14,7 +14,6 @@ import {
 	EGW_AO_FLAG_IS_CONTAINER,
 	EGW_AO_STATE_VISIBLE
 } from "../../egw_action/egw_action_constants";
-import {nm_action} from "../et2_extension_nextmatch_actions";
 import type {Et2Nextmatch} from "./Et2Nextmatch";
 
 /**
@@ -212,6 +211,7 @@ export class Et2NextmatchActionController
 	private dragDropAOI : Et2NextmatchDragDropAOI | null = null;
 	private dropHoverRow : HTMLElement | null = null;
 	private preparedDragRow : HTMLElement | null = null;
+	private pendingActionSubmitValue : Record<string, any> | null = null;
 
 	constructor(host : Et2Nextmatch)
 	{
@@ -236,6 +236,7 @@ export class Et2NextmatchActionController
 			return;
 		}
 		this.actionManager.updateActions(actions, this.getAppName());
+		this.annotateActionsWithNextmatch(this.actionManager.children || []);
 		const data = this.actionManager.data || {};
 		this.actionManager.data = {
 			...data,
@@ -245,13 +246,7 @@ export class Et2NextmatchActionController
 		};
 		this.actionManager.setDefaultExecute((action, senders, target) =>
 		{
-			const ids = this.getSelection();
-			if(!action.data)
-			{
-				action.data = {};
-			}
-			action.data.nextmatch = this.host;
-			nm_action(action, senders, target, ids);
+			this.executeNextmatchAction(action, senders, target);
 		});
 		const selectAllAction = this.actionManager.getActionById?.("select_all");
 		selectAllAction?.set_onExecute?.(() =>
@@ -264,6 +259,11 @@ export class Et2NextmatchActionController
 	getSelection() : { ids : string[]; all : boolean }
 	{
 		return {ids: [...this.selectedRowIds], all: this.allSelected};
+	}
+
+	getActionSubmitValue() : Record<string, any> | null
+	{
+		return this.pendingActionSubmitValue ? {...this.pendingActionSubmitValue} : null;
 	}
 
 	clearRowActionObjects()
@@ -559,6 +559,11 @@ export class Et2NextmatchActionController
 		{
 			return false;
 		}
+		if(!action.data)
+		{
+			action.data = {};
+		}
+		action.data.nextmatch = this.host;
 		const placeholderObject = this.ensurePlaceholderActionObject(anchorElement || this.host);
 		if(!placeholderObject)
 		{
@@ -566,7 +571,7 @@ export class Et2NextmatchActionController
 		}
 		try
 		{
-			nm_action(action, [placeholderObject], placeholderObject, {ids: [], all: false});
+			this.executeNextmatchAction(action, [placeholderObject], placeholderObject, {ids: [], all: false});
 			return true;
 		}
 		catch(e)
@@ -822,6 +827,338 @@ export class Et2NextmatchActionController
 			}
 		}
 		return links;
+	}
+
+	/**
+	 * Execute Nextmatch action targets locally for the web component.
+	 *
+	 * These are utility action executions that the Nextmatch provides for itself.
+	 */
+	private executeNextmatchAction(
+		action : EgwAction,
+		senders : EgwActionObject[] = [],
+		target : any = null,
+		selection : { ids : string[]; all : boolean } = this.getSelection()
+	) : boolean | void
+	{
+		if((action as any).checkbox && (!action.data || typeof action.data.nm_action === "undefined"))
+		{
+			return;
+		}
+		if(!action.data)
+		{
+			action.data = {};
+		}
+		action.data.nextmatch = this.host;
+		if(typeof action.data.nm_action === "undefined" && (action as any).type === "popup")
+		{
+			action.data.nm_action = "submit";
+		}
+
+		const ids = this.normalizeSelection(selection, senders);
+		const url = this.buildActionUrl(action, ids);
+		const actionTarget = typeof action.data.target !== "undefined" ? action.data.target : target;
+
+		switch(action.data.nm_action)
+		{
+			case "alert":
+				window.alert(`${(action as any).caption} ('${action.id}') executed on rows: ${ids.idsCsv}`);
+				break;
+
+			case "location":
+				this.executeLocationAction(action, url, actionTarget);
+				break;
+
+			case "popup":
+				this.executePopupAction(action, url, actionTarget);
+				break;
+
+			case "long_task":
+				if(this.executeLongTaskAction(action, ids))
+				{
+					break;
+				}
+			// Fall through to egw_open for single-row long_task actions with egw_open.
+			case "egw_open":
+				this.executeEgwOpenAction(action, ids.providerIds, actionTarget);
+				break;
+
+			case "open_popup":
+				if(this.openActionPopup(action, ids.rawIds))
+				{
+					break;
+				}
+			// If no popup is available, submit the action payload.
+			case "submit":
+				this.executeSubmitAction(action, ids, senders);
+				break;
+		}
+	}
+
+	private normalizeSelection(selection : { ids? : string[]; all? : boolean } = {}, senders : EgwActionObject[] = [])
+	{
+		const rawIds = (selection.ids && selection.ids.length ? selection.ids : senders.map((sender) => sender?.id)).filter(Boolean).map(String);
+		const providerIds = rawIds.map((id) => id.split("::").pop()).filter(Boolean);
+		return {
+			rawIds,
+			providerIds,
+			all: selection.all === true,
+			rowIdsCsv: this.toCsv(rawIds),
+			idsCsv: this.toCsv(providerIds)
+		};
+	}
+
+	private toCsv(ids : string[]) : string
+	{
+		return ids.map((id) =>
+		{
+			const value = String(id);
+			return value.indexOf(",") >= 0 ? `"${value.replace(/"/g, '""')}"` : value;
+		}).join(",");
+	}
+
+	private buildActionUrl(action : EgwAction, ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>) : string
+	{
+		const data = action.data || {};
+		if(typeof data.url === "undefined")
+		{
+			return "#";
+		}
+		let url = String(data.url);
+		if(ids.all === true && url.includes("active_filters") && this.host.activeFilters)
+		{
+			url = url.replace(/(\$|%24)active_filters/, encodeURIComponent(JSON.stringify(this.host.activeFilters)));
+		}
+		return url
+			.replace(/(\$|%24)id/, encodeURIComponent(ids.idsCsv))
+			.replace(/(\$|%24)select_all/, String(ids.all))
+			.replace(/(\$|%24)row_id/, encodeURIComponent(ids.rowIdsCsv));
+	}
+
+	private executeLocationAction(action : EgwAction, url : string, target : any)
+	{
+		if(typeof action.data?.targetapp !== "undefined")
+		{
+			(this.host.egw() as any).top?.egw_appWindowOpen(action.data.targetapp, url);
+		}
+		else if(target)
+		{
+			(this.host.egw() as any).open_link(url, target, action.data?.width ? `${action.data.width}x${action.data.height}` : false);
+		}
+		else
+		{
+			window.location.href = url;
+		}
+	}
+
+	private executePopupAction(action : EgwAction, url : string, target : any)
+	{
+		let popupUrl = url;
+		let postForm : HTMLFormElement | null = null;
+		if(url.length > 4000)
+		{
+			const params = url.split("&");
+			popupUrl = params.shift() || url;
+			postForm = document.createElement("form");
+			postForm.method = "post";
+			for(const param of params)
+			{
+				const values = param.split("=");
+				if(["cd", "tz", "menuaction", "hasupdate"].includes(values[0]))
+				{
+					popupUrl += `&${values.join("=")}`;
+				}
+				const input = document.createElement("input");
+				input.name = values[0];
+				input.type = "text";
+				input.value = values.slice(1).join("=");
+				postForm.append(input);
+			}
+		}
+		const popup = this.host.egw().open_link(popupUrl, target, `${action.data?.width}x${action.data?.height}`);
+		if(postForm && popup)
+		{
+			popup.name = popup.name || "postRequest";
+			postForm.target = popup.name;
+			postForm.action = popupUrl;
+			document.body.append(postForm);
+			postForm.submit();
+			postForm.remove();
+		}
+	}
+
+	private executeLongTaskAction(action : EgwAction, ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>) : boolean
+	{
+		if(!ids.all && ids.providerIds.length <= 1 && typeof action.data?.egw_open !== "undefined")
+		{
+			return false;
+		}
+		const dialog = (window as any).Et2Dialog;
+		if(ids.all)
+		{
+			this.fetchAllIds(ids.providerIds).then((allIds) =>
+			{
+				dialog?.long_task?.(null, action.data?.message || (action as any).caption, action.data?.title, action.data?.menuaction, allIds);
+			});
+			return true;
+		}
+		dialog?.long_task?.(null, action.data?.message || (action as any).caption, action.data?.title, action.data?.menuaction, ids.providerIds);
+		return true;
+	}
+
+	private async fetchAllIds(existingIds : string[]) : Promise<string[]>
+	{
+		const dataProvider = (this.host as any)._dataProvider;
+		if(!dataProvider?.fetchPage)
+		{
+			return existingIds;
+		}
+		const datagrid = (this.host as any)._datagrid;
+		const total = Number(datagrid?.total || 0);
+		if(!total || existingIds.length >= total)
+		{
+			return existingIds;
+		}
+		const ids : string[] = [];
+		for(let start = 0; start < total; start += 200)
+		{
+			const page = await dataProvider.fetchPage(start, Math.min(200, total - start));
+			for(const row of page?.rows || [])
+			{
+				ids.push(String(row.id || "").split("::").pop());
+			}
+		}
+		return ids.filter(Boolean);
+	}
+
+	private executeEgwOpenAction(action : EgwAction, providerIds : string[], target : any)
+	{
+		const spec = String(action.data?.egw_open || "");
+		const params = spec.split("-");
+		let egwOpenId = providerIds[0] || "";
+		const type = params.shift();
+		const app = params.shift();
+		if(!type || !app)
+		{
+			return;
+		}
+		if(typeof params[2] !== "undefined")
+		{
+			if(egwOpenId.indexOf(":") >= 0)
+			{
+				egwOpenId = egwOpenId.split(":")[Number(params.shift())];
+			}
+			else if(params.length > 1 && params[0] === "" && params[1].indexOf("from=merge") !== -1)
+			{
+				params.shift();
+			}
+			else
+			{
+				params.shift();
+			}
+		}
+		if(params.length > 1 && params[0] === "" && params[1].indexOf("from=merge") !== -1)
+		{
+			params.shift();
+		}
+		(window as any).egw(app, window).open(egwOpenId, app, type, params.join("-"), target);
+	}
+
+	private executeSubmitAction(
+		action : EgwAction,
+		ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>,
+		senders : EgwActionObject[] = []
+	)
+	{
+		const checkboxValues = {};
+		const checkboxes = this.actionManager?.getActionsByAttr?.("checkbox", true) || action.getManager?.()?.getActionsByAttr?.("checkbox", true) || [];
+		for(const checkbox of checkboxes)
+		{
+			checkboxValues[checkbox.id] = checkbox.checked;
+		}
+
+		const nextmatch = action.data?.nextmatch || this.host || (senders[0] as any)?._context?._widget;
+		if(!nextmatch)
+		{
+			this.host.egw().debug("error", "Missing nextmatch widget, could not submit", action);
+			return;
+		}
+		this.pendingActionSubmitValue = Object.assign(
+			{},
+			action.data || {},
+			{
+				selected: ids.providerIds,
+				select_all: ids.all,
+				checkboxes: checkboxValues
+			}
+		);
+		delete this.pendingActionSubmitValue.id;
+		this.pendingActionSubmitValue[nextmatch.settings?.action_var || "action"] = action.id;
+		delete this.pendingActionSubmitValue.nextmatch;
+
+		if(action.data?.postSubmit)
+		{
+			nextmatch.getInstanceManager()?.postSubmit?.();
+		}
+		else
+		{
+			nextmatch.getInstanceManager()?.submit?.();
+		}
+	}
+
+	private openActionPopup(action : EgwAction, selectedIds : string[]) : boolean
+	{
+		const instance = this.host.getInstanceManager?.();
+		const uid = instance?.uniqueId || "";
+		const root = instance?.DOMContainer || document.body;
+		const popup = root.querySelector(`et2-dialog[id*='${action.id}_popup']`) ||
+			document.body.querySelector(`#${uid}_${action.id}_popup`) ||
+			document.body.querySelector(`[id*='${action.id}_popup']`);
+		if(!popup)
+		{
+			return false;
+		}
+		action.data.nextmatch = this.host;
+		(popup as any).selectedIds = selectedIds;
+		if(typeof (popup as any).show === "function")
+		{
+			(popup as any).show();
+			return true;
+		}
+		if(typeof (popup as any).open === "boolean")
+		{
+			(popup as any).open = true;
+			return true;
+		}
+		if(typeof (popup as any).showModal === "function")
+		{
+			(popup as any).showModal();
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Preserve legacy action handlers by giving every registered action direct
+	 * access to the owning nextmatch. Some handlers are invoked outside the
+	 * default execute callback, so manager-level data is not always enough.
+	 */
+	private annotateActionsWithNextmatch(actions : EgwAction[] | { [id : string] : EgwAction })
+	{
+		const actionList = Array.isArray(actions) ? actions : Object.values(actions || {});
+		for(const action of actionList)
+		{
+			if(!action)
+			{
+				continue;
+			}
+			if(!action.data)
+			{
+				action.data = {};
+			}
+			action.data.nextmatch = this.host;
+			this.annotateActionsWithNextmatch(action.children || []);
+		}
 	}
 
 	private hasDragActions() : boolean

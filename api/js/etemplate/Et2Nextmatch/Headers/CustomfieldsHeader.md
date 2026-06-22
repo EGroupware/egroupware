@@ -19,20 +19,10 @@ Add the custom fields header to the Nextmatch header row where custom field colu
 When visible custom fields are available, each one is shown as its own sort header. If no custom fields are visible,
 the header shows the configured `label`.
 
-### Keep the header compact
+### Header overflow
 
-Use `max-visible-fields` to control how many custom field headers are shown directly. Extra fields are grouped under
-the label and shown when the user hovers or focuses the header.
-
-```html
-<et2-nextmatch-header-customfields
-	label="More fields"
-	max-visible-fields="2"
-></et2-nextmatch-header-customfields>
-```
-
-This is useful for applications with many optional custom fields, where showing every custom field in the header would
-make the list hard to scan.
+All visible custom fields are shown directly in the header. When the rendered field list is taller than `5em`, the
+header keeps that height and scrolls the field list.
 
 ### Show selected custom fields
 
@@ -74,5 +64,4 @@ Use `type-filter` when the header should only offer certain kinds of custom fiel
 - Custom fields use their configured labels in the header.
 - Sorting works the same way as other Nextmatch sortable headers.
 - Column selection controls which custom fields are visible.
-- The label is used as a fallback and as the compact caption when there are many visible fields.
-- Keep `max-visible-fields` low when the application has several optional custom fields.
+- The label is used as a fallback when no custom fields are visible.

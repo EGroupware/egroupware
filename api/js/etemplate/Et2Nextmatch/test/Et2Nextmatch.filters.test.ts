@@ -1,6 +1,7 @@
 import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT} from "../Headers/events";
+import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
 
 /**
@@ -472,7 +473,44 @@ describe("Et2Nextmatch header event handling", () =>
 		el.remove();
 	});
 
-	it("provides deprecated getValue and set_columns compatibility", async() =>
+	it("keeps settings as an object and ignores non-object settings attributes", () =>
+	{
+		const el = new Et2Nextmatch();
+		const settings = {
+			actions: {archive: {}},
+			action_var: "nm_action_id",
+			placeholder_actions: "add,import_csv"
+		};
+		const contentMgr = {
+			getEntry: () => settings,
+			getPath: () => [],
+			expandName: (value) => value,
+			parseBoolExpression: (value) => value
+		} as any;
+		const modificationsMgr = {
+			getPerspectiveData: () => ({owner: null}),
+			getEntry: () => null
+		} as any;
+		const getArrayMgr = sinon.stub(el, "getArrayMgr");
+		getArrayMgr.withArgs("content").returns(contentMgr);
+		getArrayMgr.withArgs("modifications").returns(modificationsMgr);
+		const attrs : any = {
+			id: "nm",
+			settings: "[object Object]"
+		};
+
+		el.transformAttributes(attrs);
+
+		assert.deepEqual(attrs.settings, settings, "settings should stay as the content object");
+		assert.equal(el.settings.action_var, "nm_action_id", "settings property should receive the object action_var");
+		assert.deepEqual(el.placeholderActions, ["add", "import_csv"], "legacy settings should still normalize other properties");
+
+		el.settings = "[object Object]";
+		assert.deepEqual(el.settings, {action_var: "action"}, "non-object settings assignments should fall back to defaults");
+		getArrayMgr.restore();
+	});
+
+	it("provides getValue input and deprecated set_columns compatibility", async() =>
 	{
 		const el = new Et2Nextmatch();
 		(Et2Nextmatch as any)._deprecationWarnings?.clear?.();
@@ -491,7 +529,8 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.equal(value.search, "term", "value getter should include active filter state");
 		assert.equal(value.col_filter.owner, "5", "value getter should include column filter state");
 
-		assert.deepEqual(el.getValue(), value, "getValue should proxy the deprecated state accessor to value");
+		assert.deepEqual(el.getValue(), value, "getValue should return the submitted nextmatch value");
+		assert.isFalse(warn.called, "getValue should not warn because it implements et2_IInput");
 
 		el.set_columns(["owner"]);
 		assert.deepEqual(
@@ -499,9 +538,17 @@ describe("Et2Nextmatch header event handling", () =>
 			["owner"],
 			"set_columns should only change visibility on already defined columns"
 		);
-		assert.isAtLeast(warn.callCount, 2, "deprecated compatibility methods should warn");
+		assert.isTrue(warn.calledOnce, "deprecated set_columns compatibility method should warn");
 
 		warn.restore();
+	});
+
+	it("implements et2_IInput so submit value collection includes it", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		assert.isTrue(et2_implements_registry[et2_IInput](el as any), "Et2Nextmatch should satisfy et2_IInput structurally");
+		assert.deepEqual(el.getValue(), el.value, "getValue should provide the submitted nextmatch value");
 	});
 
 });

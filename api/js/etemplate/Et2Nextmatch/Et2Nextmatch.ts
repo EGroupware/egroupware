@@ -27,6 +27,7 @@ import {
 	Et2NextmatchSortEventDetail
 } from "./Headers/events";
 import styles from "./Et2Nextmatch.styles";
+import {et2_IInput} from "../et2_core_interfaces";
 
 /**
  * @summary Nextmatch shows entries with filtering and context menu
@@ -52,7 +53,7 @@ import styles from "./Et2Nextmatch.styles";
  * @cssproperty [--meta-column-width=6px] - Width of leading metadata indicator column.
  */
 @customElement("et2-nextmatch")
-export class Et2Nextmatch extends Et2Widget(LitElement)
+export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 {
 	/**
 	 * Compose Nextmatch host styles from shared Et2Widget styles and local layout styles.
@@ -113,15 +114,38 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	/**
 	 * Optional list of action ids allowed for placeholder context menu.
 	 */
-	@property({attribute: false})
+	@property({attribute: false, type: Array})
 	placeholderActions : string[] = [];
 
 	/**
 	 * Optional list of custom filter attributes that should round-trip through nextmatch fetches.
 	 * Mirrors legacy `extra_attributes` setting.
 	 */
-	@property({attribute: false})
+	@property({attribute: false, type: Array})
 	extraAttributes : string[] = [];
+
+	/**
+	 * Additional nextmatch settings
+	 *
+	 * Additional customized settings for applications that can't follow the defaults.
+	 * Keep this available for action handlers that still use `nextmatch..settings`,
+	 * especially the server-defined action variable used by submit actions.
+	 */
+	@property({attribute: false, type: Object})
+	set settings(value : Record<string, any> | string | null | undefined)
+	{
+		const oldValue = this.settings;
+		this._settings = {
+			...Et2Nextmatch.DEFAULT_SETTINGS,
+			...this._settingsObject(value)
+		};
+		this.requestUpdate("settings", oldValue);
+	}
+
+	get settings() : Record<string, any>
+	{
+		return this._settings;
+	}
 
 	/**
 	 * Prepared row template and metadata currently bound into the datagrid.
@@ -189,6 +213,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	 * Bridges selection, context actions, and drag/drop into the egw_action system.
 	 */
 	private _actionController : Et2NextmatchActionController;
+
+	/**
+	 * Backing store for the public `settings` property.
+	 */
+	private _settings : Record<string, any> = {...Et2Nextmatch.DEFAULT_SETTINGS};
+
+	private static readonly DEFAULT_SETTINGS : Record<string, any> = {action_var: "action"};
 
 	/**
 	 * Deduplicates deprecation warnings so each legacy API warns only once per session.
@@ -280,11 +311,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 
 	transformAttributes(attrs)
 	{
-		// Process legacy 'settings' into properties
+		// Process 'settings' into properties
 		// We're before namespace creation here, so use attrs.id
-		const settings = this.getArrayMgr("content").getEntry(attrs.id || 'nm');
-		if(settings && Object.keys(settings).length > 0)
+		const attrSettings = this._settingsObject(attrs.settings);
+		const settings = this._settingsObject(this.getArrayMgr("content").getEntry(attrs.id || 'nm'));
+		const mergedSettings = {
+			...settings,
+			...attrSettings
+		};
+		if(Object.keys(mergedSettings).length > 0)
 		{
+			attrs.settings = mergedSettings;
 			Object.assign(attrs, settings);
 		}
 		// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
@@ -297,6 +334,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			if(typeof value !== "undefined")
 			{
 				attrs[modernKey] = this._toStringArray(value);
+				delete attrs[legacyKey];
 			}
 		}
 		if(typeof attrs.searchletter !== "undefined")
@@ -319,6 +357,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 			}
 		}
 		super.transformAttributes(attrs);
+	}
+
+	private _settingsObject(value : Record<string, any> | string | null | undefined) : Record<string, any>
+	{
+		return value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
 	}
 
 	protected _initActions(actions : EgwAction[] | { [id : string] : object })
@@ -461,12 +504,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Legacy nextmatch value shape used by favorites and app state restore.
+	 * Nextmatch value used by submits, favourites, and app state.
 	 */
 	get value() : Record<string, any>
 	{
 		const value = {
-			...this.activeFilters
+			...this._filters
 		};
 		const selectcols = this._currentColumns
 			.filter((column) => !column.hidden)
@@ -476,17 +519,32 @@ export class Et2Nextmatch extends Et2Widget(LitElement)
 		{
 			value["selectcols"] = selectcols;
 		}
-		return value;
+		return {
+			...value,
+			...(this._actionController.getActionSubmitValue() || {})
+		};
 	}
 
 	/**
-	 * Legacy nextmatch state accessor used by favorites and app state restore.
-	 * @deprecated Use `value` instead.
+	 * et2_IInput implementation used by eTemplate submit value collection.
 	 */
 	getValue() : Record<string, any>
 	{
-		this._warnDeprecatedOnce("getValue", "Et2Nextmatch.getValue() is deprecated, use `value` instead");
 		return this.value;
+	}
+
+	isDirty() : boolean
+	{
+		return false;
+	}
+
+	resetDirty()
+	{
+	}
+
+	isValid() : boolean
+	{
+		return true;
 	}
 
 	/**

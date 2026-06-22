@@ -92,9 +92,6 @@ export default css`
 	:host(.dg-resize-limit-max) .dg-resize-helper {
 		border-right-color: var(--sl-color-danger-600);
 	}
-	.dg-col:has(+ .dg-colselection) {
-		border-right: none;
-	}
 	.dg-colselection {
 		position: absolute;
 		right: 0px;

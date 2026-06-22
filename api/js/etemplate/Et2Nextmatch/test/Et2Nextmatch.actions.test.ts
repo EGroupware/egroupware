@@ -207,6 +207,110 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Modern nextmatch action registration preserves the legacy direct nextmatch
+	 *   pointer on every action, including nested child actions.
+	 *
+	 * Setup strategy:
+	 * - Use a fake action manager that builds a parent action with one child.
+	 * - Initialize actions through the controller.
+	 *
+	 * Pass criteria:
+	 * - Parent and child action data both contain the owning nextmatch instance.
+	 */
+	it("annotates registered actions and children with the owning nextmatch", () =>
+	{
+		const host = {
+			id: "nm_annotate",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any;
+		const fakeActionManager = {
+			children: [] as any[],
+			data: {},
+			getActionById: () => null,
+			updateActions: () =>
+			{
+				fakeActionManager.children = [{
+					id: "parent",
+					data: {},
+					children: {
+						child: {
+							id: "child",
+							data: {}
+						}
+					}
+				}];
+			},
+			setDefaultExecute: () => {}
+		};
+		const controller : any = new Et2NextmatchActionController(host);
+		controller.actionManager = fakeActionManager;
+		controller.objectManager = makeFakeObjectManager();
+
+		controller.initActions({parent: {caption: "Parent"}});
+
+		assert.strictEqual(fakeActionManager.children[0].data.nextmatch, host, "parent action should reference nextmatch");
+		assert.strictEqual(fakeActionManager.children[0].children.child.data.nextmatch, host, "child action should reference nextmatch");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Legacy submit target still receives selected ids, select_all, checkboxes,
+	 *   active filters and the configured action variable from Et2Nextmatch.settings.
+	 *
+	 * Setup strategy:
+	 * - Execute the modern controller with `nm_action=submit` against a real Et2Nextmatch.
+	 * - Stub the instance manager submit path.
+	 *
+	 * Pass criteria:
+	 * - Submit is called once.
+	 * - The generated nextmatch value includes the legacy submit payload.
+	 */
+	it("supports legacy submit actions through Et2Nextmatch settings action_var", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		const postSubmit = sinon.spy();
+		el.settings = {action_var: "nm_action_id"};
+		el.setInstanceManager({
+			submit,
+			postSubmit,
+			DOMContainer: document.body,
+			app: "addressbook",
+			uniqueId: "nm_submit_uid"
+		} as any);
+		el.applyFilters({filter: "open"}, {reload: false});
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionsByAttr: () => []
+		};
+
+		const action : any = {
+			id: "archive",
+			caption: "Archive",
+			data: {
+				nm_action: "submit",
+				nextmatch: el,
+				extra_payload: "kept"
+			}
+		};
+
+		controller.executeNextmatchAction(action, [], null, {ids: ["addressbook::7"], all: false});
+		const value = el.value;
+
+		assert.isTrue(submit.calledOnce, "submit action should use the instance manager submit path");
+		assert.isFalse(postSubmit.called, "regular submit should not use postSubmit");
+		assert.deepEqual(value.selected, ["7"], "selected ids should be converted back to provider ids");
+		assert.equal(value.select_all, false, "select_all flag should be included");
+		assert.equal(value.filter, "open", "active filters should be included");
+		assert.equal(value.extra_payload, "kept", "action data should be included");
+		assert.equal(value.nm_action_id, "archive", "configured action_var should receive the action id");
+		assert.notProperty(value, "nextmatch", "nextmatch object should not be submitted");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Nextmatch action manager wiring must work without relying on window global action getter functions.
 	 *
 	 * Setup strategy:

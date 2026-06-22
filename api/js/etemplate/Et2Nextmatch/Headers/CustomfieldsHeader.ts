@@ -1,4 +1,4 @@
-import {css, html, LitElement, PropertyValues} from "lit";
+import {html, LitElement, PropertyValues} from "lit";
 import {
 	Et2CustomfieldsController,
 	Et2CustomfieldSelectionItem,
@@ -10,81 +10,21 @@ import {property} from "lit/decorators/property.js";
 import "./SortableHeader";
 
 /**
- * Header widget that renders visible custom fields as Nextmatch sort headers.
+ * @summary Renders visible custom fields as sortable Nextmatch headers.
  *
- * The Datagrid column selection uses this component's public visibility methods
- * to keep custom field headers aligned with saved user column preferences.
+ * This component renders its nested sort headers into light DOM so the owning
+ * Datagrid can discover and synchronize sort state. Custom field visibility is
+ * managed by Nextmatch column selection and saved user preferences.
+ *
+ * @csspart base - The component's internal wrapper.
+ * @csspart field-list - Scrollable container for visible custom field headers.
+ * @csspart label - Fallback label shown when no custom fields are visible.
  */
-@customElement('et2-nextmatch-header-customfields')
+@customElement("et2-nextmatch-header-customfields")
 export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 {
-	static get styles()
-	{
-		return [
-			super.styles,
-			css`
-				:host {
-					display: block;
-					position: relative;
-				}
-				.label.et2_label_empty {
-					min-width: var(--sl-spacing-small);
-				}
-
-				.list {
-					width: 100%;
-					border-collapse: collapse;
-				}
-
-				.list td {
-					padding: 0;
-					vertical-align: top;
-				}
-
-				.field-header {
-					display: block;
-					width: 100%;
-				}
-
-				.list-clamp {
-					max-height: 5em;
-					overflow: hidden;
-				}
-
-				.overflow-caption {
-					display: block;
-					max-width: 100%;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-
-				.hover-list {
-					display: none;
-					position: absolute;
-					left: 0;
-					top: 100%;
-					min-width: 100%;
-					max-height: 16em;
-					overflow: auto;
-					padding: var(--sl-spacing-medium);
-					z-index: var(--sl-z-index-dropdown);
-					background: var(--sl-panel-background-color);
-					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-					box-shadow: var(--sl-shadow-large);
-				}
-
-				:host(:hover) .hover-list,
-				:host(:focus-within) .hover-list {
-					display: block;
-				}
-			`
-		];
-	}
-
 	/**
-	 * Caption shown when no custom fields are visible, or when the visible field
-	 * list is collapsed because it exceeds `maxVisibleFields`.
+	 * Caption shown when no custom fields are visible.
 	 */
 	@property({type: String})
 	label : string = "Custom fields";
@@ -117,26 +57,11 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	typeFilter : string | string[] | "previous" | null = null;
 
 	/**
-	 * Maximum number of visible custom field header rows before collapsing to the
-	 * caption and hover list.
-	 */
-	@property({type: Number, attribute: "max-visible-fields"})
-	maxVisibleFields : number = 3;
-
-	/**
 	 * Retry interval used while waiting for custom field definitions from late
 	 * template modifications.
 	 */
 	@property({type: Number, attribute: false})
 	hydrationRetryMs : number = 80;
-
-	private _controller : Et2CustomfieldsController | null = null;
-	private _headerContainer : HTMLElement | null = null;
-	private _previousHeaderStyles : {overflow : string; textOverflow : string; whiteSpace : string} | null = null;
-	private _pendingHydrationTimer : number | null = null;
-	private _hydrationAttempts : number = 0;
-	private _hasVisibilityOverride : boolean = false;
-	private static readonly HYDRATION_RETRY_MAX = 8;
 
 	/**
 	 * Render nested sortheaders into light DOM so the owning Nextmatch/datagrid
@@ -168,7 +93,6 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	connectedCallback()
 	{
 		super.connectedCallback();
-		this._enableHeaderOverflow();
 		if(!this._syncCustomfieldsFromModifications())
 		{
 			this._recomputeVisibility();
@@ -179,7 +103,6 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	disconnectedCallback()
 	{
 		this._clearHydrationRetry();
-		this._restoreHeaderOverflow();
 		super.disconnectedCallback();
 	}
 
@@ -202,8 +125,13 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 			this._syncCustomfieldsFromModifications();
 		}
 		this._scheduleHydrationRetry();
-		this._enableHeaderOverflow();
 	}
+
+	private _controller : Et2CustomfieldsController | null = null;
+	private _pendingHydrationTimer : number | null = null;
+	private _hydrationAttempts : number = 0;
+	private _hasVisibilityOverride : boolean = false;
+	private static readonly HYDRATION_RETRY_MAX = 8;
 
 	private _normalizeFieldsAttribute(fields : Record<string, boolean> | string | null | undefined) : Record<string, boolean> | string | null | undefined
 	{
@@ -233,46 +161,6 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 			.filter(Boolean)
 			.forEach((name) => result[name] = true);
 		return result;
-	}
-
-	/**
-	 * Get custom fields in the shape expected by Nextmatch column selection.
-	 */
-	getCustomfieldSelectionItems() : Et2CustomfieldSelectionItem[]
-	{
-		if(!this._controller)
-		{
-			this._recomputeVisibility();
-		}
-		return this._controller?.getSelectionItems() || [];
-	}
-
-	/**
-	 * Get the current custom field visibility map.
-	 */
-	getCustomfieldVisibility() : Record<string, boolean>
-	{
-		if(!this._controller)
-		{
-			this._recomputeVisibility();
-		}
-		return this._controller?.getVisibleMap() || {};
-	}
-
-	/**
-	 * Apply custom field visibility from column selection or saved Datagrid
-	 * preferences.
-	 */
-	setCustomfieldVisibility(fields : Record<string, boolean>)
-	{
-		if(!this._controller)
-		{
-			this._recomputeVisibility();
-		}
-		this._controller?.setVisibility(fields || {});
-		this._hasVisibilityOverride = true;
-		this.fields = {...fields};
-		this.requestUpdate();
 	}
 
 	private _recomputeVisibility()
@@ -372,13 +260,13 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	private _fieldsTableTemplate(fields : Et2CustomfieldSelectionItem[])
 	{
 		return html`
-			<table class="list">
+            <table class="customfields-header__fields">
 				<tbody>
 				${fields.map((field) => html`
 					<tr>
 						<td>
 							<et2-nextmatch-sortheader
-								class="field-header"
+                                    class="customfields-header__field-header"
 								id=${this._customfieldSortId(field.name)}
 								label=${field.label}
 							></et2-nextmatch-sortheader>
@@ -390,96 +278,88 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		`;
 	}
 
+	/**
+	 * This component renders into light DOM so the owning Datagrid can discover
+	 * nested sort headers. Lit static styles are shadow-root scoped, so these
+	 * local styles need to render with the light-DOM template.
+	 */
 	private _lightDomStylesTemplate()
 	{
 		return html`
 			<style>
 				et2-nextmatch-header-customfields {
 					display: block;
-					position: relative;
 				}
 				et2-nextmatch-header-customfields .label.et2_label_empty {
 					min-width: var(--sl-spacing-small);
 				}
-				et2-nextmatch-header-customfields .list {
+
+                et2-nextmatch-header-customfields .customfields-header {
+                    position: relative;
+                }
+
+                et2-nextmatch-header-customfields .customfields-header__fields {
 					width: 100%;
 					border-collapse: collapse;
 				}
-				et2-nextmatch-header-customfields .list td {
+
+                et2-nextmatch-header-customfields .customfields-header__fields td {
 					padding: 0;
 					vertical-align: top;
 				}
-				et2-nextmatch-header-customfields .field-header {
+
+                et2-nextmatch-header-customfields .customfields-header__field-header {
 					display: block;
 					width: 100%;
 				}
-				et2-nextmatch-header-customfields .list-clamp {
+
+                et2-nextmatch-header-customfields .customfields-header__field-list {
 					max-height: 5em;
 					overflow: hidden;
-				}
-				et2-nextmatch-header-customfields .overflow-caption {
-					display: block;
-					max-width: 100%;
-					white-space: nowrap;
-					overflow: hidden;
-					text-overflow: ellipsis;
-				}
-				et2-nextmatch-header-customfields .hover-list {
-					display: none;
-					position: absolute;
-					left: 0;
-					top: 100%;
-					min-width: 100%;
-					max-height: 16em;
-					overflow: auto;
-					padding: var(--sl-spacing-medium);
-					z-index: var(--sl-z-index-dropdown);
-					background: var(--sl-panel-background-color);
-					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-					box-shadow: var(--sl-shadow-large);
-				}
-				et2-nextmatch-header-customfields:hover .hover-list,
-				et2-nextmatch-header-customfields:focus-within .hover-list {
-					display: block;
+                    overflow-y: auto;
 				}
 			</style>
 		`;
 	}
 
-	private _enableHeaderOverflow()
+	/**
+	 * Get custom fields in the shape expected by Nextmatch column selection.
+	 */
+	getCustomfieldSelectionItems() : Et2CustomfieldSelectionItem[]
 	{
-		// The compact hover list needs to extend beyond the datagrid header cell.
-		const parent = this.parentElement;
-		if(!parent || !parent.classList.contains("dg-col-inner"))
+		if(!this._controller)
 		{
-			return;
+			this._recomputeVisibility();
 		}
-		if(this._headerContainer === parent)
-		{
-			return;
-		}
-		this._headerContainer = parent;
-		this._previousHeaderStyles = {
-			overflow: parent.style.overflow || "",
-			textOverflow: parent.style.textOverflow || "",
-			whiteSpace: parent.style.whiteSpace || ""
-		};
-		parent.style.overflow = "visible";
-		parent.style.textOverflow = "clip";
-		parent.style.whiteSpace = "normal";
+		return this._controller?.getSelectionItems() || [];
 	}
 
-	private _restoreHeaderOverflow()
+	/**
+	 * Get the current custom field visibility map.
+	 */
+	getCustomfieldVisibility() : Record<string, boolean>
 	{
-		if(!this._headerContainer || !this._previousHeaderStyles)
+		if(!this._controller)
 		{
-			return;
+			this._recomputeVisibility();
 		}
-		this._headerContainer.style.overflow = this._previousHeaderStyles.overflow;
-		this._headerContainer.style.textOverflow = this._previousHeaderStyles.textOverflow;
-		this._headerContainer.style.whiteSpace = this._previousHeaderStyles.whiteSpace;
-		this._headerContainer = null;
-		this._previousHeaderStyles = null;
+		return this._controller?.getVisibleMap() || {};
+	}
+
+	/**
+	 * Apply custom field visibility from column selection or saved Datagrid
+	 * preferences.
+	 */
+	setCustomfieldVisibility(fields : Record<string, boolean>)
+	{
+		if(!this._controller)
+		{
+			this._recomputeVisibility();
+		}
+		this._controller?.setVisibility(fields || {});
+		this._hasVisibilityOverride = true;
+		this.fields = {...fields};
+		this.requestUpdate();
 	}
 
 	render()
@@ -487,26 +367,23 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		const fields = this.getCustomfieldSelectionItems().filter((field) => field.visible === true);
 		if(fields.length)
 		{
-			const list = this._fieldsTableTemplate(fields);
-			const maxVisibleFields = Number.isFinite(this.maxVisibleFields) && this.maxVisibleFields >= 0 ?
-				Math.floor(this.maxVisibleFields) : 3;
-			const isOverflowed = fields.length > maxVisibleFields;
-			if(isOverflowed)
-			{
-				return html`
-					${this._lightDomStylesTemplate()}
-					<span class="overflow-caption">${this._overflowCaption()}</span>
-					<div class="hover-list">${list}</div>
-				`;
-			}
 			return html`
 				${this._lightDomStylesTemplate()}
-				<div class="list-clamp">${list}</div>
+                <div class="customfields-header" part="base">
+                    <div class="customfields-header__field-list" part="field-list">
+                        ${this._fieldsTableTemplate(fields)}
+                    </div>
+                </div>
 			`;
 		}
 		return html`
 			${this._lightDomStylesTemplate()}
-			<span class="label ${this._overflowCaption() ? "" : "et2_label_empty"}">${this._overflowCaption()}</span>
+            <div class="customfields-header" part="base">
+				<span
+                        class="customfields-header__label label ${this._overflowCaption() ? "" : "et2_label_empty"}"
+                        part="label"
+                >${this._overflowCaption()}</span>
+            </div>
 		`;
 	}
 }
