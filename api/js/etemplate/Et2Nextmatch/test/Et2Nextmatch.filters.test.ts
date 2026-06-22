@@ -518,11 +518,18 @@ describe("Et2Nextmatch header event handling", () =>
 
 	it("keeps settings as an object and ignores non-object settings attributes", () =>
 	{
+		/*
+		 * Contract: legacy settings remain available for action/filter behaviour, but
+		 * initial rows are exposed only through attrs.rows so settings do not retain
+		 * a duplicate row payload after the datagrid is seeded.
+		 */
 		const el = new Et2Nextmatch();
+		const rows = [{id: "row-1", label: "Initial row"}];
 		const settings = {
 			actions: {archive: {}},
 			action_var: "nm_action_id",
-			placeholder_actions: "add,import_csv"
+			placeholder_actions: "add,import_csv",
+			rows
 		};
 		const contentMgr = {
 			getEntry: () => settings,
@@ -544,7 +551,14 @@ describe("Et2Nextmatch header event handling", () =>
 
 		el.transformAttributes(attrs);
 
-		assert.deepEqual(attrs.settings, settings, "settings should stay as the content object");
+		assert.deepEqual(attrs.rows, rows, "initial rows should still be exposed for datagrid seeding");
+		assert.notProperty(attrs.settings, "rows", "settings should not retain the initial row payload");
+		assert.deepEqual(attrs.settings, {
+			actions: {archive: {}},
+			action_var: "nm_action_id",
+			placeholder_actions: "add,import_csv"
+		}, "settings should keep non-row content settings");
+		assert.notProperty(el.settings, "rows", "settings property should not retain the initial row payload");
 		assert.equal(el.settings.action_var, "nm_action_id", "settings property should receive the object action_var");
 		assert.deepEqual(el.placeholderActions, ["add", "import_csv"], "legacy settings should still normalize other properties");
 

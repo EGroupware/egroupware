@@ -158,9 +158,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	set settings(value : Record<string, any> | string | null | undefined)
 	{
 		const oldValue = this.settings;
+		const settings = this._settingsObject(value);
+		delete settings.rows;
 		this._settings = {
 			...Et2Nextmatch.DEFAULT_SETTINGS,
-			...this._settingsObject(value)
+			...settings
 		};
 		this.requestUpdate("settings", oldValue);
 	}
@@ -346,7 +348,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		};
 		if(Object.keys(mergedSettings).length > 0)
 		{
-			attrs.settings = mergedSettings;
+			const retainedSettings = {...mergedSettings};
+			delete retainedSettings.rows;
+			attrs.settings = retainedSettings;
 			Object.assign(attrs, settings);
 		}
 		// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
