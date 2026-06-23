@@ -202,6 +202,8 @@ class Jmap
 		return $value;
 	}
 
+	const JMAP_CORE = "urn:ietf:params:jmap:core";
+
 	/**
 	 * Make a JMAP call - emulating multiple methodCalls with single calls and resolving references
 	 *

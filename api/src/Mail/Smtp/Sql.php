@@ -63,9 +63,9 @@ class Sql extends Mail\Smtp
 	 *
 	 * @param string $defaultDomain =null
 	 */
-	function __construct($defaultDomain=null)
+	function __construct($defaultDomain=null, ?Mail\Account $account = null)
 	{
-		parent::__construct($defaultDomain);
+		parent::__construct($defaultDomain, $account);
 
 		$this->db = $GLOBALS['egw']->db;
 	}

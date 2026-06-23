@@ -513,7 +513,7 @@ class Account implements \ArrayAccess
 		{
 			$params = $this->getParamOverwrites();
 			$class = $params['acc_smtp_type'];
-			$this->smtpServer = new $class($params);
+			$this->smtpServer = new $class($params, $this);
 			$this->smtpServer->editForwardingAddress = false;
 			$this->smtpServer->host = $params['acc_smtp_host'];
 			$this->smtpServer->port = $params['acc_smtp_port'];

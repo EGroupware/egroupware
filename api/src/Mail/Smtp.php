@@ -52,6 +52,11 @@ class Smtp
 	protected $accounts;
 
 	/**
+	 * Instance of mail account this class belongs too
+	 */
+	readonly Api\Mail\Account $account;
+
+	/**
 	 * SmtpServerId
 	 *
 	 * @var int
@@ -79,11 +84,13 @@ class Smtp
 	 *
 	 * @param string $defaultDomain =null
 	 */
-	function __construct($defaultDomain=null)
+	function __construct($defaultDomain=null, ?Api\Mail\Account $account=null)
 	{
 		$this->defaultDomain = $defaultDomain ? $defaultDomain : $GLOBALS['egw_info']['server']['mail_suffix'];
 
 		$this->accounts = $GLOBALS['egw']->accounts;
+
+		if ($account) $this->account = $account;
 	}
 
 	/**
