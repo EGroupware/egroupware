@@ -7,6 +7,8 @@ import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {Et2CustomfieldsBase} from "../../Et2Customfields/Et2CustomfieldsBase";
 import "../../Et2Customfields/Et2CustomfieldsList";
 import "../../Et2Customfields/Et2CustomfieldsListRow";
+import "../../Et2Url/Et2UrlEmail";
+import "../../Et2Url/Et2UrlEmailReadonly";
 
 const egw = {
 	debug: () => {},
@@ -105,6 +107,22 @@ class Et2DatagridMgrProbe extends HTMLElement
 if(!customElements.get("et2-dg-mgr-probe"))
 {
 	customElements.define("et2-dg-mgr-probe", Et2DatagridMgrProbe);
+}
+
+class Et2DatagridContainerFixture extends HTMLElement
+{
+	loadFromXML(source : Element)
+	{
+		for(const child of Array.from(source.childNodes))
+		{
+			this.appendChild(child.cloneNode(true));
+		}
+	}
+}
+
+if(!customElements.get("et2-dg-container"))
+{
+	customElements.define("et2-dg-container", Et2DatagridContainerFixture);
 }
 
 class Et2DatagridAlignmentFixture extends LitElement
@@ -381,6 +399,149 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: plain readonly descriptions in datagrid rows render as native
+	 * text, while descriptions with link behavior keep the full widget.
+	 * Setup: prepare a row template with one simple value and linked values.
+	 * Pass: the simple value becomes a span and row binding resolves its text.
+	 */
+	it("uses lightweight native text for simple datagrid row descriptions", () =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		el.columns = [
+			{key: "line1", title: "Line 1", width: "1fr"},
+			{key: "line2", title: "Line 2", width: "1fr"},
+			{key: "preferred", title: "Preferred", width: "1fr"},
+			{key: "description", title: "Description", width: "1fr"}
+		] as any;
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `
+			<td><et2-description id="\${row}[line1]" noLang="1" class="name-line"></et2-description></td>
+			<td><et2-description id="$[line2]" noLang="1" class="legacy-name-line"></et2-description></td>
+			<td><et2-description id="\${row}[preferred]" href="$row_cont[preferred_link]" noLang="1"></et2-description></td>
+			<td><et2-description id="\${row}[description]" noLang="1" activateLinks="1"></et2-description></td>
+		`;
+
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		const simple = prepared?.template.content.querySelector(".name-line") as HTMLElement | null;
+		assert.equal(simple?.localName, "span", "simple descriptions should compile to native text");
+		assert.isNull(
+			prepared?.template.content.querySelector("span[data-et2nm-id]"),
+			"native text should not need row attribute upgrade bookkeeping"
+		);
+		assert.isNotNull(
+			prepared?.template.content.querySelector("et2-description[href]"),
+			"linked descriptions should keep the full widget"
+		);
+		assert.isNotNull(
+			prepared?.template.content.querySelector("et2-description[activatelinks]"),
+			"activateLinks descriptions should keep the full widget"
+		);
+
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template,
+			rowTemplateXml: prepared?.xml,
+			rowTemplateAttrMap: prepared?.attrMap || {},
+			loaderTemplate: null
+		} as any;
+		const row = {
+			id: "row-0",
+			data: {
+				line1: "Lightweight row text",
+				line2: "Legacy shorthand text",
+				preferred: "Call me",
+				preferred_link: "tel:+15551234567"
+			}
+		};
+		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
+		assert.include(
+			rowElement?.querySelector(".name-line")?.textContent || "",
+			"Lightweight row text",
+			"native description text should bind from row data"
+		);
+		assert.include(
+			rowElement?.querySelector(".legacy-name-line")?.textContent || "",
+			"Legacy shorthand text",
+			"native description text should bind legacy $[field] row placeholders"
+		);
+		assert.isNotNull(
+			rowElement?.querySelector("et2-description[href]"),
+			"linked row description should still render as a widget"
+		);
+		assert.isNotNull(
+			rowElement?.querySelector("et2-description[activatelinks]"),
+			"activateLinks row description should still render as a widget"
+		);
+	});
+
+	/**
+	 * Contract: row-provider cloning owns child preparation for container
+	 * widgets. Container loadFromXML must not load original children before the
+	 * row provider appends prepared lightweight children.
+	 * Setup: use a custom container whose loadFromXML would clone children if
+	 * loadWebComponent() were used.
+	 * Pass: only the prepared lightweight child exists.
+	 */
+	it("does not duplicate children when preparing custom element row containers", () =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `
+			<td>
+				<et2-dg-container>
+					<et2-description id="$[line1]" noLang="1" class="name-line"></et2-description>
+				</et2-dg-container>
+			</td>
+		`;
+
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, [{key: "line1", title: "Line 1"}] as any);
+		const container = prepared?.template.content.querySelector("et2-dg-container") as HTMLElement | null;
+
+		assert.equal(
+			container?.querySelectorAll(".name-line").length,
+			1,
+			"container should contain only the prepared lightweight child"
+		);
+		assert.isNull(
+			container?.querySelector("et2-description"),
+			"source description child should not also be loaded by the container widget"
+		);
+	});
+
+	/**
+	 * Contract: datagrid rows instantiate readonly widget variants when
+	 * etemplate2 has registered a `_ro` custom element.
+	 * Setup: prepare a row template with et2-url-email, which has a registered
+	 * et2-url-email_ro variant.
+	 * Pass: the prepared row uses the readonly tag and keeps source attributes.
+	 */
+	it("uses registered readonly widget variants in datagrid row templates", () =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `
+			<td><et2-url-email id="\${row}[email]" readonly="true" emailDisplay="email"></et2-url-email></td>
+		`;
+
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, [{key: "email", title: "Email"}] as any);
+		const email = prepared?.template.content.querySelector("et2-url-email_ro") as HTMLElement | null;
+
+		assert.isNotNull(email, "email URL widgets should use the readonly custom element in rows");
+		assert.isNull(
+			prepared?.template.content.querySelector("et2-url-email"),
+			"editable email URL widgets should not be kept for readonly rows"
+		);
+		assert.equal(
+			email?.getAttribute("emailDisplay"),
+			"email",
+			"readonly widget should keep attributes needed by its renderer"
+		);
+	});
+
+	/**
 	 * Contract: datagrid customfield rows receive shared metadata once from the
 	 * customfield source and row-specific values from top-level #field data.
 	 * Setup: build a row template containing et2-customfields-list without a header,
@@ -409,6 +570,10 @@ describe("Et2Datagrid row rendering", () =>
 		const rowTemplate = document.createElement("row");
 		rowTemplate.innerHTML = `<td><et2-customfields-list class="customfields"></et2-customfields-list></td>`;
 		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		assert.isNotNull(
+			prepared?.template.content.querySelector("et2-customfields-list-row[data-et2nm-id]"),
+			"leaf customfields row widget should keep row-upgrade bookkeeping"
+		);
 		el.templateData = {
 			columns: el.columns,
 			rowTemplate: prepared?.template,

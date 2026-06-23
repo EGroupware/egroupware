@@ -52,6 +52,7 @@ export class Et2RowProvider
 		resolved = resolved.replace(/\{([^}]+)\}/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
 		resolved = resolved.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
 		resolved = resolved.replace(/\$\{row\}\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
+		resolved = resolved.replace(/\$\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
 		resolved = resolved.replace(/\$row_cont\[([^\]]+)\]/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
 		resolved = resolved.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (_match, token) => String(getFieldValue(row, token) ?? ""));
 		return resolved;
@@ -556,6 +557,13 @@ export class Et2RowProvider
 	) : Element
 	{
 		let tag = source.tagName.toLowerCase();
+		const lightweightDescription = tag === "et2-description"
+		                               ? this._lightweightDescriptionElement(source)
+		                               : null;
+		if(lightweightDescription)
+		{
+			return lightweightDescription;
+		}
 		if(tag === "et2-customfields-list")
 		{
 			// Datagrid rows use a text-only renderer; the full list widget creates nested Et2 widgets.
@@ -568,8 +576,18 @@ export class Et2RowProvider
 		let element : HTMLElement | typeof Et2Widget;
 		if(typeof window.customElements.get(tag) !== "undefined")
 		{
-			// Try webComponent loader first
-			element = loadWebComponent(tag, source, null);
+			if(this._hasTemplateChildren(source))
+			{
+				// Children are cloned by _createFragmentFromXml(). Do not use
+				// loadWebComponent() here, as it calls loadFromXML() and would load
+				// the source children before the row provider appends its prepared
+				// child clones.
+				element = document.createElement(tag);
+			}
+			else
+			{
+				element = loadWebComponent(tag, source, null);
+			}
 		}
 		else
 		{
@@ -611,6 +629,77 @@ export class Et2RowProvider
 		}
 
 
+		return element;
+	}
+
+	private _hasTemplateChildren(source : Element) : boolean
+	{
+		return Array.from(source.childNodes).some((child) =>
+			child.nodeType === Node.ELEMENT_NODE ||
+			child.nodeType === Node.TEXT_NODE && !!child.nodeValue?.trim()
+		);
+	}
+
+	/**
+	 * Replace plain readonly row descriptions with native text.
+	 *
+	 * Datagrid rows can contain many simple et2-description widgets. If the
+	 * description does not need link, tooltip, translation, or event behaviour,
+	 * native text avoids creating a Lit element and shadow root for every row.
+	 */
+	private _lightweightDescriptionElement(source : Element) : HTMLElement | null
+	{
+		const allowedAttributes = new Set([
+			"id",
+			"value",
+			"class",
+			"align",
+			"style",
+			"readonly",
+			"noLang",
+			"nolang",
+			"no_lang"
+		]);
+		for(const name of source.getAttributeNames())
+		{
+			if(!allowedAttributes.has(name))
+			{
+				return null;
+			}
+		}
+
+		const id = source.getAttribute("id");
+		const value = source.getAttribute("value");
+		const idIsDynamic = !!id && (id.includes("$") || id.includes("{"));
+		const textExpression = idIsDynamic ? id : value ?? id;
+		if(!textExpression)
+		{
+			return null;
+		}
+		const noLang = source.hasAttribute("noLang") || source.hasAttribute("nolang") || source.hasAttribute("no_lang");
+		const dynamicText = textExpression.includes("$") || textExpression.includes("{");
+		if(!noLang && !dynamicText)
+		{
+			return null;
+		}
+
+		const element = document.createElement("span");
+		const className = source.getAttribute("class");
+		if(className)
+		{
+			element.setAttribute("class", className);
+		}
+		const style = source.getAttribute("style");
+		if(style)
+		{
+			element.setAttribute("style", style);
+		}
+		const align = source.getAttribute("align");
+		if(align)
+		{
+			element.setAttribute("data-align", align);
+		}
+		element.textContent = this._normalizeLegacyRowExpressionShorthand(textExpression);
 		return element;
 	}
 
