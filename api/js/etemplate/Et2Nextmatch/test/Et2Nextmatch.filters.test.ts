@@ -148,6 +148,25 @@ describe("Et2Nextmatch header event handling", () =>
 		el.remove();
 	});
 
+	it("exposes active filters without allowing direct mutation", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.applyFilters({
+			search: "term",
+			col_filter: {owner: "42"},
+			sort: {id: "title", asc: true}
+		}, {reload: false});
+
+		const filters = el.activeFilters;
+		filters.search = "changed";
+		filters.col_filter.owner = "99";
+		filters.sort.asc = false;
+
+		assert.equal(el.activeFilters.search, "term", "top-level active filter mutation should not affect internal state");
+		assert.equal(el.activeFilters.col_filter.owner, "42", "nested column filter mutation should not affect internal state");
+		assert.deepEqual(el.activeFilters.sort, {id: "title", asc: true}, "nested sort mutation should not affect internal state");
+	});
+
 	/**
 	 * Contract under test:
 	 * - Non-canceled header sort events update sort filter state.
@@ -520,8 +539,8 @@ describe("Et2Nextmatch header event handling", () =>
 	{
 		/*
 		 * Contract: legacy settings remain available for action/filter behaviour, but
-		 * initial rows are exposed only through attrs.rows so settings do not retain
-		 * a duplicate row payload after the datagrid is seeded.
+		 * initial rows and actions are exposed through their own attrs so settings
+		 * does not retain duplicate initialization payloads.
 		 */
 		const el = new Et2Nextmatch();
 		const rows = [{id: "row-1", label: "Initial row"}];
@@ -554,10 +573,9 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.deepEqual(attrs.rows, rows, "initial rows should still be exposed for datagrid seeding");
 		assert.notProperty(attrs.settings, "rows", "settings should not retain the initial row payload");
 		assert.deepEqual(attrs.settings, {
-			actions: {archive: {}},
 			action_var: "nm_action_id",
 			placeholder_actions: "add,import_csv"
-		}, "settings should keep non-row content settings");
+		}, "settings should keep non-initialization content settings");
 		assert.notProperty(el.settings, "rows", "settings property should not retain the initial row payload");
 		assert.equal(el.settings.action_var, "nm_action_id", "settings property should receive the object action_var");
 		assert.deepEqual(el.placeholderActions, ["add", "import_csv"], "legacy settings should still normalize other properties");

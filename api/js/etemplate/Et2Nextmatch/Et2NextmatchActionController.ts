@@ -1077,12 +1077,7 @@ export class Et2NextmatchActionController
 			checkboxValues[checkbox.id] = checkbox.checked;
 		}
 
-		const nextmatch = action.data?.nextmatch || this.host || (senders[0] as any)?._context?._widget;
-		if(!nextmatch)
-		{
-			this.host.egw().debug("error", "Missing nextmatch widget, could not submit", action);
-			return;
-		}
+		const nextmatch = this.host;
 		this.pendingActionSubmitValue = Object.assign(
 			{},
 			action.data || {},

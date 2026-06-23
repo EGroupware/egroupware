@@ -373,7 +373,6 @@ describe("Et2Nextmatch action setup", () =>
 			caption: "Archive",
 			data: {
 				nm_action: "submit",
-				nextmatch: el,
 				extra_payload: "kept"
 			}
 		};

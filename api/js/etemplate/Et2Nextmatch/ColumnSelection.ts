@@ -146,7 +146,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	 */
 	protected rowTemplate(column) : TemplateResult
 	{
-		const isCustom = column.widget?.instanceOf?.(et2_nextmatch_customfields) || false;
+		const isCustom = this._isCustomfieldsColumn(column);
 		const alwaysOn = [et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS, et2_dataview_column.ET2_COL_VISIBILITY_ALWAYS_NOSELECT].indexOf(column.visibility) !== -1;
 
 		// Don't show disabled columns
@@ -169,9 +169,42 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
                     })}">
                 <sl-icon slot="prefix" name="grip-vertical"></sl-icon>
                 ${column.caption}
-                <!-- Custom fields get listed separately -->
-                ${isCustom ? this.customFieldsTemplate(column) : ''}
-            </sl-menu-item>`;
+            </sl-menu-item>
+            <!-- Custom fields get listed separately -->
+            ${isCustom ? this.customFieldsTemplate(column) : ''}`;
+	}
+
+	private _isCustomfieldsColumn(column) : boolean
+	{
+		return column.isCustomfields === true ||
+			(column.customFields || []).length > 0 ||
+			column.widget?.instanceOf?.(et2_nextmatch_customfields) ||
+			false;
+	}
+
+	private _customfieldItems(column) : Array<{ id : string; caption : string; visibility : boolean | number }>
+	{
+		if(Array.isArray(column.customFields) && column.customFields.length)
+		{
+			return column.customFields.map((field) => ({
+				id: field.id,
+				caption: field.caption,
+				visibility: field.visibility
+			}));
+		}
+		let widget = column.widget as et2_nextmatch_customfields & {
+			customfields : Record<string, { name : string; label : string }>;
+			fields : Record<string, boolean>;
+		};
+		if(jQuery.isEmptyObject(widget?.customfields || {}))
+		{
+			return [];
+		}
+		return Object.values(widget.customfields).map((field) => ({
+			id: et2_customfields_list.PREFIX + field.name,
+			caption: field.label,
+			visibility: widget.fields?.[field.name] ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : false
+		}));
 	}
 
 	/**
@@ -185,25 +218,27 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	protected customFieldsTemplate(column) : TemplateResult
 	{
 		// Custom fields get listed separately
-		let widget = column.widget as et2_nextmatch_customfields & {
-			customfields : Record<string, { name : string; label : string }>;
-			fields : Record<string, boolean>;
-		};
-		if(jQuery.isEmptyObject(widget.customfields))
+		const customFields = this._customfieldItems(column);
+		if(customFields.length == 0)
 		{
 			// No customfields defined, don't show column
 			return html``;
 		}
 		return html`
             <sl-divider></sl-divider>
-            ${repeat(Object.values(widget.customfields), (field) => field.name, (field) =>
+            ${repeat(customFields, (field) => field.id, (field) =>
             {
-                return this.rowTemplate({
-                    id: et2_customfields_list.PREFIX + field.name,
-                    caption: field.label,
-                    visibility: (widget.fields[field.name] ? et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE : false)
-
-                });
+                return html`
+                    <sl-menu-item
+                            exportparts="label,prefix"
+                            value="${String(field.id).split(" ").join("___")}"
+                            data-parent-column="${String(column.id).split(" ").join("___")}"
+                            type="checkbox"
+                            ?checked=${field.visibility == et2_dataview_column.ET2_COL_VISIBILITY_VISIBLE}
+                            title="${field.caption}"
+                            class="select_row">
+                        ${field.caption}
+                    </sl-menu-item>`;
             })}
             <sl-divider></sl-divider>`;
 	}
@@ -235,9 +270,9 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				{
 					value.push(val);
 				}
-				if(column.widget?.customfields)
+				if(this._isCustomfieldsColumn(column))
 				{
-					menuItem.querySelectorAll("[value][checked]").forEach((cf : SlMenuItem) =>
+					this.shadowRoot.querySelectorAll(`[data-parent-column='${val}'][value][checked]`).forEach((cf : SlMenuItem) =>
 					{
 						value.push(cf.value.split("___").join(" "));
 					})
@@ -246,7 +281,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		});
 
 		// Add in letters
-		this.shadowRoot?.querySelectorAll("[part='columns'] > :not(.column)").forEach((i : SlMenuItem) =>
+		this.shadowRoot?.querySelectorAll("[part='columns'] > :not(.column):not([data-parent-column])").forEach((i : SlMenuItem) =>
 		{
 			if(i.checked)
 			{

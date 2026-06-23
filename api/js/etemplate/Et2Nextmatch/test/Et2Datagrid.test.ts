@@ -163,7 +163,7 @@ before(() =>
 			event.stopImmediatePropagation?.();
 		}
 	};
-	window.addEventListener("error", resizeObserverErrorHandler);
+	window.addEventListener("error", resizeObserverErrorHandler, true);
 	resizeObserverRejectionHandler = (event : PromiseRejectionEvent) =>
 	{
 		const message = String((event?.reason && (event.reason.message || event.reason)) || "");
@@ -172,19 +172,19 @@ before(() =>
 			event.preventDefault();
 		}
 	};
-	window.addEventListener("unhandledrejection", resizeObserverRejectionHandler);
+	window.addEventListener("unhandledrejection", resizeObserverRejectionHandler, true);
 });
 
 after(() =>
 {
 	if(resizeObserverErrorHandler)
 	{
-		window.removeEventListener("error", resizeObserverErrorHandler);
+		window.removeEventListener("error", resizeObserverErrorHandler, true);
 		resizeObserverErrorHandler = null;
 	}
 	if(resizeObserverRejectionHandler)
 	{
-		window.removeEventListener("unhandledrejection", resizeObserverRejectionHandler);
+		window.removeEventListener("unhandledrejection", resizeObserverRejectionHandler, true);
 		resizeObserverRejectionHandler = null;
 	}
 	if(originalResizeObserver)

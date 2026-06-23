@@ -349,7 +349,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		if(Object.keys(mergedSettings).length > 0)
 		{
 			const retainedSettings = {...mergedSettings};
+			// Rows and actions are initialized through their own attributes.
 			delete retainedSettings.rows;
+			delete retainedSettings.actions;
 			attrs.settings = retainedSettings;
 			Object.assign(attrs, settings);
 		}
@@ -743,15 +745,34 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
-	 * Legacy-compatible active filters accessor used by header/filter integrations.
-	 *
-	 * @deprecated Accessing filter state via this accessor is legacy compatibility.
-	 * Prefer event-driven updates (`applyFilters`, header filter/sort events) and
-	 * treat filter state as internal.
+	 * Active filter snapshot used by header/filter integrations and action URL expansion.
+	 * Use applyFilters() to update filter state.
 	 */
 	get activeFilters() : Record<string, any>
 	{
-		return this._filters;
+		return this._filterSnapshot(this._filters);
+	}
+
+	private _filterSnapshot(filters : Record<string, any>) : Record<string, any>
+	{
+		return Object.entries(filters || {}).reduce((snapshot, [key, value]) =>
+		{
+			snapshot[key] = this._filterSnapshotValue(value);
+			return snapshot;
+		}, {} as Record<string, any>);
+	}
+
+	private _filterSnapshotValue(value : any) : any
+	{
+		if(Array.isArray(value))
+		{
+			return value.map((entry) => this._filterSnapshotValue(entry));
+		}
+		if(value && typeof value === "object" && Object.getPrototypeOf(value) === Object.prototype)
+		{
+			return this._filterSnapshot(value);
+		}
+		return value;
 	}
 
 	/**
