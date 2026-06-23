@@ -2114,7 +2114,7 @@ class addressbook_ui extends addressbook_bo
 							}
 						}
 						$selected_cfs = array_unique(array_merge($selected_cfs, (array)$this->config['index_load_cfs']));
-						$customfields = $this->read_customfields($ids, $selected_cfs ?: null);
+						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
 					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);
 					// distributionlist memership for the entrys
