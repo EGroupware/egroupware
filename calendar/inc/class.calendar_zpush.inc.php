@@ -670,7 +670,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			'end' => 'endtime',
 		) as $key => $attr)
 		{
-			if (isset($message->$attr)) $event[$key] = Api\DateTime::server2user($message->$attr);
+			if (isset($message->$attr)) $event[$key] = Api\DateTime::server2user($message->$attr, 'DateTime');
 		}
 		// copying strings
 		foreach(array(
@@ -698,8 +698,8 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 		if (($event['whole_day'] = $message->alldayevent))
 		{
-			if ($event['end'] == $event['start']) $event['end'] += 24*3600;	// some clients send equal start&end for 1day
-			$event['end']--;	// otherwise our whole-day event code in save makes it one more day!
+			if ($event['end'] == $event['start']) $event['end']->add('+1day');	// some clients send equal start&end for 1day
+			$event['end']->add('-1second');	// otherwise our whole-day event code in save makes it one more day!
 		}
 
 		$participants = array();
@@ -847,14 +847,14 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			}
 			if ($message->recurrence->until)
 			{
-				$event['recur_enddate'] = Api\DateTime::server2user($message->recurrence->until);
+				$event['recur_enddate'] = Api\DateTime::server2user($message->recurrence->until, 'DateTime');
 			}
 			$event['recur_exception'] = array();
 			if ($message->exceptions)
 			{
 				foreach($message->exceptions as $exception)
 				{
-					$event['recur_exception'][] = Api\DateTime::server2user($exception->exceptionstarttime);
+					$event['recur_exception'][] = Api\DateTime::server2user($exception->exceptionstarttime, 'DateTime');
 				}
 				$event['recur_exception'] = array_unique($event['recur_exception']);
 			}
@@ -866,7 +866,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				{
 					if (--$count <= 0) break;
 				}
-				$event['recur_enddate'] = $rtime->format('ts');
+				$event['recur_enddate'] = $rtime;
 			}
 		}
 		// only import alarms in own calendar
@@ -1231,7 +1231,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				{
 					if ($ex_event['id'] == $event['id']) continue;	// ignore series master
 					$exception = $this->GetMessage($folderid, $ex_event, $contentparameters, 'SyncAppointmentException');
-					$exception->exceptionstarttime = $exception_time = $ex_event['recurrence'];
+					$exception->exceptionstarttime = $exception_time = Api\DateTime::user2server($ex_event['recurrence'], 'ts');
 					foreach(array('attendees','recurrence','uid','timezone','organizername','organizeremail') as $not_supported)
 					{
 						$exception->$not_supported = null;	// not allowed in exceptions :-(
@@ -1252,7 +1252,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 						if (empty($event['uid'])) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." BEWARE no UID given for this event:".$event['id'].' but exception is set for '.$exception_time);
 						$exception = new SyncAppointmentException();	// exceptions seems to be full SyncAppointments, with only starttime required
 						$exception->deleted = 1;
-						$exception->exceptionstarttime = $exception_time;
+						$exception->exceptionstarttime = Api\DateTime::user2server($exception_time, 'ts');
 						ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added deleted exception ".Api\DateTime::to($exception_time, 'Y-m-d H:i:s').' '.array2string($exception));
 						$message->exceptions[] = $exception;
 					}
