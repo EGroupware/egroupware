@@ -289,8 +289,8 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
-	 * - Modern nextmatch action registration preserves the legacy direct nextmatch
-	 *   pointer on every action, including nested child actions.
+	 * - Et2Nextmatch action registration attaches the owning nextmatch pointer
+	 *   on every action, including nested child actions.
 	 *
 	 * Setup strategy:
 	 * - Use a fake action manager that builds a parent action with one child.
@@ -337,18 +337,18 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
-	 * - Legacy submit target still receives selected ids, select_all, checkboxes,
+	 * - Controller submit actions provide selected ids, select_all, checkboxes,
 	 *   active filters and the configured action variable from Et2Nextmatch.settings.
 	 *
 	 * Setup strategy:
-	 * - Execute the modern controller with `nm_action=submit` against a real Et2Nextmatch.
+	 * - Execute the controller submit path against a real Et2Nextmatch.
 	 * - Stub the instance manager submit path.
 	 *
 	 * Pass criteria:
 	 * - Submit is called once.
-	 * - The generated nextmatch value includes the legacy submit payload.
+	 * - The generated nextmatch value includes the controller submit payload.
 	 */
-	it("supports legacy submit actions through Et2Nextmatch settings action_var", () =>
+	it("supports submit actions through Et2Nextmatch settings action_var", () =>
 	{
 		const el = new Et2Nextmatch();
 		el.id = "nm";
@@ -388,6 +388,64 @@ describe("Et2Nextmatch action setup", () =>
 		assert.equal(value.extra_payload, "kept", "action data should be included");
 		assert.equal(value.nm_action_id, "archive", "configured action_var should receive the action id");
 		assert.notProperty(value, "nextmatch", "nextmatch object should not be submitted");
+	});
+
+	it("can execute a plain action through the controller submit path", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		el.setInstanceManager({
+			submit,
+			DOMContainer: document.body,
+			app: "addressbook",
+			uniqueId: "nm_view_org_uid"
+		} as any);
+		const action : any = {
+			id: "view_org",
+			data: {}
+		};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id) => id === "view_org" ? action : null,
+			getActionsByAttr: () => []
+		};
+
+		const handled = el.executeAction("view_org", {ids: ["org_name:Example"], all: false}, {nmAction: "submit"});
+		const value = el.value;
+
+		assert.isTrue(handled, "existing action should be handled");
+		assert.isTrue(submit.calledOnce, "forced submit action should submit the instance manager");
+		assert.deepEqual(value.selected, ["org_name:Example"], "selected ids should be submitted");
+		assert.equal(value.action, "view_org", "default action_var should receive the action id");
+		assert.notProperty(action.data, "nm_action", "temporary nm_action should not remain on action data");
+	});
+
+	it("executes actions against the current selection when selection is omitted", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		el.setInstanceManager({
+			submit,
+			DOMContainer: document.body,
+			app: "addressbook",
+			uniqueId: "nm_current_selection_uid"
+		} as any);
+		const action : any = {
+			id: "view_org",
+			data: {}
+		};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id) => id === "view_org" ? action : null,
+			getActionsByAttr: () => []
+		};
+		sinon.stub(el, "getSelection").returns({ids: ["addressbook::99"], all: false});
+
+		el.executeAction("view_org", undefined, {nmAction: "submit"});
+
+		assert.deepEqual(el.value.selected, ["99"], "omitted selection should use the nextmatch current selection");
 	});
 
 	/**

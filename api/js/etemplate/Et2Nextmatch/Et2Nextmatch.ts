@@ -16,6 +16,7 @@ import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
+import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
@@ -30,14 +31,19 @@ import styles from "./Et2Nextmatch.styles";
 import {et2_IInput} from "../et2_core_interfaces";
 
 /**
- * @summary Nextmatch shows entries with filtering and context menu
+ * @summary Nextmatch shows entries with filtering and context menus.
+ *
+ * Et2Nextmatch renders server-backed, virtualized list data from a named template or slotted row/column templates.
+ * It preserves selected legacy nextmatch APIs for app integrations while delegating data loading to Et2Datagrid.
  *
  * @event et2-loading-start - Re-emitted from the inner datagrid when row fetching starts.
  * @event et2-loading-done - Re-emitted from the inner datagrid when all fetches complete.
  * @event et2-loading-error - Re-emitted from the inner datagrid when a fetch fails.
- * @event et2-search-result - Legacy-compatible event emitted after fetch completion.
- * @event et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
- * @event et2-columns-changed - Re-emitted from the inner datagrid when columns change.
+ * @event {CustomEvent<{total: string, nextmatch: Et2Nextmatch}>} et2-search-result - Legacy-compatible event emitted after fetch completion.
+ * @event {CustomEvent<{selectedRowIds?: string[], activeRowId?: string, allSelected?: boolean}>} et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
+ * @event {CustomEvent<{columns: Et2DatagridColumn[]}>} et2-columns-changed - Re-emitted from the inner datagrid when columns change.
+ * @event {CustomEvent<{oldFilters: Record<string, any>, activeFilters: Record<string, any>, nm: Et2Nextmatch}>} et2-filter - Cancelable event emitted before active filters are applied.
+ * @event refresh - Legacy compatibility event emitted after refresh requests are processed.
  *
  * @slot header - Optional content rendered above the datagrid.
  * @slot footer - Optional content rendered below the datagrid.
@@ -65,6 +71,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			styles
 		];
 	}
+
+	private static readonly DEFAULT_SETTINGS : Record<string, any> = {action_var: "action"};
+
+	/**
+	 * Deduplicates deprecation warnings so each legacy API warns only once per session.
+	 */
+	private static _deprecationWarnings : Set<string> = new Set();
 
 	/** Initial rows data. Can be set directly or via setRows(). */
 	@property({type: Array})
@@ -246,14 +259,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	private _settings : Record<string, any> = {...Et2Nextmatch.DEFAULT_SETTINGS};
 
-	private static readonly DEFAULT_SETTINGS : Record<string, any> = {action_var: "action"};
-
-	/**
-	 * Deduplicates deprecation warnings so each legacy API warns only once per session.
-	 */
-	private static _deprecationWarnings : Set<string> = new Set();
-
-
 	/**
 	 * Resolve the internal datagrid instance from shadow DOM.
 	 * This is centralized so future render structure changes only need one update.
@@ -400,21 +405,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._actionController.initActions(actions);
 	}
 
-	getSelection() : { ids : string[]; all : boolean }
-	{
-		return this._actionController.getSelection();
-	}
-
-	selectSingleRow(rowId : string)
-	{
-		this._datagrid?.selectSingleRow(rowId);
-	}
-
-	selectAllRows()
-	{
-		this._datagrid?.selectAllRows();
-	}
-
 	/**
 	 * Initialize the widget from attributes/template and trigger first load.
 	 * We prefer showing provided rows immediately to keep first paint fast.
@@ -499,6 +489,89 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	_createNamespace() : boolean
 	{
 		return true;
+	}
+
+	/**
+	 * Return the current selection tracked by the action controller.
+	 */
+	getSelection() : { ids : string[]; all : boolean }
+	{
+		return this._actionController.getSelection();
+	}
+
+	/**
+	 * Execute a registered nextmatch action against the supplied or current selection.
+	 */
+	executeAction(
+		actionId : string,
+		selection : { ids? : string[]; all? : boolean } = this.getSelection(),
+		options? : { nmAction? : string }
+	) : boolean
+	{
+		return this._actionController.executeAction(actionId, selection, options);
+	}
+
+	/**
+	 * Fetch every id matching the current filter, showing a cancelable wait dialog.
+	 */
+	async fetchAllIds(pageSize : number = 200) : Promise<string[]>
+	{
+		const ids : string[] = [];
+		let start = 0;
+		let total : number | null = null;
+		let cancelled = false;
+		const dialog = Et2Dialog.show_dialog(
+			() =>
+			{
+				cancelled = true;
+			},
+			this.egw().lang("Loading"),
+			this.egw().lang("please wait..."),
+			{},
+			[{
+				"button_id": Et2Dialog.CANCEL_BUTTON,
+				label: this.egw().lang("Cancel"),
+				id: "dialog[cancel]",
+				image: "cancel"
+			}],
+			Et2Dialog.INFORMATION_MESSAGE,
+			undefined,
+			this.egw()
+		);
+		try
+		{
+			do
+			{
+				if(cancelled)
+				{
+					throw new DOMException("Canceled", "AbortError");
+				}
+				const page = await this._dataProvider.fetchPage(start, pageSize);
+				if(cancelled)
+				{
+					throw new DOMException("Canceled", "AbortError");
+				}
+				ids.push(...page.rows.map((row) => this._dataProvider.toProviderRowId(row.id)));
+				total = typeof page.total === "number" ? page.total : ids.length;
+				start += pageSize;
+			}
+			while(ids.length < total);
+			return Array.from(new Set(ids));
+		}
+		finally
+		{
+			dialog.destroy();
+		}
+	}
+
+	selectSingleRow(rowId : string)
+	{
+		this._datagrid?.selectSingleRow(rowId);
+	}
+
+	selectAllRows()
+	{
+		this._datagrid?.selectAllRows();
 	}
 
 	/**
@@ -633,7 +706,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * @see egw_app.nm_refresh_index()
 	 * @fires refresh
 	 */
-	public refresh(_row_ids : string[] | string, _type? : Et2DatagridUpdateType)
+	refresh(_row_ids : string[] | string, _type? : Et2DatagridUpdateType)
 	{
 		// Framework trying to refresh, but nextmatch not fully initialized
 		if(!this._datagrid || !this._dataProvider)
@@ -781,7 +854,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	applyFilters(set? : Record<string, any>, options? : { reload? : boolean })
 	{
-		let changed = false;
+		let changed = typeof set == "undefined";
 		if(!this._filters || typeof this._filters !== "object")
 		{
 			this._filters = {col_filter: {}};
@@ -989,7 +1062,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	/**
 	 * Watch slot mutations and re-resolve template data when no explicit template name is set.
-	 * We observe subtree+slot attributes because slotted content can be reparented dynamically.
+	 * We observe child-list changes because slotted template content can be added dynamically.
 	 */
 	private _initSlotObserver()
 	{
