@@ -104,7 +104,8 @@ jobs:
           done
 
           echo "Waiting for EGroupware installation log message..."
-          until $COMPOSE logs egroupware | grep -q "$SUCCESS_MSG"; do
+          INSTALL_LOG="$(mktemp)"
+          until $COMPOSE logs egroupware > "$INSTALL_LOG" && grep -q "$SUCCESS_MSG" "$INSTALL_LOG"; do
             if [ "$ELAPSED" -ge "$MAX_WAIT" ]; then
               echo "::error::Timed out waiting for EGroupware installation"
               echo "==== egroupware logs ===="
@@ -128,37 +129,37 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
 
+          INSTALL_LOG="$(mktemp)"
+          $COMPOSE logs egroupware > "$INSTALL_LOG"
+
           # Get sysop admin user from install log
           SYSOP_USER="sysop"
           SYSOP_PASS="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /EGroupware username: sysop/ {found=1; next}
-                found && /password:/ {
-                  sub(/^[^:]*:[[:space:]]*/, "", $0)
-                  print
-                  exit
-                }
-              '
+            awk '
+              /EGroupware username: sysop/ {found=1; next}
+              found && /password:/ {
+                sub(/^[^:]*:[[:space:]]*/, "", $0)
+                print
+                exit
+              }
+            ' "$INSTALL_LOG"
           )"
 
           # Get setup user/password from install log.
           CONFIG_USER="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /Setup username:/ {sub(/.*Setup username:[[:space:]]*/, "", $0); print; exit}
-              '
+            awk '
+              /Setup username:/ {sub(/.*Setup username:[[:space:]]*/, "", $0); print; exit}
+            ' "$INSTALL_LOG"
           )"
           CONFIG_PASS="$(
-            $COMPOSE logs egroupware |
-              awk '
-                /Setup username:/ {found=1; next}
-                found && /password:/ {
-                  sub(/^[^:]*:[[:space:]]*/, "", $0)
-                  print
-                  exit
-                }
-              '
+            awk '
+              /Setup username:/ {found=1; next}
+              found && /password:/ {
+                sub(/^[^:]*:[[:space:]]*/, "", $0)
+                print
+                exit
+              }
+            ' "$INSTALL_LOG"
           )"
           for v in SYSOP_USER SYSOP_PASS CONFIG_USER CONFIG_PASS; do
             if [ -z "${!v}" ]; then
