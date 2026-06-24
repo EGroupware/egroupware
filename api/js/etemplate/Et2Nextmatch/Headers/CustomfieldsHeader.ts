@@ -169,8 +169,7 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 			customfields: this.customfields || {},
 			fields: this.fields || {},
 			exclude: this.exclude,
-			typeFilter: this.typeFilter,
-			mode: "nextmatch-customfields"
+			typeFilter: this.typeFilter
 		});
 	}
 

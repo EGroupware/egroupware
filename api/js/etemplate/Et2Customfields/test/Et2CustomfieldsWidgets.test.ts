@@ -4,6 +4,19 @@ import "../Et2CustomfieldsList";
 import "../Et2CustomfieldsListRow";
 import "../Et2CustomfieldsFilters";
 import {Et2CustomfieldsBase} from "../Et2CustomfieldsBase";
+import "../../Et2Select/Et2Select";
+import "../../Et2Select/SelectTypes";
+import "../../Et2Textbox/Et2Textbox";
+import "../../Et2Textbox/Et2TextboxReadonly";
+import "../../Et2Textarea/Et2Textarea";
+import "../../Et2Textarea/Et2TextareaReadonly";
+
+const egwStub = {
+	lang: (label : string) => label,
+	link_app_list: () => ({})
+};
+window.egw = function() { return egwStub; } as any;
+Object.assign(window.egw, egwStub);
 
 const customfields = {
 	cf_text: {label: "Text", type: "text", type2: "task"},
@@ -20,7 +33,7 @@ const customfields = {
  * - Render each component variant and assign deterministic customfield metadata.
  *
  * Pass criteria:
- * - Visibility maps reflect mode + filter inputs.
+ * - Visibility maps reflect field, tab, and filter inputs.
  * - Public visibility APIs return predictable field names/maps.
  */
 describe("Et2Customfields webcomponents", () =>
@@ -57,19 +70,45 @@ describe("Et2Customfields webcomponents", () =>
 		element.value = {"#cf_text": "First row"};
 		await element.updateComplete;
 
-		const firstWidget = element.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
+		const firstWidget = element.querySelector("[data-field='cf_text'] > *") as HTMLElement | null;
 		await (firstWidget as any)?.updateComplete;
 		assert.isNull(element.shadowRoot, "customfields list should render into light DOM");
 		assert.isNotNull(firstWidget, "customfields list should create field widgets in its light DOM");
+		assert.equal(firstWidget?.localName, "et2-textbox_ro", "list text customfields should use readonly textboxes");
 		assert.include(firstWidget?.textContent || "", "First row", "field widget should display the current row value");
 
 		element.value = {"#cf_text": "Second row"};
 		await element.updateComplete;
 
-		const secondWidget = element.querySelector("[data-field='cf_text'] et2-description") as HTMLElement | null;
+		const secondWidget = element.querySelector("[data-field='cf_text'] > *") as HTMLElement | null;
 		await (secondWidget as any)?.updateComplete;
 		assert.strictEqual(secondWidget, firstWidget, "unchanged field definitions should keep the same widget instance");
 		assert.include(secondWidget?.textContent || "", "Second row", "row value changes should update the existing widget");
+	});
+
+	it("renders editable et2-customfields with mapped field widgets", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields></et2-customfields>
+		`);
+		element.customfields = {
+			cf_text: {label: "Text", type: "text", rows: 1},
+			cf_notes: {label: "Notes", type: "text", rows: 3}
+		};
+		element.fields = {cf_text: true, cf_notes: true};
+		element.value = {"#cf_text": "Editable text", "#cf_notes": "Editable notes"};
+		await element.updateComplete;
+
+		assert.equal(
+			element.querySelector("[data-field='cf_text'] > *")?.localName,
+			"et2-textbox",
+			"editable single-row text should use textbox"
+		);
+		assert.equal(
+			element.querySelector("[data-field='cf_notes'] > *")?.localName,
+			"et2-textarea",
+			"editable multi-row text should use textarea"
+		);
 	});
 
 	/**
@@ -146,7 +185,7 @@ describe("Et2Customfields webcomponents", () =>
 		assert.notInclude(text, "Unsupported", "row renderer should ignore unprefixed field values");
 	});
 
-	it("applies mode-specific defaults for et2-customfields-filters", async() =>
+	it("defaults et2-customfields-filters to visible fields", async() =>
 	{
 		const element = await fixture<Et2CustomfieldsBase>(html`
 			<et2-customfields-filters></et2-customfields-filters>
@@ -158,6 +197,26 @@ describe("Et2Customfields webcomponents", () =>
 			["cf_text", "cf_select", "cf_private"],
 			"filter widget should default all customfields visible"
 		);
+	});
+
+	it("renders customfields filters as selectboxes and skips non-filter fields", async() =>
+	{
+		const element = await fixture<Et2CustomfieldsBase>(html`
+			<et2-customfields-filters></et2-customfields-filters>
+		`);
+		element.customfields = {
+			cf_text: {label: "Text", type: "text"},
+			cf_select: {label: "Select", type: "select", values: {open: "Open", closed: "Closed"}},
+			cf_file: {label: "File", type: "filemanager"}
+		};
+		await element.updateComplete;
+
+		const select = element.querySelector("[data-field='cf_select'] > *") as any;
+		assert.equal(select?.localName, "et2-select", "select customfield filters should render as selectboxes");
+		assert.equal(select?.emptyLabel, "all", "filter selectbox should use the legacy empty label");
+		assert.isTrue(select?.multiple, "filter selectbox should be multiple");
+		assert.isNull(element.querySelector("[data-field='cf_text']"), "text customfields should not render as filters");
+		assert.isNull(element.querySelector("[data-field='cf_file']"), "filemanager customfields should not render as filters");
 	});
 
 	it("supports type_filter previous across widget instances", async() =>

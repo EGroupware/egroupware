@@ -13,7 +13,6 @@ export interface LegacyVisibilityInput
 	exclude? : string | null;
 	typeFilter? : string | string[] | "previous" | null;
 	tab? : string | null;
-	mode? : "customfields" | "customfields-list" | "customfields-filters" | "nextmatch-customfields";
 	defaultTabMatch? : "" | "-private" | "-non-private" | null;
 }
 
@@ -60,7 +59,6 @@ export function legacyVisibility(input : LegacyVisibilityInput) : Record<string,
 		exclude: input.exclude || "",
 		typeFilter: input.typeFilter ?? null,
 		tab: input.tab ?? null,
-		mode: input.mode || "customfields",
 		defaultTabMatch: input.defaultTabMatch ?? null
 	};
 	const exclude = new Set(String(options.exclude).split(",").map((name) => name.trim()).filter(Boolean));
@@ -108,11 +106,7 @@ export function legacyVisibility(input : LegacyVisibilityInput) : Record<string,
 				continue;
 			}
 			const field = options.customfields[fieldName];
-			if(options.mode === "customfields-filters")
-			{
-				options.fields[fieldName] = true;
-			}
-			else if(field.tab)
+			if(field.tab)
 			{
 				options.fields[fieldName] = field.tab === options.tab;
 			}

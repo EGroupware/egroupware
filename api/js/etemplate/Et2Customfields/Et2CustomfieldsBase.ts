@@ -12,8 +12,6 @@ import {
  */
 export const CUSTOMFIELD_PREFIX = "#";
 
-export type Et2CustomfieldsMode = "customfields" | "customfields-list" | "customfields-filters" | "nextmatch-customfields";
-
 /**
  * Base webcomponent for customfield-based widgets.
  *
@@ -46,9 +44,6 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 
 	@property({type: String})
 	tab : string | null = null;
-
-	@property({attribute: false})
-	mode : Et2CustomfieldsMode = "customfields";
 
 	protected _visibleFields : Record<string, boolean> = {};
 
@@ -84,8 +79,7 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 			changedProperties.has("fields") ||
 			changedProperties.has("exclude") ||
 			changedProperties.has("typeFilter") ||
-			changedProperties.has("tab") ||
-			changedProperties.has("mode")
+			changedProperties.has("tab")
 		)
 		{
 			this._recomputeVisibility();
@@ -215,8 +209,7 @@ export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 			fields: this.fields || {},
 			exclude: this.exclude,
 			typeFilter: this.typeFilter,
-			tab: this.tab,
-			mode: this.mode
+			tab: this.tab
 		});
 		this._visibleFields = this._controller.getVisibleMap();
 	}

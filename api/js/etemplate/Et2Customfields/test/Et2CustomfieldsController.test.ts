@@ -6,7 +6,7 @@ import {legacyVisibility, sampleCustomfields} from "./legacyVisibilityHelper";
  * Contract under test:
  * - `Et2CustomfieldsController` must preserve legacy visibility/filter outcomes
  *   for covered migration scenarios.
- * - Filter-only mode field allowance matches legacy type gate semantics.
+ * - Filter field allowance matches legacy type gate semantics.
  *
  * Setup strategy:
  * - Reuse the same sample customfield definitions and compare controller output
@@ -86,15 +86,28 @@ describe("Et2CustomfieldsController", () =>
 		assert.deepEqual(itemMap, controller.getVisibleMap(), "selection items should mirror visibility state");
 	});
 
-	it("applies legacy filter-mode type allowance rules", () =>
+	it("applies legacy filter field type allowance rules", () =>
+	{
+		const controller = new Et2CustomfieldsController({
+			customfields: sampleCustomfields
+		});
+		assert.isTrue(controller.isAllowedFilterField(sampleCustomfields.cf_project, {project: true}), "app-backed fields should be allowed as filters");
+		assert.isTrue(controller.isAllowedFilterField({type: "select"}, {}), "select fields should be allowed as filters");
+		assert.isFalse(controller.isAllowedFilterField(sampleCustomfields.cf_file, {filemanager: true}), "filemanager should not be allowed as a filter");
+	});
+
+	it("applies tab limits to default visibility", () =>
 	{
 		const controller = new Et2CustomfieldsController({
 			customfields: sampleCustomfields,
-			mode: "customfields-filters"
+			tab: "missing"
 		});
-		assert.isTrue(controller.isAllowedFilterField(sampleCustomfields.cf_project, {project: true}), "app-backed fields should be allowed in filter mode");
-		assert.isTrue(controller.isAllowedFilterField({type: "select"}, {}), "select fields should be allowed in filter mode");
-		assert.isFalse(controller.isAllowedFilterField(sampleCustomfields.cf_file, {filemanager: true}), "filemanager should not be allowed in filter mode");
+		assert.deepEqual(controller.getVisibleMap(), {
+			cf_text: true,
+			cf_project: false,
+			cf_private: true,
+			cf_file: true
+		}, "tab-specific customfields should be hidden when their tab does not match");
 	});
 
 	it("normalizes array-shaped customfields by field name for chooser labels", () =>

@@ -23,7 +23,6 @@ export interface Et2CustomfieldsControllerOptions
 	exclude? : string | null;
 	typeFilter? : string | string[] | "previous" | null;
 	tab? : string | null;
-	mode? : "customfields" | "customfields-list" | "customfields-filters" | "nextmatch-customfields";
 	defaultTabMatch? : "" | "-private" | "-non-private" | null;
 }
 
@@ -101,7 +100,6 @@ export class Et2CustomfieldsController
 
 	private readonly customfields : Record<string, Et2CustomfieldDefinition>;
 	private readonly fieldAliases : Map<string, string> = new Map();
-	private readonly mode : "customfields" | "customfields-list" | "customfields-filters" | "nextmatch-customfields";
 	private readonly tab : string | null;
 	private readonly defaultTabMatch : "" | "-private" | "-non-private" | null;
 	private readonly exclude : Set<string>;
@@ -112,7 +110,6 @@ export class Et2CustomfieldsController
 	constructor(options : Et2CustomfieldsControllerOptions)
 	{
 		this.customfields = this._normalizeCustomfields(options.customfields || {});
-		this.mode = options.mode || "customfields";
 		this.tab = typeof options.tab === "string" && options.tab.length ? options.tab : null;
 		this.defaultTabMatch = options.defaultTabMatch ?? null;
 		this.exclude = this._normalizeExclude(options.exclude);
@@ -351,10 +348,6 @@ export class Et2CustomfieldsController
 				if(this.exclude.has(fieldName))
 				{
 					visible = false;
-				}
-				else if(this.mode === "customfields-filters")
-				{
-					visible = true;
 				}
 				else if(field.tab)
 				{

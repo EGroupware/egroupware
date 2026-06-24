@@ -233,6 +233,20 @@ describe("Legacy customfields visibility baseline", () =>
 		}, "fields without a tab stay visible while matching tab-specific fields remain visible");
 	});
 
+	it("hides tab-specific fields when the active tab does not match", () =>
+	{
+		const visibility = legacyVisibility({
+			customfields: sampleCustomfields,
+			tab: "missing"
+		});
+		assert.deepEqual(visibility, {
+			cf_text: true,
+			cf_project: false,
+			cf_private: true,
+			cf_file: true
+		}, "default visibility is all fields, constrained by tab-specific customfields");
+	});
+
 	it("applies default tab private split rules", () =>
 	{
 		const visibility = legacyVisibility({

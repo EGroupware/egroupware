@@ -3,13 +3,17 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {css, html} from "lit";
 import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
+import {ref} from "lit/directives/ref.js";
 import "../Et2Description/Et2Description";
+import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2CustomfieldWidgetMapper";
 
 /**
- * Read-only customfields list.
+ * @summary Renders read-only customfield widgets.
  *
- * Renders selected customfields using the matching readonly Et2 widget where
- * possible, falling back to et2-description for simple/unknown types.
+ * Field widgets render in light DOM so eTemplate widget lookup,
+ * validation, and event paths can discover generated child widgets. Selected
+ * customfields use the matching readonly Et2 widget when possible and fall back
+ * to `et2-description` for unsupported types.
  *
  * @csspart base - Container around all customfield rows.
  * @csspart field - Container for one visible customfield.
@@ -17,43 +21,34 @@ import "../Et2Description/Et2Description";
 @customElement("et2-customfields-list")
 export class Et2CustomfieldsList extends Et2CustomfieldsBase
 {
-	static get styles()
-	{
-		return [
-			...super.styles,
-			css`
-				:host {
-					display: block;
-				}
+	static styles = [
+		...super.styles,
+		css`
+			:host {
+				display: block;
+			}
 
-				.customfields-list {
-					display: flex;
-					flex-direction: column;
-					gap: var(--sl-spacing-2x-small, 0.25rem);
-				}
+			.customfields-list {
+				display: flex;
+				flex-direction: column;
+				gap: var(--sl-spacing-2x-small, 0.25rem);
+			}
 
-				.customfields-list__field {
-					display: flex;
-					align-items: center;
-					min-width: 0;
-				}
+			.customfields-list__field {
+				display: flex;
+				align-items: center;
+				min-width: 0;
+			}
 
-				.customfields-list__field[hidden] {
-					display: none;
-				}
+			.customfields-list__field[hidden] {
+				display: none;
+			}
 
-				.customfields-list__field > * {
-					min-width: 0;
-				}
-			`
-		];
-	}
-
-	constructor()
-	{
-		super();
-		this.mode = "customfields-list";
-	}
+			.customfields-list__field > * {
+				min-width: 0;
+			}
+		`
+	];
 
 	/**
 	 * Field widgets are intentionally rendered into light DOM so legacy widget
@@ -73,53 +68,21 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 		return this.value?.[CUSTOMFIELD_PREFIX + fieldName] ?? this.value?.[fieldName] ?? "";
 	}
 
-	private _fieldWidgetType(field : Record<string, any>) : string
-	{
-		const type = String(field.type || "text").replace(/_/g, "-");
-		if(type === "text" || type === "int" || type === "float" || type === "serial")
-		{
-			return "et2-description";
-		}
-		const readonlyType = "et2-" + type + "_ro";
-		if(customElements.get(readonlyType))
-		{
-			return readonlyType;
-		}
-		const editableType = "et2-" + type;
-		if(customElements.get(editableType))
-		{
-			return editableType;
-		}
-		return "et2-description";
-	}
-
 	private _fieldWidgetTemplate(fieldName : string, field : Record<string, any>, value : any)
 	{
-		const tag = unsafeStatic(this._fieldWidgetType(field));
-		const common = {
-			id: CUSTOMFIELD_PREFIX + fieldName,
-			label: field.label || fieldName
-		};
-		if(field.help)
+		const mapping = mapCustomfieldToWidget(fieldName, field, value, {
+			context: "list",
+			readonly: true,
+			prefix: CUSTOMFIELD_PREFIX
+		});
+		if(!mapping)
 		{
-			return staticHtml`
-				<${tag}
-					.id=${common.id}
-					.noLang=${true}
-					.value=${value}
-					.statustext=${field.help}
-					.label=${common.label}
-					readonly
-				></${tag}>
-			`;
+			return html``;
 		}
+		const tag = unsafeStatic(mapping.tagName);
 		return staticHtml`
 			<${tag}
-				.id=${common.id}
-				.noLang=${true}
-				.value=${value}
-				.label=${common.label}
-				readonly
+				${ref((element) => applyCustomfieldWidgetMapping(element, mapping))}
 			></${tag}>
 		`;
 	}

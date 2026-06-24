@@ -4,7 +4,7 @@ import {css, html} from "lit";
 import {repeat} from "lit/directives/repeat.js";
 
 /**
- * Lightweight customfields renderer for Et2Datagrid rows.
+ * @summary Renders customfield values as lightweight row text.
  *
  * Datagrid rows can create hundreds of these, so this widget renders plain text
  * values and avoids nested Et2 widgets. Et2Datagrid assigns customfields,
@@ -16,33 +16,24 @@ import {repeat} from "lit/directives/repeat.js";
 @customElement("et2-customfields-list-row")
 export class Et2CustomfieldsListRow extends Et2CustomfieldsBase
 {
-	static get styles()
-	{
-		return [
-			...super.styles,
-			css`
-				:host {
-					display: block;
-				}
+	static styles = [
+		...super.styles,
+		css`
+			:host {
+				display: block;
+			}
 
-				.customfields-list-row {
-					display: flex;
-					flex-direction: column;
-					gap: var(--sl-spacing-2x-small, 0.25rem);
-				}
+			.customfields-list-row {
+				display: flex;
+				flex-direction: column;
+				gap: var(--sl-spacing-2x-small, 0.25rem);
+			}
 
-				.customfields-list-row__field[hidden] {
-					display: none;
-				}
-			`
-		];
-	}
-
-	constructor()
-	{
-		super();
-		this.mode = "customfields-list";
-	}
+			.customfields-list-row__field[hidden] {
+				display: none;
+			}
+		`
+	];
 
 	/**
 	 * Row renderers only support the datagrid row contract: #customfield keys.
