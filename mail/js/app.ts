@@ -1296,7 +1296,7 @@ export class MailApp extends EgwApp
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
 	mail_preview(selected, nextmatch) {
-		let data = {};
+		let data:any = {};
 		let rowId = '';
 		let sel_options = {}
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
@@ -1334,6 +1334,8 @@ export class MailApp extends EgwApp
 				},data));
 			}
 		}
+		// We cannot do any sensible thing if there is no rowId (or data) to act on
+		if(!rowId && Object.keys(data).length === 0) return
 
 		if (data.toaddress||data.fromaddress)
 		{
