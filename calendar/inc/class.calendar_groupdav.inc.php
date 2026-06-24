@@ -943,6 +943,36 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
+	 * Return a UTC timestamp for a recurrence value.
+	 *
+	 * get_series() defaults to server formatted dates, while imported CalDAV (& the rest of calendar)
+	 * events contain DateTime objects.
+	 *
+	 * @param DateTime|string|int $recurrence
+	 * @return int|null
+	 */
+	private static function recurrenceTimestamp($recurrence) : ?int
+	{
+		if(empty($recurrence))
+		{
+			return null;
+		}
+		if($recurrence instanceof DateTimeInterface)
+		{
+			return $recurrence->getTimestamp();
+		}
+		try
+		{
+			return (new Api\DateTime($recurrence, Api\DateTime::$server_timezone))->getTimestamp();
+		}
+		catch (Exception $e)
+		{
+			unset($e);
+			return null;
+		}
+	}
+
+	/**
 	 * Check if $user is a participant of given $event incl. group-invitations
 	 *
 	 * @param array $event
@@ -1505,9 +1535,9 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		foreach(self::get_series($events[0]['uid'],$bo) as $k => $event)
 		{
 			if (!$k) $master = $event;
-			if ($event['recurrence'])
+			if(($recurrence_ts = self::recurrenceTimestamp($event['recurrence'])) !== null)
 			{
-				$org_recurrences[$event['recurrence']->getTimestamp()] = $event;
+				$org_recurrences[$recurrence_ts] = $event;
 			}
 		}
 
@@ -1523,7 +1553,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 
 			// from now on we deal with exceptions
-			$org_recurrence = isset($recurrence['recurrence']) ? $org_recurrences[$recurrence['recurrence']->getTimestamp()] : null;
+			$recurrence_ts = self::recurrenceTimestamp($recurrence['recurrence'] ?? null);
+			$org_recurrence = $recurrence_ts !== null && isset($org_recurrences[$recurrence_ts]) ? $org_recurrences[$recurrence_ts] : null;
 			if (isset($org_recurrence))	// already existing recurrence
 			{
 				//error_log(__METHOD__.'() setting id #'.$org_recurrence['id']).' for '.$recurrence['recurrence'].' = '.date('Y-m-d H:i:s',$recurrence['recurrence']);
@@ -1536,7 +1567,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					$exceptions[] = $recurrence['recurrence'];
 				}
 				// remove recurrence to be able to detect deleted exceptions
-				unset($org_recurrences[$recurrence['recurrence']->getTimestamp()]);
+				unset($org_recurrences[$recurrence_ts]);
 			}
 		}
 		$master['recur_exception'] = array_merge($exceptions, $master['recur_exception']);
