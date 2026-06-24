@@ -1074,9 +1074,8 @@ class calendar_bo
 	{
 		foreach($events as &$event)
 		{
-			$timestamps = !empty($event['whole_day']) ?
-				array('modified', 'created', 'recur_enddate', 'recurrence', 'recur_date', 'deleted') :
-				array('start', 'end', 'modified', 'created', 'recur_enddate', 'recurrence', 'recur_date', 'deleted');
+			$timestamps = array('start', 'end', 'modified', 'created', 'recur_enddate', 'recurrence', 'recur_date',
+			                    'deleted');
 
 			foreach(array_merge($timestamps, $this->getCfTtimestamps()) as $name)
 			{
@@ -1092,6 +1091,12 @@ class calendar_bo
 				$event[$name] = $event[$name] instanceof DateTime ?
 					$event[$name] : new DateTime($event[$name], DateTime::$server_timezone);
 				$event[$name]->setUser();
+			}
+			if($event['whole_day'])
+			{
+				// It should already be like this, but just in case...
+				$event['start']->setTime(0, 0, 0);
+				$event['end']->setTime(23, 59, 59);
 			}
 		}
 	}
