@@ -959,11 +959,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		}
 		if($recurrence instanceof DateTimeInterface)
 		{
-			return $recurrence->getTimestamp();
+			return $recurrence->format('ts');
 		}
 		try
 		{
-			return (new Api\DateTime($recurrence, Api\DateTime::$server_timezone))->getTimestamp();
+			return (new Api\DateTime($recurrence, Api\DateTime::$server_timezone))->format('ts');
 		}
 		catch (Exception $e)
 		{
