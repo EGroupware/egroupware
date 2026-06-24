@@ -23,28 +23,31 @@ import type {Et2CustomfieldWidgetMapping} from "./Et2CustomfieldWidgetMapper";
 @customElement("et2-customfields-filters")
 export class Et2CustomfieldsFilters extends Et2CustomfieldsBase
 {
-	static styles = [
-		...super.styles,
-		css`
-			:host {
-				display: block;
-			}
+	static get styles()
+	{
+		return [
+			...super.styles,
+			css`
+				:host {
+					display: block;
+				}
 
-			.customfields-filters {
-				display: flex;
-				flex-direction: column;
-				gap: var(--sl-spacing-2x-small, 0.25rem);
-			}
+				.customfields-filters {
+					display: flex;
+					flex-direction: column;
+					gap: var(--sl-spacing-2x-small, 0.25rem);
+				}
 
-			.customfields-filters__field {
-				min-width: 0;
-			}
+				.customfields-filters__field {
+					min-width: 0;
+				}
 
-			.customfields-filters__field > * {
-				min-width: 0;
-			}
-		`
-	];
+				.customfields-filters__field > * {
+					min-width: 0;
+				}
+			`
+		];
+	}
 
 	protected createRenderRoot()
 	{

@@ -27,6 +27,11 @@ export const CUSTOMFIELD_PREFIX = "#";
  */
 export class Et2CustomfieldsBase extends Et2Widget(LitElement)
 {
+	static get styles()
+	{
+		return super.styles ?? [];
+	}
+
 	@property({type: Object, attribute: false})
 	customfields : Record<string, any> = {};
 

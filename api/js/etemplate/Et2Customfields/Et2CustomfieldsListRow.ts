@@ -16,24 +16,27 @@ import {repeat} from "lit/directives/repeat.js";
 @customElement("et2-customfields-list-row")
 export class Et2CustomfieldsListRow extends Et2CustomfieldsBase
 {
-	static styles = [
-		...super.styles,
-		css`
-			:host {
-				display: block;
-			}
+	static get styles()
+	{
+		return [
+			...super.styles,
+			css`
+				:host {
+					display: block;
+				}
 
-			.customfields-list-row {
-				display: flex;
-				flex-direction: column;
-				gap: var(--sl-spacing-2x-small, 0.25rem);
-			}
+				.customfields-list-row {
+					display: flex;
+					flex-direction: column;
+					gap: var(--sl-spacing-2x-small, 0.25rem);
+				}
 
-			.customfields-list-row__field[hidden] {
-				display: none;
-			}
-		`
-	];
+				.customfields-list-row__field[hidden] {
+					display: none;
+				}
+			`
+		];
+	}
 
 	/**
 	 * Row renderers only support the datagrid row contract: #customfield keys.

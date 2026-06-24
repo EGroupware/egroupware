@@ -32,38 +32,41 @@ import {Et2Widget} from "../Et2Widget/Et2Widget";
 @customElement("et2-example-card")
 export class Et2ExampleCard extends Et2Widget(LitElement)
 {
-	static styles = [
-		...super.styles,
-		css`
-			:host {
-				--example-color: var(--sl-color-primary-600);
-				display: block;
-			}
+	static get styles()
+	{
+		return [
+			...super.styles,
+			css`
+				:host {
+					--example-color: var(--sl-color-primary-600);
+					display: block;
+				}
 
-			.example-card {
-				display: flex;
-				align-items: center;
-				gap: var(--sl-spacing-small);
-				padding: var(--sl-spacing-medium);
-				border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
-				border-radius: var(--sl-border-radius-medium);
-			}
+				.example-card {
+					display: flex;
+					align-items: center;
+					gap: var(--sl-spacing-small);
+					padding: var(--sl-spacing-medium);
+					border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+					border-radius: var(--sl-border-radius-medium);
+				}
 
-			:host([no-border]) .example-card {
-				border: 0;
-			}
+				:host([no-border]) .example-card {
+					border: 0;
+				}
 
-			.example-card__content {
-				flex: 1 1 auto;
-				min-width: 0;
-			}
+				.example-card__content {
+					flex: 1 1 auto;
+					min-width: 0;
+				}
 
-			.example-card__action {
-				flex: 0 0 auto;
-				color: var(--example-color);
-			}
-		`
-	];
+				.example-card__action {
+					flex: 0 0 auto;
+					color: var(--example-color);
+				}
+			`
+		];
+	}
 
 	/**
 	 * Removes the border around the component.
@@ -264,21 +267,28 @@ value, expose it as a CSS custom property with a sensible token-based default.
 }
 ```
 
+Always define styles as a **static getter** (`static get styles()`), not a static field (`static styles = [...]`).
+TypeScript compiles static field initializers before the prototype chain is fully wired, so `super.styles` is
+`undefined` inside a field initializer. The getter is evaluated lazily at call time, where `super` resolves correctly.
+
 Small amounts of component CSS can be inlined in the component's static `styles`, especially when the styles are only a
 few rules and are easier to read beside the template.
 
 ```ts
 class Et2Example
 {
-	static styles = [
-		...super.styles,
-		css`
-			:host {
-				display: block;
-				min-width: 0;
-			}
-		`
-	];
+	static get styles()
+	{
+		return [
+			...super.styles,
+			css`
+				:host {
+					display: block;
+					min-width: 0;
+				}
+			`
+		];
+	}
 }
 ```
 
@@ -290,10 +300,13 @@ import styles from "./Et2Example.styles";
 
 class Et2Example
 {
-	static styles = [
-		...super.styles,
-		styles
-	];
+	static get styles()
+	{
+		return [
+			...super.styles,
+			styles
+		];
+	}
 }
 ```
 

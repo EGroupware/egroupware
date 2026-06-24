@@ -21,34 +21,37 @@ import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2Custom
 @customElement("et2-customfields-list")
 export class Et2CustomfieldsList extends Et2CustomfieldsBase
 {
-	static styles = [
-		...super.styles,
-		css`
-			:host {
-				display: block;
-			}
+	static get styles()
+	{
+		return [
+			...super.styles,
+			css`
+				:host {
+					display: block;
+				}
 
-			.customfields-list {
-				display: flex;
-				flex-direction: column;
-				gap: var(--sl-spacing-2x-small, 0.25rem);
-			}
+				.customfields-list {
+					display: flex;
+					flex-direction: column;
+					gap: var(--sl-spacing-2x-small, 0.25rem);
+				}
 
-			.customfields-list__field {
-				display: flex;
-				align-items: center;
-				min-width: 0;
-			}
+				.customfields-list__field {
+					display: flex;
+					align-items: center;
+					min-width: 0;
+				}
 
-			.customfields-list__field[hidden] {
-				display: none;
-			}
+				.customfields-list__field[hidden] {
+					display: none;
+				}
 
-			.customfields-list__field > * {
-				min-width: 0;
-			}
-		`
-	];
+				.customfields-list__field > * {
+					min-width: 0;
+				}
+			`
+		];
+	}
 
 	/**
 	 * Field widgets are intentionally rendered into light DOM so legacy widget
