@@ -1079,7 +1079,7 @@ class calendar_bo
 
 			foreach(array_merge($timestamps, $this->getCfTtimestamps()) as $name)
 			{
-				if($event[$name] === 0 || $event[$name] === '0')
+				if(isset($event[$name]) && ($event[$name] === 0 || $event[$name] === '0'))
 				{
 					$event[$name] = null;
 				}

@@ -256,7 +256,7 @@ class calendar_ical extends calendar_boupdate
 		{
 			$organizerURL = '';
 			$organizerCN = false;
-			$recurrence = Api\DateTime::server2user($recur_date, 'ts');
+			$recurrence = $recur_date ? Api\DateTime::server2user($recur_date, 'ts') : 0;
 			$tzid = null;
 
 			if ((!is_array($event) || empty($event['tzid']) && ($event = $event['id'])) &&
