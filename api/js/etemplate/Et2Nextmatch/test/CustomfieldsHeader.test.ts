@@ -63,26 +63,32 @@ describe("Et2CustomfieldsHeader sorting", () =>
 	{
 		const host = document.createElement("div");
 		document.body.append(host);
-		const header = customfieldsHeader();
-		host.append(header);
-		await header.updateComplete;
-		let sortDetail : any = null;
-		host.addEventListener(ET2_NEXTMATCH_SORT_EVENT, (event : CustomEvent) =>
+		try
 		{
-			sortDetail = event.detail;
-		});
+			const header = customfieldsHeader();
+			host.append(header);
+			await header.updateComplete;
+			let sortDetail : any = null;
+			host.addEventListener(ET2_NEXTMATCH_SORT_EVENT, (event : CustomEvent) =>
+			{
+				sortDetail = event.detail;
+			});
 
-		const sortHeader = sortHeaderById(header, "#cf_text");
-		assert.isNotNull(sortHeader, "customfield sort header should render");
-		assert.equal(sortHeader!.getAttribute("id"), "#cf_text", "customfield sort header DOM id should be set");
-		sortHeader!.click();
-		await waitForBubblingHandlers();
+			const sortHeader = sortHeaderById(header, "#cf_text");
+			assert.isNotNull(sortHeader, "customfield sort header should render");
+			assert.equal(sortHeader!.getAttribute("id"), "#cf_text", "customfield sort header DOM id should be set");
+			sortHeader!.click();
+			await waitForBubblingHandlers();
 
-		assert.deepEqual(
-			{id: sortDetail?.id, asc: sortDetail?.asc},
-			{id: "#cf_text", asc: true},
-			"customfield sort event should be emitted"
-		);
-		host.remove();
+			assert.deepEqual(
+				{id: sortDetail?.id, asc: sortDetail?.asc},
+				{id: "#cf_text", asc: true},
+				"customfield sort event should be emitted"
+			);
+		}
+		finally
+		{
+			host.remove();
+		}
 	});
 });

@@ -161,9 +161,11 @@ if(!customElements.get("et2-dg-alignment-fixture"))
 let resizeObserverErrorHandler : ((event : ErrorEvent) => void) | null = null;
 let resizeObserverRejectionHandler : ((event : PromiseRejectionEvent) => void) | null = null;
 let originalResizeObserver : typeof window.ResizeObserver | undefined;
+let originalWindowOnError : OnErrorEventHandler | null = null;
 before(() =>
 {
 	originalResizeObserver = window.ResizeObserver;
+	originalWindowOnError = window.onerror;
 	class ResizeObserverStub
 	{
 		observe() {}
@@ -182,6 +184,19 @@ before(() =>
 		}
 	};
 	window.addEventListener("error", resizeObserverErrorHandler, true);
+	window.onerror = (message, source, lineno, colno, error) =>
+	{
+		const text = String(message || error?.message || "");
+		if(text.includes("ResizeObserver loop completed with undelivered notifications"))
+		{
+			return true;
+		}
+		if(typeof originalWindowOnError === "function")
+		{
+			return originalWindowOnError.call(window, message, source, lineno, colno, error);
+		}
+		return false;
+	};
 	resizeObserverRejectionHandler = (event : PromiseRejectionEvent) =>
 	{
 		const message = String((event?.reason && (event.reason.message || event.reason)) || "");
@@ -209,6 +224,8 @@ after(() =>
 	{
 		window.ResizeObserver = originalResizeObserver;
 	}
+	window.onerror = originalWindowOnError;
+	originalWindowOnError = null;
 });
 
 describe("Et2Datagrid row rendering", () =>

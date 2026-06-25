@@ -883,6 +883,63 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		assert.deepEqual(arrayMgrs.sel_options.data.nonexistent_widget, {opt: "value"});
 	});
 
+	/**
+	 * Contract under test:
+	 * - Numeric row keys in the legacy `rows` payload are row data, not additional metadata.
+	 *
+	 * Setup strategy:
+	 * - Response includes numeric row keys plus additional sel_options.
+	 * - Track content manager writes while fetching an empty ordered page.
+	 *
+	 * Pass criteria:
+	 * - Numeric keys are ignored by additional-data handling.
+	 * - Real additional data is still applied.
+	 */
+	it("ignores numeric row keys when processing additional response data", async() =>
+	{
+		const contentData : Record<string, any> = {};
+		const selOptionsData : Record<string, any> = {};
+		const host = createProviderHost({
+			id: "nm-numeric-row-keys",
+			getArrayMgr: (name : string) =>
+			{
+				if(name === "content")
+				{
+					return {data: contentData, getEntry: (key : string) => contentData[key]};
+				}
+				if(name === "sel_options")
+				{
+					return {data: selOptionsData};
+				}
+				return {data: {}};
+			},
+			getParent: () => ({getArrayMgr: () => ({data: selOptionsData})}),
+			egw: () => ({
+				app_name: () => "addressbook",
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					callback({
+						rows: {
+							0: {id: "addressbook::1", data: {n_fn: "Ada Lovelace"}},
+							sel_options: {
+								filter: {"": "All"}
+							}
+						},
+						order: [],
+						total: 0
+					});
+				},
+				dataRegisterUID: () => {}
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		await provider.fetchPage(0, 25);
+
+		assert.notProperty(contentData, "0", "numeric row key should not be copied into content metadata");
+		assert.deepEqual(selOptionsData.filter, {"": "All"}, "non-row additional data should still be applied");
+	});
+
 // ============================================================================
 // DATAGRID INTEGRATION TESTS
 // ============================================================================

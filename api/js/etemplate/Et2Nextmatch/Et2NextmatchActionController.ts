@@ -741,6 +741,7 @@ export class Et2NextmatchActionController
 	 */
 	customizeRowElement(rowElement : HTMLElement)
 	{
+		this.cleanupDetachedRowActionObjects();
 		if(!rowElement)
 		{
 			return;

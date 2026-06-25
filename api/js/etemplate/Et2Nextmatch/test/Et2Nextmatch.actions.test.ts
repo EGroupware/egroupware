@@ -215,6 +215,60 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Recycled datagrid rows do not leave action objects holding detached DOM nodes.
+	 *
+	 * Setup strategy:
+	 * - Create a row action object through the normal popup-target path.
+	 * - Detach that row and customize a later rendered row.
+	 *
+	 * Pass criteria:
+	 * - The detached row action object is removed during row customization.
+	 */
+	it("prunes detached row action objects while customizing rendered rows", () =>
+	{
+		const removeDetached = sinon.spy();
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_actions_cleanup",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {
+			children: [],
+			data: {},
+			getActionById: () => null,
+			addAction: () => controller.actionManager,
+			updateActions: () => {},
+			setDefaultExecute: () => {}
+		};
+		controller.objectManager = makeFakeObjectManager((rowId) => makeFakeRowObject({
+			id: rowId,
+			remove: removeDetached
+		}));
+
+		const row = document.createElement("div");
+		row.setAttribute("data-row-id", "row::detached");
+		document.body.append(row);
+		controller.findEventRow = () => ({rowId: "row::detached", rowElement: row});
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
+		row.remove();
+
+		const nextRow = document.createElement("div");
+		nextRow.setAttribute("data-row-id", "row::next");
+		document.body.append(nextRow);
+		try
+		{
+			controller.customizeRowElement(nextRow);
+			assert.isTrue(removeDetached.calledOnce, "detached row action object should be removed");
+			assert.isFalse(controller.rowActionObjects.has("row::detached"), "detached action object should leave the map");
+		}
+		finally
+		{
+			nextRow.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
 	 * - Selecting a popup action executes the configured handler with the selected row object.
 	 *
 	 * Setup strategy:

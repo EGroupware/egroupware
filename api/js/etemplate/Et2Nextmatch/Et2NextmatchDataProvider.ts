@@ -111,7 +111,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	{
 		for(let i in additionalData)
 		{
-			if(Number.isInteger(i) || !i)
+			if(!i || /^\d+$/.test(i))
 			{
 				continue;
 			}

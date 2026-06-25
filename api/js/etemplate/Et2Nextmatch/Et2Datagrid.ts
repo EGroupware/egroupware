@@ -3124,7 +3124,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * @return {TemplateResult<1>}
 	 * @private
 	 */
-	private _accessableHeaderTemplate(visibleColumns:Et2DatagridColumn[])
+	private _accessibleHeaderTemplate(visibleColumns:Et2DatagridColumn[])
 	{
 		return html`
 			<td aria-hidden="true"></td>
@@ -3180,7 +3180,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 					>
 						<!-- Accessible / sizing header -->
 						<thead>
-							${this._accessableHeaderTemplate(visibleColumns)}
+							${this._accessibleHeaderTemplate(visibleColumns)}
 						</thead>
                         <tbody id="rows" part="rows" role="rowgroup">
                         ${virtualize({
