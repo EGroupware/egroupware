@@ -1334,8 +1334,6 @@ export class MailApp extends EgwApp
 				},data));
 			}
 		}
-		// We cannot do any sensible thing if there is no rowId (or data) to act on
-		if(!rowId && Object.keys(data).length === 0) return
 
 		if (data.toaddress||data.fromaddress)
 		{
@@ -1355,6 +1353,8 @@ export class MailApp extends EgwApp
 		}
 
 		if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data, sel_options:sel_options});
+		// We cannot do any sensible thing if there is no rowId (or data) to act on after the mailPreview is cleared
+		if(!rowId && Object.keys(data).length === 0) return
 
 		if (selected && selected.length>1)
 		{
