@@ -2901,9 +2901,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this.anchorRowIndex = this._rowsByIndex.length ? this._rowsByIndex.length - 1 : -1;
 		}
-		// Re-emit selection because refreshed/deleted rows may have changed selected row payloads.
 		this._syncRowAccessibilityState();
-		this._emitSelectionChanged();
 		this._reconcileRowRenderState();
 	}
 

@@ -749,6 +749,9 @@ describe("Et2Datagrid row rendering", () =>
 		}) as any;
 		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
 		el.selectSingleRow("addressbook::row-1");
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
+		let selectionEvents = 0;
+		el.addEventListener("et2-selection-changed", () => selectionEvents++);
 
 		await el.refresh(["row-1"], "update" as any);
 		await new Promise((resolve) => window.setTimeout(resolve, 0));
@@ -760,6 +763,7 @@ describe("Et2Datagrid row rendering", () =>
 			"selection should remain anchored to the refreshed row id"
 		);
 		assert.deepEqual(pulsedRowIds, ["addressbook::row-1"], "refresh should schedule a pulse for the updated row");
+		assert.equal(selectionEvents, 0, "refreshing selected row data should not emit a selection change");
 		assert.isTrue(
 			renderedRow.classList.contains("dg-row--refreshed"),
 			"visible refreshed rows should receive the refreshed state class"
