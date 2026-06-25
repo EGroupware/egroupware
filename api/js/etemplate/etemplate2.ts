@@ -589,6 +589,15 @@ export class etemplate2
 	 */
 	download(_url)
 	{
+		//Firefox on mobile (especially on iPhone) does not use the download attribute
+		//on a programmatically clicked <a> Element correctly and destroys the egw session
+		// so we open it in a new tab
+		// that tab instantly closes after download is done, Firefox might display the downloaded file afterward but in a new tab
+		// so at least the egw tab is not destroyed
+		if(egwIsMobile() && /Firefox|FxiOS/.test(navigator.userAgent)){
+			window.open(_url,"_blank","noopener");
+			return;
+		}
 		const a = document.createElement('a');
 		a.href = _url;
 		a.download = 'download';

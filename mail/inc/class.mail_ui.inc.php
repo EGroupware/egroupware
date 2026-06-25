@@ -2118,6 +2118,24 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$image = "<et2-image src='attach'></et2-image>";
 					$datarowid = $this->createRowID($_folderName,$message_uid,true);
 					$attachments = $header['attachments'];
+					//If we have a smime Mail $header['attachments'] has the wrong part value
+					// for the actual attachments we want to display on client side later on
+					// so we use getMessageAttachments(...) instead
+					if ($header['smimeType'])
+					{
+						try
+						{
+							$resolvedAttachments = $this->mail_bo->getMessageAttachments($message_uid, null, null, false, true, true, $_folderName);
+							if (!empty($resolvedAttachments))
+							{
+								$attachments = $resolvedAttachments;
+							}
+						}
+						catch (\Exception $e)
+						{
+							// Keep header attachments as fallback.
+						}
+					}
 					if (count($attachments) == 1)
 					{
 						$image = "<et2-image src='attach' statustext=\"{$attachments[0]['name']}\"></et2-image>";
