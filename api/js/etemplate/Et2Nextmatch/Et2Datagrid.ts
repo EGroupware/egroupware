@@ -61,6 +61,7 @@ interface Et2DatagridCustomfieldColumnState
  * @csspart column-selection - Column selection action container in the header.
  *
  * @cssproperty [--row-height=3em] - Estimated row height used for spacer rendering.
+ * @cssproperty [--row-cell-max-height=10em] - Maximum height for individual row cells before vertical scrolling.
  * @cssproperty [--meta-column-width=0px] - Width of leading metadata column.
  * @cssproperty [--column-sizes] - Grid-template column track definition used by header/body rows.
  * @cssproperty [--column-count=1] - Column count fallback when explicit track sizes are not set.
@@ -1572,7 +1573,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				{
 					const id = element.getAttribute?.("data-et2nm-id");
 					const stored = id ? attrMap[id] : null;
-					const isCustomfieldsRow = element.localName === "et2-customfields-list-row";
+					const isCustomfieldsRow = element.localName === "et2-customfields-list";
 					if(isCustomfieldsRow)
 					{
 						this._applyCustomfieldRowState(element, rowData);
@@ -1645,6 +1646,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			element.fields = visibility;
 		}
+		// No labels in rows
+		element.noLabel = true;
 		const fieldNames = columnState?.visibleFieldNames || (
 			visibility && Object.keys(visibility).length
 				? Object.keys(visibility).filter((name) => visibility[name] === true)
@@ -2072,7 +2075,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._applyColumnLayoutToRowElement(row);
 			const rowIndex = parseInt(row.getAttribute("data-row-index") || "-1", 10);
 			const rowData = rowIndex >= 0 ? this._rowsByIndex[rowIndex]?.data : null;
-			row.querySelectorAll("et2-customfields-list-row").forEach((element) =>
+			row.querySelectorAll("et2-customfields-list").forEach((element) =>
 			{
 				this._applyCustomfieldRowState(element as any, rowData);
 			});
@@ -2163,6 +2166,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _onTableClick(event : MouseEvent)
 	{
+		if(this._isInteractiveRowEventTarget(event))
+		{
+			return;
+		}
 		const target = event.target as HTMLElement | null;
 		const row = target?.closest("[data-row-id]") as HTMLElement | null;
 		if(!row)
@@ -2188,7 +2195,48 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	private _onTablePointerDown(event : PointerEvent)
 	{
+		if(this._isInteractiveRowEventTarget(event))
+		{
+			this._lastPointerToggleSelect = false;
+			return;
+		}
 		this._lastPointerToggleSelect = !!(event.ctrlKey || event.metaKey || event.getModifierState?.("Control") || event.getModifierState?.("Meta"));
+	}
+
+	private _isInteractiveRowEventTarget(event : Event) : boolean
+	{
+		const path = event.composedPath?.() || [];
+		let rowElement : HTMLElement | null = null;
+		for(const node of path)
+		{
+			if(node instanceof HTMLElement && node.closest?.("[data-row-id]"))
+			{
+				rowElement = node.closest("[data-row-id]") as HTMLElement;
+				break;
+			}
+		}
+		if(!rowElement)
+		{
+			return false;
+		}
+
+		const interactiveSelector = [
+			"a[href]",
+			"[role='link']",
+			".et2_clickable"
+		].join(",");
+		for(const node of path)
+		{
+			if(node === rowElement)
+			{
+				return false;
+			}
+			if(node instanceof HTMLElement && node.matches?.(interactiveSelector))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

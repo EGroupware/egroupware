@@ -167,13 +167,17 @@ export default css`
 			box-sizing: border-box;
 			padding: 0px var(--sl-spacing-x-small);
 			min-width: 0;
-			overflow: hidden;
+			max-height: var(--row-cell-max-height, 10em);
+			overflow-x: hidden;
+			overflow-y: auto;
 			text-overflow: ellipsis;
 		}
 
 		tbody td[data-dg-meta-cell="1"] {
 			padding: 0;
 			min-width: 0;
+			max-height: none;
+			overflow: hidden;
 		}
 
 	}
