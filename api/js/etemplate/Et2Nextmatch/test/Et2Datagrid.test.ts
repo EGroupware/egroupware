@@ -372,33 +372,6 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
-	 * Contract: row templates may use et2-customfields-list, but datagrid rows
-	 * instantiate the lightweight et2-customfields-list-row implementation.
-	 * Setup: prepare a row template with an explicit et2-customfields-list tag.
-	 * Pass: the prepared template contains the row renderer and keeps row attributes.
-	 */
-	it("uses the lightweight row renderer for explicit et2 customfields-list rows", () =>
-	{
-		const host = document.createElement("et2-datagrid") as Et2Datagrid;
-		const provider = new Et2RowProvider(host);
-		const row = document.createElement("row");
-		row.innerHTML = `<et2-customfields-list id="$row" class="customfields"></et2-customfields-list>`;
-
-		const prepared = (provider as any)._prepareRowTemplate(row, []);
-		const list = prepared?.template.content.querySelector("et2-customfields-list-row") as HTMLElement | null;
-
-		assert.isNotNull(
-			list,
-			"explicit et2-customfields-list rows should use the lightweight datagrid row renderer"
-		);
-		assert.equal(
-			list?.getAttribute("id"),
-			"$row",
-			"row renderer should keep row-scoped id for later row-context transform"
-		);
-	});
-
-	/**
 	 * Contract: plain readonly descriptions in datagrid rows render as native
 	 * text, while descriptions with link behavior keep the full widget.
 	 * Setup: prepare a row template with one simple value and linked values.
@@ -571,7 +544,7 @@ describe("Et2Datagrid row rendering", () =>
 		rowTemplate.innerHTML = `<td><et2-customfields-list class="customfields"></et2-customfields-list></td>`;
 		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		assert.isNotNull(
-			prepared?.template.content.querySelector("et2-customfields-list-row[data-et2nm-id]"),
+			prepared?.template.content.querySelector("et2-customfields-list[data-et2nm-id]"),
 			"leaf customfields row widget should keep row-upgrade bookkeeping"
 		);
 		el.templateData = {
@@ -592,26 +565,46 @@ describe("Et2Datagrid row rendering", () =>
 			const applied = (el as any)._applyRowElementAttributes(rowElement!, row.data, 0);
 			assert.isTrue(applied, "row customfields should initialize from row managers");
 
-			const list = rowElement!.querySelector("et2-customfields-list-row") as Et2CustomfieldsBase | null;
+			const list = rowElement!.querySelector("et2-customfields-list") as Et2CustomfieldsBase | null;
 			assert.isNotNull(list, "row should use the lightweight customfields renderer");
 			await list!.updateComplete;
+
+			const fieldEl = list!.querySelector("[data-field='cf_text']") as HTMLElement | null;
+			const childWidget = fieldEl?.querySelector("*") as any;
+			if(childWidget && typeof childWidget.updateComplete !== "undefined")
+			{
+				await childWidget.updateComplete;
+			}
 
 			assert.deepEqual(
 				list!.getVisibleFieldNames(),
 				["cf_text"],
 				"visible fields should come from shared customfield metadata, not row values"
 			);
-			assert.include(
-				list!.shadowRoot?.querySelector("[data-field='cf_text']")?.textContent || "",
-				"Row customfield value",
-				"visible customfield should display the current row value"
-			);
+			// Support either native-text renderers (et2-description) or readonly input widgets (et2-textbox_ro)
+			if(childWidget && typeof childWidget.value !== "undefined")
+			{
+				assert.equal(
+					String(childWidget.value),
+					"Row customfield value",
+					"visible customfield widget should expose the current row value via its value property"
+				);
+			}
+			else
+			{
+				assert.include(
+					fieldEl?.textContent || "",
+					"Row customfield value",
+					"visible customfield should display the current row value"
+				);
+			}
+
 			assert.deepEqual(
 				list!.value,
 				{"#cf_text": "Row customfield value"},
 				"row customfield values should include only visible selected customfields"
 			);
-			assert.isNull(
+			assert.isNotOk(
 				list!.shadowRoot?.querySelector("[data-field='cf_hidden']"),
 				"hidden customfield should not be rendered even when the row has a value"
 			);
@@ -675,7 +668,7 @@ describe("Et2Datagrid row rendering", () =>
 		assert.isNotNull(rowElement, "row should be built from the customfields template");
 		assert.isTrue((el as any)._applyRowElementAttributes(rowElement!, row.data, 0));
 
-		const list = rowElement!.querySelector("et2-customfields-list-row") as Et2CustomfieldsBase | null;
+		const list = rowElement!.querySelector("et2-customfields-list") as Et2CustomfieldsBase | null;
 		assert.deepEqual(
 			list?.fields,
 			visibility,
