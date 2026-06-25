@@ -344,7 +344,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			($events =& $this->bo->search([
 				'offset' => $chunk*self::CHUNK_SIZE,
 				'num_rows' => self::CHUNK_SIZE,
-				'date_format' => $is_jscalendar ? 'object' : 'server',
+				'date_format' => 'object',
 			]+$filter)); ++$chunk)
 		{
 			foreach($events as $event)
@@ -783,8 +783,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					'cal_id' => $event['id'],
 					'notify_only' => true
 				], ['participants' =>array_filter($event['participants'], function($key){return is_numeric($key);}, ARRAY_FILTER_USE_KEY)], $event['start_date'], $event['end_date']);
-			}catch (Exception $e)
-			{
+			}
+			catch (Exception $e) {
 				//error_log(__METHOD__.'()'.$e->getMessage());
 				// do nothing
 			}
@@ -1659,8 +1659,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	{
 		if (strpos($column=self::$path_attr,'_') === false) $column = 'cal_'.$column;
 
-		$event = $this->bo->read(array($column => $id, 'cal_reference=0'), null, true,
-			$date_format = Api\CalDAV::isJSON() ? 'object' : 'server');
+		$event = $this->bo->read(array($column => $id, 'cal_reference=0'), null, true, 'object');
 
 		// read with array as 1. param, returns an array of events!
 		// as we no longer return only NOT-deleted events, there might be more

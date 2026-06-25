@@ -1873,6 +1873,12 @@ class calendar_boupdate extends calendar_bo
 		}
 		$tracking->track($save_event, $old_event ?: null);
 
+		// unset the cached event, to fix CalDAV/REST change would return old etag from before the change causing further updates to fail
+		if (self::$cached_event['id'] == $cal_id)
+		{
+			self::$cached_event = [];
+		}
+
 		return $cal_id;
 	}
 
