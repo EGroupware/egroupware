@@ -1035,13 +1035,23 @@ class calendar_uiviews extends calendar_ui
 							$dayEvents[$day][$num]['whole_day']=true;
 						}
 					}
-					$this->to_client($dayEvents[$day][$num]);
 				}
 				// check after every day if we have to increase $this->extraRows
 				if(($this->extraRowsOriginal+$extraRowsToAdd) > $this->extraRows)
 				{
 					$this->remBotExtraRows = $extraRowsToAdd;
 					$this->extraRows = ($this->extraRowsOriginal+$extraRowsToAdd);
+				}
+			}
+
+			// Run to_client() on all events after, since to_client() modifies the event
+			// and we need the original event for the whole day check.  Multi-day events
+			// are in the array as references.
+			foreach($dayEvents as $day => $oneDayEvents)
+			{
+				foreach($oneDayEvents as $num => $event)
+				{
+					$this->to_client($dayEvents[$day][$num]);
 				}
 			}
 		}
