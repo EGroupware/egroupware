@@ -17,7 +17,6 @@ import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
-import {fetchAll, nm_action, nm_compare_field} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import "./CRM";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {LitElement} from "lit";
@@ -198,8 +197,9 @@ class AddressbookApp extends EgwApp
 				// No data on the event, we'll have to reload if calendar column is visible
 				// to get the updated information
 				var nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
-				var pref = nm ? nm._getPreferences() : false;
-				if(pref && pref.visible.indexOf('calendar_calendar') > -1)
+				var visible = nm ? (nm.getValue().selectcols || []) : [];
+				if(typeof visible === 'string') visible = visible.split(',');
+				if(visible.indexOf('calendar_calendar') > -1)
 				{
 					nm.refresh(null,'update');
 				}
@@ -483,7 +483,7 @@ class AddressbookApp extends EgwApp
 		}
 	}
 	/**
-	 * Add appointment or show calendar for selected contacts, call default nm_action after some checks
+	 * Add appointment or show calendar for selected contacts
 	 *
 	 * @param _action
 	 * @param _senders
@@ -493,8 +493,11 @@ class AddressbookApp extends EgwApp
 		if (!_senders[0].id.match(/^(?:addressbook::)?[0-9]+$/))
 		{
 			// send org-view requests to server
-			_action.data.nm_action = "submit";
-			nm_action(_action, _senders);
+			const nm = _action.data?.nextmatch || _action.parent?.data?.nextmatch;
+			return nm.executeAction(_action.id, {
+				ids: _senders.map((sender) => sender.id),
+				all: nm.getSelection().all === true
+			}, {nmAction: "submit"});
 		}
 		else
 		{
@@ -563,24 +566,26 @@ class AddressbookApp extends EgwApp
 	}
 
 	/**
-	 * Add task for selected contacts, call default nm_action after some checks
+	 * Add task for selected contacts
 	 *
 	 * @param _action
 	 * @param _senders
 	 */
 	add_task(_action, _senders)
 	{
+		const nm = _action.data?.nextmatch || _action.parent?.data?.nextmatch;
 		if (!_senders[0].id.match(/^(addressbook::)?[0-9]+$/))
 		{
 			// send org-view requests to server
-			_action.data.nm_action = "submit";
+			return nm.executeAction(_action.id, {
+				ids: _senders.map((sender) => sender.id),
+				all: nm.getSelection().all === true
+			}, {nmAction: "submit"});
 		}
-		else
-		{
-			// call nm_action's popup
-			_action.data.nm_action = "popup";
-		}
-		nm_action(_action, _senders);
+		return nm.executeAction(_action.id, {
+			ids: _senders.map((sender) => sender.id),
+			all: nm.getSelection().all === true
+		}, {nmAction: "popup"});
 	}
 
 	/**
@@ -792,10 +797,11 @@ class AddressbookApp extends EgwApp
 			owner = filter.getValue()||egw.preference('add_default','addressbook');
 		}
 		var contacts = [];
-		if(selected && selected[0] && selected[0].getAllSelected())
+		const nm = this.et2.getWidgetById('nm');
+		if(nm.getSelection().all)
 		{
 			// Action says all contacts selected, better ask the server for _all_ the IDs
-			var fetching = fetchAll(selected, this.et2.getWidgetById('nm'), jQuery.proxy(
+			var fetching = this._fetchAllSelected(nm, jQuery.proxy(
 				function(contacts) {
 					this._add_new_list_prompt(owner, contacts);
 				}, this));
@@ -890,6 +896,18 @@ class AddressbookApp extends EgwApp
 		document.body.appendChild(dialog);
 	}
 
+	_fetchAllSelected(nm, callback)
+	{
+		if(nm.getSelection().all)
+		{
+			nm.fetchAllIds()
+				.then((ids) => callback.call(this, ids))
+				.catch(() => {});
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Rename the current distribution list selected in the nextmatch filter2
 	 *
@@ -974,7 +992,7 @@ class AddressbookApp extends EgwApp
 
 		if(filter2_val == 'add')
 		{
-			this.add_new_list(typeof widget == 'undefined' ? this.et2.getWidgetById('filter').value : widget.header.filter.get_value());
+			this.add_new_list(filter.getValue?.() || filter.get_value?.() || filter.value);
 			filter2.set_value('');
 		}
 		// automatic switch to accounts addressbook or all addressbooks depending on distribution list is a group
@@ -1008,7 +1026,25 @@ class AddressbookApp extends EgwApp
 		if (field) var val = field.get_value();
 		if (val)
 		{
-			return nm_compare_field;
+			return (_action) =>
+			{
+				let field : any = document.getElementById(_action.data.fieldId);
+				let value;
+				if(field)
+				{
+					value = jQuery(field).val();
+				}
+				else
+				{
+					field = _action.data.nextmatch?.getWidgetById(_action.data.fieldId);
+					value = field?.getValue?.();
+				}
+				if(!field) return false;
+
+				return _action.data.fieldValue.substr(0,1) == '!' ?
+					value != _action.data.fieldValue.substr(1) :
+					value == _action.data.fieldValue;
+			};
 		}
 		else
 		{
@@ -1038,7 +1074,7 @@ class AddressbookApp extends EgwApp
 			return false;
 		}
 		// Reset filters first
-		nm.activeFilters = {};
+		nm.applyFilters({}, {reload: false});
 		nm.applyFilters(filters);
 		return false;
 	}
@@ -1054,7 +1090,7 @@ class AddressbookApp extends EgwApp
 		var link = {'preset[type]':[], 'preset[file]':[]};
 		var content = {data:{files:{file:[], type:[]}}};
 		var nm = this.et2.getWidgetById('nm');
-		if(fetchAll(_elems, nm, jQuery.proxy(function(ids) {
+		if(this._fetchAllSelected(nm, jQuery.proxy(function(ids) {
 			this.adb_mail_vcard(_action, ids.map(function(num) {return {id:'addressbook::'+num};}));
 		}, this)))
 		{
@@ -1115,8 +1151,8 @@ class AddressbookApp extends EgwApp
 	{
 		// Check for all selected.
 		if (typeof(nm) === "undefined") nm = this.et2.getWidgetById('nm');
-		if(fetchAll(selected, nm, (ids) => {
-			// fetchAll() returns just the ID, no prefix, so map it to match normal selected
+		if(this._fetchAllSelected(nm, (ids) => {
+			// fetchAllIds() returns just the ID, no prefix, so map it to match normal selected
 			this.addEmail(action, ids.map((num) => { return {id:'addressbook::'+num}; }), nm, which);
 		}))
 		{
@@ -1222,9 +1258,9 @@ class AddressbookApp extends EgwApp
 
 		// Check for all selected, don't resolve until all done
 		let nm = this.et2.getWidgetById('nm');
-		let all = new Promise(function(resolve)
+		let all = new Promise((resolve) =>
 		{
-			let fetching = fetchAll(selected, nm, ids => {resolve(ids.map(function(num) {return {id: 'addressbook::' + num};}))});
+			let fetching = this._fetchAllSelected(nm, ids => {resolve(ids.map(function(num) {return {id: 'addressbook::' + num};}))});
 			if(!fetching)
 			{
 				resolve(selected);
@@ -1431,9 +1467,7 @@ class AddressbookApp extends EgwApp
 			))
 			{
 				const nm = index.widgetContainer.getWidgetById('nm');
-				const action = nm.controller._actionManager.getActionById('view_org');
-				const senders = [{_context: {_widget: nm}}];
-				return nm_action(action, senders, {}, {ids: [state.state.grouped_view]});
+				return nm.executeAction("view_org", {ids: [state.state.grouped_view], all: false}, {nmAction: "submit"});
 			}
 			grouped.value = state.state.grouped_view;
 		}

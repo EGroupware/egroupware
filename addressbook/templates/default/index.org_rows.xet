@@ -14,9 +14,9 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Type" id="type" options="1"/>
-					<nextmatch-header label="#" align="center" id="number" options="Number"/>
-					<nextmatch-sortheader id="org_name" label="Organisation"/>
+                    <nextmatch-header label="Type" id="type"/>
+                    <nextmatch-header label="#" align="center" id="number"/>
+                    <et2-nextmatch-sortheader id="org_name" label="Organisation"/>
 					<nextmatch-header label="Department" id="org_unit"/>
 					<nextmatch-header label="Business address" id="business"/>
 					<et2-vbox>

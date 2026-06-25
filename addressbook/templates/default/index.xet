@@ -28,85 +28,79 @@
             </columns>
             <rows>
                 <row class="th">
-                    <nextmatch-header label="Type" id="type"/>
-                    <grid spacing="0" padding="0">
-                        <columns>
-                            <column/>
-                            <column/>
-                        </columns>
-                        <rows>
-                            <row disabled="!@order=n_fileas">
-                                <nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
-                            </row>
-                            <row disabled="!@order=n_given">
-                                <nextmatch-sortheader label="Firstname" id="n_given"/>
-                                <nextmatch-sortheader label="Name" id="n_family"/>
-                            </row>
-                            <row disabled="!@order=n_family">
-                                <nextmatch-sortheader label="Name" id="n_family"/>
-                                <nextmatch-sortheader label="Firstname" id="n_given"/>
-                            </row>
-                            <row>
-                                <nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
-                            </row>
-                            <row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
-                                <nextmatch-sortheader label="Name" id="n_family"/>
-                                <nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
-                            </row>
-                            <row disabled="@order=n_fileas">
-                                <nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
-                            </row>
-                        </rows>
-                    </grid>
-                    <nextmatch-header label="role" id="role"/>
-                    <nextmatch-header label="Category" id="cat_id"/>
-                    <nextmatch-header label="Photo" id="photo"/>
-                    <nextmatch-header label="Birthday" id="bday"/>
+                    <et2-nextmatch-header label="Type" id="type"/>
                     <et2-vbox>
-                        <nextmatch-header label="Business address" id="business"/>
+                        <et2-hbox disabled="!@order=n_fileas">
+                            <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="!@order=n_given">
+                            <et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="!@order=n_family">
+                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
+                            <et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+                        </et2-hbox>
+                        <et2-hbox>
+                            <et2-nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
+                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
+                            <et2-nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="@order=n_fileas">
+                            <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                        </et2-hbox>
+                    </et2-vbox>
+                    <et2-nextmatch-header label="role" id="role"/>
+                    <et2-nextmatch-header label="Category" id="cat_id"/>
+                    <et2-nextmatch-header label="Photo" id="photo"/>
+                    <et2-nextmatch-header label="Birthday" id="bday"/>
+                    <et2-vbox>
+                        <et2-nextmatch-header label="Business address" id="business"/>
                         <et2-nextmatch-header-custom id="adr_one_countrycode" class="countrySelect"
-                            statustext="{Business address} {country}" widgetType="select-country" emptyLabel="Country"/>
-                        <nextmatch-sortheader label="zip code" id="adr_one_postalcode" statustext="{Business address} {zip code}"/>
+                                                     statustext="{Business address} {country}" widgetType="select-country" emptyLabel="Country"/>
+                        <et2-nextmatch-sortheader label="zip code" id="adr_one_postalcode" statustext="{Business address} {zip code}"/>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-header label="Home address" id="home"/>
+                        <et2-nextmatch-header label="Home address" id="home"/>
                         <et2-nextmatch-header-custom id="adr_two_countrycode" class="countrySelect"
-                            statustext="{Home address} {country}" widgetType="select-country" emptyLabel="Country"/>
-                        <nextmatch-sortheader label="zip code" id="adr_two_postalcode" statustext="{Home address} {zip code}"/>
+                                                     statustext="{Home address} {country}" widgetType="select-country" emptyLabel="Country"/>
+                        <et2-nextmatch-sortheader label="zip code" id="adr_two_postalcode" statustext="{Home address} {zip code}"/>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-header label="Business phone" id="tel_work"/>
-                        <nextmatch-header label="Mobile phone" id="tel_cell"/>
-                        <nextmatch-header label="Home phone" id="tel_home"/>
+                        <et2-nextmatch-header label="Business phone" id="tel_work"/>
+                        <et2-nextmatch-header label="Mobile phone" id="tel_cell"/>
+                        <et2-nextmatch-header label="Home phone" id="tel_home"/>
                         <et2-description value="Fax"></et2-description>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-header label="Url" id="url"/>
-                        <nextmatch-header label="Business email" id="email"/>
-                        <nextmatch-header label="Home email" id="email_home"/>
+                        <et2-nextmatch-header label="Url" id="url"/>
+                        <et2-nextmatch-header label="Business email" id="email"/>
+                        <et2-nextmatch-header label="Home email" id="email_home"/>
                     </et2-vbox>
-                    <nextmatch-header label="Room" id="room"/>
-                    <nextmatch-customfields id="customfields"/>
-                    <nextmatch-header label="Kanban" id="kanban"/>
-                    <nextmatch-header label="Note" id="note"/>
-                    <nextmatch-header label="Distribution lists" id="distribution_list"/>
+                    <et2-nextmatch-header label="Room" id="room"/>
+                    <et2-nextmatch-header-customfields id="customfields"/>
+                    <et2-nextmatch-header label="Kanban" id="kanban"/>
+                    <et2-nextmatch-header label="Note" id="note"/>
+                    <et2-nextmatch-header label="Distribution lists" id="distribution_list"/>
                     <et2-vbox>
-                        <nextmatch-header label="Addressbook" id="owner"/>
+                        <et2-nextmatch-header label="Addressbook" id="owner"/>
                         <et2-nextmatch-header-account id="shared_with" emptyLabel="Shared with" accountType="both"/>
                     </et2-vbox>
-                    <nextmatch-sortheader label="ID" id="contact_id"/>
+                    <et2-nextmatch-sortheader label="ID" id="contact_id"/>
                     <et2-vbox>
-                        <nextmatch-header label="Last date" id="calendar"/>
-                        <nextmatch-header label="Next date" id="calendar"/>
+                        <et2-nextmatch-header label="Last date" id="calendar"/>
+                        <et2-nextmatch-header label="Next date" id="calendar"/>
                     </et2-vbox>
                     <et2-vbox>
-                        <nextmatch-sortheader label="Created" id="contact_created" sortmode="DESC"/>
-                        <nextmatch-sortheader label="Last modified" id="contact_modified" sortmode="DESC"/>
+                        <et2-nextmatch-sortheader label="Created" id="contact_created" sortmode="DESC"/>
+                        <et2-nextmatch-sortheader label="Last modified" id="contact_modified" sortmode="DESC"/>
                     </et2-vbox>
-                    <nextmatch-sortheader label="Username" id="account_lid" sortmode="ASC"/>
+                    <et2-nextmatch-sortheader label="Username" id="account_lid" sortmode="ASC"/>
                     <et2-nextmatch-header-filter ariaLabel="Type" id="tid" emptyLabel="All types"/>
                 </row>
-                <row class="$row_cont[class] $row_cont[cat_id]" valign="top">
+                <row class="$class $cat_id" valign="top">
                     <et2-image align="center" label="$row_cont[type_label]" src="$row_cont[type]" noLang="1"
                                style="font-size: 22px"/>
                     <et2-vbox id="${row}[id]">
@@ -166,7 +160,7 @@
                                        emailDisplay="email"></et2-url-email>
                     </et2-vbox>
                     <et2-description id="${row}[room]"></et2-description>
-                    <customfields-list id="$row" class="customfields"/>
+                    <et2-customfields-list id="$row" class="customfields"/>
                     <et2-link-string entryId="$row_cont[id]" application="addressbook"
                                      onlyApp="kanban"></et2-link-string>
                     <et2-textarea id="${row}[note]" readonly="true" noLang="1" noAiTools="true"></et2-textarea>
@@ -197,13 +191,13 @@
         <et2-hbox id="main_header" width="100%">
             <et2-toolbar id="toolbar">
                 <et2-button-icon statustext="Add a new contact" id="add" image="add" slot="prefix"
-                    onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'870','610','_blank','addressbook',null,true); return false;"
-                        noSubmit="true"></et2-button-icon>
+                                 onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.edit'),'870','610','_blank','addressbook',null,true); return false;"
+                                 noSubmit="true"></et2-button-icon>
                 <template template="api.search-button" slot="prefix"></template>
                 <et2-button statustext="Advanced search" image="advanced-search" id="advanced-search"
-                    label="Advanced search"
-                    onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
-                    noSubmit="true"></et2-button>
+                            label="Advanced search"
+                            onclick="egw(window).openPopup(egw::link('/index.php','menuaction=addressbook.addressbook_ui.extSearch'),'870','610','_blank','addressbook',null,true); return false;"
+                            noSubmit="true"></et2-button>
                 <et2-select label="Select view" statustext="Select a view" id="grouped_view" onchange="app.addressbook.change_grouped_view" noLang="1" emptyLabel="All contacts"></et2-select>
                 <et2-select id="filter" onchange="app.addressbook.changeNmFilter" noLang="1" emptyLabel="All addressbooks" label="Select addressbook"></et2-select>
                 <et2-select-cat id="cat_id" onchange="app.addressbook.changeNmFilter" label="Category"></et2-select-cat>
@@ -213,6 +207,6 @@
     </template>
     <template id="addressbook.index" template="" lang="" group="0" version="1.9.002">
         <template template="addressbook.index.header" slot="main-header"></template>
-        <nextmatch id="nm" template="addressbook.index.rows" span="all"/>
+        <et2-nextmatch id="nm" template="addressbook.index.rows" span="all"/>
     </template>
 </overlay>

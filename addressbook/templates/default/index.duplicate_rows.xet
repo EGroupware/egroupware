@@ -14,35 +14,29 @@
 				<row class="th">
 					<nextmatch-header label="Type" id="type"/>
 					<nextmatch-header label="#" align="center" id="group_count"/>
-					<grid>
-						<columns>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row disabled="!@order=n_fileas">
-								<nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
-							</row>
-							<row disabled="!@order=n_given">
-								<nextmatch-sortheader label="Firstname" id="n_given"/>
-								<nextmatch-sortheader label="Name" id="n_family"/>
-							</row>
-							<row disabled="!@order=n_family">
-								<nextmatch-sortheader label="Name" id="n_family"/>
-								<nextmatch-sortheader label="Firstname" id="n_given"/>
-							</row>
-							<row>
-								<nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
-							</row>
-							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
-								<nextmatch-sortheader label="Name" id="n_family"/>
-								<nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
-							</row>
-							<row disabled="@order=n_fileas">
-								<nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
-							</row>
-						</rows>
-					</grid>
+                    <et2-vbox>
+                        <et2-hbox disabled="!@order=n_fileas">
+                            <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="!@order=n_given">
+                            <et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="!@order=n_family">
+                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
+                            <et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+                        </et2-hbox>
+                        <et2-hbox>
+                            <et2-nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
+                            <et2-nextmatch-sortheader label="Name" id="n_family"/>
+                            <et2-nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
+                        </et2-hbox>
+                        <et2-hbox disabled="@order=n_fileas">
+                            <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
+                        </et2-hbox>
+                    </et2-vbox>
 					<nextmatch-header label="Business address" id="business"/>
 					<!--
 					<et2-vbox>
