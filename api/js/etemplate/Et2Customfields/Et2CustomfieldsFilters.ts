@@ -10,6 +10,7 @@ import {
 	mapCustomfieldToWidget
 } from "./Et2CustomfieldWidgetMapper";
 import type {Et2CustomfieldWidgetMapping} from "./Et2CustomfieldWidgetMapper";
+import "../Et2Link/Et2LinkEntry";
 
 /**
  * @summary Renders customfield filter selectboxes.

@@ -25,7 +25,7 @@ export function mapCustomfieldToWidget(
 {
 	const context = options.context || "list";
 	const prefix = options.prefix || "#";
-	const apps = options.apps || {};
+	const apps = options.apps || defaultLinkApps();
 	const attrs : Record<string, any> = {
 		id: prefix + fieldName,
 		label: field?.label || fieldName,
@@ -61,16 +61,26 @@ export function mapCustomfieldToWidget(
 
 	if(isAppBacked)
 	{
-		widgetType = "link-entry";
 		if(sourceType === "filemanager")
 		{
 			return mapFilemanagerField(fieldName, field, attrs);
 		}
-		delete attrs.label;
-		attrs[attrs.readonly ? "app" : "onlyApp"] = typeof field.only_app === "undefined"
+		const app = typeof field.only_app === "undefined"
 			? sourceType
 			: (field.onlyApp ?? field.only_app);
-		attrs.searchOptions = {filter: field.values || {}};
+		delete attrs.label;
+		attrs.value = normalizeLinkValue(app, value);
+		if(attrs.readonly && context !== "filters")
+		{
+			widgetType = "link";
+			attrs.app = app;
+		}
+		else
+		{
+			widgetType = "link-entry";
+			attrs.onlyApp = app;
+			attrs.searchOptions = {filter: field.values || {}};
+		}
 		return finalizeMapping(widgetType, attrs);
 	}
 
@@ -265,13 +275,52 @@ export function normalizeCustomfieldOptions(source : any) : Array<{value : strin
 		}));
 }
 
+function defaultLinkApps() : Record<string, any>
+{
+	try
+	{
+		const egw = (globalThis as any).egw;
+		const egwInstance = typeof egw === "function" ? egw() : egw;
+		return egwInstance?.link_app_list?.() || {};
+	}
+	catch(e)
+	{
+		return {};
+	}
+}
+
+function normalizeLinkValue(app : string, value : any)
+{
+	if(!value)
+	{
+		return "";
+	}
+	if(typeof value === "object")
+	{
+		return {
+			...value,
+			app: value.app || app,
+			id: value.id ?? value.entryId ?? value.value ?? ""
+		};
+	}
+	return {
+		app,
+		id: String(value)
+	};
+}
+
 export function applyCustomfieldWidgetMapping(element : Element | undefined, mapping : Et2CustomfieldWidgetMapping)
 {
 	if(!element)
 	{
 		return;
 	}
-	for(const [name, value] of Object.entries(mapping.attrs || {}))
+	const attrs = {...(mapping.attrs || {})};
+	if(typeof (element as any).transformAttributes === "function")
+	{
+		(element as any).transformAttributes(attrs);
+	}
+	for(const [name, value] of Object.entries(attrs))
 	{
 		if(typeof value === "undefined")
 		{

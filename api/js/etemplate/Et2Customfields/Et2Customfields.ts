@@ -6,6 +6,7 @@ import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
 import type {Et2CustomfieldWidgetMapping} from "./Et2CustomfieldWidgetMapper";
 import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2CustomfieldWidgetMapper";
+import "../Et2Link/Et2LinkEntry";
 
 /**
  * @summary Renders editable customfield widgets.

@@ -1,7 +1,7 @@
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2DatagridColumn, Et2DatagridTemplateData} from "./Et2Datagrid.types";
-import "../Et2Customfields/Et2CustomfieldsListRow";
+import "../Et2Customfields/Et2CustomfieldsList";
 
 interface Et2RowProviderHost extends HTMLElement
 {
@@ -563,11 +563,6 @@ export class Et2RowProvider
 		if(lightweightDescription)
 		{
 			return lightweightDescription;
-		}
-		if(tag === "et2-customfields-list")
-		{
-			// Datagrid rows use a text-only renderer; the full list widget creates nested Et2 widgets.
-			tag = "et2-customfields-list-row";
 		}
 		if(typeof window.customElements.get(tag + "_ro") !== "undefined")
 		{

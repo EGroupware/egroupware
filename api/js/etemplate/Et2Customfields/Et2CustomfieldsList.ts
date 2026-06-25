@@ -1,10 +1,13 @@
 import {CUSTOMFIELD_PREFIX, Et2CustomfieldsBase} from "./Et2CustomfieldsBase";
 import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 import {css, html} from "lit";
 import {html as staticHtml, unsafeStatic} from "lit/static-html.js";
 import {repeat} from "lit/directives/repeat.js";
 import {ref} from "lit/directives/ref.js";
 import "../Et2Description/Et2Description";
+import "../Et2Link/Et2Link";
+import "../Et2Select/SelectTypes";
 import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2CustomfieldWidgetMapper";
 
 /**
@@ -21,6 +24,9 @@ import {applyCustomfieldWidgetMapping, mapCustomfieldToWidget} from "./Et2Custom
 @customElement("et2-customfields-list")
 export class Et2CustomfieldsList extends Et2CustomfieldsBase
 {
+	@property({type: Boolean, attribute: "no-label", reflect: true})
+	noLabel : boolean = false;
+
 	static get styles()
 	{
 		return [
@@ -49,6 +55,21 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 				.customfields-list__field > * {
 					min-width: 0;
 				}
+
+				:host([no-label]) .customfields-list__field {
+					align-items: stretch;
+					width: 100%;
+				}
+
+				:host([no-label]) .customfields-list__field > * {
+					flex: 1 1 auto;
+					width: 100%;
+					max-width: 100%;
+				}
+
+				:host([no-label]) et2-link::part(remark) {
+					display: none;
+				}
 			`
 		];
 	}
@@ -71,6 +92,11 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 		return this.value?.[CUSTOMFIELD_PREFIX + fieldName] ?? this.value?.[fieldName] ?? "";
 	}
 
+	private _isEmptyValue(value : any) : boolean
+	{
+		return value === null || typeof value === "undefined" || value === "";
+	}
+
 	private _fieldWidgetTemplate(fieldName : string, field : Record<string, any>, value : any)
 	{
 		const mapping = mapCustomfieldToWidget(fieldName, field, value, {
@@ -81,6 +107,10 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 		if(!mapping)
 		{
 			return html``;
+		}
+		if(this.noLabel)
+		{
+			mapping.attrs.label = "";
 		}
 		const tag = unsafeStatic(mapping.tagName);
 		return staticHtml`
@@ -117,6 +147,21 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 				et2-customfields-list .customfields-list__field > * {
 					min-width: 0;
 				}
+
+				et2-customfields-list[no-label] .customfields-list__field {
+					align-items: stretch;
+					width: 100%;
+				}
+
+				et2-customfields-list[no-label] .customfields-list__field > * {
+					flex: 1 1 auto;
+					width: 100%;
+					max-width: 100%;
+				}
+
+				et2-customfields-list[no-label] et2-link::part(remark) {
+					display: none;
+				}
 			</style>
 		`;
 	}
@@ -131,13 +176,18 @@ export class Et2CustomfieldsList extends Et2CustomfieldsBase
 				{
 					const field = this.customfields?.[fieldName] || {};
 					const value = this._fieldValue(fieldName);
+					const empty = this._isEmptyValue(value);
+					if(this.noLabel && empty)
+					{
+						return html``;
+					}
 					return html`
 						<div
 							class="customfields-list__field"
 							part="field"
 							data-field=${fieldName}
 							title=${field.label || fieldName}
-							?hidden=${value === null || typeof value === "undefined" || value === ""}
+							?hidden=${empty}
 						>
 							${this._fieldWidgetTemplate(fieldName, field, value)}
 						</div>

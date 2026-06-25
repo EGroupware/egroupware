@@ -56,6 +56,7 @@ import {et2_IInput} from "../et2_core_interfaces";
  * @csspart grid - Internal `et2-datagrid` element.
  * @csspart footer - Wrapper for bottom slot content rendered below the grid.
  * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
+ * @cssproperty [--row-cell-max-height=10em] - Forwarded to internal datagrid row cell max height.
  * @cssproperty [--meta-column-width=6px] - Width of leading metadata indicator column.
  */
 @customElement("et2-nextmatch")
@@ -1722,13 +1723,28 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _isInteractiveRowEventTarget(event : MouseEvent) : boolean
 	{
 		const rowElement = this._getContextMenuRowElement(event);
-		const target = event.target as HTMLElement | null;
-		const link = target?.closest?.("a");
-		if(!rowElement || !link)
+		if(!rowElement)
 		{
 			return false;
 		}
-		return rowElement.contains(link);
+		const interactiveSelector = [
+			"a[href]",
+			"[role='link']",
+			".et2_clickable"
+		].join(",");
+		const path = event.composedPath?.() || [];
+		for(const node of path)
+		{
+			if(node === rowElement)
+			{
+				return false;
+			}
+			if(node instanceof HTMLElement && node.matches?.(interactiveSelector))
+			{
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
