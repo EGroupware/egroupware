@@ -260,11 +260,11 @@ class calendar_ical extends calendar_boupdate
 			$tzid = null;
 
 			if ((!is_array($event) || empty($event['tzid']) && ($event = $event['id'])) &&
-				!($event = $this->read($event, $recurrence, false, 'server')))
+				!($event = $this->read($event, $recurrence, false, 'object')))
 			{
 				if ($this->read($event, $recurrence, true, 'server'))
 				{
-					if ($this->check_perms(calendar_bo::ACL_FREEBUSY, $event, 0, 'server'))
+					if ($this->check_perms(calendar_bo::ACL_FREEBUSY, $event, 0, 'object'))
 					{
 						$this->clear_private_infos($event, array($this->user, $event['owner']));
 					}
@@ -334,7 +334,7 @@ class calendar_ical extends calendar_boupdate
 
 			if ($recurrence)
 			{
-				if (!($master = $this->read($event['id'], 0, true, 'server'))) continue;
+				if (!($master = $this->read($event['id'], 0, true, 'object'))) continue;
 
 				if (!isset($this->supportedFields['participants']))
 				{
@@ -605,10 +605,14 @@ class calendar_ical extends calendar_boupdate
 						if (empty($event['whole_day']))
 						{
 							// Hack for CalDAVTester to export duration instead of endtime
-							if ($tzid == 'UTC' && ($duration = Api\DateTime::to($event['end'], 'ts') - Api\DateTime::to($event['start'], 'ts')) <= 86400)
+							if ($tzid == 'UTC' && ($duration = $event['end']->getTimeStamp()-$event['start']->getTimeStamp()) <= 86400)
+							{
 								$attributes['duration'] = $duration;
+							}
 							else
-								$attributes['DTEND'] = self::getDateTime($event['end'],$tzid,$parameters['DTEND']);
+							{
+								$attributes['DTEND'] = self::getDateTime($event['end'], $tzid, $parameters['DTEND']);
+							}
 						}
 						else
 						{
@@ -1143,10 +1147,6 @@ class calendar_ical extends calendar_boupdate
 	 */
 	static function getDateTime($time,$tzid,array &$params=null)
 	{
-		if (empty($tzid) || $tzid == 'UTC')
-		{
-			return Api\DateTime::to($time,'ts');
-		}
 		if (!is_a($time,'DateTime'))
 		{
 			$time = new Api\DateTime($time,Api\DateTime::$server_timezone);
@@ -1156,6 +1156,11 @@ class calendar_ical extends calendar_boupdate
 			self::$tz_cache[$tzid] = calendar_timezones::DateTimeZone($tzid);
 		}
 		$time->setTimezone(self::$tz_cache[$tzid]);
+
+		if (empty($tzid) || $tzid == 'UTC')
+		{
+			return $time->format('Ymd\THis\Z');
+		}
 		$params['TZID'] = $tzid;
 
 		return $time->format('Ymd\THis');

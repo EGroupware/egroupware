@@ -813,7 +813,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			// pass in original event as master, as it has correct start-date even if first recurrence is an exception
 			if ($expand || !isset($events))
 			{
-				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event, isset($json) ? 'object' : 'server');
+				$events =& self::get_series($event['uid'], $this->bo, $expand, $user, $event, 'object');
 
 				if (!empty($readd_master))
 				{
@@ -1685,7 +1685,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 		if (!($retval = $this->bo->check_perms(calendar_bo::ACL_FREEBUSY,$event, 0, 'server')) &&
 			// above can be true, if current user is not in master but just a recurrence
-			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo, false, null, null, $date_format))))
+			(!$event['recur_type'] || !($events = self::get_series($event['uid'], $this->bo, false, null, null, 'object'))))
 		{
 			if ($this->debug > 0) error_log(__METHOD__."($id) no READ or FREEBUSY rights returning ".array2string($retval));
 			return $retval;
