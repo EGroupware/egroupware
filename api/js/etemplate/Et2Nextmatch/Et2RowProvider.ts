@@ -597,7 +597,9 @@ export class Et2RowProvider
 			attrMap[assignedId] = {};
 		}
 
-		// Set static attributes through transformAttributes(), keeping row placeholders for row binding.
+		// Resolve row-independent attributes now. Keep row-scoped string
+		// attributes for per-row binding, but let Et2Widget see row-scoped
+		// boolean/function attributes so it can populate deferredProperties.
 		const staticAttrs : Record<string, string> = {};
 		for(const name of source.getAttributeNames())
 		{
@@ -611,20 +613,56 @@ export class Et2RowProvider
 			if(recordAttributes && assignedId && normalizedValue.includes("$"))
 			{
 				attrMap[assignedId][name] = normalizedValue;
+				if(this._shouldTransformForDeferredProperty(element, name))
+				{
+					staticAttrs[name] = normalizedValue;
+				}
 			}
 			else
 			{
-				staticAttrs[name] = value;
+				staticAttrs[name] = normalizedValue;
 			}
 		}
-		const et2Element = element as HTMLElement & { transformAttributes? : (attrs : Record<string, string>) => void };
+		const et2Element = element as HTMLElement & {
+			deferredProperties? : Record<string, string>;
+			transformAttributes? : (attrs : Record<string, string>) => void;
+		};
+		this._setTemplateArrayManagers(et2Element);
 		if(typeof et2Element.transformAttributes === "function" && Object.keys(staticAttrs).length > 0)
 		{
-			et2Element.transformAttributes(staticAttrs);
+			try
+			{
+				et2Element.transformAttributes(staticAttrs);
+			}
+			catch(e)
+			{
+				this.host.egw?.()?.debug?.("error", "Et2RowProvider: failed to transform row template widget", {
+					element: element?.tagName || "",
+					error: e
+				});
+			}
+		}
+		if(recordAttributes && assignedId && et2Element.deferredProperties)
+		{
+			Object.assign(attrMap[assignedId], et2Element.deferredProperties);
 		}
 
 
 		return element;
+	}
+
+	private _setTemplateArrayManagers(element : any)
+	{
+		const contentMgr = this.host.getArrayMgr?.("content");
+		if(contentMgr && element.setArrayMgr)
+		{
+			element.setArrayMgr("content", contentMgr);
+		}
+		const modificationsMgr = this.host.getArrayMgr?.("modifications");
+		if(modificationsMgr && element.setArrayMgr)
+		{
+			element.setArrayMgr("modifications", modificationsMgr);
+		}
 	}
 
 	private _hasTemplateChildren(source : Element) : boolean
@@ -633,6 +671,34 @@ export class Et2RowProvider
 			child.nodeType === Node.ELEMENT_NODE ||
 			child.nodeType === Node.TEXT_NODE && !!child.nodeValue?.trim()
 		);
+	}
+
+	private _shouldTransformForDeferredProperty(element : Element, attributeName : string) : boolean
+	{
+		const widgetClass : any = window.customElements.get(element.localName);
+		if(!widgetClass?.getPropertyOptions)
+		{
+			return false;
+		}
+		const propertyName = this._attributeToPropertyName(attributeName);
+		const property = widgetClass.getPropertyOptions(propertyName);
+		const type = typeof property === "object" ? property.type : property;
+		return type === Boolean || type === Function;
+	}
+
+	private _attributeToPropertyName(attribute : string) : string
+	{
+		if(attribute === "select_options" || attribute.indexOf("_") === -1)
+		{
+			return attribute;
+		}
+		const parts = attribute.split("_");
+		if(attribute === "parent_node")
+		{
+			parts[1] = "Id";
+		}
+		const first = parts.shift() || "";
+		return first + parts.map((part) => part[0].toUpperCase() + part.substring(1)).join("");
 	}
 
 	/**

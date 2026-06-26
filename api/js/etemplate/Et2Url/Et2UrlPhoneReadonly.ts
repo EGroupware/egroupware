@@ -20,9 +20,11 @@ export class Et2UrlPhoneReadonly extends Et2UrlReadonly
 	{
 		if (typeof attrs.onclick === 'undefined')
 		{
-			attrs.onclick = () =>
+			// Use the clicked widget, not the template widget that created this handler.
+			attrs.onclick = function(event)
 			{
-				Et2UrlPhone.action(this.value);
+				const widget = event?.currentTarget || this;
+				Et2UrlPhone.action(widget.value);
 			}
 		}
 		super.transformAttributes(attrs);

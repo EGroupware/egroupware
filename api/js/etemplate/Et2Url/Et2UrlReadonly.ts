@@ -38,11 +38,13 @@ export class Et2UrlReadonly extends Et2Description
 	{
 		if (typeof attrs.onclick === 'undefined')
 		{
-			attrs.onclick = () =>
+			// Use the clicked widget, not the template widget that created this handler.
+			attrs.onclick = function(event)
 			{
-				if(this.value)
+				const widget = event?.currentTarget || this;
+				if(widget.value)
 				{
-					Et2Url.action(this.value);
+					Et2Url.action(widget.value);
 				}
 			}
 		}

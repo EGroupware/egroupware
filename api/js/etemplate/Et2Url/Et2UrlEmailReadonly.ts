@@ -52,18 +52,20 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 	{
 		if (typeof attrs.onclick === 'undefined')
 		{
-			attrs.onclick = () =>
+			// Use the clicked widget, not the template widget that created this handler.
+			attrs.onclick = function(event)
 			{
-				let email=this._value;
+				const widget = event?.currentTarget || this;
+				let email=widget._value;
 				if (!IsEmail.EMAIL_PREG.exec(email))
 				{
-					let name = this._value;
+					let name = widget._value;
 					// do we need to remove the domain in brackets again?
-					if ((this.emailDisplay === 'preference' ? window.egw.preference("emailTag", "mail") : this.emailDisplay) === 'domain')
+					if ((widget.emailDisplay === 'preference' ? window.egw.preference("emailTag", "mail") : widget.emailDisplay) === 'domain')
 					{
-						name = this._value.replace(/ \([^@. ]+\.[^@ )]+\)$/, '');
+						name = widget._value.replace(/ \([^@. ]+\.[^@ )]+\)$/, '');
 					}
-					email = '"' + name + '" <' + this.statustext + '>'
+					email = '"' + name + '" <' + widget.statustext + '>'
 				}
 				if (IsEmail.EMAIL_PREG.exec(email))
 				{

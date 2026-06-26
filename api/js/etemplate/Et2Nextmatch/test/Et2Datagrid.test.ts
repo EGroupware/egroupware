@@ -2,12 +2,15 @@ import {assert} from "@open-wc/testing";
 import {html, LitElement} from "lit";
 import {Et2Datagrid} from "../Et2Datagrid";
 import datagridStyles from "../Et2Datagrid.styles.ts";
-import {Et2RowProvider} from "../Et2RowProvider";
+import {Et2RowProvider} from "../Et2RowProvider.ts";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {Et2CustomfieldsBase} from "../../Et2Customfields/Et2CustomfieldsBase";
 import "../../Et2Customfields/Et2CustomfieldsList";
 import "../../Et2Url/Et2UrlEmail";
 import "../../Et2Url/Et2UrlEmailReadonly";
+import {Et2UrlPhone} from "../../Et2Url/Et2UrlPhone";
+import "../../Et2Url/Et2UrlPhoneReadonly.ts";
+import {Et2Widget} from "../../Et2Widget/Et2Widget";
 
 const egw = {
 	debug: () => {},
@@ -117,6 +120,22 @@ class Et2DatagridContainerFixture extends HTMLElement
 if(!customElements.get("et2-dg-container"))
 {
 	customElements.define("et2-dg-container", Et2DatagridContainerFixture);
+}
+
+class Et2DatagridDeferredFixture extends Et2Widget(LitElement)
+{
+	static get properties()
+	{
+		return {
+			...super.properties,
+			active: {type: Boolean}
+		};
+	}
+}
+
+if(!customElements.get("et2-dg-deferred"))
+{
+	customElements.define("et2-dg-deferred", Et2DatagridDeferredFixture);
 }
 
 class Et2DatagridAlignmentFixture extends LitElement
@@ -522,6 +541,114 @@ describe("Et2Datagrid row rendering", () =>
 			email?.getAttribute("emailDisplay"),
 			"email",
 			"readonly widget should keep attributes needed by its renderer"
+		);
+	});
+
+	/**
+	 * Contract: readonly URL widgets whose id is changed per row use the resolved
+	 * row value for both display and their click action.
+	 * Setup: prepare an addressbook-style phone widget using ${row}[field].
+	 * Pass: clicking the readonly phone widget dials the current row value.
+	 */
+	it("hydrates readonly phone URL row widgets when their id is row-scoped", () =>
+	{
+		const el = createDatagrid();
+		el.setArrayMgr("content", new et2_arrayMgr({phone_label: "Business phone"}));
+		el.columns = [{key: "tel_work", title: "Work phone", width: "1fr"}] as any;
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("tr");
+		const cell = document.createElement("td");
+		cell.innerHTML = `<et2-url-phone id="\${row}[tel_work]" readonly="true" class="telWork" statustext="@phone_label"></et2-url-phone>`;
+		rowTemplate.appendChild(cell);
+
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		const preparedPhone = prepared?.template.content.querySelector("et2-url-phone_ro.telWork") as any;
+		assert.equal(
+			preparedPhone?.getAttribute("statustext"),
+			"Business phone",
+			"@ attributes should be resolved once in the nextmatch namespace"
+		);
+		let templateHandlerValue = "";
+		const originalActionForTemplateHandler = Et2UrlPhone.action;
+		Et2UrlPhone.action = (value) =>
+		{
+			templateHandlerValue = value;
+		};
+		try
+		{
+			preparedPhone.onclick.call({value: "(555) 111-TWO"}, new MouseEvent("click"));
+		}
+		finally
+		{
+			Et2UrlPhone.action = originalActionForTemplateHandler;
+		}
+		assert.equal(
+			templateHandlerValue,
+			"(555) 111-TWO",
+			"phone click handler prepared on the template should use the clicked widget value"
+		);
+		(el as any).templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template ?? null,
+			rowTemplateXml: prepared?.xml ?? null,
+			rowTemplateAttrMap: prepared?.attrMap ?? {}
+		};
+		const row = {id: "row-0", data: {tel_work: "(555) 123-ABCD"}};
+		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLElement;
+
+		(el as any)._applyRowElementAttributes(rowElement, row.data, 0);
+		const phone = rowElement.querySelector("et2-url-phone_ro.telWork") as any;
+		assert.isNotNull(phone, rowElement.outerHTML);
+		let clickedValue = "";
+		const originalAction = Et2UrlPhone.action;
+		Et2UrlPhone.action = (value) =>
+		{
+			clickedValue = value;
+		};
+		assert.equal(typeof phone.onclick, "function", "phone widget should have a callable click handler");
+		try
+		{
+			phone.onclick(new MouseEvent("click"));
+		}
+		finally
+		{
+			Et2UrlPhone.action = originalAction;
+		}
+
+		assert.equal(phone?.localName, "et2-url-phone_ro", "phone URL widgets should use the readonly custom element in rows");
+		assert.equal(phone?.value, row.data.tel_work, "dynamic phone id should be hydrated from row data");
+		assert.equal(clickedValue, row.data.tel_work, "phone click should use the hydrated row value");
+	});
+
+	/**
+	 * Contract: row-scoped boolean attributes use Et2Widget deferredProperties,
+	 * while still being available to the per-row transform pass.
+	 * Setup: prepare a row widget with a boolean property bound to $row_cont.
+	 * Pass: the prepared widget and row attribute map both keep the deferred
+	 * boolean expression for row-time parsing.
+	 */
+	it("keeps Et2Widget deferredProperties for row-scoped boolean attributes", () =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("tr");
+		const cell = document.createElement("td");
+		cell.innerHTML = `<et2-dg-deferred active="$row_cont[active]"></et2-dg-deferred>`;
+		rowTemplate.appendChild(cell);
+
+		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, [{key: "active", title: "Active"}] as any);
+		const widget = prepared?.template.content.querySelector("et2-dg-deferred") as any;
+		const deferredId = widget?.getAttribute("data-et2nm-id");
+
+		assert.equal(
+			widget?.deferredProperties?.active,
+			"$row_cont[active]",
+			"Et2Widget should defer row-scoped boolean attributes during template preparation"
+		);
+		assert.equal(
+			prepared?.attrMap?.[deferredId]?.active,
+			"$row_cont[active]",
+			"datagrid row binding should keep deferred boolean attributes for per-row transform"
 		);
 	});
 
