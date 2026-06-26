@@ -439,7 +439,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 		// sync-collection report --> return modified of last contact as sync-token
 		if ($sync_collection)
 		{
-			$this->sync_collection_token = $event['modified'];
+			$this->sync_collection_token = Api\DateTime::user2server($event['modified'], 'ts');
 		}
 
 		if ($this->debug)
@@ -646,6 +646,11 @@ class calendar_groupdav extends Api\CalDAV\Handler
 					{
 						$parts = explode('/', $option['data']);
 						$sync_token = array_pop($parts);
+						// fix broken sync-tokens in form "Y-m-d H:i:s"
+						if (!is_numeric($sync_token))
+						{
+							$sync_token = (new Api\DateTime($sync_token, Api\DateTime::$server_timezone))->format('ts');
+						}
 						$cal_filters['query'][] = 'cal_modified>'.(int)$sync_token;
 						$cal_filters['filter'] = 'everything';	// to return deleted entries too
 						// no standard time-range!
