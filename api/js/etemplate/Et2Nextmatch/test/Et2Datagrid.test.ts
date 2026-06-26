@@ -6,7 +6,6 @@ import {Et2RowProvider} from "../Et2RowProvider";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {Et2CustomfieldsBase} from "../../Et2Customfields/Et2CustomfieldsBase";
 import "../../Et2Customfields/Et2CustomfieldsList";
-import "../../Et2Customfields/Et2CustomfieldsListRow";
 import "../../Et2Url/Et2UrlEmail";
 import "../../Et2Url/Et2UrlEmailReadonly";
 
