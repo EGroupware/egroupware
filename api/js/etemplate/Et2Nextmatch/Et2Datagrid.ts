@@ -2385,22 +2385,26 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		);
 
 		const dialog = new Et2Dialog(this.egw());
-		const selector = document.createElement("et2-nextmatch-columnselection") as any;
-		selector.columns = columns;
-		dialog.appendChild(selector);
 		dialog.transformAttributes({
 			title: this.egw().lang("Select columns"),
 			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_column_selection.xet"),
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
-			isModal: true
+			isModal: true,
+			value: {
+				modifications: {
+					columns: {
+						columns: columns
+					}
+				}
+			}
 		});
 		document.body.appendChild(dialog);
-		const [buttonId] = await dialog.getComplete();
+		const [buttonId, value] = await dialog.getComplete();
 		if(buttonId !== Et2Dialog.OK_BUTTON)
 		{
 			return;
 		}
-		const selectedOrder = (selector.value || [])
+		const selectedOrder = ((value as any)?.columns || [])
 			.map((value) => this._columnState.decodeSelectionId(String(value)));
 		this.columns = this._columnState.applySelectionOrder(this.columns || [], selectedOrder);
 		this._rebuildCustomfieldColumnStateCache();
