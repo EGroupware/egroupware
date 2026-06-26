@@ -17,7 +17,8 @@ export default css`
 		overflow: hidden;
 		--column-sizes: '';
 		--column-count: 1;
-		--scrollbar-space: 16px;
+		--scrollbar-space: 0px;
+		--column-selection-width: 16px;
 		--row-height: 3em;
 	}
 
@@ -95,7 +96,7 @@ export default css`
 	.dg-colselection {
 		position: absolute;
 		right: 0px;
-		width: 16px;
+		width: var(--column-selection-width);
 		padding:0;
 		justify-items: center;
 		/* Give it a background color in case insufficent space makes it overlap */

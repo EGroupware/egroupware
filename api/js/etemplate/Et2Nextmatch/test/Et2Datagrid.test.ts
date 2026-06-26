@@ -243,6 +243,37 @@ after(() =>
 
 describe("Et2Datagrid row rendering", () =>
 {
+	/**
+	 * Contract: header scrollbar reservation is independent from the column
+	 * selection action width.
+	 * Setup: inspect the datagrid stylesheet used by the alignment fixture.
+	 * Pass: scrollbar reservation defaults to zero and the chooser uses its own
+	 * CSS custom property for width.
+	 */
+	it("does not reserve column chooser width as scrollbar space by default", () =>
+	{
+		const cssText = datagridStyles.cssText;
+
+		assert.include(
+			cssText,
+			"--scrollbar-space: 0px;",
+			"hidden or overlay scrollbars should not reserve phantom header width"
+		);
+		assert.match(
+			cssText,
+			/\.dg-colselection\s*{[\s\S]*width:\s*var\(--column-selection-width\);/,
+			"column chooser should keep a fixed clickable width separate from scrollbar reservation"
+		);
+	});
+
+	/**
+	 * Contract: the visible header grid must align with body cell columns when a
+	 * metadata column is present.
+	 * Setup: render a fixed alignment fixture with a leading meta column and two
+	 * data columns.
+	 * Pass: the first visible header and first visible body cell have the same
+	 * left edge.
+	 */
 	it("aligns visible headers with body cells when meta column has width", async() =>
 	{
 		const host = document.createElement("div");
@@ -273,6 +304,13 @@ describe("Et2Datagrid row rendering", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: persisted customfield visibility is queued until the header
+	 * widget exposes the customfield visibility API.
+	 * Setup: create a customfields column with pending visibility and add the
+	 * header method only after the first replay attempt.
+	 * Pass: visibility remains queued while unavailable, then applies and clears.
+	 */
 	it("replays pending customfield visibility when header becomes ready", () =>
 	{
 		const el = createDatagrid();
@@ -308,6 +346,13 @@ describe("Et2Datagrid row rendering", () =>
 		);
 	});
 
+	/**
+	 * Contract: datagrid row binding applies row-scoped template attributes to
+	 * upgraded row widgets.
+	 * Setup: build a row template with a transform probe and a row attribute map.
+	 * Pass: transformed widget attributes resolve to a displayed non-empty row
+	 * value.
+	 */
 	it("applies transformed widget attributes and values for rendered rows", async() =>
 	{
 		const el = createDatagrid();
@@ -814,6 +859,14 @@ describe("Et2Datagrid row rendering", () =>
 		);
 	});
 
+	/**
+	 * Contract: modern shorthand and legacy row expressions remain supported in
+	 * row template attributes.
+	 * Setup: build a row template using ${row}[field], $field, $class and
+	 * $cat_id placeholders.
+	 * Pass: widget transforms receive expected placeholders and row-level classes
+	 * resolve from row content.
+	 */
 	it("supports modern and legacy row shorthand expressions in template attributes", async() =>
 	{
 		const el = createDatagrid();
@@ -983,6 +1036,13 @@ describe("Et2Datagrid row rendering", () =>
 
 describe("Et2Datagrid keyboard navigation", () =>
 {
+	/**
+	 * Contract: keyboard navigation advances active row state without relying on
+	 * contiguous DOM rows.
+	 * Setup: seed a large virtualized row set, move active state to a middle row,
+	 * then send ArrowDown.
+	 * Pass: active row index and id advance by exactly one row.
+	 */
 	it("advances active row with ArrowDown in virtualized data", async() =>
 	{
 		const el = createDatagrid();
@@ -1002,6 +1062,12 @@ describe("Et2Datagrid keyboard navigation", () =>
 
 describe("Et2Datagrid column sizing", () =>
 {
+	/**
+	 * Contract: static pixel column widths are preserved in the CSS grid track
+	 * definition.
+	 * Setup: render a datagrid with one unitless width and one explicit px width.
+	 * Pass: computed --column-sizes contains normalized pixel tracks for both.
+	 */
 	it("keeps static pixel column widths in CSS grid tracks", async() =>
 	{
 		const host = document.createElement("div");
@@ -1029,6 +1095,12 @@ describe("Et2Datagrid column sizing", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: relative column widths stay relative in the CSS grid track
+	 * definition.
+	 * Setup: render a datagrid with percentage and fr column widths.
+	 * Pass: computed --column-sizes converts percentage to fr and preserves fr.
+	 */
 	it("keeps relative column widths in CSS grid tracks", async() =>
 	{
 		const host = document.createElement("div");
@@ -1056,6 +1128,11 @@ describe("Et2Datagrid column sizing", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: minWidth accepts both unitless and explicit pixel values.
+	 * Setup: render percentage and pixel columns with unitless and px minWidth.
+	 * Pass: computed --column-sizes contains minmax() tracks with pixel minimums.
+	 */
 	it("normalizes minWidth for pixel and unitless values", async() =>
 	{
 		const host = document.createElement("div");
@@ -1087,6 +1164,12 @@ describe("Et2Datagrid column sizing", () =>
 
 describe("Et2Datagrid selection mode", () =>
 {
+	/**
+	 * Contract: initial keyboard focus state does not imply selection.
+	 * Setup: render a two-row grid and reconcile row state.
+	 * Pass: first row is active, selected row set is empty and aria-selected is
+	 * false when the row is rendered.
+	 */
 	it("starts with first row active but not selected", async() =>
 	{
 		const host = document.createElement("div");
@@ -1124,6 +1207,11 @@ describe("Et2Datagrid selection mode", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: arrow-key navigation changes active row without selecting it.
+	 * Setup: render a three-row grid with no initial selection and send ArrowDown.
+	 * Pass: active row moves to the second row while selected row set stays empty.
+	 */
 	it("keeps selection empty when moving active row with ArrowDown", async() =>
 	{
 		const host = document.createElement("div");
@@ -1160,6 +1248,12 @@ describe("Et2Datagrid selection mode", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: keyboard navigation remains available after scroll focus recovery.
+	 * Setup: focus an app container, dispatch a datagrid body scroll, then send
+	 * ArrowDown.
+	 * Pass: active row advances to the next row.
+	 */
 	it("keeps ArrowDown navigation after scroll moves focus to container", async() =>
 	{
 		const host = document.createElement("div");
@@ -1205,6 +1299,14 @@ describe("Et2Datagrid selection mode", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: scroll handling must not steal focus from external controls but
+	 * must still allow grid navigation when focus is on the app container.
+	 * Setup: scroll once while an external input is focused, then scroll with an
+	 * app container focused and send ArrowDown.
+	 * Pass: external input keeps focus and app-container keyboard navigation
+	 * advances the active row.
+	 */
 	it("keeps scroll focus behavior without stealing external focus", async() =>
 	{
 		const host = document.createElement("div");
@@ -1261,6 +1363,12 @@ describe("Et2Datagrid selection mode", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: fetched rows follow the same active-versus-selected behavior as
+	 * preloaded rows.
+	 * Setup: fetch initial rows through the data provider, then send ArrowDown.
+	 * Pass: active row moves to the second fetched row and selection stays empty.
+	 */
 	it("keeps selection empty with fetched rows when moving active row with ArrowDown", async() =>
 	{
 		const host = document.createElement("div");
@@ -1317,6 +1425,12 @@ describe("Et2Datagrid selection mode", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: pointer selection follows the configured selectionMode.
+	 * Setup: exercise none, single and multiple modes on the same three-row grid.
+	 * Pass: none mode ignores changes, single mode replaces selection and
+	 * multiple mode supports additive toggle and range selection.
+	 */
 	it("applies selection behavior for none, single, and multiple selectionMode", async() =>
 	{
 		const host = document.createElement("div");
@@ -1363,6 +1477,13 @@ describe("Et2Datagrid selection mode", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: Ctrl+A selects all rendered rows only in multiple selection mode.
+	 * Setup: render a three-row grid in multiple mode and send a cancelable
+	 * Ctrl+A key event.
+	 * Pass: native select-all is prevented, allSelected is set and all row ids are
+	 * selected.
+	 */
 	it("selects all rows with Ctrl+A in multiple mode", async() =>
 	{
 		const host = document.createElement("div");
@@ -1396,6 +1517,13 @@ describe("Et2Datagrid selection mode", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: Ctrl+A is not intercepted outside multiple selection mode.
+	 * Setup: render a two-row grid in single mode with one selected row, then send
+	 * a cancelable Ctrl+A key event.
+	 * Pass: event default is not prevented, allSelected remains false and
+	 * selection is unchanged.
+	 */
 	it("does not select all rows with Ctrl+A outside multiple mode", async() =>
 	{
 		const host = document.createElement("div");
@@ -1432,6 +1560,12 @@ describe("Et2Datagrid selection mode", () =>
 
 describe("Et2Datagrid virtual height stability", () =>
 {
+	/**
+	 * Contract: placeholder replacement must not shrink the virtual scroll range.
+	 * Setup: seed initial rows, request a later chunk with a deferred provider
+	 * response and compare scrollHeight before, during and after fetch.
+	 * Pass: in-flight and final scroll heights stay at or above baseline.
+	 */
 	it("keeps scroll height stable after replacing placeholders with fetched rows", async() =>
 	{
 		let resolvePage : ((value : any) => void) | null = null;
@@ -1490,6 +1624,13 @@ describe("Et2Datagrid virtual height stability", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: missing chunks deeper than the first page are requested on demand.
+	 * Setup: seed the first chunk and manually request a row index in a later
+	 * chunk.
+	 * Pass: already materialized chunk is not fetched and the later chunk start is
+	 * requested.
+	 */
 	it("requests deeper chunks when rows in a later chunk are needed", async() =>
 	{
 		const calls : number[] = [];
@@ -1545,6 +1686,13 @@ describe("Et2Datagrid virtual height stability", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: scrolling into an unloaded virtualized area requests the matching
+	 * data chunk.
+	 * Setup: seed the first chunk, render a virtual row in a later chunk and
+	 * dispatch scroll.
+	 * Pass: provider is called with the later chunk start.
+	 */
 	it("requests more rows when user scrolls to unloaded chunk", async() =>
 	{
 		const calls : number[] = [];
@@ -1602,6 +1750,11 @@ describe("Et2Datagrid virtual height stability", () =>
 
 describe("Et2Datagrid data loading", () =>
 {
+	/**
+	 * Contract: loadMore does not fetch data already covered by initial rows.
+	 * Setup: preload enough rows to cover the current chunk and call loadMore.
+	 * Pass: provider fetchPage is not called.
+	 */
 	it("does not request rows when there are sufficient rows provided initially", async() =>
 	{
 		let fetchCalls = 0;
@@ -1646,6 +1799,12 @@ describe("Et2Datagrid data loading", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: loadMore does not fetch past the known total row count.
+	 * Setup: preload exactly total rows in a viewport that could otherwise ask for
+	 * more.
+	 * Pass: provider fetchPage is not called and preloaded rows remain intact.
+	 */
 	it("does not request rows when initial rows equal total rows even if viewport has extra space", async() =>
 	{
 		let fetchCalls = 0;
@@ -1692,6 +1851,11 @@ describe("Et2Datagrid data loading", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: an empty grid fetches its first page when loadMore is requested.
+	 * Setup: configure a provider with no preloaded rows and call loadMore.
+	 * Pass: provider fetchPage is called once and fetched rows are rendered.
+	 */
 	it("requests rows when there are no preloaded rows", async() =>
 	{
 		let fetchCalls = 0;

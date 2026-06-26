@@ -65,11 +65,14 @@ interface Et2DatagridCustomfieldColumnState
  * @cssproperty [--meta-column-width=0px] - Width of leading metadata column.
  * @cssproperty [--column-sizes] - Grid-template column track definition used by header/body rows.
  * @cssproperty [--column-count=1] - Column count fallback when explicit track sizes are not set.
- * @cssproperty [--scrollbar-space=15px] - Reserved right-side space in header for body scrollbar alignment.
+ * @cssproperty [--scrollbar-space=0px] - Reserved right-side space in header for body scrollbar alignment.
+ * @cssproperty [--column-selection-width=16px] - Width of the header column selection action.
  */
 @customElement("et2-datagrid")
 export class Et2Datagrid extends Et2Widget(LitElement)
 {
+	private static _browserScrollbarSpacePx : number | null = null;
+
 	/**
 	 * Compose datagrid styles from shared shoelace/widget styles and local datagrid CSS.
 	 */
@@ -243,6 +246,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _columnResizeHandles : HTMLElement[] = [];
 	private _columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
+	private _scrollbarSpacePx : number = 0;
 	private _pendingCustomfieldVisibilityByColumnKey : Map<string, Record<string, boolean>> = new Map();
 	private _customfieldColumnStateByKey : Map<string, Et2DatagridCustomfieldColumnState> = new Map();
 	private _loadedColumnPreferenceKey : string | null = null;
@@ -366,6 +370,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	constructor()
 	{
 		super();
+		this._scrollbarSpacePx = this._browserScrollbarSpace();
 		this._onTableClick = this._onTableClick.bind(this);
 		this._onTablePointerDown = this._onTablePointerDown.bind(this);
 		this._onTableKeydown = this._onTableKeydown.bind(this);
@@ -1869,6 +1874,37 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Measure platform scrollbar width once so columns do not resize as rows
+	 * cross the vertical overflow threshold.
+	 */
+	private _browserScrollbarSpace() : number
+	{
+		if(Et2Datagrid._browserScrollbarSpacePx !== null)
+		{
+			return Et2Datagrid._browserScrollbarSpacePx;
+		}
+		const measurementRoot = document.body || document.documentElement;
+		if(!measurementRoot)
+		{
+			return 0;
+		}
+		const container = document.createElement("div");
+		container.style.position = "absolute";
+		container.style.top = "-9999px";
+		container.style.width = "100px";
+		container.style.height = "100px";
+		container.style.overflow = "scroll";
+		container.style.visibility = "hidden";
+		measurementRoot.appendChild(container);
+
+		const gutter = container.offsetWidth - container.clientWidth;
+		container.remove();
+
+		Et2Datagrid._browserScrollbarSpacePx = Number.isFinite(gutter) && gutter > 0 ? gutter : 0;
+		return Et2Datagrid._browserScrollbarSpacePx;
+	}
+
+	/**
 	 * Keep table columns aligned with currently visible columns.
 	 */
 	private _ensureTableColSizes()
@@ -3152,7 +3188,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const stateTemplate = this._stateTemplate();
 		const styles = {
 			'--column-count' : visibleColumns.length,
-			'--column-sizes': this._columnWidths(visibleColumns)
+			'--column-sizes': this._columnWidths(visibleColumns),
+			'--scrollbar-space': `${this._scrollbarSpacePx}px`
 		}
 		const rowCount = this.total ?? Math.max(this._rowsByIndex.length + this._pendingPlaceholderCount, this.rows.length);
 		const virtualIndexes = this._getVirtualIndexes(rowCount);
