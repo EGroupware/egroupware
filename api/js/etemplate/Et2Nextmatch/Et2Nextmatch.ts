@@ -1233,6 +1233,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const nextColumns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
 		this._templateData = {
 			...templateData,
+			sourceColumns: templateData.sourceColumns?.length ? templateData.sourceColumns : columns,
 			columns: nextColumns
 		};
 	}

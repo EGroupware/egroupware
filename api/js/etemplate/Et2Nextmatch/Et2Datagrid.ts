@@ -430,7 +430,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(changedProperties.has("templateData"))
 		{
 			// Capture source cell->column mapping before user reorders columns.
-			this._sourceColumnKeys = (this.templateData?.columns || this.columns || []).map((column) => String(column.key));
+			this._sourceColumnKeys = (this.templateData?.sourceColumns || this.templateData?.columns || this.columns || []).map((column) => String(column.key));
 		}
 		if(structureChanged)
 		{

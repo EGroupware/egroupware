@@ -54,6 +54,24 @@ export default {
 					document.documentElement.lang = 'en-US';
 					Object.defineProperty(window.navigator, 'language', {value: 'en-US', configurable: true});
 					Object.defineProperty(window.navigator, 'languages', {value: ['en-US'], configurable: true});
+					if(!window.egw)
+					{
+						const egwFallback = function() { return window.egw || egwFallback; };
+						Object.assign(egwFallback, {
+							lang: label => label,
+							debug: () => {},
+							image: () => "",
+							link: link => link,
+							open_link: () => {},
+							tooltipBind: () => {},
+							tooltipUnbind: () => {},
+							preference: () => null,
+							set_preference: () => {},
+							app_name: () => "api",
+							uid: () => "test"
+						});
+						window.egw = egwFallback;
+					}
 				</script>
 				<script type="module">
 					import '${testRunnerImport}';

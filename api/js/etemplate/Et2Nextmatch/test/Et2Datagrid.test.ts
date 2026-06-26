@@ -334,6 +334,54 @@ describe("Et2Datagrid row rendering", () =>
 		);
 	});
 
+	it("uses source column order to align row cells after preference reordering", () =>
+	{
+		const el = createDatagrid();
+		const rowTemplate = document.createElement("template");
+		rowTemplate.innerHTML = `
+			<tr>
+				<td>A cell</td>
+				<td>B cell</td>
+				<td>C cell</td>
+			</tr>
+		`;
+
+		el.columns = [
+			{key: "b", title: "B"},
+			{key: "a", title: "A"},
+			{key: "c", title: "C"}
+		] as any;
+		const sourceColumns = [
+			{key: "a", title: "A"},
+			{key: "b", title: "B"},
+			{key: "c", title: "C"}
+		];
+		el.templateData = {
+			columns: el.columns,
+			sourceColumns,
+			rowTemplate,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null
+		} as any;
+		(el as any).willUpdate(new Map([["templateData", null]]));
+
+		const rowElement = (el as any)._buildRowElement({id: "row-0", data: {}}, 0) as HTMLTableRowElement | null;
+		assert.isNotNull(rowElement, "row should be built from template");
+
+		const visibleCells = Array.from(rowElement!.querySelectorAll(":scope > td:not([data-dg-meta-cell])")) as HTMLElement[];
+		assert.deepEqual(
+			visibleCells.map((cell) => cell.getAttribute("data-col-key")),
+			["b", "a", "c"],
+			"row cells should be reordered to visible column order"
+		);
+		assert.deepEqual(
+			visibleCells.map((cell) => cell.textContent?.trim()),
+			["B cell", "A cell", "C cell"],
+			"cell contents should stay associated with their original source columns"
+		);
+	});
+
 	/**
 	 * Contract: row binding must preserve shared array managers while replacing
 	 * only the content manager with the current row perspective.

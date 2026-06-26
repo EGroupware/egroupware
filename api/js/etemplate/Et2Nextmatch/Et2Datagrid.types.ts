@@ -22,6 +22,8 @@ export interface Et2DatagridTemplateData
 	rowHeight?: number;
 	loaderTemplate : HTMLTemplateElement | null;
 	columns : Et2DatagridColumn[];
+	/** Physical row-template column order before user/preference reordering. */
+	sourceColumns? : Et2DatagridColumn[];
 }
 
 export interface Et2DatagridRow
