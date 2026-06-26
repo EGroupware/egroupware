@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2247fdc7b6bced883e517a829a3b06a",
+    "content-hash": "e54f4ff5cf955165b5954e6a4f09f4d2",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3362,16 +3362,16 @@
         },
         {
             "name": "egroupware/z-push-dev",
-            "version": "2.5.0.1",
+            "version": "2.5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/z-push.git",
-                "reference": "7774018b19b5b55e24dbd1107693496597ab70ee"
+                "reference": "c732735a0fc8b59a8c9f6f9432472c32dd25e645"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/7774018b19b5b55e24dbd1107693496597ab70ee",
-                "reference": "7774018b19b5b55e24dbd1107693496597ab70ee",
+                "url": "https://api.github.com/repos/EGroupware/z-push/zipball/c732735a0fc8b59a8c9f6f9432472c32dd25e645",
+                "reference": "c732735a0fc8b59a8c9f6f9432472c32dd25e645",
                 "shasum": ""
             },
             "require": {
@@ -3385,7 +3385,7 @@
             "description": "Z-Push is an open-source application to synchronize ActiveSync compatible devices",
             "homepage": "http://z-push.org/",
             "support": {
-                "source": "https://github.com/EGroupware/z-push/tree/2.5.0.1"
+                "source": "https://github.com/EGroupware/z-push/tree/2.5.0.2"
             },
             "time": "2015-09-02T00:00:00+00:00"
         },

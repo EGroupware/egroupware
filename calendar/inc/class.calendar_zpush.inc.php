@@ -1081,14 +1081,12 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			'modified' => 'dtstamp',
 		) as $key => $attr)
 		{
-			if (!empty($event[$key])) $message->$attr = is_a($event[$key], '\DateTime') ?
-				Api\DateTime::user2server($event[$key], 'ts') : $event[$key];
+			if (!empty($event[$key])) $message->$attr = $event[$key];
 		}
 		if (($message->alldayevent = (int)calendar_bo::isWholeDay($event)))
 		{
 			// all-day-events in EGw are with time=00:00 in user- and not server-timezone, as used by ZPush
-			$message->starttime = Api\DateTime::user2server($message->starttime,'ts');
-			$message->endtime = Api\DateTime::user2server($message->endtime,'ts')+1;    // EGw all-day-events are 1 sec shorter!
+			$message->endtime->add('1second');    // EGw all-day-events are 1 sec shorter!
 		}
 		// copying strings
 		foreach(array(
@@ -1135,7 +1133,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 
 			$attendee = new SyncAttendee();
 			$attendee->attendeestatus = (int)(self::$status2as[$status]??null);
-			$attendee->attendeetype = (int)self::$role2as[$role];
+			$attendee->attendeetype = (int)(self::$role2as[$role]??1);  // 1=required
 			if (is_numeric($uid))
 			{
 				$attendee->name = $GLOBALS['egw']->accounts->id2name($uid,'account_fullname');
@@ -1202,10 +1200,8 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			}
 			if ($rrule->enddate)	// enddate is only a date, but AS needs a time incl. correct starttime!
 			{
-				$enddate = clone $rrule->time;
-				$enddate->setDate($rrule->enddate->format('Y'), $rrule->enddate->format('m'),
-					$rrule->enddate->format('d'));
-				$recurrence->until = $enddate->format('server');
+				$recurrence->until = (clone $rrule->time)->setDate($rrule->enddate->format('Y'),
+					$rrule->enddate->format('m'), $rrule->enddate->format('d'));
 			}
 
 			if ($rrule->exceptions)
@@ -1231,13 +1227,13 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 				{
 					if ($ex_event['id'] == $event['id']) continue;	// ignore series master
 					$exception = $this->GetMessage($folderid, $ex_event, $contentparameters, 'SyncAppointmentException');
-					$exception->exceptionstarttime = $exception_time = Api\DateTime::user2server($ex_event['recurrence'], 'ts');
+					$exception->exceptionstarttime = $ex_event['recurrence'];
 					foreach(array('attendees','recurrence','uid','timezone','organizername','organizeremail') as $not_supported)
 					{
 						$exception->$not_supported = null;	// not allowed in exceptions :-(
 					}
 					$exception->deleted = 0;
-					if (($key = array_search($exception_time,$event['recur_exception'])) !== false)
+					if (($key = array_search($ex_event['recurrence'], $event['recur_exception'])) !== false)
 					{
 						unset($event['recur_exception'][$key]);
 					}
@@ -1252,7 +1248,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 						if (empty($event['uid'])) ZLog::Write(LOGLEVEL_DEBUG, __METHOD__.__LINE__." BEWARE no UID given for this event:".$event['id'].' but exception is set for '.$exception_time);
 						$exception = new SyncAppointmentException();	// exceptions seems to be full SyncAppointments, with only starttime required
 						$exception->deleted = 1;
-						$exception->exceptionstarttime = Api\DateTime::user2server($exception_time, 'ts');
+						$exception->exceptionstarttime = $exception_time;
 						ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."() added deleted exception ".Api\DateTime::to($exception_time, 'Y-m-d H:i:s').' '.array2string($exception));
 						$message->exceptions[] = $exception;
 					}
@@ -1368,12 +1364,12 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 	 * Just given the exact time of the next transition, which is available via DateTimeZone::getTransistions(),
 	 * will fail for recurring events longer then a year, as the transition date/time changes!
 	 *
-	 * We use now the RRule given in the iCal timezone defintion available via calendar_timezones::tz2id($tz,'component').
+	 * We use now the RRule given in the iCal timezone definition available via calendar_timezones::tz2id($tz,'component').
 	 *
 	 * Not every timezone uses DST, in which case only bias matters and dstbias=0
 	 * (probably all other values should be 0, as MapiMapping::_getGMTTZ() in backend/ics.php does it).
 	 *
-	 * For southern hermisphere DST in southern winter (eg. January), Active Sync implementation of iPhone
+	 * For Southern Hemisphere DST in southern winter (eg. January), Active Sync implementation of iPhone
 	 * uses a negative dstbias (eg. -60) and an accordingly moved start- and end-time.
 	 * For Pacific/Auckland TZ iPhone AS implementation uses -720=-12h instead of 720=+12h.
 	 * Both are corrected now in our Active Sync timezone generation, as we can not find
@@ -1616,7 +1612,7 @@ END:VTIMEZONE
 			}
 			catch(Exception $e) {
 				unset($e);
-				// simpy ignore that, as it only means $tz can NOT be converted, because it has no VTIMEZONE component
+				// simply ignore that, as it only means $tz can NOT be converted, because it has no VTIMEZONE component
 			}
 		}
 		return $cache[$key];
@@ -1724,6 +1720,8 @@ if (isset($_SERVER['SCRIPT_FILENAME']) && realpath($_SERVER['SCRIPT_FILENAME']) 
 		pre.style.display = pre.style.display && pre.style.display == 'none' ? 'block' : 'none';
 	}
 	</script>\n";
+
+	Api\DateTime::$user_timezone = new DateTimeZone('Europe/Berlin');
 
 	// TZID => AS timezone blobs reported by various devices
 	foreach(array(
