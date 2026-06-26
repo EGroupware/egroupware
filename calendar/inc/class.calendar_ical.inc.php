@@ -2916,7 +2916,7 @@ class calendar_ical extends calendar_boupdate
 					foreach($attributes['values'] as $date)
 					{
 						// ToDo: use $date['period'], if set, to allow a different duration than end- - start-time
-						$vcardData['recur_rdates'][] = (new DateTime('now', DateTime::$server_timezone))
+						$vcardData['recur_rdates'][] = (clone $vcardData['start'])  // clone start to preserve TZ
 							->setDate($date['year'], $date['month'], $date['mday'])
 							->setTime($date['hour'] ?? $hour, $date['minute'] ?? $minutes, $date['second'] ?? $seconds);
 					}
@@ -2925,14 +2925,10 @@ class calendar_ical extends calendar_boupdate
 					if ($attributes['values'])
 					{
 						$days = array();
-						$hour = Api\DateTime::to($vcardData['start'], 'H');
-						$minutes = Api\DateTime::to($vcardData['start'], 'i');
-						$seconds = Api\DateTime::to($vcardData['start'], 's');
 						foreach ($attributes['values'] as $day)
 						{
-							$days[] = (new DateTime('now', DateTime::$server_timezone))
-								->setDate($day['year'], $day['month'], $day['mday'])
-								->setTime($hour, $minutes, $seconds);
+							$days[] = (clone $vcardData['start'])  // clone start to preserve TZ
+								->setDate($day['year'], $day['month'], $day['mday']);
 						}
 						$vcardData['recur_exception'] = array_merge($vcardData['recur_exception'], $days);
 					}
