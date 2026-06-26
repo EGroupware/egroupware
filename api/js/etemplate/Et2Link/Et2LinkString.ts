@@ -215,7 +215,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		super.updated(changedProperties);
 
 		if((changedProperties.has("application") || changedProperties.has("entryId") || changedProperties.has("onlyApp") || changedProperties.has("linkType")) &&
-			this.application && this.entryId
+			this.application && this._hasEntryId()
 		)
 		{
 			// Something changed, and we have the information needed to get the matching links
@@ -335,6 +335,10 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 */
 	public get_links(not_saved_links? : LinkInfo[], offset = 0)
 	{
+		if(!this._hasEntryId())
+		{
+			return;
+		}
 		if(this._loading)
 		{
 			// Already waiting
@@ -377,6 +381,11 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 				this._loading = false;
 				this.requestUpdate();
 			})
+	}
+
+	protected _hasEntryId() : boolean
+	{
+		return !!this.entryId && (typeof this.entryId !== "string" || this.entryId.indexOf("$row") === -1);
 	}
 
 	getDetachedAttributes(_attrs : string[])
