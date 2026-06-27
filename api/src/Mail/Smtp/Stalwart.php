@@ -164,13 +164,12 @@ class Stalwart extends Sql
 			'description' => $this->accounts->id2name($_uidnumber, 'account_fullname'),
 			//'emailAddress' => strtolower($account_lid.'@'.$this->defaultDomain),  // is server-set by name and domainId
 			'domainId' => $this->domainId($this->defaultDomain),
-			'aliases' => self::aliasesPatch($aliases),
+			'aliases' => $aliases,
 			'quotas' => ['maxDiskQuota' => $_quota ? $_quota << 20 : null],
-			/* ToDo: seems like credentials can not be updated with pre-hashed passwords :(
-			'credentials' => [[
+			'credentials' => (object)["0" => [  // otherwise PHP's json_encode encodes it as JSON array
 				'@type' => 'Password',
 				'secret' => $this->accounts->id2name($_uidnumber, 'account_pwd'),
-			]]*/
+			]]
 		]);
 		// update account in Stalwart
 		if (($userData = $this->getUserData($_uidnumber)) && !empty($userData['accountStatus']) && $_accountStatus)
@@ -179,11 +178,11 @@ class Stalwart extends Sql
 			// array_diff_assoc() does NOT work with non-scalar values!
 			$diff = array_udiff_assoc($account, $userData['stalwart'], static fn($a, $b) => $a != $b);
 			// trying to delete a not existing quota give a 400 Bad Request
-			if (array_key_exists('quotas', $diff) && !isset($diff['quotas']) && !isset($userData['stalwart']['quotas']['maxDiskQuota']))
+			if (array_key_exists('quotas', $diff) && !isset($diff['quotas']['maxDiskQuota']) && !isset($userData['stalwart']['quotas']['maxDiskQuota']))
 			{
 				unset($diff['quotas']);
 			}
-			if (!($diff['aliases'] = self::aliasesPatch($account['aliases'], $userData['stalwart']['aliases'])))
+			if (($diff['aliases'] = self::aliasesPatch($account['aliases'], $userData['stalwart']['aliases'])) == (object)[])
 			{
 				unset($diff['aliases']);
 			}
@@ -196,7 +195,7 @@ class Stalwart extends Sql
 						]], 'a'
 					]], [Jmap::JMAP_CORE, self::USING_STALWART]);
 
-				if (array_key_exists($userData['stalwart']['id'], $response['methodResponses'][0][1]['updated'] ?? []))
+				if (!array_key_exists($userData['stalwart']['id'], $response['methodResponses'][0][1]['updated'] ?? []))
 				{
 					throw new \Exception("Mail account NOT updated: ".json_encode($response, JSON_UNESCAPED_SLASHES));
 				}
@@ -210,23 +209,17 @@ class Stalwart extends Sql
 		elseif (empty($userData['accountStatus']) && $_accountStatus)
 		{
 			$account['@type'] = 'User';
+			if (!isset($account['quotas']['maxDiskQuota'])) unset($account['quotas']);
+			if (isset($account['aliases'])) $account['aliases'] = (object)$account['aliases'];
 			$response = $this->jmapClient()->jmapCall([
 				['x:Account/set', [
 					'create' => [
 						'new1' => $account,
 					]], 'a'
 				],
-				/* no sure how to specify the accountId
-				['x:AccountPassword/set', [
-					'update' => [
-						'singleton' => [
-							'secret' => $this->accounts->id2name($_uidnumber, 'account_pwd'),
-						]
-					]
-				], 'b']*/
 			], [Jmap::JMAP_CORE, self::USING_STALWART]);
 			// no new account created
-			if (empty($response['methodResponses'][0]['x:Account/set']['created']['new1']['id']))
+			if (empty($response['methodResponses'][0][1]['created']['new1']['id']))
 			{
 				throw new \Exception("Mail account NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES));
 			}
@@ -249,20 +242,20 @@ class Stalwart extends Sql
 	 * Aliases is a map, thought Stalwart uses numerical keys "0", "1", ...
 	 *
 	 * @param array $new
-	 * @param array $old
+	 * @param array|object|null $old
 	 * @return array map or patch for aliases
 	 */
-	protected function aliasesPatch(?array $new, array $old=[])
+	protected function aliasesPatch(array $new, array|object|null $old=null) : object
 	{
 		$aliases = [];
-		foreach($old as $key => $alias)
+		foreach($old ?? [] as $key => $alias)
 		{
-			if (!($found=array_filter($new, function($n, $k) use ($alias)
+			if (!($found=array_filter($new, static function($n) use ($alias)
 			{
 				return $n['name'] === $alias['name'] && $n['domainId'] === $alias['domainId'];
 			})))
 			{
-				$aliases[(string)$key] = null;
+				$aliases[$key] = null;
 			}
 			/* EGroupware has no NOT enabled aliases
 			elseif ($alias['enabled'] != $found[0]['enabled'])
@@ -281,13 +274,12 @@ class Stalwart extends Sql
 				}
 			}
 		}
-		// for new aliases we make up some string keys, to php creates a JSON map/object not an array
-		foreach($new as $k => $alias)
+		$num_old = count(is_object($old) ? get_object_vars($old) : $old);
+		foreach(array_values($new) as $k => $alias)
 		{
-			unset($alias['description']);
-			$aliases["new$k"] = $alias;
+			$aliases[$num_old+$k] = $alias;
 		}
-		return $aliases;
+		return (object)$aliases;    // aliases must be an object, never an array to be a JSON patch
 	}
 
 	/**
