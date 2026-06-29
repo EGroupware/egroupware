@@ -1651,7 +1651,7 @@ class Contacts extends Contacts\Storage
 			$field_list = is_string($this->prefs['link_title_cf']) ? explode(',', $this->prefs['link_title_cf']) : $this->prefs['link_title_cf'];
 			foreach ($field_list as $field)
 			{
-				if($contact['#'.$field])
+				if(!empty($contact['#'.$field]))
 				{
 				   $title .= ', ' . $contact['#'.$field];
 				}
