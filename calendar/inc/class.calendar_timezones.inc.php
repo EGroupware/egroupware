@@ -162,7 +162,7 @@ class calendar_timezones
 			// version 2019b no longer contains BEGIN/END:TIMEZONE and TZID
 			return "BEGIN:VTIMEZONE\r\nTZID:$data[tzid]\r\n$data[component]\r\nEND:VTIMEZONE";
 		}
-		return !$data ? $data : ($what ? $data[$what] : $data);
+		return !$data ? $data : ($what ? ($data[$what] ?? null) : $data);
 	}
 
 	/**
