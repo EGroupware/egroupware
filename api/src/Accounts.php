@@ -726,7 +726,7 @@ class Accounts
 	 */
 	static function email($first,$last,$account,$domain=null)
 	{
-		if ($GLOBALS['egw_info']['server']['email_address_format'] === 'none')
+		if (($GLOBALS['egw_info']['server']['email_address_format']??null) === 'none')
 		{
 			return null;
 		}
@@ -754,7 +754,7 @@ class Accounts
 
 		$email = str_replace(array('first','last','initial','account','dot','underscore','-'),
 			array($first,$last,substr($first,0,1),$account,$dot,$underscore,''),
-			$GLOBALS['egw_info']['server']['email_address_format'] ? $GLOBALS['egw_info']['server']['email_address_format'] : 'first-dot-last').
+			$GLOBALS['egw_info']['server']['email_address_format'] ?? 'first-dot-last').
 			($domain ? '@'.$domain : '');
 
 		if (!empty($GLOBALS['egw_info']['server']['email_address_lowercase']))
