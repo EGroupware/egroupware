@@ -202,7 +202,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 			'start' => $cutoffdate,
 			'enum_recuring' => false,
 			'daywise' => false,
-			'date_format' => 'server',
+			'date_format' => 'DateTime',
 			// default = not rejected, current user return NO meeting requests (status=unknown), as they are returned via email!
 			// with filter="default" iOS 12.3 and z-push 2.5 shows events double: 1. email/meeting-request and 2. calendar entry itself
 			// ToDo: use filter="default", if user does NOT have email or email-notfications in calendar
