@@ -3082,17 +3082,27 @@ export class MailApp extends EgwApp
 				}
 
 				// Update cache & call callbacks - updates list
+				//do not update flags that are already correctly set
 				dataElem.data['class']  = classes.join(' ');
-				const nmRow = _elems[currentIndex] ||
-					this?.nm?.controller?.getObjectManager()?.selectedChildren?.find((item: EgwActionObject) =>
+				const nmRow = data.popup ?
+					(opener?.app?.mail?.nm?.controller?.getObjectManager()?.children?.find(
+							(item: EgwActionObject) =>
+							{
+								if (item.id === data.msg[0]) return item;
+							}
+						)
+					)
+					:
+					((_elems[currentIndex]) ||
+						(this?.nm?.controller?.getObjectManager()?.selectedChildren?.find((item: EgwActionObject) =>
 					{
 						if (item.id === this.mail_currentlyFocussed) return item
-					});
+					})));
 				const nmNode : HTMLElement = nmRow?.iface.getDOMNode();
 
 				//only the class attribute in data has changed, so
 				//we do not need to trigger the nm callbacks we can just
-				//update local Storage and set the classes und the nm row
+				//update local Storage and set the classes on the nm row
 				egw.dataStoreUID(data.msg[i], dataElem.data);
 
 				//set or remove the flag in the DOM since it can no longer come from the server because we do not trigger a full reload
@@ -3197,7 +3207,7 @@ export class MailApp extends EgwApp
 	{
 		//false means do not send back a request response
 		//if we selected only some mails the handling is done clientside already
-		const needsResponse = _elems.all;
+		const needsResponse = _elems.all || this.egw.is_popup();
 		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
 		//	.sendRequest(true);
 	}
@@ -3802,14 +3812,15 @@ export class MailApp extends EgwApp
 				// Check that the ID & interface is there.  Paste is missing iface.
 				if (_actionObjects[i].id.length>0 && _actionObjects[i].iface)
 				{
-					const dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
-					dataElem.addClass(_class);
+					const dataElem: HTMLElement = (_actionObjects[i].iface.getDOMNode());
+					dataElem.classList.add(_class);
 
 				}
 			}
 		}
 		else
 		{
+			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().children;
 			for (let i = 0; i < _actionObjects['msg'].length; i++)
 			{
 				const mail_uid = _actionObjects['msg'][i];
@@ -3823,7 +3834,10 @@ export class MailApp extends EgwApp
 				}
 
 				// Update class
-				dataElem.data['class']  += ' ' + _class;
+				let changed = true;
+				if (dataElem.data['class'].includes(_class))
+					changed = false;
+				if (changed) dataElem.data['class'] += ' ' + _class;
 
 				// need to update flags too
 				switch(_class)
@@ -3831,6 +3845,30 @@ export class MailApp extends EgwApp
 					case 'unseen':
 						delete dataElem.data.flags.read;
 						break;
+				}
+				//check current UI state
+				const action = actions.find(action =>
+				{
+					if (action.id === mail_uid) return action
+				});
+				if (action)
+				{
+					try
+					{
+						const nmNode = action.iface.getDOMNode();
+						if (_class === "unseen")
+						{
+							//image src usually comes from the server but can't anymore in this case so we set it directly
+							const img: Et2Image = nmNode.querySelector(".status_img");
+							if (img) img.src = egw.image("mail_unseen")
+						}
+						nmNode.classList.add(_class)
+						//egwData already hs the correct entrys -- no need to call it again
+						if (changed) egw.dataStoreUID(mail_uid, dataElem.data, true);
+						return;
+					} catch (e)
+					{
+					}
 				}
 
 				// Update record, which updates all listeners (including nextmatch)
@@ -3855,8 +3893,8 @@ export class MailApp extends EgwApp
 			{
 				if (_actionObjects[i].id.length>0)
 				{
-					const dataElem = jQuery(_actionObjects[i].iface.getDOMNode());
-					dataElem.removeClass(_class);
+					const dataElem: HTMLElement = _actionObjects[i].iface.getDOMNode();
+					dataElem.classList.remove(_class);
 
 				}
 			}
