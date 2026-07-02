@@ -85,7 +85,7 @@
   "dependencies": {
     "@bundled-es-modules/pdfjs-dist": "^2.5.207-rc1",
     "@lit-labs/virtualizer": "^2.1.1",
-    "@rollup/plugin-commonjs": "^24.0.1",
+    "@rollup/plugin-commonjs": "^28.0.0",
     "@shoelace-style/shoelace": "2.20.1",
     "@tinymce/tinymce-webcomponent": "^2.4.0",
     "@types/jquery": "^3.5.29",
