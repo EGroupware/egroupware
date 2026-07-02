@@ -429,11 +429,13 @@ export class Et2NextmatchActionController
 		this._selectActionRow(row.rowId, rowObject);
 		const rect = row.rowElement.getBoundingClientRect();
 		const mouseEvent = contextEvent as MouseEvent;
+		const target = this.findContextTarget(contextEvent, row.rowElement);
 		return  rowObject.executeActionImplementation({
 			event: contextEvent,
 			posx: typeof mouseEvent.clientX === "number" ? mouseEvent.clientX : rect.left + (rect.width / 2),
 			posy: typeof mouseEvent.clientY === "number" ? mouseEvent.clientY : rect.top + (rect.height / 2),
-			innerText: row.rowElement.textContent || ""
+			target,
+			innerText: target?.textContent || row.rowElement.textContent || ""
 		}, "popup", EGW_AO_EXEC_SELECTED);
 	}
 
@@ -1514,6 +1516,65 @@ export class Et2NextmatchActionController
 			return {rowId, rowElement: rowFromPoint};
 		}
 		return null;
+	}
+
+	/**
+	 * Resolve the most specific rendered element for row popup context.
+	 *
+	 * Row actions still execute on the row action object, but generic popup
+	 * helpers such as "Copy to OS clipboard" need the clicked widget/cell text
+	 * instead of the whole row text.
+	 */
+	private findContextTarget(event : Event, rowElement : HTMLElement) : HTMLElement
+	{
+		const path = event.composedPath?.() || [];
+		for(const target of path)
+		{
+			if(!(target instanceof HTMLElement) || target === rowElement || !rowElement.contains(target))
+			{
+				continue;
+			}
+			const widget = this.closestContextWidget(target, rowElement);
+			if(widget)
+			{
+				return widget;
+			}
+			if((target.textContent || "").trim())
+			{
+				return target;
+			}
+		}
+		const pointTarget = this.findContextTargetFromPoint(event as MouseEvent, rowElement);
+		return pointTarget || rowElement;
+	}
+
+	private closestContextWidget(target : HTMLElement, rowElement : HTMLElement) : HTMLElement | null
+	{
+		let node : HTMLElement | null = target;
+		while(node && node !== rowElement)
+		{
+			const tagName = node.tagName.toLowerCase();
+			if(tagName.includes("-") || node.hasAttribute("data-et2-id") || node.hasAttribute("data-id"))
+			{
+				return node;
+			}
+			node = node.parentElement;
+		}
+		return null;
+	}
+
+	private findContextTargetFromPoint(event : MouseEvent, rowElement : HTMLElement) : HTMLElement | null
+	{
+		if(typeof event.clientX !== "number" || typeof event.clientY !== "number")
+		{
+			return null;
+		}
+		const deepTarget = this.getDeepElementFromPoint(rowElement.getRootNode() as Document | ShadowRoot, event.clientX, event.clientY);
+		if(!deepTarget || deepTarget === rowElement || !rowElement.contains(deepTarget))
+		{
+			return null;
+		}
+		return this.closestContextWidget(deepTarget, rowElement) || deepTarget;
 	}
 
 	/**

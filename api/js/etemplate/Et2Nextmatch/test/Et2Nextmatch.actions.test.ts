@@ -923,6 +923,62 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Delegated row popup actions execute on the row object.
+	 * - Popup context still exposes the clicked widget as the clipboard/text target.
+	 *
+	 * Setup strategy:
+	 * - Create a row with a child custom element representing a rendered widget.
+	 * - Dispatch the contextmenu from the widget while stubbing row/action lookup.
+	 *
+	 * Pass criteria:
+	 * - The popup context target is the widget.
+	 * - Context text comes from the widget, not the whole row.
+	 */
+	it("uses the clicked widget as row popup context target", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const controller : any = (el as any)._actionController;
+		const row = document.createElement("tr");
+		row.setAttribute("data-row-id", "row::clipboard");
+		const otherCell = document.createElement("td");
+		otherCell.textContent = "Other row text";
+		const cell = document.createElement("td");
+		const widget = document.createElement("et2-label");
+		widget.textContent = "Specific widget text";
+		cell.append(widget);
+		row.append(otherCell, cell);
+		document.body.append(row);
+		const fakeRowObject = {
+			forceSelection: sinon.spy(),
+			executeActionImplementation: sinon.stub().returns(true)
+		};
+
+		sinon.stub(controller, "findEventRow").returns({rowId: "row::clipboard", rowElement: row});
+		sinon.stub(controller, "ensureRowActionObject").returns(fakeRowObject);
+
+		widget.addEventListener("contextmenu", (event) => controller.triggerPopupForRow(event), {once: true});
+		widget.dispatchEvent(new MouseEvent("contextmenu", {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			clientX: 12,
+			clientY: 34
+		}));
+
+		const context = fakeRowObject.executeActionImplementation.firstCall.args[0];
+		assert.strictEqual(context.target, widget, "popup context should target the clicked widget");
+		assert.equal(context.innerText, "Specific widget text", "popup context text should come from the clicked widget");
+
+		(controller.findEventRow as sinon.SinonStub).restore();
+		(controller.ensureRowActionObject as sinon.SinonStub).restore();
+		row.remove();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - Moving pointer beyond movement threshold cancels pending long-press popup.
 	 *
 	 * Setup strategy:
