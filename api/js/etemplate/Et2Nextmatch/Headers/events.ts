@@ -10,6 +10,7 @@ export const ET2_NEXTMATCH_FILTER_EVENT = "et2-nextmatch-filter";
 export type Et2NextmatchSortEventDetail = {
 	id : string;
 	asc? : boolean;
+	clear? : boolean;
 	update? : boolean;
 };
 

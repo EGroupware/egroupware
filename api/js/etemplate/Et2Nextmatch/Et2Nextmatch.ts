@@ -1384,7 +1384,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		);
 		sortHeaders.forEach((header : any) =>
 		{
-			const headerId = String(header.getAttribute?.("id") || "");
+			const headerId = String(header.id || header.getAttribute?.("id") || "");
 			const headerMode = sort?.id && headerId === sort.id ? mode : "none";
 			if(typeof header.setSortmode === "function")
 			{
@@ -1421,7 +1421,22 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 				return;
 			}
-			this.sortBy(detail.id, detail.asc, detail.update);
+			if(detail.clear)
+			{
+				if(detail.update === false)
+				{
+					this._filters.sort = undefined;
+					this._updateSortHeaderState();
+				}
+				else
+				{
+					this.resetSort();
+				}
+			}
+			else
+			{
+				this.sortBy(detail.id, detail.asc, detail.update);
+			}
 			const appName = this._getAppName();
 			if(!appName || !this.template)
 			{

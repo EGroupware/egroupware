@@ -1,6 +1,6 @@
 import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
-import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT} from "../Headers/events";
+import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
 import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
 
@@ -194,6 +194,115 @@ describe("Et2Nextmatch header event handling", () =>
 		await waitForBubblingHandlers();
 
 		assert.deepEqual(el.activeFilters.sort, {id: "title", asc: true}, "sort state should be applied");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Sort headers cycle through unsorted, ascending, descending, and back to
+	 *   unsorted.
+	 *
+	 * Setup strategy:
+	 * - Click a standalone sort header, applying each reflected mode between
+	 *   clicks the same way Nextmatch does after filter state changes.
+	 *
+	 * Pass criteria:
+	 * - The emitted sort detail requests asc, then desc, then clear.
+	 */
+	it("emits a clear sort event after ascending and descending states", async() =>
+	{
+		const sortHeader = document.createElement("et2-nextmatch-sortheader") as any;
+		sortHeader.id = "title";
+		document.body.append(sortHeader);
+		await sortHeader.updateComplete;
+		const sortEvents : Et2NextmatchSortEventDetail[] = [];
+		sortHeader.addEventListener(ET2_NEXTMATCH_SORT_EVENT, (event : CustomEvent<Et2NextmatchSortEventDetail>) =>
+		{
+			event.preventDefault();
+			sortEvents.push({...event.detail});
+		});
+
+		sortHeader.click();
+		sortHeader.setSortmode("asc");
+		sortHeader.click();
+		sortHeader.setSortmode("desc");
+		sortHeader.click();
+
+		assert.deepInclude(sortEvents[0], {id: "title", asc: true}, "first click should request ascending sort");
+		assert.deepInclude(sortEvents[1], {id: "title", asc: false}, "second click should request descending sort");
+		assert.equal(sortEvents[2].id, "title", "third click should still identify the column");
+		assert.isTrue(sortEvents[2].clear, "third click should request clearing the sort");
+		assert.isUndefined(sortEvents[2].asc, "clear event should not include a sort direction");
+		sortHeader.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Sort headers with a descending default still cycle through all three
+	 *   states.
+	 *
+	 * Setup strategy:
+	 * - Click a standalone sort header with `sortmode=DESC`, applying each
+	 *   reflected mode between clicks.
+	 *
+	 * Pass criteria:
+	 * - The emitted sort detail requests desc, then asc, then clear.
+	 */
+	it("keeps the three-state cycle when the default sort direction is descending", async() =>
+	{
+		const sortHeader = document.createElement("et2-nextmatch-sortheader") as any;
+		sortHeader.id = "modified";
+		sortHeader.sortmode = "DESC";
+		document.body.append(sortHeader);
+		await sortHeader.updateComplete;
+		const sortEvents : Et2NextmatchSortEventDetail[] = [];
+		sortHeader.addEventListener(ET2_NEXTMATCH_SORT_EVENT, (event : CustomEvent<Et2NextmatchSortEventDetail>) =>
+		{
+			event.preventDefault();
+			sortEvents.push({...event.detail});
+		});
+
+		sortHeader.click();
+		sortHeader.setSortmode("desc");
+		sortHeader.click();
+		sortHeader.setSortmode("asc");
+		sortHeader.click();
+
+		assert.deepInclude(sortEvents[0], {id: "modified", asc: false}, "first click should request descending sort");
+		assert.deepInclude(sortEvents[1], {id: "modified", asc: true}, "second click should request ascending sort");
+		assert.isTrue(sortEvents[2].clear, "third click should request clearing the sort");
+		assert.isUndefined(sortEvents[2].asc, "clear event should not include a sort direction");
+		sortHeader.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Nextmatch honors explicit clear-sort events from sortable headers.
+	 *
+	 * Setup strategy:
+	 * - Seed an active sort and dispatch a header sort event with `clear`.
+	 *
+	 * Pass criteria:
+	 * - `activeFilters.sort` is cleared.
+	 */
+	it("clears sort state when sort event requests clear", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.applyFilters({sort: {id: "title", asc: false}}, {reload: false});
+		document.body.append(el);
+		await el.updateComplete;
+
+		const eventSource = document.createElement("div");
+		el.append(eventSource);
+		eventSource.dispatchEvent(new CustomEvent(ET2_NEXTMATCH_SORT_EVENT, {
+			bubbles: true,
+			composed: true,
+			cancelable: true,
+			detail: {id: "title", clear: true}
+		}));
+		await waitForBubblingHandlers();
+
+		assert.isUndefined(el.activeFilters.sort, "sort state should be cleared");
 		el.remove();
 	});
 

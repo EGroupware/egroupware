@@ -31,7 +31,7 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 				:host {
 					width: 100%;
 					cursor: pointer;
-					display: inline-block;
+					display: inline-flex;
 					white-space: nowrap;
 				}
 
@@ -39,6 +39,7 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 					padding-right: var(--sl-spacing-large, 20px);
 					overflow: hidden;
 					text-overflow: ellipsis;
+					flex: 1 1 auto;
 				}
 
 				.nextmatch_sortheader:hover {
@@ -47,7 +48,6 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 
 				.nextmatch_sortheader--marker {
 					text-decoration: none;
-					margin-left: var(--sl-spacing-small);
 					background-repeat: no-repeat;
 				}
 			`
@@ -91,7 +91,21 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 
 	private _sortId() : string
 	{
-		return String(this.getAttribute("id") || "");
+		return this.id || this.getAttribute("id") || "";
+	}
+
+	private _nextSortmode() : SortMode
+	{
+		const defaultAsc = String(this.sortmode || "").toUpperCase() !== "DESC";
+		switch(this._currentSortmode)
+		{
+			case "none":
+				return defaultAsc ? "asc" : "desc";
+			case "asc":
+				return defaultAsc ? "desc" : "none";
+			case "desc":
+				return defaultAsc ? "none" : "asc";
+		}
 	}
 
 	/**
@@ -105,15 +119,16 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 		}
 		event.preventDefault();
 
-		const defaultAsc = String(this.sortmode || "").toUpperCase() !== "DESC";
 		const sortId = this._sortId();
+		const nextSortmode = this._nextSortmode();
 		const sortEvent = new CustomEvent<Et2NextmatchSortEventDetail>(ET2_NEXTMATCH_SORT_EVENT, {
 			bubbles: true,
 			composed: true,
 			cancelable: true,
 			detail: {
 				id: sortId,
-				asc: this._currentSortmode === "none" ? defaultAsc : undefined
+				asc: nextSortmode === "none" ? undefined : nextSortmode === "asc",
+				clear: nextSortmode === "none"
 			}
 		});
 		this.dispatchEvent(sortEvent);
@@ -129,7 +144,14 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 			{
 				return;
 			}
-			this.nextmatch.sortBy(sortId, sortEvent.detail.asc, sortEvent.detail.update);
+			if(sortEvent.detail.clear && typeof this.nextmatch.resetSort === "function")
+			{
+				this.nextmatch.resetSort();
+			}
+			else
+			{
+				this.nextmatch.sortBy(sortId, sortEvent.detail.asc, sortEvent.detail.update);
+			}
 			try
 			{
 					this.egw().set_preference(
