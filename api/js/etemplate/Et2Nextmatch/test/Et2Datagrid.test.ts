@@ -6,7 +6,7 @@ import {Et2RowProvider} from "../Et2RowProvider.ts";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {Et2CustomfieldsBase} from "../../Et2Customfields/Et2CustomfieldsBase";
 import "../../Et2Customfields/Et2CustomfieldsList";
-import "../../Et2Url/Et2UrlEmail";
+import {Et2UrlEmail} from "../../Et2Url/Et2UrlEmail";
 import "../../Et2Url/Et2UrlEmailReadonly";
 import {Et2UrlPhone} from "../../Et2Url/Et2UrlPhone";
 import "../../Et2Url/Et2UrlPhoneReadonly.ts";
@@ -587,6 +587,70 @@ describe("Et2Datagrid row rendering", () =>
 			"email",
 			"readonly widget should keep attributes needed by its renderer"
 		);
+	});
+
+	/**
+	 * Contract: row-scoped readonly email URL widgets show a synchronous
+	 * fallback value when preference formatting waits on contact lookup.
+	 * Setup: hydrate a datagrid row while emailDisplay="preference" resolves
+	 * to a name-based display and the contact JSON request does not resolve.
+	 * Pass: the row still displays the raw email and click actions use the
+	 * current row value instead of an empty/stale formatted value.
+	 */
+	it("hydrates readonly email URL row widgets before async preference formatting resolves", () =>
+	{
+		const originalPreference = window.egw.preference;
+		const originalJsonq = window.egw.jsonq;
+		window.egw.preference = () => "onlyname";
+		window.egw.jsonq = () => new Promise(() => {});
+
+		try
+		{
+			const el = createDatagrid();
+			el.columns = [{key: "email", title: "Email", width: "1fr"}] as any;
+			const provider = new Et2RowProvider(el as any);
+			const rowTemplate = document.createElement("tr");
+			const cell = document.createElement("td");
+			cell.innerHTML = `<et2-url-email id="\${row}[email]" readonly="true" emailDisplay="preference"></et2-url-email>`;
+			rowTemplate.appendChild(cell);
+
+			const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+			(el as any).templateData = {
+				columns: el.columns,
+				rowTemplate: prepared?.template ?? null,
+				rowTemplateXml: prepared?.xml ?? null,
+				rowTemplateAttrMap: prepared?.attrMap ?? {}
+			};
+			const row = {id: "row-0", data: {email: "row@example.com"}};
+			const rowElement = (el as any)._buildRowElement(row, 0) as HTMLElement;
+
+			(el as any)._applyRowElementAttributes(rowElement, row.data, 0);
+			const email = rowElement.querySelector("et2-url-email_ro") as any;
+			assert.isNotNull(email, rowElement.outerHTML);
+
+			let clickedValue = "";
+			const originalAction = Et2UrlEmail.action;
+			Et2UrlEmail.action = (value) =>
+			{
+				clickedValue = value;
+			};
+			try
+			{
+				email.onclick(new MouseEvent("click"));
+			}
+			finally
+			{
+				Et2UrlEmail.action = originalAction;
+			}
+
+			assert.equal(email.value, row.data.email, "email should display the raw row value until async formatting resolves");
+			assert.equal(clickedValue, row.data.email, "email click should use the current raw row value");
+		}
+		finally
+		{
+			window.egw.preference = originalPreference;
+			window.egw.jsonq = originalJsonq;
+		}
 	});
 
 	/**
