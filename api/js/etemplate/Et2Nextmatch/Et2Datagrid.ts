@@ -2410,11 +2410,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Handle column selection action from the header button.
+	 * Open the column selection dialog.
+	 *
+	 * This is public so containers can expose the same column chooser outside the
+	 * datagrid header.
 	 */
-	protected async _handleColumnSelectionClick(event : MouseEvent) : Promise<void>
+	async openColumnSelection(event? : Event) : Promise<void>
 	{
 		event?.preventDefault();
+		if(this.noColumnSelection)
+		{
+			return;
+		}
 		const columns = this._columnState.toSelectionItems(
 			this.columns || [],
 			this._parseColumnBooleanExpression.bind(this)
@@ -2453,6 +2460,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			bubbles: true,
 			composed: true
 		}));
+	}
+
+	/**
+	 * Handle column selection action from the header button.
+	 */
+	protected async _handleColumnSelectionClick(event : MouseEvent) : Promise<void>
+	{
+		await this.openColumnSelection(event);
 	}
 
 	/**

@@ -18,7 +18,7 @@ export default css`
 		--column-sizes: '';
 		--column-count: 1;
 		--scrollbar-space: 0px;
-		--column-selection-width: 16px;
+		--column-selection-width: min(16px, var(--scrollbar-space));
 		--row-height: 3em;
 	}
 

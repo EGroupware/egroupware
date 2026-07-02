@@ -2119,6 +2119,18 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		return _order;
 	}
 
+	/**
+	 * Open the column selection dialog.
+	 *
+	 * Public alias used by app containers so they do not need to call the legacy
+	 * internal click handler directly.
+	 */
+	openColumnSelection(e? : Event)
+	{
+		e?.preventDefault();
+		this._selectColumnsClick(e);
+	}
+
 	_selectColumnsClick(e)
 	{
 		const self = this;

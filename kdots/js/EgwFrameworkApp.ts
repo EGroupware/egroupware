@@ -1313,7 +1313,7 @@ export class EgwFrameworkApp extends LitElement
                                  class="egw_fw_app--no_mobile"
                                  label=${this.egw.lang("Select columns")}
                                  statustext=${this.egw.lang("Select columns")}
-                                 @click=${e => {this.nextmatch._selectColumnsClick(e)}} nosubmit>
+                                 @click=${e => {this.nextmatch.openColumnSelection(e)}} nosubmit>
                 </et2-button-icon>
                 ${hasCustomFilter ? html`
                     <slot name="filter"></slot>` : nothing}

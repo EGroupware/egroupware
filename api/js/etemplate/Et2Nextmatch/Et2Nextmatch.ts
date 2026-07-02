@@ -581,6 +581,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * Open the column selection dialog from outside the datagrid header.
+	 */
+	async openColumnSelection(event? : Event) : Promise<void>
+	{
+		event?.preventDefault();
+		await this.updateComplete;
+		await this._datagrid?.openColumnSelection(event);
+	}
+
+	/**
 	 * Public API to override visible columns programmatically.
 	 * Accepts legacy string arrays and normalizes them for datagrid consumption.
 	 */
