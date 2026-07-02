@@ -1,3 +1,16 @@
+egroupware-docker (26.7.20260702) hardy; urgency=low
+
+  * Calendar/CalDAV/REST: wrong etag returned in CalDAV REPORT/PROPFIND or REST PUT/PATCH causing event updates being rejected
+  * Calendar/CalDAV: fix deleting of recurrances/parsing EXDATE
+  * Calendar/CalDAV: fix broken sync-token causing all events being synced / high server load
+  * Calendar/ActiveSync: using now automatic conversation from DateTime objects from our own z-push 2.5.0.2
+  * Mail: do not try to load Preview if no mail is selected
+  * Mail: prevent attempt to delete when no mail is selected
+  * OpenID: fix error (Class "League\OAuth2\Server\RequestTypes\AuthorizationRequest" not found) when confirming scopes
+  * PHP: fix 3 more usages of PHP 8.4+ syntax while requiring only PHP 8.2 (we recommend PHP 8.5!)
+
+ -- Ralf Becker <rb@egroupware.org>  Thu, 02 Jul 2026 09:44:48 +0200
+
 egroupware-docker (26.6.20260619) hardy; urgency=low
 
   * Api/TinyMCE: fixed not usable editor in some places due to zero height
