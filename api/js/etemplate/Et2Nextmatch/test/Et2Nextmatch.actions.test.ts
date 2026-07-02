@@ -1144,6 +1144,53 @@ describe("Et2Nextmatch action setup", () =>
 		el.remove();
 	});
 
+	/**
+	 * Contract under test:
+	 * - Inline placeholder buttons use evaluated action-link enabled state.
+	 *
+	 * Setup strategy:
+	 * - Configure two placeholder actions.
+	 * - Stub the placeholder action object to report one disabled link.
+	 *
+	 * Pass criteria:
+	 * - Only the enabled and visible action is returned for inline rendering.
+	 */
+	it("filters disabled placeholder actions from inline no-results buttons", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm_inline_placeholder_links";
+		document.body.append(el);
+		await el.updateComplete;
+		const controller : any = (el as any)._actionController;
+		const actions = [
+			{id: "add", type: "popup", children: []},
+			{id: "import_csv", type: "popup", children: []}
+		];
+		controller.actionManager = {
+			children: actions,
+			getActionById: (id : string) => actions.find((action) => action.id === id) || null
+		};
+		controller.objectManager = makeFakeObjectManager();
+		controller.setPlaceholderActions(["add", "import_csv"]);
+		const placeholderObject = {
+			updateActionLinks: () => {},
+			getSelectedLinks: () => ({
+				links: {
+					add: {enabled: false, visible: true},
+					import_csv: {enabled: true, visible: true}
+				}
+			})
+		};
+		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
+
+		const inlineActions = controller.getInlinePlaceholderActions();
+
+		assert.deepEqual(inlineActions.map((action) => action.id), ["import_csv"], "disabled placeholder actions should not render inline");
+
+		ensurePlaceholderActionObject.restore();
+		el.remove();
+	});
+
 	it("binds delegated drag target resolution on the datagrid rows container", () =>
 	{
 		const host = document.createElement("div");

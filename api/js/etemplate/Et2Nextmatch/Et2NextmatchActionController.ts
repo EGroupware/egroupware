@@ -635,7 +635,7 @@ export class Et2NextmatchActionController
 			resolved.push(action);
 		}
 		const seen = new Set<string>();
-		return resolved.filter((action) =>
+		const uniqueActions = resolved.filter((action) =>
 		{
 			const actionId = String(action?.id || "");
 			if(!actionId || seen.has(actionId))
@@ -645,6 +645,8 @@ export class Et2NextmatchActionController
 			seen.add(actionId);
 			return true;
 		});
+		const enabledActionIds = this._enabledPlaceholderActionIds(uniqueActions.map((action) => action.id));
+		return uniqueActions.filter((action) => enabledActionIds.has(action.id));
 	}
 
 	/**
@@ -659,6 +661,10 @@ export class Et2NextmatchActionController
 		}
 		const action = this.actionManager.getActionById?.(actionId);
 		if(!action)
+		{
+			return false;
+		}
+		if(!this._enabledPlaceholderActionIds([action.id], anchorElement || this.host).has(action.id))
 		{
 			return false;
 		}
@@ -1453,11 +1459,74 @@ export class Et2NextmatchActionController
 	}[]
 	{
 		const allowed = new Set((allowedLinks || []).map((id) => String(id || "").trim()).filter(Boolean));
-		return this.getActionLinks().map((actionId) => ({
-			actionId,
-			enabled: allowed.has(actionId),
-			visible: allowed.has(actionId)
-		}));
+		return this.getActionLinks().map((actionId) =>
+		{
+			const allowedInPlaceholderContext = this._isPlaceholderContextActionAllowed(actionId, allowed);
+			return {
+				actionId,
+				enabled: allowedInPlaceholderContext,
+				visible: allowedInPlaceholderContext
+			};
+		});
+	}
+
+	/**
+	 * Return placeholder action ids that are enabled and visible for the placeholder context.
+	 *
+	 * This evaluates through the same action-link path as the placeholder popup once
+	 * per action type, so dynamic `enabled` callbacks and context visibility flags
+	 * are owned by the action system.
+	 */
+	private _enabledPlaceholderActionIds(actionIds : string[], anchorElement : HTMLElement = this.host) : Set<string>
+	{
+		const requested = Array.from(new Set((actionIds || []).map((id) => String(id || "").trim()).filter(Boolean)));
+		const enabled = new Set<string>();
+		this.ensureActionManagers();
+		if(!requested.length || !this.objectManager)
+		{
+			return enabled;
+		}
+		const placeholderObject = this.ensurePlaceholderActionObject(anchorElement);
+		if(!placeholderObject)
+		{
+			return enabled;
+		}
+		placeholderObject.updateActionLinks(this._getPlaceholderContextLinks(requested));
+
+		const actionTypes = new Set<string>();
+		for(const actionId of requested)
+		{
+			const action = this.actionManager?.getActionById?.(actionId);
+			actionTypes.add(String((action as any)?.type || "popup"));
+		}
+		for(const actionType of actionTypes)
+		{
+			const links = placeholderObject.getSelectedLinks?.(actionType, true)?.links || {};
+			for(const actionId of requested)
+			{
+				const link = links[actionId];
+				if(link?.enabled && link?.visible)
+				{
+					enabled.add(actionId);
+				}
+			}
+		}
+		return enabled;
+	}
+
+	/**
+	 * Top-level action links also need to be enabled when one of their children is
+	 * allowed, because the egw_action link resolver reaches children through the
+	 * parent's context link.
+	 */
+	private _isPlaceholderContextActionAllowed(actionId : string, allowed : Set<string>) : boolean
+	{
+		if(allowed.has(actionId))
+		{
+			return true;
+		}
+		const action = this.actionManager?.getActionById?.(actionId);
+		return !!action?.children?.some((child) => child?.id && allowed.has(child.id));
 	}
 
 	private ensurePlaceholderActionObject(anchorElement : HTMLElement) : EgwActionObject | null
