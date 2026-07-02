@@ -2,6 +2,7 @@ import {assert} from "@open-wc/testing";
 import {
 	applyLegacyNextmatchColumnPreferences,
 	applyLegacyCustomfieldVisibility,
+	datagridColumnPreferenceValue,
 	legacyVisibleCustomfieldNames
 } from "../Et2NextmatchColumnPreferences.ts";
 
@@ -43,6 +44,60 @@ describe("Et2Nextmatch column preferences", () =>
 				"VAT-ID": true
 			},
 			"only customfields selected in the legacy CSV should be visible"
+		);
+	});
+
+	it("keeps legacy customfield visibility on headers that are not upgraded yet", () =>
+	{
+		const customfieldsHeader = {};
+		const columns = [
+			{key: "customfields", title: "Custom fields", header: customfieldsHeader as any}
+		];
+
+		const applied = applyLegacyCustomfieldVisibility(columns, ["cf_text", "cf_private"]);
+
+		assert.isTrue(applied, "legacy customfield visibility should be stored for a pending header");
+		assert.deepEqual(
+			(customfieldsHeader as any).fields,
+			{cf_text: true, cf_private: true},
+			"pending header should receive fields for Lit/custom element upgrade"
+		);
+		assert.deepEqual(
+			columns[0].customFields,
+			["cf_text", "cf_private"],
+			"column should carry legacy selected customfields until the header is ready"
+		);
+	});
+
+	it("normalizes legacy customfield visibility into datagrid preference value", () =>
+	{
+		const columns = [
+			{key: "customfields", title: "Custom fields"},
+			{key: "subject", title: "Subject", hidden: true}
+		];
+		const nextColumns = applyLegacyNextmatchColumnPreferences(
+			columns,
+			"customfields,#cf_text,#cf_private",
+			null
+		);
+
+		assert.deepEqual(
+			datagridColumnPreferenceValue(nextColumns),
+			[
+				{
+					key: "customfields",
+					width: undefined,
+					hidden: false,
+					customFields: ["cf_text", "cf_private"]
+				},
+				{
+					key: "subject",
+					width: undefined,
+					hidden: true,
+					customFields: undefined
+				}
+			],
+			"Datagrid should receive resolved structured customfield preferences"
 		);
 	});
 

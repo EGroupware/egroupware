@@ -1,5 +1,9 @@
 import {Et2DatagridColumn} from "./Et2Datagrid.types";
 
+export type Et2NextmatchResolvedColumn = Et2DatagridColumn & {
+	customFields?: string[];
+};
+
 /**
  * Apply legacy Nextmatch column visibility/order, widths, and customfield child
  * visibility to current Datagrid columns.
@@ -8,7 +12,7 @@ export function applyLegacyNextmatchColumnPreferences(
 	columns : Et2DatagridColumn[],
 	storedVisibility : any,
 	storedSizes : any
-) : Et2DatagridColumn[]
+) : Et2NextmatchResolvedColumn[]
 {
 	const isLegacyVisibilityCsv = typeof storedVisibility === "string" &&
 		!storedVisibility.trim().startsWith("[") &&
@@ -19,10 +23,10 @@ export function applyLegacyNextmatchColumnPreferences(
 	const mappedVisibleKeys = mapLegacyVisibleKeysToCurrentColumns(visibleKeys, columns);
 	const visibleCustomfields = legacyVisibleCustomfieldNames(visibleKeys);
 
-	let nextColumns = [...(columns || [])];
+	let nextColumns : Et2NextmatchResolvedColumn[] = [...(columns || [])];
 	if(mappedVisibleKeys.length)
 	{
-		nextColumns = applyLegacySelectionOrder(nextColumns, mappedVisibleKeys);
+		nextColumns = applyLegacySelectionOrder(nextColumns, mappedVisibleKeys) as Et2NextmatchResolvedColumn[];
 	}
 
 	const widthMap = normalizeLegacyColumnWidthMap(storedSizes);
@@ -40,6 +44,24 @@ export function applyLegacyNextmatchColumnPreferences(
 	});
 	applyLegacyCustomfieldVisibility(nextColumns, visibleCustomfields);
 	return nextColumns;
+}
+
+/**
+ * Convert resolved columns into Datagrid's structured preference shape.
+ */
+export function datagridColumnPreferenceValue(columns : Et2NextmatchResolvedColumn[]) : Array<{
+	key : string;
+	width?: string;
+	hidden : boolean;
+	customFields?: string[];
+}>
+{
+	return (columns || []).map((column) => ({
+		key: String(column.key),
+		width: typeof column.width === "string" ? column.width : undefined,
+		hidden: !!column.hidden,
+		customFields: column.customFields?.length ? column.customFields : undefined
+	}));
 }
 
 /**
@@ -175,7 +197,7 @@ export function legacyVisibleCustomfieldNames(legacyKeys : string[]) : string[]
  * Apply selected legacy customfield entries to the customfields column header.
  */
 export function applyLegacyCustomfieldVisibility(
-	columns : Et2DatagridColumn[],
+	columns : Et2NextmatchResolvedColumn[],
 	visibleCustomfields : string[]
 ) : boolean
 {
@@ -194,12 +216,20 @@ export function applyLegacyCustomfieldVisibility(
 		{
 			continue;
 		}
+		column.customFields = Object.keys(visibility).filter((name) => visibility[name] === true);
 		const header = column.header as any;
-		if(typeof header?.setCustomfieldVisibility !== "function")
+		if(!header)
 		{
-			return false;
+			return true;
 		}
-		header.setCustomfieldVisibility(visibility);
+		if(typeof header.setCustomfieldVisibility === "function")
+		{
+			header.setCustomfieldVisibility(visibility);
+		}
+		else
+		{
+			header.fields = {...visibility};
+		}
 		return true;
 	}
 	return false;

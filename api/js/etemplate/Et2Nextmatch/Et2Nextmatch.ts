@@ -18,7 +18,11 @@ import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
-import {applyLegacyNextmatchColumnPreferences} from "./Et2NextmatchColumnPreferences";
+import {
+	applyLegacyNextmatchColumnPreferences,
+	datagridColumnPreferenceValue,
+	type Et2NextmatchResolvedColumn
+} from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
 import "./Headers/CustomfieldsHeader";
@@ -1247,6 +1251,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * - `nextmatch-<row_ID>-size` -> JSON/object map `{ column_key: size }`
 	 *
 	 * This migration is legacy Nextmatch-specific compatibility behaviour
+	 *
+	 * TODO: When things stabilize, we can delete the old preferences
 	 */
 	private _applyLegacyNextmatchColumnPreferences(
 		columns : Et2DatagridColumn[],
@@ -1283,28 +1289,50 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			return columns;
 		}
 
-		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, storedVisibility, storedSizes);
-
-		// Seed the new-format preference for datagrid persistence path.
-		/*
-		// TODO: When things stabilize, we can do this an delete the old preferences
-		if(visibleKeys.length || Object.keys(widthMap).length)
+		const hasLegacyVisibility = typeof storedVisibility === "string" &&
+			!storedVisibility.trim().startsWith("[") &&
+			!storedVisibility.trim().startsWith("{") &&
+			!!storedVisibility.trim();
+		const hasLegacySizes = (typeof storedSizes === "string" && !!storedSizes.trim()) ||
+			(!!storedSizes && typeof storedSizes === "object" && !!Object.keys(storedSizes).length);
+		if(!hasLegacyVisibility && !hasLegacySizes)
 		{
-			try
-			{
-				this.egw().set_preference(app, preferenceBase, nextColumns.map((column) => ({
-					key: String(column.key),
-					width: typeof column.width === "string" ? column.width : undefined,
-					hidden: !!column.hidden
-				})));
-			}
-			catch(e)
-			{
-			}
+			return columns;
 		}
 
-		 */
-		return nextColumns;
+		const nextColumns = applyLegacyNextmatchColumnPreferences(columns, storedVisibility, storedSizes);
+		this._seedDatagridColumnPreferencesFromLegacy(rowTemplateId, app, nextColumns);
+
+		return nextColumns.map((column) =>
+		{
+			if(!column.customFields)
+			{
+				return column;
+			}
+			const {customFields: _customFields, ...datagridColumn} = column;
+			return datagridColumn;
+		});
+	}
+
+	/**
+	 * Store legacy Nextmatch preferences in Datagrid's structured preference
+	 * shape, so Datagrid receives a single resolved source of truth.
+	 */
+	private _seedDatagridColumnPreferencesFromLegacy(
+		rowTemplateId : string,
+		app : string,
+		columns : Et2NextmatchResolvedColumn[]
+	)
+	{
+		const key = String(this.columnPreferenceName || "").trim() || `nextmatch-${rowTemplateId}-prefs`;
+		const value = datagridColumnPreferenceValue(columns);
+		try
+		{
+			this.egw().set_preference(app, key, value);
+		}
+		catch(e)
+		{
+		}
 	}
 
 	/**
