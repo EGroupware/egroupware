@@ -28,6 +28,7 @@ import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
+import {et2_arrayMgr} from "../et2_core_arrayMgr";
 
 interface Et2DatagridCustomfieldColumnState
 {
@@ -1562,12 +1563,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 		const mgrRowData = {};
 		mgrRowData[rowIndex] = rowData;
-		const mgr = this.getArrayMgr("content")?.openPerspective(this as any, mgrRowData, rowIndex);
+		const contentMgr = this.getArrayMgr("content") || new et2_arrayMgr(mgrRowData);
+		const mgr = contentMgr.openPerspective(this as any, mgrRowData, rowIndex);
 		const mgrs : any = this.getArrayMgrs?.() || {};
-		if(mgr)
-		{
-			mgrs.content = mgr;
-		}
+		mgrs.content = mgr;
 		try
 		{
 			// Apply stored template attributes through each widget's transform hook

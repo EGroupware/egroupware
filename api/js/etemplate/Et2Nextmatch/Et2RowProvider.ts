@@ -609,10 +609,13 @@ export class Et2RowProvider
 				continue;
 			}
 			const normalizedValue = this._normalizeLegacyRowExpressionShorthand(value);
-			element.setAttribute(name, normalizedValue);
 			if(recordAttributes && assignedId && normalizedValue.includes("$"))
 			{
 				attrMap[assignedId][name] = normalizedValue;
+				if(name !== "id")
+				{
+					element.setAttribute(name, normalizedValue);
+				}
 				if(this._shouldTransformForDeferredProperty(element, name))
 				{
 					staticAttrs[name] = normalizedValue;
@@ -620,6 +623,7 @@ export class Et2RowProvider
 			}
 			else
 			{
+				element.setAttribute(name, normalizedValue);
 				staticAttrs[name] = normalizedValue;
 			}
 		}

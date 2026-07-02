@@ -241,6 +241,21 @@ after(() =>
 	originalWindowOnError = null;
 });
 
+beforeEach(function()
+{
+	console.info(`[Et2Datagrid.test] START ${this.currentTest?.fullTitle()}`);
+});
+
+afterEach(function()
+{
+	console.info(`[Et2Datagrid.test] END ${this.currentTest?.state || "unknown"} ${this.currentTest?.fullTitle()}`);
+});
+
+after(function()
+{
+	console.info("[Et2Datagrid.test] COMPLETE");
+});
+
 describe("Et2Datagrid row rendering", () =>
 {
 	/**
@@ -593,16 +608,26 @@ describe("Et2Datagrid row rendering", () =>
 	 * Contract: row-scoped readonly email URL widgets show a synchronous
 	 * fallback value when preference formatting waits on contact lookup.
 	 * Setup: hydrate a datagrid row while emailDisplay="preference" resolves
-	 * to a name-based display and the contact JSON request does not resolve.
+	 * to a name-based display and hold the contact JSON request pending during
+	 * assertions.
 	 * Pass: the row still displays the raw email and click actions use the
 	 * current row value instead of an empty/stale formatted value.
 	 */
-	it("hydrates readonly email URL row widgets before async preference formatting resolves", () =>
+	it("hydrates readonly email URL row widgets before async preference formatting resolves", async() =>
 	{
 		const originalPreference = window.egw.preference;
 		const originalJsonq = window.egw.jsonq;
+		let resolveContactRequest : (result : Record<string, any>) => void = () => {};
+		let contactRequest : Promise<Record<string, any>> | null = null;
 		window.egw.preference = () => "onlyname";
-		window.egw.jsonq = () => new Promise(() => {});
+		window.egw.jsonq = () =>
+		{
+			contactRequest = new Promise((resolve) =>
+			{
+				resolveContactRequest = resolve;
+			});
+			return contactRequest;
+		};
 
 		try
 		{
@@ -648,6 +673,8 @@ describe("Et2Datagrid row rendering", () =>
 		}
 		finally
 		{
+			resolveContactRequest({});
+			await contactRequest;
 			window.egw.preference = originalPreference;
 			window.egw.jsonq = originalJsonq;
 		}

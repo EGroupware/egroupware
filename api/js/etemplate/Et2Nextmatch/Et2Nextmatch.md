@@ -41,7 +41,7 @@ The row/header structure is read from that template and converted for `et2-datag
 
 Full details for columns, rows, expression syntax, wrapper behaviour, and loader slots are documented in:
 
-- [Et2Datagrid.md](/var/www/egroupware/api/js/etemplate/Et2Nextmatch/Et2Datagrid.md)
+- [Et2Datagrid](/components/et2-datagrid)
 
 ## Notes
 
