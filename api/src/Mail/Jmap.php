@@ -121,7 +121,7 @@ class Jmap
 		// Stalwart (v0.16.8) chokes on escaped slashes in method names like 'SieveScript/get'
 		if (is_array($body))
 		{
-			$body = json_encode($body, JSON_UNESCAPED_SLASHES);
+			$body = json_encode($body, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT);
 
 			if (!array_filter($header, fn ($value) => str_starts_with($value, 'Content-Type:')))
 			{
@@ -582,6 +582,57 @@ class Jmap
 			$ret[$methodResponse[2]] = $methodResponse[1];
 		}
 		return $ret;
+	}
+
+	/**
+	 * Boolean filter conditions
+	 *
+	 * @param string $operator "AND", "OR" or "NOT"
+	 * @param array $filters e.g. ["name" => ["nameA", "nameB"]]
+	 * @return array
+	 */
+	public static function filterConditions(string $operator, array $filters)
+	{
+		if (!in_array($operator, ['AND', 'OR', 'NOT'])) throw new \InvalidArgumentException("Invalid operator '$operator'!");
+
+		$conditions = [];
+		foreach($filters as $name => $values)
+		{
+			if (is_int($name))
+			{
+				$conditions[] = $values;
+				continue;
+			}
+			foreach ((array)$values as $value)
+			{
+				$conditions[] = [$name => $value];
+			}
+		}
+		return [
+			'operator' => $operator,
+			'conditions' => $conditions,
+		];
+	}
+
+	/**
+	 * Generate a JMAP patch from current IDs and optional old IDs with values true for added and null for removed
+	 *
+	 * @param array $new new ids
+	 * @param array|null $old old ids
+	 * @return object with id => true or null pairs
+	 */
+	public static function boolPatch(array $new, array $old=null) : object
+	{
+		$patch = [];
+		if (($added = $old ? array_diff_key($new, $old) : $new))
+		{
+			$patch = array_combine($added, array_fill(0, count($added), true));
+		}
+		if ($old && (($removed = array_diff_key($old, $new))))
+		{
+			$patch += array_combine($removed, array_fill(0, count($removed), null));
+		}
+		return (object)$patch;
 	}
 
 	/**

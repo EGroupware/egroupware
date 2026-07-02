@@ -70,25 +70,43 @@ class Stalwart extends Sql
 		}
 		$account_lid = Api\Accounts::id2name($account_id ?? $user) ?: throw new \InvalidArgumentException("Invalid user $user!");
 
-		$domainId = $this->domainId($this->defaultDomain) ?? throw new \Exception("Domain '$this->defaultDomain' not found!");
-		$response = $this->jmapClient()->jmapCall([
-			['x:Account/query', [
-				'filter' => [
-					'name' => $account_lid,
-					'domainId' => $domainId,
-				],
-			], 'b'],
-			['x:Account/get', [
-				'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'b'],
-			], 'c'],
-		], [Jmap::JMAP_CORE, self::USING_STALWART]);
-
-		// we have to manually filter the returned accounts by their domainId, as Stalwart does not support filtering by domainId
-		foreach($response['methodResponses'][1][1]['list'] as $account)
+		// we check the SQL user-data, if we have a Stalwart accountId stored in mail_type=0=TYPE_ENABLED
+		if (($userData = parent::getUserData($user, $match_uid_at_domain)))
 		{
-			if ($account['domainId'] === $domainId) break;
+			if ($userData['accountStatus'] === self::MAIL_ENABLED)
+			{
+				unset($userData['accountStatus']);
+			}
+			elseif (!empty($userData['accountStatus']))
+			{
+				$response = $this->jmapClient()->jmapCall([
+					['x:Account/get', [
+						'ids' => [$userData['accountStatus']],
+					], 'c'],
+				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+
+				$account = current($response['methodResponses'][0][1]['list'] ?? []);
+			}
 		}
-		if ($account['domainId'] === $domainId)
+
+		$domainId = $this->domainId($this->defaultDomain) ?? throw new \Exception("Domain '$this->defaultDomain' not found!");
+		if (!isset($account))
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['x:Account/query', [
+					'filter' => [
+						'name' => self::name2stalwart($account_lid),
+						'domainId' => $domainId,
+					],
+				], 'b'],
+				['x:Account/get', [
+					'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'b'],
+				], 'c'],
+			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+
+			$account = current($response['methodResponses'][1][1]['list'] ?? []);
+		}
+		if ($account && $account['domainId'] === $domainId)
 		{
 			$aliases = [];
 			foreach($account['aliases'] as $alias)
@@ -105,14 +123,9 @@ class Stalwart extends Sql
 				'mailAlternateAddress' => array_unique($aliases),
 				'mailForwardingAddress' => [],
 				//'forwardOnly' => false,
-				'accountStatus' => self::MAIL_ENABLED,
+				'accountStatus' => $account['id'],
 				'stalwart' => $account,
 			];
-		}
-		// we return the SQL user-data, but not as active, as not in Stalwart yet
-		elseif (($userData = parent::getUserData($user, $match_uid_at_domain)))
-		{
-			unset($userData['accountStatus']);
 		}
 		if (!empty($this->debug)) error_log(__METHOD__."('$user') returning ".array2string($userData));
 		return $userData;
@@ -138,7 +151,7 @@ class Stalwart extends Sql
 		if (!empty($this->debug)) error_log(__METHOD__ . "($_uidnumber, " . array2string($_mailAlternateAddress) . ', ' . array2string($_mailForwardingAddress) . ", '$_deliveryMode', '$_accountStatus', '$_mailLocalAddress', $_quota, forwarding_only=" . array2string($_forwarding_only) . ') ' . function_backtrace());
 
 		$account_lid = $this->accounts->id2name($_uidnumber) ?? throw new \Exception("Invalid user #$_uidnumber!");
-		if (strtolower($_mailLocalAddress) !== strtolower($account_lid.'@'.$this->defaultDomain))
+		if (self::name2stalwart($_mailLocalAddress) !== self::name2stalwart($account_lid.'@'.$this->defaultDomain))
 		{
 			array_unshift($_mailAlternateAddress, $_mailLocalAddress);
 		}
@@ -153,14 +166,14 @@ class Stalwart extends Sql
 			}
 			$aliases[] = [
 				'enabled' => true,
-				'name' => $name,
+				'name' => self::name2stalwart($name),
 				'domainId' => $domainId,
 				'description' => null,  // ToDo: preserve from $userData['stalwart']['aliases']
 			];
 		}
 		$account = array_filter([
 			'@type' => 'User',
-			'name' => $account_lid,
+			'name' => self::name2stalwart($account_lid),
 			'description' => $this->accounts->id2name($_uidnumber, 'account_fullname'),
 			//'emailAddress' => strtolower($account_lid.'@'.$this->defaultDomain),  // is server-set by name and domainId
 			'domainId' => $this->domainId($this->defaultDomain),
@@ -169,7 +182,8 @@ class Stalwart extends Sql
 			'credentials' => (object)["0" => [  // otherwise PHP's json_encode encodes it as JSON array
 				'@type' => 'Password',
 				'secret' => $this->accounts->id2name($_uidnumber, 'account_pwd'),
-			]]
+			]],
+			'memberGroupIds' => $this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber)),
 		]);
 		// update account in Stalwart
 		if (($userData = $this->getUserData($_uidnumber)) && !empty($userData['accountStatus']) && $_accountStatus)
@@ -182,22 +196,26 @@ class Stalwart extends Sql
 			{
 				unset($diff['quotas']);
 			}
-			if (($diff['aliases'] = self::aliasesPatch($account['aliases'], $userData['stalwart']['aliases'])) == (object)[])
+			if (($diff['aliases'] = self::aliasesPatch($account['aliases']??[], $userData['stalwart']['aliases'])) == (object)[])
 			{
 				unset($diff['aliases']);
+			}
+			if (($diff['memberGroupIds'] = JMAP::boolPatch($account['memberGroupIds'], array_keys($userData['stalwart']['memberGroupIds']))) == (object)[])
+			{
+				unset($diff['memberGroupIds']);
 			}
 			if ($diff)
 			{
 				$response = $this->jmapClient()->jmapCall([
 					['x:Account/set', [
 						'update' => [
-							$userData['stalwart']['id'] => $diff,
+							($accountId=$userData['stalwart']['id']) => $diff,
 						]], 'a'
 					]], [Jmap::JMAP_CORE, self::USING_STALWART]);
 
 				if (!array_key_exists($userData['stalwart']['id'], $response['methodResponses'][0][1]['updated'] ?? []))
 				{
-					throw new \Exception("Mail account NOT updated: ".json_encode($response, JSON_UNESCAPED_SLASHES));
+					throw new \Exception("Mail account NOT updated: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 				}
 			}
 		}
@@ -221,12 +239,13 @@ class Stalwart extends Sql
 			// no new account created
 			if (empty($response['methodResponses'][0][1]['created']['new1']['id']))
 			{
-				throw new \Exception("Mail account NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES));
+				throw new \Exception("Mail account NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 			}
+			$accountId = $response['methodResponses'][0][1]['created']['new1']['id'];
 		}
 		// updating the SQL table too for now
 		parent::setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode,
-			$_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only, $_setMailbox);
+			$accountId, $_mailLocalAddress, $_quota, $_forwarding_only, $_setMailbox);
 
 		/* called by parent::setUserData(), as long as we call that
 		// let interested parties know account was update
@@ -236,6 +255,91 @@ class Stalwart extends Sql
 		));*/
 
 		return true;
+	}
+
+	/**
+	 * Stalwart silently lowercases names and removes space (we replace space with an underscore instead)
+	 *
+	 * @param string|array $name
+	 * @return string
+	 */
+	static function name2stalwart(string|array $name)
+	{
+		$ret = array_map(static fn($name) => strtolower(str_replace(' ', '_', $name)), (array)$name);
+
+		return !is_array($name) ? $ret[0] : $ret;
+	}
+
+	/**
+	 * Sync the given groups to Stalwart, if not already exist, and return their ids
+	 *
+	 * @param string[] $memberships account_id => account_lid pairs
+	 * @return string[]
+	 */
+	protected function groupIds(array $memberships)
+	{
+		$memberships = self::name2stalwart($memberships);
+		$stalwartIds = [];
+		foreach($this->db->select(self::TABLE, '*', [
+			'account_id' => array_keys($memberships),
+			'mail_type' => self::TYPE_ENABLED
+		], __LINE__, __FILE__) as $row)
+		{
+			$stalwartIds[$row['account_id']] = $row['mail_value'];
+		}
+		$domainId = $this->domainId($this->defaultDomain) ?? throw new \Exception("Domain '$this->defaultDomain' not found!");
+		$response = $this->jmapClient()->jmapCall([
+			['x:Account/query', [
+				'filter' => /*Jmap::filterConditions('AND', [
+					Jmap::filterConditions('OR', ['name' => array_diff_key($memberships, array_flip($stalwartIds))]),*/
+				[
+					'domainId' => $domainId,
+				],
+			], 'b'],
+			['x:Account/get', [
+				'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'b'],
+			], 'c'],
+		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+		foreach($response['methodResponses'][1][1]['list'] as $group)
+		{
+			if (($key=array_search($group['name'], $memberships)) !== false)
+			{
+				$stalwartIds[$key] = $group['id'];
+				$this->db->insert(self::TABLE, [
+					'account_id' => $key,
+					'mail_type' => self::TYPE_ENABLED,
+					'mail_value' => $group['id'],
+				], false,__LINE__, __FILE__);
+			}
+		}
+		// create still missing groups on Stalwart side
+		$methodcalls = [
+			['x:Account/set', [
+				'create' => []], 'a'
+			],
+		];
+		if (($missing = array_diff_key($memberships, $stalwartIds)))
+		{
+			foreach ($missing as $account_id => $account_lid)
+			{
+				$methodcalls[0][1]['create']['new' . $account_id] = [
+					'@type' => 'Group',
+					'name' => $account_lid,
+					'domainId' => $domainId,
+				];
+			}
+			$response = $this->jmapClient()->jmapCall($methodcalls, [Jmap::JMAP_CORE, self::USING_STALWART]);
+			foreach ($response['methodResponses'][0][1]['created'] as $egwId => $response)
+			{
+				$stalwartIds[$key=substr($egwId, 3)] = $response['id'];
+				$this->db->insert(self::TABLE, [
+					'account_id' => $key,
+					'mail_type' => self::TYPE_ENABLED,
+					'mail_value' => $response['id'],
+				], false,__LINE__, __FILE__);
+			}
+		}
+		return array_values($stalwartIds);
 	}
 
 	/**
@@ -250,10 +354,10 @@ class Stalwart extends Sql
 		$aliases = [];
 		foreach($old ?? [] as $key => $alias)
 		{
-			if (!($found=array_filter($new, static function($n) use ($alias)
+			if (!($found=current(array_filter($new, static function($n) use ($alias)
 			{
 				return $n['name'] === $alias['name'] && $n['domainId'] === $alias['domainId'];
-			})))
+			}))))
 			{
 				$aliases[$key] = null;
 			}
@@ -267,9 +371,10 @@ class Stalwart extends Sql
 			{
 				foreach($new as $k => $n)
 				{
-					if ($found[0]['name'] === $alias['name'] && $found[0]['domainId'] === $alias['domainId'])
+					if ($found['name'] === $alias['name'] && $found['domainId'] === $alias['domainId'])
 					{
 						unset($new[$k]);
+						break;
 					}
 				}
 			}
