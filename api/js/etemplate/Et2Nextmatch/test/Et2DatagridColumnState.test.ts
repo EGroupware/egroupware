@@ -110,6 +110,31 @@ describe("Et2DatagridColumnState", () =>
 
 	/**
 	 * Contract under test:
+	 * - Column selection labels use the prepared header widget label when present.
+	 *
+	 * Setup strategy:
+	 * - Provide a raw column title and a prepared header with a different label.
+	 *
+	 * Pass criteria:
+	 * - Chooser title and caption match the prepared header label.
+	 */
+	it("uses prepared header labels for chooser captions", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const header = {
+			label: "Business phone",
+			cloneNode: () => null
+		};
+		const items = state.toSelectionItems([
+			{key: "tel_work", title: "phone_label", header: header as any}
+		]);
+
+		assert.equal(items[0].caption, "Business phone", "chooser caption should use translated header label");
+		assert.equal(items[0].title, "Business phone", "chooser title should use translated header label");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Column selection metadata includes nested customfields from header providers.
 	 *
 	 * Setup strategy:

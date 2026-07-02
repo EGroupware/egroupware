@@ -131,33 +131,60 @@ export class Et2DatagridColumnState
 	{
 		return (columns || [])
 			.filter((column) => !this.isColumnDisabled(column, parseExpression))
-			.map((column) => ({
-				id: this.encodeSelectionId(String(column.key)),
-				title: column.title,
-				caption: column.title,
-				widget: column.header?.cloneNode?.(true) || null,
-				visibility: !this.isColumnHidden(column, parseExpression),
-				isCustomfields: typeof (column.header as any)?.getCustomfieldSelectionItems === "function",
-				customFields: (() =>
-				{
-					const header = column.header as any;
-					if(typeof header?.getCustomfieldSelectionItems !== "function")
+			.map((column) =>
+			{
+				const caption = this._selectionCaption(column);
+				return {
+					id: this.encodeSelectionId(String(column.key)),
+					title: caption,
+					caption,
+					widget: column.header?.cloneNode?.(true) || null,
+					visibility: !this.isColumnHidden(column, parseExpression),
+					isCustomfields: typeof (column.header as any)?.getCustomfieldSelectionItems === "function",
+					customFields: (() =>
 					{
-						return [];
-					}
-					const fields = header.getCustomfieldSelectionItems();
-					if(!Array.isArray(fields))
-					{
-						return [];
-					}
-					return fields.map((field : any) => ({
-						id: this.encodeSelectionId(String(field.name || "")),
-						name: String(field.name || ""),
-						caption: String(field.label || field.name || ""),
-						visibility: field.visible === true
-					})).filter((field) => field.name.length > 0);
-				})()
-			}));
+						const header = column.header as any;
+						if(typeof header?.getCustomfieldSelectionItems !== "function")
+						{
+							return [];
+						}
+						const fields = header.getCustomfieldSelectionItems();
+						if(!Array.isArray(fields))
+						{
+							return [];
+						}
+						return fields.map((field : any) => ({
+							id: this.encodeSelectionId(String(field.name || "")),
+							name: String(field.name || ""),
+							caption: String(field.label || field.name || ""),
+							visibility: field.visible === true
+						})).filter((field) => field.name.length > 0);
+					})()
+				};
+			});
+	}
+
+	/**
+	 * Resolve the label shown by ColumnSelection from the prepared header widget
+	 * first, because `column.title` is captured from raw template XML before
+	 * widget labels are translated.
+	 */
+	private _selectionCaption(column : Et2DatagridColumn) : string
+	{
+		const header = column.header as any;
+		const caption = String(
+			header?.label ||
+			header?.emptyLabel ||
+			header?.getAttribute?.("label") ||
+			header?.getAttribute?.("emptyLabel") ||
+			header?.getAttribute?.("title") ||
+			header?.textContent ||
+			column.title ||
+			column.key ||
+			""
+		).trim();
+
+		return caption || String(column.title || column.key || "");
 	}
 
 	/**
