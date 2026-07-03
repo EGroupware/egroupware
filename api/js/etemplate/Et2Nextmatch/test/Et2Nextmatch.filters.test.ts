@@ -42,6 +42,14 @@ const waitForBubblingHandlers = async() =>
 	await Promise.resolve();
 };
 
+const waitForCondition = async(condition : () => boolean) =>
+{
+	for(let i = 0; i < 10 && !condition(); i++)
+	{
+		await waitForBubblingHandlers();
+	}
+};
+
 const sortableMode = (sortHeader : HTMLElement) =>
 {
 	const label = sortHeader.shadowRoot!.querySelector(".nextmatch_sortheader") as HTMLElement | null;
@@ -363,6 +371,53 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.equal(sortableMode(dateHeader), "asc", "active datagrid sort header should reflect current sort");
 		assert.equal(sortableMode(nameHeader), "none", "inactive datagrid sort header should be cleared");
 		assert.equal(sortableMode(customfieldSortHeader!), "none", "inactive customfield sort header should be cleared");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Initial sort settings are reflected into active filters and
+	 *   sortable header state before the first load.
+	 *
+	 * Setup strategy:
+	 * - Create nextmatch with `settings.order` and `settings.sort`.
+	 * - Add matching and non-matching sortable headers to the datagrid shadow DOM
+	 *   before `firstUpdated()` initializes settings sort.
+	 *
+	 * Pass criteria:
+	 * - `activeFilters.sort` matches the configured default.
+	 * - The matching header shows the configured sort direction.
+	 */
+	it("reflects initial settings sort into sortable headers", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.settings = {
+			order: "date",
+			sort: "DESC"
+		};
+		const nameHeader = document.createElement("et2-nextmatch-sortheader") as HTMLElement;
+		nameHeader.setAttribute("id", "name");
+		const dateHeader = document.createElement("et2-nextmatch-sortheader") as HTMLElement;
+		dateHeader.setAttribute("id", "date");
+		const applySlotsStub = sinon.stub(el as any, "_applyTemplateFromSlots").callsFake(async() =>
+		{
+			const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement & { shadowRoot : ShadowRoot };
+			assert.isNotNull(datagrid, "nextmatch should render datagrid");
+			datagrid.shadowRoot!.append(nameHeader, dateHeader);
+			await (nameHeader as any).updateComplete;
+			await (dateHeader as any).updateComplete;
+		});
+
+		document.body.append(el);
+		await el.updateComplete;
+		await waitForCondition(() => !!el.activeFilters.sort);
+		await (nameHeader as any).updateComplete;
+		await (dateHeader as any).updateComplete;
+
+		assert.deepEqual(el.activeFilters.sort, {id: "date", asc: false}, "initial settings sort should become active");
+		assert.equal(sortableMode(dateHeader), "desc", "matching header should show initial descending sort");
+		assert.equal(sortableMode(nameHeader), "none", "non-matching header should remain unsorted");
+		applySlotsStub.restore();
 		el.remove();
 	});
 

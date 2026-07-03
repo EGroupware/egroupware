@@ -56,7 +56,7 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 
 	/**
 	 * Default sort direction used on first click.
-	 * Matches legacy behavior: anything other than DESC defaults to ASC.
+	 * Anything other than DESC defaults to ASC.
 	 */
 	@property({type: String})
 	sortmode : string = "";

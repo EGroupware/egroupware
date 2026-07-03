@@ -429,6 +429,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			await this._applyTemplateFromSlots();
 		}
+		this._initializeSettingsSort();
 
 		if(this.rows.length)
 		{
@@ -996,6 +997,23 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			this._filters.searchletter = this.searchletter;
 		}
+	}
+
+	/**
+	 * Seed the default sort settings into active filters for the first load
+	 * and header state reflection.
+	 */
+	private _initializeSettingsSort()
+	{
+		if(this._filters.sort || !this.settings.order || !this.settings.sort)
+		{
+			return;
+		}
+		this.sortBy(
+			String(this.settings.order),
+			String(this.settings.sort).toUpperCase() === "ASC",
+			false
+		);
 	}
 
 	/**
