@@ -116,6 +116,12 @@ class Stalwart extends Sql
 					$aliases[] = $alias['name'].'@'.$this->domain($account['domainId']);
 				}
 			}
+			// add mailing lists as aliases too
+			$lists = $this->getMailingListByRecipient($account['emailAddress']);
+			foreach($lists as $list)
+			{
+				$aliases[] = $list['emailAddress'];
+			}
 			$userData = [
 				'mailLocalAddress' => $account['emailAddress'],
 				'quotaLimit' => $account['quotas']['maxDiskQuota'] ?? null ? $account['quotas']['maxDiskQuota']>>20 : null, // MB
@@ -125,6 +131,7 @@ class Stalwart extends Sql
 				//'forwardOnly' => false,
 				'accountStatus' => $account['id'],
 				'stalwart' => $account,
+				'mailingLists' => $lists,
 			];
 		}
 		if (!empty($this->debug)) error_log(__METHOD__."('$user') returning ".array2string($userData));
@@ -196,7 +203,7 @@ class Stalwart extends Sql
 			{
 				unset($diff['quotas']);
 			}
-			if (($diff['aliases'] = self::aliasesPatch($account['aliases']??[], $userData['stalwart']['aliases'])) == (object)[])
+			if (($diff['aliases'] = $this->aliasesPatch($account['aliases']??[], $userData['stalwart']['aliases'], $userData['mailingLists'])) == (object)[])
 			{
 				unset($diff['aliases']);
 			}
@@ -206,16 +213,35 @@ class Stalwart extends Sql
 			}
 			if ($diff)
 			{
-				$response = $this->jmapClient()->jmapCall([
-					['x:Account/set', [
-						'update' => [
-							($accountId=$userData['stalwart']['id']) => $diff,
-						]], 'a'
-					]], [Jmap::JMAP_CORE, self::USING_STALWART]);
-
-				if (!array_key_exists($userData['stalwart']['id'], $response['methodResponses'][0][1]['updated'] ?? []))
+				while(true)
 				{
+					$response = $this->jmapClient()->jmapCall([
+						['x:Account/set', [
+							'update' => [
+								($accountId=$userData['stalwart']['id']) => $diff,
+							]], 'a'
+						]], [Jmap::JMAP_CORE, self::USING_STALWART]);
+
+					// check account updated
+					if(array_key_exists($userData['stalwart']['id'], $response['methodResponses'][0][1]['updated'] ?? []))
+					{
+						break;
+					}
+					if ($this->checkErrorEmailTaken($response['methodResponses'][0][1]['notUpdated'][$accountId] ?? null,
+						$diff['aliases'], $account['name'].'@'.$this->domain($account['domainId'])))
+					{
+						continue;   // --> try again updating it
+					}
 					throw new \Exception("Mail account NOT updated: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+				}
+			}
+			// check if a list-alias has been removed --> remove it from the list
+			foreach($userData['mailingLists'] as $list)
+			{
+				if (!in_array($list['emailAddress'], $account['aliases']??[]))
+				{
+					unset($list['recipients'][strtolower($_mailLocalAddress)]);
+					$this->mailingList($list['emailAddress'], array_keys($list['recipients']));
 				}
 			}
 		}
@@ -229,19 +255,29 @@ class Stalwart extends Sql
 			$account['@type'] = 'User';
 			if (!isset($account['quotas']['maxDiskQuota'])) unset($account['quotas']);
 			if (isset($account['aliases'])) $account['aliases'] = (object)$account['aliases'];
-			$response = $this->jmapClient()->jmapCall([
-				['x:Account/set', [
-					'create' => [
-						'new1' => $account,
-					]], 'a'
-				],
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
-			// no new account created
-			if (empty($response['methodResponses'][0][1]['created']['new1']['id']))
+
+			while(true)
 			{
+				$response = $this->jmapClient()->jmapCall([
+					['x:Account/set', [
+						'create' => [
+							'new1' => $account,
+						]], 'a'
+					],
+				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+				// check new account created
+				if (!empty($response['methodResponses'][0][1]['created']['new1']['id']))
+				{
+					$accountId = $response['methodResponses'][0][1]['created']['new1']['id'];
+					break;
+				}
+				if ($this->checkErrorEmailTaken($response['methodResponses'][0][1]['notCreated']['new1'] ?? null,
+					$account['aliases'], $account['name'] . '@' . $this->domain($account['domainId'])))
+				{
+					continue;   // --> try again creating it
+				}
 				throw new \Exception("Mail account NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 			}
-			$accountId = $response['methodResponses'][0][1]['created']['new1']['id'];
 		}
 		// updating the SQL table too for now
 		parent::setUserData($_uidnumber, $_mailAlternateAddress, $_mailForwardingAddress, $_deliveryMode,
@@ -343,13 +379,332 @@ class Stalwart extends Sql
 	}
 
 	/**
+	 * Check error caused by one email/alias already used by an other object
+	 *
+	 * @param ?array $error notCreated / notUpdated error for account to update or create
+	 * @param array[] $aliases array of array with values for name and domainId
+	 * @return bool true: shared alias was replaced with a mailing-list
+	 * @throw \Exception on error
+	 */
+	function checkErrorEmailTaken(?array $error, array|object &$aliases, $email)
+	{
+		if (($error['type']??null) === 'primaryKeyViolation' &&
+			in_array('email', $error['properties']??[]) &&
+			!empty($error['objectId']['id']) &&
+			($object = $this->get($error['objectId']['object'], $error['objectId']['id'])))
+		{
+			$key = array_search($object['emailAddress'], $emails = $this->aliases2emails($aliases));
+
+			switch($error['objectId']['object'])
+			{
+				// alias address already hold by a mailing-list --> add the other account too
+				case 'MailingList':
+					if ($key !== false)
+					{
+						$this->mailingList($object['emailAddress'], array_merge(array_keys($object['recipients']), (array)$email));
+						if (is_object($aliases))
+						{
+							unset($aliases->$key);
+						}
+						else
+						{
+							unset($aliases[$key]);
+						}
+						return true;    // $email added to MailingList
+					}
+					break;
+
+				// alias address hold by another account --> remove alias and add both to new mailing-list
+				case 'Account':
+					// alias is primary email of another account --> nothing we want to do to allow that currently
+					if ($key !== false)
+					{
+						throw new \Exception("Account '$object[name]' already exists!");
+					}
+					// alias is shared with another account --> create new mailing-list and add both
+					foreach(array_intersect($aliases, $this->aliases2emails($object['aliases'])) as $key => $alias_email)
+					{
+						$alias_key = $this->aliasKey($object['aliases'], [
+							'name' => explode('@', $alias_email)[0],
+							'domainId' => $this->domainId(explode('@', $alias_email)[1]),
+						]);
+						// remove offending alias first
+						$response = $this->jmapClient()->jmapCall([
+							['x:Account/set', [
+								'update' => [$object['id'] => ['aliases' => [$alias_key => null]]],
+							], 'a']
+						], [Jmap::JMAP_CORE, self::USING_STALWART]);
+						if (!array_key_exists($object['id'], $response['methodResponses'][0][1]['update']))
+						{
+							throw new \Exception("Could not update account $object[email] to remove alias '$alias_email'!");
+						}
+						if (is_object($aliases))
+						{
+							unset($aliases->$key);
+						}
+						else
+						{
+							unset($aliases[$key]);
+						}
+						// then create new mailing list
+						$this->mailingList($alias_email, [$email, $object['emailAddress']]);
+					}
+					return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Convert aliases (array with values for key "name" and "domainId") to email-addresses
+	 *
+	 * @param array[]|object $aliases
+	 * @return string[] email addresses
+	 */
+	public function aliases2emails(array|object $aliases) : array
+	{
+		return array_map(fn($alias) => $alias['name'].'@'.$this->domain($alias['domainId']),
+			is_array($aliases) ? $aliases : get_object_vars($aliases));
+	}
+
+	/**
+	 * Create or update a distribution-/mailing-list for the given email address with given members
+	 *
+	 * @param string $email
+	 * @param array $recipients email-addresses
+	 * @param string|null $emailAccount accountId currently holding the $email
+	 * @param array $aliases further alias email-addresses for the distribution list
+	 * @throws \Exception on error
+	 * @return void
+	 */
+	public function mailingList(string $email, array $recipients, ?string $emailAccount=null, array $aliases=[])
+	{
+		[$name, $domain] = explode('@', $email);
+		$domainId = $this->domainId($domain);
+		$mailing_list = [
+			'name' => $name,
+			'domainId' => $domainId,
+			'recipients' => (object)array_combine(array_values($recipients), array_fill(0, count($recipients), true)),
+			'aliases' => $this->aliasesPatch($aliases),
+		];
+		if (!$emailAccount)
+		{
+			if (($stalwart_mailing_list = $this->getMailingListByRecipient($email)[0] ?? null) &&
+				$stalwart_mailing_list['emailAddress'] !== $email)
+			{
+				$stalwart_mailing_list = null;
+			}
+		}
+		// remove $email from account currently holding it
+		else
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['x:Account/get', [
+					'id' => $emailAccount,
+				], "a"],
+			]);
+			if (($aliases = $response['methodResponses'][0][1]['list']['id']['aliases'] ?? null) &&
+				($key = $this->aliasKey($aliases, [
+					'name' => $name,
+					'domainId' => $domainId,
+				])))
+			{
+				$aliases[$key] = null;
+				$response = $this->jmapClient()->jmapCall([
+					['x:Account/set', [
+						'update' => [
+						'id' => ['aliases' => $aliases],
+					]], "a"],
+				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			}
+		}
+		// create mailing-list
+		if (empty($stalwart_mailing_list))
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['x:MailingList/set', [
+					'create' => [
+						'new1' => $mailing_list,
+					]
+				]]
+			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			$listId = $response['methodResponses'][0][1]['created']['new1']['id'] ??
+				throw new \Exception("Mailing list '$email' NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES));
+		}
+		// update mailing list, if there is a change in recipients
+		elseif (($recipient_changes = self::emailPatch($mailing_list['recipients'], $stalwart_mailing_list['recipients'])) != (object)[])
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['x:MailingList/set', [
+					'update' => [
+						$stalwart_mailing_list['id'] => ['recipients' => $recipient_changes],
+					]
+				], 'a']
+			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			if (!array_key_exists($stalwart_mailing_list['id'], $response['methodResponses'][0][1]['updated']))
+			{
+				throw new \Exception("Mailing list '$mailing_list[emailAddress]' NOT updated: " . json_encode($response, JSON_UNESCAPED_SLASHES));
+			}
+		}
+	}
+
+	/**
+	 * Get all mailing-lists with the given recipient
+	 *
+	 * @param string $recipient email-address
+	 * @param bool $return_just_email false: return full mailing-lists, true: return email address of mailing-list
+	 * @param bool $return_groups_too false: return no groups, true: also return groups
+	 * @return array
+	 */
+	public function getMailingListByRecipient(string $recipient, bool $return_just_email=false, bool $return_groups_too=false) : array
+	{
+		$response = $this->jmapClient()->jmapCall([
+			['x:MailingList/query', [
+				'filter' => [
+					'text' => $recipient,
+				]
+			], 'a'],
+			['x:MailingList/get', [
+				'#ids' => ['name' => 'x:MailingList/query', 'path' => '/ids', 'resultOf' => 'a'],
+			], 'b']
+		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+		$lists = $response['methodResponses'][1][1]['list'] ?? [];
+
+		// should we return groups used as distribution lists
+		if (!$return_groups_too)
+		{
+			$lists = array_filter($lists, function($list) {
+				return Api\Accounts::getInstance()->get_type($list['name']) !== 'g';
+			});
+		}
+
+		if ($return_just_email)
+		{
+			return array_map(fn($mailing_list) => $mailing_list['emailAddress'], $lists);
+		}
+		return $lists;
+	}
+
+	/**
+	 * JMAP query for one or more objects
+	 *
+	 * @param string $what name of object e.g. "Account"
+	 * @param array $filter JMAP filter
+	 * @param bool $multiple false (default): throw if more then one result, true: return array of matches
+	 * @return array|null
+	 * @throw \Exception for more the one result
+	 */
+	protected function query(string $what, array $filter, bool $multiple=false) : ?array
+	{
+		$response = $this->jmapClient()->jmapCall([
+			["x:$what/query", [
+				'filter' => $filter,
+			], 'a']
+		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+
+		if ($multiple)
+		{
+			return $response['methodResponses'][0][1]['list'] ?? [];
+		}
+		if (count($response['methodResponses'][0][1]['list'] ?? []) > 1)
+		{
+			throw new \Exception("Query for $what object returned more then one result, filter: ".
+				json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+		}
+		return current($response['methodResponses'][0][1]['list'] ?? []);
+	}
+
+	/**
+	 * JMAP get for one object by its type and ID
+	 *
+	 * @param string $what name of object e.g. "Account"
+	 * @param string $id id
+	 * @return array|null
+	 * @throw \Exception for more the one result
+	 */
+	protected function get(string $what, string $id) : ?array
+	{
+		$response = $this->jmapClient()->jmapCall([
+			["x:$what/get", [
+				'id' => $id,
+			], 'a']
+		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+
+		return $response['methodResponses'][0][1]['list'][0] ??
+			throw new \Exception("Get for $what object with id='$id' returned no result: ".
+			json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
+	}
+
+	/**
+	 * Find key / attribute name of given alias
+	 *
+	 * @param array|object $aliases array or object of aliases
+	 * @param string|array $find alias object or emailAddress to search
+	 * @return string|null key of alias or null, if not find
+	 */
+	public function aliasKey(array|object $aliases, string|array $find) : ?string
+	{
+		if (is_string($find))
+		{
+			$find = [
+				'name' => explode('@', $find)[0],
+				'domainId' => $this->domainId(explode('@', $find)[1]),
+			];
+		}
+		foreach($aliases as $id => $alias)
+		{
+			if ($alias['name'] === $find['name'] && $alias['domainId'] === $find['domainId'])
+			{
+				return $id;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * ML recipients is a map emailAddress => true
+	 *
+	 * @param array|object $new new email address
+	 * @param array|object|null $old existing ones
+	 * @return object map or patch for aliases email => true|null
+	 */
+	protected static function emailPatch(array|object $new, array|object|null $old=null) : object
+	{
+		if (is_object($new))
+		{
+			$new = array_keys(get_object_vars($new));
+		}
+		if (is_object($old))
+		{
+			$old = array_keys(get_object_vars($old));
+		}
+		$recipients = [];
+		foreach($old ?? [] as $email)
+		{
+			if (($key = array_search($email, $new)) !== false)
+			{
+				unset($new[$key]);
+			}
+			else
+			{
+				$recipients[$email] = null;
+			}
+		}
+		foreach($new as $email)
+		{
+			$recipients[$email] = true;
+		}
+		return (object)$recipients;    // aliases must be an object, never an array to be a JSON patch
+	}
+
+	/**
 	 * Aliases is a map, thought Stalwart uses numerical keys "0", "1", ...
 	 *
 	 * @param array $new
 	 * @param array|object|null $old
-	 * @return array map or patch for aliases
+	 * @return object map or patch for aliases
 	 */
-	protected function aliasesPatch(array $new, array|object|null $old=null) : object
+	protected function aliasesPatch(array $new, array|object|null $old=null, ?array $lists=null) : object
 	{
 		$aliases = [];
 		foreach($old ?? [] as $key => $alias)
@@ -379,7 +734,15 @@ class Stalwart extends Sql
 				}
 			}
 		}
-		$num_old = count(is_object($old) ? get_object_vars($old) : $old);
+		// remove mailing-list aliases
+		foreach($lists ?? [] as $list)
+		{
+			if (($key = $this->aliasKey($new, $list['emailAddress'])) !== null)
+			{
+				unset($new[$key]);
+			}
+		}
+		$num_old = count(is_object($old) ? get_object_vars($old) : $old ?? []);
 		foreach(array_values($new) as $k => $alias)
 		{
 			$aliases[$num_old+$k] = $alias;

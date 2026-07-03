@@ -212,12 +212,21 @@ class Jmap
 	 * @link https://github.com/stalwartlabs/mail-server/discussions/1508
 	 * @ToDo throw exceptions on JMAP errors
 	 * @param array $methodCalls [string $method, array $args][]
-	 * @param string|array $using ='urn:ietf:params:jmap:mail'
+	 * @param string|array $using
 	 * @param bool $emulate true: emulate multiple methodCalls, false: send them in one call to the server
 	 * @return array response
 	 */
-	public function jmapCall(array $methodCalls, $using='urn:ietf:params:jmap:mail', bool $emulate=false)
+	public function jmapCall(array $methodCalls, string|array $using, bool $emulate=false)
 	{
+		// some basic checks
+		foreach($methodCalls as $n => &$call)
+		{
+			if (!is_array($call) || count($call) !== 3 ||
+				!is_string($call[0]) || !is_array($call[1]) || !is_string($call[2]))
+			{
+				throw new \InvalidArgumentException("Invalid method call #$n: ".json_encode($call, JSON_UNESCAPED_SLASHES));
+			}
+		}
 		if (!$emulate || count($methodCalls) === 1)
 		{
 			return $this->api($this->url, 'POST', [
