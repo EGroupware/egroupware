@@ -103,6 +103,12 @@
     "sortablejs": "^1.14.0",
     "tinymce": "^8.6.0"
   },
+  "overridesNote": "jsdom is pinned to html-encoding-sniffer@4 because html-encoding-sniffer@6 requires ESM-only @exodus/bytes from CommonJS under Node 24.",
+  "overrides": {
+    "jsdom": {
+      "html-encoding-sniffer": "4.0.0"
+    }
+  },
   "engines": {
     "node": ">=14.0.0"
   }

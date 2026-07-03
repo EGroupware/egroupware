@@ -35,6 +35,8 @@ fs.copyFileSync("../dist/custom-elements.json", "assets/custom-elements.json");
 
 module.exports = async function (eleventyConfig)
 {
+	// package.json overrides jsdom's html-encoding-sniffer dependency to avoid html-encoding-sniffer@6 requiring
+	// ESM-only @exodus/bytes from CommonJS under Node 24.
 	const {JSDOM} = await import('jsdom');
 
 	//
