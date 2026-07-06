@@ -259,36 +259,6 @@ class Sql
 				return false;
 			}
 		}
-		// store group-email in mailaccounts table
-		if ($data['account_id'] < 0 && class_exists('EGroupware\\Api\\Mail\\Smtp\\Sql', isset($data['account_email'])))
-		{
-			try {
-				if (isset($GLOBALS['egw_setup']) && !in_array(Api\Mail\Smtp\Sql::TABLE, $this->db->table_names(true)))
-				{
-					// cant store email, if table not yet exists
-				}
-				elseif (empty($data['account_email']))
-				{
-					$this->db->delete(Api\Mail\Smtp\Sql::TABLE, array(
-						'account_id' => $data['account_id'],
-						'mail_type' => Api\Mail\Smtp\Sql::TYPE_ALIAS,
-					), __LINE__, __FILE__, Api\Mail\Smtp\Sql::APP);
-				}
-				else
-				{
-					$this->db->insert(Api\Mail\Smtp\Sql::TABLE, array(
-						'mail_value' => $data['account_email'],
-					), array(
-						'account_id' => $data['account_id'],
-						'mail_type' => Api\Mail\Smtp\Sql::TYPE_ALIAS,
-					), __LINE__, __FILE__, Api\Mail\Smtp\Sql::APP);
-				}
-			}
-			// ignore not (yet) existing mailaccounts table (does NOT work in PostgreSQL, because of transaction!)
-			catch (Api\Db\Exception $e) {
-				unset($e);
-			}
-		}
 		return $data['account_id'];
 	}
 

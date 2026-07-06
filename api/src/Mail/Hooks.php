@@ -75,6 +75,20 @@ class Hooks
 	}
 
 	/**
+	 * Hook called when a group get added or edited
+	 *
+	 * @param array $data
+	 * @param int $data['account_id'] numerical id
+	 * @param string $data['account_lid'] account-name
+	 * @param string $data['account_email'] email
+	 */
+	static function updategroup(array $data)
+	{
+		self::run_plugin_hooks('updategroup', $data);
+	}
+
+
+	/**
 	 * Run hook on plugins of all mail-accounts of given account_id
 	 *
 	 * @param string $method plugin method to run
@@ -89,13 +103,15 @@ class Hooks
 			try {
 				$account = new Account($params);
 				if ($account->acc_smtp_type != __NAMESPACE__.'\\Smtp' && ($smtp = $account->smtpServer(true)) &&
-					is_a($smtp, __NAMESPACE__.'\\Smtp') && get_class($smtp) != __NAMESPACE__.'\\Smtp')
+					is_a($smtp, __NAMESPACE__.'\\Smtp') && get_class($smtp) != __NAMESPACE__.'\\Smtp' &&
+					method_exists($smtp, $method))
 				{
 					$smtp->$method($data);
 				}
 				if ($account->acc_imap_type != __NAMESPACE__.'\\Imap' && $account->acc_imap_admin_username &&
 					$account->acc_imap_admin_password && ($imap = $account->imapServer(true)) &&
-					is_a($imap, __NAMESPACE__.'\\Imap') && get_class($imap) != __NAMESPACE__.'\\Imap')
+					is_a($imap, __NAMESPACE__.'\\Imap') && get_class($imap) != __NAMESPACE__.'\\Imap' &&
+					method_exists($imap, $method))
 				{
 					$imap->$method($data);
 				}

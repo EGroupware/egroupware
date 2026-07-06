@@ -32,6 +32,11 @@ class Stalwart extends Sql
 	const DESCRIPTION = 'Stalwart';
 
 	/**
+	 * Capabilities of this class (pipe-separated): default, forward
+	 */
+	const CAPABILITIES = 'default';
+
+	/**
 	 * @var Jmap JMAP connection
 	 */
 	protected Jmap $jmap;
@@ -45,6 +50,20 @@ class Stalwart extends Sql
 	protected $jmap_accountId;
 
 	const USING_STALWART = "urn:stalwart:jmap";
+
+	/**
+	 * Hook called when group is added or updated
+	 *
+	 * @param array $data values for keys "location", "account_id", "account_lid", "account_email" and "mailbox"
+	 * @return void
+	 */
+	function updateGroup($data)
+	{
+		$this->group($data['account_id'], $data['account_lid'],
+			$data['account_email'] ?? Api\Accounts::id2name($data['account_id']));
+
+		parent::updateGroup($data);
+	}
 
 	/**
 	 * Get the data of a given user
@@ -156,6 +175,8 @@ class Stalwart extends Sql
 	                     $_accountStatus, $_mailLocalAddress, $_quota, $_forwarding_only=false, $_setMailbox=null)
 	{
 		if (!empty($this->debug)) error_log(__METHOD__ . "($_uidnumber, " . array2string($_mailAlternateAddress) . ', ' . array2string($_mailForwardingAddress) . ", '$_deliveryMode', '$_accountStatus', '$_mailLocalAddress', $_quota, forwarding_only=" . array2string($_forwarding_only) . ') ' . function_backtrace());
+
+		if (empty($_mailLocalAddress)) return;
 
 		$account_lid = $this->accounts->id2name($_uidnumber) ?? throw new \Exception("Invalid user #$_uidnumber!");
 		if (self::name2stalwart($_mailLocalAddress) !== self::name2stalwart($account_lid.'@'.$this->defaultDomain))
@@ -306,6 +327,8 @@ class Stalwart extends Sql
 		return !is_array($name) ? $ret[0] : $ret;
 	}
 
+	const NON_MAILBOX_GROUP_PREFIX = 'noreply-';
+
 	/**
 	 * Sync the given groups to Stalwart, if not already exist, and return their ids
 	 *
@@ -338,7 +361,9 @@ class Stalwart extends Sql
 		], [Jmap::JMAP_CORE, self::USING_STALWART]);
 		foreach($response['methodResponses'][1][1]['list'] as $group)
 		{
-			if (($key=array_search($group['name'], $memberships)) !== false)
+			if (($key=array_search($group['name'], $memberships)) !== false ||
+				str_starts_with($group['name'], self::NON_MAILBOX_GROUP_PREFIX) &&
+					($key=array_search(substr($group['name'], strlen(self::NON_MAILBOX_GROUP_PREFIX)), $memberships)) !== false)
 			{
 				$stalwartIds[$key] = $group['id'];
 				$this->db->insert(self::TABLE, [
@@ -358,24 +383,120 @@ class Stalwart extends Sql
 		{
 			foreach ($missing as $account_id => $account_lid)
 			{
-				$methodcalls[0][1]['create']['new' . $account_id] = [
-					'@type' => 'Group',
-					'name' => $account_lid,
-					'domainId' => $domainId,
-				];
-			}
-			$response = $this->jmapClient()->jmapCall($methodcalls, [Jmap::JMAP_CORE, self::USING_STALWART]);
-			foreach ($response['methodResponses'][0][1]['created'] as $egwId => $response)
-			{
-				$stalwartIds[$key=substr($egwId, 3)] = $response['id'];
-				$this->db->insert(self::TABLE, [
-					'account_id' => $key,
-					'mail_type' => self::TYPE_ENABLED,
-					'mail_value' => $response['id'],
-				], false,__LINE__, __FILE__);
+				$stalwartIds[$account_id] = $this->group($account_id, $account_lid,
+					Api\Accounts::id2name($account_id, 'account_email'), false);
 			}
 		}
 		return array_values($stalwartIds);
+	}
+
+	/**
+	 * Create or update group
+	 *
+	 * @param int $account_id
+	 * @param string $account_lid
+	 * @param string $account_email
+	 * @param bool|null $exists null: check, false: does not exist, true: does already exist (but groupId not known)
+	 * @param bool $is_shared_mailbox
+	 * @return string group ID
+	 */
+	public function group(int $account_id, string $account_lid, string $account_email, ?bool $exists=null, bool $is_shared_mailbox=false)
+	{
+		$domainId = $this->domainId($this->defaultDomain);
+		$name = self::name2stalwart($account_lid);
+		$prefix = empty($account_email) || !$is_shared_mailbox ? self::NON_MAILBOX_GROUP_PREFIX : '';
+		$account = array_filter([
+			'@type' => 'Group',
+			'name' => $prefix.$name,
+			'description' => $account_lid,
+			//'emailAddress' => strtolower($account_lid.'@'.$this->defaultDomain),  // is server-set by name and domainId
+			'domainId' => $domainId,
+			//'aliases' => $aliases,
+			//'quotas' => ['maxDiskQuota' => $_quota ? $_quota << 20 : null],
+		]);
+		// check if group already exists with or without prefix
+		if ($exists !== false)
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['x:Account/query', [
+					'filter' => Jmap::filterConditions('AND', [
+						'domainId' => $domainId,
+						'name' => $name,
+					]),
+				], 'b'],
+				['x:Account/get', [
+					'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'b'],
+				], 'c'],
+				['x:Account/query', [
+					'filter' => Jmap::filterConditions('AND', [
+						'domainId' => $domainId,
+						'name' => self::NON_MAILBOX_GROUP_PREFIX.$name,
+					]),
+				], 'd'],
+				['x:Account/get', [
+					'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'd'],
+				], 'e'],
+			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+		}
+		if ($exists !== false && ($groupId = $response['methodResponses'][0][1]['ids'][0] ?? $response['methodResponses'][2][1]['ids'][0] ?? null))
+		{
+			$group = current($response['methodResponses'][1][1]['list']) ?: current($response['methodResponses'][3][1]['list']);
+			if (($diff=array_diff_assoc($account, $group)))
+			{
+				// update group
+				$response = $this->jmapClient()->jmapCall([
+					['x:Account/set', [
+						'update' => [$groupId => $diff],
+					], 'a'],
+				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			}
+		}
+		else
+		{
+			// create group
+			$response = $this->jmapClient()->jmapCall([
+				['x:Account/set', [
+					'create' => ['new1' => $account],
+				], 'a'],
+			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			$groupId = $response['methodResponses'][0][1]['created'][0] ?? throw new \Exception("Could not create group '$account_lid'!");
+			$this->db->insert(self::TABLE, [
+				'account_id' => $account_id,
+				'mail_type' => self::TYPE_ENABLED,
+				'mail_value' => $groupId,
+			], false,__LINE__, __FILE__);
+		}
+		// update mailing list, if required
+		if (!empty($account_email) && !$is_shared_mailbox)
+		{
+			$this->mailingList($account_email, array_values(array_filter(array_map(fn($account_id) => Api\Accounts::id2name($account_id, 'account_email'),
+					Api\Accounts::getInstance()->members($account_id, true)))), null, [], lang('Group').' '.$account_lid);
+		}
+		// remove evtl. existing mailing-list
+		else
+		{
+			if (empty($account_email))
+			{
+				$account_email = $account['account_lid'].'@'.$this->defaultDomain;
+			}
+			foreach ($this->getMailingListByRecipient($account_email, false, true) as $list)
+			{
+				if (strtolower($list['emailAddress']) === strtolower($account_email))
+				{
+					$response = $this->jmapClient()->jmapCall([
+						['x:Account/set', [
+							'delete' => [$list['id']]
+						], 'a'],
+					], [Jmap::JMAP_CORE, self::USING_STALWART]);
+					if (!array_key_exists($list['id'], $response['methodResponses'][0][1]['deleted']))
+					{
+						throw new \Exception("Could not delete mailing list '$account_email'!");
+					}
+					break;
+				}
+			}
+		}
+		return $groupId;
 	}
 
 	/**
@@ -474,18 +595,20 @@ class Stalwart extends Sql
 	 * @param array $recipients email-addresses
 	 * @param string|null $emailAccount accountId currently holding the $email
 	 * @param array $aliases further alias email-addresses for the distribution list
+	 * @param ?string $description
 	 * @throws \Exception on error
-	 * @return void
+	 * @return string mailing-list ID
 	 */
-	public function mailingList(string $email, array $recipients, ?string $emailAccount=null, array $aliases=[])
+	public function mailingList(string $email, array $recipients, ?string $emailAccount=null, array $aliases=[], ?string $description=null)
 	{
 		[$name, $domain] = explode('@', $email);
 		$domainId = $this->domainId($domain);
 		$mailing_list = [
-			'name' => $name,
+			'name' => self::name2stalwart($name),
 			'domainId' => $domainId,
 			'recipients' => (object)array_combine(array_values($recipients), array_fill(0, count($recipients), true)),
 			'aliases' => $this->aliasesPatch($aliases),
+			'description' => $description,
 		];
 		if (!$emailAccount)
 		{
@@ -526,7 +649,7 @@ class Stalwart extends Sql
 					'create' => [
 						'new1' => $mailing_list,
 					]
-				]]
+				], 'a']
 			], [Jmap::JMAP_CORE, self::USING_STALWART]);
 			$listId = $response['methodResponses'][0][1]['created']['new1']['id'] ??
 				throw new \Exception("Mailing list '$email' NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES));
@@ -546,10 +669,11 @@ class Stalwart extends Sql
 				throw new \Exception("Mailing list '$mailing_list[emailAddress]' NOT updated: " . json_encode($response, JSON_UNESCAPED_SLASHES));
 			}
 		}
+		return $stalwart_mailing_list['id'] ?? $listId;
 	}
 
 	/**
-	 * Get all mailing-lists with the given recipient
+	 * Get all mailing-lists with the given recipient or email
 	 *
 	 * @param string $recipient email-address
 	 * @param bool $return_just_email false: return full mailing-lists, true: return email address of mailing-list

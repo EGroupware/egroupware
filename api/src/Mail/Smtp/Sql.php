@@ -415,4 +415,41 @@ class Sql extends Mail\Smtp
 
 		return true;
 	}
+
+	/**
+	 * Hook called when group is added or updated
+	 *
+	 * @param array $data values for keys "location", "account_id", "account_lid", "account_email" and "mailbox"
+	 * @return void
+	 */
+	function updateGroup(array $data)
+	{
+		// store group-email in mailaccounts table
+		try {
+			if (isset($GLOBALS['egw_setup']) && !in_array(self::TABLE, $this->db->table_names(true)))
+			{
+				// cant store email, if table not yet exists
+			}
+			elseif (empty($data['account_email']))
+			{
+				$this->db->delete(self::TABLE, array(
+					'account_id' => $data['account_id'],
+					'mail_type' => self::TYPE_ALIAS,
+				), __LINE__, __FILE__, self::APP);
+			}
+			else
+			{
+				$this->db->insert(self::TABLE, array(
+					'mail_value' => $data['account_email'],
+				), array(
+					'account_id' => $data['account_id'],
+					'mail_type' => self::TYPE_ALIAS,
+				), __LINE__, __FILE__, self::APP);
+			}
+		} 
+		// ignore not (yet) existing mailaccounts table (does NOT work in PostgreSQL, because of transaction!)
+		catch (Api\Db\Exception $e) {
+			unset($e);
+		}
+	}
 }
