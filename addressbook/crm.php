@@ -94,5 +94,6 @@ try {
 }
 catch (\Exception $e) {
 	error_log("crm.php: No contact for from=$from found!");
+	$from = htmlspecialchars($from, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8');
 	die("No contact for from=$from found!\n");
 }
