@@ -39,7 +39,7 @@ if (!is_readable($path_to_egroupware.'/header.inc.php'))
 
 	if (isset($_SERVER['HTTP_HOST']))
 	{
-		header("HTTP/1.1 500 $msg");
+		header("HTTP/1.1 500 Internal Server Error");
 	}
 	if (defined('ASYNC_LOG'))
 	{
@@ -47,7 +47,7 @@ if (!is_readable($path_to_egroupware.'/header.inc.php'))
 		fwrite($f,$msg);
 		fclose($f);
 	}
-	die($msg);
+	die(htmlspecialchars($msg, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8'));
 }
 include($path_to_egroupware.'/header.inc.php');
 unset($GLOBALS['egw_info']['flags']['noapi']);
