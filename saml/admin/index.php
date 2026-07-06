@@ -1,31 +1,22 @@
 <?php
 
+declare(strict_types=1);
+
+namespace SimpleSAML;
+
 require_once('../_include.php');
 
-\SimpleSAML\Utils\HTTP::redirectTrustedURL(\SimpleSAML\Module::getModuleURL('admin/'));
+$config = Configuration::getInstance();
+$httpUtils = new Utils\HTTP();
 
-// Load SimpleSAMLphp configuration
-$config = \SimpleSAML\Configuration::getInstance();
-$session = \SimpleSAML\Session::getSessionFromRequest();
+$headers = $config->getOptionalArray('headers.security', Configuration::DEFAULT_SECURITY_HEADERS);
+$redirect = Module::getModuleURL('admin/');
+$response =  new HTTP\RunnableResponse([$httpUtils, 'redirectTrustedURL'], [$redirect]);
+foreach ($headers as $header => $value) {
+    // Some pages may have specific requirements that we must follow. Don't touch them.
+    if (!$response->headers->has($header)) {
+        $response->headers->set($header, $value);
+    }
+}
 
-// Check if valid local session exists..
-\SimpleSAML\Utils\Auth::requireAdmin();
-
-$adminpages = [
-    'hostnames.php' => 'Diagnostics on hostname, port and protocol',
-    'phpinfo.php' => 'PHP info',
-    '../module.php/sanitycheck/index.php' => 'Sanity check of your SimpleSAMLphp setup',
-    'sandbox.php' => 'Sandbox for testing changes to layout and css',
-];
-
-$logouturl = \SimpleSAML\Utils\Auth::getAdminLogoutURL();
-
-$template = new \SimpleSAML\XHTML\Template($config, 'index.php');
-
-$template->data['pagetitle'] = 'Admin';
-$template->data['adminpages'] = $adminpages;
-$template->data['remaining']  = $session->getAuthData('admin', 'Expire') - time();
-$template->data['valid'] = 'na';
-$template->data['logouturl'] = $logouturl;
-
-$template->show();
+$response->send();

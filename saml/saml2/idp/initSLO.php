@@ -1,16 +1,30 @@
 <?php
 
+/**
+ * @deprecated  This script exists for legacy purposes only and will be removed in a future release.
+ */
+
+declare(strict_types=1);
+
+namespace SimpleSAML;
+
 require_once('../../_include.php');
 
-$metadata = \SimpleSAML\Metadata\MetaDataStorageHandler::getMetadataHandler();
-$idpEntityId = $metadata->getMetaDataCurrentEntityID('saml20-idp-hosted');
-$idp = \SimpleSAML\IdP::getById('saml2:' . $idpEntityId);
+use SimpleSAML\Configuration;
+use SimpleSAML\Module\saml\Controller;
+use Symfony\Component\HttpFoundation\Request;
 
-\SimpleSAML\Logger::info('SAML2.0 - IdP.initSLO: Accessing SAML 2.0 IdP endpoint init Single Logout');
+$request = Request::createFromGlobals();
+$config = Configuration::getInstance();
+$controller = new Controller\SingleLogout($config);
 
-if (!isset($_GET['RelayState'])) {
-    throw new \SimpleSAML\Error\Error('NORELAYSTATE');
+$headers = $config->getOptionalArray('headers.security', Configuration::DEFAULT_SECURITY_HEADERS);
+
+$response = $controller->initSingleLogout($request);
+foreach ($headers as $header => $value) {
+    // Some pages may have specific requirements that we must follow. Don't touch them.
+    if (!$response->headers->has($header)) {
+        $response->headers->set($header, $value);
+    }
 }
-
-$idp->doLogoutRedirect(\SimpleSAML\Utils\HTTP::checkURLAllowed((string) $_GET['RelayState']));
-assert(false);
+$response->send();

@@ -778,9 +778,9 @@ class Saml implements BackendSSO
 		{
 			$simplesaml_dir = EGW_SERVER_ROOT.'/vendor/simplesamlphp/simplesamlphp';
 
-			foreach(glob($simplesaml_dir.'/config-templates/*.php') as $path)
+			foreach(glob($simplesaml_dir.'/config/*.php.dist') as $path)
 			{
-				switch($file=basename($path))
+				switch($file=basename($path, '.dist'))
 				{
 					case 'config.php':
 						$cookie_domain = Api\Session::getCookieDomain($cookie_path, $cookie_secure);
@@ -803,6 +803,7 @@ EOF
 							"'admin.protectindexpage' => false," => "'admin.protectindexpage' => true,",
 							"'certdir' => 'cert/'," => "'certdir' => __DIR__.'/cert/',",
 							"'loggingdir' => 'log/'," => "'loggingdir' => __DIR__.'/log/',",
+							"'cachedir' => '/var/cache/simplesamlphp'," => "'cachedir' => __DIR__.'/cache/',",
 							"'datadir' => 'data/'," => "'datadir' => __DIR__.'/data/',",
 							"'tempdir' => '/tmp/simplesaml'," => "'tempdir' => __DIR__.'/tmp',",
 							"'metadatadir' => 'metadata'," => "'metadatadir' => __DIR__.'/metadata',",
@@ -828,6 +829,7 @@ EOF
 						$replacements = [
 							"'idp' => null," => "'idp' => ".self::quote(
 								count(self::splitIdP($config['saml_idp'])) <= 1 ? trim($config['saml_idp']) : null).',',
+							"'entityID' => 'https://myapp.example.org/'" => "'https://".Api\Header\Http::host()."/'",
 							"'discoURL' => null," => "'discoURL' => null,\n\n".
 								// add our private and public keys
 								"\t'privatekey' => 'saml.pem',\n\n".

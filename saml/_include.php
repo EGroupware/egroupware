@@ -1,69 +1,40 @@
 <?php
 
+declare(strict_types=1);
+
+// Set start-time for debugging purposes
+define('SIMPLESAMLPHP_START', hrtime(true));
+
 // EGroupware modification start
 require_once __DIR__.'/_egw_include.php';
 // initialize the autoloader
 //require_once(dirname(dirname(__FILE__)) . '/lib/_autoload.php');
 // EGroupware modification end
 
-// enable assertion handler for all pages
-\SimpleSAML\Error\Assertion::installHandler();
+use SAML2\Compat\ContainerSingleton;
+use SimpleSAML\Compat\SspContainer;
+use SimpleSAML\Configuration;
+use SimpleSAML\Error;
+use SimpleSAML\Utils;
 
-// show error page on unhandled exceptions
-function SimpleSAML_exception_handler($exception)
-{
-    \SimpleSAML\Module::callHooks('exception_handler', $exception);
+$exceptionHandler = new Error\ExceptionHandler();
+set_exception_handler([$exceptionHandler, 'customExceptionHandler']);
 
-    if ($exception instanceof \SimpleSAML\Error\Error) {
-        $exception->show();
-    } elseif ($exception instanceof \Exception) {
-        $e = new \SimpleSAML\Error\Error('UNHANDLEDEXCEPTION', $exception);
-        $e->show();
-    } elseif (class_exists('Error') && $exception instanceof \Error) {
-        $code = $exception->getCode();
-        $errno = ($code > 0) ? $code : E_ERROR;
-        $errstr = $exception->getMessage();
-        $errfile = $exception->getFile();
-        $errline = $exception->getLine();
-        SimpleSAML_error_handler($errno, $errstr, $errfile, $errline);
-    }
-}
-
-set_exception_handler('SimpleSAML_exception_handler');
-
-// log full backtrace on errors and warnings
-function SimpleSAML_error_handler($errno, $errstr, $errfile = null, $errline = 0, $errcontext = null)
-{
-    if (\SimpleSAML\Logger::isErrorMasked($errno)) {
-        // masked error
-        return false;
-    }
-
-    static $limit = 5;
-    $limit -= 1;
-    if ($limit < 0) {
-        // we have reached the limit in the number of backtraces we will log
-        return false;
-    }
-
-    // show an error with a full backtrace
-    $context = (is_null($errfile) ? '' : " at $errfile:$errline");
-    $e = new \SimpleSAML\Error\Exception('Error ' . $errno . ' - ' . $errstr . $context);
-    $e->logError();
-
-    // resume normal error processing
-    return false;
-}
-
-set_error_handler('SimpleSAML_error_handler');
+$errorHandler = new Error\ErrorHandler();
+set_error_handler([$errorHandler, 'customErrorHandler']);
 
 try {
-    \SimpleSAML\Configuration::getInstance();
-} catch (\Exception $e) {
-    throw new \SimpleSAML\Error\CriticalConfigurationError(
-        $e->getMessage()
+    Configuration::getInstance();
+} catch (Exception $e) {
+    throw new Error\CriticalConfigurationError(
+        $e->getMessage(),
     );
 }
 
 // set the timezone
-\SimpleSAML\Utils\Time::initTimezone();
+$timeUtils = new Utils\Time();
+$timeUtils->initTimezone();
+
+// set the SAML2 container
+$container = new SspContainer();
+ContainerSingleton::setContainer($container);
