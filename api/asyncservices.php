@@ -59,7 +59,7 @@ if (!isset($GLOBALS['egw_domain'][$_REQUEST['domain']]) || empty($db_type))
 
 	if (isset($_SERVER['HTTP_HOST']))
 	{
-		header("HTTP/1.1 500 $msg");
+		header("HTTP/1.1 500 Internal Server Error");
 	}
 	if (defined('ASYNC_LOG'))
 	{
@@ -67,7 +67,7 @@ if (!isset($GLOBALS['egw_domain'][$_REQUEST['domain']]) || empty($db_type))
 		fwrite($f,$msg);
 		fclose($f);
 	}
-	die($msg);
+	die(htmlspecialchars($msg, ENT_QUOTES|ENT_SUBSTITUTE, 'UTF-8'));
 }
 
 include(EGW_SERVER_ROOT.'/api/src/loader.php');
