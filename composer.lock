@@ -1803,16 +1803,16 @@
         },
         {
             "name": "egroupware/imap-client",
-            "version": "2.31.2",
+            "version": "2.31.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Imap_Client.git",
-                "reference": "08fe784122c7a6afdaa11e57ad227ff010cb9efa"
+                "reference": "d4f28ef507cd93655b595ddffddbfbcdee8f659f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/08fe784122c7a6afdaa11e57ad227ff010cb9efa",
-                "reference": "08fe784122c7a6afdaa11e57ad227ff010cb9efa",
+                "url": "https://api.github.com/repos/EGroupware/Imap_Client/zipball/d4f28ef507cd93655b595ddffddbfbcdee8f659f",
+                "reference": "d4f28ef507cd93655b595ddffddbfbcdee8f659f",
                 "shasum": ""
             },
             "require": {
@@ -1867,7 +1867,7 @@
             "description": "IMAP client library",
             "homepage": "https://www.horde.org/libraries/Horde_Imap_Client",
             "support": {
-                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.2"
+                "source": "https://github.com/EGroupware/Imap_Client/tree/2.31.3"
             },
             "time": "2019-09-29T00:00:00+00:00"
         },
