@@ -717,10 +717,15 @@ class Widget
 
 			$er = error_reporting(0);
 			try {
-				eval('$name = "' . strtr($name, ['"' => '\\"', '`' => '']) . '";');
+				eval('$name = "' . strtr($name, [
+					'"' => '\\"',         // escape used double quotes
+					'`' => '',            // disarm/remove backtick operator allowed in strings
+					'${row}' => $row,     // this is the only necessary usage of ${...}, we replace it directly with $row
+					'{' => '', '}' => '', // disarm ${...} usable to run PHP e.g. "${phpinfo()}" or "${system('id')}"
+				]) . '";');
 			}
 			catch(\Throwable $e) {
-				error_log(__METHOD__."() eval('\$name = \"".strtr($name, ['"' => '\\"', '`' => '']) . "\";)");
+				error_log(__METHOD__."() eval('\$name = \"".strtr($name, ['"' => '\\"', '`' => '', '${row}' => $row, '{' => '', '}' => '']) . "\";)");
 				_egw_log_exception($e);
 			}
 			error_reporting($er);
