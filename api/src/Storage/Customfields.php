@@ -454,7 +454,7 @@ class Customfields implements \IteratorAggregate
 
 		foreach($update as $old_cf)
 		{
-			self::$db->$op(self::TABLE, array(
+			self::$db->update(self::TABLE, array(
 				'cf_order' => $old_cf['order'],
 			), array(
 				'cf_name' => $old_cf['name'],
