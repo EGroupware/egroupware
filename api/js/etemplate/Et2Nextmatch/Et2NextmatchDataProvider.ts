@@ -18,6 +18,9 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	/** Tracks one in-flight refresh promise per normalized row id so concurrent callers share one server request. */
 	private _inFlightRefreshes : Map<string, Promise<Et2DatagridRefreshResult>> = new Map();
 
+	/**
+	 * Build the current server request context shared by page and refresh calls.
+	 */
 	private _requestContext()
 	{
 		return {
@@ -181,6 +184,47 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		return this._stableSerialize(this._currentFilters());
 	}
 
+	/**
+	 * Create a provider for a nested child grid under one parent row.
+	 *
+	 * Child providers reuse the same row-id normalization and refresh path as the
+	 * root provider, but add `parent_id` to page fetches and query signatures.
+	 */
+	createChildProvider(parentRowId : string) : Et2DatagridDataProvider
+	{
+		const provider = this;
+		const parentProviderRowId = this.toProviderRowId(String(parentRowId || ""));
+		return {
+			fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>
+			{
+				return provider._fetchPageWithRange(start, pageSize, {parent_id: parentProviderRowId});
+			},
+			getQuerySignature() : string
+			{
+				return provider._stableSerialize({
+					filters: provider._currentFilters(),
+					parent_id: parentProviderRowId
+				});
+			},
+			getDataStorePrefix() : string
+			{
+				return provider.getDataStorePrefix();
+			},
+			normalizeRowId(rowId : string | number, ensurePrefix : boolean = false) : string
+			{
+				return provider.normalizeRowId(rowId, ensurePrefix);
+			},
+			toProviderRowId(dataStoreRowId : string) : string
+			{
+				return provider.toProviderRowId(dataStoreRowId);
+			},
+			refresh(rowIds : string[], type : Et2DatagridUpdateType) : Promise<Et2DatagridRefreshResult>
+			{
+				return provider.refresh(rowIds, type);
+			}
+		};
+	}
+
 	getDataStorePrefix() : string
 	{
 		const app = this.host.getInstanceManager?.()?.app || this.host.egw?.()?.app_name?.();
@@ -318,8 +362,25 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	 */
 	async fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>
 	{
+		return this._fetchPageWithRange(start, pageSize);
+	}
+
+	/**
+	 * Fetch a page of rows with optional Nextmatch range fields such as `parent_id`.
+	 */
+	private async _fetchPageWithRange(
+		start : number,
+		pageSize : number,
+		rangeOverrides : Record<string, any> = {}
+	) : Promise<Et2DatagridPageResult>
+	{
 		const {execId, widgetId, filters} = this._requestContext();
 		const context = {prefix: this.getDataStorePrefix()};
+		const request = {
+			start,
+			num_rows: pageSize,
+			...rangeOverrides
+		};
 
 		return await new Promise((resolve, reject) =>
 		{
@@ -327,7 +388,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 			{
 				this.host.egw().dataFetch(
 					execId,
-					{start, num_rows: pageSize},
+					request,
 					filters,
 					widgetId,
 					(resp : any) =>
@@ -338,7 +399,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 							return;
 						}
 						// Extra data from nextmatch
-						this._processAdditionalData(resp.rows);
+						this._processAdditionalData(resp.rows || {});
 
 						const order : string[] = Array.isArray(resp.order) ? resp.order : [];
 						if(!order.length)

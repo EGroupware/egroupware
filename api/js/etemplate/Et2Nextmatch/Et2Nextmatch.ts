@@ -6,6 +6,9 @@ import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Datagrid} from "./Et2Datagrid";
 import {
 	Et2DatagridColumn,
+	Et2DatagridDataProvider,
+	Et2DatagridExpandedRowContext,
+	Et2DatagridExpansionConfig,
 	Et2DatagridRowCustomizeContext,
 	Et2DatagridTemplateData,
 	Et2DatagridUpdateType,
@@ -34,6 +37,8 @@ import {
 } from "./Headers/events";
 import styles from "./Et2Nextmatch.styles";
 import {et2_IInput} from "../et2_core_interfaces";
+import {styleMap} from "lit/directives/style-map.js";
+import {ref} from "lit/directives/ref.js";
 
 /**
  * @summary Nextmatch shows entries with filtering and context menus.
@@ -45,7 +50,8 @@ import {et2_IInput} from "../et2_core_interfaces";
  * @event et2-loading-done - Re-emitted from the inner datagrid when all fetches complete.
  * @event et2-loading-error - Re-emitted from the inner datagrid when a fetch fails.
  * @event {CustomEvent<{total: string, nextmatch: Et2Nextmatch}>} et2-search-result - Legacy-compatible event emitted after fetch completion.
- * @event {CustomEvent<{selectedRowIds?: string[], activeRowId?: string, allSelected?: boolean}>} et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
+ * @event {CustomEvent<{selectedRowIds?: string[], activeRowId?: string, allSelected?: boolean, replaceSelection?: boolean}>} et2-selection-changed - Re-emitted from the inner datagrid when row selection changes.
+ * @event {CustomEvent<{activeRowId?: string, activeRowIndex?: number}>} et2-active-row-changed - Re-emitted from the inner datagrid when active row focus changes.
  * @event {CustomEvent<{columns: Et2DatagridColumn[]}>} et2-columns-changed - Re-emitted from the inner datagrid when columns change.
  * @event {CustomEvent<{oldFilters: Record<string, any>, activeFilters: Record<string, any>, nm: Et2Nextmatch}>} et2-filter - Cancelable event emitted before active filters are applied.
  * @event refresh - Legacy compatibility event emitted after refresh requests are processed.
@@ -59,10 +65,11 @@ import {et2_IInput} from "../et2_core_interfaces";
  *
  * @csspart header - Wrapper for top header slot content rendered above the grid.
  * @csspart grid - Internal `et2-datagrid` element.
+ * @csspart subgrid - Expanded child `et2-datagrid` rendered for expandable rows.
  * @csspart footer - Wrapper for bottom slot content rendered below the grid.
  * @cssproperty [--row-height=3em] - Forwarded to internal datagrid row-height estimate.
  * @cssproperty [--row-cell-max-height=10em] - Forwarded to internal datagrid row cell max height.
- * @cssproperty [--meta-column-width=6px] - Width of leading metadata indicator column.
+ * @cssproperty [--meta-column-width=max(var(--sl-spacing-large), 6px)] - Width of leading metadata indicator/expander column.
  */
 @customElement("et2-nextmatch")
 export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
@@ -229,6 +236,20 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * Translates current filter/template state into datagrid fetch requests.
 	 */
 	private _dataProvider : Et2NextmatchDataProvider;
+	/** Lazily-created child providers keyed by normalized parent row id. */
+	private _childDataProviders : Map<string, Et2DatagridDataProvider> = new Map();
+	/** Tracks expanded subgrids that have already triggered their initial load. */
+	private _initializedSubgrids : WeakSet<Et2Datagrid> = new WeakSet();
+	/** Controlled expansion state shared with the root datagrid. */
+	private _expandedRowIds : Set<string> = new Set();
+	/** Selection state per parent/child grid, merged for legacy action handling. */
+	private _selectionByGridId : Map<string, { selectedRowIds : string[]; allSelected : boolean }> = new Map();
+	/** Current datagrid column state after user preference/resizing changes. */
+	private _datagridColumns : Et2DatagridColumn[] | null = null;
+	/** Frozen column snapshots for already-open child grids. */
+	private _subgridColumnSnapshots : Map<string, {
+		columns : Et2DatagridColumn[];
+	}> = new Map();
 
 	/**
 	 * Watches slot content so slot-driven templates can be reparsed on changes.
@@ -280,7 +301,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	private get _currentColumns() : Et2DatagridColumn[]
 	{
-		return this._templateData?.columns || [];
+		return this._datagridColumns || this._templateData?.columns || [];
 	}
 
 	constructor()
@@ -312,6 +333,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.addEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.addEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.addEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.addEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
+		this.addEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
 		this.addEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.addEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.addEventListener("keydown", this._handleKeydown as EventListener);
@@ -319,6 +342,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.addEventListener("pointermove", this._handlePointerMove as EventListener);
 		this.addEventListener("pointerup", this._cancelLongPress as EventListener);
 		this.addEventListener("pointercancel", this._cancelLongPress as EventListener);
+		this.addEventListener("et2-datagrid-enter-expanded-row", this._handleEnterExpandedRow as EventListener);
+		this.addEventListener("et2-datagrid-leave-child-grid", this._handleLeaveChildGrid as EventListener);
+		this.addEventListener("dragstart", this._handleDragStartCapture as EventListener, true);
 		this.addEventListener("dragend", this._cancelLongPress as EventListener, true);
 	}
 
@@ -335,6 +361,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.removeEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.removeEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.removeEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
+		this.removeEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
 		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.removeEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.removeEventListener("keydown", this._handleKeydown as EventListener);
@@ -342,6 +370,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.removeEventListener("pointermove", this._handlePointerMove as EventListener);
 		this.removeEventListener("pointerup", this._cancelLongPress as EventListener);
 		this.removeEventListener("pointercancel", this._cancelLongPress as EventListener);
+		this.removeEventListener("et2-datagrid-enter-expanded-row", this._handleEnterExpandedRow as EventListener);
+		this.removeEventListener("et2-datagrid-leave-child-grid", this._handleLeaveChildGrid as EventListener);
+		this.removeEventListener("dragstart", this._handleDragStartCapture as EventListener, true);
 		this.removeEventListener("dragend", this._cancelLongPress as EventListener, true);
 		this._actionController.destroy();
 		super.disconnectedCallback();
@@ -401,14 +432,28 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		super.transformAttributes(attrs);
 	}
 
+	/**
+	 * Normalize legacy string/object settings into a plain object.
+	 */
 	private _settingsObject(value : Record<string, any> | string | null | undefined) : Record<string, any>
 	{
 		return value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
 	}
 
+	/**
+	 * Initialize legacy nextmatch actions through the action controller.
+	 */
 	protected _initActions(actions : EgwAction[] | { [id : string] : object })
 	{
 		this._actionController.initActions(actions);
+	}
+
+	/**
+	 * Expose row-target resolution to the legacy action framework's AOI bridge.
+	 */
+	findActionTarget(event : Event)
+	{
+		return this._actionController.findActionTarget(event);
 	}
 
 	/**
@@ -573,7 +618,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	selectSingleRow(rowId : string)
 	{
-		this._datagrid?.selectSingleRow(rowId);
+		(this._findGridContainingRow(rowId) || this._datagrid)?.selectSingleRow(rowId);
 	}
 
 	selectAllRows()
@@ -600,6 +645,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const nextColumns = (columns || []).map((column, index) =>
 			typeof column === "string" ? {key: "col" + index, title: column} : column
 		);
+		this._datagridColumns = null;
+		this._subgridColumnSnapshots.clear();
 		this._templateData = this._templateData
 			? {
 				...this._templateData,
@@ -843,6 +890,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		return this._filterSnapshot(this._filters);
 	}
 
+	/**
+	 * Build a stable copy of filters for change comparison.
+	 */
 	private _filterSnapshot(filters : Record<string, any>) : Record<string, any>
 	{
 		return Object.entries(filters || {}).reduce((snapshot, [key, value]) =>
@@ -852,6 +902,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}, {} as Record<string, any>);
 	}
 
+	/**
+	 * Normalize nested filter values for stable comparison.
+	 */
 	private _filterSnapshotValue(value : any) : any
 	{
 		if(Array.isArray(value))
@@ -965,6 +1018,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			this._filters.col_filter = {};
 		}
+		this.egw().debug("info", "Changed nm filters", this._filters);
 
 		this._updateSortHeaderState();
 		this._actionController.clearRowActionObjects();
@@ -1084,6 +1138,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		return this.updateComplete;
 	}
 
+	/**
+	 * Emit one deprecation warning per legacy API name.
+	 */
 	private _warnDeprecatedOnce(method : string, message : string)
 	{
 		if(Et2Nextmatch._deprecationWarnings.has(method))
@@ -1262,7 +1319,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	private _applyTemplateData(templateData : Et2DatagridTemplateData)
 	{
-		const columns = templateData.columns?.length ? templateData.columns : this._currentColumns;
+		this._datagridColumns = null;
+		this._subgridColumnSnapshots.clear();
+		const columns = templateData.columns?.length ? templateData.columns : [];
 		const nextColumns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
 		this._templateData = {
 			...templateData,
@@ -1345,6 +1404,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	/**
 	 * Store legacy Nextmatch preferences in Datagrid's structured preference
 	 * shape, so Datagrid receives a single resolved source of truth.
+	 *
+	 * This is only a migration seed. Once the datagrid has stored its own
+	 * preference, for example after a column resize, that newer preference wins.
 	 */
 	private _seedDatagridColumnPreferencesFromLegacy(
 		rowTemplateId : string,
@@ -1353,6 +1415,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	)
 	{
 		const key = String(this.columnPreferenceName || "").trim() || `nextmatch-${rowTemplateId}-prefs`;
+		try
+		{
+			if(this.egw().preference(key, app))
+			{
+				return;
+			}
+		}
+		catch(e)
+		{
+			return;
+		}
 		const value = datagridColumnPreferenceValue(columns);
 		try
 		{
@@ -1398,6 +1471,205 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		);
 		this._actionController.customizeRowElement(context.rowElement);
 	};
+
+	/**
+	 * Build the generic datagrid expansion bridge from Nextmatch hierarchy settings.
+	 */
+	private _datagridExpansionConfig() : Et2DatagridExpansionConfig
+	{
+		return {
+			isExpandable: (row) => this._isExpandableNextmatchRow(row?.data),
+			renderExpandedContent: (context) => this._renderExpandedNextmatchGrid(context),
+			expandedRowIds: this._expandedRowIds,
+			onExpandedRowIdsChanged: (expandedRowIds) =>
+			{
+				for(const expandedRowId of this._expandedRowIds)
+				{
+					if(!expandedRowIds.has(expandedRowId))
+					{
+						this._subgridColumnSnapshots.delete(expandedRowId);
+					}
+				}
+				this._expandedRowIds = new Set(expandedRowIds);
+				this.requestUpdate();
+			}
+		};
+	}
+
+	/**
+	 * Determine whether a Nextmatch row should show a child-grid expander.
+	 */
+	private _isExpandableNextmatchRow(rowData : Record<string, any> | null | undefined) : boolean
+	{
+		if(!rowData)
+		{
+			return false;
+		}
+		const isParentField = this._settings?.is_parent;
+		if(isParentField && Object.prototype.hasOwnProperty.call(rowData, isParentField))
+		{
+			const value = rowData[isParentField];
+			const expected = this._settings?.is_parent_value;
+			return expected !== undefined && expected !== null
+			       ? String(value) === String(expected)
+			       : this._isTruthyNextmatchParentValue(value);
+		}
+		return rowData.is_parent === true;
+	}
+
+	/**
+	 * Apply legacy truthiness for configured parent-row marker values.
+	 */
+	private _isTruthyNextmatchParentValue(value : any) : boolean
+	{
+		return value !== undefined && value !== null && value !== false && value !== 0 && value !== "0" && value !== "";
+	}
+
+	/**
+	 * Render the nested datagrid used for one expanded Nextmatch parent row.
+	 */
+	private _renderExpandedNextmatchGrid(context : Et2DatagridExpandedRowContext)
+	{
+		const parentRowId = String(context.row.id || "");
+		const childProvider = this._childDataProvider(parentRowId);
+		const childParentRowId = typeof this._dataProvider.toProviderRowId === "function"
+		                         ? this._dataProvider.toProviderRowId(parentRowId)
+		                         : parentRowId;
+		const columnSnapshot = this._subgridColumnSnapshot(parentRowId);
+
+		return html`
+            <et2-datagrid
+                    class="nextmatch-subgrid"
+                    part="subgrid"
+                    embedded-virtualized
+                    ._parent=${this}
+                    .columns=${columnSnapshot.columns}
+                    .templateData=${this._templateData}
+                    .rowCustomizer=${this._customizeDatagridRow}
+                    .dataProvider=${childProvider}
+                    .parentRowId=${childParentRowId}
+                    .noVisibleHeader=${true}
+                    .noColumnSelection=${true}
+                    .inheritColumnSizes=${true}
+                    .autoActivateFirstRow=${false}
+                    .configurationLoading=${this._templateLoading}
+                    .emptyStateText=${this.egw().lang("No visible children")}
+                    selection-mode="multiple"
+                    style=${styleMap({
+                        "--meta-column-width": "6px"
+                    })}
+                    ${ref(this._loadExpandedGrid)}
+            >
+                <sl-alert slot="noResults" variant="neutral" open>
+                    <sl-icon slot="icon" name="inbox"></sl-icon>
+                    <strong>${this.egw().lang("No visible children")}</strong>
+                </sl-alert>
+            </et2-datagrid>
+		`;
+	}
+
+	/**
+	 * Freeze child columns when a row expands so later parent column updates do
+	 * not change the child grid mid-render.
+	 */
+	private _subgridColumnSnapshot(
+		parentRowId : string
+	) : { columns : Et2DatagridColumn[] }
+	{
+		if(!this._subgridColumnSnapshots.has(parentRowId))
+		{
+			this._subgridColumnSnapshots.set(parentRowId, {
+				columns: (this._currentColumns || []).map((column) => ({...column}))
+			});
+		}
+		return this._subgridColumnSnapshots.get(parentRowId)!;
+	}
+
+	/**
+	 * Reuse one child data provider per parent row.
+	 */
+	private _childDataProvider(parentRowId : string) : Et2DatagridDataProvider
+	{
+		if(!this._childDataProviders.has(parentRowId))
+		{
+			this._childDataProviders.set(parentRowId, this._dataProvider.createChildProvider(parentRowId));
+		}
+		return this._childDataProviders.get(parentRowId)!;
+	}
+
+	/**
+	 * Trigger the first child-grid load after Lit has connected the expanded grid.
+	 */
+	private _loadExpandedGrid = (element ? : Element) =>
+	{
+		if(!(element instanceof Et2Datagrid) || this._templateLoading || this._initializedSubgrids.has(element))
+		{
+			return;
+		}
+		this._initializedSubgrids.add(element);
+		void element.updateComplete.then(() =>
+		{
+			if(element.isConnected)
+			{
+				element.reload();
+			}
+		});
+	};
+
+	/**
+	 * Move keyboard focus from an expanded parent row into its child grid.
+	 */
+	private _handleEnterExpandedRow = (event : CustomEvent<{ parentRowId? : string }>) =>
+	{
+		const parentRowId = String(event.detail?.parentRowId || "");
+		const childGrid = this._findChildGridForParent(parentRowId);
+		if(!childGrid)
+		{
+			return;
+		}
+		event.preventDefault();
+		event.stopPropagation();
+		childGrid.focusFirstRow?.();
+	};
+
+	/**
+	 * Move keyboard focus from a child grid back to its parent row.
+	 */
+	private _handleLeaveChildGrid = (event : CustomEvent<{ parentRowId? : string }>) =>
+	{
+		const parentRowId = String(event.detail?.parentRowId || "");
+		if(!parentRowId)
+		{
+			return;
+		}
+		event.preventDefault();
+		event.stopPropagation();
+		this._datagrid?.focusRowById?.(this._dataProvider.normalizeRowId(parentRowId, true));
+	};
+
+	/**
+	 * Find the rendered child grid belonging to an expanded parent row.
+	 */
+	private _findChildGridForParent(parentRowId : string) : Et2Datagrid | null
+	{
+		const parentDataStoreRowId = this._dataProvider.normalizeRowId(parentRowId, true);
+		const expandedRow = this._datagrid?.shadowRoot?.querySelector(
+			`[data-dg-expanded-row='1'][data-parent-row-id='${CSS.escape(parentDataStoreRowId)}']`
+		) as HTMLElement | null;
+		return expandedRow?.querySelector("et2-datagrid") as Et2Datagrid | null;
+	}
+
+	/**
+	 * Find the parent or child grid that currently renders a row id.
+	 */
+	private _findGridContainingRow(rowId : string) : Et2Datagrid | null
+	{
+		const normalizedRowId = this._dataProvider.normalizeRowId(rowId, true);
+		const grids = [this._datagrid, ...this._childGrids()].filter(Boolean) as Et2Datagrid[];
+		return grids.find((grid) =>
+			!!grid.shadowRoot?.querySelector(`[data-row-id='${CSS.escape(normalizedRowId)}']`)
+		) || null;
+	}
 
 	/**
 	 * Keep slotted sort headers in sync with currently active sort filter.
@@ -1520,16 +1792,140 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._actionController.syncDragDropRegistration();
 	};
 
-	private _handleSelectionChanged = (event : CustomEvent<{ selectedRowIds? : string[]; activeRowId? : string; allSelected? : boolean }>) =>
+	/**
+	 * Track column changes from the root datagrid so child grids inherit them.
+	 */
+	private _handleDatagridColumnsChanged = (event : CustomEvent<{ columns? : Et2DatagridColumn[] }>) =>
+	{
+		const datagrid = this._datagrid;
+		const sourceGrid = this._eventSourceDatagrid(event);
+		if(!datagrid || sourceGrid !== datagrid || !event.detail?.columns?.length)
+		{
+			return;
+		}
+		this._datagridColumns = event.detail.columns.map((column) => ({...column}));
+		this.requestUpdate();
+	};
+
+	/**
+	 * Merge selection events from parent and child grids for legacy action state.
+	 */
+	private _handleSelectionChanged = (event : CustomEvent<{
+		selectedRowIds? : string[];
+		activeRowId? : string;
+		allSelected? : boolean;
+		replaceSelection? : boolean
+	}>) =>
 	{
 		const datagrid = this._datagrid;
 		if(!datagrid || !event.composedPath().includes(datagrid))
 		{
 			return;
 		}
-		this._actionController.handleSelectionChanged(event.detail || {});
+		const sourceGrid = this._eventSourceDatagrid(event) || datagrid;
+		const gridId = this._selectionGridId(sourceGrid);
+		if((sourceGrid.selectionMode === "single" || event.detail?.replaceSelection) && event.detail?.selectedRowIds?.length)
+		{
+			this._clearOtherGridSelections(sourceGrid);
+		}
+		this._selectionByGridId.set(gridId, {
+			selectedRowIds: [...(event.detail?.selectedRowIds || [])],
+			allSelected: !!event.detail?.allSelected
+		});
+		this._syncActiveGrid(sourceGrid);
+		this._actionController.handleSelectionChanged(this._mergedSelectionDetail(event.detail || {}));
 	};
 
+	/**
+	 * Keep only one active row visible across parent and child grids.
+	 */
+	private _handleActiveRowChanged = (event : CustomEvent<{ activeRowId? : string; activeRowIndex? : number }>) =>
+	{
+		const sourceGrid = this._eventSourceDatagrid(event);
+		if(sourceGrid && (sourceGrid === this._datagrid || this._childGrids().includes(sourceGrid)))
+		{
+			this._syncActiveGrid(sourceGrid);
+		}
+	};
+
+	/**
+	 * Clear selection from all grids except the one that just selected a row.
+	 */
+	private _clearOtherGridSelections(sourceGrid : Et2Datagrid)
+	{
+		const grids = [
+			this._datagrid,
+			...this._childGrids()
+		].filter((grid) : grid is Et2Datagrid => !!grid && grid !== sourceGrid);
+		for(const grid of grids)
+		{
+			this._selectionByGridId.delete(this._selectionGridId(grid));
+			grid.clearSelection?.(false);
+		}
+	}
+
+	/**
+	 * Resolve the datagrid instance that originated a composed event.
+	 */
+	private _eventSourceDatagrid(event : Event) : Et2Datagrid | null
+	{
+		return (event.composedPath?.() || []).find((target) => target instanceof Et2Datagrid) as Et2Datagrid | null;
+	}
+
+	/**
+	 * Build a stable key for selection state in the parent grid or a child grid.
+	 */
+	private _selectionGridId(grid : Et2Datagrid) : string
+	{
+		return grid === this._datagrid ? "parent" : `child:${grid.parentRowId || ""}`;
+	}
+
+	/**
+	 * Merge parent and child grid selections into the legacy Nextmatch detail shape.
+	 */
+	private _mergedSelectionDetail(detail : { activeRowId? : string; activeRowIndex? : number })
+	{
+		const selectedRowIds = Array.from(new Set(
+			Array.from(this._selectionByGridId.values()).flatMap((selection) => selection.selectedRowIds)
+		));
+		const allSelected = Array.from(this._selectionByGridId.values()).some((selection) => selection.allSelected);
+		return {
+			...detail,
+			selectedRowIds,
+			allSelected
+		};
+	}
+
+	/**
+	 * Clear active-row state in sibling grids when another grid takes focus.
+	 */
+	private _syncActiveGrid(activeGrid : Et2Datagrid)
+	{
+		if(activeGrid !== this._datagrid)
+		{
+			this._datagrid?.clearActiveRow?.();
+		}
+		for(const childGrid of this._childGrids())
+		{
+			if(childGrid !== activeGrid)
+			{
+				childGrid.clearActiveRow?.();
+			}
+		}
+	}
+
+	/**
+	 * Return all currently rendered child datagrids inside expanded rows.
+	 */
+	private _childGrids() : Et2Datagrid[]
+	{
+		const datagrid = this._datagrid;
+		return Array.from(datagrid?.shadowRoot?.querySelectorAll("et2-datagrid") || []) as Et2Datagrid[];
+	}
+
+	/**
+	 * Route context-menu requests to placeholder or row action popups.
+	 */
 	private _handleContextMenu = (event : MouseEvent) =>
 	{
 		// Developer abort context menu
@@ -1560,6 +1956,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 	};
 
+	/**
+	 * Execute the default row action on non-interactive row double-click.
+	 */
 	private _handleDoubleClick = (event : MouseEvent) =>
 	{
 		if(event.defaultPrevented || event.button !== 0)
@@ -1597,6 +1996,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		return null;
 	}
 
+	/**
+	 * Detect row interactions that should remain native interactive element events.
+	 */
 	private _isInteractiveRowEventTarget(event : MouseEvent) : boolean
 	{
 		const rowElement = this._getContextMenuRowElement(event);
@@ -1715,6 +2117,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 	}
 
+	/**
+	 * Open the row action popup from keyboard Enter.
+	 */
 	private _handleKeydown = (event : KeyboardEvent) =>
 	{
 		if(event.key !== "Enter")
@@ -1728,11 +2133,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 	};
 
+	/**
+	 * Forward pointerdown to the action controller for long-press/drag setup.
+	 */
 	private _handlePointerDown = (event : PointerEvent) =>
 	{
 		this._actionController.handlePointerDown(event);
 	};
 
+	/**
+	 * Forward pointer movement to cancel long-press when needed.
+	 */
 	private _handlePointerMove = (event : PointerEvent) =>
 	{
 		this._actionController.handlePointerMove(event);
@@ -1748,6 +2159,60 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	};
 
 	/**
+	 * Prevent native drag-start from resize handles before the action controller sees it.
+	 */
+	private _handleDragStartCapture = (event : DragEvent) =>
+	{
+		if(!this._isColumnResizeDragStart(event))
+		{
+			return;
+		}
+		event.preventDefault();
+		event.stopPropagation();
+		event.stopImmediatePropagation?.();
+	};
+
+	/**
+	 * Check whether a dragstart belongs to the column resize handle.
+	 */
+	private _isColumnResizeDragStart(event : DragEvent) : boolean
+	{
+		const path = event.composedPath?.() || [];
+		if(path.some((target) =>
+			target instanceof HTMLElement &&
+			!!target.closest?.(".dg-col-resize-handle")))
+		{
+			return true;
+		}
+		if(typeof event.clientX !== "number" || typeof event.clientY !== "number")
+		{
+			return false;
+		}
+		const deepTarget = this._deepElementFromPoint(this.shadowRoot, event.clientX, event.clientY);
+		return !!deepTarget?.closest?.(".dg-col-resize-handle");
+	}
+
+	/**
+	 * Resolve the deepest shadow-DOM element at a point.
+	 */
+	private _deepElementFromPoint(root : Document | ShadowRoot | null, x : number, y : number) : HTMLElement | null
+	{
+		let element = root?.elementFromPoint?.(x, y) as HTMLElement | null;
+		let lastElement : HTMLElement | null = null;
+		while(element && element !== lastElement)
+		{
+			lastElement = element;
+			const next = element.shadowRoot?.elementFromPoint?.(x, y) as HTMLElement | null;
+			if(!next || next === element)
+			{
+				break;
+			}
+			element = next;
+		}
+		return element;
+	}
+
+	/**
 	 * Render the orchestration shell.
 	 * We explicitly set `._parent` so Et2Datagrid can participate in Et2Widget array manager lookup.
 	 */
@@ -1756,6 +2221,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const hasSlottedNoResults = !!this.querySelector("[slot='noResults']");
 		const inlinePlaceholderActions : EgwAction[] = this._actionController
 			.getInlinePlaceholderActions();
+		const metaColumnWidth = "max(var(--sl-spacing-large), 6px)";
 		return html`
 				<div part="header"><slot name="header"></slot></div>
                 ${this._renderLetterSearch()}
@@ -1767,9 +2233,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 					.rowCustomizer=${this._customizeDatagridRow}
 					.columnPreferenceName=${this.columnPreferenceName}
 					.dataProvider=${this._dataProvider}
+                        .expansionConfig=${this._datagridExpansionConfig()}
 					.configurationLoading=${this._templateLoading}
                         .emptyStateText=${this.placeholder}
 					selection-mode="multiple"
+                        style=${styleMap({"--meta-column-width": metaColumnWidth})}
                 >
                     ${hasSlottedNoResults
                       ? html`

@@ -82,6 +82,9 @@ abstract class Et2NextmatchBaseAOI implements EgwActionObjectInterface
 		this.doMakeVisible();
 	}
 
+	/**
+	 * Base AOI visibility hook; concrete rows are already visible when rendered.
+	 */
 	protected doMakeVisible() : void
 	{
 	}
@@ -176,11 +179,17 @@ class Et2NextmatchRowAOI extends Et2NextmatchBaseAOI
 		this.node = node;
 	}
 
+	/**
+	 * Return the DOM row owned by this action object interface.
+	 */
 	protected doGetDOMNode() : HTMLElement
 	{
 		return this.node;
 	}
 
+	/**
+	 * Row AOIs delegate action execution to their owning action object.
+	 */
 	protected doTriggerEvent() : boolean
 	{
 		return false;
@@ -388,19 +397,19 @@ export class Et2NextmatchActionController
 	 */
 	private materializeVisibleSelectedRows(selectedSet : Set<string>, activeRowId : string)
 	{
-		const rowsBody = this.getRowsBody();
-		if(!rowsBody)
+		const rowsBodies = this.getRowsBodies();
+		if(!rowsBodies.length)
 		{
 			return;
 		}
 		const rowIds = this.allSelected
-		               ? Array.from(rowsBody.querySelectorAll("[data-row-id]"))
+		               ? rowsBodies.flatMap((rowsBody) => Array.from(rowsBody.querySelectorAll("[data-row-id]")))
 						   .map((row) => this.getActionRowId(row as HTMLElement))
 						   .filter(Boolean) as string[]
 		               : Array.from(selectedSet);
 		for(const rowId of rowIds)
 		{
-			const rowElement = rowsBody.querySelector(`[data-row-id="${CSS.escape(rowId)}"]`) as HTMLElement | null;
+			const rowElement = this.findRenderedRowByActionId(rowId, rowsBodies);
 			if(!rowElement)
 			{
 				continue;
@@ -813,6 +822,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Lazily create the action and object managers used by legacy actions.
+	 */
 	private ensureActionManagers()
 	{
 		const appName = this.getAppName() || this.host.egw().app_name?.();
@@ -881,6 +893,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Materialize or update the action object bound to one rendered row.
+	 */
 	private ensureRowActionObject(rowId : string, rowElement : HTMLElement) : EgwActionObject | null
 	{
 		if(!rowId || !rowElement)
@@ -933,6 +948,9 @@ export class Et2NextmatchActionController
 		return rowObject;
 	}
 
+	/**
+	 * Mirror a context-action row into both datagrid and action object selection.
+	 */
 	private _selectActionRow(rowId : string, rowObject : EgwActionObject)
 	{
 		rowObject.forceSelection();
@@ -946,6 +964,9 @@ export class Et2NextmatchActionController
 		this.selectedRowIds = [rowId];
 	}
 
+	/**
+	 * Return top-level action ids currently available to row objects.
+	 */
 	private getActionLinks() : string[]
 	{
 		const links : string[] = [];
@@ -1029,6 +1050,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Resolve selected row ids into datastore and provider ids for action execution.
+	 */
 	private normalizeSelection(selection : { ids? : string[]; all? : boolean } = {}, senders : EgwActionObject[] = [])
 	{
 		const rawIds = (selection.ids && selection.ids.length ? selection.ids : senders.map((sender) => sender?.id)).filter(Boolean).map(String);
@@ -1042,6 +1066,9 @@ export class Et2NextmatchActionController
 		};
 	}
 
+	/**
+	 * Convert selected provider ids to the legacy comma-separated action format.
+	 */
 	private toCsv(ids : string[]) : string
 	{
 		return ids.map((id) =>
@@ -1051,6 +1078,9 @@ export class Et2NextmatchActionController
 		}).join(",");
 	}
 
+	/**
+	 * Substitute legacy row-id placeholders into an action URL template.
+	 */
 	private buildActionUrl(action : EgwAction, ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>) : string
 	{
 		const data = action.data || {};
@@ -1069,6 +1099,9 @@ export class Et2NextmatchActionController
 			.replace(/(\$|%24)row_id/, encodeURIComponent(ids.rowIdsCsv));
 	}
 
+	/**
+	 * Execute a location-style action by navigating the requested target.
+	 */
 	private executeLocationAction(action : EgwAction, url : string, target : any)
 	{
 		if(typeof action.data?.targetapp !== "undefined")
@@ -1085,6 +1118,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Execute a popup-style action through the legacy popup helper.
+	 */
 	private executePopupAction(action : EgwAction, url : string, target : any)
 	{
 		let popupUrl = url;
@@ -1121,6 +1157,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Execute a long-task action using the legacy egw.json transport.
+	 */
 	private executeLongTaskAction(action : EgwAction, ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>) : boolean
 	{
 		if(!ids.all && ids.providerIds.length <= 1 && typeof action.data?.egw_open !== "undefined")
@@ -1145,6 +1184,9 @@ export class Et2NextmatchActionController
 		return true;
 	}
 
+	/**
+	 * Execute an egw.open action with the selected provider row ids.
+	 */
 	private executeEgwOpenAction(action : EgwAction, providerIds : string[], target : any)
 	{
 		const spec = String(action.data?.egw_open || "");
@@ -1178,6 +1220,9 @@ export class Et2NextmatchActionController
 		(window as any).egw(app, window).open(egwOpenId, app, type, params.join("-"), target);
 	}
 
+	/**
+	 * Store submit action payload so Et2Nextmatch can include it in form submit data.
+	 */
 	private executeSubmitAction(
 		action : EgwAction,
 		ids : ReturnType<Et2NextmatchActionController["normalizeSelection"]>,
@@ -1215,6 +1260,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Open a configured action popup/dialog for the selected provider row ids.
+	 */
 	private openActionPopup(action : EgwAction, selectedIds : string[]) : boolean
 	{
 		const instance = this.host.getInstanceManager?.();
@@ -1270,16 +1318,69 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Check whether any registered action participates in drag handling.
+	 */
 	private hasDragActions() : boolean
 	{
 		return (this.actionManager?.children || []).some((child) => child?.type === "drag");
 	}
 
+	/**
+	 * Return the root datagrid rows body.
+	 */
 	private getRowsBody() : HTMLElement | null
 	{
 		return this.host.shadowRoot?.querySelector("et2-datagrid")?.shadowRoot?.getElementById("rows") as HTMLElement | null;
 	}
 
+	/**
+	 * Return rows bodies for the root grid and any currently rendered child grids.
+	 *
+	 * The action framework operates on rendered DOM rows, so nested grids need to
+	 * participate in row lookup for selection, context menus and drag/drop.
+	 */
+	private getRowsBodies() : HTMLElement[]
+	{
+		const primaryRowsBody = this.getRowsBody();
+		const rootGrid = this.host.shadowRoot?.querySelector("et2-datagrid") as HTMLElement | null;
+		if(!rootGrid?.shadowRoot)
+		{
+			return primaryRowsBody ? [primaryRowsBody] : [];
+		}
+		const grids = [
+			rootGrid,
+			...Array.from(rootGrid.shadowRoot.querySelectorAll("et2-datagrid"))
+		] as HTMLElement[];
+		const rowsBodies = grids
+			.map((grid) => grid.shadowRoot?.getElementById("rows") as HTMLElement | null)
+			.filter(Boolean) as HTMLElement[];
+		if(primaryRowsBody && !rowsBodies.includes(primaryRowsBody))
+		{
+			rowsBodies.unshift(primaryRowsBody);
+		}
+		return rowsBodies;
+	}
+
+	/**
+	 * Find a rendered parent or child row by action/datastore row id.
+	 */
+	private findRenderedRowByActionId(rowId : string, rowsBodies : HTMLElement[] = this.getRowsBodies()) : HTMLElement | null
+	{
+		for(const rowsBody of rowsBodies)
+		{
+			const rowElement = rowsBody.querySelector(`[data-row-id="${CSS.escape(rowId)}"]`) as HTMLElement | null;
+			if(rowElement)
+			{
+				return rowElement;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Remove action objects whose rendered rows have left the DOM.
+	 */
 	private cleanupDetachedRowActionObjects()
 	{
 		for(const [rowId, rowObject] of this.rowActionObjects.entries())
@@ -1298,6 +1399,9 @@ export class Et2NextmatchActionController
 		}
 	}
 
+	/**
+	 * Create the action object interface wrapper for one rendered row.
+	 */
 	private createRowActionObjectInterface(rowElement : HTMLElement)
 	{
 		return new Et2NextmatchRowAOI(rowElement);
@@ -1342,6 +1446,9 @@ export class Et2NextmatchActionController
 		this.preparedDragRow = row.rowElement;
 	}
 
+	/**
+	 * Register legacy link-based drag/drop action implementations once.
+	 */
 	private initLinkDragDropActions()
 	{
 		const mgr = this.actionManager;
@@ -1529,6 +1636,9 @@ export class Et2NextmatchActionController
 		return !!action?.children?.some((child) => child?.id && allowed.has(child.id));
 	}
 
+	/**
+	 * Materialize the placeholder action object used by empty-state actions.
+	 */
 	private ensurePlaceholderActionObject(anchorElement : HTMLElement) : EgwActionObject | null
 	{
 		if(!this.objectManager)
@@ -1617,6 +1727,9 @@ export class Et2NextmatchActionController
 		return pointTarget || rowElement;
 	}
 
+	/**
+	 * Find the nearest row widget target suitable for context action metadata.
+	 */
 	private closestContextWidget(target : HTMLElement, rowElement : HTMLElement) : HTMLElement | null
 	{
 		let node : HTMLElement | null = target;
@@ -1632,6 +1745,9 @@ export class Et2NextmatchActionController
 		return null;
 	}
 
+	/**
+	 * Resolve the deepest context target for popup actions at the pointer location.
+	 */
 	private findContextTargetFromPoint(event : MouseEvent, rowElement : HTMLElement) : HTMLElement | null
 	{
 		if(typeof event.clientX !== "number" || typeof event.clientY !== "number")
@@ -1656,27 +1772,30 @@ export class Et2NextmatchActionController
 		{
 			return null;
 		}
-		const rowsBody = this.getRowsBody();
-		if(!rowsBody)
+		const rowsBodies = this.getRowsBodies();
+		if(!rowsBodies.length)
 		{
 			return null;
 		}
-		const deepTarget = this.getDeepElementFromPoint(rowsBody.getRootNode() as Document | ShadowRoot, event.clientX, event.clientY);
-		const deepRow = deepTarget?.closest?.("[data-row-id]") as HTMLElement | null;
-		if(deepRow)
+		for(const rowsBody of rowsBodies)
 		{
-			return deepRow;
-		}
-		const rows = Array.from(rowsBody.querySelectorAll("[data-row-id]")) as HTMLElement[];
-		for(const row of rows)
-		{
-			const rect = row.getBoundingClientRect();
-			if(
-				event.clientX >= rect.left && event.clientX <= rect.right &&
-				event.clientY >= rect.top && event.clientY <= rect.bottom
-			)
+			const deepTarget = this.getDeepElementFromPoint(rowsBody.getRootNode() as Document | ShadowRoot, event.clientX, event.clientY);
+			const deepRow = deepTarget?.closest?.("[data-row-id]") as HTMLElement | null;
+			if(deepRow)
 			{
-				return row;
+				return deepRow;
+			}
+			const rows = Array.from(rowsBody.querySelectorAll("[data-row-id]")) as HTMLElement[];
+			for(const row of rows)
+			{
+				const rect = row.getBoundingClientRect();
+				if(
+					event.clientX >= rect.left && event.clientX <= rect.right &&
+					event.clientY >= rect.top && event.clientY <= rect.bottom
+				)
+				{
+					return row;
+				}
 			}
 		}
 		return null;

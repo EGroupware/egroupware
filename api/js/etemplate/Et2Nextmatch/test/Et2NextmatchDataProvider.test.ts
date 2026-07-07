@@ -181,6 +181,86 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 
 	/**
 	 * Contract under test:
+	 * - Child providers fetch through the normal Nextmatch path with an added `parent_id` range value.
+	 *
+	 * Setup strategy:
+	 * - Create a root provider and child provider from a datastore-prefixed parent id.
+	 * - Capture the request passed to `dataFetch()`.
+	 *
+	 * Pass criteria:
+	 * - The request includes start, num_rows, and raw provider parent id.
+	 * - Returned child rows still use UID registration and server order.
+	 */
+	it("fetches child pages with parent_id using the normal row resolution flow", async() =>
+	{
+		let capturedRequest : any = null;
+		const host = createProviderHost({
+			id: "nm-child",
+			egw: () => ({
+				app_name: () => "addressbook",
+				dataFetch: (_execId, request, _filters, _widgetId, callback) =>
+				{
+					capturedRequest = {...request};
+					callback({
+						rows: {},
+						order: ["addressbook::child-1"],
+						total: 1
+					});
+				},
+				dataRegisterUID: (uid : string, callback : Function) =>
+				{
+					callback({title: "Child row"}, uid);
+				}
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		const childProvider = provider.createChildProvider("addressbook::parent-7");
+		const page = await childProvider.fetchPage(50, 25);
+
+		assert.deepEqual(
+			capturedRequest,
+			{start: 50, num_rows: 25, parent_id: "parent-7"},
+			"child fetch should send the raw parent id expected by Nextmatch.php"
+		);
+		assert.deepEqual(page.rows.map((row) => row.id), ["addressbook::child-1"]);
+		assert.equal(page.total, 1);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Child provider query signatures include both current filters and the parent id.
+	 *
+	 * Setup strategy:
+	 * - Mutate the host filters after creating the child provider.
+	 *
+	 * Pass criteria:
+	 * - The signature changes with current filters.
+	 * - A different parent id produces a different signature.
+	 */
+	it("includes parent id and current filters in child query signatures", () =>
+	{
+		const host = createProviderHost({id: "nm-child-signature"});
+		host._filters = {col_filter: {status: "open"}};
+		const provider = new Et2NextmatchDataProvider(host);
+		const childProvider = provider.createChildProvider("addressbook::parent-1");
+		const initialSignature = childProvider.getQuerySignature!();
+
+		host._filters = {col_filter: {status: "closed"}};
+		assert.notEqual(
+			childProvider.getQuerySignature!(),
+			initialSignature,
+			"child signature should use filters at call time"
+		);
+		assert.notEqual(
+			provider.createChildProvider("addressbook::parent-2").getQuerySignature!(),
+			childProvider.getQuerySignature!(),
+			"different parent ids should not share child query signatures"
+		);
+	});
+
+	/**
+	 * Contract under test:
 	 * - Data-store prefix selection uses app context first and host id as fallback.
 	 *
 	 * Setup strategy:

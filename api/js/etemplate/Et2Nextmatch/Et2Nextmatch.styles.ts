@@ -23,6 +23,14 @@ export default css`
 		border-left-color: var(--category-color, transparent);
 	}
 
+	.nextmatch-subgrid {
+		height: auto;
+	}
+
+	.nextmatch-subgrid::part(state) {
+		padding: var(--sl-spacing-x-small);
+	}
+
 	.nextmatch_lettersearch {
 		display: flex;
 		flex-wrap: nowrap;

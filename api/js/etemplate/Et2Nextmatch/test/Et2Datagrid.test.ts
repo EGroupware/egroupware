@@ -21,6 +21,11 @@ const egw = {
 	set_preference: () => {},
 	app_name: () => "addressbook"
 };
+let preferenceCalls : { app : string; key : string; value : any }[] = [];
+egw.set_preference = (app : string, key : string, value : any) =>
+{
+	preferenceCalls.push({app, key, value});
+};
 
 window.egw = function() { return egw; } as any;
 Object.assign(window.egw, egw);
@@ -46,6 +51,54 @@ function createDatagrid() : Et2Datagrid
 	const el = new Et2Datagrid();
 	el.dataProvider = createDatagridDataProvider() as any;
 	return el;
+}
+
+async function waitForDatagridRow(el : Et2Datagrid, rowId : string) : Promise<HTMLElement | null>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		const rows = Array.from(el.shadowRoot?.querySelectorAll(`[data-row-id='${rowId}']`) || []) as HTMLElement[];
+		if(rows.length > 0)
+		{
+			return rows[rows.length - 1];
+		}
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+	}
+	return null;
+}
+
+async function waitForExpandedRow(el : Et2Datagrid, parentRowId : string) : Promise<HTMLElement | null>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		const expandedRow = el.shadowRoot?.querySelector(
+			`[data-dg-expanded-row='1'][data-parent-row-id='${parentRowId}']`
+		) as HTMLElement | null;
+		if(expandedRow)
+		{
+			return expandedRow;
+		}
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+	}
+	return null;
+}
+
+async function waitForExpandedContext(el : Et2Datagrid, expectedColumnSizes? : string) : Promise<HTMLElement | null>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		const contexts = Array.from(el.shadowRoot?.querySelectorAll(".expanded-context") || []) as HTMLElement[];
+		const context = contexts[contexts.length - 1] || null;
+		if(context && (!expectedColumnSizes || context.dataset.columnSizes === expectedColumnSizes))
+		{
+			return context;
+		}
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+	}
+	return null;
 }
 
 class Et2DatagridTestTransform extends HTMLElement
@@ -279,6 +332,113 @@ describe("Et2Datagrid row rendering", () =>
 			/\.dg-colselection\s*{[\s\S]*width:\s*var\(--column-selection-width\);/,
 			"column chooser should keep a fixed clickable width separate from scrollbar reservation"
 		);
+		assert.notInclude(
+			cssText,
+			":host(.dg-has-expanders)",
+			"enabling expanders should not alter scroll-body layout before rows are expanded"
+		);
+	});
+
+	it("keeps numeric virtualizer items until rows are expanded", () =>
+	{
+		const el = createDatagrid();
+		el.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => "",
+			expandedRowIds: new Set()
+		};
+		el.setInitialRows([
+			{id: "row-0", label: "Row 0", is_parent: true},
+			{id: "row-1", label: "Row 1"}
+		]);
+		el.total = 2;
+
+		assert.deepEqual((el as any)._getVirtualItems(2), [0, 1]);
+
+		el.expansionConfig.expandedRowIds!.add("row-0");
+		assert.deepEqual((el as any)._getVirtualItems(2), [
+			0,
+			{type: "expanded", rowIndex: 0, parentRowId: "row-0"},
+			1
+		]);
+	});
+
+	it("does not cap virtual height below materialized rows", () =>
+	{
+		const el = createDatagrid();
+		el.setInitialRows([
+			{id: "row-0", label: "Row 0"},
+			{id: "row-1", label: "Row 1"},
+			{id: "row-2", label: "Row 2"},
+			{id: "row-3", label: "Row 3"}
+		]);
+		el.total = 2;
+
+		assert.equal((el as any)._virtualRowCount(), 4);
+		assert.deepEqual((el as any)._getVirtualItems((el as any)._virtualRowCount()), [0, 1, 2, 3]);
+	});
+
+	/**
+	 * Contract: expanded container rows are not data rows for focus, selection,
+	 * accessibility synchronization, or rendered-row helpers.
+	 * Setup: render a grid with one expanded parent and call the same private
+	 * helpers used by keyboard/focus recovery.
+	 * Pass: helper methods see only real data rows, and the expanded row keeps
+	 * its non-focusable/non-selected container state.
+	 */
+	it("ignores expanded container rows for data-row focus and accessibility state", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.style.height = "100%";
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`<button class="child-button">Child</button>`,
+			expandedRowIds: new Set(["row-0"])
+		};
+		host.appendChild(el);
+		await el.updateComplete;
+		el.setInitialRows([
+			{id: "row-0", label: "Row 0", is_parent: true},
+			{id: "row-1", label: "Row 1"}
+		]);
+		el.total = 2;
+		await el.updateComplete;
+
+		const expandedRow = await waitForExpandedRow(el, "row-0");
+		assert.isNotNull(expandedRow, "expanded container row should render");
+		assert.isFalse(expandedRow!.hasAttribute("data-row-index"), "expanded row should not advertise a data row index");
+		assert.isTrue((el as any)._hasRenderedRows(), "real data rows should still be detected");
+		assert.isTrue((el as any)._isRowIndexRendered(0), "parent data row should be rendered");
+		assert.isTrue((el as any)._isRowIndexRendered(1), "sibling data row should be rendered");
+		assert.strictEqual(
+			(el as any)._findRenderedRowElement("row-0")?.getAttribute("data-dg-expanded-row"),
+			null,
+			"row lookup by parent id should return the parent data row, not the expanded container"
+		);
+
+		(el as any).activeRowIndex = 0;
+		(el as any).activeRowId = "row-0";
+		(el as any).selectedRowIds = new Set(["row-0"]);
+		(el as any)._syncRowAccessibilityState();
+		(el as any)._focusRowByIndex(0, 0, false);
+
+		assert.equal(expandedRow!.getAttribute("aria-selected"), "false", "expanded row should remain unselected");
+		assert.equal(expandedRow!.getAttribute("tabindex"), "-1", "expanded row should remain outside row roving tabindex");
+		assert.isFalse(expandedRow!.classList.contains("dg-row-active"), "expanded row should not receive active row state");
+		assert.equal(
+			(el.shadowRoot!.activeElement as HTMLElement | null)?.getAttribute("data-row-index"),
+			"0",
+			"focus recovery should focus the parent data row"
+		);
+
+		host.remove();
 	});
 
 	/**
@@ -1143,10 +1303,55 @@ describe("Et2Datagrid keyboard navigation", () =>
 		el.total = 200;
 		const startIndex = 20;
 		(el as any)._moveActiveRow(startIndex, false);
-		(el as any)._onTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
+		(el as any)._handleTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
 
 		assert.equal((el as any).activeRowIndex, startIndex + 1, "activeRowIndex should advance by exactly one row");
 		assert.equal((el as any).activeRowId, `row-${startIndex + 1}`, "active row id should advance by exactly one row");
+	});
+
+	/**
+	 * Contract: handled keyboard navigation belongs to the focused grid.
+	 * Setup: seed a child-like grid, then send a cancelable ArrowDown event with
+	 * a spyable stopPropagation method.
+	 * Pass: the grid advances its own active row and stops the event before a
+	 * parent grid can also process it.
+	 */
+	it("stops propagation for handled row navigation keys", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.style.height = "100%";
+		host.appendChild(el);
+		await el.updateComplete;
+
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.setInitialRows([
+			{id: "row-0", label: "Row 0"},
+			{id: "row-1", label: "Row 1"}
+		]);
+		el.total = 2;
+		await el.updateComplete;
+		(el as any)._moveActiveRow(0, false);
+
+		let bubbledToHost = false;
+		el.addEventListener("keydown", () =>
+		{
+			bubbledToHost = true;
+		});
+		const event = new KeyboardEvent("keydown", {key: "ArrowDown", bubbles: true, composed: true, cancelable: true});
+		const table = el.shadowRoot!.querySelector("table")!;
+		table.dispatchEvent(event);
+
+		assert.isTrue(event.defaultPrevented, "handled ArrowDown should prevent native page scrolling");
+		assert.isFalse(bubbledToHost, "handled ArrowDown should not bubble into a parent datagrid");
+		assert.equal((el as any).activeRowId, "row-1", "active row should advance within the handling grid");
+
+		host.remove();
 	});
 
 });
@@ -1329,7 +1534,7 @@ describe("Et2Datagrid selection mode", () =>
 		assert.equal((el as any).activeRowIndex, 0, "first row should start active");
 		assert.equal((el as any).selectedRowIds.size, 0, "no rows should start selected");
 
-		(el as any)._onTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
+		(el as any)._handleTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
 		await el.updateComplete;
 
 		assert.equal((el as any).activeRowIndex, 1, "second row should be active after ArrowDown");
@@ -1380,7 +1585,7 @@ describe("Et2Datagrid selection mode", () =>
 		await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
 		await el.updateComplete;
 
-		(el as any)._onTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
+		(el as any)._handleTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
 		await el.updateComplete;
 
 		assert.equal((el as any).activeRowIndex, 1, "second row should be active after ArrowDown");
@@ -1445,7 +1650,7 @@ describe("Et2Datagrid selection mode", () =>
 		await new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
 		await el.updateComplete;
 
-		(el as any)._onTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
+		(el as any)._handleTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
 		await el.updateComplete;
 		assert.equal((el as any).activeRowIndex, 1, "active row should advance after ArrowDown");
 		assert.equal((el as any).activeRowId, "row-1", "active row id should move to second row");
@@ -1506,7 +1711,7 @@ describe("Et2Datagrid selection mode", () =>
 		assert.equal((el as any).activeRowId, "row-0", "active row should map to first fetched row");
 		assert.equal((el as any).selectedRowIds.size, 0, "no rows should be selected after initial fetch");
 
-		(el as any)._onTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
+		(el as any)._handleTableKeydown(new KeyboardEvent("keydown", {key: "ArrowDown"}));
 		await el.updateComplete;
 
 		assert.equal((el as any).activeRowIndex, 1, "second row should become active after ArrowDown");
@@ -1599,7 +1804,7 @@ describe("Et2Datagrid selection mode", () =>
 		await el.updateComplete;
 
 		const event = new KeyboardEvent("keydown", {key: "a", ctrlKey: true, cancelable: true});
-		(el as any)._onTableKeydown(event);
+		(el as any)._handleTableKeydown(event);
 
 		assert.isTrue(event.defaultPrevented, "Ctrl+A should prevent native browser select-all");
 		assert.isTrue(el.allSelected, "Ctrl+A should set allSelected");
@@ -1639,7 +1844,7 @@ describe("Et2Datagrid selection mode", () =>
 		await el.updateComplete;
 
 		const event = new KeyboardEvent("keydown", {key: "a", ctrlKey: true, cancelable: true});
-		(el as any)._onTableKeydown(event);
+		(el as any)._handleTableKeydown(event);
 
 		assert.isFalse(event.defaultPrevented, "Ctrl+A should not be intercepted outside multiple mode");
 		assert.isFalse(el.allSelected, "single mode should not set allSelected from Ctrl+A");
@@ -1651,6 +1856,109 @@ describe("Et2Datagrid selection mode", () =>
 
 describe("Et2Datagrid virtual height stability", () =>
 {
+	/**
+	 * Contract: embedded subgrids start at a one-row reservation while loading,
+	 * then grow after the virtualizer can report/render actual content.
+	 */
+	it("uses one row as the embedded virtualized loading base height", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.embeddedVirtualized = true;
+		el.noVisibleHeader = true;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.fetching = true;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await el.updateComplete;
+
+		assert.equal(el.style.height, "44px", "embedded loading grid should reserve one base row before rows render");
+		assert.equal((el as any)._virtualRowCount(), 1, "embedded loading grid should only render one loading row");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: embedded virtualized grids keep the virtualizer-owned tbody height
+	 * for small fully materialized child result sets, while keeping their body
+	 * overflow visible so the ancestor grid remains the only scrollport.
+	 *
+	 * Setup: render a child-style datagrid whose loaded rows match its total.
+	 *
+	 * Pass: tbody has a concrete explicit height matching the rendered rows, and
+	 * the internal body does not expose its own vertical scrollbar.
+	 */
+	it("preserves tbody height for fully loaded small embedded virtualized grids", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.embeddedVirtualized = true;
+		el.noVisibleHeader = true;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		const initialRows = Array.from({length: 10}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(initialRows);
+		el.total = initialRows.length;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+
+		const body = el.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		const root = el.shadowRoot!.querySelector(".dg-root") as HTMLElement;
+		const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
+		const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
+		const explicitTbodyHeight = rowsBody.style.height || rowsBody.style.minHeight;
+		const rowsBodyRect = rowsBody.getBoundingClientRect();
+		const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
+		const renderedRowsHeight = Math.ceil(
+			Math.max(...rowBounds.map((rect) => rect.bottom)) -
+			Math.min(Math.min(...rowBounds.map((rect) => rect.top)), rowsBodyRect.top)
+		);
+
+		assert.match(explicitTbodyHeight, /^\d+px$/, "tbody should keep the virtualizer's explicit height");
+		assert.isAtLeast(
+			parseInt(explicitTbodyHeight, 10),
+			renderedRowsHeight,
+			"tbody height should not be shorter than the rendered child row stack"
+		);
+		assert.equal(el.style.height, explicitTbodyHeight, "embedded grid host height should match the virtualizer-owned tbody height");
+		assert.equal(
+			root.style.getPropertyValue("--embedded-virtualized-height"),
+			explicitTbodyHeight,
+			"embedded grid root height variable should match the virtualizer-owned tbody height"
+		);
+		assert.equal(getComputedStyle(body).overflowY, "visible", "embedded grid body should not be its own scrollport");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: expanded cells must not inherit the normal data-cell max-height
+	 * rule, because expanded rows host nested grids/detail content.
+	 */
+	it("does not apply normal data-cell max height to expanded cells", () =>
+	{
+		const cssText = String((datagridStyles as any).cssText || datagridStyles);
+		assert.match(
+			cssText,
+			/\.dg-body\s+tbody\s+td\.dg-expanded-cell\s*{[\s\S]*max-height:\s*none;/,
+			"expanded cells need a selector specific enough to beat the generic tbody td max-height rule"
+		);
+	});
+
 	/**
 	 * Contract: placeholder replacement must not shrink the virtual scroll range.
 	 * Setup: seed initial rows, request a later chunk with a deferred provider

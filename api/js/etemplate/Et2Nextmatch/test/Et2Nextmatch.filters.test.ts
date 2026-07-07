@@ -1,4 +1,5 @@
 import {assert} from "@open-wc/testing";
+import {render} from "lit";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
 import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
@@ -790,4 +791,282 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.deepEqual(el.getValue(), el.value, "getValue should provide the submitted nextmatch value");
 	});
 
+});
+
+describe("Et2Nextmatch expandable child grid wiring", () =>
+{
+	/**
+	 * Contract under test:
+	 * - Nextmatch grids reserve enough leading metadata column width for row expanders.
+	 *
+	 * Setup strategy:
+	 * - Render a minimal nextmatch and inspect the inner datagrid's explicit CSS variable.
+	 *
+	 * Pass criteria:
+	 * - The normal 6px metadata indicator width is lifted to at least Shoelace large spacing.
+	 */
+	it("widens the meta column for row expanders", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+
+		const grid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement | null;
+		assert.isNotNull(grid, "nextmatch should render an inner datagrid");
+		assert.strictEqual(
+			grid!.style.getPropertyValue("--meta-column-width"),
+			"max(var(--sl-spacing-large), 6px)"
+		);
+
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Expanded nextmatch child content uses the same row template/columns as the parent.
+	 * - Child grids hide only their visible header and disable their column chooser.
+	 *
+	 * Setup strategy:
+	 * - Call the private render hook directly with a minimal expanded-row context.
+	 * - Render the returned template into a detached container.
+	 *
+	 * Pass criteria:
+	 * - The rendered child datagrid receives the same templateData and columns objects.
+	 * - The visible header is configured hidden while the child remains a normal datagrid.
+	 */
+		it("renders child grids with the same template data and no visible header", async() =>
+		{
+			const el = new Et2Nextmatch();
+			const columns : any[] = [{key: "title", title: "Title"}];
+		const fetchPage = sinon.stub().resolves({rows: [], total: 0});
+		const createChildProvider = sinon.stub().returns({
+			fetchPage,
+			getQuerySignature: () => "child-query",
+			getDataStorePrefix: () => "addressbook",
+			normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
+			toProviderRowId: (rowId : string) => rowId,
+			refresh: async() => ({rows: [], removedRowIds: []})
+		});
+		const templateData = {
+			rowTemplateId: "infolog.index.rows",
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns
+		};
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._templateData = templateData;
+		(el as any)._templateLoading = false;
+		(el as any)._dataProvider = {
+			createChildProvider,
+			toProviderRowId: (rowId : string) => rowId.replace(/^addressbook::/, ""),
+			normalizeRowId: (rowId : string | number, ensurePrefix? : boolean) =>
+			{
+				const normalized = String(rowId ?? "");
+				return ensurePrefix && !normalized.startsWith("addressbook::") ? `addressbook::${normalized}` : normalized;
+			}
+		};
+
+		const container = document.createElement("div");
+		document.body.append(container);
+		render((el as any)._renderExpandedNextmatchGrid({
+			row: {id: "addressbook::parent-1", data: {is_parent: true}},
+			rowIndex: 0,
+			parentGrid: document.createElement("et2-datagrid"),
+			columnSizes: "120px",
+			metaColumnWidth: "28px"
+		}), container);
+		await Promise.resolve();
+
+		const childGrid = container.querySelector("et2-datagrid") as any;
+		assert.isNotNull(childGrid, "expanded content should render a child datagrid");
+		const reload = sinon.stub(childGrid, "reload").callsFake(async() =>
+		{
+			await fetchPage(0, childGrid.pageSize);
+		});
+		await childGrid.updateComplete;
+		await Promise.resolve();
+		assert.strictEqual(childGrid.templateData, templateData, "child grid should reuse parent template data");
+		assert.notStrictEqual(childGrid.columns, columns, "child grid should not share the parent column array");
+		assert.deepEqual(
+			childGrid.columns.map((column) => ({key: column.key, title: column.title, width: column.width})),
+			columns.map((column) => ({key: column.key, title: column.title, width: column.width})),
+			"child grid should receive equivalent parent column descriptors"
+		);
+		childGrid.columns[0].width = "320px";
+		assert.notEqual(columns[0].width, "320px", "child column width changes should not mutate parent column descriptors");
+		assert.isTrue(childGrid.noVisibleHeader, "child grid should hide only its visible header");
+		assert.isTrue(childGrid.noColumnSelection, "child grid should not expose independent column selection");
+		assert.isTrue(childGrid.inheritColumnSizes, "child grid should inherit column track sizing from the parent grid");
+		assert.isTrue(childGrid.embeddedVirtualized, "child grid should reserve virtualized height inside the parent scrollport");
+		assert.isFalse(childGrid.hasAttribute("auto-height"), "child grid should not use simple auto-height for large child result sets");
+		assert.isFalse(childGrid.noColumnPersistence, "child grid should rely on hidden headers for preference suppression");
+		assert.isFalse(childGrid.noColumnResize, "child grid should rely on hidden headers for resize suppression");
+		assert.isNull(
+			childGrid.shadowRoot?.querySelector(".dg-col-resize-handle"),
+			"child grid should not expose independent column resizing when its header is hidden"
+		);
+		assert.isFalse(childGrid.autoActivateFirstRow, "child grid should not create an active row simply by rendering");
+		assert.strictEqual(
+			childGrid.style.getPropertyValue("--column-sizes"),
+			"",
+			"child grid should not set its own column track string"
+		);
+		assert.strictEqual(childGrid.style.getPropertyValue("--meta-column-width"), "6px", "child grid should use a non-expander meta column width");
+		assert.isTrue(createChildProvider.calledOnceWithExactly("addressbook::parent-1"), "child provider should be created for the parent row");
+		assert.isTrue(reload.calledOnce, "child grid should be asked to reload when opened");
+		assert.isTrue(fetchPage.calledOnceWithExactly(0, 50), "child grid should fetch its first page when opened");
+
+		render(null, container);
+		container.remove();
+		el.remove();
+	});
+
+	it("uses root datagrid column changes for first expanded child grid render", async() =>
+	{
+		const el = new Et2Nextmatch();
+		const originalColumns = [
+			{key: "title", title: "Title", width: "100px"},
+			{key: "date", title: "Date", width: "1fr"}
+		];
+		const resizedColumns = [
+			{key: "title", title: "Title", width: "260px"},
+			{key: "date", title: "Date", width: "1fr"}
+		];
+		const laterColumns = [
+			{key: "title", title: "Title", width: "320px"},
+			{key: "date", title: "Date", width: "1fr"}
+		];
+		const fetchPage = sinon.stub().resolves({rows: [], total: 0});
+		const createChildProvider = sinon.stub().returns({
+			fetchPage,
+			getQuerySignature: () => "child-query",
+			getDataStorePrefix: () => "addressbook",
+			normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
+			toProviderRowId: (rowId : string) => rowId,
+			refresh: async() => ({rows: [], removedRowIds: []})
+		});
+		const templateData = {
+			rowTemplateId: "infolog.index.rows",
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns: originalColumns
+		};
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._templateData = templateData;
+		(el as any)._templateLoading = false;
+		(el as any)._dataProvider = {
+			createChildProvider,
+			toProviderRowId: (rowId : string) => rowId,
+			normalizeRowId: (rowId : string | number) => String(rowId ?? "")
+		};
+		await el.requestUpdate();
+		await el.updateComplete;
+
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		rootGrid.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: resizedColumns},
+			bubbles: true,
+			composed: true
+		}));
+		await el.updateComplete;
+		assert.strictEqual((el as any)._templateData, templateData, "root column sync must not replace templateData and trigger preference reload loops");
+
+		const container = document.createElement("div");
+		document.body.append(container);
+		render((el as any)._renderExpandedNextmatchGrid({
+			row: {id: "addressbook::parent-1", data: {is_parent: true}},
+			rowIndex: 0,
+			parentGrid: rootGrid,
+			columnSizes: "260px 1fr",
+			metaColumnWidth: "28px"
+		}), container);
+		await Promise.resolve();
+
+		const childGrid = container.querySelector("et2-datagrid") as any;
+		assert.deepEqual(
+			childGrid.columns.map((column) => ({key: column.key, width: column.width})),
+			resizedColumns.map((column) => ({key: column.key, width: column.width})),
+			"first expanded child grid should use the root datagrid's current resized columns"
+		);
+		assert.strictEqual(
+			childGrid.style.getPropertyValue("--column-sizes"),
+			"",
+			"first expanded child grid should inherit the root datagrid's current column track"
+		);
+		assert.isTrue(childGrid.inheritColumnSizes, "child grid should be configured to inherit column track sizing");
+		assert.strictEqual(childGrid.style.getPropertyValue("--meta-column-width"), "6px", "child grid should not inherit the parent expander meta width");
+
+		rootGrid.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: laterColumns},
+			bubbles: true,
+			composed: true
+		}));
+		await el.updateComplete;
+		render((el as any)._renderExpandedNextmatchGrid({
+			row: {id: "addressbook::parent-1", data: {is_parent: true}},
+			rowIndex: 0,
+			parentGrid: rootGrid,
+			columnSizes: "320px 1fr",
+			metaColumnWidth: "28px"
+		}), container);
+		await Promise.resolve();
+
+		const rerenderedChildGrid = container.querySelector("et2-datagrid") as any;
+		assert.deepEqual(
+			rerenderedChildGrid.columns.map((column) => ({key: column.key, width: column.width})),
+			resizedColumns.map((column) => ({key: column.key, width: column.width})),
+			"existing child grid should keep the column snapshot captured when it was created"
+		);
+		assert.strictEqual(
+			rerenderedChildGrid.style.getPropertyValue("--column-sizes"),
+			"",
+			"existing child grid should continue inheriting the parent column track"
+		);
+
+		render(null, container);
+		container.remove();
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Nextmatch expansion treats settings.is_parent as the row-data key to evaluate.
+	 * - settings.is_parent_value, when set, is compared to that row-data value.
+	 * - The normalized row.is_parent boolean remains a fallback for providers that expose only normalized data.
+	 */
+	it("evaluates expandable rows from nextmatch hierarchy settings", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.settings = {is_parent: "group_count"};
+		const config = (el as any)._datagridExpansionConfig();
+
+		assert.isTrue(
+			config.isExpandable({id: "group", data: {group_count: 2}}, 0),
+			"truthy configured row field should make the row expandable"
+		);
+		assert.isFalse(
+			config.isExpandable({id: "empty-group", data: {group_count: 0, is_parent: true}}, 1),
+			"present but empty configured row field should take precedence over normalized fallback"
+		);
+		el.settings = {is_parent: "node_type", is_parent_value: "folder"};
+		assert.isTrue(
+			config.isExpandable({id: "folder", data: {node_type: "folder"}}, 2),
+			"configured is_parent_value should allow matching rows"
+		);
+		assert.isFalse(
+			config.isExpandable({id: "leaf", data: {node_type: "leaf"}}, 3),
+			"configured is_parent_value should reject non-matching rows"
+		);
+		el.settings = {};
+		assert.isTrue(
+			config.isExpandable({id: "normalized-parent", data: {is_parent: true}}, 4),
+			"normalized true should remain a fallback when no hierarchy field is configured"
+		);
+	});
 });

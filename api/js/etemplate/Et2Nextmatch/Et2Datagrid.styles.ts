@@ -5,6 +5,16 @@ export default css`
 		display: block;
 		height: 100%;
 		min-height: 0;
+		--row-expander-size: var(--sl-spacing-large);
+		--row-expander-icon-size: 0.5em;
+	}
+
+	:host([auto-height]) {
+		height: auto;
+	}
+
+	:host([embedded-virtualized]) {
+		height: var(--embedded-virtualized-height, auto);
 	}
 
 	.dg-root {
@@ -20,6 +30,16 @@ export default css`
 		--scrollbar-space: 0px;
 		--column-selection-width: min(16px, var(--scrollbar-space));
 		--row-height: 3em;
+	}
+
+	:host([auto-height]) .dg-root {
+		height: auto;
+		overflow: visible;
+	}
+
+	:host([embedded-virtualized]) .dg-root {
+		height: 100%;
+		overflow: visible;
 	}
 
 	.dg-header {
@@ -97,9 +117,9 @@ export default css`
 		position: absolute;
 		right: 0px;
 		width: var(--column-selection-width);
-		padding:0;
+		padding: 0;
 		justify-items: center;
-		/* Give it a background color in case insufficent space makes it overlap */
+		/* Give it a background color in case insufficient space makes it overlap */
 		background-color: var(--sl-color-neutral-100);
 	}
 
@@ -146,6 +166,12 @@ export default css`
 			border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 		}
 
+		tbody > tr.dg-row-expanded {
+			grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+			min-height: 0;
+			border-bottom: 0;
+		}
+
 		tbody > *[aria-selected="true"] {
 			background: var(--sl-color-primary-50, #eef5ff);
 		}
@@ -179,12 +205,75 @@ export default css`
 			min-width: 0;
 			max-height: none;
 			overflow: hidden;
+			display: flex;
+			align-items: flex-start;
+			justify-content: center;
 		}
 
 	}
 
+	.dg-row-expander {
+		appearance: none;
+		border: 0;
+		background: transparent;
+		color: var(--sl-color-neutral-700);
+		cursor: pointer;
+		inline-size: var(--row-expander-size);
+		block-size: var(--row-expander-size);
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0;
+		margin: 0;
+	}
+
+	.dg-row-expander:hover {
+		color: var(--sl-color-neutral-900);
+	}
+
+	.dg-row-expander:focus-visible {
+		outline: 2px solid var(--sl-color-primary-600);
+		outline-offset: -2px;
+	}
+
+	.dg-row-expander__icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 120ms ease-out;
+	}
+
+	.dg-row-expander__chevron {
+		inline-size: 0;
+		block-size: 0;
+		border-block-start: calc(var(--row-expander-icon-size) * 0.8) solid transparent;
+		border-block-end: calc(var(--row-expander-icon-size) * 0.8) solid transparent;
+		border-inline-start: var(--row-expander-icon-size) solid currentColor;
+		transform-origin: 45% 50%;
+	}
+
+	.dg-row-expander--expanded .dg-row-expander__icon {
+		transform: rotate(90deg);
+	}
+
+	.dg-row-expander slot[name="collapse-icon"],
+	.dg-row-expander--expanded slot[name="expand-icon"] {
+		display: none;
+	}
+
+	.dg-row-expander--expanded slot[name="collapse-icon"] {
+		display: inline-flex;
+	}
+
 	.dg-row-placeholder {
 		background: transparent;
+	}
+
+	.dg-body tbody td.dg-expanded-cell {
+		grid-column: 1 / -1;
+		padding: 0;
+		max-height: none;
+		overflow: visible;
 	}
 
 	@keyframes dg-row-refresh-pulse {
@@ -197,6 +286,18 @@ export default css`
 		100% {
 			background-color: color-mix(in srgb, var(--sl-color-warning-200) 35%, transparent);
 		}
+	}
+
+	:host([auto-height]) .dg-body {
+		flex: 0 0 auto;
+		overflow: visible;
+		scrollbar-gutter: auto;
+	}
+
+	:host([embedded-virtualized]) .dg-body {
+		flex: 1 1 auto;
+		overflow: visible;
+		scrollbar-gutter: auto;
 	}
 
 	.dg-placeholder-cell {
