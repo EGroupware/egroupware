@@ -393,8 +393,8 @@ class Egw extends Egw\Base
 		if (!in_array($GLOBALS['egw_info']['flags']['currentapp'], array('api','about')))	// give everyone implicit api rights
 		{
 			// This will need to use ACL in the future
-			if (!$GLOBALS['egw_info']['user']['apps'][$currentapp = $GLOBALS['egw_info']['flags']['currentapp']] ||
-				($GLOBALS['egw_info']['flags']['admin_only'] && !$GLOBALS['egw_info']['user']['apps']['admin']))
+			if (!isset($GLOBALS['egw_info']['user']['apps'][$currentapp = $GLOBALS['egw_info']['flags']['currentapp']]) ||
+				(!empty($GLOBALS['egw_info']['flags']['admin_only']) && empty($GLOBALS['egw_info']['user']['apps']['admin'])))
 			{
 				// present a login page, if anon user has no right for an application
 				if ($this->session->session_flags == 'A')
