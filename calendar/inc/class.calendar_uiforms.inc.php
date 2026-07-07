@@ -2689,12 +2689,12 @@ class calendar_uiforms extends calendar_ui
 	function event_changed(array &$_event, array $_old)
 	{
 		static $keys_to_check = array('start', 'end', 'title', 'description', 'location', 'participants',
-			'recur_type', 'recur_data', 'recur_interval', 'recur_exception', 'recur_rdates');
+			'recur_type', 'recur_data', 'recur_interval', 'recur_exception', 'recur_rdates', 'recur_enddate');
 
 		// only compare certain fields, taking account unset, null or '' values
 		$event = array_intersect_key(array_diff($_event, [null, ''])+array('recur_exception'=>array()), array_flip($keys_to_check));
 		$old = array_intersect_key(array_diff($_old, [null, '']), array_flip($keys_to_check));
-		foreach(['start', 'end'] as $name)
+		foreach(['start', 'end', 'recur_enddate'] as $name)
 		{
 			if(isset($event[$name]) && !($event[$name] instanceof Api\DateTime))
 			{
@@ -2707,7 +2707,7 @@ class calendar_uiforms extends calendar_ui
 		}
 		$event_cmp = $event;
 		$old_cmp = $old;
-		foreach(['start', 'end'] as $name)
+		foreach(['start', 'end', 'recur_enddate'] as $name)
 		{
 			if(isset($event_cmp[$name]))
 			{
@@ -2729,7 +2729,7 @@ class calendar_uiforms extends calendar_ui
 		}
 
 		$changes = array_diff_assoc($event_cmp, $old_cmp);
-		foreach(['start', 'end'] as $name)
+		foreach(['start', 'end', 'recur_enddate'] as $name)
 		{
 			if(isset($changes[$name]) && isset($event[$name]) && $event[$name] instanceof Api\DateTime)
 			{
@@ -2759,7 +2759,7 @@ class calendar_uiforms extends calendar_ui
 			$changes['end'] = clone $changes['start'];
 			$changes['end']->modify(((int)Api\DateTime::to($_event['end'], 'ts') - (int)Api\DateTime::to($_event['start'], 'ts')) . ' seconds');
 		}
-
+		error_log(__METHOD__."(".json_encode($event).', '.json_encode($old).") returning ".json_encode($changes));
 		return $changes;
 	}
 
