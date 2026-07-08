@@ -97,26 +97,6 @@ try {
 	else
 	{
 		@list($appName, $className, $functionName, $handler) = explode('.', $_GET['menuaction'])+[null, null, null, null];
-
-		// ajax_exec call via menuaction=$app.kdots_framework.ajax_exec.template.$app.$class.$method
-		if ($handler === 'template' &&
-			preg_match('/^([^.]+)\.[a-z]+_framework\.ajax_exec\.template.([^.]+)\.([^.]+)\.(.+)$/', $_GET['menuaction'], $matches) &&
-			$matches[1] === $matches[2])
-		{
-			$className = $matches[3];
-		}
-		// check $className belongs to $appName
-		$classApp = str_starts_with($className, 'EGroupware\\') ? explode('\\', $className)[1] :
-			// handle special case of $appName containing '_' like 'news_admin'
-			(str_starts_with($className, $appName.'_') ? $appName : explode('_', $className)[0]);
-
-		if ($_GET['menuaction'] !== 'api.queue' &&  // exception for "api.queue" / multiple queued json message
-			strcasecmp($appName, $classApp) &&  // compare case-insensitive, as classnames are case-insensitive
-			// check of old not autoloadable classes e.g. phpbrain.uikb.$method
-			!file_exists($path=__DIR__.'/'.$appName.'/inc/class.'.$classApp.'.inc.php'))
-		{
-			throw new InvalidArgumentException("Class '$className' does NOT belong to application '$appName'!", 997);
-		}
 	}
 	//error_log("json.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
 

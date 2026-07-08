@@ -47,6 +47,39 @@ class Request
 	}
 
 	/**
+	 * Check if class given in menuaction matches the specified app
+	 *
+	 * Prevent circumventing ACL/run-rights check, by specifying a different app e.g. api for autoloadable classes.
+	 *
+	 * @param string $menuaction
+	 * @throws \InvalidArgumentException if a different app is specified than the also specified class belongs too
+	 * @return void
+	 */
+	public static function checkMenuAction(string $menuaction)
+	{
+		[$appName, $className, $functionName, $handler] = explode('.', $menuaction)+[null, null, null, null];
+
+		// ajax_exec call via menuaction=$app.kdots_framework.ajax_exec.template.$app.$class.$method
+		if ($handler === 'template' &&
+			preg_match('/^([^.]+)\.[a-z]+_framework\.ajax_exec\.template.([^.]+)\.([^.]+)\.(.+)$/', $menuaction, $matches) &&
+			$matches[1] === $matches[2])
+		{
+			$className = $matches[3];
+		}
+		// check $className belongs to $appName
+		$classApp = str_starts_with($className, 'EGroupware\\') ? explode('\\', $className)[1] :
+			// handle special case of $appName containing '_' like 'news_admin'
+			(str_starts_with($className, $appName.'_') ? $appName : explode('_', $className)[0]);
+
+		if (strcasecmp($appName, $classApp) &&  // compare case-insensitive, as classnames are case-insensitive
+			// check of old not autoloadable classes e.g. phpbrain.uikb.$method
+			!file_exists($path=EGW_INCLUDE_ROOT.'/'.$appName.'/inc/class.'.$classApp.'.inc.php'))
+		{
+			throw new \InvalidArgumentException("Class '$className' does NOT belong to application '$appName'!", 997);
+		}
+	}
+
+	/**
 	 * Parses the raw input data supplied with the input_data parameter and calls the menuaction
 	 * passing all parameters supplied in the request to it.
 	 *
@@ -86,7 +119,7 @@ class Request
 			}
 		}
 		// do we have a single request or an array of queued requests
-		if ($menuaction == 'api.queue')
+		if ($menuaction === 'api.queue')
 		{
 			// close session to NOT block other requests (api.queue should NOT be used for changing something in session)
 			$GLOBALS['egw']->session->commit_session();
@@ -135,7 +168,15 @@ class Request
 		}
 		else
 		{
-			@list($appName, $className, $functionName, $handler) = explode('.',$menuaction);
+			@list($appName, $className, $functionName, $handler) = explode('.', $menuaction)+[null, null, null, null];
+
+			self::checkMenuAction($menuaction);
+		}
+
+		// check if user has rights for appName (would otherwise not happen for api.queue!)
+		if (!isset($GLOBALS['egw_info']['user']['apps'][$appName]))
+		{
+			throw new Api\Exception\NoPermission\App($appName);
 		}
 		//error_log("json.php: appName=$appName, className=$className, functionName=$functionName, handler=$handler");
 
@@ -204,7 +245,5 @@ class Request
 
 		call_user_func_array(array($ajaxClass, $functionName),
 			Api\Translation::convert($parameters, 'utf-8'));
-
-
 	}
 }
