@@ -718,6 +718,7 @@ class Widget
 			$er = error_reporting(0);
 			try {
 				eval('$name = "' . strtr($name, [
+					'\\' => '\\\\',       // escape backslashes, to gard against \" to be escaped as \\" and therefore not at all
 					'"' => '\\"',         // escape used double quotes
 					'`' => '',            // disarm/remove backtick operator allowed in strings
 					'${row}' => $row,     // this is the only necessary usage of ${...}, we replace it directly with $row
@@ -725,7 +726,7 @@ class Widget
 				]) . '";');
 			}
 			catch(\Throwable $e) {
-				error_log(__METHOD__."() eval('\$name = \"".strtr($name, ['"' => '\\"', '`' => '', '${row}' => $row, '{' => '', '}' => '']) . "\";)");
+				error_log(__METHOD__."() eval('\$name = \"".strtr($name, ['\\' => '\\\\', '"' => '\\"', '`' => '', '${row}' => $row, '{' => '', '}' => '']) . "\";)");
 				_egw_log_exception($e);
 			}
 			error_reporting($er);
