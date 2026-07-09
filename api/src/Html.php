@@ -436,6 +436,7 @@ class Html
 	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
 	* @param string $_executeJSAfterInit ='' Javascript to be executed after InstanceReady of CKEditor
 	* @return string the necessary html for the textarea
+	* @deprecated use eTemplate2
 	*/
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
 		$_height='400px', $_width='100%',$_start_path='',$_purify=true, $_focusToBody=false, $_executeJSAfterInit='')
@@ -597,6 +598,7 @@ tinymce.init({
 	* @param string $_border ='0px' NOT used for CKEditor
 	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
 	* @param string $_executeJSAfterInit ='' Javascript to be executed after InstanceReady of CKEditor
+    * @deprecated use eTemplate2
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px',$_focusToBody=false,$_executeJSAfterInit='')
