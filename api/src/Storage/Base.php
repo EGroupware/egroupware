@@ -886,7 +886,8 @@ class Base
 					{
 						$db_filter[] = $val;
 					}
-					elseif ($val === "!''")
+					// only allow "!''" for real column-names NOT (e.g. injected) SQL fragments
+					elseif ($val === "!''" && preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)?$/iu', $col))
 					{
 						$db_filter[] = $col." != ''";
 					}
