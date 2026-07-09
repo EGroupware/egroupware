@@ -53,7 +53,7 @@ if(isset($GLOBALS['sitemgr_info']) && $GLOBALS['egw_info']['user']['userid'] == 
 
 function parseForward(&$extra_vars)
 {
-	$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : @$_POST['phpgw_forward'];
+	$forward = isset($_GET['phpgw_forward']) ? urldecode($_GET['phpgw_forward']) : $_POST['phpgw_forward'] ?? null;
 	if (!$forward)
 	{
 		$extra_vars = 'cd=yes';
