@@ -45,7 +45,7 @@
 							<et2-label  value="Quantity"></et2-label>
 							<et2-description  align="left" id="${row}[quantity]" noLang="1"></et2-description>
 						</et2-hbox>
-						<et2-select-cat  id="{$row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
+						<et2-select-cat  id="${row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
 					</et2-vbox>
 					<et2-vbox>
 						<et2-hbox  class="avatar">

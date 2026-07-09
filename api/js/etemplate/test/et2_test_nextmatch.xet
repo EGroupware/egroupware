@@ -67,13 +67,13 @@
 						<image label="$row_cont[info_type]" src="${row}[info_type]"/>
 						<button statustext="Change the status of an entry, eg. close it" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" image="$row_cont[info_status_label]" ro_image="$row_cont[info_status_label]"/>
 						<progress statustext="Change the status of an entry, eg. close it" id="${row}[info_percent]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
-						<image label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
+						<image label="$row_cont[info_percent2]" src="${row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"/>
 					</hbox>
 					<vbox options="0,0" class="fullWidth">
 						<link label="%s $row_cont[info_addr]" id="${row}[info_link]" options="b"/>
 						<hbox options="0,0">
 							<description id="${row}[info_subject]" no_lang="1" class="$row_cont[sub_class]"/>
-							<description align="right" id="{$row}[info_number]" no_lang="1" class="infoId"/>
+							<description align="right" id="${row}[info_number]" no_lang="1" class="infoId"/>
 						</hbox>
 						<box class="infoDes">
 							<description id="${row}[info_des]" no_lang="1" options=",,1"/>
@@ -133,4 +133,3 @@
 
 	<nextmatch options="grid_defn" />
 </overlay>
-

@@ -61,13 +61,13 @@
 						<et2-image  label="$row_cont[info_type]" src="${row}[info_type]"></et2-image>
 						<et2-button  image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" roImage="$row_cont[info_status_label]"></et2-button>
 						<et2-button  image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"></et2-button>
-						<et2-image  label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"></et2-image>
+						<et2-image  label="$row_cont[info_percent2]" src="${row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"></et2-image>
 					</et2-hbox>
 					<et2-vbox  cellpadding="0" cellspacing="0" class="infolog_fullWidth">
 						<et2-link  label="%s $row_cont[info_from]" id="${row}[info_link]" app=""></et2-link>
 						<et2-hbox  cellpadding="0" cellspacing="0" >
 							<et2-description  class="$row_cont[sub_class]" id="${row}[info_subject]" noLang="1"></et2-description>
-							<et2-description  align="right" id="{$row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
+							<et2-description  align="right" id="${row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
 						</et2-hbox>
 						<et2-description  id="${row}[info_des]" activateLinks="1" noLang="1"></et2-description>
 						<et2-link-string  id="${row}[filelinks]"></et2-link-string>
@@ -182,13 +182,13 @@
 						<et2-image  label="$row_cont[info_type]" src="${row}[info_type]"></et2-image>
 						<et2-button  image="$row_cont[info_status_label]" label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;" roImage="$row_cont[info_status_label]"></et2-button>
 						<et2-button  image="$row_cont[info_percent]" label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" statustext="Change the status of an entry, eg. close it" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"></et2-button>
-						<et2-image  label="$row_cont[info_percent2]" src="{$row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"></et2-image>
+						<et2-image  label="$row_cont[info_percent2]" src="${row}[info_percent2]" onclick="window.open(egw::link('/index.php','menuaction=infolog.infolog_ui.edit&amp;info_id=$row_cont[info_id]'),'_blank','dependent=yes,width=750,height=600,scrollbars=yes,status=yes'); return false;"></et2-image>
 					</et2-hbox>
 					<et2-vbox  cellpadding="0" cellspacing="0" class="infolog_fullWidth">
 						<et2-link  label="%s $row_cont[info_from]" id="${row}[info_link]" app=""></et2-link>
 						<et2-hbox  cellpadding="0" cellspacing="0" >
 							<et2-description  class="$row_cont[sub_class]" id="${row}[info_subject]" noLang="1"></et2-description>
-							<et2-description  align="right" id="{$row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
+							<et2-description  align="right" id="${row}[info_number]" class="infolog_infoId" noLang="1"></et2-description>
 						</et2-hbox>
 						<et2-description  id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
 						<et2-link-string  id="${row}[filelinks]"></et2-link-string>

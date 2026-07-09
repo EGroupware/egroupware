@@ -26,7 +26,7 @@
 							</row>
 							<row>
 								<et2-description  id="${row}[name]" noLang="1"></et2-description>
-								<et2-checkbox  id="export[${row}]" noLang="1" selectedValue="$row_cont[field]" ></et2-checkbox>
+								<et2-checkbox  id="export[$row]" noLang="1" selectedValue="$row_cont[field]" ></et2-checkbox>
 							</row>
 						</rows>
 					</grid>

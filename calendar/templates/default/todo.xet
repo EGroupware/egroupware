@@ -26,7 +26,7 @@ Egroupware
 					</columns>
 					<rows>
 						<row class="todo_row">
-							<html id="{$row}[icons]" />
+							<html id="${row}[icons]" />
 
 							<et2-description  value="$row_cont[title]" href="$row_cont[edit]" extraLinkPopup="$row_cont[edit_size]"></et2-description>
 						</row>

@@ -18,7 +18,7 @@
 				</row>
 				<row class="row">
 					<et2-date  id="${row}[start]" readonly="true"></et2-date>
-					<et2-select  id="{$row}start" statustext="select a time" noLang="1"></et2-select>
+					<et2-select  id="${row}start" statustext="select a time" noLang="1"></et2-select>
 					<et2-button  label="Select" id="select[$row]" statustext="use the selected time and close the popup" onclick="app.calendar.freetime_select"></et2-button>
 					<et2-date-time  id="${row}[end]" readonly="true"></et2-date-time>
 				</row>

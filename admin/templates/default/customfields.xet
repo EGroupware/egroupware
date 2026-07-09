@@ -67,7 +67,7 @@
                         <et2-description  id="${row}[cf_label]" noLang="1"></et2-description>
                         <et2-description  id="${row}[cf_label]"></et2-description>
                     </et2-vbox>
-                    <customfields-types statustext="Type of customfield" id="{$row}[cf_type]" readonly="true"
+                    <customfields-types statustext="Type of customfield" id="${row}[cf_type]" readonly="true"
                                         app="$cont[appname]"/>
                     <et2-checkbox  id="${row}[cf_needed]" readonly="true" selectedValue="1" unselectedValue="0"></et2-checkbox>
 					<et2-select-account  id="${row}[cf_private]" readonly="true" accountType="both"></et2-select-account>

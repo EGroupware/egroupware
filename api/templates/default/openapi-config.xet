@@ -21,14 +21,14 @@
                     <et2-description value=""></et2-description>
                 </row>
                 <row>
-                    <et2-textbox id="{$row}[user-agent]" placeholder="Name"></et2-textbox>
-                    <et2-textbox id="{$row}[regexp]" placeholder="Perl regular expression"></et2-textbox>
-                    <et2-select id="{$row}[allow]">
+                    <et2-textbox id="${row}[user-agent]" placeholder="Name"></et2-textbox>
+                    <et2-textbox id="${row}[regexp]" placeholder="Perl regular expression"></et2-textbox>
+                    <et2-select id="${row}[allow]">
                         <option value="">Deny</option>
                         <option value="1">Allow</option>
                     </et2-select>
-                    <et2-select id="{$row}[operationIds]" multiple="true" placeholder="Select..."></et2-select>
-                    <et2-number id="{$row}[default-matches]" statustext="default number of matches, if no limit is specified in the request"></et2-number>
+                    <et2-select id="${row}[operationIds]" multiple="true" placeholder="Select..."></et2-select>
+                    <et2-number id="${row}[default-matches]" statustext="default number of matches, if no limit is specified in the request"></et2-number>
                     <et2-button-icon id="delete[$row]" image="delete" statustext="Delete this row"
                         onclick="Et2Dialog.confirm(widget,'Delete this row','Delete')"></et2-button-icon>
                 </row>

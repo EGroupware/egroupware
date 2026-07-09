@@ -51,8 +51,8 @@
                         <et2-description  align="left" id="${row}[bookable]" noLang="1"></et2-description>
                     </et2-vbox>
                     <et2-vbox>
-                        <et2-select-cat  id="{$row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
-                        <et2-select-account  id="{$row}[admin]" readonly="true" noLang="1"></et2-select-account>
+                        <et2-select-cat  id="${row}[cat_id]" readonly="true" noLang="1"></et2-select-cat>
+                        <et2-select-account  id="${row}[admin]" readonly="true" noLang="1"></et2-select-account>
                     </et2-vbox>
                     <et2-vbox>
                         <et2-description  id="${row}[location]" noLang="1"></et2-description>
