@@ -68,6 +68,7 @@ class Request
 			$className = $matches[3];
 		}
 		// check $className belongs to $appName
+		if (str_starts_with($className, '\\EGroupware\\')) $className = substr($className, 1);  // remove leading \EGroupware
 		$classApp = str_starts_with($className, 'EGroupware\\') ? explode('\\', $className)[1] :
 			// handle special case of $appName containing '_' like 'news_admin'
 			(str_starts_with($className, $appName.'_') ? $appName : explode('_', $className)[0]);
