@@ -436,150 +436,12 @@ class Html
 	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
 	* @param string $_executeJSAfterInit ='' Javascript to be executed after InstanceReady of CKEditor
 	* @return string the necessary html for the textarea
-	 * @deprecated
-	 */
+	* @deprecated use eTemplate2
+	*/
 	static function fckEditor($_name, $_content, $_mode, $_options=array('toolbar_expanded' =>'true'),
 		$_height='400px', $_width='100%',$_start_path='',$_purify=true, $_focusToBody=false, $_executeJSAfterInit='')
 	{
-		//not used anymore but defined in function signature
-		unset ($_options);
-
 		return self::textarea($_name, $_content, 'style="width: ' . $_width . '; height: ' . $_height . ';" id="' . htmlspecialchars($_name) . '"');
-
-
-		//include the ckeditor js file
-		Framework::includeJS('/vendor/tinymce/tinymce/tinymce.min.js');
-
-		// run content through htmlpurifier
-		if ($_purify && !empty($_content))
-			$_content = self::purify($_content);
-
-		// User preferences
-		$font = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font'];
-		$font_size = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_size'];
-		$font_size_unit = $GLOBALS['egw_info']['user']['preferences']['common']['rte_font_unit'];
-		$rte_menubar = $GLOBALS['egw_info']['user']['preferences']['common']['rte_menubar'];
-		$focusToBody = $_focusToBody ? "tinymce" : false;
-		ContentSecurityPolicy::add('script-src', 'unsafe-inline');
-		// we need to enable double encoding here, as ckEditor has to undo one level of encoding
-		// otherwise < and > chars eg. from html markup entered in regular (not source) input, will turn into html!
-		//error_log(__METHOD__.__LINE__.' '.Header\UserAgent::type().','.Header\UserAgent::version());
-		return self::textarea($_name,$_content,'id="'.htmlspecialchars($_name).'"',true).	// true = double encoding
-'
-<script type="text/javascript">
-
-window.setTimeout(function() {
-    window.egw_ready.wait(function() {
-
-var imageUpload = egw.ajaxUrl("EGroupware\\\\Api\\\\Etemplate\\\\Widget\\\\Vfs::ajax_htmlarea_upload")+"&type=htmlarea";
-imageUpload = imageUpload.substr(egw.webserverUrl.length+1);
-var font_size_formats = {
-	pt: "8pt 10pt 12pt 14pt 18pt 24pt 36pt 48pt 72pt",
-	px:"8px 10px 12px 14px 18px 24px 36px 48px 72px"
-};
-var  language_code = {
-	bg: "bg_BG", ca: "ca",	cs: "cs", da: "da", de: "de",	en:"en_CA",
-	el:"el", "es-es":"es",	et: "et", eu: "eu" , fa: "fa_IR", fi: "fi",
-	fr: "fr_FR", hi:"",	hr:"hr", hu:"hu_HU", id: "id", it: "it", iw: "",
-	ja: "ja", ko: "ko_KR", lo: "", lt: "lt", lv: "lv",	nl: "nl", no: "nb_NO",
-	pl: "pl", pt: "pt_PT", "pt-br": "pt_BR", ru: "ru", sk: "sk", sl: "sl_SI",
-	sv: "sv_SE", th: "th_TH", tr: "tr_TR", uk: "en_GB", vi: "vi_VN", zh: "zh_CN",
-	"zh-tw": "zh_TW"
-};
-var name = "#"+"'.$_name.'".replace( /(:|\.|\[|\]|,|=|@)/g, "\\\$1" );
-var height = "'.$_height.'";
-var width = "'.$_width.'";
-var value = jQuery(name).val();
-/**
- * language code represention for TinyMCE lang code
- */
-var language_code = {
-	bg: "bg_BG", ca: "ca",	cs: "cs", da: "da", de: "de",	en:"en_CA",
-	el:"el", "es-es":"es",	et: "et", eu: "eu" , fa: "fa_IR", fi: "fi",
-	fr: "fr_FR", hi:"",	hr:"hr", hu:"hu_HU", id: "id", it: "it", iw: "",
-	ja: "ja", ko: "ko_KR", lo: "", lt: "lt", lv: "lv",	nl: "nl", no: "nb_NO",
-	pl: "pl", pt: "pt_PT", "pt-br": "pt_BR", ru: "ru", sk: "sk", sl: "sl_SI",
-	sv: "sv_SE", th: "th_TH", tr: "tr_TR", uk: "en_GB", vi: "vi_VN", zh: "zh_CN",
-	"zh-tw": "zh_TW"
-};
-tinymce.init({
-			base_url: egw.webserverUrl + "/vendor/tinymce/tinymce",
-			selector: name,
-			menubar: parseInt('. $rte_menubar.')? true : false,
-			branding: false,
-			resize: false,
-			height: height.match(/%/) ? height : parseInt(height),
-			width: width.match(/%/) ? width : parseInt(width),
-			min_height: 200,
-			auto_focus: "'.$focusToBody.'",
-			language: language_code["'. $GLOBALS['egw_info']['user']['preferences']['common']['lang'].'"],
-			language_url: egw.webserverUrl+"/api/js/tinymce/langs/"+language_code[egw.preference("lang", "common")]+".js",
-			browser_spellcheck: true,
-			images_upload_url: imageUpload,
-			paste_data_images: true,
-			paste_filter_drop: true,
-			contextmenu: false,
-			file_picker_callback: function(_callback, _value, _meta){
-				var callback = _callback;
-				var attrs = {
-					menuaction: "filemanager.filemanager_select.select",
-					mode: "open",
-					method: "download_url",
-					path: "'. $_start_path.'"
-				};
-
-				// Open the filemanager select in a popup
-				var popup = egw(window).open_link(
-					egw().link("/index.php", attrs),
-					"link_existing",
-					"680x400"
-				);
-				if(popup)
-				{
-					// Safari and IE lose reference to global variables after window close
-					// Try to get updated data before window is closed then later we trigger
-					// change event on widget
-					egw().window.setTimeout(function(){
-						jQuery(popup).bind("unload",function(){
-							callback(this.selected_files, {alt:this.selected_files});
-						});
-					},1000);
-				}
-			},
-			init_instance_callback : function(_editor){
-				console.log(_editor);
-				_editor.execCommand("fontName", true,"'.$font.'");
-				_editor.execCommand("fontSize",	true,"'.$font_size.$font_size_unit.'");
-				_editor.setContent(value);
-			},
-			plugins: [
-				"print searchreplace autolink directionality "+
-				"visualblocks visualchars image link media template "+
-				"codesample table charmap hr pagebreak nonbreaking anchor toc "+
-				"insertdatetime advlist lists textcolor wordcount imagetools "+
-				"colorpicker textpattern help paste code searchreplace"
-			],
-			toolbar: "undo redo | formatselect | fontselect fontsizeselect | bold italic strikethrough forecolor backcolor | "+
-					"link | alignleft aligncenter alignright alignjustify  | numlist "+
-					"bullist outdent indent  | removeformat code| image | searchreplace",
-			block_formats: "Paragraph=p;Heading 1=h1;Heading 2=h2;Heading 3=h3;"+
-					"Heading 4=h4;Heading 5=h5;Heading 6=h6;Preformatted=pre",
-			font_formats: "Andale Mono=andale mono,times;Arial=arial,helvetica,"+
-					"sans-serif;Arial Black=arial black,avant garde;Book Antiqua=book "+
-					"antiqua,palatino;Comic Sans MS=comic sans ms,sans-serif;"+
-					"Courier New=courier new,courier;Georgia=georgia,palatino;"+
-					"Helvetica=helvetica;Impact=impact,chicago;Symbol=symbol;"+
-					"Tahoma=tahoma,arial,helvetica,sans-serif;Terminal=terminal,"+
-					"monaco;Times New Roman=times new roman,times;Trebuchet "+
-					"MS=trebuchet ms,geneva;Verdana=verdana,geneva;Webdings=webdings;"+
-					"Wingdings=wingdings,zapf dingbats",
-			fontsize_formats:font_size_formats["'. $font_size_unit.'"],
-		});
-		'.($_executeJSAfterInit?$_executeJSAfterInit:'').'
-	});
-}, 200);
-</script>
-';
 	}
 
 	/**
@@ -596,6 +458,7 @@ tinymce.init({
 	* @param string $_border ='0px' NOT used for CKEditor
 	* @param mixed (boolean/string) $_focusToBody=false USED only for CKEDIOR true means yes, focus on top, you may specify TOP or BOTTOM (to focus on the end of the editor area)
 	* @param string $_executeJSAfterInit ='' Javascript to be executed after InstanceReady of CKEditor
+    * @deprecated use eTemplate2
 	* @return string the necessary html for the textarea
 	*/
 	static function fckEditorQuick($_name, $_mode, $_content='', $_height='400px', $_width='100%',$_purify=true, $_border='0px',$_focusToBody=false,$_executeJSAfterInit='')
