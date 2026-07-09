@@ -4934,6 +4934,14 @@ export class MailApp extends EgwApp
 		}
 	}
 
+	/**override egw_app
+	 * window title specifically for mail.
+	 * This is different from all other apps since it does not write "mail-display" infront
+	 *
+	 */
+	_set_Window_title(){
+		document.title = this.getWindowTitle();
+	}
 	/**
 	 * Window title getter function in order to set the window title
 	 *
@@ -4941,19 +4949,11 @@ export class MailApp extends EgwApp
 	 */
 	getWindowTitle()
 	{
-		var widget = {};
-		switch(this.et2._inst.name)
-		{
-			case 'mail.display':
-				widget = this.et2.getWidgetById('mail_displaysubject');
-				if (widget) return widget.options.value;
-				break;
-			case 'mail.compose':
-				widget = this.et2.getWidgetById('subject');
-				if (widget) return widget.get_value();
-				break;
-		}
-		return undefined;
+		//mail display uses #mail-display_mail_displaysubject text and
+		// mail compose uses #mail-compose_subject input
+		const widget:Et2Textbox | Et2Description = document.querySelector('#mail-display_mail_displaysubject') ||
+			document.querySelector('#mail-compose_subject')
+		return widget.value
 	}
 
 	/**
