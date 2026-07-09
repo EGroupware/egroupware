@@ -21,13 +21,17 @@ import {
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {MailCompose} from "./compose";
-import {egw} from "../../api/js/jsapi/egw_global";
-import {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
+import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
+
+import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
 import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import type {Et2Image} from "../../api/js/etemplate/Et2Image/Et2Image";
+import type {Et2Tree} from "../../api/js/etemplate/Et2Tree/Et2Tree";
+import {etemplate2} from "../../api/js/etemplate/etemplate2";
+import type {Et2Description} from "../../api/js/etemplate/Et2Description/Et2Description";
+import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 
-/* required dependency, commented out because no module, but egw:uses is no longer parsed
-*/
+
 
 /**
  * UI for mail
@@ -68,7 +72,7 @@ export class MailApp extends EgwApp
 	 */
 	subscription_treeLastState : "";
 
-	tree_wdg : null;
+	tree_wdg: Et2Tree = null;
 
 	/**
 	 * abbrevations for common access rights
@@ -106,6 +110,10 @@ export class MailApp extends EgwApp
 	push_active : any = {};
 
 	private _compose : MailCompose;
+	et2_obj: etemplate2;
+// defer calls to mail_refreshFolderStatus,
+// to accumulate updates of multiple rows e.g. deleting multiple emails
+	refresh_timeout: any;
 	/**
 	 * Compose functions sub-object (gets automatic instanciated, if used)
 	 */
@@ -261,6 +269,8 @@ export class MailApp extends EgwApp
 				this.mail_refreshFolderStatus(undefined, undefined, false);
 
 				// Bind to nextmatch refresh to update folder status
+				//todo get rid of jq. jq._data exists and contains the event handlers
+				//@ts-ignore
 				if (nm != null && (typeof jQuery._data(nm).events == 'undefined' || typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
 					jQuery(nm).on('refresh', (_event, _widget, _row_id, _type) =>
@@ -268,11 +278,11 @@ export class MailApp extends EgwApp
 						if (!self.push_active[_widget.settings.foldertree.split("::")[0]])
 						{
 							// defer calls to mail_refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
-							if (typeof self.refresh_timeout === 'undefined')
+							if (!self.refresh_timeout)
 							{
 								self.refresh_timeout = window.setTimeout(() =>
 								{
-									delete self.refresh_timeout;
+									self.refresh_timeout = null;
 									self.mail_refreshFolderStatus.call(self, undefined, undefined, false);
 								}, 2000);
 							}
@@ -284,7 +294,8 @@ export class MailApp extends EgwApp
 				}
 				if (this.tree_wdg) {
 					// show / open selected folder, if necessary autoload it
-					if (this.tree_wdg.value && !this.tree_wdg.scrollToSelected()) {
+					if (typeof this.tree_wdg.value === "string" && !this.tree_wdg.scrollToSelected())
+					{
 						const parts = this.tree_wdg.value.split('::');
 						const path_parts = parts[1].split('/');
 						const do_open = (folder) => {
@@ -304,8 +315,8 @@ export class MailApp extends EgwApp
 				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
 				const cat_id = this.et2.getWidgetById('cat_id');
 				cat_id.value = this.nm.activeFilters.cat_id;	// not sure why this is necessary to get the current value
-				var alreadyrefreshed = this.mail_searchtype_change(null, cat_id);
-				if (!alreadyrefreshed) this.mail_callRefreshVacationNotice();
+				const already_refreshed = this.mail_searchtype_change(null, cat_id);
+				if (!already_refreshed) this.mail_callRefreshVacationNotice();
 				break;
 			case 'mail.display':
 				// Prepare display dialog for printing
@@ -317,11 +328,11 @@ export class MailApp extends EgwApp
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
 					self.mail_prepare_print();
-					self.resolveExternalImages(this.contentWindow.document, window.location.search.endsWith('&mode=print_images'));
+					self.resolveExternalImages((this as HTMLIFrameElement).contentWindow.document, window.location.search.endsWith('&mode=print_images'));
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
 					// Check if the iframe content is loaded then trigger the print command
-					if (window.location.search.search('&print=') >= 0 && jQuery(this.contentWindow.document.body).children().length >0 )
+					if (window.location.search.search('&print=') >= 0 && jQuery((this as HTMLIFrameElement).contentWindow.document.body).children().length > 0)
 					{
 						self.mail_print();
 					}
@@ -349,8 +360,7 @@ export class MailApp extends EgwApp
 				// 	egw.debug("warn","could not set initial values for compose toolbar helper")
 				// }
 				if (composeToolbar?.getWidgetById('pgp')?.value ||
-					this.et2.getArrayMgr('content').data.mail_plaintext &&
-						this.et2.getArrayMgr('content').data.mail_plaintext.indexOf(this.begin_pgp_message) != -1)
+					(this.et2.getArrayMgr('content').data as any)?.mail_plaintext?.includes(this.begin_pgp_message))
 				{
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
@@ -372,7 +382,7 @@ export class MailApp extends EgwApp
 					}
 				}*/
 				this.compose.fieldExpanderInit();
-				this.compose.checkSharingFilemode();
+				this.compose.checkSharingFilemode(undefined);
 
 				this.compose.subject2title();
 
@@ -479,6 +489,8 @@ export class MailApp extends EgwApp
 			case 'mail.view':
 				// we need to set mail_currentlyFocused var otherwise mail
 				// defined actions won't work
+				// this means mobileView() was called earlier and not this is set
+				//@ts-ignore
 				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
 
 		}
@@ -561,7 +573,7 @@ export class MailApp extends EgwApp
 					if (pushData.acl.flags.includes('\\Deleted') || pushData.acl.flags.includes('$deleted'))
 					{
 						pushData.type = 'delete';
-						return this._super.call(this, pushData);
+						return super.push(pushData);
 					}
 					this.pushUpdateFlags(pushData);
 					break;
@@ -795,8 +807,7 @@ export class MailApp extends EgwApp
 		)
 		{
 			// Make sure keys match, even if some filters are not defined
-			// using JSON.stringfy() directly gave a crash in Safari 7.0.4
-			return this.egw.jsonEncode({
+			return JSON.stringify({
 				selectedFolder: query_context.filters.selectedFolder || '',
 				cat_id: query_context.filters.cat_id || '',
 				filter: query_context.filters.filter || '',
@@ -964,7 +975,7 @@ export class MailApp extends EgwApp
 			command = 'print';
 		}
 		//alert('Open Message:'+_id+' '+subject);
-		var h = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
+		var h:any = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
 		const setTitle = async(w) =>
 		{
 			await egw(w).ready;
@@ -1043,7 +1054,7 @@ export class MailApp extends EgwApp
 			}
 		}
 		// Extra info passed to egw.open()
-		var settings = {
+		const settings: { id: string; from: string;smime_type?:string } = {
 			// 'Source' Mail UID
 			id: '',
 			// How to pull data from the Mail IDs for the compose
@@ -1052,7 +1063,7 @@ export class MailApp extends EgwApp
 
 		// We only handle one for everything but forward
 		settings.id = ((typeof _elems == 'undefined'|| _elems.length == 0)?'':_elems[0].id);
-		var content = egw.dataGetUIDdata(settings.id);
+		const content = egw.dataGetUIDdata(settings.id);
 		if (content) settings.smime_type = content.data['smime'];
 		switch(_action.id)
 		{
@@ -1712,23 +1723,16 @@ export class MailApp extends EgwApp
 	/**
 	 * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
 	 *
-	 * @param {stirng} _nodeID
+	 * @param {string} _nodeID
 	 * @param {string} mode
 	 * @param {boolean} _refreshGridArea
 	 * @param {boolean} _refreshQuotaDisplay
 	 *
 	 */
-	mail_refreshFolderStatus(_nodeID,mode,_refreshGridArea,_refreshQuotaDisplay) {
-		if (typeof _nodeID != 'undefined' && typeof _nodeID[_nodeID] != 'undefined' && _nodeID[_nodeID])
-		{
-			_refreshGridArea = _nodeID[_refreshGridArea];
-			mode = _nodeID[mode];
-			_nodeID = _nodeID[_nodeID];
-		}
-		var nodeToRefresh = 0;
-		var mode2use = "none";
-		if (typeof _refreshGridArea == 'undefined') _refreshGridArea=true;
-		if (typeof _refreshQuotaDisplay == 'undefined') _refreshQuotaDisplay=true;
+	mail_refreshFolderStatus(_nodeID: string, mode: string, _refreshGridArea = true, _refreshQuotaDisplay = true)
+	{
+		let nodeToRefresh: string | 0 = 0;
+		let mode2use = "none";
 		if (_nodeID) nodeToRefresh = _nodeID;
 		if (mode) {
 			if (mode == "forced") {mode2use = mode;}
@@ -1760,10 +1764,10 @@ export class MailApp extends EgwApp
 	/**
 	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
 	 *
-	 * @param {object} _server
+	 * @param {object} _server omitting uses this->mail_bo->profileID on serverside
 	 *
 	 */
-	mail_refreshQuotaDisplay(_server)
+	mail_refreshQuotaDisplay(_server?: any)
 	{
 		egw.json('mail.mail_ui.ajax_refreshQuotaDisplay',[_server])
 			.sendRequest(true);
@@ -1818,7 +1822,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _server
 	 *
 	 */
-	mail_callRefreshVacationNotice(_server)
+	mail_callRefreshVacationNotice(_server?)
 	{
 		egw.jsonq('mail_ui::ajax_refreshVacationNotice',[_server]);
 	}
@@ -2255,10 +2259,9 @@ export class MailApp extends EgwApp
 	 * @param {boolean} _isPopup
 	 * @param {boolean} _refreshVacationNotice
 	 */
-	mail_refreshMessageGrid(_isPopup, _refreshVacationNotice) {
-		if (typeof _isPopup == 'undefined') _isPopup = false;
-		if (typeof _refreshVacationNotice == 'undefined') _refreshVacationNotice = false;
-		var nm;
+	mail_refreshMessageGrid(_isPopup: boolean = false, _refreshVacationNotice: boolean = false)
+	{
+		let nm: et2_nextmatch;
 		if (_isPopup && !this.mail_isMainWindow)
 		{
 			nm = window.opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
@@ -2267,8 +2270,8 @@ export class MailApp extends EgwApp
 		{
 			nm = this.et2.getWidgetById(this.nm_index);
 		}
-		var dates = this.et2.getWidgetById('mail.index.datefilter');
-		var filter = this.et2.getWidgetById('cat_id');
+		const dates = this.et2.getWidgetById('mail.index.datefilter');
+		const filter = this.et2.getWidgetById('cat_id');
 		if(nm && filter)
 		{
 			nm.activeFilters["startdate"]=null;
@@ -4802,10 +4805,11 @@ export class MailApp extends EgwApp
 
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
+	 * both parameters can be ommited if we are in a mail.display and not in mail.index
 	 */
-	mail_print(_action, _senders)
+	mail_print(_action?, _senders?)
 	{
-		var currentTemp = this.et2._inst.name;
+		const currentTemp = this.et2_obj.name;
 
 		switch (currentTemp)
 		{
@@ -4845,10 +4849,9 @@ export class MailApp extends EgwApp
 	 * Prepare display dialog for printing
 	 * copies iframe content to a DIV, as iframe causes
 	 * trouble for multipage printing
-	 * @param {jQuery object} _iframe mail body iframe
-	 * @returns {undefined}
+	 * @param _iframe mail body iframe, can be ommited to use querySelector
 	 */
-	mail_prepare_print(_iframe)
+	mail_prepare_print(_iframe?: HTMLIFrameElement)
 	{
 		const mainIframe = _iframe || document.body.querySelector('#mail-display_mailDisplayBodySrc');
 		let tmpPrintDiv = document.body.querySelector('#tempPrintDiv');

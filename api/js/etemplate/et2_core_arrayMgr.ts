@@ -27,7 +27,7 @@ import {et2_compilePHPExpression} from "./et2_core_phpExpressionCompiler";
 export class et2_arrayMgr
 {
 	splitIds : boolean = true;
-	public data : object;
+	public data : any;
 	// Holds information about the current perspective
 	public perspectiveData : { owner : et2_widget; row : number; key : string } = {
 		"owner": null,

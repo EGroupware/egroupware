@@ -1090,7 +1090,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	 *	@return {boolean} false if Notification is not supported by browser
 	 */
 	notification(_title : string, _options : {dir?: "ltr"|"rtl"|"auto", lang?: string, body?: string, icon?: string,
-		tag?: string, onclick: Function, onshow?: Function, onclose?: Function, onerror?: Function, requireInteraction?: boolean}) : false|void;
+		tag?: string, onclick?: Function, onshow?: Function, onclose?: Function, onerror?: Function, requireInteraction?: boolean}) : false|void;
 	/**
 	 * Check Notification availability by browser
 	 *
@@ -1388,7 +1388,7 @@ declare interface IegwAppLocal extends IegwWndLocal
 	 * @param {function} [callback] Callback function to un-register.  If
 	 *	omitted, all functions for the prefix will be removed.
 	 */
-	dataCacheUnregister(prefix : string, callback : Function);
+	dataCacheUnregister(prefix : string, callback? : Function);
 }
 
 /**

@@ -13,6 +13,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 
 export class MailCompose
 {
@@ -133,9 +134,9 @@ export class MailCompose
 	 * Check sharing mode and disable not available options
 	 *
 	 * @param {DOMNode} _node
-	 * @param {et2_widget} _widget
+	 * @param {et2_widget} _widget can be omitted to get 'filemode' widget from et2
 	 */
-	checkSharingFilemode(_node, _widget)
+	checkSharingFilemode(_node, _widget?)
 	{
 		if (!this.et2 || this.et2.getArrayMgr('content').getEntry('no_griddata')) return;
 		if (!_widget) _widget = this.et2.getWidgetById('filemode');
@@ -261,11 +262,11 @@ export class MailCompose
 	/**
 	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
-	 * @param {jQuery event} event
-	 * @param {widget object} widget clicked label (Folder, Cc or Bcc) from compose popup
+	 * @param {jQuery event} event unused
+	 * @param {widget} widget clicked label (Folder, Cc or Bcc) from compose popup. Can be ommited to show all widgets
 	 *
 	 */
-	fieldExpander(event,widget)
+	fieldExpander(event?:undefined,widget?)
 	{
 		const expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
 		for (const name in expWidgets)
@@ -450,10 +451,10 @@ export class MailCompose
 	/**
 	 * Write / update compose window title with subject
 	 *
-	 * @param {DOMNode} _node
+	 * @param {DOMNode} _node unused parameter
 	 * @param {et2_widget} _widget
 	 */
-	subject2title(_node, _widget)
+	subject2title(_node=undefined, _widget?)
 	{
 		if (!_widget) _widget = this.et2.getWidgetById('subject');
 
