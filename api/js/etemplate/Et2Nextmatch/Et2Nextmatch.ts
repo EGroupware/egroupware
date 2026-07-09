@@ -3,6 +3,7 @@ import {customElement} from "lit/decorators/custom-element.js";
 import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
+import {loadStylesheet} from "../Et2Widget/cssTools";
 import {Et2Datagrid} from "./Et2Datagrid";
 import {
 	Et2DatagridColumn,
@@ -473,6 +474,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		else
 		{
 			await this._applyTemplateFromSlots();
+			void this._updateRowStylesheets();
 		}
 		this._initializeSettingsSort();
 
@@ -522,6 +524,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 				this._applyTemplateFromSlots();
 			}
+			// Load new row CSS
+			void this._updateRowStylesheets();
 		}
 		if(changedProperties.has("filterTemplate"))
 		{
@@ -691,6 +695,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			...value,
 			...(this._actionController.getActionSubmitValue() || {})
 		};
+	}
+
+	/**
+	 * Get the total number of rows
+	 *
+	 * @return {number}
+	 */
+	get totalCount() : number
+	{
+		return this._datagrid?.total ?? 0;
 	}
 
 	/**
@@ -1162,7 +1176,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			if(!this.template && this._hasAddedTemplateSlotNode(records))
 			{
-				this._applyTemplateFromSlots();
+				this._applyTemplateFromSlots().then(() => this._updateRowStylesheets());
 			}
 		});
 		this._slotObserver.observe(this, {
@@ -1471,6 +1485,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		);
 		this._actionController.customizeRowElement(context.rowElement);
 	};
+
+	private async _updateRowStylesheets()
+	{
+		const appName = this._getAppName();
+		const sheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
+		await this.updateComplete;
+		this._datagrid.rowStylesheets = sheet ? [sheet] : [];
+	}
 
 	/**
 	 * Build the generic datagrid expansion bridge from Nextmatch hierarchy settings.
@@ -2227,16 +2249,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                 ${this._renderLetterSearch()}
 				<et2-datagrid
                         part="grid"
-					._parent=${this}
-					.columns=${this._currentColumns}
-					.templateData=${this._templateData}
-					.rowCustomizer=${this._customizeDatagridRow}
-					.columnPreferenceName=${this.columnPreferenceName}
-					.dataProvider=${this._dataProvider}
+                        exportparts="rows, row"
+                        ._parent=${this}
+                        .columns=${this._currentColumns}
+                        .templateData=${this._templateData}
+                        .rowCustomizer=${this._customizeDatagridRow}
+                        .columnPreferenceName=${this.columnPreferenceName}
+                        .dataProvider=${this._dataProvider}
                         .expansionConfig=${this._datagridExpansionConfig()}
-					.configurationLoading=${this._templateLoading}
+                        .configurationLoading=${this._templateLoading}
                         .emptyStateText=${this.placeholder}
-					selection-mode="multiple"
+                        selection-mode="multiple"
                         style=${styleMap({"--meta-column-width": metaColumnWidth})}
                 >
                     ${hasSlottedNoResults

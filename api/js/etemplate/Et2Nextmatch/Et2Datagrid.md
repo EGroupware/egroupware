@@ -1,12 +1,10 @@
-# Et2Datagrid
-
-`et2-datagrid` renders a virtualized table/grid from:
+`et2-datagrid` is used by other widgets to display a list of rows. The owner widget will provide
 
 - `columns` metadata
 - row template data (`templateData`)
 - row data from a `dataProvider` or preloaded rows
 
-This page documents column and row template behavior shared by both:
+This page documents column and row template behaviour shared by both:
 
 - named templates loaded through `et2-nextmatch template="app.index.rows"`
 - slotted templates provided directly to `et2-nextmatch`
@@ -34,15 +32,19 @@ When using `et2-nextmatch template="app.index.rows"`:
 Example:
 
 ```xml
-<tr class="th" slot="columns">
-    <et2-nextmatch-sortheader id="n_family" label="Name"></et2-nextmatch-sortheader>
-    <et2-nextmatch-header id="note" label="Note"></et2-nextmatch-header>
-    <et2-vbox>
-        <et2-nextmatch-header id="tel_work" label="Business phone"></et2-nextmatch-header>
-        <et2-nextmatch-header id="tel_cell" label="Mobile phone"></et2-nextmatch-header>
-        <et2-nextmatch-header id="tel_home" label="Home phone"></et2-nextmatch-header>
-    </et2-vbox>
-</tr>
+
+<et2-nextmatch>
+    <tr class="th" slot="columns">
+        <et2-nextmatch-sortheader id="n_family" label="Name"></et2-nextmatch-sortheader>
+        <et2-nextmatch-header id="note" label="Note"></et2-nextmatch-header>
+        <et2-vbox>
+            <et2-nextmatch-header id="tel_work" label="Business phone"></et2-nextmatch-header>
+            <et2-nextmatch-header id="tel_cell" label="Mobile phone"></et2-nextmatch-header>
+            <et2-nextmatch-header id="tel_home" label="Home phone"></et2-nextmatch-header>
+        </et2-vbox>
+    </tr>
+    <tr slot="rows">...</tr>
+</et2-nextmatch>
 ```
 
 ## Rows
@@ -80,20 +82,134 @@ Example:
 
 ```xml
 <tr class="$class $cat_id" slot="row">
-    <et2-description id="${n_family}" noLang="1"></et2-description>
+    <et2-description id="n_family" noLang="1"></et2-description>
     <et2-textarea id="${note}" readonly="true" noLang="1"></et2-textarea>
     <et2-vbox>
-        <et2-url-phone id="${tel_work}" 
-           readonly="true" class="telNumbers" statustext="Business phone"
+        <et2-url-phone id="tel_work"
+                       readonly="true" class="telNumbers" statustext="Business phone"
         ></et2-url-phone>
-        <et2-url-phone id="${tel_cell}" 
-           readonly="true" class="telNumbers" statustext="Mobile phone"
+        <et2-url-phone id="tel_cell"
+                       readonly="true" class="telNumbers" statustext="Mobile phone"
         ></et2-url-phone>
-        <et2-url-phone id="${tel_home}" 
-           readonly="true" class="telNumbers" statustext="Home phone"
+        <et2-url-phone id="tel_home"
+                       readonly="true" class="telNumbers" statustext="Home phone"
         ></et2-url-phone>
     </et2-vbox>
 </tr>
+```
+
+## Styling Row Contents
+
+Rows are rendered inside the `et2-datagrid` shadow DOM. Normal page CSS does not reach row contents unless the target is
+exposed as a CSS part. `et2-nextmatch` loads the current application's
+`templates/default/app.css` into the datagrid row shadow DOM, so row classes and widget selectors that must affect row
+contents can live there.
+
+### Static Widget Style
+
+For a simple static change that applies to every row, add a class to the row template and style it in `app.css`.
+
+```xml
+
+<row>
+    <et2-description class="entry-title" id="title" noLang="1"></et2-description>
+    <et2-description id="owner" noLang="1"></et2-description>
+</row>
+```
+
+```css
+.entry-title {
+	color: var(--sl-color-primary-700);
+	font-weight: var(--sl-font-weight-semibold);
+}
+```
+
+### Static Widget Internals
+
+To style a widget's exposed internal part from the stylesheet, use `::part()` on the widget in the row template.
+
+```xml
+
+<row>
+    <et2-image class="status" label="Open"></et2-image>
+</row>
+```
+
+```css
+.status::part(base) {
+	min-width: 0;
+	padding-inline: var(--sl-spacing-small);
+}
+```
+
+### Static Exported Parts
+
+Use `exportparts` when normal application CSS outside the datagrid needs to style a row widget's internal part. The
+datagrid gathers row-template `exportparts` and forwards them through `et2-nextmatch`.
+
+```xml
+
+<row>
+    <et2-hbox class="contact-methods" exportparts="base:contact-methods__base">
+        <et2-url-phone id="${row}[tel_work]" readonly="true"></et2-url-phone>
+        <et2-url-phone id="${row}[tel_cell]" readonly="true"></et2-url-phone>
+        <et2-url-email id="${row}[email]" readonly="true"></et2-url-email>
+    </et2-hbox>
+</row>
+```
+
+```css
+et2-nextmatch::part(contact-methods__base) {
+	flex-wrap: wrap;
+	align-content: flex-start;
+	row-gap: var(--sl-spacing-2x-small);
+}
+```
+
+### Dynamic Row Class
+
+For dynamic row state, put a class expression on the row or widget and style it in the stylesheet. This is the most
+direct option when the server already supplies a class such as `overdue`, `readonly`, or `cat_<ID>`.
+
+```xml
+
+<row class="$class priority_${priority}">
+    <et2-description class="entry-title" id="${title}" noLang="1"></et2-description>
+    <et2-description class="entry-status" id="${status}" noLang="1"></et2-description>
+</row>
+```
+
+```css
+tr.overdue .entry-status {
+	color: var(--sl-color-danger-700);
+	font-weight: var(--sl-font-weight-semibold);
+}
+
+tr.priority_high .entry-title {
+	border-inline-start: 3px solid var(--warning-color);
+	padding-inline-start: var(--sl-spacing-x-small);
+}
+```
+
+### Dynamic Widget Class
+
+When only one widget needs dynamic styling, you can put the class expression on that widget instead of the whole row.
+
+```xml
+
+<row>
+    <et2-description class="entry-status status_${status_class}" id="${status}" noLang="1"></et2-description>
+</row>
+```
+
+```css
+.entry-status.status_warning {
+	color: var(--sl-color-warning-700);
+}
+
+.entry-status.status_error {
+	color: var(--sl-color-danger-700);
+}
 ```
 
 ## Loader Template

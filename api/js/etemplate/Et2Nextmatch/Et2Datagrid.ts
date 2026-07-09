@@ -198,6 +198,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	@property({attribute: false})
 	templateData : Et2DatagridTemplateData | null = null;
 
+	@property({type: Array, attribute: false})
+	rowStylesheets : CSSStyleSheet[] = [];
+
 	/**
 	 * Maximum number of rows requested per page load.
 	 */
@@ -314,6 +317,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private activeRowIndex : number = -1;
 	/** Active row id mirrored from `activeRowIndex` for event payload convenience. */
 	private activeRowId : string | null = null;
+	private _initialExportParts : string[] = [];
 	private _scrollListener : (() => void) | null = null;
 	private _inFlightRequestKeys : Set<string> = new Set();
 	private _queuedRequestTimer : number | null = null;
@@ -521,6 +525,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
+		if(this.hasAttribute("exportparts") && this._initialExportParts.length == 0)
+		{
+			this._initialExportParts = this.getAttribute("exportparts")?.split(",").map(p => p.trim());
+		}
 		if(
 			changedProperties.has("templateData") ||
 			changedProperties.has("columnPreferenceName") ||
@@ -552,6 +560,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(structureChanged)
 		{
 			this._prepareVisibleHeaders();
+			this._updateExportParts();
 			this._reconcileRowRenderState(false);
 			this._postRenderStructureSyncNeeded = true;
 		}
@@ -568,6 +577,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
+
+		// Include new row stylesheet(s)
+		if(changedProperties.has("rowStylesheets"))
+		{
+			this.shadowRoot!.adoptedStyleSheets = [
+				...(this.constructor as typeof Et2Datagrid).elementStyles.map(s => s instanceof CSSStyleSheet ? s : s.styleSheet),
+				...this.rowStylesheets
+			];
+		}
 		if(this._postRenderStructureSyncNeeded)
 		{
 			this._ensureTableColSizes();
@@ -2288,6 +2306,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 							element.transformAttributes(stored);
 						}
 					}
+					else
+					{
+						Object.entries(stored).forEach(([attr, value]) =>
+						{
+							element.setAttribute(attr, mgr.expandName(value));
+						});
+					}
 				}
 				catch(e)
 				{
@@ -2618,6 +2643,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._body.style["--column-sizes"] = this._columnWidths(visibleColumns);
 		}
+	}
+
+	/**
+	 * Gather all exportparts from row contents so they can be passed up outside the shadowRoot
+	 *
+	 * @private
+	 */
+	private _updateExportParts()
+	{
+		const childParts = Array.from(this.templateData?.rowTemplate?.content?.querySelectorAll("[exportparts]") ?? [])
+			.map(e =>
+			{
+				return e.getAttribute("exportparts")
+					.split(",")
+					.map(p => p.trim().split(":").pop())
+					.filter(p => p);
+			})
+		this.setAttribute("exportparts", [...this._initialExportParts, ...childParts].join(", "));
 	}
 
 	/**

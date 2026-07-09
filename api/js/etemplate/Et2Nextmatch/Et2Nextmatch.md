@@ -37,13 +37,74 @@ The row/header structure is read from that template and converted for `et2-datag
 </et2-nextmatch>
 ```
 
-### Shared Template Details
 
 Full details for columns, rows, expression syntax, wrapper behaviour, and loader slots are documented in:
 
 - [Et2Datagrid](/components/et2-datagrid)
 
-## Notes
+### Notes
 
 - If both a `template` attribute and slotted templates are provided, `template` wins.
 - `setRows()` can preload initial rows; otherwise rows are fetched through the bound Nextmatch data provider.
+
+## Styling Rows
+
+`et2-nextmatch` renders rows inside `et2-datagrid`, so normal application CSS does not automatically reach row contents.
+`et2-nextmatch` loads the current application's `templates/default/app.css` into the
+datagrid row shadow DOM. Use that file for row classes and widget selectors that must affect row contents.
+
+We could add optional row-specific stylesheets later, for example `addressbook/templates/default/index.rows.css`, if we
+want these advantages:
+
+- fewer unrelated app rules inside row shadow DOM
+- clearer ownership for styles used only by one row template
+- smaller stylesheet parse cost for large `app.css` files
+- fewer accidental matches between edit/view CSS and list rows
+- easier deletion when a row template is removed or replaced
+
+For the full set of row styling options, including `exportparts`, see
+[Et2Datagrid: Styling Row Contents](/components/et2-datagrid#styling-row-contents).
+
+### Highlighting an Overdue Entry
+
+Have the server add an `overdue` class for rows that need attention, then style that class via CSS.
+
+```xml
+
+<row class="$class">
+    <et2-description class="task-title" id="title" noLang="1"></et2-description>
+    <et2-description class="task-due" id="due" noLang="1"></et2-description>
+</row>
+```
+
+```css
+.overdue .task-title {
+	font-weight: var(--sl-font-weight-semibold);
+}
+
+.overdue .task-due {
+	color: var(--sl-color-danger-700);
+}
+```
+
+### Wrapping Contact Details
+
+If the row contains a widget with internal layout, expose the part you need and style it from CSS.
+
+```xml
+
+<row class="$class">
+    <et2-hbox class="contact-methods" exportparts="base:contact-methods__base">
+        <et2-url-phone id="tel_work" readonly="true"></et2-url-phone>
+        <et2-url-phone id="tel_cell" readonly="true"></et2-url-phone>
+        <et2-url-email id="email" readonly="true"></et2-url-email>
+    </et2-hbox>
+</row>
+```
+
+```css
+et2-nextmatch::part(contact-methods__base) {
+	flex-wrap: wrap;
+	row-gap: var(--sl-spacing-2x-small);
+}
+```

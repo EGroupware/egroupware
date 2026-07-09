@@ -71,7 +71,7 @@ export default css`
 	}
 
 	.dg-col--lead {
-		grid-column: 2;
+		grid-column: span 2;
 	}
 
 	.dg-col-resize-handle {
