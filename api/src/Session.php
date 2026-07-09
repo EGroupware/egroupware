@@ -1596,7 +1596,11 @@ class Session
 	 */
 	public static function link($url, $extravars = '')
 	{
-		//error_log(_METHOD__."(url='$url',extravars='".array2string($extravars)."')");
+		// check if an absolute URL is given and matches our host, if not reject link-generation and possible redirect to it
+		if (preg_match('#^(https?:)?//#i', $url) && parse_url($url, PHP_URL_SCHEME) !== Header\Http::Host())
+		{
+			throw new \InvalidArgumentException("Trying to redirect/link outside EGroupware server: ".htmlspecialchars($url));
+		}
 
 		if ($url[0] != '/')
 		{
