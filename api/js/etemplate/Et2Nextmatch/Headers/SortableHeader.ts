@@ -29,14 +29,14 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 			...super.styles,
 			css`
 				:host {
-					width: 100%;
+					width: fit-content;
 					cursor: pointer;
 					display: inline-flex;
 					white-space: nowrap;
 				}
 
 				.nextmatch_sortheader {
-					padding-right: var(--sl-spacing-large, 20px);
+					padding-right: var(--sl-spacing-small);
 					overflow: hidden;
 					text-overflow: ellipsis;
 					flex: 1 1 auto;
@@ -47,6 +47,7 @@ export class Et2NextmatchSortableHeader extends Et2NextmatchHeader implements et
 				}
 
 				.nextmatch_sortheader--marker {
+					width: 1em;
 					text-decoration: none;
 					background-repeat: no-repeat;
 				}

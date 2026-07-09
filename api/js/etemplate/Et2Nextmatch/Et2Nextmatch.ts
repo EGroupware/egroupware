@@ -37,6 +37,7 @@ import {
 	Et2NextmatchSortEventDetail
 } from "./Headers/events";
 import styles from "./Et2Nextmatch.styles";
+import rowStyles from "./Et2Nextmatch.row.styles";
 import {et2_IInput} from "../et2_core_interfaces";
 import {styleMap} from "lit/directives/style-map.js";
 import {ref} from "lit/directives/ref.js";
@@ -212,6 +213,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	@state()
 	private _templateLoading : boolean = true;
+
+	@state()
+	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
 
 	/**
 	 * Monotonic token used to ignore stale async template-load completions.
@@ -1490,8 +1494,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	{
 		const appName = this._getAppName();
 		const sheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
+		this._rowStylesheets = sheet ? [rowStyles.styleSheet!, sheet] : [rowStyles.styleSheet!];
 		await this.updateComplete;
-		this._datagrid.rowStylesheets = sheet ? [sheet] : [];
+		const datagrid = this._datagrid;
+		if(datagrid)
+		{
+			datagrid.rowStylesheets = this._rowStylesheets;
+		}
 	}
 
 	/**
@@ -1568,6 +1577,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                     .columns=${columnSnapshot.columns}
                     .templateData=${this._templateData}
                     .rowCustomizer=${this._customizeDatagridRow}
+                    .rowStylesheets=${this._rowStylesheets}
                     .dataProvider=${childProvider}
                     .parentRowId=${childParentRowId}
                     .noVisibleHeader=${true}
@@ -2254,6 +2264,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                         .columns=${this._currentColumns}
                         .templateData=${this._templateData}
                         .rowCustomizer=${this._customizeDatagridRow}
+                        .rowStylesheets=${this._rowStylesheets}
                         .columnPreferenceName=${this.columnPreferenceName}
                         .dataProvider=${this._dataProvider}
                         .expansionConfig=${this._datagridExpansionConfig()}

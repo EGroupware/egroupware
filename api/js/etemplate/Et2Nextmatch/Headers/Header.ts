@@ -22,6 +22,7 @@ export class Et2NextmatchHeader extends Et2Widget(LitElement) implements et2_INe
 			css`
 				:host {
 					display: inline-block;
+					width: fit-content;
 				}
 
 				.label {

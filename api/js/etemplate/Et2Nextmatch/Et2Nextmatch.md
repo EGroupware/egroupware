@@ -65,6 +65,32 @@ want these advantages:
 For the full set of row styling options, including `exportparts`, see
 [Et2Datagrid: Styling Row Contents](/components/et2-datagrid#styling-row-contents).
 
+### Anti-example: Styling Row Descendants Through `::part(row)`
+
+Do not try to style widgets inside rows from outside the datagrid shadow DOM by selecting descendants of the exported
+`row` part. `::part()` exposes the part element itself, not arbitrary descendants inside that part, so this selector
+will
+not style row links:
+
+```less
+et2-nextmatch {
+  ::part(row) {
+	/* Links in nextmatch should be blue */
+
+	et2-link, et2-link-string {
+	  color: var(--sl-color-sky-900);
+	}
+  }
+}
+```
+
+Because the rows are managed by `et2-datagrid` inside its shadow DOM, you cannot style them from outside the datagrid.
+
+• `et2-nextmatch::part(row) { ... }` can style the row elements themselves, but not their descendants.
+• `et2-nextmatch::part(row) et2-link { ... }` cannot style links inside the row.
+For framework-level row styles, add to `Et2Nextmatch.row.styles.ts`. For app-specific row styles, use the app's
+`templates/default/app.css`.
+
 ### Highlighting an Overdue Entry
 
 Have the server add an `overdue` class for rows that need attention, then style that class via CSS.
