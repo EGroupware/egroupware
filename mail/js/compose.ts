@@ -51,7 +51,7 @@ export class MailCompose
 		{
 			if(jQuery('.ms-editor-wrap').length === 0)
 			{
-				this.saveAsDraft(null, 'autosaving');
+				void this.saveAsDraft(null, 'autosaving');
 			}
 		}, 120000);
 	}
@@ -67,10 +67,10 @@ export class MailCompose
 	 */
 	uploadStart()
 	{
-		var boxAttachment = this.et2.getWidgetById('attachments');
+		const boxAttachment = this.et2.getWidgetById('attachments');
 		if (boxAttachment)
 		{
-			var groupbox = boxAttachment.getParent();
+			const groupbox = boxAttachment.getParent();
 			if (groupbox) groupbox.set_disabled(false);
 		}
 		return true;
@@ -133,7 +133,7 @@ export class MailCompose
 	/**
 	 * Check sharing mode and disable not available options
 	 *
-	 * @param {DOMNode} _node
+	 * @param {Node} _node
 	 * @param {et2_widget} _widget can be omitted to get 'filemode' widget from et2
 	 */
 	checkSharingFilemode(_node, _widget?)
@@ -141,7 +141,7 @@ export class MailCompose
 		if (!this.et2 || this.et2.getArrayMgr('content').getEntry('no_griddata')) return;
 		if (!_widget) _widget = this.et2.getWidgetById('filemode');
 
-		var extended_settings = _widget.get_value() != 'attach' && this.egw.app('stylite');
+		const extended_settings = _widget.get_value() != 'attach' && this.egw.app('stylite');
 		this.et2.getWidgetById('expiration').set_readonly(!extended_settings);
 		this.et2.getWidgetById('password').set_readonly(!extended_settings);
 		this.et2.getWidgetById('password').set_suggest(!extended_settings ? 0 : 8);
@@ -156,7 +156,7 @@ export class MailCompose
 		{
 			const mode = _widget.get_value();
 			const mode_label = _widget.select_options.filter(option => option.value == mode)[0]?.label;
-			Et2Dialog.alert(this.egw.lang('Be aware that all attachments will be sent as %1!', mode_label),
+			void Et2Dialog.alert(this.egw.lang('Be aware that all attachments will be sent as %1!', mode_label),
 				this.egw.lang('Filemode has been switched to %1', mode_label),
 				Et2Dialog.WARNING_MESSAGE);
 			const content = this.et2.getArrayMgr('content');
@@ -187,7 +187,7 @@ export class MailCompose
 	{
 		if (!jQuery.isEmptyObject(_widget))
 		{
-			if (typeof _widget.id !== 'undefined') var widgetId = _widget.id;
+			const widgetId = typeof _widget.id !== 'undefined' ? _widget.id : undefined;
 			switch (widgetId)
 			{
 				case 'mimeType':
@@ -208,7 +208,7 @@ export class MailCompose
 	 */
 	fieldExpanderInit()
 	{
-		var widgets = {
+		const widgets = {
 			cc:{
 				widget:{},
 				jQClass: '.mailComposeJQueryCc'
@@ -230,15 +230,17 @@ export class MailCompose
 				jQClass: '.mailComposeJQueryFrom'
 			}
 		};
-		let actions = egw.preference('toggledOnActions', 'mail') ?? [];
-		if (typeof actions === 'string')
-			actions = actions ? actions.split(',') : [];
+		const maybe_actions = egw.preference('toggledOnActions', 'mail') ?? [];
+		let actions:string[];
+		if(maybe_actions === false) return;
+		if (typeof maybe_actions === 'string')
+			actions = maybe_actions ? maybe_actions.split(',') : [];
 		//transform empty actions object to empty array
-		if(!actions.indexOf)
-			actions = Object.values(actions)
-		for(var widget in widgets)
+		if(!Array.isArray(actions))
+			actions = Object.values(maybe_actions)
+		for(const widget in widgets)
 		{
-			var expanderBtn = widget + '_expander';
+			const expanderBtn = widget + '_expander';
 			widgets[widget].widget = this.et2.getWidgetById(widget);
 			if(widget === 'from')
 				widgets['from'].widget = this.et2.getWidgetById('mailaccount');
@@ -307,7 +309,7 @@ export class MailCompose
 					}
 					break;
 				case 'from_expander':
-					document.querySelector('.mailComposeJQueryFrom').style.display=''
+					(document.querySelector('.mailComposeJQueryFrom') as HTMLElement).style.display=''
 					this.keepFromExpander = true;
 					break;
 			}
@@ -348,7 +350,7 @@ export class MailCompose
 							break;
 						case 'replyto':
 							jQuery(".mailComposeJQueryReplyto").show();
-							if (typeof expWidgets.replyto != 'undefiend')
+							if (typeof expWidgets.replyto != 'undefined')
 							{
 								//expWidgets.replyto.set_disabled(true);
 							}
@@ -382,10 +384,10 @@ export class MailCompose
 	 */
 	protected setDraggingDnDCompose()
 	{
-		var zIndex = 100;
-		var dragItems = jQuery('div.ms-sel-item:not(div.ui-draggable)');
+		let zIndex = 100;
+		const dragItems = jQuery('div.ms-sel-item:not(div.ui-draggable)');
 		dragItems.each(function(i,item){
-			var $isErr = jQuery(item).find('.ui-state-error');
+			const $isErr = jQuery(item).find('.ui-state-error');
 			if ($isErr.length > 0)
 			{
 				delete dragItems.splice(i,1);
@@ -409,7 +411,7 @@ export class MailCompose
 				 */
 				revert(){
 					this.parent().find('.ms-sel-item').css('position','relative');
-					var $input = this.parent().children('input');
+					const $input = this.parent().children('input');
 					// Make sure input field not getting into second line after revert
 					$input.width($input.width()-10);
 					return true;
@@ -422,7 +424,7 @@ export class MailCompose
 				 */
 				start(event, ui)
 				{
-					var dragItem = jQuery(this);
+					const dragItem = jQuery(this);
 					if (event.ctrlKey || event.metaKey)
 					{
 						dragItem.addClass('mailCompose_copyEmail')
@@ -451,7 +453,7 @@ export class MailCompose
 	/**
 	 * Write / update compose window title with subject
 	 *
-	 * @param {DOMNode} _node unused parameter
+	 * @param {Node} _node unused parameter
 	 * @param {et2_widget} _widget
 	 */
 	subject2title(_node=undefined, _widget?)
@@ -472,22 +474,21 @@ export class MailCompose
 	 */
 	displayUploadedFile(tag_info, widget)
 	{
-		var attgrid;
-		attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
+		const attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name]/,'')];
 
 		if (attgrid.uid && (attgrid.partID||attgrid.folder))
 		{
 			this.app.displayAttachment(tag_info, widget, true);
 			return;
 		}
-		var get_param = {
+		const get_param = {
 			menuaction: 'mail.mail_compose.getAttachment',	// todo compose for Draft folder
 			tmpname: attgrid.tmp_name,
 			etemplate_exec_id: this.et2.getInstanceManager().etemplate_exec_id
 		};
-		var width;
-		var height;
-		var windowName ='maildisplayAttachment_'+attgrid.file.replace(/\//g,"_");
+		let width;
+		let height;
+		let windowName ='maildisplayAttachment_'+attgrid.file.replace(/\//g,"_");
 		switch(attgrid.type.toUpperCase())
 		{
 			case 'IMAGE/JPEG':
@@ -502,8 +503,8 @@ export class MailCompose
 			case 'TEXT/VCARD':
 			case 'TEXT/CALENDAR':
 			case 'TEXT/X-VCALENDAR':
-				var reg = '800x600';
-				var reg2;
+				let reg = '800x600';
+				let reg2;
 				// handle calendar/vcard
 				if (attgrid.type.toUpperCase()=='TEXT/CALENDAR')
 				{
@@ -523,7 +524,7 @@ export class MailCompose
 						reg = reg2['add_popup'];
 					}
 				}
-				var w_h =reg.split('x');
+				const w_h =reg.split('x');
 				width = w_h[0];
 				height = w_h[1];
 				break;
@@ -553,8 +554,8 @@ export class MailCompose
 
 		if (this.app.mailvelope_editor)
 		{
-			var self = this;
-			wait = wait.then(() =>
+			const self = this;
+			wait.then(() =>
 			{
 				this.app.mailvelopeGetCheckRecipients().then(function (_recipients)
 				{
@@ -593,8 +594,6 @@ export class MailCompose
 		const toolbar = this.et2.getWidgetById('composeToolbar');
 		const to_integrate_ids = this.et2.getWidgetById('to_integrate_ids');
 		let integWidget = {};
-		const self = this;
-
 		for (let index = 0; index < integApps.length; index++)
 		{
 			integWidget = index < integApps.length ? toolbar.getWidgetById(integApps[index]) : null;
@@ -642,7 +641,7 @@ export class MailCompose
 	 */
 	priorityChange(_action)
 	{
-		var widget = this.et2.getWidgetById ('priority');
+		const widget = this.et2.getWidgetById ('priority');
 		if (widget)
 		{
 			widget.set_value(_action.id);
@@ -656,7 +655,7 @@ export class MailCompose
 	triggerWidget(_action)
 	{
 		const helpers = this.et2.querySelector(".mailComposeHeaderSection");
-		var widget = helpers.getWidgetById(_action.id);
+		const widget = helpers.getWidgetById(_action.id);
 		if (widget)
 		{
 			switch(widget.id)
@@ -677,10 +676,10 @@ export class MailCompose
 	 */
 	saveDraft2fm(_action)
 	{
-		var content = this.et2.getArrayMgr('content').data;
-		var subject = this.et2.getWidgetById('subject');
-		var elem = {0:{id:"", subject:""}};
-		var self = this;
+		const content = this.et2.getArrayMgr('content').data;
+		const subject = this.et2.getWidgetById('subject');
+		const elem = {0:{id:"", subject:""}};
+		const self = this;
 		if (typeof content != 'undefined' && content.lastDrafted && subject)
 		{
 			elem[0].id = content.lastDrafted;
@@ -692,7 +691,7 @@ export class MailCompose
 			this.saveAsDraft(null, 'autosaving').then(function(){
 				self.saveDraft2fm(_action);
 			}, function(){
-				Et2Dialog.alert('You need to save the message as draft first before to be able to save it into VFS', 'Save to filemanager', 'info');
+				void Et2Dialog.alert('You need to save the message as draft first before to be able to save it into VFS', 'Save to filemanager', 'info');
 			});
 		}
 	}
@@ -708,10 +707,10 @@ export class MailCompose
 	 */
 	saveAsDraft(_egw_action, _action)
 	{
-		var self = this;
+		const self = this;
 		return new Promise(function(_resolve, _reject){
-			var content = self.et2.getArrayMgr('content').data;
-			var action = _action;
+			const content = self.et2.getArrayMgr('content').data;
+			let action = _action;
 			if (_egw_action && _action !== 'autosaving')
 			{
 				action = _egw_action.id;
@@ -727,8 +726,8 @@ export class MailCompose
 					self.app.mailvelope_editor.encrypt([]).then(function(_armored)
 					{
 						content['mail_plaintext'] = _armored;
-						self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
-							var res = self.savingDraft_response(_data,action);
+						void self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+							const res = self.savingDraft_response(_data,action);
 							if (res)
 							{
 								_resolve();
@@ -750,7 +749,7 @@ export class MailCompose
 					// Send request through framework main window, so it works even if the main window is reloaded
 					framework.egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], function (_data)
 					{
-						var res = self.savingDraft_response(_data, action);
+						const res = self.savingDraft_response(_data, action);
 						if (res)
 						{
 							_resolve();
@@ -794,14 +793,14 @@ export class MailCompose
 
 		if (_responseData.success)
 		{
-			var content = this.et2.getArrayMgr('content');
-			var lastDrafted = this.et2.getWidgetById('lastDrafted');
-			var folderTree = typeof (opener || window)?.etemplate2?.getByApplication('mail')[0] != 'undefined' ?
+			const content = this.et2.getArrayMgr('content');
+			const lastDrafted = this.et2.getWidgetById('lastDrafted');
+			const folderTree = typeof (opener || window)?.etemplate2?.getByApplication('mail')[0] != 'undefined' ?
 				(opener || window).etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('nm[foldertree]') : null;
 			const activeFolder = folderTree ? folderTree.getSelectedNode() : null;
 			if (content)
 			{
-				var prevDraftedId = content.data.lastDrafted;
+				const prevDraftedId = content.data.lastDrafted;
 				content.data.lastDrafted = _responseData.draftedId;
 				this.et2.setArrayMgr('content', content);
 				lastDrafted.set_value(_responseData.draftedId);
@@ -839,7 +838,7 @@ export class MailCompose
 
 	/**
 	 * Print a mail from compose
-	 * @param {stirng} _id id of new draft
+	 * @param {string} _id id of new draft
 	 */
 	print(_id)
 	{
