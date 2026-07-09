@@ -143,12 +143,13 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 
 	// Title is read-only inside
 	private _title : string;
-	private _titlePromise : Promise<string>;
+	private _titlePromise : Promise<string> | null;
 
 	constructor()
 	{
 		super();
 		this._title = Et2Link.MISSING_TITLE;
+		this._titlePromise = null;
 		this.__linkHook = "view";
 	}
 
@@ -245,8 +246,11 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		if(!_value)
 		{
+			this.app = "";
 			this.entryId = "";
 			this.title = "";
+			this._titlePromise = null;
+			this.requestUpdate("value");
 			return;
 		}
 		if(typeof _value != 'object' && _value)
@@ -305,6 +309,16 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		this.value = _value;
 	}
 
+	transformAttributes(attrs)
+	{
+		super.transformAttributes(attrs);
+
+		if(this.id && this.getArrayMgr("content")?.getEntry(this.id, false, true) === null)
+		{
+			this.value = "";
+		}
+	}
+
 	get exposeValue() : ExposeValue
 	{
 		let info = <ExposeValue><unknown>{
@@ -353,12 +367,20 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 			if(this.app && this.entryId && this._title == Et2Link.MISSING_TITLE)
 			{
 				// Title will be fetched from server and then set
-				this._titlePromise = this.egw()?.link_title(this.app, this.entryId, true).then(title =>
+				const app = this.app;
+				const entryId = this.entryId;
+				const titlePromise = this.egw()?.link_title(app, entryId, true).then(title =>
 				{
+					if(this.app !== app || this.entryId !== entryId || this._titlePromise !== titlePromise)
+					{
+						return;
+					}
 					this._title = title;
+					this._titlePromise = null;
 					// It's probably already been rendered
 					this.requestUpdate();
 				});
+				this._titlePromise = titlePromise ?? null;
 			}
 		}
 	}
