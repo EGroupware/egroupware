@@ -722,6 +722,7 @@ class Widget
 					'"' => '\\"',         // escape used double quotes
 					'`' => '',            // disarm/remove backtick operator allowed in strings
 					'${row}' => $row,     // this is the only necessary usage of ${...}, we replace it directly with $row
+					'{$row}' => $row,     // deprecated use '${row}'
 					'{' => '', '}' => '', // disarm ${...} usable to run PHP e.g. "${phpinfo()}" or "${system('id')}"
 				]) . '";');
 			}
