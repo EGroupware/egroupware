@@ -246,7 +246,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 	{
 		if(!_value)
 		{
-			this.app = "";
+			this.app = this.getAttribute("app") ?? "";
 			this.entryId = "";
 			this.title = "";
 			this._titlePromise = null;
@@ -375,7 +375,7 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 					{
 						return;
 					}
-					this._title = title;
+					this._title = title || "";
 					this._titlePromise = null;
 					// It's probably already been rendered
 					this.requestUpdate();
