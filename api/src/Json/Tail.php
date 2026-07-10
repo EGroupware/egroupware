@@ -23,13 +23,8 @@ use EGroupware\Api;
  * If fetch returns no new content next request will be in 2s, otherwise in 200ms.
  * As logfiles can be quite huge, we display at max the last 32k of it!
  *
- * Example usage:
- *
- * $error_log = new Api\Json\Tail('/var/log/apache2/error_log');
- * echo $error_log->show();
- *
- * Strongly preferred for security reasons is to use a path relative to EGroupware's files_dir,
- * eg. new Api\Json\Tail('groupdav/somelog')!
+ * For security reasons you can only use a path relative to EGroupware's files_dir,
+ * e.g. new Api\Json\Tail('groupdav/somelog') and it can not contain ".."!
  */
 class Tail
 {
@@ -66,20 +61,26 @@ class Tail
 	/**
 	 * Constructor
 	 *
-	 * @param string $filename =null if not starting with as slash relative to EGw files dir (this is strongly prefered for security reasons)
+	 * @param ?string $filename =null if not starting with as slash relative to EGw files dir (this is strongly prefered for security reasons)
 	 */
-	public function __construct($filename=null)
+	public function __construct(?string $filename=null)
 	{
 		$this->filenames =& Api\Cache::getSession('phpgwapi', __CLASS__);
 
 		if ($filename)
 		{
-			// do NOT allow path-traversal
-			$filename = str_replace('../', '', $filename);
-
+			if ($filename[0] === '/' ||
+				parse_url($filename, PHP_URL_SCHEME) ||
+				strpos($filename, '..') !== false)
+			{
+				throw new \InvalidArgumentException('Invalid path provided: ' . htmlspecialchars($filename));
+			}
 			$this->filename = $filename;
 
-			if (!$this->filenames || !in_array($filename,$this->filenames)) $this->filenames[] = $filename;
+			if (!$this->filenames || !in_array($filename,$this->filenames))
+			{
+				$this->filenames[] = $filename;
+			}
 		}
 	}
 
@@ -96,7 +97,7 @@ class Tail
 		{
 			throw new Api\Exception\WrongParameter("Not allowed to view '$filename'!");
 		}
-		if ($filename[0] != '/') $filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
+		$filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
 
 		if (file_exists($filename))
 		{
@@ -140,7 +141,8 @@ class Tail
 		{
 			throw new Api\Exception\WrongParameter("Not allowed to view '$filename'!");
 		}
-		if ($filename[0] != '/') $filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
+		$filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
+
 		if ($truncate)
 		{
 			file_put_contents($filename, '');
@@ -162,7 +164,7 @@ class Tail
 	{
 		if (!isset($this->filename))
 		{
-			throw new Api\Exception\WrongParameter("Must be instanciated with filename!");
+			throw new Api\Exception\WrongParameter("Must be instantiated with filename!");
 		}
 		if (is_null($header)) $header = $this->filename;
 
@@ -195,8 +197,7 @@ class Tail
 		while(ob_end_clean()) {}
 
 		Api\Header\Content::type(basename($filename), 'text/plain');
-		if ($filename[0] != '/') $filename = $GLOBALS['egw_info']['server']['files_dir'].'/'.$filename;
-		readfile($filename);
+		readfile($GLOBALS['egw_info']['server']['files_dir'].'/'.$filename);
 		exit;
 	}
 }
