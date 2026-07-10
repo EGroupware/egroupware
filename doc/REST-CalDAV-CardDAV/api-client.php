@@ -115,7 +115,7 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 	}
 	if ($only_public)
 	{
-		checkPublicHost($url);
+		checkPublicIP($url);
 	}
 	if (!($curl = curl_init($url)))
 	{
@@ -190,7 +190,7 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 		// if we got a redirect, check that the location is either on the same server or also has a valid public IP
 		if ($only_public && $http_status[0] === '3' && $follow && $response_header['location'][0] !== '/')
 		{
-			checkPublicHost($response_header['location']);
+			checkPublicIP($response_header['location']);
 		}
     }
     while ($http_status[0] === '3' && $follow && preg_match('#^HTTP/[\d.]+ \d+#', $response));
