@@ -176,7 +176,7 @@ class Request
 		}
 
 		// check if user has rights for appName (would otherwise not happen for api.queue!)
-		if (!isset($GLOBALS['egw_info']['user']['apps'][$appName]))
+		if (!in_array($appName, ['api', 'about']) && !isset($GLOBALS['egw_info']['user']['apps'][$appName]))
 		{
 			throw new Api\Exception\NoPermission\App($appName);
 		}
