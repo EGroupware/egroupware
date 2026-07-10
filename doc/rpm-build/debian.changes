@@ -1,3 +1,14 @@
+egroupware-docker (26.7.20260710) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+  * All apps: inserting a new custom-fields between or before existing ones removes most data from the existing fields
+  * Calendar/Mail: fix applying an external organizers update did loose the recurrence end-date
+  * Mail: display title no longer shows "mail-display" prefix
+  * Mail: fix access check in mail_hooks access method
+  * Invoices: OCR import now identifies document type (invoice, credit note, ...) and billing period
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 10 Jul 2026 09:53:41 +0200
+
 egroupware-docker (26.7.20260702) hardy; urgency=low
 
   * Calendar/CalDAV/REST: wrong etag returned in CalDAV REPORT/PROPFIND or REST PUT/PATCH causing event updates being rejected
