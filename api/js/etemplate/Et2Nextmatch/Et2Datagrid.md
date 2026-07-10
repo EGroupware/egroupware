@@ -244,3 +244,81 @@ Example:
     <strong>This mailbox is empty</strong>
 </sl-alert>
 ```
+
+## Developer Notes
+
+`et2-datagrid` is the low-level row renderer used by owner widgets such as `et2-nextmatch`. It should stay generic:
+owners supply structure and data, while the datagrid owns virtualization, row DOM creation, selection state, keyboard
+navigation, column layout, loaders, no-results rendering, and refresh application.
+
+### Using Et2Datagrid From Widgets
+
+An owner widget should configure the datagrid by passing:
+
+- `columns`: normalized column metadata used for headers, column widths, visibility, and row layout.
+- `templateData`: prepared row, loader, and attribute-map data, usually produced by `Et2RowProvider`.
+- `dataProvider`: an `Et2DatagridDataProvider` implementation for paged loading and row refreshes.
+- Optional presentation hooks such as `rowCustomizer`, `selectionMode`, `expansionConfig`, and preloaded rows.
+
+Keep app-specific concerns in the owner widget or its provider. The datagrid should not know how a particular app stores
+filters, talks to the server, resolves a named template, or interprets legacy Nextmatch response payloads. It should
+receive already-normalized columns, rows, and row templates.
+
+### RowProvider
+
+`Et2RowProvider` is the template adapter between an owner widget and the datagrid. It reads either a named eTemplate or
+slotted markup and returns `Et2DatagridTemplateData`.
+
+Its responsibilities include:
+
+- finding the effective header and row template markup
+- extracting column metadata from headers
+- normalizing legacy row wrappers such as `<row>` into datagrid-renderable markup
+- preparing a reusable `HTMLTemplateElement` for rows
+- converting row widgets to readonly display behaviour where needed
+- recording row-scoped widget attributes in `rowTemplateAttrMap`
+- preparing optional loader template data
+
+`Et2RowProvider` does not fetch row data. It prepares the shape used to render rows once data is available.
+
+### DataProviders
+
+`Et2DatagridDataProvider` is the data boundary for the datagrid. A provider supplies rows in the datagrid's normalized
+shape:
+
+```ts
+{
+	id: string;
+	data: any;
+}
+```
+
+The required provider methods are:
+
+- `fetchPage(start, pageSize)`: load a page of rows and optionally return the total row count.
+- `refresh(rowIds, type)`: resolve updated rows and removed row ids for refresh operations.
+- `normalizeRowId(rowId, ensurePrefix)`: convert ids to the datastore form used by the rendered grid.
+- `toProviderRowId(dataStoreRowId)`: convert rendered/datastore ids back to the provider's native row id.
+
+Optional methods such as `getQuerySignature()` and `getDataStorePrefix()` let the datagrid detect query changes and keep
+row ids stable across paging, refreshes, nested grids, and action handling.
+
+`Et2NextmatchDataProvider` is the Nextmatch implementation. It adapts `egw.dataFetch()` and `egw.dataRegisterUID()` into
+the generic provider interface, processes extra Nextmatch response data such as select options and filter values, reads
+refreshed rows back from the central UID cache, and supports child-grid providers for expandable rows.
+
+### Rendering Pipeline
+
+Row rendering is split into preparation and per-row hydration:
+
+1. `Et2RowProvider` finds the row template, normalizes it, extracts columns, and compiles it into a reusable template.
+   Row-independent values are resolved at this stage, including static `$cont` / `@...` expressions and literal strings.
+2. `Et2RowProvider` records row-scoped widget attributes in the template attribute map instead of permanently resolving
+   them on the reusable template.
+3. `Et2Datagrid` clones the prepared row template for each row needed by the virtualizer.
+4. `Et2Datagrid` applies recorded row-scoped widget attributes to the clone using that row's `rowData`, which came from
+   the configured `Et2DatagridDataProvider`.
+
+This order keeps static template work shared across all rows while preserving correct row-specific values for each
+physical row clone. The virtualizer determines which row indexes need DOM nodes and manages their addition and removal;
+the data provider supplies row objects, and the prepared template controls how each row object becomes DOM.
