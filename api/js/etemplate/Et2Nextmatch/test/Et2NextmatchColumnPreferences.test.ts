@@ -3,20 +3,42 @@ import {
 	applyLegacyNextmatchColumnPreferences,
 	applyLegacyCustomfieldVisibility,
 	datagridColumnPreferenceValue,
-	legacyVisibleCustomfieldNames
+	legacyVisibleCustomfieldNames,
+	shouldPersistDatagridColumnPreferenceEvent
 } from "../Et2NextmatchColumnPreferences.ts";
 
 describe("Et2Nextmatch column preferences", () =>
 {
+	/**
+	 * Contract: saved preference replay updates runtime columns but is not a
+	 * user change to save again.
+	 * Setup: compare a replay event with a normal column-change event.
+	 * Pass: replay events are rejected for persistence and normal events remain
+	 * persistable.
+	 */
+	it("does not persist column preference replay events", () =>
+	{
+		assert.isFalse(
+			shouldPersistDatagridColumnPreferenceEvent(new CustomEvent("et2-columns-changed", {
+				detail: {source: "preferences"}
+			})),
+			"preference replay events should not write preferences again"
+		);
+		assert.isTrue(
+			shouldPersistDatagridColumnPreferenceEvent(new CustomEvent("et2-columns-changed", {
+				detail: {source: "user"}
+			})),
+			"user column-change events should still write preferences"
+		);
+		assert.isTrue(
+			shouldPersistDatagridColumnPreferenceEvent(new CustomEvent("et2-columns-changed")),
+			"legacy column-change events without source should still write preferences"
+		);
+	});
+
 	it("applies legacy customfield entries as field-level visibility", () =>
 	{
-		const appliedVisibility : Record<string, boolean>[] = [];
-		const customfieldsHeader = {
-			setCustomfieldVisibility: (visibility : Record<string, boolean>) =>
-			{
-				appliedVisibility.push({...visibility});
-			}
-		};
+		const customfieldsHeader = {};
 		const columns = [
 			{key: "cat_id", title: "Category"},
 			{key: "type", title: "Type"},
@@ -30,9 +52,8 @@ describe("Et2Nextmatch column preferences", () =>
 		const applied = applyLegacyCustomfieldVisibility(columns, visibleCustomfields);
 
 		assert.isTrue(applied, "customfield visibility should be applied to the customfields header");
-		assert.equal(appliedVisibility.length, 1, "legacy customfield entries should apply one visibility map");
 		assert.deepEqual(
-			appliedVisibility[0],
+			(customfieldsHeader as any).fields,
 			{
 				Branche: true,
 				CustomerNumber: true,
@@ -103,13 +124,7 @@ describe("Et2Nextmatch column preferences", () =>
 
 	it("applies legacy Nextmatch order, widths, fuzzy columns, and customfields", () =>
 	{
-		const appliedVisibility : Record<string, boolean>[] = [];
-		const customfieldsHeader = {
-			setCustomfieldVisibility: (visibility : Record<string, boolean>) =>
-			{
-				appliedVisibility.push({...visibility});
-			}
-		};
+		const customfieldsHeader = {};
 		const columns = [
 			{key: "cat_id", title: "Category", width: "60px"},
 			{key: "type", title: "Type", width: "40px"},
@@ -149,7 +164,7 @@ describe("Et2Nextmatch column preferences", () =>
 		assert.equal(nextColumns.find((column) => column.key === "type")?.width, "55px", "legacy width should apply by key");
 		assert.equal(nextColumns.find((column) => column.key === "photo")?.width, "75px", "legacy width should apply after ordering");
 		assert.deepEqual(
-			appliedVisibility[0],
+			(customfieldsHeader as any).fields,
 			{Branche: true, CustomerNumber: true},
 			"legacy customfield entries should apply field-level visibility"
 		);

@@ -45,6 +45,51 @@ function createDatagrid() : Et2Datagrid
 
 describe("Et2Datagrid column preferences", () =>
 {
+	it("replays saved customfield preferences as selected fields", () =>
+	{
+		const storedPreference = [
+			{
+				key: "customfields",
+				hidden: false,
+				customFields: ["cf_visible"]
+			}
+		];
+		const originalPreference = egw.preference;
+		const preference = (key : string) => key === "nextmatch-addressbook.index.rows-prefs" ? storedPreference : null;
+		egw.preference = preference;
+		(window.egw as any).preference = preference;
+		try
+		{
+			const el = createDatagrid();
+			const header = document.createElement("div");
+			const host = document.createElement("et2-nextmatch");
+			host.attachShadow({mode: "open"}).appendChild(el);
+			el.columnPreferenceName = "nextmatch-addressbook.index.rows-prefs";
+			el.templateData = {
+				columns: [{key: "customfields", title: "Custom fields", header: header as any}],
+				rowTemplateId: "addressbook.index.rows",
+				rowTemplate: null,
+				rowTemplateXml: null,
+				rowTemplateAttrMap: {},
+				loaderTemplate: null
+			} as any;
+			el.columns = [{key: "customfields", title: "Custom fields", header: header as any}] as any;
+
+			(el as any)._loadColumnPreferencesIfNeeded();
+
+			assert.equal(
+				header.getAttribute("fields"),
+				"cf_visible",
+				"stored selected customfields should be set on the header before upgrade"
+			);
+		}
+		finally
+		{
+			egw.preference = originalPreference;
+			(window.egw as any).preference = originalPreference;
+		}
+	});
+
 	it("uses source column order to align row cells after preference reordering", () =>
 	{
 		const el = createDatagrid();

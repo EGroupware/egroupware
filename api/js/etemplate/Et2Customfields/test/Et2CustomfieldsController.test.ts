@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {Et2CustomfieldsController, mergeCustomfieldSettingsFromSources} from "../Et2CustomfieldsController";
+import {Et2CustomfieldsController, mergeCustomfieldSettingsFromSources} from "../Et2CustomfieldsController.ts";
 import {legacyVisibility, sampleCustomfields} from "./legacyVisibilityHelper";
 
 /**

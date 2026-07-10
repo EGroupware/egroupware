@@ -493,48 +493,6 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
-	 * Contract: persisted customfield visibility is queued until the header
-	 * widget exposes the customfield visibility API.
-	 * Setup: create a customfields column with pending visibility and add the
-	 * header method only after the first replay attempt.
-	 * Pass: visibility remains queued while unavailable, then applies and clears.
-	 */
-	it("replays pending customfield visibility when header becomes ready", () =>
-	{
-		const el = createDatagrid();
-		const header : Record<string, any> = {};
-		el.columns = [
-			{key: "customfields", title: "Custom fields", header: header as any}
-		] as any;
-		(el as any)._pendingCustomfieldVisibilityByColumnKey.set("customfields", {cf_text: true, cf_private: false});
-
-		(el as any)._applyPendingCustomfieldHeaderVisibility();
-		assert.equal(
-			(el as any)._pendingCustomfieldVisibilityByColumnKey.size,
-			1,
-			"pending customfield visibility should remain queued until header API is available"
-		);
-
-		let applied : Record<string, boolean> | null = null;
-		header.setCustomfieldVisibility = (visibility : Record<string, boolean>) =>
-		{
-			applied = {...visibility};
-		};
-
-		(el as any)._applyPendingCustomfieldHeaderVisibility();
-		assert.deepEqual(
-			applied,
-			{cf_text: true, cf_private: false},
-			"queued visibility should be applied once header exposes setCustomfieldVisibility()"
-		);
-		assert.equal(
-			(el as any)._pendingCustomfieldVisibilityByColumnKey.size,
-			0,
-			"pending visibility queue should clear after successful replay"
-		);
-	});
-
-	/**
 	 * Contract: datagrid row binding applies row-scoped template attributes to
 	 * upgraded row widgets.
 	 * Setup: build a row template with a transform probe and a row attribute map.

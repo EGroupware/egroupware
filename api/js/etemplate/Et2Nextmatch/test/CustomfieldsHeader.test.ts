@@ -46,8 +46,77 @@ const sortHeaderById = (header : any, id : string) =>
 		.find((sortHeader : any) => sortHeader.getAttribute("id") === id) as HTMLElement | undefined;
 };
 
-describe("Et2CustomfieldsHeader sorting", () =>
+const modificationsWithCustomfields = (customfieldSettings : Record<string, any>) =>
 {
+	return {
+		getEntry: (id : string) => id === "~custom_fields~" ? customfieldSettings : {},
+		getRoot()
+		{
+			return this;
+		}
+	};
+};
+
+describe("Et2CustomfieldsHeader", () =>
+{
+	it("treats fields as the selected customfield allow-list", () =>
+	{
+		const header = customfieldsHeader();
+		header.fields = {
+			cf_text: true,
+			cf_owner: true
+		};
+
+		assert.deepEqual(
+			header.getCustomfieldVisibility(),
+			{
+				cf_text: true,
+				cf_select: false,
+				cf_date: false,
+				cf_owner: true
+			},
+			"customfields missing from fields should be hidden"
+		);
+	});
+
+	it("uses a fields attribute from column preferences before modification defaults", () =>
+	{
+		const header = document.createElement("et2-nextmatch-header-customfields") as any;
+		header.setAttribute("fields", "cf_text,cf_select");
+		header.setArrayMgr("modifications", modificationsWithCustomfields({
+			customfields: {
+				cf_text: {label: "Text", type: "text"},
+				cf_select: {label: "Select", type: "select"},
+				cf_date: {label: "Date", type: "date"}
+			},
+			fields: {
+				cf_text: true,
+				cf_select: true,
+				cf_date: true
+			}
+		}) as any);
+
+		header._applyFieldsAttribute();
+		assert.isTrue(
+			header._syncCustomfieldsFromModifications(),
+			"customfield metadata should hydrate from modifications"
+		);
+		assert.deepEqual(
+			header.fields,
+			{cf_text: true, cf_select: true},
+			"preference fields attribute should stay the selected sparse field list"
+		);
+		assert.deepEqual(
+			header.getCustomfieldVisibility(),
+			{
+				cf_text: true,
+				cf_select: true,
+				cf_date: false
+			},
+			"customfields missing from the preference fields attribute should remain hidden"
+		);
+	});
+
 	/**
 	 * Contract under test:
 	 * - CustomfieldsHeader renders each visible custom field as a nested sortable

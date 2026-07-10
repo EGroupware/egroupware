@@ -27,6 +27,7 @@ import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
+import {shouldPersistDatagridColumnPreferenceEvent} from "./Et2NextmatchColumnPreferences";
 import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -341,12 +342,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
 	private _scrollbarSpacePx : number = 0;
-	private _pendingCustomfieldVisibilityByColumnKey : Map<string, Record<string, boolean>> = new Map();
 	private _customfieldColumnStateByKey : Map<string, Et2DatagridCustomfieldColumnState> = new Map();
 	private _internalExpandedRowIds : Set<string> = new Set();
 	private _loadedColumnPreferenceKey : string | null = null;
 	private _postRenderStructureSyncNeeded : boolean = false;
-	private _handleColumnsChangedForPersistence : EventListener = () => this._persistColumnPreferences();
+	private _handleColumnsChangedForPersistence : EventListener = (event) => this._persistColumnPreferencesFromColumnEvent(event);
 	private _loggedMissingTemplateWarning : boolean = false;
 
 
@@ -593,7 +593,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._applyColumnVisibilityToRenderedRows();
 			this._postRenderStructureSyncNeeded = false;
 		}
-		this._applyPendingCustomfieldHeaderVisibility();
 		this._upgradeRenderedRows();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
@@ -937,17 +936,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		this._pendingCustomfieldVisibilityByColumnKey.clear();
 		const orderByKey = new Map<string, number>();
 		const byKey = new Map<string, { width? : string; hidden? : boolean; customFields? : string[] }>();
-		const toVisibilityMap = (visibleCustomfields : string[] = []) : Record<string, boolean> =>
-		{
-			return visibleCustomfields.reduce((result, name) =>
-			{
-				result[name] = true;
-				return result;
-			}, {} as Record<string, boolean>);
-		};
 		const normalizeVisibleCustomfields = (source : any) : string[] | undefined =>
 		{
 			if(Array.isArray(source))
@@ -998,16 +988,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				return column;
 			}
 			const header = column.header as any;
-			if(persisted.customFields && typeof header?.setCustomfieldVisibility === "function")
+			if(persisted.customFields)
 			{
-				header.setCustomfieldVisibility(toVisibilityMap(persisted.customFields));
-			}
-			else if(persisted.customFields)
-			{
-				this._pendingCustomfieldVisibilityByColumnKey.set(
-					String(column.key),
-					toVisibilityMap(persisted.customFields)
-				);
+				this._applyCustomfieldPreferenceToHeader(header, persisted.customFields);
 			}
 			return {
 				...column,
@@ -1026,38 +1009,38 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}));
 	}
 
-	/**
-	 * Replay persisted customfield visibility for headers that were not yet ready
-	 * when preferences were first loaded.
-	 */
-	private _applyPendingCustomfieldHeaderVisibility()
+	private _applyCustomfieldPreferenceToHeader(
+		header : any,
+		customFields : string[]
+	)
 	{
-		if(!this._pendingCustomfieldVisibilityByColumnKey.size || !this.columns?.length)
+		if(!header)
 		{
 			return;
 		}
-		let changed = false;
-		for(const column of this.columns)
+		if(typeof header.setCustomfieldVisibility === "function")
 		{
-			const key = String(column.key);
-			const pending = this._pendingCustomfieldVisibilityByColumnKey.get(key);
-			if(!pending)
+			header.setCustomfieldVisibility(customFields.reduce((fields, name) =>
 			{
-				continue;
-			}
-			const header = column.header as any;
-			if(typeof header?.setCustomfieldVisibility !== "function")
-			{
-				continue;
-			}
-			header.setCustomfieldVisibility(pending);
-			this._pendingCustomfieldVisibilityByColumnKey.delete(key);
-			changed = true;
+				fields[name] = true;
+				return fields;
+			}, {} as Record<string, boolean>));
+			return;
 		}
-		if(changed)
+		header.setAttribute?.("fields", customFields.join(","));
+	}
+
+	/**
+	 * Ignore preference replay events so initial load does not overwrite the
+	 * user's saved column state before delayed headers finish applying it.
+	 */
+	private _persistColumnPreferencesFromColumnEvent(event : Event)
+	{
+		if(!shouldPersistDatagridColumnPreferenceEvent(event))
 		{
-			this._rebuildCustomfieldColumnStateCache();
+			return;
 		}
+		this._persistColumnPreferences();
 	}
 
 	/**
@@ -2458,7 +2441,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			const customfields = header.customfields && typeof header.customfields === "object" ? header.customfields : {};
 			const visibility = header.getCustomfieldVisibility();
-			const visibleFieldNames = visibility && typeof visibility === "object" && Object.keys(visibility).length
+			const visibleFieldNames = visibility && typeof visibility === "object"
 				? Object.keys(visibility).filter((name) => visibility[name] === true)
 				: Object.keys(customfields);
 			this._customfieldColumnStateByKey.set(String(column.key), {

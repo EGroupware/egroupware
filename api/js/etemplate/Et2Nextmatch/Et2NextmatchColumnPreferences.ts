@@ -5,6 +5,15 @@ export type Et2NextmatchResolvedColumn = Et2DatagridColumn & {
 };
 
 /**
+ * Column changes replayed from saved preferences must update runtime column
+ * state without writing preferences again.
+ */
+export function shouldPersistDatagridColumnPreferenceEvent(event : Event) : boolean
+{
+	return (event as CustomEvent)?.detail?.source !== "preferences";
+}
+
+/**
  * Apply legacy Nextmatch column visibility/order, widths, and customfield child
  * visibility to current Datagrid columns.
  */
@@ -229,6 +238,7 @@ export function applyLegacyCustomfieldVisibility(
 		else
 		{
 			header.fields = {...visibility};
+			header.requestUpdate?.("fields");
 		}
 		return true;
 	}

@@ -81,8 +81,13 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		const modifications = this.getArrayMgr("modifications");
 		const localData = this.id ? (modifications?.getEntry(this.id) || {}) : {};
 		const globalData = modifications?.getRoot?.()?.getEntry("~custom_fields~", true) || {};
+		const hasExplicitFields = typeof attrs.fields !== "undefined" && attrs.fields !== null && attrs.fields !== "";
 		mergeCustomfieldSettingsFromSources(attrs, localData, globalData);
 		attrs.fields = this._normalizeFieldsAttribute(attrs.fields);
+		if(hasExplicitFields)
+		{
+			this._hasExplicitFields = true;
+		}
 		if(typeof attrs.type_filter !== "undefined" && typeof attrs.typeFilter === "undefined")
 		{
 			attrs.typeFilter = attrs.type_filter;
@@ -93,6 +98,7 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	connectedCallback()
 	{
 		super.connectedCallback();
+		this._applyFieldsAttribute();
 		if(!this._syncCustomfieldsFromModifications())
 		{
 			this._recomputeVisibility();
@@ -130,7 +136,15 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	private _controller : Et2CustomfieldsController | null = null;
 	private _pendingHydrationTimer : number | null = null;
 	private _hydrationAttempts : number = 0;
-	private _hasVisibilityOverride : boolean = false;
+	/**
+	 * Tracks whether `fields` came from an explicit source such as Datagrid
+	 * column preferences, a template attribute, or column selection.
+	 *
+	 * The controller owns resolved visibility. This flag only records provenance
+	 * so late customfield metadata hydration can preserve the explicit sparse
+	 * allow-list instead of replacing it with modification defaults.
+	 */
+	private _hasExplicitFields : boolean = false;
 	private static readonly HYDRATION_RETRY_MAX = 8;
 
 	private _normalizeFieldsAttribute(fields : Record<string, boolean> | string | null | undefined) : Record<string, boolean> | string | null | undefined
@@ -163,6 +177,16 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		return result;
 	}
 
+	private _applyFieldsAttribute()
+	{
+		if(this._hasExplicitFields || !this.hasAttribute("fields"))
+		{
+			return;
+		}
+		this.fields = this._normalizeFieldsAttribute(this.getAttribute("fields")) as Record<string, boolean>;
+		this._hasExplicitFields = true;
+	}
+
 	private _recomputeVisibility()
 	{
 		this._controller = new Et2CustomfieldsController({
@@ -175,8 +199,8 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 
 	private _syncCustomfieldsFromModifications() : boolean
 	{
-		// Preserve user-selected visibility after column selection or persisted
-		// Datagrid preferences have applied an explicit visibility map.
+		// Hydrate missing metadata from modifications. If `fields` is explicit,
+		// keep it as the selected sparse allow-list and only take metadata.
 		const modifications = this.getArrayMgr("modifications");
 		if(!modifications)
 		{
@@ -185,7 +209,7 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		const localData = this.id ? (modifications.getEntry(this.id) || {}) : {};
 		const globalData = modifications.getRoot?.()?.getEntry("~custom_fields~", true) || {};
 		const previousFields = this.fields || {};
-		const preserveVisibility = this._hasVisibilityOverride && Object.keys(previousFields).length > 0;
+		const preserveVisibility = this._hasExplicitFields;
 		const attrs : Record<string, any> = {
 			customfields: this.customfields,
 			fields: this.fields,
@@ -198,6 +222,7 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		{
 			this.customfields = attrs.customfields || {};
 			this.fields = preserveVisibility ? {...previousFields} : (attrs.fields || {});
+			this._hasExplicitFields = preserveVisibility;
 			this.exclude = attrs.exclude || this.exclude;
 			this.typeFilter = typeof attrs.typeFilter === "undefined" ? this.typeFilter : attrs.typeFilter;
 			this._recomputeVisibility();
@@ -338,10 +363,7 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	 */
 	getCustomfieldVisibility() : Record<string, boolean>
 	{
-		if(!this._controller)
-		{
-			this._recomputeVisibility();
-		}
+		this._recomputeVisibility();
 		return this._controller?.getVisibleMap() || {};
 	}
 
@@ -351,13 +373,9 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 	 */
 	setCustomfieldVisibility(fields : Record<string, boolean>)
 	{
-		if(!this._controller)
-		{
-			this._recomputeVisibility();
-		}
-		this._controller?.setVisibility(fields || {});
-		this._hasVisibilityOverride = true;
 		this.fields = {...fields};
+		this._hasExplicitFields = true;
+		this._recomputeVisibility();
 		this.requestUpdate();
 	}
 

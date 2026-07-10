@@ -19,6 +19,14 @@ export interface Et2CustomfieldSelectionItem
 export interface Et2CustomfieldsControllerOptions
 {
 	customfields : Record<string, Et2CustomfieldDefinition> | Et2CustomfieldDefinition[];
+	/**
+	 * Sparse input allow-list keyed by customfield name.
+	 *
+	 * Template attributes and column preferences use this shape: present keys
+	 * with value `true` are selected for display. Missing customfields are not
+	 * selected when `fields` is provided. When omitted entirely, visibility falls
+	 * back to type/tab/exclude defaults.
+	 */
 	fields? : Record<string, boolean> | string | null;
 	exclude? : string | null;
 	typeFilter? : string | string[] | "previous" | null;
@@ -104,7 +112,19 @@ export class Et2CustomfieldsController
 	private readonly defaultTabMatch : "" | "-private" | "-non-private" | null;
 	private readonly exclude : Set<string>;
 	private readonly typeFilter : string[] | null;
+	/**
+	 * Normalized sparse allow-list from `options.fields`.
+	 *
+	 * This is input policy, not resolved visibility. It intentionally only
+	 * contains fields explicitly selected by template/preferences.
+	 */
 	private readonly explicitFields : Record<string, boolean>;
+	/**
+	 * Dense resolved visibility for every known customfield.
+	 *
+	 * Derived from customfield definitions plus `explicitFields`, `exclude`,
+	 * `typeFilter`, tab, and default tab rules.
+	 */
 	private visibility : Record<string, boolean>;
 
 	constructor(options : Et2CustomfieldsControllerOptions)
@@ -142,6 +162,13 @@ export class Et2CustomfieldsController
 		});
 	}
 
+	/**
+	 * Replace resolved visibility from a sparse selected-field map.
+	 *
+	 * Callers should still treat the sparse map as the authoritative preference
+	 * shape. This method expands it to the controller's dense per-customfield
+	 * visibility map for rendering/selection queries.
+	 */
 	setVisibility(fields : Record<string, boolean>)
 	{
 		const next : Record<string, boolean> = {};
@@ -326,6 +353,8 @@ export class Et2CustomfieldsController
 		const baseFields : Record<string, boolean> = {};
 		if(explicitFieldsProvided)
 		{
+			// Sparse explicit fields are an allow-list. Missing customfields are
+			// hidden in the dense resolved map below.
 			Object.assign(baseFields, this.explicitFields);
 		}
 		else if(this.typeFilter?.length)
@@ -336,10 +365,9 @@ export class Et2CustomfieldsController
 			}
 		}
 
-		const fieldsProvided = Object.keys(baseFields).length > 0;
 		const visibility : Record<string, boolean> = {};
 
-		if(!fieldsProvided)
+		if(!explicitFieldsProvided && !this.typeFilter?.length)
 		{
 			for(const fieldName of allFields)
 			{
