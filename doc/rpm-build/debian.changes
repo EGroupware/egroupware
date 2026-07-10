@@ -1,8 +1,8 @@
-egroupware-docker (26.7.20260710.2) hardy; urgency=low
+egroupware-docker (26.7.20260710.3) hardy; urgency=low
 
   * SECURITY: this release fixes two more security vulnerabilities just reported, everyone is strongly adviced to update to it!
 
- -- Ralf Becker <rb@egroupware.org>  Fri, 10 Jul 2026 17:04:57 +0200
+ -- Ralf Becker <rb@egroupware.org>  Fri, 10 Jul 2026 17:18:14 +0200
 
 egroupware-docker (26.7.20260710) hardy; urgency=low
 
