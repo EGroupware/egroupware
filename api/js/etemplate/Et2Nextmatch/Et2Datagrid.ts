@@ -24,6 +24,7 @@ import {
 } from "./Et2Datagrid.types";
 import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2DatagridColumnManager";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
+import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 import {styleMap} from "lit/directives/style-map.js";
@@ -3359,6 +3360,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.columns || [],
 			this._parseColumnBooleanExpression.bind(this)
 		);
+		this.dispatchEvent(new CustomEvent<{ columns : Et2DatagridColumnSelectionItem[] }>("et2-column-selection-items", {
+			detail: {columns},
+			bubbles: true,
+			composed: true
+		}));
 
 		const dialog = new Et2Dialog(this.egw());
 		dialog.transformAttributes({
@@ -3382,7 +3388,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		const selectedOrder = ((value as any)?.columns || [])
 			.map((value) => this._columnState.decodeSelectionId(String(value)));
-		this.columns = this._columnState.applySelectionOrder(this.columns || [], selectedOrder);
+		const applyDetail = {selectedOrder};
+		this.dispatchEvent(new CustomEvent<{ selectedOrder : string[] }>("et2-column-selection-apply", {
+			detail: applyDetail,
+			bubbles: true,
+			composed: true
+		}));
+		this.columns = this._columnState.applySelectionOrder(this.columns || [], applyDetail.selectedOrder);
 		this._rebuildCustomfieldColumnStateCache();
 		// Apply track sizes and current rendered-row cell visibility immediately.
 		this._ensureTableColSizes();

@@ -15,6 +15,7 @@ import {
 	Et2DatagridUpdateType,
 	Et2DatagridUpdateTypes
 } from "./Et2Datagrid.types";
+import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
@@ -41,6 +42,8 @@ import rowStyles from "./Et2Nextmatch.row.styles";
 import {et2_IInput} from "../et2_core_interfaces";
 import {styleMap} from "lit/directives/style-map.js";
 import {ref} from "lit/directives/ref.js";
+
+const LETTERSEARCH_SELECTION_ID = "~search_letter~";
 
 /**
  * @summary Nextmatch shows entries with filtering and context menus.
@@ -139,6 +142,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	@property({type: Boolean})
 	lettersearch : boolean = false;
+
+	/**
+	 * Actual letter-search bar visibility. `lettersearch` remains the settings
+	 * capability flag, while this tracks the user-controlled chooser state.
+	 */
+	private _lettersearchVisible : boolean = true;
 
 	/**
 	 * Current active letter search filter value.
@@ -340,6 +349,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.addEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
 		this.addEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
 		this.addEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
+		this.addEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
+		this.addEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
 		this.addEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.addEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.addEventListener("keydown", this._handleKeydown as EventListener);
@@ -368,6 +379,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.removeEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
 		this.removeEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
 		this.removeEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
+		this.removeEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
+		this.removeEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
 		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.removeEventListener("dblclick", this._handleDoubleClick as EventListener, true);
 		this.removeEventListener("keydown", this._handleKeydown as EventListener);
@@ -508,6 +521,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 				this._filters.searchletter = nextValue;
 			}
+		}
+		if(changedProperties.has("settings") || changedProperties.has("lettersearch"))
+		{
+			this._lettersearchVisible = !this.lettersearch ||
+				!!this.egw().preference(this._lettersearchPreferenceKey, this.egw().app_name());
+		}
+		if(this.lettersearch && !this._lettersearchVisible && this._filters.searchletter)
+		{
+			this._filters.searchletter = false;
+			this.searchletter = false;
 		}
 	}
 
@@ -691,6 +714,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			.filter((column) => !column.hidden)
 			.map((column) => String(column.key || ""))
 			.filter(Boolean);
+		if(this.lettersearch && this._lettersearchVisible)
+		{
+			selectcols.push("lettersearch");
+		}
 		if(selectcols.length)
 		{
 			value["selectcols"] = selectcols;
@@ -1840,6 +1867,56 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	};
 
 	/**
+	 * Add legacy letter search as a pseudo-column in the root column chooser.
+	 */
+	private _handleColumnSelectionItems = (event : CustomEvent<{ columns : Et2DatagridColumnSelectionItem[] }>) =>
+	{
+		if(!this.lettersearch || this._eventSourceDatagrid(event) !== this._datagrid)
+		{
+			return;
+		}
+		const caption = this.egw().lang("Search letter");
+		event.detail.columns.push({
+			id: LETTERSEARCH_SELECTION_ID,
+			title: caption,
+			caption,
+			widget: null,
+			visibility: this.lettersearch && this._lettersearchVisible
+		});
+	};
+
+	/**
+	 * Consume the letter-search pseudo-column before real grid columns are applied.
+	 */
+	private _handleColumnSelectionApply = (event : CustomEvent<{ selectedOrder : string[] }>) =>
+	{
+		if(!this.lettersearch || this._eventSourceDatagrid(event) !== this._datagrid)
+		{
+			return;
+		}
+		const selectedOrder = event.detail?.selectedOrder || [];
+		const letterIndex = selectedOrder.indexOf(LETTERSEARCH_SELECTION_ID);
+		const nextVisible = letterIndex >= 0;
+		if(letterIndex >= 0)
+		{
+			selectedOrder.splice(letterIndex, 1);
+		}
+		this._lettersearchVisible = nextVisible;
+		this.egw().set_preference(this.egw().app_name(), this._lettersearchPreferenceKey, nextVisible);
+		if(!nextVisible && (this._filters.searchletter || this.searchletter))
+		{
+			this.applyFilters({searchletter: false});
+			return;
+		}
+		this.requestUpdate();
+	};
+
+	private get _lettersearchPreferenceKey() : string
+	{
+		return `nextmatch-${this.settings.columnselection_pref || this.columnPreferenceName}-lettersearch`;
+	}
+
+	/**
 	 * Merge selection events from parent and child grids for legacy action state.
 	 */
 	private _handleSelectionChanged = (event : CustomEvent<{
@@ -2081,7 +2158,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	{
 		const currentLetterValue = this._filters.searchletter || this.searchletter || "";
 		const currentLetter = typeof currentLetterValue === "string" ? currentLetterValue : "";
-		if(!this.lettersearch && !currentLetter)
+		if((!this.lettersearch && !currentLetter) || (this.lettersearch && !this._lettersearchVisible))
 		{
 			return null;
 		}

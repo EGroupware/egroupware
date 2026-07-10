@@ -27,7 +27,7 @@ const egwStub = {
 	lang: (label : string) => label,
 	tooltipBind: () => {},
 	tooltipUnbind: () => {},
-	preference: (_key? : string) => null,
+	preference: (key? : string) => String(key || "").endsWith("-lettersearch") ? true : null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
 	link: (url : string) => url,
@@ -538,6 +538,63 @@ describe("Et2Nextmatch header event handling", () =>
 
 		assert.equal(el.activeFilters.searchletter, "M", "property searchletter should be mirrored into filters");
 		assert.isNotNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "active searchletter should render lettersearch");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Letter search participates in column selection as a pseudo-column.
+	 * - Hiding that pseudo-column clears the active search letter and removes the
+	 *   pseudo id before real column ordering is applied.
+	 *
+	 * Setup strategy:
+	 * - Render nextmatch with `lettersearch=true` and an active search letter.
+	 * - Dispatch the datagrid column-selection extension events directly.
+	 *
+	 * Pass criteria:
+	 * - The chooser item list gains `~search_letter~`.
+	 * - Applying a selection without that id clears `searchletter`.
+	 */
+	it("adds lettersearch to column selection and clears it when hidden", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.lettersearch = true;
+		el.searchletter = "M";
+		document.body.append(el);
+		await el.updateComplete;
+
+		const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as HTMLElement | null;
+		assert.isNotNull(datagrid, "nextmatch should render a datagrid");
+
+		const columns : any[] = [];
+		datagrid!.dispatchEvent(new CustomEvent("et2-column-selection-items", {
+			detail: {columns},
+			bubbles: true,
+			composed: true
+		}));
+		assert.equal(columns[0]?.id, "~search_letter~", "lettersearch should be exposed as a chooser item");
+		assert.equal(columns[0]?.caption, "Search letter", "chooser item should use the legacy caption");
+		assert.isTrue(columns[0]?.visibility, "lettersearch chooser item should reflect current visibility");
+
+		const selectedOrder = ["name", "~search_letter~"];
+		datagrid!.dispatchEvent(new CustomEvent("et2-column-selection-apply", {
+			detail: {selectedOrder},
+			bubbles: true,
+			composed: true
+		}));
+		assert.deepEqual(selectedOrder, ["name"], "lettersearch pseudo id should be removed before column ordering");
+
+		const hiddenSelection = ["name"];
+		datagrid!.dispatchEvent(new CustomEvent("et2-column-selection-apply", {
+			detail: {selectedOrder: hiddenSelection},
+			bubbles: true,
+			composed: true
+		}));
+		await waitForBubblingHandlers();
+		await el.updateComplete;
+
+		assert.isFalse(el.activeFilters.searchletter, "hiding lettersearch should clear the active search letter");
+		assert.isNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "hidden lettersearch should not render");
 		el.remove();
 	});
 
