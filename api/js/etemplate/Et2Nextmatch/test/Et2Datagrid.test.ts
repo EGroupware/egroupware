@@ -19,7 +19,8 @@ const egw = {
 	tooltipUnbind: () => {},
 	preference: () => null,
 	set_preference: () => {},
-	app_name: () => "addressbook"
+	app_name: () => "addressbook",
+	link: (url : string) => url
 };
 let preferenceCalls : { app : string; key : string; value : any }[] = [];
 egw.set_preference = (app : string, key : string, value : any) =>
@@ -442,14 +443,14 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
-	 * Contract: the visible header grid must align with body cell columns when a
-	 * metadata column is present.
+	 * Contract: the lead visible header spans the metadata column and first body
+	 * cell, while subsequent headers align with their body cell columns.
 	 * Setup: render a fixed alignment fixture with a leading meta column and two
 	 * data columns.
-	 * Pass: the first visible header and first visible body cell have the same
-	 * left edge.
+	 * Pass: the lead header's right edge matches the first body cell's right
+	 * edge, and the second header starts where the second body cell starts.
 	 */
-	it("aligns visible headers with body cells when meta column has width", async() =>
+	it("aligns visible headers with body cells when lead header spans meta column", async() =>
 	{
 		const host = document.createElement("div");
 		host.style.height = "240px";
@@ -462,18 +463,30 @@ describe("Et2Datagrid row rendering", () =>
 		await el.updateComplete;
 
 		const headerCell = el.shadowRoot!.querySelector(".dg-header .dg-col[data-column-key='name']") as HTMLElement | null;
+		const secondHeaderCell = el.shadowRoot!.querySelector(".dg-header .dg-col[data-column-key='email']") as HTMLElement | null;
 		const row = el.shadowRoot!.querySelector("[data-row-id]") as HTMLElement | null;
 		const bodyCell = el.shadowRoot!.querySelector("tbody [data-row-id] td[data-col-key='name']") as HTMLElement | null;
+		const secondBodyCell = el.shadowRoot!.querySelector("tbody [data-row-id] td[data-col-key='email']") as HTMLElement | null;
 		assert.isNotNull(row, "body row should render");
 		assert.isNotNull(headerCell, "first visible header should render");
+		assert.isNotNull(secondHeaderCell, "second visible header should render");
 		assert.isNotNull(bodyCell, "first visible body cell should render");
+		assert.isNotNull(secondBodyCell, "second visible body cell should render");
 
-		const headerLeft = Math.round(headerCell!.getBoundingClientRect().left);
-		const bodyLeft = Math.round(bodyCell!.getBoundingClientRect().left);
+		const headerRight = Math.round(headerCell!.getBoundingClientRect().right);
+		const bodyRight = Math.round(bodyCell!.getBoundingClientRect().right);
 		assert.equal(
-			headerLeft,
-			bodyLeft,
-			"meta column width must not shift the first visible header away from its body cell"
+			headerRight,
+			bodyRight,
+			"lead header should span the meta column and first body cell"
+		);
+
+		const secondHeaderLeft = Math.round(secondHeaderCell!.getBoundingClientRect().left);
+		const secondBodyLeft = Math.round(secondBodyCell!.getBoundingClientRect().left);
+		assert.equal(
+			secondHeaderLeft,
+			secondBodyLeft,
+			"subsequent headers should align with their body cells"
 		);
 
 		host.remove();
@@ -1140,7 +1153,7 @@ describe("Et2Datagrid row rendering", () =>
 			},
 			loaderTemplate: null
 		} as any;
-		const row = {id: "row-0", data: {id: "row-0", class: "primary", cat_id: "3", note: "Legacy note"}};
+		const row = {id: "row-0", data: {id: "row-0", class: "primary", cat_id: "3,7", note: "Legacy note"}};
 		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
 		assert.isNotNull(rowElement, "row should be built from template");
 
@@ -1163,6 +1176,7 @@ describe("Et2Datagrid row rendering", () =>
 		);
 		assert.include(rowElement!.className, "primary", "`$class` should resolve from row content");
 		assert.include(rowElement!.className, "cat_3", "`$cat_id` should resolve into category class");
+		assert.include(rowElement!.className, "cat_7", "`$cat_id` should resolve all category classes");
 	});
 
 	/**

@@ -30,6 +30,7 @@ const egwStub = {
 	preference: (_key? : string) => null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
+	link: (url : string) => url,
 	dataFetch: (_execId, _request, _filters, _widgetId, callback) => callback({order: [], total: 0}),
 	dataRegisterUID: (_uid, callback) => callback({}, "row::1"),
 	debug: () => {}

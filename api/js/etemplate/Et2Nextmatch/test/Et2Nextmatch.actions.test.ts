@@ -12,6 +12,7 @@ const egwStub = {
 	preference: (_key? : string) => null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
+	link: (url : string) => url,
 	uid: () => "nm-test-id",
 	debug: () => {}
 };

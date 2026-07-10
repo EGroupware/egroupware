@@ -1247,6 +1247,8 @@ export class Et2NextmatchActionController
 			}
 		);
 		delete this.pendingActionSubmitValue.id;
+		// Avoid deep structures getting passed around
+		delete this.pendingActionSubmitValue.children;
 		this.pendingActionSubmitValue[nextmatch.settings?.action_var || "action"] = action.id;
 		delete this.pendingActionSubmitValue.nextmatch;
 

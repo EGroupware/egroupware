@@ -3,7 +3,8 @@ import "../ColumnSelection.ts";
 
 const egw = {
 	lang: (label : string) => label,
-	user: () => ({})
+	user: () => ({}),
+	link: (url : string) => url
 };
 window.egw = function() { return egw; } as any;
 Object.assign(window.egw, egw);

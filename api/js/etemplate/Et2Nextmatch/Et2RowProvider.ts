@@ -16,19 +16,6 @@ interface Et2RowProviderHost extends HTMLElement
 export class Et2RowProvider
 {
 	private static readonly CATEGORY_CLASS_PLACEHOLDER_FIELDS = ["cat", "cat_id", "category", "info_cat"] as const;
-	private static readonly CATEGORY_CLASS_PLACEHOLDER_TOKENS : Set<string> = (() =>
-	{
-		const tokens = new Set<string>();
-		for(const field of Et2RowProvider.CATEGORY_CLASS_PLACEHOLDER_FIELDS)
-		{
-			tokens.add(`$${field}`);
-			tokens.add(`{${field}}`);
-			tokens.add(`$row.${field}`);
-			tokens.add(`\${row}[${field}]`);
-			tokens.add(`$row_cont[${field}]`);
-		}
-		return tokens;
-	})();
 
 	private host : Et2RowProviderHost;
 	private _templateLoadToken : number = 0;
@@ -93,15 +80,13 @@ export class Et2RowProvider
 		const normalized = new Set<string>();
 		for(const token of classTokens)
 		{
-			if(this._isCategoryClassPlaceholder(token))
+			if(this._isCategoryPlaceholder(token))
 			{
-				if(categoryIds.length)
+				const tokenCategoryIds = this._extractCategoryIds(this.resolveSimpleRowPlaceholders(token, row, getFieldValue));
+				for(const id of tokenCategoryIds.length ? tokenCategoryIds : categoryIds)
 				{
 					normalized.add("row_category");
-					for(const id of categoryIds)
-					{
-						normalized.add(`cat_${id}`);
-					}
+					normalized.add(`cat_${id}`);
 				}
 				continue;
 			}
@@ -114,9 +99,20 @@ export class Et2RowProvider
 		return Array.from(normalized).join(" ");
 	}
 
-	private static _isCategoryClassPlaceholder(token : string) : boolean
+	private static _isCategoryPlaceholder(token : string) : boolean
 	{
-		return Et2RowProvider.CATEGORY_CLASS_PLACEHOLDER_TOKENS.has(token);
+		const field = this._placeholderField(token);
+		return !!field && (Et2RowProvider.CATEGORY_CLASS_PLACEHOLDER_FIELDS as readonly string[]).includes(field);
+	}
+
+	private static _placeholderField(token : string) : string | null
+	{
+		return token.match(/^\$([a-zA-Z_][a-zA-Z0-9_]*)$/)?.[1]
+			|| token.match(/^\{([a-zA-Z_][a-zA-Z0-9_]*)\}$/)?.[1]
+			|| token.match(/^\$row\.([a-zA-Z_][a-zA-Z0-9_]*)$/)?.[1]
+			|| token.match(/^\$\{row\}\[([^\]]+)\]$/)?.[1]
+			|| token.match(/^\$row_cont\[([^\]]+)\]$/)?.[1]
+			|| null;
 	}
 
 	private static _rowCategoryIds(row : any, getFieldValue : (row : any, key : string) => any) : string[]

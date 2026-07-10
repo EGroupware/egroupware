@@ -9,6 +9,7 @@ const egwStub = {
 	preference: () => null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
+	link: (url : string) => url,
 	debug: () => {}
 };
 

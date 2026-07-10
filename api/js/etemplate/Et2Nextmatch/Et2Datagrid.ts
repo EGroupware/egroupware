@@ -2287,6 +2287,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						this._applyCustomfieldRowState(element, rowData);
 						continue;
 					}
+					if(element === rowRoot)
+					{
+						if(stored && Object.keys(stored).length)
+						{
+							this._applyRowRootStoredAttributes(rowRoot, stored, rowData);
+						}
+						continue;
+					}
 					if(element.setArrayMgrs)
 					{
 						element.setArrayMgrs(mgrs);
@@ -2335,6 +2343,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		rowRoot.classList.remove("loading");
 		return true;
+	}
+
+	/**
+	 * Apply deferred row-root attributes through the same resolver used when the
+	 * template clone is first built, preserving category class normalization.
+	 *
+	 * Row-root attributes are not widget attributes. In particular, class values
+	 * like `$row_cont[cat_id]` must become `row_category cat_#`, not the raw
+	 * category id returned by generic array-manager expansion.
+	 */
+	private _applyRowRootStoredAttributes(rowRoot : HTMLElement, stored : Record<string, string>, rowData : any)
+	{
+		Object.entries(stored).forEach(([attr, value]) =>
+		{
+			rowRoot.setAttribute(attr, value);
+		});
+		this._populateRowRootAttributes(rowRoot, rowData);
 	}
 
 	/**

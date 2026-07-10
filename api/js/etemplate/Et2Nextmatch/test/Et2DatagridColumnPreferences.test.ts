@@ -8,7 +8,8 @@ const egw = {
 	tooltipUnbind: () => {},
 	preference: () => null,
 	set_preference: () => {},
-	app_name: () => "addressbook"
+	app_name: () => "addressbook",
+	link: (url : string) => url
 };
 let preferenceCalls : { app : string; key : string; value : any }[] = [];
 egw.set_preference = (app : string, key : string, value : any) =>
