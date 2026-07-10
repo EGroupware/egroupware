@@ -94,11 +94,14 @@ function apiIterator(string $url, array &$params=[])
  * @param array $header
  * @param array|null $response_header associative array of response headers, key 0 has HTTP status
  * @param int $follow how many redirects to follow, default 3, can be set to 0 to NOT follow
+ * @param bool $only_public true: reject to connect or return results from private or reserved IP addresses
  * @return array|string array of decoded JSON or string body
  * @throws JsonException for invalid JSON
+ * @throws InvalidArgumentException if $only_public and $url or redirects resolve to a non-public IP address
  * @throws Exception with code=0: opening http connection, code=HTTP status, if status is NOT 2xx
  */
-function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null, int $follow=3)
+function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null,
+             int $follow=3, bool $only_public=true)
 {
 	global $base_url, $authorization;
 
@@ -109,6 +112,10 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 	if (in_array(strtoupper($method), ['GET', 'DELETE', 'HEAD']) && $body && !is_resource($body))
 	{
 		$url .= '?' . (is_array($body) ? http_build_query($body) : $body);
+	}
+	if ($only_public)
+	{
+		checkPublicHost($url);
 	}
 	if (!($curl = curl_init($url)))
 	{
@@ -179,6 +186,12 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 		    }
 	    }
 	    [, $http_status] = explode(' ', $response_header[0], 2);
+
+		// if we got a redirect, check that the location is either on the same server or also has a valid public IP
+		if ($only_public && $http_status[0] === '3' && $follow && $response_header['location'][0] !== '/')
+		{
+			checkPublicHost($response_header['location']);
+		}
     }
     while ($http_status[0] === '3' && $follow && preg_match('#^HTTP/[\d.]+ \d+#', $response));
 
@@ -226,6 +239,41 @@ class HttpException extends Exception
 		}
 		$this->response_headers = $response_headers;
 		$this->response = $response;
+	}
+}
+
+/**
+ * Check host does not resolve to a private or reserved IP address
+ *
+ * @param string $url hostname or URL
+ * @throws \InvalidArgumentException if $host is or resolved to private or reserved IP address
+ * @return void
+ */
+function checkPublicIP(string $url)
+{
+	$host = parse_url($url, PHP_URL_HOST) ?? $url;
+
+	// check if host is already an IP address
+	if (filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4|FILTER_FLAG_IPV6))
+	{
+		if (!filter_var($host, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 |
+			FILTER_FLAG_NO_PRIV_RANGE |  FILTER_FLAG_NO_RES_RANGE))
+		{
+			throw new \InvalidArgumentException("Host '{$host}' is a private or reserved IP address!");
+		}
+	}
+	// if not try to resolve it
+	else
+	{
+		foreach (dns_get_record($host) as $record)
+		{
+			if (in_array($record['type'], ['A', 'AAAA'], true) &&
+				!filter_var($record['ip'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 |
+					FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE))
+			{
+				throw new \InvalidArgumentException("Host '{$host}' resolves to private or reserved IP address '{$record['ip']}'!");
+			}
+		}
 	}
 }
 
