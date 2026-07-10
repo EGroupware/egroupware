@@ -1,3 +1,12 @@
+egroupware-docker (23.1.20260710) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+  * This is probably the last 23.1 security release, we recommend to update to 26.x rather sooner than later.
+  * All apps: inserting a new custom-fields between or before existing ones removes most data from the existing fields
+  * Mail: fix access check in mail_hooks access method
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 10 Jul 2026 11:25:36 +0200
+
 egroupware-docker (23.1.20260601) hardy; urgency=low
 
   * Security release for 23.1: everyone still using 23.1 (not 26.x) is strongly encouraged to update to it
