@@ -86,8 +86,10 @@ et2-nextmatch {
 
 Because the rows are managed by `et2-datagrid` inside its shadow DOM, you cannot style them from outside the datagrid.
 
-• `et2-nextmatch::part(row) { ... }` can style the row elements themselves, but not their descendants.
-• `et2-nextmatch::part(row) et2-link { ... }` cannot style links inside the row.
+* `et2-nextmatch::part(row) { ... }` can style the row elements themselves, but not their descendants.
+* `et2-nextmatch::part(row) et2-link { ... }` cannot style links inside the row.
+* `et2-nextmatch::part(exported-part) { ... }` can style explicitly exported parts.
+
 For framework-level row styles, add to `Et2Nextmatch.row.styles.ts`. For app-specific row styles, use the app's
 `templates/default/app.css`.
 

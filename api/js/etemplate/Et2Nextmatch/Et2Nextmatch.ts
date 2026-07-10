@@ -48,8 +48,8 @@ const LETTERSEARCH_SELECTION_ID = "~search_letter~";
 /**
  * @summary Nextmatch shows entries with filtering and context menus.
  *
- * Et2Nextmatch renders server-backed, virtualized list data from a named template or slotted row/column templates.
- * It preserves selected legacy nextmatch APIs for app integrations while delegating data loading to Et2Datagrid.
+ * Et2Nextmatch uses Et2Datagrid to show application entries using a row template.
+ * Rows must be read-only, we do not allow inputs in the rows.
  *
  * @event et2-loading-start - Re-emitted from the inner datagrid when row fetching starts.
  * @event et2-loading-done - Re-emitted from the inner datagrid when all fetches complete.
@@ -138,7 +138,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	/**
 	 * Show A-Z letter search controls for filtering by leading character.
-	 * Mirrors legacy `lettersearch` nextmatch setting.
+	 * Users can still turn it off in column selection preferences
 	 */
 	@property({type: Boolean})
 	lettersearch : boolean = false;
@@ -179,7 +179,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	/**
 	 * Optional list of custom filter attributes that should round-trip through nextmatch fetches.
-	 * Mirrors legacy `extra_attributes` setting.
 	 */
 	@property({attribute: false, type: Array})
 	extraAttributes : string[] = [];
@@ -281,7 +280,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
 
 	/**
-	 * Active nextmatch filter payload mirrored for legacy integrations and fetches.
+	 * Active nextmatch filter payload for fetching data.
 	 */
 	private _filters : Record<string, any> = {col_filter: {}};
 
@@ -1757,7 +1756,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
-	 * Resolve app-name used for legacy sort preference persistence.
+	 * Resolve app-name used for sort preference persistence.
 	 */
 	_getAppName() : string
 	{
@@ -1832,7 +1831,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	};
 
 	/**
-	 * Emit legacy `et2-search-result` after datagrid finishes loading.
+	 * Emit `et2-search-result` after datagrid finishes loading.
 	 */
 	private _handleLoadingDone = (event : Event) =>
 	{
@@ -1867,7 +1866,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	};
 
 	/**
-	 * Add legacy letter search as a pseudo-column in the root column chooser.
+	 * Add letter search as a pseudo-column in the root column chooser.
 	 */
 	private _handleColumnSelectionItems = (event : CustomEvent<{ columns : Et2DatagridColumnSelectionItem[] }>) =>
 	{
@@ -1917,7 +1916,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
-	 * Merge selection events from parent and child grids for legacy action state.
+	 * Merge selection events from parent and child grids for action state.
 	 */
 	private _handleSelectionChanged = (event : CustomEvent<{
 		selectedRowIds? : string[];
