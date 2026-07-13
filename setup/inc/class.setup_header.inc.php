@@ -190,13 +190,13 @@ class setup_header
 
 		foreach($egw_domain as $domain => $data)
 		{
-			$var = array('DB_DOMAIN' => $domain);
+			$var = array('DB_DOMAIN' => addslashes($domain));
 			foreach($data as $name => $value)
 			{
 				if ($name == 'db_port' && !$value) $value = $this->default_db_ports[$data['db_type']];
 				if ($name == 'config_passwd')
 				{
-					$var['CONFIG_PASS'] = self::is_hashed($value) ? $value : Api\Auth::encrypt_sql($value, $most_secure_pw_hash);
+					$var['CONFIG_PASS'] = addslashes(self::is_hashed($value) ? $value : Api\Auth::encrypt_sql($value, $most_secure_pw_hash));
 				}
 				else
 				{
