@@ -150,13 +150,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _lettersearchVisible : boolean = true;
 
 	/**
-	 * Current active letter search filter value.
-	 * `false` / empty means "all letters".
-	 */
-	@property({attribute: false})
-	searchletter : string | false = false;
-
-	/**
 	 * Field / column that holds Modified date for entries.
 	 * Used for smart refresh.
 	 *
@@ -196,6 +189,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const oldValue = this.settings;
 		const settings = this._settingsObject(value);
 		delete settings.rows;
+		if(typeof settings.searchletter !== "undefined")
+		{
+			this._setSearchletterFilter(settings.searchletter);
+			delete settings.searchletter;
+		}
 		this._settings = {
 			...Et2Nextmatch.DEFAULT_SETTINGS,
 			...settings
@@ -416,6 +414,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			attrs.settings = retainedSettings;
 			Object.assign(attrs, settings);
 		}
+		if(typeof attrs.searchletter !== "undefined")
+		{
+			attrs.settings = {
+				...this._settingsObject(attrs.settings),
+				searchletter: attrs.searchletter
+			};
+			delete attrs.searchletter;
+		}
 		// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
 		for(const [modernKey, legacyKey] of [
 			["placeholderActions", "placeholder_actions"],
@@ -428,10 +434,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				attrs[modernKey] = this._toStringArray(value);
 				delete attrs[legacyKey];
 			}
-		}
-		if(typeof attrs.searchletter !== "undefined")
-		{
-			attrs.searchletter = attrs.searchletter || false;
 		}
 		if(typeof attrs.lettersearch !== "undefined")
 		{
@@ -457,6 +459,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _settingsObject(value : Record<string, any> | string | null | undefined) : Record<string, any>
 	{
 		return value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
+	}
+
+	/**
+	 * Normalize legacy settings-provided letter search into the active filters.
+	 */
+	private _setSearchletterFilter(value : any)
+	{
+		this._filters.searchletter = value && value != "false" ? value : false;
 	}
 
 	/**
@@ -515,14 +525,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	willUpdate(changedProperties : PropertyValues)
 	{
 		super.willUpdate(changedProperties);
-		if(changedProperties.has("searchletter"))
-		{
-			const nextValue = this.searchletter || false;
-			if(this._filters.searchletter !== nextValue)
-			{
-				this._filters.searchletter = nextValue;
-			}
-		}
 		if(changedProperties.has("settings") || changedProperties.has("lettersearch"))
 		{
 			this._lettersearchVisible = !this.lettersearch ||
@@ -531,7 +533,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		if(this.lettersearch && !this._lettersearchVisible && this._filters.searchletter)
 		{
 			this._filters.searchletter = false;
-			this.searchletter = false;
 		}
 	}
 
@@ -1057,10 +1058,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				if(activeFilters[key] !== set[key])
 				{
 					activeFilters[key] = set[key];
-					if(key === "searchletter")
-					{
-						this.searchletter = set[key] || false;
-					}
 					changed = true;
 				}
 			}
@@ -1121,10 +1118,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 				this._filters[attribute] = value;
 			}
-		}
-		if(this.searchletter)
-		{
-			this._filters.searchletter = this.searchletter;
 		}
 	}
 
@@ -1937,7 +1930,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 		this._lettersearchVisible = nextVisible;
 		this.egw().set_preference(this.egw().app_name(), this._lettersearchPreferenceKey, nextVisible);
-		if(!nextVisible && (this._filters.searchletter || this.searchletter))
+		if(!nextVisible && this._filters.searchletter)
 		{
 			this.applyFilters({searchletter: false});
 			return;
@@ -2190,7 +2183,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	private _renderLetterSearch()
 	{
-		const currentLetterValue = this._filters.searchletter || this.searchletter || "";
+		const currentLetterValue = this._filters.searchletter || "";
 		const currentLetter = typeof currentLetterValue === "string" ? currentLetterValue : "";
 		if((!this.lettersearch && !currentLetter) || (this.lettersearch && !this._lettersearchVisible))
 		{

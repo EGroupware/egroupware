@@ -509,7 +509,6 @@ describe("Et2Nextmatch header event handling", () =>
 	{
 		const el = new Et2Nextmatch();
 		el.lettersearch = false;
-		el.searchletter = false;
 		document.body.append(el);
 		await el.updateComplete;
 
@@ -520,23 +519,26 @@ describe("Et2Nextmatch header event handling", () =>
 
 	/**
 	 * Contract under test:
-	 * - Setting `searchletter` as a property mirrors into active filters before render.
+	 * - Settings-provided `searchletter` is stored as an active filter, not as a
+	 *   retained setting.
 	 *
 	 * Setup strategy:
-	 * - Render nextmatch with a property-provided search letter.
+	 * - Render nextmatch with a settings-provided search letter.
 	 *
 	 * Pass criteria:
-	 * - `activeFilters.searchletter` matches the property value.
+	 * - `activeFilters.searchletter` matches the settings value.
+	 * - `settings.searchletter` is not retained as a setting.
 	 * - Letter-search controls render because an active letter is set.
 	 */
-	it("mirrors searchletter property into active filters before render", async() =>
+	it("moves settings searchletter into active filters before render", async() =>
 	{
 		const el = new Et2Nextmatch();
-		el.searchletter = "M";
+		el.settings = {searchletter: "M"};
 		document.body.append(el);
 		await el.updateComplete;
 
-		assert.equal(el.activeFilters.searchletter, "M", "property searchletter should be mirrored into filters");
+		assert.equal(el.activeFilters.searchletter, "M", "settings searchletter should be moved into filters");
+		assert.isUndefined(el.settings.searchletter, "searchletter should not be retained in settings");
 		assert.isNotNull(el.shadowRoot?.querySelector(".nextmatch_lettersearch"), "active searchletter should render lettersearch");
 		el.remove();
 	});
@@ -559,7 +561,7 @@ describe("Et2Nextmatch header event handling", () =>
 	{
 		const el = new Et2Nextmatch();
 		el.lettersearch = true;
-		el.searchletter = "M";
+		el.applyFilters({searchletter: "M"}, {reload: false});
 		document.body.append(el);
 		await el.updateComplete;
 
