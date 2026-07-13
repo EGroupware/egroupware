@@ -237,10 +237,19 @@ export default css`
 	}
 
 	.dg-row-expander__icon {
-		display: inline-flex;
+		display: inline-grid;
 		align-items: center;
 		justify-content: center;
 		transition: transform 120ms ease-out;
+	}
+
+	.dg-row-expander slot[name="expand-icon"],
+	.dg-row-expander slot[name="collapse-icon"] {
+		grid-area: 1 / 1;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 120ms ease-out;
 	}
 
 	.dg-row-expander__chevron {
@@ -256,13 +265,16 @@ export default css`
 		transform: rotate(90deg);
 	}
 
-	.dg-row-expander slot[name="collapse-icon"],
-	.dg-row-expander--expanded slot[name="expand-icon"] {
-		display: none;
+	.dg-row-expander slot[name="collapse-icon"] {
+		opacity: 0;
 	}
 
 	.dg-row-expander--expanded slot[name="collapse-icon"] {
-		display: inline-flex;
+		opacity: 1;
+	}
+
+	.dg-row-expander--expanded slot[name="expand-icon"] {
+		opacity: 0;
 	}
 
 	.dg-row-placeholder {
@@ -274,6 +286,42 @@ export default css`
 		padding: 0;
 		max-height: none;
 		overflow: visible;
+	}
+
+	.dg-expanded-content {
+		min-height: 0;
+		overflow: visible;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.dg-row-expanded {
+			animation: dg-expanded-row-reveal 160ms ease-out;
+		}
+
+		.dg-row-expanded .dg-expanded-content {
+			animation: dg-expanded-content-reveal 160ms ease-out;
+			transform-origin: top;
+		}
+	}
+
+	@keyframes dg-expanded-row-reveal {
+		from {
+			clip-path: inset(0 0 100% 0);
+		}
+		to {
+			clip-path: inset(0);
+		}
+	}
+
+	@keyframes dg-expanded-content-reveal {
+		from {
+			opacity: 0;
+			transform: translateY(-0.25rem);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	@keyframes dg-row-refresh-pulse {

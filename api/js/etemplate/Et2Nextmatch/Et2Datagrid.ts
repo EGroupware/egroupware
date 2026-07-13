@@ -141,6 +141,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedVirtualizedMeasuredRowHeightPx : number | null = null;
 	private _embeddedVirtualizedHostHeight : string | null = null;
 	private _embeddedVirtualizedHeightFrame : number | null = null;
+	private _embeddedVirtualizedRowsResizeObserver : ResizeObserver | null = null;
 	private _rowsMinHeightFrame : number | null = null;
 
 	/**
@@ -496,6 +497,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			cancelAnimationFrame(this._embeddedVirtualizedHeightFrame);
 			this._embeddedVirtualizedHeightFrame = null;
 		}
+		this._embeddedVirtualizedRowsResizeObserver?.disconnect();
+		this._embeddedVirtualizedRowsResizeObserver = null;
 		if(this._rowsMinHeightFrame !== null)
 		{
 			cancelAnimationFrame(this._rowsMinHeightFrame);
@@ -674,8 +677,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				cancelAnimationFrame(this._embeddedVirtualizedHeightFrame);
 				this._embeddedVirtualizedHeightFrame = null;
 			}
+			this._embeddedVirtualizedRowsResizeObserver?.disconnect();
 			return;
 		}
+		this._observeEmbeddedVirtualizedRows();
 		this._embeddedVirtualizedMeasuredRowHeightPx = this._measureEmbeddedVirtualizedRowHeight();
 		const height = this._embeddedVirtualizedContentHeight() ?? this._embeddedVirtualizedLoadingHeight();
 		this._scheduleEmbeddedVirtualizedHeightSync();
@@ -683,9 +688,31 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		this.style.height = height;
-		this._embeddedVirtualizedHostHeight = height;
-		this.requestUpdate();
+		this._applyEmbeddedVirtualizedHostHeight(height);
+	}
+
+	/**
+	 * Watch realized child rows so late widget upgrades/content changes can grow
+	 * the embedded grid host and the parent expanded row on the first expansion.
+	 */
+	private _observeEmbeddedVirtualizedRows()
+	{
+		if(!this.embeddedVirtualized)
+		{
+			return;
+		}
+		if(!this._embeddedVirtualizedRowsResizeObserver)
+		{
+			this._embeddedVirtualizedRowsResizeObserver = new ResizeObserver(() =>
+			{
+				this._scheduleEmbeddedVirtualizedHeightSync();
+			});
+		}
+		this._embeddedVirtualizedRowsResizeObserver.disconnect();
+		for(const row of this._embeddedVirtualizedRenderedRows())
+		{
+			this._embeddedVirtualizedRowsResizeObserver.observe(row);
+		}
 	}
 
 	/**
@@ -711,10 +738,42 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				return;
 			}
-			this.style.height = height;
-			this._embeddedVirtualizedHostHeight = height;
-			this.requestUpdate();
+			this._applyEmbeddedVirtualizedHostHeight(height);
 		});
+	}
+
+	/**
+	 * Apply the embedded host height and ask the parent virtualizer to remeasure
+	 * the expanded row that contains this child grid.
+	 */
+	private _applyEmbeddedVirtualizedHostHeight(height : string)
+	{
+		this.style.height = height;
+		this._embeddedVirtualizedHostHeight = height;
+		this._notifyParentVirtualizerOfEmbeddedHeightChange();
+		this.requestUpdate();
+	}
+
+	/**
+	 * Parent datagrids usually learn child height changes via ResizeObserver, but
+	 * first expansion can happen before observers have measured the expanded row.
+	 */
+	private _notifyParentVirtualizerOfEmbeddedHeightChange()
+	{
+		const root = this.getRootNode();
+		const parentGrid = root instanceof ShadowRoot && root.host instanceof Et2Datagrid
+		                   ? root.host
+		                   : null;
+		const expandedRow = this.closest("tr[data-dg-expanded-row]") as HTMLElement | null;
+		const virtualizer = parentGrid?._virtualize as any;
+		if(!expandedRow || !virtualizer || typeof virtualizer._childrenSizeChanged !== "function")
+		{
+			return;
+		}
+		virtualizer._childrenSizeChanged([{
+			target: expandedRow,
+			contentRect: expandedRow.getBoundingClientRect()
+		}]);
 	}
 
 	/**
@@ -765,7 +824,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return null;
 		}
-		const rows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]:not([data-et2dg-placeholder])")) as HTMLElement[];
+		const rows = this._embeddedVirtualizedRenderedRows();
 		if(!rows.length)
 		{
 			return null;
@@ -784,13 +843,20 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Return realized data rows that contribute to embedded grid height.
+	 */
+	private _embeddedVirtualizedRenderedRows() : HTMLElement[]
+	{
+		const rowsBody = this._rowsBody as HTMLElement | null;
+		return Array.from(rowsBody?.querySelectorAll(":scope > tr[data-row-id]:not([data-et2dg-placeholder])") || []) as HTMLElement[];
+	}
+
+	/**
 	 * Measure realized child rows so the loading fallback can reuse the actual row height.
 	 */
 	private _measureEmbeddedVirtualizedRowHeight() : number | null
 	{
-		const renderedRows = Array.from(
-			this.shadowRoot?.querySelectorAll("tbody > tr[data-row-id]:not([data-et2dg-placeholder])") || []
-		) as HTMLElement[];
+		const renderedRows = this._embeddedVirtualizedRenderedRows();
 		const heights = renderedRows
 			.map((row) => row.getBoundingClientRect().height)
 			.filter((height) => Number.isFinite(height) && height > 0);
@@ -1796,7 +1862,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                     tabindex="-1"
             >
                 <td class="dg-expanded-cell" part="expanded-row" role="gridcell">
-                    ${content as any}
+                    <div class="dg-expanded-content" part="expanded-row-content">
+                        ${content as any}
+                    </div>
                 </td>
             </tr>
 		`;
@@ -2173,6 +2241,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(this._rowUpgradeQueue.length)
 		{
 			this._scheduleRowUpgradeQueue();
+		}
+		else if(this.embeddedVirtualized)
+		{
+			// Row upgrades can change child-grid row height after the normal Lit update.
+			this._scheduleEmbeddedVirtualizedHeightSync();
 		}
 		else if(this.total == this.rows.length)
 		{

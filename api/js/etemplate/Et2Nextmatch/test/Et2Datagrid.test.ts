@@ -102,6 +102,20 @@ async function waitForExpandedContext(el : Et2Datagrid, expectedColumnSizes? : s
 	return null;
 }
 
+async function waitForEmbeddedHostHeight(el : Et2Datagrid, height : string) : Promise<boolean>
+{
+	for(let i = 0; i < 20; i++)
+	{
+		if(el.style.height === height)
+		{
+			return true;
+		}
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+	}
+	return false;
+}
+
 class Et2DatagridTestTransform extends HTMLElement
 {
 	private _mgr : any;
@@ -337,6 +351,27 @@ describe("Et2Datagrid row rendering", () =>
 			cssText,
 			":host(.dg-has-expanders)",
 			"enabling expanders should not alter scroll-body layout before rows are expanded"
+		);
+	});
+
+	it("keeps both expander icon slots rendered", () =>
+	{
+		const cssText = datagridStyles.cssText;
+
+		assert.match(
+			cssText,
+			/\.dg-row-expander\s+slot\[name="expand-icon"\],\s*\.dg-row-expander\s+slot\[name="collapse-icon"\]\s*{[\s\S]*display:\s*inline-flex;/,
+			"expand and collapse icon slots should both stay rendered"
+		);
+		assert.notMatch(
+			cssText,
+			/slot\[name="(?:expand|collapse)-icon"\][^{]*{[^}]*display:\s*none;/,
+			"expander icon slots should not be hidden with display none"
+		);
+		assert.match(
+			cssText,
+			/\.dg-row-expander--expanded\s+slot\[name="expand-icon"\]\s*{[\s\S]*opacity:\s*0;/,
+			"expanded state should visually swap icons without removing either slot"
 		);
 	});
 
@@ -1185,6 +1220,56 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: if a refreshed visible row no longer qualifies as expandable,
+	 * its live expansion state is pruned while the data row remains visible.
+	 * Setup: seed one expanded parent row, then refresh it with non-parent data.
+	 * Pass: the expanded container disappears and the controlled expanded-id set
+	 * no longer contains the row id.
+	 */
+	it("collapses a refreshed row that no longer qualifies as expandable", async() =>
+	{
+		const el = createDatagrid();
+		const expandedRowIds = new Set(["addressbook::row-1"]);
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`<div class="expanded-context">Child rows</div>`,
+			expandedRowIds,
+			onExpandedRowIdsChanged: (nextExpandedRowIds) =>
+			{
+				expandedRowIds.clear();
+				nextExpandedRowIds.forEach((id) => expandedRowIds.add(id));
+				el.expansionConfig!.expandedRowIds = expandedRowIds;
+			}
+		};
+		el.dataProvider = createDatagridDataProvider({
+			refresh: async() => ({
+				rows: [{id: "addressbook::row-1", data: {uid: "addressbook::row-1", label: "No children", is_parent: false}}],
+				removedRowIds: []
+			})
+		}) as any;
+		el.setInitialRows([{uid: "addressbook::row-1", label: "Parent row", is_parent: true}]);
+		el.total = 1;
+
+		assert.deepEqual(
+			(el as any)._getVirtualItems(1),
+			[0, {type: "expanded", rowIndex: 0, parentRowId: "addressbook::row-1"}],
+			"expanded render item should exist before refresh"
+		);
+
+		await el.refresh(["row-1"], "update" as any);
+
+		assert.isFalse(expandedRowIds.has("addressbook::row-1"), "refresh pruning should remove the row from expansion state");
+		assert.deepEqual(
+			(el as any)._getVirtualItems(1),
+			[0],
+			"expanded render item should be removed after the refreshed row is no longer expandable"
+		);
+		assert.equal(el.rows[0].data.label, "No children", "the refreshed data row should remain visible");
+	});
+
+	/**
 	 * Contract: selecting a visible row must tolerate sparse virtualized row state.
 	 * Setup: emulate a scrolled grid where earlier indexes are not loaded but the
 	 * last visible row is present in `_rowsByIndex`.
@@ -1893,6 +1978,7 @@ describe("Et2Datagrid virtual height stability", () =>
 		const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
 		const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
 		const explicitTbodyHeight = rowsBody.style.height || rowsBody.style.minHeight;
+		const hostHeightSynced = await waitForEmbeddedHostHeight(el, explicitTbodyHeight);
 		const rowsBodyRect = rowsBody.getBoundingClientRect();
 		const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
 		const renderedRowsHeight = Math.ceil(
@@ -1906,13 +1992,69 @@ describe("Et2Datagrid virtual height stability", () =>
 			renderedRowsHeight,
 			"tbody height should not be shorter than the rendered child row stack"
 		);
-		assert.equal(el.style.height, explicitTbodyHeight, "embedded grid host height should match the virtualizer-owned tbody height");
+		assert.isTrue(hostHeightSynced, "embedded grid host height should match the virtualizer-owned tbody height");
 		assert.equal(
 			root.style.getPropertyValue("--embedded-virtualized-height"),
 			explicitTbodyHeight,
 			"embedded grid root height variable should match the virtualizer-owned tbody height"
 		);
 		assert.equal(getComputedStyle(body).overflowY, "visible", "embedded grid body should not be its own scrollport");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: embedded child grids remeasure after row widget upgrades, because
+	 * the first virtualizer height can be a one-row loading estimate.
+	 *
+	 * Setup: render a fully loaded embedded grid, force its tbody/host height back
+	 * to the one-row estimate, then run the row-upgrade drain path.
+	 *
+	 * Pass: the next frame restores tbody and host height to at least the rendered
+	 * child-row stack height.
+	 */
+	it("remeasures embedded virtualized height after row upgrades drain", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.embeddedVirtualized = true;
+		el.noVisibleHeader = true;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		const initialRows = Array.from({length: 5}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(initialRows);
+		el.total = initialRows.length;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+
+		const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
+		const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
+		const rowsBodyRect = rowsBody.getBoundingClientRect();
+		const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
+		const renderedRowsHeight = Math.ceil(
+			Math.max(...rowBounds.map((rect) => rect.bottom)) -
+			Math.min(Math.min(...rowBounds.map((rect) => rect.top)), rowsBodyRect.top)
+		);
+
+		rowsBody.style.height = "44px";
+		el.style.height = "44px";
+		(el as any)._embeddedVirtualizedHostHeight = "44px";
+
+		(el as any)._processRowUpgradeQueue();
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+		const hostHeightSynced = await waitForEmbeddedHostHeight(el, rowsBody.style.height);
+
+		assert.isAtLeast(parseInt(rowsBody.style.height, 10), renderedRowsHeight, "tbody height should cover rendered child rows");
+		assert.isTrue(hostHeightSynced, "embedded grid host height should match the corrected tbody height");
 
 		host.remove();
 	});
@@ -1928,6 +2070,24 @@ describe("Et2Datagrid virtual height stability", () =>
 			cssText,
 			/\.dg-body\s+tbody\s+td\.dg-expanded-cell\s*{[\s\S]*max-height:\s*none;/,
 			"expanded cells need a selector specific enough to beat the generic tbody td max-height rule"
+		);
+	});
+
+	/**
+	 * Contract: expanded-row animation respects the browser motion preference.
+	 */
+	it("guards expanded-row reveal animation with reduced-motion preference", () =>
+	{
+		const cssText = String((datagridStyles as any).cssText || datagridStyles);
+		assert.match(
+			cssText,
+			/@media\s*\(prefers-reduced-motion:\s*no-preference\)\s*{[\s\S]*\.dg-row-expanded[\s\S]*animation:\s*dg-expanded-row-reveal/,
+			"expanded-row reveal animation should only run when reduced motion is not requested"
+		);
+		assert.match(
+			cssText,
+			/\.dg-row-expanded\s+\.dg-expanded-content[\s\S]*animation:\s*dg-expanded-content-reveal/,
+			"expanded content should get the reveal animation inside the reduced-motion media query"
 		);
 	});
 
