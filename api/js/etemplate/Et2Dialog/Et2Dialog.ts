@@ -1473,7 +1473,7 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				{
 					request.abort();
 				}
-				updateUi({type: 'error', data: dialog.egw().lang("failed") + " " + parameters.join(" ")}, index + 1)
+				updateUi({type: 'error', data: dialog.egw().lang("failed") + " " + JSON.stringify(parameters)}, index + 1)
 			}, 30000);
 
 				// Async request, we'll take the next step in the callback
