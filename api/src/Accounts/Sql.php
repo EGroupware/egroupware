@@ -108,9 +108,12 @@ class Sql
         $setupDb = $GLOBALS['egw_setup']->db ?? null;
         $runtimeDb = $GLOBALS['egw']->db ?? null;
 
-        if (is_object($setupDb)) {
+        if (is_object($setupDb))
+		{
             $this->db = $setupDb;
-        } elseif (is_object($runtimeDb)) {
+        }
+		elseif (is_object($runtimeDb))
+		{
             $this->db = $runtimeDb;
         }
     }
