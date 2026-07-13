@@ -3813,7 +3813,7 @@ export class MailApp extends EgwApp
 				if (_actionObjects[i].id.length>0 && _actionObjects[i].iface)
 				{
 					const dataElem: HTMLElement = (_actionObjects[i].iface.getDOMNode());
-					dataElem.classList.add(_class);
+					dataElem?.classList.add(_class);
 
 				}
 			}
