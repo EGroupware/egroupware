@@ -563,6 +563,11 @@ class Sharing
 				if (!$this->share['resolve_url'])
 				{
 					$this->share['resolve_url'] = Vfs::resolve_url($this->share['share_path'], true, true, true, true);
+					// reapply ro=1 for not writable shares
+					if (!($this->share['share_writable'] & 1))
+					{
+						$this->share['resolve_url'] .= (strpos($this->share['resolve_url'], '?') ? '&' : '?').'ro=1';
+					}
 				}
 				Vfs::mount($this->share['resolve_url'], '/', false, false, true);
 			}
