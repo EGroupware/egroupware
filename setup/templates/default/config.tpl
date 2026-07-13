@@ -526,6 +526,8 @@
           <option value="custom"{selected_oic_username_attribute_custom}>{lang_custom_attribute}</option>
         </select>
         <input name="newsettings[oic_username_custom]" value="{value_oic_username_custom}" size="40" placeholder="{lang_custom_attribute}"/>
+        <label title="{lang_Only_check_if_you_want_allow_unverified_email_addresses!}">
+          <input type=checkbox name="newsettings[oic_email_unverified]" value="true" {checked_oic_email_unverified_true}>{lang_Allow_unverified_email}</label>
       </td>
    </tr>
    <tr class="row_off">
