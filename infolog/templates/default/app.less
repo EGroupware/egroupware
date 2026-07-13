@@ -30,14 +30,24 @@ table.infolog_fullWidth { width: 100%; }
 .infolog_image16 img { height: 16px; }
 .infolog_responsible select {width: 120px;}
 
+.infolog_subjectHeader::part(base) {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 0;
+}
+
+.infolog_subjectHeader > :nth-child(even) {
+  justify-self: end;
+  text-align: right;
+}
 
 .infolog_date_duration select.et2_date_duration {
   width: 69%;
   margin-left: 2px;
 }
 
-tr.infolog_rowHasParent > td:first-child {
-  background-image: url(../../../node_modules/bootstrap-icons/icons/caret-up-fill.svg);
+.infolog_rowHasParent > td:nth-child(2) {
+  background-image: url(node_modules/bootstrap-icons/icons/caret-up-fill.svg);
   background-repeat: no-repeat;
   background-size: 1em;
   background-position: ~'round(up, 0.3em,1px)' 0px;
@@ -49,8 +59,13 @@ tr.infolog_rowHasParent > td:first-child {
 }
 
 .infoDes {
+  display: var(--infolog-info-details-display, block);
   max-height: var(--descHeight, 5em);
   overflow: clip;
+}
+
+.infoDescRow {
+  display: var(--infolog-info-details-display, block);
 }
 
 .infoDes:hover {
@@ -62,7 +77,7 @@ tr.infolog_rowHasParent > td:first-child {
 }
 
 /* Spacing for parent / sub indicators */
-.egwGridView_grid .infolog_CompletedClmn {
+.egwGridView_grid .infolog_CompletedClmn, .infolog_CompletedClmn {
   max-width: fit-content;
   margin-left: 10px;
   &::part(base){
@@ -75,6 +90,9 @@ tr.infolog_rowHasParent > td:first-child {
 
 tr.infolog_rowHasParent > td:first-child .infolog_CompletedClmn {
   margin-left: 16px;
+}
+.infolog_infoId {
+  text-align: right;
 }
 
 /* Right-align extra buttons in tab and give them the same size as other buttons */
@@ -141,28 +159,15 @@ span#infolog-index_\$\{row\}\[info_des\] {
   width: calc(100% + 30px) !important;
 }
 
-/**
- * Kdots:
- */
+et2-hbox.infolog_CompletedClmn {
+  et2-image {
+	width: 1rem;
+	*[part="image"] {
+	  vertical-align: middle;
+	}
+  }
 
-egw-app[name="infolog"] {
-  /* Hide nextmatch header, it's in the framework now */
-
-  .et2_nextmatch .nextmatch_header {
-	height: 0px;
-	overflow: hidden;
+  progress {
+	max-width: 2em;
   }
 }
-  et2-hbox.infolog_CompletedClmn {
-    et2-image {
-      width: 1rem;
-      *[part="image"] {
-        vertical-align: middle;
-      }
-    }
-    div.et2_progress {
-      width: 100%;
-      height: var(--sl-line-height-dense, 0.7em);
-	  max-width: 2em;
-    }
-  }

@@ -14,7 +14,6 @@
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {CRMView} from "../../addressbook/js/CRM";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {nm_open_popup} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
@@ -23,6 +22,7 @@ import {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 
 /**
  * UI for Infolog
@@ -80,11 +80,9 @@ class InfologApp extends EgwApp
 			case 'infolog.index':
 				this.filter_change();
 				// Show / hide descriptions according to details filter
-				var nm = <et2_nextmatch>this.et2.getWidgetById('nm');
-				var filter2 = <et2_selectbox> nm.getWidgetById('filter2');
-				this.show_details(filter2.value == 'all', nm.getDOMNode(nm));
-				// Remove the rule added by show_details() if the template is removed
-				jQuery(_et2.DOMContainer).on('clear', jQuery.proxy(function() {egw.css(this);}, '#' + nm.getDOMNode(nm).id + ' .et2_box.infoDes'));
+				var nm = <Et2Nextmatch>this.et2.getWidgetById('nm');
+				var filter2 = <Et2Select>this.et2.getWidgetById('filter2');
+				this.show_details(filter2.value, nm);
 
 				// Enable decrypt on hover
 				if (this.egw.user('apps').stylite) {
@@ -93,7 +91,7 @@ class InfologApp extends EgwApp
 					});
 				}
 				// blur count, if limit modified optimization used
-				if (nm.getController()?.getTotalCount() === 9999)
+				if(nm?.totalCount === 9999)
 				{
 					this.blurCount(true);
 				}
@@ -269,7 +267,7 @@ class InfologApp extends EgwApp
 		if (this.nm && filter2)
 		{
 			// Show / hide descriptions
-			this.show_details(filter2.value === 'all', this.nm.getDOMNode(this.nm));
+			this.show_details(filter2.value === 'all', this.nm);
 		}
 
 		// Only change columns for a real user event, to avoid interfering with
@@ -331,15 +329,14 @@ class InfologApp extends EgwApp
 	}
 
 	/**
-	 * Show or hide details by changing the CSS class
+	 * Show or hide details in nextmatch rows.
 	 *
 	 * @param {boolean} show
-	 * @param {DOMNode} dom_node
+	 * @param nextmatch nextmatch widget
 	 */
-	show_details(show, dom_node)
+	show_details(show, nextmatch : any)
 	{
-		// Show / hide descriptions
-        egw.css((dom_node && dom_node.id ? "#"+dom_node.id+' ' : '') + (egwIsMobile()? ".infoDescRow" : ".infoDes"),"display:" + (show ? "block;" : "none;"));
+		nextmatch?.style?.setProperty("--infolog-info-details-display", show ? "block" : "none");
 	}
 
 	/**
@@ -874,6 +871,7 @@ class InfologApp extends EgwApp
 	 */
 	toggleDetails(_ev : Event, _widget : Et2ButtonToggle)
 	{
+		this.show_details(_widget.value, this.et2.getWidgetById("nm"));
 		this.nm && this.nm.applyFilters({filter2: _widget.value ? 'all' : ''});
 	}
 
