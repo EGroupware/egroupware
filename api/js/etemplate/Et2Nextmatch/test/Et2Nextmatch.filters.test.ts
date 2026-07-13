@@ -841,6 +841,76 @@ describe("Et2Nextmatch header event handling", () =>
 		warn.restore();
 	});
 
+	/**
+	 * Contract under test:
+	 * - `setColumns()` updates the live root datagrid, not only Nextmatch's
+	 *   submit value/template cache.
+	 *
+	 * Setup strategy:
+	 * - Render a real Et2Nextmatch so the child datagrid exists, then call
+	 *   `setColumns()` with a changed visibility state.
+	 *
+	 * Pass criteria:
+	 * - The child datagrid's current `columns` property reflects the hidden flag.
+	 */
+	it("applies setColumns changes to the rendered datagrid", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const columnEvents : CustomEvent[] = [];
+		el.addEventListener("et2-columns-changed", (event : CustomEvent) =>
+		{
+			columnEvents.push(event);
+		});
+
+		el.setColumns([
+			{key: "title", title: "Title"} as any,
+			{key: "owner", title: "Owner"} as any
+		]);
+		await el.updateComplete;
+
+		const grid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		assert.deepEqual(
+			grid.columns.map((column) => ({key: column.key, hidden: column.hidden === true})),
+			[
+				{key: "title", hidden: false},
+				{key: "owner", hidden: false}
+			],
+			"initial setColumns call should reach the rendered datagrid"
+		);
+		assert.equal(columnEvents.length, 1, "initial setColumns call should emit a column-change event");
+		assert.deepEqual(
+			columnEvents[0].detail.columns.map((column) => column.key),
+			["title", "owner"],
+			"setColumns event should expose the updated column list"
+		);
+
+		el.setColumns(["owner"]);
+		await el.updateComplete;
+		await grid.updateComplete;
+
+		assert.deepEqual(
+			grid.columns.map((column) => ({key: column.key, hidden: column.hidden === true})),
+			[
+				{key: "title", hidden: true},
+				{key: "owner", hidden: false}
+			],
+			"string setColumns calls should update current datagrid column visibility"
+		);
+		assert.equal(columnEvents.length, 2, "string setColumns call should emit a column-change event");
+		assert.deepEqual(
+			columnEvents[1].detail.columns.map((column) => ({key: column.key, hidden: column.hidden === true})),
+			[
+				{key: "title", hidden: true},
+				{key: "owner", hidden: false}
+			],
+			"string setColumns event should expose the updated column visibility"
+		);
+
+		el.remove();
+	});
+
 	it("implements et2_IInput so submit value collection includes it", () =>
 	{
 		const el = new Et2Nextmatch();

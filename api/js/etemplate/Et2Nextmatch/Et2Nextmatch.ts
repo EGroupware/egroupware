@@ -278,6 +278,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * Tracks which legacy column-preference keys were already migrated once.
 	 */
 	private _legacyColumnPreferenceApplied : Set<string> = new Set();
+	/** Visible column keys requested before template columns are available. */
+	private _pendingVisibleColumnKeys : string[] | null = null;
 
 	/**
 	 * Active nextmatch filter payload for fetching data.
@@ -670,25 +672,59 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * Public API to override visible columns programmatically.
 	 * Accepts legacy string arrays and normalizes them for datagrid consumption.
 	 */
-	setColumns(columns : Array<string | { key : string; title : string }>)
+	setColumns(columns : Array<string | Et2DatagridColumn>)
 	{
-		const nextColumns = (columns || []).map((column, index) =>
-			typeof column === "string" ? {key: "col" + index, title: column} : column
-		);
-		this._datagridColumns = null;
+		const currentColumns = this._currentColumns.length ? this._currentColumns : this._datagrid?.columns || [];
+		const stringColumns = (columns || []).filter((column) => typeof column === "string") as string[];
+		const hasOnlyStringColumns = stringColumns.length === (columns || []).length;
+		if(hasOnlyStringColumns)
+		{
+			this._pendingVisibleColumnKeys = stringColumns.map((column) => String(column));
+		}
+		else
+		{
+			this._pendingVisibleColumnKeys = null;
+		}
+		const nextColumns = hasOnlyStringColumns && currentColumns.length
+			? this._applyVisibleColumnKeys(currentColumns, stringColumns)
+			: (columns || []).map((column, index) =>
+				typeof column === "string" ? {key: "col" + index, title: column} : column
+			);
+		this._datagridColumns = nextColumns.map((column) => ({...column}));
 		this._subgridColumnSnapshots.clear();
-		this._templateData = this._templateData
-			? {
-				...this._templateData,
-				columns: nextColumns
-			}
-			: {
+		if(!this._templateData)
+		{
+			this._templateData = {
 				rowTemplate: null,
 				rowTemplateXml: null,
 				rowTemplateAttrMap: {},
 				loaderTemplate: null,
 				columns: nextColumns
 			};
+		}
+		if(this._datagrid)
+		{
+			this._datagrid.columns = nextColumns.map((column) => ({...column}));
+			this._datagrid.requestUpdate();
+		}
+		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
+			detail: {columns: nextColumns},
+			bubbles: true,
+			composed: true
+		}));
+		this.requestUpdate();
+	}
+
+	/**
+	 * Apply a visible-column key list to the current template columns.
+	 */
+	private _applyVisibleColumnKeys(columns : Et2DatagridColumn[], visibleKeys : string[]) : Et2DatagridColumn[]
+	{
+		const selected = new Set((visibleKeys || []).map((key) => String(key)));
+		return (columns || []).map((column) => ({
+			...column,
+			hidden: !selected.has(String(column.key || ""))
+		}));
 	}
 
 	/**
@@ -776,12 +812,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			return;
 		}
-		const requestedKeys = new Set(requestedColumns);
-		const nextColumns = currentColumns.map((column) => ({
-			...column,
-			hidden: !requestedKeys.has(String(column.key || ""))
-		}));
-		this.setColumns(nextColumns);
+		this.setColumns(requestedColumns);
 	}
 
 	/**
@@ -1366,7 +1397,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._datagridColumns = null;
 		this._subgridColumnSnapshots.clear();
 		const columns = templateData.columns?.length ? templateData.columns : [];
-		const nextColumns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
+		let nextColumns = this._applyLegacyNextmatchColumnPreferences(columns || [], templateData);
+		if(this._pendingVisibleColumnKeys?.length)
+		{
+			nextColumns = this._applyVisibleColumnKeys(nextColumns, this._pendingVisibleColumnKeys);
+		}
 		this._templateData = {
 			...templateData,
 			sourceColumns: templateData.sourceColumns?.length ? templateData.sourceColumns : columns,

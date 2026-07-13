@@ -3,39 +3,11 @@ import {
 	applyLegacyNextmatchColumnPreferences,
 	applyLegacyCustomfieldVisibility,
 	datagridColumnPreferenceValue,
-	legacyVisibleCustomfieldNames,
-	shouldPersistDatagridColumnPreferenceEvent
+	legacyVisibleCustomfieldNames
 } from "../Et2NextmatchColumnPreferences.ts";
 
 describe("Et2Nextmatch column preferences", () =>
 {
-	/**
-	 * Contract: saved preference replay updates runtime columns but is not a
-	 * user change to save again.
-	 * Setup: compare a replay event with a normal column-change event.
-	 * Pass: replay events are rejected for persistence and normal events remain
-	 * persistable.
-	 */
-	it("does not persist column preference replay events", () =>
-	{
-		assert.isFalse(
-			shouldPersistDatagridColumnPreferenceEvent(new CustomEvent("et2-columns-changed", {
-				detail: {source: "preferences"}
-			})),
-			"preference replay events should not write preferences again"
-		);
-		assert.isTrue(
-			shouldPersistDatagridColumnPreferenceEvent(new CustomEvent("et2-columns-changed", {
-				detail: {source: "user"}
-			})),
-			"user column-change events should still write preferences"
-		);
-		assert.isTrue(
-			shouldPersistDatagridColumnPreferenceEvent(new CustomEvent("et2-columns-changed")),
-			"legacy column-change events without source should still write preferences"
-		);
-	});
-
 	it("applies legacy customfield entries as field-level visibility", () =>
 	{
 		const customfieldsHeader = {};

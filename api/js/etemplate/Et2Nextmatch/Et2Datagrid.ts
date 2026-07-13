@@ -27,7 +27,6 @@ import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
-import {shouldPersistDatagridColumnPreferenceEvent} from "./Et2NextmatchColumnPreferences";
 import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -347,7 +346,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _internalExpandedRowIds : Set<string> = new Set();
 	private _loadedColumnPreferenceKey : string | null = null;
 	private _postRenderStructureSyncNeeded : boolean = false;
-	private _handleColumnsChangedForPersistence : EventListener = (event) => this._persistColumnPreferencesFromColumnEvent(event);
 	private _loggedMissingTemplateWarning : boolean = false;
 
 
@@ -474,7 +472,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._handleColumnResizeMove = this._handleColumnResizeMove.bind(this);
 		this._handleColumnResizeEnd = this._handleColumnResizeEnd.bind(this);
 		this._scrollListener = () => this._maybePrefetchOnScroll();
-		this._handleColumnsChangedForPersistence = this._handleColumnsChangedForPersistence.bind(this);
 	}
 
 	/**
@@ -504,7 +501,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			cancelAnimationFrame(this._rowsMinHeightFrame);
 			this._rowsMinHeightFrame = null;
 		}
-		this.removeEventListener("et2-columns-changed", this._handleColumnsChangedForPersistence);
 		super.disconnectedCallback();
 	}
 
@@ -514,7 +510,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	firstUpdated(changedProperties : PropertyValues)
 	{
 		super.firstUpdated(changedProperties);
-		this.addEventListener("et2-columns-changed", this._handleColumnsChangedForPersistence);
 		if(this._body && this._scrollListener)
 		{
 			this._body.addEventListener("scroll", this._scrollListener, {passive: true});
@@ -1066,10 +1061,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		});
 		this.columns = nextColumns;
 		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
-			detail: {
-				columns: this.columns,
-				source: "preferences"
-			},
+			detail: {columns: this.columns},
 			bubbles: true,
 			composed: true
 		}));
@@ -1094,19 +1086,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		header.setAttribute?.("fields", customFields.join(","));
-	}
-
-	/**
-	 * Ignore preference replay events so initial load does not overwrite the
-	 * user's saved column state before delayed headers finish applying it.
-	 */
-	private _persistColumnPreferencesFromColumnEvent(event : Event)
-	{
-		if(!shouldPersistDatagridColumnPreferenceEvent(event))
-		{
-			return;
-		}
-		this._persistColumnPreferences();
 	}
 
 	/**
@@ -2918,6 +2897,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				bubbles: true,
 				composed: true
 			}));
+			this._persistColumnPreferences();
 		}
 		this._clearColumnResizeDragState();
 	}
@@ -3461,6 +3441,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			bubbles: true,
 			composed: true
 		}));
+		this._persistColumnPreferences();
 	}
 
 	/**
