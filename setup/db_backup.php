@@ -48,7 +48,7 @@ $asyncservice = new Api\Asyncservice();
 // download a backup, has to be before any output !!!
 if (!empty($_POST['download']))
 {
-	$filename = $db_backup->backup_dir.'/'.key($_POST['download']);
+	$filename = basename(key($_POST['download']));
 	$file = $db_backup->fopen_backup($filename, true, false);
 
 	// FIRST: switch off zlib.output_compression, as this would limit downloads in size to memory_limit
@@ -56,7 +56,7 @@ if (!empty($_POST['download']))
 	// SECOND: end all active output buffering
 	while(ob_end_clean()) {}
 
-	Api\Header\Content::type(basename($filename));
+	Api\Header\Content::type($filename);
 	fpassthru($file);
 	fclose($file);
 	$db_backup->log($filename, 'Downloaded');

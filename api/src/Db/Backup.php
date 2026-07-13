@@ -187,7 +187,7 @@ class Backup
 	/**
 	 * Opens the backup-file using the highest available compression
 	 *
-	 * @param ?string $name =false string/boolean filename to use, or false for the default one
+	 * @param ?string $name =null filename relative to backup-dir to use, or null for the default one
 	 * @param bool $reading =false opening for reading ('rb') or writing ('wb')
 	 * @param bool $un_compress true: opening file with (un)compression wrapper, false: opening as it is for download
 	 * @return resource file-handle
@@ -195,7 +195,7 @@ class Backup
 	 */
 	public function fopen_backup(?string $name=null, bool $reading=false, bool $un_compress=true)
 	{
-		if ($name && $name[0] !== '/')
+		if ($name)
 		{
 			$name = $this->backup_dir.'/'.basename($name);
 		}
