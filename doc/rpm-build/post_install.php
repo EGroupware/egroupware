@@ -457,7 +457,7 @@ else
 
 	// update egroupware, or single app(s), in later case skip backup
 	$setup_update = $setup_cli.' --update '.escapeshellarg('all,'.$config['config_user'].','.$config['config_passwd'].
-		(empty($config['install-update-app']) ? '' : ',no,'.$config['install-update-app']));
+		(empty($config['install-update-app']) ? ','.$config['backup'] : ',no,'.$config['install-update-app']));
 	$ret = run_cmd($setup_update,$output,array(4,15));
 
 	switch($ret)
