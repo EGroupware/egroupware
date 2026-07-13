@@ -437,7 +437,10 @@ class Sharing extends \EGroupware\Api\Sharing
 				}
 			} while ($check && $check != '/');
 
-			if (($exists = ($stat = Vfs::stat($path)) && Vfs::check_access($path, Vfs::READABLE, $stat)))
+			if (($exists = ($stat = Vfs::stat($path)) &&
+				Vfs::check_access($path, Vfs::READABLE, $stat)) &&
+				(!in_array($mode, [self::WRITABLE, Wopi::WOPI_WRITABLE, Wopi::WOPI_SHARED]) ||
+					Vfs::check_access($path, Vfs::WRITABLE, $stat)))
 			{
 				// Not sure why stat puts a / on the end of files, but remove it
 				if(substr($stat['url'], -1) == '/' && !Vfs::is_dir($stat['url']))
