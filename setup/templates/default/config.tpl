@@ -504,6 +504,10 @@
      <td>{lang_URL_of_the_IdP_(without_path)}:</td>
      <td><input name="newsettings[oic_provider]" value="{value_oic_provider}" size="80" /></td>
    </tr>
+   <tr class="row_off">
+     <td>{lang_Microsoft_Tenant_ID_(empty_allows_every_tenant!)}:</td>
+     <td><input name="newsettings[oic_tenant_id]" value="{value_oic_tenant_id}" size="80" /></td>
+   </tr>
    <tr class="row_on">
      <td>{lang_Client_ID}:</td>
      <td><input name="newsettings[oic_client_id]" value="{value_oic_client_id}" size="40" /></td>
