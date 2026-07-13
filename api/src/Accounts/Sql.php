@@ -101,19 +101,19 @@ class Sql
 	 *
 	 * @param ?Api\Accounts $frontend reference to the frontend class, to be able to call it's methods if needed
 	 */
-	function __construct(?Api\Accounts $frontend=null)
-	{
-		$this->frontend = $frontend;
+    public function __construct(?Api\Accounts $frontend = null)
+    {
+        $this->frontend = $frontend;
 
-		if (is_object($GLOBALS['egw_setup']->db))
-		{
-			$this->db = $GLOBALS['egw_setup']->db;
-		}
-		else
-		{
-			$this->db = $GLOBALS['egw']->db;
-		}
-	}
+        $setupDb = $GLOBALS['egw_setup']->db ?? null;
+        $runtimeDb = $GLOBALS['egw']->db ?? null;
+
+        if (is_object($setupDb)) {
+            $this->db = $setupDb;
+        } elseif (is_object($runtimeDb)) {
+            $this->db = $runtimeDb;
+        }
+    }
 
 	/**
 	 * Set used frontend object
