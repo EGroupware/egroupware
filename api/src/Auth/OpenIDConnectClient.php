@@ -259,7 +259,7 @@ class MicrosoftIssuerValidator
 	 */
 	public function __invoke($iss)
 	{
-		$issuer_regexp = '#^'.str_replace('{tenantid}', '[a-f0-9-]+', $this->oidc->getWellKnownIssuer()).'$#';
+		$issuer_regexp = '#^'.str_replace('{tenantid}', $GLOBALS['egw_info']['server']['oic_tenant_id'] ?? '[a-f0-9-]+', $this->oidc->getWellKnownIssuer()).'$#';
 
 		return (bool)preg_match($issuer_regexp, $iss);
 	}
