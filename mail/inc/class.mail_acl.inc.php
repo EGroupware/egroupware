@@ -306,11 +306,11 @@ class mail_acl
 	 */
 	public static function ajax_folders()
 	{
-		if (!empty($_GET['account_id']) && !$GLOBALS['egw_info']['user']['apps']['admin'])
+		if (isset($_GET['account_id']) && empty($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			throw new Api\Exception\NoPermission\Admin;
 		}
-		$account = Mail\Account::read($_GET['acc_id'], $_GET['account_id']);
+		$account = Mail\Account::read($_GET['acc_id'], $_GET['account_id'] ?? null);
 		$imap = $account->imapServer(!empty($_GET['account_id']) ? (int)$_GET['account_id'] : false);
 		$mailbox = $imap->isAdminConnection ? $imap->getUserMailboxString($imap->isAdminConnection) : 'INBOX';
 
