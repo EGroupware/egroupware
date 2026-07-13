@@ -3617,17 +3617,21 @@ class calendar_uiforms extends calendar_ui
 	 * @param string $_eventId
 	 * @param integer $uid
 	 * @param string $status
+	 * @return int|false int number of changed recurrences, false on ACL failure
 	 */
 	function ajax_status($_eventId, $uid, $status)
 	{
 		list($eventId, $date) = explode(':', $_eventId);
-		$event = $this->bo->read($eventId);
+		if (!($event = $this->bo->read($eventId)))
+		{
+			return false;
+		}
 		if($date)
 		{
 			$d = new Api\DateTime($date, Api\DateTime::$user_timezone);
 		}
 
-		// If we have a recuring event for a particular day, make an exception
+		// If we have a recurring event for a particular day, make an exception
 		if ($event['recur_type'] != MCAL_RECUR_NONE && $date)
 		{
 			if (!empty($event['whole_day']))
@@ -3635,7 +3639,7 @@ class calendar_uiforms extends calendar_ui
 				$d = $this->bo->so->startOfDay($d);
 				$d->setUser();
 			}
-			$event = $this->bo->read($eventId, $d, true);
+			$event = $this->bo->read($eventId, $d);
 			$date = $d->format('ts');
 		}
 		if($event['participants'][$uid])
@@ -3643,20 +3647,16 @@ class calendar_uiforms extends calendar_ui
 			$q = $r = null;
 			calendar_so::split_status($event['participants'][$uid],$q,$r);
 			$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
-			$this->bo->set_status($event['id'],$uid,$status,$date,true);
+			return $this->bo->set_status($event['id'],$uid,$status,$date);
 		}
-		else
+		// Group membership
+		foreach(array_keys($event['participants'] ?? []) as $id)
 		{
-			// Group membership
-			foreach(array_keys($event['participants'] ?? []) as $id)
+			if($GLOBALS['egw']->accounts->get_type($id) == 'g' && in_array($uid,$GLOBALS['egw']->accounts->members($id,true)))
 			{
-				if($GLOBALS['egw']->accounts->get_type($id) == 'g' && in_array($uid,$GLOBALS['egw']->accounts->members($id,true)))
-				{
-					calendar_so::split_status($event['participants'][$uid],$q,$r);
-					$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
-					$this->bo->set_status($event['id'],$uid,$status,$date,true);
-					break;
-				}
+				calendar_so::split_status($event['participants'][$uid],$q,$r);
+				$event['participants'][$uid] = $status = calendar_so::combine_status($status,$q,$r);
+				return $this->bo->set_status($event['id'],$uid,$status,$date);
 			}
 		}
 	}
