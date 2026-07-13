@@ -30,7 +30,6 @@ class admin_passwordreset
 	 */
 	public $public_functions = array(
 		'index' => true,
-		'ajax_clear_credentials' => true
 	);
 
 	/**
@@ -330,9 +329,12 @@ class admin_passwordreset
 		}
 	}
 
-	public function ajax_clear_credentials($action_id, $account_ids)
+	public function ajax_clear_credentials($action_id, $account_ids, $etemplate_exec_id)
 	{
 		$msg = [];
+
+		// check we have a valid etemplate_exec_id / CSRF token
+		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
 
 		if($action_id == 'clear_mail')
 		{
@@ -395,6 +397,9 @@ class admin_passwordreset
 	{
 		$msg = '';
 		$changed = [];
+
+		// check we have a valid etemplate_exec_id / CSRF token
+		Api\Etemplate\Request::csrfCheck($content['values']['etemplate_exec_id'], __METHOD__, func_get_args());
 
 		// Save message for next time
 		if(!empty($content['values']['subject']))

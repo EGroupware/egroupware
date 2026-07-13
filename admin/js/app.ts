@@ -1614,7 +1614,7 @@ class AdminApp extends EgwApp
 		{
 			ids.push(row.id.split("::").pop());
 		}
-		this.egw.request("admin.admin_passwordreset.ajax_clear_credentials", [action.id, ids]);
+		this.egw.request("admin.admin_passwordreset.ajax_clear_credentials", [action.id, ids, this.et2.getInstanceManager().etemplate_exec_id]);
 	}
 
 	/**
@@ -1874,6 +1874,7 @@ class AdminApp extends EgwApp
 	{
 		const data = [];
 		const values = this.et2.getInstanceManager().getValues(this.et2);
+		values.etemplate_exec_id = this.et2.getInstanceManager().etemplate_exec_id;
 		let users = values.users ?? [];
 		delete values.users;
 
