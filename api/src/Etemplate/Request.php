@@ -242,7 +242,7 @@ class Request
 	 */
 	public static function csrfCheck($id, $caller, $args=[])
 	{
-		if (!self::read($id, false))		// false: do NOT handle not found, but return null
+		if (empty($id) || !self::read($id, false))		// false: do NOT handle not found, but return null
 		{
 			error_log(__METHOD__."('$id', $caller, ".json_encode($args).") called with invalid/expired etemplate_exec_id: possible CSRF detected from IP ".$_SERVER['REMOTE_ADDR'].' to '.$_SERVER['REQUEST_METHOD'].' '.$_SERVER['REQUEST_URI']);
 			$msg = lang('Request could not be processed, please reload your window (press F5 or Cmd R)!');
