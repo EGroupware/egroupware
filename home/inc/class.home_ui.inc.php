@@ -666,7 +666,10 @@ class home_ui
 	public static function ajax_set_default($action, $portlet_ids, $group)
 	{
 		// Admins only
-		if(!$GLOBALS['egw_info']['apps']['admin']) return;
+		if(empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 
 		// Load the appropriate group
 		if($group)
