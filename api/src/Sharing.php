@@ -556,14 +556,20 @@ class Sharing
 
 			// WebDAV always looks at the original request for a single file so make sure the file is found at the root
 			Vfs::$is_root = true;
-			unset($GLOBALS['egw_info']['server']['vfs_fstab']);
+			try {
+				unset($GLOBALS['egw_info']['server']['vfs_fstab']);
 
-			// Make SURE resolve_url is set, otherwise webdav will give full access to /
-			if(!$this->share['resolve_url'])
-			{
-				$this->share['resolve_url'] = Vfs::resolve_url($this->share['share_path'], true, true, true, true);
+				// Make SURE resolve_url is set, otherwise webdav will give full access to /
+				if (!$this->share['resolve_url'])
+				{
+					$this->share['resolve_url'] = Vfs::resolve_url($this->share['share_path'], true, true, true, true);
+				}
+				Vfs::mount($this->share['resolve_url'], '/', false, false, true);
 			}
-			Vfs::mount($this->share['resolve_url'], '/', false, false, true);
+			finally
+			{
+				Vfs::$is_root = false;
+			}
 			Vfs::clearstatcache();
 
 			$webdav_server = new Vfs\WebDAV();
