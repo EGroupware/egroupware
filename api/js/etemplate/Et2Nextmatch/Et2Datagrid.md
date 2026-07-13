@@ -212,6 +212,29 @@ When only one widget needs dynamic styling, you can put the class expression on 
 }
 ```
 
+### Dynamic CSS Property
+
+When an owner widget needs to change the same row styling for all rendered rows, set a CSS custom property on the
+datagrid or owner widget and use it from the row stylesheet. This keeps row DOM updates out of application code and lets
+the browser apply the change to currently rendered and newly virtualized rows.
+
+```ts
+this.datagrid.style.setProperty("--app-row-details-display", showDetails ? "block" : "none");
+```
+
+```xml
+<row>
+    <et2-description class="entry-title" id="${title}" noLang="1"></et2-description>
+    <et2-description class="entry-details" id="${details}" noLang="1"></et2-description>
+</row>
+```
+
+```css
+.entry-details {
+	display: var(--app-row-details-display, none);
+}
+```
+
 ## Loader Template
 
 Optional placeholder template while rows are loading:

@@ -115,6 +115,35 @@ Have the server add an `overdue` class for rows that need attention, then style 
 }
 ```
 
+### Letting Users Show Or Hide Row Details
+
+For a list option such as "show details", set a CSS custom property on the nextmatch widget when the option changes.
+The row stylesheet can then use that value for every row, including rows that are rendered later while scrolling.
+
+```ts
+show_details(show, nextmatch : Et2Nextmatch)
+{
+	nextmatch?.style?.setProperty("--task-details-display", show ? "block" : "none");
+}
+```
+
+```xml
+<row class="$class">
+    <et2-description class="task-title" id="${title}" noLang="1"></et2-description>
+    <et2-description class="task-details" id="${description}" noLang="1"></et2-description>
+</row>
+```
+
+```css
+.task-details {
+	display: var(--task-details-display, none);
+	max-height: 5em;
+	overflow: clip;
+}
+```
+
+This is the same pattern InfoLog uses to show or hide description rows without updating each row individually.
+
 ### Wrapping Contact Details
 
 If the row contains a widget with internal layout, expose the part you need and style it from CSS.
