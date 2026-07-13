@@ -77,6 +77,13 @@ class Openidconnect implements BackendSSO
 				$attribute = $GLOBALS['egw_info']['server']['oic_username_custom'];
 			}
 			$account_lid = $this->client->getVerifiedClaims($attribute);
+
+			// check for email attribute, that email is either verified or unverified emails are explicitly allowed
+			if ($attribute === 'email' && ($this->client->getVerifiedClaims('email_verified')
+				|| !empty($GLOBALS['egw_info']['server']['oic_unverified_email'])))
+			{
+				return null;
+			}
 			// extract username with regular expression, if configured and matching
 			if (!empty($GLOBALS['egw_info']['server']['oic_username_preg']) && preg_match($GLOBALS['egw_info']['server']['oic_username_preg'], $account_lid))
 			{
