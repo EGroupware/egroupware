@@ -1,5 +1,6 @@
 import {assert} from "@open-wc/testing";
-import {Et2NextmatchDataProvider} from "../Et2NextmatchDataProvider";
+// @ts-ignore TS2691: web-test-runner transpiles this source import; generated JS may be stale here.
+import {Et2NextmatchDataProvider} from "../Et2NextmatchDataProvider.ts";
 
 function createProviderHost(overrides : Record<string, any> = {}) : any
 {
@@ -163,7 +164,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				const delays : Record<string, number> = {"uid-1": 15, "uid-2": 1, "uid-3": 5};
 				window.setTimeout(() =>
 				{
-					callback({title: uid.toUpperCase()}, uid);
+					callback({id: uid, title: uid.toUpperCase()}, uid);
 				}, delays[uid] || 0);
 			}
 			})
@@ -173,10 +174,47 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		const page = await provider.fetchPage(0, 25);
 		assert.deepEqual(
 			page.rows.map((row) => row.id),
-			["uid-1", "uid-2", "uid-3"],
+			["addressbook::uid-1", "addressbook::uid-2", "addressbook::uid-3"],
 			"row order should match server `order` list, not callback completion order"
 		);
 		assert.equal(page.total, 3, "total should come from response");
+	});
+
+	it("uses configured row_id field from row data for datagrid row identity", async() =>
+	{
+		const host = createProviderHost({
+			id: "nm-filemanager-row-id",
+			getInstanceManager: () => ({etemplate_exec_id: "exec-1", app: "filemanager"}),
+			egw: () => ({
+				app_name: () => "filemanager",
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					callback({
+						rows: {},
+						order: ["reused-row-uid-1", "reused-row-uid-2"],
+						total: 2
+					});
+				},
+				dataRegisterUID: (uid : string, callback : Function) =>
+				{
+					const paths : Record<string, string> = {
+						"reused-row-uid-1": "/home/demo/alpha.txt",
+						"reused-row-uid-2": "/home/demo/beta.txt"
+					};
+					callback({path: paths[uid], name: paths[uid].split("/").pop()}, "filemanager::shared");
+				}
+			})
+		});
+		host.settings = {row_id: "path"};
+
+		const provider = new Et2NextmatchDataProvider(host);
+		const page = await provider.fetchPage(0, 25);
+
+		assert.deepEqual(
+			page.rows.map((row) => row.id),
+			["filemanager::/home/demo/alpha.txt", "filemanager::/home/demo/beta.txt"],
+			"row ids should follow settings.row_id data values, not repeated datastore callback ids"
+		);
 	});
 
 	/**
@@ -209,7 +247,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				},
 				dataRegisterUID: (uid : string, callback : Function) =>
 				{
-					callback({title: "Child row"}, uid);
+					callback({id: uid, title: "Child row"}, uid);
 				}
 			})
 		});
@@ -319,7 +357,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 					(window as any).__providerRefreshCache = {
 						"addressbook::42": {
 							timestamp: Date.now(),
-							data: {uid: "addressbook::42", title: "Updated title"}
+							data: {id: "addressbook::42", uid: "addressbook::42", title: "Updated title"}
 						}
 					};
 					callback({rows: {}, total: request.refresh?.length || 1});
@@ -366,7 +404,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 			app_name: () => "calendar",
 			dataGetUIDdata: (uid : string) => ({
 				timestamp: Date.now(),
-				data: {uid, title: cachedTitle}
+				data: {id: uid, uid, title: cachedTitle}
 			}),
 			dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
 			{
@@ -413,7 +451,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 						calls.push({execId, request, filters, widgetId, context, rowIds});
 						cache["addressbook::42"] = {
 							timestamp: Date.now(),
-							data: {uid: "addressbook::42", title: `${type} row`}
+							data: {id: "addressbook::42", uid: "addressbook::42", title: `${type} row`}
 						};
 						callback({rows: {}, total: 1});
 					},
@@ -485,7 +523,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				app_name: () => "addressbook",
 				dataGetUIDdata: (uid : string) => ({
 					timestamp: Date.now(),
-					data: {uid, title: "Cache-backed row"}
+					data: {id: uid, uid, title: "Cache-backed row"}
 				}),
 				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
 				{
@@ -518,7 +556,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		const cache : Record<string, any> = {
 			"addressbook::42": {
 				timestamp: Date.now(),
-				data: {uid: "addressbook::42", title: "Existing row"}
+				data: {id: "addressbook::42", uid: "addressbook::42", title: "Existing row"}
 			}
 		};
 		const host = createProviderHost({
@@ -568,7 +606,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				app_name: () => "addressbook",
 				dataGetUIDdata: (uid : string) => ({
 					timestamp: Date.now(),
-					data: {uid, title: `refresh-${fetchCalls}`}
+					data: {id: uid, uid, title: `refresh-${fetchCalls}`}
 				}),
 				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
 				{
@@ -652,7 +690,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				app_name: () => "addressbook",
 				dataGetUIDdata: () => ({
 					timestamp: Date.now(),
-					data: {uid: "addressbook::99", title: "Destroyed"}
+					data: {id: "addressbook::99", uid: "addressbook::99", title: "Destroyed"}
 				}),
 				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
 				{
@@ -706,7 +744,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 					{
 						cache[`addressbook::${rowId}`] = {
 							timestamp: Date.now(),
-							data: {uid: `addressbook::${rowId}`, title: `Row ${rowId}`}
+							data: {id: `addressbook::${rowId}`, uid: `addressbook::${rowId}`, title: `Row ${rowId}`}
 						};
 					}
 					callback({rows: {}, total: 1});
@@ -786,8 +824,8 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	{
 		const calls : any[] = [];
 		const cache : Record<string, any> = {
-			"calendar::1": {timestamp: Date.now(), data: {uid: "calendar::1", title: "Event A"}},
-			"calendar::2": {timestamp: Date.now(), data: {uid: "calendar::2", title: "Event B"}}
+			"calendar::1": {timestamp: Date.now(), data: {id: "calendar::1", uid: "calendar::1", title: "Event A"}},
+			"calendar::2": {timestamp: Date.now(), data: {id: "calendar::2", uid: "calendar::2", title: "Event B"}}
 		};
 
 		const host = createProviderHost({
@@ -1044,6 +1082,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				dataGetUIDdata: (uid : string) => ({
 					timestamp: Date.now(),
 					data: {
+						id: uid,
 						uid,
 						ts_id: "123",
 						ts_title: "My Entry",
@@ -1086,7 +1125,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	it("maintains consistent result structure across all update types", async() =>
 	{
 		const cache : Record<string, any> = {
-			"mail::1": {timestamp: Date.now(), data: {uid: "mail::1", subject: "Email 1"}}
+			"mail::1": {timestamp: Date.now(), data: {id: "mail::1", uid: "mail::1", subject: "Email 1"}}
 		};
 
 		const host = createProviderHost({

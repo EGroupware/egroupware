@@ -1,6 +1,6 @@
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
-import {Et2DatagridColumn, Et2DatagridTemplateData} from "./Et2Datagrid.types";
+import {Et2DatagridColumn, Et2DatagridTemplateData, Et2DatagridTileLayout, Et2DatagridView} from "./Et2Datagrid.types";
 import "../Et2Customfields/Et2CustomfieldsList";
 
 interface Et2RowProviderHost extends HTMLElement
@@ -62,6 +62,10 @@ export class Et2RowProvider
 			{
 				rowRoot.setAttribute(name, resolved);
 			}
+		}
+		for(const id of categoryIds)
+		{
+			rowRoot.classList.add("row_category", `cat_${id}`);
 		}
 	}
 
@@ -294,6 +298,7 @@ export class Et2RowProvider
 		return {
 			columns,
 			rowTemplateId: rowElement?.id || undefined,
+			templateSignature: prepared?.signature,
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
@@ -330,12 +335,16 @@ export class Et2RowProvider
 
 		const columns : Et2DatagridColumn[] = this._extractColumnsFromHeaderNode(headerNode)
 			.map((c, index) => {return {...colMeta[index], ...c}});
-		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode);
+		const view = this._templateView(rowNode);
+		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode, view);
 		const prepared = this._prepareRowTemplate(normalizedRowNode, columns);
 
 		return {
+			view,
+			tileLayout: view === "tile" ? this._tileLayoutFromRowNode(rowNode) : undefined,
 			columns,
 			rowTemplateId: tplRoot.getAttribute("id") || tplRoot.id || normalizedRowNode?.id || undefined,
+			templateSignature: prepared?.signature,
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
@@ -475,7 +484,7 @@ export class Et2RowProvider
 	/**
 	 * Compile row template DOM into a reusable HTMLTemplateElement with tracked dynamic attributes.
 	 */
-	private _prepareRowTemplate(rowNode : Element, columns : Et2DatagridColumn[]) : { template : HTMLTemplateElement; xml : Element; attrMap : Record<string, Record<string, string>> } | null
+	private _prepareRowTemplate(rowNode : Element, columns : Et2DatagridColumn[]) : { template : HTMLTemplateElement; xml : Element; attrMap : Record<string, Record<string, string>>; signature : string } | null
 	{
 		if(!rowNode)
 		{
@@ -499,8 +508,35 @@ export class Et2RowProvider
 		return {
 			template,
 			xml,
-			attrMap
+			attrMap,
+			signature: this._rowTemplateSignature(template, attrMap)
 		};
+	}
+
+	/**
+	 * Produce a stable fingerprint for row-key and upgrade invalidation.
+	 */
+	private _rowTemplateSignature(template : HTMLTemplateElement, attrMap : Record<string, Record<string, string>>) : string
+	{
+		return [
+			template.innerHTML,
+			this._stableStringify(attrMap)
+		].join("\n");
+	}
+
+	private _stableStringify(value : any) : string
+	{
+		if(value === null || typeof value !== "object")
+		{
+			return JSON.stringify(value);
+		}
+		if(Array.isArray(value))
+		{
+			return "[" + value.map((entry) => this._stableStringify(entry)).join(",") + "]";
+		}
+		return "{" + Object.keys(value).sort().map((key) =>
+			JSON.stringify(key) + ":" + this._stableStringify(value[key])
+		).join(",") + "}";
 	}
 
 	/**
@@ -791,7 +827,7 @@ export class Et2RowProvider
 	/**
 	 * Normalize legacy <row> templates into proper table row markup.
 	 */
-	private _normalizeTemplateRowNode(rowNode : Element) : Element
+	private _normalizeTemplateRowNode(rowNode : Element, view : Et2DatagridView = "row") : Element
 	{
 		if(!rowNode)
 		{
@@ -799,6 +835,10 @@ export class Et2RowProvider
 		}
 
 		const tagName = rowNode.tagName.toLowerCase();
+		if(view === "tile")
+		{
+			return this._normalizeTileTemplateRowNode(rowNode);
+		}
 		if(tagName !== "row" && tagName !== "tr")
 		{
 			return rowNode.cloneNode(true) as Element;
@@ -842,6 +882,129 @@ export class Et2RowProvider
 		}
 
 		return newRow;
+	}
+
+	/**
+	 * Normalize legacy tile rows into a non-table item root.
+	 *
+	 * Tile view must keep each entry as an individual virtual item. We therefore
+	 * strip legacy row/cell wrappers and keep the actual tile content under a div.
+	 */
+	private _normalizeTileTemplateRowNode(rowNode : Element) : Element
+	{
+		const tile = document.createElement("div");
+		for(let i = 0; i < rowNode.attributes.length; i++)
+		{
+			tile.setAttribute(rowNode.attributes[i].name, rowNode.attributes[i].value);
+		}
+		tile.classList.add("tile");
+
+		const appendChild = (child : Node) =>
+		{
+			if(child.nodeType === Node.TEXT_NODE)
+			{
+				if(child.nodeValue && child.nodeValue.trim() !== "")
+				{
+					tile.appendChild(document.createTextNode(child.nodeValue));
+				}
+				return;
+			}
+			if(child.nodeType !== Node.ELEMENT_NODE)
+			{
+				return;
+			}
+			const childElement = child as Element;
+			const tag = childElement.tagName.toLowerCase();
+			if(tag === "td" || tag === "th")
+			{
+				for(const nested of Array.from(childElement.childNodes))
+				{
+					appendChild(nested);
+				}
+				return;
+			}
+			tile.appendChild(childElement.cloneNode(true));
+		};
+
+		for(const child of Array.from(rowNode.childNodes))
+		{
+			appendChild(child);
+		}
+
+		return tile;
+	}
+
+	/**
+	 * Infer the template's intended layout without changing server data.
+	 */
+	private _templateView(rowNode : Element | null) : Et2DatagridView
+	{
+		return rowNode?.classList?.contains("tile") ? "tile" : "row";
+	}
+
+	/**
+	 * Extract fixed tile dimensions from generic tile markup when available.
+	 */
+	private _tileLayoutFromRowNode(rowNode : Element | null) : Et2DatagridTileLayout
+	{
+		const tileContent = this._tileContentElement(rowNode);
+		const width =
+			rowNode?.getAttribute("data-tile-width") ||
+			rowNode?.getAttribute("tile-width") ||
+			tileContent?.getAttribute("width") ||
+			(tileContent as HTMLElement | null)?.style?.width ||
+			undefined;
+		const height =
+			rowNode?.getAttribute("data-tile-height") ||
+			rowNode?.getAttribute("tile-height") ||
+			tileContent?.getAttribute("height") ||
+			(tileContent as HTMLElement | null)?.style?.height ||
+			undefined;
+		return {
+			width: this._normalizeCssLength(width) || "150px",
+			height: this._normalizeCssLength(height) || "120px",
+			gap: "4px",
+			padding: "4px"
+		};
+	}
+
+	private _tileContentElement(rowNode : Element | null) : Element | null
+	{
+		if(!rowNode)
+		{
+			return null;
+		}
+		const explicitlySized = rowNode.querySelector("[data-tile-width],[data-tile-height],[tile-width],[tile-height],[width],[height]");
+		if(explicitlySized)
+		{
+			return explicitlySized;
+		}
+		for(const child of Array.from(rowNode.children))
+		{
+			const tag = child.tagName.toLowerCase();
+			if(tag !== "td" && tag !== "th")
+			{
+				return child;
+			}
+			const nested = Array.from(child.children).find((element) =>
+				element.tagName.toLowerCase() !== "td" && element.tagName.toLowerCase() !== "th"
+			);
+			if(nested)
+			{
+				return nested;
+			}
+		}
+		return null;
+	}
+
+	private _normalizeCssLength(value? : string | null) : string | undefined
+	{
+		const length = String(value || "").trim();
+		if(!length)
+		{
+			return undefined;
+		}
+		return /^\d+(\.\d+)?$/.test(length) ? `${length}px` : length;
 	}
 
 	/**

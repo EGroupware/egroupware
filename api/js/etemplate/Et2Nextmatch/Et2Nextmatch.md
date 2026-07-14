@@ -42,6 +42,57 @@ Full details for columns, rows, expression syntax, wrapper behaviour, and loader
 
 - [Et2Datagrid](/components/et2-datagrid)
 
+### Tile View
+
+Use tile view when entries should be shown as individual cards or thumbnails instead of table rows. The default view is
+`row`; switch to tile view on the client with `setView("tile")` or by setting the `view` property.
+
+```ts
+nextmatch.setView("tile");
+nextmatch.template = "example.tile";
+```
+
+The `view` property only changes client-side rendering. It does not change the data provider request shape by itself.
+Calling `applyFilters({view: "tile"})` is not required for tile rendering.
+
+A tile template uses the normal nextmatch template structure, but the data row has the `tile` class. Each entry remains
+its own virtualized item and flows left-to-right, wrapping to the next visual line according to available width.
+
+```xml
+<template id="example.tile">
+    <grid width="100%">
+        <columns>
+            <column width="100%"/>
+        </columns>
+        <rows>
+            <row class="th">
+                <nextmatch-header/>
+            </row>
+            <row class="tile $row_cont[class]">
+                <et2-vbox class="tile-card" width="140px" height="120px">
+                    <et2-image src="${row}[icon]" label="${row}[title]"></et2-image>
+                    <et2-description id="${row}[title]" noLang="1"></et2-description>
+                </et2-vbox>
+            </row>
+        </rows>
+    </grid>
+</template>
+```
+
+Set fixed dimensions on the tile content with `width` and `height`, or set `data-tile-width` and `data-tile-height` on
+the tile row. The virtualizer uses those values to estimate placement and scrolling.
+
+```xml
+<row class="tile" data-tile-width="140px" data-tile-height="120px">
+    <et2-vbox class="tile-card">
+        ...
+    </et2-vbox>
+</row>
+```
+
+Keep tile CSS in the application's `templates/default/app.css`, the same as row CSS. Use application-owned class names
+for tile content; shared Nextmatch code only depends on the `tile` row class and generic sizing attributes.
+
 ### Notes
 
 - If both a `template` attribute and slotted templates are provided, `template` wins.

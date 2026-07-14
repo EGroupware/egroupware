@@ -1192,11 +1192,11 @@ describe("Et2Datagrid row rendering", () =>
 		el.dataProvider = createDatagridDataProvider({
 			fetchPage: async() => ({rows: [], total: 1}),
 			refresh: async() => ({
-				rows: [{id: "addressbook::row-1", data: {uid: "addressbook::row-1", label: "Updated row"}}],
+				rows: [{id: "addressbook::row-1", data: {id: "addressbook::row-1", uid: "addressbook::row-1", label: "Updated row"}}],
 				removedRowIds: []
 			})
 		}) as any;
-		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
+		el.setInitialRows([{id: "addressbook::row-1", uid: "addressbook::row-1", label: "Original row"}]);
 		el.selectSingleRow("addressbook::row-1");
 		await new Promise((resolve) => window.setTimeout(resolve, 0));
 		let selectionEvents = 0;
@@ -1245,11 +1245,11 @@ describe("Et2Datagrid row rendering", () =>
 		};
 		el.dataProvider = createDatagridDataProvider({
 			refresh: async() => ({
-				rows: [{id: "addressbook::row-1", data: {uid: "addressbook::row-1", label: "No children", is_parent: false}}],
+				rows: [{id: "addressbook::row-1", data: {id: "addressbook::row-1", uid: "addressbook::row-1", label: "No children", is_parent: false}}],
 				removedRowIds: []
 			})
 		}) as any;
-		el.setInitialRows([{uid: "addressbook::row-1", label: "Parent row", is_parent: true}]);
+		el.setInitialRows([{id: "addressbook::row-1", uid: "addressbook::row-1", label: "Parent row", is_parent: true}]);
 		el.total = 1;
 
 		assert.deepEqual(
@@ -1314,11 +1314,11 @@ describe("Et2Datagrid row rendering", () =>
 		el.dataProvider = createDatagridDataProvider({
 			fetchPage: async() => ({rows: [], total: 2}),
 			refresh: async() => ({
-				rows: [{id: "addressbook::row-2", data: {uid: "addressbook::row-2", label: "Inserted row"}}],
+				rows: [{id: "addressbook::row-2", data: {id: "addressbook::row-2", uid: "addressbook::row-2", label: "Inserted row"}}],
 				removedRowIds: []
 			})
 		}) as any;
-		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
+		el.setInitialRows([{id: "addressbook::row-1", uid: "addressbook::row-1", label: "Original row"}]);
 		el.total = 1;
 		el.selectSingleRow("addressbook::row-1");
 

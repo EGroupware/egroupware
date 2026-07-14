@@ -12,10 +12,26 @@ export interface Et2DatagridColumn
 	hidden? : boolean;
 }
 
+export type Et2DatagridView = "row" | "tile";
+
+export interface Et2DatagridTileLayout
+{
+	width? : string;
+	height? : string;
+	gap? : string;
+	padding? : string;
+}
+
 export interface Et2DatagridTemplateData
 {
 	/** Source template id used for persisted column preference keys. */
 	rowTemplateId? : string;
+	/** Fingerprint of normalized row markup and deferred row attributes used for render invalidation. */
+	templateSignature? : string;
+	/** Visual layout expected by the row template. Defaults to row. */
+	view? : Et2DatagridView;
+	/** Optional tile sizing hints used by virtualized tile view. */
+	tileLayout? : Et2DatagridTileLayout;
 	rowTemplate : HTMLTemplateElement | null;
 	rowTemplateXml : Element | null;
 	/** Stored row-template attributes keyed by generated widget id. */
