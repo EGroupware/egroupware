@@ -81,6 +81,10 @@ class importexport_definition implements importexport_iface_egw_record {
 			if ( !( importexport_definitions_bo::is_permitted($this->get_record_array()) || $this->is_admin)) {
 				throw new Exception('Error: User "'.$this->user.'" is not permitted to get definition with identifier "'.$_identifier.'"!');
 			}
+			if(!importexport_helper_functions::is_valid_plugin($this->definition['plugin']))
+			{
+				throw new Exception('Error: Can\'t load definition, "' . $this->definition['plugin'] . '" is not a valid plugin!');
+			}
 			set_error_handler(function($errorno, $errorstr, $errorfile, $errorline)
 			{
 				if(0=== error_reporting())
@@ -146,7 +150,7 @@ class importexport_definition implements importexport_iface_egw_record {
 
 	public function __set($_attribute_name,$_data) {
 		if (!array_key_exists($_attribute_name,$this->attributes)) {
-			throw new Exception('Error: "'. $_attribute_name. '" is not an attribute defintion');
+			throw new Exception('Error: "' . $_attribute_name . '" is not an attribute definition');
 		}
 		switch ($_attribute_name) {
 			case 'allowed_users' :
@@ -155,6 +159,13 @@ class importexport_definition implements importexport_iface_egw_record {
 				return $this->set_options($_data);
 			case 'filter':
 				return $this->set_filter((Array)$_data);
+			case 'plugin':
+				if($_data && !importexport_helper_functions::is_valid_plugin($_data))
+				{
+					throw new Exception('Error: Can\'t save definition, "' + (string)$_data + '" is not a valid plugin!');
+				}
+				$this->definition[$_attribute_name] = $_data;
+				return;
 			default :
 				$this->definition[$_attribute_name] = $_data;
 				return;
@@ -301,6 +312,10 @@ class importexport_definition implements importexport_iface_egw_record {
 	public function save ( $_dst_identifier ) {
 		if ( strlen($this->definition['name']) < 3 ) {
 			throw new Exception('Error: Can\'t save definition, no valid name given!');
+		}
+		if(!importexport_helper_functions::is_valid_plugin($this->definition['plugin']))
+		{
+			throw new Exception('Error: Can\'t save definition, "' + $this->definition['plugin'] + '" is not a valid plugin!');
 		}
 
 		$this->so_sql->data = $this->definition;

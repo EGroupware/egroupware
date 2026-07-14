@@ -777,4 +777,32 @@ class importexport_helper_functions {
 		}
 		return null;
 	}
+
+
+	/**
+	 * Check whether a given class-name is a registered import/export plugin
+	 *
+	 * @param string $plugin class-name to check
+	 * @param string $_appname ='all'
+	 * @param string $_type ='all' 'import', 'export' or 'all'
+	 * @return boolean true if $plugin is a known/registered plugin
+	 */
+	public static function is_valid_plugin($plugin, $_appname = 'all', $_type = 'all')
+	{
+		if(empty($plugin) || !is_string($plugin))
+		{
+			return false;
+		}
+		foreach(self::get_plugins($_appname, $_type) as $by_type)
+		{
+			foreach((array)$by_type as $class_map)
+			{
+				if(is_array($class_map) && isset($class_map[$plugin]))
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
 } // end of importexport_helper_functions
