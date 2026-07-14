@@ -506,7 +506,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			{
 				if($fields[$field])
 				{
-					$label = $fields[$field];
+					$label = is_string($fields[$field]) ?: ($fields[$field]['label'] ?? $field);
 				}
 			}
 		}
