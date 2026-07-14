@@ -70,160 +70,161 @@ Deleting with `DELETE` requests is only possible, if the invoice has NOT been is
 }
 ```
 
-| BT Number          | Description                                 | JSON-Path                                                                                                         |
-|--------------------|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
-| **Invoice Data**   |                                             |                                                                                                                   |
-| BT-1               | Invoice number                              | `/ExchangedDocument/ID`                                                                                           |
-| BT-2               | Invoice issue date (YYYYmmdd)               | `/ExchangedDocument/IssueDateTime`                                                                                |
-| BT-3               | Invoice type code e.g. 380                  | `/ExchangedDocument/TypeCode`                                                                                     |
-| BT-22              | Notes (array of)                            | `/ExchangedDocument/IncludedNote/{n}/Content` (`/Content` can be skiped, if no SubjectCode)                       |    
-| BT-21              | SubjectCode                                 | `/ExchangedDocument/IncludedNote/{n}/SubjectCode`                                                                 |     
-|                    |                                             |                                                                                                                   |
-| BT-23              | Business process type identifier            | `/ExchangedDocument/BusinessProcessSpecifiedDocumentContextParameter/BusinessProcessType`                         |
-| BT-24              | Specification identifier                    | `/ExchangedDocument/SpecifiedExchangedDocumentContext/GuidelineSpecifiedDocumentContextParameter/ID`              |
-|                    |                                             |                                                                                                                   |
-| **References**     |                                             | `/SupplyChainTradeTransaction/ApplicableHeaderTradeAgreement`                                                     |
-| BT-10              | Buyer reference (Leitweg-ID)                | + `BuyerReference`                                                                                                |
-| BT-11              | Project reference                           | + `SpecifiedProcuringProject/ID`                                                                                  |                                                                
-|                    | Project name                                | + `SpecifiedProcuringProject/Name`                                                                                |                                                                 
-| BT-12              | Contract reference (contract nr)            | + `ContractReferencedDocument`                                                                                    |
-| BT-13              | Buyer order reference (order nr)            | + `BuyerOrderReferencedDocument`                                                                                  |
+| BT Number          | Description                                | JSON-Path                                                                                                         |
+|--------------------|--------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| **Invoice Data**   |                                            |                                                                                                                   |
+| BT-1               | Invoice number                             | `/ExchangedDocument/ID`                                                                                           |
+| BT-2               | Invoice issue date (YYYYmmdd)              | `/ExchangedDocument/IssueDateTime`                                                                                |
+| BT-3               | Invoice type code e.g. 380                 | `/ExchangedDocument/TypeCode`                                                                                     |
+| BT-22              | Notes (array of)                           | `/ExchangedDocument/IncludedNote/{n}/Content` (`/Content` can be skiped, if no SubjectCode)                       |    
+| BT-21              | SubjectCode                                | `/ExchangedDocument/IncludedNote/{n}/SubjectCode`                                                                 |     
+|                    |                                            |                                                                                                                   |
+| BT-23              | Business process type identifier           | `/ExchangedDocument/BusinessProcessSpecifiedDocumentContextParameter/BusinessProcessType`                         |
+| BT-24              | Specification identifier                   | `/ExchangedDocument/SpecifiedExchangedDocumentContext/GuidelineSpecifiedDocumentContextParameter/ID`              |
+|                    |                                            |                                                                                                                   |
+| **References**     |                                            | `/SupplyChainTradeTransaction/ApplicableHeaderTradeAgreement`                                                     |
+| BT-10              | Buyer reference (Leitweg-ID)               | + `BuyerReference`                                                                                                |
+| BT-11              | Project reference                          | + `SpecifiedProcuringProject/ID`                                                                                  |                                                                
+|                    | Project name                               | + `SpecifiedProcuringProject/Name`                                                                                |                                                                 
+| BT-12              | Contract reference (contract nr)           | + `ContractReferencedDocument`                                                                                    |
+| BT-13              | Buyer order reference (order nr)           | + `BuyerOrderReferencedDocument`                                                                                  |
 | BT-14              | Seller order reference (order confirmation) | + `SellerOrderReferencedDocument`                                                                                 |
-|                    |                                             |                                                                                                                   |
-| **Seller**         |                                             | + `SellerTradeParty`                                                                                              |         
-| BT-29              | Seller ID                                   | ++ `ID`                                                                                                           |
-| BT-27              | Seller name                                 | ++ `Name`                                                                                                         |
-| BT-31              | Seller VAT identifier                       | ++ `SpecifiedTaxRegistration/ID-VA`                                                                               |
-| BT-32              | Seller tax registration identifier          | ++ `SpecifiedTaxRegistration/ID-FC`                                                                               |
-| BT-35..40          | Seller address ...                          | ++ `PostalTradeAddress`                                                                                           |
-| BT-35              | Seller address line 1                       | +++ `LineOne`                                                                                                     |
-| BT-36              | Seller address line 2                       | +++ `LineTwo`                                                                                                     |
-| BT-37              | Seller city                                 | +++ `CityName`                                                                                                    |
-| BT-38              | Seller postal code                          | +++ `PostcodeCode`                                                                                                |
-| BT-40              | Seller country code e.g. "DE"               | +++ `CountryID`                                                                                                   |
-| BT-41..43          | Seller contact ...                          | ++ `DefinedTradeContact`                                                                                          |
-| BT-41              | Seller contact name                         | +++ `PersonName`                                                                                                  |
-| BT-41-0            | Seller contact department                   | +++ `DepartmentName`                                                                                              |
-| BT-42              | Seller contact telephone                    | +++ `TelephoneUniversalCommunication`                                                                             |
-| BT-43              | Seller contact email                        | +++ `EmailURIUniversalCommunication`                                                                              |
-| BT-34              | Seller email                                | ++ `URIUniversalCommunication`                                                                                    |                                                                       |
-|                    | Sets seller information from addressbook    | ++ `ContactID`                                                                                                    |
-|                    |                                             |                                                                                                                   |
-| **Buyer**          |                                             | + `BuyerTradeParty`                                                                                               |               
-| BT-46              | Buyer ID                                    | ++ `ID`                                                                                                           |
-| BT-44              | Buyer name                                  | ++ `Name`                                                                                                         |
-| BT-48              | Buyer VAT identifier                        | ++ `SpecifiedTaxRegistration/ID-VA`                                                                               |
-| BT-47              | Seller tax registration identifier          | ++ `SpecifiedTaxRegistration/ID-FC`                                                                               |
-| BT-50..55          | Buyer address ...                           | ++ `PostalTradeAddress`                                                                                           |
-| BT-50              | Buyer address line 1                        | +++ `LineOne`                                                                                                     |
-| BT-51              | Buyer address line 2                        | +++ `LineTwo`                                                                                                     |
-| BT-52              | Buyer city                                  | +++ `CityName`                                                                                                    |
-| BT-53              | Buyer postal code                           | +++ `PostcodeCode`                                                                                                |
-| BT-55              | Buyer country code                          | +++ `CountryID`                                                                                                   |
-| BT-56..58          | Buyer contact ...                           | ++ `DefinedTradeContact`                                                                                          |
-| BT-56              | Buyer contact name                          | +++ `PersonName`                                                                                                  |
-| BT-56-0            | Buyer contact department                    | +++ `DepartmentName`                                                                                              |
-| BT-57              | Buyer contact telephone                     | +++ `TelephoneUniversalCommunication`                                                                             |
-| BT-58              | Buyer contact email                         | +++ `EmailURIUniversalCommunication`                                                                              |
-| BT-49              | Buyer email                                 | ++ `URIUniversalCommunication`                                                                                    |                                                                       |
-|                    | Sets buyer information from Addressbook     | ++ `ContactID`                                                                                                    |
-|                    |                                             |                                                                                                                   |
-| **OtherParties**   | See seller and buyer for attributes         | `/SupplyChainTradeTransaction/ApplicableHeaderTradeAgreement`                                                     |
-| BT-                | Invoicee                                    | + `InvoiceeTradeParty`                                                                                            |               
-| BT-                | Ship to                                     | + `ShipToTradeParty`                                                                                              |               
-| BT-                | Ultimate ship to                            | + `UltimateShiptoTradeParty`                                                                                      |               
-| BT-                | Product end user                            | + `ProductEndUserTradeParty`                                                                                      |               
-| BT-                | Invoicer                                    | + `InvoicerTradeParty`                                                                                            |               
-| BT-                | Ship from                                   | + `ShipFromTradeParty`                                                                                            |               
-| BT-                | Payee                                       | + `PayeeTradeParty`                                                                                               |               
-| BT-                | Tax representative                          | + `TaxRepresentativeTradeParty`                                                                                   |               
-|                    |                                             |                                                                                                                   |
-| **Invoice Lines**  |                                             | `/SupplyChainTradeTransaction/IncludedSupplyChainTradeLineItem/*/` (array of objects)                             |                                 
-| BT-126             | Invoice line identifier (position number)   | + `AssociatedDocumentLineDocument/LineID` (`/ID` can be skipped)                                                  |
-| BT-127             | Invoice line note                           | + `AssociatedDocumentLineDocument/IncludedNote` (`/Content` can be skipped)                                       |
-| BT-129             | Invoice line quantity                       | + `SpecifiedLineTradeDelivery/BilledQuantity`                                                                     |
-| BT-130             | Invoice line quantity UnitCode              | + `SpecifiedLineTradeDelivery/BilledQuantityUnitCode`                                                             |
-| BT-153             | Invoice line item name                      | + `SpecifiedTradeProduct/Name`                                                                                    |
-| BT-154             | Invoice line item description               | + `SpecifiedTradeProduct/Description`                                                                             |
-| BT-159             | Invoice line item county of origin          | + `SpecifiedTradeProduct/OriginTradeCountry`                                                                      |
-| BT-146             | Invoice line net price                      | + `SpecifiedLineTradeAgreement/NetPriceProductTradePrice`                                                         |                                                                                                 
-| BT-                | VAT type code always "VAT"                  | + `SpecifiedLineTradeSettlement/ApplicableTradeTax/TypeCode` (can be skipped)                                     |
-| BT-151             | VAT category code e.g. "S"                  | + `SpecifiedLineTradeSettlement/ApplicableTradeTax/CategoryCode`                                                  |
-| BT-152             | VAT category rate in percent                | + `SpecifiedLineTradeSettlement/ApplicableTradeTax/RateApplicablePercent`                                         |
-| BT-131             | Invoice line net amount (summarion)         | + `SpecifiedLineTradeSettlement/SpecifiedTradeSettlementLineMonetarySummation`                                    |
-| BT-160             | Product charactarisation name               |                                                                                                                   |
-| BT-161             | Product charactarisation value              |                                                                                                                   |
-|                    | Line item allowances or surcharges          | + `SpecifiedLineTradeSettlement/SpecifiedTradeAllowanceCharge/*/` (max 100 objects)                               |
-|                    | true: surcharge, false: allowance           | ++ `ChargeIndicator`                                                                                              |                                                            
-| BT-136/141 (al/su) | Actual amount                               | ++ `ActualAmount`                                                                                                 |
-| BT-137/142         | Basis amount                                | ++ `BasisAmount`                                                                                                  |
-| BT-138/143         | Percent, if applicable                      | ++ `CalculationPercent`                                                                                           |                                                             
-| BT-139/144         | Reason                                      | ++ `Reason`                                                                                                       |
-| BT-140/155         | Reason code (optional)                      | ++ `ReasonCode`                                                                                                   |
-|                    |                                             |                                                                                                                   |
-| **Invoice Level**  | **Allowances or Surcharges**                | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/SpecifiedTradeAllowanceCharge/*/` (max 100 objects) |
-|                    | true: surcharge, false: allowance           | + `ChargeIndicator`                                                                                               |                                                            
-| BT-92/99 (al/su)   | Actual amount                               | + `ActualAmount`                                                                                                  |
-| BT-93/100          | Basis amount                                | + `BasisAmount`                                                                                                   |
-| BT-94/101          | Percent, if applicable                      | + `CalculationPercent`                                                                                            |                                                             
-| BT-97/104          | Reason                                      | + `Reason`                                                                                                        |
-| BT-98/105          | Reason code (optional)                      | + `ReasonCode`                                                                                                    |
-|                    | VAT category                                | + `CategoryTradeTax`                                                                                              |
-| BT-95/102          | VAT category code e.g. "S"                  | ++ `CategoryCode`                                                                                                 |
-| BT-96/103          | VAT category rate (percent)                 | ++ `RateApplicablePercent`                                                                                        |                                                                                    
-|                    | Tax type code (optional, always "VAT")      | ++ `TypeCode`                                                                                                     |                                                                                             
-|                    |                                             |                                                                                                                   |
-| **Invoice Totals** |                                             | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/SpecifiedTradeSettlementHeaderMonetarySummation`    |
-| BT-106             | Sum of invoice line net amounts             | + `LineTotalAmount`                                                                                               |
-| BT-107             | Sum of allowances                           | + `AllowanceTotalAmount`                                                                                          |
-| BT-108             | Sum of surcharges                           | + `ChargeTotalAmount`                                                                                             |
-| BT-109             | Invoice total amount without VAT            | + `TaxBasisTotalAmount`                                                                                           |
-| BT-110             | Total VAT amount                            | + `TaxTotalAmount`                                                                                                |
-| BT-110             | Total VAT amount currency ID e.g. "EUR"     | + `TaxTotalAmountCurrencyID`                                                                                      |
-| BT-112             | Invoice total amount with VAT               | + `GrandTotalAmount`                                                                                              |
-| BT-113             | Prepaid amount                              | + `TotalPrepaidAmount`                                                                                            |
-| BT-114             | Rounding amount                             | + `GrandTotalAmount`                                                                                              |
-| BT-115             | Due payable amount                          | + `DuePaybleAmount`                                                                                               |
-|                    |                                             |                                                                                                                   |
-| **VAT Summation**  |                                             | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/ApplicableTradeTax/*/` (array of objects)           |
-| BT-116             | VAT category taxable amount                 | + `BasisAmount`                                                                                                   |
-| BT-117             | VAT category tax amount                     | + `ActualAmount`                                                                                                  |
-| BT-118             | VAT category code e.g. "S"                  | + `CategoryCode`                                                                                                  |
-| BT-119             | VAT category rate (percent)                 | + `CalculatedAmount`                                                                                              |
-| BT-120             | VAT excemption reason                       | + `CalculatedAmount`                                                                                              |
-| BT-121             | VAT excemption reason code                  | + `CalculatedAmount`                                                                                              |
-|                    |                                             |                                                                                                                   |
-| **Billing Period** |                                             | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/BillingSpecifiedPeriod`                             |   
-| BT-73              | Start date in format 102 YYYYmmdd           | + `StartDateTime`                                                                                                 |
-| BT-74              | End date in format 102 YYYYmmdd             | + `EndDateTime`                                                                                                   |
-|                    |                                             |                                                                                                                   |
-| **Payment Terms**  |                                             | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/SpecifiedTradePaymentTerms`                         |
-| BT-20              | Description                                 | + `Description`  fixed value: `#SKONTO#TAGE=7#PROZENT=2.00#description`                                           |
-| BT-9               | Due date in format 102 YYYYmmdd             | + `DueDateDateTime`                                                                                               |
-|                    |                                             |                                                                                                                   |
-| **Payment Data**   |                                             | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement`                                                    |
-| BT-5               | Invoice currencya code e.g. "EUR"           | +`InvoiceCurrencyCode`                                                                                            |
-| BT-81              | Payment mean type code                      | + `SpecifiedTradeSettlementPaymentMeans/TypeCode`                                                                 |
-|                    | SEPA transfer TypeCode=58                   | + ``                                                                                                              |
-| BT-84              | Payment account identifier (IBAN)           | + `SpecifiedTradeSettlementPaymentMeans/PayeePartyCreditorFinancialAccount/IBANID`                                |
-| BT-86              | Payment service provider identifier (BIC)   | + `SpecifiedTradeSettlementPaymentMeans/PayeePartyCreditorFinancialAccount/BICID`                                 |
-|                    | Credit card TypeCode=48                     | + `SpecifiedTradeSettlementPaymentMeans/ApplicableTradeSettlementFinancialCard`                                   |
-| BT-87              | Credit card number                          | ++ `ID`                                                                                                           |
-| BT-88              | Credit card holder name                     | ++ `CardholderName`                                                                                               |
-| BT-91              | SEPA mandate TypeCode=59                    | + `SpecifiedTradeSettlementPaymentMeans/PayerPartyDebtorFinancialAccount`                                         |
-| BT-89              | Direct debit mandate ID                     | + `SpecifiedTradePaymentTerms/DirectDebitMandateID`                                                               |
-| BT-90              | Bank assigned creditor identifyier          | + `CreditorReferenceID`                                                                                           |     
-| BT-83              | Payment instruction note (purpose)          | + `/ExchangedDocument/SpecifiedTradeSettlementPaymentMeans/PaymentInstructionNote`                                |
-|                    |                                             |                                                                                                                   |
-| **MetaData**       |                                             | `/MetaData` attributes are readonly, unless otherwise noted                                                       |
-| no bt-numbers      | Status: `draft`, `issued`, `imported`       | + `Status`  writable, but only certain transitions allowd                                                         |
-|                    | Creator email of creator                    | + `Creator`                                                                                                       |
-|                    | Created date/time                           | + `Created`                                                                                                       |
-|                    | Last modifier email                         | + `Modifier`                                                                                                      |
-|                    | Modified date/time                          | + `Modified`                                                                                                      |
-|                    | Category object: { `cat-name`: true }       | + `Catgory` writable                                                                                              |
-|                    | Description private notes, not in invoice   | + `Description` writable                                                                                          |
-|                    | Path of object e.g. `/invoices/123`         | + `Path`                                                                                                          |
+|                    |                                            |                                                                                                                   |
+| **Seller**         |                                            | + `SellerTradeParty`                                                                                              |         
+| BT-29              | Seller ID                                  | ++ `ID`                                                                                                           |
+| BT-27              | Seller name                                | ++ `Name`                                                                                                         |
+| BT-31              | Seller VAT identifier                      | ++ `SpecifiedTaxRegistration/ID-VA`                                                                               |
+| BT-32              | Seller tax registration identifier         | ++ `SpecifiedTaxRegistration/ID-FC`                                                                               |
+| BT-35..40          | Seller address ...                         | ++ `PostalTradeAddress`                                                                                           |
+| BT-35              | Seller address line 1                      | +++ `LineOne`                                                                                                     |
+| BT-36              | Seller address line 2                      | +++ `LineTwo`                                                                                                     |
+| BT-37              | Seller city                                | +++ `CityName`                                                                                                    |
+| BT-38              | Seller postal code                         | +++ `PostcodeCode`                                                                                                |
+| BT-40              | Seller country code e.g. "DE"              | +++ `CountryID`                                                                                                   |
+| BT-41..43          | Seller contact ...                         | ++ `DefinedTradeContact`                                                                                          |
+| BT-41              | Seller contact name                        | +++ `PersonName`                                                                                                  |
+| BT-41-0            | Seller contact department                  | +++ `DepartmentName`                                                                                              |
+| BT-42              | Seller contact telephone                   | +++ `TelephoneUniversalCommunication`                                                                             |
+| BT-43              | Seller contact email                       | +++ `EmailURIUniversalCommunication`                                                                              |
+| BT-34              | Seller email                               | ++ `URIUniversalCommunication`                                                                                    |                                                                       |
+|                    | Sets seller information from addressbook   | ++ `ContactID`                                                                                                    |
+|                    |                                            |                                                                                                                   |
+| **Buyer**          |                                            | + `BuyerTradeParty`                                                                                               |               
+| BT-46              | Buyer ID                                   | ++ `ID`                                                                                                           |
+| BT-44              | Buyer name                                 | ++ `Name`                                                                                                         |
+| BT-48              | Buyer VAT identifier                       | ++ `SpecifiedTaxRegistration/ID-VA`                                                                               |
+| BT-47              | Seller tax registration identifier         | ++ `SpecifiedTaxRegistration/ID-FC`                                                                               |
+| BT-50..55          | Buyer address ...                          | ++ `PostalTradeAddress`                                                                                           |
+| BT-50              | Buyer address line 1                       | +++ `LineOne`                                                                                                     |
+| BT-51              | Buyer address line 2                       | +++ `LineTwo`                                                                                                     |
+| BT-52              | Buyer city                                 | +++ `CityName`                                                                                                    |
+| BT-53              | Buyer postal code                          | +++ `PostcodeCode`                                                                                                |
+| BT-55              | Buyer country code                         | +++ `CountryID`                                                                                                   |
+| BT-56..58          | Buyer contact ...                          | ++ `DefinedTradeContact`                                                                                          |
+| BT-56              | Buyer contact name                         | +++ `PersonName`                                                                                                  |
+| BT-56-0            | Buyer contact department                   | +++ `DepartmentName`                                                                                              |
+| BT-57              | Buyer contact telephone                    | +++ `TelephoneUniversalCommunication`                                                                             |
+| BT-58              | Buyer contact email                        | +++ `EmailURIUniversalCommunication`                                                                              |
+| BT-49              | Buyer email                                | ++ `URIUniversalCommunication`                                                                                    |                                                                       |
+|                    | Sets buyer information from Addressbook    | ++ `ContactID`                                                                                                    |
+|                    |                                            |                                                                                                                   |
+| **OtherParties**   | See seller and buyer for attributes        | `/SupplyChainTradeTransaction/ApplicableHeaderTradeAgreement`                                                     |
+| BT-                | Invoicee                                   | + `InvoiceeTradeParty`                                                                                            |               
+| BT-                | Ship to                                    | + `ShipToTradeParty`                                                                                              |               
+| BT-                | Ultimate ship to                           | + `UltimateShiptoTradeParty`                                                                                      |               
+| BT-                | Product end user                           | + `ProductEndUserTradeParty`                                                                                      |               
+| BT-                | Invoicer                                   | + `InvoicerTradeParty`                                                                                            |               
+| BT-                | Ship from                                  | + `ShipFromTradeParty`                                                                                            |               
+| BT-                | Payee                                      | + `PayeeTradeParty`                                                                                               |               
+| BT-                | Tax representative                         | + `TaxRepresentativeTradeParty`                                                                                   |               
+|                    |                                            |                                                                                                                   |
+| **Invoice Lines**  |                                            | `/SupplyChainTradeTransaction/IncludedSupplyChainTradeLineItem/*/` (array of objects)                             |                                 
+| BT-126             | Invoice line identifier (position number)  | + `AssociatedDocumentLineDocument/LineID` (`/ID` can be skipped)                                                  |
+| BT-127             | Invoice line note                          | + `AssociatedDocumentLineDocument/IncludedNote` (`/Content` can be skipped)                                       |
+| BT-129             | Invoice line quantity                      | + `SpecifiedLineTradeDelivery/BilledQuantity`                                                                     |
+| BT-130             | Invoice line quantity UnitCode             | + `SpecifiedLineTradeDelivery/BilledQuantityUnitCode`                                                             |
+| BT-153             | Invoice line item name                     | + `SpecifiedTradeProduct/Name`                                                                                    |
+| BT-154             | Invoice line item description              | + `SpecifiedTradeProduct/Description`                                                                             |
+| BT-159             | Invoice line item county of origin         | + `SpecifiedTradeProduct/OriginTradeCountry`                                                                      |
+| BT-146             | Invoice line net price                     | + `SpecifiedLineTradeAgreement/NetPriceProductTradePrice`                                                         |                                                                                                 
+| BT-                | VAT type code always "VAT"                 | + `SpecifiedLineTradeSettlement/ApplicableTradeTax/TypeCode` (can be skipped)                                     |
+| BT-151             | VAT category code e.g. "S"                 | + `SpecifiedLineTradeSettlement/ApplicableTradeTax/CategoryCode`                                                  |
+| BT-152             | VAT category rate in percent               | + `SpecifiedLineTradeSettlement/ApplicableTradeTax/RateApplicablePercent`                                         |
+| BT-131             | Invoice line net amount (summarion)        | + `SpecifiedLineTradeSettlement/SpecifiedTradeSettlementLineMonetarySummation`                                    |
+| BT-160             | Product charactarisation name              |                                                                                                                   |
+| BT-161             | Product charactarisation value             |                                                                                                                   |
+|                    | Line item allowances or surcharges         | + `SpecifiedLineTradeSettlement/SpecifiedTradeAllowanceCharge/*/` (max 100 objects)                               |
+|                    | true: surcharge, false: allowance          | ++ `ChargeIndicator`                                                                                              |                                                            
+| BT-136/141 (al/su) | Actual amount                              | ++ `ActualAmount`                                                                                                 |
+| BT-137/142         | Basis amount                               | ++ `BasisAmount`                                                                                                  |
+| BT-138/143         | Percent, if applicable                     | ++ `CalculationPercent`                                                                                           |                                                             
+| BT-139/144         | Reason                                     | ++ `Reason`                                                                                                       |
+| BT-140/155         | Reason code (optional)                     | ++ `ReasonCode`                                                                                                   |
+|                    |                                            |                                                                                                                   |
+| **Invoice Level**  | **Allowances or Surcharges**               | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/SpecifiedTradeAllowanceCharge/*/` (max 100 objects) |
+|                    | true: surcharge, false: allowance          | + `ChargeIndicator`                                                                                               |                                                            
+| BT-92/99 (al/su)   | Actual amount                              | + `ActualAmount`                                                                                                  |
+| BT-93/100          | Basis amount                               | + `BasisAmount`                                                                                                   |
+| BT-94/101          | Percent, if applicable                     | + `CalculationPercent`                                                                                            |                                                             
+| BT-97/104          | Reason                                     | + `Reason`                                                                                                        |
+| BT-98/105          | Reason code (optional)                     | + `ReasonCode`                                                                                                    |
+|                    | VAT category                               | + `CategoryTradeTax`                                                                                              |
+| BT-95/102          | VAT category code e.g. "S"                 | ++ `CategoryCode`                                                                                                 |
+| BT-96/103          | VAT category rate (percent)                | ++ `RateApplicablePercent`                                                                                        |                                                                                    
+|                    | Tax type code (optional, always "VAT")     | ++ `TypeCode`                                                                                                     |                                                                                             
+|                    |                                            |                                                                                                                   |
+| **Invoice Totals** |                                            | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/SpecifiedTradeSettlementHeaderMonetarySummation`    |
+| BT-106             | Sum of invoice line net amounts            | + `LineTotalAmount`                                                                                               |
+| BT-107             | Sum of allowances                          | + `AllowanceTotalAmount`                                                                                          |
+| BT-108             | Sum of surcharges                          | + `ChargeTotalAmount`                                                                                             |
+| BT-109             | Invoice total amount without VAT           | + `TaxBasisTotalAmount`                                                                                           |
+| BT-110             | Total VAT amount                           | + `TaxTotalAmount`                                                                                                |
+| BT-110             | Total VAT amount currency ID e.g. "EUR"    | + `TaxTotalAmountCurrencyID`                                                                                      |
+| BT-112             | Invoice total amount with VAT              | + `GrandTotalAmount`                                                                                              |
+| BT-113             | Prepaid amount                             | + `TotalPrepaidAmount`                                                                                            |
+| BT-114             | Rounding amount                            | + `GrandTotalAmount`                                                                                              |
+| BT-115             | Due payable amount                         | + `DuePaybleAmount`                                                                                               |
+|                    |                                            |                                                                                                                   |
+| **VAT Summation**  |                                            | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/ApplicableTradeTax/*/` (array of objects)           |
+| BT-116             | VAT category taxable amount                | + `BasisAmount`                                                                                                   |
+| BT-117             | VAT category tax amount                    | + `ActualAmount`                                                                                                  |
+| BT-118             | VAT category code e.g. "S"                 | + `CategoryCode`                                                                                                  |
+| BT-119             | VAT category rate (percent)                | + `CalculatedAmount`                                                                                              |
+| BT-120             | VAT excemption reason                      | + `CalculatedAmount`                                                                                              |
+| BT-121             | VAT excemption reason code                 | + `CalculatedAmount`                                                                                              |
+|                    |                                            |                                                                                                                   |
+| **Billing Period** |                                            | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/BillingSpecifiedPeriod`                             |   
+| BT-73              | Start date in format 102 YYYYmmdd          | + `StartDateTime`                                                                                                 |
+| BT-74              | End date in format 102 YYYYmmdd            | + `EndDateTime`                                                                                                   |
+|                    |                                            |                                                                                                                   |
+| **Payment Terms**  |                                            | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement/SpecifiedTradePaymentTerms`                         |
+| BT-20              | Description                                | + `Description`  fixed value: `#SKONTO#TAGE=7#PROZENT=2.00#description`                                           |
+| BT-9               | Due date in format 102 YYYYmmdd            | + `DueDateDateTime`                                                                                               |
+|                    |                                            |                                                                                                                   |
+| **Payment Data**   |                                            | `/SupplyChainTradeTransaction/ApplicableHeaderTradeSettlement`                                                    |
+| BT-5               | Invoice currencya code e.g. "EUR"          | +`InvoiceCurrencyCode`                                                                                            |
+| BT-81              | Payment mean type code                     | + `SpecifiedTradeSettlementPaymentMeans/TypeCode`                                                                 |
+|                    | SEPA transfer TypeCode=58                  | + ``                                                                                                              |
+| BT-84              | Payment account identifier (IBAN)          | + `SpecifiedTradeSettlementPaymentMeans/PayeePartyCreditorFinancialAccount/IBANID`                                |
+| BT-86              | Payment service provider identifier (BIC)  | + `SpecifiedTradeSettlementPaymentMeans/PayeePartyCreditorFinancialAccount/BICID`                                 |
+|                    | Credit card TypeCode=48                    | + `SpecifiedTradeSettlementPaymentMeans/ApplicableTradeSettlementFinancialCard`                                   |
+| BT-87              | Credit card number                         | ++ `ID`                                                                                                           |
+| BT-88              | Credit card holder name                    | ++ `CardholderName`                                                                                               |
+| BT-91              | SEPA mandate TypeCode=59                   | + `SpecifiedTradeSettlementPaymentMeans/PayerPartyDebtorFinancialAccount`                                         |
+| BT-89              | Direct debit mandate ID                    | + `SpecifiedTradePaymentTerms/DirectDebitMandateID`                                                               |
+| BT-90              | Bank assigned creditor identifyier         | + `CreditorReferenceID`                                                                                           |     
+| BT-83              | Payment instruction note (purpose)         | + `/ExchangedDocument/SpecifiedTradeSettlementPaymentMeans/PaymentInstructionNote`                                |
+|                    |                                            |                                                                                                                   |
+| **MetaData**       |                                            | `/MetaData` attributes are readonly, unless otherwise noted                                                       |
+| no bt-numbers      | Status: `draft`, `issued`, `imported`      | + `Status`  writable, but only certain transitions allowd                                                         |
+|                    | Creator email of creator                   | + `Creator`                                                                                                       |
+|                    | Created date/time                          | + `Created`                                                                                                       |
+|                    | Last modifier email                        | + `Modifier`                                                                                                      |
+|                    | Modified date/time                         | + `Modified`                                                                                                      |
+|                    | Category object: { `cat-name`: true }      | + `Catgory` writable                                                                                              |
+|                    | Description private notes, not in invoice  | + `Description` writable                                                                                          |
+|                    | Path of object e.g. `/invoices/123`        | + `Path`                                                                                                          |
+|                    | Payments on the invoice {`Y-m-d` => float }| + `Payments`                                                                                                      |
 
 The response to the initial `POST` request to create an invoice contains a `Location` header to the newly created resource 
 `/invoices/<invoice-id>`, which can be used to further modify the invoice with a `PUT` or `PATCH` request, 
