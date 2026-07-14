@@ -212,6 +212,7 @@ et2-hbox.infolog_CompletedClmn et2-image *[part="image"] {
   vertical-align: middle;
 }
 et2-hbox.infolog_CompletedClmn progress {
+  width: 100%;
   max-width: 2em;
 }
 @media all {

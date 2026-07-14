@@ -77,7 +77,7 @@
                         <et2-image label="$row_cont[info_type]" src="$row_cont[info_icon]" defaultSrc="infolog/navbar"></et2-image>
                         <et2-image label="$row_cont[info_status_label]" id="edit_status[$row_cont[info_id]]" src="infolog/$row_cont[info_status_label]" defaultSrc="status"></et2-image>
                         <!--et2-image label="$row_cont[info_percent]" id="edit_percent[$row_cont[info_id]]" href="javascript:egw.open($row_cont[info_id],'infolog');" src="$row_cont[info_percent]"></et2-image-->
-                        <progress label="$row_cont[info_percent]" value="${row}[info_percent]" max="100"/>
+                        <progress label="$row_cont[info_percent]" value="$row_cont[info_percent]" max="100"/>
                     </et2-hbox>
                     <et2-vbox class="infolog_fullWidth">
                         <et2-link label="%s $row_cont[info_addr]" id="${row}[info_link]" app=""></et2-link>
@@ -92,7 +92,7 @@
                         </et2-box>
                         <et2-link-string id="${row}[filelinks]"></et2-link-string>
                     </et2-vbox>
-                    <customfields-list id="$row" class="customfields" app="infolog"/>
+                    <et2-customfields-list id="$row" class="customfields" app="infolog"/>
                     <et2-link-string entryId="$row_cont[info_id]" application="infolog"
                                      onlyApp="kanban"></et2-link-string>
                     <et2-select-cat id="${row}[info_cat]" readonly="true"></et2-select-cat>
