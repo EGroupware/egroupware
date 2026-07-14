@@ -852,7 +852,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 * @param array $master =null use provided event as master to fix wrong start-date if first recurrence is an exception
 	 * @return array
 	 */
-	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null, $date_format='server')
+	private static function &get_series($uid,calendar_bo $bo=null, $expand=false, $user=null, $master=null, $date_format='object')
 	{
 		if (is_null($bo)) $bo = new calendar_boupdate();
 
