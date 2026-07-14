@@ -19,13 +19,6 @@ use EGroupware\Api\Link;
  */
 class timesheet_import_csv extends importexport_basic_import_csv
 {
-	public static $special_fields = array(
-		'addressbook'     => 'Link to Addressbook, use nlast,nfirst[,org] or contact_id from addressbook',
-		'link_1'      => '1. link: appname:appid the entry should be linked to, eg.: addressbook:123',
-		'link_2'      => '2. link: appname:appid the entry should be linked to, eg.: addressbook:123',
-		'link_3'      => '3. link: appname:appid the entry should be linked to, eg.: addressbook:123',
-	);
-
 	/**
 	 * conditions for actions
 	 *

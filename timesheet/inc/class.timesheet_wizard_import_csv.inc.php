@@ -35,9 +35,10 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 		$this->mapping_fields = array('ts_id' => lang('Timesheet ID')) + $bo->field2label;
 
 		// These aren't in the list
-                $this->mapping_fields += array(
-                        'ts_modified'   => lang('Modified'),
-                );
+		$this->mapping_fields += array(
+			'ts_modified' => lang('Modified'),
+			'pl_id'       => lang('Pricelist'),
+		);
 
 		// List each custom field
 		unset($this->mapping_fields['customfields']);
@@ -46,7 +47,7 @@ class timesheet_wizard_import_csv extends importexport_wizard_basic_import_csv
 			$this->mapping_fields['#'.$name] = $data['label'];
 		}
 
-		$this->mapping_fields += tracker_import_csv::$special_fields;
+		$this->mapping_fields += timesheet_import_csv::$special_fields;
 
 		// Actions
 		$this->actions = array(
