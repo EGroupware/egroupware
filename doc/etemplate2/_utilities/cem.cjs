@@ -162,7 +162,7 @@ module.exports.getAllComponents = function ()
 		// Stick it in a variable so we can use the content filters
 		if (fs.existsSync(path.resolve(docPath)))
 		{
-			fs.readFile(docPath, (err, data) => component.content = data.toString());
+			component.content = fs.readFileSync(docPath, 'utf8');
 		}
 	})
 	if (debug) console.log("return allComponentes sorted by name")

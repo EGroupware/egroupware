@@ -27,7 +27,9 @@ const eleventyReadyFile = path.join(sitedir, 'assets/search.json');
 let childProcess;
 let buildResults = [];
 
-const bundleDirectories = [outdir, 'doc/etemplate2/_data'];
+// Only doc/dist needs CEM-generated output; doc/etemplate2/_data is the 11ty data dir
+// and its custom-elements.json was never consumed (cem.cjs reads doc/dist/custom-elements.json).
+const bundleDirectories = [outdir];
 let packageData = JSON.parse(readFileSync(path.join(process.cwd(), 'package.json'), 'utf-8'));
 const egwVersion = JSON.stringify(packageData.version.toString());
 
@@ -406,51 +408,12 @@ if (serve)
 		});
 	});
 
-	// Rebuild and reload when source files change
-	bs.watch('src/**/!(*.test).*').on('change', async filename =>
-	{
-		console.log('[build] File changed: ', filename);
+	// Rebuilds are handled entirely by Eleventy's --watch: eleventy.config.cjs adds
+	// api/js/etemplate as a watch target and re-runs cem analyze (metadata) in its
+	// eleventy.beforeWatch hook (only when a .ts file changed). BrowserSync only serves
+	// and reloads when the built output changes, so there is nothing to rebuild here.
 
-		try
-		{
-			const isTheme = /^src\/themes/.test(filename);
-			const isStylesheet = /(\.css|\.styles\.ts)$/.test(filename);
-
-			// Rebuild the source
-			const rebuildResults = buildResults.map(result => result.rebuild());
-			await Promise.all(rebuildResults);
-
-			// Rebuild stylesheets when a theme file changes
-			if (isTheme)
-			{
-				await Promise.all(
-					bundleDirectories.map(dir =>
-					{
-						execPromise(`node scripts/make-themes.js --outdir "${dir}"`, {stdio: 'inherit'});
-					})
-				);
-			}
-
-			// Rebuild metadata (but not when styles are changed)
-			if (!isStylesheet)
-			{
-				await Promise.all(
-					bundleDirectories.map(dir =>
-					{
-						return execPromise(`node scripts/make-metadata.js --outdir "${dir}"`, {stdio: 'inherit'});
-					})
-				);
-			}
-
-			bs.reload();
-		}
-		catch (err)
-		{
-			console.error(chalk.red(err));
-		}
-	});
-
-	// Reload without rebuilding when the docs change
+	// Reload when the built docs change
 	bs.watch([`${sitedir}/**/*.*`]).on('change', filename =>
 	{
 		bs.reload();

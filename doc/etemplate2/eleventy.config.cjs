@@ -1,6 +1,7 @@
 /* eslint-disable no-invalid-this */
 const fs = require('fs');
 const path = require('path');
+const {execSync} = require('child_process');
 const lunr = require('lunr');
 const {capitalCase} = require('change-case');
 const {customElementsManifest, getAllComponents, getShoelaceVersion} = require('./_utilities/cem.cjs');
@@ -20,7 +21,7 @@ const replacer = require('./_utilities/replacer.cjs');
 const assetsDir = 'assets';
 const cdndir = 'cdn';
 const npmdir = 'dist';
-const allComponents = getAllComponents();
+let allComponents = getAllComponents();
 let hasBuiltSearchIndex = false;
 
 // Write component data to file, 11ty will pick it up and create pages - the name & location are important
@@ -273,6 +274,45 @@ module.exports = async function (eleventyConfig)
 	eleventyConfig.on('eleventy.after', () =>
 	{
 		console.log('[eleventy.after]');
+	});
+
+	//
+	// Keep component docs fresh under --watch.
+	//
+	// Component markdown (api/js/etemplate/**/*.md) and the generated API tables
+	// (custom-elements.json from cem analyze) are NOT in 11ty's input/_data graph,
+	// so the watcher never sees them and the top-level getAllComponents() run above
+	// only happens once at config load. Watch the source tree and, before every
+	// rebuild, regenerate the manifest from TypeScript and re-read component content
+	// into _data/components.json so the page actually reflects the edit.
+	//
+	// cem analyze only needs to run when a .ts file changed — editing a component's
+	// .md doc is just a content change that getAllComponents() re-reads cheaply without
+	// re-analyzing TypeScript. We also write the manifest to doc/dist only (the single
+	// source cem.cjs consumes); the previous second run into _data was never read.
+	//
+	eleventyConfig.addWatchTarget("../../api/js/etemplate/**/*.{ts,md}");
+
+	eleventyConfig.on('eleventy.beforeWatch', (queue) =>
+	{
+		// Only re-run the (expensive) cem analyzer when a TypeScript source file changed.
+		const tsChanged = (queue || []).some(file => file.endsWith('.ts'));
+		if (tsChanged)
+		{
+			// metadata.mjs resolves its own paths; run from the repo root so cem analyze finds package.json.
+			const repoRoot = path.resolve(__dirname, '../..');
+			const metadataScript = path.resolve(repoRoot, 'doc/scripts/metadata.mjs');
+			execSync(`node "${metadataScript}" --outdir "${path.resolve(__dirname, '../dist')}"`, {cwd: repoRoot, stdio: 'inherit'});
+		}
+
+		// Re-read component markdown + manifest into components.json for the page render.
+		// Cheap, and also runs when only a .md doc changed so its content is refreshed.
+		allComponents = getAllComponents();
+		if (!fs.existsSync("_data"))
+		{
+			fs.mkdirSync("_data");
+		}
+		fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
 	});
 
 	//
