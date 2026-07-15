@@ -772,7 +772,12 @@ describe("Et2Nextmatch header event handling", () =>
 		const settings = {
 			actions: {archive: {}},
 			action_var: "nm_action_id",
+			col_filter: {owner: "5"},
+			filter_aria_label: "Addressbook",
+			home_dir: "/home/demo",
+			not_a_nextmatch_setting: "pollution",
 			placeholder_actions: "add,import_csv",
+			searchletter: "M",
 			rows
 		};
 		const contentMgr = {
@@ -796,18 +801,43 @@ describe("Et2Nextmatch header event handling", () =>
 		el.transformAttributes(attrs);
 
 		assert.deepEqual(attrs.rows, rows, "initial rows should still be exposed for datagrid seeding");
+		assert.equal(attrs.home_dir, "/home/demo", "legacy content attributes should still be exposed separately");
 		assert.notProperty(attrs.settings, "rows", "settings should not retain the initial row payload");
+		assert.notProperty(attrs.settings, "col_filter", "settings should not retain active column filters");
+		assert.notProperty(attrs.settings, "home_dir", "settings should not retain undocumented app attributes");
+		assert.notProperty(attrs.settings, "not_a_nextmatch_setting", "settings should ignore unknown content keys");
+		assert.notProperty(attrs.settings, "searchletter", "settings should not retain active letter-search state");
 		assert.deepEqual(attrs.settings, {
 			action_var: "nm_action_id",
+			filter_aria_label: "Addressbook",
 			placeholder_actions: "add,import_csv"
 		}, "settings should keep non-initialization content settings");
+		assert.deepEqual(el.activeFilters.col_filter, {owner: "5"}, "content col_filter should move into active filters");
+		assert.equal(el.activeFilters.searchletter, "M", "content searchletter should move into active filters");
 		assert.notProperty(el.settings, "rows", "settings property should not retain the initial row payload");
+		assert.notProperty(el.settings, "col_filter", "settings property should not retain active column filters");
+		assert.notProperty(el.settings, "searchletter", "settings property should not retain active letter-search state");
 		assert.equal(el.settings.action_var, "nm_action_id", "settings property should receive the object action_var");
 		assert.deepEqual(el.placeholderActions, ["add", "import_csv"], "legacy settings should still normalize other properties");
 
 		el.settings = "[object Object]";
 		assert.deepEqual(el.settings, {action_var: "action"}, "non-object settings assignments should fall back to defaults");
 		getArrayMgr.restore();
+	});
+
+	it("moves explicit settings col_filter into active filters", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		el.settings = {
+			action_var: "nm_action_id",
+			col_filter: {owner: "5"},
+			searchletter: "M"
+		};
+
+		assert.deepEqual(el.activeFilters.col_filter, {owner: "5"}, "settings col_filter should be moved into filters");
+		assert.equal(el.activeFilters.searchletter, "M", "settings searchletter should be moved into filters");
+		assert.deepEqual(el.settings, {action_var: "nm_action_id"}, "active filter state should not be retained as settings");
 	});
 
 	it("provides getValue input and deprecated set_columns compatibility", async() =>

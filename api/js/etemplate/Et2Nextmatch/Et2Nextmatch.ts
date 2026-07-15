@@ -91,7 +91,67 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		];
 	}
 
+	/**
+	 * Defaults for settings that nextmatch expects even when the server does not provide them.
+	 */
 	private static readonly DEFAULT_SETTINGS : Record<string, any> = {action_var: "action"};
+
+	/**
+	 * Content from `$content[nm]` contains both nextmatch configuration
+	 * and arbitrary app state. Only keep documented nextmatch settings here so
+	 * `settings` remains useful for action/filter behaviour without retaining
+	 * unrelated content payloads. Active fetch state like `col_filter` and
+	 * `searchletter` is intentionally omitted and normalized into `_filters`.
+	 */
+	private static readonly ALLOWED_SETTINGS : Set<string> = new Set([
+		"action",
+		"action_links",
+		"action_var",
+		"actions",
+		"columnselection_pref",
+		"columns_forced",
+		"dataStorePrefix",
+		"default_cols",
+		"extra_attributes",
+		"filter_template",
+		"is_parent",
+		"is_parent_value",
+		"lettersearch",
+		"no_columnselection",
+		"order",
+		"parent_id",
+		"placeholder",
+		"placeholder_actions",
+		"return",
+		"row_id",
+		"row_modified",
+		"rows",
+		"search",
+		"select_all",
+		"selectcols",
+		"selected",
+		"sort",
+		"start",
+		"template",
+		"total"
+	]);
+
+	/**
+	 * Legacy filter controls use patterned keys such as `filter_label`,
+	 * `filter2_no_lang`, and `cat_id_placeholder`. Allow these suffixes for
+	 * `filter`, `filter2`, `cat`, and `cat_id` while still rejecting unknown
+	 * app-specific content keys.
+	 */
+	private static readonly ALLOWED_SETTING_SUFFIXES : Set<string> = new Set([
+		"aria_label",
+		"help",
+		"label",
+		"no_lang",
+		"onchange",
+		"placeholder",
+		"statustext",
+		"widget"
+	]);
 
 	/**
 	 * Deduplicates deprecation warnings so each legacy API warns only once per session.
@@ -196,6 +256,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const oldValue = this.settings;
 		const settings = this._settingsObject(value);
 		delete settings.rows;
+		if(typeof settings.col_filter !== "undefined")
+		{
+			this._setColFilterFilter(settings.col_filter);
+			delete settings.col_filter;
+		}
 		if(typeof settings.searchletter !== "undefined")
 		{
 			this._setSearchletterFilter(settings.searchletter);
@@ -407,7 +472,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		// Process 'settings' into properties
 		// We're before namespace creation here, so use attrs.id
 		const attrSettings = this._settingsObject(attrs.settings);
-		const settings = this._settingsObject(this.getArrayMgr("content").getEntry(attrs.id || 'nm'));
+		const contentSettings = this._settingsObject(this.getArrayMgr("content").getEntry(attrs.id || 'nm'));
+		const settings = this._filterAllowedSettings(contentSettings);
 		const mergedSettings = {
 			...settings,
 			...attrSettings
@@ -419,15 +485,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			delete retainedSettings.rows;
 			delete retainedSettings.actions;
 			attrs.settings = retainedSettings;
-			Object.assign(attrs, settings);
+			Object.assign(attrs, contentSettings);
 		}
 		if(typeof attrs.searchletter !== "undefined")
 		{
-			attrs.settings = {
-				...this._settingsObject(attrs.settings),
-				searchletter: attrs.searchletter
-			};
+			this._setSearchletterFilter(attrs.searchletter);
 			delete attrs.searchletter;
+		}
+		if(typeof attrs.col_filter !== "undefined")
+		{
+			this._setColFilterFilter(attrs.col_filter);
+			delete attrs.col_filter;
 		}
 		// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
 		for(const [modernKey, legacyKey] of [
@@ -468,12 +536,43 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		return value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
 	}
 
+	private _filterAllowedSettings(settings : Record<string, any>) : Record<string, any>
+	{
+		const allowed : Record<string, any> = {};
+		for(const [key, value] of Object.entries(settings))
+		{
+			if(this._isAllowedSetting(key))
+			{
+				allowed[key] = value;
+			}
+		}
+		return allowed;
+	}
+
+	private _isAllowedSetting(key : string) : boolean
+	{
+		if(Et2Nextmatch.ALLOWED_SETTINGS.has(key))
+		{
+			return true;
+		}
+		const match = key.match(/^(filter2?|cat(?:_id)?)_(.+)$/);
+		return !!match && Et2Nextmatch.ALLOWED_SETTING_SUFFIXES.has(match[2]);
+	}
+
 	/**
 	 * Normalize legacy settings-provided letter search into the active filters.
 	 */
 	private _setSearchletterFilter(value : any)
 	{
 		this._filters.searchletter = value && value != "false" ? value : false;
+	}
+
+	/**
+	 * Normalize legacy settings-provided column filters into the active fetch filters.
+	 */
+	private _setColFilterFilter(value : any)
+	{
+		this._filters.col_filter = value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
 	}
 
 	/**
@@ -509,8 +608,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		else
 		{
 			await this._applyTemplateFromSlots();
-			void this._updateRowStylesheets();
 		}
+		await this._updateRowStylesheets();
 		this._initializeSettingsSort();
 
 		if(this.rows.length)
@@ -1364,7 +1463,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			await this._waitForSlottedTemplateChildrenReady();
 			this._templateLoading = false;
-			const templateData = this._rowProvider.fromSlots();
+			const templateData = await this._rowProvider.fromSlots();
 			if(!templateData)
 			{
 				this._templateData = null;

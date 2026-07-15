@@ -76,51 +76,170 @@
 /**
  * Tile view
  */
-table.egwGridView_grid .tile .file_tile {
-  height: 100px;
-  width: 135px;
-  word-break: break-all;
+/**
+ * Filemanager tile view
+ */
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile,
+:host([view="tile"]) .tile {
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 8em;
+  min-height: 8em;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile,
+:host([view="tile"]) .tile .file_tile {
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  width: 100%;
+  height: 13em;
+  min-width: 8em;
+  min-height: 8em;
+  max-height: 14em;
+  margin: 0;
+  padding: 0.625em;
+  border: 1px solid var(--sl-color-neutral-200, #dfe3ea);
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  word-break: normal;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile:hover,
+:host([view="tile"]) .tile .file_tile:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_header,
+:host([view="tile"]) .tile .file_tile .file_tile_header {
+  flex: 0 0 auto;
+  min-height: 1.5em;
+  align-items: center;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_header .et2_label,
+:host([view="tile"]) .tile .file_tile .file_tile_header .et2_label {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  font-weight: 600;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  word-break: normal;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_preview,
+:host([view="tile"]) .tile .file_tile .file_tile_preview {
+  flex: 1 1 auto;
+  align-items: center;
+  justify-content: center;
+  max-height: 8.5em;
+  min-height: 0;
+  border-radius: 4px;
+  background: var(--sl-color-neutral-0, #fff);
   overflow: hidden;
 }
-table.egwGridView_grid .tile .file_tile et2-vfs-mime {
-  width: 4em;
-  margin: 0 auto;
-}
-.egwGridView_grid .tile span.iconOverlayContainer {
-  display: block;
-  max-width: 140px;
-}
-.tile .file_tile img.vfsMimeIcon,
-.tile .file_tile et2-vfs-mime > img {
-  height: 48px;
-  width: auto;
-  display: block;
-  margin: 0 auto;
-}
-.tile .file_tile .et2_label {
-  word-wrap: break-word;
-}
-.tile .file_tile {
-  position: relative;
-}
-.tile .file_tile[data-mime^="image"] .et2_label {
-  display: none;
-}
-.tile .file_tile[data-mime^="image"]:hover .et2_label {
-  display: block;
-  position: absolute;
-  top: 10px;
-  color: white;
-  text-shadow: 2px 2px 8px black;
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_preview et2-vfs-mime,
+:host([view="tile"]) .tile .file_tile .file_tile_preview et2-vfs-mime {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
+  height: 100%;
+  margin: 0;
 }
-.tile .file_tile[data-mime^="image"]:hover .et2_label[id*=comment] {
-  top: 30px;
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_preview et2-vfs-mime[mime="httpd/unix-directory"],
+:host([view="tile"]) .tile .file_tile .file_tile_preview et2-vfs-mime[mime="httpd/unix-directory"] {
+  font-size: 3em;
 }
-#filemanager-index_nm .file_tile[data-mime^="image"] img.vfsMimeIcon,
-#filemanager-index_nm .file_tile[data-mime^="image"] et2-vfs-mime > img {
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_preview span.iconOverlayContainer,
+:host([view="tile"]) .tile .file_tile .file_tile_preview span.iconOverlayContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_preview img.vfsMimeIcon,
+:host([view="tile"]) .tile .file_tile .file_tile_preview img.vfsMimeIcon,
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_preview et2-vfs-mime > img,
+:host([view="tile"]) .tile .file_tile .file_tile_preview et2-vfs-mime > img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
   height: auto;
-  max-height: 100px;
+  object-fit: contain;
+  margin: 0 auto;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta,
+:host([view="tile"]) .tile .file_tile .file_tile_meta {
+  display: var(--filemanager-tile-meta-display, none);
+  flex: 0 0 auto;
+  align-items: stretch;
+  gap: 0.15em;
+  padding-top: 0.25em;
+  color: var(--sl-color-neutral-600, #5f6b7a);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_row,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_row {
+  align-items: center;
+  gap: 0.35em;
+  min-width: 0;
+  min-height: 1.25em;
+  overflow: hidden;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_icon,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_icon {
+  flex: 0 0 auto;
+  margin-right: 0.25em;
+  color: var(--sl-color-neutral-400, #9aa4b2);
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_label,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_label {
+  flex: 0 0 auto;
+  color: var(--sl-color-neutral-500, #6b7280);
+  font-weight: 600;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_comment et2-description,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_comment et2-description,
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_label,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_label,
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_row et2-date-time,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_row et2-date-time,
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_row et2-vfs-uid,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_row et2-vfs-uid {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_size,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_size {
+  display: var(--filemanager-tile-size-display, none);
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_mtime,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_mtime {
+  display: var(--filemanager-tile-mtime-display, none);
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_owner,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_owner {
+  display: var(--filemanager-tile-owner-display, none);
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile .file_tile_meta .file_tile_meta_comment,
+:host([view="tile"]) .tile .file_tile .file_tile_meta .file_tile_meta_comment {
+  display: var(--filemanager-tile-comment-display, none);
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile[data-mime^="image"] .et2_label,
+:host([view="tile"]) .tile .file_tile[data-mime^="image"] .et2_label,
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile[data-mime^="image"]:hover .et2_label,
+:host([view="tile"]) .tile .file_tile[data-mime^="image"]:hover .et2_label {
+  position: static;
+  display: block;
+  width: auto;
+  color: inherit;
+  text-shadow: none;
 }
 /**
  * Select file dialog
@@ -215,14 +334,6 @@ div.editInfoMarker {
 button#filemanager-index_new img {
   display: none;
 }
-div#filemanager-index_filemanager-index-header_right {
-  display: inline-flex;
-  gap: 1ex;
-}
-/*navbar icons in filemanager should always have the save size of 32px*/
-.egwGridView_grid et2-vfs-mime img[src*='/navbar'] {
-  width: 32px !important;
-}
 [slot="main-header"] et2-toolbar et2-vfs-path[slot="list"] {
   --input-text-color: initial;
   /*reset input text color so it is always visible in the dropdown */
@@ -251,4 +362,3 @@ div#filemanager-index_filemanager-index-header_right {
 #popupMainDiv > #filemanager-index_filemanager-index-app-toolbar[slot=''] et2-toolbar et2-vfs-path et2-image {
   --image-filter: none;
 }
-/*# sourceMappingURL=app.css.map */
