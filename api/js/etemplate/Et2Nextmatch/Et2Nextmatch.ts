@@ -473,6 +473,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		// We're before namespace creation here, so use attrs.id
 		const attrSettings = this._settingsObject(attrs.settings);
 		const contentSettings = this._settingsObject(this.getArrayMgr("content").getEntry(attrs.id || 'nm'));
+		for(const sourceSettings of [contentSettings, attrSettings])
+		{
+			if(typeof sourceSettings.col_filter !== "undefined")
+			{
+				this._setColFilterFilter(sourceSettings.col_filter);
+				delete sourceSettings.col_filter;
+			}
+			if(typeof sourceSettings.searchletter !== "undefined")
+			{
+				this._setSearchletterFilter(sourceSettings.searchletter);
+				delete sourceSettings.searchletter;
+			}
+		}
 		const settings = this._filterAllowedSettings(contentSettings);
 		const mergedSettings = {
 			...settings,

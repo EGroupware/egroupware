@@ -44,6 +44,15 @@ interface Et2DatagridCustomfieldColumnState
 type Et2DatagridRenderItem =
 	| { type : "row"; rowIndex : number }
 	| { type : "expanded"; rowIndex : number; parentRowId : string };
+
+const DEFAULT_TILE_LAYOUT = {
+	// @lit-labs/virtualizer parses grid itemSize, gap and padding as pixel numbers internally.
+	// Keep these defaults in px so spacing does not collapse when passed through the grid layout.
+	width: "150px",
+	height: "120px",
+	gap: "4px",
+	padding: "4px"
+} as const;
 type Et2DatagridVirtualItem = number | Et2DatagridRenderItem;
 
 /**
@@ -1493,7 +1502,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		return null;
 	}
-
 
 	/**
 	 * Prefetch when user is close to the end so additional rows appear without a visible wait at bottom.
@@ -4312,13 +4320,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _tileLayoutConfig()
 	{
 		const layout = this.templateData?.tileLayout || {};
+		const defaultWidth = this._lengthToPx(DEFAULT_TILE_LAYOUT.width) || 0;
+		const defaultHeight = this._lengthToPx(DEFAULT_TILE_LAYOUT.height) || 0;
+		const width = this._lengthToPx(layout.width || DEFAULT_TILE_LAYOUT.width) || defaultWidth;
+		const height = this._lengthToPx(layout.height || DEFAULT_TILE_LAYOUT.height) || defaultHeight;
 		return grid(<any>{
 			itemSize: {
-				width: layout.width || "150px",
-				height: layout.height || "120px"
+				width: `${width}px`,
+				height: `${height}px`
 			},
-			gap: layout.gap || "4px",
-			padding: layout.padding || "4px",
+			gap: layout.gap || DEFAULT_TILE_LAYOUT.gap,
+			padding: layout.padding || DEFAULT_TILE_LAYOUT.padding,
+			flex: {preserve: "height"},
 			justify: "start"
 		});
 	}

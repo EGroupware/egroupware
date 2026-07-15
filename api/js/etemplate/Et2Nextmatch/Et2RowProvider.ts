@@ -1,6 +1,11 @@
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
-import {Et2DatagridColumn, Et2DatagridTemplateData, Et2DatagridTileLayout, Et2DatagridView} from "./Et2Datagrid.types";
+import {
+	Et2DatagridColumn,
+	Et2DatagridTemplateData,
+	Et2DatagridTileLayout,
+	Et2DatagridView
+} from "./Et2Datagrid.types";
 import "../Et2Customfields/Et2CustomfieldsList";
 
 interface Et2RowProviderHost extends HTMLElement
@@ -8,6 +13,15 @@ interface Et2RowProviderHost extends HTMLElement
 	egw? : Function;
 	getArrayMgr? : Function;
 }
+
+const DEFAULT_TILE_LAYOUT = {
+	// @lit-labs/virtualizer parses grid itemSize, gap and padding as pixel numbers internally.
+	// Keep these defaults in px so spacing does not collapse when passed through the grid layout.
+	width: "150px",
+	height: "120px",
+	gap: "4px",
+	padding: "4px"
+} as const;
 
 /**
  * Resolves nextmatch row definitions from a template name or from slotted markup.
@@ -216,7 +230,7 @@ export class Et2RowProvider
 				return null;
 			}
 
-			return this._fromTemplateRoot(xml || tpl);
+			return await this._fromTemplateRoot(xml || tpl);
 		}
 		catch(e)
 		{
@@ -275,7 +289,7 @@ export class Et2RowProvider
 	/**
 	 * Resolve row/column metadata from named slots on the host element.
 	 */
-	fromSlots() : Et2DatagridTemplateData | null
+	async fromSlots() : Promise<Et2DatagridTemplateData | null>
 	{
 		const headerSource = this._getSlotContent("columns");
 		const rowSource = this._getSlotContent("row");
@@ -287,7 +301,7 @@ export class Et2RowProvider
 		                ? this._extractColumnsFromHeaderNode(resolvedHeader).map((column, index) => ({...columnMeta[index], ...column}))
 		                : [];
 		const rowElement = this._resolveSlotRowElement(rowSource);
-		const prepared = rowElement ? this._prepareRowTemplate(rowElement, columns) : null;
+		const prepared = rowElement ? await this._prepareRowTemplate(rowElement, columns) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
 
 		if(!columns.length && !prepared)
@@ -309,7 +323,7 @@ export class Et2RowProvider
 	/**
 	 * Parse template XML root to produce datagrid-ready template data.
 	 */
-	private _fromTemplateRoot(tplRoot : Element) : Et2DatagridTemplateData
+	private async _fromTemplateRoot(tplRoot : Element) : Promise<Et2DatagridTemplateData>
 	{
 		let headerNode : Element | null = tplRoot.querySelector(".th") ?? tplRoot.querySelector("thead");
 		let rowNode : Element | null = null;
@@ -337,7 +351,7 @@ export class Et2RowProvider
 			.map((c, index) => {return {...colMeta[index], ...c}});
 		const view = this._templateView(rowNode);
 		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode, view);
-		const prepared = this._prepareRowTemplate(normalizedRowNode, columns);
+		const prepared = await this._prepareRowTemplate(normalizedRowNode, columns);
 
 		return {
 			view,
@@ -484,7 +498,12 @@ export class Et2RowProvider
 	/**
 	 * Compile row template DOM into a reusable HTMLTemplateElement with tracked dynamic attributes.
 	 */
-	private _prepareRowTemplate(rowNode : Element, columns : Et2DatagridColumn[]) : { template : HTMLTemplateElement; xml : Element; attrMap : Record<string, Record<string, string>>; signature : string } | null
+	private async _prepareRowTemplate(rowNode : Element, columns : Et2DatagridColumn[]) : Promise<{
+		template : HTMLTemplateElement;
+		xml : Element;
+		attrMap : Record<string, Record<string, string>>;
+		signature : string
+	} | null>
 	{
 		if(!rowNode)
 		{
@@ -509,19 +528,21 @@ export class Et2RowProvider
 			template,
 			xml,
 			attrMap,
-			signature: this._rowTemplateSignature(template, attrMap)
+			signature: await this._rowTemplateSignature(template, attrMap)
 		};
 	}
 
 	/**
 	 * Produce a stable fingerprint for row-key and upgrade invalidation.
 	 */
-	private _rowTemplateSignature(template : HTMLTemplateElement, attrMap : Record<string, Record<string, string>>) : string
+	private async _rowTemplateSignature(template : HTMLTemplateElement, attrMap : Record<string, Record<string, string>>) : Promise<string>
 	{
-		return [
+		const source = [
 			template.innerHTML,
 			this._stableStringify(attrMap)
 		].join("\n");
+		const egw = this.host.egw?.();
+		return `${source.length.toString(36)}:${await egw.hashString(source)}`;
 	}
 
 	private _stableStringify(value : any) : string
@@ -644,7 +665,7 @@ export class Et2RowProvider
 			if(recordAttributes && assignedId && normalizedValue.includes("$"))
 			{
 				attrMap[assignedId][name] = normalizedValue;
-				if(name !== "id")
+				if(name !== "id" && !this._shouldDeferTemplateAttribute(element, name))
 				{
 					element.setAttribute(name, normalizedValue);
 				}
@@ -685,6 +706,13 @@ export class Et2RowProvider
 
 
 		return element;
+	}
+
+	private _shouldDeferTemplateAttribute(element : Element, attributeName : string) : boolean
+	{
+		// Et2Widget's data setter rewrites dataset and removes data-et2nm-id,
+		// which makes the row upgrade pass skip this widget entirely.
+		return attributeName === "data" && typeof (element as any).transformAttributes === "function";
 	}
 
 	private _setTemplateArrayManagers(element : any)
@@ -961,10 +989,10 @@ export class Et2RowProvider
 			(tileContent as HTMLElement | null)?.style?.height ||
 			undefined;
 		return {
-			width: this._normalizeCssLength(width) || "150px",
-			height: this._normalizeCssLength(height) || "120px",
-			gap: "4px",
-			padding: "4px"
+			width: this._normalizeCssLength(width) || DEFAULT_TILE_LAYOUT.width,
+			height: this._normalizeCssLength(height) || DEFAULT_TILE_LAYOUT.height,
+			gap: DEFAULT_TILE_LAYOUT.gap,
+			padding: DEFAULT_TILE_LAYOUT.padding
 		};
 	}
 

@@ -3,6 +3,7 @@ import {Et2Datagrid} from "../Et2Datagrid";
 // @ts-ignore TS2691: web-test-runner transpiles this source import; generated JS may be stale here.
 import {Et2RowProvider} from "../Et2RowProvider.ts";
 import {Et2DatagridTemplateData} from "../Et2Datagrid.types";
+import "../../Layout/Et2Box/Et2Box";
 
 const egwStub = {
 	debug: () => {},
@@ -12,7 +13,12 @@ const egwStub = {
 	preference: () => null,
 	set_preference: () => {},
 	app_name: () => "test",
-	link: (url : string) => url
+	link: (url : string) => url,
+	hashString: async(value : string) => {
+		const data = (new TextEncoder()).encode(value);
+		const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+		return Array.from(new Uint8Array(hashBuffer)).map(byte => byte.toString(16).padStart(2, "0")).join("");
+	}
 };
 window.egw = function() { return egwStub; } as any;
 Object.assign(window.egw, egwStub);
@@ -45,7 +51,7 @@ function tileTemplateRoot() : Element
 						<nextmatch-header/>
 					</row>
 					<row class="tile $row_cont[class]">
-						<et2-vbox class="tile-card" width="135px" height="110px" data-kind="$row_cont[kind]">
+						<et2-vbox class="tile-card" width="135px" height="110px" data="kind:$row_cont[kind]" statustext="$row_cont[title]">
 							<et2-description id="\${row}[title]" no_lang="1"></et2-description>
 						</et2-vbox>
 					</row>
@@ -69,7 +75,7 @@ function rowTemplateRoot() : Element
 						<nextmatch-header/>
 					</row>
 					<row class="$row_cont[class]">
-						<et2-vbox class="row-card" data-kind="$row_cont[kind]">
+						<et2-vbox class="row-card" data="kind:$row_cont[kind]" statustext="$row_cont[title]">
 							<et2-description id="\${row}[title]" no_lang="1"></et2-description>
 						</et2-vbox>
 					</row>
@@ -211,10 +217,10 @@ describe("Et2Datagrid tile view", () =>
 	 * - The resolved template data is marked as tile view, includes fixed tile
 	 *   dimensions, and the reusable row template has a non-table root.
 	 */
-	it("infers generic tile layout metadata from a tile row template", () =>
+	it("infers generic tile layout metadata from a tile row template", async() =>
 	{
 		const provider = new Et2RowProvider({egw: () => egwStub} as any);
-		const templateData = (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
+		const templateData = await (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
 
 		assert.equal(templateData.view, "tile", "tile row class should select tile view metadata");
 		assert.equal(templateData.tileLayout?.width, "135px", "tile width should come from fixed tile content");
@@ -223,7 +229,7 @@ describe("Et2Datagrid tile view", () =>
 		assert.isTrue(templateData.rowTemplate?.content.firstElementChild?.classList.contains("tile"), "tile class should be retained");
 	});
 
-	it("uses normalized row markup in template signatures", () =>
+	it("uses normalized row markup in template signatures", async() =>
 	{
 		const rowTemplateRoot = new DOMParser().parseFromString(`
 			<template id="same.id">
@@ -248,12 +254,14 @@ describe("Et2Datagrid tile view", () =>
 			</template>
 		`, "text/xml").documentElement;
 		const provider = new Et2RowProvider({egw: () => egwStub} as any);
-		const rowTemplateData = (provider as any)._fromTemplateRoot(rowTemplateRoot) as Et2DatagridTemplateData;
-		const tileTemplateData = (provider as any)._fromTemplateRoot(tileTemplateRoot) as Et2DatagridTemplateData;
+		const rowTemplateData = await (provider as any)._fromTemplateRoot(rowTemplateRoot) as Et2DatagridTemplateData;
+		const tileTemplateData = await (provider as any)._fromTemplateRoot(tileTemplateRoot) as Et2DatagridTemplateData;
 
 		assert.equal(rowTemplateData.rowTemplateId, tileTemplateData.rowTemplateId, "fixture should keep the same template id");
 		assert.isString(rowTemplateData.templateSignature, "row template should have a render signature");
 		assert.isString(tileTemplateData.templateSignature, "tile template should have a render signature");
+		assert.isBelow(rowTemplateData.templateSignature?.length || 0, 80, "row template signature should remain compact");
+		assert.isBelow(tileTemplateData.templateSignature?.length || 0, 80, "tile template signature should remain compact");
 		assert.notEqual(rowTemplateData.templateSignature, tileTemplateData.templateSignature, "row and tile markup must invalidate different virtualized rows");
 	});
 
@@ -285,7 +293,7 @@ describe("Et2Datagrid tile view", () =>
 	it("renders tile entries as individual virtual items", async() =>
 	{
 		const provider = new Et2RowProvider({egw: () => egwStub} as any);
-		const templateData = (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
+		const templateData = await (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
 		const el = new Et2Datagrid();
 		el.style.width = "420px";
 		el.style.height = "240px";
@@ -327,7 +335,7 @@ describe("Et2Datagrid tile view", () =>
 	it("upgrades tile row template widgets after render", async() =>
 	{
 		const provider = new Et2RowProvider({egw: () => egwStub} as any);
-		const templateData = (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
+		const templateData = await (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
 		const el = new Et2Datagrid();
 		el.style.width = "420px";
 		el.style.height = "240px";
@@ -346,6 +354,8 @@ describe("Et2Datagrid tile view", () =>
 
 		assert.isOk(row, "tile row should be upgraded after render");
 		assert.equal(tileCard?.getAttribute("data-kind"), "document", "tile child attributes should be transformed from row data");
+		assert.equal(tileCard?.getAttribute("statustext"), "one", "tile child widget statustext should be transformed from row data");
+		assert.equal((tileCard as any)?.statustext, "one", "tile child widget statustext property should be transformed from row data");
 
 		el.remove();
 	});
@@ -366,8 +376,8 @@ describe("Et2Datagrid tile view", () =>
 	it("upgrades rows after switching between tile and row templates", async() =>
 	{
 		const provider = new Et2RowProvider({egw: () => egwStub} as any);
-		const tileTemplateData = (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
-		const rowTemplateData = (provider as any)._fromTemplateRoot(rowTemplateRoot()) as Et2DatagridTemplateData;
+		const tileTemplateData = await (provider as any)._fromTemplateRoot(tileTemplateRoot()) as Et2DatagridTemplateData;
+		const rowTemplateData = await (provider as any)._fromTemplateRoot(rowTemplateRoot()) as Et2DatagridTemplateData;
 		const el = new Et2Datagrid();
 		el.style.width = "420px";
 		el.style.height = "240px";
@@ -391,6 +401,7 @@ describe("Et2Datagrid tile view", () =>
 
 		assert.isOk(row, "row view should upgrade after switching from tile view");
 		assert.equal(rowCard?.getAttribute("data-kind"), "document", "row child attributes should transform after switching from tile view");
+		assert.equal(rowCard?.getAttribute("statustext"), "one", "row child statustext should transform after switching from tile view");
 
 		el.view = "tile";
 		el.templateData = tileTemplateData;
@@ -401,6 +412,7 @@ describe("Et2Datagrid tile view", () =>
 
 		assert.isOk(tile, "tile view should upgrade after switching from row view");
 		assert.equal(tileCard?.getAttribute("data-kind"), "document", "tile child attributes should transform after switching from row view");
+		assert.equal(tileCard?.getAttribute("statustext"), "one", "tile child statustext should transform after switching from row view");
 
 		el.remove();
 	});

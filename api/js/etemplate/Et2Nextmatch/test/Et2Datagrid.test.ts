@@ -20,7 +20,12 @@ const egw = {
 	preference: () => null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
-	link: (url : string) => url
+	link: (url : string) => url,
+	hashString: async(value : string) => {
+		const data = (new TextEncoder()).encode(value);
+		const hashBuffer = await crypto.subtle.digest("SHA-256", data);
+		return Array.from(new Uint8Array(hashBuffer)).map(byte => byte.toString(16).padStart(2, "0")).join("");
+	}
 };
 let preferenceCalls : { app : string; key : string; value : any }[] = [];
 egw.set_preference = (app : string, key : string, value : any) =>
@@ -580,7 +585,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * from row content.
 	 * Pass: both shared metadata and row-scoped value are available.
 	 */
-	it("preserves non-content array managers while applying row content perspective", () =>
+	it("preserves non-content array managers while applying row content perspective", async() =>
 	{
 		const el = createDatagrid();
 		el.setArrayMgr("content", new et2_arrayMgr({}));
@@ -598,7 +603,7 @@ describe("Et2Datagrid row rendering", () =>
 		rowTemplate.innerHTML = `
 			<td><et2-dg-mgr-probe data-value="$row_cont[#cf_text]"></et2-dg-mgr-probe></td>
 		`;
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		el.templateData = {
 			columns: el.columns,
 			rowTemplate: prepared?.template,
@@ -633,7 +638,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * Setup: prepare a row template with one simple value and linked values.
 	 * Pass: the simple value becomes a span and row binding resolves its text.
 	 */
-	it("uses lightweight native text for simple datagrid row descriptions", () =>
+	it("uses lightweight native text for simple datagrid row descriptions", async() =>
 	{
 		const el = createDatagrid();
 		const provider = new Et2RowProvider(el as any);
@@ -651,7 +656,7 @@ describe("Et2Datagrid row rendering", () =>
 			<td><et2-description id="\${row}[description]" noLang="1" activateLinks="1"></et2-description></td>
 		`;
 
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		const simple = prepared?.template.content.querySelector(".name-line") as HTMLElement | null;
 		assert.equal(simple?.localName, "span", "simple descriptions should compile to native text");
 		assert.isNull(
@@ -712,7 +717,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * loadWebComponent() were used.
 	 * Pass: only the prepared lightweight child exists.
 	 */
-	it("does not duplicate children when preparing custom element row containers", () =>
+	it("does not duplicate children when preparing custom element row containers", async() =>
 	{
 		const el = createDatagrid();
 		const provider = new Et2RowProvider(el as any);
@@ -725,7 +730,7 @@ describe("Et2Datagrid row rendering", () =>
 			</td>
 		`;
 
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, [{key: "line1", title: "Line 1"}] as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, [{key: "line1", title: "Line 1"}] as any);
 		const container = prepared?.template.content.querySelector("et2-dg-container") as HTMLElement | null;
 
 		assert.equal(
@@ -746,7 +751,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * et2-url-email_ro variant.
 	 * Pass: the prepared row uses the readonly tag and keeps source attributes.
 	 */
-	it("uses registered readonly widget variants in datagrid row templates", () =>
+	it("uses registered readonly widget variants in datagrid row templates", async() =>
 	{
 		const el = createDatagrid();
 		const provider = new Et2RowProvider(el as any);
@@ -755,7 +760,7 @@ describe("Et2Datagrid row rendering", () =>
 			<td><et2-url-email id="\${row}[email]" readonly="true" emailDisplay="email"></et2-url-email></td>
 		`;
 
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, [{key: "email", title: "Email"}] as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, [{key: "email", title: "Email"}] as any);
 		const email = prepared?.template.content.querySelector("et2-url-email_ro") as HTMLElement | null;
 
 		assert.isNotNull(email, "email URL widgets should use the readonly custom element in rows");
@@ -805,7 +810,7 @@ describe("Et2Datagrid row rendering", () =>
 			cell.innerHTML = `<et2-url-email id="\${row}[email]" readonly="true" emailDisplay="preference"></et2-url-email>`;
 			rowTemplate.appendChild(cell);
 
-			const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+			const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 			(el as any).templateData = {
 				columns: el.columns,
 				rowTemplate: prepared?.template ?? null,
@@ -852,7 +857,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * Setup: prepare an addressbook-style phone widget using ${row}[field].
 	 * Pass: clicking the readonly phone widget dials the current row value.
 	 */
-	it("hydrates readonly phone URL row widgets when their id is row-scoped", () =>
+	it("hydrates readonly phone URL row widgets when their id is row-scoped", async() =>
 	{
 		const el = createDatagrid();
 		el.setArrayMgr("content", new et2_arrayMgr({phone_label: "Business phone"}));
@@ -863,7 +868,7 @@ describe("Et2Datagrid row rendering", () =>
 		cell.innerHTML = `<et2-url-phone id="\${row}[tel_work]" readonly="true" class="telWork" statustext="@phone_label"></et2-url-phone>`;
 		rowTemplate.appendChild(cell);
 
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		const preparedPhone = prepared?.template.content.querySelector("et2-url-phone_ro.telWork") as any;
 		assert.equal(
 			preparedPhone?.getAttribute("statustext"),
@@ -929,7 +934,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * Pass: the prepared widget and row attribute map both keep the deferred
 	 * boolean expression for row-time parsing.
 	 */
-	it("keeps Et2Widget deferredProperties for row-scoped boolean attributes", () =>
+	it("keeps Et2Widget deferredProperties for row-scoped boolean attributes", async() =>
 	{
 		const el = createDatagrid();
 		const provider = new Et2RowProvider(el as any);
@@ -938,7 +943,7 @@ describe("Et2Datagrid row rendering", () =>
 		cell.innerHTML = `<et2-dg-deferred active="$row_cont[active]"></et2-dg-deferred>`;
 		rowTemplate.appendChild(cell);
 
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, [{key: "active", title: "Active"}] as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, [{key: "active", title: "Active"}] as any);
 		const widget = prepared?.template.content.querySelector("et2-dg-deferred") as any;
 		const deferredId = widget?.getAttribute("data-et2nm-id");
 
@@ -982,7 +987,7 @@ describe("Et2Datagrid row rendering", () =>
 		el.columns = [{key: "customfields", title: "Custom fields", width: "1fr"}] as any;
 		const rowTemplate = document.createElement("row");
 		rowTemplate.innerHTML = `<td><et2-customfields-list class="customfields"></et2-customfields-list></td>`;
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		assert.isNotNull(
 			prepared?.template.content.querySelector("et2-customfields-list[data-et2nm-id]"),
 			"leaf customfields row widget should keep row-upgrade bookkeeping"
@@ -1061,7 +1066,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * Setup: provide a customfield header with four fields and three selected.
 	 * Pass: the row renderer receives the same visibility map object from the header.
 	 */
-	it("applies selected customfield visibility from the header to row renderers", () =>
+	it("applies selected customfield visibility from the header to row renderers", async() =>
 	{
 		const el = createDatagrid();
 		el.setArrayMgr("content", new et2_arrayMgr({}));
@@ -1094,7 +1099,7 @@ describe("Et2Datagrid row rendering", () =>
 		const provider = new Et2RowProvider(el as any);
 		const rowTemplate = document.createElement("row");
 		rowTemplate.innerHTML = `<div><et2-customfields-list class="customfields"></et2-customfields-list></div>`;
-		const prepared = (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
 		el.templateData = {
 			columns: el.columns,
 			rowTemplate: prepared?.template,
