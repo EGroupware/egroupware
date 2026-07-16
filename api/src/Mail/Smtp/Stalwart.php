@@ -199,6 +199,9 @@ class Stalwart extends Sql
 				'description' => null,  // ToDo: preserve from $userData['stalwart']['aliases']
 			];
 		}
+		$prefs = (new Api\Preferences($_uidnumber))->read_repository();
+		[$lang, $country] = explode('-', $prefs['common']['lang'])+[null, null];
+		$locale = $lang.'_'.strtoupper($country ?: $prefs['common']['country']);
 		$account = array_filter([
 			'@type' => 'User',
 			'name' => self::name2stalwart($account_lid),
@@ -207,11 +210,13 @@ class Stalwart extends Sql
 			'domainId' => $this->domainId($this->defaultDomain),
 			'aliases' => $aliases,
 			'quotas' => ['maxDiskQuota' => $_quota ? $_quota << 20 : null],
+			'locale' => $locale,
+			'timeZone' => $prefs['common']['tz'] ?? 'UTC',
 			'credentials' => (object)["0" => [  // otherwise PHP's json_encode encodes it as JSON array
 				'@type' => 'Password',
 				'secret' => $this->accounts->id2name($_uidnumber, 'account_pwd'),
 			]],
-			'memberGroupIds' => $this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber)),
+			'memberGroupIds' => Jmap::boolPatch($this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber))),
 		]);
 		// update account in Stalwart
 		if (($userData = $this->getUserData($_uidnumber)) && !empty($userData['accountStatus']) && $_accountStatus)
@@ -228,7 +233,7 @@ class Stalwart extends Sql
 			{
 				unset($diff['aliases']);
 			}
-			if (($diff['memberGroupIds'] = JMAP::boolPatch($account['memberGroupIds'], array_keys($userData['stalwart']['memberGroupIds']))) == (object)[])
+			if (($diff['memberGroupIds'] = JMAP::boolPatch(array_keys(get_object_vars($account['memberGroupIds'])), array_keys($userData['stalwart']['memberGroupIds']))) == (object)[])
 			{
 				unset($diff['memberGroupIds']);
 			}
@@ -660,11 +665,11 @@ class Stalwart extends Sql
 			$response = $this->jmapClient()->jmapCall([
 				['x:MailingList/set', [
 					'update' => [
-						$stalwart_mailing_list['id'] => ['recipients' => $recipient_changes],
+						$stalwart_mailing_list['id'] => ['recipients' => $mailing_list['recipients']],
 					]
 				], 'a']
 			], [Jmap::JMAP_CORE, self::USING_STALWART]);
-			if (!array_key_exists($stalwart_mailing_list['id'], $response['methodResponses'][0][1]['updated']))
+			if (!array_key_exists($stalwart_mailing_list['id'], $response['methodResponses'][0][1]['updated'] ?? []))
 			{
 				throw new \Exception("Mailing list '$mailing_list[emailAddress]' NOT updated: " . json_encode($response, JSON_UNESCAPED_SLASHES));
 			}
@@ -801,6 +806,10 @@ class Stalwart extends Sql
 		if (is_object($old))
 		{
 			$old = array_keys(get_object_vars($old));
+		}
+		elseif (is_array($old) && is_string(key($old)))
+		{
+			$old = array_keys($old);
 		}
 		$recipients = [];
 		foreach($old ?? [] as $email)

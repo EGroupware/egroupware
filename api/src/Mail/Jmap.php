@@ -61,6 +61,11 @@ class Jmap
 	protected string $eventSourceUrl;
 
 	/**
+	 * @var string|null path to log to, or null to disable logging
+	 */
+	protected ?string $log=null;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $host_or_url JMAP url, or hostname to bootstrap via "https://$host_or_url/.well-known/jmap"
@@ -75,6 +80,8 @@ class Jmap
 		$this->url = $host_or_url;
 		$this->user = $user;
 		$this->secret = $secret;
+
+		//$this->log = '/var/lib/egroupware/'.$_SERVER['HTTP_HOST'].'/jmap.log';
 
 		// EGroupware Mail "mail" service
 		if ($this->url === 'mail')
@@ -133,7 +140,33 @@ class Jmap
 				$header[] = 'Content-Type: application/json';
 			}
 		}
-		return api($url, $method, $body, $header, $response_header, $follow, only_public: false);
+		if (!$this->log)
+		{
+			return api($url, $method, $body, $header, $response_header, $follow, only_public: false);
+		}
+		// logging request and response
+		file_put_contents($this->log, date('Y-m-d H:i:s O')." $method $url\n".implode("\n", $header)."\n\n".$body."\n\n", FILE_APPEND);
+
+		try {
+			$response = api($url, $method, $body, $header, $response_header, $follow, only_public: false);
+
+			file_put_contents($this->log, date('Y-m-d H:i:s O').' '.
+				implode("\n", array_map(fn($value, $key) => $key === 0 ? $value : "$key: $value", array_values($response_header), array_keys($response_header)))."\n\n".
+					(is_scalar($response) ? $response : json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT))."\n\n", FILE_APPEND);
+
+			return $response;
+		}
+		catch (\Throwable $e) {
+			file_put_contents($this->log, date('Y-m-d H:i:s O').' '.$e->getMessage()."\n\n".$e->getTraceAsString()."\n\n", FILE_APPEND);
+
+			if ($e instanceof \HttpException)
+			{
+				file_put_contents($this->log,
+					implode("\n", array_map(fn($value, $key) => $key === 0 ? $value : "$key: $value", array_values($e->response_headers), array_keys($e->response_headers)))."\n\n".
+					(is_scalar($e->response) ? $e->response : json_encode($e->response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT))."\n\n", FILE_APPEND);
+			}
+			throw $e;
+		}
 	}
 
 	/**
