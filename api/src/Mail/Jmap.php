@@ -128,7 +128,7 @@ class Jmap
 				$header[] = 'Content-Type: application/json';
 			}
 		}
-		return api($url, $method, $body, $header, $response_header, $follow);
+		return api($url, $method, $body, $header, $response_header, $follow, only_public: false);
 	}
 
 	/**
