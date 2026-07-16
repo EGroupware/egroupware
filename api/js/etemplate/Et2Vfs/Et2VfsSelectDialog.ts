@@ -745,10 +745,10 @@ export class Et2VfsSelectDialog
                             roImage="filemanager/createdir_disabled"
                             @click=${this.handleCreateDirectory}
                 ></et2-button>
-                <file id="upload_file" statustext="upload file" progress_dropdownlist="true" multiple="true"
+                <et2-vfs-upload id="upload_file" aria-label="Upload file" path="${this.path}/"
                       ?disabled=${!this._pathWritable}
-                      onFinish="app.vfsSelectUI.storeFile"
-                ></file>
+                               @et2-load=${this.startSearch}
+                ></et2-vfs-upload>
                 <et2-searchbox id="search"
                                @keydown=${this.handleSearchKeyDown}
                                @sl-clear=${this.startSearch}
