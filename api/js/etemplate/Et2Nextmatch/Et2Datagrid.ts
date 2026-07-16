@@ -59,7 +59,7 @@ type Et2DatagridVirtualItem = number | Et2DatagridRenderItem;
  * @summary Virtualized data grid for infinite rows with column sizing, selection, and lazy paging.
  *
  * @event et2-loading-start - Fired when one or more row fetch requests are dispatched.
- * @event et2-loading-done - Fired when all in-flight row fetch requests complete successfully.
+ * @event et2-loading-done - Fired when row data is ready: after all in-flight fetches complete, or after setInitialRows() seeds preloaded rows.
  * @event et2-loading-error - Fired when a row fetch request fails.
  * @event et2-selection-changed - Fired when row selection changes.
  * @event et2-active-row-changed - Fired when keyboard or pointer navigation changes the active row.
@@ -3930,6 +3930,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.displayedRowIds = new Set(mappedRows.map((row) => row.id));
 		this._pruneLoadedNonExpandableExpandedRows();
 		this.requestUpdate();
+		// Symmetric with the fetch path (see et2-loading-done above): preloaded
+		// rows are "loaded" too, so consumers (search-result total, drag/drop
+		// registration) get the same signal regardless of load path.
+		this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
 	}
 
 	/**

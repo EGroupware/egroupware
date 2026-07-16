@@ -363,7 +363,8 @@ export default css`
 	.dg-tile-grid > [data-row-id] {
 		box-sizing: border-box;
 		outline: none;
-		border: 0;
+		border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+		border-radius: var(--sl-panel-border-radius);
 		display: flex;
 		align-items: stretch;
 		justify-content: center;

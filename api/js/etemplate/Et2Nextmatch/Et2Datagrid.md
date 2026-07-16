@@ -870,7 +870,7 @@ Visibility legend: **public** (called by owner widgets), **private** (internal o
 |--------------------------------------|------------|----------|-------------------------------------------------------------------------------|
 | `loadMore()`                         | public     | load     | Request the first (or next missing) page from index 0.                        |
 | `reload()`                           | public     | load     | Clear all rows and re-fetch; reset `total` and error state.                   |
-| `setInitialRows(rows)`               | public     | load     | Seed preloaded row data and skip the initial provider fetch.                  |
+| `setInitialRows(rows)`               | public     | load     | Seed preloaded row data (skips the initial provider fetch) and fire `et2-loading-done`. |
 | `refresh(row_ids, type)`             | public     | refresh  | Targeted in-place refresh or removal without a full reload.                   |
 | `selectSingleRow(rowId)`             | public     | selection | Select one loaded row and emit `et2-selection-changed`.                       |
 | `selectAllRows()`                    | public     | selection | Select all currently loaded rows when `selectionMode` is `multiple`.          |
