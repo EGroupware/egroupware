@@ -49,10 +49,11 @@ foreach(apiIterator('/infolog/', $params) as $infolog)
  *
  * @param string $url either path (starting with / and prepending global $base_url) or full URL
  * @param array& $params can contain optional "sync-token" (default="") and "nresults" (default=100) and returns final "sync-token"
+ * @param bool $only_public true: reject to connect or return results from private or reserved IP addresses
  * @return Generator<array> yields array with additional value for key "@self" containing the key of the responses-object yielded
  * @throws JsonException|Exception see api
  */
-function apiIterator(string $url, array &$params=[])
+function apiIterator(string $url, array &$params=[], bool $only_public=true)
 {
 	while(true)
 	{
@@ -64,7 +65,7 @@ function apiIterator(string $url, array &$params=[])
 		{
 			$params['sync-token']='';
 		}
-		$responses = api($url, 'GET', $params);
+		$responses = api($url, 'GET', $params, only_public: $only_public);
 		if (!isset($responses['responses']))
 		{
 			throw new \Exception('Invalid respose: '.(is_scalar($responses) ? $responses : json_encode($responses)));
