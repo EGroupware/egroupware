@@ -60,8 +60,20 @@ table.infolog_fullWidth { width: 100%; }
 
 .infoDes {
   display: var(--infolog-info-details-display, block);
-  max-height: var(--descHeight, 5em);
+  max-height: var(--descHeight, 5lh);
   overflow: clip;
+}
+
+.infolog_fullWidth {
+  height: 100%;
+
+  .infoDes et2-description {
+    align-items: flex-start;
+  }
+
+  > et2-link-string:last-child {
+    margin-top: auto;
+  }
 }
 
 .infoDescRow {
@@ -72,8 +84,8 @@ table.infolog_fullWidth { width: 100%; }
   overflow: auto;
 }
 /* break in words if necessary for description */
-.infoDes > span {
-  overflow-wrap: break-word;
+.infoDes {
+  overflow-wrap: anywhere;
 }
 
 /* Spacing for parent / sub indicators */

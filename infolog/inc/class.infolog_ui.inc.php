@@ -89,6 +89,8 @@ class infolog_ui
 		'add_sub' => 'InfoLog - New Subproject',
 		'sp'      => '- Subprojects from',
 	);
+	//Number of attachment lines to show in the infolog list before adding a scrollbar
+	const MAX_ATTACHMENT_LINES = 5;
 
 	/**
 	 * Constructor
@@ -1155,10 +1157,13 @@ class infolog_ui
 		// add scrollbar to long description, if user choose so in his prefs
 		if ($this->prefs['limit_des_lines'] > 0 || (string)$this->prefs['limit_des_lines'] == '')
 		{
-			$values['css'] .= '<style type="text/css">@media screen { .infoDes {  '.
-				' --descHeight:  ' .
-				(($this->prefs['limit_des_lines'] ? $this->prefs['limit_des_lines'] : 5) * 1.35).	// dono why em is not real lines
-				'em;}}</style>';
+			$desc_height = (int) $this->prefs['limit_des_lines'] ?: 5;
+			//set description and max row height css var on nm as a whole not just on one of its shodow components
+			//give 5 lh max for attachments. Induce scrollbar if there are more
+			$values['css'] .= '<style type="text/css">@media screen { #infolog-index_nm {  ' .
+				' --descHeight:  ' . $desc_height . 'lh;
+				 --row-cell-max-height: ' . ($desc_height+self::MAX_ATTACHMENT_LINES) . 'lh;' .
+				'}}</style>';
 		}
 
 		$sel_options = array(
