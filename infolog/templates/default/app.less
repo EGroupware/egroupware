@@ -61,7 +61,7 @@ table.infolog_fullWidth { width: 100%; }
 .infoDes {
   display: var(--infolog-info-details-display, block);
   max-height: var(--descHeight, 5lh);
-  overflow: clip;
+  overflow: auto;
 }
 
 .infolog_fullWidth {
@@ -71,8 +71,10 @@ table.infolog_fullWidth { width: 100%; }
     align-items: flex-start;
   }
 
-  > et2-link-string:last-child {
+  et2-link-string {
     margin-top: auto;
+    overflow: clip auto;
+    max-height: 5lh;
   }
 }
 
@@ -80,9 +82,6 @@ table.infolog_fullWidth { width: 100%; }
   display: var(--infolog-info-details-display, block);
 }
 
-.infoDes:hover {
-  overflow: auto;
-}
 /* break in words if necessary for description */
 .infoDes {
   overflow-wrap: anywhere;

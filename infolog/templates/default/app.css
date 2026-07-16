@@ -105,7 +105,7 @@ table.infolog_fullWidth {
 .infoDes {
   display: var(--infolog-info-details-display, block);
   max-height: var(--descHeight, 5lh);
-  overflow: clip;
+  overflow: auto;
 }
 .infolog_fullWidth {
   height: 100%;
@@ -113,14 +113,13 @@ table.infolog_fullWidth {
 .infolog_fullWidth .infoDes et2-description {
   align-items: flex-start;
 }
-.infolog_fullWidth > et2-link-string:last-child {
+.infolog_fullWidth et2-link-string {
   margin-top: auto;
+  overflow: clip auto;
+  max-height: 5lh;
 }
 .infoDescRow {
   display: var(--infolog-info-details-display, block);
-}
-.infoDes:hover {
-  overflow: auto;
 }
 /* break in words if necessary for description */
 .infoDes {
