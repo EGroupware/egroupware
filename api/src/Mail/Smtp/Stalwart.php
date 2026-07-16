@@ -395,12 +395,12 @@ class Stalwart extends Sql
 	 *
 	 * @param int $account_id
 	 * @param string $account_lid
-	 * @param string $account_email
+	 * @param string|null $account_email
 	 * @param bool|null $exists null: check, false: does not exist, true: does already exist (but groupId not known)
 	 * @param bool $is_shared_mailbox
 	 * @return string group ID
 	 */
-	public function group(int $account_id, string $account_lid, string $account_email, ?bool $exists=null, bool $is_shared_mailbox=false)
+	public function group(int $account_id, string $account_lid, ?string $account_email, ?bool $exists=null, bool $is_shared_mailbox=false)
 	{
 		$domainId = $this->domainId($this->defaultDomain);
 		$name = self::name2stalwart($account_lid);

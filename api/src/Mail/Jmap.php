@@ -81,6 +81,11 @@ class Jmap
 		{
 			$this->url = Api\Framework::getUrl('/jmap/');
 		}
+		// EGroupware Hosting
+		elseif($this->url === 'stalwart')
+		{
+			$this->url = 'https://stalwart.egroupware.org/jmap/';
+		}
 
 		if (!str_starts_with($this->url, 'https://'))
 		{
