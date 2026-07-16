@@ -1160,10 +1160,15 @@ class infolog_ui
 			$desc_height = (int) $this->prefs['limit_des_lines'] ?: 5;
 			//set description and max row height css var on nm as a whole not just on one of its shodow components
 			//give 5 lh max for attachments. Induce scrollbar if there are more
-			$values['css'] .= '<style type="text/css">@media screen { #infolog-index_nm {  ' .
+			// plus one for the title row
+			$values['css'] .= '<style type="text/css">@media screen { #infolog-index_nm, et2-nextmatch[id^="infolog-index"] {  ' .
 				' --descHeight:  ' . $desc_height . 'lh;
-				 --row-cell-max-height: ' . ($desc_height+self::MAX_ATTACHMENT_LINES) . 'lh;' .
+				 --row-cell-max-height: ' . ($desc_height + self::MAX_ATTACHMENT_LINES + 1) . 'lh;' .
 				'}}</style>';
+		} elseif ($this->prefs['limit_des_lines'] == 0)
+		{
+			$values['css'] .= '<style type="text/css">@media screen { #infolog-index_nm, et2-nextmatch[id^="infolog-index"] {  ' .
+				' --descHeight:  fit-content; --row-cell-max-height: fit-content;}}</style>';
 		}
 
 		$sel_options = array(
