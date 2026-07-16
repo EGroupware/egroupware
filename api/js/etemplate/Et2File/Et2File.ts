@@ -482,6 +482,11 @@ export class Et2File extends Et2InputWidget(LitElement)
 			fileItem.requestUpdate("progress");
 			fileItem.requestUpdate("variant");
 		}
+		// Per-file completion signal (success path).  Consumers that report
+		// upload status (e.g. nextmatch row drop) listen here instead of the
+		// batch `change`, because `change` fires after the file is removed from
+		// the list and can no longer be inspected.
+		this.dispatchEvent(new CustomEvent("et2-file-complete", {bubbles: true, detail: {file, success: !file.warning}}));
 	}
 
 	protected resumableFileError(file, jsonResponse)
@@ -500,10 +505,15 @@ export class Et2File extends Et2InputWidget(LitElement)
 				fileItem.error(file.warning);
 			}
 		}
-		fileItem.loading = false;
-
-		fileItem.requestUpdate("variant");
-		fileItem.requestUpdate("loading");
+		if(fileItem)
+		{
+			fileItem.loading = false;
+			fileItem.requestUpdate("variant");
+			fileItem.requestUpdate("loading");
+		}
+		// Per-file completion signal (error path).  Without this, failed uploads
+		// emit nothing and consumers get no feedback at all.
+		this.dispatchEvent(new CustomEvent("et2-file-complete", {bubbles: true, detail: {file, success: !file.warning}}));
 	}
 
 	protected resumableUploadComplete()

@@ -24,6 +24,7 @@ import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
+import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
 import {
 	applyLegacyNextmatchColumnPreferences,
 	datagridColumnPreferenceValue,
@@ -60,6 +61,7 @@ const LETTERSEARCH_SELECTION_ID = "~search_letter~";
  * @event {CustomEvent<{activeRowId?: string, activeRowIndex?: number}>} et2-active-row-changed - Re-emitted from the inner datagrid when active row focus changes.
  * @event {CustomEvent<{columns: Et2DatagridColumn[]}>} et2-columns-changed - Re-emitted from the inner datagrid when columns change.
  * @event {CustomEvent<{oldFilters: Record<string, any>, activeFilters: Record<string, any>, nm: Et2Nextmatch}>} et2-filter - Cancelable event emitted before active filters are applied.
+ * @event {CustomEvent<{rowUid: string, files: File[]}>} et2-filedrop - Native OS file drop onto a row (or empty area). `rowUid` is "" when dropped outside any row. Cancelable: call `event.preventDefault()` in a listener to suppress the framework default (upload + link into the row's VFS link dir) and handle it yourself (e.g. filemanager uploads into the row's folder).
  * @event refresh - Legacy compatibility event emitted after refresh requests are processed.
  *
  * @slot header - Optional content rendered above the datagrid.
@@ -329,6 +331,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _selectionByGridId : Map<string, { selectedRowIds : string[]; allSelected : boolean }> = new Map();
 	/** Current datagrid column state after user preference/resizing changes. */
 	private _datagridColumns : Et2DatagridColumn[] | null = null;
+	/**
+	 * Resolves once template columns are first derived (in _applyTemplateData),
+	 * so consumers can await columns without polling.  Deliberately NOT tied to
+	 * updateComplete: gating Lit readiness on this stalls etemplate2's load.
+	 */
+	private _resolveColumnsReady : () => void = () => {};
+	private _columnsReady : Promise<void> = new Promise((resolve) => { this._resolveColumnsReady = resolve; });
 	/** Frozen column snapshots for already-open child grids. */
 	private _subgridColumnSnapshots : Map<string, {
 		columns : Et2DatagridColumn[];
@@ -367,6 +376,20 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _actionController : Et2NextmatchActionController;
 
 	/**
+	 * Row element currently highlighted as a native file drop target, so we can
+	 * move/clear the highlight without thrashing during dragover.
+	 */
+	private _dropHoverRow : HTMLElement | null = null;
+
+	/**
+	 * Count of in-flight OS-file dragenter/leave pairs.  Used to tell an OS
+	 * file drag from an action-framework drag, and to keep the highlight while
+	 * moving across child elements.  `dataTransfer.files` is empty during
+	 * dragover (only populated on drop), so we detect via the `Files` type.
+	 */
+	private _osFileDragDepth = 0;
+
+	/**
 	 * Backing store for the public `settings` property.
 	 */
 	private _settings : Record<string, any> = {...Et2Nextmatch.DEFAULT_SETTINGS};
@@ -387,6 +410,188 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private get _currentColumns() : Et2DatagridColumn[]
 	{
 		return this._datagridColumns || this._templateData?.columns || [];
+	}
+
+	/**
+	 * Resolves once the template columns have been derived, so consumers (e.g.
+	 * filemanager tile view) can await visible columns without polling:
+	 *     await nm.whenColumnsReady(); // getValue().selectcols is now populated
+	 * This is a side-channel promise, independent of updateComplete, so awaiting
+	 * it never blocks or stalls etemplate2's load.
+	 */
+	public whenColumnsReady() : Promise<void>
+	{
+		return this._columnsReady;
+	}
+
+	/**
+	 * Native OS file drops onto a row are surfaced as the `et2-filedrop` event
+	 * (`detail: { rowUid: string; files: File[] }`), dispatched on this element
+	 * with `bubbles`/`composed` so apps can listen on the widget's DOM node.
+	 * `rowUid` is "" when the drop landed outside any row, so the listener can
+	 * fall back to the current directory.  Apps do not need to call a setter — a
+	 * standard addEventListener is enough, matching the rest of the nextmatch event API.
+	 */
+
+	/**
+	 * True when the drag carries OS files (as opposed to an action-framework
+	 * row drag).  Note `dataTransfer.files` is empty during dragover — only the
+	 * `Files` type is exposed — so we test the types, not the file list.
+	 */
+	private _isOsFileDrag(event : DragEvent) : boolean
+	{
+		return !!event.dataTransfer?.types?.includes?.("Files");
+	}
+
+	/**
+	 * Allow a drop only for OS file drags; action-framework drags (no files)
+	 * are left to the action system untouched.  Highlights the row under the
+	 * pointer as the drop target.  Must run in the capture phase so the action
+	 * controller does not swallow the drag first.
+	 */
+	private _handleFileDragOver = (event : DragEvent) : void =>
+	{
+		if(!this._isOsFileDrag(event)) return;
+		// preventDefault() is what makes the browser accept the drop.
+		event.preventDefault();
+		const row = this._findDropRowElement(event);
+		if(row && row !== this._dropHoverRow)
+		{
+			this._clearDropHover();
+			row.classList.add("drop-hover");
+			this._dropHoverRow = row;
+		}
+	};
+
+	/**
+	 * Track OS-file dragenter so we can clear the highlight when the drag
+	 * truly leaves the nextmatch (not just moves between child elements).
+	 */
+	private _handleFileDragEnter = (event : DragEvent) : void =>
+	{
+		if(this._isOsFileDrag(event)) this._osFileDragDepth++;
+	};
+
+	/**
+	 * Clear the drop-target highlight when the OS-file drag leaves the
+	 * nextmatch entirely (dragleave fires on every child boundary, so we count
+	 * enter/leave pairs).
+	 */
+	private _handleFileDragLeave = (event : DragEvent) : void =>
+	{
+		if(!this._isOsFileDrag(event)) return;
+		this._osFileDragDepth = Math.max(0, this._osFileDragDepth - 1);
+		if(this._osFileDragDepth === 0) this._clearDropHover();
+	};
+
+	private _clearDropHover() : void
+	{
+		this._dropHoverRow?.classList.remove("drop-hover");
+		this._dropHoverRow = null;
+	};
+
+	/**
+	 * Emit an `et2-filedrop` event for native OS file drops onto a row, then
+	 * apply the framework default (upload + link to the row, gated on the link
+	 * registry) unless a consumer cancels it with `event.preventDefault()`.
+	 *
+	 * The default mirrors the legacy nextmatch `handle_drop`: dropping a file on
+	 * a row uploads into that entry's VFS link directory, linking the file to
+	 * the entry.  Apps that need different behaviour (e.g. filemanager uploads
+	 * into the row's folder instead of linking) listen for `et2-filedrop` and
+	 * call `preventDefault()` to suppress the framework default.
+	 */
+	private _handleFileDrop = async (event : DragEvent) : Promise<void> =>
+	{
+		const files = event.dataTransfer?.files;
+		if(!files || files.length === 0) return;
+		event.preventDefault();
+		event.stopPropagation();
+		const rowElement = this._findDropRowElement(event);
+		const rowUid = rowElement?.getAttribute("data-row-id") || "";
+		this._clearDropHover();
+		this._osFileDragDepth = 0;
+
+		const dropEvent = new CustomEvent("et2-filedrop", {
+			detail: {rowUid, files: Array.from(files)},
+			bubbles: true,
+			composed: true,
+			cancelable: true
+		});
+		this.dispatchEvent(dropEvent);
+
+		// Consumer cancelled (e.g. filemanager's folder upload) -> no default.
+		if(dropEvent.defaultPrevented) return;
+
+		await this._defaultFileDrop(rowUid, Array.from(files));
+	};
+
+	/**
+	 * Framework default for a native OS file drop: upload the files into the
+	 * target row's VFS link directory, linking them to that entry.  Only runs
+	 * when the app is linkable (`link_get_registry`) and we have a row UID.
+	 */
+	private async _defaultFileDrop(rowUid : string, files : File[]) : Promise<void>
+	{
+		if(!rowUid) return;
+
+		const split = rowUid.split("::");
+		const to_app = split.shift() || "";
+		const to_id = split.join("::");
+
+		// Respect link system settings: only link when the app is registered.
+		if(!this.egw().link_get_registry?.(to_app)) return;
+
+		const path = `/apps/${to_app}/${to_id}/`;
+		const link = <Et2VfsUpload>loadWebComponent("et2-vfs-upload", {path, multiple: true}, this);
+		this.appendChild(link);
+		await link.updateComplete;
+		files.forEach(file => link.addFile(file));
+
+		// Report results through the standard message bar, typed to upload
+		// status.  We listen to the widget's per-file `et2-file-complete` event
+		// (dispatched on both success and error) rather than the batch `change`,
+		// because `change` fires only after the file is removed from the list
+		// and can no longer be inspected.
+		let done = 0;
+		const total = files.length;
+		link.addEventListener("et2-file-complete", (e : CustomEvent) =>
+		{
+			this.refresh(rowUid, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+
+			const file = e.detail?.file;
+			const warning = file?.warning;
+			if(!e.detail?.success || warning)
+			{
+				this.egw().message(warning ?? this.egw().lang("Failed to upload %1", file?.fileName ?? ""), "error");
+			}
+			else
+			{
+				this.egw().link_title(to_app, to_id, (title) =>
+				{
+					this.egw().message(this.egw().lang("%1 linked to %2", file?.fileName ?? "", title || rowUid), "success");
+				});
+			}
+
+			if(++done >= total)
+			{
+				link.remove();
+			}
+		});
+	}
+
+
+	private _findDropRowElement(event : DragEvent) : HTMLElement | null
+	{
+		for(const target of (event.composedPath?.() ?? []))
+		{
+			if(target instanceof HTMLElement)
+			{
+				const row = target.closest?.("[data-row-id]") as HTMLElement | null;
+				if(row) return row;
+			}
+		}
+		return null;
 	}
 
 	constructor()
@@ -433,6 +638,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.addEventListener("et2-datagrid-leave-child-grid", this._handleLeaveChildGrid as EventListener);
 		this.addEventListener("dragstart", this._handleDragStartCapture as EventListener, true);
 		this.addEventListener("dragend", this._cancelLongPress as EventListener, true);
+		// Native OS file drops (upload).  Distinct from action-framework drags,
+		// which are handled by the action controller.  Captured in the capture
+		// phase so the action controller does not swallow the OS file drag.
+		this.addEventListener("dragenter", this._handleFileDragEnter as EventListener, true);
+		this.addEventListener("dragover", this._handleFileDragOver as EventListener, true);
+		this.addEventListener("drop", this._handleFileDrop as EventListener, true);
+		this.addEventListener("dragleave", this._handleFileDragLeave as EventListener, true);
 	}
 
 	/**
@@ -463,6 +675,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.removeEventListener("et2-datagrid-leave-child-grid", this._handleLeaveChildGrid as EventListener);
 		this.removeEventListener("dragstart", this._handleDragStartCapture as EventListener, true);
 		this.removeEventListener("dragend", this._cancelLongPress as EventListener, true);
+		this.removeEventListener("dragenter", this._handleFileDragEnter as EventListener, true);
+		this.removeEventListener("dragover", this._handleFileDragOver as EventListener, true);
+		this.removeEventListener("drop", this._handleFileDrop as EventListener, true);
+		this.removeEventListener("dragleave", this._handleFileDragLeave as EventListener, true);
 		this._actionController.destroy();
 		super.disconnectedCallback();
 	}
@@ -1542,6 +1758,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			sourceColumns: templateData.sourceColumns?.length ? templateData.sourceColumns : columns,
 			columns: nextColumns
 		};
+		// Columns now exist (getValue().selectcols is populated) - let consumers proceed.
+		this._resolveColumnsReady();
 	}
 
 	/**

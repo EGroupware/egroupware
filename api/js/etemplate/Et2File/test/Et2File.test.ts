@@ -211,4 +211,56 @@ describe('Et2File Component', async() =>
 		assert.strictEqual(fileItem.progress, 100, 'File progress should be 100%');
 		clock.restore();
 	});
+
+	/**
+	 * Per-file completion event `et2-file-complete`.
+	 *
+	 * Behaviour under test:
+	 *   Et2File must emit a `et2-file-complete` CustomEvent for every finished
+	 *   upload, on BOTH the success and error paths, carrying
+	 *   `{file, success}`.  Consumers (e.g. nextmatch row drop) route feedback
+	 *   to the message bar from this event; without it, failed uploads give no
+	 *   feedback at all and the success message can be missed because the
+	 *   batch `change` fires after the file is removed from the list.
+	 *
+	 * Setup strategy:
+	 *   - Invoke the protected resumableFileComplete directly with a successful
+	 *     server response (success path) and assert the event carries
+	 *     success:true.
+	 *   - Invoke the protected resumableFileError directly with a failing
+	 *     server response (error path) and assert the event carries
+	 *     success:false and file.warning set.
+	 *
+	 * Pass criteria:
+	 *   - On success, `et2-file-complete` fires with detail.success === true.
+	 *   - On error, `et2-file-complete` fires with detail.success === false
+	 *     (and file.warning set).
+	 *
+	 * Environment constraints:
+	 *   - Handlers are invoked directly (no real upload / stub needed), so the
+	 *     test is deterministic and independent of the Resumable stub's
+	 *     progress handling.
+	 */
+	it('dispatches et2-file-complete on success and on error', async() =>
+	{
+		// --- Success path ---
+		const file : any = {name: 'ok.txt', file: {name: 'ok.txt'}, fileName: 'ok.txt', loading: true};
+		const okEventPromise = oneEvent(element, 'et2-file-complete');
+		(element as any).resumableFileComplete(file, JSON.stringify({
+			response: [{type: 'data', data: {ok_tmp_123: {name: 'ok.txt', type: 'text/plain'}}}]
+		}));
+		const okEvent = await okEventPromise;
+		assert.isTrue(okEvent.detail.success, "success path should report success:true");
+		assert.isFalse(!!okEvent.detail.file?.warning, "successful file should have no warning");
+
+		// --- Error path ---
+		const badFile : any = {name: 'bad.txt', file: {name: 'bad.txt'}, fileName: 'bad.txt', loading: true};
+		const errEventPromise = oneEvent(element, 'et2-file-complete');
+		(element as any).resumableFileError(badFile, JSON.stringify({
+			response: [{type: 'data', data: {bad: 'Permission denied'}}]
+		}));
+		const errEvent = await errEventPromise;
+		assert.isFalse(errEvent.detail.success, "error path should report success:false");
+		assert.equal(badFile.warning, 'Permission denied', "failed file should carry a warning");
+	});
 });

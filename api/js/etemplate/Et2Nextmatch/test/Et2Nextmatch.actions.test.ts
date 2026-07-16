@@ -1579,8 +1579,8 @@ describe("Et2Nextmatch action setup", () =>
 		await el.updateComplete;
 		const controller : any = (el as any)._actionController;
 		const actions = [
-			{id: "add", type: "popup", children: []},
-			{id: "import_csv", type: "popup", children: []}
+			{id: "add", type: "popup", children: [], enabled: {exec: sinon.stub().returns(false)}},
+			{id: "import_csv", type: "popup", children: [], enabled: {exec: sinon.stub().returns(true)}}
 		];
 		controller.actionManager = {
 			children: actions,
@@ -1588,15 +1588,7 @@ describe("Et2Nextmatch action setup", () =>
 		};
 		controller.objectManager = makeFakeObjectManager();
 		controller.setPlaceholderActions(["add", "import_csv"]);
-		const placeholderObject = {
-			updateActionLinks: () => {},
-			getSelectedLinks: () => ({
-				links: {
-					add: {enabled: false, visible: true},
-					import_csv: {enabled: true, visible: true}
-				}
-			})
-		};
+		const placeholderObject = {updateActionLinks: () => {}};
 		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
 
 		const inlineActions = controller.getInlinePlaceholderActions();
@@ -1628,7 +1620,17 @@ describe("Et2Nextmatch action setup", () =>
 		});
 		const controller : any = new SourceEt2NextmatchActionController(host as any);
 		const actions = [
-			{id: "add", type: "popup", children: []}
+			{
+				id: "add",
+				type: "popup",
+				children: [],
+				enabled: {
+					exec: () =>
+					{
+						throw new Error("row required");
+					}
+				}
+			}
 		];
 		controller.actionManager = {
 			children: actions,
@@ -1636,18 +1638,58 @@ describe("Et2Nextmatch action setup", () =>
 		};
 		controller.objectManager = makeFakeObjectManager();
 		controller.setPlaceholderActions(["add"]);
-		const placeholderObject = {
-			updateActionLinks: () => {},
-			getSelectedLinks: () =>
-			{
-				throw new Error("row required");
-			}
-		};
+		const placeholderObject = {updateActionLinks: () => {}};
 		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
 
 		const inlineActions = controller.getInlinePlaceholderActions();
 
 		assert.deepEqual(inlineActions.map((action) => action.id), ["add"], "placeholder actions should not be hidden by row-dependent enabled checks");
+
+		ensurePlaceholderActionObject.restore();
+	});
+
+	/**
+	 * Contract under test:
+	 * - Placeholder enabled checks only run for explicitly configured placeholder actions.
+	 *
+	 * Setup strategy:
+	 * - Configure a parent placeholder action with a child that has a row-dependent
+	 *   enabled callback.
+	 *
+	 * Pass criteria:
+	 * - The parent action remains available.
+	 * - The child enabled callback is not called with the placeholder sender.
+	 */
+	it("does not run enabled checks for non-placeholder descendants", async() =>
+	{
+		const host = Object.assign(document.createElement("div"), {
+			id: "nm_inline_placeholder_child_enabled",
+			egw: () => egwStub,
+			getInstanceManager: () => null
+		});
+		const controller : any = new SourceEt2NextmatchActionController(host as any);
+		const childEnabled = sinon.stub().throws(new Error("row required"));
+		const actions = [
+			{
+				id: "share",
+				type: "popup",
+				children: [{id: "hidden_upload", type: "popup", children: [], enabled: {exec: childEnabled}}],
+				enabled: {exec: sinon.stub().returns(true)}
+			}
+		];
+		controller.actionManager = {
+			children: actions,
+			getActionById: (id : string) => id === "share" ? actions[0] : actions[0].children.find((action) => action.id === id) || null
+		};
+		controller.objectManager = makeFakeObjectManager();
+		controller.setPlaceholderActions(["share"]);
+		const placeholderObject = {updateActionLinks: () => {}};
+		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
+
+		const inlineActions = controller.getInlinePlaceholderActions();
+
+		assert.deepEqual(inlineActions.map((action) => action.id), ["share"], "configured parent placeholder action should remain available");
+		assert.isFalse(childEnabled.called, "non-placeholder child enabled callback should not be evaluated");
 
 		ensurePlaceholderActionObject.restore();
 	});
