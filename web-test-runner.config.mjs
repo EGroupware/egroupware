@@ -150,6 +150,6 @@ export default {
 			}
 		},
 		// Handles typescript
-		esbuildPlugin({ts: true})
+		esbuildPlugin({ts: true, tsconfig: 'tsconfig.json'})
 	],
 };
