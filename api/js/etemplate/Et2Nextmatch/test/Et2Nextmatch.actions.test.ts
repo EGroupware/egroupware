@@ -1,8 +1,6 @@
 import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2NextmatchActionController, resolveActionApiGetters} from "../Et2NextmatchActionController";
-// @ts-ignore TS2691: web-test-runner transpiles this source import; generated JS may be stale here.
-import {Et2NextmatchActionController as SourceEt2NextmatchActionController} from "../Et2NextmatchActionController.ts";
 import {EgwPopupActionImplementation} from "../../../egw_action/EgwPopupActionImplementation";
 import * as sinon from "sinon";
 
@@ -1597,101 +1595,6 @@ describe("Et2Nextmatch action setup", () =>
 
 		ensurePlaceholderActionObject.restore();
 		el.remove();
-	});
-
-	/**
-	 * Contract under test:
-	 * - Inline placeholder buttons do not fail if legacy enabled checks require real rows.
-	 *
-	 * Setup strategy:
-	 * - Configure a placeholder action that exists in the action tree.
-	 * - Make the placeholder object throw from `getSelectedLinks()`, matching row-only
-	 *   enabled callbacks being evaluated without a selected row.
-	 *
-	 * Pass criteria:
-	 * - The placeholder action still renders using the placeholder context link map.
-	 */
-	it("keeps inline placeholder actions when row-dependent enabled checks throw", async() =>
-	{
-		const host = Object.assign(document.createElement("div"), {
-			id: "nm_inline_placeholder_throwing_links",
-			egw: () => egwStub,
-			getInstanceManager: () => null
-		});
-		const controller : any = new SourceEt2NextmatchActionController(host as any);
-		const actions = [
-			{
-				id: "add",
-				type: "popup",
-				children: [],
-				enabled: {
-					exec: () =>
-					{
-						throw new Error("row required");
-					}
-				}
-			}
-		];
-		controller.actionManager = {
-			children: actions,
-			getActionById: (id : string) => actions.find((action) => action.id === id) || null
-		};
-		controller.objectManager = makeFakeObjectManager();
-		controller.setPlaceholderActions(["add"]);
-		const placeholderObject = {updateActionLinks: () => {}};
-		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
-
-		const inlineActions = controller.getInlinePlaceholderActions();
-
-		assert.deepEqual(inlineActions.map((action) => action.id), ["add"], "placeholder actions should not be hidden by row-dependent enabled checks");
-
-		ensurePlaceholderActionObject.restore();
-	});
-
-	/**
-	 * Contract under test:
-	 * - Placeholder enabled checks only run for explicitly configured placeholder actions.
-	 *
-	 * Setup strategy:
-	 * - Configure a parent placeholder action with a child that has a row-dependent
-	 *   enabled callback.
-	 *
-	 * Pass criteria:
-	 * - The parent action remains available.
-	 * - The child enabled callback is not called with the placeholder sender.
-	 */
-	it("does not run enabled checks for non-placeholder descendants", async() =>
-	{
-		const host = Object.assign(document.createElement("div"), {
-			id: "nm_inline_placeholder_child_enabled",
-			egw: () => egwStub,
-			getInstanceManager: () => null
-		});
-		const controller : any = new SourceEt2NextmatchActionController(host as any);
-		const childEnabled = sinon.stub().throws(new Error("row required"));
-		const actions = [
-			{
-				id: "share",
-				type: "popup",
-				children: [{id: "hidden_upload", type: "popup", children: [], enabled: {exec: childEnabled}}],
-				enabled: {exec: sinon.stub().returns(true)}
-			}
-		];
-		controller.actionManager = {
-			children: actions,
-			getActionById: (id : string) => id === "share" ? actions[0] : actions[0].children.find((action) => action.id === id) || null
-		};
-		controller.objectManager = makeFakeObjectManager();
-		controller.setPlaceholderActions(["share"]);
-		const placeholderObject = {updateActionLinks: () => {}};
-		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
-
-		const inlineActions = controller.getInlinePlaceholderActions();
-
-		assert.deepEqual(inlineActions.map((action) => action.id), ["share"], "configured parent placeholder action should remain available");
-		assert.isFalse(childEnabled.called, "non-placeholder child enabled callback should not be evaluated");
-
-		ensurePlaceholderActionObject.restore();
 	});
 
 	it("binds delegated drag target resolution on the datagrid rows container", () =>

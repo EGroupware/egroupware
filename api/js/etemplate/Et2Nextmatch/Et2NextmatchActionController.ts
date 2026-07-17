@@ -1600,10 +1600,7 @@ export class Et2NextmatchActionController
 		{
 			return enabled;
 		}
-		const placeholderLinks = this._getPlaceholderContextLinks(requested);
-		const fallbackLinks : Record<string, { actionId : string; enabled : boolean; visible : boolean }> =
-			Object.fromEntries(placeholderLinks.map((link) => [link.actionId, link]));
-		placeholderObject.updateActionLinks(placeholderLinks);
+		placeholderObject.updateActionLinks(this._getPlaceholderContextLinks(requested));
 
 		const actionTypes = new Set<string>();
 		for(const actionId of requested)
@@ -1613,17 +1610,7 @@ export class Et2NextmatchActionController
 		}
 		for(const actionType of actionTypes)
 		{
-			let links : Record<string, any> = {};
-			try
-			{
-				links = placeholderObject.getSelectedLinks?.(actionType, true)?.links || {};
-			}
-			catch(_e)
-			{
-				// Some legacy enabled checks require real row objects. Empty-state placeholder
-				// actions only need the placeholder context links built above.
-				links = fallbackLinks;
-			}
+			const links = placeholderObject.getSelectedLinks?.(actionType, true)?.links || {};
 			for(const actionId of requested)
 			{
 				const link = links[actionId];

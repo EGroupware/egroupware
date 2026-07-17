@@ -13,8 +13,7 @@ import {
 	Et2DatagridRowCustomizeContext,
 	Et2DatagridTemplateData,
 	Et2DatagridUpdateType,
-	Et2DatagridUpdateTypes,
-	Et2DatagridView
+	Et2DatagridUpdateTypes
 } from "./Et2Datagrid.types";
 import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
@@ -194,12 +193,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	/** Optional custom preference name for persisted datagrid column settings. */
 	@property({type: String, attribute: "column-preference-name"})
 	columnPreferenceName : string = "";
-
-	/**
-	 * Visual layout mode for the inner datagrid. Row is the default.
-	 */
-	@property({type: String, reflect: true})
-	view : Et2DatagridView = "row";
 
 	/** Optional filter template source (template name, .xet URL, or template element). */
 	@property({attribute: false})
@@ -1542,29 +1535,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
-	 * Switch between row and tile layout.
-	 *
-	 * This is a frontend rendering choice. It does not alter the data provider
-	 * request shape; callers that already persist `view` in filters may continue
-	 * to do so explicitly.
-	 */
-	setView(view : Et2DatagridView)
-	{
-		this.view = view === "tile" ? "tile" : "row";
-		return this.updateComplete;
-	}
-
-	/**
-	 * Switch between row and tile layout.
-	 * @deprecated Use `setView()` instead.
-	 */
-	set_view(view : Et2DatagridView)
-	{
-		this._warnDeprecatedOnce("set_view", "Et2Nextmatch.set_view is deprecated, use `nm.setView(...)`");
-		return this.setView(view);
-	}
-
-	/**
 	 * Emit one deprecation warning per legacy API name.
 	 */
 	private _warnDeprecatedOnce(method : string, message : string)
@@ -1988,13 +1958,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                     part="subgrid"
                     embedded-virtualized
                     ._parent=${this}
-                    .view=${this.view}
                     .columns=${columnSnapshot.columns}
                     .templateData=${this._templateData}
                     .rowCustomizer=${this._customizeDatagridRow}
                     .rowStylesheets=${this._rowStylesheets}
                     .dataProvider=${childProvider}
-                    .rowIdField=${this._settings?.row_id}
                     .parentRowId=${childParentRowId}
                     .noVisibleHeader=${true}
                     .noColumnSelection=${true}
@@ -2435,11 +2403,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const rowElement = this._getContextMenuRowElement(event);
 		if(!placeholderStateElement && !rowElement)
 		{
-			if(this._actionController.triggerPopupForRow(event))
-			{
-				event.preventDefault();
-				event.stopPropagation();
-			}
 			return;
 		}
 		// Capture-phase intercept to ensure exactly one popup flow runs.
@@ -2732,12 +2695,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                         part="grid"
                         exportparts="rows, row"
                         ._parent=${this}
-                        .view=${this.view}
                         .columns=${this._currentColumns}
                         .templateData=${this._templateData}
                         .rowCustomizer=${this._customizeDatagridRow}
                         .rowStylesheets=${this._rowStylesheets}
-                        .rowIdField=${this._settings?.row_id}
                         .columnPreferenceName=${this.columnPreferenceName}
                         .dataProvider=${this._dataProvider}
                         .expansionConfig=${this._datagridExpansionConfig()}

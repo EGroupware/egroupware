@@ -250,24 +250,6 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	}
 
 	/**
-	 * Resolve the datagrid row id from row data using legacy Nextmatch settings,
-	 * defaulting to the `id` field.
-	 */
-	private _rowIdFromData(rowData : Record<string, any> | null | undefined) : string
-	{
-		const rowIdField = String((this.host as any)?.settings?.row_id || "id").trim() || "id";
-		if(rowIdField && rowData && Object.prototype.hasOwnProperty.call(rowData, rowIdField))
-		{
-			const rowId = rowData[rowIdField];
-			if(rowId !== undefined && rowId !== null && String(rowId) !== "")
-			{
-				return this.normalizeRowId(rowId, true);
-			}
-		}
-		return "";
-	}
-
-	/**
 	 * Strip the datastore prefix from a row id to recover the bare provider/server id.
 	 */
 	toProviderRowId(dataStoreRowId : string) : string
@@ -291,7 +273,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 			return null;
 		}
 		return {
-			id: this._rowIdFromData(cached.data),
+			id: rowId,
 			data: cached.data
 		};
 	}
@@ -438,10 +420,9 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 								uid,
 								(data : any, resolvedUid : string) =>
 								{
-									const rowData = data || {};
 									rowsByIndex[index] = {
-										id: this._rowIdFromData(rowData),
-										data: rowData
+										id: String(resolvedUid || uid),
+										data: data || {}
 									};
 									pending--;
 									if(pending <= 0)

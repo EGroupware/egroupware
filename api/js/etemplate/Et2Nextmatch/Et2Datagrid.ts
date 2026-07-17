@@ -9,7 +9,6 @@ import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import styles from "./Et2Datagrid.styles";
 import {virtualize, virtualizerRef} from "@lit-labs/virtualizer/virtualize.js";
-import {grid} from "@lit-labs/virtualizer/layouts/grid.js";
 import {
 	Et2DatagridColumn,
 	Et2DatagridDataProvider,
@@ -21,12 +20,11 @@ import {
 	Et2DatagridSelectionMode,
 	Et2DatagridTemplateData,
 	Et2DatagridUpdateType,
-	Et2DatagridUpdateTypes,
-	Et2DatagridView
+	Et2DatagridUpdateTypes
 } from "./Et2Datagrid.types";
 import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2DatagridColumnManager";
-import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
+import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 import {styleMap} from "lit/directives/style-map.js";
@@ -200,12 +198,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	dataProvider : Et2DatagridDataProvider | null = null;
 
 	/**
-	 * Row-data field that contains the application row id.
-	 */
-	@property({type: String, attribute: "row-id-field"})
-	rowIdField : string = "id";
-
-	/**
 	 * Optional hook invoked for each realized row to customize row/meta-cell presentation.
 	 */
 	@property({attribute: false})
@@ -216,13 +208,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	@property({attribute: false})
 	templateData : Et2DatagridTemplateData | null = null;
-
-	/**
-	 * Visual layout mode. Row is the default datagrid table layout, tile is a
-	 * non-row wrapping virtualized layout where every entry remains its own item.
-	 */
-	@property({type: String, reflect: true})
-	view : Et2DatagridView = "row";
 
 	@property({type: Array, attribute: false})
 	rowStylesheets : CSSStyleSheet[] = [];
@@ -350,11 +335,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
 	private _requestDispatchDelayMs : number = 100;
 	private _rowUpgradeObserver : MutationObserver | null = null;
-	private _rowUpgradeObservedRoot : HTMLElement | null = null;
 	private _rowUpgradeQueue : HTMLElement[] = [];
 	private _rowUpgradeScheduled : boolean = false;
 	private _rowUpgradeFrameHandle : number | null = null;
-	private _rowUpgradeScanFrameHandle : number | null = null;
 	private _rowUpgradeBatchSize : number = 8;
 	/** Per-frame time budget (ms) for row widget upgrades to avoid long tasks on the main thread. */
 	private _rowUpgradeFrameBudgetMs : number = 8;
@@ -476,7 +459,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private get _gridTable() : HTMLElement | null
 	{
-		return this.shadowRoot?.querySelector("[role='grid']") as HTMLElement | null;
+		return this.shadowRoot?.querySelector("table[role='grid']") as HTMLElement | null;
 	}
 
 	private get _virtualize()
@@ -509,7 +492,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._clearColumnResizeDragState();
 		this._rowUpgradeObserver?.disconnect();
 		this._rowUpgradeObserver = null;
-		this._rowUpgradeObservedRoot = null;
 		this._clearRowUpgradeQueue();
 		if(this._body && this._scrollListener)
 		{
@@ -527,11 +509,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			cancelAnimationFrame(this._rowsMinHeightFrame);
 			this._rowsMinHeightFrame = null;
-		}
-		if(this._rowUpgradeScanFrameHandle !== null)
-		{
-			cancelAnimationFrame(this._rowUpgradeScanFrameHandle);
-			this._rowUpgradeScanFrameHandle = null;
 		}
 		super.disconnectedCallback();
 	}
@@ -562,8 +539,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		if(
 			changedProperties.has("templateData") ||
-			changedProperties.has("view") ||
-			changedProperties.has("rowIdField") ||
 			changedProperties.has("columnPreferenceName") ||
 			changedProperties.has("noColumnPersistence") ||
 			changedProperties.has("noVisibleHeader")
@@ -575,8 +550,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const columnsBeforePreferenceLoad = this.columns;
 		if(
 			changedProperties.has("templateData") ||
-			changedProperties.has("view") ||
-			changedProperties.has("rowIdField") ||
 			changedProperties.has("columns") ||
 			changedProperties.has("columnPreferenceName") ||
 			changedProperties.has("noColumnPersistence") ||
@@ -586,10 +559,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._loadColumnPreferencesIfNeeded();
 		}
 		const columnsChanged = changedProperties.has("columns") || this.columns !== columnsBeforePreferenceLoad;
-		const structureChanged = changedProperties.has("templateData") ||
-			changedProperties.has("view") ||
-			changedProperties.has("rowIdField") ||
-			columnsChanged;
+		const structureChanged = changedProperties.has("templateData") || columnsChanged;
 		if(changedProperties.has("templateData"))
 		{
 			// Capture source cell->column mapping before user reorders columns.
@@ -597,9 +567,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		if(structureChanged)
 		{
-			this._clearRowUpgradeQueue();
-			this._virtualIndexesCount = -1;
-			this._virtualItemsSignature = "";
 			this._prepareVisibleHeaders();
 			this._updateExportParts();
 			this._reconcileRowRenderState(false);
@@ -633,9 +600,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._applyColumnVisibilityToRenderedRows();
 			this._postRenderStructureSyncNeeded = false;
 		}
-		this._initRowUpgradeObserver();
 		this._upgradeRenderedRows();
-		this._scheduleRenderedRowsUpgradeScan();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
 			this._focusRowByIndex(this.activeRowIndex, 10);
@@ -887,7 +852,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedVirtualizedRenderedRows() : HTMLElement[]
 	{
 		const rowsBody = this._rowsBody as HTMLElement | null;
-		return this._renderedDataRowElements(rowsBody);
+		return Array.from(rowsBody?.querySelectorAll(":scope > tr[data-row-id]:not([data-et2dg-placeholder])") || []) as HTMLElement[];
 	}
 
 	/**
@@ -1429,7 +1394,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				continue;
 			}
-			const rowId = this._rowExpansionId(row, rowIndex);
+			const rowId = this._rowExpansionId(row);
 			if(nextExpandedRowIds.has(rowId) && !this._isRowExpandable(row, rowIndex))
 			{
 				nextExpandedRowIds.delete(rowId);
@@ -1589,10 +1554,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._ensureMetaCell(root, row, rowIndex);
 		root.classList.add("loading");
 		this._markRowElement(root, row, rowIndex);
-		if(!this._isTileView())
-		{
-			this._applyColumnLayoutToRowElement(root);
-		}
+		this._applyColumnLayoutToRowElement(root);
 		return root;
 	}
 
@@ -1601,11 +1563,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _ensureMetaCell(rowElement : HTMLElement, row : Et2DatagridRow, rowIndex : number)
 	{
-		const metaSelector = this._isTileView() ? ":scope > [data-dg-meta-cell='1']" : ":scope > td[data-dg-meta-cell='1']";
-		let metaCell = rowElement.querySelector(metaSelector) as HTMLTableCellElement | null;
+		let metaCell = rowElement.querySelector(":scope > td[data-dg-meta-cell='1']") as HTMLTableCellElement | null;
 		if(!metaCell)
 		{
-			metaCell = document.createElement(this._isTileView() ? "div" : "td") as HTMLTableCellElement;
+			metaCell = document.createElement("td");
 			metaCell.setAttribute("data-dg-meta-cell", "1");
 			metaCell.setAttribute("part", "row-meta");
 			metaCell.setAttribute("aria-hidden", "true");
@@ -1631,14 +1592,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Normalize a data row id for use as a stable expansion key.
 	 */
-	private _rowExpansionId(row : Et2DatagridRow, rowIndex : number = -1) : string
+	private _rowExpansionId(row : Et2DatagridRow) : string
 	{
-		const rawId = row?.id;
-		if(rawId !== undefined && rawId !== null && String(rawId) !== "")
-		{
-			return this._dataStoreRowIdFor(rawId);
-		}
-		return "";
+		return this._dataStoreRowIdFor(row.id);
 	}
 
 	/**
@@ -1664,21 +1620,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Check whether a data row currently has an expanded detail row.
 	 */
-	private _isRowExpanded(row : Et2DatagridRow, rowIndex : number = -1) : boolean
+	private _isRowExpanded(row : Et2DatagridRow) : boolean
 	{
-		return this._expandedRowIds().has(this._rowExpansionId(row, rowIndex));
+		return this._expandedRowIds().has(this._rowExpansionId(row));
 	}
 
 	/**
 	 * Update expansion state through the controlled callback or local fallback state.
 	 */
-	private _setRowExpanded(row : Et2DatagridRow, expanded : boolean, rowIndex : number = -1)
+	private _setRowExpanded(row : Et2DatagridRow, expanded : boolean)
 	{
-		const rowId = this._rowExpansionId(row, rowIndex);
-		if(!rowId)
-		{
-			return;
-		}
+		const rowId = this._rowExpansionId(row);
 		const nextExpandedRowIds = new Set(this._expandedRowIds());
 		if(expanded)
 		{
@@ -1722,7 +1674,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			rowElement.removeAttribute("aria-expanded");
 			return;
 		}
-		const expanded = this._isRowExpanded(row, rowIndex);
+		const expanded = this._isRowExpanded(row);
 		const expander = existing ?? document.createElement("button");
 		if(!existing)
 		{
@@ -1754,14 +1706,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _initRowUpgradeObserver()
 	{
-		const observedRoot = this._body;
-		if(observedRoot === this._rowUpgradeObservedRoot && this._rowUpgradeObserver)
-		{
-			return;
-		}
 		this._rowUpgradeObserver?.disconnect();
-		this._rowUpgradeObservedRoot = observedRoot;
-		if(!observedRoot)
+		const rowsBody = this._rowsBody;
+		if(!rowsBody)
 		{
 			return;
 		}
@@ -1770,7 +1717,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._upgradeRenderedRows();
 			this._guardFocusAfterVirtualMutation();
 		});
-		this._rowUpgradeObserver.observe(observedRoot, {childList: true, subtree: true});
+		this._rowUpgradeObserver.observe(rowsBody, {childList: true, subtree: true});
 	}
 
 	/**
@@ -1852,24 +1799,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const chunkStart = Math.floor(rowIndex / this.pageSize) * this.pageSize;
 		this._requestChunkForRowIndex(rowIndex);
 		const placeholderRowId = `placeholder:${rowIndex}`;
-		if(this._isTileView())
-		{
-			return html`
-                <div
-                        class="dg-row-placeholder dg-tile-placeholder"
-                        data-et2dg-placeholder="1"
-                        data-row-index=${String(rowIndex)}
-                        data-row-id=${placeholderRowId}
-                        role="row"
-                        aria-rowindex=${String(rowIndex + 1)}
-                        aria-selected="false"
-                        tabindex=${rowIndex === this.activeRowIndex ? "0" : "-1"}
-                >
-                    ${this.templateData?.loaderTemplate ? html`${unsafeHTML(this._loaderHtml())}` : html`
-                        <sl-skeleton effect="sheen" style="width:100%;height:100%"></sl-skeleton>`}
-                </div>
-			`;
-		}
 		return html`
             <tr
                     class="dg-row-placeholder"
@@ -2002,12 +1931,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			items.push(rowIndex);
 			const row = this._rowsByIndex[rowIndex];
-			if(row && this._isRowExpanded(row, rowIndex) && this._isRowExpandable(row, rowIndex))
+			if(row && this._isRowExpanded(row) && this._isRowExpandable(row, rowIndex))
 			{
 				items.push({
 					type: "expanded",
 					rowIndex,
-					parentRowId: this._rowExpansionId(row, rowIndex)
+					parentRowId: this._rowExpansionId(row)
 				});
 			}
 		}
@@ -2061,7 +1990,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _virtualRowKey = (item : Et2DatagridVirtualItem) : string =>
 	{
-		const structureSignature = this._rowRenderStructureSignature();
 		if(typeof item === "number")
 		{
 			const row = this._rowsByIndex[item];
@@ -2069,17 +1997,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			{
 				const rowId = String(row.id ?? item);
 				const version = this._rowRenderVersionById.get(rowId) || 0;
-				const expandedState = this._expandedRowIds().size ? `:${this._isRowExpanded(row, item) ? "expanded" : "collapsed"}` : "";
-				return `${structureSignature}:${this._dataStoreRowIdFor(rowId)}:${version}${expandedState}`;
+				const expandedState = this._expandedRowIds().size ? `:${this._isRowExpanded(row) ? "expanded" : "collapsed"}` : "";
+				return `${this._dataStoreRowIdFor(rowId)}:${version}${expandedState}`;
 			}
 			const querySignature = this.dataProvider?.getQuerySignature?.() || "";
-			return `${structureSignature}:placeholder:${querySignature}:${item}`;
+			return `placeholder:${querySignature}:${item}`;
 		}
 		if(item.type === "expanded")
 		{
 			const querySignature = this.dataProvider?.getQuerySignature?.() || "";
 			const columnSignature = this._columnWidths(this._visibleColumns());
-			return `${structureSignature}:expanded:${item.parentRowId}:${querySignature}:${columnSignature}`;
+			return `expanded:${item.parentRowId}:${querySignature}:${columnSignature}`;
 		}
 		const rowIndex = item.rowIndex;
 		const row = this._rowsByIndex[rowIndex];
@@ -2087,28 +2015,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			const rowId = String(row.id ?? rowIndex);
 			const version = this._rowRenderVersionById.get(rowId) || 0;
-			const expandedState = this._isRowExpanded(row, rowIndex) ? "expanded" : "collapsed";
-			return `${structureSignature}:${this._dataStoreRowIdFor(rowId)}:${version}:${expandedState}`;
+			const expandedState = this._isRowExpanded(row) ? "expanded" : "collapsed";
+			return `${this._dataStoreRowIdFor(rowId)}:${version}:${expandedState}`;
 		}
 		const querySignature = this.dataProvider?.getQuerySignature?.() || "";
-		return `${structureSignature}:placeholder:${querySignature}:${rowIndex}`;
+		return `placeholder:${querySignature}:${rowIndex}`;
 	};
-
-	private _rowRenderStructureSignature() : string
-	{
-		return [
-			this._isTileView() ? "tile" : "row",
-			this.templateData?.rowTemplateId || "",
-			this.templateData?.templateSignature || "",
-			this.templateData?.view || "",
-			this.rowIdField || "id"
-		].join(":");
-	}
-
-	private _rowUpgradeSignature(dataRowId : string) : string
-	{
-		return `${this._rowRenderStructureSignature()}:${dataRowId}`;
-	}
 
 	/**
 	 * Stamp row-level accessibility and identity attributes.
@@ -2210,14 +2122,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _upgradeRenderedRows()
 	{
-		const rowElements = this._renderedDataRowElements(this._rowsBody);
+		const rowElements = Array.from(this._rowsBody?.querySelectorAll("[data-row-id]:not(.dg-row-placeholder)") || []) as HTMLElement[];
 		for(const rowElement of rowElements)
 		{
 			// Skip already-upgraded instances for the same row identity.
 			const dataRowId = rowElement.getAttribute("data-row-id") || "";
-			const upgradeSignature = this._rowUpgradeSignature(dataRowId);
 			const upgradedFor = rowElement.getAttribute("data-et2dg-upgraded-for") || "";
-			if(upgradedFor === upgradeSignature && dataRowId)
+			if(upgradedFor === dataRowId && dataRowId)
 			{
 				continue;
 			}
@@ -2242,63 +2153,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * The virtualizer can materialize children after Lit's `updated()` callback.
-	 * Scan for a bounded number of frames so rows inserted during that handoff
-	 * still get their row-scoped template attributes applied.
-	 */
-	private _scheduleRenderedRowsUpgradeScan(remainingFrames : number = 30)
-	{
-		if(this._rowUpgradeScanFrameHandle !== null)
-		{
-			return;
-		}
-		this._rowUpgradeScanFrameHandle = requestAnimationFrame(() =>
-		{
-			this._rowUpgradeScanFrameHandle = null;
-			this._upgradeRenderedRows();
-			if(remainingFrames > 1)
-			{
-				this._scheduleRenderedRowsUpgradeScan(remainingFrames - 1);
-			}
-		});
-	}
-
-	/**
-	 * Return direct rendered data rows/items from the virtualizer host.
-	 *
-	 * `children` is used instead of a `:scope > ...` selector because tbody
-	 * selector behaviour can vary while the virtualizer is actively moving rows.
-	 */
-	private _renderedDataRowElements(rowsBody : HTMLElement | null) : HTMLElement[]
-	{
-		return Array.from(rowsBody?.children || [])
-			.filter((element) =>
-				element instanceof HTMLElement &&
-				element.hasAttribute("data-row-id") &&
-				!element.hasAttribute("data-et2dg-placeholder")
-			) as HTMLElement[];
-	}
-
-	/**
 	 * Cancel queued/in-flight frame work for row upgrades.
 	 */
 	private _clearRowUpgradeQueue()
 	{
 		this._rowUpgradeQueue.length = 0;
-		this._rowsBody?.querySelectorAll("[data-et2dg-upgrade-queued='1']").forEach((rowElement) =>
-		{
-			(rowElement as HTMLElement).removeAttribute("data-et2dg-upgrade-queued");
-		});
 		this._rowUpgradeScheduled = false;
 		if(this._rowUpgradeFrameHandle !== null)
 		{
 			cancelAnimationFrame(this._rowUpgradeFrameHandle);
 			this._rowUpgradeFrameHandle = null;
-		}
-		if(this._rowUpgradeScanFrameHandle !== null)
-		{
-			cancelAnimationFrame(this._rowUpgradeScanFrameHandle);
-			this._rowUpgradeScanFrameHandle = null;
 		}
 	}
 
@@ -2339,9 +2203,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			rowElement.removeAttribute("data-et2dg-upgrade-queued");
 			const dataRowId = rowElement.getAttribute("data-row-id") || "";
-			const upgradeSignature = this._rowUpgradeSignature(dataRowId);
 			const upgradedFor = rowElement.getAttribute("data-et2dg-upgraded-for") || "";
-			if(upgradedFor === upgradeSignature && dataRowId)
+			if(upgradedFor === dataRowId && dataRowId)
 			{
 				continue;
 			}
@@ -2358,7 +2221,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			rowElement.classList.add("loading");
 			if(this._applyRowElementAttributes(rowElement, row.data, rowIndex))
 			{
-				rowElement.setAttribute("data-et2dg-upgraded-for", upgradeSignature);
+				rowElement.setAttribute("data-et2dg-upgraded-for", dataRowId);
 			}
 			processed++;
 		}
@@ -2522,29 +2385,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			rowRoot.classList.remove("loading");
 			return false;
 		}
-		this._rerunRowCustomizer(rowRoot, rowData, rowIndex);
 		rowRoot.classList.remove("loading");
 		return true;
-	}
-
-	private _rerunRowCustomizer(rowElement : HTMLElement, rowData : any, rowIndex : number)
-	{
-		if(!this.rowCustomizer)
-		{
-			return;
-		}
-		const metaSelector = this._isTileView() ? ":scope > [data-dg-meta-cell='1']" : ":scope > td[data-dg-meta-cell='1']";
-		const metaCell = rowElement.querySelector(metaSelector) as HTMLTableCellElement | null;
-		if(!metaCell)
-		{
-			return;
-		}
-		this.rowCustomizer({
-			rowElement,
-			rowData,
-			rowIndex,
-			metaCell
-		});
 	}
 
 	/**
@@ -2675,12 +2517,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _rowIdFor(row : any, fallbackIndex : number) : string
 	{
-		const rowIdField = String(this.rowIdField || "id").trim() || "id";
-		if(row && row[rowIdField] !== undefined && row[rowIdField] !== null && String(row[rowIdField]) !== "")
-		{
-			return this._dataStoreRowIdFor(row[rowIdField], true);
-		}
-		return "";
+		return String(row?.uid ?? row?.id ?? row?.row_id ?? fallbackIndex);
 	}
 
 	/**
@@ -3108,10 +2945,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _applyColumnLayoutToRowElement(row : HTMLElement)
 	{
-		if(this._isTileView())
-		{
-			return;
-		}
 		if(row.classList.contains("dg-row-placeholder"))
 		{
 			return;
@@ -3332,7 +3165,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		this._setRowExpanded(row, !this._isRowExpanded(row, rowIndex), rowIndex);
+		this._setRowExpanded(row, !this._isRowExpanded(row));
 	}
 
 	/**
@@ -3458,14 +3291,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			event.preventDefault();
 			event.stopPropagation();
-			if(!this._isRowExpanded(row, this.activeRowIndex))
+			if(!this._isRowExpanded(row))
 			{
-				this._setRowExpanded(row, true, this.activeRowIndex);
+				this._setRowExpanded(row, true);
 				return true;
 			}
 			this.dispatchEvent(new CustomEvent("et2-datagrid-enter-expanded-row", {
 				detail: {
-					parentRowId: this._rowExpansionId(row, this.activeRowIndex),
+					parentRowId: this._rowExpansionId(row),
 					rowId: row.id,
 					rowIndex: this.activeRowIndex
 				},
@@ -3474,11 +3307,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}));
 			return true;
 		}
-		if(event.key === "ArrowLeft" && this._isRowExpanded(row, this.activeRowIndex))
+		if(event.key === "ArrowLeft" && this._isRowExpanded(row))
 		{
 			event.preventDefault();
 			event.stopPropagation();
-			this._setRowExpanded(row, false, this.activeRowIndex);
+			this._setRowExpanded(row, false);
 			return true;
 		}
 		return false;
@@ -3875,11 +3708,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			const cells = Array.from(rowElement.children) as HTMLElement[];
 			cells.forEach((cell, cellIndex) =>
 			{
-				if(cell.getAttribute("data-dg-meta-cell") === "1" && this._isTileView())
-				{
-					cell.setAttribute("aria-hidden", "true");
-					return;
-				}
 				const isHeader = cell.tagName.toLowerCase() === "th";
 				cell.setAttribute("role", isHeader ? "columnheader" : "gridcell");
 				cell.setAttribute("aria-colindex", String(cellIndex + 1));
@@ -4316,30 +4144,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return null;
 	}
 
-	private _isTileView() : boolean
-	{
-		return this.view === "tile" || this.templateData?.view === "tile";
-	}
-
-	private _tileLayoutConfig()
-	{
-		const layout = this.templateData?.tileLayout || {};
-		const defaultWidth = this._lengthToPx(DEFAULT_TILE_LAYOUT.width) || 0;
-		const defaultHeight = this._lengthToPx(DEFAULT_TILE_LAYOUT.height) || 0;
-		const width = this._lengthToPx(layout.width || DEFAULT_TILE_LAYOUT.width) || defaultWidth;
-		const height = this._lengthToPx(layout.height || DEFAULT_TILE_LAYOUT.height) || defaultHeight;
-		return grid(<any>{
-			itemSize: {
-				width: `${width}px`,
-				height: `${height}px`
-			},
-			gap: layout.gap || DEFAULT_TILE_LAYOUT.gap,
-			padding: layout.padding || DEFAULT_TILE_LAYOUT.padding,
-			flex: {preserve: "height"},
-			justify: "start"
-		});
-	}
-
 	/**
 	 * Render the visible column header row (or fallback header slot).
 	 */
@@ -4448,8 +4252,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	render()
 	{
 		const visibleColumns = this._visibleColumns();
-		const isTileView = this._isTileView();
-		const headerTemplate = this.noVisibleHeader || isTileView ? nothing : this._headerTemplate(visibleColumns);
+		const headerTemplate = this.noVisibleHeader ? nothing : this._headerTemplate(visibleColumns);
 		const stateTemplate = this._stateTemplate();
 		const styles = {
 			'--column-count' : visibleColumns.length,
@@ -4459,18 +4262,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		const rowCount = this._virtualRowCount();
 		const virtualItems = this._getVirtualItems(rowCount);
-		const virtualizerConfig = {
-			items: virtualItems,
-			keyFunction: this._virtualRowKey,
-			renderItem: this._renderVirtualRow,
-			...(isTileView ? {layout: this._tileLayoutConfig()} : {})
-		};
-		const gridAttributes = {
-			"aria-label": this.getAttribute("aria-label") || this.getAttribute("label") || "Data grid",
-			"aria-multiselectable": String(this.selectionMode === "multiple"),
-			"aria-colcount": String((isTileView ? 1 : visibleColumns.length || this.columns.length || 1) + (isTileView ? 0 : 1)),
-			"aria-rowcount": String(this.total ?? this.rows.length)
-		};
 		return html`
             <div class="dg-root" part="base" style=${styleMap(styles)}>
 				<!-- Visible header for users -->
@@ -4484,33 +4275,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
                 <div class="dg-body" part="body">
 					${stateTemplate}
-                    ${isTileView ? html`
-                        <div
-                                id="rows"
-                                class="dg-tile-grid"
-                                part="rows"
-                                role="grid"
-                                tabindex="-1"
-                                aria-label=${gridAttributes["aria-label"]}
-                                aria-multiselectable=${gridAttributes["aria-multiselectable"]}
-                                aria-colcount=${gridAttributes["aria-colcount"]}
-                                aria-rowcount=${gridAttributes["aria-rowcount"]}
-                                ?hidden=${!!stateTemplate}
-                                @keydown=${this._handleTableKeydown}
-                                @pointerdown=${this._handleTablePointerDown}
-                                @click=${this._handleTableClick}
-                        >
-                            ${virtualize(virtualizerConfig)}
-                        </div>
-                    ` : html`
 					<table
                             part="table"
 						role="grid"
 						tabindex="-1"
-                            aria-label=${gridAttributes["aria-label"]}
-                            aria-multiselectable=${gridAttributes["aria-multiselectable"]}
-                            aria-colcount=${gridAttributes["aria-colcount"]}
-                            aria-rowcount=${gridAttributes["aria-rowcount"]}
+						aria-label=${this.getAttribute("aria-label") || this.getAttribute("label") || "Data grid"}
+						aria-multiselectable=${String(this.selectionMode === "multiple")}
+						aria-colcount=${String((visibleColumns.length || this.columns.length || 1) + 1)}
+						aria-rowcount=${String(this.total ?? this.rows.length)}
 						?hidden=${!!stateTemplate}
                             @keydown=${this._handleTableKeydown}
                             @pointerdown=${this._handleTablePointerDown}
@@ -4521,10 +4293,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 							${this._accessibleHeaderTemplate(visibleColumns)}
 						</thead>
                         <tbody id="rows" part="rows" role="rowgroup">
-                        ${virtualize(virtualizerConfig)}
+                        ${virtualize({
+                            items: virtualItems,
+                            keyFunction: this._virtualRowKey,
+                            renderItem: this._renderVirtualRow
+                        })}
                         </tbody>
 					</table>
-                    `}
 				</div>
 			</div>
 		`;
