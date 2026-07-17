@@ -1054,7 +1054,7 @@ declare interface IegwWndLocal extends IegwGlobal
 	/**
 	 * Handle a push notification about entry changes from the websocket
 	 *
-	 * @param  pushData
+	 * @param  pushData|Array<pushData> one or multiple push-objects
 	 * @param {string} pushData.app application name
 	 * @param {(string|number)} pushData.id id of entry to refresh or null
 	 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
