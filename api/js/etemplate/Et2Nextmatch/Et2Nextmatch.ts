@@ -13,7 +13,8 @@ import {
 	Et2DatagridRowCustomizeContext,
 	Et2DatagridTemplateData,
 	Et2DatagridUpdateType,
-	Et2DatagridUpdateTypes
+	Et2DatagridUpdateTypes,
+	Et2DatagridView
 } from "./Et2Datagrid.types";
 import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
@@ -134,7 +135,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		"sort",
 		"start",
 		"template",
-		"total"
+		"total",
+		"view"
 	]);
 
 	/**
@@ -194,6 +196,29 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	@property({type: String, attribute: "column-preference-name"})
 	columnPreferenceName : string = "";
 
+	private _view : Et2DatagridView = "row";
+
+	/**
+	 * Visual layout mode for the inner datagrid. Row is the default.
+	 */
+	@property({type: String, reflect: true})
+	set view(value : Et2DatagridView | string)
+	{
+		const oldValue = this._view;
+		const nextValue = this._normalizeView(value);
+		if(nextValue === oldValue)
+		{
+			return;
+		}
+		this._view = nextValue;
+		this.requestUpdate("view", oldValue);
+	}
+
+	get view() : Et2DatagridView
+	{
+		return this._view;
+	}
+
 	/** Optional filter template source (template name, .xet URL, or template element). */
 	@property({attribute: false})
 	filterTemplate : string | Et2Template | HTMLElement | null = null;
@@ -251,6 +276,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const oldValue = this.settings;
 		const settings = this._settingsObject(value);
 		delete settings.rows;
+		if(typeof settings.view !== "undefined")
+		{
+			settings.view = this._normalizeView(settings.view);
+			this.view = settings.view;
+			this._filters.view = settings.view;
+		}
 		if(typeof settings.col_filter !== "undefined")
 		{
 			this._setColFilterFilter(settings.col_filter);
@@ -684,6 +715,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const contentSettings = this._settingsObject(this.getArrayMgr("content").getEntry(attrs.id || 'nm'));
 		for(const sourceSettings of [contentSettings, attrSettings])
 		{
+			if(typeof sourceSettings.view !== "undefined")
+			{
+				sourceSettings.view = this._normalizeView(sourceSettings.view);
+				this._filters.view = sourceSettings.view;
+			}
 			if(typeof sourceSettings.col_filter !== "undefined")
 			{
 				this._setColFilterFilter(sourceSettings.col_filter);
@@ -736,6 +772,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			attrs.lettersearch = !!attrs.lettersearch;
 		}
+		if(typeof attrs.view !== "undefined")
+		{
+			attrs.view = this._normalizeView(attrs.view);
+		}
 		const rowsSource = typeof attrs.rows !== "undefined" ? attrs.rows : this.getAttribute("rows");
 		if(typeof rowsSource === "string")
 		{
@@ -756,6 +796,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _settingsObject(value : Record<string, any> | string | null | undefined) : Record<string, any>
 	{
 		return value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
+	}
+
+	private _normalizeView(value : string | null | undefined) : Et2DatagridView
+	{
+		return String(value || "").trim().toLowerCase() === "tile" ? "tile" : "row";
 	}
 
 	private _filterAllowedSettings(settings : Record<string, any>) : Record<string, any>
@@ -831,7 +876,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			await this._applyTemplateFromSlots();
 		}
-		await this._updateRowStylesheets();
 		this._initializeSettingsSort();
 
 		if(this.rows.length)
@@ -844,6 +888,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			await this._datagrid?.reload();
 		}
+		await this._updateRowStylesheets();
 	}
 
 	/**
@@ -1531,7 +1576,26 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	{
 		this.template = template_name;
 		this._warnDeprecatedOnce("set_template", "Et2Nextmatch.set_template is deprecated, use `nm.template='...'`");
+		return this._applyTemplateFromName(template_name).then(() => this.updateComplete);
+	}
+
+	/**
+	 * Switch between row and tile layout.
+	 */
+	setView(view : Et2DatagridView)
+	{
+		this.view = this._normalizeView(view);
 		return this.updateComplete;
+	}
+
+	/**
+	 * Switch between row and tile layout.
+	 * @deprecated Use `setView()` instead.
+	 */
+	set_view(view : Et2DatagridView)
+	{
+		this._warnDeprecatedOnce("set_view", "Et2Nextmatch.set_view is deprecated, use `nm.setView(...)`");
+		return this.setView(view);
 	}
 
 	/**
@@ -1608,6 +1672,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const token = ++this._templateLoadToken;
 		this._templateLoading = true;
 		this._templateLoadingName = templateName;
+		this._resetColumnsReady();
 
 		const loadPromise = (async() =>
 		{
@@ -1658,14 +1723,24 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			return this._slotApplyInFlight;
 		}
+		const token = ++this._templateLoadToken;
+		const previousTemplateData = this._templateData;
+		this._resetColumnsReady();
 		this._slotApplyInFlight = (async() =>
 		{
 			await this._waitForSlottedTemplateChildrenReady();
-			this._templateLoading = false;
 			const templateData = await this._rowProvider.fromSlots();
+			if(token !== this._templateLoadToken)
+			{
+				return;
+			}
+			this._templateLoading = false;
 			if(!templateData)
 			{
-				this._templateData = null;
+				if(this._templateData === previousTemplateData)
+				{
+					this._templateData = null;
+				}
 				return;
 			}
 			this._applyTemplateData(templateData);
@@ -1730,6 +1805,27 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		};
 		// Columns now exist (getValue().selectcols is populated) - let consumers proceed.
 		this._resolveColumnsReady();
+	}
+
+	private _effectiveView() : Et2DatagridView
+	{
+		if(this.view === "tile")
+		{
+			return "tile";
+		}
+		return this._templateData?.view === "tile" &&
+			(!this._templateData.rowTemplateId || this._templateData.rowTemplateId === this.template)
+		       ? "tile"
+		       : "row";
+	}
+
+	private _resetColumnsReady()
+	{
+		this._resolveColumnsReady();
+		this._columnsReady = new Promise((resolve) =>
+		{
+			this._resolveColumnsReady = resolve;
+		});
 	}
 
 	/**
@@ -2018,10 +2114,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	private _loadExpandedGrid = (element ? : Element) =>
 	{
-		if(!(element instanceof Et2Datagrid) || this._templateLoading || this._initializedSubgrids.has(element))
+		if(!(element instanceof Et2Datagrid) || this._templateLoading)
 		{
 			return;
 		}
+			if(this._initializedSubgrids.has(element))
+			{
+				return;
+			}
 		this._initializedSubgrids.add(element);
 		void element.updateComplete.then(() =>
 		{
@@ -2688,6 +2788,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const inlinePlaceholderActions : EgwAction[] = this._actionController
 			.getInlinePlaceholderActions();
 		const metaColumnWidth = "max(var(--sl-spacing-large), 6px)";
+		const effectiveView = this._effectiveView();
 		return html`
 				<div part="header"><slot name="header"></slot></div>
                 ${this._renderLetterSearch()}
@@ -2695,6 +2796,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                         part="grid"
                         exportparts="rows, row"
                         ._parent=${this}
+                        .view=${effectiveView}
                         .columns=${this._currentColumns}
                         .templateData=${this._templateData}
                         .rowCustomizer=${this._customizeDatagridRow}

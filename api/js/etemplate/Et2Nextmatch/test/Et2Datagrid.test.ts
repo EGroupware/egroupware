@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {html, LitElement} from "lit";
+import {html, LitElement, render} from "lit";
 import {Et2Datagrid} from "../Et2Datagrid";
 import datagridStyles from "../Et2Datagrid.styles.ts";
 import {Et2RowProvider} from "../Et2RowProvider.ts";
@@ -402,6 +402,55 @@ describe("Et2Datagrid row rendering", () =>
 			{type: "expanded", rowIndex: 0, parentRowId: "row-0"},
 			1
 		]);
+	});
+
+	it("retargets row upgrade observation when switching between row and tile view", async() =>
+	{
+		const host = document.createElement("div");
+		document.body.appendChild(host);
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.setInitialRows([{id: "row-0", label: "Row 0"}]);
+		el.total = 1;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		const rowRowsBody = el.shadowRoot!.getElementById("rows");
+		assert.equal((el as any)._rowUpgradeObservedRowsBody, rowRowsBody, "row tbody should be observed initially");
+
+		el.view = "tile";
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		const tileRowsBody = el.shadowRoot!.getElementById("rows");
+		assert.notEqual(tileRowsBody, rowRowsBody, "tile view should render a different rows container");
+		assert.equal((el as any)._rowUpgradeObservedRowsBody, tileRowsBody, "tile rows container should be observed after switch");
+
+		host.remove();
+	});
+
+	it("recovers rows left with a stale upgrade queued marker", async() =>
+	{
+		const host = document.createElement("div");
+		document.body.appendChild(host);
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.setInitialRows([{id: "row-0", label: "Row 0"}]);
+		el.total = 1;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		const row = await waitForDatagridRow(el, "row-0");
+		assert.isNotNull(row, "row should render");
+		row!.removeAttribute("data-et2dg-upgraded-for");
+		row!.setAttribute("data-et2dg-upgrade-queued", "1");
+		(el as any)._rowUpgradeQueue.length = 0;
+
+		(el as any)._upgradeRenderedRows();
+		assert.equal(row!.getAttribute("data-et2dg-upgrade-queued"), "1", "row should be requeued");
+		assert.include((el as any)._rowUpgradeQueue, row, "row should be present in the active queue");
+
+		host.remove();
 	});
 
 	it("does not cap virtual height below materialized rows", () =>
@@ -1978,25 +2027,25 @@ describe("Et2Datagrid virtual height stability", () =>
 		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 		await el.updateComplete;
 
-		const body = el.shadowRoot!.querySelector(".dg-body") as HTMLElement;
-		const root = el.shadowRoot!.querySelector(".dg-root") as HTMLElement;
-		const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
-		const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
-		const explicitTbodyHeight = rowsBody.style.height || rowsBody.style.minHeight;
-		const hostHeightSynced = await waitForEmbeddedHostHeight(el, explicitTbodyHeight);
-		const rowsBodyRect = rowsBody.getBoundingClientRect();
-		const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
-		const renderedRowsHeight = Math.ceil(
-			Math.max(...rowBounds.map((rect) => rect.bottom)) -
-			Math.min(Math.min(...rowBounds.map((rect) => rect.top)), rowsBodyRect.top)
-		);
+			const body = el.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+			const root = el.shadowRoot!.querySelector(".dg-root") as HTMLElement;
+			const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
+			const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
+			const explicitTbodyHeight = rowsBody.style.height || rowsBody.style.minHeight;
+			const hostHeightSynced = await waitForEmbeddedHostHeight(el, explicitTbodyHeight);
+			const rowsBodyRect = rowsBody.getBoundingClientRect();
+			const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
+			const renderedRowsHeight = Math.ceil(
+				Math.max(...rowBounds.map((rect) => rect.bottom)) -
+				Math.min(Math.min(...rowBounds.map((rect) => rect.top)), rowsBodyRect.top)
+			);
 
-		assert.match(explicitTbodyHeight, /^\d+px$/, "tbody should keep the virtualizer's explicit height");
-		assert.isAtLeast(
-			parseInt(explicitTbodyHeight, 10),
-			renderedRowsHeight,
-			"tbody height should not be shorter than the rendered child row stack"
-		);
+			assert.match(explicitTbodyHeight, /^\d+px$/, "tbody should keep the virtualizer's explicit height");
+			assert.isAtLeast(
+				parseInt(explicitTbodyHeight, 10),
+				renderedRowsHeight,
+				"tbody height should not be shorter than the rendered child row stack"
+			);
 		assert.isTrue(hostHeightSynced, "embedded grid host height should match the virtualizer-owned tbody height");
 		assert.equal(
 			root.style.getPropertyValue("--embedded-virtualized-height"),
@@ -2038,33 +2087,33 @@ describe("Et2Datagrid virtual height stability", () =>
 		await el.updateComplete;
 		await waitForDatagridRow(el, "row-0");
 		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-		await el.updateComplete;
+			await el.updateComplete;
 
-		const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
-		const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
-		const rowsBodyRect = rowsBody.getBoundingClientRect();
-		const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
-		const renderedRowsHeight = Math.ceil(
-			Math.max(...rowBounds.map((rect) => rect.bottom)) -
-			Math.min(Math.min(...rowBounds.map((rect) => rect.top)), rowsBodyRect.top)
-		);
+			const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
+			const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
+			const rowsBodyRect = rowsBody.getBoundingClientRect();
+			const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
+			const renderedRowsHeight = Math.ceil(
+				Math.max(...rowBounds.map((rect) => rect.bottom)) -
+				Math.min(Math.min(...rowBounds.map((rect) => rect.top)), rowsBodyRect.top)
+			);
 
-		rowsBody.style.height = "44px";
-		el.style.height = "44px";
-		(el as any)._embeddedVirtualizedHostHeight = "44px";
+			rowsBody.style.height = "44px";
+			el.style.height = "44px";
+			(el as any)._embeddedVirtualizedHostHeight = "44px";
 
-		(el as any)._processRowUpgradeQueue();
-		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-		await el.updateComplete;
-		const hostHeightSynced = await waitForEmbeddedHostHeight(el, rowsBody.style.height);
+			(el as any)._processRowUpgradeQueue();
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			await el.updateComplete;
+			const hostHeightSynced = await waitForEmbeddedHostHeight(el, rowsBody.style.height);
 
-		assert.isAtLeast(parseInt(rowsBody.style.height, 10), renderedRowsHeight, "tbody height should cover rendered child rows");
-		assert.isTrue(hostHeightSynced, "embedded grid host height should match the corrected tbody height");
+			assert.isAtLeast(parseInt(rowsBody.style.height, 10), renderedRowsHeight, "tbody height should cover rendered child rows");
+			assert.isTrue(hostHeightSynced, "embedded grid host height should match the corrected tbody height");
 
-		host.remove();
-	});
+			host.remove();
+		});
 
-	/**
+		/**
 	 * Contract: expanded cells must not inherit the normal data-cell max-height
 	 * rule, because expanded rows host nested grids/detail content.
 	 */
@@ -2229,8 +2278,8 @@ describe("Et2Datagrid virtual height stability", () =>
 	 * dispatch scroll.
 	 * Pass: provider is called with the later chunk start.
 	 */
-	it("requests more rows when user scrolls to unloaded chunk", async() =>
-	{
+		it("requests more rows when user scrolls to unloaded chunk", async() =>
+		{
 		const calls : number[] = [];
 		const dataProvider = createDatagridDataProvider({
 			fetchPage: async(start : number, pageSize : number) =>
@@ -2279,10 +2328,94 @@ describe("Et2Datagrid virtual height stability", () =>
 		await new Promise((resolve) => window.setTimeout(resolve, 0));
 		await el.updateComplete;
 
-		assert.isTrue(calls.some((start) => start === 150), "scrolling into unloaded area should request matching chunk");
-		host.remove();
+			assert.isTrue(calls.some((start) => start === 150), "scrolling into unloaded area should request matching chunk");
+			host.remove();
+		});
+
+		/**
+		 * Contract: when virtualization exposes a deep unloaded row, the datagrid
+		 * fetches that chunk and can render the fetched row at its absolute index.
+		 * Setup: preload only the first page, ask the virtual row renderer for row
+		 * 160, then wait for the queued page fetch.
+		 * Pass: row 160 is materialized in rowsByIndex and a second render returns
+		 * row-160 instead of the placeholder/first-page row.
+		 */
+		it("renders fetched rows for deep virtual indexes", async() =>
+		{
+			const calls : number[] = [];
+			const dataProvider = createDatagridDataProvider({
+				fetchPage: async(start : number, pageSize : number) =>
+				{
+					calls.push(start);
+					return {
+						total: 200,
+						rows: Array.from({length: pageSize}, (_v, index) => ({
+							id: `row-${start + index}`,
+							label: `Row ${start + index}`
+						}))
+					};
+				},
+				getQuerySignature: () => "deep-index-renders-fetched-row"
+			});
+
+			const host = document.createElement("div");
+			host.style.height = "360px";
+			host.style.width = "800px";
+			document.body.appendChild(host);
+
+			const el = createDatagrid();
+			el.style.height = "100%";
+			host.appendChild(el);
+			await el.updateComplete;
+			(el as any)._requestDispatchDelayMs = 0;
+			(el as any)._rowHeightLocked = true;
+			(el as any)._rowHeightPx = 42;
+
+			el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+			el.pageSize = 50;
+			el.dataProvider = dataProvider as any;
+			el.setInitialRows(Array.from({length: 50}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+			el.total = 200;
+			(el as any)._reconcileRowRenderState();
+			await el.updateComplete;
+
+			const scratchTable = document.createElement("table");
+			const scratchBody = document.createElement("tbody");
+			scratchTable.appendChild(scratchBody);
+			document.body.appendChild(scratchTable);
+
+			render((el as any)._renderVirtualRow(160), scratchBody);
+			const placeholder = scratchBody.querySelector("[data-row-id='placeholder:160']") as HTMLElement | null;
+			assert.isNotNull(placeholder, "first deep render should expose a placeholder and queue fetch");
+
+			(el as any)._processQueuedRequests();
+			await new Promise((resolve) => window.setTimeout(resolve, 0));
+			await el.updateComplete;
+
+			assert.deepEqual(calls, [150], "deep render should fetch the chunk containing row 160");
+			assert.equal((el as any)._rowsByIndex[160]?.id, "row-160", "deep fetched row should be stored by absolute index");
+
+			render((el as any)._renderVirtualRow(160), scratchBody);
+			const rendered = scratchBody.querySelector("[data-row-id='row-160']") as HTMLElement | null;
+			assert.isNotNull(rendered, "second deep render should output row 160");
+			assert.equal(rendered!.getAttribute("data-row-index"), "160", "second deep render should keep the absolute row index");
+			assert.isNull(scratchBody.querySelector("[data-row-id='placeholder:160']"), "second deep render should no longer output a placeholder");
+
+			(el as any)._virtualize?.element(160)?.scrollIntoView({block: "start"});
+			await (el as any)._virtualize?.layoutComplete;
+			await el.updateComplete;
+			const liveRendered = await waitForDatagridRow(el, "row-160");
+			assert.isNotNull(liveRendered, "live datagrid shadow DOM should render row 160 after virtualizer scroll");
+			assert.equal(liveRendered!.getAttribute("data-row-index"), "160", "live rendered row should keep the absolute row index");
+			assert.isNull(
+				el.shadowRoot!.querySelector("[data-row-id='placeholder:160']"),
+				"live datagrid shadow DOM should not keep row 160 as a placeholder"
+			);
+
+			scratchTable.remove();
+			host.remove();
+		});
 	});
-});
 
 describe("Et2Datagrid data loading", () =>
 {

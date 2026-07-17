@@ -173,7 +173,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		const page = await provider.fetchPage(0, 25);
 		assert.deepEqual(
 			page.rows.map((row) => row.id),
-			["uid-1", "uid-2", "uid-3"],
+			["addressbook::uid-1", "addressbook::uid-2", "addressbook::uid-3"],
 			"row order should match server `order` list, not callback completion order"
 		);
 		assert.equal(page.total, 3, "total should come from response");

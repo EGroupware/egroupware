@@ -250,6 +250,44 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	}
 
 	/**
+	 * Resolve the configured application row-id field, defaulting consistently to `id`.
+	 */
+	private _rowIdField() : string
+	{
+		return String((this.host as any)?.settings?.row_id || "id").trim() || "id";
+	}
+
+	/**
+	 * Resolve the canonical datagrid row id.
+	 *
+	 * Internally the datagrid, datastore and actions all use prefixed datastore
+	 * UIDs. If the configured row id is missing from row data, fall back to the
+	 * resolved datastore UID so one bad row cannot collapse a page into duplicate
+	 * empty ids.
+	 */
+	private _rowIdFromData(rowData : Record<string, any> | null | undefined, fallbackUid : string) : string
+	{
+		const rowIdField = this._rowIdField();
+		if(rowData && Object.prototype.hasOwnProperty.call(rowData, rowIdField))
+		{
+			const rowId = rowData[rowIdField];
+			if(rowId !== undefined && rowId !== null && String(rowId) !== "")
+			{
+				return this.normalizeRowId(rowId, true);
+			}
+		}
+		return this.normalizeRowId(fallbackUid, true);
+	}
+
+	/**
+	 * Resolve the canonical datagrid/action row id for already-available row data.
+	 */
+	rowIdForData(rowData : Record<string, any> | null | undefined, fallbackIndex : string | number = "") : string
+	{
+		return this._rowIdFromData(rowData, String(fallbackIndex));
+	}
+
+	/**
 	 * Strip the datastore prefix from a row id to recover the bare provider/server id.
 	 */
 	toProviderRowId(dataStoreRowId : string) : string
@@ -273,7 +311,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 			return null;
 		}
 		return {
-			id: rowId,
+			id: this._rowIdFromData(cached.data, rowId),
 			data: cached.data
 		};
 	}
@@ -420,9 +458,10 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 								uid,
 								(data : any, resolvedUid : string) =>
 								{
+									const rowData = data || {};
 									rowsByIndex[index] = {
-										id: String(resolvedUid || uid),
-										data: data || {}
+										id: this._rowIdFromData(rowData, String(resolvedUid || uid)),
+										data: rowData
 									};
 									pending--;
 									if(pending <= 0)

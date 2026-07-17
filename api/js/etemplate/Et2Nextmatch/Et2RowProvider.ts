@@ -2,6 +2,8 @@ import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {
 	Et2DatagridColumn,
+	Et2DatagridTileLayout,
+	Et2DatagridView,
 	Et2DatagridTemplateData
 } from "./Et2Datagrid.types";
 import "../Et2Customfields/Et2CustomfieldsList";
@@ -295,7 +297,9 @@ export class Et2RowProvider
 		                ? this._extractColumnsFromHeaderNode(resolvedHeader).map((column, index) => ({...columnMeta[index], ...column}))
 		                : [];
 		const rowElement = this._resolveSlotRowElement(rowSource);
-		const prepared = rowElement ? await this._prepareRowTemplate(rowElement, columns) : null;
+		const view = this._templateView(rowElement);
+		const normalizedRowElement = rowElement ? this._normalizeTemplateRowNode(rowElement, view) : null;
+		const prepared = normalizedRowElement ? await this._prepareRowTemplate(normalizedRowElement, columns) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
 
 		if(!columns.length && !prepared)
@@ -305,6 +309,8 @@ export class Et2RowProvider
 
 		return {
 			columns,
+			view,
+			tileLayout: view === "tile" ? this._tileLayoutFromRowNode(rowElement) : undefined,
 			rowTemplateId: rowElement?.id || undefined,
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
@@ -342,10 +348,13 @@ export class Et2RowProvider
 
 		const columns : Et2DatagridColumn[] = this._extractColumnsFromHeaderNode(headerNode)
 			.map((c, index) => {return {...colMeta[index], ...c}});
-		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode);
+		const view = this._templateView(rowNode);
+		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode, view);
 		const prepared = await this._prepareRowTemplate(normalizedRowNode, columns);
 
 		return {
+			view,
+			tileLayout: view === "tile" ? this._tileLayoutFromRowNode(rowNode) : undefined,
 			columns,
 			rowTemplateId: tplRoot.getAttribute("id") || tplRoot.id || normalizedRowNode?.id || undefined,
 			rowTemplate: prepared?.template ?? null,
@@ -814,7 +823,7 @@ export class Et2RowProvider
 	/**
 	 * Normalize legacy <row> templates into proper table row markup.
 	 */
-	private _normalizeTemplateRowNode(rowNode : Element) : Element
+	private _normalizeTemplateRowNode(rowNode : Element, view : Et2DatagridView = "row") : Element
 	{
 		if(!rowNode)
 		{
@@ -822,6 +831,10 @@ export class Et2RowProvider
 		}
 
 		const tagName = rowNode.tagName.toLowerCase();
+		if(view === "tile")
+		{
+			return this._normalizeTileTemplateRowNode(rowNode);
+		}
 		if(tagName !== "row" && tagName !== "tr")
 		{
 			return rowNode.cloneNode(true) as Element;
@@ -865,6 +878,126 @@ export class Et2RowProvider
 		}
 
 		return newRow;
+	}
+
+	/**
+	 * Normalize legacy tile rows into a non-table item root.
+	 */
+	private _normalizeTileTemplateRowNode(rowNode : Element) : Element
+	{
+		const tile = document.createElement("div");
+		for(let i = 0; i < rowNode.attributes.length; i++)
+		{
+			tile.setAttribute(rowNode.attributes[i].name, rowNode.attributes[i].value);
+		}
+		tile.classList.add("tile");
+
+		const appendChild = (child : Node) =>
+		{
+			if(child.nodeType === Node.TEXT_NODE)
+			{
+				if(child.nodeValue && child.nodeValue.trim() !== "")
+				{
+					tile.appendChild(document.createTextNode(child.nodeValue));
+				}
+				return;
+			}
+			if(child.nodeType !== Node.ELEMENT_NODE)
+			{
+				return;
+			}
+			const childElement = child as Element;
+			const tag = childElement.tagName.toLowerCase();
+			if(tag === "td" || tag === "th")
+			{
+				for(const nested of Array.from(childElement.childNodes))
+				{
+					appendChild(nested);
+				}
+				return;
+			}
+			tile.appendChild(childElement.cloneNode(true));
+		};
+
+		for(const child of Array.from(rowNode.childNodes))
+		{
+			appendChild(child);
+		}
+
+		return tile;
+	}
+
+	/**
+	 * Infer the template's intended layout without changing server data.
+	 */
+	private _templateView(rowNode : Element | null) : Et2DatagridView
+	{
+		return rowNode?.classList?.contains("tile") ? "tile" : "row";
+	}
+
+	/**
+	 * Extract fixed tile dimensions from generic tile markup when available.
+	 */
+	private _tileLayoutFromRowNode(rowNode : Element | null) : Et2DatagridTileLayout
+	{
+		const tileContent = this._tileContentElement(rowNode);
+		const width =
+			rowNode?.getAttribute("data-tile-width") ||
+			rowNode?.getAttribute("tile-width") ||
+			tileContent?.getAttribute("width") ||
+			(tileContent as HTMLElement | null)?.style?.width ||
+			undefined;
+		const height =
+			rowNode?.getAttribute("data-tile-height") ||
+			rowNode?.getAttribute("tile-height") ||
+			tileContent?.getAttribute("height") ||
+			(tileContent as HTMLElement | null)?.style?.height ||
+			undefined;
+		return {
+			width: this._normalizeCssLength(width) || DEFAULT_TILE_LAYOUT.width,
+			height: this._normalizeCssLength(height) || DEFAULT_TILE_LAYOUT.height,
+			gap: DEFAULT_TILE_LAYOUT.gap,
+			padding: DEFAULT_TILE_LAYOUT.padding
+		};
+	}
+
+	private _tileContentElement(rowNode : Element | null) : Element | null
+	{
+		if(!rowNode)
+		{
+			return null;
+		}
+		const explicitlySized = rowNode.querySelector("[data-tile-width],[data-tile-height],[tile-width],[tile-height],[width],[height]");
+		if(explicitlySized)
+		{
+			return explicitlySized;
+		}
+		for(const child of Array.from(rowNode.children))
+		{
+			const tag = child.tagName.toLowerCase();
+			if(tag !== "td" && tag !== "th")
+			{
+				return child;
+			}
+			const nested = Array.from(child.children).find((element) =>
+				element.tagName.toLowerCase() !== "td" && element.tagName.toLowerCase() !== "th"
+			);
+			if(nested)
+			{
+				return nested;
+			}
+		}
+		return null;
+	}
+
+	private _normalizeCssLength(value? : string | null) : string | undefined
+	{
+		const length = String(value || "").trim();
+		if(!length)
+		{
+			return undefined;
+		}
+		return /^\d+(\.\d+)?$/.test(length) ? `${length}px` : length;
 	}
 
 	/**

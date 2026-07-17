@@ -348,6 +348,55 @@ export default css`
 		scrollbar-gutter: auto;
 	}
 
+	:host([view="tile"]) .dg-body {
+		overflow-y: auto;
+		overflow-x: hidden;
+	}
+
+	.dg-tile-grid {
+		position: relative;
+		width: 100%;
+		min-height: 100%;
+		outline: none;
+	}
+
+	.dg-tile-grid > [data-row-id] {
+		box-sizing: border-box;
+		outline: none;
+		border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+		border-radius: var(--sl-panel-border-radius);
+		position: relative;
+		display: flex;
+		align-items: stretch;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.dg-tile-grid > [data-row-id][aria-selected="true"] {
+		background: var(--sl-color-primary-50, #eef5ff);
+	}
+
+	.dg-tile-grid > [data-row-id].dg-row-active {
+		box-shadow: inset 0 0 0 2px var(--sl-color-primary-600, #2869db);
+	}
+
+	.dg-tile-grid > [data-row-id].dg-row--refreshed {
+		animation: dg-row-refresh-pulse 5s ease-out forwards;
+	}
+
+	.dg-tile-grid > [data-row-id].drop-hover {
+		background: var(--sl-color-primary-100);
+		box-shadow: var(--sl-shadow-large);
+	}
+
+	.dg-tile-grid > [data-row-id] > [data-dg-meta-cell="1"] {
+		display: none;
+	}
+
+	.dg-tile-placeholder {
+		padding: var(--sl-spacing-x-small);
+	}
+
 	.dg-placeholder-cell {
 		grid-column: 1 / -1;
 		padding: 6px 8px;

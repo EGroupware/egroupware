@@ -1056,13 +1056,18 @@ export class Et2NextmatchActionController
 	 */
 	private normalizeSelection(selection : { ids? : string[]; all? : boolean } = {}, senders : EgwActionObject[] = [])
 	{
-		const rawIds = (selection.ids && selection.ids.length ? selection.ids : senders.map((sender) => sender?.id)).filter(Boolean).map(String);
-		const providerIds = rawIds.map((id) => id.split("::").pop()).filter(Boolean);
+		const provider = (this.host as any)._dataProvider;
+		const rawIds = (selection.ids && selection.ids.length ? selection.ids : senders.map((sender) => sender?.id))
+			.filter(Boolean)
+			.map((id) => provider?.normalizeRowId?.(String(id), true) || String(id));
+		const providerIds = rawIds
+			.map((id) => provider?.toProviderRowId?.(id) || id)
+			.filter(Boolean);
 		return {
 			rawIds,
 			providerIds,
 			all: selection.all === true,
-			rowIdsCsv: this.toCsv(rawIds),
+			rowIdsCsv: this.toCsv(providerIds),
 			idsCsv: this.toCsv(providerIds)
 		};
 	}
@@ -1621,7 +1626,50 @@ export class Et2NextmatchActionController
 				}
 			}
 		}
+		if(!enabled.size && typeof placeholderObject.getSelectedLinks !== "function")
+		{
+			for(const actionId of requested)
+			{
+				if(this._placeholderActionEnabledByDefinition(actionId, placeholderObject))
+				{
+					enabled.add(actionId);
+				}
+			}
+		}
 		return enabled;
+	}
+
+	/**
+	 * Fallback for lightweight/legacy action objects that accept updateActionLinks()
+	 * but cannot report getSelectedLinks(). Keep this scoped to placeholder inline
+	 * filtering; full action objects continue to use egw_action's own resolver.
+	 */
+	private _placeholderActionEnabledByDefinition(actionId : string, placeholderObject : EgwActionObject) : boolean
+	{
+		const action = this.actionManager?.getActionById?.(actionId) as any;
+		if(!action)
+		{
+			return false;
+		}
+		let enabled = true;
+		try
+		{
+			if(typeof action.enabled?.exec === "function")
+			{
+				enabled = !!action.enabled.exec(action, [placeholderObject], placeholderObject);
+			}
+			else if(action.enabled === false)
+			{
+				enabled = false;
+			}
+		}
+		catch(e)
+		{
+			enabled = false;
+		}
+		const isMobile = typeof window.egwIsMobile === "function" && window.egwIsMobile();
+		const visible = (!action.hideOnMobile || !isMobile) && (enabled || !action.hideOnDisabled);
+		return enabled && visible;
 	}
 
 	/**
