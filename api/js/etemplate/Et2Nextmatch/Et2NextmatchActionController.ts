@@ -828,7 +828,8 @@ export class Et2NextmatchActionController
 	private ensureActionManagers()
 	{
 		const appName = this.getAppName() || this.host.egw().app_name?.();
-		const uid = this.host.id || this.host.getInstanceManager()?.uniqueId || this.host.egw().uid?.();
+		const instanceUid = this.host.getInstanceManager()?.uniqueId;
+		const uid = this.host.id || this.host.egw().uid?.() || instanceUid;
 		if(!uid)
 		{
 			return;
@@ -850,19 +851,19 @@ export class Et2NextmatchActionController
 			}
 			if(!appActionManager)
 			{
-				const localGlobalActionManager = new EgwActionManager();
-				try
-				{
-					appActionManager = localGlobalActionManager.addAction("actionManager", uid);
-				}
-				catch(e)
-				{
-					appActionManager = localGlobalActionManager;
-				}
+				appActionManager = new EgwActionManager();
 			}
 			try
 			{
-				this.actionManager = appActionManager?.getActionById?.(uid, 1) || appActionManager?.addAction?.("actionManager", uid) || appActionManager;
+				let parentActionManager = appActionManager;
+				const instanceActionManager = instanceUid
+					? appActionManager?.getActionById?.(instanceUid, 1) || appActionManager?.addAction?.("actionManager", instanceUid)
+					: null;
+				if(instanceActionManager)
+				{
+					parentActionManager = instanceActionManager;
+				}
+				this.actionManager = parentActionManager?.getActionById?.(uid, 1) || parentActionManager?.addAction?.("actionManager", uid) || parentActionManager;
 			}
 			catch(e)
 			{

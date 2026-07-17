@@ -2,6 +2,7 @@ import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2NextmatchActionController, resolveActionApiGetters} from "../Et2NextmatchActionController";
 import {EgwPopupActionImplementation} from "../../../egw_action/EgwPopupActionImplementation";
+import {egw_getActionManager} from "../../../egw_action/egw_action";
 import * as sinon from "sinon";
 
 const egwStub = {
@@ -356,6 +357,49 @@ describe("Et2Nextmatch action setup", () =>
 		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
 
 		assert.deepEqual(executedRowIds, ["row::7"], "popup handler should receive selected sender row");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Nextmatch action managers are scoped by eTemplate instance before widget id.
+	 *
+	 * Setup strategy:
+	 * - Initialize two controllers with the same app and Nextmatch id but different instance ids.
+	 * - Do not pre-create the instance action managers.
+	 *
+	 * Pass criteria:
+	 * - Each controller creates a separate instance action manager, then a separate Nextmatch action manager under it.
+	 */
+	it("creates an eTemplate instance action manager before resolving duplicate nextmatch ids", () =>
+	{
+		const appName = `addressbook_nextmatch_scope_${Date.now()}`;
+		const nextmatchId = "nm";
+		const appActionManager = egw_getActionManager(appName, true, 1);
+		const makeHost = (instanceId : string) => ({
+			id: nextmatchId,
+			egw: () => ({
+				...egwStub,
+				app_name: () => appName
+			}),
+			getInstanceManager: () => ({
+				app: appName,
+				uniqueId: instanceId
+			})
+		});
+		const firstController : any = new Et2NextmatchActionController(makeHost("template_one") as any);
+		const secondController : any = new Et2NextmatchActionController(makeHost("template_two") as any);
+
+		firstController.ensureActionManagers();
+		secondController.ensureActionManagers();
+
+		const instanceOne = appActionManager.getActionById("template_one", 1);
+		const instanceTwo = appActionManager.getActionById("template_two", 1);
+
+		assert.notStrictEqual(firstController.actionManager, secondController.actionManager, "duplicate Nextmatch ids should not share one action manager");
+		assert.isOk(instanceOne, "first eTemplate instance action manager should be created");
+		assert.isOk(instanceTwo, "second eTemplate instance action manager should be created");
+		assert.strictEqual(firstController.actionManager, instanceOne.getActionById(nextmatchId, 1), "first Nextmatch manager should be under the first instance");
+		assert.strictEqual(secondController.actionManager, instanceTwo.getActionById(nextmatchId, 1), "second Nextmatch manager should be under the second instance");
 	});
 
 	/**
