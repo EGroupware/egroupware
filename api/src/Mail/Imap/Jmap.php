@@ -325,10 +325,11 @@ class Jmap extends Mail\Imap
 			if (!$this->jmap) $this->jmap = $this->jmapClient();
 			$client_id = $this->jmapClientId($this->acc_id, $account_id ?: $GLOBALS['egw_info']['user']['account_id'], true)['client_id'];
 			$expires = new Api\DateTime('+2days', new \DateTimeZone('UTC'));
-			if (!($subscriptions=array_filter($this->jmap->getPushSubscriptions()['list']??[], static function(array $pushSubscription) use ($client_id)
+			if (!($subscriptions=array_values(array_filter($this->jmap->getPushSubscriptions()['list']??[],
+				static function(array $pushSubscription) use ($client_id)
 			{
 				return $pushSubscription['deviceClientId'] === $client_id;
-			})))
+			}))))
 			{
 				$url = Api\Framework::getUrl(Api\Framework::link('/api/jmapPush.php', [
 					'acc_id' => $this->acc_id,
