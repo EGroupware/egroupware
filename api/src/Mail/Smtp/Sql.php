@@ -169,7 +169,7 @@ class Sql extends Mail\Smtp
 				{
 					case self::TYPE_ENABLED:
 						$userData['accountStatus'] = $row['mail_value'];
-						$enabled[$row['account_id']] = $row['mail_value'] == self::MAIL_ENABLED;
+						$enabled[$row['account_id']] = true;
 						break;
 
 					case self::TYPE_DELIVERY:

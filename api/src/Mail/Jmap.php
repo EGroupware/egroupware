@@ -89,7 +89,7 @@ class Jmap
 			$this->url = Api\Framework::getUrl('/jmap/');
 		}
 		// EGroupware Hosting
-		elseif($this->url === 'stalwart')
+		elseif($this->url === 'stalwart' || $this->url === 'internal.k8s.farm.egroupware.org')
 		{
 			$this->url = 'https://stalwart.egroupware.org/jmap/';
 		}
@@ -240,7 +240,14 @@ class Jmap
 		return $value;
 	}
 
+	/**
+	 * JMAP core
+	 */
 	const JMAP_CORE = "urn:ietf:params:jmap:core";
+	/**
+	 * JMAP mail (includes core!)
+	 */
+	const JMAP_MAIL = [self::JMAP_CORE, "urn:ietf:params:jmap:mail"];
 
 	/**
 	 * Make a JMAP call - emulating multiple methodCalls with single calls and resolving references
@@ -322,7 +329,7 @@ class Jmap
 	{
 		$response = $this->jmapCall([[ "PushSubscription/get", [
             "ids" => null,
-		], "0" ]]);
+		], "0" ]], self::JMAP_MAIL);
 		$sessionState = $response['sessionState'] ?? null;
 		return $response['methodResponses'][0][1] ?? throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
 	}
@@ -368,7 +375,7 @@ class Jmap
 					'expires' => $expires ? $expires->format(self::DATETIME_UTC_FORMAT) : null,
 				],
 			]
-		], "0"]]);
+		], "0"]], self::JMAP_MAIL);
 		$sessionState = $response['sessionState'] ?? null;
 		return $response['methodResponses'][0][1]['created'][$id] ?? throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
 	}
@@ -388,7 +395,7 @@ class Jmap
 			"update" => [
 				$pushSubscriptionId => $values,
 			]
-		], "0"]]);
+		], "0"]], self::JMAP_MAIL);
 		$sessionState = $response['sessionState'] ?? null;
 		return $response['methodResponses'][0][1] ?? throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
 	}
@@ -407,7 +414,7 @@ class Jmap
 		$response = $this->jmapCall([
 			['Mailbox/query', ['accountId' => $accountId ?: $this->accountId, 'filter' => ['name' => $folder]], 't0'],
 			['Email/get', ['accountId' => $accountId ?: $this->accountId, '#inMailbox' => ['name' => 'Mailbox/query', 'path' => '/ids', 'resultOf' => 't0'], 'ids' => []], 't1'],
-		]);
+		], self::JMAP_MAIL);
 		$sessionState = $response['sessionState'] ?? null;
 		return [
 			'Mailbox' => $response['methodResponses'][0][1]['queryState'] ?? throw new Api\Exception("Could not query Mailbox state using folder '$folder'!"),
@@ -442,7 +449,7 @@ class Jmap
 			}
 			$methodCalls[] = ['Mailbox/query', $query, (string)$key++];
 		}
-		$response = $this->jmapCall($methodCalls);
+		$response = $this->jmapCall($methodCalls, self::JMAP_MAIL);
 		$lastMethodResponse = array_pop($response['methodResponses']);
 		return $lastMethodResponse[1]['ids'][0] ?? null;
 	}
@@ -496,7 +503,7 @@ class Jmap
 						],
 						'properties' => ['parentId', 'name'],
 					], 'f3'],
-				]);
+				], self::JMAP_MAIL);
 				foreach ($response['methodResponses'] as $methodResponse)
 				{
 					if ($methodResponse[1]['list'])
@@ -621,7 +628,7 @@ class Jmap
 				], "email-destroyed"],
 			]);
 		}
-		$response = $this->jmapCall($methodCalls);
+		$response = $this->jmapCall($methodCalls, self::JMAP_MAIL);
 		$sessionState = $response['sessionState'] ?? null;
 		$ret = [];
 		foreach($response['methodResponses'] as $methodResponse)

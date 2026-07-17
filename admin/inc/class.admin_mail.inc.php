@@ -986,7 +986,11 @@ class admin_mail
 		// ensure correct values for single user mail accounts (we only hide them client-side)
 		if (!($is_multiple = Mail\Account::is_multiple($content)))
 		{
-			$content['acc_imap_type'] = 'EGroupware\\Api\\Mail\\Imap';
+			// we need to allow to use JMAP for single connections too, to be able to use JMAP and push
+			if ($content['acc_imap_type'] !== Mail\Imap\Jmap::class)
+			{
+				$content['acc_imap_type'] = 'EGroupware\\Api\\Mail\\Imap';
+			}
 			unset($content['acc_imap_login_type']);
 			$content['acc_smtp_type'] = 'EGroupware\\Api\\Mail\\Smtp';
 			unset($content['acc_smtp_auth_session']);

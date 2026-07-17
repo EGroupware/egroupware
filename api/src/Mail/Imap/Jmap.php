@@ -31,7 +31,7 @@ class Jmap extends Mail\Imap
 	/**
 	 * Label shown in EMailAdmin
 	 */
-	const DESCRIPTION = 'Stalwart';
+	const DESCRIPTION = 'Stalwart/JMAP';
 	/**
 	 * Capabilities of this class (pipe-separated): default, sieve, admin, logintypeemail
 	 */
@@ -506,7 +506,7 @@ class Jmap extends Mail\Imap
 					$push_payload[] = $push;
 				}
 				$push = new Api\Json\Push($client_data['account_id']);
-				$push->apply('egw.push', $push_payload);
+				$push->call('egw.push', $push_payload);
 				break;
 			case 'EmailDelivery':   // extension is not supported
 			default:

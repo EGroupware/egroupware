@@ -325,7 +325,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		/**
 		 * Handle a push notification about entry changes from the websocket
 		 *
-		 * @param  pushData
+		 * @param  pushData|Array<pushData> one or multiple push-objects
 		 * @param {string} pushData.app application name
 		 * @param {(string|number)} pushData.id id of entry to refresh or null
 		 * @param {string} pushData.type either 'update', 'edit', 'delete', 'add' or null
@@ -345,6 +345,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			if (typeof pushData == "undefined")
 			{
 				this.debug('warn', "Push sent nothing");
+				return;
+			}
+			// multiple push-objects in one messages
+			if (Array.isArray(pushData))
+			{
+				pushData = pushData.forEach((data) => this.push(data));
 				return;
 			}
 
