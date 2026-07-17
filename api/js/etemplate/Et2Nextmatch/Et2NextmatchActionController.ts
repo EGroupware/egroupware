@@ -1468,7 +1468,7 @@ export class Et2NextmatchActionController
 		let dragAction = mgr.getActionById?.("egw_link_drag");
 		let dropCancel = mgr.getActionById?.("egw_cancel_drop");
 		const dataProvider = (this.host as any)._dataProvider;
-		const dataStorePrefix = dataProvider?.getDataStorePrefix?.() || this.host.getInstanceManager()?.app || this.host.egw().app_name?.();
+		const dataStorePrefix = dataProvider?.getDataStorePrefix?.();
 		if(!this.host.egw().link_get_registry?.(dataStorePrefix, "query") ||
 			this.host.egw().link_get_registry?.(dataStorePrefix, "title"))
 		{

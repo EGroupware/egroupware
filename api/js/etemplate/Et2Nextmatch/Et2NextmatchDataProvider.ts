@@ -227,12 +227,13 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 
 	getDataStorePrefix() : string
 	{
-		const app = this.host.getInstanceManager?.()?.app || this.host.egw?.()?.app_name?.();
-		if(app)
+		// Use dataStorePrefix setting or fall back to the nextmatch's own app
+		const configured = (this.host as any)?.settings?.dataStorePrefix;
+		if(configured)
 		{
-			return String(app);
+			return String(configured);
 		}
-		return String(this.host.id || this.host.getAttribute("id") || "row");
+		return String(this.host.getInstanceManager?.()?.app || this.host.egw?.()?.app_name?.() || "");
 	}
 
 	/**

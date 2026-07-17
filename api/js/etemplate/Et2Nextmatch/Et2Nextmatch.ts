@@ -106,8 +106,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * `searchletter` is intentionally omitted and normalized into `_filters`.
 	 */
 	private static readonly ALLOWED_SETTINGS : Set<string> = new Set([
-		"action",
-		"action_links",
 		"action_var",
 		"actions",
 		"columnselection_pref",
