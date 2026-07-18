@@ -1483,9 +1483,10 @@ class Account implements \ArrayAccess
 	 * @param int|boolean $offset =false offset or false to return all
 	 * @param int $num_rows =0 number of rows to return, 0=default from prefs (if $offset !== false)
 	 * @param boolean $replace_placeholders =true should placeholders like {{n_fn}} be replaced
+	 * @param boolean $only_visible = false if set to true it skips the accounts with a name starting with a dot(.)
 	 * @return \Iterator with acc_id => acc_name or Account objects
 	 */
-	public static function search($only_current_user=true, $just_name=true, $order_by=null, $offset=false, $num_rows=0, $replace_placeholders=true)
+	public static function search($only_current_user=true, $just_name=true, $order_by=null, $offset=false, $num_rows=0, $replace_placeholders=true, $only_visible = false)
 	{
 		//error_log(__METHOD__."($only_current_user, $just_name, '$order_by', $offset, $num_rows)");
 		$where = array();
@@ -1500,6 +1501,9 @@ class Account implements \ArrayAccess
 			$where[] = self::$db->expression(self::VALID_TABLE, self::VALID_TABLE.'.', array(
 				'account_id' => $account_id ? self::memberships($account_id) : 0
 			));
+		}
+		if($only_visible){
+			$where[] = self::$db->strpos("egw_ea_accounts.acc_name","'.'" )." NOT IN (1) ";
 		}
 		if (empty($order_by) || !preg_match('/^[a-z_]+ (ASC|DESC)$/i', $order_by))
 		{
