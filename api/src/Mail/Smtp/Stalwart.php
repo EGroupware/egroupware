@@ -141,11 +141,18 @@ class Stalwart extends Sql
 			{
 				$aliases[] = $list['emailAddress'];
 			}
+			// check if EGroupware's primary email is just an alias for Stalwart --> preserve it
+			if (($key = array_search(strtolower($userData['mailLocalAddress']), $aliases)) !== false)
+			{
+				$email = strtolower($userData['mailLocalAddress']);
+				$aliases[] = $account['emailAddress'];
+				unset($aliases[$key]);
+			}
 			$userData = [
-				'mailLocalAddress' => $account['emailAddress'],
+				'mailLocalAddress' =>  $email ?? $account['emailAddress'],   // preserve EGroupware's primary mail address
 				'quotaLimit' => $account['quotas']['maxDiskQuota'] ?? null ? $account['quotas']['maxDiskQuota']>>20 : null, // MB
 				'uid' => [$account['name']],
-				'mailAlternateAddress' => array_unique($aliases),
+				'mailAlternateAddress' => array_values(array_unique($aliases)),
 				'mailForwardingAddress' => [],
 				//'forwardOnly' => false,
 				'accountStatus' => $account['id'],
@@ -200,6 +207,7 @@ class Stalwart extends Sql
 			];
 		}
 		$prefs = (new Api\Preferences($_uidnumber))->read_repository();
+		// ToDo: make sure combination of language and country is a valid local BEFORE sending it to Stalwart
 		[$lang, $country] = explode('-', $prefs['common']['lang'])+[null, null];
 		$locale = $lang.'_'.strtoupper($country ?: $prefs['common']['country']);
 		$account = array_filter([
@@ -258,16 +266,27 @@ class Stalwart extends Sql
 					{
 						continue;   // --> try again updating it
 					}
+					// check given locale is invalid (EGroupware language and country are independent!)
+					if ($response['methodResponses'][0][1]['notUpdated'][$accountId]['type'] === 'invalidPatch' &&
+						in_array('locale', $response['methodResponses'][0][1]['notUpdated'][$accountId]['properties']))
+					{
+						// use to currently set one in Stalwart or "en_US" if nothing is set
+						$diff['locale'] = $userData['stalwart']['locale'] ?? 'en_US';
+						continue;
+					}
 					throw new \Exception("Mail account NOT updated: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 				}
 			}
 			// check if a list-alias has been removed --> remove it from the list
 			foreach($userData['mailingLists'] as $list)
 			{
-				if (!in_array($list['emailAddress'], $account['aliases']??[]))
+				if (!in_array($list['emailAddress'], array_map(fn($alias)=>$alias['name'].'@'.$this->domain($alias['domainId']), $account['aliases']??[])))
 				{
-					unset($list['recipients'][strtolower($_mailLocalAddress)]);
-					$this->mailingList($list['emailAddress'], array_keys($list['recipients']));
+					if (isset($list['recipients'][$email=self::name2stalwart($account_lid).'@'.$this->domain($account['domainId'])]))
+					{
+						unset($list['recipients'][$email]);
+						$this->mailingList($list['emailAddress'], array_keys($list['recipients']));
+					}
 				}
 			}
 		}
@@ -301,6 +320,13 @@ class Stalwart extends Sql
 					$account['aliases'], $account['name'] . '@' . $this->domain($account['domainId'])))
 				{
 					continue;   // --> try again creating it
+				}
+				// check given locale is invalid (EGroupware language and country are independent!)
+				if (in_array('locale', $response['methodResponses'][0][1]['notCreated']['new1']['properties'] ?? []))
+				{
+					// use "en_US" as fallback
+					$account['locale'] = 'en_US';
+					continue;
 				}
 				throw new \Exception("Mail account NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES|JSON_PRETTY_PRINT));
 			}
@@ -699,6 +725,9 @@ class Stalwart extends Sql
 		], [Jmap::JMAP_CORE, self::USING_STALWART]);
 		$lists = $response['methodResponses'][1][1]['list'] ?? [];
 
+		// as we can only search field-unspecific, we have to make sure the returned lists really contain $recipient OR use it as emailAddress
+		$lists = array_filter($lists, fn($list) => isset($list['recipients'][$recipient]) || $list['emailAddress'] === $recipient);
+
 		// should we return groups used as distribution lists
 		if (!$return_groups_too)
 		{
@@ -857,9 +886,10 @@ class Stalwart extends Sql
 			// alias set/unchanged in $new --> not report in patch
 			else
 			{
+				$aliases[$key] = $alias;
 				foreach($new as $k => $n)
 				{
-					if ($found['name'] === $alias['name'] && $found['domainId'] === $alias['domainId'])
+					if ($found['name'] === $n['name'] && $found['domainId'] === $n['domainId'])
 					{
 						unset($new[$k]);
 						break;
