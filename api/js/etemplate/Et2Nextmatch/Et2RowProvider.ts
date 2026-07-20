@@ -1,11 +1,8 @@
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
-import {
-	Et2DatagridColumn,
-	Et2DatagridTileLayout,
-	Et2DatagridView,
-	Et2DatagridTemplateData
-} from "./Et2Datagrid.types";
+import {loadStylesheet} from "../Et2Widget/cssTools";
+import {resolveEt2StylesSrc} from "../Et2Styles/Et2Styles";
+import {Et2DatagridColumn, Et2DatagridTemplateData, Et2DatagridTileLayout, Et2DatagridView} from "./Et2Datagrid.types";
 import "../Et2Customfields/Et2CustomfieldsList";
 
 interface Et2RowProviderHost extends HTMLElement
@@ -226,7 +223,8 @@ export class Et2RowProvider
 				return null;
 			}
 
-			return await this._fromTemplateRoot(xml || tpl);
+			const templateUrl = typeof (tpl as any).getUrl === "function" ? (tpl as any).getUrl() : "";
+			return await this._fromTemplateRoot(xml || tpl, templateUrl);
 		}
 		catch(e)
 		{
@@ -288,8 +286,11 @@ export class Et2RowProvider
 	async fromSlots() : Promise<Et2DatagridTemplateData | null>
 	{
 		const headerSource = this._getSlotContent("columns");
-		const rowSource = this._getSlotContent("row");
+		const originalRowSource = this._getSlotContent("row");
+		const rowSource = this._cloneTemplateSource(originalRowSource);
 		const loaderSource = this._getSlotContent("loader");
+		const templateUrl = this._templateUrl(originalRowSource);
+		const rowStylesheets = rowSource ? await this._extractRowStylesheets(rowSource, templateUrl) : [];
 
 		const resolvedHeader = headerSource ? this._resolveSlotHeaderElement(headerSource) : null;
 		const columnMeta = resolvedHeader ? this._extractSlotColumnMeta(resolvedHeader) : [];
@@ -299,7 +300,7 @@ export class Et2RowProvider
 		const rowElement = this._resolveSlotRowElement(rowSource);
 		const view = this._templateView(rowElement);
 		const normalizedRowElement = rowElement ? this._normalizeTemplateRowNode(rowElement, view) : null;
-		const prepared = normalizedRowElement ? await this._prepareRowTemplate(normalizedRowElement, columns) : null;
+		const prepared = normalizedRowElement ? await this._prepareRowTemplate(normalizedRowElement, columns, templateUrl) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
 
 		if(!columns.length && !prepared)
@@ -315,6 +316,10 @@ export class Et2RowProvider
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
+			rowStylesheets: [
+				...rowStylesheets,
+				...(prepared?.rowStylesheets ?? [])
+			],
 			loaderTemplate
 		};
 	}
@@ -322,8 +327,10 @@ export class Et2RowProvider
 	/**
 	 * Parse template XML root to produce datagrid-ready template data.
 	 */
-	private async _fromTemplateRoot(tplRoot : Element) : Promise<Et2DatagridTemplateData>
+	private async _fromTemplateRoot(tplRoot : Element, templateUrl : string = "") : Promise<Et2DatagridTemplateData>
 	{
+		tplRoot = this._cloneTemplateSource(tplRoot) ?? tplRoot;
+		const rowStylesheets = await this._extractRowStylesheets(tplRoot, templateUrl);
 		let headerNode : Element | null = tplRoot.querySelector(".th") ?? tplRoot.querySelector("thead");
 		let rowNode : Element | null = null;
 		if(!headerNode && tplRoot.children.length >= 2)
@@ -350,7 +357,7 @@ export class Et2RowProvider
 			.map((c, index) => {return {...colMeta[index], ...c}});
 		const view = this._templateView(rowNode);
 		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode, view);
-		const prepared = await this._prepareRowTemplate(normalizedRowNode, columns);
+		const prepared = await this._prepareRowTemplate(normalizedRowNode, columns, templateUrl);
 
 		return {
 			view,
@@ -360,6 +367,10 @@ export class Et2RowProvider
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
+			rowStylesheets: [
+				...rowStylesheets,
+				...(prepared?.rowStylesheets ?? [])
+			],
 			loaderTemplate: null
 		};
 	}
@@ -496,10 +507,11 @@ export class Et2RowProvider
 	/**
 	 * Compile row template DOM into a reusable HTMLTemplateElement with tracked dynamic attributes.
 	 */
-	private async _prepareRowTemplate(rowNode : Element, columns : Et2DatagridColumn[]) : Promise<{
+	private async _prepareRowTemplate(rowNode : Element, columns : Et2DatagridColumn[], templateUrl : string = "") : Promise<{
 		template : HTMLTemplateElement;
 		xml : Element;
-		attrMap : Record<string, Record<string, string>>
+		attrMap : Record<string, Record<string, string>>;
+		rowStylesheets : CSSStyleSheet[];
 	} | null>
 	{
 		if(!rowNode)
@@ -508,6 +520,7 @@ export class Et2RowProvider
 		}
 
 		const xml = rowNode.cloneNode(true) as Element;
+		const rowStylesheets = await this._extractRowStylesheets(xml, templateUrl);
 		const attrMap : Record<string, Record<string, string>> = {};
 		const idState = {next: 1};
 
@@ -524,8 +537,88 @@ export class Et2RowProvider
 		return {
 			template,
 			xml,
-			attrMap
+			attrMap,
+			rowStylesheets
 		};
+	}
+
+	/**
+	 * Pull row-template-local styles into constructable stylesheets for the
+	 * datagrid shadow root, and remove the style widgets so row clones do not
+	 * inject them into the document head.
+	 */
+	private async _extractRowStylesheets(rowNode : Element, templateUrl : string = "") : Promise<CSSStyleSheet[]>
+	{
+		const root = rowNode instanceof HTMLTemplateElement ? rowNode.content : rowNode;
+		const styleNodes = Array.from(root.querySelectorAll("et2-styles")) as HTMLElement[];
+		if(["et2-styles"].includes(rowNode.tagName.toLowerCase()))
+		{
+			styleNodes.unshift(rowNode as HTMLElement);
+		}
+
+		const sheets : CSSStyleSheet[] = [];
+		for(const styleNode of styleNodes)
+		{
+			const inlineCss = styleNode.getAttribute("value") || styleNode.textContent || "";
+			if(inlineCss.trim())
+			{
+				try
+				{
+					const sheet = new CSSStyleSheet();
+					await sheet.replace(inlineCss);
+					sheets.push(sheet);
+				}
+				catch(e)
+				{
+					this.host.egw?.()?.debug?.("error", "Et2RowProvider: failed to parse row template styles", {
+						error: e
+					});
+				}
+			}
+
+			const src = styleNode.getAttribute("src") || "";
+			if(src)
+			{
+				const sheet = await loadStylesheet(resolveEt2StylesSrc(src, this.host.egw?.(), templateUrl));
+				if(sheet)
+				{
+					sheets.push(sheet);
+				}
+			}
+
+			styleNode.remove();
+		}
+		return sheets;
+	}
+
+	private _cloneTemplateSource(source : Element | null) : Element | null
+	{
+		if(!source)
+		{
+			return null;
+		}
+		if(source instanceof HTMLTemplateElement)
+		{
+			const template = document.createElement("template");
+			template.content.appendChild(source.content.cloneNode(true));
+			return template;
+		}
+		return source.cloneNode(true) as Element;
+	}
+
+	private _templateUrl(source? : Element | null) : string
+	{
+		const domTemplate = source?.closest?.("et2-template") as any;
+		if(typeof domTemplate?.getUrl == "function")
+		{
+			return domTemplate.getUrl();
+		}
+		const hostTemplate = this.host.closest?.("et2-template") as any;
+		if(typeof hostTemplate?.getUrl == "function")
+		{
+			return hostTemplate.getUrl();
+		}
+		return "";
 	}
 
 	/**

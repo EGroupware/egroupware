@@ -414,15 +414,40 @@ Example:
 
 ## Styling row contents
 
-Rows are rendered inside the `et2-datagrid` shadow DOM. Normal page CSS does not reach row contents
-unless the target is exposed as a CSS part. `et2-nextmatch` loads the current application's
-`templates/default/app.css` into the datagrid row shadow DOM, so row classes and widget selectors
-that must affect row contents can live there.
+Rows are rendered inside the `et2-datagrid` shadow DOM. Normal page CSS does not reach row contents unless the target is
+exposed as a CSS part.
+
+Preferred row-template styling uses `et2-styles` inside the row template definition. `Et2RowProvider`
+extracts those styles and passes them into the datagrid row shadow DOM. The `et2-styles` element can be placed anywhere
+inside the row template definition; it does not need to be inside the `<row>` element.
+
+```xml
+
+<template id="app.index.rows">
+    <grid>
+        <columns>
+            <column id="title"></column>
+        </columns>
+        <row>
+            <et2-description class="entry-title" id="title" noLang="1"></et2-description>
+        </row>
+    </grid>
+
+    <et2-styles src="row.css"></et2-styles>
+</template>
+```
+
+`src="row.css"` resolves relative to the `.xet` file containing the row template. Inline CSS inside
+`et2-styles` is also supported.
+
+If the row template contains `et2-styles`, `et2-nextmatch` does not load the application's
+`templates/default/app.css` into the datagrid row shadow DOM. If no row-local `et2-styles` is present,
+`app.css` is still loaded as the compatibility fallback.
 
 ### Static Widget Style
 
-For a simple static change that applies to every row, add a class to the row template and style it
-in `app.css`.
+For a simple static change that applies to every row, add a class to the row template and style it in the row template
+stylesheet.
 
 ```xml
 

@@ -50,11 +50,28 @@ Full details for columns, rows, expression syntax, wrapper behaviour, and loader
 ## Styling Rows
 
 `et2-nextmatch` renders rows inside `et2-datagrid`, so normal application CSS does not automatically reach row contents.
-`et2-nextmatch` loads the current application's `templates/default/app.css` into the
-datagrid row shadow DOM. Use that file for row classes and widget selectors that must affect row contents.
+Put row-specific styles in an `et2-styles` element inside the row template definition. `et2-nextmatch`
+extracts those styles and adopts them into the datagrid row shadow DOM.
 
-We could add optional row-specific stylesheets later, for example `addressbook/templates/default/index.rows.css`, if we
-want these advantages:
+```xml
+
+<template id="app.index.rows">
+    <grid>
+        ...
+    </grid>
+
+    <et2-styles src="row.css"></et2-styles>
+</template>
+```
+
+The `et2-styles` element can be anywhere inside the row template definition, not only inside `<row>`.
+Bare filenames such as `row.css` resolve relative to the `.xet` file containing the template.
+
+When row-template-local styles are present, the current application's `templates/default/app.css` is
+not loaded into the datagrid row shadow DOM. If the row template does not contain `et2-styles`,
+`app.css` is still loaded as a compatibility fallback.
+
+Row-template-local stylesheets have these advantages:
 
 - fewer unrelated app rules inside row shadow DOM
 - clearer ownership for styles used only by one row template
@@ -91,7 +108,8 @@ Because the rows are managed by `et2-datagrid` inside its shadow DOM, you cannot
 * `et2-nextmatch::part(exported-part) { ... }` can style explicitly exported parts.
 
 For framework-level row styles, add to `Et2Nextmatch.row.styles.ts`. For app-specific row styles, use the app's
-`templates/default/app.css`.
+row-template `et2-styles`. `templates/default/app.css` remains the fallback for row templates that have
+not been migrated.
 
 ### Highlighting an Overdue Entry
 

@@ -34,6 +34,8 @@ export interface Et2DatagridTemplateData
 	rowTemplateXml : Element | null;
 	/** Stored row-template attributes keyed by generated widget id. */
 	rowTemplateAttrMap : Record<string, Record<string, string>>;
+	/** Styles extracted from <et2-styles> inside the row template. */
+	rowStylesheets? : CSSStyleSheet[];
 	/** Optional row-height hint supplied by template parsing. */
 	rowHeight?: number;
 	loaderTemplate : HTMLTemplateElement | null;

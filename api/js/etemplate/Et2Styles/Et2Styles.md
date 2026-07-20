@@ -60,6 +60,38 @@ With the above, `row.css` is loaded from
 `/egroupware/infolog/templates/default/row.css` — no app prefix or absolute path
 required.
 
+### Datagrid row template styles
+
+When an `et2-nextmatch` row template contains an `et2-styles` element, those
+styles are treated as row-template-local styles. They are adopted into the
+`et2-datagrid` row shadow root instead of being injected into the document head.
+
+```xml
+<template id="infolog.index.rows">
+    <grid>
+        <columns>
+            <column id="info_subject"></column>
+        </columns>
+        <row class="$class">
+            <et2-description id="info_subject"></et2-description>
+        </row>
+    </grid>
+
+    <et2-styles src="row.css"></et2-styles>
+</template>
+```
+
+The `et2-styles` element can be anywhere inside the row template definition; it
+does not need to be inside the `<row>` element. Both inline CSS and `src` are
+supported. A bare filename such as `row.css` resolves beside the `.xet` file that
+contains the row template.
+
+If row-template-local styles are present, `et2-nextmatch` adopts only the
+framework row stylesheet and the extracted row-template styles into the datagrid
+row shadow root. The application's `templates/default/app.css` fallback is not
+added to that shadow root. If no row-template-local `et2-styles` is present,
+`app.css` is still used as the compatibility fallback for row styling.
+
 :::tip
 
 The injected CSS is document-wide, not scoped to the widget. Use specific
@@ -67,4 +99,3 @@ selectors (or a unique `id` on the `et2-styles` element) to avoid affecting
 unrelated parts of the page.
 
 :::
-

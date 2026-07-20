@@ -316,6 +316,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	@state()
 	private _templateLoading : boolean = true;
 
+	private _appRowStylesheet : CSSStyleSheet | null = null;
+
 	@state()
 	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
 
@@ -1812,6 +1814,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			sourceColumns: templateData.sourceColumns?.length ? templateData.sourceColumns : columns,
 			columns: nextColumns
 		};
+		this._syncDatagridRowStylesheets();
 		// Columns now exist (getValue().selectcols is populated) - let consumers proceed.
 		this._resolveColumnsReady();
 	}
@@ -1982,9 +1985,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private async _updateRowStylesheets()
 	{
 		const appName = this._getAppName();
-		const sheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
-		this._rowStylesheets = sheet ? [rowStyles.styleSheet!, sheet] : [rowStyles.styleSheet!];
+		this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
 		await this.updateComplete;
+		this._syncDatagridRowStylesheets();
+	}
+
+	private _syncDatagridRowStylesheets()
+	{
+		const templateRowStylesheets = this._templateData?.rowStylesheets || [];
+		this._rowStylesheets = [
+			rowStyles.styleSheet!,
+			...(templateRowStylesheets.length ? templateRowStylesheets : (this._appRowStylesheet ? [this._appRowStylesheet] : []))
+		];
 		const datagrid = this._datagrid;
 		if(datagrid)
 		{

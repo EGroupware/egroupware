@@ -2,6 +2,7 @@ import {assert} from "@open-wc/testing";
 import {html, LitElement, render} from "lit";
 import {Et2Datagrid} from "../Et2Datagrid";
 import datagridStyles from "../Et2Datagrid.styles.ts";
+import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2RowProvider} from "../Et2RowProvider.ts";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {Et2CustomfieldsBase} from "../../Et2Customfields/Et2CustomfieldsBase";
@@ -896,6 +897,79 @@ describe("Et2Datagrid row rendering", () =>
 			container?.querySelector("et2-description"),
 			"source description child should not also be loaded by the container widget"
 		);
+	});
+
+	/**
+	 * Contract: <et2-styles> inside a row template belongs to datagrid rows only.
+	 * Setup: prepare a row template that contains row-local et2-styles.
+	 * Pass: the stylesheet is extracted for the datagrid shadow root and the
+	 * style widget is removed from the row template so it cannot inject into head.
+	 */
+	it("extracts row template styles for datagrid row shadow stylesheets", async() =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		const templateRoot = new DOMParser().parseFromString(`
+			<template id="test.index.rows">
+				<grid>
+					<columns>
+						<column/>
+					</columns>
+					<rows>
+						<row class="th">
+							<et2-nextmatch-header label="Title" id="title"/>
+						</row>
+						<row>
+							<td><et2-description id="$[title]" noLang="1"></et2-description></td>
+						</row>
+					</rows>
+				</grid>
+				<et2-styles>
+					tr.template-local-style td {
+						color: rgb(1, 2, 3);
+					}
+				</et2-styles>
+			</template>
+		`, "text/xml").documentElement;
+
+		const templateData = await (provider as any)._fromTemplateRoot(templateRoot);
+
+		assert.lengthOf(templateData?.rowStylesheets || [], 1, "template-local et2-styles should be returned as stylesheets");
+		assert.isNull(
+			templateData?.rowTemplate.content.querySelector("et2-styles"),
+			"row-local et2-styles tags should not remain in the prepared row template"
+		);
+		assert.isNull(
+			templateData?.rowTemplateXml.querySelector("et2-styles"),
+			"row-local et2-styles tags should not remain in the stored row XML"
+		);
+		assert.include(
+			templateData!.rowStylesheets!.flatMap((sheet) => Array.from(sheet.cssRules as CSSRuleList).map((rule : CSSRule) => rule.cssText)).join("\n"),
+			"tr.template-local-style td",
+			"row-local CSS should be present in the extracted stylesheet"
+		);
+	});
+
+	/**
+	 * Contract: template-local row styles replace app.css for datagrid rows.
+	 * Setup: compose row styles with both an app stylesheet and a template
+	 * stylesheet present.
+	 * Pass: the template stylesheet is included and the app stylesheet is not.
+	 */
+	it("uses template row styles instead of app.css in datagrid row stylesheets", async() =>
+	{
+		const nextmatch = new Et2Nextmatch() as any;
+		const appSheet = new CSSStyleSheet();
+		await appSheet.replace(".from-app-css { color: red; }");
+		const templateSheet = new CSSStyleSheet();
+		await templateSheet.replace(".from-template { color: green; }");
+
+		nextmatch._appRowStylesheet = appSheet;
+		nextmatch._templateData = {rowStylesheets: [templateSheet]};
+		nextmatch._syncDatagridRowStylesheets();
+
+		assert.include(nextmatch._rowStylesheets, templateSheet, "template row stylesheet should be adopted");
+		assert.notInclude(nextmatch._rowStylesheets, appSheet, "app.css should not be adopted when template row styles exist");
 	});
 
 	/**
