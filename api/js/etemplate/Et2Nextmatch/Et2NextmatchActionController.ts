@@ -706,6 +706,7 @@ export class Et2NextmatchActionController
 		this.clearPreparedDragRow();
 		this.cancelLongPress();
 		this.clearDropHover();
+		this.objectManager?.unregisterActions?.();
 		this.dragDropAOI?.bindNode(null);
 		this.clearRowActionObjects();
 	}
@@ -726,6 +727,7 @@ export class Et2NextmatchActionController
 			this.dragDropAOI?.bindNode(null);
 			return;
 		}
+		this.objectManager.unregisterActions?.();
 		if(!rowsBody)
 		{
 			this.dragDropAOI?.bindNode(null);
@@ -739,7 +741,6 @@ export class Et2NextmatchActionController
 		{
 			this.dragDropAOI.bindNode(rowsBody);
 		}
-		this.objectManager.unregisterActions?.();
 		this.objectManager.setAOI(this.dragDropAOI);
 		this.objectManager.updateActionLinks(this.getActionLinks());
 		for(const rowObject of this.rowActionObjects.values())
@@ -884,7 +885,7 @@ export class Et2NextmatchActionController
 				}
 			}
 			this.objectManager = appObjectManager?.addObject
-				? appObjectManager.addObject(new EgwActionObjectManager(uid, this.actionManager))
+				? appObjectManager.addObject(this.createObjectManager(uid, appObjectManager))
 				: new EgwActionObjectManager(uid, this.actionManager);
 			if(!this.objectManager)
 			{
@@ -892,6 +893,16 @@ export class Et2NextmatchActionController
 			}
 			this.objectManager.flags |= EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
 		}
+	}
+
+	private createObjectManager(uid : string, appObjectManager : EgwActionObjectManager)
+	{
+		const existingObject = appObjectManager.getObjectById?.(uid, 1);
+		if(existingObject && existingObject !== appObjectManager)
+		{
+			existingObject.remove?.();
+		}
+		return new EgwActionObjectManager(uid, this.actionManager);
 	}
 
 	/**
@@ -1468,7 +1479,7 @@ export class Et2NextmatchActionController
 		let dragAction = mgr.getActionById?.("egw_link_drag");
 		let dropCancel = mgr.getActionById?.("egw_cancel_drop");
 		const dataProvider = (this.host as any)._dataProvider;
-		const dataStorePrefix = dataProvider?.getDataStorePrefix?.();
+		const dataStorePrefix = dataProvider?.getDataStorePrefix?.() || this.host.egw().appName || this.host.egw().app_name?.();
 		if(!this.host.egw().link_get_registry?.(dataStorePrefix, "query") ||
 			this.host.egw().link_get_registry?.(dataStorePrefix, "title"))
 		{
@@ -1574,15 +1585,18 @@ export class Et2NextmatchActionController
 	}[]
 	{
 		const allowed = new Set((allowedLinks || []).map((id) => String(id || "").trim()).filter(Boolean));
-		return this.getActionLinks().map((actionId) =>
-		{
-			const allowedInPlaceholderContext = this._isPlaceholderContextActionAllowed(actionId, allowed);
-			return {
-				actionId,
-				enabled: allowedInPlaceholderContext,
-				visible: allowedInPlaceholderContext
-			};
-		});
+		return this.getActionLinks()
+			.filter((actionId) => (this.actionManager?.getActionById?.(actionId) as any)?.type !== "drag")
+			.filter((actionId) => (this.actionManager?.getActionById?.(actionId) as any)?.type !== "drop")
+			.map((actionId) =>
+			{
+				const allowedInPlaceholderContext = this._isPlaceholderContextActionAllowed(actionId, allowed);
+				return {
+					actionId,
+					enabled: allowedInPlaceholderContext,
+					visible: allowedInPlaceholderContext
+				};
+			});
 	}
 
 	/**

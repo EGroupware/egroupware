@@ -2,7 +2,7 @@ import {assert} from "@open-wc/testing";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2NextmatchActionController, resolveActionApiGetters} from "../Et2NextmatchActionController";
 import {EgwPopupActionImplementation} from "../../../egw_action/EgwPopupActionImplementation";
-import {egw_getActionManager} from "../../../egw_action/egw_action";
+import {egw_getActionManager, egw_getObjectManager} from "../../../egw_action/egw_action";
 import * as sinon from "sinon";
 
 const egwStub = {
@@ -400,6 +400,33 @@ describe("Et2Nextmatch action setup", () =>
 		assert.isOk(instanceTwo, "second eTemplate instance action manager should be created");
 		assert.strictEqual(firstController.actionManager, instanceOne.getActionById(nextmatchId, 1), "first Nextmatch manager should be under the first instance");
 		assert.strictEqual(secondController.actionManager, instanceTwo.getActionById(nextmatchId, 1), "second Nextmatch manager should be under the second instance");
+	});
+
+	it("removes a stale widget action object before creating delegated row object manager", () =>
+	{
+		const appName = `addressbook_nextmatch_object_${Date.now()}`;
+		const nextmatchId = "nm_stale_object";
+		const appObjectManager = egw_getObjectManager(appName, true, 1);
+		const staleObject = appObjectManager.addObject(nextmatchId);
+		const unregisterActions = sinon.spy(staleObject, "unregisterActions");
+		const controller : any = new Et2NextmatchActionController({
+			id: nextmatchId,
+			egw: () => ({
+				...egwStub,
+				app_name: () => appName
+			}),
+			getInstanceManager: () => ({
+				app: appName,
+				uniqueId: `template_${Date.now()}`
+			})
+		} as any);
+
+		controller.ensureActionManagers();
+
+		const matchingObjects = appObjectManager.children.filter((child : any) => child.id === nextmatchId);
+		assert.isTrue(unregisterActions.calledOnce, "stale host-bound object should unregister its action listeners");
+		assert.lengthOf(matchingObjects, 1, "only the delegated object manager should remain for the Nextmatch id");
+		assert.strictEqual(matchingObjects[0], controller.objectManager, "remaining object should be the controller's delegated object manager");
 	});
 
 	/**
@@ -1323,7 +1350,7 @@ describe("Et2Nextmatch action setup", () =>
 		try
 		{
 			controller.handlePointerDown(event);
-			await clock.tickAsync(560);
+			clock.tick(560);
 			assert.isTrue(triggerPopupForRow.calledOnce, "long-press should trigger popup action");
 		}
 		finally
@@ -1466,7 +1493,7 @@ describe("Et2Nextmatch action setup", () =>
 				clientX: 25,
 				clientY: 10
 			}));
-			await clock.tickAsync(560);
+			clock.tick(560);
 			assert.isFalse(triggerPopupForRow.called, "popup should not open after movement cancels long-press");
 		}
 		finally
@@ -1825,6 +1852,117 @@ describe("Et2Nextmatch action setup", () =>
 		assert.isTrue(objectManager.updateActionLinks.calledOnce, "rows container should still be synchronized with the action system");
 		assert.deepEqual(objectManager.updateActionLinks.firstCall.args[0], [], "no drop links should be registered when no drop action exists");
 		assert.isFalse(addAction.called, "controller should not synthesize drop actions when drop support is unavailable");
+	});
+
+	it("registers link drop support using app name when data store prefix is unset", () =>
+	{
+		const actions : Record<string, any> = {};
+		const children : any[] = [];
+		const actionManager = {
+			children,
+			getActionById: (id : string) => actions[id] || null,
+			addAction: (type : string, id : string, caption : string, icon : string, onExecute : Function, allowOnMultiple : boolean) =>
+			{
+				const action : any = {
+					id,
+					type,
+					caption,
+					icon,
+					onExecute,
+					allowOnMultiple,
+					acceptedTypes: type === "drop" ? ["default"] : undefined,
+					set_group(group : string)
+					{
+						this.group = group;
+					},
+					set_dragType(dragType : string)
+					{
+						this.dragType = dragType;
+					}
+				};
+				actions[id] = action;
+				children.push(action);
+				return action;
+			}
+		};
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_link_drop_app_fallback",
+			egw: () => ({
+				...egwStub,
+				appName: "addressbook",
+				link_get_registry: (app : string, type : string) => app === "addressbook" && type === "query" ? {} : null,
+				user: (key : string) => key === "apps" ? {addressbook: {}, infolog: {}} : null
+			}),
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = actionManager;
+
+		controller.initLinkDragDropActions();
+
+		assert.exists(actions.egw_link_drop, "link drop action should be registered when the app supports link queries");
+		assert.include(actions.egw_link_drop.acceptedTypes, "link");
+		assert.notInclude(actions.egw_link_drop.acceptedTypes, "file", "link drop should not accept filemanager/file drop types");
+		assert.strictEqual(actions.egw_link_drag.dragType, "link", "row drag action should advertise link drags");
+	});
+
+	it("unregisters drop handlers before rebinding the delegated rows AOI", () =>
+	{
+		const oldRows = document.createElement("tbody");
+		const newRows = document.createElement("tbody");
+		const events : Array<{event : string, node : HTMLElement | null}> = [];
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drop_rebind",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.ensureActionManagers = () => {};
+		controller.initLinkDragDropActions = () => {};
+		controller.getRowsBody = () => newRows;
+		controller.getActionLinks = () => [];
+		controller.dragDropAOI = {
+			node: oldRows,
+			bindNode(node : HTMLElement | null)
+			{
+				events.push({event: "bind", node});
+				this.node = node;
+			}
+		};
+		controller.objectManager = {
+			unregisterActions: () => events.push({event: "unregister", node: controller.dragDropAOI.node}),
+			setAOI: () => {},
+			updateActionLinks: () => {}
+		};
+
+		controller.syncDragDropRegistration();
+
+		assert.deepEqual(events, [
+			{event: "unregister", node: oldRows},
+			{event: "bind", node: newRows}
+		], "old row listeners must be unregistered before the AOI points at the new rows body");
+	});
+
+	it("does not link drag or drop actions to placeholder host context", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_placeholder_context_links",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		const actions = {
+			open: {id: "open", type: "popup"},
+			egw_link_drop: {id: "egw_link_drop", type: "drop"},
+			egw_link_drag: {id: "egw_link_drag", type: "drag"}
+		};
+		controller.getActionLinks = () => Object.keys(actions);
+		controller.actionManager = {
+			getActionById: (id : string) => actions[id]
+		};
+
+		assert.deepEqual(
+			controller._getPlaceholderContextLinks(["open"]).map((link) => link.actionId),
+			["open"],
+			"placeholder host context should only link popup actions"
+		);
 	});
 
 	it("materializes visible selected rows into action objects for multi-row drag helpers", () =>
