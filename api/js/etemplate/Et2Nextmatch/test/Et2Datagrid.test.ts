@@ -332,6 +332,111 @@ after(function()
 describe("Et2Datagrid row rendering", () =>
 {
 	/**
+	 * Contract: the built-in no-results state looks like a full-width row, not a
+	 * Shoelace alert.
+	 * Setup: render an empty datagrid with a valid column structure so the grid
+	 * enters the no-rows state rather than the missing-template state.
+	 * Pass: the state wrapper remains available for Nextmatch context-menu
+	 * routing, and the fallback content is row-like markup without `sl-alert`.
+	 */
+	it("renders the default empty state as a row-like placeholder", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "name", title: "Name"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.emptyStateText = "Nothing here yet";
+		document.body.append(el);
+		await el.updateComplete;
+
+		const state = el.shadowRoot!.querySelector(".dg-state.dg-state--empty") as HTMLElement | null;
+		const emptyRow = state?.querySelector(".dg-empty-row") as HTMLElement | null;
+		const emptyCell = state?.querySelector(".dg-empty-cell") as HTMLElement | null;
+
+		assert.isNotNull(state, "empty state should keep the dg-state context-menu anchor");
+		assert.isNotNull(emptyRow, "default no-results fallback should render row-like markup");
+		assert.equal(emptyCell?.textContent?.trim(), "Nothing here yet", "empty row should show configured placeholder text");
+		assert.isNull(state?.querySelector("sl-alert"), "default no-results fallback should not render a Shoelace alert");
+		assert.isNull(state?.querySelector(".dg-empty-action-menu"), "empty action menu button should be hidden by default");
+
+		el.remove();
+	});
+
+	/**
+	 * Contract: the empty-state action menu button is opt-in and emits a composed
+	 * contextmenu event from the empty row.
+	 * Setup: render an empty datagrid with the action menu flag enabled, then
+	 * click the button.
+	 * Pass: the button is present and `contextmenu` is emitted with the click coordinates.
+	 */
+	it("emits contextmenu from the empty-state action menu button", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "name", title: "Name"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.emptyStateActionMenu = true;
+		document.body.append(el);
+		await el.updateComplete;
+
+		let contextEvent : MouseEvent | null = null;
+		let rowReceivedContextMenu = false;
+		const emptyRow = el.shadowRoot!.querySelector(".dg-empty-row") as HTMLElement | null;
+		emptyRow?.addEventListener("contextmenu", () =>
+		{
+			rowReceivedContextMenu = true;
+		}, {once: true});
+		el.addEventListener("contextmenu", (event) =>
+		{
+			contextEvent = event as MouseEvent;
+		}, {once: true});
+		const button = el.shadowRoot!.querySelector(".dg-empty-action-menu") as HTMLElement | null;
+		assert.isNotNull(button, "empty action menu button should render when enabled");
+
+		button!.dispatchEvent(new MouseEvent("click", {
+			bubbles: true,
+			cancelable: true,
+			composed: true,
+			clientX: 44,
+			clientY: 55
+		}));
+
+		assert.equal(contextEvent?.type, "contextmenu", "button click should emit a contextmenu event");
+		assert.equal(contextEvent?.clientX, 44, "contextmenu should keep the click X coordinate");
+		assert.equal(contextEvent?.clientY, 55, "contextmenu should keep the click Y coordinate");
+		assert.isTrue(rowReceivedContextMenu, "contextmenu should be dispatched from the empty row");
+		el.remove();
+	});
+
+	/**
+	 * Contract: custom `noResults` slot content still replaces the built-in
+	 * fallback.
+	 * Setup: render an empty datagrid with a slotted custom no-results element.
+	 * Pass: the shadow slot receives the custom element while the state wrapper
+	 * remains the interaction anchor.
+	 */
+	it("keeps custom noResults slot content for the empty state", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "name", title: "Name"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		const custom = document.createElement("div");
+		custom.slot = "noResults";
+		custom.className = "custom-no-results";
+		custom.textContent = "Custom empty";
+		el.append(custom);
+		document.body.append(el);
+		await el.updateComplete;
+
+		const state = el.shadowRoot!.querySelector(".dg-state.dg-state--empty") as HTMLElement | null;
+		const slot = state?.querySelector("slot[name='noResults']") as HTMLSlotElement | null;
+		const assigned = slot?.assignedElements() || [];
+
+		assert.isNotNull(state, "empty state should keep the dg-state context-menu anchor");
+		assert.deepEqual(assigned, [custom], "custom noResults content should be assigned to the empty-state slot");
+
+		el.remove();
+	});
+
+	/**
 	 * Contract: header scrollbar reservation is independent from the column
 	 * selection action width.
 	 * Setup: inspect the datagrid stylesheet used by the alignment fixture.

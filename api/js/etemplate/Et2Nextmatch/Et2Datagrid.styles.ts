@@ -432,4 +432,32 @@ export default css`
 		display: block;
 	}
 
+	.dg-state--empty {
+		padding: 0;
+	}
+
+	.dg-empty-row {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: center;
+		width: 100%;
+		min-height: var(--row-height, 3em);
+		box-sizing: border-box;
+		background: var(--sl-color-neutral-0);
+		border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+		color: var(--sl-color-neutral-600);
+	}
+
+	.dg-empty-cell {
+		display: flex;
+		align-items: center;
+		min-width: 0;
+		padding: 0 var(--sl-spacing-small);
+		box-sizing: border-box;
+	}
+
+	.dg-empty-action-menu {
+		margin-inline-end: var(--sl-spacing-x-small);
+	}
+
 `;

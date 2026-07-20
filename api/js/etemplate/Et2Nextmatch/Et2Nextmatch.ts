@@ -319,6 +319,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	@state()
 	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
 
+	@state()
+	private _hasPlaceholderActions : boolean = false;
+
 	/**
 	 * Monotonic token used to ignore stale async template-load completions.
 	 */
@@ -846,6 +849,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	protected _initActions(actions : EgwAction[] | { [id : string] : object })
 	{
 		this._actionController.initActions(actions);
+		this._syncPlaceholderActionAvailability();
+	}
+
+	private _syncPlaceholderActionAvailability()
+	{
+		this._hasPlaceholderActions = this._actionController.hasPlaceholderActions();
 	}
 
 	/**
@@ -864,6 +873,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	{
 		super.firstUpdated(changedProperties);
 		this._actionController.setPlaceholderActions(this.placeholderActions);
+		this._syncPlaceholderActionAvailability();
 		this._initializeExtraAttributeFilters();
 
 		if(this.template)
@@ -934,6 +944,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		if(changedProperties.has("placeholderActions"))
 		{
 			this._actionController.setPlaceholderActions(this.placeholderActions);
+			this._syncPlaceholderActionAvailability();
 		}
 		this._actionController.syncDragDropRegistration();
 	}
@@ -2069,12 +2080,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                         "--meta-column-width": "6px"
                     })}
                     ${ref(this._loadExpandedGrid)}
-            >
-                <sl-alert slot="noResults" variant="neutral" open>
-                    <sl-icon slot="icon" name="inbox"></sl-icon>
-                    <strong>${this.egw().lang("No visible children")}</strong>
-                </sl-alert>
-            </et2-datagrid>
+            ></et2-datagrid>
 		`;
 	}
 
@@ -2639,49 +2645,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
-	 * Render Nextmatch default no-results template into datagrid's `noResults` slot.
-	 */
-	private _renderDefaultNoResults(actions : EgwAction[])
-	{
-		return html`
-            <sl-alert slot="noResults" variant="neutral" open>
-                <sl-icon slot="icon" name="inbox"></sl-icon>
-                <strong>${this.placeholder || this.egw().lang("No entries to display")}</strong>
-                ${actions.length > 0 ? html`
-                    <div class="nextmatch_placeholder_actions">
-                        ${actions.map((action) => html`
-                            <et2-button
-                                    class="nextmatch_placeholder_action"
-                                    noSubmit
-                                    .image=${action.iconUrl || action.id}
-                                    .label=${action.caption || action.id}
-                                    @click=${(event : MouseEvent) => this._handlePlaceholderActionClick(event, String(action.id))}
-                            ></et2-button>
-                        `)}
-                    </div>
-                ` : null}
-            </sl-alert>
-		`;
-	}
-
-	/**
-	 * Execute one placeholder action from inline loader-slot buttons.
-	 */
-	private _handlePlaceholderActionClick(event : MouseEvent, actionId : string)
-	{
-		if(!actionId)
-		{
-			return;
-		}
-		const stateElement = (event.currentTarget as HTMLElement | null)?.closest(".dg-state") as HTMLElement | null;
-		if(this._actionController.executePlaceholderAction(actionId, stateElement || this))
-		{
-			event.preventDefault();
-			event.stopPropagation();
-		}
-	}
-
-	/**
 	 * Open the row action popup from keyboard Enter.
 	 */
 	private _handleKeydown = (event : KeyboardEvent) =>
@@ -2783,8 +2746,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	render()
 	{
 		const hasSlottedNoResults = !!this.querySelector("[slot='noResults']");
-		const inlinePlaceholderActions : EgwAction[] = this._actionController
-			.getInlinePlaceholderActions();
 		const metaColumnWidth = "max(var(--sl-spacing-large), 6px)";
 		const effectiveView = this._effectiveView();
 		return html`
@@ -2804,13 +2765,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                         .expansionConfig=${this._datagridExpansionConfig()}
                         .configurationLoading=${this._templateLoading}
                         .emptyStateText=${this.placeholder}
+                        .emptyStateActionMenu=${this._hasPlaceholderActions}
                         selection-mode="multiple"
                         style=${styleMap({"--meta-column-width": metaColumnWidth})}
                 >
                     ${hasSlottedNoResults
                       ? html`
                                 <slot name="noResults" slot="noResults"></slot>`
-                      : this._renderDefaultNoResults(inlinePlaceholderActions)}
+                      : null}
                 </et2-datagrid>
                 <div part="footer">
                     <slot name="footer"></slot>

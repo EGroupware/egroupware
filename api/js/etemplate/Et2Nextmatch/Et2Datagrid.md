@@ -399,16 +399,15 @@ Example:
 
 Optional template shown when loading is complete and no rows are available:
 
-- Replaces the default no-results `<sl-alert>` entirely
+- Replaces the default row-like no-results placeholder entirely
 
 Example:
 
 ```xml
 
-<sl-alert slot="noResults" variant="neutral" open>
-    <sl-icon slot="icon" name="inbox"></sl-icon>
-    <strong>This mailbox is empty</strong>
-</sl-alert>
+<div slot="noResults" class="mail-empty-placeholder">
+    This mailbox is empty
+</div>
 ```
 
 ---

@@ -25,8 +25,8 @@ import {
 	Et2DatagridView
 } from "./Et2Datagrid.types";
 import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2DatagridColumnManager";
-import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
+import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 import {styleMap} from "lit/directives/style-map.js";
@@ -74,6 +74,7 @@ type Et2DatagridVirtualItem = number | Et2DatagridRenderItem;
  * @csspart header - Visible column header row container.
  * @csspart body - Scrollable container for state content and table.
  * @csspart state - State message container (loading, empty, template missing, or fetch error).
+ * @csspart state-action-menu - Empty-state action menu button.
  * @csspart resize-helper - Helper bar shown while resizing a column.
  * @csspart table - Internal table element with ARIA grid semantics.
  * @csspart rows - Table body that hosts virtualized row content.
@@ -317,6 +318,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	@property({type: String, attribute: "empty-state-text"})
 	emptyStateText : string = "";
+
+	/**
+	 * Show an empty-state action menu button. The button dispatches a composed
+	 * contextmenu event from the empty row so owners can use their normal row
+	 * action-menu routing.
+	 */
+	@property({type: Boolean, attribute: "empty-state-action-menu"})
+	emptyStateActionMenu : boolean = false;
 
 	/**
 	 * Optional explicit preference key for persisted column state.
@@ -3584,6 +3593,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Ask the owner widget to open its normal context menu from the empty row.
+	 */
+	private _handleEmptyStateActionMenuClick(event : MouseEvent)
+	{
+		event.preventDefault();
+		event.stopPropagation();
+		const target = event.currentTarget as HTMLElement | null;
+		const row = target?.closest?.(".dg-empty-row") as HTMLElement | null;
+		(row || target || this).dispatchEvent(new MouseEvent("contextmenu", {
+			bubbles: true,
+			cancelable: true,
+			clientX: event.clientX,
+			clientY: event.clientY,
+			composed: true
+		}));
+	}
+
+	/**
 	 * Toggle selected state for active row according to current selection mode.
 	 */
 	private _toggleSelectionOnActiveRow()
@@ -4257,13 +4284,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			const emptyStateText = this.emptyStateText || this.egw().lang("No entries to display");
 			return html`
-				<div class="dg-state" part="state">
+				<div class="dg-state dg-state--empty" part="state">
 					<slot name="noResults">
-						<sl-alert variant="neutral" open>
-							<sl-icon slot="icon" name="inbox"></sl-icon>
-							<strong>${emptyStateText}</strong><br/>
-							${this._hasFetchedOnce ? this.egw().lang("No rows were returned.") : this.egw().lang("Waiting for rows.")}
-						</sl-alert>
+						<div class="dg-empty-row" role="row">
+							<div class="dg-empty-cell" role="gridcell">
+								${emptyStateText}
+							</div>
+							${this.emptyStateActionMenu ? html`
+								<et2-button-icon
+										class="dg-empty-action-menu"
+										part="state-action-menu"
+										image="three-dots-vertical"
+										label=${this.egw().lang("Actions")}
+										noSubmit
+										@click=${this._handleEmptyStateActionMenuClick}
+								></et2-button-icon>
+							` : nothing}
+						</div>
 					</slot>
 				</div>
 			`;

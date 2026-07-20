@@ -52,14 +52,4 @@ export default css`
 		border-color: var(--sl-color-primary-500);
 	}
 
-	.nextmatch_placeholder_actions {
-		margin-top: var(--sl-spacing-small);
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--sl-spacing-2x-small);
-	}
-
-	.nextmatch_placeholder_action {
-		color: var(--sl-color-primary-700);
-	}
 `;

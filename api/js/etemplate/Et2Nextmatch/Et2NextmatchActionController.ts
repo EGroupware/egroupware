@@ -606,6 +606,17 @@ export class Et2NextmatchActionController
 	}
 
 	/**
+	 * Check whether the current action tree contains any configured placeholder
+	 * actions. Final enabled/visible state is still evaluated by the action
+	 * framework when the menu opens.
+	 */
+	hasPlaceholderActions() : boolean
+	{
+		this.ensureActionManagers();
+		return this._resolvePlaceholderActionLinks(this.getPlaceholderActionIds()).length > 0;
+	}
+
+	/**
 	 * Resolve inline placeholder actions from configured ids.
 	 * If `add` has children, return the children entries instead of the add parent.
 	 */
@@ -1556,21 +1567,73 @@ export class Et2NextmatchActionController
 			return [];
 		}
 		const available : string[] = [];
-		for(const action of this.actionManager?.children || [])
+		const collectAvailable = (actions : EgwAction[] = []) =>
 		{
-			if(action?.id && requested.has(action.id))
+			for(const action of actions || [])
 			{
-				available.push(action.id);
-			}
-			for(const childId of Object.keys(action?.children || {}))
-			{
-				if(requested.has(childId))
+				if(action?.id && requested.has(action.id))
 				{
-					available.push(childId);
+					available.push(action.id);
 				}
+				collectAvailable(action?.children || []);
+			}
+		};
+		collectAvailable(this.actionManager?.children || []);
+		return Array.from(new Set(available));
+	}
+
+	/**
+	 * Check whether an action or any descendant is allowed in placeholder context.
+	 */
+	private _actionTreeContainsAllowed(action : EgwAction | null | undefined, allowed : Set<string>) : boolean
+	{
+		if(!action)
+		{
+			return false;
+		}
+		if(action.id && allowed.has(action.id))
+		{
+			return true;
+		}
+		for(const child of action.children || [])
+		{
+			if(this._actionTreeContainsAllowed(child, allowed))
+			{
+				return true;
 			}
 		}
-		return Array.from(new Set(available));
+		return false;
+	}
+
+	/**
+	 * Check whether an action id belongs to an allowed placeholder action branch.
+	 */
+	private _isActionInAllowedPlaceholderBranch(action : EgwAction | null | undefined, allowed : Set<string>) : boolean
+	{
+		for(let current = action; current; current = current.parent)
+		{
+			if(current.id && allowed.has(current.id))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Action framework links are top-level, but placeholder actions can target a
+	 * child menu entry such as InfoLog's add -> new. Keep the parent menu branch
+	 * available while hiding unrelated top-level actions.
+	 */
+	private _isPlaceholderContextActionAllowed(actionId : string, allowed : Set<string>) : boolean
+	{
+		if(allowed.has(actionId))
+		{
+			return true;
+		}
+		const action = this.actionManager?.getActionById?.(actionId);
+		return this._actionTreeContainsAllowed(action, allowed) ||
+			this._isActionInAllowedPlaceholderBranch(action, allowed);
 	}
 
 	/**
@@ -1684,21 +1747,6 @@ export class Et2NextmatchActionController
 		const isMobile = typeof window.egwIsMobile === "function" && window.egwIsMobile();
 		const visible = (!action.hideOnMobile || !isMobile) && (enabled || !action.hideOnDisabled);
 		return enabled && visible;
-	}
-
-	/**
-	 * Top-level action links also need to be enabled when one of their children is
-	 * allowed, because the egw_action link resolver reaches children through the
-	 * parent's context link.
-	 */
-	private _isPlaceholderContextActionAllowed(actionId : string, allowed : Set<string>) : boolean
-	{
-		if(allowed.has(actionId))
-		{
-			return true;
-		}
-		const action = this.actionManager?.getActionById?.(actionId);
-		return !!action?.children?.some((child) => child?.id && allowed.has(child.id));
 	}
 
 	/**

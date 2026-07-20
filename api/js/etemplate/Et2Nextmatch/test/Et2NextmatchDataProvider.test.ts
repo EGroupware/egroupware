@@ -5,6 +5,7 @@ function createProviderHost(overrides : Record<string, any> = {}) : any
 {
 	const host = document.createElement("div") as any;
 	host.id = overrides.id ?? "nm-test";
+	host.settings = overrides.settings ?? {};
 	host.activeFilters = overrides.activeFilters ?? {col_filter: {}};
 	host.sortBy = overrides.sortBy ?? (() => {});
 	host.getAttribute = overrides.getAttribute ?? (() => host.id);
@@ -261,33 +262,33 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 
 	/**
 	 * Contract under test:
-	 * - Data-store prefix selection uses app context first and host id as fallback.
+	 * - Data-store prefix selection uses an explicit dataStorePrefix first and app context as fallback.
 	 *
 	 * Setup strategy:
+	 * - One host with a custom `settings.dataStorePrefix`.
 	 * - One host with `instanceManager.app`.
-	 * - One host without app context but with a widget id.
 	 *
 	 * Pass criteria:
-	 * - Prefix resolves to app when available, otherwise to host id.
+	 * - Prefix resolves to the custom setting when available, otherwise to app.
 	 */
-	it("uses app name for data-store prefix and falls back to widget id", () =>
+	it("uses configured data-store prefix and falls back to app name", () =>
 	{
+		const configuredHost = createProviderHost({
+			id: "nm-configured",
+			settings: {dataStorePrefix: "egw_shares"},
+			getInstanceManager: () => ({app: "filemanager"}),
+			egw: () => ({app_name: () => "addressbook"})
+		});
+		const configuredProvider = new Et2NextmatchDataProvider(configuredHost);
+		assert.equal(configuredProvider.getDataStorePrefix(), "egw_shares", "configured prefix should be preferred");
+
 		const appHost = createProviderHost({
 			id: "nm-app",
 			getInstanceManager: () => ({app: "calendar"}),
 			egw: () => ({app_name: () => "addressbook"})
 		});
 		const appProvider = new Et2NextmatchDataProvider(appHost);
-		assert.equal(appProvider.getDataStorePrefix(), "calendar", "instance app should be preferred for prefix");
-
-		const idHost = createProviderHost({
-			id: "nm-id",
-			getAttribute: (name : string) => name === "id" ? "nm-id" : null,
-			getInstanceManager: () => ({}),
-			egw: () => ({app_name: () => ""})
-		});
-		const idProvider = new Et2NextmatchDataProvider(idHost);
-		assert.equal(idProvider.getDataStorePrefix(), "nm-id", "host id should be fallback prefix when app is unavailable");
+		assert.equal(appProvider.getDataStorePrefix(), "calendar", "instance app should be app fallback for prefix");
 	});
 
 	/**

@@ -27,6 +27,7 @@ const egwStub = {
 	lang: (label : string) => label,
 	tooltipBind: () => {},
 	tooltipUnbind: () => {},
+	image: () => "",
 	preference: (key? : string) => String(key || "").endsWith("-lettersearch") ? true : null,
 	set_preference: () => {},
 	app_name: () => "addressbook",
@@ -702,6 +703,55 @@ describe("Et2Nextmatch header event handling", () =>
 		triggerPlaceholderPopup.restore();
 		triggerPopupForRow.restore();
 		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - The real datagrid default empty placeholder still routes context menus
+	 *   through Nextmatch's placeholder action path.
+	 *
+	 * Setup strategy:
+	 * - Render Nextmatch with columns but no rows, leaving Datagrid to provide
+	 *   its built-in no-results placeholder.
+	 * - Dispatch a composed `contextmenu` from the actual datagrid shadow DOM
+	 *   placeholder.
+	 *
+	 * Pass criteria:
+	 * - Placeholder popup is called with configured placeholder actions.
+	 * - The event is prevented and the regular row popup path is not used.
+	 */
+	it("routes context menu from the datagrid default empty placeholder", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.placeholderActions = ["add", "import_csv"];
+		document.body.append(el);
+		const triggerPlaceholderPopup = sinon.stub((el as any)._actionController, "triggerPlaceholderPopup").returns(true);
+		const triggerPopupForRow = sinon.stub((el as any)._actionController, "triggerPopupForRow").returns(false);
+		try
+		{
+			el.setColumns([{key: "name", title: "Name"} as any]);
+			await el.updateComplete;
+			const datagrid = el.shadowRoot?.querySelector("et2-datagrid") as any;
+			await datagrid?.updateComplete;
+			await waitForCondition(() => !!datagrid?.shadowRoot?.querySelector(".dg-empty-row"));
+			const placeholder = datagrid?.shadowRoot?.querySelector(".dg-empty-row") as HTMLElement | null;
+
+			assert.isNotNull(placeholder, "datagrid should render its built-in empty placeholder");
+			const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
+			placeholder!.dispatchEvent(event);
+			await waitForBubblingHandlers();
+
+			assert.isTrue(triggerPlaceholderPopup.calledOnce, "placeholder popup should be attempted from rendered placeholder");
+			assert.deepEqual(triggerPlaceholderPopup.firstCall.args[1], ["add", "import_csv"], "configured placeholderActions should be used");
+			assert.isTrue(event.defaultPrevented, "context menu should be prevented when placeholder popup opens");
+			assert.isFalse(triggerPopupForRow.called, "row popup should not run for the empty placeholder");
+		}
+		finally
+		{
+			triggerPlaceholderPopup.restore();
+			triggerPopupForRow.restore();
+			el.remove();
+		}
 	});
 
 	/**

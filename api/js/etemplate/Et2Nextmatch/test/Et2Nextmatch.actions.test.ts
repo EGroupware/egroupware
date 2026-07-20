@@ -1631,40 +1631,81 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
-	 * - Inline placeholder buttons use evaluated action-link enabled state.
+	 * - Placeholder actions can target child menu entries such as InfoLog's
+	 *   top-level `add` action containing a `new` child.
 	 *
 	 * Setup strategy:
-	 * - Configure two placeholder actions.
-	 * - Stub the placeholder action object to report one disabled link.
+	 * - Configure a minimal action tree with `add -> new` and unrelated `open`.
+	 * - Resolve placeholder links for `new`, then build the placeholder context
+	 *   link map.
 	 *
 	 * Pass criteria:
-	 * - Only the enabled and visible action is returned for inline rendering.
+	 * - `new` resolves as an available placeholder action.
+	 * - The top-level `add` branch is visible/enabled so the context menu can
+	 *   reach `new`.
+	 * - Unrelated actions stay hidden/disabled.
 	 */
-	it("filters disabled placeholder actions from inline no-results buttons", async() =>
+	it("allows placeholder actions configured as child menu ids", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_placeholder_child_action",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "infolog"})
+		} as any);
+		const add : any = {id: "add", type: "popup", children: []};
+		const newAction : any = {id: "new", type: "popup", parent: add, children: []};
+		add.children = [newAction];
+		const open : any = {id: "open", type: "popup", children: []};
+		const actions = {add, new: newAction, open};
+		controller.getActionLinks = () => ["open", "add"];
+		controller.actionManager = {
+			children: [open, add],
+			getActionById: (id : string) => actions[id]
+		};
+		controller.setPlaceholderActions(["new"]);
+
+		const resolved = controller._resolvePlaceholderActionLinks(["new"]);
+		const contextLinks = controller._getPlaceholderContextLinks(resolved);
+
+		assert.deepEqual(resolved, ["new"], "child placeholder action id should resolve from the action tree");
+		assert.isTrue(controller.hasPlaceholderActions(), "child placeholder action should count as an available placeholder action");
+		assert.deepEqual(contextLinks, [
+			{actionId: "open", enabled: false, visible: false},
+			{actionId: "add", enabled: true, visible: true}
+		], "placeholder context should expose the parent branch for the allowed child action only");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Placeholder actions are not rendered as inline no-results buttons.
+	 *
+	 * Setup strategy:
+	 * - Configure placeholder actions.
+	 * - Stub inline action resolution so the test fails if render tries to use
+	 *   the old inline-button path.
+	 *
+	 * Pass criteria:
+	 * - Nextmatch does not ask for inline placeholder actions during render.
+	 * - No default content is slotted into datagrid's `noResults` slot.
+	 */
+	it("does not render placeholder actions as inline no-results buttons", async() =>
 	{
 		const el = new Et2Nextmatch();
-		el.id = "nm_inline_placeholder_links";
+		el.id = "nm_no_inline_placeholder_actions";
+		el.placeholderActions = ["add", "import_csv"];
 		document.body.append(el);
 		await el.updateComplete;
 		const controller : any = (el as any)._actionController;
-		const actions = [
-			{id: "add", type: "popup", children: [], enabled: {exec: sinon.stub().returns(false)}},
-			{id: "import_csv", type: "popup", children: [], enabled: {exec: sinon.stub().returns(true)}}
-		];
-		controller.actionManager = {
-			children: actions,
-			getActionById: (id : string) => actions.find((action) => action.id === id) || null
-		};
-		controller.objectManager = makeFakeObjectManager();
-		controller.setPlaceholderActions(["add", "import_csv"]);
-		const placeholderObject = {updateActionLinks: () => {}};
-		const ensurePlaceholderActionObject = sinon.stub(controller, "ensurePlaceholderActionObject").returns(placeholderObject);
+		const getInlinePlaceholderActions = sinon.stub(controller, "getInlinePlaceholderActions").throws(new Error("inline placeholder actions should not be resolved"));
 
-		const inlineActions = controller.getInlinePlaceholderActions();
+		el.requestUpdate();
+		await el.updateComplete;
 
-		assert.deepEqual(inlineActions.map((action) => action.id), ["import_csv"], "disabled placeholder actions should not render inline");
+		const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as HTMLElement | null;
+		assert.isFalse(getInlinePlaceholderActions.called, "render should not resolve placeholder actions for inline buttons");
+		assert.isNull(datagrid?.querySelector("[slot='noResults']"), "Nextmatch should leave default no-results rendering to Datagrid");
 
-		ensurePlaceholderActionObject.restore();
+		getInlinePlaceholderActions.restore();
 		el.remove();
 	});
 
