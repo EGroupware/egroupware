@@ -8,8 +8,6 @@
  * @author Andreas Stöckel
  */
 
-import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
-import "../jquery/jquery.noconflict.js";
 import {egw} from "../jsapi/egw_global.js";
 
 /**
