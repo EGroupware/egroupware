@@ -138,6 +138,7 @@
                 </row>
             </rows>
         </grid>
+        <et2-styles src="row.css"></et2-styles>
     </template>
     <template id="infolog.index" template="" lang="" group="0" version="1.9.005">
         <template template="infolog.index.header" slot="main-header"></template>
