@@ -474,11 +474,13 @@ class infolog_ui
 			);
 
 		$query['limit_modified_n_month'] = $this->bo->limit_modified_n_month;
+		$search = $query['search'];
 		if (!empty($query['search']))
 		{
-			$query['search'] = (!empty($query['search_type'])?$query['search_type'].':':'').$query['search'];
+			$query['search'] = (!empty($query['search_type']) ? $query['search_type'].':' : '').$query['search'];
 		}
 		$infos = $this->bo->search($query);
+		$query['search'] = $search;
 		// if limit modified optimization has been used, blur the wrong/not exact total
 		if (!empty($query['limit_modified_n_month']))
 		{
