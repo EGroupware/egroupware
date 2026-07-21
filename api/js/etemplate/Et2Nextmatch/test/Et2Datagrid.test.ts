@@ -196,6 +196,15 @@ if(!customElements.get("et2-dg-container"))
 	customElements.define("et2-dg-container", Et2DatagridContainerFixture);
 }
 
+class DatagridPlainCustomFixture extends HTMLElement
+{
+}
+
+if(!customElements.get("dg-plain-custom"))
+{
+	customElements.define("dg-plain-custom", DatagridPlainCustomFixture);
+}
+
 class Et2DatagridDeferredFixture extends Et2Widget(LitElement)
 {
 	static get properties()
@@ -900,6 +909,30 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: row templates can contain non-Et2 custom elements that are not
+	 * Et2Widget subclasses.  Et2 widgets still need to use Et2Widget.
+	 * Setup: prepare a row template with a registered plain custom element.
+	 * Pass: preparation succeeds and preserves static attributes.
+	 */
+	it("prepares non-Et2Widget custom elements without transformAttributes", async() =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("row");
+		rowTemplate.innerHTML = `
+			<td>
+				<dg-plain-custom data-value="static"></dg-plain-custom>
+			</td>
+		`;
+
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, [{key: "label", title: "Label"}] as any);
+		const plain = prepared?.template.content.querySelector("dg-plain-custom") as HTMLElement | null;
+
+		assert.isNotNull(plain, "plain custom element should remain in prepared row template");
+		assert.equal(plain?.getAttribute("data-value"), "static", "static attributes should be preserved");
+	});
+
+	/**
 	 * Contract: <et2-styles> inside a row template belongs to datagrid rows only.
 	 * Setup: prepare a row template that contains row-local et2-styles.
 	 * Pass: the stylesheet is extracted for the datagrid shadow root and the
@@ -1403,6 +1436,32 @@ describe("Et2Datagrid row rendering", () =>
 		assert.include(rowElement!.className, "primary", "`$class` should resolve from row content");
 		assert.include(rowElement!.className, "cat_3", "`$cat_id` should resolve into category class");
 		assert.include(rowElement!.className, "cat_7", "`$cat_id` should resolve all category classes");
+	});
+
+	/**
+	 * Contract: provider-backed datagrids keep row data in the provider, not in datagrid row indexes.
+	 * Setup: configure getRowData(), seed rows, and render one row from the internal index.
+	 * Pass: datagrid stores only the id while rendered cells resolve values through the provider.
+	 */
+	it("stores only row ids when the provider supplies row data lookup", () =>
+	{
+		const el = createDatagrid();
+		const rowDataById : Record<string, any> = {
+			"addressbook::row-1": {uid: "addressbook::row-1", label: "Provider row"}
+		};
+		el.dataProvider = createDatagridDataProvider({
+			getRowData: (rowId : string) => rowDataById[rowId] ?? null
+		}) as any;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+
+		el.setInitialRows([rowDataById["addressbook::row-1"]]);
+
+		assert.deepEqual(el.rows[0], {id: "addressbook::row-1"}, "public row state should not carry provider-owned data");
+		assert.deepEqual((el as any)._rowsByIndex[0], {id: "addressbook::row-1"}, "indexed row state should not carry provider-owned data");
+
+		const rowElement = (el as any)._buildRowElement((el as any)._rowsByIndex[0], 0) as HTMLTableRowElement | null;
+		assert.include(rowElement?.textContent || "", "Provider row", "row rendering should resolve data through provider.getRowData()");
 	});
 
 	/**

@@ -195,10 +195,12 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	it("fetches child pages with parent_id using the normal row resolution flow", async() =>
 	{
 		let capturedRequest : any = null;
+		const cache : Record<string, any> = {};
 		const host = createProviderHost({
 			id: "nm-child",
 			egw: () => ({
 				app_name: () => "addressbook",
+				dataGetUIDdata: (uid : string) => cache[uid] ?? null,
 				dataFetch: (_execId, request, _filters, _widgetId, callback) =>
 				{
 					capturedRequest = {...request};
@@ -211,6 +213,10 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				dataRegisterUID: (uid : string, callback : Function) =>
 				{
 					callback({title: "Child row"}, uid);
+				},
+				dataStoreUID: (uid : string, data : any) =>
+				{
+					cache[uid] = {timestamp: Date.now(), data};
 				}
 			})
 		});
@@ -225,6 +231,8 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 			"child fetch should send the raw parent id expected by Nextmatch.php"
 		);
 		assert.deepEqual(page.rows.map((row) => row.id), ["addressbook::child-1"]);
+		assert.deepEqual(page.rows[0], {id: "addressbook::child-1"}, "child provider should return id-only rows");
+		assert.equal(childProvider.getRowData!("addressbook::child-1").title, "Child row", "child datagrids should resolve row data through provider lookup");
 		assert.equal(page.total, 1);
 	});
 
@@ -289,6 +297,103 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		});
 		const appProvider = new Et2NextmatchDataProvider(appHost);
 		assert.equal(appProvider.getDataStorePrefix(), "calendar", "instance app should be app fallback for prefix");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Preloaded rows are stored in egw's UID cache under their normalized row ids.
+	 *
+	 * Setup strategy:
+	 * - Configure filemanager-style `row_id: path`.
+	 * - Store two already-available rows through the provider.
+	 *
+	 * Pass criteria:
+	 * - dataStoreUID receives filemanager-prefixed UIDs matching the row paths.
+	 */
+	it("stores preloaded rows using the configured row id field", () =>
+	{
+		const stored : Record<string, any> = {};
+		const host = createProviderHost({
+			id: "nm-filemanager-preload",
+			settings: {row_id: "path"},
+			getInstanceManager: () => ({app: "filemanager"}),
+			egw: () => ({
+				app_name: () => "filemanager",
+				dataStoreUID: (uid : string, data : any) =>
+				{
+					stored[uid] = data;
+				}
+			})
+		});
+
+		const rows = [
+			{path: "/home/nathan/Generated", name: "Generated"},
+			{path: "/home/nathan/Invoice.odt", name: "Invoice.odt"}
+		];
+		const provider = new Et2NextmatchDataProvider(host);
+		provider.storeRows(rows);
+
+		assert.sameMembers(
+			Object.keys(stored),
+			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			"stored UIDs should be discoverable by egw.dataKnownUIDs('filemanager')"
+		);
+		assert.equal(stored["filemanager::/home/nathan/Generated"], rows[0]);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Fetched rows are explicitly kept in egw's UID cache after dataRegisterUID resolves.
+	 *
+	 * Setup strategy:
+	 * - Return ordered filemanager paths from dataFetch().
+	 * - Resolve row payloads from dataRegisterUID() without pre-populating a cache.
+	 *
+	 * Pass criteria:
+	 * - Returned datagrid rows and dataStoreUID entries use the configured path id.
+	 */
+	it("stores fetched rows resolved through dataRegisterUID", async() =>
+	{
+		const stored : Record<string, any> = {};
+		const host = createProviderHost({
+			id: "nm-filemanager-fetch",
+			settings: {row_id: "path"},
+			getInstanceManager: () => ({etemplate_exec_id: "exec-1", app: "filemanager"}),
+			egw: () => ({
+				app_name: () => "filemanager",
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					callback({
+						rows: {},
+						order: ["/home/nathan/Generated", "/home/nathan/Invoice.odt"],
+						total: 2
+					});
+				},
+				dataRegisterUID: (uid : string, callback : Function) =>
+				{
+					callback({path: uid.replace(/^filemanager::/, ""), name: uid.split("/").pop()}, uid);
+				},
+				dataStoreUID: (uid : string, data : any, skipCallback : boolean) =>
+				{
+					stored[uid] = {data, skipCallback};
+				}
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		const page = await provider.fetchPage(0, 25);
+
+		assert.deepEqual(
+			page.rows.map((row) => row.id),
+			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			"fetched row ids should use normalized filemanager paths"
+		);
+		assert.sameMembers(
+			Object.keys(stored),
+			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			"fetched row data should be stored in the egw UID cache"
+		);
+		assert.isTrue(stored["filemanager::/home/nathan/Generated"].skipCallback, "callback recursion should be avoided");
 	});
 
 	/**
@@ -384,7 +489,7 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 
 		assert.equal(fetchCalls, 1, "explicit refresh should fetch even when cache already has the row");
 		assert.deepEqual(result.rows.map((row) => row.id), ["calendar::99"]);
-		assert.equal(result.rows[0].data.title, "Fetched row");
+		assert.equal(provider.getRowData(result.rows[0].id).title, "Fetched row");
 	});
 
 	/**
@@ -585,12 +690,12 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		// First refresh completes
 		const result1 = await provider.refresh(["99"], "update");
 		assert.equal(fetchCalls, 1, "first refresh should fetch");
-		assert.equal(result1.rows[0].data.title, "refresh-1", "first refresh gets first fetch result");
+		assert.equal(provider.getRowData(result1.rows[0].id).title, "refresh-1", "first refresh gets first fetch result");
 
 		// Second refresh (after first completes) should also fetch
 		const result2 = await provider.refresh(["99"], "update");
 		assert.equal(fetchCalls, 2, "second refresh should fetch again (not reuse old promise)");
-		assert.equal(result2.rows[0].data.title, "refresh-2", "second refresh gets fresh fetch result");
+		assert.equal(provider.getRowData(result2.rows[0].id).title, "refresh-2", "second refresh gets fresh fetch result");
 	});
 
 	/**
@@ -1067,9 +1172,10 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 		assert.equal(result.rows.length, 1);
 		const row = result.rows[0];
 		assert.isNotEmpty(row.id);
-		assert.isObject(row.data);
-		assert.equal(row.data.ts_id, "123");
-		assert.equal(row.data.ts_title, "My Entry");
+		const rowData = provider.getRowData(row.id);
+		assert.isObject(rowData);
+		assert.equal(rowData.ts_id, "123");
+		assert.equal(rowData.ts_title, "My Entry");
 		assert.isArray(result.removedRowIds);
 	});
 

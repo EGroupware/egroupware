@@ -890,6 +890,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 		if(this.rows.length)
 		{
+			this._dataProvider.storeRows(this.rows);
 			this._datagrid?.setInitialRows(this.rows);
 			// No need to keep them
 			this.rows = [];
@@ -1119,6 +1120,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	setRows(rows : any[])
 	{
 		this.rows = rows || [];
+		this._dataProvider.storeRows(this.rows);
 		this._datagrid?.setInitialRows(this.rows);
 	}
 

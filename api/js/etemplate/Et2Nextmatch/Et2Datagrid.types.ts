@@ -47,7 +47,7 @@ export interface Et2DatagridTemplateData
 export interface Et2DatagridRow
 {
 	id : string;
-	data : any;
+	data? : any;
 }
 
 export interface Et2DatagridPageResult
@@ -75,6 +75,7 @@ export interface Et2DatagridDataProvider
 	fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>;
 	getQuerySignature?() : string;
 	getDataStorePrefix?() : string;
+	getRowData?(rowId : string) : any;
 	normalizeRowId(rowId : string | number, ensurePrefix? : boolean) : string;
 	toProviderRowId(dataStoreRowId : string) : string;
 

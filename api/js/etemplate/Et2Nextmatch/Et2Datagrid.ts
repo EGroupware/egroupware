@@ -1261,7 +1261,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				}
 				this.displayedRowIds.add(row.id);
 				const index = start + rowOffset;
-				this._rowsByIndex[index] = row;
+				this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: row.id} : row;
 			}
 			this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
 		}
@@ -1534,6 +1534,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		const template = this.templateData?.rowTemplate;
 		const templateXml = this.templateData?.rowTemplateXml;
+		const rowData = this._rowDataFor(row);
 
 		// Simple row fallback
 		if(!template && !templateXml)
@@ -1543,8 +1544,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			tr.innerHTML = this.columns
 				.filter((column) => !this._isColumnHidden(column))
 				.map((column) => this._isTileView()
-				                 ? `<div>${String(this._getFieldValue(row.data, column.key) ?? "")}</div>`
-				                 : `<td>${String(this._getFieldValue(row.data, column.key) ?? "")}</td>`)
+				                 ? `<div>${String(this._getFieldValue(rowData, column.key) ?? "")}</div>`
+				                 : `<td>${String(this._getFieldValue(rowData, column.key) ?? "")}</td>`)
 				.join("");
 			this._ensureMetaCell(tr, row, rowIndex);
 			this._markRowElement(tr, row, rowIndex);
@@ -1572,13 +1573,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 
 		// Fast, simple replacements
-		this._populateCloneWithRow(fragment, row.data);
+		this._populateCloneWithRow(fragment, rowData);
 		const root = (fragment.firstElementChild || null) as HTMLElement | null;
 		if(!root)
 		{
 			return null;
 		}
-		this._populateRowRootAttributes(root, row.data);
+		this._populateRowRootAttributes(root, rowData);
 		root.setAttribute("part", `${root.getAttribute("part") || ""} row`.trim());
 		this._ensureMetaCell(root, row, rowIndex);
 		root.classList.add("loading");
@@ -1608,7 +1609,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._syncRowExpander(rowElement, metaCell, row, rowIndex);
 		this.rowCustomizer?.({
 			rowElement,
-			rowData: row.data,
+			rowData: this._rowDataFor(row),
 			rowIndex,
 			metaCell
 		});
@@ -1641,7 +1642,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		try
 		{
-			return !!this.expansionConfig.isExpandable(row, rowIndex);
+			return !!this.expansionConfig.isExpandable(this._rowForCallback(row), rowIndex);
 		}
 		catch(e)
 		{
@@ -1912,7 +1913,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const columnSizes = this._columnWidths(visibleColumns);
 		const metaColumnWidth = this._effectiveMetaColumnWidth();
 		const content = this.expansionConfig.renderExpandedContent({
-			row,
+			row: this._rowForCallback(row),
 			rowIndex: item.rowIndex,
 			parentGrid: this,
 			columnSizes,
@@ -2325,7 +2326,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				continue;
 			}
 			rowElement.classList.add("loading");
-			if(this._applyRowElementAttributes(rowElement, row.data, rowIndex))
+			if(this._applyRowElementAttributes(rowElement, this._rowDataFor(row), rowIndex))
 			{
 				rowElement.setAttribute("data-et2dg-upgraded-for", upgradeSignature);
 			}
@@ -2642,6 +2643,37 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return String(providerRowIdForData.call(this.dataProvider, row, fallbackIndex));
 		}
 		return String(row?.uid ?? row?.id ?? row?.row_id ?? fallbackIndex);
+	}
+
+	/**
+	 * Resolve row payload from the provider.  Datagrid keeps row identity and
+	 * index state; data ownership remains with the provider / datastore.
+	 */
+	private _rowDataFor(row : Et2DatagridRow | string | null | undefined) : any
+	{
+		if(!row)
+		{
+			return null;
+		}
+		const rowId = typeof row === "string" ? row : row.id;
+		const providerRowData = this.dataProvider?.getRowData?.(rowId);
+		if(typeof providerRowData !== "undefined" && providerRowData !== null)
+		{
+			return providerRowData;
+		}
+		return typeof row === "string" ? null : row.data ?? null;
+	}
+
+	/**
+	 * Build the row shape expected by customization / expansion callbacks
+	 * without storing that data in the datagrid's row indexes.
+	 */
+	private _rowForCallback(row : Et2DatagridRow) : Et2DatagridRow
+	{
+		return {
+			id: row.id,
+			data: this._rowDataFor(row)
+		};
 	}
 
 	/**
@@ -3060,7 +3092,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._applyColumnLayoutToRowElement(row);
 			const rowIndex = parseInt(row.getAttribute("data-row-index") || "-1", 10);
-			const rowData = rowIndex >= 0 ? this._rowsByIndex[rowIndex]?.data : null;
+			const rowData = rowIndex >= 0 ? this._rowDataFor(this._rowsByIndex[rowIndex]) : null;
 			row.querySelectorAll("et2-customfields-list").forEach((element) =>
 			{
 				this._applyCustomfieldRowState(element as any, rowData);
@@ -3875,7 +3907,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _emitSelectionChanged(replaceSelection : boolean = false)
 	{
-		const selectedRows = this.rows.filter((row) => this.selectedRowIds.has(row.id)).map((row) => row.data);
+		const selectedRows = this.rows.filter((row) => this.selectedRowIds.has(row.id)).map((row) => this._rowDataFor(row));
 		const detail : Et2DatagridSelectionDetail = {
 			selectedRowIds: Array.from(this.selectedRowIds),
 			allSelected: this.allSelected,
@@ -3898,7 +3930,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		const mappedRows = (rows || []).map((row, index) => ({
 			id: this._rowIdFor(row, index),
-			data: row
+			...(this.dataProvider?.getRowData ? {} : {data: row})
 		}));
 		this._clearRows();
 		this.selectedRowIds.clear();
@@ -4052,8 +4084,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				{
 					continue;
 				}
-				// Preserve the row's current visual position and swap only its data payload.
-				this._rowsByIndex[index] = refreshedRow;
+				// Preserve the row's current visual position; data was refreshed in the provider/datastore.
+				this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: refreshedRow.id} : refreshedRow;
 				this.displayedRowIds.add(refreshedRow.id);
 				this._rowRenderVersionById.set(refreshedRow.id, (this._rowRenderVersionById.get(refreshedRow.id) || 0) + 1);
 				pulsedRowIds.push(refreshedRow.id);
@@ -4067,7 +4099,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 					{
 						continue;
 					}
-					insertedRows.push(row);
+					insertedRows.push(this.dataProvider?.getRowData ? {id: row.id} : row);
 				}
 				if(insertedRows.length)
 				{

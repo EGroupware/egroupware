@@ -685,18 +685,12 @@ export class Et2RowProvider
 		let element : HTMLElement | typeof Et2Widget;
 		if(typeof window.customElements.get(tag) !== "undefined")
 		{
-			if(this._hasTemplateChildren(source))
-			{
-				// Children are cloned by _createFragmentFromXml(). Do not use
-				// loadWebComponent() here, as it calls loadFromXML() and would load
-				// the source children before the row provider appends its prepared
-				// child clones.
-				element = document.createElement(tag);
-			}
-			else
-			{
-				element = loadWebComponent(tag, source, null);
-			}
+			// Children are cloned by _createFragmentFromXml(). Do not use
+			// loadWebComponent() here, as it calls loadFromXML() and would load
+			// source children before the row provider appends prepared clones.
+			// Attribute transformation is handled below when the element is an
+			// Et2Widget and implements transformAttributes().
+			element = document.createElement(tag);
 		}
 		else
 		{

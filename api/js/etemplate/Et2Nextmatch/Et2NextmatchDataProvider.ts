@@ -210,6 +210,10 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 			{
 				return provider.getDataStorePrefix();
 			},
+			getRowData(rowId : string) : any
+			{
+				return provider.getRowData(rowId);
+			},
 			normalizeRowId(rowId : string | number, ensurePrefix : boolean = false) : string
 			{
 				return provider.normalizeRowId(rowId, ensurePrefix);
@@ -289,6 +293,32 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	}
 
 	/**
+	 * Store already-available row data in egw's UID cache using the same row-id
+	 * normalization as fetched rows.  This preserves the Nextmatch
+	 * contract that visible rows are discoverable through egw.dataKnownUIDs().
+	 */
+	storeRows(rows : any[], skipCallback : boolean = false) : void
+	{
+		const egw = this.host.egw();
+		if(typeof egw?.dataStoreUID !== "function")
+		{
+			return;
+		}
+		(rows || []).forEach((row, index) =>
+		{
+			if(!row || typeof row !== "object")
+			{
+				return;
+			}
+			const uid = this._rowIdFromData(row, String(index));
+			if(uid)
+			{
+				egw.dataStoreUID(uid, row, skipCallback);
+			}
+		});
+	}
+
+	/**
 	 * Strip the datastore prefix from a row id to recover the bare provider/server id.
 	 */
 	toProviderRowId(dataStoreRowId : string) : string
@@ -306,15 +336,24 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	 */
 	private _cachedRow(rowId : string) : Et2DatagridRow | null
 	{
-		const cached = this.host.egw().dataGetUIDdata?.(rowId) as IegwData | undefined;
-		if(!cached?.data)
+		const rowData = this.getRowData(rowId);
+		if(!rowData)
 		{
 			return null;
 		}
 		return {
-			id: this._rowIdFromData(cached.data, rowId),
-			data: cached.data
+			id: this._rowIdFromData(rowData, rowId)
 		};
+	}
+
+	/**
+	 * Resolve canonical row data from egw's UID cache.
+	 */
+	getRowData(rowId : string) : any
+	{
+		const normalizedId = this.normalizeRowId(rowId, true);
+		const cached = this.host.egw().dataGetUIDdata?.(normalizedId) as IegwData | undefined;
+		return cached?.data ?? null;
 	}
 
 	/**
@@ -460,9 +499,10 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 								(data : any, resolvedUid : string) =>
 								{
 									const rowData = data || {};
+									const rowId = this._rowIdFromData(rowData, String(resolvedUid || uid));
+									this.host.egw().dataStoreUID?.(rowId, rowData, true);
 									rowsByIndex[index] = {
-										id: this._rowIdFromData(rowData, String(resolvedUid || uid)),
-										data: rowData
+										id: rowId
 									};
 									pending--;
 									if(pending <= 0)
