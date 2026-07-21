@@ -1635,9 +1635,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	/**
 	 * Switch between row and tile layout.
 	 */
-	setView(view : Et2DatagridView)
+	async setView(view : Et2DatagridView, templateName? : string)
 	{
-		this.view = this._normalizeView(view);
+		const nextView = this._normalizeView(view);
+		if(templateName && templateName !== this.template)
+		{
+			this.template = templateName;
+			await this._applyTemplateFromName(templateName);
+		}
+		this.view = nextView;
 		return this.updateComplete;
 	}
 

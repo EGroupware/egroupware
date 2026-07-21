@@ -141,10 +141,7 @@ export class filemanagerAPP extends EgwApp
 			if (button_widget)
 			{
 				const view = this.normalizeView(et2.app_obj?.filemanager?.nm?.view || VIEW_TILE);
-				button_widget.image = egw.image("list_" + (view == VIEW_ROW ? VIEW_TILE : VIEW_ROW));
-				//@ts-ignore statustext inherited from et2-widget
-				button_widget.statustext = this.egw.lang(view === VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
-
+				this.updateChangeViewButton(view, button_widget);
 			}
 
 		}
@@ -191,6 +188,7 @@ export class filemanagerAPP extends EgwApp
 			{
 				nm_node.addEventListener("et2-columns-changed", () => this.updateTileColumns(nm));
 			}
+			this.scheduleChangeViewButtonUpdate(nm, this.et2.getArrayMgr('content').getEntry('nm[view]'));
 			this.updateTileColumns(nm);
 		}
 
@@ -1078,6 +1076,26 @@ export class filemanagerAPP extends EgwApp
 		return view == VIEW_ROW ? "filemanager.index.rows" : "filemanager.tile";
 	}
 
+	private updateChangeViewButton(view : Et2DatagridView, button_widget? : Et2Button)
+	{
+		button_widget = button_widget || this.et2?.getWidgetById?.('button[change_view]') ||
+			<Et2Button><unknown>document?.getElementById("filemanager-index_toolbar_button[change_view]");
+		if(!button_widget)
+		{
+			return;
+		}
+
+		button_widget.image = egw.image("list_" + (view == VIEW_ROW ? VIEW_TILE : VIEW_ROW));
+		//@ts-ignore statustext inherited from et2-widget
+		button_widget.statustext = (view == VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+	}
+
+	private scheduleChangeViewButtonUpdate(nm? : Et2Nextmatch, fallbackView? : string)
+	{
+		nm = nm || this.nm || this.et2?.getWidgetById?.('nm');
+		nm.updateComplete.then(() => this.updateChangeViewButton(this.normalizeView(nm.view || fallbackView)));
+	}
+
 	/**
 	 * Toggle view between tiles and rows
 	 *
@@ -1113,30 +1131,25 @@ export class filemanagerAPP extends EgwApp
 			}
 			view = this.normalizeView(view);
 
-			// Toggle button icon to the other view
-			button_widget.image = egw.image("list_" + (view == VIEW_ROW ? VIEW_TILE : VIEW_ROW));
-
-			button_widget.statustext = (view == VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+			this.updateChangeViewButton(view, button_widget);
 		}
 		else
 		{
 			view = this.normalizeView(view);
+			this.updateChangeViewButton(view);
 		}
 
-		nm.setView(view);
-		if(view === VIEW_TILE)
+		nm.setView(view, this.templateForView(view)).then(() => nm.whenColumnsReady()).then(() =>
 		{
-			nm.collapseExpandedRows();
-		}
+			if(view === VIEW_TILE)
+			{
+				nm.collapseExpandedRows();
+			}
 
-		// Change template to match
-		nm.template = this.templateForView(view);
-
-		nm.updateComplete.then(() => nm.whenColumnsReady()).then(() =>
-		{
 			// View switches only change presentation. Keep NM/app state current
 			// without re-fetching the same directory data or clearing row actions.
 			nm.applyFilters({view: view}, {reload: false, clearActions: false});
+			this.scheduleChangeViewButtonUpdate(nm, view);
 			this.updateTileColumns(nm);
 		});
 	}
