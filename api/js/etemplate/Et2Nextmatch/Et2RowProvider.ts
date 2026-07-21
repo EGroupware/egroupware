@@ -289,6 +289,7 @@ export class Et2RowProvider
 		const originalRowSource = this._getSlotContent("row");
 		const rowSource = this._cloneTemplateSource(originalRowSource);
 		const loaderSource = this._getSlotContent("loader");
+		const noResultsSource = this._getSlotContent("noResults");
 		const templateUrl = this._templateUrl(originalRowSource);
 		const rowStylesheets = rowSource ? await this._extractRowStylesheets(rowSource, templateUrl) : [];
 
@@ -302,6 +303,7 @@ export class Et2RowProvider
 		const normalizedRowElement = rowElement ? this._normalizeTemplateRowNode(rowElement, view) : null;
 		const prepared = normalizedRowElement ? await this._prepareRowTemplate(normalizedRowElement, columns, templateUrl) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
+		const noResultsTemplate = noResultsSource ? this._toTemplate(noResultsSource) : null;
 
 		if(!columns.length && !prepared)
 		{
@@ -320,7 +322,8 @@ export class Et2RowProvider
 				...rowStylesheets,
 				...(prepared?.rowStylesheets ?? [])
 			],
-			loaderTemplate
+			loaderTemplate,
+			noResultsTemplate
 		};
 	}
 
@@ -358,6 +361,10 @@ export class Et2RowProvider
 		const view = this._templateView(rowNode);
 		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode, view);
 		const prepared = await this._prepareRowTemplate(normalizedRowNode, columns, templateUrl);
+		const loaderSource = tplRoot.querySelector('[slot="loader"]');
+		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
+		const noResultsSource = tplRoot.querySelector('[slot="noResults"]');
+		const noResultsTemplate = noResultsSource ? this._toTemplate(noResultsSource) : null;
 
 		return {
 			view,
@@ -371,7 +378,8 @@ export class Et2RowProvider
 				...rowStylesheets,
 				...(prepared?.rowStylesheets ?? [])
 			],
-			loaderTemplate: null
+			loaderTemplate,
+			noResultsTemplate
 		};
 	}
 

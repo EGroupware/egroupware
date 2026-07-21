@@ -39,6 +39,7 @@ export interface Et2DatagridTemplateData
 	/** Optional row-height hint supplied by template parsing. */
 	rowHeight?: number;
 	loaderTemplate : HTMLTemplateElement | null;
+	noResultsTemplate? : HTMLTemplateElement | null;
 	columns : Et2DatagridColumn[];
 	/** Physical row-template column order before user/preference reordering. */
 	sourceColumns? : Et2DatagridColumn[];

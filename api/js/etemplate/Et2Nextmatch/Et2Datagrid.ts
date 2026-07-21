@@ -4300,7 +4300,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Extract slot-provided loader template HTML for state rendering fallback.
+	 * Extract template-provided loader content for state rendering.
 	 */
 	private _loaderHtml() : string
 	{
@@ -4310,6 +4310,19 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return "";
 		}
 		return loaderTemplate.innerHTML || "";
+	}
+
+	/**
+	 * Extract template-provided no-results content for state rendering.
+	 */
+	private _noResultsHtml() : string
+	{
+		const noResultsTemplate = this.templateData?.noResultsTemplate;
+		if(!noResultsTemplate)
+		{
+			return "";
+		}
+		return noResultsTemplate.innerHTML || "";
 	}
 
 
@@ -4365,6 +4378,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(noRows)
 		{
 			const emptyStateText = this.emptyStateText || this.egw().lang("No entries to display");
+			if(this.templateData?.noResultsTemplate)
+			{
+				return html`
+					<div class="dg-state dg-state--empty" part="state">
+						${unsafeHTML(this._noResultsHtml())}
+					</div>
+				`;
+			}
 			return html`
 				<div class="dg-state dg-state--empty" part="state">
 					<slot name="noResults">

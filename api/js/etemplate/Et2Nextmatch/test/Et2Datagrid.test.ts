@@ -447,6 +447,74 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: no-results templates extracted from named .xet templates are
+	 * preferred for the empty state.
+	 * Setup: render an empty datagrid with templateData.noResultsTemplate.
+	 * Pass: the empty state contains the template-provided content.
+	 */
+	it("uses templateData noResultsTemplate as the preferred empty state", async() =>
+	{
+		const el = createDatagrid();
+		const noResultsTemplate = document.createElement("template");
+		noResultsTemplate.innerHTML = `<div class="template-no-results">Template empty</div>`;
+		el.columns = [{key: "name", title: "Name"}] as any;
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			noResultsTemplate
+		} as any;
+		document.body.append(el);
+		await el.updateComplete;
+
+		const state = el.shadowRoot!.querySelector(".dg-state.dg-state--empty") as HTMLElement | null;
+
+		assert.isNotNull(state?.querySelector(".template-no-results"), "template noResults content should render");
+
+		el.remove();
+	});
+
+	/**
+	 * Contract: templateData.noResultsTemplate has precedence over slotted
+	 * noResults content; the framework default is only used when neither exists.
+	 * Setup: render an empty datagrid with both templateData.noResultsTemplate
+	 * and a live noResults slot.
+	 * Pass: the template-provided empty state renders and the live slot is not
+	 * used as the state content.
+	 */
+	it("prefers templateData noResultsTemplate over slotted noResults content", async() =>
+	{
+		const el = createDatagrid();
+		const noResultsTemplate = document.createElement("template");
+		noResultsTemplate.innerHTML = `<div class="template-no-results">Template empty</div>`;
+		const custom = document.createElement("div");
+		custom.slot = "noResults";
+		custom.className = "custom-no-results";
+		custom.textContent = "Custom empty";
+		el.columns = [{key: "name", title: "Name"}] as any;
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			noResultsTemplate
+		} as any;
+		el.append(custom);
+		document.body.append(el);
+		await el.updateComplete;
+
+		const state = el.shadowRoot!.querySelector(".dg-state.dg-state--empty") as HTMLElement | null;
+
+		assert.isNotNull(state?.querySelector(".template-no-results"), "template noResults content should render");
+		assert.isNull(state?.querySelector("slot[name='noResults']"), "live noResults slot should not be used when a template is provided");
+
+		el.remove();
+	});
+
+	/**
 	 * Contract: header scrollbar reservation is independent from the column
 	 * selection action width.
 	 * Setup: inspect the datagrid stylesheet used by the alignment fixture.
@@ -1032,6 +1100,55 @@ describe("Et2Datagrid row rendering", () =>
 			templateData!.rowStylesheets!.flatMap((sheet) => Array.from(sheet.cssRules as CSSRuleList).map((rule : CSSRule) => rule.cssText)).join("\n"),
 			"tr.template-local-style td",
 			"row-local CSS should be present in the extracted stylesheet"
+		);
+	});
+
+	/**
+	 * Contract: loaders and no-results content declared in named .xet templates
+	 * are passed through to the datagrid, same as slotted content.
+	 * Setup: parse a template root with a row template plus slot="loader" and
+	 * slot="noResults" content.
+	 * Pass: both templates are present and contain the declared markup.
+	 */
+	it("extracts state templates from named template roots", async() =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		const templateRoot = new DOMParser().parseFromString(`
+			<template id="test.tile">
+				<grid>
+					<columns>
+						<column/>
+					</columns>
+					<rows>
+						<row class="th">
+							<et2-nextmatch-header label="Title" id="title"/>
+						</row>
+						<row class="tile" data-tile-width="232px" data-tile-height="208px">
+							<et2-vbox class="tile-body" width="100%" height="208px"></et2-vbox>
+						</row>
+					</rows>
+				</grid>
+				<et2-vbox class="tile-loader" slot="loader">
+					<et2-description class="tile-loader-name"></et2-description>
+				</et2-vbox>
+				<et2-vbox class="tile-no-results" slot="noResults">
+					<et2-description class="tile-no-results-message"></et2-description>
+				</et2-vbox>
+			</template>
+		`, "text/xml").documentElement;
+
+		const templateData = await (provider as any)._fromTemplateRoot(templateRoot);
+
+		assert.isNotNull(templateData?.loaderTemplate, "loader template should be extracted");
+		assert.isNotNull(
+			templateData?.loaderTemplate?.content.querySelector(".tile-loader-name"),
+			"loader template should contain declared loader content"
+		);
+		assert.isNotNull(templateData?.noResultsTemplate, "noResults template should be extracted");
+		assert.isNotNull(
+			templateData?.noResultsTemplate?.content.querySelector(".tile-no-results-message"),
+			"noResults template should contain declared empty-state content"
 		);
 	});
 

@@ -66,7 +66,7 @@ Its responsibilities include:
 - preparing a reusable `HTMLTemplateElement` for rows
 - converting row widgets to readonly display behaviour where needed
 - recording row-scoped widget attributes in `rowTemplateAttrMap`
-- preparing optional loader template data
+- preparing optional loader and no-results template data
 
 `Et2RowProvider` does not fetch row data. It prepares the shape used to render rows once data is
 available.
@@ -376,13 +376,29 @@ Example:
 </tr>
 ```
 
-### Loader Template
+### State Templates
 
-Optional placeholder template while rows are loading:
+`Et2Datagrid` has two optional state templates:
 
-- `slot="loader"` (preferred)
+- `slot="loader"` — placeholder content while rows are loading.
+- `slot="noResults"` — content shown when loading is complete and no rows are available.
 
-Any wrapper can be used for loader slot content.
+These can be supplied in either a named `.xet` template parsed by `Et2RowProvider` or as live slotted
+children of the owner component.
+
+State template precedence is:
+
+1. Named-template state content extracted into `templateData.loaderTemplate` or
+   `templateData.noResultsTemplate`.
+2. Live slotted content forwarded by the owner component, for example
+   `<slot name="noResults" slot="noResults"></slot>`.
+3. The datagrid's built-in default state UI.
+
+The named `.xet` template is the app-level definition and is preferred when present. Live slots are
+the lower-level component API for owners that do not provide state content through `templateData`.
+The built-in default is only the final fallback.
+
+Any wrapper can be used for state template content.
 
 Example:
 
@@ -394,14 +410,6 @@ Example:
     </td>
 </tr>
 ```
-
-### No-Results Template
-
-Optional template shown when loading is complete and no rows are available:
-
-- Replaces the default row-like no-results placeholder entirely
-
-Example:
 
 ```xml
 
@@ -575,6 +583,25 @@ this.datagrid.style.setProperty("--app-row-details-display", showDetails ? "bloc
 ```css
 .entry-details {
 	display: var(--app-row-details-display, none);
+}
+```
+
+### Built-in row sizing properties
+
+`Et2Datagrid` exposes row sizing CSS custom properties for owner widgets and apps that need to tune
+standard row layout:
+
+| Property                | Default | Effect                                                                 |
+|-------------------------|---------|------------------------------------------------------------------------|
+| `--row-height`          | `3em`   | Estimated row height used for virtual spacer rendering and empty rows. |
+| `--row-cell-max-height` | `10em`  | Maximum height for normal row cells before vertical scrolling.         |
+
+Use `--row-cell-max-height` when row content is being clipped or scrolls too early. It applies to
+normal row `td` / `th` cells; expanded rows and tile view use separate sizing paths.
+
+```css
+et2-nextmatch {
+	--row-cell-max-height: 16em;
 }
 ```
 
