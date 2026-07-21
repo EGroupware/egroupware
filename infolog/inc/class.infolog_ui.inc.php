@@ -757,8 +757,8 @@ class infolog_ui
 			return $data;
 		}
 		$start = $infolog['info_startdate'] ? new Api\DateTime($infolog['info_startdate']) : null;
-		$end = ($infolog['info_enddate'] || $infolog['info_datecompleted']) ?
-			new Api\DateTime($infolog['info_enddate'] || $infolog['info_datecompleted']) : null;
+		$end = ($infolog['info_enddate'] ?: $infolog['info_datecompleted']) ?
+			new Api\DateTime($infolog['info_enddate'] ?: $infolog['info_datecompleted']) : null;
 		$event = array_merge($data, array(
 			'category'    => $GLOBALS['egw']->categories->check_list(Acl::READ, $infolog['info_cat']),
 			'priority'    => $infolog['info_priority'] + 1,
@@ -770,7 +770,11 @@ class infolog_ui
 			'end'         => $end
 		));
 		unset($event['entry_id']);
-		if(!$event['end'])
+		if(!$event['start'] && $event['end'])
+		{
+			$event['start'] = (clone $event['end'])->modify( (-(int)$GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength']) . ' minutes');
+		}
+		if(!$event['end'] || $event['end'] <= $event['start'])
 		{
 			$event['end'] = (clone $event['start'])->add( ((int)$GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength']) . ' minutes');
 		}
