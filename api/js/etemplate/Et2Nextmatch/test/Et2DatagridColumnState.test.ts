@@ -166,11 +166,11 @@ describe("Et2DatagridColumnState", () =>
 
 	/**
 	 * Contract under test:
-	 * - Selecting child customfields auto-selects the customfields column and applies
+	 * - Selecting the customfields parent and child applies
 	 *   per-field visibility back to header state.
 	 *
 	 * Setup strategy:
-	 * - Apply selection containing only one child customfield id.
+	 * - Apply selection containing the parent customfields column and one child customfield id.
 	 *
 	 * Pass criteria:
 	 * - Parent customfields column is visible.
@@ -198,6 +198,7 @@ describe("Et2DatagridColumnState", () =>
 			{key: "customfields", title: "Custom fields", header: header as any}
 		];
 		const selected = [
+			"customfields",
 			"cf_private"
 		];
 		const next = state.applySelectionOrder(columns, selected);
@@ -209,6 +210,50 @@ describe("Et2DatagridColumnState", () =>
 			headerState.visibility,
 			{cf_text: false, cf_private: true},
 			"header should receive field-level visibility map from chooser selection"
+		);
+	});
+
+	/**
+	 * Contract under test:
+	 * - Omitting the customfields parent column hides the whole column but keeps
+	 *   child customfield visibility.
+	 *
+	 * Setup strategy:
+	 * - Apply a selection that includes only a normal column.
+	 *
+	 * Pass criteria:
+	 * - Customfields column is hidden.
+	 * - Header receives the selected child customfield visibility map.
+	 */
+	it("keeps customfield visibility when parent column is omitted", () =>
+	{
+		const state = new Et2DatagridColumnState();
+		const headerState = {
+			visibility: {cf_text: true, cf_private: true}
+		};
+		const header = {
+			getCustomfieldSelectionItems: () => [
+				{name: "cf_text", label: "Text", visible: headerState.visibility.cf_text},
+				{name: "cf_private", label: "Private", visible: headerState.visibility.cf_private}
+			],
+			setCustomfieldVisibility: (visibility : Record<string, boolean>) =>
+			{
+				headerState.visibility = {...visibility};
+			}
+		};
+
+		const columns : Et2DatagridColumn[] = [
+			{key: "subject", title: "Subject"},
+			{key: "customfields", title: "Custom fields", header: header as any}
+		];
+		const next = state.applySelectionOrder(columns, ["subject", "cf_private"]);
+		const byKey = new Map(next.map((column) => [String(column.key), column]));
+
+		assert.isTrue(byKey.get("customfields")?.hidden, "customfields column should be hidden");
+		assert.deepEqual(
+			headerState.visibility,
+			{cf_text: false, cf_private: true},
+			"selected customfield children should be remembered when the parent column is omitted"
 		);
 	});
 });

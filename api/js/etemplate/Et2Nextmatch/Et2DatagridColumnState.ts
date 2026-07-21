@@ -247,17 +247,11 @@ export class Et2DatagridColumnState
 			{
 				for(const columnKey of customfieldColumns)
 				{
-					selectedKeys.add(columnKey);
 					if(!selectedCustomfields.has(columnKey))
 					{
 						selectedCustomfields.set(columnKey, new Set());
 					}
 					selectedCustomfields.get(columnKey)!.add(selectedKey);
-					if(!orderedSeen.has(columnKey))
-					{
-						orderedColumnKeys.push(columnKey);
-						orderedSeen.add(columnKey);
-					}
 				}
 				continue;
 			}
@@ -293,7 +287,7 @@ export class Et2DatagridColumnState
 				continue;
 			}
 			const selectedForColumn = selectedCustomfields.get(key);
-			if(!selectedForColumn)
+			if(!selectedForColumn && selectedKeys.has(key))
 			{
 				continue;
 			}
@@ -308,7 +302,7 @@ export class Et2DatagridColumnState
 					{
 						continue;
 					}
-					nextVisibility[fieldName] = selectedForColumn.has(fieldName);
+					nextVisibility[fieldName] = selectedForColumn?.has(fieldName) || false;
 				}
 			}
 			header.setCustomfieldVisibility(nextVisibility);

@@ -47,4 +47,44 @@ describe("Et2ColumnSelection", () =>
 
 		selector.remove();
 	});
+
+	/**
+	 * Contract under test:
+	 * - Unchecking the customfields parent column does not discard remembered
+	 *   individual customfield rows.
+	 *
+	 * Setup strategy:
+	 * - Render a customfields-aware column with a checked child field.
+	 * - Uncheck only the parent row.
+	 *
+	 * Pass criteria:
+	 * - The selector value omits the parent column but keeps the child field.
+	 */
+	it("keeps checked customfield children when parent column is unchecked", async() =>
+	{
+		const selector = document.createElement("et2-nextmatch-columnselection") as any;
+		selector.columns = [{
+			id: "customfields",
+			title: "Custom fields",
+			caption: "Custom fields",
+			widget: document.createElement("et2-nextmatch-header-customfields"),
+			visibility: true,
+			isCustomfields: true,
+			customFields: [
+				{id: "cf_text", name: "cf_text", caption: "Text", visibility: true}
+			]
+		}];
+		document.body.append(selector);
+		await selector.updateComplete;
+
+		const parent = selector.shadowRoot.querySelector("sl-menu-item[value='customfields']") as any;
+		const child = selector.shadowRoot.querySelector("sl-menu-item[value='cf_text']") as any;
+		parent.checked = false;
+		child.checked = true;
+
+		assert.notInclude(selector.value, "customfields", "parent customfields column should be omitted");
+		assert.include(selector.value, "cf_text", "child field should remain selected when parent is unchecked");
+
+		selector.remove();
+	});
 });
