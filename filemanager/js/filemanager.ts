@@ -14,10 +14,10 @@
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import type {Et2DatagridUpdateType, Et2DatagridView} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
-import {et2_nextmatch_controller} from "../../api/js/etemplate/et2_extension_nextmatch_controller";
 import {egw} from "../../api/js/jsapi/egw_global";
 import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
@@ -25,6 +25,9 @@ import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
 import {egwAction} from "../../api/js/egw_action/egw_action";
 import type {Et2VfsUpload} from "../../api/js/etemplate/Et2Vfs/Et2VfsUpload";
 import {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
+
+const VIEW_ROW : Et2DatagridView = "row";
+const VIEW_TILE : Et2DatagridView = "tile";
 
 /**
  * UI for filemanager
@@ -137,10 +140,10 @@ export class filemanagerAPP extends EgwApp
 			const button_widget: Et2Button = document?.querySelector("#filemanager-index_toolbar_button\\[change_view\\]")
 			if (button_widget)
 			{
-				const view: string = et2.app_obj?.filemanager?.nm?.view || et2_nextmatch_controller.VIEW_TILE
-				button_widget.image = egw.image("list_" + (view == et2_nextmatch_controller.VIEW_ROW ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW));
+				const view = this.normalizeView(et2.app_obj?.filemanager?.nm?.view || VIEW_TILE);
+				button_widget.image = egw.image("list_" + (view == VIEW_ROW ? VIEW_TILE : VIEW_ROW));
 				//@ts-ignore statustext inherited from et2-widget
-				button_widget.statustext = this.egw.lang(view === et2_nextmatch_controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+				button_widget.statustext = this.egw.lang(view === VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
 
 			}
 
@@ -248,29 +251,19 @@ export class filemanagerAPP extends EgwApp
 			return;
 		}
 
+		const pushedPath = String(pushData.id || "");
 		// Special handling only for sub-dirs, super.push() handled everything else
-		if(pushData.id == this.get_path() || !pushData.id.toString().startsWith(this.get_path()))
+		if(pushedPath == this.get_path() || !pushedPath.startsWith(this.get_path()))
 		{
 			return;
 		}
-		// Nextmatch controller has the sub-grids.
-		let nm = <et2_nextmatch>this.et2?.getDOMWidgetById('nm');
+		let nm = <Et2Nextmatch><unknown>this.et2?.getDOMWidgetById('nm');
 		if(!nm)
 		{
 			return;
 		}
 
-		nm.controller._children.forEach((subgrid) =>
-		{
-			if(subgrid._parentId === this.dirname(pushData.id))
-			{
-				console.log(subgrid);
-				let uid = pushData.id.toString().indexOf(nm.controller.dataStorePrefix) == 0 ? pushData.id : nm.controller.dataStorePrefix + "::" + pushData.id;
-				nm._refresh_grid(pushData.type, subgrid, [pushData.id], uid);
-			}
-
-		});
-
+		void nm.refreshChildRows(this.dirname(pushedPath), [pushedPath], pushData.type as Et2DatagridUpdateType);
 	}
 
 	/**
@@ -296,17 +289,31 @@ export class filemanagerAPP extends EgwApp
 		}
 		const path = state.state?.path || "~";
 
-		// NM used to have path as a child widget, but now path is outside so we do some extra stuff
-		const nm_update = this.nm.update_in_progress;
-		this.nm.update_in_progress = true;
-		this.change_dir(path);
-		if(state.state?.path)
+		// NM used to have path as a child widget, but now path is outside so we do some extra stuff.
+		// Update the path widget without dispatching a change event; super.setState() applies the
+		// restored filters once below.
+		for(var etemplate_name in this.path_widget) break;
+		let dir = path;
+		if(dir === "~")
+		{
+			dir = this.et2.getArrayMgr("content").getEntry("nm[home_dir]");
+		}
+		if(typeof etemplate_name === "string" && this.path_widget[etemplate_name])
+		{
+			this.path_widget[etemplate_name].set_value(dir);
+		}
+		const upload = this.et2.getWidgetById('upload');
+		if(upload)
+		{
+			// Et2VfsUpload needs the trailing /
+			upload.path = dir + '/';
+		}
+		if(state.state)
 		{
 			state.state.col_filter ??= {};
 			// Client side uses dir, not path
-			state.state.col_filter.dir = path;
+			state.state.col_filter.dir = dir;
 		}
-		this.nm.update_in_progress = nm_update;
 
 		let result = super.setState(state, 'filemanager.index');
 
@@ -1061,6 +1068,16 @@ export class filemanagerAPP extends EgwApp
 		this.path_widget[etemplate_name].dispatchEvent(new Event("change"));
 	}
 
+	private normalizeView(view) : Et2DatagridView
+	{
+		return view === VIEW_TILE ? VIEW_TILE : VIEW_ROW;
+	}
+
+	private templateForView(view : Et2DatagridView) : string
+	{
+		return view == VIEW_ROW ? "filemanager.index.rows" : "filemanager.tile";
+	}
+
 	/**
 	 * Toggle view between tiles and rows
 	 *
@@ -1089,37 +1106,33 @@ export class filemanagerAPP extends EgwApp
 		}
 		if(button_widget)
 		{
-			// Switch view based on button icon, since controller can get re-created
+			// Switch view based on button icon, since the widget can get re-created
 			if(typeof view != 'string')
 			{
-				view = button_widget.image.match(/\/(list|list_row)\.svg$/) ? et2_nextmatch_controller.VIEW_ROW : et2_nextmatch_controller.VIEW_TILE;
+				view = button_widget.image.match(/\/(list|list_row)\.svg$/) ? VIEW_ROW : VIEW_TILE;
 			}
-			view = view === et2_nextmatch_controller.VIEW_TILE ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW;
+			view = this.normalizeView(view);
 
 			// Toggle button icon to the other view
-			//todo: nm.controller needs to be changed to nm.getController after merging typescript branch into master
-			button_widget.image = egw.image("list_" + (view == et2_nextmatch_controller.VIEW_ROW ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW));
+			button_widget.image = egw.image("list_" + (view == VIEW_ROW ? VIEW_TILE : VIEW_ROW));
 
-			button_widget.statustext = (view == et2_nextmatch_controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
+			button_widget.statustext = (view == VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
 		}
 		else
 		{
-			view = view === et2_nextmatch_controller.VIEW_TILE ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW;
+			view = this.normalizeView(view);
 		}
 
-		nm.set_view(view);
-		if(view === et2_nextmatch_controller.VIEW_TILE && typeof (nm as any).collapseExpandedRows === "function")
+		nm.setView(view);
+		if(view === VIEW_TILE)
 		{
-			(nm as any).collapseExpandedRows();
+			nm.collapseExpandedRows();
 		}
 
 		// Change template to match
-		let template : any = view == et2_nextmatch_controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
-		const templateReady = typeof (nm as any).set_template === "function"
-		                      ? (nm as any).set_template(template)
-		                      : Promise.resolve();
+		nm.template = this.templateForView(view);
 
-		Promise.resolve(templateReady).then(() =>
+		nm.updateComplete.then(() => nm.whenColumnsReady()).then(() =>
 		{
 			// View switches only change presentation. Keep NM/app state current
 			// without re-fetching the same directory data or clearing row actions.
@@ -1166,7 +1179,7 @@ export class filemanagerAPP extends EgwApp
 		};
 
 		// Only tile view has these meta rows - clear everything for list view
-		if(nm.view !== et2_nextmatch_controller.VIEW_TILE)
+		if(nm.view !== VIEW_TILE)
 		{
 			host.style.removeProperty("--filemanager-tile-meta-display");
 			for(const property of Object.values(columnProperty))
