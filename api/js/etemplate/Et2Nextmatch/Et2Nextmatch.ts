@@ -1291,6 +1291,43 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * Refresh rows in an expanded child grid without refreshing the root grid.
+	 *
+	 * @param parentRowId Parent row id whose expanded child grid owns the rows
+	 * @param rowIds Row id(s) to refresh inside the child grid
+	 * @param type Refresh type
+	 * @return true when a rendered child grid was found and refreshed
+	 */
+	async refreshChildRows(
+		parentRowId : string,
+		rowIds : string[] | string,
+		type : Et2DatagridUpdateType = Et2DatagridUpdateTypes.EDIT
+	) : Promise<boolean>
+	{
+		if(!this._datagrid || !this._dataProvider)
+		{
+			return false;
+		}
+		const childGrid = this._findChildGridForParent(parentRowId);
+		if(!childGrid)
+		{
+			return false;
+		}
+		const rows = this._toStringArray(rowIds);
+		if(!rows.length)
+		{
+			return false;
+		}
+
+		await childGrid.refresh(rows, type);
+		this.dispatchEvent(new CustomEvent("refresh", {
+			composed: true,
+			bubbles: true
+		}));
+		return true;
+	}
+
+	/**
 	 * Create/attach filterbox once and return it.
 	 */
 	private _ensureFilterbox() : Et2Filterbox

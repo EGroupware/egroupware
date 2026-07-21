@@ -1074,6 +1074,31 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 		el.remove();
 	});
 
+	it("refreshes rows in a rendered expanded child grid", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const datagrid = sinon.stub(el as any, "_datagrid").get(() => ({}));
+		(el as any)._dataProvider = {};
+		const refresh = sinon.stub().resolves();
+		const findChildGrid = sinon.stub(el as any, "_findChildGridForParent").returns({refresh});
+		const refreshEvent = sinon.spy();
+		el.addEventListener("refresh", refreshEvent);
+
+		const refreshed = await el.refreshChildRows("filemanager::/home/demo/Documents", ["/home/demo/Documents/report.pdf"], "update" as any);
+
+		assert.isTrue(refreshed, "refresh should report that a rendered child grid was refreshed");
+		assert.isTrue(findChildGrid.calledOnceWithExactly("filemanager::/home/demo/Documents"), "parent id should be used to find the child grid");
+		assert.isTrue(refresh.calledOnceWithExactly(["/home/demo/Documents/report.pdf"], "update"), "child grid should receive requested rows and type");
+		assert.isTrue(refreshEvent.calledOnce, "successful child refresh should emit the legacy refresh event");
+
+		findChildGrid.returns(null);
+		assert.isFalse(await el.refreshChildRows("missing-parent", ["missing-row"], "update" as any), "missing child grid should be a no-op");
+		datagrid.restore();
+		el.remove();
+	});
+
 	/**
 	 * Contract under test:
 	 * - Expanded nextmatch child content uses the same row template/columns as the parent.
