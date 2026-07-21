@@ -163,6 +163,25 @@
 					text-shadow: none;
 				}
 			}
+
+			&.file_tile_loader {
+				pointer-events: none;
+
+				.file_tile_loader_bar {
+					display: block;
+					width: 70%;
+					height: 1em;
+					border-radius: var(--sl-border-radius-medium);
+					background: var(--sl-color-neutral-200, #e0e0e0);
+				}
+
+				.file_tile_loader_preview {
+					background: var(--sl-color-neutral-50, #f8f8f8);
+					align-self: center;
+					width: 10em;
+					height: 10em;
+				}
+			}
 		}
 	}
 

@@ -49,8 +49,14 @@
 
 			</rows>
 		</grid>
-        <et2-vbox data-tile-width="232px" data-tile-height="208px" slot="loader">
-            <et2-image src="egroupware"></et2-image>
+        <et2-vbox class="tile" data-tile-width="232px" data-tile-height="208px" slot="loader">
+            <et2-vbox class="file_tile filemanager_file_tile file_tile_loader" width="100%" height="208px">
+                <et2-hbox class="file_tile_header">
+                    <et2-description class="file_tile_loader_bar file_tile_loader_name"></et2-description>
+                </et2-hbox>
+                <et2-vbox class="file_tile_preview file_tile_loader_preview">
+                </et2-vbox>
+            </et2-vbox>
         </et2-vbox>
 	</template>
 </overlay>

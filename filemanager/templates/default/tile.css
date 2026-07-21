@@ -157,3 +157,22 @@
   color: inherit;
   text-shadow: none;
 }
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile.file_tile_loader,
+:host([view="tile"]) .tile .file_tile.file_tile_loader {
+  pointer-events: none;
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile.file_tile_loader .file_tile_loader_bar,
+:host([view="tile"]) .tile .file_tile.file_tile_loader .file_tile_loader_bar {
+  display: block;
+  width: 70%;
+  height: 1em;
+  border-radius: var(--sl-border-radius-medium);
+  background: var(--sl-color-neutral-200, #e0e0e0);
+}
+:host([view="tile"]) .dg-tile-grid > [data-row-id] > .tile .file_tile.file_tile_loader .file_tile_loader_preview,
+:host([view="tile"]) .tile .file_tile.file_tile_loader .file_tile_loader_preview {
+  background: var(--sl-color-neutral-50, #f8f8f8);
+  align-self: center;
+  width: 10em;
+  height: 10em;
+}
