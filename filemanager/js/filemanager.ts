@@ -13,6 +13,7 @@
  */
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
@@ -158,9 +159,36 @@ export class filemanagerAPP extends EgwApp
 
 		if(this.et2.getWidgetById('nm'))
 		{
-			// Legacy JS only supports 2 arguments (event and widget), so set
-			// to the actual function here
-			this.et2.getWidgetById('nm').set_onfiledrop(jQuery.proxy(this.filedrop, this));
+			const nm = this.et2.getWidgetById('nm');
+			const nm_node = typeof nm.getDOMNode === "function" ? nm.getDOMNode() : null;
+
+			// Native OS file-drop onto rows is surfaced as et2-filedrop.
+			// Reuse the existing node reference and route the event into the
+			// legacy filedrop() handler (row_uid, files).
+			if(nm_node)
+			{
+				nm_node.addEventListener("et2-filedrop", (e : CustomEvent) =>
+				{
+					// Filemanager overrides the framework default (upload+link):
+					// drop on a directory row uploads into that folder instead of
+					// linking. Cancel the default so it doesn't also run.
+					if(e.cancelable)
+					{
+						e.preventDefault();
+					}
+					this.filedrop(e.detail?.rowUid ?? "", e.detail?.files ?? []);
+				});
+			}
+
+			// Drive tile view's optional meta rows from the visible columns.
+			// By the time et2_ready() runs the nextmatch's firstUpdated() (and
+			// thus its columns) have resolved, so apply now; et2-columns-changed
+			// covers later column-selection changes.
+			if(nm_node)
+			{
+				nm_node.addEventListener("et2-columns-changed", () => this.updateTileColumns(nm));
+			}
+			this.updateTileColumns(nm);
 		}
 
 		// get clipboard from browser localstore and update button tooltips
@@ -1023,7 +1051,7 @@ export class filemanagerAPP extends EgwApp
 				_dir = this.dirname(this.get_path(etemplate_name));
 				break;
 			case '~':
-				_dir = this.et2.getWidgetById('nm').options.settings.home_dir;
+				_dir = this.et2.getArrayMgr("content").getEntry("nm[home_dir]")
 				break;
 		}
 
@@ -1043,7 +1071,7 @@ export class filemanagerAPP extends EgwApp
 	change_view(view, button_widget?)
 	{
 		let et2 = etemplate2.getById('filemanager-index');
-		let nm : et2_nextmatch;
+		let nm : Et2Nextmatch;
 		if(et2 && et2.widgetContainer.getWidgetById('nm'))
 		{
 			nm = et2.widgetContainer.getWidgetById('nm');
@@ -1057,7 +1085,7 @@ export class filemanagerAPP extends EgwApp
 
 		if(!button_widget)
 		{
-			button_widget = (<et2_nextmatch><unknown>nm).getWidgetById('button[change_view]');
+			button_widget = (<Et2Nextmatch><unknown>nm).getWidgetById('button[change_view]');
 		}
 		if(button_widget)
 		{
@@ -1066,6 +1094,7 @@ export class filemanagerAPP extends EgwApp
 			{
 				view = button_widget.image.match(/\/(list|list_row)\.svg$/) ? et2_nextmatch_controller.VIEW_ROW : et2_nextmatch_controller.VIEW_TILE;
 			}
+			view = view === et2_nextmatch_controller.VIEW_TILE ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW;
 
 			// Toggle button icon to the other view
 			//todo: nm.controller needs to be changed to nm.getController after merging typescript branch into master
@@ -1073,23 +1102,103 @@ export class filemanagerAPP extends EgwApp
 
 			button_widget.statustext = (view == et2_nextmatch_controller.VIEW_ROW ? this.egw.lang("Tile view") : this.egw.lang('List view'));
 		}
+		else
+		{
+			view = view === et2_nextmatch_controller.VIEW_TILE ? et2_nextmatch_controller.VIEW_TILE : et2_nextmatch_controller.VIEW_ROW;
+		}
 
 		nm.set_view(view);
-		// Put it into active filters (but don't refresh)
-		nm.activeFilters["view"]= view;
+		if(view === et2_nextmatch_controller.VIEW_TILE && typeof (nm as any).collapseExpandedRows === "function")
+		{
+			(nm as any).collapseExpandedRows();
+		}
 
 		// Change template to match
 		let template : any = view == et2_nextmatch_controller.VIEW_ROW ? 'filemanager.index.rows' : 'filemanager.tile';
-		nm.set_template(template);
+		const templateReady = typeof (nm as any).set_template === "function"
+		                      ? (nm as any).set_template(template)
+		                      : Promise.resolve();
 
-		// Wait for template to load, then refresh
-		template = nm.getWidgetById(template);
-		if(template && template.loading)
+		Promise.resolve(templateReady).then(() =>
 		{
-			template.loading.then(function() {
-				nm.applyFilters({view: view});
-			});
+			// View switches only change presentation. Keep NM/app state current
+			// without re-fetching the same directory data or clearing row actions.
+			nm.applyFilters({view: view}, {reload: false, clearActions: false});
+			this.updateTileColumns(nm);
+		});
+	}
+
+	/**
+	 * Drive the tile view's optional meta rows (modified, owner, comment, size)
+	 * from the user's currently visible columns.
+	 *
+	 * The tile template (filemanager.tile) declares these as columns and the
+	 * CSS gates each meta row behind a --filemanager-tile-*-display custom
+	 * property that defaults to "none".  Here we set those properties to match
+	 * which columns are currently visible, so the tiles honour the user's column
+	 * selection both on initial load and when switching between tile and list view.
+	 *
+	 * Columns are resolved asynchronously and, because filemanager preloads its
+	 * rows (setInitialRows, not reload), no loading event fires - so we wait for
+	 * the nextmatch's update cycle and retry briefly until the columns appear.
+	 *
+	 * @param {et2_nextmatch} [nm] - The nextmatch to read columns from.  Defaults to this.nm.
+	 */
+	updateTileColumns(nm? : any)
+	{
+		nm = nm || this.nm;
+		if(!nm)
+		{
+			return;
 		}
+		const host = (typeof nm.getDOMNode === "function" ? nm.getDOMNode() : null) || <HTMLElement><unknown>nm;
+		if(!host || typeof host.style?.setProperty !== "function")
+		{
+			return;
+		}
+
+		// Map tile column key -> CSS custom property controlling its meta row
+		const columnProperty = {
+			size: "--filemanager-tile-size-display",
+			mtime: "--filemanager-tile-mtime-display",
+			uid: "--filemanager-tile-owner-display",
+			comment: "--filemanager-tile-comment-display"
+		};
+
+		// Only tile view has these meta rows - clear everything for list view
+		if(nm.view !== et2_nextmatch_controller.VIEW_TILE)
+		{
+			host.style.removeProperty("--filemanager-tile-meta-display");
+			for(const property of Object.values(columnProperty))
+			{
+				host.style.removeProperty(property);
+			}
+			return;
+		}
+
+		const apply = () =>
+		{
+			// Currently visible columns, as reported by the nextmatch value
+			const selectcols : string[] = nm.getValue?.()?.selectcols || [];
+			let anyVisible = false;
+			for(const [key, property] of Object.entries(columnProperty))
+			{
+				const visible = selectcols.indexOf(key) !== -1;
+				host.style.setProperty(property, visible ? "flex" : "none");
+				anyVisible = anyVisible || visible;
+			}
+			// Show the meta container only if at least one optional row is visible
+			host.style.setProperty("--filemanager-tile-meta-display", anyVisible ? "flex" : "none");
+		};
+
+		// Et2Nextmatch resolves whenColumnsReady() once the template columns
+		// are derived (getValue().selectcols populated).  It's a side-channel
+		// promise, independent of updateComplete, so awaiting it can't stall the
+		// load - and unlike an event, a resolved promise is safe to await late.
+		const ready = typeof nm.whenColumnsReady === "function"
+		              ? nm.whenColumnsReady()
+		              : Promise.resolve();
+		ready.then(() => apply());
 	}
 
 	/**
@@ -1103,7 +1212,6 @@ export class filemanagerAPP extends EgwApp
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		let path = this.id2path(_senders[0].id);
 		this.et2 = this.et2 ? this.et2 : etemplate2.getById('filemanager-index').widgetContainer;
-		let mime = this.et2._inst.widgetContainer.getWidgetById('$row');
 		// try to get mime widget DOM node out of the row DOM
 		let mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("et2-vfs-mime");
 		let fe = egw.file_editor_prefered_mimes();
@@ -1117,7 +1225,7 @@ export class filemanagerAPP extends EgwApp
 		{
 			mime_dom.click();
 		}
-		else if (mime && this.isEditable(_action, _senders) && fe && fe.edit)
+		else if (this.isEditable(_action, _senders) && fe && fe.edit)
 		{
 
 			egw.open_link(egw.link('/index.php', {
@@ -1605,6 +1713,8 @@ export class filemanagerAPP extends EgwApp
 	 */
 	hidden_upload_enabled(_action : egwAction, _senders : egwActionObject[])
 	{
+		// TODO: FIX PROPERLY
+		return false;
 		if(_senders[0].id == 'nm')
 		{
 			return false;
@@ -1713,6 +1823,8 @@ export class filemanagerAPP extends EgwApp
 	 */
 	isEditable(_egwAction, _senders) : boolean
 	{
+		// TODO: FIX PROPERLY
+		return false;
 		if (_senders.length>1) return false;
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		let mime = this.et2.getInstanceManager().widgetContainer.getWidgetById('$row');
@@ -1726,6 +1838,8 @@ export class filemanagerAPP extends EgwApp
 
 	checkInvoice(_egwAction, _senders) : boolean
 	{
+		// TODO: FIX PROPERLY
+		return false;
 		if (_senders.length>1) return false;
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		return data.data?.mime && ['application/pdf', 'text/xml', 'application/xml'].includes(data.data.mime);

@@ -48,10 +48,6 @@
 
   }
 }
-#filemanager-index_nm et2-vfs-mime img[src$="svg"], #filemanager-index_nm et2-vfs-mime svg{
-    height: 1em !important;
-}
-
 /* Override default filter width since there's only one, and limited space left */
 #filemanager-index_nm_filter {
     max-width: initial;
@@ -81,14 +77,10 @@
 	min-width: 24em;
 }
 
-#filemanager-index_nm_path {
-	flex-grow: 1;
-	min-width: 0;
-}
-
 /**
- * Tile view
+ * Row and tile view
  */
+@import "rows.less";
 @import "tile.less";
 
 /**

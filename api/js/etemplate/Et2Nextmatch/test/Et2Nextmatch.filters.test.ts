@@ -178,6 +178,25 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.deepEqual(el.activeFilters.sort, {id: "title", asc: true}, "nested sort mutation should not affect internal state");
 	});
 
+	it("can update filter state without reloading or clearing row actions", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const datagrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		const reload = sinon.spy(datagrid, "reload");
+		const clearRowActionObjects = sinon.spy();
+		(el as any)._actionController.clearRowActionObjects = clearRowActionObjects;
+
+		const changed = el.applyFilters({view: "tile"}, {reload: false, clearActions: false});
+
+		assert.isTrue(changed, "filter state should update");
+		assert.equal(el.activeFilters.view, "tile", "view should be stored in active filters");
+		assert.isFalse(reload.called, "reload should be skipped");
+		assert.isFalse(clearRowActionObjects.called, "row actions should be preserved");
+		el.remove();
+	});
+
 	/**
 	 * Contract under test:
 	 * - Non-canceled header sort events update sort filter state.
@@ -1028,6 +1047,30 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 			"max(var(--sl-spacing-large), 6px)"
 		);
 
+		el.remove();
+	});
+
+	it("collapses expanded rows and forgets child-grid column snapshots", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._expandedRowIds = new Set(["addressbook::parent-1"]);
+		(el as any)._subgridColumnSnapshots.set("addressbook::parent-1", {
+			columns: [{key: "title", title: "Title"}]
+		});
+		const requestUpdate = sinon.spy(el, "requestUpdate");
+
+		const changed = el.collapseExpandedRows();
+
+		assert.isTrue(changed, "collapse should report changed state");
+		assert.equal((el as any)._expandedRowIds.size, 0, "expanded row ids should be cleared");
+		assert.equal((el as any)._subgridColumnSnapshots.size, 0, "child grid column snapshots should be cleared");
+		assert.isTrue(requestUpdate.called, "collapsing expanded rows should schedule a render");
+
+		requestUpdate.resetHistory();
+		assert.isFalse(el.collapseExpandedRows(), "empty expansion state should be a no-op");
+		assert.isFalse(requestUpdate.called, "no-op collapse should not schedule another render");
 		el.remove();
 	});
 

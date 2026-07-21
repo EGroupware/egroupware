@@ -1,0 +1,169 @@
+/**
+ * Filemanager tile view
+ */
+@filemanager-tile-min-size: 8em;
+@filemanager-tile-size: 13em;
+@filemanager-tile-max-size: 14em;
+@filemanager-tile-thumbnail-size: 8.5em;
+@filemanager-tile-gap: 0.5em;
+@filemanager-tile-padding: 0.625em;
+
+:host([view="tile"]) {
+	.dg-tile-grid > [data-row-id] > .tile,
+	.tile {
+		box-sizing: border-box;
+		width: 100%;
+		min-width: @filemanager-tile-min-size;
+		min-height: @filemanager-tile-min-size;
+
+		// .file_tile is an et2-vbox: its real column layout lives in the shadow
+		// <div part="base">.  Make that base fill the host so the preview can
+		// absorb leftover space instead of leaving a gap below the meta.
+		.file_tile::part(base) {
+			height: 100%;
+		}
+
+		.file_tile {
+			position: relative;
+			box-sizing: border-box;
+			display: flex;
+			flex-direction: column;
+			gap: @filemanager-tile-gap;
+			width: 100%;
+			min-width: @filemanager-tile-min-size;
+			min-height: @filemanager-tile-min-size;
+			margin: 0;
+			padding: @filemanager-tile-padding;
+			overflow: hidden;
+			word-break: normal;
+
+			.file_tile_header {
+				flex: 0 0 auto;
+				min-height: 1.5em;
+				align-items: center;
+
+				.et2_label {
+					display: block;
+					width: 100%;
+					overflow: hidden;
+					font-weight: 600;
+					line-height: 1.25;
+					text-overflow: ellipsis;
+					white-space: nowrap;
+					word-break: normal;
+				}
+			}
+
+			.file_tile_preview {
+				flex: 1 1 auto;
+				align-items: center;
+				justify-content: center;
+				min-height: 0;
+				border-radius: 4px;
+				background: var(--sl-color-neutral-0, #fff);
+				overflow: hidden;
+
+				et2-vfs-mime {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					width: 100%;
+					height: 100%;
+					margin: 0;
+
+					&[mime="httpd/unix-directory"] {
+						font-size: 3em;
+					}
+				}
+
+				span.iconOverlayContainer {
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					max-width: 100%;
+					width: 100%;
+					height: 100%;
+				}
+
+				img.vfsMimeIcon,
+				et2-vfs-mime > img {
+					max-width: 100%;
+					max-height: 100%;
+					width: auto;
+					height: auto;
+					object-fit: contain;
+					margin: 0 auto;
+				}
+			}
+
+			.file_tile_meta {
+				display: var(--filemanager-tile-meta-display, none);
+				flex: 0 0 auto;
+				align-items: stretch;
+				gap: 0.15em;
+				padding-top: 0.25em;
+				color: var(--sl-color-neutral-600, #5f6b7a);
+				font-size: 0.875rem;
+				white-space: nowrap;
+				overflow: hidden;
+
+				.file_tile_meta_row {
+					align-items: center;
+					gap: 0.35em;
+					min-width: 0;
+					min-height: 1.25em;
+					overflow: hidden;
+				}
+
+				.file_tile_meta_icon {
+					flex: 0 0 auto;
+					margin-right: 0.25em;
+					color: var(--sl-color-neutral-400, #9aa4b2);
+				}
+
+				.file_tile_meta_label {
+					flex: 0 0 auto;
+					color: var(--sl-color-neutral-500, #6b7280);
+					font-weight: 600;
+				}
+
+				.file_tile_meta_comment et2-description,
+				.file_tile_meta_label,
+				.file_tile_meta_row et2-date-time,
+				.file_tile_meta_row et2-vfs-uid {
+					min-width: 0;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+
+				.file_tile_meta_size {
+					display: var(--filemanager-tile-size-display, none);
+				}
+
+				.file_tile_meta_mtime {
+					display: var(--filemanager-tile-mtime-display, none);
+				}
+
+				.file_tile_meta_owner {
+					display: var(--filemanager-tile-owner-display, none);
+				}
+
+				.file_tile_meta_comment {
+					display: var(--filemanager-tile-comment-display, none);
+				}
+			}
+
+			&[data-mime^="image"] {
+				.et2_label,
+				&:hover .et2_label {
+					position: static;
+					display: block;
+					width: auto;
+					color: inherit;
+					text-shadow: none;
+				}
+			}
+		}
+	}
+
+}

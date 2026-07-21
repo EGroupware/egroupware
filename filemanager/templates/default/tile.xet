@@ -8,23 +8,49 @@
 	Also important is the tile class on the row, to get the proper display and
 	the column width="100%" to take the whole width
 	-->
-	<template id="filemanager.tile" template="" lang="" group="0" version="1.9.001">
+    <template id="filemanager.tile" template="" lang="" group="0" version="26.1">
 		<grid width="100%">
 			<columns>
 				<column width="100%"/>
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header/>
+                    <et2-nextmatch-sortheader label="Size" id="size"/>
+                    <et2-nextmatch-sortheader label="Modified" id="mtime"/>
+                    <et2-nextmatch-sortheader label="Owner" id="uid"/>
+                    <et2-nextmatch-header label="Comment" id="comment"/>
 				</row>
-				<row class="tile $row_cont[class]">
-					<et2-vbox  class="file_tile" width="135px" height="110px" data="mime:$row_cont[mime]" statustext="${row_cont}[title]">
-						<et2-vfs-mime  align="center" id="$row" thumbMimeSize="image,128"></et2-vfs-mime>
-						<vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
-<!--						<et2-description  id="${row}[comment]"></et2-description>-->
+                <!-- Tile layout dimensions are px because @lit-labs/virtualizer parses grid sizing as pixel numbers. -->
+                <row class="tile $row_cont[class]" data-tile-width="232px" data-tile-height="208px">
+                    <et2-vbox class="file_tile filemanager_file_tile" width="100%" height="208px" data="mime:$row_cont[mime]" statustext="$row_cont[title]">
+                        <et2-hbox class="file_tile_header">
+                            <vfs-name id="${row}[name]" no_lang="1" readonly="true"/>
+                        </et2-hbox>
+                        <et2-vbox class="file_tile_preview">
+                            <et2-vfs-mime align="center" id="$row" thumbMimeSize="image,120"></et2-vfs-mime>
+                        </et2-vbox>
+                        <et2-vbox class="file_tile_meta">
+                            <et2-hbox class="file_tile_meta_row file_tile_meta_size">
+                                <et2-vfs-size id="${row}[size]"/>
+                            </et2-hbox>
+                            <et2-hbox class="file_tile_meta_row file_tile_meta_mtime">
+                                <et2-image class="file_tile_meta_icon" src="clock-history" icon="true"></et2-image>
+                                <et2-date-time id="${row}[mtime]" readonly="true"></et2-date-time>
+                            </et2-hbox>
+                            <et2-hbox class="file_tile_meta_row file_tile_meta_owner">
+                                <et2-vfs-uid id="${row}[uid]" noLang="1"></et2-vfs-uid>
+                            </et2-hbox>
+                            <et2-hbox class="file_tile_meta_row file_tile_meta_comment">
+                                <et2-description aria-label="Comment" id="${row}[comment]"></et2-description>
+                            </et2-hbox>
+                        </et2-vbox>
 					</et2-vbox>
 				</row>
+
 			</rows>
 		</grid>
+        <et2-vbox data-tile-width="232px" data-tile-height="208px" slot="loader">
+            <et2-image src="egroupware"></et2-image>
+        </et2-vbox>
 	</template>
 </overlay>

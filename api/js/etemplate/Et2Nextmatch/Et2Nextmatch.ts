@@ -1384,7 +1384,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * Legacy-compatible filter application entry point.
 	 * Merges updates into `activeFilters`, emits cancelable `et2-filter`, and reloads rows by default.
 	 */
-	applyFilters(set? : Record<string, any>, options? : { reload? : boolean })
+	applyFilters(set? : Record<string, any>, options? : { reload? : boolean, clearActions? : boolean })
 	{
 		let changed = typeof set == "undefined";
 		if(!this._filters || typeof this._filters !== "object")
@@ -1479,7 +1479,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.egw().debug("info", "Changed nm filters", this._filters);
 
 		this._updateSortHeaderState();
-		this._actionController.clearRowActionObjects();
+		if(options?.clearActions !== false)
+		{
+			this._actionController.clearRowActionObjects();
+		}
 		if(options?.reload !== false)
 		{
 			this._datagrid?.reload();
@@ -1609,6 +1612,21 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	{
 		this._warnDeprecatedOnce("set_view", "Et2Nextmatch.set_view is deprecated, use `nm.setView(...)`");
 		return this.setView(view);
+	}
+
+	/**
+	 * Collapse all currently expanded child grids and forget their cached layout snapshots.
+	 */
+	collapseExpandedRows()
+	{
+		if(!this._expandedRowIds.size && !this._subgridColumnSnapshots.size)
+		{
+			return false;
+		}
+		this._expandedRowIds.clear();
+		this._subgridColumnSnapshots.clear();
+		this.requestUpdate();
+		return true;
 	}
 
 	/**
