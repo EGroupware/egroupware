@@ -1,130 +1,115 @@
 /**
  * CRM view with contact data in sidebox
  */
-.addressbook_sidebox_name {
-	font-weight: bold;
+/* Some row styles are reused outside the row template */
+/**
+ * Addressbook index rows
+ */
+img.iphoto {
+  height: auto;
 }
-.addressbook_sidebox_name, .addressbook_sidebox_org {
-	font-size: 130%;
-	padding: 2px 0 2px 0;
+.avatar img.iphoto {
+  border: none;
+  box-shadow: none;
+}
+.avatar span {
+  margin-right: 0;
+}
+label > span.et2_link {
+  display: none;
+}
+.addressbook_sidebox_name,
+.addressbook_sidebox_org {
+  font-size: 130%;
+  padding: 2px 0 2px 0;
+}
+.addressbook_sidebox_name {
+  font-weight: bold;
 }
 td.addressbook_sidebox_header {
-	font-weight: bold;
-	height: 20px;
-	vertical-align: bottom;
+  font-weight: bold;
+  height: 20px;
+  vertical-align: bottom;
 }
 form[id^=addressbook-view].et2_container {
-	flex: 0 0 min-content;
-	padding: var(--sl-spacing-x-small, 0.25rem) var(--sl-spacing-x-small, 0.25rem) 0 var(--sl-spacing-medium, 0.25rem);
+  flex: 0 0 min-content;
+  padding: var(--sl-spacing-x-small, 0.25rem) var(--sl-spacing-x-small, 0.25rem) 0 var(--sl-spacing-medium, 0.25rem);
 }
-div.addressbook_view_sidebox .toolbox button{
-	vertical-align: middle;
+div.addressbook_view_sidebox .toolbox button {
+  vertical-align: middle;
 }
 div.addressbook_view_sidebox img[id$='_button[delete]'] {
-	float: right;
-	margin-top: 9px;
+  float: right;
+  margin-top: 9px;
 }
-.addressbook_view .toolbox et2-hbox::part(base){
-	flex-wrap: wrap;
-	font-size: 1.5em;
-	justify-content: space-around;
+.addressbook_view .toolbox et2-hbox::part(base) {
+  flex-wrap: wrap;
+  font-size: 1.5em;
+  justify-content: space-around;
 }
-
 .addressbook_view .description--content {
-	overflow: hidden;
-	text-overflow: ellipsis;
-	white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 /*.addressbook_view*/
-
-
-	/**
-     * new addressbook.edit
-     */
-#addressbook-edit.et2_container {
-}
+/**
+ * new addressbook.edit
+ */
 div.addressbook_edit_general_picture {
-	position: relative;
+  position: relative;
 }
 div.addressbook_edit_general_picture img {
-	position: absolute;
-	width: auto;
-	max-width: 80px;
-	height: 105px;
-	left: 2px;
+  position: absolute;
+  width: auto;
+  max-width: 80px;
+  height: 105px;
+  left: 2px;
 }
-.uploadphoto{
-	position: absolute;
-	top: 70px;
-	left: 0;
-	display: none;
-	border: 2px solid var(--sl-color-neutral-950, black);
-	background-color: var(--sl-color-neutral-0);
-	padding: 4px;
-	z-index: 1;
+.uploadphoto {
+  position: absolute;
+  top: 70px;
+  left: 0;
+  display: none;
+  border: 2px solid var(--sl-color-neutral-950, black);
+  background-color: var(--sl-color-neutral-0);
+  padding: 4px;
+  z-index: 1;
 }
-.typeIcon { height: 16px; width: 16px; }
-.editname{
-	position: absolute;
-	display: none;
-	border: 2px solid var(--sl-color-neutral-950, black);
-	background-color: var(--sl-color-neutral-0);
-	padding: 4px;
-	top: 55px;
-	left: 102px;
-	z-index: 1;
-	padding-right: 10px;
+.typeIcon {
+  height: 16px;
+  width: 16px;
+}
+.editname {
+  position: absolute;
+  display: none;
+  border: 2px solid var(--sl-color-neutral-950, black);
+  background-color: var(--sl-color-neutral-0);
+  padding: 4px;
+  top: 55px;
+  left: 102px;
+  z-index: 1;
+  padding-right: 10px;
 }
 .custom_country {
-	display: none;
+  display: none;
 }
-#addressbook-edit
-#addressbook-edit_tel_prefer-tel_work, #addressbook-edit_tel_prefer-tel_cell {
-	left: 7px;
+#addressbook-edit #addressbook-edit_tel_prefer-tel_work {
+  left: 7px;
 }
-#addressbook-edit_memberships + .chzn-container .chzn-results {
-	max-height: 85px;
+#addressbook-edit_tel_prefer-tel_cell {
+  left: 7px;
 }
 /**
  * Index page
  */
-#addressbook-index img.iphoto {
-    height: auto;
-}
-
-#addressbook-index .avatar img.iphoto {
-    border: none;
-    box-shadow: none;
-}
-#addressbook-index .avatar span {margin-right: 0;}
-#addressbook-index_org_view, #addressbook-index_addressbook-index-right_add > div.et2_box_widget {
-	top: 0;
-	padding-top: 0;
-}
-#addressbook-edit_adr_one_locality,
-#addressbook-edit_adr_two_locality,
-#addressbook-edit_adr_one_postalcode,
-#addressbook-edit_adr_two_postalcode{
-	
-}
 div.city_state_postcode #addressbook-edit_adr_two_postalcode,
-div.city_state_postcode #addressbook-edit_adr_one_postalcode {margin-right: 5px !important;}
-.addressbookHooked .egwGridView_grid label>span.et2_link {
-	display: none;
+div.city_state_postcode #addressbook-edit_adr_one_postalcode {
+  margin-right: 5px !important;
 }
-
-et2-button#addressbook-index_nm_advanced-search {
-	margin-right: 0 !important;
+.smime_section_border {
+  border-top: 1px solid #e5e5e5;
 }
-.smime_section_border {border-top: 1px solid #e5e5e5;}
-.smime_section_border> * {padding-top: 10px;}
-
-/*Limit height of nm rows introduce scrollbars on customfields and notes*/
-.et2_customfield_list.customfields{
-	table-layout: fixed;
-}
-.et2_customfield_list.customfields tbody, #addressbook-index_nm_0\[note\] span[part='content']{
-	display: block;
-	max-height: 10em;
-	overflow: hidden auto;
+.smime_section_border > * {
+  padding-top: 10px;
 }

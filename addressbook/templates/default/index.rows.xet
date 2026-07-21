@@ -2,6 +2,7 @@
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
 <overlay>
     <template id="addressbook.index.rows" template="" lang="" group="0" version="1.9.005">
+        <et2-styles src="rows.css"></et2-styles>
         <grid width="100%">
             <columns>
                 <column width="20"/>

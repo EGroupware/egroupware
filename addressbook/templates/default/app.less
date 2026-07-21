@@ -1,0 +1,137 @@
+/**
+ * CRM view with contact data in sidebox
+ */
+
+/* Some row styles are reused outside the row template */
+@import (less) "rows.less";
+
+.addressbook_sidebox_name,
+.addressbook_sidebox_org {
+	font-size: 130%;
+	padding: 2px 0 2px 0;
+}
+
+.addressbook_sidebox_name {
+	font-weight: bold;
+}
+
+td.addressbook_sidebox_header {
+	font-weight: bold;
+	height: 20px;
+	vertical-align: bottom;
+}
+
+form[id^=addressbook-view].et2_container {
+	flex: 0 0 min-content;
+	padding: var(--sl-spacing-x-small, 0.25rem) var(--sl-spacing-x-small, 0.25rem) 0 var(--sl-spacing-medium, 0.25rem);
+}
+
+div.addressbook_view_sidebox {
+	.toolbox {
+		button {
+			vertical-align: middle;
+		}
+	}
+
+	img[id$='_button[delete]'] {
+		float: right;
+		margin-top: 9px;
+	}
+}
+
+.addressbook_view {
+	.toolbox {
+		et2-hbox::part(base) {
+			flex-wrap: wrap;
+			font-size: 1.5em;
+			justify-content: space-around;
+		}
+	}
+
+	.description--content {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}
+
+/*.addressbook_view*/
+
+/**
+ * new addressbook.edit
+ */
+#addressbook-edit.et2_container {
+}
+
+div.addressbook_edit_general_picture {
+	position: relative;
+
+	img {
+		position: absolute;
+		width: auto;
+		max-width: 80px;
+		height: 105px;
+		left: 2px;
+	}
+}
+
+.uploadphoto {
+	position: absolute;
+	top: 70px;
+	left: 0;
+	display: none;
+	border: 2px solid var(--sl-color-neutral-950, black);
+	background-color: var(--sl-color-neutral-0);
+	padding: 4px;
+	z-index: 1;
+}
+
+.typeIcon {
+	height: 16px;
+	width: 16px;
+}
+
+.editname {
+	position: absolute;
+	display: none;
+	border: 2px solid var(--sl-color-neutral-950, black);
+	background-color: var(--sl-color-neutral-0);
+	padding: 4px;
+	top: 55px;
+	left: 102px;
+	z-index: 1;
+	padding-right: 10px;
+}
+
+.custom_country {
+	display: none;
+}
+
+#addressbook-edit {
+	#addressbook-edit_tel_prefer-tel_work {
+		left: 7px;
+	}
+}
+
+#addressbook-edit_tel_prefer-tel_cell {
+	left: 7px;
+}
+
+/**
+ * Index page
+ */
+
+div.city_state_postcode {
+	#addressbook-edit_adr_two_postalcode,
+	#addressbook-edit_adr_one_postalcode {
+		margin-right: 5px !important;
+	}
+}
+
+.smime_section_border {
+	border-top: 1px solid #e5e5e5;
+
+	> * {
+		padding-top: 10px;
+	}
+}
