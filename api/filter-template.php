@@ -264,7 +264,7 @@ EOF;
 EOF;
 		}
 		$str = $xet . <<<EOF
-		<styles>et2-hbox.sort::part(base) {  align-items: flex-end }</styles>
+		<et2-styles>et2-hbox.sort::part(base) {  align-items: flex-end }</et2-styles>
 	</et2-template>
 </overlay>
 EOF;
