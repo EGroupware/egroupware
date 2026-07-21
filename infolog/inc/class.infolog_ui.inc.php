@@ -766,6 +766,7 @@ class infolog_ui
 			'end'         => $end
 		));
 		unset($event['entry_id']);
+		if(!$event['start'] && !$event['end']) $event['start'] = new Api\DateTime();
 		if(!$event['start'] && $event['end'])
 		{
 			$event['start'] = (clone $event['end'])->modify( (-(int)$GLOBALS['egw_info']['user']['preferences']['calendar']['defaultlength']) . ' minutes');
