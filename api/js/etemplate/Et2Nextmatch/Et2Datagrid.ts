@@ -154,6 +154,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedVirtualizedHeightFrame : number | null = null;
 	private _embeddedVirtualizedRowsResizeObserver : ResizeObserver | null = null;
 	private _rowsMinHeightFrame : number | null = null;
+	private _virtualizerLayoutSyncFrame : number | null = null;
 
 	/**
 	 * Error state set when the latest fetch failed.
@@ -531,6 +532,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			cancelAnimationFrame(this._rowsMinHeightFrame);
 			this._rowsMinHeightFrame = null;
 		}
+		if(this._virtualizerLayoutSyncFrame !== null)
+		{
+			cancelAnimationFrame(this._virtualizerLayoutSyncFrame);
+			this._virtualizerLayoutSyncFrame = null;
+		}
 		super.disconnectedCallback();
 	}
 
@@ -634,6 +640,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._setupColumnResizeInteract();
 		}
 		this._syncEmbeddedVirtualizedHostHeight();
+		if(
+			!this.embeddedVirtualized &&
+			!this._isTileView() &&
+			(
+				changedProperties.has("view") ||
+				changedProperties.has("templateData")
+			)
+		)
+		{
+			// Row/tile switches replace #rows. Seed row height before the
+			// virtualizer's scheduled layout reads the new empty tbody as a
+			// zero-height viewport and decides there is no visible range.
+			this._syncRowsMinHeight();
+			this._scheduleVirtualizerLayoutSync();
+		}
 	}
 
 	/**
@@ -673,12 +694,41 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const explicitHeight = rowsBody.style.height || "";
 		const virtualizerHeight = /^\d+(\.\d+)?px$/.test(explicitHeight) ? parseFloat(explicitHeight) : 0;
 		const renderedRowsHeight = this._embeddedVirtualizedRenderedRowsHeight();
-		const height = Math.max(virtualizerHeight || 0, renderedRowsHeight || 0);
+		// On a freshly recreated row tbody there may be no rendered rows and no
+		// virtualizer-owned height yet. Use the existing row-height estimate once
+		// so the first layout pass has a concrete viewport to render into.
+		const estimatedVirtualizerHeight = virtualizerHeight || renderedRowsHeight
+		                                  ? 0
+		                                  : this._virtualRowCount() * (this._resolveTemplateRowHeightPx() || this._rowHeightPx || 44);
+		const height = Math.max(virtualizerHeight || 0, renderedRowsHeight || 0, estimatedVirtualizerHeight || 0);
 		const value = height > 0 ? `${Math.ceil(height)}px` : "";
 		if(rowsBody.style.minHeight !== value)
 		{
 			rowsBody.style.minHeight = value;
 		}
+	}
+
+	/**
+	 * Ask the virtualizer for one more layout pass after structural row-host
+	 * sizing changes. This mirrors the resize/scroll callback users triggered
+	 * manually by nudging the scroll position, but keeps it scoped to view /
+	 * template switches and does not schedule a Lit render.
+	 */
+	private _scheduleVirtualizerLayoutSync()
+	{
+		if(this._virtualizerLayoutSyncFrame !== null)
+		{
+			return;
+		}
+		this._virtualizerLayoutSyncFrame = requestAnimationFrame(() =>
+		{
+			this._virtualizerLayoutSyncFrame = null;
+			const virtualizer = this._rowsBody?.[virtualizerRef] as any;
+			if(typeof virtualizer?._hostElementSizeChanged === "function")
+			{
+				virtualizer._hostElementSizeChanged();
+			}
+		});
 	}
 
 	/**

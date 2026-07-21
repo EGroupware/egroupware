@@ -544,6 +544,58 @@ describe("Et2Datagrid row rendering", () =>
 		host.remove();
 	});
 
+	it("renders rows after switching from tile template back to row template", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+		const el = createDatagrid();
+		const rowColumns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const tileColumns = [{key: "label", title: "Label", width: "100%"}] as any;
+		const rowTemplateData = {
+			rowTemplateId: "test.index.rows",
+			view: "row",
+			columns: rowColumns
+		} as any;
+		const tileTemplateData = {
+			rowTemplateId: "test.tile",
+			view: "tile",
+			tileLayout: {width: "160px", height: "120px"},
+			columns: tileColumns
+		} as any;
+		el.columns = rowColumns;
+		el.templateData = rowTemplateData;
+		const initialRows = Array.from({length: 12}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(initialRows);
+		el.total = initialRows.length;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+
+		el.view = "tile";
+		el.columns = tileColumns;
+		el.templateData = tileTemplateData;
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+
+		el.view = "row";
+		el.columns = rowColumns;
+		el.templateData = rowTemplateData;
+		await el.updateComplete;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		const rowsBody = el.shadowRoot!.querySelector("tbody#rows") as HTMLElement;
+		const renderedRow = rowsBody.querySelector(":scope > tr[data-row-id='row-0']") as HTMLElement | null;
+		assert.isNotNull(renderedRow, "row should render after returning from tile view");
+		assert.isAbove(rowsBody.querySelectorAll(":scope > tr[data-row-id]").length, 0, "row tbody should contain rendered rows");
+		assert.notEqual(rowsBody.style.minHeight, "100%", "row tbody should not keep tile/grid min-height");
+
+		host.remove();
+	});
+
 	it("recovers rows left with a stale upgrade queued marker", async() =>
 	{
 		const host = document.createElement("div");
