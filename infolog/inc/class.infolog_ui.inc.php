@@ -759,8 +759,10 @@ class infolog_ui
 			'title'       => $infolog['info_subject'],
 			'description' => $infolog['info_des'],
 			'location'    => $infolog['info_location'],
-			'start'       => $infolog['info_startdate'],
-			'end'         => $infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
+			'start' => new Api\DateTime($infolog['info_startdate']
+			),
+			'end'   => new Api\DateTime($infolog['info_enddate'] ? $infolog['info_enddate'] : $infolog['info_datecompleted']
+			)
 		));
 		unset($event['entry_id']);
 		if(!$event['end'])
