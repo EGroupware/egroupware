@@ -79,7 +79,7 @@
   background-position: round(up, 0.3em,1px) 0px;
 }
 /*get <a> tags inside description in listview with no breakline*/
-.et2_nextmatch .egwGridView_grid tr td div.et2_vbox .infoDes a,
+div.et2_vbox .infoDes a,
 .infoDes a {
   display: inline-table;
 }
@@ -104,12 +104,10 @@
   display: var(--infolog-info-details-display, block);
 }
 /* Spacing for parent / sub indicators */
-.egwGridView_grid .infolog_CompletedClmn,
 .infolog_CompletedClmn {
   max-width: fit-content;
   margin-left: 10px;
 }
-.egwGridView_grid .infolog_CompletedClmn::part(base),
 .infolog_CompletedClmn::part(base) {
   /* Put line break for the first column*/
   flex-wrap: wrap;
