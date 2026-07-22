@@ -318,6 +318,7 @@ export class Et2RowProvider
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
+			rowTemplateHandlerMap: prepared?.handlerMap ?? {},
 			rowStylesheets: [
 				...rowStylesheets,
 				...(prepared?.rowStylesheets ?? [])
@@ -374,6 +375,7 @@ export class Et2RowProvider
 			rowTemplate: prepared?.template ?? null,
 			rowTemplateXml: prepared?.xml ?? null,
 			rowTemplateAttrMap: prepared?.attrMap ?? {},
+			rowTemplateHandlerMap: prepared?.handlerMap ?? {},
 			rowStylesheets: [
 				...rowStylesheets,
 				...(prepared?.rowStylesheets ?? [])
@@ -519,6 +521,7 @@ export class Et2RowProvider
 		template : HTMLTemplateElement;
 		xml : Element;
 		attrMap : Record<string, Record<string, string>>;
+		handlerMap : Record<string, Record<string, string>>;
 		rowStylesheets : CSSStyleSheet[];
 	} | null>
 	{
@@ -530,10 +533,11 @@ export class Et2RowProvider
 		const xml = rowNode.cloneNode(true) as Element;
 		const rowStylesheets = await this._extractRowStylesheets(xml, templateUrl);
 		const attrMap : Record<string, Record<string, string>> = {};
+		const handlerMap : Record<string, Record<string, string>> = {};
 		const idState = {next: 1};
 
 		const template = document.createElement("template");
-		const fragment = this._createFragmentFromXml(xml, attrMap, idState, true);
+		const fragment = this._createFragmentFromXml(xml, attrMap, handlerMap, idState, true);
 		template.content.appendChild(fragment);
 
 		// Keep existing readonly behavior so row widgets render as display-only templates.
@@ -546,6 +550,7 @@ export class Et2RowProvider
 			template,
 			xml,
 			attrMap,
+			handlerMap,
 			rowStylesheets
 		};
 	}
@@ -635,12 +640,13 @@ export class Et2RowProvider
 	private _createFragmentFromXml(
 		node : Element,
 		attrMap : Record<string, Record<string, string>>,
+		handlerMap : Record<string, Record<string, string>>,
 		idState : { next : number },
 		recordAttributes : boolean = false
 	) : DocumentFragment
 	{
 		const fragment = document.createDocumentFragment();
-		const root = this._cloneElement(node, attrMap, idState, recordAttributes);
+		const root = this._cloneElement(node, attrMap, handlerMap, idState, recordAttributes);
 		fragment.appendChild(root);
 
 		const walk = (source : Element, destination : Element) =>
@@ -658,7 +664,7 @@ export class Et2RowProvider
 					continue;
 				}
 
-				const childElement = this._cloneElement(child as Element, attrMap, idState, recordAttributes);
+				const childElement = this._cloneElement(child as Element, attrMap, handlerMap, idState, recordAttributes);
 				destination.appendChild(childElement);
 				walk(child as Element, childElement);
 			}
@@ -674,6 +680,7 @@ export class Et2RowProvider
 	private _cloneElement(
 		source : Element,
 		attrMap : Record<string, Record<string, string>>,
+		handlerMap : Record<string, Record<string, string>>,
 		idState : { next : number },
 		recordAttributes : boolean
 	) : Element
@@ -725,6 +732,12 @@ export class Et2RowProvider
 				continue;
 			}
 			const normalizedValue = this._normalizeLegacyRowExpressionShorthand(value);
+			if(recordAttributes && assignedId && this._isTemplateEventHandler(element, name))
+			{
+				handlerMap[assignedId] ??= {};
+				handlerMap[assignedId][name] = normalizedValue;
+				continue;
+			}
 			if(recordAttributes && assignedId && normalizedValue.includes("$"))
 			{
 				attrMap[assignedId][name] = normalizedValue;
@@ -776,6 +789,22 @@ export class Et2RowProvider
 		// Et2Widget's data setter rewrites dataset and removes data-et2nm-id,
 		// which makes the row upgrade pass skip this widget entirely.
 		return attributeName === "data" && typeof (element as any).transformAttributes === "function";
+	}
+
+	/**
+	 * Event handlers are delegated by Et2Datagrid, rather than installed on every
+	 * virtualized row widget.  Only declared Function properties qualify, so
+	 * ordinary attributes beginning with "on" retain their normal behaviour.
+	 */
+	private _isTemplateEventHandler(element : Element, attributeName : string) : boolean
+	{
+		if(!attributeName.startsWith("on"))
+		{
+			return false;
+		}
+		const widgetClass : any = window.customElements.get(element.localName);
+		const property = widgetClass?.getPropertyOptions?.(attributeName);
+		return (typeof property === "object" ? property?.type : property) === Function;
 	}
 
 	private _setTemplateArrayManagers(element : any)

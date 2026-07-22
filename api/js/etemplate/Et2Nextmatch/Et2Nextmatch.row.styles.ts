@@ -9,4 +9,13 @@ export default css`
 	et2-link-string {
 		color: var(--sl-color-sky-900);
 	}
+
+	.et2_link {
+		color: var(--sl-color-sky-900);
+	}
+
+	.et2_link:hover {
+		cursor: pointer;
+		text-decoration: underline;
+	}
 `;

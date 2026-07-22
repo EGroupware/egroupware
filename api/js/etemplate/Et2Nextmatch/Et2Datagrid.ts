@@ -4,7 +4,7 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import shoelace from "../Styles/shoelace";
-import {Et2Widget} from "../Et2Widget/Et2Widget";
+import {Et2Widget, et2_warnLegacyEventHandler} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import styles from "./Et2Datagrid.styles";
@@ -33,6 +33,7 @@ import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
+import {et2_compileLegacyJS} from "../et2_core_legacyJSFunctions";
 
 interface Et2DatagridCustomfieldColumnState
 {
@@ -155,6 +156,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedVirtualizedRowsResizeObserver : ResizeObserver | null = null;
 	private _rowsMinHeightFrame : number | null = null;
 	private _virtualizerLayoutSyncFrame : number | null = null;
+	private _templateHandlerListeners : Map<string, EventListener> = new Map();
+	private _templateHandlerCache : Map<string, Function | false> = new Map();
+	private _rowTemplateHandlerCache : WeakMap<HTMLElement, Map<string, Function | false>> = new WeakMap();
 
 	/**
 	 * Error state set when the latest fetch failed.
@@ -503,11 +507,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._scrollListener = () => this._maybePrefetchOnScroll();
 	}
 
+	connectedCallback()
+	{
+		super.connectedCallback();
+		this._syncTemplateHandlerListeners();
+	}
+
 	/**
 	 * Disconnect DOM listeners and queued async work when component is detached.
 	 */
 	disconnectedCallback()
 	{
+		this._syncTemplateHandlerListeners(new Set());
 		this._teardownColumnResizeInteract();
 		this._clearColumnResizeDragState();
 		this._rowUpgradeObserver?.disconnect();
@@ -587,6 +598,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const structureChanged = changedProperties.has("templateData") || changedProperties.has("view") || columnsChanged;
 		if(changedProperties.has("templateData"))
 		{
+			this._templateHandlerCache.clear();
+			this._rowTemplateHandlerCache = new WeakMap();
+			this._syncTemplateHandlerListeners();
 			// Capture source cell->column mapping before user reorders columns.
 			this._sourceColumnKeys = (this.templateData?.sourceColumns || this.templateData?.columns || this.columns || []).map((column) => String(column.key));
 		}
@@ -601,6 +615,115 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._rebuildCustomfieldColumnStateCache();
 		}
+	}
+
+	/**
+	 * Attach one capturing listener per event type used by the row template.
+	 * Row widgets are virtualized, so binding handlers on the grid keeps listener
+	 * count independent from both the number of rows and their redraws.
+	 */
+	private _syncTemplateHandlerListeners(eventTypes? : Set<string>)
+	{
+		const required = eventTypes ?? new Set(
+			Object.values(this.templateData?.rowTemplateHandlerMap || {})
+				.flatMap((handlers) => Object.keys(handlers))
+				.filter((attribute) => attribute.startsWith("on"))
+				.map((attribute) => attribute.substring(2))
+		);
+		for(const [eventType, listener] of this._templateHandlerListeners)
+		{
+			if(!required.has(eventType))
+			{
+				this.removeEventListener(eventType, listener, true);
+				this._templateHandlerListeners.delete(eventType);
+			}
+		}
+		for(const eventType of required)
+		{
+			if(this._templateHandlerListeners.has(eventType))
+			{
+				continue;
+			}
+			const listener = (event : Event) => this._handleTemplateHandlerEvent(event);
+			this.addEventListener(eventType, listener, true);
+			this._templateHandlerListeners.set(eventType, listener);
+		}
+	}
+
+	private _handleTemplateHandlerEvent(event : Event)
+	{
+		const handlerMap = this.templateData?.rowTemplateHandlerMap || {};
+		for(const node of event.composedPath())
+		{
+			if(node === this)
+			{
+				break;
+			}
+			if(!(node instanceof HTMLElement))
+			{
+				continue;
+			}
+			if(node.hasAttribute("data-et2nm-id"))
+			{
+				const id = node.getAttribute("data-et2nm-id")!;
+				const source = handlerMap[id]?.["on" + event.type];
+				if(source)
+				{
+					const handler = this._templateHandler(node, id, event.type, source);
+					const result = handler && handler(event, node);
+					if(result === false)
+					{
+						event.preventDefault();
+						event.stopPropagation();
+						return;
+					}
+					if(event.cancelBubble)
+					{
+						return;
+					}
+				}
+			}
+			if(node.hasAttribute("data-row-id"))
+			{
+				return;
+			}
+		}
+	}
+
+	private _templateHandler(widget : HTMLElement, id : string, eventType : string, source : string) : Function | false
+	{
+		const hasRowContext = source.includes("$") || source.includes("@");
+		const handlerKey = id + ":on" + eventType;
+		let handlers : Map<string, Function | false>;
+		if(hasRowContext)
+		{
+			const rowHandlers = this._rowTemplateHandlerCache.get(widget);
+			if(rowHandlers)
+			{
+				handlers = rowHandlers;
+			}
+			else
+			{
+				handlers = new Map();
+				this._rowTemplateHandlerCache.set(widget, handlers);
+			}
+		}
+		else
+		{
+			handlers = this._templateHandlerCache;
+		}
+		let handler : Function | false;
+		if(handlers.has(handlerKey))
+		{
+			handler = handlers.get(handlerKey)!;
+		}
+		else
+		{
+			et2_warnLegacyEventHandler(widget, source);
+			handler = et2_compileLegacyJS(source, widget as any, widget as any);
+			handlers.set(handlerKey, handler);
+		}
+		return handler;
 	}
 
 	/**
@@ -2495,6 +2618,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				{
 					const id = element.getAttribute?.("data-et2nm-id");
 					const stored = id ? attrMap[id] : null;
+					const handlerSources = id ? this.templateData?.rowTemplateHandlerMap?.[id] : null;
+					if(handlerSources && Object.values(handlerSources).some((source) => source.includes("$") || source.includes("@")))
+					{
+						// Virtualized widgets are reused. These handlers are compiled with
+						// the current array-manager perspective, so discard their previous
+						// row-specific function before applying a new row.
+						this._rowTemplateHandlerCache.delete(element);
+					}
 					const isCustomfieldsRow = element.localName === "et2-customfields-list";
 					if(isCustomfieldsRow)
 					{
