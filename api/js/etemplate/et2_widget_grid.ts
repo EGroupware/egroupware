@@ -24,6 +24,7 @@ import {egw_getAppObjectManager, egwActionObject} from '../egw_action/egw_action
 import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithDefault} from "./et2_core_xml";
 import {egw} from "../jsapi/egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
+import {et2_warnOnce} from "./Et2Widget/Et2Widget";
 
 
 /**
@@ -444,8 +445,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 			{
 				if(y >= h)
 				{
-					this.egw().debug("warn", "Skipped grid cell in column, '" +
-						nodeName + "'");
+					et2_warnOnce(this, "legacy-grid:skipped-column:" + nodeName,
+						"Skipped grid cell in column, '" + nodeName + "'");
 					return;
 				}
 
@@ -516,8 +517,8 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 					{
 						// Only notify it skipping other than description,
 						// description used to pad
-						this.egw().debug("warn", "Skipped grid cell in row, '" +
-							nodeName + "'");
+						et2_warnOnce(this, "legacy-grid:skipped-row:" + nodeName,
+							"Skipped grid cell in row, '" + nodeName + "'");
 					}
 					return;
 				}

@@ -1909,6 +1909,12 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 					// Need row context, defer it until later
 					// Repeating rows & nextmatch will parse it again when doing the row
 					widget.deferredProperties[attribute] = attrValue;
+					// The deferred value will be transformed with its row context.
+					// Do not leave it as an inline event attribute in the meantime.
+					if(attribute.startsWith("on"))
+					{
+						widget.removeAttribute(attribute);
+					}
 					widget.egw().debug("info", "Had to defer %s parsing for %o\nCan it be rewritten to avoid $row & $row_cont?", attribute, widget);
 					break;
 				}
@@ -1916,6 +1922,7 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 				// Leaving it to the LitElement conversion loses the widget as context
 				if(typeof attrValue !== "function")
 				{
+					//et2_warnLegacyEventHandler(widget, attrValue);
 					attrValue = et2_compileLegacyJS(attrValue, widget, widget);
 				}
 				break;
@@ -1966,7 +1973,14 @@ function transformAttributes(widget, mgr : et2_arrayMgr, attributes)
 		// (handlers can only be bound _after_ the widget is added to the DOM
 		if(attribute.startsWith("on") && typeof attrValue == "function")
 		{
-			//widget.updateComplete.then(() => addEventListener(attribute, attrValue));
+			// Never reflect legacy handler source back to an inline DOM attribute.
+			// Apart from violating CSP, that would replace this compiled function with
+			// a browser-created handler when the event is dispatched.
+			widget.removeAttribute(attribute);
+			const old_value = widget[attribute];
+			widget[attribute] = attrValue;
+			widget.requestUpdate(attribute, old_value);
+			continue;
 		}
 
 		// Set as attribute or property, as appropriate.  Don't set missing attributes.
@@ -2041,4 +2055,37 @@ export function cssImage(image_name : string, app_name? : string)
 	{
 		return css``;
 	}
+}
+
+const warnedMessages = new Set<string>();
+
+/**
+ * Log a warning only once for a stable caller-provided key.
+ *
+ * This is shared by legacy and web-component widgets, where repeated row or
+ * cell processing can otherwise flood the debug log with the same warning.
+ */
+export function et2_warnOnce(widget : any, key : string, ...args : any[]) : boolean
+{
+	if(warnedMessages.has(key))
+	{
+		return false;
+	}
+	warnedMessages.add(key);
+	widget.egw?.()?.debug?.("warn", ...args);
+	return true;
+}
+
+/**
+ * Warn once per legacy handler source when templates use executable JavaScript
+ * instead of a direct dotted method reference.
+ */
+export function et2_warnLegacyEventHandler(widget : any, source : unknown)
+{
+	if(typeof source !== "string" || /^(?:app\.)?[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)+$/.test(source.trim()))
+	{
+		return;
+	}
+	et2_warnOnce(widget, "legacy-event-handler:" + source,
+		"Legacy event handler uses JavaScript; prefer an app.<appname>.<method> reference", source);
 }
