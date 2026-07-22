@@ -21,6 +21,8 @@ import {egw} from "../../jsapi/egw_global";
  */
 export class Et2VfsName extends Et2Textbox
 {
+	private fileInfo : {path?: string; mime?: string} | null = null;
+
 	constructor()
 	{
 		super();
@@ -43,6 +45,7 @@ export class Et2VfsName extends Et2Textbox
 	{
 		if(_value && typeof _value === 'object')
 		{
+			this.fileInfo = _value;
 			if(typeof _value.name === 'string' && _value.name.length)
 			{
 				_value = _value.name;
@@ -53,12 +56,29 @@ export class Et2VfsName extends Et2Textbox
 				_value = segments[segments.length - 1] || _value.path;
 			}
 		}
+		else if(_value == null)
+		{
+			this.fileInfo = null;
+		}
 		super.value = _value;
 	}
 
 	get value()
 	{
 		return super.value;
+	}
+
+	/**
+	 * Open the row-bound VFS file using the standard file handler.
+	 */
+	open() : boolean
+	{
+		if(!this.fileInfo?.path)
+		{
+			return false;
+		}
+		this.egw().open({path: this.fileInfo.path, type: this.fileInfo.mime}, "file");
+		return false;
 	}
 
 	/**
@@ -84,12 +104,14 @@ customElements.define("et2-vfs-name", Et2VfsName);
  */
 export class Et2VfsNameReadonly extends Et2Description
 {
+	private fileInfo : {path?: string; mime?: string} | null = null;
+
 	constructor()
 	{
 		super();
 		this.updateComplete.then((v) =>
 		{
-			this.value = egw.decodePath(this.value);
+			if(this.value) this.value = egw.decodePath(this.value);
 		});
 	}
 
@@ -103,6 +125,7 @@ export class Et2VfsNameReadonly extends Et2Description
 	{
 		if(_value && typeof _value === 'object')
 		{
+			this.fileInfo = _value;
 			if(typeof _value.name === 'string' && _value.name.length)
 			{
 				_value = _value.name;
@@ -113,12 +136,26 @@ export class Et2VfsNameReadonly extends Et2Description
 				_value = segments[segments.length - 1] || _value.path;
 			}
 		}
+		else if(_value == null)
+		{
+			this.fileInfo = null;
+		}
 		super.value = _value;
 	}
 
 	get value()
 	{
 		return super.value;
+	}
+
+	open() : boolean
+	{
+		if(!this.fileInfo?.path)
+		{
+			return false;
+		}
+		this.egw().open({path: this.fileInfo.path, type: this.fileInfo.mime}, "file");
+		return false;
 	}
 }
 // @ts-ignore TypeScript is not recognizing that this widget is a LitElement
