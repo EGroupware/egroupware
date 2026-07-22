@@ -80,9 +80,13 @@ class InfologApp extends EgwApp
 			case 'infolog.index':
 				this.filter_change();
 				// Show / hide descriptions according to details filter
-				var nm = <Et2Nextmatch>this.et2.getWidgetById('nm');
-				var filter2 = <Et2Select>this.et2.getWidgetById('filter2');
-				this.show_details(filter2.value, nm);
+				const nm = <Et2Nextmatch>this.et2.getWidgetById('nm');
+				//"all" indicates display description; "null" or "" means do not
+				const filter2:boolean = (nm.filter2 ?? '') == "all";
+				this.show_details(filter2, nm);
+				//sync toolbar toggle button with current filter2 state
+				const detailsToggle= this.et2?.getWidgetById('details');
+				if(detailsToggle) detailsToggle.value= filter2;
 
 				// Enable decrypt on hover
 				if (this.egw.user('apps').stylite) {
