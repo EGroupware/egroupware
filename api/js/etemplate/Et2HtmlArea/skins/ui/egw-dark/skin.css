@@ -7135,3 +7135,6 @@ body.tox-dialog__disable-scroll {
 .tox.tox-tinymce-aux .tox-toolbar__overflow {
   box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.15);
 }
+.tox-silver-popup-sink .tox-pop {
+  width: 21rem;
+}

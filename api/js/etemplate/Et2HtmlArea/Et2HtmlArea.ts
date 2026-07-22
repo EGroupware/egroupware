@@ -134,6 +134,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 	static get styles()
 	{
 		return [
+			// @ts-ignore
 			...super.styles,
 			css`
 				:host {

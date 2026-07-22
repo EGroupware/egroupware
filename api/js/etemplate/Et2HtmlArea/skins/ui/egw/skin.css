@@ -7132,3 +7132,6 @@ body.tox-dialog__disable-scroll {
   display: flex;
   flex: 1;
 }
+.tox-silver-popup-sink .tox-pop {
+  width: 21rem;
+}

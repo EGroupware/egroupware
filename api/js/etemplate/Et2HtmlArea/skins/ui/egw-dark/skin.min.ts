@@ -638,4 +638,5 @@ export interface Classes {
   "tox-dialog-loading": string;
   "tox-tab": string;
   "tox-dialog__content-js": string;
+  "tox-silver-popup-sink": string;
 };
