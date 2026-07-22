@@ -5,6 +5,12 @@
  * Mocha (https://mochajs.org/) &  Chai Assertion Library (https://www.chaijs.com/api/assert/)
  * Playwright (https://playwright.dev/docs/intro) runs the tests in actual browsers.
  *
+ * Test groups are discovered from each app with a js/test/ directory and are
+ * named after that app.  Use `npm run jstest` to run every group, or select an
+ * app with `npm run jstest -- <app>` (for example, `npm run jstest -- api`).
+ * Pass a test file or glob instead to run it directly, for example:
+ * `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`.
+ *
  * Trouble getting tests to run?  Try manually compiling TypeScript (source & tests), that seems to help.
  */
 
@@ -21,25 +27,19 @@ const appJS = fs.readdirSync('.')
 			fs.statSync(`${dir}/js/test`).isDirectory(),
 	)
 
-const cliFileArgs = process.argv
-	.slice(2)
-	.filter(arg => arg && !arg.startsWith('-'));
+const testGroups = appJS.map(app => ({
+	name: app,
+	files: `${app}/js/**/*.test.ts`,
+}));
+const groupFiles = Object.fromEntries(testGroups.map(({name, files}) => [name, files]));
+groupFiles.default = groupFiles.api;
 
-const defaultGroups =
-	[
-		{
-			name: 'api',
-			files: 'api/js/etemplate/**/test/*.test.ts'
-		}
-	].concat(
-		appJS.map(app =>
-		{
-			return {
-				name: app,
-				files: `${app}/js/**/*.test.ts`
-			}
-		})
-	);
+// A positional group name expands to its test glob; other positional arguments
+// remain file paths or globs for targeted test runs.
+const cliFiles = process.argv
+	.slice(2)
+	.filter(arg => arg && !arg.startsWith('-'))
+	.map(arg => groupFiles[arg] ?? arg);
 
 export default {
 	nodeResolve: true,
@@ -106,11 +106,11 @@ export default {
 	},
 	browsers: [
 		playwrightLauncher({product: 'firefox', concurrency: 1}),
-		playwrightLauncher({product: 'chromium'}),
+		playwrightLauncher({product: 'chromium', concurrency: 1}),
 		// Dependant on specific versions of shared libraries (libicuuc.so.66, latest is .67)
 		//playwrightLauncher({ product: 'webkit' }),
 	],
-	...(cliFileArgs.length ? {files: cliFileArgs} : {groups: defaultGroups}),
+	...(cliFiles.length ? {files: cliFiles} : {groups: testGroups}),
 
 	plugins: [
 		{

@@ -947,8 +947,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		this.style.height = height;
 		this._embeddedVirtualizedHostHeight = height;
+		this.shadowRoot?.querySelector<HTMLElement>(".dg-root")?.style.setProperty("--embedded-virtualized-height", height);
 		this._notifyParentVirtualizerOfEmbeddedHeightChange();
-		this.requestUpdate();
 	}
 
 	/**

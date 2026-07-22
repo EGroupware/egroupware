@@ -119,6 +119,13 @@ export class Et2Styles extends Et2Widget(LitElement)
 	connectedCallback()
 	{
 		super.connectedCallback();
+		// Some templates place CSS rules as text content inside the <styles>
+		// tag. Read it before the initial render so it does not schedule a
+		// follow-up Lit update from firstUpdated().
+		if(!this.value && this.textContent)
+		{
+			this.value = this.textContent.trim();
+		}
 
 		// Start from a clean slate in case we are being re-connected so we never
 		// leave orphaned nodes.
@@ -146,16 +153,6 @@ export class Et2Styles extends Et2Widget(LitElement)
 		super.disconnectedCallback();
 
 		this._removeInjectedNodes();
-	}
-
-	firstUpdated()
-	{
-		// Legacy templates place the CSS rules as text content inside the
-		// <styles> tag.  Pick that up if nothing was explicitly set.
-		if(!this.value && this.textContent)
-		{
-			this.value = this.textContent.trim();
-		}
 	}
 
 	updated(changedProperties)
