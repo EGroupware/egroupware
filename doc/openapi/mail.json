@@ -112,6 +112,44 @@
       }
     },
     "/mail/{id}": {
+      "get": {
+        "tags": ["Mail"],
+        "operationId": "getMailAccount",
+        "summary": "Get mail account details",
+        "description": "Returns the full configuration of a specific mail account by its ID. Passwords are masked for security.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Mail account details retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MailAccount"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          }
+        }
+      },
       "post": {
         "tags": ["Mail"],
         "operationId": "sendMailFor",
@@ -164,6 +202,50 @@
                 }
               }
             }
+          }
+        }
+      },
+      "patch": {
+        "tags": ["Mail"],
+        "operationId": "patchMailAccount",
+        "summary": "Patch mail account configuration",
+        "description": "Updates specific fields of a mail account. Requires appropriate permissions (admin or editable account). Only provided fields are modified.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "enum": ["application/json"]
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MailAccountPatch"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Mail account updated successfully (No Content)"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          },
+          "403": {
+            "$ref": "#/components/responses/Forbidden"
+          },
+          "404": {
+            "$ref": "#/components/responses/NotFound"
           }
         }
       }
@@ -665,6 +747,103 @@
           }
         }
       },
+      "MailAccount": {
+        "type": "object",
+        "description": "Full mail account configuration returned by GET /mail/{id}. Passwords are masked for security.",
+        "properties": {
+          "accDomain": { "type": "string" },
+          "accFolderArchive": { "type": "string" },
+          "accFolderDraft": { "type": "string" },
+          "accFolderHam": { "type": "string" },
+          "accFolderJunk": { "type": "string" },
+          "accFolderSent": { "type": "string" },
+          "accFolderTemplate": { "type": "string" },
+          "accFolderTrash": { "type": "string" },
+          "accFurtherIdentities": { "type": "boolean" },
+          "accId": { "type": "integer" },
+          "accImapAccountId": { "type": "string" },
+          "accImapHost": { "type": "string" },
+          "accImapLogintype": { "type": "string", "description": "Login type for IMAP (e.g., '' (Username specified for all), 'standard' (username from account), 'vmailmgr' (username@domainname), 'uidNumber' (UserId@domain eg. u1234@domain), 'email' (EMail-address from account, 'domain/username' (Exchange: domain/username)" },
+          "accImapPort": { "type": ["integer", "null"] },
+          "accImapSsl": { "type": "integer", "description": "0: unencrypted, 1: StartTLS, 2: TLS" },
+          "accImapType": { "type": "string" },
+          "accImapUsername": { "type": "string" },
+          "accModified": { "type": "string", "format": "date-time" },
+          "accModifier": { "type": "integer" },
+          "accName": { "type": "string" },
+          "accSieveEnabled": { "type": "boolean" },
+          "accSieveHost": { "type": "string" },
+          "accSievePort": { "type": "integer" },
+          "accSieveSsl": { "type": "integer", "description": "0: unencrypted, 1: StartTLS, 2: TLS" },
+          "accSmimeAccountId": { "type": "integer" },
+          "accSmtpAccountId": { "type": "string" },
+          "accSmtpAuthSession": { "type": "boolean" },
+          "accSmtpHost": { "type": "string" },
+          "accSmtpPort": { "type": "integer" },
+          "accSmtpeSsl": { "type": "integer", "description": "0: unencrypted, 1: StartTLS, 2: TLS" },
+          "accSmtpType": { "type": "string" },
+          "accUserEditable": { "type": "boolean", "description": "Whether the user can edit this account" },
+          "accUserForward": { "type": "boolean" },
+          "accountId": { "type": "array", "items": { "type": "string" } },
+          "accountStatus": { "type": "boolean", "description": "True if the account is active/enabled" },
+          "deliveryMode": { "type": ["string", "null"] },
+          "identEmail": { "type": "string" },
+          "identId": { "type": "integer" },
+          "identName": { "type": "string" },
+          "identOrg": { "type": "string" },
+          "identRealname": { "type": "string" },
+          "identSignature": { "type": "string" },
+          "mailAlternateAddress": { "type": "array", "items": { "type": "string" } },
+          "mailForwardingAddress": { "type": "array", "items": { "type": "string" } },
+          "mailLocalAddress": { "type": "string" },
+          "quotaLimit": { "type": ["integer", "null"], "description": "Quota limit in MB" },
+          "quotaUsed": { "type": ["integer", "null"], "description": "Quota used in MB (read-only)" }
+        }
+      },
+      "MailAccountPatch": {
+        "type": "object",
+        "description": "Partial update object for PATCH /mail/{id}. Only provided fields are modified. Read-only fields (e.g., passwords, IDs) will be ignored.",
+        "properties": {
+          "accDomain": { "type": "string" },
+          "accFolderArchive": { "type": "string" },
+          "accFolderDraft": { "type": "string" },
+          "accFolderHam": { "type": "string" },
+          "accFolderJunk": { "type": "string" },
+          "accFolderSent": { "type": "string" },
+          "accFolderTemplate": { "type": "string" },
+          "accFolderTrash": { "type": "string" },
+          "accFurtherIdentities": { "type": "boolean" },
+          "accImapHost": { "type": "string" },
+          "accImapLogintype": { "type": "string", "description": "Login type for IMAP (e.g., '' (Username specified for all), 'standard' (username from account), 'vmailmgr' (username@domainname), 'uidNumber' (UserId@domain eg. u1234@domain), 'email' (EMail-address from account, 'domain/username' (Exchange: domain/username)" },
+          "accImapPort": { "type": ["integer", "null"] },
+          "accImapSsl": { "type": "integer", "description": "0: unencrypted, 1: StartTLS, 2: TLS" },
+          "accImapType": { "type": "string" },
+          "accImapUsername": { "type": "string" },
+          "accName": { "type": "string" },
+          "accSieveEnabled": { "type": "boolean" },
+          "accSieveHost": { "type": "string" },
+          "accSievePort": { "type": "integer" },
+          "accSieveSsl": { "type": "integer", "description": "0: unencrypted, 1: StartTLS, 2: TLS" },
+          "accSmtpAuthSession": { "type": "boolean" },
+          "accSmtpHost": { "type": "string" },
+          "accSmtpPort": { "type": "integer" },
+          "accSmtpeSsl": { "type": "integer", "description": "0: unencrypted, 1: StartTLS, 2: TLS" },
+          "accSmtpType": { "type": "string" },
+          "accUserEditable": { "type": "boolean", "description": "Whether the user can edit this account" },
+          "accUserForward": { "type": "boolean" },
+          "accountStatus": { "type": "boolean", "description": "Enable/disable the account (admin only)" },
+          "deliveryMode": { "type": ["string", "null"] },
+          "identEmail": { "type": "string", "format": "email" },
+          "identName": { "type": "string" },
+          "identOrg": { "type": "string" },
+          "identRealname": { "type": "string" },
+          "identSignature": { "type": "string" },
+          "mailAlternateAddress": { "type": "array", "items": { "type": "string" } },
+          "mailForwardingAddress": { "type": "array", "items": { "type": "string" } },
+          "mailLocalAddress": { "type": "string" },
+          "quotaLimit": { "type": ["integer", "null"], "description": "Quota limit in MB (admin only)" }
+        }
+      },
       "SendMailRequest": {
         "type": "object",
         "required": ["to", "subject"],
@@ -854,6 +1033,26 @@
               "type": "string"
             },
             "description": "Basic authentication realm"
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/ErrorResponse"
+            }
           }
         }
       }
