@@ -300,7 +300,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
     private _handleTapHold = function (_node, _callback) {
         //TODO (todo-jquery): ATM we need to convert the possible given jquery dom node object into DOM Element, this
         // should be no longer necessary after removing jQuery nodes.
-        if (_node instanceof jQuery) {
+        if (typeof jQuery !== "undefined" && _node instanceof jQuery) {
             _node = _node[0];
         }
 

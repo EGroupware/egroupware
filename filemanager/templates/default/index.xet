@@ -36,7 +36,7 @@
                 <row class="row $row_cont[class]">
                     <et2-vfs-mime align="center" id="$row" width="100%"></et2-vfs-mime>
                     <et2-image src="${row}[locked]" label="$row_cont[locked_status]" statustext="$row_cont[locked_status]"></et2-image>
-                    <et2-vfs-name id="$row" no_lang="1"/>
+                    <et2-vfs-name id="$row" no_lang="1" class="et2_link" onclick="widget.open(); return false;"/>
                     <et2-vfs-size align="right" id="${row}[size]"/>
                     <et2-date-time id="${row}[mtime]" readonly="true"></et2-date-time>
                     <et2-date-time id="${row}[ctime]" readonly="true"></et2-date-time>
