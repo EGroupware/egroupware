@@ -274,6 +274,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const oldValue = this.settings;
 		const settings = this._settingsObject(value);
 		delete settings.rows;
+		this._normalizeTotalSetting(settings);
 		if(typeof settings.view !== "undefined")
 		{
 			settings.view = this._normalizeView(settings.view);
@@ -718,6 +719,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const contentSettings = this._settingsObject(this.getArrayMgr("content").getEntry(attrs.id || 'nm'));
 		for(const sourceSettings of [contentSettings, attrSettings])
 		{
+			this._normalizeTotalSetting(sourceSettings);
 			if(typeof sourceSettings.view !== "undefined")
 			{
 				sourceSettings.view = this._normalizeView(sourceSettings.view);
@@ -799,6 +801,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _settingsObject(value : Record<string, any> | string | null | undefined) : Record<string, any>
 	{
 		return value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
+	}
+
+	private _normalizeTotalSetting(settings : Record<string, any>)
+	{
+		if(typeof settings.total === "string")
+		{
+			settings.total = Number(settings.total);
+		}
 	}
 
 	private _normalizeView(value : string | null | undefined) : Et2DatagridView
@@ -891,6 +901,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		if(this.rows.length)
 		{
 			this._dataProvider.storeRows(this.rows);
+			this._applySettingsTotalToDatagrid();
 			this._datagrid?.setInitialRows(this.rows);
 			// No need to keep them
 			this.rows = [];
@@ -1121,7 +1132,20 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	{
 		this.rows = rows || [];
 		this._dataProvider.storeRows(this.rows);
+		this._applySettingsTotalToDatagrid();
 		this._datagrid?.setInitialRows(this.rows);
+	}
+
+	/**
+	 * Apply the server-provided total before initial rows emit loading-done.
+	 * Initial rows are only the preloaded page, not necessarily the full result.
+	 */
+	private _applySettingsTotalToDatagrid()
+	{
+		if(this._datagrid && typeof this.settings?.total === "number")
+		{
+			this._datagrid.total = this.settings.total;
+		}
 	}
 
 	/**

@@ -65,6 +65,42 @@ describe("Et2Nextmatch header event handling", () =>
 {
 	/**
 	 * Contract under test:
+	 * - Initial rows must still produce a search-result signal
+	 *   when nextmatch is rendered in tile view.
+	 *
+	 * Setup strategy:
+	 * - Configure tile view and preloaded rows before connecting the nextmatch.
+	 * - Listen for the bubbling `et2-search-result` event on the host.
+	 *
+	 * Pass criteria:
+	 * - At least one search-result event is emitted with the settings total.
+	 */
+	it("emits search result for initial rows in tile view", async() =>
+	{
+		const el = new Et2Nextmatch();
+		el.view = "tile";
+		el.settings = {total: "17"};
+		el.rows = [
+			{id: "row-1", title: "Row 1"},
+			{id: "row-2", title: "Row 2"}
+		];
+
+		let eventTotal = "";
+		el.addEventListener("et2-search-result", (event : Event) =>
+		{
+			eventTotal = String((event as CustomEvent).detail?.total ?? "");
+		});
+
+		document.body.append(el);
+		await waitForCondition(() => eventTotal === "17");
+
+		assert.strictEqual(el.settings.total, 17, "string settings total should be normalized when settings are applied");
+		assert.equal(eventTotal, "17", "initial tile rows should emit a search-result event with settings total");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
 	 * - Non-canceled header filter events merge into active filters.
 	 *
 	 * Setup strategy:
@@ -847,7 +883,8 @@ describe("Et2Nextmatch header event handling", () =>
 			not_a_nextmatch_setting: "pollution",
 			placeholder_actions: "add,import_csv",
 			searchletter: "M",
-			rows
+			rows,
+			total: "17"
 		};
 		const contentMgr = {
 			getEntry: () => settings,
@@ -879,7 +916,8 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.deepEqual(attrs.settings, {
 			action_var: "nm_action_id",
 			filter_aria_label: "Addressbook",
-			placeholder_actions: "add,import_csv"
+			placeholder_actions: "add,import_csv",
+			total: 17
 		}, "settings should keep non-initialization content settings");
 		assert.deepEqual(el.activeFilters.col_filter, {owner: "5"}, "content col_filter should move into active filters");
 		assert.equal(el.activeFilters.searchletter, "M", "content searchletter should move into active filters");
