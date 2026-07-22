@@ -61,16 +61,6 @@ jobs:
             -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
           $COMPOSE up -d --force-recreate db egroupware nginx
 
-      - name: Install PHP extensions
-        run: |
-          set -euo pipefail
-          COMPOSE="docker compose --project-directory $GITHUB_WORKSPACE/sources \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.yml \
-            -f $GITHUB_WORKSPACE/sources/doc/docker/docker-compose.ci.yml"
-          $COMPOSE exec -T egroupware sh -lc '
-            set -e
-            php_version="$(php -r "echo PHP_MAJOR_VERSION . \".\" . PHP_MINOR_VERSION;")"
-          '
       - name: Wait for install
         run: |
           set -euo pipefail
