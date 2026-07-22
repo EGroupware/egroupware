@@ -216,10 +216,10 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			}
 			if($success) $count++;
 
-			// Add some more time
-			if($success && $import_csv->get_current_position() > 0 && $import_csv->get_current_position() % 100 == 0)
+			// Switching timelimit off for more than 100 items
+			if($success && $import_csv->get_current_position() > 0 && $import_csv->get_current_position() == 100)
 			{
-				set_time_limit(10);
+				set_time_limit(0);
 			}
 
 			// Send an update to client
