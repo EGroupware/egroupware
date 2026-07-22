@@ -219,3 +219,112 @@ HTTP/1.1 200 Ok
 }
 ```
 </details>
+
+#### **GET** `/mail/<id>` get mail account
+
+<details>
+  <summary>Example: Querying a mail account by its ID</summary>
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/a --user <user> -H 'Accept: application/json'
+    
+HTTP/1.1 200 Ok
+
+{
+    "accDomain": "boulder.egroupware.org",
+    "accFolderArchive": "",
+    "accFolderDraft": "Drafts",
+    "accFolderHam": "",
+    "accFolderJunk": "Junk",
+    "accFolderSent": "Sent",
+    "accFolderTemplate": "Templates",
+    "accFolderTrash": "Trash",
+    "accFurtherIdentities": false,
+    "accId": 1,
+    "accImapAccountId": "c",
+    "accImapAdminAccountId": 0,
+    "accImapAdminCredId": 184,
+    "accImapAdminPassword": "********",
+    "accImapAdminPwEnc": 4,
+    "accImapAdminUsername": "dovecot@boulder.egroupware.org",
+    "accImapCredId": "email",
+    "accImapDefaultQuota": null,
+    "accImapHost": "mail",
+    "accImapLogintype": "email",
+    "accImapPassword": "********",
+    "accImapPort": 993,
+    "accImapSsl": 2,
+    "accImapTimeout": null,
+    "accImapType": "EGroupware\\Api\\Mail\\Imap\\Jmap",
+    "accImapUsername": "ralf@boulder.egroupware.org",
+    "accModified": "2026-07-21 18:57:03",
+    "accModifier": 5,
+    "accName": "EGroupware Mail",
+    "accSieveEnabled": true,
+    "accSieveHost": "mail",
+    "accSievePort": 4190,
+    "accSieveSsl": 1,
+    "accSmimeAccountId": 5,
+    "accSmimeCredId": 123,
+    "accSmimePassword": "********",
+    "accSmimePwEnc": 4,
+    "accSmimeUsername": "ralf@boulder.egroupware.org",
+    "accSmtpAccountId": "c",
+    "accSmtpAuthSession": true,
+    "accSmtpCredId": "email",
+    "accSmtpHost": "mail",
+    "accSmtpPassword": "********",
+    "accSmtpPort": 465,
+    "accSmtpSsl": 2,
+    "accSmtpType": "EGroupware\\Api\\Mail\\Smtp\\Stalwart",
+    "accSmtpUsername": "ralf@boulder.egroupware.org",
+    "accSpamAccountId": 0,
+    "accSpamApi": "https://spamtitan.egroupware.org",
+    "accSpamCredId": 122,
+    "accSpamPassword": "********",
+    "accSpamPwEnc": 4,
+    "accSpamUsername": "https://spamtitan.egroupware.org",
+    "accUserEditable": true,
+    "accUserForward": true,
+    "accountId": [
+        "0"
+    ],
+    "accountStatus": true,
+    "deliveryMode": null,
+    "identEmail": "ralf@boulder.egroupware.org",
+    "identId": 1,
+    "identName": "Test Ralf",
+    "identOrg": "boulder.egroupware.org",
+    "identRealname": "Herr Ralf Becker",
+    "identSignature": "<p style=\"font-family: arial, helvetica, sans-serif; font-size: 10pt;\">{{n_fn}}<br />{{org_name}}<br />{{#Test}}</p>\n<p style=\"font-family: arial, helvetica, sans-serif; font-size: 10pt;\">{{user/n_fn}}<br />{{user/#Test}}</p>",
+    "mailAlternateAddress": [
+        "ralf.becker@boulder.egroupware.org",
+        "buyer.ag@boulder.egroupware.org",
+        "bb@boulder.egroupware.org",
+        "postmaster@boulder.egroupware.org"
+    ],
+    "mailForwardingAddress": [],
+    "mailLocalAddress": "ralf@boulder.egroupware.org",
+    "notifyAccountId": 0,
+    "notifyFolders": [],
+    "quotaLimit": 200,
+    "quotaUsed": 0
+}
+```
+</details>
+
+
+#### **PATCH** `/mail/<id>` modifying a mail account
+
+<details>
+  <summary>Example: Modifying a mail account specified by its ID</summary>
+
+```
+curl -i https://example.org/egroupware/groupdav.php/mail/a --user <user> -H 'Content-Type: application/json' -X PATCH \
+  -d '{"identName": "Test Ralf", "quotaLimit": 200, "accountStatus": true}'
+
+HTTP/2 204
+x-dav-powered-by: EGroupware 26.1 CalDAV/CardDAV/GroupDAV server
+x-webdav-status: 204 No Content
+```
+</details>

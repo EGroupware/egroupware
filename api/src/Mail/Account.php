@@ -499,7 +499,7 @@ class Account implements \ArrayAccess
 				unset($ex);
 			}
 		}
-		return $this->deliveryMode != Smtp::FORWARD_ONLY && $this->accountStatus == Smtp::MAIL_ENABLED;
+		return $this->deliveryMode != Smtp::FORWARD_ONLY && isset($this->accountStatus);
 	}
 
 	/**

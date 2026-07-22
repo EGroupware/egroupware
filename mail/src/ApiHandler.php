@@ -11,6 +11,7 @@
 namespace EGroupware\Mail;
 
 use EGroupware\Api;
+use OpenAI\Exceptions\InvalidArgumentException;
 
 /**
  * REST API for mail
@@ -563,7 +564,8 @@ class ApiHandler extends Api\CalDAV\Handler
 			{
 				$prefix = '/'.Api\Accounts::id2name($user);
 				if (str_starts_with($path, $prefix)) $path = substr($path, strlen($prefix));
-				if ($user  != $GLOBALS['egw_info']['user']['account_id'])
+				if ($user != $GLOBALS['egw_info']['user']['account_id'] &&
+					empty($GLOBALS['egw_info']['user']['apps']['admin']))
 				{
 					throw new \Exception("/mail is NOT available for users other than the one you authenticated!", 403);
 				}
@@ -573,6 +575,12 @@ class ApiHandler extends Api\CalDAV\Handler
 				case '/mail':
 					echo json_encode(iterator_to_array(Api\Mail\Account::identities([], true, 'name', $user)),
 						self::JSON_RESPONSE_OPTIONS);
+					return true;
+
+				case preg_match('#^/mail/(\d+)$#', $path, $matches) === 1:
+					$account = self::getMailAccount($user, $matches[1] ?? null);
+					$account->getUserData();    // read user data too
+					echo json_encode(self::JsMailAccount($account), self::JSON_RESPONSE_OPTIONS);
 					return true;
 
 				case preg_match('#^/mail(/(\d+))?/vacation$#', $path, $matches) === 1:
@@ -626,7 +634,106 @@ class ApiHandler extends Api\CalDAV\Handler
 			return Api\Mail\Account::get_default();
 		}
 		$identity = Api\Mail\Account::read_identity($ident_id, false, $user);
-		return Api\Mail\Account::read($identity['acc_id']);
+		return Api\Mail\Account::read($identity['acc_id'],
+			!empty($GLOBALS['egw_info']['user']['apps']['admin']) && $user != $GLOBALS['egw_info']['user']['account_id'] ? $user : null);
+	}
+
+	const PASSWORD_DUMMY = '********';
+	static function JsMailAccount(Api\Mail\Account $account) : array
+	{
+		$data = array_combine(
+			array_map(fn($name) => lcfirst(implode('', array_map('ucfirst', explode('_', $name)))), array_keys($account->params)),
+			array_map(fn($value, $key) => str_ends_with($key, '_password') ? self::PASSWORD_DUMMY :
+				($value === (string)(int)$value ? (int)$value : $value), $account->params, array_keys($account->params)));
+
+		$data['accFurtherIdentities'] = (bool)$data['AccFurtherIdentities'];
+
+		// unset some internal user-data
+		unset($data['stalwart'], $data['mailingLists'], $data['uid']);
+		if (isset($data['accountStatus']))
+		{
+			$data['accountStatus'] = !empty($data['accountStatus']);
+		}
+		ksort($data);
+
+		return $data;
+	}
+
+	static function parseJsMailAccount(array $data) : array
+	{
+		$account = array_combine(
+			array_map(fn($key) => !preg_match('/^(mail|quota|accountStatus|delivery)/', $key) && preg_match_all('/[A-Z]*[a-z]+/', $key, $matches) ?
+				implode('_', array_map(fn($name) => strtolower($name), $matches[0])) : $key, array_keys($data)),
+			array_values($data));
+
+		// remove "xxxxxxxx" used to replace passwords
+		$data = array_filter($account,
+			fn($value, $key) => !str_ends_with($key, '_password') || $value !== self::PASSWORD_DUMMY,
+			ARRAY_FILTER_USE_BOTH);
+
+		foreach($data as $name => &$value)
+		{
+			switch ($name)
+			{
+				case 'acc_further_identities':
+				case 'acc_user_editable':
+				case 'acc_user_forward':
+					is_bool($value) || throw new \InvalidArgumentException("AccFurtherIdentities must be true or false, $value given!");
+					break;
+				case str_ends_with($name, '_port'):
+					if ($value !== '')
+					{
+						$value = preg_match('/^[1-9]+[0-9]*$/', $value) && 0 < $value && $value <= 65536 ? (int)$value :
+							throw new \InvalidArgumentException("$name must be either be empty of a number between 0 and 65536, $value given!");
+					}
+					break;
+				case 'quotaLimit':
+					if ($value !== '')
+					{
+						$value = preg_match('/^[1-9]+[0-9]*$/', $value) && 0 < $value ? (int)$value :
+							throw new \InvalidArgumentException("$name must be either be empty of a number between bigger than 0, $value given!");
+					}
+					break;
+				case 'mailLocalAddress':
+				case 'mailAlternateAddress':
+				case 'mailForwardAddress':
+					$value = self::parseEmail($value, $name === 'mailLocalAddress');
+					break;
+				case str_ends_with($name, '_id'):
+				case 'quotaUsed':   // readonly
+					// do NOT allow changing them that way
+					unset($account[$name]);
+					break;
+				case 'acc_imap_login_type':
+					in_array($value, \admin_mail::$login_types, true) ||
+						throw new \InvalidArgumentException("Invalid login type value '$value'! Allowed values are '".implode("', '", \admin_mail::$login_types)."'");
+					break;
+			}
+		}
+		return $data;
+	}
+
+	/**
+	 * Parse / validate a single or multiple email addresses
+	 *
+	 * @param string|string[] $values
+	 * @param bool $multiple
+	 * @return string|string[]
+	 */
+	public static function parseEmail($values, bool $multiple=true)
+	{
+		if (!$multiple && is_array($values))
+		{
+			throw new \InvalidArgumentException('Only a single email address allowed!');
+		}
+		foreach((array)$values as $email)
+		{
+			if (!preg_match(Api\Etemplate\Widget\Url::EMAIL_PREG, $email) || substr($email, -1) === '>')
+			{
+				throw new \InvalidArgumentException("Invalid email address '$email'!");
+			}
+		}
+		return $values;
 	}
 
 	/**
@@ -655,16 +762,52 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Handle get request for an applications entry
+	 * Handle put or patch request for an applications entry
+	 *
+	 * Currently only patching of mail accounts is implemented
 	 *
 	 * @param array &$options
 	 * @param int $id
 	 * @param int $user =null account_id of owner, default null
+	 * @param string $prefix =null user prefix from path (eg. /ralf from /ralf/addressbook)
+	 * @param string $method='PUT' also called for POST and PATCH
+	 * @param ?string $content_type=null
 	 * @return mixed boolean true on success, false on failure or string with http status (eg. '404 Not Found')
 	 */
-	function put(&$options,$id,$user=null)
+	function put(&$options, $id, $user=null, $prefix=null, string $method='PUT', ?string $content_type=null)
 	{
-		return '501 Not Implemented';
+		if ($method !== 'PATCH' || !Api\CalDAV::isJSON() ||
+			($id = (int)$id) <= 0)
+		{
+			return '501 Not Implemented';
+		}
+		if (!($account = $this->getMailAccount($user, $id)))
+		{
+			return '404 Not Found';
+		}
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) &&
+			!($account->acc_user_editable && array_intersect($account->account_id, [0, $GLOBALS['egw_info']['user']['account_id']]) &&
+				$user == $GLOBALS['egw_info']['user']['account_id']))
+		{
+			return '403 Not Authorized';
+		}
+		try {
+			$account->getUserData();
+			$data = self::parseJsMailAccount(json_decode($options['content'], true, 2, JSON_THROW_ON_ERROR));
+			$data = Api\CalDAV\JsBase::patch($data, $account->params);
+
+			// save user data only, if used as an admin
+			if (empty($GLOBALS['egw_info']['user']['apps']['admin']))
+			{
+				$user = null;
+			}
+			Api\Mail\Account::write($data, $user);
+
+			return '204 No Content';
+		}
+		catch (\Throwable $e) {
+			self::handleException($e);
+		}
 	}
 
 	/**

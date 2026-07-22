@@ -106,6 +106,7 @@ class Stalwart extends Sql
 
 				$account = current($response['methodResponses'][0][1]['list'] ?? []);
 			}
+			$userData['mailAlternateAddress'] ??= [];
 		}
 
 		$domainId = $this->domainId($this->defaultDomain) ?? throw new \Exception("Domain '$this->defaultDomain' not found!");
@@ -151,6 +152,7 @@ class Stalwart extends Sql
 			$userData = [
 				'mailLocalAddress' =>  $email ?? $account['emailAddress'],   // preserve EGroupware's primary mail address
 				'quotaLimit' => $account['quotas']['maxDiskQuota'] ?? null ? $account['quotas']['maxDiskQuota']>>20 : null, // MB
+				'quotaUsed' => isset($account['usedDiskQuota']) ? $account['usedDiskQuota']>>20 : null, // MB
 				'uid' => [$account['name']],
 				'mailAlternateAddress' => array_values(array_unique($aliases)),
 				'mailForwardingAddress' => [],
@@ -225,7 +227,7 @@ class Stalwart extends Sql
 				'secret' => $this->accounts->id2name($_uidnumber, 'account_pwd'),
 			]],
 			'memberGroupIds' => Jmap::boolPatch($this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber))),
-		]);
+		], fn($val) => isset($val));    // keep empty array
 		// update account in Stalwart
 		if (($userData = $this->getUserData($_uidnumber)) && !empty($userData['accountStatus']) && $_accountStatus)
 		{

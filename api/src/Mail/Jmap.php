@@ -194,6 +194,7 @@ class Jmap
 			$response = $this->api($url.'/.well-known/jmap');
 		}
 		// as I can't figure out what the Stalwart URL for the session object is, I use .well-know/jmap for now
+		// it's: /jmap/session
 		else//if (empty($accountId))
 		{
 			$response = $this->api($url.'/.well-known/jmap');
