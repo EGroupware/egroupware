@@ -27,7 +27,7 @@ module.exports.getAllComponents = function ()
 			customElementsManifestShoelace.modules.find(module =>
 				sl_class = module.declarations.find(declaration => declaration.kind === "class" && declaration.name === superclass.name));
 		}
-		else if (superclass && superclass.name.substring(0, 3) === "Et2")
+		else if (superclass && typeof superclass.name === 'string' && superclass.name.substring(0, 3) === "Et2")
 		{
 			const name = superclass.name.replace(/(Readonly|Mobile)$/, '');
 			customElementsManifest.modules.find(module =>
