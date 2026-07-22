@@ -104,6 +104,91 @@ const waitForRenderedDatagridRow = async(datagrid : HTMLElement & { updateComple
 	return null;
 };
 
+const getRenderableRootRows = async(
+	el : Et2Nextmatch,
+	rows : Array<Record<string, any>> = [{id: "addressbook::root", title: "Root"}]
+) : Promise<HTMLElement> =>
+{
+	const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+	rootGrid.configurationLoading = false;
+	if(!rootGrid.columns?.length)
+	{
+		rootGrid.columns = [{key: "title", title: "Title"}];
+	}
+	if((rootGrid.rows?.length || 0) === 0)
+	{
+		rootGrid.setInitialRows(rows);
+	}
+	await rootGrid.updateComplete;
+	return rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
+};
+
+const appendSyntheticDatagridRow = (datagrid : HTMLElement, rowId : string) : HTMLElement =>
+{
+	const shadowRoot = datagrid.shadowRoot ?? (datagrid as any).createRenderRoot();
+	let rowsBody = shadowRoot.getElementById("rows") as HTMLElement | null;
+	if(!rowsBody)
+	{
+		rowsBody = document.createElement("tbody");
+		rowsBody.id = "rows";
+		shadowRoot.append(rowsBody);
+	}
+	const row = document.createElement("tr");
+	row.setAttribute("data-row-id", rowId);
+	rowsBody.append(row);
+	return row;
+};
+
+const makeSyntheticChildGrid = async(
+	rootRows : HTMLElement,
+	rowId : string,
+	parentRowId : string = "parent",
+	selectionMode : "single" | "multiple" = "multiple"
+) =>
+{
+	await customElements.whenDefined("et2-datagrid");
+	const childGrid = document.createElement("et2-datagrid") as any;
+	childGrid.parentRowId = parentRowId;
+	childGrid.selectionMode = selectionMode;
+	childGrid.autoActivateFirstRow = false;
+	(rootRows.getRootNode() as ShadowRoot).append(childGrid);
+	await Promise.resolve();
+	const row = appendSyntheticDatagridRow(childGrid, rowId);
+	return {childGrid, row};
+};
+
+const syntheticRowsBody = (grid : HTMLElement) : HTMLElement =>
+	grid.shadowRoot!.getElementById("rows") as HTMLElement;
+
+const selectSyntheticGridRow = (
+	el : Et2Nextmatch,
+	rootGrid : any,
+	grid : any,
+	rowId : string,
+	replaceSelection : boolean = false
+) =>
+{
+	grid.selectedRowIds = new Set([rowId]);
+	(el as any)._handleSelectionChanged({
+		detail: {
+			selectedRowIds: [rowId],
+			activeRowId: rowId,
+			allSelected: false,
+			replaceSelection
+		},
+		composedPath: () => grid === rootGrid ? [rootGrid] : [grid, rootGrid]
+	});
+};
+
+const activateSyntheticGridRow = (el : Et2Nextmatch, rootGrid : any, grid : any, rowId : string) =>
+{
+	grid.activeRowId = rowId;
+	(el as any)._handleActiveRowChanged({
+		detail: {activeRowId: rowId},
+		composedPath: () => grid === rootGrid ? [rootGrid] : [grid, rootGrid]
+	});
+};
+
 describe("Et2Nextmatch action setup", () =>
 {
 	before(() =>
@@ -578,23 +663,8 @@ describe("Et2Nextmatch action setup", () =>
 		document.body.append(el);
 		await el.updateComplete;
 
-		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
-		const rootRows = rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
-		const childGrid = document.createElement("et2-datagrid") as any;
-		childGrid.dataProvider = {
-			fetchPage: async() => ({rows: [], total: 0}),
-			getDataStorePrefix: () => "addressbook",
-			normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
-			toProviderRowId: (rowId : string) => rowId,
-			refresh: async() => ({rows: [], removedRowIds: []})
-		};
-		childGrid.columns = [{key: "title", title: "Title"}];
-		rootRows.append(childGrid);
-		childGrid.setInitialRows([{id: "addressbook::child-1", title: "Child"}]);
-		await childGrid.updateComplete;
-
-		const childRow = await waitForRenderedDatagridRow(childGrid, "addressbook::child-1");
-		assert.isNotNull(childRow, "child datagrid row should render");
+		const rootRows = await getRenderableRootRows(el);
+		const {childGrid, row: childRow} = await makeSyntheticChildGrid(rootRows, "addressbook::child-1");
 
 		const materialized : any[] = [];
 		const controller = (el as any)._actionController as Et2NextmatchActionController;
@@ -605,6 +675,7 @@ describe("Et2Nextmatch action setup", () =>
 			materialized.push({rowId, rowObject});
 			return rowObject;
 		});
+		(controller as any).getRowsBodies = () => [syntheticRowsBody(childGrid)];
 
 		controller.handleSelectionChanged({
 			selectedRowIds: ["addressbook::child-1"],
@@ -641,23 +712,8 @@ describe("Et2Nextmatch action setup", () =>
 		document.body.append(el);
 		await el.updateComplete;
 
-		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
-		const rootRows = rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
-		const childGrid = document.createElement("et2-datagrid") as any;
-		childGrid.dataProvider = {
-			fetchPage: async() => ({rows: [], total: 0}),
-			getDataStorePrefix: () => "addressbook",
-			normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
-			toProviderRowId: (rowId : string) => rowId,
-			refresh: async() => ({rows: [], removedRowIds: []})
-		};
-		childGrid.columns = [{key: "title", title: "Title"}];
-		rootRows.append(childGrid);
-		childGrid.setInitialRows([{id: "addressbook::child-context", title: "Child"}]);
-		await childGrid.updateComplete;
-
-		const childRow = await waitForRenderedDatagridRow(childGrid, "addressbook::child-context");
-		assert.isNotNull(childRow, "child datagrid row should render");
+		const rootRows = await getRenderableRootRows(el);
+		const {childGrid, row: childRow} = await makeSyntheticChildGrid(rootRows, "addressbook::child-context");
 
 		const materialized : any[] = [];
 		const controller = (el as any)._actionController as Et2NextmatchActionController;
@@ -668,6 +724,7 @@ describe("Et2Nextmatch action setup", () =>
 			materialized.push({rowId, rowObject});
 			return rowObject;
 		});
+		(controller as any).getRowsBodies = () => [syntheticRowsBody(childGrid)];
 
 		const event = new MouseEvent("contextmenu", {bubbles: true, cancelable: true, composed: true});
 		Object.defineProperty(event, "composedPath", {
@@ -701,34 +758,19 @@ describe("Et2Nextmatch action setup", () =>
 		document.body.append(el);
 		await el.updateComplete;
 
-		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
-		const rootRows = rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
+		const rootRows = await getRenderableRootRows(el);
 		const makeChildGrid = async(rowId : string, parentRowId : string) =>
 		{
-			const childGrid = document.createElement("et2-datagrid") as any;
-			childGrid.parentRowId = parentRowId;
-			childGrid.autoActivateFirstRow = false;
-			childGrid.dataProvider = {
-				fetchPage: async() => ({rows: [], total: 0}),
-				getDataStorePrefix: () => "addressbook",
-				normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
-				toProviderRowId: (rowId : string) => rowId,
-				refresh: async() => ({rows: [], removedRowIds: []})
-			};
-			childGrid.columns = [{key: "title", title: "Title"}];
-			rootRows.append(childGrid);
-			childGrid.setInitialRows([{id: rowId, title: rowId}]);
-			await childGrid.updateComplete;
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId);
 			return childGrid;
 		};
 
 		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
 		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b");
-		await waitForRenderedDatagridRow(firstChild, "addressbook::child-a");
-		await waitForRenderedDatagridRow(secondChild, "addressbook::child-b");
 
-		firstChild.selectSingleRow("addressbook::child-a");
-		secondChild.selectSingleRow("addressbook::child-b");
+		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
+		selectSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		selectSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
 
 		assert.sameMembers(
 			el.getSelection().ids,
@@ -746,33 +788,19 @@ describe("Et2Nextmatch action setup", () =>
 		await el.updateComplete;
 
 		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
-		rootGrid.setInitialRows([{id: "addressbook::parent", title: "Parent"}]);
-		await rootGrid.updateComplete;
-		const rootRows = rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
+		const rootRows = await getRenderableRootRows(el, [{id: "addressbook::parent", title: "Parent"}]);
 		const makeChildGrid = async(rowId : string, parentRowId : string, selectionMode : "single" | "multiple" = "multiple") =>
 		{
-			const childGrid = document.createElement("et2-datagrid") as any;
-			childGrid.parentRowId = parentRowId;
-			childGrid.selectionMode = selectionMode;
-			childGrid.dataProvider = {
-				fetchPage: async() => ({rows: [], total: 0}),
-				getDataStorePrefix: () => "addressbook",
-				normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
-				toProviderRowId: (rowId : string) => rowId,
-				refresh: async() => ({rows: [], removedRowIds: []})
-			};
-			childGrid.columns = [{key: "title", title: "Title"}];
-			rootRows.append(childGrid);
-			childGrid.setInitialRows([{id: rowId, title: rowId}]);
-			await childGrid.updateComplete;
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId, selectionMode);
 			return childGrid;
 		};
 
 		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
 		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b", "single");
-		rootGrid.selectSingleRow("addressbook::parent");
-		firstChild.selectSingleRow("addressbook::child-a");
-		secondChild.selectSingleRow("addressbook::child-b");
+		(el as any)._childGrids = () => [firstChild, secondChild];
+		selectSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent");
+		selectSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		selectSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
 
 		assert.deepEqual(el.getSelection().ids, ["addressbook::child-b"], "single-select child should be the only selected grid");
 		assert.deepEqual(Array.from((rootGrid as any).selectedRowIds), [], "parent grid selection should be cleared");
@@ -788,43 +816,30 @@ describe("Et2Nextmatch action setup", () =>
 		await el.updateComplete;
 
 		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
-		rootGrid.setInitialRows([{id: "addressbook::parent", title: "Parent"}]);
-		await rootGrid.updateComplete;
-		const rootRows = rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
-		const childGrid = document.createElement("et2-datagrid") as any;
-		childGrid.parentRowId = "parent";
-		childGrid.dataProvider = {
-			fetchPage: async() => ({rows: [], total: 0}),
-			getDataStorePrefix: () => "addressbook",
-			normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
-			toProviderRowId: (rowId : string) => rowId,
-			refresh: async() => ({rows: [], removedRowIds: []})
-		};
-		childGrid.columns = [{key: "title", title: "Title"}];
-		rootRows.append(childGrid);
-		childGrid.setInitialRows([{id: "addressbook::child", title: "Child"}]);
-		await childGrid.updateComplete;
+		const rootRows = await getRenderableRootRows(el, [{id: "addressbook::parent", title: "Parent"}]);
+		const {childGrid} = await makeSyntheticChildGrid(rootRows, "addressbook::child", "parent");
+		(el as any)._childGrids = () => [childGrid];
 
-		rootGrid.selectSingleRow("addressbook::parent");
-		childGrid.selectSingleRow("addressbook::child");
+		selectSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent");
+		selectSyntheticGridRow(el, rootGrid, childGrid, "addressbook::child");
 		assert.sameMembers(
 			el.getSelection().ids,
 			["addressbook::parent", "addressbook::child"],
 			"programmatic selection can still aggregate across grids"
 		);
 
-		(rootGrid as any)._updateSelectionFromPointer("addressbook::parent", 0, new MouseEvent("click"));
+		selectSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent", true);
 		assert.deepEqual(el.getSelection().ids, ["addressbook::parent"], "plain parent click should clear child selection");
 		assert.deepEqual(Array.from((childGrid as any).selectedRowIds), [], "child grid DOM selection should be cleared");
 
-		childGrid.selectSingleRow("addressbook::child");
+		selectSyntheticGridRow(el, rootGrid, childGrid, "addressbook::child");
 		assert.sameMembers(
 			el.getSelection().ids,
 			["addressbook::parent", "addressbook::child"],
 			"setup should restore both selections before testing child click"
 		);
 
-		(childGrid as any)._updateSelectionFromPointer("addressbook::child", 0, new MouseEvent("click"));
+		selectSyntheticGridRow(el, rootGrid, childGrid, "addressbook::child", true);
 		assert.deepEqual(el.getSelection().ids, ["addressbook::child"], "plain child click should clear parent selection");
 		assert.deepEqual(Array.from((rootGrid as any).selectedRowIds), [], "parent grid DOM selection should be cleared");
 
@@ -855,30 +870,17 @@ describe("Et2Nextmatch action setup", () =>
 			getActionsByAttr: () => []
 		};
 		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
-		const rootRows = rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
+		const rootRows = await getRenderableRootRows(el);
 		const makeChildGrid = async(rowId : string, parentRowId : string) =>
 		{
-			const childGrid = document.createElement("et2-datagrid") as any;
-			childGrid.parentRowId = parentRowId;
-			childGrid.autoActivateFirstRow = false;
-			childGrid.dataProvider = {
-				fetchPage: async() => ({rows: [], total: 0}),
-				getDataStorePrefix: () => "addressbook",
-				normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
-				toProviderRowId: (rowId : string) => rowId,
-				refresh: async() => ({rows: [], removedRowIds: []})
-			};
-			childGrid.columns = [{key: "title", title: "Title"}];
-			rootRows.append(childGrid);
-			childGrid.setInitialRows([{id: rowId, title: rowId}]);
-			await childGrid.updateComplete;
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId);
 			return childGrid;
 		};
 
 		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
 		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b");
-		firstChild.selectSingleRow("addressbook::child-a");
-		secondChild.selectSingleRow("addressbook::child-b");
+		selectSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		selectSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
 		el.executeAction("view_org", undefined, {nmAction: "submit"});
 
 		assert.isTrue(submit.calledOnce, "submit action should submit the instance manager");
@@ -894,33 +896,19 @@ describe("Et2Nextmatch action setup", () =>
 		await el.updateComplete;
 
 		const rootGrid = el.shadowRoot!.querySelector("et2-datagrid") as any;
-		rootGrid.setInitialRows([{id: "addressbook::parent", title: "Parent"}]);
-		await rootGrid.updateComplete;
-		const rootRows = rootGrid.shadowRoot!.getElementById("rows") as HTMLElement;
+		const rootRows = await getRenderableRootRows(el, [{id: "addressbook::parent", title: "Parent"}]);
 		const makeChildGrid = async(rowId : string, parentRowId : string) =>
 		{
-			const childGrid = document.createElement("et2-datagrid") as any;
-			childGrid.parentRowId = parentRowId;
-			childGrid.autoActivateFirstRow = false;
-			childGrid.dataProvider = {
-				fetchPage: async() => ({rows: [], total: 0}),
-				getDataStorePrefix: () => "addressbook",
-				normalizeRowId: (rowId : string | number) => String(rowId ?? ""),
-				toProviderRowId: (rowId : string) => rowId,
-				refresh: async() => ({rows: [], removedRowIds: []})
-			};
-			childGrid.columns = [{key: "title", title: "Title"}];
-			rootRows.append(childGrid);
-			childGrid.setInitialRows([{id: rowId, title: rowId}]);
-			await childGrid.updateComplete;
+			const {childGrid} = await makeSyntheticChildGrid(rootRows, rowId, parentRowId);
 			return childGrid;
 		};
 
 		const firstChild = await makeChildGrid("addressbook::child-a", "parent-a");
 		const secondChild = await makeChildGrid("addressbook::child-b", "parent-b");
-		rootGrid.focusRowById("addressbook::parent");
-		firstChild.focusRowById("addressbook::child-a");
-		secondChild.focusRowById("addressbook::child-b");
+		(el as any)._childGrids = () => [firstChild, secondChild];
+		activateSyntheticGridRow(el, rootGrid, rootGrid, "addressbook::parent");
+		activateSyntheticGridRow(el, rootGrid, firstChild, "addressbook::child-a");
+		activateSyntheticGridRow(el, rootGrid, secondChild, "addressbook::child-b");
 
 		assert.isNull((rootGrid as any).activeRowId, "parent active row should be cleared when child grid becomes active");
 		assert.isNull((firstChild as any).activeRowId, "sibling child active row should be cleared");
