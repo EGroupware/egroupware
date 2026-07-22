@@ -1390,6 +1390,48 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: row-upgrade bookkeeping is attached only to elements which need
+	 * row-time work.
+	 * Setup: prepare a row with static markup, a row-bound widget value, and a
+	 * customfields renderer with no dynamic source attributes.
+	 * Pass: static elements stay unmarked while the dynamic widget and
+	 * customfields renderer retain ids for the row upgrade pass.
+	 */
+	it("marks only row-time elements for nextmatch row hydration", async() =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("tr");
+		rowTemplate.innerHTML = `
+			<td class="static-cell">
+				<et2-dg-test-transform class="static-widget" data-value="Static"></et2-dg-test-transform>
+				<et2-dg-test-transform class="dynamic-widget" data-value="$label"></et2-dg-test-transform>
+				<et2-customfields-list class="customfields"></et2-customfields-list>
+			</td>
+		`;
+
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, [{key: "label", title: "Label"}] as any);
+		const root = prepared?.template.content.firstElementChild as HTMLElement | null;
+		const staticCell = root?.querySelector(".static-cell") as HTMLElement | null;
+		const staticWidget = root?.querySelector(".static-widget") as HTMLElement | null;
+		const dynamicWidget = root?.querySelector(".dynamic-widget") as HTMLElement | null;
+		const customfields = root?.querySelector("et2-customfields-list") as HTMLElement | null;
+
+		assert.isFalse(root?.hasAttribute("data-et2nm-id") || false, "static row root should not be upgraded");
+		assert.isFalse(staticCell?.hasAttribute("data-et2nm-id") || false, "static cell should not be upgraded");
+		assert.isFalse(staticWidget?.hasAttribute("data-et2nm-id") || false, "static widget should not be upgraded");
+		assert.isTrue(dynamicWidget?.hasAttribute("data-et2nm-id") || false, "row-bound widget should be upgraded");
+		assert.isTrue(customfields?.hasAttribute("data-et2nm-id") || false, "customfields renderer should be upgraded");
+
+		const dynamicId = dynamicWidget?.getAttribute("data-et2nm-id") || "";
+		assert.deepEqual(
+			prepared?.attrMap?.[dynamicId],
+			{"data-value": "$row_cont[label]"},
+			"row-bound attributes should remain available for hydration"
+		);
+	});
+
+	/**
 	 * Contract: datagrid customfield rows receive shared metadata once from the
 	 * customfield source and row-specific values from top-level #field data.
 	 * Setup: build a row template containing et2-customfields-list without a header,

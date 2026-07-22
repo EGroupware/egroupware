@@ -713,11 +713,26 @@ export class Et2RowProvider
 		}
 
 		let assignedId : string | null = null;
-		if(recordAttributes)
+		const ensureRowUpgradeId = () : string | null =>
 		{
-			assignedId = "et2nm-" + idState.next++;
-			element.setAttribute("data-et2nm-id", assignedId);
-			attrMap[assignedId] = {};
+			if(!recordAttributes)
+			{
+				return null;
+			}
+			if(!assignedId)
+			{
+				assignedId = "et2nm-" + idState.next++;
+				(element as HTMLElement).setAttribute("data-et2nm-id", assignedId);
+				attrMap[assignedId] = {};
+			}
+			return assignedId;
+		};
+
+		// Customfield renderers receive their value and shared field state during
+		// row hydration even when the source template has no dynamic attributes.
+		if(recordAttributes && tag === "et2-customfields-list")
+		{
+			ensureRowUpgradeId();
 		}
 
 		// Resolve row-independent attributes now. Keep row-scoped string
@@ -732,15 +747,25 @@ export class Et2RowProvider
 				continue;
 			}
 			const normalizedValue = this._normalizeLegacyRowExpressionShorthand(value);
-			if(recordAttributes && assignedId && this._isTemplateEventHandler(element, name))
+			if(recordAttributes && this._isTemplateEventHandler(element, name))
 			{
-				handlerMap[assignedId] ??= {};
-				handlerMap[assignedId][name] = normalizedValue;
+				const id = ensureRowUpgradeId();
+				if(!id)
+				{
+					continue;
+				}
+				handlerMap[id] ??= {};
+				handlerMap[id][name] = normalizedValue;
 				continue;
 			}
-			if(recordAttributes && assignedId && normalizedValue.includes("$"))
+			if(recordAttributes && normalizedValue.includes("$"))
 			{
-				attrMap[assignedId][name] = normalizedValue;
+				const id = ensureRowUpgradeId();
+				if(!id)
+				{
+					continue;
+				}
+				attrMap[id][name] = normalizedValue;
 				if(name !== "id" && !this._shouldDeferTemplateAttribute(element, name))
 				{
 					element.setAttribute(name, normalizedValue);
@@ -775,9 +800,13 @@ export class Et2RowProvider
 				});
 			}
 		}
-		if(recordAttributes && assignedId && et2Element.deferredProperties)
+		if(recordAttributes && et2Element.deferredProperties)
 		{
-			Object.assign(attrMap[assignedId], et2Element.deferredProperties);
+			const id = ensureRowUpgradeId();
+			if(id)
+			{
+				Object.assign(attrMap[id], et2Element.deferredProperties);
+			}
 		}
 
 
