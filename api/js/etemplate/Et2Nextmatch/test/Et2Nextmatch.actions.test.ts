@@ -1818,6 +1818,70 @@ describe("Et2Nextmatch action setup", () =>
 		assert.isFalse(row.draggable, "prepared row should be cleared after pointer cleanup");
 	});
 
+	/**
+	 * A filemanager tile's et2-vfs-mime thumbnail is a native-draggable image.
+	 * Simulate pointerdown on that image and resolve its containing tile row.
+	 * Pass when the image's browser file drag is disabled while the row is armed
+	 * for the normal Nextmatch drag action.
+	 */
+	it("uses the row drag for an et2-vfs-mime thumbnail", () =>
+	{
+		const row = document.createElement("div");
+		row.setAttribute("data-row-id", "filemanager::/home/test.png");
+		const mime = document.createElement("et2-vfs-mime");
+		const thumbnail = document.createElement("img");
+		mime.append(thumbnail);
+		row.append(mime);
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_prepare_thumbnail_drag",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "filemanager"})
+		} as any);
+		controller.actionManager = {children: [{id: "egw_link_drag", type: "drag"}]};
+		controller.findEventRow = () => ({rowId: "filemanager::/home/test.png", rowElement: row});
+
+		controller.prepareDragRow({
+			button: 0,
+			ctrlKey: false,
+			metaKey: false,
+			shiftKey: false,
+			altKey: false,
+			target: thumbnail,
+			composedPath: () => [thumbnail, mime, row]
+		} as PointerEvent);
+
+		assert.isFalse(thumbnail.draggable, "thumbnail should not start a browser-native image/file drag");
+		assert.isTrue(row.draggable, "tile row should remain the Nextmatch drag source");
+		controller.clearPreparedDragRow();
+	});
+
+	/**
+	 * Filemanager's desktop drag-out builds its DownloadURL from the selected
+	 * action object's row data.  Materialize a virtualized row through the
+	 * controller and pass when its file metadata is exposed on that object.
+	 */
+	it("keeps file metadata on row action objects for desktop drag-out", () =>
+	{
+		const row = document.createElement("div");
+		const fileData = {
+			name: "test.png",
+			mime: "image/png",
+			download_url: "/webdav.php/home/test.png?download"
+		};
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_drag_out_data",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "filemanager"}),
+			_dataProvider: {getRowData: () => fileData}
+		} as any);
+		controller.actionManager = {children: []};
+		controller.objectManager = makeFakeObjectManager();
+
+		const rowObject = controller.ensureRowActionObject("filemanager::/home/test.png", row);
+
+		assert.strictEqual(rowObject.data, fileData, "row action object should expose the data required for DownloadURL");
+	});
+
 	it("does not arm a nextmatch row as draggable without a drag action", () =>
 	{
 		const row = document.createElement("tr");

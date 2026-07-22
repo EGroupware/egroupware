@@ -968,6 +968,15 @@ export class Et2NextmatchActionController
 			rowObject.findActionTargetHandler = this.objectManager;
 			rowObject.updateActionLinks(this.getActionLinks());
 		}
+		const rowData = (this.host as any)._dataProvider?.getRowData?.(rowId) ??
+			this.host.egw().dataGetUIDdata?.(rowId)?.data;
+		if(rowData && typeof rowData === "object")
+		{
+			// egwDragActionImplementation uses the selected action object's data
+			// to create Chrome's DownloadURL payload for Filemanager drag-out.
+			// Keep it refreshed as virtualized rows are recycled.
+			(rowObject as any).data = rowData;
+		}
 		return rowObject;
 	}
 
@@ -1472,8 +1481,29 @@ export class Et2NextmatchActionController
 		{
 			return;
 		}
+		this._disableNativeVfsThumbnailDrag(event, row.rowElement);
 		row.rowElement.draggable = true;
 		this.preparedDragRow = row.rowElement;
+	}
+
+	/**
+	 * Browser-native image dragging takes precedence over a draggable tile.  A
+	 * filemanager thumbnail is an image inside et2-vfs-mime, so explicitly
+	 * disable that image's native drag source before arming its row.  The row
+	 * then supplies the normal Nextmatch action drag instead of exposing the
+	 * thumbnail URL as a browser file drag.
+	 */
+	private _disableNativeVfsThumbnailDrag(event : PointerEvent, rowElement : HTMLElement)
+	{
+		const thumbnail = (event.composedPath?.() || []).find((node) =>
+			node instanceof HTMLImageElement &&
+			rowElement.contains(node) &&
+			!!node.closest("et2-vfs-mime")
+		) as HTMLImageElement | undefined;
+		if(thumbnail)
+		{
+			thumbnail.draggable = false;
+		}
 	}
 
 	/**
