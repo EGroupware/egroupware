@@ -82,6 +82,31 @@
             <et2-button label="File a file" statustext="File a file" id="file_a_file" onclick="app.filemanager.fileafile" image="upload" noSubmit="true"></et2-button>
 		</et2-toolbar>
 	</et2-template>
+    <et2-template id="filemanager.index.filter">
+        <et2-searchbox id="search" label="Search" class="et2-label-fixed"></et2-searchbox>
+        <et2-visually-hidden class="sort">
+            <et2-select id="sort[id]" label="Sorting" ariaLabel="Ordering" class="et2-label-fixed" value="gid">
+                <option value="mime">Type</option>
+                <option value="name">Name</option>
+                <option value="size">Size</option>
+                <option value="mtime">Modified</option>
+                <option value="ctime">Created</option>
+                <option value="mode">Permissions</option>
+                <option value="uid">Owner</option>
+                <option value="gid">Group</option>
+            </et2-select>
+            <et2-button-toggle ariaLabel="Sorting" id="sort[asc]" onIcon="caret-up-fill" offIcon="caret-down-fill" style="flex-grow: 0;"></et2-button-toggle>
+        </et2-visually-hidden>
+        <et2-select id="filter" label="Filter" class="et2-label-fixed"></et2-select>
+        <et2-details summary="Column Filters" id="col_filters" open="true">
+            <customfields-filters id="col_filter" readonly="true" label="" fields="" class="et2-label-fixed">
+            </customfields-filters>
+        </et2-details>
+        <et2-details summary="Favorites" open="true">
+            <et2-favorites-menu application="filemanager"></et2-favorites-menu>
+        </et2-details>
+        <et2-styles>et2-hbox.sort::part(base) { align-items: flex-end }</et2-styles>
+    </et2-template>
 	<template id="filemanager.index" template="" lang="" group="0" version="1.9.003">
 		<et2-template template="filemanager.index.app-toolbar" slot="main-header"></et2-template>
         <et2-nextmatch id="nm" template="filemanager.index.rows"/>
