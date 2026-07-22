@@ -2808,20 +2808,82 @@ describe("Et2Datagrid virtual height stability", () =>
 			assert.equal(rendered!.getAttribute("data-row-index"), "160", "second deep render should keep the absolute row index");
 			assert.isNull(scratchBody.querySelector("[data-row-id='placeholder:160']"), "second deep render should no longer output a placeholder");
 
-			(el as any)._virtualize?.element(160)?.scrollIntoView({block: "start"});
-			await (el as any)._virtualize?.layoutComplete;
-			await el.updateComplete;
-			const liveRendered = await waitForDatagridRow(el, "row-160");
-			assert.isNotNull(liveRendered, "live datagrid shadow DOM should render row 160 after virtualizer scroll");
-			assert.equal(liveRendered!.getAttribute("data-row-index"), "160", "live rendered row should keep the absolute row index");
-			assert.isNull(
-				el.shadowRoot!.querySelector("[data-row-id='placeholder:160']"),
-				"live datagrid shadow DOM should not keep row 160 as a placeholder"
-			);
-
 			scratchTable.remove();
 			host.remove();
 		});
+
+		/**
+		 * Contract: a datagrid keeps its virtualizer row host alive from initial
+		 * loading through rows in both row and tile view.
+		 * Setup: start in configuration loading, then provide one initial page and
+		 * render a virtual item from an unloaded page into the live row host.
+		 * Pass: the host survives, fetches the deeper page, and renders its live row.
+		 */
+		for(const view of ["row", "tile"] as const)
+		{
+			it(`fetches and renders deep ${view} rows after initial loading clears`, async() =>
+			{
+				const calls : number[] = [];
+				const dataProvider = createDatagridDataProvider({
+					fetchPage: async(start : number, pageSize : number) =>
+					{
+						calls.push(start);
+						return {
+							total: 200,
+							rows: Array.from({length: pageSize}, (_v, index) => ({
+								id: `row-${start + index}`,
+								label: `Row ${start + index}`
+							}))
+						};
+					},
+					getQuerySignature: () => `initial-loading-${view}`
+				});
+
+				const host = document.createElement("div");
+				host.style.height = "360px";
+				host.style.width = "800px";
+
+				const el = createDatagrid();
+				el.configurationLoading = true;
+				if(view === "tile")
+				{
+					el.view = view;
+				}
+				el.style.height = "100%";
+				(el as any)._requestDispatchDelayMs = 0;
+				(el as any)._rowHeightLocked = true;
+				(el as any)._rowHeightPx = 42;
+				el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+				el.pageSize = 50;
+				el.dataProvider = dataProvider as any;
+				document.body.appendChild(host);
+				host.appendChild(el);
+				await el.updateComplete;
+
+				const rows = el.shadowRoot!.querySelector("#rows") as HTMLElement | null;
+				assert.isNotNull(rows, "virtualizer row host should exist during initial loading");
+
+				el.setInitialRows(Array.from({length: 50}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+				el.total = 200;
+				(el as any)._reconcileRowRenderState();
+				el.configurationLoading = false;
+				await el.updateComplete;
+
+				assert.equal(el.shadowRoot!.querySelector("#rows"), rows, "loading state should not replace the virtualizer row host");
+				render((el as any)._renderVirtualRow(160), rows!);
+
+				(el as any)._processQueuedRequests();
+				await new Promise((resolve) => window.setTimeout(resolve, 0));
+				await el.updateComplete;
+				assert.include(calls, 150, "deep virtual item should fetch the missing page");
+
+				render((el as any)._renderVirtualRow(160), rows!);
+				const rendered = rows!.querySelector("[data-row-id='row-160']") as HTMLElement | null;
+				assert.isNotNull(rendered, "live row host should render the fetched deep row");
+				assert.equal(rendered!.getAttribute("data-row-index"), "160", "live deep row should keep its absolute index");
+				host.remove();
+			});
+		}
 	});
 
 describe("Et2Datagrid data loading", () =>

@@ -4568,8 +4568,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	                    })}></div>
 	                `}
 
-	                <div class="dg-body" part="body">
-						${stateTemplate ? stateTemplate : html`
+                <div class="dg-body" part="body">
+						${stateTemplate}
 	                    <div
 	                            id="rows"
 	                            class="dg-tile-grid"
@@ -4580,6 +4580,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	                            aria-multiselectable=${String(this.selectionMode === "multiple")}
 	                            aria-colcount=${String(1)}
 	                            aria-rowcount=${String(this.total ?? this.rows.length)}
+	                            ?hidden=${!!stateTemplate}
 	                            @keydown=${this._handleTableKeydown}
 	                            @pointerdown=${this._handleTablePointerDown}
 	                            @click=${this._handleTableClick}
@@ -4590,7 +4591,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	                            renderItem: this._renderVirtualRow,
 	                            layout: this._tileLayoutConfig()
 	                        })}
-	                    </div>`}
+	                    </div>
 					</div>
 				</div>
 			`;
@@ -4606,8 +4607,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                     })}></div>
                 `}
 
-                <div class="dg-body" part="body">
-					${stateTemplate ? stateTemplate : html`
+	                <div class="dg-body" part="body">
+					${stateTemplate}
 					<table
                             part="table"
 						role="grid"
@@ -4616,6 +4617,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						aria-multiselectable=${String(this.selectionMode === "multiple")}
 						aria-colcount=${String((visibleColumns.length || this.columns.length || 1) + 1)}
 						aria-rowcount=${String(this.total ?? this.rows.length)}
+						?hidden=${!!stateTemplate}
                             @keydown=${this._handleTableKeydown}
                             @pointerdown=${this._handleTablePointerDown}
                             @click=${this._handleTableClick}
@@ -4631,7 +4633,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                             renderItem: this._renderVirtualRow
                         })}
                         </tbody>
-					</table>`}
+					</table>
 				</div>
 			</div>
 		`;
