@@ -162,7 +162,7 @@ class importexport_definition implements importexport_iface_egw_record {
 			case 'plugin':
 				if($_data && !importexport_helper_functions::is_valid_plugin($_data))
 				{
-					throw new Exception('Error: Can\'t save definition, "' + (string)$_data + '" is not a valid plugin!');
+					throw new Exception('Error: Can\'t save definition, "' . (string)$_data . '" is not a valid plugin!');
 				}
 				$this->definition[$_attribute_name] = $_data;
 				return;
@@ -315,7 +315,7 @@ class importexport_definition implements importexport_iface_egw_record {
 		}
 		if(!importexport_helper_functions::is_valid_plugin($this->definition['plugin']))
 		{
-			throw new Exception('Error: Can\'t save definition, "' + $this->definition['plugin'] + '" is not a valid plugin!');
+			throw new Exception('Error: Can\'t save definition, "' . $this->definition['plugin'] . '" is not a valid plugin!');
 		}
 
 		$this->so_sql->data = $this->definition;
