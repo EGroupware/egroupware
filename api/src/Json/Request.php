@@ -74,6 +74,7 @@ class Request
 
 		if (strcasecmp($appName, $classApp) &&  // compare case-insensitive, as classnames are case-insensitive
 			$appName !== 'admin' && // allow admin app, which anyway is the highest privilege (used a lot in Admin app)
+			strtolower($classApp) !== 'api' &&  // api is implicit allowed for everyone
 			// check of old not autoloadable classes e.g. phpbrain.uikb.$method
 			!file_exists($path=EGW_INCLUDE_ROOT.'/'.$appName.'/inc/class.'.$classApp.'.inc.php'))
 		{
