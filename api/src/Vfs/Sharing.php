@@ -134,6 +134,19 @@ class Sharing extends \EGroupware\Api\Sharing
 			}
 			Vfs::$is_root = false;
 
+			// Single-file shares are served directly via WebDAV (ServeRequest), which
+			// needs resolve_url pointing at the share OWNER's file (owner as url-user).
+			// Without this, a logged-in sharee (different from the owner) gets
+			// resolve_url recomputed with themselves as the user and cannot read it.
+			$share['resolve_url'] = Vfs::build_url([
+				'user' => Api\Accounts::id2name($share['share_owner']),
+			]+Vfs::parse_url(Vfs::resolve_url($share['share_path'], true, true, true, true)));
+			// if share not writable append ro=1 to mount url to make it readonly
+			if (!($share['share_writable'] & 1))
+			{
+				$share['resolve_url'] .= (strpos($share['resolve_url'], '?') ? '&' : '?').'ro=1';
+			}
+
 			// get_ui() will ask user if he wants the share permanently mounted
 			return;
 		}
