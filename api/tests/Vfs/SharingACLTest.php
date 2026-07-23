@@ -314,4 +314,55 @@ class SharingACLTest extends SharingBase
 
 		$this->checkSharedFile($link, $mimetype, $share);
 	}
+
+	/**
+	 * Test that a single-file share served to a DIFFERENT logged-in user
+	 * (keep_session branch) actually delivers the file, not an empty body.
+	 *
+	 * This is the regression test for the bug where the keep_session branch
+	 * did not set resolve_url pointing at the share OWNER's file, so a
+	 * logged-in non-owner got an empty response (HTTP 200, 0 bytes).
+	 */
+	public function testSingleFileKeepSession()
+	{
+		$dir = Vfs::get_home_dir().'/';
+
+		// Plain text file
+		$file = $dir.'test_file.txt';
+		$content = 'Testing that sharing a single file to another logged-in user gives us the file.';
+		$this->assertTrue(
+			file_put_contents(Vfs::PREFIX.$file, $content) !== FALSE,
+			'Unable to write test file "' . Vfs::PREFIX . $file .'" - check file permissions for CLI user'
+		);
+		$this->files[] = $file;
+
+		$mimetype = Vfs::mime_content_type($file);
+
+		// Create and use link (as the original user)
+		$extra = array();
+		$this->getShareExtra($file, Sharing::READONLY, $extra);
+
+		$share = $this->createShare($file, Sharing::READONLY, $extra);
+		$link = Vfs\Sharing::share2link($share);
+
+		// Re-init, since they look at user, fstab, etc.
+		Vfs::clearstatcache();
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
+
+		// Now follow the link as a DIFFERENT logged-in user (keep_session branch)
+		LoggedInTest::load_egw($this->account['account_lid'],$this->account['account_passwd']);
+		Vfs::init_static();
+		Vfs\StreamWrapper::init_static();
+
+		// Use cookies for the current (different) user session so the share is
+		// opened with keep_session, exactly like a real logged-in sharee.
+		$data = array();
+		$form = $this->getShare($link, $data, true);
+		$this->assertNotNull($form, "Could not read the share link '$link'");
+
+		// The single file is served via WebDAV (ServeRequest), not the filemanager UI,
+		// so check the actual download delivers the real content, not an empty body.
+		$this->checkSharedFile($link, $mimetype, $share, $content);
+	}
 }
