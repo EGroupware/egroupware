@@ -793,6 +793,12 @@ class importexport_helper_functions {
 		{
 			return false;
 		}
+		// during setup not all apps are already installed and therefore the test would fail and setup stall
+		// --> we assume setup / the developer knows what he's doing and allow every plugin name
+		if (!empty($GLOBALS['egw_setup']))
+		{
+			return true;
+		}
 		foreach(self::get_plugins($_appname, $_type) as $by_type)
 		{
 			foreach((array)$by_type as $class_map)
