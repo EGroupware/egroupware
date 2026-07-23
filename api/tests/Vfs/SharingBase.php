@@ -663,7 +663,7 @@ class SharingBase extends LoggedInTest
 	 * @param $link Share URL
 	 * @param $file Vfs path to file
 	 */
-	public function checkSharedFile($link, $mimetype, $share)
+	public function checkSharedFile($link, $mimetype, $share, $expected_content = null)
 	{
 		$curl = curl_init($link);
 		curl_setopt($curl, CURLOPT_NOBODY, true);
@@ -711,6 +711,22 @@ class SharingBase extends LoggedInTest
 		}
 		$this->assertEquals(200, $http_code, "Did not find the file, got HTTP status $http_code at '$effective_url'");
 		$this->assertStringContainsString($mimetype, $content_type, 'Wrong file type');
+
+		// If we have expected content, make sure the body actually contains it.
+		// A 0-byte or wrong-content response (e.g. an error page) would otherwise
+		// pass the HEAD-only checks above. Use GET since the body is what matters.
+		if($expected_content !== null)
+		{
+			curl_setopt($curl, CURLOPT_NOBODY, false);
+			curl_setopt($curl, CURLOPT_HTTPGET, true);
+			curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
+			$body = curl_exec($curl);
+			$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+			$this->assertEquals(200, $http_code, "GET for content returned HTTP $http_code at '$effective_url'");
+			$this->assertNotEmpty($body, "Share link '$link' returned an empty body");
+			$this->assertStringContainsString($expected_content, $body,
+				"Share link '$link' did not return the expected file content");
+		}
 	}
 
 	/**
