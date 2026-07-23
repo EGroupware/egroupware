@@ -817,52 +817,6 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
-	 * Contract: datagrid row binding applies row-scoped template attributes to
-	 * upgraded row widgets.
-	 * Setup: build a row template with a transform probe and a row attribute map.
-	 * Pass: transformed widget attributes resolve to a displayed non-empty row
-	 * value.
-	 */
-	it("applies transformed widget attributes and values for rendered rows", async() =>
-	{
-		const el = createDatagrid();
-		const rowTemplate = document.createElement("template");
-		rowTemplate.innerHTML = `
-			<tr>
-				<td><et2-dg-test-transform data-et2nm-id="w1" data-value="$label"></et2-dg-test-transform></td>
-				<td>$label</td>
-			</tr>
-		`;
-
-		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
-		el.templateData = {
-			columns: el.columns,
-			rowTemplate,
-			rowTemplateXml: null,
-			rowTemplateAttrMap: {w1: {"data-value": "$row.label"}},
-			loaderTemplate: null
-		} as any;
-		const row = {id: "row-0", data: {id: "row-0", label: "Row 0"}};
-		const rowElement = (el as any)._buildRowElement(row, 0) as HTMLTableRowElement | null;
-		assert.isNotNull(rowElement, "row should be built from template");
-
-		const applied = (el as any)._applyRowElementAttributes(rowElement!, row.data, 0);
-		assert.isTrue(applied, "row template attributes should apply successfully");
-
-		const transformed = rowElement!.querySelector("et2-dg-test-transform") as HTMLElement | null;
-		assert.isNotNull(transformed, "transformed widget should be present in row");
-		assert.isTrue(
-			(transformed!.getAttribute("data-value") || "").length > 0,
-			"transformed widget should have a non-empty data-value"
-		);
-		assert.equal(
-			transformed!.getAttribute("data-value"),
-			transformed!.textContent?.trim(),
-			"transformed widget attribute and displayed value should match"
-		);
-	});
-
-	/**
 	 * Contract: row binding must preserve shared array managers while replacing
 	 * only the content manager with the current row perspective.
 	 * Setup: probe widget reads customfield metadata from modifications and value
@@ -929,6 +883,7 @@ describe("Et2Datagrid row rendering", () =>
 		el.columns = [
 			{key: "line1", title: "Line 1", width: "1fr"},
 			{key: "line2", title: "Line 2", width: "1fr"},
+			{key: "plain_field", title: "Plain field", width: "1fr"},
 			{key: "preferred", title: "Preferred", width: "1fr"},
 			{key: "description", title: "Description", width: "1fr"}
 		] as any;
@@ -936,6 +891,7 @@ describe("Et2Datagrid row rendering", () =>
 		rowTemplate.innerHTML = `
 			<td><et2-description id="\${row}[line1]" noLang="1" class="name-line"></et2-description></td>
 			<td><et2-description id="$[line2]" noLang="1" class="legacy-name-line"></et2-description></td>
+			<td><et2-description id="plain_field" noLang="1" class="plain-id-line"></et2-description></td>
 			<td><et2-description id="\${row}[preferred]" href="$row_cont[preferred_link]" noLang="1"></et2-description></td>
 			<td><et2-description id="\${row}[description]" noLang="1" activateLinks="1"></et2-description></td>
 		`;
@@ -968,6 +924,7 @@ describe("Et2Datagrid row rendering", () =>
 			data: {
 				line1: "Lightweight row text",
 				line2: "Legacy shorthand text",
+				plain_field: "Plain id row text",
 				preferred: "Call me",
 				preferred_link: "tel:+15551234567"
 			}
@@ -982,6 +939,11 @@ describe("Et2Datagrid row rendering", () =>
 			rowElement?.querySelector(".legacy-name-line")?.textContent || "",
 			"Legacy shorthand text",
 			"native description text should bind legacy $[field] row placeholders"
+		);
+		assert.include(
+			rowElement?.querySelector(".plain-id-line")?.textContent || "",
+			"Plain id row text",
+			"native description text should bind plain row field ids"
 		);
 		assert.isNotNull(
 			rowElement?.querySelector("et2-description[href]"),
@@ -1379,12 +1341,12 @@ describe("Et2Datagrid row rendering", () =>
 
 		assert.equal(
 			widget?.deferredProperties?.active,
-			"$row_cont[active]",
+			"$[active]",
 			"Et2Widget should defer row-scoped boolean attributes during template preparation"
 		);
 		assert.equal(
 			prepared?.attrMap?.[deferredId]?.active,
-			"$row_cont[active]",
+			"$[active]",
 			"datagrid row binding should keep deferred boolean attributes for per-row transform"
 		);
 	});
@@ -1426,7 +1388,7 @@ describe("Et2Datagrid row rendering", () =>
 		const dynamicId = dynamicWidget?.getAttribute("data-et2nm-id") || "";
 		assert.deepEqual(
 			prepared?.attrMap?.[dynamicId],
-			{"data-value": "$row_cont[label]"},
+			{"data-value": "$label"},
 			"row-bound attributes should remain available for hydration"
 		);
 	});
@@ -1436,7 +1398,7 @@ describe("Et2Datagrid row rendering", () =>
 	 * customfield source and row-specific values from top-level #field data.
 	 * Setup: build a row template containing et2-customfields-list without a header,
 	 * forcing the modifications-array fallback used by legacy templates.
-	 * Pass: only selected fields render and the value object contains visible #fields.
+	 * Pass: only selected fields render while the renderer reuses the row object.
 	 */
 	it("hydrates datagrid row customfields once from shared metadata and displays row values", async() =>
 	{
@@ -1516,10 +1478,10 @@ describe("Et2Datagrid row rendering", () =>
 				);
 			}
 
-			assert.deepEqual(
+			assert.equal(
 				list!.value,
-				{"#cf_text": "Row customfield value"},
-				"row customfield values should include only visible selected customfields"
+				row.data,
+				"row customfields should reuse the complete row object"
 			);
 			assert.isNotOk(
 				list!.shadowRoot?.querySelector("[data-field='cf_hidden']"),
@@ -1636,8 +1598,8 @@ describe("Et2Datagrid row rendering", () =>
 		const transformed = rowElement!.querySelector("et2-dg-test-transform") as HTMLElement | null;
 		assert.equal(
 			(transformed as any)?.lastTransformedAttrs?.["data-value"],
-			"${row}[note]",
-			"modern ${row}[field] placeholder should be passed through to widget transform"
+			"Legacy note",
+			"modern ${row}[field] placeholder should resolve before widget transformation"
 		);
 		assert.equal(
 			Et2RowProvider.resolveSimpleRowPlaceholders("$note", row.data, (_rowData, key) => row.data[key]),

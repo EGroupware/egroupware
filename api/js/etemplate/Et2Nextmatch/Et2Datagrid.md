@@ -7,6 +7,7 @@ no-results rendering, and refresh application.
 [Configuring the datagrid from an owner widget](#configuring-the-datagrid-from-an-owner-widget)<br>
 [Minimal owner widget wiring](#minimal-owner-widget-wiring)<br>
 [Row templates: columns and rows](#row-templates-columns-and-rows)<br>
+[Row data bindings](#row-data-bindings)<br>
 [Styling row contents](#styling-row-contents)<br>
 [Lifecycle (class internals)](#lifecycle-class-internals)<br>
 [Rendering pipeline (summary)](#rendering-pipeline-summary)<br>
@@ -257,8 +258,8 @@ reads these slots from its host:
     </tr>
 
     <tr class="$class" slot="row">
-        <et2-description id="${title}" noLang="1"></et2-description>
-        <et2-description id="${owner}" noLang="1"></et2-description>
+        <et2-description id="title" noLang="1"></et2-description>
+        <et2-description id="owner" noLang="1"></et2-description>
     </tr>
 </my-grid-owner>
 ```
@@ -333,12 +334,45 @@ Row rendering is driven by a row template.
 
 :::
 
-Field expression support in row templates:
+### Row data bindings
 
-- Legacy: `${row}[note]`, `$row_cont[note]`
-- Shorthand: `${note}`, `$note`
+Use direct bindings for row data in templates:
 
-Both work. For new templates, shorthand is recommended for readability.
+- `$field` resolves an own field of the current row.
+- `$[parent.child]` resolves a nested row path.
+- `$row` is reserved for renderers that need the complete row context, such as VFS and customfields row renderers. For
+  value-capable renderers it receives the row object; other uses retain the row id/key.
+
+The datagrid resolves direct row bindings before `transformAttributes()`. This avoids an ArrayMgr row perspective for
+the usual row and lets widgets receive concrete values. Non-row expressions remain in the normal manager context:
+`$cont[...]`, `_cont`, `@...`, and `@@...` are not row bindings.
+
+```xml
+
+<row class="$class $[category.css_class]">
+    <et2-description id="title" noLang="1"></et2-description>
+    <et2-date-time id="modified" value="$[timestamps.modified]" readonly="true"></et2-date-time>
+    <et2-image src="$icon" label="$type_label"></et2-image>
+    <et2-date-duration disabled="!$used_time" value="$duration"></et2-date-duration>
+    <et2-hbox onclick="egw.open($id, 'infolog');"></et2-hbox>
+</row>
+```
+
+For value-capable row widgets, a simple `id="title"` remains the widget id and is hydrated from
+`rowData.title` when that own field exists and no explicit `value` is present. Use `value="$field"`
+for a differently named or nested row value. Compound/action ids such as `edit_status[$id]` remain
+ids and are not value bindings.
+
+Legacy row syntax remains supported without changing existing templates:
+
+```xml
+<!-- Legacy compatibility: equivalent to id="title" -->
+<et2-description id="${row}[title]" noLang="1"></et2-description>
+<et2-description id="$row_cont[title]" noLang="1"></et2-description>
+```
+
+When direct resolution cannot safely handle an expression, the datagrid retains the ArrayMgr perspective compatibility
+path. Do not add new row templates that depend on that fallback.
 
 #### From Named Templates
 
@@ -361,7 +395,7 @@ Example:
 ```xml
 <tr class="$class $cat_id" slot="row">
     <et2-description id="n_family" noLang="1"></et2-description>
-    <et2-textarea id="${note}" readonly="true" noLang="1"></et2-textarea>
+    <et2-textarea id="note" readonly="true" noLang="1"></et2-textarea>
     <et2-vbox>
         <et2-url-phone id="tel_work"
                        readonly="true" class="telNumbers" statustext="Business phone"
@@ -501,9 +535,9 @@ internal part. The datagrid gathers row-template `exportparts` and forwards them
 
 <row>
     <et2-hbox class="contact-methods" exportparts="base:contact-methods__base">
-        <et2-url-phone id="${row}[tel_work]" readonly="true"></et2-url-phone>
-        <et2-url-phone id="${row}[tel_cell]" readonly="true"></et2-url-phone>
-        <et2-url-email id="${row}[email]" readonly="true"></et2-url-email>
+        <et2-url-phone id="tel_work" readonly="true"></et2-url-phone>
+        <et2-url-phone id="tel_cell" readonly="true"></et2-url-phone>
+        <et2-url-email id="email" readonly="true"></et2-url-email>
     </et2-hbox>
 </row>
 ```
@@ -523,9 +557,10 @@ This is the most direct option when the server already supplies a class such as 
 `readonly`, or `cat_<ID>`.
 
 ```xml
-<row class="$class priority_${priority}">
-    <et2-description class="entry-title" id="${title}" noLang="1"></et2-description>
-    <et2-description class="entry-status" id="${status}" noLang="1"></et2-description>
+
+<row class="$class priority_$priority">
+    <et2-description class="entry-title" id="title" noLang="1"></et2-description>
+    <et2-description class="entry-status" id="status" noLang="1"></et2-description>
 </row>
 ```
 
@@ -548,7 +583,7 @@ of the whole row.
 
 ```xml
 <row>
-    <et2-description class="entry-status status_${status_class}" id="${status}" noLang="1"></et2-description>
+    <et2-description class="entry-status status_$status_class" id="status" noLang="1"></et2-description>
 </row>
 ```
 
@@ -575,8 +610,8 @@ this.datagrid.style.setProperty("--app-row-details-display", showDetails ? "bloc
 
 ```xml
 <row>
-    <et2-description class="entry-title" id="${title}" noLang="1"></et2-description>
-    <et2-description class="entry-details" id="${details}" noLang="1"></et2-description>
+    <et2-description class="entry-title" id="title" noLang="1"></et2-description>
+    <et2-description class="entry-details" id="details" noLang="1"></et2-description>
 </row>
 ```
 
@@ -827,7 +862,7 @@ is where a logical row becomes a DOM node:
 1. It clones the prepared `<template>` (`document.importNode(template.content, true)`) — or falls back
    to a simple `<tr>` built from column values when no template exists.
 2. `_populateCloneWithRow()` ([Et2Datagrid.ts:2401](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2401))
-   walks text nodes and resolves simple `$row.*` placeholders via
+   walks text nodes and resolves direct and legacy row placeholders via
    `Et2RowProvider.resolveSimpleRowPlaceholders()`.
 3. `_populateRowRootAttributes()` ([Et2Datagrid.ts:2423](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2423))
    resolves root-level placeholder attributes (e.g. dynamic row classes) via
@@ -843,8 +878,9 @@ is where a logical row becomes a DOM node:
 
 ### Hydration (deferred row binding)
 
-Row templates are stamped as inert strings, so widget binding and row-scoped array-manager
-expansion are deferred to keep scrolling/rendering responsive.
+Row templates are stamped as inert strings, so widget binding is deferred to keep scrolling/rendering responsive. Direct
+row bindings are resolved from the current `rowData` during that deferred pass; an ArrayMgr perspective is only a
+compatibility fallback.
 
 `_initRowUpgradeObserver()` ([Et2Datagrid.ts:1755](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1755))
 installs a `MutationObserver` on the scroll body
@@ -863,8 +899,10 @@ processes a bounded batch per animation frame
 is the hydration core. It:
 
 - reads `rowTemplateAttrMap` for each element carrying `data-et2nm-id`,
-- builds a row-scoped content array manager (`mgrRowData[rowIndex] = rowData`) and opens a perspective
-  so `$row.*` expressions resolve against *this* row,
+- resolves direct and normalized legacy row expressions from `rowData` before widget transformation,
+- supplies direct `id` bindings as widget values when the widget supports values,
+- uses the normal content manager for non-row expressions and opens a row-scoped ArrayMgr perspective only when direct
+  resolution cannot safely handle an expression,
 - for `et2-customfields-list` elements, applies cached customfield state via
   `_applyCustomfieldRowState()`,
 - for the row root, applies stored root attributes,
@@ -917,43 +955,43 @@ controls how each row object becomes DOM.
 
 Visibility legend: **public** (called by owner widgets), **private** (internal only).
 
-| Method                               | Visibility | Stage    | Purpose                                                                       |
-|--------------------------------------|------------|----------|-------------------------------------------------------------------------------|
-| `loadMore()`                         | public     | load     | Request the first (or next missing) page from index 0.                        |
-| `reload()`                           | public     | load     | Clear all rows and re-fetch; reset `total` and error state.                   |
-| `setInitialRows(rows)`               | public     | load     | Seed preloaded row data (skips the initial provider fetch) and fire `et2-loading-done`. |
-| `refresh(row_ids, type)`             | public     | refresh  | Targeted in-place refresh or removal without a full reload.                   |
-| `selectSingleRow(rowId)`             | public     | selection | Select one loaded row and emit `et2-selection-changed`.                       |
-| `selectAllRows()`                    | public     | selection | Select all currently loaded rows when `selectionMode` is `multiple`.          |
-| `clearSelection()`                   | public     | selection | Clear selected rows and optionally emit the selection event.                  |
-| `focusFirstRow()`                    | public     | focus    | Move active focus to the first loaded row.                                    |
-| `focusRowById(rowId)`                | public     | focus    | Move active focus to a loaded row by id.                                      |
-| `clearActiveRow()`                   | public     | focus    | Clear active-row focus state.                                                 |
-| `openColumnSelection(event?)`        | public     | columns  | Open the column chooser from an owner-level control.                          |
-| `render()`                           | Lit        | render   | Builds the virtualizer config, headers, state template, and CSS vars.         |
-| `_getVirtualItems()`                 | private    | render   | Builds virtualizer item list, inserting expanded items after parents.         |
-| `_virtualRowCount()`                 | private    | render   | Resolves slot count (`total` vs materialized count).                          |
-| `_virtualRowKey()`                   | private    | render   | Stable key per row/expanded/placeholder; includes structure + render version. |
-| `_renderVirtualRow()`                | private    | generate | Per-slot callback: build row DOM or emit placeholder + chunk request.         |
-| `_requestChunkForRowIndex()`         | private    | generate | Queue a page fetch for the chunk owning an unloaded index.                    |
-| `_buildRowElement()`                 | private    | generate | Clone template, resolve placeholders, mark, ensure meta cell, layout.         |
-| `_populateCloneWithRow()`            | private    | generate | Resolve `$row.*` text placeholders in the cloned fragment.                    |
-| `_populateRowRootAttributes()`       | private    | generate | Resolve placeholder attributes on the row root.                               |
-| `_markRowElement()`                  | private    | generate | Stamp a11y/identity attributes (`role`, `data-row-*`, `aria-*`, `tabindex`).  |
-| `_ensureMetaCell()`                  | private    | generate | Ensure leading metadata cell + expander; invoke `rowCustomizer`.              |
-| `_applyColumnLayoutToRowElement()`   | private    | generate | Apply column track sizing to the row.                                         |
-| `_initRowUpgradeObserver()`          | private    | hydrate  | `MutationObserver` that enqueues realized rows for hydration.                 |
-| `_upgradeRenderedRows()`             | private    | hydrate  | Find newly realized rows, skip upgraded, enqueue.                             |
-| `_processRowUpgradeQueue()`          | private    | hydrate  | Bounded per-frame hydration: bind widgets, customfields, customizer.          |
-| `_applyRowElementAttributes()`       | private    | hydrate  | Apply `rowTemplateAttrMap` attrs via row-scoped array manager.                |
-| `_scheduleRenderedRowsUpgradeScan()` | private    | hydrate  | Re-scan frames to catch virtualizer-late rows.                                |
-| `_queueRequest()`                    | private    | fetch    | Record a debounced request + placeholder count.                               |
-| `_processQueuedRequests()`           | private    | fetch    | Dispatch queued requests, fire `et2-loading-start`.                           |
-| `_fetchPage()`                       | private    | fetch    | Await `dataProvider.fetchPage()`, merge rows, fire done/error.                |
-| `_reconcileRowRenderState()`         | private    | fetch    | Prune stale expansions, pin first active row, request render.                 |
-| `_stateTemplate()`                   | private    | state    | Resolve loading/error/missing-template/empty UI.                              |
-| `_applyRefreshedRows()`              | private    | refresh  | Merge provider refresh result; pulse changed rows.                            |
-| `_removeRowsById()`                  | private    | refresh  | Remove rows client-side; fix counts/selection.                                |
+| Method                               | Visibility | Stage     | Purpose                                                                                 |
+|--------------------------------------|------------|-----------|-----------------------------------------------------------------------------------------|
+| `loadMore()`                         | public     | load      | Request the first (or next missing) page from index 0.                                  |
+| `reload()`                           | public     | load      | Clear all rows and re-fetch; reset `total` and error state.                             |
+| `setInitialRows(rows)`               | public     | load      | Seed preloaded row data (skips the initial provider fetch) and fire `et2-loading-done`. |
+| `refresh(row_ids, type)`             | public     | refresh   | Targeted in-place refresh or removal without a full reload.                             |
+| `selectSingleRow(rowId)`             | public     | selection | Select one loaded row and emit `et2-selection-changed`.                                 |
+| `selectAllRows()`                    | public     | selection | Select all currently loaded rows when `selectionMode` is `multiple`.                    |
+| `clearSelection()`                   | public     | selection | Clear selected rows and optionally emit the selection event.                            |
+| `focusFirstRow()`                    | public     | focus     | Move active focus to the first loaded row.                                              |
+| `focusRowById(rowId)`                | public     | focus     | Move active focus to a loaded row by id.                                                |
+| `clearActiveRow()`                   | public     | focus     | Clear active-row focus state.                                                           |
+| `openColumnSelection(event?)`        | public     | columns   | Open the column chooser from an owner-level control.                                    |
+| `render()`                           | Lit        | render    | Builds the virtualizer config, headers, state template, and CSS vars.                   |
+| `_getVirtualItems()`                 | private    | render    | Builds virtualizer item list, inserting expanded items after parents.                   |
+| `_virtualRowCount()`                 | private    | render    | Resolves slot count (`total` vs materialized count).                                    |
+| `_virtualRowKey()`                   | private    | render    | Stable key per row/expanded/placeholder; includes structure + render version.           |
+| `_renderVirtualRow()`                | private    | generate  | Per-slot callback: build row DOM or emit placeholder + chunk request.                   |
+| `_requestChunkForRowIndex()`         | private    | generate  | Queue a page fetch for the chunk owning an unloaded index.                              |
+| `_buildRowElement()`                 | private    | generate  | Clone template, resolve placeholders, mark, ensure meta cell, layout.                   |
+| `_populateCloneWithRow()`            | private    | generate  | Resolve direct and legacy row text placeholders in the cloned fragment.                 |
+| `_populateRowRootAttributes()`       | private    | generate  | Resolve placeholder attributes on the row root.                                         |
+| `_markRowElement()`                  | private    | generate  | Stamp a11y/identity attributes (`role`, `data-row-*`, `aria-*`, `tabindex`).            |
+| `_ensureMetaCell()`                  | private    | generate  | Ensure leading metadata cell + expander; invoke `rowCustomizer`.                        |
+| `_applyColumnLayoutToRowElement()`   | private    | generate  | Apply column track sizing to the row.                                                   |
+| `_initRowUpgradeObserver()`          | private    | hydrate   | `MutationObserver` that enqueues realized rows for hydration.                           |
+| `_upgradeRenderedRows()`             | private    | hydrate   | Find newly realized rows, skip upgraded, enqueue.                                       |
+| `_processRowUpgradeQueue()`          | private    | hydrate   | Bounded per-frame hydration: bind widgets, customfields, customizer.                    |
+| `_applyRowElementAttributes()`       | private    | hydrate   | Apply row attrs directly; use an ArrayMgr perspective only as fallback.                 |
+| `_scheduleRenderedRowsUpgradeScan()` | private    | hydrate   | Re-scan frames to catch virtualizer-late rows.                                          |
+| `_queueRequest()`                    | private    | fetch     | Record a debounced request + placeholder count.                                         |
+| `_processQueuedRequests()`           | private    | fetch     | Dispatch queued requests, fire `et2-loading-start`.                                     |
+| `_fetchPage()`                       | private    | fetch     | Await `dataProvider.fetchPage()`, merge rows, fire done/error.                          |
+| `_reconcileRowRenderState()`         | private    | fetch     | Prune stale expansions, pin first active row, request render.                           |
+| `_stateTemplate()`                   | private    | state     | Resolve loading/error/missing-template/empty UI.                                        |
+| `_applyRefreshedRows()`              | private    | refresh   | Merge provider refresh result; pulse changed rows.                                      |
+| `_removeRowsById()`                  | private    | refresh   | Remove rows client-side; fix counts/selection.                                          |
 
 ---
 
@@ -1099,10 +1137,10 @@ used by nested/child grids to namespace row ids.
 ### Row-scoped deferred attributes (`rowTemplateAttrMap`)
 
 Row templates may carry attributes that depend on the row, such as `class="$class
-priority_${priority}"`. `Et2RowProvider` does **not** permanently resolve these on the shared template;
-instead it records them in `templateData.rowTemplateAttrMap` keyed by the generated widget id
-(`data-et2nm-id`). During hydration, `_applyRowElementAttributes()` expands them against a row-scoped
-array manager so each physical clone gets its own correct values.
+priority_$priority"`. `Et2RowProvider` does **not** permanently resolve these on the shared template;
+instead it records them in `templateData.rowTemplateAttrMap` keyed by the generated widget id (`data-et2nm-id`). During
+hydration, `_applyRowElementAttributes()` resolves direct row bindings against the current `rowData` so each physical
+clone gets its own concrete values. Unsupported expressions retain the ArrayMgr perspective fallback.
 
 As an app author you normally do not populate `rowTemplateAttrMap` directly — you write the expression
 in the template and let `Et2RowProvider` record it. The mechanism matters when you build custom row

@@ -669,7 +669,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				const source = handlerMap[id]?.["on" + event.type];
 				if(source)
 				{
-					const handler = this._templateHandler(node, id, event.type, source);
+					const rowElement = node.closest?.("[data-row-index]") as HTMLElement | null;
+					const rowIndex = parseInt(rowElement?.getAttribute("data-row-index") || "-1", 10);
+					const row = rowIndex >= 0 ? this._rowsByIndex[rowIndex] : null;
+					const handlerSource = row
+						? String(this._resolveRowExpression(source, this._rowDataFor(row), String(row.id ?? rowIndex)).value)
+						: source;
+					const handler = this._templateHandler(node, id, event.type, handlerSource, source.includes("$") || source.includes("@"));
 					const result = handler && handler(event, node);
 					if(result === false)
 					{
@@ -690,9 +696,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 	}
 
-	private _templateHandler(widget : HTMLElement, id : string, eventType : string, source : string) : Function | false
+	private _templateHandler(widget : HTMLElement, id : string, eventType : string, source : string, rowScoped : boolean = false) : Function | false
 	{
-		const hasRowContext = source.includes("$") || source.includes("@");
+		const hasRowContext = rowScoped || source.includes("$") || source.includes("@");
 		const handlerKey = id + ":on" + eventType;
 		let handlers : Map<string, Function | false>;
 		if(hasRowContext)
@@ -724,6 +730,84 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			handlers.set(handlerKey, handler);
 		}
 		return handler;
+	}
+
+	/**
+	 * Convert legacy row syntax to the compact form used by direct row
+	 * hydration.  This mirrors Et2RowProvider's preparation-time conversion so
+	 * manually supplied template data remains compatible too.
+	 */
+	private _canonicalRowExpression(value : string) : string
+	{
+		let normalized = value;
+		normalized = normalized.replace(/\$row_cont((?:\[[^\]]+\])+)/g, (_match, fields) =>
+			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
+		);
+		normalized = normalized.replace(/\$\{row\}((?:\[[^\]]+\])+)/g, (_match, fields) =>
+			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
+		);
+		normalized = normalized.replace(/\{\$row\}((?:\[[^\]]+\])+)/g, (_match, fields) =>
+			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
+		);
+		normalized = normalized.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, field) => "$[" + field + "]");
+		normalized = normalized.replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g, (_match, token) => token === "row" ? "${row}" : "$" + token);
+		return normalized;
+	}
+
+	/**
+	 * Resolve row tokens without opening an ArrayMgr perspective.  Non-row
+	 * tokens such as $cont and @labels are deliberately left for the widget's
+	 * normal content manager.
+	 */
+	private _resolveRowExpression(value : string, rowData : any, rowId : string) : {value : any; rowValue? : any; fallback : boolean}
+	{
+		const normalized = this._canonicalRowExpression(value);
+		const exact = normalized.match(/^\$\[([^\]]+)\]$/) || normalized.match(/^\$([a-zA-Z_][a-zA-Z0-9_]*)$/);
+		if(exact && !["row", "row_cont", "cont", "_cont"].includes(exact[1]))
+		{
+			const field = exact[1];
+			const rowValue = this._getFieldValue(rowData, field) ?? "";
+			return {value: rowValue, rowValue, fallback: false};
+		}
+		if(normalized === "$row" || normalized === "${row}")
+		{
+			return {value: rowId, rowValue: rowId, fallback: false};
+		}
+
+		let fallback = /\$row_cont|\$\{row\}\[|\{\$row\}\[/.test(normalized);
+		const resolved = normalized
+			.replace(/\$\[([^\]]+)\]/g, (_match, field) => String(this._getFieldValue(rowData, field) ?? ""))
+			.replace(/\$row\b/g, rowId)
+			.replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g, (match, field) =>
+			{
+				if(["row", "row_cont", "cont", "_cont"].includes(field))
+				{
+					return match;
+				}
+				return String(this._getFieldValue(rowData, field) ?? "");
+			});
+		return {value: resolved, fallback};
+	}
+
+	private _rowAttributePropertyType(element : any, attribute : string) : any
+	{
+		const property = element.constructor?.getPropertyOptions?.(attribute === "select_options" || attribute.indexOf("_") === -1
+			? attribute
+			: attribute.replace(/_([a-z])/g, (_match, letter) => letter.toUpperCase()));
+		return typeof property === "object" ? property?.type : property;
+	}
+
+	private _directBooleanRowValue(value : string, rowData : any, rowId : string) : boolean | undefined
+	{
+		const normalized = this._canonicalRowExpression(value);
+		const match = normalized.match(/^(!)?(?:\$\[([^\]]+)\]|\$([a-zA-Z_][a-zA-Z0-9_]*))$/);
+		if(!match || ["row_cont", "cont", "_cont"].includes(match[3]))
+		{
+			return undefined;
+		}
+		const raw = match[2] ? this._getFieldValue(rowData, match[2]) : match[3] === "row" ? rowId : this._getFieldValue(rowData, match[3]);
+		const truthy = !(raw === false || raw === null || typeof raw === "undefined" || raw === "" || raw === 0 || raw === "0" || raw === "false");
+		return match[1] ? !truthy : truthy;
 	}
 
 	/**
@@ -2602,16 +2686,26 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return true;
 		}
 
-		const mgrRowData = {};
-		mgrRowData[rowIndex] = rowData;
-		const contentMgr = this.getArrayMgr("content") || new et2_arrayMgr(mgrRowData);
-		const mgr = contentMgr.openPerspective(this as any, mgrRowData, rowIndex);
+		const contentMgr = this.getArrayMgr("content") || new et2_arrayMgr({});
 		const mgrs : any = this.getArrayMgrs?.() || {};
-		mgrs.content = mgr;
+		let mgr = contentMgr;
+		mgrs.content = contentMgr;
+		const rowId = String(this._rowsByIndex[rowIndex]?.id ?? this._rowIdFor(rowData, rowIndex));
+		const usePerspectiveFallback = () =>
+		{
+			if(mgr !== contentMgr)
+			{
+				return;
+			}
+			const mgrRowData = {};
+			mgrRowData[rowIndex] = rowData;
+			mgr = contentMgr.openPerspective(this as any, mgrRowData, rowIndex);
+			mgrs.content = mgr;
+		};
 		try
 		{
-			// Apply stored template attributes through each widget's transform hook
-			// so row-scoped values ($row.*) are expanded with the current row manager.
+			// Resolve row values directly first.  The ArrayMgr perspective remains a
+			// compatibility fallback for row expressions this resolver cannot handle.
 			for(const element of toUpgrade)
 			{
 				try
@@ -2629,6 +2723,44 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 					const isCustomfieldsRow = element.localName === "et2-customfields-list";
 					if(isCustomfieldsRow)
 					{
+						// Customfields use id="$row" for their row object, but any
+						// other row-bound attribute follows normal row hydration.
+						const customfieldAttributes : Record<string, any> = {};
+						for(const [attribute, value] of Object.entries(stored || {}))
+						{
+							if(attribute === "id")
+							{
+								continue;
+							}
+							const resolved = this._resolveRowExpression(value, rowData, rowId);
+							if(resolved.fallback)
+							{
+								usePerspectiveFallback();
+							}
+							const booleanValue = this._rowAttributePropertyType(element, attribute) === Boolean
+								? this._directBooleanRowValue(value, rowData, rowId)
+								: undefined;
+							customfieldAttributes[attribute] = typeof booleanValue === "undefined" ? resolved.value : booleanValue;
+						}
+						if(element.setArrayMgrs)
+						{
+							element.setArrayMgrs(mgrs);
+						}
+						if(element.setArrayMgr && mgr)
+						{
+							element.setArrayMgr("content", mgr);
+						}
+						if(Object.keys(customfieldAttributes).length)
+						{
+							if(typeof element.transformAttributes === "function")
+							{
+								element.transformAttributes(customfieldAttributes);
+							}
+							else
+							{
+								Object.entries(customfieldAttributes).forEach(([attribute, value]) => element.setAttribute(attribute, String(value ?? "")));
+							}
+						}
 						this._applyCustomfieldRowState(element, rowData);
 						continue;
 					}
@@ -2648,22 +2780,81 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 					{
 						element.setArrayMgr("content", mgr);
 					}
+					const attributes : Record<string, any> = {};
+					let hasDirectValue = false;
+					let directValue : any;
+					for(const [attribute, value] of Object.entries(stored || {}))
+					{
+						const resolved = this._resolveRowExpression(value, rowData, rowId);
+						if(resolved.fallback)
+						{
+							usePerspectiveFallback();
+						}
+						const booleanValue = this._rowAttributePropertyType(element, attribute) === Boolean
+							? this._directBooleanRowValue(value, rowData, rowId)
+							: undefined;
+						attributes[attribute] = typeof booleanValue === "undefined" ? resolved.value : booleanValue;
+						if(attribute === "value" && resolved.rowValue !== undefined)
+						{
+							hasDirectValue = true;
+							directValue = resolved.rowValue;
+						}
+					}
+					// Row-bound ids conventionally mean "the value at this row key".
+					// VFS row renderers use $row for the complete row object.
+					const idBinding = stored?.id ? this._resolveRowExpression(stored.id, rowData, rowId) : null;
+					const isRowObjectBinding = stored?.id === "$row" || stored?.id === "${row}";
+					if(stored?.value === undefined && (idBinding?.rowValue !== undefined || isRowObjectBinding) &&
+						(this._rowAttributePropertyType(element, "value") || typeof element.set_value === "function"))
+					{
+						attributes.value = isRowObjectBinding ? rowData : idBinding!.rowValue;
+						hasDirectValue = true;
+						directValue = attributes.value;
+						delete attributes.id;
+					}
+					else if(!stored?.value && !stored?.id && typeof element.id === "string" && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(element.id) &&
+						Object.prototype.hasOwnProperty.call(rowData || {}, element.id) &&
+						(this._rowAttributePropertyType(element, "value") || typeof element.set_value === "function"))
+					{
+						attributes.value = rowData[element.id];
+						hasDirectValue = true;
+						directValue = attributes.value;
+					}
+					if(element.setArrayMgrs)
+					{
+						element.setArrayMgrs(mgrs);
+					}
+					if(element.setArrayMgr && mgr)
+					{
+						element.setArrayMgr("content", mgr);
+					}
 					if(typeof element.transformAttributes === "function")
 					{
-						if(!stored || !Object.keys(stored).length)
+						if(!Object.keys(attributes).length)
 						{
 							continue;
 						}
 						else
 						{
-							element.transformAttributes(stored);
+							element.transformAttributes(attributes);
+							if(hasDirectValue)
+							{
+								if(typeof element.set_value === "function")
+								{
+									element.set_value(directValue);
+								}
+								else
+								{
+									element.value = directValue;
+								}
+							}
 						}
 					}
 					else
 					{
-						Object.entries(stored).forEach(([attr, value]) =>
+						Object.entries(attributes).forEach(([attr, value]) =>
 						{
-							element.setAttribute(attr, mgr.expandName(value));
+							element.setAttribute(attr, mgr.expandName(String(value)));
 						});
 					}
 				}
@@ -2733,34 +2924,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		// No labels in rows
 		element.noLabel = true;
-		const fieldNames = columnState?.visibleFieldNames || (
-			visibility && Object.keys(visibility).length
-				? Object.keys(visibility).filter((name) => visibility[name] === true)
-				: Object.keys(customfields || {})
-		);
-		element.value = this._customfieldValuesFromRowData(
-			rowData,
-			fieldNames
-		);
-	}
-
-	/**
-	 * Extract the row value object expected by a customfields-list renderer.
-	 */
-	private _customfieldValuesFromRowData(
-		rowData : any,
-		fieldNames : string[]
-	) : Record<string, any>
-	{
-		const value : Record<string, any> = {};
-		for(const fieldName of fieldNames)
-		{
-			const prefixedKey = CUSTOMFIELD_PREFIX + fieldName;
-			value[prefixedKey] = rowData && Object.prototype.hasOwnProperty.call(rowData, prefixedKey)
-				? rowData[prefixedKey]
-				: "";
-		}
-		return value;
+		// Et2CustomfieldsList reads only the visible field keys, so the complete
+		// row can be reused without allocating a filtered value object per row.
+		element.value = rowData || {};
 	}
 
 	/**

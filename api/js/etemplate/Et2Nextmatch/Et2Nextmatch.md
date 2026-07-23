@@ -25,8 +25,8 @@ The row/header structure is read from that template and converted for `et2-datag
     </tr>
 
     <tr class="$class $cat_id" slot="row">
-        <et2-description id="${n_family}" noLang="1"></et2-description>
-        <et2-textarea id="${note}" readonly="true" noLang="1"></et2-textarea>
+        <et2-description id="n_family" noLang="1"></et2-description>
+        <et2-textarea id="note" readonly="true" noLang="1"></et2-textarea>
     </tr>
 
     <tr slot="loader">
@@ -46,6 +46,31 @@ Full details for columns, rows, expression syntax, wrapper behaviour, and loader
 
 - If both a `template` attribute and slotted templates are provided, `template` wins.
 - `setRows()` can preload initial rows; otherwise rows are fetched through the bound Nextmatch data provider.
+
+## Row value bindings
+
+Use direct row bindings in new or edited row templates. `$field` reads `field` from the current row;
+`$[parent.child]` reads a nested value. Direct bindings work in any row-template attribute; each widget then applies its
+normal interpretation of the resolved attribute value.
+
+```xml
+
+<row class="$class $[category.css_class]">
+    <et2-description id="title" noLang="1"></et2-description>
+    <et2-date-time id="modified" readonly="true"></et2-date-time>
+    <et2-image src="$icon" label="$type_label"></et2-image>
+    <et2-description class="priority_$priority" id="status" noLang="1"></et2-description>
+</row>
+```
+
+For ordinary display widgets, `id="title"` remains the stable widget id and, when the row has an own `title` field, the
+datagrid supplies `rowData.title` as the widget value. Use `value="$other_field"` when the value comes from a differently
+named or nested row field. Keep action and compound ids as ids, for example `id="delete[$id]"`; they are not row-value
+bindings.
+
+Existing templates do not need a bulk rewrite. Legacy `${row}[title]`, `{$row}[title]`,
+`$row_cont[title]`, and `$row.title` continue to work in row templates. Use them only when documenting or maintaining
+legacy markup; new examples and template edits should use direct bindings.
 
 ## Styling Rows
 
@@ -147,8 +172,8 @@ show_details(show, nextmatch : Et2Nextmatch)
 
 ```xml
 <row class="$class">
-    <et2-description class="task-title" id="${title}" noLang="1"></et2-description>
-    <et2-description class="task-details" id="${description}" noLang="1"></et2-description>
+    <et2-description class="task-title" id="title" noLang="1"></et2-description>
+    <et2-description class="task-details" id="description" noLang="1"></et2-description>
 </row>
 ```
 

@@ -917,7 +917,10 @@ export class Et2RowProvider
 		const id = source.getAttribute("id");
 		const value = source.getAttribute("value");
 		const idIsDynamic = !!id && (id.includes("$") || id.includes("{"));
-		const textExpression = idIsDynamic ? id : value ?? id;
+		const plainFieldId = !!id && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(id);
+		// A plain id in a row description is a row-value binding.  Preserve that
+		// contract when replacing the widget with native text.
+		const textExpression = idIsDynamic ? id : value ?? (plainFieldId ? "$" + id : id);
 		if(!textExpression)
 		{
 			return null;
@@ -952,8 +955,9 @@ export class Et2RowProvider
 	/**
 	 * Normalize legacy row-expression shorthand so Datagrid row context resolves it like classic Nextmatch.
 	 *
-	 * `$field` becomes `$row_cont[field]`, `${field}` becomes `${row}[field]`.
-	 * Already explicit row/content references are preserved.
+	 * Legacy row references become the direct row-data syntax used by the
+	 * datagrid. Template source remains unchanged; this is only the prepared
+	 * row representation. Content/template references stay untouched.
 	 */
 	private _normalizeLegacyRowExpressionShorthand(value : string) : string
 	{
@@ -962,13 +966,19 @@ export class Et2RowProvider
 			return value;
 		}
 		let normalized = value;
+		normalized = normalized.replace(/\$row_cont((?:\[[^\]]+\])+)/g, (_match, fields) =>
+			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
+		);
+		normalized = normalized.replace(/\$\{row\}((?:\[[^\]]+\])+)/g, (_match, fields) =>
+			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
+		);
+		normalized = normalized.replace(/\{\$row\}((?:\[[^\]]+\])+)/g, (_match, fields) =>
+			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
+		);
+		normalized = normalized.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, field) => "$[" + field + "]");
 		normalized = normalized.replace(
 			/\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g,
-			(_match, token) => token === "row" ? "${row}" : "${row}[" + token + "]"
-		);
-		normalized = normalized.replace(
-			/\$([a-zA-Z_][a-zA-Z0-9_]*)\b/g,
-			(match, token) => ["row", "row_cont", "cont", "_cont"].includes(token) ? match : "$row_cont[" + token + "]"
+			(_match, token) => token === "row" ? "${row}" : "$" + token
 		);
 		return normalized;
 	}
