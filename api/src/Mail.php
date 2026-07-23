@@ -1958,6 +1958,11 @@ class Mail
 		$retValue['label3']   = in_array('$label3', $headerFlags);
 		$retValue['label4']   = in_array('$label4', $headerFlags);
 		$retValue['label5']   = in_array('$label5', $headerFlags);
+		$retValue['customFlag1'] = in_array('$customflag1', $headerFlags);
+		$retValue['customFlag2'] = in_array('$customflag2', $headerFlags);
+		$retValue['customFlag3'] = in_array('$customflag3', $headerFlags);
+		$retValue['customFlag4'] = in_array('$customflag4', $headerFlags);
+		$retValue['customFlag5'] = in_array('$customflag5', $headerFlags);
 		//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].':'.array2string($retValue));
 		return $retValue;
 	}
@@ -4429,6 +4434,41 @@ class Mail
 					case "unlabel5":
 					case "unlabelfive":
 						$this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
+						break;
+					case "customFlag1":
+						$this->icServer->store($folder, array('remove'=>array('$customflag2', '$customflag3', '$customflag4', '$customflag5'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$customflag1'), 'ids'=> $uidsToModify));
+						break;
+					case "uncustomFlag1":
+						$this->icServer->store($folder, array('remove'=>array('$customflag1'), 'ids'=> $uidsToModify));
+						break;
+					case "customFlag2":
+						$this->icServer->store($folder, array('remove'=>array('$customflag1', '$customflag3', '$customflag4', '$customflag5'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$customflag2'), 'ids'=> $uidsToModify));
+						break;
+					case "uncustomFlag2":
+						$this->icServer->store($folder, array('remove'=>array('$customflag2'), 'ids'=> $uidsToModify));
+						break;
+					case "customFlag3":
+						$this->icServer->store($folder, array('remove'=>array('$customflag1', '$customflag2', '$customflag4', '$customflag5'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$customflag3'), 'ids'=> $uidsToModify));
+						break;
+					case "uncustomFlag3":
+						$this->icServer->store($folder, array('remove'=>array('$customflag3'), 'ids'=> $uidsToModify));
+						break;
+					case "customFlag4":
+						$this->icServer->store($folder, array('remove'=>array('$customflag1', '$customflag2', '$customflag3', '$customflag5'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$customflag4'), 'ids'=> $uidsToModify));
+						break;
+					case "uncustomFlag4":
+						$this->icServer->store($folder, array('remove'=>array('$customflag4'), 'ids'=> $uidsToModify));
+						break;
+					case "customFlag5":
+						$this->icServer->store($folder, array('remove'=>array('$customflag1', '$customflag2', '$customflag3', '$customflag4'), 'ids'=> $uidsToModify));
+						$this->icServer->store($folder, array('add'=>array('$customflag5'), 'ids'=> $uidsToModify));
+						break;
+					case "uncustomFlag5":
+						$this->icServer->store($folder, array('remove'=>array('$customflag5'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel":
 						$this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));

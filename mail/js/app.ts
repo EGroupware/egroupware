@@ -646,7 +646,7 @@ export class MailApp extends EgwApp
 				pushData.acl.event = 'FlagsSet';
 				this.pushUpdateFlags(pushData);
 			}
-			pushData.acl.flags = ['$seen', '$delete', '$flagged', '$label1', '$label2', '$label3', '$label4', '$label5'].filter((flag => !pushData.acl.flags.includes(flag)));
+			pushData.acl.flags = ['$seen', '$delete', '$flagged', '$label1', '$label2', '$label3', '$label4', '$label5', '$customflag1', '$customflag2', '$customflag3', '$customflag4', '$customflag5'].filter((flag => !pushData.acl.flags.includes(flag)));
 			if (pushData.acl.flags.length)
 			{
 				pushData.acl.event = 'FlagsClear';
@@ -678,13 +678,26 @@ export class MailApp extends EgwApp
 					case 'label3':
 					case 'label4':
 					case 'label5':
+					case 'customflag1':
+					case 'customflag2':
+					case 'customflag3':
+					case 'customflag4':
+					case 'customflag5':
 					case 'flagged':
+						if (flag.substring(0, 10) == 'customflag') flag = flag.replace('customflag', 'customFlag');
 						if (unset)
 						{
 							this.mail_removeRowClass(msg, flag);
 						}
 						else
 						{
+							if (flag.substring(0, 10) == 'customFlag')
+							{
+								['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'].forEach(customFlag =>
+								{
+									if (customFlag != flag) this.mail_removeRowClass(msg, customFlag);
+								});
+							}
 							rowClass = flag;
 						}
 						break;
@@ -2845,6 +2858,16 @@ export class MailApp extends EgwApp
 						if (_action.id=="label4") actionlabel="to do";
 					case "label5":
 						if (_action.id=="label5") actionlabel="later";
+					case "customFlag1":
+						if (_action.id=="customFlag1") actionlabel="red";
+					case "customFlag2":
+						if (_action.id=="customFlag2") actionlabel="orange";
+					case "customFlag3":
+						if (_action.id=="customFlag3") actionlabel="green";
+					case "customFlag4":
+						if (_action.id=="customFlag4") actionlabel="blue";
+					case "customFlag5":
+						if (_action.id=="customFlag5") actionlabel="purple";
 					case "flagged":
 					case "read":
 					case "undelete":
@@ -2890,6 +2913,11 @@ export class MailApp extends EgwApp
 						case "label3":
 						case "label4":
 						case "label5":
+						case "customFlag1":
+						case "customFlag2":
+						case "customFlag3":
+						case "customFlag4":
+						case "customFlag5":
 						case "flagged":
 						case "read":
 						case "undelete":
@@ -2931,6 +2959,11 @@ export class MailApp extends EgwApp
 			case "label3":
 			case "label4":
 			case "label5":
+			case "customFlag1":
+			case "customFlag2":
+			case "customFlag3":
+			case "customFlag4":
+			case "customFlag5":
 			case "flagged":
 			case "read":
 			case "undelete":
@@ -3065,36 +3098,40 @@ export class MailApp extends EgwApp
 				break;
 			default:
 				break;
-		}
-		// jQuery(data).extend({},data, formData);
-		if (data['all']=='cancel') return false;
+			}
+			// jQuery(data).extend({},data, formData);
+			if (data['all']=='cancel') return false;
+			const customFlags = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
 
-		if (_action.id.substring(0,2)=='un') {
-			//old style, only available for undelete and unlabel (no toggle)
-			if ( _action.id=='unlabel') // this means all labels should be removed
+			if (_action.id.substring(0,2)=='un') {
+				//old style, only available for undelete and unlabel (no toggle)
+				if ( _action.id=='unlabel') // this means all labels should be removed
 			{
 				const labels = ['label1','label2','label3','label4','label5'];
 				for (let i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
 				this.mail_flagMessages(_action.id,data);
 			}
-			else
-			{
-				this.mail_removeRowClass(_elems,_action.id.substring(2));
-				this.mail_setRowClass(_elems,_action.id);
-				this.mail_flagMessages(_action.id,data);
+				else
+				{
+					this.mail_removeRowClass(_elems,_action.id.substring(2));
+					if (!customFlags.includes(_action.id.substring(2)))
+					{
+						this.mail_setRowClass(_elems,_action.id);
+					}
+					this.mail_flagMessages(_action.id,data);
+				}
 			}
-		}
 		else if (_action.id=='readall')
 		{
 			this.mail_flagMessages('read',data);
 		}
 		else
 		{
-			var msg_set = {msg:[]};
-			var msg_unset = {msg:[]};
-			var dataElem;
-			let flags: {};
-			let classes: string[];
+				var msg_set = {msg:[]};
+				var msg_unset = {msg:[]};
+				var dataElem;
+				let flags: {};
+				let classes: string[];
 			for (let i = 0; i < data.msg.length; i++)
 			{
 				const currentIndex = i;
@@ -3117,14 +3154,28 @@ export class MailApp extends EgwApp
 				{
 					classes.splice(classes.indexOf('un' + rowClass),1);
 				}
-				if (flags[_action.id])
-				{
-					msg_unset['msg'].push(data.msg[i]);
-					classes.push('un'+rowClass);
-					delete flags[_action.id];
-				}
+					if (flags[_action.id])
+					{
+						msg_unset['msg'].push(data.msg[i]);
+						if (!customFlags.includes(_action.id))
+						{
+							classes.push('un'+rowClass);
+						}
+						delete flags[_action.id];
+					}
 				else
 				{
+					if (customFlags.includes(_action.id))
+					{
+						for (let j=0; j<customFlags.length; j++)
+						{
+							if (customFlags[j] != _action.id)
+							{
+								delete flags[customFlags[j]];
+								classes = classes.filter((className) => className != customFlags[j] && className != 'un' + customFlags[j]);
+							}
+						}
+					}
 					msg_set['msg'].push(data.msg[i]);
 					flags[_action.id] = _action.id;
 					classes.push(rowClass);
@@ -3162,11 +3213,13 @@ export class MailApp extends EgwApp
 					const img: Et2Image = nmNode.querySelector(".status_img");
 					if (img) img.src = egw.image("mail_unseen")
 				}
-				if (flags['flagged'] == 'flagged')
+				if (flags['flagged'] == 'flagged' ||
+					customFlags.some(customFlag => flags[customFlag] == customFlag))
 				{
 					if (!nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage'))
 					{
 						const flagElem: Et2Image = document.createElement('et2-image') as Et2Image
+						flagElem.id = "flaggedImage"
 						flagElem.src = "unread_flagged_small"
 						nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]'))?.appendChild(flagElem);
 					}

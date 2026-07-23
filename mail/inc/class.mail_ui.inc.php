@@ -1517,7 +1517,52 @@ class mail_ui
 							),
 						),
 					),
-					// modified icons from http://creativecommons.org/licenses/by-sa/3.0/
+					'customFlag' => array(
+						'caption' => 'Custom Flag',
+						'icon' => 'unread_flagged_small',
+						'group' => $group,
+						// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
+						'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+						'hideOnDisabled' => true,
+						'children' => array(
+							'customFlag1' => array(
+								'group' => ++$group,
+								'caption' => 'red',
+								'iconColor' => '#ff0000',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag2' => array(
+								'group' => $group,
+								'caption' => 'orange',
+								'iconColor' => '#ff8000',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag3' => array(
+								'group' => $group,
+								'caption' => 'green',
+								'iconColor' => '#008000',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag4' => array(
+								'group' => $group,
+								'caption' => 'blue',
+								'iconColor' => '#0000ff',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag5' => array(
+								'group' => $group,
+								'caption' => 'purple',
+								'iconColor' => '#8000ff',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+						),
+					),
+					// Icon are all bootstrap Icons
 					'flagged' => array(
 						'group' => ++$group,
 						'caption' => 'Flag / Unflag',
@@ -2031,6 +2076,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if(!empty($header['label3'])) $flags .= "3";
 			if(!empty($header['label4'])) $flags .= "4";
 			if(!empty($header['label5'])) $flags .= "5";
+			if(!empty($header['customFlag1'])) $flags .= "c1";
+			if(!empty($header['customFlag2'])) $flags .= "c2";
+			if(!empty($header['customFlag3'])) $flags .= "c3";
+			if(!empty($header['customFlag4'])) $flags .= "c4";
+			if(!empty($header['customFlag5'])) $flags .= "c5";
 			//error_log(__METHOD__.array2string($header).' Flags:'.$flags);
 
 			// the css for this row
@@ -2072,6 +2122,21 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			if ($header['label5']) {
 				$css_styles[] = 'label5';
+			}
+			if ($header['customFlag1']) {
+				$css_styles[] = 'customFlag1';
+			}
+			if ($header['customFlag2']) {
+				$css_styles[] = 'customFlag2';
+			}
+			if ($header['customFlag3']) {
+				$css_styles[] = 'customFlag3';
+			}
+			if ($header['customFlag4']) {
+				$css_styles[] = 'customFlag4';
+			}
+			if ($header['customFlag5']) {
+				$css_styles[] = 'customFlag5';
 			}
 
 			//error_log(__METHOD__.array2string($css_styles));
@@ -2163,7 +2228,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				// show a flag for flagged messages
 				$imageflagged ='';
-				if ($header['flagged'])
+				$displayFlag= !empty($header['flagged']);
+				foreach ((array)$header as $key => $value)
+				{
+					if (!empty($value) && str_starts_with($key, 'customFlag'))
+					{
+						$displayFlag = true;
+						break;
+					}
+				}
+				if ($displayFlag)
 				{
 					$imageflagged = "<et2-image src='unread_flagged_small' id='flaggedImage'></et2-image>";
 				}
@@ -5372,11 +5446,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					{
 						$filter = $filter2toggle = array();
 					}
-					// flags read,flagged,label1,label2,label3,label4,label5 can be toggled: handle this when all mails in a folder
+					// flags read,flagged,label1,label2,label3,label4,label5,customFlag1..5 can be toggled: handle this when all mails in a folder
 					// should be affected serverside. here.
 					$messageList = $messageListForToggle = array();
 					$flag2check = ($_flag=='read'?'seen':$_flag);
-					if (in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
+					if (in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5','customFlag1','customFlag2','customFlag3','customFlag4','customFlag5')) &&
 						!($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))
 					{
 						$filter2toggle['status'] = array('un'.$_flag);
@@ -5426,9 +5500,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$alreadyFlagged=true;
 					}
 					elseif (!empty($filter) &&
-						(!in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) ||
-						(in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
-						($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))))
+						(!in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5','customFlag1','customFlag2','customFlag3','customFlag4','customFlag5')) ||
+						(in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5','customFlag1','customFlag2','customFlag3','customFlag4','customFlag5')) &&
+							($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))))
 					{
 						if ($query['filter'])
 						{
@@ -5494,6 +5568,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				'label3'	=> 'personal',//lang('personal'),
 				'label4'	=> 'to do',	//lang('to do'),
 				'label5'	=> 'later',	//lang('later'),
+				'customFlag1' => 'red',
+				'customFlag2' => 'orange',
+				'customFlag3' => 'green',
+				'customFlag4' => 'blue',
+				'customFlag5' => 'purple',
 			);
 			$response = Api\Json\Response::get();
 			if (isset($_messageList['msg']) && $_messageList['popup'])
