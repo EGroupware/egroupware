@@ -350,7 +350,8 @@ export class EgwMenuShoelace extends LitElement
 				}, 100);
 			});
 		};
-		const captionStyle=item.color?`color:${item.color};`:''+item.indentation?`padding-left:${item.indentation}em;`:'';
+		const captionStyle = item.color ? `color:${item.color};` : '' +
+		item.indentation ? `padding-left:${item.indentation}em;` : '';
 		return html`
             <et2-menu-item
                     class=${classMap({
@@ -367,7 +368,8 @@ export class EgwMenuShoelace extends LitElement
                     ${ref(updateLoading)}
             >
                 ${item.iconUrl ? html`
-                    <et2-image slot="prefix" src="${item.iconUrl}"></et2-image>` : nothing}
+                    <et2-image slot="prefix" src="${item.iconUrl}"
+                               style=${item.iconColor ? "color: " + item.iconColor : nothing}></et2-image>` : nothing}
 				<span style=${captionStyle||nothing}>${item.caption}</span>
                 ${item.shortcutCaption ? html`<span slot="suffix" class="keyboard_shortcut">
 					${item.shortcutCaption}
