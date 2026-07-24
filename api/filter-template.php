@@ -197,6 +197,7 @@ EOF;
 				$widget = $attrs['widgetType'] ?? 'et2-select';
 				switch ($match[2])
 				{
+					case 'header-customfields':
 					case 'customfields':
 						$widget = 'customfields-filters';
 						$attrs['label'] = '';
