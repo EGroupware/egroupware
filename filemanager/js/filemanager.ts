@@ -1739,8 +1739,6 @@ export class filemanagerAPP extends EgwApp
 	 */
 	hidden_upload_enabled(_action : egwAction, _senders : egwActionObject[])
 	{
-		// TODO: FIX PROPERLY
-		return false;
 		if(_senders[0].id == 'nm')
 		{
 			return false;
@@ -1849,23 +1847,14 @@ export class filemanagerAPP extends EgwApp
 	 */
 	isEditable(_egwAction, _senders) : boolean
 	{
-		// TODO: FIX PROPERLY
-		return false;
 		if (_senders.length>1) return false;
 		let data = egw.dataGetUIDdata(_senders[0].id);
-		let mime = this.et2.getInstanceManager().widgetContainer.getWidgetById('$row');
 		let fe = egw.file_editor_prefered_mimes(data.data.mime);
-		if(!mime || fe && fe.mime && !fe.mime[data.data.mime])
-		{
-			return false;
-		}
-		return !!data.data.mime.match(mime.mime_odf_regex);
+		return data?.data?.mime && fe?.mime && typeof fe.mime[data.data.mime] !== "undefined";
 	}
 
 	checkInvoice(_egwAction, _senders) : boolean
 	{
-		// TODO: FIX PROPERLY
-		return false;
 		if (_senders.length>1) return false;
 		let data = egw.dataGetUIDdata(_senders[0].id);
 		return data.data?.mime && ['application/pdf', 'text/xml', 'application/xml'].includes(data.data.mime);
