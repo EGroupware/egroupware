@@ -786,7 +786,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                 _links[clipboard_action.id] = {
                     "actionObj": clipboard_action,
                     "enabled": os_clipboard_caption.length > 0,
-					"visible": this._context ? os_clipboard_caption.length > 0 : true,
+					"visible": true,
                     "cnt": 0
                 };
             }
