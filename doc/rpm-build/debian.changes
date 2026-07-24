@@ -1,3 +1,14 @@
+egroupware-docker (26.7.20260724) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple security vulnerabilities, everyone is strongly adviced to update to it!
+  * Admin: fix lost background image, if config from apps like calendar or addressbook is saved
+  * Adressbook/other apps: fix merge-print with converting to PDF failed after last security release
+  * Auth/OpenIDConnect: only use unverified email, if explicitly enabled in configuration
+  * ImportExport: fix stalled installation caused by last security hardening
+  * ProjectManager: fix SQL error when searching in element list for 2 or more keywords
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 24 Jul 2026 08:31:41 +0200
+
 egroupware-docker (26.7.20260710.3) hardy; urgency=low
 
   * SECURITY: this release fixes two more security vulnerabilities just reported, everyone is strongly adviced to update to it!
