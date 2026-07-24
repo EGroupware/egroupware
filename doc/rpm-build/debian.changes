@@ -1,3 +1,12 @@
+egroupware-docker (23.1.20260724) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple security vulnerabilities, everyone is strongly adviced to update to it!
+  * Adressbook/other apps: fix merge-print with converting to PDF failed after last security release
+  * Auth/OpenIDConnect: only use unverified email, if explicitly enabled in configuration
+  * IMPORTANT: security coverage for 23.1 will end August 15th 2026, update to 26.x to receive further security updates!
+
+ -- Ralf Becker <rb@egroupware.org>  Fri, 24 Jul 2026 10:09:39 +0200
+
 egroupware-docker (23.1.20260710.3) hardy; urgency=low
 
   * SECURITY: this release fixes two more security vulnerabilities, everyone is strongly adviced to update to it!
