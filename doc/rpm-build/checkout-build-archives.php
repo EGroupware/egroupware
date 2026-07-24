@@ -223,7 +223,7 @@ function get_changelog_from_git($_path, $log_pattern=null, &$last_tag=null, $pre
 		$output = null;
 		run_cmd($cmd, $output);
 
-		$date_last_tag = new DateTime(preg_replace('/^\d+\.\d+\./', '', $last_tag));
+		$date_last_tag = new DateTime(preg_replace('/^\d+\.\d+\./', '', substr($last_tag, 0, 13)));
 		foreach($output as $line)
 		{
 			if (substr($line, 0, 8) === "Date:   ")
