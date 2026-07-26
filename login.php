@@ -254,7 +254,18 @@ else
 		}
 		elseif (!isset($GLOBALS['sessionid']) || ! $GLOBALS['sessionid'])
 		{
-			Egw::redirect_link('/login.php?cd=' . $GLOBALS['egw']->session->cd_reason);
+			// preserve phpgw_* params (eg. phpgw_forward) across a rejected login, so a
+			// subsequent correct login still returns to whatever originally redirected here
+			// (eg. openid's /authorize), instead of falling through to the default "/index.php"
+			$retry_vars = ['cd' => $GLOBALS['egw']->session->cd_reason];
+			foreach ($_GET as $name => $value)
+			{
+				if (strpos($name, 'phpgw_') !== false)
+				{
+					$retry_vars[$name] = $value;
+				}
+			}
+			Egw::redirect_link('/login.php', $retry_vars);
 		}
 		else
 		{
