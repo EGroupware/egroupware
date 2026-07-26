@@ -319,6 +319,14 @@ jobs:
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
+              echo "=== diagnostics: openid/src/Grant listing ==="
+              ls -la openid/src/Grant/ || true
+              echo "=== diagnostics: endpoint.php use-statements ==="
+              grep -n "^use EGroupware" openid/endpoint.php || true
+              echo "=== diagnostics: composer psr-4 map for OpenID ==="
+              grep -n "OpenID" vendor/composer/autoload_psr4.php || true
+              echo "=== diagnostics: plain composer autoload class_exists check ==="
+              php -r "require \"vendor/autoload.php\"; var_dump(class_exists(\"EGroupware\\\\OpenID\\\\Grant\\\\ClientCredentialsGrant\"));" || true
               php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
