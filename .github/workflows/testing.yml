@@ -314,11 +314,10 @@ jobs:
           # serves the actual checked-out branch from $EGW_SRC_DIR instead - patch the mismatched
           # EGW_SERVER_ROOT so the app-specific autoloader (api/src/autoload.php, which resolves
           # classes via EGW_INCLUDE_ROOT rather than composer's own correctly-resolved base dir)
-          # looks in the right place.
-          HEADER_INC="$GITHUB_WORKSPACE/sources/doc/docker/data/header.inc.php"
-          if [ -f "$HEADER_INC" ]; then
-            sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" "$HEADER_INC"
-          fi
+          # looks in the right place. Done inside the container (not via the host bind-mount path)
+          # since the file is owned by the container's own user, not the Actions runner.
+          $COMPOSE exec -T egroupware \
+            sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
 
           # Run tests with local HTTP endpoint inside egroupware container
           $COMPOSE exec -T \
