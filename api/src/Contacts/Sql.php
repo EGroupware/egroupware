@@ -192,6 +192,11 @@ class Sql extends Api\Storage
 		$sort = $param['sort'] == 'DESC' ? 'DESC' : 'ASC';
 
 		list(,$by) = explode(',',$param['org_view']);
+		// $by is used unquoted in SQL below, only allow known, safe column names
+		if ($by && !in_array($by, array('org_unit', 'adr_one_locality'), true))
+		{
+			$by = null;
+		}
 		if (!$by)
 		{
 			$extra = array(
