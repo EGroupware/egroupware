@@ -211,27 +211,47 @@ class Sql extends Api\Storage
 			// org total for more then one $by
 			$by_expr = $by == 'org_unit_count' ? "COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END)" :
 				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END)";
-			parent::search($param['search'],array('org_name'),
-				"GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort", array(
-				"NULL AS $by",
-				'1 AS is_main',
-				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
-				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
-				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
-			),$wildcard,false,$op/*'OR'*/,'UNION',$filter,$join);
-			// org by location
-			parent::search($param['search'],array('org_name'),
-				"GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort", array(
-				"CASE WHEN $by IS NULL THEN '' ELSE $by END AS $by",
-				'0 AS is_main',
-				'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
-				"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
-				"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
-			),$wildcard,false,$op/*'OR'*/,'UNION',$filter,$join);
+			// $by is restricted to known-safe column names above, $sort to ASC/DESC --> fragments below are NOT
+			// client-controlled, but sanitizeOrderBy() can not validate GROUP BY/HAVING --> bypass it narrowly here
+			$this->sanitize_order_by = false;
+			try
+			{
+				parent::search($param['search'],array('org_name'),
+					"GROUP BY org_name HAVING $by_expr > 1 ORDER BY org_name $sort", array(
+					"NULL AS $by",
+					'1 AS is_main',
+					'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
+					"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
+					"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
+				),$wildcard,false,$op/*'OR'*/,'UNION',$filter,$join);
+				// org by location
+				parent::search($param['search'],array('org_name'),
+					"GROUP BY org_name,$by ORDER BY org_name $sort,$by $sort", array(
+					"CASE WHEN $by IS NULL THEN '' ELSE $by END AS $by",
+					'0 AS is_main',
+					'COUNT(DISTINCT egw_addressbook.contact_id) AS org_count',
+					"COUNT(DISTINCT CASE WHEN org_unit IS NULL THEN '' ELSE org_unit END) AS org_unit_count",
+					"COUNT(DISTINCT CASE WHEN adr_one_locality IS NULL THEN '' ELSE adr_one_locality END) AS adr_one_locality_count",
+				),$wildcard,false,$op/*'OR'*/,'UNION',$filter,$join);
+			}
+			finally
+			{
+				$this->sanitize_order_by = true;
+			}
 			$append = "ORDER BY org_name $sort,is_main DESC,$by $sort";
 		}
-		$rows = parent::search($param['search'],array('org_name'),$append,$extra,$wildcard,false,$op/*'OR'*/,
-			array($param['start'],$param['num_rows']),$filter,$join);
+		// $append may contain a GROUP BY (set above, from the !$by branch), which sanitizeOrderBy() can not
+		// validate --> bypass it narrowly here; $append is always server-constructed, never client input
+		$this->sanitize_order_by = false;
+		try
+		{
+			$rows = parent::search($param['search'],array('org_name'),$append,$extra,$wildcard,false,$op/*'OR'*/,
+				array($param['start'],$param['num_rows']),$filter,$join);
+		}
+		finally
+		{
+			$this->sanitize_order_by = true;
+		}
 
 		if (!$rows) return false;
 
@@ -251,9 +271,19 @@ class Sql extends Api\Storage
 
 		if (count($filter['org_name']))
 		{
-			foreach((array) parent::search(null, array('org_name','org_unit','adr_one_locality'),
-				'GROUP BY org_name,org_unit,adr_one_locality',
-				'',$wildcard,false,$op/*'AND'*/,false,$filter,$join) as $row)
+			// fixed, server-generated GROUP BY (never client input) --> bypass sanitizeOrderBy() narrowly
+			$this->sanitize_order_by = false;
+			try
+			{
+				$duplicate_orgs = (array) parent::search(null, array('org_name','org_unit','adr_one_locality'),
+					'GROUP BY org_name,org_unit,adr_one_locality',
+					'',$wildcard,false,$op/*'AND'*/,false,$filter,$join);
+			}
+			finally
+			{
+				$this->sanitize_order_by = true;
+			}
+			foreach($duplicate_orgs as $row)
 			{
 				$org_key = $row['org_name'].($by ? '|||'.$row[$by] : '');
 				if ($orgs[$org_key]['org_unit_count'] == 1)
