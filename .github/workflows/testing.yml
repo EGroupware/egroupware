@@ -327,6 +327,8 @@ jobs:
               grep -n "OpenID" vendor/composer/autoload_psr4.php || true
               echo "=== diagnostics: plain composer autoload class_exists check ==="
               php -r "require \"vendor/autoload.php\"; var_dump(class_exists(\"EGroupware\\\\OpenID\\\\Grant\\\\ClientCredentialsGrant\"));" || true
+              echo "=== diagnostics: full header.inc.php bootstrap check ==="
+              php -r "\$_SERVER[\"PATH_INFO\"]=\"/access_token\"; \$GLOBALS[\"egw_info\"]=array(\"flags\"=>array(\"currentapp\"=>\"login\",\"noheader\"=>true,\"nonavbar\"=>true)); require \"header.inc.php\"; echo \"EGW_SERVER_ROOT=\".EGW_SERVER_ROOT.PHP_EOL; echo \"EGW_INCLUDE_ROOT=\".EGW_INCLUDE_ROOT.PHP_EOL; \$p=EGW_INCLUDE_ROOT.\"/openid/src/Grant/ClientCredentialsGrant.php\"; echo \"path=\$p exists=\".var_export(file_exists(\$p),true).PHP_EOL; echo \"class_exists=\".var_export(class_exists(\"EGroupware\\\\OpenID\\\\Grant\\\\ClientCredentialsGrant\"),true).PHP_EOL;" || true
               php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
