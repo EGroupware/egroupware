@@ -32,7 +32,7 @@
         ],
         "operationId": "listTimesheets",
         "summary": "List all timesheets the current user has access too",
-        "description": "Returns all timesheets for the current user. Supports filtering, pagination, and custom property selection. To search use parameter 'filters[search]' set to your search pattern.",
+        "description": "Returns timesheets for the current user, ordered by timesheet ID (oldest first); pass filters[order]=ts_start DESC for newest first. Use filters[search] for a free-text pattern. Date-range filtering (filters[start]/filters[end]) is NOT supported for timesheets and returns HTTP 422. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk.",
         "parameters": [
           {
             "$ref": "#/components/parameters/props"
@@ -44,6 +44,9 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
             "$ref": "#/components/parameters/filters_search"
           },
           {
@@ -52,7 +55,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -177,7 +180,7 @@
         ],
         "operationId": "listUserTimesheets",
         "summary": "List all timesheets for a given user",
-        "description": "Returns all timesheets for the specified user. Supports filtering, pagination, and custom property selection. To search use parameter 'filters[search]' set to your search pattern.",
+        "description": "Returns timesheets for the specified user, ordered by timesheet ID (oldest first); pass filters[order]=ts_start DESC for newest first. Use filters[search] for a free-text pattern. Date-range filtering (filters[start]/filters[end]) is NOT supported for timesheets and returns HTTP 422. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk.",
         "parameters": [
           {
             "$ref": "#/components/parameters/username"
@@ -192,6 +195,9 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
             "$ref": "#/components/parameters/filters_search"
           },
           {
@@ -200,7 +206,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -336,7 +342,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -557,7 +563,16 @@
         "schema": {
           "type": "integer"
         },
-        "description": "Limit number of responses (only for sync-collection)"
+        "description": "Limit the number of timesheets returned. Only honored together with the sync-token parameter: send sync-token= (empty) plus nresults=N to receive at most N timesheets, a \"more-results\": true flag when further timesheets exist, and a sync-token to request the next chunk. Sent on its own, nresults has no effect."
+      },
+      "filters_order": {
+        "name": "filters[order]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sort order as '<db-column>' optionally followed by ' ASC' or ' DESC'. Defaults to 'egw_timesheet.ts_id' (oldest first). A table-qualified column such as egw_timesheet.<column> is also accepted. Example: filters[order]=ts_start DESC"
       },
       "filters_search": {
         "name": "filters[search]",

@@ -35,7 +35,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -115,7 +115,7 @@
             "schema": {
               "type": "integer"
             },
-            "description": "Limit number of responses (only for sync-collection)"
+            "description": "Limit the number of results returned. Only honored together with the sync-token parameter: send sync-token= (empty) plus nresults=N to receive at most N results, a \"more-results\": true flag when further results exist, and a sync-token to request the next chunk. Sent on its own, nresults has no effect."
           }
         ],
         "responses": {

@@ -29,11 +29,12 @@
         "tags": ["Tracker"],
         "operationId": "listTickets",
         "summary": "List all tickets the current user has access to",
-        "description": "Returns all tracker tickets accessible to the current user. Supports filtering by status, priority, queue, and assignee. Use 'filters[search]' for full-text search across summary and description.",
+        "description": "Returns tracker tickets accessible to the current user, most recently modified first. Supports filtering by status, priority, queue and assignee, and filters[search] for full-text search across summary and description. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk.",
         "parameters": [
           { "$ref": "#/components/parameters/props" },
           { "$ref": "#/components/parameters/syncToken" },
           { "$ref": "#/components/parameters/nresults" },
+          { "$ref": "#/components/parameters/filters_order" },
           { "$ref": "#/components/parameters/filters_search" },
           { "$ref": "#/components/parameters/filters_linked" },
           { "$ref": "#/components/parameters/filters_status" },
@@ -43,7 +44,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -129,12 +130,13 @@
         "tags": ["Tracker"],
         "operationId": "listUserTickets",
         "summary": "List all tickets for a given user",
-        "description": "Returns all tracker tickets created by the specified user. Supports the same filters as the current-user endpoint.",
+        "description": "Returns tracker tickets created by the specified user, most recently modified first. Supports the same filters as the current-user endpoint. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk.",
         "parameters": [
           { "$ref": "#/components/parameters/username" },
           { "$ref": "#/components/parameters/props" },
           { "$ref": "#/components/parameters/syncToken" },
           { "$ref": "#/components/parameters/nresults" },
+          { "$ref": "#/components/parameters/filters_order" },
           { "$ref": "#/components/parameters/filters_search" },
           { "$ref": "#/components/parameters/filters_linked" },
           { "$ref": "#/components/parameters/filters_status" },
@@ -144,7 +146,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -226,7 +228,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -369,7 +371,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -448,7 +450,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -911,7 +913,14 @@
         "in": "query",
         "required": false,
         "schema": { "type": "integer" },
-        "description": "Maximum number of tickets to return."
+        "description": "Limit the number of tickets returned. Only honored together with the sync-token parameter: send sync-token= (empty) plus nresults=N to receive at most N tickets, a \"more-results\": true flag when further tickets exist, and a sync-token to request the next chunk. Sent on its own, nresults has no effect."
+      },
+      "filters_order": {
+        "name": "filters[order]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Sort order as '<db-column>' optionally followed by ' ASC' or ' DESC'. Defaults to 'COALESCE(tr_modified,tr_created) DESC' (newest first). A table-qualified column such as egw_tracker.<column> is also accepted. Example: filters[order]=tr_created DESC"
       },
       "filters_search": {
         "name": "filters[search]",

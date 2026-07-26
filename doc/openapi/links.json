@@ -83,7 +83,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [

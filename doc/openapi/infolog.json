@@ -29,7 +29,7 @@
       "get": {
         "tags": ["InfoLog"],
         "summary": "List all infolog entries",
-        "description": "Returns all infolog entries (tasks, notes, calls, etc.) for the user. Supports filtering, pagination, and custom property selection.",
+        "description": "Returns infolog entries (tasks, notes, calls, etc.) for the user, most recently modified first. filters[start]/filters[end] match entries whose start/due date overlaps the range. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listTasks",
         "parameters": [
           {
@@ -40,6 +40,9 @@
           },
           {
             "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters_order"
           },
           {
             "$ref": "#/components/parameters/filters_start"
@@ -56,7 +59,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -145,7 +148,7 @@
       "get": {
         "tags": ["InfoLog"],
         "summary": "List all infolog entries of a given user",
-        "description": "Returns all infolog entries (tasks, notes, calls, etc.) for the given user. Supports filtering, pagination, and custom property selection.",
+        "description": "Returns infolog entries (tasks, notes, calls, etc.) for the given user, most recently modified first. filters[start]/filters[end] match entries whose start/due date overlaps the range. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listUserTasks",
         "parameters": [
           {
@@ -159,6 +162,9 @@
           },
           {
             "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters_order"
           },
           {
             "$ref": "#/components/parameters/filters_start"
@@ -175,7 +181,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -273,7 +279,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json","application/pretty+json"]
@@ -469,25 +475,36 @@
         "schema": {
           "type": "integer"
         },
-        "description": "Limit number of responses (only for sync-collection)"
+        "description": "Limit the number of entries returned. Only honored together with the sync-token parameter: send sync-token= (empty) plus nresults=N to receive at most N entries, a \"more-results\": true flag when further entries exist, and a sync-token to request the next chunk. Sent on its own, nresults has no effect."
       },
       "filters_start": {
         "name": "filters[start]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "datetime"
+          "type": "string",
+          "format": "date"
         },
-        "description": "Start date of search. Example: filters[start]=2026-01-01"
+        "description": "Only return entries overlapping this start date, as YYYY-MM-DD (a full ISO 8601 date-time is also accepted). REQUIRED whenever the question refers to a time period: resolve phrases like 'this week', 'today' or 'next month' to explicit dates and pass them. Example: filters[start]=2026-01-01"
       },
       "filters_end": {
         "name": "filters[end]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "datetime"
+          "type": "string",
+          "format": "date"
         },
-        "description": "End date of search. Example: filters[start]=2026-02-01"
+        "description": "Only return entries overlapping this end date, as YYYY-MM-DD (a full ISO 8601 date-time is also accepted). Pass together with filters[start] for any time-bounded question. Example: filters[end]=2026-02-01"
+      },
+      "filters_order": {
+        "name": "filters[order]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sort order as '<db-column>' optionally followed by ' ASC' or ' DESC'. Defaults to 'info_datemodified DESC' (newest first). Example: filters[order]=info_enddate ASC"
       },
       "filters_search": {
         "name": "filters[search]",

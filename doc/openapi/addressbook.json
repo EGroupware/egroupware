@@ -31,7 +31,7 @@
           "Addressbook"
         ],
         "summary": "Search all addressbooks",
-        "description": "Search in all addressbooks the user has access to. Supports searching, filtering, pagination, and custom property selection.",
+        "description": "Search all addressbooks the user has access to, ordered by contact ID (oldest first); pass filters[order]=contact_modified DESC for newest first. Use filters[search] for a free-text pattern. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk.",
         "operationId": "searchContacts",
         "parameters": [
           {
@@ -44,6 +44,9 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
             "$ref": "#/components/parameters/filters_search"
           },
           {
@@ -52,7 +55,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -146,7 +149,7 @@
       "get": {
         "tags": ["Addressbook"],
         "summary": "List or search contacts in the given users addressbook",
-        "description": "Returns all contacts in the user's addressbook. Supports filtering, pagination, and custom property selection.",
+        "description": "Returns contacts from the user's addressbook, ordered by contact ID (oldest first); pass filters[order]=contact_modified DESC for newest first. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk.",
         "operationId": "listContacts",
         "parameters": [
           {
@@ -162,6 +165,9 @@
             "$ref": "#/components/parameters/nresults"
           },
           {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
             "$ref": "#/components/parameters/filters_search"
           },
           {
@@ -170,7 +176,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -273,7 +279,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -485,7 +491,16 @@
         "schema": {
           "type": "integer"
         },
-        "description": "Limit number of responses (only for sync-collection)"
+        "description": "Limit the number of contacts returned. Only honored together with the sync-token parameter: send sync-token= (empty) plus nresults=N to receive at most N contacts, a \"more-results\": true flag when further contacts exist, and a sync-token to request the next chunk. Sent on its own, nresults has no effect."
+      },
+      "filters_order": {
+        "name": "filters[order]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sort order as '<db-column>' optionally followed by ' ASC' or ' DESC'. Defaults to 'egw_addressbook.contact_id' (oldest first). A table-qualified column such as egw_addressbook.<column> is also accepted. Example: filters[order]=n_family ASC"
       },
       "filters_search": {
         "name": "filters[search]",
