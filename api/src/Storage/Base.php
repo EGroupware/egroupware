@@ -982,6 +982,9 @@ class Base
 		{
 			$order_by = self::sanitizeOrderBy($order_by);
 		}
+		// reset immediately after use, so a false set by a caller (eg. search2criteria()) for this one
+		// call can never leak into a later search()/get_rows() call on the same, possibly reused, object
+		$this->sanitize_order_by = true;
 
 		// fix GROUP BY clause to contain all non-aggregate selected columns
 		if ($order_by && stripos($order_by,'GROUP BY') !== false)
@@ -1087,20 +1090,32 @@ class Base
 	/**
 	 * Sanitize (currently just remove) not understood ORDER BY clause
 	 *
-	 * @param ?string $fragment SQL fragment containing ORDER BY clause, could also contain GROUP BY etc
-	 * @return string sanitized version of $_order_by
+	 * GROUP BY and HAVING fragments can NOT be validated here and are therefore never let through,
+	 * regardless of whether an ORDER BY is also present. Trusted, server-constructed GROUP BY/HAVING
+	 * fragments (no client-supplied content) must bypass this method entirely, by setting
+	 * $this->sanitize_order_by = false right before (and back to true right after) the search()/get_rows()
+	 * call, instead of relying on this method to let them through.
+	 *
+	 * @param ?string $fragment SQL fragment containing ORDER BY clause, must NOT contain GROUP BY or HAVING
+	 * @return string sanitized version of $_order_by, not-understood ORDER BY content is silently removed
+	 * @throws \InvalidArgumentException if $fragment contains GROUP BY or HAVING, which is never a legitimate
+	 *	client-input case and therefore likely indicates a caller we overlooked
 	 */
 	static function sanitizeOrderBy(?string $fragment)
 	{
-		// check fragment contains ORDER BY --> just operate on what's behind
-		if ($fragment && stripos($fragment,'ORDER BY') !== false)
-		{
-			[$group_by, $order_by] = preg_split('/order +by +/i', $fragment);
-		}
-		// check fragment not just contain GROUP BY or HAVING --> nothing to do
-		elseif (empty($fragment) || stripos($fragment,'GROUP BY')!==false || stripos($fragment,'HAVING')!==false)
+		if (empty($fragment))
 		{
 			return $fragment;
+		}
+		// GROUP BY / HAVING can NOT be safely validated here --> never let them through
+		if (stripos($fragment,'GROUP BY') !== false || stripos($fragment,'HAVING') !== false)
+		{
+			throw new \InvalidArgumentException(__METHOD__."(".json_encode($fragment).") contains untrusted GROUP BY/HAVING");
+		}
+		// check fragment contains ORDER BY --> just operate on what's behind
+		if (stripos($fragment,'ORDER BY') !== false)
+		{
+			[$group_by, $order_by] = preg_split('/order +by +/i', $fragment);
 		}
 		// fragment is ORDER BY clause
 		else
