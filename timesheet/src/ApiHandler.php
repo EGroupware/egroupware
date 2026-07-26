@@ -278,6 +278,18 @@ class ApiHandler extends Api\CalDAV\Handler
 		$cols = [];
 		foreach($filter as $name => $value)
 		{
+			// CalDAV::jsonIndex() appends a synthetic ['name' => 'time-range', ...] element under an
+			// integer key for filters[start]/filters[end]. Timesheet has no time-range support, and
+			// letting it reach the default branch below builds a "ts_0" column from an array, which
+			// surfaces as a 500 echoing the whole egw_timesheet schema back to the client.
+			if (!is_string($name))
+			{
+				if (is_array($value) && ($value['name'] ?? null) === 'time-range')
+				{
+					throw new Api\CalDAV\JsParseException("Timesheet does not support the filters[start] / filters[end] date-range filter");
+				}
+				throw new Api\CalDAV\JsParseException("Invalid filter ".json_encode($value));
+			}
 			switch($name)
 			{
 				case 'search':
@@ -309,6 +321,16 @@ class ApiHandler extends Api\CalDAV\Handler
 						return (int)$val;
 					}, (array)$value);
 					$cols['ts_status'] = count($value) <= 1 ? array_pop($value) : $value;
+					break;
+				case 'order':
+					// passed through to propfind_generator(), which uses it as the SQL ORDER BY:
+					// only allow a (optionally table-qualified) column name plus an optional direction
+					if (!preg_match('/^[a-z0-9_]+(\.[a-z0-9_]+)?( (ASC|DESC))?$/i', (string)$value))
+					{
+						throw new Api\CalDAV\JsParseException("Invalid order filter ".json_encode($value).
+							", expected '<column>' optionally followed by ' ASC' or ' DESC'");
+					}
+					$cols['order'] = $value;
 					break;
 				case 'linked':
 					if (!preg_match('/^([a-z_]+):(\d+)$/i', $filter['linked'], $matches) ||
