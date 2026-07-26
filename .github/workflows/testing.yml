@@ -309,6 +309,17 @@ jobs:
             fi
           done
 
+          # header.inc.php is generated against the image's own baked-in /usr/share/egroupware
+          # install (rsynced from the image at container start), but the "Run PHPUnit" step below
+          # serves the actual checked-out branch from $EGW_SRC_DIR instead - patch the mismatched
+          # EGW_SERVER_ROOT so the app-specific autoloader (api/src/autoload.php, which resolves
+          # classes via EGW_INCLUDE_ROOT rather than composer's own correctly-resolved base dir)
+          # looks in the right place.
+          HEADER_INC="$GITHUB_WORKSPACE/sources/doc/docker/data/header.inc.php"
+          if [ -f "$HEADER_INC" ]; then
+            sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" "$HEADER_INC"
+          fi
+
           # Run tests with local HTTP endpoint inside egroupware container
           $COMPOSE exec -T \
             -e HTTP_HOST=127.0.0.1:8081 \
@@ -319,16 +330,6 @@ jobs:
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
-              echo "=== diagnostics: openid/src/Grant listing ==="
-              ls -la openid/src/Grant/ || true
-              echo "=== diagnostics: endpoint.php use-statements ==="
-              grep -n "^use EGroupware" openid/endpoint.php || true
-              echo "=== diagnostics: composer psr-4 map for OpenID ==="
-              grep -n "OpenID" vendor/composer/autoload_psr4.php || true
-              echo "=== diagnostics: plain composer autoload class_exists check ==="
-              php -r "require \"vendor/autoload.php\"; var_dump(class_exists(\"EGroupware\\\\OpenID\\\\Grant\\\\ClientCredentialsGrant\"));" || true
-              echo "=== diagnostics: full header.inc.php bootstrap check ==="
-              php -r "\$_SERVER[\"PATH_INFO\"]=\"/access_token\"; \$GLOBALS[\"egw_info\"]=array(\"flags\"=>array(\"currentapp\"=>\"login\",\"noheader\"=>true,\"nonavbar\"=>true)); require \"header.inc.php\"; echo \"EGW_SERVER_ROOT=\".EGW_SERVER_ROOT.PHP_EOL; echo \"EGW_INCLUDE_ROOT=\".EGW_INCLUDE_ROOT.PHP_EOL; \$p=EGW_INCLUDE_ROOT.\"/openid/src/Grant/ClientCredentialsGrant.php\"; echo \"path=\$p exists=\".var_export(file_exists(\$p),true).PHP_EOL; echo \"class_exists=\".var_export(class_exists(\"EGroupware\\\\OpenID\\\\Grant\\\\ClientCredentialsGrant\"),true).PHP_EOL;" || true
               php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
