@@ -329,7 +329,13 @@ jobs:
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
-              php -S 127.0.0.1:8081 -t "$PWD" > /tmp/egw-phpunit-http.log 2>&1 &
+              echo "<?php" > /tmp/router.php
+              echo "if (preg_match(\"#^/\\.well-known/openid-configuration(?:\\?.*)?\$#\", \$_SERVER[\"REQUEST_URI\"])) {" >> /tmp/router.php
+              echo "  require \"$PWD/openid/well-known-configuration.php\";" >> /tmp/router.php
+              echo "  return true;" >> /tmp/router.php
+              echo "}" >> /tmp/router.php
+              echo "return false;" >> /tmp/router.php
+              php -S 127.0.0.1:8081 -t "$PWD" /tmp/router.php > /tmp/egw-phpunit-http.log 2>&1 &
               server_pid=$!
               trap "kill $server_pid 2>/dev/null || true" EXIT
 
