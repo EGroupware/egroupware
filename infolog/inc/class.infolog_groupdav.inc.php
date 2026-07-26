@@ -444,7 +444,27 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		// in case of JSON/REST API pass filters to report
 		if (Api\CalDAV::isJSON() && !empty($options['filters']) && is_array($options['filters']))
 		{
-			$filters = $options['filters'] + $filters;    // + to allow overwriting default owner filter (BO ensures ACL!)
+			// CalDAV::jsonIndex() turns filters[start]/filters[end] into a synthetic time-range
+			// element under an integer key. It has to go through _time_range_filter() to become a
+			// SQL fragment: merging it verbatim into the column filter yields "AND Array" and a 500.
+			$json_filters = $options['filters'];
+			$time_ranges = [];
+			foreach($json_filters as $key => $value)
+			{
+				if (!is_string($key))
+				{
+					if (is_array($value) && ($value['name'] ?? null) === 'time-range')
+					{
+						$time_ranges[] = $this->_time_range_filter($value['attrs']);
+					}
+					unset($json_filters[$key]);
+				}
+			}
+			$filters = $json_filters + $filters;    // + to allow overwriting default owner filter (BO ensures ACL!)
+			foreach($time_ranges as $time_range)
+			{
+				$filters[] = $time_range;
+			}
 		}
 		elseif ($options['filters'])
 		{
