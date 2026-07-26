@@ -102,7 +102,7 @@
 		"egroupware/mime": "^2.13.0",
 		"egroupware/news_admin": "self.version",
 		"egroupware/nls": "^2.3.0",
-		"egroupware/openid": "self.version",
+		"egroupware/openid": "dev-upstream-rebase-2026",
 		"egroupware/projectmanager": "self.version",
 		"egroupware/rag": "self.version",
 		"egroupware/registration": "self.version",
@@ -111,7 +111,7 @@
 		"egroupware/smallpart": "self.version",
 		"egroupware/smtp": "^1.10.0",
 		"egroupware/socket-client": "^2.2.0",
-		"egroupware/status": "self.version",
+		"egroupware/status": "dev-fix-lcobucci-jwt-5",
 		"egroupware/stream-filter": "^2.1.0",
 		"egroupware/stream-wrapper": "^2.2.0",
 		"egroupware/support": "^2.3.0",
@@ -129,6 +129,10 @@
 		"guzzlehttp/guzzle": "^7.12.1",
 		"guzzlehttp/psr7": "^2.12.1",
 		"jumbojett/openid-connect-php": "^0.9.10",
+		"lcobucci/clock": "^3.2",
+		"lcobucci/jwt": "^5.6",
+		"league/oauth2-server": "^9.4",
+		"monolog/monolog": "^3.0",
 		"npm-asset/as-jqplot": "1.0.*",
 		"npm-asset/gridster": "0.5.*",
 		"oomphinc/composer-installers-extender": "^2.0.1",
@@ -138,7 +142,9 @@
 		"phpseclib/phpseclib": "^3.0.34",
 		"pragmarx/google2fa-qrcode": "^1.0",
 		"robrichards/xmlseclibs": "^3.1.1",
-		"simplesamlphp/simplesamlphp": "^2.5.0"
+		"simplesamlphp/simplesamlphp": "^2.5.0",
+		"slim/slim": "^4.15",
+		"steverhoades/oauth2-openid-connect-server": "^3.0.1"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^12.5.22"
