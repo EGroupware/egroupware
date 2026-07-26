@@ -544,6 +544,85 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	}
 
 	/**
+	 * Apply the JSON/REST API filters to the calendar search parameters
+	 *
+	 * Unlike the CalDAV XML filters handled in _report_filters(), these arrive as a plain
+	 * name => value array. filters[start] / filters[end] have already been turned into a
+	 * synthetic time-range element under an integer key by Api\CalDAV::jsonIndex().
+	 *
+	 * Entries outside filters[start]/filters[end] keep the collection's default -100/+365 day
+	 * window, same as an unfiltered listing.
+	 *
+	 * @param array $filters filters from the request
+	 * @param array& $cal_filters
+	 * @throws Api\Exception 400 for an invalid linked-filter
+	 */
+	private function jsonReportFilters(array $filters, array &$cal_filters)
+	{
+		$search = $linked_ids = null;
+
+		foreach($filters as $name => $value)
+		{
+			if (!is_string($name))
+			{
+				if (is_array($value) && ($value['name'] ?? null) === 'time-range')
+				{
+					if (!empty($value['attrs']['start']))
+					{
+						$cal_filters['start'] = $this->vCalendar->_parseDateTime($value['attrs']['start']);
+					}
+					if (!empty($value['attrs']['end']))
+					{
+						$cal_filters['end'] = $this->vCalendar->_parseDateTime($value['attrs']['end']);
+					}
+				}
+				continue;
+			}
+			switch($name)
+			{
+				case 'search':
+					// string: free-text over cal_title, cal_description and cal_location
+					// array: <db-column> => <value>, integer keys stripped as they'd be used as SQL
+					$search = is_array($value) ?
+						array_filter($value, static fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY) : $value;
+					break;
+
+				case 'linked':
+					if (!preg_match('/^([a-z_]+):(\d+)$/i', $value, $matches) ||
+						!isset($GLOBALS['egw_info']['user']['apps'][$matches[1]]) || (int)$matches[2] <= 0)
+					{
+						throw new Api\Exception("Invalid linked-filter '$value', should be '<app-name>:<nummeric-ID>'!", 400);
+					}
+					// [0] to return nothing instead of everything, if there are no links
+					$linked_ids = Api\Link::get_links($matches[1], $matches[2], 'calendar') ?: [0];
+					break;
+
+				default:
+					$this->caldav->log(__METHOD__."() unknown filter '$name' --> ignored");
+					break;
+			}
+		}
+
+		// calendar_bo::search() only understands one "query": either a free-text string searched over
+		// title/description/location, or an array of <db-column> => <value>. sql_filter is not usable
+		// here, calendar_bo::search() deliberately overwrites it from its own 2nd argument.
+		if (isset($search) && isset($linked_ids) && !is_array($search))
+		{
+			throw new Api\Exception("filters[linked] can not be combined with a free-text filters[search] for calendar", 400);
+		}
+		if (isset($linked_ids))
+		{
+			$search = (array)($search ?? []);
+			// table-qualified, cal_id exists in egw_cal and egw_cal_user
+			$search['egw_cal.cal_id'] = $linked_ids;
+		}
+		if (isset($search))
+		{
+			$cal_filters['query'] = $search;
+		}
+	}
+
+	/**
 	 * Process the filters from the CalDAV REPORT request
 	 *
 	 * @param array $options
@@ -554,7 +633,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 	 */
 	function _report_filters($options, &$cal_filters, $id, &$nresults)
 	{
-		if ($options['filters'])
+		// JSON/REST API: filters arrive as a plain name => value array, not as CalDAV XML elements,
+		// so they would all fall through the switch below and be silently ignored
+		if (Api\CalDAV::isJSON() && !empty($options['filters']) && is_array($options['filters']))
+		{
+			$this->jsonReportFilters($options['filters'], $cal_filters);
+		}
+		elseif ($options['filters'])
 		{
 			// unset default start & end
 			$cal_start = $cal_filters['start']; unset($cal_filters['start']);
