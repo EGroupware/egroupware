@@ -572,7 +572,8 @@ class timesheet_bo extends Api\Storage
 			// regular entries
 			parent::search($criteria,$only_keys,$order_by,$extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
 
-			$sort = substr($order_by,8);
+			// do NOT derive $sort from the untrusted $order_by via substr, always resolve to a plain ASC/DESC
+			$sort = stripos($order_by,'DESC') !== false ? 'DESC' : 'ASC';
 			$union_order = array();
 			$sum_ts_id = array('year' => -3,'month' => -2,'week' => -1,'day' => 0);
 			foreach($this->show_sums as $type)
@@ -581,11 +582,21 @@ class timesheet_bo extends Api\Storage
 				$union_order[] = 'is_sum_'.$type;
 				$sum_extra_cols[$type][0] = '1';
 				// the $type sum
-				parent::search($criteria,array(
-					(string)$sum_ts_id[$type],"''","''","''",'MIN(ts_start)','SUM(ts_duration) AS ts_duration',
-					($this->quantity_sum ? "SUM(ts_quantity) AS ts_quantity" : '0'),
-					'0','NULL','0','0','0','0','0','0',"SUM(COALESCE(ts_paused,0)) AS ts_paused",'NULL',"SUM($total_sql) AS ts_total"
-				),'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
+				// $sum_sql[$type] is a fixed, server-generated SQL fragment (never client input) --> bypass sanitizeOrderBy(),
+				// which can not validate GROUP BY, narrowly scoped to just this one call
+				$this->sanitize_order_by = false;
+				try
+				{
+					parent::search($criteria,array(
+						(string)$sum_ts_id[$type],"''","''","''",'MIN(ts_start)','SUM(ts_duration) AS ts_duration',
+						($this->quantity_sum ? "SUM(ts_quantity) AS ts_quantity" : '0'),
+						'0','NULL','0','0','0','0','0','0',"SUM(COALESCE(ts_paused,0)) AS ts_paused",'NULL',"SUM($total_sql) AS ts_total"
+					),'GROUP BY '.$sum_sql[$type],$sum_extra_cols,$wildcard,$empty,$op,'UNION',$filter,$join,$need_full_no_count);
+				}
+				finally
+				{
+					$this->sanitize_order_by = true;
+				}
 				$sum_extra_cols[$type][0] = '0';
 			}
 			$union_order[] = 'ts_start '.$sort;
