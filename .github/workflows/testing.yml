@@ -331,6 +331,7 @@ jobs:
               set -euo pipefail
               echo "<?php" > /tmp/router.php
               echo "if (preg_match(\"#^/\\.well-known/openid-configuration(?:\\?.*)?\$#\", \$_SERVER[\"REQUEST_URI\"])) {" >> /tmp/router.php
+              echo "  chdir(\"$PWD/openid\");" >> /tmp/router.php
               echo "  require \"$PWD/openid/well-known-configuration.php\";" >> /tmp/router.php
               echo "  return true;" >> /tmp/router.php
               echo "}" >> /tmp/router.php
