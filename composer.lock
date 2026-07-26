@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3d91e9a6ad1b668b45f759171722ea4b",
+    "content-hash": "bb64d57eccb3232a4e0652b87619e0fa",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -2237,16 +2237,16 @@
         },
         {
             "name": "egroupware/openid",
-            "version": "dev-upstream-rebase-2026",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "9f61a68d681763bcf8a0c444b9740e0bf3e8464f"
+                "reference": "c739a5b429fe6f33cb7cfc8e3fde0aed24f0e08a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/9f61a68d681763bcf8a0c444b9740e0bf3e8464f",
-                "reference": "9f61a68d681763bcf8a0c444b9740e0bf3e8464f",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/c739a5b429fe6f33cb7cfc8e3fde0aed24f0e08a",
+                "reference": "c739a5b429fe6f33cb7cfc8e3fde0aed24f0e08a",
                 "shasum": ""
             },
             "require": {
@@ -2260,6 +2260,7 @@
                 "slim/slim": "^4.15",
                 "steverhoades/oauth2-openid-connect-server": "^3.0.1"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "autoload": {
                 "psr-4": {
@@ -2279,9 +2280,9 @@
             "description": "EGroupware OpenID Connect / OAuth2 server",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/openid/tree/upstream-rebase-2026"
+                "source": "https://github.com/EGroupware/openid/tree/master"
             },
-            "time": "2026-07-26T05:18:58+00:00"
+            "time": "2026-07-26T12:12:23+00:00"
         },
         {
             "name": "egroupware/projectmanager",
@@ -2660,21 +2661,22 @@
         },
         {
             "name": "egroupware/status",
-            "version": "dev-fix-lcobucci-jwt-5",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "dc4bf3b8e77dc07b39790c8c23699cabbd56a361"
+                "reference": "43c6de400f39b38c94a36b9cdecdd182926f1938"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/dc4bf3b8e77dc07b39790c8c23699cabbd56a361",
-                "reference": "dc4bf3b8e77dc07b39790c8c23699cabbd56a361",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/43c6de400f39b38c94a36b9cdecdd182926f1938",
+                "reference": "43c6de400f39b38c94a36b9cdecdd182926f1938",
                 "shasum": ""
             },
             "require": {
                 "lcobucci/jwt": "^5.6"
             },
+            "default-branch": true,
             "type": "egroupware-app",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -2697,9 +2699,9 @@
             "description": "EGroupware status / presence app showing logged in and/or in chat active users",
             "homepage": "https://www.egroupware.org/",
             "support": {
-                "source": "https://github.com/EGroupware/status/tree/fix-lcobucci-jwt-5"
+                "source": "https://github.com/EGroupware/status/tree/master"
             },
-            "time": "2026-07-26T04:55:58+00:00"
+            "time": "2026-07-26T12:14:27+00:00"
         },
         {
             "name": "egroupware/stream-filter",
