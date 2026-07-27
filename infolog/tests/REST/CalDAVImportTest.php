@@ -7,14 +7,6 @@
  * tasks via JSON POST/PUT against the REST API and checks the same InfoLog
  * field mapping, malformed-payload rejection and foreign-collection ACL denial.
  *
- * NOTE on 'priority': Api\CalDAV\JsCalendar::JsTask() serializes info_priority
- * via Priority($p) (the calendar 0..3 scale), while parseJsTask() parses it back
- * via parsePriority($p, true) (the infolog-specific 0..3 scale). Composing the
- * two is only the identity for priority=1 - every other value (0, 2..9) comes
- * back different from what was submitted. This looks like a pre-existing bug
- * (parseJsTask() probably needs the same $infolog=true flag as Priority()'s
- * call), so these tests deliberately only use priority=1 to stay meaningful.
- *
  * @package infolog
  * @subpackage tests
  */
@@ -149,7 +141,7 @@ class CalDAVImportTest extends RestBase
 			'description' => 'Created through REST import',
 			'progress' => 'in-progress',
 			'percentComplete' => 55,
-			'priority' => 1,	// see class docblock: only priority=1 round-trips correctly
+			'priority' => 1,
 		]);
 
 		$this->assertSame($uid, $task['title'] ?? null);
@@ -184,7 +176,7 @@ class CalDAVImportTest extends RestBase
 			'description' => 'Updated version',
 			'progress' => 'completed',
 			'percentComplete' => 100,
-			'priority' => 1,
+			'priority' => 9,
 			'egroupware.org:completed' => '2026-07-20T10:00:00Z',
 		]);
 
@@ -192,6 +184,7 @@ class CalDAVImportTest extends RestBase
 		$this->assertSame('Updated version', $updated['description'] ?? null);
 		$this->assertSame('completed', $updated['progress'] ?? null);
 		$this->assertSame(100, $updated['percentComplete'] ?? null);
+		$this->assertSame(9, $updated['priority'] ?? null);
 		$this->assertNotEmpty($updated['egroupware.org:completed'] ?? null);
 
 		$fetched = $this->getResourceJson($id);
