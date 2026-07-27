@@ -1112,10 +1112,17 @@ class Base
 		{
 			throw new \InvalidArgumentException(__METHOD__."(".json_encode($fragment).") contains untrusted GROUP BY/HAVING");
 		}
-		// check fragment contains ORDER BY --> just operate on what's behind
-		if (stripos($fragment,'ORDER BY') !== false)
+		// check fragment contains ORDER BY --> just operate on what's behind. A legitimate fragment never
+		// has anything before ORDER BY (that keyword is only ever prepended by trusted code AFTER this
+		// method already validated the rest) --> any non-blank prefix means untrusted/overlooked content
+		$has_order_by = stripos($fragment,'ORDER BY') !== false;
+		if ($has_order_by)
 		{
-			[$group_by, $order_by] = preg_split('/order +by +/i', $fragment);
+			[$prefix, $order_by] = preg_split('/order +by +/i', $fragment);
+			if (trim($prefix) !== '')
+			{
+				throw new \InvalidArgumentException(__METHOD__."(".json_encode($fragment).") contains untrusted content before ORDER BY");
+			}
 		}
 		// fragment is ORDER BY clause
 		else
@@ -1126,9 +1133,10 @@ class Base
 			$order_by !== implode('', $all_matches[0]))
 		{
 			error_log(__METHOD__."(".json_encode($fragment).") REMOVED");
-			return $group_by??'';
+			return '';
 		}
-		return $fragment;
+		// only ever return the validated part, never anything that preceded an ORDER BY in $fragment
+		return $has_order_by ? 'ORDER BY '.$order_by : $fragment;
 	}
 
 	/**
