@@ -12,6 +12,8 @@ Following RFCs / drafts used/planned for JSON encoding of InfoLog entries
 ### Used JSCalendar Task schema to encode InfoLog entries plus EGroupware&InfoLog specific extensions:
 * stock JSCalendar Task attributes like: `uid`, `title`, `start`, ... (see above link)
 * `@type` is always `Task` independent of InfoLog type, see `egroupware.org:type` below
+* `status` stock values `tentative` (InfoLog `offer`), `cancelled` (InfoLog `deleted`/`cancelled`), `confirmed` otherwise.
+  **Read-only / ignored on write**, as it does not reflect InfoLog's real status - use `progress` and/or `egroupware.org:status` to change it
 * `progress` stock values: 
   * `needs-action` (InfoLog `not-started`)
   * `in-progress` (InfoLog `ongoing`)
@@ -30,6 +32,7 @@ Following RFCs / drafts used/planned for JSON encoding of InfoLog entries
     * `owner` this is the task owner, which might or might not be also an `attendee`
   * other attributes like `participationStatus` are currently NOT persisted by InfoLog
 * `egroupware.org:type` InfoLog type like `task`, `phone`, `note`, `email`, also custom InfoLog-types admin has created
+* `egroupware.org:status` **real** InfoLog status like `not-started`, `ongoing`, `done`, `canceled`, `billed`, also custom InfoLog-status admin has created
 * `egroupware.org:completed` completed date&time
 * `egroupware.org:price` float value with price, if set
 * `egroupware.org:pricelist` integer ID of used price-list (readonly)
@@ -84,6 +87,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/infolog/ -H "Accept:
       "privacy": "public",
       "percentComplete": 10,
       "egroupware.org:type": "task",
+      "egroupware.org:status": "ongoing",
       "relatedTo": {
           "56f7094e-e962-904d-b74a-cf139f9eecb0": {
               "@type": "Relation",
@@ -117,6 +121,7 @@ curl https://example.org/egroupware/groupdav.php/<username>/infolog/ -H "Accept:
       "privacy": "public",
       "percentComplete": 10,
       "egroupware.org:type": "task",
+      "egroupware.org:status": "offer",
     }
   }
 }
@@ -186,6 +191,7 @@ curl 'https://example.org/egroupware/groupdav.php/infolog/956' -H "Accept: appli
     "priority": 9,
     "privacy": "public",
     "egroupware.org:type": "task",
+    "egroupware.org:status": "not-started",
     "egroupware.org:customfields": {
         "contact": {
             "value": [
@@ -282,7 +288,8 @@ X-WebDAV-Status: 201 Created
     "status": "confirmed",
     "progress": "completed",
     "privacy": "public",
-    "egroupware.org:type": "task"
+    "egroupware.org:type": "task",
+    "egroupware.org:status": "done"
 }
 ```
 </details>

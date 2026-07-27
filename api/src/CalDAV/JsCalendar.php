@@ -251,7 +251,7 @@ class JsCalendar extends JsBase
 				'status' => in_array($entry['info_status'], ['deleted', 'cancelled']) ? 'cancelled' :
 					($entry['info_status'] === 'offer' ? 'tentative' : 'confirmed'),
 				'progress' => self::Progress($entry['info_status']),
-				'priority' => isset($entry['info_priority']) ? self::Priority($entry['info_priority']) : null,
+				'priority' => isset($entry['info_priority']) ? self::Priority($entry['info_priority'], true) : null,
 				'categories' => self::categories($entry['info_cat']),
 				'privacy' => $entry['info_access'],
 				'percentComplete' => (int)$entry['info_percent'],
@@ -260,6 +260,7 @@ class JsCalendar extends JsBase
 				'egroupware.org:price' => $entry['info_price'] ? (float)$entry['info_price'] : null,
 				'egroupware.org:completed' => $entry['info_datecompleted'] ?
 					self::DateTime($entry['info_datecompleted'], Api\DateTime::$user_timezone->getName()) : null,
+				'egroupware.org:status' => $entry['info_status'],
 			] + self::Locations(['location' => $entry['info_location'] ?? null]) + [
 				'relatedTo' => self::relatedTo($entry['info_id_parent'] ?: 0, $entry['info_link_id'], $entry['info_id']),
 				'egroupware.org:customfields' => self::customfields($entry, 'infolog', Api\DateTime::$user_timezone->getName()),
@@ -388,6 +389,10 @@ class JsCalendar extends JsBase
 
 					case 'egroupware.org:type':
 						$event['info_type'] = self::parseInfoType($value);
+						break;
+
+					case 'egroupware.org:status':
+						$event['info_status'] = self::parseInfoStatus($value, $event['info_type'] ?? self::parseInfoType($data['egroupware.org:type']) ?: 'task');
 						break;
 
 					case 'egroupware.org:price':
@@ -1368,6 +1373,24 @@ class JsCalendar extends JsBase
 			throw new \InvalidArgumentException("Invalid / non-existing InfoLog type '$type', allowed values are: '".implode("', '", array_keys($bo->enums['type']))."'");
 		}
 		return $type;
+	}
+
+	/**
+	 * Parse an InfoLog type
+	 *
+	 * @param string $type
+	 * @throws \InvalidArgumentException
+	 * @return string
+	 */
+	protected static function parseInfoStatus(string $status, string $type)
+	{
+		$bo = self::getInfolog();
+		if (!isset($bo->status[$type][$status]))
+		{
+			throw new \InvalidArgumentException("Invalid / non-existing InfoLog status '$status', allowed values for type '$type' are: '".
+				implode("', '", array_keys($bo->status[$type]))."'");
+		}
+		return $status;
 	}
 
 	/**

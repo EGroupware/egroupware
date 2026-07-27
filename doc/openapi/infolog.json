@@ -547,8 +547,19 @@
           },
           "status": {
             "type": "string",
-            "enum": ["open", "completed", "cancelled", "in-progress"],
-            "description": "Status of the infolog entry (e.g., for tasks)"
+            "enum": ["tentative", "confirmed", "cancelled"],
+            "readOnly": true,
+            "description": "Stock JSCalendar status: 'tentative' (InfoLog 'offer'), 'cancelled' (InfoLog 'deleted'/'cancelled'), 'confirmed' otherwise. Read-only / ignored on write, as it does not reflect InfoLog's real status - use 'progress' and/or 'egroupware.org:status' to change it"
+          },
+          "progress": {
+            "type": "string",
+            "description": "Stock JSCalendar progress: 'needs-action' (InfoLog 'not-started'), 'in-progress' (InfoLog 'ongoing'), 'completed' (InfoLog 'done'), 'cancelled', or 'egroupware.org:<infolog-status>' for all other InfoLog statuses",
+            "example": "in-progress"
+          },
+          "egroupware.org:status": {
+            "type": "string",
+            "description": "Real InfoLog status, e.g. 'not-started', 'ongoing', 'done', 'cancelled', 'offer', 'billed', also custom InfoLog-status an admin has created - the allowed values depend on 'egroupware.org:type'",
+            "example": "ongoing"
           },
           "priority": {
             "type": "integer",
@@ -604,9 +615,13 @@
           "description": {
             "type": "string"
           },
-          "status": {
+          "progress": {
             "type": "string",
-            "enum": ["open", "completed", "cancelled", "in-progress"]
+            "description": "'needs-action', 'in-progress', 'completed', 'cancelled', or 'egroupware.org:<infolog-status>'"
+          },
+          "egroupware.org:status": {
+            "type": "string",
+            "description": "Real InfoLog status, allowed values depend on 'egroupware.org:type'"
           },
           "priority": {
             "type": "integer"
