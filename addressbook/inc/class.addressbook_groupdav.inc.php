@@ -244,7 +244,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		{
 			if (++$yielded && isset($nresults) && $yielded > $nresults)
 			{
-				$this->sync_collection_token = $resource['modified'];
+				$this->sync_collection_token = Api\DateTime::user2server($resource['modified'], 'ts')-1;
 				$this->more_results = true;
 				return;
 			}
@@ -335,7 +335,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 				}
 				if (++$yielded && isset($nresults) && $yielded > $nresults)
 				{
-					$this->sync_collection_token = $contact['modified'];
+					$this->sync_collection_token = Api\DateTime::user2server($contact['modified'], 'ts')-1;
 					$this->more_results = true;
 					return;
 				}
@@ -362,7 +362,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			// sync-collection report --> return modified of last contact as sync-token
 			if ($sync_collection_report)
 			{
-				$this->sync_collection_token = $contact['modified'];
+				$this->sync_collection_token = Api\DateTime::user2server($contact['modified'], 'ts');
 			}
 			if (count($contacts) === $this->bo->total)
 			{
