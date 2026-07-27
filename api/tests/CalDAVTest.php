@@ -150,6 +150,136 @@ abstract class CalDAVTest extends TestCase
 	}
 
 	/**
+	 * URL of an app's collection, e.g. "/<user>/addressbook/" or "/<user>/infolog/"
+	 *
+	 * Shared by CalDAV/CardDAV (native XML) and REST (JSON) tests alike.
+	 *
+	 * @param string $app eg. "addressbook", "infolog" or "calendar"
+	 * @param string $user account_lid of the collection owner
+	 * @return string
+	 */
+	protected function collectionUrl(string $app, string $user) : string
+	{
+		return '/'.$user.'/'.$app.'/';
+	}
+
+	/**
+	 * PUT an arbitrary resource (vCard/iCalendar) to a CalDAV/CardDAV path.
+	 *
+	 * Unlike REST, CalDAV/CardDAV clients choose the resource name themselves,
+	 * so no id needs to be extracted from the response.
+	 *
+	 * @param string $path eg. "/<user>/addressbook/<name>.vcf"
+	 * @param string $content_type eg. "text/vcard" or "text/calendar"
+	 * @param string $body raw vCard/iCalendar content
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @param array $headers additional headers
+	 * @return ResponseInterface
+	 */
+	protected function putResource(string $path, string $content_type, string $body, ?string $user=null, array $headers=[]) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		return $this->getClient($user)->put($this->url($path), [
+			RequestOptions::HEADERS => array_merge([
+				'Content-Type' => $content_type,
+			], $headers),
+			RequestOptions::BODY => $body,
+		]);
+	}
+
+	/**
+	 * Strip the "/groupdav.php" server-prefix from an href, leaving "/<user>/<app>/<name>".
+	 */
+	protected function hrefSuffix(string $href) : string
+	{
+		$marker = '/groupdav.php';
+		$pos = strpos($href, $marker);
+		return $pos !== false ? substr($href, $pos + strlen($marker)) : $href;
+	}
+
+	/**
+	 * DELETE a CalDAV/CardDAV resource.
+	 *
+	 * @param string $path eg. "/<user>/addressbook/<name>.vcf"
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @return ResponseInterface
+	 */
+	protected function deleteResource(string $path, ?string $user=null) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		return $this->getClient($user)->delete($this->url($path));
+	}
+
+	/**
+	 * Perform a native rfc6578 sync-collection REPORT (XML) request against a collection.
+	 *
+	 * @param string $collection eg. from collectionUrl()
+	 * @param ?string $sync_token ='' empty string for the initial/full sync
+	 * @param ?int $nresults =null limit number of results per chunk, null for no limit
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @return array with keys "hrefs" (ordered list of "/<user>/<app>/<name>" paths, including deleted
+	 *  ones - they keep their place in the oldest-modified-first order), "deleted" (subset of "hrefs"
+	 *  reported without properties, i.e. status 404 - removed since the given sync-token), "sync-token"
+	 *  (string to resume from, or null) and "more-results" (bool)
+	 */
+	protected function reportSyncCollection(string $collection, ?string $sync_token='', ?int $nresults=null, ?string $user=null) : array
+	{
+		$user = $user ?: $this->organizerLid();
+		$limit = isset($nresults) ? "  <D:limit><D:nresults>$nresults</D:nresults></D:limit>\n" : '';
+		$body = '<?xml version="1.0" encoding="utf-8"?>'."\n".
+			'<D:sync-collection xmlns:D="DAV:">'."\n".
+			'  <D:sync-token>'.htmlspecialchars((string)$sync_token).'</D:sync-token>'."\n".
+			"  <D:sync-level>1</D:sync-level>\n".
+			$limit.
+			"  <D:prop>\n".
+			"    <D:getetag/>\n".
+			"    <D:getlastmodified/>\n".
+			"  </D:prop>\n".
+			"</D:sync-collection>\n";
+
+		$response = $this->getClient($user)->request('REPORT', $this->url($collection), [
+			RequestOptions::HEADERS => [
+				'Content-Type' => 'application/xml; charset=utf-8',
+				'Depth' => '1',
+			],
+			RequestOptions::BODY => $body,
+		]);
+		$this->assertHttpStatus(207, $response, 'sync-collection REPORT');
+
+		$xml = new \SimpleXMLElement((string)$response->getBody());
+		$xml->registerXPathNamespace('D', 'DAV:');
+
+		$hrefs = [];
+		$deleted = [];
+		$more_results = false;
+		foreach($xml->xpath('//D:response') as $node)
+		{
+			$dav = $node->children('DAV:');
+			// only set for entries without a propstat, i.e. the 507 more-results marker or a 404 deletion
+			$status = (string)$dav->status;
+			if (strpos($status, '507') !== false)
+			{
+				$more_results = true;
+				continue;	// marker response for the collection itself, not a real resource
+			}
+			$href = $this->hrefSuffix((string)$dav->href);
+			$hrefs[] = $href;
+			if (strpos($status, '404') !== false)
+			{
+				$deleted[] = $href;
+			}
+		}
+		$sync_token_nodes = $xml->xpath('//D:sync-token');
+
+		return [
+			'hrefs' => $hrefs,
+			'deleted' => $deleted,
+			'sync-token' => $sync_token_nodes ? (string)$sync_token_nodes[0] : null,
+			'more-results' => $more_results,
+		];
+	}
+
+	/**
 	 * Extract numeric cal_id from ETag header and track it for cleanup.
 	 */
 	protected function addCalendarID($response) : int

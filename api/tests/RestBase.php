@@ -72,6 +72,109 @@ abstract class RestBase extends CalDAVTest
 	}
 
 	/**
+	 * POST a JSON resource (JsContact/JsTask/JsEvent) to an app's collection to create a new entry.
+	 *
+	 * @param string $collection eg. from collectionUrl()
+	 * @param array $data
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @param array $headers additional headers
+	 * @return ResponseInterface 201 Created on success; Location & ETag contain the new id
+	 */
+	protected function postResource(string $collection, array $data, ?string $user=null, array $headers=[]) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		return $this->getClient($user)->post($this->url($collection), [
+			RequestOptions::HEADERS => $this->jsonHeaders(array_merge([
+				'Prefer' => 'return=representation',
+			], $headers)),
+			RequestOptions::BODY => $this->jsonBody($data),
+		]);
+	}
+
+	/**
+	 * Extract the numeric id of a freshly created resource from a collection other than calendar.
+	 *
+	 * @param ResponseInterface $response create (POST) response
+	 * @param string $app eg. "addressbook" or "infolog", used to parse the Location header
+	 * @return string|int new id, or '' if none could be determined
+	 */
+	protected function resourceIdFromResponse(ResponseInterface $response, string $app)
+	{
+		$location = $response->getHeader('Location')[0] ?? '';
+		if ($location !== '' && preg_match('#/'.preg_quote($app, '#').'/([^/?\#]+)$#', $location, $matches))
+		{
+			return $matches[1];
+		}
+		// ETag: "<id>:<recurrence>:<modified>"
+		$etag = $response->getHeader('ETag')[0] ?? '';
+		$parts = explode(':', trim($etag, '[]"'));
+		return $parts[0] ?? '';
+	}
+
+	/**
+	 * DELETE a REST resource.
+	 *
+	 * Overrides {@see CalDAVTest::deleteResource()} to add the "Accept: application/json" header,
+	 * which a REST DELETE request MUST send, otherwise the CalDAV server returns 404 (see class docblock).
+	 *
+	 * @param string $path eg. from collectionUrl() plus an id
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @param array $headers additional headers
+	 * @return ResponseInterface
+	 */
+	protected function deleteResource(string $path, ?string $user=null, array $headers=[]) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		return $this->getClient($user)->delete($this->url($path), [
+			RequestOptions::HEADERS => $this->jsonHeaders($headers),
+		]);
+	}
+
+	/**
+	 * Perform a sync-collection REPORT via the REST/JSON GET shortcut (sync-token/nresults GET parameters).
+	 *
+	 * @param string $collection eg. from collectionUrl()
+	 * @param ?string $sync_token ='' empty string for the initial/full sync
+	 * @param ?int $nresults =null limit number of results per chunk, null for no limit
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @param array $extra_query additional GET parameters, e.g. ['filters' => ['order' => 'foo']]
+	 * @return ResponseInterface
+	 */
+	protected function syncCollectionResponse(string $collection, ?string $sync_token='', ?int $nresults=null, ?string $user=null, array $extra_query=[]) : ResponseInterface
+	{
+		$user = $user ?: $this->organizerLid();
+		$query = array_merge(['sync-token' => $sync_token ?? ''], $extra_query);
+		if (isset($nresults))
+		{
+			$query['nresults'] = $nresults;
+		}
+		return $this->getClient($user)->get($this->url($collection), [
+			RequestOptions::HEADERS => $this->jsonHeaders(),
+			RequestOptions::QUERY => $query,
+		]);
+	}
+
+	/**
+	 * Perform a sync-collection REPORT and return the decoded JSON body (asserts HTTP 200).
+	 *
+	 * Decoded body has keys "responses" (path => JsEvent/JsContact/JsTask or null if deleted),
+	 * "sync-token" (to resume from) and optionally "more-results" (true if $nresults truncated the result).
+	 *
+	 * @param string $collection eg. from collectionUrl()
+	 * @param ?string $sync_token ='' empty string for the initial/full sync
+	 * @param ?int $nresults =null limit number of results per chunk, null for no limit
+	 * @param ?string $user account_lid to authenticate as, default organizer/EGW_USER
+	 * @param array $extra_query additional GET parameters
+	 * @return array decoded response body
+	 */
+	protected function syncCollection(string $collection, ?string $sync_token='', ?int $nresults=null, ?string $user=null, array $extra_query=[]) : array
+	{
+		$response = $this->syncCollectionResponse($collection, $sync_token, $nresults, $user, $extra_query);
+		$this->assertHttpStatus(200, $response, 'sync-collection REPORT');
+		return $this->jsonDecode($response);
+	}
+
+	/**
 	 * Default JSON request headers, $extra is merged in last (and can overwrite them)
 	 *
 	 * @param array $extra additional headers
