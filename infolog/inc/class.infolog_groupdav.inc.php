@@ -722,6 +722,20 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		if (($is_json=Api\CalDAV::isJSON($type)))
 		{
 			$task = Api\CalDAV\JsCalendar::parseJsTask($options['content'], $oldTask ?? [], $type, $method, $user) + ($oldTask??[]);
+			// setting owner or responsible for new tasks based on folder (mirrors infolog_ical::importVTODO(),
+			// as parseJsTask() itself does NOT set info_owner - without this, bo::write()'s ACL check for a
+			// new task silently falls back to the acting user's own grants, bypassing the collection owner's)
+			if (!is_null($user) && !$oldTask)
+			{
+				if ($this->bo->check_access($task, Acl::ADD))
+				{
+					$task['info_owner'] = $user;
+				}
+				elseif (!in_array($user, (array)$task['info_responsible']))
+				{
+					$task['info_responsible'][] = $user;
+				}
+			}
 			if ($callback_data)
 			{
 				$callback = array_shift($callback_data);
