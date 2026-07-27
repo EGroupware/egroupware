@@ -144,7 +144,8 @@
 		"robrichards/xmlseclibs": "^3.1.1",
 		"simplesamlphp/simplesamlphp": "^2.5.0",
 		"slim/slim": "^4.15",
-		"steverhoades/oauth2-openid-connect-server": "^3.0.1"
+		"steverhoades/oauth2-openid-connect-server": "^3.0.1",
+		"web-auth/webauthn-lib": "^5.3.5"
 	},
 	"require-dev": {
 		"phpunit/phpunit": "^12.5.22"
