@@ -122,6 +122,7 @@
 		"egroupware/translation": "^2.3.0",
 		"egroupware/url": "^2.3.0",
 		"egroupware/util": "^2.7.0",
+		"egroupware/webauthn": "self.version",
 		"egroupware/webdav": "^0.5.1",
 		"egroupware/xml_feed_parser": "^1.0.5",
 		"egroupware/z-push-dev": "2.5.0.3",
