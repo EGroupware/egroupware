@@ -302,6 +302,13 @@ jobs:
           # webauthn is a newer first-party app (composer.json require egroupware/webauthn); the CI
           # image's baked-in install predates it, so its schema (egw_webauthn_pubkeys) was never
           # created - install it explicitly, same as the "test" fixture app above.
+          #
+          # header.inc.php still points EGW_SERVER_ROOT at the image's baked-in /usr/share/egroupware
+          # at this point in the pipeline (that only gets patched to $EGW_SRC_DIR later, in "Run
+          # PHPUnit") - without this, setup-cli.php scans the old baked-in app list, never sees
+          # webauthn as new, and silently no-ops with "No update necessary". Patch it here too
+          # (idempotent, harmless if "Run PHPUnit" repeats it) so the scan sees the real checkout.
+          $COMPOSE exec -T egroupware sed -i "s#/usr/share/egroupware#$EGW_SRC_DIR#g" /var/lib/egroupware/header.inc.php
           $COMPOSE exec -T \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
