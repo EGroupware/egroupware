@@ -8,8 +8,8 @@
 
 namespace EGroupware\Infolog;
 
-require_once __DIR__.'/../../api/tests/CalDAVTest.php';
-require_once __DIR__.'/../../api/tests/LoggedInTest.php';
+require_once __DIR__.'/../../../api/tests/CalDAVTest.php';
+require_once __DIR__.'/../../../api/tests/LoggedInTest.php';
 
 use EGroupware\Api\CalDAV;
 use EGroupware\Api\CalDAVTest;
@@ -21,9 +21,9 @@ use GuzzleHttp\RequestOptions;
 class CalDAVImportTest extends CalDAVTest
 {
 	protected const OTHER_USER = 'infolog_caldav_other';
-	protected const FIXTURE_CREATE = __DIR__.'/fixtures/caldav-import-create.ics.tpl';
-	protected const FIXTURE_UPDATE = __DIR__.'/fixtures/caldav-import-update.ics.tpl';
-	protected const FIXTURE_COMPLETED_NO_STATUS = __DIR__.'/fixtures/caldav-import-completed-no-status.ics.tpl';
+	protected const FIXTURE_CREATE = __DIR__.'/../fixtures/caldav-import-create.ics.tpl';
+	protected const FIXTURE_UPDATE = __DIR__.'/../fixtures/caldav-import-update.ics.tpl';
+	protected const FIXTURE_COMPLETED_NO_STATUS = __DIR__.'/../fixtures/caldav-import-completed-no-status.ics.tpl';
 
 	/**
 	 * Track created CalDAV resources for cleanup.
