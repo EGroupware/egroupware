@@ -677,6 +677,7 @@ abstract class CalDAVTest extends TestCase
 			'_REQUEST_ConfigDomain' => $_REQUEST['ConfigDomain'] ?? null,
 			'egw_info'              => $GLOBALS['egw_info'] ?? null,
 			'egw_setup'             => $GLOBALS['egw_setup'] ?? null,
+			'egw'                   => $GLOBALS['egw'] ?? null,
 		];
 	}
 
@@ -720,6 +721,23 @@ abstract class CalDAVTest extends TestCase
 		else
 		{
 			unset($GLOBALS['egw_setup']);
+		}
+		if(self::$setup_global_snapshot['egw'] !== null)
+		{
+			$GLOBALS['egw'] = self::$setup_global_snapshot['egw'];
+		}
+		else
+		{
+			// getSetup() bootstrapped its own $GLOBALS['egw'] (under 'setup'/noapi context) because
+			// none existed yet - discard it, so a subsequent LoggedInTest::load_egw() (eg. in a test
+			// class running right after, due to alphabetic test-file ordering) builds a properly
+			// flagged Egw instance instead of silently reusing this minimal one via its reuse-guard
+			// (empty($GLOBALS['egw']) check), which left ACL/rights loaded for the wrong context.
+			if(!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+			{
+				$GLOBALS['egw']->db->disconnect();
+			}
+			unset($GLOBALS['egw']);
 		}
 		self::$setup_global_snapshot = null;
 	}
