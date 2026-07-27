@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "94f162323bcdccf5e5ee5a42a9290a80",
+    "content-hash": "479d31feb907970842db9869ddd72467",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -3353,12 +3353,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/webauthn.git",
-                "reference": "743a4dee36a0f8e8775d8d061fd42c8cbc0c1bae"
+                "reference": "925a097b043c7832059b8ddb33d9b318ef1d27ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/webauthn/zipball/743a4dee36a0f8e8775d8d061fd42c8cbc0c1bae",
-                "reference": "743a4dee36a0f8e8775d8d061fd42c8cbc0c1bae",
+                "url": "https://api.github.com/repos/EGroupware/webauthn/zipball/925a097b043c7832059b8ddb33d9b318ef1d27ea",
+                "reference": "925a097b043c7832059b8ddb33d9b318ef1d27ea",
                 "shasum": ""
             },
             "require": {
@@ -3387,7 +3387,7 @@
                 "issues": "https://github.com/EGroupware/webauthn/issues",
                 "source": "https://github.com/EGroupware/webauthn/tree/master"
             },
-            "time": "2026-07-27T14:00:56+00:00"
+            "time": "2026-07-27T17:27:20+00:00"
         },
         {
             "name": "egroupware/webdav",
@@ -13821,7 +13821,8 @@
     },
     "platform-dev": {},
     "platform-overrides": {
-        "php": "8.2"
+        "php": "8.2",
+        "ext-swoole": "4.4.2"
     },
     "plugin-api-version": "2.9.0"
 }
