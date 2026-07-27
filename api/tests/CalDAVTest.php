@@ -563,6 +563,18 @@ abstract class CalDAVTest extends TestCase
 	 */
 	private static function resetSharedRuntimeState() : void
 	{
+		// Reset Link runtime caches/object instances used by query/title/file access helpers
+		// BEFORE resetting the Accounts singleton below: Link::init_static(true) triggers hooks
+		// (eg. some CTI backends construct Api\Accounts::getInstance() eagerly), which must still
+		// see the current, properly-configured Accounts instance - not a freshly (default-config)
+		// re-instantiated one, which can otherwise try to contact a backend that isn't reachable
+		// in this context (eg. an LDAP/AD server).
+		// In some teardown contexts (eg. CI ordering), egwd db can already be gone.
+		if (!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
+		{
+			\EGroupware\Api\Link::init_static(true);
+		}
+
 		// Reset Accounts singleton/caches to avoid cross-suite backend/capability leaks.
 		$accounts_instance = new \ReflectionProperty(\EGroupware\Api\Accounts::class, '_instance');
 		$accounts_instance->setAccessible(true);
@@ -571,14 +583,6 @@ abstract class CalDAVTest extends TestCase
 		$accounts_cache = new \ReflectionProperty(\EGroupware\Api\Accounts::class, 'cache');
 		$accounts_cache->setAccessible(true);
 		$accounts_cache->setValue(null, []);
-
-		// Reset Link runtime caches/object instances used by query/title/file access helpers.
-		// In some teardown contexts (eg. CI ordering), egwd db can already be gone.
-		// Link::init_static(true) triggers hooks that require a valid db.
-		if (!empty($GLOBALS['egw']) && !empty($GLOBALS['egw']->db))
-		{
-			\EGroupware\Api\Link::init_static(true);
-		}
 	}
 
 	/**
