@@ -51,7 +51,7 @@ class Events extends Api\Storage\Base
 		{
 			self::$instance = $this;
 		}
-		$this->user = $GLOBALS['egw_info']['user']['account_id'];
+		$this->user = (int)($GLOBALS['egw_info']['user']['account_id'] ?? 0);
 	}
 
 	function __destruct()
