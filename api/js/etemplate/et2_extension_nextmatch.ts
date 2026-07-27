@@ -585,6 +585,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			if(this.controller && this.controller._grid)
 			{
 				this.controller._grid.doInvalidate = true;
+				this.controller.update();
 			}
 		}, this));
 		return this.template_promise ? this.template_promise : true;
