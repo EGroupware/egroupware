@@ -327,6 +327,14 @@ export class EgwFramework extends LitElement
 
 		const menuaction = _ajax_exec_url ? _ajax_exec_url.match(/menuaction=([^&]+)/) : null;
 
+		// The leading app must be the app the executed menuaction actually belongs to
+		// (Api\Json\Request::checkMenuAction requires it), NOT the hosting tab, which may
+		// differ, e.g. opening preferences.preferences_categories_ui from another app's tab.
+		if(menuaction)
+		{
+			appName = menuaction[1].split('.')[0];
+		}
+
 		// use template handler to call current framework, eg. pixelegg
 		return baseUrl + appName + '.kdots_framework.' + _fun + '.template' +
 			(menuaction ? '.' + menuaction[1] : '');
