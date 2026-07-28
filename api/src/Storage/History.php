@@ -157,7 +157,10 @@ class History
 	protected function doRetention() : ?int
 	{
 		static $once=0;
-		if (!empty($GLOBALS['egw_info']['server']['history_retention']) && !$once++)
+		if (!empty($GLOBALS['egw_info']['server']['history_retention']) &&
+			// run retention only weekends or after 18h
+			(in_array(date('l'), ['Saturday', 'Sunday']) || (new Api\DateTime())->format('H') >= 18) &&
+			!$once++)
 		{
 			Api\Egw::on_shutdown(function()
 			{
