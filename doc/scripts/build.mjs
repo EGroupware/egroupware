@@ -1,7 +1,7 @@
 import {deleteAsync} from 'del';
 import {exec, spawn} from 'child_process';
 import {globby} from 'globby';
-import browserSync from 'browser-sync';
+import {startDevServer} from '@web/dev-server';
 import chalk from 'chalk';
 import commandLineArgs from 'command-line-args';
 import esbuild from 'esbuild';
@@ -367,93 +367,58 @@ if (serve)
 		result = await buildTheDocs(true);
 	});
 
-	const bs = browserSync.create();
 	const port = await getPort({port: portNumbers(4000, 4999)});
-	const browserSyncConfig = {
-		startPath: '/',
-		port,
-		logLevel: 'silent',
-		logPrefix: '[egw]',
-		logFileChanges: true,
-		notify: false,
-		single: false,
-		ghostMode: false,
-		server: {
-			baseDir: sitedir,
-			routes: {
-				'/dist': './cdn'
-			}
-		}
-	};
 
-	// Launch browser sync
-	bs.init(browserSyncConfig, () =>
-	{
-		const url = `http://localhost:${port}`;
-		console.log(chalk.cyan(`\n🥾 The dev server is available at ${url}`));
+	// Serves sitedir (watching it for changes and reloading the browser, like BrowserSync
+	// did), plus /dist/* rewritten to cdndir for the bundled npm CDN assets.
+	await startDevServer({
+		readCliArgs: false,
+		readFileConfig: false,
+		logStartMessage: false,
+		config: {
+			rootDir: sitedir,
+			port,
+			watch: true,
+			middleware: [
+				async (ctx, next) =>
+				{
+					if (!ctx.path.startsWith('/dist/')) return next();
 
-		// Log deferred output
-		if (result.output.length > 0)
-		{
-			console.log('\n' + result.output.join('\n'));
-		}
-
-		// Log output that comes later on
-		result.child.stdout?.on('data', data =>
-		{
-			console.log(data.toString());
-		});
-	});
-
-	// Rebuild and reload when source files change
-	bs.watch('src/**/!(*.test).*').on('change', async filename =>
-	{
-		console.log('[build] File changed: ', filename);
-
-		try
-		{
-			const isTheme = /^src\/themes/.test(filename);
-			const isStylesheet = /(\.css|\.styles\.ts)$/.test(filename);
-
-			// Rebuild the source
-			const rebuildResults = buildResults.map(result => result.rebuild());
-			await Promise.all(rebuildResults);
-
-			// Rebuild stylesheets when a theme file changes
-			if (isTheme)
-			{
-				await Promise.all(
-					bundleDirectories.map(dir =>
+					try
 					{
-						execPromise(`node scripts/make-themes.js --outdir "${dir}"`, {stdio: 'inherit'});
-					})
-				);
-			}
-
-			// Rebuild metadata (but not when styles are changed)
-			if (!isStylesheet)
-			{
-				await Promise.all(
-					bundleDirectories.map(dir =>
+						ctx.body = await fs.readFile(path.join(cdndir, ctx.path.slice('/dist/'.length)));
+						ctx.type = path.extname(ctx.path);
+					}
+					catch
 					{
-						return execPromise(`node scripts/make-metadata.js --outdir "${dir}"`, {stdio: 'inherit'});
-					})
-				);
-			}
-
-			bs.reload();
-		}
-		catch (err)
-		{
-			console.error(chalk.red(err));
+						ctx.status = 404;
+					}
+				}
+			]
 		}
 	});
 
-	// Reload without rebuilding when the docs change
-	bs.watch([`${sitedir}/**/*.*`]).on('change', filename =>
+	const url = `http://localhost:${port}`;
+	console.log(chalk.cyan(`\n🥾 The dev server is available at ${url}`));
+
+	// Log deferred output
+	if (result.output.length > 0)
 	{
-		bs.reload();
+		console.log('\n' + result.output.join('\n'));
+	}
+
+	// Log output that comes later on
+	result.child.stdout?.on('data', data =>
+	{
+		console.log(data.toString());
 	});
+
+	// Eleventy's own --watch handles rebuilding the docs content. Component metadata
+	// (cem analyze) is not auto-regenerated on .ts changes here; re-run "npm run docs"
+	// if metadata drifts. The dev server only serves and reloads when the built output
+	// (sitedir) changes, so there is nothing else to rebuild here.
+	// (The previous browser-sync-based watcher here called scripts/make-themes.js and
+	// scripts/make-metadata.js, neither of which exist anywhere in this repo - already dead.)
 }
 
 

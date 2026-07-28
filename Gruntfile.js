@@ -8,22 +8,16 @@
  */
 
 /**
- * To install grunt to build minified javascript files you need to run:
+ * This is no longer run via the grunt CLI/npm package (dropped, as both grunt and
+ * grunt-contrib-cssmin vendor outdated, vulnerable glob/minimatch/js-yaml versions
+ * with no upstream fix - see GHSA-mh99-v99m-4gvg and related advisories).
  *
- *		sudo npm install -g grunt-cli
- *		npm install # installs everything from package.json into node_modules dir
- *
- * To generate the now existing package.json:
- *		npm init
- *		npm install grunt --save-dev
- *		npm install grunt-newer --save-dev
- *		npm install grunt-contrib-cssmin --save-dev
- *
- * Building happens by running in your EGroupware directory:
- *
- *		grunt	# runs cssmin for all targets with changed files
- * or
- *		grunt [newer:]cssmin:<target>	# targets: pixelegg, jdots
+ * This file is kept for two reasons:
+ * - build-css.mjs (run via "npm run css") reads the cssmin config below through a
+ *   minimal grunt.initConfig() shim, so the file lists stay a single source of truth
+ * - Api\Framework\Bundle::getImportMap() (api/src/Framework/Bundle.php) parses this
+ *   file's grunt.initConfig({...}) call directly by regex for (unrelated, legacy)
+ *   JS bundle info
  *
  * Please use only double quotes, as we parse this file as json to update it!
  *

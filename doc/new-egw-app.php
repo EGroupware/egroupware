@@ -64,9 +64,8 @@ $bins = array(
 	'php'      => PHP_BINARY,
 	'git'      => ['/usr/local/bin/git', '/usr/bin/git'],
 	'composer' => ['/usr/local/bin/composer', '/usr/bin/composer', '/usr/bin/composer.phar'],
-	// npm and grunt are no hard requirement and should be the last in the list!
+	// npm is no hard requirement and should be the last in the list!
 	'npm'      => ['/usr/local/bin/npm', '/usr/bin/npm'],
-	'grunt'    => [__DIR__.'/node_modules/.bin/grunt', '/usr/local/bin/grunt', '/usr/bin/grunt'],
 );
 
 // check if the necessary binaries are installed
@@ -95,13 +94,13 @@ foreach($bins as $name => $binaries)
 	{
 		$bins[$name] = $$name = false;
 		error_log("Could not find $name command!");
-		if (!in_array($name, ['npm','grunt']))
+		if (!in_array($name, ['npm']))
 		{
 			exit(1);
 		}
 		else
 		{
-			error_log("npm and grunt are required to minify JavaScript and CSS files to improve performance.");
+			error_log("npm is required to minify JavaScript and CSS files to improve performance.");
 			break;
 		}
 	}
