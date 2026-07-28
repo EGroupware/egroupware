@@ -2241,12 +2241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "c6a80d9467a4d88ecd2b756c35dd56897c0ebf6a"
+                "reference": "d1083054b1728185adb2b5acf52826df3026a35b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/c6a80d9467a4d88ecd2b756c35dd56897c0ebf6a",
-                "reference": "c6a80d9467a4d88ecd2b756c35dd56897c0ebf6a",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/d1083054b1728185adb2b5acf52826df3026a35b",
+                "reference": "d1083054b1728185adb2b5acf52826df3026a35b",
                 "shasum": ""
             },
             "require": {
@@ -3933,7 +3933,7 @@
                     "homepage": "https://github.com/Nyholm"
                 },
                 {
-                    "name": "Márk Sági-Kazár",
+                    "name": "M\u00e1rk S\u00e1gi-Kaz\u00e1r",
                     "email": "mark.sagikazar@gmail.com",
                     "homepage": "https://github.com/sagikazarmark"
                 },
@@ -4132,7 +4132,7 @@
                     "homepage": "https://github.com/Nyholm"
                 },
                 {
-                    "name": "Márk Sági-Kazár",
+                    "name": "M\u00e1rk S\u00e1gi-Kaz\u00e1r",
                     "email": "mark.sagikazar@gmail.com",
                     "homepage": "https://github.com/sagikazarmark"
                 },
@@ -4142,7 +4142,7 @@
                     "homepage": "https://github.com/Tobion"
                 },
                 {
-                    "name": "Márk Sági-Kazár",
+                    "name": "M\u00e1rk S\u00e1gi-Kaz\u00e1r",
                     "email": "mark.sagikazar@gmail.com",
                     "homepage": "https://sagikazarmark.hu"
                 }
@@ -4263,7 +4263,7 @@
             ],
             "authors": [
                 {
-                    "name": "Luís Cobucci",
+                    "name": "Lu\u00eds Cobucci",
                     "email": "lcobucci@gmail.com"
                 }
             ],
@@ -4331,7 +4331,7 @@
             ],
             "authors": [
                 {
-                    "name": "Luís Cobucci",
+                    "name": "Lu\u00eds Cobucci",
                     "email": "lcobucci@gmail.com",
                     "role": "Developer"
                 }
@@ -5714,7 +5714,7 @@
             ],
             "authors": [
                 {
-                    "name": "Sérgio Carvalho",
+                    "name": "S\u00e9rgio Carvalho",
                     "email": "sergiosgc@gmail.com",
                     "role": "Lead"
                 }
@@ -5926,7 +5926,7 @@
                     "role": "Developer"
                 },
                 {
-                    "name": "Hans-Jürgen Petrich",
+                    "name": "Hans-J\u00fcrgen Petrich",
                     "email": "petrich@tronic-media.com",
                     "role": "Developer"
                 },
@@ -6910,11 +6910,11 @@
             ],
             "authors": [
                 {
-                    "name": "Andreas Åkre Solberg",
+                    "name": "Andreas \u00c5kre Solberg",
                     "email": "andreas.solberg@uninett.no"
                 },
                 {
-                    "name": "Jaime Pérez Crespo",
+                    "name": "Jaime P\u00e9rez Crespo",
                     "email": "jaime.perez@uninett.no"
                 },
                 {
@@ -6977,7 +6977,7 @@
             ],
             "authors": [
                 {
-                    "name": "Andreas Åkre Solberg",
+                    "name": "Andreas \u00c5kre Solberg",
                     "email": "andreas.solberg@uninett.no"
                 }
             ],
@@ -7104,7 +7104,7 @@
             ],
             "authors": [
                 {
-                    "name": "Andreas Åkre Solberg",
+                    "name": "Andreas \u00c5kre Solberg",
                     "email": "andreas.solberg@uninett.no"
                 },
                 {
