@@ -1,7 +1,7 @@
 import {deleteAsync} from 'del';
 import {exec, spawn} from 'child_process';
 import {globby} from 'globby';
-import browserSync from 'browser-sync';
+import {startDevServer} from '@web/dev-server';
 import chalk from 'chalk';
 import commandLineArgs from 'command-line-args';
 import esbuild from 'esbuild';
@@ -369,54 +369,56 @@ if (serve)
 		result = await buildTheDocs(true);
 	});
 
-	const bs = browserSync.create();
 	const port = await getPort({port: portNumbers(4000, 4999)});
-	const browserSyncConfig = {
-		startPath: '/',
-		port,
-		logLevel: 'silent',
-		logPrefix: '[egw]',
-		logFileChanges: true,
-		notify: false,
-		single: false,
-		ghostMode: false,
-		server: {
-			baseDir: sitedir,
-			routes: {
-				'/dist': './cdn'
-			}
-		}
-	};
 
-	// Launch browser sync
-	bs.init(browserSyncConfig, () =>
+	// Serves sitedir (watching it for changes and reloading the browser, like BrowserSync
+	// did), plus /dist/* rewritten to cdndir for the bundled npm CDN assets.
+	await startDevServer({
+		readCliArgs: false,
+		readFileConfig: false,
+		logStartMessage: false,
+		config: {
+			rootDir: sitedir,
+			port,
+			watch: true,
+			middleware: [
+				async (ctx, next) =>
+				{
+					if (!ctx.path.startsWith('/dist/')) return next();
+
+					try
+					{
+						ctx.body = await fs.readFile(path.join(cdndir, ctx.path.slice('/dist/'.length)));
+						ctx.type = path.extname(ctx.path);
+					}
+					catch
+					{
+						ctx.status = 404;
+					}
+				}
+			]
+		}
+	});
+
+	const url = `http://localhost:${port}`;
+	console.log(chalk.cyan(`\n🥾 The dev server is available at ${url}`));
+
+	// Log deferred output
+	if (result.output.length > 0)
 	{
-		const url = `http://localhost:${port}`;
-		console.log(chalk.cyan(`\n🥾 The dev server is available at ${url}`));
+		console.log('\n' + result.output.join('\n'));
+	}
 
-		// Log deferred output
-		if (result.output.length > 0)
-		{
-			console.log('\n' + result.output.join('\n'));
-		}
-
-		// Log output that comes later on
-		result.child.stdout?.on('data', data =>
-		{
-			console.log(data.toString());
-		});
+	// Log output that comes later on
+	result.child.stdout?.on('data', data =>
+	{
+		console.log(data.toString());
 	});
 
 	// Rebuilds are handled entirely by Eleventy's --watch: eleventy.config.cjs adds
 	// api/js/etemplate as a watch target and re-runs cem analyze (metadata) in its
-	// eleventy.beforeWatch hook (only when a .ts file changed). BrowserSync only serves
-	// and reloads when the built output changes, so there is nothing to rebuild here.
-
-	// Reload when the built docs change
-	bs.watch([`${sitedir}/**/*.*`]).on('change', filename =>
-	{
-		bs.reload();
-	});
+	// eleventy.beforeWatch hook (only when a .ts file changed). The dev server only serves
+	// and reloads when the built output (sitedir) changes, so there is nothing to rebuild here.
 }
 
 
