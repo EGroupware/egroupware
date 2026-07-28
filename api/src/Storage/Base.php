@@ -1129,7 +1129,9 @@ class Base
 		{
 			$order_by = $fragment;
 		}
-		if (!preg_match_all("/(#?[a-z_][a-z0-9_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(, *|$)/ui", $order_by, $all_matches) ||
+		// a term is either a plain (optionally dotted) column name, or COALESCE(col1,col2,...) treated like one -
+		// arguments must themselves be plain column names, no nested functions/literals/subqueries allowed
+		if (!preg_match_all("/((?:COALESCE)\\( *[a-z_][a-z0-9_.]* *(?:, *[a-z_][a-z0-9_.]* *)+\\)|#?[a-z_][a-z0-9_.]+) *(<> *''|IS NULL|IS NOT NULL|& *\d+)? *(ASC|DESC)?(, *|$)/ui", $order_by, $all_matches) ||
 			$order_by !== implode('', $all_matches[0]))
 		{
 			error_log(__METHOD__."(".json_encode($fragment).") REMOVED");
