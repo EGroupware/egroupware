@@ -144,9 +144,20 @@ describe('EgwFramework', () =>
 			'home'
 		);
 
+		// leading app must be the target app of the menuaction, not the hosting tab ('home')
 		assert.equal(
 			result,
-			'home.kdots_framework.test.template.app.handler.method'
+			'app.kdots_framework.test.template.app.handler.method'
+		);
+	});
+
+	it('falls back to given appName when there is no target menuaction', () =>
+	{
+		const result = element.getMenuaction('test', null, 'home');
+
+		assert.equal(
+			result,
+			'home.kdots_framework.test.template'
 		);
 	});
 });
