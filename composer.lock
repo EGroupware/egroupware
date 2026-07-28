@@ -2241,12 +2241,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/openid.git",
-                "reference": "c739a5b429fe6f33cb7cfc8e3fde0aed24f0e08a"
+                "reference": "c6a80d9467a4d88ecd2b756c35dd56897c0ebf6a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/openid/zipball/c739a5b429fe6f33cb7cfc8e3fde0aed24f0e08a",
-                "reference": "c739a5b429fe6f33cb7cfc8e3fde0aed24f0e08a",
+                "url": "https://api.github.com/repos/EGroupware/openid/zipball/c6a80d9467a4d88ecd2b756c35dd56897c0ebf6a",
+                "reference": "c6a80d9467a4d88ecd2b756c35dd56897c0ebf6a",
                 "shasum": ""
             },
             "require": {
@@ -2665,12 +2665,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/status.git",
-                "reference": "43c6de400f39b38c94a36b9cdecdd182926f1938"
+                "reference": "709fae3e405f378883f36c1e89c9a8016db817a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/status/zipball/43c6de400f39b38c94a36b9cdecdd182926f1938",
-                "reference": "43c6de400f39b38c94a36b9cdecdd182926f1938",
+                "url": "https://api.github.com/repos/EGroupware/status/zipball/709fae3e405f378883f36c1e89c9a8016db817a0",
+                "reference": "709fae3e405f378883f36c1e89c9a8016db817a0",
                 "shasum": ""
             },
             "require": {
@@ -12521,7 +12521,7 @@
         "ext-xml": "*",
         "ext-xsl": "*"
     },
-    "platform-dev": {},
+    "platform-dev": [],
     "platform-overrides": {
         "php": "8.2"
     },
