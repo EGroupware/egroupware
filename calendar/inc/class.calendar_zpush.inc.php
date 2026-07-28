@@ -382,7 +382,7 @@ class calendar_zpush implements activesync_plugin_write, activesync_plugin_meeti
 		}
 		if (($message->alldayevent = (int)calendar_bo::isWholeDay($event)))
 		{
-			++$message->endtime;	// EGw all-day-events are 1 sec shorter!
+			$message->endtime->add('1second');  // EGw all-day-events are 1 sec shorter!
 		}
 		// copying strings
 		foreach(array(
