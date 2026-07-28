@@ -253,8 +253,13 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				})
 				.then((data) => this.handleResponse(data) || data)
 				.catch((_err) => {
+					if (!response_ok)
+					{
+						// HTTP-level error (eg. 400 from a thrown InvalidArgumentException): _err is the Response object
+						(error || this.handleError).call(this, _err, 'error');
+					}
 					// no response / empty body causing response.json() to throw (a different error per browser!)
-					if (response_ok && !_err.message.match(/Unexpected end of/i))
+					else if (!_err.message.match(/Unexpected end of/i))
 					{
 						(error || this.handleError).call(this, _err)
 					}
@@ -296,8 +301,9 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		// Don't error about an abort
 		if(_err !== 'abort')
 		{
-			// for fetch Response get json, as it's used below
-			if (typeof response.headers === 'object' && response.headers.get('Content-Type') === 'application/json')
+			// for fetch Response get json, as it's used below (only once, body can only be read once!)
+			if (typeof response.headers === 'object' && response.headers.get('Content-Type') === 'application/json' &&
+				typeof response.responseJSON === 'undefined')
 			{
 				return response.json().then((json) => {
 					response.responseJSON = json;
@@ -315,7 +321,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				"\n\nURL: "+this.url+"\n"+date+
 				// if EGroupware send JSON payload with error, errno show it here too
 				(_err === 'error' && response.status === 400 && typeof response.responseJSON === 'object' && response.responseJSON.error ?
-				"\nError: "+response.responseJSON.error+' ('+response.responseJSON.errno+')' : '')
+				"\nError: "+response.responseJSON.error+' ('+response.responseJSON.errno+')' : ''),
+				'error'
 			);
 
 			this.egw.debug('error', 'Ajax request to', this.url, ' failed: ', _err, response.status, response.statusText, response.responseJSON);
