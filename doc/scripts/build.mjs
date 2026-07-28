@@ -4,7 +4,6 @@ import {globby} from 'globby';
 import browserSync from 'browser-sync';
 import chalk from 'chalk';
 import commandLineArgs from 'command-line-args';
-import copy from 'recursive-copy';
 import esbuild from 'esbuild';
 import fs from 'fs/promises';
 import getPort, {portNumbers} from 'get-port';
