@@ -2,9 +2,7 @@
 
 | Tools | Usage |
 | ----- | ----- |
-| <img src="https://travis-ci.com/images/logos/TravisCI-Full-Color.png" width="108" alt="Travis CI"/> | runs unit-tests after each commit |
-| [![Scrutinizer CI](https://scrutinizer-ci.com/images/logo.png) scrutinizer](https://scrutinizer-ci.com/g/EGroupware/egroupware/) | runs static analysis on our codebase |
-| <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQ2scF5HUwLnJVnk2UhYwWpUXHmLQYNXM5yBw&usqp=CAU" width="110" alt="BrowserStack" /> | manual testing with unusual browser versions or platforms |
+| <img src="https://browserstack.wpenginepowered.com/wp-content/themes/browserstack/img/bstack-logo-global.svg" width="110" alt="BrowserStack" /> | manual testing with unusual browser versions or platforms |
 
 ### Default and preferred installation method for EGroupware is via your Linux package manager:
 
