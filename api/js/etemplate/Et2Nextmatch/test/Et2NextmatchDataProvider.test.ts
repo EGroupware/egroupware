@@ -313,6 +313,8 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 	it("stores preloaded rows using the configured row id field", () =>
 	{
 		const stored : Record<string, any> = {};
+		const registered : string[] = [];
+		const unregistered : string[] = [];
 		const host = createProviderHost({
 			id: "nm-filemanager-preload",
 			settings: {row_id: "path"},
@@ -322,6 +324,14 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 				dataStoreUID: (uid : string, data : any) =>
 				{
 					stored[uid] = data;
+				},
+				dataRegisterUID: (uid : string) =>
+				{
+					registered.push(uid);
+				},
+				dataUnregisterUID: (uid : string) =>
+				{
+					unregistered.push(uid);
 				}
 			})
 		});
@@ -339,6 +349,13 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 			"stored UIDs should be discoverable by egw.dataKnownUIDs('filemanager')"
 		);
 		assert.equal(stored["filemanager::/home/nathan/Generated"], rows[0]);
+		assert.sameMembers(
+			registered,
+			["filemanager::/home/nathan/Generated", "filemanager::/home/nathan/Invoice.odt"],
+			"preloaded rows should stay registered so the UID store does not expire them while virtualized"
+		);
+		provider.clearInitialRowRegistrations();
+		assert.sameMembers(unregistered, registered, "preloaded row registrations should be released when their query ends");
 	});
 
 	/**

@@ -4,7 +4,7 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {loadStylesheet} from "../Et2Widget/cssTools";
-import {Et2Datagrid} from "./Et2Datagrid";
+import {Et2Datagrid, type Et2DatagridRowsSnapshot} from "./Et2Datagrid";
 import {
 	Et2DatagridColumn,
 	Et2DatagridDataProvider,
@@ -351,10 +351,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _dataProvider : Et2NextmatchDataProvider;
 	/** Lazily-created child providers keyed by normalized parent row id. */
 	private _childDataProviders : Map<string, Et2DatagridDataProvider> = new Map();
+	/** Loaded row snapshots for virtualized child grids, keyed by normalized parent row id. */
+	private _childGridRowsSnapshots : Map<string, Et2DatagridRowsSnapshot> = new Map();
 	/** Tracks expanded subgrids that have already triggered their initial load. */
 	private _initializedSubgrids : WeakSet<Et2Datagrid> = new WeakSet();
 	/** Controlled expansion state shared with the root datagrid. */
 	private _expandedRowIds : Set<string> = new Set();
+	/** Controlled expansion state for each rendered child grid, keyed by its parent row id. */
+	private _expandedRowIdsByParent : Map<string, Set<string>> = new Map();
 	/** Selection state per parent/child grid, merged for legacy action handling. */
 	private _selectionByGridId : Map<string, { selectedRowIds : string[]; allSelected : boolean }> = new Map();
 	/** Current datagrid column state after user preference/resizing changes. */
@@ -680,6 +684,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	disconnectedCallback()
 	{
+		this._dataProvider?.clearInitialRowRegistrations?.();
 		this._slotObserver?.disconnect();
 		this._slotObserver = null;
 		this._filterbox?.remove();
@@ -1131,6 +1136,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	setRows(rows : any[])
 	{
 		this.rows = rows || [];
+		this._dataProvider?.clearInitialRowRegistrations?.();
 		this._dataProvider.storeRows(this.rows);
 		this._applySettingsTotalToDatagrid();
 		this._datagrid?.setInitialRows(this.rows);
@@ -1544,6 +1550,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			this._actionController.clearRowActionObjects();
 		}
+		this._dataProvider?.clearInitialRowRegistrations?.();
+		// Keep the root expansion ids so matching parent rows stay open after the
+		// reload, but discard every child-level cache. Child providers inherit the
+		// active filters, and a snapshot keyed only by parent row id is no longer
+		// valid once those filters change.
+		if(this._clearExpandedChildBranches())
+		{
+			this.requestUpdate();
+		}
 		if(options?.reload !== false)
 		{
 			this._datagrid?.reload();
@@ -1686,12 +1701,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	collapseExpandedRows()
 	{
-		if(!this._expandedRowIds.size && !this._subgridColumnSnapshots.size)
+		if(
+			!this._expandedRowIds.size &&
+			!this._expandedRowIdsByParent.size &&
+			!this._subgridColumnSnapshots.size &&
+			!this._childDataProviders.size &&
+			!this._childGridRowsSnapshots.size
+		)
 		{
 			return false;
 		}
-		this._expandedRowIds.clear();
-		this._subgridColumnSnapshots.clear();
+		this._clearExpandedBranches();
 		this.requestUpdate();
 		return true;
 	}
@@ -2096,23 +2116,126 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	private _datagridExpansionConfig() : Et2DatagridExpansionConfig
 	{
+		return this._expansionConfigForSet(this._expandedRowIds, (expandedRowIds) =>
+		{
+			this._applyExpandedRowIds("", expandedRowIds);
+		});
+	}
+
+	/**
+	 * Build the reusable expansion bridge for one grid level.
+	 */
+	private _expansionConfigForSet(
+		currentExpandedRowIds : Set<string>,
+		onChanged : (expandedRowIds : Set<string>) => void
+	) : Et2DatagridExpansionConfig
+	{
 		return {
 			isExpandable: (row) => this._isExpandableNextmatchRow(row?.data),
 			renderExpandedContent: (context) => this._renderExpandedNextmatchGrid(context),
-			expandedRowIds: this._expandedRowIds,
-			onExpandedRowIdsChanged: (expandedRowIds) =>
-			{
-				for(const expandedRowId of this._expandedRowIds)
-				{
-					if(!expandedRowIds.has(expandedRowId))
-					{
-						this._subgridColumnSnapshots.delete(expandedRowId);
-					}
-				}
-				this._expandedRowIds = new Set(expandedRowIds);
-				this.requestUpdate();
-			}
+			rendersSubgrid: true,
+			expandedRowIds: currentExpandedRowIds,
+			onExpandedRowIdsChanged: onChanged
 		};
+	}
+
+	/**
+	 * Build the same expansion bridge for a child grid, with only expansion state
+	 * scoped to the child grid's parent row.
+	 */
+	private _childDatagridExpansionConfig(parentRowId : string) : Et2DatagridExpansionConfig
+	{
+		const state = this._childExpandedRowIds(parentRowId);
+		return this._expansionConfigForSet(state, (expandedRowIds) =>
+		{
+			this._applyExpandedRowIds(parentRowId, expandedRowIds);
+		});
+	}
+
+	/**
+	 * Resolve controlled expansion state for one child grid.
+	 */
+	private _childExpandedRowIds(parentRowId : string) : Set<string>
+	{
+		if(!this._expandedRowIdsByParent.has(parentRowId))
+		{
+			this._expandedRowIdsByParent.set(parentRowId, new Set());
+		}
+		return this._expandedRowIdsByParent.get(parentRowId)!;
+	}
+
+	/**
+	 * Replace one level's expanded ids and prune snapshots/state for collapsed descendants.
+	 */
+	private _applyExpandedRowIds(parentRowId : string, expandedRowIds : Set<string>)
+	{
+		const previousExpandedRowIds = parentRowId ? this._childExpandedRowIds(parentRowId) : this._expandedRowIds;
+		for(const expandedRowId of previousExpandedRowIds)
+		{
+			if(!expandedRowIds.has(expandedRowId))
+			{
+				this._forgetExpandedBranch(expandedRowId);
+			}
+		}
+		if(parentRowId)
+		{
+			this._expandedRowIdsByParent.set(parentRowId, new Set(expandedRowIds));
+		}
+		else
+		{
+			this._expandedRowIds = new Set(expandedRowIds);
+		}
+		this.requestUpdate();
+	}
+
+	/**
+	 * Drop cached state owned by a collapsed expanded row and its descendants.
+	 */
+	private _forgetExpandedBranch(parentRowId : string)
+	{
+		const childExpandedRowIds = this._expandedRowIdsByParent.get(parentRowId);
+		if(childExpandedRowIds)
+		{
+			for(const childRowId of childExpandedRowIds)
+			{
+				this._forgetExpandedBranch(childRowId);
+			}
+		}
+		this._expandedRowIdsByParent.delete(parentRowId);
+		this._subgridColumnSnapshots.delete(parentRowId);
+		this._childDataProviders.delete(parentRowId);
+		this._childGridRowsSnapshots.delete(parentRowId);
+	}
+
+	/**
+	 * Drop all expanded-row state and child-grid caches.
+	 */
+	private _clearExpandedBranches()
+	{
+		this._expandedRowIds.clear();
+		this._clearExpandedChildBranches();
+	}
+
+	/**
+	 * Forget state below the root expansion level while retaining root rows that
+	 * should remain expanded. Used when a root query changes: a surviving parent
+	 * row may still be valid, but its child provider and cached rows must be
+	 * recreated under the new filters.
+	 */
+	private _clearExpandedChildBranches() : boolean
+	{
+		const hasChildState = this._expandedRowIdsByParent.size > 0 ||
+		                      this._subgridColumnSnapshots.size > 0 ||
+		                      this._childDataProviders.size > 0 ||
+		                      this._childGridRowsSnapshots.size > 0;
+		this._expandedRowIdsByParent.clear();
+		this._subgridColumnSnapshots.clear();
+		this._childDataProviders.clear();
+		this._childGridRowsSnapshots.clear();
+		// A surviving DOM child grid needs another initial load after its provider
+		// and snapshot were discarded. WeakSet has no clear(), so replace it.
+		this._initializedSubgrids = new WeakSet();
+		return hasChildState;
 	}
 
 	/**
@@ -2165,11 +2288,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                     .columns=${columnSnapshot.columns}
                     .templateData=${this._templateData}
                     .rowCustomizer=${this._customizeDatagridRow}
-                    .rowStylesheets=${this._rowStylesheets}
-                    .dataProvider=${childProvider}
-                    .parentRowId=${childParentRowId}
-                    .noVisibleHeader=${true}
-                    .noColumnSelection=${true}
+					.rowStylesheets=${this._rowStylesheets}
+					.dataProvider=${childProvider}
+					.expansionConfig=${this._childDatagridExpansionConfig(parentRowId)}
+					.parentRowId=${childParentRowId}
+					.noVisibleHeader=${true}
+					.noColumnSelection=${true}
                     .inheritColumnSizes=${true}
                     .autoActivateFirstRow=${false}
                     .configurationLoading=${this._templateLoading}
@@ -2221,11 +2345,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			return;
 		}
-			if(this._initializedSubgrids.has(element))
-			{
-				return;
-			}
+		if(this._initializedSubgrids.has(element))
+		{
+			return;
+		}
 		this._initializedSubgrids.add(element);
+		const parentRowId = this._dataProvider.normalizeRowId(String(element.parentRowId || ""), true);
+		const snapshot = this._childGridRowsSnapshots.get(parentRowId);
+		if(snapshot)
+		{
+			element.restoreRowsSnapshot(snapshot);
+			return;
+		}
 		void element.updateComplete.then(() =>
 		{
 			if(element.isConnected)
@@ -2263,7 +2394,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 		event.preventDefault();
 		event.stopPropagation();
-		this._datagrid?.focusRowById?.(this._dataProvider.normalizeRowId(parentRowId, true));
+		const parentDataStoreRowId = this._dataProvider.normalizeRowId(parentRowId, true);
+		const parentGrid = this._findGridContainingRow(parentDataStoreRowId) || this._datagrid;
+		parentGrid?.focusRowById?.(parentDataStoreRowId);
 	};
 
 	/**
@@ -2272,10 +2405,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _findChildGridForParent(parentRowId : string) : Et2Datagrid | null
 	{
 		const parentDataStoreRowId = this._dataProvider.normalizeRowId(parentRowId, true);
-		const expandedRow = this._datagrid?.shadowRoot?.querySelector(
-			`[data-dg-expanded-row='1'][data-parent-row-id='${CSS.escape(parentDataStoreRowId)}']`
-		) as HTMLElement | null;
-		return expandedRow?.querySelector("et2-datagrid") as Et2Datagrid | null;
+		for(const grid of this._renderedDatagrids())
+		{
+			const expandedRow = grid.shadowRoot?.querySelector(
+				`[data-dg-expanded-row='1'][data-parent-row-id='${CSS.escape(parentDataStoreRowId)}']`
+			) as HTMLElement | null;
+			const childGrid = expandedRow?.querySelector("et2-datagrid") as Et2Datagrid | null;
+			if(childGrid)
+			{
+				return childGrid;
+			}
+		}
+		return null;
 	}
 
 	/**
@@ -2284,10 +2425,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _findGridContainingRow(rowId : string) : Et2Datagrid | null
 	{
 		const normalizedRowId = this._dataProvider.normalizeRowId(rowId, true);
-		const grids = [this._datagrid, ...this._childGrids()].filter(Boolean) as Et2Datagrid[];
-		return grids.find((grid) =>
+		return this._renderedDatagrids().find((grid) =>
 			!!grid.shadowRoot?.querySelector(`[data-row-id='${CSS.escape(normalizedRowId)}']`)
 		) || null;
+	}
+
+	/**
+	 * Return the root datagrid and every rendered child grid.
+	 */
+	private _renderedDatagrids() : Et2Datagrid[]
+	{
+		return [this._datagrid, ...this._childGrids()].filter((grid) : grid is Et2Datagrid => !!grid);
 	}
 
 	/**
@@ -2397,6 +2545,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _handleLoadingDone = (event : Event) =>
 	{
 		const datagrid = this._datagrid;
+		const sourceGrid = event.composedPath().find((target) => target instanceof Et2Datagrid) as Et2Datagrid | undefined;
+		if(sourceGrid && sourceGrid !== datagrid && sourceGrid.parentRowId)
+		{
+			this._childGridRowsSnapshots.set(
+				this._dataProvider.normalizeRowId(String(sourceGrid.parentRowId), true),
+				sourceGrid.rowsSnapshot()
+			);
+		}
 		if(!datagrid || !event.composedPath().includes(datagrid))
 		{
 			return;
@@ -2589,7 +2745,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _childGrids() : Et2Datagrid[]
 	{
 		const datagrid = this._datagrid;
-		return Array.from(datagrid?.shadowRoot?.querySelectorAll("et2-datagrid") || []) as Et2Datagrid[];
+		const childGrids : Et2Datagrid[] = [];
+		const stack = datagrid ? [datagrid] : [];
+		while(stack.length)
+		{
+			const grid = stack.shift()!;
+			const directChildren = Array.from(grid.shadowRoot?.querySelectorAll("et2-datagrid") || []) as Et2Datagrid[];
+			for(const childGrid of directChildren)
+			{
+				childGrids.push(childGrid);
+				stack.push(childGrid);
+			}
+		}
+		return childGrids;
 	}
 
 	/**

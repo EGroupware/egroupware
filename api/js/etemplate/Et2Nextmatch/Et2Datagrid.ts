@@ -4,11 +4,12 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {unsafeHTML} from "lit/directives/unsafe-html.js";
 import shoelace from "../Styles/shoelace";
-import {Et2Widget, et2_warnLegacyEventHandler} from "../Et2Widget/Et2Widget";
+import {et2_warnLegacyEventHandler, Et2Widget} from "../Et2Widget/Et2Widget";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import styles from "./Et2Datagrid.styles";
 import {virtualize, virtualizerRef} from "@lit-labs/virtualizer/virtualize.js";
+import {FlowLayout} from "@lit-labs/virtualizer/layouts/flow.js";
 import {grid} from "@lit-labs/virtualizer/layouts/grid.js";
 import {
 	Et2DatagridColumn,
@@ -46,6 +47,13 @@ type Et2DatagridRenderItem =
 	| { type : "row"; rowIndex : number }
 	| { type : "expanded"; rowIndex : number; parentRowId : string };
 
+export type Et2DatagridRowsSnapshot = {
+	rowsByIndex : Array<Et2DatagridRow | null>;
+	total : number | null;
+	displayedRowIds : string[];
+	hasFetchedOnce : boolean;
+};
+
 const DEFAULT_TILE_LAYOUT = {
 	// @lit-labs/virtualizer parses grid itemSize, gap and padding as pixel numbers internally.
 	// Keep these defaults in px so spacing does not collapse when passed through the grid layout.
@@ -55,6 +63,130 @@ const DEFAULT_TILE_LAYOUT = {
 	padding: "4px"
 } as const;
 type Et2DatagridVirtualItem = number | Et2DatagridRenderItem;
+type Et2DatagridRowHeightSource = "default" | "template" | "css" | "parent" | "measured" | "api";
+
+/**
+ * Fixed-pitch flow layout with sparse overrides for expanded branches.
+ *
+ * All ordinary rows use `_itemSize.height`; only expanded virtual items are
+ * recorded. This keeps an offscreen branch from changing FlowLayout's average
+ * item size and therefore the parent scrollbar extent.
+ */
+class Et2DatagridSparseFlowLayout extends FlowLayout
+{
+	expandedItemHeights : Map<number, number> = new Map();
+
+	private _heights() : Map<number, number>
+	{
+		return this.expandedItemHeights instanceof Map ? this.expandedItemHeights : new Map();
+	}
+
+	private _rowHeight() : number
+	{
+		return Math.max(1, this._itemSize?.height || 1);
+	}
+
+	_getSize(index : number) : number
+	{
+		return this._heights().get(index) ?? this._rowHeight();
+	}
+
+	_getAverageSize() : number
+	{
+		return this._rowHeight();
+	}
+
+	_getPosition(index : number) : number
+	{
+		const rowHeight = this._rowHeight();
+		let position = index * rowHeight;
+		for(const [expandedIndex, expandedHeight] of this._heights())
+		{
+			if(expandedIndex >= index)
+			{
+				continue;
+			}
+			position += expandedHeight - rowHeight;
+		}
+		return position;
+	}
+
+	_calculateAnchor(lower : number, upper : number) : number
+	{
+		if(!this.items.length)
+		{
+			return 0;
+		}
+		const target = Math.max(0, (lower + upper) / 2);
+		let low = 0;
+		let high = this.items.length - 1;
+		while(low < high)
+		{
+			const middle = Math.floor((low + high + 1) / 2);
+			if(this._getPosition(middle) <= target)
+			{
+				low = middle;
+			}
+			else
+			{
+				high = middle - 1;
+			}
+		}
+		return low;
+	}
+
+	/**
+	 * FlowLayout's default error correction compares positions to `index ×
+	 * averageSize`. Sparse branch positions are already exact, so that comparison
+	 * would incorrectly shift the physical range by every expanded-height delta.
+	 */
+	_calculateError() : number
+	{
+		return 0;
+	}
+
+	/**
+	 * A virtualizer host with no children can report a zero-height clipping
+	 * rectangle. FlowLayout normally clears its range in that case, which leaves
+	 * this tbody empty forever. Render one initial overhang instead so Lit can
+	 * apply the known scroll extent and ResizeObserver can establish the real
+	 * viewport on the next pass.
+	 */
+	_getActiveItems()
+	{
+		if(this.items.length && this._viewDim1 === 0)
+		{
+			// FlowLayout keeps the raw viewport dimensions private. This temporary
+			// bootstrap override is required only until its first ResizeObserver pass.
+			const internalLayout = this as any;
+			const viewportSize = internalLayout._viewportSize[this._sizeDim];
+			internalLayout._viewportSize[this._sizeDim] = Math.min(this._scrollSize, this._overhang);
+			super._getActiveItems();
+			internalLayout._viewportSize[this._sizeDim] = viewportSize;
+			return;
+		}
+		super._getActiveItems();
+	}
+
+	_updateScrollSize()
+	{
+		const rowHeight = this._rowHeight();
+		let height = this.items.length * rowHeight;
+		for(const [expandedIndex, expandedHeight] of this._heights())
+		{
+			if(expandedIndex < this.items.length)
+			{
+				height += expandedHeight - rowHeight;
+			}
+		}
+		(this as any)._scrollSize = Math.max(1, height);
+	}
+
+	notifyExpandedItemHeightChanged()
+	{
+		this._scheduleReflow();
+	}
+}
 
 /**
  * @summary Virtualized data grid for infinite rows with column sizing, selection, and lazy paging.
@@ -87,7 +219,7 @@ type Et2DatagridVirtualItem = number | Et2DatagridRenderItem;
  * @csspart column - A visible header column wrapper.
  * @csspart column-selection - Column selection action container in the header.
  *
- * @cssproperty [--row-height=3em] - Estimated row height used for spacer rendering.
+ * @cssproperty [--row-height=44px] - Estimated row height used for spacer rendering.
  * @cssproperty [--row-cell-max-height=10em] - Maximum height for individual row cells before vertical scrolling.
  * @cssproperty [--meta-column-width=0px] - Width of leading metadata column; expandable grids default it wide enough for the expander.
  * @cssproperty [--row-expander-size=20px] - Width and height of the row expand/collapse button.
@@ -101,7 +233,6 @@ type Et2DatagridVirtualItem = number | Et2DatagridRenderItem;
 @customElement("et2-datagrid")
 export class Et2Datagrid extends Et2Widget(LitElement)
 {
-	private static _browserScrollbarSpacePx : number | null = null;
 
 	/**
 	 * Compose datagrid styles from shared shoelace/widget styles and local datagrid CSS.
@@ -141,24 +272,55 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	@state()
 	private _rowsByIndex : Array<Et2DatagridRow | null> = [];
+
 	private _rowRenderVersionById : Map<string, number> = new Map();
 	private _refreshPulseTimersByElement : Map<HTMLElement, number> = new Map();
 	private _refreshPulseDurationMs : number = 5000;
-
+	private static _browserScrollbarSpacePx : number | null = null;
+	/**
+	 * Quiet period before treating shared-scroll layout as settled. 200ms is an
+	 * empirically chosen debounce that has worked well for wheel and drag
+	 * scrolling: short enough to repair a dropped child range promptly, while
+	 * avoiding a corrective layout during the same scroll gesture.
+	 */
+	private static readonly _embeddedScrollSettleDelayMs : number = 200;
 	private _virtualIndexes : number[] = [];
 	private _virtualIndexesCount : number = -1;
 	private _virtualItems : Et2DatagridVirtualItem[] = [];
 	private _virtualItemsSignature : string = "";
+	private _expandedVirtualItemHeights : Map<number, number> = new Map();
+	private _expandedRowHeightByParentRowId : Map<string, number> = new Map();
 	private _rowHeightPx : number = 44;
+	private _rowHeightLocked : boolean = false;
+	private _rowHeightSource : Et2DatagridRowHeightSource = "default";
+	// Grids with expansion/subgrids need a deterministic row pitch. Once their
+	// first upgraded row batch establishes a height, keep it stable until
+	// rows/template reset so later pages and expansions do not move the scrollbar.
+	private _rowHeightSettled : boolean = false;
+	private _embeddedRowHeightSettled : boolean = false;
+	private _sparseVirtualizerLayoutActive : boolean = false;
+	private _sparseVirtualizerLayoutFrame : number | null = null;
+	private _measuredRowHeightByRowId : Map<string, number> = new Map();
+	private _rowWidgetsUpgradedFrame : number | null = null;
+	private _rowWidgetsUpgradeSettling : boolean = false;
+	private _embeddedVirtualizedHeightSyncPendingAfterRowUpgrade : boolean = false;
 	private _embeddedVirtualizedMeasuredRowHeightPx : number | null = null;
 	private _embeddedVirtualizedHostHeight : string | null = null;
 	private _embeddedVirtualizedHeightFrame : number | null = null;
-	private _embeddedVirtualizedRowsResizeObserver : ResizeObserver | null = null;
+	private _embeddedVirtualizedHeightSyncPassesRemaining : number = 0;
+	private _embeddedParentScrollOffsetTop : number | null = null;
+	private _embeddedChildGridResizeObserver : ResizeObserver | null = null;
+	private _embeddedChildGridObserverSyncFrame : number | null = null;
+	private _remeasuredEmbeddedChildGridsThisFrame : WeakSet<Et2Datagrid> = new WeakSet();
+	private _embeddedChildScrollSyncFrame : number | null = null;
+	private _embeddedChildScrollSettleTimer : number | null = null;
+	private _embeddedSelfScrollSyncFrame : number | null = null;
 	private _rowsMinHeightFrame : number | null = null;
 	private _virtualizerLayoutSyncFrame : number | null = null;
 	private _templateHandlerListeners : Map<string, EventListener> = new Map();
 	private _templateHandlerCache : Map<string, Function | false> = new Map();
 	private _rowTemplateHandlerCache : WeakMap<HTMLElement, Map<string, Function | false>> = new WeakMap();
+	private _loggedExpansionRowHeightWarning : boolean = false;
 
 	/**
 	 * Error state set when the latest fetch failed.
@@ -183,6 +345,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	@state()
 	private _pendingPlaceholderCount : number = 0;
+	private _pendingPlaceholderRequests : Map<string, { start : number; requestedCount : number }> = new Map();
 
 	@state()
 	private _resizeHelperLeftPx : number | null = null;
@@ -293,6 +456,84 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	embeddedVirtualized : boolean = false;
 
 	/**
+	 * Reflects whether row height is fixed by the row template. Fixed-height rows
+	 * must clip cell content to keep visual rows aligned with virtualizer math.
+	 */
+	@property({type: Boolean, attribute: "fixed-row-height", reflect: true})
+	fixedRowHeight : boolean = false;
+
+	/**
+	 * Current row-height estimate used by virtualized layout and propagated to
+	 * embedded child grids. Fixed template heights remain authoritative.
+	 */
+	get rowHeightEstimatePx() : number
+	{
+		return this._effectiveRowHeightPx();
+	}
+
+	/**
+	 * Apply a parent row-height estimate as a floor for this grid. A locked
+	 * embedded child keeps the inherited pitch; fixed-height row templates do
+	 * not accept parent estimates.
+	 */
+	setRowHeightEstimate(rowHeightPx : number, lockToParent : boolean = false)
+	{
+		if(this._rowHeightSource === "template")
+		{
+			return;
+		}
+		const rowHeight = Math.ceil(Number(rowHeightPx) || 0);
+		if(rowHeight <= 0)
+		{
+			return;
+		}
+		if(lockToParent)
+		{
+			this._setRowHeight(rowHeight, "parent");
+			this._rowHeightLocked = true;
+			this._rowHeightSettled = true;
+			this._embeddedRowHeightSettled = true;
+			this.fixedRowHeight = true;
+		}
+		else if(rowHeight <= this._rowHeightPx + 1)
+		{
+			return;
+		}
+		else
+		{
+			this._setRowHeight(rowHeight, "api");
+		}
+		this.requestUpdate();
+		if(this.embeddedVirtualized)
+		{
+			this._scheduleEmbeddedVirtualizedHeightSync();
+		}
+		this._syncEmbeddedChildGridRowHeightEstimates();
+	}
+
+	/** Re-read a consumer-provided `--row-height` after dynamic CSS changes. */
+	refreshRowHeightFromCss()
+	{
+		if(this._rowHeightSource !== "template")
+		{
+			if(this.style.getPropertyValue("--row-height") === `${this._rowHeightPx}px`)
+			{
+				this.style.removeProperty("--row-height");
+			}
+			this._rowHeightSource = "default";
+		}
+		this._syncTemplateRowHeightHint(true);
+		this._syncFixedRowHeightMode();
+		this._scheduleSparseVirtualizerLayoutActivation();
+		this._scheduleVirtualizerLayoutSync();
+		if(this.embeddedVirtualized)
+		{
+			this._scheduleEmbeddedVirtualizedHeightSync();
+		}
+		this._syncEmbeddedChildGridRowHeightEstimates();
+	}
+
+	/**
 	 * Automatically mark the first loaded row active. Subgrids disable this so
 	 * simply expanding a row does not create multiple active rows.
 	 */
@@ -353,12 +594,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _initialExportParts : string[] = [];
 	private _scrollListener : (() => void) | null = null;
 	private _scrollListenerBody : HTMLElement | null = null;
+	private _bodyScrollVersion : number = 0;
+	private _lastBodyScrollAt : number = 0;
+	private _deferredEmbeddedRemeasureTimer : number | null = null;
+	private _deferredEmbeddedRemeasureChildGrids : Set<Et2Datagrid> = new Set();
 	private _inFlightRequestKeys : Set<string> = new Set();
+	private _completedRequestKeys : Set<string> = new Set();
 	private _queuedRequestTimer : number | null = null;
 	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
 	private _requestDispatchDelayMs : number = 100;
 	private _rowUpgradeObserver : MutationObserver | null = null;
 	private _rowUpgradeObservedRowsBody : HTMLElement | null = null;
+	private _rowUpgradeRangeListener : ((event : Event) => void) | null = null;
 	private _rowUpgradeQueue : HTMLElement[] = [];
 	private _rowUpgradeScheduled : boolean = false;
 	private _rowUpgradeFrameHandle : number | null = null;
@@ -488,7 +735,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	private get _virtualize()
 	{
-		return this._rowsBody[virtualizerRef];
+		return this._rowsBody?.[virtualizerRef];
 	}
 
 	/**
@@ -504,13 +751,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
 		this._handleColumnResizeMove = this._handleColumnResizeMove.bind(this);
 		this._handleColumnResizeEnd = this._handleColumnResizeEnd.bind(this);
-		this._scrollListener = () => this._maybePrefetchOnScroll();
+		this._scrollListener = () =>
+		{
+			this._bodyScrollVersion++;
+			this._lastBodyScrollAt = performance.now();
+			this._maybePrefetchOnScroll();
+			this._scheduleEmbeddedChildScrollSync(this._body);
+		};
 	}
 
 	connectedCallback()
 	{
 		super.connectedCallback();
+		this._syncTemplateRowHeightHint();
 		this._syncTemplateHandlerListeners();
+		this.addEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
 	}
 
 	/**
@@ -519,12 +774,25 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	disconnectedCallback()
 	{
 		this._syncTemplateHandlerListeners(new Set());
+		this.removeEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
 		this._teardownColumnResizeInteract();
 		this._clearColumnResizeDragState();
 		this._rowUpgradeObserver?.disconnect();
 		this._rowUpgradeObserver = null;
+		if(this._rowUpgradeRangeListener)
+		{
+			this._rowUpgradeObservedRowsBody?.removeEventListener("rangeChanged", this._rowUpgradeRangeListener);
+		}
+		this._rowUpgradeRangeListener = null;
 		this._rowUpgradeObservedRowsBody = null;
 		this._clearRowUpgradeQueue();
+		if(this._rowWidgetsUpgradedFrame !== null)
+		{
+			cancelAnimationFrame(this._rowWidgetsUpgradedFrame);
+			this._rowWidgetsUpgradedFrame = null;
+		}
+		this._rowWidgetsUpgradeSettling = false;
+		this._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade = false;
 		if(this._scrollListenerBody && this._scrollListener)
 		{
 			this._scrollListenerBody.removeEventListener("scroll", this._scrollListener);
@@ -536,8 +804,35 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			cancelAnimationFrame(this._embeddedVirtualizedHeightFrame);
 			this._embeddedVirtualizedHeightFrame = null;
 		}
-		this._embeddedVirtualizedRowsResizeObserver?.disconnect();
-		this._embeddedVirtualizedRowsResizeObserver = null;
+		this._embeddedVirtualizedHeightSyncPassesRemaining = 0;
+		this._embeddedChildGridResizeObserver?.disconnect();
+		this._embeddedChildGridResizeObserver = null;
+		if(this._embeddedChildGridObserverSyncFrame !== null)
+		{
+			cancelAnimationFrame(this._embeddedChildGridObserverSyncFrame);
+			this._embeddedChildGridObserverSyncFrame = null;
+		}
+		if(this._embeddedChildScrollSyncFrame !== null)
+		{
+			cancelAnimationFrame(this._embeddedChildScrollSyncFrame);
+			this._embeddedChildScrollSyncFrame = null;
+		}
+		if(this._embeddedChildScrollSettleTimer !== null)
+		{
+			clearTimeout(this._embeddedChildScrollSettleTimer);
+			this._embeddedChildScrollSettleTimer = null;
+		}
+		if(this._embeddedSelfScrollSyncFrame !== null)
+		{
+			cancelAnimationFrame(this._embeddedSelfScrollSyncFrame);
+			this._embeddedSelfScrollSyncFrame = null;
+		}
+		if(this._deferredEmbeddedRemeasureTimer !== null)
+		{
+			clearTimeout(this._deferredEmbeddedRemeasureTimer);
+			this._deferredEmbeddedRemeasureTimer = null;
+		}
+		this._deferredEmbeddedRemeasureChildGrids.clear();
 		if(this._rowsMinHeightFrame !== null)
 		{
 			cancelAnimationFrame(this._rowsMinHeightFrame);
@@ -547,6 +842,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			cancelAnimationFrame(this._virtualizerLayoutSyncFrame);
 			this._virtualizerLayoutSyncFrame = null;
+		}
+		if(this._sparseVirtualizerLayoutFrame !== null)
+		{
+			cancelAnimationFrame(this._sparseVirtualizerLayoutFrame);
+			this._sparseVirtualizerLayoutFrame = null;
 		}
 		super.disconnectedCallback();
 	}
@@ -558,6 +858,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		super.firstUpdated(changedProperties);
 		this._syncDomEventTargets();
+		this._scheduleSparseVirtualizerLayoutActivation();
 		this._setupColumnResizeInteract();
 	}
 
@@ -582,6 +883,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._loadedColumnPreferenceKey = null;
 		}
 		this.classList.toggle("dg-has-expanders", !!this.expansionConfig);
+		if(changedProperties.has("expansionConfig"))
+		{
+			this._syncFixedRowHeightMode();
+		}
 		const columnsBeforePreferenceLoad = this.columns;
 		if(
 			changedProperties.has("templateData") ||
@@ -598,6 +903,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const structureChanged = changedProperties.has("templateData") || changedProperties.has("view") || columnsChanged;
 		if(changedProperties.has("templateData"))
 		{
+			this._syncTemplateRowHeightHint();
 			this._templateHandlerCache.clear();
 			this._rowTemplateHandlerCache = new WeakMap();
 			this._syncTemplateHandlerListeners();
@@ -833,6 +1139,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._postRenderStructureSyncNeeded = false;
 		}
 		this._syncDomEventTargets();
+		if(changedProperties.has("rows") || changedProperties.has("expansionConfig"))
+		{
+			this._scheduleEmbeddedChildGridObserverSync();
+		}
 		this._upgradeRenderedRows();
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
@@ -847,6 +1157,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._setupColumnResizeInteract();
 		}
 		this._syncEmbeddedVirtualizedHostHeight();
+		if(this.embeddedVirtualized)
+		{
+			const scrollport = this._scrollportForEmbeddedSelf();
+			this._syncEmbeddedParentScrollOffset(scrollport);
+			this._syncEmbeddedVirtualizerScrollport(scrollport);
+		}
 		if(
 			!this.embeddedVirtualized &&
 			!this._isTileView() &&
@@ -900,19 +1216,72 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		const explicitHeight = rowsBody.style.height || "";
 		const virtualizerHeight = /^\d+(\.\d+)?px$/.test(explicitHeight) ? parseFloat(explicitHeight) : 0;
-		const renderedRowsHeight = this._embeddedVirtualizedRenderedRowsHeight();
+		const deterministicVirtualHeight = this._usesFixedVirtualizerRowHeight()
+		                                  ? this._fixedVirtualItemsHeight()
+		                                  : 0;
+		const renderedRowsHeight = deterministicVirtualHeight > 0 ? 0 : this._embeddedVirtualizedRenderedRowsHeight();
 		// On a freshly recreated row tbody there may be no rendered rows and no
 		// virtualizer-owned height yet. Use the existing row-height estimate once
 		// so the first layout pass has a concrete viewport to render into.
 		const estimatedVirtualizerHeight = virtualizerHeight || renderedRowsHeight
 		                                  ? 0
-		                                  : this._virtualRowCount() * (this._resolveTemplateRowHeightPx() || this._rowHeightPx || 44);
-		const height = Math.max(virtualizerHeight || 0, renderedRowsHeight || 0, estimatedVirtualizerHeight || 0);
+		                                  : this._virtualRowCount() * this.rowHeightEstimatePx;
+		const height = Math.max(
+			virtualizerHeight || 0,
+			deterministicVirtualHeight,
+			renderedRowsHeight || 0,
+			estimatedVirtualizerHeight || 0,
+			this._cachedExpandedRowsMinHeightFloor(Math.max(virtualizerHeight || 0, estimatedVirtualizerHeight || 0))
+		);
 		const value = height > 0 ? `${Math.ceil(height)}px` : "";
 		if(rowsBody.style.minHeight !== value)
 		{
 			rowsBody.style.minHeight = value;
 		}
+	}
+
+	/**
+	 * Exact parent scroll extent for fixed-pitch virtual rows. Expanded branches
+	 * are sparse overrides; realized DOM rows must not influence this value.
+	 */
+	private _fixedVirtualItemsHeight() : number
+	{
+		const rowHeight = this.rowHeightEstimatePx;
+		const items = this._getVirtualItems(this._virtualRowCount());
+		let height = items.length * rowHeight;
+		for(const item of items)
+		{
+			if(typeof item === "number" || item.type !== "expanded")
+			{
+				continue;
+			}
+			height += Math.max(0, (this._expandedRowHeightByParentRowId.get(item.parentRowId) || rowHeight) - rowHeight);
+		}
+		return Math.ceil(height);
+	}
+
+	/**
+	 * Preserve expanded branch height while a virtualized expanded row is
+	 * recycled out of DOM. Lit Virtualizer still counts the expanded row as one
+	 * normal estimated item, so add only the measured extra height.
+	 */
+	private _cachedExpandedRowsMinHeightFloor(baseHeight : number) : number
+	{
+		if(!this._expandedRowHeightByParentRowId.size)
+		{
+			return 0;
+		}
+		const expandedRowIds = this._expandedRowIds();
+		const rowHeight = this.rowHeightEstimatePx;
+		let extraHeight = 0;
+		for(const [parentRowId, height] of this._expandedRowHeightByParentRowId)
+		{
+			if(expandedRowIds.has(parentRowId))
+			{
+				extraHeight += Math.max(0, height - rowHeight);
+			}
+		}
+		return extraHeight > 0 ? baseHeight + extraHeight : 0;
 	}
 
 	/**
@@ -939,6 +1308,32 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Replace the bootstrap FlowLayout only after it has rendered the tbody once.
+	 * A new virtualizer uses its host bounds to determine its viewport; replacing
+	 * it while an empty tbody has no bounds creates a zero-viewport feedback loop
+	 * that clears every virtual row.
+	 */
+	private _scheduleSparseVirtualizerLayoutActivation()
+	{
+		if(this._sparseVirtualizerLayoutActive || this._sparseVirtualizerLayoutFrame !== null || !this._usesFixedVirtualizerRowHeight())
+		{
+			return;
+		}
+		this._sparseVirtualizerLayoutFrame = requestAnimationFrame(() =>
+		{
+			this._sparseVirtualizerLayoutFrame = null;
+			if(!this.isConnected || this._sparseVirtualizerLayoutActive || !this._usesFixedVirtualizerRowHeight())
+			{
+				return;
+			}
+			this._syncRowsMinHeight();
+			this._sparseVirtualizerLayoutActive = true;
+			this.requestUpdate();
+			this._scheduleVirtualizerLayoutSync();
+		});
+	}
+
+	/**
 	 * Keep an embedded virtualized grid's host height aligned with its tbody.
 	 *
 	 * Embedded grids do not own a scrollport, so the parent grid needs the child
@@ -958,13 +1353,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				cancelAnimationFrame(this._embeddedVirtualizedHeightFrame);
 				this._embeddedVirtualizedHeightFrame = null;
 			}
-			this._embeddedVirtualizedRowsResizeObserver?.disconnect();
+			this._embeddedVirtualizedHeightSyncPassesRemaining = 0;
 			return;
 		}
-		this._observeEmbeddedVirtualizedRows();
 		this._embeddedVirtualizedMeasuredRowHeightPx = this._measureEmbeddedVirtualizedRowHeight();
 		const height = this._embeddedVirtualizedContentHeight() ?? this._embeddedVirtualizedLoadingHeight();
-		this._scheduleEmbeddedVirtualizedHeightSync();
 		if(!height || this._embeddedVirtualizedHostHeight === height)
 		{
 			return;
@@ -973,27 +1366,539 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Watch realized child rows so late widget upgrades/content changes can grow
-	 * the embedded grid host and the parent expanded row on the first expansion.
+	 * Observe direct embedded child grids hosted by this grid's expanded rows.
+	 * This replaces the previous per-rendered-row observer and keeps height
+	 * remeasurement scoped to the immediate parent/child grid boundary.
 	 */
-	private _observeEmbeddedVirtualizedRows()
+	private _syncEmbeddedChildGridObservers()
 	{
-		if(!this.embeddedVirtualized)
+		if(!this._embeddedChildGridResizeObserver)
+		{
+			this._embeddedChildGridResizeObserver = new ResizeObserver((entries) =>
+			{
+				for(const entry of entries)
+				{
+					const childGrid = entry.target;
+					if(childGrid instanceof Et2Datagrid)
+					{
+						this._remeasureObservedEmbeddedChildGrid(childGrid);
+					}
+				}
+			});
+		}
+		this._embeddedChildGridResizeObserver.disconnect();
+		for(const childGrid of this._directEmbeddedChildGrids())
+		{
+			childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, this._usesFixedVirtualizerRowHeight());
+			const scrollport = this._scrollportForEmbeddedChild(childGrid);
+			const logicalOffsetTop = this._embeddedChildLogicalScrollOffsetTop(childGrid);
+			if(logicalOffsetTop !== null)
+			{
+				childGrid._embeddedParentScrollOffsetTop = logicalOffsetTop;
+			}
+			else
+			{
+				childGrid._syncEmbeddedParentScrollOffset(scrollport);
+			}
+			childGrid._syncEmbeddedVirtualizerScrollport(scrollport);
+			if(scrollport)
+			{
+				childGrid._handleEmbeddedParentScroll(scrollport);
+			}
+			this._embeddedChildGridResizeObserver.observe(childGrid);
+		}
+	}
+
+	/**
+	 * Expanded-row content is stamped by Lit/virtualizer across frame
+	 * boundaries. Re-sync once after render so newly upgraded/recycled embedded
+	 * child grids receive parent scroll and row-height state.
+	 */
+	private _scheduleEmbeddedChildGridObserverSync()
+	{
+		if(this._embeddedChildGridObserverSyncFrame !== null)
 		{
 			return;
 		}
-		if(!this._embeddedVirtualizedRowsResizeObserver)
+		this._embeddedChildGridObserverSyncFrame = requestAnimationFrame(() =>
 		{
-			this._embeddedVirtualizedRowsResizeObserver = new ResizeObserver(() =>
+			this._embeddedChildGridObserverSyncFrame = null;
+			if(this.isConnected)
 			{
-				this._scheduleEmbeddedVirtualizedHeightSync();
-			});
-		}
-		this._embeddedVirtualizedRowsResizeObserver.disconnect();
-		for(const row of this._embeddedVirtualizedRenderedRows())
+				this._syncEmbeddedChildGridObservers();
+			}
+		});
+	}
+
+	/**
+	 * Push this grid's current row-height estimate into direct embedded child
+	 * grids. Child grids treat the value as a floor unless their row template
+	 * declares a fixed height.
+	 */
+	private _syncEmbeddedChildGridRowHeightEstimates()
+	{
+		for(const childGrid of this._directEmbeddedChildGrids())
 		{
-			this._embeddedVirtualizedRowsResizeObserver.observe(row);
+			childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, this._usesFixedVirtualizerRowHeight());
 		}
+	}
+
+	/**
+	 * Return child datagrids directly hosted by this grid's expanded rows.
+	 */
+	private _directEmbeddedChildGrids() : Et2Datagrid[]
+	{
+		const expandedRows = Array.from(this.shadowRoot?.querySelectorAll("tr[data-dg-expanded-row]") || []) as HTMLElement[];
+		return expandedRows
+			.map((expandedRow) => expandedRow.querySelector("et2-datagrid"))
+			.filter((grid) : grid is Et2Datagrid => grid instanceof Et2Datagrid);
+	}
+
+	/**
+	 * Remeasure from ResizeObserver only when the child was not already handled
+	 * by its explicit height event in the same frame.
+	 */
+	private _remeasureObservedEmbeddedChildGrid(childGrid : Et2Datagrid) : boolean
+	{
+		if(this._remeasuredEmbeddedChildGridsThisFrame.has(childGrid))
+		{
+			return false;
+		}
+		return this._remeasureDirectEmbeddedChildGrid(childGrid);
+	}
+
+	/**
+	 * Return true while the owning body is actively scrolling. Parent virtualizer
+	 * size corrections during this window change its internal scroll math and
+	 * visibly move the scrollbar.
+	 */
+	private _isBodyScrollActive() : boolean
+	{
+		return this._lastBodyScrollAt > 0 && performance.now() - this._lastBodyScrollAt < Et2Datagrid._embeddedScrollSettleDelayMs;
+	}
+
+	/**
+	 * Defer parent virtualizer remeasurement until scroll settles. The expanded
+	 * row's explicit height has already been synced, so this only delays the
+	 * virtualizer's private layout correction.
+	 */
+	private _deferEmbeddedChildGridRemeasure(childGrid : Et2Datagrid)
+	{
+		this._deferredEmbeddedRemeasureChildGrids.add(childGrid);
+		if(this._deferredEmbeddedRemeasureTimer !== null)
+		{
+			return;
+		}
+		this._deferredEmbeddedRemeasureTimer = window.setTimeout(() =>
+		{
+			this._deferredEmbeddedRemeasureTimer = null;
+			if(this._isBodyScrollActive())
+			{
+				this._deferEmbeddedChildGridRemeasure(childGrid);
+				return;
+			}
+			const childGrids = Array.from(this._deferredEmbeddedRemeasureChildGrids);
+			this._deferredEmbeddedRemeasureChildGrids.clear();
+			for(const deferredChildGrid of childGrids)
+			{
+				this._remeasureDirectEmbeddedChildGrid(deferredChildGrid, true);
+			}
+		}, Et2Datagrid._embeddedScrollSettleDelayMs);
+	}
+
+	/**
+	 * Find the nearest ancestor that owns vertical scrolling, crossing shadow
+	 * roots as required by recursively embedded grids.
+	 */
+	private _nearestScrollableAncestor(node : HTMLElement | null) : HTMLElement | null
+	{
+		while(node)
+		{
+			if(getComputedStyle(node).overflow !== "visible")
+			{
+				return node;
+			}
+			const parent = node.parentElement;
+			if(parent)
+			{
+				node = parent;
+				continue;
+			}
+			const root = node.getRootNode();
+			node = root instanceof ShadowRoot ? root.host as HTMLElement : null;
+		}
+		return null;
+	}
+
+	/**
+	 * Find the real scrollport shared by an embedded child grid. Nested embedded
+	 * grids can have visible-overflow grid bodies between themselves and the root
+	 * scroll body, so resolve this from DOM/style.
+	 */
+	private _scrollportForEmbeddedChild(childGrid : Et2Datagrid) : HTMLElement | null
+	{
+		return this._nearestScrollableAncestor(childGrid.parentElement as HTMLElement | null);
+	}
+
+	/**
+	 * Resolve this embedded grid's external scrollport. Embedded grids keep
+	 * their own body overflow visible, so late page loads must re-run layout
+	 * against the ancestor that owns scrolling.
+	 */
+	private _scrollportForEmbeddedSelf() : HTMLElement | null
+	{
+		if(!this.embeddedVirtualized)
+		{
+			return null;
+		}
+		return this._nearestScrollableAncestor(this.parentElement as HTMLElement | null);
+	}
+
+	/**
+	 * Private @lit-labs/virtualizer integration boundary for embedded grids.
+	 *
+	 * The library has no public API for changing a virtualizer's clipping
+	 * scrollport. Embedded grids therefore require these compatible internals:
+	 * `_clippingAncestors`, `_correctScrollError`, and `_updateView`. Keep all
+	 * such integration here so a library upgrade has one small compatibility
+	 * surface to verify rather than private-property writes spread across layout.
+	 */
+	private _syncEmbeddedVirtualizerScrollport(scrollport : HTMLElement | null)
+	{
+		if(!this.embeddedVirtualized || !scrollport)
+		{
+			return;
+		}
+		const virtualizer = this._virtualize as any;
+		if(!virtualizer)
+		{
+			return;
+		}
+		virtualizer._clippingAncestors = [scrollport];
+		if(!virtualizer._et2EmbeddedScrollErrorPatched)
+		{
+			// The parent owns this scrollport. A child layout may reflow its local
+			// range, but must never correct the shared scroll position.
+			virtualizer._correctScrollError = () => {};
+			virtualizer._et2EmbeddedScrollErrorPatched = true;
+		}
+		if(!virtualizer._et2EmbeddedUpdateViewPatched && typeof virtualizer._updateView === "function")
+		{
+			const originalUpdateView = virtualizer._updateView.bind(virtualizer);
+			virtualizer._updateView = () =>
+			{
+				originalUpdateView();
+				this._syncEmbeddedVirtualizerViewport(scrollport, virtualizer);
+			};
+			virtualizer._et2EmbeddedUpdateViewPatched = true;
+		}
+	}
+
+	/**
+	 * Complete the private virtualizer integration by restoring the child grid's
+	 * logical viewport after every internal view update. The virtualizer measures
+	 * a deeply nested host from its recycled physical DOM position, which is not
+	 * its position in the shared root scrollport. Also provide a real viewport
+	 * fallback when all clipping ancestors temporarily report zero height for an
+	 * offscreen nested branch.
+	 */
+	private _syncEmbeddedVirtualizerViewport(scrollport : HTMLElement, virtualizer : any = this._virtualize)
+	{
+		const logicalOffsetTop = this._embeddedParentScrollOffsetTop;
+		const layout = virtualizer?._layout;
+		if(logicalOffsetTop === null || !layout)
+		{
+			return;
+		}
+		const viewportSize = layout.viewportSize || {width: 0, height: 0};
+		const localScrollTop = Math.max(0, scrollport.scrollTop - logicalOffsetTop);
+		if(!(viewportSize.height > 0))
+		{
+			const size = {
+				...viewportSize,
+				height: Math.max(1, scrollport.clientHeight)
+			};
+			layout.viewportSize = size;
+		}
+		const viewportScroll = layout.viewportScroll || {top: 0, left: 0};
+		const scroll = {
+			...viewportScroll,
+			top: localScrollTop
+		};
+		layout.viewportScroll = scroll;
+		if(layout.offsetWithinScroller)
+		{
+			layout.offsetWithinScroller = {
+				...layout.offsetWithinScroller,
+				top: logicalOffsetTop
+			};
+		}
+		// Virtualizer calls `reflowIfNeeded()` immediately after `_updateView()`.
+		// Mark the corrected logical viewport pending so that existing normal pass
+		// performs it once, rather than forcing a second reflow from this callback.
+		layout._scheduleReflow?.();
+	}
+
+	/**
+	 * Cache this embedded grid's absolute offset inside the parent scrollport.
+	 * Parent virtualizer recycling can keep the DOM node near the viewport while
+	 * its logical content position is much farther down the scroll range, so
+	 * scroll math cannot depend only on current bounding rects.
+	 */
+	private _syncEmbeddedParentScrollOffset(scrollport : HTMLElement | null)
+	{
+		if(!this.embeddedVirtualized || !scrollport)
+		{
+			return;
+		}
+		const scrollportRect = scrollport.getBoundingClientRect();
+		const ownRect = this.getBoundingClientRect();
+		const offsetTop = Math.max(0, scrollport.scrollTop + ownRect.top - scrollportRect.top);
+		if(this._embeddedParentScrollOffsetTop === null || scrollport.scrollTop <= offsetTop + scrollport.clientHeight)
+		{
+			this._embeddedParentScrollOffsetTop = offsetTop;
+		}
+	}
+
+	/**
+	 * Calculate a direct child grid's logical top in the shared parent scroll
+	 * range. This avoids using recycled DOM rects from the parent virtualizer.
+	 *
+	 * Invariants: virtual item order matches the current expansion state; the
+	 * sparse layout's expanded-item map contains the direct-child reservations;
+	 * and an embedded parent offset is already relative to the same scrollport.
+	 * If sparse layout is unavailable, the fallback reconstructs that same order
+	 * from the settled normal-row pitch and cached expanded-row heights.
+	 */
+	private _embeddedChildLogicalScrollOffsetTop(childGrid : Et2Datagrid) : number | null
+	{
+		const expandedRow = childGrid.closest("tr[data-dg-expanded-row]") as HTMLElement | null;
+		if(!expandedRow || expandedRow.getRootNode() !== this.shadowRoot)
+		{
+			return null;
+		}
+		const parentRowId = expandedRow.getAttribute("data-parent-row-id") || "";
+		if(!parentRowId)
+		{
+			return null;
+		}
+		const virtualItems = this._getVirtualItems(this._virtualRowCount());
+		const expandedItemIndex = virtualItems.findIndex((item) =>
+			typeof item !== "number" && item.type === "expanded" && item.parentRowId === parentRowId
+		);
+		const layout = this._virtualize?._layout;
+		// The sparse layout is the source of truth for the parent expanded row's
+		// rendered position. Reconstructing that position from row indexes and
+		// cached branch heights can become stale while multiple nested expansions
+		// are recycled, leaving a child virtualizer to render the wrong window.
+		if(expandedItemIndex >= 0 && layout instanceof Et2DatagridSparseFlowLayout)
+		{
+			return (this.embeddedVirtualized ? this._embeddedParentScrollOffsetTop || 0 : 0) + layout._getPosition(expandedItemIndex);
+		}
+		const parentIndex = this._rowsByIndex.findIndex((row) => row ? this._rowExpansionId(row) === parentRowId : false);
+		if(parentIndex < 0)
+		{
+			return null;
+		}
+		const rowHeight = this.rowHeightEstimatePx;
+		let offsetTop = (this.embeddedVirtualized ? this._embeddedParentScrollOffsetTop || 0 : 0) + ((parentIndex + 1) * rowHeight);
+		const expandedRowIds = this._expandedRowIds();
+		for(let index = 0; index < parentIndex; index++)
+		{
+			const row = this._rowsByIndex[index];
+			if(!row)
+			{
+				continue;
+			}
+			const rowId = this._rowExpansionId(row);
+			if(expandedRowIds.has(rowId))
+			{
+				offsetTop += Math.max(0, (this._expandedRowHeightByParentRowId.get(rowId) || 0) - rowHeight);
+			}
+		}
+		return offsetTop;
+	}
+
+	/**
+	 * Propagate parent scroll movement to embedded descendants whose virtualizer
+	 * uses the same ancestor scrollport.
+	 */
+	private _notifyEmbeddedChildGridsOfParentScroll(scrollport : HTMLElement | null)
+	{
+		if(!scrollport)
+		{
+			return;
+		}
+		for(const childGrid of this._directEmbeddedChildGrids())
+		{
+			const logicalOffsetTop = this._embeddedChildLogicalScrollOffsetTop(childGrid);
+			if(logicalOffsetTop !== null)
+			{
+				childGrid._embeddedParentScrollOffsetTop = logicalOffsetTop;
+			}
+			childGrid._handleEmbeddedParentScroll(scrollport);
+		}
+	}
+
+	/**
+	 * Defer embedded child scroll sync until the parent virtualizer has applied
+	 * its own scroll-position layout update.
+	 */
+	private _scheduleEmbeddedChildScrollSync(scrollport : HTMLElement | null)
+	{
+		if(!scrollport)
+		{
+			return;
+		}
+		// Rapid scroll events can coalesce while a nested virtualizer is applying
+		// an earlier range. Do a final normal layout pass when scrolling stops so
+		// the last shared-scroll position cannot leave a child range incomplete.
+		if(this._embeddedChildScrollSettleTimer !== null)
+		{
+			clearTimeout(this._embeddedChildScrollSettleTimer);
+		}
+		this._embeddedChildScrollSettleTimer = window.setTimeout(() =>
+		{
+			this._embeddedChildScrollSettleTimer = null;
+			if(this.isConnected)
+			{
+				this._notifyEmbeddedChildGridsOfParentScroll(scrollport);
+			}
+		}, Et2Datagrid._embeddedScrollSettleDelayMs);
+		if(this._embeddedChildScrollSyncFrame !== null)
+		{
+			return;
+		}
+		this._embeddedChildScrollSyncFrame = requestAnimationFrame(() =>
+		{
+			this._embeddedChildScrollSyncFrame = null;
+			this._notifyEmbeddedChildGridsOfParentScroll(scrollport);
+		});
+	}
+
+	/**
+	 * Re-sync this embedded grid after data for the current parent-scroll range
+	 * arrives. Without this, a fetched later page can remain invisible until the
+	 * next user scroll event.
+	 */
+	private _scheduleEmbeddedSelfScrollSync(force : boolean = false)
+	{
+		if(!this.embeddedVirtualized || this._embeddedSelfScrollSyncFrame !== null)
+		{
+			return;
+		}
+		if(!force && !this._hasRenderedMaterializedPlaceholder())
+		{
+			return;
+		}
+		this._embeddedSelfScrollSyncFrame = requestAnimationFrame(() =>
+		{
+			this._embeddedSelfScrollSyncFrame = null;
+			const scrollport = this._scrollportForEmbeddedSelf();
+			if(scrollport)
+			{
+				this._handleEmbeddedParentScroll(scrollport);
+			}
+		});
+	}
+
+	/**
+	 * Return true only when a currently rendered placeholder now has backing row
+	 * data. This keeps post-fetch self-sync bounded to placeholder replacement
+	 * and prevents recursive fetch/layout cascades.
+	 */
+	private _hasRenderedMaterializedPlaceholder() : boolean
+	{
+		for(const placeholder of Array.from(this._rowsBody?.querySelectorAll("[data-et2dg-placeholder][data-row-index]") || []) as HTMLElement[])
+		{
+			const rowIndex = parseInt(placeholder.getAttribute("data-row-index") || "-1", 10);
+			if(rowIndex >= 0 && !!this._rowsByIndex[rowIndex])
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Check whether a fetched absolute row range intersects this embedded grid's
+	 * current parent-scroll viewport.
+	 */
+	private _embeddedFetchedRangeOverlapsViewport(start : number, requestedCount : number) : boolean
+	{
+		if(!this.embeddedVirtualized || requestedCount <= 0)
+		{
+			return false;
+		}
+		const scrollport = this._scrollportForEmbeddedSelf();
+		const rowsBody = this._rowsBody;
+		if(!scrollport || !rowsBody)
+		{
+			return false;
+		}
+		const rowHeight = Math.max(this.rowHeightEstimatePx, this._embeddedVirtualizedMeasuredRowHeightPx || 0, 1);
+		const viewportTop = this._embeddedParentScrollOffsetTop !== null
+		                    ? Math.max(0, scrollport.scrollTop - this._embeddedParentScrollOffsetTop)
+		                    : rowsBody.scrollTop;
+		const firstVisible = Math.max(0, Math.floor(viewportTop / rowHeight) - this.pageSize);
+		const lastVisible = Math.ceil((viewportTop + scrollport.clientHeight) / rowHeight) + this.pageSize;
+		const requestEnd = start + requestedCount;
+		return start < lastVisible && requestEnd > firstVisible;
+	}
+
+	/**
+	 * Embedded row grids are driven by an ancestor scrollport. Queue provider
+	 * chunks from that shared scroll position directly, so loading does not
+	 * depend on the virtualizer first stamping placeholder rows for the range.
+	 */
+	private _requestEmbeddedVisibleChunks(scrollport : HTMLElement)
+	{
+		if(!this.embeddedVirtualized || !this.dataProvider || this._isTileView())
+		{
+			return;
+		}
+		const rowCount = this._virtualRowCount();
+		if(rowCount <= 0)
+		{
+			return;
+		}
+		const rowHeight = Math.max(this.rowHeightEstimatePx, this._embeddedVirtualizedMeasuredRowHeightPx || 0, 1);
+		const localScrollTop = this._embeddedParentScrollOffsetTop !== null
+		                       ? Math.max(0, scrollport.scrollTop - this._embeddedParentScrollOffsetTop)
+		                       : (this._rowsBody?.scrollTop || 0);
+		const firstVisible = Math.max(0, Math.floor(localScrollTop / rowHeight));
+		const lastVisible = Math.min(rowCount - 1, Math.ceil((localScrollTop + scrollport.clientHeight) / rowHeight));
+		this._requestChunkForRowIndex(firstVisible);
+		this._requestChunkForRowIndex(lastVisible);
+	}
+
+	/**
+	 * Embedded row grids use the ancestor scrollport. On ancestor scroll, fetch
+	 * the visible chunks and reflow this grid's virtualizer against that same
+	 * scrollport; never mutate the child tbody's own scroll position.
+	 */
+	private _handleEmbeddedParentScroll(scrollport : HTMLElement)
+	{
+		if(!this.isConnected)
+		{
+			return;
+		}
+		if(this._embeddedParentScrollOffsetTop === null)
+		{
+			this._syncEmbeddedParentScrollOffset(scrollport);
+		}
+		this._syncEmbeddedVirtualizerScrollport(scrollport);
+		this._requestEmbeddedVisibleChunks(scrollport);
+		const virtualizer = this._virtualize as any;
+		if(typeof virtualizer?._updateLayout === "function")
+		{
+			virtualizer._updateLayout();
+		}
+		else if(typeof virtualizer?._handleScrollEvent === "function")
+		{
+			virtualizer._handleScrollEvent();
+		}
+		this._notifyEmbeddedChildGridsOfParentScroll(scrollport);
 	}
 
 	/**
@@ -1001,26 +1906,49 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Re-check on the next animation frame so the host and exposed CSS variable
 	 * follow the final row layout instead of an early estimate.
 	 */
-	private _scheduleEmbeddedVirtualizedHeightSync()
+	private _scheduleEmbeddedVirtualizedHeightSync = () =>
 	{
+		if(this._rowUpgradeScheduled || this._rowUpgradeQueue.length || this._rowWidgetsUpgradeSettling)
+		{
+			this._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade = true;
+			return;
+		}
+		const fullRenderHeight = this._embeddedFullRenderContentHeight();
+		this._embeddedVirtualizedHeightSyncPassesRemaining = Math.max(
+			this._embeddedVirtualizedHeightSyncPassesRemaining,
+			fullRenderHeight > 0 ? 1 : 3
+		);
 		if(this._embeddedVirtualizedHeightFrame !== null)
 		{
 			return;
 		}
-		this._embeddedVirtualizedHeightFrame = requestAnimationFrame(() =>
+		this._embeddedVirtualizedHeightFrame = requestAnimationFrame(() => this._runEmbeddedVirtualizedHeightSyncPass());
+	};
+
+	/**
+	 * Run a bounded settle pass for embedded height. Nested row widgets can
+	 * upgrade over consecutive frames, so one post-update measurement is not
+	 * enough to keep parent reservations accurate.
+	 */
+	private _runEmbeddedVirtualizedHeightSyncPass()
+	{
+		this._embeddedVirtualizedHeightFrame = null;
+		if(!this.embeddedVirtualized)
 		{
-			this._embeddedVirtualizedHeightFrame = null;
-			if(!this.embeddedVirtualized)
-			{
-				return;
-			}
-			const height = this._embeddedVirtualizedContentHeight();
-			if(!height || this._embeddedVirtualizedHostHeight === height)
-			{
-				return;
-			}
+			this._embeddedVirtualizedHeightSyncPassesRemaining = 0;
+			return;
+		}
+		this._embeddedVirtualizedMeasuredRowHeightPx = this._measureEmbeddedVirtualizedRowHeight();
+		const height = this._embeddedVirtualizedContentHeight();
+		if(height && this._embeddedVirtualizedHostHeight !== height)
+		{
 			this._applyEmbeddedVirtualizedHostHeight(height);
-		});
+		}
+		this._embeddedVirtualizedHeightSyncPassesRemaining--;
+		if(this._embeddedVirtualizedHeightSyncPassesRemaining > 0)
+		{
+			this._embeddedVirtualizedHeightFrame = requestAnimationFrame(() => this._runEmbeddedVirtualizedHeightSyncPass());
+		}
 	}
 
 	/**
@@ -1029,32 +1957,266 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _applyEmbeddedVirtualizedHostHeight(height : string)
 	{
-		this.style.height = height;
-		this._embeddedVirtualizedHostHeight = height;
-		this.shadowRoot?.querySelector<HTMLElement>(".dg-root")?.style.setProperty("--embedded-virtualized-height", height);
-		this._notifyParentVirtualizerOfEmbeddedHeightChange();
-	}
-
-	/**
-	 * Parent datagrids usually learn child height changes via ResizeObserver, but
-	 * first expansion can happen before observers have measured the expanded row.
-	 */
-	private _notifyParentVirtualizerOfEmbeddedHeightChange()
-	{
-		const root = this.getRootNode();
-		const parentGrid = root instanceof ShadowRoot && root.host instanceof Et2Datagrid
-		                   ? root.host
-		                   : null;
-		const expandedRow = this.closest("tr[data-dg-expanded-row]") as HTMLElement | null;
-		const virtualizer = parentGrid?._virtualize as any;
-		if(!expandedRow || !virtualizer || typeof virtualizer._childrenSizeChanged !== "function")
+		if(this._embeddedVirtualizedHostHeight === height && this.style.height === height)
 		{
 			return;
 		}
+		this.style.height = height;
+		this._embeddedVirtualizedHostHeight = height;
+		this.shadowRoot?.querySelector<HTMLElement>(".dg-root")?.style.setProperty("--embedded-virtualized-height", height);
+		this._notifyParentVirtualizerOfEmbeddedHeightChange(height);
+	}
+
+	/**
+	 * Dispatch a composed event so the direct parent grid can remeasure the
+	 * expanded row that hosts this embedded grid.
+	 */
+	private _notifyParentVirtualizerOfEmbeddedHeightChange(height : string)
+	{
+		this.dispatchEvent(new CustomEvent("et2-embedded-height", {
+			bubbles: true,
+			composed: true,
+			detail: {
+				height: parseFloat(height) || 0
+			}
+		}));
+	}
+
+	/**
+	 * Handle height changes from a direct embedded child grid only. Descendant
+	 * events are ignored here and handled by their nearest parent grid.
+	 */
+	private _handleEmbeddedHeightEvent = (event : CustomEvent<{ height? : number }>) =>
+	{
+		const childGrid = event.composedPath?.()[0] as EventTarget | null;
+		if(!(childGrid instanceof Et2Datagrid) || childGrid === this)
+		{
+			return;
+		}
+		// The parent pitch is authoritative once it has settled. Lock the child
+		// before its reported total is converted into an expanded-row height.
+		childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, this._usesFixedVirtualizerRowHeight());
+		// The child emits this after applying the same value to its host, so it is
+		// the authoritative reservation for this event. Observer/deferred paths
+		// still derive height from the child when no event value is available.
+		const reportedHeight = Number(event.detail?.height);
+		if(!this._remeasureDirectEmbeddedChildGrid(
+			childGrid,
+			false,
+			Number.isFinite(reportedHeight) && reportedHeight > 0 ? reportedHeight : undefined
+		))
+		{
+			return;
+		}
+		event.stopPropagation();
+		if(this.embeddedVirtualized)
+		{
+			this._scheduleEmbeddedVirtualizedHeightSync();
+		}
+	};
+
+	/**
+	 * Remeasure the expanded row containing one direct child grid.
+	 *
+	 * @lit-labs/virtualizer has no public "remeasure this child" API for the
+	 * virtualize() directive. Keep the private `_childrenSizeChanged` call
+	 * contained here so the rest of the recursive height flow uses DOM events.
+	 */
+	private _remeasureDirectEmbeddedChildGrid(
+		childGrid : Et2Datagrid,
+		forceVirtualizerRemeasure : boolean = false,
+		reportedHeight? : number
+	) : boolean
+	{
+		const expandedRow = childGrid.closest("tr[data-dg-expanded-row]") as HTMLElement | null;
+		if(!expandedRow || expandedRow.getRootNode() !== this.shadowRoot)
+		{
+			return false;
+		}
+		const heightChanged = this._syncExpandedRowHeightFromChildGrid(expandedRow, childGrid, reportedHeight);
+		if(!heightChanged && !forceVirtualizerRemeasure)
+		{
+			return false;
+		}
+		const virtualizer = this._virtualize as any;
+		if(!virtualizer || typeof virtualizer._childrenSizeChanged !== "function")
+		{
+			if(this.embeddedVirtualized)
+			{
+				this._scheduleEmbeddedVirtualizedHeightSync();
+			}
+			return true;
+		}
+		if(!forceVirtualizerRemeasure && this._isBodyScrollActive())
+		{
+			this._deferEmbeddedChildGridRemeasure(childGrid);
+			return true;
+		}
 		virtualizer._childrenSizeChanged([{
 			target: expandedRow,
-			contentRect: expandedRow.getBoundingClientRect()
+			contentRect: {
+				...expandedRow.getBoundingClientRect(),
+				height: parseFloat(expandedRow.style.height || expandedRow.style.minHeight || "") || expandedRow.getBoundingClientRect().height
+			}
 		}]);
+		this._remeasuredEmbeddedChildGridsThisFrame.add(childGrid);
+		requestAnimationFrame(() =>
+		{
+			this._remeasuredEmbeddedChildGridsThisFrame.delete(childGrid);
+		});
+		return true;
+	}
+
+	/**
+	 * Make the expanded-row host contribute the embedded child's full reserved
+	 * height to parent virtualizer measurement. Grid/table layout can otherwise
+	 * measure only the rendered child-row stack while the child host itself has a
+	 * much larger virtualized height.
+	 */
+	private _syncExpandedRowHeightFromChildGrid(
+		expandedRow : HTMLElement,
+		childGrid : Et2Datagrid,
+		reportedHeight? : number
+	) : boolean
+	{
+		// Once the parent pitch and child total are known, branch height is pure
+		// data: it must never depend on which child rows happen to be realized at
+		// the current scroll position.
+		const childHeight = reportedHeight ?? (this._usesFixedVirtualizerRowHeight() &&
+		                                    childGrid.embeddedVirtualized &&
+		                                    childGrid.total !== null
+			? childGrid._fixedVirtualItemsHeight()
+			: Math.ceil(
+				childGrid._embeddedFullRenderContentHeight() ||
+				parseFloat(childGrid.style.height || "") ||
+				childGrid.getBoundingClientRect().height ||
+				0
+			));
+		if(childHeight <= 0)
+		{
+			return false;
+		}
+		const value = `${childHeight}px`;
+		const parentRowId = expandedRow.getAttribute("data-parent-row-id") || "";
+		const syncedHeight = parseFloat(expandedRow.getAttribute("data-dg-synced-child-height") || "") || 0;
+		if(Math.abs(syncedHeight - childHeight) <= 1)
+		{
+			return false;
+		}
+		if(parentRowId)
+		{
+			this._expandedRowHeightByParentRowId.set(parentRowId, childHeight);
+			this._syncExpandedVirtualItemHeight(parentRowId, childHeight);
+		}
+		expandedRow.setAttribute("data-dg-synced-child-height", String(childHeight));
+		expandedRow.style.height = value;
+		expandedRow.style.minHeight = value;
+		const expandedCell = expandedRow.querySelector<HTMLElement>(".dg-expanded-cell");
+		const expandedContent = expandedRow.querySelector<HTMLElement>(".dg-expanded-content");
+		expandedCell?.style.setProperty("height", value);
+		expandedCell?.style.setProperty("min-height", value);
+		expandedContent?.style.setProperty("height", value);
+		expandedContent?.style.setProperty("min-height", value);
+		this._syncRowsMinHeightForExpandedRow();
+		return true;
+	}
+
+	private _syncExpandedVirtualItemHeight(parentRowId : string, height : number)
+	{
+		const virtualItemIndex = this._getVirtualItems(this._virtualRowCount()).findIndex((item) =>
+			typeof item !== "number" && item.type === "expanded" && item.parentRowId === parentRowId
+		);
+		if(virtualItemIndex < 0)
+		{
+			return;
+		}
+		this._expandedVirtualItemHeights.set(virtualItemIndex, height);
+		const layout = this._virtualize?._layout;
+		if(layout instanceof Et2DatagridSparseFlowLayout)
+		{
+			layout.notifyExpandedItemHeightChanged();
+		}
+	}
+
+	/**
+	 * Resolve the full normal-flow embedded content height. Used while embedded
+	 * self-virtualization is disabled so the parent reserves the child rows plus
+	 * spacer ranges instead of the child's currently painted bounding box.
+	 */
+	private _embeddedFullRenderContentHeight() : number
+	{
+		if(!this.embeddedVirtualized || this._isTileView())
+		{
+			return 0;
+		}
+		const rowsBody = this._rowsBody as HTMLElement | null;
+		const styleHeight = parseFloat(rowsBody?.style.height || rowsBody?.style.minHeight || "") || 0;
+		const rowHeight = Math.max(this.rowHeightEstimatePx, this._embeddedVirtualizedMeasuredRowHeightPx || 0, 1);
+		if(this.total !== null && (this._usesFixedVirtualizerRowHeight() || this._expandedRowHeightByParentRowId.size > 0))
+		{
+			return this._fixedVirtualItemsHeight();
+		}
+		const rowSlots = this.total !== null ? Math.max(0, this.total) : this._virtualRowCount();
+		const baseRowsHeight = rowSlots * rowHeight;
+		const reservedRowsHeight = Math.max(
+			baseRowsHeight,
+			this._cachedExpandedRowsMinHeightFloor(baseRowsHeight)
+		);
+		return Math.ceil(this.total !== null ? reservedRowsHeight : Math.max(styleHeight, reservedRowsHeight));
+	}
+
+	/**
+	 * Keep the parent virtualizer host tall enough for a large embedded branch
+	 * even if the virtualizer rewrites its own explicit height during relayout.
+	 */
+	private _syncRowsMinHeightForExpandedRow()
+	{
+		const rowsBody = this._rowsBody;
+		if(!rowsBody)
+		{
+			return;
+		}
+		const explicitHeight = parseFloat(rowsBody.style.height || rowsBody.style.minHeight || "") || 0;
+		const estimatedHeight = this._virtualRowCount() * this.rowHeightEstimatePx;
+		const requiredHeight = Math.ceil(this._cachedExpandedRowsMinHeightFloor(Math.max(explicitHeight, estimatedHeight)));
+		const currentMinHeight = parseFloat(rowsBody.style.minHeight || "") || 0;
+		if(requiredHeight > currentMinHeight)
+		{
+			rowsBody.style.minHeight = `${requiredHeight}px`;
+		}
+	}
+
+	/**
+	 * Restore scrollTop after Lit virtualizer has had a chance to settle layout.
+	 */
+	private _restoreBodyScrollTopAfterLayout(
+		scrollTop : number | null,
+		scrollVersion : number = this._bodyScrollVersion
+	)
+	{
+		if(scrollTop === null)
+		{
+			return;
+		}
+		requestAnimationFrame(() =>
+		{
+			requestAnimationFrame(() =>
+			{
+				const body = this._body;
+				if(this._bodyScrollVersion !== scrollVersion)
+				{
+					return;
+				}
+				if(body && body.scrollTop > scrollTop + 1)
+				{
+					return;
+				}
+				if(body && Math.abs(body.scrollTop - scrollTop) > 1)
+				{
+					body.scrollTop = scrollTop;
+				}
+			});
+		});
 	}
 
 	/**
@@ -1075,18 +2237,51 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedVirtualizedContentHeight() : string | null
 	{
 		const rowsBody = this._rowsBody as HTMLElement | null;
+		const fullRenderHeight = this._embeddedFullRenderContentHeight();
+		if(fullRenderHeight > 0)
+		{
+			const value = `${Math.ceil(fullRenderHeight)}px`;
+			if(rowsBody)
+			{
+				if(rowsBody.style.height !== value)
+				{
+					rowsBody.style.height = value;
+				}
+				if(rowsBody.style.minHeight !== value)
+				{
+					rowsBody.style.minHeight = value;
+				}
+			}
+			return value;
+		}
 		const virtualizerHeight = this._embeddedVirtualizedVirtualizerHeight();
 		const renderedRowsHeight = this._embeddedVirtualizedRenderedRowsHeight();
+		const rowHeight = Math.max(
+			this._embeddedVirtualizedMeasuredRowHeightPx || 0,
+			this.rowHeightEstimatePx
+		);
+		const reservedRowsHeight = this._virtualRowCount() * rowHeight;
+		const virtualizerHeightPx = virtualizerHeight ? parseFloat(virtualizerHeight) : 0;
+		const canShrinkStaleVirtualizerHeight = this.total !== null && this.rows.length >= this.total;
+		const effectiveVirtualizerHeight = canShrinkStaleVirtualizerHeight && reservedRowsHeight > 0
+		                                  ? Math.min(virtualizerHeightPx, reservedRowsHeight)
+		                                  : virtualizerHeightPx;
+		const baseHeight = Math.max(
+			effectiveVirtualizerHeight,
+			reservedRowsHeight || 0
+		);
 		const height = Math.max(
-			virtualizerHeight ? parseFloat(virtualizerHeight) : 0,
-			renderedRowsHeight || 0
+			effectiveVirtualizerHeight,
+			renderedRowsHeight || 0,
+			reservedRowsHeight || 0,
+			this._cachedExpandedRowsMinHeightFloor(baseHeight)
 		);
 		if(!height)
 		{
 			return null;
 		}
 		const value = `${Math.ceil(height)}px`;
-		if(rowsBody && renderedRowsHeight && renderedRowsHeight > (virtualizerHeight ? parseFloat(virtualizerHeight) : 0))
+		if(rowsBody && Math.abs(height - virtualizerHeightPx) > 1)
 		{
 			rowsBody.style.height = value;
 		}
@@ -1137,19 +2332,113 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Measure realized child rows so the loading fallback can reuse the actual row height.
+	 * Update sampled row-height average from the currently realized, upgraded
+	 * data rows. Samples are retained by row id so scrolling through mixed-height
+	 * rows converges instead of replacing the estimate with only the current
+	 * viewport slice.
 	 */
-	private _measureEmbeddedVirtualizedRowHeight() : number | null
+	private _updateMeasuredAverageRowHeight() : number | null
 	{
-		const renderedRows = this._embeddedVirtualizedRenderedRows();
-		const heights = renderedRows
-			.map((row) => row.getBoundingClientRect().height)
-			.filter((height) => Number.isFinite(height) && height > 0);
-		if(!heights.length)
+		if(this._rowHeightLocked)
+		{
+			return this._rowHeightPx;
+		}
+		if(this._usesFixedVirtualizerRowHeight())
+		{
+			return this._rowHeightPx;
+		}
+		const rows = this._measurableRenderedRows();
+		for(const row of rows)
+		{
+			const rowId = row.getAttribute("data-row-id") || "";
+			const height = Math.ceil(row.getBoundingClientRect().height);
+			if(rowId && Number.isFinite(height) && height > 0)
+			{
+				this._measuredRowHeightByRowId.set(rowId, height);
+			}
+		}
+		if(!this._measuredRowHeightByRowId.size)
 		{
 			return null;
 		}
-		return Math.ceil(heights.reduce((sum, height) => sum + height, 0) / heights.length);
+		const heights = Array.from(this._measuredRowHeightByRowId.values());
+		const average = Math.ceil(heights.reduce((sum, height) => sum + height, 0) / heights.length);
+		const shouldSettle = average > 0 && (this.embeddedVirtualized || !!this.expansionConfig);
+		const rowHeightChanged = Math.abs(average - this._rowHeightPx) > 1;
+		// The first upgraded batch establishes the fixed pitch for an expandable
+		// grid. Afterwards widgets can be refreshed without asking Lit to recreate
+		// the virtualizer range again: the pitch is already deterministic, and an
+		// extra render can replace freshly realized rows after the upgrade observer
+		// has run.
+		const needsLayoutUpdate = rowHeightChanged || (shouldSettle && !this._rowHeightSettled);
+		if(!this._rowHeightLocked && average > 0 && needsLayoutUpdate)
+		{
+			this._setRowHeight(average, "measured");
+			this._syncEmbeddedChildGridRowHeightEstimates();
+			// Changing to the sparse layout recreates Lit's virtualizer. Seed the
+			// current tbody before that swap: an empty grid host otherwise clips its
+			// own viewport to zero, clears its range, and can never render a row to
+			// recover a height from.
+			this._syncRowsMinHeight();
+			this.requestUpdate();
+			this._scheduleVirtualizerLayoutSync();
+			if(this.embeddedVirtualized)
+			{
+				this._embeddedRowHeightSettled = true;
+				this._scheduleEmbeddedVirtualizedHeightSync();
+			}
+		}
+		if(average > 0)
+		{
+			if(shouldSettle)
+			{
+				this._rowHeightSettled = true;
+				this._embeddedRowHeightSettled = true;
+				this._syncFixedRowHeightMode();
+				this._scheduleSparseVirtualizerLayoutActivation();
+				this._logExpansionRowHeightWarning();
+			}
+		}
+		return average;
+	}
+
+	/**
+	 * Return realized data rows that should contribute to row-height sampling.
+	 */
+	private _measurableRenderedRows() : HTMLElement[]
+	{
+		const rowsBody = this._rowsBody as HTMLElement | null;
+		if(this._isTileView())
+		{
+			return this._renderedDataRowElements(rowsBody);
+		}
+		return Array.from(rowsBody?.querySelectorAll(":scope > tr[data-row-id]:not([data-et2dg-placeholder]):not(.dg-row-placeholder)") || []) as HTMLElement[];
+	}
+
+	/**
+	 * Measure realized child rows so the loading fallback can reuse the sampled
+	 * upgraded average row height.
+	 */
+	private _measureEmbeddedVirtualizedRowHeight() : number | null
+	{
+		if(this._rowHeightLocked || this._usesFixedVirtualizerRowHeight() || this._embeddedRowHeightSettled)
+		{
+			return this._rowHeightPx;
+		}
+		const sampledHeights = Array.from(this._measuredRowHeightByRowId.values()).filter((height) => Number.isFinite(height) && height > 0);
+		if(sampledHeights.length)
+		{
+			return Math.ceil(sampledHeights.reduce((sum, height) => sum + height, 0) / sampledHeights.length);
+		}
+		const rows = this._measurableRenderedRows();
+		const measuredHeights = rows
+			.map((row) => Math.ceil(row.getBoundingClientRect().height))
+			.filter((height) => Number.isFinite(height) && height > 0);
+		if(!measuredHeights.length)
+		{
+			return null;
+		}
+		return Math.ceil(measuredHeights.reduce((sum, height) => sum + height, 0) / measuredHeights.length);
 	}
 
 	/**
@@ -1455,6 +2744,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		this._queuedRequests.set(requestKey, {start, requestedCount, requestKey});
+		this._pendingPlaceholderRequests.set(requestKey, {start, requestedCount});
 		this._pendingPlaceholderCount += this._isEmbeddedInitialLoading() ? Math.min(requestedCount, 1) : requestedCount;
 		this.requestUpdate();
 	}
@@ -1493,6 +2783,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			if(requestKey)
 			{
 				this._inFlightRequestKeys.delete(requestKey);
+				this._pendingPlaceholderRequests.delete(requestKey);
 			}
 			this._syncLoadingFromInFlight();
 			return;
@@ -1537,7 +2828,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			if(requestKey)
 			{
+				if(!this.fetchFailed)
+				{
+					this._completedRequestKeys.add(requestKey);
+				}
 				this._inFlightRequestKeys.delete(requestKey);
+				this._pendingPlaceholderRequests.delete(requestKey);
 			}
 			this._syncLoadingFromInFlight();
 			if(this.fetchFailed)
@@ -1549,6 +2845,20 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
 			}
 			this._reconcileRowRenderState();
+			if(this.embeddedVirtualized)
+			{
+				this._scheduleVirtualizerLayoutSync();
+				this._scheduleEmbeddedVirtualizedHeightSync();
+				void this.updateComplete.then(() =>
+				{
+					if(this.isConnected)
+					{
+						this._scheduleEmbeddedSelfScrollSync(
+							this._embeddedFetchedRangeOverlapsViewport(start, requestedCount)
+						);
+					}
+				});
+			}
 		}
 	}
 
@@ -1561,7 +2871,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._rowsByIndex = [];
 		this._rowRenderVersionById.clear();
 		this.displayedRowIds.clear();
-		this._pendingPlaceholderCount = 0;
+		this._completedRequestKeys.clear();
+		this._expandedRowHeightByParentRowId.clear();
+		this._expandedVirtualItemHeights.clear();
+		this._virtualItems = [];
+		this._virtualItemsSignature = "";
+		this._measuredRowHeightByRowId.clear();
+		this._rowHeightSettled = false;
+		this._embeddedRowHeightSettled = false;
+		this._sparseVirtualizerLayoutActive = false;
+		if(this._deferredEmbeddedRemeasureTimer !== null)
+		{
+			clearTimeout(this._deferredEmbeddedRemeasureTimer);
+			this._deferredEmbeddedRemeasureTimer = null;
+		}
+		this._deferredEmbeddedRemeasureChildGrids.clear();
 		this._clearQueuedRequests();
 		this._clearRowUpgradeQueue();
 	}
@@ -1572,6 +2896,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _clearQueuedRequests()
 	{
 		this._queuedRequests.clear();
+		this._pendingPlaceholderRequests.clear();
+		this._pendingPlaceholderCount = 0;
 		if(this._queuedRequestTimer !== null)
 		{
 			window.clearTimeout(this._queuedRequestTimer);
@@ -1685,6 +3011,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		for(const rowId of expandedRowIds)
+		{
+			if(!nextExpandedRowIds.has(rowId))
+			{
+				this._expandedRowHeightByParentRowId.delete(rowId);
+			}
+		}
 		if(this.expansionConfig.onExpandedRowIdsChanged)
 		{
 			this.expansionConfig.onExpandedRowIdsChanged(nextExpandedRowIds);
@@ -1719,6 +3052,105 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		return this._lengthToPx(candidate);
 	}
+
+	private _resolveExternalCssRowHeightPx() : number | null
+	{
+		const candidate = this.style.getPropertyValue("--row-height") || getComputedStyle(this).getPropertyValue("--row-height");
+		return candidate ? this._lengthToPx(candidate.trim()) : null;
+	}
+
+	/** Keep the virtualizer's numeric pitch and host CSS contract in sync. */
+	private _setRowHeight(rowHeight : number, source : Et2DatagridRowHeightSource)
+	{
+		this._rowHeightPx = rowHeight;
+		this._rowHeightSource = source;
+		if(source !== "css")
+		{
+			this.style.setProperty("--row-height", `${rowHeight}px`);
+		}
+	}
+
+	/**
+	 * Resolve the row-height estimate shared by CSS, virtualizer reservations,
+	 * and embedded child grids.
+	 */
+	private _effectiveRowHeightPx() : number
+	{
+		return Math.max(
+			this._rowHeightPx || 0,
+			this._resolveTemplateRowHeightPx() || 0,
+			44
+		);
+	}
+
+	/**
+	 * Rows must be a fixed pitch when the row template/config explicitly defines
+	 * a height, or when row expansion can insert nested grids. Without expansion,
+	 * Lit virtualizer can keep measuring variable-height rows.
+	 */
+	private _usesFixedVirtualizerRowHeight() : boolean
+	{
+		return this._rowHeightLocked ||
+		       (this.embeddedVirtualized && this._embeddedRowHeightSettled) ||
+		       (!!this.expansionConfig && this._rowHeightSettled);
+	}
+
+	private _syncFixedRowHeightMode()
+	{
+		const fixed = this._usesFixedVirtualizerRowHeight();
+		if(this.fixedRowHeight !== fixed)
+		{
+			this.fixedRowHeight = fixed;
+			this.requestUpdate();
+		}
+	}
+
+	private _logExpansionRowHeightWarning()
+	{
+		if(!this.expansionConfig?.rendersSubgrid || this._rowHeightSource === "template" || this._rowHeightSource === "css" || this._rowHeightSource === "parent" || this._loggedExpansionRowHeightWarning)
+		{
+			return;
+		}
+		this._loggedExpansionRowHeightWarning = true;
+		this.egw().debug(
+			"warn",
+			"Et2Datagrid expansion uses a fixed row height measured from the first rendered batch. Set an explicit row template height or --row-height for deterministic layout."
+		);
+	}
+
+	/**
+	 * Treat row-template height hints as authoritative. When present, skip
+	 * sampled row-height averaging while still allowing row-upgrade events to
+	 * fire after widgets settle.
+	 */
+	private _syncTemplateRowHeightHint(refreshCss : boolean = false)
+	{
+		const templateRowHeight = this._resolveTemplateRowHeightPx();
+		const cssRowHeight = templateRowHeight || (!refreshCss && this._rowHeightSource !== "default" && this._rowHeightSource !== "css")
+		                     ? null
+		                     : this._resolveExternalCssRowHeightPx();
+		const rowHeight = templateRowHeight || cssRowHeight;
+		if(rowHeight && rowHeight > 0)
+		{
+			this._setRowHeight(rowHeight, templateRowHeight ? "template" : "css");
+			this._rowHeightLocked = true;
+			this._rowHeightSettled = true;
+			this._embeddedRowHeightSettled = true;
+			this.fixedRowHeight = true;
+			this._measuredRowHeightByRowId.clear();
+			this._syncEmbeddedChildGridRowHeightEstimates();
+			return;
+		}
+		if(this._rowHeightSource === "template" || this._rowHeightSource === "css" || refreshCss)
+		{
+			this._rowHeightLocked = false;
+			this._rowHeightSettled = false;
+			this._embeddedRowHeightSettled = false;
+			this.fixedRowHeight = false;
+			this._setRowHeight(44, "default");
+		}
+	}
+
 	/**
 	 * Convert simple CSS lengths to pixels for row-height calculation.
 	 */
@@ -1921,6 +3353,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _setRowExpanded(row : Et2DatagridRow, expanded : boolean)
 	{
+		const scrollTop = expanded ? null : this._body?.scrollTop ?? null;
+		const scrollVersion = this._bodyScrollVersion;
 		const rowId = this._rowExpansionId(row);
 		const nextExpandedRowIds = new Set(this._expandedRowIds());
 		if(expanded)
@@ -1930,6 +3364,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		else
 		{
 			nextExpandedRowIds.delete(rowId);
+			this._expandedRowHeightByParentRowId.delete(rowId);
 		}
 		if(this.expansionConfig?.onExpandedRowIdsChanged)
 		{
@@ -1945,6 +3380,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._internalExpandedRowIds = nextExpandedRowIds;
 		}
 		this.requestUpdate();
+		if(!expanded)
+		{
+			this._restoreBodyScrollTopAfterLayout(scrollTop, scrollVersion);
+		}
 	}
 
 	/**
@@ -1998,12 +3437,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _initRowUpgradeObserver()
 	{
 		const rowsBody = this._rowsBody;
-		if(this._rowUpgradeObservedRowsBody === rowsBody && this._rowUpgradeObserver)
+		if(this._rowUpgradeObservedRowsBody === rowsBody && this._rowUpgradeObserver && this._rowUpgradeRangeListener)
 		{
 			return;
 		}
 		this._rowUpgradeObserver?.disconnect();
+		if(this._rowUpgradeRangeListener)
+		{
+			this._rowUpgradeObservedRowsBody?.removeEventListener("rangeChanged", this._rowUpgradeRangeListener);
+		}
 		this._rowUpgradeObserver = null;
+		this._rowUpgradeRangeListener = null;
 		this._rowUpgradeObservedRowsBody = null;
 		if(!rowsBody)
 		{
@@ -2015,6 +3459,22 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._guardFocusAfterVirtualMutation();
 		});
 		this._rowUpgradeObserver.observe(rowsBody, {childList: true, subtree: true});
+		// The virtualizer emits this after selecting a new realized range. Queue the
+		// existing hydration pass after its directive has applied that range; this
+		// covers a DOM mutation missed while the virtualizer host is recreated.
+		this._rowUpgradeRangeListener = () =>
+		{
+			queueMicrotask(() =>
+			{
+				if(this._rowUpgradeObservedRowsBody !== rowsBody)
+				{
+					return;
+				}
+				this._upgradeRenderedRows();
+				this._guardFocusAfterVirtualMutation();
+			});
+		};
+		rowsBody.addEventListener("rangeChanged", this._rowUpgradeRangeListener);
 		this._rowUpgradeObservedRowsBody = rowsBody;
 	}
 
@@ -2037,6 +3497,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 		}
 		this._initRowUpgradeObserver();
+		this._syncEmbeddedChildGridObservers();
 	}
 
 	/**
@@ -2098,25 +3559,46 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Render one virtual item by absolute data row index, using placeholder+fetch when data is missing.
 	 */
-	private _renderVirtualRow = (item : Et2DatagridRenderItem | number) : TemplateResult =>
+	private _renderVirtualRow = (
+		item : Et2DatagridRenderItem | number | undefined,
+		rowStyleOrIndex? : Record<string, string | undefined> | number,
+		requestMissingChunk : boolean = true
+	) : TemplateResult =>
 	{
+		const rowStyle = typeof rowStyleOrIndex === "object" && rowStyleOrIndex !== null ? rowStyleOrIndex : undefined;
+		// Lit Virtualizer can deliver one stale range slot after an expansion
+		// changes the virtual item count. Render that slot as its absolute-index
+		// placeholder instead of throwing and aborting the whole range update.
+		if(typeof item === "undefined")
+		{
+			item = typeof rowStyleOrIndex === "number" ? rowStyleOrIndex : 0;
+		}
 		if(typeof item === "number")
 		{
 			item = {type: "row", rowIndex: item};
 		}
 		if(item.type === "expanded")
 		{
-			return this._renderExpandedRow(item);
+			return this._renderExpandedRow(item, rowStyle);
 		}
 		const rowIndex = item.rowIndex;
 		const row = this._rowsByIndex[rowIndex];
 		if(row)
 		{
 			const rowElement = this._buildRowElement(row, rowIndex);
+			for(const [name, value] of Object.entries(rowStyle || {}))
+			{
+				if(value)
+				{
+					rowElement?.style.setProperty(name, value);
+				}
+			}
 			return html`${unsafeHTML(rowElement?.outerHTML || "")}`;
 		}
-		const chunkStart = Math.floor(rowIndex / this.pageSize) * this.pageSize;
-		this._requestChunkForRowIndex(rowIndex);
+		if(requestMissingChunk)
+		{
+			this._requestChunkForRowIndex(rowIndex);
+		}
 		const placeholderRowId = `placeholder:${rowIndex}`;
 		if(this._isTileView())
 		{
@@ -2146,6 +3628,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                     aria-rowindex=${String(rowIndex + 1)}
                     aria-selected="false"
                     tabindex=${rowIndex === this.activeRowIndex ? "0" : "-1"}
+                    style=${styleMap(rowStyle || {})}
             >
                 <td data-dg-meta-cell="1" part="row-meta" aria-hidden="true"></td>
                 <td class="dg-placeholder-cell">
@@ -2159,7 +3642,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Render the extra virtual item that hosts consumer-provided expanded content.
 	 */
-	private _renderExpandedRow(item : Extract<Et2DatagridRenderItem, { type : "expanded" }>) : TemplateResult
+	private _renderExpandedRow(
+		item : Extract<Et2DatagridRenderItem, { type : "expanded" }>,
+		rowStyle : Record<string, string | undefined> = {}
+	) : TemplateResult
 	{
 		const row = this._rowsByIndex[item.rowIndex];
 		if(!row || !this.expansionConfig?.renderExpandedContent)
@@ -2176,6 +3662,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			columnSizes,
 			metaColumnWidth
 		});
+		const cachedHeight = this._expandedRowHeightByParentRowId.get(item.parentRowId);
+		const cachedHeightValue = cachedHeight && cachedHeight > 0 ? `${Math.ceil(cachedHeight)}px` : undefined;
+		const cachedHeightStyle = {height: cachedHeightValue, minHeight: cachedHeightValue};
+		// Declare the parent's settled pitch before consumer content is stamped.
+		// Embedded child grids inherit and lock this value during connection, before
+		// their first render or data request can produce a competing measurement.
+		const expandedContentStyle = {
+			...cachedHeightStyle,
+			"--row-height": `${this.rowHeightEstimatePx}px`
+		};
 		return html`
             <tr
                     class="dg-row-expanded"
@@ -2184,9 +3680,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
                     role="row"
                     aria-selected="false"
                     tabindex="-1"
+                    style=${styleMap({...rowStyle, ...cachedHeightStyle})}
             >
-                <td class="dg-expanded-cell" part="expanded-row" role="gridcell">
-                    <div class="dg-expanded-content" part="expanded-row-content">
+                <td class="dg-expanded-cell" part="expanded-row" role="gridcell" style=${styleMap(cachedHeightStyle)}>
+                    <div class="dg-expanded-content" part="expanded-row-content" style=${styleMap(expandedContentStyle)}>
                         ${content as any}
                     </div>
                 </td>
@@ -2220,7 +3717,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		const requestKey = this._requestKey(chunkStart, requestedCount);
-		if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+		if(this._completedRequestKeys.has(requestKey) || this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
 		{
 			return;
 		}
@@ -2283,6 +3780,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		this._virtualItems = items;
 		this._virtualItemsSignature = signature;
+		this._expandedVirtualItemHeights.clear();
+		items.forEach((item, index) =>
+		{
+			if(typeof item !== "number" && item.type === "expanded")
+			{
+				const height = this._expandedRowHeightByParentRowId.get(item.parentRowId);
+				if(height)
+				{
+					this._expandedVirtualItemHeights.set(index, height);
+				}
+			}
+		});
 		return this._virtualItems;
 	}
 
@@ -2295,7 +3804,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return 1;
 		}
-		const materializedCount = Math.max(this._rowsByIndex.length + this._pendingPlaceholderCount, this.rows.length);
+		const pendingPlaceholderExtent = Math.max(
+			0,
+			...Array.from(this._pendingPlaceholderRequests.values()).map((request) => request.start + request.requestedCount)
+		);
+		const materializedCount = Math.max(this._rowsByIndex.length + this._pendingPlaceholderCount, this.rows.length, pendingPlaceholderExtent);
 		return this.total === null ? materializedCount : Math.max(this.total, materializedCount);
 	}
 
@@ -2320,7 +3833,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return null;
 		}
 		const rowHeight = Math.max(
-			this._rowHeightPx || this._resolveTemplateRowHeightPx() || 44,
+			this.rowHeightEstimatePx,
 			this._embeddedVirtualizedMeasuredRowHeightPx || 0
 		);
 		return `${rowHeight}px`;
@@ -2329,9 +3842,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Provide stable keys for realized rows, expanded rows, and deterministic placeholders.
 	 */
-	private _virtualRowKey = (item : Et2DatagridVirtualItem) : string =>
+	private _virtualRowKey = (item : Et2DatagridVirtualItem | undefined, itemIndex : number = 0) : string =>
 	{
 		const structureSignature = this._rowRenderStructureSignature();
+		// `rangeChanged` can be queued with the previous item count while an
+		// expand/collapse render has already supplied the shorter item array.
+		// Keep the keyed repeat stable for that one stale slot; the next layout
+		// pass replaces it with the current item at this absolute index.
+		if(typeof item === "undefined")
+		{
+			const querySignature = this.dataProvider?.getQuerySignature?.() || "";
+			return `${structureSignature}:placeholder:${querySignature}:${itemIndex}`;
+		}
 		if(typeof item === "number")
 		{
 			const row = this._rowsByIndex[item];
@@ -2512,7 +4034,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			rowElement.setAttribute("data-et2dg-upgrade-queued", "1");
 			this._rowUpgradeQueue.push(rowElement);
 		}
-		this._scheduleRowUpgradeQueue();
+		if(this._rowUpgradeQueue.length)
+		{
+			this._scheduleRowUpgradeQueue();
+		}
 	}
 
 	/**
@@ -2593,17 +4118,52 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._scheduleRowUpgradeQueue();
 		}
-		else if(this.embeddedVirtualized)
+		else
 		{
-			// Row upgrades can change child-grid row height after the normal Lit update.
-			this._scheduleEmbeddedVirtualizedHeightSync();
+			this._scheduleRowsUpgradedSettle();
 		}
-		else if(this.total == this.rows.length)
+	}
+
+	/**
+	 * Wait for upgraded row widgets to paint, update the measured row-height
+	 * average, then notify height consumers that row layout is stable enough for
+	 * reservation calculations.
+	 */
+	private _scheduleRowsUpgradedSettle()
+	{
+		if(this._rowWidgetsUpgradedFrame !== null)
 		{
-			// Updates are done.  If we have all the rows, make sure the height is exactly right to avoid cutting
-			// off the last rows if some are taller than expected.  Don't do this if we don't have all rows.
-			this._scheduleRowsMinHeightSync();
+			return;
 		}
+		this._rowWidgetsUpgradeSettling = true;
+		this._rowWidgetsUpgradedFrame = requestAnimationFrame(() =>
+		{
+			this._rowWidgetsUpgradedFrame = requestAnimationFrame(() =>
+			{
+				this._rowWidgetsUpgradedFrame = null;
+				this._updateMeasuredAverageRowHeight();
+				this._rowWidgetsUpgradeSettling = false;
+				this.dispatchEvent(new CustomEvent("et2-row-widgets-upgraded", {
+					bubbles: true,
+					composed: true,
+					detail: {
+						averageRowHeight: this._rowHeightPx,
+						rowHeightLocked: this._rowHeightLocked
+					}
+				}));
+				if(this.embeddedVirtualized || this._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade)
+				{
+					this._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade = false;
+					this._scheduleEmbeddedVirtualizedHeightSync();
+				}
+				else if(this.total == this.rows.length)
+				{
+					// Updates are done. If all rows are loaded, ensure height covers
+					// upgraded content. Do not do this for partial data sets.
+					this._scheduleRowsMinHeightSync();
+				}
+			});
+		});
 	}
 
 	/**
@@ -3868,7 +5428,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			const body = this._body;
 			if(body)
 			{
-				const rowHeight = this._rowHeightPx || 44;
+				const rowHeight = this.rowHeightEstimatePx;
 				const centeredTop = Math.max(0, Math.floor(activeIndex * rowHeight - body.clientHeight / 2));
 				body.scrollTop = centeredTop;
 			}
@@ -4359,6 +5919,42 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Capture loaded row slots so a virtualized embedded grid can be restored
+	 * immediately if its host expanded row is recycled and later rendered again.
+	 */
+	rowsSnapshot() : Et2DatagridRowsSnapshot
+	{
+		return {
+			rowsByIndex: this._rowsByIndex.slice(),
+			total: this.total,
+			displayedRowIds: Array.from(this.displayedRowIds),
+			hasFetchedOnce: this._hasFetchedOnce
+		};
+	}
+
+	/**
+	 * Restore row data for a recycled embedded child grid without changing its
+	 * selection or expansion state. Request/loading/error state is deliberately
+	 * transient and is reset rather than restored from the snapshot.
+	 */
+	restoreRowsSnapshot(snapshot : Et2DatagridRowsSnapshot)
+	{
+		this._clearQueuedRequests();
+		this._clearRows();
+		this._rowsByIndex = snapshot.rowsByIndex.slice();
+		this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
+		this.total = snapshot.total;
+		this.displayedRowIds = new Set(snapshot.displayedRowIds);
+		this._hasFetchedOnce = snapshot.hasFetchedOnce;
+		this.loading = false;
+		this.fetching = false;
+		this.fetchFailed = false;
+		this.fetchErrorMessage = "";
+		this.requestUpdate();
+		this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
+	}
+
+	/**
 	 * Apply a targeted row refresh without forcing a full grid reload.
 	 *
 	 * The provider decides which rows changed or disappeared; the datagrid only updates
@@ -4587,7 +6183,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		const requestKey = this._requestKey(start, requestedCount);
-		if(this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+		if(this._completedRequestKeys.has(requestKey) || this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
 		{
 			return;
 		}
@@ -4734,6 +6330,45 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Keep a fixed implicit pitch for normal rows and sparse, explicit branch
+	 * heights for expanded items. This avoids FlowLayout's average-based scroll
+	 * estimates while retaining normal DOM recycling.
+	 */
+	private _tableLayoutConfig()
+	{
+		if(!this._usesFixedVirtualizerRowHeight() || !this._sparseVirtualizerLayoutActive)
+		{
+			return undefined;
+		}
+		const rowHeight = Math.max(1, this.rowHeightEstimatePx);
+		// @lit-labs/virtualizer does not expose a public type for custom FlowLayout
+		// configuration. Keep this cast localized until that integration is typed.
+		return <any>{
+			type: Et2DatagridSparseFlowLayout,
+			_itemSize: {
+				width: 100,
+				height: rowHeight
+			},
+			// Lit needs a measurement callback to initialize its viewport and keep
+			// ResizeObserver delivery active. The sparse layout ignores Flow's
+			// resulting averages; this supplies only stable row measurements.
+			_measureChildren: (element : Element) =>
+			{
+				const rect = element.getBoundingClientRect();
+				return {
+					width: rect.width,
+					height: element.classList.contains("dg-row-expanded") ? rect.height : rowHeight,
+					marginTop: 0,
+					marginRight: 0,
+					marginBottom: 0,
+					marginLeft: 0
+				};
+			},
+			expandedItemHeights: this._expandedVirtualItemHeights
+		};
+	}
+
+	/**
 	 * Render the visible column header row (or fallback header slot).
 	 */
 	protected _headerTemplate(visibleColumns:Et2DatagridColumn[])
@@ -4848,10 +6483,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			'--column-count' : visibleColumns.length,
 			'--column-sizes': this.inheritColumnSizes ? "inherit" : this._columnWidths(visibleColumns),
 			'--scrollbar-space': `${this._scrollbarSpacePx}px`,
+			// Templates render below this shadow-root element. Mirror the resolved
+			// host contract here so their local CSS always receives the same pitch.
+			'--row-height': `${this.rowHeightEstimatePx}px`,
 			'--embedded-virtualized-height': this._embeddedVirtualizedHostHeight ?? undefined
 		}
 		const rowCount = this._virtualRowCount();
-		const virtualItems = this._getVirtualItems(rowCount);
+		const embeddedRowCount = this.embeddedVirtualized && !isTileView && this.total !== null ? Math.max(0, this.total) : rowCount;
+		const virtualItems = this._getVirtualItems(embeddedRowCount);
 		if(isTileView)
 		{
 			return html`
@@ -4893,6 +6532,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				</div>
 			`;
 		}
+		const tableLayout = this._tableLayoutConfig();
+		const tableVirtualizerConfig : any = {
+			items: virtualItems,
+			keyFunction: this._virtualRowKey,
+			renderItem: this._renderVirtualRow
+		};
+		if(tableLayout)
+		{
+			tableVirtualizerConfig.layout = tableLayout;
+		}
 		return html`
             <div class="dg-root" part="base" style=${styleMap(styles)}>
 				<!-- Visible header for users -->
@@ -4907,7 +6556,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	                <div class="dg-body" part="body">
 					${stateTemplate}
 					<table
-                            part="table"
+						part="table"
 						role="grid"
 						tabindex="-1"
 						aria-label=${this.getAttribute("aria-label") || this.getAttribute("label") || "Data grid"}
@@ -4915,20 +6564,20 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						aria-colcount=${String((visibleColumns.length || this.columns.length || 1) + 1)}
 						aria-rowcount=${String(this.total ?? this.rows.length)}
 						?hidden=${!!stateTemplate}
-                            @keydown=${this._handleTableKeydown}
-                            @pointerdown=${this._handleTablePointerDown}
-                            @click=${this._handleTableClick}
+						@keydown=${this._handleTableKeydown}
+						@pointerdown=${this._handleTablePointerDown}
+						@click=${this._handleTableClick}
 					>
 						<!-- Accessible / sizing header -->
 						<thead>
 							${this._accessibleHeaderTemplate(visibleColumns)}
 						</thead>
-                        <tbody id="rows" part="rows" role="rowgroup">
-                        ${virtualize({
-                            items: virtualItems,
-                            keyFunction: this._virtualRowKey,
-                            renderItem: this._renderVirtualRow
-                        })}
+                        <tbody
+                                id="rows"
+                                part="rows"
+                                role="rowgroup"
+                        >
+                        ${virtualize(tableVirtualizerConfig)}
                         </tbody>
 					</table>
 				</div>

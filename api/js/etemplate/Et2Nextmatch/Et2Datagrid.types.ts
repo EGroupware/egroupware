@@ -130,6 +130,8 @@ export interface Et2DatagridExpansionConfig
 	isExpandable(row : Et2DatagridRow, rowIndex : number) : boolean;
 	/** Render expanded content immediately after the parent row. */
 	renderExpandedContent(context : Et2DatagridExpandedRowContext) : unknown;
+	/** True when expanded content is an embedded datagrid/subgrid. */
+	rendersSubgrid? : boolean;
 	/** Optional controlled set of expanded row ids. */
 	expandedRowIds? : Set<string>;
 	/** Called with the next expanded-id set when expansion state changes. */

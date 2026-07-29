@@ -42,6 +42,32 @@ Full details for columns, rows, expression syntax, wrapper behaviour, and loader
 
 - [Et2Datagrid](/components/et2-datagrid)
 
+## Row expansion
+
+`et2-nextmatch` maps the existing Nextmatch hierarchy contract onto `et2-datagrid` row expansion.
+There is no separate client or server contract for recursive expansion:
+
+- rows are expandable when the row data has `is_parent: true`, or when the configured
+  `settings.is_parent` field matches `settings.is_parent_value`;
+- child rows are fetched through the existing child-provider path, which sends `parent_id` to the
+  server;
+- every child level uses the same expansion semantics as its parent; only the `parent_id` scoped to
+  that level changes.
+
+Expanded content is an embedded `<et2-datagrid>` that reuses the parent Nextmatch row template,
+column snapshot, row customizer, and row styles. The child grid is `embedded-virtualized`, so it does
+not create a nested scrollbar. It reserves its own full virtualized height inside the parent
+scrollport while rendering only the visible child rows.
+
+Expansion is recursive for acyclic hierarchy data. If a child row is marked as a parent by the same
+`is_parent` / configured marker contract, that child row can expand into another embedded datagrid
+using the same contract. Each level keeps its own `total`; child totals are not rolled up into the
+root total.
+
+The server must not return cyclic hierarchy data such as A → B → A or a row as its own child.
+Recursive expansion documents this as a data requirement; it does not add a runtime cycle/depth
+guard.
+
 ### Notes
 
 - If both a `template` attribute and slotted templates are provided, `template` wins.

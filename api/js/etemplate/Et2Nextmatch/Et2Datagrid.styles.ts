@@ -5,6 +5,9 @@ export default css`
 		display: block;
 		height: 100%;
 		min-height: 0;
+		--embedded-virtualized-height: auto;
+		--meta-column-width: 0px;
+		--row-cell-max-height: 10em;
 		--row-expander-size: var(--sl-spacing-large);
 		--row-expander-icon-size: 0.5em;
 	}
@@ -15,6 +18,7 @@ export default css`
 
 	:host([embedded-virtualized]) {
 		height: var(--embedded-virtualized-height, auto);
+		overflow: visible;
 	}
 
 	.dg-root {
@@ -29,7 +33,6 @@ export default css`
 		--column-count: 1;
 		--scrollbar-space: 0px;
 		--column-selection-width: min(16px, var(--scrollbar-space));
-		--row-height: 3em;
 	}
 
 	:host([auto-height]) .dg-root {
@@ -127,6 +130,7 @@ export default css`
 		flex: 1 1 auto;
 		overflow-y: auto;
 		overflow-x: hidden;
+		overflow-anchor: none;
 		min-height: 0;
 		position: relative;
 		scrollbar-gutter: stable;
@@ -160,9 +164,11 @@ export default css`
 		tbody > tr {
 			display: grid;
 			grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+			grid-column: 1 / -1;
+			box-sizing: border-box;
 			outline: none;
 			width: 100%;
-			min-height: 4em;
+			min-height: max(44px, var(--row-height, 44px));
 			border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 		}
 
@@ -210,6 +216,19 @@ export default css`
 			justify-content: center;
 		}
 
+	}
+
+	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) {
+		height: var(--row-height, 44px);
+		min-height: var(--row-height, 44px);
+		max-height: var(--row-height, 44px);
+		overflow: hidden;
+	}
+
+	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) > td,
+	:host([fixed-row-height]) .dg-body tbody > tr[data-row-id]:not(.dg-row-expanded) > th {
+		max-height: var(--row-height, 44px);
+		overflow: hidden;
 	}
 
 	.dg-row-expander {
@@ -291,6 +310,7 @@ export default css`
 	.dg-expanded-content {
 		min-height: 0;
 		overflow: visible;
+		margin-left: var(--sl-spacing-large);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
@@ -346,6 +366,18 @@ export default css`
 		flex: 1 1 auto;
 		overflow: visible;
 		scrollbar-gutter: auto;
+	}
+
+	:host([embedded-virtualized]) .dg-body tbody {
+		/*
+		 * Embedded virtualized rows are positioned from an explicit row-height
+		 * pitch. A tbody grid row-gap is outside that pitch, so it accumulates as
+		 * unreserved vertical space and eventually makes later rows overlap or
+		 * leaves a false spacer at the end. Keep the embedded pitch entirely in
+		 * the row height itself.
+		 */
+		row-gap: 0;
+		overflow-anchor: none;
 	}
 
 	:host([view="tile"]) .dg-body {
@@ -405,20 +437,6 @@ export default css`
 		--sheen-color: var(--sl-color-neutral-200);
 	}
 
-	.dg-row-spacer {
-		padding: 0;
-		border: 0;
-		height: 0;
-		min-height: 0 !important;
-		width: 100%;
-		grid-column: 1 / -1;
-		background-image: repeating-linear-gradient(
-				0deg,
-				var(--sl-color-neutral-200, rgba(0, 0, 0, 0.08)), var(--sl-color-neutral-200, rgba(0, 0, 0, 0.08)) 1px,
-				var(--sl-color-neutral-50) 1px, var(--sl-color-neutral-50) var(--row-height, 3em)
-		);
-	}
-
 	.skeleton-row {
 		display: flex;
 		padding: var(--sl-spacing-large);
@@ -441,7 +459,7 @@ export default css`
 		grid-template-columns: minmax(0, 1fr) auto;
 		align-items: center;
 		width: 100%;
-		min-height: var(--row-height, 3em);
+		min-height: var(--row-height, 44px);
 		box-sizing: border-box;
 		background: var(--sl-color-neutral-0);
 		border-bottom: var(--sl-panel-border-width) solid var(--sl-panel-border-color);

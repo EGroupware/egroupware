@@ -1,6 +1,7 @@
 import {assert} from "@open-wc/testing";
 import {render} from "lit";
 import {Et2Nextmatch} from "../Et2Nextmatch";
+import type {Et2Datagrid} from "../Et2Datagrid";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
 import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
@@ -230,6 +231,51 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.equal(el.activeFilters.view, "tile", "view should be stored in active filters");
 		assert.isFalse(reload.called, "reload should be skipped");
 		assert.isFalse(clearRowActionObjects.called, "row actions should be preserved");
+		el.remove();
+	});
+
+	/**
+	 * Contract under test:
+	 * - A changed root filter keeps root rows expanded, but no child-level data
+	 *   or expansion state survives into the new query.
+	 *
+	 * Pass criteria:
+	 * - A matching root row can remain open after reload.
+	 * - Its child provider, cached rows, nested expansion state, and initial-load
+	 *   marker are discarded so the child reloads with the new filters.
+	 */
+	it("keeps root expansions but discards subgrid caches when filters change", async() =>
+	{
+		const el = new Et2Nextmatch();
+		document.body.append(el);
+		await el.updateComplete;
+		const rootRowId = "addressbook::parent-1";
+		const childRowId = "addressbook::child-1";
+		const initializedChild = {} as Et2Datagrid;
+		(el as any)._expandedRowIds = new Set([rootRowId]);
+		(el as any)._expandedRowIdsByParent.set(rootRowId, new Set([childRowId]));
+		(el as any)._childDataProviders.set(rootRowId, {});
+		(el as any)._childGridRowsSnapshots.set(rootRowId, {
+			rowsByIndex: [{id: childRowId}],
+			total: 1,
+			displayedRowIds: [childRowId],
+			hasFetchedOnce: true
+		});
+		(el as any)._subgridColumnSnapshots.set(rootRowId, {
+			columns: [{key: "title", title: "Title"}]
+		});
+		(el as any)._initializedSubgrids.add(initializedChild);
+
+		const changed = el.applyFilters({search: "updated query"}, {reload: false});
+
+		assert.isTrue(changed, "filter change should be accepted");
+		assert.isTrue((el as any)._expandedRowIds.has(rootRowId), "root expanded rows should remain open");
+		assert.equal((el as any)._expandedRowIdsByParent.size, 0, "nested expansion state should be cleared");
+		assert.equal((el as any)._childDataProviders.size, 0, "child providers should be recreated for the new filters");
+		assert.equal((el as any)._childGridRowsSnapshots.size, 0, "cached child rows should not cross query changes");
+		assert.equal((el as any)._subgridColumnSnapshots.size, 0, "child column snapshots should be reset with the child grids");
+		assert.isFalse((el as any)._initializedSubgrids.has(initializedChild), "surviving child grids should be allowed to load again");
+
 		el.remove();
 	});
 
@@ -1217,6 +1263,27 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 		assert.isTrue(childGrid.noColumnSelection, "child grid should not expose independent column selection");
 		assert.isTrue(childGrid.inheritColumnSizes, "child grid should inherit column track sizing from the parent grid");
 		assert.isTrue(childGrid.embeddedVirtualized, "child grid should reserve virtualized height inside the parent scrollport");
+		assert.isObject(childGrid.expansionConfig, "child grid should receive the recursive expansion config");
+		assert.isTrue(
+			childGrid.expansionConfig.isExpandable({id: "addressbook::child-parent", data: {is_parent: true}}, 0),
+			"child grid should use the same parent-row marker semantics as the root"
+		);
+		assert.instanceOf(childGrid.expansionConfig.expandedRowIds, Set, "child grid should own controlled expansion state");
+		assert.notStrictEqual(
+			childGrid.expansionConfig.expandedRowIds,
+			(el as any)._expandedRowIds,
+			"child grid expansion state should be distinct from root expansion state"
+		);
+		childGrid.expansionConfig.onExpandedRowIdsChanged(new Set(["addressbook::child-parent"]));
+		await el.updateComplete;
+		assert.isTrue(
+			(el as any)._expandedRowIdsByParent.get("addressbook::parent-1").has("addressbook::child-parent"),
+			"child expansion changes should be stored under the child grid's parent row"
+		);
+		assert.isFalse(
+			(el as any)._expandedRowIds.has("addressbook::child-parent"),
+			"child expansion changes should not contaminate root expansion state"
+		);
 		assert.isFalse(childGrid.hasAttribute("auto-height"), "child grid should not use simple auto-height for large child result sets");
 		assert.isFalse(childGrid.noColumnPersistence, "child grid should rely on hidden headers for preference suppression");
 		assert.isFalse(childGrid.noColumnResize, "child grid should rely on hidden headers for resize suppression");
@@ -1237,6 +1304,69 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 
 		render(null, container);
 		container.remove();
+		el.remove();
+	});
+
+	it("restores recycled child grids from cached row snapshots instead of reloading", async() =>
+	{
+		const el = new Et2Nextmatch();
+		const columns : any[] = [{key: "title", title: "Title"}];
+		const fetchPage = sinon.stub().resolves({rows: [], total: 0});
+		const createChildProvider = sinon.stub().returns({
+			fetchPage,
+			getQuerySignature: () => "child-query",
+			getDataStorePrefix: () => "addressbook",
+			getRowData: (rowId : string) => ({id: rowId, title: rowId}),
+			normalizeRowId: (rowId : string | number, ensurePrefix? : boolean) =>
+			{
+				const normalized = String(rowId ?? "");
+				return ensurePrefix && !normalized.startsWith("addressbook::") ? `addressbook::${normalized}` : normalized;
+			},
+			toProviderRowId: (rowId : string) => rowId.replace(/^addressbook::/, ""),
+			refresh: async() => ({rows: [], removedRowIds: []})
+		});
+		document.body.append(el);
+		await el.updateComplete;
+		(el as any)._templateData = {
+			rowTemplateId: "infolog.index.rows",
+			rowTemplate: null,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null,
+			columns
+		};
+		(el as any)._templateLoading = false;
+		(el as any)._dataProvider = {
+			createChildProvider,
+			toProviderRowId: (rowId : string) => rowId.replace(/^addressbook::/, ""),
+			normalizeRowId: (rowId : string | number, ensurePrefix? : boolean) =>
+			{
+				const normalized = String(rowId ?? "");
+				return ensurePrefix && !normalized.startsWith("addressbook::") ? `addressbook::${normalized}` : normalized;
+			}
+		};
+		(el as any)._childGridRowsSnapshots.set("addressbook::parent-1", {
+			rowsByIndex: [{id: "addressbook::child-1"}, {id: "addressbook::child-2"}],
+			total: 2,
+			displayedRowIds: ["addressbook::child-1", "addressbook::child-2"],
+			hasFetchedOnce: true
+		});
+
+		const childGrid = document.createElement("et2-datagrid") as any;
+		childGrid.parentRowId = "parent-1";
+		childGrid.dataProvider = createChildProvider("addressbook::parent-1");
+		document.body.append(childGrid);
+		const reload = sinon.stub(childGrid, "reload");
+		const restore = sinon.spy(childGrid, "restoreRowsSnapshot");
+		(el as any)._loadExpandedGrid(childGrid);
+		await childGrid.updateComplete;
+
+		assert.isTrue(restore.calledOnce, "recycled child grid should restore its cached rows immediately");
+		assert.isTrue(reload.notCalled, "recycled child grid should not clear itself and reload from scratch");
+		assert.equal(childGrid.total, 2, "restored child grid should keep its cached total");
+		assert.deepEqual(childGrid.rows.map((row) => row.id), ["addressbook::child-1", "addressbook::child-2"]);
+
+		childGrid.remove();
 		el.remove();
 	});
 

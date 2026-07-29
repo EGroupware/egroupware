@@ -1,5 +1,6 @@
 import {assert} from "@open-wc/testing";
 import {html, LitElement, render} from "lit";
+import * as sinon from "sinon";
 import {Et2Datagrid} from "../Et2Datagrid";
 import datagridStyles from "../Et2Datagrid.styles.ts";
 import {Et2Nextmatch} from "../Et2Nextmatch";
@@ -108,11 +109,15 @@ async function waitForExpandedContext(el : Et2Datagrid, expectedColumnSizes? : s
 	return null;
 }
 
-async function waitForEmbeddedHostHeight(el : Et2Datagrid, height : string) : Promise<boolean>
+async function waitForEmbeddedHostHeight(
+	el : Et2Datagrid,
+	predicate : (height : string) => boolean,
+	maxFrames : number = 30
+) : Promise<boolean>
 {
-	for(let i = 0; i < 20; i++)
+	for(let i = 0; i < maxFrames; i++)
 	{
-		if(el.style.height === height)
+		if(predicate(el.style.height))
 		{
 			return true;
 		}
@@ -688,6 +693,63 @@ describe("Et2Datagrid row rendering", () =>
 		host.remove();
 	});
 
+	/**
+	 * Contract: a virtualizer range change must hydrate newly realized row widgets
+	 * even if MutationObserver delivery is missed.
+	 * Setup: render enough rows to scroll, then disconnect the observer before
+	 * scrolling a new row into the virtual range.
+	 * Pass: the connected widget for that newly realized row has its row value.
+	 */
+	it("hydrates newly realized rows from the virtualizer range event", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.cssText = "width:800px;height:240px";
+		document.body.appendChild(host);
+		const el = createDatagrid();
+		el.style.height = "100%";
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("tr");
+		rowTemplate.innerHTML = `<td><et2-dg-test-transform class="row-label" data-value="$label"></et2-dg-test-transform></td>`;
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template ?? null,
+			rowTemplateXml: prepared?.xml ?? null,
+			rowTemplateAttrMap: prepared?.attrMap ?? {}
+		} as any;
+		const rows = Array.from({length: 48}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(rows);
+		el.total = rows.length;
+		host.appendChild(el);
+
+		try
+		{
+			assert.isNotNull(await waitForDatagridRow(el, "row-0"), "initial range should render");
+			(el as any)._rowUpgradeObserver?.disconnect();
+			const body = el.shadowRoot?.querySelector(".dg-body") as HTMLElement;
+			body.scrollTop = 1200;
+			body.dispatchEvent(new Event("scroll"));
+
+			let widget : HTMLElement | null = null;
+			for(let frame = 0; frame < 30; frame++)
+			{
+				const row = await waitForDatagridRow(el, "row-24");
+				widget = row?.querySelector("et2-dg-test-transform.row-label") as HTMLElement | null;
+				if(widget?.textContent === "Row 24")
+				{
+					break;
+				}
+				await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			}
+			assert.equal(widget?.textContent, "Row 24", "newly realized widget should be hydrated after range change");
+		}
+		finally
+		{
+			host.remove();
+		}
+	});
+
 	it("does not cap virtual height below materialized rows", () =>
 	{
 		const el = createDatagrid();
@@ -763,6 +825,69 @@ describe("Et2Datagrid row rendering", () =>
 			"focus recovery should focus the parent data row"
 		);
 
+		host.remove();
+	});
+
+	/**
+	 * Contract: embedded child height events are handled at the direct parent
+	 * grid boundary.
+	 *
+	 * Setup: render an expanded row containing an embedded child datagrid, then
+	 * dispatch the same composed `et2-embedded-height` event a child uses after
+	 * its host height changes.
+	 *
+	 * Pass: the parent forwards the child's resolved host height to its direct
+	 * remeasure helper exactly once and stops the original event from bubbling
+	 * past the parent grid.
+	 */
+	it("routes embedded height events through the direct parent grid", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "360px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`<et2-datagrid class="child-grid"></et2-datagrid>`,
+			expandedRowIds: new Set(["row-0"])
+		};
+		el.setInitialRows([{id: "row-0", label: "Row 0", is_parent: true}]);
+		el.total = 1;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		const expandedRow = await waitForExpandedRow(el, "row-0");
+		const childGrid = expandedRow!.querySelector("et2-datagrid") as Et2Datagrid;
+		assert.instanceOf(childGrid, Et2Datagrid, "expanded content should contain the child grid");
+
+		const remeasure = sinon.stub(el as any, "_remeasureDirectEmbeddedChildGrid").returns(true);
+		const leaked = sinon.spy();
+		document.body.addEventListener("et2-embedded-height", leaked);
+
+		childGrid.dispatchEvent(new CustomEvent("et2-embedded-height", {
+			bubbles: true,
+			composed: true,
+			detail: {height: 88}
+		}));
+
+		assert.isTrue(
+			remeasure.calledOnceWithExactly(childGrid, false, 88),
+			"parent should remeasure the direct child using its reported host height"
+		);
+		assert.isFalse(leaked.called, "direct parent should stop the original height event after handling it");
+		(el as any)._remeasuredEmbeddedChildGridsThisFrame.add(childGrid);
+		assert.isFalse(
+			(el as any)._remeasureObservedEmbeddedChildGrid(childGrid),
+			"ResizeObserver should not duplicate a child remeasure already handled by the height event in the same frame"
+		);
+		assert.isTrue(remeasure.calledOnce, "same-frame observer suppression should avoid a second remeasure call");
+
+		document.body.removeEventListener("et2-embedded-height", leaked);
+		remeasure.restore();
 		host.remove();
 	});
 
@@ -2379,6 +2504,1139 @@ describe("Et2Datagrid selection mode", () =>
 describe("Et2Datagrid virtual height stability", () =>
 {
 	/**
+	 * Contract: an expansion can shorten the item array while Lit Virtualizer
+	 * still processes one queued range from the preceding array shape.
+	 *
+	 * Pass: stale undefined slots receive an absolute-index placeholder key and
+	 * render as placeholders, rather than throwing and leaving prior physical
+	 * rows overlapped in the DOM.
+	 */
+	it("tolerates stale virtualizer range items during expansion changes", () =>
+	{
+		const el = createDatagrid();
+		el.dataProvider = createDatagridDataProvider({getQuerySignature: () => "stale-range"}) as any;
+
+		assert.match(
+			(el as any)._virtualRowKey(undefined, 37),
+			/:placeholder:stale-range:37$/,
+			"stale range slot should receive a stable absolute-index placeholder key"
+		);
+		assert.doesNotThrow(
+			() => (el as any)._renderVirtualRow(undefined, 37),
+			"stale range slot should render a placeholder rather than throwing"
+		);
+	});
+
+	/**
+	 * Contract: an expanded embedded child grid contributes its reserved height
+	 * to the parent grid's single scrollport.
+	 *
+	 * Setup: render a short parent grid in a fixed-height host, expand the first
+	 * row into an embedded virtualized child grid, and load enough child rows to
+	 * require scrolling.
+	 *
+	 * Pass: the parent `.dg-body` remains the scroll container and exposes a
+	 * scroll range after the expanded child height is applied.
+	 */
+	it("keeps the parent scrollport scrollable after embedded child expansion", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "180px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const childRows = Array.from({length: 50}, (_v, index) => ({id: `child-${index}`, label: `Child ${index}`}));
+		const childTotal = 200;
+		const childRowData = new Map(childRows.map((row) => [row.id, row]));
+		const childColumns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const childProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) => ({
+				rows: childRows.slice(start, start + pageSize),
+				total: childTotal
+			}),
+			getRowData: (rowId : string) => childRowData.get(rowId),
+			getQuerySignature: () => "expanded-child-scroll-regression"
+		});
+		const parent = createDatagrid();
+		parent.style.height = "100%";
+		parent.columns = childColumns;
+		parent.templateData = {columns: parent.columns} as any;
+		parent.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`
+				<et2-datagrid
+						embedded-virtualized
+						no-visible-header
+						.columns=${childColumns}
+						.templateData=${{columns: childColumns} as any}
+						.dataProvider=${childProvider as any}
+				></et2-datagrid>
+			`,
+			expandedRowIds: new Set(["row-0"])
+		};
+		parent.setInitialRows([
+			{id: "row-0", label: "Parent 0", is_parent: true},
+			{id: "row-1", label: "Parent 1"}
+		]);
+		parent.total = 2;
+		host.appendChild(parent);
+
+		await parent.updateComplete;
+		const expandedRow = await waitForExpandedRow(parent, "row-0");
+		const child = expandedRow!.querySelector("et2-datagrid") as Et2Datagrid;
+		assert.instanceOf(child, Et2Datagrid, "expanded row should host a child datagrid");
+
+		const loaded = new Promise<void>((resolve) =>
+		{
+			child.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await child.reload();
+		await loaded;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await parent.updateComplete;
+
+		const parentBody = parent.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		const childBody = child.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		assert.isAbove(parseInt(child.style.height || "0", 10), host.clientHeight, "child should reserve more height than the parent viewport");
+		assert.isAbove(
+			parentBody.scrollHeight,
+			parentBody.clientHeight,
+			"parent body should have a scroll range after expanded child height is reserved"
+		);
+		assert.equal(getComputedStyle(childBody).overflowY, "visible", "child body should not become the nested scrollport");
+		const firstChildRow = await waitForDatagridRow(child, "child-0");
+		assert.isNotNull(firstChildRow, "the fetched child result should render an actual data row");
+		assert.include(firstChildRow!.textContent || "", "Child 0", "the rendered child row should expose its fetched value");
+		const childRect = child.getBoundingClientRect();
+		const firstChildRect = firstChildRow!.getBoundingClientRect();
+		assert.isAtLeast(firstChildRect.top, childRect.top - 1, "the first child row should begin inside its expanded host");
+		assert.isAtMost(firstChildRect.bottom, childRect.bottom + 1, "the first child row should remain inside its expanded host");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: embedded virtualized child grids must keep their internal
+	 * virtualizer spacer aligned with the full host height reservation.
+	 *
+	 * Setup: load one child page while the provider reports a larger total,
+	 * matching a filemanager directory where more child rows exist than are
+	 * initially rendered.
+	 *
+	 * Pass: the child host and its internal `tbody` both reserve the full
+	 * virtualized child height, so scrolling the parent can reveal later child
+	 * rows instead of clipping at the first rendered page.
+	 */
+	it("keeps embedded child tbody height aligned with total-row host reservation", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "180px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const rows = Array.from({length: 50}, (_v, index) => ({id: `child-spacer-${index}`, label: `Child ${index}`}));
+		const rowData = new Map(rows.map((row) => [row.id, row]));
+		const total = 200;
+		const el = createDatagrid();
+		el.embeddedVirtualized = true;
+		el.noVisibleHeader = true;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.dataProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) => ({
+				rows: rows.slice(start, start + pageSize),
+				total
+			}),
+			getRowData: (rowId : string) => rowData.get(rowId),
+			getQuerySignature: () => "embedded-child-spacer-regression"
+		}) as any;
+		host.appendChild(el);
+
+		const loaded = new Promise<void>((resolve) =>
+		{
+			el.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await el.reload();
+		await loaded;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+
+		const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
+		const hostHeight = parseInt(el.style.height || "0", 10);
+		const rowsBodyHeight = parseInt(rowsBody.style.height || rowsBody.style.minHeight || "0", 10);
+		assert.isAbove(hostHeight, host.clientHeight, "embedded host should reserve the full child result height");
+		assert.isAtLeast(
+			rowsBodyHeight,
+			hostHeight,
+			"embedded tbody spacer should match the full host reservation, not just the first rendered page"
+		);
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: embedded virtualized grids must recompute their total reserved
+	 * height from measured upgraded row height, not only from the virtualizer's
+	 * initial row estimate.
+	 *
+	 * Setup: render an embedded child-style grid whose row stylesheet makes
+	 * realized rows taller than the default virtualizer estimate while total
+	 * reports many more rows than are currently realized.
+	 *
+	 * Pass: the child host and tbody reserve enough height for every reported
+	 * child row at the measured upgraded row height, preventing bottom clipping.
+	 */
+	it("uses measured upgraded row height for embedded total reservation", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "180px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const rows = Array.from({length: 50}, (_v, index) => ({id: `child-tall-${index}`, label: `Child ${index}`}));
+		const rowData = new Map(rows.map((row) => [row.id, row]));
+		const total = 200;
+		const el = createDatagrid();
+		el.embeddedVirtualized = true;
+		el.noVisibleHeader = true;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.dataProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) => ({
+				rows: rows.slice(start, start + pageSize),
+				total
+			}),
+			getRowData: (rowId : string) => rowData.get(rowId),
+			getQuerySignature: () => "embedded-tall-row-total-regression"
+		}) as any;
+		host.appendChild(el);
+
+		const loaded = new Promise<void>((resolve) =>
+		{
+			el.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await el.reload();
+		await loaded;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+
+		const initialHostHeight = parseInt(el.style.height || "0", 10);
+		const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
+		for(const row of Array.from(rowsBody.querySelectorAll("tr[data-row-id]")) as HTMLElement[])
+		{
+			row.style.minHeight = "96px";
+		}
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await el.updateComplete;
+
+		const firstRow = rowsBody.querySelector("tr[data-row-id]") as HTMLElement;
+		const measuredRowHeight = Math.ceil(firstRow.getBoundingClientRect().height);
+		const expectedReservedHeight = total * measuredRowHeight;
+		const heightSettled = await waitForEmbeddedHostHeight(el, (height) => parseInt(height || "0", 10) >= expectedReservedHeight);
+		const hostHeight = parseInt(el.style.height || "0", 10);
+		const rowsBodyHeight = parseInt(rowsBody.style.height || rowsBody.style.minHeight || "0", 10);
+
+		assert.isAtLeast(measuredRowHeight, 96, "test fixture should render rows taller than the default estimate");
+		assert.isAbove(expectedReservedHeight, initialHostHeight, "late-upgraded rows should require a larger reservation than the initial estimate");
+		assert.isTrue(heightSettled, "embedded height should settle after late row growth");
+		assert.isAtLeast(hostHeight, expectedReservedHeight, "embedded host should reserve total rows at measured upgraded row height");
+		assert.isAtLeast(rowsBodyHeight, expectedReservedHeight, "embedded tbody should match the upgraded total-row reservation");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: row-height estimates are updated after row widgets upgrade and
+	 * consumers can await an explicit event before calculating embedded heights.
+	 *
+	 * Setup: render normal rows, force the estimate below the actual rendered
+	 * row height, and run the post-upgrade settle path.
+	 *
+	 * Pass: `et2-row-widgets-upgraded` fires after the settle frame and carries
+	 * the measured average now used for later reservations.
+	 */
+	it("emits upgraded-row event with measured average row height", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.setInitialRows(Array.from({length: 5}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+		el.total = 5;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		(el as any)._rowHeightLocked = false;
+		(el as any)._rowHeightSource = "default";
+		(el as any)._rowHeightSettled = false;
+		(el as any)._rowHeightPx = 20;
+		const upgraded = new Promise<CustomEvent<{ averageRowHeight : number }>>((resolve) =>
+		{
+			el.addEventListener("et2-row-widgets-upgraded", (event) => resolve(event as CustomEvent<{ averageRowHeight : number }>), {once: true});
+		});
+
+		(el as any)._scheduleRowsUpgradedSettle();
+		const event = await upgraded;
+
+		assert.isAbove(event.detail.averageRowHeight, 20, "upgraded event should report measured row height above the stale estimate");
+		assert.equal((el as any)._rowHeightPx, event.detail.averageRowHeight, "future reservations should use the measured average");
+		assert.equal(el.style.getPropertyValue("--row-height"), `${event.detail.averageRowHeight}px`);
+
+		host.remove();
+	});
+
+	it("locks expandable grids to the first upgraded average row height", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.expansionConfig = {
+			isExpandable: () => true,
+			renderExpandedContent: () => html`<div>expanded</div>`,
+			expandedRowIds: new Set()
+		};
+		el.setInitialRows(Array.from({length: 5}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+		el.total = 5;
+		host.appendChild(el);
+
+		const debugSpy = sinon.spy(egw, "debug");
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		(el as any)._rowHeightPx = 20;
+
+		const upgraded = new Promise<CustomEvent<{ averageRowHeight : number }>>((resolve) =>
+		{
+			el.addEventListener("et2-row-widgets-upgraded", (event) => resolve(event as CustomEvent<{ averageRowHeight : number }>), {once: true});
+		});
+		(el as any)._scheduleRowsUpgradedSettle();
+		const event = await upgraded;
+
+		assert.equal((el as any)._rowHeightPx, event.detail.averageRowHeight, "expandable grid should use the first upgraded average");
+		assert.isTrue((el as any)._rowHeightSettled, "expandable grid should settle after the first upgraded batch");
+		assert.isTrue(el.fixedRowHeight, "expandable grid should switch to fixed row-height CSS");
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		const layout = (el as any)._tableLayoutConfig();
+		assert.isOk(layout, "expandable grids should configure a settled normal-row pitch");
+		assert.equal(layout._itemSize.height, event.detail.averageRowHeight, "normal rows should retain the settled height");
+		assert.isFunction(layout._measureChildren, "the sparse layout should keep Lit's viewport measurement lifecycle active");
+		assert.instanceOf(layout.expandedItemHeights, Map, "expanded branch heights should be held in a sparse map");
+		const virtualizer = (el as any)._virtualize as any;
+		assert.isAbove(virtualizer?._layout?.viewportSize?.height || 0, 0,
+			"switching to the sparse layout must retain a non-zero viewport and rendered range");
+		assert.isFalse(
+			debugSpy.calledWithMatch("warn", sinon.match("Set an explicit row template height")),
+			"generic expanded detail rows should not warn about subgrid row-height configuration"
+		);
+		debugSpy.restore();
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: the deterministic expansion layout supports the common empty
+	 * result set without attempting anchor or height-map calculations.
+	 *
+	 * Setup: create a settled expandable grid with zero virtual items.
+	 *
+	 * Pass: forcing the layout to reflow leaves its minimum scroll size intact
+	 * and does not throw, so the grid can render its normal empty state.
+	 */
+	it("keeps the sparse expansion layout safe for empty lists", async() =>
+	{
+		const el = createDatagrid();
+		el.expansionConfig = {
+			isExpandable: () => true,
+			renderExpandedContent: () => html``,
+			expandedRowIds: new Set()
+		};
+		(el as any)._rowHeightSettled = true;
+		(el as any)._sparseVirtualizerLayoutActive = true;
+		const config = (el as any)._tableLayoutConfig();
+		const layout = new config.type(() => undefined, config);
+		layout.items = [];
+		await Promise.resolve();
+		layout.reflowIfNeeded(true);
+
+		assert.equal(layout._scrollSize, 1, "empty lists should retain the virtualizer's minimum scroll size");
+	});
+
+	it("clears sparse expansion caches when rows reset", () =>
+	{
+		const el = createDatagrid();
+		(el as any)._expandedVirtualItemHeights.set(4, 1200);
+		(el as any)._virtualItems = [0, {type: "expanded", rowIndex: 0, parentRowId: "row-0"}];
+		(el as any)._virtualItemsSignature = "stale-expanded-items";
+
+		(el as any)._clearRows();
+
+		assert.equal((el as any)._expandedVirtualItemHeights.size, 0, "sparse expanded-row heights should not survive a row reset");
+		assert.deepEqual((el as any)._virtualItems, [], "expanded virtual items should be rebuilt for the next result set");
+		assert.equal((el as any)._virtualItemsSignature, "", "the virtual item cache signature should be invalidated");
+	});
+
+	it("bootstraps a non-empty sparse layout from a zero-height host", async() =>
+	{
+		const el = createDatagrid();
+		el.expansionConfig = {
+			isExpandable: () => true,
+			renderExpandedContent: () => html``,
+			expandedRowIds: new Set()
+		};
+		(el as any)._rowHeightSettled = true;
+		(el as any)._sparseVirtualizerLayoutActive = true;
+		const config = (el as any)._tableLayoutConfig();
+		const layout = new config.type(() => undefined, config);
+		layout.items = Array.from({length: 48}, (_value, index) => index);
+		await Promise.resolve();
+		layout.reflowIfNeeded(true);
+
+		assert.equal(layout._first, 0, "a zero-height host should retain an initial realized range");
+		assert.isAbove(layout._last, 0, "the initial range should contain enough rows to establish host height");
+	});
+
+	it("warns about measured fixed row height only for subgrid expansion", () =>
+	{
+		const el = createDatagrid();
+		(el as any).egw = () => egw;
+		el.expansionConfig = {
+			isExpandable: () => true,
+			renderExpandedContent: () => html`<et2-datagrid embedded-virtualized></et2-datagrid>`,
+			rendersSubgrid: true,
+			expandedRowIds: new Set()
+		};
+
+		const debugSpy = sinon.spy(egw, "debug");
+		(el as any)._logExpansionRowHeightWarning();
+
+		assert.isTrue(
+			debugSpy.calledWithMatch("warn", sinon.match("Set an explicit row template height")),
+			"subgrid expansion should warn when row height was inferred from the first batch"
+		);
+		debugSpy.restore();
+	});
+
+	it("leaves non-expandable grids on variable-height virtualizer layout", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.setInitialRows(Array.from({length: 5}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+		el.total = 5;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		(el as any)._rowHeightPx = 20;
+
+		const upgraded = new Promise<void>((resolve) => el.addEventListener("et2-row-widgets-upgraded", () => resolve(), {once: true}));
+		(el as any)._scheduleRowsUpgradedSettle();
+		await upgraded;
+
+		assert.isFalse((el as any)._rowHeightSettled, "non-expandable grid should not freeze row-height averaging");
+		assert.isFalse(el.fixedRowHeight, "non-expandable grid should not clip rows to a fixed measured height");
+		assert.isUndefined((el as any)._tableLayoutConfig(), "non-expandable grid should keep Lit virtualizer's variable-height flow layout");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: a row-template height hint is authoritative. The grid still
+	 * emits the row-upgraded event after widgets settle, but does not replace the
+	 * template height with sampled averages from rendered rows.
+	 */
+	it("keeps template row height fixed while still emitting upgraded-row event", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const rowTemplate = document.createElement("template");
+		rowTemplate.innerHTML = `<tr data-row-height="72"><td data-column="label">$label</td></tr>`;
+
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate,
+			rowTemplateXml: null,
+			rowTemplateAttrMap: {},
+			loaderTemplate: null
+		} as any;
+		el.setInitialRows(Array.from({length: 5}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+		el.total = 5;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		for(const row of Array.from(el.shadowRoot!.querySelectorAll("tr[data-row-id]")) as HTMLElement[])
+		{
+			row.style.minHeight = "140px";
+		}
+
+		const upgraded = new Promise<CustomEvent<{ averageRowHeight : number; rowHeightLocked : boolean }>>((resolve) =>
+		{
+			el.addEventListener("et2-row-widgets-upgraded", (event) =>
+			{
+				resolve(event as CustomEvent<{ averageRowHeight : number; rowHeightLocked : boolean }>);
+			}, {once: true});
+		});
+		(el as any)._scheduleRowsUpgradedSettle();
+		const event = await upgraded;
+
+		assert.equal(event.detail.averageRowHeight, 72, "event should report the template row height");
+		assert.isTrue(event.detail.rowHeightLocked, "event should advertise that row height is fixed");
+		assert.equal((el as any)._rowHeightPx, 72, "template height should not be replaced by rendered row average");
+		assert.equal((el as any)._measuredRowHeightByRowId.size, 0, "fixed-height templates should skip row-height sampling");
+		assert.equal(el.style.getPropertyValue("--row-height"), "72px");
+		assert.isTrue(el.fixedRowHeight, "template height should enable fixed-row-height mode");
+		assert.isTrue(el.hasAttribute("fixed-row-height"), "fixed-row-height mode should reflect for CSS clipping");
+
+		host.remove();
+	});
+
+	it("refreshes the virtualizer pitch from a changed CSS row-height", () =>
+	{
+		const el = createDatagrid();
+		el.setRowHeightEstimate(72);
+		el.style.setProperty("--row-height", "96px");
+		el.refreshRowHeightFromCss();
+
+		assert.equal(el.rowHeightEstimatePx, 96, "CSS refresh should update the numeric virtualizer pitch");
+		assert.equal((el as any)._rowHeightSource, "css", "CSS refresh should retain the external source");
+		assert.equal(el.style.getPropertyValue("--row-height"), "96px", "CSS refresh should preserve the consumer's inline variable");
+		assert.isTrue((el as any)._rowHeightLocked, "an explicit CSS height should use fixed row layout");
+	});
+
+	it("clips regular cells in fixed row height mode", () =>
+	{
+		const cssText = String((datagridStyles as any).cssText || datagridStyles);
+		assert.include(
+			cssText,
+			"min-height: max(44px, var(--row-height, 44px));",
+			"regular rows should use the measured/configured row height as a min-height floor"
+		);
+		assert.match(
+			cssText,
+			/tbody\s*>\s*tr\s*{[\s\S]*box-sizing:\s*border-box;/,
+			"row-height reservations must include the bottom border so an embedded subgrid cannot overrun its expanded host"
+		);
+		assert.match(
+			cssText,
+			/:host\(\[embedded-virtualized\]\)\s+\.dg-body\s+tbody\s*{[\s\S]*row-gap:\s*0;/,
+			"embedded virtualized table rows should not use tbody row-gap because Lit virtualizer does not measure it"
+		);
+		assert.match(
+			cssText,
+			/:host\(\[fixed-row-height\]\)\s+\.dg-body\s+tbody\s*>\s*tr\[data-row-id\]:not\(\.dg-row-expanded\)\s*{[\s\S]*max-height:\s*var\(--row-height,\s*44px\);[\s\S]*overflow:\s*hidden;/,
+			"fixed row-height rows should clip overflowing widget content to the declared row height"
+		);
+		assert.match(
+			cssText,
+			/:host\(\[fixed-row-height\]\)\s+\.dg-body\s+tbody\s*>\s*tr\[data-row-id\]:not\(\.dg-row-expanded\)\s*>\s*td,[\s\S]*overflow:\s*hidden;/,
+			"fixed row-height cells should not expose independent vertical overflow"
+		);
+	});
+
+	it("passes the parent row-height estimate to embedded child grids", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const parent = createDatagrid();
+		parent.columns = columns;
+		parent.templateData = {columns} as any;
+		parent.setRowHeightEstimate(96);
+		parent.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`
+				<et2-datagrid
+						embedded-virtualized
+						no-visible-header
+						.columns=${columns}
+						.templateData=${{columns} as any}
+				></et2-datagrid>
+			`,
+			expandedRowIds: new Set(["parent-row"])
+		};
+		parent.setInitialRows([{id: "parent-row", label: "Parent", is_parent: true}]);
+		parent.total = 1;
+		(parent as any)._rowHeightSettled = true;
+		host.appendChild(parent);
+
+		await parent.updateComplete;
+		const expandedRow = await waitForExpandedRow(parent, "parent-row");
+		const child = expandedRow?.querySelector("et2-datagrid") as Et2Datagrid | null;
+		assert.isOk(child, "test fixture should render an embedded child grid");
+		await child!.updateComplete;
+		await parent.updateComplete;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await child!.updateComplete;
+
+		assert.equal(child!.rowHeightEstimatePx, 96, "child grid should inherit the parent's settled row height");
+		assert.equal((child as any)._rowHeightSource, "parent",
+			"an inherited parent estimate must lock the child to the parent's settled row height");
+		assert.equal(child!.style.getPropertyValue("--row-height"), "96px", "child grid CSS should use the propagated row-height estimate");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: expanding a row must not collapse an already-scrollable parent
+	 * grid's scroll range.
+	 *
+	 * Setup: render a parent grid with enough rows to require scrolling, expand a
+	 * row into an asynchronously loaded embedded child grid, and wait for the
+	 * child load to complete.
+	 *
+	 * Pass: the parent body still has a scrollbar-sized scroll range after the
+	 * child grid reports its height.
+	 */
+	it("preserves the parent scrollbar when expanding a row in an already scrollable grid", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "180px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const childRows = Array.from({length: 50}, (_v, index) => ({id: `child-existing-scroll-${index}`, label: `Child ${index}`}));
+		const childRowData = new Map(childRows.map((row) => [row.id, row]));
+		const columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const childProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) => ({
+				rows: childRows.slice(start, start + pageSize),
+				total: 200
+			}),
+			getRowData: (rowId : string) => childRowData.get(rowId),
+			getQuerySignature: () => "expanded-child-existing-scroll-regression"
+		});
+		const parent = createDatagrid();
+		parent.style.height = "100%";
+		parent.columns = columns;
+		parent.templateData = {columns} as any;
+		parent.setInitialRows(Array.from({length: 80}, (_v, index) => ({
+			id: `row-${index}`,
+			label: `Parent ${index}`,
+			is_parent: index === 0
+		})));
+		parent.total = 80;
+		host.appendChild(parent);
+		await parent.updateComplete;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		const parentBody = parent.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		const baselineScrollHeight = parentBody.scrollHeight;
+		assert.isAbove(baselineScrollHeight, parentBody.clientHeight, "parent should start with a scroll range");
+
+		parent.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`
+				<et2-datagrid
+						embedded-virtualized
+						no-visible-header
+						.columns=${columns}
+						.templateData=${{columns} as any}
+						.dataProvider=${childProvider as any}
+				></et2-datagrid>
+			`,
+			expandedRowIds: new Set(["row-0"])
+		};
+		await parent.updateComplete;
+		const expandedRow = await waitForExpandedRow(parent, "row-0");
+		const child = expandedRow!.querySelector("et2-datagrid") as Et2Datagrid;
+		const loaded = new Promise<void>((resolve) =>
+		{
+			child.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await child.reload();
+		await loaded;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		assert.isAbove(parentBody.scrollHeight, parentBody.clientHeight, "parent body should remain scrollable after expansion");
+		assert.isAtLeast(parentBody.scrollHeight, baselineScrollHeight, "expansion should not shrink the parent scroll range");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: the parent scrollport must drive both embedded child
+	 * virtualization and top-level rows after the expanded branch.
+	 *
+	 * Setup: render one expanded parent row, a large embedded child result, and a
+	 * top-level row after the expansion.
+	 *
+	 * Pass: scrolling the parent into the middle of the child branch renders
+	 * later child rows, and scrolling past the child branch renders the following
+	 * top-level row.
+	 */
+	it("renders later child rows and following parent rows without changing the shared scroll range", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const childRows = Array.from({length: 200}, (_v, index) => ({id: `child-shared-scroll-${index}`, label: `Child ${index}`}));
+		const childRowData = new Map(childRows.map((row) => [row.id, row]));
+		const columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const calls : number[] = [];
+		const childProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) =>
+			{
+				calls.push(start);
+				return {
+					rows: childRows.slice(start, start + pageSize),
+					total: childRows.length
+				};
+			},
+			getRowData: (rowId : string) => childRowData.get(rowId),
+			getQuerySignature: () => "shared-parent-scroll-regression"
+		});
+		const parent = createDatagrid();
+		parent.style.height = "100%";
+		parent.columns = columns;
+		parent.templateData = {columns} as any;
+		parent.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`
+				<et2-datagrid
+						embedded-virtualized
+						no-visible-header
+						.columns=${columns}
+						.templateData=${{columns} as any}
+						.dataProvider=${childProvider as any}
+				></et2-datagrid>
+			`,
+			expandedRowIds: new Set(["row-0"])
+		};
+		parent.setInitialRows([
+			{id: "row-0", label: "Parent 0", is_parent: true},
+			{id: "row-after", label: "Parent after"}
+		]);
+		parent.total = 2;
+		host.appendChild(parent);
+
+		await parent.updateComplete;
+		const expandedRow = await waitForExpandedRow(parent, "row-0");
+		const child = expandedRow!.querySelector("et2-datagrid") as Et2Datagrid;
+		const loaded = new Promise<void>((resolve) =>
+		{
+			child.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await child.reload();
+		await loaded;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		const parentBody = parent.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		const childHostHeight = parseInt(child.style.height || "0", 10);
+		assert.isAbove(childHostHeight, parentBody.clientHeight, "child branch should be taller than the parent viewport");
+		assert.isAtLeast(
+			parentBody.scrollHeight,
+			childHostHeight,
+			"parent scroll range should include the embedded child's full reserved height"
+		);
+		assert.isAbove(parentBody.scrollHeight, parentBody.clientHeight, "parent body must remain a constrained scrollport");
+		const childRow = await waitForDatagridRow(child, "child-shared-scroll-0");
+		assert.isNotNull(childRow, "test fixture should render the first child row before measuring child scroll target");
+		const childRowHeight = Math.ceil(childRow!.getBoundingClientRect().height);
+		const childOffsetInParent = parentBody.scrollTop + child.getBoundingClientRect().top - parentBody.getBoundingClientRect().top;
+		const bottomBeforeChildScroll = parentBody.scrollHeight - parentBody.clientHeight;
+		parentBody.scrollTop = bottomBeforeChildScroll;
+		parentBody.dispatchEvent(new Event("scroll"));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		parentBody.scrollTop = Math.floor(childOffsetInParent + 100 * childRowHeight);
+		parentBody.dispatchEvent(new Event("scroll"));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		for(let i = 0; i < 10 && !child.shadowRoot?.querySelector("[data-row-id='child-shared-scroll-100']"); i++)
+		{
+			await new Promise<void>((resolve) => setTimeout(resolve, 0));
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		}
+		for(let i = 0; i < 10 && !child.shadowRoot?.querySelector("[data-row-id='child-shared-scroll-100']"); i++)
+		{
+			await new Promise<void>((resolve) => setTimeout(resolve, 25));
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		}
+		const renderedChildIndexes = Array.from(child.shadowRoot?.querySelectorAll("[data-row-index]") || [])
+			.map((row) => parseInt((row as HTMLElement).getAttribute("data-row-index") || "-1", 10));
+		assert.isAbove(parentBody.scrollTop, 0, "parent scroll position must not be reset after child height sync");
+		assert.isAbove(
+			Math.max(...renderedChildIndexes),
+			50,
+			"scrolling the parent into the child branch should render later child rows"
+			);
+			assert.isNotNull(
+				child.shadowRoot?.querySelector("[data-row-id='child-shared-scroll-100']"),
+				`scrolling the parent into an unloaded child range should fetch and render real child rows, not leave a blank placeholder range; calls=${calls.join(",")}`
+			);
+
+		parentBody.scrollTop = childOffsetInParent + childHostHeight + 80;
+		parentBody.dispatchEvent(new Event("scroll"));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		assert.isNotNull(
+			parent.shadowRoot?.querySelector("[data-row-id='row-after']"),
+			"scrolling past the child branch should render the following top-level row"
+		);
+
+		const parentLayout = (parent as any)._virtualize?._layout;
+		const stableScrollHeight = parentBody.scrollHeight;
+		const stableLayoutSize = parentLayout?._scrollSize;
+		const branchStart = Math.max(0, Math.floor(childOffsetInParent));
+		const branchEnd = Math.max(branchStart, Math.floor(childOffsetInParent + childHostHeight));
+		for(const target of [0, branchStart + 1, branchEnd - 1, bottomBeforeChildScroll])
+		{
+			parentBody.scrollTop = target;
+			parentBody.dispatchEvent(new Event("scroll"));
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			assert.equal(parentBody.scrollHeight, stableScrollHeight,
+				"crossing a known child branch must not change the scrollbar extent");
+			assert.equal(parentLayout?._scrollSize, stableLayoutSize,
+				"crossing a known child branch must not change the sparse layout extent");
+		}
+		// Verify the deferred shared-scroll synchronization does not alter either
+		// extent after the final scroll event has settled.
+		await new Promise<void>((resolve) => window.setTimeout(resolve, 250));
+		assert.equal(parentBody.scrollHeight, stableScrollHeight,
+			"the settled shared-scroll sync must preserve the scrollbar extent");
+		assert.equal(parentLayout?._scrollSize, stableLayoutSize,
+			"the settled shared-scroll sync must preserve the sparse layout extent");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: an embedded grid must use its logical branch offset, rather than
+	 * its recycled DOM position, when sharing an ancestor scrollport.
+	 *
+	 * Setup: give an embedded child a logical offset inside a scrolling host and
+	 * drive the host to a later position.
+	 *
+	 * Pass: its FlowLayout viewport uses `scrollTop - logicalOffset`; a zero
+	 * clipped viewport is also replaced by the ancestor viewport so deep nested
+	 * branches do not clear all of their physical rows.
+	 */
+	it("uses logical shared-scroll viewport coordinates for embedded descendants", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		host.style.overflowY = "auto";
+		document.body.appendChild(host);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		child.templateData = {columns: child.columns} as any;
+		child.setInitialRows(Array.from({length: 40}, (_value, index) => ({id: `logical-offset-${index}`, label: `Row ${index}`})));
+		child.total = 40;
+		host.appendChild(child);
+
+		await child.updateComplete;
+		await waitForDatagridRow(child, "logical-offset-0");
+		for(let i = 0; i < 2; i++)
+		{
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		}
+
+		(child as any)._embeddedParentScrollOffsetTop = 112;
+		host.scrollTop = 400;
+		(child as any)._handleEmbeddedParentScroll(host);
+
+		const layout = (child as any)._virtualize?._layout;
+		assert.equal(layout.viewportScroll.top, 288, "layout scroll position should be relative to the child branch's logical top");
+		assert.isAbove(layout.viewportSize.height, 0, "embedded layout should retain a usable shared viewport height");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: parent-scroll propagation must tolerate nested embedded
+	 * virtualizers that have been disconnected by row recycling.
+	 *
+	 * Setup: render an embedded child grid, then simulate Lit Virtualizer's
+	 * transient disconnected state by clearing its private scroller controller.
+	 *
+	 * Pass: handling a parent scroll does not call the disconnected virtualizer's
+	 * scroll handler and does not throw.
+	 */
+	it("skips disconnected embedded virtualizers during parent scroll sync", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		child.templateData = {columns: child.columns} as any;
+		child.setInitialRows(Array.from({length: 20}, (_v, index) => ({id: `row-${index}`, label: `Row ${index}`})));
+		child.total = 20;
+		host.appendChild(child);
+
+		await child.updateComplete;
+		await waitForDatagridRow(child, "row-0");
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		const rowsBody = child.shadowRoot!.querySelector("tbody") as HTMLElement;
+		const virtualizer = (child as any)._virtualize as any;
+		assert.isOk(virtualizer, "embedded row-mode grids should use Lit virtualization against the shared scrollport");
+
+		assert.doesNotThrow(() =>
+		{
+			(child as any)._handleEmbeddedParentScroll(host);
+		});
+		assert.isAtLeast(rowsBody.scrollTop, 0, "local embedded scroll offset should remain valid");
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: measured expanded-branch height remains part of the parent
+	 * virtual height even when the expanded row is not currently realized.
+	 *
+	 * Setup: seed expanded state and a cached measured branch height, matching a
+	 * nested expanded row that was measured before row recycling removed it from
+	 * the DOM.
+	 *
+	 * Pass: the cached floor adds only the branch height above the normal
+	 * virtualizer row estimate.
+	 */
+	it("keeps cached expanded branch height while expanded rows are recycled", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`<div>expanded</div>`,
+			expandedRowIds: new Set(["row-10"])
+		};
+		el.setInitialRows(Array.from({length: 40}, (_v, index) => ({
+			id: `row-${index}`,
+			label: `Row ${index}`,
+			is_parent: index === 10
+		})));
+		el.total = 40;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		(el as any)._rowHeightPx = 44;
+		(el as any)._expandedRowHeightByParentRowId.set("row-10", 500);
+
+		assert.equal(
+			(el as any)._cachedExpandedRowsMinHeightFloor(40 * 44),
+			40 * 44 + (500 - 44),
+			"cached expanded branch should add only the measured extra height over the normal expanded-row estimate"
+		);
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: an embedded grid that contains its own expanded child branch must
+	 * include cached inner expanded height in its host reservation.
+	 *
+	 * Setup: render an embedded child-style grid with an expanded row id and a
+	 * cached measured inner branch height, matching a nested subgrid after the
+	 * inner expanded row has been recycled out of DOM.
+	 *
+	 * Pass: the embedded host-height calculation remains taller than the plain
+	 * data-row reservation by the cached expanded-branch extra height.
+	 */
+	it("includes cached inner expanded height in embedded host reservation", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const el = createDatagrid();
+		el.embeddedVirtualized = true;
+		el.noVisibleHeader = true;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`<div>expanded</div>`,
+			expandedRowIds: new Set(["row-10"])
+		};
+		el.setInitialRows(Array.from({length: 40}, (_v, index) => ({
+			id: `row-${index}`,
+			label: `Row ${index}`,
+			is_parent: index === 10
+		})));
+		el.total = 40;
+		host.appendChild(el);
+
+		await el.updateComplete;
+		await waitForDatagridRow(el, "row-0");
+		(el as any)._rowHeightPx = 44;
+		(el as any)._embeddedVirtualizedMeasuredRowHeightPx = 44;
+		(el as any)._expandedRowHeightByParentRowId.set("row-10", 500);
+
+		const height = parseInt((el as any)._embeddedVirtualizedContentHeight(), 10);
+		assert.equal(
+			height,
+			40 * 44 + 500,
+			"embedded host height should include the full extra expanded virtual item after recycling"
+		);
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: collapsing a deepest expanded branch removes its reservation from
+	 * every ancestor without rolling child totals into their parents.
+	 *
+	 * Setup: render three real nested grids. The middle grid expands into a leaf
+	 * grid, then its expanded row is collapsed after the leaf height has already
+	 * been reserved by both ancestors.
+	 *
+	 * Pass: the middle grid drops its cached leaf reservation, reports its new
+	 * host height, and the root grid drops the corresponding ancestor reservation
+	 * instead of retaining blank scroll space. Root, child, and leaf totals remain
+	 * their distinct reported values throughout the flow.
+	 */
+	it("keeps per-level totals isolated when a nested branch expands and collapses", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "220px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const providerFor = (rows : any[], total : number, querySignature : string) =>
+		{
+			const rowData = new Map(rows.map((row) => [row.id, row]));
+			return createDatagridDataProvider({
+				fetchPage: async(start : number, pageSize : number) => ({rows: rows.slice(start, start + pageSize), total}),
+				getRowData: (rowId : string) => rowData.get(rowId),
+				getQuerySignature: () => querySignature
+			});
+		};
+		const leafRows = Array.from({length: 4}, (_value, index) => ({id: `leaf-${index}`, label: `Leaf ${index}`}));
+		const childRows = [{id: "child-0", label: "Child", is_parent: true}];
+		const parentRows = [{id: "parent-0", label: "Parent", is_parent: true}];
+		const leaf = createDatagrid();
+		leaf.embeddedVirtualized = true;
+		leaf.noVisibleHeader = true;
+		leaf.columns = columns;
+		leaf.templateData = {columns} as any;
+		leaf.dataProvider = providerFor(leafRows, 25, "nested-total-leaf") as any;
+		leaf.setInitialRows(leafRows);
+		leaf.total = 25;
+		leaf.setRowHeightEstimate(50, true);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = columns;
+		child.templateData = {columns} as any;
+		child.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => leaf,
+			expandedRowIds: new Set(["child-0"])
+		};
+		child.dataProvider = providerFor(childRows, 7, "nested-total-child") as any;
+		child.setInitialRows(childRows);
+		child.total = 7;
+		child.setRowHeightEstimate(50, true);
+
+		const parent = createDatagrid();
+		parent.style.height = "100%";
+		parent.columns = columns;
+		parent.templateData = {columns} as any;
+		parent.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => child,
+			expandedRowIds: new Set(["parent-0"])
+		};
+		parent.dataProvider = providerFor(parentRows, 11, "nested-total-parent") as any;
+		parent.setInitialRows(parentRows);
+		parent.total = 11;
+		parent.setRowHeightEstimate(50, true);
+		host.appendChild(parent);
+
+		await parent.updateComplete;
+		await child.updateComplete;
+		await leaf.updateComplete;
+		for(let i = 0; i < 4; i++)
+		{
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		}
+
+		const childExpandedRow = await waitForExpandedRow(child, "child-0");
+		assert.isNotNull(childExpandedRow, "middle grid should render the deepest expanded branch");
+		assert.equal(parent.total, 11, "root total should remain its own row count after nested expansion");
+		assert.equal(child.total, 7, "child total should remain its own row count after nested expansion");
+		assert.equal(leaf.total, 25, "leaf total should remain its own row count after nested expansion");
+		const leafHeight = (leaf as any)._fixedVirtualItemsHeight();
+		const childHeight = (child as any)._fixedVirtualItemsHeight();
+		const initialParentHeight = (parent as any)._fixedVirtualItemsHeight();
+		assert.equal((child as any)._expandedRowHeightByParentRowId.get("child-0"), leafHeight, "middle grid should reserve the leaf height");
+		assert.equal((parent as any)._expandedRowHeightByParentRowId.get("parent-0"), childHeight, "root grid should reserve the middle grid including its leaf branch");
+		assert.isAbove(initialParentHeight, childHeight, "root virtual extent should include its own rows as well as the nested branch");
+
+		// `_setRowExpanded()` normally schedules a Lit update, whose embedded-host
+		// sync emits this notification after render. Suppress that unrelated
+		// virtualizer render here and emit the same settled host-height update
+		// directly, so this test isolates the recursive reservation contract.
+		const requestUpdate = sinon.stub(child, "requestUpdate").returns(false as any);
+		(child as any)._setRowExpanded((child as any)._rowsByIndex[0], false);
+		const collapsedChildHeight = (child as any)._fixedVirtualItemsHeight();
+		(child as any)._applyEmbeddedVirtualizedHostHeight(`${collapsedChildHeight}px`);
+		requestUpdate.restore();
+
+		assert.isFalse((child as any)._expandedRowHeightByParentRowId.has("child-0"), "middle grid should clear the collapsed leaf reservation");
+		assert.isBelow(collapsedChildHeight, childHeight, "middle grid should shrink after its nested branch collapses");
+		assert.equal((parent as any)._expandedRowHeightByParentRowId.get("parent-0"), collapsedChildHeight, "root grid should receive the reduced middle-grid height");
+		assert.isBelow((parent as any)._fixedVirtualItemsHeight(), initialParentHeight, "root virtual extent should release the recursive reservation");
+		assert.equal(parent.total, 11, "root total should not change when the nested branch collapses");
+		assert.equal(child.total, 7, "child total should not change when its branch collapses");
+		assert.equal(leaf.total, 25, "leaf total should not change when it is detached by collapse");
+
+		host.remove();
+	});
+
+	/**
 	 * Contract: embedded subgrids start at a one-row reservation while loading,
 	 * then grow after the virtualizer can report/render actual content.
 	 */
@@ -2442,16 +3700,18 @@ describe("Et2Datagrid virtual height stability", () =>
 			const root = el.shadowRoot!.querySelector(".dg-root") as HTMLElement;
 			const rowsBody = el.shadowRoot!.querySelector("tbody") as HTMLElement;
 			const renderedRows = Array.from(rowsBody.querySelectorAll(":scope > tr[data-row-id]")) as HTMLElement[];
-			const explicitTbodyHeight = rowsBody.style.height || rowsBody.style.minHeight;
-			const hostHeightSynced = await waitForEmbeddedHostHeight(el, explicitTbodyHeight);
 			const rowsBodyRect = rowsBody.getBoundingClientRect();
 			const rowBounds = renderedRows.map((row) => row.getBoundingClientRect());
 			const renderedRowsHeight = Math.ceil(
 				Math.max(...rowBounds.map((rect) => rect.bottom)) -
 				Math.min(Math.min(...rowBounds.map((rect) => rect.top)), rowsBodyRect.top)
 			);
+			const heightSettled = await waitForEmbeddedHostHeight(el, (height) => parseInt(height || "0", 10) >= renderedRowsHeight);
+			const explicitTbodyHeight = rowsBody.style.height || rowsBody.style.minHeight;
+			const hostHeightSynced = await waitForEmbeddedHostHeight(el, (height) => height === explicitTbodyHeight, 20);
 
 			assert.match(explicitTbodyHeight, /^\d+px$/, "tbody should keep the virtualizer's explicit height");
+			assert.isTrue(heightSettled, "embedded height should settle after row widget upgrade");
 			assert.isAtLeast(
 				parseInt(explicitTbodyHeight, 10),
 				renderedRowsHeight,
@@ -2514,10 +3774,10 @@ describe("Et2Datagrid virtual height stability", () =>
 			(el as any)._embeddedVirtualizedHostHeight = "44px";
 
 			(el as any)._processRowUpgradeQueue();
-			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-			await el.updateComplete;
-			const hostHeightSynced = await waitForEmbeddedHostHeight(el, rowsBody.style.height);
+			const heightSettled = await waitForEmbeddedHostHeight(el, (height) => parseInt(height || "0", 10) >= renderedRowsHeight);
+			const hostHeightSynced = await waitForEmbeddedHostHeight(el, (height) => height === rowsBody.style.height, 20);
 
+			assert.isTrue(heightSettled, "embedded height should settle after row upgrade drain");
 			assert.isAtLeast(parseInt(rowsBody.style.height, 10), renderedRowsHeight, "tbody height should cover rendered child rows");
 			assert.isTrue(hostHeightSynced, "embedded grid host height should match the corrected tbody height");
 
@@ -2679,6 +3939,265 @@ describe("Et2Datagrid virtual height stability", () =>
 		await el.updateComplete;
 
 		assert.isTrue(calls.some((start) => start === 150), "missing deeper chunk should be requested");
+		host.remove();
+	});
+
+	/**
+	 * Contract: replacing placeholders in an embedded grid's later chunk must
+	 * leave realized rows positioned in increasing visual order.
+	 *
+	 * Setup: render an embedded child grid with only the first page loaded, drive
+	 * it from an ancestor scrollport into a later unloaded range, then resolve
+	 * that later page.
+	 *
+	 * Pass: later real rows render and their virtualizer transforms remain
+	 * monotonic, avoiding overlapped/mispositioned rows.
+	 */
+	it("positions later embedded rows after placeholder replacement", async() =>
+	{
+		const childRows = Array.from({length: 200}, (_v, index) => ({id: `embedded-later-${index}`, label: `Row ${index}`}));
+		const rowData = new Map(childRows.map((row) => [row.id, row]));
+		const calls : number[] = [];
+		const dataProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) =>
+			{
+				calls.push(start);
+				return {
+					total: childRows.length,
+					rows: childRows.slice(start, start + pageSize)
+				};
+			},
+			getRowData: (rowId : string) => rowData.get(rowId),
+			getQuerySignature: () => "embedded-later-placeholder-position"
+		});
+
+		const scrollport = document.createElement("div");
+		scrollport.style.height = "240px";
+		scrollport.style.width = "800px";
+		scrollport.style.overflowY = "auto";
+		document.body.appendChild(scrollport);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		child.templateData = {columns: child.columns} as any;
+		child.dataProvider = dataProvider as any;
+		scrollport.appendChild(child);
+
+		const loaded = new Promise<void>((resolve) =>
+		{
+			child.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await child.reload();
+		await loaded;
+		const heightSettled = await waitForEmbeddedHostHeight(child, (height) => parseInt(height || "0", 10) >= childRows.length * 40);
+		assert.isTrue(heightSettled, "embedded child should reserve enough host height for later rows");
+		assert.isAbove(scrollport.scrollHeight, scrollport.clientHeight, "ancestor scrollport should be scrollable before requesting later rows");
+		const firstRow = await waitForDatagridRow(child, "embedded-later-0");
+		assert.isNotNull(firstRow, "test fixture should render the first child row before measuring row height");
+		const measuredRowHeight = Math.ceil(firstRow.getBoundingClientRect().height);
+		assert.isAbove(measuredRowHeight, 0, "test fixture should have a measurable first child row");
+
+		scrollport.scrollTop = 100 * measuredRowHeight;
+		(child as any)._handleEmbeddedParentScroll(scrollport);
+		for(let i = 0; i < 20 && !child.shadowRoot?.querySelector("[data-row-id='embedded-later-100']"); i++)
+		{
+			await new Promise((resolve) => window.setTimeout(resolve, 0));
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			(child as any)._handleEmbeddedParentScroll(scrollport);
+		}
+
+		assert.isTrue(calls.some((start) => start === 100), "embedded child should fetch the later visible chunk");
+		const laterRows = Array.from(child.shadowRoot?.querySelectorAll("[data-row-id^='embedded-later-']") || []) as HTMLElement[];
+		const indexedRows = laterRows
+			.map((row) => ({
+				index: parseInt(row.getAttribute("data-row-index") || "-1", 10),
+				top: row.getBoundingClientRect().top,
+				bottom: row.getBoundingClientRect().bottom
+			}))
+			.filter((row) => row.index >= 100)
+			.sort((left, right) => left.index - right.index);
+		assert.isAtLeast(indexedRows.length, 2, "later real child rows should render after placeholder replacement");
+		for(let i = 1; i < indexedRows.length; i++)
+		{
+			assert.isAtLeast(
+				indexedRows[i].top,
+				indexedRows[i - 1].top,
+				"later embedded child rows should keep monotonically increasing visual positions"
+			);
+			assert.isAtLeast(
+				indexedRows[i].top,
+				indexedRows[i - 1].bottom - 1,
+				"later embedded child rows should not overlap their previous row"
+			);
+		}
+
+		scrollport.remove();
+	});
+
+	/**
+	 * Contract: when a later embedded page is queued before the provider reports
+	 * a total, placeholder reservation must extend to the absolute requested
+	 * range. Appending one placeholder page to the loaded count under-reserves
+	 * the scroll range and can make later rows appear at the wrong offset or not
+	 * appear at all.
+	 */
+	it("reserves absolute placeholder extent for later embedded chunks without a known total", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "240px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		child.templateData = {columns: child.columns} as any;
+		child.setInitialRows(Array.from({length: 50}, (_v, index) => ({id: `unknown-total-${index}`, label: `Row ${index}`})));
+		child.total = null;
+		host.appendChild(child);
+
+		await child.updateComplete;
+		const firstRow = await waitForDatagridRow(child, "unknown-total-0");
+		assert.isNotNull(firstRow, "test fixture should render the first child row");
+		const measuredRowHeight = Math.ceil(firstRow.getBoundingClientRect().height);
+
+		(child as any)._queueRequest(100, 50, "unknown-total-later:100:50");
+		await child.updateComplete;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		assert.isAtLeast(
+			(child as any)._virtualRowCount(),
+			150,
+			"queued later placeholders should reserve through start + count, even with total unknown"
+		);
+		assert.isTrue(
+			await waitForEmbeddedHostHeight(child, (height) => parseInt(height || "0", 10) >= 150 * measuredRowHeight),
+			"embedded host should expose the reserved later placeholder extent to the parent scrollport"
+		);
+
+		host.remove();
+	});
+
+	/**
+	 * Contract: after a queued later page resolves with the final total, pending
+	 * placeholder extent must be cleared so the embedded grid does not render
+	 * skeleton rows after the last real row.
+	 */
+	it("clears later placeholder extent after final embedded page resolves", async() =>
+	{
+		const childRows = Array.from({length: 106}, (_v, index) => ({id: `final-page-${index}`, label: `Row ${index}`}));
+		const rowData = new Map(childRows.map((row) => [row.id, row]));
+		const dataProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) => ({
+				total: childRows.length,
+				rows: childRows.slice(start, start + pageSize)
+			}),
+			getRowData: (rowId : string) => rowData.get(rowId),
+			getQuerySignature: () => "embedded-final-page-placeholders"
+		});
+
+		const host = document.createElement("div");
+		host.style.height = "240px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		child.templateData = {columns: child.columns} as any;
+		child.dataProvider = dataProvider as any;
+		host.appendChild(child);
+
+		const loaded = new Promise<void>((resolve) =>
+		{
+			child.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await child.reload();
+		await loaded;
+
+		const finalRequestKey = (child as any)._requestKey(100, 6);
+		(child as any)._queueRequest(100, 6, finalRequestKey);
+		(child as any)._inFlightRequestKeys.add(finalRequestKey);
+		await (child as any)._fetchPage(100, 6, finalRequestKey);
+		await child.updateComplete;
+
+		assert.equal((child as any)._pendingPlaceholderRequests.size, 0, "resolved final-page placeholder request should be removed");
+		assert.equal((child as any)._pendingPlaceholderCount, 0, "resolved final-page placeholder count should be removed");
+		assert.equal((child as any)._virtualRowCount(), childRows.length, "virtual row count should stop at the known final total");
+
+		host.remove();
+	});
+
+	it("shrinks stale embedded spacer height after final total is known", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "240px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		child.templateData = {columns: child.columns} as any;
+		child.setInitialRows(Array.from({length: 6}, (_v, index) => ({id: `final-spacer-${index}`, label: `Row ${index}`})));
+		child.total = 6;
+		host.appendChild(child);
+
+		await child.updateComplete;
+		const firstRow = await waitForDatagridRow(child, "final-spacer-0");
+		assert.isNotNull(firstRow, "test fixture should render a measurable row");
+		const rowHeight = Math.ceil(firstRow.getBoundingClientRect().height);
+		const rowsBody = child.shadowRoot!.querySelector("#rows") as HTMLElement;
+		rowsBody.style.height = `${rowHeight * 8}px`;
+		(child as any)._embeddedVirtualizedHostHeight = `${rowHeight * 8}px`;
+
+		(child as any)._scheduleVirtualizerLayoutSync();
+		(child as any)._syncEmbeddedVirtualizedHostHeight();
+		for(let i = 0; i < 30 && parseInt(child.style.height || "0", 10) > rowHeight * 6 + 8; i++)
+		{
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			await child.updateComplete;
+		}
+
+		assert.isAtMost(parseInt(child.style.height || "0", 10), rowHeight * 6 + 8, "embedded host should shrink to the known final row count");
+		assert.isAtMost(parseInt(rowsBody.style.height || "0", 10), rowHeight * 6 + 8, "embedded spacer should not keep stale placeholder height");
+
+		host.remove();
+	});
+
+	it("does not shrink embedded spacer to the loaded slice before final total is materialized", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "240px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const child = createDatagrid();
+		child.embeddedVirtualized = true;
+		child.noVisibleHeader = true;
+		child.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		child.templateData = {columns: child.columns} as any;
+		child.setInitialRows(Array.from({length: 50}, (_v, index) => ({id: `partial-spacer-${index}`, label: `Row ${index}`})));
+		child.total = 200;
+		host.appendChild(child);
+
+		await child.updateComplete;
+		const firstRow = await waitForDatagridRow(child, "partial-spacer-0");
+		assert.isNotNull(firstRow, "test fixture should render a measurable row");
+		const rowHeight = child.rowHeightEstimatePx;
+		const rowsBody = child.shadowRoot!.querySelector("#rows") as HTMLElement;
+		rowsBody.style.height = `${rowHeight * 50}px`;
+
+		const height = parseInt((child as any)._embeddedVirtualizedContentHeight(), 10);
+
+		assert.isAtLeast(height, rowHeight * 200, "partial known-total child should reserve the full reported total, not only loaded rows");
+		assert.isAtLeast(parseInt(rowsBody.style.height || "0", 10), rowHeight * 200, "embedded spacer should remain scrollable through unloaded known-total rows");
+
 		host.remove();
 	});
 

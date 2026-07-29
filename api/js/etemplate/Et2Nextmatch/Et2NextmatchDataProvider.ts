@@ -15,6 +15,8 @@ import {IegwData} from "../../jsapi/egw_global";
 export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 {
 	private host : Et2Nextmatch;
+	/** No-op UID listeners retained only while preloaded rows belong to this query. */
+	private _initialRowRegistrations : Map<string, Function> = new Map();
 	/** Tracks one in-flight refresh promise per normalized row id so concurrent callers share one server request. */
 	private _inFlightRefreshes : Map<string, Promise<Et2DatagridRefreshResult>> = new Map();
 
@@ -103,6 +105,17 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	constructor(host : Et2Nextmatch)
 	{
 		this.host = host;
+	}
+
+	/** Release the UID listeners used to retain preloaded rows for this query. */
+	clearInitialRowRegistrations() : void
+	{
+		const egw = this.host.egw();
+		for(const [uid, callback] of this._initialRowRegistrations)
+		{
+			egw.dataUnregisterUID?.(uid, callback, this.host);
+		}
+		this._initialRowRegistrations.clear();
 	}
 
 	/**
@@ -304,6 +317,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		{
 			return;
 		}
+		const {execId, widgetId} = this._requestContext();
 		(rows || []).forEach((row, index) =>
 		{
 			if(!row || typeof row !== "object")
@@ -314,6 +328,17 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 			if(uid)
 			{
 				egw.dataStoreUID(uid, row, skipCallback);
+				// Initial rows are supplied directly rather than through fetchPage(),
+				// so they otherwise have no UID registration. The global store expires
+				// unregistered entries after five minutes while the virtualizer still
+				// retains their ids. A no-op registration gives them the same lifetime
+				// as fetched rows without duplicating row data in another cache.
+				if(!this._initialRowRegistrations.has(uid))
+				{
+					const callback = () => {};
+					this._initialRowRegistrations.set(uid, callback);
+					egw.dataRegisterUID?.(uid, callback, this.host, execId, widgetId);
+				}
 			}
 		});
 	}

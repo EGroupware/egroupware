@@ -628,7 +628,7 @@ standard row layout:
 
 | Property                | Default | Effect                                                                 |
 |-------------------------|---------|------------------------------------------------------------------------|
-| `--row-height`          | `3em`   | Estimated row height used for virtual spacer rendering and empty rows. |
+| `--row-height`          | `44px`  | Estimated row height used for virtual spacer rendering and empty rows. |
 | `--row-cell-max-height` | `10em`  | Maximum height for normal row cells before vertical scrolling.         |
 
 Use `--row-cell-max-height` when row content is being clipped or scrolls too early. It applies to
@@ -1073,6 +1073,35 @@ this.datagrid.expansionConfig = expansionConfig;
 
 The expanded content receives `Et2DatagridExpandedRowContext` (`row`, `rowIndex`, `parentGrid`,
 `columnSizes`, `metaColumnWidth`) so it can align itself to the parent column tracks.
+
+When expanded content is another datagrid, set `embeddedVirtualized`. An embedded virtualized child
+grid does not create its own scroll body; its `.dg-body` uses `overflow: visible`, so the nearest
+scrollable ancestor remains the parent grid's body. The child still owns its own virtualizer and
+`total`, so it reserves its full child-row height while rendering only the visible child rows.
+Totals are per grid level and are not rolled up into an ancestor total.
+
+For fixed-pitch expansion, that reservation is deterministic: a child with a
+known `total` reserves `total × settled row pitch`, plus sparse height overrides
+for any of its own expanded rows. The reservation is not recalculated from the
+currently rendered child window, so crossing an embedded branch while scrolling
+does not resize the parent scrollbar. Expanding or collapsing a child row is a
+real height change and is propagated upward through the direct-parent event.
+
+Recursive expansion uses the same hooks at every level. A child grid receives the same expansion
+semantics as its parent (`isExpandable`, `renderExpandedContent`, controlled `expandedRowIds`, and
+`onExpandedRowIdsChanged`), but owns its own expanded-id set. In `et2-nextmatch`, the only data
+change between levels is the `parent_id` passed to the child provider; the existing `is_parent` /
+configured parent marker and `parent_id` server contract are reused unchanged at every depth.
+
+Height propagation for embedded virtualized child grids is direct-parent only. When a child grid's
+resolved host height changes, it dispatches `et2-embedded-height`; the nearest parent datagrid
+remeasures the expanded row containing that direct child and, if the parent is itself embedded,
+updates its own host height so the next event can propagate upward. Ancestors do not process a
+descendant event directly, which avoids double-counting nested branch height.
+
+Hierarchy data is expected to be acyclic. The datagrid does not add a defensive depth or cycle guard
+for recursive expansion; providers must not return cycles such as A → B → A or a row as its own
+child.
 
 ### `dataProvider` override
 
