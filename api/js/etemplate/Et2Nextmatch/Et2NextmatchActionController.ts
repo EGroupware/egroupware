@@ -289,6 +289,31 @@ export class Et2NextmatchActionController
 	}
 
 	/**
+	 * Execute an action shortcut originating in this nextmatch.
+	 *
+	 * This is called while the event is being captured by Et2Nextmatch.  The
+	 * datagrid consumes some keys (notably Ctrl+A) for its own navigation, so
+	 * waiting for the document-level key manager would make those action
+	 * shortcuts unreachable.
+	 */
+	handleShortcut(event : KeyboardEvent) : boolean
+	{
+		const keyCode = event.keyCode;
+		if(!keyCode)
+		{
+			return false;
+		}
+		return !!this.objectManager?.executeActionImplementation?.({
+			keyEvent: {
+				keyCode,
+				shift: event.shiftKey,
+				ctrl: event.ctrlKey || event.metaKey,
+				alt: event.altKey
+			}
+		}, "popup", EGW_AO_EXEC_SELECTED);
+	}
+
+	/**
 	 * Return the pending submit payload produced by the last submit action.
 	 *
 	 * Et2Nextmatch includes this value in its normal eTemplate submit value so

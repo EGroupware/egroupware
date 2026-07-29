@@ -372,6 +372,38 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - A shortcut declared by a nextmatch action is executed before datagrid key handling.
+	 *
+	 * Setup strategy:
+	 * - Provide a Delete action and an action-object manager spy to the controller.
+	 *
+	 * Pass criteria:
+	 * - Delete is forwarded with its matching shortcut data; an unmatched Ctrl+A is ignored.
+	 */
+	it("forwards matching action shortcuts to the action object manager", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({} as any);
+		const execute = sinon.stub().callsFake((context) => context.keyEvent.keyCode === 46);
+		controller.actionManager = {
+			children: [{
+				id: "delete",
+				shortcut: {keyCode: 46, shift: false, ctrl: false, alt: false}
+			}]
+		};
+		controller.objectManager = {executeActionImplementation: execute};
+
+		const deleteEvent = new KeyboardEvent("keydown", {key: "Delete"});
+		Object.defineProperty(deleteEvent, "keyCode", {value: 46});
+		assert.isTrue(controller.handleShortcut(deleteEvent), "Delete shortcut should be handled");
+		assert.isTrue(execute.calledOnce, "matching shortcut should execute through the action manager");
+		assert.deepInclude(execute.firstCall.args[0].keyEvent, {keyCode: 46, ctrl: false}, "shortcut data should preserve key and modifiers");
+		const selectAllEvent = new KeyboardEvent("keydown", {key: "a", ctrlKey: true});
+		Object.defineProperty(selectAllEvent, "keyCode", {value: 65});
+		assert.isFalse(controller.handleShortcut(selectAllEvent), "unmatched shortcut should remain available to other handlers");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Selecting a popup action executes the configured handler with the selected row object.
 	 *
 	 * Setup strategy:

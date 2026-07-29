@@ -661,6 +661,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.addEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
 		this.addEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.addEventListener("dblclick", this._handleDoubleClick as EventListener, true);
+		this.addEventListener("keydown", this._handleActionShortcut as EventListener, true);
 		this.addEventListener("keydown", this._handleKeydown as EventListener);
 		this.addEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.addEventListener("pointermove", this._handlePointerMove as EventListener);
@@ -699,6 +700,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.removeEventListener("et2-column-selection-apply", this._handleColumnSelectionApply as EventListener);
 		this.removeEventListener("contextmenu", this._handleContextMenu as EventListener, true);
 		this.removeEventListener("dblclick", this._handleDoubleClick as EventListener, true);
+		this.removeEventListener("keydown", this._handleActionShortcut as EventListener, true);
 		this.removeEventListener("keydown", this._handleKeydown as EventListener);
 		this.removeEventListener("pointerdown", this._handlePointerDown as EventListener);
 		this.removeEventListener("pointermove", this._handlePointerMove as EventListener);
@@ -2921,6 +2923,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			return;
 		}
 		if(this._actionController.triggerPopupForRow(event))
+		{
+			event.preventDefault();
+			event.stopPropagation();
+		}
+	};
+
+	/**
+	 * Let nextmatch action shortcuts run before the datagrid handles navigation
+	 * keys and stops their propagation.
+	 */
+	private _handleActionShortcut = (event : KeyboardEvent) =>
+	{
+		if(this._actionController.handleShortcut(event))
 		{
 			event.preventDefault();
 			event.stopPropagation();
