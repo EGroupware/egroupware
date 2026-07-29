@@ -4,7 +4,7 @@
 ##
 ################################################################################
 ARG ARCH=
-FROM ${ARCH}node:20-bookworm-slim
+FROM ${ARCH}node:26-bookworm-slim
 LABEL maintainer="rb@egroupware.org"
 
 ARG VERSION=dev-master

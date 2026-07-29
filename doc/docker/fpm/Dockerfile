@@ -1,6 +1,6 @@
 ################################################################################
 ##
-## EGroupware FPM container using Ubuntu 20.04, NodeJS 20 and PHP 8.4 from ondrej/php PPA
+## EGroupware FPM container using Ubuntu 20.04, NodeJS 26 and PHP 8.5 from ondrej/php PPA
 ##
 ################################################################################
 ARG ARCH=
@@ -86,15 +86,15 @@ RUN set -e \
 	&& rm -f /usr/local/bin/composer.phar
 RUN set -e \
 	&& cd /usr/share/egroupware \
-	# install nodejs 20.x (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x) \
+	# install nodejs 26.x (Shoelace requires >= 14.17, Ubuntu 22.04 only has 12.x) \
 	&& if [ "$TARGETPLATFORM" = "linux/ppc64le" ]; then \
-        dist_node_v20=https://nodejs.org/dist/latest-v20.x/ \
-        dist_node_v20_ppc64le=$(curl $dist_node_v20|grep ppc64le.tar.xz|cut -d'"' -f2) \
-        curl -L $dist_node_v20$dist_node_v20_ppc64le | tar --directory=/usr/local/ -xJvf - ; \
+        dist_node_v26=https://nodejs.org/dist/latest-v26.x/ \
+        dist_node_v26_ppc64le=$(curl $dist_node_v26|grep ppc64le.tar.xz|cut -d'"' -f2) \
+        curl -L $dist_node_v26$dist_node_v26_ppc64le | tar --directory=/usr/local/ -xJvf - ; \
     else \
     	mkdir -p /etc/apt/keyrings \
         && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
-        && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_20.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
+        && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_26.x nodistro main" | tee /etc/apt/sources.list.d/nodesource.list \
         && apt-get update \
         && apt-get install -y nodejs libatomic1 ; \
     fi \
