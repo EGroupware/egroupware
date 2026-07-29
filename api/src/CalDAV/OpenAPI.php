@@ -38,6 +38,35 @@ class OpenAPI
 	const HTTP_METHODS = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'];
 
 	/**
+	 * Collect the OpenAPI description files to merge
+	 *
+	 * Two locations are supported:
+	 * - doc/openapi/<app>.json      the central directory, app taken from the file name
+	 * - <app>/doc/openapi/*.json    shipped with the app, app taken from the directory
+	 *
+	 * The second lets an app carry its own description instead of having to patch a file outside
+	 * itself, which matters for apps maintained in their own repository. Because the app is the
+	 * directory there, an app may also split its description over several files.
+	 *
+	 * @return \Generator<array{0:string,1:string}> [app-name, full path]
+	 */
+	protected static function descriptionFiles(): \Generator
+	{
+		foreach(scandir($base_dir = EGW_SERVER_ROOT.'/doc/openapi') ?: [] as $file)
+		{
+			if (str_ends_with($file, ".json"))
+			{
+				yield [basename($file, '.json'), $base_dir.'/'.$file];
+			}
+		}
+		// the central directory is not matched by this pattern, so nothing is included twice
+		foreach(glob(EGW_SERVER_ROOT.'/*/doc/openapi/*.json') ?: [] as $app_path)
+		{
+			yield [basename(dirname($app_path, 3)), $app_path];
+		}
+	}
+
+	/**
 	 * Scan directory for app-specific JSON files and merge them into a single OpenAPI spec
 	 *
 	 * @param bool $inline_parameters true: replace parameter references with the actual data
@@ -94,21 +123,21 @@ class OpenAPI
 		// wide (shared by all users). Only the per-user app-visibility filter below, plus the
 		// operationId dedup/filter and $inline_parameters resolution, stay per-call - all cheap,
 		// in-memory operations on the already-decoded data, so correctness per user/call is kept.
-		$all_app_json = Api\Cache::getInstance(__CLASS__, 'scan', static function()
+		// A list of [app, decoded json], not keyed by app: an app may split its description over
+		// several files (see descriptionFiles()). Its own cache key, so an entry still cached in the
+		// app-keyed shape is not read as this one.
+		$all_app_json = Api\Cache::getInstance(__CLASS__, 'scan-files', static function()
 		{
 			$all = [];
-			foreach(scandir($base_dir = EGW_SERVER_ROOT.'/doc/openapi') as $file)
+			foreach(self::descriptionFiles() as [$app, $file_path])
 			{
-				if (str_ends_with($file, ".json"))
-				{
-					$all[basename($file, '.json')] = json_decode(file_get_contents($base_dir.'/'.$file), true);
-				}
+				$all[] = [$app, json_decode(file_get_contents($file_path), true)];
 			}
 			return $all;
 		}, [], 86400);
 
 		$operationIds = [];
-		foreach($all_app_json as $app => $app_json)
+		foreach($all_app_json as [$app, $app_json])
 		{
 			// if we're authenticated only show API's of apps the user has access too or are independent of an app like "links.json"
 			if (isset($GLOBALS['egw_info']['apps'][$app]) &&
