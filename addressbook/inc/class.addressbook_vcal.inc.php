@@ -1053,7 +1053,7 @@ class addressbook_vcal extends addressbook_bo
 						$attribute['values']);
 				}
 				$contact['##'.$attribute['name']] = $attribute['params'] || count($attribute['values']) > 1 ?
-					serialize($attribute) : $attribute['value'];
+					json_encode($attribute) : $attribute['value'];
 			}
 		}
 

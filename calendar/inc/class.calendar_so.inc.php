@@ -639,7 +639,7 @@ class calendar_so
 			$last_request = $now;
 		}
 
-		$signature = serialize(func_get_args());
+		$signature = json_encode(func_get_args());
 		if(isset($ctags[$signature]))
 		{
 			return $ctags[$signature];
