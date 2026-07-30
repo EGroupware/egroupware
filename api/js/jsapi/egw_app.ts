@@ -1117,7 +1117,16 @@ export abstract class EgwApp
 				{
 					if(all)
 					{
-						fetchAll(ids, nm, idsArr => resolve(vars.options.individual ? idsArr : [idsArr]));
+						if(nm instanceof Et2Nextmatch)
+						{
+							nm.fetchAllIds()
+								.then(idsArr => resolve(vars.options.individual ? idsArr : [idsArr]))
+								.catch(() => {});
+						}
+						else
+						{
+							fetchAll(ids, nm, idsArr => resolve(vars.options.individual ? idsArr : [idsArr]));
+						}
 					}
 					else
 					{
