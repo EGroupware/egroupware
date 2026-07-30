@@ -290,7 +290,7 @@ class calendar_export_csv implements importexport_iface_export_plugin {
 			$end = '+1 ' . $states['view'];
 			$end = strtotime($end, $start->format('ts'))-1;
 		}
-		$prefs = unserialize($GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
+		$prefs = json_php_unserialize($GLOBALS['egw_info']['user']['preferences']['importexport'][$definition->definition_id]);
 		$data = array(
 			'name'		=> 'calendar.export_csv_select',
 			'content'	=> array(

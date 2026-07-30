@@ -577,8 +577,12 @@ class calendar_so
 			$ctags = array();
 			$last_request = time();
 		}
-		$signature = serialize(func_get_args());
-		if (isset($ctags[$signature])) return $ctags[$signature];
+
+		$signature = json_encode(func_get_args());
+		if(isset($ctags[$signature]))
+		{
+			return $ctags[$signature];
+		}
 
 		$types = array();
 		foreach((array)$users as $uid)

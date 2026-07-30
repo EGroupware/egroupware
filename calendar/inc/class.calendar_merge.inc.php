@@ -101,7 +101,7 @@ class calendar_merge extends Api\Storage\Merge
 			$this->table_plugins[$day] = 'day'; // Current day
 		}
 		$this->query = is_array($this->bo->cal_prefs['saved_states']) ?
-			$this->bo->cal_prefs['saved_states'] : unserialize($this->bo->cal_prefs['saved_states']);
+			$this->bo->cal_prefs['saved_states'] : json_php_unserialize($this->bo->cal_prefs['saved_states']);
 
 		$this->query['users'] = is_array($this->query['owner']) ? $this->query['owner'] : explode(',', $this->query['owner']);
 		$this->query['num_rows'] = -1;

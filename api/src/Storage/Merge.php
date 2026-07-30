@@ -747,7 +747,7 @@ abstract class Merge
 
 			// check export-limit and fail if user tries to export more entries then allowed
 			if(!$is_excepted && (is_array($export_limit_excepted = $GLOBALS['egw_info']['server']['export_limit_excepted']) ||
-					is_array($export_limit_excepted = unserialize($export_limit_excepted))))
+					is_array($export_limit_excepted = json_php_unserialize($export_limit_excepted))))
 			{
 				$id_and_memberships = $GLOBALS['egw']->accounts->memberships($GLOBALS['egw_info']['user']['account_id'], true);
 				$id_and_memberships[] = $GLOBALS['egw_info']['user']['account_id'];

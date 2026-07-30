@@ -322,7 +322,7 @@ class Contacts extends Contacts\Storage
 		if (!empty($GLOBALS['egw_info']['server']['org_fileds_to_update']))
 		{
 			$this->org_fields =  $GLOBALS['egw_info']['server']['org_fileds_to_update'];
-			if (!is_array($this->org_fields)) $this->org_fields = unserialize($this->org_fields);
+			if (!is_array($this->org_fields)) $this->org_fields = json_php_unserialize($this->org_fields);
 
 			// Set country code if country name is selected
 			$supported_fields = $this->get_fields('supported',null,0);

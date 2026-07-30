@@ -936,7 +936,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		{
 			// update members given in $contact['##X-ADDRESSBOOKSERVER-MEMBER']
 			$new_members = $contact['members'] ?: $contact['##X-ADDRESSBOOKSERVER-MEMBER'];
-			if (is_string($new_members) && $new_members[1] === ':' && ($n = unserialize($new_members)))
+			if (is_string($new_members) && $new_members[1] === ':' && ($n = json_php_unserialize($new_members)))
 			{
 				$new_members = $n['values'];
 			}
