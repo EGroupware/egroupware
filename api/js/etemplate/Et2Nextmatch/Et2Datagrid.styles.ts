@@ -5,11 +5,6 @@ export default css`
 		display: block;
 		height: 100%;
 		min-height: 0;
-		--embedded-virtualized-height: auto;
-		--meta-column-width: 0px;
-		--row-cell-max-height: 10em;
-		--row-expander-size: var(--sl-spacing-large);
-		--row-expander-icon-size: 0.5em;
 	}
 
 	:host([auto-height]) {
@@ -237,8 +232,8 @@ export default css`
 		background: transparent;
 		color: var(--sl-color-neutral-700);
 		cursor: pointer;
-		inline-size: var(--row-expander-size);
-		block-size: var(--row-expander-size);
+		inline-size: var(--row-expander-size, var(--sl-spacing-large));
+		block-size: var(--row-expander-size, var(--sl-spacing-large));
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -274,9 +269,9 @@ export default css`
 	.dg-row-expander__chevron {
 		inline-size: 0;
 		block-size: 0;
-		border-block-start: calc(var(--row-expander-icon-size) * 0.8) solid transparent;
-		border-block-end: calc(var(--row-expander-icon-size) * 0.8) solid transparent;
-		border-inline-start: var(--row-expander-icon-size) solid currentColor;
+		border-block-start: calc(var(--row-expander-icon-size, 0.5em) * 0.8) solid transparent;
+		border-block-end: calc(var(--row-expander-icon-size, 0.5em) * 0.8) solid transparent;
+		border-inline-start: var(--row-expander-icon-size, 0.5em) solid currentColor;
 		transform-origin: 45% 50%;
 	}
 

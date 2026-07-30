@@ -221,14 +221,14 @@ class Et2DatagridSparseFlowLayout extends FlowLayout
  *
  * @cssproperty [--row-height=44px] - Estimated row height used for spacer rendering.
  * @cssproperty [--row-cell-max-height=10em] - Maximum height for individual row cells before vertical scrolling.
- * @cssproperty [--meta-column-width=0px] - Width of leading metadata column; expandable grids default it wide enough for the expander.
- * @cssproperty [--row-expander-size=20px] - Width and height of the row expand/collapse button.
- * @cssproperty [--row-expander-icon-size=6px] - Size of the default CSS triangle expander icon.
- * @cssproperty [--column-sizes] - Grid-template column track definition used by header/body rows.
- * @cssproperty [--column-count=1] - Column count fallback when explicit track sizes are not set.
- * @cssproperty [--scrollbar-space=0px] - Reserved right-side space in header for body scrollbar alignment.
- * @cssproperty [--column-selection-width=16px] - Width of the header column selection action.
- * @cssproperty [--embedded-virtualized-height] - Synced reserved height for an embedded virtualized grid with no own scrollbar.
+ * @cssproperty [--meta-column-width=0px] - Width of leading metadata column; expandable grids calculate a width large enough for the expander when it is not supplied.
+ * @cssproperty [--row-expander-size=var(--sl-spacing-large)] - Width and height of the row expand/collapse button.
+ * @cssproperty [--row-expander-icon-size=0.5em] - Size of the default CSS triangle expander icon.
+ * @cssproperty [--column-sizes] - Internal: automatically calculated grid-template column tracks for header and body rows.
+ * @cssproperty [--column-count=1] - Internal: automatically calculated visible column count; `1` is only the CSS fallback.
+ * @cssproperty [--scrollbar-space=0px] - Internal: automatically calculated header space reserved for body scrollbar alignment.
+ * @cssproperty [--column-selection-width=16px] - Internal: automatically calculated width of the header column-selection action.
+ * @cssproperty [--embedded-virtualized-height=auto] - Internal: automatically synchronized reserved height for an embedded virtualized grid with no own scrollbar.
  */
 @customElement("et2-datagrid")
 export class Et2Datagrid extends Et2Widget(LitElement)
@@ -456,8 +456,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	embeddedVirtualized : boolean = false;
 
 	/**
-	 * Reflects whether row height is fixed by the row template. Fixed-height rows
-	 * must clip cell content to keep visual rows aligned with virtualizer math.
+	 * Reflects whether CSS rows need a fixed height: either an explicit row-height
+	 * contract or an embedded subgrid's reserved virtualizer pitch. Fixed-height
+	 * rows clip cell content to keep visual rows aligned with virtualizer math.
 	 */
 	@property({type: Boolean, attribute: "fixed-row-height", reflect: true})
 	fixedRowHeight : boolean = false;
@@ -1389,7 +1390,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._embeddedChildGridResizeObserver.disconnect();
 		for(const childGrid of this._directEmbeddedChildGrids())
 		{
-			childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, this._usesFixedVirtualizerRowHeight());
+			childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, childGrid.embeddedVirtualized);
 			const scrollport = this._scrollportForEmbeddedChild(childGrid);
 			const logicalOffsetTop = this._embeddedChildLogicalScrollOffsetTop(childGrid);
 			if(logicalOffsetTop !== null)
@@ -1439,7 +1440,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		for(const childGrid of this._directEmbeddedChildGrids())
 		{
-			childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, this._usesFixedVirtualizerRowHeight());
+			childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, childGrid.embeddedVirtualized);
 		}
 	}
 
@@ -1995,7 +1996,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		// The parent pitch is authoritative once it has settled. Lock the child
 		// before its reported total is converted into an expanded-row height.
-		childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, this._usesFixedVirtualizerRowHeight());
+		childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, childGrid.embeddedVirtualized);
 		// The child emits this after applying the same value to its host, so it is
 		// the authoritative reservation for this event. Observer/deferred paths
 		// still derive height from the child when no event value is available.
@@ -2082,7 +2083,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		// Once the parent pitch and child total are known, branch height is pure
 		// data: it must never depend on which child rows happen to be realized at
 		// the current scroll position.
-		const childHeight = reportedHeight ?? (this._usesFixedVirtualizerRowHeight() &&
+		const childHeight = reportedHeight ?? (childGrid._usesFixedVirtualizerRowHeight() &&
 		                                    childGrid.embeddedVirtualized &&
 		                                    childGrid.total !== null
 			? childGrid._fixedVirtualItemsHeight()
@@ -2363,7 +2364,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		const heights = Array.from(this._measuredRowHeightByRowId.values());
 		const average = Math.ceil(heights.reduce((sum, height) => sum + height, 0) / heights.length);
-		const shouldSettle = average > 0 && (this.embeddedVirtualized || !!this.expansionConfig);
+		const shouldSettle = average > 0 && this.embeddedVirtualized;
 		const rowHeightChanged = Math.abs(average - this._rowHeightPx) > 1;
 		// The first upgraded batch establishes the fixed pitch for an expandable
 		// grid. Afterwards widgets can be refreshed without asking Lit to recreate
@@ -3059,14 +3060,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return candidate ? this._lengthToPx(candidate.trim()) : null;
 	}
 
-	/** Keep the virtualizer's numeric pitch and host CSS contract in sync. */
+	/**
+	 * Keep the virtualizer's numeric pitch current. Only explicit and embedded
+	 * fixed-height contracts are reflected into CSS; a measured main-row average
+	 * is an estimate, not a minimum visual row height.
+	 */
 	private _setRowHeight(rowHeight : number, source : Et2DatagridRowHeightSource)
 	{
+		const previousRowHeight = this._rowHeightPx;
 		this._rowHeightPx = rowHeight;
 		this._rowHeightSource = source;
-		if(source !== "css")
+		if(source === "template" || source === "parent" || source === "api")
 		{
 			this.style.setProperty("--row-height", `${rowHeight}px`);
+		}
+		else if(source === "default" && this.style.getPropertyValue("--row-height") === `${previousRowHeight}px`)
+		{
+			this.style.removeProperty("--row-height");
 		}
 	}
 
@@ -3084,20 +3094,25 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Rows must be a fixed pitch when the row template/config explicitly defines
-	 * a height, or when row expansion can insert nested grids. Without expansion,
-	 * Lit virtualizer can keep measuring variable-height rows.
+	 * Only embedded subgrids need a fixed virtualizer pitch for their reserved
+	 * height. Main grids keep Lit's variable-height layout so their rows can grow
+	 * with content. An explicit row height remains fixed anywhere it is used.
 	 */
 	private _usesFixedVirtualizerRowHeight() : boolean
 	{
 		return this._rowHeightLocked ||
-		       (this.embeddedVirtualized && this._embeddedRowHeightSettled) ||
-		       (!!this.expansionConfig && this._rowHeightSettled);
+		       (this.embeddedVirtualized && this._embeddedRowHeightSettled);
 	}
 
 	private _syncFixedRowHeightMode()
 	{
-		const fixed = this._usesFixedVirtualizerRowHeight();
+		// A root grid with expandable rows needs a stable virtualizer pitch, but
+		// its normal rows must still grow with their content. Only embedded grids
+		// need CSS-level clipping to match their reserved subgrid height. An
+		// explicit template/CSS/parent height remains an intentional fixed-row
+		// contract regardless of where the grid is rendered.
+		const fixed = this._rowHeightLocked ||
+		              (this.embeddedVirtualized && this._embeddedRowHeightSettled);
 		if(this.fixedRowHeight !== fixed)
 		{
 			this.fixedRowHeight = fixed;
@@ -6483,9 +6498,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			'--column-count' : visibleColumns.length,
 			'--column-sizes': this.inheritColumnSizes ? "inherit" : this._columnWidths(visibleColumns),
 			'--scrollbar-space': `${this._scrollbarSpacePx}px`,
-			// Templates render below this shadow-root element. Mirror the resolved
-			// host contract here so their local CSS always receives the same pitch.
-			'--row-height': `${this.rowHeightEstimatePx}px`,
+			// A measured main-row pitch is only virtualizer state. Publish the value
+			// to row templates only when CSS must enforce a fixed-height contract.
+			'--row-height': this._usesFixedVirtualizerRowHeight() ? `${this.rowHeightEstimatePx}px` : undefined,
 			'--embedded-virtualized-height': this._embeddedVirtualizedHostHeight ?? undefined
 		}
 		const rowCount = this._virtualRowCount();

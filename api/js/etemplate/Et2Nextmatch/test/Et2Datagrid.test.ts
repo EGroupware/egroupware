@@ -2394,12 +2394,12 @@ describe("Et2Datagrid virtual height stability", () =>
 
 		assert.isAbove(event.detail.averageRowHeight, 20, "upgraded event should report measured row height above the stale estimate");
 		assert.equal((el as any)._rowHeightPx, event.detail.averageRowHeight, "future reservations should use the measured average");
-		assert.equal(el.style.getPropertyValue("--row-height"), `${event.detail.averageRowHeight}px`);
+		assert.equal(el.style.getPropertyValue("--row-height"), "", "a measured main-row average must not become a CSS row-height");
 
 		host.remove();
 	});
 
-	it("locks expandable grids to the first upgraded average row height", async() =>
+	it("keeps expandable main rows flexible while settling their virtualizer pitch", async() =>
 	{
 		const host = document.createElement("div");
 		host.style.height = "220px";
@@ -2430,19 +2430,11 @@ describe("Et2Datagrid virtual height stability", () =>
 		(el as any)._scheduleRowsUpgradedSettle();
 		const event = await upgraded;
 
-		assert.equal((el as any)._rowHeightPx, event.detail.averageRowHeight, "expandable grid should use the first upgraded average");
-		assert.isTrue((el as any)._rowHeightSettled, "expandable grid should settle after the first upgraded batch");
-		assert.isTrue(el.fixedRowHeight, "expandable grid should switch to fixed row-height CSS");
-		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-		const layout = (el as any)._tableLayoutConfig();
-		assert.isOk(layout, "expandable grids should configure a settled normal-row pitch");
-		assert.equal(layout._itemSize.height, event.detail.averageRowHeight, "normal rows should retain the settled height");
-		assert.isFunction(layout._measureChildren, "the sparse layout should keep Lit's viewport measurement lifecycle active");
-		assert.instanceOf(layout.expandedItemHeights, Map, "expanded branch heights should be held in a sparse map");
-		const virtualizer = (el as any)._virtualize as any;
-		assert.isAbove(virtualizer?._layout?.viewportSize?.height || 0, 0,
-			"switching to the sparse layout must retain a non-zero viewport and rendered range");
+		assert.equal((el as any)._rowHeightPx, event.detail.averageRowHeight, "expandable grid should retain a current measurement for future child estimates");
+		assert.isFalse((el as any)._rowHeightSettled, "expandable main grids should not freeze their row-height measurement");
+		assert.isFalse(el.fixedRowHeight, "expandable main rows should grow with their content instead of being CSS-clipped");
+		assert.isFalse(el.hasAttribute("fixed-row-height"), "only embedded subgrids should receive fixed-row-height CSS");
+		assert.isUndefined((el as any)._tableLayoutConfig(), "expandable main grids should keep Lit's variable-height layout");
 		assert.isFalse(
 			debugSpy.calledWithMatch("warn", sinon.match("Set an explicit row template height")),
 			"generic expanded detail rows should not warn about subgrid row-height configuration"
@@ -2450,6 +2442,17 @@ describe("Et2Datagrid virtual height stability", () =>
 		debugSpy.restore();
 
 		host.remove();
+	});
+
+	it("clips settled embedded subgrid rows to their reserved pitch", () =>
+	{
+		const el = createDatagrid();
+		el.embeddedVirtualized = true;
+		(el as any)._embeddedRowHeightSettled = true;
+
+		(el as any)._syncFixedRowHeightMode();
+
+		assert.isTrue(el.fixedRowHeight, "a settled embedded subgrid should use fixed-row-height CSS");
 	});
 
 	/**
@@ -2469,7 +2472,8 @@ describe("Et2Datagrid virtual height stability", () =>
 			renderExpandedContent: () => html``,
 			expandedRowIds: new Set()
 		};
-		(el as any)._rowHeightSettled = true;
+		el.embeddedVirtualized = true;
+		(el as any)._embeddedRowHeightSettled = true;
 		(el as any)._sparseVirtualizerLayoutActive = true;
 		const config = (el as any)._tableLayoutConfig();
 		const layout = new config.type(() => undefined, config);
@@ -2502,7 +2506,8 @@ describe("Et2Datagrid virtual height stability", () =>
 			renderExpandedContent: () => html``,
 			expandedRowIds: new Set()
 		};
-		(el as any)._rowHeightSettled = true;
+		el.embeddedVirtualized = true;
+		(el as any)._embeddedRowHeightSettled = true;
 		(el as any)._sparseVirtualizerLayoutActive = true;
 		const config = (el as any)._tableLayoutConfig();
 		const layout = new config.type(() => undefined, config);
@@ -2636,6 +2641,16 @@ describe("Et2Datagrid virtual height stability", () =>
 	it("clips regular cells in fixed row height mode", () =>
 	{
 		const cssText = String((datagridStyles as any).cssText || datagridStyles);
+		assert.notMatch(
+			cssText,
+			/:host\s*\{[^}]*--row-cell-max-height/,
+			"the cell-height default must not shadow a value inherited from an owning nextmatch"
+		);
+		assert.include(
+			cssText,
+			"max-height: var(--row-cell-max-height, 10em);",
+			"cells should retain the generic fallback when no owning nextmatch provides a limit"
+		);
 		assert.include(
 			cssText,
 			"min-height: max(44px, var(--row-height, 44px));",
@@ -2661,6 +2676,20 @@ describe("Et2Datagrid virtual height stability", () =>
 			/:host\(\[fixed-row-height\]\)\s+\.dg-body\s+tbody\s*>\s*tr\[data-row-id\]:not\(\.dg-row-expanded\)\s*>\s*td,[\s\S]*overflow:\s*hidden;/,
 			"fixed row-height cells should not expose independent vertical overflow"
 		);
+	});
+
+	it("keeps public layout variables inheritable while retaining local fallbacks", () =>
+	{
+		const cssText = String((datagridStyles as any).cssText || datagridStyles);
+		assert.notMatch(
+			cssText,
+			/:host\s*\{[^}]*(?:--embedded-virtualized-height|--meta-column-width|--row-(?:cell-max-height|expander-size|expander-icon-size))/,
+			"host defaults must not shadow values inherited from an owning nextmatch"
+		);
+		assert.include(cssText, "height: var(--embedded-virtualized-height, auto);", "embedded grids should default to automatic height");
+		assert.include(cssText, "var(--meta-column-width, 0px)", "the metadata column should retain its zero-width fallback");
+		assert.include(cssText, "var(--row-expander-size, var(--sl-spacing-large))", "expanders should retain their size fallback");
+		assert.include(cssText, "var(--row-expander-icon-size, 0.5em)", "expander icons should retain their size fallback");
 	});
 
 	it("passes the parent row-height estimate to embedded child grids", async() =>
@@ -2798,7 +2827,7 @@ describe("Et2Datagrid virtual height stability", () =>
 	 * later child rows, and scrolling past the child branch renders the following
 	 * top-level row.
 	 */
-	it("renders later child rows and following parent rows without changing the shared scroll range", async() =>
+	it("renders later child rows and following parent rows through the shared scrollport", async() =>
 	{
 		const host = document.createElement("div");
 		host.style.height = "220px";
@@ -2910,30 +2939,6 @@ describe("Et2Datagrid virtual height stability", () =>
 			parent.shadowRoot?.querySelector("[data-row-id='row-after']"),
 			"scrolling past the child branch should render the following top-level row"
 		);
-
-		const parentLayout = (parent as any)._virtualize?._layout;
-		const stableScrollHeight = parentBody.scrollHeight;
-		const stableLayoutSize = parentLayout?._scrollSize;
-		const branchStart = Math.max(0, Math.floor(childOffsetInParent));
-		const branchEnd = Math.max(branchStart, Math.floor(childOffsetInParent + childHostHeight));
-		for(const target of [0, branchStart + 1, branchEnd - 1, bottomBeforeChildScroll])
-		{
-			parentBody.scrollTop = target;
-			parentBody.dispatchEvent(new Event("scroll"));
-			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-			assert.equal(parentBody.scrollHeight, stableScrollHeight,
-				"crossing a known child branch must not change the scrollbar extent");
-			assert.equal(parentLayout?._scrollSize, stableLayoutSize,
-				"crossing a known child branch must not change the sparse layout extent");
-		}
-		// Verify the deferred shared-scroll synchronization does not alter either
-		// extent after the final scroll event has settled.
-		await new Promise<void>((resolve) => window.setTimeout(resolve, 250));
-		assert.equal(parentBody.scrollHeight, stableScrollHeight,
-			"the settled shared-scroll sync must preserve the scrollbar extent");
-		assert.equal(parentLayout?._scrollSize, stableLayoutSize,
-			"the settled shared-scroll sync must preserve the sparse layout extent");
 
 		host.remove();
 	});
