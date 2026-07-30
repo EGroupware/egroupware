@@ -247,7 +247,7 @@ class calendar_ui
 	{
 		// retrieve saved states from prefs
 		$states = is_array($this->bo->cal_prefs['saved_states']) ?
-			$this->bo->cal_prefs['saved_states'] : unserialize($this->bo->cal_prefs['saved_states']);
+			$this->bo->cal_prefs['saved_states'] : json_encode($this->bo->cal_prefs['saved_states']);
 
 		// only look at _REQUEST, if we are in the calendar (prefs and admin show our sidebox menu too!)
 		if (is_null($set_states))

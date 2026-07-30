@@ -1589,7 +1589,7 @@ END:VTIMEZONE
 
 		unset($data['name']);	// not used, but can stall the match
 
-		$key = serialize($data);
+		$key = json_encode($data);
 
 		for($n = 0; !isset($cache[$key]); ++$n)
 		{

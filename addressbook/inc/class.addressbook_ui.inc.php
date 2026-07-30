@@ -108,7 +108,7 @@ class addressbook_ui extends addressbook_bo
 		$this->config['export_limit'] = $this->config['contact_export_limit'] = Api\Storage\Merge::getExportLimit($app='addressbook');
 
 		if ($this->config['copy_fields'] && ($fields = is_array($this->config['copy_fields']) ?
-			$this->config['copy_fields'] : unserialize($this->config['copy_fields'])))
+			$this->config['copy_fields'] : json_php_unserialize($this->config['copy_fields'])))
 		{
 			// Set country code if country name is selected
 			$supported_fields = $this->get_fields('supported',null,0);
@@ -277,7 +277,7 @@ class addressbook_ui extends addressbook_bo
 			);
 
 			// use the state of the last session stored in the user prefs
-			if (($state = @unserialize($this->prefs[str_replace('addressbook.', '', $template ?? 'index').'_state'], ['allowed_classes' => false])))
+			if (($state = json_php_unserialize($this->prefs[str_replace('addressbook.', '', $template ?? 'index').'_state'], ['allowed_classes' => false])))
 			{
 				$content['nm'] = array_merge($content['nm'],$state);
 			}
@@ -1914,7 +1914,7 @@ class addressbook_ui extends addressbook_bo
 			// do NOT allow col_filter[tid] to be NULL, as it show all contacts incl. deleted ones, which is not wanted in the UI
 			$query['col_filter']['tid'] ??= '';
 			// save the state of the index in the user prefs
-			$state = serialize(array(
+			$state = json_encode(array(
 				'filter'        => $query['filter'] ?? '',
 				'cat_id'        => $query['cat_id'],
 				'order'         => $query['order'],
