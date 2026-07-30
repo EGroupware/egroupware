@@ -1054,7 +1054,7 @@ class infolog_bo
 			}
 
 			// writing links for a new entry
-			if(!$old && is_array($to_write['link_to']['to_id']) && count($to_write['link_to']['to_id']))
+			if(!$old && is_array($to_write['link_to']['to_id'] ?? null) && count($to_write['link_to']['to_id']))
 			{
 				//echo "<p>writing links for new entry $info_id</p>\n"; _debug_array($content['link_to']['to_id']);
 				Link::link('infolog', $info_id, $to_write['link_to']['to_id']);
