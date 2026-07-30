@@ -1104,6 +1104,9 @@ abstract class Ajax extends Api\Framework
 		{
 			throw new Api\Exception\WrongParameter(__METHOD__."('$link') no menuaction set!");
 		}
+		// make sure we have a valid menuaction, check e.g. app-name matches the given class
+		Api\Json\Request::checkMenuAction($_GET['menuaction']);
+
 		// set session action
 		$GLOBALS['egw']->session->set_action('Ajax: '.$_GET['menuaction']);
 
