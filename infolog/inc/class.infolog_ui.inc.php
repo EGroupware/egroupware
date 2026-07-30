@@ -1996,10 +1996,9 @@ class infolog_ui
 						$undelete = $this->bo->check_access($old,infolog_bo::ACL_UNDELETE);
 					}
 					// enddate in the past gives warning
-					if (isset($content['info_enddate'])
-							&& $content['info_enddate'] < $this->bo->user_time_now
-							&& !$this->bo->allow_past_due_date && !($content['info_status'] == 'done'
-							|| $content['info_status'] == 'archive'))
+					if (!empty($content['info_enddate']) && $content['info_enddate'] < $this->bo->user_time_now &&
+						!$this->bo->allow_past_due_date &&
+						!($content['info_status'] == 'done' || $content['info_status'] == 'archive'))
 					{
 						$this->tmpl->set_validation_error('info_enddate', lang('Due date must be in the future!!!'));
 					}
@@ -2008,7 +2007,7 @@ class infolog_ui
 				{
 					$operation = $info_id ?  'edit' : 'add';
 
-					if (is_array($content['link_to']['to_id']) && count($content['link_to']['to_id']))
+					if (is_array($content['link_to']['to_id'] ?? null) && count($content['link_to']['to_id']))
 					{
 						$content['info_link_id'] = 0;	// as field has to be int
 					}
@@ -2040,8 +2039,11 @@ class infolog_ui
 
 					$pm_links = Link::get_links('infolog',$content['info_id'],'projectmanager');
 
-					$content['link_to']['to_app'] = 'infolog';
-					$content['link_to']['to_id'] = $info_id;
+					// some template customization caused $content['link_to'] === "", giving a TypeError before
+					$content['link_to'] = [
+						'to_app' => 'infolog',
+						'to_id' => $info_id,
+					]+(is_array($content['link_to'] ?? null) ? $content['link_to'] : []);
 					/* $info_link_id is never defined
 					if ($info_link_id && strpos($info_link_id,':') !== false)	// updating info_link_id if necessary
 					{
