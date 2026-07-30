@@ -332,7 +332,8 @@ class admin_account
 			}
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
-		if ($GLOBALS['egw']->acl->check('account_access',32,'admin') ||
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) ||
+			$GLOBALS['egw']->acl->check('account_access',32,'admin') ||
 			$GLOBALS['egw_info']['user']['account_id'] == $content['account_id'] ||
 				(is_array($content['account_id']) && in_array($GLOBALS['egw_info']['user']['account_id'], $content['account_id'])	)
 		)
