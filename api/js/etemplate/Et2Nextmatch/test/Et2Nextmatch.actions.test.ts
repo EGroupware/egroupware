@@ -441,7 +441,18 @@ describe("Et2Nextmatch action setup", () =>
 		controller.actionManager = fakeActionManager;
 		controller.objectManager = makeFakeObjectManager((rowId) =>
 		{
-			const rowObject = makeFakeRowObject({id: rowId, links: [] as string[]});
+			const rowObject = makeFakeRowObject({
+				id: rowId,
+				links: [] as string[],
+				parent: {
+					updateSelectedChildren: (child : any, selected : boolean) =>
+					{
+						if(selected) selectedRows.add(child);
+						else selectedRows.delete(child);
+					},
+					updateFocusedChild: () => {}
+				}
+			});
 			rowObject.updateActionLinks = function(links : string[])
 			{
 				this.links = links;
@@ -474,6 +485,191 @@ describe("Et2Nextmatch action setup", () =>
 		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
 
 		assert.deepEqual(executedRowIds, ["row::7"], "popup handler should receive selected sender row");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Opening a context menu on one of several Nextmatch-selected rows must
+	 *   synchronize those row objects before popup execution.
+	 *
+	 * Setup strategy:
+	 * - Keep two row ids in the Nextmatch selection model while only the context
+	 *   row remains rendered.
+	 * - Open a popup on one of the rendered rows.
+	 *
+	 * Pass criteria:
+	 * - Popup execution receives both selected row objects, not only the context
+	 *   row that caused lazy action-object creation.
+	 */
+	it("passes all selected rows to popup actions opened from a selected row", () =>
+	{
+		const executedRowIds : string[] = [];
+		const rowObjects = new Map<string, any>();
+		const rows = document.createElement("tbody");
+		for(const rowId of ["addressbook::1"])
+		{
+			const row = document.createElement("tr");
+			row.setAttribute("data-row-id", rowId);
+			rows.append(row);
+		}
+		const fakeActionManager = {
+			children: [] as FakeAction[],
+			data: {},
+			getActionById: () => null,
+			addAction: () => fakeActionManager,
+			updateActions: (actions : Record<string, any>) =>
+			{
+				fakeActionManager.children = Object.entries(actions).map(([id, action]) => ({
+					id,
+					type: action.type || "popup",
+					data: action.data || {},
+					execute: (senders, target) => action.onExecute?.(action, senders, target)
+				}));
+			},
+			setDefaultExecute: () => {}
+		};
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_popup_multi_selection",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = fakeActionManager;
+		controller.getRowsBodies = () => [rows];
+		controller.objectManager = makeFakeObjectManager((rowId) =>
+		{
+			const rowObject = makeFakeRowObject({id: rowId, links: [] as string[]});
+			rowObject.forceSelection = () => rowObject._actionSelected = true;
+			rowObject.updateActionLinks = function(links : string[]) { this.links = links; };
+			rowObject.executeActionImplementation = function()
+			{
+				const action = fakeActionManager.children.find((candidate) => candidate.id === this.links[0]);
+				const selected = Array.from(rowObjects.values()).filter((candidate) => candidate._actionSelected);
+				action?.execute(selected, this);
+				return !!action;
+			};
+			rowObjects.set(rowId, rowObject);
+			return rowObject;
+		});
+		controller.initActions({
+			archive: {
+				type: "popup",
+				onExecute: (_action, senders) => executedRowIds.push(...senders.map((sender) => sender.id))
+			}
+		});
+		controller.selectedRowIds = ["addressbook::1", "addressbook::2"];
+		const contextRow = rows.querySelector("[data-row-id='addressbook::1']") as HTMLElement;
+		controller.findEventRow = () => ({rowId: "addressbook::1", rowElement: contextRow});
+
+		controller.triggerPopupForRow(new MouseEvent("contextmenu", {bubbles: true, composed: true, cancelable: true}));
+
+		assert.equal(rowObjects.size, 2, "selection synchronization should materialize the rendered and virtualized selected rows");
+		assert.sameMembers(executedRowIds, ["addressbook::1", "addressbook::2"], "popup action should receive every selected row");
+	});
+
+	/**
+	 * Contract under test:
+	 * - The Nextmatch action bridge forwards every selected row object supplied
+	 *   by the action framework to the configured action execution path.
+	 *
+	 * Setup strategy:
+	 * - Register a default action executor through the controller's normal
+	 *   action-manager initialization.
+	 * - Invoke it with two selected source row objects and one target row.
+	 *
+	 * Pass criteria:
+	 * - The bridge receives the complete ordered sender list and the target
+	 *   unchanged; action-framework selection/visibility logic is not tested.
+	 */
+	it("forwards every selected row to the action execution bridge", () =>
+	{
+		let defaultExecute : Function | null = null;
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm_action_multi_sender",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.actionManager = {
+			data: {},
+			getActionById: () => null,
+			addAction: () => controller.actionManager,
+			updateActions: () => {},
+			setDefaultExecute: (handler : Function) => defaultExecute = handler
+		};
+		const executeNextmatchAction = sinon.stub(controller, "executeNextmatchAction");
+		controller.initActions({archive: {data: {nm_action: "submit"}}});
+
+		const sources = [makeFakeRowObject({id: "addressbook::1"}), makeFakeRowObject({id: "addressbook::2"})];
+		const target = makeFakeRowObject({id: "addressbook::target"});
+		defaultExecute!({id: "archive", data: {nm_action: "submit"}}, sources, target);
+
+		assert.strictEqual(executeNextmatchAction.firstCall.args[1], sources, "all selected source rows should be forwarded together");
+		assert.strictEqual(executeNextmatchAction.firstCall.args[2], target, "action target should be forwarded unchanged");
+	});
+
+	/**
+	 * Contract under test:
+	 * - A select-all selection reaches the Nextmatch submit bridge as the legacy
+	 *   `select_all` flag rather than an incomplete list of rendered ids.
+	 *
+	 * Setup strategy:
+	 * - Execute a submit action with an empty id list and `all: true`.
+	 *
+	 * Pass criteria:
+	 * - The submitted Nextmatch value marks `select_all` true.
+	 */
+	it("submits select-all actions as a complete result-set selection", () =>
+	{
+		const el = new Et2Nextmatch();
+		const submit = sinon.spy();
+		el.setInstanceManager({submit, DOMContainer: document.body, app: "addressbook"} as any);
+		const action : any = {id: "archive", data: {nm_action: "submit"}};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id : string) => id === "archive" ? action : null,
+			getActionsByAttr: () => []
+		};
+
+		el.executeAction("archive", {ids: [], all: true});
+
+		assert.isTrue(submit.calledOnce, "select-all action should submit through the instance manager");
+		assert.isTrue(el.value.select_all, "submit payload should represent all matching rows");
+		assert.deepEqual(el.value.selected, [], "select-all should not be reduced to rendered row ids");
+	});
+
+	/**
+	 * Contract under test:
+	 * - The action-system select-all entry delegates selection to Nextmatch rather
+	 *   than selecting only currently materialized action objects.
+	 *
+	 * Setup strategy:
+	 * - Provide a minimal select-all action and capture its registered callback.
+	 *
+	 * Pass criteria:
+	 * - Running the callback calls the host's public select-all bridge once.
+	 */
+	it("routes the select-all action through Nextmatch", () =>
+	{
+		let selectAllHandler : Function | null = null;
+		const host : any = {
+			id: "nm_select_all_action",
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"}),
+			selectAllRows: sinon.spy()
+		};
+		const selectAllAction = {set_onExecute: (handler : Function) => selectAllHandler = handler};
+		const controller : any = new Et2NextmatchActionController(host);
+		controller.actionManager = {
+			data: {},
+			getActionById: (id : string) => id === "select_all" ? selectAllAction : null,
+			addAction: () => controller.actionManager,
+			updateActions: () => {},
+			setDefaultExecute: () => {}
+		};
+
+		controller.initActions({});
+		selectAllHandler!();
+
+		assert.isTrue(host.selectAllRows.calledOnce, "select-all action should delegate to the Nextmatch selection bridge");
 	});
 
 	/**
@@ -1245,6 +1441,8 @@ describe("Et2Nextmatch action setup", () =>
 		const controller : any = (el as any)._actionController;
 		const fakeRowObject = {
 			forceSelection: sinon.spy(),
+			setSelected: sinon.spy(),
+			setFocused: sinon.spy(),
 			executeActionImplementation: sinon.stub().returns(true)
 		};
 		const ensureRowActionObject = sinon.stub(controller, "ensureRowActionObject").returns(fakeRowObject);
@@ -1282,6 +1480,8 @@ describe("Et2Nextmatch action setup", () =>
 		row.setAttribute("data-row-id", "row::same");
 		const fakeRowObject = {
 			forceSelection: sinon.spy(),
+			setSelected: sinon.spy(),
+			setFocused: sinon.spy(),
 			executeActionImplementation: sinon.stub().returns(true)
 		};
 
@@ -2087,6 +2287,66 @@ describe("Et2Nextmatch action setup", () =>
 			controller._getPlaceholderContextLinks(["open"]).map((link) => link.actionId),
 			["open"],
 			"placeholder host context should only link popup actions"
+		);
+	});
+
+	/**
+	 * Contract under test:
+	 * - The Nextmatch link-drop adapter consumes every selected drag source and
+	 *   the distinct target row supplied by the action framework.
+	 *
+	 * Setup strategy:
+	 * - Register the controller's link-drop action with a minimal action manager.
+	 * - Invoke its callback with two source rows and one target row.
+	 *
+	 * Pass criteria:
+	 * - The link request targets the dropped-on row and contains both sources.
+	 */
+	it("passes all drag sources and the target row to the link-drop adapter", () =>
+	{
+		const sentRequests : any[] = [];
+		const sendRequest = sinon.spy();
+		const registeredActions = new Map<string, any>();
+		const host : any = {
+			id: "nm_link_drop",
+			egw: () => ({
+				...egwStub,
+				link_get_registry: (_app : string, capability : string) => capability === "query",
+				json: (...args : any[]) =>
+				{
+					sentRequests.push(args);
+					return {sendRequest};
+				}
+			}),
+			_dataProvider: {getDataStorePrefix: () => "addressbook"},
+			refresh: () => {}
+		};
+		const controller : any = new Et2NextmatchActionController(host);
+		controller.actionManager = {
+			getActionById: (id : string) => registeredActions.get(id),
+			addAction: (type : string, id : string, _caption : string, _icon : string, onExecute : Function) =>
+			{
+				const action = {type, id, onExecute, acceptedTypes: []};
+				registeredActions.set(id, action);
+				return action;
+			}
+		};
+
+		controller.initLinkDragDropActions();
+		registeredActions.get("egw_link_drop").onExecute(
+			{},
+			[{id: "addressbook::source-1"}, {id: "calendar::source-2"}],
+			{id: "addressbook::target"}
+		);
+
+		assert.isTrue(sendRequest.calledOnce, "drop adapter should send one link request");
+		assert.deepEqual(
+			sentRequests[0][1],
+			["addressbook", "target", [
+				{app: "addressbook", id: "source-1"},
+				{app: "calendar", id: "source-2"}
+			]],
+			"drop adapter should preserve both selected sources and the target row"
 		);
 	});
 

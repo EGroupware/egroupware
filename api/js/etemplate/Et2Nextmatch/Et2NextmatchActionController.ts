@@ -216,6 +216,8 @@ export class Et2NextmatchActionController
 	private actionManager : EgwAction | null = null;
 	private objectManager : EgwActionObjectManager | null = null;
 	private rowActionObjects : Map<string, EgwActionObject> = new Map();
+	/** Detached DOM nodes used only while explicitly selected rows are virtualized out of view. */
+	private selectionProxyRows : Map<string, HTMLElement> = new Map();
 	private longPressTimer : number | null = null;
 	private longPressPointerId : number | null = null;
 	private longPressStartX : number = 0;
@@ -392,6 +394,7 @@ export class Et2NextmatchActionController
 			}
 		}
 		this.rowActionObjects.clear();
+		this.selectionProxyRows.clear();
 		this.selectedRowIds = [];
 		this.allSelected = false;
 	}
@@ -399,15 +402,16 @@ export class Et2NextmatchActionController
 	/**
 	 * Mirror datagrid selection changes into the action framework.
 	 *
-	 * Only visible selected rows are materialized as action objects. For
-	 * select-all, off-screen rows are represented later when actions normalize
-	 * the selection and fetch all ids as needed.
+	 * Explicitly selected rows remain materialized even when virtualization has
+	 * recycled their DOM; select-all remains a global flag and does not create
+	 * one action object per unloaded row.
 	 */
 	handleSelectionChanged(detail : { selectedRowIds? : string[]; activeRowId? : string; allSelected? : boolean })
 	{
 		this.selectedRowIds = [...(detail?.selectedRowIds || [])];
 		this.allSelected = !!detail?.allSelected;
 		const selectedSet = new Set(this.selectedRowIds);
+		this._pruneSelectionProxies(selectedSet);
 		const activeRowId = String(detail?.activeRowId || "");
 		this.materializeVisibleSelectedRows(selectedSet, activeRowId);
 		for(const [rowId, rowObject] of this.rowActionObjects.entries())
@@ -434,7 +438,8 @@ export class Et2NextmatchActionController
 		               : Array.from(selectedSet);
 		for(const rowId of rowIds)
 		{
-			const rowElement = this.findRenderedRowByActionId(rowId, rowsBodies);
+			const rowElement = this.findRenderedRowByActionId(rowId, rowsBodies) ||
+			                   (!this.allSelected ? this._selectionProxyRow(rowId) : null);
 			if(!rowElement)
 			{
 				continue;
@@ -442,6 +447,43 @@ export class Et2NextmatchActionController
 			const rowObject = this.ensureRowActionObject(rowId, rowElement);
 			rowObject?.setSelected(this.allSelected || selectedSet.has(rowId));
 			rowObject?.setFocused(rowId === activeRowId);
+		}
+	}
+
+	/**
+	 * Return a detached row node for an explicitly selected row that is no
+	 * longer rendered.  EgwActionObject uses its object tree, not DOM placement,
+	 * to collect selected senders for popup actions.
+	 */
+	private _selectionProxyRow(rowId : string) : HTMLElement
+	{
+		let row = this.selectionProxyRows.get(rowId);
+		if(!row)
+		{
+			row = document.createElement("tr");
+			row.setAttribute("data-row-id", rowId);
+			row.setAttribute("data-et2nm-selection-proxy", "1");
+			this.selectionProxyRows.set(rowId, row);
+		}
+		return row;
+	}
+
+	/** Remove proxy action objects once their ids are no longer explicitly selected. */
+	private _pruneSelectionProxies(selectedSet : Set<string>)
+	{
+		for(const [rowId] of this.selectionProxyRows)
+		{
+			if(!this.allSelected && selectedSet.has(rowId))
+			{
+				continue;
+			}
+			this.selectionProxyRows.delete(rowId);
+			const rowObject = this.rowActionObjects.get(rowId);
+			if(rowObject?._context?.getAttribute?.("data-et2nm-selection-proxy") === "1")
+			{
+				rowObject.remove?.();
+				this.rowActionObjects.delete(rowId);
+			}
 		}
 	}
 
@@ -1010,6 +1052,11 @@ export class Et2NextmatchActionController
 	 */
 	private _selectActionRow(rowId : string, rowObject : EgwActionObject)
 	{
+		// Context actions can be opened before every selected row has been lazily
+		// materialized as an action object.  Synchronize visible rows first so
+		// EgwActionObject.forceSelection() preserves the complete Nextmatch
+		// selection instead of reducing it to the context row.
+		this.materializeVisibleSelectedRows(new Set(this.selectedRowIds), rowId);
 		rowObject.forceSelection();
 		const rowAlreadySelected = this.allSelected || this.selectedRowIds.includes(rowId);
 		if(rowAlreadySelected)
@@ -1454,7 +1501,9 @@ export class Et2NextmatchActionController
 				continue;
 			}
 			const rowElement = rowObject._context as HTMLElement | null;
-			if(rowElement?.isConnected)
+			const isSelectedProxy = rowElement?.getAttribute("data-et2nm-selection-proxy") === "1" &&
+			                        !this.allSelected && this.selectedRowIds.includes(rowId);
+			if(rowElement?.isConnected || isSelectedProxy)
 			{
 				continue;
 			}
