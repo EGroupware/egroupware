@@ -4,6 +4,8 @@
   height: 100%;
    */
   padding: 0 var(--sl-spacing-small);
+  max-height: 98vh; //If popup is not big enough make sure we can still reach bottom buttons
+  overflow: auto; //To trigger a scrollbar when user interface is zoomed (desktop or browser).
 
   .dialogHeader, .dialogFooter, .dialogFooterToolbar {
 	// Set border a little thicker & darker
