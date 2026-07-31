@@ -232,7 +232,7 @@ so we force the button images to be square*/
 	set image(new_image : string)
 	{
 		let oldValue = this.__image;
-		if(new_image.startsWith("http") || new_image.startsWith(this.egw().webserverUrl))
+		if(new_image?.startsWith("http") || new_image?.startsWith(this.egw().webserverUrl))
 		{
 			this.__image = new_image
 		}
