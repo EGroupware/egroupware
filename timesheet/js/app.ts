@@ -185,7 +185,7 @@ class TimesheetApp extends EgwApp
 		var ts_project = this.et2.getWidgetById('ts_project');
 		if (ts_project)
 		{
-			ts_project.set_blur(_widget.getValue() ? _widget.search.val() : '');
+			ts_project.placeholder = _widget.getValue() ?_widget._searchNode?.optionSearch(_widget.value)?.label : '';
 		}
 	}
 
