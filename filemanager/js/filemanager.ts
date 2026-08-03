@@ -272,11 +272,16 @@ export class filemanagerAPP extends EgwApp
 		const nm_update = this.nm.update_in_progress;
 		this.nm.update_in_progress = true;
 		this.change_dir(path);
+		state.state ??={};
+		state.state.col_filter ??= {};
 		if(state.state?.path)
 		{
-			state.state.col_filter ??= {};
 			// Client side uses dir, not path
 			state.state.col_filter.dir = path;
+		}
+		else
+		{
+			state.state.col_filter.dir = Object.values(this.path_widget)[0]?.value;
 		}
 		this.nm.update_in_progress = nm_update;
 
