@@ -518,9 +518,18 @@ class Sharing
 
 	/**
 	 * Serve a request on a share specified in REQUEST_URI
+	 *
+	 * This class is final, so nothing overwrites it's path-traversal checks!
 	 */
-	public function ServeRequest()
+	final public function ServeRequest()
 	{
+		// check for path traversal and abort with 400 Bad Request
+		if (strpos(urldecode($_SERVER['REQUEST_URI']), '..') !== false)
+		{
+			error_log(__METHOD__.'() stopped path traversal attempt using REQUEST_URI: '.$_SERVER['REQUEST_URI']);
+			http_response_code(400);
+			exit;
+		}
 		// sharing is for a different share, change to current share
 		if (empty($this->share['skip_validate_token']) && self::get_token() && $this->share['share_token'] !== self::get_token())
 		{
