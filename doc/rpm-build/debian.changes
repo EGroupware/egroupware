@@ -1,3 +1,11 @@
+egroupware-docker (23.1.20260804) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+  * Admin: really fix lost background image, if config from apps like calendar or addressbook is saved
+  * IMPORTANT: security coverage for 23.1 will end August 15th 2026, update to 26.x to receive further security updates!
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 04 Aug 2026 15:35:59 +0200
+
 egroupware-docker (23.1.20260724) hardy; urgency=low
 
   * SECURITY: this release fixes multiple security vulnerabilities, everyone is strongly adviced to update to it!
