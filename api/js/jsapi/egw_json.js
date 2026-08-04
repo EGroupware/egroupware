@@ -255,7 +255,13 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				.catch((_err) => {
 					if (!response_ok)
 					{
+						// request was aborted via promise.abort(), or browser cancelled it (eg. navigation): ignore
+						if (_err && _err.name === 'AbortError')
+						{
+							return;
+						}
 						// HTTP-level error (eg. 400 from a thrown InvalidArgumentException): _err is the Response object
+						// or a network-level failure (eg. TypeError "Failed to fetch"): _err is the Error object
 						(error || this.handleError).call(this, _err, 'error');
 					}
 					// no response / empty body causing response.json() to throw (a different error per browser!)
@@ -313,9 +319,12 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			const date = typeof response.headers === 'object' ? 'Date: '+response.headers.get('Date') :
 				(typeof response.getAllResponseHeaders === 'function' ? response.getAllResponseHeaders().match(/^Date:.*$/mi)[0] : null) ||
 				'Date: '+(new Date).toString();
+			// response is not a real HTTP response (eg. a network-level fetch failure): fall back to its error message
+			const status = typeof response.status !== 'undefined' ? response.statusText+' ('+response.status+')' :
+				(response.message || this.egw.lang('network error'));
 			this.egw.message.call(this.egw,
 				this.egw.lang('A request to the EGroupware server returned with an error')+
-				': '+response.statusText+' ('+response.status+")\n\n"+
+				': '+status+"\n\n"+
 				this.egw.lang('Please reload the EGroupware desktop (F5 / Cmd+r).')+"\n"+
 				this.egw.lang('If the error persists, contact your administrator for help and ask to check the error-log of the webserver.')+
 				"\n\nURL: "+this.url+"\n"+date+
