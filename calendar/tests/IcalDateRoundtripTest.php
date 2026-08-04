@@ -37,9 +37,19 @@ class IcalDateRoundtripTest extends \EGroupware\Api\AppTest
 	protected static $orig_date_tz;
 	protected static $orig_server_timezone;
 	protected static $orig_user_tz;
+	protected static $orig_user_dateformat;
+	protected static $orig_user_timeformat;
 
 	public static function setUpBeforeClass() : void
 	{
+		// capture before the real login in parent::setUpBeforeClass() runs, so we
+		// restore Api\DateTime's static format properties to whatever they were
+		// before this class touched them - not to the logged-in user's own prefs,
+		// which would otherwise leak into unrelated tests running later in the
+		// same PHPUnit process (those statics are shared process-wide)
+		self::$orig_user_dateformat = Api\DateTime::$user_dateformat;
+		self::$orig_user_timeformat = Api\DateTime::$user_timeformat;
+
 		parent::setUpBeforeClass();
 		self::$orig_date_tz = date_default_timezone_get();
 		self::$orig_server_timezone = $GLOBALS['egw_info']['server']['server_timezone'] ?? 'UTC';
@@ -52,6 +62,8 @@ class IcalDateRoundtripTest extends \EGroupware\Api\AppTest
 		$GLOBALS['egw_info']['server']['server_timezone'] = self::$orig_server_timezone;
 		$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = self::$orig_user_tz;
 		Api\DateTime::init();
+		Api\DateTime::$user_dateformat = self::$orig_user_dateformat;
+		Api\DateTime::$user_timeformat = self::$orig_user_timeformat;
 		parent::tearDownAfterClass();
 	}
 
@@ -75,6 +87,8 @@ class IcalDateRoundtripTest extends \EGroupware\Api\AppTest
 		$GLOBALS['egw_info']['server']['server_timezone'] = self::$orig_server_timezone;
 		$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = self::$orig_user_tz;
 		Api\DateTime::init();
+		Api\DateTime::$user_dateformat = self::$orig_user_dateformat;
+		Api\DateTime::$user_timeformat = self::$orig_user_timeformat;
 
 		parent::tearDown();
 	}
