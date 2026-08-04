@@ -151,6 +151,9 @@
 	"require-dev": {
 		"phpunit/phpunit": "^12.5.22"
 	},
+	"replace": {
+		"pear/pear_exception": "*"
+	},
 	"suggest": {
 		"ext-opcache": "Opcode cache to speed up PHP",
 		"ext-apcu": "Used for in-memory caching",
