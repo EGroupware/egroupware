@@ -164,6 +164,21 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	rows : any[] = [];
 
 	/**
+	 * Legacy XET selection handler.  This intentionally does not use the DOM
+	 * `onselect` property, whose native Event callback signature conflicts with
+	 * nextmatch's legacy `(selectedRowIds, nextmatch)` contract.
+	 */
+	@property({type: Function, attribute: false})
+	legacyOnselect : ((selectedRowIds : string[], nextmatch : Et2Nextmatch) => unknown) | null = null;
+
+	/**
+	 * XET file-drop handler.  Return `false` to cancel the framework's
+	 * default upload-and-link action
+	 */
+	@property({type: Function, attribute: false})
+	onfiledrop : ((rowUid : string, files : File[]) => unknown) | null = null;
+
+	/**
 	 * Template name used to resolve columns and row layout.
 	 *
 	 * This uses a custom accessor instead of Lit's generated setter so template
@@ -655,6 +670,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.addEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.addEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.addEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.addEventListener("et2-selection-changed", this._handleLegacyOnselect as EventListener);
+		this.addEventListener("et2-filedrop", this._handleLegacyOnfiledrop as EventListener);
 		this.addEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
 		this.addEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
 		this.addEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
@@ -694,6 +711,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.removeEventListener(ET2_NEXTMATCH_FILTER_EVENT, this._handleHeaderFilterEvent as EventListener);
 		this.removeEventListener("et2-loading-done", this._handleLoadingDone as EventListener);
 		this.removeEventListener("et2-selection-changed", this._handleSelectionChanged as EventListener);
+		this.removeEventListener("et2-selection-changed", this._handleLegacyOnselect as EventListener);
+		this.removeEventListener("et2-filedrop", this._handleLegacyOnfiledrop as EventListener);
 		this.removeEventListener("et2-active-row-changed", this._handleActiveRowChanged as EventListener);
 		this.removeEventListener("et2-columns-changed", this._handleDatagridColumnsChanged as EventListener);
 		this.removeEventListener("et2-column-selection-items", this._handleColumnSelectionItems as EventListener);
@@ -720,6 +739,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	transformAttributes(attrs)
 	{
+		// `onselect` is a native HTMLElement property.  Move the legacy XET
+		// handler before the generic transformer resolves Function properties.
+		if(typeof attrs.onselect !== "undefined")
+		{
+			attrs.legacyOnselect = attrs.onselect;
+			delete attrs.onselect;
+		}
+
 		// Process 'settings' into properties
 		// We're before namespace creation here, so use attrs.id
 		const attrSettings = this._settingsObject(attrs.settings);
@@ -2661,6 +2688,32 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		});
 		this._syncActiveGrid(sourceGrid);
 		this._actionController.handleSelectionChanged(this._mergedSelectionDetail(event.detail || {}));
+	};
+
+	/**
+	 * Invoke a legacy `onselect` XET handler after the current selection has
+	 * been merged and passed to the action controller.
+	 */
+	private _handleLegacyOnselect = (event : CustomEvent) : void =>
+	{
+		const datagrid = this._datagrid;
+		if(!datagrid || !event.composedPath().includes(datagrid))
+		{
+			return;
+		}
+		this.legacyOnselect?.call(this, this.getSelection().ids, this);
+	};
+
+	/**
+	 * Invoke a legacy `onfiledrop` XET handler.  Returning false cancels the
+	 * same default action cancelled by preventDefault() on `et2-filedrop`.
+	 */
+	private _handleLegacyOnfiledrop = (event : CustomEvent<{rowUid : string; files : File[]}>) : void =>
+	{
+		if(this.onfiledrop?.call(this, event.detail.rowUid, event.detail.files) === false)
+		{
+			event.preventDefault();
+		}
 	};
 
 	/**
