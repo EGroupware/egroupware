@@ -383,7 +383,7 @@ export class Et2LinkList extends Et2LinkString
 		};
 
 		// Unsaved entry, had no ID yet
-		if(!this.entryId || typeof this.entryId !== "string" && this.entryId[link.link_id])
+		if(!this.entryId || typeof this.entryId !== "string")
 		{
 			if(this.entryId)
 			{
