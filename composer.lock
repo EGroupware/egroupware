@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "479d31feb907970842db9869ddd72467",
+    "content-hash": "94f162323bcdccf5e5ee5a42a9290a80",
     "packages": [
         {
             "name": "adldap2/adldap2",
@@ -1796,16 +1796,16 @@
         },
         {
             "name": "egroupware/icalendar",
-            "version": "2.2.5",
+            "version": "2.2.6",
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/Icalendar.git",
-                "reference": "aa841afb3bc719ab55400d04f3e4db8f96af6fe7"
+                "reference": "a6acb078dd259bcbdeda1231fe75247c77e7e05f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/aa841afb3bc719ab55400d04f3e4db8f96af6fe7",
-                "reference": "aa841afb3bc719ab55400d04f3e4db8f96af6fe7",
+                "url": "https://api.github.com/repos/EGroupware/Icalendar/zipball/a6acb078dd259bcbdeda1231fe75247c77e7e05f",
+                "reference": "a6acb078dd259bcbdeda1231fe75247c77e7e05f",
                 "shasum": ""
             },
             "require": {
@@ -1854,9 +1854,9 @@
             "description": "iCalendar and vCard library",
             "homepage": "https://www.horde.org/libraries/Horde_Icalendar",
             "support": {
-                "source": "https://github.com/EGroupware/Icalendar/tree/2.2.5"
+                "source": "https://github.com/EGroupware/Icalendar/tree/2.2.6"
             },
-            "time": "2026-06-26T00:00:00+00:00"
+            "time": "2026-08-04T00:00:00+00:00"
         },
         {
             "name": "egroupware/idna",
@@ -13821,8 +13821,7 @@
     },
     "platform-dev": [],
     "platform-overrides": {
-        "php": "8.2",
-        "ext-swoole": "4.4.2"
+        "php": "8.2"
     },
     "plugin-api-version": "2.9.0"
 }
