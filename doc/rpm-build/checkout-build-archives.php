@@ -44,19 +44,19 @@ $config = array(
 	// add given extra-apps or (uncompressed!) archives to above all.tar.bz2 archive
 	'all-add' => array('contrib'),
 	// diverse binaries we need
-	'svn' => trim(`which svn` ?? 'svn'),
-	'tar' => trim(`which gtar` ?: `which gnutar` ?: `which tar`),	// tar on MacOS does not support --owner or --group
-	'mv' => trim(`which mv`),
-	'rm' => trim(`which rm`),
-	'zip' => trim(`which zip` ?? 'zip'),
-	'bzip2' => trim(`which bzip2` ?? 'bzip2'),
-	'clamscan' => trim(`which clamscan` ?? 'clamscan'),
-	'freshclam' => trim(`which freshclam` ?? 'freshclam'),
-	'git' => trim(`which git` ?? 'git'),
-	'gpg' => trim(`which gpg` ?? 'gpg'),
-	'editor' => trim(`which vi` ?? 'vi'),
-	'rsync' => trim(`which rsync` ?? 'rsync').' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*" --exclude "*-policy-*" --exclude "*-webauthn-*" --exclude "*-kanban-*"',
-	'composer' => trim(`which composer.phar`),
+	'svn' => trim(shell_exec('which svn') ?? 'svn'),
+	'tar' => trim(shell_exec('which gtar') ?: shell_exec('which gnutar') ?: shell_exec('which tar')),	// tar on MacOS does not support --owner or --group
+	'mv' => trim(shell_exec('which mv')),
+	'rm' => trim(shell_exec('which rm')),
+	'zip' => trim(shell_exec('which zip') ?? 'zip'),
+	'bzip2' => trim(shell_exec('which bzip2') ?? 'bzip2'),
+	'clamscan' => trim(shell_exec('which clamscan') ?? 'clamscan'),
+	'freshclam' => trim(shell_exec('which freshclam') ?? 'freshclam'),
+	'git' => trim(shell_exec('which git') ?? 'git'),
+	'gpg' => trim(shell_exec('which gpg') ?? 'gpg'),
+	'editor' => trim(shell_exec('which vi') ?? 'vi'),
+	'rsync' => trim(shell_exec('which rsync') ?? 'rsync').' --progress -e ssh --exclude "*-stylite-*" --exclude "*-esyncpro-*" --exclude "*-policy-*" --exclude "*-webauthn-*" --exclude "*-kanban-*"',
+	'composer' => trim(shell_exec('which composer.phar')),
 	'after-checkout' => 'rm -rf */source */templates/*/source',
 	'packager' => 'build@egroupware.org',
 	'obs' => '~/build.opensuse.org/server:eGroupWare:trunk/egroupware-docker',
@@ -573,8 +573,6 @@ function github_api($_url, $data, $method='POST', $upload=null, $content_type=nu
 	}
 
 	if ($verbose) echo (strlen($response) > 200 ? substr($response, 0, 200).' ...' : $response)."\n";
-
-	curl_close($c);
 
 	return json_decode($response, true);
 }
