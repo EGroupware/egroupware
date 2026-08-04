@@ -79,8 +79,8 @@ class Openidconnect implements BackendSSO
 			$account_lid = $this->client->getVerifiedClaims($attribute);
 
 			// check for email attribute, that email is either verified or unverified emails are explicitly allowed
-			if ($attribute === 'email' && ($this->client->getVerifiedClaims('email_verified')
-				|| !empty($GLOBALS['egw_info']['server']['oic_unverified_email'])))
+			if ($attribute === 'email' && !$this->client->getVerifiedClaims('email_verified')
+				&& empty($GLOBALS['egw_info']['server']['oic_email_unverified']))
 			{
 				return null;
 			}
