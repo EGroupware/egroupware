@@ -1773,7 +1773,7 @@ class calendar_boupdate extends calendar_bo
 			{
 				if (!isset($event['alarm'][$id]))
 				{
-					$alarm['time'] = (new DateTime($event['start'], DateTime::$server_timezone))->modify("- {$alarm['offset']} seconds");
+					$alarm['time'] = (new DateTime($event['start'], DateTime::$server_timezone))->modify(-$alarm['offset'].' seconds');
 					if($alarm['time'] < new DateTime('now', DateTime::$server_timezone))
 					{
 						calendar_so::shift_alarm($event, $alarm);
