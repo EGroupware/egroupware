@@ -1,3 +1,17 @@
+egroupware-docker (26.8.20260804) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+  * Admin: really fix lost background image, if config from apps like calendar or addressbook is saved
+  * CalDAV/Calendar: fix EX/RDATE were exported wrong (timezone shifted) for server-timezones NOT UTC
+  * Customfields: fix multiline text and richtext CFs collapsing to almost nothing in Firefox
+  * Invoices: export exemption reason (code) to XML and automatic fill it for category-code "AE" with "Reverse charge" and "VATEX-EU-AE"
+  * OpenID: bump to current upstream (league v9, steverhoades v3, Slim 4, lcobucci/jwt 5)
+  * OpenIDConnect/Authentication: fix inverted email_verified check and config key mismatch
+  * Status/Jitsi: tolerate legacy too-short secrets, validate new ones in admin config
+  * WebAuthN: former EPL app allowing to use WebAuthN as 2nd factor either with passkeys, platform authenticators (e.g. Windows Hello) or hardware tokens like Yubikeys
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 04 Aug 2026 14:58:42 +0200
+
 egroupware-docker (26.7.20260724) hardy; urgency=low
 
   * SECURITY: this release fixes multiple security vulnerabilities, everyone is strongly adviced to update to it!
