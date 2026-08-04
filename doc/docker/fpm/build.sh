@@ -44,8 +44,7 @@ docker pull $BASE
 
 # add further tags for default PHP version only
 [ $PHP_VERSION = $DEFAULT_PHP_VERSION -a "$BRANCH" != $VERSION -a "dev-${BRANCH}" != $VERSION ] && {
-  #extra_tags="--tag egroupware/egroupware:latest --tag egroupware/egroupware:$BRANCH"
-  extra_tags="--tag egroupware/egroupware:$BRANCH"
+  extra_tags="--tag egroupware/egroupware:latest --tag egroupware/egroupware:$BRANCH"
 }
 
 if docker buildx 2>&1 >/dev/null
