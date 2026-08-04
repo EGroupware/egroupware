@@ -33,7 +33,7 @@ class Avatar extends Etemplate\Widget
 	 * @param array $contactIds Array of parameters (contact IDs) to process, one per Avatar
 	 * @return array An array containing the results of the image check
 	 */
-	public function ajax_image_check(array $contactIds) : array
+	public function ajax_image_check(array $contactIds=[]) : array
 	{
 		$result = [];
 		$contacts = new Contacts();
