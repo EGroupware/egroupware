@@ -472,6 +472,23 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 								const ai = <LitElement>loadWebComponent('et2-ai', {}, this);
 								wc.parentNode.insertBefore(ai, wc);
 								ai.appendChild(wc);
+								// et2-ai's :host is height:100%, so give it the same explicit
+								// height as the textarea it wraps.  Otherwise et2-ai stays
+								// squashed to the table's 1px auto-size hack and the textarea
+								// (which now has its own explicit height) overflows on top of
+								// the rows below instead of the table row growing to fit it.
+								// (attrs.height was already consumed & deleted by transformAttributes(),
+								// which set it as an inline style on wc itself - read it back from there.)
+								const height = (<HTMLElement><unknown>wc).style.height;
+								if(height)
+								{
+									(<HTMLElement><unknown>ai).style.height = height;
+								}
+							}
+							// see _setup_htmlarea() for why this is min-height, not height
+							else if(type === 'htmlarea' && attrs.minHeight)
+							{
+								(<HTMLElement><unknown>wc).style.minHeight = attrs.minHeight;
 							}
 						})
 					}
@@ -490,6 +507,14 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 						cf[0].append(ai);
 						ai._parent_node = cf[0];
 						ai.addChild(legacy);
+						// Same fix as the textarea case: et2-ai's :host is height:100%, so give it
+						// the same explicit height as the htmlarea it wraps.  Otherwise et2-ai stays
+						// squashed to the table's 1px auto-size hack and the htmlarea overflows on
+						// top of the rows below instead of the table row growing to fit it.
+						if(attrs.config?.height)
+						{
+							(<HTMLElement><unknown>ai).style.height = attrs.config.height;
+						}
 					}
 				}
 			}
@@ -702,6 +727,11 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		if(attrs.rows && attrs.rows > 0)
 		{
 			field.type = 'textarea';
+			// Give the textarea an explicit height instead of relying on it filling 100% of its
+			// container.  That percentage chain runs through the "TD will still autosize" 1px hack
+			// in etemplate2.css, which Firefox and Chrome resolve differently, collapsing the
+			// textarea to almost nothing in Firefox.  Use em, not px, so it scales with font-size.
+			attrs.height = (attrs.rows * 1.5) + 'em';
 		}
 
 		if(field.len)
@@ -820,7 +850,20 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 		{
 			attrs.config.width = field.len+'px';
 		}
-		attrs.config.height = (((field.rows > 0 && field.rows !='undefined') ? field.rows : 5) *16) +'px';
+		const rows = (field.rows > 0 && field.rows !='undefined') ? field.rows : 5;
+		// TinyMCE's own init config wants a plain pixel number, not a CSS length
+		attrs.config.height = (rows * 16) +'px';
+		// et2-htmlarea has its own built-in min-height for when it has a menu/toolbar
+		// (Et2HtmlArea.ts: .htmlarea__has-menu.htmlarea__has-toolbar { min-height: 20em }),
+		// but that only stops that *inner* element from shrinking - it doesn't make the
+		// *host* grow.  The host's own :host{height:100%} still resolves against the
+		// customfield table's "1px hack" TD, and Firefox (unlike Chrome) takes that
+		// literally instead of re-resolving it once the row auto-grows, collapsing the
+		// host to ~1px while its content overflows past it.  A definite min-height set
+		// directly on the host isn't subject to that percentage ambiguity - min-height
+		// always wins over a smaller height, in every browser - so mirror the component's
+		// own worst-case (menu+toolbar) floor here too.  See the et2-htmlarea wrap below.
+		attrs.minHeight = '20em';
 
 		// We have to push the config modifications into the modifications array, or they'll
 		// be overwritten by the site config from the server
