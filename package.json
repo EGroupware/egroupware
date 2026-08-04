@@ -112,5 +112,12 @@
   },
   "engines": {
     "node": ">=14.0.0"
+  },
+  "allowScripts": {
+    "core-js@3.29.1": true,
+    "esbuild@0.28.1": true,
+    "fsevents@2.3.3": true,
+    "fsevents@2.3.2": true,
+    "core-js-pure@3.37.1": true
   }
 }
