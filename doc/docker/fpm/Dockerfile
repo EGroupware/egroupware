@@ -103,13 +103,10 @@ RUN set -e \
 	&& npm install \
 	# npm install fails "silent" on network timeouts, retry until it works
 	&& until npm run build; do sleep 5; npm install; done \
-	&& npm install -g grunt-cli \
-	# npm install fails "silent" on network timeouts, retry until it works
-	&& until grunt; do sleep 5; npm install -g grunt-cli; done \
-    # fix permissions (as some npm modules have world-writable files)
+	# fix permissions (as some npm modules have world-writable files)
     && chmod -R o-w . \
+    && npm run css \
 	# clean up and remove caches
-	&& npm uninstall -g grunt-cli \
 	&& npm cache clear --force \
 	&& apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false zip \
 	&& apt-get clean \
