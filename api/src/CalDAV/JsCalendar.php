@@ -1004,6 +1004,10 @@ class JsCalendar extends JsBase
 				$ex_date = new Api\DateTime($timestamp, Api\DateTime::$server_timezone);
 				if (!empty($event['whole_day']))
 				{
+					// whole-day dates are floating: zero the time in the event's own
+					// timezone, not the server's, or the calendar day can shift (e.g.
+					// server=UTC, event=Europe/Berlin near midnight)
+					$ex_date->setTimezone(new \DateTimeZone($event['tzid']));
 					$ex_date->setTime(0, 0, 0);
 				}
 				$overrides[self::DateTime($ex_date, $event['tzid'])] = [
