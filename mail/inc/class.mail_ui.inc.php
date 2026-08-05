@@ -4904,16 +4904,48 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	public static function ajax_jmapBootstrap($icServerID=null)
 	{
 		$response = Api\Json\Response::get();
+		$icServerID = $icServerID ?: self::$icServerID;
 		try
 		{
-			$imapServer = Mail\Account::read($icServerID ?: self::$icServerID)->imapServer();
-			$response->data($imapServer instanceof Mail\Imap\Stalwart ? $imapServer->jmapBootstrap() : null);
+			// accountId "0" is never a real account - it's served by mail/jmap.php from an
+			// in-file fixture, purely so the client-side JMAP code can be tested/exercised
+			// without a real mailbox
+			if ((string)$icServerID === '0')
+			{
+				$response->data(self::jmapLocalBootstrap('0'));
+				return;
+			}
+			$imapServer = Mail\Account::read($icServerID)->imapServer();
+			$response->data($imapServer instanceof Mail\Imap\Stalwart
+				? $imapServer->jmapBootstrap()
+				// any other (plain IMAP) account: served by our own local JMAP shim, see mail/jmap.php
+				: self::jmapLocalBootstrap((string)$icServerID));
 		}
 		catch (Exception $e)
 		{
 			unset($e);
 			$response->data(null);
 		}
+	}
+
+	/**
+	 * Bootstrap payload for accounts served by our own local JMAP shim (mail/jmap.php),
+	 * i.e. every plain IMAP account (no real JMAP server exists for those) plus the acc_id="0"
+	 * demo/test fixture.
+	 *
+	 * @param string $accountId
+	 * @return array values for keys "sessionUrl", "accountId", "access_token", "expires_in"
+	 */
+	private static function jmapLocalBootstrap(string $accountId) : array
+	{
+		return [
+			'sessionUrl' => Api\Framework::getUrl('/mail/jmap.php'),
+			'accountId' => $accountId,
+			// NOT the session id: auth is via the session cookie (mail/jmap.php is a
+			// same-origin endpoint), this only fills jmap-jam's required bearerToken field
+			'access_token' => 'no-token-required',
+			'expires_in' => 3600,	// session lifetime is renewed on every request anyway
+		];
 	}
 
 	/**
