@@ -391,8 +391,10 @@ class Jmap extends Mail\Imap
 			fastcgi_finish_request();
 		}
 		$mail_account = Mail\Account::read($client_data['acc_id'], $client_data['account_id']);
-		$jmap = new Mail\Jmap($mail_account->acc_imap_host, $mail_account->acc_imap_username, $mail_account->acc_imap_password,
-			Api\Cache::getSession(__CLASS__, 'accountId:'.$mail_account->acc_id));
+		// go through imapServer()->jmapClient() (not a plain "new Mail\Jmap(...)"), so accounts using
+		// Imap\Stalwart authenticate with a cached Bearer token instead of checking the password again
+		$stalwart = $mail_account->imapServer();
+		$jmap = $stalwart->jmapClient();
 		$old_states = Api\Cache::getSession(__CLASS__, 'states:'.$mail_account->acc_id);
 		$sessionState = Api\Cache::getSession(__CLASS__, 'sessionState:'.$mail_account->acc_id);
 		$currentFolder = Api\Cache::getSession(__CLASS__, 'currentFolder:'.$mail_account->acc_id);
@@ -421,8 +423,6 @@ class Jmap extends Mail\Imap
 				{
 					break;  // no change or nothing we're interested in
 				}
-				$stalwart = $mail_account->imapServer();
-				$stalwart->jmap = $jmap;
 				$push_payload = [];
 				foreach($changes as $type => $change)
 				{

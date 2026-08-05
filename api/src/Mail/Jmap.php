@@ -218,6 +218,120 @@ class Jmap
 	}
 
 	/**
+	 * client_id we present to Stalwart's OAuth server
+	 *
+	 * Stalwart accepts any client_id by default and does not require prior registration,
+	 * see https://stalw.art/docs/auth/oauth/client-registration/
+	 */
+	const OAUTH_CLIENT_ID = 'egroupware';
+
+	/**
+	 * Never dereferenced by Stalwart, only compared between the /api/auth and /auth/token
+	 * calls of a single exchange, so an arbitrary (but https) URL is fine.
+	 */
+	const OAUTH_REDIRECT_URI = 'https://egroupware.org/oauth/stalwart-imap';
+
+	/**
+	 * Switch authentication from Basic username/password to a Bearer access-token
+	 *
+	 * Used by Imap\Stalwart to avoid the cost of a bcrypt password check on every request.
+	 *
+	 * @param string $token
+	 */
+	public function setBearerToken(string $token)
+	{
+		global $authorization;
+
+		$authorization[parse_url($this->url, PHP_URL_HOST) ?: $this->url] = 'Authorization: Bearer '.$token;
+	}
+
+	/**
+	 * Authenticate directly with $username/$password against Stalwart's own OAuth server to
+	 * obtain an access- and refresh-token, without any browser or user interaction.
+	 *
+	 * Stalwart does not implement the OAuth2 "password" grant (RFC 6749 §4.3). We instead
+	 * replicate what Stalwart's own WebUI does on login: POST credentials to /api/auth (the
+	 * single, unavoidable bcrypt check) to get a one-time client-code, then exchange that
+	 * code for tokens at the regular /auth/token endpoint using the "authorization_code"
+	 * grant - all server-side, no redirect or user interaction required.
+	 *
+	 * @link https://github.com/stalwartlabs/stalwart/blob/main/crates/http/src/auth/oauth/auth.rs
+	 * @param string $username
+	 * @param string $password
+	 * @return array|null null if NOT a Stalwart server, wrong credentials, or MFA is required,
+	 *  otherwise values for keys "access_token", "refresh_token", "expires_in"
+	 */
+	public function passwordGrant(string $username, string $password) : ?array
+	{
+		try {
+			$response = $this->api($this->oauthBaseUrl().'/api/auth', 'POST', [
+				'type' => 'authCode',
+				'accountName' => $username,
+				'accountSecret' => $password,
+				'clientId' => self::OAUTH_CLIENT_ID,
+				'redirectUri' => self::OAUTH_REDIRECT_URI,
+			]);
+			if (($response['type'] ?? null) !== 'authenticated' || empty($response['client_code']))
+			{
+				return null;	// wrong credentials, MFA required, or request not accepted
+			}
+			return $this->exchangeToken('authorization_code', [
+				'code' => $response['client_code'],
+				'redirect_uri' => self::OAUTH_REDIRECT_URI,
+			]);
+		}
+		catch (\Throwable $e) {
+			return null;	// not a Stalwart server, network- or other error
+		}
+	}
+
+	/**
+	 * Use a refresh-token to get a new access-token (and possibly a new refresh-token)
+	 *
+	 * @param string $refresh_token
+	 * @return array|null null if refresh failed (token revoked or expired), otherwise
+	 *  values for keys "access_token", "refresh_token", "expires_in"
+	 */
+	public function refreshToken(string $refresh_token) : ?array
+	{
+		try {
+			return $this->exchangeToken('refresh_token', [
+				'refresh_token' => $refresh_token,
+			]);
+		}
+		catch (\Throwable $e) {
+			return null;
+		}
+	}
+
+	/**
+	 * Call Stalwart's /auth/token endpoint
+	 *
+	 * @param string $grant_type "authorization_code" or "refresh_token"
+	 * @param array $params grant-specific parameters
+	 * @return array|null null on error (RFC 6749 §5.2), otherwise values for keys
+	 *  "access_token", "token_type", "expires_in", "refresh_token", "scope"
+	 */
+	protected function exchangeToken(string $grant_type, array $params) : ?array
+	{
+		$response = $this->api($this->oauthBaseUrl().'/auth/token', 'POST',
+			http_build_query(['grant_type' => $grant_type, 'client_id' => self::OAUTH_CLIENT_ID]+$params),
+			['Content-Type: application/x-www-form-urlencoded']);
+
+		return isset($response['access_token']) ? $response : null;
+	}
+
+	/**
+	 * Get scheme+host of the JMAP server, to build OAuth endpoint URLs from
+	 *
+	 * @return string e.g. "https://example.org:443"
+	 */
+	protected function oauthBaseUrl() : string
+	{
+		return preg_replace('#^(https?://[^/]+)(/.*)$#', '$1', $this->apiUrl ?: $this->url);
+	}
+
+	/**
 	 * Simple JSON path implementation
 	 *
 	 * @param array $value
