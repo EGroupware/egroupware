@@ -21,6 +21,7 @@ import {
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {MailCompose} from "./compose";
+import {MailJmap} from "./jmap";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -110,6 +111,7 @@ export class MailApp extends EgwApp
 	push_active : any = {};
 
 	private _compose : MailCompose;
+	private _jmap : MailJmap;
 	et2_obj: etemplate2;
 // defer calls to mail_refreshFolderStatus,
 // to accumulate updates of multiple rows e.g. deleting multiple emails
@@ -124,6 +126,20 @@ export class MailApp extends EgwApp
 			window.app._compose = new MailCompose(this);
 		}
 		return window.app._compose;
+	}
+
+	/**
+	 * Direct client-side JMAP access sub-object (gets automatically instanciated, if used)
+	 *
+	 * Only usable for accounts backed by Imap\Stalwart - see MailJmap.getRows()
+	 */
+	get jmap() : MailJmap
+	{
+		if(!window.app._jmap)
+		{
+			window.app._jmap = new MailJmap(this);
+		}
+		return window.app._jmap;
 	}
 
 	/**
@@ -180,6 +196,10 @@ export class MailApp extends EgwApp
 		// delete compose sub-object
 		this._compose?.destroy();
 		delete this._compose;
+
+		// delete jmap sub-object
+		this._jmap?.destroy();
+		delete this._jmap;
 
 		// call parent
 		super.destroy.apply(this, arguments);

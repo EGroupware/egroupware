@@ -124,13 +124,45 @@ class Stalwart extends Jmap
 	 */
 	protected function cacheToken(string $cache_key, array $response) : string
 	{
-		Api\Cache::setInstance(__CLASS__, 'access:'.$cache_key, $response['access_token'],
-			max(60, ($response['expires_in'] ?? 3600) - self::TOKEN_EXPIRY_MARGIN));
+		$ttl = max(60, ($response['expires_in'] ?? 3600) - self::TOKEN_EXPIRY_MARGIN);
+
+		Api\Cache::setInstance(__CLASS__, 'access:'.$cache_key, $response['access_token'], $ttl);
+		// cached alongside the token (same TTL), so clients asking for a bootstrap payload
+		// can report a remaining expires_in, without us storing the token twice
+		Api\Cache::setInstance(__CLASS__, 'access_expires:'.$cache_key, time() + $ttl, $ttl);
 
 		if (!empty($response['refresh_token']))
 		{
 			Api\Cache::setInstance(__CLASS__, 'refresh:'.$cache_key, $response['refresh_token'], self::REFRESH_TOKEN_TTL);
 		}
 		return $response['access_token'];
+	}
+
+	/**
+	 * Bootstrap payload for browser clients that want to talk to Stalwart's JMAP API directly
+	 *
+	 * Never sends the refresh-token or password to the client: only a short-lived access-token
+	 * plus the public session-discovery URL and JMAP accountId needed to use it. Callers are
+	 * expected to re-request this shortly before expires_in elapses, instead of reacting to a
+	 * 401, so the refresh-token stays server-side at all times.
+	 *
+	 * @return array|null null if not eligible (admin/master connection, or no token available)
+	 *  otherwise values for keys "sessionUrl", "accountId", "access_token", "expires_in"
+	 */
+	public function jmapBootstrap() : ?array
+	{
+		if ($this->isAdminConnection || !($access_token = $this->accessToken()))
+		{
+			return null;
+		}
+		$cache_key = $this->acc_id.':'.$this->acc_imap_username;
+		$jmap = parent::jmapClient();
+
+		return [
+			'sessionUrl' => $jmap->sessionUrl(),
+			'accountId' => $jmap->accountId,
+			'access_token' => $access_token,
+			'expires_in' => max(0, (int)Api\Cache::getInstance(__CLASS__, 'access_expires:'.$cache_key) - time()),
+		];
 	}
 }

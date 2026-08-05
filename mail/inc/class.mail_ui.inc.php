@@ -1897,10 +1897,34 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * function generateJmapRowID - create a unique rowID for a JMAP-sourced row (see splitRowID)
+	 *
+	 * Unlike generateRowID(), $_folderID is a JMAP Mailbox id, NOT base64-encoded (it's already
+	 * an opaque id without special characters), and $_emailID is the JMAP Email.id, NOT a
+	 * numeric IMAP UID - that's exactly what lets splitRowID() tell the two shapes apart.
+	 *
+	 * @param integer $_profileID profile ID for the rowid to be used
+	 * @param string $_folderID JMAP Mailbox id
+	 * @param string $_emailID JMAP Email id
+	 * @param boolean $_prependApp to indicate that the app 'mail' is to be used for creating the rowID
+	 * @return string - a colon separated string in the form [app:]accountID:profileID:folderID:emailID
+	 */
+	static function generateJmapRowID($_profileID, $_folderID, $_emailID, $_prependApp=false)
+	{
+		return ($_prependApp?'mail'.self::$delimiter:'').trim($GLOBALS['egw_info']['user']['account_id']).self::$delimiter.$_profileID.self::$delimiter.$_folderID.self::$delimiter.$_emailID;
+	}
+
+	/**
 	 * function splitRowID - split the rowID into its parts
 	 *
+	 * RowIDs come in two flavours, distinguished by whether the last segment is numeric:
+	 * - classic IMAP rows: folder is base64-encoded, msgUID is a numeric IMAP UID
+	 * - JMAP-sourced rows (see generateJmapRowID): folderID is a raw JMAP Mailbox id (NOT
+	 *   base64-encoded), emailID is an opaque JMAP Email id (never purely numeric)
+	 *
 	 * @param string|null $_rowID string - a colon separated string in the form accountID:profileID:folder:message_uid
-	 * @return array with values for keys "app", "accountID", "profileID", "folder", "msgUID"
+	 * @return array with values for keys "app", "accountID", "profileID", "folder", "msgUID",
+	 *  "folderID", "emailID", "is_jmap"
 	 */
 	static function splitRowID(?string $_rowID)
 	{
@@ -1911,12 +1935,18 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// we have an own created rowID; prepend app=mail
 			array_unshift($res,'mail');
 		}
+		// classic IMAP UIDs are always numeric; JMAP Email ids are opaque, non-numeric strings
+		$is_jmap = isset($res[4]) && $res[4] !== '' && !is_numeric($res[4]);
+
 		return [
 			'app' => $res[0]??null,
 			'accountID' => $res[1]??null,
 			'profileID' => $res[2]??null,
-			'folder' => !empty($res[3]) ? base64_decode($res[3]) : null,
-			'msgUID' => $res[4]??null,
+			'folder' => !$is_jmap && !empty($res[3]) ? base64_decode($res[3]) : null,
+			'msgUID' => !$is_jmap ? ($res[4]??null) : null,
+			'folderID' => $is_jmap ? ($res[3]??null) : null,
+			'emailID' => $is_jmap ? ($res[4]??null) : null,
+			'is_jmap' => $is_jmap,
 		];
 	}
 
@@ -4859,6 +4889,30 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				$response->call('egw.refresh',lang('failed to delete %1 ! Reason: %2',$oldFolderInfo['shortDisplayName'],$msg),'mail');
 			}
+		}
+	}
+
+	/**
+	 * Bootstrap payload for client-side direct JMAP access (see Mail\Imap\Stalwart::jmapBootstrap)
+	 *
+	 * Returns null for accounts NOT backed by Stalwart/JMAP (or if no token could be obtained),
+	 * in which case the client transparently keeps using the regular server-side get_rows.
+	 *
+	 * @param int|null $icServerID profile / server ID, defaults to the active profile
+	 * @return nothing values for keys "sessionUrl", "accountId", "access_token", "expires_in", or null
+	 */
+	public static function ajax_jmapBootstrap($icServerID=null)
+	{
+		$response = Api\Json\Response::get();
+		try
+		{
+			$imapServer = Mail\Account::read($icServerID ?: self::$icServerID)->imapServer();
+			$response->data($imapServer instanceof Mail\Imap\Stalwart ? $imapServer->jmapBootstrap() : null);
+		}
+		catch (Exception $e)
+		{
+			unset($e);
+			$response->data(null);
 		}
 	}
 

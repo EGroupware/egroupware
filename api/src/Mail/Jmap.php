@@ -332,6 +332,19 @@ class Jmap
 	}
 
 	/**
+	 * Get the JMAP session-discovery URL (RFC 8620 .well-known/jmap)
+	 *
+	 * Used by clients (e.g. the browser via jmap-jam) that need to bootstrap their own
+	 * JMAP session, given only a bearer access-token, without ever seeing the password.
+	 *
+	 * @return string e.g. "https://example.org/.well-known/jmap"
+	 */
+	public function sessionUrl() : string
+	{
+		return $this->oauthBaseUrl().'/.well-known/jmap';
+	}
+
+	/**
 	 * Simple JSON path implementation
 	 *
 	 * @param array $value
