@@ -96,6 +96,22 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		$this->assertArrayHasKey('email', $first['from'][0]);
 	}
 
+	public function testEmailGetPreviewOnlyFetchedWhenRequested()
+	{
+		// mirrors mail_ui::get_rows()'s "fetchPreview" behaviour (filter2 / mail.ShowDetails
+		// preference, the "Sneak preview in list" toggle): MailJmap.getRows() only puts
+		// "preview" in the requested properties when that toggle is on
+		$withPreview = \mail_jmap_dispatch([
+			['Email/get', ['accountId' => '0', 'ids' => ['1'], 'properties' => ['id', 'preview']], 'g0'],
+		])[0][1]['list'][0];
+		$this->assertNotSame('', $withPreview['preview']);
+
+		$withoutPreview = \mail_jmap_dispatch([
+			['Email/get', ['accountId' => '0', 'ids' => ['1'], 'properties' => ['id', 'subject']], 'g0'],
+		])[0][1]['list'][0];
+		$this->assertSame('', $withoutPreview['preview']);
+	}
+
 	public function testEmailQueryPagination()
 	{
 		$responses = \mail_jmap_dispatch([
@@ -273,6 +289,44 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		$query = \mail_jmap_filter_to_query(['notKeyword' => '$seen']);
 		$state = self::searchState($query);
 		$this->assertArrayHasKey('SEEN', $state['flag']);
+	}
+
+	public function testImapDateConvertsToUserTimezoneNotRealUtc()
+	{
+		// eTemplate/get_rows convention: dates are shown in the *user's* configured timezone,
+		// formatted with a literal "Z" suffix so the browser displays those wall-clock digits
+		// as-is (see mail_jmap_imap_date()'s docblock) - NOT real UTC despite the "Z". Horde's
+		// DateTime objects carry the server's timezone, so a straight UTC conversion is wrong.
+		$previous = \EGroupware\Api\DateTime::$user_timezone;
+		\EGroupware\Api\DateTime::$user_timezone = new \DateTimeZone('Europe/Berlin');
+		try
+		{
+			// 21:01 UTC == 23:01 in Berlin (CEST, UTC+2) in August
+			$date = new \DateTime('2026-08-05 21:01:00', new \DateTimeZone('UTC'));
+			$this->assertSame('2026-08-05T23:01:00Z', \mail_jmap_imap_date($date));
+		}
+		finally
+		{
+			\EGroupware\Api\DateTime::$user_timezone = $previous;
+		}
+	}
+
+	public function testEmailGetPreservesEmailQuerySortOrder()
+	{
+		// Email/get's list must come back in the order Email/query's ids were given, not
+		// whatever order the fixture (or, for a real account, the IMAP FETCH response) happens
+		// to iterate in - otherwise a correctly-sorted Email/query gets silently undone
+		$reversedIds = array_reverse(array_keys(array_filter(
+			mail_jmap_demo_fixture()['emails'],
+			static fn($email) => $email['mailbox'] === 'INBOX',
+		)));
+		$reversedIds = array_map('strval', $reversedIds);
+
+		$result = \mail_jmap_dispatch([
+			['Email/get', ['accountId' => '0', 'ids' => $reversedIds], 'g0'],
+		]);
+
+		$this->assertSame($reversedIds, array_column($result[0][1]['list'], 'id'));
 	}
 
 	public function testFilterToQueryIgnoresInMailbox()

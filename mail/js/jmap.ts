@@ -42,6 +42,7 @@ export interface JmapGetRowsQuery
 	filter? : string;			// status filter, see mail_ui::$statusTypes
 	startdate? : string;
 	enddate? : string;
+	filter2? : string;			// truthy: "Sneak preview in list" toggle, see mail_ui::get_rows()'s fetchPreview
 }
 
 type EmailFilterCondition = Record<string, any>;
@@ -110,6 +111,10 @@ export class MailJmap
 
 		const start = query.start || 0;
 		const limit = query.num_rows || 50;
+		// matches mail_ui::get_rows()'s "fetchPreview" behaviour: the (comparatively expensive)
+		// message-body preview snippet is only fetched when the "Sneak preview in list" toggle
+		// (filter2 / mail.ShowDetails preference) is on
+		const fetchPreview = !!query.filter2;
 
 		const [{ids, emails}] = await client.requestMany((t) =>
 		{
@@ -121,13 +126,18 @@ export class MailJmap
 				limit,
 				calculateTotal: true,
 			});
+			const properties = [
+				'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
+				'from', 'to', 'cc', 'bcc', 'hasAttachment',
+			];
+			if (fetchPreview)
+			{
+				properties.push('preview');
+			}
 			const emails = t.Email.get({
 				accountId: token.accountId,
 				ids: ids.$ref('/ids'),
-				properties: [
-					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject', 'preview',
-					'from', 'to', 'cc', 'bcc', 'hasAttachment',
-				],
+				properties,
 			});
 			return {ids, emails};
 		});
@@ -164,9 +174,20 @@ export class MailJmap
 		}
 		// _filters.selectedFolder is only set once the user actively picks a folder in this
 		// session (see app.ts's "nm.activeFilters['selectedFolder'] = ..." call-sites) - same
-		// "not always set, read it from foldertree" situation and fallback as app.ts:588-589
+		// "not always set, read it from foldertree" situation and fallback as app.ts:588-589.
+		// On the very first fetch right after page load, even the foldertree widget itself can
+		// still be mid-initialisation (returns nothing yet) - without a further fallback here,
+		// that one call falls through to classic get_rows(), while every later fetch (folder
+		// click, sort, ...) already has a populated selectedFolder and goes via JMAP, so the
+		// same folder ends up rendered twice with two different code paths (and, since classic
+		// get_rows() caches/sorts server-side while we always do a fresh IMAP query, possibly
+		// visibly different results). mail_ui::ajax_jmapBootstrap() etc. persist the current
+		// "profileID::folder" into the "ActiveProfileID" preference (mail_ui.inc.php:1629) on
+		// every navigation, and preferences are already loaded synchronously at this point
+		// (no widget-readiness dependency), so it's a reliable last-resort fallback.
 		let selectedFolder = _filters.selectedFolder ||
-			this.app.et2?.getWidgetById(this.app.nm_index + '[foldertree]')?.getValue();
+			this.app.et2?.getWidgetById(this.app.nm_index + '[foldertree]')?.getValue() ||
+			this.egw.preference('ActiveProfileID', 'mail');
 		if (!selectedFolder)
 		{
 			return false;
@@ -184,6 +205,7 @@ export class MailJmap
 			filter: _filters.filter,
 			startdate: _filters.startdate,
 			enddate: _filters.enddate,
+			filter2: _filters.filter2,
 		};
 		// sort is only split into order/sort strings server-side (Nextmatch.php), still a
 		// {id, asc} object at this point - same normalisation buildSort() expects as input
@@ -603,7 +625,7 @@ export class MailJmap
 			date: email.sentAt || email.receivedAt,
 			modified: email.receivedAt,
 			size: email.size,
-			bodypreview: email.preview,
+			bodypreview: email.preview || '',
 			attachments: email.hasAttachment ? "<et2-image src='attach'></et2-image>" : '&nbsp;',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
 			// mail_preview() unconditionally reads data.attachmentsBlock[0], so this must at

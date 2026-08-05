@@ -495,10 +495,15 @@ function mail_jmap_build_sort(array $sortSpec) : array
 function mail_jmap_email_get(string $accountId, array $args, array &$context) : array
 {
 	$ids = array_map('strval', (array)($args['ids'] ?? []));
+	// absent/empty "properties" means "all", per RFC 8621 - our own client always sends an
+	// explicit list though, and only includes "preview" when the "Sneak preview in list"
+	// toggle is on (mirrors mail_ui::get_rows()'s fetchPreview), to skip the extra IMAP work
+	$properties = (array)($args['properties'] ?? []);
+	$wantPreview = !$properties || in_array('preview', $properties, true);
 
 	if ($accountId === '0')
 	{
-		return mail_jmap_demo_email_get($ids);
+		return mail_jmap_demo_email_get($ids, $wantPreview);
 	}
 	if (!$ids)
 	{
@@ -516,17 +521,27 @@ function mail_jmap_email_get(string $accountId, array $args, array &$context) : 
 	$query->flags();
 	$query->size();
 	$query->structure();
-	$query->bodyText(['length' => 800, 'peek' => true]);
+	if ($wantPreview)
+	{
+		$query->bodyText(['length' => 800, 'peek' => true]);
+	}
 
 	$results = $imap->fetch($mailbox, $query, [
 		'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
 	]);
 
+	// IMAP FETCH responses come back in whatever order the server chooses (typically ascending
+	// UID, NOT the order of the id-set given), so $results must NOT be iterated directly - that
+	// would silently undo Email/query's sort (e.g. turning "newest first" into "oldest first"
+	// within the page). Rebuild the list in the order Email/query already determined instead.
 	$list = [];
-	foreach ($results as $uid => $data)
+	foreach ($ids as $id)
 	{
-		/** @var \Horde_Imap_Client_Data_Fetch $data */
-		$list[] = mail_jmap_email_from_fetch($imap, $mailbox, (string)$uid, $data);
+		if (($data = $results[(int)$id] ?? null))
+		{
+			/** @var \Horde_Imap_Client_Data_Fetch $data */
+			$list[] = mail_jmap_email_from_fetch($imap, $mailbox, $id, $data, $wantPreview);
+		}
 	}
 	$found = array_column($list, 'id');
 
@@ -545,9 +560,10 @@ function mail_jmap_email_get(string $accountId, array $args, array &$context) : 
  * @param string $mailbox
  * @param string $uid
  * @param \Horde_Imap_Client_Data_Fetch $data
+ * @param bool $wantPreview false skips the (extra IMAP round-trip) preview snippet entirely
  * @return array
  */
-function mail_jmap_email_from_fetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data) : array
+function mail_jmap_email_from_fetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true) : array
 {
 	$envelope = $data->getEnvelope();
 	$structure = $data->getStructure();
@@ -573,7 +589,7 @@ function mail_jmap_email_from_fetch(\Horde_Imap_Client_Socket $imap, string $mai
 		'receivedAt' => mail_jmap_imap_date($data->getImapDate()),
 		'sentAt' => mail_jmap_imap_date($envelope->date),
 		'subject' => (string)$envelope->subject,
-		'preview' => mail_jmap_preview($imap, $mailbox, $uid, $structure, $data),
+		'preview' => $wantPreview ? mail_jmap_preview($imap, $mailbox, $uid, $structure, $data) : '',
 		'from' => mail_jmap_address_list($envelope->from),
 		'to' => mail_jmap_address_list($envelope->to),
 		'cc' => mail_jmap_address_list($envelope->cc),
@@ -690,9 +706,13 @@ function mail_jmap_imap_date(?\DateTime $date) : ?string
 	{
 		return null;
 	}
-	$date = clone $date;
-	$date->setTimezone(new \DateTimeZone('UTC'));
-	return $date->format(Api\Mail\Jmap::DATETIME_UTC_FORMAT);
+	// eTemplate/get_rows convention (NOT real UTC, despite the "Z"): dates are converted to the
+	// *user's* timezone (Api\DateTime::$user_timezone, from prefs), then formatted with a
+	// literal "Z" suffix so the browser displays those wall-clock numbers as-is instead of
+	// re-applying its own (browser-local) timezone conversion on top. Horde's DateTime objects
+	// carry the server's timezone, not the user's, so this conversion is required, not optional -
+	// Api\DateTime::to() handles it the same way classic get_rows()/Nextmatch.php do.
+	return Api\DateTime::to($date, Api\DateTime::ET2);
 }
 
 /**
@@ -778,9 +798,10 @@ function mail_jmap_demo_email_query(string $folder, array $args, array &$context
 
 /**
  * @param string[] $ids
+ * @param bool $wantPreview false blanks the "preview" property, mirroring the real-account path
  * @return array {accountId: string, list: array[], notFound: string[]}
  */
-function mail_jmap_demo_email_get(array $ids) : array
+function mail_jmap_demo_email_get(array $ids, bool $wantPreview = true) : array
 {
 	$emails = mail_jmap_demo_fixture()['emails'];
 	$list = [];
@@ -788,7 +809,7 @@ function mail_jmap_demo_email_get(array $ids) : array
 	{
 		if (isset($emails[$id]))
 		{
-			$list[] = $emails[$id];
+			$list[] = $wantPreview ? $emails[$id] : ['preview' => ''] + $emails[$id];
 		}
 	}
 	$found = array_column($list, 'id');
