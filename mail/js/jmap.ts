@@ -605,6 +605,10 @@ export class MailJmap
 			size: email.size,
 			bodypreview: email.preview,
 			attachments: email.hasAttachment ? "<et2-image src='attach'></et2-image>" : '&nbsp;',
+			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
+			// mail_preview() unconditionally reads data.attachmentsBlock[0], so this must at
+			// least exist as an array or clicking a row throws and the preview never loads
+			attachmentsBlock: [],
 			class: css.join(' '),
 			icon: 'bug-fill',
 			flags,

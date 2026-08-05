@@ -4904,18 +4904,19 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	public static function ajax_jmapBootstrap($icServerID=null)
 	{
 		$response = Api\Json\Response::get();
-		$icServerID = $icServerID ?: self::$icServerID;
 		try
 		{
 			// accountId "0" is never a real account - it's served by mail/jmap.php from an
 			// in-file fixture, purely so the client-side JMAP code can be tested/exercised
-			// without a real mailbox
+			// without a real mailbox.
+			// Checked BEFORE the "?: self::$icServerID" fallback below: '0' is falsy in PHP,
+			// so applying that fallback first would silently replace it with the active profile.
 			if ((string)$icServerID === '0')
 			{
 				$response->data(self::jmapLocalBootstrap('0'));
 				return;
 			}
-			$imapServer = Mail\Account::read($icServerID)->imapServer();
+			$imapServer = Mail\Account::read($icServerID ?: self::$icServerID)->imapServer();
 			$response->data($imapServer instanceof Mail\Imap\Stalwart
 				? $imapServer->jmapBootstrap()
 				// any other (plain IMAP) account: served by our own local JMAP shim, see mail/jmap.php
@@ -4939,7 +4940,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	private static function jmapLocalBootstrap(string $accountId) : array
 	{
 		return [
-			'sessionUrl' => Api\Framework::getUrl('/mail/jmap.php'),
+			'sessionUrl' => Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php')),
 			'accountId' => $accountId,
 			// NOT the session id: auth is via the session cookie (mail/jmap.php is a
 			// same-origin endpoint), this only fills jmap-jam's required bearerToken field

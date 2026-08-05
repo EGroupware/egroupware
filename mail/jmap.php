@@ -106,7 +106,7 @@ if (!defined('MAIL_JMAP_TESTS'))
  */
 function mail_jmap_session() : array
 {
-	$url = Api\Framework::getUrl('/mail/jmap.php');
+	$url = Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php'));
 
 	return [
 		'capabilities' => [
@@ -516,7 +516,7 @@ function mail_jmap_email_get(string $accountId, array $args, array &$context) : 
 	$query->flags();
 	$query->size();
 	$query->structure();
-	$query->bodyText(['length' => 400, 'peek' => true]);
+	$query->bodyText(['length' => 800, 'peek' => true]);
 
 	$results = $imap->fetch($mailbox, $query, [
 		'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
@@ -526,7 +526,7 @@ function mail_jmap_email_get(string $accountId, array $args, array &$context) : 
 	foreach ($results as $uid => $data)
 	{
 		/** @var \Horde_Imap_Client_Data_Fetch $data */
-		$list[] = mail_jmap_email_from_fetch((string)$uid, $data);
+		$list[] = mail_jmap_email_from_fetch($imap, $mailbox, (string)$uid, $data);
 	}
 	$found = array_column($list, 'id');
 
@@ -541,16 +541,19 @@ function mail_jmap_email_get(string $accountId, array $args, array &$context) : 
  * Map a single fetched message to a JMAP-shaped Email object (only the properties
  * MailJmap.getRows() requests - see the file docblock for the full scope note)
  *
+ * @param \Horde_Imap_Client_Socket $imap
+ * @param string $mailbox
  * @param string $uid
  * @param \Horde_Imap_Client_Data_Fetch $data
  * @return array
  */
-function mail_jmap_email_from_fetch(string $uid, \Horde_Imap_Client_Data_Fetch $data) : array
+function mail_jmap_email_from_fetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data) : array
 {
 	$envelope = $data->getEnvelope();
+	$structure = $data->getStructure();
 
 	$hasAttachment = false;
-	if (($structure = $data->getStructure()))
+	if ($structure)
 	{
 		foreach ($structure->partIterator() as $part)
 		{
@@ -562,7 +565,6 @@ function mail_jmap_email_from_fetch(string $uid, \Horde_Imap_Client_Data_Fetch $
 			}
 		}
 	}
-	$preview = trim(preg_replace('/\s+/u', ' ', strip_tags((string)$data->getBodyText(0))));
 
 	return [
 		'id' => $uid,
@@ -571,13 +573,72 @@ function mail_jmap_email_from_fetch(string $uid, \Horde_Imap_Client_Data_Fetch $
 		'receivedAt' => mail_jmap_imap_date($data->getImapDate()),
 		'sentAt' => mail_jmap_imap_date($envelope->date),
 		'subject' => (string)$envelope->subject,
-		'preview' => mb_substr($preview, 0, 200),
+		'preview' => mail_jmap_preview($imap, $mailbox, $uid, $structure, $data),
 		'from' => mail_jmap_address_list($envelope->from),
 		'to' => mail_jmap_address_list($envelope->to),
 		'cc' => mail_jmap_address_list($envelope->cc),
 		'bcc' => mail_jmap_address_list($envelope->bcc),
 		'hasAttachment' => $hasAttachment,
 	];
+}
+
+/**
+ * Get a clean preview snippet.
+ *
+ * For a multipart message, the base message's body-text (used directly for a
+ * singlepart message) is the *raw* multipart content - MIME boundaries, sub-part
+ * headers and all - so for multipart messages we do one extra, per-message
+ * bodyPart() fetch for the actual first text part (Horde_Mime_Part::findBody()),
+ * instead of showing that raw MIME structure to the user.
+ *
+ * @param \Horde_Imap_Client_Socket $imap
+ * @param string $mailbox
+ * @param string $uid
+ * @param \Horde_Mime_Part|null $structure
+ * @param \Horde_Imap_Client_Data_Fetch $data
+ * @return string
+ */
+function mail_jmap_preview(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, ?\Horde_Mime_Part $structure, \Horde_Imap_Client_Data_Fetch $data) : string
+{
+	if ($structure && stripos((string)$structure->getType(), 'multipart/') === 0 &&
+		($bodyId = $structure->findBody('plain') ?? $structure->findBody()) !== null)
+	{
+		try
+		{
+			$partQuery = new \Horde_Imap_Client_Fetch_Query();
+			$partQuery->bodyPart($bodyId, ['decode' => true, 'length' => 800, 'peek' => true]);
+			$partResults = $imap->fetch($mailbox, $partQuery, [
+				'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+			]);
+			if (($partData = $partResults[(int)$uid] ?? null))
+			{
+				/** @var \Horde_Imap_Client_Data_Fetch $partData */
+				return mail_jmap_clean_preview((string)$partData->getBodyPart($bodyId));
+			}
+		}
+		catch (\Throwable $e)
+		{
+			// fall through to the (possibly noisy) top-level body text below
+		}
+	}
+	return mail_jmap_clean_preview((string)$data->getBodyText(0));
+}
+
+/**
+ * Strip MIME header/boundary lines and collapse whitespace, then truncate
+ *
+ * @param string $text
+ * @return string
+ */
+function mail_jmap_clean_preview(string $text) : string
+{
+	$lines = array_filter(preg_split('/\r?\n/', $text), static function ($line)
+	{
+		$line = trim($line);
+		return $line !== '' && !preg_match('/^(--|[\w-]+:\s)/', $line);
+	});
+	$preview = trim(preg_replace('/\s+/u', ' ', strip_tags(implode(' ', $lines))));
+	return mb_substr($preview, 0, 200);
 }
 
 /**
