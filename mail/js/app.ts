@@ -167,6 +167,10 @@ export class MailApp extends EgwApp
 				},
 				this
 			);
+
+		// Let mail's direct-JMAP path (see jmap.ts) answer NextMatch's regular row-fetch
+		// itself for Stalwart-backed accounts, instead of round-tripping through get_rows
+		this.egw.dataRegisterFetch('mail', this.jmap.fetchRows, this.jmap);
 	}
 
 	/**
@@ -186,6 +190,7 @@ export class MailApp extends EgwApp
 
 		// Unregister client side cache
 		this.egw.dataCacheUnregister('mail');
+		this.egw.dataUnregisterFetch('mail');
 
 		this.tree_wdg?.destroy && this.tree_wdg.destroy();
 		this.tree_wdg?.remove && this.tree_wdg.remove();

@@ -52,6 +52,16 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 	var lastModification = null;
 
 	/**
+	 * fetchCallback stores callbacks that get the first chance to answer a
+	 * dataFetch() call themselves, instead of the regular ajax_get_rows
+	 * request, e.g. to fetch rows via a different transport (see mail's
+	 * direct-JMAP get_rows). It is indexed by prefix.
+	 *
+	 * @type Object
+	 */
+	var fetchCallback = {};
+
+	/**
 	 * cacheCallback stores callbacks that determine if data is placed
 	 * into cacheStorage, or simply kept temporarily.  It is indexed
 	 * by prefix.
@@ -384,78 +394,118 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 				knownUids.slice(typeof _queriedRange.start != "undefined" ? _queriedRange.start:0,KNOWN_UID_LIMIT);
 			}
 
-			// Check to see if we have long-term caching of the query and its results
-			if(window.localStorage && _context.prefix && cacheCallback[_context.prefix])
+			// Regular request to ajax_get_rows, incl. the long-term query cache check.
+			// Named so a registered fetchCallback (see below) can fall back to it asynchronously.
+			function sendRequest()
 			{
-				// Ask registered callbacks if we should cache this
-				for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
+				// Check to see if we have long-term caching of the query and its results
+				if(window.localStorage && _context.prefix && cacheCallback[_context.prefix])
 				{
-					var cc = cacheCallback[_context.prefix][i];
-					var cache_key = cc.callback.call(cc.context, _context);
-					if(cache_key)
+					// Ask registered callbacks if we should cache this
+					for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
 					{
-						cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
-
-						var cached = window.localStorage.getItem(cache_key);
-						if(cached)
+						var cc = cacheCallback[_context.prefix][i];
+						var cache_key = cc.callback.call(cc.context, _context);
+						if(cache_key)
 						{
-							cached = JSON.parse(cached);
-							var needs_update = true;
+							cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
 
-							// Check timestamp
-							if(cached.lastModification && ((Date.now()/1000) - cached.lastModification) < CACHE_LIFETIME)
+							var cached = window.localStorage.getItem(cache_key);
+							if(cached)
 							{
-								needs_update = false;
-							}
+								cached = JSON.parse(cached);
+								var needs_update = true;
 
-							egw.debug('log', 'Data cached query from ' + new Date(cached.lastModification*1000)+': ' + cache_key + '('+
-								(needs_update ? 'will be' : 'will not be')+" updated)\nprocessing...");
+								// Check timestamp
+								if(cached.lastModification && ((Date.now()/1000) - cached.lastModification) < CACHE_LIFETIME)
+								{
+									needs_update = false;
+								}
 
-							// Call right away with cached data, but set no_cache flag
-							// to avoid re-caching this data with a new timestamp.
-							// We may still ask the server though.
-							var no_cache = _context.no_cache;
-							_context.no_cache = true;
-							parseServerResponse(cached, _callback, _context, _execId, _widgetId);
-							_context.no_cache = no_cache;
+								egw.debug('log', 'Data cached query from ' + new Date(cached.lastModification*1000)+': ' + cache_key + '('+
+									(needs_update ? 'will be' : 'will not be')+" updated)\nprocessing...");
+
+								// Call right away with cached data, but set no_cache flag
+								// to avoid re-caching this data with a new timestamp.
+								// We may still ask the server though.
+								var no_cache = _context.no_cache;
+								_context.no_cache = true;
+								parseServerResponse(cached, _callback, _context, _execId, _widgetId);
+								_context.no_cache = no_cache;
 
 
-							// If cache registrant wants notification of cache useage,
-							// let it know
-							if(cc.notification)
-							{
-								cc.notification.call(cc.context, needs_update);
-							}
+								// If cache registrant wants notification of cache useage,
+								// let it know
+								if(cc.notification)
+								{
+									cc.notification.call(cc.context, needs_update);
+								}
 
-							if(!needs_update)
-							{
-								// Cached data is new enough, skip the server call
-								return;
+								if(!needs_update)
+								{
+									// Cached data is new enough, skip the server call
+									return;
+								}
 							}
 						}
 					}
 				}
+				// create a clone of filters, which can be used in parseServerResponse and cache callbacks
+				// independent of changes happening while waiting for the response
+				_context.filters = jQuery.extend({}, _filters);
+				var request = egw.json(
+					"EGroupware\\Api\\Etemplate\\Widget\\Nextmatch::ajax_get_rows",
+					[
+						_execId,
+						_queriedRange,
+						_filters,
+						_widgetId,
+						knownUids,
+						lm
+					],
+					function(result) {
+						parseServerResponse(result, _callback, _context, _execId, _widgetId);
+					},
+					this,
+					true
+				);
+				request.sendRequest();
 			}
-			// create a clone of filters, which can be used in parseServerResponse and cache callbacks
-			// independent of changes happening while waiting for the response
-			_context.filters = jQuery.extend({}, _filters);
-			var request = egw.json(
-				"EGroupware\\Api\\Etemplate\\Widget\\Nextmatch::ajax_get_rows",
-				[
-					_execId,
-					_queriedRange,
-					_filters,
-					_widgetId,
-					knownUids,
-					lm
-				],
-				function(result) {
-					parseServerResponse(result, _callback, _context, _execId, _widgetId);
-				},
-				this,
-				true
-			);
-			request.sendRequest();
+
+			// Give a registered app callback (see dataRegisterFetch) the first chance to
+			// answer this fetch itself, e.g. via a different transport than ajax_get_rows.
+			if(_context.prefix && fetchCallback[_context.prefix] && fetchCallback[_context.prefix].length)
+			{
+				for(var i = 0; i < fetchCallback[_context.prefix].length; i++)
+				{
+					var fc = fetchCallback[_context.prefix][i];
+					var result = fc.callback.call(fc.context, _execId, _queriedRange, _filters, _widgetId, knownUids, lm);
+					if(result)
+					{
+						// result may be the {order, data, total, ...} shape directly, or a
+						// Promise resolving to it (or to false/undefined to fall back)
+						Promise.resolve(result).then(function(res)
+						{
+							if(res)
+							{
+								parseServerResponse(res, _callback, _context, _execId, _widgetId);
+							}
+							else
+							{
+								sendRequest();
+							}
+						}, function(err)
+						{
+							// misbehaving fetchCallback (rejected instead of resolving false) - fall back rather than hang
+							egw.debug('warn', 'dataRegisterFetch callback for prefix "'+_context.prefix+'" rejected, falling back to ajax_get_rows', err);
+							sendRequest();
+						});
+						return;
+					}
+				}
+			}
+
+			sendRequest();
 		},
 
 		/**
@@ -513,6 +563,61 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 			}
 			// Callback not provided or not found, reset by prefix
 			cacheCallback[prefix] = [];
+		},
+
+		/**
+		 * Let an app opt-in to answer dataFetch() itself, instead of the regular
+		 * ajax_get_rows request - e.g. mail fetching rows directly from a JMAP
+		 * server for Stalwart-backed accounts.
+		 *
+		 * Only one registered callback per prefix is expected to actually handle a
+		 * given fetch; the first one returning a truthy value wins.
+		 *
+		 * @param {string} prefix UID / Application prefix should match the
+		 *	individual record prefix
+		 * @param {function} callback_function function(_execId, _queriedRange, _filters,
+		 *	_widgetId, _knownUids, _lastModification) - called before the regular
+		 *	ajax_get_rows request. Return false/undefined to let dataFetch() continue
+		 *	normally, or a {order, data, total, lastModification, readonlys} result
+		 *	(same shape ajax_get_rows itself returns, un-prefixed uids) - or a Promise
+		 *	resolving to one of those - to answer the fetch instead.
+		 * @param {object} context Context for callback function.
+		 */
+		dataRegisterFetch: function(prefix, callback_function, context)
+		{
+			if(typeof fetchCallback[prefix] == 'undefined')
+			{
+				fetchCallback[prefix] = [];
+			}
+			fetchCallback[prefix].push({
+				callback: callback_function,
+				context: context || null
+			});
+		},
+
+		/**
+		 * Unregister a previously registered fetch callback
+		 * @param {string} prefix UID / Application prefix should match the
+		 *	individual record prefix
+		 * @param {function} [callback] Callback function to un-register.  If
+		 *	omitted, all functions for the prefix will be removed.
+		 */
+		dataUnregisterFetch: function(prefix, callback)
+		{
+			if(typeof callback != 'undefined' && fetchCallback[prefix])
+			{
+				for(var i = 0; i < fetchCallback[prefix].length; i++)
+				{
+					if(fetchCallback[prefix][i].callback == callback)
+					{
+						fetchCallback[prefix].splice(i,1);
+						return;
+					}
+				}
+				return;
+			}
+			// Callback not provided or not found, reset by prefix
+			fetchCallback[prefix] = [];
 		}
 	};
 

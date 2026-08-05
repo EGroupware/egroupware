@@ -1389,6 +1389,33 @@ declare interface IegwAppLocal extends IegwWndLocal
 	 *	omitted, all functions for the prefix will be removed.
 	 */
 	dataCacheUnregister(prefix : string, callback? : Function);
+	/**
+	 * Let an app opt-in to answer dataFetch() itself, instead of the regular
+	 * ajax_get_rows request - e.g. mail fetching rows directly from a JMAP
+	 * server for Stalwart-backed accounts.
+	 *
+	 * Only one registered callback per prefix is expected to actually handle a
+	 * given fetch; the first one returning a truthy value wins.
+	 *
+	 * @param {string} prefix UID / Application prefix should match the
+	 *	individual record prefix
+	 * @param {function} callback_function function(_execId, _queriedRange, _filters,
+	 *	_widgetId, _knownUids, _lastModification) - called before the regular
+	 *	ajax_get_rows request. Return false/undefined to let dataFetch() continue
+	 *	normally, or a {order, data, total, lastModification, readonlys} result
+	 *	(same shape ajax_get_rows itself returns, un-prefixed uids) - or a Promise
+	 *	resolving to one of those - to answer the fetch instead.
+	 * @param {object} context Context for callback function.
+	 */
+	dataRegisterFetch(prefix : string, callback_function : Function, context : object);
+	/**
+	 * Unregister a previously registered fetch callback
+	 * @param {string} prefix UID / Application prefix should match the
+	 *	individual record prefix
+	 * @param {function} [callback] Callback function to un-register.  If
+	 *	omitted, all functions for the prefix will be removed.
+	 */
+	dataUnregisterFetch(prefix : string, callback? : Function);
 }
 
 /**

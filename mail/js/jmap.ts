@@ -1,9 +1,13 @@
 /**
  * mail - direct client-side JMAP access for Stalwart/JMAP backed accounts
  *
- * Phase 1: getRows() only - a standalone, directly-callable JMAP replica of
- * mail_ui::get_rows(), NOT yet wired into the NextMatch data-fetch pipeline,
- * and no server-side action (reply/delete/move/flag/...) understands the
+ * getRows() is a standalone JMAP replica of mail_ui::get_rows(), wired into
+ * NextMatch's regular row-fetch via fetchRows() + egw.dataRegisterFetch()
+ * (see MailApp's constructor/destroy), so the browser talks to the JMAP
+ * server directly for Stalwart-backed accounts instead of round-tripping
+ * through ajax_get_rows - transparently falling back to it otherwise.
+ *
+ * No server-side action (reply/delete/move/flag/...) understands the
  * row-ids produced here yet. See mail_ui::splitRowID()/generateJmapRowID()
  * for the server-side counterpart of the row-id scheme used below.
  *
@@ -50,11 +54,15 @@ export class MailJmap
 {
 	protected app : MailApp;
 
+	// how long to skip re-checking a profile that just turned out not to be JMAP-eligible
+	private static readonly INELIGIBLE_RECHECK_INTERVAL = 5 * 60 * 1000;
+
 	// keyed by profileID, since a user may have several JMAP-backed mail accounts
 	private tokens : Record<string, JmapToken> = {};
 	private tokenPromises : Record<string, Promise<JmapToken | null>> = {};
 	private clients : Record<string, JamClient> = {};
 	private refreshTimers : Record<string, number> = {};
+	private ineligibleUntil : Record<string, number> = {};
 	// "profileID::folder/path" -> JMAP Mailbox id
 	private mailboxIds : Record<string, string> = {};
 
@@ -131,6 +139,84 @@ export class MailJmap
 	}
 
 	/**
+	 * egw.dataRegisterFetch('mail', ...) callback: gives us the first chance to answer
+	 * NextMatch's regular row-fetch, so the browser talks to the JMAP server directly for
+	 * Stalwart-backed accounts instead of round-tripping through ajax_get_rows.
+	 *
+	 * Falls back (resolves false) for cases this phase doesn't handle yet - single-row
+	 * refresh, parent/children (csv_export) - or for accounts that just aren't JMAP-eligible,
+	 * so the caller transparently sends the regular request instead. Never rejects.
+	 *
+	 * @param _execId unused - only relevant to the ajax_get_rows path
+	 * @param _queriedRange {start, num_rows} or {refresh: [...]}
+	 * @param _filters raw NextMatch activeFilters (same object about to be JSON-posted to
+	 *  ajax_get_rows if we don't handle it), incl. selectedFolder and sort as {id, asc}
+	 * @param _widgetId unused
+	 * @param _knownUids unused - JMAP always tells us the true total via calculateTotal
+	 * @param _lastModification unused - we don't support incremental/only-changed fetches yet
+	 */
+	fetchRows(_execId : string, _queriedRange : any, _filters : any, _widgetId : string,
+		_knownUids : string[], _lastModification : number) : false | Promise<any>
+	{
+		if (_queriedRange.refresh || _queriedRange.parent_id)
+		{
+			return false;
+		}
+		// _filters.selectedFolder is only set once the user actively picks a folder in this
+		// session (see app.ts's "nm.activeFilters['selectedFolder'] = ..." call-sites) - same
+		// "not always set, read it from foldertree" situation and fallback as app.ts:588-589
+		let selectedFolder = _filters.selectedFolder ||
+			this.app.et2?.getWidgetById(this.app.nm_index + '[foldertree]')?.getValue();
+		if (!selectedFolder)
+		{
+			return false;
+		}
+		if (!selectedFolder.match(/::/))
+		{
+			selectedFolder += '::INBOX';
+		}
+		const query : JmapGetRowsQuery = {
+			selectedFolder,
+			start: _queriedRange.start,
+			num_rows: _queriedRange.num_rows,
+			cat_id: _filters.cat_id,
+			search: _filters.search,
+			filter: _filters.filter,
+			startdate: _filters.startdate,
+			enddate: _filters.enddate,
+		};
+		// sort is only split into order/sort strings server-side (Nextmatch.php), still a
+		// {id, asc} object at this point - same normalisation buildSort() expects as input
+		if (_filters.sort && typeof _filters.sort === 'object')
+		{
+			query.order = _filters.sort.id;
+			query.sort = _filters.sort.asc ? 'ASC' : 'DESC';
+		}
+
+		return this.getRows(query).then((result) : any =>
+		{
+			if (!result)
+			{
+				return false;
+			}
+			const data : Record<string, any> = {};
+			result.rows.forEach((row) => data[row.row_id] = row);
+
+			return {
+				order: result.rows.map((row) => row.row_id),
+				data,
+				total: result.total,
+				lastModification: Math.floor(Date.now() / 1000),
+				readonlys: {},
+			};
+		}).catch((e) =>
+		{
+			console.error('MailJmap.fetchRows(): falling back to regular get_rows after error', e);
+			return false;
+		});
+	}
+
+	/**
 	 * Get a valid access-token for $profileID, requesting a fresh one from the server if needed
 	 *
 	 * The refresh-token never leaves the server: we just re-request this same bootstrap
@@ -140,6 +226,12 @@ export class MailJmap
 	 */
 	private async ensureToken(profileID : string) : Promise<JmapToken | null>
 	{
+		// avoid re-requesting the bootstrap endpoint on every single get_rows call for
+		// accounts that just aren't JMAP-eligible (fetchRows() is now on that hot path)
+		if ((this.ineligibleUntil[profileID] || 0) > Date.now())
+		{
+			return null;
+		}
 		const cached = this.tokens[profileID];
 		if (cached && cached.expires_at > Date.now())
 		{
@@ -156,6 +248,7 @@ export class MailJmap
 					{
 						delete this.tokens[profileID];
 						delete this.clients[profileID];
+						this.ineligibleUntil[profileID] = Date.now() + MailJmap.INELIGIBLE_RECHECK_INTERVAL;
 						return null;
 					}
 					const token : JmapToken = {
