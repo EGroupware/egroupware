@@ -41,6 +41,10 @@ $GLOBALS['egw_info'] = array(
 );
 include(dirname(__DIR__).'/header.inc.php');
 
+// release session, as this endpoint is stateless (stores nothing in $_SESSION) and it
+// blocks parallel requests otherwise - same pattern as api/avatar.php, api/images.php, ...
+$GLOBALS['egw']->session->commit_session();
+
 use EGroupware\Mail\JmapShim;
 
 header('Content-Type: application/json; charset=utf-8');
