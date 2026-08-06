@@ -1334,12 +1334,8 @@ export class MailJmap
 		const fromList = addressList(email.from);
 		const toList = addressList(email.to);
 
-		let attachments = email.hasAttachment ? "<et2-image src='attach'></et2-image>" : '&nbsp;';
-		if (keywords['$flagged'] || MailJmap.CUSTOM_FLAGS.some((flag, index) =>
-			keywords['$customflag' + (index + 1)]))
-		{
-			attachments += "<et2-image src='unread_flagged_small' id='flaggedImage'></et2-image>";
-		}
+		const hasFlagged = keywords['$flagged'] || MailJmap.CUSTOM_FLAGS.some((flag, index) =>
+			keywords['$customflag' + (index + 1)]);
 
 		return {
 			row_id: this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id,
@@ -1356,7 +1352,11 @@ export class MailJmap
 			modified: email.receivedAt,
 			size: email.size,
 			bodypreview: email.preview || '',
-			attachments,
+			// Kept for the preview's attachment-presence check.  Row templates use
+			// the individual image values below instead of a legacy html widget.
+			attachments: email.hasAttachment ? 'attach' : '',
+			attachment_icon: email.hasAttachment ? 'attach' : '',
+			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
 			// mail_preview() unconditionally reads data.attachmentsBlock[0], so this must at
 			// least exist as an array or clicking a row throws and the preview never loads

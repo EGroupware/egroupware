@@ -19,9 +19,11 @@ import {
 	EGW_KEY_ARROW_UP
 } from "../../api/js/egw_action/egw_action_constants";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
+import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
-import {MailJmap, JmapBodyResult} from "./jmap";
+import {JmapBodyResult, MailJmap} from "./jmap";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -31,7 +33,6 @@ import type {Et2Tree} from "../../api/js/etemplate/Et2Tree/Et2Tree";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {Et2Description} from "../../api/js/etemplate/Et2Description/Et2Description";
 import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
-
 
 
 /**
@@ -217,14 +218,6 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {bool} _disable
 	 */
-	disable_autorefresh(_disable)
-	{
-		if (this.checkET2())
-		{
-			this.et2.getWidgetById('nm').set_disable_autorefresh(_disable);
-		}
-	}
-
 	/**
 	 * check and try to reinitialize et2 of module
 	 */
@@ -341,7 +334,6 @@ export class MailApp extends EgwApp
 				}
 				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
 				const cat_id = this.et2.getWidgetById('cat_id');
-				cat_id.value = this.nm.activeFilters.cat_id;	// not sure why this is necessary to get the current value
 				const already_refreshed = this.mail_searchtype_change(null, cat_id);
 				if (!already_refreshed) this.mail_callRefreshVacationNotice();
 				break;
@@ -963,72 +955,33 @@ export class MailApp extends EgwApp
 	/**
 	 * nextmatch normally handles updates and selection of next row after delete, but mail is different
 	 *
-	 * Mail uses et2_nextmatch option "disable_selection_advance" so here we handle the selection of the "next" row by
-	 * special rules - remember the above & below messages and only select the "next" row if the user uses
-	 * arrow keys in the next 10 seconds.
+	 * Mail uses the delete event's remembered neighbours and selects one only if
+	 * the user uses an arrow key in the next 10 seconds.
 	 *
-	 * @param et2_extension_nextmatch nm
+	 * @param Et2Nextmatch nm
 	 * @param string[] row_ids
 	 * @param string type
 	 */
-	refresh(nm, row_ids, type)
+	refresh(nm : Et2Nextmatch, row_ids : string[], type : Et2DatagridUpdateType)
 	{
-		// Note above and below rows
-		const rows = {above: null, below: null};
-
-		// Find 'top' & 'bottom', since selection order depends on which way user was moving
-		let entry = null;
-		row_ids.forEach(r =>
+		const selectRemembered = (event : CustomEvent<{previousRowId : string | null; nextRowId : string | null}>) =>
 		{
-			const rowEntry = nm.controller._selectionMgr._getRegisteredRowsEntry(r);
-			if (rows.above == null || rowEntry?.idx < rows.above.idx)
+			const selectNeighbour = (e : KeyboardEvent) =>
 			{
-				rows.above = rowEntry;
-			}
-			if (rows.below == null || rowEntry?.idx > rows.below.idx)
-			{
-				rows.below = rowEntry;
-			}
-		})
-		rows.above = rows.above.ao.getPrevious(1);
-		rows.below = rows.below?.ao?.getNext(1) ?? rows.above;
-
-		// Immediately refresh (remove from) nextmatch with normal refresh()
-		nm.refresh(row_ids, type);
-
-		// Wait to see if user moves the cursor via keyboard
-		const grid = nm.controller._grid.innerTbody.get(0);
-		const selectRemembered = (e) =>
-		{
-			let next = null;
-			if (e.keyCode === EGW_KEY_ARROW_UP && rows.above)
-			{
-				next = rows.above;
-			}
-			else if (e.keyCode === EGW_KEY_ARROW_DOWN)
-			{
-				next = rows.below;
-			}
-			if (next)
-			{
-				// Prevent double-move
+				const rowId = e.keyCode === EGW_KEY_ARROW_UP ? event.detail.previousRowId :
+					e.keyCode === EGW_KEY_ARROW_DOWN ? event.detail.nextRowId : null;
+				if(!rowId) return;
 				e.preventDefault();
 				e.stopImmediatePropagation();
-				// Focus with action system
-				nm.controller._selectionMgr.setSelected(next.id, true);
-				nm.controller._selectionMgr.setFocused(next.id, true);
-				// Scroll into view
-				next.iface.getDOMNode().scrollIntoViewIfNeeded();
-			}
-		}
-		// Bind listener
-		document.body.addEventListener("keydown", selectRemembered, {once: true});
-
-		// Remove listener after 10s
-		window.setTimeout(() =>
-		{
-			document.body.removeEventListener("keydown", selectRemembered);
-		}, 10000);
+				nm.selectSingleRow(rowId);
+				nm.focusRowById(rowId);
+			};
+			document.body.addEventListener("keydown", selectNeighbour, {once: true});
+			window.setTimeout(() => document.body.removeEventListener("keydown", selectNeighbour), 10000);
+		};
+		nm.addEventListener("et2-rows-deleted", selectRemembered as EventListener, {once: true});
+		nm.refresh(row_ids, type);
+		window.setTimeout(() => nm.removeEventListener("et2-rows-deleted", selectRemembered as EventListener), 0);
 	}
 
 		/**
@@ -1598,7 +1551,7 @@ export class MailApp extends EgwApp
 	/**
 	 * mail_preview - implementation of the preview action
 	 *
-	 * @param nextmatch et2_nextmatch The widget whose row was selected
+	 * @param nextmatch Et2Nextmatch The widget whose row was selected
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
 	mail_preview(selected, nextmatch) {
@@ -2552,7 +2505,7 @@ export class MailApp extends EgwApp
 	 */
 	mail_refreshMessageGrid(_isPopup: boolean = false, _refreshVacationNotice: boolean = false)
 	{
-		let nm: et2_nextmatch;
+		let nm: Et2Nextmatch;
 		if (_isPopup && !this.mail_isMainWindow)
 		{
 			nm = window.opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
@@ -2718,7 +2671,7 @@ export class MailApp extends EgwApp
 	 * then removes the rows & selects the next row for focus.  In mail we tell the nextmatch to remove the rows
 	 * immediately and keep track of the rows above & below the deleted row(s), not setting focus to a new row.
 	 * Then tell the server, and if the user presses up or down arrow in the next 10s, we focus the above or below row.
-	 * see et2_extension_nextmatch option "disable_selection_advance"
+	 * Mail keeps its delayed-arrow selection behaviour via the nextmatch delete event.
 	 *
 	 * @param {string} _msg - message list
 	 * @param {object} _action - optional action
@@ -2749,35 +2702,18 @@ export class MailApp extends EgwApp
 			message = this.mail_splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = atob(message[3]);
 		}
-		// nextmatch normally handles selection of next row after delete, but mail is different
-		// (uses et2_nextmatch option disable_selection_advance)
+		// Mail only selects an adjacent row after the user's next arrow key.
 		const nm = _calledFromPopup ?
 			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index) :
 			this.et2.getWidgetById(this.nm_index);
-		const row_ids = _msg["msg"];
 		if (!_msg["all"])
 		{
-			this.refresh(nm, _msg["msg"], et2_nextmatch.DELETE);
-		}
-
-		// If auto-refresh is on, turn it off until the delete request finishes
-		const nm_autorefresh = nm._get_autorefresh();
-		if (nm_autorefresh)
-		{
-			nm._set_autorefresh(0);
+			this.refresh(nm, _msg["msg"], Et2DatagridUpdateTypes.DELETE);
 		}
 
 		// Tell server
 		egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)])
 			.sendRequest(true)
-			.finally(() =>
-			{
-				// Restart autorefresh
-				if (nm_autorefresh)
-				{
-					nm._set_autorefresh(nm_autorefresh);
-				}
-			})
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
 		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
@@ -2972,7 +2908,7 @@ export class MailApp extends EgwApp
 
 		// reset nm action selection, seems actions system accumulate selected items
 		// and that leads to corruption for selected all actions
-		this.et2.getWidgetById(this.nm_index).controller._selectionMgr.resetSelection();
+		(this.et2.getWidgetById(this.nm_index) as Et2Nextmatch).clearSelection();
 
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
@@ -4585,24 +4521,16 @@ export class MailApp extends EgwApp
 
 		var self = this;
 		var nm = this.et2.getWidgetById(this.nm_index);
-		// Nextmatch automatically selects the next row and calls preview.
-		// Stop it for now, we'll put it back when the copy is done
-		let on_select = nm.options.onselect;
-		nm.options.onselect = null;
+		// The legacy callback is cancelable through its selection event, rather
+		// than changing the component's callback property.
+		const suppressPreview = (event : Event) => event.preventDefault();
+		nm.addEventListener("et2-selection-changed", suppressPreview, {capture: true, once: true});
 		_senders[0].parent.setAllSelected(false);
-		this.mail_preview([],nm);
-		// Restore onselect handler
-		nm.options.onselect = on_select;
-
-		// If auto-refresh is on, turn it off until the move request finishes
-		const nm_autorefresh = nm._get_autorefresh();
-		if (nm_autorefresh)
-		{
-			nm._set_autorefresh(0);
-		}
+		queueMicrotask(() => nm.removeEventListener("et2-selection-changed", suppressPreview, {capture: true}));
+		this.mail_preview([], nm);
 
 		// Remove from nm immediately so the user gets immediate feedback, we send an error message later in case something went wrong
-		this.refresh(nm, messages.msg, et2_nextmatch.DELETE);
+		this.refresh(nm, messages.msg, Et2DatagridUpdateTypes.DELETE);
 
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
@@ -4617,15 +4545,7 @@ export class MailApp extends EgwApp
 				nm.refresh();
 			}
 		})
-			.sendRequest(true)
-			.finally(() =>
-			{
-				// Restart autorefresh
-				if (nm_autorefresh)
-				{
-					nm._set_autorefresh(nm_autorefresh);
-				}
-			});
+			.sendRequest(true);
 	}
 
 	/**
@@ -5888,7 +5808,7 @@ export class MailApp extends EgwApp
 			if (_data[1] && _data[1].length > 0)
 			{
 				egw.refresh(_data[0],'mail',_data[1],'delete');
-				nm.controller._selectionMgr.resetSelection();
+				nm.clearSelection();
 			}
 			else
 			{
@@ -6316,14 +6236,11 @@ export class MailApp extends EgwApp
 	/**
 	 * get preview pane state base on selected preference.
 	 *
-	 * It also set a right css class for vertical state.
-	 *
 	 * @returns {Boolean} returns true for visible Pane and false for hiding
 	 */
 	getPreviewPaneState()
 	{
 		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
-		var nm = this.et2.getWidgetById(this.nm_index);
 		var state = false;
 		switch (previewPane)
 		{
@@ -6338,7 +6255,6 @@ export class MailApp extends EgwApp
 				break;
 			default: // default is vertical
 				state = true;
-				nm.header.right_div.addClass('vertical_splitter');
 		}
 		return state;
 	}

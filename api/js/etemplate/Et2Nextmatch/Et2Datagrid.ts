@@ -5859,7 +5859,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.dispatchEvent(new CustomEvent("et2-selection-changed", {
 			detail,
 			bubbles: true,
-			composed: true
+			composed: true,
+			cancelable: true
 		}));
 	}
 
@@ -6085,9 +6086,21 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(type === Et2DatagridUpdateTypes.DELETE)
 		{
 			// Delete is the one case we can satisfy entirely client-side.
-			if(this._removeRowsById(this._normalizeRefreshRowIds(row_ids)) > 0)
+			const deletedRowIds = this._normalizeRefreshRowIds(row_ids);
+			const neighbours = this.getNeighbours(deletedRowIds);
+			if(this._removeRowsById(deletedRowIds) > 0)
 			{
+				this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
 				this._finalizeRefreshedRows();
+				this.dispatchEvent(new CustomEvent("et2-rows-deleted", {
+					detail: {
+						rowIds: deletedRowIds,
+						previousRowId: neighbours.previousRowId,
+						nextRowId: neighbours.nextRowId
+					},
+					bubbles: true,
+					composed: true
+				}));
 			}
 			return;
 		}
@@ -6223,6 +6236,47 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.total = Math.max(0, this.total - removedCount);
 		}
 		return removedCount;
+	}
+
+	/**
+	 * Find the closest displayed rows before and after the supplied rows.  This
+	 * is useful for application-specific selection policies and other operations
+	 * that need to preserve a user's position without exposing the grid's row
+	 * collection.
+	 */
+	getNeighbours(rowIds : string[]) : {previousRowId : string | null; nextRowId : string | null}
+	{
+		const deleted = new Set(rowIds);
+		const indexes = this._rowsByIndex.reduce((result, row, index) =>
+		{
+			if(row && deleted.has(row.id))
+			{
+				result.push(index);
+			}
+			return result;
+		}, [] as number[]);
+		if(!indexes.length)
+		{
+			return {previousRowId: null, nextRowId: null};
+		}
+
+		const rowBefore = (start : number, step : number) : string | null =>
+		{
+			for(let index = start; index >= 0 && index < this._rowsByIndex.length; index += step)
+			{
+				const row = this._rowsByIndex[index];
+				if(row && !deleted.has(row.id))
+				{
+					return row.id;
+				}
+			}
+			return null;
+		};
+
+		return {
+			previousRowId: rowBefore(Math.min(...indexes) - 1, -1),
+			nextRowId: rowBefore(Math.max(...indexes) + 1, 1)
+		};
 	}
 
 	/**
