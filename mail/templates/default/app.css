@@ -442,7 +442,7 @@ div.mail-compose_fileselector {
   padding-left: 8px !important;
 }
 #mail-index_mailPreview_subject,
-#mail-display_mail_displaysubject {
+#mail-display_mailDisplayDetails_subject {
   margin-bottom: 0.5em;
   font-size: 1.2em;
 }
@@ -455,6 +455,10 @@ et2-details.details {
 }
 .mailPreviewHeaders et2-details::part(header) {
   padding: 0;
+}
+#mail-index_attachmentsBlock,
+#mail-display_attachmentsBlock {
+  width: 100%;
 }
 #mail-index_mailPreview .et2_email > span {
   display: inline;
@@ -470,7 +474,7 @@ et2-details.details {
   max-height: 75px;
 }
 .previewAttachmentArea .et2_button_icon,
-#mail-display_mail_displayattachments .et2_button_icon {
+#mail-display_attachmentsBlock .et2_button_icon {
   width: 16px;
   height: 16px;
 }
@@ -714,7 +718,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
     font-size: 10pt !important;
     font-family: arial;
   }
-  #mail-display_mail_displaysubject {
+  #mail-display_mailDisplayDetails_subject {
     font-weight: bold;
   }
   .mailDisplayHeaders {

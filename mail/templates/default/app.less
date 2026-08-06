@@ -534,7 +534,7 @@ div.mail-compose_fileselector {
 #mail-index_mailPreview > div, #mail-index_mailPreview > * {
     padding-left: 8px !important;
 }
-#mail-index_mailPreview_subject, #mail-display_mail_displaysubject {
+#mail-index_mailPreview_subject, #mail-display_mailDisplayDetails_subject {
 	margin-bottom: 0.5em;
 	font-size: 1.2em;
 }
@@ -545,6 +545,14 @@ et2-details.details {width: 100%}
 	border: none;
 }
 .mailPreviewHeaders et2-details::part(header) {padding: 0;}
+// The expanded attachments popover (.details__body, hoisted, width:100% of the
+// et2-details host which already spans to the parent's right edge) - but the grid
+// *inside* it sizes itself to content by default (table-layout: auto), instead of
+// filling that available width like the rest of the popover does.
+#mail-index_attachmentsBlock,
+#mail-display_attachmentsBlock {
+	width: 100%;
+}
 #mail-index_mailPreview .et2_email > span {
     display: inline;
 }
@@ -557,7 +565,7 @@ et2-details.details {width: 100%}
 	max-height: 75px;
 }
 
-.previewAttachmentArea .et2_button_icon, #mail-display_mail_displayattachments .et2_button_icon {
+.previewAttachmentArea .et2_button_icon, #mail-display_attachmentsBlock .et2_button_icon {
 	width: 16px;
 	height: 16px;
 }
@@ -819,7 +827,7 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
         font-family: arial;
     }
 
-    #mail-display_mail_displaysubject {
+    #mail-display_mailDisplayDetails_subject {
         font-weight: bold;
     }
 

@@ -2326,6 +2326,21 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	 * @throws Api\Exception\AssertionFailed
 	 * @throws Api\Json\Exception
 	 */
+	/**
+	 * Bootstrap the "view" popup
+	 *
+	 * Only resolves and validates the row-id, switches to its profile (needed for
+	 * getDisplayToolbarActions()'s account/folder-derived action list), and builds the
+	 * mail.display template shell - it does NOT fetch the message header/envelope/attachments
+	 * itself. mail.display uses the exact same field ids as mail.index.preview (the inline
+	 * preview panel's template, see mail/templates/default/index.xet), filled client-side by
+	 * the same MailApp.renderMessageInto() (mail/js/app.ts): from the row already cached in the
+	 * window that opened this popup, or - if that's unavailable (e.g. a bookmarked/direct link,
+	 * or the opener was closed) - a fallback ajax call to ajax_fetchMessageDetails(). Message
+	 * *body* loading is unaffected - still the loadEmailBody iframe below, unchanged, already
+	 * shared with the preview panel and already resolving classic/local-shim/Stalwart row-ids
+	 * transparently via Mail::splitRowID().
+	 */
 	function displayMessage(?array $_requesteddata = null)
 	{
 		if (is_null($_requesteddata)) $_requesteddata = $_GET;
@@ -2356,108 +2371,41 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		{
 			Egw::redirect_link('/index.php',array('menuaction'=>'mail.mail_compose.compose','id'=>$rowID,'from'=>'composefromdraft'));
 		}
-		$this->mail_bo->reopen($mailbox);
-		// retrieve the flags of the message, before touching it.
-		try
-		{
-			$headers	= $this->mail_bo->getMessageHeader($uid, $partID,true,true,$mailbox);
-		}
-		catch (Api\Exception $e)
-		{
-			$error_msg[] = lang("ERROR: Message could not be displayed.");
-			$error_msg[] = lang("In Mailbox: %1, with ID: %2, and PartID: %3",$mailbox,$uid,$partID);
-			Framework::message($e->getMessage(), 'error');
-		}
-		if (!empty($uid)) $this->mail_bo->getFlags($uid);
-		$envelope	= $this->mail_bo->getMessageEnvelope($uid, $partID,true,$mailbox);
-		//error_log(__METHOD__.__LINE__.array2string($envelope));
-		$this->mail_bo->getMessageRawHeader($uid, $partID,$mailbox);
-		$fetchEmbeddedImages = false;
-		// if we are in HTML so its likely that we should show the embedded images; as a result
-		// we do NOT want to see those, that are embedded in the list of attachments
-		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		// profile is already switched to $icServerID above, so this just resolves attachments
-		$attachmentHTMLBlock = $this->resolveAttachmentsBlock($rowID, $partID, $fetchEmbeddedImages);
 
-		$nonDisplayAbleCharacters = array('[\016]','[\017]',
-				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-
-		//error_log(__METHOD__.__LINE__.$mailBody);
-		$this->mail_bo->closeConnection();
-		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
-		$etpl = new Etemplate('mail.display');
-		$subject = $this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT']),false);
-
-		// Set up data for taglist widget(s)
-		if ($envelope['FROM']==$envelope['SENDER']) unset($envelope['SENDER']);
-		$sel_options = array();
-		foreach(array('SENDER','FROM','TO','CC','BCC') as $field)
+		$content = [
+			// Send mail ID so client JS can populate header/address/attachments and dispatch
+			// actions - everything else here is chrome, not message content.
+			'mail_id' => $rowID,
+			'displayToolbaractions' => json_encode($this->getDisplayToolbarActions()),
+			'image_proxy' => self::image_proxy(),
+			'emailTag' => $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname',
+		];
+		if (!$uid || !$mailbox)
 		{
-			if (!isset($envelope[$field])) continue;
-			foreach($envelope[$field] as $field_data)
-			{
-				//error_log(__METHOD__.__LINE__.array2string($field_data));
-				$content[strtolower($field)][] = $field_data;
-				$sel_options[$field][] = array(
-					// taglist requires these - not optional
-					'id' => $field_data,
-					'label' => str_replace('"',"'",$field_data),
-				);
-			}
+			$content['msg'] = lang("ERROR: Message could not be displayed.").' '.
+				lang("In Mailbox: %1, with ID: %2, and PartID: %3",$mailbox,$uid,$partID);
 		}
-		$actionsenabled = $this->getDisplayToolbarActions();
-		$content['displayToolbaractions'] = json_encode($actionsenabled);
-		if (empty($subject)) $subject = lang('no subject');
-		$content['msg'] = (is_array($error_msg)?implode("<br>",$error_msg):$error_msg);
-		// Send mail ID so we can use it for actions
-		$content['mail_id'] = $rowID;
-		if (!is_array($headers) || !isset($headers['DATE']))
-		{
-			$headers['DATE'] = (is_array($envelope)&&$envelope['DATE']?$envelope['DATE']:'');
-		}
-		$content['mail_displaydate'] = Mail::_strtotime($headers['DATE'],'ts',true);
-		$content['mail_displaysubject'] = $subject;
 		$linkData = array('menuaction'=>"mail.mail_ui.loadEmailBody","_messageID"=>$rowID);
 		if (!empty($partID)) $linkData['_partID']=$partID;
 		if ($htmlOptions != $this->mail_bo->htmlOptions) $linkData['_htmloptions']=$htmlOptions;
 		$content['mailDisplayBodySrc'] = Egw::link('/index.php',$linkData);
-		if (!empty($attachmentHTMLBlock))
+
+		$this->mail_bo->closeConnection();
+		if ($rememberServerID != $this->mail_bo->profileID)
 		{
-			$content['mail_displayattachments'] = $attachmentHTMLBlock;
-			$content['attachmentsBlockTitle'] = count($attachmentHTMLBlock) > 1 ? '+'.(count($attachmentHTMLBlock)-1) : '';
-			$sel_options['mail_displayattachments']['actions'] = mail_hooks::attachmentsBlockActions();
+			$this->changeProfile($rememberServerID);
 		}
 
-		$content['mail_id']=$rowID;
-
-		if ($headers['SMIMETYPE'])
-		{
-			$content['smime'] = Mail\Smime::isSmimeSignatureOnly($headers['SMIMETYPE'])?
-				Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
-		}
-
+		$etpl = new Etemplate('mail.display');
 		// DRAG attachment actions
-		$etpl->setElementAttribute('mail_displayattachments', 'actions', array(
+		$etpl->setElementAttribute('attachmentsBlock', 'actions', array(
 			'file_drag' => array(
 				'dragType' => 'file',
 				'type' => 'drag',
 				'onExecute' => 'javaScript:app.mail.drag_attachment'
 			)
 		));
-		$readonlys = $preserv = $content;
-		unset($readonlys['mail_displayattachments']);
-		$readonlys['mail_displaydate'] = true;
-		if ($rememberServerID != $this->mail_bo->profileID)
-		{
-			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from->'.$rememberServerID);
-			$this->changeProfile($rememberServerID);
-		}
-		// send configured image proxy to client-side
-		$content['image_proxy'] = self::image_proxy();
-		$content['avatar'] = Api\Mail\Avatar::getAvatar($content['from'][0]);
-		$content['emailTag'] =  $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname';
-		$etpl->exec('mail.mail_ui.displayMessage', $content, $sel_options, $readonlys, $preserv, 2);
+		$etpl->exec('mail.mail_ui.displayMessage', $content, array(), array(), $content, 2);
 	}
 
 	/**
@@ -4671,6 +4619,81 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$response->data([
 			'attachmentsBlock' => $this->resolveAttachmentsBlock($_rowid),
 		]);
+	}
+
+	/**
+	 * Fetch a single row's full header/address/attachment detail, shaped exactly like
+	 * mail_preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
+	 * header2gridelements()/email2row() (mail/js/jmap.ts) produce for list rows.
+	 *
+	 * Fallback for the "view" popup (mail_ui::displayMessage()) when window.opener's row cache
+	 * isn't available - a bookmarked/direct link, or the opener window was closed. The normal,
+	 * zero-extra-round-trip case reuses the opener's already-fetched row instead of calling this.
+	 *
+	 * @param string $_rowid row id from nm
+	 * @return void
+	 */
+	function ajax_fetchMessageDetails($_rowid)
+	{
+		$response = Api\Json\Response::get();
+
+		$idParts = Mail::splitRowID($_rowid);
+		$uid = $idParts['msgUID'];
+		$mailbox = $idParts['folder'];
+		if (!$uid || !$mailbox)
+		{
+			$response->data(null);
+			return;
+		}
+		$rememberServerID = $this->mail_bo->profileID;
+		$switchedProfile = $idParts['profileID'] && $idParts['profileID'] != $rememberServerID;
+		if ($switchedProfile)
+		{
+			$this->changeProfile($idParts['profileID']);
+		}
+
+		try
+		{
+			$headers = $this->mail_bo->getMessageHeader($uid, null, true, true, $mailbox);
+			$envelope = $this->mail_bo->getMessageEnvelope($uid, null, true, $mailbox);
+		}
+		catch (Api\Exception $e)
+		{
+			if ($switchedProfile) $this->changeProfile($rememberServerID);
+			$response->data(null);
+			return;
+		}
+		$attachmentsBlock = $this->resolveAttachmentsBlock($_rowid);
+
+		if ($switchedProfile)
+		{
+			$this->changeProfile($rememberServerID);
+		}
+
+		$nonDisplayAbleCharacters = array('[\016]','[\017]',
+			'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
+			'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
+		$subject = $this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT'] ?? ''),false);
+
+		$data = [
+			'uid' => $uid,
+			'subject' => $subject !== '' ? $subject : lang('no subject'),
+			'date' => Mail::_strtotime($headers['DATE'] ?? ($envelope['DATE'] ?? ''), 'ts', true),
+			'fromaddress' => $envelope['FROM'][0] ?? '',
+			'additionalfromaddress' => array_slice($envelope['FROM'] ?? [], 1),
+			'toaddress' => $envelope['TO'][0] ?? '',
+			'additionaltoaddress' => array_slice($envelope['TO'] ?? [], 1),
+			'ccaddress' => $envelope['CC'] ?? [],
+			'bccaddress' => $envelope['BCC'] ?? [],
+			'attachmentsBlock' => $attachmentsBlock,
+			'attachments' => $attachmentsBlock ? "<et2-image src='attach'></et2-image>" : '&nbsp;',
+		];
+		if (!empty($headers['SMIMETYPE']))
+		{
+			$data['smime'] = Mail\Smime::isSmimeSignatureOnly($headers['SMIMETYPE']) ?
+				Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
+		}
+		$response->data($data);
 	}
 
 	/**

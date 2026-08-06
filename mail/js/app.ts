@@ -366,12 +366,6 @@ export class MailApp extends EgwApp
 				this.mail_isMainWindow = false;
 				this.mail_display();
 
-				// Register attachments for drag
-				this.register_for_drag(
-					this.et2.getArrayMgr("content").getEntry('mail_id'),
-					this.et2.getArrayMgr("content").getEntry('mail_displayattachments')
-				);
-
 				break;
 			case 'mail.compose':
 				this.compose.setEtemplate(this.et2);
@@ -1306,6 +1300,61 @@ export class MailApp extends EgwApp
 			{
 				this.et2.getWidgetById('displayToolbar').actions = toolbaractions;
 			}
+
+			// Popup content isn't fetched server-side (see mail_ui::displayMessage()) - fill it
+			// the same way the preview panel does, from the row already cached in the window
+			// that opened this popup, or a fallback ajax call if that's unavailable.
+			const rowId = content.mail_id;
+			const details = this.et2.getWidgetById('mailDisplayDetails');
+			if (rowId && details)
+			{
+				this.renderPopupMessage(details, rowId);
+			}
+		}
+	}
+
+	/**
+	 * Populate the "view" popup's header/address/attachments
+	 *
+	 * Sources data from the row already cached in the window that opened this popup (the
+	 * established window.opener.<egw|etemplate2|app> pattern already used elsewhere in this
+	 * codebase for popups, e.g. this.et2.getById() lookups via window.opener further down this
+	 * file) - no extra IMAP round-trip, same data the list/preview panel already fetched.
+	 * Falls back to one ajax call (ajax_fetchMessageDetails) when that's unavailable: a
+	 * bookmarked/direct link, or the opener window was closed.
+	 *
+	 * @param template the mailDisplayDetails grid widget
+	 * @param rowId
+	 */
+	renderPopupMessage(template, rowId : string)
+	{
+		let openerData : any;
+		try
+		{
+			openerData = window.opener && !window.opener.closed && window.opener.egw ?
+				window.opener.egw.dataGetUIDdata(rowId)?.data : undefined;
+		}
+		catch (e)
+		{
+			// window.opener can be from a different origin in some conditions - fall through to ajax
+		}
+
+		if (openerData && Object.keys(openerData).length)
+		{
+			const data = this.renderMessageInto(template, rowId, openerData);
+			this.register_for_drag(rowId, data.attachmentsBlock);
+		}
+		else
+		{
+			this.egw.jsonq('mail.mail_ui.ajax_fetchMessageDetails', [rowId], (_data) =>
+			{
+				if (_data)
+				{
+					egw.dataStoreUID(_data.uid ?? rowId, _data);
+					const data = this.renderMessageInto(template, rowId, _data);
+					this.register_for_drag(rowId, data.attachmentsBlock);
+				}
+			});
 		}
 	}
 
@@ -1326,70 +1375,71 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_preview - implementation of the preview action
+	 * Resolve a row's data (from cache, or a caller-supplied object) and fill the given
+	 * template with it: address concat, on-demand attachmentsBlock resolution (winmail.dat or
+	 * JMAP rows missing a resolved block - see mail/js/jmap.ts), then template.set_value().
 	 *
-	 * @param nextmatch et2_nextmatch The widget whose row was selected
-	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
+	 * Shared by mail_preview() (below, sourcing data from this window's own row cache) and the
+	 * "view" popup (mail_open()'s target page, sourcing data from window.opener's cache or a
+	 * server fallback) - both render the same message the same way, from the same data shape.
+	 *
+	 * @param template et2 widget with set_value({content, sel_options}), e.g. the mailPreview grid
+	 * @param rowId
+	 * @param data optional pre-resolved row data (e.g. from window.opener's cache); defaults to
+	 *  this window's own egw.dataGetUIDdata(rowId).data
+	 * @return the row data object (attachmentsBlock may still be updating asynchronously)
 	 */
-	mail_preview(selected, nextmatch) {
-		let data:any = {};
-		let rowId = '';
-		let sel_options = {}
+	renderMessageInto(template, rowId : string, data? : any) : any
+	{
+		let sel_options = {};
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
-		let mailPreview = this.et2.getWidgetById('mailPreview');
-		let previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
-		// don't go further if the preview is supposed to be disabled and we're not in mobile view
-		if (previewPane == 'hide' && !egwIsMobile()) return;
+		data = data ?? egw.dataGetUIDdata(rowId).data ?? {};
+		data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
 
-		if(typeof selected != 'undefined' && selected.length == 1 && selected[0])
+		// Try to resolve winmail.data attachment
+		if (data && data.attachmentsBlock && data.attachmentsBlock[0]
+				&& data.attachmentsBlock[0].winmailFlag
+				&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
+				data.attachmentsBlock[0].filename == "winmail.dat"))
 		{
-			rowId = this.mail_fetchCurrentlyFocussed(selected);
-			data = egw.dataGetUIDdata(rowId).data;
-			data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
-			// Try to resolve winmail.data attachment
-			if (data && data.attachmentsBlock[0]
-					&& data.attachmentsBlock[0].winmailFlag
-					&& (data.attachmentsBlock[0].mimetype =='application/ms-tnef' ||
-					data.attachmentsBlock[0].filename == "winmail.dat"))
+			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
+			this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[rowId], (_data) =>
 			{
-				attachmentsBlock.getDOMNode().classList.add('loading');
-				this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[rowId], jQuery.proxy(function(_data){
-					attachmentsBlock.getDOMNode().classList.remove('loading');
-					if (typeof _data == 'object')
-					{
-						data.attachmentsBlock = _data;
-						data.attachmentsBlockTitle = _data.length > 1 ? `+${_data.length-1}` : '';
-						// Update client cache to avoid resolving winmail.dat attachment again
-						egw.dataStoreUID(data.uid, data);
-						if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data});
-					}
-					else
-					{
-						console.log('Can not resolve the winmail.data!');
-					}
-				},data));
-			}
-			// Rows fetched via client-side JMAP (see mail/js/jmap.ts) don't carry a resolved
-			// attachmentsBlock (building it needs a server-side mime_data/download token via
-			// Link::set_data(), not just JMAP metadata) - fetch it on demand, same as the
-			// winmail.dat resolution above, whenever the row indicates it has attachment(s).
-			else if (data && Array.isArray(data.attachmentsBlock) && data.attachmentsBlock.length === 0
-				&& data.attachments && data.attachments !== '&nbsp;')
-			{
-				attachmentsBlock.getDOMNode().classList.add('loading');
-				this.egw.jsonq('mail.mail_ui.ajax_fetchAttachments', [rowId], (_data) =>
+				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
+				if (typeof _data == 'object')
 				{
-					attachmentsBlock.getDOMNode().classList.remove('loading');
-					if (_data && Array.isArray(_data.attachmentsBlock) && _data.attachmentsBlock.length)
-					{
-						data.attachmentsBlock = _data.attachmentsBlock;
-						this.setupViewAttachmentActions(data, sel_options);
-						// Update client cache to avoid re-fetching the attachment block again
-						egw.dataStoreUID(data.uid, data);
-						if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data, sel_options:sel_options});
-					}
-				});
-			}
+					data.attachmentsBlock = _data;
+					data.attachmentsBlockTitle = _data.length > 1 ? `+${_data.length-1}` : '';
+					// Update client cache to avoid resolving winmail.dat attachment again
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content:data});
+				}
+				else
+				{
+					console.log('Can not resolve the winmail.data!');
+				}
+			});
+		}
+		// Rows fetched via client-side JMAP (see mail/js/jmap.ts) don't carry a resolved
+		// attachmentsBlock (building it needs a server-side mime_data/download token via
+		// Link::set_data(), not just JMAP metadata) - fetch it on demand, same as the
+		// winmail.dat resolution above, whenever the row indicates it has attachment(s).
+		else if (data && Array.isArray(data.attachmentsBlock) && data.attachmentsBlock.length === 0
+			&& data.attachments && data.attachments !== '&nbsp;')
+		{
+			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
+			this.egw.jsonq('mail.mail_ui.ajax_fetchAttachments', [rowId], (_data) =>
+			{
+				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
+				if (_data && Array.isArray(_data.attachmentsBlock) && _data.attachmentsBlock.length)
+				{
+					data.attachmentsBlock = _data.attachmentsBlock;
+					this.setupViewAttachmentActions(data, sel_options);
+					// Update client cache to avoid re-fetching the attachment block again
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
+				}
+			});
 		}
 
 		if (data.toaddress||data.fromaddress)
@@ -1409,7 +1459,35 @@ export class MailApp extends EgwApp
 			this.setupViewAttachmentActions(data, sel_options);
 		}
 
-		if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data, sel_options:sel_options});
+		if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
+
+		return data;
+	}
+
+	/**
+	 * mail_preview - implementation of the preview action
+	 *
+	 * @param nextmatch et2_nextmatch The widget whose row was selected
+	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
+	 */
+	mail_preview(selected, nextmatch) {
+		let data:any = {};
+		let rowId = '';
+		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
+		let mailPreview = this.et2.getWidgetById('mailPreview');
+		let previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
+		// don't go further if the preview is supposed to be disabled and we're not in mobile view
+		if (previewPane == 'hide' && !egwIsMobile()) return;
+
+		if(typeof selected != 'undefined' && selected.length == 1 && selected[0])
+		{
+			rowId = this.mail_fetchCurrentlyFocussed(selected);
+			data = this.renderMessageInto(mailPreview, rowId);
+		}
+		else if (!egwIsMobile() && mailPreview)
+		{
+			mailPreview.set_value({content:data, sel_options:{}});
+		}
 		// We cannot do any sensible thing if there is no rowId (or data) to act on after the mailPreview is cleared
 		if(!rowId && Object.keys(data).length === 0) return
 
@@ -3414,7 +3492,7 @@ export class MailApp extends EgwApp
 			else
 			{
 				mailid = this.et2.getArrayMgr("content").getEntry('mail_id');
-				attgrid = this.et2.getArrayMgr("content").getEntry('mail_displayattachments')[widget.id.replace(/\[filename\]/,'')];
+				attgrid = this.et2.getArrayMgr("content").getEntry('attachmentsBlock')[widget.id.replace(/\[filename\]/,'')];
 			}
 		}
 		if (calledForCompose===true)
@@ -3546,7 +3624,7 @@ export class MailApp extends EgwApp
 		else
 		{
 			mail_id = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attachments = this.et2.getArrayMgr("content").getEntry('mail_displayattachments');
+			attachments = this.et2.getArrayMgr("content").getEntry('attachmentsBlock');
 		}
 
 		switch (action)
@@ -3684,7 +3762,7 @@ export class MailApp extends EgwApp
 			let subject = dataElem? dataElem.data.subject: _elems[i].subject;
 			if (this.egw.is_popup() && this.et2._inst.name == 'mail.display')
 			{
-				subject = this.et2.getArrayMgr('content').getEntry('mail_displaysubject');
+				subject = this.et2.getArrayMgr('content').getEntry('subject');
 			}
 			// Replace these now, they really cause problems later
 			const filename = subject ? subject.replace(/[\f\n\t\v\x0b\:*#?<>%"\/\\\?]/g,"_") : 'unknown';
@@ -4998,11 +5076,11 @@ export class MailApp extends EgwApp
 	 */
 	getWindowTitle()
 	{
-		//mail display uses #mail-display_mail_displaysubject text and
+		//mail display uses #mail-display_mailDisplayDetails_subject text and
 		// mail compose uses #mail-compose_subject input
-		const widget:Et2Textbox | Et2Description = document.querySelector('#mail-display_mail_displaysubject') ||
+		const widget:Et2Textbox | Et2Description = document.querySelector('#mail-display_mailDisplayDetails_subject') ||
 			document.querySelector('#mail-compose_subject')
-		return widget.value
+		return widget?.value
 	}
 
 	/**

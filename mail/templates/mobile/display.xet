@@ -12,43 +12,40 @@
 				</et2-hbox>
 			</et2-hbox>
 			<et2-hbox  class="mail-d-h1" width="100%">
-				<et2-description  align="left" id="mail_displaysubject" readonly="true" noLang="1"></et2-description>
+				<et2-description  align="left" id="subject" readonly="true" noLang="1"></et2-description>
 			</et2-hbox>
 
-			<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersFrom" disabled="!@FROM" width="100%">
-				<et2-url-email  id="FROM" readonly="true"></et2-url-email>
+			<!--
+                Same field ids/shape as mail.index.preview (mail/templates/default/index.xet) and
+                the desktop mail.display - all filled by the same client-side
+                MailApp.renderMessageInto() from the same row data. et2-email's own
+                rows="1"/multiple overflow behaviour (hover/click to show the rest) replaces the
+                old custom "Show all Addresses" toggle button.
+            -->
+			<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersFrom" disabled="!@additionalfromaddress" width="100%">
+				<et2-email  id="additionalfromaddress" readonly="true" rows="1"></et2-email>
 			</et2-hbox>
 			<et2-hbox  class="mail-d-h2" align="right" width="100%">
-				<et2-date-time  id="mail_displaydate" readonly="true"></et2-date-time>
+				<et2-date-time  id="date" readonly="true"></et2-date-time>
 			</et2-hbox>
-			<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersTo" disabled="!@TO" width="100%">
+			<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersTo" disabled="!@additionaltoaddress" width="100%">
 				<et2-description  value="To"></et2-description>
-				<et2-hbox  id="TO" class="mail_extraEmails">
-				</et2-hbox>
-				<et2-button  class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader" noSubmit="true"></et2-button>
+				<et2-email  id="additionaltoaddress" readonly="true" rows="1"></et2-email>
 			</et2-hbox>
 			<et2-hbox>
 				<et2-details  summary="show details" toggleAlign="left">
-					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersSender" disabled="!@SENDER" width="100%">
-						<et2-description  value="on behalf of"></et2-description>
-						<et2-url-email  id="SENDER" readonly="true"></et2-url-email>
-					</et2-hbox>
-					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersCc" disabled="!@CC" width="100%">
+					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersCc" disabled="!@ccaddress" width="100%">
 						<et2-description  value="Cc"></et2-description>
-						<et2-hbox  id="CC" class="mail_extraEmails">
-						</et2-hbox>
-						<et2-button  class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader" noSubmit="true"></et2-button>
+						<et2-email  id="ccaddress" readonly="true" rows="1"></et2-email>
 					</et2-hbox>
-					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersBcc" disabled="!@BCC" width="100%">
+					<et2-hbox  class="mail-d-h2" id="mailDisplayHeadersBcc" disabled="!@bccaddress" width="100%">
 						<et2-description  value="Bcc"></et2-description>
-						<et2-hbox  id="BCC" class="mail_extraEmails">
-						</et2-hbox>
-						<et2-button  class="et2_button ui-button" label="Show all Addresses" image="foldertree_nolines_plus" onclick="app.mail.showAllHeader" noSubmit="true"></et2-button>
+						<et2-email  id="bccaddress" readonly="true" rows="1"></et2-email>
 					</et2-hbox>
 				</et2-details>
 				<et2-details  class="attachments" summary="show attachments" toggleAlign="left">
-					<et2-box  class="$cont[mailDisplayAttachmentsClass]">
-						<grid disabled="@no_griddata" id="mail_displayattachments" class="egwGridView_grid" width="100%">
+					<et2-box>
+						<grid disabled="!@attachmentsBlock" id="attachmentsBlock" class="egwGridView_grid" width="100%">
 							<columns>
 								<column disabled="!@showtempname"/>
 								<column disabled="!@showtempname"/>

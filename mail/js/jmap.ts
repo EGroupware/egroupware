@@ -192,6 +192,10 @@ export class MailJmap
 		{
 			return false;
 		}
+		// egw.preference() auto-casts a purely-numeric stored value (just "42", no "::folder"
+		// suffix yet - happens right after switching account, before a folder click persists
+		// one) to a real JS number, not a string - guard the .match() below against that.
+		selectedFolder = String(selectedFolder);
 		if (!selectedFolder.match(/::/))
 		{
 			selectedFolder += '::INBOX';
