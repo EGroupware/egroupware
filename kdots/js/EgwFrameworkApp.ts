@@ -624,6 +624,7 @@ export class EgwFrameworkApp extends LitElement
 		let deferred = [];
 		let et2_list = [];
 		const appWindow = this.framework.egw.window;
+		this.framework.classList.add("print");
 
 		// @ts-ignore that etemplate2 doesn't exist
 		if((template = appWindow.etemplate2.getById(this.id)) && this == template.DOMContainer)
@@ -648,9 +649,17 @@ export class EgwFrameworkApp extends LitElement
 
 		if(et2_list.length)
 		{
-			// Try to clean up after - not guaranteed
-			let afterPrint = () =>
+			let cleanedUp = false;
+			let printEnded = false;
+			let previewBlurred = false;
+			const chromium = /Chrome|Chromium|Edg\//.test(appWindow.navigator.userAgent);
+			const cleanup = () =>
 			{
+				if(cleanedUp) return;
+				cleanedUp = true;
+				appWindow.removeEventListener("blur", onBlur);
+				appWindow.removeEventListener("focus", onFocus);
+				appWindow.removeEventListener("afterprint", afterPrint);
 				this.egw.loading_prompt(this.name, true, this.egw.lang('please wait...'), this, egwIsMobile() ? 'horizontal' : 'spinner');
 
 				// Give framework a chance to deal, then reset the etemplates
@@ -663,9 +672,28 @@ export class EgwFrameworkApp extends LitElement
 							_widget.afterPrint();
 						}, et2_list[i], et2_IPrint);
 					}
+					appWindow.requestAnimationFrame(() => appWindow.requestAnimationFrame(() =>
+						this.framework.classList.remove("print")
+					));
 					this.egw.loading_prompt(this.name, false);
 				}, 100);
 				appWindow.onafterprint = null;
+			};
+			const afterPrint = () =>
+			{
+				printEnded = true;
+				if(!chromium || !previewBlurred) cleanup();
+			};
+			const onBlur = () =>
+			{
+				previewBlurred = true;
+			};
+			const onFocus = () =>
+			{
+				// Focus returning after the preview blurred means the dialog closed
+				// (printed or canceled) - don't also require afterprint, it's not
+				// reliably fired on cancel in every browser
+				if(previewBlurred) cleanup();
 			};
 			/* Not sure what this did, it triggers while preview is still up
 			if(appWindow.matchMedia)
@@ -684,18 +712,21 @@ export class EgwFrameworkApp extends LitElement
 
 			 */
 
+			appWindow.addEventListener("blur", onBlur);
+			appWindow.addEventListener("focus", onFocus);
 			appWindow.addEventListener("afterprint", afterPrint, {once: true});
 
 			// Wait for everything to be ready
 			return Promise.all(deferred).catch((e) =>
 			{
-				afterPrint();
+				cleanup();
 				if(typeof e == "undefined")
 				{
 					throw "rejected";
 				}
 			});
 		}
+		this.framework.classList.remove("print");
 	}
 
 	protected showSide(side : "left" | "right", size = null)
