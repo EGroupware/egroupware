@@ -2003,12 +2003,19 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		if(total == 0) this.controller._emptyRow();
 
 		// Set data cache prefix to either provided custom or auto
-		if(!this.options.settings.dataStorePrefix && this.options.settings.get_rows)
+		if(!this.options.settings.dataStorePrefix)
 		{
-			// Use jsapi data module to update
-			let list = this.options.settings.get_rows.split('.', 2);
-			if(list.length < 2) list = this.options.settings.get_rows.split('_');	// support "app_something::method"
-			this.options.settings.dataStorePrefix = list[0];
+			// Use jsapi data module to update - prefer get_rows (server-side row-fetch
+			// callback), but apps without one (rows fetched entirely client-side, e.g. mail's
+			// direct JMAP access, see mail/js/jmap.ts) still need a prefix derived from
+			// somewhere: fall back to the row template, which is always "app.something...".
+			let source = this.options.settings.get_rows || this.options.template;
+			if(source)
+			{
+				let list = source.split('.', 2);
+				if(list.length < 2) list = source.split('_');	// support "app_something::method"
+				this.options.settings.dataStorePrefix = list[0];
+			}
 		}
 		this.controller.setPrefix(this.options.settings.dataStorePrefix);
 

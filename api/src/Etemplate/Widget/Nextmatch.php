@@ -122,7 +122,7 @@ class Nextmatch extends Etemplate\Widget
 		$form_name = self::form_name($cname, $this->id, $expand);
 		$value = self::get_array(self::$request->content, $form_name, true);
 
-		list($app) = explode('.', $value['get_rows']);
+		list($app) = explode('.', $value['get_rows'] ?? '');
 		if(empty($GLOBALS['egw_info']['apps'][$app]))
 		{
 			list($app) = explode('.', $this->attrs['template']);

@@ -23,7 +23,7 @@ use EGroupware\Api\Mail;
  * Mail User Interface
  *
  * As we do NOT want to connect to previous imap server, when a profile change is triggered
- * by user get_rows and ajax_changeProfile are not static methods and instanciates there own
+ * by user ajax_changeProfile is not a static method and instanciates its own
  * mail_ui object.
  *
  * If they detect a profile change is to be triggered they call:
@@ -521,7 +521,10 @@ class mail_ui
 				$content['customLabels'] = Mail::getCustomLabels();
 				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
-				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
+				// no 'get_rows' callback: rows are fetched client-side via direct JMAP access
+				// (mail/js/jmap.ts's MailJmap, see egw.dataRegisterFetch('mail', ...) in this
+				// app's constructor) for every account (Stalwart real-JMAP, or plain IMAP via
+				// our local shim) - there is no server-side fallback path anymore.
 				$content[self::$nm_index]['num_rows'] = 0;      // Do not send any rows with initial request
 				$content[self::$nm_index]['default_cols'] = 'avatar,status,attachments,subject,address,date,size';	// I  columns to use if there's no user or default pref (! as first char uses all but the named columns), default all columns
 				$content[self::$nm_index]['csv_fields'] = false;
@@ -1663,288 +1666,6 @@ class mail_ui
 	}
 
 	/**
-	 * Callback to fetch the rows for the nextmatch widget
-	 *
-	 * Function is static to not automatic call constructor in case profile is changed.
-	 *
-	 * @param array $query
-	 * @param array &$rows
-	 * @param array &$readonlys
-	 */
-	public static function get_rows(&$query,&$rows,&$readonlys)
-	{
-		unset($readonlys);	// not used, but required by function signature
-
-		if($query['cat_id'] == '')
-		{
-			$query['cat_id'] = 'quick';
-		}
-
-		// handle possible profile change in get_rows
-		if (!empty($query['selectedFolder']))
-		{
-			list($_profileID,$folderName) = explode(self::$delimiter, $query['selectedFolder'], 2);
-			if (is_numeric(($_profileID)) && $_profileID != (int)$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'])
-			{
-				try {
-					$mail_ui = new mail_ui(false);	// do NOT run constructor, as we change profile anyway
-					$mail_ui->changeProfile($_profileID);
-					$query['actions'] = $mail_ui->get_actions();
-				}
-				catch(Exception $e)
-				{
-					unset($e);
-					$rows=array();
-					return 0;
-				}
-				if (empty($folderName)) $query['selectedFolder'] = $_profileID.self::$delimiter.'INBOX';
-			}
-			$prefs = $GLOBALS['egw']->preferences ?? new Api\Preferences();
-			$prefs->read();
-			$prefs->add('mail', 'ActiveProfileID', $query['selectedFolder']);
-			$prefs->save_repository();
-		}
-		if (!isset($mail_ui))
-		{
-			try
-			{
-				$mail_ui = new mail_ui(true);	// run constructor for current profile
-			}
-			catch(Exception $e)
-			{
-				unset($e);
-				$rows=array();
-				return 0;
-			}
-			if (empty($query['selectedFolder'])) $query['selectedFolder'] = $mail_ui->mail_bo->profileID.self::$delimiter.'INBOX';
-		}
-		// enable push notifications, if supported (and configured) by the server
-		if ($mail_ui->mail_bo->icServer instanceof Api\Mail\Imap\PushIface &&
-			$mail_ui->mail_bo->icServer->pushAvailable())
-		{
-			Api\Json\Response::get()->call('app.mail.disable_autorefresh',
-				$mail_ui->mail_bo->icServer->enablePush(null, $query['selectedFolder']));
-		}
-		else
-		{
-			Api\Json\Response::get()->call('app.mail.disable_autorefresh', false);
-		}
-		//error_log(__METHOD__.__LINE__.' SelectedFolder:'.$query['selectedFolder'].' Start:'.$query['start'].' NumRows:'.$query['num_rows'].array2string($query['order']).'->'.array2string($query['sort']));
-		//Mail::$debugTimes=true;
-		if (Mail::$debugTimes) $starttime = microtime(true);
-		//$query['search'] is the phrase in the searchbox
-
-		$mail_ui->mail_bo->restoreSessionData();
-		if (isset($query['selectedFolder'])) $mail_ui->mail_bo->sessionData['mailbox']=$query['selectedFolder'];
-
-		$sRToFetch = null;
-		list($_profileID,$_folderName) = explode(self::$delimiter,$query['selectedFolder'],2);
-		if (strpos($_folderName,self::$delimiter)!==false)
-		{
-			list($app,$_profileID,$_folderName) = explode(self::$delimiter,$_folderName,3);
-			unset($app);
-		}
-		//save selected Folder to sessionData (mailbox)->currentFolder
-		if (isset($query['selectedFolder'])) $mail_ui->mail_bo->sessionData['mailbox']=$_folderName;
-		$toSchema = false;//decides to select list schema with column to selected (if false fromaddress is default)
-		if ($mail_ui->mail_bo->folderExists($_folderName))
-		{
-			$toSchema = $mail_ui->mail_bo->isDraftFolder($_folderName,false)||$mail_ui->mail_bo->isSentFolder($_folderName,false)||$mail_ui->mail_bo->isTemplateFolder($_folderName,false);
-		}
-		else
-		{
-			// take the extra time on failure
-			if (!$mail_ui->mail_bo->folderExists($_folderName,true))
-			{
-				//error_log(__METHOD__.__LINE__.' Test on Folder:'.$_folderName.' failed; Using INBOX instead');
-				$query['selectedFolder']=$mail_ui->mail_bo->sessionData['mailbox']=$_folderName='INBOX';
-			}
-		}
-		$rowsFetched['messages'] = null;
-		$offset = $query['start']+1; // we always start with 1
-		$maxMessages = $query['num_rows'];
-		//error_log(__METHOD__.__LINE__.array2string($query));
-		$sort = ($query['order']=='address'?($toSchema?'toaddress':'fromaddress'):$query['order']);
-		if (!empty($query['search'])||($query['cat_id']=='bydate' && (!empty($query['startdate'])||!empty($query['enddate']))))
-		{
-			if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
-			{
-				Mail::$supportsORinQuery = Api\Cache::getCache(Api\Cache::INSTANCE,'email','supportsORinQuery'.trim($GLOBALS['egw_info']['user']['account_id']), null, array(), 60*60*10);
-				if (!isset(Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]))
-				{
-					Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]=true;
-				}
-			}
-			//error_log(__METHOD__.__LINE__.' Startdate:'.$query['startdate'].' Enddate'.$query['enddate']);
-			$cutoffdate = $cutoffdate2 = null;
-			if ($query['startdate']) $cutoffdate = Api\DateTime::to($query['startdate'],'ts');//SINCE, enddate
-			if ($query['enddate']) $cutoffdate2 = Api\DateTime::to($query['enddate'],'ts');//BEFORE, startdate
-			//error_log(__METHOD__.__LINE__.' Startdate:'.$cutoffdate2.' Enddate'.$cutoffdate);
-			$filter = array(
-				'filterName' => (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID]?lang('quicksearch'):lang('subject')),
-				'type' => $query['cat_id'] ?: (Mail::$supportsORinQuery[$mail_ui->mail_bo->profileID] ? '' : 'subject'),
-				'string' => $query['search'],
-				'status' => '',
-				//'range'=>"BETWEEN",'since'=> date("d-M-Y", $cutoffdate),'before'=> date("d-M-Y", $cutoffdate2)
-			);
-			if ($query['enddate']||$query['startdate']) {
-				$filter['range'] = "BETWEEN";
-				if ($cutoffdate) {
-					$filter[(empty($cutoffdate2)?'date':'since')] =  date("d-M-Y", $cutoffdate);
-					if (empty($cutoffdate2)) $filter['range'] = "SINCE";
-				}
-				if ($cutoffdate2) {
-					$filter[(empty($cutoffdate)?'date':'before')] =  date("d-M-Y", $cutoffdate2);
-					if (empty($cutoffdate)) $filter['range'] = "BEFORE";
-				}
-			}
-		}
-		else
-		{
-			$filter = array();
-		}
-		if ($query['filter'])
-		{
-			$filter['status'] = $query['filter'];
-		}
-		$reverse = ($query['sort']=='ASC'?false:true);
-		$prefchanged = false;
-		if (!isset($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']) || ($query['cat_id'] !=$GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']))
-		{
-			//error_log(__METHOD__.__LINE__.' Changing userPref ActivesearchType:'.$query['cat_id']);
-			$GLOBALS['egw']->preferences->add('mail','ActiveSearchType',$query['cat_id'],'user');
-			$prefchanged = true;
-		}
-		if (!isset($GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails']) || ($query['filter2'] !=$GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails']))
-		{
-			$GLOBALS['egw']->preferences->add('mail','ShowDetails',$query['filter2'],'user');
-			$prefchanged = true;
-		}
-		if ($prefchanged)
-		{
-			// save prefs
-			$GLOBALS['egw']->preferences->save_repository(true);
-		}
-		//error_log(__METHOD__.__LINE__.' maxMessages:'.$maxMessages.' Offset:'.$offset.' Filter:'.array2string($mail_ui->sessionData['messageFilter']));
-/*
-$cutoffdate = Api\DateTime::to('now','ts')-(3600*24*6);//SINCE, enddate
-$cutoffdate2 = Api\DateTime::to('now','ts')-(3600*24*3);//BEFORE, startdate
-$filter['range'] = "BETWEEN";// we support SINCE, BEFORE, BETWEEN and ON
-$filter['since'] = date("d-M-Y", $cutoffdate);
-$filter['before']= date("d-M-Y", $cutoffdate2);
-*/
-		$sR = array();
-		try
-		{
-			if ($maxMessages > 75)
-			{
-				$rByUid = true;
-				$_sR = $mail_ui->mail_bo->getSortedList(
-					$_folderName,
-					$sort,
-					$reverse,
-					$filter,
-					$rByUid
-				);
-				$rowsFetched['messages'] = $_sR['count'];
-				$ids = $_sR['match']->ids;
-				// if $sR is false, something failed fundamentally
-				if($reverse === true) $ids = ($ids===false?array():array_reverse((array)$ids));
-				$sR = array_slice((array)$ids,($offset==0?0:$offset-1),$maxMessages); // we need only $maxMessages of uids
-				$sRToFetch = $sR;//array_slice($sR,0,50); // we fetch only the headers of a subset of the fetched uids
-				//error_log(__METHOD__.__LINE__.' Rows fetched (UID only):'.count($sR).' Data:'.array2string($sR));
-				$maxMessages = 75;
-				$sortResultwH['header'] = array();
-				if (count($sRToFetch)>0)
-				{
-					//error_log(__METHOD__.__LINE__.' Headers to fetch with UIDs:'.count($sRToFetch).' Data:'.array2string($sRToFetch));
-					$sortResult = array();
-					// fetch headers
-					$sortResultwH = $mail_ui->mail_bo->getHeaders(
-						$_folderName,
-						$offset,
-						$maxMessages,
-						$sort,
-						$reverse,
-						$filter,
-						$sRToFetch,
-						true, //cacheResult
-						($query['filter2']?true:false) // fetchPreview
-					);
-				}
-			}
-			else
-			{
-				$sortResult = array();
-				$uids = array_map(function($row_id)
-				{
-					return Mail::splitRowID($row_id)['msgUID'];
-				}, (array)$query['col_filter']['row_id']) ?: null;
-				// fetch headers
-				$sortResultwH = $mail_ui->mail_bo->getHeaders(
-					$_folderName,
-					$offset,
-					$maxMessages,
-					$sort,
-					$reverse,
-					$filter,
-					$uids, // this uids only
-					true, // cacheResult
-					($query['filter2']?true:false) // fetchPreview
-				);
-				$rowsFetched['messages'] = $sortResultwH['info']['total'];
-			}
-		}
-		catch (Exception $e)
-		{
-			$sortResultwH=array();
-			$sR=array();
-			self::callWizard($e->getMessage(), false, 'error');
-		}
-		$response = Api\Json\Response::get();
-		// unlock immediately after fetching the rows
-		if (stripos($_GET['menuaction'],'ajax_get_rows')!==false)
-		{
-			//error_log(__METHOD__.__LINE__.' unlock tree ->'.$_GET['menuaction']);
-			$response->call('app.mail.unlock_tree');
-		}
-
-		if (is_array($sR) && count($sR)>0)
-		{
-			foreach ((array)$sR as $key => $v)
-			{
-				if (array_key_exists($key,(array)$sortResultwH['header'])==true)
-				{
-					$sortResult['header'][] = $sortResultwH['header'][$key];
-				}
-				else
-				{
-					if (!empty($v)) $sortResult['header'][] = array('uid'=>$v);
-				}
-			}
-		}
-		else
-		{
-			$sortResult = $sortResultwH;
-		}
-		$rowsFetched['rowsFetched'] = $sortResult['header'] ? count($sortResult['header']) : 0;
-		if (empty($rowsFetched['messages'])) $rowsFetched['messages'] = $rowsFetched['rowsFetched'];
-
-		//error_log(__METHOD__.__LINE__.' Rows fetched:'.$rowsFetched.' Data:'.array2string($sortResult));
-		$cols = array('row_id','uid','status','attachments','subject','address','toaddress','fromaddress','ccaddress','bccaddress','additionaltoaddress','date','size','modified','bodypreview', 'security');
-		if ($GLOBALS['egw_info']['user']['preferences']['common']['select_mode']=='EGW_SELECTMODE_TOGGLE') unset($cols[0]);
-		$rows = $mail_ui->header2gridelements($sortResult['header'],$cols, $_folderName, $folderType=$toSchema);
-
-		// Save the session (since we are committing session) at the end
-		// to make sure all necessary data are stored in session.
-		// e.g.: Link:: get_data which is used to read attachments data.
-		$mail_ui->mail_bo->saveSessionData();
-
-		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'Folder:'.$_folderName.' Start:'.$query['start'].' NumRows:'.$query['num_rows'],__METHOD__.__LINE__);
-		return $rowsFetched['messages'];
-	}
-
-	/**
 	 * function createRowID - create a unique rowID for the grid
 	 *
 	 * @param string $_folderName used to ensure the uniqueness of the uid over all folders
@@ -2063,319 +1784,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		unset($actionsenabled['view']['children']['openashtml']);//not supported in preview
 
 		return $actionsenabled;
-	}
-
-	/**
-	 * function header2gridelements - to populate the grid elements with the collected Data
-	 *
-	 * @param array $_headers headerdata to process
-	 * @param array $cols cols to populate
-	 * @param array $_folderName to ensure the uniqueness of the uid over all folders
-	 * @param array $_folderType used to determine if we need to populate from/to
-	 * @return array populated result array
-	 */
-	public function header2gridelements($_headers, $cols, $_folderName, $_folderType=0)
-	{
-		if (Mail::$debugTimes) $starttime = microtime(true);
-		$rv = array();
-		$i=0;
-		foreach((array)$_headers as $header)
-		{
-			$i++;
-			$data = array();
-			//error_log(__METHOD__.array2string($header));
-			$message_uid = $header['uid'];
-			$data['uid'] = $message_uid;
-			$data['row_id']=$this->createRowID($_folderName,$message_uid);
-
-			if ($header['smimeType'])
-			{
-				$data['smime'] = Mail\Smime::isSmimeSignatureOnly($header['smimeType'])?
-				Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
-			}
-
-			$flags = "";
-			if(!empty($header['recent'])) $flags .= "R";
-			if(!empty($header['flagged'])) $flags .= "F";
-			if(!empty($header['answered'])) $flags .= "A";
-			if(!empty($header['forwarded'])) $flags .= "W";
-			if(!empty($header['deleted'])) $flags .= "D";
-			if(!empty($header['seen'])) $flags .= "S";
-			if(!empty($header['label1'])) $flags .= "1";
-			if(!empty($header['label2'])) $flags .= "2";
-			if(!empty($header['label3'])) $flags .= "3";
-			if(!empty($header['label4'])) $flags .= "4";
-			if(!empty($header['label5'])) $flags .= "5";
-			if(!empty($header['customFlag1'])) $flags .= "c1";
-			if(!empty($header['customFlag2'])) $flags .= "c2";
-			if(!empty($header['customFlag3'])) $flags .= "c3";
-			if(!empty($header['customFlag4'])) $flags .= "c4";
-			if(!empty($header['customFlag5'])) $flags .= "c5";
-			//error_log(__METHOD__.array2string($header).' Flags:'.$flags);
-
-			// the css for this row
-			$is_recent=false;
-			$css_styles = array("mail");
-			if ($header['deleted']) {
-				$css_styles[] = 'deleted';
-			}
-			if ($header['recent'] && !($header['deleted'] || $header['seen'] || $header['answered'] || $header['forwarded'])) {
-				$css_styles[] = 'recent';
-				$is_recent=true;
-			}
-			if ($header['priority'] < 3) {
-				$css_styles[] = 'prio_high';
-			}
-			if ($header['flagged']) {
-				$css_styles[] = 'flagged';
-			}
-			if (!$header['seen']) {
-				$css_styles[] = 'unseen'; // different status image for recent // solved via css !important
-			}
-			if ($header['answered']) {
-				$css_styles[] = 'replied';
-			}
-			if ($header['forwarded']) {
-				$css_styles[] = 'forwarded';
-			}
-			if ($header['label1']) {
-				$css_styles[] = 'label1';
-			}
-			if ($header['label2']) {
-				$css_styles[] = 'label2';
-			}
-			if ($header['label3']) {
-				$css_styles[] = 'label3';
-			}
-			if ($header['label4']) {
-				$css_styles[] = 'label4';
-			}
-			if ($header['label5']) {
-				$css_styles[] = 'label5';
-			}
-			foreach (Mail::getCustomLabels() as $id => $customLabel)
-			{
-				if (!empty($header['keywords'][$id]))
-				{
-					$css_styles[] = $id;
-				}
-			}
-			if ($header['customFlag1']) {
-				$css_styles[] = 'customFlag1';
-			}
-			if ($header['customFlag2']) {
-				$css_styles[] = 'customFlag2';
-			}
-			if ($header['customFlag3']) {
-				$css_styles[] = 'customFlag3';
-			}
-			if ($header['customFlag4']) {
-				$css_styles[] = 'customFlag4';
-			}
-			if ($header['customFlag5']) {
-				$css_styles[] = 'customFlag5';
-			}
-
-			//error_log(__METHOD__.array2string($css_styles));
-
-			if (in_array("subject", $cols))
-			{
-				// filter out undisplayable characters
-				$search = array('[\016]','[\017]',
-					'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-					'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-				$replace = '';
-
-				$header['subject'] = preg_replace($search,$replace,$header['subject']);
-				// curly brackets get messed up by the template!
-
-				if (!empty($header['subject'])) {
-					// make the subject shorter if it is to long
-					$subject = $header['subject'];
-				} else {
-					$subject = '('. lang('no subject') .')';
-				}
-
-				$data["subject"] = $subject; // the mailsubject
-			}
-
-			$imageHTMLBlock = '';
-			//error_log(__METHOD__.__LINE__.array2string($header));
-			if (in_array('attachments', $cols))
-			{
-				if (!empty($header['attachments']) && (in_array($header['mimetype'], array(
-						'multipart/mixed', 'multipart/signed', 'multipart/related', 'multipart/report',
-						'text/calendar', 'text/html', 'multipart/alternative',
-					)) ||
-					substr($header['mimetype'],0,11) == 'application' ||
-					substr($header['mimetype'],0,5) == 'audio' ||
-					substr($header['mimetype'],0,5) == 'video'))
-				{
-					$image = "<et2-image src='attach'></et2-image>";
-					$datarowid = $this->createRowID($_folderName,$message_uid,true);
-					$attachments = $header['attachments'];
-					//If we have a smime Mail $header['attachments'] has the wrong part value
-					// for the actual attachments we want to display on client side later on
-					// so we use getMessageAttachments(...) instead
-					if ($header['smimeType'])
-					{
-						try
-						{
-							$resolvedAttachments = $this->mail_bo->getMessageAttachments($message_uid, null, null, false, true, true, $_folderName);
-							if (!empty($resolvedAttachments))
-							{
-								$attachments = $resolvedAttachments;
-							}
-						}
-						catch (\Exception $e)
-						{
-							// Keep header attachments as fallback.
-						}
-					}
-					if (count($attachments) == 1)
-					{
-						$image = "<et2-image src='attach' statustext=\"{$attachments[0]['name']}\"></et2-image>";
-					}
-					else
-					{
-						$statustext = lang('%1 attachments', count($attachments));
-						$image = "<et2-image src='attach' statustext=\"{$statustext}\"></et2-image>";
-					}
-					$imageHTMLBlock = self::createAttachmentBlock($attachments, $datarowid, $header['uid'],$_folderName);
-
-					$attachmentFlag = $image;
-				}
-				else
-				{
-					$attachmentFlag = '&nbsp;';
-					$imageHTMLBlock = '';
-				}
-				// show priority flag
-				if ($header['priority'] < 3)
-				{
-					$image = "<et2-image src='prio_high' statustext=\"" . lang('High priority') . "\"></et2-image>";
-				}
-				elseif ($header['priority'] > 3)
-				{
-					$image = "<et2-image src='prio_low' statustext=\"" . lang('Low priority') . "\"></et2-image>";
-				}
-				else
-				{
-					$image = '';
-				}
-				// show a flag for flagged messages
-				$imageflagged ='';
-				$displayFlag= !empty($header['flagged']);
-				foreach ((array)$header as $key => $value)
-				{
-					if (!empty($value) && str_starts_with($key, 'customFlag'))
-					{
-						$displayFlag = true;
-						break;
-					}
-				}
-				if ($displayFlag)
-				{
-					$imageflagged = "<et2-image src='unread_flagged_small' id='flaggedImage'></et2-image>";
-				}
-				$data['attachments'] = $image.$attachmentFlag.$imageflagged; // icon for attachments available
-			}
-
-			// sent or draft or template folder -> to address
-			if (in_array("toaddress", $cols))
-			{
-				// sent or drafts or template folder means foldertype > 0, use to address instead of from
-				$data["toaddress"] = $header['to_address'];//Mail::htmlentities($header['to_address'],$this->charset);
-			}
-
-			if (in_array("additionaltoaddress", $cols))
-			{
-				$data['additionaltoaddress'] = $header['additional_to_addresses'];
-			}
-			//fromaddress
-			if (in_array("fromaddress", $cols))
-			{
-				$data["fromaddress"] = $header['sender_address'];
-			}
-			$data['additionalfromaddress'] = $header['additional_from_addresses'];
-			if (in_array("ccaddress", $cols))
-			{
-				$data['ccaddress'] = $header['cc_addresses'];
-			}
-			if (in_array("bccaddress", $cols))
-			{
-				$data['bccaddress'] = $header['bcc_addresses'];
-			}
-			if (in_array("date", $cols))
-			{
-				$data["date"] = $header['date'];
-			}
-			if (in_array("modified", $cols))
-			{
-				$data["modified"] = $header['internaldate'];
-			}
-
-			if (in_array("size", $cols))
-				$data["size"] = $header['size']; /// size
-
-			$data["class"] = implode(' ', $css_styles);
-			$data["icon"]="bug-fill";
-			//translate style-classes back to flags
-			$data['flags'] = Array();
-			$icon_options = Array();
-			if ($header['seen']) $data["flags"]['read'] = 'read';
-			foreach ($css_styles as &$flag) {
-				if ($flag!='mail')
-				{
-					if ($flag=='label1') {$data["flags"]['label1'] = 'label1';}
-					elseif ($flag=='label2') {$data["flags"]['label2'] = 'label2';}
-					elseif ($flag=='label3') {$data["flags"]['label3'] = 'label3';}
-					elseif ($flag=='label4') {$data["flags"]['label4'] = 'label4';}
-					elseif ($flag=='label5') {$data["flags"]['label5'] = 'label5';}
-					elseif ($flag=='unseen') {unset($data["flags"]['read']);}
-					else $data["flags"][$flag] = $flag;
-
-					//translate style classes to what icon we want to display
-					// unread mail should be blue circle
-					if($flag=='deleted') $icon_options[]='mail_deleted';
-					elseif($flag=='unseen') $icon_options[]='mail_unseen';
-					elseif($flag=='flagged_seen') $icon_options[]='mail_flagged_seen';
-					elseif($flag=='flagged_unseen') $icon_options[]='mail_flagged_unseen';
-					elseif($flag=='recent') $icon_options[]='mail_recent';
-					elseif($flag=='replied') $icon_options[]='mail_replied';
-					elseif($flag=='forwarded') $icon_options[]='mail_forwarded';
-				}
-			}
-			// take precedence of icons into account
-			if(in_array("mail_forwarded", $icon_options)) $data['status_icon']='mail_forward';
-			elseif(in_array("mail_replied", $icon_options)) $data['status_icon']='mail_reply';
-			elseif(in_array("mail_recent", $icon_options)) $data['status_icon']='mail_recent';
-			elseif(in_array("mail_flagged_unseen", $icon_options)) $data['status_icon']='mail_flagged_unseen';
-			elseif(in_array("mail_flagged_seen", $icon_options)) $data['status_icon']='mail_flagged_seen';
-			elseif(in_array("mail_unseen", $icon_options)) $data['status_icon']='mail_unseen';
-			elseif(in_array("mail_deleted", $icon_options)) $data['status_icon']='mail_deleted';
-
-			if ($header['disposition-notification-to']) $data['dispositionnotificationto'] = $header['disposition-notification-to'];
-			if (($header['mdnsent']||$header['mdnnotsent']|$header['seen'])&&isset($data['dispositionnotificationto'])) unset($data['dispositionnotificationto']);
-			$data['attachmentsBlock'] = $imageHTMLBlock;
-			$data['address'] = $_folderType ? $data["toaddress"] : $data["fromaddress"];
-			$data['lavatar'] = Api\Mail\Avatar::getLavatar($data['address']);
-			$data['fromlavatar'] = $_folderType ? Api\Mail\Avatar::getLavatar($data['fromaddress']) : $data['lavatar'];
-
-			if (in_array("bodypreview", $cols) && $header['bodypreview'])
-			{
-				$data["bodypreview"] = $header['bodypreview'];
-			}
-			$data['emailTag'] = $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? "onlyname";
-			$rv[] = $data;
-			//error_log(__METHOD__.__LINE__.array2string($data));
-		}
-		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'Folder:'.$_folderName,__METHOD__.__LINE__);
-
-		// ToDo: call this ONLY if labels change
-		Etemplate\Widget::setElementAttribute('toolbar', 'actions', $this->get_toolbar_actions());
-
-		return $rv;
 	}
 
 	/**
@@ -4735,7 +4143,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	/**
 	 * Fetch a single row's full header/address/attachment detail, shaped exactly like
 	 * mail_preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
-	 * header2gridelements()/email2row() (mail/js/jmap.ts) produce for list rows.
+	 * email2row() (mail/js/jmap.ts) produces for list rows.
 	 *
 	 * Fallback for the "view" popup (mail_ui::displayMessage()) when window.opener's row cache
 	 * isn't available - a bookmarked/direct link, or the opener window was closed. The normal,
@@ -5044,8 +4452,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	/**
 	 * Bootstrap payload for client-side direct JMAP access (see Mail\Imap\Stalwart::jmapBootstrap)
 	 *
-	 * Returns null for accounts NOT backed by Stalwart/JMAP (or if no token could be obtained),
-	 * in which case the client transparently keeps using the regular server-side get_rows.
+	 * Every account is JMAP-eligible (Stalwart directly, or plain IMAP via jmapLocalBootstrap()),
+	 * so returning null here means the account/server is genuinely unreachable right now - there
+	 * is no server-side row-fetch fallback anymore, the client surfaces this as an error.
 	 *
 	 * @param int|null $icServerID profile / server ID, defaults to the active profile
 	 * @return nothing values for keys "sessionUrl", "accountId", "access_token", "expires_in", or null
@@ -5106,6 +4515,46 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			'expires_in' => 3600,	// session lifetime is renewed on every request anyway
 			'isLocal' => true,
 		];
+	}
+
+	/**
+	 * (Re-)enable server push for a profile, if its mail server supports it
+	 *
+	 * Ported from the old get_rows()'s per-fetch call: now triggered client-side (fire-and-forget)
+	 * from mail/js/jmap.ts's MailJmap.enablePushOnce(), at most once per profile per JMAP-token
+	 * lifetime rather than on every row fetch.
+	 *
+	 * Covers both push mechanisms Api\Mail\Imap\PushIface implementors may use: Stalwart's native
+	 * JMAP push subscriptions (Api\Mail\Imap\Jmap::enablePush(), always available), and plain
+	 * IMAP/Dovecot's mailbox-metadata push token registration (Api\Mail\Imap::enablePush(),
+	 * opt-in via the "imap_hosts_with_push" site config) - whichever the account's server class
+	 * actually implements.
+	 *
+	 * Deliberately uses the same lightweight Mail\Account::read()->imapServer() object
+	 * ajax_jmapBootstrap() already uses (not mail_ui::changeProfile()), so this has no side
+	 * effect on the user's "active profile" session state - it may run for a profile that
+	 * isn't the one currently being viewed.
+	 *
+	 * @param int|string $icServerID profile / server ID
+	 * @param string|null $selectedFolder "profileID::folder/path", used to seed Stalwart's
+	 *  "current folder" for its push-state diffing - defaults to INBOX if not given
+	 * @return nothing
+	 */
+	public static function ajax_enablePush($icServerID, $selectedFolder=null)
+	{
+		try
+		{
+			$imapServer = Mail\Account::read($icServerID)->imapServer();
+			if ($imapServer instanceof Api\Mail\Imap\PushIface && $imapServer->pushAvailable())
+			{
+				$folder = explode(self::$delimiter, (string)$selectedFolder, 2)[1] ?? 'INBOX';
+				$imapServer->enablePush(null, $icServerID.self::$delimiter.($folder ?: 'INBOX'));
+			}
+		}
+		catch (\Exception $e)
+		{
+			_egw_log_exception($e);
+		}
 	}
 
 	/**

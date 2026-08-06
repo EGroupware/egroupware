@@ -62,7 +62,8 @@ class Jmap extends Mail\Imap
 	 */
 	protected $jmap_states;
 	/**
-	 * @var string current folder, stored in session and updated by mail_ui::get_rows() calling self::enablePush()
+	 * @var string current folder, stored in session and updated by self::enablePush() (called
+	 *  from mail_ui::ajax_enablePush(), triggered client-side by mail/js/jmap.ts)
 	 */
 	protected $current_folder;
 

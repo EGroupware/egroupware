@@ -437,10 +437,17 @@ class JmapShim
 	}
 
 	/**
-	 * Email/get: fetch exactly the properties MailJmap.getRows() requests for a batch of ids
+	 * Email/get: fetch exactly the properties MailJmap.getRows()/refreshRows() request for a
+	 * batch of ids
+	 *
+	 * Needs to know which mailbox $ids live in (they're plain per-mailbox IMAP UIDs, not
+	 * globally-unique real-JMAP ids - see the class docblock): either taken from the request's
+	 * preceding Email/query (MailJmap.getRows()'s normal batching), or, when called standalone
+	 * (MailJmap.refreshRows()), from an explicit "mailboxId" argument - our own local-only
+	 * extension, same idea as emailSet()'s.
 	 *
 	 * @param string $accountId
-	 * @param array $args {ids: string[]}
+	 * @param array $args {ids: string[], mailboxId?: string}
 	 * @param array &$context see emailQuery()
 	 * @return array {accountId: string, list: array[], notFound: string[]}
 	 */
@@ -461,12 +468,19 @@ class JmapShim
 		{
 			return ['accountId' => $accountId, 'list' => [], 'notFound' => []];
 		}
-		$mailbox = $context['mailbox'][$accountId] ?? null;
-		if ($mailbox === null)
-		{
-			throw new \Exception('Email/get without a preceding Email/query for the same accountId in this request');
-		}
 		$imap = self::imapServer($accountId);
+		if (!empty($args['mailboxId']))
+		{
+			$mailbox = self::hordeMailbox($imap, self::folderPath((string)$args['mailboxId']));
+		}
+		else
+		{
+			$mailbox = $context['mailbox'][$accountId] ?? null;
+			if ($mailbox === null)
+			{
+				throw new \Exception('Email/get without a preceding Email/query or a mailboxId for the same accountId in this request');
+			}
+		}
 
 		$query = new \Horde_Imap_Client_Fetch_Query();
 		$query->envelope();

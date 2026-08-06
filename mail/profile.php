@@ -144,18 +144,12 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 		/*$_returnNodeOnly=*/true, $cache, /*$_popWizard=*/false);
 	$listmailboxestime = microtime(true);
 
-	// get first 20 mails
-	$query = array(
-		'start' => 0,
-		'num_rows' => 20,
-		'filter' => 'any',
-		'filter2' => 'quick',
-		'search' => '',
-		'order' => 'date',
-		'sort' => 'DESC',
+	// get first 20 mails (mail_ui::get_rows() no longer exists - rows are fetched client-side
+	// via direct JMAP access now, so call the underlying header fetch directly instead)
+	$sortResult = $mail_ui->mail_bo->getHeaders(
+		'INBOX', 1, 20, 'date', true, ['status' => 'any'], null, true, true
 	);
-	$rows = $readonlys = array();
-	$mail_ui->get_rows($query, $rows, $readonlys);
+	$rows = $sortResult['header'] ?? [];
 	$fetchtime = microtime(true);
 
 	if (isset($_GET['uid']) && (int)$_GET['uid'] > 0)
