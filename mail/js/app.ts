@@ -1469,7 +1469,12 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			this.egw.jsonq('mail.mail_ui.ajax_fetchMessageDetails', [rowId], (_data) =>
+			// Not this.egw.jsonq() (queues under menuaction=api.queue): the server side
+			// generates a Link::set_data() download token for each attachment, which needs to
+			// persist in the session - api.queue's handler closes/commits the session up front
+			// (to avoid blocking other concurrent queued requests), silently discarding that
+			// write. egw.request() sends a normal, immediate, non-queued request instead.
+			this.egw.request('mail.mail_ui.ajax_fetchMessageDetails', [rowId]).then((_data) =>
 			{
 				if (_data)
 				{
@@ -1526,7 +1531,9 @@ export class MailApp extends EgwApp
 				data.attachmentsBlock[0].filename == "winmail.dat"))
 		{
 			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
-			this.egw.jsonq('mail.mail_ui.ajax_resolveWinmail',[rowId], (_data) =>
+			// Not this.egw.jsonq() - see the ajax_fetchMessageDetails call above for why: this
+			// also generates a Link::set_data() token that needs to survive in the session.
+			this.egw.request('mail.mail_ui.ajax_resolveWinmail',[rowId]).then((_data) =>
 			{
 				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
 				if (typeof _data == 'object')
@@ -1551,7 +1558,8 @@ export class MailApp extends EgwApp
 			&& data.attachments && data.attachments !== '&nbsp;')
 		{
 			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
-			this.egw.jsonq('mail.mail_ui.ajax_fetchAttachments', [rowId], (_data) =>
+			// Not this.egw.jsonq() - same reason as above.
+			this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]).then((_data) =>
 			{
 				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
 				if (_data && Array.isArray(_data.attachmentsBlock) && _data.attachmentsBlock.length)
