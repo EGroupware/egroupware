@@ -1886,12 +1886,6 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			return false;
 		}
 
-		// this may be a bit rude, it may be sufficient that GetMessageList does not list messages flagged as deleted
-		if ($this->mail->mailPreferences['deleteOptions'] == 'mark_as_deleted')
-		{
-			// ignore mark as deleted -> Expunge!
-			//$this->mail->icServer->expunge(); // do not expunge as GetMessageList does not List messages flagged as deleted
-		}
 		ZLog::Write(LOGLEVEL_DEBUG, "IMAP-DeleteMessage: $rv");
 
 		return $rv;

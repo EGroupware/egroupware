@@ -21,7 +21,7 @@ import {
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {MailCompose} from "./compose";
-import {MailJmap, JmapBodyResult} from "./jmap";
+import {MailJmap, JmapBodyResult, JmapMessageReference} from "./jmap";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -2724,6 +2724,39 @@ export class MailApp extends EgwApp
 	 * @param {object} _action - optional action
 	 * @param {object} _calledFromPopup
 	 */
+	/**
+	 * Try the fast client-side JMAP delete path (MailJmap.deleteMessages()) for the common case -
+	 * an explicit selection, not "select all matching the current filter" (that stays on the
+	 * classic path, see plan). Returns null if not applicable at all (caller falls back to the
+	 * unchanged ajax_deleteMessages() call directly); otherwise a Promise that either succeeds via
+	 * JMAP or, on any failure, falls back to that same classic call internally - so the caller can
+	 * treat the return value uniformly (e.g. .finally()) either way.
+	 */
+	private mail_tryJmapDelete(_msg : any, _action : any) : Promise<any> | null
+	{
+		if (_msg['all'] || !Array.isArray(_msg['msg']) || !_msg['msg'].length)
+		{
+			return null;
+		}
+		let references : JmapMessageReference[];
+		try
+		{
+			references = _msg['msg'].map((id : string) => this.jmap.messageReference(id));
+		}
+		catch (e)
+		{
+			return null;
+		}
+		const mode : 'trash' | 'destroy' = _action === 'remove_immediately' ? 'destroy' :
+			_action === 'move_to_trash' ? 'trash' :
+			(this.egw.preference('deleteOptions', 'mail') === 'remove_immediately' ? 'destroy' : 'trash');
+		return this.jmap.deleteMessages(references, mode).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapDelete(): JMAP delete failed, falling back to server', e);
+			return egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true);
+		});
+	}
+
 	mail_deleteMessages(_msg,_action,_calledFromPopup)
 	{
 		let message, ftree, _foldernode, displayname;
@@ -2767,9 +2800,11 @@ export class MailApp extends EgwApp
 			nm._set_autorefresh(0);
 		}
 
-		// Tell server
-		egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)])
-			.sendRequest(true)
+		// Tell server - fast client-side JMAP path for the common case (explicit selection, not
+		// "select all matching the current filter"), falling back to the classic ajax call
+		// unchanged for anything else or on any failure (see mail_tryJmapDelete())
+		(this.mail_tryJmapDelete(_msg, _action) ??
+			egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true))
 			.finally(() =>
 			{
 				// Restart autorefresh
@@ -4548,6 +4583,44 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Try the fast client-side JMAP move path (MailJmap.moveMessages()) for the common case - an
+	 * explicit selection (not "select all matching the current filter") within one account, and
+	 * not the "move to archive" shortcut (that needs the server to resolve the actual archive
+	 * folder, see ajax_copyMessages()'s $_move2ArchiveMarker). Returns null if not applicable
+	 * (caller falls back to the unchanged classic call directly); otherwise a Promise that either
+	 * succeeds via JMAP or, on any failure, falls back to that same classic call.
+	 */
+	private mail_tryJmapMove(target : string, messages : any, isArchiveShortcut : boolean,
+		classicMove : () => Promise<any>) : Promise<any> | null
+	{
+		if (isArchiveShortcut || messages['all'] || !Array.isArray(messages.msg) || !messages.msg.length)
+		{
+			return null;
+		}
+		const sepIndex = target.indexOf('::');
+		const targetProfileID = sepIndex > 0 ? target.substring(0, sepIndex) : '';
+		const targetFolderPath = sepIndex > 0 ? target.substring(sepIndex + 2) : '';
+		if (!targetProfileID || !targetFolderPath)
+		{
+			return null;
+		}
+		let references : JmapMessageReference[];
+		try
+		{
+			references = messages.msg.map((id : string) => this.jmap.messageReference(id));
+		}
+		catch (e)
+		{
+			return null;
+		}
+		return this.jmap.moveMessages(references, targetProfileID, targetFolderPath).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapMove(): JMAP move failed, falling back to server', e);
+			return classicMove();
+		});
+	}
+
+	/**
 	 * mail_move - implementation of the move action from drag n drop
 	 *
 	 * @param _action
@@ -4605,7 +4678,8 @@ export class MailApp extends EgwApp
 		this.refresh(nm, messages.msg, et2_nextmatch.DELETE);
 
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (_action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2'?'2':'_') ], function(){
+		const isArchiveShortcut = _action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2';
+		const classicMove = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (isArchiveShortcut?'2':'_') ], function(){
 			self.unlock_tree();
 
 			// Server response may contain refresh, but it's always delete
@@ -4616,8 +4690,11 @@ export class MailApp extends EgwApp
 				// Can't trust the sorting, needs to be full refresh
 				nm.refresh();
 			}
-		})
-			.sendRequest(true)
+		}).sendRequest(true);
+
+		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
+		// unchanged for anything else or on any failure (see mail_tryJmapMove())
+		(this.mail_tryJmapMove(target, messages, isArchiveShortcut, classicMove) ?? classicMove())
 			.finally(() =>
 			{
 				// Restart autorefresh

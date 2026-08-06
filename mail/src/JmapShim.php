@@ -558,6 +558,12 @@ class JmapShim
 		$notUpdated = [];
 		$add = [];
 		$remove = [];
+		// id => target folder path (base64-decoded from the mailboxIds patch's one truthy key) -
+		// a move, see class docblock's "moveMessages()" reference and the client-side caller
+		// (MailJmap.moveMessages(), mail/js/jmap.ts) - only ever sent as a full-property
+		// replacement ({"mailboxIds": {newId: true}}), never a "mailboxIds/oldId" patch-path, so
+		// there's always exactly one truthy entry to look at
+		$moves = [];
 		$allowed = self::writableKeywords();
 
 		foreach ((array)($args['update'] ?? []) as $id => $patch)
@@ -569,8 +575,20 @@ class JmapShim
 				continue;
 			}
 			$operations = [];
+			$moveTo = null;
 			foreach ($patch as $path => $value)
 			{
+				if ((string)$path === 'mailboxIds' && is_array($value))
+				{
+					$target = array_key_first(array_filter($value));
+					if ($target === null)
+					{
+						$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => ['mailboxIds']];
+						continue 2;
+					}
+					$moveTo = self::folderPath((string)$target);
+					continue;
+				}
 				if (!str_starts_with((string)$path, 'keywords/'))
 				{
 					$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => [(string)$path]];
@@ -595,7 +613,24 @@ class JmapShim
 					$remove[$keyword][] = $id;
 				}
 			}
+			if ($moveTo !== null)
+			{
+				$moves[$moveTo][] = $id;
+			}
 			$updated[$id] = null;
+		}
+
+		$destroyed = [];
+		$notDestroyed = [];
+		foreach ((array)($args['destroy'] ?? []) as $id)
+		{
+			$id = (string)$id;
+			if (!ctype_digit($id))
+			{
+				$notDestroyed[$id] = ['type' => 'invalidArguments'];
+				continue;
+			}
+			$destroyed[] = $id;
 		}
 
 		if ($accountId === '0')
@@ -606,6 +641,8 @@ class JmapShim
 				'newState' => '0',
 				'updated' => (object)$updated,
 				'notUpdated' => (object)$notUpdated,
+				'destroyed' => $destroyed,
+				'notDestroyed' => (object)$notDestroyed,
 			];
 		}
 
@@ -629,6 +666,25 @@ class JmapShim
 				]);
 			}
 		}
+		// same primitive Mail::moveMessages()'s same-account branch uses (api/src/Mail.php),
+		// called directly - a server-internal IMAP COPY+move, no message bytes handled by us
+		foreach ($moves as $targetFolder => $ids)
+		{
+			$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+			$imap->copy($mailbox, $targetMailbox, [
+				'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+				'move' => true,
+			]);
+		}
+		if ($destroyed)
+		{
+			// same primitive Mail::deleteMessages()'s "remove_immediately" mode uses
+			$imap->store($mailbox, [
+				'add' => ['\\Deleted'],
+				'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $destroyed)),
+			]);
+			$imap->expunge($mailbox);
+		}
 
 		return [
 			'accountId' => $accountId,
@@ -636,6 +692,8 @@ class JmapShim
 			'newState' => '0',
 			'updated' => (object)$updated,
 			'notUpdated' => (object)$notUpdated,
+			'destroyed' => $destroyed,
+			'notDestroyed' => (object)$notDestroyed,
 		];
 	}
 
@@ -982,6 +1040,51 @@ class JmapShim
 			return 'tnef';
 		}
 		return null;
+	}
+
+	/**
+	 * Build the flat attachment-array shape mail_ui::createAttachmentBlock() expects, from a
+	 * TNEF-decoded Horde_Mime_Part tree (Mail::tnef_decoder()'s output) - ported from the
+	 * equivalent loop in Mail::getMessageAttachments() (api/src/Mail.php:6254-6286), not a call
+	 * into it, since that method also does the (unrelated, IMAP-based) surrounding attachment
+	 * enumeration this doesn't need - used by mail_ui::ajax_resolveWinmail()'s JMAP-native path,
+	 * for a winmail.dat attached alongside a normal message (as opposed to the whole-message-is-
+	 * TNEF case, see resolveTnef()/specialCaseType() above, an unrelated/rarer case).
+	 *
+	 * @param string $uid original message uid (the winmail.dat attachment's own container message)
+	 * @param string $partID original winmail.dat part's MIME id within that message
+	 * @param \Horde_Mime_Part $decoded Mail::tnef_decoder()'s output
+	 * @return array[] attachment entries, same shape Mail::getMessageAttachments() produces
+	 */
+	public static function tnefAttachments(string $uid, string $partID, \Horde_Mime_Part $decoded) : array
+	{
+		$attachments = [];
+		foreach ($decoded->getParts() as $mime_id => $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			$attachment = $part->getAllDispositionParameters();
+			$attachment['disposition'] = $part->getDisposition();
+			$attachment['mimeType'] = $part->getType();
+			$attachment['uid'] = $uid;
+			$attachment['partID'] = $partID;
+			$attachment['is_winmail'] = $uid.'@'.$partID.'@'.$mime_id;
+			if (empty($attachment['name']))
+			{
+				$attachment['name'] = Api\Mail::attachmentName($part);
+			}
+			$attachment['size'] = $part->getBytes();
+			if (($cid = $part->getContentId()))
+			{
+				$attachment['cid'] = $cid;
+			}
+			if (empty($attachment['name']))
+			{
+				$attachment['name'] = (!empty($attachment['cid']) ? $attachment['cid'] :
+					'unknown_Uid'.$uid.'_Part'.$mime_id).'.'.Api\MimeMagic::mime2ext($attachment['mimeType']);
+			}
+			$attachments[] = $attachment;
+		}
+		return $attachments;
 	}
 
 	/**

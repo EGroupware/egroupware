@@ -149,7 +149,6 @@ class mail_hooks
 
 		$deleteOptions = array(
 			'move_to_trash'		=> lang('move to trash'),
-			'mark_as_deleted'	=> lang('mark as deleted'),
 			'remove_immediately'	=> lang('remove immediately')
 		);
 

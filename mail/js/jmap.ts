@@ -31,6 +31,7 @@ interface JmapToken
 	expires_at : number;	// ms epoch, with our own safety-margin already subtracted
 	isLocal : boolean;
 	customLabels : Record<string, {name : string, color : string, icon? : string}>;
+	trashFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Trash" - see deleteMessages()
 }
 
 export interface JmapMessageReference
@@ -595,11 +596,12 @@ export class MailJmap
 	 * has actually rendered - same deliberately-asynchronous, post-load pattern app.ts's
 	 * resolveExternalImages() already uses for remote images.
 	 *
-	 * Local-shim accounts: rewritten straight to mail_ui::displayImage() (existing endpoint, no new
-	 * server code - see JmapShim.php's bodyPartToJmap() docblock). Stalwart accounts: downloaded
-	 * directly from Stalwart via JMAP's own Blob download (client.downloadBlob()), matching this
-	 * project's "talk directly to JMAP for Stalwart" architecture the rest of the way through -
-	 * object URLs are revoked again the next time this row's body is (re-)rendered.
+	 * Uniformly via JMAP Blob download (client.downloadBlob()) for both backends - Stalwart's own
+	 * blobId downloads directly from Stalwart; the local shim's blobId is self-describing
+	 * (JmapShim.php's bodyPartToJmap() docblock) and resolved by its own download() endpoint
+	 * (mail/jmap.php's "download" branch) - no more mail_ui::displayImage() dependency for this
+	 * fast path (that endpoint is still used by the legacy server-rendered fallback page). Object
+	 * URLs are revoked again the next time this row's body is (re-)rendered.
 	 */
 	private objectUrls : Record<string, string[]> = {};
 
@@ -621,7 +623,6 @@ export class MailJmap
 				byCid[att.cid] = att;
 			}
 		});
-		const ref = this.messageReference(rowId);
 
 		await Promise.all(images.map(async(img) =>
 		{
@@ -633,29 +634,15 @@ export class MailJmap
 			}
 			try
 			{
-				if (result.isLocal)
-				{
-					img.src = this.egw.link('/index.php', {
-						menuaction: 'mail.mail_ui.displayImage',
-						profileID: result.profileID,
-						uid: btoa(ref.emailId),
-						cid: btoa(cid),
-						partID: attachment.partId,
-						mailbox: ref.mailboxId,
-					});
-				}
-				else
-				{
-					const response = await this.clients[result.profileID].downloadBlob({
-						accountId: result.accountId,
-						blobId: attachment.blobId,
-						mimeType: attachment.type,
-						fileName: attachment.name || 'image',
-					});
-					const url = URL.createObjectURL(await response.blob());
-					this.objectUrls[rowId].push(url);
-					img.src = url;
-				}
+				const response = await this.clients[result.profileID].downloadBlob({
+					accountId: result.accountId,
+					blobId: attachment.blobId,
+					mimeType: attachment.type,
+					fileName: attachment.name || 'image',
+				});
+				const url = URL.createObjectURL(await response.blob());
+				this.objectUrls[rowId].push(url);
+				img.src = url;
 			}
 			catch (e)
 			{
@@ -706,6 +693,7 @@ export class MailJmap
 						expires_at: Date.now() + Math.max(0, data.expires_in - 60) * 1000,
 						isLocal: !!data.isLocal,
 						customLabels: data.customLabels || {},
+						trashFolder: data.trashFolder,
 					};
 					if (Object.keys(token.customLabels).length)
 					{
@@ -1072,9 +1060,15 @@ export class MailJmap
 		return {['keywords/' + keyword]: set ? true : null};
 	}
 
-	/** Submit a JMAP Email/set update, adding the local mailbox extension only for our shim. */
+	/**
+	 * Submit a JMAP Email/set update, adding the local mailbox extension only for our shim.
+	 *
+	 * Despite the name (kept to avoid touching its many existing keyword-patch callers), also used
+	 * for mailboxIds patches (moveMessages()) - the JMAP shape ({[id]: {property: value}}) is the
+	 * same either way, Email/set doesn't care what the property is.
+	 */
 	private async updateKeywords(profileID : string, mailboxId : string,
-		update : Record<string, Record<string, boolean | null>>) : Promise<any>
+		update : Record<string, Record<string, any>>) : Promise<any>
 	{
 		if (!Object.keys(update).length)
 		{
@@ -1155,6 +1149,100 @@ export class MailJmap
 				group.map(reference => reference.emailId), patch)));
 	}
 
+	/**
+	 * Move messages to another mailbox within the SAME account, via JMAP Email/set mailboxIds -
+	 * a server-internal reference change, same as the classic IMAP COPY+move path already was for
+	 * same-account moves (no message bytes pass through us either way) - the win here is protocol
+	 * purity for Stalwart (no IMAP connection needed for this action at all) and a uniform
+	 * JMAP-shaped interface for the local shim.
+	 *
+	 * Cross-account moves are explicitly out of scope (see plan) - throws so the caller
+	 * (app.ts) falls back to the existing server-side ajax_copyMessages(), unchanged.
+	 *
+	 * @param references
+	 * @param targetProfileID must equal every reference's own profileID
+	 * @param targetFolderPath EGroupware "/"-joined folder path of the destination, within
+	 *  targetProfileID - resolved to a JMAP Mailbox id via the same cached mailboxId() lookup
+	 *  getRows()/toggleForAll() already use
+	 */
+	async moveMessages(references : JmapMessageReference[], targetProfileID : string, targetFolderPath : string) : Promise<void>
+	{
+		if (!references.length || references.some(ref => ref.profileID !== targetProfileID))
+		{
+			throw new Error('MailJmap.moveMessages(): cross-account move not supported');
+		}
+		const token = await this.ensureToken(targetProfileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const targetMailboxId = await this.mailboxId(
+			this.clients[targetProfileID], token.accountId, targetProfileID, targetFolderPath);
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.updateIds(group[0].profileID, group[0].mailboxId,
+				group.map(reference => reference.emailId), {mailboxIds: {[targetMailboxId]: true}})));
+	}
+
+	/**
+	 * Delete messages - always within their own account (there's no such thing as a cross-account
+	 * delete). 'trash' moves them to the account's Trash mailbox (resolved via moveMessages() from
+	 * the JMAP bootstrap's "trashFolder", see ensureToken()/mail_ui::ajax_jmapBootstrap()'s
+	 * docblock); 'destroy' permanently removes them (JMAP Email/set destroy - the equivalent of
+	 * Mail::deleteMessages()'s "remove_immediately", not "mark_as_deleted", which has no JMAP
+	 * equivalent and has been removed entirely, see plan).
+	 */
+	async deleteMessages(references : JmapMessageReference[], mode : 'trash' | 'destroy') : Promise<void>
+	{
+		if (!references.length)
+		{
+			return;
+		}
+		if (mode === 'trash')
+		{
+			await Promise.all(Object.values(this.groupReferences(references)).map(async(group) =>
+			{
+				const profileID = group[0].profileID;
+				const token = await this.ensureToken(profileID);
+				if (!token)
+				{
+					throw new Error(this.egw.lang('Unable to connect to the mail server'));
+				}
+				if (!token.trashFolder)
+				{
+					throw new Error('MailJmap.deleteMessages(): no trash folder known for this profile');
+				}
+				return this.moveMessages(group, profileID, token.trashFolder);
+			}));
+			return;
+		}
+		await Promise.all(Object.values(this.groupReferences(references)).map(async(group) =>
+		{
+			const profileID = group[0].profileID;
+			const token = await this.ensureToken(profileID);
+			if (!token)
+			{
+				throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			}
+			const args : any = {
+				accountId: token.accountId,
+				destroy: group.map(ref => ref.emailId),
+			};
+			if (token.isLocal)
+			{
+				args.mailboxId = group[0].mailboxId;
+			}
+			const [{result}] = await this.clients[profileID].requestMany((t) => ({
+				result: t.Email.set(args) as any,
+			}));
+			if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
+			{
+				const error : any = new Error(this.egw.lang('Failed to delete one or more messages'));
+				error.notDestroyed = result.notDestroyed;
+				throw error;
+			}
+		}));
+	}
+
 	private withKeyword(filter : EmailFilter, keyword : string, set : boolean) : EmailFilter
 	{
 		return {operator: 'AND', conditions: [filter, set ? {hasKeyword: keyword} : {notKeyword: keyword}]};
@@ -1187,11 +1275,11 @@ export class MailJmap
 	}
 
 	private async updateIds(profileID : string, mailboxId : string, ids : string[],
-		patch : Record<string, boolean | null>) : Promise<void>
+		patch : Record<string, any>) : Promise<void>
 	{
 		for (let start = 0; start < ids.length; start += MailJmap.QUERY_PAGE_SIZE)
 		{
-			const update : Record<string, Record<string, boolean | null>> = {};
+			const update : Record<string, Record<string, any>> = {};
 			ids.slice(start, start + MailJmap.QUERY_PAGE_SIZE).forEach(id => update[id] = {...patch});
 			await this.updateKeywords(profileID, mailboxId, update);
 		}
