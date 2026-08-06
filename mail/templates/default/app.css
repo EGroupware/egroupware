@@ -17,30 +17,53 @@
 .quoted5 {
   color: #bb6600;
 }
+tr.mail {
+  --mail-left-border-color: transparent;
+}
 tr.mail td:first-child {
-  border-left: 6px solid transparent;
+  border-left: 6px solid var(--mail-left-border-color) !important;
 }
-tr.mail.label1 td:first-child {
-  border-left-color: #ff0080 !important;
+tr.mail.label1 {
+  --mail-left-border-color: #ff0080;
 }
-tr.mail.label2 td:first-child {
-  border-left-color: #ff8000 !important;
+tr.mail.label2 {
+  --mail-left-border-color: #ff8000;
 }
-tr.mail.label3 td:first-child {
-  border-left-color: #008000 !important;
+tr.mail.label3 {
+  --mail-left-border-color: #008000;
 }
-tr.mail.label4 td:first-child {
-  border-left-color: #0000ff !important;
+tr.mail.label4 {
+  --mail-left-border-color: #0000ff;
 }
-tr.mail.label5 td:first-child {
-  border-left-color: #8000ff !important;
+tr.mail.label5 {
+  --mail-left-border-color: #8000ff;
 }
-tr.mail.flagged td:first-child {
-  border-left-color: #ff0000 !important;
+tr.mail.flagged {
+  --mail-left-border-color: #ff0000;
+}
+tr.mail.customFlag1 {
+  --flag-color: #ff0000;
+}
+tr.mail.customFlag2 {
+  --flag-color: #ff8000;
+}
+tr.mail.customFlag3 {
+  --flag-color: #008000;
+}
+tr.mail.customFlag4 {
+  --flag-color: #0000ff;
+}
+tr.mail.customFlag5 {
+  --flag-color: #8000ff;
+}
+tr.mail.deleted {
+  --mail-left-border-color: silver;
 }
 tr.mail.deleted td:first-child {
-  border-left-color: silver;
   text-decoration: line-through;
+}
+tr.mail #flaggedImage {
+  color: var(--flag-color, var(--sl-color-neutral-800));
 }
 /**
 	No styling on recent, sometimes recent & unseen are cleared seperately causing confusion when the row doesn't change
@@ -1041,6 +1064,11 @@ tr.mailComposeJQueryBcc,
 tr.mailComposeJQueryFolder,
 tr.mailComposeJQueryReplyto {
   display: none;
+}
+et2-menu-item#mark et2-menu-item#customFlag et2-image[slot='prefix'] {
+  background: linear-gradient(180deg, red, orange, yellow, green, cyan, blue, violet);
+  background-clip: text;
+  color: transparent;
 }
 /**
  * Kdots

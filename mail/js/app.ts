@@ -105,6 +105,8 @@ export class MailApp extends EgwApp
 	 */
 	image_proxy : any = 'https://';
 
+	customLabels : {[id: string]: {name: string, color: string, icon?: string}} = {};
+
 	/**
 	 * stores push activated acc ids
 	 */
@@ -131,7 +133,7 @@ export class MailApp extends EgwApp
 	/**
 	 * Direct client-side JMAP access sub-object (gets automatically instanciated, if used)
 	 *
-	 * Only usable for accounts backed by Imap\Stalwart - see MailJmap.getRows()
+	 * Uses a server's native JMAP endpoint or the local plain-IMAP shim.
 	 */
 	get jmap() : MailJmap
 	{
@@ -513,8 +515,83 @@ export class MailApp extends EgwApp
 				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
 
 		}
+		this.customLabels = this.et2.getArrayMgr('content').getEntry('customLabels') ||
+			window.opener?.app?.mail?.customLabels || this.customLabels;
+		this.mail_updateCustomLabelStylesheet();
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
+	}
+
+	/**
+	 * Get configured custom labels, including from the opener for popup actions
+	 */
+	mail_getCustomLabels()
+	{
+		return Object.keys(this.customLabels).length ? this.customLabels :
+			window.opener?.app?.mail?.customLabels || {};
+	}
+
+	/**
+	 * Resolve a case-insensitive IMAP keyword to its category-name label ID
+	 */
+	mail_getCustomLabelId(_id: string)
+	{
+		return Object.keys(this.mail_getCustomLabels()).find(
+			labelId => labelId.toLowerCase() === _id.toLowerCase()
+		);
+	}
+
+	/**
+	 * Check if an action or IMAP keyword is a configured custom label
+	 */
+	mail_isCustomLabel(_id: string)
+	{
+		return typeof this.mail_getCustomLabelId(_id) !== 'undefined';
+	}
+
+	/**
+	 * All labels represented in row flags
+	 */
+	mail_getLabelIds()
+	{
+		return ['label1', 'label2', 'label3', 'label4', 'label5',
+			...Object.keys(this.mail_getCustomLabels())];
+	}
+
+	/**
+	 * Check if an action is a built-in or configured label
+	 */
+	mail_isLabel(_id: string)
+	{
+		return this.mail_getLabelIds().includes(_id);
+	}
+
+	/**
+	 * Add configured custom-label colors after the static Mail label rules
+	 */
+	mail_updateCustomLabelStylesheet()
+	{
+		const id = 'mail-custom-label-colors';
+		let style = document.getElementById(id) as HTMLStyleElement;
+		if (!style)
+		{
+			style = document.createElement('style');
+			style.id = id;
+			document.head.append(style);
+		}
+		style.textContent = '';
+		const customLabels = this.mail_getCustomLabels();
+		for (const labelId of Object.keys(customLabels))
+		{
+			const customLabel = customLabels[labelId];
+			if (CSS.supports('color', customLabel.color))
+			{
+				style.sheet.insertRule(
+					`tr.mail.${CSS.escape(labelId)} { --mail-left-border-color: ${customLabel.color}; }`,
+					style.sheet.cssRules.length
+				);
+			}
+		}
 	}
 
 	/**
@@ -640,7 +717,11 @@ export class MailApp extends EgwApp
 				pushData.acl.event = 'FlagsSet';
 				this.pushUpdateFlags(pushData);
 			}
-			pushData.acl.flags = ['$seen', '$delete', '$flagged', '$label1', '$label2', '$label3', '$label4', '$label5'].filter((flag => !pushData.acl.flags.includes(flag)));
+			const knownFlags = ['$seen', '$delete', '$flagged', '$label1', '$label2', '$label3', '$label4', '$label5',
+				'$customflag1', '$customflag2', '$customflag3', '$customflag4', '$customflag5',
+				...Object.keys(this.mail_getCustomLabels()).map(id => '$' + id.toLowerCase())];
+			const currentFlags = pushData.acl.flags.map(flag => flag.toLowerCase());
+			pushData.acl.flags = knownFlags.filter((flag => !currentFlags.includes(flag)));
 			if (pushData.acl.flags.length)
 			{
 				pushData.acl.event = 'FlagsClear';
@@ -661,6 +742,35 @@ export class MailApp extends EgwApp
 			for (let i in ids)
 			{
 				let msg = {msg:['mail::'+ids[i]]};
+				const customLabelId = this.mail_getCustomLabelId(flag);
+				if (customLabelId)
+				{
+					flag = customLabelId;
+					if (unset)
+					{
+						this.mail_removeRowClass(msg, flag);
+					}
+					else
+					{
+						this.mail_setRowClass(msg, flag);
+					}
+					const uid = msg.msg[0];
+					const dataElem = egw.dataGetUIDdata(uid);
+					if (dataElem)
+					{
+						dataElem.data.flags ||= {};
+						if (unset)
+						{
+							delete dataElem.data.flags[flag];
+						}
+						else
+						{
+							dataElem.data.flags[flag] = flag;
+						}
+						egw.dataStoreUID(uid, dataElem.data, true);
+					}
+					continue;
+				}
 				switch(flag)
 				{
 					case 'seen':
@@ -672,13 +782,26 @@ export class MailApp extends EgwApp
 					case 'label3':
 					case 'label4':
 					case 'label5':
+					case 'customflag1':
+					case 'customflag2':
+					case 'customflag3':
+					case 'customflag4':
+					case 'customflag5':
 					case 'flagged':
+						if (flag.substring(0, 10) == 'customflag') flag = flag.replace('customflag', 'customFlag');
 						if (unset)
 						{
 							this.mail_removeRowClass(msg, flag);
 						}
 						else
 						{
+							if (flag.substring(0, 10) == 'customFlag')
+							{
+								['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'].forEach(customFlag =>
+								{
+									if (customFlag != flag) this.mail_removeRowClass(msg, customFlag);
+								});
+							}
 							rowClass = flag;
 						}
 						break;
@@ -2923,6 +3046,16 @@ export class MailApp extends EgwApp
 						if (_action.id=="label4") actionlabel="to do";
 					case "label5":
 						if (_action.id=="label5") actionlabel="later";
+					case "customFlag1":
+						if (_action.id=="customFlag1") actionlabel="red";
+					case "customFlag2":
+						if (_action.id=="customFlag2") actionlabel="orange";
+					case "customFlag3":
+						if (_action.id=="customFlag3") actionlabel="green";
+					case "customFlag4":
+						if (_action.id=="customFlag4") actionlabel="blue";
+					case "customFlag5":
+						if (_action.id=="customFlag5") actionlabel="purple";
 					case "flagged":
 					case "read":
 					case "undelete":
@@ -2930,6 +3063,14 @@ export class MailApp extends EgwApp
 						if (_action.id.substr(0,5)=='label') messageToDisplay = this.egw.lang("Do you really want to toggle label %1 for ALL messages in the current view?",this.egw.lang(actionlabel))+" ";
 						break;
 					default:
+						if (this.mail_isCustomLabel(_action.id))
+						{
+							messageToDisplay = this.egw.lang(
+								"Do you really want to toggle label %1 for ALL messages in the current view?",
+								_action.caption
+							) + " ";
+							break;
+						}
 						var type = null;
 						if (_action.id.substr(0,4)=='move' || _action.id === "drop_move_mail")
 						{
@@ -2968,6 +3109,11 @@ export class MailApp extends EgwApp
 						case "label3":
 						case "label4":
 						case "label5":
+						case "customFlag1":
+						case "customFlag2":
+						case "customFlag3":
+						case "customFlag4":
+						case "customFlag5":
 						case "flagged":
 						case "read":
 						case "undelete":
@@ -2980,8 +3126,18 @@ export class MailApp extends EgwApp
 							that.mail_callCopy(_action, _elems, _target, rv);
 							break;
 						default:
-							if (_action.id.substr(0, 4) == 'move') that.mail_callMove(_action, _elems, _target, rv);
-							if (_action.id.substr(0, 4) == 'copy') that.mail_callCopy(_action, _elems, _target, rv);
+							if (that.mail_isCustomLabel(_action.id))
+							{
+								that.mail_callFlagMessages(_action, _elems, rv);
+							}
+							else if (_action.id.substr(0, 4) == 'move')
+							{
+								that.mail_callMove(_action, _elems, _target, rv);
+							}
+							else if (_action.id.substr(0, 4) == 'copy')
+							{
+								that.mail_callCopy(_action, _elems, _target, rv);
+							}
 					}
 				}, messageToDisplay, this.egw.lang("Confirm"), null, buttons);
 			}
@@ -3009,6 +3165,11 @@ export class MailApp extends EgwApp
 			case "label3":
 			case "label4":
 			case "label5":
+			case "customFlag1":
+			case "customFlag2":
+			case "customFlag3":
+			case "customFlag4":
+			case "customFlag5":
 			case "flagged":
 			case "read":
 			case "undelete":
@@ -3021,8 +3182,18 @@ export class MailApp extends EgwApp
 				this.mail_callCopy(_action, _elems,_target, rvMain);
 				break;
 			default:
-				if (_action.id.substr(0,4)=='move') this.mail_callMove(_action, _elems,_target, rvMain);
-				if (_action.id.substr(0,4)=='copy') this.mail_callCopy(_action, _elems,_target, rvMain);
+				if (this.mail_isCustomLabel(_action.id))
+				{
+					this.mail_callFlagMessages(_action, _elems,rvMain);
+				}
+				else if (_action.id.substr(0,4)=='move')
+				{
+					this.mail_callMove(_action, _elems,_target, rvMain);
+				}
+				else if (_action.id.substr(0,4)=='copy')
+				{
+					this.mail_callCopy(_action, _elems,_target, rvMain);
+				}
 		}
 	}
 
@@ -3073,6 +3244,104 @@ export class MailApp extends EgwApp
 		this.mail_checkAllSelected(_action,_elems,null,true);
 	}
 
+	/** Capture row state before an optimistic keyword update. */
+	mail_snapshotRows(_messageIds : string[])
+	{
+		const snapshots = {};
+		for (const uid of _messageIds || [])
+		{
+			const dataElem = egw.dataGetUIDdata(uid);
+			if (dataElem)
+			{
+				snapshots[uid] = {
+					flags: {...(dataElem.data.flags || {})},
+					class: dataElem.data['class'] || '',
+				};
+			}
+		}
+		return snapshots;
+	}
+
+	/** Restore failed optimistic keyword updates without rerendering successful rows. */
+	mail_restoreRows(_snapshots, _failedEmailIds? : string[])
+	{
+		const knownClasses = [...this.mail_getLabelIds(),
+			'customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+		for (const uid of Object.keys(_snapshots || {}))
+		{
+			if (_failedEmailIds?.length)
+			{
+				try
+				{
+					if (!_failedEmailIds.includes(this.jmap.messageReference(uid).emailId)) continue;
+				}
+				catch (_e)
+				{
+					continue;
+				}
+			}
+			const dataElem = egw.dataGetUIDdata(uid);
+			if (!dataElem) continue;
+			dataElem.data.flags = {..._snapshots[uid].flags};
+			dataElem.data['class'] = _snapshots[uid].class;
+			const mailApp = this.nm ? this : window.opener?.app?.mail;
+			const node = mailApp?.nm?.controller?.getObjectManager()?.children?.find(
+				(item: EgwActionObject) => item.id === uid
+			)?.iface?.getDOMNode();
+			knownClasses.forEach(className => node?.classList.remove(className));
+			_snapshots[uid].class.split(' ').filter(className => knownClasses.includes(className))
+				.forEach(className => node?.classList.add(className));
+			const hasFlag = !!dataElem.data.flags.flagged ||
+				['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5']
+					.some(flag => !!dataElem.data.flags[flag]);
+			const flagImage = node?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage');
+			if (hasFlag && !flagImage)
+			{
+				const image : Et2Image = document.createElement('et2-image') as Et2Image;
+				image.id = 'flaggedImage';
+				image.src = 'unread_flagged_small';
+				node?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]'))?.appendChild(image);
+			}
+			else if (!hasFlag)
+			{
+				flagImage?.remove();
+			}
+			egw.dataStoreUID(uid, dataElem.data, true);
+		}
+	}
+
+	/**
+	 * Remove every built-in and configured custom label from local row state
+	 */
+	mail_removeAllLabelState(_messageList)
+	{
+		const labels = this.mail_getLabelIds();
+		for (const uid of _messageList.msg)
+		{
+			const dataElem = egw.dataGetUIDdata(uid);
+			if (!dataElem) continue;
+
+			dataElem.data.flags ||= {};
+			let classes = dataElem.data['class']?.split(' ') || [];
+			labels.forEach(label =>
+			{
+				delete dataElem.data.flags[label];
+				classes = classes.filter(className => className != label && className != 'un' + label);
+			});
+			dataElem.data['class'] = classes.join(' ');
+
+			const mailApp = this.nm ? this : window.opener?.app?.mail;
+			const nmNode = mailApp?.nm?.controller?.getObjectManager()?.children?.find(
+				(item: EgwActionObject) => item.id === uid
+			)?.iface?.getDOMNode();
+			labels.forEach(label =>
+			{
+				nmNode?.classList.remove(label, 'un' + label);
+			});
+			egw.dataStoreUID(uid, dataElem.data, !!nmNode);
+		}
+	}
+
 	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
 	 *
@@ -3086,7 +3355,7 @@ export class MailApp extends EgwApp
 		 * vars
 		 */
 		let folder = '';
-		let data = {
+		let data : any = {
 				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
 				all: _allMessagesChecked || false,
 				popup: typeof this.et2_view!='undefined' || egw(window).is_popup() || false,
@@ -3107,6 +3376,7 @@ export class MailApp extends EgwApp
 		{
 			data.msg = this.mail_getFormData(_elems).msg;
 		}
+		data['jmapSnapshots'] = this.mail_snapshotRows(data.msg);
 		switch (_action.id)
 		{
 			case 'read':
@@ -3143,36 +3413,39 @@ export class MailApp extends EgwApp
 				break;
 			default:
 				break;
-		}
-		// jQuery(data).extend({},data, formData);
-		if (data['all']=='cancel') return false;
+			}
+			// jQuery(data).extend({},data, formData);
+			if (data['all']=='cancel') return false;
+			const customFlags = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
 
-		if (_action.id.substring(0,2)=='un') {
-			//old style, only available for undelete and unlabel (no toggle)
-			if ( _action.id=='unlabel') // this means all labels should be removed
+			if (_action.id.substring(0,2)=='un' && !this.mail_isLabel(_action.id)) {
+				//old style, only available for undelete and unlabel (no toggle)
+				if ( _action.id=='unlabel') // this means all labels should be removed
 			{
-				const labels = ['label1','label2','label3','label4','label5'];
-				for (let i=0; i<labels.length; i++)	this.mail_removeRowClass(_elems,labels[i]);
+				this.mail_removeAllLabelState(data);
 				this.mail_flagMessages(_action.id,data);
 			}
-			else
-			{
-				this.mail_removeRowClass(_elems,_action.id.substring(2));
-				this.mail_setRowClass(_elems,_action.id);
-				this.mail_flagMessages(_action.id,data);
+				else
+				{
+					this.mail_removeRowClass(_elems,_action.id.substring(2));
+					if (!customFlags.includes(_action.id.substring(2)))
+					{
+						this.mail_setRowClass(_elems,_action.id);
+					}
+					this.mail_flagMessages(_action.id,data);
+				}
 			}
-		}
 		else if (_action.id=='readall')
 		{
 			this.mail_flagMessages('read',data);
 		}
 		else
 		{
-			var msg_set = {msg:[]};
-			var msg_unset = {msg:[]};
-			var dataElem;
-			let flags: {};
-			let classes: string[];
+				var msg_set = {msg:[]};
+				var msg_unset = {msg:[]};
+				var dataElem;
+				let flags: {};
+				let classes: string[];
 			for (let i = 0; i < data.msg.length; i++)
 			{
 				const currentIndex = i;
@@ -3195,14 +3468,28 @@ export class MailApp extends EgwApp
 				{
 					classes.splice(classes.indexOf('un' + rowClass),1);
 				}
-				if (flags[_action.id])
-				{
-					msg_unset['msg'].push(data.msg[i]);
-					classes.push('un'+rowClass);
-					delete flags[_action.id];
-				}
+					if (flags[_action.id])
+					{
+						msg_unset['msg'].push(data.msg[i]);
+						if (!customFlags.includes(_action.id) && !this.mail_isLabel(_action.id))
+						{
+							classes.push('un'+rowClass);
+						}
+						delete flags[_action.id];
+					}
 				else
 				{
+					if (customFlags.includes(_action.id))
+					{
+						for (let j=0; j<customFlags.length; j++)
+						{
+							if (customFlags[j] != _action.id)
+							{
+								delete flags[customFlags[j]];
+								classes = classes.filter((className) => className != customFlags[j] && className != 'un' + customFlags[j]);
+							}
+						}
+					}
 					msg_set['msg'].push(data.msg[i]);
 					flags[_action.id] = _action.id;
 					classes.push(rowClass);
@@ -3240,11 +3527,13 @@ export class MailApp extends EgwApp
 					const img: Et2Image = nmNode.querySelector(".status_img");
 					if (img) img.src = egw.image("mail_unseen")
 				}
-				if (flags['flagged'] == 'flagged')
+				if (flags['flagged'] == 'flagged' ||
+					customFlags.some(customFlag => flags[customFlag] == customFlag))
 				{
 					if (!nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage'))
 					{
 						const flagElem: Et2Image = document.createElement('et2-image') as Et2Image
+						flagElem.id = "flaggedImage"
 						flagElem.src = "unread_flagged_small"
 						nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]'))?.appendChild(flagElem);
 					}
@@ -3261,11 +3550,21 @@ export class MailApp extends EgwApp
 			// Notify server of changes
 			if (msg_unset['msg'] && msg_unset['msg'].length)
 			{
-				if (!data['all']) this.mail_flagMessages('un'+_action.id,msg_unset);
+				msg_unset['jmapSnapshots'] = data.jmapSnapshots;
+				if (!data['all']) this.mail_flagMessages(
+					this.mail_isLabel(_action.id) ?
+						{customLabel: _action.id, set: false} : 'un'+_action.id,
+					msg_unset
+				);
 			}
 			if (msg_set['msg'] && msg_set['msg'].length)
 			{
-				if (!data['all']) this.mail_flagMessages(_action.id,msg_set);
+				msg_set['jmapSnapshots'] = data.jmapSnapshots;
+				if (!data['all']) this.mail_flagMessages(
+					this.mail_isLabel(_action.id) ?
+						{customLabel: _action.id, set: true} : _action.id,
+					msg_set
+				);
 			}
 			//server must do the toggle, as we apply to ALL, not only the visible
 			if (data['all']) this.mail_flagMessages(_action.id,data);
@@ -3313,8 +3612,14 @@ export class MailApp extends EgwApp
 			case 'label4':
 				action = 'keyword4';
 				break;
-			case 'label4':
-				action = 'keyword4';
+			case 'label5':
+				action = 'keyword5';
+				break;
+			default:
+				if (this.mail_isCustomLabel(_actionId))
+				{
+					action = _actionId;
+				}
 				break;
 		}
 		if (action == _filters.filter)
@@ -3330,12 +3635,81 @@ export class MailApp extends EgwApp
 	 * @param {object} _elems
 	 * @param {boolean} _isPopup
 	 */
-	mail_flagMessages(_flag, _elems,_isPopup)
+	mail_flagMessages(_flag, _elems,_isPopup?)
 	{
+		const labelOperation = typeof _flag === 'object' && typeof _flag?.customLabel === 'string' ? _flag : null;
+		const actionId = labelOperation?.customLabel || String(_flag);
+		const customFlag = actionId.replace(/^un/, '').match(/^customFlag[1-5]$/) ? actionId.replace(/^un/, '') : null;
+		const jmapKeywordAction = !!labelOperation || this.mail_isLabel(actionId) || !!customFlag || actionId === 'unlabel';
+
+		if (jmapKeywordAction)
+		{
+			let operation : Promise<void>;
+			if (_elems.all)
+			{
+				const filters = _elems.activeFilters || {};
+				let selectedFolder = filters.selectedFolder ||
+					this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
+					this.egw.preference('ActiveProfileID', 'mail');
+				if (selectedFolder && !selectedFolder.includes('::')) selectedFolder += '::INBOX';
+				const query : any = {
+					selectedFolder,
+					cat_id: filters.cat_id,
+					search: filters.search,
+					filter: filters.filter,
+					startdate: filters.startdate,
+					enddate: filters.enddate,
+				};
+				if (filters.sort && typeof filters.sort === 'object')
+				{
+					query.order = filters.sort.id;
+					query.sort = filters.sort.asc ? 'ASC' : 'DESC';
+				}
+				operation = actionId === 'unlabel' ?
+					this.jmap.clearLabelsForAll(query) : this.jmap.toggleForAll(query, actionId);
+			}
+			else
+			{
+				try
+				{
+					const references = (_elems.msg || []).map(id => this.jmap.messageReference(id));
+					if (actionId === 'unlabel')
+					{
+						operation = this.jmap.clearLabels(references);
+					}
+					else if (customFlag)
+					{
+						operation = this.jmap.setCustomFlag(references, customFlag, !actionId.startsWith('un'));
+					}
+					else
+					{
+						operation = this.jmap.setLabel(references, actionId, labelOperation?.set ?? true);
+					}
+				}
+				catch (error)
+				{
+					operation = Promise.reject(error);
+				}
+			}
+			operation.then(() =>
+			{
+				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
+			}).catch((error) =>
+			{
+				const failedIds = error?.notUpdated ? Object.keys(error.notUpdated) : null;
+				this.mail_restoreRows(_elems.jmapSnapshots, failedIds);
+				this.egw.message(error?.message || this.egw.lang('Failed to update messages'), 'error');
+				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
+			});
+			return;
+		}
+
 		//false means do not send back a request response
 		//if we selected only some mails the handling is done clientside already
 		const needsResponse = _elems.all || this.egw.is_popup();
-		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
+		const requestElems = {..._elems};
+		delete requestElems.jmapSnapshots;
+		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, requestElems, needsResponse]);
 		//	.sendRequest(true);
 	}
 

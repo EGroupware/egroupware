@@ -24,6 +24,7 @@ export class EgwPopupAction extends EgwAction {
     singleClick = false;
     private isChecked: EgwFnct;
     color = null;
+    iconColor = null;
 
     constructor(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
         super(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
@@ -114,6 +115,9 @@ export class EgwPopupAction extends EgwAction {
     set_color (_value)
     {
         this.color = _value;
+    }
+    set_iconColor (_value:string){
+        this.iconColor = _value;
     }
 }
 

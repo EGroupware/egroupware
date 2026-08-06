@@ -30,6 +30,7 @@ $setup_info['mail']['tables']    = array(); // former felamimail tables are used
 $setup_info['mail']['hooks']['search_link'] = 'mail_hooks::search_link';
 $setup_info['mail']['hooks']['admin'] = 'mail_hooks::admin';
 $setup_info['mail']['hooks']['settings'] = 'mail_hooks::settings';
+$setup_info['mail']['hooks']['categories'] = 'mail_hooks::categories';
 $setup_info['mail']['hooks']['sidebox_menu'] = 'mail_hooks::sidebox_menu';
 $setup_info['mail']['hooks']['session_creation'] = 'EGroupware\\Api\\Mail::resetConnectionErrorCache';
 $setup_info['mail']['hooks']['verify_settings'] = 'EGroupware\\Api\\Mail::forcePrefReload';

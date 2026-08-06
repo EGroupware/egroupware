@@ -29,7 +29,6 @@ use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
 use Horde_Translation;
 use Horde_Translation_Handler_Gettext;
-use EGroupware\Api;
 
 use tidy;
 use function PHPUnit\Framework\isEmpty;
@@ -72,6 +71,77 @@ class Mail
 	const DELIMITER = '::';
 
 	/**
+	 * Custom mail labels indexed by their action ID
+	 *
+	 * @var array<string,array{name:string,color:string}>
+	 */
+	public static array $customLabels = array();
+	private static ?array $customLabelsCache = null;
+
+	/**
+	 * Return configured custom mail labels
+	 *
+	 * Mail categories are used as the persistent configuration.  The static
+	 * property remains empty by default and is only a fallback for contexts in
+	 * which categories are unavailable.
+	 *
+	 * @return array<string,array{name:string,color:string,icon?:string}>
+	 */
+	public static function getCustomLabels(): array
+	{
+		if (self::$customLabelsCache !== null)
+		{
+			return self::$customLabelsCache;
+		}
+		try
+		{
+			$categories = new Categories($GLOBALS['egw_info']['user']['account_id'] ?? '', 'mail');
+			$labels = self::categoriesToCustomLabels($categories->return_array(
+				'all', 0, false, '', 'ASC', 'name', false, null, -1, '', null
+			));
+			if ($labels)
+			{
+				return self::$customLabelsCache = $labels;
+			}
+		}
+		catch (\Throwable $e)
+		{
+			// Categories are not available during some setup / unit-test contexts.
+		}
+		return self::$customLabels;
+	}
+
+	/**
+	 * Convert Mail categories into custom-label metadata
+	 *
+	 * Category names are stable UI ids.  The optional description is the
+	 * displayed caption, while color and icon are stored in category data.
+	 * Invalid IMAP keyword ids are ignored.
+	 *
+	 * @param array $categories
+	 * @return array<string,array{name:string,color:string,icon?:string}>
+	 */
+	private static function categoriesToCustomLabels(array $categories): array
+	{
+		$labels = array();
+		foreach ($categories as $category)
+		{
+			$id = (string)($category['name'] ?? '');
+			if (!preg_match('/^[a-z0-9][a-z0-9_-]*$/Di', $id))
+			{
+				continue;
+			}
+			$data = is_array($category['data'] ?? null) ? $category['data'] : array();
+			$labels[$id] = array(
+				'name' => (string)(($category['description'] ?? '') ?: $id),
+				'color' => (string)($data['color'] ?? ''),
+				'icon' => (string)($data['icon'] ?? ''),
+			);
+		}
+		return $labels;
+	}
+
+	/**
 	 * the current display char set
 	 * @var string
 	 */
@@ -104,14 +174,14 @@ class Mail
 	/**
 	 * Active incomming (IMAP) Server Object
 	 *
-	 * @var Api\Mail\Imap
+	 * @var Mail\Imap
 	 */
 	var $icServer;
 
 	/**
 	 * Active outgoing (smtp) Server Object
 	 *
-	 * @var Api\Mail\Smtp
+	 * @var Mail\Smtp
 	 */
 	var $ogServer;
 
@@ -1958,8 +2028,126 @@ class Mail
 		$retValue['label3']   = in_array('$label3', $headerFlags);
 		$retValue['label4']   = in_array('$label4', $headerFlags);
 		$retValue['label5']   = in_array('$label5', $headerFlags);
+		$retValue['customFlag1'] = in_array('$customflag1', $headerFlags);
+		$retValue['customFlag2'] = in_array('$customflag2', $headerFlags);
+		$retValue['customFlag3'] = in_array('$customflag3', $headerFlags);
+		$retValue['customFlag4'] = in_array('$customflag4', $headerFlags);
+		$retValue['customFlag5'] = in_array('$customflag5', $headerFlags);
+		$retValue['keywords'] = array();
+		foreach (array_keys(self::getCustomLabels()) as $id)
+		{
+			$keyword = self::validateKeyword($id);
+			if (in_array('$'.$keyword, $headerFlags))
+			{
+				$retValue['keywords'][$id] = true;
+			}
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].':'.array2string($retValue));
 		return $retValue;
+	}
+
+	/**
+	 * Validate a custom-label identifier before using it as an IMAP keyword
+	 *
+	 * @param string $keyword
+	 * @return string
+	 * @throws Exception\WrongParameter
+	 */
+	private static function validateKeyword($keyword)
+	{
+		$keyword = is_string($keyword) ? strtolower($keyword) : $keyword;
+		if (!is_string($keyword) || !preg_match('/^[a-z0-9][a-z0-9_-]*$/D', $keyword))
+		{
+			throw new Exception\WrongParameter('Invalid IMAP keyword');
+		}
+		return $keyword;
+	}
+
+	/**
+	 * Resolve a configured label id case-insensitively
+	 *
+	 * @param string $keyword
+	 * @return string|null exact configured UI id
+	 */
+	private static function customLabelId($keyword)
+	{
+		if (!is_string($keyword))
+		{
+			return null;
+		}
+		foreach (array_keys(self::getCustomLabels()) as $id)
+		{
+			if (strcasecmp($id, $keyword) === 0)
+			{
+				return $id;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Check if an ID is a built-in or configured mail label keyword
+	 *
+	 * @param string $keyword
+	 * @return bool
+	 */
+	public static function isLabelKeyword($keyword)
+	{
+		return is_string($keyword) &&
+			(preg_match('/^label[1-5]$/Di', $keyword) || self::customLabelId($keyword) !== null);
+	}
+
+	/**
+	 * Build an explicit positive or negative label search criterion
+	 *
+	 * @param string $keyword
+	 * @param bool $set true to search for the label, false to search for messages without it
+	 * @return array{keyword:string,set:bool}
+	 * @throws Exception\WrongParameter
+	 */
+	public static function labelSearchCriterion($keyword, $set)
+	{
+		if (!self::isLabelKeyword($keyword))
+		{
+			throw new Exception\WrongParameter('Unknown mail label');
+		}
+		return array(
+			'keyword' => self::validateKeyword($keyword),
+			'set' => (bool)$set,
+		);
+	}
+
+	/**
+	 * Normalize a label status or explicit label search criterion
+	 *
+	 * Existing keyword1..5 statuses remain aliases for label1..5.
+	 *
+	 * @param mixed $criteria
+	 * @return array{keyword:string,set:bool}|null
+	 * @throws Exception\WrongParameter
+	 */
+	private static function labelSearchFromStatus($criteria)
+	{
+		if (is_array($criteria))
+		{
+			if (!array_key_exists('keyword', $criteria) || !array_key_exists('set', $criteria))
+			{
+				throw new Exception\WrongParameter('Invalid mail label search criterion');
+			}
+			return self::labelSearchCriterion($criteria['keyword'], $criteria['set']);
+		}
+		if (!is_string($criteria))
+		{
+			return null;
+		}
+
+		$keyword = strtolower($criteria);
+		if (preg_match('/^keyword([1-5])$/D', $keyword, $matches))
+		{
+			$keyword = 'label'.$matches[1];
+		}
+		return self::isLabelKeyword($keyword) ?
+			self::labelSearchCriterion($keyword, true) : null;
 	}
 
 	/**
@@ -2203,11 +2391,24 @@ class Mail
 		// statusQuery MUST be placed first, as search for subject/mailbody and such is
 		// depending on charset. flagSearch is not BUT messes the charset if called afterwards
 		$statusQueryValid = false;
-		foreach((array)$_criterias['status'] as $k => $criteria) {
+		$statusCriteria = $_criterias['status'] ?? array();
+		if (is_array($statusCriteria) && array_key_exists('keyword', $statusCriteria))
+		{
+			$statusCriteria = array($statusCriteria);
+		}
+		foreach((array)$statusCriteria as $k => $criteria) {
 			$imapStatusFilter = new Horde_Imap_Client_Search_Query();
 			$imapStatusFilter->charset('UTF-8');
-			$criteria = strtoupper($criteria);
-			switch ($criteria) {
+			$statusQueryValid = false;
+			if ($labelSearch = self::labelSearchFromStatus($criteria))
+			{
+				$imapStatusFilter->flag('$'.$labelSearch['keyword'], $labelSearch['set']);
+				$queryValid = $statusQueryValid = true;
+			}
+			else
+			{
+				$criteria = strtoupper($criteria);
+				switch ($criteria) {
 				case 'ANSWERED':
 				case 'DELETED':
 				case 'FLAGGED':
@@ -2218,19 +2419,6 @@ class Mail
 					break;
 				case 'READ':
 					$imapStatusFilter->flag('SEEN', $set=true);
-					$queryValid = $statusQueryValid =true;
-					break;
-				case 'LABEL1':
-				case 'KEYWORD1':
-				case 'LABEL2':
-				case 'KEYWORD2':
-				case 'LABEL3':
-				case 'KEYWORD3':
-				case 'LABEL4':
-				case 'KEYWORD4':
-				case 'LABEL5':
-				case 'KEYWORD5':
-					$imapStatusFilter->flag(str_ireplace('KEYWORD','$LABEL',$criteria), $set=true);
 					$queryValid = $statusQueryValid =true;
 					break;
 				case 'NEW':
@@ -2263,21 +2451,9 @@ class Mail
 					$imapStatusFilter->flag('SEEN', $set=false);
 					$queryValid = $statusQueryValid =true;
 					break;
-				case 'UNLABEL1':
-				case 'UNKEYWORD1':
-				case 'UNLABEL2':
-				case 'UNKEYWORD2':
-				case 'UNLABEL3':
-				case 'UNKEYWORD3':
-				case 'UNLABEL4':
-				case 'UNKEYWORD4':
-				case 'UNLABEL5':
-				case 'UNKEYWORD5':
-					$imapStatusFilter->flag(str_ireplace(array('UNKEYWORD','UNLABEL'),'$LABEL',$criteria), $set=false);
-					$queryValid = $statusQueryValid =true;
-					break;
 				default:
 					$statusQueryValid = false;
+				}
 			}
 			if ($statusQueryValid)
 			{
@@ -4394,41 +4570,21 @@ class Mail
 					case "labelone":
 						$this->icServer->store($folder, array('add'=>array('$label1'), 'ids'=> $uidsToModify));
 						break;
-					case "unlabel1":
-					case "unlabelone":
-						$this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
-						break;
 					case "label2":
 					case "labeltwo":
 						$this->icServer->store($folder, array('add'=>array('$label2'), 'ids'=> $uidsToModify));
-						break;
-					case "unlabel2":
-					case "unlabeltwo":
-						$this->icServer->store($folder, array('remove'=>array('$label2'), 'ids'=> $uidsToModify));
 						break;
 					case "label3":
 					case "labelthree":
 						$this->icServer->store($folder, array('add'=>array('$label3'), 'ids'=> $uidsToModify));
 						break;
-					case "unlabel3":
-					case "unlabelthree":
-						$this->icServer->store($folder, array('remove'=>array('$label3'), 'ids'=> $uidsToModify));
-						break;
 					case "label4":
 					case "labelfour":
 						$this->icServer->store($folder, array('add'=>array('$label4'), 'ids'=> $uidsToModify));
 						break;
-					case "unlabel4":
-					case "unlabelfour":
-						$this->icServer->store($folder, array('remove'=>array('$label4'), 'ids'=> $uidsToModify));
-						break;
 					case "label5":
 					case "labelfive":
 						$this->icServer->store($folder, array('add'=>array('$label5'), 'ids'=> $uidsToModify));
-						break;
-					case "unlabel5":
-					case "unlabelfive":
-						$this->icServer->store($folder, array('remove'=>array('$label5'), 'ids'=> $uidsToModify));
 						break;
 					case "unlabel":
 						$this->icServer->store($folder, array('remove'=>array('$label1'), 'ids'=> $uidsToModify));
@@ -7943,7 +8099,7 @@ class Mail
 		{
 			try{
 				$message = $this->_decryptSmimeBody($message, $params['passphrase'] !='' ?
-						$params['passphrase'] : Api\Cache::getSession('mail', 'smime_passphrase'));
+						$params['passphrase'] : Cache::getSession('mail', 'smime_passphrase'));
 			}
 			catch(\Horde_Crypt_Exception $e)
 			{

@@ -19,7 +19,7 @@
 //	cursor: default;
 //	white-space: nowrap;
 //}
-
+//What ever value is listed last in the @labels takes precedence if we have multiple labels
 @labels: {
 	label1: #ff0080;
 	label2: #ff8000;
@@ -28,21 +28,42 @@
 	label5: #8000ff;
 	flagged: #ff0000;
 };
+@customFlags: {
+	customFlag1: #ff0000;
+	customFlag2: #ff8000;
+	customFlag3: #008000;
+	customFlag4: #0000ff;
+	customFlag5: #8000ff;
+}
 
 tr.mail {
+	--mail-left-border-color: transparent;
+
 	td:first-child {
-		border-left: 6px solid transparent;
+		border-left: 6px solid var(--mail-left-border-color) !important;
 	}
 
 	each(@labels, {
-		&.@{key} td:first-child {
-			border-left-color: @value !important;
+		&.@{key} {
+			--mail-left-border-color: @value;
+		}
+	});
+	each(@customFlags, {
+		&.@{key} {
+			--flag-color: @value;
 		}
 	});
 
-	&.deleted td:first-child {
-		border-left-color: silver;
-		text-decoration: line-through;
+	&.deleted {
+		--mail-left-border-color: silver;
+
+		td:first-child {
+			text-decoration: line-through;
+		}
+	}
+
+	#flaggedImage {
+		color: var(--flag-color, var(--sl-color-neutral-800));
 	}
 }
 
@@ -1191,6 +1212,12 @@ table.et2_egw_action_ddHelper_row .innerContainer {
 /* hide by default hidden compose header-lines, to not show them briefly before hidden by app.js */
 tr.mailComposeJQueryCc, tr.mailComposeJQueryBcc, tr.mailComposeJQueryFolder, tr.mailComposeJQueryReplyto  {
 	display: none;
+}
+
+et2-menu-item#mark et2-menu-item#customFlag et2-image[slot='prefix'] {
+	background: linear-gradient(180deg, red, orange, yellow, green, cyan, blue, violet);
+	background-clip: text;
+	color: transparent;
 }
 
 /**

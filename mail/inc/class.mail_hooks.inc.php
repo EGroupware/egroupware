@@ -535,6 +535,19 @@ class mail_hooks
 	}
 
 	/**
+	 * Hook to tell framework we use standard categories method
+	 *
+	 * @param array|string $data hook-data or location (not used)
+	 * @return boolean
+	 */
+	public static function categories($data)
+	{
+		unset($data); // not used, but required by function signature
+
+		return true;
+	}
+
+	/**
 	 * Admin hook
 	 *
 	 * @param array|string $hook_data

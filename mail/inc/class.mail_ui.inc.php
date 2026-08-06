@@ -120,6 +120,21 @@ class mail_ui
 		'deleted'	=> 'deleted',	// lang('deleted')
 	);
 
+	/**
+	 * Custom labels as searchable status options
+	 *
+	 * @return array<string,string>
+	 */
+	private static function customLabelStatusTypes(): array
+	{
+		$statusTypes = array();
+		foreach (Mail::getCustomLabels() as $id => $customLabel)
+		{
+			$statusTypes[$id] = $customLabel['name'];
+		}
+		return $statusTypes;
+	}
+
 	/**All mime types in mail-attachments
 	 * that only want to be handled with server-side links if
 	 * mail registers a mime-handler for them
@@ -503,6 +518,7 @@ class mail_ui
 				$content[self::$nm_index]['filter2_aria_label'] = lang('Details');
 				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
 				$content[self::$nm_index]['actions'] = self::get_actions();
+				$content['customLabels'] = Mail::getCustomLabels();
 				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
 				$content[self::$nm_index]['get_rows'] = 'mail_ui::get_rows';
@@ -546,11 +562,14 @@ class mail_ui
 						'keyword3'	=> 'personal',//lang('personal'),
 						'keyword4'	=> 'to do',	//lang('to do'),
 						'keyword5'	=> 'later',	//lang('later'),
-					));
+					), self::customLabelStatusTypes());
 				}
 				else
 				{
-					$keywords = array('keyword1','keyword2','keyword3','keyword4','keyword5');
+					$keywords = array_merge(
+						array('keyword1','keyword2','keyword3','keyword4','keyword5'),
+						array_keys(self::customLabelStatusTypes())
+					);
 					foreach($keywords as &$k)
 					{
 						if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
@@ -1517,7 +1536,52 @@ class mail_ui
 							),
 						),
 					),
-					// modified icons from http://creativecommons.org/licenses/by-sa/3.0/
+					'customFlag' => array(
+						'caption' => 'Custom Flag',
+						'icon' => 'unread_flagged_small',
+						'group' => $group,
+						// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
+						'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+						'hideOnDisabled' => true,
+						'children' => array(
+							'customFlag1' => array(
+								'group' => ++$group,
+								'caption' => 'red',
+								'iconColor' => '#ff0000',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag2' => array(
+								'group' => $group,
+								'caption' => 'orange',
+								'iconColor' => '#ff8000',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag3' => array(
+								'group' => $group,
+								'caption' => 'green',
+								'iconColor' => '#008000',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag4' => array(
+								'group' => $group,
+								'caption' => 'blue',
+								'iconColor' => '#0000ff',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+							'customFlag5' => array(
+								'group' => $group,
+								'caption' => 'purple',
+								'iconColor' => '#8000ff',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+							),
+						),
+					),
+					// Icon are all bootstrap Icons
 					'flagged' => array(
 						'group' => ++$group,
 						'caption' => 'Flag / Unflag',
@@ -1565,6 +1629,17 @@ class mail_ui
 				//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			)
 		);
+		foreach (Mail::getCustomLabels() as $id => $customLabel)
+		{
+			$actions['mark']['children']['setLabel']['children'][$id] = array(
+				'group' => $actions['mark']['children']['setLabel']['children']['label5']['group'],
+				'caption' => $customLabel['name'],
+				'no_lang' => true,
+				'color' => $customLabel['color'],
+				'icon' => 'tag_message',//TODO maybe allow to use the custom icon set in the category
+				'onExecute' => 'javaScript:app.mail.mail_flag',
+			);
+		}
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
 		// save as tracker, save as infolog, as this are actions that are either available for all, or not, we do that for all and not via css-class disabling
 		if (!isset($GLOBALS['egw_info']['user']['apps']['infolog']))
@@ -2031,6 +2106,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if(!empty($header['label3'])) $flags .= "3";
 			if(!empty($header['label4'])) $flags .= "4";
 			if(!empty($header['label5'])) $flags .= "5";
+			if(!empty($header['customFlag1'])) $flags .= "c1";
+			if(!empty($header['customFlag2'])) $flags .= "c2";
+			if(!empty($header['customFlag3'])) $flags .= "c3";
+			if(!empty($header['customFlag4'])) $flags .= "c4";
+			if(!empty($header['customFlag5'])) $flags .= "c5";
 			//error_log(__METHOD__.array2string($header).' Flags:'.$flags);
 
 			// the css for this row
@@ -2072,6 +2152,28 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			if ($header['label5']) {
 				$css_styles[] = 'label5';
+			}
+			foreach (Mail::getCustomLabels() as $id => $customLabel)
+			{
+				if (!empty($header['keywords'][$id]))
+				{
+					$css_styles[] = $id;
+				}
+			}
+			if ($header['customFlag1']) {
+				$css_styles[] = 'customFlag1';
+			}
+			if ($header['customFlag2']) {
+				$css_styles[] = 'customFlag2';
+			}
+			if ($header['customFlag3']) {
+				$css_styles[] = 'customFlag3';
+			}
+			if ($header['customFlag4']) {
+				$css_styles[] = 'customFlag4';
+			}
+			if ($header['customFlag5']) {
+				$css_styles[] = 'customFlag5';
 			}
 
 			//error_log(__METHOD__.array2string($css_styles));
@@ -2163,7 +2265,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				}
 				// show a flag for flagged messages
 				$imageflagged ='';
-				if ($header['flagged'])
+				$displayFlag= !empty($header['flagged']);
+				foreach ((array)$header as $key => $value)
+				{
+					if (!empty($value) && str_starts_with($key, 'customFlag'))
+					{
+						$displayFlag = true;
+						break;
+					}
+				}
+				if ($displayFlag)
 				{
 					$imageflagged = "<et2-image src='unread_flagged_small' id='flaggedImage'></et2-image>";
 				}
@@ -4951,14 +5062,23 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// so applying that fallback first would silently replace it with the active profile.
 			if ((string)$icServerID === '0')
 			{
-				$response->data(self::jmapLocalBootstrap('0'));
+				$bootstrap = self::jmapLocalBootstrap('0');
+				$bootstrap['customLabels'] = Mail::getCustomLabels();
+				$response->data($bootstrap);
 				return;
 			}
 			$imapServer = Mail\Account::read($icServerID ?: self::$icServerID)->imapServer();
-			$response->data($imapServer instanceof Mail\Imap\Stalwart
-				? $imapServer->jmapBootstrap()
-				// any other (plain IMAP) account: served by our own local JMAP shim, see mail/jmap.php
-				: self::jmapLocalBootstrap((string)$icServerID));
+			$local = !($imapServer instanceof Mail\Imap\Stalwart);
+			$bootstrap = $local
+				// any plain IMAP account is served by our own local JMAP shim
+				? self::jmapLocalBootstrap((string)$icServerID)
+				: $imapServer->jmapBootstrap();
+			if ($bootstrap)
+			{
+				$bootstrap['isLocal'] = $local;
+				$bootstrap['customLabels'] = Mail::getCustomLabels();
+			}
+			$response->data($bootstrap);
 		}
 		catch (Exception $e)
 		{
@@ -4984,6 +5104,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			// same-origin endpoint), this only fills jmap-jam's required bearerToken field
 			'access_token' => 'no-token-required',
 			'expires_in' => 3600,	// session lifetime is renewed on every request anyway
+			'isLocal' => true,
 		];
 	}
 
@@ -5108,11 +5229,14 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				'keyword3'	=> 'personal',//lang('personal'),
 				'keyword4'	=> 'to do',	//lang('to do'),
 				'keyword5'	=> 'later',	//lang('later'),
-			));
+			), self::customLabelStatusTypes());
 		}
 		else
 		{
-			$keywords = array('keyword1','keyword2','keyword3','keyword4','keyword5');
+			$keywords = array_merge(
+				array('keyword1','keyword2','keyword3','keyword4','keyword5'),
+				array_keys(self::customLabelStatusTypes())
+			);
 			foreach($keywords as &$k)
 			{
 				if (array_key_exists($k,$this->statusTypes)) unset($this->statusTypes[$k]);
@@ -5416,11 +5540,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					{
 						$filter = $filter2toggle = array();
 					}
-					// flags read,flagged,label1,label2,label3,label4,label5 can be toggled: handle this when all mails in a folder
+					// read and flagged can be toggled here for legacy non-JMAP callers
 					// should be affected serverside. here.
 					$messageList = $messageListForToggle = array();
 					$flag2check = ($_flag=='read'?'seen':$_flag);
-					if (in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
+					if (in_array($_flag,array('read','flagged')) &&
 						!($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))
 					{
 						$filter2toggle['status'] = array('un'.$_flag);
@@ -5470,9 +5594,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 						$alreadyFlagged=true;
 					}
 					elseif (!empty($filter) &&
-						(!in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) ||
-						(in_array($_flag,array('read','flagged','label1','label2','label3','label4','label5')) &&
-						($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))))
+						(!in_array($_flag,array('read','flagged')) ||
+						(in_array($_flag,array('read','flagged')) &&
+							($flag2check==$query['filter'] || stripos($query['filter'],$flag2check)!==false))))
 					{
 						if ($query['filter'])
 						{
@@ -5522,7 +5646,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					$messageList[] = $hA['msgUID'];
 				}
 				if(Mail::$debug) error_log(__METHOD__.__LINE__." $_flag in $folder:".array2string(((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList)));
-				$this->mail_bo->flagMessages($_flag, ((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList),$folder);
+				$this->mail_bo->flagMessages(
+					$_flag,
+					((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList),
+					$folder
+				);
 			}
 		}
 		else
@@ -5538,7 +5666,16 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				'label3'	=> 'personal',//lang('personal'),
 				'label4'	=> 'to do',	//lang('to do'),
 				'label5'	=> 'later',	//lang('later'),
+				'customFlag1' => 'red',
+				'customFlag2' => 'orange',
+				'customFlag3' => 'green',
+				'customFlag4' => 'blue',
+				'customFlag5' => 'purple',
 			);
+			foreach (Mail::getCustomLabels() as $id => $customLabel)
+			{
+				$flag[$id] = $customLabel['name'];
+			}
 			$response = Api\Json\Response::get();
 			if (isset($_messageList['msg']) && $_messageList['popup'])
 			{
