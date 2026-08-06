@@ -45,7 +45,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			return uid;
 		}
 
-		this.debug('warning', 'ready has already been called!');
+		egw.debug('warning', 'ready has already been called!');
 
 		return null;
 	}
@@ -96,7 +96,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// Set "isReady" to true, if readyPendingCnt is zero
-			var isReady = readyPendingCnt === 0;
+			isReady = readyPendingCnt === 0;
 
 			// Call all registered callbacks
 			for (var i = registeredCallbacks.length - 1; i >= 0; i--)

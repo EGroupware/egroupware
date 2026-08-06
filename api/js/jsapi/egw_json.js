@@ -243,7 +243,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			const controller = new AbortController();
 			const signal = controller.signal;
 			let response_ok = false;
-			promise = _wnd.fetch(url, {...init, ...signal})
+			promise = _wnd.fetch(url, {...init, signal})
 				.then((response) => {
 					response_ok = response.ok;
 					if (!response.ok) {
