@@ -551,6 +551,57 @@ class Jmap
 	}
 
 	/**
+	 * Fetch one Email via Email/get with the given properties
+	 *
+	 * Used by Imap\Jmap's JMAP-native S/MIME/TNEF resolvers (see api/src/Mail/Imap/Jmap.php) to
+	 * fetch bodyStructure/attachments etc. server-side, instead of an IMAP FETCH - same
+	 * request shape mail/js/jmap.ts's MailJmap.fetchBody() already uses client-side.
+	 *
+	 * @param string $id JMAP Email id
+	 * @param array $properties e.g. ['bodyStructure','textBody','htmlBody','attachments','bodyValues']
+	 * @param bool $fetchAllBodyValues
+	 * @return array the Email object
+	 * @throws Api\Exception if not found
+	 */
+	public function emailGet(string $id, array $properties, bool $fetchAllBodyValues=true) : array
+	{
+		$args = [
+			'accountId' => $this->accountId,
+			'ids' => [$id],
+			'properties' => $properties,
+		];
+		if ($fetchAllBodyValues)
+		{
+			$args['fetchAllBodyValues'] = true;
+		}
+		$response = $this->jmapCall([['Email/get', $args, '0']], self::JMAP_MAIL);
+		return $response['methodResponses'][0][1]['list'][0] ??
+			throw new Api\Exception("Email '$id' not found via Email/get");
+	}
+
+	/**
+	 * Download a Blob (RFC 8620 §6.2) - the raw bytes of one Email body-part, or (whole-message
+	 * blobId) the raw RFC822 message. Unlike an IMAP FETCH body-part, a JMAP blob is already the
+	 * final decoded representation - no Content-Transfer-Encoding reversal needed here.
+	 *
+	 * @param string $blobId
+	 * @param string $name suggested filename, substituted into the download URL only
+	 * @param string $type expected mime-type, substituted into the download URL only
+	 * @return string raw bytes
+	 * @throws Api\Exception|\HttpException
+	 */
+	public function downloadBlob(string $blobId, string $name='blob', string $type='application/octet-stream') : string
+	{
+		$url = strtr($this->downloadUrl, [
+			'{accountId}' => rawurlencode($this->accountId),
+			'{blobId}' => rawurlencode($blobId),
+			'{name}' => rawurlencode($name),
+			'{type}' => rawurlencode($type),
+		]);
+		return (string)$this->api($url, 'GET', '', ['Accept: */*']);
+	}
+
+	/**
 	 * Get id of a folder-path e.g. INBOX/folder/subfolder (id corresponds to subfolder in INBOX/folder!)
 	 *
 	 * @param string $folder folder-path

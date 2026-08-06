@@ -6299,7 +6299,7 @@ class Mail
 	 * @return boolean|Horde_Mime_part Multipart/Mixed part decoded attachments |
 	 *	return false if there's no attachments or failure
 	 */
-	public function tnef_decoder( $data )
+	public static function tnef_decoder( $data )
 	{
 		foreach(array('Horde_Compress', 'Horde_Icalendar', 'Horde_Mapi') as $class)
 		{

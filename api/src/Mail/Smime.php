@@ -240,6 +240,117 @@ class Smime extends Horde_Crypt_Smime
 	}
 
 	/**
+	 * JMAP-native S/MIME resolution: decrypt/verify a raw message already fetched via JMAP (Blob
+	 * download for Stalwart - Api\Mail\Imap\Jmap - or JmapShim::fetchRawMessage() for the local
+	 * shim) instead of Mail::resolveSmimeMessage()'s IMAP-based getMessageRawBody(). Same
+	 * decrypt/verify logic as that method (Horde_Crypt_Smime, via this class, unchanged) - only
+	 * how the raw bytes were obtained differs, so this is the one place that logic lives, reused by
+	 * both backends instead of duplicated.
+	 *
+	 * @param int $profileID mail account id, for cert/key lookup (get_acc_smime())
+	 * @param string $rawMessage raw RFC822 bytes, however obtained
+	 * @param string $topLevelType top-level Content-Type of the still-encrypted message, e.g.
+	 *  "multipart/signed" or "application/pkcs7-mime" - used only to decide signature-only vs.
+	 *  encrypted, mirrors Mail\Smime::getSmimeType()'s own logic without needing a Horde_Mime_Part
+	 * @param string $passphrase = '' falls back to the cached session passphrase, same as
+	 *  Mail::_decryptSmimeBody() already does
+	 * @param ?string $fromAddress sender address (already known from the Email envelope/JMAP
+	 *  "from", no extra fetch needed) - cross-checked against the signer certificate's email
+	 * @return Horde_Mime_Part the decrypted/verified structure, with 'X-EGroupware-Smime' metadata
+	 *  attached (same convention Mail::getStructure() already uses)
+	 * @throws Smime\PassphraseMissing
+	 */
+	public static function resolveMessage(int $profileID, string $rawMessage, string $topLevelType,
+		string $passphrase='', ?string $fromAddress=null) : Horde_Mime_Part
+	{
+		$passphrase = $passphrase ?: (Api\Cache::getSession('mail', 'smime_passphrase') ?: '');
+		$metadata = ['mimeType' => $topLevelType];
+		$smime = new self;
+		$message = $rawMessage;
+
+		$signatureOnly = self::isSmimeSignatureOnly(
+			$topLevelType === 'multipart/signed' ? self::SMIME_TYPE_SIGNED_DATA : null);
+
+		if (!$signatureOnly)
+		{
+			$acc_smime = self::get_acc_smime($profileID, $passphrase);
+			if (empty($acc_smime) || !$smime->verifyPassphrase($acc_smime['pkey'] ?? '', $passphrase))
+			{
+				throw new Smime\PassphraseMissing(lang('Authentication failure!'));
+			}
+			$AB_bo = new \addressbook_bo();
+			$certkey = $AB_bo->get_smime_keys($acc_smime['acc_smime_username'] ?? '');
+			try
+			{
+				$message = $smime->decrypt($message, [
+					'type' => 'message',
+					'pubkey' => $certkey[strtolower($acc_smime['acc_smime_username'] ?? '')] ?? '',
+					'privkey' => $acc_smime['pkey'],
+					'passphrase' => $passphrase,
+				]);
+			}
+			catch (\Horde_Crypt_Exception $e)
+			{
+				throw new Smime\PassphraseMissing(lang('Could not decrypt '.
+					'S/MIME data. This message may not be encrypted by your '.
+					'public key and not being able to find corresponding private key.'));
+			}
+			$metadata['encrypted'] = true;
+		}
+
+		$cert = null;
+		try
+		{
+			$cert = $smime->verifySignature($message);
+		}
+		catch (\Exception $ex)
+		{
+			if (isset($message['password_required']))
+			{
+				throw new Smime\PassphraseMissing($message['msg']);
+			}
+			// verification failure - either tampered, not validly signed, or encrypted-only
+			$metadata['verify'] = false;
+			$metadata['signed'] = true;
+			$metadata['msg'] = $ex->getMessage();
+		}
+
+		if ($cert)	// signed message, might be encrypted too
+		{
+			$message_parts = $smime->extractSignedContents($message);
+			$cert_email = strtolower($cert->email);
+			$metadata = array_merge($metadata, [
+				'verify' => $cert->verify,
+				'cert' => $cert->cert,
+				'certDetails' => $smime->parseCert($cert->cert),
+				'msg' => $cert->msg,
+				'certHtml' => $smime->certToHTML($cert->cert),
+				'email' => $cert_email,
+				'signed' => true,
+			]);
+			if ($fromAddress && strcasecmp($fromAddress, $cert_email) != 0 &&
+				stripos($metadata['certDetails']['extensions']['subjectAltName'] ?? '', $fromAddress) === false)
+			{
+				$metadata['unknownemail'] = true;
+				$metadata['msg'] .= ' '.lang('Email address of signer is different from the email address of sender!');
+			}
+			$AB_bo ??= new \addressbook_bo();
+			$certkey = $AB_bo->get_smime_keys($cert_email);
+			if (!is_array($certkey) || strcasecmp(trim($certkey[$cert_email] ?? ''), trim($cert->cert)) != 0)
+			{
+				$metadata['addtocontact'] = true;
+			}
+		}
+		else	// only encrypted, or verification failed above
+		{
+			$message_parts = Horde_Mime_Part::parseMessage($message, ['forcemime' => true]);
+		}
+		$message_parts->setMetadata('X-EGroupware-Smime', $metadata);
+
+		return $message_parts;
+	}
+
+	/**
 	 * Generate certificate, private and public key pair
 	 *
 	 * @param array $_dn distinguished name to be used in certificate

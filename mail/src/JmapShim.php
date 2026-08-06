@@ -66,7 +66,10 @@ class JmapShim
 			'primaryAccounts' => new \stdClass(),
 			'username' => (string)($GLOBALS['egw_info']['user']['account_lid'] ?? ''),
 			'apiUrl' => $url,
-			'downloadUrl' => $url,
+			// jmap-jam's downloadBlob() substitutes these 4 placeholders verbatim (no URL-encoding
+			// of the substituted values - see urlsafeB64Encode()'s docblock) and does a plain GET,
+			// handled by mail/jmap.php's "download" branch -> JmapShim::download()
+			'downloadUrl' => $url.'?download=1&accountId={accountId}&blobId={blobId}&type={type}&name={name}',
 			'uploadUrl' => $url,
 			'eventSourceUrl' => $url,
 			'state' => '0',
@@ -196,6 +199,22 @@ class JmapShim
 	public static function folderPath(string $folderId) : string
 	{
 		return $folderId === '' ? '' : (string)base64_decode($folderId);
+	}
+
+	/**
+	 * URL-safe base64 (RFC 4648 §5) - used for blobId (see bodyPartToJmap()), since jmap-jam's
+	 * downloadBlob() substitutes it into a URL template *without* URL-encoding the value first, so
+	 * plain base64's '+', '/', '=' would otherwise corrupt the value ('+' in particular is decoded
+	 * as a space by PHP's own $_GET parsing).
+	 */
+	public static function urlsafeB64Encode(string $data) : string
+	{
+		return rtrim(strtr(base64_encode($data), '+/', '-_'), '=');
+	}
+
+	public static function urlsafeB64Decode(string $data) : string
+	{
+		return (string)base64_decode(strtr($data, '-_', '+/'));
 	}
 
 	/**
@@ -700,8 +719,10 @@ class JmapShim
 	 *
 	 * mail/js/jmap.ts's MailJmap.fetchBody() decides client-side (from bodyStructure/attachments
 	 * alone, before ever calling this) whether a message needs the legacy server-side path instead
-	 * (S/MIME, winmail.dat, meeting invites, PGP/MIME) - this method is only reached for the
-	 * remaining "plain mail" case, so it doesn't need to special-case any of those itself.
+	 * (S/MIME, winmail.dat, meeting invites) - this method is only reached for the remaining "plain
+	 * mail" case (which now includes PGP/MIME - Mailvelope decrypts it entirely client-side, see
+	 * MailJmap.findPgpPart()/downloadPartText(), fetching the raw ciphertext part via the blobId
+	 * scheme below), so it doesn't need to special-case any of those itself.
 	 *
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $mailbox
@@ -723,7 +744,7 @@ class JmapShim
 			{
 				continue;
 			}
-			$attachments[] = self::bodyPartToJmap($part);
+			$attachments[] = self::bodyPartToJmap($part, $mailbox, $uid);
 		}
 
 		$bodyValues = [];
@@ -733,9 +754,9 @@ class JmapShim
 		}
 
 		return [
-			'bodyStructure' => self::bodyPartToJmap($structure),
-			'textBody' => $textId !== null ? [self::bodyPartToJmap($structure->getPart($textId))] : [],
-			'htmlBody' => $htmlId !== null ? [self::bodyPartToJmap($structure->getPart($htmlId))] : [],
+			'bodyStructure' => self::bodyPartToJmap($structure, $mailbox, $uid),
+			'textBody' => $textId !== null ? [self::bodyPartToJmap($structure->getPart($textId), $mailbox, $uid)] : [],
+			'htmlBody' => $htmlId !== null ? [self::bodyPartToJmap($structure->getPart($htmlId), $mailbox, $uid)] : [],
 			'attachments' => $attachments,
 			'bodyValues' => $bodyValues,
 		];
@@ -744,18 +765,22 @@ class JmapShim
 	/**
 	 * One Horde_Mime_Part -> one RFC 8621 EmailBodyPart, recursing into subParts for multipart
 	 *
+	 * blobId is self-describing (base64($mailbox).':'.$uid.':'.partId) since the local shim has no
+	 * separate blob store/registry to look one up in later, unlike a real JMAP server - download()
+	 * below decodes it back. Mirrors how row-ids already encode base64(folder)/uid for the same
+	 * reason (see class docblock).
+	 *
 	 * @param \Horde_Mime_Part $part
+	 * @param string $mailbox real (already delimiter-translated) IMAP mailbox name
+	 * @param string $uid
 	 * @return array
 	 */
-	public static function bodyPartToJmap(\Horde_Mime_Part $part) : array
+	public static function bodyPartToJmap(\Horde_Mime_Part $part, string $mailbox, string $uid) : array
 	{
 		$contentId = $part->getContentId();
 		$result = [
 			'partId' => $part->getMimeId(),
-			// no separate blob store - the local shim's cid: images are resolved via the existing
-			// mail_ui::displayImage() endpoint client-side, not a JMAP Blob download, so this is
-			// never actually used, only present for RFC-shape completeness
-			'blobId' => $part->getMimeId(),
+			'blobId' => self::urlsafeB64Encode($mailbox).':'.$uid.':'.$part->getMimeId(),
 			'size' => $part->getBytes(),
 			'name' => $part->getName() ?: null,
 			'type' => strtolower((string)$part->getType()),
@@ -765,7 +790,7 @@ class JmapShim
 		];
 		if ($part->getPrimaryType() === 'multipart')
 		{
-			$result['subParts'] = array_map([self::class, 'bodyPartToJmap'], $part->getParts());
+			$result['subParts'] = array_map(static fn($sub) => self::bodyPartToJmap($sub, $mailbox, $uid), $part->getParts());
 		}
 		return $result;
 	}
@@ -806,6 +831,266 @@ class JmapShim
 			'isEncodingProblem' => false,
 			'isTruncated' => false,
 		];
+	}
+
+	/**
+	 * JMAP Blob download (RFC 8620 §6.2) for the local shim - streams one part's raw,
+	 * transfer-decoded bytes (or the whole raw RFC822 message, blobId's partId segment empty).
+	 *
+	 * Called from mail/jmap.php's GET route matching the "downloadUrl" template returned by
+	 * session() - authenticated the same way as everything else here (same-origin session cookie,
+	 * see class docblock), not by the bearer token in the Authorization header jmap-jam sends (that
+	 * header is otherwise unused/ignored by this shim, same as the JSON POST dispatch).
+	 *
+	 * @param string $accountId
+	 * @param string $blobId see bodyPartToJmap() - base64($mailbox).':'.$uid.':'.$partId
+	 * @param string $name suggested filename for Content-Disposition
+	 * @param string $type Content-Type to send
+	 */
+	public static function download(string $accountId, string $blobId, string $name, string $type) : void
+	{
+		[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
+		$imap = ($mailboxB64 !== null && $uid) ? self::imapServer($accountId) : null;
+		if (!$imap)
+		{
+			http_response_code(404);
+			return;
+		}
+		$mailbox = self::urlsafeB64Decode($mailboxB64);
+
+		$bytes = $partId !== '' ? self::fetchRawPart($imap, $mailbox, $uid, $partId) : self::fetchRawMessage($imap, $mailbox, $uid);
+		if ($bytes === null)
+		{
+			http_response_code(404);
+			return;
+		}
+
+		header('Content-Type: '.$type);
+		header('Content-Disposition: inline; filename="'.addslashes($name).'"');
+		header('Content-Length: '.strlen($bytes));
+		echo $bytes;
+	}
+
+	/**
+	 * Fetch one body-part's raw, transfer-decoded bytes - deliberately WITHOUT fetchBodyValue()'s
+	 * charset conversion, since this must return exact original bytes (binary attachments, PGP
+	 * data, a TNEF/winmail.dat attachment for Mail::tnef_decoder()'s Horde_Compress input, ...).
+	 *
+	 * Direct Imap/Horde MIME work, deliberately NOT going through mail_ui/Api\Mail (see class
+	 * docblock) - reused by download() (the browser-facing JMAP Blob download) and by the
+	 * server-side JMAP-native S/MIME/TNEF resolvers (Imap\Jmap for Stalwart, this class for the
+	 * local shim - see plan) fetching a part in-process, no HTTP round trip needed.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param string $partId
+	 * @return ?string null if the message/part wasn't found
+	 */
+	public static function fetchRawPart(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, string $partId) : ?string
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		$query->structure();
+		$query->bodyPart($partId, ['decode' => true, 'peek' => true]);
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		$data = $results[(int)$uid] ?? null;
+		if (!$data)
+		{
+			return null;
+		}
+		// same transfer-decode recipe as fetchBodyValue()
+		$raw = (string)$data->getBodyPart($partId);
+		$encoding = $data->getBodyPartDecode($partId);
+		$part = $data->getStructure()->getPart($partId);
+		$part->setContents($raw, ['encoding' => $encoding]);
+		return $part->getContents();
+	}
+
+	/**
+	 * Fetch the whole raw RFC822 message - the JMAP-native equivalent of Mail::getMessageRawBody()
+	 * (which uses the exact same Horde_Imap_Client_Fetch_Query::fullText() primitive, just via
+	 * mail_bo), needed by the S/MIME resolver (Mail\Smime/Horde_Crypt_Smime decrypt/verify the
+	 * *whole* message, not one part).
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @return ?string null if the message wasn't found
+	 */
+	public static function fetchRawMessage(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid) : ?string
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		$query->fullText(['peek' => true]);
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		$data = $results[(int)$uid] ?? null;
+		return $data ? (string)$data->getFullMsg() : null;
+	}
+
+	/**
+	 * Bare structure-only fetch (no body/preview) - used by mail_ui::get_load_email_data()'s
+	 * JMAP-native dispatch (see plan) to cheaply decide, before fetching any body content, whether
+	 * a message needs the S/MIME/TNEF resolvers or falls through to the classic path.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @return ?\Horde_Mime_Part null if not found
+	 */
+	public static function structureGet(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid) : ?\Horde_Mime_Part
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		$query->structure();
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		$data = $results[(int)$uid] ?? null;
+		return $data ? $data->getStructure() : null;
+	}
+
+	// top-level content-types that need the JMAP-native S/MIME resolver (resolveSmime()/
+	// resolveSmimeJmap()) - same list mail/js/jmap.ts's MailJmap.SPECIAL_CASE_TYPES uses for S/MIME
+	private const SMIME_TYPES = [
+		'multipart/signed', 'application/pkcs7-mime', 'application/x-pkcs7-mime',
+		'application/pkcs7-signature', 'application/x-pkcs7-signature',
+	];
+
+	/**
+	 * Decide whether a message's *top-level* bodyStructure needs the JMAP-native S/MIME or TNEF
+	 * resolver - top-level only (not a recursive walk), matching both Mail::getStructure()'s own
+	 * original S/MIME check (top-level type/protocol only) and this plan's TNEF scoping (only the
+	 * whole-message-is-TNEF case, not TNEF-as-a-regular-attachment - see JmapShim::resolveTnef()'s
+	 * docblock).
+	 *
+	 * @param array $bodyStructure RFC 8621 EmailBodyPart shape (bodyPartToJmap()/Email/get), or a
+	 *  plain {type: string, ...} - only the top-level "type" is inspected
+	 * @return string|null 'smime', 'tnef', or null (not a special case, fall through to the
+	 *  classic path - meeting invites and anything else)
+	 */
+	public static function specialCaseType(array $bodyStructure) : ?string
+	{
+		$type = strtolower($bodyStructure['type'] ?? '');
+		if (in_array($type, self::SMIME_TYPES, true))
+		{
+			return 'smime';
+		}
+		if ($type === 'application/ms-tnef')
+		{
+			return 'tnef';
+		}
+		return null;
+	}
+
+	/**
+	 * Render an already-fully-parsed (in-memory) Horde_Mime_Part tree to final sanitized HTML -
+	 * shared by the JMAP-native S/MIME and TNEF resolvers (resolveSmime()/resolveTnef() below, and
+	 * Imap\Jmap's equivalents for Stalwart). Deliberately new code, not a call into
+	 * mail_ui::getdisplayableBody()/showBody() - mirrors mail/js/jmap.ts's
+	 * MailJmap.assembleBodyHtml()'s selection logic (best-body via findBody(), prefer html unless
+	 * "only_if_no_text"), server-side HTML sanitization via the existing generic Api\Html\HtmLawed
+	 * (not mail-specific, same allowlist config the client-side DOMPurify path is modelled on)
+	 * instead of the classic getdisplayableBody()/htmLawed-with-tidy pipeline.
+	 *
+	 * Known, accepted limitation (rare fallback path): no inline cid: image resolution or
+	 * attachment list - both already have their own mechanisms for the normal mail path and are
+	 * out of scope here (see plan).
+	 *
+	 * @param \Horde_Mime_Part $structure all parts' contents already populated (true after
+	 *  Horde_Mime_Part::parseMessage() parses a complete raw message) - no fetch happens in here
+	 * @param string $htmlOptions 'only_if_no_text' prefers text/plain if present, else default
+	 *  (prefer html when present)
+	 * @return string sanitized HTML body only (no document wrapper - callers still use
+	 *  mail_ui::get_email_header()/showBody() for that, unchanged page chrome)
+	 */
+	public static function structureToHtml(\Horde_Mime_Part $structure, string $htmlOptions='') : string
+	{
+		$textId = $structure->findBody('plain');
+		$htmlId = $structure->findBody('html');
+		$useHtml = $htmlId !== null && $htmlOptions !== 'only_if_no_text';
+		$partId = $useHtml ? $htmlId : ($textId ?? $htmlId);
+
+		if ($partId === null)
+		{
+			return '';
+		}
+		$part = $structure->getPart($partId);
+		$charset = $part->getContentTypeParameter('charset') ?: 'us-ascii';
+		$raw = Api\Translation::convert($part->getContents(), $charset, 'utf-8');
+
+		if ($useHtml && $partId === $htmlId)
+		{
+			$htmLawed = new Api\Html\HtmLawed();
+			return $htmLawed->run($raw, Api\Mail::$htmLawed_config);
+		}
+		return '<pre>'.htmlspecialchars($raw, ENT_QUOTES, 'UTF-8').'</pre>';
+	}
+
+	/**
+	 * JMAP-native S/MIME resolution for the local shim - fetches the raw message directly (no
+	 * mail_ui/Api\Mail involved, see class docblock), decrypts/verifies via the existing
+	 * Api\Mail\Smime::resolveMessage() (shared with Imap\Jmap's Stalwart equivalent), and renders
+	 * via structureToHtml() above.
+	 *
+	 * @param string $accountId
+	 * @param string $mailboxId JMAP Mailbox id (base64 folder path)
+	 * @param string $uid
+	 * @param string $topLevelType see Api\Mail\Smime::resolveMessage()
+	 * @param string $fromAddress
+	 * @param string $htmlOptions
+	 * @param string $passphrase
+	 * @return string sanitized HTML body
+	 * @throws Api\Mail\Smime\PassphraseMissing
+	 * @throws \Exception message/mailbox not found
+	 */
+	public static function resolveSmime(string $accountId, string $mailboxId, string $uid, string $topLevelType,
+		string $fromAddress, string $htmlOptions='', string $passphrase='') : string
+	{
+		$imap = self::imapServer($accountId);
+		$mailbox = self::hordeMailbox($imap, self::folderPath($mailboxId));
+		$raw = self::fetchRawMessage($imap, $mailbox, $uid);
+		if ($raw === null)
+		{
+			throw new \Exception("Message '$uid' not found in '$mailbox'!");
+		}
+		$structure = Api\Mail\Smime::resolveMessage((int)$accountId, $raw, $topLevelType, $passphrase, $fromAddress);
+		return self::structureToHtml($structure, $htmlOptions);
+	}
+
+	/**
+	 * JMAP-native TNEF resolution for the local shim, for the case where the *entire* message is a
+	 * TNEF/winmail.dat blob (single-part application/ms-tnef, no separate real body - see
+	 * MailJmap.isSpecialCase()'s client-side detection this mirrors). Uses the existing
+	 * Api\Mail::tnef_decoder() (Horde_Compress, transport-agnostic, unchanged) fed JMAP-fetched
+	 * bytes instead of an IMAP-fetched attachment.
+	 *
+	 * @param string $accountId
+	 * @param string $mailboxId JMAP Mailbox id (base64 folder path)
+	 * @param string $uid
+	 * @param string $partId the whole-message TNEF part's id (usually "1")
+	 * @param string $htmlOptions
+	 * @return string sanitized HTML body
+	 * @throws \Exception message/part not found, or TNEF decoding failed
+	 */
+	public static function resolveTnef(string $accountId, string $mailboxId, string $uid, string $partId, string $htmlOptions='') : string
+	{
+		$imap = self::imapServer($accountId);
+		$mailbox = self::hordeMailbox($imap, self::folderPath($mailboxId));
+		$raw = self::fetchRawPart($imap, $mailbox, $uid, $partId);
+		if ($raw === null)
+		{
+			throw new \Exception("Message '$uid' part '$partId' not found in '$mailbox'!");
+		}
+		// Mail::tnef_decoder() is pure Horde_Compress orchestration with no $this/IMAP usage at
+		// all - made static (was an unnecessary instance method) so it's callable directly here
+		$decoded = Api\Mail::tnef_decoder($raw);
+		if (!$decoded)
+		{
+			throw new \Exception('Could not decode TNEF data');
+		}
+		return self::structureToHtml($decoded, $htmlOptions);
 	}
 
 	/**

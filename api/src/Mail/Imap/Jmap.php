@@ -15,6 +15,7 @@ namespace EGroupware\Api\Mail\Imap;
 use EGroupware\Api;
 use EGroupware\Api\Mail;
 use EGroupware\SwoolePush\Tokens;
+use EGroupware\Mail\JmapShim;
 
 /**
  * Manages connection to Jmap e.g. Stalwart mail-server
@@ -306,6 +307,63 @@ class Jmap extends Mail\Imap
 	public function jmapClient()
 	{
 		return $this->jmap ?? ($this->jmap = new Mail\Jmap($this->acc_imap_host, $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId));
+	}
+
+	/**
+	 * JMAP-native S/MIME resolution for Stalwart - fetches the raw message via a real JMAP Blob
+	 * download (Mail\Jmap::downloadBlob(), the Email's own top-level blobId) instead of an IMAP
+	 * FETCH, decrypts/verifies via the existing Mail\Smime::resolveMessage() (shared with
+	 * JmapShim's local-shim equivalent), and renders via JmapShim::structureToHtml() - no
+	 * mail_ui/Api\Mail\Imap IMAP connection involved at all for this path.
+	 *
+	 * @param string $emailId JMAP Email id
+	 * @param string $topLevelType see Mail\Smime::resolveMessage()
+	 * @param string $fromAddress
+	 * @param string $htmlOptions
+	 * @param string $passphrase
+	 * @return string sanitized HTML body
+	 * @throws Mail\Smime\PassphraseMissing
+	 * @throws Api\Exception
+	 */
+	public function resolveSmimeJmap(string $emailId, string $topLevelType, string $fromAddress,
+		string $htmlOptions='', string $passphrase='') : string
+	{
+		$client = $this->jmapClient();
+		$email = $client->emailGet($emailId, ['blobId']);
+		$raw = $client->downloadBlob($email['blobId'], 'message.eml', 'message/rfc822');
+		$structure = Mail\Smime::resolveMessage($this->acc_id, $raw, $topLevelType, $passphrase, $fromAddress);
+		return JmapShim::structureToHtml($structure, $htmlOptions);
+	}
+
+	/**
+	 * JMAP-native TNEF resolution for Stalwart, for the case where the *entire* message is a
+	 * TNEF/winmail.dat blob (see JmapShim::resolveTnef()'s docblock - same scope, IMAP shim
+	 * equivalent). Downloads that one part's blob (its blobId, from the same "attachments" JMAP
+	 * already returned) instead of an IMAP FETCH, decodes via the existing (now static, since it
+	 * never touched $this/IMAP) Mail::tnef_decoder().
+	 *
+	 * @param string $emailId JMAP Email id
+	 * @param string $partId the whole-message TNEF part's JMAP partId
+	 * @param string $htmlOptions
+	 * @return string sanitized HTML body
+	 * @throws Api\Exception part not found, or TNEF decoding failed
+	 */
+	public function resolveTnefJmap(string $emailId, string $partId, string $htmlOptions='') : string
+	{
+		$client = $this->jmapClient();
+		$email = $client->emailGet($emailId, ['attachments']);
+		$attachment = current(array_filter($email['attachments'] ?? [], static fn($a) => ($a['partId'] ?? null) === $partId)) ?: null;
+		if (!$attachment)
+		{
+			throw new Api\Exception("Part '$partId' not found on Email '$emailId'");
+		}
+		$raw = $client->downloadBlob($attachment['blobId'], $attachment['name'] ?? 'winmail.dat', $attachment['type'] ?? 'application/ms-tnef');
+		$decoded = Mail::tnef_decoder($raw);
+		if (!$decoded)
+		{
+			throw new Api\Exception('Could not decode TNEF data');
+		}
+		return JmapShim::structureToHtml($decoded, $htmlOptions);
 	}
 
 	/**

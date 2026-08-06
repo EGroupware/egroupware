@@ -380,12 +380,12 @@ export class MailJmap
 	// message/attachment content-types that keep a message on the legacy server-side body path
 	// (mail_ui::displayMessage() / get_load_email_data() / getdisplayableBody()) instead of the
 	// fast client-side JMAP path below - see the plan's "Key findings" for why each needs to stay
-	// server-side (S/MIME keys, TNEF decoding, calendar.calendar_uiforms::meeting() rendering).
-	// multipart/encrypted (PGP/MIME, Mailvelope) is deliberately included here too for now - it's
-	// already fully working server-assembled + client-decrypted, and reimplementing RFC 8621 body-
-	// part-selection for it is not worth the risk in the same pass as the main feature.
+	// server-side (S/MIME needs private key material server-side, TNEF decoding is a binary-format
+	// library job, meeting invites render via calendar.calendar_uiforms::meeting()).
+	// multipart/encrypted (PGP/MIME) is NOT in this set - Mailvelope decrypts entirely client-side
+	// already and needs no server involvement at all, see findPgpPart()/fetchBody() below.
 	private static readonly SPECIAL_CASE_TYPES = new Set([
-		'multipart/signed', 'multipart/encrypted',
+		'multipart/signed',
 		'application/pkcs7-mime', 'application/x-pkcs7-mime',
 		'application/pkcs7-signature', 'application/x-pkcs7-signature',
 		'text/calendar', 'application/ms-tnef',
@@ -429,9 +429,18 @@ export class MailJmap
 			{
 				return {special: true};
 			}
+			// PGP/MIME: no server involvement needed at all (see SPECIAL_CASE_TYPES' docblock) -
+			// the "body" is the raw ciphertext/armored-text of multipart/encrypted's 2nd sub-part,
+			// downloaded as a blob (same mechanism resolveInlineImages() uses for cid: images) and
+			// rendered through the plain-text path so Mailvelope's mailvelopeDisplay()
+			// (mail/js/app.ts) finds it in the `td.td_display > pre` it already scans for.
+			const pgpPart = this.findPgpPart(email.bodyStructure);
+			const html = pgpPart ?
+				this.wrapDocument(MailJmap.textToHtml(await this.downloadPartText(ref.profileID, token, pgpPart))) :
+				this.assembleBodyHtml(email, htmlOptions);
 			return {
 				special: false,
-				html: this.assembleBodyHtml(email, htmlOptions),
+				html,
 				attachments: email.attachments || [],
 				profileID: ref.profileID,
 				accountId: token.accountId,
@@ -458,6 +467,46 @@ export class MailJmap
 			return true;
 		}
 		return (part.subParts || []).some((sub : any) => this.isSpecialCase(sub));
+	}
+
+	/**
+	 * Depth-first search for a multipart/encrypted part, returning its 2nd sub-part (RFC 3156: 1st
+	 * is the application/pgp-encrypted control part, 2nd is the actual ciphertext/armored blob) -
+	 * mirrors Mail::getMessageAttachments()'s "skip multipart/encrypted incl. its two sub-parts"
+	 * comment (api/src/Mail.php:6169), i.e. that 2nd sub-part is deliberately never listed as a
+	 * regular attachment either, same convention this follows.
+	 */
+	private findPgpPart(part : any) : any | null
+	{
+		if (!part)
+		{
+			return null;
+		}
+		if ((part.type || '').toLowerCase() === 'multipart/encrypted' && part.subParts?.length >= 2)
+		{
+			return part.subParts[1];
+		}
+		for (const sub of part.subParts || [])
+		{
+			const found = this.findPgpPart(sub);
+			if (found)
+			{
+				return found;
+			}
+		}
+		return null;
+	}
+
+	/** Download one body part's raw bytes via JMAP Blob download, decoded as UTF-8 text */
+	private async downloadPartText(profileID : string, token : JmapToken, part : any) : Promise<string>
+	{
+		const response = await this.clients[profileID].downloadBlob({
+			accountId: token.accountId,
+			blobId: part.blobId,
+			mimeType: part.type || 'application/octet-stream',
+			fileName: part.name || 'part',
+		});
+		return response.text();
 	}
 
 	/**
@@ -494,7 +543,25 @@ export class MailJmap
 		{
 			body = MailJmap.textToHtml(raw);
 		}
+		return this.wrapDocument(body);
+	}
 
+	/**
+	 * Wrap already-sanitized body HTML into a self-contained document for the body iframe's
+	 * `srcdoc` - shared by assembleBodyHtml() (normal mail) and fetchBody()'s PGP path.
+	 *
+	 * Loads the same `preview.js` (mailto/internal-EGroupware-link activation) the server-rendered
+	 * body already uses, unmodified - a `srcdoc` iframe without a `sandbox` attribute is same-
+	 * origin with the parent, exactly like the server-rendered one, so this needs no separate
+	 * reimplementation of that logic. `<meta>`/`<base>` are explicitly forbidden from the sanitized
+	 * body content itself (assembleBodyHtml()'s DOMPurify config), so a malicious/buggy message
+	 * can't smuggle in a competing CSP, a `<meta http-equiv="refresh">`, or hijack relative URLs.
+	 *
+	 * cid: image references are left as-is here - resolved asynchronously after render by
+	 * resolveInlineImages(), same as external images already are (resolveExternalImages()).
+	 */
+	private wrapDocument(body : string) : string
+	{
 		// same directive set the current server-rendered response sets via HTTP header
 		// (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000: script-src 'self' to
 		// load preview.js below, img-src additionally allows blob: for Stalwart inline-image

@@ -47,6 +47,16 @@ $GLOBALS['egw']->session->commit_session();
 
 use EGroupware\Mail\JmapShim;
 
+// Blob download (RFC 8620 §6.2): plain GET matching the "downloadUrl" template from session()
+// below, not part of the regular JSON method-call dispatch (jmap-jam calls this separately, see
+// JmapShim::download()'s docblock).
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' && isset($_GET['download']))
+{
+	JmapShim::download((string)($_GET['accountId'] ?? ''), (string)($_GET['blobId'] ?? ''),
+		(string)($_GET['name'] ?? 'download'), (string)($_GET['type'] ?? 'application/octet-stream'));
+	exit;
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 try

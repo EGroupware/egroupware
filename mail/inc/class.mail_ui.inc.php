@@ -18,6 +18,7 @@ use EGroupware\Api\Vfs;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Etemplate\KeyManager;
 use EGroupware\Api\Mail;
+use EGroupware\Mail\JmapShim;
 
 /**
  * Mail User Interface
@@ -2909,7 +2910,145 @@ class mail_ui
 		exit();
 	}
 
-	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null, $smimePassphrase = '')
+	/**
+	 * S/MIME passphrase-request form, shown by get_load_email_data() (both the classic and the new
+	 * JMAP-native path, see tryJmapNativeSpecialCase()) when Mail\Smime\PassphraseMissing is thrown
+	 *
+	 * @param Mail\Smime\PassphraseMissing $e
+	 * @return string
+	 */
+	private function smimePassphraseFormHtml(Mail\Smime\PassphraseMissing $e) : string
+	{
+		$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
+		if (empty($acc_smime))
+		{
+			self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'), true, 'error');
+		}
+		Framework::message($e->getMessage());
+		$configs = Api\Config::read('mail');
+		// do NOT include any default CSS
+		return $this->get_email_header().
+			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
+			'<form id="smimePasswordRequest" method="post">'.
+					'<div class="bg-style"></div>'.
+					'<div>'.
+						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
+						'<input type="submit" value="'.lang("submit").'"/>'.
+						'<div style="margin-top:10px;position:relative;text-align:center;margin-left:-15px;">'.
+							lang("Remember the password for ").
+								'<input name="smime_pass_exp" type="number" max="480" min="1" placeholder="'.
+								(is_array($configs) && $configs['smime_pass_exp'] ? $configs['smime_pass_exp'] : "10").
+								'" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
+						'</div>'.
+					'</div>'.
+			'</form>';
+	}
+
+	/**
+	 * Try the new JMAP-native S/MIME/TNEF resolvers (see plan: "Mail: move PGP client-side, make
+	 * S/MIME + TNEF server-side handling JMAP-native") for get_load_email_data()'s fallback
+	 * body-render path, fetching bodyStructure/raw bytes via JMAP (Stalwart: Imap\Jmap's
+	 * jmapClient(); local IMAP: JmapShim) instead of Mail::getStructure()/getMessageRawBody()'s
+	 * IMAP FETCH chain.
+	 *
+	 * Only handles the two cases those resolvers cover (S/MIME, whole-message TNEF - see
+	 * JmapShim::specialCaseType()) - returns null for everything else (meeting invites, a plain
+	 * message reached here only because the client-side fast path failed, and any Stalwart-backed
+	 * row where the caller couldn't supply a JMAP emailId, see loadEmailBody()), so the caller
+	 * falls through to the unchanged classic Mail::getStructure() path.
+	 *
+	 * @param string $uid real IMAP UID (already resolved, see Api\Mail::splitRowID())
+	 * @param string|null $partID
+	 * @param string $mailbox
+	 * @param string $htmlOptions
+	 * @param string|null $smimePassphrase
+	 * @param string|null $emailID JMAP opaque Email id - only available/meaningful for
+	 *  Stalwart-backed rows (Api\Mail::splitRowID()'s 'emailID', see loadEmailBody())
+	 * @return string|null final page HTML, or null to fall through to the classic path
+	 */
+	private function tryJmapNativeSpecialCase($uid, $partID, $mailbox, $htmlOptions, $smimePassphrase, $emailID)
+	{
+		unset($partID);	// not used by the S/MIME/TNEF resolvers (they always resolve the whole message)
+		$icServer = $this->mail_bo->icServer;
+		$isStalwart = $icServer instanceof Mail\Imap\Jmap;
+
+		try
+		{
+			if ($isStalwart)
+			{
+				if (!$emailID)
+				{
+					return null;
+				}
+				$email = $icServer->jmapClient()->emailGet($emailID, ['bodyStructure', 'from']);
+				$bodyStructure = $email['bodyStructure'] ?? null;
+				$from = $email['from'][0]['email'] ?? null;
+			}
+			else
+			{
+				$structure = JmapShim::structureGet($icServer, $mailbox, $uid);
+				if (!$structure)
+				{
+					return null;
+				}
+				$bodyStructure = JmapShim::bodyPartToJmap($structure, $mailbox, $uid);
+				$from = null;	// not needed: JmapShim::resolveSmime() only uses it for the
+								// signer/sender cross-check, a nice-to-have, not a hard requirement
+			}
+			if (!$bodyStructure || !($type = JmapShim::specialCaseType($bodyStructure)))
+			{
+				return null;
+			}
+
+			if ($smimePassphrase)
+			{
+				if ($this->mail_bo->mailPreferences['smime_pass_exp'] != $_POST['smime_pass_exp'])
+				{
+					$GLOBALS['egw']->preferences->add('mail', 'smime_pass_exp', $_POST['smime_pass_exp']);
+					$GLOBALS['egw']->preferences->save_repository();
+				}
+				Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase, (int)($_POST['smime_pass_exp']?:10) * 60);
+			}
+
+			if ($type === 'smime')
+			{
+				$body = $isStalwart ?
+					$icServer->resolveSmimeJmap($emailID, $bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase) :
+					JmapShim::resolveSmime((string)$this->mail_bo->profileID, base64_encode($mailbox), $uid,
+						$bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase);
+			}
+			else	// 'tnef'
+			{
+				$body = $isStalwart ?
+					$icServer->resolveTnefJmap($emailID, $bodyStructure['partId'], $htmlOptions) :
+					JmapShim::resolveTnef((string)$this->mail_bo->profileID, base64_encode($mailbox), $uid, $bodyStructure['partId'], $htmlOptions);
+			}
+
+			Api\Session::cache_control(true);
+			foreach (['frame-src', 'connect-src', 'manifest-src'] as $src)
+			{
+				Api\Header\ContentSecurityPolicy::add($src, 'none');
+			}
+			Api\Header\ContentSecurityPolicy::add('script-src', 'self', true);	// true = remove default 'unsafe-eval'
+			Api\Header\ContentSecurityPolicy::add('img-src', 'http:');
+			Api\Header\ContentSecurityPolicy::add('media-src', ['https:', 'http:']);
+
+			return $this->get_email_header().$this->showBody($body, false);
+		}
+		catch (Mail\Smime\PassphraseMissing $e)
+		{
+			return $this->smimePassphraseFormHtml($e);
+		}
+		catch (\Throwable $e)
+		{
+			// any other failure (JMAP unreachable, part not found, TNEF decode failure, ...):
+			// fall through to the classic IMAP-based path rather than showing an error
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	function get_load_email_data($uid, $partID, $mailbox,$htmlOptions=null, $smimePassphrase = '', $emailID=null)
 	{
 		// seems to be needed, as if we open a mail from notification popup that is
 		// located in a different folder, we experience: could not parse message
@@ -2919,6 +3058,15 @@ class mail_ui
 		$this->partID = $partID;
 		$bufferHtmlOptions = $this->mail_bo->htmlOptions;
 		if (empty($htmlOptions)) $htmlOptions = $this->mail_bo->htmlOptions;
+
+		// JMAP-native S/MIME/TNEF (see plan) - returns null for anything else (meeting invites,
+		// no usable JMAP access, ...) to fall through to the classic IMAP-based path unchanged
+		if (($jmapHtml = $this->tryJmapNativeSpecialCase($uid, $partID, $mailbox, $htmlOptions, $smimePassphrase, $emailID)) !== null)
+		{
+			$this->mail_bo->htmlOptions = $bufferHtmlOptions;
+			return $jmapHtml;
+		}
+
 		// fetching structure now, to supply it to getMessageBody and getMessageAttachment, so it does not get fetched twice
 		try
 		{
@@ -2948,30 +3096,7 @@ class mail_ui
 		}
 		catch(Mail\Smime\PassphraseMissing $e)
 		{
-			$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID);
-			if (empty($acc_smime))
-			{
-				self::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'), true, 'error');
-			}
-			Framework::message($e->getMessage());
-			$configs = Api\Config::read('mail');
-			// do NOT include any default CSS
-			$smimeHtml = $this->get_email_header().
-			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
-			'<form id="smimePasswordRequest" method="post">'.
-					'<div class="bg-style"></div>'.
-					'<div>'.
-						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
-						'<input type="submit" value="'.lang("submit").'"/>'.
-						'<div style="margin-top:10px;position:relative;text-align:center;margin-left:-15px;">'.
-							lang("Remember the password for ").
-								'<input name="smime_pass_exp" type="number" max="480" min="1" placeholder="'.
-								(is_array($configs) && $configs['smime_pass_exp'] ? $configs['smime_pass_exp'] : "10").
-								'" value="'.$this->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
-						'</div>'.
-					'</div>'.
-			'</form>';
-			return $smimeHtml;
+			return $this->smimePassphraseFormHtml($e);
 		}
 		$calendar_part = null;
 		$bodyParts	= $this->mail_bo->getMessageBody($uid, ($htmlOptions?$htmlOptions:''), $partID, $structure, false, $mailbox, $calendar_part);
@@ -3694,7 +3819,7 @@ class mail_ui
 			$this->changeProfile($icServerID);
 		}
 
-		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase'] ?? null);
+		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase'] ?? null, $uidA['emailID'] ?? null);
 		//error_log(array2string($bodyResponse));
 		echo $bodyResponse;
 
