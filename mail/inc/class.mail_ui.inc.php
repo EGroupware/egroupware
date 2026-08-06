@@ -2376,16 +2376,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		// if we are in HTML so its likely that we should show the embedded images; as a result
 		// we do NOT want to see those, that are embedded in the list of attachments
 		if ($htmlOptions !='always_display') $fetchEmbeddedImages = true;
-		try{
-			$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages,true,true,$mailbox);
-		}
-		catch(Mail\Smime\PassphraseMissing $e)
-		{
-			//continue
-		}
-
-		//error_log(__METHOD__.__LINE__.array2string($attachments));
-		$attachmentHTMLBlock = self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
+		// profile is already switched to $icServerID above, so this just resolves attachments
+		$attachmentHTMLBlock = $this->resolveAttachmentsBlock($rowID, $partID, $fetchEmbeddedImages);
 
 		$nonDisplayAbleCharacters = array('[\016]','[\017]',
 				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
@@ -4591,13 +4583,56 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Resolve a row-id to its attachmentsBlock
+	 *
+	 * Shared by displayMessage() (the "view" popup), ajax_resolveWinmail() and
+	 * ajax_fetchAttachments() (both used by the preview panel) - the three places that
+	 * independently used to run splitRowID()+getMessageAttachments()+createAttachmentBlock()
+	 * themselves. Switches to the row's own profile if it differs from the currently active
+	 * one, and always switches back afterwards, so it's safe to call regardless of which
+	 * account is currently active.
+	 *
+	 * @param string $rowID row id from nm
+	 * @param string|null $partID part to get attachments for, if message is eg. a forwarded/attached message
+	 * @param bool $fetchEmbeddedImages true: also return embedded images as attachments
+	 * @param bool $returnFullHTML false (default): return data array, true: HTML
+	 * @return array attachmentsBlock, see createAttachmentBlock()
+	 */
+	private function resolveAttachmentsBlock(string $rowID, ?string $partID=null, bool $fetchEmbeddedImages=false, bool $returnFullHTML=false)
+	{
+		$idParts = Mail::splitRowID($rowID);
+		$uid = $idParts['msgUID'];
+		$mailbox = $idParts['folder'];
+		if (!$uid || !$mailbox) return [];
+
+		$rememberServerID = $this->mail_bo->profileID;
+		$switchedProfile = $idParts['profileID'] && $idParts['profileID'] != $rememberServerID;
+		if ($switchedProfile)
+		{
+			$this->changeProfile($idParts['profileID']);
+		}
+		try
+		{
+			$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true, true, $mailbox);
+		}
+		catch (Mail\Smime\PassphraseMissing $e)
+		{
+			$attachments = [];
+		}
+		finally
+		{
+			if ($switchedProfile)
+			{
+				$this->changeProfile($rememberServerID);
+			}
+		}
+		return is_array($attachments) ? self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox, $returnFullHTML) : [];
+	}
+
+	/**
 	 * ResolveWinmail fetches the encoded attachments
 	 * from winmail.dat and will response expected structure back
 	 * to client in order to display them.
-	 *
-	 * Note: this ajax function should only be called via
-	 * nm mail selection as it does not support profile change
-	 * and uses the current available ic_server connection.
 	 *
 	 * @param type $_rowid row id from nm
 	 *
@@ -4606,14 +4641,9 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$response = Api\Json\Response::get();
 
-		$idParts = Mail::splitRowID($_rowid);
-		$uid = $idParts['msgUID'];
-		$mbox = $idParts['folder'];
-
-		$attachments = $this->mail_bo->getMessageAttachments($uid, null, null, false,true,true,$mbox);
-		if (is_array($attachments))
+		$attachments = $this->resolveAttachmentsBlock($_rowid);
+		if (!empty($attachments))
 		{
-			$attachments = $this->createAttachmentBlock($attachments, $_rowid, $uid, $mbox, false);
 			$response->data($attachments);
 		}
 		else
@@ -4638,17 +4668,8 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$response = Api\Json\Response::get();
 
-		$idParts = Mail::splitRowID($_rowid);
-		if ($idParts['profileID'] && $idParts['profileID'] != $this->mail_bo->profileID)
-		{
-			$this->changeProfile($idParts['profileID']);
-		}
-		$uid = $idParts['msgUID'];
-		$mbox = $idParts['folder'];
-
-		$attachments = $uid && $mbox ? $this->mail_bo->getMessageAttachments($uid, null, null, false, true, true, $mbox) : [];
 		$response->data([
-			'attachmentsBlock' => is_array($attachments) ? self::createAttachmentBlock($attachments, $_rowid, $uid, $mbox) : [],
+			'attachmentsBlock' => $this->resolveAttachmentsBlock($_rowid),
 		]);
 	}
 
