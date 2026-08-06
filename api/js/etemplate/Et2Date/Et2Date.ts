@@ -399,6 +399,12 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 
 	private _boundTooltipElements : HTMLElement[] = [];
 
+	// Currently running init(), init() is async and can be called multiple times
+	private _initPromise : Promise<void> = null;
+
+	// We destroyed Flatpickr in disconnectedCallback() and have to re-create it when we get re-connected
+	private _reinitOnConnect = false;
+
 	constructor()
 	{
 		super();
@@ -422,6 +428,14 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		// Most date widgets start hidden; defer Flatpickr construction until first interaction.
 		this.addEventListener("focusin", this.init, {once: true});
 		this.addEventListener("pointerdown", this.init, {once: true});
+
+		// If we were just moved in the DOM (eg. template loaded into a framework tab), disconnectedCallback()
+		// destroyed Flatpickr.  Re-create it, or the input keeps showing the raw value until the user clicks in.
+		if(this._reinitOnConnect)
+		{
+			this._reinitOnConnect = false;
+			this.updateComplete.then(() => this.init());
+		}
 	}
 
 	disconnectedCallback()
@@ -429,7 +443,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		super.disconnectedCallback();
 		this.removeEventListener("focusin", this.init);
 		this.removeEventListener("pointerdown", this.init);
-		this._inputNode?.removeEventListener('change', this._onChange);
+		// _updateValueOnChange & _handleInputChange were added in init(), the input survives inside the shadow root
+		// so they would pile up on every disconnect / reconnect cycle
+		this.findInputField()?.removeEventListener('change', this._updateValueOnChange);
 		delete this._inputElement?.flatpickr;
 		this.findInputField()?.removeEventListener("input", this._handleInputChange);
 
@@ -444,6 +460,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			delete this._inputNode?._flatpickr;
 			this._instance = undefined;
+			this._reinitOnConnect = true;
 		}
 	}
 
@@ -485,7 +502,35 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		{
 			return;
 		}
+		if(typeof this._instance !== "undefined")
+		{
+			return;
+		}
+		// Not (or no longer) in the document - starting Flatpickr now would leak its calendar into <body>, since
+		// disconnectedCallback() will not run again to destroy it.  Wait for the next connectedCallback() instead.
+		if(!this.isConnected)
+		{
+			this._reinitOnConnect = true;
+			return;
+		}
 
+		// init() is async, but called from updated() and user interaction, so it may already be running.  Starting a
+		// second Flatpickr would bind it to the first one's altInput and leave the first instance behind.
+		if(!this._initPromise)
+		{
+			this._initPromise = this._initFlatpickr().finally(() => {this._initPromise = null;});
+		}
+		return this._initPromise;
+	}
+
+	/**
+	 * Actually create Flatpickr, use init() to avoid starting this more than once
+	 *
+	 * @returns {Promise<void>}
+	 * @protected
+	 */
+	protected async _initFlatpickr()
+	{
 		// Wait for language to be loaded
 		await localizePromise;
 
@@ -510,6 +555,14 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 				{
 					this._inputNode.value = flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
 				}
+			}
+
+			// We may have been removed from the document while waiting (eg. framework tab closed while loading).
+			// Same leak as above - nothing would ever destroy the instance.
+			if(!this.isConnected)
+			{
+				this._reinitOnConnect = true;
+				return;
 			}
 
 			this.initializeComponent();
