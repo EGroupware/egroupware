@@ -1143,24 +1143,30 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						unset($attachment);
 						continue;	// do NOT add attachment as attachment
 					}
+					// TNEF/winmail.dat sub-attachments all share the same (outer) MIME partID, so
+					// getMessageAttachments() gives each one a unique "is_winmail" composite key
+					// (uid@partID@mimeId) instead - use that to address the individual sub-part
+					// when present, so downloading one of several winmail.dat children doesn't
+					// just return the raw, still-packed winmail.dat bytes for all of them.
+					$attRef = $attach['is_winmail'] ?? $attach['partID'];
 					if (Request::GetProtocolVersion() >= 12.0) {
 						$attachment = new SyncBaseAttachment();
 						if (!isset($output->asattachments) || !is_array($output->asattachments))
 							$output->asattachments = array();
 						$attachment->estimatedDataSize = $attach['size'];
 						$attachment->method = 1;
-						$attachment->filereference = $folderid . ":" . $id . ":" . $attach['partID'];
+						$attachment->filereference = $folderid . ":" . $id . ":" . $attRef;
 					} else {
 						$attachment = new SyncAttachment();
 						if (!isset($output->attachments) || !is_array($output->attachments))
 							$output->attachments = array();
 						$attachment->attsize = $attach['size'];
 						$attachment->attmethod = 1;
-						$attachment->attname = $folderid . ":" . $id . ":" . $attach['partID'];//$key;
+						$attachment->attname = $folderid . ":" . $id . ":" . $attRef;//$key;
 					}
 
 					$attachment->displayname = $attach['name'];
-					//error_log(__METHOD__.__LINE__.'->'.$folderid . ":" . $id . ":" . $attach['partID']);
+					//error_log(__METHOD__.__LINE__.'->'.$folderid . ":" . $id . ":" . $attRef);
 
 					$attachment->attoid = "";//isset($part->headers['content-id']) ? trim($part->headers['content-id']) : "";
 					//$attachment->isinline=0; // if not inline, do not use isinline
@@ -1299,7 +1305,19 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (!isset($this->mail)) $this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
 
 		$this->mail->reopen($folder);
-		$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
+		// a TNEF/winmail.dat sub-attachment: $part is the "is_winmail" composite key
+		// "uid@partID@mimeId" built in GetMessage(), not a plain MIME part id - getAttachment()
+		// needs the *outer* winmail.dat partID plus the full composite key to pick the right
+		// unpacked child (see its $_winmail_nr handling)
+		if (strpos($part, '@') !== false)
+		{
+			[, $winmailPartID] = explode('@', $part);
+			$attachment = $this->mail->getAttachment($id,$winmailPartID,$part,false,true,$folder);
+		}
+		else
+		{
+			$attachment = $this->mail->getAttachment($id,$part,0,false,true,$folder);
+		}
 		$SIOattachment = new SyncItemOperationsAttachment();
 		fseek($attachment['attachment'], 0, SEEK_SET);	// z-push requires stream seeked to start
 		$SIOattachment->data = $attachment['attachment'];
