@@ -6867,7 +6867,10 @@ class Mail
 					}
 					else
 					{
-						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],0,false,false));
+						// $attachment['is_winmail'] (uid@partID@mimeId) is set for individual unpacked
+						// TNEF/winmail.dat children - without it getAttachment() can't tell which
+						// child to decode and returns the raw, still-packed winmail.dat bytes
+						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],$attachment['is_winmail'] ?? 0,false,false));
 
 						if (empty($attachments[$num]['attachment'])&&$attachments[$num]['cid'])
 						{
