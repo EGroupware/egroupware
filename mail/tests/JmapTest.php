@@ -1,11 +1,12 @@
 <?php
 /**
- * Test mail/jmap.php's supported JMAP method-calls (Mailbox/query, Email/query, Email/get)
- * and the request-level plumbing around them (result-reference resolution, error handling).
+ * Test EGroupware\Mail\JmapShim's supported JMAP method-calls (Mailbox/query, Email/query,
+ * Email/get) and the request-level plumbing around them (result-reference resolution, error
+ * handling).
  *
- * Runs entirely against the built-in accountId "0" demo fixture plus pure helper functions -
- * no database, session or IMAP connection required. See mail/jmap.php's docblock and
- * mail_jmap_demo_fixture() for what "0" serves.
+ * Runs entirely against the built-in accountId "0" demo fixture plus pure helper methods -
+ * no database, session or IMAP connection required. See JmapShim's docblock and
+ * JmapShim::demoFixture() for what "0" serves.
  *
  * @link http://www.egroupware.org
  * @package mail
@@ -14,14 +15,11 @@
 
 namespace EGroupware\Mail;
 
-define('MAIL_JMAP_TESTS', true);
-require_once __DIR__.'/../jmap.php';
-
 class JmapTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * Read a Horde_Imap_Client_Search_Query's protected internal state, to assert on
-	 * mail_jmap_filter_to_query()'s translation without depending on a live IMAP server.
+	 * JmapShim::filterToQuery()'s translation without depending on a live IMAP server.
 	 */
 	protected static function searchState(\Horde_Imap_Client_Search_Query $query) : array
 	{
@@ -32,7 +30,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	public function testMailboxQueryTopLevel()
 	{
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Mailbox/query', ['filter' => ['name' => 'INBOX']], 'c0'],
 		]);
 
@@ -44,12 +42,12 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	public function testMailboxQueryNestedFolder()
 	{
 		// mirrors MailJmap.mailboxId()'s per-level walk: one Mailbox/query per path segment
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Mailbox/query', ['filter' => ['name' => 'INBOX']], 'p0'],
 		]);
 		$parentId = $responses[0][1]['ids'][0];
 
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Mailbox/query', ['filter' => ['name' => 'Sent', 'parentId' => $parentId]], 'p1'],
 		]);
 
@@ -60,7 +58,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	{
 		// same shape MailJmap.getRows() sends via client.requestMany(): Email/query followed
 		// by Email/get whose "ids" is a #-result-reference into the query's "/ids"
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Email/query', [
 				'accountId' => '0',
 				'filter' => ['inMailbox' => base64_encode('INBOX')],
@@ -101,12 +99,12 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		// mirrors mail_ui::get_rows()'s "fetchPreview" behaviour (filter2 / mail.ShowDetails
 		// preference, the "Sneak preview in list" toggle): MailJmap.getRows() only puts
 		// "preview" in the requested properties when that toggle is on
-		$withPreview = \mail_jmap_dispatch([
+		$withPreview = JmapShim::dispatch([
 			['Email/get', ['accountId' => '0', 'ids' => ['1'], 'properties' => ['id', 'preview']], 'g0'],
 		])[0][1]['list'][0];
 		$this->assertNotSame('', $withPreview['preview']);
 
-		$withoutPreview = \mail_jmap_dispatch([
+		$withoutPreview = JmapShim::dispatch([
 			['Email/get', ['accountId' => '0', 'ids' => ['1'], 'properties' => ['id', 'subject']], 'g0'],
 		])[0][1]['list'][0];
 		$this->assertSame('', $withoutPreview['preview']);
@@ -114,7 +112,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	public function testEmailQueryPagination()
 	{
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Email/query', [
 				'accountId' => '0',
 				'filter' => ['inMailbox' => base64_encode('INBOX')],
@@ -130,7 +128,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	public function testEmailQueryScopedToFolder()
 	{
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Email/query', [
 				'accountId' => '0',
 				'filter' => ['inMailbox' => base64_encode('INBOX/Sent')],
@@ -142,7 +140,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	public function testUnsupportedMethodReturnsErrorResponse()
 	{
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Foo/bar', [], 'x0'],
 		]);
 
@@ -154,7 +152,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	{
 		// a real (non-demo) accountId with no matching Email/query earlier in the same
 		// request must fail fast, without ever trying to reach the database/IMAP server
-		$responses = \mail_jmap_dispatch([
+		$responses = JmapShim::dispatch([
 			['Email/get', ['accountId' => '999', 'ids' => ['1']], 'g0'],
 		]);
 
@@ -165,7 +163,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	{
 		$responses = [['Email/query', ['ids' => ['a', 'b']], 'q0']];
 
-		$args = \mail_jmap_resolve_refs([
+		$args = JmapShim::resolveRefs([
 			'#ids' => ['name' => 'Email/query', 'resultOf' => 'q0', 'path' => '/ids'],
 			'accountId' => '0',
 		], $responses);
@@ -176,28 +174,28 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	public function testResolveRefsThrowsWhenUnresolvable()
 	{
 		$this->expectException(\Exception::class);
-		\mail_jmap_resolve_refs([
+		JmapShim::resolveRefs([
 			'#ids' => ['name' => 'Email/query', 'resultOf' => 'missing', 'path' => '/ids'],
 		], []);
 	}
 
 	public function testJsonPath()
 	{
-		$this->assertSame('c', \mail_jmap_json_path(['a' => ['b' => 'c']], '/a/b'));
-		$this->assertNull(\mail_jmap_json_path(['a' => []], '/a/b'));
+		$this->assertSame('c', JmapShim::jsonPath(['a' => ['b' => 'c']], '/a/b'));
+		$this->assertNull(JmapShim::jsonPath(['a' => []], '/a/b'));
 	}
 
 	public function testFolderPathBase64Roundtrip()
 	{
-		$this->assertSame('INBOX/Sub', \mail_jmap_folder_path(base64_encode('INBOX/Sub')));
-		$this->assertSame('', \mail_jmap_folder_path(''));
+		$this->assertSame('INBOX/Sub', JmapShim::folderPath(base64_encode('INBOX/Sub')));
+		$this->assertSame('', JmapShim::folderPath(''));
 	}
 
 	public function testFlagsToKeywords()
 	{
 		$this->assertSame(
 			['$seen' => true, '$answered' => true, '$forwarded' => true, '$label1' => true],
-			\mail_jmap_flags_to_keywords(['\\Seen', '\\Answered', '$Forwarded', '$label1']),
+			JmapShim::flagsToKeywords(['\\Seen', '\\Answered', '$Forwarded', '$label1']),
 		);
 	}
 
@@ -205,15 +203,15 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	{
 		$this->assertSame(
 			[\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_DATE],
-			\mail_jmap_build_sort([]),
+			JmapShim::buildSort([]),
 		);
 		$this->assertSame(
 			[\Horde_Imap_Client::SORT_SUBJECT],
-			\mail_jmap_build_sort([['property' => 'subject', 'isAscending' => true]]),
+			JmapShim::buildSort([['property' => 'subject', 'isAscending' => true]]),
 		);
 		$this->assertSame(
 			[\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_ARRIVAL],
-			\mail_jmap_build_sort([['property' => 'receivedAt', 'isAscending' => false]]),
+			JmapShim::buildSort([['property' => 'receivedAt', 'isAscending' => false]]),
 		);
 	}
 
@@ -221,7 +219,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	{
 		// {operator: 'AND', conditions: [{subject: 'foo'}, {minSize: 1000}]}, same shape
 		// MailJmap.buildFilter() produces once more than one condition applies
-		$query = \mail_jmap_filter_to_query([
+		$query = JmapShim::filterToQuery([
 			'operator' => 'AND',
 			'conditions' => [['subject' => 'foo'], ['minSize' => 1000]],
 		]);
@@ -238,7 +236,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	public function testFilterToQueryOr()
 	{
 		// same shape buildTokenizedFilter() sends for a single term across several fields
-		$query = \mail_jmap_filter_to_query([
+		$query = JmapShim::filterToQuery([
 			'operator' => 'OR',
 			'conditions' => [['subject' => 'x'], ['from' => 'x'], ['to' => 'x']],
 		]);
@@ -249,7 +247,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	public function testFilterToQueryNotOfLeaf()
 	{
-		$query = \mail_jmap_filter_to_query([
+		$query = JmapShim::filterToQuery([
 			'operator' => 'NOT',
 			'conditions' => [['subject' => 'spam']],
 		]);
@@ -262,7 +260,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	{
 		// NOT(subject:x OR from:x) must become AND(NOT subject:x, NOT from:x), since Horde
 		// only supports per-leaf negation, not a query-level NOT combinator
-		$query = \mail_jmap_filter_to_query([
+		$query = JmapShim::filterToQuery([
 			'operator' => 'NOT',
 			'conditions' => [[
 				'operator' => 'OR',
@@ -282,11 +280,11 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	public function testFilterToQueryHasAndNotKeyword()
 	{
-		$query = \mail_jmap_filter_to_query(['hasKeyword' => '$flagged']);
+		$query = JmapShim::filterToQuery(['hasKeyword' => '$flagged']);
 		$state = self::searchState($query);
 		$this->assertSame('flag', $state['flag']['FLAGGED']['type']);
 
-		$query = \mail_jmap_filter_to_query(['notKeyword' => '$seen']);
+		$query = JmapShim::filterToQuery(['notKeyword' => '$seen']);
 		$state = self::searchState($query);
 		$this->assertArrayHasKey('SEEN', $state['flag']);
 	}
@@ -295,7 +293,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	{
 		// eTemplate/get_rows convention: dates are shown in the *user's* configured timezone,
 		// formatted with a literal "Z" suffix so the browser displays those wall-clock digits
-		// as-is (see mail_jmap_imap_date()'s docblock) - NOT real UTC despite the "Z". Horde's
+		// as-is (see JmapShim::imapDate()'s docblock) - NOT real UTC despite the "Z". Horde's
 		// DateTime objects carry the server's timezone, so a straight UTC conversion is wrong.
 		$previous = \EGroupware\Api\DateTime::$user_timezone;
 		\EGroupware\Api\DateTime::$user_timezone = new \DateTimeZone('Europe/Berlin');
@@ -303,7 +301,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		{
 			// 21:01 UTC == 23:01 in Berlin (CEST, UTC+2) in August
 			$date = new \DateTime('2026-08-05 21:01:00', new \DateTimeZone('UTC'));
-			$this->assertSame('2026-08-05T23:01:00Z', \mail_jmap_imap_date($date));
+			$this->assertSame('2026-08-05T23:01:00Z', JmapShim::imapDate($date));
 		}
 		finally
 		{
@@ -317,12 +315,12 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		// whatever order the fixture (or, for a real account, the IMAP FETCH response) happens
 		// to iterate in - otherwise a correctly-sorted Email/query gets silently undone
 		$reversedIds = array_reverse(array_keys(array_filter(
-			mail_jmap_demo_fixture()['emails'],
+			JmapShim::demoFixture()['emails'],
 			static fn($email) => $email['mailbox'] === 'INBOX',
 		)));
 		$reversedIds = array_map('strval', $reversedIds);
 
-		$result = \mail_jmap_dispatch([
+		$result = JmapShim::dispatch([
 			['Email/get', ['accountId' => '0', 'ids' => $reversedIds], 'g0'],
 		]);
 
@@ -331,8 +329,8 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	public function testFilterToQueryIgnoresInMailbox()
 	{
-		// inMailbox is consumed separately by mail_jmap_find_in_mailbox(), not a search criterion
-		$query = \mail_jmap_filter_to_query(['inMailbox' => 'aW5ib3g=']);
+		// inMailbox is consumed separately by JmapShim::findInMailbox(), not a search criterion
+		$query = JmapShim::filterToQuery(['inMailbox' => 'aW5ib3g=']);
 		$this->assertSame([], self::searchState($query));
 	}
 }
