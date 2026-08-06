@@ -11,6 +11,77 @@ export default css`
 		height: auto;
 	}
 
+	:host(.print),
+	:host(.print) .dg-root,
+	:host(.print) .dg-body {
+		height: auto;
+		overflow: visible;
+	}
+
+	:host(.print) .dg-colselection,
+	:host(.print) .dg-resize-helper {
+		display: none;
+	}
+
+	/* Same-tbody print mode: #rows is the one element that holds both the
+	 * normal virtualized rows and the static print rows, so retain table
+	 * fragmentation on it instead of treating it as one CSS grid fragment. */
+	:host(.print) .dg-body #rows {
+		display: table-row-group;
+		height: auto !important;
+		min-height: 0 !important;
+		contain: none !important;
+		/* This hacky hack prevents the last rows from being cut off.
+		 * They're there in the DOM and visible in print emulation, but the
+		 * print layout across pages cuts them off.
+		 */
+		padding-bottom: 20em;
+	}
+
+	:host(.print) .dg-body tbody {
+		display: grid;
+		grid-auto-rows: max-content;
+		height: auto;
+		min-height: 0 !important;
+		contain: none !important;
+	}
+
+	:host(.print) .dg-body table {
+		display: table;
+		height: auto;
+		overflow: visible;
+	}
+
+	:host(.print) .dg-body thead {
+		display: table-header-group;
+	}
+
+	:host(.print) .dg-body tbody > tr {
+		display: grid;
+		grid-template-columns: var(--meta-column-width, 0px) var(--column-sizes, repeat(var(--column-count), 1fr));
+		width: 100%;
+		position: relative !important;
+		transform: none !important;
+		break-inside: avoid;
+		page-break-inside: avoid;
+		page-break-after: auto;
+	}
+
+	:host(.print) .dg-body tbody > tr > td,
+	:host(.print) .dg-body tbody > tr > th {
+		max-height: none;
+		overflow: visible;
+	}
+
+	:host(.print) .dg-body tbody > tr > td et2-vbox {
+		height: auto;
+		min-height: max-content;
+	}
+
+	:host(.print) .dg-body tbody > tr > td et2-vbox > * {
+		flex: 0 0 auto !important;
+	}
+
 	:host([embedded-virtualized]) {
 		height: var(--embedded-virtualized-height, auto);
 		overflow: visible;

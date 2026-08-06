@@ -592,6 +592,186 @@ describe("Et2Datagrid row rendering", () =>
 		]);
 	});
 
+	/**
+	 * Contract under test:
+	 * - Print rendering uses a separate full-row source and does not change the
+	 *   normal virtualized rows.
+	 *
+	 * Setup strategy:
+	 * - Seed two ordinary rows, then provide one print-only row id.
+	 *
+	 * Pass criteria:
+	 * - Normal rows remain intact while print mode is active, and clearing print
+	 *   mode restores virtualized rendering without a data reload.
+	 */
+	it("keeps print rows separate from normal virtualized rows", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "400px";
+		document.body.append(host);
+		const el = createDatagrid();
+		el.setInitialRows([
+			{id: "row-0", label: "Row 0"},
+			{id: "row-1", label: "Row 1"}
+		]);
+
+		host.append(el);
+		try
+		{
+			await el.updateComplete;
+			await el.setPrintRows(["print-0"]);
+			assert.deepEqual(el.rows.map((row) => row.id), ["row-0", "row-1"], "print preparation must not replace normal rows");
+			assert.deepEqual((el as any)._printRows.map((row) => row.id), ["addressbook::print-0"], "print mode should normalize requested row ids for the shared data cache");
+			assert.isTrue(el.classList.contains("print"), "print mode should be styled explicitly");
+
+			el.clearPrintRows();
+			await el.updateComplete;
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			await el.updateComplete;
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+			assert.isNull((el as any)._printRows, "clearing print mode should restore normal virtualized rendering");
+			assert.isFalse(el.classList.contains("print"), "print styling should be removed after cleanup");
+			assert.isAtLeast(el.shadowRoot!.querySelectorAll("tbody tr[data-row-id]").length, 1, "clearing print mode should restart normal virtualized row rendering");
+		}
+		finally
+		{
+			host.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Print preparation must render every selected row at its content height,
+	 *   so a multi-line Address Book cell cannot occupy the next row's space.
+	 *
+	 * Setup strategy:
+	 * - Prepare two real datagrid rows from a row template containing a 90px
+	 *   content block, then enter print mode from normal fixed-height mode.
+	 *
+	 * Pass criteria:
+	 * - Both requested print rows are rendered; each row grows to contain the
+	 *   block; and the second row begins at or after the first row's bottom edge.
+	 *
+	 * Environment constraints:
+	 * - This is print-preparation DOM geometry, not Chromium's native preview.
+	 *   It exercises the same rendered row bounds that the preview captures.
+	 */
+	it("keeps tall print-row content out of following rows", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.cssText = "width:400px";
+		document.body.append(host);
+		const el = createDatagrid();
+		el.fixedRowHeight = true;
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const provider = new Et2RowProvider(el as any);
+		const rowTemplate = document.createElement("tr");
+		rowTemplate.innerHTML = `<td><div class="print-tall-content" style="height:90px">$label</div></td>`;
+		const prepared = await (provider as any)._prepareRowTemplate(rowTemplate, el.columns as any);
+		el.templateData = {
+			columns: el.columns,
+			rowTemplate: prepared?.template ?? null,
+			rowTemplateXml: prepared?.xml ?? null,
+			rowTemplateAttrMap: prepared?.attrMap ?? {}
+		} as any;
+		el.setInitialRows([{id: "print-0", label: "First"}, {id: "print-1", label: "Second"}]);
+		host.append(el);
+
+		try
+		{
+			await el.setPrintRows(["print-0", "print-1"]);
+			assert.isFalse(el.fixedRowHeight, "print rows must not retain fixed-height clipping");
+			const first = await waitForDatagridRow(el, "addressbook::print-0");
+			const second = await waitForDatagridRow(el, "addressbook::print-1");
+			assert.isNotNull(first, "first requested row should remain in the print DOM");
+			assert.isNotNull(second, "second requested row should remain in the print DOM");
+
+			const firstBounds = first!.getBoundingClientRect();
+			const secondBounds = second!.getBoundingClientRect();
+			assert.isAtLeast(firstBounds.height, 90, "first print row should grow to contain tall content");
+			assert.isAtLeast(secondBounds.height, 90, "second print row should grow to contain tall content");
+			assert.isAtLeast(secondBounds.top, firstBounds.bottom, "print rows must not overlap");
+		}
+		finally
+		{
+			host.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - A virtualizer spacer from normal scrolling must not survive into print
+	 *   mode and reserve an otherwise blank page.
+	 *
+	 * Setup strategy:
+	 * - Render a datagrid, add a representative inline min-height, then enter
+	 *   print mode.
+	 *
+	 * Pass criteria:
+	 * - Print preparation clears both virtualizer-owned height properties.
+	 */
+	it("clears virtualizer spacer sizing for print rows", async() =>
+	{
+		const el = createDatagrid();
+		document.body.append(el);
+		try
+		{
+			await el.updateComplete;
+			const rows = el.shadowRoot!.querySelector("#rows") as HTMLElement;
+			rows.style.height = "25000px";
+			rows.style.minHeight = "25000px";
+
+			await el.setPrintRows(["print-0"]);
+
+			assert.notStrictEqual(rows.style.height, "25000px", "print rows should replace the virtualizer height spacer with their measured flow extent");
+			assert.strictEqual(rows.style.minHeight, "", "print rows should clear the virtualizer min-height spacer");
+		}
+		finally
+		{
+			el.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - Leaving print mode must remove the print spacer instead of retaining a
+	 *   full-result min-height in the normal grid.
+	 *
+	 * Setup strategy:
+	 * - Render a grid with a print-sized inline spacer, enter print mode, then
+	 *   simulate the browser's cancellation cleanup.
+	 *
+	 * Pass criteria:
+	 * - The rows container has no inline height reservation after cleanup.
+	 */
+	it("removes print spacer sizing when print is cancelled", async() =>
+	{
+		const el = createDatagrid();
+		const normalRows = Array.from({length: 200}, (_value, index) => ({id: `row-${index}`, label: `Row ${index}`}));
+		el.setInitialRows(normalRows);
+		el.total = normalRows.length;
+		document.body.append(el);
+		try
+		{
+			await el.updateComplete;
+			const rows = el.shadowRoot!.querySelector("#rows") as HTMLElement;
+			rows.style.minHeight = "25000px";
+
+			await el.setPrintRows(normalRows.map((row) => row.id));
+			el.clearPrintRows();
+			await el.updateComplete;
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+			assert.strictEqual(rows.style.height, "", "cancelling print must clear the print-only tbody height");
+			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body")!.style.height, "", "cancelling print must clear the print-only body height");
+			assert.strictEqual(el.shadowRoot!.querySelector<HTMLElement>(".dg-body table")!.style.height, "", "cancelling print must clear the print-only table height");
+		}
+		finally
+		{
+			el.remove();
+		}
+	});
+
 	it("retargets row upgrade observation when switching between row and tile view", async() =>
 	{
 		const host = document.createElement("div");

@@ -1,6 +1,7 @@
 import {assert} from "@open-wc/testing";
 import {render} from "lit";
 import {Et2Nextmatch} from "../Et2Nextmatch";
+import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
 import type {Et2Datagrid} from "../Et2Datagrid";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
 import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
@@ -1514,5 +1515,47 @@ describe("Et2Nextmatch expandable child grid wiring", () =>
 			config.isExpandable({id: "normalized-parent", data: {is_parent: true}}, 4),
 			"normalized true should remain a fallback when no hierarchy field is configured"
 		);
+	});
+
+
+	/**
+	 * Contract under test:
+	 * - Cancelling the Nextmatch print dialog rejects with the legacy
+	 *   no-value signal that aborts the framework print sequence.
+	 *
+	 * Setup strategy:
+	 * - Stub the XET dialog completion as Cancel on a rendered Nextmatch.
+	 *
+	 * Pass criteria:
+	 * - beforePrint rejects with `undefined`, rather than an error object the
+	 *   framework treats as handled before continuing to browser print.
+	 */
+	it("aborts the framework print sequence when the print dialog is cancelled", async() =>
+	{
+		const transform = sinon.stub(Et2Dialog.prototype, "transformAttributes");
+		const complete = sinon.stub(Et2Dialog.prototype, "getComplete").resolves([Et2Dialog.CANCEL_BUTTON, {}]);
+		const el = new Et2Nextmatch();
+		el.setColumns([{key: "name", title: "Name"}]);
+		document.body.append(el);
+		try
+		{
+			let rejection : unknown = Symbol("not rejected");
+			try
+			{
+				await el.beforePrint();
+			}
+			catch(error)
+			{
+				rejection = error;
+			}
+			assert.isUndefined(rejection, "cancel should use the framework's undefined rejection signal");
+		}
+		finally
+		{
+			complete.restore();
+			transform.restore();
+			document.querySelectorAll("et2-dialog").forEach((dialog) => dialog.remove());
+			el.remove();
+		}
 	});
 });
