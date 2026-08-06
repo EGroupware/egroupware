@@ -42,6 +42,28 @@
 	}
   }
 
+	#topmenu_info_update {
+		color: var(--sl-color-yellow-500);
+
+		&::part(base) {
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			justify-content: center;
+		}
+		&:not(.security-update){
+			width: fit-content;
+			height: fit-content;
+		}
+		&.security-update {
+			color: var(--sl-color-neutral-900);
+
+			&::part(base) {
+				animation: security-update-pulse 3s infinite ease-in-out;
+			}
+		}
+	}
+
   & > * {
 	border: none;
 	background-color: transparent;
@@ -187,6 +209,14 @@
   }
 }
 
+@keyframes security-update-pulse {
+	0%, 100% {
+		background-color: var(--sl-color-danger-600);
+	}
+	50% {
+		background-color: var(--sl-color-neutral-100);
+	}
+}
 #topmenu_info_print_title {
   background-image: url(../../../api/templates/default/images/print.svg);
 
