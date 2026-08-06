@@ -3310,7 +3310,8 @@ export class MailApp extends EgwApp
 	mail_restoreRows(_snapshots, _failedEmailIds? : string[])
 	{
 		const knownClasses = [...this.mail_getLabelIds(),
-			'customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+			'customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5',
+			'flagged', 'unflagged'];
 		for (const uid of Object.keys(_snapshots || {}))
 		{
 			if (_failedEmailIds?.length)
@@ -3492,7 +3493,6 @@ export class MailApp extends EgwApp
 				let classes: string[];
 			for (let i = 0; i < data.msg.length; i++)
 			{
-				const currentIndex = i;
 				dataElem = egw.dataGetUIDdata(data.msg[i]);
 				if(typeof dataElem.data.flags == 'undefined')
 				{
@@ -3515,7 +3515,12 @@ export class MailApp extends EgwApp
 					if (flags[_action.id])
 					{
 						msg_unset['msg'].push(data.msg[i]);
-						if (!customFlags.includes(_action.id) && !this.mail_isLabel(_action.id))
+						if (customFlags.includes(_action.id))
+						{
+							delete flags['flagged'];
+							classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
+						}
+						else if (!this.mail_isLabel(_action.id))
 						{
 							classes.push('un'+rowClass);
 						}
@@ -3533,42 +3538,53 @@ export class MailApp extends EgwApp
 								classes = classes.filter((className) => className != customFlags[j] && className != 'un' + customFlags[j]);
 							}
 						}
+						flags['flagged'] = 'flagged';
+						classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
+						classes.push('flagged');
 					}
 					msg_set['msg'].push(data.msg[i]);
 					flags[_action.id] = _action.id;
 					classes.push(rowClass);
 				}
 
-				// Update cache & call callbacks - updates list
-				//do not update flags that are already correctly set
+				// Update cache and the existing row without rebuilding it
+				// Do not update flags that are already correctly set
 				dataElem.data['class']  = classes.join(' ');
 				const nmRow = data.popup ?
 					(opener?.app?.mail?.nm?.controller?.getObjectManager()?.children?.find(
 							(item: EgwActionObject) =>
 							{
-								if (item.id === data.msg[0]) return item;
+								if (item.id === data.msg[i]) return item;
 							}
 						)
 					)
 					:
-					((_elems[currentIndex]) ||
-						(this?.nm?.controller?.getObjectManager()?.selectedChildren?.find((item: EgwActionObject) =>
+					(this?.nm?.controller?.getObjectManager()?.children?.find((item: EgwActionObject) =>
 					{
-						if (item.id === this.mail_currentlyFocussed) return item
-					})));
-				const nmNode : HTMLElement = nmRow?.iface.getDOMNode();
+						if (item.id === data.msg[i]) return item
+					}));
+				const nmNode : HTMLElement = nmRow?.iface?.getDOMNode();
+				const updateExistingRow = !!nmNode?.isConnected;
 
-				//only the class attribute in data has changed, so
-				//we do not need to trigger the nm callbacks we can just
-				//update local Storage and set the classes on the nm row
-				egw.dataStoreUID(data.msg[i], dataElem.data);
+				// Only the flags and class attribute changed.  Keep the existing row and update
+				// it directly, as a NextMatch callback clears the row before rebuilding it.
+				const changedClasses = [rowClass, 'un' + rowClass];
+				if (customFlags.includes(_action.id))
+				{
+					changedClasses.push('flagged', 'unflagged', ...customFlags,
+						...customFlags.map(customFlag => 'un' + customFlag));
+				}
+				changedClasses.forEach(className => nmNode?.classList.remove(className));
+				classes.filter(className => changedClasses.includes(className))
+					.forEach(className => nmNode?.classList.add(className));
+				egw.dataStoreUID(data.msg[i], dataElem.data, updateExistingRow);
 
-				//set or remove the flag in the DOM since it can no longer come from the server because we do not trigger a full reload
-				//this needs to happen after egw.dataStoreUID since that triggers a redrawing of the row
+				// Set or remove the flag in the DOM since it can no longer come from the server
+				// when the existing row is updated without a callback.
 				if (classes.includes("unseen"))
 				{
 					//image src usually comes from the server but can't anymore in this case so we set it directly
-					const img: Et2Image = nmNode.querySelector(".status_img");
+					const img: Et2Image = nmNode?.querySelector(".status_img");
 					if (img) img.src = egw.image("mail_unseen")
 				}
 				if (flags['flagged'] == 'flagged' ||

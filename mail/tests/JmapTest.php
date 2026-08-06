@@ -150,8 +150,9 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * Email/set accepts independent label changes and the mutually-exclusive custom-flag
-	 * patches produced by MailJmap.  The demo account avoids a live IMAP dependency; pass
-	 * criteria are a JMAP-shaped updated map and no per-id failures.
+	 * patches produced by MailJmap, including the accompanying standard flagged keyword.
+	 * The demo account avoids a live IMAP dependency; pass criteria are a JMAP-shaped
+	 * updated map and no per-id failures.
 	 */
 	public function testEmailSetAcceptsWritableKeywordPatches()
 	{
@@ -164,6 +165,7 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 							'keywords/$label1' => true,
 							'keywords/$customflag1' => null,
 							'keywords/$customflag2' => true,
+							'keywords/$flagged' => true,
 					],
 				],
 			], 's0'],
@@ -172,6 +174,19 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('Email/set', $responses[0][0]);
 		$this->assertArrayHasKey('1', (array)$responses[0][1]['updated']);
 		$this->assertSame([], (array)$responses[0][1]['notUpdated']);
+	}
+
+	/**
+	 * JMAP's $flagged system keyword must be written as IMAP's \Flagged system flag,
+	 * while custom flags remain ordinary IMAP keywords.  Pass criteria are the exact
+	 * values consumed by Horde's store operation.
+	 */
+	public function testWritableKeywordMappingTranslatesFlaggedSystemKeyword()
+	{
+		$keywords = JmapShim::writableKeywords();
+
+		$this->assertSame('\\Flagged', $keywords['$flagged']);
+		$this->assertSame('$customflag2', $keywords['$customflag2']);
 	}
 
 	/**

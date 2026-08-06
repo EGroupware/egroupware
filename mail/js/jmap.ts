@@ -1066,11 +1066,12 @@ export class MailJmap
 				group.map(reference => reference.emailId), patch)));
 	}
 
-	/** Toggle a mutually-exclusive custom flag for explicitly partitioned message ids. */
+	/** Toggle a mutually-exclusive custom flag together with the standard flagged keyword. */
 	async setCustomFlag(references : JmapMessageReference[], flagId : string, set : boolean) : Promise<void>
 	{
 		const keyword = this.customFlagKeyword(flagId);
 		const patch = this.keywordPatch(keyword, set);
+		Object.assign(patch, this.keywordPatch('$flagged', set));
 		if (set)
 		{
 			MailJmap.CUSTOM_FLAGS.forEach(other =>
@@ -1151,6 +1152,7 @@ export class MailJmap
 		const setPatch = this.keywordPatch(keyword, true);
 		if (customFlag)
 		{
+			Object.assign(setPatch, this.keywordPatch('$flagged', true));
 			MailJmap.CUSTOM_FLAGS.forEach(other =>
 			{
 				const otherKeyword = this.customFlagKeyword(other);
@@ -1160,8 +1162,13 @@ export class MailJmap
 				}
 			});
 		}
+		const removePatch = this.keywordPatch(keyword, false);
+		if (customFlag)
+		{
+			Object.assign(removePatch, this.keywordPatch('$flagged', false));
+		}
 		await this.updateIds(profileID, mailboxId, setIds, setPatch);
-		await this.updateIds(profileID, mailboxId, removeIds, this.keywordPatch(keyword, false));
+		await this.updateIds(profileID, mailboxId, removeIds, removePatch);
 	}
 
 	/** Clear all labels from every message matching the current NextMatch filters. */
@@ -1246,11 +1253,9 @@ export class MailJmap
 			}
 		});
 
-		let status_icon : string;
+		let status_icon = '';
 		if (keywords['$forwarded']) status_icon = 'mail_forward';
 		else if (keywords['$answered']) status_icon = 'mail_reply';
-		else if (keywords['$flagged'] && !keywords['$seen']) status_icon = 'mail_flagged_unseen';
-		else if (keywords['$flagged']) status_icon = 'mail_flagged_seen';
 		else if (!keywords['$seen']) status_icon = 'mail_unseen';
 
 		// mail_ui::header2gridelements()'s convention (relied on by app.ts's mail_preview(), which

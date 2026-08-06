@@ -38,9 +38,6 @@ tr.mail.label4 {
 tr.mail.label5 {
   --mail-left-border-color: #8000ff;
 }
-tr.mail.flagged {
-  --mail-left-border-color: #ff0000;
-}
 tr.mail.customFlag1 {
   --flag-color: #ff0000;
 }

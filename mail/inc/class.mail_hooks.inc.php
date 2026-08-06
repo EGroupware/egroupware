@@ -565,7 +565,12 @@ class mail_hooks
 
 		$file = Array(
 			'Site Configuration' => Egw::link('/index.php',array('menuaction'=>'admin.uiconfig.index','appname'=>'mail','ajax'=>'true')),
-		);
+			'Global Categories' => Egw::link('/index.php', array(
+					'menuaction' => 'admin.admin_categories.index',
+					'appname' => $appname,
+					'global_cats' => True,
+					'ajax' => 'true',)
+			));
 		display_section($appname,$title,$file);
 	}
 
