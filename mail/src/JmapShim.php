@@ -6,18 +6,18 @@
  * accounts, talking directly to Stalwart's real JMAP server. Plain IMAP accounts
  * (Dovecot, Cyrus, ...) have no JMAP server at all, so this class acts as one -
  * but only implements the handful of methods MailJmap actually sends
- * (Mailbox/query, Email/query, Email/get, plus RFC 8620 §3.7 result-reference
+ * (Mailbox/query, Email/query, Email/get, Email/set, plus RFC 8620 §3.7 result-reference
  * resolution for its batched request), backed directly by
  * Api\Mail\Account::read()->imapServer() (a Horde_Imap_Client_Socket) via plain
- * IMAP search()/fetch() calls. It deliberately does NOT go through mail_ui or
- * Api\Mail (mail_bo) - those stay the legacy/actions layer for now.
+ * IMAP search()/fetch()/store() calls. It deliberately does NOT go through
+ * mail_ui or Api\Mail (mail_bo).
  *
  * Row-id compatibility: emailID here is a plain IMAP UID and folderID is
  * base64(folder path), same as mail_ui::generateRowID()'s classic scheme - so
  * rows fetched via this class are indistinguishable from mail_ui::get_rows()'s
- * own output to every existing action handler. This is unlike Stalwart-sourced
- * rows, which use opaque JMAP ids and still need the (unfinished) emailId2uid()
- * translation before actions can understand them.
+ * own output to legacy action handlers. Stalwart-sourced rows use opaque JMAP
+ * ids, resolved by the Imap\Jmap row-id implementation when a legacy handler
+ * still needs an IMAP UID.
  *
  * accountId "0" is never a real account - it's served from an in-class fixture,
  * to give the client-side code a stable target for testing without a real
@@ -102,6 +102,9 @@ class JmapShim
 						break;
 					case 'Email/get':
 						$result = self::emailGet($accountId, $args, $context);
+						break;
+					case 'Email/set':
+						$result = self::emailSet($accountId, $args);
 						break;
 					default:
 						throw new \Exception("Unsupported method '$method'");
@@ -401,7 +404,7 @@ class JmapShim
 			'$seen' => 'Seen',
 			'$answered' => 'Answered',
 			'$flagged' => 'Flagged',
-			default => ltrim($keyword, '$'),
+			default => $keyword,
 		};
 	}
 
@@ -499,6 +502,124 @@ class JmapShim
 			'list' => $list,
 			'notFound' => array_values(array_diff($ids, $found)),
 		];
+	}
+
+	/**
+	 * Email/set: apply the supported JMAP keyword patches directly through Horde IMAP.
+	 *
+	 * The local shim uses mailbox-local numeric IMAP UIDs as Email ids, therefore the
+	 * browser includes our local-only mailboxId extension.  Real JMAP servers never
+	 * receive that extension.
+	 *
+	 * @param string $accountId
+	 * @param array $args {mailboxId:string, update:array<string,array<string,bool|null>>}
+	 * @return array JMAP Email/set response
+	 */
+	public static function emailSet(string $accountId, array $args) : array
+	{
+		$updated = [];
+		$notUpdated = [];
+		$add = [];
+		$remove = [];
+		$allowed = self::writableKeywords();
+
+		foreach ((array)($args['update'] ?? []) as $id => $patch)
+		{
+			$id = (string)$id;
+			if (!ctype_digit($id) || !is_array($patch))
+			{
+				$notUpdated[$id] = ['type' => 'invalidArguments'];
+				continue;
+			}
+			$operations = [];
+			foreach ($patch as $path => $value)
+			{
+				if (!str_starts_with((string)$path, 'keywords/'))
+				{
+					$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => [(string)$path]];
+					continue 2;
+				}
+				$keyword = strtolower(substr((string)$path, strlen('keywords/')));
+				if (!isset($allowed[$keyword]) || ($value !== true && $value !== null))
+				{
+					$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => [(string)$path]];
+					continue 2;
+				}
+				$operations[] = [$keyword, $value === true];
+			}
+			foreach ($operations as [$keyword, $set])
+			{
+				if ($set)
+				{
+					$add[$keyword][] = $id;
+				}
+				else
+				{
+					$remove[$keyword][] = $id;
+				}
+			}
+			$updated[$id] = null;
+		}
+
+		if ($accountId === '0')
+		{
+			return [
+				'accountId' => $accountId,
+				'oldState' => '0',
+				'newState' => '0',
+				'updated' => (object)$updated,
+				'notUpdated' => (object)$notUpdated,
+			];
+		}
+
+		$mailboxId = (string)($args['mailboxId'] ?? '');
+		$folder = self::folderPath($mailboxId);
+		if ($folder === '')
+		{
+			throw new \InvalidArgumentException('Email/set requires mailboxId for the local IMAP shim');
+		}
+		$imap = self::imapServer($accountId);
+		$mailbox = self::hordeMailbox($imap, $folder);
+		// Remove first so replacing a custom flag never leaves two selected if the
+		// following add fails.
+		foreach ([['remove', $remove], ['add', $add]] as [$operation, $operations])
+		{
+			foreach ($operations as $keyword => $ids)
+			{
+				$imap->store($mailbox, [
+					$operation => [$keyword],
+					'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+				]);
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'updated' => (object)$updated,
+			'notUpdated' => (object)$notUpdated,
+		];
+	}
+
+	/**
+	 * Keywords the Mail UI is allowed to mutate through the local shim.
+	 *
+	 * @return array<string,true>
+	 */
+	public static function writableKeywords() : array
+	{
+		$keywords = [];
+		foreach (['label1', 'label2', 'label3', 'label4', 'label5',
+			'customflag1', 'customflag2', 'customflag3', 'customflag4', 'customflag5'] as $keyword)
+		{
+			$keywords['$'.$keyword] = true;
+		}
+		foreach (array_keys(Api\Mail::getCustomLabels()) as $keyword)
+		{
+			$keywords['$'.strtolower($keyword)] = true;
+		}
+		return $keywords;
 	}
 
 	/**

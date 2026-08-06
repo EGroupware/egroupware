@@ -1,7 +1,7 @@
 <?php
 /**
  * Test EGroupware\Mail\JmapShim's supported JMAP method-calls (Mailbox/query, Email/query,
- * Email/get) and the request-level plumbing around them (result-reference resolution, error
+ * Email/get, Email/set) and the request-level plumbing around them (result-reference resolution, error
  * handling).
  *
  * Runs entirely against the built-in accountId "0" demo fixture plus pure helper methods -
@@ -148,6 +148,64 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('x0', $responses[0][2]);
 	}
 
+	/**
+	 * Email/set accepts independent label changes and the mutually-exclusive custom-flag
+	 * patches produced by MailJmap.  The demo account avoids a live IMAP dependency; pass
+	 * criteria are a JMAP-shaped updated map and no per-id failures.
+	 */
+	public function testEmailSetAcceptsWritableKeywordPatches()
+	{
+		$responses = JmapShim::dispatch([
+			['Email/set', [
+				'accountId' => '0',
+				'mailboxId' => base64_encode('INBOX'),
+					'update' => [
+						'1' => [
+							'keywords/$label1' => true,
+							'keywords/$customflag1' => null,
+							'keywords/$customflag2' => true,
+					],
+				],
+			], 's0'],
+		]);
+
+		$this->assertSame('Email/set', $responses[0][0]);
+		$this->assertArrayHasKey('1', (array)$responses[0][1]['updated']);
+		$this->assertSame([], (array)$responses[0][1]['notUpdated']);
+	}
+
+	/**
+	 * The local shim must not be an arbitrary IMAP-keyword write endpoint.  An unknown
+	 * keyword is rejected per id and no update is reported.
+	 */
+	public function testEmailSetRejectsUnknownKeyword()
+	{
+		$result = JmapShim::dispatch([
+			['Email/set', [
+				'accountId' => '0',
+				'update' => ['1' => ['keywords/$not-configured' => true]],
+			], 's0'],
+		])[0][1];
+
+		$this->assertSame([], (array)$result['updated']);
+		$this->assertSame('invalidProperties', ((array)$result['notUpdated'])['1']['type']);
+	}
+
+	/**
+	 * Only numeric mailbox-local UIDs are valid Email ids in the local shim.
+	 */
+	public function testEmailSetRejectsOpaqueIdForLocalShim()
+	{
+		$result = JmapShim::dispatch([
+			['Email/set', [
+				'accountId' => '0',
+				'update' => ['opaque' => ['keywords/$label1' => true]],
+			], 's0'],
+		])[0][1];
+
+		$this->assertSame('invalidArguments', ((array)$result['notUpdated'])['opaque']['type']);
+	}
+
 	public function testEmailGetWithoutPrecedingQueryErrors()
 	{
 		// a real (non-demo) accountId with no matching Email/query earlier in the same
@@ -194,8 +252,9 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 	public function testFlagsToKeywords()
 	{
 		$this->assertSame(
-			['$seen' => true, '$answered' => true, '$forwarded' => true, '$label1' => true],
-			JmapShim::flagsToKeywords(['\\Seen', '\\Answered', '$Forwarded', '$label1']),
+			['$seen' => true, '$answered' => true, '$forwarded' => true, '$label1' => true,
+				'$project' => true, '$customflag2' => true],
+			JmapShim::flagsToKeywords(['\\Seen', '\\Answered', '$Forwarded', '$label1', '$Project', '$customFlag2']),
 		);
 	}
 
@@ -287,6 +346,14 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		$query = JmapShim::filterToQuery(['notKeyword' => '$seen']);
 		$state = self::searchState($query);
 		$this->assertArrayHasKey('SEEN', $state['flag']);
+
+		$query = JmapShim::filterToQuery(['hasKeyword' => '$project']);
+		$state = self::searchState($query);
+		$this->assertArrayHasKey('$PROJECT', $state['flag']);
+
+		$query = JmapShim::filterToQuery(['notKeyword' => '$project']);
+		$state = self::searchState($query);
+		$this->assertFalse($state['flag']['$PROJECT']['set'] ?? false);
 	}
 
 	public function testImapDateConvertsToUserTimezoneNotRealUtc()

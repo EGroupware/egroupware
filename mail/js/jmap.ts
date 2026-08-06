@@ -7,9 +7,9 @@
  * server directly for Stalwart-backed accounts instead of round-tripping
  * through ajax_get_rows - transparently falling back to it otherwise.
  *
- * No server-side action (reply/delete/move/flag/...) understands the
- * row-ids produced here yet. See mail_ui::splitRowID()/generateJmapRowID()
- * for the server-side counterpart of the row-id scheme used below.
+ * Label and custom-flag actions are handled directly with JMAP Email/set.
+ * Other actions use Api\Mail::splitRowID() when they still need the legacy
+ * PHP/IMAP path.
  *
  * @link: https://www.egroupware.org
  * @author EGroupware GmbH [info@egroupware.org]
@@ -28,6 +28,15 @@ interface JmapToken
 	accountId : string;
 	access_token : string;
 	expires_at : number;	// ms epoch, with our own safety-margin already subtracted
+	isLocal : boolean;
+	customLabels : Record<string, {name : string, color : string, icon? : string}>;
+}
+
+export interface JmapMessageReference
+{
+	profileID : string;
+	mailboxId : string;
+	emailId : string;
 }
 
 export interface JmapGetRowsQuery
@@ -49,7 +58,7 @@ type EmailFilterCondition = Record<string, any>;
 type EmailFilter = EmailFilterCondition | {operator : 'AND' | 'OR' | 'NOT', conditions : EmailFilter[]};
 
 /**
- * Direct JMAP access, used only for accounts backed by Imap\Stalwart (see mail_ui::ajax_jmapBootstrap)
+ * Direct JMAP access, using Stalwart or the local plain-IMAP JMAP shim selected by the bootstrap.
  */
 export class MailJmap
 {
@@ -66,6 +75,8 @@ export class MailJmap
 	private ineligibleUntil : Record<string, number> = {};
 	// "profileID::folder/path" -> JMAP Mailbox id
 	private mailboxIds : Record<string, string> = {};
+	private static readonly CUSTOM_FLAGS = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+	private static readonly QUERY_PAGE_SIZE = 500;
 
 	get egw() : IegwAppLocal
 	{
@@ -278,7 +289,14 @@ export class MailJmap
 						accountId: data.accountId,
 						access_token: data.access_token,
 						expires_at: Date.now() + Math.max(0, data.expires_in - 60) * 1000,
+						isLocal: !!data.isLocal,
+						customLabels: data.customLabels || {},
 					};
+					if (Object.keys(token.customLabels).length)
+					{
+						this.app.customLabels = token.customLabels;
+						this.app.mail_updateCustomLabelStylesheet();
+					}
 					this.tokens[profileID] = token;
 					this.clients[profileID] = new JamClient({
 						sessionUrl: token.sessionUrl,
@@ -389,7 +407,8 @@ export class MailJmap
 			conditions.push({before: this.toUTCDate(query.enddate, 1)});
 		}
 
-		switch ((query.filter || '').toLowerCase())
+		const status = (query.filter || '').toLowerCase();
+		switch (status)
 		{
 			case 'flagged':
 				conditions.push({hasKeyword: '$flagged'});
@@ -403,10 +422,37 @@ export class MailJmap
 			case 'seen':
 				conditions.push({hasKeyword: '$seen'});
 				break;
+			case 'keyword1':
+			case 'label1':
+			case 'keyword2':
+			case 'label2':
+			case 'keyword3':
+			case 'label3':
+			case 'keyword4':
+			case 'label4':
+			case 'keyword5':
+			case 'label5':
+				conditions.push({hasKeyword: '$label' + status.slice(-1)});
+				break;
 			// 'deleted': no JMAP equivalent, see method docblock
+			default:
+			{
+				const customLabel = this.customLabelId(status);
+				if (customLabel)
+				{
+					conditions.push({hasKeyword: '$' + customLabel.toLowerCase()});
+				}
+			}
 		}
 
 		return conditions.length === 1 ? conditions[0] : {operator: 'AND', conditions};
+	}
+
+	/** Resolve a custom-label id case-insensitively. */
+	private customLabelId(id : string) : string | null
+	{
+		const labels = this.app.mail_getCustomLabels();
+		return Object.keys(labels).find(label => label.toLowerCase() === id.toLowerCase()) || null;
 	}
 
 	/**
@@ -557,11 +603,241 @@ export class MailJmap
 	}
 
 	/**
+	 * Parse either a NextMatch row id or an egw.data UID into the JMAP ids used by this client.
+	 */
+	messageReference(rowId : string) : JmapMessageReference
+	{
+		let parts = String(rowId || '').split('::');
+		if (parts[0] === 'mail')
+		{
+			parts = parts.slice(1);
+		}
+		if (parts.length !== 4 || !parts[1] || !parts[2] || !parts[3])
+		{
+			throw new Error(`Invalid Mail row id '${rowId}'`);
+		}
+		return {
+			profileID: parts[1],
+			mailboxId: parts[2],
+			emailId: parts[3],
+		};
+	}
+
+	/** Resolve an action id to its JMAP keyword. */
+	private labelKeyword(labelId : string) : string
+	{
+		const id = labelId.toLowerCase();
+		if (/^label[1-5]$/.test(id))
+		{
+			return '$' + id;
+		}
+		const customId = this.customLabelId(labelId);
+		if (!customId)
+		{
+			throw new Error(`Unknown Mail label '${labelId}'`);
+		}
+		return '$' + customId.toLowerCase();
+	}
+
+	private customFlagKeyword(flagId : string) : string
+	{
+		const index = MailJmap.CUSTOM_FLAGS.findIndex(flag => flag.toLowerCase() === flagId.toLowerCase());
+		if (index < 0)
+		{
+			throw new Error(`Unknown custom flag '${flagId}'`);
+		}
+		return '$customflag' + (index + 1);
+	}
+
+	private keywordPatch(keyword : string, set : boolean) : Record<string, boolean | null>
+	{
+		return {['keywords/' + keyword]: set ? true : null};
+	}
+
+	/** Submit a JMAP Email/set update, adding the local mailbox extension only for our shim. */
+	private async updateKeywords(profileID : string, mailboxId : string,
+		update : Record<string, Record<string, boolean | null>>) : Promise<any>
+	{
+		if (!Object.keys(update).length)
+		{
+			return {updated: {}};
+		}
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const args : any = {accountId: token.accountId, update};
+		if (token.isLocal)
+		{
+			args.mailboxId = mailboxId;
+		}
+		const [{result}] = await this.clients[profileID].requestMany((t) => ({
+			result: t.Email.set(args),
+		}));
+		if (result?.notUpdated && Object.keys(result.notUpdated).length)
+		{
+			const error : any = new Error(this.egw.lang('Failed to update one or more messages'));
+			error.notUpdated = result.notUpdated;
+			throw error;
+		}
+		return result;
+	}
+
+	private groupReferences(references : JmapMessageReference[]) : Record<string, JmapMessageReference[]>
+	{
+		return references.reduce((groups, reference) =>
+		{
+			const key = reference.profileID + '::' + reference.mailboxId;
+			(groups[key] ||= []).push(reference);
+			return groups;
+		}, {} as Record<string, JmapMessageReference[]>);
+	}
+
+	/** Add or remove one independently stackable label. */
+	async setLabel(references : JmapMessageReference[], labelId : string, set : boolean) : Promise<void>
+	{
+		const keyword = this.labelKeyword(labelId);
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.updateIds(group[0].profileID, group[0].mailboxId,
+				group.map(reference => reference.emailId), this.keywordPatch(keyword, set))));
+	}
+
+	/** Remove all known labels without touching custom flags or unrelated keywords. */
+	async clearLabels(references : JmapMessageReference[]) : Promise<void>
+	{
+		const keywords = ['$label1', '$label2', '$label3', '$label4', '$label5',
+			...Object.keys(this.app.mail_getCustomLabels()).map(id => '$' + id.toLowerCase())];
+		const patch : Record<string, boolean | null> = {};
+		keywords.forEach(keyword => Object.assign(patch, this.keywordPatch(keyword, false)));
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.updateIds(group[0].profileID, group[0].mailboxId,
+				group.map(reference => reference.emailId), patch)));
+	}
+
+	/** Toggle a mutually-exclusive custom flag for explicitly partitioned message ids. */
+	async setCustomFlag(references : JmapMessageReference[], flagId : string, set : boolean) : Promise<void>
+	{
+		const keyword = this.customFlagKeyword(flagId);
+		const patch = this.keywordPatch(keyword, set);
+		if (set)
+		{
+			MailJmap.CUSTOM_FLAGS.forEach(other =>
+			{
+				const otherKeyword = this.customFlagKeyword(other);
+				if (otherKeyword !== keyword)
+				{
+					Object.assign(patch, this.keywordPatch(otherKeyword, false));
+				}
+			});
+		}
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.updateIds(group[0].profileID, group[0].mailboxId,
+				group.map(reference => reference.emailId), patch)));
+	}
+
+	private withKeyword(filter : EmailFilter, keyword : string, set : boolean) : EmailFilter
+	{
+		return {operator: 'AND', conditions: [filter, set ? {hasKeyword: keyword} : {notKeyword: keyword}]};
+	}
+
+	private async queryAllIds(client : JamClient, accountId : string, filter : EmailFilter) : Promise<string[]>
+	{
+		const ids : string[] = [];
+		let total = 0;
+		do
+		{
+			const [{page}] = await client.requestMany((t) => ({
+				page: t.Email.query({
+					accountId,
+					filter,
+					position: ids.length,
+					limit: MailJmap.QUERY_PAGE_SIZE,
+					calculateTotal: true,
+				}),
+			}));
+			ids.push(...(page.ids || []));
+			total = page.total ?? ids.length;
+			if (!page.ids?.length)
+			{
+				break;
+			}
+		}
+		while (ids.length < total);
+		return ids;
+	}
+
+	private async updateIds(profileID : string, mailboxId : string, ids : string[],
+		patch : Record<string, boolean | null>) : Promise<void>
+	{
+		for (let start = 0; start < ids.length; start += MailJmap.QUERY_PAGE_SIZE)
+		{
+			const update : Record<string, Record<string, boolean | null>> = {};
+			ids.slice(start, start + MailJmap.QUERY_PAGE_SIZE).forEach(id => update[id] = {...patch});
+			await this.updateKeywords(profileID, mailboxId, update);
+		}
+	}
+
+	/** Toggle a label or custom flag for every message matching the current NextMatch filters. */
+	async toggleForAll(query : JmapGetRowsQuery, actionId : string) : Promise<void>
+	{
+		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const client = this.clients[profileID];
+		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const filter = this.buildFilter(query, mailboxId);
+		const customFlag = MailJmap.CUSTOM_FLAGS.includes(actionId);
+		const keyword = customFlag ? this.customFlagKeyword(actionId) : this.labelKeyword(actionId);
+		const [setIds, removeIds] = await Promise.all([
+			this.queryAllIds(client, token.accountId, this.withKeyword(filter, keyword, false)),
+			this.queryAllIds(client, token.accountId, this.withKeyword(filter, keyword, true)),
+		]);
+
+		const setPatch = this.keywordPatch(keyword, true);
+		if (customFlag)
+		{
+			MailJmap.CUSTOM_FLAGS.forEach(other =>
+			{
+				const otherKeyword = this.customFlagKeyword(other);
+				if (otherKeyword !== keyword)
+				{
+					Object.assign(setPatch, this.keywordPatch(otherKeyword, false));
+				}
+			});
+		}
+		await this.updateIds(profileID, mailboxId, setIds, setPatch);
+		await this.updateIds(profileID, mailboxId, removeIds, this.keywordPatch(keyword, false));
+	}
+
+	/** Clear all labels from every message matching the current NextMatch filters. */
+	async clearLabelsForAll(query : JmapGetRowsQuery) : Promise<void>
+	{
+		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const client = this.clients[profileID];
+		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
+		const patch : Record<string, boolean | null> = {};
+		['$label1', '$label2', '$label3', '$label4', '$label5',
+			...Object.keys(this.app.mail_getCustomLabels()).map(id => '$' + id.toLowerCase())]
+			.forEach(keyword => Object.assign(patch, this.keywordPatch(keyword, false)));
+		await this.updateIds(profileID, mailboxId, ids, patch);
+	}
+
+	/**
 	 * Map a JMAP Email object to a row shaped like mail_ui::header2gridelements()'s output
 	 *
 	 * Simplified for Phase 1: no smime-type detection, no attachment-list preview block,
-	 * no X-Priority header. row_id uses mail_ui::generateJmapRowID()'s scheme so server-side
-	 * splitRowID() can recognise and decode it once actions are migrated.
+	 * no X-Priority header. row_id uses mail_ui::generateJmapRowID()'s scheme so legacy
+	 * server-side actions can recognise and decode it when needed.
 	 */
 	private email2row(email : any, profileID : string, mailboxId : string) : any
 	{
@@ -602,6 +878,22 @@ export class MailJmap
 				css.push('label' + i);
 			}
 		}
+		Object.keys(this.app.mail_getCustomLabels()).forEach(labelId =>
+		{
+			if (keywords['$' + labelId.toLowerCase()])
+			{
+				flags[labelId] = labelId;
+				css.push(labelId);
+			}
+		});
+		MailJmap.CUSTOM_FLAGS.forEach((customFlag, index) =>
+		{
+			if (keywords['$customflag' + (index + 1)])
+			{
+				flags[customFlag] = customFlag;
+				css.push(customFlag);
+			}
+		});
 
 		let status_icon : string;
 		if (keywords['$forwarded']) status_icon = 'mail_forward';
@@ -619,6 +911,13 @@ export class MailJmap
 		const fromList = addressList(email.from);
 		const toList = addressList(email.to);
 
+		let attachments = email.hasAttachment ? "<et2-image src='attach'></et2-image>" : '&nbsp;';
+		if (keywords['$flagged'] || MailJmap.CUSTOM_FLAGS.some((flag, index) =>
+			keywords['$customflag' + (index + 1)]))
+		{
+			attachments += "<et2-image src='unread_flagged_small' id='flaggedImage'></et2-image>";
+		}
+
 		return {
 			row_id: this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id,
 			uid: email.id,
@@ -634,7 +933,7 @@ export class MailJmap
 			modified: email.receivedAt,
 			size: email.size,
 			bodypreview: email.preview || '',
-			attachments: email.hasAttachment ? "<et2-image src='attach'></et2-image>" : '&nbsp;',
+			attachments,
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
 			// mail_preview() unconditionally reads data.attachmentsBlock[0], so this must at
 			// least exist as an array or clicking a row throws and the preview never loads
