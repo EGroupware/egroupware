@@ -5908,13 +5908,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.classList.add("print");
 		this.requestUpdate();
 		await this.updateComplete;
-		// Static print rows now own #rows. Stop any layout work queued by the
-		// disconnected virtualizer before measuring the print surface.
-		if(this._virtualizerLayoutSyncFrame !== null)
-		{
-			cancelAnimationFrame(this._virtualizerLayoutSyncFrame);
-			this._virtualizerLayoutSyncFrame = null;
-		}
 		this._syncRowsMinHeight();
 		for(let frame = 0; frame < 3; frame++)
 		{
@@ -5964,6 +5957,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 
 		this.classList.remove("print");
+		// The virtualize() directive is being re-attached to the tbody fresh (it wasn't
+		// present while _printRows rendered statically), so this is the same "new
+		// virtualizer, host has no bounds yet" bootstrap case firstUpdated()/
+		// refreshRowHeightFromCss() guard against - reuse that instead of sizing the
+		// virtualizer immediately, which risks the zero-viewport feedback loop.
+		this._sparseVirtualizerLayoutActive = false;
 		this.requestUpdate();
 		void this.updateComplete.then(() =>
 		{

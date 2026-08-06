@@ -58,6 +58,10 @@ export class EgwFramework extends LitElement
 
 			// TEMP STUFF
 			css`
+				:host(.print) {
+					--egw-split-panel-slot-overflow: visible;
+				}
+
 				:host .placeholder {
 					display: none;
 				}
@@ -160,6 +164,7 @@ export class EgwFramework extends LitElement
 		this.appDOMObserver = new MutationObserver(this.handleAppDOMChange);
 		this.handleDarkmodeChange = this.handleDarkmodeChange.bind(this);
 		this.handleApplicationListShow = this.handleApplicationListShow.bind(this);
+		this.handleKeydown = this.handleKeydown.bind(this);
 	}
 	connectedCallback()
 	{
@@ -181,6 +186,7 @@ export class EgwFramework extends LitElement
 		}
 
 		document.body.addEventListener("egw-darkmode-change", this.handleDarkmodeChange);
+		document.addEventListener("keydown", this.handleKeydown);
 	}
 
 	disconnectedCallback()
@@ -188,7 +194,20 @@ export class EgwFramework extends LitElement
 		super.disconnectedCallback();
 
 		document.body.removeEventListener("egw-darkmode-change", this.handleDarkmodeChange);
+		document.removeEventListener("keydown", this.handleKeydown);
 		this.appDOMObserver.disconnect();
+	}
+
+	/**
+	 * Capture Ctrl+P / Cmd+P and print the active application instead of the whole window
+	 */
+	protected handleKeydown(e : KeyboardEvent)
+	{
+		if((e.ctrlKey || e.metaKey) && e.key?.toLowerCase() === "p")
+		{
+			e.preventDefault();
+			this.print();
+		}
 	}
 
 	protected firstUpdated(_changedProperties : PropertyValues)
