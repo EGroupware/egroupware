@@ -459,6 +459,10 @@ class JmapShim
 		// toggle is on (mirrors mail_ui::get_rows()'s fetchPreview), to skip the extra IMAP work
 		$properties = (array)($args['properties'] ?? []);
 		$wantPreview = !$properties || in_array('preview', $properties, true);
+		// body fields (mail/js/jmap.ts's MailJmap.fetchBody()) are only requested one id at a
+		// time, and cost an extra per-message IMAP round trip below - skip for the row-list fetch
+		static $bodyProperties = ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues'];
+		$wantBody = !$properties || array_intersect($properties, $bodyProperties);
 
 		if ($accountId === '0')
 		{
@@ -506,7 +510,7 @@ class JmapShim
 			if (($data = $results[(int)$id] ?? null))
 			{
 				/** @var \Horde_Imap_Client_Data_Fetch $data */
-				$list[] = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview);
+				$list[] = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody);
 			}
 		}
 		$found = array_column($list, 'id');
@@ -647,7 +651,7 @@ class JmapShim
 	 * @param bool $wantPreview false skips the (extra IMAP round-trip) preview snippet entirely
 	 * @return array
 	 */
-	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true) : array
+	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false) : array
 	{
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
@@ -666,7 +670,7 @@ class JmapShim
 			}
 		}
 
-		return [
+		$email = [
 			'id' => $uid,
 			'keywords' => self::flagsToKeywords($data->getFlags()),
 			'size' => $data->getSize(),
@@ -679,6 +683,128 @@ class JmapShim
 			'cc' => self::addressList($envelope->cc),
 			'bcc' => self::addressList($envelope->bcc),
 			'hasAttachment' => $hasAttachment,
+		];
+		if ($wantBody && $structure)
+		{
+			$email += self::emailBodyFields($imap, $mailbox, $uid, $structure);
+		}
+		return $email;
+	}
+
+	/**
+	 * Build the RFC 8621 body fields (bodyStructure/textBody/htmlBody/attachments/bodyValues) for
+	 * one message - direct Imap/Horde MIME work, deliberately NOT going through mail_ui/Api\Mail
+	 * (see class docblock). Ported subset of Mail::getMultipartAlternative()/getTextPart()'s
+	 * essential logic (best-body selection via Horde_Mime_Part::findBody(), transfer-decode +
+	 * charset-convert), not a call into those methods.
+	 *
+	 * mail/js/jmap.ts's MailJmap.fetchBody() decides client-side (from bodyStructure/attachments
+	 * alone, before ever calling this) whether a message needs the legacy server-side path instead
+	 * (S/MIME, winmail.dat, meeting invites, PGP/MIME) - this method is only reached for the
+	 * remaining "plain mail" case, so it doesn't need to special-case any of those itself.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param \Horde_Mime_Part $structure
+	 * @return array {bodyStructure: array, textBody: array[], htmlBody: array[], attachments: array[], bodyValues: array}
+	 */
+	public static function emailBodyFields(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Mime_Part $structure) : array
+	{
+		$textId = $structure->findBody('plain');
+		$htmlId = $structure->findBody('html');
+
+		$attachments = [];
+		foreach ($structure->partIterator() as $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			$id = $part->getMimeId();
+			if ($part->getPrimaryType() === 'multipart' || $id === $textId || $id === $htmlId)
+			{
+				continue;
+			}
+			$attachments[] = self::bodyPartToJmap($part);
+		}
+
+		$bodyValues = [];
+		foreach (array_unique(array_filter([$textId, $htmlId])) as $partId)
+		{
+			$bodyValues[$partId] = self::fetchBodyValue($imap, $mailbox, $uid, $structure, $partId);
+		}
+
+		return [
+			'bodyStructure' => self::bodyPartToJmap($structure),
+			'textBody' => $textId !== null ? [self::bodyPartToJmap($structure->getPart($textId))] : [],
+			'htmlBody' => $htmlId !== null ? [self::bodyPartToJmap($structure->getPart($htmlId))] : [],
+			'attachments' => $attachments,
+			'bodyValues' => $bodyValues,
+		];
+	}
+
+	/**
+	 * One Horde_Mime_Part -> one RFC 8621 EmailBodyPart, recursing into subParts for multipart
+	 *
+	 * @param \Horde_Mime_Part $part
+	 * @return array
+	 */
+	public static function bodyPartToJmap(\Horde_Mime_Part $part) : array
+	{
+		$contentId = $part->getContentId();
+		$result = [
+			'partId' => $part->getMimeId(),
+			// no separate blob store - the local shim's cid: images are resolved via the existing
+			// mail_ui::displayImage() endpoint client-side, not a JMAP Blob download, so this is
+			// never actually used, only present for RFC-shape completeness
+			'blobId' => $part->getMimeId(),
+			'size' => $part->getBytes(),
+			'name' => $part->getName() ?: null,
+			'type' => strtolower((string)$part->getType()),
+			'charset' => $part->getContentTypeParameter('charset') ?: null,
+			'disposition' => $part->getDisposition() ?: null,
+			'cid' => $contentId ? trim($contentId, '<>') : null,
+		];
+		if ($part->getPrimaryType() === 'multipart')
+		{
+			$result['subParts'] = array_map([self::class, 'bodyPartToJmap'], $part->getParts());
+		}
+		return $result;
+	}
+
+	/**
+	 * Fetch + transfer-decode + charset-convert (to UTF-8) one body part's text content
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param \Horde_Mime_Part $structure
+	 * @param string $partId
+	 * @return array {value: string, isEncodingProblem: bool, isTruncated: bool}
+	 */
+	public static function fetchBodyValue(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Mime_Part $structure, string $partId) : array
+	{
+		$query = new \Horde_Imap_Client_Fetch_Query();
+		// 'decode' asks the IMAP server to reverse Content-Transfer-Encoding itself (RFC 3516
+		// BINARY) - not guaranteed to happen (Dovecot commonly doesn't for quoted-printable/base64
+		// text parts), so getBodyPartDecode() below must still be checked and, same as
+		// Mail::fetchPartContents()'s established recipe, decoded client-side via the part's own
+		// setContents()/getContents() (which falls back to the part's own parsed
+		// Content-Transfer-Encoding header when $encoding is null) whenever it didn't
+		$query->bodyPart($partId, ['decode' => true, 'peek' => true]);
+		$results = $imap->fetch($mailbox, $query, [
+			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
+		]);
+		$partData = $results[(int)$uid] ?? null;
+		$raw = $partData ? (string)$partData->getBodyPart($partId) : '';
+		$encoding = $partData ? $partData->getBodyPartDecode($partId) : null;
+
+		$part = $structure->getPart($partId);
+		$part->setContents($raw, ['encoding' => $encoding]);
+		$charset = $part->getContentTypeParameter('charset') ?: 'us-ascii';
+
+		return [
+			'value' => Api\Translation::convert($part->getContents(), $charset, 'utf-8'),
+			'isEncodingProblem' => false,
+			'isTruncated' => false,
 		];
 	}
 

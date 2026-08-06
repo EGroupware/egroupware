@@ -21,7 +21,7 @@ import {
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import {MailCompose} from "./compose";
-import {MailJmap} from "./jmap";
+import {MailJmap, JmapBodyResult} from "./jmap";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -1667,13 +1667,7 @@ export class MailApp extends EgwApp
 			for (var t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
 			this.W_TIMEOUTS.push(window.setTimeout(function(){
 
-				console.log(rowId);
-				// Request email body from server
-				IframeHandle.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:rowId}));
-				IframeHandle.getDOMNode().addEventListener("load", function (e)
-				{
-					self.resolveExternalImages (this.contentWindow.document);
-				}, {once: true});
+				self.loadMessageBody(IframeHandle, rowId, (doc) => self.resolveExternalImages(doc));
 			}, 300));
 		}
 
@@ -1791,6 +1785,48 @@ export class MailApp extends EgwApp
 
 		sel_options.attachmentsBlock.actions = actions;
 	}
+
+	/**
+	 * Load a message body into an iframe widget: try the fast client-side JMAP body-fetch first
+	 * (mail/js/jmap.ts's MailJmap.fetchBody()), falling back to the existing full server-rendered
+	 * page load - identical fallback behaviour to before this feature - for special-case messages
+	 * (S/MIME, winmail.dat, meeting invites, PGP/MIME) or any fetch failure.
+	 *
+	 * Deliberately does not call resolveExternalImages() itself - the two call sites (preview
+	 * panel, popup) already did that differently (popup skips it for meeting-invite content) - left
+	 * to $onLoad, same as before this method existed. resolveInlineImages() (cid: images) has no
+	 * such per-caller difference, so it *is* called here, for the fast path only (the fallback path
+	 * still resolves cid: images server-side, same as always).
+	 *
+	 * @param iframeWidget the et2 iframe widget (messageIFRAME)
+	 * @param rowId
+	 * @param onLoad called with the iframe's contentDocument once loaded, either path
+	 */
+	private loadMessageBody(iframeWidget : any, rowId : string, onLoad : (doc : Document) => void) : void
+	{
+		const iframe = iframeWidget.getDOMNode() as HTMLIFrameElement;
+		this.jmap.fetchBody(rowId).then((result) =>
+		{
+			if (result.special)
+			{
+				iframe.addEventListener('load', () => onLoad(iframe.contentWindow.document), {once: true});
+				iframeWidget.set_src(egw.link('/index.php', {menuaction: 'mail.mail_ui.loadEmailBody', _messageID: rowId}));
+				return;
+			}
+			// explicit cast, not relying on control-flow narrowing of the "special" discriminant -
+			// this project's tsconfig has strictNullChecks off, where that narrowing doesn't hold
+			const fast = result as Extract<JmapBodyResult, { special : false }>;
+			iframe.addEventListener('load', () =>
+			{
+				const doc = iframe.contentWindow.document;
+				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
+					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
+				onLoad(doc);
+			}, {once: true});
+			iframe.srcdoc = fast.html;
+		});
+	}
+
 		/**
 		 * Show external images
 		 * @param _node
@@ -5968,24 +6004,24 @@ export class MailApp extends EgwApp
 			toolbar.actions = content.toolbar || {};
 
 
-			// Request email body from server
-			iframe.set_src(egw.link('/index.php',{menuaction:'mail.mail_ui.loadEmailBody',_messageID:id}));
-			jQuery(iframe.getDOMNode()).on('load',function(){
-
-				if (jQuery(this.contentWindow.document.body).find('#calendar-meeting').length > 0)
+			// Request email body - fast client-side JMAP path, or the full server-rendered page
+			// for special-case messages (see loadMessageBody())
+			self.loadMessageBody(iframe, id, (doc) =>
+			{
+				const frame = iframe.getDOMNode();
+				if (jQuery(doc.body).find('#calendar-meeting').length > 0)
 				{
-					var frame = this;
-					jQuery(this).show();
+					jQuery(frame).show();
 					// calendar meeting mails still need to be in iframe, therefore, we calculate the height
 					// and set the iframe with a fixed height to be able to see all content without getting
 					// scrollbar becuase of scrolling issue in iframe
-					window.setTimeout(function(){jQuery(frame).height(frame.contentWindow.document.body.scrollHeight);}, 500);
+					window.setTimeout(function(){jQuery(frame).height(doc.body.scrollHeight);}, 500);
 				}
 				else
 				{
-					self.resolveExternalImages(this.contentWindow.document);
+					self.resolveExternalImages(doc);
 					// Deal with scrolling by setting iframe size to content height
-					jQuery(this).height(this.contentWindow.document.body.scrollHeight);
+					jQuery(frame).height(doc.body.scrollHeight);
 				}
 			});
 		});

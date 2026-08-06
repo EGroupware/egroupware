@@ -21,6 +21,7 @@
 import type {MailApp} from "./app";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
 import JamClient from "jmap-jam";
+import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 
 interface JmapToken
 {
@@ -38,6 +39,19 @@ export interface JmapMessageReference
 	mailboxId : string;
 	emailId : string;
 }
+
+/** Result of MailJmap.fetchBody() - see that method's docblock */
+export type JmapBodyResult =
+	{ special : true }
+	|
+	{
+		special : false;
+		html : string;
+		attachments : any[];
+		profileID : string;
+		accountId : string;
+		isLocal : boolean;
+	};
 
 export interface JmapGetRowsQuery
 {
@@ -361,6 +375,226 @@ export class MailJmap
 			console.error('MailJmap.refreshRows(): failed, resolving as an empty result', e);
 			return false;
 		}
+	}
+
+	// message/attachment content-types that keep a message on the legacy server-side body path
+	// (mail_ui::displayMessage() / get_load_email_data() / getdisplayableBody()) instead of the
+	// fast client-side JMAP path below - see the plan's "Key findings" for why each needs to stay
+	// server-side (S/MIME keys, TNEF decoding, calendar.calendar_uiforms::meeting() rendering).
+	// multipart/encrypted (PGP/MIME, Mailvelope) is deliberately included here too for now - it's
+	// already fully working server-assembled + client-decrypted, and reimplementing RFC 8621 body-
+	// part-selection for it is not worth the risk in the same pass as the main feature.
+	private static readonly SPECIAL_CASE_TYPES = new Set([
+		'multipart/signed', 'multipart/encrypted',
+		'application/pkcs7-mime', 'application/x-pkcs7-mime',
+		'application/pkcs7-signature', 'application/x-pkcs7-signature',
+		'text/calendar', 'application/ms-tnef',
+	]);
+
+	/**
+	 * Fetch and assemble one message's body directly via JMAP (Stalwart, or the local IMAP shim)
+	 *
+	 * Fetches bodyStructure/textBody/htmlBody/attachments/bodyValues in one optimistic round trip
+	 * (fetchAllBodyValues) and inspects the returned structure for the special cases above -
+	 * discarding the fetched bodyValues and returning {special:true} if found, so the caller
+	 * (app.ts) falls back to the existing server-rendered iframe unchanged. Never throws - any
+	 * failure (unreachable profile, network error) also resolves {special:true}, for the same
+	 * fallback reason.
+	 */
+	async fetchBody(rowId : string, htmlOptions? : string) : Promise<JmapBodyResult>
+	{
+		try
+		{
+			const ref = this.messageReference(rowId);
+			const token = await this.ensureToken(ref.profileID);
+			if (!token)
+			{
+				return {special: true};
+			}
+			const args : any = {
+				accountId: token.accountId,
+				ids: [ref.emailId],
+				properties: ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues'],
+				fetchAllBodyValues: true,
+			};
+			if (token.isLocal)
+			{
+				args.mailboxId = ref.mailboxId;
+			}
+			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
+				emails: t.Email.get(args) as any,
+			}));
+			const email = (emails.list || [])[0];
+			if (!email || this.isSpecialCase(email.bodyStructure))
+			{
+				return {special: true};
+			}
+			return {
+				special: false,
+				html: this.assembleBodyHtml(email, htmlOptions),
+				attachments: email.attachments || [],
+				profileID: ref.profileID,
+				accountId: token.accountId,
+				isLocal: token.isLocal,
+			};
+		}
+		catch (e)
+		{
+			console.error('MailJmap.fetchBody(): failed, falling back to the server-rendered body', e);
+			return {special: true};
+		}
+	}
+
+	/** Depth-first walk of bodyStructure/subParts for any SPECIAL_CASE_TYPES / winmail.dat match */
+	private isSpecialCase(part : any) : boolean
+	{
+		if (!part)
+		{
+			return false;
+		}
+		if (MailJmap.SPECIAL_CASE_TYPES.has((part.type || '').toLowerCase()) ||
+			(part.name || '').toLowerCase() === 'winmail.dat')
+		{
+			return true;
+		}
+		return (part.subParts || []).some((sub : any) => this.isSpecialCase(sub));
+	}
+
+	/**
+	 * Assemble a sanitized, self-contained HTML document for the body iframe's `srcdoc`
+	 *
+	 * Loads the same `preview.js` (mailto/internal-EGroupware-link activation) the server-rendered
+	 * body already uses, unmodified - a `srcdoc` iframe without a `sandbox` attribute is same-
+	 * origin with the parent, exactly like the server-rendered one, so this needs no separate
+	 * reimplementation of that logic. `<meta>`/`<base>` are explicitly forbidden from the sanitized
+	 * body content itself, so a malicious/buggy message can't smuggle in a competing CSP, a
+	 * `<meta http-equiv="refresh">`, or hijack relative URLs.
+	 *
+	 * cid: image references are left as-is here - resolved asynchronously after render by
+	 * resolveInlineImages(), same as external images already are (resolveExternalImages()).
+	 */
+	private assembleBodyHtml(email : any, htmlOptions? : string) : string
+	{
+		const htmlParts : any[] = email.htmlBody || [];
+		const textParts : any[] = email.textBody || [];
+		const useHtml = htmlParts.length > 0 && htmlOptions !== 'only_if_no_text';
+		const part = useHtml ? htmlParts[0] : (textParts[0] || htmlParts[0]);
+		const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
+		const isHtml = !!part && (useHtml || !textParts.length);
+
+		let body : string;
+		if (isHtml)
+		{
+			body = DOMPurify.sanitize(raw, {
+				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
+				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+			});
+		}
+		else
+		{
+			body = MailJmap.textToHtml(raw);
+		}
+
+		// same directive set the current server-rendered response sets via HTTP header
+		// (mail_ui::get_load_email_data(), class.mail_ui.inc.php:2993-3000: script-src 'self' to
+		// load preview.js below, img-src additionally allows blob: for Stalwart inline-image
+		// downloads, see resolveInlineImages(), alongside the data: URIs cid images already used)
+		const csp = "frame-src 'none'; connect-src 'none'; manifest-src 'none'; script-src 'self'; " +
+			"img-src http: blob: data:; media-src https: http: data:";
+
+		return `<!DOCTYPE html><html><head><meta charset="utf-8">` +
+			`<meta http-equiv="Content-Security-Policy" content="${csp}">` +
+			`<link rel="stylesheet" href="${this.egw.link('/mail/templates/default/preview.css')}">` +
+			`<script defer src="${this.egw.link('/mail/js/preview.js')}"></script>` +
+			`</head><body><div class="mailDisplayBody"><table width="100%" style="table-layout:fixed">` +
+			`<tr><td class="td_display">${body}</td></tr></table></div></body></html>`;
+	}
+
+	/** text/plain -> escaped, auto-linked, <pre>-wrapped HTML - mirrors mail_ui::getdisplayableBody() */
+	private static textToHtml(text : string) : string
+	{
+		const escaped = (text || '')
+			.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		const linked = escaped.replace(/((?:https?:\/\/|www\.)[^\s<>"]+)/gi, (url) =>
+		{
+			const href = url.toLowerCase().startsWith('http') ? url : 'https://' + url;
+			return `<a href="${href}" target="_blank" rel="noopener noreferrer">${url}</a>`;
+		});
+		return DOMPurify.sanitize(`<pre>${linked}</pre>`, {ALLOWED_TAGS: ['pre', 'a'], ALLOWED_ATTR: ['href', 'target', 'rel']});
+	}
+
+	/**
+	 * Resolve `cid:` image references left untouched by assembleBodyHtml(), after the srcdoc body
+	 * has actually rendered - same deliberately-asynchronous, post-load pattern app.ts's
+	 * resolveExternalImages() already uses for remote images.
+	 *
+	 * Local-shim accounts: rewritten straight to mail_ui::displayImage() (existing endpoint, no new
+	 * server code - see JmapShim.php's bodyPartToJmap() docblock). Stalwart accounts: downloaded
+	 * directly from Stalwart via JMAP's own Blob download (client.downloadBlob()), matching this
+	 * project's "talk directly to JMAP for Stalwart" architecture the rest of the way through -
+	 * object URLs are revoked again the next time this row's body is (re-)rendered.
+	 */
+	private objectUrls : Record<string, string[]> = {};
+
+	async resolveInlineImages(doc : Document, rowId : string, result : Extract<JmapBodyResult, { special : false }>) : Promise<void>
+	{
+		(this.objectUrls[rowId] || []).forEach(url => URL.revokeObjectURL(url));
+		this.objectUrls[rowId] = [];
+
+		const images = Array.from(doc.querySelectorAll('img[src^="cid:"]')) as HTMLImageElement[];
+		if (!images.length)
+		{
+			return;
+		}
+		const byCid : Record<string, any> = {};
+		result.attachments.forEach((att : any) =>
+		{
+			if (att.cid)
+			{
+				byCid[att.cid] = att;
+			}
+		});
+		const ref = this.messageReference(rowId);
+
+		await Promise.all(images.map(async(img) =>
+		{
+			const cid = decodeURIComponent(img.getAttribute('src').substring(4));
+			const attachment = byCid[cid];
+			if (!attachment)
+			{
+				return;
+			}
+			try
+			{
+				if (result.isLocal)
+				{
+					img.src = this.egw.link('/index.php', {
+						menuaction: 'mail.mail_ui.displayImage',
+						profileID: result.profileID,
+						uid: btoa(ref.emailId),
+						cid: btoa(cid),
+						partID: attachment.partId,
+						mailbox: ref.mailboxId,
+					});
+				}
+				else
+				{
+					const response = await this.clients[result.profileID].downloadBlob({
+						accountId: result.accountId,
+						blobId: attachment.blobId,
+						mimeType: attachment.type,
+						fileName: attachment.name || 'image',
+					});
+					const url = URL.createObjectURL(await response.blob());
+					this.objectUrls[rowId].push(url);
+					img.src = url;
+				}
+			}
+			catch (e)
+			{
+				console.error('MailJmap.resolveInlineImages(): failed for cid', cid, e);
+			}
+		}));
 	}
 
 	/**

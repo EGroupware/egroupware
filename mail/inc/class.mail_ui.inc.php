@@ -2304,6 +2304,13 @@ class mail_ui
 	 * display image
 	 *
 	 * all params are passed as GET Parameters
+	 *
+	 * "profileID" is optional, for backwards compatibility with existing (server-rendered body)
+	 * callers that rely on it defaulting to whatever profile this session's mail_bo already has
+	 * active - but is required for correctness when called from the client-side JMAP body-fetch
+	 * path (mail/js/jmap.ts's MailJmap.fetchBody()), which has no such session-affinity guarantee
+	 * (same pattern as mail_ui::ajax_enablePush(), which took an explicit icServerID for the same
+	 * reason).
 	 */
 	function displayImage()
 	{
@@ -2311,6 +2318,10 @@ class mail_ui
 		$cid	= base64_decode($_GET['cid']);
 		$partID = urldecode($_GET['partID']);
 		if (!empty($_GET['mailbox'])) $mailbox  = base64_decode($_GET['mailbox']);
+		if (!empty($_GET['profileID']) && $_GET['profileID'] != $this->mail_bo->profileID)
+		{
+			$this->changeProfile($_GET['profileID']);
+		}
 
 		//error_log(__METHOD__.__LINE__.":$uid, $cid, $partID");
 		$this->mail_bo->reopen($mailbox);
