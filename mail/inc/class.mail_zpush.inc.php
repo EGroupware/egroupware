@@ -711,7 +711,10 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 					{
 						if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' Key:'.$key.'->'.array2string($attachment));
 						$attachmentNames .= $attachment['name']."\n";
-						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],0,false,false,$folder);
+						// $attachment['is_winmail'] (uid@partID@mimeId) is set for individual unpacked
+						// TNEF/winmail.dat children - without it getAttachment() can't tell which
+						// child to decode and returns the raw, still-packed winmail.dat bytes
+						$attachmentData	= $this->mail->getAttachment($uid, $attachment['partID'],$attachment['is_winmail'] ?? 0,false,false,$folder);
 						$x = $mailObject->AddStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['mimeType']);
 						ZLog::Write(LOGLEVEL_DEBUG,__METHOD__.__LINE__.' added part with number:'.$x);
 					}
