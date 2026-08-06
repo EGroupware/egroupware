@@ -23,6 +23,20 @@ export default css`
 		border-left-color: var(--category-color, transparent);
 	}
 
+	:host(.print) {
+		height: auto;
+	}
+
+	:host(.print) [part="header"],
+	:host(.print) .nextmatch_lettersearch,
+	:host(.print) [part="footer"] {
+		display: none;
+	}
+
+	:host(.print) et2-datagrid {
+		height: auto;
+	}
+
 	.nextmatch-subgrid {
 		height: auto;
 	}

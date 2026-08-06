@@ -1540,20 +1540,28 @@ class mail_ui
 							),
 						),
 					),
-					'customFlag' => array(
-						'caption' => 'Custom Flag',
+					'flag' => array(
+						'caption' => 'Flag / Unflag',
 						'icon' => 'unread_flagged_small',
-						'group' => $group,
-						// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
-						'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
-						'hideOnDisabled' => true,
+						'group' => ++$group,
 						'children' => array(
+							'flagged' => array(
+								'group' => ++$group,
+								'caption' => 'Flag / Unflag',
+								'icon' => 'unread_flagged_small',
+								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'hint' => 'Flag or Unflag a mail',
+								'shortcut' => KeyManager::shortcut(KeyManager::F, true, true),
+								'toolbarDefault' => true
+							),
 							'customFlag1' => array(
 								'group' => ++$group,
 								'caption' => 'red',
 								'iconColor' => '#ff0000',
 								'icon' => 'unread_flagged_small',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+								'hideOnDisabled' => true,
 							),
 							'customFlag2' => array(
 								'group' => $group,
@@ -1561,6 +1569,8 @@ class mail_ui
 								'iconColor' => '#ff8000',
 								'icon' => 'unread_flagged_small',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+								'hideOnDisabled' => true,
 							),
 							'customFlag3' => array(
 								'group' => $group,
@@ -1568,6 +1578,8 @@ class mail_ui
 								'iconColor' => '#008000',
 								'icon' => 'unread_flagged_small',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+								'hideOnDisabled' => true,
 							),
 							'customFlag4' => array(
 								'group' => $group,
@@ -1575,6 +1587,8 @@ class mail_ui
 								'iconColor' => '#0000ff',
 								'icon' => 'unread_flagged_small',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+								'hideOnDisabled' => true,
 							),
 							'customFlag5' => array(
 								'group' => $group,
@@ -1582,18 +1596,10 @@ class mail_ui
 								'iconColor' => '#8000ff',
 								'icon' => 'unread_flagged_small',
 								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+								'hideOnDisabled' => true,
 							),
 						),
-					),
-					// Icon are all bootstrap Icons
-					'flagged' => array(
-						'group' => ++$group,
-						'caption' => 'Flag / Unflag',
-						'icon' => 'unread_flagged_small',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
-						'hint' => 'Flag or Unflag a mail',
-						'shortcut' => KeyManager::shortcut(KeyManager::F, true, true),
-						'toolbarDefault' => true
 					),
 					'read' => array(
 						'group' => $group,
@@ -1746,7 +1752,7 @@ class mail_ui
 					$actionsenabled[$act]=$actions[$act];
 					break;
 				case 'flagged':
-					$actionsenabled[$act]= $actions['mark']['children'][$act];
+					$actionsenabled[$act]= $actions['mark']['children']['flag']['children'][$act];
 					break;
 				case 'read':
 					$actionsenabled[$act]= $actions['mark']['children'][$act];

@@ -16,7 +16,7 @@ import {
 	Et2DatagridUpdateTypes,
 	Et2DatagridView
 } from "./Et2Datagrid.types";
-import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
+import {Et2DatagridColumnState, type Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
@@ -46,6 +46,11 @@ import {styleMap} from "lit/directives/style-map.js";
 import {ref} from "lit/directives/ref.js";
 
 const LETTERSEARCH_SELECTION_ID = "~search_letter~";
+
+type Et2NextmatchPrintState = {
+	columns : Et2DatagridColumn[];
+	orientationStyle : HTMLStyleElement;
+};
 
 /**
  * @summary Nextmatch shows entries with filtering and context menus.
@@ -378,6 +383,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _selectionByGridId : Map<string, { selectedRowIds : string[]; allSelected : boolean }> = new Map();
 	/** Current datagrid column state after user preference/resizing changes. */
 	private _datagridColumns : Et2DatagridColumn[] | null = null;
+	/** Temporary runtime state which must be removed after the browser print dialog closes. */
+	private _printState : Et2NextmatchPrintState | null = null;
 	/**
 	 * Resolves once template columns are first derived (in _applyTemplateData),
 	 * so consumers can await columns without polling.  Deliberately NOT tied to
@@ -1027,9 +1034,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
-	 * Fetch every id matching the current filter, showing a cancelable wait dialog.
+	 * Fetch matching ids up to the requested maximum, showing a cancelable wait dialog.
 	 */
-	async fetchAllIds(pageSize : number = 200) : Promise<string[]>
+	async fetchAllIds(pageSize : number = 200, maxRows : number = Number.POSITIVE_INFINITY) : Promise<string[]>
 	{
 		const ids : string[] = [];
 		let start = 0;
@@ -1061,7 +1068,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				{
 					throw new DOMException("Canceled", "AbortError");
 				}
-				const page = await this._dataProvider.fetchPage(start, pageSize);
+				const page = await this._dataProvider.fetchPage(start, Math.min(pageSize, maxRows - ids.length));
 				if(cancelled)
 				{
 					throw new DOMException("Canceled", "AbortError");
@@ -1070,13 +1077,111 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				total = typeof page.total === "number" ? page.total : ids.length;
 				start += pageSize;
 			}
-			while(ids.length < total);
+			while(ids.length < total && ids.length < maxRows);
 			return Array.from(new Set(ids));
 		}
 		finally
 		{
 			dialog.destroy();
 		}
+	}
+
+
+
+	/**
+	 * Prepare the current nextmatch for browser printing.
+	 *
+	 * The existing XET dialog supplies print-only columns, row count, and page
+	 * orientation.  Preferences are read as defaults but never written here.
+	 */
+	async beforePrint() : Promise<void>
+	{
+		if(this._printState)
+		{
+			return;
+		}
+		await this.updateComplete;
+		const grid = this._datagrid;
+		if(!grid)
+		{
+			return;
+		}
+
+		const columns = new Et2DatagridColumnState().toSelectionItems(this._currentColumns);
+		const total = Math.max(0, grid.total ?? grid.rows.length);
+		const dialog = new Et2Dialog(this.egw());
+		dialog.transformAttributes({
+			title: this.egw().lang("Print"),
+			template: this.egw().link(this.egw().webserverUrl + "/api/templates/default/nm_print_dialog.xet"),
+			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
+			isModal: true,
+			value: {
+				content: {
+					row_count: Math.min(100, total),
+					columns: columns.filter((column) => column.visibility).map((column) => column.id),
+					orientation: false
+				},
+				modifications: {columns: {columns}}
+			}
+		});
+		document.body.append(dialog);
+		const [button, value] = await dialog.getComplete();
+		if(button !== Et2Dialog.OK_BUTTON)
+		{
+			// EgwFrameworkApp treats an undefined rejection as an aborted print.
+			// Defined errors are handled there and would still open browser print.
+			return Promise.reject();
+		}
+
+		const selectedColumns = ((value as any)?.columns || [])
+			.map((column : unknown) => String(column).split("___").join(" "))
+			.filter(Boolean);
+
+		const requestedRows = Math.min(total, Math.max(0, parseInt((value as any)?.row_count, 10) || 0));
+		const orientation : "portrait" | "landscape" = (value as any)?.orientation ? "landscape" : "portrait";
+		const originalColumns = this._currentColumns.map((column) => ({...column}));
+
+
+		try
+		{
+			let printColumns = selectedColumns.length
+				? new Et2DatagridColumnState().applySelectionOrder(originalColumns, selectedColumns)
+				: originalColumns.filter((column) => !column.hidden);
+			this.setColumns(printColumns);
+			this.classList.add("print", orientation);
+			const orientationStyle = document.createElement("style");
+			orientationStyle.media = "print";
+			orientationStyle.textContent = `@page { size: ${orientation}; }`;
+			document.head.append(orientationStyle);
+			this._printState = {columns: originalColumns, orientationStyle};
+
+			let rowIds = grid.rows.map((row) => row.id);
+			if(requestedRows > rowIds.length)
+			{
+				rowIds = await this.fetchAllIds(200, requestedRows);
+			}
+			await grid.setPrintRows(rowIds.slice(0, requestedRows));
+		}
+		catch(error)
+		{
+			this.afterPrint();
+			throw error;
+		}
+	}
+
+	/** Restore normal columns and virtualized rendering after browser printing. */
+	afterPrint() : void
+	{
+		const state = this._printState;
+		this._datagrid?.clearPrintRows();
+		this.classList.remove("print", "portrait", "landscape");
+		if(!state)
+		{
+			return;
+		}
+		state.orientationStyle.remove();
+		this._printState = null;
+		this.setColumns(state.columns);
 	}
 
 	selectSingleRow(rowId : string)

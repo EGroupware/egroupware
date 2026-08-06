@@ -582,7 +582,7 @@ class JmapShim
 					$notUpdated[$id] = ['type' => 'invalidProperties', 'properties' => [(string)$path]];
 					continue 2;
 				}
-				$operations[] = [$keyword, $value === true];
+				$operations[] = [$allowed[$keyword], $value === true];
 			}
 			foreach ($operations as [$keyword, $set])
 			{
@@ -642,19 +642,19 @@ class JmapShim
 	/**
 	 * Keywords the Mail UI is allowed to mutate through the local shim.
 	 *
-	 * @return array<string,true>
+	 * @return array<string,string> JMAP keyword to IMAP flag / keyword
 	 */
 	public static function writableKeywords() : array
 	{
-		$keywords = [];
+		$keywords = ['$flagged' => '\\Flagged'];
 		foreach (['label1', 'label2', 'label3', 'label4', 'label5',
 			'customflag1', 'customflag2', 'customflag3', 'customflag4', 'customflag5'] as $keyword)
 		{
-			$keywords['$'.$keyword] = true;
+			$keywords['$'.$keyword] = '$'.$keyword;
 		}
 		foreach (array_keys(Api\Mail::getCustomLabels()) as $keyword)
 		{
-			$keywords['$'.strtolower($keyword)] = true;
+			$keywords['$'.strtolower($keyword)] = '$'.strtolower($keyword);
 		}
 		return $keywords;
 	}

@@ -6,8 +6,8 @@ const egw = {
 	lang: (label : string) => label,
 	tooltipBind: () => {},
 	tooltipUnbind: () => {},
-	preference: () => null,
-	set_preference: () => {},
+	preference: (..._args : any[]) => null,
+	set_preference: (..._args : any[]) => {},
 	app_name: () => "addressbook",
 	link: (url : string) => url
 };

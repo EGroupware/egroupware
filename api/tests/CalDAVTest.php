@@ -540,6 +540,8 @@ abstract class CalDAVTest extends TestCase
 			{
 				if (!empty($data['id']))
 				{
+					self::logoutAccessLog((int)$data['id']);
+
 					try {
 						$command = new \admin_cmd_delete_account((int)$data['id'], null, true);
 						$command->comment = 'Removing in tearDownAfterClass for '.static::class;
@@ -556,6 +558,25 @@ abstract class CalDAVTest extends TestCase
 		self::resetSharedRuntimeState();
 		self::restoreSetupGlobals();
 		self::$setup = null;
+	}
+
+	/**
+	 * Mark a test-created account's egw_access_log row(s) as logged out.
+	 *
+	 * getClient()/auth() authenticate via HTTP Basic Auth against groupdav.php, which Session::create()
+	 * only ever logs as a "pseudo session" (see Session::get_sessionid()) - never closed by the DAV
+	 * request itself, only by session-timeout GC. Left open, each createUser()'d account keeps counting
+	 * as a concurrent user (Stylite license check) even after we delete the account below; since
+	 * account_id is unique per test account, it's safe to close every open row for it here.
+	 */
+	private static function logoutAccessLog(int $account_id) : void
+	{
+		if(empty($GLOBALS['egw']) || empty($GLOBALS['egw']->db))
+		{
+			return;
+		}
+		$GLOBALS['egw']->db->update(Session::ACCESS_LOG_TABLE, ['lo' => time()],
+			['account_id' => $account_id, 'lo' => null], __LINE__, __FILE__);
 	}
 
 	/**
