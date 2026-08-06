@@ -839,14 +839,6 @@ class mail_ui
 					'group'	=> $group,
 				);
 				break;
-			case 'mark_as_deleted':
-				$tree_actions['compress_folder'] = array(
-					'caption' => 'compress folder',
-					'icon' => 'dhtmlxtree/MailFolderTrash',
-					'onExecute' => 'javaScript:app.mail.mail_compressFolder',
-					'group'	=> $group,
-				);
-				break;
 		}
 		$junkFolder = ($imap_actions?$this->mail_bo->getJunkFolder():null);
 
@@ -1156,7 +1148,6 @@ class mail_ui
 		// duplicated from mail_hooks
 		static $deleteOptions = array(
 			'move_to_trash'		=> 'move to trash',
-			'mark_as_deleted'	=> 'mark as deleted',
 			'remove_immediately' =>	'remove immediately',
 		);
 		// todo: real hierarchical folder list
@@ -1617,12 +1608,6 @@ class mail_ui
 						'onExecute' => 'javaScript:app.mail.mail_flag',
 						'hint' => 'mark all messages in folder as read',
 						'toolbarDefault' => false
-					),
-					'undelete' => array(
-						'group' => $group,
-						'caption' => 'Undelete',
-						'icon' => 'revert',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
 					),
 				),
 			),
@@ -4250,7 +4235,7 @@ class mail_ui
 	{
 		$response = Api\Json\Response::get();
 
-		$attachments = $this->resolveAttachmentsBlock($_rowid);
+		$attachments = $this->resolveWinmailJmap($_rowid) ?? $this->resolveAttachmentsBlock($_rowid);
 		if (!empty($attachments))
 		{
 			$response->data($attachments);
@@ -4258,6 +4243,100 @@ class mail_ui
 		else
 		{
 			$response->call('egw.message', lang('Can not resolve the winmail.dat attachment!'));
+		}
+	}
+
+	/**
+	 * JMAP-native winmail.dat unpacking for ajax_resolveWinmail() - fetches the winmail.dat part's
+	 * raw bytes via JMAP (Stalwart: Imap\Jmap's jmapClient(); local IMAP: JmapShim) instead of
+	 * Mail::getMessageAttachments()'s IMAP-based enumeration + Mail::getAttachment(), decodes via
+	 * the existing (now static, transport-agnostic) Mail::tnef_decoder(), and builds the same
+	 * attachment-array shape via the new JmapShim::tnefAttachments() (ported, not a call into
+	 * Mail::getMessageAttachments()'s equivalent loop) before handing off to the existing, generic
+	 * createAttachmentBlock() (download-link/token UI plumbing, not IMAP-specific - kept, see plan).
+	 *
+	 * Scope note: only the *listing* is JMAP-native here - createAttachmentBlock()'s per-file
+	 * Link::set_data() download tokens still point at Api\Mail::getAttachmentAccount(), an IMAP
+	 * fetch, when the user actually clicks to download one of these files. Making that JMAP-native
+	 * too is a further step, not done here.
+	 *
+	 * @param string $rowID
+	 * @return array|null null if not applicable/failed - caller falls through to the classic
+	 *  resolveAttachmentsBlock() path (covers the whole-message-is-TNEF case too, which
+	 *  specialCaseType()/an "attachments" search can't find - that's handled entirely differently,
+	 *  server-rendered, see tryJmapNativeSpecialCase())
+	 */
+	private function resolveWinmailJmap($rowID) : ?array
+	{
+		$idParts = Mail::splitRowID($rowID);
+		$uid = $idParts['msgUID'];
+		$mailbox = $idParts['folder'];
+		$acc_id = $idParts['profileID'];
+		if (!$uid || !$mailbox || !$acc_id)
+		{
+			return null;
+		}
+
+		try
+		{
+			$icServer = Mail\Account::read((int)$acc_id)->imapServer();
+			$isStalwart = $icServer instanceof Mail\Imap\Jmap;
+
+			if ($isStalwart)
+			{
+				if (empty($idParts['emailID']))
+				{
+					return null;
+				}
+				$email = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments']);
+				$winmailPart = current(array_filter($email['attachments'] ?? [], static function($a)
+				{
+					return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
+				})) ?: null;
+				if (!$winmailPart)
+				{
+					return null;
+				}
+				$partID = $winmailPart['partId'];
+				$raw = $icServer->jmapClient()->downloadBlob($winmailPart['blobId'], 'winmail.dat', 'application/ms-tnef');
+			}
+			else
+			{
+				$structure = JmapShim::structureGet($icServer, $mailbox, $uid);
+				if (!$structure)
+				{
+					return null;
+				}
+				$attachments = JmapShim::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
+				$winmailPart = current(array_filter($attachments, static function($a)
+				{
+					return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
+				})) ?: null;
+				if (!$winmailPart)
+				{
+					return null;
+				}
+				$partID = $winmailPart['partId'];
+				$raw = JmapShim::fetchRawPart($icServer, $mailbox, $uid, $partID);
+			}
+			if ($raw === null)
+			{
+				return null;
+			}
+
+			$decoded = Mail::tnef_decoder($raw);
+			if (!$decoded)
+			{
+				return null;
+			}
+
+			$attachments = JmapShim::tnefAttachments($uid, $partID, $decoded);
+			return self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;	// fall through to the classic path rather than showing an error
 		}
 	}
 
@@ -4628,6 +4707,11 @@ class mail_ui
 			{
 				$bootstrap['isLocal'] = $local;
 				$bootstrap['customLabels'] = Mail::getCustomLabels();
+				// account config only (no IMAP round-trip, no full special-use autodetection like
+				// Mail::getTrashFolder() does) - good enough for MailJmap.deleteMessages()'s
+				// move-to-trash resolution; a reasonable simplification for accounts that don't
+				// override the conventional "Trash" name without configuring acc_folder_trash
+				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?: 'Trash';
 			}
 			$response->data($bootstrap);
 		}

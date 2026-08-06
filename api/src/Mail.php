@@ -4313,7 +4313,7 @@ class Mail
 	 *
 	 * @param mixed array/string _messageUID array of ids to flag, or 'all'
 	 * @param string _folder foldername
-	 * @param string _forceDeleteMethod - "no", or deleteMethod like 'move_to_trash',"mark_as_deleted","remove_immediately"
+	 * @param string _forceDeleteMethod - "no", or deleteMethod like 'move_to_trash',"remove_immediately"
 	 *
 	 * @return bool true, as we do not handle return values yet
 	 * @throws Exception
@@ -4339,7 +4339,7 @@ class Mail
 			$uidsToDelete->add($_messageUID);
 		}
 		$deleteOptions = $_forceDeleteMethod; // use forceDeleteMethod if not "no", or unknown method
-		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"mark_as_deleted","remove_immediately"))) $deleteOptions  = ($this->mailPreferences['deleteOptions']?$this->mailPreferences['deleteOptions']:"mark_as_deleted");
+		if ($_forceDeleteMethod === 'no' || !in_array($_forceDeleteMethod,array('move_to_trash',"remove_immediately"))) $deleteOptions  = ($this->mailPreferences['deleteOptions']?:"move_to_trash");
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->'.array2string($_messageUID).','.$_folder.'/'.$this->sessionData['mailbox'].' Option:'.$deleteOptions);
 		$trashFolder    = $this->getTrashFolder();
 		$draftFolder	= $this->getDraftFolder(); //$GLOBALS['egw_info']['user']['preferences']['mail']['draftFolder'];
@@ -4369,26 +4369,6 @@ class Mail
 					{
 						throw new Exception("Failed to move Messages (".array2string($uidsToDelete).") from Folder $_folder to $trashFolder Error:".$e->getMessage());
 					}
-				}
-				break;
-
-			case "mark_as_deleted":
-				//error_log(__METHOD__.' ('.__LINE__.') ');
-				// mark messages as deleted
-				if (!isset($_messageUID)) $_messageUID='all';
-				foreach((array)$_messageUID as $key =>$uid)
-				{
-					//flag messages, that are flagged for deletion as seen too
-					$this->flagMessages('read', $uid, $_folder);
-					$flags = $this->getFlags($uid);
-					$this->flagMessages('delete', $uid, $_folder);
-					//error_log(__METHOD__.' ('.__LINE__.') '.array2string($flags));
-					if (strpos( array2string($flags),'Deleted')!==false) $undelete[] = $uid;
-					unset($flags);
-				}
-				foreach((array)$undelete as $key =>$uid)
-				{
-					$this->flagMessages('undelete', $uid, $_folder);
 				}
 				break;
 
@@ -6887,7 +6867,10 @@ class Mail
 					}
 					else
 					{
-						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],0,false,false));
+						// $attachment['is_winmail'] (uid@partID@mimeId) is set for individual unpacked
+						// TNEF/winmail.dat children - without it getAttachment() can't tell which
+						// child to decode and returns the raw, still-packed winmail.dat bytes
+						$attachments[$num] = array_merge($attachments[$num],$mailClass->getAttachment($uid, $attachment['partID'],$attachment['is_winmail'] ?? 0,false,false));
 
 						if (empty($attachments[$num]['attachment'])&&$attachments[$num]['cid'])
 						{

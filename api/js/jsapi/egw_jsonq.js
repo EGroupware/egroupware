@@ -190,7 +190,9 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 			}
 			else
 			{
-				for (let n in push_callbacks)
+				// iterate backwards, so splicing out a throwing callback doesn't
+				// shift the index of callbacks not yet visited this dispatch
+				for (let n = push_callbacks.length - 1; n >= 0; n--)
 				{
 					try {
 						push_callbacks[n].call(this, data);

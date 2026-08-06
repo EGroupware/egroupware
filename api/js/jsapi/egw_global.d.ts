@@ -16,15 +16,19 @@
 import type {EgwApp} from "./egw_app";
 import type {Et2Dialog} from "../etemplate/Et2Dialog/Et2Dialog";
 
+// This file has top-level imports, which makes it a module - without "declare global",
+// everything below would be scoped to this module instead of augmenting the global scope.
+declare global {
+
 /**
  * Global egw object (for now created by the diverse JavaScript files) with a TypeScript interface
  */
-declare var egw : Iegw;
+var egw : Iegw;
 
 /**
  * Interface for global egw with window global or local methods or as function returning an object allowing also application local methods
  */
-declare interface Iegw extends IegwWndLocal {
+interface Iegw extends IegwWndLocal {
 	(_app?: string | Window, _wnd?: Window) : IegwAppLocal,
 	/**
 	 * Copy text to the clipboard
@@ -41,7 +45,7 @@ declare interface Iegw extends IegwWndLocal {
 /**
  * Return type for egw.app() call
  */
-declare interface Iapplication
+interface Iapplication
 {
 	title     : string;	// application title untranslated, better use egw.lang(app.name)
 	name      : string;	// app-name
@@ -58,7 +62,7 @@ declare interface Iapplication
 /**
  * Data stored by egw_data
  */
-declare interface IegwData
+interface IegwData
 {
 	timestamp?: number;
 	data: {[key:string]: any};
@@ -67,7 +71,7 @@ declare interface IegwData
 /**
  * Interface for all window global methods (existing only in top window)
  */
-declare interface IegwGlobal
+interface IegwGlobal
 {
 	/**
 	 * Base URL of EGroupware install "/egroupware" or full URL incl. schema and domain
@@ -681,8 +685,6 @@ declare interface IegwGlobal
 	 *
 	 * @param string
 	 */
-	async
-
 	hashString(name : any) : Promise<string>;
 	/**
 	 * Escape HTML special chars, just like PHP
@@ -711,7 +713,7 @@ declare interface IegwGlobal
 	 * @param {string} appname
 	 * @param {Window} popup
 	 */
-	storeWindow(appname: boolean, popup : Window) : void;
+	storeWindow(appname: string, popup : Window) : void;
 	/**
 	 * Get a list of the names of open popups
 	 *
@@ -760,7 +762,7 @@ declare interface IegwGlobal
 	week_start(date : string) : Date;
 }
 
-declare class JsonRequest
+class JsonRequest
 {
 	/**
 	 * Sends the assembled request to the server
@@ -787,7 +789,7 @@ declare class JsonRequest
 /**
  * Interface for window local methods (plus the global ones)
  */
-declare interface IegwWndLocal extends IegwGlobal
+interface IegwWndLocal extends IegwGlobal
 {
 	window : Window;
 	/**
@@ -1295,7 +1297,7 @@ declare interface IegwWndLocal extends IegwGlobal
 /**
  * Interface for application local methods (returned by global egw function)
  */
-declare interface IegwAppLocal extends IegwWndLocal
+interface IegwAppLocal extends IegwWndLocal
 {
 	/**
 	 * implemented in egw_data.js
@@ -1423,34 +1425,36 @@ declare interface IegwAppLocal extends IegwWndLocal
  *
  * Please note the egw_* ones are deprecated in favor of the above API
  */
-declare function egw_getFramework() : any;
-declare var chrome : any;
-declare var InstallTrigger : any;
-declare var app : {classes: any, [propName: string]: EgwApp};
-declare var egw_globalObjectManager : any;
-declare var egw_LAB : any;
-declare function egwIsMobile() : string|null;
+function egw_getFramework() : any;
+var chrome : any;
+var InstallTrigger : any;
+var app : {classes: any, [propName: string]: EgwApp};
+var egw_globalObjectManager : any;
+var egw_LAB : any;
+function egwIsMobile() : string|null;
 
-declare var mailvelope : any;
+var mailvelope : any;
 
-declare var framework : any;
+var framework : any;
 
-declare function egw_refresh(_msg : string, app : string, id? : string|number, _type?, targetapp?, replace?, _with?, msgtype?);
-declare function egw_open();
+function egw_refresh(_msg : string, app : string, id? : string|number, _type?, targetapp?, replace?, _with?, msgtype?);
+function egw_open();
 
-declare function egw_getWindowLeft() : number;
-declare function egw_getWindowTop() : number;
-declare function egw_getWindowInnerWidth() : number;
-declare function egw_getWindowInnerHeight() : number;
-declare function egw_getWindowOuterWidth() : number;
-declare function egw_getWindowOuterHeight() : number;
+function egw_getWindowLeft() : number;
+function egw_getWindowTop() : number;
+function egw_getWindowInnerWidth() : number;
+function egw_getWindowInnerHeight() : number;
+function egw_getWindowOuterWidth() : number;
+function egw_getWindowOuterHeight() : number;
 /**
  *
  * @param {string} _mime current mime type
  * @returns {object|null} returns object of filemanager editor hook
  */
-declare function egw_get_file_editor_prefered_mimes(_mime : string) : {mime:object, edit:any, edit_popup?:any}|null;
+function egw_get_file_editor_prefered_mimes(_mime : string) : {mime:object, edit:any, edit_popup?:any}|null;
 
 // Youtube API golbal vars
-declare var YT : any;
-declare function onYouTubeIframeAPIReady();
+var YT : any;
+function onYouTubeIframeAPIReady();
+
+}

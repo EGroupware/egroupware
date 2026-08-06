@@ -167,7 +167,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				_wnd.document.querySelector('div#divAppboxHeader').textContent = _header;
 			}
 
-			_wnd.document.title = _wnd.document.title.replace(/[.*]$/, '['+_header+']');
+			_wnd.document.title = _wnd.document.title.replace(/\[.*\]$/, '['+_header+']');
 		},
 
 		/**
