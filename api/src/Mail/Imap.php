@@ -1596,5 +1596,29 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		return self::$hosts_with_push && (in_array($this->acc_imap_host, self::$hosts_with_push) ||
 			in_array($this->acc_imap_host.':'.$this->acc_imap_port, self::$hosts_with_push));
 	}
+
+	/**
+	 * Resolve the folder+uid tail of a row-id (see Api\Mail::splitRowID(), the caller) into
+	 * a real folder name and message UID.
+	 *
+	 * Base implementation for plain IMAP: rows are already classic-shaped (base64-encoded
+	 * folder, numeric IMAP UID) - this is also exactly what rows sourced from mail/jmap.php's
+	 * local JMAP shim (for plain IMAP accounts) look like, so no further translation is needed.
+	 * Imap\Jmap overrides this for Stalwart's own opaque JMAP ids.
+	 *
+	 * @param string $folder base64-encoded folder name, or '' if not present in the row-id
+	 * @param string $uid message UID, or '' if not present in the row-id
+	 * @return array with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap"
+	 */
+	public function splitRowID(string $folder, string $uid) : array
+	{
+		return [
+			'folder' => $folder !== '' ? base64_decode($folder) : null,
+			'msgUID' => $uid !== '' ? $uid : null,
+			'folderID' => null,
+			'emailID' => null,
+			'is_jmap' => false,
+		];
+	}
 }
 Imap::init_static();

@@ -608,7 +608,7 @@ class mail_compose
 						$_content['processedmail_id'] = explode(',',$_content['processedmail_id']);
 						foreach ($_content['processedmail_id'] as $k =>$rowid)
 						{
-							$fhA = mail_ui::splitRowID($rowid);
+							$fhA = Mail::splitRowID($rowid);
 							//$this->sessionData['uid'][] = $fhA['msgUID'];
 							//$this->sessionData['forwardedUID'][] = $fhA['msgUID'];
 							$idsForRefresh[] = mail_ui::generateRowID($fhA['profileID'], $fhA['folder'], $fhA['msgUID'], $_prependApp=false);
@@ -617,7 +617,7 @@ class mail_compose
 					}
 					if ($_content['mode']=='reply' && !empty($_content['processedmail_id']))
 					{
-						$rhA = mail_ui::splitRowID($_content['processedmail_id']);
+						$rhA = Mail::splitRowID($_content['processedmail_id']);
 						//$this->sessionData['uid'] = $rhA['msgUID'];
 						$idsForRefresh[] = mail_ui::generateRowID($rhA['profileID'], $rhA['folder'], $rhA['msgUID'], $_prependApp=false);
 						$workingFolder = $rhA['folder'];
@@ -626,7 +626,7 @@ class mail_compose
 				//the line/condition below should not be needed
 				if (empty($idsForRefresh) && !empty($_content['processedmail_id']))
 				{
-					$rhA = mail_ui::splitRowID($_content['processedmail_id']);
+					$rhA = Mail::splitRowID($_content['processedmail_id']);
 					$idsForRefresh[] = mail_ui::generateRowID($rhA['profileID'], $rhA['folder'], $rhA['msgUID'], $_prependApp=false);
 					$workingFolder = $rhA['folder'];	// need folder to refresh eg. drafts folder
 				}
@@ -1656,7 +1656,7 @@ class mail_compose
 			$replyIds = explode(',',$mail_id);
 			$mail_id = $replyIds[0];
 		}
-		$hA = mail_ui::splitRowID($mail_id);
+		$hA = Mail::splitRowID($mail_id);
 		$msgUID = $hA['msgUID'];
 		$folder = $hA['folder'];
 		$icServerID = $hA['profileID'];
@@ -1710,7 +1710,7 @@ class mail_compose
 					foreach ($replyIds as &$m_id)
 					{
 						//error_log(__METHOD__.__LINE__.' ID:'.$m_id.' Mode:'.$mode);
-						$hA = mail_ui::splitRowID($m_id);
+						$hA = Mail::splitRowID($m_id);
 						$msgUID = $hA['msgUID'];
 						$folder = $hA['folder'];
 						$content = $this->getForwardData($icServer, $folder, $msgUID, $part_id, $mode);
@@ -2921,14 +2921,14 @@ class mail_compose
 					$draft_id = mail_ui::generateRowID($this->mail_bo->profileID, $folder, $messageUid);
 					if ($content['lastDrafted'] != $draft_id && isset($content['lastDrafted']))
 					{
-						$dhA = mail_ui::splitRowID($content['lastDrafted']);
+						$dhA = Mail::splitRowID($content['lastDrafted']);
 						$duid = $dhA['msgUID'];
 						$dmailbox = $dhA['folder'];
 						// beware: do not delete the original mail as found in processedmail_id
 						$pMuid='';
 						if (!empty($content['processedmail_id']))
 						{
-							$pMhA = mail_ui::splitRowID($content['processedmail_id']);
+							$pMhA = Mail::splitRowID($content['processedmail_id']);
 							$pMuid = $pMhA['msgUID'];
 						}
 						//error_log(__METHOD__.__LINE__."#$pMuid#$pMuid!=$duid#".array2string($content['attachments']));
@@ -3138,7 +3138,7 @@ class mail_compose
 				$this->sessionData['uid']=array();
 				foreach ($_formData['processedmail_id'] as $k =>$rowid)
 				{
-					$fhA = mail_ui::splitRowID($rowid);
+					$fhA = Mail::splitRowID($rowid);
 					$this->sessionData['uid'][] = $fhA['msgUID'];
 					$this->sessionData['forwardedUID'][] = $fhA['msgUID'];
 					if (!empty($fhA['folder'])) $this->sessionData['sourceFolder'] = $fhA['folder'];
@@ -3146,13 +3146,13 @@ class mail_compose
 			}
 			if ($_formData['mode']=='reply' && !empty($_formData['processedmail_id']))
 			{
-				$rhA = mail_ui::splitRowID($_formData['processedmail_id']);
+				$rhA = Mail::splitRowID($_formData['processedmail_id']);
 				$this->sessionData['uid'] = $rhA['msgUID'];
 				$this->sessionData['messageFolder'] = $rhA['folder'];
 			}
 			if ($_formData['mode']=='composefromdraft' && !empty($_formData['processedmail_id']))
 			{
-				$dhA = mail_ui::splitRowID($_formData['processedmail_id']);
+				$dhA = Mail::splitRowID($_formData['processedmail_id']);
 				$this->sessionData['uid'] = $dhA['msgUID'];
 				$this->sessionData['messageFolder'] = $dhA['folder'];
 			}
@@ -3492,7 +3492,7 @@ class mail_compose
 		if (isset($this->sessionData['lastDrafted']))
 		{
 			$lastDrafted=array();
-			$dhA = mail_ui::splitRowID($this->sessionData['lastDrafted']);
+			$dhA = Mail::splitRowID($this->sessionData['lastDrafted']);
 			$lastDrafted['uid'] = $dhA['msgUID'];
 			$lastDrafted['folder'] = $dhA['folder'];
 			if (isset($lastDrafted['uid']) && !empty($lastDrafted['uid'])) $lastDrafted['uid']=trim($lastDrafted['uid']);
@@ -4113,7 +4113,7 @@ class mail_compose
 		$ids = is_array($_ids) ? $_ids : explode(',', $_ids);
 		if (is_array($ids) && $_serverID)
 		{
-			$parts = mail_ui::splitRowID($ids[0]);
+			$parts = Mail::splitRowID($ids[0]);
 			if ($_serverID != $parts['profileID'])
 			{
 				throw new Exception(lang('Cross account forward attachment is not allowed!'));
@@ -4121,7 +4121,7 @@ class mail_compose
 		}
 		foreach ($ids as &$id)
 		{
-			$parts = mail_ui::splitRowID($id);
+			$parts = Mail::splitRowID($id);
 			$mail_bo    = $this->mail_bo;
 			$mail_bo->openConnection();
 			$mail_bo->reopen($parts['folder']);

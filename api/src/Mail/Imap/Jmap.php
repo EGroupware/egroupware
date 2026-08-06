@@ -605,11 +605,47 @@ class Jmap extends Mail\Imap
 		{
 			$query->headerText('Message-ID', $messageId);
 		}
-		foreach($this->search($folder=$this->jmap->folderId2path($folderId), $query) as $uid)
+		foreach($this->search($folder=$this->jmapClient()->folderId2path($folderId), $query) as $uid)
 		{
 			return (int)(string)$uid ?: null;    // casting direct to (int) does NOT work / gives always 1!
 		}
 		return null;
+	}
+
+	/**
+	 * Resolve the folder+uid tail of a row-id (see Api\Mail::splitRowID(), the caller).
+	 *
+	 * A numeric $uid means this row was produced by this account's classic ajax_get_rows()
+	 * fallback (still real IMAP UIDs, same as any other IMAP account) - handle it exactly like
+	 * the base class. Otherwise $uid is one of Stalwart's own opaque JMAP Email ids, resolved
+	 * via emailId2uid().
+	 *
+	 * Known limitation, not a regression (this row-id shape isn't resolvable at all today): a
+	 * bare row-id carries no Message-ID header value, so this only succeeds when the IMAP
+	 * backend supports the EMAILID search extension - without it, emailId2uid()'s Message-ID
+	 * fallback searches for an empty header and (safely) returns null, same "not found" handling
+	 * every splitRowID() caller already has for a missing/stale row.
+	 *
+	 * @param string $folder JMAP Mailbox id, or '' if not present in the row-id
+	 * @param string $uid JMAP Email id (or numeric IMAP UID for classic-fallback rows), or '' if not present
+	 * @return array with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap"
+	 */
+	public function splitRowID(string $folder, string $uid) : array
+	{
+		if ($uid === '' || is_numeric($uid))
+		{
+			return parent::splitRowID($folder, $uid);
+		}
+		$realFolder = null;
+		$realUid = $this->emailId2uid($uid, '', $folder, $realFolder);
+
+		return [
+			'folder' => $realFolder,
+			'msgUID' => $realUid !== null ? (string)$realUid : null,
+			'folderID' => $folder,
+			'emailID' => $uid,
+			'is_jmap' => true,
+		];
 	}
 
 	/**

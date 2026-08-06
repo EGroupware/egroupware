@@ -280,7 +280,7 @@ class mail_integration {
 		else
 		{
 			// Initializing mail connection requirements
-			$hA = mail_ui::splitRowID($_rowid);
+			$hA = Mail::splitRowID($_rowid);
 			$sessionLocation = $hA['app']; // THIS is part of the row ID, we may use this for validation
 			// Check the mail app
 			if ($sessionLocation != 'mail') throw new Api\Exception\AssertionFailed(lang('Application mail expected but got: %1',$sessionLocation));

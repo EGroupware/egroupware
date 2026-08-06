@@ -317,6 +317,51 @@ class Mail
 	}
 
 	/**
+	 * Split a mail row-id (see mail_ui::generateRowID()/generateJmapRowID()) into its parts,
+	 * resolving the folder+uid tail into a real folder name and message UID.
+	 *
+	 * RowIDs come in two flavours, distinguished by whether the last segment is numeric:
+	 * - classic IMAP rows: folder is base64-encoded, msgUID is a numeric IMAP UID - this is
+	 *   also what rows from mail/jmap.php's local JMAP shim (plain IMAP accounts) look like
+	 * - JMAP-sourced rows (see generateJmapRowID): folderID is a raw JMAP Mailbox id (NOT
+	 *   base64-encoded), emailID is Stalwart's own opaque JMAP Email id (never purely numeric)
+	 *
+	 * The actual folder/uid resolution is delegated to the account's IMAP connection object
+	 * (Imap::splitRowID()/Imap\Jmap::splitRowID() override) - polymorphism, instead of this
+	 * method needing to know which backend classes exist. The connection itself comes from
+	 * self::getInstance(), reusing whatever instance/connection is already cached for that
+	 * profileID in this request rather than resolving a fresh one for every row.
+	 *
+	 * Note: like every other getInstance() caller, an invalid/inaccessible profileID does NOT
+	 * throw here - validateProfileID() (called unconditionally by the Mail constructor) silently
+	 * falls back to another of the *current user's own* valid accounts. That's existing,
+	 * shared behaviour, not something specific to this method.
+	 *
+	 * @param string|null $rowID colon-separated string in the form [app::]accountID::profileID::folder::uid
+	 * @return array with values for keys "app", "accountID", "profileID", "folder", "msgUID",
+	 *  "folderID", "emailID", "is_jmap"
+	 */
+	public static function splitRowID(?string $rowID) : array
+	{
+		$res = $rowID ? explode(self::DELIMITER, $rowID) : [];
+		// as a rowID is prefixed with "$app::", should be mail!
+		if (count($res) === 4 && is_numeric($res[0]))
+		{
+			// we have an own created rowID; prepend app=mail
+			array_unshift($res, 'mail');
+		}
+		$result = ['app' => $res[0] ?? null, 'accountID' => $res[1] ?? null, 'profileID' => $res[2] ?? null];
+
+		if (!isset($res[2]))
+		{
+			return $result + ['folder' => null, 'msgUID' => null, 'folderID' => null, 'emailID' => null, 'is_jmap' => false];
+		}
+		$profileID = (int)$res[2];
+		$mail = self::getInstance(true, $profileID, false);
+		return $result + $mail->icServer->splitRowID((string)($res[3] ?? ''), (string)($res[4] ?? ''));
+	}
+
+	/**
 	 * This method tries to fix alias address lacking domain part
 	 * by trying to add domain part extracted from given reference address
 	 *

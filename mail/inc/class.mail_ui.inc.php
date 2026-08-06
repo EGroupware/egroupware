@@ -965,7 +965,7 @@ class mail_ui
 		// Check active profile and change it if it's neccessary
 		if (is_array($_items[0]))
 		{
-			$id_parts = self::splitRowID($_items[0]['row_id']);
+			$id_parts = Mail::splitRowID($_items[0]['row_id']);
 			if ($id_parts['profileID'] && $id_parts['profileID'] != $this->mail_bo->profileID)
 			{
 				$this->changeProfile($id_parts['profileID']);
@@ -984,7 +984,7 @@ class mail_ui
 
 		foreach ($_items as &$params)
 		{
-			$id_parts = self::splitRowID($params['row_id']);
+			$id_parts = Mail::splitRowID($params['row_id']);
 			// Current Mailbox
 			$mailbox = $id_parts['folder'];
 			$messages[] = $params['row_id'];
@@ -1803,7 +1803,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$sortResult = array();
 				$uids = array_map(function($row_id)
 				{
-					return self::splitRowID($row_id)['msgUID'];
+					return Mail::splitRowID($row_id)['msgUID'];
 				}, (array)$query['col_filter']['row_id']) ?: null;
 				// fetch headers
 				$sortResultwH = $mail_ui->mail_bo->getHeaders(
@@ -1897,11 +1897,11 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * function generateJmapRowID - create a unique rowID for a JMAP-sourced row (see splitRowID)
+	 * function generateJmapRowID - create a unique rowID for a JMAP-sourced row (see Api\Mail::splitRowID())
 	 *
 	 * Unlike generateRowID(), $_folderID is a JMAP Mailbox id, NOT base64-encoded (it's already
 	 * an opaque id without special characters), and $_emailID is the JMAP Email.id, NOT a
-	 * numeric IMAP UID - that's exactly what lets splitRowID() tell the two shapes apart.
+	 * numeric IMAP UID - that's exactly what lets Api\Mail::splitRowID() tell the two shapes apart.
 	 *
 	 * @param integer $_profileID profile ID for the rowid to be used
 	 * @param string $_folderID JMAP Mailbox id
@@ -1912,42 +1912,6 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	static function generateJmapRowID($_profileID, $_folderID, $_emailID, $_prependApp=false)
 	{
 		return ($_prependApp?'mail'.self::$delimiter:'').trim($GLOBALS['egw_info']['user']['account_id']).self::$delimiter.$_profileID.self::$delimiter.$_folderID.self::$delimiter.$_emailID;
-	}
-
-	/**
-	 * function splitRowID - split the rowID into its parts
-	 *
-	 * RowIDs come in two flavours, distinguished by whether the last segment is numeric:
-	 * - classic IMAP rows: folder is base64-encoded, msgUID is a numeric IMAP UID
-	 * - JMAP-sourced rows (see generateJmapRowID): folderID is a raw JMAP Mailbox id (NOT
-	 *   base64-encoded), emailID is an opaque JMAP Email id (never purely numeric)
-	 *
-	 * @param string|null $_rowID string - a colon separated string in the form accountID:profileID:folder:message_uid
-	 * @return array with values for keys "app", "accountID", "profileID", "folder", "msgUID",
-	 *  "folderID", "emailID", "is_jmap"
-	 */
-	static function splitRowID(?string $_rowID)
-	{
-		$res = $_rowID ? explode(self::$delimiter, $_rowID) : [];
-		// as a rowID is prefixed with "$app::", should be mail!
-		if (count($res) === 4 && is_numeric($res[0]))
-		{
-			// we have an own created rowID; prepend app=mail
-			array_unshift($res,'mail');
-		}
-		// classic IMAP UIDs are always numeric; JMAP Email ids are opaque, non-numeric strings
-		$is_jmap = isset($res[4]) && $res[4] !== '' && !is_numeric($res[4]);
-
-		return [
-			'app' => $res[0]??null,
-			'accountID' => $res[1]??null,
-			'profileID' => $res[2]??null,
-			'folder' => !$is_jmap && !empty($res[3]) ? base64_decode($res[3]) : null,
-			'msgUID' => !$is_jmap ? ($res[4]??null) : null,
-			'folderID' => $is_jmap ? ($res[3]??null) : null,
-			'emailID' => $is_jmap ? ($res[4]??null) : null,
-			'is_jmap' => $is_jmap,
-		];
 	}
 
 	/**
@@ -2313,7 +2277,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if(isset($_GET['id'])) $rowID	= $_GET['id'];
 		if(isset($_GET['part'])) $partID = $_GET['part'];
 
-		$hA = self::splitRowID($rowID);
+		$hA = Mail::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		$icServerID = $hA['profileID'];
@@ -2370,7 +2334,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$partID = $_requesteddata['part'] ?? null;
 		$preventRedirect   = isset($_requesteddata['mode']) && in_array($_requesteddata['mode'], ['display', 'print']);
 
-		$hA = self::splitRowID($rowID);
+		$hA = Mail::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		$icServerID = $hA['profileID'];
@@ -2629,7 +2593,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				if (strtoupper($value['mimeType']) == 'APPLICATION/OCTET-STREAM') $value['mimeType'] = Api\MimeMagic::filename2mime($attachmentHTML[$key]['filename']);
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype'] = Api\MimeMagic::mime2label($value['mimeType']);
-				$hA = self::splitRowID($rowID);
+				$hA = Mail::splitRowID($rowID);
 				$uid = $hA['msgUID'];
 				$mailbox = $hA['folder'];
 				$acc_id = $hA['profileID'];
@@ -2921,7 +2885,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		if(!empty($_GET['id']))
 		{
-			$hA = self::splitRowID($_GET['id']);
+			$hA = Mail::splitRowID($_GET['id']);
 			$uid = $hA['msgUID'] ?? null;
 			$mailbox = $hA['folder'] ?? null;
 			$icServerID = $hA['profileID'] ?? null;
@@ -3031,7 +2995,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if(isset($_GET['part'])) $partID = $_GET['part'];
 		if (isset($_GET['location'])&& ($_GET['location']=='display'||$_GET['location']=='filemanager')) $display	= $_GET['location'];
 
-		$hA = self::splitRowID($rowID);
+		$hA = Mail::splitRowID($rowID);
 		$uid = $hA['msgUID'];
 		$mailbox = $hA['folder'];
 		$icServerID = $hA['profileID'];
@@ -3160,7 +3124,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$preservedServerID = $this->mail_bo->profileID;
 		foreach((array)$ids as $id)
 		{
-			$hA = self::splitRowID($id);
+			$hA = Mail::splitRowID($id);
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
 			$icServerID = $hA['profileID'];
@@ -3272,7 +3236,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$getParams = function ($id) {
 			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
 			$lId = implode('::',array($app,$user,$serverID,$mailbox,$uid));
-			$hA = mail_ui::splitRowID($lId);
+			$hA = Mail::splitRowID($lId);
 			return array(
 				'is_winmail' => $is_winmail == "null" || !$is_winmail?false:$is_winmail,
 				'user' => $user,
@@ -3383,7 +3347,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		$rememberServerID = $this->mail_bo->profileID;
 		if(!is_numeric($message_id))
 		{
-			$hA = self::splitRowID($message_id);
+			$hA = Mail::splitRowID($message_id);
 			$message_id = $hA['msgUID'];
 			$mailbox = $hA['folder'];
 			$icServerID = $hA['profileID'];
@@ -3960,7 +3924,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function ajax_saveModifiedMessageSubject ($_rowID, $_subject)
 	{
 		$response = Api\Json\Response::get();
-		$idData = self::splitRowID($_rowID);
+		$idData = Mail::splitRowID($_rowID);
 		$folder = $idData['folder'];
 		try {
 			$raw = $this->mail_bo->getMessageRawBody($idData['msgUID'],'', $folder);
@@ -4248,7 +4212,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 		if (!$_htmloptions && !empty($_GET['_htmloptions'])) $_htmloptions = $_GET['_htmloptions'];
 		if(Mail::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions");
 		if (empty($_messageID)) return "";
-		$uidA = self::splitRowID($_messageID);
+		$uidA = Mail::splitRowID($_messageID);
 		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 		$messageID = $uidA['msgUID'];
 		$icServerID = $uidA['profileID'];
@@ -4642,7 +4606,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	{
 		$response = Api\Json\Response::get();
 
-		$idParts = self::splitRowID($_rowid);
+		$idParts = Mail::splitRowID($_rowid);
 		$uid = $idParts['msgUID'];
 		$mbox = $idParts['folder'];
 
@@ -5290,7 +5254,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function ajax_sendMDN($_messageList)
 	{
 		if(Mail::$debug) error_log(__METHOD__."->".array2string($_messageList));
-		$uidA = self::splitRowID($_messageList['msg'][0]);
+		$uidA = Mail::splitRowID($_messageList['msg'][0]);
 		if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
 		{
 			$this->changeProfile($uidA['profileID']);
@@ -5320,7 +5284,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (isset($_messageList['all']) && $_messageList['all'])
 			{
 				// we have both messageIds AND allFlag folder information
-				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$uidA = Mail::splitRowID($_messageList['msg'][0]);
 				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
 				{
 					$this->changeProfile($uidA['profileID']);
@@ -5461,7 +5425,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 					{
 						if(Mail::$debug) error_log(__METHOD__.__LINE__." $_flag all ".array2string($filter));
 						$alreadyFlagged=true;
-						$uidA = self::splitRowID($_messageList['msg'][0]);
+						$uidA = Mail::splitRowID($_messageList['msg'][0]);
 						$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 						$this->mail_bo->flagMessages($_flag, 'all', $folder);
 					}
@@ -5469,7 +5433,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			else
 			{
-				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$uidA = Mail::splitRowID($_messageList['msg'][0]);
 				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
 				{
 					$this->changeProfile($uidA['profileID']);
@@ -5480,7 +5444,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			{
 				foreach($_messageList['msg'] as $rowID)
 				{
-					$hA = self::splitRowID($rowID);
+					$hA = Mail::splitRowID($rowID);
 					$messageList[] = $hA['msgUID'];
 				}
 				if(Mail::$debug) error_log(__METHOD__.__LINE__." $_flag in $folder:".array2string(((isset($_messageList['all']) && $_messageList['all']) ? 'all':$messageList)));
@@ -5541,7 +5505,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (isset($_messageList['all']) && $_messageList['all'])
 			{
 				// we have both messageIds AND allFlag folder information
-				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$uidA = Mail::splitRowID($_messageList['msg'][0]);
 				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
 				{
 					$this->changeProfile($uidA['profileID']);
@@ -5615,7 +5579,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			}
 			else
 			{
-				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$uidA = Mail::splitRowID($_messageList['msg'][0]);
 				if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
 				{
 					$this->changeProfile($uidA['profileID']);
@@ -5623,7 +5587,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 				foreach($_messageList['msg'] as $rowID)
 				{
-					$hA = self::splitRowID($rowID);
+					$hA = Mail::splitRowID($rowID);
 					$messageList[] = $hA['msgUID'];
 				}
 				try
@@ -5711,7 +5675,7 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 			if (isset($_messageList['all']) && $_messageList['all'])
 			{
 				// we have both messageIds AND allFlag folder information
-				$uidA = self::splitRowID($_messageList['msg'][0]);
+				$uidA = Mail::splitRowID($_messageList['msg'][0]);
 				$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 				$sourceProfileID = $uidA['profileID'];
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
@@ -5792,13 +5756,13 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 				$messageList = array();
 				while(count($_messageList['msg']) > 0)
 				{
-					$uidA = self::splitRowID($_messageList['msg'][0]);
+					$uidA = Mail::splitRowID($_messageList['msg'][0]);
 					$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
 					$sourceProfileID = $uidA['profileID'];
 					$moveList = array();
 					foreach($_messageList['msg'] as $rowID)
 					{
-						$hA = self::splitRowID($rowID);
+						$hA = Mail::splitRowID($rowID);
 
 						// If folder changes, stop and move what we've got
 						if($hA['folder'] != $folder) break;
