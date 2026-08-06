@@ -367,7 +367,7 @@ class admin_passwordreset
 					case 'openid.access_tokens':
 						// We need to get all access tokens, no easy way to delete by account
 						$token_repo = new AccessTokenRepository();
-						$token_repo->revokeAccessToken(['account_id' => $action['selected']]);
+						$token_repo->revokeAccessTokenByQuery(['account_id' => $action['selected']]);
 						$count = $GLOBALS['egw']->db->affected_rows();
 						$msg[] = ($count > 1 ? $count.' ' : '') .  lang('Access Token revoked.');
 						break;
