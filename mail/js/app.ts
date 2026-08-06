@@ -1369,6 +1369,27 @@ export class MailApp extends EgwApp
 					}
 				},data));
 			}
+			// Rows fetched via client-side JMAP (see mail/js/jmap.ts) don't carry a resolved
+			// attachmentsBlock (building it needs a server-side mime_data/download token via
+			// Link::set_data(), not just JMAP metadata) - fetch it on demand, same as the
+			// winmail.dat resolution above, whenever the row indicates it has attachment(s).
+			else if (data && Array.isArray(data.attachmentsBlock) && data.attachmentsBlock.length === 0
+				&& data.attachments && data.attachments !== '&nbsp;')
+			{
+				attachmentsBlock.getDOMNode().classList.add('loading');
+				this.egw.jsonq('mail.mail_ui.ajax_fetchAttachments', [rowId], (_data) =>
+				{
+					attachmentsBlock.getDOMNode().classList.remove('loading');
+					if (_data && Array.isArray(_data.attachmentsBlock) && _data.attachmentsBlock.length)
+					{
+						data.attachmentsBlock = _data.attachmentsBlock;
+						this.setupViewAttachmentActions(data, sel_options);
+						// Update client cache to avoid re-fetching the attachment block again
+						egw.dataStoreUID(data.uid, data);
+						if (!egwIsMobile() && mailPreview) mailPreview.set_value({content:data, sel_options:sel_options});
+					}
+				});
+			}
 		}
 
 		if (data.toaddress||data.fromaddress)

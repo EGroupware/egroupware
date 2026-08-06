@@ -4623,6 +4623,36 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
+	 * Fetch the attachmentsBlock for a single row on demand
+	 *
+	 * Rows fetched via client-side JMAP (see mail/js/jmap.ts and mail/src/JmapShim.php) only
+	 * carry a "does it have attachments" flag, not a resolved attachmentsBlock - building that
+	 * needs a server-side download token (Link::set_data(), see createAttachmentBlock()), which
+	 * isn't something the JMAP metadata alone can provide. The preview panel (app.ts's
+	 * mail_preview()) calls this on demand, once, for whichever single row is being previewed.
+	 *
+	 * @param string $_rowid row id from nm
+	 * @return void
+	 */
+	function ajax_fetchAttachments($_rowid)
+	{
+		$response = Api\Json\Response::get();
+
+		$idParts = Mail::splitRowID($_rowid);
+		if ($idParts['profileID'] && $idParts['profileID'] != $this->mail_bo->profileID)
+		{
+			$this->changeProfile($idParts['profileID']);
+		}
+		$uid = $idParts['msgUID'];
+		$mbox = $idParts['folder'];
+
+		$attachments = $uid && $mbox ? $this->mail_bo->getMessageAttachments($uid, null, null, false, true, true, $mbox) : [];
+		$response->data([
+			'attachmentsBlock' => is_array($attachments) ? self::createAttachmentBlock($attachments, $_rowid, $uid, $mbox) : [],
+		]);
+	}
+
+	/**
 	 * move folder
 	 *
 	 * @param string _folderName  folder to vove

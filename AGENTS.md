@@ -62,6 +62,10 @@ Primary expectations:
 See `doc/etemplate2/pages/tutorials/web-component-authoring.md` for information on coding standards and best practices
 for webComponents.
 
+Do not introduce new uses of jQuery (`jQuery.proxy`, `$(...)`, etc.) in TypeScript/JavaScript. Existing jQuery usage
+may remain until it's naturally touched, but new code should use plain JS/TS (arrow functions for `this`-binding,
+native DOM APIs, etc.) instead.
+
 ## Testing
 
 See `doc/ai/testing.md`.

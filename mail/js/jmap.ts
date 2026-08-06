@@ -565,8 +565,8 @@ export class MailJmap
 	 */
 	private email2row(email : any, profileID : string, mailboxId : string) : any
 	{
-		const address = (list : { name? : string, email : string }[]) =>
-			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email).join(', ');
+		const addressList = (list : { name? : string, email : string }[]) =>
+			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
 
 		const keywords : Record<string, boolean> = email.keywords || {};
 		const flags : Record<string, string> = {};
@@ -610,18 +610,26 @@ export class MailJmap
 		else if (keywords['$flagged']) status_icon = 'mail_flagged_seen';
 		else if (!keywords['$seen']) status_icon = 'mail_unseen';
 
-		const fromaddress = address(email.from);
-		const toaddress = address(email.to);
+		// mail_ui::header2gridelements()'s convention (relied on by app.ts's mail_preview(), which
+		// concats "primary address" + "additional addresses" into one list for the preview panel):
+		// toaddress/fromaddress hold only the *first* address as a single string, any further
+		// recipients go in additionaltoaddress/additionalfromaddress as one string each. cc/bcc
+		// have no such split - there's no single-value list column for them, so every recipient
+		// goes in ccaddress/bccaddress as one string each.
+		const fromList = addressList(email.from);
+		const toList = addressList(email.to);
 
 		return {
 			row_id: this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id,
 			uid: email.id,
 			subject: email.subject || '(' + this.egw.lang('no subject') + ')',
-			fromaddress,
-			toaddress,
-			ccaddress: address(email.cc),
-			bccaddress: address(email.bcc),
-			address: fromaddress,
+			fromaddress: fromList[0] || '',
+			additionalfromaddress: fromList.slice(1),
+			toaddress: toList[0] || '',
+			additionaltoaddress: toList.slice(1),
+			ccaddress: addressList(email.cc),
+			bccaddress: addressList(email.bcc),
+			address: fromList[0] || '',
 			date: email.sentAt || email.receivedAt,
 			modified: email.receivedAt,
 			size: email.size,
