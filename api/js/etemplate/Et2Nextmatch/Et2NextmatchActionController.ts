@@ -305,6 +305,18 @@ export class Et2NextmatchActionController
 		{
 			return false;
 		}
+
+		// executeActionImplementation() below runs against `this.objectManager`, which
+		// is flagged EGW_AO_FLAG_IS_CONTAINER - so its own forceSelection() gate never
+		// fires (that only applies when a leaf row object executes an action on itself,
+		// see the popup/default-action/placeholder paths elsewhere in this file, which
+		// already select their target row - or call forceSelection() directly - before
+		// executing). Arrow-key navigation moves the active row without touching
+		// selection, so without an equivalent guard here, a shortcut like Delete would
+		// silently act on whatever was last explicitly selected (e.g. by an earlier
+		// click) rather than the row the user is now focused on.
+		this.forceActiveRowSelected();
+
 		return !!this.objectManager?.executeActionImplementation?.({
 			keyEvent: {
 				keyCode,
@@ -313,6 +325,25 @@ export class Et2NextmatchActionController
 				alt: event.altKey
 			}
 		}, "popup", EGW_AO_EXEC_SELECTED);
+	}
+
+	/**
+	 * Mirror of EgwActionObject.forceSelection() for the container-level
+	 * shortcut path: if the row currently focused via keyboard/pointer navigation
+	 * isn't part of the current selection, collapse the selection down to just that
+	 * row before a shortcut acts on "the selected rows". Left untouched when there's
+	 * no active row, the active row is already selected, or everything is selected -
+	 * so an explicit multi-selection that already includes the active row (built via
+	 * ctrl-click or the Space-bar toggle) survives intact.
+	 */
+	private forceActiveRowSelected() : void
+	{
+		const activeRowId = this.host.getActiveRowId?.();
+		if(!activeRowId || this.allSelected || this.selectedRowIds.includes(activeRowId))
+		{
+			return;
+		}
+		this.host.selectSingleRow?.(activeRowId);
 	}
 
 	/**

@@ -5782,6 +5782,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._moveActiveRow(rowIndex, true);
 	}
 
+	/**
+	 * Read-only accessor for the row keyboard/pointer navigation currently considers
+	 * "active" (focused). Callers that need to reconcile focus against selection -
+	 * e.g. before executing a keyboard shortcut - use this instead of reaching into
+	 * the private `activeRowIndex`/`activeRowId` bookkeeping directly.
+	 */
+	getActiveRowId() : string | null
+	{
+		return this.activeRowId;
+	}
+
 	clearActiveRow()
 	{
 		this.activeRowIndex = -1;

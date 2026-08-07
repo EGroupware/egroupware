@@ -404,6 +404,70 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - A shortcut runs against "the selected rows", but arrow-key navigation only
+	 *   moves the active row without changing selection.  Mirroring legacy
+	 *   EgwActionObject.forceSelection(), the active row must be folded into the
+	 *   selection before the shortcut executes whenever it isn't already part of it -
+	 *   otherwise a shortcut like Delete would silently act on a stale, previously
+	 *   clicked/selected row instead of the row currently shown as active.
+	 *
+	 * Setup strategy:
+	 * - Provide a Delete action and a host stub exposing getActiveRowId()/selectSingleRow().
+	 * - Exercise three selection states: active row not selected, active row already
+	 *   part of an explicit multi-selection, and "all rows" selected.
+	 *
+	 * Pass criteria:
+	 * - selectSingleRow() is called only in the first case; the other two leave the
+	 *   existing selection untouched.
+	 */
+	it("folds the active row into selection before running a shortcut, unless it already qualifies", () =>
+	{
+		const controller : any = new Et2NextmatchActionController({} as any);
+		controller.actionManager = {
+			children: [{
+				id: "delete",
+				shortcut: {keyCode: 46, shift: false, ctrl: false, alt: false}
+			}]
+		};
+		controller.objectManager = {executeActionImplementation: sinon.stub().returns(true)};
+
+		const deleteEvent = () =>
+		{
+			const event = new KeyboardEvent("keydown", {key: "Delete"});
+			Object.defineProperty(event, "keyCode", {value: 46});
+			return event;
+		};
+
+		// Active row (row-2) was reached by arrow keys, not clicked/selected - a
+		// previously clicked row-0 is still the only thing in `selectedRowIds`.
+		controller.host = {getActiveRowId: () => "row-2", selectSingleRow: sinon.stub()};
+		controller.selectedRowIds = ["row-0"];
+		controller.allSelected = false;
+		controller.handleShortcut(deleteEvent());
+		assert.isTrue(controller.host.selectSingleRow.calledOnceWith("row-2"),
+			"active row not in the selection should be folded in before executing");
+
+		// Active row is already part of an explicit multi-selection (e.g. built via
+		// ctrl-click or the Space-bar toggle) - must survive untouched.
+		controller.host = {getActiveRowId: () => "row-2", selectSingleRow: sinon.stub()};
+		controller.selectedRowIds = ["row-0", "row-2"];
+		controller.allSelected = false;
+		controller.handleShortcut(deleteEvent());
+		assert.isFalse(controller.host.selectSingleRow.called,
+			"active row already selected should not collapse an existing multi-selection");
+
+		// "Select all" doesn't enumerate every id in selectedRowIds - must not be
+		// mistaken for "active row is unselected".
+		controller.host = {getActiveRowId: () => "row-2", selectSingleRow: sinon.stub()};
+		controller.selectedRowIds = [];
+		controller.allSelected = true;
+		controller.handleShortcut(deleteEvent());
+		assert.isFalse(controller.host.selectSingleRow.called,
+			"select-all should not be collapsed just because the active row isn't literally listed");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Selecting a popup action executes the configured handler with the selected row object.
 	 *
 	 * Setup strategy:

@@ -1196,6 +1196,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		(this._findGridContainingRow(rowId) || this._datagrid)?.focusRowById(rowId);
 	}
 
+	/**
+	 * Id of whichever row - in the parent grid or an expanded child grid - keyboard/pointer
+	 * navigation currently considers active.  `_syncActiveGrid` guarantees at most one grid
+	 * has a non-null active row at a time, so the first match found is authoritative.
+	 */
+	getActiveRowId() : string | null
+	{
+		return this._datagrid?.getActiveRowId() ||
+			this._childGrids().map((grid) => grid.getActiveRowId()).find((rowId) => !!rowId) ||
+			null;
+	}
+
 	/** Clear the displayed selection without exposing the action controller. */
 	clearSelection()
 	{
