@@ -295,10 +295,7 @@ export class MailApp extends EgwApp
 				{
 					jQuery(nm).on('refresh', (_event) =>
 					{
-						// Et2Nextmatch.refresh() dispatches a plain DOM CustomEvent (no jQuery
-						// trigger-with-extra-args), so _widget/_row_id/_type are never actually
-						// supplied - use the nm reference captured above instead
-						if (!self.push_active[nm.settings.foldertree.split("::")[0]])
+						if (!self.push_active[nm.activeFilters.selectedFolder.split("::")[0]])
 						{
 							// defer calls to mail_refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
 							if (!self.refresh_timeout)
