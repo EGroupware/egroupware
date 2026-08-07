@@ -4146,17 +4146,45 @@ export class MailApp extends EgwApp
 			case 'downloadOneAsFile':
 			case 'downloadAllToZip':
 				attachment = attachments[row_id];
-				let url = window.egw_webserverUrl+'/index.php?';
-				url += new URLSearchParams({
-					menuaction: action === 'downloadOneAsFile' ?
-						'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
-					mode: 'save',
-					id: attachment.mail_id,
-					part: attachment.partID,
-					is_winmail: attachment.winmailFlag,
-					smime_type: attachment.smime_type ?? ''
-				}).toString();
-				window.etemplate2.prototype.download(url);
+				const classicDownload = () =>
+				{
+					let url = window.egw_webserverUrl+'/index.php?';
+					url += new URLSearchParams({
+						menuaction: action === 'downloadOneAsFile' ?
+							'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
+						mode: 'save',
+						id: attachment.mail_id,
+						part: attachment.partID,
+						is_winmail: attachment.winmailFlag,
+						smime_type: attachment.smime_type ?? ''
+					}).toString();
+					window.etemplate2.prototype.download(url);
+				};
+				// Fast client-side JMAP path for a single attachment with a known blobId (set by
+				// mail_ui::jmapAttachmentsToLegacy(), both backends) - falls back to the classic
+				// getAttachment() URL on any failure. downloadAllToZip stays on the classic path
+				// (server-side zip assembly, not a per-file fetch).
+				if (action === 'downloadOneAsFile' && attachment.blobId)
+				{
+					let profileID : string;
+					try
+					{
+						profileID = this.jmap.messageReference(attachment.mail_id).profileID;
+					}
+					catch (e)
+					{
+						classicDownload();
+						break;
+					}
+					this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type)
+						.catch((e) =>
+						{
+							console.error('MailApp.saveAttachmentHandler(): JMAP download failed, falling back to server', e);
+							classicDownload();
+						});
+					break;
+				}
+				classicDownload();
 				break;
 			case 'forward':
 				// Give some UI feedback, this might take a second
@@ -4708,6 +4736,52 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Try the fast client-side JMAP copy path - MailJmap.copyMessages() for an explicit selection,
+	 * or copyAllMatching() for "select all matching the current filter" - within one account.
+	 * Cross-account copies fall through to the classic path (copyMessages()/copyAllMatching() both
+	 * throw for those). Returns null if not applicable (caller falls back to the unchanged classic
+	 * call directly); otherwise a Promise that either succeeds via JMAP or, on any failure, falls
+	 * back to that same classic call. Mirrors mail_tryJmapMove() exactly, minus the "move to
+	 * archive" shortcut concept, which doesn't apply to copy.
+	 */
+	private mail_tryJmapCopy(target : string, messages : any, classicCopy : () => Promise<any>) : Promise<any> | null
+	{
+		const sepIndex = target.indexOf('::');
+		const targetProfileID = sepIndex > 0 ? target.substring(0, sepIndex) : '';
+		const targetFolderPath = sepIndex > 0 ? target.substring(sepIndex + 2) : '';
+		if (!targetProfileID || !targetFolderPath)
+		{
+			return null;
+		}
+		if (messages['all'])
+		{
+			return this.jmap.copyAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath).catch((e) =>
+			{
+				console.error('MailApp.mail_tryJmapCopy(): JMAP bulk copy failed, falling back to server', e);
+				return classicCopy();
+			});
+		}
+		if (!Array.isArray(messages.msg) || !messages.msg.length)
+		{
+			return null;
+		}
+		let references : JmapMessageReference[];
+		try
+		{
+			references = messages.msg.map((id : string) => this.jmap.messageReference(id));
+		}
+		catch (e)
+		{
+			return null;
+		}
+		return this.jmap.copyMessages(references, targetProfileID, targetFolderPath).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapCopy(): JMAP copy failed, falling back to server', e);
+			return classicCopy();
+		});
+	}
+
+	/**
 	 * mail_callCopy - implementation of the copy action from drag n drop
 	 *
 	 * @param _action
@@ -4725,9 +4799,13 @@ export class MailApp extends EgwApp
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
 		var self = this;
-		egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
+		const classicCopy = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
 			.sendRequest();
 		// Server response contains refresh
+
+		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
+		// unchanged for anything else or on any failure (see mail_tryJmapCopy())
+		(this.mail_tryJmapCopy(target, messages, classicCopy) ?? classicCopy());
 	}
 
 	/**

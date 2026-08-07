@@ -653,6 +653,48 @@ export class MailJmap
 	}
 
 	/**
+	 * Download one attachment via JMAP Blob download and trigger a browser save - same
+	 * client.downloadBlob() + Blob mechanism resolveInlineImages() already uses to display cid:
+	 * images, uniformly for both backends (Stalwart's own blobId; the local shim's self-describing
+	 * one, resolved by JmapShim's download() endpoint) - no mail_ui::getAttachment() IMAP fetch.
+	 *
+	 * @param profileID
+	 * @param blobId as returned by mail_ui::jmapAttachmentsToLegacy() in the row's attachmentsBlock
+	 * @param filename suggested filename for the save dialog
+	 * @param mimeType
+	 * @throws Error on any failure - caller falls back to the classic getAttachment() URL
+	 */
+	async downloadAttachment(profileID : string, blobId : string, filename : string, mimeType : string) : Promise<void>
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const response = await this.clients[profileID].downloadBlob({
+			accountId: token.accountId,
+			blobId,
+			mimeType: mimeType || 'application/octet-stream',
+			fileName: filename || 'attachment',
+		});
+		const url = URL.createObjectURL(await response.blob());
+		try
+		{
+			const link = document.createElement('a');
+			link.href = url;
+			link.download = filename || 'attachment';
+			document.body.appendChild(link);
+			link.click();
+			link.remove();
+		}
+		finally
+		{
+			// revoke after the click has been processed, not synchronously
+			window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+		}
+	}
+
+	/**
 	 * Get a valid access-token for $profileID, requesting a fresh one from the server if needed
 	 *
 	 * The refresh-token never leaves the server: we just re-request this same bootstrap
@@ -1186,6 +1228,34 @@ export class MailJmap
 	}
 
 	/**
+	 * Copy messages to another mailbox within the SAME account, via JMAP Email/set's PatchObject
+	 * syntax (RFC 8620 §5.3) - a partial "mailboxIds/<id>": true patch *adds* the target mailbox
+	 * without touching the message's existing ones, unlike moveMessages()'s full-property
+	 * replacement. Real JMAP servers (Stalwart) support this natively, no new server code needed;
+	 * the local shim's emailSet() is extended to recognise this patch-path shape too.
+	 *
+	 * Cross-account copies are out of scope, same as moveMessages() - throws so the caller falls
+	 * back to the existing server-side ajax_copyMessages().
+	 */
+	async copyMessages(references : JmapMessageReference[], targetProfileID : string, targetFolderPath : string) : Promise<void>
+	{
+		if (!references.length || references.some(ref => ref.profileID !== targetProfileID))
+		{
+			throw new Error('MailJmap.copyMessages(): cross-account copy not supported');
+		}
+		const token = await this.ensureToken(targetProfileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const targetMailboxId = await this.mailboxId(
+			this.clients[targetProfileID], token.accountId, targetProfileID, targetFolderPath);
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.updateIds(group[0].profileID, group[0].mailboxId,
+				group.map(reference => reference.emailId), {[`mailboxIds/${targetMailboxId}`]: true})));
+	}
+
+	/**
 	 * Delete messages - always within their own account (there's no such thing as a cross-account
 	 * delete). 'trash' moves them to the account's Trash mailbox (resolved via moveMessages() from
 	 * the JMAP bootstrap's "trashFolder", see ensureToken()/mail_ui::ajax_jmapBootstrap()'s
@@ -1343,6 +1413,30 @@ export class MailJmap
 		const targetMailboxId = await this.mailboxId(client, token.accountId, targetProfileID, targetFolderPath);
 		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
 		await this.updateIds(profileID, mailboxId, ids, {mailboxIds: {[targetMailboxId]: true}});
+	}
+
+	/**
+	 * Copy every message matching the current NextMatch filter(s) to another mailbox within the
+	 * SAME account - see copyMessages() for the PatchObject mechanism. Cross-account copies are out
+	 * of scope, same as moveAllMatching().
+	 */
+	async copyAllMatching(query : JmapGetRowsQuery, targetProfileID : string, targetFolderPath : string) : Promise<void>
+	{
+		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
+		if (profileID !== targetProfileID)
+		{
+			throw new Error('MailJmap.copyAllMatching(): cross-account copy not supported');
+		}
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const client = this.clients[profileID];
+		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const targetMailboxId = await this.mailboxId(client, token.accountId, targetProfileID, targetFolderPath);
+		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
+		await this.updateIds(profileID, mailboxId, ids, {[`mailboxIds/${targetMailboxId}`]: true});
 	}
 
 	/**

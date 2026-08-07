@@ -559,11 +559,14 @@ class JmapShim
 		$add = [];
 		$remove = [];
 		// id => target folder path (base64-decoded from the mailboxIds patch's one truthy key) -
-		// a move, see class docblock's "moveMessages()" reference and the client-side caller
-		// (MailJmap.moveMessages(), mail/js/jmap.ts) - only ever sent as a full-property
-		// replacement ({"mailboxIds": {newId: true}}), never a "mailboxIds/oldId" patch-path, so
-		// there's always exactly one truthy entry to look at
+		// a move (full-property replacement, {"mailboxIds": {newId: true}}), see
+		// MailJmap.moveMessages() (mail/js/jmap.ts) - there's always exactly one truthy entry to
+		// look at
 		$moves = [];
+		// id => target folder path, from a "mailboxIds/<id>": true PatchObject path (RFC 8620
+		// §5.3) - a copy (adds the target mailbox without touching existing ones), see
+		// MailJmap.copyMessages() (mail/js/jmap.ts)
+		$copies = [];
 		$allowed = self::writableKeywords();
 
 		foreach ((array)($args['update'] ?? []) as $id => $patch)
@@ -576,6 +579,7 @@ class JmapShim
 			}
 			$operations = [];
 			$moveTo = null;
+			$copyTo = null;
 			foreach ($patch as $path => $value)
 			{
 				if ((string)$path === 'mailboxIds' && is_array($value))
@@ -587,6 +591,11 @@ class JmapShim
 						continue 2;
 					}
 					$moveTo = self::folderPath((string)$target);
+					continue;
+				}
+				if (str_starts_with((string)$path, 'mailboxIds/') && $value === true)
+				{
+					$copyTo = self::folderPath(substr((string)$path, strlen('mailboxIds/')));
 					continue;
 				}
 				if (!str_starts_with((string)$path, 'keywords/'))
@@ -616,6 +625,10 @@ class JmapShim
 			if ($moveTo !== null)
 			{
 				$moves[$moveTo][] = $id;
+			}
+			if ($copyTo !== null)
+			{
+				$copies[$copyTo][] = $id;
 			}
 			$updated[$id] = null;
 		}
@@ -674,6 +687,15 @@ class JmapShim
 			$imap->copy($mailbox, $targetMailbox, [
 				'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
 				'move' => true,
+			]);
+		}
+		// same IMAP COPY primitive, without 'move' - the message stays in $mailbox too, see
+		// MailJmap.copyMessages()
+		foreach ($copies as $targetFolder => $ids)
+		{
+			$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+			$imap->copy($mailbox, $targetMailbox, [
+				'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
 			]);
 		}
 		if ($destroyed)
