@@ -153,7 +153,7 @@ export async function createEgwLinksPrefsUserEnv(prefs : object = {}) : Promise<
 	// bare global used by preferences.show_preferences()'s "not supported" branch
 	(env.window as any).egw_message = () => {};
 
-	for (const file of ['egw_preferences.ts', 'egw_user.ts', 'egw_config.ts', 'egw_lang.ts', 'egw_links.js'])
+	for (const file of ['egw_preferences.ts', 'egw_user.ts', 'egw_config.ts', 'egw_lang.ts', 'egw_links.ts'])
 	{
 		await loadScript(env.window.document, '/api/js/jsapi/'+file, 'module');
 	}

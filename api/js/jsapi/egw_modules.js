@@ -11,7 +11,7 @@ import "./egw_core";
 import "./egw_debug.js";
 import "./egw_preferences";
 import "./egw_lang";
-import "./egw_links.js";
+import "./egw_links";
 import "./egw_open";
 import "./egw_user";
 import "./egw_config";

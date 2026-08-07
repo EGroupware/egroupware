@@ -14,10 +14,158 @@
 */
 import './egw_core';
 
+export interface LinksModule
+{
+	/**
+	 * Check if _app is in the registry and has an entry for _name
+	 *
+	 * If the returned value is an object, it will always be a clone, not the registry itself!
+	 * (So no need to run this.deepExtend() or jQuery.extend(true, ...) on it.)
+	 *
+	 * @param _app app-name
+	 * @param _name name / key in the registry, e.g. 'view' or undefined to get whole registry for _app
+	 * @return false if _app or attribute _name is not registered, otherwise value for attribute _name or whole registry for _app
+	 */
+	link_get_registry(_app : string, _name? : string) : any;
+
+	/**
+	 * jQuery.extend(true, ...) alternative
+	 *
+	 * Do NOT specify true as first parameter!
+	 *
+	 * For jQuery.extend(out, obj1, ...) use: {...out, ...obj1, ...}
+	 *
+	 * @param out
+	 * @param arguments_
+	 */
+	deepExtend(out : any, ...arguments_ : any[]) : any;
+
+	/**
+	 * Get mime-type information from app-registry
+	 *
+	 * We prefer a full match over a wildcard like 'text/*' (written as regualr expr. "/^text\\//"
+	 *
+	 * @param _type
+	 * @param _app_or_num default 1, return 1st, 2nd, n-th match, or match from application _app_or_num only
+	 * @return with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
+	 */
+	get_mime_info(_type : string, _app_or_num? : number|string) : {menuaction : string, mime_id? : string, mime_url? : string, mime_popup? : string}|null;
+
+	/**
+	 * Get handler (link-data) for given path and mime-type
+	 *
+	 * @param _path vfs path, egw_link::set_data() id or
+	 *	object with attr path, optional download_url or id, app2 and id2 (path=/apps/app2/id2/id)
+	 * @param _type mime-type, if not given in _path object
+	 * @param _app_or_num default 1, use 1st, 2nd, n-th match, or match from application _app_or_num only
+	 * @return string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
+	 */
+	mime_open(_path : string|object, _type : string, _app_or_num? : number|string) : string|object;
+
+	/**
+	 * Get list of link-aware apps the user has rights to use
+	 *
+	 * @param _must_support capability the apps need to support, eg. 'add', default ''=list all apps
+	 * @return with app => title pairs
+	 */
+	link_app_list(_must_support? : string) : object;
+
+	/**
+	 * Set link registry
+	 *
+	 * @param _registry whole registry or entries for just one app
+	 * @param _app
+	 * @param _need_clone _images need to be cloned, as it is from different window context
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_link_registry(_registry : object, _app? : string, _need_clone? : boolean) : void;
+
+	/**
+	 * Generate a url which supports url or cookies based sessions
+	 *
+	 * Please note, the values of the query get url encoded!
+	 *
+	 * @param _url a url relative to the egroupware install root, it can contain a query too or
+	 *	full url containing a schema and "://"
+	 * @param _extravars query string arguements as string or array (prefered)
+	 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
+	 * @return generated url
+	 */
+	link(_url : string, _extravars? : string|object) : string;
+
+	/**
+	 * Query a title of _app/_id
+	 *
+	 * Deprecated default of returning string or null for no callback, will change in future to always return a Promise!
+	 *
+	 * @param _app
+	 * @param _id
+	 * @param _callback true to always return a promise, false: just lookup title-cache or optional callback
+	 * 	NOT giving either a boolean value or a callback is deprecated!
+	 * @param _context context for the callback
+	 * @param _force_reload true load again from server, even if already cached
+	 * @return Promise for _callback given (function or true), string with title if it exists in local cache or null if not
+	 */
+	link_title(_app : string, _id : string|number, _callback? : Function|boolean, _context? : object, _force_reload? : boolean) : Promise<string>|string|null;
+	link_title(_app : string, _id : string|number, _callback : true) : Promise<string>;
+	link_title(_app : string, _id : string|number, _callback? : false) : string|null;
+
+	/**
+	 * Unset a (cached) link-title or all link-titles of an application
+	 *
+	 * @param _app
+	 * @param _id
+	 */
+	unset_link_title(_app : string, _id? : string) : void;
+
+	/**
+	 * Callback to add all current title requests
+	 *
+	 * @param _params of parameters, only first parameter is used
+	 */
+	link_title_before_send(_params : any[]) : void;
+
+	/**
+	 * Callback for server response
+	 *
+	 * @param _response _app => _id => title
+	 */
+	link_title_callback(_response : object) : void;
+
+	/**
+	 * Create quick add selectbox
+	 *
+	 * @param _parent parent or selector of it to create selectbox in
+	 */
+	link_quick_add(_parent : HTMLElement|string) : void;
+
+	/**
+	 * Check if a mimetype is editable
+	 *
+	 * Check mimetype & user preference
+	 */
+	isEditable(mime : string) : boolean;
+
+	/**
+	 * Check if a mimetype is openable in Collabora
+	 * (without needing to have Collabora JS loaded)
+	 *
+	 * @param mime
+	 */
+	isCollaborable(mime : string) : string|false;
+}
+
+declare global
+{
+	interface IegwGlobal extends LinksModule
+	{
+	}
+}
+
 /**
  * @augments Class
  */
-egw.extend('links', egw.MODULE_GLOBAL, function()
+egw.extend('links', egw.MODULE_GLOBAL, function() : LinksModule
 {
 	"use strict";
 
@@ -26,14 +174,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.open() or egw.set_link_registry()
 	 */
-	let link_registry = undefined;
+	let link_registry : any = undefined;
 
 	/**
 	 * Local cache for link-titles
 	 *
 	 * @access private, use egw.link_title(_app, _id[, _callback, _context])
 	 */
-	let title_cache = {};
+	let title_cache : {[app : string] : {[id : string] : string}} = {};
 
 	/**
 	 * Queue for link_title requests
@@ -41,14 +189,14 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 	 * @access private, use egw.link_title(_app, _id[, _callback, _context])
 	 * @var object _app._id.[{callback: _callback, context: _context}[, ...]]
 	 */
-	let title_queue = {};
+	let title_queue : {[app : string] : {[id : string] : {callback : Function, context : any}[]}} = {};
 
 	/**
 	 * Uid of active jsonq request, to not start another one, as we get notified
 	 * before it's actually send to the server via our link_title_before_send callback.
 	 * @access private
 	 */
-	let title_uid = null;
+	let title_uid : any = null;
 
 	/**
 	 * Encode query parameters
@@ -58,7 +206,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 	 * @param array? _query
 	 * @return array
 	 */
-	function urlencode(_values, _prefix, _query)
+	function urlencode(_values : any, _prefix? : string, _query? : string[]) : string[]
 	{
 		if (typeof _query === 'undefined') _query = [];
 		if (Array.isArray(_values))
@@ -95,7 +243,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @return {any} false if _app or attribute _name is not registered, otherwise value for attribute _name or whole registry for _app
 		 * @memberOf egw
 		 */
-		link_get_registry: function(_app, _name)
+		link_get_registry: function(this : any, _app : string, _name? : string) : any
 		{
 			if (typeof link_registry !== 'object')
 			{
@@ -156,7 +304,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @param {Array<any>} arguments_
 		 * @return {{}|*}
 		 */
-		deepExtend: function (out, ...arguments_)
+		deepExtend: function (this : any, out : any, ...arguments_ : any[]) : any
 		{
 			if (!out) {
 				return {};
@@ -174,7 +322,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 							out[key] = this.deepExtend(out[key], value);
 							break;
 						case '[object Array]':
-							out[key] = this.deepExtend(new Array(value.length), value);
+							out[key] = this.deepExtend(new Array((<any>value).length), value);
 							break;
 						default:
 							out[key] = value;
@@ -194,10 +342,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @param {number|string} _app_or_num default 1, return 1st, 2nd, n-th match, or match from application _app_or_num only
 		 * @return {object} with values for keys 'menuaction', 'mime_id' (path) or 'mime_url' and options 'mime_popup' and other values to pass one
 		 */
-		get_mime_info: function(_type, _app_or_num)
+		get_mime_info: function(_type : string, _app_or_num? : any) : any
 		{
 			if (!_app_or_num) _app_or_num = 1;
-			let wildcard_mime;
+			let wildcard_mime : any;
 			for(const app of isNaN(_app_or_num) ? [_app_or_num] : Object.keys(link_registry))
 			{
 				const reg = link_registry[app];
@@ -232,9 +380,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @param {number|string} _app_or_num default 1, use 1st, 2nd, n-th match, or match from application _app_or_num only
 		 * @return {string|object} string with EGw relative link, array with get-parameters for '/index.php' or null (directory and not filemanager access)
 		 */
-		mime_open: function(_path, _type, _app_or_num)
+		mime_open: function(this : any, _path : any, _type : string, _app_or_num? : any) : any
 		{
-			let path;
+			let path : any;
 			if (typeof _path === 'object')
 			{
 				if (typeof _path.path === 'undefined')
@@ -258,8 +406,8 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			{
 				path = _path;
 			}
-			let mime_info = this.get_mime_info(_type, _app_or_num);
-			let data = {};
+			let mime_info : any = this.get_mime_info(_type, _app_or_num);
+			let data : any = {};
 			if (mime_info)
 			{
 				if ((typeof _app_or_num === 'undefined' || _app_or_num === 'collabora') && this.isCollaborable(_type))
@@ -316,9 +464,9 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @param {string} _must_support capability the apps need to support, eg. 'add', default ''=list all apps
 		 * @return {object} with app => title pairs
 		 */
-		link_app_list: function(_must_support)
+		link_app_list: function(this : any, _must_support? : string) : any
 		{
-			let apps = [];
+			let apps : any[] = [];
 			for (let type in link_registry)
 			{
 				const reg = link_registry[type];
@@ -339,7 +487,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				return al === bl ? 0 : (al > bl ? 1 : -1);
 			});
 			// create sorted associative array / object
-			const sorted = {};
+			const sorted : any = {};
 			for(let i = 0; i < apps.length; ++i)
 			{
 				sorted[apps[i].type] = apps[i].label;
@@ -355,7 +503,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @param {boolean} _need_clone _images need to be cloned, as it is from different window context
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_link_registry: function (_registry, _app, _need_clone)
+		set_link_registry: function (this : any, _registry : object, _app? : string, _need_clone? : boolean) : void
 		{
 			if (typeof _app === 'undefined')
 			{
@@ -382,7 +530,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * 	if string is used ambersands in vars have to be already urlencoded as '%26', function ensures they get NOT double encoded
 		 * @return {string} generated url
 		 */
-		link: function(_url, _extravars)
+		link: function(this : any, _url : string, _extravars? : any) : string
 		{
 			if (_url.substr(0,4) === 'http' && _url.indexOf('://') <= 5)
 			{
@@ -393,7 +541,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 				if (_url[0] != '/')
 				{
 					alert("egw.link('"+_url+"') called with url starting NOT with a slash!");
-					const app = window.egw_appName;
+					const app = (<any>window).egw_appName;
 					if (app != 'login' && app != 'logout') _url = app+'/'+_url;
 				}
 				// append the url to the webserver url, if not already contained or empty
@@ -402,7 +550,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 					_url = this.webserverUrl + _url;
 				}
 			}
-			const vars = {};
+			const vars : any = {};
 
 			// check if the url already contains a query and ensure that vars is an array and all strings are in extravars
 			const url_othervars = _url.split('?',2);
@@ -422,10 +570,10 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// parse extravars string into the vars array
 			if (_extravars)
 			{
-				_extravars = _extravars.split('&');
-				for(let i=0; i < _extravars.length; ++i)
+				const extravarsParts = (<string>_extravars).split('&');
+				for(let i=0; i < extravarsParts.length; ++i)
 				{
-					const name_val = _extravars[i].split('=', 2);
+					const name_val = extravarsParts[i].split('=', 2);
 					let name = name_val[0];
 					let val = name_val[1] || '';
 					if (val.indexOf('%26') !== -1) val = val.replace(/%26/g,'&');	// make sure to not double encode &
@@ -459,7 +607,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @param {boolean} _force_reload true load again from server, even if already cached
 		 * @return {Promise|string|null} Promise for _callback given (function or true), string with title if it exists in local cache or null if not
 		 */
-		link_title: function(_app, _id, _callback, _context, _force_reload)
+		link_title: function(this : any, _app : string, _id : any, _callback? : any, _context? : any, _force_reload? : boolean) : any
 		{
 			// check if we have a cached title --> return it direct
 			if (typeof title_cache[_app] !== 'undefined' && typeof title_cache[_app][_id] !== 'undefined' && _force_reload !== true)
@@ -517,7 +665,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 * @param _app
 		 * @param string|undefined _id
 		 */
-		unset_link_title: function(_app, _id)
+		unset_link_title: function(_app : string, _id? : string) : void
 		{
 			if (typeof _id === 'undefined' || _id === null)
 			{
@@ -534,7 +682,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param {object} _params of parameters, only first parameter is used
 		 */
-		link_title_before_send: function(_params)
+		link_title_before_send: function(_params : any[]) : void
 		{
 			// add all current title-requests
 			for(let app in title_queue)
@@ -556,7 +704,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param {object} _response _app => _id => title
 		 */
-		link_title_callback: function(_response)
+		link_title_callback: function(_response : any) : void
 		{
 			if (typeof _response !== 'object')
 			{
@@ -592,17 +740,17 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param {DOMnode} _parent parent to create selectbox in
 		 */
-		link_quick_add: function(_parent)
+		link_quick_add: function(this : any, _parent : any) : void
 		{
 			// check if quick-add selectbox is already there, only create it again if not
-			if (document.getElementById('quick_add_selectbox') || egwIsMobile())
+			if (document.getElementById('quick_add_selectbox') || (<any>window).egwIsMobile())
 			{
 				return;
 			}
 
 			// Use node as the trigger
-			const parent = typeof _parent == "string" ?  document.getElementById(_parent) : _parent;
-			const select = document.createElement('et2-select');
+			const parent : any = typeof _parent == "string" ?  document.getElementById(_parent) : _parent;
+			const select : any = document.createElement('et2-select');
 			select.setAttribute('id', 'quick_add_selectbox');
 			select.setAttribute('aria-hidden', 'true');
 			// Empty label is required to clear value, but we hide it
@@ -626,7 +774,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			// need to load common translations for app-names
 			this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], () =>
 			{
-				let options = [];
+				let options : any[] = [];
 				const apps = this.link_app_list('add');
 				for(let app in apps)
 				{
@@ -657,13 +805,13 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 *
 		 * Check mimetype & user preference
 		 */
-		isEditable: function (mime)
+		isEditable: function (this : any, mime : string) : boolean
 		{
 			if (!mime)
 			{
 				return false;
 			}
-			let fe = this.file_editor_prefered_mimes(mime);
+			let fe : any = this.file_editor_prefered_mimes(mime);
 			if (!fe || !fe.mime || fe && fe.mime && !fe.mime[mime])
 			{
 				return false;
@@ -679,7 +827,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 		 *
 		 * @return string|false
 		 */
-		isCollaborable: function (mime)
+		isCollaborable: function (this : any, mime : string) : any
 		{
 			if (typeof this.user('apps')['collabora'] == "undefined")
 			{
@@ -687,7 +835,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function()
 			}
 
 			// Additional check to see if Collabora can open the file at all, not just edit it
-			let fe = this.file_editor_prefered_mimes(mime);
+			let fe : any = this.file_editor_prefered_mimes(mime);
 			if (fe && fe.mime && fe.mime[mime] && fe.mime[mime].name || this.isEditable(mime))
 			{
 				return fe.mime[mime].name;
