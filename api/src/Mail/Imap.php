@@ -1608,17 +1608,16 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 *
 	 * @param string $folder base64-encoded folder name, or '' if not present in the row-id
 	 * @param string $uid message UID, or '' if not present in the row-id
-	 * @return array with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap"
+	 * @return RowIdParts with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap" -
+	 *  already cheap here (no IMAP call), but kept as the same lazy-capable type Imap\Jmap::
+	 *  splitRowID() returns so Api\Mail::splitRowID() can treat both uniformly
 	 */
-	public function splitRowID(string $folder, string $uid) : array
+	public function splitRowID(string $folder, string $uid) : RowIdParts
 	{
-		return [
+		return new RowIdParts(['folderID' => null, 'emailID' => null, 'is_jmap' => false], fn() => [
 			'folder' => $folder !== '' ? base64_decode($folder) : null,
 			'msgUID' => $uid !== '' ? $uid : null,
-			'folderID' => null,
-			'emailID' => null,
-			'is_jmap' => false,
-		];
+		]);
 	}
 }
 Imap::init_static();

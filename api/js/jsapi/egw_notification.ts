@@ -6,13 +6,54 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Hadi Nategh <hn-AT-stylite.de>
- * @version $Id: $
  */
 
 /*egw:uses
 	egw_core;
 */
 import './egw_core';
+
+export interface NotificationModule
+{
+	/**
+	 * @param _title a string to be shown as notification message
+	 * @param _options an object of Notification possible options:
+	 *		options = {
+	 *			dir:  // direction of notification to be shown rtl, ltr or auto
+	 *			lang: // a valid BCP 47 language tag
+	 *			body: // DOM body
+	 *			icon: // parse icon URL, default icon is app icon
+	 *			tag: // a string value used for tagging an instance of notification, default is app name
+	 *			onclick: // Callback function dispatches on click on notification message
+	 *			onshow: // Callback function dispatches when notification is shown
+	 *			onclose: // Callback function dispateches on notification close
+	 *			onerror: // Callback function dispatches on error, default is a egw.debug log
+	 *		    requireInteraction: // boolean value indicating that a notification should remain active until the user clicks or dismisses it
+	 *		}
+	 *	@return false if Notification is not supported by browser
+	 */
+	notification(_title : string, _options : {dir?: "ltr"|"rtl"|"auto", lang?: string, body?: string, icon?: string,
+		tag?: string, onclick?: Function, onshow?: Function, onclose?: Function, onerror?: Function, requireInteraction?: boolean}) : false|void;
+
+	/**
+	 * Check Notification availability by browser
+	 *
+	 * @returns true if notification is supported and permitted otherwise false
+	 */
+	checkNotification() : boolean;
+
+	/**
+	 * Check if there's any runnig notifications and will close them all
+	 */
+	killAliveNotifications() : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends NotificationModule
+	{
+	}
+}
 
 /**
  * Methods to display browser notification
@@ -23,14 +64,14 @@ import './egw_core';
  *
  * @return {object} defined functions of module
  */
-egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Window) : NotificationModule
 {
 	"use strict";
 
 	// Notification permission, the default value is 'default' which is equivalent to 'denied'
 	var permission = 'default';
 	// Keeps alive notifications
-	var alive_notifications = [];
+	var alive_notifications : any[] = [];
 
 	if (typeof Notification != 'undefined')
 	{
@@ -57,23 +98,23 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *		}
 		 *	@return {boolean} false if Notification is not supported by browser
 		 */
-		notification: function (_title, _options)
+		notification: function (this : any, _title : string, _options? : any) : any
 		{
 			// Check if the notification is supported by  browser
 			if (typeof Notification == 'undefined') return false;
 
 			var self = this;
 			// Check and ask for permission
-			if (Notification && Notification.requestPermission && permission === 'default') Notification.requestPermission (function(_permission){
+			if (Notification && Notification.requestPermission && permission === 'default') (<any>Notification).requestPermission (function(_permission : string){
 				permission = _permission;
 				if (permission === 'granted') self.notification(_title,_options);
 			});
 
 			// All options including callbacks
-			var options = _options || {};
+			var options : any = _options || {};
 
 			// Options used for creating Notification instane
-			var inst_options = {
+			var inst_options : any = {
 				tag: options.tag || egw.app_name(),
 				dir: options.dir || 'ltr',
 				lang: options.lang || egw.preference('lang', 'common'),
@@ -90,13 +131,20 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			setTimeout(notification.close.bind(notification), 10000);
 
 			// Callback function dispatches on click on notification message
-			notification.onclick = options.onclick || '';
+			// (cast: DOM types require Function|null here, but the original
+			// falls back to '' - preserved exactly rather than "fixed" to null,
+			// which would be an observable behavior change)
+			(<any>notification).onclick = options.onclick || '';
 			// Callback function dispatches when notification is shown
-			notification.onshow = options.onshow || '';
+			(<any>notification).onshow = options.onshow || '';
 			// Callback function dispateches on notification close
-			notification.onclose = options.onclose || '';
+			(<any>notification).onclose = options.onclose || '';
 			// Callback function dispatches on error
-			notification.onerror = options.onerror || function (e) {egw.debug('Notification failed because of ' + e);};
+			// (this call is single-argument, so the message string ends up in
+			// debug()'s _level parameter, which it never matches - a silent
+			// no-op in the original .js too; preserved via cast, not "fixed"
+			// by adding a level argument)
+			(<any>notification).onerror = options.onerror || function (e) {(<any>egw.debug)('Notification failed because of ' + e);};
 
 			// Collect all running notifications in case if want to close them all,
 			// for instance on logout action.
@@ -108,24 +156,24 @@ egw.extend('notification', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @returns {Boolean} true if notification is supported and permitted otherwise false
 		 */
-		checkNotification: function () {
+		checkNotification: function () : boolean {
 			// Check if the notification is supported by  browser
 			if (typeof Notification == 'undefined') return false;
-			
+
 			// Ask for permission if there's nothing decided yet
 			if (Notification && Notification.requestPermission && permission == 'default') {
-				Notification.requestPermission (function(_permission){
+				(<any>Notification).requestPermission (function(_permission : string){
 					permission = _permission;
 				});
 			}
-			return (Notification && Notification.requestPermission && permission == 'granted');
+			return !!(Notification && Notification.requestPermission && permission == 'granted');
 		},
 
 		/**
 		 * Check if there's any runnig notifications and will close them all
 		 *
 		 */
-		killAliveNotifications: function ()
+		killAliveNotifications: function () : void
 		{
 			if (alive_notifications && alive_notifications.length > 0)
 			{

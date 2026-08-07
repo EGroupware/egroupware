@@ -95,7 +95,7 @@ export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv
 		app_name: sinon.stub().returns('infolog')
 	};
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_utils.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_utils.ts', 'module');
 
 	env.egw.extend('links-stub', env.egw.MODULE_GLOBAL, () => ({
 		link_get_registry: env.stubs.link_get_registry,

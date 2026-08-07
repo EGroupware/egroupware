@@ -705,24 +705,26 @@ class Jmap extends Mail\Imap
 	 *
 	 * @param string $folder JMAP Mailbox id, or '' if not present in the row-id
 	 * @param string $uid JMAP Email id (or numeric IMAP UID for classic-fallback rows), or '' if not present
-	 * @return array with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap"
+	 * @return RowIdParts with values for keys "folder", "msgUID", "folderID", "emailID", "is_jmap" -
+	 *  "folder"/"msgUID" are only actually resolved (real IMAP EMAILID search via emailId2uid())
+	 *  the first time either is read - many callers only need "emailID"/"folderID" and never touch
+	 *  the numeric UID at all, so they no longer pay for that search
 	 */
-	public function splitRowID(string $folder, string $uid) : array
+	public function splitRowID(string $folder, string $uid) : Mail\RowIdParts
 	{
 		if ($uid === '' || is_numeric($uid))
 		{
 			return parent::splitRowID($folder, $uid);
 		}
-		$realFolder = null;
-		$realUid = $this->emailId2uid($uid, '', $folder, $realFolder);
-
-		return [
-			'folder' => $realFolder,
-			'msgUID' => $realUid !== null ? (string)$realUid : null,
-			'folderID' => $folder,
-			'emailID' => $uid,
-			'is_jmap' => true,
-		];
+		return new Mail\RowIdParts(['folderID' => $folder, 'emailID' => $uid, 'is_jmap' => true], function() use ($folder, $uid)
+		{
+			$realFolder = null;
+			$realUid = $this->emailId2uid($uid, '', $folder, $realFolder);
+			return [
+				'folder' => $realFolder,
+				'msgUID' => $realUid !== null ? (string)$realUid : null,
+			];
+		});
 	}
 
 	/**

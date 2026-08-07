@@ -18,7 +18,7 @@
 	egw_debug;
 */
 import './egw.js';
-import './egw_utils.js';
+import './egw_utils';
 
 export interface JsonModule
 {

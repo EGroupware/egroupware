@@ -408,10 +408,13 @@ class Mail
 	 * shared behaviour, not something specific to this method.
 	 *
 	 * @param string|null $rowID colon-separated string in the form [app::]accountID::profileID::folder::uid
-	 * @return array with values for keys "app", "accountID", "profileID", "folder", "msgUID",
-	 *  "folderID", "emailID", "is_jmap"
+	 * @return Mail\RowIdParts with values for keys "app", "accountID", "profileID", "folder",
+	 *  "msgUID", "folderID", "emailID", "is_jmap" - behaves exactly like the plain array this used
+	 *  to return (bracket read/write/isset/unset, foreach, count()), except "folder"/"msgUID" are
+	 *  only actually resolved (which, for a Stalwart opaque-id row, means a real IMAP EMAILID
+	 *  search) the first time either is read - see Mail\RowIdParts
 	 */
-	public static function splitRowID(?string $rowID) : array
+	public static function splitRowID(?string $rowID) : Mail\RowIdParts
 	{
 		$res = $rowID ? explode(self::DELIMITER, $rowID) : [];
 		// as a rowID is prefixed with "$app::", should be mail!
@@ -424,11 +427,12 @@ class Mail
 
 		if (!isset($res[2]))
 		{
-			return $result + ['folder' => null, 'msgUID' => null, 'folderID' => null, 'emailID' => null, 'is_jmap' => false];
+			return new Mail\RowIdParts($result + ['folderID' => null, 'emailID' => null, 'is_jmap' => false],
+				fn() => ['folder' => null, 'msgUID' => null]);
 		}
 		$profileID = (int)$res[2];
 		$mail = self::getInstance(true, $profileID, false);
-		return $result + $mail->icServer->splitRowID((string)($res[3] ?? ''), (string)($res[4] ?? ''));
+		return $mail->icServer->splitRowID((string)($res[3] ?? ''), (string)($res[4] ?? ''))->withEager($result);
 	}
 
 	/**

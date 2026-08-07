@@ -2021,6 +2021,11 @@ class mail_ui
 	{
 		$attachmentHTMLBlock='';
 		$attachmentHTML = array();
+		// profileID is cheap to resolve (pure string-parsing, no IMAP) even for a lazy-resolving
+		// row-id - done once here, not per-attachment (see below), and without touching the
+		// msgUID/folder keys (which for a Stalwart opaque-id row DO cost a real IMAP search) since
+		// $uid/$mailbox are already given as parameters
+		$acc_id = Mail::splitRowID($rowID)['profileID'];
 
 		// skip message/delivery-status and set a title for original eml file
 		if (($attachments[0]['mimeType'] === 'message/delivery-status'))
@@ -2044,19 +2049,25 @@ class mail_ui
 				if (strtoupper($value['mimeType']) == 'APPLICATION/OCTET-STREAM') $value['mimeType'] = Api\MimeMagic::filename2mime($attachmentHTML[$key]['filename']);
 				$attachmentHTML[$key]['type']=$value['mimeType'];
 				$attachmentHTML[$key]['mimetype'] = Api\MimeMagic::mime2label($value['mimeType']);
-				$hA = Mail::splitRowID($rowID);
-				$uid = $hA['msgUID'];
-				$mailbox = $hA['folder'];
-				$acc_id = $hA['profileID'];
 				$onlyOwnHandlers = preg_match(self::$mimeTypesHandledOnlyByMail, $value['mimeType']) ? 'mail' : null;
 				// JMAP-native attachment content fetch (blobId set by jmapAttachmentsToLegacy()/
 				// resolveWinmailJmap() for a Stalwart-sourced row) instead of the classic
 				// Api\Mail::getAttachmentAccount() IMAP fetch - same target for both mime_data and
 				// invoice_data below, and for link_save/downloadOneAsFile client-side (blobId is
 				// passed through to the browser via $attachmentHTML[$key]['blobId'])
-				$attachmentTarget = !empty($value['blobId'])
-					? ['EGroupware\\Api\\Mail\\Imap\\Jmap::downloadBlobAccount', [$acc_id, $value['blobId'], $attachmentHTML[$key]['filename'], $value['mimeType']]]
-					: ['EGroupware\\Api\\Mail::getAttachmentAccount', [$acc_id, $mailbox, $uid, $value['partID'], $value['is_winmail'] ?? false, true]];
+				if (!empty($value['blobId']))
+				{
+					$attachmentTarget = ['EGroupware\\Api\\Mail\\Imap\\Jmap::downloadBlobAccount', [$acc_id, $value['blobId'], $attachmentHTML[$key]['filename'], $value['mimeType']]];
+				}
+				else
+				{
+					// $uid/$mailbox are null when the caller resolved a blobId for every part and
+					// intentionally skipped their (possibly IMAP-expensive) resolution - only
+					// derived here, from $rowID, if this classic fallback is actually reached
+					$fallbackUid = $uid ?? Mail::splitRowID($rowID)['msgUID'];
+					$fallbackMailbox = $mailbox ?? Mail::splitRowID($rowID)['folder'];
+					$attachmentTarget = ['EGroupware\\Api\\Mail::getAttachmentAccount', [$acc_id, $fallbackMailbox, $fallbackUid, $value['partID'], $value['is_winmail'] ?? false, true]];
+				}
 				$attachmentHTML[$key]['mime_data'] = Link::set_data($value['mimeType'], $attachmentTarget[0], $attachmentTarget[1],
 					false,$onlyOwnHandlers);
 				$attachmentHTML[$key]['size']=Vfs::hsize($value['size']);
@@ -2130,10 +2141,14 @@ class mail_ui
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
 							'is_winmail'=> $value['is_winmail'],
-							'mailbox'   => base64_encode($mailbox),
+							// not read by getAttachment() (which re-derives folder from 'id' via
+							// Mail::splitRowID() instead) - kept for URL-shape compatibility, but
+							// degrades to '' rather than forcing $mailbox's (possibly IMAP-expensive
+							// for a Stalwart opaque-id row) resolution when the caller didn't need it
+							'mailbox'   => base64_encode($mailbox ?? ''),
 							'smime_type' => $value['smime_type']
 						) , $mode);
-						$windowName = 'displayAttachment_'. $uid;
+						$windowName = 'displayAttachment_'. ($uid ?? $rowID);
 						$reg = '800x600';
 						// handle calendar/vcard
 						if (strtoupper($value['mimeType'])=='TEXT/CALENDAR')
@@ -2159,7 +2174,9 @@ class mail_ui
 							'id'		=> $rowID,
 							'part'		=> $value['partID'],
 							'is_winmail'    => $value['is_winmail'],
-							'mailbox'   => base64_encode($mailbox),
+							// see the TEXT/VCARD case above for why this degrades to '' instead of
+							// forcing $mailbox's resolution
+							'mailbox'   => base64_encode($mailbox ?? ''),
 							'smime_type' => $value['smime_type']
 						);
 						$linkView = "window.location.href = '".Egw::link('/index.php',$linkData)."';";
@@ -2700,7 +2717,11 @@ class mail_ui
 		 * Extract all parameteres from the given id
 		 * @param int $id message id ('::' delimited mailbox::uid::part-id::is_winmail::name)
 		 *
-		 * @return array an array of parameters
+		 * @return array an array of parameters - 'idParts' is Mail::splitRowID()'s lazy
+		 *  RowIdParts result, deliberately NOT pre-extracted into 'uid'/'mailbox' keys here: for a
+		 *  Stalwart opaque-id row those cost a real IMAP EMAILID search to resolve, and the JMAP
+		 *  fast path below (fetchAttachmentJmap()) never needs them at all - only read
+		 *  $idParts['msgUID']/['folder'] where the classic fallback is actually reached
 		 */
 		$getParams = function ($id) {
 			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
@@ -2711,46 +2732,54 @@ class mail_ui
 				'user' => $user,
 				'name' => $name,
 				'part' => $part,
-				'uid' => $hA['msgUID'],
-				'mailbox' => $hA['folder'],
+				'idParts' => $hA,
 				'icServer' => $hA['profileID'],
 				'rowID' => $lId,
 			);
 		};
 		$jmapCache = [];
+		// only needed for the classic per-attachment fallback - fetchAttachmentJmap() talks to the
+		// account's IMAP/JMAP connection directly (Mail\Account::read()->imapServer()), bypassing
+		// mail_bo/changeProfile()/reopen() entirely, so this is never called for the JMAP fast path
+		$classicFetch = function(array $params)
+		{
+			if ($params['icServer'] && $params['icServer'] != $this->mail_bo->profileID)
+			{
+				$this->changeProfile($params['icServer']);
+			}
+			$this->mail_bo->reopen($params['idParts']['folder']);
+			return $this->mail_bo->getAttachment($params['idParts']['msgUID'],$params['part'],$params['is_winmail'],false);
+		};
 
 		//Examine the first attachment to see if attachment
 		//is winmail.dat embedded attachments.
 		$p = $getParams((is_array($ids)?$ids[0]:$ids));
 		if ($p['is_winmail'])
 		{
+			// winmail/TNEF internal attachments always need the classic path regardless of
+			// backend (see resolveWinmailJmap()'s docblock) - eager resolution here is expected
 			if ($p['icServer'] && $p['icServer'] != $this->mail_bo->profileID)
 			{
 				$this->changeProfile($p['icServer']);
 			}
-			$this->mail_bo->reopen($p['mailbox']);
+			$this->mail_bo->reopen($p['idParts']['folder']);
 			// retrieve all embedded attachments at once
 			// avoids to fetch heavy winmail.dat content
 			// for each file.
-			$attachments = $this->mail_bo->getTnefAttachments($p['uid'],$p['part'], false, $p['mailbox']);
+			$attachments = $this->mail_bo->getTnefAttachments($p['idParts']['msgUID'],$p['part'], false, $p['idParts']['folder']);
 		}
 
 		foreach((array)$ids as $id)
 		{
 			$params = $getParams($id);
 
-			if ($params['icServer'] && $params['icServer'] != $this->mail_bo->profileID)
-			{
-				$this->changeProfile($params['icServer']);
-			}
-			$this->mail_bo->reopen($params['mailbox']);
-
 			// is multiple attachments
 			if (Vfs::is_dir($path) || $params['is_winmail'])
 			{
 				if ($params['is_winmail'])
 				{
-					// Try to find the right content for file id
+					// winmail/TNEF internal attachments already resolved above (classic-only,
+					// mail_bo already positioned by the pre-check block)
 					foreach ($attachments as $key => $val)
 					{
 						if ($key == $params['is_winmail']) $attachment = $val;
@@ -2759,13 +2788,13 @@ class mail_ui
 				else
 				{
 					$attachment = $this->fetchAttachmentJmap($params['rowID'], $params['part'], $params['icServer'], $jmapCache)
-						?? $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
+						?? $classicFetch($params);
 				}
 			}
 			else
 			{
 				$attachment = $this->fetchAttachmentJmap($params['rowID'], $params['part'], $params['icServer'], $jmapCache)
-					?? $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
+					?? $classicFetch($params);
 			}
 
 			$file = $dir. '/' . ($filename ? $filename : Mail::clean_subject_for_filename($attachment['filename']));
@@ -2818,9 +2847,12 @@ class mail_ui
 		if(isset($_GET['id'])) $message_id	= $_GET['id'];
 		//error_log(__METHOD__.__LINE__.$message_id);
 		$rememberServerID = $this->mail_bo->profileID;
+		$emailID = $folderID = null;
 		if(!is_numeric($message_id))
 		{
 			$hA = Mail::splitRowID($message_id);
+			$emailID = $hA['emailID'] ?? null;
+			$folderID = $hA['folderID'] ?? null;
 			$message_id = $hA['msgUID'];
 			$mailbox = $hA['folder'];
 			$icServerID = $hA['profileID'];
@@ -2835,7 +2867,13 @@ class mail_ui
 			$mailbox = $this->mail_bo->sessionData['mailbox'];
 		}
 		$icServerID = $icServerID ?? $this->mail_bo->profileID;
-		$rowID = self::generateRowID($icServerID, $mailbox, $message_id);
+		// generateRowID() always produces a classic-shaped (base64-folder/numeric-uid) row-id,
+		// which would make resolveAttachmentsJmap() below always take its non-Stalwart branch
+		// (Mail::splitRowID() can't tell it apart from a real classic row) - reconstruct the
+		// original opaque-emailID shape instead when we have one, so the JMAP-native listing
+		// (and thus the per-file blobId fetch further down) actually gets used for Stalwart rows
+		$rowID = $emailID ? self::generateJmapRowID($icServerID, $folderID, $emailID) :
+			self::generateRowID($icServerID, $mailbox, $message_id);
 		// always fetch all, even inline (images)
 		$fetchEmbeddedImages = true;
 		$jmapAttachments = $this->resolveAttachmentsJmap($rowID, null, $fetchEmbeddedImages);
@@ -2853,7 +2891,8 @@ class mail_ui
 		$attachments = $jmapAttachments ??
 			$this->mail_bo->getMessageAttachments($message_id,null, null, $fetchEmbeddedImages, true,true,$mailbox);
 		// put them in VFS so they can be zipped
-		$header = $this->mail_bo->getMessageHeader($message_id,'',true,false,$mailbox);
+		$subject = self::resolveSubjectJmap($icServerID, $emailID) ??
+			($this->mail_bo->getMessageHeader($message_id,'',true,false,$mailbox)['SUBJECT'] ?? null);
 		//get_home_dir may fetch the users startfolder if set; if not writeable, action will fail. TODO: use temp_dir
 		$homedir = '/home/'.$GLOBALS['egw_info']['user']['account_lid'];
 		$temp_path = $homedir/*Vfs::get_home_dir()*/ . "/.mail_$message_id";
@@ -2861,7 +2900,7 @@ class mail_ui
 
 		// Add subject to path, so it gets used as the file name, replacing ':'
 		// as it seems to cause an error
-		$path = $temp_path . '/' . ($header['SUBJECT'] ? Vfs::encodePathComponent(Api\Mail::clean_subject_for_filename(str_replace(':','-', $header['SUBJECT']))) : lang('mail')) .'/';
+		$path = $temp_path . '/' . ($subject ? Vfs::encodePathComponent(Api\Mail::clean_subject_for_filename(str_replace(':','-', $subject))) : lang('mail')) .'/';
 		if(!Vfs::mkdir($path, 0700, true))
 		{
 			echo "Unable to open temp directory $path";
@@ -4408,10 +4447,8 @@ class mail_ui
 			return null;	// nested message/rfc822 attachments - not implemented here
 		}
 		$idParts = Mail::splitRowID($rowID);
-		$uid = $idParts['msgUID'];
-		$mailbox = $idParts['folder'];
 		$acc_id = $idParts['profileID'];
-		if (!$uid || !$mailbox || !$acc_id)
+		if (!$acc_id)
 		{
 			return null;
 		}
@@ -4428,9 +4465,21 @@ class mail_ui
 					return null;
 				}
 				$attachments = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments'])['attachments'] ?? [];
+				// $uid/$mailbox deliberately left unresolved here - a Stalwart opaque-id row's
+				// msgUID/folder cost a real IMAP EMAILID search (Mail\Imap\Jmap::emailId2uid()) to
+				// resolve, and createAttachmentBlock() only actually needs them for its
+				// classic-fallback branch (blobId missing) or dead/unused URL params - see there
+				$uid = $mailbox = null;
 			}
 			else
 			{
+				// no such win for the local shim - it's real IMAP either way, so resolve normally
+				$uid = $idParts['msgUID'];
+				$mailbox = $idParts['folder'];
+				if (!$uid || !$mailbox)
+				{
+					return null;
+				}
 				$structure = JmapShim::structureGet($icServer, $mailbox, $uid);
 				if (!$structure)
 				{
@@ -4567,6 +4616,38 @@ class mail_ui
 				$blobId = JmapShim::urlsafeB64Encode($mailbox).':'.$uid.':';
 			}
 			return $blobId ? self::fetchBlobBytes($acc_id, $blobId) : null;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native subject fetch for download_zip()'s temp-folder path name - Stalwart only, same
+	 * scoping as replaceMessageJmap(): the local shim is a thin IMAP wrapper, no protocol-level win
+	 * possible there, so shim rows keep the classic Api\Mail::getMessageHeader() fetch.
+	 *
+	 * @param string $acc_id
+	 * @param ?string $emailID Stalwart's opaque Email.id, null for local-shim rows (always fails
+	 *  fast for those, caller falls back to the classic fetch)
+	 * @return ?string null on any failure or non-Stalwart row
+	 */
+	private static function resolveSubjectJmap(string $acc_id, ?string $emailID) : ?string
+	{
+		if (!$emailID)
+		{
+			return null;
+		}
+		try
+		{
+			$icServer = JmapShim::imapServer($acc_id);
+			if (!$icServer instanceof Mail\Imap\Jmap)
+			{
+				return null;
+			}
+			return $icServer->jmapClient()->emailGet($emailID, ['subject'])['subject'] ?? null;
 		}
 		catch (\Throwable $e)
 		{
