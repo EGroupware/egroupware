@@ -48,8 +48,11 @@ class JmapShim
 	/**
 	 * JMAP session-discovery object, fetched once by jmap-jam's JamClient on construction
 	 *
-	 * Only 'apiUrl' is actually used by jmap-jam (verified against its bundled source) -
-	 * the rest is filled in for a plausible-looking, spec-shaped response.
+	 * Only 'apiUrl'/'downloadUrl'/'uploadUrl' are actually used by our own shipped code (verified
+	 * against jmap-jam's bundled source and MailJmap's own accountId resolution, which goes through
+	 * ajax_jmapBootstrap()'s response, not session parsing) - 'accounts'/'primaryAccounts' are
+	 * populated correctly too (see $accountId below) for spec-completeness/any other JMAP-generic
+	 * code that might call jmap-jam's own getPrimaryAccount(), but nothing shipped depends on them.
 	 *
 	 * @return array
 	 */
@@ -57,20 +60,44 @@ class JmapShim
 	{
 		$url = Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php'));
 
+		// accountId comes from jmapLocalBootstrap()'s sessionUrl (see mail_ui.inc.php) - session()
+		// has no other way to know which account a given JamClient instance belongs to, since it's
+		// otherwise a shared, generic endpoint. Not present when called directly/without a bootstrap
+		// (e.g. the demo fixture) - "accounts"/"primaryAccounts" then stay empty, matching before;
+		// nothing shipped relies on them (the app resolves its own accountId via
+		// ajax_jmapBootstrap()'s response, not jmap-jam's session parsing).
+		$accountId = (string)($_GET['accountId'] ?? '');
+		$accounts = $primaryAccounts = new \stdClass();
+		if ($accountId !== '')
+		{
+			$accounts = [$accountId => [
+				'name' => (string)($GLOBALS['egw_info']['user']['account_lid'] ?? ''),
+				'isPersonal' => true,
+				'isReadOnly' => false,
+				'accountCapabilities' => [
+					'urn:ietf:params:jmap:mail' => new \stdClass(),
+				],
+			]];
+			$primaryAccounts = ['urn:ietf:params:jmap:mail' => $accountId];
+		}
+
 		return [
 			'capabilities' => [
 				Api\Mail\Jmap::JMAP_CORE => new \stdClass(),
 				'urn:ietf:params:jmap:mail' => new \stdClass(),
 			],
-			'accounts' => new \stdClass(),
-			'primaryAccounts' => new \stdClass(),
+			'accounts' => $accounts,
+			'primaryAccounts' => $primaryAccounts,
 			'username' => (string)($GLOBALS['egw_info']['user']['account_lid'] ?? ''),
 			'apiUrl' => $url,
 			// jmap-jam's downloadBlob() substitutes these 4 placeholders verbatim (no URL-encoding
 			// of the substituted values - see urlsafeB64Encode()'s docblock) and does a plain GET,
 			// handled by mail/jmap.php's "download" branch -> JmapShim::download()
 			'downloadUrl' => $url.'?download=1&accountId={accountId}&blobId={blobId}&type={type}&name={name}',
-			'uploadUrl' => $url,
+			// RFC 8620 §6.1 requires the {accountId} template - jmap-jam's uploadBlob() substitutes
+			// it before POSTing the raw bytes, handled by mail/jmap.php's "upload" branch ->
+			// JmapShim::upload()
+			'uploadUrl' => $url.'?upload=1&accountId={accountId}',
 			'eventSourceUrl' => $url,
 			'state' => '0',
 		];
@@ -108,6 +135,9 @@ class JmapShim
 						break;
 					case 'Email/set':
 						$result = self::emailSet($accountId, $args);
+						break;
+					case 'Email/import':
+						$result = self::emailImport($accountId, $args);
 						break;
 					default:
 						throw new \Exception("Unsupported method '$method'");
@@ -720,6 +750,118 @@ class JmapShim
 	}
 
 	/**
+	 * Email/import (RFC 8621 §4.8): append an uploaded (or existing) blob to a mailbox as a new
+	 * message - the local-shim counterpart of a real JMAP server's import, needed for client-side
+	 * message composition (e.g. saving to Sent) without going through mail_ui/Api\Mail. Same
+	 * Horde_Imap_Client_Socket::append() primitive Mail::appendMessage() uses.
+	 *
+	 * Only a single target mailbox per email is supported (the common case, and all MailJmap
+	 * currently sends) - if more than one truthy id is given, the first is used.
+	 *
+	 * @param string $accountId
+	 * @param array $args {emails: {creationId: {blobId, mailboxIds, keywords?}}}
+	 * @return array
+	 */
+	public static function emailImport(string $accountId, array $args) : array
+	{
+		$imap = self::imapServer($accountId);
+		$created = [];
+		$notCreated = [];
+
+		foreach ((array)($args['emails'] ?? []) as $creationId => $email)
+		{
+			$creationId = (string)$creationId;
+			try
+			{
+				if (!$imap)
+				{
+					throw new \InvalidArgumentException('Unknown account');
+				}
+				$blobId = (string)($email['blobId'] ?? '');
+				$raw = $blobId !== '' ? self::readUploadedBlob($accountId, $blobId) : null;
+				if ($raw === null)
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['blobId']];
+					continue;
+				}
+				$target = array_key_first(array_filter((array)($email['mailboxIds'] ?? [])));
+				$folder = $target !== null ? self::folderPath((string)$target) : '';
+				if ($folder === '')
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['mailboxIds']];
+					continue;
+				}
+				$mailbox = self::hordeMailbox($imap, $folder);
+
+				$flags = [];
+				foreach ((array)($email['keywords'] ?? []) as $keyword => $set)
+				{
+					if ($set && ($flag = self::importKeywordToFlag(strtolower((string)$keyword))) !== null)
+					{
+						$flags[] = $flag;
+					}
+				}
+
+				$ret = $imap->append($mailbox, [['data' => $raw, 'flags' => $flags]]);
+				$uid = is_object($ret) && isset($ret->ids) ? (string)current($ret->ids) : null;
+				if ($uid === null || $uid === '')
+				{
+					// server didn't report UIDPLUS-style ids (append() returned plain true) - same
+					// fallback Mail::appendMessage() uses: the just-appended message is always the
+					// newest by arrival, found directly rather than via Api\Mail (see class docblock)
+					$sorted = $imap->search($mailbox, new \Horde_Imap_Client_Search_Query(), [
+						'sort' => [\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_ARRIVAL],
+					]);
+					$uid = (string)(array_values($sorted['match']->ids ?? [])[0] ?? '');
+				}
+				if ($uid === '')
+				{
+					throw new \Exception('IMAP server did not report the new message UID');
+				}
+
+				$created[$creationId] = ['id' => $uid, 'blobId' => $blobId, 'threadId' => $uid, 'size' => strlen($raw)];
+				if (str_starts_with($blobId, 'upload:'))
+				{
+					@unlink(self::uploadPath(substr($blobId, strlen('upload:'))));
+				}
+			}
+			catch (\Throwable $e)
+			{
+				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
+		];
+	}
+
+	/**
+	 * Standard IMAP flags an imported message's "keywords" may set - broader than
+	 * writableKeywords() (which only covers what the UI may *mutate* on an existing message via
+	 * Email/set - labels/customflags/$flagged, deliberately excluding \Seen/\Draft/\Answered).
+	 * Unrecognised keywords are silently ignored rather than failing the whole import.
+	 *
+	 * @param string $keyword lowercased JMAP keyword, e.g. "$seen"
+	 * @return ?string IMAP flag, or null if not a recognised standard keyword
+	 */
+	private static function importKeywordToFlag(string $keyword) : ?string
+	{
+		return match ($keyword)
+		{
+			'$seen' => '\\Seen',
+			'$answered' => '\\Answered',
+			'$flagged' => '\\Flagged',
+			'$draft' => '\\Draft',
+			default => self::writableKeywords()[$keyword] ?? null,
+		};
+	}
+
+	/**
 	 * Keywords the Mail UI is allowed to mutate through the local shim.
 	 *
 	 * @return array<string,string> JMAP keyword to IMAP flag / keyword
@@ -949,6 +1091,79 @@ class JmapShim
 		header('Content-Disposition: inline; filename="'.addslashes($name).'"');
 		header('Content-Length: '.strlen($bytes));
 		echo $bytes;
+	}
+
+	/**
+	 * Blob upload (RFC 8620 §6.3): plain POST of raw bytes matching the "uploadUrl" template from
+	 * session() above - a prerequisite for Email/import (composing a new message client-side and
+	 * saving it, e.g. to Sent, without going through mail_ui/Api\Mail).
+	 *
+	 * Unlike downloaded/existing-message blobs (self-describing "mailbox:uid:partId", resolved live
+	 * via IMAP FETCH - see class docblock), an uploaded blob has no IMAP message to describe yet, so
+	 * it needs actual temporary storage: written to a randomly-named file under temp_dir, referenced
+	 * by an "upload:<token>" blobId. The token is generated here (never client-supplied), so there's
+	 * no path-traversal risk from a crafted blobId. Consumed (and deleted) by emailImport() below;
+	 * see readUploadedBlob()'s docblock for the case where import never follows.
+	 *
+	 * @param string $accountId
+	 */
+	public static function upload(string $accountId) : void
+	{
+		$type = $_SERVER['CONTENT_TYPE'] ?? 'application/octet-stream';
+		$bytes = file_get_contents('php://input');
+		$token = bin2hex(random_bytes(16));
+		file_put_contents(self::uploadPath($token), $bytes);
+
+		echo json_encode([
+			'accountId' => $accountId,
+			'blobId' => 'upload:'.$token,
+			'type' => $type,
+			'size' => strlen($bytes),
+		], JSON_UNESCAPED_SLASHES);
+	}
+
+	/**
+	 * @param string $token hex string only - never build this from unvalidated client input
+	 * @return string absolute path of the temp file backing an "upload:<token>" blobId
+	 */
+	private static function uploadPath(string $token) : string
+	{
+		if (!ctype_xdigit($token) || $token === '')
+		{
+			throw new \InvalidArgumentException('Invalid upload token');
+		}
+		return $GLOBALS['egw_info']['server']['temp_dir'].'/jmap_upload_'.$token;
+	}
+
+	/**
+	 * Resolve an Email/import blobId to raw bytes - either a freshly uploaded blob ("upload:<token>",
+	 * see upload() above) or an existing message/part already on the server (the same self-describing
+	 * "mailbox:uid:partId" scheme download() decodes), for re-importing already-downloaded content.
+	 *
+	 * Uploaded blobs are single-use: deleted by emailImport() after a successful import. If upload()
+	 * is called but import never follows (e.g. the user aborts composing), the temp file is orphaned -
+	 * accepted as a known limitation given how small/rare this is, rather than adding a GC sweep for
+	 * it; a stale jmap_upload_* file is always safe to delete manually if this ever matters in practice.
+	 *
+	 * @param string $accountId
+	 * @param string $blobId
+	 * @return ?string null if not found/resolvable
+	 */
+	private static function readUploadedBlob(string $accountId, string $blobId) : ?string
+	{
+		if (str_starts_with($blobId, 'upload:'))
+		{
+			$path = self::uploadPath(substr($blobId, strlen('upload:')));
+			return is_file($path) ? file_get_contents($path) : null;
+		}
+		[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
+		$imap = ($mailboxB64 !== null && $uid) ? self::imapServer($accountId) : null;
+		if (!$imap)
+		{
+			return null;
+		}
+		$mailbox = self::urlsafeB64Decode($mailboxB64);
+		return $partId !== '' ? self::fetchRawPart($imap, $mailbox, $uid, $partId) : self::fetchRawMessage($imap, $mailbox, $uid);
 	}
 
 	/**

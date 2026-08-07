@@ -4845,7 +4845,10 @@ class mail_ui
 	private static function jmapLocalBootstrap(string $accountId) : array
 	{
 		return [
-			'sessionUrl' => Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php')),
+			// accountId in the query string lets JmapShim::session() report this specific
+			// account's "primaryAccounts"/"accounts" - session() itself is otherwise a shared,
+			// generic endpoint with no other way to know which account is asking
+			'sessionUrl' => Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php')).'?accountId='.urlencode($accountId),
 			'accountId' => $accountId,
 			// NOT the session id: auth is via the session cookie (mail/jmap.php is a
 			// same-origin endpoint), this only fills jmap-jam's required bearerToken field

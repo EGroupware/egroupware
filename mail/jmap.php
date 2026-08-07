@@ -57,6 +57,24 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && isset($_GET['download']))
 	exit;
 }
 
+// Blob upload (RFC 8620 §6.3): POST of raw bytes matching the "uploadUrl" template from session()
+// below - jmap-jam substitutes {accountId} into the query string before POSTing, so this is a POST
+// with a non-JSON (raw binary) body, handled separately from the JSON method-call dispatch below.
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['upload']))
+{
+	header('Content-Type: application/json; charset=utf-8');
+	try
+	{
+		JmapShim::upload((string)($_GET['accountId'] ?? ''));
+	}
+	catch (\Throwable $e)
+	{
+		http_response_code(500);
+		echo json_encode(['type' => 'serverFail', 'description' => $e->getMessage()], JSON_UNESCAPED_SLASHES);
+	}
+	exit;
+}
+
 header('Content-Type: application/json; charset=utf-8');
 
 try
