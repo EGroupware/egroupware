@@ -2725,16 +2725,30 @@ export class MailApp extends EgwApp
 	 * @param {object} _calledFromPopup
 	 */
 	/**
-	 * Try the fast client-side JMAP delete path (MailJmap.deleteMessages()) for the common case -
-	 * an explicit selection, not "select all matching the current filter" (that stays on the
-	 * classic path, see plan). Returns null if not applicable at all (caller falls back to the
-	 * unchanged ajax_deleteMessages() call directly); otherwise a Promise that either succeeds via
-	 * JMAP or, on any failure, falls back to that same classic call internally - so the caller can
-	 * treat the return value uniformly (e.g. .finally()) either way.
+	 * Try the fast client-side JMAP delete path - MailJmap.deleteMessages() for an explicit
+	 * selection, or deleteAllMatching() for "select all matching the current filter". Returns null
+	 * if not applicable at all (caller falls back to the unchanged ajax_deleteMessages() call
+	 * directly); otherwise a Promise that either succeeds via JMAP or, on any failure, falls back
+	 * to that same classic call internally - so the caller can treat the return value uniformly
+	 * (e.g. .finally()) either way.
 	 */
 	private mail_tryJmapDelete(_msg : any, _action : any) : Promise<any> | null
 	{
-		if (_msg['all'] || !Array.isArray(_msg['msg']) || !_msg['msg'].length)
+		const mode : 'trash' | 'destroy' = _action === 'remove_immediately' ? 'destroy' :
+			_action === 'move_to_trash' ? 'trash' :
+			(this.egw.preference('deleteOptions', 'mail') === 'remove_immediately' ? 'destroy' : 'trash');
+		const fallback = () => egw.json('mail.mail_ui.ajax_deleteMessages',
+			[_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true);
+
+		if (_msg['all'])
+		{
+			return this.jmap.deleteAllMatching(this.mail_buildJmapQuery(_msg), mode).catch((e) =>
+			{
+				console.error('MailApp.mail_tryJmapDelete(): JMAP bulk delete failed, falling back to server', e);
+				return fallback();
+			});
+		}
+		if (!Array.isArray(_msg['msg']) || !_msg['msg'].length)
 		{
 			return null;
 		}
@@ -2747,13 +2761,10 @@ export class MailApp extends EgwApp
 		{
 			return null;
 		}
-		const mode : 'trash' | 'destroy' = _action === 'remove_immediately' ? 'destroy' :
-			_action === 'move_to_trash' ? 'trash' :
-			(this.egw.preference('deleteOptions', 'mail') === 'remove_immediately' ? 'destroy' : 'trash');
 		return this.jmap.deleteMessages(references, mode).catch((e) =>
 		{
 			console.error('MailApp.mail_tryJmapDelete(): JMAP delete failed, falling back to server', e);
-			return egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true);
+			return fallback();
 		});
 	}
 
@@ -2878,6 +2889,34 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Try the fast client-side JMAP path (MailJmap.purgeFolder()) for "empty junk"/"empty trash" -
+	 * always applicable (no "select all"/single-selection distinction, it's a whole-folder purge),
+	 * but purgeFolder() throws if the profile has no junk/trash folder configured, or on any JMAP
+	 * failure - either way this falls back to the given classic ajax call unchanged, which has its
+	 * own completion callback (unlock_tree()) already - not duplicated here. On success, replicates
+	 * the two client-visible effects the classic call's server response used to push: clear the
+	 * folder-tree badge (mail_setFolderStatus - the folder is now empty) and, if the purged folder
+	 * is the one currently displayed, refresh the grid (classic path's conditional egw.refresh()).
+	 */
+	private mail_tryJmapPurgeFolder(profileID : string, which : 'trash' | 'junk', selectedFolder : string,
+		onSuccess : () => void, fallback : () => Promise<any>) : Promise<any>
+	{
+		return this.jmap.purgeFolder(profileID, which).then((purgedFolder) =>
+		{
+			this.mail_setFolderStatus({[purgedFolder]: 0});
+			if (purgedFolder === selectedFolder)
+			{
+				this.mail_refreshMessageGrid();
+			}
+			onSuccess();
+		}, (e) =>
+		{
+			console.error('MailApp.mail_tryJmapPurgeFolder(): JMAP purge failed, falling back to server', e);
+			return fallback();
+		});
+	}
+
+	/**
 	 * mail_emptySpam
 	 *
 	 * @param {object} action
@@ -2889,8 +2928,10 @@ export class MailApp extends EgwApp
 		var self = this;
 
 		this.egw.message(this.egw.lang('empty junk'), 'success');
-		egw.json('mail.mail_ui.ajax_emptySpam',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
-			.sendRequest(true);
+		const classicEmptySpam = () => egw.json('mail.mail_ui.ajax_emptySpam',
+			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
+			function(){self.unlock_tree();}).sendRequest(true);
+		this.mail_tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlock_tree(), classicEmptySpam);
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
@@ -2921,8 +2962,10 @@ export class MailApp extends EgwApp
 		var self = this;
 
 		this.egw.message(this.egw.lang('empty trash'), 'success');
-		egw.json('mail.mail_ui.ajax_emptyTrash',[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],function(){self.unlock_tree();})
-			.sendRequest(true);
+		const classicEmptyTrash = () => egw.json('mail.mail_ui.ajax_emptyTrash',
+			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
+			function(){self.unlock_tree();}).sendRequest(true);
+		this.mail_tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlock_tree(), classicEmptyTrash);
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
@@ -3724,6 +3767,37 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Turn a "select all matching filter" _elems/_msg object's activeFilters into the
+	 * JmapGetRowsQuery shape MailJmap.buildFilter() (and everything built on it - toggleForAll(),
+	 * clearLabelsForAll(), moveAllMatching(), deleteAllMatching()) expects.
+	 *
+	 * @param {object} _elems _msg/_elems object with an .activeFilters property (only present/used
+	 *  when .all is truthy)
+	 */
+	private mail_buildJmapQuery(_elems) : any
+	{
+		const filters = _elems.activeFilters || {};
+		let selectedFolder = filters.selectedFolder ||
+			this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
+			this.egw.preference('ActiveProfileID', 'mail');
+		if (selectedFolder && !selectedFolder.includes('::')) selectedFolder += '::INBOX';
+		const query : any = {
+			selectedFolder,
+			cat_id: filters.cat_id,
+			search: filters.search,
+			filter: filters.filter,
+			startdate: filters.startdate,
+			enddate: filters.enddate,
+		};
+		if (filters.sort && typeof filters.sort === 'object')
+		{
+			query.order = filters.sort.id;
+			query.sort = filters.sort.asc ? 'ASC' : 'DESC';
+		}
+		return query;
+	}
+
+	/**
 	 * Flag mail as 'read', 'unread', 'flagged' or 'unflagged'
 	 *
 	 * @param {object} _flag
@@ -3742,24 +3816,7 @@ export class MailApp extends EgwApp
 			let operation : Promise<void>;
 			if (_elems.all)
 			{
-				const filters = _elems.activeFilters || {};
-				let selectedFolder = filters.selectedFolder ||
-					this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
-					this.egw.preference('ActiveProfileID', 'mail');
-				if (selectedFolder && !selectedFolder.includes('::')) selectedFolder += '::INBOX';
-				const query : any = {
-					selectedFolder,
-					cat_id: filters.cat_id,
-					search: filters.search,
-					filter: filters.filter,
-					startdate: filters.startdate,
-					enddate: filters.enddate,
-				};
-				if (filters.sort && typeof filters.sort === 'object')
-				{
-					query.order = filters.sort.id;
-					query.sort = filters.sort.asc ? 'ASC' : 'DESC';
-				}
+				const query = this.mail_buildJmapQuery(_elems);
 				operation = actionId === 'unlabel' ?
 					this.jmap.clearLabelsForAll(query) : this.jmap.toggleForAll(query, actionId);
 			}
@@ -4583,17 +4640,18 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Try the fast client-side JMAP move path (MailJmap.moveMessages()) for the common case - an
-	 * explicit selection (not "select all matching the current filter") within one account, and
+	 * Try the fast client-side JMAP move path - MailJmap.moveMessages() for an explicit selection,
+	 * or moveAllMatching() for "select all matching the current filter" - within one account, and
 	 * not the "move to archive" shortcut (that needs the server to resolve the actual archive
-	 * folder, see ajax_copyMessages()'s $_move2ArchiveMarker). Returns null if not applicable
-	 * (caller falls back to the unchanged classic call directly); otherwise a Promise that either
-	 * succeeds via JMAP or, on any failure, falls back to that same classic call.
+	 * folder, see ajax_copyMessages()'s $_move2ArchiveMarker). Cross-account moves fall through to
+	 * the classic path too (moveMessages()/moveAllMatching() both throw for those). Returns null if
+	 * not applicable (caller falls back to the unchanged classic call directly); otherwise a
+	 * Promise that either succeeds via JMAP or, on any failure, falls back to that same classic call.
 	 */
 	private mail_tryJmapMove(target : string, messages : any, isArchiveShortcut : boolean,
 		classicMove : () => Promise<any>) : Promise<any> | null
 	{
-		if (isArchiveShortcut || messages['all'] || !Array.isArray(messages.msg) || !messages.msg.length)
+		if (isArchiveShortcut)
 		{
 			return null;
 		}
@@ -4601,6 +4659,18 @@ export class MailApp extends EgwApp
 		const targetProfileID = sepIndex > 0 ? target.substring(0, sepIndex) : '';
 		const targetFolderPath = sepIndex > 0 ? target.substring(sepIndex + 2) : '';
 		if (!targetProfileID || !targetFolderPath)
+		{
+			return null;
+		}
+		if (messages['all'])
+		{
+			return this.jmap.moveAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath).catch((e) =>
+			{
+				console.error('MailApp.mail_tryJmapMove(): JMAP bulk move failed, falling back to server', e);
+				return classicMove();
+			});
+		}
+		if (!Array.isArray(messages.msg) || !messages.msg.length)
 		{
 			return null;
 		}

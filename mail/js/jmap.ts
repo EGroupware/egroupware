@@ -32,6 +32,7 @@ interface JmapToken
 	isLocal : boolean;
 	customLabels : Record<string, {name : string, color : string, icon? : string}>;
 	trashFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Trash" - see deleteMessages()
+	junkFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Junk" - null if not configured
 }
 
 export interface JmapMessageReference
@@ -694,6 +695,7 @@ export class MailJmap
 						isLocal: !!data.isLocal,
 						customLabels: data.customLabels || {},
 						trashFolder: data.trashFolder,
+						junkFolder: data.junkFolder,
 					};
 					if (Object.keys(token.customLabels).length)
 					{
@@ -1283,6 +1285,122 @@ export class MailJmap
 			ids.slice(start, start + MailJmap.QUERY_PAGE_SIZE).forEach(id => update[id] = {...patch});
 			await this.updateKeywords(profileID, mailboxId, update);
 		}
+	}
+
+	/** Permanently destroy a (possibly large) set of ids, in QUERY_PAGE_SIZE-sized Email/set calls. */
+	private async destroyIds(profileID : string, mailboxId : string, ids : string[]) : Promise<void>
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		for (let start = 0; start < ids.length; start += MailJmap.QUERY_PAGE_SIZE)
+		{
+			const args : any = {
+				accountId: token.accountId,
+				destroy: ids.slice(start, start + MailJmap.QUERY_PAGE_SIZE),
+			};
+			if (token.isLocal)
+			{
+				args.mailboxId = mailboxId;
+			}
+			const [{result}] = await this.clients[profileID].requestMany((t) => ({
+				result: t.Email.set(args) as any,
+			}));
+			if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
+			{
+				const error : any = new Error(this.egw.lang('Failed to delete one or more messages'));
+				error.notDestroyed = result.notDestroyed;
+				throw error;
+			}
+		}
+	}
+
+	/**
+	 * Move every message matching the current NextMatch filter(s) to another mailbox within the
+	 * SAME account - same underlying Email/set mailboxIds patch as moveMessages(), just driven by
+	 * a re-run filter query (queryAllIds()) instead of an explicit selection, mirroring
+	 * toggleForAll()'s "act on everything matching the filter" shape.
+	 *
+	 * Cross-account moves are out of scope, same as moveMessages() - throws so the caller falls
+	 * back to the existing server-side ajax_copyMessages().
+	 */
+	async moveAllMatching(query : JmapGetRowsQuery, targetProfileID : string, targetFolderPath : string) : Promise<void>
+	{
+		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
+		if (profileID !== targetProfileID)
+		{
+			throw new Error('MailJmap.moveAllMatching(): cross-account move not supported');
+		}
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const client = this.clients[profileID];
+		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const targetMailboxId = await this.mailboxId(client, token.accountId, targetProfileID, targetFolderPath);
+		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
+		await this.updateIds(profileID, mailboxId, ids, {mailboxIds: {[targetMailboxId]: true}});
+	}
+
+	/**
+	 * Delete every message matching the current NextMatch filter(s) - 'trash' delegates to
+	 * moveAllMatching() (same trashFolder resolution deleteMessages() uses), 'destroy' permanently
+	 * removes them. See deleteMessages() for the single-selection equivalent.
+	 */
+	async deleteAllMatching(query : JmapGetRowsQuery, mode : 'trash' | 'destroy') : Promise<void>
+	{
+		const [profileID, folder] = (query.selectedFolder || '').split('::', 2);
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		if (mode === 'trash')
+		{
+			if (!token.trashFolder)
+			{
+				throw new Error('MailJmap.deleteAllMatching(): no trash folder known for this profile');
+			}
+			await this.moveAllMatching(query, profileID, token.trashFolder);
+			return;
+		}
+		const client = this.clients[profileID];
+		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
+		await this.destroyIds(profileID, mailboxId, ids);
+	}
+
+	/**
+	 * Permanently destroy every message in the account's Trash or Junk mailbox - "empty trash"/
+	 * "empty junk". Reuses deleteAllMatching() with a query that has no search/filter/dates, just
+	 * a selectedFolder - buildFilter() then produces a filter of just "inMailbox", i.e. everything
+	 * in that one folder, minus whatever JMAP already never exposes (\Deleted-flagged messages).
+	 *
+	 * @param which 'trash' or 'junk' - resolved via the JMAP bootstrap's trashFolder/junkFolder
+	 *  (see ajax_jmapBootstrap()'s docblock); throws (caller falls back to the classic
+	 *  ajax_emptyTrash()/ajax_emptySpam() call) if the profile has no such folder configured
+	 * @return the resolved "profileID::folder" selectedFolder key that was purged, so the caller
+	 *  can update the folder-tree badge / refresh the grid without a server round trip (the classic
+	 *  ajax call's response used to push these via app.mail.mail_setFolderStatus/egw.refresh)
+	 */
+	async purgeFolder(profileID : string, which : 'trash' | 'junk') : Promise<string>
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const folder = which === 'trash' ? token.trashFolder : token.junkFolder;
+		if (!folder)
+		{
+			throw new Error(`MailJmap.purgeFolder(): no ${which} folder known for this profile`);
+		}
+		const selectedFolder = profileID + '::' + folder;
+		await this.deleteAllMatching({selectedFolder}, 'destroy');
+		return selectedFolder;
 	}
 
 	/** Toggle a label or custom flag for every message matching the current NextMatch filters. */

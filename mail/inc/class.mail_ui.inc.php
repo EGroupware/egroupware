@@ -4708,10 +4708,13 @@ class mail_ui
 				$bootstrap['isLocal'] = $local;
 				$bootstrap['customLabels'] = Mail::getCustomLabels();
 				// account config only (no IMAP round-trip, no full special-use autodetection like
-				// Mail::getTrashFolder() does) - good enough for MailJmap.deleteMessages()'s
-				// move-to-trash resolution; a reasonable simplification for accounts that don't
-				// override the conventional "Trash" name without configuring acc_folder_trash
+				// Mail::getTrashFolder()/getJunkFolder() do) - good enough for
+				// MailJmap.deleteMessages()'s move-to-trash resolution and the "empty trash"/
+				// "empty junk" fast paths; a reasonable simplification for accounts that don't
+				// override the conventional "Trash"/"Junk" names without configuring
+				// acc_folder_trash/acc_folder_junk
 				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?: 'Trash';
+				$bootstrap['junkFolder'] = $imapServer->acc_folder_junk ?: null;
 			}
 			$response->data($bootstrap);
 		}
