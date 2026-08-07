@@ -11,6 +11,71 @@
 
 import './egw_core';
 
+export interface CalendarModule
+{
+	/**
+	 * setup a calendar / date-selection
+	 *
+	 * @member of egw
+	 * @param _input
+	 * @param _time
+	 * @param _callback
+	 * @param _context
+	 */
+	calendar(_input : any, _time : any, _callback : any, _context : any) : void;
+
+	/**
+	 * setup a time-selection
+	 *
+	 * @param _input
+	 * @param _callback
+	 * @param _context
+	 */
+	time(_input : any, _callback : any, _context : any) : void;
+
+	/**
+	 * transform PHP date/time-format to jQuery date/time-format
+	 *
+	 * @param _php_format
+	 */
+	dateTimeFormat(_php_format : string) : string;
+
+	/**
+	 * Get timezone offset of user in seconds
+	 *
+	 * If browser / OS is configured correct, identical to: (new Date()).getTimezoneOffset()
+	 *
+	 * @return offset to UTC in minutes
+	 */
+	getTimezoneOffset() : number;
+
+	/**
+	 * Calculate the start of the week, according to user's preference
+	 *
+	 * @param date
+	 */
+	week_start(date : string) : Date;
+
+	/**
+	 * Get a list of holidays for the given year
+	 *
+	 * Returns a promise that resolves with a list of holidays indexed by date, in Ymd format:
+	 * {20001225: [{day: 14, month: 2, occurence: 2021, name: "Valentinstag"}]}
+	 *
+	 * No need to cache the results, we do it here.
+	 *
+	 * @param year
+	 */
+	holidays(year : number) : Promise<{ [key : string] : Array<object> }>;
+}
+
+declare global
+{
+	interface IegwGlobal extends CalendarModule
+	{
+	}
+}
+
 /**
  * Date and timepicker
  *
@@ -18,11 +83,11 @@ import './egw_core';
  * @param {string} _app application name object is instanced for
  * @param {object} _wnd window object is instanced for
  */
-egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
+egw.extend('calendar', egw.MODULE_GLOBAL, function (_app : string, _wnd : Window) : CalendarModule
 {
 	"use strict";
 
-	let _holiday_cache = {};
+	let _holiday_cache : {[year : number] : any} = {};
 
 	/**
 	 * transform PHP date/time-format to jQuery date/time-format
@@ -30,7 +95,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 	 * @param {string} _php_format
 	 * @returns {string}
 	 */
-	function dateTimeFormat(_php_format)
+	function dateTimeFormat(_php_format : string) : string
 	{
 		return _php_format
 			.replace("Y","yy")
@@ -53,7 +118,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 		 * @param _context
 		 * @returns
 		 */
-		calendar: function(_input, _time, _callback, _context)
+		calendar: function(_input : any, _time : any, _callback : any, _context : any) : void
 		{
 			alert('jQueryUI datepicker is no longer supported!');
 		},
@@ -65,7 +130,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 		 * @param _context
 		 * @returns
 		 */
-		time: function(_input, _callback, _context)
+		time: function(_input : any, _callback : any, _context : any) : void
 		{
 			alert('jQueryUI datepicker is no longer supported!');
 		},
@@ -75,7 +140,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 		 * @param {string} _php_format
 		 * @returns {string}
 		 */
-		dateTimeFormat: function(_php_format)
+		dateTimeFormat: function(_php_format : string) : string
 		{
 			return dateTimeFormat(_php_format);
 		},
@@ -86,8 +151,8 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 		 *
 		 * @return {number} offset to UTC in minutes
 		 */
-		getTimezoneOffset: function() {
-			return isNaN(egw.preference('timezoneoffset')) ? (new Date()).getTimezoneOffset() : parseInt(egw.preference('timezoneoffset'));
+		getTimezoneOffset: function() : number {
+			return isNaN(<any>egw.preference('timezoneoffset')) ? (new Date()).getTimezoneOffset() : parseInt(<any>egw.preference('timezoneoffset'));
 		},
 		/**
 		 * Calculate the start of the week, according to user's preference
@@ -95,7 +160,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 		 * @param {string} date
 		 * @return {Date}
 		 */
-		week_start: function(date) {
+		week_start: function(date : string) : Date {
 			var d = new Date(date);
 			var day = d.getUTCDay();
 			var diff = 0;
@@ -125,7 +190,7 @@ egw.extend('calendar', egw.MODULE_GLOBAL, function (_app, _wnd)
 		 * @param year
 		 * @returns Promise<{[key: string]: Array<object>}>
 		 */
-		holidays: function holidays(year) //: Promise<{ [key : string] : Array<object> }>
+		holidays: function holidays(year : number) : Promise<any>
 		{
 			// No country selected causes error, so skip if it's missing
 			if (!egw || !egw.preference('country', 'common'))

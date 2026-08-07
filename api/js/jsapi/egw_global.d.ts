@@ -187,21 +187,7 @@ interface IegwGlobal
 
 	// preferences: implemented in egw_preferences.ts, contributing PreferencesModule
 
-	/**
-	 * implemented in egw_calendar.js
-	 */
-	/**
-	 * Get a list of holidays for the given year
-	 *
-	 * Returns a promise that resolves with a list of holidays indexed by date, in Ymd format:
-	 * {20001225: [{day: 14, month: 2, occurence: 2021, name: "Valentinstag"}]}
-	 *
-	 * No need to cache the results, we do it here.
-	 *
-	 * @param year
-	 * @returns Promise<{[key: string]: Array<object>}>
-	 */
-	holidays(fullYear : number) : Promise<{ [key : string] : Array<object> }>;
+	// calendar: implemented in egw_calendar.ts, contributing CalendarModule
 
 	// store: implemented in egw_store.ts, contributing StoreModule
 	// user: implemented in egw_user.ts, contributing UserModule
@@ -309,32 +295,6 @@ interface IegwGlobal
 	 * @param {Window|String} closed Window that was closed, or its name
 	 */
 	windowClosed(appname : string, closed : Window|string) : void;
-
-	/**
-	 * implemented in egw_calendar.js
-	 */
-	/**
-	 * transform PHP date/time-format to jQuery date/time-format
-	 *
-	 * @param {string} _php_format
-	 * @returns {string}
-	 */
-	dateTimeFormat(_php_format : string) : string;
-	/**
-	 * Get timezone offset of user in seconds
-	 *
-	 * If browser / OS is configured correct, identical to: (new Date()).getTimezoneOffset()
-	 *
-	 * @return {number} offset to UTC in seconds
-	 */
-	getTimezoneOffset() : number;
-	/**
-	 * Calculate the start of the week, according to user's preference
-	 *
-	 * @param {string} date
-	 * @return {Date}
-	 */
-	week_start(date : string) : Date;
 }
 
 // JsonRequest class: implemented in egw_json.ts
@@ -384,41 +344,7 @@ interface IegwWndLocal extends IegwGlobal
 	// jsonq: implemented in egw_jsonq.ts, contributing JsonqModule
 	// message: implemented in egw_message.ts, contributing MessageModule
 
-	/**
-	 * implemented in egw_notifications.js
-	 */
-	/**
-	 *
-	 * @param {string} _title a string to be shown as notification message
-	 * @param {object} _options an object of Notification possible options:
-	 *		options = {
-	 *			dir:  // direction of notification to be shown rtl, ltr or auto
-	 *			lang: // a valid BCP 47 language tag
-	 *			body: // DOM body
-	 *			icon: // parse icon URL, default icon is app icon
-	 *			tag: // a string value used for tagging an instance of notification, default is app name
-	 *			onclick: // Callback function dispatches on click on notification message
-	 *			onshow: // Callback function dispatches when notification is shown
-	 *			onclose: // Callback function dispateches on notification close
-	 *			onerror: // Callback function dispatches on error, default is a egw.debug log
-	 *		    requireInteraction: // boolean value indicating that a notification should remain active until the user clicks or dismisses it
-	 *		}
-	 *	@return {boolean} false if Notification is not supported by browser
-	 */
-	notification(_title : string, _options : {dir?: "ltr"|"rtl"|"auto", lang?: string, body?: string, icon?: string,
-		tag?: string, onclick?: Function, onshow?: Function, onclose?: Function, onerror?: Function, requireInteraction?: boolean}) : false|void;
-	/**
-	 * Check Notification availability by browser
-	 *
-	 * @returns {Boolean} true if notification is supported and permitted otherwise false
-	 */
-	checkNotification() : boolean;
-	/**
-	 * Check if there's any runnig notifications and will close them all
-	 *
-	 */
-	killAliveNotifications() : void;
-
+	// notification: implemented in egw_notification.ts, contributing NotificationModule
 	// open: implemented in egw_open.ts, contributing OpenModule
 	// ready: implemented in egw_ready.ts, contributing ReadyModule
 

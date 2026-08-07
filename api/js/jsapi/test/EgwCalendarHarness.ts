@@ -41,7 +41,7 @@ export async function createEgwCalendarEnv(prefs : object = {}) : Promise<EgwCal
 	env.fetchStub = sinon.stub();
 	(env.window as any).fetch = env.fetchStub;
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_calendar.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_calendar.ts', 'module');
 
 	return env;
 }

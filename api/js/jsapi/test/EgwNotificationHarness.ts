@@ -66,7 +66,7 @@ export async function createEgwNotificationEnv(initialPermission : string = 'gra
 	});
 	(env.window as any).Notification = NotificationStub;
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_notification.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_notification.ts', 'module');
 
 	return env;
 }
