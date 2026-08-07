@@ -106,7 +106,7 @@ class Authenticate
 			!empty($_COOKIE['oauth_id_token']) && ($matches = [1 => $_COOKIE['oauth_id_token']])) &&
 			class_exists('EGroupware\OpenID\Token') && ($token = (new Token())->validate($matches[1], "PT5M", $client)))
 		{
-			$username = $token->getClaim('sub');
+			$username = $token->claims()->get('sub');
 			unset($password);
 			$auth_check = false;    // we just checked the authentication
 			// set session->limits from app-* scopes, thought we need to check the client itself, as the token contains only requested scopes
