@@ -8,6 +8,9 @@
 tr.mail {
   --mail-left-border-color: transparent;
 }
+tr.mail td {
+  overflow-y: hidden;
+}
 tr.mail td:first-child {
   border-left: 6px solid var(--mail-left-border-color) !important;
 }
@@ -48,6 +51,7 @@ tr.mail #flaggedImage {
   color: var(--flag-color, var(--sl-color-neutral-800));
 }
 tr.unseen et2-description:not(.bodypreview),
+tr.unseen .mail_subject,
 tr.unseen et2-url-email,
 tr.unseen et2-url-email_ro {
   font-weight: bold !important;
@@ -105,7 +109,7 @@ tr.mail .mail_row_content > et2-hbox::part(base) {
 tr.mail et2-hbox::part(base) {
   justify-content: flex-start;
 }
-tr.mail span {
+tr.mail span:not(.mail_subject):not(.bodypreview) {
   max-height: 2lh;
   overflow: hidden;
   text-overflow: ellipsis;
