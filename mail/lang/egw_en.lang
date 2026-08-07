@@ -61,6 +61,8 @@ any status	mail	en	any status
 append	mail	en	append
 appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application email expected but got: %1
+applying rights	mail	en	Applying rights
+applying rights to %1 folders ...	mail	en	Applying rights to %1 folders ...
 archive folder	mail	en	Archive Folder
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
@@ -503,6 +505,8 @@ remove immediately	mail	en	Remove immediately
 removed folder %1	mail	en	Removed folder %1
 removing %1 from blacklisted email addresses failed because of %2	mail	en	Removing %1 from blacklisted email addresses failed because of %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	en	Removing %1 from whiltelisted email addresses failed because of %2
+removing rights	mail	en	Removing rights
+removing rights from %1 folders ...	mail	en	Removing rights from %1 folders ...
 rename folder	mail	en	Rename folder
 rename folder %1 ?	mail	en	Rename folder %1?
 rename folder %1 to:	mail	en	Rename folder %1 to:

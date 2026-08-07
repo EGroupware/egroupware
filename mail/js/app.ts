@@ -5540,6 +5540,173 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Enumerate all subfolders of the currently selected mailbox, then run one menuaction
+	 * call per folder through a long-task progress dialog.
+	 *
+	 * Shared by acl_save() (grant) and acl_delete_row() (revoke): both need to expand the
+	 * mailbox tree client-side, so the server never has to recurse through possibly
+	 * thousands of IMAP folders inside a single request (which used to be able to run into
+	 * PHP's execution-time limit with no feedback to the user).
+	 *
+	 * @param {string} menuaction mail.mail_acl.ajax_setACL or mail.mail_acl.ajax_deleteACL
+	 * @param {function} buildItem(folder, isRoot, acc_id, account_id) builds the long_task
+	 *	list item for one folder; isRoot tells it whether folder is the originally selected
+	 *	mailbox itself (getSubfolders() on the server always includes it) or one of its
+	 *	descendants - needed because rows without "recursive" checked must only ever be
+	 *	applied to the root, never to descendants
+	 * @param {string} title long_task dialog title
+	 * @param {function} msgFor(count) long_task dialog message
+	 * @param {function} callback long_task completion callback
+	 */
+	acl_run_recursive(menuaction, buildItem, title, msgFor, callback)
+	{
+		// acc_id/account_id are preserved server-side state for this etemplate, not part of
+		// the submitted content - getValues() never has them. The Folder field itself is
+		// the only place the client has them, since the server put them there for its own
+		// remote-search use (edit() sets searchOptions to {acc_id, account_id}, or just
+		// {mailaccount: acc_id} for a non-admin editing their own mailbox).
+		const mailboxWidget = this.et2.getWidgetById('mailbox');
+		const mailbox = Array.isArray(mailboxWidget.value) ? mailboxWidget.value[0] : mailboxWidget.value;
+		const searchOptions : any = mailboxWidget.searchOptions || {};
+		const acc_id = searchOptions.acc_id ?? searchOptions.mailaccount;
+		const account_id = searchOptions.account_id;
+
+		const loading_id = 'mail-acl-recursive';
+		this.egw.loading_prompt(loading_id, true, this.egw.lang('please wait...'));
+		const url = this.egw.link(this.egw.ajaxUrl('mail.mail_acl.ajax_folders'), {
+			acc_id: acc_id,
+			account_id: account_id,
+			mailbox: mailbox,
+			query: ''
+		});
+		return this.egw.request(url, []).then((folders : { id : string, label : string }[]) =>
+		{
+			this.egw.loading_prompt(loading_id, false);
+			const list = folders.map(folder => buildItem(folder.id, folder.id === mailbox, acc_id, account_id));
+			Et2Dialog.long_task(callback, msgFor(list.length), title, menuaction, list, 'mail');
+		});
+	}
+
+	/**
+	 * Save/Apply button handler for the folder ACL dialog (button[save] / button[apply])
+	 *
+	 * If none of the grid rows have "recursive" checked, this falls through to the normal
+	 * ajax etemplate submit. Otherwise it expands the mailbox tree and grants the rights
+	 * one folder at a time through a long-running task with progress feedback.
+	 *
+	 * @param {Event} _event
+	 * @param {Et2Button} _widget button[save] or button[apply]
+	 * @return {boolean} true to let the normal submit proceed, false to block it (this
+	 *	handler already triggers the submit itself once the long task finishes)
+	 */
+	acl_save(_event, _widget)
+	{
+		const values = this.et2._inst.getValues(this.et2);
+		// acc_id is only present in getValues() for a row added this session - once a row
+		// has been saved once, the server marks its account picker readonly (edit(), to
+		// stop it being reassigned to a different account) and readonly widgets are
+		// dropped from getValues(). The widget itself still has the real value though.
+		const grid : [string, any][] = Object.entries(values.grid || {}).map(([key, row]) =>
+			[key, {...(<object>row), acc_id: (<any>row).acc_id ?? this.et2.getWidgetById(key + '[acc_id]')?.value}]);
+
+		if (!grid.some(([, row]) => row.acl_recursive && row.acc_id))
+		{
+			return true;
+		}
+
+		this.acl_run_recursive('mail.mail_acl.ajax_setACL',
+			(folder, isRoot, acc_id, account_id) => ({
+				...values,
+				mailbox: folder,
+				acc_id: acc_id,
+				account_id: account_id,
+				// every row applies to the root folder, but only rows with "recursive"
+				// checked may also apply to its descendants (getSubfolders() includes the
+				// root itself, so rows without "recursive" would otherwise leak into every
+				// subfolder too)
+				grid: Object.fromEntries(grid
+					.filter(([, row]) => row.acc_id && (isRoot || row.acl_recursive))
+					.map(([key, row]) => [key, {...row, acl_recursive: false}]))
+			}),
+			this.egw.lang('Applying rights'),
+			(count) => this.egw.lang('Applying rights to %1 folders ...', count),
+			(val) =>
+			{
+				if (val)
+				{
+					// recursion is already fully handled by the long task above - reset
+					// the checkboxes before any follow-up submit/refresh, or a still-checked
+					// "recursive" would re-trigger the old unbounded synchronous loop again
+					grid.forEach(([key]) =>
+					{
+						const cb = this.et2.getWidgetById(key + '[acl_recursive]');
+						if (cb) cb.set_value(false);
+					});
+					_widget.id === 'button[save]' ? window.close() : this.et2._inst.submit();
+				}
+			}
+		);
+		return false;
+	}
+
+	/**
+	 * Delete button handler for one grid row of the folder ACL dialog (delete[$row])
+	 *
+	 * If the row's "recursive" checkbox isn't set, this behaves exactly like before
+	 * (Et2Dialog.confirm(), which submits the row deletion itself on confirmation).
+	 * If it is set, after confirming, revokes the ACL from every subfolder one at a time
+	 * through a long-running task instead of the old unbounded server-side loop.
+	 *
+	 * @param {Event} _event
+	 * @param {Et2Button} _widget delete[$row] button
+	 * @return {boolean|void} always falsy: submitting is either delegated to
+	 *	Et2Dialog.confirm() or triggered manually once the long task finishes
+	 */
+	acl_delete_row(_event, _widget)
+	{
+		const rowId = _widget.id.replace(/[^0-9.]+/g, '');
+		const values = this.et2._inst.getValues(this.et2);
+		const row = values.grid?.[rowId];
+
+		if (!row || !row.acl_recursive)
+		{
+			return Et2Dialog.confirm(_widget, this.egw.lang('Do you really want to remove all rights from this account?'), this.egw.lang('Remove'));
+		}
+
+		// acc_id is readonly (and so missing from getValues()) for any row that was
+		// already saved before this session - read the real value straight from the widget
+		const identifier = row.acc_id ?? this.et2.getWidgetById(rowId + '[acc_id]')?.value;
+
+		Et2Dialog.show_dialog((button_id) =>
+		{
+			if (button_id !== Et2Dialog.YES_BUTTON) return;
+
+			this.acl_run_recursive('mail.mail_acl.ajax_deleteACL',
+				(folder, isRoot, acc_id, account_id) => ({
+					mailbox: folder,
+					identifier: identifier,
+					acc_id: acc_id,
+					account_id: account_id
+				}),
+				this.egw.lang('Removing rights'),
+				(count) => this.egw.lang('Removing rights from %1 folders ...', count),
+				(val) =>
+				{
+					if (val)
+					{
+						// same reasoning as acl_save(): never let a still-checked
+						// "recursive" box re-trigger the old synchronous loop on refresh
+						const cb = this.et2.getWidgetById(rowId + '[acl_recursive]');
+						if (cb) cb.set_value(false);
+						this.et2._inst.submit();
+					}
+				}
+			);
+		}, this.egw.lang('Do you really want to remove all rights from this account?'), this.egw.lang('Remove'), {},
+			Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
+	}
+
+	/**
 	 * Edit a mail account
 	 *
 	 * @param _action

@@ -74,6 +74,8 @@ class mail_acl
 	 */
 	var $public_functions = array(
 		'edit'	=> True,
+		'ajax_setACL' => True,
+		'ajax_deleteACL' => True,
 	);
 
 	/**
@@ -300,19 +302,40 @@ class mail_acl
 	}
 
 	/**
-	 * Autocomplete for folder taglist
+	 * Check the current user is allowed to administer another account's mailbox
 	 *
+	 * @param ?string $account_id account_id of the mailbox to check, or null/unset for the own mailbox
+	 * @throws Api\Exception\NoPermission\Admin
+	 */
+	protected static function _require_admin_permission($account_id)
+	{
+		// use !empty(), not isset(): callers may pass an empty string for "no account_id"
+		// (e.g. a JS object literal with an undefined account_id key still serializes to
+		// account_id= on the wire), which must NOT be treated as a foreign account_id
+		if (!empty($account_id) && empty($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin;
+		}
+	}
+
+	/**
+	 * Autocomplete for folder taglist, also used to enumerate all subfolders of a given
+	 * mailbox for the "recursive" grant/delete long-running task (mail/js/app.ts acl_run_recursive)
+	 *
+	 * @param ?string $_GET['mailbox'] restrict the search to subfolders of this mailbox, defaults to the account root
 	 * @throws Api\Exception\NoPermission\Admin
 	 */
 	public static function ajax_folders()
 	{
-		if (isset($_GET['account_id']) && empty($GLOBALS['egw_info']['user']['apps']['admin']))
-		{
-			throw new Api\Exception\NoPermission\Admin;
-		}
+		self::_require_admin_permission($_GET['account_id'] ?? null);
 		$account = Mail\Account::read($_GET['acc_id'], $_GET['account_id'] ?? null);
 		$imap = $account->imapServer(!empty($_GET['account_id']) ? (int)$_GET['account_id'] : false);
-		$mailbox = $imap->isAdminConnection ? $imap->getUserMailboxString($imap->isAdminConnection) : 'INBOX';
+		// $_GET['mailbox'] can be an array (taglist widget value) and/or prefixed with "{acc_id}::", same as $content['mailbox'] in edit()
+		$mailbox = !empty($_GET['mailbox']) ? self::_extract_mailbox($_GET['mailbox'], $_GET['acc_id']) : null;
+		if (empty($mailbox))
+		{
+			$mailbox = $imap->isAdminConnection ? $imap->getUserMailboxString($imap->isAdminConnection) : 'INBOX';
+		}
 
 		$folders = array();
 		foreach(self::getSubfolders($mailbox, $imap) as $folder)
@@ -339,12 +362,14 @@ class mail_acl
      *
      * @param array $content content including the acl rights
      * @param string $msg Message
+     * @param ?bool &$all_ok=null on return whether all setACL() calls succeeded (used by ajax_setACL())
      *
      * @return Array | void return array of validation messages or nothing
      */
-	function update_acl ($content, &$msg)
+	function update_acl ($content, &$msg, &$all_ok=null)
 	{
 		$validator = array();
+		$all_ok = true;
 
 		foreach ($content['grid'] as $keys => $value)
 		{
@@ -382,6 +407,7 @@ class mail_acl
 				else
 				{
 					$msg = lang('Error while setting ACL for folder %1!', $content['mailbox'])."\n".$msg;
+					$all_ok = false;
 				}
 			}
 			else
@@ -510,6 +536,37 @@ class mail_acl
 	}
 
 	/**
+	 * Ajax callback deleting the ACL of a single folder for one identifier
+	 *
+	 * Used by the "recursive" delete long-running task (mail/js/app.ts acl_delete_row):
+	 * the client already expanded the folder tree into one call per folder, so this
+	 * never recurses itself.
+	 *
+	 * @param array $content with keys acc_id, account_id, mailbox, identifier
+	 * @throws Api\Exception\NoPermission\Admin
+	 */
+	public function ajax_deleteACL($content)
+	{
+		self::_require_admin_permission($content['account_id'] ?? null);
+		$account = Mail\Account::read($content['acc_id'], $content['account_id'] ?? null);
+		$this->imap = $account->imapServer(!empty($content['account_id']) ? (int)$content['account_id'] : false);
+
+		$msg = null;
+		// identifier comes from the account-picker widget, which (like acc_id in
+		// update_acl()) may submit an array-wrapped value - unwrap it the same way
+		// remove_acl() already does for the synchronous single-folder delete
+		$identifier = self::_extract_acc_id($content['identifier']);
+		if (($ok = $this->deleteACL($content['mailbox'], $identifier, false, $msg)))
+		{
+			Api\Json\Response::get()->data($content['mailbox']);
+		}
+		else
+		{
+			Api\Json\Response::get()->error($msg);
+		}
+	}
+
+	/**
 	 * Get subfolders of a mailbox
 	 *
 	 * @param string $mailbox structural folder name
@@ -577,6 +634,34 @@ class mail_acl
 			return false;
 		}
 		return true;
+	}
+
+	/**
+	 * Ajax callback setting the ACL rights of all grid rows on a single folder
+	 *
+	 * Used by the "recursive" save/apply long-running task (mail/js/app.ts acl_save):
+	 * the client already expanded the folder tree into one call per folder (with each
+	 * row's acl_recursive forced to false), so this never recurses itself.
+	 *
+	 * @param array $content with keys acc_id, account_id, mailbox, grid (as in update_acl())
+	 * @throws Api\Exception\NoPermission\Admin
+	 */
+	public function ajax_setACL($content)
+	{
+		self::_require_admin_permission($content['account_id'] ?? null);
+		$account = Mail\Account::read($content['acc_id'], $content['account_id'] ?? null);
+		$this->imap = $account->imapServer(!empty($content['account_id']) ? (int)$content['account_id'] : false);
+
+		$msg = null;
+		$this->update_acl($content, $msg, $all_ok);
+		if ($all_ok)
+		{
+			Api\Json\Response::get()->data($content['mailbox']);
+		}
+		else
+		{
+			Api\Json\Response::get()->error($msg);
+		}
 	}
 
 	/**

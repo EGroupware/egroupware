@@ -60,6 +60,8 @@ any status	mail	fr	n'importe quel statut
 append	mail	fr	Ajouter
 appended after reply before sending	mail	fr	Ajouté après la réponse avant l'envoi
 application mail expected but got: %1	mail	fr	Application mail attendue mais résultat obtenu : %1
+applying rights	mail	fr	Application des droits
+applying rights to %1 folders ...	mail	fr	Application des droits sur %1 dossier(s) ...
 archive folder	mail	fr	Dossier Archives
 are you sure you want to delete all selected folders?	mail	fr	Souhaitez-vous supprimer tous les dossiers sélectionnés ?
 are you sure you want to move folder %1 to folder %2?	mail	fr	Souhaitez-vous transférer le dossier %1 dans le dossier %2
@@ -492,6 +494,8 @@ remove immediately	mail	fr	Enlever immédiatement
 removed folder %1	mail	fr	Dossier %1 supprimé
 removing %1 from blacklisted email addresses failed because of %2	mail	fr	La suppression de %1 des adresses électroniques figurant sur la liste noire a échoué en raison de %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	fr	La suppression de %1 des adresses électroniques figurant sur la liste blanche a échoué en raison de %2
+removing rights	mail	fr	Suppression des droits
+removing rights from %1 folders ...	mail	fr	Suppression des droits de %1 dossier(s) ...
 rename folder	mail	fr	Renommer le dossier
 rename folder %1 ?	mail	fr	Renommer le dossier %1 ?
 rename folder %1 to:	mail	fr	Renommer le dossier %1 en :
