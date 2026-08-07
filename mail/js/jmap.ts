@@ -318,7 +318,26 @@ export class MailJmap
 	{
 		try
 		{
-			const groups = this.groupReferences(rowIds.map(rowId => this.messageReference(rowId)));
+			// A malformed id (e.g. a folder id ending up here instead of a message row id - a
+			// known, not yet root-caused issue, see feedback_et2nextmatch_mail_regression memory)
+			// must not abort refreshing every OTHER row in the same batch - drop just that one
+			const references : JmapMessageReference[] = [];
+			for (const rowId of rowIds)
+			{
+				try
+				{
+					references.push(this.messageReference(rowId));
+				}
+				catch (e)
+				{
+					console.warn('MailJmap.refreshRows(): dropping malformed row id', rowId);
+				}
+			}
+			if (!references.length)
+			{
+				return false;
+			}
+			const groups = this.groupReferences(references);
 
 			const data : Record<string, any> = {};
 			const order : string[] = [];

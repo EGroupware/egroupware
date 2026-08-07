@@ -294,9 +294,12 @@ export class MailApp extends EgwApp
 				//@ts-ignore
 				if (nm != null && (typeof jQuery._data(nm).events == 'undefined' || typeof jQuery._data(nm).events.refresh == 'undefined'))
 				{
-					jQuery(nm).on('refresh', (_event, _widget, _row_id, _type) =>
+					jQuery(nm).on('refresh', (_event) =>
 					{
-						if (!self.push_active[_widget.settings.foldertree.split("::")[0]])
+						// Et2Nextmatch.refresh() dispatches a plain DOM CustomEvent (no jQuery
+						// trigger-with-extra-args), so _widget/_row_id/_type are never actually
+						// supplied - use the nm reference captured above instead
+						if (!self.push_active[nm.settings.foldertree.split("::")[0]])
 						{
 							// defer calls to mail_refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
 							if (!self.refresh_timeout)
@@ -996,6 +999,20 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Does _id look like a real "(mail::)?accountID::profileID::mailboxId::emailId" message row
+	 * id - i.e. would MailJmap.messageReference() accept it? Mirrors that method's own shape
+	 * check (kept in sync manually, jmap.ts's version is private) - used to defensively filter
+	 * out anything else (e.g. a bare folder id) before handing it to egw.dataRefreshUID(), which
+	 * has no validation of its own. See feedback_et2nextmatch_mail_regression memory.
+	 */
+	private mail_isValidRowId(id : string) : boolean
+	{
+		let parts = String(id || '').split('::');
+		if (parts[0] === 'mail') parts = parts.slice(1);
+		return parts.length === 4 && !!parts[1] && !!parts[2] && !!parts[3];
+	}
+
+	/**
 	 * mail_fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
 	 *
 	 * @param _selected array of the selected mails
@@ -1007,9 +1024,15 @@ export class MailApp extends EgwApp
 		{
 			if (_reset == true)
 			{
-				// Request updated data, if possible
-				if (this.mail_currentlyFocussed!='') egw.dataRefreshUID(this.mail_currentlyFocussed);
-				for(let k = 0; k < this.mail_selectedMails.length; k++) egw.dataRefreshUID(this.mail_selectedMails[k]);
+				// Request updated data, if possible - skip anything that isn't shaped like a real
+				// message row id (a known, not yet root-caused issue can leave something else
+				// here instead, e.g. a folder id - see feedback_et2nextmatch_mail_regression
+				// memory; dataRefreshUID() has no validation of its own)
+				if (this.mail_currentlyFocussed!='' && this.mail_isValidRowId(this.mail_currentlyFocussed)) egw.dataRefreshUID(this.mail_currentlyFocussed);
+				for(let k = 0; k < this.mail_selectedMails.length; k++)
+				{
+					if (this.mail_isValidRowId(this.mail_selectedMails[k])) egw.dataRefreshUID(this.mail_selectedMails[k]);
+				}
 				//nm.refresh(this.mail_selectedMails,'delete');
 			}
 			this.mail_selectedMails = [];
@@ -3345,7 +3368,7 @@ export class MailApp extends EgwApp
 			dataElem.data.flags = {..._snapshots[uid].flags};
 			dataElem.data['class'] = _snapshots[uid].class;
 			const mailApp = this.nm ? this : window.opener?.app?.mail;
-			const node = mailApp?.nm?.controller?.getObjectManager()?.children?.find(
+			const node = egw_getObjectManager(mailApp?.appname)?.getObjectById(mailApp?.nm_index)?.children?.find(
 				(item: EgwActionObject) => item.id === uid
 			)?.iface?.getDOMNode();
 			knownClasses.forEach(className => node?.classList.remove(className));
@@ -3391,7 +3414,7 @@ export class MailApp extends EgwApp
 			dataElem.data['class'] = classes.join(' ');
 
 			const mailApp = this.nm ? this : window.opener?.app?.mail;
-			const nmNode = mailApp?.nm?.controller?.getObjectManager()?.children?.find(
+			const nmNode = egw_getObjectManager(mailApp?.appname)?.getObjectById(mailApp?.nm_index)?.children?.find(
 				(item: EgwActionObject) => item.id === uid
 			)?.iface?.getDOMNode();
 			labels.forEach(label =>
@@ -3566,7 +3589,7 @@ export class MailApp extends EgwApp
 				// Do not update flags that are already correctly set
 				dataElem.data['class']  = classes.join(' ');
 				const nmRow = data.popup ?
-					(opener?.app?.mail?.nm?.controller?.getObjectManager()?.children?.find(
+					(egw_getObjectManager(opener?.app?.mail?.appname)?.getObjectById(opener?.app?.mail?.nm_index)?.children?.find(
 							(item: EgwActionObject) =>
 							{
 								if (item.id === data.msg[i]) return item;
@@ -3574,11 +3597,11 @@ export class MailApp extends EgwApp
 						)
 					)
 					:
-					(this?.nm?.controller?.getObjectManager()?.children?.find((item: EgwActionObject) =>
+					(egw_getObjectManager(this.appname)?.getObjectById(this.nm_index)?.children?.find((item: EgwActionObject) =>
 					{
 						if (item.id === data.msg[i]) return item
 					}));
-				const nmNode : HTMLElement = nmRow?.iface?.getDOMNode();
+				const nmNode : Element = nmRow?.iface?.getDOMNode();
 				const updateExistingRow = !!nmNode?.isConnected;
 
 				// Only the flags and class attribute changed.  Keep the existing row and update
@@ -4438,7 +4461,7 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().children;
+			let actions: EgwActionObject[] = egw_getObjectManager(this.appname)?.getObjectById(this.nm_index)?.children || [];
 			for (let i = 0; i < _actionObjects['msg'].length; i++)
 			{
 				const mail_uid = _actionObjects['msg'][i];
@@ -4519,7 +4542,7 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			let actions: EgwActionObject[] = this.nm?.controller?.getObjectManager().children;
+			let actions: EgwActionObject[] = egw_getObjectManager(this.appname)?.getObjectById(this.nm_index)?.children || [];
 			for (let i = 0; i < _actionObjects['msg'].length; i++)
 			{
 				const mail_uid = _actionObjects['msg'][i];
