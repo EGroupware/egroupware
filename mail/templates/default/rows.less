@@ -1,0 +1,181 @@
+/* Styles for virtualized Mail nextmatch rows. */
+
+.useEllipsis {
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	word-wrap: break-word;
+}
+
+@labels: {
+	label1: #ff0080;
+	label2: #ff8000;
+	label3: #008000;
+	label4: #0000ff;
+	label5: #8000ff;
+};
+@customFlags: {
+	customFlag1: #ff0000;
+	customFlag2: #ff8000;
+	customFlag3: #008000;
+	customFlag4: #0000ff;
+	customFlag5: #8000ff;
+}
+
+tr.mail {
+	--mail-left-border-color: transparent;
+
+	td {
+		overflow-y: hidden;
+	}
+
+	td:first-child {
+		border-left: 6px solid var(--mail-left-border-color) !important;
+	}
+
+	each(@labels, {
+		&.@{key} {
+			--mail-left-border-color: @value;
+		}
+	});
+	each(@customFlags, {
+		&.@{key} {
+			--flag-color: @value;
+		}
+	});
+
+	&.deleted td:first-child {
+		text-decoration: line-through;
+	}
+
+	#flaggedImage {
+		color: var(--flag-color, var(--sl-color-neutral-800));
+	}
+}
+
+tr.unseen et2-description:not(.bodypreview),
+tr.unseen .mail_subject,
+tr.unseen et2-url-email,
+tr.unseen et2-url-email_ro {
+	font-weight: bold !important;
+}
+
+tr.unseen et2-date-time_ro,
+tr.unseen et2-date-time-today,
+tr.unseen [id$="[date]"] {
+	font-weight: normal;
+}
+
+.status_img {
+	display: inline-block;
+	font-size: calc(1em + 2px);
+	width: 1em;
+	height: 1em;
+}
+
+tr.unseen .status_img.bi-circle-fill {
+	color: var(--mail-color);
+	display: block !important;
+}
+
+tr:not(.unseen) .status_img.bi-circle-fill {
+	display: none;
+}
+
+et2-vbox,
+et2-hbox,
+et2-vbox::part(base),
+et2-hbox::part(base),
+et2-vbox et2-description,
+et2-hbox et2-description {
+	min-width: 0;
+}
+
+tr.mail et2-vbox {
+	font-size: 1em;
+	color: var(--sl-color-neutral-950);
+}
+
+tr.mail et2-vbox::part(base) {
+	align-items: stretch;
+	gap: var(--sl-spacing-2x-small);
+	padding-block: var(--sl-spacing-2x-small);
+}
+
+tr.mail .mail_row_content,
+tr.mail .mail_row_content::part(base),
+tr.mail .mail_row_content > et2-hbox,
+tr.mail .mail_row_content > et2-hbox::part(base) {
+	min-width: 0;
+	max-width: 100%;
+}
+
+tr.mail .mail_row_content {
+	flex: 1 1 0;
+}
+
+tr.mail .mail_row_content > et2-hbox,
+tr.mail .mail_row_content > et2-hbox::part(base) {
+	width: 100%;
+	overflow: hidden;
+}
+
+tr.mail et2-hbox::part(base) {
+	justify-content: flex-start;
+}
+
+tr.mail span:not(.mail_subject):not(.bodypreview) {
+	max-height: 2lh;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	line-clamp: 2;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+}
+
+tr.mail .mail_subject {
+	align-self: stretch;
+	flex: 1 1 auto !important;
+	justify-content: flex-start;
+	min-width: 0;
+	max-width: 100%;
+	width: 100%;
+	overflow: hidden;
+	text-align: left;
+}
+
+tr.mail .mail_subject  {
+	display: block;
+	min-width: 0;
+	width: 100%;
+	max-height: 1lh;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+tr.mail .bodypreview {
+	white-space: nowrap;
+	font-size: 1em;
+	font-weight: normal !important;
+	color: var(--sl-color-neutral-600) !important;
+	overflow: hidden;
+}
+
+tr.mail et2-lavatar {
+	display: flex;
+	align-items: center;
+	flex: 0 0 3.7em;
+	max-width: 3.7em;
+	min-width: 3.7em !important;
+}
+
+tr.mail .status_icons {
+	margin-right: 1em;
+}
+
+tr.mail .status_icons et2-image {
+	font-size: calc(1em + 2px);
+	height: calc(1em + 2px);
+}

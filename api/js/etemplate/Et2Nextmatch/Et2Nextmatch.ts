@@ -67,6 +67,7 @@ type Et2NextmatchPrintState = {
  * @event {CustomEvent<{columns: Et2DatagridColumn[]}>} et2-columns-changed - Re-emitted from the inner datagrid when columns change.
  * @event {CustomEvent<{oldFilters: Record<string, any>, activeFilters: Record<string, any>, nm: Et2Nextmatch}>} et2-filter - Cancelable event emitted before active filters are applied.
  * @event {CustomEvent<{rowUid: string, files: File[]}>} et2-filedrop - Native OS file drop onto a row (or empty area). `rowUid` is "" when dropped outside any row. Cancelable: call `event.preventDefault()` in a listener to suppress the framework default (upload + link into the row's VFS link dir) and handle it yourself (e.g. filemanager uploads into the row's folder).
+ * @event {CustomEvent<{rowIds: string[], previousRowId: string|null, nextRowId: string|null}>} et2-rows-deleted - Emitted after displayed rows are deleted.  The neighbour ids are captured before deletion for application-specific selection policy.
  * @event refresh - Legacy compatibility event emitted after refresh requests are processed.
  *
  * @slot header - Optional content rendered above the datagrid.
@@ -1187,6 +1188,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	selectSingleRow(rowId : string)
 	{
 		(this._findGridContainingRow(rowId) || this._datagrid)?.selectSingleRow(rowId);
+	}
+
+	/** Focus a displayed row and scroll it into view. */
+	focusRowById(rowId : string)
+	{
+		(this._findGridContainingRow(rowId) || this._datagrid)?.focusRowById(rowId);
+	}
+
+	/** Clear the displayed selection without exposing the action controller. */
+	clearSelection()
+	{
+		this._childGrids().forEach((grid) => grid.clearSelection());
+		this._datagrid?.clearSelection();
 	}
 
 	selectAllRows()
@@ -2806,7 +2820,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			return;
 		}
-		this.legacyOnselect?.call(this, this.getSelection().ids, this);
+		if(!event.defaultPrevented)
+		{
+			this.legacyOnselect?.call(this, this.getSelection().ids, this);
+		}
 	};
 
 	/**
