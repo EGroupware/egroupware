@@ -7,13 +7,34 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
  * @copyright Stylite 2011
- * @version $Id$
  */
 
 /*egw:uses
 	egw_core;
 */
 import './egw_core';
+
+export interface CssModule
+{
+	/**
+	 * The css function can be used to introduce a rule for the given css
+	 * selector. So you're capable of adding new custom css selector while
+	 * runtime and also update them.
+	 *
+	 * @param _selector is the css select which can be used to apply the
+	 * 	stlyes to the html elements.
+	 * @param _rule is the rule which should be connected to the selector.
+	 * 	if empty or omitted, the given selector gets removed.
+	 */
+	css(_selector : string, _rule? : string) : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends CssModule
+	{
+	}
+}
 
 /**
  * Module which allows to add stylesheet rules at runtime. Exports the following
@@ -22,20 +43,20 @@ import './egw_core';
  * @param {string} _app application name object is instanciated for
  * @param {object} _wnd window object is instanciated for
  */
-egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+egw.extend('css', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Window) : CssModule
 {
 	"use strict";
 
 	/**
 	 * Assoziative array which stores the current css rule for a given selector.
 	 */
-	var selectors = {};
+	var selectors : {[selector : string] : number} = {};
 
 	/**
 	 * Variable used to calculate unique id for the selectors.
 	 */
 	var selectorCount = 0;
-	var sheet;
+	var sheet : any;
 
 	return {
 		/**
@@ -48,7 +69,7 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param _rule is the rule which should be connected to the selector.
 		 * 	if empty or omitted, the given selector gets removed.
 		 */
-		css: function(_selector, _rule) {
+		css: function(_selector : string, _rule? : string) : void {
 			// Set the current index to the maximum index
 			var index = sheet ? Math.min(selectorCount, sheet.cssRules.length) : 0;
 
@@ -60,7 +81,7 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				_wnd.document.getElementsByTagName('head')[0].appendChild(style);
 
 				// Obtain the reference to the styleSheet object of the generated style tag
-				sheet = style.sheet ? style.sheet : style.styleSheet;
+				sheet = style.sheet ? style.sheet : (<any>style).styleSheet;
 
 				selectorCount = 0;
 				selectors = {};
@@ -112,4 +133,3 @@ egw.extend('css', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 	};
 });
-

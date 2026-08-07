@@ -203,56 +203,7 @@ interface IegwGlobal
 	 */
 	holidays(fullYear : number) : Promise<{ [key : string] : Array<object> }>;
 
-	/**
-	 * implemented in egw_store.js
-	 */
-	/**
-	 * Retrieve a value from session storage
-	 *
-	 * @param {string} application Name of application, or common
-	 * @param {string} key
-	 * @returns {string|null}
-	 */
-	getSessionItem(application : string, key : string) : string;
-	/**
-	 * Set a value in session storage
-	 *
-	 * @param {string} application Name of application, or common
-	 * @param {string} key
-	 * @param {string | array} value
-	 */
-	setSessionItem(application : string, key : string, value : string[] | string) : void;
-	/**
-	 * Remove a value from session storage
-	 * @param {string} application
-	 * @param {string} key
-	 */
-	removeSessionItem(application : string, key : string) : void;
-	/**
-	 * Set an item to localStorage
-	 *
-	 * @param {string} application an application name or a prefix
-	 * @param {string} item
-	 * @param {string} value
-	 * @returns {undefined} returns undefined
-	 */
-	setLocalStorageItem(application : string, item : string, value : string);
-	/**
-	 * Get an item from localStorage
-	 *
-	 * @param {string} application an application name or prefix
-	 * @param {string} item an item name stored in localStorage
-	 * @return {string|null} reutrns requested item value otherwise null
-	 */
-	getLocalStorageItem(application : string, item : string) : string|null;
-	/**
-	 * Remove an item from localStorage
-	 *
-	 * @param {string} application application name or prefix
-	 * @param {string} item an item name to remove
-	 */
-	removeLocalStorageItem(application : string, item : string) : void;
-
+	// store: implemented in egw_store.ts, contributing StoreModule
 	// user: implemented in egw_user.ts, contributing UserModule
 
 	/**
@@ -393,20 +344,7 @@ interface IegwGlobal
  */
 interface IegwWndLocal extends IegwGlobal
 {
-	/**
-	 * implemented in egw_css.js
-	 */
-	/**
-	 * The css function can be used to introduce a rule for the given css
-	 * selector. So you're capable of adding new custom css selector while
-	 * runtime and also update them.
-	 *
-	 * @param _selector is the css select which can be used to apply the
-	 * 	stlyes to the html elements.
-	 * @param _rule is the rule which should be connected to the selector.
-	 * 	if empty or omitted, the given selector gets removed.
-	 */
-	css(_selector : string, _rule? : string);
+	// css: implemented in egw_css.ts, contributing CssModule
 
 	// json: implemented in egw_json.ts, contributing JsonModule (json(), request(),
 	// callFunc(), applyFunc(), registerJSONPlugin(), unregisterJSONPlugin(), unregisterAllPlugins())

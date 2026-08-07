@@ -17,7 +17,7 @@ export async function createEgwCssStoreEnv(prefs : object = {}) : Promise<EgwCss
 	const base = await createEgwCoreEnv(Object.assign({webserverUrl: 'https://example.test'}, prefs));
 	const env = base as EgwCssStoreEnv;
 
-	for (const file of ['egw_css.js', 'egw_store.js'])
+	for (const file of ['egw_css.ts', 'egw_store.ts'])
 	{
 		await loadScript(env.window.document, '/api/js/jsapi/'+file, 'module');
 	}
