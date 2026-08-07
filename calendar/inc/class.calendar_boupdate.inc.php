@@ -994,6 +994,34 @@ class calendar_boupdate extends calendar_bo
 	}
 
 	/**
+	 * Adjust an event's start/end for display to a notification recipient in their own timezone
+	 *
+	 * Timed events have a real instant, so each recipient must see it converted into their own
+	 * timezone. Whole-day events have no time-of-day/instant at all - start/end are just the
+	 * 00:00:00/23:59:59 boundaries of the event's days - so converting them as if they were an
+	 * instant would shift the displayed date/time by the offset between the acting user's and
+	 * the recipient's timezone (eg. showing "0:00"/"23:59" as "2:00"/"1:59 next day"). Mirrors
+	 * how calendar_ical::exportVCal() handles DTSTART/DTEND for whole-day events.
+	 *
+	 * @param array $event event array, only used to check whole_day
+	 * @param Api\DateTime $startdate event start, already in the acting user's timezone
+	 * @param Api\DateTime $enddate event end, already in the acting user's timezone
+	 * @param \DateTimeZone $timezone recipient's timezone
+	 * @return Api\DateTime[] [start, end] to use for both $cleared_event (-> iCal) and $details (-> notification text)
+	 */
+	protected function _notification_dates(array $event, Api\DateTime $startdate, Api\DateTime $enddate, \DateTimeZone $timezone)
+	{
+		if ($event['whole_day'])
+		{
+			return array(
+				new Api\DateTime($startdate->format('Y-m-d').' 00:00:00', $timezone),
+				new Api\DateTime($enddate->format('Y-m-d').' 23:59:59', $timezone),
+			);
+		}
+		return array($startdate->setTimezone($timezone), $enddate->setTimezone($timezone));
+	}
+
+	/**
 	 * sends update-messages to certain participants of an event
 	 *
 	 * @param int $msg_type type of the notification: MSG_ADDED, MSG_MODIFIED, MSG_ACCEPTED, ...
@@ -1250,10 +1278,11 @@ class calendar_boupdate extends calendar_bo
 					// Set dates:
 					// $details in "preference" format, $cleared_event as DateTime so calendar_ical->exportVCal() gets
 					// the times right, since it assumes a timestamp is in server time
-					$cleared_event['start'] = $startdate->setTimezone($timezone);
+					list($startdate, $enddate) = $this->_notification_dates($event, $startdate, $enddate, $timezone);
+					$cleared_event['start'] = $startdate;
 					$details['startdate'] = $startdate->format($timeformat);
 
-					$cleared_event['end'] = $enddate->setTimezone($timezone);
+					$cleared_event['end'] = $enddate;
 					$details['enddate'] = $enddate->format($timeformat);
 
 					$cleared_event['updated'] = $modified->setTimezone($timezone);
