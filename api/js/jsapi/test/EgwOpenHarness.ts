@@ -149,7 +149,7 @@ export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv
 	// What egw.js's bootstrap normally sets before any window-local module runs.
 	env.egw.top = env.window;
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_open.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_open.ts', 'module');
 
 	return env;
 }

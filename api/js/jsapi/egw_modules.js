@@ -12,7 +12,7 @@ import "./egw_debug.js";
 import "./egw_preferences";
 import "./egw_lang";
 import "./egw_links.js";
-import "./egw_open.js";
+import "./egw_open";
 import "./egw_user";
 import "./egw_config";
 import "./egw_images";

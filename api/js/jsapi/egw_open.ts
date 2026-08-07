@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -16,12 +15,143 @@
 */
 import './egw_core';
 
+export interface OpenModule
+{
+	/**
+	 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
+	 *
+	 * Examples:
+	 * - egw.open(123,'infolog') or egw.open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
+	 * - egw.open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
+	 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
+	 * - egw.open('','addressbook','list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
+	 *
+	 * @param id_data either just the id or if app=="" "app:id" or object with all data
+	 * 	to be able to open files you need to give: (mine-)type, path or id, app2 and id2 (path=/apps/app2/id2/id"
+	 * @param app app-name or empty (app is part of id)
+	 * @param type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
+	 * @param extra extra url parameters to append as object or string
+	 * @param target target of window to open
+	 * @param target_app target application to open in that tab
+	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 * - This option only makes sense to be enabled when the open_link requested without user interaction
+	 * @return returns object for given specific target like '_tab'
+	 */
+	open(id_data : string|number|object, app? : string, type? : "edit"|"view"|"view_list"|"add"|"list",
+				   extra? : string|object, target? : string, target_app? : string, _check_popup_blocker? : boolean) : any;
+
+	/**
+	 * View an EGroupware entry: opens a framework tab for the given app entry
+	 *
+	 * @param _id either just the id or if app=="" "app:id" or object with all data
+	 * @param _app app-name or empty (app is part of id)
+	 * @param _type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
+	 * @param _extra extra url parameters to append as object or string
+	 * @param _framework_app framework app attributes e.g. title or displayName
+	 * @return appname of new tab
+	 */
+	openTab(_id : string|number|object, _app? : string, _type? : string, _extra? : string|object, _framework_app? : object) : string|void;
+
+	/**
+	 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
+	 *
+	 * @param _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+	 * @param _target optional target / window name
+	 * @param _popup widthxheight, if a popup should be used
+	 * @param _target_app app-name for opener
+	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 * - This option only makes sense to be enabled when the open_link requested without user interaction
+	 * @param _mime_type if given, we check if any app has registered a mime-handler for that type and use it
+	 */
+	open_link(_link : string, _target? : string, _popup? : string, _target_app? : string,
+			  _check_popup_blocker? : boolean, _mime_type? : string) : Window|void|any;
+
+	/**
+	 * Opens a menuaction in an Et2Dialog instead of a popup
+	 *
+	 * Please note:
+	 * This method does NOT (yet) work in popups, only in the main EGroupware window!
+	 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
+	 *
+	 * @param _menuaction
+	 */
+	openDialog(_menuaction : string) : Promise<any>;
+
+	/**
+	 * Open a (centered) popup window with given size and url
+	 *
+	 * @param _url
+	 * @param _width
+	 * @param _height
+	 * @param _windowName or "_blank"
+	 * @param _app app-name for framework to set correct opener or false for current app
+	 * @param _returnID true: return window, false: return undefined
+	 * @param _status "yes" or "no" to display status bar of popup
+	 * @param _skip_framework
+	 */
+	openPopup(_url : string, _width : number, _height : number|"availHeight", _windowName? : string, _app? : string|boolean,
+			  _returnID? : boolean, _status? : "yes"|"no", _skip_framework? : boolean) : Window|void;
+
+	/**
+	 * Get available height of screen
+	 */
+	availHeight() : number;
+
+	/**
+	 * Use frameworks (framed template) link handler to open a url
+	 *
+	 * @param _url
+	 * @param _target
+	 */
+	link_handler(_url : string, _target? : string) : void;
+
+	/**
+	 * Close current window / popup
+	 */
+	close() : void;
+
+	/**
+	 * Check if browser pop-up blocker is on/off
+	 *
+	 * @param _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
+	 * @param _target optional target / window name
+	 * @param _popup widthxheight, if a popup should be used
+	 * @param _target_app app-name for opener
+	 *
+	 * @return returns false if pop-up blocker is off
+	 * - returns true if pop-up blocker is on,
+	 * - and re-call the open_link with provided parameters, after user interaction.
+	 */
+	_check_popupBlocker(_link : string, _target? : string, _popup? : string, _target_app? : string) : boolean;
+
+	/**
+	 * This function helps to append content/ run commands into an already
+	 * opened popup window. Popup windows now are getting stored in framework
+	 * object and can be retrieved/closed from framework.
+	 *
+	 * @param _app name of application to be requested its popups
+	 * @param _method application method implemented in app.js
+	 * @param _content content to be passed to method
+	 * @param _extra url or object of extra
+	 * @param _regexp regular expression to get specific popup with matched url
+	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 */
+	openWithinWindow(_app : string, _method : string, _content : object, _extra? : string|object, _regexp? : RegExp, _check_popup_blocker? : boolean) : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends OpenModule
+	{
+	}
+}
+
 /**
  * @augments Class
  * @param {object} _egw
  * @param {DOMwindow} _wnd
  */
-egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
+egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw : string, _wnd : Window) : OpenModule
 {
 	"use strict";
 
@@ -38,10 +168,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 	 *
 	 * @param {String} uri
 	 */
-	function mailto(uri)
+	function mailto(uri : string) : void
 	{
 		// Parse uri into a map
-		var match = [], index;
+		var match : any = [], index;
 		var mailto = uri.match(/^mailto:([^?]+)/) || [];
 		var hashes = uri.slice(uri.indexOf('?') + 1).split('&');
 		for(var i = 0; i < hashes.length; i++)
@@ -51,7 +181,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			match[index[0]] = index[1];
 		}
 		if (mailto[1]) mailto[1] = mailto[1].replace(/__AMPERSAND__/g, '&');
-		var content = {
+		var content : any = {
 			to: mailto[1] || [],
 			cc: match['cc']	|| [],
 			bcc: match['bcc'] || []
@@ -110,7 +240,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 *
 		 * @return {object|void} returns object for given specific target like '_tab'
 		 */
-		open: function(id_data, app, type, extra, target, target_app, _check_popup_blocker)
+		open: function(this : any, id_data : any, app? : string, type? : string, extra? : any, target? : string, target_app? : string, _check_popup_blocker? : boolean) : any
 		{
 			// Log for debugging purposes - special log tag 'navigation' always
 			// goes in user log, if user log is enabled
@@ -147,9 +277,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				id = id_data;
 				id_data = { 'id': id, 'app': app, 'extra': extra };
 			}
-			var url;
-			var popup;
-			var params;
+			var url : any;
+			var popup : any;
+			var params : any;
+			var app_registry : any;
 			if (app == 'file')
 			{
 				url = this.mime_open(id_data);
@@ -178,7 +309,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			}
 			else
 			{
-				var app_registry = this.link_get_registry(app);
+				app_registry = this.link_get_registry(app);
 
 				if (!app || !app_registry)
 				{
@@ -196,7 +327,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				if(typeof app_registry[type] === 'object')
 				{
 					// Copy, not get a reference, or we'll change the registry
-					params = jQuery.extend({},app_registry[type]);
+					params = (<any>jQuery).extend({},app_registry[type]);
 				}
 				else if (typeof app_registry[type] === 'string' &&
 					(app_registry[type].substr(0, 11) === 'javascript:' || app_registry[type].substr(0, 4) === 'app.'))
@@ -222,7 +353,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				}
 				else if (typeof extra == 'object')
 				{
-					jQuery.extend(params, extra);
+					(<any>jQuery).extend(params, extra);
 				}
 				popup = app_registry[type+'_popup'];
 			}
@@ -265,13 +396,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {object} _framework_app framework app attributes e.g. title or displayName
 		 * @return {string} appname of new tab
 		  */
-		openTab: function(_id, _app, _type, _extra, _framework_app)
+		openTab: function(this : any, _id : any, _app? : string, _type? : string, _extra? : any, _framework_app? : object) : string|void
 		{
-			if (_wnd.framework && _wnd.framework.tabLinkHandler)
+			if ((<any>_wnd).framework && (<any>_wnd).framework.tabLinkHandler)
 			{
-				var data = this.open(_id, _app, _type, _extra, "_tab", false);
+				var data : any = this.open(_id, _app, _type, _extra, "_tab", false);
 				// Use framework's link handler
-				return _wnd.framework.tabLinkHandler(data.url, _framework_app);
+				return (<any>_wnd).framework.tabLinkHandler(data.url, _framework_app);
 			}
 			else
 			{
@@ -290,7 +421,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * - This option only makes sense to be enabled when the open_link requested without user interaction
 		 * @param {string} _mime_type if given, we check if any app has registered a mime-handler for that type and use it
 		 */
-		open_link: function(_link, _target, _popup, _target_app, _check_popup_blocker, _mime_type)
+		open_link: function(this : any, _link : string, _target? : string, _popup? : string, _target_app? : string, _check_popup_blocker? : boolean, _mime_type? : string) : any
 		{
 			// Log for debugging purposes - don't use navigation here to avoid
 			// flooding log with details already captured by egw.open()
@@ -324,13 +455,13 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				url = this.webserverUrl + url;
 			}
-			var mime_info = _mime_type ? this.get_mime_info(_mime_type, _target_app) : undefined;
+			var mime_info : any = _mime_type ? this.get_mime_info(_mime_type, _target_app) : undefined;
 			if (mime_info && (mime_info.mime_url || mime_info.mime_data) && !(
 				// Don't change if already set
 				_link.includes(mime_info.menuaction) && (_link.includes(mime_info.mime_url) || _link.includes(mime_info.mime_data))
 			))
 			{
-				var data = {};
+				var data : any = {};
 				for(var attr in mime_info)
 				{
 					switch(attr)
@@ -388,14 +519,14 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				// No mime type registered, set target properly based on browsing environment
 
 				//do not open pdfs (or other non images) on mobile, since we can not really get back when mobile browser calls _wnd.open(url,'_self') with a pdf, instantly download instead
-				if (egwIsMobile() && mime_info?.ext && !mime_info.ext.includes("image")){
+				if ((<any>window).egwIsMobile() && mime_info?.ext && !mime_info.ext.includes("image")){
 					url+='&mode=save'
-					window.etemplate2.prototype.download(url)
+					(<any>window).etemplate2.prototype.download(url)
 					return
 				}
 				if (_target == '_browser')
 				{
-					_target = egwIsMobile()?'_self':'_blank';
+					_target = (<any>window).egwIsMobile()?'_self':'_blank';
 				}
 				_target = _target == '_phonecall' && _popup && _popup.indexOf('x') < 0 ? _popup:_target;
 				return _wnd.open(url, _target);
@@ -412,10 +543,10 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param string _menuaction
 		 * @return Promise<Et2Dialog>
 		 */
-		openDialog: function(_menuaction)
+		openDialog: function(_menuaction : string) : Promise<any>
 		{
-			let resolver;
-			let rejector;
+			let resolver : (value ?: any) => void;
+			let rejector : (reason ?: any) => void;
 			const dialog_promise = new Promise((resolve, reject) =>
 			{
 				resolver = value => resolve(value);
@@ -426,7 +557,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				{
 					if (Array.isArray(_response) && typeof _response[0] === 'string')
 					{
-						let dialog = jQuery(_response[0]).appendTo(_wnd.document.body);
+						let dialog = (<any>jQuery)(_response[0]).appendTo(_wnd.document.body);
 						if (dialog.length > 0 && dialog.get(0))
 						{
 							resolver(dialog.get(0));
@@ -459,7 +590,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {boolean} _skip_framework
 		 * @returns {DOMWindow|undefined}
 		 */
-		openPopup: function(_url, _width, _height, _windowName, _app, _returnID, _status, _skip_framework)
+		openPopup: function(this : any, _url : string, _width : any, _height : any, _windowName? : string, _app? : any, _returnID? : boolean, _status? : string, _skip_framework? : boolean) : Window|void
 		{
 			// Log for debugging purposes
 			egw.debug("navigation", "openPopup(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
@@ -467,27 +598,27 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			if (_height == 'availHeight') _height = this.availHeight();
 
 			// if we have a framework and we use mobile template --> let framework deal with opening popups
-			if (!_skip_framework && _wnd.framework)
+			if (!_skip_framework && (<any>_wnd).framework)
 			{
-				return _wnd.framework.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _wnd);
+				return (<any>_wnd).framework.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _wnd);
 			}
 
 			if (typeof(_app) == 'undefined') _app = false;
 			if (typeof(_returnID) == 'undefined') _returnID = false;
 
-			var $wnd = jQuery(egw.top);
-			var positionLeft = ($wnd.outerWidth()/2)-(_width/2)+_wnd.screenX;
-			var positionTop  = ($wnd.outerHeight()/2)-(_height/2)+_wnd.screenY;
+			var $wnd = (<any>jQuery)(egw.top);
+			var positionLeft = ($wnd.outerWidth()/2)-(_width/2)+(<any>_wnd).screenX;
+			var positionTop  = ($wnd.outerHeight()/2)-(_height/2)+(<any>_wnd).screenY;
 
 			// IE fails, if name contains eg. a dash (-)
 			if (navigator.userAgent.match(/msie/i)) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');
 
-			var windowID = _wnd.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
+			var windowID : any = _wnd.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
 				",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
 				",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
 
 			// inject egw object
-			if (windowID) windowID.egw = _wnd.egw;
+			if (windowID) windowID.egw = (<any>_wnd).egw;
 
 			// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
 			if (_returnID !== false) return windowID;
@@ -496,7 +627,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		/**
 		 * Get available height of screen
 		 */
-		availHeight: function()
+		availHeight: function() : number
 		{
 			return screen.availHeight < screen.height ?
 				(navigator.userAgent.match(/windows/ig)? screen.availHeight -100:screen.availHeight) // Seems chrome not counting taskbar in available height
@@ -509,7 +640,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {string} _url
 		 * @param {string} _target
 		 */
-		link_handler: function(_url, _target)
+		link_handler: function(_url : string, _target? : string) : void
 		{
 			// if url is supposed to open in admin, use admins loader to open it in it's own iframe
 			// (otherwise there's no tree and sidebox!)
@@ -517,9 +648,9 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				_url = _url.replace(/menuaction=([^&]+)/, 'menuaction=admin.admin_ui.index&load=$1');
 			}
-			if (_wnd.framework)
+			if ((<any>_wnd).framework)
 			{
-				_wnd.framework.linkHandler(_url, _target);
+				(<any>_wnd).framework.linkHandler(_url, _target);
 			}
 			else
 			{
@@ -530,11 +661,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		/**
 		 * Close current window / popup
 		 */
-		close: function()
+		close: function() : void
 		{
-			if (_wnd.framework && typeof _wnd.framework.popup_close == "function")
+			if ((<any>_wnd).framework && typeof (<any>_wnd).framework.popup_close == "function")
 			{
-				_wnd.framework.popup_close(_wnd);
+				(<any>_wnd).framework.popup_close(_wnd);
 			}
 			else
 			{
@@ -554,17 +685,17 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * - returns true if pop-up blocker is on,
 		 * - and re-call the open_link with provided parameters, after user interaction.
 		 */
-		_check_popupBlocker: function(_link, _target, _popup, _target_app)
+		_check_popupBlocker: function(_link : string, _target? : string, _popup? : string, _target_app? : string) : boolean
 		{
 			var popup = window.open("","",'top='+(screen.height/2)+',left='+(screen.width/2)+',width=1,height=1,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,dependent=yes');
 
-			if (!popup||popup == 'undefined'||popup == null)
+			if (!popup||(<any>popup) == 'undefined'||popup == null)
 			{
-				Et2Dialog.show_dialog(function ()
+				(<any>window).Et2Dialog.show_dialog(function ()
 					{
-						window.egw.open_link(_link, _target, _popup, _target_app);
+						(<any>window).egw.open_link(_link, _target, _popup, _target_app);
 					}, egw.lang("The browser popup blocker is on. Please click on OK button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1", window.location.hostname),
-					"Popup Blocker Warning", {}, Et2Dialog.BUTTONS_OK, Et2Dialog.WARNING_MESSAGE);
+					"Popup Blocker Warning", {}, (<any>window).Et2Dialog.BUTTONS_OK, (<any>window).Et2Dialog.WARNING_MESSAGE);
 				return true;
 			}
 			else
@@ -586,11 +717,11 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 		 * @param {regex} _regexp regular expression to get specific popup with matched url
 		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 		 */
-		openWithinWindow: function (_app, _method, _content, _extra, _regexp, _check_popup_blocker)
+		openWithinWindow: function (this : any, _app : string, _method : string, _content : object, _extra? : any, _regexp? : RegExp, _check_popup_blocker? : boolean) : void
 		{
-			var popups = window.framework.popups_get(_app, _regexp);
+			var popups : any[] = (<any>window).framework.popups_get(_app, _regexp);
 
-			var openUp = function (_app, _extra) {
+			var openUp = function (_app : string, _extra : any) {
 
 				var len = 0;
 				if (typeof _extra == "string")
@@ -601,7 +732,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				{
 					for (var i in _extra)
 					{
-						if (jQuery.isArray(_extra[i]))
+						if ((<any>jQuery).isArray(_extra[i]))
 						{
 							var tmp = '';
 							for (var j in _extra[i])
@@ -625,18 +756,18 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 				// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
 				if (len > 2083)
 				{
-					var popup = egw.open('','mail','add','','compose__','mail', _check_popup_blocker);
-					var $tmpForm = jQuery(document.createElement('form'));
-					var $tmpSubmitInput = jQuery(document.createElement('input')).attr({type:"submit"});
+					var popup : any = egw.open('','mail','add','','compose__','mail', _check_popup_blocker);
+					var $tmpForm = (<any>jQuery)(document.createElement('form'));
+					var $tmpSubmitInput = (<any>jQuery)(document.createElement('input')).attr({type:"submit"});
 					for (var i in _extra)
 					{
-						if (jQuery.isArray(_extra[i]))
+						if ((<any>jQuery).isArray(_extra[i]))
 						{
-							$tmpForm.append(jQuery(document.createElement('input')).attr({name:i, type:"text", value: JSON.stringify(_extra[i])}));
+							$tmpForm.append((<any>jQuery)(document.createElement('input')).attr({name:i, type:"text", value: JSON.stringify(_extra[i])}));
 						}
 						else
 						{
-							$tmpForm.append(jQuery(document.createElement('input')).attr({name:i, type:"text", value: _extra[i]}));
+							$tmpForm.append((<any>jQuery)(document.createElement('input')).attr({name:i, type:"text", value: _extra[i]}));
 						}
 					}
 
@@ -656,7 +787,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			{
 				if(popups[i].closed)
 				{
-					window.framework.popups_grabage_collector();
+					(<any>window).framework.popups_grabage_collector();
 				}
 			}
 
@@ -674,7 +805,7 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			];
 
 			// Fill dialog options
-			const options = [];
+			const options : any[] = [];
 			for (let i = 0; i < popups.length; i++)
 			{
 				options.push({label: popups[i].document.title || this.lang(_app), index: i});
@@ -685,16 +816,16 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw, _wnd)
 			switch (new_dialog_pref)
 			{
 				case "new":
-					options.index = "new";
+					(<any>options).index = "new";
 					break;
 				default:
 				case "add":
-					options.index = 0;
+					(<any>options).index = 0;
 					break;
 			}
-			let dialog = new Et2Dialog(this.app_name());
+			let dialog = new (<any>window).Et2Dialog(this.app_name());
 			dialog.transformAttributes({
-				callback: function (_button_id, _value)
+				callback: function (_button_id : string, _value : any)
 				{
 					//Always remember what was chosen, as preselection for next time
 					egw.set_preference("common", pref_name, _value.grid.index == "new" ? "new" : "add");
