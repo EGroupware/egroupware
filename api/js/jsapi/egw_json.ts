@@ -20,13 +20,137 @@
 import './egw.js';
 import './egw_utils.js';
 
+export interface JsonModule
+{
+	/**
+	 * Check if there is a *working* connection to a push server
+	 */
+	pushAvailable() : boolean;
+
+	/** The constructor of the egw_json_request class.
+	 *
+	 * @param _menuaction the menuaction function which should be called and
+	 * 	which handles the actual request. If the menuaction is a full featured
+	 * 	url, this one will be used instead.
+	 * @param _parameters which should be passed to the menuaction function.
+	 * @param _callback specifies the callback function which should be
+	 * 	called, once the request has been sucessfully executed.
+	 * @param _context is the context which will be used for the callback function
+	 * @param _async true: asynchronious request, false: synchronious request,
+	 * 	"keepalive": async. request with keepalive===true / sendBeacon, to be used in beforeunload event
+	 * @param _sender is a parameter being passed to the _callback function
+	 */
+	json(_menuaction : string, _parameters? : any[] | object, _callback? : Function, _context? : object, _async? : boolean|"keepalive", _sender?) : JsonRequest;
+
+	/**
+	 * Do an AJAX call and get a javascript promise, which will be resolved with the returned data.
+	 *
+	 * egw.request() returns immediately with a Promise.  The promise will be resolved with just the returned data,
+	 * any other "piggybacked" responses will be handled by registered handlers.  The data will also be passed to
+	 * any registered data handlers (egw.data) before it is passed to your handler.
+	 *
+	 * @param _menuaction
+	 * @param _parameters
+	 *
+	 * @return Promise resolving to data part (not full response, which can contain other parts).
+	 * Promise.abort() allows to abort the pending request
+	 */
+	request(_menuaction : string, _parameters : any[] | object) : Promise<any>;
+
+	/**
+	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
+	 *
+	 * @param _func dot-separated function name or function
+	 * @param args variable number of arguments
+	 */
+	callFunc(_func : string|Function, ...args : any) : Promise<any>|any;
+
+	/**
+	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
+	 *
+	 * @param _func dot-separated function name or function
+	 * @param args arguments
+	 * @param _context
+	 */
+	applyFunc(_func : string|Function, args : any[], _context? : object) : Promise<any>|any;
+
+	/**
+	 * Registers a new handler plugin.
+	 *
+	 * @param _callback is the callback function which should be called
+	 * 	whenever a response is comming from the server.
+	 * @param _context is the context in which the callback function should
+	 * 	be called. If null is given, the plugin is executed in the context
+	 * 	of the request object context.
+	 * @param _type is an optional parameter defaulting to 'global'.
+	 * 	it describes the response type which this plugin should be
+	 * 	handling.
+	 * @param _global Register the handler globally or
+	 *	locally.  Global handlers must stay around, so should be used
+	 *	for global modules.
+	 */
+	registerJSONPlugin(_callback : Function, _context, _type?, _global?) : void;
+
+	/**
+	 * Removes a previously registered plugin.
+	 *
+	 * @param _callback is the callback function which should be called
+	 * 	whenever a response is comming from the server.
+	 * @param _context is the context in which the callback function should
+	 * 	be called.
+	 * @param _type is an optional parameter defaulting to 'global'.
+	 * 	it describes the response type which this plugin should be
+	 * 	handling.
+	 * @param _global Remove a global or local handler.
+	 */
+	unregisterJSONPlugin(_callback : Function, _context, _type? : string, _global? : boolean) : void;
+
+	/**
+	 * Removes all plugins registered on this (window-local) instance
+	 */
+	unregisterAllPlugins() : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends JsonModule
+	{
+	}
+
+	class JsonRequest
+	{
+		/**
+		 * Sends the assembled request to the server
+		 * @param _async true: asynchronious request, false: synchronious request,
+		 * 	"keepalive": async. request with keepalive===true / sendBeacon, to be used in beforeunload event
+		 * @param method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST
+		 * @param error option error callback(_xmlhttp, _err) used instead our default this.error
+		 *
+		 * @return Promise or for async==="keepalive" boolean is returned.
+		 * Promise.abort() allows to abort the pending request
+		 */
+		sendRequest(async? : boolean|"keepalive", method? : "POST"|"GET", error? : Function) : Promise<any>|boolean;
+
+		/**
+		 * Open websocket to push server (and keeps it open)
+		 *
+		 * @param url this.websocket(s)://host:port
+		 * @param tokens tokens to subscribe too: sesssion-, user- and instance-token (in that order!)
+		 * @param account_id to connect for
+		 * @param error option error callback(_msg) used instead our default this.error
+		 * @param reconnect timeout in ms (internal)
+		 */
+		openWebSocket(url : string, tokens : string[], account_id : number, error : Function, reconnect : number) : void;
+	}
+}
+
 /**
  * Module sending json requests
  *
  * @param {string} _app application name object is instantiated for
  * @param {object} _wnd window object is instantiated for
  */
-egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+egw.extend('json', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Window) : JsonModule
 {
 	"use strict";
 
@@ -36,16 +160,16 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * object, where each response type can have an array of handlers attached
 	 * to it.
 	 */
-	var plugins = {};
+	var plugins : {[type : string] : {callback : Function, context : any}[]} = {};
 
 	/**
 	 * Global json handlers are from global modules, not window level
 	 */
-	if(typeof egw._global_json_handlers == 'undefined')
+	if(typeof (<any>egw)._global_json_handlers == 'undefined')
 	{
-		egw._global_json_handlers = {};
+		(<any>egw)._global_json_handlers = {};
 	}
-	var global_plugins = egw._global_json_handlers;
+	var global_plugins = (<any>egw)._global_json_handlers;
 
 	/**
 	 * Internal implementation of the JSON request object.
@@ -59,8 +183,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {object} _sender
 	 * @param {egw} _egw
 	 */
-	const json_request = function(_menuaction, _parameters, _callback, _context,
-		_async, _sender, _egw)
+	const json_request : any = function(this : any, _menuaction : string, _parameters : any[] | object, _callback : Function, _context : any,
+		_async : boolean|"keepalive", _sender : any, _egw : any)
 	{
 		// Copy the parameters
 		this.url = _egw.ajaxUrl(_menuaction);
@@ -82,7 +206,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 
 		// Function which is currently used to display alerts -- may be replaced by
 		// some API function.
-		this.alertHandler = function(_message, _details) {
+		this.alertHandler = function(_message : string, _details? : any) {
 			// we need to use the alert function of the window of the request, not just the main window
 			(this.egw ? this.egw.window : window).alert(_message);
 
@@ -98,7 +222,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	const check_interval = 30000;	// 30 sec
 	const max_ping_response_time = 1000;
 	let reconnect_time = min_reconnect_time;
-	let websocket = null;
+	let websocket : any = null;
 
 	/**
 	 * Open websocket to push server (and keeps it open)
@@ -109,18 +233,18 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {function} error option error callback(_msg) used instead our default this.error
 	 * @param {int} reconnect timeout in ms (internal)
 	 */
-	json_request.prototype.openWebSocket = function(url, tokens, account_id, error, reconnect)
+	json_request.prototype.openWebSocket = function(this : any, url : string, tokens : string[], account_id : number, error? : Function, reconnect? : number) : void
 	{
 		reconnect_time = reconnect || min_reconnect_time;
-		let check_timer;
-		let check = function()
+		let check_timer : any;
+		let check = function(this : any)
 		{
 			this.websocket.send('ping');
-			check_timer = window.setTimeout(function()
+			check_timer = window.setTimeout(function(this : any)
 			{
 				console.log("Server did not respond to ping in "+max_ping_response_time+" seconds --> try reconnecting");
 				check_timer = null;
-				this.websocket.onclose = function()
+				this.websocket.onclose = function(this : any)
 				{
 					this.websocket = null;
 					this.openWebSocket(url, tokens, account_id, error, reconnect_time);
@@ -135,7 +259,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			check_timer = window.setTimeout(check, check_interval);
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
-				account_id: parseInt(account_id)
+				account_id: parseInt(<any>account_id)
 			}));
 		};
 
@@ -194,7 +318,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @return {Promise|boolean} Promise or for async==="keepalive" boolean is returned
 	 * Promise.abort() allows to abort the pending request
 	 */
-	json_request.prototype.sendRequest = function(async, method, error)
+	json_request.prototype.sendRequest = function(this : any, async? : boolean|"keepalive", method? : string, error? : Function) : any
 	{
 		if(typeof async != "undefined")
 		{
@@ -220,7 +344,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 
 		let url = this.url;
-		let init = {
+		let init : any = {
 			method: method
 		}
 		if (url.includes("api.queue") || url.includes("Rocketchat"))
@@ -237,7 +361,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			init.headers = { 'Content-Type': 'application/json'};
 			init.body = request_obj;
 		}
-		let promise;
+		let promise : any;
 		if (this.async)
 		{
 			const controller = new AbortController();
@@ -303,7 +427,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {XMLHTTP|Response} response
 	 * @param {string} _err
 	 */
-	json_request.prototype.handleError = function(response, _err) {
+	json_request.prototype.handleError = function(this : any, response : any, _err? : string) : any {
 		// Don't error about an abort
 		if(_err !== 'abort')
 		{
@@ -345,7 +469,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 	};
 
-	json_request.prototype.handleResponse = function(data) {
+	json_request.prototype.handleResponse = function(this : any, data : any) : any {
 		if (data && typeof data.response != 'undefined')
 		{
 			/* disabled for now
@@ -355,7 +479,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				:jQuery('<div id="divGenTime" class="pageGenTime"><span class="pageTime"></span></div>').appendTo('#egw_fw_footer');
 			}*/
 			// Load files first
-			var js_files = [];
+			var js_files : string[] = [];
 			for (var i = data.response.length - 1; i >= 0; --i)
 			{
 				var res = data.response[i];
@@ -387,7 +511,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// defer apply's for app.* after et2_load is finished
-			let apply_app = [];
+			let apply_app : any[] = [];
 			if (data.response.filter((res) => res.type === 'et2_load').length)
 			{
 				apply_app = data.response.filter((res) => res.type === 'apply' && res.data.func.substr(0, 4) === 'app.');
@@ -472,7 +596,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @return {boolean}
 		 */
-		pushAvailable: function()
+		pushAvailable: function() : boolean
 		{
 			return websocket !== null && websocket.readyState == websocket.OPEN && reconnect_time === min_reconnect_time;
 		},
@@ -490,8 +614,8 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param _context is the context which will be used for the callback function
 		 * @param _sender is a parameter being passed to the _callback function
 		 */
-		json: function(_menuaction, _parameters, _callback, _context, _async,
-			_sender)
+		json: function(_menuaction : string, _parameters? : any[] | object, _callback? : Function, _context? : any, _async? : boolean|"keepalive",
+			_sender? : any) : any
 		{
 			return new json_request(_menuaction, _parameters, _callback,
 				_context, _async, _sender, this);
@@ -504,58 +628,17 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * any other "piggybacked" responses will be handled by registered handlers.  The data will also be passed to
 		 * any registered data handlers (egw.data) before it is passed to your handler.
 		 *
-		 * To use:
-		 * @example
-		 * 	egw.request(
-		 * 		"EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options",
-		 * 		["select-cat"]
-	 	 * 	)
-		 * 	.then(function(data) {
-		 * 		// Deal with the returned data here.  data may be undefined if no data was returned.
-		 * 		console.log("Here's the categories:",data);
-		 * 	});
-		 *
-		 *
-		 * 	The return is a Promise, so multiple .then() can be chained in the usual ways:
-		 * 	@example
-		 * 	egw.request(...)
-		 * 		.then(function(data) {
-		 * 		  if(debug) console.log("Requested data", data);
-		 * 		}
-		 * 		.then(function(data) {
-		 * 			// Change the data for the rest of the chain
-		 * 		    if(typeof data === "undefined") return [];
-		 * 		}
-		 * 		.then(function(data) {
-		 * 			// data is never undefined now, if it was before it's an empty array now
-		 * 		 	for(let i = 0; i < data.length; i++)
-		 * 			{
-		 * 		 		...
-		 * 			}
-		 * 		}
-		 *
-		 *
-		 * 	You can also fire off multiple requests, and wait for them to all be answered:
-		 * 	@example
-		 * 	let first = egw.request(...);
-		 * 	let second = egw.request(...);
-		 * 	Promise.all([first, second])
-		 * 		.then(function(values) {
-		 * 		 	console.log("First:", values[0], "Second:", values[1]);
-		 * 		}
-		 *
-		 *
 		 * @param {string} _menuaction
 		 * @param {any[]} _parameters
 		 *
 		 * @return Promise resolving to data part (not full response, which can contain other parts)
 		 * Promise.abort() allows to abort the pending request
 		 */
-		request: function(_menuaction, _parameters)
+		request: function(this : any, _menuaction : string, _parameters? : any[] | object) : any
 		{
-			const request = new json_request(_menuaction, _parameters, null, this, true, this, this);
+			const request : any = new json_request(_menuaction, _parameters, null, this, true, this, this);
 			const response = request.sendRequest();
-			let promise = response.then(function(response)
+			let promise : any = response.then(function(response : any)
 			{
 				// The ajax request has completed, get just the data & pass it on
 				if(response && response.response)
@@ -594,7 +677,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {mixed} ...args variable number of arguments
 		 * @returns {mixed|Promise}
 		 */
-		callFunc: function(_func)
+		callFunc: function(this : any, _func : string|Function) : any
 		{
 			return this.applyFunc(_func, [].slice.call(arguments, 1));
 		},
@@ -607,10 +690,10 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {object} _context
 		 * @returns {mixed|Promise}
 		 */
-		applyFunc: function(_func, args, _context)
+		applyFunc: function(this : any, _func : string|Function, args : any, _context? : any) : any
 		{
-			let parent = _context || _wnd;
-			let func = _func;
+			let parent : any = _context || _wnd;
+			let func : any = _func;
 
 			if (typeof _func === 'string')
 			{
@@ -625,7 +708,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					// check if we need a not yet included app.js object --> include it now and return a Promise
 					else if (i == 1 && parts[0] == 'app' && typeof (_context || _wnd).app.classes[parts[1]] === 'undefined')
 					{
-						return _wnd.egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())
+						return (<any>_wnd).egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())
 							.then(() => this.applyFunc(_func, args, _context || _wnd),
 								(err) => {console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.")});
 					}
@@ -662,7 +745,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *	locally.  Global handlers must stay around, so should be used
 		 *	for global modules.
 		 */
-		registerJSONPlugin: function(_callback, _context, _type, _global)
+		registerJSONPlugin: function(_callback : Function, _context : any, _type? : string, _global? : boolean) : void
 		{
 			// _type defaults to 'global'
 			if (typeof _type === 'undefined')
@@ -701,7 +784,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * 	handling.
 		 * @param {boolean} [_global=false] Remove a global or local handler.
 		 */
-		unregisterJSONPlugin: function(_callback, _context, _type, _global)
+		unregisterJSONPlugin: function(_callback : Function, _context : any, _type? : string, _global? : boolean) : void
 		{
 			// _type defaults to 'global'
 			if (typeof _type === 'undefined')
@@ -726,7 +809,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				}
 			}
 		},
-		unregisterAllPlugins: function ()
+		unregisterAllPlugins: function () : void
 		{
 			for (const type of Object.getOwnPropertyNames(plugins))
 			{
@@ -767,14 +850,14 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			(typeof res.data.key != 'undefined') &&
 			(typeof res.data.value != 'undefined'))
 		{
-			var obj = _wnd.document.getElementById(res.data.id);
+			var obj : any = _wnd.document.getElementById(res.data.id);
 			if (obj)
 			{
 				obj[res.data.key] = res.data.value;
 
 				if (res.data.key == "innerHTML")
 				{
-					egw_insertJS(res.data.value);
+					(<any>window).egw_insertJS(res.data.value);
 				}
 
 				return true;
@@ -831,7 +914,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		{
 			try
 			{
-				var jQueryObject = jQuery(res.data.select, req.context);
+				var jQueryObject = (<any>jQuery)(res.data.select, req.context);
 				jQueryObject[res.data.func].apply(jQueryObject,	res.data.parms);
 			}
 			catch (e)
@@ -851,22 +934,27 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			typeof res.data.global == 'boolean')
 		{
 			//Special handling for framework reload
-			res.data.global |= (res.data.url.indexOf("?cd=10") > 0);
+			// Was `|=` in the original .js (an untyped bitwise-OR-assign that,
+			// at runtime, silently turned a `true` global into the number 1) -
+			// TS rejects `|=` on a value narrowed to `boolean` by the typeof
+			// check above. `||=` is behaviorally equivalent here since the only
+			// later use of res.data.global is a truthy check.
+			res.data.global ||= (res.data.url.indexOf("?cd=10") > 0);
 
 			if (res.data.global)
 			{
-				egw_topWindow().location.href = res.data.url;
+				(<any>window).egw_topWindow().location.href = res.data.url;
 			}
 			// json request was originating from a different popup --> redirect that one
-			else if(this && this.DOMContainer && this.DOMContainer.ownerDocument.defaultView != window &&
-				egw(this.DOMContainer.ownerDocument.defaultView).is_popup())
+			else if(this && (<any>this).DOMContainer && (<any>this).DOMContainer.ownerDocument.defaultView != window &&
+				egw((<any>this).DOMContainer.ownerDocument.defaultView).is_popup())
 			{
-				this.DOMContainer.ownerDocument.location.href = res.data.url;
+				(<any>this).DOMContainer.ownerDocument.location.href = res.data.url;
 			}
 			// main window, open url in respective tab
 			else
 			{
-				egw_appWindowOpen(res.data.app, res.data.url);
+				(<any>window).egw_appWindowOpen(res.data.app, res.data.url);
 			}
 			return true;
 		}
@@ -887,7 +975,7 @@ egw.extend('json', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	json.registerJSONPlugin(function(type, res, req) {
 		if (typeof res.data == 'string')
 		{
-			return Promise.all(res.data.map((src) => import(src)))
+			return Promise.all((<any>res.data).map((src) => import(src)))
 				.then(() => req.onLoadFinish.call(req.sender));
 		}
 		throw 'Invalid parameters';

@@ -576,29 +576,7 @@ interface IegwGlobal
 	week_start(date : string) : Date;
 }
 
-class JsonRequest
-{
-	/**
-	 * Sends the assembled request to the server
-	 * @param {boolean|"keepalive"} _async true: asynchronious request, false: synchronious request,
-	 * 	"keepalive": async. request with keepalive===true / sendBeacon, to be used in beforeunload event
-	 * @param {string} method ='POST' allow to eg. use a (cachable) 'GET' request instead of POST
-	 * @param {function} error option error callback(_xmlhttp, _err) used instead our default this.error
-	 *
-	 * @return {jqXHR} jQuery jqXHR request object
-	 */
-	sendRequest(async? : boolean|"keepalive", method? : "POST"|"GET", error? : Function) : Promise<any>
-	/**
-	 * Open websocket to push server (and keeps it open)
-	 *
-	 * @param {string} url this.websocket(s)://host:port
-	 * @param {array} tokens tokens to subscribe too: sesssion-, user- and instance-token (in that order!)
-	 * @param {number} account_id to connect for
-	 * @param {function} error option error callback(_msg) used instead our default this.error
-	 * @param {int} reconnect timeout in ms (internal)
-	 */
-	openWebSocket(url : string, tokens : string[], account_id : number, error : Function, reconnect : number);
-}
+// JsonRequest class: implemented in egw_json.ts
 
 /**
  * Interface for window local methods (plus the global ones)
@@ -620,126 +598,8 @@ interface IegwWndLocal extends IegwGlobal
 	 */
 	css(_selector : string, _rule? : string);
 
-	/**
-	 * implemented in egw_json.js
-	 */
-	/** The constructor of the egw_json_request class.
-	 *
-	 * @param _menuaction the menuaction function which should be called and
-	 * 	which handles the actual request. If the menuaction is a full featured
-	 * 	url, this one will be used instead.
-	 * @param _parameters which should be passed to the menuaction function.
-	 * @param {boolean|"keepalive"} _async true: asynchronious request, false: synchronious request,
-	 * 	"keepalive": async. request with keepalive===true / sendBeacon, to be used in beforeunload event
-	 * @param _callback specifies the callback function which should be
-	 * 	called, once the request has been sucessfully executed.
-	 * @param _context is the context which will be used for the callback function
-	 * @param _sender is a parameter being passed to the _callback function
-	 */
-	json(_menuaction : string, _parameters? : any[], _callback? : Function, _context? : object, _async? : boolean|"keepalive", _sender?) : JsonRequest;
-
-	/**
-	 * Do an AJAX call and get a javascript promise, which will be resolved with the returned data.
-	 *
-	 * egw.request() returns immediately with a Promise.  The promise will be resolved with just the returned data,
-	 * any other "piggybacked" responses will be handled by registered handlers.  The data will also be passed to
-	 * any registered data handlers (egw.data) before it is passed to your handler.
-	 *
-	 * To use:
-	 * @example
-	 * 	egw.request(
-	 * 		"EGroupware\\Api\\Etemplate\\Widget\\Select::ajax_get_options",
-	 * 		["select-cat"]
-	 * 	)
-	 * 	.then(function(data) {
-	 * 		// Deal with the returned data here.  data may be undefined if no data was returned.
-	 * 		console.log("Here's the categories:",data);
-	 * 	});
-	 *
-	 *
-	 * 	The return is a Promise, so multiple .then() can be chained in the usual ways:
-	 * 	@example
-	 * 	egw.request(...)
-	 * 		.then(function(data) {
-	 * 		  if(debug) console.log("Requested data", data);
-	 * 		}
-	 * 		.then(function(data) {
-	 * 			// Change the data for the rest of the chain
-	 * 		    if(typeof data === "undefined") return [];
-	 * 		}
-	 * 		.then(function(data) {
-	 * 			// data is never undefined now, if it was before it's an empty array now
-	 * 		 	for(let i = 0; i < data.length; i++)
-	 * 			{
-	 * 		 		...
-	 * 			}
-	 * 		}
-	 *
-	 *
-	 * 	You can also fire off multiple requests, and wait for them to all be answered:
-	 * 	@example
-	 * 	let first = egw.request(...);
-	 * 	let second = egw.request(...);
-	 * 	Promise.all([first, second])
-	 * 		.then(function(values) {
-	 * 		 	console.log("First:", values[0], "Second:", values[1]);
-	 * 		}
-	 *
-	 *
-	 * @param {string} _menuaction
-	 * @param {any[]} _parameters
-	 *
-	 * @return Promise
-	 */
-	request(_menuaction: string, param2: any[]): Promise<any>;
-
-	/**
-	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
-	 *
-	 * @param {string|Function} _func dot-separated function name or function
-	 * @param {mixed} ...args variable number of arguments
-	 * @returns {mixed|Promise}
-	 */
-	callFunc(_func : string|Function, ...args : any) : Promise<any>|any
-	/**
-	 * Call a function specified by it's name (possibly dot separated, eg. "app.myapp.myfunc")
-	 *
-	 * @param {string|Function} _func dot-separated function name or function
-	 * @param {array} args arguments
-	 * @param {object} _context
-	 * @returns {mixed|Promise}
-	 */
-	applyFunc(_func : string|Function, args : IArguments, _context? : Object)  : Promise<any>|any
-
-	/**
-	 * Registers a new handler plugin.
-	 *
-	 * @param _callback is the callback function which should be called
-	 * 	whenever a response is comming from the server.
-	 * @param _context is the context in which the callback function should
-	 * 	be called. If null is given, the plugin is executed in the context
-	 * 	of the request object context.
-	 * @param _type is an optional parameter defaulting to 'global'.
-	 * 	it describes the response type which this plugin should be
-	 * 	handling.
-	 * @param {boolean} [_global=false] Register the handler globally or
-	 *	locally.  Global handlers must stay around, so should be used
-	 *	for global modules.
-	 */
-	registerJSONPlugin(_callback : Function, _context, _type?, _global?);
-	/**
-	 * Removes a previously registered plugin.
-	 *
-	 * @param _callback is the callback function which should be called
-	 * 	whenever a response is comming from the server.
-	 * @param _context is the context in which the callback function should
-	 * 	be called.
-	 * @param _type is an optional parameter defaulting to 'global'.
-	 * 	it describes the response type which this plugin should be
-	 * 	handling.
-	 * @param {boolean} [_global=false] Remove a global or local handler.
-	 */
-	unregisterJSONPlugin(_callback : Function, _context, _type? : string, _global? : boolean);
+	// json: implemented in egw_json.ts, contributing JsonModule (json(), request(),
+	// callFunc(), applyFunc(), registerJSONPlugin(), unregisterJSONPlugin(), unregisterAllPlugins())
 
 	/**
 	 * implemented in egw_files.js
@@ -773,22 +633,7 @@ interface IegwWndLocal extends IegwGlobal
 	 */
 	includeCSS(_cssFiles : string|string[]) : void;
 
-	/**
-	 * implemented in egw_jsonq.js
-	 */
-	/**
-	 * Send a queued JSON call to the server
-	 *
-	 * @param {string} _menuaction the menuaction function which should be called and
-	 *   which handles the actual request. If the menuaction is a full featured
-	 *   url, this one will be used instead.
-	 * @param {array} _parameters which should be passed to the menuaction function.
-	 * @param {function} _callback callback function which should be called upon a "data" response is received
-	 * @param {object} _sender is the reference object the callback function should get
-	 * @param {function} _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
-	 * @return Promise
-	 */
-	jsonq(_menuaction : string, _parameters? : any[], _callback? : Function, _sender? : object, _callbeforesend? : Function) : Promise<any>;
+	// jsonq: implemented in egw_jsonq.ts, contributing JsonqModule
 
 	/**
 	 * implemented in egw_message.js

@@ -75,7 +75,7 @@ export async function createEgwMessageEnv(prefs : object = {}) : Promise<EgwMess
 	const importMap = env.window.document.createElement('script');
 	importMap.type = 'importmap';
 	importMap.textContent = JSON.stringify({
-		imports: {'/api/js/jsapi/egw_json.js': '/api/js/jsapi/test/EgwJsStub.ts'}
+		imports: {'/api/js/jsapi/egw_json.ts': '/api/js/jsapi/test/EgwJsStub.ts'}
 	});
 	env.window.document.head.appendChild(importMap);
 

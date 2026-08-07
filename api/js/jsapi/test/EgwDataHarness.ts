@@ -95,7 +95,7 @@ export async function createEgwDataEnv() : Promise<EgwDataEnv>
 	importMap.textContent = JSON.stringify({
 		imports: {
 			'/api/js/jsapi/egw.js': '/api/js/jsapi/test/EgwJsStub.ts',
-			'/api/js/jsapi/egw_json.js': '/api/js/jsapi/test/EgwJsStub.ts'
+			'/api/js/jsapi/egw_json.ts': '/api/js/jsapi/test/EgwJsStub.ts'
 		}
 	});
 	env.window.document.head.appendChild(importMap);

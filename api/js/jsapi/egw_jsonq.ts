@@ -15,7 +15,40 @@
 */
 import './egw_core';
 
-egw.extend('jsonq', egw.MODULE_GLOBAL, function()
+export interface JsonqModule
+{
+	/**
+	 * Send a queued JSON call to the server
+	 *
+	 * @param _menuaction the menuaction function which should be called and
+	 *   which handles the actual request. If the menuaction is a full featured
+	 *   url, this one will be used instead.
+	 * @param _parameters which should be passed to the menuaction function.
+	 * @param _callback callback function which should be called upon a "data" response is received
+	 * @param _sender is the reference object the callback function should get
+	 * @param _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
+	 * @return Promise
+	 */
+	jsonq(_menuaction : string, _parameters? : any[], _callback? : Function, _sender? : object, _callbeforesend? : Function) : Promise<any>;
+
+	/**
+	 * Register a callback to receive push broadcasts eg. in a popup or iframe
+	 *
+	 * It's also used internally by egw_message's push method to dispatch to the registered callbacks.
+	 *
+	 * @param data callback (with bound context) or PushData to dispatch to callbacks
+	 */
+	registerPush(data : Function|object) : void;
+}
+
+declare global
+{
+	interface IegwGlobal extends JsonqModule
+	{
+	}
+}
+
+egw.extend('jsonq', egw.MODULE_GLOBAL, function() : JsonqModule
 {
 	"use strict";
 
@@ -24,14 +57,14 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 	 *
 	 * @type {Function[]}
 	 */
-	let push_callbacks = [];
+	let push_callbacks : Function[] = [];
 
 	/**
 	 * Queued json requests (objects with attributes menuaction, parameters, context, callback, sender and callbeforesend)
 	 *
 	 * @access private, use jsonq method to queue requests
 	 */
-	const jsonq_queue = {};
+	const jsonq_queue : {[uid : string] : any} = {};
 
 	/**
 	 * Next uid (index) in queue
@@ -41,16 +74,16 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 	/**
 	 * Running timer for next send of queued items
 	 */
-	let jsonq_timer = null;
+	let jsonq_timer : any = null;
 
 	/**
 	 * Send the whole job-queue to the server in a single json request with menuaction=queue
 	 */
-	function jsonq_send()
+	function jsonq_send() : void
 	{
 		if (jsonq_uid > 0 && typeof jsonq_queue['u'+(jsonq_uid-1)] == 'object')
 		{
-			const jobs_to_send = {};
+			const jobs_to_send : {[uid : string] : any} = {};
 			let something_to_send = false;
 			for(let uid in jsonq_queue)
 			{
@@ -107,7 +140,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 								else
 								{
 									// fake egw.json_request object, to call it with the current response
-									json.handleResponse({response: response});
+									(<any>json).handleResponse({response: response});
 								}
 							}
 							// Response is there, but empty.  Make sure to resolve it or the callback doesn't get called.
@@ -143,7 +176,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 		 * @param {function|undefined} _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
 		 * @return Promise
 		 */
-		jsonq: function(_menuaction, _parameters, _callback, _sender, _callbeforesend)
+		jsonq: function(_menuaction : string, _parameters? : any[], _callback? : Function, _sender? : any, _callbeforesend? : Function) : Promise<any>
 		{
 			const uid = 'u'+(jsonq_uid++);
 			jsonq_queue[uid] = {
@@ -155,7 +188,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 				parameters: _parameters ? [].concat(_parameters) : [],
 				callbeforesend: _callbeforesend && _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
 			};
-			let promise = new Promise(resolve => {
+			let promise : any = new Promise(resolve => {
 				jsonq_queue[uid].resolve = resolve;
 			});
 			if (typeof _callback === 'function')
@@ -182,7 +215,7 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param {Function|PushData} data callback (with bound context) or PushData to dispatch to callbacks
 		 */
-		registerPush: function(data)
+		registerPush: function(data : Function|any) : void
 		{
 			if (typeof data === "function")
 			{

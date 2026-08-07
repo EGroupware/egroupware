@@ -9,7 +9,7 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-import './egw_json.js';
+import './egw_json';
 
 document.addEventListener('DOMContentLoaded', function() {
 	"use strict";

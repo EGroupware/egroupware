@@ -15,7 +15,7 @@
 	egw_debug;
 */
 import './egw.js';
-import './egw_json.js';	// for egw.registerJSONPlugin
+import './egw_json';	// for egw.registerJSONPlugin
 
 /**
  * Module storing and updating row data

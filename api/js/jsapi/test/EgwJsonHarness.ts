@@ -103,8 +103,8 @@ export async function createEgwJsonEnv(prefs : object = {}) : Promise<EgwJsonEnv
 	});
 	env.window.document.head.appendChild(importMap);
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_json.js', 'module');
-	await loadScript(env.window.document, '/api/js/jsapi/egw_jsonq.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_json.ts', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_jsonq.ts', 'module');
 
 	return env;
 }

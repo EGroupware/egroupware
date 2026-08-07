@@ -13,7 +13,7 @@
 	egw_core;
 */
 import './egw_core';
-import './egw_json.js';	// for registerJSONPlugin
+import './egw_json';	// for registerJSONPlugin
 
 /**
  * Methods to display a success or error message and the app-header
