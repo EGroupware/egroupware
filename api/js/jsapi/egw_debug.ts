@@ -7,13 +7,43 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
 	egw_core;
 */
 import './egw_core';
+
+export interface DebugModule
+{
+	/**
+	 * Return current log-level
+	 */
+	debug_level() : number;
+
+	/**
+	 * The debug function can be used to send a debug message to the
+	 * java script console. The first parameter specifies the debug
+	 * level, all other parameters are passed to the corresponding
+	 * console function.
+	 *
+	 * @param _level "navigation", "log", "info", "warn", "error"
+	 * @param args arguments to egw.debug
+	 */
+	debug(_level : "navigation"|"log"|"info"|"warn"|"error", ...args : any[]) : void;
+
+	/**
+	 * Display log to user because he clicked on icon showed by raise_error
+	 */
+	show_log() : void;
+}
+
+declare global
+{
+	interface IegwGlobal extends DebugModule
+	{
+	}
+}
 
 /**
  * Log debug messages to browser console and persistent html5 localStorage
@@ -24,7 +54,7 @@ import './egw_core';
  * @param {string} _app
  * @param {object} _wnd
  */
-egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
+egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : DebugModule
 {
 	"use strict";
 
@@ -77,7 +107,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 	 * @param {string} _stack
 	 * @returns {Boolean} false if localStorage is NOT supported, null if level requires no logging, true if logged
 	 */
-	function log_on_client(_level, _args, _stack)
+	function log_on_client(_level : string, _args : any[], _stack? : string) : boolean
 	{
 		if (!window.localStorage) return false;
 
@@ -92,7 +122,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 			default:
 				if (!LOCAL_LOG_LEVEL) return null;
 		}
-		var data = {
+		var data : any = {
 			time: (new Date()).getTime(),
 			level: _level,
 			args: _args
@@ -117,16 +147,16 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 		}
 		if (typeof window.localStorage[LASTLOG] == 'undefined')
 		{
-			window.localStorage[LASTLOG] = 0;
+			window.localStorage[LASTLOG] = <any>0;
 		}
 		// check if MAX_LOGS changed in code --> clear whole log
-		if (window.localStorage[LASTLOG] > MAX_LOGS)
+		if (<any>window.localStorage[LASTLOG] > MAX_LOGS)
 		{
 			clear_client_log();
 		}
 		try {
 			window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
-			window.localStorage[LASTLOG] = (1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS;
+			window.localStorage[LASTLOG] = <any>((1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS);
 		}
 		catch(e) {
 			switch (e.name)
@@ -145,9 +175,9 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 						}
 						catch(e) {
 							// for Class we try removing _parent and _children attributes and try again to stringify
-							if (data.args[i] instanceof Class)
+							if (data.args[i] instanceof (<any>window).Class)
 							{
-								data.args[i] = jQuery.extend({}, data.args[i]);
+								data.args[i] = (<any>jQuery).extend({}, data.args[i]);
 								delete data.args[i]._parent;
 								delete data.args[i]._children;
 								try {
@@ -165,7 +195,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 			}
 			try {
 				window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
-				window.localStorage[LASTLOG] = (1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS;
+				window.localStorage[LASTLOG] = <any>((1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS);
 			}
 			catch(e) {
 				// ignore error, if eg. localStorage exceeds quota on client
@@ -178,9 +208,9 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 	 *
 	 * @returns {Array} of Object with values for attributes level, message, trace
 	 */
-	function get_client_log()
+	function get_client_log() : any[]
 	{
-		var logs = [];
+		var logs : any[] = [];
 
 		if (window.localStorage && typeof window.localStorage[LASTLOG] != 'undefined')
 		{
@@ -205,16 +235,16 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 	/**
 	 * Clears whole client log
 	 */
-	function clear_client_log()
+	function clear_client_log() : boolean
 	{
 		// Remove indicator icon
-		jQuery('#topmenu_info_error').remove();
+		(<any>jQuery)('#topmenu_info_error').remove();
 
 		if (!window.localStorage) return false;
 
 		var max = MAX_LOGS;
 		// check if we have more log entries then allowed, happens if MAX_LOGS get changed in code
-		if (window.localStorage[LASTLOG] > MAX_LOGS)
+		if (<any>window.localStorage[LASTLOG] > MAX_LOGS)
 		{
 			max = 1000;	// this should NOT be changed, if MAX_LOGS get's smaller!
 		}
@@ -237,12 +267,12 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 	 *	Actual message is in args[0]
 	 * @returns {DOMNode}
 	 */
-	function format_message(log)
+	function format_message(log : any) : HTMLTableRowElement
 	{
 		var row = document.createElement('tr');
 		row.setAttribute('class', log.level);
 		var timestamp = row.insertCell(-1);
-		timestamp.appendChild(document.createTextNode(new Date(log.time)));
+		timestamp.appendChild(document.createTextNode(<any>(new Date(log.time))));
 		timestamp.setAttribute('class', 'timestamp');
 
 		var level = row.insertCell(-1);
@@ -270,23 +300,23 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 	/**
 	 * Show user an error happend by displaying a clickable icon with tooltip of current error
 	 */
-	function raise_error()
+	function raise_error() : void
 	{
-		var icon = jQuery('#topmenu_info_error');
+		var icon : any = (<any>jQuery)('#topmenu_info_error');
 		if (!icon.length)
 		{
-			var icon = jQuery(egw(_wnd).image_element(egw.image('dialog_error')));
+			var icon = (<any>jQuery)(egw(_wnd).image_element(egw.image('dialog_error')));
 			icon.addClass('topmenu_info_item').attr('id', 'topmenu_info_error');
 			// ToDo: tooltip
 			icon.on('click', egw(_wnd).show_log);
-			jQuery('#egw_fw_topmenu_info_items,#topmenu_info').append(icon);
+			(<any>jQuery)('#egw_fw_topmenu_info_items,#topmenu_info').append(icon);
 		}
 	}
 
 	// bind to global error handler, only if LOCAL_LOG_LEVEL > 0
 	if (LOCAL_LOG_LEVEL)
 	{
-		jQuery(_wnd).on('error', function(e)
+		(<any>jQuery)(_wnd).on('error', function(e : any)
 		{
 			// originalEvent does NOT always exist in IE
 			var event = typeof e.originalEvent == 'object' ? e.originalEvent : e;
@@ -316,56 +346,58 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 	 * console function.
 	 */
 	return {
-		debug_level: function() {
+		debug_level: function() : number {
 			return DEBUGLEVEL;
 		},
-		debug: function(_level) {
-			if (typeof _wnd.console != "undefined")
+		debug: function(_level : string) : void {
+			var args : any[];
+			if (typeof (<any>_wnd).console != "undefined")
 			{
 				// Get the passed parameters and remove the first entry
-				var args = [];
+				args = [];
 				for (var i = 1; i < arguments.length; i++)
 				{
 					args.push(arguments[i]);
 				}
 
 				// Add in a trace
+				var stack : string;
 				if (DEBUGLEVEL >= 5 && typeof (new Error).stack != "undefined")
 				{
-					var stack = (new Error).stack;
+					stack = (new Error).stack;
 					args.push(stack);
 				}
 
 				if (_level == "log" && DEBUGLEVEL >= 4 &&
-					typeof _wnd.console.log == "function")
+					typeof (<any>_wnd).console.log == "function")
 				{
-					_wnd.console.log.apply(_wnd.console, args);
+					(<any>_wnd).console.log.apply((<any>_wnd).console, args);
 				}
 
 				if (_level == "info" && DEBUGLEVEL >= 3 &&
-					typeof _wnd.console.info == "function")
+					typeof (<any>_wnd).console.info == "function")
 				{
-					_wnd.console.info.apply(_wnd.console, args);
+					(<any>_wnd).console.info.apply((<any>_wnd).console, args);
 				}
 
 				if (_level == "warn" && DEBUGLEVEL >= 2 &&
-					typeof _wnd.console.warn == "function")
+					typeof (<any>_wnd).console.warn == "function")
 				{
-					_wnd.console.warn.apply(_wnd.console, args);
+					(<any>_wnd).console.warn.apply((<any>_wnd).console, args);
 				}
 
 				if (_level == "error" && DEBUGLEVEL >= 1 &&
-					typeof _wnd.console.error == "function")
+					typeof (<any>_wnd).console.error == "function")
 				{
-					_wnd.console.error.apply(_wnd.console, args);
+					(<any>_wnd).console.error.apply((<any>_wnd).console, args);
 				}
 			}
 			// raise errors to user, if LOCAL_LOG_LEVEL > 0
-			if (LOCAL_LOG_LEVEL && _level == "error") raise_error(args);
+			if (LOCAL_LOG_LEVEL && _level == "error") raise_error();
 
 			// log to html5 localStorage
 			if (typeof stack != 'undefined') args.pop();	// remove stacktrace again
-			log_on_client(_level, args);
+			log_on_client(<any>_level, args);
 		},
 
 		/**
@@ -373,7 +405,7 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 		 *
 		 * @returns {undefined}
 		 */
-		show_log: function()
+		show_log: function() : void
 		{
 			var table = document.createElement('table');
 			var body = document.createElement('tbody');
@@ -389,32 +421,31 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app, _wnd)
 			wrapper.setAttribute('class', 'client_error_log');
 			wrapper.appendChild(table);
 
-			if(window.jQuery && window.jQuery.ui.dialog)
+			if((<any>window).jQuery && (<any>window).jQuery.ui.dialog)
 			{
-				var $wrapper = jQuery(wrapper);
+				var $wrapper : any = (<any>jQuery)(wrapper);
 				// Start hidden
-				jQuery('tr',$wrapper).addClass('hidden')
+				(<any>jQuery)('tr',$wrapper).addClass('hidden')
 					.on('click', function() {
-						jQuery(this).toggleClass('hidden',{});
-						jQuery(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
+						(<any>jQuery)(this).toggleClass('hidden',{});
+						(<any>jQuery)(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
 					});
 				// Wrap in div so we can control height
-				jQuery('td',$wrapper).wrapInner('<div/>')
+				(<any>jQuery)('td',$wrapper).wrapInner('<div/>')
 					.filter('.stack').children().addClass('ui-icon ui-icon-circle-plus');
 
 				$wrapper.dialog({
 					title: egw.lang('Error log'),
 					buttons: [
-						{text: egw.lang('OK'), click: function() {jQuery(this).dialog( "close" ); }},
-						{text: egw.lang('clear'), click: function() {clear_client_log(); jQuery(this).empty();}}
+						{text: egw.lang('OK'), click: function() {(<any>jQuery)(this).dialog( "close" ); }},
+						{text: egw.lang('clear'), click: function() {clear_client_log(); (<any>jQuery)(this).empty();}}
 					],
 					width: 800,
 					height: 400
 				});
 				$wrapper[0].scrollTop = $wrapper[0].scrollHeight;
 			}
-			if (_wnd.console) _wnd.console.log(get_client_log());
+			if ((<any>_wnd).console) (<any>_wnd).console.log(get_client_log());
 		}
 	};
 });
-

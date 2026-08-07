@@ -156,30 +156,7 @@ interface IegwGlobal
 	// config: implemented in egw_config.ts, contributing ConfigModule
 	// data_storage: implemented in egw_data.ts, contributing DataStorageModule
 
-	/**
-	 * implemented in egw_debug.js
-	 */
-	/**
-	 * Return current log-level
-	 */
-	debug_level() : number;
-	/**
-	 * The debug function can be used to send a debug message to the
-	 * java script console. The first parameter specifies the debug
-	 * level, all other parameters are passed to the corresponding
-	 * console function.
-	 *
-	 * @param {String} _level "navigation", "log", "info", "warn", "error"
-	 * @param args arguments to egw.debug
-	 */
-	debug(_level : "navigation"|"log"|"info"|"warn"|"error", ...args : any[]) : void;
-	/**
-	 * Display log to user because he clicked on icon showed by raise_error
-	 *
-	 * @returns {undefined}
-	 */
-	show_log() : void;
-
+	// debug: implemented in egw_debug.ts, contributing DebugModule
 	// images: implemented in egw_images.ts, contributing ImagesModule
 	// lang: implemented in egw_lang.ts, contributing LangModule
 

@@ -8,7 +8,7 @@ import "../jquery/jquery.noconflict.js";
 
 import "./egw.js";
 import "./egw_core";
-import "./egw_debug.js";
+import "./egw_debug";
 import "./egw_preferences";
 import "./egw_lang";
 import "./egw_links";

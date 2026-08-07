@@ -20,7 +20,7 @@ export async function createEgwDebugEnv(prefs : object = {}) : Promise<EgwDebugE
 
 	await loadScript(env.window.document, '/vendor/bower-asset/jquery/dist/jquery.min.js');
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_debug.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_debug.ts', 'module');
 
 	return env;
 }
