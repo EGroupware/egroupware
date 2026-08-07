@@ -16,16 +16,60 @@
 */
 import './egw_core';
 
+export interface FilesModule
+{
+	/**
+	 * Load and execute javascript file(s) in order
+	 *
+	 * Deprecated because with egw composition happening in main window the used import statement happens in that context
+	 * and NOT in the window (eg. popup or iframe) this module is instantiated for!
+	 *
+	 * @memberOf egw
+	 * @param _jsFiles (array of) urls to include
+	 * @param _callback called after JS files are loaded and executed
+	 * @param _context
+	 * @param _prefix prefix for _jsFiles
+	 * @deprecated use es6 import statement: Promise.all([].concat(_jsFiles).map((src)=>import(_prefix+src))).then(...)
+	 */
+	includeJS(_jsFiles : string|string[], _callback? : Function, _context? : object, _prefix? : string) : Promise<any>;
+
+	/**
+	 * Check if file is already included and optional mark it as included if not yet included
+	 *
+	 * Check does NOT differenciate between file.min.js and file.js.
+	 * Only .js get's recored in files for further checking, if _add_if_not set.
+	 *
+	 * @param _file
+	 * @param _add_if_not if true mark file as included
+	 * @return true if file already included, false if not
+	 */
+	included(_file : string, _add_if_not? : boolean) : boolean;
+
+	/**
+	 * Include a CSS file
+	 *
+	 * @param _cssFiles full url of file to include
+	 */
+	includeCSS(_cssFiles : string|string[]) : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends FilesModule
+	{
+	}
+}
+
 /**
  * @augments Class
  * @param {string} _app application name object is instanciated for
  * @param {object} _wnd window object is instanciated for
  */
-egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+egw.extend('files', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Window) : FilesModule
 {
 	"use strict";
 
-	var egw = this;
+	var egw : any = this;
 
 	/**
 	 * Remove optional timestamp attached as query parameter, eg. /path/name.js?12345678[&other=val]
@@ -39,7 +83,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param _src url
 	 * @return url with timestamp stripped off
 	 */
-	function removeTS(_src)
+	function removeTS(_src : string) : string
 	{
 		return _src.replace(/[?&][0-9]+&?/, '?').replace(/\?$/, '');
 	}
@@ -64,15 +108,15 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {string|Array} _srcs all url's have to be egw releativ!
 	 * @returns {Array}
 	 */
-	function files_from_bundles(_srcs)
+	function files_from_bundles(_srcs : string|string[]) : string[]
 	{
-		var files = [];
+		var files : string[] = [];
 
-		if (typeof _srcs == 'string') _srcs = [_srcs];
+		var srcs : string[] = typeof _srcs == 'string' ? [_srcs] : _srcs;
 
-		for(var n=0; n < _srcs.length; ++n)
+		for(var n=0; n < srcs.length; ++n)
 		{
-			var file = _srcs[n];
+			var file = srcs[n];
 			files.push(file.replace(min_js_regexp, '.js'));
 			var contains = file.match(bundle2files_regexp);
 
@@ -94,7 +138,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {array} _urls absolute urls
 	 * @returns {array} relativ urls
 	 */
-	function strip_egw_url(_urls)
+	function strip_egw_url(_urls : string[]) : string[]
 	{
 		var egw_url = egw.webserverUrl;
 		if (egw_url.charAt(egw_url.length-1) != '/') egw_url += '/';
@@ -119,15 +163,15 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	/**
 	 * Array which contains all currently bound in javascript and css files.
 	 */
-	var files = [];
+	var files : string[] = [];
 	// add already included scripts
-	var tags = jQuery('script', _wnd.document);
+	var tags : any = (<any>jQuery)('script', _wnd.document);
 	for(var i=0; i < tags.length; ++i)
 	{
 		files.push(removeTS(tags[i].src));
 	}
 	// add already included css
-	tags = jQuery('link[type="text/css"]', _wnd.document);
+	tags = (<any>jQuery)('link[type="text/css"]', _wnd.document);
 	for(var i=0; i < tags.length; ++i)
 	{
 		files.push(removeTS(tags[i].href));
@@ -152,7 +196,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @deprecated use es6 import statement: Promise.all([].concat(_jsFiles).map((src)=>import(_prefix+src))).then(...)
 		 * @return Promise
 		 */
-		includeJS: function(_jsFiles, _callback, _context, _prefix)
+		includeJS: function(_jsFiles : any, _callback? : Function, _context? : any, _prefix? : string) : any
 		{
 			// Also allow including a single javascript file
 			if (typeof _jsFiles === 'string')
@@ -161,7 +205,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 			// filter out files included by script-tag via egw.js
 			_jsFiles = _jsFiles.filter((src) => src.match(egw.legacy_js_regexp) === null);
-			let promise;
+			let promise : any;
 			if (_jsFiles.length === 1)	// running this in below case fails when loading app.js from etemplate.load()
 			{
 				const src = _jsFiles[0];
@@ -194,7 +238,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {boolean} _add_if_not if true mark file as included
 		 * @return boolean true if file already included, false if not
 		 */
-		included: function(_file, _add_if_not)
+		included: function(_file : string, _add_if_not? : boolean) : boolean
 		{
 			var file = removeTS(_file).replace(min_js_regexp, '.js');
 			var not_inc = files.indexOf(file) == -1;
@@ -211,7 +255,7 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @param {string|array} _cssFiles full url of file to include
 		 */
-		includeCSS: function(_cssFiles)
+		includeCSS: function(this : any, _cssFiles : any) : void
 		{
 			if (typeof _cssFiles == 'string') _cssFiles = [_cssFiles];
 			_cssFiles = strip_egw_url(_cssFiles);
@@ -235,5 +279,3 @@ egw.extend('files', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 	};
 });
-
-

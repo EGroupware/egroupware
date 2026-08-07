@@ -36,7 +36,7 @@ export async function createEgwFilesEnv(prefs : object = {}) : Promise<EgwFilesE
 		debug_level: () => 0
 	}));
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_files.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_files.ts', 'module');
 
 	return env;
 }

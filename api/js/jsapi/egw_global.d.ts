@@ -309,37 +309,7 @@ interface IegwWndLocal extends IegwGlobal
 	// json: implemented in egw_json.ts, contributing JsonModule (json(), request(),
 	// callFunc(), applyFunc(), registerJSONPlugin(), unregisterJSONPlugin(), unregisterAllPlugins())
 
-	/**
-	 * implemented in egw_files.js
-	 */
-	/**
-	 * Load and execute javascript file(s) in order
-	 *
-	 * @memberOf egw
-	 * @param {string|array} _jsFiles (array of) urls to include
-	 * @param {function} _callback called after JS files are loaded and executed
-	 * @param {object} _context
-	 * @param {string} _prefix prefix for _jsFiles
-	 * @deprecated use es6 import statement: Promise.all([].concat(_jsFiles).map((src)=>import(_prefix+src))).then(...)
-	 */
-	includeJS(_jsFiles : string|string[], _callback? : Function, _context? : object, _prefix? : string);
-	/**
-	 * Check if file is already included and optional mark it as included if not yet included
-	 *
-	 * Check does NOT differenciate between file.min.js and file.js.
-	 * Only .js get's recored in files for further checking, if _add_if_not set.
-	 *
-	 * @param {string} _file
-	 * @param {boolean} _add_if_not if true mark file as included
-	 * @return boolean true if file already included, false if not
-	 */
-	included(_file : string, _add_if_not? : boolean) : boolean;
-	/**
-	 * Include a CSS file
-	 *
-	 * @param {string|array} _cssFiles full url of file to include
-	 */
-	includeCSS(_cssFiles : string|string[]) : void;
+	// files: implemented in egw_files.ts, contributing FilesModule
 
 	// jsonq: implemented in egw_jsonq.ts, contributing JsonqModule
 	// message: implemented in egw_message.ts, contributing MessageModule

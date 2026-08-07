@@ -17,7 +17,7 @@ import "./egw_user";
 import "./egw_config";
 import "./egw_images";
 import "./egw_jsonq";
-import "./egw_files.js";
+import "./egw_files";
 import "./egw_json";
 import "./egw_store";
 import "./egw_tooltip.js";
