@@ -30,16 +30,6 @@ var egw : Iegw;
  */
 interface Iegw extends IegwWndLocal {
 	(_app?: string | Window, _wnd?: Window) : IegwAppLocal,
-	/**
-	 * Copy text to the clipboard
-	 *
-	 * @param text Actual text to copy.  Usually target_element.value
-	 * @param target_element Optional, but useful for fallback copy attempts
-	 * @param event Optional, but if you have an event we can try some fallback options with it
-	 *
-	 * @returns {Promise<undefined|boolean>|Promise<void>}
-	 */
-	copyTextToClipboard:(text, target_element, event)=>any
 }
 
 /**
@@ -169,109 +159,7 @@ interface IegwGlobal
 	// store: implemented in egw_store.ts, contributing StoreModule
 	// user: implemented in egw_user.ts, contributing UserModule
 
-	/**
-	 * implemented in egw_utils.js
-	 */
-	/**
-	 * Get url for ajax request
-	 *
-	 * @param _menuaction
-	 * @return full url incl. webserver_url
-	 */
-	ajaxUrl(_menuaction : string) : string;
-	/**
-	 * Get window of element
-	 *
-	 * @param _elem
-	 */
-	elemWindow(_elem : HTMLElement) : Window;
-	/**
-	 * Get unique identifier
-	 *
-	 * @return {string} hex encoded, per call incremented counter
-	 */
-	uid() : string;
-	/**
-	 * Decode encoded vfs special chars
-	 *
-	 * @param {string} _path path to decode
-	 * @return {string}
-	 */
-	decodePath(_path : string) : string;
-	/**
-	 * Encode vfs special chars excluding /
-	 *
-	 * @param {string} _path path to decode
-	 * @return {string}
-	 */
-	encodePath(_path : string) : string;
-	/**
-	 * Encode vfs special chars removing /
-	 *
-	 * '%' => '%25',
-	 * '#' => '%23',
-	 * '?' => '%3F',
-	 * '/' => '',	// better remove it completly
-	 *
-	 * @param {string} _comp path to decode
-	 * @return {string}
-	 */
-	encodePathComponent(_comp : string) : string;
-
-	/**
-	 * Hash a string
-	 *
-	 * @param string
-	 */
-	hashString(name : any) : Promise<string>;
-	/**
-	 * Escape HTML special chars, just like PHP
-	 *
-	 * @param {string} s String to encode
-	 *
-	 * @return {string}
-	 */
-	htmlspecialchars(s : string) : string;
-	/**
-	 * If an element has display: none (or a parent like that), it has no size.
-	 * Use this to get its dimensions anyway.
-	 *
-	 * @param element HTML element
-	 * @param boolOuter Pass true to get outerWidth() / outerHeight() instead of width() / height()
-	 *
-	 * @return Object [w: width, h: height]
-	 *
-	 * @author Ryan Wheale
-	 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
-	 */
-	getHiddenDimensions(element : HTMLElement | JQuery, boolOuter? : boolean) : {h: number, w: number, top: number, left: number};
-	/**
-	 * Store a window's name in egw.store so we can have a list of open windows
-	 *
-	 * @param {string} appname
-	 * @param {Window} popup
-	 */
-	storeWindow(appname: string, popup : Window) : void;
-	/**
-	 * Get a list of the names of open popups
-	 *
-	 * Using the name, you can get a reference to the popup using:
-	 * window.open('', name);
-	 * Popups that were not given a name when they were opened are not tracked.
-	 *
-	 * @param {string} appname Application that owns/opened the popup
-	 * @param {string} regex Optionally filter names by the given regular expression
-	 *
-	 * @returns {string[]} List of window names
-	 */
-	getOpenWindows(appname : string, regex? : string) : string[];
-	/**
-	 * Notify egw of closing a named window, which removes it from the list
-	 *
-	 * @param {String} appname
-	 * @param {Window|String} closed Window that was closed, or its name
-	 */
-	windowClosed(appname : string, closed : Window|string) : void;
+	// utils: implemented in egw_utils.ts, contributing UtilsModule
 }
 
 // JsonRequest class: implemented in egw_json.ts

@@ -14,11 +14,149 @@
 */
 import './egw_core';
 
-egw.extend('utils', egw.MODULE_GLOBAL, function()
+export interface UtilsModule
+{
+	/**
+	 * Get url for ajax request
+	 *
+	 * @param _menuaction
+	 * @return full url incl. webserver_url
+	 */
+	ajaxUrl(_menuaction : string) : string;
+
+	/**
+	 * Get window of element
+	 *
+	 * @param _elem
+	 */
+	elemWindow(_elem : HTMLElement) : Window;
+
+	/**
+	 * Get unique identifier
+	 *
+	 * @return hex encoded, per call incremented counter
+	 */
+	uid() : string;
+
+	/**
+	 * Decode encoded vfs special chars
+	 *
+	 * @param _path path to decode
+	 */
+	decodePath(_path : string) : string;
+
+	/**
+	 * Encode vfs special chars excluding /
+	 *
+	 * @param _path path to decode
+	 */
+	encodePath(_path : string) : string;
+
+	/**
+	 * Encode vfs special chars removing /
+	 *
+	 * '%' => '%25',
+	 * '#' => '%23',
+	 * '?' => '%3F',
+	 * '/' => '',	// better remove it completly
+	 *
+	 * @param _comp path to decode
+	 */
+	encodePathComponent(_comp : string) : string;
+
+	/**
+	 * Hash a string
+	 */
+	hashString(string : string) : Promise<string>;
+
+	/**
+	 * Escape HTML special chars, just like PHP
+	 *
+	 * @param s String to encode
+	 */
+	htmlspecialchars(s : string) : string;
+
+	/**
+	 * If an element has display: none (or a parent like that), it has no size.
+	 * Use this to get its dimensions anyway.
+	 *
+	 * @param element HTML element
+	 * @param boolOuter Pass true to get outerWidth() / outerHeight() instead of width() / height()
+	 *
+	 * @author Ryan Wheale
+	 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
+	 */
+	getHiddenDimensions(element : HTMLElement | JQuery, boolOuter? : boolean) : {w : number, h : number, top : number, left : number};
+
+	/**
+	 * Store a window's name in egw.store so we can have a list of open windows
+	 *
+	 * @param appname
+	 * @param popup
+	 */
+	storeWindow(appname : string, popup : Window) : void;
+
+	/**
+	 * Get a list of the names of open popups
+	 *
+	 * Using the name, you can get a reference to the popup using:
+	 * window.open('', name);
+	 * Popups that were not given a name when they were opened are not tracked.
+	 *
+	 * @param appname Application that owns/opened the popup
+	 * @param regex Optionally filter names by the given regular expression
+	 *
+	 * @returns List of window names
+	 */
+	getOpenWindows(appname : string, regex? : string) : string[] | {[name : string] : number};
+
+	/**
+	 * Notify egw of closing a named window, which removes it from the list
+	 *
+	 * @param appname
+	 * @param closed Window that was closed, or its name
+	 */
+	windowClosed(appname : string, closed : Window | string) : void;
+
+	/**
+	 * Copy text to the clipboard
+	 *
+	 * @param text Actual text to copy.  Usually target_element.value
+	 * @param target_element Optional, but useful for fallback copy attempts
+	 * @param event Optional, but if you have an event we can try some fallback options with it
+	 */
+	copyTextToClipboard(text : string, target_element? : HTMLElement, event? : ClipboardEvent | Event) : Promise<undefined | boolean | void>;
+
+	/**
+	 * Get a cache object shared between all EGroupware windows
+	 *
+	 * @param _name unique name for the cache-object
+	 */
+	getCache(_name : string) : {[key : string] : any};
+
+	/**
+	 * Invalidate / delete given part of the cache
+	 *
+	 * @param _name unique name of cache-object
+	 * @param _attr undefined: invalidate/unset whole object or just the given attribute _attr or matching RegExp _attr
+	 */
+	invalidateCache(_name : string, _attr? : string | RegExp) : void;
+
+	jsonEncode(value : any) : string;
+}
+
+declare global
+{
+	interface IegwGlobal extends UtilsModule
+	{
+	}
+}
+
+egw.extend('utils', egw.MODULE_GLOBAL, function() : UtilsModule
 {
 	"use strict";
 
-	function json_escape_string(input)
+	function json_escape_string(input : string) : string
 	{
 		var len = input.length;
 		var res = "";
@@ -67,7 +205,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		return res;
 	}
 
-	function json_encode_simple(input)
+	function json_encode_simple(input : any) : string | null
 	{
 		switch (input.constructor)
 		{
@@ -85,7 +223,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		}
 	}
 
-	function json_encode(input)
+	function json_encode(input : any) : string
 	{
 		if (input == null || !input && input.length == 0) return 'null';
 
@@ -99,7 +237,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 					for (var k in input)
 					{
 						//Filter non numeric entries
-						if (!isNaN(k))
+						if (!isNaN(<any>k))
 							buf.push(json_encode(input[k]));
 					}
 					return '[' + buf.join(',') + ']';
@@ -113,14 +251,14 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 					return '{' + buf.join(',') + '}';
 
 				default:
-					switch(typeof input)
+					switch(<string>typeof input)
 					{
 						case 'array':
 							var buf = [];
 							for (var k in input)
 							{
 								//Filter non numeric entries
-								if (!isNaN(k))
+								if (!isNaN(<any>k))
 									buf.push(json_encode(input[k]));
 							}
 							return '[' + buf.join(',') + ']';
@@ -150,11 +288,10 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 	 * @param event Optional, but if you have an event we can try some things on it
 	 * @param target_element Element whose contents you're trying to copy
 	 * @param text Actual text.  Usually target_element.value.
-	 * @returns {boolean}
 	 */
-	function fallbackCopyTextToClipboard(event, target_element, text)
+	function fallbackCopyTextToClipboard(event : ClipboardEvent | Event, target_element : HTMLElement, text : string) : boolean
 	{
-		const win = target_element?.ownerDocument.defaultView ?? target_element.ownerDocument.parentWindow ?? window;
+		const win : any = (<any>target_element)?.ownerDocument.defaultView ?? (<any>target_element).ownerDocument.parentWindow ?? window;
 
 		// Cancel any no-select css
 		if (target_element)
@@ -172,17 +309,17 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 
 			// detect we are in IE via checking setActive, since it's
 			// only supported in IE, and make sure there's clipboardData object
-			if (event && typeof event.target.setActive != 'undefined' && win.clipboardData)
+			if (event && typeof (<any>event.target).setActive != 'undefined' && win.clipboardData)
 			{
 				win.clipboardData.setData('Text', target_element.textContent.trim());
 			}
-			if (event && event.clipboardData)
+			if (event && (<any>event).clipboardData)
 			{
-				event.clipboardData.setData('text/plain', target_element.textContent.trim());
-				event.clipboardData.setData('text/html', target_element.outerHTML);
+				(<any>event).clipboardData.setData('text/plain', target_element.textContent.trim());
+				(<any>event).clipboardData.setData('text/html', target_element.outerHTML);
 			}
 		}
-		let textArea;
+		let textArea : HTMLTextAreaElement;
 		if (!win.clipboardData)
 		{
 
@@ -219,20 +356,18 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 
 	/**
 	 * Global cache shared between all EGroupware windows
-	 * @type {{}}
 	 */
-	const cache = {};
+	const cache : {[name : string] : {[key : string] : any}} = {};
 
 	// Create the utils object which contains references to all functions
 	// covered by it.
-	var utils = {
+	var utils : Omit<UtilsModule, 'jsonEncode'> = {
 		/**
 		 * Get a cache object shared between all EGroupware windows
 		 *
-		 * @param {string} _name unique name for the cache-object
-		 * @return {*}
+		 * @param _name unique name for the cache-object
 		 */
-		getCache: function(_name)
+		getCache: function(_name : string)
 		{
 			if (typeof cache[_name] === 'undefined') cache[_name] = {};
 
@@ -242,10 +377,10 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		/**
 		 * Invalidate / delete given part of the cache
 		 *
-		 * @param {string} _name unique name of cache-object
-		 * @param {string|RegExp|undefined} _attr undefined: invalidate/unset whole object or just the given attribute _attr or matching RegExp _attr
+		 * @param _name unique name of cache-object
+		 * @param _attr undefined: invalidate/unset whole object or just the given attribute _attr or matching RegExp _attr
 		 */
-		invalidateCache: function(_name, _attr)
+		invalidateCache: function(_name : string, _attr? : string | RegExp)
 		{
 			// string with regular expression like "/^something/i"
 			if (typeof _attr === 'string' && (_attr[0] === '/', _attr.indexOf('/', 1) !== -1))
@@ -268,11 +403,12 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			}
 			else
 			{
-				delete cache[_name][_attr];
+				delete cache[_name][<string>_attr];
 			}
 		},
 
-		ajaxUrl: function(_menuaction) {
+		ajaxUrl: function(_menuaction : string)
+		{
 			if(_menuaction.indexOf('menuaction=') >= 0)
 			{
 				return _menuaction;
@@ -280,24 +416,26 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			return this.webserverUrl + '/json.php?menuaction=' + _menuaction;
 		},
 
-		elemWindow: function(_elem) {
-			var res =
-				_elem.ownerDocument.parentNode ||
+		elemWindow: function(_elem : HTMLElement)
+		{
+			var res : any =
+				(<any>_elem.ownerDocument).parentNode ||
 				_elem.ownerDocument.defaultView;
 			return res;
 		},
 
-		uid: function() {
+		uid: function()
+		{
 			return (uid_counter++).toString(16);
 		},
 
 		/**
 		 * Decode encoded vfs special chars
 		 *
-		 * @param {string} _path path to decode
-		 * @return {string}
+		 * @param _path path to decode
 		 */
-		decodePath: function(_path) {
+		decodePath: function(_path : string)
+		{
 			try {
 				return decodeURIComponent(_path);
 			}
@@ -311,10 +449,10 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		/**
 		 * Encode vfs special chars excluding /
 		 *
-		 * @param {string} _path path to decode
-		 * @return {string}
+		 * @param _path path to decode
 		 */
-		encodePath: function(_path) {
+		encodePath: function(_path : string)
+		{
 			var components = _path.split('/');
 			for(var n=0; n < components.length; n++)
 			{
@@ -331,19 +469,17 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * '?' => '%3F',
 		 * '/' => '',	// better remove it completly
 		 *
-		 * @param {string} _comp path to decode
-		 * @return {string}
+		 * @param _comp path to decode
 		 */
-		encodePathComponent: function(_comp) {
+		encodePathComponent: function(_comp : string)
+		{
 			return _comp.replace(/%/g,'%25').replace(/#/g,'%23').replace(/\?/g,'%3F').replace(/\//g,'');
 		},
 
 		/**
 		 * Hash a string
-		 *
-		 * @param string
 		 */
-		async hashString(string)
+		async hashString(string : string)
 		{
 			const data = (new TextEncoder()).encode(string);
 			const hashBuffer = await crypto.subtle.digest('SHA-256', data);
@@ -355,11 +491,10 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		/**
 		 * Escape HTML special chars, just like PHP
 		 *
-		 * @param {string} s String to encode
-		 *
-		 * @return {string}
+		 * @param s String to encode
 		 */
-		htmlspecialchars: function(s) {
+		htmlspecialchars: function(s : string)
+		{
 			return s.replace(/&/g, '&amp;')
 				.replace(/"/g, '&quot;')
 				.replace(/</g, '&lt;')
@@ -373,39 +508,38 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * @param element HTML element
 		 * @param boolOuter Pass true to get outerWidth() / outerHeight() instead of width() / height()
 		 *
-		 * @return Object [w: width, h: height]
-		 *
 		 * @author Ryan Wheale
 		 * @see http://www.foliotek.com/devblog/getting-the-width-of-a-hidden-element-with-jquery-using-width/
 		 */
-		getHiddenDimensions: function(element, boolOuter) {
-			var $item = jQuery(element);
-			var props = { position: "absolute", visibility: "hidden", display: "block" };
+		getHiddenDimensions: function(element : HTMLElement | JQuery, boolOuter? : boolean)
+		{
+			var $item : any = (<any>window).jQuery(element);
+			var props : any = { position: "absolute", visibility: "hidden", display: "block" };
 			var dim = { "w":0, "h":0 , "left":0, "top":0};
 			var $hiddenParents = $item.parents().andSelf().not(":visible");
 
-			var oldProps = [];
+			var oldProps : any[] = [];
 			$hiddenParents.each(function() {
-				var old = {};
-				if (this.styles)
+				var old : any = {};
+				if ((<any>this).styles)
 				{
 					for (var name in props)
 					{
 						old[name] = this.style[name];
 					}
 				}
-				else if (this.computedStyleMap)
+				else if ((<any>this).computedStyleMap)
 				{
 					for (var name in props)
 					{
-						let s = this.computedStyleMap().get(name)
+						let s = (<any>this).computedStyleMap().get(name)
 						if (s)
 						{
 							old[name] = s.value || "";
 						}
 					}
 				}
-				jQuery(this).show();
+				(<any>window).jQuery(this).show();
 				oldProps.push(old);
 			});
 
@@ -414,7 +548,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 			dim.top = $item.offset().top;
 			dim.left = $item.offset().left;
 
-			$hiddenParents.each(function(i) {
+			$hiddenParents.each(function(i : number) {
 				var old = oldProps[i];
 				if (this.style)
 				{
@@ -432,12 +566,12 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		/**
 		 * Store a window's name in egw.store so we can have a list of open windows
 		 *
-		 * @param {string} appname
-		 * @param {Window} popup
+		 * @param appname
+		 * @param popup
 		 */
-		storeWindow: function(appname, popup)
+		storeWindow: function(appname : string, popup : Window)
 		{
-			if (popup.opener && popup.opener.framework) popup.opener.framework.popups_garbage_collector();
+			if ((<any>popup).opener && (<any>popup).opener.framework) (<any>popup).opener.framework.popups_garbage_collector();
 
 			// Don't store if it has no name
 			if(!popup.name || ['_blank'].indexOf(popup.name) >= 0)
@@ -445,7 +579,7 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 				return;
 			}
 
-			var _target_app = appname || this.appName || egw_appName || 'common';
+			var _target_app = appname || this.appName || (<any>window).egw_appName || 'common';
 			var open_windows = JSON.parse(this.getSessionItem(_target_app, 'windows')) || {};
 			open_windows[popup.name] = Date.now();
 			this.setSessionItem(_target_app, 'windows', JSON.stringify(open_windows));
@@ -460,18 +594,19 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * window.open('', name);
 		 * Popups that were not given a name when they were opened are not tracked.
 		 *
-		 * @param {string} appname Application that owns/opened the popup
-		 * @param {string} regex Optionally filter names by the given regular expression
+		 * @param appname Application that owns/opened the popup
+		 * @param regex Optionally filter names by the given regular expression
 		 *
-		 * @returns {string[]} List of window names
+		 * @returns List of window names
 		 */
-		getOpenWindows: function(appname, regex) {
+		getOpenWindows: function(appname : string, regex? : string)
+		{
 			var open_windows = JSON.parse(this.getSessionItem(appname, 'windows')) || {};
 			if(typeof regex == 'undefined')
 			{
 				return open_windows;
 			}
-			var list = [];
+			var list : string[] = [];
 			var now = Date.now();
 			for(var i in open_windows)
 			{
@@ -492,11 +627,10 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		/**
 		 * Notify egw of closing a named window, which removes it from the list
 		 *
-		 * @param {String} appname
-		 * @param {Window|String} closed Window that was closed, or its name
-		 * @returns {undefined}
+		 * @param appname
+		 * @param closed Window that was closed, or its name
 		 */
-		windowClosed: function (appname, closed)
+		windowClosed: function (appname : string, closed : Window | string)
 		{
 			var closed_name = typeof closed == "string" ? closed : closed.name;
 			var closed_window = typeof closed == "string" ? null : closed;
@@ -519,18 +653,16 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 		 * @param text Actual text to copy.  Usually target_element.value
 		 * @param target_element Optional, but useful for fallback copy attempts
 		 * @param event Optional, but if you have an event we can try some fallback options with it
-		 *
-		 * @returns {Promise<undefined|boolean>|Promise<void>}
 		 */
-		copyTextToClipboard: function (text, target_element, event)
+		copyTextToClipboard: function (text : string, target_element? : HTMLElement, event? : ClipboardEvent | Event)
 		{
-			if (!navigator.clipboard)
+			if (!(<any>navigator).clipboard)
 			{
 				let success = fallbackCopyTextToClipboard(event, target_element, text);
 				return Promise.resolve(success ? undefined : false);
 			}
 			// Use Clipboard API
-			const win = target_element?.ownerDocument.defaultView ?? target_element.ownerDocument.parentWindow ?? window;
+			const win : any = (<any>target_element)?.ownerDocument.defaultView ?? (<any>target_element).ownerDocument.parentWindow ?? window;
 			return win.navigator.clipboard.writeText(text);
 		}
 	};
@@ -539,14 +671,14 @@ egw.extend('utils', egw.MODULE_GLOBAL, function()
 	// its implementation, otherwise our own
 	if (typeof window.JSON !== 'undefined' && typeof window.JSON.stringify !== 'undefined')
 	{
-		utils["jsonEncode"] = JSON.stringify;
+		(<any>utils)["jsonEncode"] = JSON.stringify;
 	}
 	else
 	{
-		utils["jsonEncode"] = json_encode;
+		(<any>utils)["jsonEncode"] = json_encode;
 	}
 
 	// Return the extension
-	return utils;
+	return <UtilsModule>utils;
 
 });

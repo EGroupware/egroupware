@@ -29,7 +29,7 @@ export async function createEgwUtilsEnv(prefs : object = {}) : Promise<EgwUtilsE
 	}));
 
 	await loadScript(env.window.document, '/api/js/jsapi/egw_store.ts', 'module');
-	await loadScript(env.window.document, '/api/js/jsapi/egw_utils.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_utils.ts', 'module');
 
 	return env;
 }
