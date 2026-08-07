@@ -6,7 +6,6 @@
  * @subpackage api
  * @link http://www.egroupware.org
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -15,6 +14,110 @@
 import './egw_core';
 import './egw_json';	// for registerJSONPlugin
 
+export interface MessageModule
+{
+	/**
+	 * Display an error or regular message
+	 *
+	 * Alle messages but type "success" are displayed 'til next message or user clicks on it.
+	 *
+	 * @param _msg message to show or empty to remove previous message
+	 * @param _type 'help', 'info', 'error', 'warning' or 'success' (default)
+	 * @param _discardID unique string id (appname:id) in order to register
+	 * the message as discardable. If no appname given, the id will be prefixed with
+	 * current app. The discardID will be stored in local storage.
+	 *
+	 * @returns returns an object containing data and methods related to the message
+	 */
+	message(_msg : string, _type? : "help" | "info" | "error" | "warning" | "success", _discardID? : string) : any;
+
+	/**
+	 * Are we running in a popup
+	 *
+	 * @returns true: popup, false: main window
+	 */
+	is_popup() : boolean;
+
+	/**
+	 * Active app independent if we are using a framed template-set or not
+	 */
+	app_name() : string;
+
+	/**
+	 * Update app-header and website-title
+	 *
+	 * @param _header
+	 * @param _app Application name, if not for the current app
+	 */
+	app_header(_header : string, _app? : string) : void;
+
+	/**
+	 * Loading prompt is for building a loading animation and show it to user
+	 * while a request is under progress.
+	 *
+	 * @param _id a unique id to be able to distinguish loading-prompts
+	 * @param _stat true to show the loading and false to remove it
+	 * @param _msg a message to show while loading
+	 * @param _node DOM selector id or jquery DOM object, default is body
+	 * @param _mode	defines the animation mode, default mode is spinner
+	 *	animation modes:
+	 *		- spinner: a sphere with a spinning bar inside (default)
+	 *		- horizental: a horizental bar
+	 *
+	 * @returns returns jQuery DOM object or null in case of hiding
+	 */
+	loading_prompt(_id : string, _stat : boolean, _msg? : string, _node? : string|JQuery|HTMLElement, _mode? : "spinner"|"horizontal") : JQuery|null;
+
+	/**
+	 * Refresh given application _targetapp display of entry _app _id, incl. outputting _msg
+	 *
+	 * Default implementation here only reloads window with it's current url with an added msg=_msg attached
+	 *
+	 * @param _msg message (already translated) to show, eg. 'Entry deleted'
+	 * @param _app application name
+	 * @param _id id of entry to refresh or null
+	 * @param _type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - update-in-place: update row, but do NOT move it, or refresh if uid does not exist
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param _targetapp which app's window should be refreshed, default current
+	 * @param _replace regular expression to replace in url
+	 * @param _with
+	 * @param _msg_type 'error', 'warning' or 'success' (default)
+	 * @param _links app => array of ids of linked entries
+	 * or null, if not triggered on server-side, which adds that info
+	 */
+	refresh(_msg : string, _app : string, _id? : string|number, _type? : "update"|"edit"|"delete"|"add"|null,
+			_targetapp? : string, _replace? : string|RegExp, _with? : string, _msg_type? : "error"|"warning"|"success", _links? : object) : void;
+
+	/**
+	 * Handle a push notification about entry changes from the websocket
+	 *
+	 * @param pushData one or multiple push-objects
+	 * @param pushData.app application name
+	 * @param pushData.id id of entry to refresh or null
+	 * @param pushData.type either 'update', 'edit', 'delete', 'add' or null
+	 * - update: request just modified data from given rows.  Sorting is not considered,
+	 *		so if the sort field is changed, the row will not be moved.
+	 * - edit: rows changed, but sorting may be affected.  Requires full reload.
+	 * - delete: just delete the given rows clientside (no server interaction neccessary)
+	 * - add: requires full reload for proper sorting
+	 * @param pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
+	 * @param pushData.account_id User that caused the notification
+	 */
+	push(pushData : object|object[]) : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends MessageModule
+	{
+	}
+}
+
 /**
  * Methods to display a success or error message and the app-header
  *
@@ -22,7 +125,7 @@ import './egw_json';	// for registerJSONPlugin
  * @param {string} _app application name object is instanciated for
  * @param {object} _wnd window object is instanciated for
  */
-egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+egw.extend('message', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Window) : MessageModule
 {
 	"use strict";
 
@@ -35,7 +138,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	// Register an 'error' plugin, displaying using the message system
 	window.setTimeout(() =>
 	{
-		egw(_wnd).registerJSONPlugin(function (type, res, req)
+		egw(_wnd).registerJSONPlugin(function (type, res, req) : boolean
 		{
 			if (typeof res.data == 'string')
 			{
@@ -52,9 +155,9 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 	 * @param {string} _str
 	 * @returns {string}
 	 */
-	function html_entity_decode(_str)
+	function html_entity_decode(_str : string) : string
 	{
-		return _str && _str.indexOf('&') != -1 ? jQuery('<span>'+_str+'</span>').text() : _str;
+		return _str && _str.indexOf('&') != -1 ? (<any>jQuery)('<span>'+_str+'</span>').text() : _str;
 	}
 
 	return {
@@ -71,20 +174,20 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @return {object} returns an object containing data and methods related to the message
 		 */
-		message: function(_msg, _type, _discardID)
+		message: function(this : any, _msg : string, _type? : "help" | "info" | "error" | "warning" | "success", _discardID? : string) : any
 		{
-			let message = null;
+			let message : any = null;
 			// if we are NOT in a popup then call the message on top window
 			if (!this.is_popup() && _wnd !== egw.top)
 			{
 				return egw(egw.top).message(_msg, _type);
 			}
-			if (egw_getFramework() && typeof egw_getFramework().message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
+			if ((<any>window).egw_getFramework() && typeof (<any>window).egw_getFramework().message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
 			{
-				message = framework.message(_msg, _type, null, true, _discardID, _wnd);
+				message = (<any>window).framework.message(_msg, _type, null, true, _discardID, _wnd);
 			}
 			// Add popup message styling
-			if (message && (!egw_getFramework() || !_wnd.document.body.contains(framework)))
+			if (message && (!(<any>window).egw_getFramework() || !_wnd.document.body.contains((<any>window).framework)))
 			{
 				return message.then(m =>
 				{
@@ -103,7 +206,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 					_wnd.document.querySelector('egw-message')?.remove();
 					return;
 				}
-				const alert = Object.assign(_wnd.document.createElement("egw-message"), {message: _msg, type: _type});
+				const alert : any = Object.assign(_wnd.document.createElement("egw-message"), {message: _msg, type: _type});
 				alert.addEventListener("sl-hide", (e) =>
 				{
 					delete this._messages[(e.target).dataset.hash ?? ""];
@@ -123,11 +226,11 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @returns {boolean} true: popup, false: main window
 		 */
-		is_popup: function ()
+		is_popup: function () : boolean
 		{
 			var popup = false;
 			try {
-				if (_wnd.opener && _wnd.opener != _wnd && typeof _wnd.opener.top.egw == 'function')
+				if (_wnd.opener && _wnd.opener != _wnd && typeof (<any>_wnd.opener).top.egw == 'function')
 				{
 					popup = true;
 				}
@@ -143,9 +246,9 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @returns {string}
 		 */
-		app_name: function()
+		app_name: function(this : any) : string
 		{
-			return !this.is_popup() && _wnd.framework && _wnd.framework.activeApp ? _wnd.framework.activeApp.appName : _wnd.egw_appName;
+			return !this.is_popup() && (<any>_wnd).framework && (<any>_wnd).framework.activeApp ? (<any>_wnd).framework.activeApp.appName : (<any>_wnd).egw_appName;
 		},
 
 		/**
@@ -154,10 +257,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {string} _header
 		 * @param {string} _app Application name, if not for the current app
 		 */
-		app_header: function(_header,_app)
+		app_header: function(this : any, _header : string, _app? : string) : void
 		{
 			// not for popups and only for framed templates
-			if (!this.is_popup() && _wnd.framework && _wnd.framework.setWebsiteTitle)
+			if (!this.is_popup() && (<any>_wnd).framework && (<any>_wnd).framework.setWebsiteTitle)
 			{
 				// Ignore
 				return;
@@ -185,10 +288,10 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @returns {jquery dom object|null} returns jQuery DOM object or null in case of hiding
 		 */
-		loading_prompt: function(_id,_stat,_msg,_node, _mode)
+		loading_prompt: function(_id : string, _stat : boolean, _msg? : string, _node? : any, _mode? : string) : any
 		{
-			var $container = '';
-			var jQuery = _wnd.jQuery;
+			var $container : any = '';
+			var jQuery = (<any>_wnd).jQuery;
 
 			var id = _id? 'egw-loadin-prompt_'+_id: 'egw-loading-prompt_1';
 			var mode = _mode || 'spinner';
@@ -240,12 +343,12 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {object|null} _links app => array of ids of linked entries
 		 * or null, if not triggered on server-side, which adds that info
 		 */
-	   refresh: function(_msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type, _links)
+	   refresh: function(this : any, _msg : string, _app : string, _id? : any, _type? : string, _targetapp? : string, _replace? : any, _with? : string, _msg_type? : "error" | "warning" | "success", _links? : any) : void
 	   {
 			// Log for debugging purposes
 			this.debug("log", "egw_refresh(%s, %s, %s, %o, %s, %s)", _msg, _app, _id, _type, _targetapp, _replace, _with, _msg_type, _links);
 
-			var win = _targetapp ? _wnd.egw_appWindow(_targetapp) : _wnd;
+			var win : any = _targetapp ? (<any>_wnd).egw_appWindow(_targetapp) : _wnd;
 
 			this.message(_msg, _msg_type);
 
@@ -262,7 +365,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			// notify app observers: if observer for _app itself returns false, no regular refresh will take place
 			// app's own observer can replace current app_refresh functionality
 			var no_regular_refresh = false;
-			for(var app_obj of _wnd.egw.window.EgwApp)	// run observers in main window (eg. not iframe, which might be opener!)
+			for(var app_obj of (<any>_wnd).egw.window.EgwApp)	// run observers in main window (eg. not iframe, which might be opener!)
 			{
 				if (typeof app_obj.observer == 'function' &&
 					app_obj.observer(_msg, _app, _id, _type, _msg_type, _links) === false && app_obj.appname === _app)
@@ -337,7 +440,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param {object|null} pushData.acl Extra data for determining relevance.  eg: owner or responsible to decide if update is necessary
 		 * @param {number} pushData.account_id User that caused the notification
 		 */
-		push: function(pushData)
+		push: function(this : any, pushData : any) : void
 		{
 			// Log for debugging purposes
 			this.debug("log", "push(%o)", pushData);
@@ -355,7 +458,7 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 			}
 
 			// notify app observers
-			for (var app_obj of _wnd.egw.window.EgwApp)	// run observers in main window (eg. not iframe, which might be opener!)
+			for (var app_obj of (<any>_wnd).egw.window.EgwApp)	// run observers in main window (eg. not iframe, which might be opener!)
 			{
 				if (typeof app_obj.push == 'function')
 				{

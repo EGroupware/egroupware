@@ -100,7 +100,7 @@ export async function createEgwDataEnv() : Promise<EgwDataEnv>
 	});
 	env.window.document.head.appendChild(importMap);
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_data.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_data.ts', 'module');
 
 	return env;
 }

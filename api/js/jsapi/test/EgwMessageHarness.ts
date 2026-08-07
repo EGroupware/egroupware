@@ -79,7 +79,7 @@ export async function createEgwMessageEnv(prefs : object = {}) : Promise<EgwMess
 	});
 	env.window.document.head.appendChild(importMap);
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_message.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_message.ts', 'module');
 
 	return env;
 }

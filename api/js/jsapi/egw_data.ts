@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel
  * @copyright Stylite 2012
- * @version $Id$
  */
 
 /*egw:uses
@@ -17,13 +16,260 @@
 import './egw.js';
 import './egw_json';	// for egw.registerJSONPlugin
 
+export interface DataModule
+{
+	/**
+	 * The dataFetch function provides an abstraction layer for the
+	 * corresponding "EGroupware\Api\Etemplate\Widget\Nextmatch::ajax_get_rows" function.
+	 * The server returns the following structure:
+	 * 	{
+	 * 		order: [uid, ...],
+	 * 		data:
+	 * 			{
+	 * 				uid0: data,
+	 * 				...
+	 * 				uidN: data
+	 * 			},
+	 * 		total: <TOTAL COUNT>,
+	 * 		lastModification: <LAST MODIFICATION TIMESTAMP>,
+	 * 		readonlys: <READONLYS>
+	 * 	}
+	 * If a uid got deleted on the server above data is null.
+	 * If a uid is omitted from data, is has not changed since lastModification.
+	 *
+	 * If order/data is null, this means that nothing has changed for the
+	 * given range.
+	 * The dataFetch function stores new data for the uid's inside the
+	 * local data storage, the grid views are then capable of querying the
+	 * data for those uids from the local storage using the
+	 * "dataRegisterUID" function.
+	 *
+	 * @param _execId is the execution context of the etemplate instance
+	 * 	you're querying the data for.
+	 * @param _queriedRange is an object of the following form:
+	 * 	{
+	 * 		start: <START INDEX>,
+	 * 		num_rows: <COUNT OF ENTRIES>
+	 * 	}
+	 * The range always corresponds to the given filter settings.
+	 * @param _filters contains the filter settings. The filter settings are
+	 * 	those which are crucial for the mapping between index and uid.
+	 * @param _widgetId id with full namespace of widget
+	 * @param _callback is the function that should get called, once the data
+	 * 	is available. The data passed to the callback function has the
+	 * 	following form:
+	 * 	{
+	 * 		order: [uid, ...],
+	 * 		total: <TOTAL COUNT>,
+	 * 		lastModification: <LAST MODIFICATION TIMESTAMP>,
+	 * 		readonlys: <READONLYS>
+	 * 	}
+	 * 	Please note that the "uids" comming from the server and the ones
+	 * 	being parsed to the callback function differ. While the uids
+	 * 	which are returned from the server are only unique inside the
+	 * 	application, the uids which are used on the client are "globally"
+	 * 	unique.
+	 * @param _context is the context in which the callback function will get
+	 * 	called.
+	 * @param _knownUids is an array of uids already known to the client.
+	 *  This parameter may be null in order to indicate that the client
+	 *  currently has no data for the given filter settings.
+	 */
+	dataFetch(_execId : string, _queriedRange : {start? : number, num_rows? : number, refresh? : string|string[], no_data? : boolean, only_data? : boolean},
+	          _filters : object, _widgetId : string, _callback : Function, _context : any,
+	          _knownUids? : string[]) : void;
+
+	/**
+	 * Turn on long-term client side cache of a particular request
+	 * (cache the nextmatch query results) for fast, immediate response
+	 * with old data.
+	 *
+	 * The request is still sent to the server, and the cache is updated
+	 * with fresh data, and any needed callbacks are called again with
+	 * the fresh data.
+	 *
+	 * @param prefix UID / Application prefix should match the
+	 *	individual record prefix
+	 * @param callback_function A function that will analize the provided fetch
+	 *	parameters and return a reproducable cache key, or false to not cache
+	 *	the request.
+	 * @param notice_function A function that will be called whenever
+	 *	cached data is used.  It is passed one parameter, a boolean that indicates
+	 *	if the server is or will be queried to refresh the cache.  Do not fetch additional data
+	 *	inside this callback, and return quickly.
+	 * @param context Context for callback function.
+	 */
+	dataCacheRegister(prefix : string, callback_function : Function, notice_function : Function, context : object) : void;
+
+	/**
+	 * Unregister a previously registered cache callback
+	 * @param prefix UID / Application prefix should match the
+	 *	individual record prefix
+	 * @param callback Callback function to un-register.  If
+	 *	omitted, all functions for the prefix will be removed.
+	 */
+	dataCacheUnregister(prefix : string, callback? : Function) : void;
+
+	/**
+	 * Let an app opt-in to answer dataFetch() itself, instead of the regular
+	 * ajax_get_rows request - e.g. mail fetching rows directly from a JMAP
+	 * server for Stalwart-backed accounts.
+	 *
+	 * Only one registered callback per prefix is expected to actually handle a
+	 * given fetch; the first one returning a truthy value wins.
+	 *
+	 * @param prefix UID / Application prefix should match the
+	 *	individual record prefix
+	 * @param callback_function function(_execId, _queriedRange, _filters,
+	 *	_widgetId, _knownUids, _lastModification) - called before the regular
+	 *	ajax_get_rows request. Return false/undefined to let dataFetch() continue
+	 *	normally, or a {order, data, total, lastModification, readonlys} result
+	 *	(same shape ajax_get_rows itself returns, un-prefixed uids) - or a Promise
+	 *	resolving to one of those - to answer the fetch instead.
+	 * @param context Context for callback function.
+	 */
+	dataRegisterFetch(prefix : string, callback_function : Function, context : object) : void;
+
+	/**
+	 * Unregister a previously registered fetch callback
+	 * @param prefix UID / Application prefix should match the
+	 *	individual record prefix
+	 * @param callback Callback function to un-register.  If
+	 *	omitted, all functions for the prefix will be removed.
+	 */
+	dataUnregisterFetch(prefix : string, callback? : Function) : void;
+}
+
+export interface DataStorageModule
+{
+	/**
+	 * Registers the intrest in a certain uid for a callback function. If
+	 * the data for that uid changes or gets loaded, the given callback
+	 * function is called. If the data for the given uid is available at the
+	 * time of registering the callback, the callback is called immediately.
+	 *
+	 * @param _uid is the uid for which the callback should be registered.
+	 * @param _callback is the callback which should get called.
+	 * @param _context is the optional context in which the callback will be
+	 * executed
+	 * @param _execId is the exec id which will be used in case the data is
+	 * not available
+	 * @param _widgetId is the widget id which will be used in case the uid
+	 * has to be fetched.
+	 */
+	dataRegisterUID(_uid : string, _callback : Function, _context?, _execId?: string, _widgetId?: string) : void;
+
+	/**
+	 * Unregisters the intrest of updates for a certain data uid.
+	 *
+	 * @param _uid is the data uid for which the callbacks should be
+	 * 	unregistered.
+	 * @param _callback specifies the specific callback that should be
+	 * 	unregistered. If it evaluates to false, all callbacks (or those
+	 * 	matching the optionally given context) are removed.
+	 * @param _context specifies the callback context that should be
+	 * 	unregistered. If it evaluates to false, all callbacks (or those
+	 * 	matching the optionally given callback function) are removed.
+	 */
+	dataUnregisterUID(_uid : string, _callback? : Function, _context?) : void;
+
+	/**
+	 * Returns whether data is available for the given uid.
+	 *
+	 * @param _uid is the uid for which should be checked whether it has some
+	 * 	data.
+	 */
+	dataHasUID(_uid : string) : boolean;
+
+	/**
+	 * Returns data of a given uid.
+	 *
+	 * @param _uid is the uid for which should be checked whether it has some
+	 * 	data.
+	 */
+	dataGetUIDdata(_uid : string) : IegwData;
+
+	/**
+	 * Returns all uids that have the given prefix
+	 *
+	 * @param _prefix
+	 * @return of uids
+	 */
+	dataKnownUIDs(_prefix : string) : string[];
+
+	/**
+	 * Stores data for the uid and calls all callback functions registered
+	 * for that uid.
+	 *
+	 * @param _uid is the uid for which the data should be saved.
+	 * @param _data is the data which should be saved.
+	 * @param _skipCallback do not call any callback functions, just update the local storage
+	 */
+	dataStoreUID(_uid : string, _data : object, _skipCallback?:boolean) : void;
+
+	/**
+	 * Deletes the data for a certain uid from the local storage and
+	 * unregisters all callback functions associated to it.
+	 *
+	 * This does NOT update nextmatch!
+	 * Application code should use: egw(window).refresh(msg, app, id, "delete");
+	 *
+	 * @param _uid is the uid which should be deleted.
+	 */
+	dataDeleteUID(_uid : string) : void;
+
+	/**
+	 * Force a refreash of the given uid from the server if known, and
+	 * calls all associated callbacks.
+	 *
+	 * If the UID does not have any registered callbacks, it cannot be refreshed because the required
+	 * execID and context are missing.
+	 *
+	 * @param _uid is the uid which should be refreshed.
+	 * @return True if the uid is known and can be refreshed, false if unknown and will not be refreshed
+	 */
+	dataRefreshUID(_uid : string) : boolean;
+
+	/**
+	 * Search for exact UID string or regular expression and return widgets using it
+	 *
+	 * @param _uid is the uid which should be refreshed.
+	 * @return UID: array of (nextmatch-)wigetIds
+	 */
+	dataSearchUIDs(_uid : string|RegExp) : /*et2_nextmatch*/any[];
+
+	/**
+	 * Search for exact UID string or regular expression and call registered (nextmatch-)widgets refresh function with given _type
+	 *
+	 * This method is preferable over dataRefreshUID for app code, as it takes care of things like counters too.
+	 *
+	 * It does not do anything for _type="add"!
+	 *
+	 * @param _uid is the uid which should be refreshed.
+	 * @param _type "delete", "edit", "update", not useful for "add"!
+	 * @return (nextmatch-)wigets refreshed
+	 */
+	dataRefreshUIDs(_uid : string|RegExp, _type : "delete"|"edit"|"update") : /*et2_nextmatch*/any[];
+}
+
+declare global
+{
+	interface IegwAppLocal extends DataModule
+	{
+	}
+
+	interface IegwGlobal extends DataStorageModule
+	{
+	}
+}
+
 /**
  * Module storing and updating row data
  *
  * @param {string} _app application name object is instanciated for
  * @param {object} _wnd window object is instanciated for
  */
-egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
+egw.extend("data", egw.MODULE_APP_LOCAL, function (_app : string, _wnd : Window) : DataModule
 {
 	"use strict";
 
@@ -49,7 +295,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 	 */
 	var CACHE_KEY_PREFIX = 'cached_fetch_';
 
-	var lastModification = null;
+	var lastModification : any = null;
 
 	/**
 	 * fetchCallback stores callbacks that get the first chance to answer a
@@ -59,7 +305,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 	 *
 	 * @type Object
 	 */
-	var fetchCallback = {};
+	var fetchCallback : {[prefix : string] : {callback : Function, context : any}[]} = {};
 
 	/**
 	 * cacheCallback stores callbacks that determine if data is placed
@@ -68,7 +314,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 	 *
 	 * @type Array
 	 */
-	var cacheCallback = {};
+	var cacheCallback : {[prefix : string] : {callback : Function, notification : Function|false, context : any}[]} = {};
 
 	/**
 	 * The uid function generates a session-unique id for the current
@@ -77,7 +323,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 	 * @param {string} _uid
 	 * @param {string} _prefix
 	 */
-	function UID(_uid, _prefix)
+	function UID(_uid : string, _prefix? : string) : string
 	{
 		_prefix = _prefix ? _prefix : _app;
 
@@ -93,10 +339,10 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 	 * @param {string} _prefix UID / application prefix
 	 * @returns {Number} Number of cached recordsets removed, normally 1.
 	 */
-	function _clearCache(_prefix)
+	function _clearCache(_prefix : string) : number
 	{
 		// Find cached items for the prefix, we prefer to expire just within the app
-		var indexes = [];
+		var indexes : {key : string, lastModification : number}[] = [];
 		for(var i = 0; i < window.localStorage.length; i++)
 		{
 			var key = window.localStorage.key(i);
@@ -161,7 +407,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 		return indexes.length;
 	}
 
-	function parseServerResponse(_result, _callback, _context, _execId, _widgetId)
+	function parseServerResponse(_result : any, _callback : Function, _context : any, _execId : string, _widgetId : string) : void
 	{
 		// Check whether the result is valid
 		// This result is not for us, quietly return
@@ -196,7 +442,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 				let uid = UID(key, (typeof _context == "object" && _context != null) ?_context.prefix : "");
 				if (_result.data[key] === null &&
 				(
-					typeof _context.refresh == "undefined" || _context.refresh && !jQuery.inArray(key,_context.refresh)
+					typeof _context.refresh == "undefined" || _context.refresh && !(<any>jQuery).inArray(key,_context.refresh)
 				))
 				{
 					egw.dataDeleteUID(uid);
@@ -230,7 +476,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 				for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
 				{
 					var cc = cacheCallback[_context.prefix][i];
-					var cache_key = cc.callback.call(cc.context, _context);
+					var cache_key : any = cc.callback.call(cc.context, _context);
 					if(cache_key)
 					{
 						cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
@@ -242,7 +488,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 
 								// Register a handler on each data so we can know if it is updated or removed
 								egw.dataUnregisterUID(uid, null, cache_key);
-								egw.dataRegisterUID(uid, function(data, _uid) {
+								egw.dataRegisterUID(uid, function(this : any, data : any, _uid : string) {
 									// If data item is removed, remove it from cached fetch too
 									if(data == null)
 									{
@@ -278,7 +524,10 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 							// No, something worse happened
 							else
 							{
-								egw.debug('warning', 'Tried to cache some data.  It did not work.', cache_key, e);
+								// "warning" is not a recognized debug level (only "warn" is) - this call
+								// was already a silent no-op in the original .js; preserved as-is rather
+								// than "fixed" to actually log, which would be an observable behavior change.
+								(<any>egw.debug)('warning', 'Tried to cache some data.  It did not work.', cache_key, e);
 							}
 						}
 					}
@@ -359,8 +608,8 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 		 *  This parameter may be null in order to indicate that the client
 		 *  currently has no data for the given filter settings.
 		 */
-		dataFetch: function (_execId, _queriedRange, _filters, _widgetId,
-				_callback, _context, _knownUids)
+		dataFetch: function (this : any, _execId : string, _queriedRange : any, _filters : any, _widgetId : string,
+				_callback : Function, _context : any, _knownUids? : string[]) : void
 		{
 			var lm = lastModification;
 			if(typeof _context.lastModification != "undefined") lm = _context.lastModification;
@@ -388,7 +637,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 			}
 
 			// Limit the amount of UIDs we say we know about to a sensible number, in case user is enjoying auto-pagination
-			var knownUids = _knownUids ? _knownUids : egw.dataKnownUIDs(_context.prefix ? _context.prefix : _app);
+			var knownUids : any = _knownUids ? _knownUids : egw.dataKnownUIDs(_context.prefix ? _context.prefix : _app);
 			if(knownUids > KNOWN_UID_LIMIT)
 			{
 				knownUids.slice(typeof _queriedRange.start != "undefined" ? _queriedRange.start:0,KNOWN_UID_LIMIT);
@@ -405,12 +654,12 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 					for(var i = 0; i < cacheCallback[_context.prefix].length; i++)
 					{
 						var cc = cacheCallback[_context.prefix][i];
-						var cache_key = cc.callback.call(cc.context, _context);
+						var cache_key : any = cc.callback.call(cc.context, _context);
 						if(cache_key)
 						{
 							cache_key = CACHE_KEY_PREFIX + _context.prefix + '::' + cache_key;
 
-							var cached = window.localStorage.getItem(cache_key);
+							var cached : any = window.localStorage.getItem(cache_key);
 							if(cached)
 							{
 								cached = JSON.parse(cached);
@@ -452,7 +701,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 				}
 				// create a clone of filters, which can be used in parseServerResponse and cache callbacks
 				// independent of changes happening while waiting for the response
-				_context.filters = jQuery.extend({}, _filters);
+				_context.filters = (<any>jQuery).extend({}, _filters);
 				var request = egw.json(
 					"EGroupware\\Api\\Etemplate\\Widget\\Nextmatch::ajax_get_rows",
 					[
@@ -479,7 +728,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 				for(var i = 0; i < fetchCallback[_context.prefix].length; i++)
 				{
 					var fc = fetchCallback[_context.prefix][i];
-					var result = fc.callback.call(fc.context, _execId, _queriedRange, _filters, _widgetId, knownUids, lm);
+					var result : any = fc.callback.call(fc.context, _execId, _queriedRange, _filters, _widgetId, knownUids, lm);
 					if(result)
 					{
 						// result may be the {order, data, total, ...} shape directly, or a
@@ -528,7 +777,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 		 *	inside this callback, and return quickly.
 		 * @param {object} context Context for callback function.
 		 */
-		dataCacheRegister: function(prefix, callback_function, notice_function, context)
+		dataCacheRegister: function(prefix : string, callback_function : Function, notice_function? : Function, context? : any) : void
 		{
 			if(typeof cacheCallback[prefix] == 'undefined')
 			{
@@ -548,7 +797,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 		 * @param {function} [callback] Callback function to un-register.  If
 		 *	omitted, all functions for the prefix will be removed.
 		 */
-		dataCacheUnregister: function(prefix, callback)
+		dataCacheUnregister: function(prefix : string, callback? : Function) : void
 		{
 			if(typeof callback != 'undefined')
 			{
@@ -583,7 +832,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 		 *	resolving to one of those - to answer the fetch instead.
 		 * @param {object} context Context for callback function.
 		 */
-		dataRegisterFetch: function(prefix, callback_function, context)
+		dataRegisterFetch: function(prefix : string, callback_function : Function, context? : any) : void
 		{
 			if(typeof fetchCallback[prefix] == 'undefined')
 			{
@@ -602,7 +851,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 		 * @param {function} [callback] Callback function to un-register.  If
 		 *	omitted, all functions for the prefix will be removed.
 		 */
-		dataUnregisterFetch: function(prefix, callback)
+		dataUnregisterFetch: function(prefix : string, callback? : Function) : void
 		{
 			if(typeof callback != 'undefined' && fetchCallback[prefix])
 			{
@@ -623,7 +872,7 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app, _wnd)
 
 });
 
-egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
+egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app : string, _wnd : Window) : DataStorageModule {
 
 	/**
 	 * The localStorage object is used to store the data for certain uids. An
@@ -633,13 +882,13 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 	 * 		data: <DATA>
 	 * 	}
 	 */
-	var localStorage = {};
+	var localStorage : {[uid : string] : {timestamp : number, data : any}} = {};
 
 	/**
 	 * The registeredCallbacks map is used to store all callbacks registerd for
 	 * a certain uid.
 	 */
-	var registeredCallbacks = {};
+	var registeredCallbacks : {[uid : string] : {callback : Function, context : any, execId : string, widgetId : string}[]} = {};
 
 
 
@@ -655,7 +904,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 	 * @param {object} req
 	 * @returns {Boolean}
 	 */
-	egw.registerJSONPlugin(function(type, res, req) {
+	egw.registerJSONPlugin(function(this : any, type, res, req) {
 		if ((typeof res.data.uid != 'undefined') &&
 			(typeof res.data.data != 'undefined'))
 		{
@@ -673,7 +922,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 	 *     "uids": <ARRAY OF UIDS>
 	 * }
 	 */
-	var queue = {};
+	var queue : {[hash : string] : {timer : any, uids : string[]}} = {};
 
 	/**
 	 * Contains the queue timeout in milliseconds.
@@ -735,7 +984,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @param _widgetId is the widget id which will be used in case the uid
 		 * has to be fetched.
 		 */
-		dataRegisterUID: function (_uid, _callback, _context, _execId, _widgetId) {
+		dataRegisterUID: function (this : any, _uid : string, _callback : Function, _context? : any, _execId? : string, _widgetId? : string) : void {
 			// Create the slot for the uid if it does not exist now
 			if (typeof registeredCallbacks[_uid] === "undefined")
 			{
@@ -759,9 +1008,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				_callback.call(_context, localStorage[_uid].data, _uid);
 			}
 			// Check long-term storage
-			else if(window.localStorage && window.localStorage[_uid])
+			else if((<any>window).localStorage && (<any>window).localStorage[_uid])
 			{
-				localStorage[_uid] = JSON.parse(window.localStorage[_uid]);
+				localStorage[_uid] = JSON.parse((<any>window).localStorage[_uid]);
 				_callback.call(_context, localStorage[_uid].data, _uid);
 			}
 			else if (_execId && _widgetId)
@@ -815,7 +1064,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * 	unregistered. If it evaluates to false, all callbacks (or those
 		 * 	matching the optionally given callback function) are removed.
 		 */
-		dataUnregisterUID: function (_uid, _callback, _context) {
+		dataUnregisterUID: function (_uid : string, _callback? : Function, _context? : any) : void {
 
 			// Force the optional parameters to be exactly null
 			_callback = _callback ? _callback : null;
@@ -849,7 +1098,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @param _uid is the uid for which should be checked whether it has some
 		 * 	data.
 		 */
-		dataHasUID: function (_uid) {
+		dataHasUID: function (_uid : string) : boolean {
 			return typeof localStorage[_uid] !== "undefined";
 		},
 
@@ -859,7 +1108,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @param _uid is the uid for which should be checked whether it has some
 		 * 	data.
 		 */
-		dataGetUIDdata: function (_uid) {
+		dataGetUIDdata: function (_uid : string) : any {
 			return localStorage[_uid];
 		},
 
@@ -870,9 +1119,9 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @return {array}
 		 * TODO: Improve this
 		 */
-		dataKnownUIDs: function (_prefix) {
+		dataKnownUIDs: function (_prefix : string) : string[] {
 
-			var result = [];
+			var result : string[] = [];
 
 			for (var key in localStorage)
 			{
@@ -895,7 +1144,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @param _data is the data which should be saved.
 		 * @param _skip_callback do not call any callback functions, just update the local storage
 		 */
-		dataStoreUID: function (_uid, _data,_skip_callback=false) {
+		dataStoreUID: function (_uid : string, _data : any, _skip_callback : boolean = false) : void {
 			// Get the current unix timestamp
 			var timestamp = (new Date).getTime();
 
@@ -938,7 +1187,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 *
 		 * @param _uid is the uid which should be deleted.
 		 */
-		dataDeleteUID: function (_uid) {
+		dataDeleteUID: function (this : any, _uid : string) : void {
 			if (typeof localStorage[_uid] !== "undefined")
 			{
 				// Delete the element from the local storage
@@ -959,7 +1208,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @param {string} _uid is the uid which should be refreshed.
 		 * @return {boolean} True if the uid is known and can be refreshed, false if unknown and will not be refreshed
 		 */
-		dataRefreshUID: function (_uid) {
+		dataRefreshUID: function (this : any, _uid : string) : boolean {
 			if (typeof localStorage[_uid] === "undefined") return false;
 
 			if(typeof registeredCallbacks[_uid] !== "undefined" && registeredCallbacks[_uid].length > 0)
@@ -967,17 +1216,17 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				var _execId = registeredCallbacks[_uid][0].execId;
 				// This widget ID MUST be a nextmatch, because the data call is to Etemplate\Widget\Nexmatch
 				var nextmatchId = registeredCallbacks[_uid][0].widgetId;
-				var uid = _uid.split("::");
-				var context = {
-					"prefix":uid.shift()
+				var uidParts = _uid.split("::");
+				var context : any = {
+					"prefix":uidParts.shift()
 				};
-				uid = uid.join("::");
+				var uid = uidParts.join("::");
 
 				// find filters, even if context is not always from nextmatch, eg. caching uses it's a string context
 				var filters = {};
 				for(var i=0; i < registeredCallbacks[_uid].length; i++)
 				{
-					var callback = registeredCallbacks[_uid][i];
+					var callback : any = registeredCallbacks[_uid][i];
 					if (typeof callback.context == 'object' &&
 						typeof callback.context.self == 'object' &&
 						typeof callback.context.self._filters == 'object')
@@ -1001,10 +1250,10 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @param {string|RegExp} _uid is the uid which should be refreshed.
 		 * @return {object} UID: array of (nextmatch-)wigetIds
 		 */
-		dataSearchUIDs: function(_uid)
+		dataSearchUIDs: function(_uid : string|RegExp) : any
 		{
-			var matches = {};
-			var f = function(_uid)
+			var matches : any = {};
+			var f = function(_uid : string)
 			{
 				if (typeof matches[_uid] == "undefined")
 				{
@@ -1014,7 +1263,7 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 				{
 					for(var n=0; n < registeredCallbacks[_uid].length; ++n)
 					{
-						var callback = registeredCallbacks[_uid][n];
+						var callback : any = registeredCallbacks[_uid][n];
 						if (typeof callback.context != "undefined" &&
 							typeof callback.context.self != "undefined" &&
 							typeof callback.context.self._widget != "undefined")
@@ -1024,19 +1273,19 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 					}
 				}
 			};
-			if (typeof _uid == "object" && _uid.constructor.name == "RegExp")
+			if (typeof _uid == "object" && (<any>_uid).constructor.name == "RegExp")
 			{
 				for(var uid in localStorage)
 				{
-					if (_uid.test(uid))
+					if ((<RegExp>_uid).test(uid))
 					{
 						f(uid);
 					}
 				}
 			}
-			else if (typeof localStorage[_uid] != "undefined")
+			else if (typeof localStorage[<string>_uid] != "undefined")
 			{
-				f(_uid);
+				f(<string>_uid);
 			}
 			return matches;
 		},
@@ -1052,16 +1301,16 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app, _wnd) {
 		 * @param {string} _type "delete", "edit", "update", not useful for "add"!
 		 * @return {array} (nextmatch-)wigets refreshed
 		 */
-		dataRefreshUIDs: function(_uid, _type)
+		dataRefreshUIDs: function(this : any, _uid : string|RegExp, _type : string) : any[]
 		{
 			var uids = this.dataSearchUIDs(_uid);
-			var widgets = [];
-			var uids4widget = [];
+			var widgets : any[] = [];
+			var uids4widget : any[] = [];
 			for(var uid in uids)
 			{
 				for(var n=0; n < uids[uid].length; ++n)
 				{
-					var widget = uids[uid][n];
+					var widget : any = uids[uid][n];
 					var idx = widgets.indexOf(widget);
 					if (idx == -1)
 					{
