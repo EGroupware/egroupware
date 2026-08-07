@@ -32,7 +32,7 @@ export async function createEgwMiscEnv(prefs : object = {}) : Promise<EgwMiscEnv
 		app_name: () => null
 	}));
 
-	for (const file of ['egw_config.js', 'egw_lang.js', 'egw_images.js'])
+	for (const file of ['egw_config.ts', 'egw_lang.ts', 'egw_images.ts'])
 	{
 		await loadScript(env.window.document, '/api/js/jsapi/'+file, 'module');
 	}

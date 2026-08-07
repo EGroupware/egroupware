@@ -153,26 +153,7 @@ interface IegwGlobal
 	 */
 	dumpInstances() : {instances : object, moduleInstances : object};
 
-	/**
-	 * implemented in egw_config.js
-	 */
-	/**
-	 * Query clientside config
-	 *
-	 * @param {string} _name name of config variable
-	 * @param {string} _app default "phpgwapi"
-	 * @return mixed
-	 */
-	config(_name: string, _app?: string) : any;
-
-	/**
-	 * Set clientside configuration for all apps
-	 *
-	 * @param {object} _configs
-	 * @param {boolean} _need_clone _configs need to be cloned, as it is from different window context
-	 *	and therefore will be inaccessible in IE, after that window is closed
-	 */
-	set_configs(_configs: object, _need_clone?: boolean) : void;
+	// config: implemented in egw_config.ts, contributing ConfigModule
 
 	/**
 	 * implemeneted in egw_data.js
@@ -302,90 +283,9 @@ interface IegwGlobal
 	 */
 	show_log() : void;
 
-	/**
-	 * implemented in egw_images.js
-	 */
-	/**
-	 * Set imagemap, called from /api/images.php
-	 *
-	 * @param {array|object} _images
-	 * @param {boolean} _need_clone _images need to be cloned, as it is from different window context
-	 *	and therefore will be inaccessible in IE, after that window is closed
-	 */
-	set_images(_images: object, _need_clone? : boolean);
-	/**
-	 * Get image URL for a given image-name and application
-	 *
-	 * @param {string} _name image-name without extension
-	 * @param {string} _app application name, default current app of window
-	 * @return string with URL of image
-	 */
-	image(_name : string, _app? : string) : string;
-	/**
-	 * Get image url for a given mime-type and option file
-	 *
-	 * @param {string} _mime
-	 * @param {string} _path vfs path to generate thumbnails for images
-	 * @param {number} _size defaults to 128 (only supported size currently)
-	 * @param {number} _mtime current modification time of file to allow infinit caching as url changes
-	 * @returns url of image
-	 */
-	mime_icon(_mime : string, _path? : string, _size? : number, _mtime? : number) : string;
-	/**
-	 * Create DOM img or svn element depending on url
-	 *
-	 * @param {string} _url source url
-	 * @param {string} _alt alt attribute for img tag
-	 * @returns DOM node
-	 */
-	image_element(_url : string, _alt? : string) : HTMLImageElement;
+	// images: implemented in egw_images.ts, contributing ImagesModule
+	// lang: implemented in egw_lang.ts, contributing LangModule
 
-	/**
-	 * implemented in egw_lang.js
-	 */
-	/**
-	 * Set translation for a given application
-	 *
-	 * @param {string} _app
-	 * @param {object} _messages message => translation pairs
-	 * @param {boolean} _need_clone _messages need to be cloned, as it is from different window context
-	 *	and therefore will be inaccessible in IE, after that window is closed
-	 */
-	set_lang_arr(_app : string, _messages : object, _need_clone? : true) : void;
-	/**
-	 * Translate a given phrase replacing optional placeholders
-	 *
-	 * @param {string} _msg message to translate
-	 * @param _args optional parameters (%{number} replacements)
-	 * @return {string}
-	 */
-	lang(_msg : string, ..._args : string[] | number[]) : string;
-	/**
-	 * Load default langfiles for an application: common, _appname, custom
-	 *
-	 * @param {Window} _window
-	 * @param {string} _appname name of application to load translations for
-	 * @param {function} _callback
-	 * @param {object} _context
-	 */
-	langRequireApp(_window : Window, _appname : string, _callback? : Function, _context? : object) : void;
-	/**
-	 * Includes the language files for the given applications -- if those
-	 * do not already exist, include them.
-	 *
-	 * @param {Window} _window is the window which needs the language -- this is
-	 * 	needed as the "ready" event has to be postponed in that window until
-	 * 	all lang files are included.
-	 * @param {array} _apps is an array containing the applications for which the
-	 * 	data is needed as objects of the following form:
-	 * 		{
-	 * 			app: <APPLICATION NAME>,
-	 * 			lang: <LANGUAGE CODE>
-	 * 		}
-	 * @param {function} _callback called after loading, if not given ready event will be postponed instead
-	 * @param {object} _context for callback
-	 */
-	langRequire(_window : Window, _apps : {app: string, lang: string}[], _callback? : Function, _context? : object) : void;
 	/**
 	 * Check if $app is in the registry and has an entry for $name
 	 *

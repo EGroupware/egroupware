@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -15,7 +14,55 @@
 */
 import './egw_core';
 
-egw.extend('images', egw.MODULE_GLOBAL, function()
+export interface ImagesModule
+{
+	/**
+	 * Set imagemap, called from /api/images.php
+	 *
+	 * @param _images
+	 * @param _need_clone _images need to be cloned, as it is from different window context
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_images(_images : object, _need_clone? : boolean) : void;
+
+	/**
+	 * Get image URL for a given image-name and application
+	 *
+	 * @param _name image-name without extension
+	 * @param _app application name, default current app of window
+	 * @return string with URL of image
+	 */
+	image(_name : string, _app? : string) : string;
+
+	/**
+	 * Get image url for a given mime-type and option file
+	 *
+	 * @param _mime
+	 * @param _path vfs path to generate thumbnails for images
+	 * @param _size defaults to 128 (only supported size currently)
+	 * @param _mtime current modification time of file to allow infinit caching as url changes
+	 * @returns url of image
+	 */
+	mime_icon(_mime : string, _path? : string, _size? : number, _mtime? : number) : string;
+
+	/**
+	 * Create DOM img or svn element depending on url
+	 *
+	 * @param _url source url
+	 * @param _alt alt attribute for img tag
+	 * @returns DOM node
+	 */
+	image_element(_url : string, _alt? : string) : HTMLImageElement;
+}
+
+declare global
+{
+	interface IegwGlobal extends ImagesModule
+	{
+	}
+}
+
+egw.extend('images', egw.MODULE_GLOBAL, function() : ImagesModule
 {
 	"use strict";
 
@@ -24,14 +71,14 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.image(_name, _app)
 	 */
-	let images;
+	let images : any;
 
 	/**
 	 * Mapping some old formats to the newer form, or any other aliasing for mime-types
 	 *
 	 * Should be in sync with ../inc/class.mime_magic.inc.php
 	 */
-	const mime_alias_map = {
+	const mime_alias_map : {[mime : string] : string} = {
 		'text/vcard': 'text/x-vcard',
 		'text/comma-separated-values': 'text/csv',
 		'text/rtf': 'application/rtf',
@@ -51,9 +98,9 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 		 * @param {boolean} _need_clone _images need to be cloned, as it is from different window context
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_images: function (_images, _need_clone)
+		set_images: function (_images : object, _need_clone? : boolean) : void
 		{
-			images = _need_clone ? jQuery.extend(true, {}, _images) : _images;
+			images = _need_clone ? (<any>jQuery).extend(true, {}, _images) : _images;
 		},
 
 		/**
@@ -63,10 +110,10 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 		 * @param {string} _app application name, default current app of window
 		 * @return string with URL of image
 		 */
-		image: function (_name, _app)
+		image: function (this : any, _name : string, _app? : string) : string
 		{
 			// For logging all paths tried
-			var tries = {};
+			var tries : {[key : string] : any} = {};
 
 			if (!images)
 			{
@@ -160,7 +207,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 		 * @param {number} _mtime current modification time of file to allow infinit caching as url changes
 		 * @returns url of image
 		 */
-		mime_icon: function(_mime, _path, _size, _mtime)
+		mime_icon: function(this : any, _mime : string, _path? : string, _size? : number, _mtime? : number) : string
 		{
 			if (typeof _size == 'undefined') _size = 128;
 			if (!_mime) _mime = 'unknown';
@@ -176,7 +223,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 			}
 
 			var type  = _mime.toLowerCase().split('/');
-			var image = type[0] == 'egw' ? this.image('navbar',type[1]) : undefined;
+			var image : any = type[0] == 'egw' ? this.image('navbar',type[1]) : undefined;
 
 			if (image)
 			{
@@ -193,7 +240,7 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 				)
 			))
 			{
-				var params = { 'path': _path, 'thsize': this.config('link_list_thumbnail') || 64};
+				var params : {path : string, thsize : any, mtime? : number} = { path: _path, thsize: this.config('link_list_thumbnail') || 64};
 				if (_mtime) params.mtime = _mtime;
 				image = this.link('/api/thumbnail.php', params);
 			}
@@ -221,9 +268,9 @@ egw.extend('images', egw.MODULE_GLOBAL, function()
 		 * @param {string} _alt alt attribute for img tag
 		 * @returns DOM node
 		 */
-		image_element: function(_url, _alt)
+		image_element: function(_url : string, _alt? : string) : HTMLImageElement
 		{
-			var icon;
+			var icon : HTMLImageElement;
 			icon = document.createElement('img');
 			if (_url) icon.src = _url;
 			if (_alt) icon.alt = _alt;

@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -15,7 +14,34 @@
 */
 import './egw_core';
 
-egw.extend('config', egw.MODULE_GLOBAL, function()
+export interface ConfigModule
+{
+	/**
+	 * Query clientside config
+	 *
+	 * @param _name name of config variable
+	 * @param _app default "phpgwapi"
+	 */
+	config(_name : string, _app? : string) : any;
+
+	/**
+	 * Set clientside configuration for all apps
+	 *
+	 * @param _configs
+	 * @param _need_clone _configs need to be cloned, as it is from different window context
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_configs(_configs : object, _need_clone? : boolean) : void;
+}
+
+declare global
+{
+	interface IegwGlobal extends ConfigModule
+	{
+	}
+}
+
+egw.extend('config', egw.MODULE_GLOBAL, function() : ConfigModule
 {
 	"use strict";
 
@@ -24,7 +50,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.config(_name, _app="phpgwapi")
 	 */
-	var configs = {};
+	var configs : {[app : string] : {[name : string] : any}} = {};
 
 
 	/**
@@ -37,9 +63,12 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 			typeof navigator.registerProtocolHandler === 'function')	// eg. Safari 15.5 does NOT implement it
 		{
 			const _ask_mailto_handler = () => {
-				let url = egw_webserverUrl;
+				let url : string = (<any>window).egw_webserverUrl;
 				if (url[0] === '/') url = document.location.protocol+'//'+document.location.hostname+(url !== '/' ? url : '');
-				navigator.registerProtocolHandler('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
+				// 3rd "title" arg is from an older spec version - current TS DOM
+				// lib types only declare 2, but browsers still accept (and some
+				// older ones still use) a 3rd; keep it, matching the original.
+				(<any>navigator.registerProtocolHandler)('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
 				// remember not to ask again for this "session"
 				window.sessionStorage.setItem('asked-mailto-handler', 'yes');
 			};
@@ -51,7 +80,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 				{
 					return;
 				}
-				const dialog = window.Et2Dialog;
+				const dialog : any = (<any>window).Et2Dialog;
 				if (typeof dialog === 'undefined')
 				{
 					window.setTimeout(install_mailto_handler.bind(this), 1000);
@@ -89,7 +118,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 		 * @param {string} _app default "phpgwapi"
 		 * @return mixed
 		 */
-		config: function (_name, _app)
+		config: function (_name : string, _app? : string) : any
 		{
 			if (typeof _app == 'undefined') _app = 'phpgwapi';
 
@@ -105,9 +134,9 @@ egw.extend('config', egw.MODULE_GLOBAL, function()
 		 * @param {boolean} _need_clone _configs need to be cloned, as it is from different window context
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_configs: function(_configs, _need_clone)
+		set_configs: function(this : any, _configs : object, _need_clone? : boolean) : void
 		{
-			configs = _need_clone ? jQuery.extend(true, {}, _configs) : _configs;
+			configs = _need_clone ? (<any>jQuery).extend(true, {}, _configs) : <any>_configs;
 
 			if (this.config('install_mailto_handler') !== 'disabled')
 			{

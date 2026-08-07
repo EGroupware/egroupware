@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -17,10 +16,67 @@
 */
 import './egw_core';
 
+export interface LangModule
+{
+	/**
+	 * Set translation for a given application
+	 *
+	 * @param _app
+	 * @param _messages message => translation pairs
+	 * @param _need_clone _messages need to be cloned, as it is from different window context
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_lang_arr(_app : string, _messages : object, _need_clone? : true) : void;
+
+	/**
+	 * Translate a given phrase replacing optional placeholders
+	 *
+	 * @param _msg message to translate
+	 * @param _args optional parameters (%{number} replacements)
+	 */
+	lang(_msg : string, ..._args : string[] | number[]) : string;
+
+	/**
+	 * Load default langfiles for an application: common, _appname, custom
+	 *
+	 * @param _window
+	 * @param _appname name of application to load translations for
+	 * @param _callback
+	 * @param _context
+	 */
+	langRequireApp(_window : Window, _appname : string, _callback? : Function, _context? : object) : void;
+
+	/**
+	 * Includes the language files for the given applications -- if those
+	 * do not already exist, include them.
+	 *
+	 * @param _window is the window which needs the language -- this is
+	 * 	needed as the "ready" event has to be postponed in that window until
+	 * 	all lang files are included.
+	 * @param _apps is an array containing the applications for which the
+	 * 	data is needed as objects of the following form:
+	 * 		{
+	 * 			app: <APPLICATION NAME>,
+	 * 			lang: <LANGUAGE CODE>
+	 * 		}
+	 * @param _callback called after loading, if not given ready event will be postponed instead
+	 * @param _context for callback
+	 * @return Promise
+	 */
+	langRequire(_window : Window, _apps : {app : string, lang : string}[], _callback? : Function, _context? : object) : any;
+}
+
+declare global
+{
+	interface IegwGlobal extends LangModule
+	{
+	}
+}
+
 /**
  * @augments Class
  */
-egw.extend('lang', egw.MODULE_GLOBAL, function()
+egw.extend('lang', egw.MODULE_GLOBAL, function() : LangModule
 {
 	"use strict";
 
@@ -29,7 +85,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.lang() or egw.set_lang_arr()
 	 */
-	const lang_arr = {};
+	const lang_arr : {[app : string] : {[message : string] : string}} = {};
 
 	// Return the actual extension
 	return {
@@ -42,12 +98,12 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 * @memberOf egw
 		 */
-		set_lang_arr: function(_app, _messages, _need_clone)
+		set_lang_arr: function(_app : string, _messages : object, _need_clone? : boolean) : void
 		{
-			if(!jQuery.isArray(_messages))
+			if(!(<any>jQuery).isArray(_messages))
 			{
 				// no deep clone jQuery.extend(true,...) neccessary, as _messages contains only string values
-				lang_arr[_app] = _need_clone ? jQuery.extend({}, _messages) : _messages;
+				lang_arr[_app] = _need_clone ? (<any>jQuery).extend({}, _messages) : <any>_messages;
 			}
 		},
 
@@ -58,7 +114,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 		 * @param {...string} _arg1 ... _argN
 		 * @return {string}
 		 */
-		lang: function(_msg, _arg1)
+		lang: function(this : any, _msg : string, _arg1? : any) : string
 		{
 			if(_msg === null || _msg === undefined)
 			{
@@ -73,7 +129,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 			_msg = _msg.toLowerCase();
 
 			// search apps in given order for a replacement
-			var apps = this.lang_order || ['custom', this.getAppName(), 'etemplate', 'common', 'notifications'];
+			var apps : string[] = this.lang_order || ['custom', this.getAppName(), 'etemplate', 'common', 'notifications'];
 			for(var i = 0; i < apps.length; ++i)
 			{
 				if (typeof lang_arr[apps[i]] != "undefined" &&
@@ -105,7 +161,7 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 		 * @param {function} _callback
 		 * @param {object} _context
 		 */
-		langRequireApp: function(_window, _appname, _callback, _context)
+		langRequireApp: function(this : any, _window : Window, _appname : string, _callback? : Function, _context? : object) : void
 		{
 			var lang = egw.preference('lang');
 			var langs = [{app: 'common', lang: lang}];
@@ -136,14 +192,15 @@ egw.extend('lang', egw.MODULE_GLOBAL, function()
 		 * @param {object} _context for callback
 		 * @return Promise
 		 */
-		langRequire: function(_window, _apps, _callback, _context) {
+		langRequire: function(this : any, _window : Window, _apps : {app : string, lang : string, etag? : string}[], _callback? : Function, _context? : object)
+		{
 			// Get the ready and the files module for the given window
 			var ready = this.module("ready", _window);
 			var files = this.module("files", this.window);
 
 			// Build the file names which should be included
-			var jss = [];
-			var apps = [];
+			var jss : string[] = [];
+			var apps : string[] = [];
 			for (var i = 0; i < _apps.length; i++)
 			{
 				if (!_apps[i].app) continue;
