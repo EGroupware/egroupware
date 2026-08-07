@@ -21,6 +21,12 @@
  * egw_message.js has a side-effect-only `import './egw_json.js'` (just for
  * registerJSONPlugin, which this harness provides directly) - redirected
  * to the empty stub, same as EgwDataHarness/EgwJsonHarness.
+ *
+ * message()'s no-framework DOM fallback creates a real `<egw-message>`
+ * element and awaits its `.updateComplete` before calling `.toast()` - both
+ * only exist once the real (Lit-based) web component is defined. Rather
+ * than loading that whole component, a minimal custom element satisfying
+ * just that shape is registered here.
  */
 import {createEgwCoreEnv, EgwCoreEnv} from "./EgwCoreHarness";
 
@@ -51,6 +57,20 @@ export async function createEgwMessageEnv(prefs : object = {}) : Promise<EgwMess
 	(env.window as any).egw_getFramework = () => (env.window as any).framework || null;
 	(env.window as any).EgwApp = [];
 	(env.window as any).egw_appWindow = (_app : string) => env.window;
+
+	if (!env.window.customElements.get('egw-message'))
+	{
+		const HTMLElementInWindow : any = (env.window as any).HTMLElement;
+		const PromiseInWindow : any = (env.window as any).Promise;
+		const EgwMessageStub = class extends HTMLElementInWindow
+		{
+			message : string;
+			type : string;
+			toast() {}
+			get updateComplete() { return PromiseInWindow.resolve(true); }
+		};
+		env.window.customElements.define('egw-message', EgwMessageStub as any);
+	}
 
 	const importMap = env.window.document.createElement('script');
 	importMap.type = 'importmap';

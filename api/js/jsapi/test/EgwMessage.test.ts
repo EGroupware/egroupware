@@ -187,6 +187,17 @@ describe('egw_message.js (message)', () =>
 			assert.isNull(env.window.document.querySelector('egw-message'));
 		});
 
+		it('creates a fallback <egw-message> element with the given message/type when there is no framework', async() =>
+		{
+			const result = await env.egw().message('Hello World', 'success');
+
+			const el = env.window.document.querySelector('egw-message') as any;
+			assert.exists(el);
+			assert.equal(el.message, 'Hello World');
+			assert.equal(el.type, 'success');
+			assert.strictEqual(result, el, 'the resolved value is the element itself');
+		});
+
 		it('returns framework.message()\'s promise as-is when the framework is attached to the document', async() =>
 		{
 			const frameworkNode : any = env.window.document.createElement('div');
@@ -269,6 +280,18 @@ describe('egw_message.js (message)', () =>
 			instance.refresh('done', 'infolog', 1, 'update');
 
 			assert.isFalse((env.window as any).app_refresh.called);
+		});
+
+		it('continues using the window that framework.refresh() returns (a truthy replacement) for the app_refresh check', () =>
+		{
+			const instance = env.egw();
+			sinon.stub(instance, 'message');
+			const newWin : any = {location: {href: 'x'}, app_refresh: sinon.stub()};
+			(env.window as any).framework = {refresh: sinon.stub().returns(newWin)};
+
+			instance.refresh('done', 'infolog', 1, 'update');
+
+			assert.isTrue(newWin.app_refresh.calledOnceWith('done', 'infolog', 1, 'update'));
 		});
 
 		it('delegates to window.etemplate2.app_refresh, and refreshes the target app too when it differs', () =>

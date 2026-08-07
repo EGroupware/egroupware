@@ -17,8 +17,14 @@
  *    guarantee `window.egw` exists, which this harness already
  *    guarantees). Redirected via a per-document import map to an empty
  *    stub, same as EgwDataHarness - see EgwJsStub.ts.
+ * 5. A handful of the built-in response plugins (message/css/redirect) call
+ *    methods from OTHER modules (egw_message.js's message(), egw_files.js's
+ *    includeCSS()) or bare globals (egw_insertJS, egw_appWindowOpen) not
+ *    loaded here - stubbed as sinon spies via `env.stubs.*` so tests can
+ *    assert on them without pulling in those modules' own dependencies.
  */
 import {createEgwCoreEnv, EgwCoreEnv} from "./EgwCoreHarness";
+import * as sinon from "sinon";
 
 export interface FakeFetchCall
 {
@@ -33,6 +39,10 @@ export interface EgwJsonEnv extends EgwCoreEnv
 {
 	/** every window.fetch() call made by json_request.sendRequest(), in order */
 	fetchCalls : FakeFetchCall[];
+	stubs : {
+		message : sinon.SinonStub;
+		includeCSS : sinon.SinonStub;
+	};
 }
 
 export async function createEgwJsonEnv(prefs : object = {}) : Promise<EgwJsonEnv>
@@ -47,6 +57,21 @@ export async function createEgwJsonEnv(prefs : object = {}) : Promise<EgwJsonEnv
 		debug: () => {},
 		debug_level: () => 0
 	}));
+
+	env.stubs = {
+		message: sinon.stub(),
+		includeCSS: sinon.stub()
+	};
+	env.egw.extend('stubs', env.egw.MODULE_GLOBAL, () => ({
+		message: env.stubs.message,
+		includeCSS: env.stubs.includeCSS,
+		// handleError()'s user-facing message text; identity is enough here
+		lang: (msg : string) => msg
+	}));
+	// bare globals the "assign"/"redirect" built-in plugins call, normally
+	// defined in jsapi.js (not loaded here)
+	(env.window as any).egw_insertJS = sinon.stub();
+	(env.window as any).egw_appWindowOpen = sinon.stub();
 
 	env.window.fetch = (url : string, init : any) : Promise<any> =>
 	{

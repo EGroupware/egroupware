@@ -158,6 +158,165 @@ describe('egw_json.js (json)', () =>
 		});
 	});
 
+	describe('built-in response plugins', () =>
+	{
+		// "js" (dynamic import() of remote scripts) and "html" (replaces the
+		// whole document via document.write()) are deliberately not covered
+		// here: one needs a real importable module, the other would destroy
+		// the test iframe's document out from under later assertions - both
+		// disproportionately heavy for what they'd add over the others.
+
+		it('"alert" calls window.alert and logs the details via debug', () =>
+		{
+			const alertStub = sinon.stub(env.window, 'alert');
+			const debugSpy = sinon.spy(env.egw(), 'debug');
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'alert', data: {message: 'Oops', details: 'stack trace'}}]
+			});
+
+			assert.isTrue(alertStub.calledOnceWith('Oops'));
+			assert.isTrue(debugSpy.calledWith('info', 'Oops', 'stack trace'));
+		});
+
+		it('"alert" (and every other built-in plugin) throwing "Invalid parameters" is caught and logged, not propagated', () =>
+		{
+			const debugSpy = sinon.spy(env.egw(), 'debug');
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'alert', data: {message: 'Oops'}}] // missing "details"
+			});
+
+			assert.equal(debugSpy.firstCall.args[0], 'error');
+			assert.include(debugSpy.firstCall.args[1], 'Invalid parameters');
+		});
+
+		it('"message" forwards to egw.message(message, type)', () =>
+		{
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'message', data: {message: 'Saved', type: 'success'}}]
+			});
+
+			assert.isTrue(env.stubs.message.calledOnceWith('Saved', 'success'));
+		});
+
+		it('"assign" sets a DOM property by element id', () =>
+		{
+			const div = env.window.document.createElement('div');
+			div.id = 'target';
+			env.window.document.body.appendChild(div);
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'assign', data: {id: 'target', key: 'textContent', value: 'Hello'}}]
+			});
+
+			assert.equal(div.textContent, 'Hello');
+		});
+
+		it('"assign" additionally runs egw_insertJS for innerHTML assignments specifically', () =>
+		{
+			const div = env.window.document.createElement('div');
+			div.id = 'target2';
+			env.window.document.body.appendChild(div);
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'assign', data: {id: 'target2', key: 'innerHTML', value: '<b>hi</b>'}}]
+			});
+
+			assert.isTrue((env.window as any).egw_insertJS.calledOnceWith('<b>hi</b>'));
+		});
+
+		it('"assign" for an unknown element id does nothing and does not throw', () =>
+		{
+			const debugSpy = sinon.spy(env.egw(), 'debug');
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'assign', data: {id: 'nosuchid', key: 'textContent', value: 'x'}}]
+			});
+
+			assert.isFalse(debugSpy.calledWith('error'));
+		});
+
+		it('"script" executes the given source in the request\'s window context', () =>
+		{
+			(env.window as any).__probe = 0;
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'script', data: 'window.__probe = 42;'}]
+			});
+
+			assert.equal((env.window as any).__probe, 42);
+		});
+
+		it('"script" catches its own execution errors via debug, without throwing', () =>
+		{
+			const debugSpy = sinon.spy(env.egw(), 'debug');
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'script', data: 'throw new Error("boom");'}]
+			});
+
+			assert.equal(debugSpy.firstCall.args[0], 'error');
+			assert.equal(debugSpy.firstCall.args[1], 'Error while executing script: ');
+		});
+
+		it('"apply" calls a global function by name with the given parameters', () =>
+		{
+			(env.window as any).myGlobalFunc = sinon.stub();
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'apply', data: {func: 'myGlobalFunc', parms: [1, 2]}}]
+			});
+
+			assert.isTrue((env.window as any).myGlobalFunc.calledOnceWith(1, 2));
+		});
+
+		it('"jquery" calls a jQuery method on the selected elements', () =>
+		{
+			const div = env.window.document.createElement('div');
+			div.className = 'target3';
+			env.window.document.body.appendChild(div);
+
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'jquery', data: {select: '.target3', func: 'addClass', parms: ['highlighted']}}]
+			});
+
+			assert.isTrue(div.classList.contains('highlighted'));
+		});
+
+		it('"css" forwards to egw.includeCSS()', () =>
+		{
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'css', data: '/some/style.css'}]
+			});
+
+			assert.isTrue(env.stubs.includeCSS.calledOnceWith('/some/style.css'));
+		});
+
+		it('"redirect" (non-global) calls egw_appWindowOpen instead of navigating', () =>
+		{
+			env.egw().json('m', [], null, null).handleResponse({
+				response: [{type: 'redirect', data: {url: '/somewhere', global: false, app: 'infolog'}}]
+			});
+
+			assert.isTrue((env.window as any).egw_appWindowOpen.calledOnceWith('infolog', '/somewhere'));
+		});
+	});
+
+	describe('handleError (via a non-ok fetch response)', () =>
+	{
+		it('displays a message and logs via debug, without throwing', async() =>
+		{
+			const promise = env.egw().json('m', [], null, null, true).sendRequest();
+
+			env.fetchCalls[0].resolveNotOk(400, {error: 'Bad stuff', errno: 42});
+			await promise;
+
+			assert.isTrue(env.stubs.message.calledOnce);
+			assert.include(env.stubs.message.firstCall.args[0], 'Bad stuff');
+		});
+	});
+
 	describe('sendRequest (async, via fetch)', () =>
 	{
 		it('POSTs to ajaxUrl(menuaction) with the parameters JSON-encoded in the body', () =>
@@ -291,6 +450,28 @@ describe('egw_jsonq.js (jsonq)', () =>
 		assert.isTrue(callbeforesend.calledOnce);
 		const body = JSON.parse(env.fetchCalls[0].init.body);
 		assert.deepEqual(body.request.parameters[0].u0.parameters, [1, 'extra']);
+	});
+
+	it('stops the batching timer once the queue empties, and restarts it for a later call', async() =>
+	{
+		// jsonq_uid is a module-level counter that never resets, so the
+		// second batch's uid is NOT "u0" again - read it back from the
+		// actual request body rather than assuming.
+		const p1 = env.egw().jsonq('menu.one', [1]);
+		await wait(150);
+		assert.equal(env.fetchCalls.length, 1);
+
+		const uid1 = Object.keys(JSON.parse(env.fetchCalls[0].init.body).request.parameters[0])[0];
+		env.fetchCalls[0].resolve({response: [{type: 'data', data: {[uid1]: [{type: 'data', data: 'result-one'}]}}]});
+		assert.equal(await p1, 'result-one');
+
+		const p2 = env.egw().jsonq('menu.two', [2]);
+		await wait(150);
+		assert.equal(env.fetchCalls.length, 2, 'a call arriving after the queue emptied must start a new batch');
+
+		const uid2 = Object.keys(JSON.parse(env.fetchCalls[1].init.body).request.parameters[0])[0];
+		env.fetchCalls[1].resolve({response: [{type: 'data', data: {[uid2]: [{type: 'data', data: 'result-two'}]}}]});
+		assert.equal(await p2, 'result-two');
 	});
 
 	describe('registerPush', () =>
