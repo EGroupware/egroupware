@@ -23,7 +23,7 @@ import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Nextmatch/Et
 import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
-import {MailJmap, JmapBodyResult, JmapMessageReference} from "./jmap";
+import {JmapBodyResult, JmapMessageReference, MailJmap} from "./jmap";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -33,7 +33,6 @@ import type {Et2Tree} from "../../api/js/etemplate/Et2Tree/Et2Tree";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {Et2Description} from "../../api/js/etemplate/Et2Description/Et2Description";
 import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
-
 
 
 /**
@@ -962,6 +961,16 @@ export class MailApp extends EgwApp
 	 * Mail uses the delete event's remembered neighbours and selects one only if
 	 * the user uses an arrow key in the next 10 seconds.
 	 *
+	 * The datagrid also has its own native Up/Down handling bound on its table, which
+	 * would otherwise race this listener depending on where the browser happens to park
+	 * focus after the deleted row's DOM node is removed. Listening on the
+	 * capture phase makes mail see the key first, but we only actually act - and stop the
+	 * event - when real focus has NOT already recovered onto a rendered grid row.  Once
+	 * focus is back on a row (which is normally the case well before a human can react),
+	 * the grid's own activeRowIndex is trustworthy again and must be left to handle
+	 * navigation (and, via Et2Nextmatch's own capture-phase action-shortcut handler,
+	 * subsequent Delete-key presses) as usual.
+	 *
 	 * @param Et2Nextmatch nm
 	 * @param string[] row_ids
 	 * @param string type
@@ -972,16 +981,33 @@ export class MailApp extends EgwApp
 		{
 			const selectNeighbour = (e : KeyboardEvent) =>
 			{
-				const rowId = e.keyCode === EGW_KEY_ARROW_UP ? event.detail.previousRowId :
-					e.keyCode === EGW_KEY_ARROW_DOWN ? event.detail.nextRowId : null;
-				if(!rowId) return;
+				if(e.keyCode !== EGW_KEY_ARROW_UP && e.keyCode !== EGW_KEY_ARROW_DOWN)
+				{
+					return;
+				}
+				// Focus already resting on a real row means the grid's own navigation
+				// has recovered and is trustworthy - defer to it instead of hijacking
+				// what may be unrelated, later keyboard navigation.
+				let active : Element | null = document.activeElement;
+				while(active?.shadowRoot?.activeElement)
+				{
+					active = active.shadowRoot.activeElement;
+				}
+				if(active?.closest?.("[data-row-index]"))
+				{
+					return;
+				}
+
 				e.preventDefault();
 				e.stopImmediatePropagation();
+
+				const rowId = e.keyCode === EGW_KEY_ARROW_UP ? event.detail.previousRowId : event.detail.nextRowId;
+				if(!rowId) return;
 				nm.selectSingleRow(rowId);
 				nm.focusRowById(rowId);
 			};
-			document.body.addEventListener("keydown", selectNeighbour, {once: true});
-			window.setTimeout(() => document.body.removeEventListener("keydown", selectNeighbour), 10000);
+			document.addEventListener("keydown", selectNeighbour, {capture: true, once: true});
+			window.setTimeout(() => document.removeEventListener("keydown", selectNeighbour, {capture: true}), 10000);
 		};
 		nm.addEventListener("et2-rows-deleted", selectRemembered as EventListener, {once: true});
 		nm.refresh(row_ids, type);
