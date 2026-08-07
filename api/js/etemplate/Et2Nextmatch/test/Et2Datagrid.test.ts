@@ -2155,6 +2155,95 @@ describe("Et2Datagrid row rendering", () =>
 			"visible added rows should receive the refreshed state class"
 		);
 	});
+
+	/**
+	 * Contract: an "edit" refresh always does a full reload, unconditionally - never a targeted
+	 * single-row provider refresh. An edit can change the fields a filter checks (eg. a status
+	 * change matching the active status filter) and can move the row to a new sorted position,
+	 * neither of which is knowable client-side, so "edit" cannot be handled like "update".
+	 * Setup: seed one already-displayed row, stub fetchPage to return the server's fresh page
+	 * and provider.refresh() to fail the test if it's ever called for an edit.
+	 * Pass: fetchPage is used to repopulate the grid; the targeted provider.refresh() path is
+	 * never invoked for "edit".
+	 */
+	it("always does a full reload for an edit refresh, even for an already-displayed row", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		(el as any)._requestDispatchDelayMs = 0;
+		let fetchPageCalls = 0;
+		let refreshCalls = 0;
+		el.dataProvider = createDatagridDataProvider({
+			fetchPage: async() =>
+			{
+				fetchPageCalls++;
+				return {
+					rows: [{id: "addressbook::row-1", data: {uid: "addressbook::row-1", label: "Edited label"}}],
+					total: 1
+				};
+			},
+			refresh: async() =>
+			{
+				refreshCalls++;
+				return {rows: [], removedRowIds: []};
+			}
+		}) as any;
+		el.setInitialRows([{uid: "addressbook::row-1", label: "Original row"}]);
+		el.total = 1;
+
+		const reloaded = new Promise<void>((resolve) =>
+		{
+			el.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await el.refresh(["row-1"], "edit" as any);
+		await reloaded;
+
+		assert.equal(fetchPageCalls, 1, "edit refresh should always trigger a real fetchPage reload");
+		assert.equal(refreshCalls, 0, "edit refresh should never use the targeted single-row provider refresh");
+		assert.deepEqual(el.rows.map((row) => row.id), ["addressbook::row-1"], "reloaded rows should come from fetchPage");
+		assert.equal(el.rows[0].data.label, "Edited label", "reloaded row data should come from the fresh fetchPage response");
+	});
+
+	/**
+	 * Contract: a literal "update" refresh moves the matched row to the top, matching
+	 * Et2Nextmatch.refresh()'s docblock ("updates on top, if sorted by last modified"). This
+	 * type only ever reaches here when the grid IS sorted by modified - Et2Nextmatch.refresh()
+	 * converts it to "update-in-place"/"edit" otherwise - so no further sort check is needed.
+	 * Setup: seed two loaded rows, stub provider refresh with fresh data for the second (not
+	 * first) row.
+	 * Pass: the refreshed row moves to index 0, ahead of the untouched row; total/anchor are
+	 * unaffected since the row was already counted.
+	 */
+	it("moves a row to the top on a literal 'update' refresh", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		el.dataProvider = createDatagridDataProvider({
+			fetchPage: async() => ({rows: [], total: 2}),
+			refresh: async() => ({
+				rows: [{id: "addressbook::row-2", data: {uid: "addressbook::row-2", label: "Just modified"}}],
+				removedRowIds: []
+			})
+		}) as any;
+		el.setInitialRows([
+			{uid: "addressbook::row-1", label: "Row 1"},
+			{uid: "addressbook::row-2", label: "Row 2"}
+		]);
+		el.total = 2;
+
+		await el.refresh(["row-2"], "update" as any);
+		await new Promise((resolve) => window.setTimeout(resolve, 0));
+
+		assert.deepEqual(
+			el.rows.map((row) => row.id),
+			["addressbook::row-2", "addressbook::row-1"],
+			"the just-modified row should move to the top, ahead of the untouched row"
+		);
+		assert.equal(el.rows[0].data.label, "Just modified", "row data should be refreshed as well as moved");
+		assert.equal(el.total, 2, "total should not change - the row was already counted, just moved");
+	});
 });
 
 describe("Et2Datagrid keyboard navigation", () =>

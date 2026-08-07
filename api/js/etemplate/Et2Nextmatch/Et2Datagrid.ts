@@ -6086,7 +6086,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Apply a targeted row refresh without forcing a full grid reload.
 	 *
 	 * The provider decides which rows changed or disappeared; the datagrid only updates
-	 * rows it already has materialized locally.
+	 * rows it already has materialized locally. `edit` is the exception - see below.
 	 */
 	async refresh(row_ids : string[], type : Et2DatagridUpdateType) : Promise<void>
 	{
@@ -6113,6 +6113,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 					composed: true
 				}));
 			}
+			return;
+		}
+		if(type === Et2DatagridUpdateTypes.EDIT)
+		{
+			// An edit can change the fields a filter checks (eg. a status change matching the
+			// active status filter) and can move the row to a new sorted position - both
+			// unknown client-side, so always fall back to a full reload rather than a targeted
+			// single-row refresh.
+			await this.reload();
 			return;
 		}
 		try
@@ -6146,6 +6155,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 *
 	 * Refresh updates replace loaded rows in place. `add` refreshes may also prepend newly
 	 * visible rows because Nextmatch semantics place new rows at the top of the grid.
+	 *
+	 * `update` only ever reaches here when the grid IS sorted by the modified-date field -
+	 * `Et2Nextmatch.refresh()` converts it to `update-in-place` or `edit` otherwise - so a
+	 * matched row is moved to the top (same as `add`) rather than updated at its old index.
+	 *
+	 * `edit` never reaches here - `refresh()` always routes it to a full `reload()` instead,
+	 * since an edit can change the fields a filter checks and can move the row to a new sorted
+	 * position, neither of which is knowable client-side from a targeted single-row refresh.
 	 */
 	private _applyRefreshedRows(result : Et2DatagridRefreshResult, type : Et2DatagridUpdateType) : boolean
 	{
@@ -6155,24 +6172,52 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const pulsedRowIds : string[] = [];
 		if(rowsById.size)
 		{
-			for(let index = 0; index < this._rowsByIndex.length; index++)
+			if(type === Et2DatagridUpdateTypes.UPDATE)
 			{
-				const currentRow = this._rowsByIndex[index];
-				if(!currentRow)
+				const movedRowIds = new Set(rowsById.keys());
+				this._rowsByIndex = this._rowsByIndex.filter((row) => !row || !movedRowIds.has(row.id));
+				const topRows = (result.rows || []).map((row) => this.dataProvider?.getRowData ? {id: row.id} : row);
+				this._rowsByIndex.unshift(...topRows);
+				topRows.forEach((row) =>
 				{
-					continue;
-				}
-				const refreshedRow = rowsById.get(currentRow.id);
-				if(!refreshedRow)
-				{
-					continue;
-				}
-				// Preserve the row's current visual position; data was refreshed in the provider/datastore.
-				this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: refreshedRow.id} : refreshedRow;
-				this.displayedRowIds.add(refreshedRow.id);
-				this._rowRenderVersionById.set(refreshedRow.id, (this._rowRenderVersionById.get(refreshedRow.id) || 0) + 1);
-				pulsedRowIds.push(refreshedRow.id);
+					if(!this.displayedRowIds.has(row.id))
+					{
+						if(this.total !== null)
+						{
+							this.total += 1;
+						}
+						if(this.anchorRowIndex >= 0)
+						{
+							this.anchorRowIndex += 1;
+						}
+					}
+					this.displayedRowIds.add(row.id);
+					this._rowRenderVersionById.set(row.id, (this._rowRenderVersionById.get(row.id) || 0) + 1);
+				});
+				pulsedRowIds.push(...topRows.map((row) => row.id));
 				changed = true;
+			}
+			else
+			{
+				for(let index = 0; index < this._rowsByIndex.length; index++)
+				{
+					const currentRow = this._rowsByIndex[index];
+					if(!currentRow)
+					{
+						continue;
+					}
+					const refreshedRow = rowsById.get(currentRow.id);
+					if(!refreshedRow)
+					{
+						continue;
+					}
+					// Preserve the row's current visual position; data was refreshed in the provider/datastore.
+					this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: refreshedRow.id} : refreshedRow;
+					this.displayedRowIds.add(refreshedRow.id);
+					this._rowRenderVersionById.set(refreshedRow.id, (this._rowRenderVersionById.get(refreshedRow.id) || 0) + 1);
+					pulsedRowIds.push(refreshedRow.id);
+					changed = true;
+				}
 			}
 			if(type === Et2DatagridUpdateTypes.ADD)
 			{

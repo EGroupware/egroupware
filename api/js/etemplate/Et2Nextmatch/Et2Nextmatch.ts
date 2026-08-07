@@ -16,7 +16,7 @@ import {
 	Et2DatagridUpdateTypes,
 	Et2DatagridView
 } from "./Et2Datagrid.types";
-import {Et2DatagridColumnState, type Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
+import {type Et2DatagridColumnSelectionItem, Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
@@ -1465,10 +1465,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			_type = Et2DatagridUpdateTypes.EDIT;
 		}
-		if(update_pref == "exact" && !this._isSortedByModified())
-		{
-			_type = Et2DatagridUpdateTypes.EDIT;
-		}
+		// Note: no further "exact" + not-sorted-by-modified override here - the branches above
+		// already convert "update"/"add" to "edit" for that combination. An unconditional
+		// override here would also clobber "delete" and "update-in-place", both documented as
+		// unconditional regardless of preference/sort.
 
 		this._datagrid.refresh(_row_ids, _type).then(() =>
 		{
@@ -1775,6 +1775,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		if(typeof value === "string")
 		{
 			return value.split(",").map((item) => item.trim()).filter(Boolean);
+		}
+		else if (typeof value === "number")
+		{
+			return [value+""];
 		}
 		return [];
 	}
