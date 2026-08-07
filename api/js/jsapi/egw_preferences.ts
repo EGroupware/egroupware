@@ -7,7 +7,6 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /*egw:uses
@@ -15,7 +14,103 @@
 */
 import './egw_core';
 
-egw.extend('preferences', egw.MODULE_GLOBAL, function()
+export interface PreferencesModule
+{
+	/**
+	 * Setting prefs for an app or 'common'
+	 *
+	 * @param _data object with name: value pairs to set
+	 * @param _app application name, 'common' or undefined to prefes of all apps at once
+	 * @param _need_clone _data need to be cloned, as it is from different window context
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_preferences(_data : object, _app? : string, _need_clone? : boolean) : void;
+
+	/**
+	 * Query an EGroupware user preference
+	 *
+	 * If a preference is not already loaded (only done for "common" by default),
+	 * it is synchronously queried from the server, if no _callback parameter is given!
+	 *
+	 * @param _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
+	 * @param _app default 'common'
+	 * @param _callback optional callback, if preference needs loading first
+	 *  - default/undefined: preference is synchronously queried, if not loaded, and returned
+	 *  - function: if loaded, preference is returned, if not false and callback is called once it's loaded
+	 * 	- true:  a promise for the preference is returned
+	 *	- false: if preference is not loaded, undefined is return and no (synchronous) request is send to server
+	 * @param _context context for callback
+	 * @return (Promise for) preference value or false, if callback given and preference not yet loaded
+	 */
+	preference(_name : string, _app? : string, _callback? : Function|boolean, _context? : object) : any;
+
+	/**
+	 * Set a preference and sends it to the server
+	 *
+	 * Server will silently ignore setting preferences, if user has no right to do so!
+	 *
+	 * Preferences are only send to server, if they are changed!
+	 *
+	 * @param _app application name or "common"
+	 * @param _name name of the pref
+	 * @param _val value of the pref, null, undefined or "" to unset it
+	 * @param _callback Function passed along to the queue, called after preference is set server-side,
+	 *	IF the preference is changed / has a value different from the current one
+	 */
+	set_preference(_app : string, _name : string, _val : any, _callback? : Function) : void;
+
+	/**
+	 * Endpoint for push to request reload of preference, if loaded and affected
+	 *
+	 * @param _app app-name of prefs to reload
+	 * @param _account_id 0: allways reload (default or forced prefs), <0: reload if member of group
+	 */
+	reload_preferences(_app : string, _account_id : number|string) : void;
+
+	/**
+	 * Call context / open app specific preferences function
+	 *
+	 * @param name type 'acl', 'prefs', or 'cats'
+	 * @param apps array with apps allowing to call that type, or object/hash with app and boolean or hash with url-params
+	 */
+	show_preferences(name : "acl"|"prefs"|"cats", apps : object|string[]) : void;
+
+	/**
+	 * Setting prefs for an app or 'common'
+	 *
+	 * @param _data
+	 * @param _app application name or undefined to set grants of all apps at once
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_grants(_data : object, _app? : string) : void;
+
+	/**
+	 * Query an EGroupware user preference
+	 *
+	 * We currently load grants from all apps in egw.js, so no need for a callback or promise.
+	 *
+	 * @param _app app-name
+	 * @return grant object, false if not (yet) loaded and no callback or undefined
+	 */
+	grants(_app : string) : any;
+
+	/**
+	 * Get mime types supported by file editor AND not excluded by user
+	 *
+	 * @param _mime current mime type
+	 * @returns returns object of filemanager editor hook
+	 */
+	file_editor_prefered_mimes(_mime : string) : object | null;
+}
+
+declare global
+{
+	interface IegwGlobal extends PreferencesModule
+	{
+	}
+}
+
+egw.extend('preferences', egw.MODULE_GLOBAL, function() : PreferencesModule
 {
 	"use strict";
 
@@ -25,10 +120,10 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.preferences() or egw.set_perferences()
 	 */
-	var prefs = {
+	var prefs : {[app : string] : any} = {
 		common:{textsize:12}
 	};
-	var grants = {};
+	var grants : {[app : string] : any} = {};
 
 	/**
 	 * App-names in egw_preference table are limited to 16 chars, so we can not store anything longer
@@ -38,7 +133,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 	 * @param _app
 	 * @returns {string}
 	 */
-	function sanitizeApp(_app)
+	function sanitizeApp(_app : string) : string
 	{
 		if (typeof _app === 'undefined') _app = 'common';
 
@@ -63,15 +158,15 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param {boolean} _need_clone _data need to be cloned, as it is from different window context
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_preferences: function(_data, _app, _need_clone)
+		set_preferences: function(_data : object, _app? : string, _need_clone? : boolean) : void
 		{
 			if (typeof _app == 'undefined')
 			{
-				prefs = _need_clone ? jQuery.extend(true, {}, _data) : _data;
+				prefs = _need_clone ? (<any>jQuery).extend(true, {}, _data) : _data;
 			}
 			else
 			{
-				prefs[sanitizeApp(_app)] = jQuery.extend(true, {}, _data);	// we always clone here, as call can come from this.preferences!
+				prefs[sanitizeApp(_app)] = (<any>jQuery).extend(true, {}, _data);	// we always clone here, as call can come from this.preferences!
 			}
 		},
 
@@ -91,7 +186,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param {object} _context context for callback
 		 * @return Promise|object|string|bool (Promise for) preference value or false, if callback given and preference not yet loaded
 		 */
-		preference: function(_name, _app, _callback, _context)
+		preference: function(this : any, _name : string, _app? : string, _callback? : Function|boolean, _context? : object) : any
 		{
 			_app = sanitizeApp(_app);
 
@@ -113,12 +208,12 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 			let ret;
 			if (_name === "*")
 			{
-				ret = typeof prefs[_app] === 'object' ? jQuery.extend({}, prefs[_app]) : prefs[_app];
+				ret = typeof prefs[_app] === 'object' ? (<any>jQuery).extend({}, prefs[_app]) : prefs[_app];
 			}
 			else
 			{
 				ret = typeof prefs[_app][_name] === 'object' && prefs[_app][_name] !== null ?
-					jQuery.extend({}, prefs[_app][_name]) : prefs[_app][_name];
+					(<any>jQuery).extend({}, prefs[_app][_name]) : prefs[_app][_name];
 			}
 			if (_callback === true)
 			{
@@ -140,7 +235,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param {function} _callback Function passed along to the queue, called after preference is set server-side,
 		 *	IF the preference is changed / has a value different from the current one
 		 */
-		set_preference: function(_app, _name, _val, _callback)
+		set_preference: function(this : any, _app : string, _name : string, _val : any, _callback? : Function) : void
 		{
 			_app = sanitizeApp(_app);
 
@@ -177,7 +272,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param _app app-name of prefs to reload
 		 * @param _account_id _account_id 0: allways reload (default or forced prefs), <0: reload if member of group
 		 */
-		reload_preferences: function(_app, _account_id)
+		reload_preferences: function(this : any, _app : string, _account_id : number|string) : void
 		{
 			if (typeof _account_id !== 'number') _account_id = parseInt(_account_id);
 			if (typeof prefs[_app] === 'undefined' ||	// prefs not loaded
@@ -195,15 +290,15 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param {string} name type 'acl', 'prefs', or 'cats'
 		 * @param {(array|object)} apps array with apps allowing to call that type, or object/hash with app and boolean or hash with url-params
 		 */
-		show_preferences: function (name, apps)
+		show_preferences: function (this : any, name : "acl"|"prefs"|"cats", apps : object|string[]) : void
 		{
 			var current_app = this.app_name();
-			var query = {menuaction:'',current_app: current_app};
+			var query : any = {menuaction:'',current_app: current_app};
 			// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
-			if (jQuery.isArray(apps) && jQuery.inArray(current_app, apps) == -1 && (name != 'prefs' && name != 'acl') ||
-				!jQuery.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
+			if ((<any>jQuery).isArray(apps) && (<any>jQuery).inArray(current_app, apps) == -1 && (name != 'prefs' && name != 'acl') ||
+				!(<any>jQuery).isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
 			{
-				egw_message(egw.lang('Not supported by current application!'), 'warning');
+				(<any>window).egw_message(egw.lang('Not supported by current application!'), 'warning');
 			}
 			else
 			{
@@ -212,13 +307,13 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 				{
 					case 'prefs':
 						query.menuaction ='preferences.preferences_settings.index';
-						if (jQuery.inArray(current_app, apps) != -1) query.appname=current_app;
+						if ((<any>jQuery).inArray(current_app, apps) != -1) query.appname=current_app;
 						egw.open_link(egw.link(url, query), '_blank', '1200x600');
 						break;
 
 					case 'acl':
 						query.menuaction='preferences.preferences_acl.index';
-						if (jQuery.inArray(current_app, apps) != -1) query.acl_app=current_app;
+						if ((<any>jQuery).inArray(current_app, apps) != -1) query.acl_app=current_app;
 						egw.open_link(egw.link(url, query), '_blank', '1200x600');
 						break;
 
@@ -249,15 +344,15 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param {string} _app application name or undefined to set grants of all apps at once
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_grants: function(_data, _app)
+		set_grants: function(_data : object, _app? : string) : void
 		{
 			if (_app)
 			{
-				grants[_app] = jQuery.extend(true, {}, _data);
+				grants[_app] = (<any>jQuery).extend(true, {}, _data);
 			}
 			else
 			{
-				grants = jQuery.extend(true, {}, _data);
+				grants = (<any>jQuery).extend(true, {}, _data);
 			}
 		},
 
@@ -272,7 +367,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param {object} _context context for callback
 		 * @return {object|undefined|false} grant object, false if not (yet) loaded and no callback or undefined
 		 */
-		grants: function( _app) //, _callback, _context)
+		grants: function( _app : string) : any //, _callback, _context)
 		{
 			/* we currently load grants from all apps in egw.js, so no need for a callback or promise
 			if (typeof grants[_app] == 'undefined')
@@ -283,7 +378,7 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 				if (typeof grants[_app] == 'undefined') grants[_app] = {};
 				if (typeof _callback == 'function') return false;
 			}*/
-			return typeof grants[_app] === 'object' ? jQuery.extend({}, grants[_app]) : grants[_app];
+			return typeof grants[_app] === 'object' ? (<any>jQuery).extend({}, grants[_app]) : grants[_app];
 		},
 
 		/**
@@ -292,9 +387,9 @@ egw.extend('preferences', egw.MODULE_GLOBAL, function()
 		 * @param {string} _mime current mime type
 		 * @returns {object|null} returns object of filemanager editor hook
 		 */
-		file_editor_prefered_mimes: function(_mime)
+		file_editor_prefered_mimes: function(this : any, _mime : string) : object | null
 		{
-			const fe = jQuery.extend(true, {}, this.link_get_registry('filemanager-editor'));
+			const fe = (<any>jQuery).extend(true, {}, this.link_get_registry('filemanager-editor'));
 			let ex_mimes = this.preference('collab_excluded_mimes', 'filemanager');
 			const dblclick_action = this.preference('document_doubleclick_action', 'filemanager');
 			if (dblclick_action === 'download' && typeof _mime === 'string')

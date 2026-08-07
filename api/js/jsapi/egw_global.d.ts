@@ -375,74 +375,11 @@ interface IegwGlobal
 	 */
 	link_quick_add(_parent : HTMLElement|string) : void;
 
-	/**
-	 * implemented in egw_preferences.js
-	 */
-	/**
-	 * Setting prefs for an app or 'common'
-	 *
-	 * @param {object} _data object with name: value pairs to set
-	 * @param {string} _app application name, 'common' or undefined to prefes of all apps at once
-	 * @param {boolean} _need_clone _data need to be cloned, as it is from different window context
-	 *	and therefore will be inaccessible in IE, after that window is closed
-	 */
-	set_preferences(_data : object, _app? : string, _need_clone? : boolean) : void;
-	/**
-	 * Query an EGroupware user preference
-	 *
-	 * If a prefernce is not already loaded (only done for "common" by default), it is synchroniosly queryed from the server!
-	 *
-	 * @param {string} _name name of the preference, eg. 'dateformat', or '*' to get all the application's preferences
-	 * @param {string} _app default 'common'
-	 * @param {function|undefined} _callback optional callback, if preference needs loading first
-	 * if false given and preference is not loaded, undefined is return and no (synchronious) request is send to server
-	 * @param {object} _context context for callback
-	 * @return string|object|bool preference value or false, if callback given and preference not yet loaded
-	 *  of object with all prefs for _name="*"
-	 */
-	preference(_name : string, _app? : string, _callback? : Function, _context? : object) : string|object|boolean;
-	/**
-	 * Set a preference and sends it to the server
-	 *
-	 * Server will silently ignore setting preferences, if user has no right to do so!
-	 *
-	 * Preferences are only send to server, if they are changed!
-	 *
-	 * @param {string} _app application name or "common"
-	 * @param {string} _name name of the pref
-	 * @param _val value of the pref, null, undefined or "" to unset it
-	 * @param {function} _callback Function passed along to the queue, called after preference is set server-side,
-	 *	IF the preference is changed / has a value different from the current one
-	 */
-	set_preference(_app : string, _name : string, _val : any, _callback? : Function) : void;
-	/**
-	 * Call context / open app specific preferences function
-	 *
-	 * @param {string} name type 'acl', 'prefs', or 'cats'
-	 * @param {(array|object)} apps array with apps allowing to call that type, or object/hash with app and boolean or hash with url-params
-	 */
-	show_preferences(name : "acl"|"prefs"|"cats", apps : object|string[]) : void;
-	/**
-	 * Setting prefs for an app or 'common'
-	 *
-	 * @param {object} _data
-	 * @param {string} _app application name or undefined to set grants of all apps at once
-	 *	and therefore will be inaccessible in IE, after that window is closed
-	 */
-	set_grants(_data : object, _app? : string) : void;
-	/**
-	 * Query an EGroupware user preference
-	 *
-	 * We currently load grants from all apps in egw.js, so no need for a callback or promise.
-	 *
-	 * @param {string} _app app-name
-	 * @ param {function|false|undefined} _callback optional callback, if preference needs loading first
-	 * if false given and preference is not loaded, undefined is return and no (synchronious) request is send to server
-	 * @ param {object} _context context for callback
-	 * @return grant object, false if not (yet) loaded and no callback or undefined
-	 */
-	grants(_app : string) /*, _callback, _context)*/ : any;
+	// preferences: implemented in egw_preferences.ts, contributing PreferencesModule
 
+	/**
+	 * implemented in egw_calendar.js
+	 */
 	/**
 	 * Get a list of holidays for the given year
 	 *
@@ -455,14 +392,6 @@ interface IegwGlobal
 	 * @returns Promise<{[key: string]: Array<object>}>
 	 */
 	holidays(fullYear : number) : Promise<{ [key : string] : Array<object> }>;
-
-	/**
-	 * Get mime types supported by file editor AND not excluded by user
-	 *
-	 * @param {string} _mime current mime type
-	 * @returns {object|null} returns object of filemanager editor hook
-	 */
-	file_editor_prefered_mimes(_mime : string) : object | null;
 
 	/**
 	 * implemented in egw_store.js
@@ -514,92 +443,7 @@ interface IegwGlobal
 	 */
 	removeLocalStorageItem(application : string, item : string) : void;
 
-	/**
-	 * implemented in egw_user.js
-	 */
-	/**
-	 * Set data of current user
-	 *
-	 * @param {object} _data
-	 * @param {boolean} _need_clone _data need to be cloned, as it is from different window context
-	 *	and therefore will be inaccessible in IE, after that window is closed
-	 */
-	set_user(_data : object, _need_clone? : boolean) : void;
-	/**
-	 * Get data about current user
-	 *
-	 * @param {string} _field
-	 * - 'account_id','account_lid','person_id','account_status',
-	 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
-	 * - 'apps': object with app => data pairs the user has run-rights for
-	 * @return {string|array|null}
-	 */
-	user(_field : string) : any;
-	/**
-	 * Return data of apps the user has rights to run
-	 *
-	 * Can be used the check of run rights like: if (egw.app('addressbook')) { do something if user has addressbook rights }
-	 *
-	 * @param {string} _app
-	 * @param {string} _name attribute to return, default return whole app-data-object
-	 * @return Iapplication|string|undefined undefined if not found
-	 */
-	app(_app : string, _name : string) : string|undefined;
-	app(_app : string) : Iapplication|undefined;
-	/**
-	 * Same as app(), but use the translated app-name / title
-	 *
-	 * @param {string} _title
-	 * @param {string} _name attribute to return, default return whole app-data-object
-	 */
-	appByTitle(_title : string, _name : string) : string|undefined;
-	appByTitle(_title : string) : Iapplication|undefined;
-	/**
-	 * Get a list of accounts the user has access to
-	 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
-	 *
-	 * @param {string} type
-	 * @returns {Promise}
-	 */
-	accounts(type : "accounts" | "groups" | "both" | "owngroups") : Promise<{ value : string, label : string, icon? : string }[]>
-
-	/**
-	 * Get account-infos for given numerical _account_ids
-	 *
-	 * @param {int|array} _account_ids
-	 * @param {string} _field default 'account_email'
-	 * @param {boolean} _resolve_groups true: return attribute for all members, false: return attribute of group
-	 * @param {function} _callback
-	 * @param {object} _context
-	 */
-	accountData(_account_ids : number | number[], _field : string, _resolve_groups : boolean,
-				_callback : Function, _context : object) : void;
-	/**
-	 * Set account data.  This one can be called from the server to pre-fill the cache.
-	 *
-	 * @param {object} _data account_id => value pairs
-	 * @param {String} _field
-	 */
-	set_account_cache(_data : object, _field : string) : void;
-	/**
-	 * Set specified account-data of selected user in an other widget
-	 *
-	 * Used eg. in template as: onchange="egw.set_account_data(widget, 'target', 'account_email')"
-	 *
-	 * @param {et2_widget} _src_widget widget to select the user
-	 * @param {string} _target_name name of widget to set the data
-	 * @param {string} _field name of data to set eg. "account_email" or "{account_fullname} <{account_email}>"
-	 */
-	set_account_data(_src_widget : /*et2_widget*/object, _target_name : string, _field : string) : void;
-	/**
-	 * Invalidate client-side account cache
-	 *
-	 * For _type == "add" we invalidate the whole cache currently.
-	 *
-	 * @param {number} _id nummeric account_id, !_id will invalidate whole cache
-	 * @param {string} _type "add", "delete", "update" or "edit"
-	 */
-	invalidate_account(_id? : number, _type? : "add"|"delete"|"update"|"edit") : void;
+	// user: implemented in egw_user.ts, contributing UserModule
 
 	/**
 	 * implemented in egw_utils.js

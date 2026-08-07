@@ -14,7 +14,123 @@
 */
 import './egw_core';
 
-egw.extend('user', egw.MODULE_GLOBAL, function()
+export interface UserModule
+{
+	/**
+	 * Set data of current user
+	 *
+	 * @param _data
+	 * @param _need_clone _data need to be cloned, as it is from different window context
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_user(_data : object, _need_clone? : boolean) : void;
+
+	/**
+	 * Get data about current user
+	 *
+	 * @param _field
+	 * - 'account_id','account_lid','person_id','account_status','memberships'
+	 * - 'account_firstname','account_lastname','account_email','account_fullname','account_phone'
+	 * - 'apps': object with app => data pairs the user has run-rights for
+	 */
+	user(_field : string) : any;
+
+	/**
+	 * Return data of apps the user has rights to run
+	 *
+	 * Can be used the check of run rights like: if (egw.app('addressbook')) { do something if user has addressbook rights }
+	 *
+	 * @param _app
+	 * @param _name attribute to return, default return whole app-data-object
+	 * @return undefined if not found
+	 */
+	app(_app : string, _name : string) : string|undefined;
+	app(_app : string) : Iapplication|undefined;
+
+	/**
+	 * Same as app(), but use the translated app-name / title
+	 *
+	 * @param _title
+	 * @param _name attribute to return, default return whole app-data-object
+	 */
+	appByTitle(_title : string, _name : string) : string|undefined;
+	appByTitle(_title : string) : Iapplication|undefined;
+
+	/**
+	 * Get a list of accounts the user has access to
+	 * The list is filtered by type, one of 'accounts','groups','both', 'owngroups'
+	 *
+	 * @param type
+	 */
+	accounts(type? : "accounts" | "groups" | "both" | "owngroups") : Promise<{ value : string, label : string, icon? : string }[]>;
+
+	/**
+	 * Get account-infos for given numerical _account_ids
+	 *
+	 * @param _account_ids
+	 * @param _field default 'account_email'
+	 * @param _resolve_groups true: return attribute for all members, false: return attribute of group
+	 * @param _callback deprecated, use egw.accountDate(...).then(data => _callback.bind(_context)(data))
+	 * @param _context deprecated, see _context
+	 * @return resolving to object { account_id => value, ... }
+	 */
+	accountData(_account_ids : number | number[], _field? : string, _resolve_groups? : boolean,
+				_callback? : Function, _context? : object) : Promise<{[account_id : string] : any}>;
+
+	/**
+	 * Set account data.  This one can be called from the server to pre-fill the cache.
+	 *
+	 * @param _data account_id => value pairs
+	 * @param _field
+	 */
+	set_account_cache(_data : object, _field : string) : void;
+
+	/**
+	 * Set specified account-data of selected user in an other widget
+	 *
+	 * Used eg. in template as: onchange="egw.set_account_data(widget, 'target', 'account_email')"
+	 *
+	 * @param _src_widget widget to select the user
+	 * @param _target_name name of widget to set the data
+	 * @param _field name of data to set eg. "account_email" or "{account_fullname} <{account_email}>"
+	 */
+	set_account_data(_src_widget : /*et2_widget*/object, _target_name : string, _field : string) : void;
+
+	/**
+	 * Invalidate client-side account cache
+	 *
+	 * For _type == "add" we invalidate the whole cache currently.
+	 *
+	 * @param _id nummeric account_id, !_id will invalidate whole cache
+	 * @param _type "add", "delete", "update" or "edit"
+	 */
+	invalidate_account(_id? : number, _type? : "add"|"delete"|"update"|"edit") : void;
+
+	/**
+	 * Set prompts
+	 *
+	 * @param _prompts
+	 */
+	set_prompts(_prompts : {id : string, label : string, children? : any[], apps? : string[]}[]) : void;
+
+	/**
+	 * Get prompts for given app
+	 *
+	 * Currently, the id's "aiassist.translate" and "aiassist.generate" have children/sub-menus.
+	 *
+	 * @param _app
+	 */
+	prompts(_app : string) : {id : string, label : string, children? : any[], apps? : string[]}[];
+}
+
+declare global
+{
+	interface IegwGlobal extends UserModule
+	{
+	}
+}
+
+egw.extend('user', egw.MODULE_GLOBAL, function() : UserModule
 {
 	"use strict";
 
@@ -23,13 +139,13 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	 *
 	 * @access: private, use egw.user(_field) or egw.app(_app)
 	 */
-	let userData = {apps: {}};
+	let userData : any = {apps: {}};
 
 	/**
 	 * Client side cache of accounts user has access to
 	 * Used by account select widgets
 	 */
-	let accountStore = {
+	let accountStore : any = {
 		// Filled by AJAX when needed
 		//accounts: {},
 		//groups: {},
@@ -39,18 +155,18 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 	/**
 	 * Clientside cache for accountData calls
 	 */
-	let accountData = {};
-	let resolveGroup = {};
+	let accountData : any = {};
+	let resolveGroup : any = {};
 
 	// Hold in-progress request to avoid making more
-	let request = null;
+	let request : Promise<any> = null;
 
 	/**
 	 * Client-side cached prompts
 	 *
 	 * @var Array<{id: string, label: string, children: array|undefined, apps: array|undefined}>
 	 */
-	let prompts = [];
+	let prompts : any[] = [];
 
 	return {
 		/**
@@ -60,9 +176,9 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {boolean} _need_clone _data need to be cloned, as it is from different window context
 		 *	and therefore will be inaccessible in IE, after that window is closed
 		 */
-		set_user: function (_data, _need_clone)
+		set_user: function (_data : object, _need_clone? : boolean) : void
 		{
-			userData = _need_clone ? jQuery.extend(true, {}, _data) : _data;
+			userData = _need_clone ? (<any>jQuery).extend(true, {}, _data) : _data;
 		},
 
 		/**
@@ -74,7 +190,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * - 'apps': object with app => data pairs the user has run-rights for
 		 * @return {string|array|null}
 		 */
-		user: function (_field)
+		user: function (_field : string) : any
 		{
 			return userData[_field];
 		},
@@ -88,7 +204,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {string} _name attribute to return, default return whole app-data-object
 		 * @return object|string|null null if not found
 		 */
-		app: function(_app, _name)
+		app: function(_app : string, _name? : string) : any
 		{
 			return typeof _name == 'undefined' || typeof userData.apps[_app] == 'undefined' ?
 				userData.apps[_app] : userData.apps[_app][_name];
@@ -100,7 +216,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {string} _title
 		 * @param {string} _name attribute to return, default return whole app-data-object
 		 */
-		appByTitle: function(_title, _name)
+		appByTitle: function(_title : string, _name? : string) : any
 		{
 			for(const app in userData.apps)
 			{
@@ -119,7 +235,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {string} type
 		 * @returns {Promise<{value:string,label:string,icon?:string}[]>}
 		 */
-		accounts: function (type)
+		accounts: function (this : any, type? : string) : Promise<any>
 		{
 			if (typeof type === 'undefined')
 			{
@@ -133,7 +249,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 					return this.accounts(type)
 				});
 			}
-			if (jQuery.isEmptyObject(accountStore))
+			if ((<any>jQuery).isEmptyObject(accountStore))
 			{
 				const cache_it = data =>
 				{
@@ -176,17 +292,19 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {object|undefined} _context deprecated, see _context
 		 * @return {Promise} resolving to object { account_id => value, ... }
 		 */
-		accountData: function(_account_ids, _field, _resolve_groups, _callback, _context)
+		accountData: function(_account_ids : number | number[], _field? : string, _resolve_groups? : boolean, _callback? : Function, _context? : object) : Promise<any>
 		{
 			if (!_field) _field = 'account_email';
-			if (!Array.isArray(_account_ids)) _account_ids = [_account_ids];
+			// TS won't narrow _account_ids from number|number[] to number[] across
+			// the closures below, so normalize into a separately-typed local instead
+			const ids : number[] = Array.isArray(_account_ids) ? _account_ids : [_account_ids];
 
 			// check our cache or current user first
-			const data = {};
+			const data : any = {};
 			let pending = false;
-			for(let i=0; i < _account_ids.length; ++i)
+			for(let i=0; i < ids.length; ++i)
 			{
-				const account_id = _account_ids[i];
+				const account_id = ids[i];
 
 				if (account_id == userData.account_id)
 				{
@@ -213,14 +331,14 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				{
 					continue;
 				}
-				_account_ids.splice(i--, 1);
+				ids.splice(i--, 1);
 			}
 
 			let promise;
 			// something not found in cache --> ask server
-			if (_account_ids.length)
+			if (ids.length)
 			{
-				promise = egw.request('EGroupware\\Api\\Framework::ajax_account_data',[_account_ids, _field, _resolve_groups]).then(_data =>
+				promise = egw.request('EGroupware\\Api\\Framework::ajax_account_data',[ids, _field, _resolve_groups]).then(_data =>
 				{
 					for(let account_id in _data)
 					{
@@ -232,9 +350,9 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 					}
 					// If resolving for 1 group, cache the whole answer too
 					// (More than 1 group, we can't split to each group)
-					if(_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
+					if(_resolve_groups && ids.length === 1 && ids[0] < 0)
 					{
-						const group_id = _account_ids[0];
+						const group_id = ids[0];
 						if (typeof resolveGroup[group_id] === 'undefined')
 						{
 							resolveGroup[group_id] = {};
@@ -245,7 +363,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				});
 
 				// store promise, in case someone asks while the request is pending, to not query the server again
-				_account_ids.forEach(account_id =>
+				ids.forEach(account_id =>
 				{
 					if (_resolve_groups && account_id < 0) return;	// we must NOT cache the promise for account_id!
 
@@ -260,9 +378,9 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 						return result;
 					}.bind({ account_id: account_id }));
 				});
-				if (_resolve_groups && _account_ids.length === 1 && _account_ids[0] < 0)
+				if (_resolve_groups && ids.length === 1 && ids[0] < 0)
 				{
-					resolveGroup[_account_ids[0]] = promise;
+					resolveGroup[ids[0]] = promise;
 				}
 			}
 			else
@@ -315,7 +433,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {Array} _data
 		 * @param {String} _field
 		 */
-		set_account_cache: function(_data, _field)
+		set_account_cache: function(_data : object, _field : string) : void
 		{
 			for(let account_id in _data)
 			{
@@ -336,7 +454,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {string} _target_name name of widget to set the data
 		 * @param {string} _field name of data to set eg. "account_email" or "{account_fullname} <{account_email}>"
 		 */
-		set_account_data: function(_src_widget, _target_name, _field)
+		set_account_data: function(_src_widget : any, _target_name : string, _field : string) : void
 		{
 			const user = _src_widget.get_value();
 			const target = _src_widget.getRoot().getWidgetById(_target_name);
@@ -403,7 +521,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param {number} _id nummeric account_id, !_id will invalidate whole cache
 		 * @param {string} _type "add", "delete", "update" or "edit"
 		 */
-		invalidate_account: function(_id, _type)
+		invalidate_account: function(this : any, _id? : number, _type? : string) : void
 		{
 			if (_id)
 			{
@@ -415,7 +533,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 				accountData = {};
 				resolveGroup = {};
 			}
-			if (jQuery.isEmptyObject(accountStore)) return;
+			if ((<any>jQuery).isEmptyObject(accountStore)) return;
 
 			switch(_type)
 			{
@@ -468,7 +586,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 *
 		 * @param Array<{id: string, label: string, children: Array|undefined, apps: Array|undefined> _prompts
 		 */
-		set_prompts: function(_prompts)
+		set_prompts: function(_prompts : any[]) : void
 		{
 			prompts = _prompts;
 		},
@@ -481,7 +599,7 @@ egw.extend('user', egw.MODULE_GLOBAL, function()
 		 * @param string _app
 		 * @return Array<{id: string, label: string, children: Array|undefined, apps: Array|undefined>
 		 */
-		prompts: function(_app)
+		prompts: function(_app : string) : any[]
 		{
 			const ret = [];
 			prompts.forEach((prompt) =>
