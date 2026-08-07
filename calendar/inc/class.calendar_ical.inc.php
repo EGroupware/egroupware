@@ -1858,7 +1858,7 @@ class calendar_ical extends calendar_boupdate
 					case 'SERIES-PSEUDO-EXCEPTION':
 						if (is_array($event_info['master_event'])) // status update requires a stored master event
 						{
-							$recurrence = DateTime::server2user($event['recurrence']);
+							$recurrence = DateTime::server2user($event['recurrence'], 'DateTime');
 							if ($event_info['acl_edit'])
 							{
 								// update all participants if we have the right to do that
