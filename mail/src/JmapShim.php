@@ -512,6 +512,13 @@ class JmapShim
 		// time, and cost an extra per-message IMAP round trip below - skip for the row-list fetch
 		static $bodyProperties = ['bodyStructure', 'textBody', 'htmlBody', 'attachments', 'bodyValues'];
 		$wantBody = !$properties || array_intersect($properties, $bodyProperties);
+		// MDN (read-receipt) prompt detection - MailJmap.email2row() reads this same property
+		// name back verbatim, matching how a real JMAP server echoes header:X:form property keys
+		$wantMdn = !$properties || in_array(self::MDN_HEADER_PROPERTY, $properties, true);
+		// whole-message blobId (RFC 8621 top-level Email.blobId) - MailJmap.fetchRawHeader()'s
+		// "view header" fast path, no extra IMAP work needed (same self-describing scheme
+		// bodyPartToJmap() uses per-part, just with an empty partId - see download())
+		$wantBlobId = !$properties || in_array('blobId', $properties, true);
 
 		if ($accountId === '0')
 		{
@@ -544,6 +551,13 @@ class JmapShim
 		{
 			$query->bodyText(['length' => 800, 'peek' => true]);
 		}
+		if ($wantMdn)
+		{
+			// same 3-header priority Api\Mail::getHeaders() uses (DISPOSITION-NOTIFICATION-TO,
+			// falling back to the older RETURN-RECEIPT-TO/X-CONFIRM-READING-TO conventions)
+			$query->headers('mdn', ['Disposition-Notification-To', 'Return-Receipt-To', 'X-Confirm-Reading-To'],
+				['cache' => true, 'peek' => true]);
+		}
 
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
@@ -559,7 +573,7 @@ class JmapShim
 			if (($data = $results[(int)$id] ?? null))
 			{
 				/** @var \Horde_Imap_Client_Data_Fetch $data */
-				$list[] = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody);
+				$list[] = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId);
 			}
 		}
 		$found = array_column($list, 'id');
@@ -868,7 +882,10 @@ class JmapShim
 	 */
 	public static function writableKeywords() : array
 	{
-		$keywords = ['$flagged' => '\\Flagged'];
+		// 'MDNSent'/'MDNnotSent' (no '$' prefix) is the real IMAP keyword classic
+		// Api\Mail::flagMessages() already writes - matched here so a message flagged through
+		// either code path is recognized identically by the other
+		$keywords = ['$flagged' => '\\Flagged', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent'];
 		foreach (['label1', 'label2', 'label3', 'label4', 'label5',
 			'customflag1', 'customflag2', 'customflag3', 'customflag4', 'customflag5'] as $keyword)
 		{
@@ -890,9 +907,13 @@ class JmapShim
 	 * @param string $uid
 	 * @param \Horde_Imap_Client_Data_Fetch $data
 	 * @param bool $wantPreview false skips the (extra IMAP round-trip) preview snippet entirely
+	 * @param bool $wantMdn true adds the MDN_HEADER_PROPERTY field (needs a preceding
+	 *  $query->headers('mdn', ...) call, see emailGet())
+	 * @param bool $wantBlobId true adds the whole-message 'blobId' field (RFC 8621 top-level
+	 *  Email.blobId) - no extra IMAP work, same self-describing scheme bodyPartToJmap() uses
 	 * @return array
 	 */
-	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false) : array
+	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false) : array
 	{
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
@@ -925,11 +946,52 @@ class JmapShim
 			'bcc' => self::addressList($envelope->bcc),
 			'hasAttachment' => $hasAttachment,
 		];
+		if ($wantBlobId)
+		{
+			$email['blobId'] = self::urlsafeB64Encode($mailbox).':'.$uid.':';
+		}
+		if ($wantMdn)
+		{
+			$mdnHeaders = $data->getHeaders('mdn', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::MDN_HEADER_PROPERTY] = $mdnHeaders ? self::firstHeaderValue($mdnHeaders,
+				['Disposition-Notification-To', 'Return-Receipt-To', 'X-Confirm-Reading-To']) : null;
+		}
 		if ($wantBody && $structure)
 		{
 			$email += self::emailBodyFields($imap, $mailbox, $uid, $structure);
 		}
 		return $email;
+	}
+
+	/**
+	 * RFC 8621 §4.1.3 header-property name for the MDN (read-receipt) prompt - MailJmap.email2row()
+	 * (mail/js/jmap.ts) reads this exact key back from both backends' Email/get response, matching
+	 * how a real JMAP server echoes "header:X:form" property keys verbatim.
+	 */
+	const MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
+
+	/**
+	 * First non-empty value among a priority list of header names, decoded (RFC 2047) and trimmed -
+	 * same 3-header priority/decoding Api\Mail::getHeaders() uses, deliberately reimplemented here
+	 * rather than calling that mail_bo-coupled method (see class docblock).
+	 *
+	 * @param \Horde_Mime_Headers $headers
+	 * @param string[] $names tried in order, first present+non-empty wins
+	 * @return ?string
+	 */
+	private static function firstHeaderValue(\Horde_Mime_Headers $headers, array $names) : ?string
+	{
+		$arr = array_change_key_case($headers->toArray(), CASE_UPPER);
+		foreach ($names as $name)
+		{
+			$value = $arr[strtoupper($name)] ?? null;
+			$value = is_array($value) ? reset($value) : $value;
+			if ($value !== null && trim((string)$value) !== '')
+			{
+				return \iconv_mime_decode(trim((string)$value), 0, 'UTF-8');
+			}
+		}
+		return null;
 	}
 
 	/**

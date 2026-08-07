@@ -1695,10 +1695,10 @@ export class MailApp extends EgwApp
 						{
 							case "mdnsent":
 								egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
-								egw.jsonq('mail.mail_ui.ajax_flagMessages', ['mdnsent', messages, true]);
+								self.mail_trySetMdnFlag(messages, true);
 								return;
 							case "mdnnotsent":
-								egw.jsonq('mail.mail_ui.ajax_flagMessages', ['mdnnotsent', messages, true]);
+								self.mail_trySetMdnFlag(messages, false);
 						}
 					},
 				this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
@@ -3883,10 +3883,33 @@ export class MailApp extends EgwApp
 			}
 		}
 		//alert('mail_header('+_elems[0].id+')');
-		let url = window.egw_webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
-		url += '&id='+_elems[0].id;
-		this.mail_displayHeaderLines(url);
+		const rowId = _elems[0].id;
+		const classicHeaderPopup = () =>
+		{
+			let url = window.egw_webserverUrl+'/index.php?';
+			url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
+			url += '&id='+rowId;
+			this.mail_displayHeaderLines(url);
+		};
+		this.jmap.fetchRawHeader(rowId).then(async(text : string) =>
+		{
+			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
+			// popup Window, not the Window itself - must be awaited before touching .document
+			const popup = await egw.openPopup('about:blank', 870, 600, null, 'mail', true) as any as Window;
+			if (!popup || !popup.document)
+			{
+				classicHeaderPopup();
+				return;
+			}
+			const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			popup.document.open();
+			popup.document.write('<pre>'+escaped+'</pre>');
+			popup.document.close();
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_header(): JMAP failed, falling back to server', e);
+			classicHeaderPopup();
+		});
 	}
 
 	/**
@@ -4698,6 +4721,33 @@ export class MailApp extends EgwApp
 		{
 			console.error('MailApp.mail_tryJmapMove(): JMAP move failed, falling back to server', e);
 			return classicMove();
+		});
+	}
+
+	/**
+	 * Try the fast client-side JMAP path for the MDN Yes/No dialog's flag write
+	 * (MailJmap.setMdnFlag()) - always a single previewed message, no "select all" case. Falls back
+	 * to the classic ajax_flagMessages() call on any failure (reference-building or the JMAP call
+	 * itself). ajax_sendMDN() (the actual outbound receipt) is unrelated and unchanged.
+	 */
+	private mail_trySetMdnFlag(messages : any, sent : boolean) : void
+	{
+		const classicFallback = () =>
+			egw.jsonq('mail.mail_ui.ajax_flagMessages', [sent ? 'mdnsent' : 'mdnnotsent', messages, true]);
+		let references : JmapMessageReference[];
+		try
+		{
+			references = (messages.msg || []).map((id : string) => this.jmap.messageReference(id));
+		}
+		catch (e)
+		{
+			classicFallback();
+			return;
+		}
+		this.jmap.setMdnFlag(references, sent).catch((e) =>
+		{
+			console.error('MailApp.mail_trySetMdnFlag(): JMAP failed, falling back to server', e);
+			classicFallback();
 		});
 	}
 

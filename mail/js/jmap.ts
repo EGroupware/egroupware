@@ -98,6 +98,10 @@ export class MailJmap
 	private mailboxIds : Record<string, string> = {};
 	private static readonly CUSTOM_FLAGS = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
 	private static readonly QUERY_PAGE_SIZE = 500;
+	// RFC 8621 §4.1.3 header-property name for the MDN (read-receipt) prompt - matches
+	// JmapShim::MDN_HEADER_PROPERTY (mail/src/JmapShim.php), which echoes this same key back for
+	// local-shim accounts; a real JMAP server (Stalwart) does so natively per spec
+	private static readonly MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
 
 	get egw() : IegwAppLocal
 	{
@@ -159,7 +163,7 @@ export class MailJmap
 			});
 			const properties = [
 				'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-				'from', 'to', 'cc', 'bcc', 'hasAttachment',
+				'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
 			];
 			if (fetchPreview)
 			{
@@ -355,7 +359,7 @@ export class MailJmap
 					ids: refs.map(ref => ref.emailId),
 					properties: [
 						'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-						'from', 'to', 'cc', 'bcc', 'hasAttachment', 'preview',
+						'from', 'to', 'cc', 'bcc', 'hasAttachment', 'preview', MailJmap.MDN_HEADER_PROPERTY,
 					],
 				};
 				if (token.isLocal)
@@ -711,6 +715,50 @@ export class MailJmap
 			// revoke after the click has been processed, not synchronously
 			window.setTimeout(() => URL.revokeObjectURL(url), 1000);
 		}
+	}
+
+	/**
+	 * Raw message headers, for the "view header" action - fetches the whole message as a raw text
+	 * blob (client.downloadBlob() against the message's whole-message blobId, same mechanism
+	 * downloadAttachment()/PGP already use for a specific part) and slices at the first blank line
+	 * client-side, byte-identical to what Api\Mail::getMessageRawHeader() already returns - no
+	 * dedicated IMAP HEADERTEXT fetch needed.
+	 *
+	 * @param rowId
+	 * @throws Error on any failure - caller falls back to the classic displayHeader popup
+	 */
+	async fetchRawHeader(rowId : string) : Promise<string>
+	{
+		const reference = this.messageReference(rowId);
+		const token = await this.ensureToken(reference.profileID);
+		if (!token)
+		{
+			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+		}
+		const args : any = {accountId: token.accountId, ids: [reference.emailId], properties: ['blobId']};
+		if (token.isLocal)
+		{
+			// standalone Email/get (no preceding Email/query in this request) needs our shim's
+			// local-only mailboxId extension - see JmapShim::emailGet(), same as refreshRows()
+			args.mailboxId = reference.mailboxId;
+		}
+		const [{emails}] = await this.clients[reference.profileID].requestMany((t) => ({
+			emails: t.Email.get(args) as any,
+		}));
+		const blobId = (emails.list || [])[0]?.blobId;
+		if (!blobId)
+		{
+			throw new Error('Unable to resolve the message blobId');
+		}
+		const response = await this.clients[reference.profileID].downloadBlob({
+			accountId: token.accountId,
+			blobId,
+			mimeType: 'message/rfc822',
+			fileName: 'header',
+		});
+		const text = await response.text();
+		const match = text.match(/\r?\n\r?\n/);
+		return match ? text.slice(0, match.index) : text;
 	}
 
 	/**
@@ -1178,6 +1226,20 @@ export class MailJmap
 				group.map(reference => reference.emailId), this.keywordPatch(keyword, set))));
 	}
 
+	/**
+	 * Set the MDN-sent/not-sent keyword - a fixed keyword pair, not a dynamic label, so this
+	 * bypasses labelKeyword()'s registered-label validation (same shape as setLabel() otherwise).
+	 * Needs JmapShim::writableKeywords() to allow $mdnsent/$mdnnotsent (mail/src/JmapShim.php) -
+	 * a real JMAP server (Stalwart) accepts any keyword already.
+	 */
+	async setMdnFlag(references : JmapMessageReference[], sent : boolean) : Promise<void>
+	{
+		const keyword = sent ? '$mdnsent' : '$mdnnotsent';
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.updateIds(group[0].profileID, group[0].mailboxId,
+				group.map(reference => reference.emailId), this.keywordPatch(keyword, true))));
+	}
+
 	/** Remove all known labels without touching custom flags or unrelated keywords. */
 	async clearLabels(references : JmapMessageReference[]) : Promise<void>
 	{
@@ -1614,6 +1676,14 @@ export class MailJmap
 		{
 			css.push('unseen');
 		}
+		if (keywords['$mdnsent'])
+		{
+			flags.mdnsent = 'mdnsent';
+		}
+		if (keywords['$mdnnotsent'])
+		{
+			flags.mdnnotsent = 'mdnnotsent';
+		}
 		for (let i = 1; i <= 5; i++)
 		{
 			if (keywords['$label' + i])
@@ -1671,6 +1741,9 @@ export class MailJmap
 			modified: email.receivedAt,
 			size: email.size,
 			bodypreview: email.preview || '',
+			// MDN (read-receipt) prompt trigger - mail_preview() (app.ts) checks this against the
+			// mdnsent/mdnnotsent keywords below to decide whether to show the Yes/No dialog
+			dispositionnotificationto: email[MailJmap.MDN_HEADER_PROPERTY] || '',
 			// Kept for the preview's attachment-presence check.  Row templates use
 			// the individual image values below instead of a legacy html widget.
 			attachments: email.hasAttachment ? 'attach' : '',

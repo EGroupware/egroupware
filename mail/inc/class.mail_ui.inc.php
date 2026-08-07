@@ -2713,9 +2713,11 @@ class mail_ui
 				'part' => $part,
 				'uid' => $hA['msgUID'],
 				'mailbox' => $hA['folder'],
-				'icServer' => $hA['profileID']
+				'icServer' => $hA['profileID'],
+				'rowID' => $lId,
 			);
 		};
+		$jmapCache = [];
 
 		//Examine the first attachment to see if attachment
 		//is winmail.dat embedded attachments.
@@ -2756,12 +2758,14 @@ class mail_ui
 				}
 				else
 				{
-					$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
+					$attachment = $this->fetchAttachmentJmap($params['rowID'], $params['part'], $params['icServer'], $jmapCache)
+						?? $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 				}
 			}
 			else
 			{
-				$attachment = $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
+				$attachment = $this->fetchAttachmentJmap($params['rowID'], $params['part'], $params['icServer'], $jmapCache)
+					?? $this->mail_bo->getAttachment($params['uid'],$params['part'],$params['is_winmail'],false);
 			}
 
 			$file = $dir. '/' . ($filename ? $filename : Mail::clean_subject_for_filename($attachment['filename']));
@@ -2830,9 +2834,24 @@ class mail_ui
 		{
 			$mailbox = $this->mail_bo->sessionData['mailbox'];
 		}
+		$icServerID = $icServerID ?? $this->mail_bo->profileID;
+		$rowID = self::generateRowID($icServerID, $mailbox, $message_id);
 		// always fetch all, even inline (images)
 		$fetchEmbeddedImages = true;
-		$attachments = $this->mail_bo->getMessageAttachments($message_id,null, null, $fetchEmbeddedImages, true,true,$mailbox);
+		$jmapAttachments = $this->resolveAttachmentsJmap($rowID, null, $fetchEmbeddedImages);
+		// TNEF/winmail messages need the classic per-file unpacking below - resolveAttachmentsJmap()
+		// only lists the opaque winmail.dat blob itself (matching resolveWinmailJmap()'s own
+		// per-file-content gap, see Tier 1 notes), not its unpacked internal attachments, so discard
+		// and fall back to the classic listing (which does unpack) for those
+		if ($jmapAttachments && strtoupper($jmapAttachments[0]['type'] ?? '') === 'APPLICATION/MS-TNEF')
+		{
+			$jmapAttachments = null;
+		}
+		// note: JMAP-resolved entries (already shaped by createAttachmentBlock()) don't carry a
+		// per-attachment 'charset' - the filename-transliteration below falls back to the system
+		// charset for those, a minor accepted degradation (no functional loss, just a fallback)
+		$attachments = $jmapAttachments ??
+			$this->mail_bo->getMessageAttachments($message_id,null, null, $fetchEmbeddedImages, true,true,$mailbox);
 		// put them in VFS so they can be zipped
 		$header = $this->mail_bo->getMessageHeader($message_id,'',true,false,$mailbox);
 		//get_home_dir may fetch the users startfolder if set; if not writeable, action will fail. TODO: use temp_dir
@@ -2858,7 +2877,15 @@ class mail_ui
 		}
 		foreach($attachments as $file)
 		{
-			if ($file['is_winmail'])
+			// JMAP-native byte fetch when this part carries a blobId (Tier 1/2 listing) - avoids
+			// the classic Api\Mail::getAttachment() real-IMAP FETCH, see fetchBlobBytes()
+			$jmapBytes = $file['is_winmail'] || empty($file['blobId']) ? null :
+				self::fetchBlobBytes($icServerID, $file['blobId']);
+			if ($jmapBytes !== null)
+			{
+				$attachment = ['attachment' => $jmapBytes];
+			}
+			elseif ($file['is_winmail'])
 			{
 				// Try to find the right content for file id
 				foreach ($tnefAttachments as $key => $val)
@@ -2883,8 +2910,10 @@ class mail_ui
 			// Strip special characters to make sure the files are visible for all OS (windows has issues)
 			$target_name = Api\Mail::clean_subject_for_filename(iconv($file['charset'] ? $file['charset'] : $GLOBALS['egw_info']['server']['system_charset'], 'ASCII//IGNORE', $file['filename']));
 
-			if (!($fp = Vfs::fopen($path.$target_name,'wb')) ||
-				!(!fseek($attachment['attachment'], 0, SEEK_SET) && stream_copy_to_stream($attachment['attachment'], $fp)))
+			$fp = Vfs::fopen($path.$target_name,'wb');
+			if (!$fp || (is_string($attachment['attachment']) ?
+				!fwrite($fp,$attachment['attachment']) :
+				!(!fseek($attachment['attachment'], 0, SEEK_SET) && stream_copy_to_stream($attachment['attachment'], $fp))))
 			{
 				$success=false;
 				Framework::message("Unable to zip {$target_name}",'error');
@@ -3520,7 +3549,8 @@ class mail_ui
 		$idData = Mail::splitRowID($_rowID);
 		$folder = $idData['folder'];
 		try {
-			$raw = $this->mail_bo->getMessageRawBody($idData['msgUID'],'', $folder);
+			$raw = self::fetchMessageBytesJmap($idData['profileID'], $folder, $idData['msgUID'], $idData['emailID'] ?? null)
+				?? $this->mail_bo->getMessageRawBody($idData['msgUID'],'', $folder);
 			$result = array ('success' => true, 'msg' =>'');
 			if ($raw && $_subject)
 			{
@@ -3533,8 +3563,16 @@ class mail_ui
 				if($folder == 'INBOX'.$delimiter) $folder='INBOX';
 				if ($this->mail_bo->folderExists($folder,true))
 				{
-					$this->mail_bo->appendMessage($folder, $mailer->getRaw(), null,'\\Seen');
-					$this->mail_bo->deleteMessages($idData['msgUID'], $folder);
+					// JMAP-native transport (Stalwart only, see replaceMessageJmap()'s docblock) -
+					// falls back to the classic IMAP APPEND+STORE+EXPUNGE round trip on any failure
+					// or for local-shim rows (no protocol-level win possible there). getRaw(false)
+					// returns a plain string - the default (true) returns a stream, which
+					// Api\Mail\Jmap::uploadBlob() (string-typed) can't accept
+					if (!self::replaceMessageJmap($idData['profileID'], $folder, $idData['msgUID'], $idData['emailID'] ?? null, $mailer->getRaw(false)))
+					{
+						$this->mail_bo->appendMessage($folder, $mailer->getRaw(), null,'\\Seen');
+						$this->mail_bo->deleteMessages($idData['msgUID'], $folder);
+					}
 				}
 				else
 				{
@@ -4450,6 +4488,167 @@ class mail_ui
 	}
 
 	/**
+	 * Byte-returning blob fetch, backend-uniform dispatch by blobId shape - opaque (Stalwart real
+	 * JMAP Email.blobId, needs $icServer->jmapClient()->downloadBlob()) vs self-describing
+	 * base64(mailbox):uid:partId (local shim, see JmapShim::bodyPartToJmap()/download() - empty
+	 * partId means the whole raw message, not one part).
+	 *
+	 * Tier 2 shared primitive: used wherever a caller already has a blobId (from
+	 * resolveAttachmentsJmap()/resolveWinmailJmap()) and wants raw bytes server-side - VFS save,
+	 * zip assembly, modify-subject's raw fetch - instead of Api\Mail::getAttachment()'s classic
+	 * real-IMAP FETCH. Not used by createAttachmentBlock()'s mime_data/invoice_data Link::set_data()
+	 * tokens, which stay on the Stalwart-only downloadBlobAccount() target they already had (that
+	 * code path is consumed by *other* apps' mime-handlers, not touched here).
+	 *
+	 * @param string $acc_id
+	 * @param string $blobId
+	 * @return ?string null on any failure - caller falls back to its classic fetch
+	 */
+	private static function fetchBlobBytes(string $acc_id, string $blobId) : ?string
+	{
+		try
+		{
+			$icServer = JmapShim::imapServer($acc_id);
+			if (!$icServer)
+			{
+				return null;
+			}
+			if ($icServer instanceof Mail\Imap\Jmap)
+			{
+				return $icServer->jmapClient()->downloadBlob($blobId, 'blob', 'application/octet-stream');
+			}
+			[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
+			if ($mailboxB64 === null || !$uid)
+			{
+				return null;
+			}
+			$mailbox = JmapShim::urlsafeB64Decode($mailboxB64);
+			return $partId !== '' ? JmapShim::fetchRawPart($icServer, $mailbox, $uid, $partId) :
+				JmapShim::fetchRawMessage($icServer, $mailbox, $uid);
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;	// fall through to the classic path rather than showing an error
+		}
+	}
+
+	/**
+	 * Resolve and fetch a message's WHOLE raw body via fetchBlobBytes() - Stalwart needs one
+	 * Email/get(['blobId']) call first (opaque, server-assigned blobId); the local shim's blobId is
+	 * self-describing and directly constructible (see JmapShim::download()).
+	 *
+	 * @param string $acc_id
+	 * @param string $mailbox
+	 * @param string $uid
+	 * @param ?string $emailID Stalwart's opaque Email.id (Mail::splitRowID()'s 'emailID'), null for
+	 *  local-shim rows
+	 * @return ?string raw bytes, or null on any failure - caller falls back to its classic fetch
+	 */
+	private static function fetchMessageBytesJmap(string $acc_id, string $mailbox, string $uid, ?string $emailID) : ?string
+	{
+		try
+		{
+			$icServer = JmapShim::imapServer($acc_id);
+			if (!$icServer)
+			{
+				return null;
+			}
+			if ($icServer instanceof Mail\Imap\Jmap)
+			{
+				if (!$emailID)
+				{
+					return null;
+				}
+				$blobId = $icServer->jmapClient()->emailGet($emailID, ['blobId'])['blobId'] ?? null;
+			}
+			else
+			{
+				$blobId = JmapShim::urlsafeB64Encode($mailbox).':'.$uid.':';
+			}
+			return $blobId ? self::fetchBlobBytes($acc_id, $blobId) : null;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native transport for ajax_saveModifiedMessageSubject()'s "create the modified copy,
+	 * delete the original" operation - Stalwart only. Real JMAP has no primitive for editing an
+	 * existing message's headers in place (Email objects are immutable once stored), so the actual
+	 * fetch-raw + edit-in-Api\Mailer logic stays unchanged (already correct, protocol-agnostic) -
+	 * only the append (real IMAP APPEND) and delete-original (real IMAP STORE+EXPUNGE) transport
+	 * swap to genuine Email/import + Email/set(destroy) where a real JMAP server exists.
+	 *
+	 * Deliberately NOT extended to the local IMAP shim: JmapShim is a thin wrapper that would just
+	 * turn around and call the exact same Horde_Imap_Client_Socket::append()/store()+expunge()
+	 * primitives Api\Mail::appendMessage()/deleteMessages() already call directly - no protocol-level
+	 * win is possible there, only added indirection, so shim rows keep using the classic path.
+	 *
+	 * @param string $acc_id
+	 * @param string $folder
+	 * @param string $uid original message's uid, to be destroyed on success
+	 * @param ?string $emailID Stalwart's opaque Email.id, null for local-shim rows (always fails
+	 *  fast for those, caller falls back to the classic path)
+	 * @param string $raw new (subject-edited) raw RFC822 bytes
+	 * @return bool true on success
+	 */
+	private static function replaceMessageJmap(string $acc_id, string $folder, string $uid, ?string $emailID, string $raw) : bool
+	{
+		if (!$emailID)
+		{
+			return false;
+		}
+		try
+		{
+			$icServer = JmapShim::imapServer($acc_id);
+			if (!$icServer instanceof Mail\Imap\Jmap)
+			{
+				return false;
+			}
+			$client = $icServer->jmapClient();
+			$blobId = $client->uploadBlob($raw, 'message/rfc822');
+			$client->emailImport($blobId, $folder, ['$seen' => true]);
+			$client->emailDestroy([$emailID]);
+			return true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return false;
+		}
+	}
+
+	/**
+	 * JMAP-native attachment-bytes fetch for vfsSaveAttachments()/download_zip() - looks up the
+	 * attachment's blobId via resolveAttachmentsJmap() (whole-message block, matched by partID) and
+	 * fetches bytes via fetchBlobBytes() when found, else null so the caller falls back to its
+	 * classic Api\Mail::getAttachment() real-IMAP FETCH.
+	 *
+	 * @param string $rowID message row id (no part/winmail/name suffix)
+	 * @param string $partID
+	 * @param string $acc_id
+	 * @param array &$cache keyed by rowID, reused across multiple attachments of the same message
+	 * @return array|null ['filename'=>string, 'attachment'=>string] or null
+	 */
+	private function fetchAttachmentJmap(string $rowID, string $partID, string $acc_id, array &$cache) : ?array
+	{
+		$cache[$rowID] ??= ($this->resolveAttachmentsJmap($rowID) ?: []);
+		foreach ($cache[$rowID] as $jmapAttachment)
+		{
+			if ((string)($jmapAttachment['partID'] ?? '') === (string)$partID && !empty($jmapAttachment['blobId']))
+			{
+				$bytes = self::fetchBlobBytes($acc_id, $jmapAttachment['blobId']);
+				return $bytes === null ? null : ['filename' => $jmapAttachment['filename'], 'attachment' => $bytes];
+			}
+		}
+		return null;
+	}
+
+	/**
 	 * Fetch the attachmentsBlock for a single row on demand
 	 *
 	 * Rows fetched via client-side JMAP (see mail/js/jmap.ts and mail/src/JmapShim.php) only
@@ -4537,6 +4736,10 @@ class mail_ui
 			'attachmentsBlock' => $attachmentsBlock,
 			'attachments' => $attachmentsBlock ? "<et2-image src='attach'></et2-image>" : '&nbsp;',
 		];
+		// MDN (read-receipt) prompt trigger - same 3-header priority Api\Mail::getHeaders() uses
+		$mdnHeader = $headers['DISPOSITION-NOTIFICATION-TO'] ?? $headers['RETURN-RECEIPT-TO'] ??
+			$headers['X-CONFIRM-READING-TO'] ?? '';
+		$data['dispositionnotificationto'] = is_array($mdnHeader) ? (string)reset($mdnHeader) : (string)$mdnHeader;
 		if (!empty($headers['SMIMETYPE']))
 		{
 			$data['smime'] = Mail\Smime::isSmimeSignatureOnly($headers['SMIMETYPE']) ?

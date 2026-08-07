@@ -602,6 +602,74 @@ class Jmap
 	}
 
 	/**
+	 * Blob upload (RFC 8620 §6.3) - POST raw bytes, get back a blobId usable by emailImport().
+	 *
+	 * @param string $raw
+	 * @param string $type mime-type, e.g. "message/rfc822"
+	 * @return string new blobId
+	 * @throws Api\Exception|\HttpException
+	 */
+	public function uploadBlob(string $raw, string $type='message/rfc822') : string
+	{
+		$url = strtr($this->uploadUrl, ['{accountId}' => rawurlencode($this->accountId)]);
+		$response = $this->api($url, 'POST', $raw, ['Content-Type: '.$type]);
+		return (is_array($response) ? $response['blobId'] ?? null : null) ??
+			throw new Api\Exception('Blob upload failed: '.json_encode($response));
+	}
+
+	/**
+	 * RFC 8621 §4.8 Email/import - create a new message from an uploaded blob (see uploadBlob())
+	 * into a mailbox.
+	 *
+	 * Used by mail_ui::ajax_saveModifiedMessageSubject()'s Stalwart transport (real Email/import +
+	 * emailDestroy(), replacing the classic IMAP APPEND+STORE+EXPUNGE round trip that method still
+	 * uses for the local IMAP-shim case, which has no such protocol-level win available).
+	 *
+	 * @param string $blobId from uploadBlob()
+	 * @param string $folder folder-path e.g. "INBOX/Drafts" (resolved to a Mailbox id internally)
+	 * @param array $keywords JMAP keyword => true, e.g. ['$seen' => true]
+	 * @return string new Email.id
+	 * @throws Api\Exception
+	 */
+	public function emailImport(string $blobId, string $folder, array $keywords=[]) : string
+	{
+		$mailboxId = $this->getMailboxId($folder);
+		if (!$mailboxId)
+		{
+			throw new Api\Exception("Mailbox '$folder' not found");
+		}
+		$args = [
+			'accountId' => $this->accountId,
+			'emails' => [
+				'x' => [
+					'blobId' => $blobId,
+					'mailboxIds' => [$mailboxId => true],
+					'keywords' => $keywords ?: new \stdClass(),
+				],
+			],
+		];
+		$response = $this->jmapCall([['Email/import', $args, '0']], self::JMAP_MAIL);
+		return $response['methodResponses'][0][1]['created']['x']['id'] ??
+			throw new Api\Exception('Email/import failed: '.json_encode($response['methodResponses'][0][1]['notCreated'] ?? []));
+	}
+
+	/**
+	 * RFC 8620/8621 Email/set{destroy} - permanently delete messages by id.
+	 *
+	 * @param string[] $ids
+	 * @throws Api\Exception
+	 */
+	public function emailDestroy(array $ids) : void
+	{
+		$response = $this->jmapCall([['Email/set', ['accountId' => $this->accountId, 'destroy' => $ids], '0']], self::JMAP_MAIL);
+		$notDestroyed = $response['methodResponses'][0][1]['notDestroyed'] ?? [];
+		if ($notDestroyed)
+		{
+			throw new Api\Exception('Email/set destroy failed: '.json_encode($notDestroyed));
+		}
+	}
+
+	/**
 	 * Get id of a folder-path e.g. INBOX/folder/subfolder (id corresponds to subfolder in INBOX/folder!)
 	 *
 	 * @param string $folder folder-path
