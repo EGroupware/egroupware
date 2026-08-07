@@ -3,13 +3,15 @@
  *
  * Covers open(), open_link()'s URL/target dispatch tree, openTab(),
  * openPopup(), availHeight(), link_handler(), close(), _check_popupBlocker(),
- * the private mailto() parser (reached via open_link), and openWithinWindow()'s
- * simple no-existing-popup path. See EgwOpenHarness for what's stubbed and why.
+ * the private mailto() parser (reached via open_link), openDialog(), and
+ * openWithinWindow() including its multi-popup Et2Dialog chooser (see
+ * EgwOpenHarness for how a minimal, non-rendering Et2Dialog stand-in makes
+ * the chooser's callback directly invocable, as if a button had been
+ * clicked). See EgwOpenHarness for what else is stubbed and why.
  *
  * NOT covered (documented residual risk, see EgwOpenHarness docblock):
  * link_handler()'s no-framework fallback (real navigation), and
- * openWithinWindow()'s multi-popup Et2Dialog chooser / long-content
- * form-POST paths (need the real Et2Dialog component or real navigation).
+ * openWithinWindow()'s long-content form-POST path (real form submission).
  */
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
@@ -421,7 +423,55 @@ describe('egw_open.js (open)', () =>
 		});
 	});
 
-	describe('openWithinWindow() - simple path', () =>
+	describe('openDialog()', () =>
+	{
+		it('resolves with the dialog DOM node when the response contains dialog HTML', async() =>
+		{
+			const instance = env.egw();
+
+			const promise = instance.openDialog('infolog.infolog_ui.something');
+
+			assert.equal(env.jsonCalls.length, 1);
+			assert.equal(env.jsonCalls[0].menuaction,
+				'infolog.jdots_framework.ajax_exec.template.infolog.infolog_ui.something');
+			assert.deepEqual(env.jsonCalls[0].parameters, ['index.php?menuaction=infolog.infolog_ui.something', true]);
+
+			env.jsonCalls[0].callback!(['<div class="my-dialog">Hi</div>']);
+
+			const dialog : any = await promise;
+			assert.equal(dialog.className, 'my-dialog');
+			assert.isTrue(env.window.document.body.contains(dialog));
+		});
+
+		it('rejects when the response is not an array of [htmlString, ...]', async() =>
+		{
+			const instance = env.egw();
+			const promise = instance.openDialog('infolog.infolog_ui.something');
+
+			env.jsonCalls[0].callback!({not: 'an array'});
+
+			let error : any;
+			try { await promise; } catch (e) { error = e; }
+			// not assert.instanceOf(error, Error): constructed inside the
+			// iframe's realm - see EgwJson.test.ts's AbortSignal note for why
+			// chai's instanceOf hangs on cross-realm objects.
+			assert.include(error.message, 'Invalid response');
+		});
+
+		it('rejects when the html string does not produce any dialog element', async() =>
+		{
+			const instance = env.egw();
+			const promise = instance.openDialog('infolog.infolog_ui.something');
+
+			env.jsonCalls[0].callback!(['']);
+
+			let error : any;
+			try { await promise; } catch (e) { error = e; }
+			assert.include(error.message, 'Unable to add dialog');
+		});
+	});
+
+	describe('openWithinWindow()', () =>
 	{
 		it('opens a new entry directly via open() when there are no existing popups for the app', () =>
 		{
@@ -432,6 +482,111 @@ describe('egw_open.js (open)', () =>
 			instance.openWithinWindow('mail', 'setCompose', {to: ['x@example.com']}, {'preset[mailto]': 'mailto:x@example.com'});
 
 			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', {'preset[mailto]': 'mailto:x@example.com'}, 'mail', 'mail', undefined));
+		});
+
+		describe('dialog chooser (existing popups for the app)', () =>
+		{
+			function fakePopup(title : string)
+			{
+				return {
+					closed: false,
+					document: {title},
+					app: {mail: {setCompose: sinon.stub()}}
+				};
+			}
+
+			it('builds one option per existing popup plus a "new" option, defaulting to index 0 ("add")', () =>
+			{
+				const instance = env.egw();
+				const popups = [fakePopup('Compose 1'), fakePopup('Compose 2')];
+				(env.window as any).framework = {popups_get: sinon.stub().returns(popups)};
+				env.stubs.preference.returns('add');
+
+				instance.openWithinWindow('mail', 'setCompose', {to: ['x@example.com']}, {});
+
+				const dialog : any = env.window.document.querySelector('et2-dialog-open-stub');
+				assert.exists(dialog);
+				const options = dialog.attrs.value.content.grid;
+				// env.stubs.lang is an identity stub (returns its first arg
+				// unchanged) - it doesn't do %1 placeholder substitution, so
+				// this is genuinely "New %1" verbatim here, not a typo.
+				assert.deepEqual(options.map((o : any) => o.label), ['Compose 1', 'Compose 2', 'New %1']);
+				assert.equal(options.index, 0);
+			});
+
+			it('defaults the selection to the "new" option when the remembered preference is "new"', () =>
+			{
+				const instance = env.egw();
+				(env.window as any).framework = {popups_get: sinon.stub().returns([fakePopup('Compose 1')])};
+				env.stubs.preference.returns('new');
+
+				instance.openWithinWindow('mail', 'setCompose', {}, {});
+
+				const dialog : any = env.window.document.querySelector('et2-dialog-open-stub');
+				assert.equal(dialog.attrs.value.content.grid.index, 'new');
+			});
+
+			it('runs popups_grabage_collector() for any closed popup before building the dialog', () =>
+			{
+				const instance = env.egw();
+				const closedPopup = fakePopup('Closed');
+				closedPopup.closed = true;
+				const gc = sinon.stub();
+				(env.window as any).framework = {popups_get: sinon.stub().returns([closedPopup]), popups_grabage_collector: gc};
+
+				instance.openWithinWindow('mail', 'setCompose', {}, {});
+
+				assert.isTrue(gc.calledOnce);
+			});
+
+			it('the dialog callback opens a new entry via open() when "new" is chosen, and remembers that choice', () =>
+			{
+				const instance = env.egw();
+				const openStub = sinon.stub(instance, 'open');
+				(env.window as any).framework = {popups_get: sinon.stub().returns([fakePopup('Compose 1')])};
+
+				instance.openWithinWindow('mail', 'setCompose', {to: ['x@example.com']}, {extra: 1});
+
+				const dialog : any = env.window.document.querySelector('et2-dialog-open-stub');
+				dialog.attrs.callback('add', {grid: {index: 'new'}});
+
+				assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', {extra: 1}, 'mail', 'mail', undefined));
+				assert.isTrue(env.stubs.set_preference.calledOnceWith('common', 'mail_add_address_new_popup', 'new'));
+			});
+
+			it('the dialog callback dispatches to the chosen existing popup\'s app method, and remembers "add"', () =>
+			{
+				const instance = env.egw();
+				const popup = fakePopup('Compose 1');
+				(env.window as any).framework = {popups_get: sinon.stub().returns([popup])};
+
+				instance.openWithinWindow('mail', 'setCompose', {to: ['x@example.com']}, {extra: 1});
+
+				const dialog : any = env.window.document.querySelector('et2-dialog-open-stub');
+				dialog.attrs.callback('add', {grid: {index: 0}});
+
+				assert.isTrue(popup.app.mail.setCompose.calledOnceWith(popup, {to: ['x@example.com']}));
+				assert.isTrue(env.stubs.set_preference.calledOnceWith('common', 'mail_add_address_new_popup', 'add'));
+			});
+
+			it('the dialog callback does nothing further for "cancel"', () =>
+			{
+				const instance = env.egw();
+				const popup = fakePopup('Compose 1');
+				const openStub = sinon.stub(instance, 'open');
+				(env.window as any).framework = {popups_get: sinon.stub().returns([popup])};
+
+				instance.openWithinWindow('mail', 'setCompose', {}, {});
+
+				const dialog : any = env.window.document.querySelector('et2-dialog-open-stub');
+				dialog.attrs.callback('cancel', {grid: {index: 0}});
+
+				assert.isFalse(openStub.called);
+				assert.isFalse(popup.app.mail.setCompose.called);
+				// the preference IS still recorded, even for cancel - the
+				// callback persists it before the switch on _button_id
+				assert.isTrue(env.stubs.set_preference.calledOnce);
+			});
 		});
 	});
 });

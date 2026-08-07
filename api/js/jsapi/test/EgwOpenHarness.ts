@@ -21,14 +21,31 @@
  * NOT loaded for real (that's egw_message.js, its own Layer 2 module) -
  * mailto() only needs it as a plain stub.
  *
+ * `Et2Dialog` is a minimal custom element stand-in (registered so `new
+ * Et2Dialog(...)` is legal), not the real Lit component - it captures
+ * whatever transformAttributes() is given (including the `callback`
+ * openWithinWindow()'s dialog-chooser wires up) so tests can invoke that
+ * callback directly, as if a user had clicked a button, without needing
+ * the real dialog to render at all.
+ *
+ * `json()` is a controllable fake (see `env.jsonCalls`) purely for
+ * openDialog() - the real network layer has its own thorough coverage in
+ * EgwJson.test.ts.
+ *
  * Deliberately NOT exercised anywhere in the test suite built on this
  * harness: assigning to a real window's `location.href` (link_handler's
- * no-framework fallback) and openWithinWindow's multi-popup Et2Dialog
- * chooser / long-content form-POST paths - both would need either real
- * navigation or the full Et2Dialog web component to behave meaningfully.
+ * no-framework fallback) and openWithinWindow's long-content form-POST
+ * path (real navigation / form submission).
  */
 import {createEgwCoreEnv, EgwCoreEnv} from "./EgwCoreHarness";
 import * as sinon from "sinon";
+
+export interface JsonCall
+{
+	menuaction : string;
+	parameters : any[];
+	callback : Function | undefined;
+}
 
 export interface EgwOpenEnv extends EgwCoreEnv
 {
@@ -40,9 +57,12 @@ export interface EgwOpenEnv extends EgwCoreEnv
 		link_app_list : sinon.SinonStub;
 		lang : sinon.SinonStub;
 		preference : sinon.SinonStub;
+		set_preference : sinon.SinonStub;
 		callFunc : sinon.SinonStub;
 		message : sinon.SinonStub;
+		app_name : sinon.SinonStub;
 	};
+	jsonCalls : JsonCall[];
 }
 
 export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv>
@@ -57,6 +77,8 @@ export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv
 		debug_level: () => 0
 	}));
 
+	env.jsonCalls = [];
+
 	env.stubs = {
 		link_get_registry: sinon.stub(),
 		link: sinon.stub().callsFake((url : string, params? : any) =>
@@ -66,8 +88,11 @@ export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv
 		link_app_list: sinon.stub().returns({}),
 		lang: sinon.stub().callsFake((msg : string) => msg),
 		preference: sinon.stub().returns(undefined),
+		set_preference: sinon.stub(),
 		callFunc: sinon.stub(),
-		message: sinon.stub()
+		message: sinon.stub(),
+		// egw_message.js's app_name(), not loaded here; used by openWithinWindow()
+		app_name: sinon.stub().returns('infolog')
 	};
 
 	await loadScript(env.window.document, '/api/js/jsapi/egw_utils.js', 'module');
@@ -80,16 +105,45 @@ export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv
 		link_app_list: env.stubs.link_app_list,
 		lang: env.stubs.lang,
 		preference: env.stubs.preference,
+		set_preference: env.stubs.set_preference,
 		callFunc: env.stubs.callFunc,
-		message: env.stubs.message
+		message: env.stubs.message,
+		app_name: env.stubs.app_name,
+		json: (menuaction : string, parameters : any[], callback? : Function) =>
+		{
+			env.jsonCalls.push({menuaction, parameters, callback});
+			return {sendRequest: () => {}};
+		}
 	}));
 
 	(env.window as any).egwIsMobile = () => null;
-	(env.window as any).Et2Dialog = {
-		show_dialog: sinon.stub(),
-		BUTTONS_OK: 'ok',
-		WARNING_MESSAGE: 'warning'
+
+	const HTMLElementInWindow : any = (env.window as any).HTMLElement;
+	const Et2DialogStub : any = class extends HTMLElementInWindow
+	{
+		appname : string;
+		attrs : any;
+		constructor(appname? : string)
+		{
+			super();
+			this.appname = appname;
+		}
+		transformAttributes(attrs : any)
+		{
+			this.attrs = attrs;
+			Object.assign(this, attrs);
+		}
 	};
+	Et2DialogStub.show_dialog = sinon.stub();
+	Et2DialogStub.BUTTONS_OK = 'ok';
+	Et2DialogStub.WARNING_MESSAGE = 'warning';
+	Et2DialogStub.BUTTONS_YES_NO_CANCEL = 'yes_no_cancel';
+	Et2DialogStub.YES_BUTTON = 'yes';
+	Et2DialogStub.NO_BUTTON = 'no';
+	Et2DialogStub.CANCEL_BUTTON = 'cancel';
+	env.window.customElements.define('et2-dialog-open-stub', Et2DialogStub);
+	(env.window as any).Et2Dialog = Et2DialogStub;
+
 	env.window.open = sinon.stub() as any;
 
 	// What egw.js's bootstrap normally sets before any window-local module runs.
