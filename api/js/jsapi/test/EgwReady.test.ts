@@ -1,10 +1,13 @@
 /**
  * Tests for egw_ready.js ("ready" module) - MODULE_WND_LOCAL.
  *
- * Covers readyWaitFor()/readyDone() token accounting, ready()'s "before"
- * vs. normal callback firing rules, readyProgress() dispatch order, and
- * per-window isolation. See EgwReadyHarness for how the DOMContentLoaded/
- * load lifecycle is simulated.
+ * Covers readyWaitFor()/readyDone() token accounting (including
+ * out-of-order resolution and cross-window token isolation), ready()'s
+ * "before" vs. normal callback firing rules, readyProgress() dispatch
+ * order, _context ("this") binding for both ready() and readyProgress(),
+ * the window "load" event as an alternate/redundant trigger to
+ * DOMContentLoaded, and per-window isolation. See EgwReadyHarness for how
+ * the DOMContentLoaded/load lifecycle is simulated.
  *
  * testCallReady() used to declare `var isReady = ...` inside its own
  * function body, which shadowed the factory-level `isReady` closure
@@ -86,6 +89,35 @@ describe('egw_ready.js (ready)', () =>
 
 			assert.equal(progress.callCount, 1, 'the second readyDone() for the same token must be a no-op');
 		});
+
+		it('resolves tokens correctly out of order (a later token resolved before an earlier one)', () =>
+		{
+			const progress = sinon.stub();
+			const tokenA = env.egw().readyWaitFor();
+			const tokenB = env.egw().readyWaitFor();
+			env.egw().readyProgress(progress);
+			// pending: readyEvent + A + B = 3
+
+			env.egw().readyDone(tokenB);
+			assert.deepEqual(progress.firstCall.args, [1, 2], '[done, pending] after resolving B first');
+
+			env.egw().readyDone(tokenA);
+			assert.deepEqual(progress.secondCall.args, [2, 1], 'readyEvent is the only one left');
+		});
+
+		it('a token from one window is meaningless in another (readyDone is a no-op across windows)', () =>
+		{
+			const otherWindow = env.createWindow();
+			const tokenInMain = env.egw().readyWaitFor();
+
+			env.egw('otherapp', otherWindow).readyDone(tokenInMain);
+
+			// still pending in the main window - readyEvent + our token = 2
+			const progress = sinon.stub();
+			env.egw().readyProgress(progress);
+			env.egw().readyWaitFor();
+			assert.deepEqual(progress.firstCall.args, [0, 3]);
+		});
 	});
 
 	describe('readyProgress()', () =>
@@ -99,6 +131,17 @@ describe('egw_ready.js (ready)', () =>
 			env.egw().readyWaitFor();
 
 			assert.deepEqual(calls, ['second', 'first']);
+		});
+
+		it('calls the callback with the given _context as `this`', () =>
+		{
+			const context = {label: 'my-context'};
+			let seenThis : any;
+			env.egw().readyProgress(function(this : any) { seenThis = this; }, context);
+
+			env.egw().readyWaitFor();
+
+			assert.strictEqual(seenThis, context);
 		});
 	});
 
@@ -176,6 +219,38 @@ describe('egw_ready.js (ready)', () =>
 			env.fireReadyEvent();
 
 			assert.deepEqual(calls, ['second', 'first']);
+		});
+
+		it('calls the callback with the given _context as `this`', () =>
+		{
+			const context = {label: 'my-context'};
+			let seenThis : any;
+			env.egw().ready(function(this : any) { seenThis = this; }, context);
+
+			env.fireReadyEvent();
+
+			assert.strictEqual(seenThis, context);
+		});
+
+		it('the window\'s "load" event resolves readyEvent exactly like DOMContentLoaded does', () =>
+		{
+			const cb = sinon.stub();
+			env.egw().ready(cb);
+
+			env.fireLoadEvent();
+
+			assert.isTrue(cb.calledOnce);
+		});
+
+		it('firing both DOMContentLoaded and load only resolves readyEvent once (registeredCallbacks fire a single time)', () =>
+		{
+			const cb = sinon.stub();
+			env.egw().ready(cb);
+
+			env.fireReadyEvent();
+			env.fireLoadEvent();
+
+			assert.isTrue(cb.calledOnce, 'the second event must find readyEvent already removed from readyPending and no-op');
 		});
 	});
 

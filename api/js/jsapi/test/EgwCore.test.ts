@@ -19,6 +19,13 @@
  * behaviour that looks like a caching bug in egw.module() rather than
  * "correct" behaviour - they exist so a rewrite makes a deliberate choice
  * about whether to keep or fix it, instead of silently changing it.
+ *
+ * Also covers the introspection/utility surface of the engine itself:
+ * getAppName()'s fallback chain, dumpModules(), constant() (including its
+ * _window filter), the "too many arguments" error, duplicate module-name
+ * registration being silently ignored, and that cleaning up one window's
+ * instances doesn't disturb a sibling instance for the same app in a
+ * different window (two entries in the same instances[] hash bucket).
  */
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
@@ -92,6 +99,99 @@ describe('egw_core.js composition engine', () =>
 			assert.strictEqual(appA_w1, appA_w1_again);
 			assert.notStrictEqual(appA_w1, appA_w2, 'same app, different window must differ');
 			assert.notStrictEqual(appA_w1, appB_w1, 'same window, different app must differ');
+		});
+
+		it('throws for calls with more than 2 arguments', () =>
+		{
+			assert.throws(() => (env.egw as any)('a', 'b', 'c'), 'Invalid count of parameters');
+		});
+	});
+
+	describe('getAppName()', () =>
+	{
+		it('falls back to "api" for the global instance when app_name() is falsy', () =>
+		{
+			env.egw.extend('app_name-stub', env.egw.MODULE_GLOBAL, () => ({app_name: () => null}));
+
+			assert.equal(env.egw().getAppName(), 'api');
+		});
+
+		it('falls back to the instance\'s own appName (the app passed to egw(app)) when app_name() is falsy', () =>
+		{
+			env.egw.extend('app_name-stub', env.egw.MODULE_GLOBAL, () => ({app_name: () => null}));
+
+			assert.equal(env.egw('myapp').getAppName(), 'myapp');
+		});
+
+		it('prefers a truthy app_name() over both appName and the "api" fallback', () =>
+		{
+			env.egw.extend('app_name-stub', env.egw.MODULE_GLOBAL, () => ({app_name: () => 'overridden'}));
+
+			assert.equal(env.egw('myapp').getAppName(), 'overridden');
+		});
+	});
+
+	describe('egw.dumpModules()', () =>
+	{
+		it('reflects every registered module\'s name and flag', () =>
+		{
+			env.egw.extend('myGlobalModule', env.egw.MODULE_GLOBAL, () => ({}));
+			env.egw.extend('myAppModule', env.egw.MODULE_APP_LOCAL, () => ({}));
+
+			const modules = env.egw.dumpModules();
+
+			assert.equal(modules.myGlobalModule.name, 'myGlobalModule');
+			assert.equal(modules.myGlobalModule.flags, env.egw.MODULE_GLOBAL);
+			assert.equal(modules.myAppModule.flags, env.egw.MODULE_APP_LOCAL);
+		});
+	});
+
+	describe('egw.constant()', () =>
+	{
+		it('updates a WND_LOCAL module\'s value for every existing instance, and for the module slot itself', () =>
+		{
+			env.egw.extend('counter', env.egw.MODULE_WND_LOCAL, () => ({value: 'initial'}));
+
+			const win = env.createWindow();
+			const rootInstance = env.egw('appA');
+			const otherInstance = env.egw('appB', win);
+
+			env.egw.constant('counter', 'value', 'updated');
+
+			assert.equal(rootInstance.value, 'updated');
+			assert.equal(otherInstance.value, 'updated');
+			// the module slot itself was updated too, not just existing
+			// instances - a brand-new instance for that window sees it too
+			assert.equal(env.egw('appC', win).value, 'updated');
+		});
+
+		it('with a _window filter, only updates instances/module slots for that window', () =>
+		{
+			env.egw.extend('counter', env.egw.MODULE_WND_LOCAL, () => ({value: 'initial'}));
+
+			const win = env.createWindow();
+			const rootInstance = env.egw('appA');
+			const otherInstance = env.egw('appB', win);
+
+			env.egw.constant('counter', 'value', 'updated-for-win', win);
+
+			assert.equal(otherInstance.value, 'updated-for-win');
+			assert.equal(rootInstance.value, 'initial', 'the root window must be untouched');
+		});
+	});
+
+	describe('duplicate module registration', () =>
+	{
+		it('a second extend() call with an already-used module name is silently ignored, factory never runs', () =>
+		{
+			const firstFactory = sinon.stub().returns({value: 'first'});
+			const secondFactory = sinon.stub().returns({value: 'second'});
+			env.egw.extend('dupe', env.egw.MODULE_GLOBAL, firstFactory);
+			env.egw.extend('dupe', env.egw.MODULE_GLOBAL, secondFactory);
+
+			assert.equal(env.egw().value, 'first');
+			assert.isTrue(firstFactory.called);
+			assert.isFalse(secondFactory.called);
 		});
 	});
 
@@ -296,6 +396,26 @@ describe('egw_core.js composition engine', () =>
 
 			assert.isTrue(unregisterAllPlugins.calledOnce);
 			assert.isNull(findInstanceForWindow(env, win), 'the instance must be removed from egw\'s bookkeeping');
+		});
+
+		it('cleaning up one window does not affect a sibling instance for the SAME app in a different window', () =>
+		{
+			// appA/w1 and appA/w2 live in the same `instances['appA']` hash
+			// bucket (see egw_core.js's getEgwInstance) - closing one must
+			// only remove its own entry, not the whole bucket.
+			const unregisterAllPlugins = sinon.stub();
+			env.egw.extend('json-ish', env.egw.MODULE_WND_LOCAL, () => ({unregisterAllPlugins}));
+
+			const w1 = env.createWindow();
+			const w2 = env.createWindow();
+			env.egw('sameapp', w1);
+			env.egw('sameapp', w2);
+
+			w1.dispatchEvent(new Event('beforeunload'));
+
+			assert.isNull(findInstanceForWindow(env, w1));
+			assert.isNotNull(findInstanceForWindow(env, w2), 'the sibling instance must survive');
+			assert.isTrue(unregisterAllPlugins.calledOnce, 'only the closed window\'s instance is cleaned up');
 		});
 	});
 });

@@ -21,8 +21,10 @@ import {createEgwCoreEnv, EgwCoreEnv} from "./EgwCoreHarness";
 
 export interface EgwReadyEnv extends EgwCoreEnv
 {
-	/** Simulate the DOMContentLoaded/load event resolving the built-in 'readyEvent' token */
+	/** Simulate the document's DOMContentLoaded event resolving the built-in 'readyEvent' token */
 	fireReadyEvent(win? : Window) : void;
+	/** Simulate the window's load event - the fallback listener, registered alongside DOMContentLoaded */
+	fireLoadEvent(win? : Window) : void;
 }
 
 export async function createEgwReadyEnv(prefs : object = {}) : Promise<EgwReadyEnv>
@@ -41,6 +43,10 @@ export async function createEgwReadyEnv(prefs : object = {}) : Promise<EgwReadyE
 	env.fireReadyEvent = (win : Window = env.window) =>
 	{
 		win.document.dispatchEvent(new Event('DOMContentLoaded'));
+	};
+	env.fireLoadEvent = (win : Window = env.window) =>
+	{
+		win.dispatchEvent(new Event('load'));
 	};
 
 	return env;
