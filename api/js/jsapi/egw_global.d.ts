@@ -1193,51 +1193,7 @@ interface IegwWndLocal extends IegwGlobal
 	 */
 	openWithinWindow(_app : string, _method : string, _content : object, _extra? : string|object, _regexp? : RegExp, _check_popup_blocker? : boolean) : void;
 
-	/**
-	 * implemented in egw_ready.js
-	 */
-	/**
-	 * The readyWaitFor function can be used to register an event, that has
-	 * to be marked as "done" before the ready function will call its
-	 * registered callbacks. The function returns an id that has to be
-	 * passed to the "readDone" function once
-	 */
-	readyWaitFor() : string;
-	/**
-	 * The readyDone function can be used to mark a event token as
-	 * previously requested by "readyWaitFor" as done.
-	 *
-	 * @param _token is the token which has now been processed.
-	 */
-	readyDone(_token : string) : void;
-	/**
-	 * The ready function can be used to register a function that will be
-	 * called, when the window is completely loaded. All ready handlers will
-	 * be called exactly once. If the ready handler has already been called,
-	 * the given function will be called defered using setTimeout.
-	 *
-	 * @param _callback is the function which will be called when the page
-	 * 	is ready. No parameters will be passed.
-	 * @param _context is the context in which the callback function should
-	 * 	get called.
-	 * @param _beforeDOMContentLoaded specifies, whether the callback should
-	 * 	get called, before the DOMContentLoaded event has been fired.
-	 */
-	ready(_callback : Function, _context : object, _beforeDOMContentLoaded? : boolean) : void;
-	/**
-	 * The readyProgress function can be used to register a function that
-	 * will be called whenever a ready event is done or registered.
-	 *
-	 * @param _callback is the function which will be called when the
-	 * 	progress changes.
-	 * @param _context is the context in which the callback function which
-	 * 	should get called.
-	 */
-	readyProgress(_callback : Function, _context : object) : void;
-	/**
-	 * Returns whether the ready events have already been called.
-	 */
-	isReady() : boolean;
+	// ready: implemented in egw_ready.ts, contributing ReadyModule
 
 	/**
 	 * implemented in egw_tooltip.js

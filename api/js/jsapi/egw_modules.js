@@ -23,7 +23,7 @@ import "./egw_store.js";
 import "./egw_tooltip.js";
 import "./egw_css.js";
 import "./egw_calendar.js";
-import "./egw_ready.js";
+import "./egw_ready";
 import "./egw_data.js";
 import "./egw_tail.js";
 import "./egw_inheritance.js";

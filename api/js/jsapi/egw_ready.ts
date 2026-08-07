@@ -15,25 +15,83 @@
 */
 import './egw_core';
 
+export interface ReadyModule
+{
+	/**
+	 * The readyWaitFor function can be used to register an event, that has
+	 * to be marked as "done" before the ready function will call its
+	 * registered callbacks. The function returns an id that has to be
+	 * passed to the "readDone" function once
+	 */
+	readyWaitFor() : string;
+
+	/**
+	 * The readyDone function can be used to mark a event token as
+	 * previously requested by "readyWaitFor" as done.
+	 *
+	 * @param _token is the token which has now been processed.
+	 */
+	readyDone(_token : string) : void;
+
+	/**
+	 * The ready function can be used to register a function that will be
+	 * called, when the window is completely loaded. All ready handlers will
+	 * be called exactly once. If the ready handler has already been called,
+	 * the given function will be called defered using setTimeout.
+	 *
+	 * @param _callback is the function which will be called when the page
+	 * 	is ready. No parameters will be passed.
+	 * @param _context is the context in which the callback function should
+	 * 	get called.
+	 * @param _beforeDOMContentLoaded specifies, whether the callback should
+	 * 	get called, before the DOMContentLoaded event has been fired.
+	 */
+	ready(_callback : Function, _context? : object, _beforeDOMContentLoaded? : boolean) : void;
+
+	/**
+	 * The readyProgress function can be used to register a function that
+	 * will be called whenever a ready event is done or registered.
+	 *
+	 * @param _callback is the function which will be called when the
+	 * 	progress changes.
+	 * @param _context is the context in which the callback function which
+	 * 	should get called.
+	 */
+	readyProgress(_callback : Function, _context? : object) : void;
+
+	/**
+	 * Returns whether the ready events have already been called.
+	 */
+	isReady() : boolean;
+}
+
+declare global
+{
+	interface IegwWndLocal extends ReadyModule
+	{
+	}
+}
+
 /**
  * @augments Class
  * @param {string} _app application name object is instanciated for
  * @param {object} _wnd window object is instanciated for
  */
-egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
+egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Window) : ReadyModule
 {
 	"use strict";
 
-	var egw = this;
+	var egw : any = this;
 
-	var registeredCallbacks = [];
-	var registeredProgress = [];
-	var readyPending = {'readyEvent': true};
+	var registeredCallbacks : {callback : Function, context : object, before : boolean}[] = [];
+	var registeredProgress : {callback : Function, context : object}[] = [];
+	var readyPending : {[token : string] : boolean} = {'readyEvent': true};
 	var readyPendingCnt = 1;
 	var readyDoneCnt = 0;
 	var isReady = false;
 
-	function doReadyWaitFor() {
+	function doReadyWaitFor() : string
+	{
 		if (!isReady)
 		{
 			var uid = egw.uid();
@@ -50,7 +108,8 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		return null;
 	}
 
-	function doReadyDone(_token) {
+	function doReadyDone(_token : string) : void
+	{
 		if (typeof readyPending[_token] !== 'undefined')
 		{
 			delete readyPending[_token];
@@ -63,7 +122,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		}
 	}
 
-	function readyProgressChange()
+	function readyProgressChange() : void
 	{
 		// Call all registered progress callbacks
 		for (var i = 0; i < registeredProgress.length; i++)
@@ -79,11 +138,12 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 				readyPendingCnt + readyDoneCnt);
 	}
 
-	function readyEventHandler() {
+	function readyEventHandler() : void
+	{
 		doReadyDone('readyEvent');
 	}
 
-	function testCallReady()
+	function testCallReady() : void
 	{
 		// Check whether no further event is pending
 		if (readyPendingCnt <= 1 && !isReady)
@@ -125,13 +185,13 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		_wnd.addEventListener("load", readyEventHandler, false);
 
 	// If IE event model is used
-	} else if (_wnd.document.attachEvent) {
+	} else if ((<any>_wnd.document).attachEvent) {
 		// ensure firing before onload,
 		// maybe late but safe also for iframes
-		_wnd.document.attachEvent("onreadystatechange", readyEventHandler);
+		(<any>_wnd.document).attachEvent("onreadystatechange", readyEventHandler);
 
 		// A fallback to window.onload, that will always work
-		_wnd.attachEvent("onload", readyEventHandler);
+		(<any>_wnd).attachEvent("onload", readyEventHandler);
 	}
 
 	return {
@@ -144,7 +204,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @memberOf egw
 		 */
-		readyWaitFor: function() {
+		readyWaitFor: function() : string {
 			return doReadyWaitFor();
 		},
 
@@ -154,7 +214,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 *
 		 * @param _token is the token which has now been processed.
 		 */
-		readyDone: function(_token) {
+		readyDone: function(_token : string) : void {
 			doReadyDone(_token);
 		},
 
@@ -171,7 +231,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param _beforeDOMContentLoaded specifies, whether the callback should
 		 * 	get called, before the DOMContentLoaded event has been fired.
 		 */
-		ready: function(_callback, _context, _beforeDOMContentLoaded) {
+		ready: function(_callback : Function, _context? : object, _beforeDOMContentLoaded? : boolean) : void {
 			if (!isReady)
 			{
 				registeredCallbacks.push({
@@ -197,7 +257,7 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		 * @param _context is the context in which the callback function which
 		 * 	should get called.
 		 */
-		readyProgress: function(_callback, _context) {
+		readyProgress: function(this : any, _callback : Function, _context? : object) : void {
 			if (!isReady)
 			{
 				registeredProgress.unshift({
@@ -214,11 +274,9 @@ egw.extend('ready', egw.MODULE_WND_LOCAL, function(_app, _wnd)
 		/**
 		 * Returns whether the ready events have already been called.
 		 */
-		isReady: function() {
+		isReady: function() : boolean {
 			return isReady;
 		}
 	};
 
 });
-
-

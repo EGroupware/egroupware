@@ -38,7 +38,7 @@ export async function createEgwReadyEnv(prefs : object = {}) : Promise<EgwReadyE
 	}));
 
 	await loadScript(env.window.document, '/api/js/jsapi/egw_utils.js', 'module');
-	await loadScript(env.window.document, '/api/js/jsapi/egw_ready.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_ready.ts', 'module');
 
 	env.fireReadyEvent = (win : Window = env.window) =>
 	{
