@@ -925,6 +925,10 @@ describe("Et2Nextmatch header event handling", () =>
 			actions: {archive: {}},
 			action_var: "nm_action_id",
 			col_filter: {owner: "5"},
+			filter: "open",
+			filter2: "all",
+			cat_id: "7",
+			search: "urgent",
 			filter_aria_label: "Addressbook",
 			home_dir: "/home/demo",
 			not_a_nextmatch_setting: "pollution",
@@ -960,6 +964,10 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.notProperty(attrs.settings, "home_dir", "settings should not retain undocumented app attributes");
 		assert.notProperty(attrs.settings, "not_a_nextmatch_setting", "settings should ignore unknown content keys");
 		assert.notProperty(attrs.settings, "searchletter", "settings should not retain active letter-search state");
+		assert.notProperty(attrs.settings, "filter", "settings should not retain the active filter value");
+		assert.notProperty(attrs.settings, "filter2", "settings should not retain the active filter2 value");
+		assert.notProperty(attrs.settings, "cat_id", "settings should not retain the active category filter");
+		assert.notProperty(attrs.settings, "search", "settings should not retain the active search text");
 		assert.deepEqual(attrs.settings, {
 			action_var: "nm_action_id",
 			filter_aria_label: "Addressbook",
@@ -968,9 +976,19 @@ describe("Et2Nextmatch header event handling", () =>
 		}, "settings should keep non-initialization content settings");
 		assert.deepEqual(el.activeFilters.col_filter, {owner: "5"}, "content col_filter should move into active filters");
 		assert.equal(el.activeFilters.searchletter, "M", "content searchletter should move into active filters");
+		// Regression: a filter/category/search value active from persisted page-load state (not
+		// just one changed via its header control this session) must reach `_filters`, since
+		// that's the only place a push/refresh fetch reads filters from. Missing this let a row
+		// that shouldn't match an already-loaded filter get reported as matching anyway.
+		assert.equal(el.activeFilters.filter, "open", "content filter should move into active filters");
+		assert.equal(el.activeFilters.filter2, "all", "content filter2 should move into active filters");
+		assert.equal(el.activeFilters.cat_id, "7", "content cat_id should move into active filters");
+		assert.equal(el.activeFilters.search, "urgent", "content search should move into active filters");
 		assert.notProperty(el.settings, "rows", "settings property should not retain the initial row payload");
 		assert.notProperty(el.settings, "col_filter", "settings property should not retain active column filters");
 		assert.notProperty(el.settings, "searchletter", "settings property should not retain active letter-search state");
+		assert.notProperty(el.settings, "filter", "settings property should not retain the active filter value");
+		assert.notProperty(el.settings, "cat_id", "settings property should not retain the active category filter");
 		assert.equal(el.settings.action_var, "nm_action_id", "settings property should receive the object action_var");
 		assert.deepEqual(el.placeholderActions, ["add", "import_csv"], "legacy settings should still normalize other properties");
 

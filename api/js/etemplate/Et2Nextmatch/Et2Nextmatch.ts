@@ -108,8 +108,9 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * Content from `$content[nm]` contains both nextmatch configuration
 	 * and arbitrary app state. Only keep documented nextmatch settings here so
 	 * `settings` remains useful for action/filter behaviour without retaining
-	 * unrelated content payloads. Active fetch state like `col_filter` and
-	 * `searchletter` is intentionally omitted and normalized into `_filters`.
+	 * unrelated content payloads. Active fetch state like `col_filter`,
+	 * `searchletter`, `filter`, `filter2`, `cat_id` and `search` is intentionally
+	 * omitted and normalized into `_filters` instead - see `FILTER_VALUE_SETTINGS`.
 	 */
 	private static readonly ALLOWED_SETTINGS : Set<string> = new Set([
 		"action_var",
@@ -132,7 +133,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		"row_id",
 		"row_modified",
 		"rows",
-		"search",
 		"select_all",
 		"selectcols",
 		"selected",
@@ -142,6 +142,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		"total",
 		"view"
 	]);
+
+	/**
+	 * Simple current-filter-value settings that must land in `_filters` (read by
+	 * `Et2NextmatchDataProvider._currentFilters()` for every fetch/push-refresh check), not just
+	 * in `settings`. Without this, a filter active from persisted page-load state - rather than
+	 * changed via its header control in the current session - is silently missing from the
+	 * filters sent with a push/refresh check, so the server has no way to exclude a row that
+	 * shouldn't match it. `col_filter` and `searchletter` get the same treatment above, via
+	 * dedicated setters.
+	 */
+	private static readonly FILTER_VALUE_SETTINGS : readonly string[] = ["filter", "filter2", "cat_id", "search"];
 
 	/**
 	 * Legacy filter controls use patterned keys such as `filter_label`,
@@ -311,6 +322,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			this._setSearchletterFilter(settings.searchletter);
 			delete settings.searchletter;
+		}
+		for(const key of Et2Nextmatch.FILTER_VALUE_SETTINGS)
+		{
+			this._seedFilterValueSetting(settings, key);
 		}
 		this._settings = {
 			...Et2Nextmatch.DEFAULT_SETTINGS,
@@ -777,6 +792,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				this._setSearchletterFilter(sourceSettings.searchletter);
 				delete sourceSettings.searchletter;
 			}
+			for(const key of Et2Nextmatch.FILTER_VALUE_SETTINGS)
+			{
+				this._seedFilterValueSetting(sourceSettings, key);
+			}
 		}
 		const settings = this._filterAllowedSettings(contentSettings);
 		const mergedSettings = {
@@ -801,6 +820,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			this._setColFilterFilter(attrs.col_filter);
 			delete attrs.col_filter;
+		}
+		for(const key of Et2Nextmatch.FILTER_VALUE_SETTINGS)
+		{
+			this._seedFilterValueSetting(attrs, key);
 		}
 		// Normalize legacy snake_case settings to modern Et2Nextmatch properties.
 		for(const [modernKey, legacyKey] of [
@@ -895,6 +918,21 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _setColFilterFilter(value : any)
 	{
 		this._filters.col_filter = value && typeof value === "object" && !Array.isArray(value) ? {...value} : {};
+	}
+
+	/**
+	 * Copy one of `FILTER_VALUE_SETTINGS` out of a settings/attrs source object and into
+	 * `_filters`, deleting it from the source so it isn't left duplicated between `settings`
+	 * and `_filters` (matching how `col_filter`/`searchletter` are handled above).
+	 */
+	private _seedFilterValueSetting(source : Record<string, any>, key : string)
+	{
+		if(typeof source[key] === "undefined")
+		{
+			return;
+		}
+		this._filters[key] = source[key];
+		delete source[key];
 	}
 
 	/**
