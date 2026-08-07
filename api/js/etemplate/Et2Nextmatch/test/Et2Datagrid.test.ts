@@ -1646,12 +1646,12 @@ describe("Et2Datagrid row rendering", () =>
 
 		assert.equal(
 			widget?.deferredProperties?.active,
-			"$[active]",
+			"$active",
 			"Et2Widget should defer row-scoped boolean attributes during template preparation"
 		);
 		assert.equal(
 			prepared?.attrMap?.[deferredId]?.active,
-			"$[active]",
+			"$active",
 			"datagrid row binding should keep deferred boolean attributes for per-row transform"
 		);
 	});
@@ -1914,6 +1914,51 @@ describe("Et2Datagrid row rendering", () =>
 		assert.include(rowElement!.className, "primary", "`$class` should resolve from row content");
 		assert.include(rowElement!.className, "cat_3", "`$cat_id` should resolve into category class");
 		assert.include(rowElement!.className, "cat_7", "`$cat_id` should resolve all category classes");
+	});
+
+	/**
+	 * Contract: `_normalizeLegacyRowExpressionShorthand()` collapses a simple,
+	 * single-key bracket reference (e.g. infolog's `$row_cont[info_cat]`) to
+	 * the bare `$field` shorthand, the same as `${field}` already does. It
+	 * must not fall back to the `$[field]` bracket form, which category-class
+	 * detection in `_placeholderField()` does not recognize as a placeholder,
+	 * causing the raw category id to leak in as a bare class name.
+	 * Setup: normalize `$row_cont[info_cat] $row_cont[class]`.
+	 * Pass: the result is the bare `$info_cat $class` shorthand.
+	 */
+	it("normalizes simple $row_cont[field] bracket references to bare $field shorthand", () =>
+	{
+		const el = createDatagrid();
+		const provider = new Et2RowProvider(el as any);
+
+		const normalized = (provider as any)._normalizeLegacyRowExpressionShorthand(
+			"$row_cont[info_cat] $row_cont[class]"
+		);
+
+		assert.equal(normalized, "$info_cat $class");
+	});
+
+	/**
+	 * Contract: row templates using `$row_cont[field]` bracket syntax (e.g.
+	 * infolog's `$row_cont[info_cat]`) produce `row_category cat_#` classes
+	 * on the row root, once normalized to the bare `$field` shorthand.
+	 * Setup: apply `customizeRowRootAttributes` to a root element whose class
+	 * already holds the normalized `$info_cat` form.
+	 * Pass: the resolved class includes `row_category` and `cat_<id>`, not the
+	 * raw category id as a bare class name.
+	 */
+	it("resolves category classes from the normalized $field shorthand", () =>
+	{
+		const rowRoot = document.createElement("tr");
+		rowRoot.setAttribute("class", "$class $info_cat");
+		const row = {class: "primary", info_cat: "5"};
+
+		Et2RowProvider.customizeRowRootAttributes(rowRoot, row, (rowData, key) => rowData[key]);
+
+		assert.include(rowRoot.className, "primary", "`$class` should resolve from row content");
+		assert.include(rowRoot.className, "row_category", "`$info_cat` should be recognized as a category placeholder");
+		assert.include(rowRoot.className, "cat_5", "`$info_cat` should resolve into a category class");
+		assert.notInclude(rowRoot.className.split(/\s+/), "5", "raw category id should not leak in as a bare class name");
 	});
 
 	/**

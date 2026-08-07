@@ -965,17 +965,19 @@ export class Et2RowProvider
 		{
 			return value;
 		}
+		// A single, simple bracket key (no nested path) collapses to the bare
+		// `$field` shorthand, matching how `${field}` normalizes below. Only
+		// an actual nested path needs the `$[a.b]` form.
+		const bracketPathToShorthand = (fields : string) : string =>
+		{
+			const path = fields.slice(1, -1).split("][").join(".");
+			return /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(path) ? "$" + path : "$[" + path + "]";
+		};
 		let normalized = value;
-		normalized = normalized.replace(/\$row_cont((?:\[[^\]]+\])+)/g, (_match, fields) =>
-			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
-		);
-		normalized = normalized.replace(/\$\{row\}((?:\[[^\]]+\])+)/g, (_match, fields) =>
-			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
-		);
-		normalized = normalized.replace(/\{\$row\}((?:\[[^\]]+\])+)/g, (_match, fields) =>
-			"$[" + fields.slice(1, -1).split("][").join(".") + "]"
-		);
-		normalized = normalized.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, field) => "$[" + field + "]");
+		normalized = normalized.replace(/\$row_cont((?:\[[^\]]+\])+)/g, (_match, fields) => bracketPathToShorthand(fields));
+		normalized = normalized.replace(/\$\{row\}((?:\[[^\]]+\])+)/g, (_match, fields) => bracketPathToShorthand(fields));
+		normalized = normalized.replace(/\{\$row\}((?:\[[^\]]+\])+)/g, (_match, fields) => bracketPathToShorthand(fields));
+		normalized = normalized.replace(/\$row\.([a-zA-Z0-9_.]+)/g, (_match, field) => bracketPathToShorthand("[" + field + "]"));
 		normalized = normalized.replace(
 			/\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g,
 			(_match, token) => token === "row" ? "${row}" : "$" + token
