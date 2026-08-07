@@ -7,22 +7,54 @@
  * @link http://www.egroupware.org
  * @author Andreas Stöckel (as AT stylite.de)
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
- * @version $Id$
  */
 
 /**
- * This code setups the egw namespace and adds the "extend" function, which is
+ * This code sets up the egw namespace and adds the "extend" function, which is
  * used by extension modules to inject their content into the egw object.
+ *
+ * Kept as a plain, non-module IIFE (like the .js file it replaces) rather than
+ * an ES module - it's loaded via a classic <script src> tag (both in the real
+ * bootstrap and in EgwCoreHarness.ts), and never itself imports or is imported.
+ * Its typed public contract (Iegw/IegwGlobal/IegwWndLocal/IegwAppLocal) lives in
+ * egw_global.d.ts, not here - this file is the implementation.
  */
 (function()
 {
 	"use strict";
 
-	var instanceUid = 0;
+	/** One entry in the module registry created by egw.extend() */
+	interface ModuleDescriptor
+	{
+		code : ModuleFactory;
+		flags : number;
+		name : string;
+	}
+
+	type ModuleFactory = (this : any, _app : string | null, _wnd : Window) => object;
+
+	/** One cached egw(app, wnd) instance */
+	interface InstanceEntry
+	{
+		instance : any;
+		window : Window | null;
+		app : string | null;
+	}
+
+	/** instances['~global~' | app-name] -> window -> cached instance entry */
+	type InstancesMap = Map<string, Map<Window | null, InstanceEntry>>;
+
+	interface ModuleInstancesState
+	{
+		app : Map<string, Map<string, object>>;
+		wnd : Map<Window, Map<string, object>>;
+		glo : Map<string, object>;
+	}
 
 	// Some local functions for cloning and merging javascript objects
-	function cloneObject(_obj) {
-		var result = {};
+	function cloneObject(_obj : any) : any
+	{
+		var result : any = {};
 
 		for (var key in _obj)
 		{
@@ -32,23 +64,12 @@
 		return result;
 	}
 
-	function mergeObjects(_to, _from) {
+	function mergeObjects(_to : any, _from : any) : void
+	{
 		// Extend the egw object
 		for (var key in _from)
 		{
 			_to[key] = _from[key];
-		}
-	}
-
-	function deleteWhere(_arr, _cond)
-	{
-		for (var i = _arr.length - 1; i >= 0; i--)
-		{
-			if (_cond(_arr[i]))
-			{
-				_arr[i].instance && _arr[i].instance.unregisterAllPlugins();
-				_arr.splice(i, 1);
-			}
 		}
 	}
 
@@ -59,53 +80,41 @@
 	 *
 	 * @param _egw is a reference to the global _egw instance and is passed as
 	 * 	a context to the module instance.
-	 * @param _modules is the hash map which contains all module descriptors.
+	 * @param _modules is the registry which contains all module descriptors.
 	 * @param _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
 	 * @param _app is the application for which the module instances should get
 	 * 	created.
 	 */
-	function getAppModules(_egw, _modules, _moduleInstances, _app)
+	function getAppModules(_egw : any, _modules : Map<string, ModuleDescriptor>, _moduleInstances : ModuleInstancesState, _app : string) : Map<string, object>
 	{
 		// Check whether the application specific modules for that instance
 		// already exists, if not, create it
-		if (typeof _moduleInstances.app[_app] === 'undefined')
+		if (!_moduleInstances.app.has(_app))
 		{
-			var modInsts = {};
-			_moduleInstances.app[_app] = modInsts;
+			var modInsts = new Map<string, object>();
+			_moduleInstances.app.set(_app, modInsts);
 
 			// Otherwise create the application specific instances
-			for (var key in _modules)
+			for (var [key, mod] of _modules)
 			{
-				var mod = _modules[key];
-
 				// Check whether the module is actually an application local
 				// instance. As the module instance may already have been
 				// created by another extension (when calling the egw.module
 				// function) we're doing the second check.
-				if (mod.flags === _egw.MODULE_APP_LOCAL
-				    && typeof modInsts[key] === 'undefined')
+				if (mod.flags === _egw.MODULE_APP_LOCAL && !modInsts.has(key))
 				{
-					modInsts[key] = mod.code.call(_egw, _app, window);
+					modInsts.set(key, mod.code.call(_egw, _app, window));
 				}
 			}
 		}
 
-		return _moduleInstances.app[_app];
+		return _moduleInstances.app.get(_app)!;
 	}
 
-	function getExistingWndModules(_moduleInstances, _window)
+	function getExistingWndModules(_moduleInstances : ModuleInstancesState, _window : Window) : Map<string, object> | null
 	{
-		// Search for the specific window instance
-		for (var i = 0; i < _moduleInstances.wnd.length; i++)
-		{
-			if (_moduleInstances.wnd[i].window === _window)
-			{
-				return _moduleInstances.wnd[i].modules;
-			}
-		}
-
-		return null;
+		return _moduleInstances.wnd.get(_window) || null;
 	}
 
 	/**
@@ -115,37 +124,37 @@
 	 *
 	 * @param _egw is a reference to the global _egw instance and is passed as
 	 * 	a context to the module instance.
-	 * @param _modules is the hash map which contains all module descriptors.
+	 * @param _modules is the registry which contains all module descriptors.
 	 * @param _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
 	 * @param _instances refers to all api instances.
 	 * @param _window is the window for which the module instances should get
 	 * 	created.
 	 */
-	function getWndModules(_egw, _modules, _moduleInstances, _instances, _window)
+	function getWndModules(_egw : any, _modules : Map<string, ModuleDescriptor>, _moduleInstances : ModuleInstancesState, _instances : InstancesMap, _window : Window) : Map<string, object>
 	{
 		var mods = getExistingWndModules(_moduleInstances, _window);
-		if (mods) {
+		if (mods)
+		{
 			return mods;
 		}
 
 		// If none was found, create the slot
-		mods = {};
-		_moduleInstances.wnd.push({
-			'window': _window,
-			'modules': mods
-		});
+		mods = new Map<string, object>();
+		_moduleInstances.wnd.set(_window, mods);
 
 		// Add an eventlistener for the "onunload" event -- if "onunload" gets
 		// called, we have to delete the module slot created above
-		var fnct = function() {
-			cleanupEgwInstances(_instances, _moduleInstances, function(_w) {
+		var fnct = function()
+		{
+			cleanupEgwInstances(_instances, _moduleInstances, function(_w)
+			{
 				return _w.window === _window;
 			});
 		};
-		if (_window.attachEvent)
+		if ((<any>_window).attachEvent)
 		{
-			_window.attachEvent('onbeforeunload', fnct);
+			(<any>_window).attachEvent('onbeforeunload', fnct);
 		}
 		else
 		{
@@ -153,18 +162,15 @@
 		}
 
 		// Otherwise create the window specific instances
-		for (var key in _modules)
+		for (var [key, mod] of _modules)
 		{
-			var mod = _modules[key];
-
 			// Check whether the module is actually a window local instance. As
 			// the module instance may already have been created by another
 			// extension (when calling the egw.module function) we're doing the
 			// second check.
-			if (mod.flags === _egw.MODULE_WND_LOCAL
-			    && typeof mods[key] === 'undefined')
+			if (mod.flags === _egw.MODULE_WND_LOCAL && !mods.has(key))
 			{
-				mods[key] = mod.code.call(_egw, null, _window);
+				mods.set(key, mod.code.call(_egw, null, _window));
 			}
 		}
 
@@ -174,20 +180,19 @@
 	/**
 	 * Creates an api instance for the given application and the given window.
 	 *
-	 * @param {globalEgw} _egw is the global _egw instance which should be used.
-	 * @param {object} _modules is the hash map which contains references to all module
+	 * @param _egw is the global _egw instance which should be used.
+	 * @param _modules is the registry which contains references to all module
 	 * 	descriptors.
-	 * @param {object} _moduleInstances is the the object which contains the application
+	 * @param _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
-	 * @param {array} _list is the overall instances list, to which the module should be
+	 * @param _byWindow is the per-window map for this (app|'~global~') hash bucket,
+	 * 	to which the new instance should be added.
+	 * @param _instances is the overall instances map, to which the module should be
 	 * 	added.
-	 * @param {object} _instances is the overall instances list, to which the module should be
-	 * 	added.
-	 * @param {string} _app is the application for which the instance should be created.
-	 * @param {DOMElement} _window is the window for which the instance should be created.
-	 * @return {egw}
+	 * @param _app is the application for which the instance should be created.
+	 * @param _window is the window for which the instance should be created.
 	 */
-	function createEgwInstance(_egw, _modules, _moduleInstances, _list, _instances, _app, _window)
+	function createEgwInstance(_egw : any, _modules : Map<string, ModuleDescriptor>, _moduleInstances : ModuleInstancesState, _byWindow : Map<Window | null, InstanceEntry>, _instances : InstancesMap, _app : string | null, _window : Window | null) : any
 	{
 		// Clone the global object
 		var instance = cloneObject(_egw);
@@ -200,8 +205,8 @@
 		instance.appName = _app;
 		instance.window = _window;
 
-		// Push the newly created instance onto the instance list
-		_list.push({
+		// Register the newly created instance
+		_byWindow.set(_window, {
 			'instance': instance,
 			'window': _window,
 			'app': _app
@@ -211,23 +216,21 @@
 		// module instances into the new instance
 		if (_app)
 		{
-			var appModules = getAppModules(_egw, _modules, _moduleInstances,
-				_app);
+			var appModules = getAppModules(_egw, _modules, _moduleInstances, _app);
 
-			for (var key in appModules)
+			for (var [, mod] of appModules)
 			{
-				mergeObjects(instance, appModules[key]);
+				mergeObjects(instance, mod);
 			}
 		}
 
 		if (_window)
 		{
-			var wndModules = getWndModules(_egw, _modules, _moduleInstances,
-				_instances, _window);
+			var wndModules = getWndModules(_egw, _modules, _moduleInstances, _instances, _window);
 
-			for (var key in wndModules)
+			for (var [, mod] of wndModules)
 			{
-				mergeObjects(instance, wndModules[key]);
+				mergeObjects(instance, mod);
 			}
 		}
 
@@ -239,18 +242,17 @@
 	 * Returns a egw instance for the given application and the given window. If
 	 * the instance does not exist now, the instance will be created.
 	 *
-	 * @param {globalEgw} _egw is the global _egw instance which should be used.
-	 * @param {object} _modules is the hash map which contains references to all module
+	 * @param _egw is the global _egw instance which should be used.
+	 * @param _modules is the registry which contains references to all module
 	 * 	descriptors.
-	 * @param {object} _moduleInstances is the the object which contains the application
+	 * @param _moduleInstances is the the object which contains the application
 	 * 	and window specific module instances.
-	 * @param {object} _instances is the overall instances list, to which the module should be
+	 * @param _instances is the overall instances map, to which the module should be
 	 * 	added.
-	 * @param {string} _app is the application for which the instance should be created.
-	 * @param {DOMElement} _window is the window for which the instance should be created.
-	 * @return {egw}
+	 * @param _app is the application for which the instance should be created.
+	 * @param _window is the window for which the instance should be created.
 	 */
-	function getEgwInstance(_egw, _modules, _moduleInstances, _instances, _app, _window)
+	function getEgwInstance(_egw : any, _modules : Map<string, ModuleDescriptor>, _moduleInstances : ModuleInstancesState, _instances : InstancesMap, _app : string | null, _window : Window | null) : any
 	{
 		// Generate the hash key for the instance descriptor object
 		var hash = _app ? _app : '~global~';
@@ -258,123 +260,122 @@
 		// Let "_window" be exactly null, if it evaluates to false
 		_window = _window ? _window : null;
 
-		// Create a new entry if the calculated hash does not exist
-		if (typeof _instances[hash] === 'undefined')
+		var byWindow = _instances.get(hash);
+		if (!byWindow)
 		{
-			_instances[hash] = [];
-			return createEgwInstance(_egw, _modules, _moduleInstances,
-				_instances[hash], _instances, _app, _window);
+			// Create a new entry if the calculated hash does not exist
+			byWindow = new Map<Window | null, InstanceEntry>();
+			_instances.set(hash, byWindow);
 		}
-		else
+		else if (byWindow.has(_window))
 		{
-			// Otherwise search for the api instance corresponding to the given
-			// window
-			for (var i = 0; i < _instances[hash].length; i++)
-			{
-				if (_instances[hash][i].window === _window)
-				{
-					return _instances[hash][i].instance;
-				}
-			}
+			// Found the api instance corresponding to the given window
+			return byWindow.get(_window)!.instance;
 		}
 
 		// If we're still here, no API instance for the given window has been
 		// found -- create a new entry
-		return createEgwInstance(_egw, _modules, _moduleInstances,
-			_instances[hash], _instances, _app, _window);
+		return createEgwInstance(_egw, _modules, _moduleInstances, byWindow, _instances, _app, _window);
 	}
 
-	function cleanupEgwInstances(_instances, _moduleInstances, _cond)
+	function cleanupEgwInstances(_instances : InstancesMap, _moduleInstances : ModuleInstancesState, _cond : (_entry : {window : Window | null}) => boolean) : void
 	{
 		// Iterate over the instances
-		for (var key in _instances)
+		for (var [key, byWindow] of _instances)
 		{
 			// Delete all entries corresponding to closed windows
-			deleteWhere(_instances[key], _cond);
-
-			// Delete the complete instance key if the array is empty
-			if (_instances[key].length === 0)
+			for (var [win, entry] of Array.from(byWindow))
 			{
-				delete _instances[key];
+				if (_cond(entry))
+				{
+					entry.instance && entry.instance.unregisterAllPlugins();
+					byWindow.delete(win);
+				}
+			}
+
+			// Delete the complete hash bucket if it is now empty
+			if (byWindow.size === 0)
+			{
+				_instances.delete(key);
 			}
 		}
 
 		// Delete all entries corresponding to non existing elements in the
 		// module instances
-		deleteWhere(_moduleInstances.wnd, _cond);
-	}
-
-	function mergeGlobalModule(_module, _code, _instances, _moduleInstances)
-	{
-		// Generate the global extension
-		var globalExtension = _code.call(egw, null, window);
-
-		// Store the global extension module
-		_moduleInstances.glo[_module] = globalExtension;
-
-		for (var key in _instances)
+		for (var [wndWindow] of Array.from(_moduleInstances.wnd))
 		{
-			for (var i = 0; i < _instances[key].length; i++)
+			if (_cond({window: wndWindow}))
 			{
-				mergeObjects(_instances[key][i].instance,
-						globalExtension);
+				_moduleInstances.wnd.delete(wndWindow);
 			}
 		}
 	}
 
-	function mergeAppLocalModule(_module, _code, _instances, _moduleInstances)
+	function mergeGlobalModule(_module : string, _code : ModuleFactory, _instances : InstancesMap, _moduleInstances : ModuleInstancesState) : void
 	{
 		// Generate the global extension
 		var globalExtension = _code.call(egw, null, window);
 
 		// Store the global extension module
-		_moduleInstances.glo[_module] = globalExtension;
+		_moduleInstances.glo.set(_module, globalExtension);
+
+		for (var [, byWindow] of _instances)
+		{
+			for (var [, entry] of byWindow)
+			{
+				mergeObjects(entry.instance, globalExtension);
+			}
+		}
+	}
+
+	function mergeAppLocalModule(_module : string, _code : ModuleFactory, _instances : InstancesMap, _moduleInstances : ModuleInstancesState) : void
+	{
+		// Generate the global extension
+		var globalExtension = _code.call(egw, null, window);
+
+		// Store the global extension module
+		_moduleInstances.glo.set(_module, globalExtension);
 
 		// Merge the extension into the global instances
-		for (var i = 0; i < _instances['~global~'].length; i++)
+		for (var [, entry] of _instances.get('~global~')!)
 		{
-			mergeObjects(_instances['~global~'][i].instance, globalExtension);
+			mergeObjects(entry.instance, globalExtension);
 		}
 
-		for (var key in _moduleInstances.app)
+		for (var [key, appMods] of _moduleInstances.app)
 		{
 			// Create the application specific instance and
 			// store it in the module instances
 			var appExtension = _code.call(egw, key, window);
-			_moduleInstances.app[key][_module] = appExtension;
+			appMods.set(_module, appExtension);
 
 			// Merge the extension into all instances for
 			// the current application
-			for (var i = 0; i < _instances[key].length; i++)
+			for (var [, entry] of _instances.get(key)!)
 			{
-				mergeObjects(_instances[key][i].instance, appExtension);
+				mergeObjects(entry.instance, appExtension);
 			}
 		}
 	}
 
-	function mergeWndLocalModule(_module, _code, _instances, _moduleInstances)
+	function mergeWndLocalModule(_module : string, _code : ModuleFactory, _instances : InstancesMap, _moduleInstances : ModuleInstancesState) : void
 	{
 		// Iterate over all existing windows
-		for (var i = 0; i < _moduleInstances.wnd.length; i++)
+		for (var [wnd, mods] of _moduleInstances.wnd)
 		{
-			var wnd = _moduleInstances.wnd[i].window;
-
 			// Create the window specific instance and
 			// register it.
 			var wndExtension = _code.call(egw, null, wnd);
-			_moduleInstances.wnd[i].modules[_module] = wndExtension;
+			mods.set(_module, wndExtension);
 
 			// Extend all existing instances which are using
 			// this window.
-			for (var key in _instances)
+			for (var [, byWindow] of _instances)
 			{
-				for (var j = 0; j < _instances[key].length; j++)
+				var entry = byWindow.get(wnd);
+				if (entry)
 				{
-					if (_instances[key][j].window === wnd)
-					{
-						mergeObjects(_instances[key][j].instance,
-								wndExtension);
-					}
+					mergeObjects(entry.instance, wndExtension);
 				}
 			}
 		}
@@ -385,44 +386,42 @@
 	 * has already been set inside the object by the Api\Framework::header
 	 * function and the instance has been marked as "prefsOnly".
 	 */
-	if (typeof window.egw != "undefined" && window.egw.prefsOnly)
+	if (typeof (<any>window).egw != "undefined" && (<any>window).egw.prefsOnly)
 	{
 		// Rescue the old egw object
-		var prefs = window.egw;
+		var prefs = (<any>window).egw;
 		delete prefs['prefsOnly'];
 
 		/**
-		 * Modules contains all currently loaded egw extension modules. A module
-		 * is stored as an object of the following form:
-		 * 	{
-		 * 		name: <NAME OF THE OBJECT>,
-		 * 		code: <REFERENCE TO THE MODULE FUNCTION>,
-		 * 		flags: <MODULE FLAGS (local, global, etc.)
-		 * 	}
+		 * Modules contains all currently loaded egw extension modules.
 		 */
-		var modules = {};
+		var modules = new Map<string, ModuleDescriptor>();
 
-		var moduleInstances = {
-			'app': {},
-			'wnd': [],
-			'glo': {}
+		var moduleInstances : ModuleInstancesState = {
+			'app': new Map<string, Map<string, object>>(),
+			'wnd': new Map<Window, Map<string, object>>(),
+			'glo': new Map<string, object>()
 		};
 
 		/**
 		 * instances contains references to all created instances.
 		 */
-		var instances = {};
+		var instances : InstancesMap = new Map<string, Map<Window | null, InstanceEntry>>();
 
 		/**
 		 * Set a interval which is used to cleanup unused API instances all 10
 		 * seconds.
 		 */
-		window.setInterval(function() {
-			cleanupEgwInstances(instances, moduleInstances, function(w) {
-				try {
-					return w.window && w.window.closed;
+		window.setInterval(function()
+		{
+			cleanupEgwInstances(instances, moduleInstances, function(w)
+			{
+				try
+				{
+					return !!(w.window && (<any>w.window).closed);
 				}
-				catch(e) {
+				catch (e)
+				{
 					// IE(11) seems to throw a permission denied error, when accessing closed property
 					return true;
 				}
@@ -437,20 +436,21 @@
 		 * function and/or a window object. If you specify both, the app name
 		 * has to preceed the window object reference. If no window object is
 		 * given, the root window will be used.
-		 *
-		 * @return {egw}
 		 */
-		var egw = function() {
-
+		var egw : any = function()
+		{
 			// Get the window/app reference
-			var _app = null;
-			var _window = window;
+			var _app : string | null = null;
+			var _window : Window = window;
 
 			switch (arguments.length)
 			{
 				case 0:
-					// Return the global instance
-					return instances['~global~'][0]['instance'];
+					// _app stays null, _window stays the root window - the
+					// bootstrap below has already seeded the '~global~' hash's
+					// entry for the root window with this very egw object, so
+					// getEgwInstance() finds and returns it directly.
+					break;
 
 				case 1:
 					if (typeof arguments[0] === 'string')
@@ -473,8 +473,7 @@
 			}
 
 			// Generate an API instance
-			return getEgwInstance(egw, modules, moduleInstances, instances,
-					_app, _window);
+			return getEgwInstance(egw, modules, moduleInstances, instances, _app, _window);
 		};
 
 		var globalEgw = {
@@ -515,7 +514,8 @@
 			 * function. If the getAppName function is called on the global
 			 * instance, 'api' is returned.
 			 */
-			getAppName: function() {
+			getAppName: function(this : any)
+			{
 				// Otherwise return the correct application name.
 				return this.app_name() || this.appName || 'api';
 			},
@@ -531,17 +531,17 @@
 			 * @param _code should be a function, which returns an object that
 			 * 	should extend the egw object.
 			 */
-			extend: function(_module, _flags, _code) {
-
+			extend: function(_module : string, _flags : number, _code : ModuleFactory) : void
+			{
 				// Check whether that module is already registered
-				if (typeof modules[_module] === 'undefined')
+				if (!modules.has(_module))
 				{
 					// Create a new module entry
-					modules[_module] = {
+					modules.set(_module, {
 						'code': _code,
 						'flags': _flags,
 						'name': _module
-					};
+					});
 
 					// Create new app/module specific instances for the new
 					// module and merge the new module into all created
@@ -551,24 +551,20 @@
 						// Easiest case -- simply merge the extension into all
 						// instances
 						case egw.MODULE_GLOBAL:
-							mergeGlobalModule(_module, _code, instances,
-									moduleInstances);
+							mergeGlobalModule(_module, _code, instances, moduleInstances);
 							break;
 
 						// Create new application specific instances and merge
 						// those into all api instances for that application
 						case egw.MODULE_APP_LOCAL:
-							mergeAppLocalModule(_module, _code, instances,
-									moduleInstances);
+							mergeAppLocalModule(_module, _code, instances, moduleInstances);
 							break;
-
 
 						// Create new window specific instances for each window
 						// and merge those into all api instances for that
 						// window
 						case egw.MODULE_WND_LOCAL:
-							mergeWndLocalModule(_module, _code, instances,
-									moduleInstances);
+							mergeWndLocalModule(_module, _code, instances, moduleInstances);
 							break;
 					}
 				}
@@ -586,56 +582,70 @@
 			 * 	an object referencing to a window or evaluate to false, in which
 			 * 	case the global instance will be returned.
 			 */
-			module: function(_module, _for) {
-				if (typeof modules[_module] !== 'undefined')
+			module: function(this : any, _module : string, _for? : string | Window) : any
+			{
+				var mod = modules.get(_module);
+				if (mod)
 				{
 					// Return the global instance of the module if _for
 					// evaluates to false
 					if (!_for)
 					{
-						return moduleInstances.glo[_module];
+						return moduleInstances.glo.get(_module);
 					}
 
 					// Assume _for is an application name if it is a string.
 					// Check whether the given application instance actually
 					// exists.
-					if (typeof _for === 'string'
-					    && typeof moduleInstances.app[_for] !== 'undefined')
+					if (typeof _for === 'string' && moduleInstances.app.has(_for))
 					{
-						var mods = moduleInstances.app[_for];
+						var appMods = moduleInstances.app.get(_for)!;
 
 						// Otherwise just instanciate the module if it has not
-						// been created yet.
-						if (typeof mods[_module] === 'undefined')
+						// been created yet. (In practice unreachable: an app's
+						// module slot is only created by getAppModules(), which
+						// eagerly instantiates every MODULE_APP_LOCAL module for
+						// it at that point - so this is a defensive fallback,
+						// not a normally-exercised path. The original .js here
+						// referenced an undeclared `_app` variable instead of
+						// `_for`, which would have thrown if this branch were
+						// ever actually reached.)
+						if (!appMods.has(_module))
 						{
-							var mod = modules[_module];
-							mods[_module] = mod.code.call(this, _app, window);
+							appMods.set(_module, mod.code.call(this, _for, window));
 						}
 
-						return mods[_module];
+						return appMods.get(_module);
 					}
 
 					// If _for is an object, assume it is a window.
 					if (typeof _for === 'object')
 					{
-						var mods = getExistingWndModules(moduleInstances, _for);
+						var wndMods = getExistingWndModules(moduleInstances, _for);
 
 						// Check whether the module container for that window
 						// has been found
-						if (mods != null && typeof mods[_module] != 'undefined')
+						if (wndMods != null && wndMods.has(_module))
 						{
-							return mods[_module];
+							return wndMods.get(_module);
 						}
 						// If the given module has not been instanciated for
-						// this window, instanciate it
-						if (mods == null) mods = {};
-						if (typeof mods[_module] === 'undefined')
+						// this window, instanciate it. Note: if no module
+						// container exists yet for this window, one is NOT
+						// registered here - matching the original behaviour,
+						// this creates and returns a throwaway instance on
+						// every call until a real egw(app, window) call creates
+						// a persisted slot (see EgwCore.test.ts's documented
+						// KNOWN QUIRK).
+						if (wndMods == null)
 						{
-							var mod = modules[_module];
-							mods[_module] = mod.code.call(this, null, _for);
+							wndMods = new Map<string, object>();
 						}
-						return mods[_module];
-
+						if (!wndMods.has(_module))
+						{
+							wndMods.set(_module, mod.code.call(this, null, _for));
+						}
+						return wndMods.get(_module);
 					}
 				}
 
@@ -653,37 +663,83 @@
 			 * 	those api instances which belong to the given window, if _window
 			 * 	evaluates to false, all instances will be updated.
 			 */
-			constant: function(_module, _name, _value, _window) {
+			constant: function(_module : string, _name : string, _value : any, _window? : Window) : void
+			{
 				// Update the module instances first
-				for (var i = 0; i < moduleInstances.wnd.length; i++)
+				for (var [wnd, mods] of moduleInstances.wnd)
 				{
-					if (!_window || _window === moduleInstances.wnd[i].window)
+					if (!_window || _window === wnd)
 					{
-						moduleInstances.wnd[i].modules[_module][_name] = _value;
+						(<any>mods.get(_module))[_name] = _value;
 					}
 				}
 
 				// Now update all already instanciated instances
-				for (var key in instances)
+				for (var [, byWindow] of instances)
 				{
-					for (var i = 0; i < instances[key].length; i++)
+					for (var [, entry] of byWindow)
 					{
-						if (!_window || _window === instances[key][i].window)
+						if (!_window || _window === entry.window)
 						{
-							instances[key][i].instance[_name] = _value;
+							entry.instance[_name] = _value;
 						}
 					}
 				}
 			},
 
-			dumpModules: function() {
-				return modules;
+			dumpModules: function() : {[name : string] : ModuleDescriptor}
+			{
+				// Reconstructed as a plain object (matching the pre-Map shape)
+				// so callers relying on property access (`modules.foo`) keep
+				// working unchanged.
+				var result : {[name : string] : ModuleDescriptor} = {};
+				for (var [key, mod] of modules)
+				{
+					result[key] = mod;
+				}
+				return result;
 			},
 
-			dumpInstances: function() {
+			dumpInstances: function() : {instances : object, moduleInstances : object}
+			{
+				// Reconstructed as the original hash-of-arrays / array-of-
+				// {window,modules} shape, so callers keep working unchanged.
+				var instancesOut : {[key : string] : InstanceEntry[]} = {};
+				for (var [key, byWindow] of instances)
+				{
+					instancesOut[key] = Array.from(byWindow.values());
+				}
+
+				var appOut : {[app : string] : {[module : string] : object}} = {};
+				for (var [app, mods] of moduleInstances.app)
+				{
+					var modsOut : {[module : string] : object} = {};
+					for (var [mod, inst] of mods)
+					{
+						modsOut[mod] = inst;
+					}
+					appOut[app] = modsOut;
+				}
+
+				var wndOut = Array.from(moduleInstances.wnd, function([win, mods])
+				{
+					var modsOut : {[module : string] : object} = {};
+					for (var [mod, inst] of mods)
+					{
+						modsOut[mod] = inst;
+					}
+					return {'window': win, 'modules': modsOut};
+				});
+
+				var gloOut : {[module : string] : object} = {};
+				for (var [mod, inst] of moduleInstances.glo)
+				{
+					gloOut[mod] = inst;
+				}
+
 				return {
-					'instances': instances,
-					'moduleInstances': moduleInstances
+					'instances': instancesOut,
+					'moduleInstances': {'app': appOut, 'wnd': wndOut, 'glo': gloOut}
 				};
 			}
 		};
@@ -695,20 +751,15 @@
 		mergeObjects(egw, prefs);
 
 		// Create the entry for the root window in the module instances
-		moduleInstances.wnd.push({
-			'window': window,
-			'modules': []
-		});
+		moduleInstances.wnd.set(window, new Map<string, object>());
 
 		// Create the entry for the global window in the instances and register
 		// the global instance there
-		instances['~global~'] = [{
-			'window': window,
-			'instance': egw,
-			'app': null
-		}];
+		var rootByWindow = new Map<Window | null, InstanceEntry>();
+		rootByWindow.set(window, {'window': window, 'instance': egw, 'app': null});
+		instances.set('~global~', rootByWindow);
 
 		// Publish the egw object
-		this['egw'] = egw;
+		(<any>window)['egw'] = egw;
 	}
-}).call(window);
+})();

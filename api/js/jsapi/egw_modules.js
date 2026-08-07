@@ -7,7 +7,7 @@ import "../../../vendor/bower-asset/jquery/dist/jquery.min.js";
 import "../jquery/jquery.noconflict.js";
 
 import "./egw.js";
-import "./egw_core.js";
+import "./egw_core";
 import "./egw_debug.js";
 import "./egw_preferences.js";
 import "./egw_lang.js";

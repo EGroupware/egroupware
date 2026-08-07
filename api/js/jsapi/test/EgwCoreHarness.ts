@@ -65,7 +65,7 @@ export async function createEgwCoreEnv(prefs : object = {}) : Promise<EgwCoreEnv
 	// to pick up and turn into the real composition engine.
 	win.egw = Object.assign({prefsOnly: true}, prefs);
 
-	await loadScript(iframe.contentDocument, '/api/js/jsapi/egw_core.js');
+	await loadScript(iframe.contentDocument, '/api/js/jsapi/egw_core.ts');
 
 	return {
 		window: win,

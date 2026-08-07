@@ -12,7 +12,7 @@
 /*egw:uses
 	egw_core;
 */
-import './egw_core.js';
+import './egw_core';
 
 egw.extend('user', egw.MODULE_GLOBAL, function()
 {

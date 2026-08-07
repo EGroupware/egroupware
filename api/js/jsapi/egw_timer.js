@@ -8,7 +8,7 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-import './egw_core.js';
+import './egw_core';
 import {sprintf} from "../egw_action/egw_action_common";
 
 egw.extend('timer', egw.MODULE_GLOBAL, function()

@@ -9,7 +9,7 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-import './egw_core.js';
+import './egw_core';
 
 /**
  * Date and timepicker

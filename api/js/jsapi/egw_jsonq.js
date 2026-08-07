@@ -13,7 +13,7 @@
 	egw_core;
 	egw_debug;
 */
-import './egw_core.js';
+import './egw_core';
 
 egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 {

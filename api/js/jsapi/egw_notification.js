@@ -12,7 +12,7 @@
 /*egw:uses
 	egw_core;
 */
-import './egw_core.js';
+import './egw_core';
 
 /**
  * Methods to display browser notification

@@ -13,7 +13,7 @@
 /*egw:uses
 	egw_core;
 */
-import './egw_core.js';
+import './egw_core';
 
 /**
  * Module which allows to add stylesheet rules at runtime. Exports the following
