@@ -73,10 +73,13 @@ class timesheet_ui extends timesheet_bo
 			}
 			else	// new entry
 			{
+				$last_end = $GLOBALS['egw_info']['user']['preferences']['timesheet']['new_entry_default'] === 'start_time' ?
+					$this->get_last_end_today($GLOBALS['egw_info']['user']['account_id']) : null;
+
 				$this->data = array(
 					'ts_start' => $this->today,
-					'start_time' => '',    // force empty start-time
-					'end_time' => Api\DateTime::to($this->now, 'H:i'),
+					'start_time' => $last_end ? $last_end->format('H:i') : '',    // force empty start-time, unless continuing from last entry today
+					'end_time' => $last_end ? '' : Api\DateTime::to($this->now, 'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id' => (int)$_REQUEST['cat_id'],
 					'ts_status' => $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],

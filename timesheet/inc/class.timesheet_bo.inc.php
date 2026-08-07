@@ -651,6 +651,36 @@ class timesheet_bo extends Api\Storage
 	}
 
 	/**
+	 * Get the end-time of the last timesheet booked "today" by a given user
+	 *
+	 * Considers ALL of the user's timesheets starting today and returns the latest end-time
+	 * (ts_start+ts_duration) by actual time, NOT by ts_id or ts_start row order, as entries can
+	 * be booked or edited out of chronological order.
+	 *
+	 * @param int $user account_id to check
+	 * @return Api\DateTime|null end-time of the last booked timesheet today, or null if none found
+	 */
+	function get_last_end_today($user)
+	{
+		$entries = $this->search('', false, '', '', '', false, 'AND', false, array(
+			'ts_owner' => $user,
+			'ts_start BETWEEN '.$this->db->quote($this->today, 'int').' AND '.$this->db->quote($this->today+24*3600-1, 'int'),
+		));
+		if (!$entries) return null;
+
+		$last_end = null;
+		foreach($entries as $entry)
+		{
+			$end = $entry['ts_start'] + (int)$entry['ts_duration'] * 60;
+			if (is_null($last_end) || $end > $last_end)
+			{
+				$last_end = $end;
+			}
+		}
+		return is_null($last_end) ? null : new Api\DateTime($last_end);
+	}
+
+	/**
 	 * read a timesheet entry
 	 *
 	 * @param int $ts_id

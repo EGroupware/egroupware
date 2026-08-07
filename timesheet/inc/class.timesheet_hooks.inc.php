@@ -166,6 +166,18 @@ class timesheet_hooks
 				'xmlrpc' => True,
 				'admin'  => False,
 			],
+			'new_entry_default' => [
+				'type'   => 'select',
+				'label'  => 'Time default for new timesheet entries',
+				'name'   => 'new_entry_default',
+				'values' => [
+					'end_time'   => lang('Use current time as end time'),
+					'start_time' => lang('Start time is after last timesheet'),
+				],
+				'help'   => 'When adding a new timesheet for today: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet booked today',
+				'xmlrpc' => True,
+				'admin'  => False,
+			],
 		];
 		if (is_null(self::$timesheet_bo)) self::$timesheet_bo = new timesheet_bo();
 		if (self::$timesheet_bo->status_labels)
