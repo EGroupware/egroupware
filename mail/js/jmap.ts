@@ -178,7 +178,7 @@ export class MailJmap
 		});
 
 		return {
-			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId)),
+			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId, token.isLocal)),
 			total: ids.total ?? (emails.list || []).length,
 		};
 	}
@@ -380,7 +380,7 @@ export class MailJmap
 					const email = byId[ref.emailId];
 					if (email)
 					{
-						const row = this.email2row(email, ref.profileID, ref.mailboxId);
+						const row = this.email2row(email, ref.profileID, ref.mailboxId, token.isLocal);
 						data[row.row_id] = row;
 						order.push(row.row_id);
 					}
@@ -1645,7 +1645,31 @@ export class MailJmap
 	 * no X-Priority header. row_id uses mail_ui::generateJmapRowID()'s scheme so legacy
 	 * server-side actions can recognise and decode it when needed.
 	 */
-	private email2row(email : any, profileID : string, mailboxId : string) : any
+	/**
+	 * Convert a real-JMAP UTCDate (RFC 8621 - always true UTC, never the server's local
+	 * timezone) into eTemplate/get_rows()'s date convention: digits shown as the *user's*
+	 * configured timezone, with a literal (not real) "Z" suffix so the browser displays those
+	 * wall-clock numbers as-is instead of re-applying its own browser-local conversion on top -
+	 * see JmapShim::imapDate()'s identical convention for the local-shim (plain IMAP) case,
+	 * which arrives already converted server-side and must NOT be run through this again.
+	 */
+	private jmapUtcToUserTz(iso : string) : string
+	{
+		if (!iso) return iso;
+		const tz = this.egw.preference('tz', 'common') || 'UTC';
+		const fmt = new Intl.DateTimeFormat('en-US', {
+			timeZone: tz, hour12: false,
+			year: 'numeric', month: '2-digit', day: '2-digit',
+			hour: '2-digit', minute: '2-digit', second: '2-digit',
+		});
+		const parts : Record<string, string> = {};
+		fmt.formatToParts(new Date(iso)).forEach(p => parts[p.type] = p.value);
+		// hour12:false can still yield "24" for midnight in some engines - normalize to "00"
+		if (parts.hour === '24') parts.hour = '00';
+		return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`;
+	}
+
+	private email2row(email : any, profileID : string, mailboxId : string, isLocal : boolean = false) : any
 	{
 		const addressList = (list : { name? : string, email : string }[]) =>
 			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
@@ -1737,8 +1761,8 @@ export class MailJmap
 			ccaddress: addressList(email.cc),
 			bccaddress: addressList(email.bcc),
 			address: fromList[0] || '',
-			date: email.sentAt || email.receivedAt,
-			modified: email.receivedAt,
+			date: isLocal ? (email.sentAt || email.receivedAt) : this.jmapUtcToUserTz(email.sentAt || email.receivedAt),
+			modified: isLocal ? email.receivedAt : this.jmapUtcToUserTz(email.receivedAt),
 			size: email.size,
 			bodypreview: email.preview || '',
 			// MDN (read-receipt) prompt trigger - mail_preview() (app.ts) checks this against the

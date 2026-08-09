@@ -547,6 +547,9 @@ class JmapShim
 		$query->flags();
 		$query->size();
 		$query->structure();
+		// without this, Horde_Imap_Client_Data_Fetch::getImapDate() silently falls back to "now"
+		// instead of the message's real INTERNALDATE - emailFromFetch() relies on it for receivedAt
+		$query->imapDate();
 		if ($wantPreview)
 		{
 			$query->bodyText(['length' => 800, 'peek' => true]);
