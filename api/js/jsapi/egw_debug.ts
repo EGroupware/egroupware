@@ -91,7 +91,9 @@ class Debug implements DebugModule
 		// bind to global error handler, only if LOCAL_LOG_LEVEL > 0
 		if (this.#LOCAL_LOG_LEVEL)
 		{
-			(<any>jQuery)(_wnd).on('error', (e : any) =>
+			// dead code (LOCAL_LOG_LEVEL is hardcoded 0), never exercised - jQuery's
+			// .on('error', ...) is gone, converted to native addEventListener()
+			_wnd.addEventListener('error', (e : any) =>
 			{
 				// originalEvent does NOT always exist in IE
 				var event = typeof e.originalEvent == 'object' ? e.originalEvent : e;
@@ -192,7 +194,7 @@ class Debug implements DebugModule
 							// for Class we try removing _parent and _children attributes and try again to stringify
 							if (data.args[i] instanceof (<any>window).Class)
 							{
-								data.args[i] = (<any>jQuery).extend({}, data.args[i]);
+								data.args[i] = {...data.args[i]};
 								delete data.args[i]._parent;
 								delete data.args[i]._children;
 								try {
@@ -253,7 +255,7 @@ class Debug implements DebugModule
 	private clear_client_log() : boolean
 	{
 		// Remove indicator icon
-		(<any>jQuery)('#topmenu_info_error').remove();
+		document.getElementById('topmenu_info_error')?.remove();
 
 		if (!window.localStorage) return false;
 
@@ -316,14 +318,22 @@ class Debug implements DebugModule
 	 */
 	private raise_error() : void
 	{
-		var icon : any = (<any>jQuery)('#topmenu_info_error');
-		if (!icon.length)
+		if (!document.getElementById('topmenu_info_error'))
 		{
-			var icon = (<any>jQuery)(egw(this._wnd).image_element(egw.image('dialog_error')));
-			icon.addClass('topmenu_info_item').attr('id', 'topmenu_info_error');
+			const icon = egw(this._wnd).image_element(egw.image('dialog_error'));
+			icon.classList.add('topmenu_info_item');
+			icon.id = 'topmenu_info_error';
 			// ToDo: tooltip
-			icon.on('click', egw(this._wnd).show_log);
-			(<any>jQuery)('#egw_fw_topmenu_info_items,#topmenu_info').append(icon);
+			icon.addEventListener('click', egw(this._wnd).show_log);
+			// jQuery's .append() clones the node for every target but the last
+			// when it matches more than one; both ids are typically alternate
+			// container names for the same slot, so this rarely matters in
+			// practice, but replicated for fidelity.
+			const containers = document.querySelectorAll('#egw_fw_topmenu_info_items,#topmenu_info');
+			containers.forEach((container, i) =>
+			{
+				container.appendChild(i === containers.length - 1 ? icon : <Node>icon.cloneNode(true));
+			});
 		}
 	}
 
