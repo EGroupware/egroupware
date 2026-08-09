@@ -2213,6 +2213,45 @@ class Mail
 	}
 
 	/**
+	 * Resolve an opaque JMAP Email.id (or array of them) to real IMAP UID(s), for the classic
+	 * fallback branch of a getMessageHeader()/getMessageRawHeader()/getMessageRawBody()/
+	 * getMessageBody()/getMessageAttachments()/getAttachment()/getMessageEnvelope() call whose
+	 * JMAP-native attempt bailed for a reason unrelated to the id itself (a sub-part request, a
+	 * text/calendar part, a TNEF attachment, an unsupported $_htmlOptions, ...).
+	 *
+	 * Without this, the classic body would receive the same opaque id it was given -
+	 * Horde_Imap_Client_Ids silently treats a non-numeric id as an empty id set rather than
+	 * erroring, so the "fallback" would silently return wrong (empty) data instead of a real
+	 * fallback result. Only ever does real IMAP work in this rare bail case - every other
+	 * (successful JMAP, or already-classic-numeric) call path never reaches this.
+	 *
+	 * @param mixed $_uid single id, array of ids, or already non-JMAP (returned unchanged if so)
+	 * @param string $_folder real IMAP folder path the message is in
+	 * @return mixed same shape as $_uid, opaque ids replaced by their real UID where resolvable
+	 */
+	private function jmapResolveUid($_uid, string $_folder)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_uid)) === null)
+		{
+			return $_uid;
+		}
+		$resolved = [];
+		foreach ($ids as $id)
+		{
+			$uid = $this->icServer->emailId2uidByPath($id, $_folder);
+			if ($uid !== null)
+			{
+				$resolved[] = $uid;
+			}
+		}
+		if (!$resolved)
+		{
+			return $_uid;	// couldn't resolve anything - let classic's own not-found handling apply
+		}
+		return is_array($_uid) ? $resolved : $resolved[0];
+	}
+
+	/**
 	 * Build a prepareFlagsArray()-compatible 'FLAGS' list from a JMAP Email's keywords object.
 	 *
 	 * @param array<string,bool> $keywords
@@ -2556,7 +2595,7 @@ class Mail
 	 */
 	private function jmapGetMessageHeader($_uid, $_partID, $decode)
 	{
-		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_partID !== '' ||
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($_partID !== null && $_partID !== '') ||
 			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
 		{
 			return null;
@@ -2591,6 +2630,58 @@ class Mail
 	}
 
 	/**
+	 * JMAP-native envelope fetch for getMessageEnvelope() - built on top of jmapGetMessageHeader()
+	 * rather than a separate JMAP call, reshaping into the address-array envelope shape, the same
+	 * way the classic method's own $_useHeaderInsteadOfEnvelope=true branch already does
+	 * ($env->$v->addresses and this reshaping both produce RFC822-formatted "Name <email>"
+	 * strings, so both of getMessageEnvelope()'s classic branches are shape-compatible enough to
+	 * unify into one JMAP path here, regardless of which one the caller asked for).
+	 *
+	 * @return array|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageEnvelope($_uid, $_partID, $decode) : ?array
+	{
+		$headers = $this->jmapGetMessageHeader($_uid, $_partID, true);
+		if (!is_array($headers))
+		{
+			return null;
+		}
+		$newData = [
+			'DATE' => $headers['DATE'] ?? null,
+			'SUBJECT' => $decode ? self::decode_header($headers['SUBJECT'] ?? '') : ($headers['SUBJECT'] ?? null),
+			'MESSAGE_ID' => $headers['MESSAGE-ID'] ?? null,
+		];
+		foreach (['IN-REPLY-TO', 'REFERENCES', 'THREAD-TOPIC', 'THREAD-INDEX', 'LIST-ID', 'SIZE'] as $key)
+		{
+			if (isset($headers[$key]))
+			{
+				$newData[$key] = $headers[$key];
+			}
+		}
+		foreach (['FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'] as $recipientType)
+		{
+			if (isset($headers[$recipientType]))
+			{
+				foreach (self::parseAddressList($headers[$recipientType]) as $singleAddress)
+				{
+					$newData[$recipientType][] = $singleAddress->personal ?
+						imap_rfc822_write_address($singleAddress->mailbox, $singleAddress->host, $singleAddress->personal) :
+						($singleAddress->host ? $singleAddress->mailbox.'@'.$singleAddress->host : $singleAddress->mailbox);
+				}
+			}
+			elseif ($recipientType === 'SENDER' || $recipientType === 'REPLY-TO')
+			{
+				$newData[$recipientType] = $newData['FROM'] ?? [];
+			}
+			else
+			{
+				$newData[$recipientType] = [];
+			}
+		}
+		return $newData;
+	}
+
+	/**
 	 * JMAP-native raw header fetch for getMessageRawHeader() - same $_partID scope-limit as
 	 * jmapGetMessageHeader().
 	 *
@@ -2598,7 +2689,7 @@ class Mail
 	 */
 	private function jmapGetMessageRawHeader($_uid, $_partID) : ?string
 	{
-		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_partID !== '' ||
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($_partID !== null && $_partID !== '') ||
 			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
 		{
 			return null;
@@ -2624,7 +2715,7 @@ class Mail
 	 */
 	private function jmapGetMessageRawBody($_uid, $_partID, $_stream) : ?string
 	{
-		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_stream || $_partID !== '' ||
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_stream || ($_partID !== null && $_partID !== '') ||
 			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
 		{
 			return null;
@@ -6063,6 +6154,7 @@ class Mail
 		{
 			$this->sessionData['mailbox'] = $_folder;
 		}
+		$_uid = $this->jmapResolveUid($_uid, $_folder ?: $this->icServer->getCurrentMailbox());
 
 		if (!isset($_structure))
 		{
@@ -6397,8 +6489,13 @@ class Mail
 	 */
 	function getMessageEnvelope($_uid, $_partID = '',$decode=false, $_folder='', $_useHeaderInsteadOfEnvelope=false)
 	{
+		if (($jmapResult = $this->jmapGetMessageEnvelope($_uid, $_partID, $decode)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.":$_uid,$_partID,$decode,$_folder".function_backtrace());
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		//error_log(__METHOD__.' ('.__LINE__.') '.":$_uid,$_partID,$decode,$_folder");
 		if((empty($_partID)||$_partID=='null')&&$_useHeaderInsteadOfEnvelope===false) {
 			$uidsToFetch = new Horde_Imap_Client_Ids();
@@ -6536,6 +6633,7 @@ class Mail
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.':'.$_uid.', '.$_partID.', '.$decode.', '.$preserveUnSeen.', '.$_folder);
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;
 		$uidsToFetch->add($_uid);
@@ -6620,6 +6718,7 @@ class Mail
 		}
 		static $rawHeaders;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		//error_log(__METHOD__.' ('.__LINE__.') '." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
 
 		if (!isset($rawHeaders)||!is_array($rawHeaders)) $rawHeaders = Cache::getCache(Cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*1);
@@ -6754,6 +6853,7 @@ class Mail
 		static $rawBody;
 		$body = null;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		$_uid = !(is_object($_uid) || is_array($_uid)) ? (array)$_uid : $_uid;
 
 		if (!$_stream && isset($rawBody[$this->icServer->ImapServerId][(string)$_folder][$_uid[0]][(empty($_partID)?'NIL':$_partID)]))
@@ -6888,6 +6988,7 @@ class Mail
 		}
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 		$attachments = array();
 		if (!isset($_structure))
 		{
@@ -7163,6 +7264,7 @@ class Mail
 		}
 		//error_log(__METHOD__.__LINE__."Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr, ReturnPart:$_returnPart, Stream:$_stream, Folder:$_folder".function_backtrace());
 		if (!isset($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
+		$_uid = $this->jmapResolveUid($_uid, $_folder);
 
 		$uidsToFetch = new Horde_Imap_Client_Ids();
 		if (!(is_object($_uid) || is_array($_uid))) $_uid = (array)$_uid;

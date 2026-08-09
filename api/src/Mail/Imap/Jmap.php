@@ -690,6 +690,35 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * Resolve a JMAP Email.id to a real IMAP UID, given the folder as a real IMAP path (not a
+	 * JMAP mailbox id, unlike emailId2uid()) - used by Api\Mail's JMAP-native method overrides
+	 * (see Mail.php's jmapResolveUid()) when their JMAP-native attempt bails to the classic
+	 * implementation for a reason unrelated to the id itself (a sub-part request, a text/calendar
+	 * part, a TNEF attachment, ...) - the classic body needs a real UID to do anything useful
+	 * with, since Horde_Imap_Client_Ids silently treats a non-numeric id as an empty id set
+	 * rather than erroring, which would otherwise make the "fallback" silently return wrong
+	 * (empty) data instead of a real fallback result.
+	 *
+	 * @param string $emailId
+	 * @param string $folderPath real IMAP folder path e.g. "INBOX/Sent"
+	 * @return ?int real IMAP UID, or null if not found
+	 */
+	public function emailId2uidByPath(string $emailId, string $folderPath) : ?int
+	{
+		$query = new \Horde_Imap_Client_Search_Query();
+		if (!method_exists($query, 'emailIds'))
+		{
+			return null;	// no Message-ID fallback available here (no $messageId at this point)
+		}
+		$query->emailIds($emailId);
+		foreach ($this->search($folderPath, $query) as $uid)
+		{
+			return (int)(string)$uid ?: null;
+		}
+		return null;
+	}
+
+	/**
 	 * Resolve the folder+uid tail of a row-id (see Api\Mail::splitRowID(), the caller).
 	 *
 	 * A numeric $uid means this row was produced by this account's classic ajax_get_rows()
