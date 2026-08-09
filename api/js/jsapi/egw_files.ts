@@ -56,221 +56,204 @@ declare global
 }
 
 /**
- * @augments Class
- * @param {string} _app application name object is instanciated for
- * @param {object} _wnd window object is instanciated for
+ * Remove optional timestamp attached as query parameter, eg. /path/name.js?12345678[&other=val]
+ *
+ * Examples:
+ *  /path/file.js --> /path/file.js
+ *  /path/file.js?123456 --> /path/file.js
+ *  /path/file.php?123456&param=value --> /path/file.php?param=value
+ *  /path/file.php?param=value&123456 --> /path/file.php?param=value
+ *
+ * @param _src url
+ * @return url with timestamp stripped off
  */
-egw.extend('files', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Window) : FilesModule
+function removeTS(_src : string) : string
 {
-	"use strict";
+	return _src.replace(/[?&][0-9]+&?/, '?').replace(/\?$/, '');
+}
 
-	var egw : any = this;
+/**
+ * RegExp to extract string with comma-separated files from a bundle-url
+ */
+const bundle2files_regexp = /phpgwapi\/inc\/min\/\?b=[^&]+&f=([^&]+)/;
 
-	/**
-	 * Remove optional timestamp attached as query parameter, eg. /path/name.js?12345678[&other=val]
-	 *
-	 * Examples:
-	 *  /path/file.js --> /path/file.js
-	 *  /path/file.js?123456 --> /path/file.js
-	 *  /path/file.php?123456&param=value --> /path/file.php?param=value
-	 *  /path/file.php?param=value&123456 --> /path/file.php?param=value
-	 *
-	 * @param _src url
-	 * @return url with timestamp stripped off
-	 */
-	function removeTS(_src : string) : string
+/**
+ * Regexp to detect and remove .min.js extension
+ */
+const min_js_regexp = /\.min\.js$/;
+
+/**
+ * Return array of files-sources from bundle(s) incl. bundle-src itself
+ *
+ * @param _srcs all url's have to be egw releativ!
+ */
+function files_from_bundles(_srcs : string|string[]) : string[]
+{
+	var files : string[] = [];
+
+	var srcs : string[] = typeof _srcs == 'string' ? [_srcs] : _srcs;
+
+	for(var n=0; n < srcs.length; ++n)
 	{
-		return _src.replace(/[?&][0-9]+&?/, '?').replace(/\?$/, '');
-	}
+		var file = srcs[n];
+		files.push(file.replace(min_js_regexp, '.js'));
+		var contains = file.match(bundle2files_regexp);
 
-	/**
-	 * RegExp to extract string with comma-separated files from a bundle-url
-	 *
-	 * @type RegExp
-	 */
-	var bundle2files_regexp = /phpgwapi\/inc\/min\/\?b=[^&]+&f=([^&]+)/;
-
-	/**
-	 * Regexp to detect and remove .min.js extension
-	 *
-	 * @type RegExp
-	 */
-	var min_js_regexp = /\.min\.js$/;
-
-	/**
-	 * Return array of files-sources from bundle(s) incl. bundle-src itself
-	 *
-	 * @param {string|Array} _srcs all url's have to be egw releativ!
-	 * @returns {Array}
-	 */
-	function files_from_bundles(_srcs : string|string[]) : string[]
-	{
-		var files : string[] = [];
-
-		var srcs : string[] = typeof _srcs == 'string' ? [_srcs] : _srcs;
-
-		for(var n=0; n < srcs.length; ++n)
+		if (contains && contains.length > 1)
 		{
-			var file = srcs[n];
-			files.push(file.replace(min_js_regexp, '.js'));
-			var contains = file.match(bundle2files_regexp);
-
-			if (contains && contains.length > 1)
+			var bundle = contains[1].split(',');
+			for(var i=0; i < bundle.length; ++i)
 			{
-				var bundle = contains[1].split(',');
-				for(var i=0; i < bundle.length; ++i)
-				{
-					files.push(bundle[i].replace(min_js_regexp, '.js'));
-				}
+				files.push(bundle[i].replace(min_js_regexp, '.js'));
 			}
 		}
-		return files;
 	}
+	return files;
+}
 
-	/**
-	 * Strip of egw_url from given urls (if containing it)
-	 *
-	 * @param {array} _urls absolute urls
-	 * @returns {array} relativ urls
-	 */
-	function strip_egw_url(_urls : string[]) : string[]
+/**
+ * Strip of egw_url from given urls (if containing it)
+ *
+ * @param _urls absolute urls
+ * @returns relativ urls
+ */
+function strip_egw_url(_urls : string[]) : string[]
+{
+	var egw_url = egw.webserverUrl;
+	if (egw_url.charAt(egw_url.length-1) != '/') egw_url += '/';
+
+	for(var i=0; i < _urls.length; ++i)
 	{
-		var egw_url = egw.webserverUrl;
-		if (egw_url.charAt(egw_url.length-1) != '/') egw_url += '/';
-
-		for(var i=0; i < _urls.length; ++i)
+		var file = _urls[i];
+		// check if egw_url is only path and urls contains full url incl. protocol
+		// --> prefix it with our protocol and host, as eg. splitting by just '/' will fail!
+		var need_full_url = egw_url[0] == '/' && file.substr(0,4) == 'http' ? window.location.protocol+'//'+window.location.host : '';
+		var parts = file.split(need_full_url+egw_url);
+		if (parts.length > 1)
 		{
-			var file = _urls[i];
-			// check if egw_url is only path and urls contains full url incl. protocol
-			// --> prefix it with our protocol and host, as eg. splitting by just '/' will fail!
-			var need_full_url = egw_url[0] == '/' && file.substr(0,4) == 'http' ? window.location.protocol+'//'+window.location.host : '';
-			var parts = file.split(need_full_url+egw_url);
-			if (parts.length > 1)
-			{
-				// discard protocol and host
-				parts.shift();
-				_urls[i] = parts.join(need_full_url+egw_url);
-			}
+			// discard protocol and host
+			parts.shift();
+			_urls[i] = parts.join(need_full_url+egw_url);
 		}
-		return _urls;
 	}
+	return _urls;
+}
 
+class Files implements FilesModule
+{
 	/**
 	 * Array which contains all currently bound in javascript and css files.
 	 */
-	var files : string[] = [];
-	// add already included scripts
-	var tags : any = (<any>jQuery)('script', _wnd.document);
-	for(var i=0; i < tags.length; ++i)
-	{
-		files.push(removeTS(tags[i].src));
-	}
-	// add already included css
-	tags = (<any>jQuery)('link[type="text/css"]', _wnd.document);
-	for(var i=0; i < tags.length; ++i)
-	{
-		files.push(removeTS(tags[i].href));
-	}
-	// make urls egw-relative
-	files = strip_egw_url(files);
-	// resolve bundles and replace .min.js with .js
-	files = files_from_bundles(files);
+	#files : string[] = [];
 
-	return {
-		/**
-		 * Load and execute javascript file(s) in order
-		 *
-		 * Deprecated because with egw composition happening in main window the used import statement happens in that context
-		 * and NOT in the window (eg. popup or iframe) this module is instantiated for!
-		 *
-		 * @memberOf egw
-		 * @param {string|array} _jsFiles (array of) urls to include
-		 * @param {function} _callback called after JS files are loaded and executed
-		 * @param {object} _context
-		 * @param {string} _prefix prefix for _jsFiles
-		 * @deprecated use es6 import statement: Promise.all([].concat(_jsFiles).map((src)=>import(_prefix+src))).then(...)
-		 * @return Promise
-		 */
-		includeJS: function(_jsFiles : any, _callback? : Function, _context? : any, _prefix? : string) : any
+	#wnd : Window;
+
+	constructor(_wnd : Window)
+	{
+		this.#wnd = _wnd;
+
+		// add already included scripts
+		_wnd.document.querySelectorAll('script').forEach(tag =>
 		{
-			// Also allow including a single javascript file
-			if (typeof _jsFiles === 'string')
-			{
-				_jsFiles = [_jsFiles];
-			}
-			// filter out files included by script-tag via egw.js
-			_jsFiles = _jsFiles.filter((src) => src.match(egw.legacy_js_regexp) === null);
-			let promise : any;
-			if (_jsFiles.length === 1)	// running this in below case fails when loading app.js from etemplate.load()
-			{
-				const src = _jsFiles[0];
-				promise = import(_prefix ? _prefix+src : src)
+			this.#files.push(removeTS((<HTMLScriptElement>tag).src));
+		});
+		// add already included css
+		_wnd.document.querySelectorAll('link[type="text/css"]').forEach(tag =>
+		{
+			this.#files.push(removeTS((<HTMLLinkElement>tag).href));
+		});
+		// make urls egw-relative
+		this.#files = strip_egw_url(this.#files);
+		// resolve bundles and replace .min.js with .js
+		this.#files = files_from_bundles(this.#files);
+	}
+
+	/**
+	 * Load and execute javascript file(s) in order
+	 *
+	 * Deprecated because with egw composition happening in main window the used import statement happens in that context
+	 * and NOT in the window (eg. popup or iframe) this module is instantiated for!
+	 *
+	 * @memberOf egw
+	 * @deprecated use es6 import statement: Promise.all([].concat(_jsFiles).map((src)=>import(_prefix+src))).then(...)
+	 */
+	includeJS = (_jsFiles : any, _callback? : Function, _context? : any, _prefix? : string) : any =>
+	{
+		// Also allow including a single javascript file
+		if (typeof _jsFiles === 'string')
+		{
+			_jsFiles = [_jsFiles];
+		}
+		// filter out files included by script-tag via egw.js
+		_jsFiles = _jsFiles.filter((src) => src.match((<any>egw).legacy_js_regexp) === null);
+		let promise : any;
+		if (_jsFiles.length === 1)	// running this in below case fails when loading app.js from etemplate.load()
+		{
+			const src = _jsFiles[0];
+			promise = import(_prefix ? _prefix+src : src)
+				.catch((err) => {
+					console.error(src+": "+err.message);
+					return Promise.reject(err.message);
+				});
+		}
+		else
+		{
+			promise = Promise.all(_jsFiles.map((src) => {
+				import(_prefix ? _prefix+src : src)
 					.catch((err) => {
 						console.error(src+": "+err.message);
 						return Promise.reject(err.message);
-					});
-			}
-			else
-			{
-				promise = Promise.all(_jsFiles.map((src) => {
-					import(_prefix ? _prefix+src : src)
-						.catch((err) => {
-							console.error(src+": "+err.message);
-							return Promise.reject(err.message);
-						})
-				}));
-			}
-			return typeof _callback === 'undefined' ? promise : promise.then(_callback.call(_context));
-		},
+					})
+			}));
+		}
+		return typeof _callback === 'undefined' ? promise : promise.then(_callback.call(_context));
+	}
 
-		/**
-		 * Check if file is already included and optional mark it as included if not yet included
-		 *
-		 * Check does NOT differenciate between file.min.js and file.js.
-		 * Only .js get's recored in files for further checking, if _add_if_not set.
-		 *
-		 * @param {string} _file
-		 * @param {boolean} _add_if_not if true mark file as included
-		 * @return boolean true if file already included, false if not
-		 */
-		included: function(_file : string, _add_if_not? : boolean) : boolean
+	/**
+	 * Check if file is already included and optional mark it as included if not yet included
+	 *
+	 * Check does NOT differenciate between file.min.js and file.js.
+	 * Only .js get's recored in files for further checking, if _add_if_not set.
+	 *
+	 * @return true if file already included, false if not
+	 */
+	included = (_file : string, _add_if_not? : boolean) : boolean =>
+	{
+		var file = removeTS(_file).replace(min_js_regexp, '.js');
+		var not_inc = this.#files.indexOf(file) == -1;
+
+		if (not_inc && _add_if_not)
 		{
-			var file = removeTS(_file).replace(min_js_regexp, '.js');
-			var not_inc = files.indexOf(file) == -1;
+			this.#files = this.#files.concat(files_from_bundles(file));
+		}
+		return !not_inc;
+	}
 
-			if (not_inc && _add_if_not)
-			{
-				files = files.concat(files_from_bundles(file));
-			}
-			return !not_inc;
-		},
+	/**
+	 * Include a CSS file
+	 */
+	includeCSS = (_cssFiles : any) : void =>
+	{
+		if (typeof _cssFiles == 'string') _cssFiles = [_cssFiles];
+		_cssFiles = strip_egw_url(_cssFiles);
 
-		/**
-		 * Include a CSS file
-		 *
-		 * @param {string|array} _cssFiles full url of file to include
-		 */
-		includeCSS: function(this : any, _cssFiles : any) : void
+		for(var n=0; n < _cssFiles.length; ++n)
 		{
-			if (typeof _cssFiles == 'string') _cssFiles = [_cssFiles];
-			_cssFiles = strip_egw_url(_cssFiles);
-
-			for(var n=0; n < _cssFiles.length; ++n)
+			var file = _cssFiles[n];
+			if (!this.included(file, true))	// check if included and marks as such if not
 			{
-				var file = _cssFiles[n];
-				if (!this.included(file, true))	// check if included and marks as such if not
-				{
-					// Create the node which is used to include the css file
-					var cssnode = _wnd.document.createElement('link');
-					cssnode.type = "text/css";
-					cssnode.rel = "stylesheet";
-					cssnode.href = egw.webserverUrl+'/'+file;
+				// Create the node which is used to include the css file
+				var cssnode = this.#wnd.document.createElement('link');
+				cssnode.type = "text/css";
+				cssnode.rel = "stylesheet";
+				cssnode.href = egw.webserverUrl+'/'+file;
 
-					// Get the head node and append the newly created "link" nod to it
-					var head = _wnd.document.getElementsByTagName('head')[0];
-					head.appendChild(cssnode);
-				}
+				// Get the head node and append the newly created "link" nod to it
+				var head = this.#wnd.document.getElementsByTagName('head')[0];
+				head.appendChild(cssnode);
 			}
 		}
-	};
-});
+	}
+}
+
+egw.extend('files', egw.MODULE_WND_LOCAL, (_app : string, _wnd : Window) => new Files(_wnd));
