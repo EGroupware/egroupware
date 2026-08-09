@@ -16,20 +16,70 @@
  */
 import './egw_core';
 
+export interface TooltipOptions
+{
+	hideonhover? : boolean;
+	position? : string;
+	open? : (this : Node, event : Event, tooltip_div : HTMLElement) => any;
+	close? : (this : Node, event : Event, tooltip_div : HTMLElement) => any;
+}
+
+export interface TooltipModule
+{
+	/**
+	 * Binds a tooltip to the given DOM-Node with the given html.
+	 * It is important to remove all tooltips from all elements which are
+	 * no longer needed, in order to prevent memory leaks.
+	 *
+	 * @param _elem is the element to which the tooltip should get bound.
+	 * @param _html is the html or text code which should be shown as tooltip.
+	 * @param _isHtml if set to true content gets appended as html not text
+	 * @param _options options object. open and close are functions which are
+	 * called when the tooltip is shown or hidden, respectively. hideonhover
+	 * is a boolean that determines if the tooltip should be hidden when the
+	 * mouse enters it.
+	 */
+	tooltipBind(_elem : HTMLElement | JQuery, _html : string | Node, _isHtml? : boolean, _options? : TooltipOptions) : void;
+
+	/**
+	 * Unbinds the tooltip from the given DOM-Node.
+	 *
+	 * @param _elem is the element from which the tooltip should get
+	 * removed.
+	 */
+	tooltipUnbind(_elem : HTMLElement | JQuery) : void;
+
+	/**
+	 * Hide any currently shown tooltip and remove it from the DOM
+	 */
+	tooltipDestroy() : void;
+
+	/**
+	 * Hide tooltip, cancel the timer
+	 */
+	tooltipCancel() : void;
+}
+
+declare global
+{
+	interface IegwWndLocal extends TooltipModule
+	{
+	}
+}
+
 /**
- *
- * @param {string} _app application name object is instanciated for
- * @param {object} _wnd window object is instanciated for
+ * @param _app application name object is instanciated for
+ * @param _wnd window object is instanciated for
  */
-egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
+egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app : string, _wnd : Window) : TooltipModule
 {
 	"use strict";
 
-	const tooltipped = new Set();
-	const tooltipData = new WeakMap();
-	let tooltip_div = null;
-	let current_elem = null;
-	let hide_timeout = null;
+	const tooltipped = new Set<Node>();
+	const tooltipData = new WeakMap<Node, {html : string | Node, isHtml : boolean, options : Required<TooltipOptions>}>();
+	let tooltip_div : HTMLElement = null;
+	let current_elem : Node = null;
+	let hide_timeout : number = null;
 
 	function removeDiv()
 	{
@@ -45,7 +95,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 	{
 		[...tooltipped].forEach(node =>
 		{
-			egw.tooltipUnbind(node);
+			egw.tooltipUnbind(<HTMLElement>node);
 		});
 		tooltipped.clear();
 
@@ -63,16 +113,16 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 	let x = 0;
 	let y = 0;
 
-	const optionsDefault = {
+	const optionsDefault : Required<TooltipOptions> = {
 		hideonhover: true,
 		position: 'right',
 		open: function () {},
 		close: function () {}
 	};
 
-	const mouseenter = function (e)
+	const mouseenter = function (e : MouseEvent)
 	{
-		const elem = e.currentTarget
+		const elem = <Node>e.currentTarget
 		const data = tooltipData.get(elem);
 		if (!data)
 		{
@@ -96,13 +146,13 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 		return false;
 	};
 
-	const mouseleave = function (e)
+	const mouseleave = function (e : MouseEvent)
 	{
-		const elem = e.currentTarget
+		const elem = <Node>e.currentTarget
 		const data = tooltipData.get(elem);
 		show_delta = 0;
 
-		if (tooltip_div && e.relatedTarget && tooltip_div.contains(e.relatedTarget))
+		if (tooltip_div && e.relatedTarget && tooltip_div.contains(<Node>e.relatedTarget))
 		{
 			return;
 		}
@@ -128,7 +178,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 		}, 150);
 	};
 
-	const mousemove = function (e)
+	const mousemove = function (e : MouseEvent)
 	{
 		//Calculate the distance the mouse took since the last call of mousemove
 		const dx = x - e.clientX;
@@ -148,9 +198,9 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 	/**
 	 * We might not get an actual DOMNode, but we want to work on the actual DOMNodes not e.g. a jquery Object
 	 */
-	function getActualNode(_elem)
+	function getActualNode(_elem : HTMLElement | JQuery) : Node
 	{
-		return _elem instanceof Node ? _elem : (typeof _elem.get === "function" ? _elem.get(0) : _elem);
+		return _elem instanceof Node ? _elem : (typeof (<any>_elem).get === "function" ? (<any>_elem).get(0) : _elem);
 	}
 
 	/**
@@ -166,7 +216,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 		_wnd.document.querySelectorAll("body > .egw_tooltip").forEach(t => t.remove());
 	}
 
-	function setStyle(elem, property, value)
+	function setStyle(elem : HTMLElement, property : string, value : string | number)
 	{
 		elem.style[property] = typeof value === 'number' ? value + 'px' : value;
 	}
@@ -174,11 +224,11 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 	/**
 	 * Shows the tooltip at the current cursor position.
 	 */
-	function show(node, event, options)
+	function show(node : Node, event : MouseEvent, options : Required<TooltipOptions>)
 	{
 		if (tooltip_div && typeof x !== 'undefined' && typeof y !== 'undefined')
 		{
-			options?.open?.call(node, event, tooltip_div);
+			options?.open?.call(<any>node, event, tooltip_div);
 			//set display to block, so we can get the width and height
 			setStyle(tooltip_div, 'display', 'block');
 			//Get the width and the height of the tooltip
@@ -244,13 +294,13 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 	/**
 	 * Creates the tooltip_div with the given text.
 	 *
-	 * @param {string} _html
-	 * @param {boolean} _isHtml if set to true content gets appended as html
-	 * @param {{hideonhover: boolean, position: string, open: function, close: function}} _options options object
+	 * @param _html
+	 * @param _isHtml if set to true content gets appended as html
+	 * @param _options options object
 	 * open and close are functions which are called when the tooltip is shown or hidden, respectively.
 	 * hideonhover is a boolean that determines if the tooltip should be hidden when the mouse enters it.
 	 */
-	function prepare(_html, _isHtml, _options)
+	function prepare(_html : string | Node, _isHtml : boolean, _options : Required<TooltipOptions>)
 	{
 		// Free and null the old tooltip_div
 		hide();
@@ -269,7 +319,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 			}
 		} else
 		{
-			tooltip_div.textContent = _html;
+			tooltip_div.textContent = <string>_html;
 		}
 		tooltip_div.classList.add("egw_tooltip");
 		_wnd.document.body.append(tooltip_div);
@@ -292,7 +342,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 	/**
 	 * showTooltipTimeout is used to prepare showing the tooltip.
 	 */
-	function showTooltipTimeout(node, event, options)
+	function showTooltipTimeout(node : Node, event : MouseEvent, options : Required<TooltipOptions>)
 	{
 		if (current_elem === node)
 		{
@@ -309,7 +359,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 		}
 	}
 
-	function unbindEvents(elem)
+	function unbindEvents(elem : any)
 	{
 		elem.removeEventListener('mouseenter', mouseenter);
 		elem.removeEventListener('mouseleave', mouseleave);
@@ -329,7 +379,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 		 * @param _isHtml if set to true content gets appended as html not text
 		 * @param _options
 		 */
-		tooltipBind: function (_elem, _html, _isHtml, _options)
+		tooltipBind: function (_elem : HTMLElement | JQuery, _html : string | Node, _isHtml? : boolean, _options? : TooltipOptions)
 		{
 
 			const options = {...optionsDefault, ...(_options || {})};
@@ -342,9 +392,9 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 			{
 				tooltipData.set(elem, {html: _html, isHtml: _isHtml, options: options});
 
-				elem.addEventListener('mouseenter', mouseenter);
-				elem.addEventListener('mouseleave', mouseleave);
-				elem.addEventListener('mousemove', mousemove);
+				(<any>elem).addEventListener('mouseenter', mouseenter);
+				(<any>elem).addEventListener('mouseleave', mouseleave);
+				(<any>elem).addEventListener('mousemove', mousemove);
 			}
 		},
 
@@ -354,7 +404,7 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app, _wnd)
 		 * @param _elem is the element from which the tooltip should get
 		 * removed.
 		 */
-		tooltipUnbind: function (_elem)
+		tooltipUnbind: function (_elem : HTMLElement | JQuery)
 		{
 			const elem = getActualNode(_elem);
 			if (current_elem === elem)

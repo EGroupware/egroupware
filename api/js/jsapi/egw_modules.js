@@ -20,7 +20,7 @@ import "./egw_jsonq";
 import "./egw_files";
 import "./egw_json";
 import "./egw_store";
-import "./egw_tooltip.js";
+import "./egw_tooltip";
 import "./egw_css";
 import "./egw_calendar";
 import "./egw_ready";

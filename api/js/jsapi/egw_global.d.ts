@@ -183,28 +183,7 @@ interface IegwWndLocal extends IegwGlobal
 	// open: implemented in egw_open.ts, contributing OpenModule
 	// ready: implemented in egw_ready.ts, contributing ReadyModule
 
-	/**
-	 * implemented in egw_tooltip.js
-	 */
-	/**
-	 * Binds a tooltip to the given DOM-Node with the given html.
-	 * It is important to remove all tooltips from all elements which are
-	 * no longer needed, in order to prevent memory leaks.
-	 *
-	 * @param _elem is the element to which the tooltip should get bound. It
-	 * 	has to be a jQuery node.
-	 * @param _str is the html or text code which should be shown as tooltip.
-	 * @param _isHtml true: add a html (no automatic quoting!), false (default): add as text
-	 * @param _options tooltip options
-	 */
-	tooltipBind(_elem : HTMLElement, _str : string, _isHtml? : boolean, _options? : any);
-	/**
-	 * Unbinds the tooltip from the given DOM-Node.
-	 *
-	 * @param _elem is the element from which the tooltip should get
-	 * removed. _elem has to be a jQuery node.
-	 */
-	tooltipUnbind(_elem : HTMLElement);
+	// tooltip: implemented in egw_tooltip.ts, contributing TooltipModule
 }
 
 /**

@@ -20,7 +20,7 @@ export async function createEgwTooltipEnv(prefs : object = {}) : Promise<EgwTool
 	(env.window as any).egwIsMobile = () => null;
 	env.setMobile = (mobile : boolean) => { (env.window as any).egwIsMobile = () => (mobile ? 'mobile' : null); };
 
-	await loadScript(env.window.document, '/api/js/jsapi/egw_tooltip.js', 'module');
+	await loadScript(env.window.document, '/api/js/jsapi/egw_tooltip.ts', 'module');
 
 	return env;
 }
