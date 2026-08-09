@@ -44,46 +44,43 @@ declare global
 	}
 }
 
-egw.extend('jsonq', egw.MODULE_GLOBAL, function() : JsonqModule
+/**
+ * Module queuing json requests, to send several as one combined request
+ */
+class Jsonq implements JsonqModule
 {
-	"use strict";
-
 	/**
 	 * Explicit registered push callbacks
-	 *
-	 * @type {Function[]}
 	 */
-	let push_callbacks : Function[] = [];
+	#pushCallbacks : Function[] = [];
 
 	/**
 	 * Queued json requests (objects with attributes menuaction, parameters, context, callback, sender and callbeforesend)
-	 *
-	 * @access private, use jsonq method to queue requests
 	 */
-	const jsonq_queue : {[uid : string] : any} = {};
+	#jsonqQueue : {[uid : string] : any} = {};
 
 	/**
 	 * Next uid (index) in queue
 	 */
-	let jsonq_uid = 0;
+	#jsonqUid = 0;
 
 	/**
 	 * Running timer for next send of queued items
 	 */
-	let jsonq_timer : any = null;
+	#jsonqTimer : any = null;
 
 	/**
 	 * Send the whole job-queue to the server in a single json request with menuaction=queue
 	 */
-	function jsonq_send() : void
+	private jsonqSend() : void
 	{
-		if (jsonq_uid > 0 && typeof jsonq_queue['u'+(jsonq_uid-1)] == 'object')
+		if (this.#jsonqUid > 0 && typeof this.#jsonqQueue['u'+(this.#jsonqUid-1)] == 'object')
 		{
 			const jobs_to_send : {[uid : string] : any} = {};
 			let something_to_send = false;
-			for(let uid in jsonq_queue)
+			for(let uid in this.#jsonqQueue)
 			{
-				const job = jsonq_queue[uid];
+				const job = this.#jsonqQueue[uid];
 
 				if (job.menuaction === 'send') continue;	// already send to server
 
@@ -109,13 +106,13 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() : JsonqModule
 					const json = egw.json('none');
 					for(let uid in _data)
 					{
-						if (typeof jsonq_queue[uid] == 'undefined')
+						if (typeof this.#jsonqQueue[uid] == 'undefined')
 						{
 							console.log("jsonq_callback received response for not existing queue uid="+uid+"!");
 							console.log(_data[uid]);
 							continue;
 						}
-						const job = jsonq_queue[uid];
+						const job = this.#jsonqQueue[uid];
 						const response = _data[uid];
 
 						// The ajax request has completed, get just the data & pass it on
@@ -146,93 +143,95 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function() : JsonqModule
 							}
 						}
 
-						delete jsonq_queue[uid];
+						delete this.#jsonqQueue[uid];
 					}
 					// if nothing left in queue, stop interval-timer to give browser a rest
-					if (jsonq_timer && typeof jsonq_queue['u'+(jsonq_uid-1)] != 'object')
+					if (this.#jsonqTimer && typeof this.#jsonqQueue['u'+(this.#jsonqUid-1)] != 'object')
 					{
-						window.clearInterval(jsonq_timer);
-						jsonq_timer = null;
+						window.clearInterval(this.#jsonqTimer);
+						this.#jsonqTimer = null;
 					}
 				});
 			}
 		}
 	}
 
-	return {
-		/**
-		 * Send a queued JSON call to the server
-		 *
-		 * @param {string} _menuaction the menuaction function which should be called and
-		 *   which handles the actual request. If the menuaction is a full featured
-		 *   url, this one will be used instead.
-		 * @param {array} _parameters which should be passed to the menuaction function.
-		 * @param {function|undefined} _callback callback function which should be called upon a "data" response is received
-		 * @param {object|undefined} _sender is the reference object the callback function should get
-		 * @param {function|undefined} _callbeforesend optional callback function which can modify the parameters, eg. to do some own queuing
-		 * @return Promise
-		 */
-		jsonq: function(_menuaction : string, _parameters? : any[], _callback? : Function, _sender? : any, _callbeforesend? : Function) : Promise<any>
+	/**
+	 * Send a queued JSON call to the server
+	 *
+	 * No dynamic-dispatch through `this` anywhere in here (only bare
+	 * egw.request()/egw.json() global calls and this instance's own
+	 * private queue state), so a plain arrow field is safe.
+	 */
+	jsonq = (_menuaction : string, _parameters? : any[], _callback? : Function, _sender? : any, _callbeforesend? : Function) : Promise<any> =>
+	{
+		const uid = 'u'+(this.#jsonqUid++);
+		this.#jsonqQueue[uid] = {
+			menuaction: _menuaction,
+			// IE JSON-serializes arrays passed in from different window contextx (eg. popups)
+			// as objects (it looses object-type of array), causing them to be JSON serialized
+			// as objects and loosing parameters which are undefined
+			// JSON.stringify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
+			parameters: _parameters ? [].concat(_parameters) : [],
+			callbeforesend: _callbeforesend && _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
+		};
+		let promise : any = new Promise(resolve => {
+			this.#jsonqQueue[uid].resolve = resolve;
+		});
+		if (typeof _callback === 'function')
 		{
-			const uid = 'u'+(jsonq_uid++);
-			jsonq_queue[uid] = {
-				menuaction: _menuaction,
-				// IE JSON-serializes arrays passed in from different window contextx (eg. popups)
-				// as objects (it looses object-type of array), causing them to be JSON serialized
-				// as objects and loosing parameters which are undefined
-				// JSON.stringify([123,undefined]) --> '{"0":123}' instead of '[123,null]'
-				parameters: _parameters ? [].concat(_parameters) : [],
-				callbeforesend: _callbeforesend && _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
-			};
-			let promise : any = new Promise(resolve => {
-				jsonq_queue[uid].resolve = resolve;
+			const callback = _callback.bind(_sender);
+			promise = promise.then(_data => {
+				callback(_data);
+				return _data;
 			});
-			if (typeof _callback === 'function')
-			{
-				const callback = _callback.bind(_sender);
-				promise = promise.then(_data => {
-					callback(_data);
-					return _data;
-				});
-			}
+		}
 
-			if (jsonq_timer == null)
-			{
-				// check / send queue every N ms
-				jsonq_timer = window.setInterval(() => jsonq_send(), 100);
-			}
-			return promise;
-		},
-
-		/**
-		 * Register a callback to receive push broadcasts eg. in a popup or iframe
-		 *
-		 * It's also used internally by egw_message's push method to dispatch to the registered callbacks.
-		 *
-		 * @param {Function|PushData} data callback (with bound context) or PushData to dispatch to callbacks
-		 */
-		registerPush: function(data : Function|any) : void
+		if (this.#jsonqTimer == null)
 		{
-			if (typeof data === "function")
+			// check / send queue every N ms
+			this.#jsonqTimer = window.setInterval(() => this.jsonqSend(), 100);
+		}
+		return promise;
+	}
+
+	/**
+	 * Register a callback to receive push broadcasts eg. in a popup or iframe
+	 *
+	 * It's also used internally by egw_message's push method to dispatch to the registered callbacks.
+	 *
+	 * Dispatches registered callbacks via `.call(this, data)`, so `this` must
+	 * stay whichever egw instance the caller invoked registerPush() through -
+	 * even though every currently registered callback already carries its
+	 * own bound context (per the @param doc below) and so wouldn't
+	 * observably care either way. That dynamic `this` is a different object
+	 * than this Jsonq instance itself though (#pushCallbacks would throw if
+	 * accessed off it directly), hence the `self`-capture.
+	 *
+	 * @param data callback (with bound context) or PushData to dispatch to callbacks
+	 */
+	registerPush = ((self : Jsonq) => function(this : any, data : Function|any) : void
+	{
+		if (typeof data === "function")
+		{
+			self.#pushCallbacks.push(data);
+		}
+		else
+		{
+			// iterate backwards, so splicing out a throwing callback doesn't
+			// shift the index of callbacks not yet visited this dispatch
+			for (let n = self.#pushCallbacks.length - 1; n >= 0; n--)
 			{
-				push_callbacks.push(data);
-			}
-			else
-			{
-				// iterate backwards, so splicing out a throwing callback doesn't
-				// shift the index of callbacks not yet visited this dispatch
-				for (let n = push_callbacks.length - 1; n >= 0; n--)
-				{
-					try {
-						push_callbacks[n].call(this, data);
-					}
-					// if we get an exception, we assume the callback is no longer available and remove it
-					catch (ex) {
-						push_callbacks.splice(n, 1);
-					}
+				try {
+					self.#pushCallbacks[n].call(this, data);
+				}
+				// if we get an exception, we assume the callback is no longer available and remove it
+				catch (ex) {
+					self.#pushCallbacks.splice(n, 1);
 				}
 			}
 		}
+	})(this);
+}
 
-	};
-});
+egw.extend('jsonq', egw.MODULE_GLOBAL, () => new Jsonq());
