@@ -8,10 +8,6 @@
  * @author Ralf Becker
  */
 
-/*egw:uses
-	et2_core_widget;
-*/
-
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_widget} from "./et2_core_widget";
 

@@ -9,10 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	et2_core_inheritance;
-*/
-
 import {implements_methods,et2_implements_registry} from "./et2_core_interfaces";
 import type {et2_widget} from "./et2_core_widget";
 
@@ -108,5 +104,4 @@ et2_implements_registry.et2_IDataProvider = function(obj : et2_widget)
 {
 	return implements_methods(obj, ["dataFetch", "dataRegisterUID", "dataUnregisterUID"]);
 }
-
 

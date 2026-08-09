@@ -9,9 +9,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	egw_core;
-*/
 import './egw_core';
 
 export interface ConfigModule
@@ -51,7 +48,6 @@ egw.extend('config', egw.MODULE_GLOBAL, function() : ConfigModule
 	 * @access: private, use egw.config(_name, _app="phpgwapi")
 	 */
 	var configs : {[app : string] : {[name : string] : any}} = {};
-
 
 	/**
 	 * register our mail as mailto protocol handler (only for main-page, FF seems to pop it up constantly, if we do so in an iframe)

@@ -8,10 +8,6 @@
  * @author Andreas Stöckel
  */
 
-/*egw:uses
-	et2_core_baseWidget;
-*/
-
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -37,5 +33,4 @@ export class et2_hrule extends et2_baseWidget
 	}
 }
 et2_register_widget(et2_hrule, ["hrule"]);
-
 

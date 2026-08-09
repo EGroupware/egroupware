@@ -9,31 +9,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	egw_core;
-	egw_debug;
-	egw_preferences;
-	egw_lang;
-	egw_links;
-	egw_open;
-	egw_user;
-	egw_config;
-	egw_images;
-	egw_jsonq;
-	egw_files;
-	egw_json;
-	egw_store;
-	egw_tooltip;
-	egw_css;
-	egw_calendar;
-	egw_ready;
-	egw_data;
-	egw_tail;
-	egw_inheritance;
-	egw_message;
-	egw_notification;
-*/
-
 /**
  * Object to collect instantiated application objects
  *

@@ -9,10 +9,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	egw_core;
-	egw_links;
-*/
 import './egw_core';
 
 export interface OpenModule
@@ -855,7 +851,6 @@ egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw : string, _wnd : Window) 
 		}
 	};
 });
-
 
 // Add protocol handler as an option if mail handling is not forced so mail can handle mailto:
 /* Not working consistantly yet

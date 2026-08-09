@@ -12,14 +12,6 @@
  * @copyright 2011 Nathan Gray
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_inputWidget;
-	et2_core_valueWidget;
-	et2_extension_itempicker_actions;
-	egw_action.egw_action_common;
-*/
-
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";

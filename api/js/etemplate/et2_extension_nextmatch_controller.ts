@@ -9,20 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	et2_core_common;
-	et2_core_inheritance;
-
-	et2_dataview_view_row;
-	et2_dataview_controller;
-	et2_dataview_interfaces;
-	et2_dataview_view_tile;
-
-	et2_extension_nextmatch_actions; // Contains nm_action
-
-	egw_data;
-*/
-
 import {et2_IDataProvider} from "./et2_dataview_interfaces";
 import {et2_dataview_row} from "./et2_dataview_view_row";
 import {et2_dataview_tile} from "./et2_dataview_view_tile";
@@ -229,7 +215,6 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 			// This will remove the row, but add an empty to the end.
 			// That's OK, because it will be removed when we update the row count
 			this._grid.deleteRow(entry.idx);
-
 
 			// Remove from internal map
 			delete this._indexMap[entry.idx];
@@ -622,7 +607,6 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 		return links;
 	}
 
-
 	/**
 	 * Overridden from the parent to also process any additional data that
 	 * the data source adds, such as readonlys and additonal content.
@@ -788,7 +772,6 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 	}
 
 	/** -- Implementation of et2_IDataProvider -- **/
-
 
 	dataFetch( _queriedRange, _callback, _context)
 	{

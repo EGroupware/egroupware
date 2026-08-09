@@ -8,10 +8,6 @@
  * @author Nathan Gray
  */
 
-/*egw:uses
-	/etemplate/js/et2_core_valueWidget;
-*/
-
 import {et2_createWidget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
@@ -315,7 +311,6 @@ export class et2_calendar_view extends et2_valueWidget
 			window.setTimeout(jQuery.proxy(function() {this.loader.hide();}, this), 200);
 		}
 	}
-
 
 	/**
 	 * Parse something that we think is a date into an actual date.

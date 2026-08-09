@@ -8,12 +8,6 @@
  * @author Andreas Stöckel
  */
 
-/*egw:uses
-	et2_core_common;
-	egw_inheritance;
-	et2_core_phpExpressionCompiler;
-*/
-
 import {et2_evalBool} from "./et2_core_common";
 import type {et2_widget} from "./et2_core_widget";
 import {egw} from "../jsapi/egw_global";

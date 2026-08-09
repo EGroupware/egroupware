@@ -8,9 +8,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	egw_core;
-*/
 import './egw_core';
 import './egw_json';	// for registerJSONPlugin
 
@@ -423,7 +420,6 @@ egw.extend('message', egw.MODULE_WND_LOCAL, function(_app : string, _wnd : Windo
 			//alert('egw_refresh() about to call '+href);
 			win.location.href = href;
 	   },
-
 
 		/**
 		 * Handle a push notification about entry changes from the websocket

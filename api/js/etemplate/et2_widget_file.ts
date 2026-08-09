@@ -9,10 +9,6 @@
  * @copyright Nathan Gray 2011
  */
 
-/*egw:uses
-	et2_core_inputWidget;
-	api.Resumable.resumable;
-*/
 import {Resumable} from "../Resumable/resumable.js";
 import {et2_inputWidget} from "./et2_core_inputWidget";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
@@ -400,7 +396,6 @@ export class et2_file extends et2_inputWidget
 		if (typeof this.input == 'undefined') return <HTMLElement><unknown>false;
 		return this.input[0];
 	}
-
 
 	set_mime(mime)
 	{

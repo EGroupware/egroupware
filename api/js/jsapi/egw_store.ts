@@ -8,11 +8,6 @@
  * @author Nathan Gray
  */
 
-/*egw:uses
-	egw_core;
-	egw_ready;
-	egw_debug;
-*/
 import './egw_core';
 
 export interface StoreModule

@@ -9,37 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-
-	// Include the action system
-	egw_action.egw_action;
-	egw_action.egw_action_popup;
-	egw_action.egw_action_dragdrop;
-	egw_action.egw_menu_dhtmlx;
-
-	// Include some core classes
-	et2_core_widget;
-	et2_core_interfaces;
-	et2_core_DOMWidget;
-
-	// Include all widgets the nextmatch extension will create
-	et2_widget_template;
-	et2_widget_grid;
-	et2_widget_selectbox;
-	et2_widget_selectAccount;
-	et2_widget_taglist;
-	et2_extension_customfields;
-
-	// Include all nextmatch subclasses
-	et2_extension_nextmatch_rowProvider;
-	et2_extension_nextmatch_controller;
-	et2_widget_dynheight;
-
-	// Include the grid classes
-	et2_dataview;
-
-*/
-
 import {et2_csvSplit, et2_no_init} from "./et2_core_common";
 import {
 	et2_IInput,
@@ -310,7 +279,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 	controller : any;
 	private rowProvider : any;
 
-
 	// Flag for an update is currently being done, to avoid a loop
 	private update_in_progress : boolean;
 
@@ -383,7 +351,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			attributeFilter: ["disabled", "hidden", "style"],
 			attributeOldValue: true
 		});
-
 
 		this.header = <et2_nextmatch_header_bar>et2_createWidget("nextmatch_header_bar", {}, this);
 		this.innerDiv = jQuery(document.createElement("div"))
@@ -1253,7 +1220,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			}
 		}
 
-
 		// Edit means refresh everything, so no need to keep queueing
 		// Too many?  Forget it, we'll refresh everything.
 		if(this._queued_refreshes.length >= max_queued || _type == et2_nextmatch.EDIT || !_type)
@@ -1491,7 +1457,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}
 		return colName;
 	}
-
 
 	/**
 	 * Retrieve the user's preferences for this nextmatch merged with defaults
@@ -3148,7 +3113,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 			loadChildren()
 		}
 
-
 	}
 
 	_handleDOMMutation(mutations)
@@ -3295,7 +3259,6 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 				// Set CSS for orientation
 				this.div.addClass(orientation);
 				this.egw().set_preference(app, pref + '_orientation', orientation);
-
 
 				// Try to tell browser about orientation
 				const css = '@page { size: ' + orientation + '; }',
@@ -3979,7 +3942,6 @@ export class et2_nextmatch_header_bar extends et2_DOMWidget implements et2_INext
 		}
 	}
 
-
 	/**
 	 * Build & bind to a sub-template into the header
 	 *
@@ -4465,7 +4427,6 @@ export class et2_nextmatch_header extends et2_baseWidget implements et2_INextmat
 	{
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_nextmatch_header._attributes, _child || {}));
 
-
 		this.labelNode = jQuery(document.createElement("span"));
 		this.nextmatch = null;
 
@@ -4593,7 +4554,6 @@ export class et2_nextmatch_customfields extends et2_customfields_list implements
 		{
 			const field = this.options.customfields[field_name];
 			const cf_id = et2_customfields_list.PREFIX + field_name;
-
 
 			if(this.rows[field_name]) continue;
 

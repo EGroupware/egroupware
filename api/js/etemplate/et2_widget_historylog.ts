@@ -9,15 +9,6 @@
  * @copyright 2012 Nathan Gray
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	/vendor/bower-asset/jquery-ui/jquery-ui.js;
-	et2_core_valueWidget;
-
-	// Include the grid classes
-	et2_dataview;
-*/
-
 import {et2_IDataProvider} from "./et2_dataview_interfaces";
 import {et2_createWidget, et2_register_widget, et2_registry, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -537,7 +528,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		return null;
 	}
 
-
 	dataFetch( _queriedRange, _callback, _context)
 	{
 		// Skip getting data if there's no ID
@@ -561,7 +551,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			[]
 		);
 	}
-
 
 	// Needed by interface
 	dataRegisterUID( _uid, _callback, _context)

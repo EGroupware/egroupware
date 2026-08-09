@@ -9,11 +9,6 @@
  * @version $Id$
  */
 
-/*egw:uses
-	jsapi.jsapi; // Contains some helper functions
-	vendor.bower-asset.jquery.dist.jquery; // Used for the ajax requests
-*/
-
 /* The egw_json_request is the javaScript side implementation of class.egw_json.inc.php.*/
 (function() {
 	"use strict";
@@ -85,12 +80,10 @@
 		return egw.jsonEncode(input);
 	}
 
-
 	/**
 	 * Some variables needed to store which JS and CSS files have already be included
 	 */
 	var egw_json_files = {};
-
 
 	/**
 	 * Initialize the egw_json_files object with all files which are already bound in

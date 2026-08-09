@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2011-21
  */
 
-/*egw:uses
-	et2_interfaces;
-	et2_core_common;
-*/
-
-
 import {egw} from "../jsapi/egw_global";
 import {et2_IDOMNode} from "./et2_core_interfaces";
 import {et2_form_name} from "./et2_core_common";

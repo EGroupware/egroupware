@@ -9,10 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
-
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
@@ -96,7 +92,6 @@ export class CRMView extends EgwApp
 			egw.debug("error", "CRMView object is missing");
 			return false;
 		}
-
 
 		// We can set this now
 		crm.set_view_obj(app_obj);

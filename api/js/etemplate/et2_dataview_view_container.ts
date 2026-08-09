@@ -10,11 +10,6 @@
  * @version $Id$
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_dataview_interfaces;
-*/
-
 import {et2_dataview_IInvalidatable} from "./et2_dataview_interfaces";
 import {et2_bounds} from "./et2_core_common";
 import {ClassWithInterfaces} from "./et2_core_inheritance";
@@ -378,9 +373,7 @@ export class et2_dataview_container extends ClassWithInterfaces implements et2_d
 		}
 	}
 
-
 	/* -- PRIVATE FUNCTIONS -- */
-
 
 	/**
 	 * Used to check whether an element is visible or not (non recursive).

@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_baseWidget;
-*/
-
-
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_baseWidget} from "./et2_core_baseWidget";
 import {et2_IDetachedDOM} from "./et2_core_interfaces";
@@ -213,7 +207,6 @@ export class et2_details extends et2_box
 		this.wrapper = jQuery(document.createElement('div'))
 				.addClass('et2_details_wrapper')
 				.appendTo(this.div);
-
 
 		this._createWidget();
 	}

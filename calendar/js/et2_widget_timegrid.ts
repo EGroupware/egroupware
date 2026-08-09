@@ -8,11 +8,6 @@
  * @author Nathan Gray
  */
 
-
-/*egw:uses
-	/calendar/js/et2_widget_view.js;
-*/
-
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_calendar_view} from "./et2_widget_view";
@@ -120,7 +115,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_timegrid._attributes, _child || {}));
-
 
 		// Main container
 		this.div = jQuery(document.createElement("div"))
@@ -501,7 +495,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 					'T00:00:00Z'
 				);
 
-
 				// Make sure whole day events stay as whole day events by ignoring drop time
 				if(event_data.app == 'calendar' && event_widget.options.value.whole_day)
 				{
@@ -834,7 +827,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 		var totalDisplayMinutes	= wd_end - wd_start;
 		var rowsToDisplay	= Math.ceil((totalDisplayMinutes+60)/granularity);
 		var row_count = (1440 / this.options.granularity);
-
 
 		this.scrolling
 			.on('scroll', jQuery.proxy(this._scroll, this));
@@ -1452,7 +1444,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 							timegrid = target.iface.getWidget();
 						}
 
-
 						if (timegrid && timegrid._drop_data)
 						{
 							timegrid._event_drop.call(source[i].iface.getDOMNode(),timegrid,null, action.ui,timegrid._drop_data);
@@ -1733,7 +1724,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				this.set_start_date(day_list[0]);
 				this.set_end_date(day_list[day_list.length-1]);
 			}
-
 
 			// Sub widgets actually get their own data from egw.data, so we'll
 			// stick it there
@@ -2305,7 +2295,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 			}
 		}
 
-
 		if(time)
 		{
 			this.gridHover
@@ -2407,7 +2396,6 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				(this.options.granularity / 60) * lineHeight) +
 			this.gridHeader.outerHeight();
 		var too_small = needed > this.options.height && this.options.granularity != 0;
-
 
 		if(this.getInstanceManager().app === 'home')
 		{

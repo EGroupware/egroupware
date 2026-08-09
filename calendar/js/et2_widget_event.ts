@@ -8,11 +8,6 @@
  * @author Nathan Gray
  */
 
-
-/*egw:uses
-	/etemplate/js/et2_core_valueWidget;
-*/
-
 import {et2_register_widget, et2_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
@@ -279,7 +274,6 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 				egw: () => this.egw()
 			}, "select-cat", ",,,calendar", true);
 
-
 			// Need cleaning? (DnD helper removes content)
 			// @ts-ignore
 			if(!this.div.has(this.title).length)
@@ -430,7 +424,6 @@ export class et2_calendar_event extends et2_valueWidget implements et2_IDetached
 						// Less than 8 hours is small
 						this.div.toggleClass('calendar_calEventSmall', this.options.value.end.valueOf() - this.options.value.start.valueOf() < 28800000);
 				}
-
 
 				if (this.body.height() > this.div.height() - this.title.height() && visible_lines >= 4)
 				{

@@ -7,9 +7,6 @@
  * @author Nathan Gray
  * @version $Id$
  */
-/*egw:uses
-	/calendar/js/app.js;
-*/
 
 /**
  * Custom code for calendar favorite home page portlets.

@@ -9,15 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_common;
-
-	et2_dataview_interfaces;
-	et2_dataview_view_container;
-	et2_dataview_view_spacer;
-*/
-
 import {et2_implements_registry} from "./et2_core_interfaces";
 import {et2_dataview_IViewRange} from "./et2_dataview_interfaces";
 import {et2_dataview_container} from "./et2_dataview_view_container";
@@ -51,8 +42,6 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 	 */
 	public static readonly ET2_GRID_HOLD_COUNT = 50;
 
-
-
 	egw: any;
 
 	private _orgAvgHeight: number | boolean;
@@ -79,7 +68,6 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 	private scrollarea: any;
 	innerTbody: any;
 	private outerCell: JQuery;
-
 
 	/**
 	 * Creates the grid.
@@ -599,7 +587,6 @@ export class et2_dataview_grid extends et2_dataview_container implements et2_dat
 		}
 
 	}
-
 
 	/* ---- PRIVATE FUNCTIONS ---- */
 

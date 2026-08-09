@@ -9,9 +9,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	egw_core;
-*/
 import './egw_core';
 
 export interface UtilsModule
@@ -281,7 +278,6 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() : UtilsModule
 		}
 	}
 
-
 	/**
 	 * Try some deprecated ways of copying to the OS clipboard
 	 *
@@ -305,7 +301,6 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() : UtilsModule
 			win.getSelection().addRange(range);
 
 			target_element.style.userSelect = old_select;
-
 
 			// detect we are in IE via checking setActive, since it's
 			// only supported in IE, and make sure there's clipboardData object
@@ -561,7 +556,6 @@ egw.extend('utils', egw.MODULE_GLOBAL, function() : UtilsModule
 			//$.log(”w: ” + dim.w + ”, h:” + dim.h)
 			return dim;
 		},
-
 
 		/**
 		 * Store a window's name in egw.store so we can have a list of open windows

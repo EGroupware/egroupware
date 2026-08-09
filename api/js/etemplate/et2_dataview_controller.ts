@@ -9,18 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	et2_core_common;
-	et2_core_inheritance;
-
-	et2_dataview_interfaces;
-	et2_dataview_controller_selection;
-	et2_dataview_view_row;
-	et2_dataview_view_tile;
-
-	egw_action.egw_action;
-*/
-
 import {et2_IDataProvider} from "./et2_dataview_interfaces";
 import {et2_dataview_selectionManager} from "./et2_dataview_controller_selection";
 import {et2_dataview_row} from "./et2_dataview_view_row";
@@ -107,7 +95,6 @@ export class et2_dataview_controller
 
 		// Register the dataFetch callback
 		this._grid.setDataCallback(this._gridCallback, this);
-
 
 		// Record the child
 		if(this._parentController != null)
@@ -404,7 +391,6 @@ export class et2_dataview_controller
 
 	/* -- PRIVATE FUNCTIONS -- */
 
-
 	_getIndexEntry( _idx)
 	{
 		// Create an entry in the index map if it does not exist yet
@@ -518,7 +504,6 @@ export class et2_dataview_controller
 
 		return this.hasData;
 	}
-
 
 	/**
 	 * Create a new row.

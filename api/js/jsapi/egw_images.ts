@@ -9,9 +9,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	egw_core;
-*/
 import './egw_core';
 
 export interface ImagesModule

@@ -9,11 +9,6 @@
  * @copyright Nathan Gray 2013
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_DOMWidget;
-*/
-
 import {et2_DOMWidget} from "./et2_core_DOMWidget";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -306,7 +301,6 @@ export class et2_toolbar extends et2_DOMWidget implements et2_IInput
 				}
 			}
 		}
-
 
 		let menuLen = 0;
 		for (let key in this.preference)

@@ -8,12 +8,6 @@
  * @author Andreas Stöckel
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	lib/tooltip;
-	et2_core_DOMWidget;
-*/
-
 import {et2_IAligned, et2_IDetachedDOM} from "./et2_core_interfaces";
 import {et2_DOMWidget} from './et2_core_DOMWidget';
 import {ClassWithAttributes} from "./et2_core_inheritance";

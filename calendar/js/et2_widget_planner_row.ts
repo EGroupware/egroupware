@@ -8,13 +8,6 @@
  * @author Nathan Gray
  */
 
-/*egw:uses
-	/calendar/js/et2_widget_view.js;
-	/calendar/js/et2_widget_daycol.js;
-	/calendar/js/et2_widget_event.js;
-*/
-
-
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
@@ -246,7 +239,6 @@ export class et2_calendar_planner_row extends et2_valueWidget implements et2_IRe
 					planner.div.on('dragend.et2_timegrid_row' + widget_object.id, function()
 					{
 						jQuery(_data.ui.draggable).off('drag.et2_timegrid_row' + widget_object.id);
-
 
 						planner.div.removeClass(["drop-hover", "et2-dropzone"]);
 

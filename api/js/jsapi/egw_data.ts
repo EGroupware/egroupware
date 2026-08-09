@@ -9,10 +9,6 @@
  * @copyright Stylite 2012
  */
 
-/*egw:uses
-	egw_core;
-	egw_debug;
-*/
 import './egw.js';
 import './egw_json';	// for egw.registerJSONPlugin
 
@@ -682,7 +678,6 @@ egw.extend("data", egw.MODULE_APP_LOCAL, function (_app : string, _wnd : Window)
 								parseServerResponse(cached, _callback, _context, _execId, _widgetId);
 								_context.no_cache = no_cache;
 
-
 								// If cache registrant wants notification of cache useage,
 								// let it know
 								if(cc.notification)
@@ -889,8 +884,6 @@ egw.extend("data_storage", egw.MODULE_GLOBAL, function (_app : string, _wnd : Wi
 	 * a certain uid.
 	 */
 	var registeredCallbacks : {[uid : string] : {callback : Function, context : any, execId : string, widgetId : string}[]} = {};
-
-
 
 	/**
 	 * Register the "data" plugin globally for single uids

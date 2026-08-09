@@ -9,12 +9,6 @@
  * @copyright EGroupware GmbH 2011-2021
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_DOMWidget;
-	et2_core_xml;
-*/
-
 import {et2_no_init} from "./et2_core_common";
 import {et2_IAligned, et2_IDetachedDOM, et2_IResizeable} from "./et2_core_interfaces";
 import {et2_register_widget, et2_widget, WidgetConfig} from "./et2_core_widget";
@@ -25,7 +19,6 @@ import {et2_directChildrenByTagName, et2_filteredNodeIterator, et2_readAttrWithD
 import {egw} from "../jsapi/egw_global";
 import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {et2_warnOnce} from "./Et2Widget/Et2Widget";
-
 
 /**
  * Class which implements the "grid" XET-Tag

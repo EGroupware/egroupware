@@ -9,11 +9,6 @@
  * @author Nathan Gray
  */
 
-/*egw:uses
-        /vendor/bower-asset/jquery/dist/jquery.js;
-        et2_core_baseWidget;
-*/
-
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -297,7 +292,6 @@ export class et2_portlet extends et2_valueWidget
 		{
 			return;
 		}
-
 
 		// Save settings - server might reply with new content if the portlet needs an update,
 		// but ideally it doesn't

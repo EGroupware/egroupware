@@ -9,9 +9,6 @@
  * @copyright Stylite 2011
  */
 
-/*egw:uses
-	egw_core;
-*/
 import './egw_core';
 
 export interface CssModule

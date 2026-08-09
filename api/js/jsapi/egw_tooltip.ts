@@ -11,9 +11,6 @@
  * @version $Id$
  */
 
-/*egw:uses
- egw_core;
- */
 import './egw_core';
 
 export interface TooltipOptions
@@ -257,7 +254,6 @@ egw.extend('tooltip', egw.MODULE_WND_LOCAL, function (_app : string, _wnd : Wind
 				right: (window_width - cursor_rect.right),
 				bottom: (window_height - cursor_rect.bottom)
 			};
-
 
 			if (space_left.right < tooltip_width)
 			{

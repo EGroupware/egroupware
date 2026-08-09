@@ -9,16 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js;
-	/etemplate/js/etemplate2.js;
-	/calendar/js/View.js;
-	/calendar/js/et2_widget_owner.js;
-	/calendar/js/et2_widget_timegrid.js;
-	/calendar/js/et2_widget_planner.js;
-	/vendor/bower-asset/jquery-touchswipe/jquery.touchSwipe.js;
-*/
-
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
@@ -2705,7 +2695,6 @@ export class CalendarApp extends EgwApp
 
 				var loading = false;
 
-
 				var value = [];
 				state.state.first = view.start_date(state.state).toJSON();
 				// We'll modify this one, so it needs to be a new object
@@ -3059,7 +3048,6 @@ export class CalendarApp extends EgwApp
 					state.state.startdate = state.state.enddate = null;
 				}
 
-
 				state.state.col_filter = {participant: state.state.owner};
 				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;
 				delete state.state.keywords;
@@ -3236,7 +3224,6 @@ export class CalendarApp extends EgwApp
 		// Stop the normal bubbling if this is called on click
 		return false;
 	}
-
 
 	/**
 	 * Update the associated non-view widgets in the sidebox & filterbox
@@ -3419,7 +3406,6 @@ export class CalendarApp extends EgwApp
 			}
 		}
 	}
-
 
 	/**
 	 * Clear all calendar data from egw.data cache
@@ -3800,7 +3786,6 @@ export class CalendarApp extends EgwApp
 			(state.view == 'day' && state.owner.length < parseInt(''+this.egw.preference('day_consolidate','calendar')) ||
 			['week','day4'].indexOf(state.view) !== -1 && state.owner.length < parseInt(''+this.egw.preference('week_consolidate','calendar')));
 
-
 		for(var i = 0; i < data.length; i++)
 		{
 			var record = this.egw.dataGetUIDdata(data[i]);
@@ -4059,7 +4044,6 @@ export class CalendarApp extends EgwApp
 			var d = new Date(_date);
 			var day = d.getUTCDay();
 
-
 			// if week does not start Monday and date is Sunday --> add one day
 			if (egw.preference('weekdaystarts','calendar') != 'Monday' && !day)
 			{
@@ -4150,7 +4134,6 @@ export class CalendarApp extends EgwApp
 		{
 			return;
 		}
-
 
 		// Flag to make sure we don't hide non-view templates
 		var view_et2 = false;

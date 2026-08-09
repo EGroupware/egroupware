@@ -8,14 +8,6 @@
  * @author Andreas Stöckel
  */
 
-/*egw:uses
-	jsapi.egw;
-	et2_core_xml;
-	et2_core_common;
-	et2_core_inheritance;
-	et2_core_arrayMgr;
-*/
-
 import {ClassWithAttributes} from './et2_core_inheritance';
 import {et2_arrayMgr} from "./et2_core_arrayMgr";
 import {egw, IegwAppLocal} from "../jsapi/egw_global";
@@ -33,7 +25,6 @@ import type {et2_inputWidget} from "./et2_core_inputWidget";
  */
 export var et2_registry = {};
 export var et2_attribute_registry = {};
-
 
 /**
  * Registers the widget class defined by the given constructor, registers all its class attributes, and associates it

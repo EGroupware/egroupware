@@ -8,9 +8,6 @@
  * @author Hadi Nategh <hn-AT-stylite.de>
  */
 
-/*egw:uses
-	egw_core;
-*/
 import './egw_core';
 
 export interface NotificationModule

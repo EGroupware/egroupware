@@ -8,13 +8,6 @@
  * @author Nathan Gray
  */
 
-
-/*egw:uses
-	/calendar/js/et2_widget_view.js;
-	/calendar/js/et2_widget_planner_row.js;
-	/calendar/js/et2_widget_event.js;
-*/
-
 import {et2_createWidget, et2_register_widget, WidgetConfig} from "../../api/js/etemplate/et2_core_widget";
 import {ClassWithAttributes} from "../../api/js/etemplate/et2_core_inheritance";
 import {et2_calendar_view} from "./et2_widget_view";
@@ -120,7 +113,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_calendar_planner._attributes, _child || {}));
 
-
 		// Main container
 		this.div = jQuery(document.createElement("div"))
 			.addClass("calendar_plannerWidget");
@@ -210,7 +202,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				startAxis: "x",
 				lockAxis: "x",
 				containment: 'parent',
-
 
 				/**
 				 * If dragging to resize an event, abort drag to create
@@ -1078,7 +1069,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				readonly: this.options.readonly
 			},this);
 
-
 		if(this.isInTree())
 		{
 			row.doLoadingFinished();
@@ -1086,7 +1076,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 
 		return row;
 	}
-
 
 	_header_day_of_month()
 	{
@@ -2585,7 +2574,6 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				hidden_nodes[i].element.style.display = hidden_nodes[i].display;
 			}
 			row = jQuery(row).closest('.calendar_plannerRowWidget');
-
 
 			var row_widget = null;
 			for(var i = 0; i < this._children.length && row.length > 0; i++)

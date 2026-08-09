@@ -9,13 +9,6 @@
  * @copyright EGroupware GmbH
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	/api/js/jquery/barcode/jquery-barcode.min.js;
-	et2_core_interfaces;
-	et2_core_baseWidget;
-*/
-
 /**
  * This widget creates barcode out of a given text
  *
@@ -120,7 +113,6 @@ export class et2_barcode extends et2_valueWidget
 	{
 		// Call the inherited constructor
 		super(_parent, _attrs, ClassWithAttributes.extendAttributes(et2_barcode._attributes, _child || {}));
-
 
 		this.div = jQuery(document.createElement('div')).attr({	class:'et2_barcode'	});
 

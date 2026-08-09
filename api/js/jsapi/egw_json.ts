@@ -9,14 +9,6 @@
  * @author Ralf Becker <RalfBecker@outdoor-training.de>
  */
 
-/*egw:uses
-	vendor.bower-asset.jquery.dist.jquery;
-
-	egw_core;
-	egw_utils;
-	egw_files;
-	egw_debug;
-*/
 import './egw.js';
 import './egw_utils';
 

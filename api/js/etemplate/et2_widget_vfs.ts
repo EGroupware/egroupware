@@ -9,15 +9,6 @@
  * @copyright Nathan Gray 2012
  */
 
-/*egw:uses
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	vfsSelectUI;
-	et2_core_inputWidget;
-	et2_core_valueWidget;
-	et2_widget_description;
-	et2_widget_file;
-*/
-
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {et2_register_widget, WidgetConfig} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -239,7 +230,6 @@ export class et2_vfs extends et2_valueWidget implements et2_IDetachedDOM
 		}
 	}
 
-
 }
 et2_register_widget(et2_vfs, ["vfs"]);
 
@@ -342,7 +332,6 @@ export class et2_vfsSize extends et2_description
 	}
 }
 et2_register_widget(et2_vfsSize, ["vfs-size"]);
-
 
 /**
 * vfs-mode: textual representation of permissions + extra bits
@@ -465,7 +454,6 @@ export class et2_vfsMode extends et2_description
 }
 et2_register_widget(et2_vfsMode, ["vfs-mode"]);
 
-
 /**
 * vfs-uid / vfs-gid: Displays the name for an ID.
 * Same as read-only selectAccount, except if there's no user it shows "root"
@@ -477,7 +465,6 @@ export type et2_vfsUid = Et2VfsUid;
  * @deprecated use Et2VfsGid
  */
 export type et2_vfsGid = Et2VfsGid;
-
 
 /**
  * @deprecated use Et2VfsUpload;

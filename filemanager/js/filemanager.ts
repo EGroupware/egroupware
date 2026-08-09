@@ -8,9 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js;
- */
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
@@ -677,7 +674,6 @@ export class filemanagerAPP extends EgwApp
 		return true;
 	}
 
-
 	/**
 	 * Callback for server response to upload request:
 	 * - display message and refresh list
@@ -1030,7 +1026,6 @@ export class filemanagerAPP extends EgwApp
 
 		return (allowed || selected.length <= 1) && action.not_disableClass.apply(action, arguments);
 	}
-
 
 	/**
 	 * Change directory

@@ -8,11 +8,6 @@
  * @author Andreas Stöckel (as AT stylite.de)
  */
 
-/*egw:uses
-	egw_core;
-	egw_utils;
-	egw_debug;
-*/
 import './egw_core';
 
 export interface ReadyModule

@@ -8,12 +8,6 @@
  * @author Andreas Stöckel
  */
 
-/*egw:uses
-	jsapi.jsapi; // Needed for egw_seperateJavaScript
-	/vendor/bower-asset/jquery/dist/jquery.js;
-	et2_core_baseWidget;
-*/
-
 import {et2_valueWidget} from "./et2_core_valueWidget";
 import {WidgetConfig, et2_register_widget} from "./et2_core_widget";
 import {ClassWithAttributes} from "./et2_core_inheritance";
@@ -122,5 +116,4 @@ export class et2_html extends et2_valueWidget implements et2_IDetachedDOM
 
 }
 et2_register_widget(et2_html, ["html","htmlarea_ro"]);
-
 
