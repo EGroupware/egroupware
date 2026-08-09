@@ -41,13 +41,13 @@ class Css implements CssModule
 	/**
 	 * Assoziative array which stores the current css rule for a given selector.
 	 */
-	private selectors : {[selector : string] : number} = {};
+	#selectors : {[selector : string] : number} = {};
 
 	/**
 	 * Variable used to calculate unique id for the selectors.
 	 */
-	private selectorCount = 0;
-	private sheet : any;
+	#selectorCount = 0;
+	#sheet : any;
 
 	constructor(private _wnd : Window)
 	{
@@ -66,9 +66,9 @@ class Css implements CssModule
 	css = (_selector : string, _rule? : string) : void =>
 	{
 		// Set the current index to the maximum index
-		var index = this.sheet ? Math.min(this.selectorCount, this.sheet.cssRules.length) : 0;
+		var index = this.#sheet ? Math.min(this.#selectorCount, this.#sheet.cssRules.length) : 0;
 
-		if (!this.sheet || !this.sheet.ownerNode || this.sheet.ownerNode.ownerDocument !== this._wnd.document)
+		if (!this.#sheet || !this.#sheet.ownerNode || this.#sheet.ownerNode.ownerDocument !== this._wnd.document)
 		{
 			// Generate a style tag, which will be used to hold the newly generated css
 			// rules.
@@ -76,54 +76,54 @@ class Css implements CssModule
 			this._wnd.document.getElementsByTagName('head')[0].appendChild(style);
 
 			// Obtain the reference to the styleSheet object of the generated style tag
-			this.sheet = style.sheet ? style.sheet : (<any>style).styleSheet;
+			this.#sheet = style.sheet ? style.sheet : (<any>style).styleSheet;
 
-			this.selectorCount = 0;
-			this.selectors = {};
+			this.#selectorCount = 0;
+			this.#selectors = {};
 		}
 
 		// Remove any existing rule first, of no rule exists for the
-		if (typeof this.selectors[_selector] !== "undefined")
+		if (typeof this.#selectors[_selector] !== "undefined")
 		{
 			// Store the old index
-			index = this.selectors[_selector];
-			if(index < this.sheet.cssRules.length)
+			index = this.#selectors[_selector];
+			if(index < this.#sheet.cssRules.length)
 			{
-				if (typeof this.sheet.removeRule !== "undefined")
+				if (typeof this.#sheet.removeRule !== "undefined")
 				{
-					this.sheet.removeRule(index);
+					this.#sheet.removeRule(index);
 				}
 				else
 				{
-					this.sheet.deleteRule(index);
+					this.#sheet.deleteRule(index);
 				}
 			}
 
-			delete (this.selectors[_selector]);
+			delete (this.#selectors[_selector]);
 			if(!_rule)
 			{
-				this.selectorCount--;
+				this.#selectorCount--;
 			}
 		}
 		else
 		{
-			this.selectorCount++;
+			this.#selectorCount++;
 		}
 
 		if (_rule)
 		{
 			// Add the rule to the stylesheet
-			if (typeof this.sheet.addRule !== "undefined")
+			if (typeof this.#sheet.addRule !== "undefined")
 			{
-				this.sheet.addRule(_selector, _rule, index);
+				this.#sheet.addRule(_selector, _rule, index);
 			}
 			else
 			{
-				this.sheet.insertRule(_selector + "{" + _rule + "}", index);
+				this.#sheet.insertRule(_selector + "{" + _rule + "}", index);
 			}
 
 			// Store the new index
-			this.selectors[_selector] = index;
+			this.#selectors[_selector] = index;
 		}
 	}
 }

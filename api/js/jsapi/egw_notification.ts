@@ -60,15 +60,15 @@ declare global
 class Notification_ implements NotificationModule
 {
 	// Notification permission, the default value is 'default' which is equivalent to 'denied'
-	private permission = 'default';
+	#permission = 'default';
 	// Keeps alive notifications
-	private alive_notifications : any[] = [];
+	#alive_notifications : any[] = [];
 
 	constructor()
 	{
 		if (typeof Notification != 'undefined')
 		{
-			this.permission = Notification.permission;
+			this.#permission = Notification.permission;
 		}
 	}
 
@@ -95,9 +95,9 @@ class Notification_ implements NotificationModule
 		if (typeof Notification == 'undefined') return false;
 
 		// Check and ask for permission
-		if (Notification && Notification.requestPermission && this.permission === 'default') (<any>Notification).requestPermission ((_permission : string) => {
-			this.permission = _permission;
-			if (this.permission === 'granted') this.notification(_title, _options);
+		if (Notification && Notification.requestPermission && this.#permission === 'default') (<any>Notification).requestPermission ((_permission : string) => {
+			this.#permission = _permission;
+			if (this.#permission === 'granted') this.notification(_title, _options);
 		});
 
 		// All options including callbacks
@@ -138,7 +138,7 @@ class Notification_ implements NotificationModule
 
 		// Collect all running notifications in case if want to close them all,
 		// for instance on logout action.
-		this.alive_notifications.push(notification);
+		this.#alive_notifications.push(notification);
 	}
 
 	/**
@@ -152,12 +152,12 @@ class Notification_ implements NotificationModule
 		if (typeof Notification == 'undefined') return false;
 
 		// Ask for permission if there's nothing decided yet
-		if (Notification && Notification.requestPermission && this.permission == 'default') {
+		if (Notification && Notification.requestPermission && this.#permission == 'default') {
 			(<any>Notification).requestPermission ((_permission : string) => {
-				this.permission = _permission;
+				this.#permission = _permission;
 			});
 		}
-		return !!(Notification && Notification.requestPermission && this.permission == 'granted');
+		return !!(Notification && Notification.requestPermission && this.#permission == 'granted');
 	}
 
 	/**
@@ -165,13 +165,13 @@ class Notification_ implements NotificationModule
 	 */
 	killAliveNotifications = () : void =>
 	{
-		if (this.alive_notifications && this.alive_notifications.length > 0)
+		if (this.#alive_notifications && this.#alive_notifications.length > 0)
 		{
-			for (var i=0; i<this.alive_notifications.length;i++)
+			for (var i=0; i<this.#alive_notifications.length;i++)
 			{
-				if (typeof this.alive_notifications[i].close == 'function') this.alive_notifications[i].close();
+				if (typeof this.#alive_notifications[i].close == 'function') this.#alive_notifications[i].close();
 			}
-			this.alive_notifications = [];
+			this.#alive_notifications = [];
 		}
 	}
 }

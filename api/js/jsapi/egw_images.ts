@@ -83,14 +83,14 @@ class Images implements ImagesModule
 	 *
 	 * @access: private, use egw.image(_name, _app)
 	 */
-	private images : any;
+	#images : any;
 
 	/**
 	 * Set imagemap, called from /api/images.php
 	 */
 	set_images = (_images : object, _need_clone? : boolean) : void =>
 	{
-		this.images = _need_clone ? (<any>jQuery).extend(true, {}, _images) : _images;
+		this.#images = _need_clone ? (<any>jQuery).extend(true, {}, _images) : _images;
 	}
 
 	/**
@@ -107,7 +107,7 @@ class Images implements ImagesModule
 		// For logging all paths tried
 		var tries : {[key : string] : any} = {};
 
-		if (!self.images)
+		if (!self.#images)
 		{
 			console.log("calling egw.image('"+_name+"', '"+_app+"') before egw.set_images() returning null");
 			return null;
@@ -126,7 +126,7 @@ class Images implements ImagesModule
 		{
 			var split = _name.match(/^([^/]+)\/(.*)$/);
 			// e.g. dhtmlxtree and egw_action are subdirs in image dir, not applications
-			if (typeof self.images[split[1]] !== 'undefined')
+			if (typeof self.#images[split[1]] !== 'undefined')
 			{
 				_app = split[1];
 				_name = split[2];
@@ -135,19 +135,19 @@ class Images implements ImagesModule
 
 		// own instance specific images in vfs have the highest precedence
 		tries.vfs = _name;
-		if (typeof self.images.vfs !== 'undefined' && typeof self.images.vfs[_name] === 'string')
+		if (typeof self.#images.vfs !== 'undefined' && typeof self.#images.vfs[_name] === 'string')
 		{
-			return this.webserverUrl+self.images.vfs[_name];
+			return this.webserverUrl+self.#images.vfs[_name];
 		}
-		if (typeof self.images.global !== 'undefined' && (_name !== 'navbar' || _app === 'api'))
+		if (typeof self.#images.global !== 'undefined' && (_name !== 'navbar' || _app === 'api'))
 		{
 			tries.global = '('+_app+'/)'+_name;
-			let replace = self.images.global[_app+'/'+_name] || self.images.global[_name];
+			let replace = self.#images.global[_app+'/'+_name] || self.#images.global[_name];
 			if (replace)
 			{
-				if (typeof self.images.bootstrap[replace] === 'string')
+				if (typeof self.#images.bootstrap[replace] === 'string')
 				{
-					return this.webserverUrl+self.images.bootstrap[replace];
+					return this.webserverUrl+self.#images.bootstrap[replace];
 				}
 				const parts = replace.split('/');
 				if (parts.length > 1)
@@ -162,19 +162,19 @@ class Images implements ImagesModule
 			}
 		}
 		tries[_app + (_app == 'phpgwapi' ? " (current app)" : "")] = _name;
-		if (typeof self.images[_app] !== 'undefined' && typeof self.images[_app][_name] === 'string')
+		if (typeof self.#images[_app] !== 'undefined' && typeof self.#images[_app][_name] === 'string')
 		{
-			return this.webserverUrl+self.images[_app][_name];
+			return this.webserverUrl+self.#images[_app][_name];
 		}
 		tries.bootstrap = _name;
-		if (typeof self.images.bootstrap !== 'undefined' && typeof self.images.bootstrap[_name] === 'string')
+		if (typeof self.#images.bootstrap !== 'undefined' && typeof self.#images.bootstrap[_name] === 'string')
 		{
-			return this.webserverUrl+self.images.bootstrap[_name];
+			return this.webserverUrl+self.#images.bootstrap[_name];
 		}
 		tries.api = _name;
-		if (typeof self.images.api !== 'undefined' && typeof self.images.api[_name] === 'string')
+		if (typeof self.#images.api !== 'undefined' && typeof self.#images.api[_name] === 'string')
 		{
-			return this.webserverUrl+self.images.api[_name];
+			return this.webserverUrl+self.#images.api[_name];
 		}
 		// if no match, check if it might contain an extension
 		var matches = _name.match(/\.(png|gif|jpg)$/i);

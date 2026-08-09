@@ -72,12 +72,12 @@ declare global
  */
 class Ready implements ReadyModule
 {
-	private registeredCallbacks : {callback : Function, context : object, before : boolean}[] = [];
-	private registeredProgress : {callback : Function, context : object}[] = [];
-	private readyPending : {[token : string] : boolean} = {'readyEvent': true};
-	private readyPendingCnt = 1;
-	private readyDoneCnt = 0;
-	private _isReady = false;
+	#registeredCallbacks : {callback : Function, context : object, before : boolean}[] = [];
+	#registeredProgress : {callback : Function, context : object}[] = [];
+	#readyPending : {[token : string] : boolean} = {'readyEvent': true};
+	#readyPendingCnt = 1;
+	#readyDoneCnt = 0;
+	#isReady = false;
 
 	constructor(_wnd : Window)
 	{
@@ -86,29 +86,29 @@ class Ready implements ReadyModule
 		// Mozilla, Opera and webkit nightlies currently support this event
 		if (_wnd.document.addEventListener) {
 			// Use the handy event callback
-			_wnd.document.addEventListener("DOMContentLoaded", this.readyEventHandler, false);
+			_wnd.document.addEventListener("DOMContentLoaded", this.#readyEventHandler, false);
 
 			// A fallback to window.onload, that will always work
-			_wnd.addEventListener("load", this.readyEventHandler, false);
+			_wnd.addEventListener("load", this.#readyEventHandler, false);
 
 		// If IE event model is used
 		} else if ((<any>_wnd.document).attachEvent) {
 			// ensure firing before onload,
 			// maybe late but safe also for iframes
-			(<any>_wnd.document).attachEvent("onreadystatechange", this.readyEventHandler);
+			(<any>_wnd.document).attachEvent("onreadystatechange", this.#readyEventHandler);
 
 			// A fallback to window.onload, that will always work
-			(<any>_wnd).attachEvent("onload", this.readyEventHandler);
+			(<any>_wnd).attachEvent("onload", this.#readyEventHandler);
 		}
 	}
 
 	private doReadyWaitFor() : string
 	{
-		if (!this._isReady)
+		if (!this.#isReady)
 		{
 			var uid = egw.uid();
-			this.readyPending[uid] = true;
-			this.readyPendingCnt++;
+			this.#readyPending[uid] = true;
+			this.#readyPendingCnt++;
 
 			this.readyProgressChange();
 
@@ -126,11 +126,11 @@ class Ready implements ReadyModule
 
 	private doReadyDone(_token : string) : void
 	{
-		if (typeof this.readyPending[_token] !== 'undefined')
+		if (typeof this.#readyPending[_token] !== 'undefined')
 		{
-			delete this.readyPending[_token];
-			this.readyPendingCnt--;
-			this.readyDoneCnt++;
+			delete this.#readyPending[_token];
+			this.#readyPendingCnt--;
+			this.#readyDoneCnt++;
 
 			this.readyProgressChange();
 
@@ -141,24 +141,24 @@ class Ready implements ReadyModule
 	private readyProgressChange() : void
 	{
 		// Call all registered progress callbacks
-		for (var i = 0; i < this.registeredProgress.length; i++)
+		for (var i = 0; i < this.#registeredProgress.length; i++)
 		{
-			this.registeredProgress[i].callback.call(
-				this.registeredProgress[i].context,
-				this.readyDoneCnt,
-				this.readyPendingCnt
+			this.#registeredProgress[i].callback.call(
+				this.#registeredProgress[i].context,
+				this.#readyDoneCnt,
+				this.#readyPendingCnt
 			);
 		}
 
-		egw.debug('log', 'Ready events, processed %s/%s', this.readyDoneCnt,
-				this.readyPendingCnt + this.readyDoneCnt);
+		egw.debug('log', 'Ready events, processed %s/%s', this.#readyDoneCnt,
+				this.#readyPendingCnt + this.#readyDoneCnt);
 	}
 
 	// Passed directly to addEventListener/attachEvent in the constructor, so
 	// this must stay an arrow field (safe when detached from its instance),
 	// unlike the other private helpers here which are only ever called via
 	// this.foo() from within the class.
-	private readyEventHandler = () : void =>
+	#readyEventHandler = () : void =>
 	{
 		this.doReadyDone('readyEvent');
 	}
@@ -166,29 +166,29 @@ class Ready implements ReadyModule
 	private testCallReady() : void
 	{
 		// Check whether no further event is pending
-		if (this.readyPendingCnt <= 1 && !this._isReady)
+		if (this.#readyPendingCnt <= 1 && !this.#isReady)
 		{
 			// If exactly one event is pending and that one is not the ready
 			// event, abort
-			if (this.readyPendingCnt === 1 && !this.readyPending['readyEvent'])
+			if (this.#readyPendingCnt === 1 && !this.#readyPending['readyEvent'])
 			{
 				return;
 			}
 
 			// Set "isReady" to true, if readyPendingCnt is zero
-			this._isReady = this.readyPendingCnt === 0;
+			this.#isReady = this.#readyPendingCnt === 0;
 
 			// Call all registered callbacks
-			for (var i = this.registeredCallbacks.length - 1; i >= 0; i--)
+			for (var i = this.#registeredCallbacks.length - 1; i >= 0; i--)
 			{
-				if (this.registeredCallbacks[i].before || this.readyPendingCnt === 0)
+				if (this.#registeredCallbacks[i].before || this.#readyPendingCnt === 0)
 				{
-					this.registeredCallbacks[i].callback.call(
-						this.registeredCallbacks[i].context
+					this.#registeredCallbacks[i].callback.call(
+						this.#registeredCallbacks[i].context
 					);
 
 					// Delete the callback from the list
-					this.registeredCallbacks.splice(i, 1);
+					this.#registeredCallbacks.splice(i, 1);
 				}
 			}
 		}
@@ -231,9 +231,9 @@ class Ready implements ReadyModule
 	 */
 	ready = (_callback : Function, _context? : object, _beforeDOMContentLoaded? : boolean) : void =>
 	{
-		if (!this._isReady)
+		if (!this.#isReady)
 		{
-			this.registeredCallbacks.push({
+			this.#registeredCallbacks.push({
 				'callback': _callback,
 				'context': _context ? _context : null,
 				'before': _beforeDOMContentLoaded ? true : false
@@ -261,9 +261,9 @@ class Ready implements ReadyModule
 	 * 	should get called.
 	 */
 	readyProgress = ((self : Ready) => function(this : any, _callback : Function, _context? : object) : void {
-		if (!self._isReady)
+		if (!self.#isReady)
 		{
-			self.registeredProgress.unshift({
+			self.#registeredProgress.unshift({
 				'callback': _callback,
 				'context': _context ? _context : null
 			});
@@ -279,7 +279,7 @@ class Ready implements ReadyModule
 	 */
 	isReady = () : boolean =>
 	{
-		return this._isReady;
+		return this.#isReady;
 	}
 }
 

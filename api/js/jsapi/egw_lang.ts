@@ -78,7 +78,7 @@ class Lang implements LangModule
 	 *
 	 * @access: private, use egw.lang() or egw.set_lang_arr()
 	 */
-	private lang_arr : {[app : string] : {[message : string] : string}} = {};
+	#lang_arr : {[app : string] : {[message : string] : string}} = {};
 
 	/**
 	 * Set translation for a given application
@@ -91,7 +91,7 @@ class Lang implements LangModule
 		if(!(<any>jQuery).isArray(_messages))
 		{
 			// no deep clone jQuery.extend(true,...) neccessary, as _messages contains only string values
-			this.lang_arr[_app] = _need_clone ? (<any>jQuery).extend({}, _messages) : <any>_messages;
+			this.#lang_arr[_app] = _need_clone ? (<any>jQuery).extend({}, _messages) : <any>_messages;
 		}
 	}
 
@@ -102,7 +102,7 @@ class Lang implements LangModule
 	 * to WHICHEVER instance called it (reads this.lang_order/this.getAppName(),
 	 * both per-instance), not lexically bound to this Lang instance - hence a
 	 * plain `function` field rather than an arrow field. `self` captures this
-	 * Lang instance itself via closure, for reaching its own private lang_arr.
+	 * Lang instance itself via closure, for reaching its own #lang_arr.
 	 */
 	lang = ((self : Lang) => function(this : any, _msg : string, _arg1? : any) : string
 	{
@@ -122,10 +122,10 @@ class Lang implements LangModule
 		var apps : string[] = this.lang_order || ['custom', this.getAppName(), 'etemplate', 'common', 'notifications'];
 		for(var i = 0; i < apps.length; ++i)
 		{
-			if (typeof self.lang_arr[apps[i]] != "undefined" &&
-				typeof self.lang_arr[apps[i]][_msg] != 'undefined')
+			if (typeof self.#lang_arr[apps[i]] != "undefined" &&
+				typeof self.#lang_arr[apps[i]][_msg] != 'undefined')
 			{
-				translation = self.lang_arr[apps[i]][_msg];
+				translation = self.#lang_arr[apps[i]][_msg];
 				break;
 			}
 		}
@@ -184,7 +184,7 @@ class Lang implements LangModule
 		for (var i = 0; i < _apps.length; i++)
 		{
 			if (!_apps[i].app) continue;
-			if (typeof self.lang_arr[_apps[i].app] === "undefined")
+			if (typeof self.#lang_arr[_apps[i].app] === "undefined")
 			{
 				jss.push(this.webserverUrl +
 					'/api/lang.php?app=' + _apps[i].app +

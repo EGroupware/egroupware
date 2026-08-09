@@ -103,7 +103,7 @@ function convertPhpDateTimeFormat(_php_format : string) : string
  */
 class Calendar implements CalendarModule
 {
-	private _holiday_cache : {[year : number] : any} = {};
+	#holiday_cache : {[year : number] : any} = {};
 
 	/**
 	 * setup a calendar / date-selection
@@ -174,7 +174,7 @@ class Calendar implements CalendarModule
 	 * Called as egw(app,wnd).holidays(...) - `this.config(...)` must
 	 * dispatch through whichever instance called it, hence a plain
 	 * `function` field. `self` captures this Calendar instance for reaching
-	 * its own private _holiday_cache.
+	 * its own #holiday_cache.
 	 */
 	holidays = ((self : Calendar) => function(this : any, year : number) : Promise<any>
 	{
@@ -184,19 +184,19 @@ class Calendar implements CalendarModule
 			return Promise.resolve({});
 		}
 
-		if (typeof self._holiday_cache[year] === 'undefined')
+		if (typeof self.#holiday_cache[year] === 'undefined')
 		{
 			// Fetch with json instead of jsonq because there may be more than
 			// one widget listening for the response by the time it gets back,
 			// and we can't do that when it's queued.
-			self._holiday_cache[year] = window.fetch(
+			self.#holiday_cache[year] = window.fetch(
 				egw.link('/calendar/holidays.php', {year: year, url: this.config('ical_holiday_url') || ''})
 			).then((response) =>
 			{
-				return self._holiday_cache[year] = response.json();
+				return self.#holiday_cache[year] = response.json();
 			});
 		}
-		return Promise.resolve(self._holiday_cache[year]);
+		return Promise.resolve(self.#holiday_cache[year]);
 	})(this);
 }
 

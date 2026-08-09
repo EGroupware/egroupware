@@ -45,7 +45,7 @@ class Config implements ConfigModule
 	 *
 	 * @access: private, use egw.config(_name, _app="phpgwapi")
 	 */
-	private configs : {[app : string] : {[name : string] : any}} = {};
+	#configs : {[app : string] : {[name : string] : any}} = {};
 
 	/**
 	 * register our mail as mailto protocol handler (only for main-page, FF seems to pop it up constantly, if we do so in an iframe)
@@ -114,9 +114,9 @@ class Config implements ConfigModule
 	{
 		if (typeof _app == 'undefined') _app = 'phpgwapi';
 
-		if (typeof this.configs[_app] == 'undefined') return null;
+		if (typeof this.#configs[_app] == 'undefined') return null;
 
-		return this.configs[_app][_name];
+		return this.#configs[_app][_name];
 	}
 
 	/**
@@ -128,7 +128,7 @@ class Config implements ConfigModule
 	 */
 	set_configs = (_configs : object, _need_clone? : boolean) : void =>
 	{
-		this.configs = _need_clone ? (<any>jQuery).extend(true, {}, _configs) : <any>_configs;
+		this.#configs = _need_clone ? (<any>jQuery).extend(true, {}, _configs) : <any>_configs;
 
 		if (this.config('install_mailto_handler') !== 'disabled')
 		{

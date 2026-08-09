@@ -61,7 +61,7 @@ class Debug implements DebugModule
 	 * 4 = -- " -- plus "log"
 	 * 5 = -- " -- plus a stacktrace
 	 */
-	private DEBUGLEVEL = 3;
+	#DEBUGLEVEL = 3;
 
 	/**
 	 * Log-level for local storage and error-display in GUI
@@ -69,27 +69,27 @@ class Debug implements DebugModule
 	 * 0 = off, no logging AND no global error-handler bound
 	 * 1 = ... see above
 	 */
-	private LOCAL_LOG_LEVEL = 0;
+	#LOCAL_LOG_LEVEL = 0;
 
 	/**
 	 * Number of log-entries stored on client, new errors overwrite old ones
 	 */
-	private MAX_LOGS = 200;
+	#MAX_LOGS = 200;
 
 	/**
 	 * Number of last old log entry = next one to overwrite
 	 */
-	private LASTLOG = 'lastLog';
+	#LASTLOG = 'lastLog';
 
 	/**
 	 * Prefix for key of log-message, message number gets appended to it
 	 */
-	private LOG_PREFIX = 'log_';
+	#LOG_PREFIX = 'log_';
 
 	constructor(private _wnd : Window)
 	{
 		// bind to global error handler, only if LOCAL_LOG_LEVEL > 0
-		if (this.LOCAL_LOG_LEVEL)
+		if (this.#LOCAL_LOG_LEVEL)
 		{
 			(<any>jQuery)(_wnd).on('error', (e : any) =>
 			{
@@ -129,13 +129,13 @@ class Debug implements DebugModule
 		switch(_level)
 		{
 			case 'warn':
-				if (this.LOCAL_LOG_LEVEL < 2) return null;
+				if (this.#LOCAL_LOG_LEVEL < 2) return null;
 			case 'info':
-				if (this.LOCAL_LOG_LEVEL < 3) return null;
+				if (this.#LOCAL_LOG_LEVEL < 3) return null;
 			case 'log':
-				if (this.LOCAL_LOG_LEVEL < 4) return null;
+				if (this.#LOCAL_LOG_LEVEL < 4) return null;
 			default:
-				if (!this.LOCAL_LOG_LEVEL) return null;
+				if (!this.#LOCAL_LOG_LEVEL) return null;
 		}
 		var data : any = {
 			time: (new Date()).getTime(),
@@ -160,18 +160,18 @@ class Debug implements DebugModule
 				}
 			}
 		}
-		if (typeof window.localStorage[this.LASTLOG] == 'undefined')
+		if (typeof window.localStorage[this.#LASTLOG] == 'undefined')
 		{
-			window.localStorage[this.LASTLOG] = <any>0;
+			window.localStorage[this.#LASTLOG] = <any>0;
 		}
 		// check if MAX_LOGS changed in code --> clear whole log
-		if (<any>window.localStorage[this.LASTLOG] > this.MAX_LOGS)
+		if (<any>window.localStorage[this.#LASTLOG] > this.#MAX_LOGS)
 		{
 			this.clear_client_log();
 		}
 		try {
-			window.localStorage[this.LOG_PREFIX+window.localStorage[this.LASTLOG]] = JSON.stringify(data);
-			window.localStorage[this.LASTLOG] = <any>((1 + parseInt(window.localStorage[this.LASTLOG])) % this.MAX_LOGS);
+			window.localStorage[this.#LOG_PREFIX+window.localStorage[this.#LASTLOG]] = JSON.stringify(data);
+			window.localStorage[this.#LASTLOG] = <any>((1 + parseInt(window.localStorage[this.#LASTLOG])) % this.#MAX_LOGS);
 		}
 		catch(e) {
 			switch (e.name)
@@ -209,8 +209,8 @@ class Debug implements DebugModule
 					}
 			}
 			try {
-				window.localStorage[this.LOG_PREFIX+window.localStorage[this.LASTLOG]] = JSON.stringify(data);
-				window.localStorage[this.LASTLOG] = <any>((1 + parseInt(window.localStorage[this.LASTLOG])) % this.MAX_LOGS);
+				window.localStorage[this.#LOG_PREFIX+window.localStorage[this.#LASTLOG]] = JSON.stringify(data);
+				window.localStorage[this.#LASTLOG] = <any>((1 + parseInt(window.localStorage[this.#LASTLOG])) % this.#MAX_LOGS);
 			}
 			catch(e) {
 				// ignore error, if eg. localStorage exceeds quota on client
@@ -227,12 +227,12 @@ class Debug implements DebugModule
 	{
 		var logs : any[] = [];
 
-		if (window.localStorage && typeof window.localStorage[this.LASTLOG] != 'undefined')
+		if (window.localStorage && typeof window.localStorage[this.#LASTLOG] != 'undefined')
 		{
-			var lastlog = parseInt(window.localStorage[this.LASTLOG]);
-			for(var i=lastlog; i < lastlog+this.MAX_LOGS; ++i)
+			var lastlog = parseInt(window.localStorage[this.#LASTLOG]);
+			for(var i=lastlog; i < lastlog+this.#MAX_LOGS; ++i)
 			{
-				var log = window.localStorage[this.LOG_PREFIX+(i%this.MAX_LOGS)];
+				var log = window.localStorage[this.#LOG_PREFIX+(i%this.#MAX_LOGS)];
 				if (typeof log != 'undefined')
 				{
 					try {
@@ -257,20 +257,20 @@ class Debug implements DebugModule
 
 		if (!window.localStorage) return false;
 
-		var max = this.MAX_LOGS;
+		var max = this.#MAX_LOGS;
 		// check if we have more log entries then allowed, happens if MAX_LOGS get changed in code
-		if (<any>window.localStorage[this.LASTLOG] > this.MAX_LOGS)
+		if (<any>window.localStorage[this.#LASTLOG] > this.#MAX_LOGS)
 		{
 			max = 1000;	// this should NOT be changed, if MAX_LOGS get's smaller!
 		}
 		for(var i=0; i < max; ++i)
 		{
-			if (typeof window.localStorage[this.LOG_PREFIX+i] != 'undefined')
+			if (typeof window.localStorage[this.#LOG_PREFIX+i] != 'undefined')
 			{
-				delete window.localStorage[this.LOG_PREFIX+i];
+				delete window.localStorage[this.#LOG_PREFIX+i];
 			}
 		}
-		delete window.localStorage[this.LASTLOG];
+		delete window.localStorage[this.#LASTLOG];
 
 		return true;
 	}
@@ -329,7 +329,7 @@ class Debug implements DebugModule
 
 	debug_level = () : number =>
 	{
-		return this.DEBUGLEVEL;
+		return this.#DEBUGLEVEL;
 	}
 
 	/**
@@ -344,31 +344,31 @@ class Debug implements DebugModule
 		{
 			// Add in a trace
 			var stack : string;
-			if (this.DEBUGLEVEL >= 5 && typeof (new Error).stack != "undefined")
+			if (this.#DEBUGLEVEL >= 5 && typeof (new Error).stack != "undefined")
 			{
 				stack = (new Error).stack;
 				args.push(stack);
 			}
 
-			if (_level == "log" && this.DEBUGLEVEL >= 4 &&
+			if (_level == "log" && this.#DEBUGLEVEL >= 4 &&
 				typeof (<any>this._wnd).console.log == "function")
 			{
 				(<any>this._wnd).console.log.apply((<any>this._wnd).console, args);
 			}
 
-			if (_level == "info" && this.DEBUGLEVEL >= 3 &&
+			if (_level == "info" && this.#DEBUGLEVEL >= 3 &&
 				typeof (<any>this._wnd).console.info == "function")
 			{
 				(<any>this._wnd).console.info.apply((<any>this._wnd).console, args);
 			}
 
-			if (_level == "warn" && this.DEBUGLEVEL >= 2 &&
+			if (_level == "warn" && this.#DEBUGLEVEL >= 2 &&
 				typeof (<any>this._wnd).console.warn == "function")
 			{
 				(<any>this._wnd).console.warn.apply((<any>this._wnd).console, args);
 			}
 
-			if (_level == "error" && this.DEBUGLEVEL >= 1 &&
+			if (_level == "error" && this.#DEBUGLEVEL >= 1 &&
 				typeof (<any>this._wnd).console.error == "function")
 			{
 				(<any>this._wnd).console.error.apply((<any>this._wnd).console, args);
@@ -378,7 +378,7 @@ class Debug implements DebugModule
 			if (typeof stack != 'undefined') args.pop();
 		}
 		// raise errors to user, if LOCAL_LOG_LEVEL > 0
-		if (this.LOCAL_LOG_LEVEL && _level == "error") this.raise_error();
+		if (this.#LOCAL_LOG_LEVEL && _level == "error") this.raise_error();
 
 		// log to html5 localStorage
 		this.log_on_client(_level, args);

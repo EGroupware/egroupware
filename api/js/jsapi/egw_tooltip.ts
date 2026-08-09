@@ -66,20 +66,20 @@ declare global
 
 class Tooltip implements TooltipModule
 {
-	private readonly tooltipped = new Set<Node>();
-	private readonly tooltipData = new WeakMap<Node, {html : string | Node, isHtml : boolean, options : Required<TooltipOptions>}>();
-	private tooltip_div : HTMLElement = null;
-	private current_elem : Node = null;
-	private hide_timeout : number = null;
+	#tooltipped = new Set<Node>();
+	#tooltipData = new WeakMap<Node, {html : string | Node, isHtml : boolean, options : Required<TooltipOptions>}>();
+	#tooltip_div : HTMLElement = null;
+	#current_elem : Node = null;
+	#hide_timeout : number = null;
 
-	private readonly time_delta = 100;
-	private show_delta = 0;
-	private readonly show_delay = 200;
+	#time_delta = 100;
+	#show_delta = 0;
+	#show_delay = 200;
 
-	private x = 0;
-	private y = 0;
+	#x = 0;
+	#y = 0;
 
-	private readonly optionsDefault : Required<TooltipOptions> = {
+	#optionsDefault : Required<TooltipOptions> = {
 		hideonhover: true,
 		position: 'right',
 		open: function () {},
@@ -90,13 +90,13 @@ class Tooltip implements TooltipModule
 	{
 		_wnd.addEventListener("pagehide", () =>
 		{
-			[...this.tooltipped].forEach(node =>
+			[...this.#tooltipped].forEach(node =>
 			{
 				egw.tooltipUnbind(<HTMLElement>node);
 			});
-			this.tooltipped.clear();
+			this.#tooltipped.clear();
 
-			if (this.tooltip_div)
+			if (this.#tooltip_div)
 			{
 				this.removeDiv();
 			}
@@ -106,12 +106,12 @@ class Tooltip implements TooltipModule
 
 	private removeDiv()
 	{
-		if (!this.tooltip_div)
+		if (!this.#tooltip_div)
 		{
 			return;
 		}
-		this.tooltip_div.remove();
-		this.tooltip_div = null;
+		this.#tooltip_div.remove();
+		this.#tooltip_div = null;
 	}
 
 	// Bound to real DOM events (addEventListener/removeEventListener need a
@@ -119,27 +119,27 @@ class Tooltip implements TooltipModule
 	// instance exactly one such stable reference, same as the closures they
 	// replace. Doesn't touch `this` for anything besides instance state, so
 	// no dynamic-this concern here (unlike mouseleave below).
-	private mouseenter = (e : MouseEvent) =>
+	#mouseenter = (e : MouseEvent) =>
 	{
 		const elem = <Node>e.currentTarget
-		const data = this.tooltipData.get(elem);
+		const data = this.#tooltipData.get(elem);
 		if (!data)
 		{
 			return false;
 		}
-		if (elem !== this.current_elem)
+		if (elem !== this.#current_elem)
 		{
 			//Prepare the tooltip
 			this.prepare(data.html, data.isHtml, data.options);
 
 			// Set the current element the mouse is over and
 			// initialize the position variables
-			this.current_elem = elem;
-			this.show_delta = 0;
-			this.x = e.clientX;
-			this.y = e.clientY;
+			this.#current_elem = elem;
+			this.#show_delta = 0;
+			this.#x = e.clientX;
+			this.#y = e.clientY;
 			// Create the timeout for showing the timeout
-			this._wnd.setTimeout(() => {this.showTooltipTimeout(elem, e, data.options)}, this.time_delta);
+			this._wnd.setTimeout(() => {this.showTooltipTimeout(elem, e, data.options)}, this.#time_delta);
 		}
 
 		return false;
@@ -153,53 +153,53 @@ class Tooltip implements TooltipModule
 	// both. Stays a plain `function` (still a single stable reference, since
 	// it's assigned once as a field initializer); `self` reaches this
 	// Tooltip instance's state from inside it.
-	private mouseleave = ((self : Tooltip) => function(this : Node, e : MouseEvent)
+	#mouseleave = ((self : Tooltip) => function(this : Node, e : MouseEvent)
 	{
 		const elem = <Node>e.currentTarget
-		const data = self.tooltipData.get(elem);
-		self.show_delta = 0;
+		const data = self.#tooltipData.get(elem);
+		self.#show_delta = 0;
 
-		if (self.tooltip_div && e.relatedTarget && self.tooltip_div.contains(<Node>e.relatedTarget))
+		if (self.#tooltip_div && e.relatedTarget && self.#tooltip_div.contains(<Node>e.relatedTarget))
 		{
 			return;
 		}
 
-		if (self.hide_timeout)
+		if (self.#hide_timeout)
 		{
-			self._wnd.clearTimeout(self.hide_timeout);
+			self._wnd.clearTimeout(self.#hide_timeout);
 		}
-		self.hide_timeout = self._wnd.setTimeout(() =>
+		self.#hide_timeout = self._wnd.setTimeout(() =>
 		{
-			if (self.current_elem == this)
+			if (self.#current_elem == this)
 			{
-				self.current_elem = null;
+				self.#current_elem = null;
 			}
-			if (data.options.close.call(this, e, self.tooltip_div))
+			if (data.options.close.call(this, e, self.#tooltip_div))
 			{
 				return;
 			}
-			if (self.tooltip_div)
+			if (self.#tooltip_div)
 			{
-				self.setStyle(self.tooltip_div, 'display', 'none')
+				self.setStyle(self.#tooltip_div, 'display', 'none')
 			}
 		}, 150);
 	})(this);
 
-	private mousemove = (e : MouseEvent) =>
+	#mousemove = (e : MouseEvent) =>
 	{
 		//Calculate the distance the mouse took since the last call of mousemove
-		const dx = this.x - e.clientX;
-		const dy = this.y - e.clientY;
+		const dx = this.#x - e.clientX;
+		const dy = this.#y - e.clientY;
 		const movedist = Math.sqrt(dx * dx + dy * dy);
 
 		//Block appereance of the tooltip on fast movements (with small movedistances)
 		if (movedist > 2)
 		{
-			this.show_delta = 0;
+			this.#show_delta = 0;
 		}
 
-		this.x = e.clientX;
-		this.y = e.clientY;
+		this.#x = e.clientX;
+		this.#y = e.clientY;
 	}
 
 	/**
@@ -215,7 +215,7 @@ class Tooltip implements TooltipModule
 	 */
 	private hide()
 	{
-		if (this.tooltip_div)
+		if (this.#tooltip_div)
 		{
 			this.removeDiv();
 		}
@@ -233,26 +233,26 @@ class Tooltip implements TooltipModule
 	 */
 	private show(node : Node, event : MouseEvent, options : Required<TooltipOptions>)
 	{
-		if (this.tooltip_div && typeof this.x !== 'undefined' && typeof this.y !== 'undefined')
+		if (this.#tooltip_div && typeof this.#x !== 'undefined' && typeof this.#y !== 'undefined')
 		{
-			options?.open?.call(<any>node, event, this.tooltip_div);
+			options?.open?.call(<any>node, event, this.#tooltip_div);
 			//set display to block, so we can get the width and height
-			this.setStyle(this.tooltip_div, 'display', 'block');
+			this.setStyle(this.#tooltip_div, 'display', 'block');
 			//Get the width and the height of the tooltip
-			let tooltip_width = Math.ceil(this.tooltip_div.getBoundingClientRect().width);
+			let tooltip_width = Math.ceil(this.#tooltip_div.getBoundingClientRect().width);
 			if (tooltip_width > 300)
 			{
 				tooltip_width = 300;
 			}
-			let tooltip_height = Math.ceil(this.tooltip_div.getBoundingClientRect().height);
+			let tooltip_height = Math.ceil(this.#tooltip_div.getBoundingClientRect().height);
 
 			//Calculate the cursor_rectangle - this is a space the tooltip might
 			//not overlap with
 			const cursor_rect = {
-				left: (this.x - 8),
-				top: (this.y - 8),
-				right: (this.x + (options.position === "center" ? -1 * tooltip_width / 2 : 8)),
-				bottom: (this.y + 8)
+				left: (this.#x - 8),
+				top: (this.#y - 8),
+				right: (this.#x + (options.position === "center" ? -1 * tooltip_width / 2 : 8)),
+				bottom: (this.#y + 8)
 			};
 
 			//Calculate how much space is left on each side of the rectangle
@@ -267,14 +267,14 @@ class Tooltip implements TooltipModule
 
 			if (space_left.right < tooltip_width)
 			{
-				this.setStyle(this.tooltip_div, 'left', Math.max(0, cursor_rect.left - tooltip_width))
+				this.setStyle(this.#tooltip_div, 'left', Math.max(0, cursor_rect.left - tooltip_width))
 			} else if (space_left.left >= tooltip_width)
 			{
-				this.setStyle(this.tooltip_div, 'left', cursor_rect.right)
+				this.setStyle(this.#tooltip_div, 'left', cursor_rect.right)
 			} else
 			{
-				this.setStyle(this.tooltip_div, 'left', cursor_rect.right)
-				this.setStyle(this.tooltip_div, 'maxWidth', space_left.right)
+				this.setStyle(this.#tooltip_div, 'left', cursor_rect.right)
+				this.setStyle(this.#tooltip_div, 'maxWidth', space_left.right)
 			}
 
 			// tooltip does fit neither above nor below: put him vertical centered left or right of cursor
@@ -283,15 +283,15 @@ class Tooltip implements TooltipModule
 				if (tooltip_height > window_height - 20)
 				{
 					tooltip_height = window_height - 20;
-					this.setStyle(this.tooltip_div, 'maxHeight', tooltip_height)
+					this.setStyle(this.#tooltip_div, 'maxHeight', tooltip_height)
 				}
-				this.setStyle(this.tooltip_div, 'top', (window_height - tooltip_height) / 2)
+				this.setStyle(this.#tooltip_div, 'top', (window_height - tooltip_height) / 2)
 			} else if (space_left.bottom < tooltip_height)
 			{
-				this.setStyle(this.tooltip_div, 'top', cursor_rect.top - tooltip_height)
+				this.setStyle(this.#tooltip_div, 'top', cursor_rect.top - tooltip_height)
 			} else
 			{
-				this.setStyle(this.tooltip_div, 'top', cursor_rect.bottom)
+				this.setStyle(this.#tooltip_div, 'top', cursor_rect.bottom)
 			}
 
 		}
@@ -312,31 +312,31 @@ class Tooltip implements TooltipModule
 		this.hide();
 
 		//Generate the tooltip div, set it's text and append it to the body tag
-		this.tooltip_div = this._wnd.document.createElement('div');
-		this.setStyle(this.tooltip_div, 'display', 'none')
+		this.#tooltip_div = this._wnd.document.createElement('div');
+		this.setStyle(this.#tooltip_div, 'display', 'none')
 		if (_isHtml)
 		{
 			if (_html instanceof Node)
 			{
-				this.tooltip_div.append(_html);
+				this.#tooltip_div.append(_html);
 			} else
 			{
-				this.tooltip_div.insertAdjacentHTML('beforeend', _html);
+				this.#tooltip_div.insertAdjacentHTML('beforeend', _html);
 			}
 		} else
 		{
-			this.tooltip_div.textContent = <string>_html;
+			this.#tooltip_div.textContent = <string>_html;
 		}
-		this.tooltip_div.classList.add("egw_tooltip");
-		this._wnd.document.body.append(this.tooltip_div);
+		this.#tooltip_div.classList.add("egw_tooltip");
+		this._wnd.document.body.append(this.#tooltip_div);
 
 		//The tooltip should automatically hide when the mouse comes over it
-		this.tooltip_div.addEventListener("mouseenter", () =>
+		this.#tooltip_div.addEventListener("mouseenter", () =>
 		{
-			if(this.hide_timeout)
+			if(this.#hide_timeout)
 			{
-				this._wnd.clearTimeout(this.hide_timeout);
-				this.hide_timeout = null;
+				this._wnd.clearTimeout(this.#hide_timeout);
+				this.#hide_timeout = null;
 			}
 			if (_options.hideonhover)
 			{
@@ -355,16 +355,16 @@ class Tooltip implements TooltipModule
 	 */
 	private showTooltipTimeout(node : Node, event : MouseEvent, options : Required<TooltipOptions>)
 	{
-		if (this.current_elem === node)
+		if (this.#current_elem === node)
 		{
-			this.show_delta += this.time_delta;
-			if (this.show_delta < this.show_delay)
+			this.#show_delta += this.#time_delta;
+			if (this.#show_delta < this.#show_delay)
 			{
 				//Repeat the call of timeout
-				this._wnd.setTimeout(() => this.showTooltipTimeout(node, event, options), this.time_delta);
+				this._wnd.setTimeout(() => this.showTooltipTimeout(node, event, options), this.#time_delta);
 			} else
 			{
-				this.show_delta = 0;
+				this.#show_delta = 0;
 				this.show(node, event, options);
 			}
 		}
@@ -372,10 +372,10 @@ class Tooltip implements TooltipModule
 
 	private unbindEvents(elem : any)
 	{
-		elem.removeEventListener('mouseenter', this.mouseenter);
-		elem.removeEventListener('mouseleave', this.mouseleave);
-		elem.removeEventListener('mousemove', this.mousemove);
-		this.tooltipData.delete(elem);
+		elem.removeEventListener('mouseenter', this.#mouseenter);
+		elem.removeEventListener('mouseleave', this.#mouseleave);
+		elem.removeEventListener('mousemove', this.#mousemove);
+		this.#tooltipData.delete(elem);
 	}
 
 	/**
@@ -390,19 +390,19 @@ class Tooltip implements TooltipModule
 	 */
 	tooltipBind = (_elem : HTMLElement | JQuery, _html : string | Node, _isHtml? : boolean, _options? : TooltipOptions) : void =>
 	{
-		const options = {...this.optionsDefault, ...(_options || {})};
+		const options = {...this.#optionsDefault, ...(_options || {})};
 		const elem = this.getActualNode(_elem);
-		this.tooltipped.add(elem);
+		this.#tooltipped.add(elem);
 
 		this.unbindEvents(elem);
 
 		if (_html && !egwIsMobile())
 		{
-			this.tooltipData.set(elem, {html: _html, isHtml: _isHtml, options: options});
+			this.#tooltipData.set(elem, {html: _html, isHtml: _isHtml, options: options});
 
-			(<any>elem).addEventListener('mouseenter', this.mouseenter);
-			(<any>elem).addEventListener('mouseleave', this.mouseleave);
-			(<any>elem).addEventListener('mousemove', this.mousemove);
+			(<any>elem).addEventListener('mouseenter', this.#mouseenter);
+			(<any>elem).addEventListener('mouseleave', this.#mouseleave);
+			(<any>elem).addEventListener('mousemove', this.#mousemove);
 		}
 	}
 
@@ -415,21 +415,21 @@ class Tooltip implements TooltipModule
 	tooltipUnbind = (_elem : HTMLElement | JQuery) : void =>
 	{
 		const elem = this.getActualNode(_elem);
-		if (this.current_elem === elem)
+		if (this.#current_elem === elem)
 		{
 			this.hide();
-			this.current_elem = null;
+			this.#current_elem = null;
 		}
 
 		// Unbind all "tooltip" events from the given element
 		this.unbindEvents(elem);
-		this.tooltipped.delete(elem);
+		this.#tooltipped.delete(elem);
 	}
 
 	tooltipDestroy = () : void =>
 	{
 		this.hide()
-		this.current_elem = null;
+		this.#current_elem = null;
 	}
 
 	/**
@@ -438,7 +438,7 @@ class Tooltip implements TooltipModule
 	tooltipCancel = () : void =>
 	{
 		this.hide();
-		this.current_elem = null;
+		this.#current_elem = null;
 	}
 }
 
