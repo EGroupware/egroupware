@@ -1606,13 +1606,13 @@ class JmapShim
 		{
 			return null;
 		}
-		// eTemplate/get_rows convention (NOT real UTC, despite the "Z"): dates are converted to the
-		// *user's* timezone (Api\DateTime::$user_timezone, from prefs), then formatted with a
-		// literal "Z" suffix so the browser displays those wall-clock numbers as-is instead of
-		// re-applying its own (browser-local) timezone conversion on top. Horde's DateTime objects
-		// carry the server's timezone, not the user's, so this conversion is required, not optional -
-		// Api\DateTime::to() handles it the same way classic get_rows()/Nextmatch.php do.
-		return Api\DateTime::to($date, Api\DateTime::ET2);
+		// RFC 8621 UTCDate: real UTC, matching what a real JMAP server (Stalwart) returns - IMAP's
+		// INTERNALDATE and RFC 5322's Date: header both always carry an explicit offset, so Horde's
+		// DateTime objects already know their true instant; converting to UTC needs nothing from
+		// Api\DateTime (no dependency on $user_timezone/$server_timezone). The eTemplate/get_rows()
+		// "fake Z, user-tz digits" convention is applied client-side instead (MailJmap.jmapUtcToUserTz()),
+		// uniformly for both backends, so this shim doesn't need to special-case it here.
+		return (clone $date)->setTimezone(new \DateTimeZone('UTC'))->format('Y-m-d\TH:i:s\Z');
 	}
 
 	/**

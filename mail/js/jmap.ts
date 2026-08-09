@@ -178,7 +178,7 @@ export class MailJmap
 		});
 
 		return {
-			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId, token.isLocal)),
+			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId)),
 			total: ids.total ?? (emails.list || []).length,
 		};
 	}
@@ -380,7 +380,7 @@ export class MailJmap
 					const email = byId[ref.emailId];
 					if (email)
 					{
-						const row = this.email2row(email, ref.profileID, ref.mailboxId, token.isLocal);
+						const row = this.email2row(email, ref.profileID, ref.mailboxId);
 						data[row.row_id] = row;
 						order.push(row.row_id);
 					}
@@ -1646,12 +1646,11 @@ export class MailJmap
 	 * server-side actions can recognise and decode it when needed.
 	 */
 	/**
-	 * Convert a real-JMAP UTCDate (RFC 8621 - always true UTC, never the server's local
-	 * timezone) into eTemplate/get_rows()'s date convention: digits shown as the *user's*
-	 * configured timezone, with a literal (not real) "Z" suffix so the browser displays those
-	 * wall-clock numbers as-is instead of re-applying its own browser-local conversion on top -
-	 * see JmapShim::imapDate()'s identical convention for the local-shim (plain IMAP) case,
-	 * which arrives already converted server-side and must NOT be run through this again.
+	 * Convert a JMAP UTCDate (RFC 8621 - always true UTC, both backends: real JMAP and
+	 * JmapShim::imapDate() alike) into eTemplate/get_rows()'s date convention: digits shown as
+	 * the *user's* configured timezone, with a literal (not real) "Z" suffix so the browser
+	 * displays those wall-clock numbers as-is instead of re-applying its own browser-local
+	 * conversion on top.
 	 */
 	private jmapUtcToUserTz(iso : string) : string
 	{
@@ -1669,7 +1668,7 @@ export class MailJmap
 		return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`;
 	}
 
-	private email2row(email : any, profileID : string, mailboxId : string, isLocal : boolean = false) : any
+	private email2row(email : any, profileID : string, mailboxId : string) : any
 	{
 		const addressList = (list : { name? : string, email : string }[]) =>
 			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
@@ -1761,8 +1760,8 @@ export class MailJmap
 			ccaddress: addressList(email.cc),
 			bccaddress: addressList(email.bcc),
 			address: fromList[0] || '',
-			date: isLocal ? (email.sentAt || email.receivedAt) : this.jmapUtcToUserTz(email.sentAt || email.receivedAt),
-			modified: isLocal ? email.receivedAt : this.jmapUtcToUserTz(email.receivedAt),
+			date: this.jmapUtcToUserTz(email.sentAt || email.receivedAt),
+			modified: this.jmapUtcToUserTz(email.receivedAt),
 			size: email.size,
 			bodypreview: email.preview || '',
 			// MDN (read-receipt) prompt trigger - mail_preview() (app.ts) checks this against the

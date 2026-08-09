@@ -371,24 +371,13 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		$this->assertFalse($state['flag']['$PROJECT']['set'] ?? false);
 	}
 
-	public function testImapDateConvertsToUserTimezoneNotRealUtc()
+	public function testImapDateReturnsRealUtc()
 	{
-		// eTemplate/get_rows convention: dates are shown in the *user's* configured timezone,
-		// formatted with a literal "Z" suffix so the browser displays those wall-clock digits
-		// as-is (see JmapShim::imapDate()'s docblock) - NOT real UTC despite the "Z". Horde's
-		// DateTime objects carry the server's timezone, so a straight UTC conversion is wrong.
-		$previous = \EGroupware\Api\DateTime::$user_timezone;
-		\EGroupware\Api\DateTime::$user_timezone = new \DateTimeZone('Europe/Berlin');
-		try
-		{
-			// 21:01 UTC == 23:01 in Berlin (CEST, UTC+2) in August
-			$date = new \DateTime('2026-08-05 21:01:00', new \DateTimeZone('UTC'));
-			$this->assertSame('2026-08-05T23:01:00Z', JmapShim::imapDate($date));
-		}
-		finally
-		{
-			\EGroupware\Api\DateTime::$user_timezone = $previous;
-		}
+		// RFC 8621 UTCDate: real UTC, matching what a real JMAP server returns - the
+		// eTemplate/get_rows() "user-tz digits, fake Z" convention is applied client-side
+		// instead (MailJmap.jmapUtcToUserTz()), uniformly for both backends, not here.
+		$date = new \DateTime('2026-08-05 23:01:00', new \DateTimeZone('Europe/Berlin'));
+		$this->assertSame('2026-08-05T21:01:00Z', JmapShim::imapDate($date));
 	}
 
 	public function testEmailGetPreservesEmailQuerySortOrder()
