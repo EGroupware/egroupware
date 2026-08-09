@@ -10,6 +10,7 @@
  */
 
 import './egw_core';
+import {deepExtend} from './egw_utils';
 
 export interface UserModule
 {
@@ -181,7 +182,7 @@ class User implements UserModule
 	 */
 	set_user = (_data : object, _need_clone? : boolean) : void =>
 	{
-		this.#userData = _need_clone ? (<any>jQuery).extend(true, {}, _data) : _data;
+		this.#userData = _need_clone ? deepExtend({}, _data) : _data;
 	}
 
 	/**
@@ -246,7 +247,7 @@ class User implements UserModule
 				return this.accounts(type)
 			});
 		}
-		if ((<any>jQuery).isEmptyObject(self.#accountStore))
+		if (Object.keys(self.#accountStore).length === 0)
 		{
 			const cache_it = data =>
 			{
@@ -524,7 +525,7 @@ class User implements UserModule
 			self.#accountData = {};
 			self.#resolveGroup = {};
 		}
-		if ((<any>jQuery).isEmptyObject(self.#accountStore)) return;
+		if (Object.keys(self.#accountStore).length === 0) return;
 
 		switch(_type)
 		{

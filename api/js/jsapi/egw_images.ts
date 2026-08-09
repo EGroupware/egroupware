@@ -10,6 +10,7 @@
  */
 
 import './egw_core';
+import {deepExtend} from './egw_utils';
 
 export interface ImagesModule
 {
@@ -90,7 +91,7 @@ class Images implements ImagesModule
 	 */
 	set_images = (_images : object, _need_clone? : boolean) : void =>
 	{
-		this.#images = _need_clone ? (<any>jQuery).extend(true, {}, _images) : _images;
+		this.#images = _need_clone ? deepExtend({}, _images) : _images;
 	}
 
 	/**

@@ -88,10 +88,10 @@ class Lang implements LangModule
 	 */
 	set_lang_arr = (_app : string, _messages : object, _need_clone? : boolean) : void =>
 	{
-		if(!(<any>jQuery).isArray(_messages))
+		if(!Array.isArray(_messages))
 		{
-			// no deep clone jQuery.extend(true,...) neccessary, as _messages contains only string values
-			this.#lang_arr[_app] = _need_clone ? (<any>jQuery).extend({}, _messages) : <any>_messages;
+			// no deep clone neccessary, as _messages contains only string values
+			this.#lang_arr[_app] = _need_clone ? {..._messages} : <any>_messages;
 		}
 	}
 

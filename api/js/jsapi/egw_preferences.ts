@@ -10,6 +10,7 @@
  */
 
 import './egw_core';
+import {deepExtend} from './egw_utils';
 
 export interface PreferencesModule
 {
@@ -162,11 +163,11 @@ class Preferences implements PreferencesModule
 	{
 		if (typeof _app == 'undefined')
 		{
-			this.#prefs = _need_clone ? (<any>jQuery).extend(true, {}, _data) : _data;
+			this.#prefs = _need_clone ? deepExtend({}, _data) : _data;
 		}
 		else
 		{
-			this.#prefs[this.sanitizeApp(_app)] = (<any>jQuery).extend(true, {}, _data);	// we always clone here, as call can come from this.preferences!
+			this.#prefs[this.sanitizeApp(_app)] = deepExtend({}, _data);	// we always clone here, as call can come from this.preferences!
 		}
 	}
 
@@ -213,12 +214,12 @@ class Preferences implements PreferencesModule
 		let ret;
 		if (_name === "*")
 		{
-			ret = typeof self.#prefs[_app] === 'object' ? (<any>jQuery).extend({}, self.#prefs[_app]) : self.#prefs[_app];
+			ret = typeof self.#prefs[_app] === 'object' ? {...self.#prefs[_app]} : self.#prefs[_app];
 		}
 		else
 		{
 			ret = typeof self.#prefs[_app][_name] === 'object' && self.#prefs[_app][_name] !== null ?
-				(<any>jQuery).extend({}, self.#prefs[_app][_name]) : self.#prefs[_app][_name];
+				{...self.#prefs[_app][_name]} : self.#prefs[_app][_name];
 		}
 		if (_callback === true)
 		{
@@ -312,8 +313,8 @@ class Preferences implements PreferencesModule
 		var current_app = this.app_name();
 		var query : any = {menuaction:'',current_app: current_app};
 		// give warning, if app does not support given type, but all apps link to common prefs, if they dont support prefs themselfs
-		if ((<any>jQuery).isArray(apps) && (<any>jQuery).inArray(current_app, apps) == -1 && (name != 'prefs' && name != 'acl') ||
-			!(<any>jQuery).isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
+		if (Array.isArray(apps) && !apps.includes(current_app) && (name != 'prefs' && name != 'acl') ||
+			!Array.isArray(apps) && (typeof apps[current_app] == 'undefined' || !apps[current_app]))
 		{
 			(<any>window).egw_message(egw.lang('Not supported by current application!'), 'warning');
 		}
@@ -324,13 +325,13 @@ class Preferences implements PreferencesModule
 			{
 				case 'prefs':
 					query.menuaction ='preferences.preferences_settings.index';
-					if ((<any>jQuery).inArray(current_app, apps) != -1) query.appname=current_app;
+					if (Array.isArray(apps) && apps.includes(current_app)) query.appname=current_app;
 					egw.open_link(egw.link(url, query), '_blank', '1200x600');
 					break;
 
 				case 'acl':
 					query.menuaction='preferences.preferences_acl.index';
-					if ((<any>jQuery).inArray(current_app, apps) != -1) query.acl_app=current_app;
+					if (Array.isArray(apps) && apps.includes(current_app)) query.acl_app=current_app;
 					egw.open_link(egw.link(url, query), '_blank', '1200x600');
 					break;
 
@@ -365,11 +366,11 @@ class Preferences implements PreferencesModule
 	{
 		if (_app)
 		{
-			this.#grants[_app] = (<any>jQuery).extend(true, {}, _data);
+			this.#grants[_app] = deepExtend({}, _data);
 		}
 		else
 		{
-			this.#grants = (<any>jQuery).extend(true, {}, _data);
+			this.#grants = deepExtend({}, _data);
 		}
 	}
 
@@ -392,7 +393,7 @@ class Preferences implements PreferencesModule
 			if (typeof grants[_app] == 'undefined') grants[_app] = {};
 			if (typeof _callback == 'function') return false;
 		}*/
-		return typeof this.#grants[_app] === 'object' ? (<any>jQuery).extend({}, this.#grants[_app]) : this.#grants[_app];
+		return typeof this.#grants[_app] === 'object' ? {...this.#grants[_app]} : this.#grants[_app];
 	}
 
 	/**
@@ -407,7 +408,7 @@ class Preferences implements PreferencesModule
 	 */
 	file_editor_prefered_mimes = function(this : any, _mime : string) : object | null
 	{
-		const fe = (<any>jQuery).extend(true, {}, this.link_get_registry('filemanager-editor'));
+		const fe = deepExtend({}, this.link_get_registry('filemanager-editor'));
 		let ex_mimes = this.preference('collab_excluded_mimes', 'filemanager');
 		const dblclick_action = this.preference('document_doubleclick_action', 'filemanager');
 		if (dblclick_action === 'download' && typeof _mime === 'string')

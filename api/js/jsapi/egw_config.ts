@@ -10,6 +10,7 @@
  */
 
 import './egw_core';
+import {deepExtend} from './egw_utils';
 
 export interface ConfigModule
 {
@@ -128,7 +129,7 @@ class Config implements ConfigModule
 	 */
 	set_configs = (_configs : object, _need_clone? : boolean) : void =>
 	{
-		this.#configs = _need_clone ? (<any>jQuery).extend(true, {}, _configs) : <any>_configs;
+		this.#configs = _need_clone ? deepExtend({}, _configs) : <any>_configs;
 
 		if (this.config('install_mailto_handler') !== 'disabled')
 		{
