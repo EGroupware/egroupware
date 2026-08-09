@@ -95,7 +95,7 @@
     "core-js": "^3.29.1",
     "dexie": "^3.2.4",
     "diff2html": "^3.4.56",
-    "dompurify": "^3.4.12",
+    "dompurify": "^3.4.13",
     "imask": "^7.6.1",
     "jmap-jam": "^0.13.3",
     "lit": "^2.7.5",
