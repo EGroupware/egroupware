@@ -143,714 +143,704 @@ declare global
 }
 
 /**
- * @augments Class
- * @param {object} _egw
- * @param {DOMwindow} _wnd
+ * Magic handling for mailto: uris using mail application.
+ *
+ * We check for open compose windows and add the address in as specified in
+ * the URL.  If there are no open compose windows, a new one is opened.  If
+ * there are more than one open compose window, we prompt for which one to
+ * use.
+ *
+ * The user must have set the 'Open EMail addresses in external mail program' preference
+ * to No, otherwise the browser will handle it.
+ *
+ * Touches no instance state / `this` at all (only bare egw.* globals), so
+ * kept as a plain module-scope function rather than a class member.
  */
-egw.extend('open', egw.MODULE_WND_LOCAL, function(_egw : string, _wnd : Window) : OpenModule
+function mailto(uri : string) : void
 {
-	"use strict";
+	// Parse uri into a map
+	var match : any = [], index;
+	var mailto = uri.match(/^mailto:([^?]+)/) || [];
+	var hashes = uri.slice(uri.indexOf('?') + 1).split('&');
+	for(var i = 0; i < hashes.length; i++)
+	{
+		index = hashes[i].replace(/__AMPERSAND__/g, '&').split('=');
+		match.push(index[0]);
+		match[index[0]] = index[1];
+	}
+	if (mailto[1]) mailto[1] = mailto[1].replace(/__AMPERSAND__/g, '&');
+	var content : any = {
+		to: mailto[1] || [],
+		cc: match['cc']	|| [],
+		bcc: match['bcc'] || []
+	};
+
+	// No CSV, split them here and pay attention to quoted commas
+	const split_regex = /("[^"]*" <[^>]*>)|("[^"]*")|('[^']*')|([^,]+)/g;
+	for (let index in content)
+	{
+		if (typeof content[index] == "string")
+		{
+			const matches = content[index].match(split_regex);
+			content[index] = matches ?? content[index];
+		}
+	}
+
+	// Encode html entities in the URI, otherwise server XSS protection won't
+	// allow it to pass, because it may get mistaken for some forbidden tags,
+	// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
+	// including "<" would get mistaken for <math> tag, and server will cut it off.
+	uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+	egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri}, /mail_compose.compose/);
+
+	for (var index in content)
+	{
+		if (content[index].length > 0)
+		{
+			var cLen = content[index];
+			egw.message(egw.lang('%1 email(s) added into %2', cLen.length, egw.lang(index)));
+			return;
+		}
+	}
+}
+
+class Open implements OpenModule
+{
+	#wnd : Window;
+
+	constructor(_wnd : Window)
+	{
+		this.#wnd = _wnd;
+	}
 
 	/**
-	 * Magic handling for mailto: uris using mail application.
+	 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
 	 *
-	 * We check for open compose windows and add the address in as specified in
-	 * the URL.  If there are no open compose windows, a new one is opened.  If
-	 * there are more than one open compose window, we prompt for which one to
-	 * use.
+	 * Examples:
+	 * - egw.open(123,'infolog') or egw.open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
+	 * - egw.open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
+	 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
+	 * - egw.open('','addressbook','list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
 	 *
-	 * The user must have set the 'Open EMail addresses in external mail program' preference
-	 * to No, otherwise the browser will handle it.
+	 * Called as egw(app,wnd).open(...) - dispatches through this.mime_open(...)/
+	 * this.link_get_registry(...)/this.link(...)/this.callFunc(...)/this.appName/
+	 * this.openTab(...)/this.openDialog(...)/this.open_link(...), all of which
+	 * must resolve through whichever instance called it, hence a plain
+	 * `function` field. Doesn't touch this class's own state, so no `self`
+	 * capture is needed.
 	 *
-	 * @param {String} uri
+	 * @return returns object for given specific target like '_tab'
 	 */
-	function mailto(uri : string) : void
+	open = function(this : any, id_data : any, app? : string, type? : string, extra? : any, target? : string, target_app? : string, _check_popup_blocker? : boolean) : any
 	{
-		// Parse uri into a map
-		var match : any = [], index;
-		var mailto = uri.match(/^mailto:([^?]+)/) || [];
-		var hashes = uri.slice(uri.indexOf('?') + 1).split('&');
-		for(var i = 0; i < hashes.length; i++)
-		{
-			index = hashes[i].replace(/__AMPERSAND__/g, '&').split('=');
-			match.push(index[0]);
-			match[index[0]] = index[1];
-		}
-		if (mailto[1]) mailto[1] = mailto[1].replace(/__AMPERSAND__/g, '&');
-		var content : any = {
-			to: mailto[1] || [],
-			cc: match['cc']	|| [],
-			bcc: match['bcc'] || []
-		};
+		// Log for debugging purposes - special log tag 'navigation' always
+		// goes in user log, if user log is enabled
+		egw.debug("navigation",
+			"egw.open(id_data=%o, app=%s, type=%s, extra=%o, target=%s, target_app=%s)",
+			id_data,app,type,extra,target,target_app
+		);
 
-		// No CSV, split them here and pay attention to quoted commas
-		const split_regex = /("[^"]*" <[^>]*>)|("[^"]*")|('[^']*')|([^,]+)/g;
-		for (let index in content)
+		var id;
+		if(typeof target === 'undefined')
 		{
-			if (typeof content[index] == "string")
+			target = '_blank';
+		}
+		if (!app)
+		{
+			if (typeof id_data != 'object')
 			{
-				const matches = content[index].match(split_regex);
-				content[index] = matches ?? content[index];
+				var app_id = id_data.split(':',2);
+				app = app_id[0];
+				id = app_id[1];
+			}
+			else
+			{
+				app = id_data.app;
+				id = id_data.id;
+				if(typeof id_data.type != 'undefined')
+				{
+					type = id_data.type;
+				}
 			}
 		}
-
-		// Encode html entities in the URI, otherwise server XSS protection won't
-		// allow it to pass, because it may get mistaken for some forbidden tags,
-		// e.g., "Mathias <mathias@example.com>" the first part of email "<mathias"
-		// including "<" would get mistaken for <math> tag, and server will cut it off.
-		uri = uri.replace(/</g,'&lt;').replace(/>/g,'&gt;');
-
-		egw.openWithinWindow ("mail", "setCompose", content, {'preset[mailto]':uri}, /mail_compose.compose/);
-
-		for (var index in content)
+		else if (app != 'file')
 		{
-			if (content[index].length > 0)
+			id = id_data;
+			id_data = { 'id': id, 'app': app, 'extra': extra };
+		}
+		var url : any;
+		var popup : any;
+		var params : any;
+		var app_registry : any;
+		if (app == 'file')
+		{
+			url = this.mime_open(id_data);
+			if (typeof url == 'object')
 			{
-				var cLen = content[index];
-				egw.message(egw.lang('%1 email(s) added into %2', cLen.length, egw.lang(index)));
+		 		if(typeof url.mime_popup != 'undefined')
+				{
+					popup = url.mime_popup;
+					delete url.mime_popup;
+				}
+		 		if(typeof url.mime_target != 'undefined')
+				{
+					target = url.mime_target;
+					delete url.mime_target;
+				}
+				if (typeof url.url == 'string')
+				{
+					url = url.url;
+				}
+				else
+				{
+					params = url;
+					url = '/index.php';
+				}
+			}
+		}
+		else
+		{
+			app_registry = this.link_get_registry(app);
+
+			if (!app || !app_registry)
+			{
+				alert('egw.open() app "'+app+'" NOT defined in link registry!');
 				return;
 			}
-		}
+			if (typeof type == 'undefined') type = 'edit';
+			if (type == 'edit' && typeof app_registry.edit == 'undefined') type = 'view';
+			if (typeof app_registry[type] == 'undefined')
+			{
+				alert('egw.open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
+				return;
+			}
+			url = '/index.php';
+			if(typeof app_registry[type] === 'object')
+			{
+				// Copy, not get a reference, or we'll change the registry
+				params = {...app_registry[type]};
+			}
+			else if (typeof app_registry[type] === 'string' &&
+				(app_registry[type].substr(0, 11) === 'javascript:' || app_registry[type].substr(0, 4) === 'app.'))
+			{
+				// JavaScript, just pass it on
+				url = app_registry[type];
+				params = {};
+			}
+			if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
+			{
+				params[app_registry[type+'_id']] = id;
+			}
+			else if (type == 'add' && id)	// add add_app and app_id parameters, if given for add
+			{
+				var app_id = id.split(':',2);
+				params[app_registry.add_app] = app_id[0];
+				params[app_registry.add_id] = app_id[1];
+			}
 
+			if (typeof extra == 'string')
+			{
+				url += '?'+extra;
+			}
+			else if (typeof extra == 'object')
+			{
+				Object.assign(params, extra);
+			}
+			popup = app_registry[type+'_popup'];
+		}
+		if (url.substr(0, 11) === 'javascript:')
+		{
+			// Add parameters into javascript
+			url = 'javascript:var params = '+ JSON.stringify(params) + '; '+ url.substr(11);
+		}
+		// app.<appname>.<method>: call app method direct with parameter object as first parameter
+		else if (url.substr(0, 4) === 'app.')
+		{
+			return this.callFunc(url, params);
+		}
+		else
+		{
+			url = this.link(url, params);
+		}
+		if (target == '_tab') return {url: url};
+		if (popup == 'dialog')
+		{
+			return this.openDialog(url.split('menuaction=')[1]);
+		}
+		if (type == 'view'  && params && params.target == 'tab') {
+			return this.openTab(params[app_registry['view_id']], app, type, params, {
+				id: params[app_registry['view_id']] + '-' + this.appName,
+				icon: params['icon'],
+				displayName: id_data['title'] + " (" + egw.lang(this.appName) + ")",
+			});
+		}
+		return this.open_link(url, target, popup, target_app, _check_popup_blocker, id_data?.type);
 	}
-	return {
-		/**
-		 * View an EGroupware entry: opens a popup of correct size or redirects window.location to requested url
-		 *
-		 * Examples:
-		 * - egw.open(123,'infolog') or egw.open('infolog:123') opens popup to edit or view (if no edit rights) infolog entry 123
-		 * - egw.open('infolog:123','timesheet','add') opens popup to add new timesheet linked to infolog entry 123
-		 * - egw.open(123,'addressbook','view') opens addressbook view for entry 123 (showing linked infologs)
-		 * - egw.open('','addressbook','list',{ search: 'Becker' }) opens list of addresses containing 'Becker'
-		 *
-		 * @param {string}|int|object id_data either just the id or if app=="" "app:id" or object with all data
-		 * 	to be able to open files you need to give: (mine-)type, path or id, app2 and id2 (path=/apps/app2/id2/id"
-		 * @param {string} app app-name or empty (app is part of id)
-		 * @param {string} type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
-		 * @param {object|string} extra extra url parameters to append as object or string
-		 * @param {string} target target of window to open
-		 * @param {string} target_app target application to open in that tab
-		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
-		 * - This option only makes sense to be enabled when the open_link requested without user interaction
-		 * @memberOf egw
-		 *
-		 * @return {object|void} returns object for given specific target like '_tab'
-		 */
-		open: function(this : any, id_data : any, app? : string, type? : string, extra? : any, target? : string, target_app? : string, _check_popup_blocker? : boolean) : any
+
+	/**
+	 * View an EGroupware entry: opens a framework tab for the given app entry
+	 *
+	 * Called as egw(app,wnd).openTab(...) - dispatches this.open(...) through
+	 * whichever instance called it, hence a plain `function` field. `self`
+	 * reaches this Open instance's own _wnd.
+	 *
+	 * @return appname of new tab
+	 */
+	openTab = ((self : Open) => function(this : any, _id : any, _app? : string, _type? : string, _extra? : any, _framework_app? : object) : string|void
+	{
+		if ((<any>self.#wnd).framework && (<any>self.#wnd).framework.tabLinkHandler)
 		{
-			// Log for debugging purposes - special log tag 'navigation' always
-			// goes in user log, if user log is enabled
-			egw.debug("navigation",
-				"egw.open(id_data=%o, app=%s, type=%s, extra=%o, target=%s, target_app=%s)",
-				id_data,app,type,extra,target,target_app
-			);
-
-			var id;
-			if(typeof target === 'undefined')
-			{
-				target = '_blank';
-			}
-			if (!app)
-			{
-				if (typeof id_data != 'object')
-				{
-					var app_id = id_data.split(':',2);
-					app = app_id[0];
-					id = app_id[1];
-				}
-				else
-				{
-					app = id_data.app;
-					id = id_data.id;
-					if(typeof id_data.type != 'undefined')
-					{
-						type = id_data.type;
-					}
-				}
-			}
-			else if (app != 'file')
-			{
-				id = id_data;
-				id_data = { 'id': id, 'app': app, 'extra': extra };
-			}
-			var url : any;
-			var popup : any;
-			var params : any;
-			var app_registry : any;
-			if (app == 'file')
-			{
-				url = this.mime_open(id_data);
-				if (typeof url == 'object')
-				{
-			 		if(typeof url.mime_popup != 'undefined')
-					{
-						popup = url.mime_popup;
-						delete url.mime_popup;
-					}
-			 		if(typeof url.mime_target != 'undefined')
-					{
-						target = url.mime_target;
-						delete url.mime_target;
-					}
-					if (typeof url.url == 'string')
-					{
-						url = url.url;
-					}
-					else
-					{
-						params = url;
-						url = '/index.php';
-					}
-				}
-			}
-			else
-			{
-				app_registry = this.link_get_registry(app);
-
-				if (!app || !app_registry)
-				{
-					alert('egw.open() app "'+app+'" NOT defined in link registry!');
-					return;
-				}
-				if (typeof type == 'undefined') type = 'edit';
-				if (type == 'edit' && typeof app_registry.edit == 'undefined') type = 'view';
-				if (typeof app_registry[type] == 'undefined')
-				{
-					alert('egw.open() type "'+type+'" is NOT defined in link registry for app "'+app+'"!');
-					return;
-				}
-				url = '/index.php';
-				if(typeof app_registry[type] === 'object')
-				{
-					// Copy, not get a reference, or we'll change the registry
-					params = (<any>jQuery).extend({},app_registry[type]);
-				}
-				else if (typeof app_registry[type] === 'string' &&
-					(app_registry[type].substr(0, 11) === 'javascript:' || app_registry[type].substr(0, 4) === 'app.'))
-				{
-					// JavaScript, just pass it on
-					url = app_registry[type];
-					params = {};
-				}
-				if (type == 'view' || type == 'edit')	// add id parameter for type view or edit
-				{
-					params[app_registry[type+'_id']] = id;
-				}
-				else if (type == 'add' && id)	// add add_app and app_id parameters, if given for add
-				{
-					var app_id = id.split(':',2);
-					params[app_registry.add_app] = app_id[0];
-					params[app_registry.add_id] = app_id[1];
-				}
-
-				if (typeof extra == 'string')
-				{
-					url += '?'+extra;
-				}
-				else if (typeof extra == 'object')
-				{
-					(<any>jQuery).extend(params, extra);
-				}
-				popup = app_registry[type+'_popup'];
-			}
-			if (url.substr(0, 11) === 'javascript:')
-			{
-				// Add parameters into javascript
-				url = 'javascript:var params = '+ JSON.stringify(params) + '; '+ url.substr(11);
-			}
-			// app.<appname>.<method>: call app method direct with parameter object as first parameter
-			else if (url.substr(0, 4) === 'app.')
-			{
-				return this.callFunc(url, params);
-			}
-			else
-			{
-				url = this.link(url, params);
-			}
-			if (target == '_tab') return {url: url};
-			if (popup == 'dialog')
-			{
-				return this.openDialog(url.split('menuaction=')[1]);
-			}
-			if (type == 'view'  && params && params.target == 'tab') {
-				return this.openTab(params[app_registry['view_id']], app, type, params, {
-					id: params[app_registry['view_id']] + '-' + this.appName,
-					icon: params['icon'],
-					displayName: id_data['title'] + " (" + egw.lang(this.appName) + ")",
-				});
-			}
-			return this.open_link(url, target, popup, target_app, _check_popup_blocker, id_data?.type);
-		},
-
-		/**
-		 * View an EGroupware entry: opens a framework tab for the given app entry
-		 *
-		 * @param {string}|int|object _id either just the id or if app=="" "app:id" or object with all data
-		 * @param {string} _app app-name or empty (app is part of id)
-		 * @param {string} _type default "edit", possible "view", "view_list", "edit" (falls back to "view") and "add"
-		 * @param {object|string} _extra extra url parameters to append as object or string
-		 * @param {object} _framework_app framework app attributes e.g. title or displayName
-		 * @return {string} appname of new tab
-		  */
-		openTab: function(this : any, _id : any, _app? : string, _type? : string, _extra? : any, _framework_app? : object) : string|void
-		{
-			if ((<any>_wnd).framework && (<any>_wnd).framework.tabLinkHandler)
-			{
-				var data : any = this.open(_id, _app, _type, _extra, "_tab", false);
-				// Use framework's link handler
-				return (<any>_wnd).framework.tabLinkHandler(data.url, _framework_app);
-			}
-			else
-			{
-				this.open(_id, _app, _type, _extra);
-			}
-		},
-
-		/**
-		 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
-		 *
-		 * @param {string} _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
-		 * @param {string} _target optional target / window name
-		 * @param {string} _popup widthxheight, if a popup should be used
-		 * @param {string} _target_app app-name for opener
-		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
-		 * - This option only makes sense to be enabled when the open_link requested without user interaction
-		 * @param {string} _mime_type if given, we check if any app has registered a mime-handler for that type and use it
-		 */
-		open_link: function(this : any, _link : string, _target? : string, _popup? : string, _target_app? : string, _check_popup_blocker? : boolean, _mime_type? : string) : any
-		{
-			// Log for debugging purposes - don't use navigation here to avoid
-			// flooding log with details already captured by egw.open()
-			egw.debug("log",
-				"egw.open_link(_link=%s, _target=%s, _popup=%s, _target_app=%s)",
-				_link,_target,_popup,_target_app
-			);
-			//Check browser pop-up blocker
-			if (_check_popup_blocker)
-			{
-				if (this._check_popupBlocker(_link, _target, _popup, _target_app)) return;
-			}
-			var url = _link;
-			if (url.indexOf('javascript:') == 0)
-			{
-				(new Function(url.substr(11)))();
-				return;
-			}
-			if (url.indexOf('mailto:') == 0)
-			{
-				return mailto(url);
-			}
-			// link is not necessary an url, it can also be a menuaction!
-			if (url.indexOf('/') == -1 && url.split('.').length >= 3 &&
-				!(url.indexOf('mailto:') == 0 || url.indexOf('/index.php') == 0 || url.indexOf('://') != -1))
-			{
-				url = "/index.php?menuaction="+url;
-			}
-			// append the url to the webserver url, if not already contained or empty
-			if (url[0] == '/' && this.webserverUrl && this.webserverUrl != '/' && url.indexOf(this.webserverUrl+'/') != 0)
-			{
-				url = this.webserverUrl + url;
-			}
-			var mime_info : any = _mime_type ? this.get_mime_info(_mime_type, _target_app) : undefined;
-			if (mime_info && (mime_info.mime_url || mime_info.mime_data) && !(
-				// Don't change if already set
-				_link.includes(mime_info.menuaction) && (_link.includes(mime_info.mime_url) || _link.includes(mime_info.mime_data))
-			))
-			{
-				var data : any = {};
-				for(var attr in mime_info)
-				{
-					switch(attr)
-					{
-						case 'mime_popup':
-							_popup = mime_info.mime_popup;
-							break;
-						case 'mime_target':
-							_target = mime_info.mime_target;
-							break;
-						case 'mime_type':
-							data[mime_info.mime_type] = _mime_type;
-							break;
-						case 'mime_data':
-							data[mime_info[attr]] = _link;
-							break;
-						case 'mime_url':
-							data[mime_info[attr]] = url;
-							break;
-						default:
-							data[attr] = mime_info[attr];
-							break;
-					}
-				}
-				url = egw.link('/index.php', data);
-			}
-			else if (mime_info)
-			{
-				if (mime_info.mime_popup) _popup = mime_info.mime_popup;
-				if (mime_info.mime_target) _target = mime_info.mime_target;
-			}
-
-			if (_popup && _popup.indexOf('x') > 0)
-			{
-				var w_h = _popup.split('x');
-				var popup_window = this.openPopup(url, w_h[0], w_h[1], _target && _target != _target_app ? _target : '_blank', _target_app, true);
-
-				// Remember which windows are open
-				egw().storeWindow(_target_app, popup_window);
-
-				return popup_window;
-			}
-			else if ((typeof _target == 'undefined' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
-			{
-				if(_target == '_self')
-				{
-					// '_self' isn't allowed, but we can handle it
-					_target = undefined;
-				}
-				// Use framework's link handler, if present
-				return this.link_handler(url,_target);
-			}
-			else
-			{
-				// No mime type registered, set target properly based on browsing environment
-
-				//do not open pdfs (or other non images) on mobile, since we can not really get back when mobile browser calls _wnd.open(url,'_self') with a pdf, instantly download instead
-				if ((<any>window).egwIsMobile() && mime_info?.ext && !mime_info.ext.includes("image")){
-					url+='&mode=save'
-					(<any>window).etemplate2.prototype.download(url)
-					return
-				}
-				if (_target == '_browser')
-				{
-					_target = (<any>window).egwIsMobile()?'_self':'_blank';
-				}
-				_target = _target == '_phonecall' && _popup && _popup.indexOf('x') < 0 ? _popup:_target;
-				return _wnd.open(url, _target);
-			}
-		},
-
-		/**
-		 * Opens a menuaction in an Et2Dialog instead of a popup
-		 *
-		 * Please note:
-		 * This method does NOT (yet) work in popups, only in the main EGroupware window!
-		 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
-		 *
-		 * @param string _menuaction
-		 * @return Promise<Et2Dialog>
-		 */
-		openDialog: function(_menuaction : string) : Promise<any>
-		{
-			let resolver : (value ?: any) => void;
-			let rejector : (reason ?: any) => void;
-			const dialog_promise = new Promise((resolve, reject) =>
-			{
-				resolver = value => resolve(value);
-				rejector = reason => reject(reason);
-			});
-			let request = egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
-				['index.php?menuaction=' + _menuaction, true], _response =>
-				{
-					if (Array.isArray(_response) && typeof _response[0] === 'string')
-					{
-						let dialog = (<any>jQuery)(_response[0]).appendTo(_wnd.document.body);
-						if (dialog.length > 0 && dialog.get(0))
-						{
-							resolver(dialog.get(0));
-						}
-						else
-						{
-							console.log("Unable to add dialog with dialogExec('" + _menuaction + "')", _response);
-							rejector(new Error("Unable to add dialog"));
-						}
-					}
-					else
-					{
-						console.log("Invalid response to dialogExec('" + _menuaction + "')", _response);
-						rejector(new Error("Invalid response to dialogExec('" + _menuaction + "')"));
-					}
-				}).sendRequest();
-			return dialog_promise;
-		},
-
-		/**
-		 * Open a (centered) popup window with given size and url
-		 *
-		 * @param {string} _url
-		 * @param {number} _width
-		 * @param {number} _height
-		 * @param {string} _windowName or "_blank"
-		 * @param {string|boolean} _app app-name for framework to set correct opener or false for current app
-		 * @param {boolean} _returnID true: return window, false: return undefined
-		 * @param {string} _status "yes" or "no" to display status bar of popup
-		 * @param {boolean} _skip_framework
-		 * @returns {DOMWindow|undefined}
-		 */
-		openPopup: function(this : any, _url : string, _width : any, _height : any, _windowName? : string, _app? : any, _returnID? : boolean, _status? : string, _skip_framework? : boolean) : Window|void
-		{
-			// Log for debugging purposes
-			egw.debug("navigation", "openPopup(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
-
-			if (_height == 'availHeight') _height = this.availHeight();
-
-			// if we have a framework and we use mobile template --> let framework deal with opening popups
-			if (!_skip_framework && (<any>_wnd).framework)
-			{
-				return (<any>_wnd).framework.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, _wnd);
-			}
-
-			if (typeof(_app) == 'undefined') _app = false;
-			if (typeof(_returnID) == 'undefined') _returnID = false;
-
-			var $wnd = (<any>jQuery)(egw.top);
-			var positionLeft = ($wnd.outerWidth()/2)-(_width/2)+(<any>_wnd).screenX;
-			var positionTop  = ($wnd.outerHeight()/2)-(_height/2)+(<any>_wnd).screenY;
-
-			// IE fails, if name contains eg. a dash (-)
-			if (navigator.userAgent.match(/msie/i)) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');
-
-			var windowID : any = _wnd.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
-				",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
-				",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
-
-			// inject egw object
-			if (windowID) windowID.egw = (<any>_wnd).egw;
-
-			// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
-			if (_returnID !== false) return windowID;
-		},
-
-		/**
-		 * Get available height of screen
-		 */
-		availHeight: function() : number
-		{
-			return screen.availHeight < screen.height ?
-				(navigator.userAgent.match(/windows/ig)? screen.availHeight -100:screen.availHeight) // Seems chrome not counting taskbar in available height
-				: screen.height - 100;
-		},
-
-		/**
-		 * Use frameworks (framed template) link handler to open a url
-		 *
-		 * @param {string} _url
-		 * @param {string} _target
-		 */
-		link_handler: function(_url : string, _target? : string) : void
-		{
-			// if url is supposed to open in admin, use admins loader to open it in it's own iframe
-			// (otherwise there's no tree and sidebox!)
-			if (_target === 'admin' && !_url.match(/menuaction=admin\.admin_ui\.index/))
-			{
-				_url = _url.replace(/menuaction=([^&]+)/, 'menuaction=admin.admin_ui.index&load=$1');
-			}
-			if ((<any>_wnd).framework)
-			{
-				(<any>_wnd).framework.linkHandler(_url, _target);
-			}
-			else
-			{
-				_wnd.location.href = _url;
-			}
-		},
-
-		/**
-		 * Close current window / popup
-		 */
-		close: function() : void
-		{
-			if ((<any>_wnd).framework && typeof (<any>_wnd).framework.popup_close == "function")
-			{
-				(<any>_wnd).framework.popup_close(_wnd);
-			}
-			else
-			{
-				_wnd.close();
-			}
-		},
-
-		/**
-		 * Check if browser pop-up blocker is on/off
-		 *
-		 * @param {string} _link menuaction, EGroupware relative url or a full url (incl. "mailto:" or "javascript:")
-		 * @param {string} _target optional target / window name
-		 * @param {string} _popup widthxheight, if a popup should be used
-		 * @param {string} _target_app app-name for opener
-		 *
-		 * @return boolean returns false if pop-up blocker is off
-		 * - returns true if pop-up blocker is on,
-		 * - and re-call the open_link with provided parameters, after user interaction.
-		 */
-		_check_popupBlocker: function(_link : string, _target? : string, _popup? : string, _target_app? : string) : boolean
-		{
-			var popup = window.open("","",'top='+(screen.height/2)+',left='+(screen.width/2)+',width=1,height=1,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,dependent=yes');
-
-			if (!popup||(<any>popup) == 'undefined'||popup == null)
-			{
-				(<any>window).Et2Dialog.show_dialog(function ()
-					{
-						(<any>window).egw.open_link(_link, _target, _popup, _target_app);
-					}, egw.lang("The browser popup blocker is on. Please click on OK button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1", window.location.hostname),
-					"Popup Blocker Warning", {}, (<any>window).Et2Dialog.BUTTONS_OK, (<any>window).Et2Dialog.WARNING_MESSAGE);
-				return true;
-			}
-			else
-			{
-				popup.close();
-				return false;
-			}
-		},
-
-		/**
-		 * This function helps to append content/ run commands into an already
-		 * opened popup window. Popup windows now are getting stored in framework
-		 * object and can be retrieved/closed from framework.
-		 *
-		 * @param {string} _app name of application to be requested its popups
-		 * @param {string} _method application method implemented in app.js
-		 * @param {object} _content content to be passed to method
-		 * @param {string|object} _extra url or object of extra
-		 * @param {regex} _regexp regular expression to get specific popup with matched url
-		 * @param {boolean} _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
-		 */
-		openWithinWindow: function (this : any, _app : string, _method : string, _content : object, _extra? : any, _regexp? : RegExp, _check_popup_blocker? : boolean) : void
-		{
-			var popups : any[] = (<any>window).framework.popups_get(_app, _regexp);
-
-			var openUp = function (_app : string, _extra : any) {
-
-				var len = 0;
-				if (typeof _extra == "string")
-				{
-					len = _extra.length;
-				}
-				else if (typeof _extra == "object")
-				{
-					for (var i in _extra)
-					{
-						if ((<any>jQuery).isArray(_extra[i]))
-						{
-							var tmp = '';
-							for (var j in _extra[i])
-							{
-								tmp += i+'[]='+_extra[i][j]+'&';
-
-							}
-							len += tmp.length;
-						}
-						else if(_extra[i])
-						{
-							len += _extra[i].length;
-						}
-					}
-				}
-
-				// According to microsoft, IE 10/11 can only accept a url with 2083 characters
-				// therefore we need to send request to compose window with POST method
-				// instead of GET. We create a temporary <Form> and will post emails.
-				// ** WebServers and other browsers also have url length limit:
-				// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
-				if (len > 2083)
-				{
-					var popup : any = egw.open('','mail','add','','compose__','mail', _check_popup_blocker);
-					var $tmpForm = (<any>jQuery)(document.createElement('form'));
-					var $tmpSubmitInput = (<any>jQuery)(document.createElement('input')).attr({type:"submit"});
-					for (var i in _extra)
-					{
-						if ((<any>jQuery).isArray(_extra[i]))
-						{
-							$tmpForm.append((<any>jQuery)(document.createElement('input')).attr({name:i, type:"text", value: JSON.stringify(_extra[i])}));
-						}
-						else
-						{
-							$tmpForm.append((<any>jQuery)(document.createElement('input')).attr({name:i, type:"text", value: _extra[i]}));
-						}
-					}
-
-					// Set the temporary form's attributes
-					$tmpForm.attr({target:popup.name, action:"index.php?menuaction=mail.mail_compose.compose", method:"post"})
-							.append($tmpSubmitInput).appendTo('body');
-					$tmpForm.submit();
-					// Remove the form after submit
-					$tmpForm.remove();
-				}
-				else
-				{
-					egw.open('', _app, 'add', _extra, _app, _app, _check_popup_blocker);
-				}
-			};
-			for(var i = 0; i < popups.length; i++)
-			{
-				if(popups[i].closed)
-				{
-					(<any>window).framework.popups_grabage_collector();
-				}
-			}
-
-			 const pref_name = "mail_add_address_new_popup";
-			 const new_dialog_pref = egw.preference(pref_name, "common");
-			//If there is no popup just open a new entry instantly
-			if (popups.length == 0)
-			{
-				return openUp(_app, _extra);
-			}
-
-			const buttons = [
-				{label: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
-				{label: this.lang("Cancel"), id: "cancel"}
-			];
-
-			// Fill dialog options
-			const options : any[] = [];
-			for (let i = 0; i < popups.length; i++)
-			{
-				options.push({label: popups[i].document.title || this.lang(_app), index: i});
-			}
-			options.push({label: this.lang("New %1", egw.link_get_registry(_app, "entry")), index: "new"});
-
-			// Set initial value
-			switch (new_dialog_pref)
-			{
-				case "new":
-					(<any>options).index = "new";
-					break;
-				default:
-				case "add":
-					(<any>options).index = 0;
-					break;
-			}
-			let dialog = new (<any>window).Et2Dialog(this.app_name());
-			dialog.transformAttributes({
-				callback: function (_button_id : string, _value : any)
-				{
-					//Always remember what was chosen, as preselection for next time
-					egw.set_preference("common", pref_name, _value.grid.index == "new" ? "new" : "add");
-
-					if (_value && _value.grid)
-					{
-						switch (_button_id)
-						{
-							case "add":
-								if (_value.grid.index == "new")
-								{
-									return openUp(_app, _extra);
-								}
-								popups[_value.grid.index].app[_app][_method](popups[_value.grid.index], _content);
-								return;
-							case "cancel":
-						}
-					}
-				},
-				title: this.lang("Select an opened dialog"),
-				buttons: buttons,
-				value: {content: {grid: options}},
-				template: this.webserverUrl + '/api/templates/default/promptOpenedDialog.xet?1',
-				resizable: false
-			});
-			document.body.appendChild(dialog);
+			var data : any = this.open(_id, _app, _type, _extra, "_tab", false);
+			// Use framework's link handler
+			return (<any>self.#wnd).framework.tabLinkHandler(data.url, _framework_app);
 		}
-	};
-});
+		else
+		{
+			this.open(_id, _app, _type, _extra);
+		}
+	})(this);
+
+	/**
+	 * Open a link, which can be either a menuaction, a EGroupware relative url or a full url
+	 *
+	 * Called as egw(app,wnd).open_link(...) - dispatches through
+	 * this._check_popupBlocker(...)/this.webserverUrl/this.get_mime_info(...)/
+	 * this.openPopup(...)/this.link_app_list(...)/this.link_handler(...), all
+	 * of which must resolve through whichever instance called it, hence a
+	 * plain `function` field. Its final fallback branch also needs this Open
+	 * instance's own _wnd (`_wnd.open(url, _target)` in the original), so
+	 * unlike open()/openWithinWindow() this one does need a `self` capture.
+	 */
+	open_link = ((self : Open) => function(this : any, _link : string, _target? : string, _popup? : string, _target_app? : string, _check_popup_blocker? : boolean, _mime_type? : string) : any
+	{
+		// Log for debugging purposes - don't use navigation here to avoid
+		// flooding log with details already captured by egw.open()
+		egw.debug("log",
+			"egw.open_link(_link=%s, _target=%s, _popup=%s, _target_app=%s)",
+			_link,_target,_popup,_target_app
+		);
+		//Check browser pop-up blocker
+		if (_check_popup_blocker)
+		{
+			if (this._check_popupBlocker(_link, _target, _popup, _target_app)) return;
+		}
+		var url = _link;
+		if (url.indexOf('javascript:') == 0)
+		{
+			(new Function(url.substr(11)))();
+			return;
+		}
+		if (url.indexOf('mailto:') == 0)
+		{
+			return mailto(url);
+		}
+		// link is not necessary an url, it can also be a menuaction!
+		if (url.indexOf('/') == -1 && url.split('.').length >= 3 &&
+			!(url.indexOf('mailto:') == 0 || url.indexOf('/index.php') == 0 || url.indexOf('://') != -1))
+		{
+			url = "/index.php?menuaction="+url;
+		}
+		// append the url to the webserver url, if not already contained or empty
+		if (url[0] == '/' && this.webserverUrl && this.webserverUrl != '/' && url.indexOf(this.webserverUrl+'/') != 0)
+		{
+			url = this.webserverUrl + url;
+		}
+		var mime_info : any = _mime_type ? this.get_mime_info(_mime_type, _target_app) : undefined;
+		if (mime_info && (mime_info.mime_url || mime_info.mime_data) && !(
+			// Don't change if already set
+			_link.includes(mime_info.menuaction) && (_link.includes(mime_info.mime_url) || _link.includes(mime_info.mime_data))
+		))
+		{
+			var data : any = {};
+			for(var attr in mime_info)
+			{
+				switch(attr)
+				{
+					case 'mime_popup':
+						_popup = mime_info.mime_popup;
+						break;
+					case 'mime_target':
+						_target = mime_info.mime_target;
+						break;
+					case 'mime_type':
+						data[mime_info.mime_type] = _mime_type;
+						break;
+					case 'mime_data':
+						data[mime_info[attr]] = _link;
+						break;
+					case 'mime_url':
+						data[mime_info[attr]] = url;
+						break;
+					default:
+						data[attr] = mime_info[attr];
+						break;
+				}
+			}
+			url = egw.link('/index.php', data);
+		}
+		else if (mime_info)
+		{
+			if (mime_info.mime_popup) _popup = mime_info.mime_popup;
+			if (mime_info.mime_target) _target = mime_info.mime_target;
+		}
+
+		if (_popup && _popup.indexOf('x') > 0)
+		{
+			var w_h = _popup.split('x');
+			var popup_window = this.openPopup(url, w_h[0], w_h[1], _target && _target != _target_app ? _target : '_blank', _target_app, true);
+
+			// Remember which windows are open
+			egw().storeWindow(_target_app, popup_window);
+
+			return popup_window;
+		}
+		else if ((typeof _target == 'undefined' || _target == '_self' || typeof this.link_app_list()[_target] != "undefined"))
+		{
+			if(_target == '_self')
+			{
+				// '_self' isn't allowed, but we can handle it
+				_target = undefined;
+			}
+			// Use framework's link handler, if present
+			return this.link_handler(url,_target);
+		}
+		else
+		{
+			// No mime type registered, set target properly based on browsing environment
+
+			//do not open pdfs (or other non images) on mobile, since we can not really get back when mobile browser calls _wnd.open(url,'_self') with a pdf, instantly download instead
+			if ((<any>window).egwIsMobile() && mime_info?.ext && !mime_info.ext.includes("image")){
+				url+='&mode=save'
+				(<any>window).etemplate2.prototype.download(url)
+				return
+			}
+			if (_target == '_browser')
+			{
+				_target = (<any>window).egwIsMobile()?'_self':'_blank';
+			}
+			_target = _target == '_phonecall' && _popup && _popup.indexOf('x') < 0 ? _popup:_target;
+			return self.#wnd.open(url, _target);
+		}
+	})(this);
+
+	/**
+	 * Opens a menuaction in an Et2Dialog instead of a popup
+	 *
+	 * Please note:
+	 * This method does NOT (yet) work in popups, only in the main EGroupware window!
+	 * For popups you have to use the app.ts method openDialog(), which creates the dialog in the correct window / popup.
+	 *
+	 * Doesn't dispatch through `this` for anything, only needs this Open
+	 * instance's own _wnd, so a plain arrow field is safe.
+	 */
+	openDialog = (_menuaction : string) : Promise<any> =>
+	{
+		let resolver : (value ?: any) => void;
+		let rejector : (reason ?: any) => void;
+		const dialog_promise = new Promise((resolve, reject) =>
+		{
+			resolver = value => resolve(value);
+			rejector = reason => reject(reason);
+		});
+		let request = egw.json(_menuaction.match(/^([^.:]+)/)[0] + '.jdots_framework.ajax_exec.template.' + _menuaction,
+			['index.php?menuaction=' + _menuaction, true], _response =>
+			{
+				if (Array.isArray(_response) && typeof _response[0] === 'string')
+				{
+					// jQuery(_response[0]).appendTo(...) equivalent: parse the HTML
+					// string via a <template> and move its top-level nodes into body.
+					const template = this.#wnd.document.createElement('template');
+					template.innerHTML = _response[0];
+					const nodes = Array.from(template.content.childNodes);
+					if (nodes.length > 0)
+					{
+						nodes.forEach(node => this.#wnd.document.body.appendChild(node));
+						resolver(nodes[0]);
+					}
+					else
+					{
+						console.log("Unable to add dialog with dialogExec('" + _menuaction + "')", _response);
+						rejector(new Error("Unable to add dialog"));
+					}
+				}
+				else
+				{
+					console.log("Invalid response to dialogExec('" + _menuaction + "')", _response);
+					rejector(new Error("Invalid response to dialogExec('" + _menuaction + "')"));
+				}
+			}).sendRequest();
+		return dialog_promise;
+	}
+
+	/**
+	 * Open a (centered) popup window with given size and url
+	 *
+	 * Called as egw(app,wnd).openPopup(...) - dispatches this.availHeight()
+	 * through whichever instance called it, hence a plain `function` field.
+	 * `self` reaches this Open instance's own _wnd.
+	 *
+	 * @returns {DOMWindow|undefined}
+	 */
+	openPopup = ((self : Open) => function(this : any, _url : string, _width : any, _height : any, _windowName? : string, _app? : any, _returnID? : boolean, _status? : string, _skip_framework? : boolean) : Window|void
+	{
+		// Log for debugging purposes
+		egw.debug("navigation", "openPopup(%s, %s, %s, %o, %s, %s)",_url,_windowName,_width,_height,_status,_app);
+
+		if (_height == 'availHeight') _height = this.availHeight();
+
+		// if we have a framework and we use mobile template --> let framework deal with opening popups
+		if (!_skip_framework && (<any>self.#wnd).framework)
+		{
+			return (<any>self.#wnd).framework.openPopup(_url, _width, _height, _windowName, _app, _returnID, _status, self.#wnd);
+		}
+
+		if (typeof(_app) == 'undefined') _app = false;
+		if (typeof(_returnID) == 'undefined') _returnID = false;
+
+		// jQuery(egw.top).outerWidth()/.outerHeight() on a window just reads
+		// the native outerWidth/outerHeight properties directly.
+		const top_wnd : any = egw.top;
+		var positionLeft = (top_wnd.outerWidth/2)-(_width/2)+(<any>self.#wnd).screenX;
+		var positionTop  = (top_wnd.outerHeight/2)-(_height/2)+(<any>self.#wnd).screenY;
+
+		// IE fails, if name contains eg. a dash (-)
+		if (navigator.userAgent.match(/msie/i)) _windowName = !_windowName ? '_blank' : _windowName.replace(/[^a-zA-Z0-9_]+/,'');
+
+		var windowID : any = self.#wnd.open(_url, _windowName || '_blank', "width=" + _width + ",height=" + _height +
+			",screenX=" + positionLeft + ",left=" + positionLeft + ",screenY=" + positionTop + ",top=" + positionTop +
+			",location=no,menubar=no,directories=no,toolbar=no,scrollbars=yes,resizable=yes,status="+_status);
+
+		// inject egw object
+		if (windowID) windowID.egw = (<any>self.#wnd).egw;
+
+		// returning something, replaces whole window in FF, if used in link as "javascript:egw_openWindowCentered2()"
+		if (_returnID !== false) return windowID;
+	})(this);
+
+	/**
+	 * Get available height of screen
+	 */
+	availHeight = () : number =>
+	{
+		return screen.availHeight < screen.height ?
+			(navigator.userAgent.match(/windows/ig)? screen.availHeight -100:screen.availHeight) // Seems chrome not counting taskbar in available height
+			: screen.height - 100;
+	}
+
+	/**
+	 * Use frameworks (framed template) link handler to open a url
+	 */
+	link_handler = (_url : string, _target? : string) : void =>
+	{
+		// if url is supposed to open in admin, use admins loader to open it in it's own iframe
+		// (otherwise there's no tree and sidebox!)
+		if (_target === 'admin' && !_url.match(/menuaction=admin\.admin_ui\.index/))
+		{
+			_url = _url.replace(/menuaction=([^&]+)/, 'menuaction=admin.admin_ui.index&load=$1');
+		}
+		if ((<any>this.#wnd).framework)
+		{
+			(<any>this.#wnd).framework.linkHandler(_url, _target);
+		}
+		else
+		{
+			this.#wnd.location.href = _url;
+		}
+	}
+
+	/**
+	 * Close current window / popup
+	 */
+	close = () : void =>
+	{
+		if ((<any>this.#wnd).framework && typeof (<any>this.#wnd).framework.popup_close == "function")
+		{
+			(<any>this.#wnd).framework.popup_close(this.#wnd);
+		}
+		else
+		{
+			this.#wnd.close();
+		}
+	}
+
+	/**
+	 * Check if browser pop-up blocker is on/off
+	 *
+	 * @return boolean returns false if pop-up blocker is off
+	 * - returns true if pop-up blocker is on,
+	 * - and re-call the open_link with provided parameters, after user interaction.
+	 */
+	_check_popupBlocker = (_link : string, _target? : string, _popup? : string, _target_app? : string) : boolean =>
+	{
+		var popup = window.open("","",'top='+(screen.height/2)+',left='+(screen.width/2)+',width=1,height=1,menubar=no,resizable=yes,scrollbars=yes,status=no,toolbar=no,dependent=yes');
+
+		if (!popup||(<any>popup) == 'undefined'||popup == null)
+		{
+			(<any>window).Et2Dialog.show_dialog(function ()
+				{
+					(<any>window).egw.open_link(_link, _target, _popup, _target_app);
+				}, egw.lang("The browser popup blocker is on. Please click on OK button to see the pop-up.\n\nIf you would like to not see this message for the next time, allow your browser pop-up blocker to open popups from %1", window.location.hostname),
+				"Popup Blocker Warning", {}, (<any>window).Et2Dialog.BUTTONS_OK, (<any>window).Et2Dialog.WARNING_MESSAGE);
+			return true;
+		}
+		else
+		{
+			popup.close();
+			return false;
+		}
+	}
+
+	/**
+	 * This function helps to append content/ run commands into an already
+	 * opened popup window. Popup windows now are getting stored in framework
+	 * object and can be retrieved/closed from framework.
+	 *
+	 * Called as egw(app,wnd).openWithinWindow(...) - dispatches this.lang(...)/
+	 * this.app_name()/this.webserverUrl through whichever instance called it,
+	 * hence a plain `function` field. Doesn't touch this class's own state,
+	 * so no `self` capture is needed.
+	 */
+	openWithinWindow = function(this : any, _app : string, _method : string, _content : object, _extra? : any, _regexp? : RegExp, _check_popup_blocker? : boolean) : void
+	{
+		var popups : any[] = (<any>window).framework.popups_get(_app, _regexp);
+
+		var openUp = function (_app : string, _extra : any) {
+
+			var len = 0;
+			if (typeof _extra == "string")
+			{
+				len = _extra.length;
+			}
+			else if (typeof _extra == "object")
+			{
+				for (var i in _extra)
+				{
+					if (Array.isArray(_extra[i]))
+					{
+						var tmp = '';
+						for (var j in _extra[i])
+						{
+							tmp += i+'[]='+_extra[i][j]+'&';
+
+						}
+						len += tmp.length;
+					}
+					else if(_extra[i])
+					{
+						len += _extra[i].length;
+					}
+				}
+			}
+
+			// According to microsoft, IE 10/11 can only accept a url with 2083 characters
+			// therefore we need to send request to compose window with POST method
+			// instead of GET. We create a temporary <Form> and will post emails.
+			// ** WebServers and other browsers also have url length limit:
+			// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
+			if (len > 2083)
+			{
+				var popup : any = egw.open('','mail','add','','compose__','mail', _check_popup_blocker);
+				const tmpForm = document.createElement('form');
+				for (var i in _extra)
+				{
+					const input = document.createElement('input');
+					input.name = i;
+					input.type = 'text';
+					input.value = Array.isArray(_extra[i]) ? JSON.stringify(_extra[i]) : _extra[i];
+					tmpForm.appendChild(input);
+				}
+
+				// Set the temporary form's attributes
+				tmpForm.target = popup.name;
+				(<any>tmpForm).action = "index.php?menuaction=mail.mail_compose.compose";
+				tmpForm.method = "post";
+				const tmpSubmitInput = document.createElement('input');
+				tmpSubmitInput.type = 'submit';
+				tmpForm.appendChild(tmpSubmitInput);
+				document.body.appendChild(tmpForm);
+				tmpForm.submit();
+				// Remove the form after submit
+				tmpForm.remove();
+			}
+			else
+			{
+				egw.open('', _app, 'add', _extra, _app, _app, _check_popup_blocker);
+			}
+		};
+		for(var i = 0; i < popups.length; i++)
+		{
+			if(popups[i].closed)
+			{
+				(<any>window).framework.popups_grabage_collector();
+			}
+		}
+
+		 const pref_name = "mail_add_address_new_popup";
+		 const new_dialog_pref = egw.preference(pref_name, "common");
+		//If there is no popup just open a new entry instantly
+		if (popups.length == 0)
+		{
+			return openUp(_app, _extra);
+		}
+
+		const buttons = [
+			{label: this.lang("Add"), id: "add", "class": "ui-priority-primary", "default": true},
+			{label: this.lang("Cancel"), id: "cancel"}
+		];
+
+		// Fill dialog options
+		const options : any[] = [];
+		for (let i = 0; i < popups.length; i++)
+		{
+			options.push({label: popups[i].document.title || this.lang(_app), index: i});
+		}
+		options.push({label: this.lang("New %1", egw.link_get_registry(_app, "entry")), index: "new"});
+
+		// Set initial value
+		switch (new_dialog_pref)
+		{
+			case "new":
+				(<any>options).index = "new";
+				break;
+			default:
+			case "add":
+				(<any>options).index = 0;
+				break;
+		}
+		let dialog = new (<any>window).Et2Dialog(this.app_name());
+		dialog.transformAttributes({
+			callback: function (_button_id : string, _value : any)
+			{
+				//Always remember what was chosen, as preselection for next time
+				egw.set_preference("common", pref_name, _value.grid.index == "new" ? "new" : "add");
+
+				if (_value && _value.grid)
+				{
+					switch (_button_id)
+					{
+						case "add":
+							if (_value.grid.index == "new")
+							{
+								return openUp(_app, _extra);
+							}
+							popups[_value.grid.index].app[_app][_method](popups[_value.grid.index], _content);
+							return;
+						case "cancel":
+					}
+				}
+			},
+			title: this.lang("Select an opened dialog"),
+			buttons: buttons,
+			value: {content: {grid: options}},
+			template: this.webserverUrl + '/api/templates/default/promptOpenedDialog.xet?1',
+			resizable: false
+		});
+		document.body.appendChild(dialog);
+	}
+}
+
+egw.extend('open', egw.MODULE_WND_LOCAL, (_app : string, _wnd : Window) => new Open(_wnd));
 
 // Add protocol handler as an option if mail handling is not forced so mail can handle mailto:
 /* Not working consistantly yet
