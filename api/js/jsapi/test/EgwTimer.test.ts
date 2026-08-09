@@ -155,16 +155,18 @@ describe('egw_timer.js (timer)', () =>
 			assert.deepEqual(env.stubs.open.firstCall.args, [null, 'timesheet', 'edit', {events: 'specific', ts_id: '42'}]);
 		});
 
-		it('KNOWN BUG: pausing/stopping before ever starting throws a raw TypeError ' +
-			'(_timer.last is undefined) instead of the friendly lang() message', async() =>
+		it('FIXED: pausing/stopping before ever starting no longer throws - it just records ' +
+			'the pause/stop time (previously threw a raw TypeError since _timer.last was ' +
+			'undefined, instead of the friendly lang() message every other invalid-time-' +
+			'ordering case produces)', async() =>
 		{
 			env.egw().timer_button({}, {id: 'overall[pause]'});
 			await flushMicrotasks();
 
-			assert.isTrue(env.Et2DialogStub.alert.calledOnce);
-			// instanceof TypeError would fail cross-realm (the error is thrown inside
-			// the iframe, so it's an instance of ITS OWN TypeError constructor).
-			assert.equal(env.Et2DialogStub.alert.firstCall.args[0].constructor.name, 'TypeError');
+			assert.isFalse(env.Et2DialogStub.alert.called);
+			assert.isTrue(env.topmenu.classList.contains('paused'));
+			assert.isTrue(env.stubs.request.calledOnce);
+			assert.equal(env.stubs.request.firstCall.args[1][0].action, 'overall-pause');
 		});
 
 		it('an explicit start time before the last stop/pause raises a friendly, translated error', async() =>
@@ -373,6 +375,17 @@ describe('egw_timer.js (timer)', () =>
 		{
 			env = await createEgwTimerEnv({topmenuState: {disable: [], overall: {}, specific: {}}});
 			assert.doesNotThrow(() => env.egw().add_timer('nonexistent'));
+		});
+
+		it('FIXED: does not throw when #topmenu_timer has no data-state attribute, and the ' +
+			'click handler is still wired (previously threw a raw TypeError reading ' +
+			'"disable" of undefined)', async() =>
+		{
+			env = await createEgwTimerEnv(); // no topmenuState -> no data-state attribute at all
+			assert.doesNotThrow(() => env.egw().add_timer('topmenu_timer'));
+
+			openDialog(env);
+			assert.equal(env.window.document.querySelectorAll('et2-dialog-timer-stub').length, 1);
 		});
 
 		it('wires a click on the parent to open the timer dialog', async() =>

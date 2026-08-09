@@ -405,7 +405,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 	{
 		const time = _time ? new Date(_time) : new Date();
 		time.setSeconds(0);	// only use full minutes, as this is what we display
-		if (time.valueOf() < _timer.last.valueOf())
+		if (_timer.last && time.valueOf() < _timer.last.valueOf())
 		{
 			const last_time = formatUTCTime(_timer.last);
 			if (_timer.start)
@@ -726,7 +726,7 @@ egw.extend('timer', egw.MODULE_GLOBAL, function()
 			});
 
 			// check if overall working time is not disabled
-			if (state.disable.indexOf('overall') === -1)
+			if (state && state.disable.indexOf('overall') === -1)
 			{
 				// we need to wait that all JS is loaded
 				(<any>window).egw_ready.then(() => { window.setTimeout(() =>
