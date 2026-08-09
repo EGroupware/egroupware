@@ -2486,6 +2486,164 @@ class Mail
 	}
 
 	/**
+	 * JMAP-native move for moveMessages()'s same-account, real-move case (deleteAfterMove=true,
+	 * no cross-account target) - reuses Api\Mail\Jmap::emailMove() (full mailboxIds replace).
+	 * Copy-without-delete and cross-account moves are NOT translated here (both explicitly out
+	 * of scope for this project - cross-account already needs fetch+append regardless of
+	 * protocol, see [[mail-jmap-imap-shim]]) - null falls back to the classic implementation.
+	 *
+	 * @return bool|string[]|null null = not applicable, use the classic path
+	 */
+	private function jmapMoveMessages($_foldername, $_messageUID, $deleteAfterMove, $returnUIDs, $_sourceProfileID, $_targetProfileID)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || !$deleteAfterMove ||
+			($_sourceProfileID !== null && $_sourceProfileID !== $this->icServer->ImapServerId) ||
+			($_targetProfileID !== null && $_targetProfileID !== $this->icServer->ImapServerId) ||
+			($ids = $this->jmapMessageIds($_messageUID)) === null)
+		{
+			return null;
+		}
+		try
+		{
+			$this->icServer->jmapClient()->emailMove($ids, $_foldername);
+			// a JMAP move keeps the same Email.id (unlike a real IMAP move, which always assigns a
+			// new UID in the destination - see [[feedback-imap-uid-per-mailbox]]), so the "new" id
+			// to hand back is simply the same one
+			return $returnUIDs ? $ids : true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return false;	// no classic fallback possible - $ids aren't real IMAP UIDs
+		}
+	}
+
+	/**
+	 * Fetch the raw whole-message blob and slice it at the first blank line into header/body
+	 * text - shared by the getMessageHeader()/getMessageRawHeader()/getMessageRawBody()
+	 * JMAP-native paths below, mirroring the same technique MailJmap.fetchRawHeader() already
+	 * uses client-side (mail/js/jmap.ts) for the "view header" feature.
+	 *
+	 * @return array{header:string,body:string}
+	 * @throws Api\Exception
+	 */
+	private function jmapRawMessageParts(string $id) : array
+	{
+		$jmap = $this->icServer->jmapClient();
+		$blobId = $jmap->emailGet($id, ['blobId'], false)['blobId'] ??
+			throw new Exception\AssertionFailed("Email '$id' has no blobId");
+		$raw = $jmap->downloadBlob($blobId, 'message.eml', 'message/rfc822');
+		$pos = strpos($raw, "\r\n\r\n");
+		$sepLen = 4;
+		if ($pos === false)
+		{
+			$pos = strpos($raw, "\n\n");
+			$sepLen = 2;
+		}
+		if ($pos === false)
+		{
+			return ['header' => $raw, 'body' => ''];
+		}
+		return ['header' => substr($raw, 0, $pos), 'body' => substr($raw, $pos + $sepLen)];
+	}
+
+	/**
+	 * JMAP-native header fetch for getMessageHeader() - sub-part headers ($_partID set) are NOT
+	 * translated here (JMAP's bodyStructure partId values aren't guaranteed to match the classic
+	 * dotted IMAP mime-id scheme callers pass in) - null falls back to the classic path.
+	 *
+	 * @return array|Horde_Mime_Headers|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageHeader($_uid, $_partID, $decode)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_partID !== '' ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$headers = Horde_Mime_Headers::parseHeaders($this->jmapRawMessageParts($ids[0])['header']);
+			if ($decode === 'object')
+			{
+				$headers->setUserAgent('EGroupware API '.$GLOBALS['egw_info']['server']['versions']['phpgwapi']);
+				return $headers;
+			}
+			$retValue = array_change_key_case($headers->toArray(), CASE_UPPER);
+			if (is_array($retValue['SUBJECT'] ?? null))
+			{
+				$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
+			}
+			if ($decode)
+			{
+				foreach ($retValue as $key => $rvV)
+				{
+					$retValue[$key] = self::decode_header($rvV, in_array($key, ['FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO']));
+				}
+			}
+			return $retValue;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native raw header fetch for getMessageRawHeader() - same $_partID scope-limit as
+	 * jmapGetMessageHeader().
+	 *
+	 * @return string|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageRawHeader($_uid, $_partID) : ?string
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_partID !== '' ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			return $this->jmapRawMessageParts($ids[0])['header'];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native raw whole-message fetch for getMessageRawBody() - only the "whole message,
+	 * non-streamed" mode is translated ($_partID==='', $_stream===false, tracker's and
+	 * mail_compose's actual usage) - a specific body part or a stream result fall back to the
+	 * classic path.
+	 *
+	 * @return string|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageRawBody($_uid, $_partID, $_stream) : ?string
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_stream || $_partID !== '' ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$blobId = $jmap->emailGet($ids[0], ['blobId'], false)['blobId'] ??
+				throw new Exception\AssertionFailed("Email '{$ids[0]}' has no blobId");
+			return $jmap->downloadBlob($blobId, 'message.eml', 'message/rfc822');
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
 	 * Explicit opt-in wrapper around getSortedList() for callers that can handle opaque JMAP
 	 * Email.id strings coming back instead of real IMAP UIDs (i.e. callers that only pass the
 	 * result on to getHeaders()'s single-id mode / flagMessages() / deleteMessages(), all of
@@ -4975,6 +5133,10 @@ class Mail
 	 */
 	function moveMessages($_foldername, $_messageUID, $deleteAfterMove=true, $currentFolder = Null, $returnUIDs = false, $_sourceProfileID = Null, $_targetProfileID = Null)
 	{
+		if (($jmapResult = $this->jmapMoveMessages($_foldername, $_messageUID, $deleteAfterMove, $returnUIDs, $_sourceProfileID, $_targetProfileID)) !== null)
+		{
+			return $jmapResult;
+		}
 		$source = Mail\Account::read(($_sourceProfileID?$_sourceProfileID:$this->icServer->ImapServerId))->imapServer();
 		//$deleteOptions  = $GLOBALS['egw_info']["user"]["preferences"]["mail"]["deleteOptions"];
 		if (empty($_messageUID))
@@ -6158,6 +6320,10 @@ class Mail
 	 */
 	function getMessageHeader($_uid, $_partID = '',$decode=false, $preserveUnSeen=false, $_folder='')
 	{
+		if (($jmapResult = $this->jmapGetMessageHeader($_uid, $_partID, $decode)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.':'.$_uid.', '.$_partID.', '.$decode.', '.$preserveUnSeen.', '.$_folder);
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
 		$uidsToFetch = new Horde_Imap_Client_Ids();
@@ -6238,6 +6404,10 @@ class Mail
 	 */
 	function getMessageRawHeader($_uid, $_partID = '', $_folder = '')
 	{
+		if (($jmapResult = $this->jmapGetMessageRawHeader($_uid, $_partID)) !== null)
+		{
+			return $jmapResult;
+		}
 		static $rawHeaders;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
 		//error_log(__METHOD__.' ('.__LINE__.') '." Try Using Cache for raw Header $_uid, $_partID in Folder $_folder");
@@ -6367,6 +6537,10 @@ class Mail
 	 */
 	function getMessageRawBody($_uid, $_partID = '', $_folder='', $_stream=false)
 	{
+		if (($jmapResult = $this->jmapGetMessageRawBody($_uid, $_partID, $_stream)) !== null)
+		{
+			return $jmapResult;
+		}
 		static $rawBody;
 		$body = null;
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox']?? $this->icServer->getCurrentMailbox();
