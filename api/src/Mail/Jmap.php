@@ -580,6 +580,39 @@ class Jmap
 	}
 
 	/**
+	 * Query Email ids in a folder matching simple keyword/text conditions, sorted.
+	 *
+	 * Used by Imap\Jmap::getSortedList()'s narrow JMAP-native translation (see that method's
+	 * docblock for exactly which Api\Mail::getSortedList() filter shapes this covers - NOT a
+	 * general replacement for the full IMAP search-filter language).
+	 *
+	 * @param string $folder folder-path e.g. "INBOX" (resolved to a Mailbox id internally)
+	 * @param array $conditions JMAP FilterCondition objects, ANDed together (e.g. ['notKeyword' => '$seen'])
+	 * @param string $sortProperty 'receivedAt'|'sentAt'|'subject'|'from'|'to'|'size'
+	 * @param bool $ascending
+	 * @param int $limit
+	 * @return string[] JMAP Email ids, in sort order
+	 * @throws Api\Exception folder not found, or on any JMAP error
+	 */
+	public function emailQuery(string $folder, array $conditions, string $sortProperty='receivedAt',
+		bool $ascending=false, int $limit=1000) : array
+	{
+		$mailboxId = $this->getMailboxId($folder);
+		if ($mailboxId === null)
+		{
+			throw new Api\Exception("Folder '$folder' not found");
+		}
+		$response = $this->jmapCall([['Email/query', [
+			'accountId' => $this->accountId,
+			'filter' => ['operator' => 'AND', 'conditions' => array_merge([['inMailbox' => $mailboxId]], $conditions)],
+			'sort' => [['property' => $sortProperty, 'isAscending' => $ascending]],
+			'limit' => $limit,
+		], '0']], self::JMAP_MAIL);
+		return $response['methodResponses'][0][1]['ids'] ??
+			throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
+	}
+
+	/**
 	 * Download a Blob (RFC 8620 §6.2) - the raw bytes of one Email body-part, or (whole-message
 	 * blobId) the raw RFC822 message. Unlike an IMAP FETCH body-part, a JMAP blob is already the
 	 * final decoded representation - no Content-Transfer-Encoding reversal needed here.
@@ -666,6 +699,66 @@ class Jmap
 		if ($notDestroyed)
 		{
 			throw new Api\Exception('Email/set destroy failed: '.json_encode($notDestroyed));
+		}
+	}
+
+	/**
+	 * Patch keywords on one or more Emails via Email/set (RFC 8621 - a "keywords/$x": true|null
+	 * PatchObject leaves every other keyword untouched, unlike a full keywords replace).
+	 *
+	 * Used by Imap\Jmap::flagMessages()'s JMAP-native path.
+	 *
+	 * @param string[] $ids JMAP Email ids
+	 * @param array<string,bool|null> $patch e.g. ['keywords/$seen' => true, 'keywords/$flagged' => null]
+	 * @throws Api\Exception on any failure
+	 */
+	public function emailSetKeywords(array $ids, array $patch) : void
+	{
+		if (!$ids)
+		{
+			return;
+		}
+		$response = $this->jmapCall([['Email/set', [
+			'accountId' => $this->accountId,
+			'update' => array_fill_keys($ids, $patch),
+		], '0']], self::JMAP_MAIL);
+		$notUpdated = $response['methodResponses'][0][1]['notUpdated'] ?? [];
+		if ($notUpdated)
+		{
+			throw new Api\Exception('Email/set update failed: '.json_encode($notUpdated));
+		}
+	}
+
+	/**
+	 * Move one or more Emails to a different mailbox - a full mailboxIds replace (RFC 8621:
+	 * moving is "set mailboxIds to just the target", unlike a mailboxIds/<id> patch which adds
+	 * without removing, see emailImport()'s sibling use of the patch form elsewhere).
+	 *
+	 * Used by Imap\Jmap::deleteMessages()'s JMAP-native "move to trash" path.
+	 *
+	 * @param string[] $ids JMAP Email ids
+	 * @param string $targetFolder folder-path e.g. "INBOX/Trash" (resolved to a Mailbox id internally)
+	 * @throws Api\Exception folder not found, or on any failure
+	 */
+	public function emailMove(array $ids, string $targetFolder) : void
+	{
+		if (!$ids)
+		{
+			return;
+		}
+		$targetMailboxId = $this->getMailboxId($targetFolder);
+		if ($targetMailboxId === null)
+		{
+			throw new Api\Exception("Folder '$targetFolder' not found");
+		}
+		$response = $this->jmapCall([['Email/set', [
+			'accountId' => $this->accountId,
+			'update' => array_fill_keys($ids, ['mailboxIds' => [$targetMailboxId => true]]),
+		], '0']], self::JMAP_MAIL);
+		$notUpdated = $response['methodResponses'][0][1]['notUpdated'] ?? [];
+		if ($notUpdated)
+		{
+			throw new Api\Exception('Email/set move failed: '.json_encode($notUpdated));
 		}
 	}
 

@@ -1550,6 +1550,10 @@ class Mail
 	 */
 	function getHeaders($_folderName, $_startMessage, $_numberOfMessages, $_sort, $_reverse, $_filter, $_thisUIDOnly=null, $_cacheResult=true, $_fetchPreviews=false)
 	{
+		if (($jmapResult = $this->jmapHeaders($_thisUIDOnly)) !== null)
+		{
+			return $jmapResult;
+		}
 		//self::$debug=true;
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '.function_backtrace());
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."$_folderName,$_startMessage, $_numberOfMessages, $_sort, $_reverse, ".array2string($_filter).", $_thisUIDOnly");
@@ -2152,6 +2156,357 @@ class Mail
 		}
 		return self::isLabelKeyword($keyword) ?
 			self::labelSearchCriterion($keyword, true) : null;
+	}
+
+	/**
+	 * JMAP keyword => real IMAP flag string, for building a prepareFlagsArray()-compatible
+	 * 'FLAGS' list from a JMAP Email's keywords - mirrors JmapShim::importKeywordToFlag()'s
+	 * mapping (kept separate rather than reusing that private method, to avoid a cross-class
+	 * visibility change for this).
+	 */
+	private const JMAP_KEYWORD_TO_FLAG = [
+		'$seen' => '\\Seen', '$answered' => '\\Answered', '$flagged' => '\\Flagged', '$draft' => '\\Draft',
+		'$forwarded' => '$Forwarded', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent',
+	];
+
+	/**
+	 * $_flag (flagMessages()'s first param) => [JMAP keyword, set-or-unset]
+	 */
+	private const JMAP_FLAG_KEYWORDS = [
+		'flagged' => ['$flagged', true], 'unflagged' => ['$flagged', false],
+		'read' => ['$seen', true], 'seen' => ['$seen', true],
+		'unread' => ['$seen', false], 'unseen' => ['$seen', false],
+		'answered' => ['$answered', true], 'forwarded' => ['$forwarded', true],
+		'mdnsent' => ['$mdnsent', true], 'mdnnotsent' => ['$mdnnotsent', true],
+		'label1' => ['$label1', true], 'labelone' => ['$label1', true],
+		'label2' => ['$label2', true], 'labeltwo' => ['$label2', true],
+		'label3' => ['$label3', true], 'labelthree' => ['$label3', true],
+		'label4' => ['$label4', true], 'labelfour' => ['$label4', true],
+		'label5' => ['$label5', true], 'labelfive' => ['$label5', true],
+	];
+
+	/**
+	 * Recognize a message-id (or list of them) as coming from a JMAP-native path (this class's
+	 * own jmapSortedList()/jmapHeaders()) - a real JMAP Email.id is an opaque, non-numeric
+	 * string, never a plain IMAP UID. Same "numeric = classic, opaque string = JMAP" dispatch
+	 * Mail\Imap\Jmap::splitRowID() already uses.
+	 *
+	 * @param mixed $_messageUID
+	 * @return string[]|null null = not JMAP-native (numeric UID(s), 'all', or a
+	 *  Horde_Imap_Client_Ids object) - caller should use the classic path
+	 */
+	private function jmapMessageIds($_messageUID) : ?array
+	{
+		if (is_object($_messageUID) || $_messageUID === 'all' || $_messageUID === null || $_messageUID === '')
+		{
+			return null;
+		}
+		$ids = is_array($_messageUID) ? array_values($_messageUID) : [$_messageUID];
+		foreach ($ids as $id)
+		{
+			if ($id === '' || $id === null || is_numeric($id))
+			{
+				return null;
+			}
+		}
+		return $ids;
+	}
+
+	/**
+	 * Build a prepareFlagsArray()-compatible 'FLAGS' list from a JMAP Email's keywords object.
+	 *
+	 * @param array<string,bool> $keywords
+	 * @return string[] real IMAP-style flag strings, e.g. ['\\Seen', '$label1']
+	 */
+	private function jmapFlagsFromKeywords(array $keywords) : array
+	{
+		$flags = [];
+		foreach ($keywords as $keyword => $set)
+		{
+			if (!$set)
+			{
+				continue;
+			}
+			$keyword = strtolower($keyword);
+			if (isset(self::JMAP_KEYWORD_TO_FLAG[$keyword]))
+			{
+				$flags[] = self::JMAP_KEYWORD_TO_FLAG[$keyword];
+			}
+			elseif (str_starts_with($keyword, '$label') || str_starts_with($keyword, '$customflag'))
+			{
+				$flags[] = $keyword;
+			}
+		}
+		return $flags;
+	}
+
+	/**
+	 * Translate getSortedList()'s $_sort param to a JMAP Email/query sort property - only the
+	 * plain "by date" sort is supported, everything else (from/to/subject/size sort) falls back
+	 * to the classic path.
+	 *
+	 * @param mixed $_sort
+	 * @return ?string null = unsupported
+	 */
+	private function jmapSortProperty($_sort) : ?string
+	{
+		if (is_numeric($_sort))
+		{
+			return (int)$_sort === 0 ? 'sentAt' : null;
+		}
+		return strtoupper((string)$_sort) === 'DATE' ? 'sentAt' : null;
+	}
+
+	/**
+	 * Translate a narrow subset of getSortedList()'s $_filter shape (status-keyword list + at
+	 * most one TO/FROM/SUBJECT/BODY/TEXT text search, nothing else - no date ranges, no
+	 * OR-combinations, no category filter) into JMAP FilterCondition objects.
+	 *
+	 * This deliberately does NOT attempt to cover createIMAPFilter()'s full filter language - it
+	 * only needs to recognize tracker_mailhandler::check_mail()'s actual ['status' =>
+	 * ['UNSEEN','UNDELETED'], 'type' => 'TO', 'string' => ...] shape (and similarly narrow
+	 * shapes from other callers). Anything it doesn't recognize returns null so the caller falls
+	 * back to the classic, fully-general IMAP search.
+	 *
+	 * @param array $_filter
+	 * @return array[]|null null = not translatable
+	 */
+	private function jmapFilterConditions(array $_filter) : ?array
+	{
+		static $statusMap = [
+			'SEEN' => ['hasKeyword' => '$seen'], 'UNSEEN' => ['notKeyword' => '$seen'],
+			'ANSWERED' => ['hasKeyword' => '$answered'], 'UNANSWERED' => ['notKeyword' => '$answered'],
+			'FLAGGED' => ['hasKeyword' => '$flagged'], 'UNFLAGGED' => ['notKeyword' => '$flagged'],
+		];
+		$conditions = [];
+		foreach ((array)($_filter['status'] ?? []) as $status)
+		{
+			$status = is_string($status) ? strtoupper($status) : null;
+			// no JMAP equivalent needed: Email/set destroy is immediate, nothing stays "\Deleted"
+			if ($status === 'UNDELETED')
+			{
+				continue;
+			}
+			if ($status === null || !isset($statusMap[$status]))
+			{
+				return null;	// DELETED, a custom-label criterion, ... - not translated here
+			}
+			$conditions[] = $statusMap[$status];
+		}
+		if (!empty($_filter['string']))
+		{
+			static $fieldMap = ['TO' => 'to', 'FROM' => 'from', 'SUBJECT' => 'subject', 'BODY' => 'body', 'TEXT' => 'text'];
+			$field = $fieldMap[strtoupper((string)($_filter['type'] ?? ''))] ?? null;
+			if ($field === null)
+			{
+				return null;
+			}
+			$conditions[] = [$field => $_filter['string']];
+		}
+		foreach (array_keys($_filter) as $key)
+		{
+			if (!in_array($key, ['status', 'type', 'string'], true))
+			{
+				return null;	// range/date/cat_id/... not supported by this narrow translator
+			}
+		}
+		return $conditions;
+	}
+
+	/**
+	 * JMAP-native search/list for getSortedList()'s narrow, tracker-shaped subset of its filter
+	 * language (see jmapFilterConditions()) - null (fall back to classic IMAP search) for
+	 * anything outside that subset, a non-Stalwart connection, or on any JMAP failure.
+	 *
+	 * Unlike a numeric IMAP UID, the ids returned here are opaque JMAP Email.id strings - every
+	 * downstream call using them (jmapHeaders(), jmapFlagMessages(), jmapDeleteMessages(), ...)
+	 * recognizes that shape via jmapMessageIds() and stays JMAP-native too, with no UID
+	 * translation ever happening (a real IMAP SEARCH would be needed for that translation - see
+	 * the plan file for why doing it per-call would cost more than it saves).
+	 *
+	 * @return array{match:object,count:int}|null
+	 */
+	private function jmapSortedList($_folderName, $_sort, $_reverse, $_filter) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || !is_array($_filter))
+		{
+			return null;
+		}
+		$conditions = $this->jmapFilterConditions($_filter);
+		$sortProperty = $this->jmapSortProperty($_sort);
+		if ($conditions === null || $sortProperty === null)
+		{
+			return null;
+		}
+		try
+		{
+			$ids = $this->icServer->jmapClient()->emailQuery($_folderName, $conditions, $sortProperty, !$_reverse);
+			$match = new \stdClass();
+			$match->ids = $ids;
+			return ['match' => $match, 'count' => count($ids)];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native header/flag fetch for getHeaders()'s "specific known id(s)" mode
+	 * ($_thisUIDOnly set) - the shape tracker_mailhandler::process_message2() and
+	 * mail_ui::displayMessage()'s meeting-invite path both use. Only a minimal field set is
+	 * returned (subject, size, date, sender/to address, prepareFlagsArray()'s flag booleans) -
+	 * enough for those callers, NOT a full replacement for the general listing branch
+	 * ($_thisUIDOnly === null, used by mail_zpush/mail_hooks), which always stays classic.
+	 *
+	 * @return array{header:array[],info:array}|null
+	 */
+	private function jmapHeaders($_thisUIDOnly) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_thisUIDOnly === null ||
+			($ids = $this->jmapMessageIds($_thisUIDOnly)) === null)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$header = [];
+			foreach (array_values($ids) as $i => $id)
+			{
+				$email = $jmap->emailGet($id, ['subject', 'keywords', 'size', 'receivedAt', 'from', 'to'], false);
+				$row = self::prepareFlagsArray(['FLAGS' => $this->jmapFlagsFromKeywords($email['keywords'] ?? [])]);
+				$row['uid'] = $id;
+				$row['subject'] = $this->decode_subject($email['subject'] ?? '');
+				$row['size'] = $email['size'] ?? null;
+				$row['date'] = $row['internaldate'] = self::_strtotime($email['receivedAt'] ?? 'now', 'ts', true);
+				$from = $email['from'][0] ?? null;
+				if ($from)
+				{
+					$row['sender_address'] = empty($from['name']) ? $from['email'] : $from['name'].' <'.$from['email'].'>';
+				}
+				$to = $email['to'][0] ?? null;
+				if ($to)
+				{
+					$row['to_address'] = empty($to['name']) ? $to['email'] : $to['name'].' <'.$to['email'].'>';
+				}
+				$header[$i] = $row;
+			}
+			return ['header' => $header, 'info' => ['total' => count($header), 'first' => 0, 'last' => count($header)]];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native flag update via Email/set keywords patch - null (fall back to the classic
+	 * per-UID IMAP STORE) for a non-Stalwart connection, a non-JMAP id (including 'all', which
+	 * this doesn't attempt to translate to a JMAP-wide operation), or an unrecognized flag name.
+	 *
+	 * @return bool|null null = not applicable, use the classic path
+	 */
+	private function jmapFlagMessages($_flag, $_messageUID) : ?bool
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_messageUID)) === null)
+		{
+			return null;
+		}
+		if ($_flag === 'unlabel')
+		{
+			$patch = [];
+			foreach (['$label1', '$label2', '$label3', '$label4', '$label5'] as $keyword)
+			{
+				$patch['keywords/'.$keyword] = null;
+			}
+		}
+		elseif (isset(self::JMAP_FLAG_KEYWORDS[$_flag]))
+		{
+			[$keyword, $set] = self::JMAP_FLAG_KEYWORDS[$_flag];
+			$patch = ['keywords/'.$keyword => $set ? true : null];
+		}
+		else
+		{
+			return null;	// 'delete'/'undelete' (see jmapDeleteMessages()) or unrecognized - classic
+		}
+		try
+		{
+			$this->icServer->jmapClient()->emailSetKeywords($ids, $patch);
+			return true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return false;	// no classic fallback possible - $ids aren't real IMAP UIDs
+		}
+	}
+
+	/**
+	 * JMAP-native delete via Email/set (mailboxIds-move to Trash, or destroy for immediate
+	 * removal) - null (fall back to the classic per-UID IMAP COPY+STORE+EXPUNGE) for a
+	 * non-Stalwart connection or a non-JMAP id.
+	 *
+	 * @return bool|null null = not applicable, use the classic path
+	 */
+	private function jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod) : ?bool
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || ($ids = $this->jmapMessageIds($_messageUID)) === null)
+		{
+			return null;
+		}
+		try
+		{
+			$deleteOptions = $_forceDeleteMethod !== 'no' && in_array($_forceDeleteMethod, ['move_to_trash', 'remove_immediately'], true)
+				? $_forceDeleteMethod : ($this->mailPreferences['deleteOptions'] ?: 'move_to_trash');
+			$trashFolder = $this->getTrashFolder();
+			$jmap = $this->icServer->jmapClient();
+			if ($deleteOptions === 'remove_immediately' ||
+				(!empty($trashFolder) && strtolower((string)$_folder) === strtolower($trashFolder)))
+			{
+				$jmap->emailDestroy($ids);
+			}
+			elseif (!empty($trashFolder))
+			{
+				$jmap->emailMove($ids, $trashFolder);
+			}
+			else
+			{
+				return null;	// no trash folder known - handled classically (will likely also fail there)
+			}
+			return true;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return false;	// no classic fallback possible - $ids aren't real IMAP UIDs
+		}
+	}
+
+	/**
+	 * Explicit opt-in wrapper around getSortedList() for callers that can handle opaque JMAP
+	 * Email.id strings coming back instead of real IMAP UIDs (i.e. callers that only pass the
+	 * result on to getHeaders()'s single-id mode / flagMessages() / deleteMessages(), all of
+	 * which recognize that shape themselves - see jmapMessageIds()).
+	 *
+	 * Deliberately NOT the default behaviour of getSortedList() itself: that method's return
+	 * value already flows into several OTHER call sites (getHeaders()'s own general-listing
+	 * branch, a few mail_ui.inc.php search features, this class's own deleted-message-count
+	 * check) that assume a real numeric UID list and would break silently if fed opaque JMAP
+	 * ids instead - auto-detecting by filter shape alone can't tell those callers apart from a
+	 * caller like tracker_mailhandler::check_mail() that genuinely wants the JMAP-native id.
+	 *
+	 * @see getSortedList() for all parameters
+	 */
+	function jmapAwareSortedList($_folderName, $_sort, &$_reverse, $_filter, &$resultByUid=true, $setSession=true)
+	{
+		if (($jmapResult = $this->jmapSortedList($_folderName, $_sort, $_reverse, $_filter)) !== null)
+		{
+			return $jmapResult;
+		}
+		return $this->getSortedList($_folderName, $_sort, $_reverse, $_filter, $resultByUid, $setSession);
 	}
 
 	/**
@@ -4324,6 +4679,10 @@ class Mail
 	 */
 	function deleteMessages($_messageUID, $_folder=NULL, $_forceDeleteMethod='no')
 	{
+		if (($jmapResult = $this->jmapDeleteMessages($_messageUID, $_folder, $_forceDeleteMethod)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->'.array2string($_messageUID).','.array2string($_folder).', '.$_forceDeleteMethod);
 		$oldMailbox = '';
 		if (empty($_folder) && !empty($this->sessionData['mailbox'])) $_folder = $this->sessionData['mailbox'];
@@ -4481,6 +4840,10 @@ class Mail
 	 */
 	function flagMessages($_flag, $_messageUID,$_folder=NULL)
 	{
+		if (($jmapResult = $this->jmapFlagMessages($_flag, $_messageUID)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.'->' .$_flag." ".array2string($_messageUID).",$_folder /".$this->sessionData['mailbox']);
 		if (empty($_messageUID))
 		{
