@@ -26,7 +26,6 @@ import "./egw_calendar";
 import "./egw_ready";
 import "./egw_data";
 import "./egw_tail";
-import "./egw_inheritance.js";
 import "./egw_message";
 import "./egw_notification";
 import "./egw_timer";
