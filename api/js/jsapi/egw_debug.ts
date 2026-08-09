@@ -47,19 +47,13 @@ declare global
  *
  * localStorage is limited by a clientside quota, so we need to deal with
  * situation that storing something in localStorage will throw an exception!
- *
- * @param {string} _app
- * @param {object} _wnd
  */
-egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : DebugModule
+class Debug implements DebugModule
 {
-	"use strict";
-
 	/**
 	 * DEBUGLEVEL specifies which messages are printed to the console.
 	 * Decrease the value of EGW_DEBUGLEVEL to get less messages.
 	 *
-	 * @type Number
 	 * 0 = off, no logging
 	 * 1 = only "error"
 	 * 2 = -- " -- plus "warning"
@@ -67,57 +61,81 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 	 * 4 = -- " -- plus "log"
 	 * 5 = -- " -- plus a stacktrace
 	 */
-	var DEBUGLEVEL = 3;
+	private DEBUGLEVEL = 3;
 
 	/**
 	 * Log-level for local storage and error-display in GUI
 	 *
-	 * @type Number
 	 * 0 = off, no logging AND no global error-handler bound
 	 * 1 = ... see above
 	 */
-	var LOCAL_LOG_LEVEL = 0;
+	private LOCAL_LOG_LEVEL = 0;
+
 	/**
 	 * Number of log-entries stored on client, new errors overwrite old ones
-	 *
-	 * @type Number
 	 */
-	var MAX_LOGS = 200;
+	private MAX_LOGS = 200;
+
 	/**
 	 * Number of last old log entry = next one to overwrite
-	 *
-	 * @type String
 	 */
-	var LASTLOG = 'lastLog';
+	private LASTLOG = 'lastLog';
+
 	/**
 	 * Prefix for key of log-message, message number gets appended to it
-	 *
-	 * @type String
 	 */
-	var LOG_PREFIX = 'log_';
+	private LOG_PREFIX = 'log_';
+
+	constructor(private _wnd : Window)
+	{
+		// bind to global error handler, only if LOCAL_LOG_LEVEL > 0
+		if (this.LOCAL_LOG_LEVEL)
+		{
+			(<any>jQuery)(_wnd).on('error', (e : any) =>
+			{
+				// originalEvent does NOT always exist in IE
+				var event = typeof e.originalEvent == 'object' ? e.originalEvent : e;
+				// IE(11) gives a syntaxerror on each pageload pointing to first line of html page (doctype).
+				// As I cant figure out what's wrong there, we are ignoring it for now.
+				if (navigator.userAgent.match(/Trident/i) && typeof event.name == 'undefined' &&
+					Object.prototype.toString.call(event) == '[object ErrorEvent]' &&
+					event.lineno == 1 && event.filename.indexOf('/index.php') != -1)
+				{
+					return false;
+				}
+				this.log_on_client('error', [event.message], typeof event.stack != 'undefined' ? event.stack : null);
+				this.raise_error();
+				// rethrow error to let browser log and show it in usual way too
+				if (typeof event.error == 'object')
+				{
+					throw event.error;
+				}
+				throw event.message;
+			});
+		}
+	}
 
 	/**
 	 * Log to clientside html5 localStorage
 	 *
-	 * @param {String} _level "navigation", "log", "info", "warn", "error"
-	 * @param {Array} _args arguments to egw.debug
-	 * @param {string} _stack
-	 * @returns {Boolean} false if localStorage is NOT supported, null if level requires no logging, true if logged
+	 * @param _level "navigation", "log", "info", "warn", "error"
+	 * @param _args arguments to egw.debug
+	 * @returns false if localStorage is NOT supported, null if level requires no logging, true if logged
 	 */
-	function log_on_client(_level : string, _args : any[], _stack? : string) : boolean
+	private log_on_client(_level : string, _args : any[], _stack? : string) : boolean
 	{
 		if (!window.localStorage) return false;
 
 		switch(_level)
 		{
 			case 'warn':
-				if (LOCAL_LOG_LEVEL < 2) return null;
+				if (this.LOCAL_LOG_LEVEL < 2) return null;
 			case 'info':
-				if (LOCAL_LOG_LEVEL < 3) return null;
+				if (this.LOCAL_LOG_LEVEL < 3) return null;
 			case 'log':
-				if (LOCAL_LOG_LEVEL < 4) return null;
+				if (this.LOCAL_LOG_LEVEL < 4) return null;
 			default:
-				if (!LOCAL_LOG_LEVEL) return null;
+				if (!this.LOCAL_LOG_LEVEL) return null;
 		}
 		var data : any = {
 			time: (new Date()).getTime(),
@@ -142,25 +160,25 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 				}
 			}
 		}
-		if (typeof window.localStorage[LASTLOG] == 'undefined')
+		if (typeof window.localStorage[this.LASTLOG] == 'undefined')
 		{
-			window.localStorage[LASTLOG] = <any>0;
+			window.localStorage[this.LASTLOG] = <any>0;
 		}
 		// check if MAX_LOGS changed in code --> clear whole log
-		if (<any>window.localStorage[LASTLOG] > MAX_LOGS)
+		if (<any>window.localStorage[this.LASTLOG] > this.MAX_LOGS)
 		{
-			clear_client_log();
+			this.clear_client_log();
 		}
 		try {
-			window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
-			window.localStorage[LASTLOG] = <any>((1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS);
+			window.localStorage[this.LOG_PREFIX+window.localStorage[this.LASTLOG]] = JSON.stringify(data);
+			window.localStorage[this.LASTLOG] = <any>((1 + parseInt(window.localStorage[this.LASTLOG])) % this.MAX_LOGS);
 		}
 		catch(e) {
 			switch (e.name)
 			{
 				case 'QuotaExceededError':	// storage quota is exceeded --> delete whole log
 				case 'NS_ERROR_DOM_QUOTA_REACHED':	// FF-name
-					clear_client_log();
+					this.clear_client_log();
 					break;
 
 				default:
@@ -191,8 +209,8 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 					}
 			}
 			try {
-				window.localStorage[LOG_PREFIX+window.localStorage[LASTLOG]] = JSON.stringify(data);
-				window.localStorage[LASTLOG] = <any>((1 + parseInt(window.localStorage[LASTLOG])) % MAX_LOGS);
+				window.localStorage[this.LOG_PREFIX+window.localStorage[this.LASTLOG]] = JSON.stringify(data);
+				window.localStorage[this.LASTLOG] = <any>((1 + parseInt(window.localStorage[this.LASTLOG])) % this.MAX_LOGS);
 			}
 			catch(e) {
 				// ignore error, if eg. localStorage exceeds quota on client
@@ -203,18 +221,18 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 	/**
 	 * Get log from localStorage with oldest message first
 	 *
-	 * @returns {Array} of Object with values for attributes level, message, trace
+	 * @returns Array of Object with values for attributes level, message, trace
 	 */
-	function get_client_log() : any[]
+	private get_client_log() : any[]
 	{
 		var logs : any[] = [];
 
-		if (window.localStorage && typeof window.localStorage[LASTLOG] != 'undefined')
+		if (window.localStorage && typeof window.localStorage[this.LASTLOG] != 'undefined')
 		{
-			var lastlog = parseInt(window.localStorage[LASTLOG]);
-			for(var i=lastlog; i < lastlog+MAX_LOGS; ++i)
+			var lastlog = parseInt(window.localStorage[this.LASTLOG]);
+			for(var i=lastlog; i < lastlog+this.MAX_LOGS; ++i)
 			{
-				var log = window.localStorage[LOG_PREFIX+(i%MAX_LOGS)];
+				var log = window.localStorage[this.LOG_PREFIX+(i%this.MAX_LOGS)];
 				if (typeof log != 'undefined')
 				{
 					try {
@@ -232,27 +250,27 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 	/**
 	 * Clears whole client log
 	 */
-	function clear_client_log() : boolean
+	private clear_client_log() : boolean
 	{
 		// Remove indicator icon
 		(<any>jQuery)('#topmenu_info_error').remove();
 
 		if (!window.localStorage) return false;
 
-		var max = MAX_LOGS;
+		var max = this.MAX_LOGS;
 		// check if we have more log entries then allowed, happens if MAX_LOGS get changed in code
-		if (<any>window.localStorage[LASTLOG] > MAX_LOGS)
+		if (<any>window.localStorage[this.LASTLOG] > this.MAX_LOGS)
 		{
 			max = 1000;	// this should NOT be changed, if MAX_LOGS get's smaller!
 		}
 		for(var i=0; i < max; ++i)
 		{
-			if (typeof window.localStorage[LOG_PREFIX+i] != 'undefined')
+			if (typeof window.localStorage[this.LOG_PREFIX+i] != 'undefined')
 			{
-				delete window.localStorage[LOG_PREFIX+i];
+				delete window.localStorage[this.LOG_PREFIX+i];
 			}
 		}
-		delete window.localStorage[LASTLOG];
+		delete window.localStorage[this.LASTLOG];
 
 		return true;
 	}
@@ -260,11 +278,10 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 	/**
 	 * Format one log message for display
 	 *
-	 * @param {Object} log {{level: string, time: number, stack: string, args: array[]}} Log information
+	 * @param log {level: string, time: number, stack: string, args: array[]} Log information
 	 *	Actual message is in args[0]
-	 * @returns {DOMNode}
 	 */
-	function format_message(log : any) : HTMLTableRowElement
+	private format_message(log : any) : HTMLTableRowElement
 	{
 		var row = document.createElement('tr');
 		row.setAttribute('class', log.level);
@@ -297,43 +314,22 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 	/**
 	 * Show user an error happend by displaying a clickable icon with tooltip of current error
 	 */
-	function raise_error() : void
+	private raise_error() : void
 	{
 		var icon : any = (<any>jQuery)('#topmenu_info_error');
 		if (!icon.length)
 		{
-			var icon = (<any>jQuery)(egw(_wnd).image_element(egw.image('dialog_error')));
+			var icon = (<any>jQuery)(egw(this._wnd).image_element(egw.image('dialog_error')));
 			icon.addClass('topmenu_info_item').attr('id', 'topmenu_info_error');
 			// ToDo: tooltip
-			icon.on('click', egw(_wnd).show_log);
+			icon.on('click', egw(this._wnd).show_log);
 			(<any>jQuery)('#egw_fw_topmenu_info_items,#topmenu_info').append(icon);
 		}
 	}
 
-	// bind to global error handler, only if LOCAL_LOG_LEVEL > 0
-	if (LOCAL_LOG_LEVEL)
+	debug_level = () : number =>
 	{
-		(<any>jQuery)(_wnd).on('error', function(e : any)
-		{
-			// originalEvent does NOT always exist in IE
-			var event = typeof e.originalEvent == 'object' ? e.originalEvent : e;
-			// IE(11) gives a syntaxerror on each pageload pointing to first line of html page (doctype).
-			// As I cant figure out what's wrong there, we are ignoring it for now.
-			if (navigator.userAgent.match(/Trident/i) && typeof event.name == 'undefined' &&
-				Object.prototype.toString.call(event) == '[object ErrorEvent]' &&
-				event.lineno == 1 && event.filename.indexOf('/index.php') != -1)
-			{
-				return false;
-			}
-			log_on_client('error', [event.message], typeof event.stack != 'undefined' ? event.stack : null);
-			raise_error();
-			// rethrow error to let browser log and show it in usual way too
-			if (typeof event.error == 'object')
-			{
-				throw event.error;
-			}
-			throw event.message;
-		});
+		return this.DEBUGLEVEL;
 	}
 
 	/**
@@ -342,107 +338,100 @@ egw.extend('debug', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : 
 	 * level, all other parameters are passed to the corresponding
 	 * console function.
 	 */
-	return {
-		debug_level: function() : number {
-			return DEBUGLEVEL;
-		},
-		debug: function(_level : string) : void {
-			var args : any[];
-			if (typeof (<any>_wnd).console != "undefined")
-			{
-				// Get the passed parameters and remove the first entry
-				args = [];
-				for (var i = 1; i < arguments.length; i++)
-				{
-					args.push(arguments[i]);
-				}
-
-				// Add in a trace
-				var stack : string;
-				if (DEBUGLEVEL >= 5 && typeof (new Error).stack != "undefined")
-				{
-					stack = (new Error).stack;
-					args.push(stack);
-				}
-
-				if (_level == "log" && DEBUGLEVEL >= 4 &&
-					typeof (<any>_wnd).console.log == "function")
-				{
-					(<any>_wnd).console.log.apply((<any>_wnd).console, args);
-				}
-
-				if (_level == "info" && DEBUGLEVEL >= 3 &&
-					typeof (<any>_wnd).console.info == "function")
-				{
-					(<any>_wnd).console.info.apply((<any>_wnd).console, args);
-				}
-
-				if (_level == "warn" && DEBUGLEVEL >= 2 &&
-					typeof (<any>_wnd).console.warn == "function")
-				{
-					(<any>_wnd).console.warn.apply((<any>_wnd).console, args);
-				}
-
-				if (_level == "error" && DEBUGLEVEL >= 1 &&
-					typeof (<any>_wnd).console.error == "function")
-				{
-					(<any>_wnd).console.error.apply((<any>_wnd).console, args);
-				}
-			}
-			// raise errors to user, if LOCAL_LOG_LEVEL > 0
-			if (LOCAL_LOG_LEVEL && _level == "error") raise_error();
-
-			// log to html5 localStorage
-			if (typeof stack != 'undefined') args.pop();	// remove stacktrace again
-			log_on_client(<any>_level, args);
-		},
-
-		/**
-		 * Display log to user because he clicked on icon showed by raise_error
-		 *
-		 * @returns {undefined}
-		 */
-		show_log: function() : void
+	debug = (_level : "navigation"|"log"|"info"|"warn"|"error", ...args : any[]) : void =>
+	{
+		if (typeof (<any>this._wnd).console != "undefined")
 		{
-			var table = document.createElement('table');
-			var body = document.createElement('tbody');
-			var client_log = get_client_log();
-			for(var i = 0; i < client_log.length; i++)
+			// Add in a trace
+			var stack : string;
+			if (this.DEBUGLEVEL >= 5 && typeof (new Error).stack != "undefined")
 			{
-				body.appendChild(format_message(client_log[i]));
+				stack = (new Error).stack;
+				args.push(stack);
 			}
-			table.appendChild(body);
 
-			// Use a wrapper div for ease of styling
-			var wrapper = document.createElement('div');
-			wrapper.setAttribute('class', 'client_error_log');
-			wrapper.appendChild(table);
-
-			if((<any>window).jQuery && (<any>window).jQuery.ui.dialog)
+			if (_level == "log" && this.DEBUGLEVEL >= 4 &&
+				typeof (<any>this._wnd).console.log == "function")
 			{
-				var $wrapper : any = (<any>jQuery)(wrapper);
-				// Start hidden
-				(<any>jQuery)('tr',$wrapper).addClass('hidden')
-					.on('click', function() {
-						(<any>jQuery)(this).toggleClass('hidden',{});
-						(<any>jQuery)(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
-					});
-				// Wrap in div so we can control height
-				(<any>jQuery)('td',$wrapper).wrapInner('<div/>')
-					.filter('.stack').children().addClass('ui-icon ui-icon-circle-plus');
-
-				$wrapper.dialog({
-					title: egw.lang('Error log'),
-					buttons: [
-						{text: egw.lang('OK'), click: function() {(<any>jQuery)(this).dialog( "close" ); }},
-						{text: egw.lang('clear'), click: function() {clear_client_log(); (<any>jQuery)(this).empty();}}
-					],
-					width: 800,
-					height: 400
-				});
-				$wrapper[0].scrollTop = $wrapper[0].scrollHeight;
+				(<any>this._wnd).console.log.apply((<any>this._wnd).console, args);
 			}
-			if ((<any>_wnd).console) (<any>_wnd).console.log(get_client_log());
+
+			if (_level == "info" && this.DEBUGLEVEL >= 3 &&
+				typeof (<any>this._wnd).console.info == "function")
+			{
+				(<any>this._wnd).console.info.apply((<any>this._wnd).console, args);
+			}
+
+			if (_level == "warn" && this.DEBUGLEVEL >= 2 &&
+				typeof (<any>this._wnd).console.warn == "function")
+			{
+				(<any>this._wnd).console.warn.apply((<any>this._wnd).console, args);
+			}
+
+			if (_level == "error" && this.DEBUGLEVEL >= 1 &&
+				typeof (<any>this._wnd).console.error == "function")
+			{
+				(<any>this._wnd).console.error.apply((<any>this._wnd).console, args);
+			}
+
+			// remove stacktrace again, if we added one above
+			if (typeof stack != 'undefined') args.pop();
 		}
-	};
-});
+		// raise errors to user, if LOCAL_LOG_LEVEL > 0
+		if (this.LOCAL_LOG_LEVEL && _level == "error") this.raise_error();
+
+		// log to html5 localStorage
+		this.log_on_client(_level, args);
+	}
+
+	/**
+	 * Display log to user because he clicked on icon showed by raise_error
+	 */
+	show_log = () : void =>
+	{
+		var table = document.createElement('table');
+		var body = document.createElement('tbody');
+		var client_log = this.get_client_log();
+		for(var i = 0; i < client_log.length; i++)
+		{
+			body.appendChild(this.format_message(client_log[i]));
+		}
+		table.appendChild(body);
+
+		// Use a wrapper div for ease of styling
+		var wrapper = document.createElement('div');
+		wrapper.setAttribute('class', 'client_error_log');
+		wrapper.appendChild(table);
+
+		if((<any>window).jQuery && (<any>window).jQuery.ui.dialog)
+		{
+			// jQuery UI dialog button `click` handlers are called with `this` bound
+			// to the dialog element - captured here as `self` for the class instance.
+			var self = this;
+			var $wrapper : any = (<any>jQuery)(wrapper);
+			// Start hidden
+			(<any>jQuery)('tr',$wrapper).addClass('hidden')
+				.on('click', function() {
+					(<any>jQuery)(this).toggleClass('hidden',{});
+					(<any>jQuery)(this).find('.stack').children().toggleClass('ui-icon ui-icon-circle-plus');
+				});
+			// Wrap in div so we can control height
+			(<any>jQuery)('td',$wrapper).wrapInner('<div/>')
+				.filter('.stack').children().addClass('ui-icon ui-icon-circle-plus');
+
+			$wrapper.dialog({
+				title: egw.lang('Error log'),
+				buttons: [
+					{text: egw.lang('OK'), click: function() {(<any>jQuery)(this).dialog( "close" ); }},
+					{text: egw.lang('clear'), click: function() {self.clear_client_log(); (<any>jQuery)(this).empty();}}
+				],
+				width: 800,
+				height: 400
+			});
+			$wrapper[0].scrollTop = $wrapper[0].scrollHeight;
+		}
+		if ((<any>this._wnd).console) (<any>this._wnd).console.log(this.get_client_log());
+	}
+}
+
+egw.extend('debug', egw.MODULE_GLOBAL, (_app : string, _wnd : Window) => new Debug(_wnd));
