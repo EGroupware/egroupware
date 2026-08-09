@@ -102,7 +102,7 @@ export async function createEgwTimerEnv(options : {topmenuState? : object} = {})
 	(env.window as any).Et2Dialog = Et2DialogStub;
 	env.Et2DialogStub = Et2DialogStub;
 
-	await loadScript(doc, '/api/js/jsapi/egw_timer.js', 'module');
+	await loadScript(doc, '/api/js/jsapi/egw_timer.ts', 'module');
 
 	return env;
 }

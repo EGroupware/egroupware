@@ -29,5 +29,5 @@ import "./egw_tail";
 import "./egw_inheritance.js";
 import "./egw_message";
 import "./egw_notification";
-import "./egw_timer.js";
+import "./egw_timer";
 import "./jsapi.js";
