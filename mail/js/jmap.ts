@@ -97,6 +97,9 @@ export class MailJmap
 	// "profileID::folder/path" -> JMAP Mailbox id
 	private mailboxIds : Record<string, string> = {};
 	private static readonly CUSTOM_FLAGS = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+	// standard (non-label, non-custom-flag) system flags the UI can bulk-toggle for an explicit
+	// selection - keyed by the base ("un"-stripped) action id used throughout mail/js/app.ts
+	private static readonly SYSTEM_FLAG_KEYWORDS : Record<string, string> = {read: '$seen', flagged: '$flagged'};
 	private static readonly QUERY_PAGE_SIZE = 500;
 	// RFC 8621 §4.1.3 header-property name for the MDN (read-receipt) prompt - matches
 	// JmapShim::MDN_HEADER_PROPERTY (mail/src/JmapShim.php), which echoes this same key back for
@@ -1238,6 +1241,28 @@ export class MailJmap
 		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
 			this.updateIds(group[0].profileID, group[0].mailboxId,
 				group.map(reference => reference.emailId), this.keywordPatch(keyword, true))));
+	}
+
+	/** Resolve a base (non-"un"-prefixed) action id to its JMAP keyword, or null if not one. */
+	static systemFlagKeyword(actionId : string) : string | null
+	{
+		return MailJmap.SYSTEM_FLAG_KEYWORDS[actionId] ?? null;
+	}
+
+	/**
+	 * Toggle a standard system flag - read ($seen) or flagged ($flagged) - for an explicit
+	 * selection. Same shape as setMdnFlag(): bypasses labelKeyword()'s registered-label
+	 * validation since these are fixed keywords, not dynamic labels. $flagged is already in
+	 * JmapShim::writableKeywords(), $seen needed adding there too - a real JMAP server
+	 * (Stalwart) accepts any keyword already. Scoped to explicit selections only - "select all
+	 * matching filter" for these two keeps its classic, filter-aware toggle semantics (e.g.
+	 * "mark all as read" while viewing the Unseen filter), not replicated here.
+	 */
+	async setSystemFlag(references : JmapMessageReference[], keyword : string, set : boolean) : Promise<void>
+	{
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.updateIds(group[0].profileID, group[0].mailboxId,
+				group.map(reference => reference.emailId), this.keywordPatch(keyword, set))));
 	}
 
 	/** Remove all known labels without touching custom flags or unrelated keywords. */

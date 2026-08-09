@@ -887,8 +887,9 @@ class JmapShim
 	{
 		// 'MDNSent'/'MDNnotSent' (no '$' prefix) is the real IMAP keyword classic
 		// Api\Mail::flagMessages() already writes - matched here so a message flagged through
-		// either code path is recognized identically by the other
-		$keywords = ['$flagged' => '\\Flagged', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent'];
+		// either code path is recognized identically by the other. $seen is here for
+		// MailJmap.setSystemFlag()'s explicit-selection bulk read/unread action.
+		$keywords = ['$flagged' => '\\Flagged', '$seen' => '\\Seen', '$mdnsent' => 'MDNSent', '$mdnnotsent' => 'MDNnotSent'];
 		foreach (['label1', 'label2', 'label3', 'label4', 'label5',
 			'customflag1', 'customflag2', 'customflag3', 'customflag4', 'customflag5'] as $keyword)
 		{

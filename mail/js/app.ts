@@ -3792,7 +3792,14 @@ export class MailApp extends EgwApp
 		const labelOperation = typeof _flag === 'object' && typeof _flag?.customLabel === 'string' ? _flag : null;
 		const actionId = labelOperation?.customLabel || String(_flag);
 		const customFlag = actionId.replace(/^un/, '').match(/^customFlag[1-5]$/) ? actionId.replace(/^un/, '') : null;
-		const jmapKeywordAction = !!labelOperation || this.mail_isLabel(actionId) || !!customFlag || actionId === 'unlabel';
+		// standard system flags (read/unread, flagged/unflagged) - JMAP-native only for an
+		// explicit selection (fixes the "N selected rows, one emailId2uid() search each" gap);
+		// "select all matching filter" keeps the classic path for these two, whose semantics are
+		// filter-aware (e.g. "mark all as read" while viewing the Unseen filter), not a plain
+		// per-row toggle - not replicated here
+		const systemFlagKeyword = !_elems.all ? MailJmap.systemFlagKeyword(actionId.replace(/^un/, '')) : null;
+		const jmapKeywordAction = !!labelOperation || this.mail_isLabel(actionId) || !!customFlag ||
+			actionId === 'unlabel' || !!systemFlagKeyword;
 
 		if (jmapKeywordAction)
 		{
@@ -3815,6 +3822,10 @@ export class MailApp extends EgwApp
 					else if (customFlag)
 					{
 						operation = this.jmap.setCustomFlag(references, customFlag, !actionId.startsWith('un'));
+					}
+					else if (systemFlagKeyword)
+					{
+						operation = this.jmap.setSystemFlag(references, systemFlagKeyword, !actionId.startsWith('un'));
 					}
 					else
 					{
