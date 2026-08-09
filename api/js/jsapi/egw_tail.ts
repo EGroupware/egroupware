@@ -11,18 +11,27 @@
 
 import './egw_json';
 
+interface TailChunk
+{
+	length : number;
+	next : number;
+	content : string;
+	size : string | false;
+	writable : boolean;
+}
+
 document.addEventListener('DOMContentLoaded', function() {
 	"use strict";
 
 	let log_tail_start = 0;
 	const filenameEl = document.querySelector('pre[id^="log"]');
 
-	let filename = null;
+	let filename : string = null;
 	if (filenameEl) {
 		filename = filenameEl.getAttribute('data-filename');
 	}
 
-	function button_log(buttonId) {
+	function button_log(buttonId : string) {
 		if (buttonId !== "clear_log") {
 			egw.json("api.EGroupware\\Api\\Json\\Tail.ajax_delete", [filename, buttonId === "empty_log"])
 				.sendRequest(true);
@@ -34,7 +43,7 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	function refresh_log() {
-		egw.json("api.EGroupware\\Api\\Json\\Tail.ajax_chunk", [filename, log_tail_start], function(_data) {
+		egw.json("api.EGroupware\\Api\\Json\\Tail.ajax_chunk", [filename, log_tail_start], function(_data : TailChunk) {
 			if (_data.length) {
 				log_tail_start = _data.next;
 				const log = document.querySelector("#log");
@@ -45,10 +54,10 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 
 			if (_data.size === false) {
-				const downloadLog = document.querySelector("#download_log");
+				const downloadLog : HTMLElement = document.querySelector("#download_log");
 				if (downloadLog) downloadLog.style.display = "none";
 			} else {
-				const downloadLog = document.querySelector("#download_log");
+				const downloadLog : HTMLElement = document.querySelector("#download_log");
 				if (downloadLog) {
 					downloadLog.style.display = "block";
 					downloadLog.setAttribute("title", egw(window).lang('Size') + _data.size);
@@ -56,13 +65,13 @@ document.addEventListener('DOMContentLoaded', function() {
 			}
 
 			if (_data.writable === false) {
-				const purgeLog = document.querySelector("#purge_log");
-				const emptyLog = document.querySelector("#empty_log");
+				const purgeLog : HTMLElement = document.querySelector("#purge_log");
+				const emptyLog : HTMLElement = document.querySelector("#empty_log");
 				if (purgeLog) purgeLog.style.display = "none";
 				if (emptyLog) emptyLog.style.display = "none";
 			} else {
-				const purgeLog = document.querySelector("#purge_log");
-				const emptyLog = document.querySelector("#empty_log");
+				const purgeLog : HTMLElement = document.querySelector("#purge_log");
+				const emptyLog : HTMLElement = document.querySelector("#empty_log");
 				if (purgeLog) purgeLog.style.display = "block";
 				if (emptyLog) emptyLog.style.display = "block";
 			}
@@ -72,17 +81,17 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 
 	function resize_log() {
-		const log = document.querySelector("#log");
+		const log : HTMLElement = document.querySelector("#log");
 		if (log) {
 			log.style.width = (egw_getWindowInnerWidth() - egw_getWindowInnerWidth() * 0.02) + "px";
 			log.style.height = (egw_getWindowInnerHeight() * 0.92) + "px";
 		}
 	}
 
-	const clearLogBtn = document.querySelector('et2-button[id^="clear_log"]');
-	const purgeLogBtn = document.querySelector('et2-button[id^="purge_log"]');
-	const emptyLogBtn = document.querySelector('et2-button[id^="empty_log"]');
-	const downloadLogBtn = document.querySelector('et2-button[id^="download_log"]');
+	const clearLogBtn : any = document.querySelector('et2-button[id^="clear_log"]');
+	const purgeLogBtn : any = document.querySelector('et2-button[id^="purge_log"]');
+	const emptyLogBtn : any = document.querySelector('et2-button[id^="empty_log"]');
+	const downloadLogBtn : any = document.querySelector('et2-button[id^="download_log"]');
 
 	if (clearLogBtn) clearLogBtn.onclick = function () { button_log(this.id); };
 	if (purgeLogBtn) purgeLogBtn.onclick = function () { button_log(this.id); };

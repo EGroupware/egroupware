@@ -93,7 +93,7 @@ export async function createEgwTailEnv(options : {filename? : string} = {}) : Pr
 	});
 	doc.head.appendChild(importMap);
 
-	await loadScript(doc, '/api/js/jsapi/egw_tail.js', 'module');
+	await loadScript(doc, '/api/js/jsapi/egw_tail.ts', 'module');
 
 	env.fireDomContentLoaded = () =>
 	{
