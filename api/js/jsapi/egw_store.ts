@@ -73,103 +73,78 @@ declare global
 /**
  * Store is a wrapper around browser based, persistant storage.
  *
- *
  * @see http://www.w3.org/TR/webstorage/#storage
- *
- * @param {string} _app
- * @param {DOMWindow} _wnd
  */
-egw.extend('store', egw.MODULE_GLOBAL, function(_app : string, _wnd : Window) : StoreModule
+class Store implements StoreModule
 {
-	"use strict";
-
-	var egw : any = this;
+	constructor(private _wnd : Window)
+	{
+	}
 
 	/**
 	 * Since the storage is shared across at least all applications, make
 	 * the key include some extra info.
-	 *
-	 * @param {string} application
-	 * @param {string} key
-	 * @returns {undefined}
 	 */
-	function mapKey(application : string, key : string) : string
+	private mapKey(application : string, key : string) : string
 	{
 		return application + '-' + key;
 	}
 
-	return {
-		/**
-		 * Retrieve a value from session storage
-		 *
-		 * @param {string} application Name of application, or common
-		 * @param {string} key
-		 * @returns {string}
-		 */
-		getSessionItem: function(application : string, key : string) : string {
-			key = mapKey(application, key);
-			return _wnd.sessionStorage.getItem(key);
-		},
+	/**
+	 * Retrieve a value from session storage
+	 */
+	getSessionItem = (application : string, key : string) : string =>
+	{
+		key = this.mapKey(application, key);
+		return this._wnd.sessionStorage.getItem(key);
+	}
 
-		/**
-		 * Set a value in session storage
-		 *
-		 * @param {string} application Name of application, or common
-		 * @param {string} key
-		 * @param {string} value
-		 * @returns {@exp;window@pro;sessionStorage@call;setItem}
-		 */
-		setSessionItem: function(application : string, key : string, value : string) : void {
-			key = mapKey(application, key);
-			return _wnd.sessionStorage.setItem(key, value);
-		},
+	/**
+	 * Set a value in session storage
+	 */
+	setSessionItem = (application : string, key : string, value : string) : void =>
+	{
+		key = this.mapKey(application, key);
+		return this._wnd.sessionStorage.setItem(key, value);
+	}
 
-		/**
-		 * Remove a value from session storage
-		 * @param {string} application
-		 * @param {string} key
-		 * @returns {@exp;window@pro;sessionStorage@call;removeItem}
-		 */
-		removeSessionItem: function(application : string, key : string) : void {
-			key = mapKey(application, key);
-			return _wnd.sessionStorage.removeItem(key);
-		},
+	/**
+	 * Remove a value from session storage
+	 */
+	removeSessionItem = (application : string, key : string) : void =>
+	{
+		key = this.mapKey(application, key);
+		return this._wnd.sessionStorage.removeItem(key);
+	}
 
-		/**
-		 * Set an item to localStorage
-		 *
-		 * @param {string} application an application name or a prefix
-		 * @param {string} item
-		 * @param {any} value
-		 * @returns {undefined} returns undefined
-		 */
-		setLocalStorageItem: function(application : string, item : string, value : any) : void {
-			item = mapKey (application, item);
-			return localStorage.setItem(item,value);
-		},
+	/**
+	 * Set an item to localStorage
+	 */
+	setLocalStorageItem = (application : string, item : string, value : any) : void =>
+	{
+		item = this.mapKey(application, item);
+		return localStorage.setItem(item,value);
+	}
 
-		/**
-		 * Get an item from localStorage
-		 *
-		 * @param {string} application an application name or prefix
-		 * @param {stirng} item an item name stored in localStorage
-		 * @return {string|null} reutrns requested item value otherwise null
-		 */
-		getLocalStorageItem: function(application : string, item : string) : string|null {
-			item = mapKey(application, item);
-			return localStorage.getItem(item);
-		},
+	/**
+	 * Get an item from localStorage
+	 *
+	 * @return reutrns requested item value otherwise null
+	 */
+	getLocalStorageItem = (application : string, item : string) : string|null =>
+	{
+		item = this.mapKey(application, item);
+		return localStorage.getItem(item);
+	}
 
-		/**
-		 * Remove an item from localStorage
-		 *
-		 * @param {string} application application name or prefix
-		 * @param {string} item an item name to remove
-		 * @return {undefined} returns undefined
-		 */
-		removeLocalStorageItem: function (application : string, item : string) : void {
-			item = mapKey(application, item);
-			return localStorage.removeItem(item);
-		}
-	};
-});
+	/**
+	 * Remove an item from localStorage
+	 */
+	removeLocalStorageItem = (application : string, item : string) : void =>
+	{
+		item = this.mapKey(application, item);
+		return localStorage.removeItem(item);
+	}
+}
+
+egw.extend('store', egw.MODULE_GLOBAL, (_app : string, _wnd : Window) => new Store(_wnd));
