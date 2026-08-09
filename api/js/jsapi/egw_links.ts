@@ -10,6 +10,7 @@
  */
 
 import './egw_core';
+import {deepExtend} from './egw_utils';
 
 export interface LinksModule
 {
@@ -256,7 +257,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() : LinksModule
 			if (reg && typeof _name === 'undefined')
 			{
 				// No key requested, return the whole thing
-				return this.deepExtend({}, reg);
+				return deepExtend({}, reg);
 			}
 			// some defaults (we set them directly in the registry, to do this only once)
 			if (typeof reg[_name] === 'undefined')
@@ -285,7 +286,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() : LinksModule
 				case 'undefined':
 					return false;
 				case 'object':
-					return this.deepExtend({}, reg[_name]);
+					return deepExtend({}, reg[_name]);
 			}
 			return reg[_name];
 		},
@@ -297,37 +298,20 @@ egw.extend('links', egw.MODULE_GLOBAL, function() : LinksModule
 		 *
 		 * For jQuery.extend(out, obj1, ...) use: {...out, ...obj1, ...}
 		 *
+		 * Kept here (delegating to egw_utils.ts's plain, directly-importable
+		 * deepExtend()) purely for external callers already using
+		 * egw.deepExtend(...)/this.deepExtend(...) (e.g. mail/js/app.ts,
+		 * Et2Favorites/Favorite.ts) - new code should `import {deepExtend}
+		 * from './egw_utils'` directly instead, so it doesn't need the
+		 * 'links' module registered first just to deep-clone an object.
+		 *
 		 * @param {object} out
 		 * @param {Array<any>} arguments_
 		 * @return {{}|*}
 		 */
-		deepExtend: function (this : any, out : any, ...arguments_ : any[]) : any
+		deepExtend: function (out : any, ...arguments_ : any[]) : any
 		{
-			if (!out) {
-				return {};
-			}
-
-			for (const obj of arguments_) {
-				if (!obj) {
-					continue;
-				}
-
-				for (const [key, value] of Object.entries(obj)) {
-					switch (Object.prototype.toString.call(value)) {
-						case '[object Object]':
-							out[key] = out[key] || {};
-							out[key] = this.deepExtend(out[key], value);
-							break;
-						case '[object Array]':
-							out[key] = this.deepExtend(new Array((<any>value).length), value);
-							break;
-						default:
-							out[key] = value;
-					}
-				}
-			}
-
-			return out;
+			return deepExtend(out, ...arguments_);
 		},
 
 		/**
@@ -507,12 +491,12 @@ egw.extend('links', egw.MODULE_GLOBAL, function() : LinksModule
 				// guard against (unnecessary) overwriting the link-registry e.g. with partial data
 				if (typeof link_registry === 'undefined')
 				{
-					link_registry = _need_clone ? this.deepExtend( {}, _registry) : _registry;
+					link_registry = _need_clone ? deepExtend({}, _registry) : _registry;
 				}
 			}
 			else
 			{
-				link_registry[_app] = _need_clone ? this.deepExtend({}, _registry) : _registry;
+				link_registry[_app] = _need_clone ? deepExtend({}, _registry) : _registry;
 			}
 		},
 
@@ -555,7 +539,7 @@ egw.extend('links', egw.MODULE_GLOBAL, function() : LinksModule
 			const othervars = url_othervars[1];
 			if (_extravars && typeof _extravars == 'object')
 			{
-				this.deepExtend(vars, _extravars);
+				deepExtend(vars, _extravars);
 				_extravars = othervars;
 			}
 			else

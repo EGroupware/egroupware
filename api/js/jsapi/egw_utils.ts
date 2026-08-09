@@ -149,6 +149,51 @@ declare global
 	}
 }
 
+/**
+ * jQuery.extend(true, ...) alternative - deep-merges arguments_ into out
+ *
+ * Do NOT specify true as first parameter!
+ *
+ * For jQuery.extend(out, obj1, ...) (a SHALLOW merge) use: {...out, ...obj1, ...}
+ * instead - this one is deep-merge only.
+ *
+ * A plain, directly-importable function (not a class method reached via
+ * `this.deepExtend(...)`/`egw.deepExtend(...)`) so any module can deep-clone
+ * without depending on some OTHER module being registered first - egw_links.ts
+ * used to be the only place this lived, so anything wanting it had to wait on
+ * the 'links' module. egw_links.ts's own public deepExtend() (kept for
+ * external callers, e.g. mail/js/app.ts, Favorite.ts, that already call
+ * egw.deepExtend(...)) delegates to this.
+ */
+export function deepExtend(out : any, ...arguments_ : any[]) : any
+{
+	if (!out) {
+		return {};
+	}
+
+	for (const obj of arguments_) {
+		if (!obj) {
+			continue;
+		}
+
+		for (const [key, value] of Object.entries(obj)) {
+			switch (Object.prototype.toString.call(value)) {
+				case '[object Object]':
+					out[key] = out[key] || {};
+					out[key] = deepExtend(out[key], value);
+					break;
+				case '[object Array]':
+					out[key] = deepExtend(new Array((<any>value).length), value);
+					break;
+				default:
+					out[key] = value;
+			}
+		}
+	}
+
+	return out;
+}
+
 function json_escape_string(input : string) : string
 {
 	var len = input.length;
