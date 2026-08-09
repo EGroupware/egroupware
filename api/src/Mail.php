@@ -2941,6 +2941,82 @@ class Mail
 	}
 
 	/**
+	 * JMAP-native inline-image (cid:) attachment fetch for getAttachmentByCID() - matches JMAP's
+	 * flat Email.attachments listing (which already carries 'cid'/'name'/'type', RFC 8621) using
+	 * the exact same fuzzy cid/name matching (incl. the image-type-only restriction on the cid
+	 * branch - a quirk of the classic bodyStructure-walking method's condition, replicated as-is,
+	 * not "fixed") as the classic method it replaces. A sub-part-scoped request ($_part non-empty -
+	 * used by Mail::get_mailcontent()'s embedded-attachment fallback, reached only when
+	 * getAttachment() itself already bailed) stays classic, same bail rule as every other jmap*
+	 * method here.
+	 *
+	 * @return Horde_Mime_Part|false|null null = not applicable, use classic; false = no match
+	 *  found (matches classic's own not-found contract)
+	 */
+	private function jmapGetAttachmentByCID($_uid, $_cid, $_part, $_stream)
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || !empty($_part) || empty($_cid) ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$attachments = $jmap->emailGet($ids[0], ['attachments'], false)['attachments'] ?? [];
+			$match = null;
+			foreach ($attachments as $attachment)
+			{
+				$cid = $attachment['cid'] ?? '';
+				$name = $attachment['name'] ?? '';
+				$type = $attachment['type'] ?? '';
+				$cidMatch = $cid !== '' && !strncasecmp($type, 'image/', 6) &&
+					(strpos($cid, $_cid) !== false || strpos($_cid, $cid) !== false);
+				$nameMatch = $name !== '' && (strpos($name, $_cid) !== false || strpos($_cid, $name) !== false);
+				if ($cidMatch || $nameMatch)
+				{
+					$match = $attachment;
+					break;
+				}
+			}
+			if ($match === null)
+			{
+				return false;
+			}
+			if (isset($_stream) && empty($match['blobId']))
+			{
+				return null;	// content was requested but JMAP can't supply it - let classic try
+			}
+			$name = $match['name'] ?: '';
+			if ($name === '')
+			{
+				$ext = MimeMagic::mime2ext($match['type'] ?? 'application/octet-stream');
+				$name = (!empty($match['cid']) ? trim($match['cid'], '<>') :
+					lang('unknown').'_Part'.$match['partId']).($ext ? '.'.$ext : '');
+			}
+			$type = $match['type'] ?: 'application/octet-stream';
+			$part = new Horde_Mime_Part();
+			$part->setType($type);
+			$part->setDispositionParameter('filename', $name);
+			$part->setDisposition($match['disposition'] ?: 'inline');
+			if (isset($_stream))
+			{
+				$part->setContents($jmap->downloadBlob($match['blobId'], $name, $type), ['encoding' => '8bit']);
+			}
+			if ($part->getType() === 'application/octet-stream')
+			{
+				$part->setType(MimeMagic::filename2mime($name));
+			}
+			return $part;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
 	 * Explicit opt-in wrapper around getSortedList() for callers that can handle opaque JMAP
 	 * Email.id strings coming back instead of real IMAP UIDs (i.e. callers that only pass the
 	 * result on to getHeaders()'s single-id mode / flagMessages() / deleteMessages(), all of
@@ -7433,11 +7509,17 @@ class Mail
 	 */
 	function getAttachmentByCID($_uid, $_cid, $_part, $_stream=null)
 	{
+		if (($jmapResult = $this->jmapGetAttachmentByCID($_uid, $_cid, $_part, $_stream)) !== null)
+		{
+			return $jmapResult;
+		}
 		// some static variables to avoid fetching the same mail multiple times
 		static $uid=null, $part=null, $structure=null;
 		//error_log(__METHOD__.' ('.__LINE__.') '.":$_uid, $_cid, $_part");
 
 		if(empty($_cid)) return false;
+
+		$_uid = $this->jmapResolveUid($_uid, $this->icServer->getCurrentMailbox());
 
 		if ($_uid != $uid || $_part != $part)
 		{
