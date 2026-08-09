@@ -9,10 +9,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
-
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
@@ -45,7 +41,7 @@ export interface CrmParams
 /**
  * UI for Addressbook
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 class AddressbookApp extends EgwApp
 {

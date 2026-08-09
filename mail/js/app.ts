@@ -38,7 +38,7 @@ import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 /**
  * UI for mail
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 export class MailApp extends EgwApp
 {

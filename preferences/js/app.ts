@@ -14,7 +14,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 /**
  * JavaScript for Preferences
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 export class PreferencesApp extends EgwApp
 {

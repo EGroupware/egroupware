@@ -8,9 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
 import '../../api/js/jsapi/egw_global';
 
 import {EgwApp} from '../../api/js/jsapi/egw_app';
@@ -25,7 +22,7 @@ import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 /**
  * UI for timesheet
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 class TimesheetApp extends EgwApp
 {

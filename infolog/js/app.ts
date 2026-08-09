@@ -8,10 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
-
 import {EgwApp} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {CRMView} from "../../addressbook/js/CRM";
@@ -27,7 +23,7 @@ import {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 /**
  * UI for Infolog
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 class InfologApp extends EgwApp
 {
@@ -781,7 +777,6 @@ class InfologApp extends EgwApp
 		}
 		this.egw.applyFunc('app.stylite.toggleEncrypt', [_event, _widget, _node]);
 	}
-
 
 	/**
 	 * OnChange callback for responsible

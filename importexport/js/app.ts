@@ -18,7 +18,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 /**
  * JS for Import/Export
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 class ImportExportApp extends EgwApp
 {

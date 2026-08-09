@@ -29,7 +29,7 @@ import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
  *
  * Uses Gridster for the grid layout
  * @see http://gridster.net
- * @augments AppJS
+ * @augments EgwApp
  */
 export class HomeApp extends EgwApp
 {

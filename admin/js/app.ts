@@ -8,10 +8,6 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-/*egw:uses
-	/api/js/jsapi/egw_app.js
- */
-
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
@@ -30,7 +26,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 /**
  * UI for Admin
  *
- * @augments AppJS
+ * @augments EgwApp
  */
 export class AdminApp extends EgwApp
 	/**
@@ -969,7 +965,6 @@ export class AdminApp extends EgwApp
 			}));
 		})
 
-
 		var dialog_options = {
 			callback: (_button_id, _value) =>
 			{
@@ -1240,7 +1235,6 @@ export class AdminApp extends EgwApp
 			img.set_src(widget.getValue());
 		}
 	}
-
 
 	/**
 	 * Add / edit an account
@@ -1664,7 +1658,6 @@ export class AdminApp extends EgwApp
 			});
 	}
 
-
 	/**
 	 * Action handler for clear credentials action
 	 *
@@ -1944,7 +1937,6 @@ export class AdminApp extends EgwApp
 		values.etemplate_exec_id = this.et2.getInstanceManager().etemplate_exec_id;
 		let users = values.users ?? [];
 		delete values.users;
-
 
 		if(users.includes("~all~"))
 		{
