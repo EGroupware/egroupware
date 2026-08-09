@@ -2644,6 +2644,212 @@ class Mail
 	}
 
 	/**
+	 * Recursively check a JMAP bodyStructure for a text/calendar part - getMessageBody()'s JMAP
+	 * path doesn't populate $calendar_part (meeting-invite detection), so it bails to the classic
+	 * path whenever one is present rather than silently dropping that feature.
+	 */
+	private function jmapHasCalendarPart(array $structure) : bool
+	{
+		if (($structure['type'] ?? null) === 'text/calendar')
+		{
+			return true;
+		}
+		foreach ($structure['subParts'] ?? [] as $sub)
+		{
+			if ($this->jmapHasCalendarPart($sub))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * JMAP-native body fetch for getMessageBody()'s plain "give me the text/html body" case -
+	 * built from Email/get's textBody/htmlBody/bodyValues (already flattened/decoded server-side
+	 * by JMAP, no need to walk bodyStructure the way the classic multipart-type-switch does).
+	 * Bails to classic for: a specific sub-part request, a caller-supplied $_structure (they
+	 * already did their own IMAP fetch), any $_htmlOptions other than the two tracker/mail_compose
+	 * actually use, a message with no text/html body at all (e.g. a bare pdf/image - the classic
+	 * path's $output_no_body echo-and-exit special case isn't replicated here), or a message
+	 * containing a text/calendar part (meeting invites stay on the classic $calendar_part path).
+	 *
+	 * @return array[]|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageBody($_uid, $_htmlOptions, $_partID, $_structure) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_structure !== null ||
+			($_partID !== null && $_partID !== '') ||
+			!in_array($_htmlOptions, ['always_display', 'only_if_no_text'], true) ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$email = $jmap->emailGet($ids[0], ['bodyStructure', 'textBody', 'htmlBody', 'bodyValues'], true);
+			if ($this->jmapHasCalendarPart($email['bodyStructure'] ?? []))
+			{
+				return null;
+			}
+			$textPart = $email['textBody'][0] ?? null;
+			$htmlPart = $email['htmlBody'][0] ?? null;
+			$preferHtml = $_htmlOptions === 'always_display';
+			$chosen = $preferHtml ? ($htmlPart ?? $textPart) : ($textPart ?? $htmlPart);
+			if ($chosen === null)
+			{
+				return null;	// no text/html body at all - let classic handle its special-case output
+			}
+			$isHtml = $chosen === $htmlPart && ($chosen['type'] ?? '') === 'text/html';
+			return [[
+				'body' => $email['bodyValues'][$chosen['partId']]['value'] ?? '',
+				'mimeType' => $isHtml ? 'text/html' : 'text/plain',
+				'charSet' => 'utf-8',
+			]];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * Detect if a JMAP attachments list contains anything requiring TNEF/winmail.dat unpacking -
+	 * getMessageAttachments()'s classic resolveTNEF logic isn't replicated here, so bail to
+	 * classic whenever one is present rather than silently returning it unpacked.
+	 */
+	private function jmapHasTnefAttachment(array $attachments) : bool
+	{
+		foreach ($attachments as $attachment)
+		{
+			if (($attachment['type'] ?? '') === 'application/ms-tnef' || !strcasecmp($attachment['name'] ?? '', 'winmail.dat'))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * JMAP-native attachment listing for getMessageAttachments() - mirrors
+	 * mail_ui::jmapAttachmentsToLegacy()'s existing mapping (Tier 1 work) almost exactly, since
+	 * JMAP's "attachments" property already gives a flat, pre-classified list - no bodyStructure
+	 * walking needed. Bails to classic for: a specific sub-part request, a caller-supplied
+	 * $_structure, $fetchTextCalendar (not implemented here), or any TNEF/winmail.dat attachment
+	 * present (see jmapHasTnefAttachment()).
+	 *
+	 * @return array|null null = not applicable, use the classic path
+	 */
+	private function jmapGetMessageAttachments($_uid, $_partID, $_structure, $fetchEmbeddedImages, $fetchTextCalendar, $resolveTNEF) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_structure !== null ||
+			($_partID !== null && $_partID !== '') || $fetchTextCalendar ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$attachments = $jmap->emailGet($ids[0], ['attachments'], false)['attachments'] ?? [];
+			if ($resolveTNEF && $this->jmapHasTnefAttachment($attachments))
+			{
+				return null;
+			}
+			$legacy = [];
+			foreach ($attachments as $attachment)
+			{
+				if (!empty($attachment['cid']) && !$fetchEmbeddedImages)
+				{
+					continue;
+				}
+				$name = $attachment['name'] ?: '';
+				if ($name === '')
+				{
+					$ext = MimeMagic::mime2ext($attachment['type'] ?? 'application/octet-stream');
+					$name = (!empty($attachment['cid']) ? trim($attachment['cid'], '<>') :
+						lang('unknown').'_Part'.$attachment['partId']).($ext ? '.'.$ext : '');
+				}
+				$entry = [
+					'uid' => $ids[0],
+					'partID' => $attachment['partId'],
+					'mimeType' => $attachment['type'] ?? 'application/octet-stream',
+					'name' => $name,
+					'size' => $attachment['size'] ?? 0,
+					'disposition' => $attachment['disposition'] ?? null,
+				];
+				if (!empty($attachment['cid']))
+				{
+					$entry['cid'] = $attachment['cid'];
+				}
+				$legacy[] = $entry;
+			}
+			return $legacy;
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
+	 * JMAP-native attachment content fetch for getAttachment()'s "array of
+	 * type/charset/filename/attachment" mode (Mail::get_mailcontent()'s actual usage, called once
+	 * per entry from jmapGetMessageAttachments()'s own listing) - object-returning mode
+	 * ($_returnPart=true) and TNEF-decode mode ($_winmail_nr set) both stay classic.
+	 *
+	 * @return array|null null = not applicable, use the classic path
+	 */
+	private function jmapGetAttachment($_uid, $_partID, $_winmail_nr, $_returnPart) : ?array
+	{
+		if (!($this->icServer instanceof Mail\Imap\Jmap) || $_returnPart || $_winmail_nr ||
+			($ids = $this->jmapMessageIds($_uid)) === null || count($ids) !== 1)
+		{
+			return null;
+		}
+		try
+		{
+			$jmap = $this->icServer->jmapClient();
+			$attachments = $jmap->emailGet($ids[0], ['attachments'], false)['attachments'] ?? [];
+			$part = null;
+			foreach ($attachments as $attachment)
+			{
+				if ((string)($attachment['partId'] ?? '') === (string)$_partID)
+				{
+					$part = $attachment;
+					break;
+				}
+			}
+			if ($part === null || empty($part['blobId']))
+			{
+				return null;
+			}
+			$name = $part['name'] ?: '';
+			if ($name === '')
+			{
+				$ext = MimeMagic::mime2ext($part['type'] ?? 'application/octet-stream');
+				$name = (!empty($part['cid']) ? trim($part['cid'], '<>') :
+					lang('unknown').'_Part'.$part['partId']).($ext ? '.'.$ext : '');
+			}
+			$type = $part['type'] ?? 'application/octet-stream';
+			return [
+				'type' => $type,
+				'charset' => $part['charset'] ?? null,
+				'filename' => $name,
+				'attachment' => $jmap->downloadBlob($part['blobId'], $name, $type),
+			];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
 	 * Explicit opt-in wrapper around getSortedList() for callers that can handle opaque JMAP
 	 * Email.id strings coming back instead of real IMAP UIDs (i.e. callers that only pass the
 	 * result on to getHeaders()'s single-id mode / flagMessages() / deleteMessages(), all of
@@ -5841,6 +6047,10 @@ class Mail
 	function getMessageBody($_uid, $_htmlOptions='', $_partID=null, ?Horde_Mime_Part $_structure=null, $_preserveSeen = false,
 	                        $_folder = '', &$calendar_part=null, ?bool $output_no_body=true)
 	{
+		if (($jmapResult = $this->jmapGetMessageBody($_uid, $_htmlOptions, $_partID, $_structure)) !== null)
+		{
+			return $jmapResult;
+		}
 		if (self::$debug) echo __METHOD__."$_uid, $_htmlOptions, $_partID<br>";
 		if($_htmlOptions != '') {
 			$this->htmlOptions = $_htmlOptions;
@@ -6672,6 +6882,10 @@ class Mail
 	 */
 	function getMessageAttachments($_uid, $_partID=null, ?Horde_Mime_Part $_structure=null, $fetchEmbeddedImages=true, $fetchTextCalendar=false, $resolveTNEF=true, $_folder='')
 	{
+		if (($jmapResult = $this->jmapGetMessageAttachments($_uid, $_partID, $_structure, $fetchEmbeddedImages, $fetchTextCalendar, $resolveTNEF)) !== null)
+		{
+			return $jmapResult;
+		}
 		if (self::$debug) error_log( __METHOD__.":$_uid, $_partID");
 		if (empty($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
 		$attachments = array();
@@ -6943,6 +7157,10 @@ class Mail
 	 */
 	function getAttachment($_uid, $_partID, $_winmail_nr=0, $_returnPart=true, $_stream=false, $_folder=null)
 	{
+		if (($jmapResult = $this->jmapGetAttachment($_uid, $_partID, $_winmail_nr, $_returnPart)) !== null)
+		{
+			return $jmapResult;
+		}
 		//error_log(__METHOD__.__LINE__."Uid:$_uid, PartId:$_partID, WinMailNr:$_winmail_nr, ReturnPart:$_returnPart, Stream:$_stream, Folder:$_folder".function_backtrace());
 		if (!isset($_folder)) $_folder = $this->sessionData['mailbox'] ?? $this->icServer->getCurrentMailbox();
 
