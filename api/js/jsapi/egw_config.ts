@@ -38,21 +38,19 @@ declare global
 	}
 }
 
-egw.extend('config', egw.MODULE_GLOBAL, function() : ConfigModule
+class Config implements ConfigModule
 {
-	"use strict";
-
 	/**
 	 * Clientside config
 	 *
 	 * @access: private, use egw.config(_name, _app="phpgwapi")
 	 */
-	var configs : {[app : string] : {[name : string] : any}} = {};
+	private configs : {[app : string] : {[name : string] : any}} = {};
 
 	/**
 	 * register our mail as mailto protocol handler (only for main-page, FF seems to pop it up constantly, if we do so in an iframe)
- 	 */
-	function install_mailto_handler()
+	 */
+	private install_mailto_handler()
 	{
 		if (document.location.href.match(/(\?|&)cd=yes(&|$)/) &&
 			!window.sessionStorage.getItem('asked-mailto-handler') &&
@@ -79,7 +77,7 @@ egw.extend('config', egw.MODULE_GLOBAL, function() : ConfigModule
 				const dialog : any = (<any>window).Et2Dialog;
 				if (typeof dialog === 'undefined')
 				{
-					window.setTimeout(install_mailto_handler.bind(this), 1000);
+					window.setTimeout(this.install_mailto_handler.bind(this), 1000);
 					return;
 				}
 				dialog.show_dialog((_button) =>
@@ -106,38 +104,37 @@ egw.extend('config', egw.MODULE_GLOBAL, function() : ConfigModule
 		}
 	}
 
-	return {
-		/**
-		 * Query clientside config
-		 *
-		 * @param {string} _name name of config variable
-		 * @param {string} _app default "phpgwapi"
-		 * @return mixed
-		 */
-		config: function (_name : string, _app? : string) : any
+	/**
+	 * Query clientside config
+	 *
+	 * @param _name name of config variable
+	 * @param _app default "phpgwapi"
+	 */
+	config = (_name : string, _app? : string) : any =>
+	{
+		if (typeof _app == 'undefined') _app = 'phpgwapi';
+
+		if (typeof this.configs[_app] == 'undefined') return null;
+
+		return this.configs[_app][_name];
+	}
+
+	/**
+	 * Set clientside configuration for all apps
+	 *
+	 * @param _configs
+	 * @param _need_clone _configs need to be cloned, as it is from different window context
+	 *	and therefore will be inaccessible in IE, after that window is closed
+	 */
+	set_configs = (_configs : object, _need_clone? : boolean) : void =>
+	{
+		this.configs = _need_clone ? (<any>jQuery).extend(true, {}, _configs) : <any>_configs;
+
+		if (this.config('install_mailto_handler') !== 'disabled')
 		{
-			if (typeof _app == 'undefined') _app = 'phpgwapi';
-
-			if (typeof configs[_app] == 'undefined') return null;
-
-			return configs[_app][_name];
-		},
-
-		/**
-		 * Set clientside configuration for all apps
-		 *
-		 * @param {object} _configs
-		 * @param {boolean} _need_clone _configs need to be cloned, as it is from different window context
-		 *	and therefore will be inaccessible in IE, after that window is closed
-		 */
-		set_configs: function(this : any, _configs : object, _need_clone? : boolean) : void
-		{
-			configs = _need_clone ? (<any>jQuery).extend(true, {}, _configs) : <any>_configs;
-
-			if (this.config('install_mailto_handler') !== 'disabled')
-			{
-				install_mailto_handler();
-			}
+			this.install_mailto_handler();
 		}
-	};
-});
+	}
+}
+
+egw.extend('config', egw.MODULE_GLOBAL, () => new Config());
