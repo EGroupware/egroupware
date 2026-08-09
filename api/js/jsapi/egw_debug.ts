@@ -85,9 +85,12 @@ class Debug implements DebugModule
 	 * Prefix for key of log-message, message number gets appended to it
 	 */
 	#LOG_PREFIX = 'log_';
+	#wnd : Window;
 
-	constructor(private _wnd : Window)
+	constructor(_wnd : Window)
 	{
+		this.#wnd = _wnd;
+
 		// bind to global error handler, only if LOCAL_LOG_LEVEL > 0
 		if (this.#LOCAL_LOG_LEVEL)
 		{
@@ -320,11 +323,11 @@ class Debug implements DebugModule
 	{
 		if (!document.getElementById('topmenu_info_error'))
 		{
-			const icon = egw(this._wnd).image_element(egw.image('dialog_error'));
+			const icon = egw(this.#wnd).image_element(egw.image('dialog_error'));
 			icon.classList.add('topmenu_info_item');
 			icon.id = 'topmenu_info_error';
 			// ToDo: tooltip
-			icon.addEventListener('click', egw(this._wnd).show_log);
+			icon.addEventListener('click', egw(this.#wnd).show_log);
 			// jQuery's .append() clones the node for every target but the last
 			// when it matches more than one; both ids are typically alternate
 			// container names for the same slot, so this rarely matters in
@@ -350,7 +353,7 @@ class Debug implements DebugModule
 	 */
 	debug = (_level : "navigation"|"log"|"info"|"warn"|"error", ...args : any[]) : void =>
 	{
-		if (typeof (<any>this._wnd).console != "undefined")
+		if (typeof (<any>this.#wnd).console != "undefined")
 		{
 			// Add in a trace
 			var stack : string;
@@ -361,27 +364,27 @@ class Debug implements DebugModule
 			}
 
 			if (_level == "log" && this.#DEBUGLEVEL >= 4 &&
-				typeof (<any>this._wnd).console.log == "function")
+				typeof (<any>this.#wnd).console.log == "function")
 			{
-				(<any>this._wnd).console.log.apply((<any>this._wnd).console, args);
+				(<any>this.#wnd).console.log.apply((<any>this.#wnd).console, args);
 			}
 
 			if (_level == "info" && this.#DEBUGLEVEL >= 3 &&
-				typeof (<any>this._wnd).console.info == "function")
+				typeof (<any>this.#wnd).console.info == "function")
 			{
-				(<any>this._wnd).console.info.apply((<any>this._wnd).console, args);
+				(<any>this.#wnd).console.info.apply((<any>this.#wnd).console, args);
 			}
 
 			if (_level == "warn" && this.#DEBUGLEVEL >= 2 &&
-				typeof (<any>this._wnd).console.warn == "function")
+				typeof (<any>this.#wnd).console.warn == "function")
 			{
-				(<any>this._wnd).console.warn.apply((<any>this._wnd).console, args);
+				(<any>this.#wnd).console.warn.apply((<any>this.#wnd).console, args);
 			}
 
 			if (_level == "error" && this.#DEBUGLEVEL >= 1 &&
-				typeof (<any>this._wnd).console.error == "function")
+				typeof (<any>this.#wnd).console.error == "function")
 			{
-				(<any>this._wnd).console.error.apply((<any>this._wnd).console, args);
+				(<any>this.#wnd).console.error.apply((<any>this.#wnd).console, args);
 			}
 
 			// remove stacktrace again, if we added one above
@@ -440,7 +443,7 @@ class Debug implements DebugModule
 			});
 			$wrapper[0].scrollTop = $wrapper[0].scrollHeight;
 		}
-		if ((<any>this._wnd).console) (<any>this._wnd).console.log(this.get_client_log());
+		if ((<any>this.#wnd).console) (<any>this.#wnd).console.log(this.get_client_log());
 	}
 }
 

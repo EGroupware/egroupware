@@ -86,8 +86,12 @@ class Tooltip implements TooltipModule
 		close: function () {}
 	};
 
-	constructor(private _wnd : Window)
+	#wnd : Window;
+
+	constructor(_wnd : Window)
 	{
+		this.#wnd = _wnd;
+
 		_wnd.addEventListener("pagehide", () =>
 		{
 			[...this.#tooltipped].forEach(node =>
@@ -139,7 +143,7 @@ class Tooltip implements TooltipModule
 			this.#x = e.clientX;
 			this.#y = e.clientY;
 			// Create the timeout for showing the timeout
-			this._wnd.setTimeout(() => {this.showTooltipTimeout(elem, e, data.options)}, this.#time_delta);
+			this.#wnd.setTimeout(() => {this.showTooltipTimeout(elem, e, data.options)}, this.#time_delta);
 		}
 
 		return false;
@@ -166,9 +170,9 @@ class Tooltip implements TooltipModule
 
 		if (self.#hide_timeout)
 		{
-			self._wnd.clearTimeout(self.#hide_timeout);
+			self.#wnd.clearTimeout(self.#hide_timeout);
 		}
-		self.#hide_timeout = self._wnd.setTimeout(() =>
+		self.#hide_timeout = self.#wnd.setTimeout(() =>
 		{
 			if (self.#current_elem == this)
 			{
@@ -220,7 +224,7 @@ class Tooltip implements TooltipModule
 			this.removeDiv();
 		}
 		//there should only be the one we removed, but just in case, remove all tooltips
-		this._wnd.document.querySelectorAll("body > .egw_tooltip").forEach(t => t.remove());
+		this.#wnd.document.querySelectorAll("body > .egw_tooltip").forEach(t => t.remove());
 	}
 
 	private setStyle(elem : HTMLElement, property : string, value : string | number)
@@ -256,8 +260,8 @@ class Tooltip implements TooltipModule
 			};
 
 			//Calculate how much space is left on each side of the rectangle
-			const window_width = this._wnd.document.documentElement.clientWidth;
-			const window_height = this._wnd.document.documentElement.clientHeight;
+			const window_width = this.#wnd.document.documentElement.clientWidth;
+			const window_height = this.#wnd.document.documentElement.clientHeight;
 			const space_left = {
 				left: (cursor_rect.left),
 				top: (cursor_rect.top),
@@ -312,7 +316,7 @@ class Tooltip implements TooltipModule
 		this.hide();
 
 		//Generate the tooltip div, set it's text and append it to the body tag
-		this.#tooltip_div = this._wnd.document.createElement('div');
+		this.#tooltip_div = this.#wnd.document.createElement('div');
 		this.setStyle(this.#tooltip_div, 'display', 'none')
 		if (_isHtml)
 		{
@@ -328,14 +332,14 @@ class Tooltip implements TooltipModule
 			this.#tooltip_div.textContent = <string>_html;
 		}
 		this.#tooltip_div.classList.add("egw_tooltip");
-		this._wnd.document.body.append(this.#tooltip_div);
+		this.#wnd.document.body.append(this.#tooltip_div);
 
 		//The tooltip should automatically hide when the mouse comes over it
 		this.#tooltip_div.addEventListener("mouseenter", () =>
 		{
 			if(this.#hide_timeout)
 			{
-				this._wnd.clearTimeout(this.#hide_timeout);
+				this.#wnd.clearTimeout(this.#hide_timeout);
 				this.#hide_timeout = null;
 			}
 			if (_options.hideonhover)
@@ -361,7 +365,7 @@ class Tooltip implements TooltipModule
 			if (this.#show_delta < this.#show_delay)
 			{
 				//Repeat the call of timeout
-				this._wnd.setTimeout(() => this.showTooltipTimeout(node, event, options), this.#time_delta);
+				this.#wnd.setTimeout(() => this.showTooltipTimeout(node, event, options), this.#time_delta);
 			} else
 			{
 				this.#show_delta = 0;

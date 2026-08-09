@@ -48,9 +48,11 @@ class Css implements CssModule
 	 */
 	#selectorCount = 0;
 	#sheet : any;
+	#wnd : Window;
 
-	constructor(private _wnd : Window)
+	constructor(_wnd : Window)
 	{
+		this.#wnd = _wnd;
 	}
 
 	/**
@@ -68,12 +70,12 @@ class Css implements CssModule
 		// Set the current index to the maximum index
 		var index = this.#sheet ? Math.min(this.#selectorCount, this.#sheet.cssRules.length) : 0;
 
-		if (!this.#sheet || !this.#sheet.ownerNode || this.#sheet.ownerNode.ownerDocument !== this._wnd.document)
+		if (!this.#sheet || !this.#sheet.ownerNode || this.#sheet.ownerNode.ownerDocument !== this.#wnd.document)
 		{
 			// Generate a style tag, which will be used to hold the newly generated css
 			// rules.
-			var style = this._wnd.document.createElement('style');
-			this._wnd.document.getElementsByTagName('head')[0].appendChild(style);
+			var style = this.#wnd.document.createElement('style');
+			this.#wnd.document.getElementsByTagName('head')[0].appendChild(style);
 
 			// Obtain the reference to the styleSheet object of the generated style tag
 			this.#sheet = style.sheet ? style.sheet : (<any>style).styleSheet;

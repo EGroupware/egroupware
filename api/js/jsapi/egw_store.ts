@@ -77,8 +77,11 @@ declare global
  */
 class Store implements StoreModule
 {
-	constructor(private _wnd : Window)
+	#wnd : Window;
+
+	constructor(_wnd : Window)
 	{
+		this.#wnd = _wnd;
 	}
 
 	/**
@@ -96,7 +99,7 @@ class Store implements StoreModule
 	getSessionItem = (application : string, key : string) : string =>
 	{
 		key = this.mapKey(application, key);
-		return this._wnd.sessionStorage.getItem(key);
+		return this.#wnd.sessionStorage.getItem(key);
 	}
 
 	/**
@@ -105,7 +108,7 @@ class Store implements StoreModule
 	setSessionItem = (application : string, key : string, value : string) : void =>
 	{
 		key = this.mapKey(application, key);
-		return this._wnd.sessionStorage.setItem(key, value);
+		return this.#wnd.sessionStorage.setItem(key, value);
 	}
 
 	/**
@@ -114,7 +117,7 @@ class Store implements StoreModule
 	removeSessionItem = (application : string, key : string) : void =>
 	{
 		key = this.mapKey(application, key);
-		return this._wnd.sessionStorage.removeItem(key);
+		return this.#wnd.sessionStorage.removeItem(key);
 	}
 
 	/**
