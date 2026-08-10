@@ -511,6 +511,78 @@ describe("Et2NextmatchDataProvider core behavior", () =>
 
 	/**
 	 * Contract under test:
+	 * - A row confirmed to exist by refresh() must get a keep-alive dataRegisterUID() listener,
+	 *   same as a row from a normal page fetch (storeRows()) - otherwise its central egw-cache
+	 *   entry has no registered listener and is evicted by that cache's 5-minute idle cleanup
+	 *   sweep. A row added via a push held back while the grid wasn't visible (Et2Datagrid's
+	 *   virtualizer renders nothing while hidden) can easily go unrendered that long, and would
+	 *   then render with no data at all (bare avatar, blank subject/date) once it finally is -
+	 *   this is the mechanism, not just a render-timing quirk.
+	 *
+	 * Setup strategy:
+	 * - Refresh a row that resolves successfully (cache has data, total confirms existence).
+	 * - Capture every dataRegisterUID() call.
+	 *
+	 * Pass criteria:
+	 * - dataRegisterUID() is called exactly once for the refreshed row's normalized uid.
+	 * - A second refresh of the same row does not register a duplicate listener.
+	 */
+	it("registers a keep-alive listener for a row confirmed by refresh", async() =>
+	{
+		const registered : string[] = [];
+		const host = createProviderHost({
+			id: "nm-refresh-keepalive",
+			getInstanceManager: () => ({etemplate_exec_id: "exec-1", app: "mail"}),
+			egw: () => ({
+				app_name: "mail",
+				dataGetUIDdata: (uid : string) => ({timestamp: Date.now(), data: {uid, subject: "Pushed row"}}),
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					callback({rows: {}, total: 1});
+				},
+				dataRegisterUID: (uid : string) => registered.push(uid)
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		await provider.refresh(["501::14::SU5CT1g=::872"], "add");
+		await provider.refresh(["501::14::SU5CT1g=::872"], "add");
+
+		assert.deepEqual(registered, ["mail::501::14::SU5CT1g=::872"],
+			"the refreshed row must get exactly one keep-alive registration, not one per refresh");
+	});
+
+	/**
+	 * Contract under test:
+	 * - A refresh confirming the row does NOT exist (removal) must not register a keep-alive
+	 *   listener for it - there is nothing to keep alive, and doing so would leak a listener for
+	 *   a row id that will never be cleaned up by normal means.
+	 */
+	it("does not register a keep-alive listener when refresh reports the row removed", async() =>
+	{
+		const registered : string[] = [];
+		const host = createProviderHost({
+			id: "nm-refresh-keepalive-removed",
+			getInstanceManager: () => ({etemplate_exec_id: "exec-1", app: "mail"}),
+			egw: () => ({
+				app_name: "mail",
+				dataGetUIDdata: () => null,
+				dataFetch: (_execId, _request, _filters, _widgetId, callback) =>
+				{
+					callback({rows: {}, total: 0});
+				},
+				dataRegisterUID: (uid : string) => registered.push(uid)
+			})
+		});
+
+		const provider = new Et2NextmatchDataProvider(host);
+		await provider.refresh(["501::14::SU5CT1g=::872"], "add");
+
+		assert.deepEqual(registered, [], "a removed/non-existent row must not get a keep-alive registration");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Refresh forwards each CRUD-like update type to `dataFetch()` and returns cached row data when the row exists.
 	 *
 	 * Setup strategy:

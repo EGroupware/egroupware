@@ -15,7 +15,11 @@ import {IegwData} from "../../jsapi/egw_global";
 export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 {
 	private host : Et2Nextmatch;
-	/** No-op UID listeners retained only while preloaded rows belong to this query. */
+	/**
+	 * No-op UID listeners keeping a row's central egw-cache entry alive (immune to its 5min
+	 * idle eviction) for as long as the row belongs to this query - covers both preloaded rows
+	 * (storeRows()) and rows added/updated via a single-row refresh (_refreshSingleRow()).
+	 */
 	private _initialRowRegistrations : Map<string, Function> = new Map();
 	/** Tracks one in-flight refresh promise per normalized row id so concurrent callers share one server request. */
 	private _inFlightRefreshes : Map<string, Promise<Et2DatagridRefreshResult>> = new Map();
@@ -107,7 +111,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		this.host = host;
 	}
 
-	/** Release the UID listeners used to retain preloaded rows for this query. */
+	/** Release the UID listeners used to retain this query's rows (preloaded or refreshed-in). */
 	clearInitialRowRegistrations() : void
 	{
 		const egw = this.host.egw();
@@ -432,6 +436,24 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 						// Row payload is already stored in the central egw cache by dataFetch().
 						const refreshedRow = this._cachedRow(normalizedId);
 						const rowExists = typeof response?.total === "number" ? response.total >= 1 : !!refreshedRow;
+						if(rowExists && refreshedRow && !this._initialRowRegistrations.has(normalizedId))
+						{
+							// Unlike a normal page fetch (fetchPage(), which registers a keep-alive
+							// listener per row via egw.dataRegisterUID() - see storeRows()), this path
+							// only ever calls egw.dataStoreUID() once, indirectly, inside dataFetch()'s
+							// response parsing. Without a registered listener, the central egw cache's
+							// periodic cleanup sweep (api/js/jsapi/egw_data.ts, 5min idle/no-listener)
+							// evicts the row after 5 minutes - harmless while it's still displayed and
+							// gets refreshed again, but a row added/updated via a push held back while
+							// this grid wasn't visible (see Et2Datagrid's virtualizer, which renders
+							// nothing while hidden) can easily sit that long before ever being rendered,
+							// so it would render with no data (bare avatar, blank subject/date) the
+							// first time it finally does. Give it the same keep-alive registration as
+							// any other row so its data survives until actually rendered.
+							const keepAlive = () => {};
+							this._initialRowRegistrations.set(normalizedId, keepAlive);
+							this.host.egw().dataRegisterUID?.(normalizedId, keepAlive, this.host, execId, widgetId);
+						}
 						resolve(rowExists && refreshedRow ? {
 							rows: [refreshedRow],
 							removedRowIds: []
