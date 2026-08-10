@@ -450,7 +450,7 @@ export class et2_nextmatch_controller extends et2_dataview_controller implements
 
 				// Link the entries
 				self.egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
-					dropped.id.split('::').concat([links]),
+					dropped.id.split('::').concat([links, self._widget.getInstanceManager().etemplate_exec_id]),
 					function(result) {
 						if(result)
 						{

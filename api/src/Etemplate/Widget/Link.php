@@ -98,6 +98,16 @@ class Link extends Etemplate\Widget
 				$value[] = $link;
 			}
 		}
+
+		// Record that the user was given edit-access to this app/id in the current request, so the
+		// ajax_delete/ajax_link/ajax_link_comment methods can trust that decision (made here via the
+		// widget's readonly state, which apps set eg. from their own Acl::EDIT check) instead of having
+		// to re-derive edit-rights themselves, which is unreliable for apps without a 'file_access' hook.
+		if (is_array($value) && !empty($value['to_app']) && !empty($value['to_id']) && !is_array($value['to_id']) &&
+			!$this->is_readonly($cname, $form_name))
+		{
+			self::$request->allowLinkEdit($value['to_app'], $value['to_id']);
+		}
 	}
 
 	/**
@@ -171,10 +181,55 @@ class Link extends Etemplate\Widget
 	}
 
 	/**
-	 * Create links
+	 * Check the caller may create/delete/comment a link between the two given endpoints
+	 *
+	 * As links are symmetric, edit-rights on either ONE of the two endpoints are sufficient
+	 * (no need to also check read-rights on the other, the link-system already deals with links
+	 * to entries a user can not see).
+	 *
+	 * First trusts an edit-access decision already recorded for the current request by
+	 * beforeSendToClient() (set from the app's own readonly/Acl::EDIT check, which is the only
+	 * reliable source for apps without a 'file_access' hook). Only if that's not available (no or
+	 * unknown/stale $etemplate_exec_id, or neither endpoint whitelisted in it) does it fall back to
+	 * a real Api\Link::file_access() check.
+	 *
+	 * @param string $app1
+	 * @param string|int $id1
+	 * @param string $app2 =''
+	 * @param string|int $id2 =''
+	 * @param string $etemplate_exec_id =null
+	 * @return bool
 	 */
-	public static function ajax_link($app, $id, Array $links)
+	private static function checkLinkAccess($app1, $id1, $app2='', $id2='', $etemplate_exec_id=null)
 	{
+		if ($etemplate_exec_id && ($request = Api\Etemplate\Request::read($etemplate_exec_id, false)))
+		{
+			if ($app1 && $id1 && $request->isLinkEditAllowed($app1, $id1) ||
+				$app2 && $id2 && $request->isLinkEditAllowed($app2, $id2))
+			{
+				return true;
+			}
+		}
+		return $app1 && $id1 && Api\Link::file_access($app1, $id1, Api\Acl::EDIT) ||
+			$app2 && $id2 && Api\Link::file_access($app2, $id2, Api\Acl::EDIT);
+	}
+
+	/**
+	 * Create links
+	 *
+	 * @param string $app
+	 * @param string|int|array $id
+	 * @param array $links
+	 * @param string $etemplate_exec_id =null exec-id of the calling eTemplate, to verify edit-rights
+	 * @throws Api\Exception\NoPermission if the user has no edit-rights on $app/$id
+	 */
+	public static function ajax_link($app, $id, Array $links, $etemplate_exec_id=null)
+	{
+		// $id is an array only for a not-yet-saved entry, nothing is written to the DB in that case
+		if (!is_array($id) && !self::checkLinkAccess($app, $id, '', '', $etemplate_exec_id))
+		{
+			throw new Api\Exception\NoPermission();
+		}
 		// Files need to know full path in tmp directory
 		foreach($links as $key => $link) {
 			if($link['app'] == Api\Link::VFS_APPNAME) {
@@ -255,12 +310,22 @@ class Link extends Etemplate\Widget
 
 	/**
 	 * Allow changing of comment after link is created
+	 *
+	 * @param int $link_id
+	 * @param string $comment
+	 * @param string $etemplate_exec_id =null exec-id of the calling eTemplate, to verify edit-rights
+	 * @throws Api\Exception\NoPermission if the user has no edit-rights on either endpoint of the link
 	 */
-	public static function ajax_link_comment($link_id, $comment)
+	public static function ajax_link_comment($link_id, $comment, $etemplate_exec_id=null)
 	{
 		$result = false;
 		if((int)$link_id > 0)
 		{
+			$link = Api\Link::get_link((int)$link_id);
+			if (!$link || !self::checkLinkAccess($link['link_app1'], $link['link_id1'], $link['link_app2'], $link['link_id2'], $etemplate_exec_id))
+			{
+				throw new Api\Exception\NoPermission();
+			}
 			Api\Link::update_remark((int)$link_id, $comment);
 			$result = true;
 		}
@@ -383,14 +448,26 @@ class Link extends Etemplate\Widget
 	 * Delete a link specified by its link_id
 	 *
 	 * @param int $value link_id to delete
+	 * @param string $etemplate_exec_id =null exec-id of the calling eTemplate, to verify edit-rights
 	 * @return void
 	 * @throws Api\Json\Exception|InvalidArgumentException
+	 * @throws Api\Exception\NoPermission if the user has no edit-rights on either endpoint of the link
 	 */
-	public static function ajax_delete(int $value)
+	public static function ajax_delete(int $value, $etemplate_exec_id=null)
 	{
 		if (!$value)
 		{
 			throw new InvalidArgumentException();
+		}
+		// negative link_id's are VFS file-attachments: already ACL-checked via the links:// stream-wrapper
+		// backing the /apps VFS mount (Vfs\Links\StreamWrapper::check_extended_acl() -> Api\Link::file_access())
+		if ($value > 0)
+		{
+			$link = Api\Link::get_link($value);
+			if (!$link || !self::checkLinkAccess($link['link_app1'], $link['link_id1'], $link['link_app2'], $link['link_id2'], $etemplate_exec_id))
+			{
+				throw new Api\Exception\NoPermission();
+			}
 		}
 		$response = Api\Json\Response::get();
 		$response->data(Api\Link::unlink($value));

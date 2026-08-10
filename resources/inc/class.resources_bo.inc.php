@@ -306,6 +306,25 @@ class resources_bo
 	}
 
 	/**
+	 * Check current user's access to files/links attached to resource $id
+	 *
+	 * Used as 'file_access' hook by the linking system, see Api\Link::file_access()
+	 *
+	 * @param int $id res_id
+	 * @param int $check =Acl::READ Acl::READ or Acl::EDIT
+	 * @param string $rel_path =null not used
+	 * @return bool
+	 */
+	function file_access($id, $check=Acl::READ, $rel_path=null)
+	{
+		if (!($cat_id = $this->so->get_value('cat_id', $id)))
+		{
+			return false;
+		}
+		return $this->acl->is_permitted($cat_id, $check);
+	}
+
+	/**
 	 * saves a resource. pictures are saved in vfs
 	 *
 	 * Cornelius Weiss <egw@von-und-zu-weiss.de>

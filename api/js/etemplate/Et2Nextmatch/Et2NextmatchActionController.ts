@@ -1668,7 +1668,7 @@ export class Et2NextmatchActionController
 				}
 				this.host.egw().json(
 					"EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
-					dropped.id.split("::").concat([links]),
+					dropped.id.split("::").concat([links, this.host.getInstanceManager().etemplate_exec_id]),
 					(result) =>
 					{
 						if(!result)

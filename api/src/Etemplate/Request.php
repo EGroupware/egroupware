@@ -406,6 +406,35 @@ class Request
 	}
 
 	/**
+	 * Record that $app/$id was rendered with edit-rights in this request
+	 *
+	 * Used by the link-widget to let its ajax_* methods trust an already-made
+	 * ACL decision (eg. an app's own Acl::EDIT check that set readonlys), instead
+	 * of re-deriving edit-rights themselves via the often-too-permissive
+	 * Api\Link::file_access() fallback for apps not implementing 'file_access'.
+	 *
+	 * @param string $app
+	 * @param string|int $id
+	 */
+	public function allowLinkEdit($app, $id)
+	{
+		$this->data['link_edit_allowed'][$app][(string)$id] = true;
+		$this->data_modified = true;
+	}
+
+	/**
+	 * Check whether $app/$id was recorded as edit-allowed via allowLinkEdit()
+	 *
+	 * @param string $app
+	 * @param string|int $id
+	 * @return bool
+	 */
+	public function isLinkEditAllowed($app, $id)
+	{
+		return !empty($this->data['link_edit_allowed'][$app][(string)$id]);
+	}
+
+	/**
 	 * creates a new unique request-id
 	 *
 	 * @return string

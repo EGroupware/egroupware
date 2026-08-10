@@ -1460,7 +1460,7 @@ export class et2_calendar_timegrid extends et2_calendar_view implements et2_IDet
 				{
 					// Link the entries
 					egw.json(self.egw().getAppName()+".etemplate_widget_link.ajax_link.etemplate",
-						target.id.split('::').concat([links]),
+						target.id.split('::').concat([links, self.getInstanceManager().etemplate_exec_id]),
 						function(result) {
 							if(result)
 							{

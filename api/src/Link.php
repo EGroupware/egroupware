@@ -1841,7 +1841,10 @@ class Link extends Link\Storage
 			}
 			else
 			{
-				$ret = $cache |= self::title($app,$id) ? Acl::READ|Acl::EDIT : 0;
+				// no 'file_access' hook registered: title() only proves read-access, NOT edit-rights,
+				// so do NOT grant Acl::EDIT here (legitimate in-app edit flows are covered separately,
+				// via the etemplate-request based whitelist in Etemplate\Widget\Link::checkLinkAccess())
+				$ret = $cache |= self::title($app,$id) ? Acl::READ : 0;
 			}
 			//error_log(__METHOD__."($app,$id,$required,$rel_path) got $ret --> ".($ret & $required ? 'true' : 'false'));
 		}
