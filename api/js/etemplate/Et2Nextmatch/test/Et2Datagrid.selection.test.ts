@@ -305,4 +305,56 @@ describe("Et2Datagrid row selection", () =>
 			"addressbook::row-0", "addressbook::row-1", "addressbook::row-2", "addressbook::row-3"
 		], "deleted row should no longer be displayed");
 	});
+
+	/**
+	 * Contract: deleting the currently selected/previewed row must notify listeners
+	 * that the selection changed, not just silently drop it from internal state -
+	 * otherwise an `onselect`-driven preview pane (e.g. mail's) never re-runs and
+	 * keeps showing the just-deleted row's content.
+	 *
+	 * Setup: select one row, then delete it via `refresh(..., "delete")`.
+	 *
+	 * Pass: an `et2-selection-changed` event fires with the row excluded from
+	 * `selectedRowIds`.
+	 */
+	it("emits a selection-changed event when the selected row is deleted", async() =>
+	{
+		const rows = Array.from({length: 3}, (_value, index) => ({id: `addressbook::row-${index}`, label: `Row ${index}`}));
+		const grid = createDatagrid(rows);
+		grid.setInitialRows(rows);
+		grid.total = rows.length;
+		grid.selectSingleRow("addressbook::row-1");
+
+		let detail : any = null;
+		grid.addEventListener("et2-selection-changed", (event : Event) => detail = (event as CustomEvent).detail);
+
+		await grid.refresh(["row-1"], "delete");
+
+		assert.isNotNull(detail, "deleting the selected row should emit et2-selection-changed");
+		assert.notInclude(detail.selectedRowIds, "addressbook::row-1", "deleted row should no longer be selected");
+	});
+
+	/**
+	 * Contract: deleting rows that are neither selected nor active must not emit a
+	 * spurious selection-changed event - the selection genuinely didn't change.
+	 *
+	 * Setup: select row-0, delete the unrelated row-2.
+	 *
+	 * Pass: no `et2-selection-changed` event fires.
+	 */
+	it("does not emit selection-changed when an unselected row is deleted", async() =>
+	{
+		const rows = Array.from({length: 3}, (_value, index) => ({id: `addressbook::row-${index}`, label: `Row ${index}`}));
+		const grid = createDatagrid(rows);
+		grid.setInitialRows(rows);
+		grid.total = rows.length;
+		grid.selectSingleRow("addressbook::row-0");
+
+		let fired = false;
+		grid.addEventListener("et2-selection-changed", () => fired = true);
+
+		await grid.refresh(["row-2"], "delete");
+
+		assert.isFalse(fired, "deleting an unrelated row should not emit a selection-changed event");
+	});
 });

@@ -2808,9 +2808,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 
+		// Capture the query this request was issued for. There is no cancellation/abort path
+		// for the underlying provider request itself (e.g. a JMAP/shim get_rows call), so a
+		// response that arrives after the query has since changed (the user switched mail
+		// folders, or any other filter change, while this fetch was still in flight) must be
+		// detected and discarded here instead of being merged into what is by then a
+		// different query's grid.
+		const dispatchQuerySignature = this.dataProvider?.getQuerySignature?.() || "";
+		let stale = false;
+
 		try
 		{
 			const response = await this.dataProvider.fetchPage(start, requestedCount || this.pageSize);
+			stale = (this.dataProvider?.getQuerySignature?.() || "") !== dispatchQuerySignature;
+			if(stale)
+			{
+				return;
+			}
 			this.fetchFailed = false;
 			this.fetchErrorMessage = "";
 			this._hasFetchedOnce = true;
@@ -2847,7 +2861,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			if(requestKey)
 			{
-				if(!this.fetchFailed)
+				// A discarded stale response must NOT be marked completed - it never
+				// contributed rows to the (now current) query, so a later request for the
+				// same requestKey (e.g. switching back to this folder) must still fetch it.
+				if(!this.fetchFailed && !stale)
 				{
 					this._completedRequestKeys.add(requestKey);
 				}
@@ -6099,10 +6116,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			// Delete is the one case we can satisfy entirely client-side.
 			const deletedRowIds = this._normalizeRefreshRowIds(row_ids);
 			const neighbours = this.getNeighbours(deletedRowIds);
+			// _removeRowsById() silently drops removed ids from selectedRowIds without
+			// telling anyone - capture whether a selected/active row is being removed so
+			// listeners (e.g. mail's onselect-driven preview pane) can be notified below.
+			const selectionAffected = deletedRowIds.some((id) => this.selectedRowIds.has(id) || id === this.activeRowId);
 			if(this._removeRowsById(deletedRowIds) > 0)
 			{
 				this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
 				this._finalizeRefreshedRows();
+				if(selectionAffected)
+				{
+					this._emitSelectionChanged();
+				}
 				this.dispatchEvent(new CustomEvent("et2-rows-deleted", {
 					detail: {
 						rowIds: deletedRowIds,

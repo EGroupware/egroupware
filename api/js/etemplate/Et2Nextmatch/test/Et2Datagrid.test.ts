@@ -2244,6 +2244,45 @@ describe("Et2Datagrid row rendering", () =>
 		assert.equal(el.rows[0].data.label, "Just modified", "row data should be refreshed as well as moved");
 		assert.equal(el.total, 2, "total should not change - the row was already counted, just moved");
 	});
+
+	/**
+	 * Contract: there is no cancellation/abort path for the underlying provider request
+	 * (e.g. mail's JMAP/shim get_rows fetch), so a page fetch that resolves after the query
+	 * has since changed - e.g. the user switched folders while a slow fetch was still in
+	 * flight - must be discarded instead of writing the old query's rows into what is by
+	 * then a different query's grid.
+	 * Setup: dispatch a fetchPage() whose resolution is held open; change the provider's
+	 * query signature (simulating a folder switch) before letting it resolve.
+	 * Pass: the resolved rows/total are not applied, and the request is not marked
+	 * completed (so revisiting the original query later still re-fetches it).
+	 */
+	it("discards a fetchPage response that resolves after the query changed", async() =>
+	{
+		const el = createDatagrid();
+		el.columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		el.templateData = {columns: el.columns} as any;
+		let querySignature = "folder-a";
+		let resolveFetch : (value : any) => void;
+		const fetchPromise = new Promise((resolve) => { resolveFetch = resolve; });
+		el.dataProvider = createDatagridDataProvider({
+			fetchPage: async() => fetchPromise,
+			getQuerySignature: () => querySignature
+		}) as any;
+
+		const requestKey = "0:10:folder-a";
+		const pending = (el as any)._fetchPage(0, 10, requestKey);
+		// Simulate switching folders while the request above is still in flight.
+		querySignature = "folder-b";
+		resolveFetch!({rows: [{id: "addressbook::row-0", data: {label: "Stale row"}}], total: 1});
+		await pending;
+
+		assert.deepEqual(el.rows, [], "a stale response for the old query must not populate the new query's rows");
+		assert.isNull(el.total, "a stale response must not set total for the new query");
+		assert.isFalse(
+			(el as any)._completedRequestKeys.has(requestKey),
+			"a discarded stale response must not be marked completed, so the original query re-fetches if revisited"
+		);
+	});
 });
 
 describe("Et2Datagrid keyboard navigation", () =>
