@@ -143,6 +143,7 @@ show a quantity sum (eg. to sum up negative overtime)	admin	de	Zeige eine Mengen
 skip record	timesheet	de	Eintrag überspringen
 start	timesheet	de	Start
 start & stop timer	common	de	Zeitnehmer starten & stoppen
+start time is after last timesheet	timesheet	de	Startzeit ergibt sich aus dem letzten Stundenzettel
 start timer	common	de	Zeitnehmer starten
 start-time can not be before last stop- or pause-time %1!	common	de	Start-Zeit kann nicht vor der letzen Stop- oder Pausen-Zeit %1 liegen!
 starttime	timesheet	de	Startzeit
@@ -163,6 +164,7 @@ this month	timesheet	de	Diesen Monat
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Dieses Jahr
 ticket modified by %1 at %2	timesheet	de	Ticket geändert von %1 am %2
+time default for new timesheet entries	timesheet	de	Zeitvorgabe für neue Stundenzettel
 timer	common	de	Zeitnehmer
 timer already running or paused	common	de	Zeitnehmer läuft bereits oder ist pausiert
 timesheet	common	de	Stundenzettel
@@ -178,12 +180,14 @@ titles of any entries linked to the current record, excluding attached files	tim
 unable to convert "%1" to account id.  using plugin setting (%2) for %3.	timesheet	de	Das System konnte "%1" nicht in die Benutzer-ID umwandeln. Verwenden Sie besser die Einstellung (%2) für %3.
 undelete	timesheet	de	Wiederherstellen
 unitprice	timesheet	de	Preis pro Einheit
+use current time as end time	timesheet	de	Setzte Ende auf die aktuelle Uhrzeit
 use field from csv if possible	timesheet	de	Benutze Feld vom CSV, wenn möglich
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	timesheet	de	Verwenden Sie diesen Platzhalter für den den Seriendruck. Fügen Sie den Inhalt, der wiederholt werden soll, zwischen zwei Platzhaltern ein.
 values for selectbox	timesheet	de	Werte der Auswahlbox
 view this entry	timesheet	de	Diesen Eintrag anzeigen
 week	timesheet	de	Woche
 what should be done with unknown values?	timesheet	de	Was soll mit unbekannten Werte passieren?
+when adding a new timesheet for today: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet booked today	timesheet	de	Soll beim Anlegen eines neuen Stundenzettel für heute die Endzeit auf die aktuelle Uhrzeit gesetzt werden oder die Startzeit auf die Endzeit Ihres letzten heutigen Stundenzettels?
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	de	Wenn Sie Einträge in Dokumente einfügen, werden diese hier gespeichert. Wenn kein Verzeichnis angegeben ist, werden sie in Ihrem Home-Verzeichnis gespeichert.
 will be created when saving ...	common	de	Wird beim Speichern angelegt ...
 working time	common	de	Arbeitszeit
