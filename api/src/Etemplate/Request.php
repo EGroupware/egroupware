@@ -435,6 +435,32 @@ class Request
 	}
 
 	/**
+	 * Record that $ciphertext was sent to the client (un-masked) in this request
+	 *
+	 * Used by the password-widget to let ajax_decrypt() verify a decrypt request is for a
+	 * ciphertext we actually exposed to this user (eg. via 'viewable' or 'togglePassword'),
+	 * instead of decrypting whatever ciphertext the caller supplies directly.
+	 *
+	 * @param string $ciphertext
+	 */
+	public function allowPasswordDecrypt($ciphertext)
+	{
+		$this->data['password_decrypt_allowed'][md5((string)$ciphertext)] = true;
+		$this->data_modified = true;
+	}
+
+	/**
+	 * Check whether $ciphertext was recorded as decrypt-allowed via allowPasswordDecrypt()
+	 *
+	 * @param string $ciphertext
+	 * @return bool
+	 */
+	public function isPasswordDecryptAllowed($ciphertext)
+	{
+		return !empty($this->data['password_decrypt_allowed'][md5((string)$ciphertext)]);
+	}
+
+	/**
 	 * creates a new unique request-id
 	 *
 	 * @return string
