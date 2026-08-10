@@ -270,7 +270,7 @@ export class Et2LinkTo extends Et2InputWidget(LitElement)
 		if(links.length > 0)
 		{
 			egw.request("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link",
-				[this.value.to_app, this.value.to_id, links]).then((result) => this._link_result(result))
+				[this.value.to_app, this.value.to_id, links, this.getInstanceManager().etemplate_exec_id]).then((result) => this._link_result(result))
 
 		}
 	}

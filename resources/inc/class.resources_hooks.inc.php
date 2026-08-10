@@ -100,6 +100,7 @@ class resources_hooks
 			'add_id'     => 'link_id',
 			'add_popup'  => '800x600',
 			'find_extra' => array('name_preg' => '/^(?(?=^.picture.jpg$)|.+)$/'),	// remove pictures from regular attachment list
+			'file_access'=> 'resources.resources_bo.file_access',
 		);
 	}
 

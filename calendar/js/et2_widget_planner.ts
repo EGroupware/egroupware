@@ -1690,7 +1690,7 @@ export class et2_calendar_planner extends et2_calendar_view implements et2_IDeta
 				{
 					// Link the entries
 					egw.json(self.egw().getAppName()+".etemplate_widget_link.ajax_link.etemplate",
-						dropped.id.split('::').concat([links]),
+						dropped.id.split('::').concat([links, self.getInstanceManager().etemplate_exec_id]),
 						function(result) {
 							if(result)
 							{

@@ -393,7 +393,8 @@ export class Et2LinkList extends Et2LinkString
 		}
 		else if(typeof this.entryId == "string" && link.link_id)
 		{
-			egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_delete", [link.link_id]).sendRequest()
+			egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_delete",
+				[link.link_id, this.getInstanceManager().etemplate_exec_id]).sendRequest()
 				.then((data) =>
 				{
 					if(data)
@@ -666,7 +667,7 @@ export class Et2LinkList extends Et2LinkString
 		 */
 		remark.classList.add("loading");
 		egw.json("EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_comment",
-			[link.link_id, comment]).sendRequest()
+			[link.link_id, comment, this.getInstanceManager().etemplate_exec_id]).sendRequest()
 			.then(() =>
 			{
 				if(remark)
