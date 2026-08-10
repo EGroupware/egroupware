@@ -58,6 +58,13 @@ class LinkAclTest extends LoggedInTest
 		// Make sure we're back to the original user, a failure could leave us logged in as someone else
 		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
+		// ajax_delete/ajax_link/ajax_link_comment each call Response::get()->data(), but it's a singleton
+		// that only accepts one data-response - reset it, or the next test's call throws (same pattern
+		// as api/tests/Etemplate/WidgetBaseTest.php)
+		$ref = new \ReflectionProperty('\\EGroupware\\Api\\Json\\Response', 'response');
+		$ref->setAccessible(true);
+		$ref->setValue(null, null);
+
 		$bo = new \infolog_bo();
 		foreach($this->entries as $info_id)
 		{
@@ -366,6 +373,9 @@ class LinkAclTest extends LoggedInTest
 		// deliberately NOT granting any category-ACL
 
 		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+		// resources_acl_bo caches ALL of the current user's category rights on first use and never
+		// refreshes them - must be cleared explicitly after switching user within the same process
+		\resources_acl_bo::invalidate_cache();
 
 		$bo = new \resources_bo();
 		$this->assertFalse($bo->file_access($this->resource_id, Acl::EDIT),
@@ -385,6 +395,9 @@ class LinkAclTest extends LoggedInTest
 		(new \admin_cmd_acl(true, $this->account_id, 'resources', 'L' . $this->cat_id, Acl::EDIT))->run();
 
 		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+		// resources_acl_bo caches ALL of the current user's category rights on first use and never
+		// refreshes them - must be cleared explicitly after switching user within the same process
+		\resources_acl_bo::invalidate_cache();
 
 		$bo = new \resources_bo();
 		$this->assertTrue($bo->file_access($this->resource_id, Acl::EDIT),
