@@ -49,9 +49,31 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 		}
 	}
 
+	/**
+	 * Value set while not connected, applied once the element connects.
+	 * The setter must not wait on updateComplete while disconnected: on an element
+	 * that never (re-)connects updateComplete is already resolved, so the retry
+	 * re-enters the setter in an endless microtask loop and freezes the tab.
+	 */
+	private _disconnectedValue : { to : string, from : string } | string;
+
 	constructor()
 	{
 		super();
+	}
+
+	connectedCallback()
+	{
+		super.connectedCallback();
+		if(typeof this._disconnectedValue !== "undefined")
+		{
+			const value = this._disconnectedValue;
+			this._disconnectedValue = undefined;
+			this.updateComplete.then(() =>
+			{
+				this.value = value;
+			});
+		}
 	}
 
 	_handleChange(event)
@@ -190,10 +212,7 @@ export class Et2DateRange extends Et2InputWidget(LitElement)
 	{
 		if(!this.isConnected)
 		{
-			this.updateComplete.then(() =>
-			{
-				this.value = new_value;
-			});
+			this._disconnectedValue = new_value;
 			return;
 		}
 		if(this.relative)
