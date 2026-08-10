@@ -1001,6 +1001,14 @@ export class Et2NextmatchActionController
 				this.objectManager = new EgwActionObjectManager(uid, this.actionManager);
 			}
 			this.objectManager.flags |= EGW_AO_FLAG_DEFAULT_FOCUS | EGW_AO_FLAG_IS_CONTAINER;
+
+			// Row action objects are only materialized for currently selected rows (lazy /
+			// virtualized selection, see materializeVisibleSelectedRows()), so the inherited
+			// children.length == selectedChildren.length comparison is trivially true as soon
+			// as any child exists, wrongly reporting "all selected" after e.g. a shift-click
+			// multi-select on a freshly (re)loaded list. Use our own authoritative allSelected
+			// flag instead, mirroring et2_dataview_controller_selection.ts's legacy override.
+			this.objectManager.getAllSelected = () => this.allSelected;
 		}
 	}
 

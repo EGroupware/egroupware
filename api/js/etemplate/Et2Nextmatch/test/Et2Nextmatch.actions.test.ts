@@ -808,6 +808,59 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Et2NextmatchActionController only materializes EgwActionObject "children" for rows that
+	 *   are currently selected (lazy/virtualized selection), so children.length always equals
+	 *   selectedChildren.length whenever any selection exists. The inherited
+	 *   EgwActionObject.getAllSelected() compares exactly those two counts, so without a fix it
+	 *   would wrongly report "all selected" the moment any subset of rows is selected - most
+	 *   easily triggered right after a fresh load/reload when a shift-click selects a few of many
+	 *   rows. Mail's delete handler trusts this flag to decide between per-message delete and a
+	 *   destructive whole-folder delete, so a false positive here is safety-critical.
+	 *
+	 * Setup strategy:
+	 * - Build a real objectManager via ensureActionManagers(), then reproduce the exact trap
+	 *   condition by materializing 3 selected child action objects (children.length ===
+	 *   selectedChildren.length === 3) while the controller's authoritative allSelected flag is
+	 *   false, mirroring a 3-row shift-click out of a much larger folder.
+	 *
+	 * Pass criteria:
+	 * - objectManager.getAllSelected() must follow controller.allSelected (false here), not the
+	 *   trivially-equal children/selectedChildren counts.
+	 */
+	it("does not report all-selected from partial selection materialized after reload", () =>
+	{
+		const appName = `mail_nextmatch_allselected_${Date.now()}`;
+		const controller : any = new Et2NextmatchActionController({
+			id: "nm",
+			egw: () => ({
+				...egwStub,
+				app_name: () => appName
+			}),
+			getInstanceManager: () => ({
+				app: appName,
+				uniqueId: `template_${Date.now()}`
+			})
+		} as any);
+
+		controller.ensureActionManagers();
+		controller.allSelected = false;
+
+		for(const rowId of ["row1", "row2", "row3"])
+		{
+			const rowObject = controller.objectManager.addObject(rowId);
+			rowObject.setSelected(true);
+		}
+
+		assert.strictEqual(controller.objectManager.children.length, 3, "sanity: only the selected rows were materialized as children");
+		assert.strictEqual(controller.objectManager.selectedChildren.length, 3, "sanity: children/selectedChildren counts are trivially equal");
+		assert.isFalse(controller.objectManager.getAllSelected(), "partial selection must not be reported as all-selected merely because every materialized child is selected");
+
+		controller.allSelected = true;
+		assert.isTrue(controller.objectManager.getAllSelected(), "a real select-all must still be reported once the controller's authoritative flag is set");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Et2Nextmatch action registration attaches the owning nextmatch pointer
 	 *   on every action, including nested child actions.
 	 *
