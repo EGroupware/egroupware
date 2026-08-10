@@ -315,10 +315,17 @@ class admin_customfields
 	 *
 	 * @param array $content
 	 * @param string $etemplate_exec_id to check against CSRF
+	 * @throws Api\Exception\NoPermission if the user is denied changing site configuration
 	 */
 	public function ajax_delete_type($content, $etemplate_exec_id)
 	{
 		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
+
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
+			$GLOBALS['egw']->acl->check('site_config_acce', 2, 'admin'))
+		{
+			throw new Api\Exception\NoPermission();
+		}
 
 		// Read fields
 		$this->appname = $content['appname'];

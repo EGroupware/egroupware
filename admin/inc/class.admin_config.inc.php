@@ -23,11 +23,15 @@ class admin_config
 	 *
 	 * @param array $file file info array
 	 * @param array|string $value current value of login_background_file
-	 *
+	 * @throws Api\Exception\NoPermission if the user is denied changing site configuration
 	 */
 	function ajax_upload_anon_images ($file, $value)
 	{
-		if (!isset($GLOBALS['egw_info']['user']['apps']['admin'])) die('no rights to be here!');
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
+			$GLOBALS['egw']->acl->check('site_config_acce', 2, 'admin'))
+		{
+			throw new Api\Exception\NoPermission();
+		}
 		$path = $GLOBALS['egw_info']['server']['files_dir'].'/anon-images';
 		$success = false;
 		$response = Api\Json\Response::get();
