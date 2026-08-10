@@ -613,8 +613,12 @@ export class EgwFrameworkApp extends LitElement
 
 	private _refresh()
 	{
+		// Use our own unique tab id, not our (possibly shared) app name: multiple tabs of the
+		// same app can coexist (eg. addressbook CRM views), all sharing name="addressbook", but
+		// each with their own unique id - refresh must target this tab specifically, not
+		// whichever tab happens to have id === name.
 		// @ts-ignore
-		return this.egw.refresh("", this.name, null, null, this.name);
+		return this.egw.refresh("", this.id, null, null, this.id);
 	}
 
 	public async print()
