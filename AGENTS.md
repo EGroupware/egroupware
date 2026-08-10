@@ -80,6 +80,22 @@ Before finalizing:
 
 For code review behaviour, follow `doc/ai/review-checklist.md`.
 
+## Ongoing/major project docs
+
+Larger, multi-session efforts get a dedicated doc under `doc/ai/projects/` instead of living only in
+session notes - check there before starting related work, and add one when starting a project of
+similar scope.
+
+- `doc/ai/projects/mail-jmap-modernization.md` - mail app's move to JMAP (client-side row-fetch/body
+  rendering, server-side `Api\Mail` JMAP-native dispatch for Stalwart, local JMAP shim for plain
+  IMAP accounts). Covers architecture, current status, deliberately-out-of-scope areas, and known
+  gotchas.
+- `doc/ai/projects/jsapi-modernization.md` - `api/js/jsapi`'s TS-typing port and follow-on
+  factory-closure-to-class conversion (`egw.extend()`'s ~20 modules). Covers the enumerable-merge
+  constraint that shapes every conversion, the `#private`-vs-TS-`private` field bug class, the
+  dynamic-`this`/self-capture patterns, deliberately-out-of-scope files, postponed jQuery removal,
+  and every preserved-not-fixed `KNOWN BUG`/`KNOWN QUIRK`.
+
 ## Security and data handling
 
 - Do not commit secrets, tokens, credentials, private keys, or production data.
