@@ -78,7 +78,7 @@ class InfologApp extends EgwApp
 				// Show / hide descriptions according to details filter
 				const nm = <Et2Nextmatch>this.et2.getWidgetById('nm');
 				//"all" indicates display description; "null" or "" means do not
-				const filter2:boolean = (nm.filter2 ?? '') == "all";
+				const filter2:boolean = (nm.activeFilters.filter2 ?? '') == "all";
 				this.show_details(filter2, nm);
 				//sync toolbar toggle button with current filter2 state
 				const detailsToggle= this.et2?.getWidgetById('details');
