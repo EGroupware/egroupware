@@ -28,6 +28,7 @@ import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
 import {
 	applyLegacyNextmatchColumnPreferences,
 	datagridColumnPreferenceValue,
+	legacyColumnSelectionCsv,
 	type Et2NextmatchResolvedColumn
 } from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
@@ -326,6 +327,18 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		for(const key of Et2Nextmatch.FILTER_VALUE_SETTINGS)
 		{
 			this._seedFilterValueSetting(settings, key);
+		}
+		// Apps still drive the persisted column-preference key through the legacy
+		// `columnselection_pref` setting (e.g. to vary it per filter state). Keep that
+		// working by forwarding it to the modern `columnPreferenceName` property, which
+		// is what Et2Datagrid actually uses for column load/save.
+		if(settings.columnselection_pref)
+		{
+			this._warnDeprecatedOnce(
+				"columnselection_pref",
+				"Et2Nextmatch settings.columnselection_pref is deprecated, set the `columnPreferenceName` property instead"
+			);
+			this.columnPreferenceName = String(settings.columnselection_pref);
 		}
 		this._settings = {
 			...Et2Nextmatch.DEFAULT_SETTINGS,
@@ -1304,7 +1317,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 		if(this._datagrid)
 		{
-			this._datagrid.columns = nextColumns.map((column) => ({...column}));
+			// Explicit override (favorites, app state restore) - must reach the
+			// datagrid without the next update cycle merging the persisted
+			// column preference back over this selection.
+			this._datagrid.applyExternalColumns(nextColumns.map((column) => ({...column})));
 			this._datagrid.requestUpdate();
 		}
 		this.dispatchEvent(new CustomEvent("et2-columns-changed", {
@@ -2781,8 +2797,38 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			return;
 		}
 		this._datagridColumns = event.detail.columns.map((column) => ({...column}));
+		this._persistLegacyColumnSelection(this._datagridColumns);
 		this.requestUpdate();
 	};
+
+	/**
+	 * Keep the legacy Nextmatch CSV-format column-visibility preference
+	 * (`nextmatch-<rowTemplateId>`) up to date for apps whose PHP still reads it
+	 * directly, independent of whatever key Datagrid's own structured preference is
+	 * stored under (`columnPreferenceName`, which apps can point at a different,
+	 * dynamic key - see the `columnselection_pref` setting above). This is legacy
+	 * Nextmatch-specific compatibility behaviour, so it lives here rather than in
+	 * the generic `Et2Datagrid`.
+	 *
+	 * `egw().set_preference()` is a no-op when the value hasn't changed, so calling
+	 * this on every columns-changed event (including the initial load) is harmless.
+	 *
+	 * TODO: When things stabilize, we can delete the old preference.
+	 */
+	private _persistLegacyColumnSelection(columns : Et2DatagridColumn[])
+	{
+		if(this._datagrid?.noColumnPersistence || this._datagrid?.noVisibleHeader)
+		{
+			return;
+		}
+		const rowTemplateId = String(this._templateData?.rowTemplateId || "").trim();
+		const app = String(this.getInstanceManager()?.app || this.egw()?.app_name?.() || "").trim();
+		if(!rowTemplateId || !app)
+		{
+			return;
+		}
+		this.egw()?.set_preference?.(app, `nextmatch-${rowTemplateId}`, legacyColumnSelectionCsv(columns));
+	}
 
 	/**
 	 * Add letter search as a pseudo-column in the root column chooser.

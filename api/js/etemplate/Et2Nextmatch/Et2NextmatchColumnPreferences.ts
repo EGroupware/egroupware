@@ -1,4 +1,5 @@
 import {Et2DatagridColumn} from "./Et2Datagrid.types";
+import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 
 export type Et2NextmatchResolvedColumn = Et2DatagridColumn & {
 	customFields?: string[];
@@ -62,6 +63,40 @@ export function datagridColumnPreferenceValue(columns : Et2NextmatchResolvedColu
 		hidden: !!column.hidden,
 		customFields: column.customFields?.length ? column.customFields : undefined
 	}));
+}
+
+/**
+ * Rebuild the legacy Nextmatch CSV-format column-visibility preference (visible
+ * column keys, in order, with `#`-prefixed custom-field markers) from current
+ * Datagrid columns.
+ *
+ * Some apps' PHP still reads this format directly under the `nextmatch-<rowTemplateId>`
+ * preference key, independent of whatever key Datagrid's own structured
+ * `{key, hidden, width, customFields}` preference is stored under. This lives here,
+ * not in `Et2Datagrid`, so the generic datagrid never needs to know legacy Nextmatch
+ * CSV shapes exist - see `Et2Nextmatch._persistLegacyColumnSelection()`.
+ */
+export function legacyColumnSelectionCsv(columns : Et2DatagridColumn[]) : string
+{
+	return (columns || [])
+		.filter((column) => !column.hidden)
+		.map((column) =>
+		{
+			const key = String(column.key);
+			const header = column.header as any;
+			if(typeof header?.getCustomfieldVisibility !== "function")
+			{
+				return key;
+			}
+			const visibility = header.getCustomfieldVisibility();
+			if(!visibility || typeof visibility !== "object")
+			{
+				return key;
+			}
+			const visibleFields = Object.keys(visibility).filter((name) => visibility[name] === true);
+			return [key, ...visibleFields.map((name) => CUSTOMFIELD_PREFIX + name)].join(",");
+		})
+		.join(",");
 }
 
 /**

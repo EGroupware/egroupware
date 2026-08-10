@@ -29,7 +29,6 @@ import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2D
 import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import {Et2RowProvider} from "./Et2RowProvider";
-import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 import {styleMap} from "lit/directives/style-map.js";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
@@ -2520,6 +2519,22 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Apply columns provided by an external caller (Et2Nextmatch.setColumns()/
+	 * set_columns(), e.g. favorites or app state restore).
+	 *
+	 * Marks the current columnPreferenceName key as already loaded so the
+	 * willUpdate cycle this triggers doesn't immediately merge the persisted
+	 * (or template-default) column state back over the caller's explicit
+	 * selection - this path is an override, not a preference change, and
+	 * must not read from or write to the stored preference.
+	 */
+	applyExternalColumns(columns : Et2DatagridColumn[])
+	{
+		this.columns = columns;
+		this._loadedColumnPreferenceKey = this._columnPreferenceName();
+	}
+
+	/**
 	 * Check whether interactive column resizing should be disabled for this grid.
 	 */
 	private _isColumnResizeDisabled() : boolean
@@ -2560,7 +2575,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._loadedColumnPreferenceKey = key;
 		if(!stored)
 		{
-			return;
+			// No preference saved under this key - fall through with empty
+			// entries so the merge below resets columns to default visibility,
+			// rather than inheriting `hidden` left over from a different key.
+			stored = [];
 		}
 		if(typeof stored === "string")
 		{
@@ -2590,12 +2608,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 					})
 					.map((key) => rawEntries[key])
 				: [];
-		if(!entries.length)
-		{
-			return;
-		}
 		const orderByKey = new Map<string, number>();
 		const byKey = new Map<string, { width? : string; hidden? : boolean; customFields? : string[] }>();
+		const templateDefaultHiddenByKey = new Map<string, boolean>();
+		for(const column of (this.templateData?.sourceColumns || this.templateData?.columns || this.columns || []))
+		{
+			templateDefaultHiddenByKey.set(String(column.key), !!column.hidden);
+		}
 		const normalizeVisibleCustomfields = (source : any) : string[] | undefined =>
 		{
 			if(Array.isArray(source))
@@ -2643,7 +2662,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			const persisted = byKey.get(String(column.key));
 			if(!persisted)
 			{
-				return column;
+				// Not mentioned by this preference - fall back to the template's
+				// authored default rather than inheriting a `hidden` left over
+				// from a previously loaded columnPreferenceName.
+				const templateHidden = templateDefaultHiddenByKey.get(String(column.key)) ?? false;
+				return column.hidden !== templateHidden ? {...column, hidden: templateHidden} : column;
 			}
 			const header = column.header as any;
 			if(persisted.customFields)
@@ -2701,27 +2724,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		// Persist in legacy format, some apps look for this.
-		// Keep this compatibility write before the structured preference so the
-		// new datagrid preference remains the primary saved state.
-		this.egw()?.set_preference?.(app, 'nextmatch-' + this._columnPreferenceTemplateId(), (this.columns || [])
-			.filter(c => !c.hidden)
-			.map((column) =>
-			{
-				const header = column.header as any;
-				if(typeof header?.getCustomfieldVisibility !== "function")
-				{
-					return column.key;
-				}
-				const visibility = header.getCustomfieldVisibility();
-				if(!visibility || typeof visibility !== "object")
-				{
-					return column.key;
-				}
-				return column.key + ',' + Object.keys(visibility).filter((name) => visibility[name] === true).map(k => CUSTOMFIELD_PREFIX + k).join(",");
-			})
-			.join(',')
-		);
 		const value = (this.columns || []).map((column) => ({
 			key: String(column.key),
 			width: typeof column.width === "string" ? column.width : undefined,

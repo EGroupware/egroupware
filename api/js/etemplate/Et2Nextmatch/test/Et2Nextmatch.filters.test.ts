@@ -997,6 +997,56 @@ describe("Et2Nextmatch header event handling", () =>
 		getArrayMgr.restore();
 	});
 
+	it("warns once when settings.columnselection_pref is used", () =>
+	{
+		const el = new Et2Nextmatch();
+		(Et2Nextmatch as any)._deprecationWarnings?.clear?.();
+		const warn = sinon.stub(console, "warn");
+		try
+		{
+			el.settings = {columnselection_pref: "nextmatch-addressbook.index.rows"};
+			assert.equal(el.columnPreferenceName, "nextmatch-addressbook.index.rows",
+				"columnselection_pref should still be forwarded to columnPreferenceName");
+			assert.isTrue(warn.calledOnce, "using columnselection_pref should warn once");
+
+			el.settings = {columnselection_pref: "nextmatch-addressbook.index.rows-details"};
+			assert.isTrue(warn.calledOnce, "the deprecation warning should not repeat per settings assignment");
+		}
+		finally
+		{
+			warn.restore();
+		}
+	});
+
+	it("persists the legacy CSV-format column preference itself, independent of columnPreferenceName", () =>
+	{
+		// Et2Datagrid has no concept of the legacy Nextmatch CSV format - it only ever persists
+		// its own structured {key,hidden,...} preference. Et2Nextmatch owns writing the
+		// `nextmatch-<rowTemplateId>` CSV compatibility preference some apps' PHP still reads
+		// directly, always keyed by row-template id and never by columnPreferenceName (which can
+		// be a different, dynamic, app-chosen key - e.g. infolog's columnselection_pref).
+		const el = new Et2Nextmatch();
+		const setPreference = sinon.stub();
+		const egwStubWithSetPreference = {...egwStub, app_name: () => "infolog", set_preference: setPreference};
+		sinon.stub(el, "egw" as any).returns(egwStubWithSetPreference);
+		(el as any)._templateData = {rowTemplateId: "infolog.index.rows"};
+
+		// columnPreferenceName deliberately does NOT match the row-template id here, to prove
+		// the legacy write ignores it entirely.
+		el.columnPreferenceName = "nextmatch-infolog.index.rows-details";
+		const columns = [
+			{key: "a", title: "A", hidden: false},
+			{key: "b", title: "B", hidden: true}
+		] as any;
+		(el as any)._persistLegacyColumnSelection(columns);
+
+		assert.isTrue(setPreference.calledOnce, "should persist the legacy CSV preference");
+		const [app, key, value] = setPreference.firstCall.args;
+		assert.equal(app, "infolog");
+		assert.equal(key, "nextmatch-infolog.index.rows", "legacy key must be row-template-derived, not columnPreferenceName");
+		assert.equal(value, "a", "only the visible column key should be included");
+	});
+
 	it("moves explicit settings col_filter into active filters", () =>
 	{
 		const el = new Et2Nextmatch();

@@ -332,6 +332,44 @@ class infolog_ui
 	}
 
 	/**
+	 * Normalize a stored column-selection preference into a CSV string of visible column keys
+	 *
+	 * The preference named by `columnselection_pref` can hold three different shapes depending on
+	 * what last wrote it: a legacy CSV string of visible column keys (pre-Et2Nextmatch), a flat
+	 * array of visible column keys, or Et2Datagrid's structured preference - an array of
+	 * `{key, hidden, width, customFields}` per column, listing every column, not just visible ones.
+	 * Et2Nextmatch forwards our own dynamic `columnselection_pref` setting to its
+	 * `columnPreferenceName` property, so this is the same preference Et2Datagrid itself persists
+	 * column state under - it's not a separate legacy-only key.
+	 *
+	 * Returned as a CSV string (rather than an array) so callers can keep using substring checks
+	 * like `strpos($csv, 'info_used_time_info_planned_time')`, which also need to match longer
+	 * compound column keys such as `info_used_time_info_planned_time_info_replanned_time`.
+	 *
+	 * @param mixed $stored raw preference value
+	 * @return string CSV of visible column keys, or '' if nothing is stored
+	 */
+	protected static function columnselection_csv($stored)
+	{
+		if (empty($stored))
+		{
+			return '';
+		}
+		if (is_string($stored))
+		{
+			return $stored;
+		}
+		if (is_array($stored) && isset($stored[0]) && is_array($stored[0]))
+		{
+			$stored = array_column(array_filter($stored, static function($col)
+			{
+				return empty($col['hidden']);
+			}), 'key');
+		}
+		return implode(',', $stored);
+	}
+
+	/**
 	 * Callback for nextmatch widget
 	 *
 	 * @param array &$query
@@ -450,11 +488,11 @@ class infolog_ui
 			.($details ? '-details' : '');
 		//error_log(__METHOD__."(start=$query[start], num_rows=$query[num_rows]) query[col_filter][info_type]={$query['col_filter']['info_type']} --> query[template]=$query[template], columselection_pref=$columnselection_pref");
 
-		$columselection = $this->prefs[$columnselection_pref];
+		$columselection = self::columnselection_csv($this->prefs[$columnselection_pref]);
 
 		if (!$query['selectcols'] && $columselection)
 		{
-			$columselection = is_array($columselection) ? $columselection : explode(',',$columselection);
+			$columselection = explode(',',$columselection);
 		}
 		else
 		{
@@ -501,7 +539,7 @@ class infolog_ui
 			$query['default_cols'] = '!cat_id,info_datemodified,info_used_time_info_planned_time,info_used_time_info_planned_time_info_replanned_time,info_id';
 		}
 		// set old show_times pref, that get_info calculates the cumulated time of the timesheets (we only check used&planned to work for both time cols)
-		$this->prefs['show_times'] = strpos($this->prefs[$query['columnselection_pref']], 'info_used_time_info_planned_time') !== false;
+		$this->prefs['show_times'] = strpos(self::columnselection_csv($this->prefs[$columnselection_pref]), 'info_used_time_info_planned_time') !== false;
 
 		$reset_timesheet = false;
 		$config = Api\Config::read('infolog');
@@ -1124,10 +1162,10 @@ class infolog_ui
 		$values['nm']['columnselection_pref'] = 'nextmatch-infolog.index.rows' . ($values['nm']['filter2'] == 'all' ? '-details' : '');
 		if ($action == 'sp')
 		{
-			$pref = $values['nm']['columnselection_pref'];
+			$pref = self::columnselection_csv($this->prefs[$values['nm']['columnselection_pref']]);
 			foreach(array('info_used_time_info_planned_time_info_replanned_time','info_datemodified','info_owner_info_responsible','customfields') as $name)
 			{
-				$values['main']['no_'.$name] = strpos($this->prefs[$pref],$name) === false;
+				$values['main']['no_'.$name] = strpos($pref,$name) === false;
 			}
 			if (!$values['main']['no_customfields'])
 			{

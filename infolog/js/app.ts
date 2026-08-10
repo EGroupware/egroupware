@@ -268,51 +268,14 @@ class InfologApp extends EgwApp
 		{
 			// Show / hide descriptions
 			this.show_details(filter2.value === 'all', this.nm);
-		}
-
-		// Only change columns for a real user event, to avoid interfering with
-		// favorites
-		if (this.nm && filter2 && !this.nm.update_in_progress)
-		{
-			// Update page - set update_in_progress to true to avoid triggering
-			// the change handler and looping if the user has a custom field
-			// column change
-			let in_progress = this.nm.update_in_progress;
-			this.nm.update_in_progress = true;
 
 			// Store selection as implicit preference
-			egw.set_preference('infolog', this.nm.options.settings.columnselection_pref.replace('-details', '') + '-details-pref', filter2.value);
+			egw.set_preference('infolog', this.nm.columnPreferenceName.replace('-details', '') + '-details-pref', filter2.value);
 
-			// Change preference location - widget is nextmatch
-			this.nm.options.settings.columnselection_pref = this.nm.options.settings.columnselection_pref.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
-
-			// Load new preferences
-			var colData = this.nm.columns.slice();
-			for(var i = 0; i < this.nm.columns.length; i++) colData[i].visible=false;
-
-			if(egw.preference(this.nm.options.settings.columnselection_pref,'infolog'))
-			{
-				this.nm.set_columns((<String>egw.preference(this.nm.options.settings.columnselection_pref,'infolog')).split(','));
-			}
-			this.nm._applyUserPreferences(this.nm.columns, colData);
-
-			// Now apply them to columns
-			for(var i = 0; i < colData.length; i++)
-			{
-				this.nm.dataview.getColumnMgr().columns[i].set_width(colData[i].width);
-				this.nm.dataview.getColumnMgr().columns[i].set_visibility(colData[i].visible);
-			}
-			this.nm.dataview.getColumnMgr().updated();
-
-			// Set the actual filter value here
-			this.nm.activeFilters.filter2 = filter2.value;
-			this.nm.dataview.updateColumns();
-			this.nm.update_in_progress = in_progress;
+			// Change preference location - Et2Datagrid loads & applies the new
+			// preferences reactively when columnPreferenceName changes
+			this.nm.columnPreferenceName = this.nm.columnPreferenceName.replace('-details', '') + (filter2.value == 'all' ? '-details' : '');
 		}
-
-		// Already handled everything here and the column change probably triggered a reload
-		// Return false to skip nm doing the filter value change
-		return false;
 	}
 
 	/**
