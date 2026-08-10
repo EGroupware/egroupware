@@ -1819,15 +1819,27 @@ abstract class Framework extends Framework\Extra
 	}
 
 	/**
+	 * Fields allowed to be queried via ajax_account_data(), keep this to non-sensitive,
+	 * already widely-displayed data - NOT eg. account_pwd, account_dn or login history!
+	 */
+	const ACCOUNT_DATA_FIELDS = ['account_id', 'account_lid', 'account_firstname', 'account_lastname',
+		'account_fullname', 'account_email', 'account_phone', 'account_status'];
+
+	/**
 	 * Get certain account-data of given account-id(s)
 	 *
 	 * @param string|array $_account_ids
-	 * @param string $_field ='account_email'
+	 * @param string $_field ='account_email' one of self::ACCOUNT_DATA_FIELDS
 	 * @param boolean $_resolve_groups =false true: return attribute for all members, false return attribute for group itself
 	 * @return array account_id => data pairs
 	 */
 	public static function ajax_account_data($_account_ids, $_field, $_resolve_groups=false)
 	{
+		if (!in_array($_field, self::ACCOUNT_DATA_FIELDS))
+		{
+			throw new Exception\WrongParameter("Invalid field '$_field'!");
+		}
+
 		// close session now, to not block other user actions
 		$GLOBALS['egw']->session->commit_session();
 
