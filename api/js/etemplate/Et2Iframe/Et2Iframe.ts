@@ -85,8 +85,10 @@ export class Et2Iframe extends Et2Widget(LitElement)
 	{
 		if(_value.trim() != "")
 		{
+			// a leftover srcdoc attribute overrides src and suppresses the load event
 			if(_value.trim() == 'about:blank')
 			{
+				this.__getIframeNode().removeAttribute('srcdoc');
 				this.__getIframeNode().src = _value;
 			}
 			else
@@ -95,6 +97,7 @@ export class Et2Iframe extends Et2Widget(LitElement)
 				let loader = jQuery('<div class="et2_iframe loading"/>');
 				this.__getIframeNode().before(loader);
 				window.setTimeout(function() {
+					this.__getIframeNode().removeAttribute('srcdoc');
 					this.__getIframeNode().src = _value;
 					this.__getIframeNode().addEventListener('load',function() {
 						loader.remove();
