@@ -150,6 +150,27 @@ class resources_acl_bo
 	static private $resource_acl;
 
 	/**
+	 * Clear the cached permissions (eg. after rights changed, or the current user changed within
+	 * the same process, as $resource_acl is cached for whoever was current user on first use)
+	 *
+	 * @param int $cat_id =null clear only this category, default clear everything
+	 */
+	static public function invalidate_cache($cat_id=null)
+	{
+		if (isset($cat_id))
+		{
+			unset(self::$permissions[$cat_id]);
+		}
+		else
+		{
+			self::$permissions = null;
+		}
+		// $resource_acl holds rights for ALL categories of the user active when it got cached,
+		// it must be invalidated whenever anything about rights (or the current user) might have changed
+		self::$resource_acl = null;
+	}
+
+	/**
 	 * Get permissions of current user on a given category
 	 *
 	 * @param int $cat_id
@@ -248,7 +269,7 @@ class resources_acl_bo
 	public static function set_rights($cat_id,$read,$write,$calread,$calbook,$admin)
 	{
 		// Clear cache
-		unset(self::$permissions[$cat_id]);
+		self::invalidate_cache($cat_id);
 
 		$readcat = $read ? $read : array();
 		$writecat = $write ? $write : array();
