@@ -14,10 +14,12 @@
             </et2-button-copy>
 		</et2-hbox>
 		<styles>
-            #long_task > div {
-            width: 100%;
+            #long_task {
+            min-width: 30em;
+            min-height: 12em;
             }
             .long_task .log {
+            min-height: 6em;
             max-height: 10em;
             overflow: auto;
             }
