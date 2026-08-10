@@ -208,6 +208,19 @@ class Link extends Link\Storage
 	private static $file_access_cache = array();
 
 	/**
+	 * Instances of app bo-classes used by exec(), keyed by class-name
+	 *
+	 * These are process-lifetime, not request-lifetime: a long-running script processing
+	 * more than one user (eg. async/cron jobs, or a whole PHPUnit run) must call
+	 * init_static(true) whenever it switches user-context, or a bo-class instance
+	 * constructed for a previous user (and caching that user in eg. $this->user) would
+	 * incorrectly keep being used for title()/file_access() checks of the new user.
+	 *
+	 * @var array
+	 */
+	private static $exec_objs = array();
+
+	/**
 	 * Private constructor to forbid instanciated use
 	 *
 	 */
@@ -280,6 +293,12 @@ class Link extends Link\Storage
 		if (!(self::$file_access_cache = Cache::getSession(__CLASS__, 'link_file_access_cache')))
 		{
 			self::$file_access_cache = array();
+		}
+		// bo-class instances cached by exec() capture the constructing user (eg. $this->user), so they
+		// must NOT survive a user-context switch within the same process (eg. async/cron jobs, tests)
+		if ($clear_all)
+		{
+			self::$exec_objs = array();
 		}
 
 		// register self::save_session_cache to run on shutdown
@@ -1853,8 +1872,6 @@ class Link extends Link\Storage
 	 */
 	protected static function exec($method, array $params=array())
 	{
-		static $objs = array();
-
 		// static methods or callables can be called directly
 		if (is_callable($method))
 		{
@@ -1864,16 +1881,15 @@ class Link extends Link\Storage
 		list($app, $class, $m) = $parts = explode('.', $method);
 		if (count($parts) != 3) throw Api\Exception\WrongParameter("Wrong dot-delimited method string '$method'!");
 
-		if (!isset($objs[$class]))
+		if (!isset(self::$exec_objs[$class]))
 		{
 			if (!class_exists($class))
 			{
 				require_once EGW_INCLUDE_ROOT.'/'.$app.'/inc/class.'.$class.'.inc.php';
 			}
-			$objs[$class] = new $class;
+			self::$exec_objs[$class] = new $class;
 		}
-		// php5.6+: return $objs[$class]->$m(...$params);
-		return call_user_func_array(array($objs[$class], $m), $params);
+		return call_user_func_array(array(self::$exec_objs[$class], $m), $params);
 	}
 }
 Link::init_static();
