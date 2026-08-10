@@ -231,6 +231,13 @@ export class Et2Number extends Et2Textbox
 	set value(val)
 	{
 		const old = this.value;
+		// An unset value must render empty: parseFloat(null) is NaN and the input
+		// would show the literal "NaN", which then fails save validation
+		if(val === null || typeof val === "undefined" || (typeof val === "number" && isNaN(val)))
+		{
+			val = "";
+		}
+		const raw = val;
 		if("" + val !== "")
 		{
 			// Remove separator so parseFloat works
@@ -266,7 +273,8 @@ export class Et2Number extends Et2Textbox
 		}
 		if(val == "" || isNaN(val))
 		{
-			super.value = val;
+			// Keep the raw text (never the parsed NaN) so the validator can flag it
+			super.value = "" + raw;
 			this.requestUpdate("value", old);
 			return;
 		}
