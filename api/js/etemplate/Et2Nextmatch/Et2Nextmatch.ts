@@ -28,8 +28,8 @@ import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
 import {
 	applyLegacyNextmatchColumnPreferences,
 	datagridColumnPreferenceValue,
-	legacyColumnSelectionCsv,
-	type Et2NextmatchResolvedColumn
+	type Et2NextmatchResolvedColumn,
+	legacyColumnSelectionCsv
 } from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
@@ -226,6 +226,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	/** Optional custom preference name for persisted datagrid column settings. */
 	@property({type: String, attribute: "column-preference-name"})
 	columnPreferenceName : string = "";
+
+	/**
+	 * App that owns this nextmatch's rows - used for sort/refresh/lettersearch preference
+	 * persistence, row-stylesheet loading and legacy action-manager registration (see
+	 * `_getAppName()`). Set this explicitly when a nextmatch is embedded in another app's
+	 * page (eg. InfoLog's CRM view inside addressbook) and the owning app can't be inferred
+	 * from `template`. Leave unset to fall back to `_getAppName()`'s own resolution.
+	 */
+	@property({type: String, attribute: "app"})
+	appName : string = "";
 
 	private _view : Et2DatagridView = "row";
 
@@ -971,6 +981,28 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * Resolves once `firstUpdated()` has applied the template and seeded sort settings -
+	 * deliberately NOT once initial rows have loaded.
+	 *
+	 * Row loading (`_datagrid.reload()`) and the row stylesheet fetch happen after this
+	 * resolves and are intentionally excluded: they're a network round-trip, and nothing
+	 * that reacts to overall readiness (focus management, `resize()`, the "load" event)
+	 * should be held up waiting for rows to arrive.
+	 */
+	private _resolveFirstUpdatedComplete : () => void = () => {};
+	private _firstUpdatedComplete : Promise<void> = new Promise((resolve) =>
+	{
+		this._resolveFirstUpdatedComplete = resolve;
+	});
+
+	async getUpdateComplete() : Promise<boolean>
+	{
+		const result = await super.getUpdateComplete();
+		await this._firstUpdatedComplete;
+		return result;
+	}
+
+	/**
 	 * Initialize the widget from attributes/template and trigger first load.
 	 * We prefer showing provided rows immediately to keep first paint fast.
 	 */
@@ -981,6 +1013,21 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._syncPlaceholderActionAvailability();
 		this._initializeExtraAttributeFilters();
 
+		try
+		{
+			// Seed sort from already-known `settings` (populated from attrs/content well
+			// before firstUpdated() runs) before awaiting anything below. This needs no
+			// template/row data, so there's no reason to delay it
+			this._initializeSettingsSort();
+		}
+		finally
+		{
+			// Resolve as soon as the minimum is ready, not waiting for template/row loading below.
+			this._resolveFirstUpdatedComplete();
+		}
+
+		// Everything from here we don't wait for, it will finish on its own.  If needed, you can wait for
+		// whenColumnsReady() or listen for the appropriate event.
 		if(this.template)
 		{
 			await this._applyTemplateFromName(this.template);
@@ -989,7 +1036,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			await this._applyTemplateFromSlots();
 		}
-		this._initializeSettingsSort();
+		// Sync any sort headers that just rendered with the sort state seeded above.
+		this._updateSortHeaderState();
 
 		if(this.rows.length)
 		{
@@ -2684,9 +2732,30 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	/**
 	 * Resolve app-name used for sort preference persistence.
+	 *
+	 * Preference order: the explicit `appName` property, then the app that owns this
+	 * nextmatch's rows (the first segment of `template`, eg. "infolog" from
+	 * "infolog.index.rows"), then the instance manager's `app` as a last resort.
+	 *
+	 * Server-side, the preference is always read back under the app resolved from
+	 * `get_rows` (Nextmatch.php: `explode('.', $value['get_rows'])[0]`), which is the
+	 * same owning app - not necessarily the surrounding page/tab's app. Views that embed
+	 * one app's nextmatch inside another (eg. InfoLog's CRM view inside addressbook, which
+	 * forces currentapp to "addressbook") would otherwise save the sort preference under
+	 * the wrong namespace and never see it applied again. Set `appName` explicitly for
+	 * cases where `template` doesn't carry the owning app as its first segment.
 	 */
 	_getAppName() : string
 	{
+		if(this.appName)
+		{
+			return this.appName;
+		}
+		const template = this.template;
+		if(typeof template === "string" && template.includes("."))
+		{
+			return template.split(".")[0];
+		}
 		return String(this.getInstanceManager?.()?.app || this.egw()?.app_name?.() || "");
 	}
 
