@@ -327,9 +327,15 @@ class mail_acl
 	 */
 	public static function ajax_folders()
 	{
-		self::_require_admin_permission($_GET['account_id'] ?? null);
-		$account = Mail\Account::read($_GET['acc_id'], $_GET['account_id'] ?? null);
-		$imap = $account->imapServer(!empty($_GET['account_id']) ? (int)$_GET['account_id'] : false);
+		// empty string (eg. from a JS object literal with an undefined account_id key,
+		// still serialized as account_id= on the wire) must NOT reach Mail\Account::read()
+		// or imapServer(): both treat isset($called_for) as "a specific *other* user's
+		// mailbox" even when the value is '', which skips the normal current-user IMAP
+		// credentials and fails with "Horde_Imap_Client requires a username."
+		$account_id = !empty($_GET['account_id']) ? $_GET['account_id'] : null;
+		self::_require_admin_permission($account_id);
+		$account = Mail\Account::read($_GET['acc_id'], $account_id);
+		$imap = $account->imapServer($account_id ? (int)$account_id : false);
 		// $_GET['mailbox'] can be an array (taglist widget value) and/or prefixed with "{acc_id}::", same as $content['mailbox'] in edit()
 		$mailbox = !empty($_GET['mailbox']) ? self::_extract_mailbox($_GET['mailbox'], $_GET['acc_id']) : null;
 		if (empty($mailbox))
@@ -547,9 +553,11 @@ class mail_acl
 	 */
 	public function ajax_deleteACL($content)
 	{
-		self::_require_admin_permission($content['account_id'] ?? null);
-		$account = Mail\Account::read($content['acc_id'], $content['account_id'] ?? null);
-		$this->imap = $account->imapServer(!empty($content['account_id']) ? (int)$content['account_id'] : false);
+		// see ajax_folders() for why '' must be normalized to null here
+		$account_id = !empty($content['account_id']) ? $content['account_id'] : null;
+		self::_require_admin_permission($account_id);
+		$account = Mail\Account::read($content['acc_id'], $account_id);
+		$this->imap = $account->imapServer($account_id ? (int)$account_id : false);
 
 		$msg = null;
 		// identifier comes from the account-picker widget, which (like acc_id in
@@ -648,9 +656,11 @@ class mail_acl
 	 */
 	public function ajax_setACL($content)
 	{
-		self::_require_admin_permission($content['account_id'] ?? null);
-		$account = Mail\Account::read($content['acc_id'], $content['account_id'] ?? null);
-		$this->imap = $account->imapServer(!empty($content['account_id']) ? (int)$content['account_id'] : false);
+		// see ajax_folders() for why '' must be normalized to null here
+		$account_id = !empty($content['account_id']) ? $content['account_id'] : null;
+		self::_require_admin_permission($account_id);
+		$account = Mail\Account::read($content['acc_id'], $account_id);
+		$this->imap = $account->imapServer($account_id ? (int)$account_id : false);
 
 		$msg = null;
 		$this->update_acl($content, $msg, $all_ok);
