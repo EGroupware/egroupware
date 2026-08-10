@@ -176,7 +176,7 @@ export class Et2Password extends Et2InvokerMixin(Et2Textbox)
 				}
 				this.egw().request(
 					"EGroupware\\Api\\Etemplate\\Widget\\Password::ajax_decrypt",
-					[user_password, this.value]).then(decrypted =>
+					[user_password, this.value, this.getInstanceManager().etemplate_exec_id]).then(decrypted =>
 				{
 					if (decrypted)
 					{

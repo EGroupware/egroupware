@@ -66,6 +66,13 @@ class Password extends Etemplate\Widget\Textbox
 			{
 				$value = str_repeat('*', strlen($preserv));
 			}
+			else
+			{
+				// value is sent as-is (ciphertext) to the client: record it, so ajax_decrypt()
+				// can verify a later decrypt request is for a ciphertext we actually exposed to
+				// this user, instead of decrypting whatever ciphertext the caller supplies
+				self::$request->allowPasswordDecrypt($value);
+			}
 		}
 		else
 		{
@@ -142,13 +149,19 @@ class Password extends Etemplate\Widget\Textbox
 
 	/**
 	 * Give up the password
+	 *
+	 * @param string $user_password current user's own login-password, to re-authenticate
+	 * @param string $password ciphertext to decrypt, must have been sent to this user in this request
+	 * @param string $etemplate_exec_id =null exec-id of the calling eTemplate, to verify $password was exposed to us
 	 */
-	public static function ajax_decrypt($user_password, $password)
+	public static function ajax_decrypt($user_password, $password, $etemplate_exec_id=null)
 	{
 		$response = \EGroupware\Api\Json\Response::get();
 		$decrypted = '';
 
-		if($GLOBALS['egw']->auth->authenticate($GLOBALS['egw_info']['user']['account_lid'],$user_password))
+		if ($etemplate_exec_id && ($request = Api\Etemplate\Request::read($etemplate_exec_id, false)) &&
+			$request->isPasswordDecryptAllowed($password) &&
+			$GLOBALS['egw']->auth->authenticate($GLOBALS['egw_info']['user']['account_lid'],$user_password))
 		{
 			$decrypted = Credentials::decrypt(array('cred_password' => $password,'cred_pw_enc' => Credentials::SYSTEM_AES));
 
