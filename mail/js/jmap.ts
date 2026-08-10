@@ -208,7 +208,7 @@ export class MailJmap
 		if (_queriedRange.refresh)
 		{
 			return this.refreshRows(typeof _queriedRange.refresh === 'string' ?
-				[_queriedRange.refresh] : _queriedRange.refresh);
+				[_queriedRange.refresh] : _queriedRange.refresh, !!_filters.filter2);
 		}
 		if (_queriedRange.parent_id)
 		{
@@ -320,8 +320,14 @@ export class MailJmap
 	 * error) - dataFetch() then POSTs to ajax_get_rows, which resolves as an empty result
 	 * (mail no longer registers a 'get_rows' callback), so the affected row(s) just don't
 	 * get refreshed this time round rather than the whole fetch throwing.
+	 *
+	 * @param fetchPreview matches getRows()'s "fetchPreview" behaviour: only include the
+	 *  (comparatively expensive) message-body preview snippet when the "Sneak preview in
+	 *  list" toggle (filter2 / mail.ShowDetails preference) is on - otherwise a row added or
+	 *  updated via this path (e.g. a push 'add' held back while this tab wasn't active, then
+	 *  applied on return) would show a snippet the user has explicitly turned off.
 	 */
-	private async refreshRows(rowIds : string[]) : Promise<false | any>
+	private async refreshRows(rowIds : string[], fetchPreview : boolean) : Promise<false | any>
 	{
 		try
 		{
@@ -357,13 +363,18 @@ export class MailJmap
 				{
 					throw new Error(`MailJmap.refreshRows(): profile ${profileID} is not JMAP-eligible`);
 				}
+				const properties = [
+					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
+					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+				];
+				if (fetchPreview)
+				{
+					properties.push('preview');
+				}
 				const args : any = {
 					accountId: token.accountId,
 					ids: refs.map(ref => ref.emailId),
-					properties: [
-						'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-						'from', 'to', 'cc', 'bcc', 'hasAttachment', 'preview', MailJmap.MDN_HEADER_PROPERTY,
-					],
+					properties,
 				};
 				if (token.isLocal)
 				{
