@@ -145,18 +145,21 @@ class LinkAclTest extends LoggedInTest
 	}
 
 	/**
-	 * Grant the 2nd test-user real Acl::EDIT rights on an infolog entry, the same way
-	 * api/tests/Vfs/Links/StreamWrapperTest.php does it for its file_access() tests.
+	 * Grant the 2nd test-user real Acl::EDIT rights on infolog entries owned by the primary
+	 * test-user (which is who makeInfolog() creates entries as).
+	 *
+	 * infolog_bo::check_access() grants EDIT via 'responsible' only if the app is configured
+	 * with implicit_rights=edit (default is 'read'), so that's not reliable here - grant it
+	 * via the actual ACL grants system instead, which check_access() always honors
+	 * ($grants[$owner] & $required_rights).
 	 */
-	protected function grantInfologEdit(int $info_id) : void
+	protected function grantInfologEdit() : void
 	{
 		$command = new \admin_cmd_acl(true, $this->account_id, 'infolog', 'run', Acl::READ);
 		$command->run();
 
-		$so = new \infolog_so();
-		$element = $so->read(['info_id' => $info_id]);
-		$element['info_responsible'] = [$this->account_id];
-		$so->write($element);
+		$grant = new \admin_cmd_acl(true, $this->account_id, 'infolog', $GLOBALS['egw_info']['user']['account_id'], Acl::EDIT);
+		$grant->run();
 	}
 
 	/**
@@ -230,7 +233,7 @@ class LinkAclTest extends LoggedInTest
 		$link_id = $this->makeLink($id1, $id2);
 
 		$this->makeUser();
-		$this->grantInfologEdit($id1);
+		$this->grantInfologEdit();
 
 		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
 
