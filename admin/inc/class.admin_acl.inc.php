@@ -304,7 +304,7 @@ class admin_acl
 				!$GLOBALS['egw']->acl->check('account_access', 64, 'admin');	// ! because this denies access!
 			$own_access = $admin_access || isset($GLOBALS['egw_info']['user']['apps']['preferences']);
 		}
-		if (!(int)$account_id || !((int)$account_id == (int)$GLOBALS['egw_info']['user']['account_id'] && $location !== 'run' ?
+		if (!(int)$account_id || !((int)$location == (int)$GLOBALS['egw_info']['user']['account_id'] && $location !== 'run' ?
 				$own_access : $admin_access))
 		{
 			if ($throw) throw new Api\Exception\NoPermission(lang('Permission denied!!!'));
