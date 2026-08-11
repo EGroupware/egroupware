@@ -225,8 +225,11 @@ class Link extends Etemplate\Widget
 	 */
 	public static function ajax_link($app, $id, Array $links, $etemplate_exec_id=null)
 	{
-		// $id is an array only for a not-yet-saved entry, nothing is written to the DB in that case
-		if (!is_array($id) && !self::checkLinkAccess($app, $id, '', '', $etemplate_exec_id))
+		// $id is an array, or still falsy/unset, only for a not-yet-saved entry - Api\Link::link()
+		// itself treats "is_array($id1) || !$id1" identically (accumulates into the array, never
+		// writes to the DB, see Link::link()), so the permission check must recognize the same cases
+		// as safe, not just the array one, or attaching a file/entry before the first save fails.
+		if ($id && !is_array($id) && !self::checkLinkAccess($app, $id, '', '', $etemplate_exec_id))
 		{
 			throw new Api\Exception\NoPermission();
 		}
