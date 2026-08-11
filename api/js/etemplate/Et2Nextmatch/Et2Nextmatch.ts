@@ -2355,10 +2355,29 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._actionController.customizeRowElement(context.rowElement);
 	};
 
+	/**
+	 * Template-set (theme) this nextmatch's own containing template was loaded from, eg. "mobile" or
+	 * "default" - so the app.css fallback in `_updateRowStylesheets()` loads the same skin's stylesheet
+	 * instead of always the default skin's.
+	 */
+	private _appRowStylesheetTemplateSet() : string
+	{
+		const url = (this.closest("et2-template") as any)?.getUrl?.() ?? "";
+		const match = url.match(/\/templates\/([^\/]+)\//);
+		return match ? match[1] : "default";
+	}
+
 	private async _updateRowStylesheets()
 	{
 		const appName = this._getAppName();
-		this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
+		const templateSet = this._appRowStylesheetTemplateSet();
+		this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/${templateSet}/app.css`));
+		// Fall back to the default skin's app.css if this app has no skin-specific one (eg. no
+		// dedicated templates/mobile/app.css)
+		if(!this._appRowStylesheet && templateSet !== "default")
+		{
+			this._appRowStylesheet = await loadStylesheet(this.egw().link(`/${appName}/templates/default/app.css`));
+		}
 		await this.updateComplete;
 		this._syncDatagridRowStylesheets();
 	}
