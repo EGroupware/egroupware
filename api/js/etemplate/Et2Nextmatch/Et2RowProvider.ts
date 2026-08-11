@@ -948,6 +948,12 @@ export class Et2RowProvider
 		{
 			element.setAttribute("data-align", align);
 		}
+		// Mark as an individually addressable widget target, so row context actions
+		// (eg. "Copy to OS clipboard") resolve to this field instead of the whole row.
+		if(id)
+		{
+			element.setAttribute("data-et2-id", id);
+		}
 		element.textContent = this._normalizeLegacyRowExpressionShorthand(textExpression);
 		return element;
 	}
