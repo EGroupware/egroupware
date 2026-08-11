@@ -126,7 +126,12 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		}
 		// Some templates populate global customfield modifications after initial attribute transform.
 		// Keep one-way hydration from modifications so initial render has field list without user interaction.
-		if(!this.customfields || !Object.keys(this.customfields).length || !this.fields || !Object.keys(this.fields).length)
+		// An explicit fields map is a sparse allow-list: empty legitimately means "all hidden", so only
+		// missing metadata (or a non-explicit empty fields map) warrants a re-sync - treating the explicit
+		// empty map as missing re-entered the sync on every update and hard-froze the tab (endless
+		// performUpdate loop when custom fields are defined but every customfield column is hidden).
+		if(!this.customfields || !Object.keys(this.customfields).length ||
+			(!this._hasExplicitFields && (!this.fields || !Object.keys(this.fields).length)))
 		{
 			this._syncCustomfieldsFromModifications();
 		}
@@ -221,7 +226,13 @@ export class Et2CustomfieldsHeader extends Et2Widget(LitElement)
 		if(changed)
 		{
 			this.customfields = attrs.customfields || {};
-			this.fields = preserveVisibility ? {...previousFields} : (attrs.fields || {});
+			// When visibility is explicit the merged fields are discarded - do NOT assign a fresh
+			// clone of the unchanged map, or Lit sees a "changed" property on every sync and the
+			// update/updated cycle re-enters itself forever
+			if(!preserveVisibility)
+			{
+				this.fields = attrs.fields || {};
+			}
 			this._hasExplicitFields = preserveVisibility;
 			this.exclude = attrs.exclude || this.exclude;
 			this.typeFilter = typeof attrs.typeFilter === "undefined" ? this.typeFilter : attrs.typeFilter;
