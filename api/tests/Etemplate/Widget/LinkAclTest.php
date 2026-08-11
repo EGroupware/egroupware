@@ -42,6 +42,11 @@ class LinkAclTest extends LoggedInTest
 	 */
 	protected $resource_id;
 
+	/**
+	 * @var int|null bookmark created for the file_access hook tests
+	 */
+	protected $bookmark_id;
+
 	protected $account = [
 		'account_lid' => 'link_acl_test_user',
 		'account_firstname' => 'Link',
@@ -85,6 +90,11 @@ class LinkAclTest extends LoggedInTest
 		{
 			(new \resources_so())->delete(['res_id' => $this->resource_id]);
 			$this->resource_id = null;
+		}
+		if ($this->bookmark_id)
+		{
+			(new \bookmarks_so())->delete($this->bookmark_id);
+			$this->bookmark_id = null;
 		}
 		if ($this->cat_id)
 		{
@@ -460,6 +470,54 @@ class LinkAclTest extends LoggedInTest
 		$bo = new \resources_bo();
 		$this->assertTrue($bo->file_access($this->resource_id, Acl::EDIT),
 			'Category Acl::EDIT grant should give resources file_access() Acl::EDIT');
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+	}
+
+	/**
+	 * bookmarks now has a 'file_access' hook (bookmarks_bo::check_perms) - part of the same fix
+	 * as GHSA-hgrx-j8rv-2m36, since bookmarks is the only hookless app that uses <et2-link-to>
+	 * on itself (to_app=bookmarks), so without a real hook it fell back to the tightened
+	 * READ-only Api\Link::file_access() fallback and could never grant Acl::EDIT.
+	 */
+	public function testBookmarksFileAccessHookDeniesWithoutGrant()
+	{
+		$this->bookmark_id = (new \bookmarks_so())->add([
+			'name' => 'LinkAclTest ' . $this->getName(),
+			'url' => 'http://example.com/test',
+			'owner' => $GLOBALS['egw_info']['user']['account_id'],
+			'access' => 'private',
+		]);
+
+		$this->makeUser();
+		(new \admin_cmd_acl(true, $this->account_id, 'bookmarks', 'run', Acl::READ))->run();
+		// deliberately NOT granting any Acl::EDIT
+
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		$this->assertFalse(Api\Link::file_access('bookmarks', $this->bookmark_id, Acl::EDIT),
+			'Without any grant, bookmarks file_access() must deny Acl::EDIT on a private bookmark owned by someone else');
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+	}
+
+	public function testBookmarksFileAccessHookAllowsWithGrant()
+	{
+		$this->bookmark_id = (new \bookmarks_so())->add([
+			'name' => 'LinkAclTest ' . $this->getName(),
+			'url' => 'http://example.com/test',
+			'owner' => $GLOBALS['egw_info']['user']['account_id'],
+			'access' => 'private',
+		]);
+
+		$this->makeUser();
+		(new \admin_cmd_acl(true, $this->account_id, 'bookmarks', 'run', Acl::READ))->run();
+		(new \admin_cmd_acl(true, $GLOBALS['egw_info']['user']['account_id'], 'bookmarks', $this->account_id, Acl::EDIT))->run();
+
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		$this->assertTrue(Api\Link::file_access('bookmarks', $this->bookmark_id, Acl::EDIT),
+			'Acl::EDIT grant from the owner should give bookmarks file_access() Acl::EDIT');
 
 		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 	}
