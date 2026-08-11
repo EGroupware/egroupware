@@ -58,6 +58,15 @@ class LinkAclTest extends LoggedInTest
 		// Make sure we're back to the original user, a failure could leave us logged in as someone else
 		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
+		// resources_acl_bo::$permissions/$resource_acl are process-wide statics computed lazily for
+		// whoever is "current user" and never re-checked once set - if a resources sub-test below left
+		// them populated for the unprivileged test-user, they'd silently apply to every OTHER app/test
+		// still to run in this phpunit process (eg. calendar\ResetParticipantStatusTest, which also
+		// calls resources_bo::checkUseable() and got a stale "denied" cat_id result from this class
+		// leaking into it). Always invalidate after switching back, not just in the two tests that
+		// touch resources directly.
+		\resources_acl_bo::invalidate_cache();
+
 		// ajax_delete/ajax_link/ajax_link_comment each call Response::get()->data(), but it's a singleton
 		// that only accepts one data-response - reset it, or the next test's call throws (same pattern
 		// as api/tests/Etemplate/WidgetBaseTest.php)
