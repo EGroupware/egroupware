@@ -296,8 +296,22 @@ span#infolog-index_\$\{row\}\[info_des\] {
   #infolog-view .et2_label.et2_label_empty * {
     padding-left: 0px;
   }
+  .infolog_CompletedClmn {
+    width: 100%;
+    max-width: 100%;
+  }
   .infolog_CompletedClmn .infoType {
     padding-right: 1em;
+  }
+  et2-vbox.infolog_CompletedClmn et2-image {
+    width: 1rem;
+  }
+  et2-vbox.infolog_CompletedClmn et2-image *[part="image"] {
+    vertical-align: middle;
+  }
+  et2-vbox.infolog_CompletedClmn progress {
+    width: 100%;
+    max-width: 2em;
   }
   #infolog-edit_timestamp::part(base) {
     background: transparent;

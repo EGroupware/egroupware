@@ -117,12 +117,6 @@ Mechanical renames seen in every conversion:
 - Nested `<grid>`/`<columns>`/`<rows>` inside a `<nextmatch-header>` cell (multi-line sortable headers)
   does not carry over — replace with `<et2-vbox>`/`<et2-hbox>` wrapping
   `<et2-nextmatch-sortheader>` elements (Addressbook, Infolog).
-- **Check for other files in the same app that duplicate the main row-template id.** Some apps
-  (Infolog: `delete.xet`) embed their own independent copy of a template like `infolog.index.rows`
-  under the exact same id, rather than referencing a shared file — see
-  [Case study: `infolog.delete`'s stale duplicate row template](#case-study-infologdeletes-stale-duplicate-row-template)
-  for why converting only the "main" copy silently leaves the duplicate on the legacy nested-grid
-  header markup, and why the fix requires giving the duplicate its own id, not just renaming tags.
 - Row `class` binding: `<row class="$row_cont[class] $row_cont[cat_id]">` can be simplified to the
   direct-binding form `<row class="$class $cat_id">` — both syntaxes work, but new/edited rows should
   use direct bindings (see `Et2Nextmatch.md` § Row value bindings).
@@ -134,6 +128,23 @@ Mechanical renames seen in every conversion:
   implement the same "select the next/previous row after this one is removed" behavior in `app.ts` via
   the `et2-rows-deleted` event instead (see the replacement table below). `no_dynheight="true"` was
   also dropped without replacement in the one conversion that had it.
+- **A legacy `options="..."` attribute on any widget now throws instead of being silently ignored.**
+  `Et2Widget`'s base class repurposed `.options` into a read-only diagnostic getter (`@deprecated use
+  widget methods`) that collects declared properties into an object — it no longer accepts the old
+  positional/comma-separated config string legacy widgets used (e.g. `<et2-date-time-today
+  options=",8">`). Setting it from the XML attribute throws `TypeError: Cannot set property options of
+  #<Et2WidgetClass> which has only a getter`, and `Et2RowProvider` logs `failed to transform row
+  template widget` and drops that widget from the row (Infolog mobile). Just remove `options="..."`
+  attributes found on row-template widgets during conversion; there is no modern equivalent to migrate
+  them to, since the concept itself is gone.
+- **An empty (or under-populated) header row silently produces zero rendered data columns**, not just a
+  blank header. `Et2RowProvider._extractColumnsFromHeaderNode()` derives the column list by counting the
+  header row's *own child elements*, not the `<columns>` block's `<column>` count — a `<row
+  class="th"></row>` with no children yields `columns.length === 0`, and the datagrid then renders only
+  the built-in meta (selection) cell, with the entire data row silently missing (Infolog mobile, which
+  had historically relied on an empty header row under the legacy widget). Fix: give the header row one
+  placeholder element per column (a bare `<et2-description></et2-description>` is enough), matching the
+  data row's cell count exactly, even where there's nothing to label.
 - Add `<et2-styles src="rows.css">` inside the row template to load row-scoped CSS into the datagrid's
   row shadow DOM; add a `rows.css`/`rows.less` file per app for this if one doesn't already exist. See
   `Et2Nextmatch.md` § Styling Rows for the fallback rules to `app.css`.
@@ -199,6 +210,29 @@ template + app JS/TS only — but that's an observed outcome for four apps, not 
 - Auto-refresh pause/resume around long-running requests has no equivalent and was dropped, not fixed,
   in the one conversion that had it — call this out explicitly when converting an app that relies on
   it, rather than assuming it's covered.
+- **The row-shadow-DOM `app.css` compatibility fallback (used when the row template has no
+  `<et2-styles>`) was hardcoded to `templates/default/app.css`, regardless of the active template_set.**
+  For a mobile-skin conversion this silently loaded the *desktop* skin's `app.css` into the mobile row's
+  shadow DOM instead of `templates/mobile/app.css`, producing a layout that didn't match the mobile
+  CSS's actual selectors (Infolog). Fixed in `Et2Nextmatch.ts`'s `_updateRowStylesheets()` to derive the
+  containing template's own template_set (from its `closest("et2-template").getUrl()`) and load that
+  skin's `app.css` first, falling back to `default` only if the skin-specific file 404s — a shared
+  framework fix, not an app-specific workaround. Also note: bare `<et2-styles src="...">` values inside a
+  row template resolve relative to *that* template's own file per `Et2Nextmatch.md` — the fallback now
+  follows the same rule.
+- **Category-color row indicators have a built-in mechanism — don't hand-roll a dedicated column for
+  it.** Give the `<row>` element's `class` binding the bare recognized placeholder for the category field
+  (`$row_cont[info_cat]`, `$cat_id`, `$category`, or `$cat` — see `Et2RowProvider`'s
+  `CATEGORY_CLASS_PLACEHOLDER_FIELDS`), *not* a hand-prefixed token like `cat_$row_cont[info_cat]` (which
+  isn't recognized and just becomes a literal, inert class). The row-class normalization step then emits
+  both `row_category` and `cat_<id>` automatically, which `Et2Nextmatch`'s built-in
+  `_customizeDatagridRow` hook picks up to set `--category-color` and `part="row-meta row-meta-category"`
+  on the datagrid's own meta cell — styled by the framework default
+  `et2-datagrid::part(row-meta-category) { border-left-color: var(--category-color, transparent); }`.
+  Infolog's mobile row template previously spent a whole dedicated grid column and an inline
+  `style="background-color: var(--cat_...);"` (note the mismatched underscore vs. the framework's
+  hyphenated `--cat-<id>-color`) doing this by hand — removing it and using the built-in meta cell
+  dropped a column and fixed the color lookup in one pass.
 - **Direct `_filters` mutation while a fetch is in flight can make `Et2Datagrid` silently discard that
   fetch's response.** `Et2Datagrid._fetchPage()` captures `dataProvider.getQuerySignature()` (a
   serialization of the live `_filters` object) at dispatch time and compares it again once the response
@@ -329,78 +363,3 @@ for already-in-flight infolog work, not just a theoretical gap.
 `?template=` branch to disable the column-selection UI) does not currently map to anything on
 `Et2Datagrid` (`noColumnPersistence`/`noVisibleHeader`) — it's a pre-existing, unrelated gap, harmless
 today only because the one app setting it also doesn't rely on column persistence there.
-
-## Case study: `infolog.delete`'s stale duplicate row template
-
-Closed-out history, kept for context on the "duplicate row-template id" checklist item above.
-
-`infolog/templates/default/delete.xet` — the single-entry delete-confirmation popup opened from the
-edit popup's own "Delete" button when the entry has sub-entries (`infolog_ui::delete()`,
-`class.infolog_ui.inc.php`) — had its own top-level `<nextmatch options="infolog.index.rows" .../>`
-showing the entry's sub-entries, using the *same row-template id* as the main index page
-(`infolog.index.rows`). This was never a shared reference: EGroupware's eTemplate loader resolves a
-`template="app.rest"` id purely by filename convention (`app.rest` → `app/templates/default/rest.xet`),
-with no cross-file search. For a two-segment id like `infolog.index.rows` that convention needs a
-dedicated `infolog/templates/default/index.rows.xet` file, which infolog never had (unlike addressbook,
-calendar, and timesheet, which do ship that file and so genuinely share one row template by reference).
-Instead, `index.xet` and `delete.xet` each embedded their own independent copy under the same id — pure
-duplication, invisible until one copy gets converted and the other doesn't.
-
-**Converting only the tag** (`<nextmatch>` → `<et2-nextmatch>`, keeping `template="infolog.index.rows"`)
-rendered the sub-entries list with literal `[object Object]` header cells. Root cause: `delete.xet`'s own
-copy of `infolog.index.rows` still had the pre-conversion nested `<grid>/<columns>/<rows>` header
-markup — `index.xet`'s copy had already been converted to `<et2-vbox>/<et2-hbox>` wrapping
-`<et2-nextmatch-sortheader>` elements as part of the original conversion, but nothing ever touched
-`delete.xet`'s copy, since PHP resolves `infolog.index.rows` by scanning whichever file is *actually
-being read* for the current request (`delete.xet`, in this popup) top-to-bottom and caching every
-`<template>` block it encounters by id — so `infolog_ui::delete()` always got `delete.xet`'s own, stale
-copy, never `index.xet`'s.
-
-**Fix chosen:** rename `delete.xet`'s two local copies (`infolog.index.rows-noheader` →
-`infolog.delete.rows-noheader`, `infolog.index.rows` → `infolog.delete.rows`) to their own distinct ids
-and update the two references inside the same file. This is safe without creating a dedicated
-`index.rows.xet` file: the renamed ids don't need to match the filename convention at all, because
-they're still defined earlier in the same `delete.xet` file than where they're referenced, so the
-server's per-request template cache picks them up from the linear file scan before anything asks for
-them — confirmed by reading `Et2Nextmatch/Widget/Template.php`'s `instance()`/`relPath()` before making
-this change, not by trial and error. (The alternative — extracting a real shared
-`infolog/templates/default/index.rows.xet` file, so `index.xet` and `delete.xet` reference one
-definition — was also considered and rejected as more invasive than this app actually needed.)
-
-**First attempt at the body content was wrong, not just the id.** The initial pass left
-`infolog.delete.rows`'s row/column markup as `delete.xet`'s pre-existing content, only mechanically
-converting its legacy tags in place (nested grid header → `et2-vbox`/`et2-hbox` wrapping
-`et2-nextmatch-sortheader`, `nextmatch-sortheader`/`nextmatch-header`/`nextmatch-customfields` →
-`et2-` renames). That fixed the broken headers but left the row body as a *years-older* snapshot than
-`index.xet`'s: a trailing action-button column (Edit/Delete/Close) and `Sub`/`Action` header columns
-`index.xet` no longer has, no `<et2-customfields-list>`/kanban-link/click-to-open-row behavior, and no
-`<et2-styles src="rows.css">` — so it visually didn't match the main list at all (spotted by the user
-after the "no row template configured" fix landed, not caught by the automated verification). Corrected
-by deleting that hand-converted body entirely and pasting `index.xet`'s *current* `infolog.index.rows`
-grid/columns/rows content verbatim, keeping only the id renamed to `infolog.delete.rows`. **Lesson:**
-when a duplicate template has drifted, converting its existing legacy tags in place is not equivalent to
-having the same template — check whether the "reference" copy has evolved features (new columns, new
-widgets, new stylesheet links) beyond a mechanical tag rename, and prefer copying the current reference
-content wholesale over patching the stale copy, unless the duplicate is deliberately meant to differ.
-
-**Second bug found only by testing the actual delete flow in a browser**, not by reading templates: after
-the rename, the popup regressed from "wrong headers" to a hard failure — `Et2Datagrid: No row template
-configured`, with the client 404-ing on `.../infolog/templates/default/index.rows.xet` (a URL the *old*
-id would produce, not the renamed one). `infolog_ui::delete()`'s own `$values['nm']` array never set a
-`template` key at all, and `infolog_ui::get_rows()` (`class.infolog_ui.inc.php`, shared by every
-infolog nextmatch instance via `get_rows: 'infolog.infolog_ui.get_rows'`) has a long-standing fallback:
-if `$query['template']` isn't already set, it defaults it to the literal string `'infolog.index.rows'`
-— reasonable when every infolog nextmatch really did use that one row template, silently wrong the
-moment `delete.xet` stopped being one of them. That server-computed default gets sent back to the client
-as the widget's `template` setting, overriding whatever the XML tag's `template=` attribute said. Fixed
-by having `delete()` set `'template' => 'infolog.delete.rows'` explicitly in its own `$values['nm']`
-array, the same way `index()` explicitly sets `'template' => 'infolog.index.rows'` in its own — so
-`get_rows()`'s "not set" fallback never triggers. Anything that shares a `get_rows` callback with another,
-already-converted nextmatch instance should be checked for this same kind of hardcoded/defaulted
-`template` value, not just the XML tag's own attribute.
-
-Verified by creating a real parent entry with one sub-entry, opening the edit popup's Delete button
-(not the list's row-level Delete action, which uses a different, purely client-side confirm dialog and
-never touches this template), confirming the sub-entries list renders with correct headers and the same
-row layout/styling as the main index (no action-button column, `rows.css` loaded), and confirming
-"Yes - Delete including sub entries" removes both rows with no console errors from the change.

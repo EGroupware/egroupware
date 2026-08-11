@@ -4,37 +4,31 @@
 	<template id="infolog.index.rows" template="" lang="" group="0" version="1.9.005">
 		<grid width="100%" >
 			<columns>
-				<column width="10"/>
-				<column width="95%" />
-				<column width="80"/>
+				<column width="90%" />
+				<column width="10%" minWidth="8em"/>
 			</columns>
 			<rows>
 				<row class="th">
-
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
-				<row class="$row_cont[class]" valign="top">
-                    <et2-description class="cat_$row_cont[info_cat] mobile_cat_col" style="background-color: var(--cat_${row_cont[info_cat]}_color);"></et2-description>
+				<row class="$row_cont[info_cat] $row_cont[class]" valign="top">
 					<et2-vbox  class="infolog_fullWidth">
-						<customfields-list id="$row" class="customfields" app="infolog" disabled="true"/>
+						<et2-customfields-list id="$row" class="customfields" app="infolog" disabled="true"/>
 						<et2-hbox  class="infoSubRow">
 							<et2-description  id="${row}[info_subject]" class="$row_cont[sub_class] et2_ellipsis" overflow="hidden" width="100%" noLang="1"></et2-description>
 						</et2-hbox>
 						<et2-box  class="infoDescRow">
 							<et2-description  id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
-
 						</et2-box>
 					</et2-vbox>
 					<et2-vbox  class="infolog_CompletedClmn" align="right">
-						<et2-date-time-today  id="${row}[info_startdate]" readonly="true" options=",8"></et2-date-time-today>
-                        <et2-hbox>
-							<et2-hbox  class="infoType">
-                                <et2-image label="$row_cont[info_type]" src="infolog/$row_cont[info_type]" defaultSrc="infolog/navbar"></et2-image>
-							</et2-hbox>
-							<et2-hbox  class="infoPercent">
-								<progress label="$row_cont[info_percent]" id="${row}[info_percent2]" href="javascript:egw.open($row_cont[info_id],'infolog');"/>
-							</et2-hbox>
+						<et2-date-time-today  id="${row}[info_startdate]" readonly="true"></et2-date-time-today>
+                        <et2-hbox align="center" class="infolog_CompletedClmn" onclick="egw.open($row_cont[info_id],'infolog');">
+                            <et2-image label="$row_cont[info_type]" src="$row_cont[info_icon]" defaultSrc="infolog/navbar"></et2-image>
+                            <progress label="$row_cont[info_percent]" value="$row_cont[info_percent]" max="100"/>
                         </et2-hbox>
-						<et2-date-time-today  id="${row}[info_enddate]" readonly="true" options=",8" class="$row_cont[end_class]" width="64"></et2-date-time-today>
+						<et2-date-time-today  id="${row}[info_enddate]" readonly="true" class="$row_cont[end_class]" width="64"></et2-date-time-today>
 					</et2-vbox>
 				</row>
 			</rows>
@@ -48,6 +42,6 @@
 	</template>
 	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
 		<et2-button  class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"></et2-button>
-		<nextmatch id="nm" template="infolog.index.rows"/>
+		<et2-nextmatch id="nm" template="infolog.index.rows" no-visible-header="true"></et2-nextmatch>
 	</template>
 </overlay>

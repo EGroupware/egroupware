@@ -97,8 +97,24 @@
 		}
 	}
 	.infolog_CompletedClmn {
+		// Mobile fills its column horizontally instead of shrinking to fit-content (default/rows.less)
+		width: 100%;
+		max-width: 100%;
 		.infoType{
 			padding-right: 1em;
+		}
+	}
+	// Mobile's column wrapper is an et2-vbox, not the et2-hbox rows.less styles for desktop
+	et2-vbox.infolog_CompletedClmn {
+		et2-image {
+			width: 1rem;
+			*[part="image"] {
+				vertical-align: middle;
+			}
+		}
+		progress {
+			width: 100%;
+			max-width: 2em;
 		}
 	}
 
