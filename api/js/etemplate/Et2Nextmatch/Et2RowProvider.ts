@@ -301,6 +301,7 @@ export class Et2RowProvider
 		const rowElement = this._resolveSlotRowElement(rowSource);
 		const view = this._templateView(rowElement);
 		const normalizedRowElement = rowElement ? this._normalizeTemplateRowNode(rowElement, view) : null;
+		this._applyDefaultColumnMinWidths(columns, normalizedRowElement);
 		const prepared = normalizedRowElement ? await this._prepareRowTemplate(normalizedRowElement, columns, templateUrl) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
 		const noResultsTemplate = noResultsSource ? this._toTemplate(noResultsSource) : null;
@@ -361,6 +362,7 @@ export class Et2RowProvider
 			.map((c, index) => {return {...colMeta[index], ...c}});
 		const view = this._templateView(rowNode);
 		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode, view);
+		this._applyDefaultColumnMinWidths(columns, normalizedRowNode);
 		const prepared = await this._prepareRowTemplate(normalizedRowNode, columns, templateUrl);
 		const loaderSource = tplRoot.querySelector('[slot="loader"]');
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
@@ -1049,6 +1051,55 @@ export class Et2RowProvider
 		}
 
 		return newRow;
+	}
+
+	/**
+	 * Give columns without an explicit minWidth a content-aware floor, so a
+	 * column can never be squeezed narrower than what its own widgets need.
+	 * Row cells align positionally with columns (one <td> per column, same
+	 * order as the header), so column[index] pairs with cells[index].
+	 */
+	private _applyDefaultColumnMinWidths(columns : Et2DatagridColumn[], normalizedRowNode : Element | null) : void
+	{
+		if(!normalizedRowNode)
+		{
+			return;
+		}
+		const cells = Array.from(normalizedRowNode.children) as Element[];
+		columns.forEach((column, index) =>
+		{
+			if(column.minWidth)
+			{
+				return;
+			}
+			const cell = cells[index];
+			if(!cell)
+			{
+				return;
+			}
+			column.minWidth = this._defaultMinWidthForCell(cell);
+		});
+	}
+
+	/**
+	 * Sniff a row cell's widgets for date/date-time content to pick a default
+	 * minimum width (date-time needs more room than a bare date). Uses the
+	 * largest match so a stacked cell (e.g. an et2-vbox with mixed widgets)
+	 * gets the floor its widest widget actually needs.
+	 */
+	private _defaultMinWidthForCell(cell : Element) : string
+	{
+		const tags = new Set<string>([cell.tagName.toLowerCase()]);
+		cell.querySelectorAll("*").forEach((el) => tags.add(el.tagName.toLowerCase()));
+		if(tags.has("et2-date-time"))
+		{
+			return "9em";
+		}
+		if(tags.has("et2-date"))
+		{
+			return "5em";
+		}
+		return "3em";
 	}
 
 	/**

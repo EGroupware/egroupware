@@ -4730,7 +4730,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		relativeWidthUnits : number
 	) : number | null
 	{
-		return this._columnManager.columnLengthToPx(raw, totalVisibleWidthPx, availableRelativeWidthPx, relativeWidthUnits);
+		return this._columnManager.columnLengthToPx(
+			raw, totalVisibleWidthPx, availableRelativeWidthPx, relativeWidthUnits, this._columnResizeFloorPx()
+		);
 	}
 
 	/**

@@ -6,7 +6,7 @@ import {Et2DatagridColumn} from "./Et2Datagrid.types";
  * Why this exists:
  * Resize math needs explicit unit semantics so conversion stays predictable.
  */
-export type Et2DatagridColumnUnit = "px" | "%" | "fr";
+export type Et2DatagridColumnUnit = "px" | "%" | "fr" | "em";
 
 /**
  * Coarse width family used by conversion and write-back rules.
@@ -77,6 +77,10 @@ export class Et2DatagridColumnManager
 		{
 			return {kind: "pixel", unit: "px", value: parseFloat(value)};
 		}
+		if(/^\d+(\.\d+)?em$/.test(value))
+		{
+			return {kind: "pixel", unit: "em", value: parseFloat(value)};
+		}
 		if(/^\d+(\.\d+)?$/.test(value))
 		{
 			return {kind: "pixel", unit: "px", value: parseFloat(value)};
@@ -94,7 +98,13 @@ export class Et2DatagridColumnManager
 		const parsed = this.columnWidthDescriptor(raw);
 		if(parsed.value === null)
 		{
-			return "auto";
+			// Not "auto": an auto track sizes against each grid instance's own
+			// content, so the header and every row (each a separate grid
+			// container sharing the same --column-sizes value) can resolve an
+			// unset-width column to a different pixel width and drift out of
+			// alignment. `1fr` is content-independent and resolves identically
+			// everywhere.
+			return "1fr";
 		}
 		if(parsed.kind === "relative")
 		{
@@ -138,12 +148,16 @@ export class Et2DatagridColumnManager
 	 * Convert configured length into pixel space for runtime math.
 	 *
 	 * Drag interactions and steal distribution operate in physical px units.
+	 * `remPx` is the root font-size in px, used to resolve `em` lengths (the
+	 * default-minWidth floors are authored in `em` so they scale with the
+	 * user's font size the same way the CSS `minmax()` tracks do).
 	 */
 	columnLengthToPx(
 		raw : string | undefined,
 		totalVisibleWidthPx : number,
 		availableRelativeWidthPx : number,
-		relativeWidthUnits : number
+		relativeWidthUnits : number,
+		remPx : number = 16
 	) : number | null
 	{
 		if(!raw)
@@ -154,6 +168,10 @@ export class Et2DatagridColumnManager
 		if(parsed.value === null)
 		{
 			return null;
+		}
+		if(parsed.unit === "em")
+		{
+			return Math.max(0, Math.floor(parsed.value * remPx));
 		}
 		if(parsed.kind === "pixel")
 		{
@@ -304,7 +322,8 @@ export class Et2DatagridColumnManager
 						donorColumn.width,
 						drag.totalVisibleWidthPx,
 						availableRelativeWidthPx,
-						drag.relativeWidthUnits
+						drag.relativeWidthUnits,
+						resizeFloorPx
 					);
 					if(donorCurrentWidthPx === null)
 					{
@@ -314,7 +333,8 @@ export class Et2DatagridColumnManager
 						donorColumn.minWidth,
 						drag.totalVisibleWidthPx,
 						availableRelativeWidthPx,
-						drag.relativeWidthUnits
+						drag.relativeWidthUnits,
+						resizeFloorPx
 					);
 					const donorMinWidthPx = Math.max(1, resizeFloorPx, donorMinWidthPxRaw ?? 1);
 					const donorCapacityPx = Math.max(0, donorCurrentWidthPx - donorMinWidthPx);

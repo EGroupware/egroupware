@@ -52,6 +52,52 @@ describe("Et2DatagridColumnManager", () =>
 
 	/**
 	 * Contract under test:
+	 * - Unset column widths normalize to a content-independent track, not `auto`.
+	 *
+	 * Setup strategy:
+	 * - Normalize an empty/undefined width string.
+	 *
+	 * Pass criteria:
+	 * - Result is `1fr`. `auto` tracks resolve against each grid instance's own
+	 *   content, so the header row and every body row (separate grid contexts
+	 *   sharing the same --column-sizes value) can disagree on an auto column's
+	 *   width and drift out of alignment; `1fr` resolves identically everywhere.
+	 */
+	it("normalizes unset width to 1fr instead of auto", () =>
+	{
+		const manager = new Et2DatagridColumnManager();
+		assert.equal(manager.normalizeColumnWidth(undefined), "1fr", "unset width should not fall back to auto");
+		assert.equal(manager.normalizeColumnWidth(""), "1fr", "empty width should not fall back to auto");
+	});
+
+	/**
+	 * Contract under test:
+	 * - `columnLengthToPx` resolves `em` lengths against the caller's root
+	 *   font-size instead of silently treating them as unparseable.
+	 *
+	 * Setup strategy:
+	 * - Convert an `em` minWidth with the default 16px factor and an explicit
+	 *   custom factor.
+	 *
+	 * Pass criteria:
+	 * - Result scales with the font-size factor. Default-minWidth floors
+	 *   (Et2RowProvider's date/date-time/other em values) are authored in
+	 *   `em` specifically so they match the CSS `minmax()` floor; if this
+	 *   conversion silently returned null (as it did before `em` support was
+	 *   added), interactive resize would fall back to a trivial ~1px/16px
+	 *   floor instead of the intended one, and the resize-limit indicator
+	 *   would only appear once a column was already far too narrow.
+	 */
+	it("resolves em minWidth lengths using the root font-size factor", () =>
+	{
+		const manager = new Et2DatagridColumnManager();
+		assert.equal(manager.columnLengthToPx("3em", 1000, 1000, 1), 48, "3em should resolve to 48px at the default 16px root font-size");
+		assert.equal(manager.columnLengthToPx("3em", 1000, 1000, 1, 20), 60, "3em should scale with a custom root font-size factor");
+		assert.notEqual(manager.columnLengthToPx("3em", 1000, 1000, 1), null, "em lengths should not be treated as unparseable");
+	});
+
+	/**
+	 * Contract under test:
 	 * - Growing a column steals width proportionally from eligible right-side donors.
 	 *
 	 * Setup strategy:
