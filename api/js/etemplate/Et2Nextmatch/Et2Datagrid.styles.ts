@@ -98,7 +98,7 @@ export default css`
 		--column-sizes: '';
 		--column-count: 1;
 		--scrollbar-space: 0px;
-		--column-selection-width: min(16px, var(--scrollbar-space));
+		--column-selection-width: clamp(16px, var(--scrollbar-space), 24px);
 	}
 
 	:host([auto-height]) .dg-root {
@@ -121,7 +121,7 @@ export default css`
 		align-items: stretch;
 		min-height: var(--sl-spacing-x-large);
 		flex: 0 0 min-content;
-		padding-right: var(--scrollbar-space);
+		padding-right: var(--column-selection-width);
 	}
 
 	.dg-col {

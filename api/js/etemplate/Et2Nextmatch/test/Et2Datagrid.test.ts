@@ -520,8 +520,9 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
-	 * Contract: header scrollbar reservation is independent from the column
-	 * selection action width.
+	 * Contract: scrollbar reservation is a raw platform measurement; the column
+	 * chooser derives its own floored/capped width from it rather than using it
+	 * directly, so a zero-gutter platform still gets a usable chooser.
 	 * Setup: inspect the datagrid stylesheet used by the alignment fixture.
 	 * Pass: scrollbar reservation defaults to zero and the chooser uses its own
 	 * CSS custom property for width.
@@ -544,6 +545,42 @@ describe("Et2Datagrid row rendering", () =>
 			cssText,
 			":host(.dg-has-expanders)",
 			"enabling expanders should not alter scroll-body layout before rows are expanded"
+		);
+	});
+
+	/**
+	 * Contract: the column chooser button must stay usable even when the platform reports zero
+	 * scrollbar gutter (touch/mobile, macOS overlay scrollbars, or simply no overflowing content),
+	 * and the header must reserve exactly as much space as the chooser occupies so it never
+	 * overlaps the last column.
+	 * Setup: inspect the datagrid stylesheet used by the alignment fixture.
+	 * Pass: chooser width floors at 16px instead of shrinking to 0, capped at 24px, and the
+	 * header's right padding is repointed to that same custom property rather than the raw
+	 * scrollbar measurement.
+	 */
+	it("floors the column chooser width and reserves matching header space", () =>
+	{
+		const cssText = datagridStyles.cssText;
+
+		assert.include(
+			cssText,
+			"--column-selection-width: clamp(16px, var(--scrollbar-space), 24px);",
+			"chooser width should floor at 16px on zero-gutter platforms, capped at a sane maximum"
+		);
+		assert.notMatch(
+			cssText,
+			/--column-selection-width:\s*min\(/,
+			"chooser width must not shrink toward zero when there is no real scrollbar gutter"
+		);
+		assert.include(
+			cssText,
+			"padding-right: var(--column-selection-width);",
+			"header should reserve exactly as much space as the chooser button occupies"
+		);
+		assert.notMatch(
+			cssText,
+			/\.dg-header\s*{[\s\S]*padding-right:\s*var\(--scrollbar-space\)/,
+			"header padding must not point at the raw scrollbar measurement, or it under-reserves on zero-gutter platforms"
 		);
 	});
 
