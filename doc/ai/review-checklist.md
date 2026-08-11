@@ -59,6 +59,7 @@ It supplements `AGENTS.md` and avoids restating baseline repo policy.
 
 ## 8) Code quality and maintainability
 
+* Prefer best practices and readability over clever or quick solutions.  
 * Confirm complexity is justified by the problem and matches local patterns.
 * Check for hidden coupling, brittle assumptions, and hard-to-test logic.
 * Prefer concrete simplifications when they reduce risk without changing behaviour.

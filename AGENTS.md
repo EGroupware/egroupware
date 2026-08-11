@@ -94,6 +94,11 @@ similar scope.
   constraint that shapes every conversion, the `#private`-vs-TS-`private` field bug class, the
   dynamic-`this`/self-capture patterns, deliberately-out-of-scope files, postponed jQuery removal,
   and every preserved-not-fixed `KNOWN BUG`/`KNOWN QUIRK`.
+- `doc/ai/projects/et2-nextmatch-conversion.md` - per-app migration from the legacy
+  `et2_extension_nextmatch` widget (`<nextmatch>`) to the `Et2Nextmatch` web component
+  (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
+  replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
+  `columnPreferenceName` audit/fix for apps already converted.
 
 ## Security and data handling
 
