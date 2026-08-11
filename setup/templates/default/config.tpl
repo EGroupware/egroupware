@@ -428,6 +428,7 @@
 			<option value="ssl"{selected_ads_connection_ssl}>SSL</option>
      	</select>
         &nbsp; <label title="{lang_Disable_only_if_your_AD_has_problems_with_VLV_controls_AND_can_return_all_users_in_a_single_query!}">
+            <input type="hidden" value="" name="newsettings[ads_disable_vlv]"/>
             <input type="checkbox" value="disable" {checked_ads_disable_vlv_disable} name="newsettings[ads_disable_vlv]"/>
             {lang_Disable_VLV_controls}</label>
      </td>
@@ -527,6 +528,7 @@
         </select>
         <input name="newsettings[oic_username_custom]" value="{value_oic_username_custom}" size="40" placeholder="{lang_custom_attribute}"/>
         <label title="{lang_Only_check_if_you_want_allow_unverified_email_addresses!}">
+          <input type="hidden" value="" name="newsettings[oic_email_unverified]"/>
           <input type=checkbox name="newsettings[oic_email_unverified]" value="true" {checked_oic_email_unverified_true}>{lang_Allow_unverified_email}</label>
       </td>
    </tr>
@@ -566,6 +568,7 @@
       <option value="users+local+groups" {selected_account_import_type_users+local+groups} title="{lang_Local_groups_includes_groups_and_their_memberships_deleted_on_the_AD/LDAP_server!}">{lang_users,_groups_and_memberships,_keep_local_groups}</option>
      </select>
      <label title="{lang_Will_import_aliases_from_multivalued_mail_or_proxyAddresses_attribute}">
+        <input type="hidden" value="" name="newsettings[account_import_aliases]"/>
         <input type=checkbox name="newsettings[account_import_aliases]" value="true" {checked_account_import_aliases_true}>{lang_Import_aliases}</label>
      (<a href="account_import.php?export_ldif=aliases" target="_blank" title="{lang_Need_to_be_applied_before_enabling} {lang_Import_aliases}!">{lang_Download_ldif_with_changes}</a>)
     </td>
@@ -584,7 +587,8 @@
    <tr class="row_off">
      <td>{lang_What_to_do,_if_an_account_get_modified_in_EGroupware?}</td>
      <td><label>
-       <input type=checkbox name="newsettings[account_import_update_source]" value="true" {checked_account_import_update_source_true}>
+        <input type="hidden" value="" name="newsettings[account_import_update_source]"/>
+        <input type=checkbox name="newsettings[account_import_update_source]" value="true" {checked_account_import_update_source_true}>
        {lang_Update_the_account_in_the_source_(requires_write_rights!)}
      </label></td>
    </tr>
