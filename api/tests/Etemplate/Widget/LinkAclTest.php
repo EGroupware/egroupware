@@ -315,6 +315,47 @@ class LinkAclTest extends LoggedInTest
 		$this->assertNotEmpty(Api\Link::get_links('infolog', $id1, 'infolog'), 'Link was NOT created despite whitelisted exec_id');
 	}
 
+	/**
+	 * Attaching a file / linking an entry to a NOT YET SAVED entry (eg. dropping a file on the
+	 * link-widget while filling in an "add" form) must NOT require edit-rights: there's no real
+	 * id yet to check rights on, and Api\Link::link() itself only ever accumulates the pending
+	 * link into the (by-reference) $id array in that case - nothing gets written to the DB until
+	 * the entry is actually saved and the app processes the accumulated links afterwards.
+	 *
+	 * Regression test for a fix breaking exactly this: the app widget typically just omits
+	 * 'to_id' from a new entry's initial content rather than pre-seeding an empty array, so the
+	 * client can send id=null/''/0 just as often as id=[] - ajax_link() must treat all of those
+	 * the same (matching Api\Link::link()'s own "is_array($id1) || !$id1" check, api/src/Link.php).
+	 */
+	public function testAjaxLinkAllowedForNotYetSavedEntry()
+	{
+		$id2 = $this->makeInfolog();
+
+		$this->makeUser();
+		$this->switchUser($this->account['account_lid'], $this->account['account_passwd']);
+
+		// No exec_id, no grant at all - must still be allowed for every "not yet saved" shape
+		foreach ([null, '', 0, []] as $id1)
+		{
+			Link::ajax_link('infolog', $id1, [['app' => 'infolog', 'id' => $id2]]);
+
+			$response = Api\Json\Response::get()->initResponseArray();
+			$data = null;
+			foreach ($response as $item)
+			{
+				if ($item['type'] === 'data') $data = $item['data'];
+			}
+			$this->assertIsArray($data,
+				'ajax_link() should return the accumulated pending-links array for id=' . var_export($id1, true));
+		}
+
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+
+		// None of the above may actually have written a link to the DB
+		$this->assertEmpty(Api\Link::get_links('infolog', $id2, 'infolog'),
+			'Link got created despite $id being for a not-yet-saved entry');
+	}
+
 	public function testAjaxLinkCommentDeniedWithoutAccess()
 	{
 		$id1 = $this->makeInfolog();
