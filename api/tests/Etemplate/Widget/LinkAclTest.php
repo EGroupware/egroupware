@@ -152,13 +152,18 @@ class LinkAclTest extends LoggedInTest
 	 * with implicit_rights=edit (default is 'read'), so that's not reliable here - grant it
 	 * via the actual ACL grants system instead, which check_access() always honors
 	 * ($grants[$owner] & $required_rights).
+	 *
+	 * Note the account/location order: Acl::get_grants() (what check_access() reads its
+	 * $grants from) only picks up rows stored as acl_account=OWNER, acl_location=GRANTEE -
+	 * the opposite of Acl::check()/admin_cmd_acl's usual "account=grantee, location=owner"
+	 * convention used for e.g. 'run' rights below. Verified empirically, not just from docs.
 	 */
 	protected function grantInfologEdit() : void
 	{
 		$command = new \admin_cmd_acl(true, $this->account_id, 'infolog', 'run', Acl::READ);
 		$command->run();
 
-		$grant = new \admin_cmd_acl(true, $this->account_id, 'infolog', $GLOBALS['egw_info']['user']['account_id'], Acl::EDIT);
+		$grant = new \admin_cmd_acl(true, $GLOBALS['egw_info']['user']['account_id'], 'infolog', $this->account_id, Acl::EDIT);
 		$grant->run();
 	}
 
