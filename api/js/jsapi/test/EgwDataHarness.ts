@@ -38,6 +38,13 @@ export interface FakeJsonCall
 	sent : boolean;
 	/** simulate the server answering this request */
 	respond(result : any) : void;
+	/**
+	 * Simulate the request failing (network error, no response, ...) - the real
+	 * JsonRequest.sendRequest() never calls its success callback in this case, and its
+	 * returned promise resolves to `undefined` (its .catch() shows the default error
+	 * message, then swallows rather than rethrowing).
+	 */
+	fail() : void;
 }
 
 export interface EgwDataEnv extends EgwCoreEnv
@@ -46,6 +53,8 @@ export interface EgwDataEnv extends EgwCoreEnv
 	jsonCalls : FakeJsonCall[];
 	/** respond to the most recently issued egw.json() call */
 	respondToLastJsonCall(result : any) : void;
+	/** fail the most recently issued egw.json() call - see FakeJsonCall.fail() */
+	failLastJsonCall() : void;
 }
 
 export async function createEgwDataEnv() : Promise<EgwDataEnv>
@@ -72,14 +81,25 @@ export async function createEgwDataEnv() : Promise<EgwDataEnv>
 		unregisterJSONPlugin: () => {},
 		json: (menuaction : string, parameters : any[], callback : Function, context : any) =>
 		{
+			// mirrors JsonRequest.sendRequest()'s real contract: its returned promise
+			// resolves once the "server" answers - to the callback's return value on
+			// success (dataFetch() doesn't use it, just checks it isn't undefined), or
+			// to undefined on failure, since the success callback is never invoked then.
+			let resolveSendRequest : (result : any) => void;
+			const sendRequestPromise = new Promise<any>((resolve) => { resolveSendRequest = resolve; });
 			const call : FakeJsonCall = {
 				menuaction,
 				parameters,
 				sent: false,
-				respond(result : any) { callback.call(context, result); }
+				respond(result : any)
+				{
+					callback.call(context, result);
+					resolveSendRequest(result ?? true);
+				},
+				fail() { resolveSendRequest(undefined); }
 			};
 			env.jsonCalls.push(call);
-			return {sendRequest: () => { call.sent = true; }};
+			return {sendRequest: () => { call.sent = true; return sendRequestPromise; }};
 		}
 	}));
 
@@ -88,6 +108,13 @@ export async function createEgwDataEnv() : Promise<EgwDataEnv>
 		const call = env.jsonCalls[env.jsonCalls.length - 1];
 		if (!call) throw new Error('No egw.json() call to respond to');
 		call.respond(result);
+	};
+
+	env.failLastJsonCall = () =>
+	{
+		const call = env.jsonCalls[env.jsonCalls.length - 1];
+		if (!call) throw new Error('No egw.json() call to fail');
+		call.fail();
 	};
 
 	const importMap = env.window.document.createElement('script');

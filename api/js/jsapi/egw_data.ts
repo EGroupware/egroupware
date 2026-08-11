@@ -70,10 +70,15 @@ export interface DataModule
 	 * @param _knownUids is an array of uids already known to the client.
 	 *  This parameter may be null in order to indicate that the client
 	 *  currently has no data for the given filter settings.
+	 * @return a Promise that rejects if the request failed (network error, non-2xx response,
+	 *  malformed response, ...) - the default error message/logging still happens regardless.
+	 *  On success _callback has already run by the time the promise resolves; the promise
+	 *  itself carries no data, it only signals completion/failure for callers that need to
+	 *  know a fetch didn't just silently never call _callback.
 	 */
 	dataFetch(_execId : string, _queriedRange : {start? : number, num_rows? : number, refresh? : string|string[], no_data? : boolean, only_data? : boolean},
 	          _filters : object, _widgetId : string, _callback : Function, _context : any,
-	          _knownUids? : string[]) : void;
+	          _knownUids? : string[]) : Promise<void>;
 
 	/**
 	 * Turn on long-term client side cache of a particular request
@@ -615,7 +620,7 @@ class Data implements DataModule
 	 * instance's own #cacheCallback/parseServerResponse().
 	 */
 	dataFetch = (_execId : string, _queriedRange : any, _filters : any, _widgetId : string,
-			_callback : Function, _context : any, _knownUids? : string[]) : void =>
+			_callback : Function, _context : any, _knownUids? : string[]) : Promise<void> =>
 	{
 		const self = this;
 		var lm = this.#lastModification;
@@ -652,7 +657,7 @@ class Data implements DataModule
 
 		// Regular request to ajax_get_rows, incl. the long-term query cache check.
 		// Named so a registered fetchCallback (see below) can fall back to it asynchronously.
-		function sendRequest()
+		function sendRequest() : Promise<void>
 		{
 			// Check to see if we have long-term caching of the query and its results
 			if(window.localStorage && _context.prefix && self.#cacheCallback[_context.prefix])
@@ -699,7 +704,7 @@ class Data implements DataModule
 							if(!needs_update)
 							{
 								// Cached data is new enough, skip the server call
-								return;
+								return Promise.resolve();
 							}
 						}
 					}
@@ -724,7 +729,20 @@ class Data implements DataModule
 				this,
 				true
 			);
-			request.sendRequest();
+			// request.sendRequest()'s own promise already resolves to `undefined` on any
+			// failure (network error, no response, bad JSON, abort - its .catch() calls the
+			// default error handler for the message/logging, then swallows rather than
+			// rethrowing) and to the truthy response data on success. _callback above has
+			// already run by the time this settles. Surface the swallowed failure as a
+			// rejection here so callers can await dataFetch() to know the request failed,
+			// instead of _callback silently never firing.
+			return request.sendRequest().then((result : any) =>
+			{
+				if(typeof result === "undefined")
+				{
+					throw new Error("dataFetch request to " + _widgetId + " failed");
+				}
+			});
 		}
 
 		// Give a registered app callback (see dataRegisterFetch) the first chance to
@@ -739,7 +757,7 @@ class Data implements DataModule
 				{
 					// result may be the {order, data, total, ...} shape directly, or a
 					// Promise resolving to it (or to false/undefined to fall back)
-					Promise.resolve(result).then(function(res)
+					return Promise.resolve(result).then(function(res)
 					{
 						if(res)
 						{
@@ -747,20 +765,19 @@ class Data implements DataModule
 						}
 						else
 						{
-							sendRequest();
+							return sendRequest();
 						}
 					}, function(err)
 					{
 						// misbehaving fetchCallback (rejected instead of resolving false) - fall back rather than hang
 						egw.debug('warn', 'dataRegisterFetch callback for prefix "'+_context.prefix+'" rejected, falling back to ajax_get_rows', err);
-						sendRequest();
+						return sendRequest();
 					});
-					return;
 				}
 			}
 		}
 
-		sendRequest();
+		return sendRequest();
 	}
 
 	/**
@@ -1039,14 +1056,15 @@ class DataStorage implements DataStorageModule
 					var egwInstance = this;
 					self.#queue[hash] = {"uids": [], "timer": null};
 					self.#queue[hash].timer = window.setTimeout(function () {
-						// Fetch the data
+						// Fetch the data - failure is already reported via the default error
+						// message/logging, nothing more to do here.
 						egwInstance.dataFetch(_execId, {
 								"start": 0,
 								"num_rows": 0,
 								"only_data": true,
 								"refresh": self.#queue[hash].uids
 							},
-							[], _widgetId, null, _context, null);
+							[], _widgetId, null, _context, null).catch(() => {});
 
 						// Delete the queue entry
 						delete self.#queue[hash];
@@ -1260,8 +1278,9 @@ class DataStorage implements DataStorageModule
 				}
 			}
 
-			// need to send nextmatch filters too, as server-side will merge old version from request otherwise
-			this.dataFetch(_execId, {'refresh':uid}, filters, nextmatchId, false, context, [uid]);
+			// need to send nextmatch filters too, as server-side will merge old version from request otherwise -
+			// failure is already reported via the default error message/logging, nothing more to do here.
+			this.dataFetch(_execId, {'refresh':uid}, filters, nextmatchId, false, context, [uid]).catch(() => {});
 
 			return true;
 		}

@@ -414,7 +414,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		{
 			try
 			{
-				this.host.egw().dataFetch(
+				const fetchPromise = this.host.egw().dataFetch(
 					execId,
 					{refresh: [bareRowId]},
 					filters,
@@ -465,6 +465,11 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 					{type, prefix: this.getDataStorePrefix()},
 					[bareRowId]
 				);
+				// dataFetch() rejects if the underlying request failed - without this, a failed
+				// request never calls the success callback above, leaving this promise hanging
+				// forever: the .finally() below never runs, so this row stays stuck in
+				// _inFlightRefreshes and never refreshes again.
+				fetchPromise?.catch(reject);
 			}
 			catch(e)
 			{
@@ -511,7 +516,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 		{
 			try
 			{
-				this.host.egw().dataFetch(
+				const fetchPromise = this.host.egw().dataFetch(
 					execId,
 					request,
 					filters,
@@ -569,6 +574,12 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 					context,
 					null
 				);
+				// dataFetch() rejects if the underlying request failed (network error, no
+				// response, ...) - without this, a failed request never calls the success
+				// callback above, leaving this promise - and the datagrid's in-flight tracking
+				// for this page - hanging forever, so a later refresh/retry sees the range as
+				// still "in flight" and skips it.
+				fetchPromise?.catch(reject);
 			}
 			catch(e)
 			{

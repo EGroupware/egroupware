@@ -229,6 +229,22 @@ describe('egw_data.js (data / data_storage)', () =>
 			assert.deepEqual(env.egw().dataGetUIDdata('appA::2').data, {name: 'two'});
 		});
 
+		it('returns a promise that rejects, and never calls _callback, when the request fails', async() =>
+		{
+			const received : any[] = [];
+			let rejected = false;
+			const fetchPromise = env.egw('appA').dataFetch('exec1', {start: 0, num_rows: 2}, {}, 'widget1',
+				(result : any) => received.push(result), {prefix: 'appA'});
+			fetchPromise.catch(() => { rejected = true; });
+
+			assert.equal(env.jsonCalls.length, 1);
+			env.failLastJsonCall();
+			await flushMicrotasks();
+
+			assert.isTrue(rejected, 'dataFetch() must reject so callers relying on the promise (rather than _callback) can detect the failure');
+			assert.equal(received.length, 0, '_callback must never fire for a failed request');
+		});
+
 		it('isolates dataRegisterFetch callbacks per app - a different app with the same prefix must not see them', async() =>
 		{
 			const interceptA = sinon.stub().returns({order: ['1'], data: {'1': {v: 'A'}}, total: 1});
