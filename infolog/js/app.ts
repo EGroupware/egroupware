@@ -19,6 +19,7 @@ import {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 
 /**
  * UI for Infolog
@@ -330,6 +331,44 @@ class InfologApp extends EgwApp
 			child_button.disabled = !children;
 		}
 		nm_open_popup(_action, _senders);
+	}
+
+	/**
+	 * Confirm & delete a single entry from the edit popup's own Delete button.
+	 *
+	 * Uses the same plain "Delete selected entries?" confirmation and the same
+	 * infolog.infolog_ui.ajax_action server action as the list's row-level Delete
+	 * action (confirm_delete()), instead of rendering a separate server-side
+	 * confirmation template - there's no nextmatch/selection here to drive
+	 * confirm_delete()/nm_open_popup() directly.
+	 *
+	 * @param info_id
+	 * @param has_subs whether this entry has sub-entries, enabling "delete including sub-entries"
+	 */
+	confirm_delete_edit(info_id, has_subs)
+	{
+		const egw = this.egw;
+		const DELETE = 1, DELETE_SUB = 2, CANCEL = 0;
+		const buttons = [
+			{button_id: DELETE, id: "delete", label: egw.lang("Yes - Delete"), image: "check"},
+			{
+				button_id: DELETE_SUB, id: "delete_sub", label: egw.lang("Yes - Delete including sub-entries"),
+				image: "check", disabled: !has_subs
+			},
+			{button_id: CANCEL, id: "cancel", label: egw.lang("No - Cancel"), image: "cancelled", default: true}
+		];
+		Et2Dialog.show_dialog((button_id) =>
+		{
+			if(button_id !== DELETE && button_id !== DELETE_SUB)
+			{
+				return;
+			}
+			egw.json("infolog.infolog_ui.ajax_action", [button_id === DELETE_SUB ? "delete_sub" : "delete", [info_id], false])
+				.sendRequest(false);	// false = synchronious request, so the delete completes before we close
+			window.close();
+		}, egw.lang("Delete selected entries?"), egw.lang("Delete"), undefined, buttons,
+			Et2Dialog.QUESTION_MESSAGE, undefined, egw);
+		return false;
 	}
 
 	private _action_ids = [];

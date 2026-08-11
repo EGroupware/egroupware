@@ -1896,70 +1896,6 @@ class infolog_ui
 		if ($referer) $this->tmpl->location($referer);
 	}
 
-	/**
-	 * Deletes an InfoLog entry
-	 *
-	 * @param array|int $values info_id (default _GET[info_id])
-	 * @param string $_referer
-	 * @param string $called_by
-	 * @param boolean $skip_notification Do not send notification of deletion
-	 */
-	function delete($values=0,$_referer='',$called_by='',$skip_notification=False)
-	{
-		$info_id = (int) (is_array($values) ? $values['info_id'] : ($values ?: $_GET['info_id'] ?? null));
-		$referer = is_array($values) ? $values['referer'] : $_referer;
-
-		if (!is_array($values) && $info_id > 0 && !$this->bo->anzSubs($info_id))	// entries without subs get confirmed by javascript
-		{
-			$values = array('delete' => true);
-		}
-		//echo "<p>infolog_ui::delete(".print_r($values,true).",'$referer','$called_by') info_id=$info_id</p>\n";
-
-		if (is_array($values) || $info_id <= 0)
-		{
-			if (($values['delete'] || $values['delete_subs']) && $info_id > 0 && $this->bo->check_access($info_id,Acl::DELETE))
-			{
-				$deleted = $this->bo->delete($info_id,$values['delete_subs'],$values['info_id_parent'], $skip_notification);
-			}
-			if ($called_by)		// direct call from the same request
-			{
-				return $deleted ? lang('InfoLog entry deleted') : '';
-			}
-			if ($values['called_by'] == 'edit')	// we run in the edit popup => give control back to edit
-			{
-				$this->edit(array(
-					'info_id' => $info_id,
-					'button'  => array('deleted' => true),	// not delete!
-					'referer' => $referer,
-					'msg'     => $deleted ? lang('Infolog entry deleted') : '',
-				));
-			}
-			return $referer ? $this->tmpl->location($referer) : $this->index();
-		}
-		$readonlys = $values = array();
-		$values['main'][1] = $this->get_info($info_id,$readonlys['main']);
-
-		$this->tmpl->read('infolog.delete');
-
-		$values['nm'] = array(
-			'action'         => 'sp',
-			'action_id'      => $info_id,
-			'options-filter' => $this->filters,
-			'get_rows'       => 'infolog.infolog_ui.get_rows',
-			'no_filter2'     => True
-		);
-		$values['main']['no_actions'] = $values['nm']['no_actions'] = True;
-
-		$persist['info_id'] = $info_id;
-		$persist['referer'] = $referer;
-		$persist['info_id_parent'] = $values['main'][1]['info_id_parent'];
-		$persist['called_by'] = $called_by;
-
-		$GLOBALS['egw_info']['flags']['app_header'] = lang('InfoLog').' - '.lang('Delete');
-		$GLOBALS['egw_info']['flags']['params']['manual'] = array('page' => 'ManualInfologDelete');
-
-		$this->tmpl->exec('infolog.infolog_ui.delete',$values,array(),$readonlys,$persist,$called_by == 'edit' ? 2 : 0);
-	}
 
 	/**
 	 * Edit/Create an InfoLog Entry
@@ -2120,23 +2056,7 @@ class infolog_ui
 						$record_count = $history->delete_field($info_id, 'De');
 					}
 				}
-				elseif ($button == 'delete' && $info_id > 0)
-				{
-					if (!$referer && $action) $referer = array(
-						'menuaction' => 'infolog.infolog_ui.index',
-						'action' => $action,
-						'action_id' => $action_id
-					);
-					if (!($content['msg'] = $this->delete($info_id,$referer,'edit'))) return;	// checks ACL first
-
-					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
-				}
-				// called again after delete confirmation dialog
-				elseif ($button == 'deleted'  && $content['msg'])
-				{
-					Framework::refresh_opener($content['msg'],'infolog',$info_id,'delete');
-				}
-				if ($button == 'save' || $button == 'cancel' || $button == 'delete' || $button == 'deleted')
+				if ($button == 'save' || $button == 'cancel')
 				{
 					if ($no_popup)
 					{
