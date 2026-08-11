@@ -1,3 +1,15 @@
+egroupware-docker (26.8.20260811) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+  * Admin: fix TypeError in clearing openid access-tokens on password reset
+  * Auth: fix TypeError authenticating with OAuth Bearer token / id_token cookie
+  * Calendar: fix TypeError when importing iCal, one more date not being a DateTime
+  * Calendar: make sure notifications are in user timezone
+  * OpenID: diverse fixes / regressions after the update in the last release
+  * WebAuthN: fixed existing passkeys were not longer working due to missing proxy configuration
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 11 Aug 2026 13:12:59 +0200
+
 egroupware-docker (26.8.20260804) hardy; urgency=low
 
   * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
