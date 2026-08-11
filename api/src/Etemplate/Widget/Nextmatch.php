@@ -413,7 +413,7 @@ class Nextmatch extends Etemplate\Widget
 			$filters['col_filter'] = array_filter($filters['col_filter'], fn($key) => !is_int($key), ARRAY_FILTER_USE_KEY);
 		}
 		// remove non-string search patterns not used in UI
-		if (empty($filters['search']) || !is_string($filters['search']))
+		if (!is_string($filters['search']))
 		{
 			unset($filters['search']);
 		}
