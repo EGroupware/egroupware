@@ -11,8 +11,8 @@
 
 > Every other method (including a developer installation by cloning the repo) is way more complicated AND does not include all features, as part's of EGroupware are running in different containers, eg. the push-server!
 
-### Installing EGroupware 23.1 via Docker for non-Linux environments or not supported Linux distros:
-EGroupware 23.1 can be installed via Docker, in fact the DEB/RPM packages also does that. Instructions on how to run EGroupware in Docker are in our [Wiki](https://github.com/EGroupware/egroupware/wiki/Docker-compose-installation) and in [doc/docker](https://github.com/EGroupware/egroupware/tree/23.1/doc/docker) subdirectory.
+### Installing EGroupware 26 via Docker for non-Linux environments or not supported Linux distros:
+EGroupware 26 can be installed via Docker, in fact the DEB/RPM packages also does that. Instructions on how to run EGroupware in Docker are in our [Wiki](https://github.com/EGroupware/egroupware/wiki/Docker-compose-installation) and in [doc/docker](https://github.com/EGroupware/egroupware/tree/26/doc/docker) subdirectory.
 
 ### Installing EGroupware development version via Docker:
 * this is the preferred developer installation, as it contains eg. a push-server container
@@ -47,8 +47,8 @@ cd /path/to/your/egroupware
 setup/setup-cli.php # will tell you if a schema-update is necessary
 ```
 install-cli.php supports the following "channels":
-- release: tagged maintenance releases only eg. 19.1.20200701
-- bugfix:  release-branch incl. latest bugfixes eg. 20.1, if you are currently on 20.1.20200710
+- release: tagged maintenance releases only eg. 26.8.20260804
+- bugfix:  release-branch incl. latest bugfixes eg. 26, if you are currently on 26.8.20260804
 - \<branch\>: switch to given branch 
 - master:  latest development for next release
 
