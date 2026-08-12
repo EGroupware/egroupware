@@ -184,6 +184,14 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 
 			foreach($value_in as $key => $value)
 			{
+				// Link-type filters carry an 'app' key.  Both app & id are required
+				// for a usable filter - drop a partial (eg. app picked, no entry selected) value
+				// instead of saving it.
+				if(is_array($value) && array_key_exists('app', $value) && (empty($value['app']) || empty($value['id'])))
+				{
+					continue;
+				}
+
 				// Client side cf widget automatically prefixes #
 				$valid[substr($key,strlen(self::$prefix))] = $value;
 			}
