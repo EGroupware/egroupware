@@ -1477,23 +1477,32 @@ class admin_mail
 	 * via a real browser form POST (Etemplate2::postSubmit(), not ajax), so the server can
 	 * respond with the file directly.
 	 *
-	 * @param array $content current (posted) form content, 'acc_id' used to look up the key
+	 * @param array $content current (posted) form content, 'acc_id' used to look up the key,
+	 *  'smime_import_passphrase' (shared with the import-certificate row) used to unlock it if
+	 *  the stored p12 is itself passphrase-protected - needed for the CSR branch, which has to
+	 *  actually extract the private key (the p12 export branch just streams the stored blob
+	 *  as-is, so it works even without a passphrase).
 	 * @param int $account_id already resolved from $content['called_for'] by the caller
 	 * @param bool $csr true: export a CSR generated from the stored key, false: export the p12 itself
 	 * @return string|null translated error message, or null on success (exit()s, does not return)
 	 */
 	private function smimeExportFile(array $content, $account_id, $csr)
 	{
-		$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], '', $account_id);
+		$passphrase = $content['smime_import_passphrase'] ?: '';
+		$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], $passphrase, $account_id);
 
 		if ($csr)
 		{
-			if (empty($acc_smime['pkey']))
+			if ($acc_smime === false)
 			{
 				return lang('No S/MIME private key stored for this account.');
 			}
+			if (empty($acc_smime['pkey']))
+			{
+				return lang('Could not decrypt stored private key, wrong passphrase?');
+			}
 			$dn = !empty($acc_smime['cert']) ? Mail\Smime::dn_from_cert($acc_smime['cert']) : array();
-			if (!($data = Mail\Smime::generate_csr($acc_smime['pkey'], $dn)))
+			if (!($data = Mail\Smime::generate_csr($acc_smime['pkey'], $dn, $passphrase)))
 			{
 				return lang('Could not generate CSR.');
 			}
@@ -1654,8 +1663,12 @@ class admin_mail
 		}
 		$smime = new Mail\Smime();
 		$cert_data = $smime->generate_certificate($dn, null, $passphrase, $validity);
+		// both args must be the same passphrase: privPassphrase unlocks the just-generated privkey
+		// PEM (encrypted with it above), exportPassword protects the resulting p12 container itself -
+		// without the latter, the p12 ends up with NO container password even though the user chose
+		// one, and a later get_acc_smime() (which checks the CONTAINER password) fails to open it.
 		if (empty($cert_data['cert']) || empty($cert_data['privkey']) ||
-			!($p12 = Mail\Smime::build_pkcs12($cert_data['privkey'], $cert_data['cert'], $passphrase ?: '')))
+			!($p12 = Mail\Smime::build_pkcs12($cert_data['privkey'], $cert_data['cert'], $passphrase ?: '', $passphrase ?: '')))
 		{
 			$tpl->set_validation_error('smimeGenerate', lang('Could not generate certificate!'));
 			return null;
@@ -1699,7 +1712,9 @@ class admin_mail
 			$tpl->set_validation_error('smime_import_passphrase', lang('Could not decrypt stored private key, wrong passphrase?'));
 			return null;
 		}
-		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase)))
+		// re-apply the same passphrase as the container password too, so the re-combined p12 keeps
+		// the same protection level it had before (see matching comment in generate_smime_key())
+		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase, $passphrase)))
 		{
 			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
 			return null;

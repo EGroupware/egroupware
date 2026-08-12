@@ -367,7 +367,11 @@ class Smime extends Horde_Crypt_Smime
 	 */
 	public static function get_acc_smime($acc_id, $passphrase = '', $account_id = null)
 	{
-		if (Api\Cache::getSession('mail', 'smime_passphrase'))
+		// only fall back to the cached passphrase if the caller didn't supply one: the cache is a
+		// single session-wide slot, NOT keyed by acc_id, so for a user with multiple S/MIME-enabled
+		// accounts it can hold a DIFFERENT account's passphrase - an explicitly given passphrase
+		// (eg. freshly typed into a form) must take priority over that stale/wrong cached value.
+		if (empty($passphrase) && Api\Cache::getSession('mail', 'smime_passphrase'))
 		{
 			$passphrase = Api\Cache::getSession('mail', 'smime_passphrase');
 		}

@@ -11,6 +11,7 @@ require_once realpath(__DIR__.'/../../api/tests/LoggedInTest.php');
 
 use EGroupware\Api;
 use EGroupware\Api\Etemplate;
+use EGroupware\Api\Mail;
 
 /**
  * Tests the input-validation branches of admin_mail's S/MIME key
@@ -189,5 +190,133 @@ class SmimeGenerateTest extends Api\LoggedInTest
 		$result = admin_mail::verifySmimeAccountAccess(999999999, null, false);
 
 		$this->assertNull($result, 'an unknown/foreign acc_id must be rejected even for the current user\'s own account');
+	}
+
+	private function callExportFile(array $content, $account_id, $csr)
+	{
+		$ref = new ReflectionMethod(admin_mail::class, 'smimeExportFile');
+		$ref->setAccessible(true);
+		return $ref->invoke(new admin_mail(), $content, $account_id, $csr);
+	}
+
+	/**
+	 * Regression test for a real production bug: smimeExportFile() used to hardcode an empty
+	 * passphrase when extracting the stored private key for CSR export, so any account whose key
+	 * genuinely has a passphrase (the normal/recommended case) reported "No S/MIME private key
+	 * stored for this account" - even though the exact same key worked fine for signing/
+	 * decrypting mail (mail_compose::_encrypt() does thread a passphrase through). The p12 export
+	 * branch was unaffected (it streams the stored blob as-is, no extraction needed), which is
+	 * why only "Export CSR" was reported broken.
+	 *
+	 * Also verifies the two failure modes are now distinguished: "not found at all" vs "found but
+	 * couldn't be decrypted" - the old code conflated both into the same misleading message.
+	 */
+	public function testSmimeExportFileThreadsPassphraseForCsr()
+	{
+		$acc_id = 1; // per project memory: acc_id=1 Stalwart/JMAP test account
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+
+		try
+		{
+			// no credential at all -> "not stored"
+			$result = $this->callExportFile(array('acc_id' => $acc_id), $account_id, true);
+			$this->assertSame(lang('No S/MIME private key stored for this account.'), $result);
+
+			// create a passphrase-protected key, matching a real user's normal setup
+			$tpl = new Etemplate();
+			$genContent = array(
+				'acc_id' => $acc_id,
+				'smime_gen_dn' => json_encode(array(
+					'commonName' => 'Export File Test',
+					'emailAddress' => 'exportfiletest@example.org',
+					'passphrase' => 'correct horse',
+				)),
+			);
+			$ref = new ReflectionMethod(admin_mail::class, 'generate_smime_key');
+			$ref->setAccessible(true);
+			$cred_id = $ref->invokeArgs(null, array($genContent, $tpl, $account_id));
+			$this->assertNotNull($cred_id, 'test setup: generating the key must succeed');
+
+			// found, but wrong passphrase -> distinguished from "not found"
+			$result = $this->callExportFile(
+				array('acc_id' => $acc_id, 'smime_import_passphrase' => 'wrong'), $account_id, true);
+			$this->assertSame(lang('Could not decrypt stored private key, wrong passphrase?'), $result);
+
+			// correct passphrase: verify the underlying pieces smimeExportFile() calls succeed
+			// together (can't call smimeExportFile() itself for this case - it exit()s on success)
+			$acc_smime = Mail\Smime::get_acc_smime($acc_id, 'correct horse', $account_id);
+			$this->assertNotEmpty($acc_smime['pkey'] ?? null,
+				'get_acc_smime() must extract pkey when given the correct passphrase');
+			$csr = Mail\Smime::generate_csr($acc_smime['pkey'], array(), 'correct horse');
+			$this->assertNotFalse($csr,
+				'generate_csr() must succeed with the same passphrase - the extracted pkey PEM stays passphrase-protected');
+			$this->assertStringContainsString('BEGIN CERTIFICATE REQUEST', $csr);
+		}
+		finally
+		{
+			Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+		}
+	}
+
+	/**
+	 * Regression test for a real production bug: Smime::get_acc_smime() let a session-cached
+	 * passphrase silently OVERRIDE any explicitly given one. Api\Cache::getSession('mail',
+	 * 'smime_passphrase') is a single session-wide slot, NOT keyed by acc_id - a user with
+	 * multiple S/MIME-enabled mail accounts who recently decrypted/sent mail on account A ends up
+	 * with account A's passphrase cached. Trying to export a CSR for account B (typed correctly
+	 * into the form) then had that correct, explicit passphrase silently discarded in favour of
+	 * account A's wrong one, producing the same misleading "no key" error.
+	 */
+	public function testGetAccSmimeExplicitPassphraseOverridesWrongCachedOne()
+	{
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		// clearly-fake acc_ids: neither generate_smime_key() nor get_acc_smime() validate account
+		// existence (Credentials has no FK on acc_id), so avoid any risk of touching a real account
+		$accounts = array(999901 => 'account A passphrase', 999902 => 'account B passphrase');
+		$tpl = new Etemplate();
+		$genRef = new ReflectionMethod(admin_mail::class, 'generate_smime_key');
+		$genRef->setAccessible(true);
+
+		foreach ($accounts as $acc_id => $passphrase)
+		{
+			Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+			$genContent = array(
+				'acc_id' => $acc_id,
+				'smime_gen_dn' => json_encode(array(
+					'commonName' => "Cache Precedence Test $acc_id",
+					'emailAddress' => "cacheprecedence$acc_id@example.org",
+					'passphrase' => $passphrase,
+				)),
+			);
+			$cred_id = $genRef->invokeArgs(null, array($genContent, $tpl, $account_id));
+			$this->assertNotNull($cred_id, "test setup: generating the key for acc_id=$acc_id must succeed");
+		}
+
+		try
+		{
+			// simulate account A's passphrase being cached from earlier, unrelated mail activity
+			Api\Cache::setSession('mail', 'smime_passphrase', $accounts[999901]);
+
+			// exporting account B WITHOUT an explicit passphrase falls back to the (wrong, account
+			// A's) cache - documents the pre-existing fallback behaviour, not the bug itself
+			$stale = Mail\Smime::get_acc_smime(999902, '', $account_id);
+			$this->assertEmpty($stale['pkey'] ?? null,
+				'without an explicit passphrase, the wrong cached one is used and extraction fails (expected fallback behaviour)');
+
+			// exporting account B WITH account B's correct, explicit passphrase must succeed despite
+			// account A's passphrase still being cached - this is the actual fix
+			$correct = Mail\Smime::get_acc_smime(999902, $accounts[999902], $account_id);
+			$this->assertNotEmpty($correct['pkey'] ?? null,
+				'an explicitly given correct passphrase must take priority over a stale cached one for a different account');
+		}
+		finally
+		{
+			Api\Cache::setSession('mail', 'smime_passphrase', null);
+			foreach (array_keys($accounts) as $acc_id)
+			{
+				Mail\Credentials::delete($acc_id, $account_id, Mail\Credentials::SMIME);
+			}
+		}
 	}
 }
