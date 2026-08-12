@@ -116,7 +116,6 @@ $bins = array(
 	'php'      => PHP_BINARY,
 	'git'      => ['/usr/local/bin/git', '/usr/bin/git'],
 	'composer' => ['/usr/local/bin/composer', '/usr/bin/composer', '/usr/bin/composer.phar'],
-	// npm is no hard requirement and should be the last in the list!
 	'npm'      => ['/usr/local/bin/npm', '/usr/bin/npm'],
 );
 
@@ -146,15 +145,7 @@ foreach($bins as $name => $binaries)
 	{
 		$bins[$name] = $$name = false;
 		error_log("Could not find $name command!");
-		if (!in_array($name, ['npm']))
-		{
-			exit(1);
-		}
-		else
-		{
-			error_log("npm is required to minify JavaScript and CSS files to improve performance.");
-			break;
-		}
+		exit(1);
 	}
 }
 
@@ -288,29 +279,26 @@ if (run_cmd($cmd, 'composer') === 0 && in_array('--prefer-source', $composer_arg
 }
 
 // update npm dependencies, minify css and run rollup to build javascript
-if ($npm)
+run_cmd($npm.' install --legacy-peer-deps', 'npm install');
+
+run_cmd($npm.' run css', 'npm run css');
+
+if (!file_exists($chunks=__DIR__.'/chunks') || !is_dir($chunks))
 {
-	run_cmd($npm.' install --legacy-peer-deps', 'npm install');
-
-	run_cmd($npm.' run css', 'npm run css');
-
-    if (!file_exists($chunks=__DIR__.'/chunks') || !is_dir($chunks))
-    {
-	    if (file_exists($chunks) && !is_dir($chunks))
-	    {
-            unlink($chunks);
-	    }
-	    if (!mkdir($chunks, 0755) && !is_dir($chunks))
-	    {
-		    throw new \RuntimeException(sprintf('Cloud NOT create directory "%s"!', $chunks));
-	    }
-    }
-
-	run_cmd($npm .' run build', 'rollup (npm run build)');
+	if (file_exists($chunks) && !is_dir($chunks))
+	{
+		unlink($chunks);
+	}
+	if (!mkdir($chunks, 0755) && !is_dir($chunks))
+	{
+		throw new \RuntimeException(sprintf('Cloud NOT create directory "%s"!', $chunks));
+	}
 }
 
+run_cmd($npm .' run build', 'rollup (npm run build)');
+
 // if docs site directory exists, keep it updated
-if ($npm && file_exists(__DIR__.'/doc/dist/site'))
+if (file_exists(__DIR__.'/doc/dist/site'))
 {
  	if (run_cmd($npm .' run docs', 'build docs (npm run docs)') == 0)
     {
