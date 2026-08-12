@@ -1743,7 +1743,8 @@ export class AdminApp extends EgwApp
 	 *
 	 * smime_import_cert is deliberately NOT touched here: it stays gated by
 	 * smime_certFileChanged() alone (whether a certificate file is actually
-	 * selected), independent of the key existing.
+	 * selected), independent of the key existing. smime_passphrase is shared
+	 * by both states, so it's never toggled here either (always enabled).
 	 *
 	 * @param hasKey true once a private key is stored for the account
 	 */
@@ -1756,9 +1757,8 @@ export class AdminApp extends EgwApp
 			if (typeof widget.set_readonly === 'function') widget.set_readonly(readonly);
 			else widget.readonly = readonly;
 		};
-		['smimeGenerate', 'smimeKeyUpload', 'smime_pkcs12_password'].forEach(id => setReadonly(id, hasKey));
-		['smime_export_p12', 'smime_delete_p12', 'smimeCertUpload', 'smime_import_passphrase']
-			.forEach(id => setReadonly(id, !hasKey));
+		['smimeGenerate', 'smimeKeyUpload'].forEach(id => setReadonly(id, hasKey));
+		['smime_export_p12', 'smime_delete_p12', 'smimeCertUpload'].forEach(id => setReadonly(id, !hasKey));
 	}
 
 	/**

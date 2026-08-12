@@ -1014,3 +1014,8 @@ you will need to remove the subcategories before you can delete this category	ad
 your last submission was less then %1 days ago!	admin	de	Ihre letzte Übertragung liegt weniger als %1 Tage zurück!
 your name	admin	de	Ihr Name
 your session could not be verified.	admin	de	Ihre Sitzung konnte nicht verifiziert werden.
+only if the private key (new upload, or already stored) is passphrase-protected	admin	de	Nur falls der private Schlüssel (neuer Upload oder bereits gespeichert) durch eine Passphrase geschützt ist
+intermediate/ca certificate (optional)	admin	de	Zwischenzertifikat/CA-Zertifikat (optional)
+this s/mime private key is passphrase-protected. please enter the passphrase above and try again.	admin	de	Dieser private S/MIME-Schlüssel ist durch eine Passphrase geschützt. Bitte geben Sie die Passphrase oben ein und versuchen Sie es erneut.
+the passphrase entered was not correct, please try again.	admin	de	Die eingegebene Passphrase war nicht korrekt, bitte versuchen Sie es erneut.
+required to export or import a certificate for this key	admin	de	Erforderlich, um ein Zertifikat für diesen Schlüssel zu exportieren oder zu importieren

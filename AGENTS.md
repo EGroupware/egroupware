@@ -64,11 +64,14 @@ Primary expectations:
     it). Before adding a phrase, grep for it tagged `common` across all lang files (not just `api/lang/`) - skip
     adding it again if found, regardless of which file it lives in.
   - Determine the *correct* app-name by checking which apps' lang files are actually guaranteed to be loaded for
-    the code path the phrase lives in, not just which directory the source file is in - eg. `admin_mail`/
-    `mail_wizard` is one class reachable via both the admin app and the mail app's account wizard, but its
-    constructor only force-loads `mail`'s lang file (`Api\Translation::add_app('mail')`), never admin's, so any
-    phrase it (or the admin.mailaccount template, or its buttons' `admin/js/app.ts` handlers) introduces must go
-    in `mail/lang/*`, not `admin/lang/*`, or it silently fails to translate when reached via the mail app.
+    the code path the phrase lives in, not just which directory the source file is in. Check every class involved
+    for an explicit `Api\Translation::add_app(...)` in its constructor - both directions matter, not just the one
+    you're editing. Example (verified both ways): `admin_mail` is also reachable via the mail app's account wizard
+    (`mail_wizard extends admin_mail`), and `admin_mail::__construct()` force-loads `mail`'s lang file
+    (`Api\Translation::add_app('mail')`) - but `mail_wizard::__construct()` *also* force-loads `admin`'s
+    (`Api\Translation::add_app('admin')`), so for this particular pair both lang files are cross-loaded regardless
+    of entry point, and a phrase used by either class can go in either `admin/lang/*` or `mail/lang/*`. Don't
+    assume a one-directional gap from checking only the class you're touching - check the other side too.
 - Do not make commits without explicit instructions.
 - For major/user-visible features (not routine fixes/refactors), the commit message's first line must be
   `* <app-name>: <message>` (eg. `* mail: add S/MIME CSR export/import`), so it gets picked up by the automated

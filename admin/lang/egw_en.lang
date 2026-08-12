@@ -1016,3 +1016,8 @@ you will need to remove the subcategories before you can delete this category	ad
 your last submission was less then %1 days ago!	admin	en	Your last submission was less than %1 days ago!
 your name	admin	en	Your name
 your session could not be verified.	admin	en	Your session could not be verified.
+only if the private key (new upload, or already stored) is passphrase-protected	admin	en	Only if the private key (new upload, or already stored) is passphrase-protected
+intermediate/ca certificate (optional)	admin	en	Intermediate/CA certificate (optional)
+this s/mime private key is passphrase-protected. please enter the passphrase above and try again.	admin	en	This S/MIME private key is passphrase-protected. Please enter the passphrase above and try again.
+the passphrase entered was not correct, please try again.	admin	en	The passphrase entered was not correct, please try again.
+required to export or import a certificate for this key	admin	en	Required to export or import a certificate for this key

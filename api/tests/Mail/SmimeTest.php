@@ -182,4 +182,187 @@ class SmimeTest extends TestCase
 			$this->assertEquals($value, $dn[$key] ?? null, "dn_from_cert() must round-trip the '$key' field");
 		}
 	}
+
+	/**
+	 * build_pkcs12()'s $extracerts must end up in the resulting p12 - this is how an intermediate
+	 * CA certificate uploaded alongside a CA-signed certificate reaches outgoing signed mail:
+	 * mail_compose::_encrypt() reads get_acc_smime()['extracerts'] back out of exactly this and
+	 * passes it into Horde_Crypt_Smime/openssl_pkcs7_sign(), which embeds it in the signed
+	 * message so recipients can validate the certificate chain.
+	 */
+	public function testBuildPkcs12WithExtracertsRoundTrip()
+	{
+		$smime = new Smime();
+		$leaf = $smime->generate_certificate(self::DN, null, null, 365);
+		$intermediate = $smime->generate_certificate(
+			array('commonName' => 'Intermediate CA', 'emailAddress' => 'ca@example.org'), null, null, 365);
+
+		$p12 = Smime::build_pkcs12($leaf['privkey'], $leaf['cert'], '', 'p12pass', array($intermediate['cert']));
+		$this->assertNotFalse($p12, 'build_pkcs12() must succeed with extracerts given');
+
+		$certs = array();
+		$this->assertTrue(openssl_pkcs12_read($p12, $certs, 'p12pass'));
+		$this->assertCount(1, $certs['extracerts'] ?? array(), 'p12 must contain exactly the one given extra certificate');
+		$subject = openssl_x509_parse($certs['extracerts'][0] ?? '')['subject'] ?? array();
+		$this->assertEquals('Intermediate CA', $subject['CN'] ?? null);
+	}
+
+	/**
+	 * Strips PEM armor and returns the raw DER bytes - used to build DER test fixtures without
+	 * shelling out to the openssl CLI (openssl_x509_export() only ever produces PEM; PEM is
+	 * simply base64(DER) wrapped in "-----BEGIN...-----" armor, so reversing that is exact).
+	 */
+	private function pemToDer(string $pem) : string
+	{
+		$body = preg_replace('/-----(BEGIN|END) [^-]+-----|\r|\n/', '', $pem);
+		return base64_decode($body);
+	}
+
+	/**
+	 * normalize_cert_pem() must pass a single, already-PEM certificate through unchanged (as the
+	 * sole array element) - the common case, eg. re-processing what generate_certificate() itself
+	 * produced.
+	 */
+	public function testNormalizeCertPemSinglePem()
+	{
+		$smime = new Smime();
+		$generated = $smime->generate_certificate(self::DN, null, null, 365);
+
+		$certs = Smime::normalize_cert_pem($generated['cert']);
+
+		$this->assertCount(1, $certs);
+		$this->assertSame(trim($generated['cert']), trim($certs[0]));
+	}
+
+	/**
+	 * normalize_cert_pem() must split several PEM certificates concatenated in one file into
+	 * separate array entries - a common way CAs deliver "your certificate + the chain" as a
+	 * single file. Regression-relevant: a naive greedy regex (.*  instead of .*?) would match
+	 * from the FIRST "BEGIN" to the LAST "END", merging both certificates into one bogus entry.
+	 */
+	public function testNormalizeCertPemMultipleConcatenated()
+	{
+		$smime = new Smime();
+		$leaf = $smime->generate_certificate(self::DN, null, null, 365);
+		$intermediate = $smime->generate_certificate(
+			array('commonName' => 'Intermediate CA', 'emailAddress' => 'ca@example.org'), null, null, 365);
+
+		$certs = Smime::normalize_cert_pem($leaf['cert'].$intermediate['cert']);
+
+		$this->assertCount(2, $certs, 'must split into two separate certificates, not merge them');
+		$this->assertEquals(self::DN['commonName'], openssl_x509_parse($certs[0])['subject']['CN'] ?? null);
+		$this->assertEquals('Intermediate CA', openssl_x509_parse($certs[1])['subject']['CN'] ?? null);
+	}
+
+	/**
+	 * normalize_cert_pem() must convert a raw/binary DER-encoded certificate (eg. a Windows-style
+	 * .cer file, as a CA is likely to hand back after signing a CSR) to PEM - regression test for
+	 * a real bug where uploading such a file was rejected as "does not match the stored private
+	 * key" because the raw DER bytes were passed straight to openssl_pkcs12_export(), which
+	 * requires PEM.
+	 */
+	public function testNormalizeCertPemDerSingleCertificate()
+	{
+		$smime = new Smime();
+		$generated = $smime->generate_certificate(self::DN, null, null, 365);
+		$der = $this->pemToDer($generated['cert']);
+
+		$certs = Smime::normalize_cert_pem($der);
+
+		$this->assertCount(1, $certs);
+		$this->assertStringContainsString('BEGIN CERTIFICATE', $certs[0]);
+		$this->assertEquals(self::DN['commonName'], openssl_x509_parse($certs[0])['subject']['CN'] ?? null);
+	}
+
+	/**
+	 * normalize_cert_pem() must return an empty array (not throw/warn into a fatal) for data that
+	 * is neither a certificate nor a PKCS#7 bundle in any encoding.
+	 */
+	public function testNormalizeCertPemInvalidDataReturnsEmpty()
+	{
+		$this->assertSame(array(), @Smime::normalize_cert_pem('this is not a certificate'));
+	}
+
+	/**
+	 * normalize_cert_pem() must extract every certificate from a PEM-armored PKCS#7 (.p7b)
+	 * bundle - the other common way CAs deliver "your certificate + the chain" as one file.
+	 * Uses the openssl CLI (via crl2pkcs7) only to build the test fixture, since ext-openssl has
+	 * no PKCS#7-bundle-creation function - skips gracefully if the CLI isn't available.
+	 */
+	public function testNormalizeCertPemPkcs7Bundle()
+	{
+		exec('openssl version 2>&1', $out, $rc);
+		if ($rc !== 0)
+		{
+			$this->markTestSkipped('openssl CLI not available to build the PKCS#7 test fixture');
+		}
+
+		$smime = new Smime();
+		$leaf = $smime->generate_certificate(self::DN, null, null, 365);
+		$intermediate = $smime->generate_certificate(
+			array('commonName' => 'Intermediate CA', 'emailAddress' => 'ca@example.org'), null, null, 365);
+
+		$chain_file = tempnam(sys_get_temp_dir(), 'smime_test_');
+		$p7b_file = tempnam(sys_get_temp_dir(), 'smime_test_');
+		try
+		{
+			file_put_contents($chain_file, $leaf['cert'].$intermediate['cert']);
+			exec('openssl crl2pkcs7 -nocrl -certfile '.escapeshellarg($chain_file).
+				' -out '.escapeshellarg($p7b_file).' 2>&1', $out, $rc);
+			$this->assertSame(0, $rc, 'test setup: building the PKCS#7 fixture must succeed: '.implode("\n", $out));
+
+			$certs = Smime::normalize_cert_pem(file_get_contents($p7b_file));
+
+			$this->assertCount(2, $certs);
+			$cns = array_map(fn($c) => openssl_x509_parse($c)['subject']['CN'] ?? null, $certs);
+			$this->assertContains(self::DN['commonName'], $cns);
+			$this->assertContains('Intermediate CA', $cns);
+		}
+		finally
+		{
+			@unlink($chain_file);
+			@unlink($p7b_file);
+		}
+	}
+
+	/**
+	 * isPassphraseProtected() must recognise a p12 exported WITHOUT a passphrase as not
+	 * protected - backs admin_mail::edit()'s "smime_needs_passphrase" flag, which decides
+	 * whether to show the passphrase-hint placeholder at all.
+	 */
+	public function testIsPassphraseProtectedFalseForUnprotectedKey()
+	{
+		$smime = new Smime();
+		$generated = $smime->generate_certificate(self::DN, null, null, 365);
+		$p12 = Smime::build_pkcs12($generated['privkey'], $generated['cert'], '', '');
+
+		$this->assertFalse(Smime::isPassphraseProtected($p12));
+	}
+
+	/**
+	 * isPassphraseProtected() must recognise a p12 exported WITH a passphrase as protected -
+	 * this is the case that makes admin_mail::edit() show the placeholder hint, and makes
+	 * smimeExportFile()/import_smime_cert() reject an empty submitted passphrase up front
+	 * with a "please enter the passphrase" error rather than a generic decrypt failure.
+	 */
+	public function testIsPassphraseProtectedTrueForProtectedKey()
+	{
+		$smime = new Smime();
+		$generated = $smime->generate_certificate(self::DN, null, null, 365);
+		$p12 = Smime::build_pkcs12($generated['privkey'], $generated['cert'], '', 'p12pass');
+
+		$this->assertTrue(Smime::isPassphraseProtected($p12));
+	}
+
+	/**
+	 * isPassphraseProtected() must not throw/warn-crash on garbage input (eg. a corrupted
+	 * credential) - it deliberately uses @openssl_pkcs12_read(). openssl can't distinguish
+	 * "not a valid p12 at all" from "valid p12, wrong/missing password", so unparseable data
+	 * is conservatively reported as protected (true) - harmless, since callers only use this
+	 * to decide whether to show a passphrase-hint placeholder, never to validate the blob.
+	 */
+	public function testIsPassphraseProtectedTrueForGarbage()
+	{
+		$this->assertTrue(Smime::isPassphraseProtected('not a valid pkcs12 blob'));
+	}
 }
