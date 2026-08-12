@@ -42,6 +42,6 @@
 	</template>
 	<template id="infolog.index" template="" lang="" group="0" version="1.9.005">
 		<et2-button  class="plus_button" statustext="Add a new ToDo" id="add[task]" onclick="app.infolog.add_with_extras(widget,'task','$cont[action]','$cont[action_id]');"></et2-button>
-		<et2-nextmatch id="nm" template="infolog.index.rows" no-visible-header="true"></et2-nextmatch>
+		<et2-nextmatch id="nm" template="infolog.index.rows"></et2-nextmatch>
 	</template>
 </overlay>

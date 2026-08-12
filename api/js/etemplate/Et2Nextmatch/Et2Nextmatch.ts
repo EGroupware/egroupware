@@ -237,23 +237,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	@property({type: String, attribute: "app"})
 	appName : string = "";
 
-	/**
-	 * Suppress the whole datagrid header row, including the column-selection button.
-	 * Previously only ever set internally on embedded subgrids (expanded child rows) - now
-	 * exposed so a top-level nextmatch can opt out of a header entirely too (eg. a compact
-	 * mobile list view that never showed sort/filter headers under the legacy widget).
-	 */
-	@property({type: Boolean, attribute: "no-visible-header"})
-	noVisibleHeader : boolean = false;
-
-	/**
-	 * Hide just the column-selection ("choose visible columns") button, keeping the rest of
-	 * the header. See also the legacy `no_columnselection` setting, which `settings` forwards
-	 * here for backwards compatibility.
-	 */
-	@property({type: Boolean, attribute: "no-column-selection"})
-	noColumnSelection : boolean = false;
-
 	private _view : Et2DatagridView = "row";
 
 	/**
@@ -366,19 +349,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				"Et2Nextmatch settings.columnselection_pref is deprecated, set the `columnPreferenceName` property instead"
 			);
 			this.columnPreferenceName = String(settings.columnselection_pref);
-		}
-		// Apps still drive the "hide column selection UI" flag through the legacy
-		// `no_columnselection` setting (already an allowed passthrough key below, but nothing
-		// previously read it back). Keep that working by forwarding it to the modern
-		// `noColumnSelection` property, which is what Et2Datagrid actually uses to hide the
-		// column-chooser button.
-		if(typeof settings.no_columnselection !== "undefined")
-		{
-			this._warnDeprecatedOnce(
-				"no_columnselection",
-				"Et2Nextmatch settings.no_columnselection is deprecated, set the `noColumnSelection` property instead"
-			);
-			this.noColumnSelection = !!settings.no_columnselection;
 		}
 		this._settings = {
 			...Et2Nextmatch.DEFAULT_SETTINGS,
@@ -3428,7 +3398,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                 ${this._renderLetterSearch()}
 				<et2-datagrid
                         part="grid"
-                        exportparts="rows, row"
+                        exportparts="rows, row, header"
                         ._parent=${this}
                         .view=${effectiveView}
                         .columns=${this._currentColumns}
@@ -3436,8 +3406,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
                         .rowCustomizer=${this._customizeDatagridRow}
                         .rowStylesheets=${this._rowStylesheets}
                         .columnPreferenceName=${this.columnPreferenceName}
-                        .noVisibleHeader=${this.noVisibleHeader}
-                        .noColumnSelection=${this.noColumnSelection}
                         .dataProvider=${this._dataProvider}
                         .expansionConfig=${this._datagridExpansionConfig()}
                         .configurationLoading=${this._templateLoading}

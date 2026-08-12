@@ -243,11 +243,14 @@ template + app JS/TS only — but that's an observed outcome for four apps, not 
   shrinking toward zero, and `.dg-header`'s `padding-right` reserves exactly that same space — if
   you're touching either of those declarations, keep them pointed at the same custom property or the
   button will start overlapping the last column again.
-- **Legacy nextmatch never rendered a header row at all on mobile — including no column-selection
-  button.** `Et2Nextmatch` exposes `noVisibleHeader`/`noColumnSelection` as public `@property`s
-  (`no-visible-header`/`no-column-selection` attributes) for exactly this; set
-  `no-visible-header="true"` on a mobile skin's `<et2-nextmatch>` to restore that look. The legacy
-  `no_columnselection` PHP setting (set server-side by several apps) forwards automatically to
-  `noColumnSelection` via `Et2Nextmatch`'s `settings` setter, the same pattern as
-  `columnselection_pref` → `columnPreferenceName`. (`hide_header` is a different, unrelated legacy
-  setting confined to the dead eTemplate1 widget class — no live modern producer, safe to ignore.)
+- **`Et2Nextmatch` always renders its header row and column-selection button — there is no
+  per-instance property to suppress them.** (`Et2Datagrid` itself still has internal
+  `noVisibleHeader`/`noColumnSelection` properties, but those are only ever set by
+  `Et2Nextmatch` for embedded subgrids/expanded child rows, not exposed for a top-level grid to
+  opt into.) Legacy nextmatch visually hid its header on mobile the same always-built-then-hidden
+  way: the mobile theme's CSS hid it, not a widget flag. The modern equivalent lives in
+  `kdots/css/src/mobile.less` (`et2-nextmatch::part(header) { display: none; }`, next to the
+  legacy `.et2_nextmatch` header-hiding rules) — reachable through `Et2Datagrid`'s shadow root
+  because `Et2Nextmatch` forwards its `header` part via `exportparts`. Don't reach for a
+  JS/property-based toggle for this kind of "hide entirely on mobile" styling; match the existing
+  CSS-only pattern instead.
