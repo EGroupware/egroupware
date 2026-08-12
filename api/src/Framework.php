@@ -1046,7 +1046,7 @@ abstract class Framework extends Framework\Extra
 			{
 				if (file_exists(EGW_SERVER_ROOT.$theme_css)) break;
 			}
-			// no longer available in config, of you don't want minified CSS on a developer install, don't install grunt/generate the files
+			// no longer available in config, if you don't want minified CSS on a developer install, don't run "npm run css" to generate the files
 			//$debug_minify = !empty($GLOBALS['egw_info']['server']['debug_minify']) && $GLOBALS['egw_info']['server']['debug_minify'] === 'True';
 			if (/*!$debug_minify &&*/ file_exists(EGW_SERVER_ROOT.($theme_min_css = str_replace('.css', '.min.css', $theme_css))))
 			{

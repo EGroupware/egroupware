@@ -57,7 +57,6 @@ RUN set -e \
 	&& ln -s /dev/stderr /var/log/php$PHP_VERSION-fpm.log \
 	# install tools to build EGroupware
 	&& apt-get install -y rsync zip curl sudo cron patch \
-	&& npm install -g grunt-cli \
 	&& bash -c \
 'EXPECTED_SIGNATURE=$(curl https://composer.github.io/installer.sig); \
 curl https://getcomposer.org/installer > composer-setup.php; \

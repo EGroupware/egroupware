@@ -20,11 +20,9 @@ EGroupware 26 can be installed via Docker, in fact the DEB/RPM packages also doe
 
 ### Deprecated EGroupware development installation:
 * install composer.phar from https://getcomposer.org/download/
-* for JavaScript dependencies and build install nodejs and npm
-* optional: for minified CSS install grunt
+* for JavaScript and CSS dependencies and build install nodejs and npm
 ```
-apt/yum/zypper install nodejs
-npm install -g grunt-cli
+apt/yum/zypper install nodejs npm
 ```
 * install EGroupware and dependencies
 ```

@@ -617,7 +617,6 @@ ln -s ../../..%{egwdatadir}/header.inc.php
 %{egwdir}/README.md
 %{egwdir}/package.json
 %{egwdir}/Gruntfile.js
-%{egwdir}/updateGruntfile.php
 %{egwdir}/groupdav.htaccess
 %{egwdir}/webdav.php
 %{egwdir}/addressbook
