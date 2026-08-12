@@ -54,7 +54,27 @@ Primary expectations:
 - Preserve backwards compatibility for existing installations.
 - Do not remove legacy compatibility code without explicit approval.
 - Check whether tests, migrations, translations, or documentation need updates.
+- Any new user-facing phrase (PHP `lang('...')`, JS `egw.lang('...')`, or `label=`/`value=`/`placeholder=`/etc.
+  text in `.xet` templates) must be added to `$app/lang/egw_en.lang`, and translated in `$app/lang/egw_de.lang`
+  when feasible. Files are tab-separated: `<phrase-lowercased>\t<app-name>\t<lang-code>\t<translation>` (translation
+  keeps original casing/punctuation). Check both `en` and `de` files before adding, to avoid duplicate keys.
+  - `common` is a pseudo app-name (not a real app) for phrases needed everywhere - most of `api/lang/*` uses it,
+    but ANY app's lang file can add a row tagged `common` too (eg. `mail/lang/egw_en.lang` has
+    `mail\tcommon\ten\tMail` for the app's own display name, so other apps can show "Mail" without redefining
+    it). Before adding a phrase, grep for it tagged `common` across all lang files (not just `api/lang/`) - skip
+    adding it again if found, regardless of which file it lives in.
+  - Determine the *correct* app-name by checking which apps' lang files are actually guaranteed to be loaded for
+    the code path the phrase lives in, not just which directory the source file is in - eg. `admin_mail`/
+    `mail_wizard` is one class reachable via both the admin app and the mail app's account wizard, but its
+    constructor only force-loads `mail`'s lang file (`Api\Translation::add_app('mail')`), never admin's, so any
+    phrase it (or the admin.mailaccount template, or its buttons' `admin/js/app.ts` handlers) introduces must go
+    in `mail/lang/*`, not `admin/lang/*`, or it silently fails to translate when reached via the mail app.
 - Do not make commits without explicit instructions.
+- For major/user-visible features (not routine fixes/refactors), the commit message's first line must be
+  `* <app-name>: <message>` (eg. `* mail: add S/MIME CSR export/import`), so it gets picked up by the automated
+  release-changelog parser. Only the first line is parsed - keep it short and phrase it for end users, not
+  developers (no internal class/method names, no implementation detail). Further lines are for developers and are
+  not parsed.
 - Do not modify generated JavaScript files, they're automatically built.
 
 ## Coding standards
@@ -81,6 +101,53 @@ For code review behaviour, follow `doc/ai/review-checklist.md`.
 - Do not weaken authentication, authorization, validation, escaping, or CSRF protections.
 - Treat user input as unsafe.
 - Preserve existing permission checks.
+- In an `Etemplate`, any `$content` key with NO corresponding widget in the `.xet` template is read-only from the
+  client's perspective: `Etemplate::exec()` sends the whole `$content` array to the browser regardless of widgets
+  (so `this.et2.getArrayMgr('content').getEntry('key')` works client-side with no widget needed), but the client
+  can only ever submit values back for keys that DO have a widget. Sensitive/authorization-relevant values (an
+  internal row id, an "acting on behalf of user X" id, etc.) that must survive across submits should be passed via
+  `$preserv` (the `exec()` parameter, commonly just `$content` itself) and deliberately given NO widget - adding a
+  `<hidden id="...">` for one makes it client-writable on every subsequent submit, not just readable. Also apply
+  this to any new ajax method (`ajax_*`): its `$_data` payload is a fully untrusted raw request, not merely
+  "whatever the legitimate UI would send" - explicitly re-verify the caller is authorized for every id/account
+  it references (found via review: a new `ajax_smimeCreateKeypair()` endpoint trusted a client-supplied
+  `account_id`/`acc_id` with no ownership check at all).
+- `Api\Mail\Credentials` can encrypt a stored credential (IMAP/SMTP/S-MIME password, etc.) with either a
+  system-wide secret (`SYSTEM_AES`) or the owning user's OWN session password (`USER_AES`) - the latter is
+  chosen automatically whenever the credential is written for the currently-logged-in user's own
+  `account_id` (`Credentials::encrypt_openssl_aes()`). A `USER_AES`-encrypted credential can genuinely NOT
+  be decrypted by anyone else, including an admin - `decrypt()` returns `Credentials::UNAVAILABLE` for any
+  session that isn't that same user's. This is by design (a real security boundary), not a bug: if a
+  credential an admin wrote for a user (`SYSTEM_AES`, admin-readable) later gets re-encrypted because the
+  user touched it themselves (now `USER_AES`), the admin correctly loses access - surface that as "not
+  available to you" in error messages, don't try to work around it.
+
+## File downloads
+
+Do NOT trigger a file download from JS by creating a synthetic `<a>` with a `download` attribute and
+calling `.click()` on it. Confirmed unreliable: it can silently fail to send ANY request to the server at
+all (empty network tab, no console error), observed specifically from inside an EGroupware popup window.
+
+Use `Etemplate2.postSubmit(button)` instead (`api/js/etemplate/etemplate2.ts`) - it builds and submits a
+real `<form method="POST">` targeting the template's own `EGroupware\Api\Etemplate.process_exec` endpoint,
+which reliably reaches the server and lets it respond with the file directly. Existing usage examples:
+`calendar/js/app.ts` (`category_report_submit()`, `postSubmit()` call near line 4342),
+`infolog/js/app.ts` (`postSubmit()` near line 518), `api/js/etemplate/Et2Dialog/Et2Dialog.ts`.
+
+Pattern:
+- Client: give the trigger widget a plain, flat `id` (NOT `button[...]` bracket notation - that's a
+  different, `_set_button()`-specific mechanism for the main save/apply/delete buttons), plus
+  `noSubmit="true"` so et2's own default click-submit doesn't also fire, and
+  `onclick="app.<app>.<method>"` where the handler calls `this.et2.getInstanceManager().postSubmit(_widget)`.
+- Server: `postSubmit()` routes back to the SAME controller method that rendered the template (via the
+  stored `etemplate_exec_id`, merging `$preserv` with the newly submitted/validated values - see
+  `Etemplate::process_exec()`). That method checks `!empty($content['<that same flat id>'])` - a clicked
+  flat-id widget's own value is submitted directly as `$content[id]`, NOT nested under
+  `$content['button'][...]` - then emits the file (`Api\Header\Content::safe()` + `echo` + `exit()`)
+  instead of falling through to the normal `$tpl->exec()` redraw.
+- Bonus: because this reuses the same controller/menuaction as the rest of the form, all the usual
+  server-trusted content (`$preserv`-carried ids, etc.) is already available - no separate URL-param
+  threading needed for a GET-based download endpoint.
 
 ## Output expectations
 
