@@ -730,3 +730,20 @@ you need to select some folders first (by clicking on them)!	mail	en	You need to
 you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!
 you've got new mail	mail	en	You've got new email
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	en	Your remaining quota %1 is too low, you may not be able to send/receive further emails.\nAlthough cleaning up emails in trash or junk folder might help you to get some free space back.\nIf that didn't help, please ask your administrator for more quota.
+no s/mime private key stored for this account.	mail	en	No S/MIME private key stored for this account.
+could not generate csr.	mail	en	Could not generate CSR.
+create self-signed certificate	mail	en	Create self-signed certificate
+export csr	mail	en	Export CSR
+import ca-signed certificate for this key	mail	en	Import CA-signed certificate for this key
+passphrase, if private key is protected	mail	en	Passphrase, if private key is protected
+import certificate	mail	en	Import certificate
+create private key and export csr	mail	en	Create private key and export CSR
+private key created, downloading csr...	mail	en	Private key created, downloading CSR...
+self-signed certificate created.	mail	en	Self-signed certificate created.
+certificate imported.	mail	en	Certificate imported.
+could not generate certificate!	mail	en	Could not generate certificate!
+common name and email address are required!	mail	en	Common name and email address are required!
+no private key stored to import a certificate for!	mail	en	No private key stored to import a certificate for!
+could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
+could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
+certificate does not match the stored private key!	mail	en	Certificate does not match the stored private key!

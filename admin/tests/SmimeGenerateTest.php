@@ -30,6 +30,15 @@ use EGroupware\Api\Etemplate;
  * called through ReflectionMethod (same approach as
  * api/tests/Mail/CredentialsTest.php::callProtectedMethod()).
  *
+ * verifySmimeAccountAccess() (public) is tested directly - it guards the
+ * ajax_smimeCreateKeypair() endpoint against a client submitting an
+ * arbitrary acc_id/called_for in its (otherwise untrusted) ajax payload to
+ * act on someone else's mail account. ajax_smimeCreateKeypair() itself
+ * cannot be called directly in a test: Api\Etemplate\Request::csrfCheck()
+ * calls die()/exit on an invalid etemplate_exec_id, which would kill the
+ * test process rather than fail the assertion.
+ *
+
  * A real Etemplate instance (not a mock) is used as $tpl:
  * Etemplate\Widget::set_validation_error() is a static method, and PHPUnit
  * refuses to stub static methods on a mock object ("Static method ... cannot
@@ -138,5 +147,47 @@ class SmimeGenerateTest extends Api\LoggedInTest
 		{
 			@unlink($empty_file);
 		}
+	}
+
+	/**
+	 * A non-admin submitting a called_for different from their own account_id must be rejected -
+	 * without this check, any logged in user could pass an arbitrary called_for in the
+	 * ajax_smimeCreateKeypair() payload to generate/store a S/MIME key on behalf of someone else.
+	 *
+	 * Uses an obviously non-existent acc_id: the permission gate must reject this BEFORE ever
+	 * looking up the account, so an invalid acc_id here does not weaken what's being proven.
+	 */
+	public function testVerifySmimeAccountAccessDeniesImpersonationWithoutAdmin()
+	{
+		$own_account_id = $GLOBALS['egw_info']['user']['account_id'];
+
+		$result = admin_mail::verifySmimeAccountAccess(999999999, $own_account_id + 1, false);
+
+		$this->assertNull($result, 'a non-admin must not be able to act on behalf of a different account_id');
+	}
+
+	/**
+	 * An admin acting on behalf of a different user must still be rejected if the given acc_id
+	 * does not actually belong to that user - admin rights alone must not bypass the acc_id <->
+	 * account_id ownership check (Mail\Account::read() throws NotFound for a bogus acc_id).
+	 */
+	public function testVerifySmimeAccountAccessDeniesUnknownAccIdEvenForAdmin()
+	{
+		$own_account_id = $GLOBALS['egw_info']['user']['account_id'];
+
+		$result = admin_mail::verifySmimeAccountAccess(999999999, $own_account_id + 1, true);
+
+		$this->assertNull($result, 'admin rights must not bypass the acc_id ownership check for a non-existent account');
+	}
+
+	/**
+	 * Even a request for the user's own account_id (called_for empty, always permission-wise
+	 * allowed) must still be rejected for an acc_id that does not exist / does not belong to them.
+	 */
+	public function testVerifySmimeAccountAccessDeniesUnknownAccIdForOwnAccount()
+	{
+		$result = admin_mail::verifySmimeAccountAccess(999999999, null, false);
+
+		$this->assertNull($result, 'an unknown/foreign acc_id must be rejected even for the current user\'s own account');
 	}
 }

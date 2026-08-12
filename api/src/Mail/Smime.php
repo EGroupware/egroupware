@@ -371,10 +371,16 @@ class Smime extends Horde_Crypt_Smime
 		{
 			$passphrase = Api\Cache::getSession('mail', 'smime_passphrase');
 		}
+		// use_cache: false - the key may have just been created/imported in a different request
+		// (different PHP-FPM worker), whose write() only invalidates its OWN process-local cache
+		$on_login = null;
 		$acc_smime = Credentials::read(
 				$acc_id,
 				Credentials::SMIME,
-				$account_id ? array(0, $account_id) : $GLOBALS['egw_info']['user']['account_id']
+				$account_id ? array(0, $account_id) : $GLOBALS['egw_info']['user']['account_id'],
+				$on_login,
+				null,
+				false
 		);
 		foreach ($acc_smime as $key => $val)
 		{

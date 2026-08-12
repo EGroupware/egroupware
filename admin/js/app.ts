@@ -66,6 +66,17 @@ export class AdminApp extends EgwApp
 	nm2 : et2_nextmatch = null;
 
 	/**
+	 * Client-side-only tracking of "an S/MIME key now exists" after
+	 * ajax_smimeCreateKeypair() succeeds, until the mailaccount dialog is
+	 * reloaded. NOT sent back to the server: acc_smime_cred_id has no
+	 * corresponding widget (deliberately - a submittable cred_id would let a
+	 * client point Mail\Credentials::write() at an arbitrary row), so it is
+	 * only ever read from content (content.getEntry('acc_smime_cred_id')),
+	 * never written back via a widget.
+	 */
+	private smimeKeyCreated : boolean = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @memberOf app.classes.admin
@@ -1682,69 +1693,43 @@ export class AdminApp extends EgwApp
 	}
 
 	/**
-	 * Build the acc_id(+account_id) query string shared by the smime GET-download
-	 * endpoints. account_id (admin_mail's "called_for") is only added when set,
-	 * ie. when managing a shared/other user's mail account - Mail\Smime::
-	 * get_acc_smime() otherwise only finds the current user's own credentials.
-	 */
-	private smime_accountParams() : string
-	{
-		var content = this.et2.getArrayMgr("content");
-		var params = '&acc_id=' + content.getEntry('acc_id');
-		var called_for = content.getEntry('called_for');
-		if (called_for) params += '&account_id=' + called_for;
-		return params;
-	}
-
-	/**
-	 * Export content of given field into relevant file
-	 */
-	smime_exportCert()
-	{
-		var $a = jQuery(document.createElement('a')).appendTo('body').hide();
-		var url = window.egw.webserverUrl+'/index.php?';
-			url += 'menuaction=mail.mail_ui.smimeExportCert';
-			url += this.smime_accountParams();
-		$a.prop('href',url);
-		$a.prop('download',"");
-		$a[0].click();
-		$a.remove();
-	}
-
-	/**
-	 * Download a CSR generated from the stored smime private key, to request
-	 * a certificate from a CA (or re-request a new one).
+	 * Export the stored certificate as p12.
 	 *
-	 * If there is no private key stored yet, opens the certificate-details
-	 * dialog to create one first (see smime_generateKey('csrkey')), then
-	 * downloads the CSR for the freshly created key - one click gets you a
-	 * key pair AND its CSR, no separate "create" step needed.
+	 * Submitted via Etemplate2.postSubmit() (a real browser <form> POST, not ajax/XHR), so the
+	 * server can respond with the file directly - server-side handled by admin_mail::edit()'s
+	 * smime_export_p12 flat-id button check, which calls smimeExportFile() and exit()s.
+	 * A synthetic <a download> click triggered from JS turned out to be unreliable in practice
+	 * (the request sometimes never even reached the server, eg. in a popup window).
+	 *
+	 * @param _event
+	 * @param _widget the smime_export_p12 button widget
 	 */
-	smime_exportCsr()
+	smime_exportCert(_event, _widget)
 	{
-		if (this.et2.getArrayMgr("content").getEntry('acc_smime_cred_id'))
+		this.et2.getInstanceManager().postSubmit(_widget);
+	}
+
+	/**
+	 * Export a CSR for the stored key, same postSubmit() approach as smime_exportCert().
+	 *
+	 * If there is no private key stored yet, opens the certificate-details dialog to create one
+	 * first (see smime_generateKey('csrkey')), which itself triggers this same postSubmit() once
+	 * the ajax key-creation succeeds - one click gets you a key pair AND its CSR, no separate
+	 * "create" step needed.
+	 *
+	 * @param _event
+	 * @param _widget the smime_export_csr button widget
+	 */
+	smime_exportCsr(_event, _widget)
+	{
+		if (this.smimeKeyCreated || this.et2.getArrayMgr("content").getEntry('acc_smime_cred_id'))
 		{
-			this.smime_downloadCsr();
+			this.et2.getInstanceManager().postSubmit(_widget);
 		}
 		else
 		{
 			this.smime_generateKey('csrkey');
 		}
-	}
-
-	/**
-	 * Trigger the actual CSR download for the already stored private key
-	 */
-	private smime_downloadCsr()
-	{
-		var $a = jQuery(document.createElement('a')).appendTo('body').hide();
-		var url = window.egw.webserverUrl+'/index.php?';
-			url += 'menuaction=mail.mail_ui.smimeExportCsr';
-			url += this.smime_accountParams();
-		$a.prop('href',url);
-		$a.prop('download',"");
-		$a[0].click();
-		$a.remove();
 	}
 
 	/**
@@ -1848,14 +1833,13 @@ export class AdminApp extends EgwApp
 						{
 							return;
 						}
-						let credWidget = self.et2.getWidgetById('acc_smime_cred_id');
-						if (credWidget) credWidget.set_value(_data.acc_smime_cred_id);
+						self.smimeKeyCreated = true;
 						self.smime_setKeyState(true);
 
 						if (action == 'csrkey')
 						{
 							self.egw.message(self.egw.lang('Private key created, downloading CSR...'));
-							self.smime_downloadCsr();
+							self.et2.getInstanceManager().postSubmit(self.et2.getWidgetById('smime_export_csr'));
 						}
 						else
 						{

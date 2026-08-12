@@ -1206,6 +1206,23 @@ class admin_mail
 		}
 		$account_id = $content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
 
+		// SMIME EXPORT (p12 or CSR): flat-id buttons (no "button[...]" bracket notation) submit
+		// their own clicked state directly as $content[id], same convention as smime_delete_p12
+		// below - NOT via the bracket-notation $content['button'][...] dispatch further up.
+		// Reached via a real browser form POST (Etemplate2::postSubmit(), not ajax), so the
+		// server can exit() with the file directly - a synthetic <a download> click triggered
+		// from JS turned out to be unreliable (request not even reaching the server in some
+		// browser/popup contexts).
+		if (!empty($content['smime_export_p12']) || !empty($content['smime_export_csr']))
+		{
+			if (($error = $this->smimeExportFile($content, $account_id, !empty($content['smime_export_csr']))))
+			{
+				$msg = $error;
+				$msg_type = 'error';
+			}
+			unset($content['smime_export_p12'], $content['smime_export_csr']);
+		}
+
 		// SMIME IMPORT: CA-signed certificate for the already stored private key
 		if (!empty($content['smimeCertUpload']['tmp_name']) &&
 			($cred_id = self::import_smime_cert($content, $tpl, $account_id)))
@@ -1454,6 +1471,52 @@ class admin_mail
 	}
 
 	/**
+	 * Export the stored S/MIME certificate as p12, or a CSR for it, as a file download and exit()
+	 *
+	 * Called from edit()'s flat-id button handling (smime_export_p12/smime_export_csr), reached
+	 * via a real browser form POST (Etemplate2::postSubmit(), not ajax), so the server can
+	 * respond with the file directly.
+	 *
+	 * @param array $content current (posted) form content, 'acc_id' used to look up the key
+	 * @param int $account_id already resolved from $content['called_for'] by the caller
+	 * @param bool $csr true: export a CSR generated from the stored key, false: export the p12 itself
+	 * @return string|null translated error message, or null on success (exit()s, does not return)
+	 */
+	private function smimeExportFile(array $content, $account_id, $csr)
+	{
+		$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], '', $account_id);
+
+		if ($csr)
+		{
+			if (empty($acc_smime['pkey']))
+			{
+				return lang('No S/MIME private key stored for this account.');
+			}
+			$dn = !empty($acc_smime['cert']) ? Mail\Smime::dn_from_cert($acc_smime['cert']) : array();
+			if (!($data = Mail\Smime::generate_csr($acc_smime['pkey'], $dn)))
+			{
+				return lang('Could not generate CSR.');
+			}
+			$filename = 'certificate.csr';
+			$mime = 'application/pkcs10';
+		}
+		else
+		{
+			if (empty($acc_smime['acc_smime_password']))
+			{
+				return lang('No S/MIME private key stored for this account.');
+			}
+			$data = $acc_smime['acc_smime_password'];
+			$filename = 'certificate.p12';
+			$mime = 'application/x-pkcs12';
+		}
+		$length = 0;
+		Api\Header\Content::safe($data, $filename, $mime, $length, true, true);
+		echo $data;
+		exit();
+	}
+
+	/**
 	 * Saves the smime key
 	 *
 	 * @param array $content
@@ -1512,7 +1575,11 @@ class admin_mail
 			$response->message(lang('No mail account given!'), 'error');
 			return;
 		}
-		$account_id = $_data['called_for'] ?: $GLOBALS['egw_info']['user']['account_id'];
+		if (!($account_id = self::verifySmimeAccountAccess($_data['acc_id'], $_data['called_for'] ?? null, $this->is_admin)))
+		{
+			$response->message(lang('Permission denied!'), 'error');
+			return;
+		}
 		$content = array('acc_id' => $_data['acc_id'], 'smime_gen_dn' => json_encode($_data));
 		$tpl = new Etemplate();
 		if (!($cred_id = self::generate_smime_key($content, $tpl, $account_id)))
@@ -1522,6 +1589,38 @@ class admin_mail
 			return;
 		}
 		$response->data(array('acc_smime_cred_id' => $cred_id));
+	}
+
+	/**
+	 * Verify the current session may act on behalf of $called_for for the given mail account
+	 *
+	 * Guards ajax_smimeCreateKeypair() against a client submitting an arbitrary acc_id/called_for
+	 * in its (otherwise untrusted) ajax payload to act on someone else's mail account: only admins
+	 * may act on behalf of a DIFFERENT user, and $acc_id must actually belong to / be usable by
+	 * $called_for (or the current user, if $called_for is empty) regardless.
+	 *
+	 * @param int $acc_id untrusted, from the ajax payload
+	 * @param int|string|null $called_for untrusted, from the ajax payload
+	 * @param bool $is_admin whether the CURRENT (session) user has admin app rights
+	 * @return int|null verified account_id, or null if not authorized / acc_id does not belong to it
+	 */
+	public static function verifySmimeAccountAccess($acc_id, $called_for, $is_admin)
+	{
+		$account_id = !empty($called_for) ? (int)$called_for : $GLOBALS['egw_info']['user']['account_id'];
+		if ($account_id != $GLOBALS['egw_info']['user']['account_id'] && !$is_admin)
+		{
+			return null;
+		}
+		try
+		{
+			// verify acc_id actually belongs to / is usable by account_id, throws NotFound otherwise
+			Mail\Account::read($acc_id, $account_id);
+		}
+		catch (Api\Exception\NotFound $e)
+		{
+			return null;
+		}
+		return $account_id;
 	}
 
 	/**

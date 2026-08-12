@@ -178,9 +178,16 @@ class Credentials
 	 * @param array& $on_login =null on return array with callable and further arguments
 	 *	to run on successful login to trigger password migration
 	 * @param string|null $mailserver mailserver to detect oauth hosts
+	 * @param bool $use_cache =true set to false to force a fresh DB read, bypassing self::$cache.
+	 *  self::$cache is a per-process (PHP-FPM worker) cache: write()/delete() only unset it in the
+	 *  worker that performed the write, so a different worker that already cached an (eg. still
+	 *  credential-less) entry for this acc_id/account_id combination will never see a credential
+	 *  written by another worker afterwards. Callers where a credential may legitimately have just
+	 *  been created/changed in a different request (eg. S/MIME: create key in one request, export/
+	 *  decrypt in the next) should pass false.
 	 * @return array with values for (imap|smtp|admin)_(username|password|cred_id)
 	 */
-	public static function read($acc_id, $type=null, $account_id=null, &$on_login=null, $mailserver=null)
+	public static function read($acc_id, $type=null, $account_id=null, &$on_login=null, $mailserver=null, $use_cache=true)
 	{
 		if (is_null($type)) $type = self::ALL;
 		if (is_null($account_id))
@@ -190,7 +197,7 @@ class Credentials
 
 		// check cache, if nothing found, query database
 		// check assumes always same accounts (eg. 0=all plus own account_id) are asked
-		if (!isset(self::$cache[$acc_id]) ||
+		if (!$use_cache || !isset(self::$cache[$acc_id]) ||
 			!($rows = array_intersect_key(self::$cache[$acc_id], array_flip((array)$account_id))))
 		{
 			$rows = self::get_db()->select(self::TABLE, '*', array(
@@ -238,8 +245,15 @@ class Credentials
 				$password = self::UNAVAILABLE;
 			}
 
-			// Remove special x char added to the end for \0 trimming escape.
-			if ($type == self::SMIME && substr($password, -1) === 'x') $password = substr($password, 0, -1);
+			// Remove special x chars added to both ends as a \0 trimming escape: decrypt_openssl_aes()
+			// does trim($decrypted, "\0"), which corrupts binary p12 content that genuinely starts
+			// or ends with a null byte (common in DER-encoded certs, eg. RSA modulus sign-padding) -
+			// wrapping with a non-null marker on both sides stops trim() before it reaches real data.
+			if ($type == self::SMIME)
+			{
+				if (substr($password, 0, 1) === 'x') $password = substr($password, 1);
+				if (substr($password, -1) === 'x') $password = substr($password, 0, -1);
+			}
 
 			foreach(static::$type2prefix as $pattern => $prefix)
 			{
@@ -438,9 +452,10 @@ class Credentials
 			return;	// do NOT store credentials from session of current user!
 		}
 
-		// Add arbitary char to the ending to make sure the Smime binary content
-		// with \0 at the end not getting trimmed of while trying to decrypt.
-		if ($type == self::SMIME) $password .= 'x';
+		// Add arbitrary chars to both ends, so decrypt_openssl_aes()'s trim($decrypted, "\0") can
+		// never eat into the actual Smime binary content, even if it genuinely starts/ends with \0
+		// (see matching strip in read()).
+		if ($type == self::SMIME) $password = 'x'.$password.'x';
 
 		// no need to write empty usernames, but delete existing row
 		if ((string)$username === '')

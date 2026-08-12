@@ -104,6 +104,68 @@ class CredentialsTest extends TestCase
 		}
 	}
 
+	/**
+	 * Regression test for a real bug found while building the S/MIME feature: decrypt_openssl_aes()
+	 * does trim($decrypted, "\0"), which silently corrupts binary data that genuinely starts or
+	 * ends with a null byte (common in DER-encoded certs, eg. an RSA modulus needing a leading \0
+	 * sign-padding byte). This demonstrates the underlying bug in isolation, without the SMIME-only
+	 * 'x'-wrap workaround (see testSmimeXWrapProtectsBoundaryNullBytes) - proves WHY that workaround
+	 * is needed, and guards against someone "simplifying" decrypt_openssl_aes() by dropping trim()
+	 * without also removing the (then unnecessary) 'x'-wrap in Credentials::write()/read().
+	 */
+	public function testAesRoundTripCorruptsBoundaryNullBytes()
+	{
+		$key = 'HMqUHxzMBjjvXppV';
+		$pw_enc = null;
+
+		foreach ([
+			'leading null' => "\x00".str_repeat('A', 99),
+			'trailing null' => str_repeat('A', 99)."\x00",
+		] as $label => $plain)
+		{
+			$encrypted = self::callProtectedMethod('encrypt_openssl_aes', __NAMESPACE__.'\\Credentials',
+				array($plain, 0, &$pw_enc, $key, null, true));
+			$row = array('account_id' => 0, 'cred_password' => $encrypted, 'cred_pw_enc' => $pw_enc);
+			$decrypted = self::callProtectedMethod('decrypt_openssl_aes', __NAMESPACE__.'\\Credentials', array($row, $key));
+
+			$this->assertNotEquals($plain, $decrypted,
+				"demonstrates the bug: decrypt_openssl_aes() must NOT round-trip boundary null bytes ($label) - ".
+				'if this assertion starts failing, trim() was removed/fixed upstream and the SMIME x-wrap workaround can go too');
+		}
+	}
+
+	/**
+	 * The actual fix: Credentials::write()/read()'s SMIME-only 'x' wrap (on BOTH ends, not just the
+	 * end as it originally was) must survive the same boundary-null-byte corruption demonstrated in
+	 * testAesRoundTripCorruptsBoundaryNullBytes(). Replicates write()/read()'s wrap/strip inline
+	 * (both are on the private, DB-writing code path) so this stays a pure, no-DB test.
+	 */
+	public function testSmimeXWrapProtectsBoundaryNullBytes()
+	{
+		$key = 'HMqUHxzMBjjvXppV';
+		$pw_enc = null;
+
+		foreach ([
+			'leading null' => "\x00".str_repeat('A', 99),
+			'trailing null' => str_repeat('A', 99)."\x00",
+			'leading+trailing null' => "\x00".str_repeat('A', 98)."\x00",
+		] as $label => $plain)
+		{
+			// mirrors Credentials::write()'s "if (type==SMIME) password = 'x'.password.'x'"
+			$wrapped = 'x'.$plain.'x';
+			$encrypted = self::callProtectedMethod('encrypt_openssl_aes', __NAMESPACE__.'\\Credentials',
+				array($wrapped, 0, &$pw_enc, $key, null, true));
+			$row = array('account_id' => 0, 'cred_password' => $encrypted, 'cred_pw_enc' => $pw_enc);
+			$decrypted = self::callProtectedMethod('decrypt_openssl_aes', __NAMESPACE__.'\\Credentials', array($row, $key));
+
+			// mirrors Credentials::read()'s matching strip of both markers
+			if (substr($decrypted, 0, 1) === 'x') $decrypted = substr($decrypted, 1);
+			if (substr($decrypted, -1) === 'x') $decrypted = substr($decrypted, 0, -1);
+
+			$this->assertEquals($plain, $decrypted, "x-wrap must fully protect boundary null bytes ($label)");
+		}
+	}
+
 	protected static function callProtectedMethod($name, $classname, $params)
 	{
 		$class = new ReflectionClass($classname);
