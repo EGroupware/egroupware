@@ -87,38 +87,19 @@ class importexport_helper_functions {
 	 */
 	public static function custom_strtotime( $_string, $_format='', $_is_dst = -1) {
 		if ( empty( $_format ) ) return strtotime( $_string );
-		$fparams = explode( ',', chunk_split( $_format, 1, ',' ) );
-		$spos = 0;
-		foreach ( $fparams as $fparam ) {
 
-			switch ( $fparam ) {
-				case 'd': (int)$day = substr( $_string, $spos, 2 ); $spos += 2; break;
-				case 'm': (int)$mon = substr( $_string, $spos, 2 ); $spos += 2; break;
-				case 'y': (int)$year = substr( $_string, $spos, 2 ); $spos += 2; break;
-				case 'Y': (int)$year = substr( $_string, $spos, 4 ); $spos += 4; break;
-				case 'H': (int)$hour = substr( $_string, $spos, 2 ); $spos += 2; break;
-				case 'h': (int)$hour = substr( $_string, $spos, 2 ); $spos += 2; break;
-				case 'i': (int)$min =  substr( $_string, $spos, 2 ); $spos += 2; break;
-				case 's': (int)$sec =  substr( $_string, $spos, 2 ); $spos += 2; break;
-				case 'O': (int)$offset = $year = substr( $_string, $spos, 5 ); $spos += 5; break;
-				case 'a': (int)$hour = $fparam == 'am' ? $hour : $hour + 12; break;
-				case 'A': (int)$hour = $fparam == 'AM' ? $hour : $hour + 12; break;
-				default: $spos++; // seperator
-			}
-		}
+		// $_format uses PHP's date() format characters (eg. "d.m.Y H:i"), same as
+		// DateTime::createFromFormat() expects - let Api\DateTime do the parsing
+		// (including any timezone/offset in $_format, eg. 'O') instead of hand-rolling
+		// it field by field, which relied on a mktime() call with a 7th (DST) argument
+		// that PHP has not supported for a very long time (always fatal: "mktime()
+		// expects at most 6 arguments"). The leading '!' resets fields $_format doesn't
+		// mention (eg. time-of-day when $_format is date-only) to midnight, matching
+		// mktime()'s old behaviour - without it, createFromFormat() fills them with
+		// the current time instead.
+		$parsed = Api\DateTime::createFromFormat( '!'.$_format, $_string );
 
-		print_debug("hour:$hour; min:$min; sec:$sec; mon:$mon; day:$day; year:$year;\n");
-		$timestamp = mktime($hour, $min, $sec, $mon, $day, $year, $_is_dst);
-
-		// offset given?
-		if ( isset( $offset ) && strlen( $offset == 5 ) ) {
-			$operator = $offset[0];
-			$ohour = 60 * 60 * (int)substr( $offset, 1, 2 );
-			$omin = 60 * (int)substr( $offset, 3, 2 );
-			if ( $operator == '+' ) $timestamp += $ohour + $omin;
-			else $timestamp -= $ohour + $omin;
-		}
-		return $timestamp;
+		return $parsed ? $parsed->getTimestamp() : false;
 	}
 	/**
 	 * converts accound_lid to account_id

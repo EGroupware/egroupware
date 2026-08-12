@@ -433,7 +433,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 					do
 					{
 						$app_id = key($result);
-						shift($result);
+						array_shift($result);
 					} while($result && !$app_id);
 				}
 			} else if (in_array($field, array_keys($GLOBALS['egw_info']['apps']))) {
@@ -447,7 +447,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 					do
 					{
 						$app_id = key($result);
-						shift($result);
+						array_shift($result);
 					} while($result && !$app_id);
 				}
 			}
@@ -506,7 +506,7 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 			{
 				if($fields[$field])
 				{
-					$label = is_string($fields[$field]) ?: ($fields[$field]['label'] ?? $field);
+					$label = is_string($fields[$field]) ? $fields[$field] : ($fields[$field]['label'] ?? $field);
 				}
 			}
 		}
@@ -571,19 +571,22 @@ abstract class importexport_basic_import_csv implements importexport_iface_impor
 		if (!is_null($org_name))	// org_name given?
 		{
 			$org_name = trim($org_name);
-			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" );
+			// Contacts::read()/search() are documented to return an array OR false
+			// (never guaranteed an array) - normalise right away, since count() on
+			// anything else fatals on PHP 8.
+			$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,n_given=$n_given,org_name=$org_name" ) ?: array();
 			if (!count($addrs))
 			{
-				$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name",'','n_family,org_name');
+				$addrs = $contacts->read( 0,0,array('id'),'',"n_family=$n_family,org_name=$org_name",'','n_family,org_name') ?: array();
 			}
 		}
 		if (!is_null($n_given) && (is_null($org_name) || !count($addrs)))       // first name given and no result so far
 		{
-			$addrs = $contacts->search(array('n_family' => $n_family, 'n_given' => $n_given));
+			$addrs = $contacts->search(array('n_family' => $n_family, 'n_given' => $n_given)) ?: array();
 		}
 		if (is_null($n_given) && is_null($org_name))    // just one name given, check against fn (= full name)
 		{
-			$addrs = $contacts->read( 0,0,array('id'),'',"n_fn=$n_family",'','n_fn' );
+			$addrs = $contacts->read( 0,0,array('id'),'',"n_fn=$n_family",'','n_fn' ) ?: array();
 		}
 		if (count($addrs))
 		{
