@@ -246,30 +246,111 @@ class Smime extends Horde_Crypt_Smime
 	 * @param mixed $_cacert certificate will be signed by cacert (CA). Null means
 	 * self-signed certificate.
 	 * @param string $passphrase = null, protect private key by passphrase
+	 * @param int $validity = 365, validity of self-signed certificate in days
 	 *
-	 * @return mixed returns signed certificate, private key and pubkey or False on failure.
+	 * @return mixed returns array with keys privkey, pubkey, csr and (self-signed) cert, or False on failure.
 	 */
-	public function generate_certificate ($_dn, $_cacert = null, $passphrase = null)
+	public function generate_certificate ($_dn, $_cacert = null, $passphrase = null, $validity = 365)
 	{
 		$config = array(
-			'digest_alg' => 'sha1',
+			'digest_alg' => 'sha256',
 			'private_key_bits' => 2048,
 			'private_key_type' => OPENSSL_KEYTYPE_RSA,
 		);
 		$result = array();
-		$csrsout = '';
-		if (!!($pkey = openssl_pkey_new($config)))
+		if (!!($pkey = openssl_pkey_new($config)) &&
+			openssl_pkey_export($pkey, $result['privkey'], $passphrase))
 		{
-			if(openssl_pkey_export($pkey, $result['privkey'], $passphrase))
+			$pubkey = openssl_pkey_get_details($pkey);
+			$result['pubkey'] = $pubkey['key'];
+			if (($csr = openssl_csr_new($_dn, $pkey, $config)) &&
+				openssl_csr_export($csr, $result['csr']) &&
+				($x509 = openssl_csr_sign($csr, $_cacert, $pkey, $validity ?: 365, $config)) &&
+				openssl_x509_export($x509, $csrsout))
 			{
-				$pubkey = openssl_pkey_get_details($pkey);
-				$result['pubkey'] = $pubkey['key'];
+				$result['cert'] = $csrsout;
 			}
-			$csr = openssl_csr_new($_dn, $pkey, $config);
-			$csrs = openssl_csr_sign($csr, $_cacert, $pkey, $_dn['validation']?$_dn['validation']:365);
-			if (openssl_x509_export($csrs, $csrsout)) $result['cert'] = $csrsout;
 		}
 		return $result;
+	}
+
+	/**
+	 * Generate a CSR (certificate signing request) for an existing private key
+	 *
+	 * Used to (re-)request a CA-signed certificate for a private key already
+	 * stored for a mail account, either because the account currently has no
+	 * certificate yet (freshly generated key, self-signed placeholder cert),
+	 * or to replace/renew the certificate of an existing one.
+	 *
+	 * @param string $privkey private key in PEM format
+	 * @param array $_dn distinguished name to be used in the CSR
+	 * @param string $passphrase = '' passphrase protecting $privkey, if any
+	 * @return string|false CSR in PEM format or false on failure
+	 */
+	public static function generate_csr($privkey, array $_dn, $passphrase = '')
+	{
+		if (!($key = openssl_pkey_get_private($privkey, $passphrase)) ||
+			!($csr = openssl_csr_new($_dn, $key, array('digest_alg' => 'sha256'))) ||
+			!openssl_csr_export($csr, $out))
+		{
+			return false;
+		}
+		return $out;
+	}
+
+	/**
+	 * Combine a private key and a certificate into a PKCS12 (p12) blob
+	 *
+	 * Used to import a CA-signed certificate received for a previously
+	 * exported CSR: the certificate is combined with the private key already
+	 * stored for the account, so message signing/decryption keeps using the
+	 * very same private key.
+	 *
+	 * @param string $privkey private key in PEM format
+	 * @param string $cert certificate in PEM format
+	 * @param string $privPassphrase = '' passphrase protecting $privkey, if any
+	 * @param string $exportPassword = '' passphrase to protect the resulting p12, if any
+	 * @return string|false p12 in binary format or false on failure (eg. cert does not match private key)
+	 */
+	public static function build_pkcs12($privkey, $cert, $privPassphrase = '', $exportPassword = '')
+	{
+		if (!($key = openssl_pkey_get_private($privkey, $privPassphrase)) ||
+			!openssl_pkcs12_export($cert, $out, $key, $exportPassword))
+		{
+			return false;
+		}
+		return $out;
+	}
+
+	/**
+	 * Extract the distinguished name from a certificate, in the long-form keys
+	 * used by openssl_csr_new()/generate_certificate() (eg. "countryName"),
+	 * as openssl_x509_parse() returns them in short form (eg. "C")
+	 *
+	 * @param string $cert certificate in PEM format
+	 * @return array
+	 */
+	public static function dn_from_cert($cert)
+	{
+		if (!($data = openssl_x509_parse($cert)))
+		{
+			return array();
+		}
+		static $map = array(
+			'C' => 'countryName',
+			'ST' => 'stateOrProvinceName',
+			'L' => 'localityName',
+			'O' => 'organizationName',
+			'OU' => 'organizationalUnitName',
+			'CN' => 'commonName',
+			'emailAddress' => 'emailAddress',
+		);
+		$dn = array();
+		foreach ($map as $short => $long)
+		{
+			if (!empty($data['subject'][$short])) $dn[$long] = $data['subject'][$short];
+		}
+		return $dn;
 	}
 
 	/**
@@ -277,9 +358,14 @@ class Smime extends Horde_Crypt_Smime
 	 *
 	 * @param int $acc_id acc id of mail account
 	 * @param string $passphrase = '' protect private key by passphrase
+	 * @param int $account_id =null account the credential was stored for, eg.
+	 *  admin_mail's $content['called_for'] - defaults to the current user, but
+	 *  MUST be given when acting on behalf of another user (eg. admin editing
+	 *  a shared/other user's mail account), or an existing credential will not
+	 *  be found even though Mail\Credentials::write() stored it correctly
 	 * @return mixed return array of smime info or false if fails
 	 */
-	public static function get_acc_smime($acc_id, $passphrase = '')
+	public static function get_acc_smime($acc_id, $passphrase = '', $account_id = null)
 	{
 		if (Api\Cache::getSession('mail', 'smime_passphrase'))
 		{
@@ -288,7 +374,7 @@ class Smime extends Horde_Crypt_Smime
 		$acc_smime = Credentials::read(
 				$acc_id,
 				Credentials::SMIME,
-				$GLOBALS['egw_info']['user']['account_id']
+				$account_id ? array(0, $account_id) : $GLOBALS['egw_info']['user']['account_id']
 		);
 		foreach ($acc_smime as $key => $val)
 		{

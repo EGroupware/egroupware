@@ -1682,15 +1682,29 @@ export class AdminApp extends EgwApp
 	}
 
 	/**
+	 * Build the acc_id(+account_id) query string shared by the smime GET-download
+	 * endpoints. account_id (admin_mail's "called_for") is only added when set,
+	 * ie. when managing a shared/other user's mail account - Mail\Smime::
+	 * get_acc_smime() otherwise only finds the current user's own credentials.
+	 */
+	private smime_accountParams() : string
+	{
+		var content = this.et2.getArrayMgr("content");
+		var params = '&acc_id=' + content.getEntry('acc_id');
+		var called_for = content.getEntry('called_for');
+		if (called_for) params += '&account_id=' + called_for;
+		return params;
+	}
+
+	/**
 	 * Export content of given field into relevant file
 	 */
 	smime_exportCert()
 	{
 		var $a = jQuery(document.createElement('a')).appendTo('body').hide();
-		var acc_id = this.et2.getArrayMgr("content").getEntry('acc_id');
 		var url = window.egw.webserverUrl+'/index.php?';
 			url += 'menuaction=mail.mail_ui.smimeExportCert';
-			url += '&acc_id='+acc_id;
+			url += this.smime_accountParams();
 		$a.prop('href',url);
 		$a.prop('download',"");
 		$a[0].click();
@@ -1698,68 +1712,159 @@ export class AdminApp extends EgwApp
 	}
 
 	/**
-	 * Create certificate generator dialog
+	 * Download a CSR generated from the stored smime private key, to request
+	 * a certificate from a CA (or re-request a new one).
+	 *
+	 * If there is no private key stored yet, opens the certificate-details
+	 * dialog to create one first (see smime_generateKey('csrkey')), then
+	 * downloads the CSR for the freshly created key - one click gets you a
+	 * key pair AND its CSR, no separate "create" step needed.
 	 */
-	smime_genCertificate()
+	smime_exportCsr()
+	{
+		if (this.et2.getArrayMgr("content").getEntry('acc_smime_cred_id'))
+		{
+			this.smime_downloadCsr();
+		}
+		else
+		{
+			this.smime_generateKey('csrkey');
+		}
+	}
+
+	/**
+	 * Trigger the actual CSR download for the already stored private key
+	 */
+	private smime_downloadCsr()
+	{
+		var $a = jQuery(document.createElement('a')).appendTo('body').hide();
+		var url = window.egw.webserverUrl+'/index.php?';
+			url += 'menuaction=mail.mail_ui.smimeExportCsr';
+			url += this.smime_accountParams();
+		$a.prop('href',url);
+		$a.prop('download',"");
+		$a[0].click();
+		$a.remove();
+	}
+
+	/**
+	 * Enable/disable the S/MIME buttons/fields client-side after
+	 * ajax_smimeCreateKeypair() succeeded, without a full page reload.
+	 * Mirrors the $readonlys admin_mail::edit() sets server-side on load.
+	 *
+	 * smimeGenerate additionally disappears entirely once readonly, via its
+	 * hideOnReadonly="true" template attribute (Et2Button/ButtonMixin.ts) -
+	 * nothing special to do here, set_readonly() alone triggers that too.
+	 *
+	 * smime_import_cert is deliberately NOT touched here: it stays gated by
+	 * smime_certFileChanged() alone (whether a certificate file is actually
+	 * selected), independent of the key existing.
+	 *
+	 * @param hasKey true once a private key is stored for the account
+	 */
+	private smime_setKeyState(hasKey : boolean)
+	{
+		var setReadonly = (id : string, readonly : boolean) =>
+		{
+			let widget : any = this.et2.getWidgetById(id);
+			if (!widget) return;
+			if (typeof widget.set_readonly === 'function') widget.set_readonly(readonly);
+			else widget.readonly = readonly;
+		};
+		['smimeGenerate', 'smimeKeyUpload', 'smime_pkcs12_password'].forEach(id => setReadonly(id, hasKey));
+		['smime_export_p12', 'smime_delete_p12', 'smimeCertUpload', 'smime_import_passphrase']
+			.forEach(id => setReadonly(id, !hasKey));
+	}
+
+	/**
+	 * Enable "Import certificate" only once a certificate file has actually
+	 * been selected - independent of smime_setKeyState(), which only governs
+	 * whether a file CAN be chosen at all (an existing key is required).
+	 *
+	 * @param _event
+	 * @param _widget the smimeCertUpload file widget
+	 */
+	smime_certFileChanged(_event, _widget)
+	{
+		var hasFile = !!(_widget && _widget.value && Object.keys(_widget.value).length > 0);
+		let button : any = this.et2.getWidgetById('smime_import_cert');
+		if (!button) return;
+		if (typeof button.set_readonly === 'function') button.set_readonly(!hasFile);
+		else button.readonly = !hasFile;
+	}
+
+	/**
+	 * Open the certificate-details dialog and, on confirm, ask the server to
+	 * generate a new S/MIME private key + (self-signed) certificate.
+	 *
+	 * @param action 'selfsigned' just creates and stores the certificate.
+	 *  'csrkey' does the same, then immediately downloads a CSR for the new
+	 *  key (called from smime_exportCsr() when no key is stored yet), so a
+	 *  CA-issued certificate can later replace the self-signed one via
+	 *  "Import certificate".
+	 */
+	private smime_generateKey(action : 'selfsigned'|'csrkey')
 	{
 		var self = this;
 		let dialog = new Et2Dialog("mail");
 		dialog.transformAttributes({
 			callback(_button_id, _value)
 			{
-				if(_button_id == 'create' && _value)
-				{
-					var isValid = true;
-					var required = ['countryName', 'emailAddress'];
-					var widget;
-					// check the required fields
-					for(var i = 0; i < required.length; i++)
-					{
-						if(_value[required[i]])
-						{
-							continue;
-						}
-						widget = this.eTemplate.widgetContainer.getWidgetById(required[i]);
-						widget.set_validation_error('This field is required!');
-						isValid = false;
-					}
-					// check mismatch passphrase
-					if (_value.passphrase && _value.passphrase !== _value.passphraseConf)
-					{
-						var passphraseConf = this.eTemplate.widgetContainer.getWidgetById('passphrase');
-						passphraseConf.set_validation_error('Confirm passphrase is not match!');
-						isValid = false;
-					}
+				if(_button_id != 'create' || !_value) return;
 
-					if (isValid)
+				var isValid = true;
+				var required = ['countryName', 'emailAddress'];
+				var widget;
+				// check the required fields
+				for(var i = 0; i < required.length; i++)
+				{
+					if(_value[required[i]])
 					{
-						egw.json('mail.mail_ui.ajax_smimeGenCertificate', _value, function(_cert){
-							if (_cert)
-							{
-								for (var key in _cert)
-								{
-									if (!_cert[key]) continue;
-									switch (key)
-									{
-										case 'cert':
-											self.et2.getWidgetById('smime_cert').set_value(_cert[key]);
-											break;
-										case 'privkey':
-											self.et2.getWidgetById('acc_smime_password').set_value(_cert[key]);
-											break;
-									}
-								}
-								self.egw.message('New certificate information has been generated, please save your account if you want to store it.');
-							}
-						}).sendRequest(true);
+						continue;
 					}
-					else
-					{
-						return false;
-					}
+					widget = this.eTemplate.widgetContainer.getWidgetById(required[i]);
+					widget.set_validation_error('This field is required!');
+					isValid = false;
 				}
+				// check mismatch passphrase
+				if (_value.passphrase && _value.passphrase !== _value.passphraseConf)
+				{
+					var passphraseConf = this.eTemplate.widgetContainer.getWidgetById('passphraseConf');
+					passphraseConf.set_validation_error('Confirm passphrase is not match!');
+					isValid = false;
+				}
+				if (!isValid) return false;
+
+				var acc_id = self.et2.getArrayMgr("content").getEntry('acc_id');
+				var data = Object.assign({}, _value, {
+					acc_id: acc_id,
+					called_for: self.et2.getArrayMgr("content").getEntry('called_for'),
+				});
+				egw.json('admin.admin_mail.ajax_smimeCreateKeypair',
+					[data, self.et2.getInstanceManager().etemplate_exec_id],
+					function(_data)
+					{
+						if (!_data || !_data.acc_smime_cred_id)
+						{
+							return;
+						}
+						let credWidget = self.et2.getWidgetById('acc_smime_cred_id');
+						if (credWidget) credWidget.set_value(_data.acc_smime_cred_id);
+						self.smime_setKeyState(true);
+
+						if (action == 'csrkey')
+						{
+							self.egw.message(self.egw.lang('Private key created, downloading CSR...'));
+							self.smime_downloadCsr();
+						}
+						else
+						{
+							self.egw.message(self.egw.lang('Self-signed certificate created.'));
+						}
+					}
+				).sendRequest(true);
 			},
-			title: egw.lang('Generate Certificate'),
+			title: egw.lang(action == 'csrkey' ? 'Create private key and export CSR' : 'Create self-signed certificate'),
 			buttons: [
 				{text: this.egw.lang("Create"), id: "create", "class": "ui-priority-primary", "default": true},
 				{text: this.egw.lang("Cancel"), id: "cancel"}
@@ -1774,6 +1879,14 @@ export class AdminApp extends EgwApp
 			position: 'left top'
 		});
 		document.body.appendChild(<LitElement><unknown>dialog);
+	}
+
+	/**
+	 * Create certificate generator dialog for a self-signed certificate
+	 */
+	smime_genCertificate()
+	{
+		this.smime_generateKey('selfsigned');
 	}
 
 	/**

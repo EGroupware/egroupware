@@ -55,7 +55,8 @@ class mail_ui
 		'importMessageFromVFS2DraftAndDisplay'=>True,
 		'subscription'	=> True,
 		'folderManagement' => true,
-		'smimeExportCert' => true
+		'smimeExportCert' => true,
+		'smimeExportCsr' => true,
 	);
 
 	/**
@@ -2480,24 +2481,24 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	}
 
 	/**
-	 * Generates certificate base on given data and send
-	 * private key, pubkey and certificate back to client callback.
+	 * Vet $_GET['account_id'] for the smimeExportCert()/smimeExportCsr() download endpoints
 	 *
-	 * @param array $_data
+	 * Only trusted for users with admin rights: the credential was stored on
+	 * behalf of another user (eg. an admin managing a shared/other user's
+	 * mail account via admin_mail's called_for) - Mail\Smime::get_acc_smime()
+	 * otherwise only looks up the current user's own credentials. Without
+	 * this check, any logged in user could pass an arbitrary account_id to
+	 * export another user's S/MIME private key.
+	 *
+	 * @return int|null null uses get_acc_smime()'s own (current user) default
 	 */
-	function ajax_smimeGenCertificate ($_data)
+	private function smimeAccountId()
 	{
-		$smime = new Mail\Smime();
-		$response = Api\Json\Response::get();
-		// fields need to be excluded from data
-		$discards = array ('passphrase', 'passphraseConf', 'ca', 'validity');
-		$ca = $_data['ca'];
-		$passphrase = $_data['passphrase'];
-		foreach (array_keys($_data) as $key)
+		if (empty($_GET['account_id']) || !isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
-			if (empty($_data[$key]) || in_array($key, $discards)) unset($_data[$key]);
+			return null;
 		}
-		$response->data($smime->generate_certificate($_data, $ca, null, $passphrase, $_data['validity']));
+		return (int)$_GET['account_id'];
 	}
 
 	/**
@@ -2507,11 +2508,40 @@ $filter['before']= date("d-M-Y", $cutoffdate2);
 	function smimeExportCert()
 	{
 		if (empty($_GET['acc_id'])) return false;
-		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id']);
+		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id'], '', $this->smimeAccountId());
 		$length = 0;
 		$mime = 'application/x-pkcs12';
 		Api\Header\Content::safe($acc_smime['acc_smime_password'], "certificate.p12", $mime, $length, true, true);
 		echo $acc_smime['acc_smime_password'];
+		exit();
+	}
+
+	/**
+	 * Export a CSR (certificate signing request) generated from the stored
+	 * smime private key, so a CA can (re-)issue a certificate for it
+	 *
+	 * See smimeAccountId() docblock re. $_GET['account_id'].
+	 *
+	 * @return boolean return false if not successful
+	 */
+	function smimeExportCsr()
+	{
+		if (empty($_GET['acc_id'])) return false;
+		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id'], '', $this->smimeAccountId());
+		if (empty($acc_smime['pkey']))
+		{
+			echo lang('No S/MIME private key stored for this account.');
+			exit();
+		}
+		$dn = !empty($acc_smime['cert']) ? Mail\Smime::dn_from_cert($acc_smime['cert']) : array();
+		if (!($csr = Mail\Smime::generate_csr($acc_smime['pkey'], $dn)))
+		{
+			echo lang('Could not generate CSR.');
+			exit();
+		}
+		$length = 0;
+		Api\Header\Content::safe($csr, "certificate.csr", 'application/pkcs10', $length, true, true);
+		echo $csr;
 		exit();
 	}
 

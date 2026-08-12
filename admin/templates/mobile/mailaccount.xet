@@ -273,19 +273,32 @@
 				<row>
 					<et2-description  value="SMIME"></et2-description>
 				</row>
-				<row disabled="@hide_smime_upload">
+				<row valign="top">
+					<et2-description value="Certificate"></et2-description>
+					<et2-hbox>
+						<et2-button id="smimeGenerate" label="Create self-signed certificate" onclick="app.admin.smime_genCertificate" image="add" hideOnReadonly="true" noSubmit="true"></et2-button>
+						<et2-button  id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
+						<et2-button id="smime_export_csr" label="Export CSR" onclick="app.admin.smime_exportCsr" image="export" noSubmit="true"></et2-button>
+						<et2-button  id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" noSubmit="true"></et2-button>
+					</et2-hbox>
+				</row>
+				<row valign="top">
 					<et2-description  value="Upload your certificate .p12/.pfx file"></et2-description>
 					<et2-vbox>
 						<file id="smimeKeyUpload" accept=".p12,.pfx"/>
 						<et2-password  id="smime_pkcs12_password" maxlength="128" autocomplete="off" placeholder="Password to unlock encrypted p12"></et2-password>
 					</et2-vbox>
 				</row>
-				<row disabled="!@hide_smime_upload">
-					<et2-description  value="Current certificate"></et2-description>
+				<row valign="top">
+					<et2-description value="Import CA-signed certificate for this key"></et2-description>
 					<et2-hbox>
-						<et2-button  id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
-						<et2-button  id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" noSubmit="true"></et2-button>
+						<file id="smimeCertUpload" accept=".pem,.crt,.cer,.p7b" onchange="app.admin.smime_certFileChanged"/>
+						<et2-password id="smime_import_passphrase" maxlength="128" autocomplete="off" placeholder="Passphrase, if private key is protected"></et2-password>
+						<et2-button id="smime_import_cert" label="Import certificate" onclick="app.admin.change_account" image="upload" noSubmit="true"></et2-button>
 					</et2-hbox>
+				</row>
+				<row>
+					<hidden id="acc_smime_cred_id"/>
 				</row>
 			</rows>
 		</grid>
