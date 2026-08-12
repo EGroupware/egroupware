@@ -48,7 +48,7 @@ tr.mail {
 		text-decoration: line-through;
 	}
 
-	#flaggedImage {
+	#nm_flaggedImage {
 		color: var(--flag-color, var(--sl-color-neutral-800));
 	}
 }
@@ -80,6 +80,24 @@ tr.unseen .status_img.bi-circle-fill {
 
 tr:not(.unseen) .status_img.bi-circle-fill {
 	display: none;
+}
+@keyframes unreadGlow {
+	0% {
+		opacity: 1;
+	}
+	40% {
+		opacity: 0.6;
+	}
+	60% {
+		opacity: 0.6;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+tr.unseen.recent .status_img {
+	animation: unreadGlow 5s ease-in-out 10 forwards;
 }
 
 et2-vbox,
@@ -178,4 +196,6 @@ tr.mail .status_icons {
 tr.mail .status_icons et2-image {
 	font-size: calc(1em + 2px);
 	height: calc(1em + 2px);
+	//force width so icons line up, even if some are not set
+	width: calc(1em + 2px);
 }

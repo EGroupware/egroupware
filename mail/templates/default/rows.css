@@ -47,7 +47,7 @@ tr.mail.customFlag5 {
 tr.mail.deleted td:first-child {
   text-decoration: line-through;
 }
-tr.mail #flaggedImage {
+tr.mail #nm_flaggedImage {
   color: var(--flag-color, var(--sl-color-neutral-800));
 }
 tr.unseen et2-description:not(.bodypreview),
@@ -73,6 +73,23 @@ tr.unseen .status_img.bi-circle-fill {
 }
 tr:not(.unseen) .status_img.bi-circle-fill {
   display: none;
+}
+@keyframes unreadGlow {
+  0% {
+    opacity: 1;
+  }
+  40% {
+    opacity: 0.6;
+  }
+  60% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+tr.unseen.recent .status_img {
+  animation: unreadGlow 5s ease-in-out 10 forwards;
 }
 et2-vbox,
 et2-hbox,
@@ -157,4 +174,5 @@ tr.mail .status_icons {
 tr.mail .status_icons et2-image {
   font-size: calc(1em + 2px);
   height: calc(1em + 2px);
+  width: calc(1em + 2px);
 }
