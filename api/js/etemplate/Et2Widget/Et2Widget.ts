@@ -121,6 +121,10 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 						display: none;
 					}
 
+					:host(.et2_clickable) {
+						cursor: pointer;
+					}
+
 					/* CSS to align internal inputs according to box alignment */
 
 					:host([align="center"]) .input-group__input {

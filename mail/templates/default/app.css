@@ -942,9 +942,6 @@ div#mail-index_nm.splitter-pane {
   border-top: 1px solid silver;
   margin-bottom: 0;
 }
-#mail-index_nm .mail.row et2-url-email_ro {
-  width: fit-content;
-}
 #mail-index_nm .et2_label.et2_vfs {
   text-align: center;
 }
