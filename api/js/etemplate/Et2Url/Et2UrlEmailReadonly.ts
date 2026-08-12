@@ -45,7 +45,7 @@ export class Et2UrlEmailReadonly extends Et2UrlReadonly
 		const split = splitEmail(raw);
 		const emailDisplay = !this.emailDisplay ? "email" :
 		                     (this.emailDisplay === 'preference' ? null : this.emailDisplay);
-		super.statustext = split.email && (split.name || emailDisplay !== "email") ? split.email : "";
+		super.statustext = split.email && (split.name || emailDisplay !== "email") ? split.email : (this.statustext??"");
 		const fallback = emailDisplay === "email" ? split.email : raw;
 		super.value = fallback;
 		formatEmailAddress(raw, emailDisplay).then(

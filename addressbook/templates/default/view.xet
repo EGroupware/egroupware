@@ -24,22 +24,22 @@
                 </row>
                 <row>
                         <et2-description for="tel_work" value="Business" statustext="Business"></et2-description>
-                        <et2-url-phone id="tel_work" readonly="true"></et2-url-phone>
+                        <et2-url-phone id="tel_work" readonly="true" statustext="@tel_work"></et2-url-phone>
                 </row>
                 <row>
                         <et2-description for="tel_cell" value="Mobile phone" statustext="Mobile phone"
 ></et2-description>
-                        <et2-url-phone id="tel_cell" readonly="true"></et2-url-phone>
+                        <et2-url-phone id="tel_cell" readonly="true" statustext="@tel_cell"></et2-url-phone>
                 </row>
                 <row>
                         <et2-description for="tel_home" value="Private" statustext="Private"
 ></et2-description>
-                        <et2-url-phone id="tel_home" readonly="true"></et2-url-phone>
+                        <et2-url-phone id="tel_home" readonly="true" statustext="@tel_home"></et2-url-phone>
                 </row>
                 <row>
                         <et2-description for="tel_fax" value="Fax" statustext="Fax"
 ></et2-description>
-                        <et2-url-phone id="tel_fax" readonly="true"></et2-url-phone>
+                        <et2-url-phone id="tel_fax" readonly="true" statustext="@tel_fax"></et2-url-phone>
                 </row>
                 <row>
                     <et2-description span="2" value="EMail &amp; Internet" class="addressbook_sidebox_header"></et2-description>
@@ -47,12 +47,12 @@
                 <row>
                         <et2-description for="email" value="EMail" statustext="EMail"
 ></et2-description>
-                        <et2-url-email id="email" readonly="true"></et2-url-email>
+                        <et2-url-email id="email" readonly="true" statustext="@email"></et2-url-email>
                 </row>
                 <row>
                         <et2-description for="url" value="URL" statustext="URL"
 ></et2-description>
-                        <et2-url id="url" readonly="true"></et2-url>
+                        <et2-url id="url" readonly="true" statustext="@url"></et2-url>
                 </row>
                 <row class="toolbox">
                     <et2-hbox>
