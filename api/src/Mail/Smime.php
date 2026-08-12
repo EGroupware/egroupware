@@ -410,27 +410,94 @@ class Smime extends Horde_Crypt_Smime
 	}
 
 	/**
-	 * Combine a private key and a certificate into a PKCS12 (p12) blob
+	 * Combine a private key and a certificate (optionally with intermediate/CA
+	 * certificates) into a PKCS12 (p12) blob
 	 *
 	 * Used to import a CA-signed certificate received for a previously
 	 * exported CSR: the certificate is combined with the private key already
 	 * stored for the account, so message signing/decryption keeps using the
-	 * very same private key.
+	 * very same private key. Any $extracerts given (eg. an intermediate CA
+	 * certificate) get bundled into the p12 too - mail_compose::_encrypt()
+	 * already reads them back out (via get_acc_smime()'s 'extracerts') and
+	 * passes them into Horde_Crypt_Smime/openssl_pkcs7_sign(), which embeds
+	 * them into outgoing signed messages so recipients can validate the
+	 * certificate chain up to a CA they trust, without needing the
+	 * intermediate separately.
 	 *
 	 * @param string $privkey private key in PEM format
 	 * @param string $cert certificate in PEM format
 	 * @param string $privPassphrase = '' passphrase protecting $privkey, if any
 	 * @param string $exportPassword = '' passphrase to protect the resulting p12, if any
+	 * @param string[] $extracerts = [] additional (eg. intermediate CA) certificates in PEM format
 	 * @return string|false p12 in binary format or false on failure (eg. cert does not match private key)
 	 */
-	public static function build_pkcs12($privkey, $cert, $privPassphrase = '', $exportPassword = '')
+	public static function build_pkcs12($privkey, $cert, $privPassphrase = '', $exportPassword = '', array $extracerts = array())
 	{
+		$options = empty($extracerts) ? array() : array('extracerts' => $extracerts);
 		if (!($key = openssl_pkey_get_private($privkey, $privPassphrase)) ||
-			!openssl_pkcs12_export($cert, $out, $key, $exportPassword))
+			!openssl_pkcs12_export($cert, $out, $key, $exportPassword, $options))
 		{
 			return false;
 		}
 		return $out;
+	}
+
+	/**
+	 * Normalize an uploaded certificate/certificate-bundle into an array of PEM certificates
+	 *
+	 * Accepts whatever a CA is likely to hand back: a single PEM certificate, several PEM
+	 * certificates concatenated (a common way CAs deliver "your cert + the chain" as one file),
+	 * a PEM-armored PKCS#7 bundle (-----BEGIN PKCS7-----), or any of those in raw/binary DER
+	 * encoding instead of PEM text (eg. a Windows-style .cer or .p7b) - PEM is just base64(DER)
+	 * wrapped in armor, so DER input is converted by wrapping it the same way, then parsed.
+	 *
+	 * @param string $data raw uploaded file content, PEM or DER, single cert or bundle
+	 * @return string[] PEM certificates found (possibly empty, if $data was not usable at all)
+	 */
+	public static function normalize_cert_pem($data)
+	{
+		// one or more bare PEM certificates, possibly concatenated
+		if (preg_match_all('/-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----\r?\n?/s', $data, $matches) &&
+			$matches[0])
+		{
+			return $matches[0];
+		}
+		// PEM-armored PKCS#7 bundle
+		if (str_contains($data, '-----BEGIN PKCS7-----') && openssl_pkcs7_read($data, $certs))
+		{
+			return $certs;
+		}
+		// raw/binary DER: PEM is just base64(DER) wrapped in armor - try as a single certificate...
+		$as_cert = "-----BEGIN CERTIFICATE-----\n".chunk_split(base64_encode($data), 64, "\n")."-----END CERTIFICATE-----\n";
+		if (openssl_x509_read($as_cert))
+		{
+			return array($as_cert);
+		}
+		// ...then as a PKCS#7 bundle
+		$as_pkcs7 = "-----BEGIN PKCS7-----\n".chunk_split(base64_encode($data), 64, "\n")."-----END PKCS7-----\n";
+		if (openssl_pkcs7_read($as_pkcs7, $certs))
+		{
+			return $certs;
+		}
+		return array();
+	}
+
+	/**
+	 * Check whether a stored p12 blob requires a passphrase to even open the container
+	 *
+	 * Deliberately bypasses get_acc_smime()'s session-cached-passphrase fallback (tries a literal
+	 * empty passphrase only), so it gives a clean "does the STORED blob itself need one" answer
+	 * regardless of whatever might currently be cached - used to proactively tell the user their
+	 * certificate needs a passphrase, before they hit a confusing "not found"/"wrong passphrase"
+	 * error on export/import.
+	 *
+	 * @param string $pkcs12 raw p12 content, eg. Credentials::read()'s 'acc_smime_password'
+	 * @return bool true if a passphrase is required (opening with an empty one fails)
+	 */
+	public static function isPassphraseProtected($pkcs12)
+	{
+		$certs = array();
+		return !@openssl_pkcs12_read($pkcs12, $certs, '');
 	}
 
 	/**

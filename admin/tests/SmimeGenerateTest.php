@@ -57,7 +57,7 @@ class SmimeGenerateTest extends Api\LoggedInTest
 	{
 		// validation errors are kept in a static array shared across the whole
 		// process/test run - reset the ones we're about to check
-		foreach(array('smimeGenerate', 'smimeCertUpload', 'smime_import_passphrase') as $name)
+		foreach(array('smimeGenerate', 'smimeCertUpload', 'smime_passphrase') as $name)
 		{
 			Etemplate::set_validation_error($name, false);
 		}
@@ -196,7 +196,7 @@ class SmimeGenerateTest extends Api\LoggedInTest
 	{
 		$ref = new ReflectionMethod(admin_mail::class, 'smimeExportFile');
 		$ref->setAccessible(true);
-		return $ref->invoke(new admin_mail(), $content, $account_id, $csr);
+		return $ref->invoke(new admin_mail(), $content, new Etemplate(), $account_id, $csr);
 	}
 
 	/**
@@ -238,10 +238,17 @@ class SmimeGenerateTest extends Api\LoggedInTest
 			$cred_id = $ref->invokeArgs(null, array($genContent, $tpl, $account_id));
 			$this->assertNotNull($cred_id, 'test setup: generating the key must succeed');
 
-			// found, but wrong passphrase -> distinguished from "not found"
+			// found, but no passphrase submitted at all -> distinguished from both "not found" and
+			// "wrong passphrase" - the user likely just needs to fill in the field
+			$result = $this->callExportFile(array('acc_id' => $acc_id), $account_id, true);
+			$this->assertSame(
+				lang('This S/MIME private key is passphrase-protected. Please enter the passphrase above and try again.'),
+				$result);
+
+			// found, wrong (non-empty) passphrase -> distinguished from "none submitted"
 			$result = $this->callExportFile(
-				array('acc_id' => $acc_id, 'smime_import_passphrase' => 'wrong'), $account_id, true);
-			$this->assertSame(lang('Could not decrypt stored private key, wrong passphrase?'), $result);
+				array('acc_id' => $acc_id, 'smime_passphrase' => 'wrong'), $account_id, true);
+			$this->assertSame(lang('The passphrase entered was not correct, please try again.'), $result);
 
 			// correct passphrase: verify the underlying pieces smimeExportFile() calls succeed
 			// together (can't call smimeExportFile() itself for this case - it exit()s on success)

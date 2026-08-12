@@ -1219,7 +1219,7 @@ class admin_mail
 		// browser/popup contexts).
 		if (!empty($content['smime_export_p12']) || !empty($content['smime_export_csr']))
 		{
-			if (($error = $this->smimeExportFile($content, $account_id, !empty($content['smime_export_csr']))))
+			if (($error = $this->smimeExportFile($content, $tpl, $account_id, !empty($content['smime_export_csr']))))
 			{
 				$msg = $error;
 				$msg_type = 'error';
@@ -1234,7 +1234,7 @@ class admin_mail
 			$content['acc_smime_cred_id'] = $cred_id;
 			$msg = lang('Certificate imported.');
 		}
-		unset($content['smimeCertUpload'], $content['smime_import_passphrase']);
+		unset($content['smimeCertUpload'], $content['smimeIntermediateUpload'], $content['smime_passphrase']);
 
 		// SMIME UPLOAD/DELETE/EXPORT control
 		$content['hide_smime_upload'] = false;
@@ -1252,11 +1252,21 @@ class admin_mail
 			}
 			else
 			{
+				// proactively tell the user their key needs a passphrase (Export CSR/p12, Import
+				// certificate) BEFORE they hit a confusing error, instead of only after the fact
+				$content['smime_needs_passphrase'] = !empty($content['acc_smime_password']) &&
+					Mail\Smime::isPassphraseProtected($content['acc_smime_password']);
+
 				// do NOT send smime private key to client side, it's unnecessary and binary blob breaks json encoding
 				$content['acc_smime_password'] = Mail\Credentials::UNAVAILABLE;
 
 				$content['hide_smime_upload'] = true;
 			}
+		}
+		if ($content['smime_needs_passphrase'] ?? false)
+		{
+			$tpl->setElementAttribute('smime_passphrase', 'placeholder',
+				lang('Required to export or import a certificate for this key'));
 		}
 
 		// Uploading a p12 only makes sense without an existing key - smimeGenerate itself is
@@ -1266,12 +1276,12 @@ class admin_mail
 		// Using $readonlys, as it stays in sync client-side after ajax_smimeCreateKeypair() via
 		// Et2Widget::set_readonly() - an explicit false here also exempts these widgets from
 		// readonlys['__ALL__'] below for non-edit-access users.
-		$readonlys['smimeGenerate'] = $readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password'] =
-			$content['hide_smime_upload'];
-		$readonlys['smime_export_p12'] = $readonlys['smime_delete_p12'] =
-		$readonlys['smimeCertUpload'] = $readonlys['smime_import_passphrase'] =
-			!$content['hide_smime_upload'];
-		$readonlys['smime_export_csr'] = false;
+		$readonlys['smimeGenerate'] = $readonlys['smimeKeyUpload'] = $content['hide_smime_upload'];
+		$readonlys['smime_export_p12'] = $readonlys['smime_delete_p12'] = $readonlys['smimeCertUpload'] =
+		$readonlys['smimeIntermediateUpload'] = !$content['hide_smime_upload'];
+		// smime_passphrase is shared by both states (unlocks a file being uploaded now, or the
+		// already-stored key for import/export), so unlike the fields above it's never readonly
+		$readonlys['smime_export_csr'] = $readonlys['smime_passphrase'] = false;
 		// only enabled once a certificate file was actually chosen, see smime_certFileChanged()
 		$readonlys['smime_import_cert'] = true;
 
@@ -1475,6 +1485,23 @@ class admin_mail
 	}
 
 	/**
+	 * Build a clear error message for a failed private-key decryption attempt (Export CSR, Import
+	 * certificate), distinguishing "no passphrase was submitted at all" (likely just needs one -
+	 * the user may not have realised, despite the proactive hint set on the field, see edit()'s
+	 * smime_needs_passphrase handling) from "a passphrase was submitted but didn't work" (likely
+	 * just wrong) - both previously showed the same generic "wrong passphrase?" message.
+	 *
+	 * @param string $passphrase whatever was actually submitted (possibly empty)
+	 * @return string translated message
+	 */
+	private static function smimePassphraseError($passphrase)
+	{
+		return $passphrase === ''
+			? lang('This S/MIME private key is passphrase-protected. Please enter the passphrase above and try again.')
+			: lang('The passphrase entered was not correct, please try again.');
+	}
+
+	/**
 	 * Export the stored S/MIME certificate as p12, or a CSR for it, as a file download and exit()
 	 *
 	 * Called from edit()'s flat-id button handling (smime_export_p12/smime_export_csr), reached
@@ -1482,17 +1509,18 @@ class admin_mail
 	 * respond with the file directly.
 	 *
 	 * @param array $content current (posted) form content, 'acc_id' used to look up the key,
-	 *  'smime_import_passphrase' (shared with the import-certificate row) used to unlock it if
+	 *  'smime_passphrase' (shared with the certificate-upload/import rows) used to unlock it if
 	 *  the stored p12 is itself passphrase-protected - needed for the CSR branch, which has to
 	 *  actually extract the private key (the p12 export branch just streams the stored blob
 	 *  as-is, so it works even without a passphrase).
+	 * @param Etemplate $tpl used to highlight the passphrase field on failure, same as import_smime_cert()
 	 * @param int $account_id already resolved from $content['called_for'] by the caller
 	 * @param bool $csr true: export a CSR generated from the stored key, false: export the p12 itself
 	 * @return string|null translated error message, or null on success (exit()s, does not return)
 	 */
-	private function smimeExportFile(array $content, $account_id, $csr)
+	private function smimeExportFile(array $content, Etemplate $tpl, $account_id, $csr)
 	{
-		$passphrase = $content['smime_import_passphrase'] ?: '';
+		$passphrase = $content['smime_passphrase'] ?: '';
 		$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], $passphrase, $account_id);
 
 		if ($csr)
@@ -1503,7 +1531,9 @@ class admin_mail
 			}
 			if (empty($acc_smime['pkey']))
 			{
-				return lang('Could not decrypt stored private key, wrong passphrase?');
+				$msg = self::smimePassphraseError($passphrase);
+				$tpl->set_validation_error('smime_passphrase', $msg);
+				return $msg;
 			}
 			$dn = !empty($acc_smime['cert']) ? Mail\Smime::dn_from_cert($acc_smime['cert']) : array();
 			if (!($data = Mail\Smime::generate_csr($acc_smime['pkey'], $dn, $passphrase)))
@@ -1541,7 +1571,7 @@ class admin_mail
 	{
 		if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
 		{
-			$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_pkcs12_password']);
+			$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_passphrase']);
 			if (is_array($cert_info) && !empty($cert_info['cert']))
 			{
 				// save public key
@@ -1683,16 +1713,23 @@ class admin_mail
 	}
 
 	/**
-	 * Import a CA-signed certificate for the already stored S/MIME private key
+	 * Import a CA-signed certificate (optionally with a separately provided intermediate/CA
+	 * certificate) for the already stored S/MIME private key
 	 *
 	 * Combines the newly uploaded certificate with the private key extracted
 	 * from the currently stored PKCS12 (self-signed or CA-issued) and
 	 * re-stores the result, so message signing/decryption keeps using the
-	 * very same private key.
+	 * very same private key. Accepts PEM or DER, a single certificate, several
+	 * certificates concatenated, or a PKCS#7 (.p7b) bundle - see
+	 * Mail\Smime::normalize_cert_pem(). Whichever certificate actually
+	 * matches the stored private key is used as the leaf; any others (eg. an
+	 * intermediate CA certificate, from the same upload or the separate
+	 * smimeIntermediateUpload field) are bundled into the p12 as extracerts,
+	 * so outgoing signed mail includes them (see build_pkcs12()).
 	 *
-	 * @param array $content 'smimeCertUpload' file upload, optional
-	 *  'smime_import_passphrase' to unlock the stored private key, needs
-	 *  existing 'acc_smime_cred_id'
+	 * @param array $content 'smimeCertUpload' file upload, optional 'smimeIntermediateUpload'
+	 *  file upload, optional 'smime_passphrase' to unlock the stored private key, needs existing
+	 *  'acc_smime_cred_id'
 	 * @param Etemplate $tpl
 	 * @param int $account_id
 	 * @return int|null new cred_id or null on error
@@ -1704,21 +1741,49 @@ class admin_mail
 			$tpl->set_validation_error('smimeCertUpload', lang('No private key stored to import a certificate for!'));
 			return null;
 		}
-		if (!($cert = file_get_contents($content['smimeCertUpload']['tmp_name'])))
+		$certs = array();
+		foreach (array('smimeCertUpload', 'smimeIntermediateUpload') as $field)
+		{
+			if (!empty($content[$field]['tmp_name']) && ($data = file_get_contents($content[$field]['tmp_name'])))
+			{
+				$certs = array_merge($certs, Mail\Smime::normalize_cert_pem($data));
+			}
+		}
+		if (!$certs)
 		{
 			$tpl->set_validation_error('smimeCertUpload', lang('Could not read uploaded certificate!'));
 			return null;
 		}
-		$passphrase = $content['smime_import_passphrase'] ?: '';
+		$passphrase = $content['smime_passphrase'] ?: '';
 		$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], $passphrase, $account_id);
-		if (empty($acc_smime['pkey']))
+		if (empty($acc_smime['pkey']) || !($key = openssl_pkey_get_private($acc_smime['pkey'], $passphrase)))
 		{
-			$tpl->set_validation_error('smime_import_passphrase', lang('Could not decrypt stored private key, wrong passphrase?'));
+			$tpl->set_validation_error('smime_passphrase', self::smimePassphraseError($passphrase));
+			return null;
+		}
+		// whichever uploaded certificate actually matches the stored key is the leaf, any others
+		// (eg. an intermediate CA certificate) are bundled alongside it, not stored as "the" cert
+		$cert = null;
+		$extracerts = array();
+		foreach ($certs as $candidate)
+		{
+			if (!$cert && openssl_x509_check_private_key($candidate, $key))
+			{
+				$cert = $candidate;
+			}
+			else
+			{
+				$extracerts[] = $candidate;
+			}
+		}
+		if (!$cert)
+		{
+			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
 			return null;
 		}
 		// re-apply the same passphrase as the container password too, so the re-combined p12 keeps
 		// the same protection level it had before (see matching comment in generate_smime_key())
-		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase, $passphrase)))
+		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase, $passphrase, $extracerts)))
 		{
 			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
 			return null;
