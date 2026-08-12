@@ -304,6 +304,38 @@
 			</rows>
 		</grid>
 	</template>
+	<template id="admin.mailaccount.smimecertgen" template="" lang="" group="0" version="17.1">
+		<grid width="100%">
+			<columns>
+				<column/>
+			</columns>
+			<rows>
+				<row>
+					<et2-groupbox summary="Certificate details">
+						<et2-vbox>
+							<et2-textbox id="countryName" maxlength="2" placeholder="Country name (2 letter code, eg. DE)"></et2-textbox>
+							<et2-textbox id="stateOrProvinceName" placeholder="State or province name"></et2-textbox>
+							<et2-textbox id="localityName" placeholder="Locality name"></et2-textbox>
+							<et2-textbox id="organizationName" placeholder="Organization name"></et2-textbox>
+							<et2-textbox id="organizationalUnitName" placeholder="Organizational unit name"></et2-textbox>
+							<et2-textbox id="commonName" placeholder="Common name"></et2-textbox>
+							<et2-textbox id="emailAddress" placeholder="Email address"></et2-textbox>
+							<et2-textbox id="validity" type="integer" label="Certificate validity in days" placeholder="3650"></et2-textbox>
+						</et2-vbox>
+					</et2-groupbox>
+				</row>
+				<row>
+					<et2-groupbox summary="passphrase">
+						<et2-description value="Enter a passphrase if you would like to protect your private key by password."></et2-description>
+						<et2-vbox>
+							<et2-password id="passphrase" placeholder="Enter a passphrase"></et2-password>
+							<et2-password id="passphraseConf" placeholder="Repeat the passphrase"></et2-password>
+						</et2-vbox>
+					</et2-groupbox>
+				</row>
+			</rows>
+		</grid>
+	</template>
 	<template id="admin.mailaccount" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%">
 			<columns>
