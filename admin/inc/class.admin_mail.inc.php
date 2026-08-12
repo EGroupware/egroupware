@@ -1208,6 +1208,17 @@ class admin_mail
 					}
 			}
 		}
+		$account_id = $content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'];
+
+		// SMIME IMPORT: CA-signed certificate for the already stored private key
+		if (!empty($content['smimeCertUpload']['tmp_name']) &&
+			($cred_id = self::import_smime_cert($content, $tpl, $account_id)))
+		{
+			$content['acc_smime_cred_id'] = $cred_id;
+			$msg = lang('Certificate imported.');
+		}
+		unset($content['smimeCertUpload'], $content['smime_import_passphrase']);
+
 		// SMIME UPLOAD/DELETE/EXPORT control
 		$content['hide_smime_upload'] = false;
 		if (!empty($content['acc_smime_cred_id']))
@@ -1215,7 +1226,7 @@ class admin_mail
 			if (!empty($content['smime_delete_p12']) &&
 					Mail\Credentials::delete (
 						$content['acc_id'],
-						$content['called_for'] ? $content['called_for'] : $GLOBALS['egw_info']['user']['account_id'],
+						$account_id,
 						Mail\Credentials::SMIME
 				))
 			{
@@ -1230,6 +1241,22 @@ class admin_mail
 				$content['hide_smime_upload'] = true;
 			}
 		}
+
+		// Uploading a p12 only makes sense without an existing key - smimeGenerate itself is
+		// fully hidden (not just grayed) once readonly, via its hideOnReadonly="true" template
+		// attribute (Et2Button/ButtonMixin.ts); export/delete only make sense with one; export
+		// CSR always makes sense (creates the key first if needed, see ajax_smimeCreateKeypair()).
+		// Using $readonlys, as it stays in sync client-side after ajax_smimeCreateKeypair() via
+		// Et2Widget::set_readonly() - an explicit false here also exempts these widgets from
+		// readonlys['__ALL__'] below for non-edit-access users.
+		$readonlys['smimeGenerate'] = $readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password'] =
+			$content['hide_smime_upload'];
+		$readonlys['smime_export_p12'] = $readonlys['smime_delete_p12'] =
+		$readonlys['smimeCertUpload'] = $readonlys['smime_import_passphrase'] =
+			!$content['hide_smime_upload'];
+		$readonlys['smime_export_csr'] = false;
+		// only enabled once a certificate file was actually chosen, see smime_certFileChanged()
+		$readonlys['smime_import_cert'] = true;
 
 		// disable delete button for new, not yet saved entries, if no delete rights or a non-standard identity selected
 		$readonlys['button[delete]'] = empty($content['acc_id']) ||
@@ -1249,9 +1276,8 @@ class admin_mail
 			// allow to edit notification-folders
 			$readonlys['button[save]'] = $readonlys['button[apply]'] =
 			$readonlys['notify_folders'] = $readonlys['notify_use_default'] = false;
-			// allow to edit sMime stuff
-			$readonlys['smimeGenerate'] = $readonlys['smimeKeyUpload'] = $readonlys['smime_pkcs12_password'] =
-			$readonlys['smime_export_p12'] = $readonlys['smime_delete_p12'] = false;
+			// SMIME widgets are already explicitly true/false (not unset) above, based on account
+			// state - an explicit false there already exempts them from __ALL__, so nothing to do here.
 		}
 
 		$sel_options['acc_imap_ssl'] = $sel_options['acc_sieve_ssl'] =
@@ -1460,6 +1486,135 @@ class admin_mail
 			$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
 		}
 		return null;
+	}
+
+	/**
+	 * Ajax entry point for the "Create self-signed certificate" and "Export
+	 * CSR" (when no key is stored yet) buttons: generates a new private key
+	 * and (self-signed) certificate for the given DN and stores it right
+	 * away, so the caller can proceed to download a CSR for it without a
+	 * second, separate save step.
+	 *
+	 * Runs outside the normal edit()/save flow (no full template
+	 * submit+redraw), so the client updates its own button states via
+	 * Et2Widget::set_readonly() based on the returned cred_id instead of
+	 * relying on a server-rendered $readonlys.
+	 *
+	 * @param array $_data DN fields (countryName, stateOrProvinceName,
+	 *  localityName, organizationName, organizationalUnitName, commonName,
+	 *  emailAddress), plus validity, passphrase, passphraseConf, acc_id,
+	 *  called_for
+	 * @param string $etemplate_exec_id
+	 */
+	public function ajax_smimeCreateKeypair($_data, $etemplate_exec_id)
+	{
+		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
+
+		$response = Api\Json\Response::get();
+		if (empty($_data['acc_id']))
+		{
+			$response->message(lang('No mail account given!'), 'error');
+			return;
+		}
+		$account_id = $_data['called_for'] ?: $GLOBALS['egw_info']['user']['account_id'];
+		$content = array('acc_id' => $_data['acc_id'], 'smime_gen_dn' => json_encode($_data));
+		$tpl = new Etemplate();
+		if (!($cred_id = self::generate_smime_key($content, $tpl, $account_id)))
+		{
+			$response->message(Etemplate::get_validation_errors('smimeGenerate') ?:
+				lang('Could not generate certificate!'), 'error');
+			return;
+		}
+		$response->data(array('acc_smime_cred_id' => $cred_id));
+	}
+
+	/**
+	 * Generate a new S/MIME private key and (self-signed) certificate
+	 *
+	 * Used both to create a self-signed certificate right away, and to create
+	 * a placeholder key+certificate for which a CSR can then be exported and
+	 * sent to a CA - the real certificate later replaces the placeholder via
+	 * import_smime_cert(), reusing this very same private key.
+	 *
+	 * @param array $content 'smime_gen_dn' holds the JSON-encoded DN fields
+	 *  (countryName, stateOrProvinceName, localityName, organizationName,
+	 *  organizationalUnitName, commonName, emailAddress, validity, passphrase)
+	 *  as collected by the "Create certificate" dialog
+	 * @param Etemplate $tpl
+	 * @param int $account_id account to store the key for
+	 * @return int|null cred_id or null on error
+	 */
+	private static function generate_smime_key(array $content, Etemplate $tpl, $account_id)
+	{
+		$dn = json_decode($content['smime_gen_dn'] ?? '', true) ?: array();
+		$passphrase = !empty($dn['passphrase']) ? $dn['passphrase'] : null;
+		$validity = (int)($dn['validity'] ?? 0) ?: 365;
+		unset($dn['passphrase'], $dn['passphraseConf'], $dn['validity']);
+		$dn = array_filter($dn);
+
+		if (empty($dn['commonName']) || empty($dn['emailAddress']))
+		{
+			$tpl->set_validation_error('smimeGenerate', lang('Common name and email address are required!'));
+			return null;
+		}
+		$smime = new Mail\Smime();
+		$cert_data = $smime->generate_certificate($dn, null, $passphrase, $validity);
+		if (empty($cert_data['cert']) || empty($cert_data['privkey']) ||
+			!($p12 = Mail\Smime::build_pkcs12($cert_data['privkey'], $cert_data['cert'], $passphrase ?: '')))
+		{
+			$tpl->set_validation_error('smimeGenerate', lang('Could not generate certificate!'));
+			return null;
+		}
+		$AB_bo = new addressbook_bo();
+		$AB_bo->set_smime_keys(array($dn['emailAddress'] => $cert_data['cert']));
+		return Mail\Credentials::write($content['acc_id'], $dn['emailAddress'], $p12, Mail\Credentials::SMIME, $account_id);
+	}
+
+	/**
+	 * Import a CA-signed certificate for the already stored S/MIME private key
+	 *
+	 * Combines the newly uploaded certificate with the private key extracted
+	 * from the currently stored PKCS12 (self-signed or CA-issued) and
+	 * re-stores the result, so message signing/decryption keeps using the
+	 * very same private key.
+	 *
+	 * @param array $content 'smimeCertUpload' file upload, optional
+	 *  'smime_import_passphrase' to unlock the stored private key, needs
+	 *  existing 'acc_smime_cred_id'
+	 * @param Etemplate $tpl
+	 * @param int $account_id
+	 * @return int|null new cred_id or null on error
+	 */
+	private static function import_smime_cert(array $content, Etemplate $tpl, $account_id)
+	{
+		if (empty($content['acc_smime_cred_id']))
+		{
+			$tpl->set_validation_error('smimeCertUpload', lang('No private key stored to import a certificate for!'));
+			return null;
+		}
+		if (!($cert = file_get_contents($content['smimeCertUpload']['tmp_name'])))
+		{
+			$tpl->set_validation_error('smimeCertUpload', lang('Could not read uploaded certificate!'));
+			return null;
+		}
+		$passphrase = $content['smime_import_passphrase'] ?: '';
+		$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], $passphrase, $account_id);
+		if (empty($acc_smime['pkey']))
+		{
+			$tpl->set_validation_error('smime_import_passphrase', lang('Could not decrypt stored private key, wrong passphrase?'));
+			return null;
+		}
+		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase)))
+		{
+			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
+			return null;
+		}
+		$smime = new Mail\Smime;
+		$email = $smime->getEmailFromKey($cert);
+		$AB_bo = new addressbook_bo();
+		$AB_bo->set_smime_keys(array($email => $cert));
+		return Mail\Credentials::write($content['acc_id'], $email, $p12, Mail\Credentials::SMIME, $account_id,
+			$content['acc_smime_cred_id']);
 	}
 
 	/**
