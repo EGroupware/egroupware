@@ -1843,15 +1843,15 @@ export class AdminApp extends EgwApp
 			},
 			title: egw.lang(action == 'csrkey' ? 'Create private key and export CSR' : 'Create self-signed certificate'),
 			buttons: [
-				{text: this.egw.lang("Create"), id: "create", "class": "ui-priority-primary", "default": true},
-				{text: this.egw.lang("Cancel"), id: "cancel"}
+				{label: this.egw.lang("Create"), id: "create", image: "check", "default": true},
+				{label: this.egw.lang("Cancel"), id: "cancel", image: "cancel"}
 			],
 			value: {
 				content: {
 					value: ''
 				}
 			},
-			template: egw.webserverUrl + '/mail/templates/default/smimeCertGen.xet?' + Date.now(),
+			template: 'admin.mailaccount.smimecertgen',
 			resizable: false,
 			position: 'left top'
 		});
