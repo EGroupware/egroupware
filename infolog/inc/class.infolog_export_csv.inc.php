@@ -94,11 +94,14 @@ class infolog_export_csv implements importexport_iface_export_plugin
 				{
 					$ui = new infolog_ui();
 					$link_filters['linked'] = $query['col_filter']['info_contact'] ?: $query['col_filter']['linked'];
-					$links['linked'] = array();
 					unset($query['col_filter']['info_contact']);
 					unset($query['col_filter']['linked']);
-					$rows = array();
-					$linked = $ui->link_filters($links, $link_filters, $query, $rows);
+					if($link_filters['link']['app'] && $link_filters['linked']['id'])
+					{
+						$links['linked'] = array();
+						$rows = array();
+						$linked = $ui->link_filters($links, $link_filters, $query, $rows);
+					}
 				}
 				do
 				{
