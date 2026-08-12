@@ -242,7 +242,6 @@ class Bundle
 		$inc_mgr->include_js_file('/vendor/bower-asset/jquery/dist/jquery.js');
 		$inc_mgr->include_js_file('/api/js/jquery/jquery.noconflict.js');
 		$inc_mgr->include_js_file('/api/js/jsapi/jsapi.js');
-		$inc_mgr->include_js_file('/api/js/egw_json.js');
 		$inc_mgr->include_js_file('/api/js/jsapi/egw.js');
 		// actions
         //TODO there are more and different files that need to be included
