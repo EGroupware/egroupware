@@ -724,3 +724,20 @@ you need to select some folders first (by clicking on them)!	mail	de	Sie müssen
 you will loose current message body, unless you save it to your clipboard!	mail	de	Sie werden Ihren aktuellen Nachrichtentext verlieren, sofern Sie ihn nicht in der Zwischenablage speichern!
 you've got new mail	mail	de	Sie haben neue E-Mails
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	de	Ihre restliche Quota %1 ist zu niedrig. damit können Sie u.U. weder Mails senden noch empfangen!\nBitte ggf. Papierkorb und Spam-Ordner leeren, um Platz zu schaffen.\nWenn das nicht ausreicht, fragen Sie bitte Ihren Administrator nach einer höheren Quota für ihr Postfach.
+no s/mime private key stored for this account.	mail	de	Kein S/MIME privater Schlüssel für dieses Konto gespeichert.
+could not generate csr.	mail	de	CSR konnte nicht erstellt werden.
+create self-signed certificate	mail	de	Selbstsigniertes Zertifikat erstellen
+export csr	mail	de	CSR exportieren
+import ca-signed certificate for this key	mail	de	CA-signiertes Zertifikat für diesen Schlüssel importieren
+passphrase, if private key is protected	mail	de	Passphrase, falls der private Schlüssel geschützt ist
+import certificate	mail	de	Zertifikat importieren
+create private key and export csr	mail	de	Privaten Schlüssel erstellen und CSR exportieren
+private key created, downloading csr...	mail	de	Privater Schlüssel erstellt, CSR wird heruntergeladen...
+self-signed certificate created.	mail	de	Selbstsigniertes Zertifikat erstellt.
+certificate imported.	mail	de	Zertifikat importiert.
+could not generate certificate!	mail	de	Zertifikat konnte nicht erstellt werden!
+common name and email address are required!	mail	de	Common Name und E-Mail-Adresse sind erforderlich!
+no private key stored to import a certificate for!	mail	de	Kein privater Schlüssel gespeichert, für den ein Zertifikat importiert werden könnte!
+could not read uploaded certificate!	mail	de	Hochgeladenes Zertifikat konnte nicht gelesen werden!
+could not decrypt stored private key, wrong passphrase?	mail	de	Gespeicherter privater Schlüssel konnte nicht entschlüsselt werden, falsche Passphrase?
+certificate does not match the stored private key!	mail	de	Zertifikat passt nicht zum gespeicherten privaten Schlüssel!
