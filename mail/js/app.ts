@@ -27,8 +27,6 @@ import {JmapBodyResult, JmapMessageReference, MailJmap} from "./jmap";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
-import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
-import type {Et2Image} from "../../api/js/etemplate/Et2Image/Et2Image";
 import type {Et2Tree} from "../../api/js/etemplate/Et2Tree/Et2Tree";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {Et2Description} from "../../api/js/etemplate/Et2Description/Et2Description";
@@ -663,10 +661,9 @@ export class MailApp extends EgwApp
 						pushData.type = 'delete';
 						return super.push(pushData);
 					}
-					this.pushUpdateFlags(pushData);
-					break;
+					// fall through - a flag/keyword change is a plain in-place row refresh either way
 				case 'FlagsClear':
-					this.pushUpdateFlags(pushData);
+					nm.refresh(pushData.id, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 					break;
 				default:
 					// Just update the nm (todo: pushData.message = total number of messages in folder)
@@ -691,116 +688,6 @@ export class MailApp extends EgwApp
 			this.egw.message(message, 'success');
 			this.egw.notification(egw.lang('new mail'), {body: message, tag: 'mail', icon: egw.image('navbar', 'mail')});
 		}
-	}
-
-	/**
-	 * Updates flags on respective rows
-	 *
-	 * @param {type} pushData
-	  */
-	pushUpdateFlags(pushData)
-	{
-		// Stalwart/JMAP currently pushes just the current flags, not the ones set or unset
-		// therefore, we set all current ones and unset all not set ones
-		if (pushData.acl.event === 'Flags')
-		{
-			if (pushData.acl.flags.length)
-			{
-				pushData.acl.event = 'FlagsSet';
-				this.pushUpdateFlags(pushData);
-			}
-			const knownFlags = ['$seen', '$delete', '$flagged', '$label1', '$label2', '$label3', '$label4', '$label5',
-				'$customflag1', '$customflag2', '$customflag3', '$customflag4', '$customflag5',
-				...Object.keys(this.mail_getCustomLabels()).map(id => '$' + id.toLowerCase())];
-			const currentFlags = pushData.acl.flags.map(flag => flag.toLowerCase());
-			pushData.acl.flags = knownFlags.filter((flag => !currentFlags.includes(flag)));
-			if (pushData.acl.flags.length)
-			{
-				pushData.acl.event = 'FlagsClear';
-				this.pushUpdateFlags(pushData);
-			}
-			return;
-		}
-		const flags = [...(pushData.acl.flags ?? []),
-			...(pushData.acl.keywords ?? [])];
-		(flags).forEach(flag =>
-		{
-			let unset = (pushData.acl.flags_old && pushData.acl.flags_old.indexOf(flag) > -1) ||
-				(pushData.acl.keywords_old && pushData.acl.keywords_old.indexOf(flag) > -1) ||
-				pushData.acl.event === 'FlagsClear';
-			let rowClass = '';
-			if (flag[0] == '\\' || flag[0] == '$') flag = flag.slice(1).toLowerCase();
-			let ids = typeof pushData.id == "string" ? [pushData.id] : pushData.id;
-			for (let i in ids)
-			{
-				let msg = {msg:['mail::'+ids[i]]};
-				const customLabelId = this.mail_getCustomLabelId(flag);
-				if (customLabelId)
-				{
-					flag = customLabelId;
-					if (unset)
-					{
-						this.mail_removeRowClass(msg, flag);
-					}
-					else
-					{
-						this.mail_setRowClass(msg, flag);
-					}
-					const uid = msg.msg[0];
-					const dataElem = egw.dataGetUIDdata(uid);
-					if (dataElem)
-					{
-						dataElem.data.flags ||= {};
-						if (unset)
-						{
-							delete dataElem.data.flags[flag];
-						}
-						else
-						{
-							dataElem.data.flags[flag] = flag;
-						}
-						egw.dataStoreUID(uid, dataElem.data, true);
-					}
-					continue;
-				}
-				switch(flag)
-				{
-					case 'seen':
-						this.mail_removeRowClass(msg, (unset) ? 'seen' : 'unseen');
-						rowClass = (unset) ? 'unseen' : 'seen';
-						break;
-					case 'label1':
-					case 'label2':
-					case 'label3':
-					case 'label4':
-					case 'label5':
-					case 'customflag1':
-					case 'customflag2':
-					case 'customflag3':
-					case 'customflag4':
-					case 'customflag5':
-					case 'flagged':
-						if (flag.substring(0, 10) == 'customflag') flag = flag.replace('customflag', 'customFlag');
-						if (unset)
-						{
-							this.mail_removeRowClass(msg, flag);
-						}
-						else
-						{
-							if (flag.substring(0, 10) == 'customFlag')
-							{
-								['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'].forEach(customFlag =>
-								{
-									if (customFlag != flag) this.mail_removeRowClass(msg, customFlag);
-								});
-							}
-							rowClass = flag;
-						}
-						break;
-				}
-				this.mail_setRowClass(msg, rowClass);
-			}
-		});
 	}
 
 	/**
@@ -1132,14 +1019,12 @@ export class MailApp extends EgwApp
 			setTitle(h);
 		}
 		// THE FOLLOWING IS PROBABLY NOT NEEDED, AS THE UNEVITABLE PREVIEW IS HANDLING THE COUNTER ISSUE
-		var messages = {};
-		messages['msg'] = [_id];
-		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
-		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.flags != 'undefined' && typeof dataElem.data.flags.read != 'undefined') dataElem.data.flags.read = 'read';
+		// When body is requested, mail is marked as read by the mail server. Update UI to match -
+		// refresh re-fetches the row (now $seen) and re-renders it correctly, no local class/flags
+		// guesswork needed.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data['class'] != 'undefined' && (dataElem.data['class'].indexOf('unseen') >= 0 || dataElem.data['class'].indexOf('recent') >= 0))
 		{
-			this.mail_removeRowClass(messages,'recent');
-			this.mail_removeRowClass(messages,'unseen');
+			this.mail_refreshRows([_id]);
 			// reduce counter without server roundtrip
 			this.mail_reduceCounterWithoutServerRoundtrip();
 			// not needed, as an explizit read flags the message as seen anyhow
@@ -1674,12 +1559,12 @@ export class MailApp extends EgwApp
 		var messages = {};
 		messages['msg'] = [rowId];
 
-		// When body is requested, mail is marked as read by the mail server.  Update UI to match.
-		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data.flags != 'undefined' && typeof data.flags.read != 'undefined') data.flags.read = 'read';
+		// When body is requested, mail is marked as read by the mail server. Update UI to match -
+		// refresh re-fetches the row (now $seen) and re-renders it correctly, no local class/flags
+		// guesswork needed.
 		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data['class']  != 'undefined' && (data['class'].indexOf('unseen') >= 0 || data['class'].indexOf('recent') >= 0))
 		{
-			this.mail_removeRowClass(messages,'recent');
-			this.mail_removeRowClass(messages,'unseen');
+			nextmatch?.refresh([rowId], Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 			// reduce counter without server roundtrip
 			this.mail_reduceCounterWithoutServerRoundtrip();
 			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
@@ -2654,7 +2539,6 @@ export class MailApp extends EgwApp
 		if (msg['all']=='cancel') return false;
 		if (msg['all']) msg['activeFilters'] = this.mail_getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
-		if (!calledFromPopup) this.mail_setRowClass(_elems,'deleted');
 		this.mail_deleteMessages(msg,'no',calledFromPopup);
 		if (calledFromPopup && this.mail_isMainWindow==false)
 		{
@@ -2856,7 +2740,6 @@ export class MailApp extends EgwApp
 		else
 		{
 			this.egw.message(this.egw.lang('canceled deletion due to user interaction'), 'success');
-			this.mail_removeRowClass(messageList,'deleted');
 		}
 		this.mail_refreshMessageGrid();
 		this.mail_preview();
@@ -3349,103 +3232,24 @@ export class MailApp extends EgwApp
 		this.mail_checkAllSelected(_action,_elems,null,true);
 	}
 
-	/** Capture row state before an optimistic keyword update. */
-	mail_snapshotRows(_messageIds : string[])
-	{
-		const snapshots = {};
-		for (const uid of _messageIds || [])
-		{
-			const dataElem = egw.dataGetUIDdata(uid);
-			if (dataElem)
-			{
-				snapshots[uid] = {
-					flags: {...(dataElem.data.flags || {})},
-					class: dataElem.data['class'] || '',
-				};
-			}
-		}
-		return snapshots;
-	}
-
-	/** Restore failed optimistic keyword updates without rerendering successful rows. */
-	mail_restoreRows(_snapshots, _failedEmailIds? : string[])
-	{
-		const knownClasses = [...this.mail_getLabelIds(),
-			'customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5',
-			'flagged', 'unflagged'];
-		for (const uid of Object.keys(_snapshots || {}))
-		{
-			if (_failedEmailIds?.length)
-			{
-				try
-				{
-					if (!_failedEmailIds.includes(this.jmap.messageReference(uid).emailId)) continue;
-				}
-				catch (_e)
-				{
-					continue;
-				}
-			}
-			const dataElem = egw.dataGetUIDdata(uid);
-			if (!dataElem) continue;
-			dataElem.data.flags = {..._snapshots[uid].flags};
-			dataElem.data['class'] = _snapshots[uid].class;
-			const mailApp = this.nm ? this : window.opener?.app?.mail;
-			const node = egw_getObjectManager(mailApp?.appname)?.getObjectById(mailApp?.nm_index)?.children?.find(
-				(item: EgwActionObject) => item.id === uid
-			)?.iface?.getDOMNode();
-			knownClasses.forEach(className => node?.classList.remove(className));
-			_snapshots[uid].class.split(' ').filter(className => knownClasses.includes(className))
-				.forEach(className => node?.classList.add(className));
-			const hasFlag = !!dataElem.data.flags.flagged ||
-				['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5']
-					.some(flag => !!dataElem.data.flags[flag]);
-			const flagImage = node?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage');
-			if (hasFlag && !flagImage)
-			{
-				const image : Et2Image = document.createElement('et2-image') as Et2Image;
-				image.id = 'flaggedImage';
-				image.src = 'unread_flagged_small';
-				node?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]'))?.appendChild(image);
-			}
-			else if (!hasFlag)
-			{
-				flagImage?.remove();
-			}
-			egw.dataStoreUID(uid, dataElem.data, true);
-		}
-	}
-
 	/**
-	 * Remove every built-in and configured custom label from local row state
+	 * Trigger a targeted, in-place refresh of specific nextmatch rows.
+	 *
+	 * Et2Nextmatch/Et2Datagrid re-fetches each listed row and re-renders it from that fresh data -
+	 * for mail this goes through MailApp's dataRegisterFetch('mail', jmap.fetchRows) wiring, i.e. a
+	 * real JMAP Email/get call whose result (via email2row()) already has correct class/flagged_icon
+	 * values. This replaces the legacy pattern (still used by the old et2_extension_nextmatch widget
+	 * elsewhere) of looking up a row's DOM node by hand and patching its classList/icon - which is
+	 * both unnecessary with the new widget and was the source of persistent staleness bugs (a stale
+	 * EgwActionObject.iface reference, or a plain querySelector() unable to see past the row's nested
+	 * shadow DOM) that manual approach kept hitting.
 	 */
-	mail_removeAllLabelState(_messageList)
+	mail_refreshRows(_ids : string[], _popup? : boolean) : void
 	{
-		const labels = this.mail_getLabelIds();
-		for (const uid of _messageList.msg)
-		{
-			const dataElem = egw.dataGetUIDdata(uid);
-			if (!dataElem) continue;
-
-			dataElem.data.flags ||= {};
-			let classes = dataElem.data['class']?.split(' ') || [];
-			labels.forEach(label =>
-			{
-				delete dataElem.data.flags[label];
-				classes = classes.filter(className => className != label && className != 'un' + label);
-			});
-			dataElem.data['class'] = classes.join(' ');
-
-			const mailApp = this.nm ? this : window.opener?.app?.mail;
-			const nmNode = egw_getObjectManager(mailApp?.appname)?.getObjectById(mailApp?.nm_index)?.children?.find(
-				(item: EgwActionObject) => item.id === uid
-			)?.iface?.getDOMNode();
-			labels.forEach(label =>
-			{
-				nmNode?.classList.remove(label, 'un' + label);
-			});
-			egw.dataStoreUID(uid, dataElem.data, !!nmNode);
-		}
+		if (!_ids?.length) return;
+		const mailApp = _popup ? (window.opener?.app?.mail ?? this) : this;
+		const nm : Et2Nextmatch = mailApp.et2?.getWidgetById(mailApp.nm_index);
+		nm?.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 	}
 
 	/**
@@ -3467,7 +3271,6 @@ export class MailApp extends EgwApp
 				popup: typeof this.et2_view!='undefined' || egw(window).is_popup() || false,
 				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
 		}
-		let rowClass = _action.id;
 
 		if (typeof _elems === 'undefined' || _elems.length == 0)
 		{
@@ -3482,206 +3285,65 @@ export class MailApp extends EgwApp
 		{
 			data.msg = this.mail_getFormData(_elems).msg;
 		}
-		data['jmapSnapshots'] = this.mail_snapshotRows(data.msg);
-		switch (_action.id)
+		if (_action.id == 'read')
 		{
-			case 'read':
-				rowClass = 'seen';
-				let tree;
-				if (data.popup)
-				{
-					const et_2 = typeof this.et2_view != 'undefined' ? etemplate2 : opener.etemplate2;
-					tree = et_2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
-				}
-				else
-				{
-					tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-				}
-				folder = tree.value;
-				break;
-			case 'readall':
-				rowClass = 'seen';
-				break;
-			case 'label1':
-				rowClass = 'label1';
-				break;
-			case 'label2':
-				rowClass = 'label2';
-				break;
-			case 'label3':
-				rowClass = 'label3';
-				break;
-			case 'label4':
-				rowClass = 'label4';
-				break;
-			case 'label5':
-				rowClass = 'label5';
-				break;
-			default:
-				break;
-			}
-			// jQuery(data).extend({},data, formData);
-			if (data['all']=='cancel') return false;
-			const customFlags = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
-
-			if (_action.id.substring(0,2)=='un' && !this.mail_isLabel(_action.id)) {
-				//old style, only available for undelete and unlabel (no toggle)
-				if ( _action.id=='unlabel') // this means all labels should be removed
+			let tree;
+			if (data.popup)
 			{
-				this.mail_removeAllLabelState(data);
-				this.mail_flagMessages(_action.id,data);
+				const et_2 = typeof this.et2_view != 'undefined' ? etemplate2 : opener.etemplate2;
+				tree = et_2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index+'[foldertree]');
 			}
-				else
-				{
-					this.mail_removeRowClass(_elems,_action.id.substring(2));
-					if (!customFlags.includes(_action.id.substring(2)))
-					{
-						this.mail_setRowClass(_elems,_action.id);
-					}
-					this.mail_flagMessages(_action.id,data);
-				}
+			else
+			{
+				tree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 			}
+			folder = tree.value;
+		}
+		// jQuery(data).extend({},data, formData);
+		if (data['all']=='cancel') return false;
+
+		// 'unlabel' is the only action id actually reaching this branch today (no other action id
+		// starts with "un" - customFlag1-5/label1-5/flagged/read are all plain toggles handled below)
+		if (_action.id == 'unlabel')
+		{
+			this.mail_flagMessages(_action.id, data);
+		}
 		else if (_action.id=='readall')
 		{
 			this.mail_flagMessages('read',data);
 		}
 		else
 		{
-				var msg_set = {msg:[]};
-				var msg_unset = {msg:[]};
-				var dataElem;
-				let flags: {};
-				let classes: string[];
+			const msg_set = {msg:[]};
+			const msg_unset = {msg:[]};
 			for (let i = 0; i < data.msg.length; i++)
 			{
-				dataElem = egw.dataGetUIDdata(data.msg[i]);
-				if(typeof dataElem.data.flags == 'undefined')
-				{
-					dataElem.data.flags = {};
-				}
-				flags = dataElem.data.flags;
-				classes = dataElem.data['class']?.split(' ') || [];
-				//classes = classes.split(' ');
-				// since we toggle we need to unset the ones already set, and set the ones not set
-				// flags is data, UI is done by class, so update both
-				// Flags are there or not, class names are flag or 'un'+flag
-				if(classes.indexOf(rowClass) >= 0)
-				{
-					classes.splice(classes.indexOf(rowClass),1);
-				}
-				if(classes.indexOf('un' + rowClass) >= 0)
-				{
-					classes.splice(classes.indexOf('un' + rowClass),1);
-				}
-					if (flags[_action.id])
-					{
-						msg_unset['msg'].push(data.msg[i]);
-						if (customFlags.includes(_action.id))
-						{
-							delete flags['flagged'];
-							classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
-						}
-						else if (!this.mail_isLabel(_action.id))
-						{
-							classes.push('un'+rowClass);
-						}
-						delete flags[_action.id];
-					}
-				else
-				{
-					if (customFlags.includes(_action.id))
-					{
-						for (let j=0; j<customFlags.length; j++)
-						{
-							if (customFlags[j] != _action.id)
-							{
-								delete flags[customFlags[j]];
-								classes = classes.filter((className) => className != customFlags[j] && className != 'un' + customFlags[j]);
-							}
-						}
-						flags['flagged'] = 'flagged';
-						classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
-						classes.push('flagged');
-					}
-					msg_set['msg'].push(data.msg[i]);
-					flags[_action.id] = _action.id;
-					classes.push(rowClass);
-				}
+				// Direction only - which messages already have this flag/label set - read-only,
+				// no local flags/class mutation: mail_flagMessages()'s success handler below
+				// refreshes the affected rows once the JMAP change lands, and that refresh (a real
+				// re-fetch, see mail_refreshRows()) is what makes the row's class/icon correct,
+				// not a client-side guess at what they should become.
+				const flags = egw.dataGetUIDdata(data.msg[i])?.data?.flags || {};
+				(flags[_action.id] ? msg_unset : msg_set)['msg'].push(data.msg[i]);
 
-				// Update cache and the existing row without rebuilding it
-				// Do not update flags that are already correctly set
-				dataElem.data['class']  = classes.join(' ');
-				const nmRow = data.popup ?
-					(egw_getObjectManager(opener?.app?.mail?.appname)?.getObjectById(opener?.app?.mail?.nm_index)?.children?.find(
-							(item: EgwActionObject) =>
-							{
-								if (item.id === data.msg[i]) return item;
-							}
-						)
-					)
-					:
-					(egw_getObjectManager(this.appname)?.getObjectById(this.nm_index)?.children?.find((item: EgwActionObject) =>
-					{
-						if (item.id === data.msg[i]) return item
-					}));
-				const nmNode : Element = nmRow?.iface?.getDOMNode();
-				const updateExistingRow = !!nmNode?.isConnected;
-
-				// Only the flags and class attribute changed.  Keep the existing row and update
-				// it directly, as a NextMatch callback clears the row before rebuilding it.
-				const changedClasses = [rowClass, 'un' + rowClass];
-				if (customFlags.includes(_action.id))
-				{
-					changedClasses.push('flagged', 'unflagged', ...customFlags,
-						...customFlags.map(customFlag => 'un' + customFlag));
-				}
-				changedClasses.forEach(className => nmNode?.classList.remove(className));
-				classes.filter(className => changedClasses.includes(className))
-					.forEach(className => nmNode?.classList.add(className));
-				egw.dataStoreUID(data.msg[i], dataElem.data, updateExistingRow);
-
-				// Set or remove the flag in the DOM since it can no longer come from the server
-				// when the existing row is updated without a callback.
-				if (classes.includes("unseen"))
-				{
-					//image src usually comes from the server but can't anymore in this case so we set it directly
-					const img: Et2Image = nmNode?.querySelector(".status_img");
-					if (img) img.src = egw.image("mail_unseen")
-				}
-				if (flags['flagged'] == 'flagged' ||
-					customFlags.some(customFlag => flags[customFlag] == customFlag))
-				{
-					if (!nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage'))
-					{
-						const flagElem: Et2Image = document.createElement('et2-image') as Et2Image
-						flagElem.id = "flaggedImage"
-						flagElem.src = "unread_flagged_small"
-						nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]'))?.appendChild(flagElem);
-					}
-				} else
-				{
-					nmNode?.querySelector('#' + CSS.escape('mail-index_${row}[attachments]') + ' et2-image#flaggedImage')?.remove();
-				}
-
-
-				//Refresh the nm rows after we told dataComponent about all changes, since the dataComponent doesn't talk to nm, we need to do it manually
+				// Hide this row now if it no longer matches the active status filter (e.g. viewing
+				// "Unread" and marking read) - independent of the class/icon refresh above, and not
+				// knowable from a server response since the server doesn't know our active filter.
 				this.updateFilter_data(data.msg[i], _action.id, data.activeFilters);
 			}
 
 			// Notify server of changes
-			if (msg_unset['msg'] && msg_unset['msg'].length)
+			if (msg_unset['msg'].length && !data['all'])
 			{
-				msg_unset['jmapSnapshots'] = data.jmapSnapshots;
-				if (!data['all']) this.mail_flagMessages(
+				this.mail_flagMessages(
 					this.mail_isLabel(_action.id) ?
 						{customLabel: _action.id, set: false} : 'un'+_action.id,
 					msg_unset
 				);
 			}
-			if (msg_set['msg'] && msg_set['msg'].length)
+			if (msg_set['msg'].length && !data['all'])
 			{
-				msg_set['jmapSnapshots'] = data.jmapSnapshots;
-				if (!data['all']) this.mail_flagMessages(
+				this.mail_flagMessages(
 					this.mail_isLabel(_action.id) ?
 						{customLabel: _action.id, set: true} : _action.id,
 					msg_set
@@ -3709,6 +3371,13 @@ export class MailApp extends EgwApp
 		switch (_actionId)
 		{
 			case 'flagged':
+			case 'customFlag1':
+			case 'customFlag2':
+			case 'customFlag3':
+			case 'customFlag4':
+			case 'customFlag5':
+				// setCustomFlag() always toggles $flagged alongside the color keyword (jmap.ts),
+				// so a customFlag change is a 'flagged' change for filter-match purposes too:
 				action = 'flagged';
 				break;
 			case 'read':
@@ -3840,12 +3509,14 @@ export class MailApp extends EgwApp
 			operation.then(() =>
 			{
 				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
+				else this.mail_refreshRows(_elems.msg, !!_elems.popup);
 			}).catch((error) =>
 			{
-				const failedIds = error?.notUpdated ? Object.keys(error.notUpdated) : null;
-				this.mail_restoreRows(_elems.jmapSnapshots, failedIds);
 				this.egw.message(error?.message || this.egw.lang('Failed to update messages'), 'error');
+				// Refresh regardless of success - shows whatever the true current state actually
+				// is (unchanged, if the operation truly failed; correct, if it partially applied).
 				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
+				else this.mail_refreshRows(_elems.msg, !!_elems.popup);
 			});
 			return;
 		}
@@ -3853,9 +3524,7 @@ export class MailApp extends EgwApp
 		//false means do not send back a request response
 		//if we selected only some mails the handling is done clientside already
 		const needsResponse = _elems.all || this.egw.is_popup();
-		const requestElems = {..._elems};
-		delete requestElems.jmapSnapshots;
-		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, requestElems, needsResponse]);
+		egw.jsonq('mail.mail_ui.ajax_flagMessages', [_flag, _elems, needsResponse]);
 		//	.sendRequest(true);
 	}
 
@@ -4492,175 +4161,6 @@ export class MailApp extends EgwApp
 		}
 
 		return messages;
-	}
-
-	/**
-	 * mail_setRowClass
-	 *
-	 * @param {object} _actionObjects the senders
-	 * @param {string} _class
-	 */
-	mail_setRowClass(_actionObjects,_class) {
-		if (typeof _class == 'undefined') return false;
-
-		if (typeof _actionObjects['msg'] == 'undefined')
-		{
-			for (let i = 0; i < _actionObjects.length; i++)
-			{
-				// Check that the ID & interface is there.  Paste is missing iface.
-				if (_actionObjects[i].id.length>0 && _actionObjects[i].iface)
-				{
-					const dataElem: HTMLElement = (_actionObjects[i].iface.getDOMNode());
-					dataElem?.classList.add(_class);
-
-				}
-			}
-		}
-		else
-		{
-			let actions: EgwActionObject[] = egw_getObjectManager(this.appname)?.getObjectById(this.nm_index)?.children || [];
-			for (let i = 0; i < _actionObjects['msg'].length; i++)
-			{
-				const mail_uid = _actionObjects['msg'][i];
-
-				// Get the record from data cache
-				const dataElem = egw.dataGetUIDdata(mail_uid);
-				if(dataElem == null || typeof dataElem == undefined)
-				{
-					// Unknown ID, nothing to update
-					return;
-				}
-
-				// Update class
-				let changed = true;
-				if (dataElem.data['class'].includes(_class))
-					changed = false;
-				if (changed) dataElem.data['class'] += ' ' + _class;
-
-				// need to update flags too
-				switch(_class)
-				{
-					case 'unseen':
-						delete dataElem.data.flags.read;
-						break;
-				}
-				//check current UI state
-				const action = actions.find(action =>
-				{
-					if (action.id === mail_uid) return action
-				});
-				if (action)
-				{
-					try
-					{
-						const nmNode = action.iface.getDOMNode();
-						if (_class === "unseen")
-						{
-							//image src usually comes from the server but can't anymore in this case so we set it directly
-							const img: Et2Image = nmNode.querySelector(".status_img");
-							if (img) img.src = egw.image("mail_unseen")
-						}
-						nmNode.classList.add(_class)
-						//egwData already hs the correct entrys -- no need to call it again
-						if (changed) egw.dataStoreUID(mail_uid, dataElem.data, true);
-						return;
-					} catch (e)
-					{
-					}
-				}
-
-				// Update record, which updates all listeners (including nextmatch)
-				egw.dataStoreUID(mail_uid,dataElem.data);
-			}
-		}
-	}
-
-	/**
-	 * mail_removeRowFlag
-	 * Removes a flag and updates the CSS class.  Updates the UI, but not the server.
-	 *
-	 * @param {action object} _actionObjects the senders, or a messages object
-	 * @param {string} _class the class to be removed
-	 */
-	mail_removeRowClass(_actionObjects,_class) {
-		if (typeof _class == 'undefined') return false;
-
-		if (typeof _actionObjects['msg'] == 'undefined')
-		{
-			for (let i = 0; i < _actionObjects.length; i++)
-			{
-				if (_actionObjects[i].id.length>0)
-				{
-					const dataElem: HTMLElement = _actionObjects[i].iface.getDOMNode();
-					dataElem.classList.remove(_class);
-
-				}
-			}
-		}
-		else
-		{
-			let actions: EgwActionObject[] = egw_getObjectManager(this.appname)?.getObjectById(this.nm_index)?.children || [];
-			for (let i = 0; i < _actionObjects['msg'].length; i++)
-			{
-				const mail_uid = _actionObjects['msg'][i];
-
-				// Get the record from data cache
-				const dataElem = egw.dataGetUIDdata(mail_uid);
-				if(dataElem == null || typeof dataElem == undefined)
-				{
-					// Unknown ID, nothing to update
-					return;
-				}
-
-				// Update class
-				let classes = dataElem.data['class'] || "";
-				classes = classes.split(' ');
-				if(classes.indexOf(_class) >= 0)
-				{
-					for(const c in classes)
-					{
-						classes.splice(classes.indexOf(_class),1);
-						if (classes.indexOf(_class) < 0) break;
-					}
-					dataElem.data['class'] = classes.join(' ');
-
-					// need to update flags too
-					switch(_class)
-					{
-						case 'unseen':
-							dataElem.data.flags.read = true;
-							break;
-					}
-
-					//only the class attribute has changed, so
-					//we do not need to trigger the nm callbacks we can just
-					//update local Storage and set the classes in the nm row directly
-					// the advantage is, that nm row does not need to be redrawn
-					let skipCallback = false
-					const action = actions.find(action =>
-					{
-						if (action.id === mail_uid) return action
-					});
-					if (action)
-					{
-						try
-						{
-							const nmNode = action.iface.getDOMNode();
-							nmNode.classList.remove(_class);
-							//we found the nm DOM node and removed the class from it
-							// that means we don't need to trigger a nm redraw
-							//(the callback would trigger a redraw)
-							//(the callback would trigger a redraw)
-							skipCallback = true;
-						} catch (e)
-						{
-							skipCallback = false
-						}
-					}
-					egw.dataStoreUID(mail_uid, dataElem.data, skipCallback);
-				}
-			}
-		}
 	}
 
 	/**
