@@ -459,6 +459,15 @@ export class EgwFramework extends LitElement
 		// Wait until new tab is there to activate it
 		if(active || app.active)
 		{
+			// Keep our own reactive state in sync with the tab that's about to become
+			// active.  Without this, app.active stays false/undefined here, so any
+			// later re-render of the tab list renders this tab - and only this tab -
+			// as inactive again, out of sync with Shoelace's own (imperative) idea of
+			// which tab is active.
+			this.applicationList.forEach(a => a.active = false);
+			Object.values(this._tabApps).forEach((a : ApplicationInfo) => a.active = false);
+			app.active = true;
+
 			// Wait for egw & redraw
 			Promise.all([this.getEgwComplete(), this.updateComplete]).then(async() =>
 			{
@@ -470,6 +479,17 @@ export class EgwFramework extends LitElement
 				// Tabs present
 				await this.tabs.updateComplete;
 				this.tabs.show(appname);
+
+				// sl-tab-group's internal nav strip (.tab-group__nav) only sets
+				// overflow-x:auto and leaves overflow-y unset, which the CSS spec
+				// then also computes to "auto" - making the strip accidentally
+				// vertically scrollable, since our close-button styling (further
+				// below, ::part(close-button)) intentionally lifts it a few pixels
+				// above the tab's own box. Something can then nudge that axis,
+				// snapping every tab up. .tab-group__nav has no exported ::part(),
+				// so it can only be reached here, imperatively - there's nothing to
+				// scroll vertically here, so lock it down.
+				this.tabs.nav.style.overflowY = "hidden";
 			});
 		}
 
@@ -1560,7 +1580,7 @@ export class EgwFramework extends LitElement
                                   @sl-tab-show=${this.handleApplicationTabShow}
                                   @sl-close=${this.handleApplicationTabClose}
                     >
-                        ${repeat(this.openApplications, (app) => this._applicationTabTemplate(app))}
+                        ${repeat(this.openApplications, (app) => app.name, (app) => this._applicationTabTemplate(app))}
                     </sl-tab-group>
                     <div class="spacer spacer_end"></div>
                     <slot name="header"><span class="placeholder">header</span></slot>
