@@ -17,6 +17,8 @@ found them, and prefer the modern form for anything new.
   `doc/ai/projects/jsapi-modernization.md`'s jQuery-removal table for the common swaps and the few
   cases (jQuery UI dialogs, arbitrary-method-by-name dispatch) that need a real rewrite rather than a
   mechanical one.
+- **No `var` keyword.** Don't use the old `var` keyword in new code. even if it is used in surrounding code.
+  Use modern `const` or `let` keywords
 - **`egw.request()`, `egw.jsonq()`, and `egw.json(...).sendRequest()` serve different purposes -
   picking the right one is not "always prefer X".**
   - **`egw.request(menuaction, params).then(data => ...)`** - a single, immediate, non-queued request.
