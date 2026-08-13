@@ -3959,6 +3959,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		const dataStoreRowId = this._dataStoreRowIdFor(row.id ?? rowIndex);
 		rowElement.classList.toggle("dg-row-active", row.id == this.activeRowId);
+		// Set alongside aria-selected below, not just left for the next deferred
+		// _syncRowAccessibilityState() pass - otherwise a row rebuilt by a render-version bump
+		// (eg. Et2Datagrid.updateRowData(), used for optimistic in-place updates) mounts without
+		// its highlight for a frame and visibly flashes it back in once that pass catches up.
+		rowElement.classList.toggle("dg-row-selected", this.allSelected || this.selectedRowIds.has(row.id));
 		rowElement.setAttribute("role", "row");
 		rowElement.setAttribute("data-row-id", dataStoreRowId);
 		rowElement.setAttribute("data-row-index", String(rowIndex));
