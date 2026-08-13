@@ -478,15 +478,16 @@ class mail_ui
 				//error_log(__METHOD__.__LINE__.function_backtrace());
 				if (Mail::$debugTimes) $starttime = microtime (true);
 				$this->mail_bo->restoreSessionData();
-				$sessionFolder = $this->mail_bo->sessionData['mailbox'];
-				if ($this->mail_bo->folderExists($sessionFolder))
+				$sessionFolder = $GLOBALS['egw_info']['user']['preferences']['mail'][$this->mail_bo->profileID.'_LastFolder'] ?? null;
+				if ($sessionFolder && $this->mail_bo->folderExists($sessionFolder))
 				{
 					$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
 				}
 				else
 				{
-					$sessionFolder = $this->mail_bo->sessionData['mailbox'] = 'INBOX';
+					$sessionFolder = 'INBOX';
 				}
+				$this->mail_bo->sessionData['mailbox'] = $sessionFolder;
 				//error_log(__METHOD__.__LINE__.' SessionFolder:'.$sessionFolder.' isToSchema:'.$toSchema);
 				if (!is_array($content))
 				{
@@ -4239,6 +4240,7 @@ class mail_ui
 			{
 				$this->mail_bo->sessionData['mailbox']=$newFolderName;
 				$this->mail_bo->saveSessionData();
+				Api\Framework::ajax_set_preference('mail', $this->mail_bo->profileID.'_LastFolder', $newFolderName);
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
 			$response = Api\Json\Response::get();
@@ -4978,6 +4980,7 @@ class mail_ui
 			{
 				$this->mail_bo->sessionData['mailbox']=$newFolderName;
 				$this->mail_bo->saveSessionData();
+				Api\Framework::ajax_set_preference('mail', $this->mail_bo->profileID.'_LastFolder', $newFolderName);
 			}
 			//error_log(__METHOD__.__LINE__.array2string($oA));
 			$response = Api\Json\Response::get();

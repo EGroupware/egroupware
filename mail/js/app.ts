@@ -2949,6 +2949,10 @@ export class MailApp extends EgwApp
 			nm.applyFilters({'selectedFolder': _folder});
 		}
 
+		// Remember this as the last-used folder for this profile, so mail reopens here next time
+		const [profileID, folderName] = _folder.split('::');
+		if (profileID && folderName) this.egw.set_preference('mail', profileID + '_LastFolder', folderName);
+
 		// Get nice folder name for message, if selected is not a profile
 		if(!profile_selected)
 		{
