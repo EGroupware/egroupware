@@ -4549,8 +4549,10 @@ class mail_ui
 	 * shape createAttachmentBlock() (and its Mail::getMessageAttachments()-based callers) expect.
 	 *
 	 * @param array $jmapAttachments list of {partId, blobId, size, name, type, cid, disposition}
-	 * @param bool $fetchEmbeddedImages false: drop parts with a cid (inline images), matching
-	 *  Mail::getMessageAttachments()'s default
+	 * @param bool $fetchEmbeddedImages false: drop inline (non-"attachment"-disposition) parts with
+	 *  a cid, matching Mail::getMessageAttachments()'s default - a part explicitly disposed as
+	 *  "attachment" is always kept regardless of also carrying a cid (some mobile mail clients tag
+	 *  attached photos with both), matching Mail::getMessageAttachments()'s own disposition-first check
 	 * @return array list of {partID, mimeType, name, size, cid, disposition, blobId}
 	 */
 	private static function jmapAttachmentsToLegacy(array $jmapAttachments, bool $fetchEmbeddedImages) : array
@@ -4558,7 +4560,7 @@ class mail_ui
 		$legacy = [];
 		foreach ($jmapAttachments as $attachment)
 		{
-			if (!empty($attachment['cid']) && !$fetchEmbeddedImages)
+			if (!empty($attachment['cid']) && !$fetchEmbeddedImages && $attachment['disposition'] !== 'attachment')
 			{
 				continue;
 			}
