@@ -617,7 +617,7 @@ export class Et2Template extends Et2Widget(LitElement)
 
 		let url = "";
 		const parts = ((this.template || this.id) + "").split('?');
-		const cache_buster = parts.length > 1 ? parts.pop() : ((new Date).valueOf() / 86400 | 0).toString();
+		const cache_buster = parts.length > 1 ? parts.pop() : ((new Date).valueOf() / 86400000 | 0).toString();
 		let template_name = this.templateName;
 
 		// Full URL passed as template?

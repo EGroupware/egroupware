@@ -355,7 +355,7 @@ class AddressbookApp extends EgwApp
 					tooltip: _title,
 					icon: _params.icon || this.egw.link('/api/avatar.php', {
 						contact_id: contact_id,
-						etag: (new Date).valueOf()/86400|0	// cache for a day, better then no invalidation
+						etag: (new Date).valueOf()/86400000|0	// cache for a day, better then no invalidation
 					}),
 					refreshCallback: function() {
 						etemplate2.getById("addressbook-view-"+this.appName)?.app_obj.addressbook.view_set_list();

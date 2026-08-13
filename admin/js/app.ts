@@ -1386,7 +1386,7 @@ export class AdminApp extends EgwApp
 
 		if(egw.app('policy'))
 		{
-			import(egw.link('/policy/js/app.min.js?' + ((new Date).valueOf() / 86400 | 0).toString())).then(() =>
+			import(egw.link('/policy/js/app.min.js?' + ((new Date).valueOf() / 86400000 | 0).toString())).then(() =>
 			{
 				if(typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
 				{
