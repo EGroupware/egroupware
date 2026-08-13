@@ -2825,6 +2825,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			stale = (this.dataProvider?.getQuerySignature?.() || "") !== dispatchQuerySignature;
 			if(stale)
 			{
+				console.warn("Stale fetch discarded",{fetched: dispatchQuerySignature, current: this.dataProvider?.getQuerySignature?.() || ""});
 				return;
 			}
 			this.fetchFailed = false;
