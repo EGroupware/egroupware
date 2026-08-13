@@ -26,21 +26,24 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
     registerAction = (_aoi, _callback, _context) => {
         const node = _aoi.getDOMNode();
-		let parentNode = null;
-		let parentAO = null;
-		let isNew = false;
 
-		// Is there a parent that handles action targets?
+		// If a parent already resolves action targets for this node (see findActionTarget()),
+		// the parent's own direct registration (node === its own DOM node, below) owns the real
+		// listener - this delegate must not bind its own copy. Matches egwDragActionImplementation
+		// and EgwDropActionImplementation, which already use this exact guard. A prior version of
+		// this method let a delegate bind its own extra copy directly onto the parent the first
+		// time it was asked to register ("isNew"), tracked per-delegate rather than per-parent -
+		// since e.g. Et2Nextmatch materializes a fresh delegate per virtualized row, every distinct
+		// row believed it was first and permanently stacked one more listener on the shared parent.
 		if(typeof _context.findActionTargetHandler !== "undefined" && typeof _context.findActionTargetHandler?.iface?.getWidget == "function")
 		{
-			parentAO = _context.findActionTargetHandler;
-			parentNode = parentAO.iface.getWidget();
+			const parentNode = _context.findActionTargetHandler.iface.getWidget();
+			if(parentNode && node !== parentNode)
+			{
+				return false;
+			}
 		}
-		if(!_aoi.findActionTargetHandler && parentNode && typeof parentNode.findActionTarget == "function")
-		{
-			_aoi.findActionTargetHandler = parentNode;
-			isNew = true;
-		}
+
 		if(typeof _aoi.handlers == "undefined")
 		{
 			_aoi.handlers = {};
@@ -50,23 +53,11 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			_aoi.handlers[this.type] = [];
 		}
 
-		if(_aoi.handlers[this.type].length == 0)
+		if(node && _aoi.handlers[this.type].length == 0)
 		{
-			_aoi.handlers[this.type].push({type: 'contextmenu', listener: _callback});
-			if(isNew)
-			{
-				//if a parent is available the context menu Event-listener will only be bound once on the parent
-				this._registerDefault(parentNode, _callback, parentAO);
-				this._registerContext(parentNode, _callback, parentAO);
-
-				return true;
-			}
-			else if(node && !parentNode)
-			{
-				this._registerDefault(node, _callback, _context);
-				this._registerContext(node, _callback, _context);
-				return true;
-			}
+			this._registerDefault(node, _callback, _context);
+			this._registerContext(node, _callback, _context);
+			return true;
 		}
 		return false;
 
@@ -80,7 +71,32 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 		// Unregister handlers
 		if(_aoi.handlers)
 		{
-			_aoi.handlers[this.type]?.forEach(h => node.removeEventListener(h.type, h.listener));
+			_aoi.handlers[this.type]?.forEach(h =>
+			{
+				if(h.dispose)
+				{
+					// Not a DOM listener - a resource (e.g. a tapAndSwipe instance) that owns its
+					// own internal bindings and must be torn down through its own API.
+					h.dispose();
+					return;
+				}
+				if(!h.type || !h.listener)
+				{
+					return;
+				}
+				if(h.property)
+				{
+					// Bound via property assignment (e.g. `node.ondblclick = handler`), not
+					// addEventListener - removeEventListener() cannot undo it. Only clear it if
+					// it's still pointing at our handler, so we don't clobber a newer binding.
+					if(node[h.property] === h.listener)
+					{
+						node[h.property] = null;
+					}
+					return;
+				}
+				node.removeEventListener(h.type, h.listener);
+			});
 			delete _aoi.handlers[this.type];
 		}
         return true
@@ -217,8 +233,12 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
         if (window.egwIsMobile() || _context.manager.getActionsByAttr('singleClick', true).length > 0) {
             _node.addEventListener('click',defaultHandler)//jQuery(_node).on('click', defaultHandler);
+            _context.iface?.handlers[this.type]?.push({type: 'click', listener: defaultHandler});
         } else {
             _node.ondblclick = defaultHandler;
+            // Property assignment, not addEventListener - unregisterAction() must null the
+            // property, not call removeEventListener(). The `property` marker tells it which.
+            _context.iface?.handlers[this.type]?.push({type: 'dblclick', listener: defaultHandler, property: 'ondblclick'});
         }
     };
 
@@ -318,6 +338,7 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         });
         // bind a custom event tapandhold to be able to call it from nm action button
 		_node.addEventListener('tapandhold', _callback);
+        return tap;
     }
 
     /**
@@ -397,8 +418,14 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
         };
         // Safari still needs the taphold to trigger contextmenu
         // Chrome has default event on touch and hold which acts like right click
-        this._handleTapHold(_node, contextHandler);
+        const tap = this._handleTapHold(_node, contextHandler);
 		_context.iface?.handlers['popup'].push({type: 'tapandhold', listener: contextHandler})
+		// tapAndSwipe binds its own internal touchstart/touchend/touchmove/touchcancel listeners
+		// directly on _node - without disposing it here, every re-registration (e.g. Et2Nextmatch's
+		// syncDragDropRegistration() on every render) would leak another full instance's worth of
+		// touch listeners, each independently detecting the same gesture and firing its own stale
+		// callback - the same class of bug as the default-click handler, just for long-press.
+		_context.iface?.handlers['popup'].push({dispose: () => tap?.destroy()});
         if (!window.egwIsMobile())
         {
             _node.addEventListener('contextmenu', contextHandler);

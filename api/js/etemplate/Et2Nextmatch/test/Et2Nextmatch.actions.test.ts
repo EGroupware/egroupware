@@ -1663,6 +1663,317 @@ describe("Et2Nextmatch action setup", () =>
 
 	/**
 	 * Contract under test:
+	 * - Mobile default-click-to-open must not accumulate duplicate listeners on
+	 *   the shared rows container as new virtualized rows are materialized.
+	 *
+	 * Background:
+	 * - Nextmatch rows are virtualized: ensureRowActionObject() creates a
+	 *   brand-new action-object interface (AOI) for every distinct row the
+	 *   first time it's selected/clicked. Each row's EgwActionObject points
+	 *   findActionTargetHandler at the shared objectManager, whose own AOI
+	 *   (dragDropAOI) already registers directly on the shared rows container
+	 *   (see syncDragDropRegistration()). EgwPopupActionImplementation.
+	 *   registerAction() now refuses to bind anything for a delegate whose own
+	 *   DOM node differs from that parent node - matching how
+	 *   egwDragActionImplementation/EgwDropActionImplementation already behave -
+	 *   so no row ever adds its own copy of the listener. Before that fix, the
+	 *   "already delegated" check was tracked per-row-AOI rather than per-
+	 *   parent-node, so every newly materialized row believed it was first and
+	 *   permanently added another 'click' listener (mobile binds via
+	 *   addEventListener, not desktop's idempotent property assignment),
+	 *   opening one dialog per distinct row ever materialized in the session.
+	 *
+	 * Setup strategy:
+	 * - Build a real controller against a real rows container and register a
+	 *   real popup action, so the real egw_action registration path runs.
+	 * - Force window.egwIsMobile() to report true, matching the reported
+	 *   platform.
+	 * - Materialize several distinct rows the same way selection/keyboard
+	 *   navigation/taps do, via the controller's own row-materialization entry
+	 *   point.
+	 *
+	 * Pass criteria:
+	 * - No additional 'click' listener is added to the shared rows container
+	 *   beyond the one binding the container already owns.
+	 */
+	it("does not accumulate duplicate default-click listeners on the shared rows container as rows are materialized (mobile)", () =>
+	{
+		const originalIsMobile = window.egwIsMobile;
+		(window as any).egwIsMobile = () => true;
+
+		const rows = document.createElement("tbody");
+		rows.id = "rows";
+		document.body.append(rows);
+
+		const controller : any = new Et2NextmatchActionController({
+			id: `nm_mobile_click_dedup_${Date.now()}`,
+			egw: () => egwStub,
+			getInstanceManager: () => ({app: "addressbook"})
+		} as any);
+		controller.getRowsBody = () => rows;
+
+		try
+		{
+			controller.initActions({
+				open: {type: "popup", caption: "Open"}
+			});
+
+			const addEventListenerSpy = sinon.spy(rows, "addEventListener");
+
+			for(const rowId of ["row::a", "row::b", "row::c"])
+			{
+				const rowElement = document.createElement("tr");
+				rowElement.setAttribute("data-row-id", rowId);
+				rows.append(rowElement);
+				controller.ensureRowActionObject(rowId, rowElement);
+			}
+
+			const newClickBindings = addEventListenerSpy.getCalls().filter((call : any) => call.args[0] === "click");
+			assert.lengthOf(newClickBindings, 0, "materializing new virtualized rows must not add duplicate default-click listeners on the shared rows container");
+
+			addEventListenerSpy.restore();
+		}
+		finally
+		{
+			(window as any).egwIsMobile = originalIsMobile;
+			rows.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - EgwPopupActionImplementation.registerAction() must never bind a listener
+	 *   for a delegate whose own DOM node differs from its parent's node,
+	 *   matching egwDragActionImplementation/EgwDropActionImplementation's
+	 *   existing `node !== parentNode -> return false` guard.
+	 *
+	 * Background:
+	 * - This is the framework-level fix underlying the Nextmatch regression
+	 *   test above: a widget with many distinct children (e.g. Nextmatch's
+	 *   virtualized rows) delegates action-target resolution to a shared
+	 *   parent via findActionTargetHandler. The parent registers its own real
+	 *   listener directly; children must never add their own copy, regardless
+	 *   of how many distinct child AOIs ever call registerAction.
+	 *
+	 * Setup strategy:
+	 * - A parent node with its own AOI/context (node === parentNode) and three
+	 *   distinct child AOIs/contexts that each delegate to that same parent.
+	 *
+	 * Pass criteria:
+	 * - Only the parent's own registerAction() call binds a real listener;
+	 *   every child call returns false and adds nothing to the DOM.
+	 */
+	it("never binds a listener for a delegate whose node differs from its parent's node", () =>
+	{
+		const popup : any = new EgwPopupActionImplementation();
+		const parentNode = document.createElement("div");
+		document.body.append(parentNode);
+		(parentNode as any).findActionTarget = () => ({target: null, action: null});
+
+		// The parent's AOI needs getWidget() (read by registerAction() to resolve parentNode
+		// via _context.findActionTargetHandler.iface.getWidget()) in addition to getDOMNode()
+		// (read for its own direct registration) - matching Et2NextmatchDragDropAOI/
+		// EgwDragDropShoelaceTree, which implement both against the same underlying node.
+		const parentAoi : any = {getDOMNode: () => parentNode, getWidget: () => parentNode};
+		const parentContext : any = {iface: parentAoi, manager: {getActionsByAttr: () => []}};
+		const addEventListenerSpy = sinon.spy(parentNode, "addEventListener");
+
+		try
+		{
+			// Parent registers itself directly (no findActionTargetHandler of its own) -
+			// mirrors Et2NextmatchActionController's objectManager / Et2Tree's widget_object.
+			const parentRegistered = popup.registerAction(parentAoi, sinon.spy(), parentContext);
+			assert.isTrue(parentRegistered, "the parent's own direct registration should succeed");
+
+			for(const id of ["child::a", "child::b", "child::c"])
+			{
+				const childNode = document.createElement("div");
+				const childAoi : any = {getDOMNode: () => childNode};
+				const childContext : any = {
+					iface: childAoi,
+					manager: {getActionsByAttr: () => []},
+					// Points at the parent's own EgwActionObject-like context (which has .iface),
+					// not directly at its AOI - matching how Et2NextmatchActionController sets
+					// rowObject.findActionTargetHandler = this.objectManager (not = dragDropAOI).
+					findActionTargetHandler: parentContext
+				};
+				const childRegistered = popup.registerAction(childAoi, sinon.spy(), childContext);
+				assert.isFalse(childRegistered, `delegate ${id} must not bind its own listener onto the shared parent`);
+			}
+
+			const clickBindings = addEventListenerSpy.getCalls().filter((call : any) => call.args[0] === "click" || call.args[0] === "contextmenu");
+			assert.lengthOf(clickBindings, 1, "only the parent's own registration should ever bind a real listener on the shared node");
+		}
+		finally
+		{
+			addEventListenerSpy.restore();
+			parentNode.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - registerAction() -> unregisterAction() -> registerAction() on the same
+	 *   node/AOI must leave exactly one live default-click binding, not two.
+	 *
+	 * Background:
+	 * - registerAction() used to bookkeep a bogus {type:'contextmenu',
+	 *   listener:_callback} entry that never matched the real 'click'/
+	 *   'ondblclick' binding _registerDefault() actually created, so
+	 *   unregisterAction() could never remove it. Any widget that re-registers
+	 *   on the same node/AOI (Et2NextmatchActionController.
+	 *   syncDragDropRegistration(), called on every render; Et2Tree's
+	 *   _link_actions(); calendar's et2_widget_timegrid on window resize; any
+	 *   Et2Widget re-running set_actions()) would accumulate one more listener
+	 *   per re-registration on mobile, firing the default action once per
+	 *   accumulated listener.
+	 *
+	 * Pass criteria:
+	 * - After register -> unregister -> register, exactly one real 'click'
+	 *   entry is tracked, and a single dispatched click fires the callback
+	 *   exactly once.
+	 */
+	it("leaves exactly one live default-click binding after register/unregister/register (mobile)", () =>
+	{
+		const originalIsMobile = window.egwIsMobile;
+		(window as any).egwIsMobile = () => true;
+
+		const popup : any = new EgwPopupActionImplementation();
+		const node = document.createElement("div");
+		document.body.append(node);
+
+		const aoi : any = {getDOMNode: () => node};
+		const context : any = {iface: aoi, manager: {getActionsByAttr: () => []}};
+		const callback = sinon.spy();
+
+		try
+		{
+			popup.registerAction(aoi, callback, context);
+			popup.unregisterAction(aoi);
+			popup.registerAction(aoi, callback, context);
+
+			const clickEntries = aoi.handlers["popup"].filter((h : any) => h.type === "click");
+			assert.lengthOf(clickEntries, 1, "exactly one real click binding should be tracked after re-registration");
+
+			node.dispatchEvent(new MouseEvent("click", {bubbles: true, cancelable: true}));
+
+			assert.equal(callback.callCount, 1, "default action should fire exactly once per click, not once per stale accumulated listener");
+		}
+		finally
+		{
+			(window as any).egwIsMobile = originalIsMobile;
+			node.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - unregisterAction() must clear a desktop default-dblclick binding by
+	 *   nulling the `ondblclick` property, since removeEventListener() cannot
+	 *   undo a plain property assignment.
+	 *
+	 * Pass criteria:
+	 * - After register, node.ondblclick is a function; after unregister, it's
+	 *   null; after re-registering, invoking it fires the callback exactly once.
+	 */
+	it("clears the ondblclick property binding on unregister (desktop)", () =>
+	{
+		const popup : any = new EgwPopupActionImplementation();
+		const node = document.createElement("div");
+		document.body.append(node);
+
+		const aoi : any = {getDOMNode: () => node};
+		const context : any = {iface: aoi, manager: {getActionsByAttr: () => []}};
+		const callback = sinon.spy();
+
+		try
+		{
+			popup.registerAction(aoi, callback, context);
+			assert.isFunction(node.ondblclick, "default double-click handler should be bound");
+
+			popup.unregisterAction(aoi);
+			assert.isNull(node.ondblclick, "unregisterAction should null out the ondblclick property binding");
+
+			popup.registerAction(aoi, callback, context);
+			(node.ondblclick as Function)(new MouseEvent("dblclick", {bubbles: true, cancelable: true}));
+			assert.equal(callback.callCount, 1, "default action should fire exactly once after re-registration");
+		}
+		finally
+		{
+			node.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
+	 * - unregisterAction() must dispose the tapAndSwipe instance _registerContext()
+	 *   creates for long-press/tap-and-hold context menu support, not just remove
+	 *   the synthetic 'tapandhold' event listener.
+	 *
+	 * Background:
+	 * - _handleTapHold() creates a `new tapAndSwipe(_node, {...})` on every
+	 *   registration. tapAndSwipe's constructor binds its own internal
+	 *   touchstart/touchend/touchmove/touchcancel listeners directly on the node
+	 *   to detect the gesture. Without disposing the instance on unregister,
+	 *   every re-registration cycle (e.g. Et2NextmatchActionController.
+	 *   syncDragDropRegistration(), called on every render) would leak another
+	 *   full instance's worth of touch listeners - each one independently
+	 *   detecting the same real gesture and firing its own stale callback,
+	 *   the same class of bug as the default-click handler, just for long-press.
+	 *
+	 * Setup strategy:
+	 * - Track net add/remove counts per touch event type across several
+	 *   register/unregister cycles on the same node/AOI.
+	 *
+	 * Pass criteria:
+	 * - touchstart/touchend/touchmove/touchcancel all net to zero after each
+	 *   full register+unregister cycle - nothing is left bound.
+	 */
+	it("disposes the tapAndSwipe instance on unregister instead of leaking its touch listeners", () =>
+	{
+		const popup : any = new EgwPopupActionImplementation();
+		const node = document.createElement("div");
+		document.body.append(node);
+
+		const aoi : any = {getDOMNode: () => node};
+		const context : any = {iface: aoi, manager: {getActionsByAttr: () => []}};
+		const callback = sinon.spy();
+
+		const net : Record<string, number> = {};
+		const addOrig = node.addEventListener.bind(node);
+		const removeOrig = node.removeEventListener.bind(node);
+		node.addEventListener = ((type : string, listener : any, opts? : any) =>
+		{
+			net[type] = (net[type] || 0) + 1;
+			return addOrig(type, listener, opts);
+		}) as any;
+		node.removeEventListener = ((type : string, listener : any, opts? : any) =>
+		{
+			net[type] = (net[type] || 0) - 1;
+			return removeOrig(type, listener, opts);
+		}) as any;
+
+		try
+		{
+			for(let i = 0; i < 4; i++)
+			{
+				popup.registerAction(aoi, callback, context);
+				popup.unregisterAction(aoi);
+			}
+
+			for(const type of ["touchstart", "touchend", "touchmove", "touchcancel"])
+			{
+				assert.equal(net[type], 0, `${type} listeners must not accumulate across repeated register/unregister cycles`);
+			}
+		}
+		finally
+		{
+			node.remove();
+		}
+	});
+
+	/**
+	 * Contract under test:
 	 * - Long-press on touch/pen triggers context popup after delay.
 	 *
 	 * Setup strategy:
