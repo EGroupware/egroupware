@@ -130,6 +130,14 @@ export default css`
 		padding: var(--sl-spacing-2x-small) var(--sl-spacing-small);
 		border-right: var(--sl-panel-border-width) solid var(--sl-color-neutral-400);
 		box-sizing: border-box;
+		/*
+		 * Header and rows are separate grids that only line up because both resolve the same
+		 * --column-sizes. An "Nfr" track is minmax(auto, Nfr), so a grid item that can not shrink
+		 * below its min-content raises its own track - a long header label would widen its column
+		 * in the header only, and every following column would be off by that much. The row cells
+		 * already opt out of that (see "tbody td, tbody th" below), the header has to as well.
+		 */
+		min-width: 0;
 
 		/* Inner div lets us have clear space on the right edge of the column header */
 

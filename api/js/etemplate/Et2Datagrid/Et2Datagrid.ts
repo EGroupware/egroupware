@@ -316,6 +316,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedVirtualizedHeightSyncPassesRemaining : number = 0;
 	private _embeddedParentScrollOffsetTop : number | null = null;
 	private _embeddedChildGridResizeObserver : ResizeObserver | null = null;
+	private _headerColumnResizeObserver : ResizeObserver | null = null;
+	private _observedHeaderColumns : HTMLElement[] = [];
 	private _embeddedChildGridObserverSyncFrame : number | null = null;
 	private _remeasuredEmbeddedChildGridsThisFrame : WeakSet<Et2Datagrid> = new WeakSet();
 	private _embeddedChildScrollSyncFrame : number | null = null;
@@ -814,6 +816,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._embeddedVirtualizedHeightSyncPassesRemaining = 0;
 		this._embeddedChildGridResizeObserver?.disconnect();
 		this._embeddedChildGridResizeObserver = null;
+		this._headerColumnResizeObserver?.disconnect();
+		this._headerColumnResizeObserver = null;
+		this._observedHeaderColumns = [];
 		if(this._embeddedChildGridObserverSyncFrame !== null)
 		{
 			cancelAnimationFrame(this._embeddedChildGridObserverSyncFrame);
@@ -1145,6 +1150,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._applyColumnVisibilityToRenderedRows();
 			this._postRenderStructureSyncNeeded = false;
 		}
+		this._syncHeaderColumnObserver();
 		this._syncDomEventTargets();
 		if(changedProperties.has("rows") || changedProperties.has("expansionConfig"))
 		{
@@ -4835,10 +4841,95 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _ensureTableColSizes()
 	{
-		const visibleColumns = this._visibleColumns();
-		if(this._body)
+		if(!this._body)
 		{
-			this._body.style["--column-sizes"] = this._columnWidths(visibleColumns);
+			return;
+		}
+		if(this.inheritColumnSizes)
+		{
+			// embedded child grids inherit the parent grid's tracks through the host
+			this._body.style.removeProperty("--column-sizes");
+			return;
+		}
+		// custom properties need setProperty(), plain indexed assignment is silently ignored
+		this._body.style.setProperty("--column-sizes", this._rowColumnSizes(this._visibleColumns()));
+	}
+
+	/**
+	 * Track list for the body rows: the header's track list, with content-sized
+	 * "auto" tracks (columns without a configured width) pinned to the header's
+	 * resolved pixel width.
+	 *
+	 * Header and rows are separate grids that only line up because both resolve
+	 * the same track list. An auto track sizes to each grid's own content - the
+	 * header to its label, the rows to their widest value - and the leftover
+	 * space then distributes differently into every fr track, shifting all
+	 * column boundaries between header and rows.
+	 */
+	private _rowColumnSizes(visibleColumns : Et2DatagridColumn[]) : string
+	{
+		const sizes = this._columnWidths(visibleColumns);
+		if(!/\bauto\b/.test(sizes))
+		{
+			return sizes;
+		}
+		const header = this.shadowRoot?.querySelector(".dg-header") as HTMLElement;
+		if(!header)
+		{
+			return sizes;
+		}
+		const resolved = getComputedStyle(header).gridTemplateColumns.trim().split(/\s+/);
+		const tracks = this._splitTrackList(sizes);
+		// the resolved header list leads with the meta column track
+		if(resolved.length !== tracks.length + 1)
+		{
+			return sizes;
+		}
+		return tracks.map((track, index) => track === "auto" ? resolved[index + 1] : track).join(" ");
+	}
+
+	/**
+	 * Split a grid-template-columns track list on top-level spaces only -
+	 * "minmax(30px, 1fr)" is one track.
+	 */
+	private _splitTrackList(sizes : string) : string[]
+	{
+		return sizes.match(/(?:[^\s()]+|\([^)]*\))+/g) || [];
+	}
+
+	/**
+	 * Re-pin the rows' auto tracks whenever header column boxes change.
+	 *
+	 * The header widgets render asynchronously, so the auto track measured
+	 * during updated() is the width of a still-empty header. The observer
+	 * fires once the content (and any later container resize) settles.
+	 */
+	private _syncHeaderColumnObserver()
+	{
+		const needed = !this.inheritColumnSizes &&
+			/\bauto\b/.test(this._columnWidths(this._visibleColumns()));
+		const cols = needed
+		             ? Array.from(this.shadowRoot?.querySelectorAll(".dg-header > .dg-col") || []) as HTMLElement[]
+		             : [];
+		const same = cols.length === this._observedHeaderColumns.length &&
+			cols.every((col, index) => col === this._observedHeaderColumns[index]);
+		if(same)
+		{
+			return;
+		}
+		this._headerColumnResizeObserver?.disconnect();
+		this._observedHeaderColumns = cols;
+		if(!cols.length)
+		{
+			return;
+		}
+		if(!this._headerColumnResizeObserver)
+		{
+			this._headerColumnResizeObserver = new ResizeObserver(() => this._ensureTableColSizes());
+		}
+		for(const col of cols)
+		{
+			this._headerColumnResizeObserver.observe(col);
 		}
 	}
 
