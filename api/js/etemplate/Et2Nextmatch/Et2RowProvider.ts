@@ -296,7 +296,7 @@ export class Et2RowProvider
 		const resolvedHeader = headerSource ? this._resolveSlotHeaderElement(headerSource) : null;
 		const columnMeta = resolvedHeader ? this._extractSlotColumnMeta(resolvedHeader) : [];
 		const columns = resolvedHeader
-		                ? this._extractColumnsFromHeaderNode(resolvedHeader).map((column, index) => ({...columnMeta[index], ...column}))
+		                ? this._extractColumnsFromHeaderNode(resolvedHeader, columnMeta.length).map((column, index) => ({...columnMeta[index], ...column}))
 		                : [];
 		const rowElement = this._resolveSlotRowElement(rowSource);
 		const view = this._templateView(rowElement);
@@ -358,7 +358,7 @@ export class Et2RowProvider
 			disabled: column.getAttribute("disabled")
 		}));
 
-		const columns : Et2DatagridColumn[] = this._extractColumnsFromHeaderNode(headerNode)
+		const columns : Et2DatagridColumn[] = this._extractColumnsFromHeaderNode(headerNode, colMeta.length)
 			.map((c, index) => {return {...colMeta[index], ...c}});
 		const view = this._templateView(rowNode);
 		const normalizedRowNode = this._normalizeTemplateRowNode(rowNode, view);
@@ -422,8 +422,14 @@ export class Et2RowProvider
 
 	/**
 	 * Parse column definitions from header
+	 *
+	 * @param headerNode Header row/thead element to read column definitions from.
+	 * @param minColumnCount If the header row has no child elements (e.g. `<row class="th"></row>`),
+	 *        synthesize this many blank placeholder columns instead of returning none - otherwise
+	 *        the datagrid's grid-template-columns ends up empty and every data cell collapses to
+	 *        zero width, leaving rows present in the DOM but entirely invisible.
 	 */
-	private _extractColumnsFromHeaderNode(headerNode : Element) : Et2DatagridColumn[]
+	private _extractColumnsFromHeaderNode(headerNode : Element, minColumnCount : number = 0) : Et2DatagridColumn[]
 	{
 		const nodes = this._headerColumnSourceNodes(headerNode)
 			.filter((node) =>
@@ -450,6 +456,13 @@ export class Et2RowProvider
 			if(disabled !== null) col.disabled = disabled;
 			columns.push(col);
 		});
+		if(!columns.length && minColumnCount > 0)
+		{
+			for(let index = 0; index < minColumnCount; index++)
+			{
+				columns.push({key: "col" + index, title: "", header: document.createElement("et2-description")});
+			}
+		}
 		return columns;
 	}
 
