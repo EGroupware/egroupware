@@ -1400,9 +1400,12 @@ class JmapShim
 	 * (not mail-specific, same allowlist config the client-side DOMPurify path is modelled on)
 	 * instead of the classic getdisplayableBody()/htmLawed-with-tidy pipeline.
 	 *
-	 * Known, accepted limitation (rare fallback path): no inline cid: image resolution or
-	 * attachment list - both already have their own mechanisms for the normal mail path and are
-	 * out of scope here (see plan).
+	 * Attachment listing is still out of scope here (has its own mechanism for the normal mail
+	 * path) - but inline cid: images ARE resolved (see inlineCidImages()), unconditionally as
+	 * data: URIs regardless of size: unlike the classic resolve_inline_image_byType()'s size-gated
+	 * data-URI-vs-link choice (avoiding a second round trip for a fresh IMAP fetch), every part
+	 * here is already fully fetched/decrypted in memory - a data: URI is strictly cheaper than a
+	 * link that would otherwise require redoing the whole decrypt from scratch.
 	 *
 	 * @param \Horde_Mime_Part $structure all parts' contents already populated (true after
 	 *  Horde_Mime_Part::parseMessage() parses a complete raw message) - no fetch happens in here
@@ -1428,10 +1431,54 @@ class JmapShim
 
 		if ($useHtml && $partId === $htmlId)
 		{
+			$raw = self::inlineCidImages($raw, $structure);
 			$htmLawed = new Api\Html\HtmLawed();
 			return $htmLawed->run($raw, Api\Mail::$htmLawed_config);
 		}
 		return '<pre>'.htmlspecialchars($raw, ENT_QUOTES, 'UTF-8').'</pre>';
+	}
+
+	/**
+	 * Replace src="cid:..." / background="cid:..." references in an HTML body with data: URIs,
+	 * looked up against an already-fully-parsed-in-memory Horde_Mime_Part tree (see
+	 * structureToHtml()). No fetch/network access - every referenced part's contents are already
+	 * populated (Horde_Mime_Part::parseMessage() populates every part up front).
+	 *
+	 * @param string $html
+	 * @param \Horde_Mime_Part $structure
+	 * @return string $html with every resolvable cid: reference replaced by a data: URI (any cid:
+	 *  with no matching part is left untouched)
+	 */
+	private static function inlineCidImages(string $html, \Horde_Mime_Part $structure) : string
+	{
+		if (stripos($html, 'cid:') === false)
+		{
+			return $html;
+		}
+		$dataUris = [];
+		$resolve = static function(string $cid) use ($structure, &$dataUris)
+		{
+			$cid = trim($cid, '<>');
+			if (array_key_exists($cid, $dataUris))
+			{
+				return $dataUris[$cid];
+			}
+			foreach ($structure->partIterator() as $part)
+			{
+				/** @var \Horde_Mime_Part $part */
+				if (trim((string)$part->getContentId(), '<>') === $cid)
+				{
+					return $dataUris[$cid] = 'data:'.$part->getType().';base64,'.base64_encode($part->getContents());
+				}
+			}
+			return $dataUris[$cid] = null;
+		};
+		return preg_replace_callback('#((?:src|background)\s*=\s*)(["\'])cid:([^"\']+)\2#i',
+			static function(array $matches) use ($resolve)
+			{
+				$dataUri = $resolve(urldecode($matches[3]));
+				return $dataUri ? $matches[1].$matches[2].$dataUri.$matches[2] : $matches[0];
+			}, $html);
 	}
 
 	/**
@@ -1447,12 +1494,14 @@ class JmapShim
 	 * @param string $fromAddress
 	 * @param string $htmlOptions
 	 * @param string $passphrase
-	 * @return string sanitized HTML body
+	 * @return array{body: string, smime: ?array} sanitized HTML body, plus the decrypt/verify
+	 *  metadata (Api\Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for the
+	 *  caller to push to the client (app.mail.set_smimeFlags) - never sent to the client itself
 	 * @throws Api\Mail\Smime\PassphraseMissing
 	 * @throws \Exception message/mailbox not found
 	 */
 	public static function resolveSmime(string $accountId, string $mailboxId, string $uid, string $topLevelType,
-		string $fromAddress, string $htmlOptions='', string $passphrase='') : string
+		string $fromAddress, string $htmlOptions='', string $passphrase='') : array
 	{
 		$imap = self::imapServer($accountId);
 		$mailbox = self::hordeMailbox($imap, self::folderPath($mailboxId));
@@ -1462,7 +1511,10 @@ class JmapShim
 			throw new \Exception("Message '$uid' not found in '$mailbox'!");
 		}
 		$structure = Api\Mail\Smime::resolveMessage((int)$accountId, $raw, $topLevelType, $passphrase, $fromAddress);
-		return self::structureToHtml($structure, $htmlOptions);
+		return [
+			'body' => self::structureToHtml($structure, $htmlOptions),
+			'smime' => $structure->getMetadata('X-EGroupware-Smime'),
+		];
 	}
 
 	/**

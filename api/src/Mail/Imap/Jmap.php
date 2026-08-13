@@ -321,18 +321,23 @@ class Jmap extends Mail\Imap
 	 * @param string $fromAddress
 	 * @param string $htmlOptions
 	 * @param string $passphrase
-	 * @return string sanitized HTML body
+	 * @return array{body: string, smime: ?array} sanitized HTML body, plus the decrypt/verify
+	 *  metadata (Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for the caller to
+	 *  push to the client (app.mail.set_smimeFlags) - never sent to the client itself
 	 * @throws Mail\Smime\PassphraseMissing
 	 * @throws Api\Exception
 	 */
 	public function resolveSmimeJmap(string $emailId, string $topLevelType, string $fromAddress,
-		string $htmlOptions='', string $passphrase='') : string
+		string $htmlOptions='', string $passphrase='') : array
 	{
 		$client = $this->jmapClient();
 		$email = $client->emailGet($emailId, ['blobId']);
 		$raw = $client->downloadBlob($email['blobId'], 'message.eml', 'message/rfc822');
 		$structure = Mail\Smime::resolveMessage($this->acc_id, $raw, $topLevelType, $passphrase, $fromAddress);
-		return JmapShim::structureToHtml($structure, $htmlOptions);
+		return [
+			'body' => JmapShim::structureToHtml($structure, $htmlOptions),
+			'smime' => $structure->getMetadata('X-EGroupware-Smime'),
+		];
 	}
 
 	/**

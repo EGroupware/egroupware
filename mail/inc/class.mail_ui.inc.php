@@ -3045,13 +3045,16 @@ class mail_ui
 	 * S/MIME + TNEF server-side handling JMAP-native") for get_load_email_data()'s fallback
 	 * body-render path, fetching bodyStructure/raw bytes via JMAP (Stalwart: Imap\Jmap's
 	 * jmapClient(); local IMAP: JmapShim) instead of Mail::getStructure()/getMessageRawBody()'s
-	 * IMAP FETCH chain.
+	 * IMAP FETCH chain. This is the primary path for both - the classic Mail::getStructure()
+	 * fallback below only runs if this returns null (JMAP unreachable, or a case it doesn't cover).
 	 *
-	 * Only handles the two cases those resolvers cover (S/MIME, whole-message TNEF - see
-	 * JmapShim::specialCaseType()) - returns null for everything else (meeting invites, a plain
-	 * message reached here only because the client-side fast path failed, and any Stalwart-backed
-	 * row where the caller couldn't supply a JMAP emailId, see loadEmailBody()), so the caller
-	 * falls through to the unchanged classic Mail::getStructure() path.
+	 * For S/MIME, the decrypt/verify itself is 100% server-side and never leaves the server -
+	 * JmapShim::resolveSmime()/Imap\Jmap::resolveSmimeJmap() return the rendered body plus the
+	 * decrypt/verify metadata (Api\Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention),
+	 * and this method pushes just the display flags (verified/not-verified/unknown-signer - same
+	 * shape the classic path pushes) to the client via Api\Json\Push, same as
+	 * get_load_email_data()'s classic branch below does for its own (unrelated, only-reached-on-
+	 * fallback) S/MIME handling.
 	 *
 	 * @param string $uid real IMAP UID (already resolved, see Api\Mail::splitRowID())
 	 * @param string|null $partID
@@ -3108,10 +3111,21 @@ class mail_ui
 
 			if ($type === 'smime')
 			{
-				$body = $isStalwart ?
+				$result = $isStalwart ?
 					$icServer->resolveSmimeJmap($emailID, $bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase) :
 					JmapShim::resolveSmime((string)$this->mail_bo->profileID, base64_encode($mailbox), $uid,
 						$bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase);
+				$body = $result['body'];
+				if (($smime = $result['smime']))
+				{
+					$smime['msg'] = lang($smime['msg']);
+					$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
+					if (!empty($smime['addtocontact']) && !empty(Mail\Smime::get_acc_smime($this->mail_bo->profileID)))
+					{
+						$push->call('app.mail.smime_certAddToContact', $smime);
+					}
+					$push->call('app.mail.set_smimeFlags', $smime);
+				}
 			}
 			else	// 'tnef'
 			{
