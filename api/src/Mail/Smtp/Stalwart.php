@@ -492,7 +492,7 @@ class Stalwart extends Sql
 					'create' => ['new1' => $account],
 				], 'a'],
 			], [Jmap::JMAP_CORE, self::USING_STALWART]);
-			$groupId = $response['methodResponses'][0][1]['created'][0] ?? throw new \Exception("Could not create group '$account_lid'!");
+			$groupId = $response['methodResponses'][0][1]['created']['new1']['id'] ?? throw new \Exception("Could not create group '$account_lid'!");
 			$this->db->insert(self::TABLE, [
 				'account_id' => $account_id,
 				'mail_type' => self::TYPE_ENABLED,
