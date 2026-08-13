@@ -873,7 +873,7 @@ class Json implements JsonModule
 				// check if we need a not yet included app.js object --> include it now and return a Promise
 				else if (i == 1 && parts[0] == 'app' && typeof (_context || self.#wnd).app.classes[parts[1]] === 'undefined')
 				{
-					return (<any>self.#wnd).egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400|0).toString())
+					return (<any>self.#wnd).egw_import(this.webserverUrl+'/'+parts[1]+'/js/app.min.js?'+((new Date).valueOf()/86400000|0).toString())
 						.then(() => this.applyFunc(_func, args, _context || self.#wnd),
 							(err) => {console.error("Failure loading /"+parts[1]+'/js/app.min.js' + " (" + err + ")\nAborting.")});
 				}
