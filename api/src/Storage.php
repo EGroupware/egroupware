@@ -817,10 +817,12 @@ class Storage extends Storage\Base
 	 *
 	 * @param ?array &$filter filters to process
 	 * @param ?string &$join on return additional joins
-	 * @param string $wildcard ='' appended before and after each criterion
+	 * @param ?string $wildcard ='' appended before and after each criterion
 	 */
-	protected function cf_filter(?array &$filter, ?string &$join, string $wildcard='')
+	protected function cf_filter(?array &$filter, ?string &$join, ?string $wildcard='')
 	{
+		$wildcard ??= '';
+
 		if (is_array($filter) && count($filter))
 		{
 			$_cfnames = array_keys($this->customfields);
