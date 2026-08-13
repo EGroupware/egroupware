@@ -187,16 +187,6 @@ export class MailApp extends EgwApp
 	 */
 	destroy()
 	{
-		// Unbind from nm refresh
-		if(this.et2 != null)
-		{
-			var nm = this.et2.getWidgetById(this.nm_index);
-			if(nm != null)
-			{
-				jQuery(nm).off('refresh');
-			}
-		}
-
 		// Unregister client side cache
 		this.egw.dataCacheUnregister('mail');
 		this.egw.dataUnregisterFetch('mail');
@@ -295,11 +285,9 @@ export class MailApp extends EgwApp
 				this.mail_refreshFolderStatus(undefined, undefined, false);
 
 				// Bind to nextmatch refresh to update folder status
-				//todo get rid of jq. jq._data exists and contains the event handlers
-				//@ts-ignore
-				if (nm != null && (typeof jQuery._data(nm).events == 'undefined' || typeof jQuery._data(nm).events.refresh == 'undefined'))
+				if (nm != null)
 				{
-					jQuery(nm).on('refresh', (_event) =>
+					nm.addEventListener('refresh', (_event) =>
 					{
 						if (!self.push_active[nm.activeFilters.selectedFolder.split("::")[0]])
 						{
@@ -2382,8 +2370,7 @@ export class MailApp extends EgwApp
 			if (_status[i]['id']==selectedNode.id)
 			{
 				var nm = this.et2.getWidgetById(this.nm_index);
-				nm.activeFilters["selectedFolder"] = _status[i]['id'];
-				nm.applyFilters();
+				nm.applyFilters({selectedFolder: _status[i]['id']});
 			}
 		}
 	}
@@ -2407,8 +2394,7 @@ export class MailApp extends EgwApp
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
 			{
 				var nm = this.et2.getWidgetById(this.nm_index);
-				nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
-				nm.applyFilters();
+				nm.applyFilters({selectedFolder: selectedNodeAfter.id});
 			}
 		}
 	}
@@ -2441,8 +2427,7 @@ export class MailApp extends EgwApp
 		if (selectedNodeAfter != null && selectedNodeAfter.id!=selectedNode.id)
 		{
 			var nm = this.et2.getWidgetById(this.nm_index);
-			nm.activeFilters["selectedFolder"] = selectedNodeAfter.id;
-			nm.applyFilters();
+			nm.applyFilters({selectedFolder: selectedNodeAfter.id});
 		}
 	}
 
@@ -2467,20 +2452,19 @@ export class MailApp extends EgwApp
 		const filter = this.et2.getWidgetById('cat_id');
 		if(nm && filter)
 		{
-			nm.activeFilters["startdate"]=null;
-			nm.activeFilters["enddate"]=null;
+			const filters: any = {startdate: null, enddate: null};
 			switch(filter.getValue())
 			{
 				case 'bydate':
 
 					if (filter && dates)
 					{
-						if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) nm.activeFilters["startdate"] = this.et2.getWidgetById('startdate').value;
-						if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) nm.activeFilters["enddate"] = this.et2.getWidgetById('enddate').value;
+						if (this.et2.getWidgetById('startdate') && this.et2.getWidgetById('startdate').get_value()) filters.startdate = this.et2.getWidgetById('startdate').value;
+						if (this.et2.getWidgetById('enddate') && this.et2.getWidgetById('enddate').get_value()) filters.enddate = this.et2.getWidgetById('enddate').value;
 					}
 			}
+			nm.applyFilters(filters); // this should refresh the active folder
 		}
-		nm.applyFilters(); // this should refresh the active folder
 		if (_refreshVacationNotice) this.mail_callRefreshVacationNotice();
 	}
 
