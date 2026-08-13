@@ -24,6 +24,7 @@ import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Dat
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
 import {JmapBodyResult, JmapMessageReference, MailJmap} from "./jmap";
+import {renderAttachmentIndex} from "./attachmentIndex";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -1451,6 +1452,15 @@ export class MailApp extends EgwApp
 					// Update client cache to avoid re-fetching the attachment block again
 					egw.dataStoreUID(data.uid, data);
 					if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
+					// body may have already finished loading (empty) before this resolved -
+					// retry the auto-index now that attachmentsBlock is known, but only into
+					// the iframe still actually showing this row (loadMessageBody() marks it)
+					const iframeDoc = (this.et2.getWidgetById('messageIFRAME')?.getDOMNode() as HTMLIFrameElement)
+						?.contentDocument;
+					if (iframeDoc?.documentElement?.dataset.rowId === rowId)
+					{
+						renderAttachmentIndex(iframeDoc, data.attachmentsBlock, this.egw);
+					}
 				}
 			});
 		}
@@ -1549,7 +1559,11 @@ export class MailApp extends EgwApp
 			for (var t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
 			this.W_TIMEOUTS.push(window.setTimeout(function(){
 
-				self.loadMessageBody(IframeHandle, rowId, (doc) => self.resolveExternalImages(doc));
+				self.loadMessageBody(IframeHandle, rowId, (doc) =>
+				{
+					self.resolveExternalImages(doc);
+					renderAttachmentIndex(doc, data.attachmentsBlock, self.egw);
+				});
 			}, 300));
 		}
 
@@ -1691,7 +1705,12 @@ export class MailApp extends EgwApp
 		{
 			if (result.special)
 			{
-				iframe.addEventListener('load', () => onLoad(iframe.contentWindow.document), {once: true});
+				iframe.addEventListener('load', () =>
+				{
+					const doc = iframe.contentWindow.document;
+					doc.documentElement.dataset.rowId = rowId;
+					onLoad(doc);
+				}, {once: true});
 				iframeWidget.set_src(egw.link('/index.php', {menuaction: 'mail.mail_ui.loadEmailBody', _messageID: rowId}));
 				return;
 			}
@@ -1701,6 +1720,7 @@ export class MailApp extends EgwApp
 			iframe.addEventListener('load', () =>
 			{
 				const doc = iframe.contentWindow.document;
+				doc.documentElement.dataset.rowId = rowId;
 				this.jmap.resolveInlineImages(doc, rowId, fast).catch((e) =>
 					console.error('MailApp.loadMessageBody(): resolveInlineImages failed', e));
 				onLoad(doc);
@@ -6095,6 +6115,7 @@ export class MailApp extends EgwApp
 				else
 				{
 					self.resolveExternalImages(doc);
+					renderAttachmentIndex(doc, content.attachmentsBlock, self.egw);
 					// Deal with scrolling by setting iframe size to content height
 					jQuery(frame).height(doc.body.scrollHeight);
 				}

@@ -218,3 +218,36 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   height: 100%;
   width: 99%;
 }
+.mail_attachmentIndex {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  padding: 0.5em;
+}
+.mail_attachmentIndexDownloadAll {
+  align-self: flex-end;
+}
+.mail_attachmentIndexHeader {
+  text-align: center;
+  color: gray;
+  font-family: monospace;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.mail_attachmentIndexPdf {
+  width: 100%;
+  height: 80vh;
+  border: none;
+}
+.mail_attachmentIndexIcon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+.mail_attachmentIndexIcon img {
+  width: 64px;
+  height: 64px;
+}
