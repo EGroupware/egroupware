@@ -6392,8 +6392,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this.anchorRowIndex = this._rowsByIndex.length ? this._rowsByIndex.length - 1 : -1;
 		}
-		this._syncRowAccessibilityState();
 		this._reconcileRowRenderState();
+		// Rows whose render version just bumped get a fresh DOM node once the virtualizer's own
+		// layout pass mounts it - a separate, later async cycle than Lit's updateComplete (the
+		// version is part of the row's stable key, so the virtualizer treats it as a new node).
+		// Wait for that pass before syncing selection/accessibility classes, or they land on the
+		// outgoing node instead of the one that actually stays.
+		void Promise.resolve(this._virtualize?.layoutComplete ?? this.updateComplete)
+			.then(() => this._syncRowAccessibilityState());
 	}
 
 	selectAllRows()
