@@ -15,11 +15,14 @@
 			</columns>
 			<rows>
 				<row class="th">
+					<et2-description></et2-description>
+					<et2-description></et2-description>
+					<et2-description></et2-description>
 				</row>
 				<row class="$row_cont[class]" valign="top">
 					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
 					<et2-vbox  class="addressbookCol1">
-						<customfields-list id="$row" class="customfields" app="addressbook" disabled="true"/>
+						<et2-customfields-list id="$row" class="customfields" app="addressbook" disabled="true"/>
 						<et2-vbox  id="${row}[id]">
 							<et2-description  id="${row}[line2]" noLang="1"></et2-description>
 							<et2-description  id="${row}[line1]" noLang="1"></et2-description>
@@ -33,7 +36,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.index" template="" lang="" group="0" version="1.9.002">
-		<nextmatch id="nm" template="addressbook.index.rows" header_right="addressbook.index.right_add"/>
+		<et2-nextmatch id="nm" template="addressbook.index.rows"></et2-nextmatch>
 		<grid width="100%">
 			<columns>
 				<column/>

@@ -14,21 +14,21 @@
 			</columns>
 			<rows>
 				<row class="th">
-                    <nextmatch-header label="Type" id="type"/>
-                    <nextmatch-header label="#" align="center" id="number"/>
+                    <et2-nextmatch-header label="Type" id="type"/>
+                    <et2-nextmatch-header label="#" align="center" id="number"/>
                     <et2-nextmatch-sortheader id="org_name" label="Organisation"/>
-					<nextmatch-header label="Department" id="org_unit"/>
-					<nextmatch-header label="Business address" id="business"/>
+					<et2-nextmatch-header label="Department" id="org_unit"/>
+					<et2-nextmatch-header label="Business address" id="business"/>
 					<et2-vbox>
-						<nextmatch-header label="Business phone" id="tel_work"/>
-						<nextmatch-header label="Mobile phone" id="tel_cell"/>
-						<nextmatch-header label="Home phone" id="tel_home"/>
+						<et2-nextmatch-header label="Business phone" id="tel_work"/>
+						<et2-nextmatch-header label="Mobile phone" id="tel_cell"/>
+						<et2-nextmatch-header label="Home phone" id="tel_home"/>
 						<et2-description  value="Fax"></et2-description>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-header label="Url" id="url"/>
-						<nextmatch-header label="Business email" id="email"/>
-						<nextmatch-header label="Home email" id="email_home"/>
+						<et2-nextmatch-header label="Url" id="url"/>
+						<et2-nextmatch-header label="Business email" id="email"/>
+						<et2-nextmatch-header label="Home email" id="email_home"/>
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">

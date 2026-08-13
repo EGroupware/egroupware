@@ -235,7 +235,12 @@ class addressbook_ui extends addressbook_bo
 				'never_hide'     => True,		// I  never hide the nextmatch-line if less then maxmatch entrie
 				'start'          =>	0,			// IO position in list
 				'cat_id'         =>	'',			// IO category, if not 'no_cat' => True
-				'search'         =>	($template ?? 'addressbook.index') === 'addressbook.select' ? '@' : '', // IO search pattern
+				// "@" alone only reliably matches emails via legacy substring search; force that with the
+				// "legacy:" prefix, but only when the rag app is installed to strip it again --- without
+				// rag, Api\Storage::process_search() never parses that prefix at all and passes it through
+				// literally, which would break the match instead of fixing it
+				'search'         =>	($template ?? 'addressbook.index') === 'addressbook.select'
+					? (class_exists('EGroupware\\Rag\\Embedding') ? 'legacy:@' : '@') : '', // IO search pattern
 				'main-template'  => $template ?? 'addressbook.index',   // do NOT use "template"!
 				'order'          =>	'n_family',	// IO name of the column to sort after (optional for the sortheaders)
 				'sort'           =>	'ASC',		// IO direction of the sort: 'ASC' or 'DESC'

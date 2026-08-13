@@ -11,7 +11,9 @@
 
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import {Et2Datagrid} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid";
+import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
 import {egw} from "../../api/js/jsapi/egw_global.js";
 
 /**
@@ -24,7 +26,7 @@ export class CRMView extends EgwApp
 	list_id: string = "";
 
 	// Reference to the list
-	nm: et2_nextmatch = null;
+	nm: Et2Nextmatch = null;
 
 	// Which addressbook contact id(s) we are showing entries for
 	contact_ids: string[] = [];
@@ -161,7 +163,7 @@ export class CRMView extends EgwApp
 
 		// For easy reference later
 		this.list_id = app_obj.et2.getInstanceManager().uniqueId;
-		this.nm = <et2_nextmatch>app_obj.et2.getDOMWidgetById('nm');
+		this.nm = <Et2Nextmatch>app_obj.et2.getDOMWidgetById('nm');
 
 		let contact_ids = app_obj.et2.getArrayMgr("content").getEntry("action_id") || "";
 		if(typeof contact_ids == "string")
@@ -220,14 +222,17 @@ export class CRMView extends EgwApp
 		{
 			// Check to see if it's in OUR nextmatch
 			let uid = this.uid(pushData);
-			let known = Object.values(this.nm.controller._indexMap).filter(function(row) {return row.uid ==uid;});
+			// Et2Nextmatch has no public "is this uid currently loaded" API, so reach into its
+			// datagrid's live row list the same way Et2Nextmatch itself does internally (_datagrid getter)
+			let datagrid = <Et2Datagrid>this.nm.shadowRoot?.querySelector("et2-datagrid");
+			let known = datagrid ? datagrid.rows.filter(row => row.id == uid) : [];
 			let type = pushData.type;
 			if(known && known.length > 0)
 			{
 				if(!this.id_check(pushData.acl))
 				{
 					// Was ours, not anymore, and we know this now - no server needed.  Just remove from nm.
-					type = et2_nextmatch.DELETE;
+					type = Et2DatagridUpdateTypes.DELETE;
 				}
 				return this.nm.refresh(pushData.id, type);
 			}

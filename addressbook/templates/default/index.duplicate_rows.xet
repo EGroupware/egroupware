@@ -12,8 +12,8 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Type" id="type"/>
-					<nextmatch-header label="#" align="center" id="group_count"/>
+					<et2-nextmatch-header label="Type" id="type"/>
+					<et2-nextmatch-header label="#" align="center" id="group_count"/>
                     <et2-vbox>
                         <et2-hbox disabled="!@order=n_fileas">
                             <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
@@ -37,18 +37,18 @@
                             <et2-nextmatch-sortheader label="own sorting" id="n_fileas" span="all"/>
                         </et2-hbox>
                     </et2-vbox>
-					<nextmatch-header label="Business address" id="business"/>
+					<et2-nextmatch-header label="Business address" id="business"/>
 					<!--
 					<et2-vbox>
-						<nextmatch-header label="Business phone" id="tel_work"/>
-						<nextmatch-header label="Mobile phone" id="tel_cell"/>
-						<nextmatch-header label="Home phone" id="tel_home"/>
+						<et2-nextmatch-header label="Business phone" id="tel_work"/>
+						<et2-nextmatch-header label="Mobile phone" id="tel_cell"/>
+						<et2-nextmatch-header label="Home phone" id="tel_home"/>
 						<et2-description  value="Fax"></et2-description>
 					</et2-vbox>
 					-->
 					<et2-vbox>
-						<nextmatch-header label="Business email" id="email"/>
-						<nextmatch-header label="Home email" id="email_home"/>
+						<et2-nextmatch-header label="Business email" id="email"/>
+						<et2-nextmatch-header label="Home email" id="email_home"/>
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[cat_id] $row_cont[class]" valign="top">

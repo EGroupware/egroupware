@@ -13,42 +13,36 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-header label="Type" id="type"/>
-					<grid spacing="0" padding="0">
-						<columns>
-							<column/>
-							<column/>
-						</columns>
-						<rows>
-							<row disabled="!@order=n_given">
-								<nextmatch-sortheader label="Firstname" id="n_given"/>
-								<nextmatch-sortheader label="Name" id="n_family"/>
-							</row>
-							<row disabled="!@order=n_family">
-								<nextmatch-sortheader label="Name" id="n_family"/>
-								<nextmatch-sortheader label="Firstname" id="n_given"/>
-							</row>
-							<row>
-								<nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
-							</row>
-							<row disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
-								<nextmatch-sortheader label="Name" id="n_family"/>
-								<nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
-							</row>
-						</rows>
-					</grid>
-					<nextmatch-header label="Photo" id="photo"/>
+					<et2-nextmatch-header label="Type" id="type"/>
 					<et2-vbox>
-						<nextmatch-header label="Business address" id="business"/>
+						<et2-hbox disabled="!@order=n_given">
+							<et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+							<et2-nextmatch-sortheader label="Name" id="n_family"/>
+						</et2-hbox>
+						<et2-hbox disabled="!@order=n_family">
+							<et2-nextmatch-sortheader label="Name" id="n_family"/>
+							<et2-nextmatch-sortheader label="Firstname" id="n_given"/>
+						</et2-hbox>
+						<et2-hbox>
+							<et2-nextmatch-sortheader label="Organisation" id="org_name" span="all"/>
+						</et2-hbox>
+						<et2-hbox disabled="!@order=/^(org_name|n_fileas|adr_one_postalcode|contact_modified|contact_created|#)/">
+							<et2-nextmatch-sortheader label="Name" id="n_family"/>
+							<et2-nextmatch-sortheader label="Firstname" id="n_given" class="leftPad5"/>
+						</et2-hbox>
+					</et2-vbox>
+					<et2-nextmatch-header label="Photo" id="photo"/>
+					<et2-vbox>
+						<et2-nextmatch-header label="Business address" id="business"/>
 						<et2-nextmatch-header-custom  id="adr_one_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-header label="Home address" id="home"/>
+						<et2-nextmatch-header label="Home address" id="home"/>
 						<et2-nextmatch-header-custom  id="adr_two_countrycode" class="countrySelect" widgetType="select-country" emptyLabel="Country"/>
 					</et2-vbox>
 					<et2-vbox>
-						<nextmatch-header label="Business email" id="email"/>
-						<nextmatch-header label="Home email" id="email_home"/>
+						<et2-nextmatch-header label="Business email" id="email"/>
+						<et2-nextmatch-header label="Home email" id="email_home"/>
 					</et2-vbox>
 				</row>
 				<row class="$row_cont[class] $row_cont[cat_id]" valign="top">
@@ -91,7 +85,7 @@
 		</grid>
 	</template>
 	<template id="addressbook.select" template="" lang="" group="0" version="1.9.002">
-		<nextmatch id="nm" template="addressbook.select.rows" span="all" no_dynheight="true"/>
+		<et2-nextmatch id="nm" template="addressbook.select.rows" span="all"/>
 		<et2-hbox class="footer">
 			<et2-select label="Add" id="what_to_use">
 				<option value="">Business or home email</option>
