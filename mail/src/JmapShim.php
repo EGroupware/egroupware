@@ -903,6 +903,36 @@ class JmapShim
 	}
 
 	/**
+	 * Whether a message's parsed structure counts as "has an attachment" for the row-level
+	 * hasAttachment flag - mirrors Api\Mail's old per-row heuristic (getHeaders(), classic
+	 * pre-JMAP code) rather than Horde_Mime_Part::isAttachment(): that method has no carve-out
+	 * for an inline image with no Content-ID (can never be resolved as a cid: reference, so it
+	 * must be listed/downloadable) or for image/tiff (browsers can't display it inline regardless
+	 * of disposition), both of which the classic per-row flag always treated as "has an
+	 * attachment".
+	 *
+	 * @param \Horde_Mime_Part $structure
+	 * @return bool
+	 */
+	public static function structureHasAttachment(\Horde_Mime_Part $structure) : bool
+	{
+		foreach ($structure->partIterator() as $part)
+		{
+			/** @var \Horde_Mime_Part $part */
+			$partDisposition = $part->getDisposition();
+			$partPrimaryType = $part->getPrimaryType();
+			if ($partDisposition === 'attachment' ||
+				($partDisposition === 'inline' && $partPrimaryType === 'image' && $part->getType() === 'image/tiff') ||
+				($partDisposition === 'inline' && $partPrimaryType === 'image' && !$part->getContentId()) ||
+				($partDisposition === 'inline' && $partPrimaryType !== 'image' && $partPrimaryType !== 'multipart' && $partPrimaryType !== 'text'))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Map a single fetched message to a JMAP-shaped Email object (only the properties
 	 * MailJmap.getRows() requests - see the class docblock for the full scope note)
 	 *
@@ -922,19 +952,7 @@ class JmapShim
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
 
-		$hasAttachment = false;
-		if ($structure)
-		{
-			foreach ($structure->partIterator() as $part)
-			{
-				/** @var \Horde_Mime_Part $part */
-				if ($part->isAttachment())
-				{
-					$hasAttachment = true;
-					break;
-				}
-			}
-		}
+		$hasAttachment = $structure && self::structureHasAttachment($structure);
 
 		$email = [
 			'id' => $uid,
