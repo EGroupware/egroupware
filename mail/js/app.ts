@@ -32,7 +32,14 @@ import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import type {Et2Description} from "../../api/js/etemplate/Et2Description/Et2Description";
 import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 
+interface CustomLabel
+{
+	name: string;
+	color: string;
+	icon?: string;
+}
 
+type CustomLabels = Record<string, CustomLabel>
 /**
  * UI for mail
  *
@@ -104,7 +111,7 @@ export class MailApp extends EgwApp
 	 */
 	image_proxy : any = 'https://';
 
-	customLabels : {[id: string]: {name: string, color: string, icon?: string}} = {};
+	customLabels: CustomLabels = {};
 
 	/**
 	 * stores push activated acc ids
@@ -515,7 +522,7 @@ export class MailApp extends EgwApp
 	/**
 	 * Get configured custom labels, including from the opener for popup actions
 	 */
-	mail_getCustomLabels()
+	mail_getCustomLabels(): CustomLabels
 	{
 		return Object.keys(this.customLabels).length ? this.customLabels :
 			window.opener?.app?.mail?.customLabels || {};
@@ -561,27 +568,16 @@ export class MailApp extends EgwApp
 	 */
 	mail_updateCustomLabelStylesheet()
 	{
-		const id = 'mail-custom-label-colors';
-		let style = document.getElementById(id) as HTMLStyleElement;
-		if (!style)
-		{
-			style = document.createElement('style');
-			style.id = id;
-			document.head.append(style);
-		}
-		style.textContent = '';
+		const style = new CSSStyleSheet();
 		const customLabels = this.mail_getCustomLabels();
 		for (const labelId of Object.keys(customLabels))
 		{
 			const customLabel = customLabels[labelId];
-			if (CSS.supports('color', customLabel.color))
-			{
-				style.sheet.insertRule(
-					`tr.mail.${CSS.escape(labelId)} { --mail-left-border-color: ${customLabel.color}; }`,
-					style.sheet.cssRules.length
-				);
-			}
+			style.insertRule(
+				`tr.mail.${CSS.escape(labelId)} { --mail-left-border-color: ${customLabel.color}; }`
+			)
 		}
+		this.nm?.addRowStylesheet(style);
 	}
 
 	/**

@@ -162,6 +162,16 @@ For framework-level row styles, add to `Et2Nextmatch.row.styles.ts`. For app-spe
 row-template `et2-styles`. `templates/default/app.css` remains the fallback for row templates that have
 not been migrated.
 
+For application rules generated at runtime, create a constructable stylesheet and add it through the nextmatch:
+
+```ts
+const style = new CSSStyleSheet();
+style.replaceSync("tr.dynamic-state { color: var(--dynamic-color); }");
+nextmatch.addRowStylesheet(style);
+```
+
+The stylesheet is adopted after the static row styles and is retained if the row template is reloaded.
+
 ### Highlighting an Overdue Entry
 
 Have the server add an `overdue` class for rows that need attention, then style that class via CSS.

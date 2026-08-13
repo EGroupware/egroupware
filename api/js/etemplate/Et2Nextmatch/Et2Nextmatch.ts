@@ -380,6 +380,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	@state()
 	private _rowStylesheets : CSSStyleSheet[] = [rowStyles.styleSheet!];
+	private _additionalRowStylesheets : CSSStyleSheet[] = [];
 
 	@state()
 	private _hasPlaceholderActions : boolean = false;
@@ -1583,6 +1584,20 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * Adopt an additional runtime stylesheet into the main and child datagrid row shadow roots.
+	 * The stylesheet is retained when template row styles are synchronized again.
+	 */
+	addRowStylesheet(style : CSSStyleSheet) : void
+	{
+		if(this._additionalRowStylesheets.includes(style))
+		{
+			return;
+		}
+		this._additionalRowStylesheets = [...this._additionalRowStylesheets, style];
+		this._syncDatagridRowStylesheets();
+	}
+
+	/**
 	 * Refresh rows in an expanded child grid without refreshing the root grid.
 	 *
 	 * @param parentRowId Parent row id whose expanded child grid owns the rows
@@ -2387,7 +2402,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const templateRowStylesheets = this._templateData?.rowStylesheets || [];
 		this._rowStylesheets = [
 			rowStyles.styleSheet!,
-			...(templateRowStylesheets.length ? templateRowStylesheets : (this._appRowStylesheet ? [this._appRowStylesheet] : []))
+			...(templateRowStylesheets.length ? templateRowStylesheets : (this._appRowStylesheet ? [this._appRowStylesheet] : [])),
+			...this._additionalRowStylesheets
 		];
 		const datagrid = this._datagrid;
 		if(datagrid)

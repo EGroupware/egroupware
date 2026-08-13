@@ -1479,6 +1479,36 @@ describe("Et2Datagrid row rendering", () =>
 	});
 
 	/**
+	 * Contract: runtime row styles added through the public API survive later internal stylesheet synchronization.
+	 * Setup: add a constructed stylesheet, then synchronize the template styles again and add the same sheet twice.
+	 * Pass: the runtime sheet remains last, so it can override static rules, and is included only once.
+	 */
+	it("retains additional row stylesheets across synchronization", async() =>
+	{
+		const nextmatch = new Et2Nextmatch() as any;
+		const templateSheet = new CSSStyleSheet();
+		await templateSheet.replace(".from-template { color: green; }");
+		const additionalSheet = new CSSStyleSheet();
+		await additionalSheet.replace(".from-runtime { color: purple; }");
+
+		nextmatch._templateData = {rowStylesheets: [templateSheet]};
+		nextmatch.addRowStylesheet(additionalSheet);
+		nextmatch._syncDatagridRowStylesheets();
+		nextmatch.addRowStylesheet(additionalSheet);
+
+		assert.strictEqual(
+			nextmatch._rowStylesheets[nextmatch._rowStylesheets.length - 1],
+			additionalSheet,
+			"runtime stylesheet should remain after the template styles"
+		);
+		assert.equal(
+			nextmatch._rowStylesheets.filter((style : CSSStyleSheet) => style === additionalSheet).length,
+			1,
+			"the same runtime stylesheet should only be adopted once"
+		);
+	});
+
+	/**
 	 * Contract: datagrid rows instantiate readonly widget variants when
 	 * etemplate2 has registered a `_ro` custom element.
 	 * Setup: prepare a row template with et2-url-email, which has a registered
