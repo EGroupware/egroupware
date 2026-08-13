@@ -1008,6 +1008,13 @@ abstract class Ajax extends Api\Framework
 			// Coming in with a specific URL, save it and redirect to index.php
 			// so reloads work nicely, but strip cd=yes or we'll get the framework again
 			$last_direct_url = preg_replace('/[&?]cd=yes/','',$url);
+
+			// Make sure it's opened the same way as every other app tab (ajax_exec, not
+			// a nested iframe), or the sidebox/tree and its toggle chevron never show up
+			if (strpos($last_direct_url, 'ajax=') === false)
+			{
+				$last_direct_url .= (strpos($last_direct_url, '?') !== false ? '&' : '?') . 'ajax=true';
+			}
 			Api\Framework::redirect_link('/index.php?cd=yes');
 		}
 		else
