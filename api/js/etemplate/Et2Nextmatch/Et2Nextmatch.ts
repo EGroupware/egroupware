@@ -1584,6 +1584,20 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * Apply already-known-fresh data to one loaded row and re-render it, without a server round-trip
+	 * - eg. for an optimistic UI update that might be overwritten later on
+	 * with an actual refresh()
+	 *
+	 * @param rowId Row to update
+	 * @param data New row data
+	 * @see Et2Datagrid.updateRowData()
+	 */
+	updateRowData(rowId : string, data : any) : void
+	{
+		this._datagrid?.updateRowData(rowId, data);
+	}
+
+	/**
 	 * Adopt an additional runtime stylesheet into the main and child datagrid row shadow roots.
 	 * The stylesheet is retained when template row styles are synchronized again.
 	 */

@@ -6169,6 +6169,39 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Apply already-known-fresh data to one loaded row and re-render it, without a server round-trip.
+	 *
+	 * For providers with a lazy `getRowData()` (eg. Mail's `Et2NextmatchDataProvider` reads from
+	 * egw's central UID cache), the caller should have already written `data` there (eg. via
+	 * `egw.dataStoreUID()`) - this just bumps the row's render version so the virtualizer's stable
+	 * key (`_virtualRowKey()`) treats it as changed and re-renders it from that data on the next
+	 * paint. For a plain data-array provider (no `getRowData`), `data` is stored directly.
+	 *
+	 * Use this for optimistic, client-known-correct updates (eg. a flag toggle about to be confirmed
+	 * over the network) where waiting for `refresh()`'s real fetch would be too slow. Call
+	 * `refresh()` afterward to reconcile if the optimistic guess turns out wrong.
+	 */
+	updateRowData(rowId : string, data : any) : void
+	{
+		if(!this.dataProvider)
+		{
+			return;
+		}
+		const normalizedId = this._dataStoreRowIdFor(rowId, true);
+		const index = this._rowsByIndex.findIndex((row) => row?.id === normalizedId);
+		if(index === -1)
+		{
+			return;
+		}
+		this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: normalizedId} : {id: normalizedId, data};
+		this._rowRenderVersionById.set(normalizedId, (this._rowRenderVersionById.get(normalizedId) || 0) + 1);
+		this.displayedRowIds.add(normalizedId);
+		this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
+		this._finalizeRefreshedRows();
+		this._scheduleRenderedRowPulse([normalizedId]);
+	}
+
+	/**
 	 * Normalize refresh ids to the same datastore uid format used internally by rendered rows.
 	 */
 	private _normalizeRefreshRowIds(rowIds : string[]) : string[]

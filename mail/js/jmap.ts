@@ -1271,9 +1271,17 @@ export class MailJmap
 	 */
 	async setSystemFlag(references : JmapMessageReference[], keyword : string, set : boolean) : Promise<void>
 	{
+		const patch = this.keywordPatch(keyword, set);
+		// Unflagging clears any active colored custom flag too - a customFlag implies $flagged
+		// (setCustomFlag() above), so leaving one set here would resurrect the flagged look.
+		if (keyword === '$flagged' && !set)
+		{
+			MailJmap.CUSTOM_FLAGS.forEach(customFlag =>
+				Object.assign(patch, this.keywordPatch(this.customFlagKeyword(customFlag), false)));
+		}
 		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
 			this.updateIds(group[0].profileID, group[0].mailboxId,
-				group.map(reference => reference.emailId), this.keywordPatch(keyword, set))));
+				group.map(reference => reference.emailId), patch)));
 	}
 
 	/** Remove all known labels without touching custom flags or unrelated keywords. */

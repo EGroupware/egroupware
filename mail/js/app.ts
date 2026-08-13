@@ -55,7 +55,7 @@ export class MailApp extends EgwApp
 	/**
 	 * et2 widget container
 	 */
-	nm : any = null;
+	nm : Et2Nextmatch = null;
 	doStatus : any = null;
 
 	mail_queuedFolders : any = [];
@@ -1015,12 +1015,13 @@ export class MailApp extends EgwApp
 			setTitle(h);
 		}
 		// THE FOLLOWING IS PROBABLY NOT NEEDED, AS THE UNEVITABLE PREVIEW IS HANDLING THE COUNTER ISSUE
-		// When body is requested, mail is marked as read by the mail server. Update UI to match -
-		// refresh re-fetches the row (now $seen) and re-renders it correctly, no local class/flags
-		// guesswork needed.
+		// When body is requested, mail is marked as read by the mail server. Update UI to match instantly.
 		if (typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data['class'] != 'undefined' && (dataElem.data['class'].indexOf('unseen') >= 0 || dataElem.data['class'].indexOf('recent') >= 0))
 		{
-			this.mail_refreshRows([_id]);
+			if (typeof dataElem.data.flags != 'undefined') dataElem.data.flags.read = 'read';
+			dataElem.data['class'] = dataElem.data['class'].split(' ')
+				.filter((className) => className != 'unseen' && className != 'recent').join(' ');
+			this.mail_patchRow(_id);
 			// reduce counter without server roundtrip
 			this.mail_reduceCounterWithoutServerRoundtrip();
 			// not needed, as an explizit read flags the message as seen anyhow
@@ -1555,12 +1556,12 @@ export class MailApp extends EgwApp
 		var messages = {};
 		messages['msg'] = [rowId];
 
-		// When body is requested, mail is marked as read by the mail server. Update UI to match -
-		// refresh re-fetches the row (now $seen) and re-renders it correctly, no local class/flags
-		// guesswork needed.
+		// When body is requested, mail is marked as read by the mail server. Update UI to match instantly.
 		if (typeof data != 'undefined' && typeof data != 'undefined' && typeof data['class']  != 'undefined' && (data['class'].indexOf('unseen') >= 0 || data['class'].indexOf('recent') >= 0))
 		{
-			nextmatch?.refresh([rowId], Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+			if (typeof data.flags != 'undefined') data.flags.read = 'read';
+			data['class'] = data['class'].split(' ').filter((className) => className != 'unseen' && className != 'recent').join(' ');
+			this.mail_patchRow(rowId);
 			// reduce counter without server roundtrip
 			this.mail_reduceCounterWithoutServerRoundtrip();
 			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
@@ -3229,16 +3230,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Trigger a targeted, in-place refresh of specific nextmatch rows.
-	 *
-	 * Et2Nextmatch/Et2Datagrid re-fetches each listed row and re-renders it from that fresh data -
-	 * for mail this goes through MailApp's dataRegisterFetch('mail', jmap.fetchRows) wiring, i.e. a
-	 * real JMAP Email/get call whose result (via email2row()) already has correct class/flagged_icon
-	 * values. This replaces the legacy pattern (still used by the old et2_extension_nextmatch widget
-	 * elsewhere) of looking up a row's DOM node by hand and patching its classList/icon - which is
-	 * both unnecessary with the new widget and was the source of persistent staleness bugs (a stale
-	 * EgwActionObject.iface reference, or a plain querySelector() unable to see past the row's nested
-	 * shadow DOM) that manual approach kept hitting.
+	 * Trigger a targeted, in-place refresh of specific nextmatch rows from the server/JMAP's
+	 * actual current state - a real network round-trip (Et2NextmatchDataProvider.refresh(), which
+	 * for mail routes through MailApp's dataRegisterFetch('mail', jmap.fetchRows) wiring to a real
+	 * JMAP Email/get call). Too slow to use for every optimistic flag click (that's what
+	 * mail_patchRow() is for) - use this to reconcile back to truth after a failed optimistic
+	 * change, or for changes with no local guess to make (push notifications from other sessions).
 	 */
 	mail_refreshRows(_ids : string[], _popup? : boolean) : void
 	{
@@ -3246,6 +3243,40 @@ export class MailApp extends EgwApp
 		const mailApp = _popup ? (window.opener?.app?.mail ?? this) : this;
 		const nm : Et2Nextmatch = mailApp.et2?.getWidgetById(mailApp.nm_index);
 		nm?.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+	}
+
+	/**
+	 * Instantly reflect a keyword/class change on an already-rendered row, without waiting for the
+	 * JMAP round-trip mail_refreshRows() would need. Caller must already have written the row's
+	 * *new* flags/class into dataElem.data (the "what should this look like now" computation stays
+	 * with the caller, e.g. mail_callFlagMessages's toggle logic) - this pushes that into the
+	 * central cache (which Et2NextmatchDataProvider.getRowData() reads at render time) and asks the
+	 * nextmatch to re-render just this row from that data via Et2Nextmatch.updateRowData(), which
+	 * needs no server round-trip and no shadow-DOM traversal - the row template's own bindings
+	 * ($row_cont[class], $row_cont[flagged_icon], $row_cont[status_icon]) do the rest.
+	 *
+	 * This is a same-tick visual guess, not a confirmed state - mail_flagMessages() calls
+	 * mail_refreshRows() on JMAP failure to reconcile back to the server's real state for whichever
+	 * rows the optimistic guess got wrong.
+	 *
+	 * @param _uid row uid, already updated in egw's central data cache
+	 */
+	mail_patchRow(_uid: string): void
+	{
+		const dataElem = egw.dataGetUIDdata(_uid);
+		if (!dataElem) return;
+
+		// Mirrors MailJmap.email2row()'s status_icon logic exactly, so a locally-guessed value
+		// renders identically to what a real JMAP re-fetch would later produce.
+		const flags = dataElem.data.flags || {};
+		dataElem.data.status_icon = flags.forwarded ? 'mail_forward' :
+			flags.replied ? 'mail_reply' : !flags.read ? 'mail_unseen' : '';
+		const hasFlag = !!flags.flagged ||
+			['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'].some(f => !!flags[f]);
+		dataElem.data.flagged_icon = hasFlag ? 'unread_flagged_small' : '';
+
+		egw.dataStoreUID(_uid, dataElem.data, false);
+		(this.nm??this.et2?.getWidgetById(this.nm_index) as Et2Nextmatch)?.updateRowData(_uid, dataElem.data);
 	}
 
 	/**
@@ -3302,6 +3333,23 @@ export class MailApp extends EgwApp
 		// starts with "un" - customFlag1-5/label1-5/flagged/read are all plain toggles handled below)
 		if (_action.id == 'unlabel')
 		{
+			// Optimistically clear all labels locally so the row updates instantly - mail_flagMessages()
+			// falls back to mail_refreshRows() (a real re-fetch) only if the JMAP call actually fails.
+			const labels = this.mail_getLabelIds();
+			for (const uid of data.msg)
+			{
+				const dataElem = egw.dataGetUIDdata(uid);
+				if (!dataElem) continue;
+				dataElem.data.flags ||= {};
+				let classes = (dataElem.data['class'] || '').split(' ');
+				labels.forEach(label =>
+				{
+					delete dataElem.data.flags[label];
+					classes = classes.filter(className => className != label && className != 'un' + label);
+				});
+				dataElem.data['class'] = classes.join(' ');
+				this.mail_patchRow(uid);
+			}
 			this.mail_flagMessages(_action.id, data);
 		}
 		else if (_action.id=='readall')
@@ -3310,22 +3358,106 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
+			// Toggle flags/class locally first, for instant feedback - mail_flagMessages() falls back
+			// to mail_refreshRows() (a real re-fetch) only if the JMAP call it fires below actually
+			// fails, reconciling back to the server's real state for whichever rows the guess got wrong.
+			const customFlags = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+			const rowClass = _action.id;
 			const msg_set = {msg:[]};
 			const msg_unset = {msg:[]};
 			for (let i = 0; i < data.msg.length; i++)
 			{
-				// Direction only - which messages already have this flag/label set - read-only,
-				// no local flags/class mutation: mail_flagMessages()'s success handler below
-				// refreshes the affected rows once the JMAP change lands, and that refresh (a real
-				// re-fetch, see mail_refreshRows()) is what makes the row's class/icon correct,
-				// not a client-side guess at what they should become.
-				const flags = egw.dataGetUIDdata(data.msg[i])?.data?.flags || {};
-				(flags[_action.id] ? msg_unset : msg_set)['msg'].push(data.msg[i]);
+				const dataElem = egw.dataGetUIDdata(data.msg[i]);
+				if (!dataElem) continue;
+				dataElem.data.flags ||= {};
+				const flags = dataElem.data.flags;
+				let classes = (dataElem.data['class'] || '').split(' ');
+
+				if (_action.id === 'read')
+				{
+					// Real convention (MailJmap.email2row()): being read has no class of its own -
+					// unread is signalled by the presence of 'unseen', not by a generic
+					// rowClass/'un'+rowClass pair the way flagged/label toggles below work.
+					classes = classes.filter((className) => className != 'unseen');
+					if (flags.read)
+					{
+						msg_unset['msg'].push(data.msg[i]);
+						delete flags.read;
+						classes.push('unseen');
+					} else
+					{
+						msg_set['msg'].push(data.msg[i]);
+						flags.read = 'read';
+					}
+					dataElem.data['class'] = classes.join(' ');
+					this.mail_patchRow(data.msg[i]);
+					this.updateFilter_data(data.msg[i], data.activeFilters, flags);
+					continue;
+				}
+
+				// since we toggle we need to unset the ones already set, and set the ones not set
+				// flags is data, UI is done by class, so update both
+				// Flags are there or not, class names are flag or 'un'+flag
+				if (classes.indexOf(rowClass) >= 0)
+				{
+					classes.splice(classes.indexOf(rowClass), 1);
+				}
+				if (classes.indexOf('un' + rowClass) >= 0)
+				{
+					classes.splice(classes.indexOf('un' + rowClass), 1);
+				}
+
+				if (flags[_action.id])
+				{
+					msg_unset['msg'].push(data.msg[i]);
+					if (customFlags.includes(_action.id))
+					{
+						delete flags['flagged'];
+						classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
+					} else if (!this.mail_isLabel(_action.id))
+					{
+						classes.push('un' + rowClass);
+						if (_action.id === 'flagged')
+						{
+							// Plain unflag clears any colored custom flag too - a customFlag implies
+							// $flagged (jmap.ts), so leaving one set here would make the row look
+							// flagged again on the next render.
+							customFlags.forEach(customFlag =>
+							{
+								delete flags[customFlag];
+								classes = classes.filter((className) => className != customFlag && className != 'un' + customFlag);
+							});
+						}
+					}
+					delete flags[_action.id];
+				} else
+				{
+					if (customFlags.includes(_action.id))
+					{
+						customFlags.forEach(customFlag =>
+						{
+							if (customFlag != _action.id)
+							{
+								delete flags[customFlag];
+								classes = classes.filter((className) => className != customFlag && className != 'un' + customFlag);
+							}
+						});
+						flags['flagged'] = 'flagged';
+						classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
+						classes.push('flagged');
+					}
+					msg_set['msg'].push(data.msg[i]);
+					flags[_action.id] = _action.id;
+					classes.push(rowClass);
+				}
+
+				dataElem.data['class'] = classes.join(' ');
+				this.mail_patchRow(data.msg[i]);
 
 				// Hide this row now if it no longer matches the active status filter (e.g. viewing
-				// "Unread" and marking read) - independent of the class/icon refresh above, and not
+				// "Unread" and marking read) - independent of the class/icon patch above, and not
 				// knowable from a server response since the server doesn't know our active filter.
-				this.updateFilter_data(data.msg[i], _action.id, data.activeFilters);
+				this.updateFilter_data(data.msg[i], data.activeFilters, flags);
 			}
 
 			// Notify server of changes
@@ -3354,61 +3486,64 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Update changes on filtered mail rows in nm, triggers manual refresh
+	 * Hide a row from an active status filter if its just-updated flags no longer match it.
+	 *
+	 * Checks the row's actual resulting flags against the filter, rather than inferring a match
+	 * from which action id was clicked - e.g. switching between customFlag colors while viewing the
+	 * "flagged" filter is a set on the new color and (usually) an unset on the old one, but the row
+	 * stays flagged throughout and must never be deleted for either half of that switch; a plain
+	 * "did this action's name match the filter's name" check can't tell the two apart from a single
+	 * action id, since both the customFlag being set AND the one being unset map to the same
+	 * 'flagged' filter name.
 	 *
 	 * @param {type} _uid mail uid
-	 * @param {type} _actionId action id sended by nm action
 	 * @param {type} _filters activefilters
+	 * @param {type} _flags the row's flags, already updated to reflect this action
 	 */
-	updateFilter_data(_uid, _actionId, _filters)
+	updateFilter_data(_uid, _filters, _flags)
 	{
-		var uid = _uid.replace('mail::','');
-		var action = '';
-		switch (_actionId)
+		if (!_filters?.filter) return;
+		const uid = _uid.replace('mail::','');
+		let matches;
+		switch (_filters.filter)
 		{
 			case 'flagged':
-			case 'customFlag1':
-			case 'customFlag2':
-			case 'customFlag3':
-			case 'customFlag4':
-			case 'customFlag5':
-				// setCustomFlag() always toggles $flagged alongside the color keyword (jmap.ts),
-				// so a customFlag change is a 'flagged' change for filter-match purposes too:
-				action = 'flagged';
+				matches = !!_flags.flagged;
 				break;
-			case 'read':
-				if (_filters.filter == 'seen')
-				{
-					action = 'seen';
-				}
-				else if (_filters.filter == 'unseen')
-				{
-					action = 'unseen';
-				}
+			case 'seen':
+				matches = !!_flags.read;
 				break;
-			case 'label1':
-				action = 'keyword1';
+			case 'unseen':
+				matches = !_flags.read;
 				break;
-			case 'label2':
-				action = 'keyword2';
+			case 'keyword1':
+				matches = !!_flags.label1;
 				break;
-			case 'label3':
-				action = 'keyword3';
+			case 'keyword2':
+				matches = !!_flags.label2;
 				break;
-			case 'label4':
-				action = 'keyword4';
+			case 'keyword3':
+				matches = !!_flags.label3;
 				break;
-			case 'label5':
-				action = 'keyword5';
+			case 'keyword4':
+				matches = !!_flags.label4;
+				break;
+			case 'keyword5':
+				matches = !!_flags.label5;
 				break;
 			default:
-				if (this.mail_isCustomLabel(_actionId))
+				// custom labels use their own id as both the flag key and the filter value
+				if (this.mail_isCustomLabel(_filters.filter))
 				{
-					action = _actionId;
+					matches = !!_flags[_filters.filter];
+				} else
+				{
+					// a filter this action can never affect (e.g. 'deleted') - nothing to check
+					return;
 				}
 				break;
 		}
-		if (action == _filters.filter)
+		if (!matches)
 		{
 			egw.refresh('','mail',uid, 'delete');
 		}
@@ -3504,13 +3639,17 @@ export class MailApp extends EgwApp
 			}
 			operation.then(() =>
 			{
+				// Nothing to do here for an explicit selection - the caller already patched the
+				// row(s) optimistically (mail_patchRow()) before firing this JMAP call, and the
+				// operation just confirmed that guess was correct. "select all matching filter" has
+				// no such local guess (arbitrarily many rows, not all loaded client-side), so it
+				// always needs the real refresh.
 				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
-				else this.mail_refreshRows(_elems.msg, !!_elems.popup);
 			}).catch((error) =>
 			{
 				this.egw.message(error?.message || this.egw.lang('Failed to update messages'), 'error');
-				// Refresh regardless of success - shows whatever the true current state actually
-				// is (unchanged, if the operation truly failed; correct, if it partially applied).
+				// The optimistic patch (or "all" case) may now be showing the wrong thing - reconcile
+				// with the server's real current state.
 				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
 				else this.mail_refreshRows(_elems.msg, !!_elems.popup);
 			});
