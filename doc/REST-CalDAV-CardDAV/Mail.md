@@ -5,8 +5,19 @@ Authentication is via Basic Auth with username and a password, or a token valid 
 - CalDAV/CardDAV Sync (REST API)
 - E-Mail application
 
-> Currently only implemented is sending mail, launching interactive compose windows, 
-> viewing EML files or setting the vacation notice.
+> Currently only implemented are:
+> * sending mail non-interactive
+> * launching interactive compose windows
+> * viewing EML files 
+> * setting the vacation notice
+> * creating or editing mail accounts and identities
+
+> **Mail accounts in EGroupware can be for a single or multiple accounts or groups or even for everyone.**
+> A mail account can have multiple identities or signatures. If a mail account is for more than one 
+> EGroupware account or a group, they can have personal identities/signatures.
+
+> As far as the REST API is concerned mail accounts with 1 to N identities are always referenced with the 
+> `ident_id` of the identity (always belonging to a single mail account!), and not the `acc_id` of a mail account!
 
 Implemented requests (relative to https://example.org/egroupware/groupdav.php)
 
@@ -223,10 +234,10 @@ HTTP/1.1 200 Ok
 #### **GET** `/mail/<id>` get mail account
 
 <details>
-  <summary>Example: Querying a mail account by its ID</summary>
+  <summary>Example: Querying a mail account by its identId (DB column ident_id, NOT acc_id!)</summary>
 
 ```
-curl -i https://example.org/egroupware/groupdav.php/mail/a --user <user> -H 'Accept: application/json'
+curl -i https://example.org/egroupware/groupdav.php/mail/123 --user <user> -H 'Accept: application/json'
     
 HTTP/1.1 200 Ok
 
@@ -292,7 +303,7 @@ HTTP/1.1 200 Ok
     "accountStatus": true,
     "deliveryMode": null,
     "identEmail": "ralf@boulder.egroupware.org",
-    "identId": 1,
+    "identId": 123,
     "identName": "Test Ralf",
     "identOrg": "boulder.egroupware.org",
     "identRealname": "Herr Ralf Becker",
@@ -317,10 +328,10 @@ HTTP/1.1 200 Ok
 #### **PATCH** `/mail/<id>` modifying a mail account
 
 <details>
-  <summary>Example: Modifying a mail account specified by its ID</summary>
+  <summary>Example: Modifying a mail account specified by its identId</summary>
 
 ```
-curl -i https://example.org/egroupware/groupdav.php/mail/a --user <user> -H 'Content-Type: application/json' -X PATCH \
+curl -i https://example.org/egroupware/groupdav.php/mail/123 --user <user> -H 'Content-Type: application/json' -X PATCH \
   -d '{"identName": "Test Ralf", "quotaLimit": 200, "accountStatus": true}'
 
 HTTP/2 204
