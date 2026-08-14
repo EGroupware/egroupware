@@ -741,3 +741,4 @@ no private key stored to import a certificate for!	mail	de	Kein privater Schlüs
 could not read uploaded certificate!	mail	de	Hochgeladenes Zertifikat konnte nicht gelesen werden!
 could not decrypt stored private key, wrong passphrase?	mail	de	Gespeicherter privater Schlüssel konnte nicht entschlüsselt werden, falsche Passphrase?
 certificate does not match the stored private key!	mail	de	Zertifikat passt nicht zum gespeicherten privaten Schlüssel!
+certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.	mail	de	Zertifikatskette zu groß zum Speichern (%1 Zertifikate inkl. abgelaufener) - bitte einen Administrator kontaktieren.

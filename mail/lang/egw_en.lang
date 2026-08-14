@@ -751,3 +751,4 @@ no private key stored to import a certificate for!	mail	en	No private key stored
 could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
 could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
 certificate does not match the stored private key!	mail	en	Certificate does not match the stored private key!
+certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.	mail	en	Certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.

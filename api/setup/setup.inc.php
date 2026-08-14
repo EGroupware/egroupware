@@ -11,7 +11,7 @@
 /* Basic information about this app */
 $setup_info['api']['name']      = 'api';
 $setup_info['api']['title']     = 'EGroupware API';
-$setup_info['api']['version'] = '26.1';
+$setup_info['api']['version'] = '26.1.001';
 $setup_info['api']['versions']['current_header'] = '1.29';
 // maintenance release in sync with changelog in doc/rpm-build/debian.changes
 $setup_info['api']['versions']['maintenance_release'] = '26.8.20260811';
@@ -143,3 +143,4 @@ $setup_info['groupdav']['license'] = 'GPL';
 $setup_info['groupdav']['hooks']['preferences']	= 'EGroupware\\Api\\CalDAV\\Hooks::menus';
 $setup_info['groupdav']['hooks']['settings']	= 'EGroupware\\Api\\CalDAV\\Hooks::settings';
 $setup_info['groupdav']['hooks']['admin']       = 'EGroupware\\Api\\CalDAV\\Hooks::adminHook';
+

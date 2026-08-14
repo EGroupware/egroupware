@@ -1785,8 +1785,13 @@ class admin_mail
 			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
 			return null;
 		}
-		// keep the certificate(s) being replaced around too (same private key, so still usable to
-		// decrypt messages that were encrypted under them) - see Smime::decryptWithCandidates()
+		// Keep the certificate being replaced around too (same private key, so still usable to
+		// decrypt messages that were encrypted under it) - see Smime::decryptWithCandidates().
+		// Deliberately keeps the FULL history across repeated renewals, not just the last one -
+		// losing an older certificate means every message ever encrypted under it becomes
+		// permanently unreadable, which is worse than a large stored credential. The size check
+		// below fails loudly instead of silently truncating if that history ever doesn't fit in
+		// cred_password (egw_ea_credentials) - see Credentials::maxPasswordLength().
 		if (!empty($acc_smime['cert']) && strcasecmp(trim($acc_smime['cert']), trim($cert)) !== 0)
 		{
 			$extracerts[] = $acc_smime['cert'];
@@ -1797,6 +1802,19 @@ class admin_mail
 		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase, $passphrase, $extracerts)))
 		{
 			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
+			return null;
+		}
+		// egw_ea_credentials.cred_password has a limited size - fail loudly with all certs still
+		// intact in storage, instead of Credentials::write() silently truncating/corrupting the
+		// blob (which would break both signing AND decrypting) - see Credentials::encrypt() for
+		// the base64+AES overhead this estimates (salt + up to one block of padding). Checks the
+		// actual column size (Credentials::maxPasswordLength()), not a value fixed in code, so a
+		// site that enlarged the column is recognised without needing a matching code change.
+		if ((strlen(base64_encode($p12)) + 32) > Mail\Credentials::maxPasswordLength())
+		{
+			$tpl->set_validation_error('smimeCertUpload',
+				lang('Certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.',
+					1 + count($extracerts)));
 			return null;
 		}
 		$smime = new Mail\Smime;

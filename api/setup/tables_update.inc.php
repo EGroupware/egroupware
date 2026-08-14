@@ -1129,3 +1129,44 @@ function api_upgrade23_1_013()
 {
 	return $GLOBALS['setup_info']['api']['currentver'] = '26.1';
 }
+
+function api_upgrade26_1()
+{
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','acc_id',array(
+		'type' => 'int',
+		'precision' => '4',
+		'nullable' => False,
+		'comment' => 'into egw_ea_accounts'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','cred_type',array(
+		'type' => 'int',
+		'precision' => '2',
+		'nullable' => False,
+		'comment' => '&1=imap, &2=smtp, &4=admin'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','account_id',array(
+		'type' => 'int',
+		'meta' => 'user',
+		'precision' => '4',
+		'nullable' => False,
+		'comment' => 'account_id or 0=all'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','cred_username',array(
+		'type' => 'varchar',
+		'precision' => '80',
+		'nullable' => False,
+		'comment' => 'username'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','cred_password',array(
+		'type' => 'blob',
+		'comment' => 'password encrypted'
+	));
+	$GLOBALS['egw_setup']->oProc->AlterColumn('egw_ea_credentials','cred_pw_enc',array(
+		'type' => 'int',
+		'precision' => '1',
+		'default' => '0',
+		'comment' => '0=not, 1=user pw, 2=system'
+	));
+
+	return $GLOBALS['setup_info']['api']['currentver'] = '26.1.001';
+}
