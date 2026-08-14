@@ -207,7 +207,15 @@ class Files extends Base implements Provider
 	 */
 	function filename(array $keys,$mkdir=false)
 	{
-		$fname = $this->base_path.'/'.str_replace(array(':','*','\\'),'-',implode('/',$keys));
+		// sanitize each key SEGMENT individually, before joining: some keys (eg. an etemplate
+		// exec-id/request-id) are client-influenced, and a segment that is empty or all dots
+		// (".", "..") would otherwise resolve to the same/parent directory once joined with '/'
+		$keys = array_map(static function($key)
+		{
+			$key = str_replace(array('/', '\\', ':', '*'), '-', (string)$key);
+			return $key === '' || rtrim($key, '.') === '' ? '-'.$key : $key;
+		}, $keys);
+		$fname = $this->base_path.'/'.implode('/', $keys);
 
 		if ($mkdir && !file_exists($dirname=dirname($fname)))
 		{

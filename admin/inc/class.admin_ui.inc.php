@@ -522,6 +522,12 @@ class admin_ui
 	 */
 	public static function ajax_tree()
 	{
+		// tree_data() discloses the admin config-section navigation tree / group listing - require
+		// granted admin rights, since this static method has no constructor to gate it
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 		Etemplate\Widget\Tree::send_quote_json(self::tree_data(!empty($_GET['id']) ? $_GET['id'] : '/'));
 	}
 

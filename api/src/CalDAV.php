@@ -2470,7 +2470,14 @@ class CalDAV extends HTTP_WebDAV_Server
 	 */
 	public static function sanitize_filename($filename)
 	{
-		return str_replace(array('../', '/'), array('', '!'), $filename);
+		// stripping only "../" in one non-recursive pass would NOT be enough on its own (a crafted
+		// value can reconstruct "../" from the remainder, see the CalDAV log-viewer traversal fix) -
+		// remove every separator outright instead, since none is ever legitimate in a filename here
+		$filename = str_replace(array('/', '\\'), '!', $filename);
+
+		// neutralize a value that is empty or all dots, in case it's ever used as a path segment
+		// bounded by '/' on both sides rather than suffixed (see the account_lid caller below)
+		return $filename === '' || rtrim($filename, '.') === '' ? '!'.$filename : $filename;
 	}
 
 	/**

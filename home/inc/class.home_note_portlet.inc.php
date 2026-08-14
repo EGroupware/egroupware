@@ -54,15 +54,21 @@ class home_note_portlet extends home_portlet
 		$id = $_GET['id'] ? $_GET['id'] : $content['id'];
 		$height = $_GET['height'] ? $_GET['height'] : $content['height'];
 
-		if($content['group'] && $GLOBALS['egw_info']['apps']['admin'])
+		// writing another account's/group's preferences, or the instance-wide "forced"/"default"
+		// (Preferences::save_repository() ignores which account the object was constructed for
+		// whenever $type is 'forced'/'default', so an unprivileged caller passing a non-numeric
+		// $content['group'] would otherwise reach those global records too) requires real admin
+		// rights, not just the admin app being installed
+		if($content['group'] && isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$prefs = new Api\Preferences(is_numeric($content['group']) ? $content['group'] : $GLOBALS['egw_info']['user']['account_id']);
+			$type = is_numeric($content['group']) ? "user" : $content['group'];
 		}
 		else
 		{
 			$prefs = $GLOBALS['egw']->preferences;
+			$type = 'user';
 		}
-		$type = is_numeric($content['group']) ? "user" : $content['group'];
 		$arr = $prefs->read_repository();
 		$portlets = $arr['home'];
 		if($content['button'])
