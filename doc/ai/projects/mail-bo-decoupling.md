@@ -159,14 +159,30 @@ Per [[mail-folder-tree-jmap]], the "Folder ajax handlers"/"Row-id helpers" `mail
   also stayed - it depends on `self::fetchMessageBytesJmap()`/`self::replaceMessageJmap()`, private
   statics belonging to the not-yet-extracted "Attachment/body-fetch ajax handlers" group, not this
   one - the original table's grouping put it in the wrong bucket.
+- [x] **Account/session/profile ajax handlers** (partial) → `mail/src/Ui/ProfileHandler.php`
+  (`ajax_jmapBootstrap`→`jmapBootstrap`, `jmapLocalBootstrap`→`localBootstrap`,
+  `ajax_enablePush`→`enablePush`, `quotaDisplay`). These four were the pleasant surprise of this
+  group - already written (by an earlier phase of [[mail-jmap-modernization]]) to take an explicit
+  profile id rather than depend on `mail_ui`'s connected `mail_bo`, specifically so they'd have no
+  side effect on the session's "active profile" state - so this class needs no `mail_ui` instance at
+  all, just two read-only references to `mail_ui`'s own public static properties (`$icServerID` as a
+  fallback default, `$delimiter` for folder-id parsing). Zero-dependency like Phase 1, not
+  constructor-injected like ImportHandler/MessageActionHandler. `quotaDisplay` had no external
+  callers and was removed from `mail_ui` outright (2 internal call sites repointed); the other three
+  are menuaction-dispatched, so `mail_ui` keeps thin wrappers.
+  `changeProfile`/`ajax_changeProfile`/`gatherVacation`/`ajax_refreshVacationNotice`/
+  `ajax_refreshFilters`/`ajax_refreshQuotaDisplay` stayed - each either mutates `mail_ui`'s own
+  instance state directly (`$this->searchTypes`, `$this->statusTypes`, `self::$icServerID` itself)
+  or explicitly constructs a full `mail_ui` instance internally (`ajax_changeProfile()` does
+  `new mail_ui(false)`, `ajax_refreshVacationNotice()` does `new mail_ui()`) - there was no clean way
+  to pull them out without just relocating the same full coupling. Tests:
+  `mail/tests/ProfileHandlerQuotaDisplayTest.php` (new).
 
 ## Next up
 
-S/MIME and Import (the two smallest/most self-contained `mail_ui` domains from the original plan)
-are done; Message action is partially done (see above - the three big flag/delete/copy methods and
-`ajax_saveModifiedMessageSubject` are staying put for now, not just "not started yet"). Remaining:
-"Account/session/profile ajax handlers" (expected to need the same `mail_ui`-constructor-dependency
-shape) and the large "Attachment/body-fetch" group (likely worth splitting into two per the original
+S/MIME, Import, and Account/session/profile are done (each partially, per their notes above);
+Message action is partially done too. Remaining: the large "Attachment/body-fetch" group (likely
+worth splitting into two per the original
 table, and is where `ajax_saveModifiedMessageSubject()` actually belongs). After that, the
 higher-risk `Api\Mail` groups (header/search, body/attachment IMAP fetch) - those need the `$icServer` coupling
 question answered first, see "Recommended approach" above. Folder-related groups (`Api\Mail`'s
@@ -240,7 +256,7 @@ menuaction router requires:
 | **Attachment/body-fetch ajax handlers** | `getAttachment`, `ajax_resolveWinmail`, `resolveWinmailJmap`, `resolveAttachmentsBlock`, `resolveAttachmentsJmap`, `jmapAttachmentsToLegacy`, `fetchBlobBytes`, `fetchMessageBytesJmap`, `fetchAttachmentJmap`, `ajax_fetchAttachments`, `createAttachmentBlock`, `download_zip`, `ajax_vfsOpen`, `ajax_vfsSave`, `vfsSaveMessages`, `vfsSaveAttachments`, `displayImage`, `get_load_email_data`, `tryJmapNativeSpecialCase`, `loadEmailBody`, `getdisplayableBody`, `resolve_inline_images`, `resolve_inline_image_byType`, `ajax_fetchMessageDetails`, `ajax_parseAddressList`, `ajax_saveModifiedMessageSubject` (moved here from "Message action ajax handlers" - depends on this group's `fetchMessageBytesJmap`/`replaceMessageJmap`) | The single biggest group by method count - candidate `Mail\Ui\AttachmentHandler` + `Mail\Ui\BodyHandler`, likely worth splitting into two given the size. `createAttachmentBlock()` is called from several other places in the app by name (per [[mail-jmap-modernization]]'s `is_winmail` composite-key note) - moving it needs a repo-wide call-site sweep, not just a `mail_ui` self-contained change. |
 | **S/MIME ajax handlers** | `ajax_smimeAttachmentsChecker`, `ajax_smimeAddCertToContact`, `smimeAccountId`, `smimeExportCert`, `smimeExportCsr`, `smimePassphraseFormHtml` | **Done** → `mail/src/Ui/SmimeHandler.php`, except `smimePassphraseFormHtml` (stayed, coupled to `mail_ui` instance state - see Phase 2 progress notes). |
 | **Import handlers** | `importMessage`, `importMessageToFolder`, `importMessageFromVFS2DraftAndEdit`, `importMessageFromVFS2DraftAndDisplay` | **Done** (partial) → `mail/src/Ui/ImportHandler.php`, constructor-injected with `mail_ui` (not zero-coupling like S/MIME - see Phase 2 progress notes). `importMessage` stayed (dual template+ajax entry point); `importMessageFromVFS2DraftAndEdit` was dead code, deleted. |
-| **Account/session/profile ajax handlers** | `changeProfile`, `ajax_jmapBootstrap`, `jmapLocalBootstrap`, `ajax_enablePush`, `ajax_changeProfile`, `ajax_refreshVacationNotice`, `gatherVacation`, `ajax_refreshFilters`, `ajax_refreshQuotaDisplay`, `quotaDisplay` | Candidate `Mail\Ui\ProfileHandler`. |
+| **Account/session/profile ajax handlers** | `changeProfile`, `ajax_jmapBootstrap`, `jmapLocalBootstrap`, `ajax_enablePush`, `ajax_changeProfile`, `ajax_refreshVacationNotice`, `gatherVacation`, `ajax_refreshFilters`, `ajax_refreshQuotaDisplay`, `quotaDisplay` | **Partially done** → `mail/src/Ui/ProfileHandler.php` got `ajax_jmapBootstrap`→`jmapBootstrap`, `jmapLocalBootstrap`→`localBootstrap`, `ajax_enablePush`→`enablePush`, `quotaDisplay` - the four that were already written to take an explicit profile id rather than depend on `mail_ui`'s connected `mail_bo`, so this class needs no `mail_ui` instance at all (zero-dependency like Phase 1, not constructor-injected like ImportHandler/MessageActionHandler - see Phase 2 progress notes). The other six stayed - each either mutates `mail_ui`'s own instance state directly or explicitly constructs a full `mail_ui` instance internally. |
 | **Row-id helpers** | `createRowID`, `generateRowID`, `generateJmapRowID`, `findNode` | Already static, low coupling - could move to `Mail\RowIdParts`/a sibling of `Api\Mail::splitRowID()` (the inverse operation, currently oddly far from it in the codebase - `splitRowID` lives on `Api\Mail`, `generateRowID` on `mail_ui`). |
 
 ## Recommended approach (if this goes ahead)

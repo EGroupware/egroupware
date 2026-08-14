@@ -25,6 +25,7 @@ use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Mail\JmapShim;
 use EGroupware\Mail\Ui\ImportHandler;
 use EGroupware\Mail\Ui\MessageActionHandler;
+use EGroupware\Mail\Ui\ProfileHandler;
 use EGroupware\Mail\Ui\SmimeHandler;
 
 /**
@@ -580,7 +581,7 @@ class mail_ui
 				// call getQuotaRoot asynchronously in getRows by initiating a client Server roundtrip
 				$quota = false;//$this->mail_bo->getQuotaRoot();
 				if($quota !== false && $quota['limit'] != 'NOT SET') {
-					$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
+					$quotainfo = ProfileHandler::quotaDisplay($quota['usage'], $quota['limit']);
 					$content[self::$nm_index]['quota'] = $sel_options[self::$nm_index]['quota'] = $quotainfo['text'];
 					$content[self::$nm_index]['quotainpercent'] = $sel_options[self::$nm_index]['quotainpercent'] =  (string)$quotainfo['percent'];
 					$content[self::$nm_index]['quotaclass'] = $sel_options[self::$nm_index]['quotaclass'] = $quotainfo['class'];
@@ -2287,53 +2288,6 @@ class mail_ui
 		}
 		//error_log(__METHOD__.__LINE__.' Server:'.self::$icServerID.' Vacation retrieved:'.array2string($vacation));
 		return $vacation;
-	}
-
-	/**
-	 * gather Info on how to display the quota info
-	 *
-	 * @param int $_usage amount of usage in Kb
-	 * @param int $_limit amount of limit in Kb
-	 * @return array  returns an array of info used for quota
-	 *		array(
-	 *			class		=> string,
-	 *			text		=> string,
-	 *			percent		=> string,
-	 *			freespace	=> integer
-	 *		)
-	 */
-	function quotaDisplay($_usage, $_limit)
-	{
-		$percent = $_limit == 0 ? 100 : round(($_usage*100)/$_limit);
-		$limit = Mail::show_readable_size($_limit*1024);
-		$usage = Mail::show_readable_size($_usage*1024);
-
-		if ($_limit > 0)
-		{
-			$text = $usage .'/'.$limit;
-			switch ($percent)
-			{
-				case ($percent > 90):
-					$class ='mail-index_QuotaRed';
-					break;
-				case ($percent > 80):
-					$class ='mail-index_QuotaYellow';
-					break;
-				default:
-					$class ='mail-index_QuotaGreen';
-			}
-		}
-		else
-		{
-			$text = $usage;
-			$class ='mail-index_QuotaGreen';
-		}
-		return array (
-			'class'		=> $class,
-			'text'		=> lang('Quota: %1',$text),
-			'percent'	=> $percent,
-			'freespace'	=> $_limit*1024 - $_usage*1024
-		);
 	}
 
 	/**
@@ -4943,101 +4897,18 @@ class mail_ui
 	}
 
 	/**
-	 * Bootstrap payload for client-side direct JMAP access (see Mail\Imap\Stalwart::jmapBootstrap)
-	 *
-	 * Every account is JMAP-eligible (Stalwart directly, or plain IMAP via jmapLocalBootstrap()),
-	 * so returning null here means the account/server is genuinely unreachable right now - there
-	 * is no server-side row-fetch fallback anymore, the client surfaces this as an error.
+	 * Bootstrap payload for client-side direct JMAP access
 	 *
 	 * @param int|null $icServerID profile / server ID, defaults to the active profile
 	 * @return nothing values for keys "sessionUrl", "accountId", "access_token", "expires_in", or null
 	 */
 	public static function ajax_jmapBootstrap($icServerID=null)
 	{
-		$response = Api\Json\Response::get();
-		try
-		{
-			// accountId "0" is never a real account - it's served by mail/jmap.php from an
-			// in-file fixture, purely so the client-side JMAP code can be tested/exercised
-			// without a real mailbox.
-			// Checked BEFORE the "?: self::$icServerID" fallback below: '0' is falsy in PHP,
-			// so applying that fallback first would silently replace it with the active profile.
-			if ((string)$icServerID === '0')
-			{
-				$bootstrap = self::jmapLocalBootstrap('0');
-				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
-				$response->data($bootstrap);
-				return;
-			}
-			$imapServer = Mail\Account::read($icServerID ?: self::$icServerID)->imapServer();
-			$local = !($imapServer instanceof Mail\Imap\Stalwart);
-			$bootstrap = $local
-				// any plain IMAP account is served by our own local JMAP shim
-				? self::jmapLocalBootstrap((string)$icServerID)
-				: $imapServer->jmapBootstrap();
-			if ($bootstrap)
-			{
-				$bootstrap['isLocal'] = $local;
-				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
-				// account config only (no IMAP round-trip, no full special-use autodetection like
-				// Mail::getTrashFolder()/getJunkFolder() do) - good enough for
-				// MailJmap.deleteMessages()'s move-to-trash resolution and the "empty trash"/
-				// "empty junk" fast paths; a reasonable simplification for accounts that don't
-				// override the conventional "Trash"/"Junk" names without configuring
-				// acc_folder_trash/acc_folder_junk
-				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?: 'Trash';
-				$bootstrap['junkFolder'] = $imapServer->acc_folder_junk ?: null;
-			}
-			$response->data($bootstrap);
-		}
-		catch (Exception $e)
-		{
-			unset($e);
-			$response->data(null);
-		}
-	}
-
-	/**
-	 * Bootstrap payload for accounts served by our own local JMAP shim (mail/jmap.php),
-	 * i.e. every plain IMAP account (no real JMAP server exists for those) plus the acc_id="0"
-	 * demo/test fixture.
-	 *
-	 * @param string $accountId
-	 * @return array values for keys "sessionUrl", "accountId", "access_token", "expires_in"
-	 */
-	private static function jmapLocalBootstrap(string $accountId) : array
-	{
-		return [
-			// accountId in the query string lets JmapShim::session() report this specific
-			// account's "primaryAccounts"/"accounts" - session() itself is otherwise a shared,
-			// generic endpoint with no other way to know which account is asking
-			'sessionUrl' => Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php')).'?accountId='.urlencode($accountId),
-			'accountId' => $accountId,
-			// NOT the session id: auth is via the session cookie (mail/jmap.php is a
-			// same-origin endpoint), this only fills jmap-jam's required bearerToken field
-			'access_token' => 'no-token-required',
-			'expires_in' => 3600,	// session lifetime is renewed on every request anyway
-			'isLocal' => true,
-		];
+		ProfileHandler::jmapBootstrap($icServerID);
 	}
 
 	/**
 	 * (Re-)enable server push for a profile, if its mail server supports it
-	 *
-	 * Ported from the old get_rows()'s per-fetch call: now triggered client-side (fire-and-forget)
-	 * from mail/js/jmap.ts's MailJmap.enablePushOnce(), at most once per profile per JMAP-token
-	 * lifetime rather than on every row fetch.
-	 *
-	 * Covers both push mechanisms Api\Mail\Imap\PushIface implementors may use: Stalwart's native
-	 * JMAP push subscriptions (Api\Mail\Imap\Jmap::enablePush(), always available), and plain
-	 * IMAP/Dovecot's mailbox-metadata push token registration (Api\Mail\Imap::enablePush(),
-	 * opt-in via the "imap_hosts_with_push" site config) - whichever the account's server class
-	 * actually implements.
-	 *
-	 * Deliberately uses the same lightweight Mail\Account::read()->imapServer() object
-	 * ajax_jmapBootstrap() already uses (not mail_ui::changeProfile()), so this has no side
-	 * effect on the user's "active profile" session state - it may run for a profile that
-	 * isn't the one currently being viewed.
 	 *
 	 * @param int|string $icServerID profile / server ID
 	 * @param string|null $selectedFolder "profileID::folder/path", used to seed Stalwart's
@@ -5046,19 +4917,7 @@ class mail_ui
 	 */
 	public static function ajax_enablePush($icServerID, $selectedFolder=null)
 	{
-		try
-		{
-			$imapServer = Mail\Account::read($icServerID)->imapServer();
-			if ($imapServer instanceof Api\Mail\Imap\PushIface && $imapServer->pushAvailable())
-			{
-				$folder = explode(self::$delimiter, (string)$selectedFolder, 2)[1] ?? 'INBOX';
-				$imapServer->enablePush(null, $icServerID.self::$delimiter.($folder ?: 'INBOX'));
-			}
-		}
-		catch (\Exception $e)
-		{
-			_egw_log_exception($e);
-		}
+		ProfileHandler::enablePush($icServerID, $selectedFolder);
 	}
 
 	/**
@@ -5230,7 +5089,7 @@ class mail_ui
 		}
 
 		if($quota !== false && $quota['limit'] != 'NOT SET') {
-			$quotainfo = $this->quotaDisplay($quota['usage'], $quota['limit']);
+			$quotainfo = ProfileHandler::quotaDisplay($quota['usage'], $quota['limit']);
 			$quotaMin = ceil($quotainfo['freespace']/pow(1024, 2));
 			$quota_limit_warning = isset(mail::$mailConfig['quota_limit_warning']) ? mail::$mailConfig['quota_limit_warning'] : 30;
 			$content = array (

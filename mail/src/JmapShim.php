@@ -61,7 +61,7 @@ class JmapShim
 	{
 		$url = Api\Framework::getUrl(Api\Framework::link('/mail/jmap.php'));
 
-		// accountId comes from jmapLocalBootstrap()'s sessionUrl (see mail_ui.inc.php) - session()
+		// accountId comes from ProfileHandler::localBootstrap()'s sessionUrl (mail/src/Ui/ProfileHandler.php) - session()
 		// has no other way to know which account a given JamClient instance belongs to, since it's
 		// otherwise a shared, generic endpoint. Not present when called directly/without a bootstrap
 		// (e.g. the demo fixture) - "accounts"/"primaryAccounts" then stay empty, matching before;
