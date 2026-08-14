@@ -549,7 +549,7 @@ export class et2_nextmatch extends et2_DOMWidget implements et2_IResizeable, et2
 		}, this));
 		jQuery(this.getInstanceManager().DOMContainer.parentNode).on('show.et2_nextmatch', jQuery.proxy(function()
 		{
-			if(this.controller && this.controller._grid)
+			if(this.controller && this.controller._grid && !this.update_in_progress)
 			{
 				this.controller._grid.doInvalidate = true;
 				this.controller.update();
