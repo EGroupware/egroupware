@@ -365,4 +365,131 @@ class SmimeTest extends TestCase
 	{
 		$this->assertTrue(Smime::isPassphraseProtected('not a valid pkcs12 blob'));
 	}
+
+	/**
+	 * Regression test for the "certificate renewed via CSR can no longer decrypt old mail" bug:
+	 * openssl_pkcs7_decrypt() selects the RecipientInfo by the given certificate's issuer+serial,
+	 * not merely by whether the private key fits - so decrypt() with the CURRENT (renewed)
+	 * certificate must fail for a message encrypted under the PREVIOUS certificate, even though
+	 * both certificates share the same key pair.
+	 */
+	public function testDecryptFailsWithRenewedCertificateAlone()
+	{
+		$smime = new Smime();
+		$old = $smime->generate_certificate(self::DN, null, null, 365);
+		$renewed = $this->renewCertificate($old['privkey']);
+
+		$out = tempnam(sys_get_temp_dir(), 'smime_test_');
+		openssl_pkcs7_encrypt($this->tempFile("secret\n"), $out, $old['cert'], []);
+		$encrypted = file_get_contents($out);
+		@unlink($out);
+
+		$this->expectException(\Horde_Crypt_Exception::class);
+		$smime->decrypt($encrypted, [
+			'type' => 'message', 'pubkey' => $renewed, 'privkey' => $old['privkey'], 'passphrase' => '',
+		]);
+	}
+
+	/**
+	 * decryptWithCandidates() must fall through to a later candidate certificate when an earlier
+	 * one doesn't match the message's RecipientInfo - this is the actual fix: try the renewed
+	 * certificate first, then fall back to the retained previous one(s).
+	 */
+	public function testDecryptWithCandidatesFallsBackToMatchingCertificate()
+	{
+		$smime = new Smime();
+		$old = $smime->generate_certificate(self::DN, null, null, 365);
+		$renewed = $this->renewCertificate($old['privkey']);
+
+		$in = $this->tempFile("secret payload\n");
+		$out = tempnam(sys_get_temp_dir(), 'smime_test_');
+		openssl_pkcs7_encrypt($in, $out, $old['cert'], []);
+		$encrypted = file_get_contents($out);
+		@unlink($out);
+		@unlink($in);
+
+		$result = Smime::decryptWithCandidates($smime, $encrypted,
+			[$renewed, $old['cert']], $old['privkey'], '');
+
+		$this->assertStringContainsString('secret payload', $result);
+	}
+
+	/**
+	 * decryptWithCandidates() must throw (not silently return something useless) when none of the
+	 * given candidate certificates match the message.
+	 */
+	public function testDecryptWithCandidatesThrowsWhenNoneMatch()
+	{
+		$smime = new Smime();
+		$old = $smime->generate_certificate(self::DN, null, null, 365);
+		$unrelated = $smime->generate_certificate(
+			array('commonName' => 'Unrelated', 'emailAddress' => 'unrelated@example.org'), null, null, 365);
+
+		$in = $this->tempFile("secret payload\n");
+		$out = tempnam(sys_get_temp_dir(), 'smime_test_');
+		openssl_pkcs7_encrypt($in, $out, $old['cert'], []);
+		$encrypted = file_get_contents($out);
+		@unlink($out);
+		@unlink($in);
+
+		$this->expectException(\Horde_Crypt_Exception::class);
+		Smime::decryptWithCandidates($smime, $encrypted, [$unrelated['cert']], $unrelated['privkey'], '');
+	}
+
+	/**
+	 * isOwnCertificate() must recognise a retired own certificate (same key pair, different
+	 * certificate) as belonging to the given private key, so mail_compose::_encrypt() can filter
+	 * it out of the chain sent with outgoing signed mail.
+	 */
+	public function testIsOwnCertificateTrueForRetiredOwnCertificate()
+	{
+		$smime = new Smime();
+		$old = $smime->generate_certificate(self::DN, null, null, 365);
+		$renewed = $this->renewCertificate($old['privkey'], 42);
+
+		$this->assertTrue(Smime::isOwnCertificate($old['cert'], $old['privkey']));
+		$this->assertTrue(Smime::isOwnCertificate($renewed, $old['privkey']));
+	}
+
+	/**
+	 * isOwnCertificate() must recognise a genuine intermediate/CA certificate (belonging to a
+	 * DIFFERENT key pair, eg. the CA's) as NOT belonging to our own private key, so it's kept in
+	 * the chain sent with outgoing signed mail.
+	 */
+	public function testIsOwnCertificateFalseForUnrelatedCertificate()
+	{
+		$smime = new Smime();
+		$own = $smime->generate_certificate(self::DN, null, null, 365);
+		$intermediate = $smime->generate_certificate(
+			array('commonName' => 'Intermediate CA', 'emailAddress' => 'ca@example.org'), null, null, 365);
+
+		$this->assertFalse(Smime::isOwnCertificate($intermediate['cert'], $own['privkey']));
+	}
+
+	/**
+	 * Writes $content to a fresh temp file and returns its path (caller must clean up).
+	 */
+	private function tempFile(string $content) : string
+	{
+		$path = tempnam(sys_get_temp_dir(), 'smime_test_');
+		file_put_contents($path, $content);
+		return $path;
+	}
+
+	/**
+	 * Builds a new certificate for an EXISTING private key, mirroring what a CA does when it
+	 * (re-)signs a CSR generated via Smime::generate_csr() for an already stored key - same key
+	 * pair as $privkey, but a genuinely different certificate (own DN/issuer, but a distinct
+	 * serial number, as a real CA would assign - openssl_csr_sign()'s default serial is always 0,
+	 * which would make two self-signed certs with the same subject indistinguishable to
+	 * openssl_pkcs7_decrypt()'s issuer+serial matching and defeat the point of this test fixture).
+	 */
+	private function renewCertificate(string $privkey, int $serial=1) : string
+	{
+		$key = openssl_pkey_get_private($privkey);
+		$csr = openssl_csr_new(self::DN, $key, array('digest_alg' => 'sha256'));
+		$x509 = openssl_csr_sign($csr, null, $key, 365, array('digest_alg' => 'sha256'), $serial);
+		openssl_x509_export($x509, $cert);
+		return $cert;
+	}
 }

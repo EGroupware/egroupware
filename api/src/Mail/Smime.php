@@ -240,6 +240,72 @@ class Smime extends Horde_Crypt_Smime
 	}
 
 	/**
+	 * Try decrypting a message against several candidate recipient certificates
+	 *
+	 * openssl_pkcs7_decrypt() (used by Horde_Crypt_Smime::decrypt()) picks the message's
+	 * RecipientInfo to use by matching the given certificate's issuer+serial - NOT simply by
+	 * whether the private key mathematically fits. So renewing a certificate via CSR (same key
+	 * pair, but a new issuer/serial from the CA) makes it impossible to decrypt messages that
+	 * were encrypted under the previous certificate, even though the private key never changed.
+	 * Try each candidate certificate in turn (current one first) so old mail keeps decrypting
+	 * across a renewal, as long as the matching certificate is still available as a candidate
+	 * (see import_smime_cert() in admin_mail, which retains the previous certificate for this).
+	 *
+	 * @param Horde_Crypt_Smime $smime
+	 * @param string $message
+	 * @param string[] $pubkeys candidate certificates to try, most-likely-first
+	 * @param string $privkey
+	 * @param string $passphrase
+	 * @return string decrypted message
+	 * @throws \Horde_Crypt_Exception if none of the candidates could decrypt the message
+	 */
+	public static function decryptWithCandidates(Horde_Crypt_Smime $smime, string $message,
+		array $pubkeys, string $privkey, string $passphrase='') : string
+	{
+		$exception = null;
+		foreach (array_unique(array_filter($pubkeys)) as $pubkey)
+		{
+			try
+			{
+				return $smime->decrypt($message, [
+					'type' => 'message',
+					'pubkey' => $pubkey,
+					'privkey' => $privkey,
+					'passphrase' => $passphrase,
+				]);
+			}
+			catch (\Horde_Crypt_Exception $e)
+			{
+				$exception = $e;
+			}
+		}
+		throw $exception ?: new \Horde_Crypt_Exception('No certificate to try for decryption.');
+	}
+
+	/**
+	 * Does the given certificate belong to the given private key?
+	 *
+	 * Used to tell a retired OWN leaf-certificate (kept around in extracerts by
+	 * import_smime_cert() so old messages stay decryptable, see decryptWithCandidates()) apart
+	 * from a genuine CA/intermediate certificate (belonging to the CA's key, not ours) also stored
+	 * in extracerts - only the latter belongs in the certificate chain sent along with outgoing
+	 * signed mail (mail_compose::_encrypt()).
+	 *
+	 * @param string $certPem
+	 * @param string $privkey
+	 * @param string $passphrase = ''
+	 * @return bool
+	 */
+	public static function isOwnCertificate(string $certPem, string $privkey, string $passphrase='') : bool
+	{
+		if (!($key = @openssl_pkey_get_private($privkey, $passphrase)))
+		{
+			return false;
+		}
+		return openssl_x509_check_private_key($certPem, $key);
+	}
+
+	/**
 	 * JMAP-native S/MIME resolution: decrypt/verify a raw message already fetched via JMAP (Blob
 	 * download for Stalwart - Api\Mail\Imap\Jmap - or JmapShim::fetchRawMessage() for the local
 	 * shim) instead of Mail::resolveSmimeMessage()'s IMAP-based getMessageRawBody(). Same
@@ -282,12 +348,10 @@ class Smime extends Horde_Crypt_Smime
 			$certkey = $AB_bo->get_smime_keys($acc_smime['acc_smime_username'] ?? '');
 			try
 			{
-				$message = $smime->decrypt($message, [
-					'type' => 'message',
-					'pubkey' => $certkey[strtolower($acc_smime['acc_smime_username'] ?? '')] ?? '',
-					'privkey' => $acc_smime['pkey'],
-					'passphrase' => $passphrase,
-				]);
+				$message = self::decryptWithCandidates($smime, $message, array_merge([
+					$certkey[strtolower($acc_smime['acc_smime_username'] ?? '')] ?? '',
+					$acc_smime['cert'] ?? '',
+				], $acc_smime['extracerts'] ?? []), $acc_smime['pkey'], $passphrase);
 			}
 			catch (\Horde_Crypt_Exception $e)
 			{

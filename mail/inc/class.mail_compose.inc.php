@@ -4077,7 +4077,13 @@ class mail_compose
 			{
 				$acc_smime = Mail\Smime::get_acc_smime($this->mail_bo->profileID, $params['passphrase']);
 				$params['senderPrivKey'] = $acc_smime['pkey'] ?? null;
-				$params['extracerts'] = $acc_smime['extracerts'] ?? null;
+				// extracerts also holds retired own certificates kept around to still decrypt old
+				// mail (see Smime::decryptWithCandidates()) - only actual CA/intermediate
+				// certificates (not belonging to our own key) belong in the chain sent with
+				// outgoing signed mail
+				$params['extracerts'] = !empty($acc_smime['extracerts']) ?
+					array_values(array_filter($acc_smime['extracerts'],
+						fn($c) => !Mail\Smime::isOwnCertificate($c, $acc_smime['pkey'], $params['passphrase']))) : null;
 			}
 
 			if (isset($recipients) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))

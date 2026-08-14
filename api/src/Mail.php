@@ -8329,12 +8329,9 @@ class Mail
 			);
 		}
 
-		$params  = array (
-			'type'      => 'message',
-			'pubkey'    => $certkey[strtolower($acc_smime['acc_smime_username'])],
-			'privkey'   => $acc_smime['pkey'],
-			'passphrase'=> $_passphrase
-		);
-		return $this->smime->decrypt($_message, $params);
+		return Mail\Smime::decryptWithCandidates($this->smime, $_message, array_merge([
+			$certkey[strtolower($acc_smime['acc_smime_username'])] ?? '',
+			$acc_smime['cert'] ?? '',
+		], $acc_smime['extracerts'] ?? []), $acc_smime['pkey'], $_passphrase);
 	}
 }

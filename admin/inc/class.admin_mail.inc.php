@@ -1725,7 +1725,11 @@ class admin_mail
 	 * matches the stored private key is used as the leaf; any others (eg. an
 	 * intermediate CA certificate, from the same upload or the separate
 	 * smimeIntermediateUpload field) are bundled into the p12 as extracerts,
-	 * so outgoing signed mail includes them (see build_pkcs12()).
+	 * so outgoing signed mail includes them (see build_pkcs12()). The
+	 * certificate being replaced is also kept as an extracert (not sent with
+	 * outgoing mail, see Smime::isOwnCertificate()), so messages received
+	 * under it can still be decrypted after renewal, see
+	 * Smime::decryptWithCandidates().
 	 *
 	 * @param array $content 'smimeCertUpload' file upload, optional 'smimeIntermediateUpload'
 	 *  file upload, optional 'smime_passphrase' to unlock the stored private key, needs existing
@@ -1781,6 +1785,13 @@ class admin_mail
 			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
 			return null;
 		}
+		// keep the certificate(s) being replaced around too (same private key, so still usable to
+		// decrypt messages that were encrypted under them) - see Smime::decryptWithCandidates()
+		if (!empty($acc_smime['cert']) && strcasecmp(trim($acc_smime['cert']), trim($cert)) !== 0)
+		{
+			$extracerts[] = $acc_smime['cert'];
+		}
+		$extracerts = array_values(array_unique(array_merge($extracerts, $acc_smime['extracerts'] ?? [])));
 		// re-apply the same passphrase as the container password too, so the re-combined p12 keeps
 		// the same protection level it had before (see matching comment in generate_smime_key())
 		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase, $passphrase, $extracerts)))
