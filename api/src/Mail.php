@@ -2661,7 +2661,7 @@ class Mail
 
 	/**
 	 * JMAP-native attachment listing for getMessageAttachments() - mirrors
-	 * mail_ui::jmapAttachmentsToLegacy()'s existing mapping (Tier 1 work) almost exactly, since
+	 * EGroupware\Mail\Ui\AttachmentJmap::jmapAttachmentsToLegacy()'s existing mapping (Tier 1 work) almost exactly, since
 	 * JMAP's "attachments" property already gives a flat, pre-classified list - no bodyStructure
 	 * walking needed. Bails to classic for: a specific sub-part request, a caller-supplied
 	 * $_structure, $fetchTextCalendar (not implemented here), or any TNEF/winmail.dat attachment

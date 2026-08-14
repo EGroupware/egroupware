@@ -19,6 +19,7 @@ use EGroupware\Api\Link;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Vfs;
+use EGroupware\Mail\Ui\BodyHandler;
 
 /**
  * Mail interface class for compose mails in popup
@@ -1972,7 +1973,7 @@ class mail_compose
 				#error_log( "GetDraftData (HTML) CharSet:".mb_detect_encoding($bodyPart['body'] . 'a' , strtoupper($bodyPart['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"<br>":""). $bodyPart['body'] ;
 			}
-			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID);
+			$this->sessionData['body'] = BodyHandler::resolveInlineImages($this->sessionData['body'], $_folder, $_uid, $_partID);
 
 		} else {
 			$this->sessionData['mimeType']	= 'plain';
@@ -1986,7 +1987,7 @@ class mail_compose
 				#error_log( "GetDraftData (Plain) CharSet".mb_detect_encoding($bodyParts[$i]['body'] . 'a' , strtoupper($bodyParts[$i]['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
 				$this->sessionData['body'] .= ($i>0?"\r\n":""). $bodyPart['body'] ;
 			}
-			$this->sessionData['body'] = mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID,'plain');
+			$this->sessionData['body'] = BodyHandler::resolveInlineImages($this->sessionData['body'], $_folder, $_uid, $_partID,'plain');
 		}
 
 		if(($attachments = $mail_bo->getMessageAttachments($_uid,$_partID))) {
@@ -2474,7 +2475,7 @@ class mail_compose
 			}
 
 			$this->sessionData['body']	.= '</blockquote><br>';
-			$this->sessionData['body'] =  mail_ui::resolve_inline_images($this->sessionData['body'], $_folder, $_uid, $_partID, 'html');
+			$this->sessionData['body'] =  BodyHandler::resolveInlineImages($this->sessionData['body'], $_folder, $_uid, $_partID, 'html');
 		}
 		else
 		{
@@ -2491,7 +2492,7 @@ class mail_compose
 				// add line breaks to $bodyParts
 				$newBody2 = Api\Translation::convert_jsonsafe($bodyPart['body'],$bodyPart['charSet']);
 				#error_log( "GetReplyData (Plain) CharSet:".mb_detect_encoding($bodyPart['body'] . 'a' , strtoupper($bodyPart['charSet']).','.strtoupper($this->displayCharset).',UTF-8, ISO-8859-1'));
-				$newBody = mail_ui::resolve_inline_images($newBody2, $_folder, $_uid, $_partID, 'plain');
+				$newBody = BodyHandler::resolveInlineImages($newBody2, $_folder, $_uid, $_partID, 'plain');
 				$this->sessionData['body'] .= "\r\n";
 				$hasSignature = false;
 				// create body new, with good line breaks and indention
@@ -3625,7 +3626,9 @@ class mail_compose
 		{
 			foreach($this->sessionData['attachments'] as $value) {
 				if (!empty($value['file']) && parse_url($value['file'],PHP_URL_SCHEME) != 'vfs') {	// happens when forwarding mails
-					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.$value['file']);
+					// attachments come straight from client-submitted form-data - never trust
+					// $value['file'] as a path component, or it becomes an arbitrary-file-delete
+					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($value['file']));
 				}
 			}
 		}

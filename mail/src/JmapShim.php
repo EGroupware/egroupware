@@ -1374,7 +1374,8 @@ class JmapShim
 	}
 
 	/**
-	 * Build the flat attachment-array shape mail_ui::createAttachmentBlock() expects, from a
+	 * Build the flat attachment-array shape EGroupware\Mail\Ui\AttachmentJmap::createAttachmentBlock()
+	 * expects, from a
 	 * TNEF-decoded Horde_Mime_Part tree (Mail::tnef_decoder()'s output) - ported from the
 	 * equivalent loop in Mail::getMessageAttachments() (api/src/Mail.php:6254-6286), not a call
 	 * into it, since that method also does the (unrelated, IMAP-based) surrounding attachment

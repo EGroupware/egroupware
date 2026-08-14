@@ -1,8 +1,8 @@
 <?php
 /**
- * Test mail_ui::jmapAttachmentsToLegacy() - translates RFC 8621 EmailBodyPart attachment
- * entries (Stalwart's real Email/get "attachments", or JmapShim::emailBodyFields()'s
- * "attachments") into the shape createAttachmentBlock() expects.
+ * Test EGroupware\Mail\Ui\AttachmentJmap::jmapAttachmentsToLegacy() - translates RFC 8621
+ * EmailBodyPart attachment entries (Stalwart's real Email/get "attachments", or
+ * JmapShim::emailBodyFields()'s "attachments") into the shape createAttachmentBlock() expects.
  *
  * Pure data-transform, no database/session/IMAP connection required.
  *
@@ -15,7 +15,7 @@ class JmapAttachmentsToLegacyTest extends \PHPUnit\Framework\TestCase
 {
 	private function call(array $jmapAttachments, bool $fetchEmbeddedImages) : array
 	{
-		$ref = new ReflectionMethod(\mail_ui::class, 'jmapAttachmentsToLegacy');
+		$ref = new ReflectionMethod(\EGroupware\Mail\Ui\AttachmentJmap::class, 'jmapAttachmentsToLegacy');
 		$ref->setAccessible(true);
 		return $ref->invoke(null, $jmapAttachments, $fetchEmbeddedImages);
 	}

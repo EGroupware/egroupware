@@ -374,7 +374,7 @@ class Jmap extends Mail\Imap
 	/**
 	 * JMAP-native attachment content fetch for Link::set_data() tokens (createAttachmentBlock()'s
 	 * mime_data/invoice_data) - a drop-in alternate target for Api\Mail::getAttachmentAccount()'s
-	 * role, used when the row/attachment was JMAP-listed (mail_ui::jmapAttachmentsToLegacy()) and
+	 * role, used when the row/attachment was JMAP-listed (EGroupware\Mail\Ui\AttachmentJmap::jmapAttachmentsToLegacy()) and
 	 * therefore has a real JMAP blobId, instead of an IMAP FETCH by uid/partID.
 	 *
 	 * @param int $acc_id
