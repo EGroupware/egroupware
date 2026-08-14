@@ -122,11 +122,17 @@ similar scope.
   (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
   replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
   `columnPreferenceName` audit/fix for apps already converted.
-- `doc/ai/projects/mail-bo-decoupling.md` - proposal (not started) to break `Api\Mail`/`mail_ui` apart
-  into smaller, independently-testable components, to fix the "large heavily-coupled legacy class with
-  no test coverage" problem shared by those two and `MailApp` (client-side). Covers a full method
-  inventory grouped by responsibility, per-group coupling/risk assessment, and a recommended
-  incremental (low-risk-first) sequencing.
+- `doc/ai/projects/mail-bo-decoupling.md` - breaking `Api\Mail`/`mail_ui` apart into smaller,
+  independently-testable components, to fix the "large heavily-coupled legacy class with no test
+  coverage" problem shared by those two and `MailApp` (client-side). Phase 1 (4 low-risk `Api\Mail`
+  groups) done; covers the full method inventory, per-group coupling/risk assessment, and the
+  extraction discipline that emerged (no wrapper unless a separate-repo consumer needs it; delete
+  confirmed-dead code; re-check "no callers" case-insensitively for PHP method names).
+- `doc/ai/projects/mail-folder-tree-jmap.md` - planned migration of the mail folder-tree
+  (listing/autoloading/CRUD) from server-side PHP to client-side + JMAP, plus persisting tree
+  expand/collapse state per user. Covers why this must happen before decoupling the overlapping
+  `Api\Mail`/`mail_ui` folder groups, and the hard constraint that admin-impersonation of another
+  user's mailbox (`mail_acl.inc.php`) can never move client-side.
 
 ## Security and data handling
 

@@ -365,7 +365,8 @@ correctly resolving a real UID first (see "bail-to-classic trap" above).
   embedded-attachment fallback (a genuinely live, already-shipped tracker code path), independent of
   whether mail_compose itself changes.
 - **Folder/mailbox administration** (`getFolderStatus`, `renameFolder`, `deleteFolder`, `getQuotaRoot`,
-  namespace listing, ...) - a separate, larger concern, not started.
+  namespace listing, ...) - a separate, larger concern; now scoped as its own planned project, see
+  [[mail-folder-tree-jmap]].
 - **Making `Api\Mail::reopen()` itself JMAP-aware** - `reopen()` unconditionally does a real IMAP
   folder-status check (`folderIsSelectable()` → `getFolderStatus()` → `getMailboxes()`, real LIST)
   and a real SELECT (`icServer->openMailbox()`), regardless of backend - it's the actual reason
