@@ -3626,7 +3626,9 @@ class mail_compose
 		{
 			foreach($this->sessionData['attachments'] as $value) {
 				if (!empty($value['file']) && parse_url($value['file'],PHP_URL_SCHEME) != 'vfs') {	// happens when forwarding mails
-					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.$value['file']);
+					// attachments come straight from client-submitted form-data - never trust
+					// $value['file'] as a path component, or it becomes an arbitrary-file-delete
+					unlink($GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($value['file']));
 				}
 			}
 		}

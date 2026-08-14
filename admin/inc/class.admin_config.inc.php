@@ -39,8 +39,11 @@ class admin_config
 			(is_dir($path) || mkdir($path)))
 		{
 			$tmp_file = array_keys($file);
-			$destination = $path.'/'.$file[$tmp_file[0]]['name'];
-			$success = rename($GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp_file[0],$destination);
+			// $tmp_file[0] is a client-supplied array key - never trust it as a path component,
+			// or it becomes an arbitrary-file-read via traversal
+			$tmp_name = basename($tmp_file[0]);
+			$destination = $path.'/'.Api\Vfs::basename($file[$tmp_file[0]]['name']);
+			$success = rename($GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp_name,$destination);
 		}
 		if ($success)
 		{
