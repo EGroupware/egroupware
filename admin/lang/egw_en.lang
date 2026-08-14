@@ -1021,3 +1021,5 @@ intermediate/ca certificate (optional)	admin	en	Intermediate/CA certificate (opt
 this s/mime private key is passphrase-protected. please enter the passphrase above and try again.	admin	en	This S/MIME private key is passphrase-protected. Please enter the passphrase above and try again.
 the passphrase entered was not correct, please try again.	admin	en	The passphrase entered was not correct, please try again.
 required to export or import a certificate for this key	admin	en	Required to export or import a certificate for this key
+deleting removes your s/mime private key entirely - you will no longer be able to read any previously received encrypted messages. if you are renewing your certificate, use export csr and import certificate instead to keep your key.	admin	en	Deleting removes your S/MIME private key entirely - you will no longer be able to read any previously received encrypted messages. If you are renewing your certificate, use Export CSR and Import certificate instead to keep your key.
+delete s/mime certificate	admin	en	Delete S/MIME certificate

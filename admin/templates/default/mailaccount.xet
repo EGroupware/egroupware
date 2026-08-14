@@ -301,7 +301,7 @@
 						<et2-button id="smimeGenerate" label="Create self-signed certificate" onclick="app.admin.smime_genCertificate" image="add" hideOnReadonly="true" noSubmit="true"></et2-button>
 						<et2-button id="smime_export_p12" label="export certificate as p12" onclick="app.admin.smime_exportCert" image="export" noSubmit="true"></et2-button>
 						<et2-button id="smime_export_csr" label="Export CSR" onclick="app.admin.smime_exportCsr" image="export" noSubmit="true"></et2-button>
-						<et2-button id="smime_delete_p12" label="Delete certificate" onclick="app.admin.change_account" image="delete" noSubmit="true"></et2-button>
+						<et2-button id="smime_delete_p12" label="Delete certificate" onclick="Et2Dialog.confirm(widget,'Deleting removes your S/MIME private key entirely - you will no longer be able to read any previously received encrypted messages. If you are renewing your certificate, use Export CSR and Import certificate instead to keep your key.','Delete S/MIME certificate')" image="delete" noSubmit="true"></et2-button>
 					</et2-hbox>
 				</row>
 				<row valign="top">
