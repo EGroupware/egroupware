@@ -148,17 +148,29 @@ Per [[mail-folder-tree-jmap]], the "Folder ajax handlers"/"Row-id helpers" `mail
   **fully dead code** (zero callers anywhere, case-insensitively confirmed, not even the .eml
   mime-handler hook in `mail_hooks.inc.php` - that routes through `...AndDisplay` directly) and was
   deleted rather than moved.
-- [x] **Message action ajax handlers** (partial) → `mail/src/Ui/MessageActionHandler.php`
-  (`saveMessage`, `ajax_sendMDN`→`sendMDN`). `ajax_flagMessages()`/`ajax_deleteMessages()`/
-  `ajax_copyMessages()` stayed on `mail_ui` - each is a large (100-200 line), heavily-branched
-  legacy method that calls back into *other* not-yet-extracted `mail_ui` internals
-  (`self::ajax_setFolderStatus()` - itself blocked on [[mail-folder-tree-jmap]],
-  `self::generateRowID()`, `self::get_actions()`, `self::$delimiter`), so moving them now would be a
-  large, high-risk mechanical diff with none of Phase 1's testability payoff and no real
-  organizational win either (still 100% coupled back to `mail_ui`). `ajax_saveModifiedMessageSubject()`
-  also stayed - it depends on `self::fetchMessageBytesJmap()`/`self::replaceMessageJmap()`, private
-  statics belonging to the not-yet-extracted "Attachment/body-fetch ajax handlers" group, not this
-  one - the original table's grouping put it in the wrong bucket.
+- [x] **Message action ajax handlers** (done, except `ajax_saveModifiedMessageSubject`) →
+  `mail/src/Ui/MessageActionHandler.php` (`saveMessage`, `ajax_sendMDN`→`sendMDN`,
+  `ajax_flagMessages`→`flagMessages`, `ajax_deleteMessages`→`deleteMessages`,
+  `ajax_copyMessages`→`copyMessages`). The three big ones were originally left behind (each a large,
+  100-200 line, heavily-branched legacy method calling back into *other* mail_ui internals) but
+  turned out extractable once those other internals stopped being blockers:
+  `self::ajax_setFolderStatus()` was always fine to call as `$this->ui->ajax_setFolderStatus()`
+  (that method itself stays on `mail_ui`, blocked pending [[mail-folder-tree-jmap]], but *calling*
+  it cross-class isn't blocked); `self::generateRowID()`/`self::$delimiter` are already public
+  static on `mail_ui`, callable as `mail_ui::generateRowID()`/`mail_ui::$delimiter` from anywhere;
+  `self::get_actions()` was the one real blocker - `private`, so a call from a class that doesn't
+  extend `mail_ui` would fatal - **widened to package-default visibility** (it's pure UI
+  context-menu-array construction, nothing security-sensitive, and already called from 5 places
+  including a `new mail_ui(false)` instance in `ajax_changeProfile()`, so this isn't a new exposure).
+  `ajax_saveModifiedMessageSubject()` stayed - it depends on `AttachmentJmap::fetchMessageBytesJmap()`/
+  `AttachmentJmap::replaceMessageJmap()` and belongs with "Attachment/body-fetch ajax handlers", not
+  this group - the original table's grouping put it in the wrong bucket.
+  **Near-miss caught again**: `ajax_copyMessages()` (kept as a thin wrapper) is called internally
+  from `ajax_spamAction()` via `$this->ajax_copyMessages(...)` in 3 places - only found by grepping
+  the moved method names against the whole file afterward, same discipline as the
+  `resolve_inline_images()` near-miss in the previous group. Still correct here since the wrapper
+  was kept (not removed), but worth remembering as a recurring risk: internal self-calls are easy to
+  miss when scanning only for *external* callers before deciding a method's fate.
 - [x] **Account/session/profile ajax handlers** (partial) → `mail/src/Ui/ProfileHandler.php`
   (`ajax_jmapBootstrap`→`jmapBootstrap`, `jmapLocalBootstrap`→`localBootstrap`,
   `ajax_enablePush`→`enablePush`, `quotaDisplay`). These four were the pleasant surprise of this
@@ -215,14 +227,14 @@ Per [[mail-folder-tree-jmap]], the "Folder ajax handlers"/"Row-id helpers" `mail
 ## Next up
 
 S/MIME, Import, Account/session/profile, and Attachment/body-fetch are done (each partially, per
-their notes above); Message action is partially done too. Remaining in `mail_ui`: the
-classic-fallback half of "Attachment/body-fetch" (`getAttachment`, `displayImage`, `download_zip`,
-`resolveAttachmentsBlock`, `get_load_email_data`, `tryJmapNativeSpecialCase`, `loadEmailBody`,
-`getdisplayableBody`, the `vfs*` family, `ajax_saveModifiedMessageSubject`,
-`ajax_fetchMessageDetails`) and the three big methods left behind in "Message action"
-(`ajax_flagMessages`/`ajax_deleteMessages`/`ajax_copyMessages`) - all `mail_ui`-constructor-injection
-candidates, all deserving their own dedicated pass rather than being rushed. After that, the
-higher-risk `Api\Mail` groups (header/search, body/attachment IMAP fetch) - those need the
+their notes above); Message action is now fully done except `ajax_saveModifiedMessageSubject`
+(reassigned to Attachment/body-fetch). Remaining in `mail_ui`: the classic-fallback half of
+"Attachment/body-fetch" (`getAttachment`, `displayImage`, `download_zip`, `resolveAttachmentsBlock`,
+`get_load_email_data`, `tryJmapNativeSpecialCase`, `loadEmailBody`, `getdisplayableBody`, the `vfs*`
+family, `ajax_saveModifiedMessageSubject`, `ajax_fetchMessageDetails`) - all `mail_ui`-constructor-
+injection candidates, deserving their own dedicated pass given the size (~15 heavily
+cross-referencing methods). After that, the higher-risk `Api\Mail` groups (header/search,
+body/attachment IMAP fetch) - those need the
 `$icServer` coupling question answered first, see "Recommended approach" above. Folder-related
 groups (`Api\Mail`'s folder management, `mail_ui`'s folder ajax handlers and row-id helpers) wait on
 [[mail-folder-tree-jmap]].
@@ -290,7 +302,7 @@ menuaction router requires:
 |---|---|---|
 | **Etemplate page rendering** | `index`, `subscription`, `displayHeader`, `displayMessage`, `showBody`, `folderManagement`, `get_actions`, `get_toolbar_actions`, `get_tree_actions`, `getDisplayToolbarActions` | Stays on `mail_ui` - genuinely needs to be the menuaction-routed class. |
 | **Folder ajax handlers** | `ajax_tree_autoloading`, `ajax_foldersubscription`, `ajax_foldertree`, `ajax_reloadNode`, `ajax_setFolderStatus`, `ajax_addFolder`, `ajax_renameFolder`, `ajax_MoveFolder`, `ajax_deleteFolder`, `ajax_folderMgmtTree_autoloading`, `ajax_folderMgmt_delete`, `ajax_compressFolder`, `ajax_emptySpam`, `ajax_emptyTrash` | Candidate `Mail\Ui\FolderHandler`, taking `Api\Mail` as a constructor dependency; `mail_ui`'s `ajax_*` methods become one-line delegations (needed anyway since EGroupware's ajax dispatch resolves `mail_ui::ajax_foo` by name - can't move the method entirely, only its body). |
-| **Message action ajax handlers** | `ajax_flagMessages`, `ajax_deleteMessages`, `ajax_copyMessages`, `ajax_sendMDN`, `ajax_saveModifiedMessageSubject`, `saveMessage` | **Partially done** → `mail/src/Ui/MessageActionHandler.php` got `saveMessage`/`ajax_sendMDN` only. The other four stayed - see Phase 2 progress notes (flag/delete/copy call back into other not-yet-extracted `mail_ui` internals; `ajax_saveModifiedMessageSubject` actually belongs with "Attachment/body-fetch ajax handlers"). |
+| **Message action ajax handlers** | `ajax_flagMessages`, `ajax_deleteMessages`, `ajax_copyMessages`, `ajax_sendMDN`, `ajax_saveModifiedMessageSubject`, `saveMessage` | **Done**, except `ajax_saveModifiedMessageSubject` which actually belongs with "Attachment/body-fetch ajax handlers" (depends on that group's `fetchMessageBytesJmap`/`replaceMessageJmap`) - all 5 others → `mail/src/Ui/MessageActionHandler.php`. `ajax_flagMessages`/`ajax_deleteMessages`/`ajax_copyMessages` (the ones originally left behind, see below) turned out extractable once `AttachmentJmap`'s methods became public and `mail_ui::get_actions()`'s visibility was widened from `private` to package-default. |
 | **Attachment/body-fetch ajax handlers** | `getAttachment`, `ajax_resolveWinmail`, `resolveWinmailJmap`, `resolveAttachmentsBlock`, `resolveAttachmentsJmap`, `jmapAttachmentsToLegacy`, `fetchBlobBytes`, `fetchMessageBytesJmap`, `fetchAttachmentJmap`, `ajax_fetchAttachments`, `createAttachmentBlock`, `download_zip`, `ajax_vfsOpen`, `ajax_vfsSave`, `vfsSaveMessages`, `vfsSaveAttachments`, `displayImage`, `get_load_email_data`, `tryJmapNativeSpecialCase`, `loadEmailBody`, `getdisplayableBody`, `resolve_inline_images`, `resolve_inline_image_byType`, `ajax_fetchMessageDetails`, `ajax_parseAddressList`, `ajax_saveModifiedMessageSubject` (moved here from "Message action ajax handlers" - depends on this group's `fetchMessageBytesJmap`/`replaceMessageJmap`) | **Partially done** - see Phase 2 progress notes below. A clean "JMAP fast path" sub-cluster (10 methods) turned out to be zero-dependency, moved to `Mail\Ui\AttachmentJmap`/`Mail\Ui\BodyHandler`. The classic-fallback methods that actually need `$this->mail_bo`/`changeProfile()` (`getAttachment`, `displayImage`, `download_zip`, `resolveAttachmentsBlock`, `get_load_email_data`, `tryJmapNativeSpecialCase`, `loadEmailBody`, `getdisplayableBody`, `ajax_vfsOpen`/`ajax_vfsSave`/`vfsSaveMessages`/`vfsSaveAttachments`, `ajax_saveModifiedMessageSubject`, `ajax_fetchMessageDetails`) stayed - same shape as Import/Message-action, not attempted this round given the size. |
 | **S/MIME ajax handlers** | `ajax_smimeAttachmentsChecker`, `ajax_smimeAddCertToContact`, `smimeAccountId`, `smimeExportCert`, `smimeExportCsr`, `smimePassphraseFormHtml` | **Done** → `mail/src/Ui/SmimeHandler.php`, except `smimePassphraseFormHtml` (stayed, coupled to `mail_ui` instance state - see Phase 2 progress notes). |
 | **Import handlers** | `importMessage`, `importMessageToFolder`, `importMessageFromVFS2DraftAndEdit`, `importMessageFromVFS2DraftAndDisplay` | **Done** (partial) → `mail/src/Ui/ImportHandler.php`, constructor-injected with `mail_ui` (not zero-coupling like S/MIME - see Phase 2 progress notes). `importMessage` stayed (dual template+ajax entry point); `importMessageFromVFS2DraftAndEdit` was dead code, deleted. |
