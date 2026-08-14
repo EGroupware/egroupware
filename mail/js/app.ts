@@ -4011,8 +4011,16 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			mail_id = this.et2.getArrayMgr("content").getEntry('mail_id');
-			attachments = this.et2.getArrayMgr("content").getEntry('attachmentsBlock');
+			// this.et2 does not reliably resolve to the "view" popup's own template (its
+			// getArrayMgr("content").getEntry(...) calls silently return undefined there,
+			// crashing every action below on a single-attachment message) - walk up from the
+			// clicked widget itself instead, same as the main-window branch above, and read
+			// mail_id off the attachment row itself (createAttachmentBlock() in
+			// class.mail_ui.inc.php always sets it there) rather than a separate lookup
+			const p = widget.getParent();
+			attachments = p.getArrayMgr("content").data;
+			mail_id = (attachments && (attachments[row_id] ?? attachments[0]))?.mail_id ??
+				this.et2.getArrayMgr("content").getEntry('mail_id');
 		}
 
 		switch (action)
