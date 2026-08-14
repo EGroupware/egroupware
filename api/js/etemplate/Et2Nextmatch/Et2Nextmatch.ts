@@ -29,7 +29,8 @@ import {
 	applyLegacyNextmatchColumnPreferences,
 	datagridColumnPreferenceValue,
 	type Et2NextmatchResolvedColumn,
-	legacyColumnSelectionCsv
+	legacyColumnSelectionCsv,
+	mapLegacyVisibleKeysToCurrentColumns
 } from "./Et2NextmatchColumnPreferences";
 import "./Headers/Header";
 import "./Headers/SortableHeader";
@@ -1193,7 +1194,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 * Prepare the current nextmatch for browser printing.
 	 *
 	 * The existing XET dialog supplies print-only columns, row count, and page
-	 * orientation.  Preferences are read as defaults but never written here.
+	 * orientation.  Column/orientation choices default from `_printPreferenceKey`
+	 * (falling back to legacy Nextmatch's `<pref>_print`/`<pref>_print_orientation`
+	 * preferences if that's all that exists), and are saved back only to
+	 * `_printPreferenceKey` - see that getter for why the legacy keys are never written.
 	 */
 	async beforePrint() : Promise<void>
 	{
@@ -1210,6 +1214,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 		const columns = new Et2DatagridColumnState().toSelectionItems(this._currentColumns);
 		const total = Math.max(0, grid.total ?? grid.rows.length);
+		const app = this._getAppName();
+		const printDefaults = this._resolvePrintPreferenceDefaults(app);
+		const columnState = new Et2DatagridColumnState();
+		const mappedDefaultIds = (printDefaults.columns || [])
+			.map((key) => columnState.encodeSelectionId(key))
+			.filter((id) => columns.some((column) => column.id === id));
+		const defaultColumnIds = mappedDefaultIds.length
+			? mappedDefaultIds
+			: columns.filter((column) => column.visibility).map((column) => column.id);
+
 		const dialog = new Et2Dialog(this.egw());
 		dialog.transformAttributes({
 			title: this.egw().lang("Print"),
@@ -1219,8 +1233,8 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			value: {
 				content: {
 					row_count: Math.min(100, total),
-					columns: columns.filter((column) => column.visibility).map((column) => column.id),
-					orientation: false
+					columns: defaultColumnIds,
+					orientation: printDefaults.orientation ?? false
 				},
 				modifications: {columns: {columns}}
 			}
@@ -1242,6 +1256,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		const orientation : "portrait" | "landscape" = (value as any)?.orientation ? "landscape" : "portrait";
 		const originalColumns = this._currentColumns.map((column) => ({...column}));
 
+		const printKey = this._printPreferenceKey;
+		if(printKey)
+		{
+			try
+			{
+				this.egw().set_preference(app, printKey, {columns: selectedColumns, orientation});
+			}
+			catch(e)
+			{
+			}
+		}
 
 		try
 		{
@@ -2996,6 +3021,93 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private get _lettersearchPreferenceKey() : string
 	{
 		return `nextmatch-${this.settings.columnselection_pref || this.columnPreferenceName}-lettersearch`;
+	}
+
+	/**
+	 * Legacy Nextmatch's print preference base, reproduced only far enough to find
+	 * an existing value - see et2_extension_nextmatch.ts `beforePrint()`, which
+	 * builds the same (oddly re-prefixed) base before appending `_print`/
+	 * `_print_orientation`. Nothing in this widget writes to those keys anymore.
+	 */
+	private get _legacyPrintPreferenceBase() : string
+	{
+		let pref = String(this.columnPreferenceName || "").trim();
+		if(!pref)
+		{
+			return "";
+		}
+		if(pref.indexOf("nextmatch") === 0)
+		{
+			pref = "nextmatch-" + pref;
+		}
+		return pref;
+	}
+
+	/**
+	 * The one preference key this widget writes print column/orientation choices to.
+	 *
+	 * Legacy Nextmatch's `<pref>_print`/`<pref>_print_orientation` keys are only ever
+	 * read (via `_resolvePrintPreferenceDefaults`) as a fallback default for users who
+	 * haven't printed since upgrading - once this key has a value, it wins and the
+	 * legacy keys are never consulted again, matching how column-visibility migration
+	 * already works elsewhere in this file (`_seedDatagridColumnPreferencesFromLegacy`).
+	 */
+	private get _printPreferenceKey() : string
+	{
+		const rowTemplateId = String(this._templateData?.rowTemplateId || "").trim();
+		const base = String(this.columnPreferenceName || "").trim() || (rowTemplateId ? `nextmatch-${rowTemplateId}` : "");
+		return base ? `${base}-print-prefs` : "";
+	}
+
+	/**
+	 * Resolve stored column/orientation defaults for the print dialog.
+	 *
+	 * `_printPreferenceKey` is authoritative once it holds a value. Until then, fall
+	 * back to reading (never writing) legacy Nextmatch's print preferences, mapping
+	 * its column-key CSV onto the current columns the same way general column-visibility
+	 * migration does.
+	 */
+	private _resolvePrintPreferenceDefaults(app : string) : { columns : string[] | null, orientation : boolean | null }
+	{
+		const printKey = this._printPreferenceKey;
+		try
+		{
+			const stored : any = printKey ? this.egw().preference(printKey, app) : null;
+			if(stored && typeof stored === "object")
+			{
+				const columns = Array.isArray(stored.columns) ? stored.columns.map(String) : null;
+				const orientation = typeof stored.orientation === "string" ? stored.orientation === "landscape" : null;
+				if(columns || orientation !== null)
+				{
+					return {columns, orientation};
+				}
+			}
+		}
+		catch(e)
+		{
+		}
+
+		const legacyBase = this._legacyPrintPreferenceBase;
+		if(!legacyBase)
+		{
+			return {columns: null, orientation: null};
+		}
+		try
+		{
+			const legacyColumns : any = this.egw().preference(`${legacyBase}_print`, app);
+			const legacyOrientation : any = this.egw().preference(`${legacyBase}_print_orientation`, app);
+			const mappedKeys = Array.isArray(legacyColumns)
+				? mapLegacyVisibleKeysToCurrentColumns(legacyColumns.map(String), this._currentColumns)
+				: [];
+			return {
+				columns: mappedKeys.length ? mappedKeys : null,
+				orientation: typeof legacyOrientation === "string" ? legacyOrientation === "landscape" : null
+			};
+		}
+		catch(e)
+		{
+			return {columns: null, orientation: null};
+		}
 	}
 
 	/**
