@@ -236,13 +236,16 @@ class Link extends Etemplate\Widget
 		// Files need to know full path in tmp directory
 		foreach($links as $key => $link) {
 			if($link['app'] == Api\Link::VFS_APPNAME) {
+				// $link['id'] is only ever a temp-file basename (see Etemplate\Widget\File) - never
+				// trust it as a path component, or it becomes an arbitrary-file-read via traversal
+				$tmp_name = basename((string)$link['id']);
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 				{
-					$path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . $link['id'];
+					$path = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . $tmp_name;
 				}
 				else
 				{
-					$path = $link['id'].'+';
+					$path = $tmp_name.'+';
 				}
 				$link['tmp_name'] = $path;
 				$links[$key]['id'] = $link;
@@ -555,7 +558,9 @@ class Link extends Etemplate\Widget
 						'id'	=> array(
 							'name'	=> $attrs['name'],
 							'type'	=> $attrs['type'],
-							'tmp_name'	=> $path.$name
+							// $name is only ever a temp-file basename - never trust it as a path
+							// component, or it becomes an arbitrary-file-read via traversal
+							'tmp_name'	=> $path.basename((string)$name)
 						)
 					);
 				}

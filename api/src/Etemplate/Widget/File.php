@@ -607,6 +607,10 @@ class File extends Etemplate\Widget
 			foreach($value as $tmp => $file)
 			{
 				if(!$file || !is_array($file)) continue;
+				// $tmp is only ever a temp-file basename - never trust it as a path component,
+				// or it becomes an arbitrary-file-read via traversal for callers who consume
+				// the resulting tmp_name without an is_uploaded_file() check
+				$tmp = basename((string)$tmp);
 				if (is_dir($GLOBALS['egw_info']['server']['temp_dir']) && is_writable($GLOBALS['egw_info']['server']['temp_dir']))
 				{
 					$path = $GLOBALS['egw_info']['server']['temp_dir'].'/'.$tmp;
