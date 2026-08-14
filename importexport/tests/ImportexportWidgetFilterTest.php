@@ -107,7 +107,7 @@ class ImportexportWidgetFilterTest extends \EGroupware\Api\Etemplate\WidgetBaseT
 	 */
 	public function testPartialLinkValueWithMissingIdIsDropped()
 	{
-		$widget = $this->createWidget();
+		$widget = $this->sendFields(array('info_contact' => array('type' => 'addressbook')));
 		$content = array('set_filter' => array(
 			'info_contact' => array('app' => 'addressbook'),
 		));
@@ -121,7 +121,7 @@ class ImportexportWidgetFilterTest extends \EGroupware\Api\Etemplate\WidgetBaseT
 
 	public function testPartialLinkValueWithEmptyStringIdIsDropped()
 	{
-		$widget = $this->createWidget();
+		$widget = $this->sendFields(array('info_contact' => array('type' => 'addressbook')));
 		$content = array('set_filter' => array(
 			'info_contact' => array('app' => 'addressbook', 'id' => ''),
 		));
@@ -136,10 +136,16 @@ class ImportexportWidgetFilterTest extends \EGroupware\Api\Etemplate\WidgetBaseT
 	/**
 	 * A complete link value (app + a real, non-empty id) must survive validation
 	 * completely unchanged.
+	 *
+	 * validate() only accepts keys present in the 'customfields' allowlist that
+	 * beforeSendToClient() computes and stores server-side (see class doc there) - so,
+	 * like a real submit, this test must render the field via sendFields() first to
+	 * populate that allowlist, or validate() drops the value as an unknown field before
+	 * ever reaching the link-completeness check this test is about.
 	 */
 	public function testCompleteLinkValueSurvivesUnchanged()
 	{
-		$widget = $this->createWidget();
+		$widget = $this->sendFields(array('info_contact' => array('type' => 'addressbook')));
 		$link = array('app' => 'addressbook', 'id' => 123);
 		$content = array('set_filter' => array(
 			'info_contact' => $link,
@@ -157,10 +163,16 @@ class ImportexportWidgetFilterTest extends \EGroupware\Api\Etemplate\WidgetBaseT
 	 * the array_key_exists('app', $value) check doesn't over-match: a plain scalar
 	 * (eg. a select filter value) and a date-range-shaped array (no 'app' key) must both
 	 * survive untouched.
+	 *
+	 * As above, both fields must first go through sendFields() so they're on the
+	 * server-computed 'customfields' allowlist validate() now requires.
 	 */
 	public function testNonLinkValuesPassThroughUnchanged()
 	{
-		$widget = $this->createWidget();
+		$widget = $this->sendFields(array(
+			'info_type' => array('type' => 'select', 'values' => array('task' => 'Task')),
+			'info_startdate' => array('type' => 'date'),
+		));
 		$range = array('from' => '2026-01-01', 'to' => '2026-01-31');
 		$content = array('set_filter' => array(
 			'info_type' => 'task',
@@ -189,7 +201,7 @@ class ImportexportWidgetFilterTest extends \EGroupware\Api\Etemplate\WidgetBaseT
 	#[\PHPUnit\Framework\Attributes\DataProvider('zeroIdProvider')]
 	public function testZeroIdIsTreatedAsEmpty($id)
 	{
-		$widget = $this->createWidget();
+		$widget = $this->sendFields(array('info_contact' => array('type' => 'addressbook')));
 		$content = array('set_filter' => array(
 			'info_contact' => array('app' => 'addressbook', 'id' => $id),
 		));
