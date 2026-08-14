@@ -1716,6 +1716,19 @@ export class MailJmap
 	{
 		const addressList = (list : { name? : string, email : string }[]) =>
 			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
+		// a real JMAP server (eg. Stalwart) parses From/To/Cc/Bcc itself - if its own parser
+		// isn't RFC 2047-aware, a sending MUA's malformed encoded-word (a literal, unencoded
+		// comma inside a quoted display name - valid per RFC 2047, but breaks a naive
+		// comma-split) trips it up in one of two ways seen so far: either the address boundary
+		// itself gets split wrong (an entry ends up with no usable email at all), or the
+		// boundary is found correctly but the display-name decode leaves stray backslashes/
+		// quotes behind (a literal "\" never legitimately appears in a decoded display name).
+		// The local IMAP shim never has this problem (JmapShim::addressListFromHeader() already
+		// re-parses raw headers unconditionally), so this only ever fires for a real server's
+		// own mistake.
+		const suspectFields = (['from', 'to', 'cc', 'bcc'] as const).filter(field =>
+			(email[field] || []).some((a : { name? : string, email? : string }) =>
+				!a.email || a.email.indexOf('@') < 0 || (a.name && a.name.indexOf('\\') >= 0)));
 
 		const keywords : Record<string, boolean> = email.keywords || {};
 		const flags : Record<string, string> = {};
@@ -1825,6 +1838,72 @@ export class MailJmap
 			flags,
 			status_icon,
 			emailTag: this.egw.preference('emailTag', 'mail') || 'onlyname',
+			// non-empty only for the rare broken-server case above - MailApp.renderMessageInto()
+			// (mail/js/app.ts) checks this to trigger repairAddressField() on demand, the same
+			// way it already does for attachmentsBlock
+			suspectAddressFields: suspectFields,
 		};
+	}
+
+	/**
+	 * On-demand repair for a From/To/Cc/Bcc field whose JMAP-provided address list looks broken
+	 * (an entry with no usable email address, or a valid one with a mangled display name) - see
+	 * email2row()'s suspectAddressFields and mail_ui::ajax_parseAddressList()'s docblock for the
+	 * full story. Fetches the raw header text directly from the JMAP server (header:<field>,
+	 * RFC 8621 4.1.3's default "Raw" form) and re-parses it server-side via the same
+	 * Api\Mail::parseAddressList() the classic pre-JMAP code has always used.
+	 *
+	 * Note this can only repair what the server's raw header actually still contains - if the
+	 * server itself already rewrote/re-encoded the header when storing the message (seen live
+	 * against Stalwart for one particularly malformed sender), the "raw" value is that rewrite,
+	 * not the true original wire bytes, and this can only do the best possible reconstruction
+	 * from what's left (Api\Mail::parseAddressList()'s repair heuristic still meaningfully
+	 * improves such cases even then, just not to 100% original fidelity).
+	 *
+	 * @param rowId
+	 * @param field 'from'|'to'|'cc'|'bcc'
+	 * @return null on any failure or if the server has nothing for that raw-header property -
+	 *  caller keeps whatever (broken) list it already had rather than showing nothing
+	 */
+	async repairAddressField(rowId : string, field : 'from' | 'to' | 'cc' | 'bcc') : Promise<{ name? : string, email : string }[] | null>
+	{
+		try
+		{
+			const ref = this.messageReference(rowId);
+			const token = await this.ensureToken(ref.profileID);
+			if (!token)
+			{
+				return null;
+			}
+			// no explicit ":asRaw" suffix - RFC 8621 4.1.3 defaults an unqualified "header:name"
+			// property to the Raw form already, and Stalwart echoes the property key back
+			// canonicalized to this default form regardless of which explicit suffix was
+			// requested - requesting the bare form here means the response key always matches
+			// what we're looking for, on Stalwart and any other spec-compliant server alike.
+			const property = `header:${field}`;
+			const args : any = {
+				accountId: token.accountId,
+				ids: [ref.emailId],
+				properties: [property],
+			};
+			if (token.isLocal)
+			{
+				args.mailboxId = ref.mailboxId;
+			}
+			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
+				emails: t.Email.get(args) as any,
+			}));
+			const raw = (emails.list || [])[0] && (emails.list || [])[0][property];
+			if (!raw)
+			{
+				return null;
+			}
+			return await this.egw.request('mail.mail_ui.ajax_parseAddressList', [raw]);
+		}
+		catch (e)
+		{
+			console.error('MailJmap.repairAddressField(): failed', e);
+			return null;
+		}
 	}
 }

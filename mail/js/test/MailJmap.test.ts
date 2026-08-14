@@ -134,3 +134,69 @@ describe("MailJmap.fetchRows() held-back push refresh - preview snippet", () =>
 			"row must carry the server's snippet when the setting is on");
 	});
 });
+
+/**
+ * Contract: MailJmap.email2row() flags a From/To/Cc/Bcc field as "suspect" when the server's
+ * own address-list parsing left an entry with no usable email address - the shape a real JMAP
+ * server's (eg. Stalwart's) address parser produces when it isn't RFC 2047-aware and mis-splits
+ * a sending MUA's malformed encoded-word (a literal, unencoded comma inside a quoted display
+ * name - valid per RFC 2047, but breaks a naive comma-split). MailApp.renderMessageInto()
+ * (mail/js/app.ts) uses this flag to trigger an on-demand repair - see
+ * mail_ui::ajax_parseAddressList()'s docblock for the full story.
+ */
+describe("MailJmap.email2row() - suspect address field detection", () =>
+{
+	it("flags a field whose address list has an entry with no usable email", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { properties? : string[] } = {};
+		const email = fakeEmail({
+			cc: [{name: "Jane Doe", email: "jane.doe@example.com"}, {name: "broken fragment", email: ""}],
+		});
+		primeToken(jmap, "1", createFakeClient(email, capture));
+
+		const result : any = await jmap.fetchRows("exec", {refresh: ["1::1::mbox1::email1"]},
+			{filter2: ""}, "widget", [], 0);
+
+		assert.include(result.data["1::1::mbox1::email1"].suspectAddressFields, "cc");
+	});
+
+	/**
+	 * Real-world shape found live against Stalwart: the address boundary is found correctly
+	 * (a valid, complete email address), but the display-name decode leaves stray backslashes/
+	 * quotes behind - eg. name: '\\"Example_Corp", " Consulting\\"' for what should have been
+	 * "Example Corp, Consulting". A literal backslash never legitimately appears in a decoded
+	 * display name, so this is a reliable "something went wrong" signal on its own, even though
+	 * the email address itself is completely valid.
+	 */
+	it("flags a field whose entry has a valid email but a backslash-mangled display name", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { properties? : string[] } = {};
+		const email = fakeEmail({
+			cc: [{name: "Jane Doe", email: "jane.doe@example.com"},
+				{name: '\\"Example Corp", " Consulting\\"', email: "info@example.com"}],
+		});
+		primeToken(jmap, "1", createFakeClient(email, capture));
+
+		const result : any = await jmap.fetchRows("exec", {refresh: ["1::1::mbox1::email1"]},
+			{filter2: ""}, "widget", [], 0);
+
+		assert.include(result.data["1::1::mbox1::email1"].suspectAddressFields, "cc");
+	});
+
+	it("does not flag a well-formed address list", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { properties? : string[] } = {};
+		const email = fakeEmail({
+			cc: [{name: "Jane Doe", email: "jane.doe@example.com"}, {name: "John Smith", email: "john.smith@example.com"}],
+		});
+		primeToken(jmap, "1", createFakeClient(email, capture));
+
+		const result : any = await jmap.fetchRows("exec", {refresh: ["1::1::mbox1::email1"]},
+			{filter2: ""}, "widget", [], 0);
+
+		assert.deepEqual(result.data["1::1::mbox1::email1"].suspectAddressFields, []);
+	});
+});

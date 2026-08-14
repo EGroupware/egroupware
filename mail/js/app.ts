@@ -1452,6 +1452,39 @@ export class MailApp extends EgwApp
 				}
 			});
 		}
+		// A real JMAP server (eg. Stalwart) parses From/To/Cc/Bcc itself - if its own address
+		// parser isn't RFC 2047-aware, MailJmap.email2row() flags the affected field(s) here
+		// (an entry with no usable email address). Re-fetch+re-parse just that one broken field,
+		// on demand, the same "only when it actually looks wrong" way attachmentsBlock is above -
+		// never for every message. The local IMAP shim never sets this (it already re-parses raw
+		// headers unconditionally), so this only ever fires for a real server's own mistake.
+		if (Array.isArray(data.suspectAddressFields) && data.suspectAddressFields.length)
+		{
+			const fields = data.suspectAddressFields;
+			data.suspectAddressFields = [];
+			fields.forEach((field : 'from' | 'to' | 'cc' | 'bcc') =>
+			{
+				this.jmap.repairAddressField(rowId, field).then((list) =>
+				{
+					if (!list)
+					{
+						return;
+					}
+					const formatted = list.map(a => a.name ? `${a.name} <${a.email}>` : a.email);
+					if (field === 'from' || field === 'to')
+					{
+						data[field + 'address'] = formatted[0] || '';
+						data['additional' + field + 'address'] = formatted.slice(1);
+					}
+					else
+					{
+						data[field + 'address'] = formatted;
+					}
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
+				});
+			});
+		}
 
 		if (data.toaddress||data.fromaddress)
 		{

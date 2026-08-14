@@ -4799,6 +4799,40 @@ class mail_ui
 	}
 
 	/**
+	 * Re-parse a raw From/To/Cc/Bcc header via Api\Mail::parseAddressList(), for a real JMAP
+	 * server's (eg. Stalwart's) own address-list parsing to fall back to, on-demand, when its
+	 * result looks broken.
+	 *
+	 * Real JMAP servers parse From/To/Cc/Bcc themselves - EGroupware never sees the raw header
+	 * for those accounts (mail/js/jmap.ts talks to them directly from the browser, bypassing PHP
+	 * entirely, see MailJmap.ensureToken()). If that server's own parser isn't RFC 2047-aware
+	 * (a sending MUA's malformed encoded-word can contain a literal, unencoded comma inside a
+	 * quoted display name - valid per RFC 2047, but breaks a naive comma-split), the resulting
+	 * address list comes back with an entry either missing its email address, or with a valid
+	 * email but a backslash/quote-mangled display name - MailJmap.email2row()'s
+	 * suspectAddressFields detects exactly those shapes client-side and calls this endpoint,
+	 * requesting the raw header itself (JMAP header:X, RFC 8621 4.1.3's default "Raw" form) as a
+	 * one-off repair, instead of doing this for every message regardless of whether its
+	 * addresses actually need it.
+	 *
+	 * The local IMAP shim doesn't need this at all - JmapShim::addressListFromHeader() already
+	 * re-parses raw headers server-side unconditionally, for every message, since it's already
+	 * making a local IMAP round-trip either way.
+	 *
+	 * @param string $_header raw (still RFC 2047-encoded, un-decoded) header value, eg.
+	 *  'Jane Doe <jane@example.com>, "Example Corp, Consulting" <info@example.com>'
+	 * @return void
+	 */
+	function ajax_parseAddressList($_header)
+	{
+		$response = Api\Json\Response::get();
+
+		// generous but bounded - no legitimate address-list header gets anywhere near this,
+		// just a defensive cap against a client sending something absurd
+		$response->data(JmapShim::addressList(Mail::parseAddressList(substr((string)$_header, 0, 8000))));
+	}
+
+	/**
 	 * Fetch a single row's full header/address/attachment detail, shaped exactly like
 	 * mail_preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
 	 * email2row() (mail/js/jmap.ts) produces for list rows.

@@ -544,6 +544,14 @@ class JmapShim
 
 		$query = new \Horde_Imap_Client_Fetch_Query();
 		$query->envelope();
+		// From/To/Cc/Bcc are re-parsed from the raw header text below (addressListFromHeader()),
+		// not trusted from $envelope->from/to/cc/bcc as-is - the IMAP server's own ENVELOPE address
+		// parser isn't RFC 2047-aware and can misparse a sending MUA's malformed encoded-word (eg.
+		// one containing a literal, unencoded comma inside a quoted display name), splitting it into
+		// bogus extra addresses. Api\Mail::parseAddressList() already has the repair logic for
+		// exactly this (see its "no mailbox or host part" handling) that the classic pre-JMAP code
+		// path has long relied on - this restores that same robustness for the JMAP-native path.
+		$query->headers('addresses', ['From', 'To', 'Cc', 'Bcc'], ['cache' => true, 'peek' => true]);
 		$query->flags();
 		$query->size();
 		$query->structure();
@@ -951,6 +959,7 @@ class JmapShim
 	{
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
+		$addressHeaders = $data->getHeaders('addresses', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
 
 		$hasAttachment = $structure && self::structureHasAttachment($structure);
 
@@ -962,10 +971,10 @@ class JmapShim
 			'sentAt' => self::imapDate($envelope->date),
 			'subject' => (string)$envelope->subject,
 			'preview' => $wantPreview ? self::preview($imap, $mailbox, $uid, $structure, $data) : '',
-			'from' => self::addressList($envelope->from),
-			'to' => self::addressList($envelope->to),
-			'cc' => self::addressList($envelope->cc),
-			'bcc' => self::addressList($envelope->bcc),
+			'from' => self::addressListFromHeader($addressHeaders, 'From') ?? self::addressList($envelope->from),
+			'to' => self::addressListFromHeader($addressHeaders, 'To') ?? self::addressList($envelope->to),
+			'cc' => self::addressListFromHeader($addressHeaders, 'Cc') ?? self::addressList($envelope->cc),
+			'bcc' => self::addressListFromHeader($addressHeaders, 'Bcc') ?? self::addressList($envelope->bcc),
 			'hasAttachment' => $hasAttachment,
 		];
 		if ($wantBlobId)
@@ -1626,6 +1635,38 @@ class JmapShim
 		});
 		$preview = trim(preg_replace('/\s+/u', ' ', strip_tags(implode(' ', $lines))));
 		return mb_substr($preview, 0, 200);
+	}
+
+	/**
+	 * Re-parse a raw From/To/Cc/Bcc header via Api\Mail::parseAddressList() instead of trusting
+	 * the IMAP server's own ENVELOPE-parsed addresses - see emailGet()'s query() comment for why
+	 * (a sending MUA's malformed encoded-word containing a literal, unencoded comma inside a
+	 * quoted display name can trip up the server's own, not-2047-aware address splitter, which
+	 * Api\Mail::parseAddressList() already has repair logic for - see its "no mailbox or host
+	 * part" handling, long relied on by the classic pre-JMAP code path).
+	 *
+	 * Returns null (caller falls back to the envelope-derived list) when the header is missing
+	 * or empty - NOT the same as "parsed to zero addresses", which is a valid, different result
+	 * for a genuinely absent header (eg. no Cc) that the caller must not fall back away from.
+	 *
+	 * @param ?\Horde_Mime_Headers $headers
+	 * @param string $name header name, eg. "From"
+	 * @return ?array [{name?: string, email: string}]
+	 */
+	private static function addressListFromHeader(?\Horde_Mime_Headers $headers, string $name) : ?array
+	{
+		if (!$headers)
+		{
+			return null;
+		}
+		$arr = array_change_key_case($headers->toArray(), CASE_UPPER);
+		$value = $arr[strtoupper($name)] ?? null;
+		$value = is_array($value) ? reset($value) : $value;
+		if ($value === null || trim((string)$value) === '')
+		{
+			return null;
+		}
+		return self::addressList(Api\Mail::parseAddressList((string)$value));
 	}
 
 	/**
