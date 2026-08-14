@@ -784,7 +784,7 @@ abstract class admin_cmd
 		{
 			admin_cmd::_instanciate_acl($this->creator);
 			// todo: check only if and with $this->creator
-			if (!admin_cmd::$acl->check('run',1,'admin') &&		// creator is no longer admin
+			if (!admin_cmd::$acl->check('run',1,'admin') ||		// creator is no longer admin
 				$extra_acl && $extra_deny && admin_cmd::$acl->check($extra_acl,$extra_deny,'admin'))	// creator is explicitly forbidden to do something
 			{
 				throw new Api\Exception\NoPermission\Admin();
