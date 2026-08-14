@@ -65,7 +65,7 @@ class admin_categories
 		{
 			throw new Api\Exception\NoPermission\Admin();
 		}
-		if ($GLOBALS['egw']->acl->check('global_categorie',1,'admin'))
+		if ($GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 1))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
@@ -79,12 +79,12 @@ class admin_categories
 	{
 		if (is_null(self::$acl_search))
 		{
-			self::$acl_search = !$GLOBALS['egw']->acl->check('global_categorie',2,'admin');
-			self::$acl_add    = !$GLOBALS['egw']->acl->check('global_categorie',4,'admin');
-			self::$acl_view   = !$GLOBALS['egw']->acl->check('global_categorie',8,'admin');
-			self::$acl_edit   = !$GLOBALS['egw']->acl->check('global_categorie',16,'admin');
-			self::$acl_delete = !$GLOBALS['egw']->acl->check('global_categorie',32,'admin');
-			self::$acl_add_sub= !$GLOBALS['egw']->acl->check('global_categorie',64,'admin');
+			self::$acl_search = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 2);
+			self::$acl_add    = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 4);
+			self::$acl_view   = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 8);
+			self::$acl_edit   = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 16);
+			self::$acl_delete = !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 32);
+			self::$acl_add_sub= !$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 64);
 		}
 	}
 

@@ -46,12 +46,12 @@ class admin_hooks
 		if ($GLOBALS['egw_info']['user']['apps']['admin'])
 		{
 
-			if (!$GLOBALS['egw']->acl->check('site_config_acce', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 1))
 			{
 				$file['Site Configuration'] = Egw::link('/index.php', 'menuaction=admin.admin_config.index&appname=admin&ajax=true');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('account_access', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('account_access', 1))
 			{
 				$file['User Accounts'] = array(
 					Api\Etemplate\Widget\Tree::ID => '/accounts',
@@ -59,13 +59,13 @@ class admin_hooks
 				);
 			}
 
-			if (!$GLOBALS['egw']->acl->check('account_access', 16, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('account_access', 16))
 			{
 				$file['Bulk changes'] = Egw::link('/index.php', 'menuaction=admin.admin_passwordreset.index&ajax=true');
 				$file['Application passwords'] = Egw::link('/index.php', 'menuaction=admin.EGroupware\\Admin\\Token.index&ajax=true');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('group_access', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('group_access', 1))
 			{
 				$file['User Groups'] = array(
 					Api\Etemplate\Widget\Tree::ID => '/groups',
@@ -74,27 +74,27 @@ class admin_hooks
 				);
 			}
 
-			if (!$GLOBALS['egw']->acl->check('global_categorie', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('global_categorie', 1))
 			{
 				$file['Global Categories'] = Egw::link('/index.php', 'menuaction=admin.admin_categories.index&appname=phpgw&ajax=true');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('mainscreen_messa', 1, 'admin') || !$GLOBALS['egw']->acl->check('mainscreen_messa', 2, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('mainscreen_messa', 1) || !$GLOBALS['egw']->acl->checkAdminDeny('mainscreen_messa', 2))
 			{
 				$file['Change Login Screen Message'] = Egw::link('/index.php', 'menuaction=admin.admin_messages.index');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('current_sessions', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('current_sessions', 1))
 			{
 				$file['View Sessions'] = Egw::link('/index.php', 'menuaction=admin.admin_accesslog.sessions&ajax=true');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('access_log_acces', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('access_log_acces', 1))
 			{
 				$file['View Access Log'] = Egw::link('/index.php', 'menuaction=admin.admin_accesslog.index&ajax=true');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('applications_acc', 16, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('applications_acc', 16))
 			{
 				$file['Clear cache and register hooks'] = array(
 					'no_lang' => true,
@@ -102,17 +102,17 @@ class admin_hooks
 				);
 			}
 
-			if (!$GLOBALS['egw']->acl->check('asyncservice_acc', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('asyncservice_acc', 1))
 			{
 				$file['Asynchronous timed services'] = Egw::link('/index.php', 'menuaction=admin.admin_asyncservice.index');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('db_backup_access', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('db_backup_access', 1))
 			{
 				$file['DB backup and restore'] = Egw::link('/index.php', 'menuaction=admin.admin_db_backup.index');
 			}
 
-			if (!$GLOBALS['egw']->acl->check('info_access', 1, 'admin'))
+			if (!$GLOBALS['egw']->acl->checkAdminDeny('info_access', 1))
 			{
 				$file['phpInfo'] = "javascript:egw.openPopup('" . Egw::link('/admin/phpinfo.php', '', false) . "',960,600,'phpinfoWindow')";
 			}
@@ -148,13 +148,9 @@ class admin_hooks
 	 */
 	function ajax_clear_cache()
 	{
-		// this class has no constructor to gate it, and the deny-mask acl-check below fails open
-		// for a caller with no admin ACL rows at all - require granted admin rights explicitly
-		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
-		{
-			throw new Api\Exception\NoPermission\Admin();
-		}
-		if ($GLOBALS['egw']->acl->check('applications_acc', 16, 'admin'))
+		// this class has no constructor to gate it; checkAdminDeny() fails closed for a caller
+		// with no admin ACL rows at all, not just a deny-flagged admin
+		if ($GLOBALS['egw']->acl->checkAdminDeny('applications_acc', 16))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}
@@ -208,7 +204,7 @@ class admin_hooks
 			)
 		);
 
-		if (!$GLOBALS['egw']->acl->check('current_sessions', 1, 'admin'))    // no rights to view
+		if (!$GLOBALS['egw']->acl->checkAdminDeny('current_sessions', 1))    // no rights to view
 		{
 			$actions[] = array(
 				'description' => 'Login History',
@@ -218,7 +214,7 @@ class admin_hooks
 			);
 		}
 
-		if (!$GLOBALS['egw']->acl->check('account_access', 64, 'admin'))    // no rights to set ACL-rights
+		if (!$GLOBALS['egw']->acl->checkAdminDeny('account_access', 64))    // no rights to set ACL-rights
 		{
 			$actions[] = array(
 				'description' => 'Deny access',

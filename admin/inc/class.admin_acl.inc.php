@@ -301,7 +301,7 @@ class admin_acl
 		if (is_null($admin_access))
 		{
 			$admin_access = isset($GLOBALS['egw_info']['user']['apps']['admin']) &&
-				!$GLOBALS['egw']->acl->check('account_access', 64, 'admin');	// ! because this denies access!
+				!$GLOBALS['egw']->acl->checkAdminDeny('account_access', 64);	// ! because this denies access!
 			$own_access = $admin_access || isset($GLOBALS['egw_info']['user']['apps']['preferences']);
 		}
 		if (!(int)$account_id || !((int)$location == (int)$GLOBALS['egw_info']['user']['account_id'] && $location !== 'run' ?

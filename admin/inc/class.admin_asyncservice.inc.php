@@ -23,7 +23,7 @@ class admin_asyncservice
 
 	function index()
 	{
-		if ($GLOBALS['egw']->acl->check('asyncservice_acc',1,'admin'))
+		if ($GLOBALS['egw']->acl->checkAdminDeny('asyncservice_acc', 1))
 		{
 			Egw::redirect_link('/index.php');
 		}
