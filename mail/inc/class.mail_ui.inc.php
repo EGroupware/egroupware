@@ -23,6 +23,8 @@ use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Mail\JmapShim;
+use EGroupware\Mail\Ui\ImportHandler;
+use EGroupware\Mail\Ui\SmimeHandler;
 
 /**
  * Mail User Interface
@@ -200,6 +202,26 @@ class mail_ui
 			if ($_GET['menuaction'] != 'mail.mail_ui.index') self::callWizard($e->getMessage(),true,'error',false);
 		}
 		if (Mail::$debugTimes) Mail::logRunTimes($starttime,null,'',__METHOD__.__LINE__);
+	}
+
+	private ?SmimeHandler $_smimeHandler = null;
+
+	/**
+	 * S/MIME certificate/key ajax-handler sub-object (gets automatically instantiated, if used)
+	 */
+	private function smimeHandler() : SmimeHandler
+	{
+		return $this->_smimeHandler ??= new SmimeHandler();
+	}
+
+	private ?ImportHandler $_importHandler = null;
+
+	/**
+	 * Message-import sub-object (gets automatically instantiated, if used)
+	 */
+	private function importHandler() : ImportHandler
+	{
+		return $this->_importHandler ??= new ImportHandler($this);
 	}
 
 	/**
@@ -1933,8 +1955,7 @@ class mail_ui
 	 */
 	function ajax_smimeAttachmentsChecker ()
 	{
-		$response = Api\Json\Response::get();
-		$response->data(true);
+		$this->smimeHandler()->ajaxAttachmentsChecker();
 	}
 
 	/**
@@ -1943,30 +1964,7 @@ class mail_ui
 	 */
 	function ajax_smimeAddCertToContact ($_metadata)
 	{
-		$response = Api\Json\Response::get();
-		$ab = new addressbook_bo();
-		$response->data($ab->set_smime_keys(array($_metadata['email'] => $_metadata['cert'])));
-	}
-
-	/**
-	 * Vet $_GET['account_id'] for the smimeExportCert()/smimeExportCsr() download endpoints
-	 *
-	 * Only trusted for users with admin rights: the credential was stored on
-	 * behalf of another user (eg. an admin managing a shared/other user's
-	 * mail account via admin_mail's called_for) - Mail\Smime::get_acc_smime()
-	 * otherwise only looks up the current user's own credentials. Without
-	 * this check, any logged in user could pass an arbitrary account_id to
-	 * export another user's S/MIME private key.
-	 *
-	 * @return int|null null uses get_acc_smime()'s own (current user) default
-	 */
-	private function smimeAccountId()
-	{
-		if (empty($_GET['account_id']) || !isset($GLOBALS['egw_info']['user']['apps']['admin']))
-		{
-			return null;
-		}
-		return (int)$_GET['account_id'];
+		$this->smimeHandler()->ajaxAddCertToContact($_metadata);
 	}
 
 	/**
@@ -1975,42 +1973,18 @@ class mail_ui
 	 */
 	function smimeExportCert()
 	{
-		if (empty($_GET['acc_id'])) return false;
-		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id'], '', $this->smimeAccountId());
-		$length = 0;
-		$mime = 'application/x-pkcs12';
-		Api\Header\Content::safe($acc_smime['acc_smime_password'], "certificate.p12", $mime, $length, true, true);
-		echo $acc_smime['acc_smime_password'];
-		exit();
+		return $this->smimeHandler()->exportCert();
 	}
 
 	/**
 	 * Export a CSR (certificate signing request) generated from the stored
 	 * smime private key, so a CA can (re-)issue a certificate for it
 	 *
-	 * See smimeAccountId() docblock re. $_GET['account_id'].
-	 *
 	 * @return boolean return false if not successful
 	 */
 	function smimeExportCsr()
 	{
-		if (empty($_GET['acc_id'])) return false;
-		$acc_smime = Mail\Smime::get_acc_smime($_GET['acc_id'], '', $this->smimeAccountId());
-		if (empty($acc_smime['pkey']))
-		{
-			echo lang('No S/MIME private key stored for this account.');
-			exit();
-		}
-		$dn = !empty($acc_smime['cert']) ? Mail\Smime::dn_from_cert($acc_smime['cert']) : array();
-		if (!($csr = Mail\Smime::generate_csr($acc_smime['pkey'], $dn)))
-		{
-			echo lang('Could not generate CSR.');
-			exit();
-		}
-		$length = 0;
-		Api\Header\Content::safe($csr, "certificate.csr", 'application/pkcs10', $length, true, true);
-		echo $csr;
-		exit();
+		return $this->smimeHandler()->exportCsr();
 	}
 
 	/**
@@ -3712,7 +3686,7 @@ class mail_ui
 			$importFailed = false;
 			try
 			{
-				$messageUid = $this->importMessageToFolder($file,$destination,$importID);
+				$messageUid = $this->importHandler()->importMessageToFolder($file,$destination,$importID);
 			    $linkData = array
 			    (
 					'id' => $this->createRowID($destination, $messageUid, true),
@@ -3748,103 +3722,6 @@ class mail_ui
 	}
 
 	/**
-	 * importMessageToFolder
-	 *
-	 * @param array $_formData Array with information of name, type, file and size
-	 * @param string $_folder (passed by reference) will set the folder used. must be set with a folder, but will hold modifications if
-	 *					folder is modified
-	 * @param string $importID ID for the imported message, used by attachments to identify them unambiguously
-	 * @return mixed $messageUID or exception
-	 */
-	function importMessageToFolder($_formData,&$_folder,$importID='')
-	{
-		$importfailed = false;
-		//error_log(__METHOD__.__LINE__.array2string($_formData));
-		if (empty($_formData['file'])) $_formData['file'] = $_formData['tmp_name'];
-		// check if formdata meets basic restrictions (in tmp dir, or vfs, mimetype, etc.)
-		$alert_msg = '';
-		try
-		{
-			$tmpFileName = Mail::checkFileBasics($_formData,$importID);
-		}
-		catch (Api\Exception\WrongUserinput $e)
-		{
-			$importfailed = true;
-			$alert_msg .= $e->getMessage();
-		}
-		// -----------------------------------------------------------------------
-		if ($importfailed === false)
-		{
-			$mailObject = new Api\Mailer();
-			try
-			{
-				$this->mail_bo->parseFileIntoMailObject($mailObject, $tmpFileName);
-			}
-			catch (Api\Exception\AssertionFailed $e)
-			{
-				$importfailed = true;
-				$alert_msg .= $e->getMessage();
-			}
-			$this->mail_bo->openConnection();
-			if (empty($_folder))
-			{
-				$importfailed = true;
-				$alert_msg .= lang("Import of message %1 failed. Destination Folder not set.",$_formData['name']);
-			}
-			$delimiter = $this->mail_bo->getHierarchyDelimiter();
-			if($_folder=='INBOX'.$delimiter) $_folder='INBOX';
-			if ($importfailed === false)
-			{
-				if ($this->mail_bo->folderExists($_folder,true)) {
-					try
-					{
-						$messageUid = $this->mail_bo->appendMessage($_folder,
-							$mailObject->getRaw(),
-							null,'\\Seen');
-					}
-					catch (Api\Exception\WrongUserinput $e)
-					{
-						$importfailed = true;
-						$alert_msg .= lang("Import of message %1 failed. Could not save message to folder %2 due to: %3",$_formData['name'],$_folder,$e->getMessage());
-					}
-				}
-				else
-				{
-					$importfailed = true;
-					$alert_msg .= lang("Import of message %1 failed. Destination Folder %2 does not exist.",$_formData['name'],$_folder);
-				}
-			}
-		}
-		// set the url to open when refreshing
-		if ($importfailed == true)
-		{
-			throw new Api\Exception\WrongUserinput($alert_msg);
-		}
-		else
-		{
-			return $messageUid;
-		}
-	}
-
-	/**
-	 * importMessageFromVFS2DraftAndEdit
-	 *
-	 * @param array $formData Array with information of name, type, file and size; file is required,
-	 *                               name, type and size may be set here to meet the requirements
-	 *						Example: $formData['name']	= 'a_email.eml';
-	 *								 $formData['type']	= 'message/rfc822';
-	 *								 $formData['file']	= 'vfs://default/home/leithoff/a_email.eml';
-	 *								 $formData['size']	= 2136;
-	 * @return void
-	 */
-	function importMessageFromVFS2DraftAndEdit($formData='')
-	{
-		$this->importMessageFromVFS2DraftAndDisplay($formData,'edit');
-	}
-
-	/**
-	 * importMessageFromVFS2DraftAndDisplay
-	 *
 	 * @param array $formData Array with information of name, type, file and size; file is required,
 	 *                               name, type and size may be set here to meet the requirements
 	 *						Example: $formData['name']	= 'a_email.eml';
@@ -3856,59 +3733,7 @@ class mail_ui
 	 */
 	function importMessageFromVFS2DraftAndDisplay($formData='',$mode='display')
 	{
-		if (empty($formData)) if (isset($_REQUEST['formData'])) $formData = $_REQUEST['formData'];
-		//error_log(__METHOD__.__LINE__.':'.array2string($formData).' Mode:'.$mode.'->'.function_backtrace());
-		$draftFolder = $this->mail_bo->getDraftFolder(false);
-		$importID = Mail::getRandomString();
-
-		// handling for mime-data hash
-		if (!empty($formData['data']))
-		{
-			$formData['file'] = 'egw-data://'.$formData['data'];
-		}
-		// name should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && empty($formData['name']))
-		{
-			$buff = explode('/',$formData['file']);
-			if (is_array($buff)) $formData['name'] = array_pop($buff); // take the last part as name
-		}
-		// type should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && empty($formData['type']))
-		{
-			$buff = explode('.',$formData['file']);
-			$suffix = '';
-			if (is_array($buff)) $suffix = array_pop($buff); // take the last extension to check with ext2mime
-			if (!empty($suffix)) $formData['type'] = Api\MimeMagic::ext2mime($suffix);
-		}
-		// size should be set to meet the requirements of checkFileBasics
-		if (parse_url($formData['file'],PHP_URL_SCHEME) == 'vfs' && !isset($formData['size']))
-		{
-			$formData['size'] = strlen($formData['file']); // set some size, to meet requirements of checkFileBasics
-		}
-		try
-		{
-			$messageUid = $this->importMessageToFolder($formData,$draftFolder,$importID);
-			$linkData = array
-			(
-		        'menuaction'    => ($mode=='display'?'mail.mail_ui.displayMessage':'mail.mail_compose.composeFromDraft'),
-				'id'		=> $this->createRowID($draftFolder,$messageUid,true),
-				'deleteDraftOnClose' => 1,
-			);
-			if ($mode!='display')
-			{
-				unset($linkData['deleteDraftOnClose']);
-				$linkData['method']	='importMessageToMergeAndSend';
-			}
-			else
-			{
-				$linkData['mode']=$mode;
-			}
-			Egw::redirect_link('/index.php',$linkData);
-		}
-		catch (Api\Exception\WrongUserinput $e)
-		{
-			Framework::window_close($e->getMessage());
-		}
+		$this->importHandler()->importMessageFromVFS2DraftAndDisplay($formData, $mode);
 	}
 
 	/**

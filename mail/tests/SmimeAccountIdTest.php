@@ -1,6 +1,6 @@
 <?php
 /**
- * EGroupware Mail: security test for mail_ui's smimeExportCert()/smimeExportCsr() account_id guard
+ * EGroupware Mail: security test for Mail\Ui\SmimeHandler's account_id guard
  *
  * @link http://www.egroupware.org
  * @package mail
@@ -10,27 +10,14 @@
 require_once realpath(__DIR__.'/../../api/tests/LoggedInTest.php');
 
 use EGroupware\Api;
+use EGroupware\Mail\Ui\SmimeHandler;
 
 /**
- * Test-only subclass exposing the private smimeAccountId(), so it can be tested without going
- * through the full GET-download endpoints (which echo binary/PEM data and exit()).
- */
-class TestableMailUiSmimeAccountId extends \mail_ui
-{
-	public function callSmimeAccountId()
-	{
-		$ref = new ReflectionMethod(\mail_ui::class, 'smimeAccountId');
-		$ref->setAccessible(true);
-		return $ref->invoke($this);
-	}
-}
-
-/**
- * mail_ui::smimeAccountId() vets $_GET['account_id'] for smimeExportCert()/smimeExportCsr():
- * without this check, ANY logged in user could pass an arbitrary account_id to export another
- * user's S/MIME private key/p12, since Mail\Smime::get_acc_smime() otherwise looks up credentials
- * under whatever account_id it's given (used when an admin manages a shared/other user's mail
- * account via admin_mail's called_for).
+ * SmimeHandler::accountId() vets $_GET['account_id'] for exportCert()/exportCsr(): without this
+ * check, ANY logged in user could pass an arbitrary account_id to export another user's S/MIME
+ * private key/p12, since Mail\Smime::get_acc_smime() otherwise looks up credentials under whatever
+ * account_id it's given (used when an admin manages a shared/other user's mail account via
+ * admin_mail's called_for).
  *
  * Only users with admin app rights may have $_GET['account_id'] honoured at all; everyone else's
  * value is silently ignored (falls back to their own account, same as not passing it).
@@ -75,9 +62,7 @@ class SmimeAccountIdTest extends Api\LoggedInTest
 		unset($GLOBALS['egw_info']['user']['apps']['admin']);
 		$_GET['account_id'] = 999;
 
-		$mail_ui = new TestableMailUiSmimeAccountId(false);
-
-		$this->assertNull($mail_ui->callSmimeAccountId(),
+		$this->assertNull((new SmimeHandler())->accountId(),
 			'a non-admin user must not be able to make the export endpoints look up another account_id');
 	}
 
@@ -90,9 +75,7 @@ class SmimeAccountIdTest extends Api\LoggedInTest
 		$GLOBALS['egw_info']['user']['apps']['admin'] = true;
 		$_GET['account_id'] = 999;
 
-		$mail_ui = new TestableMailUiSmimeAccountId(false);
-
-		$this->assertSame(999, $mail_ui->callSmimeAccountId(),
+		$this->assertSame(999, (new SmimeHandler())->accountId(),
 			'an admin user\'s account_id must be passed through to get_acc_smime()');
 	}
 
@@ -105,8 +88,6 @@ class SmimeAccountIdTest extends Api\LoggedInTest
 		$GLOBALS['egw_info']['user']['apps']['admin'] = true;
 		unset($_GET['account_id']);
 
-		$mail_ui = new TestableMailUiSmimeAccountId(false);
-
-		$this->assertNull($mail_ui->callSmimeAccountId());
+		$this->assertNull((new SmimeHandler())->accountId());
 	}
 }
