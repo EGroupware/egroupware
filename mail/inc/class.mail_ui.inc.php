@@ -23,6 +23,7 @@ use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Mail\JmapShim;
+use EGroupware\Mail\Ui\AttachmentHandler;
 use EGroupware\Mail\Ui\AttachmentJmap;
 use EGroupware\Mail\Ui\BodyHandler;
 use EGroupware\Mail\Ui\ImportHandler;
@@ -236,6 +237,17 @@ class mail_ui
 	private function messageActionHandler() : MessageActionHandler
 	{
 		return $this->_messageActionHandler ??= new MessageActionHandler($this);
+	}
+
+	private ?AttachmentHandler $_attachmentHandler = null;
+
+	/**
+	 * Classic (mail_bo-coupled) attachment/body-fetch sub-object (gets automatically instantiated,
+	 * if used)
+	 */
+	private function attachmentHandler() : AttachmentHandler
+	{
+		return $this->_attachmentHandler ??= new AttachmentHandler($this);
 	}
 
 	/**
@@ -2236,17 +2248,7 @@ class mail_ui
 	 */
 	function ajax_vfsOpen($attachment_id, $filename)
 	{
-		// Use a sub-dir so we can give a nice filename
-		$temp_path = '/home/' . $GLOBALS['egw_info']['user']['account_lid'] . "/.mail/";
-		if(!Vfs::is_dir($temp_path))
-		{
-			Vfs::mkdir($temp_path);
-		}
-
-		$result = $this->vfsSaveAttachments([$attachment_id], $temp_path . $filename, 'rename');
-
-		$response = Api\Json\Response::get();
-		$response->data($result['savepath'][$attachment_id] ?? "");
+		$this->attachmentHandler()->vfsOpen($attachment_id, $filename);
 	}
 
 	/**
@@ -2264,19 +2266,7 @@ class mail_ui
 	function ajax_vfsSave ($params, $path, $submit_button_id='', $savemode='rename')
 	{
 		unset($submit_button_id); // not used here
-
-		$response = Api\Json\Response::get();
-
-		switch ($params['action'])
-		{
-			case 'message':
-				$result = $this->vfsSaveMessages($params['ids'], $path, $savemode);
-				break;
-			case 'attachment':
-				$result = $this->vfsSaveAttachments($params['ids'], $path, $savemode);
-				break;
-		}
-		$response->call('app.mail.vfsSaveCallback', $result);
+		$this->attachmentHandler()->vfsSave($params, $path, $savemode);
 	}
 
 	/**
@@ -2294,249 +2284,7 @@ class mail_ui
 	 */
 	function vfsSaveMessages($ids,$path, $savemode='rename')
 	{
-		// add mail translation
-		Api\Translation::add_app('mail');
-		$res = array ();
-
-		// extract dir from the path
-		$dir = Vfs::is_dir($path) ? $path : Vfs::dirname($path);
-
-		// exit if user has no right to the dir
-		if (!Vfs::is_writable($dir))
-		{
-			return array (
-				'msg' => lang('%1 is NOT writable by you!',$path),
-				'success' => false
-			);
-		}
-
-		$preservedServerID = $this->mail_bo->profileID;
-		foreach((array)$ids as $id)
-		{
-			$hA = Mail::splitRowID($id);
-			$uid = $hA['msgUID'];
-			$mailbox = $hA['folder'];
-			$icServerID = $hA['profileID'];
-			if ($icServerID && $icServerID != $this->mail_bo->profileID)
-			{
-				$this->changeProfile($icServerID);
-			}
-			$message = $this->mail_bo->getMessageRawBody($uid, $partID='', $mailbox);
-
-			// is multiple messages
-			if (Vfs::is_dir($path))
-			{
-				$headers = $this->mail_bo->getMessageHeader($uid,$partID,true,false,$mailbox);
-				$file = $dir . '/'.Api\Mail::clean_subject_for_filename($headers['SUBJECT']).'.eml';
-			}
-			else
-			{
-				$file = $dir . '/' . Api\Mail::clean_subject_for_filename(str_replace($dir.'/', '', $path));
-			}
-
-			if ($savemode != 'overwrite')
-			{
-				// Check if file already exists, then try to assign a none existance filename
-				$counter = 1;
-				$tmp_file = $file;
-				while (Vfs::file_exists($tmp_file))
-				{
-					$tmp_file = $file;
-					$pathinfo = pathinfo(Vfs::basename($tmp_file));
-					$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
-					$counter++;
-				}
-				$file = $tmp_file;
-			}
-
-			if (!is_string($message) || !($fp = Vfs::fopen($file,'wb')) || !fwrite($fp,$message))
-			{
-				$res['msg'] = lang('Error saving %1!',$file);
-				$res['success'] = false;
-			}
-			else
-			{
-				$res['success'] = true;
-			}
-			if ($fp) fclose($fp);
-			if ($res['success'])
-			{
-				unset($headers['SUBJECT']);//already in filename
-				$infoSection = Mail::createHeaderInfoSection($headers, 'SUPPRESS', false);
-				$props = array(array('name' => 'comment','val' => $infoSection));
-				Vfs::proppatch($file,$props);
-			}
-		}
-		if ($preservedServerID != $this->mail_bo->profileID)
-		{
-			//change Profile back to where we came from
-			$this->changeProfile($preservedServerID);
-		}
-		return $res;
-	}
-
-	/**
-	 * Save attachment(s) in the vfs
-	 *
-	 * @param string|array $ids '::' delimited mailbox::uid::part-id::is_winmail::name (::name for multiple id's)
-	 * @param string $path path in vfs (no Vfs::PREFIX!), only directory for multiple id's ($ids is an array)
-	 * @param string $savemode save mode: 'overwrite' or 'rename'
-	 *
-	 * @return array returns an array including message and success result
-	 *		array (
-	 *			'msg' => STRING,
-	 *			'success' => BOOLEAN
-	 *		)
-	 */
-	function vfsSaveAttachments($ids,$path, $savemode='rename')
-	{
-		$res = array (
-			'msg' => lang('Attachment has been saved successfully.'),
-			'success' => true
-		);
-
-		if (Vfs::is_dir($path))
-		{
-			$dir = $path;
-		}
-		else
-		{
-			$dir = Vfs::dirname($path);
-			// Need to deal with any ? here, or basename will truncate
-			$filename = Api\Mail::clean_subject_for_filename(str_replace('?','_',Vfs::basename($path)));
-		}
-
-		if (!Vfs::is_writable($dir))
-		{
-			return array (
-				'msg' => lang('%1 is NOT writable by you!',$path),
-				'success' => false
-			);
-		}
-
-		$preservedServerID = $this->mail_bo->profileID;
-
-		/**
-		 * Extract all parameteres from the given id
-		 * @param int $id message id ('::' delimited mailbox::uid::part-id::is_winmail::name)
-		 *
-		 * @return array an array of parameters - 'idParts' is Mail::splitRowID()'s lazy
-		 *  RowIdParts result, deliberately NOT pre-extracted into 'uid'/'mailbox' keys here: for a
-		 *  Stalwart opaque-id row those cost a real IMAP EMAILID search to resolve, and the JMAP
-		 *  fast path below (fetchAttachmentJmap()) never needs them at all - only read
-		 *  $idParts['msgUID']/['folder'] where the classic fallback is actually reached
-		 */
-		$getParams = function ($id) {
-			list($app,$user,$serverID,$mailbox,$uid,$part,$is_winmail,$name) = explode('::',$id,8);
-			$lId = implode('::',array($app,$user,$serverID,$mailbox,$uid));
-			$hA = Mail::splitRowID($lId);
-			return array(
-				'is_winmail' => $is_winmail == "null" || !$is_winmail?false:$is_winmail,
-				'user' => $user,
-				'name' => $name,
-				'part' => $part,
-				'idParts' => $hA,
-				'icServer' => $hA['profileID'],
-				'rowID' => $lId,
-			);
-		};
-		$jmapCache = [];
-		// only needed for the classic per-attachment fallback - fetchAttachmentJmap() talks to the
-		// account's IMAP/JMAP connection directly (Mail\Account::read()->imapServer()), bypassing
-		// mail_bo/changeProfile()/reopen() entirely, so this is never called for the JMAP fast path
-		$classicFetch = function(array $params)
-		{
-			if ($params['icServer'] && $params['icServer'] != $this->mail_bo->profileID)
-			{
-				$this->changeProfile($params['icServer']);
-			}
-			$this->mail_bo->reopen($params['idParts']['folder']);
-			return $this->mail_bo->getAttachment($params['idParts']['msgUID'],$params['part'],$params['is_winmail'],false);
-		};
-
-		//Examine the first attachment to see if attachment
-		//is winmail.dat embedded attachments.
-		$p = $getParams((is_array($ids)?$ids[0]:$ids));
-		if ($p['is_winmail'])
-		{
-			// winmail/TNEF internal attachments always need the classic path regardless of
-			// backend (see resolveWinmailJmap()'s docblock) - eager resolution here is expected
-			if ($p['icServer'] && $p['icServer'] != $this->mail_bo->profileID)
-			{
-				$this->changeProfile($p['icServer']);
-			}
-			$this->mail_bo->reopen($p['idParts']['folder']);
-			// retrieve all embedded attachments at once
-			// avoids to fetch heavy winmail.dat content
-			// for each file.
-			$attachments = $this->mail_bo->getTnefAttachments($p['idParts']['msgUID'],$p['part'], false, $p['idParts']['folder']);
-		}
-
-		foreach((array)$ids as $id)
-		{
-			$params = $getParams($id);
-
-			// is multiple attachments
-			if (Vfs::is_dir($path) || $params['is_winmail'])
-			{
-				if ($params['is_winmail'])
-				{
-					// winmail/TNEF internal attachments already resolved above (classic-only,
-					// mail_bo already positioned by the pre-check block)
-					foreach ($attachments as $key => $val)
-					{
-						if ($key == $params['is_winmail']) $attachment = $val;
-					}
-				}
-				else
-				{
-					$attachment = AttachmentJmap::fetchAttachmentJmap($params['rowID'], $params['part'], $params['icServer'], $jmapCache)
-						?? $classicFetch($params);
-				}
-			}
-			else
-			{
-				$attachment = AttachmentJmap::fetchAttachmentJmap($params['rowID'], $params['part'], $params['icServer'], $jmapCache)
-					?? $classicFetch($params);
-			}
-
-			$file = $dir. '/' . ($filename ? $filename : Mail::clean_subject_for_filename($attachment['filename']));
-
-			if ($savemode != 'overwrite')
-			{
-				$counter = 1;
-				$tmp_file = $file;
-				while (Vfs::file_exists($tmp_file))
-				{
-					$tmp_file = $file;
-					$pathinfo = pathinfo(Vfs::basename($tmp_file));
-					$tmp_file = $dir . '/' . $pathinfo['filename'] . '(' . $counter . ')' . '.' . $pathinfo['extension'];
-					$counter++;
-				}
-				$file = $tmp_file;
-			}
-
-			if (!($fp = Vfs::fopen($file,'wb')) ||
-				!fwrite($fp,$attachment['attachment']))
-			{
-				$res['msg'] = lang('Error saving %1!',$file);
-				$res['success'] = false;
-			}
-			if ($fp)
-			{
-				fclose($fp);
-			}
-			$res['savepath'][$id] = $file;
-		}
-
-		$this->mail_bo->closeConnection();
-
-		if ($preservedServerID != $this->mail_bo->profileID)
-		{
-			//change Profile back to where we came from
-			$this->changeProfile($preservedServerID);
-		}
-		return $res;
+		return $this->attachmentHandler()->vfsSaveMessages($ids, $path, $savemode);
 	}
 
 	/**
@@ -2921,7 +2669,7 @@ class mail_ui
 		// Compose the content of the frame
 		$frameHtml =
 			$this->get_email_header(BodyDecoding::getStyles($bodyParts)).
-			$this->showBody($this->getdisplayableBody($bodyParts,true,false), false);
+			$this->showBody($this->attachmentHandler()->getdisplayableBody($bodyParts,true,false), false);
 		//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
 		$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
 		$this->mail_bo->htmlOptions = $bufferHtmlOptions;
@@ -2959,177 +2707,6 @@ class mail_ui
 		}
 	}
 
-	function &getdisplayableBody($_bodyParts,$modifyURI=true,$useTidy = true)
-	{
-		$bodyParts	= $_bodyParts;
-
-		$nonDisplayAbleCharacters = array('[\016]','[\017]',
-				'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-				'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-
-		$body = '';
-
-		//error_log(__METHOD__.array2string($bodyParts)); //exit;
-		if (empty($bodyParts))
-		{
-			$ret = '';
-			return $ret;
-		}
-		foreach((array)$bodyParts as $singleBodyPart) {
-			if (!isset($singleBodyPart['body'])) {
-				$singleBodyPart['body'] = $this->getdisplayableBody($singleBodyPart,$modifyURI,$useTidy);
-				$body .= $singleBodyPart['body'];
-				continue;
-			}
-			$bodyPartIsSet = strlen(trim($singleBodyPart['body']));
-			if (!$bodyPartIsSet)
-			{
-				$body .= '';
-				continue;
-			}
-			if(!empty($body)) {
-				$body .= '<hr style="border:dotted 1px silver;">';
-			}
-			//error_log($singleBodyPart['body']);
-			//error_log(__METHOD__.__LINE__.' CharSet:'.$singleBodyPart['charSet'].' mimeType:'.$singleBodyPart['mimeType']);
-			// some characterreplacements, as they fail to translate
-			$sar = array(
-				'@(\x84|\x93|\x94)@',
-				'@(\x96|\x97|\x1a)@',
-				'@(\x82|\x91|\x92)@',
-				'@(\x85)@',
-				'@(\x86)@',
-				'@(\x99)@',
-				'@(\xae)@',
-			);
-			$rar = array(
-				'"',
-				'-',
-				'\'',
-				'...',
-				'&',
-				'(TM)',
-				'(R)',
-			);
-
-			if(($singleBodyPart['mimeType'] == 'text/html' || $singleBodyPart['mimeType'] == 'text/plain') &&
-				strtoupper($singleBodyPart['charSet']) != 'UTF-8')
-			{
-				// check if client set a wrong charset and content is utf-8 --> use utf-8
-				if (preg_match('//u', $singleBodyPart['body']))
-				{
-					$singleBodyPart['charSet'] = 'UTF-8';
-				}
-				else
-				{
-					$singleBodyPart['body'] = preg_replace($sar,$rar,$singleBodyPart['body']);
-				}
-			}
-			//error_log(__METHOD__.__LINE__.'reports:'.$singleBodyPart['charSet']);
-			if ($singleBodyPart['charSet']=='us-ascii')
-			{
-				$orgCharSet=$singleBodyPart['charSet'];
-				$singleBodyPart['charSet'] = Api\Translation::detect_encoding($singleBodyPart['body']);
-				error_log(__METHOD__.__LINE__.'reports:'.$orgCharSet.' but seems to be:'.$singleBodyPart['charSet']);
-			}
-			$singleBodyPart['body'] = Api\Translation::convert_jsonsafe($singleBodyPart['body'],$singleBodyPart['charSet']);
-			//error_log(__METHOD__.__LINE__.array2string($singleBodyPart));
-			if($singleBodyPart['mimeType'] == 'text/plain')
-			{
-				$newBody	= @htmlentities($singleBodyPart['body'],ENT_QUOTES, strtoupper(Mail::$displayCharset));
-				//error_log(__METHOD__.__LINE__.'..'.$newBody);
-				// if empty and charset is utf8 try sanitizing the string in question
-				if (empty($newBody) && strtolower($singleBodyPart['charSet'])=='utf-8') $newBody = @htmlentities(iconv('utf-8', 'utf-8', $singleBodyPart['body']),ENT_QUOTES, strtoupper(Mail::$displayCharset));
-				// if the conversion to htmlentities fails somehow, try without specifying the charset, which defaults to iso-
-				if (empty($newBody)) $newBody    = htmlentities($singleBodyPart['body'],ENT_QUOTES);
-
-				// search http[s] links and make them as links available again
-				// to understand what's going on here, have a look at
-				// http://www.php.net/manual/en/function.preg-replace.php
-
-				// create links for websites
-				if ($modifyURI) $newBody = Api\Html::activate_links($newBody);
-
-				// create links for email addresses
-				// create links for inline images
-				if ($modifyURI)
-				{
-					$newBody = BodyHandler::resolveInlineImages($newBody, $this->mailbox, $this->uid, $this->partID, 'plain');
-				}
-
-				// to display a mailpart of mimetype plain/text, may be better taged as preformatted
-				$newBody	= "<pre>".BodyDecoding::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
-			}
-			else
-			{
-				$alreadyHtmlLawed=false;
-				$newBody	= $singleBodyPart['body'];
-
-				// remove script tags incl. their content, includes e.g. <script type="application/ld+json">
-				// before HtmLawed below only removes the script-tags but leaves the content
-				Mail\Html::replaceTagsCompletley($newBody, 'script');
-
-				//TODO:$newBody	= $this->highlightQuotes($newBody);
-				#error_log(print_r($newBody,true));
-				if ($useTidy && extension_loaded('tidy'))
-				{
-					$tidy = new tidy();
-					$cleaned = $tidy->repairString($newBody, Mail::$tidy_config,'utf8');
-					// Found errors. Strip it all so there's some output
-					if($tidy->getStatus() == 2)
-					{
-						error_log(__METHOD__.' ('.__LINE__.') '.' ->'.$tidy->errorBuffer);
-					}
-					else
-					{
-						$newBody = $cleaned;
-					}
-					// filter only the 'body', as we only want that part, if we throw away the html
-					if (preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $newBody, $matches) && !empty($matches[2]))
-					{
-						$hasOther = true;
-						$newBody = $matches[2];
-					}
-				}
-				else
-				{
-					$htmLawed = new Api\Html\HtmLawed();
-					// the next line should not be needed, but produces better results on HTML 2 Text conversion,
-					// as we switched off HTMLaweds tidy functionality
-					$newBody = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>'),array('&amp;','<BR>','<BR>','<BR>'),$newBody);
-					$newBody = $htmLawed->run($newBody,Mail::$htmLawed_config);
-					$alreadyHtmlLawed=true;
-				}
-				// do the cleanup, set for the use of purifier
-				BodyDecoding::getCleanHTML($newBody);
-
-				// removes stuff between http and ?http
-				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
-				$newBody = preg_replace('~'.$Protocol.'[^>]*\?'.$Protocol.'~sim','$1',$newBody); // removes stuff between http:// and ?http://
-				// TRANSFORM MAILTO LINKS TO EMAILADDRESS ONLY, WILL BE SUBSTITUTED BY parseEmail TO CLICKABLE LINK
-				$newBody = preg_replace('/(?<!"|href=|href\s=\s|href=\s|href\s=)'.'mailto:([a-z0-9._-]+)@([a-z0-9_-]+)\.([a-z0-9._-]+)/i',
-					"\\1@\\2.\\3",
-					$newBody);
-
-				// create links for inline images
-				if ($modifyURI)
-				{
-					$newBody = BodyHandler::resolveInlineImages($newBody, $this->mailbox, $this->uid, $this->partID);
-				}
-				// email addresses / mailto links get now activated on client-side
-			}
-
-			$body .= $newBody;
-		}
-		// create links for windows shares
-		// \\\\\\\\ == '\\' in real life!! :)
-		$body = preg_replace("/(\\\\\\\\)([\w,\\\\,-]+)/i",
-			"<a href=\"file:$1$2\" target=\"_blank\"><font color=\"blue\">$1$2</font></a>", $body);
-
-		$body = preg_replace($nonDisplayAbleCharacters,'',$body);
-
-		return $body;
-	}
 
 
 	/**
@@ -3168,46 +2745,7 @@ class mail_ui
 	 */
 	function ajax_saveModifiedMessageSubject ($_rowID, $_subject)
 	{
-		$response = Api\Json\Response::get();
-		$idData = Mail::splitRowID($_rowID);
-		$folder = $idData['folder'];
-		try {
-			$raw = AttachmentJmap::fetchMessageBytesJmap($idData['profileID'], $folder, $idData['msgUID'], $idData['emailID'] ?? null)
-				?? $this->mail_bo->getMessageRawBody($idData['msgUID'],'', $folder);
-			$result = array ('success' => true, 'msg' =>'');
-			if ($raw && $_subject)
-			{
-				$mailer = new Api\Mailer();
-				$this->mail_bo->parseRawMessageIntoMailObject($mailer, $raw);
-				$mailer->removeHeader('subject');
-				$mailer->addHeader('subject', $_subject);
-				$this->mail_bo->openConnection();
-				$delimiter = $this->mail_bo->getHierarchyDelimiter();
-				if($folder == 'INBOX'.$delimiter) $folder='INBOX';
-				if ($this->mail_bo->folderExists($folder,true))
-				{
-					// JMAP-native transport (Stalwart only, see replaceMessageJmap()'s docblock) -
-					// falls back to the classic IMAP APPEND+STORE+EXPUNGE round trip on any failure
-					// or for local-shim rows (no protocol-level win possible there). getRaw(false)
-					// returns a plain string - the default (true) returns a stream, which
-					// Api\Mail\Jmap::uploadBlob() (string-typed) can't accept
-					if (!AttachmentJmap::replaceMessageJmap($idData['profileID'], $folder, $idData['msgUID'], $idData['emailID'] ?? null, $mailer->getRaw(false)))
-					{
-						$this->mail_bo->appendMessage($folder, $mailer->getRaw(), null,'\\Seen');
-						$this->mail_bo->deleteMessages($idData['msgUID'], $folder);
-					}
-				}
-				else
-				{
-					$result['success'] = false;
-					$result['msg'] = lang('Changing subject failed folder %1 does not exist', $folder);
-				}
-			}
-		} catch (Exception $e) {
-			$result['success'] = false;
-			$result['msg'] = lang('Changing subject failed because of %1 ', $e->getMessage());
-		}
-		$response->data($result);
+		Api\Json\Response::get()->data($this->attachmentHandler()->saveModifiedMessageSubject($_rowID, $_subject));
 	}
 
 	/**
@@ -3696,52 +3234,6 @@ class mail_ui
 
 	}
 
-	/**
-	 * Resolve a row-id to its attachmentsBlock
-	 *
-	 * Shared by displayMessage() (the "view" popup), ajax_resolveWinmail() and
-	 * ajax_fetchAttachments() (both used by the preview panel) - the three places that
-	 * independently used to run splitRowID()+getMessageAttachments()+createAttachmentBlock()
-	 * themselves. Switches to the row's own profile if it differs from the currently active
-	 * one, and always switches back afterwards, so it's safe to call regardless of which
-	 * account is currently active.
-	 *
-	 * @param string $rowID row id from nm
-	 * @param string|null $partID part to get attachments for, if message is eg. a forwarded/attached message
-	 * @param bool $fetchEmbeddedImages true: also return embedded images as attachments
-	 * @param bool $returnFullHTML false (default): return data array, true: HTML
-	 * @return array attachmentsBlock, see createAttachmentBlock()
-	 */
-	private function resolveAttachmentsBlock(string $rowID, ?string $partID=null, bool $fetchEmbeddedImages=false, bool $returnFullHTML=false)
-	{
-		$idParts = Mail::splitRowID($rowID);
-		$uid = $idParts['msgUID'];
-		$mailbox = $idParts['folder'];
-		if (!$uid || !$mailbox) return [];
-
-		$rememberServerID = $this->mail_bo->profileID;
-		$switchedProfile = $idParts['profileID'] && $idParts['profileID'] != $rememberServerID;
-		if ($switchedProfile)
-		{
-			$this->changeProfile($idParts['profileID']);
-		}
-		try
-		{
-			$attachments = $this->mail_bo->getMessageAttachments($uid, $partID, null, $fetchEmbeddedImages, true, true, $mailbox);
-		}
-		catch (Mail\Smime\PassphraseMissing $e)
-		{
-			$attachments = [];
-		}
-		finally
-		{
-			if ($switchedProfile)
-			{
-				$this->changeProfile($rememberServerID);
-			}
-		}
-		return is_array($attachments) ? AttachmentJmap::createAttachmentBlock($attachments, $rowID, $uid, $mailbox, $returnFullHTML) : [];
-	}
 
 	/**
 	 * ResolveWinmail fetches the encoded attachments
@@ -3755,7 +3247,7 @@ class mail_ui
 	{
 		$response = Api\Json\Response::get();
 
-		$attachments = AttachmentJmap::resolveWinmailJmap($_rowid) ?? $this->resolveAttachmentsBlock($_rowid);
+		$attachments = AttachmentJmap::resolveWinmailJmap($_rowid) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid);
 		if (!empty($attachments))
 		{
 			$response->data($attachments);
@@ -3781,10 +3273,8 @@ class mail_ui
 	 */
 	function ajax_fetchAttachments($_rowid)
 	{
-		$response = Api\Json\Response::get();
-
-		$response->data([
-			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid) ?? $this->resolveAttachmentsBlock($_rowid),
+		Api\Json\Response::get()->data([
+			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid),
 		]);
 	}
 
@@ -3832,69 +3322,7 @@ class mail_ui
 	 */
 	function ajax_fetchMessageDetails($_rowid)
 	{
-		$response = Api\Json\Response::get();
-
-		$idParts = Mail::splitRowID($_rowid);
-		$uid = $idParts['msgUID'];
-		$mailbox = $idParts['folder'];
-		if (!$uid || !$mailbox)
-		{
-			$response->data(null);
-			return;
-		}
-		$rememberServerID = $this->mail_bo->profileID;
-		$switchedProfile = $idParts['profileID'] && $idParts['profileID'] != $rememberServerID;
-		if ($switchedProfile)
-		{
-			$this->changeProfile($idParts['profileID']);
-		}
-
-		try
-		{
-			$headers = $this->mail_bo->getMessageHeader($uid, null, true, true, $mailbox);
-			$envelope = $this->mail_bo->getMessageEnvelope($uid, null, true, $mailbox);
-		}
-		catch (Api\Exception $e)
-		{
-			if ($switchedProfile) $this->changeProfile($rememberServerID);
-			$response->data(null);
-			return;
-		}
-		$attachmentsBlock = AttachmentJmap::resolveAttachmentsJmap($_rowid) ?? $this->resolveAttachmentsBlock($_rowid);
-
-		if ($switchedProfile)
-		{
-			$this->changeProfile($rememberServerID);
-		}
-
-		$nonDisplayAbleCharacters = array('[\016]','[\017]',
-			'[\020]','[\021]','[\022]','[\023]','[\024]','[\025]','[\026]','[\027]',
-			'[\030]','[\031]','[\032]','[\033]','[\034]','[\035]','[\036]','[\037]');
-		$subject = $this->mail_bo->decode_subject(preg_replace($nonDisplayAbleCharacters,'',$envelope['SUBJECT'] ?? ''),false);
-
-		$data = [
-			'uid' => $uid,
-			'subject' => $subject !== '' ? $subject : lang('no subject'),
-			'date' => Mail::_strtotime($headers['DATE'] ?? ($envelope['DATE'] ?? ''), 'ts', true),
-			'fromaddress' => $envelope['FROM'][0] ?? '',
-			'additionalfromaddress' => array_slice($envelope['FROM'] ?? [], 1),
-			'toaddress' => $envelope['TO'][0] ?? '',
-			'additionaltoaddress' => array_slice($envelope['TO'] ?? [], 1),
-			'ccaddress' => $envelope['CC'] ?? [],
-			'bccaddress' => $envelope['BCC'] ?? [],
-			'attachmentsBlock' => $attachmentsBlock,
-			'attachments' => $attachmentsBlock ? "<et2-image src='attach'></et2-image>" : '&nbsp;',
-		];
-		// MDN (read-receipt) prompt trigger - same 3-header priority Api\Mail::getHeaders() uses
-		$mdnHeader = $headers['DISPOSITION-NOTIFICATION-TO'] ?? $headers['RETURN-RECEIPT-TO'] ??
-			$headers['X-CONFIRM-READING-TO'] ?? '';
-		$data['dispositionnotificationto'] = is_array($mdnHeader) ? (string)reset($mdnHeader) : (string)$mdnHeader;
-		if (!empty($headers['SMIMETYPE']))
-		{
-			$data['smime'] = Mail\Smime::isSmimeSignatureOnly($headers['SMIMETYPE']) ?
-				Mail\Smime::TYPE_SIGN : Mail\Smime::TYPE_ENCRYPT;
-		}
-		$response->data($data);
+		Api\Json\Response::get()->data($this->attachmentHandler()->fetchMessageDetails($_rowid));
 	}
 
 	/**
