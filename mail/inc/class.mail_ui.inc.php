@@ -24,6 +24,7 @@ use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Mail\JmapShim;
 use EGroupware\Mail\Ui\ImportHandler;
+use EGroupware\Mail\Ui\MessageActionHandler;
 use EGroupware\Mail\Ui\SmimeHandler;
 
 /**
@@ -222,6 +223,16 @@ class mail_ui
 	private function importHandler() : ImportHandler
 	{
 		return $this->_importHandler ??= new ImportHandler($this);
+	}
+
+	private ?MessageActionHandler $_messageActionHandler = null;
+
+	/**
+	 * Message-action (save/MDN) sub-object (gets automatically instantiated, if used)
+	 */
+	private function messageActionHandler() : MessageActionHandler
+	{
+		return $this->_messageActionHandler ??= new MessageActionHandler($this);
 	}
 
 	/**
@@ -2485,51 +2496,7 @@ class mail_ui
 	 */
 	function saveMessage()
 	{
-		$display = false;
-		if(isset($_GET['id'])) $rowID	= $_GET['id'];
-		if(isset($_GET['part'])) $partID = $_GET['part'];
-		if (isset($_GET['location'])&& ($_GET['location']=='display'||$_GET['location']=='filemanager')) $display	= $_GET['location'];
-
-		$hA = Mail::splitRowID($rowID);
-		$uid = $hA['msgUID'];
-		$mailbox = $hA['folder'];
-		$icServerID = $hA['profileID'];
-		$rememberServerID = $this->mail_bo->profileID;
-		if ($icServerID && $icServerID != $this->mail_bo->profileID)
-		{
-			//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
-			$this->changeProfile($icServerID);
-		}
-
-		$this->mail_bo->reopen($mailbox);
-
-		$message = $this->mail_bo->getMessageRawBody($uid, $partID, $mailbox);
-
-		$this->mail_bo->closeConnection();
-		if ($rememberServerID != $this->mail_bo->profileID)
-		{
-			//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
-			$this->changeProfile($rememberServerID);
-		}
-
-		$GLOBALS['egw']->session->commit_session();
-		$headers = Horde_Mime_Headers::parseHeaders($message);
-		$subject = str_replace('$$','__',AddressList::decode_header($headers['SUBJECT']));
-		if (!$display)
-		{
-			$subject = Api\Mail::clean_subject_for_filename($subject);
-			$mime='message/rfc822';
-			Api\Header\Content::safe($message, $subject.".eml", $mime);
-			echo $message;
-		}
-		else
-		{
-			$subject = Api\Mail::clean_subject_for_filename($subject);
-			$mime = 'text/html';
-			$size = 0;
-			Api\Header\Content::safe($message, $subject . ".eml", $mime, $size, true, false);
-			print '<pre>' . htmlspecialchars($message, ENT_NOQUOTES | ENT_SUBSTITUTE, 'utf-8') . '</pre>';
-		}
+		$this->messageActionHandler()->saveMessage();
 	}
 
 	/**
@@ -5437,14 +5404,7 @@ class mail_ui
 	 */
 	function ajax_sendMDN($_messageList)
 	{
-		if(Mail::$debug) error_log(__METHOD__."->".array2string($_messageList));
-		$uidA = Mail::splitRowID($_messageList['msg'][0]);
-		if ($uidA['profileID'] && $uidA['profileID'] != $this->mail_bo->profileID)
-		{
-			$this->changeProfile($uidA['profileID']);
-		}
-		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
-		$this->mail_bo->sendMDN($uidA['msgUID'],$folder);
+		$this->messageActionHandler()->sendMDN($_messageList);
 	}
 
 	/**
