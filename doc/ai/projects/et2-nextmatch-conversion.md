@@ -14,6 +14,27 @@ Calendar, Timesheet, Admin, Importexport, Aiassistant, Preferences, Home. Relate
 docs in the same directory as the widget source: `ColumnSelectionNotes.md`,
 `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
+Addressbook's conversion covers every *reachable* list view the app itself owns: the main index
+(including its mobile skin), the org/duplicate grouped views, the CRM popup (`CRM.ts`), and the
+contact-picker popup. Two addressbook-owned templates were deliberately left on the legacy widget:
+
+- `index.rows.xet`'s Home-favorite-portlet variant — rendered through `home_favorite_portlet.inc.php`,
+  shared framework code used by ~9 other apps' portlets, so converting it is a separate, cross-app
+  change (see [Why template + app-JS must land together](#why-template--app-js-must-land-together)'s
+  shared-framework-code caution).
+- `display.xet` (the Sitemgr "display" module, `class.addressbook_display.inc.php`) — this is a CMS
+  content-block view, only reachable when the `sitemgr` app is installed and a page/module is
+  configured to embed it. On an instance without `sitemgr` installed there is no way to load or
+  browser-verify this template at all (the menuaction silently redirects to Home instead of erroring),
+  so it was converted once, found untestable, and reverted rather than ship an unverified change to a
+  template with no test coverage. Convert it for real only alongside access to an instance that has
+  `sitemgr` installed and a page configured to use the module.
+
+Filemanager's conversion covers the main index (desktop + mobile skin), the tile view, the background
+jobs list (`jobs.xet`), and the shares list (`shares.xet`). `home.rows.xet` (the Home favorite-portlet
+variant) is deliberately left on the legacy widget, same shared-framework-code reason as Addressbook's
+portlet view above.
+
 ## Status
 
 In progress. The checklist below is validated against four real conversions (see the reference
@@ -24,6 +45,17 @@ sections for the evidence each item is based on). Expect it to grow as more apps
 Do **not** split this across multiple commits by layer (template-only, then JS-only, etc.) — see
 [Why template + app-JS must land together](#why-template--app-js-must-land-together). Work through
 these in order, in one commit, then expect follow-up fixups.
+
+0. **Find every nextmatch instance the app owns, not just the main list.** An app's "list view" is
+   often more than one `.xet` file: grouped/alternate views of the same list (e.g. an org/duplicate
+   view switched via a toolbar select), a print/display/merge view, a picker/select popup, a
+   secondary popup list driven by its own `app.ts`-sibling class (e.g. a "CRM"-style related-entries
+   view), and the app's own mobile-skin templates all commonly define their own `<nextmatch>` and
+   row templates independent of `index.xet`. `grep -rl "<nextmatch\b" <app>/templates/` (and the
+   equivalent JS grep from step 2, run across every file in `<app>/js/`, not just `app.ts`) before
+   considering the app converted — Addressbook's initial conversion commit only did the main index
+   and silently left five more templates plus a whole secondary `CRM.ts` widget class on the legacy
+   widget.
 
 1. **Convert the `.xet` template(s).** Apply the mechanical renames in
    [Template rename patterns](#reference-template-rename-patterns): tag renames, header markup
@@ -77,7 +109,21 @@ these in order, in one commit, then expect follow-up fixups.
    - any view switch the app has (row/tile/kanban/etc.) works and doesn't leave stale state
    - column visibility/order/width persists across a reload, including for every distinct
      column-preference key the app uses (see step 4)
-   - push/refresh notifications update the list correctly
+   - push/refresh notifications update the list correctly — first check *which* push mechanism the
+     app actually uses; not every app shares the generic `api.queue` long-poll (e.g. mail registers
+     its own IMAP push via `ajax_enablePush`). Confirming the registration call succeeds is not the
+     same as watching a real push event land and refresh the list — say explicitly which of the two
+     you verified. Don't conclude a transport is broken from one AJAX error either: a page
+     reload/navigation aborting an in-flight long-poll logs a failure indistinguishable from a real
+     one — retest against a fresh, idle load before drawing that conclusion.
+   - if the app has a mobile skin, verify it with real device/User-Agent emulation plus a reload, not
+     a resized desktop browser window (see `doc/ai/testing.md` § Browser / manual verification) —
+     EGroupware selects the mobile template server-side from the request's `User-Agent`, so a plain
+     resize just squeezes the desktop layout into a width it was never built for and can produce
+     scary-looking but meaningless collapses (e.g. row text rendering into a 0-width cell)
+   - a UI element that looks to be missing right after SPA-navigating into the app (as opposed to a
+     full page load) may just be a stale-view artifact, not a regression — confirm on a fresh reload
+     before reporting it
    - keep [Startup/lifecycle timing pitfalls](#reference-startuplifecycle-timing-pitfalls) in mind
      while doing this — several of these bugs only show up on interaction, not on load
 
@@ -103,7 +149,10 @@ Mechanical renames seen in every conversion:
 - `<customfields-list>` → `<et2-customfields-list>` — rides along because this widget typically only
   appears inside nextmatch row templates.
 - Legacy VFS row widgets: `<vfs id="$row"/>` → `<et2-vfs-name id="$row"/>`, `<vfs-size .../>` →
-  `<et2-vfs-size .../>`, `<vfs-mode .../>` → `<et2-vfs-mode .../>` (Filemanager, Mail).
+  `<et2-vfs-size .../>`, `<vfs-mode .../>` → `<et2-vfs-mode .../>` (Filemanager, Mail). `<et2-vfs-name>`
+  bound to a single string field instead of the whole row (Filemanager's `shares.xet`) just shows plain
+  text, not a clickable breadcrumb — matches the legacy widget's own behavior for a scalar field, so no
+  functional change.
 - Read-only select widgets inside rows: `<et2-select-country readonly="true">` must become
   `<et2-select-country_ro readonly="true">` — the plain widget does not render correctly read-only
   inside the new datagrid rows (Addressbook).
@@ -125,6 +174,18 @@ Mechanical renames seen in every conversion:
   implement the same "select the next/previous row after this one is removed" behavior in `app.ts` via
   the `et2-rows-deleted` event instead (see the replacement table below). `no_dynheight="true"` was
   also dropped without replacement in the one conversion that had it.
+- **`header_right="some.template.id"` (a template shown to the right of the header row) has no
+  `Et2Nextmatch` property equivalent** — `Et2Nextmatch` doesn't expose a `headerRight`/`header_right`
+  attribute at all. If there's room for it, replace it with the pre-existing, widget-independent
+  `slot="main-header"` mechanism instead: keep the `header_right` template unchanged and add
+  `<template template="that.template.id" slot="main-header"></template>` as a sibling of the
+  `<et2-nextmatch>` tag (this is how Tracker and Filemanager's mobile skins place their own header
+  content, though those two hadn't converted the `<nextmatch>` tag itself when this was written). On a
+  cramped mobile header a visible-label select can end up with too little vertical room for the label
+  (a plain `<et2-select label="Type" ...>` needs more height than `main-header` has) — rather than
+  fight for space, it's fine to just drop the filter from the header on mobile entirely, same as
+  Addressbook's mobile skin ended up doing; the underlying `col_filter` setting still works, it's just
+  not exposed as a header control there.
 - **A legacy `options="..."` attribute on any widget now throws instead of being silently ignored.**
   `Et2Widget`'s base class repurposed `.options` into a read-only diagnostic getter (`@deprecated use
   widget methods`) that collects declared properties into an object — it no longer accepts the old
@@ -134,13 +195,6 @@ Mechanical renames seen in every conversion:
   template widget` and drops that widget from the row. Just remove `options="..."` attributes found on
   row-template widgets during conversion; there is no modern equivalent to migrate them to, since the
   concept itself is gone.
-- **An empty (or under-populated) header row silently produces zero rendered data columns**, not just a
-  blank header. `Et2RowProvider._extractColumnsFromHeaderNode()` derives the column list by counting the
-  header row's *own child elements*, not the `<columns>` block's `<column>` count — a `<row
-  class="th"></row>` with no children yields `columns.length === 0`, and the datagrid then renders only
-  the built-in meta (selection) cell, with the entire data row silently missing. Fix: give the header
-  row one placeholder element per column (a bare `<et2-description></et2-description>` is enough),
-  matching the data row's cell count exactly, even where there's nothing to label.
 - Add `<et2-styles src="rows.css">` inside the row template to load row-scoped CSS into the datagrid's
   row shadow DOM; add a `rows.css`/`rows.less` file per app for this if one doesn't already exist. See
   `Et2Nextmatch.md` § Styling Rows for the fallback rules to `app.css`.
@@ -173,6 +227,7 @@ Legacy `et2_nextmatch` widget API usage that has no direct equivalent and must b
 | `nm.controller._selectionMgr.resetSelection()` | `nm.clearSelection()`. |
 | `nm.options.onselect = null` (temporarily suppress auto-preview-on-select) | `nm.addEventListener("et2-selection-changed", e => e.preventDefault(), {capture: true, once: true})`. |
 | `et2_nextmatch.DELETE` constant | `Et2DatagridUpdateTypes.DELETE` from `Et2Datagrid.types`. |
+| `nm.controller._indexMap` (check whether a uid is currently loaded/rendered in *this* nextmatch instance, e.g. before deciding to `refresh()` it from a push notification) | **No public replacement exists.** Closest option: `(nm.shadowRoot?.querySelector("et2-datagrid") as Et2Datagrid)?.rows` — the live, kept-in-sync row list (`{id, data}[]`), reached the same way `Et2Nextmatch`'s own private `_datagrid` getter does. This walks past a `private`-in-TS-only boundary via a real DOM query, not a sanctioned API — flag it to the `Et2Nextmatch` maintainer as a gap (a public `hasRow(uid)`/`getLoadedRows()` would be cleaner) rather than treating it as fully idiomatic (Addressbook's `CRM.ts`). |
 | `this.nm.controller.getObjectManager()` | `egw_getObjectManager(appname).getObjectById(nm_index)` — grep the app for `.controller.` before considering it converted; every remaining hit is a crash waiting to happen. |
 | jQuery `.on('refresh', (_event, _widget, _row_id, _type) => ...)` | `Et2Nextmatch.refresh()` dispatches a plain DOM `CustomEvent` with **no extra arguments** — `_widget`/`_row_id`/`_type` are always `undefined` now. Close over an already-captured reference instead of reading widget/row from the event. |
 | Guessing at a renamed setting (e.g. `nm.settings.foldertree`) | Verify the replacement property actually exists on `Et2Nextmatch` (check `Et2Nextmatch.ts`) before using it. |
@@ -201,6 +256,11 @@ template + app JS/TS only — but that's an observed outcome for four apps, not 
 - **`.controller` went from a public property to a private `_actionController`.** Code walking
   `nm.controller.*` breaks or crashes silently. Grep for `.controller.` across the app's JS as a
   conversion-completeness check.
+- **Generic `et2_ready()` code (not gated by a per-template `switch`) can still reach a legacy widget
+  instance** if the app has a template deliberately left unconverted, eg. a Home favorite-portlet
+  variant (Filemanager: `scheduleChangeViewButtonUpdate()` crashed on `nm.updateComplete.then(...)` —
+  `updateComplete` is LitElement-only). Grepping for `typeof nm\.` isn't a complete check; any
+  assumed-modern-only property/method access on `nm` is a candidate.
 - **Don't guess at renamed settings.** A removed widget property doesn't always have an obviously-named
   replacement (e.g. `nm.settings.foldertree` doesn't exist; the correct property for the current
   folder is `nm.activeFilters.selectedFolder`) — verify the property exists on `Et2Nextmatch.ts` before

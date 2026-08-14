@@ -16,17 +16,17 @@
 			<rows>
 				<row class="th">
                     <et2-nextmatch-header-account id="share_owner" emptyLabel="Shared from"/>
-					<nextmatch-sortheader label="Path" id="share_path"/>
+					<et2-nextmatch-sortheader label="Path" id="share_path"/>
 					<et2-nextmatch-header-filter  id="type" emptyLabel="All types"/>
-					<nextmatch-header label="Shared with" id="shared_with"/>
-					<nextmatch-sortheader label="Expiration" id="share_expires"/>
+					<et2-nextmatch-header label="Shared with" id="shared_with"/>
+					<et2-nextmatch-sortheader label="Expiration" id="share_expires"/>
 					<et2-nextmatch-header-filter  id="share_passwd" emptyLabel="Password"/>
-					<nextmatch-sortheader label="Created" id="share_created"/>
-					<nextmatch-sortheader label="Last accessed" id="share_last_accessed"/>
+					<et2-nextmatch-sortheader label="Created" id="share_created"/>
+					<et2-nextmatch-sortheader label="Last accessed" id="share_last_accessed"/>
 				</row>
 				<row>
                     <et2-select-account_ro id="${row}[share_owner]"/>
-					<vfs id="${row}[share_path]"/>
+					<et2-vfs-name id="${row}[share_path]" readonly="true"/>
 					<et2-select  id="${row}[type]" readonly="true"></et2-select>
 					<et2-description  id="${row}[share_with]"></et2-description>
 					<et2-date  id="${row}[share_expires]" readonly="true"></et2-date>
@@ -38,6 +38,6 @@
 		</grid>
 	</template>
 	<template id="filemanager.shares" template="" lang="" group="0" version="14.2.001">
-		<nextmatch id="nm" template="filemanager.shares.rows"/>
+		<et2-nextmatch id="nm" template="filemanager.shares.rows"></et2-nextmatch>
 	</template>
 </overlay>

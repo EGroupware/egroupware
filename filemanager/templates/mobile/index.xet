@@ -22,7 +22,7 @@
 						<et2-description  id="${row}[comment]"></et2-description>
 					</et2-vbox>
 					<et2-vbox>
-						<vfs-size align="right" id="${row}[size]"/>
+						<et2-vfs-size align="right" id="${row}[size]"/>
 						<et2-date-time-today id="${row}[mtime]"></et2-date-time-today>
 					</et2-vbox>
 				</row>
@@ -61,6 +61,6 @@
         >
             <et2-button class="plus_button" size="large" noSubmit="true" slot="button"></et2-button>
         </et2-vfs-upload>
-        <nextmatch id="nm" template="filemanager.index.rows" header_right="filemanager.index.header_right"/>
+        <et2-nextmatch id="nm" template="filemanager.index.rows" header_right="filemanager.index.header_right"></et2-nextmatch>
 	</template>
 </overlay>

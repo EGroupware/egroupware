@@ -14,16 +14,16 @@
 			</columns>
 			<rows>
 				<row class="th">
-					<nextmatch-sortheader label="Name" id="name"/>
-					<nextmatch-sortheader label="Directory" id="directory"/>
+					<et2-nextmatch-sortheader label="Name" id="name"/>
+					<et2-nextmatch-sortheader label="Directory" id="directory"/>
 					<et2-nextmatch-header-filter emptyLabel="Application" id="app"/>
-					<nextmatch-header label="Type" id="info_type"></nextmatch-header>
+					<et2-nextmatch-header label="Type" id="info_type"></et2-nextmatch-header>
 					<et2-nextmatch-header-account emptyLabel="Owner" id="info_owner" accountType="both"/>
 					<et2-vbox>
-						<nextmatch-sortheader label="Modified" id="modified"/>
+						<et2-nextmatch-sortheader label="Modified" id="modified"/>
 						<et2-nextmatch-header-account emptyLabel="Modifier" id="modifier"/>
 					</et2-vbox>
-					<nextmatch-header label="Error" id="error"/>
+					<et2-nextmatch-header label="Error" id="error"/>
 				</row>
 				<row>
 					<et2-description id="${row}[name]"></et2-description>
@@ -49,6 +49,6 @@
 	</template>
 	<template id="filemanager.jobs" template="" lang="" group="0" version="1.9.001">
 		<et2-template template="filemanager.jobs.header" slot="main-header"></et2-template>
-		<nextmatch id="nm" template="filemanager.jobs.rows"/>
+		<et2-nextmatch id="nm" template="filemanager.jobs.rows"></et2-nextmatch>
 	</template>
 </overlay>

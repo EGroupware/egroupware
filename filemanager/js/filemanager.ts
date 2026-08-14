@@ -9,7 +9,6 @@
  */
 
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import type {Et2DatagridUpdateType, Et2DatagridView} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
@@ -156,8 +155,8 @@ export class filemanagerAPP extends EgwApp
 
 		if(this.et2.getWidgetById('nm'))
 		{
-			const nm = this.et2.getWidgetById('nm');
-			const nm_node = typeof nm.getDOMNode === "function" ? nm.getDOMNode() : null;
+			const nm : Et2Nextmatch = this.et2.getWidgetById('nm');
+			const nm_node = nm.getDOMNode();
 
 			// Native OS file-drop onto rows is surfaced as et2-filedrop.
 			// Reuse the existing node reference and route the event into the
@@ -395,7 +394,7 @@ export class filemanagerAPP extends EgwApp
 	 * @param filter_fields List of filter field names eg: [owner, cat_id]
 	 * @return boolean True if the nextmatch filters might include the entry, false if not
 	 */
-	_push_field_filter(pushData : PushData, nm : et2_nextmatch, filter_fields : string[]) : boolean
+	_push_field_filter(pushData : PushData, nm : Et2Nextmatch, filter_fields : string[]) : boolean
 	{
 		return pushData.id && this.dirname(<string>pushData.id) === this.get_path();
 	}
@@ -1088,7 +1087,10 @@ export class filemanagerAPP extends EgwApp
 	private scheduleChangeViewButtonUpdate(nm? : Et2Nextmatch, fallbackView? : string)
 	{
 		nm = nm || this.nm || this.et2?.getWidgetById?.('nm');
-		nm.updateComplete.then(() => this.updateChangeViewButton(this.normalizeView(nm.view || fallbackView)));
+		// nm may still be the legacy et2_extension_nextmatch widget (eg. the Home favorite
+		// portlet's filemanager.home.rows), which has no updateComplete promise and no
+		// change-view button to update.
+		nm?.updateComplete?.then(() => this.updateChangeViewButton(this.normalizeView(nm.view || fallbackView)));
 	}
 
 	/**
@@ -1163,16 +1165,16 @@ export class filemanagerAPP extends EgwApp
 	 * rows (setInitialRows, not reload), no loading event fires - so we wait for
 	 * the nextmatch's update cycle and retry briefly until the columns appear.
 	 *
-	 * @param {et2_nextmatch} [nm] - The nextmatch to read columns from.  Defaults to this.nm.
+	 * @param {Et2Nextmatch} [nm] - The nextmatch to read columns from.  Defaults to this.nm.
 	 */
-	updateTileColumns(nm? : any)
+	updateTileColumns(nm? : Et2Nextmatch)
 	{
 		nm = nm || this.nm;
 		if(!nm)
 		{
 			return;
 		}
-		const host = (typeof nm.getDOMNode === "function" ? nm.getDOMNode() : null) || <HTMLElement><unknown>nm;
+		const host = nm.getDOMNode();
 		if(!host || typeof host.style?.setProperty !== "function")
 		{
 			return;
@@ -1216,10 +1218,7 @@ export class filemanagerAPP extends EgwApp
 		// are derived (getValue().selectcols populated).  It's a side-channel
 		// promise, independent of updateComplete, so awaiting it can't stall the
 		// load - and unlike an event, a resolved promise is safe to await late.
-		const ready = typeof nm.whenColumnsReady === "function"
-		              ? nm.whenColumnsReady()
-		              : Promise.resolve();
-		ready.then(() => apply());
+		nm.whenColumnsReady().then(() => apply());
 	}
 
 	/**
