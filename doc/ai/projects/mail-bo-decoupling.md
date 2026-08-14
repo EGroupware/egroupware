@@ -43,6 +43,20 @@ dispatch pattern (`jmap<MethodName>()` helpers, see below) rather than fight it.
   site existed as `array($this,'sortByAutofolder')` (lowercase "f"), which had been silently working
   via PHP's case-insensitive method resolution the whole time. Fixed by re-auditing every moved/
   deleted method name with a case-insensitive search before trusting a "no callers" result again.
+- **When a new handler class needs "the current mailbox", give it the narrowest thing that actually
+  represents that, not the whole owning object.** Session/connection state (which profile is active,
+  the connected `Api\Mail` instance) is currently duplicated and scattered - `Api\Mail::getInstance()`
+  has its own `self::$instances[$profileID]` registry, `mail_ui` separately tracks a static
+  `$icServerID` "current profile" of its own (`mail/inc/class.mail_ui.inc.php:74`). Consolidating
+  that into one real session/connection object is its own (larger, not-yet-scoped) project - but
+  *until* it exists, new handler classes should still default to depending on the narrowest slice of
+  it they actually need (eg. "the active `Api\Mail` instance") rather than the whole `mail_ui` object,
+  where that's practical, so they're one signature change away from sitting on top of a real session
+  class later instead of needing a redesign. `ImportHandler` (constructor-injected with all of
+  `mail_ui`, see Phase 2 progress below) is the shape to improve on, not necessarily copy, next time
+  this pattern comes up - it needed more than just `mail_bo` (`createRowID()` too), so a narrower
+  dependency wasn't a clean fit there, but check first rather than defaulting to "just take
+  `mail_ui`".
 
 ## Progress
 
