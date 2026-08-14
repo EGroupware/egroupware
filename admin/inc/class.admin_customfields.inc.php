@@ -322,7 +322,7 @@ class admin_customfields
 		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
 
 		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
-			$GLOBALS['egw']->acl->check('site_config_acce', 2, 'admin'))
+			$GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 2))
 		{
 			throw new Api\Exception\NoPermission();
 		}

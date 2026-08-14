@@ -28,7 +28,7 @@ class admin_config
 	function ajax_upload_anon_images ($file, $value)
 	{
 		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']) ||
-			$GLOBALS['egw']->acl->check('site_config_acce', 2, 'admin'))
+			$GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 2))
 		{
 			throw new Api\Exception\NoPermission();
 		}
@@ -102,7 +102,7 @@ class admin_config
 		{
 			throw new Api\Exception\WrongParameter("Wrong or missing appname parameter!");
 		}
-		if ($GLOBALS['egw']->acl->check('site_config_acce',1,'admin'))
+		if ($GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 1))
 		{
 			Api\Framework::redirect_link('/index.php');
 		}
@@ -140,7 +140,7 @@ class admin_config
 
 		$c = new Api\Config($config_appname);
 		$old = (array)$c->read_repository();
-		if ($_content['cancel'] || ($_content['save'] || $_content['apply']) && $GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
+		if ($_content['cancel'] || ($_content['save'] || $_content['apply']) && $GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 2))
 		{
 			Api\Framework::redirect_link('/index.php', array(
 				'menuaction' => 'admin.admin_ui.index',
@@ -305,7 +305,7 @@ class admin_config
 		}
 
 		// make everything readonly and remove save/apply button, if user has not rights to store config
-		if ($GLOBALS['egw']->acl->check('site_config_acce',2,'admin'))
+		if ($GLOBALS['egw']->acl->checkAdminDeny('site_config_acce', 2))
 		{
 			$readonlys['__ALL__'] = true;
 			$readonlys['cancel'] = false;

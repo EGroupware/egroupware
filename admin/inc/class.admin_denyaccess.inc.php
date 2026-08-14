@@ -28,7 +28,7 @@ class admin_denyaccess
 	function __construct()
 	{
 		$this->account_id = (int)$_GET['account_id'];
-		if (!$this->account_id || $GLOBALS['egw']->acl->check('account_access',64,'admin'))
+		if (!$this->account_id || $GLOBALS['egw']->acl->checkAdminDeny('account_access', 64))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');
 		}

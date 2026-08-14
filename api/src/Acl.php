@@ -294,6 +294,34 @@ class Acl
 	}
 
 	/**
+	 * Check an admin "deny" restriction flag - but only meaningful for actual admins
+	 *
+	 * Deny-mask ACL entries under the 'admin' app (eg. account_access, site_config_acce) restrict
+	 * what an otherwise-admin user may do; they only ever have rows for users who ARE admins. For a
+	 * user who was never granted admin at all, plain check($location,$mask,'admin') returns falsy
+	 * (no matching ACL rows), which must NOT be read as "not denied"/"allowed" - they were never an
+	 * admin to begin with.
+	 *
+	 * Callers typically react to a "true" (denied) return by redirecting eg. to '/index.php' - fine
+	 * for a real admin who merely lacks this one right, but for a non-admin that can just redirect
+	 * straight back into the same admin page and loop. So a non-admin gets a hard stop (exception)
+	 * instead of a "true" return; only an actual admin's restriction is reported via the return value.
+	 *
+	 * @param string $location eg. 'account_access', 'site_config_acce'
+	 * @param int $mask restriction bit to test, eg. 16, 32, 64
+	 * @return boolean true if the current (actual admin) user has the given restriction set
+	 * @throws Exception\NoPermission\Admin if the current user is not an admin at all
+	 */
+	function checkAdminDeny($location, $mask)
+	{
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Exception\NoPermission\Admin();
+		}
+		return $this->check($location, $mask, 'admin');
+	}
+
+	/**
 	 * get specific rights for this->account_id for an app location
 	 *
 	 * @param string $location app location

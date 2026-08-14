@@ -46,8 +46,8 @@ class admin_account
 	{
 		if ((string)$content['owner'] === '0' && $GLOBALS['egw_info']['user']['apps']['admin'])
 		{
-			$deny_edit = $content['account_id'] ? $GLOBALS['egw']->acl->check('account_access', 16, 'admin') :
-				$GLOBALS['egw']->acl->check('account_access', 4, 'admin');
+			$deny_edit = $content['account_id'] ? $GLOBALS['egw']->acl->checkAdminDeny('account_access', 16) :
+				$GLOBALS['egw']->acl->checkAdminDeny('account_access', 4);
 			//error_log(__METHOD__."() contact_id=$content[contact_id], account_id=$content[account_id], deny_edit=".array2string($deny_edit));
 
 			if (!$content['account_id'] && $deny_edit) return;	// no right to add new accounts, should not happen by AB ACL
@@ -333,7 +333,7 @@ class admin_account
 			//error_log(__METHOD__."() \$_GET[account_id]=$_GET[account_id], \$_GET[contact_id]=$_GET[contact_id] content=".array2string($content));
 		}
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) ||
-			$GLOBALS['egw']->acl->check('account_access',32,'admin') ||
+			$GLOBALS['egw']->acl->checkAdminDeny('account_access', 32) ||
 			$GLOBALS['egw_info']['user']['account_id'] == $content['account_id'] ||
 				(is_array($content['account_id']) && in_array($GLOBALS['egw_info']['user']['account_id'], $content['account_id'])	)
 		)

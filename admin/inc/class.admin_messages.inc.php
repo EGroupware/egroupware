@@ -30,8 +30,8 @@ class admin_messages
 		$tpl = new Etemplate('admin.mainscreen_message');
 
 		$acls = array (
-			self::MAINSCREEN => !$GLOBALS['egw']->acl->check('mainscreen_messa',1,'admin'),
-			self::LOGINSCREEN => !$GLOBALS['egw']->acl->check('mainscreen_messa',2,'admin')
+			self::MAINSCREEN => !$GLOBALS['egw']->acl->checkAdminDeny('mainscreen_messa', 1),
+			self::LOGINSCREEN => !$GLOBALS['egw']->acl->checkAdminDeny('mainscreen_messa', 2)
 		);
 
 		if (!is_array($content))

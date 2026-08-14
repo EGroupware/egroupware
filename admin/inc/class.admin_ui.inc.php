@@ -276,7 +276,7 @@ class admin_ui
 				'allowOnMultiple' => true
 			)
 		);
-		if (!$GLOBALS['egw']->acl->check('account_access',64,'admin'))	// no rights to set ACL-rights
+		if (!$GLOBALS['egw']->acl->checkAdminDeny('account_access', 64))	// no rights to set ACL-rights
 		{
 			$actions['deny'] = array(
 				'caption'   => 'Deny access',

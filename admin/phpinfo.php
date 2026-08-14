@@ -17,7 +17,7 @@ $GLOBALS['egw_info']['flags'] = array(
 );
 include('../header.inc.php');
 
-if ($GLOBALS['egw']->acl->check('info_access',1,'admin'))
+if ($GLOBALS['egw']->acl->checkAdminDeny('info_access', 1))
 {
 	$GLOBALS['egw']->redirect_link('/index.php');
 }

@@ -103,7 +103,7 @@ class Groups
 				{
 					Framework::window_close(lang('Entry not found!'));
 				}
-				if ($GLOBALS['egw']->acl->check('group_access', 8, 'admin'))    // no view
+				if ($GLOBALS['egw']->acl->checkAdminDeny('group_access', 8))    // no view
 				{
 					Framework::window_close(lang('Permission denied!'));
 				}
@@ -125,7 +125,7 @@ class Groups
 			}
 			else
 			{
-				if ($GLOBALS['egw']->acl->check('group_access', 4, 'admin'))    // no add
+				if ($GLOBALS['egw']->acl->checkAdminDeny('group_access', 4))    // no add
 				{
 					Framework::window_close(lang('Permission denied!'));
 				}
@@ -248,8 +248,8 @@ class Groups
 		});
 
 		$readonlys['button[delete]'] = !$content['account_id'] ||
-			$GLOBALS['egw']->acl->check('group_access', 32, 'admin');    // no delete
-		if ($GLOBALS['egw']->acl->check('group_access', $content['account_id'] ? 16 : 4, 'admin'))    // no edit / add
+			$GLOBALS['egw']->acl->checkAdminDeny('group_access', 32);    // no delete
+		if ($GLOBALS['egw']->acl->checkAdminDeny('group_access', $content['account_id'] ? 16 : 4))    // no edit / add
 		{
 			$readonlys['button[save]'] = $readonlys['button[apply]'] = true;
 		}
