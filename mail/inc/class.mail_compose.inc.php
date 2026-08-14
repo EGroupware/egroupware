@@ -17,6 +17,7 @@ use EGroupware\Api\Etemplate;
 use EGroupware\Api\Framework;
 use EGroupware\Api\Link;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Vfs;
 
 /**
@@ -1349,7 +1350,6 @@ class mail_compose
 				foreach(Mail::parseAddressList($value) as $addressObject) {
 					if ($addressObject->host === '.SYNTAX-ERROR.') continue;
 					$address = imap_rfc822_write_address($addressObject->mailbox,$addressObject->host,$addressObject->personal);
-					//$address = Mail::htmlentities($address, $this->displayCharset);
 					/** @noinspection UnsupportedStringOffsetOperationsInspection */
 					$content[strtolower($destination)][]=$address;
 					$destinationRows++;
@@ -1800,11 +1800,11 @@ class mail_compose
 	function generateRFC822Address($_addressObject)
 	{
 		if($_addressObject->personal && $_addressObject->mailbox && $_addressObject->host) {
-			return sprintf('"%s" <%s@%s>', $this->mail_bo->decode_header($_addressObject->personal), $_addressObject->mailbox, $this->mail_bo->decode_header($_addressObject->host,'FORCE'));
+			return sprintf('"%s" <%s@%s>', AddressList::decode_header($_addressObject->personal), $_addressObject->mailbox, AddressList::decode_header($_addressObject->host,'FORCE'));
 		} elseif($_addressObject->mailbox && $_addressObject->host) {
-			return sprintf("%s@%s", $_addressObject->mailbox, $this->mail_bo->decode_header($_addressObject->host,'FORCE'));
+			return sprintf("%s@%s", $_addressObject->mailbox, AddressList::decode_header($_addressObject->host,'FORCE'));
 		} else {
-			return $this->mail_bo->decode_header($_addressObject->mailbox,true);
+			return AddressList::decode_header($_addressObject->mailbox,true);
 		}
 	}
 
@@ -1891,7 +1891,7 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(!$foundAddresses[$keyemail]) {
-				$address = $this->mail_bo->decode_header($val,true);
+				$address = AddressList::decode_header($val,true);
 				$this->sessionData['cc'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
@@ -1911,7 +1911,7 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(!$foundAddresses[$keyemail]) {
-				$address = $this->mail_bo->decode_header($val,true);
+				$address = AddressList::decode_header($val,true);
 				$this->sessionData['to'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
@@ -1927,7 +1927,7 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(empty($foundAddresses[$keyemail])) {
-				$address = $this->mail_bo->decode_header($val,true);
+				$address = AddressList::decode_header($val,true);
 				$this->sessionData['replyto'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
@@ -1942,13 +1942,13 @@ class mail_compose
 			}
 			$keyemail=$_rfcAddr->mailbox.'@'.$_rfcAddr->host;
 			if(empty($foundAddresses[$keyemail])) {
-				$address = $this->mail_bo->decode_header($val,true);
+				$address = AddressList::decode_header($val,true);
 				$this->sessionData['bcc'][] = $val;
 				$foundAddresses[$keyemail] = true;
 			}
 		}
 		//_debug_array($this->sessionData);
-		$this->sessionData['subject']	= $mail_bo->decode_header($headers['SUBJECT']);
+		$this->sessionData['subject']	= AddressList::decode_header($headers['SUBJECT']);
 		// remove a printview tag if composing
 		$searchfor = '/^\['.lang('printview').':\]/';
 		$this->sessionData['subject'] = preg_replace($searchfor,'',$this->sessionData['subject']);
@@ -2040,7 +2040,7 @@ class mail_compose
 		//error_log(__METHOD__.__LINE__.array2string($headers));
 		//_debug_array($headers); exit;
 		// check for Re: in subject header
-		$this->sessionData['subject'] 	= "[FWD] " . $mail_bo->decode_header($headers['SUBJECT']);
+		$this->sessionData['subject'] 	= "[FWD] " . AddressList::decode_header($headers['SUBJECT']);
 		// the three attributes below are substituted by processedmail_id and mode
 		//$this->sessionData['sourceFolder']=$_folder;
 		//$this->sessionData['forwardFlag']='forwarded';
@@ -2053,7 +2053,7 @@ class mail_compose
 				$size				= lang('unknown');
 
 			$this->addMessageAttachment($_uid, $_partID, $_folder,
-				$mail_bo->decode_header((!empty($headers['SUBJECT'])?$headers['SUBJECT']:lang('no subject'))).'.eml',
+				AddressList::decode_header((!empty($headers['SUBJECT'])?$headers['SUBJECT']:lang('no subject'))).'.eml',
 				'MESSAGE/RFC822', $size);
 		}
 		else
@@ -2404,10 +2404,10 @@ class mail_compose
 		}
 
 		// check for Re: in subject header
-		if(strtolower(substr(trim($mail_bo->decode_header($headers['SUBJECT'])), 0, 3)) == "re:") {
-			$this->sessionData['subject'] = $mail_bo->decode_header($headers['SUBJECT']);
+		if(strtolower(substr(trim(AddressList::decode_header($headers['SUBJECT'])), 0, 3)) == "re:") {
+			$this->sessionData['subject'] = AddressList::decode_header($headers['SUBJECT']);
 		} else {
-			$this->sessionData['subject'] = "Re: " . $mail_bo->decode_header($headers['SUBJECT']);
+			$this->sessionData['subject'] = "Re: " . AddressList::decode_header($headers['SUBJECT']);
 		}
 
 		//_debug_array($headers);
@@ -2569,7 +2569,7 @@ class mail_compose
 			}
 		}
 
-		Mail::getCleanHTML($_body);
+		BodyDecoding::getCleanHTML($_body);
 		return preg_replace($nonDisplayAbleCharacters, '', $_body);
 	}
 
@@ -3335,7 +3335,7 @@ class mail_compose
 					$smime_success = $this->_encrypt(
 						$mail,
 						$this->sessionData['smime_encrypt']? Mail\Smime::TYPE_SIGN_ENCRYPT: Mail\Smime::TYPE_SIGN,
-						Mail::stripRFC822Addresses($recipients),
+						AddressList::stripRFC822Addresses($recipients),
 						$identity['ident_email'],
 						$_formData['smime_passphrase']
 					);
@@ -3354,7 +3354,7 @@ class mail_compose
 					$smime_success =  $this->_encrypt(
 						$mail,
 						Mail\Smime::TYPE_ENCRYPT,
-						Mail::stripRFC822Addresses($recipients),
+						AddressList::stripRFC822Addresses($recipients),
 						$identity['ident_email']
 					);
 				}
@@ -4127,7 +4127,7 @@ class mail_compose
 			$mail_bo->reopen($parts['folder']);
 			$headers	= $mail_bo->getMessageEnvelope($parts['msgUID'], null,false,$parts['folder']);
 			$this->addMessageAttachment($parts['msgUID'], null, $parts['folder'],
-					$mail_bo->decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))).'.eml',
+					AddressList::decode_header(($headers['SUBJECT']?$headers['SUBJECT']:lang('no subject'))).'.eml',
 					'MESSAGE/RFC822', $headers['SIZE'] ? $headers['SIZE'] : lang('unknown'));
 			$mail_bo->closeConnection();
 		}

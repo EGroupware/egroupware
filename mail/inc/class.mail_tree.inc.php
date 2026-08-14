@@ -12,6 +12,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Mail\Tree;
 
 /**
@@ -216,14 +217,14 @@ class mail_tree
 
 			if ($_parent && !self::isAccountNode($_parent)) // Single node loader
 			{
-				$nodeInfo = Mail::pathToFolderData($_parent, $hDelimiter);
+				$nodeInfo = FolderHelpers::pathToFolderData($_parent, $hDelimiter);
 				$folders = $this->ui->mail_bo->getFolderArrays($nodeInfo['mailbox'],false,$_allInOneGo?0:2, $_subscribedOnly);
 
 				$childrenNode = array();
 				foreach ($folders as &$node)
 				{
 					$nodeId = $_profileID.self::DELIMITER.$node['MAILBOX'];
-					$nodeData = Mail::pathToFolderData($nodeId, $node['delimiter']);
+					$nodeData = FolderHelpers::pathToFolderData($nodeId, $node['delimiter']);
 					$childrenNode[] = array(
 						Tree::ID=> $nodeId,
 						Tree::AUTOLOAD_CHILDREN => $_allInOneGo?false:self::nodeHasChildren($node),

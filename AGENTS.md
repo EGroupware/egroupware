@@ -122,6 +122,11 @@ similar scope.
   (`<et2-nextmatch>`). Covers the template-rename checklist, the legacy-widget-API-to-`Et2Nextmatch`
   replacement table for app JS/TS, lifecycle timing pitfalls, and the `columnselection_pref` ->
   `columnPreferenceName` audit/fix for apps already converted.
+- `doc/ai/projects/mail-bo-decoupling.md` - proposal (not started) to break `Api\Mail`/`mail_ui` apart
+  into smaller, independently-testable components, to fix the "large heavily-coupled legacy class with
+  no test coverage" problem shared by those two and `MailApp` (client-side). Covers a full method
+  inventory grouped by responsibility, per-group coupling/risk assessment, and a recommended
+  incremental (low-risk-first) sequencing.
 
 ## Security and data handling
 

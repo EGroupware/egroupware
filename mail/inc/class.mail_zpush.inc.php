@@ -14,6 +14,7 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\BodyDecoding;
 
 /**
  * mail eSync plugin
@@ -965,7 +966,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 						if ($body != "" && (is_array($bodyStruct) && $bodyStruct[0]['mimeType']=='text/html')) {
 							// may be html
 							if ($this->debugLevel>0) ZLog::Write(LOGLEVEL_DEBUG, "MIME Body".' Type:html (fetched with html_only)');
-							$css = $this->mail->getStyles($bodyStruct);
+							$css = BodyDecoding::getStyles($bodyStruct);
 							$output->nativebodytype=2;
 						} else {
 							// plain text Message

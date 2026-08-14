@@ -24,7 +24,6 @@ use Horde_Imap_Client_DateTime;
 use Horde_Mime_Headers;
 use Horde_Compress;
 use Horde_Mime_Magic;
-use Horde_Mail_Rfc822;
 use Horde_Mail_Rfc822_List;
 use Horde_Mime_Mdn;
 use Horde_Translation;
@@ -73,73 +72,14 @@ class Mail
 	/**
 	 * Custom mail labels indexed by their action ID
 	 *
+	 * Fallback used by Mail\CustomLabels::getCustomLabels() when Categories aren't available -
+	 * kept here (not moved with the rest of that group) since it's public API a deployment could
+	 * conceivably set directly.
+	 *
 	 * @var array<string,array{name:string,color:string}>
 	 */
 	public static array $customLabels = array();
-	private static ?array $customLabelsCache = null;
-
-	/**
-	 * Return configured custom mail labels
-	 *
-	 * Mail categories are used as the persistent configuration.  The static
-	 * property remains empty by default and is only a fallback for contexts in
-	 * which categories are unavailable.
-	 *
-	 * @return array<string,array{name:string,color:string,icon?:string}>
-	 */
-	public static function getCustomLabels(): array
-	{
-		if (self::$customLabelsCache !== null)
-		{
-			return self::$customLabelsCache;
-		}
-		try
-		{
-			$categories = new Categories($GLOBALS['egw_info']['user']['account_id'] ?? '', 'mail');
-			$labels = self::categoriesToCustomLabels($categories->return_array(
-				'all', 0, false, '', 'ASC', 'name', false, null, -1, '', null
-			));
-			if ($labels)
-			{
-				return self::$customLabelsCache = $labels;
-			}
-		}
-		catch (\Throwable $e)
-		{
-			// Categories are not available during some setup / unit-test contexts.
-		}
-		return self::$customLabels;
-	}
-
-	/**
-	 * Convert Mail categories into custom-label metadata
-	 *
-	 * Category names are stable UI ids.  The optional description is the
-	 * displayed caption, while color and icon are stored in category data.
-	 * Invalid IMAP keyword ids are ignored.
-	 *
-	 * @param array $categories
-	 * @return array<string,array{name:string,color:string,icon?:string}>
-	 */
-	private static function categoriesToCustomLabels(array $categories): array
-	{
-		$labels = array();
-		foreach ($categories as $category)
-		{
-			$id = (string)($category['name'] ?? '');
-			if (!preg_match('/^[a-z0-9][a-z0-9_-]*$/Di', $id))
-			{
-				continue;
-			}
-			$data = is_array($category['data'] ?? null) ? $category['data'] : array();
-			$labels[$id] = array(
-				'name' => (string)(($category['description'] ?? '') ?: $id),
-				'color' => (string)($data['color'] ?? ''),
-				'icon' => (string)($data['icon'] ?? ''),
-			);
-		}
-		return $labels;
-	}
+	public static ?array $customLabelsCache = null;
 
 	/**
 	 * the current display char set
@@ -1746,11 +1686,11 @@ class Mail
 					continue;
 				}
 				if ( isset($headerForPrio['DISPOSITION-NOTIFICATION-TO']) ) {
-					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['DISPOSITION-NOTIFICATION-TO']));
+					$headerObject['DISPOSITION-NOTIFICATION-TO'] = Mail\AddressList::decode_header(trim($headerForPrio['DISPOSITION-NOTIFICATION-TO']));
 				} else if ( isset($headerForPrio['RETURN-RECEIPT-TO']) ) {
-					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['RETURN-RECEIPT-TO']));
+					$headerObject['DISPOSITION-NOTIFICATION-TO'] = Mail\AddressList::decode_header(trim($headerForPrio['RETURN-RECEIPT-TO']));
 				} else if ( isset($headerForPrio['X-CONFIRM-READING-TO']) ) {
-					$headerObject['DISPOSITION-NOTIFICATION-TO'] = self::decode_header(trim($headerForPrio['X-CONFIRM-READING-TO']));
+					$headerObject['DISPOSITION-NOTIFICATION-TO'] = Mail\AddressList::decode_header(trim($headerForPrio['X-CONFIRM-READING-TO']));
 				} /*else $sent_not = "";*/
 				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($headerObject));
 				$headerObject['DATE'] = $headerForPrio['DATE'];
@@ -1929,23 +1869,23 @@ class Mail
 				}
 				//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].'->'.array2string($_headerObject->getEnvelope()->__get('from')));
 				if(!empty($headerObject['FROM'][0])) {
-					$retValue['header'][$sortOrder[$uid]]['sender_address'] = self::decode_header($headerObject['FROM'][0],true);
+					$retValue['header'][$sortOrder[$uid]]['sender_address'] = Mail\AddressList::decode_header($headerObject['FROM'][0],true);
 					if (count($headerObject['FROM'])>1)
 					{
 						$ki=0;
 						foreach($headerObject['FROM'] as $k => $add)
 						{
 							if ($k==0) continue;
-							$retValue['header'][$sortOrder[$uid]]['additional_from_addresses'][$ki] = self::decode_header($add,true);
+							$retValue['header'][$sortOrder[$uid]]['additional_from_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 							$ki++;
 						}
 					}
 				}
 				if(!empty($headerObject['REPLY-TO'][0])) {
-					$retValue['header'][$sortOrder[$uid]]['reply_to_address'] = self::decode_header($headerObject['REPLY-TO'][0],true);
+					$retValue['header'][$sortOrder[$uid]]['reply_to_address'] = Mail\AddressList::decode_header($headerObject['REPLY-TO'][0],true);
 				}
 				if(!empty($headerObject['TO'][0])) {
-					$retValue['header'][$sortOrder[$uid]]['to_address'] = self::decode_header($headerObject['TO'][0],true);
+					$retValue['header'][$sortOrder[$uid]]['to_address'] = Mail\AddressList::decode_header($headerObject['TO'][0],true);
 					if (count($headerObject['TO'])>1)
 					{
 						$ki=0;
@@ -1953,7 +1893,7 @@ class Mail
 						{
 							if ($k==0) continue;
 							//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki] = self::decode_header($add,true);
+							$retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 							$ki++;
 						}
@@ -1964,7 +1904,7 @@ class Mail
 					foreach($headerObject['CC'] as $k => $add)
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = self::decode_header($add,true);
+						$retValue['header'][$sortOrder[$uid]]['cc_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 						$ki++;
 					}
@@ -1974,7 +1914,7 @@ class Mail
 					foreach($headerObject['BCC'] as $k => $add)
 					{
 						//error_log(__METHOD__.' ('.__LINE__.') '."-> $k:".array2string($add));
-						$retValue['header'][$sortOrder[$uid]]['bcc_addresses'][$ki] = self::decode_header($add,true);
+						$retValue['header'][$sortOrder[$uid]]['bcc_addresses'][$ki] = Mail\AddressList::decode_header($add,true);
 						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($retValue['header'][$sortOrder[$uid]]['additional_to_addresses'][$ki]));
 						$ki++;
 					}
@@ -2042,9 +1982,9 @@ class Mail
 		$retValue['customFlag4'] = in_array('$customflag4', $headerFlags);
 		$retValue['customFlag5'] = in_array('$customflag5', $headerFlags);
 		$retValue['keywords'] = array();
-		foreach (array_keys(self::getCustomLabels()) as $id)
+		foreach (array_keys(Mail\CustomLabels::getCustomLabels()) as $id)
 		{
-			$keyword = self::validateKeyword($id);
+			$keyword = Mail\CustomLabels::validateKeyword($id);
 			if (in_array('$'.$keyword, $headerFlags))
 			{
 				$retValue['keywords'][$id] = true;
@@ -2052,110 +1992,6 @@ class Mail
 		}
 		//error_log(__METHOD__.' ('.__LINE__.') '.$headerObject['SUBJECT'].':'.array2string($retValue));
 		return $retValue;
-	}
-
-	/**
-	 * Validate a custom-label identifier before using it as an IMAP keyword
-	 *
-	 * @param string $keyword
-	 * @return string
-	 * @throws Exception\WrongParameter
-	 */
-	private static function validateKeyword($keyword)
-	{
-		$keyword = is_string($keyword) ? strtolower($keyword) : $keyword;
-		if (!is_string($keyword) || !preg_match('/^[a-z0-9][a-z0-9_-]*$/D', $keyword))
-		{
-			throw new Exception\WrongParameter('Invalid IMAP keyword');
-		}
-		return $keyword;
-	}
-
-	/**
-	 * Resolve a configured label id case-insensitively
-	 *
-	 * @param string $keyword
-	 * @return string|null exact configured UI id
-	 */
-	private static function customLabelId($keyword)
-	{
-		if (!is_string($keyword))
-		{
-			return null;
-		}
-		foreach (array_keys(self::getCustomLabels()) as $id)
-		{
-			if (strcasecmp($id, $keyword) === 0)
-			{
-				return $id;
-			}
-		}
-		return null;
-	}
-
-	/**
-	 * Check if an ID is a built-in or configured mail label keyword
-	 *
-	 * @param string $keyword
-	 * @return bool
-	 */
-	public static function isLabelKeyword($keyword)
-	{
-		return is_string($keyword) &&
-			(preg_match('/^label[1-5]$/Di', $keyword) || self::customLabelId($keyword) !== null);
-	}
-
-	/**
-	 * Build an explicit positive or negative label search criterion
-	 *
-	 * @param string $keyword
-	 * @param bool $set true to search for the label, false to search for messages without it
-	 * @return array{keyword:string,set:bool}
-	 * @throws Exception\WrongParameter
-	 */
-	public static function labelSearchCriterion($keyword, $set)
-	{
-		if (!self::isLabelKeyword($keyword))
-		{
-			throw new Exception\WrongParameter('Unknown mail label');
-		}
-		return array(
-			'keyword' => self::validateKeyword($keyword),
-			'set' => (bool)$set,
-		);
-	}
-
-	/**
-	 * Normalize a label status or explicit label search criterion
-	 *
-	 * Existing keyword1..5 statuses remain aliases for label1..5.
-	 *
-	 * @param mixed $criteria
-	 * @return array{keyword:string,set:bool}|null
-	 * @throws Exception\WrongParameter
-	 */
-	private static function labelSearchFromStatus($criteria)
-	{
-		if (is_array($criteria))
-		{
-			if (!array_key_exists('keyword', $criteria) || !array_key_exists('set', $criteria))
-			{
-				throw new Exception\WrongParameter('Invalid mail label search criterion');
-			}
-			return self::labelSearchCriterion($criteria['keyword'], $criteria['set']);
-		}
-		if (!is_string($criteria))
-		{
-			return null;
-		}
-
-		$keyword = strtolower($criteria);
-		if (preg_match('/^keyword([1-5])$/D', $keyword, $matches))
-		{
-			$keyword = 'label'.$matches[1];
-		}
-		return self::isLabelKeyword($keyword) ?
-			self::labelSearchCriterion($keyword, true) : null;
 	}
 
 	/**
@@ -2617,7 +2453,7 @@ class Mail
 			{
 				foreach ($retValue as $key => $rvV)
 				{
-					$retValue[$key] = self::decode_header($rvV, in_array($key, ['FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO']));
+					$retValue[$key] = Mail\AddressList::decode_header($rvV, in_array($key, ['FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO']));
 				}
 			}
 			return $retValue;
@@ -2648,7 +2484,7 @@ class Mail
 		}
 		$newData = [
 			'DATE' => $headers['DATE'] ?? null,
-			'SUBJECT' => $decode ? self::decode_header($headers['SUBJECT'] ?? '') : ($headers['SUBJECT'] ?? null),
+			'SUBJECT' => $decode ? Mail\AddressList::decode_header($headers['SUBJECT'] ?? '') : ($headers['SUBJECT'] ?? null),
 			'MESSAGE_ID' => $headers['MESSAGE-ID'] ?? null,
 		];
 		foreach (['IN-REPLY-TO', 'REFERENCES', 'THREAD-TOPIC', 'THREAD-INDEX', 'LIST-ID', 'SIZE'] as $key)
@@ -3290,7 +3126,7 @@ class Mail
 			$imapStatusFilter = new Horde_Imap_Client_Search_Query();
 			$imapStatusFilter->charset('UTF-8');
 			$statusQueryValid = false;
-			if ($labelSearch = self::labelSearchFromStatus($criteria))
+			if ($labelSearch = Mail\CustomLabels::labelSearchFromStatus($criteria))
 			{
 				$imapStatusFilter->flag('$'.$labelSearch['keyword'], $labelSearch['set']);
 				$queryValid = $statusQueryValid = true;
@@ -3618,75 +3454,6 @@ class Mail
 	}
 
 	/**
-	 * decode header (or envelope information)
-	 * if array given, note that only values will be converted
-	 * @param  mixed $_string input to be converted, if array call decode_header recursively on each value
-	 * @param  boolean|string $_tryIDNConversion (true/false AND 'FORCE'): try IDN Conversion on domainparts of emailADRESSES
-	 * @return mixed - based on the input type
-	 */
-	static function decode_header($_string, $_tryIDNConversion=false)
-	{
-		if (is_array($_string))
-		{
-			foreach($_string as $k=>$v)
-			{
-				$_string[$k] = self::decode_header($v, $_tryIDNConversion);
-			}
-			return $_string;
-		}
-		else
-		{
-			$_string = Mail\Html::decodeMailHeader($_string,self::$displayCharset);
-			$test = @json_encode($_string);
-			//error_log(__METHOD__.__LINE__.' ->'.strlen($singleBodyPart['body']).' Error:'.json_last_error().'<- BodyPart:#'.$test.'#');
-			if (($test=="null" || $test === false || !isset($test)) && strlen($_string)>0)
-			{
-				// try to fix broken utf8
-				$x = utf8_encode($_string);
-				$test = @json_encode($x);
-				if (($test=="null" || $test === false || !isset($test)) && strlen($_string)>0)
-				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					$_string = (function_exists('mb_convert_encoding')?mb_convert_encoding($_string,'UTF-8','UTF-8'):(function_exists('iconv')?@iconv("UTF-8","UTF-8//IGNORE",$_string):$_string));
-				}
-				else
-				{
-					$_string = $x;
-				}
-			}
-
-			if ($_tryIDNConversion===true && stripos($_string,'@')!==false)
-			{
-				$rfcAddr = self::parseAddressList($_string);
-				$stringA = array();
-				foreach ($rfcAddr as $_rfcAddr)
-				{
-					if (!$_rfcAddr->valid)
-					{
-						$stringA = array();
-						break; // skip idna conversion if we encounter an error here
-					}
-					try {
-						$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox,Horde_Idna::decode($_rfcAddr->host),$_rfcAddr->personal);
-					}
-					// if Idna conversation fails, leave address unchanged
-					catch(\Exception $e) {
-						unset($e);
-						$stringA[] = imap_rfc822_write_address($_rfcAddr->mailbox, $_rfcAddr->host, $_rfcAddr->personal);
-					}
-				}
-				if (!empty($stringA)) $_string = implode(',',$stringA);
-			}
-			if ($_tryIDNConversion==='FORCE')
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.'->'.$_string.'='.Horde_Idna::decode($_string));
-				$_string = Horde_Idna::decode($_string);
-			}
-			return $_string;
-		}
-	}
-
-	/**
 	 * decode subject
 	 * if array given, note that only values will be converted
 	 * @param  mixed $_string input to be converted, if array call decode_header recursively on each value
@@ -3695,52 +3462,7 @@ class Mail
 	 */
 	function decode_subject($_string,$decode=true)
 	{
-		#$string = $_string;
-		if($_string=='NIL')
-		{
-			return 'No Subject';
-		}
-		if ($decode) $_string = self::decode_header($_string);
-		// make sure its utf-8
-		$test = @json_encode($_string);
-		if (($test=="null" || $test === false || !isset($test)) && strlen($_string)>0)
-		{
-			$_string = utf8_encode($_string);
-		}
-		return $_string;
-
-	}
-
-	/**
-	 * decodeEntityFolderName - remove html entities
-	 * @param string _folderName the foldername
-	 * @return string the converted string
-	 */
-	function decodeEntityFolderName($_folderName)
-	{
-		return html_entity_decode($_folderName, ENT_QUOTES, self::$displayCharset);
-	}
-
-	/**
-	 * convert a mailboxname from utf7-imap to displaycharset
-	 *
-	 * @param string _folderName the foldername
-	 * @return string the converted string
-	 */
-	function encodeFolderName($_folderName)
-	{
-		return Translation::convert($_folderName, 'UTF7-IMAP', self::$displayCharset);
-	}
-
-	/**
-	 * convert the foldername from display charset to UTF-7
-	 *
-	 * @param string _parent the parent foldername
-	 * @return ISO-8859-1 / UTF7-IMAP encoded string
-	 */
-	function _encodeFolderName($_folderName) {
-		return Translation::convert($_folderName, self::$displayCharset, 'ISO-8859-1');
-		#return Translation::convert($_folderName, self::$displayCharset, 'UTF7-IMAP');
+		return Mail\AddressList::decode_subject($_string, $decode);
 	}
 
 	/**
@@ -3755,8 +3477,8 @@ class Mail
 	function createFolder($_parent, $_folderName, &$_error)
 	{
 		if (self::$debug) error_log(__METHOD__.' ('.__LINE__.') '."->"."$_parent, $_folderName called from:".function_backtrace());
-		$parent		= $_parent;//$this->_encodeFolderName($_parent);
-		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
+		$parent		= $_parent;
+		$folderName	= $_folderName;
 
 		if(empty($parent)) {
 			$newFolderName = $folderName;
@@ -3812,9 +3534,9 @@ class Mail
 	 */
 	function renameFolder($_oldFolderName, $_parent, $_folderName)
 	{
-		$oldFolderName	= $_oldFolderName;//$this->_encodeFolderName($_oldFolderName);
-		$parent		= $_parent;//$this->_encodeFolderName($_parent);
-		$folderName	= $_folderName;//$this->_encodeFolderName($_folderName);
+		$oldFolderName	= $_oldFolderName;
+		$parent		= $_parent;
+		$folderName	= $_folderName;
 
 		if(empty($parent)) {
 			$newFolderName = $folderName;
@@ -3848,7 +3570,6 @@ class Mail
 	 */
 	function deleteFolder($_folderName)
 	{
-		//$folderName = $this->_encodeFolderName($_folderName);
 		try
 		{
 			$this->icServer->subscribeMailbox($_folderName,false);
@@ -4139,7 +3860,7 @@ class Mail
 						$folderObject->shortDisplayName = $shortName;
 					}
 					//$folderName = $folderName;
-					if (in_array($shortName,self::$autoFolders)&&self::searchValueInFolderObjects($shortName,$autoFolderObjects)===false) {
+					if (in_array($shortName,self::$autoFolders)&&Mail\FolderHelpers::searchValueInFolderObjects($shortName,$autoFolderObjects)===false) {
 						$autoFolderObjects[$folderName] = $folderObject;
 					} else {
 						$folders[$folderName] = $folderObject;
@@ -4154,7 +3875,11 @@ class Mail
 			}
 		}
 		if (is_array($autoFolderObjects) && !empty($autoFolderObjects)) {
-			uasort($autoFolderObjects,array($this,"sortByAutoFolderPos"));
+			uasort($autoFolderObjects, function($a, $b) {
+				$pos1 = array_search(trim($a->shortFolderName), self::$autoFolders);
+				$pos2 = array_search(trim($b->shortFolderName), self::$autoFolders);
+				return $pos1 == $pos2 ? 0 : ($pos1 < $pos2 ? -1 : 1);
+			});
 		}
 		// check if some standard folders are missing and need to be created
 		if (count($autofolder_exists) < count(self::$autoFolders) && $this->check_create_autofolders($autofolder_exists))
@@ -4162,7 +3887,7 @@ class Mail
 			// if new folders have been created, re-read folders ignoring the cache
 			return $this->getFolderObjects($_subscribedOnly, $_getCounters, $_alwaysGetDefaultFolders, false);	// false = do NOT use cache
 		}
-		if (is_array($folders)) uasort($folders,array($this,"sortByDisplayName"));
+		if (is_array($folders)) uasort($folders, fn($a, $b) => strcasecmp($a->displayName, $b->displayName));
 		//$folders2return = array_merge($autoFolderObjects,$folders);
 		//_debug_array($folders2return); #exit;
 		$folders2return[$this->icServer->ImapServerId] = array_merge((array)$inboxFolderObject,(array)$autoFolderObjects,(array)$folders);
@@ -4318,7 +4043,7 @@ class Mail
 
 					foreach ((array)$subFolders as $path => $folder)
 					{
-						$folderInfo = self::pathToFolderData($folder['MAILBOX'], $folder['delimiter']);
+						$folderInfo = Mail\FolderHelpers::pathToFolderData($folder['MAILBOX'], $folder['delimiter']);
 						if (in_array(trim($folderInfo['name']), $autofolders) || in_array(trim($folderInfo['name']), self::$autoFolders))
 						{
 							$aFolders [$path] = $folder;
@@ -4328,11 +4053,17 @@ class Mail
 							$nFolders [$path] = $folder;
 						}
 					}
-					if (is_array($aFolders)) uasort ($aFolders, array($this,'sortByAutofolder'));
+					if (is_array($aFolders)) uasort($aFolders, function($a, $b) {
+						$fa = Mail\FolderHelpers::pathToFolderData($a['MAILBOX'], $a['delimiter']);
+						$fb = Mail\FolderHelpers::pathToFolderData($b['MAILBOX'], $b['delimiter']);
+						$pos1 = array_search(trim($fa['name']), self::$autoFolders);
+						$pos2 = array_search(trim($fb['name']), self::$autoFolders);
+						return $pos1 == $pos2 ? 0 : ($pos1 < $pos2 ? -1 : 1);
+					});
 					//ksort($aFolders);
 
 					// Sort none auto folders base on mailbox name
-					uasort($nFolders,array($this,'sortByMailbox'));
+					uasort($nFolders, fn($a, $b) => strcasecmp($a['MAILBOX'], $b['MAILBOX']));
 
 					$subFolders = array_merge($aFolders,$nFolders);
 				}
@@ -4367,7 +4098,7 @@ class Mail
 				$folders = $this->icServer->getMailboxes($path, $_search, true);
 			}
 
-			if (is_array($folders)) uasort($folders, array($this,'sortByMailbox'));
+			if (is_array($folders)) uasort($folders, fn($a, $b) => strcasecmp($a['MAILBOX'], $b['MAILBOX']));
 		}
 		elseif(!$_nodePath) // all
 		{
@@ -4388,7 +4119,7 @@ class Mail
 			if (self::$debugTimes) $starttime = microtime (true);
 			// Merge of all auto folders and specialusefolders
 			$autoFoldersTmp = array_unique((array_merge(self::$autoFolders, array_values(self::$specialUseFolders))));
-			if (is_array($folders)) uasort($folders,array($this,'sortByMailbox'));//ksort($folders);
+			if (is_array($folders)) uasort($folders, fn($a, $b) => strcasecmp($a['MAILBOX'], $b['MAILBOX']));//ksort($folders);
 			$tmpFolders = $folders;
 			$inboxFolderObject=$inboxSubFolderObjects=$autoFolderObjects=$typeFolderObject=$mySpecialUseFolders=array();
 			$googleMailFolderObject=$googleAutoFolderObjects=$googleSubFolderObjects=array();
@@ -4490,7 +4221,7 @@ class Mail
 			// avoid calling sortByAutoFolder as it is not regarding subfolders
 			$autoFolderObjectsTmp = $autoFolderObjects;
 			$autoFolderObjects = [];
-			uasort($autoFolderObjectsTmp, array($this,'sortByMailbox'));
+			uasort($autoFolderObjectsTmp, fn($a, $b) => strcasecmp($a['MAILBOX'], $b['MAILBOX']));
 			foreach($autoFoldersTmp as $afk=>$aF)
 			{
 				foreach($autoFolderObjectsTmp as $k => $f)
@@ -4510,7 +4241,7 @@ class Mail
 				// avoid calling sortByAutoFolder as it is not regarding subfolders
 				$gAutoFolderObjectsTmp = $googleAutoFolderObjects;
 				unset($googleAutoFolderObjects);
-				uasort($gAutoFolderObjectsTmp, array($this,'sortByMailbox'));
+				uasort($gAutoFolderObjectsTmp, fn($a, $b) => strcasecmp($a['MAILBOX'], $b['MAILBOX']));
 				foreach($autoFoldersTmp as $afk=>$aF)
 				{
 					foreach($gAutoFolderObjectsTmp as $k => $f)
@@ -4558,110 +4289,6 @@ class Mail
 			}
 		}
 		return $num_created;
-	}
-
-	/**
-	 * search Value In FolderObjects
-	 *
-	 * Helper function to search for a specific value within the foldertree objects
-	 * @param string $needle
-	 * @param array $haystack array of folderobjects
-	 * @return MIXED false or key
-	 */
-	static function searchValueInFolderObjects($needle, $haystack)
-	{
-		$rv = false;
-		foreach ($haystack as $k => $v)
-		{
-			foreach($v as &$sv) {if (trim($sv)==trim($needle)) return $k;}
-		}
-		return $rv;
-	}
-
-	/**
-	 * sortByMailbox
-	 *
-	 * Helper function to sort folders array by mailbox
-	 * @param array $a
-	 * @param array $b array of folders
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByMailbox($a,$b)
-	{
-		return strcasecmp($a['MAILBOX'],$b['MAILBOX']);
-	}
-
-	/**
-	 * Get folder data from path
-	 *
-	 * @param string $_path a node path
-	 * @param string $_hDelimiter hierarchy delimiter
-	 * @return array returns an array of data extracted from given node path
-	 */
-	static function pathToFolderData ($_path, $_hDelimiter)
-	{
-		if (!strpos($_path, self::DELIMITER)) $_path = self::DELIMITER.$_path;
-		list(,$path) = explode(self::DELIMITER, $_path);
-		$path_chain = $parts = explode($_hDelimiter, $path);
-		$name = array_pop($parts);
-		return array (
-			'name' => $name,
-			'mailbox' => $path,
-			'parent' => implode($_hDelimiter, $parts),
-			'text' => $name,
-			'tooltip' => $name,
-			'path' => $path_chain
-		);
-	}
-
-	/**
-	 * sortByAutoFolder
-	 *
-	 * Helper function to sort folder-objects by auto Folder Position
-	 * @param array $_a
-	 * @param array $_b
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByAutoFolder($_a, $_b)
-	{
-		// 0, 1 und -1
-		$a = self::pathToFolderData($_a['MAILBOX'], $_a['delimiter']);
-		$b = self::pathToFolderData($_b['MAILBOX'], $_b['delimiter']);
-		$pos1 = array_search(trim($a['name']),self::$autoFolders);
-		$pos2 = array_search(trim($b['name']),self::$autoFolders);
-		if ($pos1 == $pos2) return 0;
-		return ($pos1 < $pos2) ? -1 : 1;
-	}
-
-	/**
-	 * sortByDisplayName
-	 *
-	 * Helper function to sort folder-objects by displayname
-	 * @param object $a
-	 * @param object $b array of folderobjects
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByDisplayName($a,$b)
-	{
-		// 0, 1 und -1
-		return strcasecmp($a->displayName,$b->displayName);
-	}
-
-	/**
-	 * sortByAutoFolderPos
-	 *
-	 * Helper function to sort folder-objects by auto Folder Position
-	 * @param object $a
-	 * @param object $b array of folderobjects
-	 * @return int expect values (0, 1 or -1)
-	 */
-	function sortByAutoFolderPos($a,$b)
-	{
-		// 0, 1 und -1
-		$pos1 = array_search(trim($a->shortFolderName),self::$autoFolders);
-		$pos2 = array_search(trim($b->shortFolderName),self::$autoFolders);
-		if ($pos1 == $pos2) return 0;
-		return ($pos1 < $pos2) ? -1 : 1;
 	}
 
 	/**
@@ -5671,133 +5298,8 @@ class Mail
 	}
 
 	/**
-	 * htmlentities
-	 * helperfunction to cope with wrong encoding in strings
-	 * @param string $_string  input to be converted
-	 * @param mixed $_charset false or string -> Target charset, if false Mail displayCharset will be used
-	 * @return string
-	 */
-	static function htmlentities($_string, $_charset=false)
-	{
-		//setting the charset (if not given)
-		if ($_charset===false) $_charset = self::$displayCharset;
-		$string = @htmlentities($_string, ENT_QUOTES, $_charset, false);
-		if (empty($string) && !empty($_string)) $string = @htmlentities(Translation::convert($_string,Translation::detect_encoding($_string),$_charset),ENT_QUOTES | ENT_IGNORE,$_charset, false);
-		return $string;
-	}
-
-	/**
-	 * clean a message from elements regarded as potentially harmful
-	 * param string/reference $_html is the text to be processed
-	 * return nothing
-	 */
-	static function getCleanHTML(&$_html)
-	{
-		// remove CRLF and TAB as it is of no use in HTML.
-		// but they matter in <pre>, so we rather don't
-		//$_html = str_replace("\r\n",' ',$_html);
-		//$_html = str_replace("\t",' ',$_html);
-		//error_log(__METHOD__.__LINE__.':'.$_html);
-		//repair doubleencoded ampersands, and some stuff htmLawed stumbles upon with balancing switched on
-		$_html = str_replace(array('&amp;amp;','<DIV><BR></DIV>',"<DIV>&nbsp;</DIV>",'<div>&nbsp;</div>','</td></font>','<br><td>','<tr></tr>','<o:p></o:p>','<o:p>','</o:p>'),
-							 array('&amp;',    '<BR>',           '<BR>',             '<BR>',             '</font></td>','<td>',    '',         '',           '',  ''),$_html);
-		//$_html = str_replace(array('&amp;amp;'),array('&amp;'),$_html);
-		if (stripos($_html,'style')!==false) Mail\Html::replaceTagsCompletley($_html,'style'); // clean out empty or pagewide style definitions / left over tags
-		if (stripos($_html,'head')!==false) Mail\Html::replaceTagsCompletley($_html,'head'); // Strip out stuff in head
-		//if (stripos($_html,'![if')!==false && stripos($_html,'<![endif]>')!==false) Mail\Html::replaceTagsCompletley($_html,'!\[if','<!\[endif\]>',false); // Strip out stuff in ifs
-		//if (stripos($_html,'!--[if')!==false && stripos($_html,'<![endif]-->')!==false) Mail\Html::replaceTagsCompletley($_html,'!--\[if','<!\[endif\]-->',false); // Strip out stuff in ifs
-		//error_log(__METHOD__.' ('.__LINE__.') '.$_html);
-
-		if (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc() === 1) $_html = stripslashes($_html);
-		// Strip out doctype in head, as htmlLawed cannot handle it TODO: Consider extracting it and adding it afterwards
-		if (stripos($_html,'!doctype')!==false) Mail\Html::replaceTagsCompletley($_html,'!doctype');
-		if (stripos($_html,'?xml:namespace')!==false) Mail\Html::replaceTagsCompletley($_html,'\?xml:namespace','/>',false);
-		if (stripos($_html,'?xml version')!==false) Mail\Html::replaceTagsCompletley($_html,'\?xml version','\?>',false);
-		if (strpos($_html,'!CURSOR')!==false) Mail\Html::replaceTagsCompletley($_html,'!CURSOR');
-		// htmLawed filter only the 'body'
-		//preg_match('`(<htm.+?<body[^>]*>)(.+?)(</body>.*?</html>)`ims', $_html, $matches);
-		//if ($matches[2])
-		//{
-		//	$hasOther = true;
-		//	$_html = $matches[2];
-		//}
-		// purify got switched to htmLawed
-		// some testcode to test purifying / htmlawed
-		//$_html = "<BLOCKQUOTE>hi <div> there </div> kram <br> </blockquote>".$_html;
-		$_html = Html\HtmLawed::purify($_html,self::$htmLawed_config,array(),true);
-		//if ($hasOther) $_html = $matches[1]. $_html. $matches[3];
-		// clean out comments , should not be needed as purify should do the job.
-		$search = array(
-			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-			'@<!--[\s\S]*?[ \t\n\r]*-->@',         // Strip multi-line comments including CDATA
-		);
-		$_html = preg_replace($search,"",$_html);
-		// remove non printable chars
-		$_html = preg_replace('/([\000-\011])/','',$_html);
-		//error_log(__METHOD__.':'.__LINE__.':'.$_html);
-	}
-
-	/**
 	 * Header and Bodystructure stuff
 	 */
-
-	/**
-	 * getMimePartCharset - fetches the charset mimepart if it exists
-	 * @param $_mimePartObject structure object
-	 * @return mixed mimepart or false if no CHARSET is found, the missing charset has to be handled somewhere else,
-	 *		as we cannot safely assume any charset as we did earlier
-	 */
-	function getMimePartCharset($_mimePartObject)
-	{
-		//$charSet = 'iso-8859-1';//self::$displayCharset; //'iso-8859-1'; // self::displayCharset seems to be asmarter fallback than iso-8859-1
-		$CharsetFound=false;
-		//echo "#".$_mimePartObject->encoding.'#<br>';
-		if(is_array($_mimePartObject->parameters)) {
-			if(isset($_mimePartObject->parameters['CHARSET'])) {
-				$charSet = $_mimePartObject->parameters['CHARSET'];
-				$CharsetFound=true;
-			}
-		}
-		// this one is dirty, but until I find something that does the trick of detecting the encoding, ....
-		//if ($CharsetFound == false && $_mimePartObject->encoding == "QUOTED-PRINTABLE") $charSet = 'iso-8859-1'; //assume quoted-printable to be ISO
-		//if ($CharsetFound == false && $_mimePartObject->encoding == "BASE64") $charSet = 'utf-8'; // assume BASE64 to be UTF8
-		return ($CharsetFound ? $charSet : $CharsetFound);
-	}
-
-	/**
-	 * decodeMimePart - fetches the charset mimepart if it exists
-	 * @param string $_mimeMessage - the message to be decoded
-	 * @param string $_encoding - the encoding used BASE64 and QUOTED-PRINTABLE is supported
-	 * @param string $_charset - not used
-	 * @return string decoded mimePart
-	 */
-	function decodeMimePart($_mimeMessage, $_encoding, $_charset = '')
-	{
-		// decode the part
-		if (self::$debug) error_log(__METHOD__."() with $_encoding and $_charset:".print_r($_mimeMessage,true));
-		switch (strtoupper($_encoding))
-		{
-			case 'BASE64':
-				// use imap_base64 to decode, not any longer, as it is strict, and fails if it encounters invalid chars
-				return base64_decode($_mimeMessage);
-
-			case 'QUOTED-PRINTABLE':
-				// use imap_qprint to decode
-				return quoted_printable_decode($_mimeMessage);
-
-			case 'WEDONTKNOWTHEENCODING':
-				// try base64
-				$r = base64_decode($_mimeMessage);
-				if (json_encode($r))
-				{
-					return $r;
-				}
-				//we do not know the encoding, so we do not decode
-			default:
-				// it is either not encoded or we don't know about it
-				return $_mimeMessage;
-		}
-	}
 
 	/**
 	 * get part of the message, if its stucture is indicating its of multipart alternative style
@@ -6171,9 +5673,6 @@ class Mail
 		}
 		else
 		{
-			// some Servers append PropertyFile___ ; strip that here for display
-			// RB: not sure what this is: preg_replace('/PropertyFile___$/','',$this->decodeMimePart($mimePartBody, $_structure->encoding, $this->getMimePartCharset($_structure))),
-
 			// Should not try to fetch if the content is already there (e.g. Smime encrypted message)
 			try {
 				if (empty($_structure->getContents())) $this->fetchPartContents($_uid, $_structure, $_stream, $_preserveSeen);
@@ -6293,7 +5792,7 @@ class Mail
 						$bodyParts = $this->getMultipartRelated($_uid, $_structure, $this->htmlOptions, $_preserveSeen, $calendar_part);
 						break;
 				}
-				return self::normalizeBodyParts($bodyParts);
+				return Mail\BodyDecoding::normalizeBodyParts($bodyParts);
 
 			case 'video':
 			case 'audio': // some servers send audiofiles and imagesfiles directly, without any stuff surround it
@@ -6322,7 +5821,7 @@ class Mail
 				} else {
 					// what if the structure->disposition is attachment ,...
 				}
-				return self::normalizeBodyParts($bodyPart);
+				return Mail\BodyDecoding::normalizeBodyParts($bodyPart);
 
 			case 'attachment':
 			case 'message':
@@ -6331,7 +5830,7 @@ class Mail
 					case 'rfc822':
 						$newStructure = $_structure->getParts();
 						if (self::$debug) {echo __METHOD__." Message -> RFC -> NewStructure:"; _debug_array($newStructure[0]);}
-						return self::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure[0]->getMimeId(), $newStructure[0], $_preserveSeen, $_folder));
+						return Mail\BodyDecoding::normalizeBodyParts($this->getMessageBody($_uid, $_htmlOptions, $newStructure[0]->getMimeId(), $newStructure[0], $_preserveSeen, $_folder));
 				}
 				break;
 
@@ -6345,34 +5844,6 @@ class Mail
 					)
 				);
 		}
-	}
-
-	/**
-	 * normalizeBodyParts - function to gather and normalize all body Information
-	 * as we may receive a bodyParts structure from within getMessageBody nested deeper than expected
-	 * so this is used to normalize the output, so we are able to rely on our expectation
-	 * @param _bodyParts - Body Array
-	 * @return array - a normalized Bodyarray
-	 */
-	static function normalizeBodyParts($_bodyParts)
-	{
-		if (is_array($_bodyParts))
-		{
-			foreach($_bodyParts as $singleBodyPart)
-			{
-				if (!isset($singleBodyPart['body'])) {
-					$buff = self::normalizeBodyParts($singleBodyPart);
-					foreach ((array)$buff as $val) { $body2return[] = $val;}
-					continue;
-				}
-				$body2return[] = $singleBodyPart;
-			}
-		}
-		else
-		{
-			$body2return = $_bodyParts;
-		}
-		return $body2return ?? null;
 	}
 
 	/**
@@ -6482,7 +5953,7 @@ class Mail
 					if ($preserveHTML==false) $newBody = Mail\Html::convertHTMLToText($newBody,self::$displayCharset,true,true);
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after convertHTMLToText:'.$newBody);
 					if ($preserveHTML==false) $newBody = nl2br($newBody); // we need this, as htmLawed removes \r\n
-					/*if (!$alreadyHtmlLawed) */ $mailClass->getCleanHTML($newBody); // remove stuff we regard as unwanted
+					Mail\BodyDecoding::getCleanHTML($newBody); // remove stuff we regard as unwanted
 					if ($preserveHTML==false) $newBody = str_replace("<br />","\r\n",$newBody);
 					//error_log(__METHOD__.' ('.__LINE__.') '.' after getClean:'.$newBody);
 				}
@@ -6500,57 +5971,6 @@ class Mail
 			//continue;
 		}
 		return $message;
-	}
-
-	static function wordwrap($str, $cols, $cut, $dontbreaklinesstartingwith=false)
-	{
-		$lines = explode("\n", $str);
-		$newStr = '';
-		foreach($lines as $line)
-		{
-			// replace tabs by 8 space chars, or any tab only counts one char
-			//$line = str_replace("\t","        ",$line);
-			//$newStr .= wordwrap($line, $cols, $cut);
-			$allowedLength = $cols-strlen($cut);
-			//dont try to break lines with links, chance is we mess up the text is way too big
-			if (strlen($line) > $allowedLength && stripos($line,'href=')===false &&
-				($dontbreaklinesstartingwith==false ||
-				 ($dontbreaklinesstartingwith &&
-				  strlen($dontbreaklinesstartingwith)>=1 &&
-				  substr($line,0,strlen($dontbreaklinesstartingwith)) != $dontbreaklinesstartingwith
-				 )
-				)
-			   )
-			{
-				$s=explode(" ", $line);
-				$line = "";
-				$linecnt = 0;
-				foreach ($s as &$v) {
-					$cnt = strlen($v);
-					// only break long words within the wordboundaries,
-					// but it may destroy links, so we check for href and dont do it if we find one
-					// we check for any html within the word, because we do not want to break html by accident
-					//do not break apart links like https://...
-					if($cnt > $allowedLength && !preg_match('#(https?|www\.)#', $v) &&
-						stripos($v,'href=')===false && stripos($v,'onclick=')===false &&
-						$cnt == strlen(html_entity_decode($v)))
-					{
-						$v=wordwrap($v, $allowedLength, $cut, true);
-					}
-					// the rest should be broken at the start of the new word that exceeds the limit
-					if ($linecnt+$cnt > $allowedLength) {
-						$v=$cut.$v;
-						#$linecnt = 0;
-						$linecnt =strlen($v)-strlen($cut);
-					} else {
-						$linecnt += $cnt;
-					}
-					if (strlen($v)) $line .= (strlen($line) ? " " : "").$v;
-				}
-			}
-			$newStr .= $line . "\n";
-		}
-		return $newStr;
 	}
 
 	/**
@@ -6636,7 +6056,7 @@ class Mail
 				foreach ($envelope as $key => $rvV)
 				{
 					//try idn conversion only on 'FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'
-					$envelope[$key]=self::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
+					$envelope[$key]=Mail\AddressList::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
 				}
 			}
 			return $envelope;
@@ -6648,7 +6068,7 @@ class Mail
 			//_debug_array($headers);
 			$newData = array(
 				'DATE'		=> $headers['DATE'],
-				'SUBJECT'	=> ($decode ? self::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
+				'SUBJECT'	=> ($decode ? Mail\AddressList::decode_header($headers['SUBJECT']):$headers['SUBJECT']),
 				'MESSAGE_ID'	=> $headers['MESSAGE-ID']
 			);
 			if (isset($headers['IN-REPLY-TO'])) $newData['IN-REPLY-TO'] = $headers['IN-REPLY-TO'];
@@ -6661,7 +6081,7 @@ class Mail
 			$recepientList = array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO');
 			foreach($recepientList as $recepientType) {
 				if(isset($headers[$recepientType])) {
-					if ($decode) $headers[$recepientType] =  self::decode_header($headers[$recepientType],true);
+					if ($decode) $headers[$recepientType] =  Mail\AddressList::decode_header($headers[$recepientType],true);
 					//error_log(__METHOD__.__LINE__." ".$recepientType."->".array2string($headers[$recepientType]));
 					foreach(self::parseAddressList($headers[$recepientType]) as $singleAddress) {
 						$addressData = array(
@@ -6766,13 +6186,12 @@ class Mail
 		{
 			$retValue['SUBJECT'] = $retValue['SUBJECT'][count($retValue['SUBJECT'])-1];
 		}
-		//error_log(__METHOD__.' ('.__LINE__.') '.':'.array2string($decode ? self::decode_header($retValue,true):$retValue));
 		if ($decode)
 		{
 			foreach ($retValue as $key => $rvV)
 			{
 				//try idn conversion only on 'FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO'
-				$retValue[$key]=self::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
+				$retValue[$key]=Mail\AddressList::decode_header($rvV,in_array($key,array('FROM', 'TO', 'CC', 'BCC', 'SENDER', 'REPLY-TO')));
 			}
 		}
 		return $retValue;
@@ -6840,75 +6259,6 @@ class Mail
 		$rawHeaders[$this->icServer->ImapServerId][(string)$_folder][$_uid][(empty($_partID)?'NIL':$_partID)]=$retValue;
 		Cache::setCache(Cache::INSTANCE,'email','rawHeadersCache'.trim($GLOBALS['egw_info']['user']['account_id']),$rawHeaders,60*60*1);
 		return $retValue;
-	}
-
-	/**
-	 * getStyles - extracts the styles from the given bodyparts
-	 * @param array $_bodyParts  with the bodyparts
-	 * @return string a preformatted string with the mails converted to text
-	 */
-	static function &getStyles($_bodyParts)
-	{
-		$style = $ret = '';
-		if (empty($_bodyParts)) return $ret;
-		foreach((array)$_bodyParts as $singleBodyPart) {
-			if (!isset($singleBodyPart['body'])) {
-				$singleBodyPart['body'] = self::getStyles($singleBodyPart);
-				$style .= $singleBodyPart['body'];
-				continue;
-			}
-
-			if (empty($singleBodyPart['charSet'])) $singleBodyPart['charSet'] = Translation::detect_encoding($singleBodyPart['body']);
-			$singleBodyPart['body'] = Translation::convert(
-				$singleBodyPart['body'],
-				strtolower($singleBodyPart['charSet'])
-			);
-			$ct = 0;
-			$newStyle=array();
-			if (stripos($singleBodyPart['body'],'<style')!==false)  $ct = preg_match_all('#<style(?:\s.*)?>(.+)</style>#isU', $singleBodyPart['body'], $newStyle);
-			if ($ct>0)
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.'#'.$ct.'#'.array2string($newStyle));
-				$style2buffer = implode('',$newStyle[0]);
-			}
-			if (!empty($style2buffer) && strtoupper(self::$displayCharset) == 'UTF-8')
-			{
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($style2buffer));
-				$test = json_encode($style2buffer);
-				//error_log(__METHOD__.' ('.__LINE__.') '.'#'.$test.'# ->'.strlen($style2buffer).' Error:'.json_last_error());
-				//if (json_last_error() != JSON_ERROR_NONE && strlen($style2buffer)>0)
-				if ($test=="null" && strlen($style2buffer)>0)
-				{
-					// this should not be needed, unless something fails with charset detection/ wrong charset passed
-					error_log(__METHOD__.' ('.__LINE__.') '.' Found Invalid sequence for utf-8 in CSS:'.$style2buffer.' Charset Reported:'.$singleBodyPart['charSet'].' Carset Detected:'.Translation::detect_encoding($style2buffer));
-					$style2buffer = utf8_encode($style2buffer);
-				}
-			}
-			$style .= $style2buffer ?? '';
-		}
-		// clean out comments and stuff
-		$search = array(
-			'@url\(http:\/\/[^\)].*?\)@si',  // url calls e.g. in style definitions
-//			'@<!--[\s\S]*?[ \t\n\r]*-->@',   // Strip multi-line comments including CDATA
-//			'@<!--[\s\S]*?[ \t\n\r]*--@',    // Strip broken multi-line comments including CDATA
-		);
-		$style = preg_replace($search,"",$style);
-
-		// CSS Security
-		// http://code.google.com/p/browsersec/wiki/Part1#Cascading_stylesheets
-		$css = preg_replace('/(javascript|expression|-moz-binding)/i','',$style);
-		if (stripos($css,'script')!==false) Mail\Html::replaceTagsCompletley($css,'script'); // Strip out script that may be included
-		// we need this, as styledefinitions are enclosed with curly brackets; and template stuff tries to replace everything between curly brackets that is having no horizontal whitespace
-		// as the comments as <!-- styledefinition --> in stylesheet are outdated, and ck-editor does not understand it, we remove it
-		$css = str_replace(array(':','<!--','-->'),array(': ','',''),$css);
-		//error_log(__METHOD__.' ('.__LINE__.') '.$css);
-
-		// check if the outlook style fix is there then set the initial line-height, since the fix is setting it to line-height:0
-		// which breaks all tr lines in the content.
-		if (preg_match('/Outlook 2016 Height Fix/i', $css)) $css .='<style>tr {line-height: initial} </style>';
-
-		// TODO: we may have to strip urls and maybe comments and ifs
-		return $css;
 	}
 
 	/**
@@ -7890,11 +7240,11 @@ class Mail
 		$headdata = null;
 		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($header).function_backtrace());
 		if ($header['SUBJECT']) $headdata = lang('subject').': '.$header['SUBJECT'].($createHTML?"<br />":"\n");
-		if ($header['FROM']) $headdata .= lang('from').': '.self::convertAddressArrayToString($header['FROM'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['SENDER']) $headdata .= lang('sender').': '.self::convertAddressArrayToString($header['SENDER'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['TO']) $headdata .= lang('to').': '.self::convertAddressArrayToString($header['TO'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['CC']) $headdata .= lang('cc').': '.self::convertAddressArrayToString($header['CC'], $createHTML).($createHTML?"<br />":"\n");
-		if ($header['BCC']) $headdata .= lang('bcc').': '.self::convertAddressArrayToString($header['BCC'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['FROM']) $headdata .= lang('from').': '.Mail\AddressList::convertAddressArrayToString($header['FROM'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['SENDER']) $headdata .= lang('sender').': '.Mail\AddressList::convertAddressArrayToString($header['SENDER'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['TO']) $headdata .= lang('to').': '.Mail\AddressList::convertAddressArrayToString($header['TO'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['CC']) $headdata .= lang('cc').': '.Mail\AddressList::convertAddressArrayToString($header['CC'], $createHTML).($createHTML?"<br />":"\n");
+		if ($header['BCC']) $headdata .= lang('bcc').': '.Mail\AddressList::convertAddressArrayToString($header['BCC'], $createHTML).($createHTML?"<br />":"\n");
 		if ($header['DATE']) $headdata .= lang('date').': '.$header['DATE'].($createHTML?"<br />":"\n");
 		if ($header['PRIORITY'] && $header['PRIORITY'] != 'normal') $headdata .= lang('priority').': '.$header['PRIORITY'].($createHTML?"<br />":"\n");
 		if ($header['IMPORTANCE'] && $header['IMPORTANCE'] !='normal') $headdata .= lang('importance').': '.$header['IMPORTANCE'].($createHTML?"<br />":"\n");
@@ -7948,64 +7298,6 @@ class Mail
 		$subject = str_replace('$$','__',($subject?$subject:lang('(no subject)')));
 		$subject = str_ireplace(array('[FWD]','[',']','{','}','<','>'),array('Fwd:',' ',' ',' ',' ',' ',' '),trim($subject));
 		return $subject;
-	}
-
-	/**
-	 * convertAddressArrayToString - converts an mail envelope Address Array To String
-	 * @param array $rfcAddressArray  an addressarray as provided by mail retieved via egw_pear....
-	 * @return string a comma separated string with the mailaddress(es) converted to text
-	 */
-	static function convertAddressArrayToString($rfcAddressArray)
-	{
-		//error_log(__METHOD__.' ('.__LINE__.') '.array2string($rfcAddressArray));
-		$returnAddr ='';
-		if (is_array($rfcAddressArray))
-		{
-			foreach((array)$rfcAddressArray as $addressData) {
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($addressData));
-				if($addressData['MAILBOX_NAME'] == 'NIL') {
-					continue;
-				}
-				if(strtolower($addressData['MAILBOX_NAME']) == 'undisclosed-recipients') {
-					continue;
-				}
-				if ($addressData['RFC822_EMAIL'])
-				{
-					$addressObjectA = self::parseAddressList($addressData['RFC822_EMAIL']);
-				}
-				else
-				{
-					$emailaddress = ($addressData['PERSONAL_NAME']?$addressData['PERSONAL_NAME'].' <'.$addressData['EMAIL'].'>':$addressData['EMAIL']);
-					$addressObjectA = self::parseAddressList($emailaddress);
-				}
-				$addressObject = $addressObjectA[0];
-				//error_log(__METHOD__.' ('.__LINE__.') '.array2string($addressObject));
-				if (!$addressObject->valid) continue;
-				//$mb =(string)$addressObject->mailbox;
-				//$h = (string)$addressObject->host;
-				//$p = (string)$addressObject->personal;
-				$returnAddr .= (strlen($returnAddr)>0?',':'');
-				//error_log(__METHOD__.' ('.__LINE__.') '.$p.' <'.$mb.'@'.$h.'>');
-				try {
-					$buff = imap_rfc822_write_address($addressObject->mailbox, Horde_Idna::decode($addressObject->host), $addressObject->personal);
-				}
-				// if Idna conversation fails, leave address unchanged
-				catch (\Exception $e) {
-					unset($e);
-					$buff = imap_rfc822_write_address($addressObject->mailbox, $addressObject->host, $addressObject->personal);
-				}
-				$returnAddr .= str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$buff);
-				//error_log(__METHOD__.' ('.__LINE__.') '.' Address: '.$returnAddr);
-			}
-		}
-		else
-		{
-			// do not mess with strings, return them untouched /* ToDo: validate string as Address */
-			$rfcAddressArray = self::decode_header($rfcAddressArray,true);
-			$rfcAddressArray = str_replace(array('<','>','"\'','\'"'),array('[',']','"','"'),$rfcAddressArray);
-			if (is_string($rfcAddressArray)) return $rfcAddressArray;
-		}
-		return $returnAddr;
 	}
 
 	/**
@@ -8833,66 +8125,7 @@ class Mail
 	 */
 	public static function parseAddressList($addresses, $default_domain=null)
 	{
-		$rfc822 = new Horde_Mail_Rfc822();
-		$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
-		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count.function_backtrace());
-		if ((empty($ret) || $ret->count()==0)&& is_string($addresses) && strlen($addresses)>0)
-		{
-			$matches = array();
-			preg_match_all("/[\w\.,-.,_.,0-9.]+@[\w\.,-.,_.,0-9.]+/",$addresses,$matches);
-			//error_log(__METHOD__.__LINE__.array2string($matches));
-			foreach ($matches[0] as &$match) {$match = trim($match,', ');}
-			$addresses = implode(',',$matches[0]);
-			//error_log(__METHOD__.__LINE__.array2string($addresses));
-			$ret = $rfc822->parseAddressList($addresses, $default_domain ? array('default_domain' => $default_domain) : array());
-			//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret).'#'.$ret->count().'#'.$ret->count);
-		}
-		$previousFailed=false;
-		$ret2 = new Horde_Mail_Rfc822_List();
-		// handle known problems on emailaddresses
-		foreach($ret as $i => $adr)
-		{
-			//mailaddresses enclosed in single quotes like 'me@you.com' show up as 'me as mailbox and you.com' as host
-			if ($adr->mailbox && stripos($adr->mailbox,"'")== 0 &&
-					$adr->host && stripos($adr->host,"'")== (strlen($adr->host) -1))
-			{
-				$adr->mailbox = str_replace("'","",$adr->mailbox);
-				$adr->host = str_replace("'","",$adr->host);
-			}
-
-
-			// try to strip extra quoting or slashes from personal part
-			$adr->personal = stripslashes($adr->personal);
-			if ($adr->personal && (stripos($adr->personal, '"') == 0 &&
-					substr($adr->personal, -1) == '"') ||
-					(substr($adr->personal, -2) == '""'))
-			{
-				$adr->personal = str_replace('"', "", $adr->personal);
-			}
-
-
-			// no mailbox or host part as 'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>' is parsed as 2 addresses separated by ','
-			//#'Xr\xc3\xa4hlyz, User <mailboxpart1.mailboxpart2@yourhost.com>'
-			//#Horde_Mail_Rfc822_List Object([_data:protected] => Array(
-			//[0] => Horde_Mail_Rfc822_Address Object([comment] => Array()[mailbox] => Xr\xc3\xa4hlyz[_host:protected] => [_personal:protected] => )
-			//[1] => Horde_Mail_Rfc822_Address Object([comment] => Array()[mailbox] => mailboxpart1.mailboxpart2[_host:protected] => youthost.com[_personal:protected] => User))[_filter:protected] => Array()[_ptr:protected] => )#2#,
-			if (strlen($adr->mailbox)==0||strlen($adr->host)==0)
-			{
-				$remember = ($adr->mailbox?$adr->mailbox:($adr->host?$adr->host:''));
-				$previousFailed=true;
-				//error_log(__METHOD__.__LINE__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal");
-			}
-			else
-			{
-				if ($previousFailed && $remember) $adr->personal = $remember. ' ' . $adr->personal;
-				$remember = '';
-				$previousFailed=false;
-				//error_log(__METHOD__.__LINE__."('$addresses', $default_domain) parsed $i: mailbox=$adr->mailbox, host=$adr->host, personal=$adr->personal");
-				$ret2->add($adr);
-			}
-		}
-		//error_log(__METHOD__.__LINE__.'#'.array2string($addresses).'#'.array2string($ret2).'#'.$ret2->count().'#'.$ret2->count);
-		return $ret2;
+		return Mail\AddressList::parseAddressList($addresses, $default_domain);
 	}
 
 	/**
@@ -8974,23 +8207,6 @@ class Mail
 
 	}
 
-	/**
-	 * This function gets array of email addresses in RFC822 format
-	 * and tries to normalize the addresses into only email addresses.
-	 *
-	 * @param array $_addresses Addresses
-	 */
-	static function stripRFC822Addresses ($_addresses)
-	{
-		$matches = array();
-		foreach ($_addresses as &$address)
-		{
-			preg_match("/<([^\'\" <>]+)>$/", $address, $matches);
-			if (!empty($matches[1])) $address = $matches[1];
-		}
-		return $_addresses;
-	}
-
 
 
 	/**
@@ -9058,7 +8274,7 @@ class Mail
 		if ($cert) // signed message, it might be encrypted too
 		{
 			$envelope = $this->getMessageEnvelope($params['uid'], '', false, $params['mailbox']);
-			$from = $this->stripRFC822Addresses($envelope['FROM']);
+			$from = Mail\AddressList::stripRFC822Addresses($envelope['FROM']);
 			$message_parts = $this->smime->extractSignedContents($message);
 			$cert_email = strtolower($cert->email);
 			//$f = $message_parts->_headers->getHeader('from');

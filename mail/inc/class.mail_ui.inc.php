@@ -18,6 +18,10 @@ use EGroupware\Api\Vfs;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Etemplate\KeyManager;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\AddressList;
+use EGroupware\Api\Mail\BodyDecoding;
+use EGroupware\Api\Mail\CustomLabels;
+use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Mail\JmapShim;
 
 /**
@@ -130,7 +134,7 @@ class mail_ui
 	private static function customLabelStatusTypes(): array
 	{
 		$statusTypes = array();
-		foreach (Mail::getCustomLabels() as $id => $customLabel)
+		foreach (CustomLabels::getCustomLabels() as $id => $customLabel)
 		{
 			$statusTypes[$id] = $customLabel['name'];
 		}
@@ -521,7 +525,7 @@ class mail_ui
 				$content[self::$nm_index]['filter2_aria_label'] = lang('Details');
 				$content[self::$nm_index]['no_filter2'] = false;       // Disable second filter
 				$content[self::$nm_index]['actions'] = self::get_actions();
-				$content['customLabels'] = Mail::getCustomLabels();
+				$content['customLabels'] = CustomLabels::getCustomLabels();
 				$content[self::$nm_index]['row_id'] = 'row_id';	     // is a concatenation of trim($GLOBALS['egw_info']['user']['account_id']):profileID:base64_encode(FOLDERNAME):uid
 				$content[self::$nm_index]['placeholder_actions'] = array('composeasnew');
 				// no 'get_rows' callback: rows are fetched client-side via direct JMAP access
@@ -1626,7 +1630,7 @@ class mail_ui
 				//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			)
 		);
-		foreach (Mail::getCustomLabels() as $id => $customLabel)
+		foreach (CustomLabels::getCustomLabels() as $id => $customLabel)
 		{
 			$actions['mark']['children']['setLabel']['children'][$id] = array(
 				'group' => $actions['mark']['children']['setLabel']['children']['label5']['group'],
@@ -2536,7 +2540,7 @@ class mail_ui
 
 		$GLOBALS['egw']->session->commit_session();
 		$headers = Horde_Mime_Headers::parseHeaders($message);
-		$subject = str_replace('$$','__',Mail::decode_header($headers['SUBJECT']));
+		$subject = str_replace('$$','__',AddressList::decode_header($headers['SUBJECT']));
 		if (!$display)
 		{
 			$subject = Api\Mail::clean_subject_for_filename($subject);
@@ -3248,7 +3252,7 @@ class mail_ui
 		}
 		// Compose the content of the frame
 		$frameHtml =
-			$this->get_email_header($this->mail_bo->getStyles($bodyParts)).
+			$this->get_email_header(BodyDecoding::getStyles($bodyParts)).
 			$this->showBody($this->getdisplayableBody($bodyParts,true,false), false);
 		//IE10 eats away linebreaks preceeded by a whitespace in PRE sections
 		$frameHtml = str_replace(" \r\n","\r\n",$frameHtml);
@@ -3386,7 +3390,7 @@ class mail_ui
 				}
 
 				// to display a mailpart of mimetype plain/text, may be better taged as preformatted
-				$newBody	= "<pre>".Mail::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
+				$newBody	= "<pre>".BodyDecoding::wordwrap($newBody,90,"\n",'&gt;')."</pre>";
 			}
 			else
 			{
@@ -3429,7 +3433,7 @@ class mail_ui
 					$alreadyHtmlLawed=true;
 				}
 				// do the cleanup, set for the use of purifier
-				Mail::getCleanHTML($newBody);
+				BodyDecoding::getCleanHTML($newBody);
 
 				// removes stuff between http and ?http
 				$Protocol = '(http:\/\/|(ftp:\/\/|https:\/\/))';    // only http:// gets removed, other protocolls are shown
@@ -4013,9 +4017,9 @@ class mail_ui
 		}
 		if ($_parent)
 		{
-			$parent = $this->mail_bo->decodeEntityFolderName($_parent);
+			$parent = FolderHelpers::decodeEntityFolderName($_parent);
 			//the conversion is handeled by horde, frontend interaction is all utf-8
-			$new = $this->mail_bo->decodeEntityFolderName($_new);
+			$new = FolderHelpers::decodeEntityFolderName($_new);
 
 			list($profileID,$p_no_delimiter) = explode(self::$delimiter,$parent,2);
 
@@ -4125,8 +4129,8 @@ class mail_ui
 		if ($_folderName)
 		{
 			Api\Translation::add_app('mail');
-			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
-			$_newName = $this->mail_bo->decodeEntityFolderName($_newName);
+			$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
+			$_newName = FolderHelpers::decodeEntityFolderName($_newName);
 
 			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
@@ -4266,7 +4270,7 @@ class mail_ui
 	{
 		Api\Translation::add_app('mail');
 		$oldPrefForSubscribedOnly = !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'];
-		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
 		list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 		if ($profileID != $this->mail_bo->profileID) $this->changeProfile($profileID);
 
@@ -4924,8 +4928,8 @@ class mail_ui
 		if (Mail::$debug) error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
 		if ($_folderName)
 		{
-			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
-			$_newLocation2 = $this->mail_bo->decodeEntityFolderName($_target);
+			$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
+			$_newLocation2 = FolderHelpers::decodeEntityFolderName($_target);
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 			list($newProfileID,$_newLocation) = explode(self::$delimiter,$_newLocation2,2);
 			if ($profileID != $this->mail_bo->profileID || $profileID != $newProfileID) $this->changeProfile($profileID);
@@ -5060,7 +5064,7 @@ class mail_ui
 		$success = false;
 		if ($_folderName)
 		{
-			$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+			$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
 			$oA = array();
 			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 			if (is_numeric($profileID) && $profileID != $this->mail_bo->profileID) $this->changeProfile ($profileID);
@@ -5169,7 +5173,7 @@ class mail_ui
 			if ((string)$icServerID === '0')
 			{
 				$bootstrap = self::jmapLocalBootstrap('0');
-				$bootstrap['customLabels'] = Mail::getCustomLabels();
+				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
 				$response->data($bootstrap);
 				return;
 			}
@@ -5182,7 +5186,7 @@ class mail_ui
 			if ($bootstrap)
 			{
 				$bootstrap['isLocal'] = $local;
-				$bootstrap['customLabels'] = Mail::getCustomLabels();
+				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
 				// account config only (no IMAP round-trip, no full special-use autodetection like
 				// Mail::getTrashFolder()/getJunkFolder() do) - good enough for
 				// MailJmap.deleteMessages()'s move-to-trash resolution and the "empty trash"/
@@ -5574,7 +5578,7 @@ class mail_ui
 		Api\Translation::add_app('mail');
 
 		$this->mail_bo->restoreSessionData();
-		$decodedFolderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
 		list($icServerID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
 
 		if (empty($folderName)) $folderName = $this->mail_bo->sessionData['mailbox'];
@@ -5829,7 +5833,7 @@ class mail_ui
 				'customFlag4' => 'blue',
 				'customFlag5' => 'purple',
 			);
-			foreach (Mail::getCustomLabels() as $id => $customLabel)
+			foreach (CustomLabels::getCustomLabels() as $id => $customLabel)
 			{
 				$flag[$id] = $customLabel['name'];
 			}
@@ -6002,7 +6006,7 @@ class mail_ui
 	{
 		if(Mail::$debug) error_log(__METHOD__."->".$_folderName.':'.print_r($_messageList,true).' Method:'.$_copyOrMove.' ArchiveMarker:'.$_move2ArchiveMarker);
 		Api\Translation::add_app('mail');
-		$folderName = $this->mail_bo->decodeEntityFolderName($_folderName);
+		$folderName = FolderHelpers::decodeEntityFolderName($_folderName);
 		// only copy or move are supported as method
 		if (!($_copyOrMove=='copy' || $_copyOrMove=='move')) $_copyOrMove='copy';
 		list($targetProfileID,$targetFolder) = explode(self::$delimiter,$folderName,2);

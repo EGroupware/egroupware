@@ -42,6 +42,7 @@ namespace EGroupware\Mail;
 
 use EGroupware\Api;
 use EGroupware\Api\Mail\Account;
+use EGroupware\Api\Mail\CustomLabels;
 
 class JmapShim
 {
@@ -903,7 +904,7 @@ class JmapShim
 		{
 			$keywords['$'.$keyword] = '$'.$keyword;
 		}
-		foreach (array_keys(Api\Mail::getCustomLabels()) as $keyword)
+		foreach (array_keys(CustomLabels::getCustomLabels()) as $keyword)
 		{
 			$keywords['$'.strtolower($keyword)] = '$'.strtolower($keyword);
 		}

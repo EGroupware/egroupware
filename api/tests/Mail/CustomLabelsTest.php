@@ -44,7 +44,7 @@ class CustomLabelsTest extends TestCase
 	 */
 	public function testCategoriesMapToCustomLabels()
 	{
-		$method = (new ReflectionClass(Mail::class))->getMethod('categoriesToCustomLabels');
+		$method = (new ReflectionClass(Mail\CustomLabels::class))->getMethod('categoriesToCustomLabels');
 		$labels = $method->invoke(null, array(
 			array(
 				'id' => 123,
@@ -94,7 +94,7 @@ class CustomLabelsTest extends TestCase
 		$this->assertTrue($flags['keywords']['HausMails']);
 		$this->assertSame(
 			array('keyword' => 'hausmails', 'set' => true),
-			Mail::labelSearchCriterion('HausMails', true)
+			Mail\CustomLabels::labelSearchCriterion('HausMails', true)
 		);
 	}
 

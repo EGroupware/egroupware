@@ -181,6 +181,20 @@ the shim).
   `JmapShim::download()`), since the shim previously had no blob store at all. The shim's blobId is
   self-describing (`urlsafeB64(mailbox) + ':' + uid + ':' + partId`) rather than a real per-account
   blob registry lookup.
+- **Auto-index for bodyless messages** (`mail/js/attachmentIndex.ts`, `renderAttachmentIndex()`):
+  when a message has no visible text/html body (`empty(trim(strip_tags($body)))`, checked
+  client-side as `doc.body.textContent.trim() === ''`), attachments are rendered directly into the
+  body area instead of leaving it blank - entirely client-side from the already-fetched
+  `attachmentsBlock`, no extra JMAP/PHP round-trip. Images render as plain lazy-loaded `<img>`,
+  PDFs as an embedded `<iframe>`, everything else as a mime-icon link (`egw.image('mime128_<main>_
+  <sub>')` → `'mime128_<main>'` → `'mime128_unknown'` fallback chain). A single attachment gets no
+  header; multiple get a `---- filename ----` divider plus a "Download all" link. Deliberately a
+  standalone module with no `MailApp` dependency (importing `MailApp` in a test pulls in the whole
+  `app.ts` graph - see Test coverage below) - wired into `MailApp` at the three places a message
+  body gets rendered (`mail_preview()`, the on-demand attachment-fetch completion handler, and the
+  popup view). Must insert into `.mailDisplayBody .td_display`, not `doc.body` directly - the
+  `.mailDisplayBody` wrapper has `height:100%` and appending as its sibling pushes content below the
+  fold.
 
 ### Attachments
 
@@ -231,6 +245,45 @@ the shim).
 - `mail_ui::ajax_jmapBootstrap()` supplies `trashFolder`/`junkFolder` so the client can resolve
   "move to trash"/purge targets without a dedicated endpoint.
 
+### Address-list parsing robustness (RFC 2047 encoded-word edge case)
+
+Both backends independently trusted an address-list parser that isn't RFC 2047-aware, and both got
+fixed, but architecturally differently since PHP is only in the loop for one of them:
+
+- **Root cause**: a comma may legally appear *inside* an RFC 2047 encoded-word's payload (Q-encoding
+  never requires escaping it) - e.g. a quoted display name `"Example Corp, Consulting"` wrapped
+  whole inside a single `=?utf-8?Q?...?=` token by the sending MUA. A naive splitter that breaks on
+  any raw comma before recognizing encoded-word boundaries mis-splits this into a bogus extra
+  address fragment, corrupting both the fragment and its neighbor.
+- **Local shim (plain IMAP)**: `JmapShim::emailFromFetch()` trusted the IMAP server's own
+  `Horde_Imap_Client_Data_Envelope` (ENVELOPE-parsed addresses) - Dovecot's address splitter has the
+  same non-2047-aware bug. Fixed by re-fetching From/To/Cc/Bcc as raw header text
+  (`$query->headers('addresses', [...], ['cache' => true, 'peek' => true])`) and routing through
+  `Api\Mail::parseAddressList()` instead (`JmapShim::addressListFromHeader()`), which already had
+  "no mailbox/host part" repair logic from the classic pre-JMAP code. Regression coverage:
+  `api/tests/Mail/ParseAddressListTest.php` (sanitized `example.com` reproduction - real `.eml`
+  fixtures with private data can't be committed).
+- **Real JMAP (Stalwart)**: PHP is never in the loop here (see client-side architecture above), so
+  the shim fix has zero effect - and worse, **Stalwart corrupts the header at storage/ingestion
+  time**, not just at query time (confirmed: both `header:X` and a raw `blobId` message download
+  return the already-corrupted, re-serialized header). No JMAP-exposed mechanism can recover the
+  true original bytes once such a message has been stored - this is a genuine Stalwart bug, outside
+  EGroupware's control, reported upstream.
+  - Fix is **detect-then-repair-on-demand**, not a blanket extra request per message (explicit design
+    constraint - most messages don't need it): `MailJmap.email2row()` flags a From/To/Cc/Bcc field
+    as `suspectAddressFields` when an entry has no usable `@`-containing email, or a display name
+    containing a literal backslash (a reliable "something went wrong" signal even when the email
+    itself is valid - the real-world Stalwart failure mode was a mangled name next to a perfectly
+    valid address). `MailApp.renderMessageInto()` then calls `MailJmap.repairAddressField()` for
+    each flagged field, which re-requests `header:<field>` (bare form - RFC 8621 §4.1.3 defaults an
+    unqualified `header:name` property to Raw, and Stalwart echoes the property key back in that
+    canonical form regardless of which explicit suffix was requested, so requesting the bare form is
+    what makes the response lookup key reliably match) and round-trips the raw text through
+    `mail_ui::ajax_parseAddressList()` → `Api\Mail::parseAddressList()` server-side. This meaningfully
+    improves the corrupted text (recovers a mangled name almost fully) but can't fully undo
+    Stalwart's own lossy corruption. Test coverage: `MailJmap.test.ts`'s "suspect address field
+    detection" suite.
+
 ### Local shim internals (plain IMAP accounts)
 
 - `mail/jmap.php` - thin front controller: session bootstrap, the `?download=1` blob route, and
@@ -270,14 +323,15 @@ the shim).
   eml/message-rfc822 attachment click path specifically (`Api\Link::set_data()` token silently
   dropped, then `Link::get_data()` failing later with a bare native `alert()`).
 
-## Current status (as of 2026-08-09)
+## Current status (as of 2026-08-14)
 
 **JMAP-native today** (Stalwart accounts; local-shim accounts already had zero extra IMAP cost for
 most of this since IMAP was already native there):
 
-- Client-side: row listing, message body rendering (incl. inline `cid:` images, PGP/MIME), bulk
-  move/delete/flag (single-row and select-all-matching-filter), folder purge, attachment
-  listing/download, copy-to-folder, view raw header, MDN, subject-edit-in-place.
+- Client-side: row listing, message body rendering (incl. inline `cid:` images, PGP/MIME,
+  bodyless-message attachment auto-index), bulk move/delete/flag (single-row and
+  select-all-matching-filter), folder purge, attachment listing/download, copy-to-folder, view raw
+  header, MDN, subject-edit-in-place, on-demand address-list repair for malformed encoded-words.
 - Server-side `Api\Mail`: `getHeaders()`, `flagMessages()`, `deleteMessages()`, `getMessageHeader()`,
   `getMessageRawHeader()`, `getMessageRawBody()`, `getMessageBody()`, `getMessageAttachments()`,
   `getAttachment()`, `getAttachmentByCID()`, `getMessageEnvelope()`, `moveMessages()` (same-account
@@ -360,11 +414,26 @@ correctly resolving a real UID first (see "bail-to-classic trap" above).
   problem (no batching, no early commit) and remains safe for session writes, but is deprecated in
   favor of `egw.request(menuaction, params).then(...)` for new code - prefer `egw.request()`, but the
   actual hard rule is just "never `jsonq()` a handler that writes session state".
+- **`this.et2` does not reliably resolve to the current template in the "view" popup window**
+  (`mail_isMainWindow === false`) - `this.et2.getArrayMgr("content").getEntry(...)` silently returns
+  `undefined` there instead of throwing, so a widget-tree lookup written against `this.et2` can crash
+  deep inside a click handler with no obvious cause (`MailApp.saveAttachmentHandler()`'s "Open with
+  Collabora" was broken this way for any single-attachment message in the popup). Walk up from the
+  clicked widget instead: `widget.getParent().getArrayMgr("content").data` works in both the main
+  window and the popup.
 
 ## Test coverage
 
 - `vendor/bin/phpunit --bootstrap doc/phpunit_bootstrap.php mail/tests/` (48 tests) +
-  `api/tests/Mail/CustomLabelsTest.php`.
+  `api/tests/Mail/CustomLabelsTest.php` + `api/tests/Mail/ParseAddressListTest.php` (encoded-word/
+  comma regression, sanitized data only).
+- `npx web-test-runner mail/js/test/*.test.ts --node-resolve` - `MailJmap.test.ts` (preview-snippet
+  gating, suspect-address-field detection) and `RenderAttachmentIndex.test.ts` (auto-index
+  rendering, 9 tests). `MailApp` itself (`mail/js/app.ts`) has **no test coverage** - it's a large,
+  heavily-coupled legacy class; anything that needs to exercise it currently relies on live testing
+  against `boulder.egroupware.org` instead (see account cheat sheet below). This is the reason
+  new client-side logic gets extracted into small standalone modules (`attachmentIndex.ts`) rather
+  than added as `MailApp` methods wherever avoidable.
 - `tracker/tests/MailHandlerTest.php` (separate `tracker` git repo, gitignored from this repo - run
   with `vendor/bin/phpunit -c doc/phpunit.xml tracker/tests/MailHandlerTest.php`). Covers
   `process_message2()`/`is_automail2()`/`forward_message2()` via a mock/double `Api\Mail`, not the

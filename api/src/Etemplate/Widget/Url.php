@@ -159,7 +159,7 @@ class Url extends Etemplate\Widget
 	 */
 	public static function ajax_contact($_email)
 	{
-		$emails = Api\Mail::stripRFC822Addresses((array)$_email);
+		$emails = Api\Mail\AddressList::stripRFC822Addresses((array)$_email);
 		$response = Api\Json\Response::get();
 		$result = $GLOBALS['egw']->contacts->search(
 			array('contact_email' => $emails, 'contact_email_home' => $emails),
