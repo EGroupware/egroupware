@@ -28,12 +28,13 @@ use tidy;
  * `resolveAttachmentsBlock()`/`vfsSaveAttachments()`/`getdisplayableBody()` had no external callers
  * and were removed from `mail_ui` outright.
  *
- * `getdisplayableBody()`'s inline-image resolution passes `$this->mailbox`/`$this->uid`/
- * `$this->partID` (now `$this->ui->mailbox`/etc.) - these are never actually assigned anywhere on
- * `mail_ui` (confirmed by grepping for assignments), so they're always null and inline `cid:` image
- * resolution inside this specific code path has likely never worked. Pre-existing behavior, kept
- * exactly as-is (not a bug introduced by this move) - flagged here rather than silently carried
- * forward unremarked, but not fixed as part of this refactor.
+ * `getdisplayableBody()`'s inline-image resolution reads `$this->mailbox`/`$this->uid`/
+ * `$this->partID` (now `$this->ui->mailbox`/etc.) - **correction**: an earlier version of this
+ * docblock claimed these were never assigned and thus always null. That was wrong - a grep limited
+ * to this file (before `Mail\Ui\MessageDisplayHandler` was extracted) missed the real assignment,
+ * which lives in `MessageDisplayHandler::get_load_email_data()` (`$this->ui->mailbox = $mailbox`
+ * etc.), the one caller of this method - see that class for the actual (correctly working) data
+ * flow. Lesson: "grep this file" isn't the same as "grep the method's actual callers".
  */
 class AttachmentHandler
 {

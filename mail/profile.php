@@ -34,6 +34,7 @@ $headertime = microtime(true);
 
 use EGroupware\Api\Mail\Account as emailadmin_account;
 use EGroupware\Api\Mail\Imap as emailadmin_imap;
+use EGroupware\Mail\Ui\MessageDisplayHandler;
 
 // on which mail account do we work, if not specified use default one (connects to imap server!)
 $acc_id = isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0 ? (int)$_GET['acc_id'] : emailadmin_account::get_default_acc_id();
@@ -161,7 +162,7 @@ function mail_times($acc_id, array &$times, $prefix='mail_')
 		$row = array_shift($rows);
 		$uid = $row['uid'];
 	}
-	$mail_ui->get_load_email_data($uid, null, 'INBOX');
+	(new MessageDisplayHandler($mail_ui))->get_load_email_data($uid, null, 'INBOX');
 	$bodytime = microtime(true);
 
 	$times += array(

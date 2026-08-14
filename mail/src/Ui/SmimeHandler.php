@@ -19,9 +19,10 @@ use EGroupware\Api\Mail;
  * `smimeExportCert()`/`smimeExportCsr()` stay in place as one-line delegations to here - required
  * because EGroupware's ajax/menuaction dispatch resolves handlers by `mail_ui::methodName`, not by
  * class-agnostic name (see doc/ai/projects/mail-bo-decoupling.md). `smimePassphraseFormHtml()` was
- * NOT moved here - unlike the rest of this group, it's coupled to `mail_ui`'s own instance state
- * (`$this->mail_bo`, `$this->get_email_header()`), so it stays with the body-rendering code it's
- * part of rather than this otherwise-self-contained cert/key-management group.
+ * NOT moved here - unlike the rest of this group, it's coupled to the mail-body-render state
+ * (`mail_bo`, `get_email_header()`), so it stays with the body-rendering code it's part of, now
+ * `Mail\Ui\MessageDisplayHandler`, rather than this otherwise-self-contained cert/key-management
+ * group.
  */
 class SmimeHandler
 {
