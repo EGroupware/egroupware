@@ -66,8 +66,17 @@ class StreamWrapper extends Vfs\StreamWrapper
 		{
 			throw new Api\Exception\NotFound('Share owner not found', 404);
 		}
-		return Vfs::concat('vfs://'.$account_lid.'@default'.Vfs::parse_url($share['share_path'], PHP_URL_PATH), $rel_path).
-			($share['share_writable'] & 1 ? '' : '?ro=1');
+		$share_root = 'vfs://'.$account_lid.'@default'.Vfs::parse_url($share['share_path'], PHP_URL_PATH);
+		$url = Vfs::concat($share_root, $rel_path);
+
+		// $rel_path can come from a client-supplied sharing:// path (StreamWrapper::replace()) -
+		// Vfs::concat() only normalizes "/../" segments, it never checks containment, so a
+		// traversal-laden $rel_path must not be allowed to resolve outside the share's own root
+		if ($url !== $share_root && strpos($url, rtrim($share_root, '/').'/') !== 0)
+		{
+			throw new Api\Exception\NotFound('Path escapes share root', 404);
+		}
+		return $url.($share['share_writable'] & 1 ? '' : '?ro=1');
 	}
 
 	/**

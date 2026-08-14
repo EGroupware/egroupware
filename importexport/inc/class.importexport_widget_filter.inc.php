@@ -182,8 +182,20 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 			$value_in = (array)self::get_array($content, $form_name);
 			$valid =& self::get_array($validated, $this->id ? $form_name : $field, true);
 
+			// Authoritative allowlist of real field names for this filter, computed server-side in
+			// beforeSendToClient() (never trust the submitted key itself: several apps' CSV export
+			// plugins interpolate it, unvalidated, into a raw SQL fragment via col_filter).
+			$allowed_fields = array_keys((array)self::getElementAttribute($form_name, 'customfields'));
+
 			foreach($value_in as $key => $value)
 			{
+				// Client side cf widget automatically prefixes #
+				$field_name = substr($key, strlen(self::$prefix));
+				if(!in_array($field_name, $allowed_fields, true))
+				{
+					continue;
+				}
+
 				// Link-type filters carry an 'app' key.  Both app & id are required
 				// for a usable filter - drop a partial (eg. app picked, no entry selected) value
 				// instead of saving it.
@@ -192,8 +204,7 @@ class importexport_widget_filter extends Etemplate\Widget\Transformer
 					continue;
 				}
 
-				// Client side cf widget automatically prefixes #
-				$valid[substr($key,strlen(self::$prefix))] = $value;
+				$valid[$field_name] = $value;
 			}
 		}
 	}

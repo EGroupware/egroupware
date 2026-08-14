@@ -81,5 +81,6 @@ else
 }
 if (($err = $merge->download($_REQUEST['path'], $ids)))
 {
-	header("HTTP/1.1 500 $err");
+	unset($err);	// contains raw request data, never reflect it into the response
+	header("HTTP/1.1 500 Internal Server Error");
 }

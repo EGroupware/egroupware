@@ -51,6 +51,13 @@ class admin_passwordreset
 	 */
 	function __construct()
 	{
+		// require the admin app to actually be granted (not just installed), so a request routed
+		// through the unrelated "api." menuaction prefix can't reach this class with the app-rights
+		// check skipped and no positive guard here to catch it
+		if(!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 		if($GLOBALS['egw']->acl->check('account_access',16,'admin'))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');

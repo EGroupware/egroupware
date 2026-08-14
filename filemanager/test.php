@@ -35,6 +35,9 @@ if (isset($path) && !empty($path))
 	}
 	Api\Cache::setSession('filemanger','test',$path);
 
+	// escaped copy for display only - never use this for the actual Vfs::* calls below
+	$html_path = htmlspecialchars($path, ENT_QUOTES, 'UTF-8');
+
 	echo "<h2>";
 	foreach(explode('/',$path) as $n => $part)
 	{
@@ -43,11 +46,11 @@ if (isset($path) && !empty($path))
 	}
 	echo "</h2>\n";
 
-	echo "<p><b>Vfs::propfind('$path')</b>=".array2string(Vfs::propfind($path))."</p>\n";
-	echo "<p><b>Vfs::resolve_url('$path')</b>=".array2string(Vfs::resolve_url($path))."</p>\n";
+	echo "<p><b>Vfs::propfind('$html_path')</b>=".array2string(Vfs::propfind($path))."</p>\n";
+	echo "<p><b>Vfs::resolve_url('$html_path')</b>=".array2string(Vfs::resolve_url($path))."</p>\n";
 
 	$is_dir = Vfs::is_dir($path);
-	echo "<p><b>is_dir('$path')</b>=".array2string($is_dir)."</p>\n";
+	echo "<p><b>is_dir('$html_path')</b>=".array2string($is_dir)."</p>\n";
 
 	$time = microtime(true);
 	$stat = Vfs::stat($path);
@@ -73,7 +76,7 @@ if (isset($path) && !empty($path))
 		if($files) echo '<ol><li>'.implode("</li>\n<li>",$files).'</ol>'."\n";
 	}
 
-	echo "<p><b>stat('$path')</b> took $stime ms (mode = ".(isset($stat['mode'])?sprintf('%o',$stat['mode']).' = '.Vfs::int2mode($stat['mode']):'NULL').')';
+	echo "<p><b>stat('$html_path')</b> took $stime ms (mode = ".(isset($stat['mode'])?sprintf('%o',$stat['mode']).' = '.Vfs::int2mode($stat['mode']):'NULL').')';
 	if (is_array($stat))
 	{
 		_debug_array($stat);
@@ -83,15 +86,15 @@ if (isset($path) && !empty($path))
 		echo "<p>".array2string($stat)."</p>\n";
 	}
 
-	echo "<p><b>Vfs::is_readable('$path')</b>=".array2string(Vfs::is_readable($path))."</p>\n";
-	echo "<p><b>Vfs::is_writable('$path')</b>=".array2string(Vfs::is_writable($path))."</p>\n";
+	echo "<p><b>Vfs::is_readable('$html_path')</b>=".array2string(Vfs::is_readable($path))."</p>\n";
+	echo "<p><b>Vfs::is_writable('$html_path')</b>=".array2string(Vfs::is_writable($path))."</p>\n";
 
-	echo "<p><b>is_link('$path')</b>=".array2string(Vfs::is_link($path))."</p>\n";
-	echo "<p><b>readlink('$path')</b>=".array2string(Vfs::readlink($path))."</p>\n";
+	echo "<p><b>is_link('$html_path')</b>=".array2string(Vfs::is_link($path))."</p>\n";
+	echo "<p><b>readlink('$html_path')</b>=".array2string(Vfs::readlink($path))."</p>\n";
 	$time3 = microtime(true);
 	$lstat = Vfs::lstat($path);
 	$time3f = number_format(1000*(microtime(true)-$time3),1);
-	echo "<p><b>lstat('$path')</b> took $time3f ms (mode = ".(isset($lstat['mode'])?sprintf('%o',$lstat['mode']).' = '.Vfs::int2mode($lstat['mode']):'NULL').')';
+	echo "<p><b>lstat('$html_path')</b> took $time3f ms (mode = ".(isset($lstat['mode'])?sprintf('%o',$lstat['mode']).' = '.Vfs::int2mode($lstat['mode']):'NULL').')';
 	if (is_array($lstat))
 	{
 		_debug_array($lstat);
@@ -102,9 +105,9 @@ if (isset($path) && !empty($path))
 	}
 	if (!$is_dir && $stat)
 	{
-		echo "<p><b>Vfs::mime_content_type('$path')</b>=".array2string(Vfs::mime_content_type($path))."</p>\n";
-		echo "<p><b>filesize(Vfs::PREFIX.'$path')</b>=".array2string(filesize(Vfs::PREFIX.$path))."</p>\n";
-		echo "<p><b>bytes(file_get_contents(Vfs::PREFIX.'$path'))</b>=".array2string(bytes(file_get_contents(Vfs::PREFIX.$path)))."</p>\n";
+		echo "<p><b>Vfs::mime_content_type('$html_path')</b>=".array2string(Vfs::mime_content_type($path))."</p>\n";
+		echo "<p><b>filesize(Vfs::PREFIX.'$html_path')</b>=".array2string(filesize(Vfs::PREFIX.$path))."</p>\n";
+		echo "<p><b>bytes(file_get_contents(Vfs::PREFIX.'$html_path'))</b>=".array2string(bytes(file_get_contents(Vfs::PREFIX.$path)))."</p>\n";
 	}
 }
 echo $GLOBALS['egw']->framework->footer();

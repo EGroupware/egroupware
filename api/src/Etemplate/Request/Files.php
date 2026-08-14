@@ -111,7 +111,7 @@ class Files extends Etemplate\Request
 				error_log("Error opening '$filename' to read the etemplate request data!");
 				return false;
 			}
-			$request->data = unserialize(file_get_contents($filename));
+			$request->data = unserialize(file_get_contents($filename), ['allowed_classes' => false]);
 			if ($request->data === false) error_log("Error unserializing '$filename' to read the etemplate request data!");
 		}
 		//error_log(__METHOD__."(id=$id");
