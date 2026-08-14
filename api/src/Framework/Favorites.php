@@ -216,7 +216,12 @@ class Favorites
 				}
 			}
 		}
-		if($group && $GLOBALS['egw_info']['apps']['admin'] && $group !== 'all')
+		// writing another account's/group's preferences, or the instance-wide "default" (Preferences::
+		// save_repository('default') ignores which account the object was constructed for, so an
+		// unprivileged caller passing group='all' would otherwise reach the same global record too)
+		// requires real admin rights, not just the admin app being installed
+		$is_admin = isset($GLOBALS['egw_info']['user']['apps']['admin']);
+		if($group && $is_admin && $group !== 'all')
 		{
 			$prefs = new Api\Preferences(is_numeric($group) ? $group : $GLOBALS['egw_info']['user']['account_id']);
 		}
@@ -225,7 +230,7 @@ class Favorites
 			$prefs = $GLOBALS['egw']->preferences;
 		}
 		$prefs->read_repository();
-		$type = $group === "all" ? "default" : "user";
+		$type = $group === "all" && $is_admin ? "default" : "user";
 		//error_log(__METHOD__."('$app', '$name', '$action', ".array2string($group).", ...) pref_name=$pref_name, type=$type");
 		if($action == "add")
 		{

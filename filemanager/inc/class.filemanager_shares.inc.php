@@ -91,7 +91,7 @@ class filemanager_shares extends filemanager_ui
 		}
 		unset($query['col_filter']['share_passwd']);
 
-		if(!$query['admin'] || !isset($GLOBALS['egw_info']['apps']['admin']))
+		if(!$query['admin'] || !isset($GLOBALS['egw_info']['user']['apps']['admin']))
 		{
 			$query['col_filter']['share_owner'] = $GLOBALS['egw_info']['user']['account_id'];
 		}

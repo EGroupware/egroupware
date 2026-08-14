@@ -183,7 +183,7 @@ class Request
 					//$len_uncompressed = bytes($id);
 					//error_log(__METHOD__."() uncompressed from $len_compressed to $len_uncompressed bytes $time ms");
 				}
-				$request->data = unserialize($id);
+				$request->data = unserialize($id, ['allowed_classes' => false]);
 
 				if (!$request->data)
 				{

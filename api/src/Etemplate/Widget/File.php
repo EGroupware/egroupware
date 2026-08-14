@@ -203,6 +203,21 @@ class File extends Etemplate\Widget
 	}
 
 	/**
+	 * Sanitize a client-supplied value used as a single temp-dir path SEGMENT (resumableIdentifier)
+	 *
+	 * Replacing '/'/'\' alone is not sufficient: a value of exactly "." or ".." contains no
+	 * separator but still resolves to the temp-dir's own parent when appended as a path segment.
+	 *
+	 * @param string $name
+	 * @return string
+	 */
+	private static function sanitizePathSegment($name): string
+	{
+		$name = str_replace(['/', '\\'], '_', (string)$name);
+		return $name === '' || rtrim($name, '.') === '' ? '_'.$name : $name;
+	}
+
+	/**
 	 * Resumable uploads, check if a chunk is already present
 	 *
 	 * @return void
@@ -219,7 +234,7 @@ class File extends Etemplate\Widget
 
 		// check the destination file (format <filename.ext>.part<#chunk>
 		// the file is stored in a temporary directory
-		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . str_replace('/', '_', $_REQUEST['resumableIdentifier']);
+		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . self::sanitizePathSegment($_REQUEST['resumableIdentifier']);
 		if(!file_exists($temp_dir))
 		{
 			//No content, file is not there
@@ -308,7 +323,7 @@ class File extends Etemplate\Widget
 			// Resumable / chunked uploads
 			// init the destination file (format <filename.ext>.part<#chunk>
 			// the file is stored in a temporary directory
-			$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/'.str_replace('/','_',$_POST['resumableIdentifier']);
+			$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/'.self::sanitizePathSegment($_POST['resumableIdentifier']);
 			$dest_file = $temp_dir.'/'.str_replace('/','_',$_POST['resumableFilename']).'.part'.(int)$_POST['resumableChunkNumber'];
 
 			// create the temporary directory

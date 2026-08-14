@@ -158,6 +158,12 @@ class admin_hooks
 	 */
 	function ajax_clear_cache()
 	{
+		// this class has no constructor to gate it, and the deny-mask acl-check below fails open
+		// for a caller with no admin ACL rows at all - require granted admin rights explicitly
+		if (!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 		if ($GLOBALS['egw']->acl->check('applications_acc',16,'admin'))
 		{
 			$GLOBALS['egw']->redirect_link('/index.php');

@@ -446,6 +446,13 @@ class admin_account
 	 */
 	public static function ajax_delete_group($account_id, $data, $etemplate_exec_id)
 	{
+		// this is a static method with no constructor to gate it, and admin_cmd::_check_admin()
+		// (run further down inside admin_cmd_delete_account::exec()) fails open for a caller with
+		// no admin ACL rows at all - require granted admin rights explicitly here
+		if(!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
 
 		$cmd = new admin_cmd_delete_account(Api\Accounts::id2name(Api\Accounts::id2name($account_id)), null, false, (array)$data['admin_cmd']);
