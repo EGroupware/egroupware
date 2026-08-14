@@ -1151,6 +1151,7 @@ abstract class Framework extends Framework\Extra
 			return substr($str,1);
 		}, self::get_script_links(true, false, $map));
 		$extra['app'] = $GLOBALS['egw_info']['flags']['currentapp'];
+		$extra['epoch'] = self::currentBuildEpoch();
 
 		// Static things we want to make sure are loaded first
 //$java_script .='<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@shoelace-style/shoelace@2.0.0-beta.44/dist/themes/base.css">
@@ -1189,6 +1190,23 @@ abstract class Framework extends Framework\Extra
 		}
 
 		return $java_script;
+	}
+
+	/**
+	 * Timestamp identifying the currently built JS, written by rollup's writeBundle hook to
+	 * build-epoch.json on every build - lets a running session poll for a newer build without
+	 * having to re-fetch or parse any JS bundle (see api/js/jsapi/egw.js)
+	 *
+	 * @return int|null null if the marker file does not exist (eg. before the first build with this feature)
+	 */
+	public static function currentBuildEpoch()
+	{
+		static $epoch = null;
+		if (!isset($epoch) && file_exists($file = EGW_SERVER_ROOT.'/api/js/build-epoch.json'))
+		{
+			$epoch = json_decode(file_get_contents($file), true)['epoch'] ?? null;
+		}
+		return $epoch;
 	}
 
 	/**

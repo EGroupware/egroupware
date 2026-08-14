@@ -27,6 +27,25 @@ window.app = {classes: {}};
 {
 	"use strict";
 
+	// Guard against a fatal crash when a mid-session rebuild loads a new-hash chunk that
+	// re-registers an already-defined custom element: the browser has no "redefine" API for
+	// an existing tag name anyway, so without this guard the second define() throws a fatal,
+	// uncatchable-at-module-scope DOMException instead of silently keeping the first version.
+	if (!window.customElements.__egwGuarded)
+	{
+		const _define = window.customElements.define.bind(window.customElements);
+		window.customElements.define = function(name, ctor, options)
+		{
+			if (window.customElements.get(name))
+			{
+				console.debug('egw: keeping already-registered', name, '(an older build already defined it earlier this session; skipping the just-fetched redefinition)');
+				return;
+			}
+			return _define(name, ctor, options);
+		};
+		window.customElements.__egwGuarded = true;
+	}
+
 	var debug = false;
 	var egw_script = document.getElementById('egw_script_id');
 	var start_time = (new Date).getTime();
@@ -51,6 +70,7 @@ window.app = {classes: {}};
 
 	window.egw_webserverUrl = egw_script.getAttribute('data-url');
 	window.egw_appName = egw_script.getAttribute('data-app');
+	window.egw_buildEpoch = parseInt(egw_script.getAttribute('data-epoch')) || null;
 
 	// split includes in legacy js and modules
 	const legacy_js_regexp = /\/dhtmlx|jquery-ui|^etemplate\/|^phpbrain\/|^phpgwapi\//;
@@ -275,10 +295,24 @@ window.app = {classes: {}};
 		// Make sure opener knows when we close - start a heartbeat
 		try {
 			if ((window.opener && window.opener.framework || popup) && window.name != '') {
+				// capture the opener's framework instance now, to notice later if the opener reloads/navigates
+				var opener_framework_at_init = window.opener && window.opener.framework;
 				// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
 				window.setInterval(function () {
+					try {
+						// opener reloaded/navigated: it now has a brand new (or no) framework instance
+						if (window.opener && window.opener.framework !== opener_framework_at_init)
+						{
+							opener_framework_at_init = window.opener.framework;
+							window.egw_rejoin();
+							return;
+						}
+					}
+					catch(e) {
+						// ignore SecurityError exception if opener is different security context / cross-origin
+					}
 					if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile()) {
-						window.opener.framework.popups.push(window);
+						window.opener.framework.popups.add(window);
 					}
 					egw().storeWindow(this.egw_appName, this);
 				}, 2000);
@@ -286,6 +320,25 @@ window.app = {classes: {}};
 		}
 		catch(e) {
 			// ignore SecurityError exception if opener is different security context / cross-origin
+		}
+
+		// Poll for a newer build and show one dismissible notice once meaningfully stale (main window only)
+		if (!popup && window.egw_buildEpoch)
+		{
+			let build_check_interval = window.setInterval(function ()
+			{
+				fetch(window.egw_webserverUrl+'/api/js/build-epoch.json', {cache: 'no-store'})
+					.then(r => r.json())
+					.then(data =>
+					{
+						if (data.epoch && data.epoch - window.egw_buildEpoch > 12*3600000) // 12 hours
+						{
+							egw(window).message(egw.lang('New updates available. Reload when convenient to get the latest updates.'), 'info');
+							window.clearInterval(build_check_interval);
+						}
+					})
+					.catch(() => {});	// ignore network errors, just retry next interval
+			}, 15*60000);
 		}
 		// instantiate app object
 		var appname = window.egw_appName;
@@ -490,25 +543,36 @@ window.et2_call = function(_func)
 }
 
 /**
- * Main window was reloaded, rejoin
+ * Main window was reloaded - reconnect this popup to its (new) opener
+ *
+ * Called reactively from the popup heartbeat once it notices the opener's framework
+ * instance changed (ie. the opener navigated/reloaded), so the opener has typically
+ * already finished its own re-init by the time this runs - unlike a proactive
+ * "wait for the opener to load" approach, this just retries until it's ready.
  */
 window.egw_rejoin = function ()
 {
-		window.setTimeout(function ()
+	let reconnecting = egw(window).message("Reconnecting...");
+	window.setTimeout(function retry()
 	{
-		opener.addEventListener("load", () =>
-		{
-			/* It takes more than just re-setting this.framework to get everything working again, but this helps */
-			let reconnecting = egw(this).message("Reconnecting...");
-			window.setTimeout(() =>
+		try {
+			if (!window.opener || typeof window.opener.top.framework == 'undefined')
 			{
-				opener.console.log("Re-set framework");
-				reconnecting.close();
-				this.framework = this.opener.framework;
-				this.framework.egw_appWindow().console.log("Popup %s rejoined", this.location.href);
-			}, 5000);
-		});
-	}.bind(window), 500);
+				window.setTimeout(retry, 1000);
+				return;
+			}
+			window.framework = window.opener.top.framework;
+			window.egw = window.opener.top.egw;
+			window.framework.popups.add(window);
+			reconnecting.close();
+			console.log("Popup %s rejoined", window.location.href);
+		}
+		catch(e)
+		{
+			// opener still initializing, or cross-origin - try again shortly
+			window.setTimeout(retry, 1000);
+		}
+	}, 500);
 }
 /**
  * Allow egw.json to load JS into popups

@@ -11,7 +11,7 @@
 
 import path from 'path';
 import babel from '@babel/core';
-import { readFileSync, readdirSync, statSync, unlinkSync  } from "fs";
+import { readFileSync, readdirSync, statSync, unlinkSync, writeFileSync  } from "fs";
 //import rimraf from 'rimraf';
 import { minify } from 'terser';
 import resolve from '@rollup/plugin-node-resolve';
@@ -27,6 +27,10 @@ readdirSync('./chunks').forEach(name => {
     const stat = statSync('./chunks/'+name);
     if (stat.atimeMs < rm_older) unlinkSync('./chunks/'+name);
 });
+
+// Timestamp identifying this build, written to build-epoch.json below so a running session
+// can cheaply poll for "is a newer build available" without re-fetching any JS bundle.
+const buildEpoch = Date.now();
 
 // Turn on minification
 const do_minify = false;
@@ -183,6 +187,13 @@ const config = {
 `
                 }
             });
+        }
+    },
+    {
+        // Write out this build's epoch, so a running session can cheaply poll for
+        // "is a newer build available" (see api/js/jsapi/egw.js) without touching any JS bundle.
+        writeBundle () {
+            writeFileSync('./api/js/build-epoch.json', JSON.stringify({epoch: buildEpoch}));
         }
     }],
 
