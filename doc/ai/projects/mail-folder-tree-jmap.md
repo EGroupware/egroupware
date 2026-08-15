@@ -135,7 +135,10 @@ either can be picked up first.
   failure/inapplicability, same interception shape [[mail-jmap-modernization]] already uses for
   move/delete/flag. So these two are permanent classic-fallbacks, not folder-tree-structure code -
   **not blocked on this migration at all**, and could be decoupled into
-  [[mail-bo-decoupling]]-style handler classes independently, any time.
+  [[mail-bo-decoupling]]-style handler classes independently, any time. **Done (2026-08-15)**:
+  both moved to `mail/src/Ui/MessageActionHandler.php` as `emptySpam()`/`emptyTrash()` (thin
+  `mail_ui` wrappers kept for the menuaction-dispatched `ajax_*` names) - see that doc's Phase 2
+  progress notes.
   `ajax_compressFolder()` (manual "compress this folder" = mark-\Deleted-then-EXPUNGE) has **no**
   JMAP fast path anywhere client-side, and probably never can - JMAP's `Email/set` destroy is
   immediate/one-phase, so IMAP's two-phase delete model has no JMAP equivalent to translate to. Ralf

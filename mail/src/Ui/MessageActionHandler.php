@@ -31,6 +31,13 @@ use mail_ui;
  * package-default so this class could call it via `$this->ui->get_actions()` - it's pure UI-action
  * array construction, nothing security-sensitive) and the still-`mail_ui`-static
  * `generateRowID()`/`$delimiter` (the "Row-id helpers" group, not yet extracted).
+ *
+ * emptySpam()/emptyTrash() (from mail_ui's `ajax_emptySpam`/`ajax_emptyTrash`) joined this group
+ * later - see doc/ai/projects/mail-folder-tree-jmap.md's "Resolved" note: `app.ts`'s
+ * `mail_emptySpam()`/`mail_emptyTrash()` already try a JMAP fast path (`MailJmap.purgeFolder()`)
+ * first, so these are permanent classic-fallbacks, not folder-tree-migration-blocked code. They're
+ * bulk message-clearing operations on a special folder (same domain as flagMessages()/
+ * deleteMessages() above), not folder-tree code, hence living here rather than a new class.
  */
 class MessageActionHandler
 {
@@ -692,6 +699,94 @@ class MessageActionHandler
 				$actionsnew = Nextmatch::egw_actions($this->ui->get_actions());
 				$response->call('app.mail.mail_rebuildActionsOnList', $actionsnew);
 			}
+		}
+	}
+
+	/**
+	 * Empty spam/junk folder
+	 *
+	 * @param string $icServerID id of the server to empty its junkFolder
+	 * @param string $selectedFolder seleted(active) folder by nm filter
+	 * @return nothing
+	 */
+	public function emptySpam($icServerID, $selectedFolder)
+	{
+		Api\Translation::add_app('mail');
+		$response = Api\Json\Response::get();
+		$rememberServerID = $this->ui->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->ui->mail_bo->profileID)
+		{
+			$this->ui->changeProfile($icServerID);
+		}
+		$junkFolder = $this->ui->mail_bo->getJunkFolder();
+		if(!empty($junkFolder)) {
+			if ($selectedFolder == $icServerID.mail_ui::$delimiter.$junkFolder)
+			{
+				// Lock the tree if the active folder is junk folder
+				$response->call('app.mail.lock_tree');
+			}
+			$this->ui->mail_bo->deleteMessages('all',$junkFolder,'remove_immediately');
+			$fStatus = array(
+				$icServerID.mail_ui::$delimiter.$junkFolder => 0
+			);
+			//Call to reset folder status counter, after junkFolder triggered not from Junk folder
+			//-as we don't have junk folder specific information available on client-side we need to deal with it on server
+			$response->call('app.mail.mail_setFolderStatus',$fStatus);
+		}
+		if ($rememberServerID != $this->ui->mail_bo->profileID)
+		{
+			$oldFolderInfo = $this->ui->mail_bo->getFolderStatus($junkFolder,false,false,false);
+			$response->call('egw.message',lang('empty junk'));
+			$response->call('app.mail.mail_reloadNode',array($icServerID.mail_ui::$delimiter.$junkFolder=>$oldFolderInfo['shortDisplayName']));
+			$this->ui->changeProfile($rememberServerID);
+		}
+		else if ($selectedFolder == $icServerID.mail_ui::$delimiter.$junkFolder)
+		{
+			$response->call('egw.refresh',lang('empty junk'),'mail');
+		}
+	}
+
+	/**
+	 * Empty trash folder
+	 *
+	 * @param string $icServerID id of the server to empty its trashFolder
+	 * @param string $selectedFolder seleted(active) folder by nm filter
+	 * @return nothing
+	 */
+	public function emptyTrash($icServerID, $selectedFolder)
+	{
+		Api\Translation::add_app('mail');
+		$response = Api\Json\Response::get();
+		$rememberServerID = $this->ui->mail_bo->profileID;
+		if ($icServerID && $icServerID != $this->ui->mail_bo->profileID)
+		{
+			$this->ui->changeProfile($icServerID);
+		}
+		$trashFolder = $this->ui->mail_bo->getTrashFolder();
+		if(!empty($trashFolder)) {
+			if ($selectedFolder == $icServerID.mail_ui::$delimiter.$trashFolder)
+			{
+				// Lock the tree if the active folder is Trash folder
+				$response->call('app.mail.lock_tree');
+			}
+			$this->ui->mail_bo->compressFolder($trashFolder);
+			$fStatus = array(
+				$icServerID.mail_ui::$delimiter.$trashFolder => 0
+			);
+			//Call to reset folder status counter, after emptyTrash triggered not from Trash folder
+			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
+			$response->call('app.mail.mail_setFolderStatus',$fStatus);
+		}
+		if ($rememberServerID != $this->ui->mail_bo->profileID)
+		{
+			$oldFolderInfo = $this->ui->mail_bo->getFolderStatus($trashFolder,false,false,false);
+			$response->call('egw.message',lang('empty trash'));
+			$response->call('app.mail.mail_reloadNode',array($icServerID.mail_ui::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
+			$this->ui->changeProfile($rememberServerID);
+		}
+		else if ($selectedFolder == $icServerID.mail_ui::$delimiter.$trashFolder)
+		{
+			$response->call('egw.refresh',lang('empty trash'),'mail');
 		}
 	}
 }
