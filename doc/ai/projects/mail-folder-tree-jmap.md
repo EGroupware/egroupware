@@ -89,11 +89,46 @@ either can be picked up first.
 - **Folder status/counters refresh** (`ajax_reloadNode`, `ajax_setFolderStatus`) → client-side +
   JMAP `Mailbox/get` (unread/total counts are standard JMAP Mailbox properties).
 - **Folder CRUD** (`ajax_addFolder`, `ajax_renameFolder`, `ajax_MoveFolder`, `ajax_deleteFolder`,
-  `ajax_foldersubscription`) → JMAP `Mailbox/set` for real JMAP; **`JmapShim` has no `Mailbox/set`
-  or `Mailbox/get` at all today** (confirmed by reading `mail/src/JmapShim.php` - it dispatches only
-  `Mailbox/query`, `Email/query`, `Email/get`, `Email/set`, `Email/import`), so the local-shim side
-  of this is a real implementation gap, not just a client-side change - mirrors the amount of new
-  server-side shim work the original row-listing/body-rendering phases each needed.
+  `ajax_foldersubscription`) → JMAP `Mailbox/set` for real JMAP.
+  - **Done (2026-08-15)**: `JmapShim::mailboxSet()` implements RFC 8621 §2.5 create/update
+    (rename/move/(un)subscribe)/destroy against Horde's `createMailbox()`/`renameMailbox()`/
+    `deleteMailbox()`/`subscribeMailbox()` - the local-shim gap identified below is closed.
+    `Mailbox/get` is still only a real-JMAP thing (via `Api\Mail\Jmap`, not this shim) - nothing
+    in the local-shim client path has needed folder metadata beyond what `Mailbox/query` already
+    gives, so it wasn't added speculatively; add it if/when a concrete caller needs it.
+    Unlike `emailSet()`, every create/update/destroy entry is individually try/caught into its
+    own `SetError` (folder ops fail per-item - "already exists", "not empty" - in ways a batch
+    of independent edits shouldn't all abort for). `onDestroyRemoveEmails` is honoured (a
+    non-empty mailbox is rejected with `mailboxHasEmail` unless the client explicitly opts in).
+    Test: `mail/tests/JmapShimMailboxSetTest.php` (mocks `Mail\Imap`, no live IMAP needed).
+  - **Admin-impersonation support, built in from the start** (ralf's requirement):
+    `JmapShim::imapServer()`/`hordeMailbox()`/`mailboxSet()` all take an optional `$calledFor`
+    (account_id to impersonate), mirroring `Mail\Account::read($acc_id,
+    $called_for)->imapServer($called_for ? (int)$called_for : false)` exactly.
+    `hordeMailbox($imap, $path, $calledFor)` resolves under the impersonated user's
+    `getUserMailboxString($calledFor)` root, joined with the "others" namespace's own delimiter
+    (not necessarily the same as the admin's personal one) - mirrors `mail_acl::edit()`'s own
+    root resolution. **Security boundary**: `dispatch()` (the client-facing entry point behind
+    `mail/jmap.php`) never passes `$calledFor` - it is NEVER derived from client-supplied
+    request data, only from a future trusted server-side PHP caller that has already run its own
+    admin-permission check (mirroring `mail_acl::_require_admin_permission()`).
+    This caller shape isn't hypothetical - admin >> Manage users >> (edit a mail account)
+    already reaches `mail_acl.inc.php` exactly this way today, for ACL editing specifically: a
+    hook-registered toolbar button (`mail_hooks::emailadmin_edit()`'s `'mail_acl'` action) links
+    to menuaction `mail.mail_acl.edit` with an explicit `acc_id`+`account_id`, gated by
+    `_require_admin_permission()`. The same hook wires up `'mail_vacation'` ->
+    `mail_sieve.editVacation` identically (`$this->mail_admin`/`$this->is_admin_vac` gating,
+    `$this->account->imapServer($this->is_admin_vac ? $account_id : false)`) for admin-set
+    vacation notices. If a folder-CRUD admin screen is ever built, that same
+    hook + `$_GET['account_id']` + admin-permission-check wiring is the template to follow -
+    `mail_acl.inc.php` itself just doesn't do folder CRUD (create/rename/delete/subscribe), only
+    ACL grants, so no caller reaches `mailboxSet()`'s `$calledFor` branch yet.
+  - Original gap analysis (now closed, kept for history): **`JmapShim` has no `Mailbox/set` or
+    `Mailbox/get` at all today** (confirmed by reading `mail/src/JmapShim.php` - it dispatches
+    only `Mailbox/query`, `Email/query`, `Email/get`, `Email/set`, `Email/import`), so the
+    local-shim side of this is a real implementation gap, not just a client-side change - mirrors
+    the amount of new server-side shim work the original row-listing/body-rendering phases each
+    needed.
 - **Resolved (2026-08-15)**: `ajax_emptySpam`/`ajax_emptyTrash` are already covered - `app.ts`'s
   `mail_emptySpam()`/`mail_emptyTrash()` already try a JMAP fast path first (`MailJmap.purgeFolder()`,
   paginated `Email/set` destroy) and only fall back to the classic `ajax_*` methods on

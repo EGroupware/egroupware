@@ -128,6 +128,12 @@ class JmapShim
 					case 'Mailbox/query':
 						$result = self::mailboxQuery($args);
 						break;
+					case 'Mailbox/set':
+						// $calledFor deliberately omitted (stays null = caller's own mailbox) -
+						// see mailboxSet()'s docblock: this client-facing dispatch() must never
+						// be how an admin-impersonated connection gets reached
+						$result = self::mailboxSet($accountId, $args);
+						break;
 					case 'Email/query':
 						$result = self::emailQuery($accountId, $args, $context);
 						break;
@@ -233,6 +239,230 @@ class JmapShim
 	}
 
 	/**
+	 * Mailbox/set (RFC 8621 §2.5): create/rename/move/(un)subscribe/delete real IMAP mailboxes
+	 * for the local-shim path, backed directly by Horde's createMailbox()/renameMailbox()/
+	 * deleteMailbox()/subscribeMailbox() - the same primitives Api\Mail::createFolder()/
+	 * renameFolder()/deleteFolder() use classically (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * Unlike emailSet() (which relies on dispatch()'s outer try/catch for the whole call), every
+	 * create/update/destroy entry here is individually try/caught into its own notCreated/
+	 * notUpdated/notDestroyed SetError - folder operations routinely fail per-item ("already
+	 * exists", "not empty", permission denied) in ways a batch of otherwise-independent folder
+	 * edits shouldn't all abort for.
+	 *
+	 * SECURITY: $calledFor is how an admin-impersonated connection (managing another user's
+	 * mailbox) reaches this method - it is NEVER read from client-supplied $args, and
+	 * dispatch()'s own 'Mailbox/set' case NEVER passes it. Per
+	 * doc/ai/projects/mail-folder-tree-jmap.md's hard constraint, the ordinary client-facing
+	 * JMAP endpoint (mail/jmap.php -> dispatch()) must never let a browser session act as anyone
+	 * but the logged-in user. $calledFor exists solely for a *trusted server-side PHP caller* to
+	 * call this method directly, after running its own admin-permission check - mirroring
+	 * mail_acl::_require_admin_permission()'s existing gate for classic ACL editing. This isn't
+	 * a hypothetical caller shape: admin >> Manage users >> (edit a mail account) already reaches
+	 * mail_acl.inc.php exactly this way today, for ACL editing specifically - see
+	 * mail_hooks::emailadmin_edit()'s 'mail_acl' action, a hook-registered toolbar button linking
+	 * to menuaction mail.mail_acl.edit with an explicit acc_id+account_id (the same hook also
+	 * wires up 'mail_vacation' -> mail_sieve.editVacation the same way). If a folder-CRUD admin
+	 * screen is ever built, that same hook + $_GET['account_id'] + _require_admin_permission()
+	 * wiring is the template to follow - mail_acl.inc.php itself just doesn't do folder CRUD
+	 * (create/rename/delete/subscribe), only ACL grants, so no caller reaches this method's
+	 * $calledFor branch yet. Never wire $calledFor to anything reachable from raw HTTP request
+	 * data.
+	 *
+	 * @param string $accountId
+	 * @param array $args {create?: {creationId: {name, parentId?, isSubscribed?}},
+	 *  update?: {mailboxId: {name?, parentId?, isSubscribed?}}, destroy?: [mailboxId],
+	 *  onDestroyRemoveEmails?: bool}
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only,
+	 *  see SECURITY above), or null for the caller's own mailbox
+	 * @return array RFC 8620 §5.3 Set response shape
+	 */
+	public static function mailboxSet(string $accountId, array $args, ?string $calledFor = null) : array
+	{
+		$created = [];
+		$notCreated = [];
+		$updated = [];
+		$notUpdated = [];
+		$destroyed = [];
+		$notDestroyed = [];
+		$imap = $accountId !== '0' ? self::imapServer($accountId, $calledFor) : null;
+
+		foreach ((array)($args['create'] ?? []) as $creationId => $props)
+		{
+			$creationId = (string)$creationId;
+			if (!$imap)
+			{
+				$notCreated[$creationId] = ['type' => 'forbidden', 'description' => 'No mailbox connection'];
+				continue;
+			}
+			try
+			{
+				$created[$creationId] = self::mailboxCreate($imap, (array)$props, $calledFor);
+			}
+			catch (\Throwable $e)
+			{
+				$notCreated[$creationId] = ['type' => 'invalidProperties', 'description' => $e->getMessage()];
+			}
+		}
+
+		foreach ((array)($args['update'] ?? []) as $id => $patch)
+		{
+			$id = (string)$id;
+			if (!$imap)
+			{
+				$notUpdated[$id] = ['type' => 'forbidden', 'description' => 'No mailbox connection'];
+				continue;
+			}
+			try
+			{
+				self::mailboxUpdate($imap, $id, (array)$patch, $calledFor);
+				$updated[$id] = null;
+			}
+			catch (\Throwable $e)
+			{
+				$notUpdated[$id] = ['type' => 'notFound', 'description' => $e->getMessage()];
+			}
+		}
+
+		$removeEmails = !empty($args['onDestroyRemoveEmails']);
+		foreach ((array)($args['destroy'] ?? []) as $id)
+		{
+			$id = (string)$id;
+			if (!$imap)
+			{
+				$notDestroyed[$id] = ['type' => 'forbidden', 'description' => 'No mailbox connection'];
+				continue;
+			}
+			try
+			{
+				self::mailboxDestroy($imap, $id, $removeEmails, $calledFor);
+				$destroyed[] = $id;
+			}
+			catch (\Throwable $e)
+			{
+				$notDestroyed[$id] = [
+					'type' => $e->getMessage() === 'mailboxHasEmail' ? 'mailboxHasEmail' : 'notFound',
+					'description' => $e->getMessage(),
+				];
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
+			'updated' => (object)$updated,
+			'notUpdated' => (object)$notUpdated,
+			'destroyed' => $destroyed,
+			'notDestroyed' => (object)$notDestroyed,
+		];
+	}
+
+	/**
+	 * Split a canonical "/"-joined folder path into its parent path and leaf name
+	 *
+	 * @param string $path
+	 * @return array{0: string, 1: string} [$parentPath, $leafName]
+	 */
+	public static function splitPath(string $path) : array
+	{
+		$pos = strrpos($path, '/');
+		return $pos === false ? ['', $path] : [substr($path, 0, $pos), substr($path, $pos + 1)];
+	}
+
+	/**
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param array $props {name: string, parentId?: string, isSubscribed?: bool}
+	 * @param string|null $calledFor see mailboxSet()
+	 * @return array {id: string}
+	 */
+	private static function mailboxCreate(\Horde_Imap_Client_Socket $imap, array $props, ?string $calledFor) : array
+	{
+		$name = (string)($props['name'] ?? '');
+		if ($name === '')
+		{
+			throw new \InvalidArgumentException("'name' is required");
+		}
+		$parentPath = !empty($props['parentId']) ? self::folderPath((string)$props['parentId']) : '';
+		$path = $parentPath !== '' ? $parentPath.'/'.$name : $name;
+		$mailbox = self::hordeMailbox($imap, $path, $calledFor);
+
+		$imap->createMailbox($mailbox);
+		// default to subscribed, matching Api\Mail::createFolder()'s classic behaviour, unless
+		// the client explicitly asked otherwise
+		$imap->subscribeMailbox($mailbox, !array_key_exists('isSubscribed', $props) || (bool)$props['isSubscribed']);
+
+		return ['id' => base64_encode($path)];
+	}
+
+	/**
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $id base64-encoded folder path
+	 * @param array $patch {name?: string, parentId?: string|null, isSubscribed?: bool}
+	 * @param string|null $calledFor see mailboxSet()
+	 */
+	private static function mailboxUpdate(\Horde_Imap_Client_Socket $imap, string $id, array $patch, ?string $calledFor) : void
+	{
+		if (($unknown = array_diff(array_keys($patch), ['name', 'parentId', 'isSubscribed'])))
+		{
+			throw new \InvalidArgumentException('Unsupported propert'.(count($unknown) > 1 ? 'ies' : 'y').': '.implode(', ', $unknown));
+		}
+		$path = self::folderPath($id);
+		if ($path === '')
+		{
+			throw new \InvalidArgumentException('Cannot update the mailbox root');
+		}
+		[$parentPath, $leafName] = self::splitPath($path);
+
+		$newParentPath = array_key_exists('parentId', $patch)
+			? ($patch['parentId'] !== null ? self::folderPath((string)$patch['parentId']) : '')
+			: $parentPath;
+		$newLeafName = array_key_exists('name', $patch) ? (string)$patch['name'] : $leafName;
+		$newPath = $newParentPath !== '' ? $newParentPath.'/'.$newLeafName : $newLeafName;
+
+		if ($newPath !== $path)
+		{
+			$imap->renameMailbox(self::hordeMailbox($imap, $path, $calledFor), self::hordeMailbox($imap, $newPath, $calledFor));
+		}
+		if (array_key_exists('isSubscribed', $patch))
+		{
+			$imap->subscribeMailbox(self::hordeMailbox($imap, $newPath, $calledFor), (bool)$patch['isSubscribed']);
+		}
+	}
+
+	/**
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $id base64-encoded folder path
+	 * @param bool $removeEmails RFC 8621 onDestroyRemoveEmails - false rejects (throws with
+	 *  message 'mailboxHasEmail', matched by mailboxSet()'s catch) a non-empty mailbox instead
+	 *  of silently deleting its messages along with it
+	 * @param string|null $calledFor see mailboxSet()
+	 */
+	private static function mailboxDestroy(\Horde_Imap_Client_Socket $imap, string $id, bool $removeEmails, ?string $calledFor) : void
+	{
+		$path = self::folderPath($id);
+		if ($path === '')
+		{
+			throw new \InvalidArgumentException('Cannot destroy the mailbox root');
+		}
+		$mailbox = self::hordeMailbox($imap, $path, $calledFor);
+
+		if (!$removeEmails)
+		{
+			$status = $imap->status($mailbox, \Horde_Imap_Client::STATUS_MESSAGES);
+			if (!empty($status['messages']))
+			{
+				throw new \RuntimeException('mailboxHasEmail');
+			}
+		}
+		// same order Api\Mail::deleteFolder() uses classically: unsubscribe first, then delete
+		$imap->subscribeMailbox($mailbox, false);
+		$imap->deleteMailbox($mailbox);
+	}
+
+	/**
 	 * URL-safe base64 (RFC 4648 §5) - used for blobId (see bodyPartToJmap()), since jmap-jam's
 	 * downloadBlob() substitutes it into a URL template *without* URL-encoding the value first, so
 	 * plain base64's '+', '/', '=' would otherwise corrupt the value ('+' in particular is decoded
@@ -251,28 +481,61 @@ class JmapShim
 	/**
 	 * Get (and cache, per request) the Horde_Imap_Client for a real account, or null for the demo account
 	 *
+	 * $calledFor requests an admin-impersonated connection for another user's mailbox - same
+	 * meaning as Mail\Account::read()'s $called_for / Mail\Account::imapServer()'s
+	 * $_adminConnection, and same security expectation: the CALLER is responsible for verifying
+	 * the current user is actually allowed to impersonate $calledFor (mirrors
+	 * mail_acl::_require_admin_permission()) before ever passing it here - this method itself
+	 * does no such check, it only opens the connection. See mailboxSet()'s docblock for why
+	 * dispatch() (the client-facing entry point) must never be the source of a non-null
+	 * $calledFor.
+	 *
 	 * @param string $accountId
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only), or
+	 *  null for the caller's own mailbox
 	 * @return \Horde_Imap_Client_Socket|null
 	 */
-	public static function imapServer(string $accountId) : ?\Horde_Imap_Client_Socket
+	public static function imapServer(string $accountId, ?string $calledFor = null) : ?\Horde_Imap_Client_Socket
 	{
 		static $servers = [];
 		if ($accountId === '0')
 		{
 			return null;
 		}
-		return $servers[$accountId] ??= Account::read((int)$accountId)->imapServer();
+		$key = $accountId.'|'.($calledFor ?? '');
+		return $servers[$key] ??= Account::read((int)$accountId, $calledFor)->imapServer($calledFor !== null ? (int)$calledFor : false);
 	}
 
 	/**
 	 * Translate an EGroupware-canonical "/"-joined folder path to the account's real IMAP mailbox name
 	 *
+	 * With $calledFor set, the path is resolved under the impersonated user's own mailbox
+	 * namespace root instead of the connection-owner's personal one - same root
+	 * mail_acl::edit() resolves via getUserMailboxString($account_id) for its own (ACL-only)
+	 * admin-impersonated screens, joined with the "others" namespace's own delimiter (which can
+	 * differ from the "personal" one $imap's own account normally uses).
+	 *
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $path
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only), or
+	 *  null for $imap's own connection owner
 	 * @return string
 	 */
-	public static function hordeMailbox(\Horde_Imap_Client_Socket $imap, string $path) : string
+	public static function hordeMailbox(\Horde_Imap_Client_Socket $imap, string $path, ?string $calledFor = null) : string
 	{
+		if ($calledFor !== null)
+		{
+			if ($path === '')
+			{
+				return $imap->getUserMailboxString($calledFor);
+			}
+			static $othersDelimiters = [];
+			$key = spl_object_id($imap);
+			$othersDelimiters[$key] ??= $imap->getNameSpaceArray()['others'][0]['delimiter'] ?? '/';
+
+			return $imap->getUserMailboxString($calledFor, str_replace('/', $othersDelimiters[$key], $path));
+		}
+
 		if ($path === '' || strtoupper($path) === 'INBOX')
 		{
 			return 'INBOX';
