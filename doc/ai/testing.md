@@ -62,6 +62,68 @@ config:
 * Ask if you don't know the proper host.
 * Make sure tests clean up after themselves, even if they fail.
 
+### Admin-only functionality: dedicated admin test account
+
+`demo` (the suite-wide default session, `EGW_USER`/`EGW_PASSWORD` in `phpunit.xml`) is intentionally a
+**non-admin** account. Do not grant it admin rights to make an admin-only test pass - many other tests
+rely on `demo` genuinely lacking admin rights (broken-ACL-check regression tests, permission-boundary
+tests, etc.), and would silently stop testing anything if `demo` became an admin.
+
+Instead, `phpunit.xml` also defines a dedicated, real, DB-backed admin account:
+
+```xml
+<var name="EGW_ADMIN_USER" value="demoadmin" />
+<var name="EGW_ADMIN_PASSWORD" value="guest" />
+```
+
+CI provisions this account the same way it provisions `demo` (`admin/admin-cli.php --edit-user` +
+`--allow-app ...,admin`), so `$GLOBALS['egw_info']['user']['apps']['admin']` and the underlying
+`egw_acl` `'run'` row are both genuinely populated - not a shortcut/mock.
+
+**Why this exists:** `admin/inc/class.admin_cmd.inc.php::_check_admin()` (called by
+`admin_cmd_edit_user`, `admin_cmd_edit_group`, `admin_cmd_delete_account`, `admin_cmd_account_app`,
+`admin_cmd_change_pw` - but NOT `admin_cmd_acl`, `admin_cmd_config`, or `admin_cmd_edit_preferences`,
+which never call it) verifies that whoever is logged in when the command object is *constructed*
+(`$this->creator`, captured in the constructor) is a real admin, and throws
+`Api\Exception\NoPermission\Admin` otherwise. Before 2026-08-15 this check had a `&&`/`||` logic bug
+that made it a silent no-op for the common zero-argument call shape; once fixed, any test that
+constructs one of the affected `admin_cmd_*` classes while logged in as `demo` now genuinely fails.
+
+**How to use it**, in any test extending `LoggedInTest` (directly or via `AppTest`/`WidgetBaseTest`/
+`CommandBase`/etc.):
+
+```php
+// admin_cmd_edit_user/_edit_group/etc. require the CURRENT session to be a real admin
+$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+$command = new \admin_cmd_edit_user(false, $account);
+$command->comment = 'Needed for unit test ' . $this->getName();
+$command->run();
+$this->account_id = $command->account;
+$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+```
+
+Gotchas, all found the hard way while fixing the 2026-08-14/15 security-fix test fallout:
+
+* **Capture session-derived values *before* switching.** If the affected call's arguments reference
+  `$GLOBALS['egw_info']['user']['account_id']`/`account_lid'` (eg. adding the current test user to a
+  new group's members), read that value into a local variable *before* calling `switchUser()` to the
+  admin account - otherwise you silently capture the admin's id instead of the original session's.
+* **A later `admin_cmd_acl`/`admin_cmd_config`/`admin_cmd_edit_preferences` call in the same method
+  does NOT need admin rights** (unaffected classes) and, if it needs to act as/target the original
+  session's account, should run *after* switching back - not swept into the same admin-session bracket
+  "for safety."
+* **Tests using `expectException()`**: wrap the `admin_cmd_*` construction+`run()` in `try { ... }
+  finally { $this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']); }` so the session is
+  restored even though the call is expected to throw - a plain sequential switch-back line never
+  executes in that case, leaving the session stuck as admin for whatever test runs next.
+* **Static contexts** (`setUpBeforeClass()`): `switchUser()` is an *instance* method, unavailable
+  without `$this`. Replicate its body directly - `\EGroupware\Api\LoggedInTest::tearDownAfterClass();
+  static::load_egw($user, $password);` - but use the **fully-qualified base class name**, never
+  `self::tearDownAfterClass()`. If the test class itself overrides `tearDownAfterClass()` (common, for
+  its own fixture cleanup), `self::` resolves to *that* override (compile-time binding to the class
+  where the code is written), silently deleting whatever fixtures you just created instead of just
+  logging out.
+
 Before changing PHP behaviour:
 
 * Check for existing tests covering the same app or API area.

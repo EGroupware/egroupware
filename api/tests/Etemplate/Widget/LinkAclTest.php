@@ -103,9 +103,12 @@ class LinkAclTest extends LoggedInTest
 		}
 		if ($this->account_id)
 		{
+			// admin_cmd_delete_account requires the CURRENT session to be a real admin
+			$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 			$command = new \admin_cmd_delete_account($this->account_id, null, true);
 			$command->comment = 'Removing in tearDown for unit test ' . $this->getName();
 			$command->run();
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 			$this->account_id = null;
 		}
 
@@ -121,11 +124,18 @@ class LinkAclTest extends LoggedInTest
 		{
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
+
+		// the group should contain the ORIGINAL (non-admin) session's account, not the admin's
+		$original_account_id = $GLOBALS['egw_info']['user']['account_id'];
+
+		// admin_cmd_edit_group/_edit_user require the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+
 		if (!$GLOBALS['egw']->accounts->exists($this->account['account_primary_group']))
 		{
 			$group = new \admin_cmd_edit_group(false, [
 				'account_lid' => 'Testers',
-				'account_members' => [$GLOBALS['egw_info']['user']['account_id']],
+				'account_members' => [$original_account_id],
 			]);
 			$group->run();
 		}
@@ -140,6 +150,9 @@ class LinkAclTest extends LoggedInTest
 			'account_members' => [$this->account_id],
 		]);
 		$remove_group->run();
+
+		// restore the base test session (same fallback identity used everywhere else)
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
 		return $this->account_id;
 	}

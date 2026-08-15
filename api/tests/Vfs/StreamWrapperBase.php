@@ -110,9 +110,12 @@ abstract class StreamWrapperBase extends LoggedInTest
 		// Remove our other test user
 		if($this->account_id)
 		{
+			// admin_cmd_delete_account requires the CURRENT session to be a real admin
+			$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 			$command = new \admin_cmd_delete_account( $this->account_id, null, true);
 			$command->comment = 'Removing in tearDown for unit test ' . $this->getName();
 			$command->run();
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 		}
 
 		// Remove any added files (as root to limit versioning issues)
@@ -457,10 +460,14 @@ abstract class StreamWrapperBase extends LoggedInTest
 		}
 
 		// It needs its own group too, Default will mess with any ACL tests
+		// (self-contained: switches to the admin test user and back internally)
 		if(!$GLOBALS['egw']->accounts->exists($account['account_primary_group']))
 		{
 			$group = $this->makeTestGroup();
 		}
+
+		// admin_cmd_edit_user/_edit_group require the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 
 		// Execute
 		$command = new \admin_cmd_edit_user(false, $account);
@@ -474,6 +481,10 @@ abstract class StreamWrapperBase extends LoggedInTest
 			$remove_group = new \admin_cmd_edit_group('Testers',['account_lid' => 'Testers', 'account_members' => [$this->account_id]]);
 			$remove_group->run();
 		}
+
+		// restore the base test session (same fallback identity used everywhere else, eg. tearDown())
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+
 		return $this->account_id;
 	}
 
@@ -482,10 +493,20 @@ abstract class StreamWrapperBase extends LoggedInTest
 	 */
 	protected function makeTestGroup()
 	{
+		// the group should contain the ORIGINAL (non-admin) session's account, not the admin's
+		$original_account_id = $GLOBALS['egw_info']['user']['account_id'];
+
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+
 		// Execute
-		$command = new \admin_cmd_edit_group(false, ['account_lid' => 'Testers', 'account_members' => $GLOBALS['egw_info']['user']['account_id']]);
+		$command = new \admin_cmd_edit_group(false, ['account_lid' => 'Testers', 'account_members' => $original_account_id]);
 		$command->comment = 'Needed for unit test ' . $this->getName();
 		$command->run();
+
+		// restore the base test session (same fallback identity used everywhere else, eg. tearDown())
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+
 		return $command->account;
 	}
 

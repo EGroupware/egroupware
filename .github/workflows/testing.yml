@@ -216,8 +216,16 @@ jobs:
           EGW_TEST_PASS="$(
             sed -n 's/.*<var name="EGW_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
           )"
+          # Dedicated admin test user (real, DB-backed admin rights) - kept separate from
+          # EGW_TEST_USER so most tests keep running as a genuine non-admin
+          EGW_ADMIN_USER="$(
+            sed -n 's/.*<var name="EGW_ADMIN_USER" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
+          )"
+          EGW_ADMIN_PASS="$(
+            sed -n 's/.*<var name="EGW_ADMIN_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
+          )"
 
-          for v in SYSOP_USER SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS; do
+          for v in SYSOP_USER SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS EGW_ADMIN_USER EGW_ADMIN_PASS; do
             if [ -z "${!v}" ]; then
               echo "::error::Missing $v"
               exit 1
@@ -232,6 +240,11 @@ jobs:
             --edit-user "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,Test,User,$EGW_TEST_PASS,$EGW_TEST_USER@example.invalid"
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --allow-app "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,projectmanager"
+
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
+            --edit-user "$SYSOP_USER,$SYSOP_PASS,$EGW_ADMIN_USER,Test,Admin,$EGW_ADMIN_PASS,$EGW_ADMIN_USER@example.invalid"
+          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
+            --allow-app "$SYSOP_USER,$SYSOP_PASS,$EGW_ADMIN_USER,admin"
 
           # Ensure share links resolve locally in CI
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \

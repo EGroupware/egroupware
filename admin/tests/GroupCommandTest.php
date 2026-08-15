@@ -63,10 +63,13 @@ class GroupCommandTest extends CommandBase {
 		$log_count = $this->get_log_count();
 
 		// Execute
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 		$command = new admin_cmd_edit_group(false, $this->group);
 		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->group_id = $command->account;
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -88,11 +91,21 @@ class GroupCommandTest extends CommandBase {
 		$this->expectException(Api\Exception\WrongUserinput::class);
 
 		// Execute
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin - use try/finally
+		// since this call is expected to throw
 		$this->account['account_lid'] = 'Default';
-		$command = new admin_cmd_edit_group(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->group_id = $command->account;
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			$command = new admin_cmd_edit_group(false, $this->account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->group_id = $command->account;
+		}
+		finally
+		{
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -112,10 +125,20 @@ class GroupCommandTest extends CommandBase {
 		unset($account['account_lid']);
 
 		// Execute
-		$command = new admin_cmd_edit_group(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->group_id = $command->account;
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin - use try/finally
+		// since this call is expected to throw
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			$command = new admin_cmd_edit_group(false, $account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->group_id = $command->account;
+		}
+		finally
+		{
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -135,10 +158,20 @@ class GroupCommandTest extends CommandBase {
 		unset($account['account_members']);
 
 		// Execute
-		$command = new admin_cmd_edit_group(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->group_id = $command->account;
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin - use try/finally
+		// since this call is expected to throw
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			$command = new admin_cmd_edit_group(false, $account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->group_id = $command->account;
+		}
+		finally
+		{
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -168,6 +201,9 @@ class GroupCommandTest extends CommandBase {
 			// Delete if there in case something went wrong
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
+
+		// admin_cmd_edit_user/_edit_group require the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 
 		$command = new admin_cmd_edit_user(false, $account);
 		$command->comment = 'Needed for unit test ' . $this->name();
@@ -203,6 +239,9 @@ class GroupCommandTest extends CommandBase {
 		$command = new admin_cmd_edit_group($this->group_id, $account);
 		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
+
+		// restore the base test session (same fallback identity used everywhere else)
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));

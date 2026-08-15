@@ -11,6 +11,12 @@
         <var name="EGW_DOMAIN" value="default" />
         <var name="EGW_USER" value="demo" />
         <var name="EGW_PASSWORD" value="guest" />
+        <!-- dedicated account with real, DB-backed admin app rights - for tests exercising
+             admin-only functionality (eg. admin_cmd_edit_user/_edit_group), switch to this via
+             LoggedInTest::switchUser() rather than granting EGW_USER admin rights, which would
+             short-circuit the many tests relying on EGW_USER NOT being an admin -->
+        <var name="EGW_ADMIN_USER" value="demoadmin" />
+        <var name="EGW_ADMIN_PASSWORD" value="guest" />
     </php>
 	    <testsuites>
 	        <testsuite name="Api">

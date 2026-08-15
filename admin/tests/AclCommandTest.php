@@ -44,11 +44,13 @@ class AclCommandTest extends CommandBase {
 			// Already exists, something went wrong
 			$GLOBALS['egw']->accounts->delete($group_id);
 		}
+		// admin_cmd_edit_group/_edit_user require the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+
 		$group_cmd = new admin_cmd_edit_group($group);
 		$group_cmd->comment = 'Needed for unit test ' . $this->name();
 		$group_cmd->run();
 		$this->group_id = $group_cmd->account;
-		$this->assertNotEmpty($this->group_id, 'Did not create test group account');
 
 		// Make a new user so we have clean ACL, and it doesn't matter if something
 		// goes wrong
@@ -71,6 +73,11 @@ class AclCommandTest extends CommandBase {
 		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
+
+		// restore the base test session (same fallback identity used everywhere else)
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+
+		$this->assertNotEmpty($this->group_id, 'Did not create test group account');
 		$this->assertNotEmpty($this->account_id, 'Did not create test user account');
 	}
 

@@ -37,10 +37,14 @@ class DeleteAccountCommandTest extends CommandBase {
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
 
+		// admin_cmd_edit_user requires the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 		$command = new admin_cmd_edit_user(false, $this->account);
 		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
 		$this->account_id = $command->account;
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+
 		$this->assertNotEmpty($this->account_id, 'Did not create test user account');
 	}
 
@@ -63,9 +67,12 @@ class DeleteAccountCommandTest extends CommandBase {
 		$log_count = $this->get_log_count();
 
 		// Execute
+		// admin_cmd_delete_account requires the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 		$command = new admin_cmd_delete_account($this->account_id);
 		$command->comment = 'Needed for unit test ' . $this->name();
 		$command->run();
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -87,9 +94,20 @@ class DeleteAccountCommandTest extends CommandBase {
 		$this->expectException(Api\Exception\WrongUserinput::class);
 
 		// Execute - we tell it it's a group, even though it's a user
-		$command = new admin_cmd_delete_account($this->account_id, null, false);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
+		// admin_cmd_delete_account requires the CURRENT session to be a real admin - use
+		// try/finally since this call is expected to throw, but the session must still be
+		// restored so later tests aren't left running as admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			$command = new admin_cmd_delete_account($this->account_id, null, false);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+		}
+		finally
+		{
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
