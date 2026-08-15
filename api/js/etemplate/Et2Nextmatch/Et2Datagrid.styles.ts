@@ -31,11 +31,12 @@ export default css`
 		height: auto !important;
 		min-height: 0 !important;
 		contain: none !important;
-		/* This hacky hack prevents the last rows from being cut off.
-		 * They're there in the DOM and visible in print emulation, but the
-		 * print layout across pages cuts them off.
+		/* The very last printed row can still end up slightly clipped at the page
+		 * bottom. Physical units are used here rather than em/vh because they 
+		 * resolve consistently across print contexts; the margin is sized to roughly a full page so the last row
+		 * has somewhere safe to overflow into even if the driver is a full page short.
 		 */
-		padding-bottom: 20em;
+		padding-bottom: 250mm;
 	}
 
 	:host(.print) .dg-body tbody {

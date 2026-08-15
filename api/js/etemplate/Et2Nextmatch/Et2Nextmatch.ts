@@ -1286,7 +1286,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 				rowIds = await this.fetchAllIds(200, requestedRows);
 			}
-			await grid.setPrintRows(rowIds.slice(0, requestedRows));
+			// setPrintRows() can now take a while for a large row count (waiting for
+			// images to load and layout to settle - see Et2Datagrid.setPrintRows()),
+			// with no dialog of its own the way fetchAllIds() has. Without this, a
+			// large print request looks like the UI hung.
+			this.egw().loading_prompt("nextmatch-print", true, this.egw().lang("please wait..."), this);
+			try
+			{
+				await grid.setPrintRows(rowIds.slice(0, requestedRows));
+			}
+			finally
+			{
+				this.egw().loading_prompt("nextmatch-print", false);
+			}
 		}
 		catch(error)
 		{
