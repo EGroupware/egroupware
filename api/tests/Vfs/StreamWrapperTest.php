@@ -50,8 +50,11 @@ class StreamWrapperTest extends StreamWrapperBase
 	protected function allowAccess(string $test_name, string &$test_file, int $test_user, string $needed) : void
 	{
 		// We'll allow access by putting test user in Default group
+		// admin_cmd_edit_user requires the CURRENT session to be a real admin
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
 		$command = new \admin_cmd_edit_user($test_user, ['account_groups' => array_merge($this->account['account_groups'],['Default'])]);
 		$command->run();
+		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
 
 		// Add explicit permission on group
 		Vfs::chmod($test_file, Vfs::mode2int('g+'.$needed));
