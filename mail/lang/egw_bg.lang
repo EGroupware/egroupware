@@ -1,3 +1,7 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	bg	(*) Моля, да имате в предвид, че пренасочването към няколко адреса няма да работи, ако броят на адресите надвишава зададения лимит. За повечето Пощенски сървъри лимитът е 4 (по подразбиране). Моля, свържете се с Администратора на вашия Пощенски сървър за допълнителна информация.
+(leave empty for no quota)	mail	bg	(Оставете празна, за да нямате квота)
+(no subject)	mail	bg	(без тема)
+(not connected)	mail	bg	(няма връзка)
 %1 attachments	mail	bg	%1 прикачени файлове
 %1 for all users	mail	bg	%1 за всички потребители
 %1 has been added to blacklisted email addresses	mail	bg	%1 е добавен към имейл адресите в "черения списък"
@@ -7,10 +11,6 @@
 %1 is not writable by you!	mail	bg	%1 НЕ е писан от вас!
 %1 mails selected	mail	bg	%1 избрани писма
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	bg	%1 изисква разширение на Sieve %2, може би опитайте с %1 или по-голям брой дни.
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	bg	(*) Моля, да имате в предвид, че пренасочването към няколко адреса няма да работи, ако броят на адресите надвишава зададения лимит. За повечето Пощенски сървъри лимитът е 4 (по подразбиране). Моля, свържете се с Администратора на вашия Пощенски сървър за допълнителна информация.
-(leave empty for no quota)	mail	bg	(Оставете празна, за да нямате квота)
-(no subject)	mail	bg	(без тема)
-(not connected)	mail	bg	(няма връзка)
 account editable by user	mail	bg	акаунт редактируем от потребителя
 acl rights retrieve failed, seems there are no rights set!	mail	bg	Извличането на ACL права не бе успешно, изглежда няма зададени права!
 acl rights retrieved successfully	mail	bg	ACL правата са изтеглени успешно
@@ -102,7 +102,6 @@ choose file	mail	bg	Изберете файл
 common acl	mail	bg	Общ ACL
 compose	mail	bg	Ново съобщение
 compose as new	mail	bg	Създай като ново
-compress folder	mail	bg	Компресиране на папката
 condition	mail	bg	условие
 configuration settings	mail	bg	Настройки за конфигурацията
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	bg	Конфигурираните стойности ще бъдат зададени автоматично в диалоговия прозорец за съставяне за уважаваното поле при съставяне на нов имейл.
@@ -128,8 +127,6 @@ current folder	mail	bg	текуща папка
 current subject	mail	bg	текуща тема
 currently:	mail	bg	Понастоящем:
 deactive	mail	bg	Деактивиране
-default identity for compose	mail	bg	Стандартна идентичност за създаване на писмо
-default signature	mail	bg	Стандартен подпис
 default sorting order	mail	bg	Подреждане по подразбиране
 default toolbar actions shown in mail's html editor	mail	bg	Функции, активирани в лентата с инструменти на редактора HTML при съставяне на имейл
 default value for remembering s/mime passphrase in minutes	mail	bg	Стойност по подразбиране за запомняне на S/MIME паролата в минути
@@ -179,6 +176,7 @@ does not contain	mail	bg	не съдържа
 does not exist on imap server.	mail	bg	не съществува на IMAP сървъра.
 does not match	mail	bg	не съвпада с
 does not match regexp	mail	bg	не съвпада с рег. израз
+don't use draft folder	mail	bg	Не използвай "Чернови"
 don't use sent	mail	bg	Не използвай "Изпратени"
 don't use template folder	mail	bg	Не използвай папка "Шаблони"
 don't use trash	mail	bg	Не използвай "Кошче"
@@ -243,10 +241,10 @@ files	mail	bg	Файлове
 flag / unflag	mail	bg	Маркирай/ Размаркирай с флагче
 flag or unflag a mail	mail	bg	Маркирайте или отмаркирайте имейл с флагче
 flagged	mail	bg	с флагче
+flagged / unflagged	mail	bg	Маркирани/ Размаркирани
 flagged %1 messages as %2 in %3	mail	bg	маркирани %1 съобщение(я) с флагче като "%2" в %3.
 flagged %1 messages as flagged in %2	mail	bg	маркирани %1 съобщение(я), като "маркирани с флаг" в %2
 flagged %1 messages as unflagged in %2	mail	bg	маркирани %1 съобщение(я), като "размаркирани с флаг" в %2
-flagged / unflagged	mail	bg	Маркирани/ Размаркирани
 folder	mail	bg	Папка
 folder %1 %2 failed because of %3!	mail	bg	Папка %1 %2 не бе успешна поради %3!
 folder %1 %2 failed!	mail	bg	Папка %1 %2 не бе успешна!
@@ -329,7 +327,6 @@ junk folder	mail	bg	Папка с нежелани файлове
 keep a copy	mail	bg	Запазване на копие
 keep a copy of the message in your inbox	mail	bg	запазване на копие от съобщението във Входящи
 kilobytes	mail	bg	килобайта
-last used signature	mail	bg	Последно използван подпис
 later	mail	bg	По-късно
 learning as ham (not spam) failed because of %1	mail	bg	Ученето като хам (не спам) се провали заради %1
 learning as spam failed because of %1	mail	bg	Ученето като спам се е провалило поради %1
@@ -362,7 +359,6 @@ message send successfully.	mail	bg	Съобщението е изпратено 
 message verified successfully.	mail	bg	Съобщението е проверено успешно.
 modify subject	mail	bg	Променете темата
 modify subject of this message	mail	bg	Променете темата на това съобщение
-move selected mails to archive	mail	bg	Премести избраните имейли в архива
 move selected to	mail	bg	премести избраните в
 move to	mail	bg	премести избраните в
 move to trash	mail	bg	Премести в Кошчето
@@ -406,7 +402,6 @@ organization | real name email	mail	bg	Организация | Истинско
 original message	mail	bg	Оригинално съобщение
 outbox	mail	bg	Изходяща поща
 permission denied	mail	bg	Не е позволено
-personal signature	mail	bg	Личен подпис
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	bg	Моля, конфигурирайте сертификата си S/MIME в раздела Encryption (Шифроване), намиращ се в диалоговия прозорец за редактиране на акаунта.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	bg	Моля, свържете се с вашия администратор, за да потвърдите дали сървърът ви поддържа филтърни правила на сървъра и как да ги активирате в EGroupware за вашия активен акаунт (%1) с ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	bg	Моля, свържете се с Вашия администратор, за да потвърдите дали Вашият сървър поддържа съобщения за ваканция от страна на сървъра и как да ги активирате в EGroupware за Вашия активен акаунт (%1) с ID: %2.
@@ -459,7 +454,6 @@ required to disable if you use dovecot with private seen flags on shared or user
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	bg	S/MIME Криптирането е неуспешно, тъй като не е намерен сертификат за адреса на подателя: %1
 save all attachments to filemanager	mail	bg	Запазете всички във Файлов мениджър
 save as draft	mail	bg	запис като чернова
-save as draft and print	mail	bg	Запазете като чернова и отпечатайте
 save as infolog	mail	bg	запис в Дневника
 save as infolog on send	mail	bg	Запазване като InfoLog при изпращане
 save message to disk	mail	bg	запис на съобщението на диска
@@ -474,7 +468,6 @@ select an existing entry in order to append mail content to it	mail	bg	Избе�
 select an item to read	mail	bg	Изберете елемент, който да прочетете
 select mail addresses from addressbook	mail	bg	Изберете пощенски адреси от адресната книга
 select or insert email address	mail	bg	Изберете или вмъкнете имейл адрес
-selected	mail	bg	избрани.
 selected date range (with quicksearch)	mail	bg	Избран диапазон от дати (с бързо търсене)
 send message and move to send folder (if configured)	mail	bg	Изпращане на съобщение и преместване в папката за изпращане (ако е конфигурирано)
 send message pgp encrypted: requires keys from all recipients!	mail	bg	Изпращане на съобщение, криптирано с PGP: изисква ключове от всички получатели!
@@ -540,7 +533,6 @@ view header lines	mail	bg	Заглавна част (Header)
 what to do when you delete a message	mail	bg	Какво да правите, когато изтривате съобщение.
 when deleting messages	mail	bg	При изтриване на съобщения
 which folders - in general - should not be automatically created, if not existing	mail	bg	кои папки НЕ следва са се създават автоматично, ако не съществуват
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	bg	С коя пощенска идентичност (подпис) искате да започнете.\nЗа „Личен подпис“ винаги използваме първия личен подпис.
 write & delete	mail	bg	Записване и изтриване
 wrote	mail	bg	написа
 you can select what info to be displayed on email tag	mail	bg	Можете да изберете каква информация да се показва на имейл тага.

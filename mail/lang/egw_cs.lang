@@ -1,12 +1,12 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	cs	(*) Pamatujte, že přeposlání na více adres nemusí fungovat správně, pokud počet adres přesáhne stanovený limit. Většina poštovních serverů má tento limit stanoven na 4 - požádejte správce svého poštovního serveru o další informace.
+(leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
+(no subject)	mail	cs	(žádný předmět)
+(not connected)	mail	cs	(nepřipojeno)
 %1 attachments	mail	cs	%1 příloh
 %1 for all users	mail	cs	%1 pro všechny uživatele
 %1 is not writable by you!	mail	cs	Pro %1 nemáte oprávnění k zápisu!
 %1 mails selected	mail	cs	%1 e-mailů vybráno
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	cs	%1 vyžaduje rozšíření Sieve %2, možná zkuste %1 nebo vyšší počet dní.
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	cs	(*) Pamatujte, že přeposlání na více adres nemusí fungovat správně, pokud počet adres přesáhne stanovený limit. Většina poštovních serverů má tento limit stanoven na 4 - požádejte správce svého poštovního serveru o další informace.
-(leave empty for no quota)	mail	cs	(ponechte prázdné, pokud nechcete omezovat velikost)
-(no subject)	mail	cs	(žádný předmět)
-(not connected)	mail	cs	(nepřipojeno)
 account editable by user	mail	cs	Účet může být upraven uživatelem
 acl rights retrieve failed, seems there are no rights set!	mail	cs	Získání ACL práv selhalo, zdá se, že práva nejsou nastavena!
 acl rights retrieved successfully	mail	cs	ACL práva byla získána úspěšně
@@ -93,7 +93,6 @@ choose file	mail	cs	Vyberte soubor
 common acl	mail	cs	Běžná práva ACL
 compose	mail	cs	Nová zpráva
 compose as new	mail	cs	Vytvořit jako novou zprávu
-compress folder	mail	cs	Komprimovat složku
 condition	mail	cs	Podmínka
 configuration settings	mail	cs	Nastavení konfigurace
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	cs	Configured values will be set automatically on compose dialog for respected field when composing a new email.
@@ -119,8 +118,6 @@ current folder	mail	cs	Aktuální složka
 current subject	mail	cs	Aktuální téma
 currently:	mail	cs	Aktuálně:
 deactive	mail	cs	Deaktivovat
-default identity for compose	mail	cs	Výchozí identita pro psaní zpráv
-default signature	mail	cs	Výchozí podpis
 default sorting order	mail	cs	Výchozí třídění
 default toolbar actions shown in mail's html editor	mail	cs	Funkce povolené na panelu nástrojů editoru HTML při vytváření e-mailu
 default value for remembering s/mime passphrase in minutes	mail	cs	Výchozí hodnota pro zapamatování přístupové fráze S/MIME v minutách
@@ -170,6 +167,7 @@ does not contain	mail	cs	neobsahuje
 does not exist on imap server.	mail	cs	neexistuje na IMAP serveru.
 does not match	mail	cs	neshoduje se s
 does not match regexp	mail	cs	neshoduje se s regulárním výrazem
+don't use draft folder	mail	cs	Nepoužívat složku Rozepsané
 don't use sent	mail	cs	Nepoužívat Odeslané
 don't use template folder	mail	cs	Nepoužívat složku šablon
 don't use trash	mail	cs	Nepoužívat Koš
@@ -234,10 +232,10 @@ files	mail	cs	Soubory
 flag / unflag	mail	cs	Označení / Odznačení
 flag or unflag a mail	mail	cs	Označení nebo neoznačení zprávy
 flagged	mail	cs	Označeno
+flagged / unflagged	mail	cs	Označeno / Odznačeno
 flagged %1 messages as %2 in %3	mail	cs	Označeno %1 zpráv jako "%2" ve složce %3.
 flagged %1 messages as flagged in %2	mail	cs	Označeno %1 zpráv ve složce %2.
 flagged %1 messages as unflagged in %2	mail	cs	Odznačeno %1 zpráv ve složce %2.
-flagged / unflagged	mail	cs	Označeno / Odznačeno
 folder	mail	cs	Složka
 folder %1 %2 failed because of %3!	mail	cs	Složka %1 %2 selhala kvůli %3!
 folder %1 %2 failed!	mail	cs	Složka %1 %2 selhalo!
@@ -320,7 +318,6 @@ junk folder	mail	cs	Složka nevyžádané pošty
 keep a copy	mail	cs	Ponechte si kopii
 keep a copy of the message in your inbox	mail	cs	Zachovat kopii zprávy ve vaší schránce
 kilobytes	mail	cs	kilobytů
-last used signature	mail	cs	Naposledy použitý podpis
 later	mail	cs	Později
 learning as ham (not spam) failed because of %1	mail	cs	Učení jako šunka (ne spam) se nezdařilo z důvodu %1
 learning as spam failed because of %1	mail	cs	Učení jako spam selhalo kvůli %1
@@ -363,7 +360,7 @@ modify subject of this message	mail	cs	Upravit předmět této zprávy
 move	mail	cs	Přesunout
 move folder	mail	cs	Přesunout složku
 move selected mails to archive	mail	cs	Přesunout vybrané zprávy do archivu
-move selected to	mail	cs	Přesunout vybrané do
+move selected to	mail	cs	Přesunout vybrané (kam)
 move to	mail	cs	Přesunout do
 move to archive	mail	cs	Přesunout do archivu
 move to trash	mail	cs	Přesunout do koše
@@ -427,7 +424,6 @@ original message	mail	cs	Původní zpráva
 outbox	mail	cs	Odeslaná pošta
 password protect	mail	cs	Chráněno heslem
 permission denied	mail	cs	Přístup zamítnut
-personal signature	mail	cs	Osobní podpis
 please configure access to an existing individual imap account.	mail	cs	Nakonfigurujte prosím přístup ke stávajícímu osobnímu IMAP účtu.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	cs	Nakonfigurujte prosím svůj certifikát S/MIME na kartě Šifrování v dialogovém okně Upravit účet.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	cs	Kontaktujte správce svého e-mailového serveru pro ověření, zda váš server podporuje pravidla a jak je v EGroupware pro váš účet %1 s identifikací %2 povolit.
@@ -542,7 +538,7 @@ select files to upload	mail	cs	Vyberte soubory pro nahrání
 select mail addresses from addressbook	mail	cs	Vyberte e-mailovou adresu (adresy) z adresáře
 select multiple	mail	cs	Vyberte více
 select or insert email address	mail	cs	Vyberte nebo vložte e-mailovou adresu
-selected	mail	cs	vybráno.
+selected	mail	cs	Vybráno
 selected date range (with quicksearch)	mail	cs	Zvolený rozsah datumu (pro rychlé hledání)
 send a reject message:	mail	cs	Odeslat odmítnutí:
 send files as	mail	cs	Odeslat soubor jako
@@ -676,9 +672,8 @@ when deleting messages	mail	cs	Při mazání zpráv
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	cs	Pokud se zprávy zobrazují ve vyskakovacích oknech, použít při zobrazení další zprávy stejné, nebo nové vyskakovací okno
 when saving messages as item of a different app	mail	cs	při uložení zprávy jako záznamu do jiné aplikace.
 when sending messages	mail	cs	Při odeslání zprávy
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	cs	Které složky (kromě složky Odeslané) by měly být zobrazeny za použití schématu pro zobrazení složky Odeslané
 which folders - in general - should not be automatically created, if not existing	mail	cs	Které složky by neměly být automaticky vytvářeny pokud neexistují
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	cs	S kterou e-mailovou identitou (podpisem) chcete začít.\nU možnosti „Osobní podpis“ se vždy použije první osobní podpis.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	cs	Které složky (kromě složky Odeslané) by měly být zobrazeny za použití schématu pro zobrazení složky Odeslané
 which method to use when forwarding a message	mail	cs	Jakým způsobem přeposlat zprávu
 whole message	mail	cs	Všechny zprávy
 with message:	mail	cs	Se zprávou:

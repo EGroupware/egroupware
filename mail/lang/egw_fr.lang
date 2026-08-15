@@ -1,3 +1,7 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	fr	(*) Veuillez considérer que le fait d'envoyer à plusieurs destinataires peut ne pas fonctionner selon la limite définie par le serveur. Veuillez contacter votre administrateur pour plus d'informations.
+(leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
+(no subject)	mail	fr	Pas de sujet
+(not connected)	mail	fr	(non connecté)
 %1 attachments	mail	fr	%1 pièces jointes
 %1 for all users	mail	fr	%1 pour tous les utilisateurs
 %1 has been added to blacklisted email addresses	mail	fr	%1 ajouté à la liste noire
@@ -7,11 +11,6 @@
 %1 is not writable by you!	mail	fr	%1 n'est pas accessible en écriture !
 %1 mails selected	mail	fr	%1 mails sélectionnés
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	fr	%1 nécessite l'extension Sieve %2, essayez peut-être %1 ou un nombre de jours plus élevé.
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	fr	(*) Veuillez considérer que le fait d'envoyer à plusieurs destinataires peut ne pas fonctionner selon la limite définie par le serveur. Veuillez contacter votre administrateur pour plus d'informations.
-(leave empty for no quota)	mail	fr	(laisser vide pour ne ne pas mettre de quota)
-(no subject)	mail	fr	Pas de sujet
-(not connected)	mail	fr	(non connecté)
-...	mail	fr	PJ
 account editable by user	mail	fr	compte modifiable par l'utilisateur
 acl rights retrieve failed, seems there are no rights set!	mail	fr	L'extraction des droits ACL a échoué, il semble qu'il n'y ait pas de droits définis !
 acl rights retrieved successfully	mail	fr	Droits ACL récupérés avec succès
@@ -60,8 +59,6 @@ any status	mail	fr	n'importe quel statut
 append	mail	fr	Ajouter
 appended after reply before sending	mail	fr	Ajouté après la réponse avant l'envoi
 application mail expected but got: %1	mail	fr	Application mail attendue mais résultat obtenu : %1
-applying rights	mail	fr	Application des droits
-applying rights to %1 folders ...	mail	fr	Application des droits sur %1 dossier(s) ...
 archive folder	mail	fr	Dossier Archives
 are you sure you want to delete all selected folders?	mail	fr	Souhaitez-vous supprimer tous les dossiers sélectionnés ?
 are you sure you want to move folder %1 to folder %2?	mail	fr	Souhaitez-vous transférer le dossier %1 dans le dossier %2
@@ -103,9 +100,8 @@ check to save as tracker entry on send	mail	fr	cocher pour sauvegarder comme Tra
 checking admin credentials failed	mail	fr	La vérification des informations d'identification de l'administrateur a échoué
 choose file	mail	fr	Sélectionner un fichier
 common acl	mail	fr	ACL communs
-compose	mail	fr	Nouveau message
-compose as new	mail	fr	Dupliquer comme un nouveau message
-compress folder	mail	fr	Compresser le dossier
+compose	mail	fr	Composer
+compose as new	mail	fr	Composer comme nouveau
 condition	mail	fr	Condition
 configuration settings	mail	fr	Paramètres de configuration
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	fr	Les valeurs configurées seront automatiquement définies dans la boîte de dialogue de composition pour les champs respectés lors de la composition d'un nouvel e-mail.
@@ -125,14 +121,12 @@ copied %1 message(s) from %2 to %3	mail	fr	Copie de %1 message(s) de %2 à %3.
 copy to	mail	fr	Copier vers
 could not append message:	mail	fr	Impossible d'ajouter au message:
 could not save the acl because some names are empty	mail	fr	Echec à l'enregistrement de l'ACL certains noms sont vides
-create new account	mail	fr	Connecter une autre boite mail
+create new account	mail	fr	Créer un nouveau compte
 cross account forward attachment is not allowed!	mail	fr	La pièce jointe du compte croisé n'est pas autorisée !
 current folder	mail	fr	Dossier actif
 current subject	mail	fr	Sujet actuel
 currently:	mail	fr	Actuellement :
 deactive	mail	fr	Désactiver
-default identity for compose	mail	fr	Identité par défaut pour la rédaction
-default signature	mail	fr	Signature par défaut
 default sorting order	mail	fr	Ordre de tri par défaut
 default toolbar actions shown in mail's html editor	mail	fr	Fonctions activées dans la barre d'outils de l'éditeur HTML lors de la composition d'un courriel
 default value for remembering s/mime passphrase in minutes	mail	fr	Valeur par défaut pour la mémorisation de la phrase de passe S/MIME en minutes
@@ -143,9 +137,9 @@ delete folder	mail	fr	Supprimer le dossier
 delete folder %1 ?	mail	fr	Supprimer le dossier %1 ?
 delete selected folders	mail	fr	Supprimer les dossiers sélectionnés
 delete this acl	mail	fr	Supprimer cet ACL
-deleted	mail	fr	Supprimé
+deleted	mail	fr	supprimé
 deleted %1 messages in %2	mail	fr	Supprimer %1 messages dans %2.
-deleted!	mail	fr	Supprimé !
+deleted!	mail	fr	supprimé !
 deleting %1 folders in progress ...	mail	fr	Suppression de %1 dossier(s) en cours ...
 deleting folders	mail	fr	Suppression de dossier
 deny certain groups access to following features	mail	fr	Refuser à certains groupes l'accès aux fonctions suivantes
@@ -213,7 +207,6 @@ enabled!	mail	fr	autorisé !
 encrypt	mail	fr	Chiffre
 encrypt your message with smime certificate	mail	fr	Chiffre votre message avec le certificat S/MIME
 encryption	mail	fr	Chiffrement
-end	common	fr	Fin
 enter the name for the new folder:	mail	fr	Entrer le nom du nouveau dossier :
 error saving %1!	mail	fr	Erreur durant l'enregistrement de %1 !
 error while setting acl for folder %1!	mail	fr	Erreur au paramétrage des ACL du dossier du dossier %1 !
@@ -248,10 +241,10 @@ files	mail	fr	Fichiers
 flag / unflag	mail	fr	Marquer / Non marquer
 flag or unflag a mail	mail	fr	Marquer ou non marquer un mail
 flagged	mail	fr	Marqué
+flagged / unflagged	mail	fr	Marqué / Non marqué
 flagged %1 messages as %2 in %3	mail	fr	Message(s) marqué(s) %1 comme "%2" dans %3.
 flagged %1 messages as flagged in %2	mail	fr	Message(s) marqué(s) %1 comme marqué(s) en %2
 flagged %1 messages as unflagged in %2	mail	fr	Marqué %1 message(s) comme non marqué dans %2
-flagged / unflagged	mail	fr	Marqué / Non marqué
 folder	mail	fr	Dossier
 folder %1 %2 failed because of %3!	mail	fr	Le dossier %1 %2 a échoué à cause de %3 !
 folder %1 %2 failed!	mail	fr	Dossier %1 %2 en échec !
@@ -314,7 +307,7 @@ imap - incoming mail	mail	fr	IMAP - mail entrant
 imap administration	mail	fr	Administration IMAP
 imap server	mail	fr	Serveur IMAP
 imap timeout	mail	fr	Timeout IMAP
-import message	mail	fr	Importer un email
+import message	mail	fr	Importer le message
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	fr	L'importation du message %1 a échoué. Impossible d'enregistrer le message dans le dossier %2 en raison de : %3
 import of message %1 failed. destination folder %2 does not exist.	mail	fr	L'importation du message %1 a échoué. Le dossier de destination %2 n'existe pas.
 import of message %1 failed. destination folder not set.	mail	fr	L'importation du message %1 a échoué. Dossier de destination non défini.
@@ -334,7 +327,6 @@ junk folder	mail	fr	Dossier des indésirables
 keep a copy	mail	fr	Garder une copie
 keep a copy of the message in your inbox	mail	fr	Garder une copie du message dans votre boite de réception
 kilobytes	mail	fr	kilo-octets
-last used signature	mail	fr	Dernière signature utilisée
 later	mail	fr	Plus tard
 learning as ham (not spam) failed because of %1	mail	fr	L'apprentissage en tant que ham (pas spam) a échoué à cause de %1
 learning as spam failed because of %1	mail	fr	L'apprentissage en tant que spam a échoué à cause de %1
@@ -407,7 +399,7 @@ no plain text part found	mail	fr	Aucune section texte plein trouvée
 no recipient address given!	mail	fr	Il n'a pas d'adresse de destinataire
 no send folder set in preferences	mail	fr	Aucun dossier "Envoyés" défini dans les préférences
 no signature	mail	fr	Pas de signature !
-no sneak preview in list	mail	fr	Masquer la prévisualisation des messages
+no sneak preview in list	mail	fr	Masquer la prévisualisation
 no subject given!	mail	fr	Votre message n'a pas de sujet !
 no subject supplied	mail	fr	pas de sujet
 no text body supplied, check attachments for message text	mail	fr	Aucun texte entré, veuillez vérifier les pièces jointes pour un message texte
@@ -441,7 +433,6 @@ original message	mail	fr	Message d'origine
 outbox	mail	fr	Boîte d'envoi
 password protect	mail	fr	protection par mot de passe
 permission denied	mail	fr	Permission refusée
-personal signature	mail	fr	Signature personnelle
 please configure access to an existing individual imap account.	mail	fr	Veuillez configurer l'accès à un compte IMAP individuel existant.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	fr	Veuillez configurer votre certificat S/MIME dans l'onglet Encryption situé dans la boîte de dialogue Edit Account.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	fr	Veuillez contacter votre administrateur pour savoir si votre serveur prend en charge les règles de filtrage côté serveur et comment les activer dans EGroupware pour votre compte actif (%1) avec ID :%2.
@@ -494,8 +485,6 @@ remove immediately	mail	fr	Enlever immédiatement
 removed folder %1	mail	fr	Dossier %1 supprimé
 removing %1 from blacklisted email addresses failed because of %2	mail	fr	La suppression de %1 des adresses électroniques figurant sur la liste noire a échoué en raison de %2
 removing %1 from whiltelisted email addresses failed because of %2	mail	fr	La suppression de %1 des adresses électroniques figurant sur la liste blanche a échoué en raison de %2
-removing rights	mail	fr	Suppression des droits
-removing rights from %1 folders ...	mail	fr	Suppression des droits de %1 dossier(s) ...
 rename folder	mail	fr	Renommer le dossier
 rename folder %1 ?	mail	fr	Renommer le dossier %1 ?
 rename folder %1 to:	mail	fr	Renommer le dossier %1 en :
@@ -523,7 +512,7 @@ rights	mail	fr	Droits
 rule priority position	mail	fr	Position des règles
 rule with priority	mail	fr	règle avec la priorité
 rules	mail	fr	Règles
-s/mime encryption failed because no certificate has been found for sender address: %1	mail	fr	Le chiffrage S/MIME a échoué car aucun certificat n'a été trouvé pour l'adresse de l'expéditeur : %1
+s/mime encryption failed because no certificate has been found for sender address: %1	mail	fr	Le cryptage S/MIME a échoué car aucun certificat n'a été trouvé pour l'adresse de l'expéditeur : %1
 save all	mail	fr	Enregistrer tout
 save all attachments to filemanager	mail	fr	Enregistrer toutes les pièces jointes vers le gestionnaire de fichiers
 save as calendar	mail	fr	Enregistrer dans le Calendrier
@@ -562,12 +551,12 @@ select files to upload	mail	fr	Sélectionner des fichiers à envoyer
 select mail addresses from addressbook	mail	fr	Sélectionner l'adresse e-mail dans le carnet d'adresses
 select multiple	mail	fr	Sélectionner plusieurs
 select or insert email address	mail	fr	Sélectionner ou insérer une adresse email
-selected	mail	fr	sélectionné.
+selected	mail	fr	sélectionné
 selected date range (with quicksearch)	mail	fr	Plage de dates (recherche rapide)
 send a reject message:	mail	fr	Envoyer un message de rejet
 send files as	mail	fr	Envoyer les fichiers comme
 send message and move to send folder (if configured)	mail	fr	Envoyer le message et le déplacer vers le dossier des messages envoyés
-send message pgp encrypted: requires keys from all recipients!	mail	fr	Envoi d'un message chiffré PGP : les clés de tous les destinataires sont nécessaires !
+send message pgp encrypted: requires keys from all recipients!	mail	fr	Envoi d'un message crypté PGP : les clés de tous les destinataires sont nécessaires !
 send only a vacation notice, do not store message in inbox	mail	fr	Envoyer uniquement un avis de vacances, ne PAS stocker le message dans INBOX
 send vacation notice and store message in inbox	mail	fr	Envoyer un avis de vacances et stocker le message dans INBOX
 sender	mail	fr	Emetteur
@@ -612,7 +601,7 @@ signed by	mail	fr	Signé par
 smime encrypted message	mail	fr	Message crypté S/MIME
 smime signed message	mail	fr	Message signé S/MIME
 smtp	mail	fr	SMTP
-sneak preview in list	mail	fr	Prévisualisation des messages
+sneak preview in list	mail	fr	Masquer la prévisualisation
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	fr	Certains clients ne parviennent pas à détecter le jeu de caractères correct si les lignes fluides sont activées.
 sort order	mail	fr	Ordre de tri
 source	mail	fr	Source
@@ -696,9 +685,8 @@ when deleting messages	mail	fr	Quand j'efface les messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	fr	Lorsque vous affichez des messages dans une fenêtre contextuelle, vous pouvez réutiliser la même fenêtre pour tous les messages ou ouvrir une nouvelle fenêtre pour chaque message
 when saving messages as item of a different app	mail	fr	lors de l'enregistrement des messages en tant qu'éléments d'une autre application.
 when sending messages	mail	fr	Quand j'envoie des messages
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	fr	Quels dossiers (en plus du dossier Envoyés) doivent être affichés en utilisant le Schéma des Éléments Envoyés
 which folders - in general - should not be automatically created, if not existing	mail	fr	Quels dossiers - en général - NE doivent PAS être automatiquement créés, s'il n'existent pas au préalable
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	fr	Choix de l'identité (signature) par défaut à la composition d'un nouveau mail. Si vous choisissez "Signature personnelle", la première signature personnelle créée sera prise par défaut.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	fr	Quels dossiers (en plus du dossier Envoyés) doivent être affichés en utilisant le Schéma des Éléments Envoyés
 which method to use when forwarding a message	mail	fr	Quelles méthode utiliser pour transférer un message
 whitelisted mails are not marked as spam	mail	fr	Les mails en liste blanche ne sont pas marqué comme spam
 whole message	mail	fr	Message entier

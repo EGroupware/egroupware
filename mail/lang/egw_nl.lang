@@ -1,11 +1,11 @@
+(leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
+(no subject)	mail	nl	(geen onderwerp)
+(not connected)	mail	nl	(niet verbonden)
 %1 attachments	mail	nl	%1 bijlagen
 %1 for all users	mail	nl	%1 voor alle gebruikers
 %1 is not writable by you!	mail	nl	%1 is NIET door uw te bewerken
 %1 mails selected	mail	nl	%1 bericht(en) geselcteerd
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	nl	%1 vereist Sieve-extensie %2, probeer misschien %1 of een hoger aantal dagen.
-(leave empty for no quota)	mail	nl	(laat leeg indien geen quota)
-(no subject)	mail	nl	(geen onderwerp)
-(not connected)	mail	nl	(niet verbonden)
 account editable by user	mail	nl	Account door gebruiker te wijzigen
 acl rights retrieve failed, seems there are no rights set!	mail	nl	ACL rechten ophalen mislukt, lijkt er op of er geen rechten zijn toegekend!
 acl rights retrieved successfully	mail	nl	ACL rechten succesvol opgehaald
@@ -92,7 +92,6 @@ choose file	mail	nl	Kies bestand
 common acl	mail	nl	ACL Standaard
 compose	mail	nl	Schrijf nieuw bericht
 compose as new	mail	nl	Stel samen als nieuw
-compress folder	mail	nl	Comprimeer map
 condition	mail	nl	Conditie
 configuration settings	mail	nl	Configuratie instellinen
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	nl	Geconfigureerde waarden zullen automatisch worden ingesteld in het samenstelvenster voor gerespecteerde velden bij het samenstellen van een nieuwe e-mail.
@@ -118,8 +117,6 @@ current folder	mail	nl	huidige map
 current subject	mail	nl	Huidig onderwerp
 currently:	mail	nl	Momenteel:
 deactive	mail	nl	Niet actief
-default identity for compose	mail	nl	Standaardidentiteit voor het opstellen van e-mails
-default signature	mail	nl	Standaardhandtekening
 default sorting order	mail	nl	Standaard volgorde
 default toolbar actions shown in mail's html editor	mail	nl	Functies ingeschakeld in de HTML editor werkbalk bij het samenstellen van een e-mail
 default value for remembering s/mime passphrase in minutes	mail	nl	Standaardwaarde voor onthouden S/MIME wachtwoord in minuten
@@ -228,10 +225,10 @@ files	mail	nl	Bestanden
 flag / unflag	mail	nl	Markeer / Geen markering op
 flag or unflag a mail	mail	nl	Markeer een bericht
 flagged	mail	nl	gemarkeerd
+flagged / unflagged	mail	nl	Gemarkeerd / Niet gemarkeerd
 flagged %1 messages as %2 in %3	mail	nl	Gemarkeerd %1 berichten als "%2" in %3.
 flagged %1 messages as flagged in %2	mail	nl	Gemarkeerd %1 berichten als gemarkeerd in %2
 flagged %1 messages as unflagged in %2	mail	nl	Gemarkeerd %1 berichten als niet gemarkeerd in %2
-flagged / unflagged	mail	nl	Gemarkeerd / Niet gemarkeerd
 folder	mail	nl	Map
 folder %1 %2 failed because of %3!	mail	nl	Map %1 %2 mislukt vanwege %3!
 folder %1 %2 failed!	mail	nl	Map %1 %2 mislukt
@@ -310,7 +307,6 @@ junk folder	mail	nl	Junk map
 keep a copy	mail	nl	Een kopie bewaren
 keep a copy of the message in your inbox	mail	nl	Bewaar een kopie van het bericht in uw inbox
 kilobytes	mail	nl	kilobytes
-last used signature	mail	nl	Laatst gebruikte handtekening
 later	mail	nl	Later
 learning as ham (not spam) failed because of %1	mail	nl	Leren als ham (geen spam) mislukt vanwege %1
 learning as spam failed because of %1	mail	nl	Leren als spam mislukt vanwege %1
@@ -411,7 +407,6 @@ organization | real name email	mail	nl	Organisatie | Echte naam [Email]
 original message	mail	nl	Origineel bericht
 outbox	mail	nl	Postvak UIT
 permission denied	mail	nl	Toestemming geweigerd
-personal signature	mail	nl	Persoonlijke handtekening
 please configure access to an existing individual imap account.	mail	nl	Configureer alstublieft toegang tot een bestaand IMAP account
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	nl	Configureer uw S/MIME-certificaat op het tabblad Encryptie in het dialoogvenster Account bewerken.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	nl	Neem contact op met uw administrateur om na te gaan of uw server filter op regels wordt ondersteund, en hoe u deze in EGroupware moet activeren voor uw actieve account (%1) met ID: %2.
@@ -518,7 +513,7 @@ select file to import into folder	mail	nl	Selecteer het bestand om in deze map t
 select file(s) from vfs	mail	nl	Selecteer het cq de bestand(en) van VFS
 select mail addresses from addressbook	mail	nl	Selecteer e-mailadres(sen) uit adresboek
 select or insert email address	mail	nl	Selecteer of voeg e-mailadres in
-selected	mail	nl	geselecteerd.
+selected	mail	nl	Geselecteerd
 selected date range (with quicksearch)	mail	nl	Geselecteerd datumbereik (met snelzoeken)
 send a reject message:	mail	nl	Stuur een bericht met afwijzing:
 send message and move to send folder (if configured)	mail	nl	Stuur berichten en verplaats deze naar de map verzonden (als dit is geconfigureerd)
@@ -641,9 +636,8 @@ when deleting messages	mail	nl	Wanneer berichten worden verwijdert
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	nl	Wanneer een bericht in een popup wordt getoond. gebruik dan dezelfde popup voor alle open berichten en voor elk bericht
 when saving messages as item of a different app	mail	nl	Als berichten bewaard worden als item van een andere applicatie
 when sending messages	mail	nl	Wanneer berichten worden verzonden
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	nl	Welke mappen (behalve de Verzenden map) moeten getoond worden bij gebruik van het schema van de verzend mappen
 which folders - in general - should not be automatically created, if not existing	mail	nl	Welke mappen - Algemeen - moeten niet automatisch aangemaakt worden als ze niet bestaan
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	nl	Met welke e-mailidentiteit (handtekening) wilt u beginnen?\nBij “Persoonlijke handtekening” gebruiken we altijd de eerste persoonlijke handtekening.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	nl	Welke mappen (behalve de Verzenden map) moeten getoond worden bij gebruik van het schema van de verzend mappen
 which method to use when forwarding a message	mail	nl	Welke methode gebruiken wanneer een berciht wordt doorgestuurd
 with message:	mail	nl	Met bericht:
 writable sharing requires epl version!	mail	nl	Schrijfbaar delen vereist EPL versie!

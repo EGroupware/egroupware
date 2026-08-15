@@ -1,9 +1,9 @@
+(leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
 %1 attachments	mail	tr	%1 ekler
 %1 for all users	mail	tr	Tüm kullanıcılar için %1
 %1 is not writable by you!	mail	tr	%1 sizin tarafınızdan yazılabilir DEĞİLDİR!
 %1 mails selected	mail	tr	%1 e-posta seçildi
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	tr	%1 için %2 Sieve uzantısı gerekiyor, belki %1 veya daha yüksek gün sayısını deneyebilirsiniz.
-(leave empty for no quota)	mail	tr	(Kota olmaması için boş bırakın)
 acl rights retrieve failed, seems there are no rights set!	mail	tr	ACL hakları geri alma başarısız oldu, ayarlanmış hak yok gibi görünüyor!
 activating by date requires a start- and end-date!	mail	tr	Tarihe göre etkinleştirme için başlangıç VE bitiş tarihi gerekir!
 add all my aliases	mail	tr	Tüm takma adlarımı ekle
@@ -17,7 +17,6 @@ after reply, visible during compose	mail	tr	Yanıttan sonra, oluşturma sırası
 aliases+forwards	mail	tr	Takma Adlar+İleri Yönler
 all my email addresses	mail	tr	tüm e-posta adreslerim
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	tr	Tüm alt klasörler de silinecek ve etkilenen tüm klasörlerdeki tüm mesajlar kaybolacaktır
-allow users to create further identities	mail	tr	Kullanıcıların yeni kimlikler oluşturmasına izin ver
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	tr	Bir kullanıcının klasörleri ve postaları okumasına, yazmasına ve oluşturmasına, bunlara mesaj göndermesine, bunlara mesaj eklemesine ve mesajları silmesine izin verir
 always respond / auto-responder	mail	tr	Her zaman yanıt / otomatik yanıtlayıcı
 always show notifiction	mail	tr	Her zaman bildirim göster
@@ -52,8 +51,6 @@ convert only mail to item (ignore possible attachments)	mail	tr	Yalnızca e-post
 copied %1 message(s) from %2 to %3	mail	tr	%1 mesaj(lar)ı %2'den %3'e kopyalandı.
 cross account forward attachment is not allowed!	mail	tr	Çapraz hesap ileri ekine izin verilmez!
 current subject	mail	tr	Güncel konu
-default identity for compose	mail	tr	Mesaj yazma için varsayılan kimlik
-default signature	mail	tr	Varsayılan imza
 default toolbar actions shown in mail's html editor	mail	tr	E-posta oluştururken HTML düzenleyici araç çubuğunda etkinleştirilen işlevler
 default value for remembering s/mime passphrase in minutes	mail	tr	Dakika cinsinden S/MIME parolasını hatırlamak için varsayılan değer
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	tr	Bir e-posta oluştururken Kime/Kopyala/Görüntülü kopya içine eklenen kişi için kişi etiketi olarak neyin gösterileceğini tanımlar. Varsayılan ad soyaddır ve boş, mevcut olan her şeyi dahil et anlamına gelir.
@@ -67,11 +64,6 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	tr	Seçilen iletileri yeni e-postaya eklemeden önce sizden onay istenmesini istiyor musunuz?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	tr	Seçili mesajları başka bir klasöre taşımadan önce sizden onay istenmesini istiyor musunuz?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	tr	E-postalar geldiğinde diğer e-posta adreslerine e-posta ile bildirim düzenlenmesini/kurulumunu engellemek istiyor musunuz( Sieve etkin olsa bile)?
-don't use draft folder	mail	tr	Taslak klasörünü kullanma
-draft	mail	tr	Taslak
-draft folder	mail	tr	Taslak Klasörü
-drafts	mail	tr	Taslaklar
-drafts folder	mail	tr	Taslaklar Klasörü
 edit account	mail	tr	Hesap düzenle
 email address	mail	tr	E-posta adresi
 email notification update failed! you need to set an email address!	mail	tr	E-posta bildirimi güncellemesi başarısız oldu! Bir e-posta adresi belirlemeniz gerekiyor!
@@ -81,7 +73,6 @@ emails in whitelisted domains are not marked as spam	mail	tr	Beyaz listedeki ala
 enable	mail	tr	Etkinleştir
 enabled	mail	tr	Etkin
 encrypt your message with smime certificate	mail	tr	Mesajınızı S/MIME sertifikası ile şifreleyin
-error: could not save message as draft	mail	tr	Hata: Mesaj taslak olarak kaydedilemedi
 event details follow	mail	tr	Etkinlik Detayları Ektedir
 every %1. day	mail	tr	Her %1. günde
 everyone	mail	tr	Herkes
@@ -111,14 +102,11 @@ header	mail	tr	Başlık
 header lines	mail	tr	Başlık satırları
 hide from	mail	tr	Kimden gizle
 high priority	mail	tr	Yüksek öncelik
-how should the available information on identities be displayed	admin	tr	Kimliklerle ilgili mevcut bilgiler nasıl görüntülenmelidir
 html	mail	tr	HTML
 ident name	mail	tr	Kimlik adı
 ident name email	mail	tr	Kimlik adı [E-posta]
 ident name organization email	mail	tr	Kimlik adı Organizasyon [E-posta]
-identity	mail	tr	Kimlik
 identity label	mail	tr	Kimlik etiketi
-identity+signature	mail	tr	Kimlik+İmza
 if different from email address	mail	tr	E-posta adresinden farklıysa
 if mail header	mail	tr	e-posta başlığı ise
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	tr	Konuya tek tıklayarak bir postanın önizlemesini görmek istiyorsanız, bunu etkinleştirin.
@@ -141,7 +129,6 @@ junk folder	mail	tr	Önemsiz klasör
 keep a copy	mail	tr	Bir kopyasını saklayın
 keep a copy of the message in your inbox	mail	tr	Mesajın bir kopyasını gelen kutunuzda saklayın
 kilobytes	mail	tr	kilobayt
-last used signature	mail	tr	En son kullanılan imza
 later	mail	tr	Daha sonra
 learning as ham (not spam) failed because of %1	mail	tr	Ham (spam değil) olarak öğrenme %1 nedeniyle başarısız oldu
 learning as spam failed because of %1	mail	tr	Spam olarak öğrenme %1 nedeniyle başarısız oldu
@@ -168,7 +155,6 @@ mark as deleted	mail	tr	Silindi olarak işaretle
 message learned as spam and moved to spam folder	mail	tr	Mesaj spam olarak öğrenildi ve spam klasörüne taşındı
 modify subject	mail	tr	Konuyu değiştir
 modify subject of this message	mail	tr	Bu mesajın konusunu değiştirin
-move selected mails to archive	mail	tr	Seçilen e-postaları arşive taşı
 move selected to	mail	tr	Seçileni şuraya taşı
 move to	mail	tr	Şuraya git
 move to archive	mail	tr	Arşiv klasörüne taşı
@@ -201,7 +187,6 @@ organization | real name email	mail	tr	Organizasyon | Gerçek ad [E-posta]
 original message	mail	tr	Orijinal mesaj
 outbox	mail	tr	Giden Kutusu
 permission denied	mail	tr	İzin verilmedi
-personal signature	mail	tr	Kişisel imza
 please configure access to an existing individual imap account.	mail	tr	Lütfen mevcut bir bireysel IMAP hesabına erişimi yapılandırın.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	tr	Lütfen S/MIME sertifikanızı Hesabı Düzenle iletişim kutusunda bulunan Şifreleme sekmesinde yapılandırın.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	tr	Sunucunuzun sunucu tarafı filtre kurallarını destekleyip desteklemediğini ve bunları ID: %2 ile aktif hesabınız (%1) için EGroupware'de nasıl etkinleştireceğinizi doğrulamak için lütfen Yöneticinizle iletişime geçin.
@@ -246,7 +231,6 @@ resend after how many days?	mail	tr	Kaç gün sonra tekrar gönderin?
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	tr	Gönderen adresi için sertifika bulunamadığından S/MIME Şifreleme başarısız oldu: %1
 save all attachments to filemanager	mail	tr	Tüm ekleri filemanager'a kaydet
 save as draft	mail	tr	Taslak olarak kaydet
-save as draft and print	mail	tr	Taslak olarak kaydet ve yazdır
 save as infolog	mail	tr	InfoLog olarak kaydet
 save as infolog on send	mail	tr	Gönderdikten sonra InfoLog olarak oluşturmak için düğmeyi işaretleyin
 save as ticket	mail	tr	Gönderdikten sonra bilet olarak oluşturmak için düğmeyi işaretleyin
@@ -262,7 +246,6 @@ select an existing entry in order to append mail content to it	mail	tr	Posta iç
 select an item to read	mail	tr	Okumak için bir öğe seçin
 select mail addresses from addressbook	mail	tr	Adres defterinden e-posta adres(ler)ini seçin
 select or insert email address	mail	tr	E-posta adresini seçin veya ekleyin
-selected	mail	tr	seçildi.
 selected date range (with quicksearch)	mail	tr	Seçilen tarih aralığı (hızlı arama ile)
 send message and move to send folder (if configured)	mail	tr	Mesaj gönderme ve gönderme klasörüne taşıma (yapılandırılmışsa)
 send message pgp encrypted: requires keys from all recipients!	mail	tr	PGP şifreli mesaj gönderme: tüm alıcıların anahtarlarını gerektirir!
@@ -315,10 +298,8 @@ trash folder	mail	tr	Çöp klasörü
 unconditional	mail	tr	Her zaman
 unsubscribe folder	mail	tr	Klasör aboneliğini iptal et
 validate addresses on submit:	mail	tr	Gönderme sırasında adresleri doğrulayın:
-validate selected addresses on submit:	mail	tr	Gönderirken seçilen adresleri doğrula:
 view header lines	mail	tr	Başlık satırlarını görüntüle
 what to do when you delete a message	mail	tr	Bir mesajı sildiğinizde ne yapmalısınız?
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	tr	Hangi e-posta kimliğiyle (imzasıyla) başlamak istersiniz?\n“Kişisel imza” seçeneğinde her zaman ilk kişisel imza kullanılır.
 write	mail	tr	Yaz
 write & delete	mail	tr	yaz & sil
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	tr	Yukarıdaki başlangıç tarihi için $$start$$ ve bitiş tarihi için $$end$$ kullanabilirsiniz.

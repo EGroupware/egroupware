@@ -88,7 +88,10 @@ caching of flags	mail	en	Caching of flags
 can not open imap connection	mail	en	Can not open IMAP connection
 can not resolve the winmail.dat attachment!	mail	en	Can not resolve the winmail.dat attachment!
 canceled deletion due to user interaction	mail	en	canceled deletion due to user interaction
+certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.	mail	en	Certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.
 certificate details	mail	en	Certificate Details
+certificate does not match the stored private key!	mail	en	Certificate does not match the stored private key!
+certificate imported.	mail	en	Certificate imported.
 certificate in text	mail	en	Certificate in text
 certificate info for email %1	mail	en	Certificate info for email %1
 certificate issued by	mail	en	Certificate issued by
@@ -104,9 +107,9 @@ check to save as tracker entry on send	mail	en	Check button to create as ticket 
 checking admin credentials failed	mail	en	Checking admin credentials failed
 choose file	mail	en	Choose file
 common acl	mail	en	Common access rights
+common name and email address are required!	mail	en	Common name and email address are required!
 compose	mail	en	Compose
 compose as new	mail	en	Compose as new
-compress folder	mail	en	Compress folder
 condition	mail	en	Condition
 configuration settings	mail	en	Configuration settings
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	en	Configured values will be set automatically on compose dialog for respected field when composing a new email.
@@ -125,9 +128,15 @@ convert only mail to item (ignore possible attachments)	mail	en	Convert only ema
 copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3.
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
+could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
+could not generate certificate!	mail	en	Could not generate certificate!
+could not generate csr.	mail	en	Could not generate CSR.
+could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
 could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
 create mailboxes (create new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb	mail	en	Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb
 create new account	mail	en	Create new account
+create private key and export csr	mail	en	Create private key and export CSR
+create self-signed certificate	mail	en	Create self-signed certificate
 cross account forward attachment is not allowed!	mail	en	Cross account forward attachment is not allowed!
 current folder	mail	en	current folder
 current subject	mail	en	Current subject
@@ -234,6 +243,7 @@ every %1. day	mail	en	Every %1. day
 everyone	mail	en	Everyone
 examine namespace to retrieve folders in others and shared	mail	en	Examine namespace to retrieve folders in others and shared
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	en	Exclude attachments greater than given size from automatic saving as draft (in MB)
+export csr	mail	en	Export CSR
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra Sent Folders
 failed to delete %1	mail	en	Failed to delete %1
@@ -318,6 +328,8 @@ imap - incoming mail	mail	en	IMAP - incoming email
 imap administration	mail	en	IMAP administration
 imap server	mail	en	IMAP server
 imap timeout	mail	en	IMAP timeout
+import ca-signed certificate for this key	mail	en	Import CA-signed certificate for this key
+import certificate	mail	en	Import certificate
 import message	mail	en	Import message
 import of message %1 failed. could not save message to folder %2 due to: %3	mail	en	Import of message %1 failed. Could not save message to folder %2 due to: %3
 import of message %1 failed. destination folder %2 does not exist.	mail	en	Import of message %1 failed. Destination folder %2 does not exist.
@@ -410,7 +422,9 @@ no folder destination supplied, and no folder to save message or other measure t
 no folders	mail	en	no folders
 no message body supplied	mail	en	No message body supplied
 no plain text part found	mail	en	No plain text part found
+no private key stored to import a certificate for!	mail	en	No private key stored to import a certificate for!
 no recipient address given!	mail	en	No recipient address given!
+no s/mime private key stored for this account.	mail	en	No S/MIME private key stored for this account.
 no send folder set in preferences	mail	en	No Send Folder set in preferences
 no signature	mail	en	no signature
 no sneak preview in list	mail	en	No sneak preview in list
@@ -447,6 +461,7 @@ organization	mail	en	Organisation
 organization | real name email	mail	en	Organisation | Real name [Email]
 original message	mail	en	Original message
 outbox	mail	en	Outbox
+passphrase, if private key is protected	mail	en	Passphrase, if private key is protected
 password protect	mail	en	password protect
 perform expunge and expunge as a part of close	mail	en	Perform EXPUNGE and expunge as a part of CLOSE
 permission denied	mail	en	Permission denied
@@ -471,6 +486,7 @@ preview pane	mail	en	Window layout
 primary profile	mail	en	Primary Profile
 printing	mail	en	Printing
 printview	mail	en	Printview
+private key created, downloading csr...	mail	en	Private key created, downloading CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	en	Processing of file %1 failed. Failed to meet basic restrictions.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	Provide a default vacation text, (used on new vacation messages when there was no message set up previously)
 push notifications	mail	en	Push notifications
@@ -575,6 +591,7 @@ select multiple	mail	en	Select multiple
 select or insert email address	mail	en	Select or insert email address
 selected	mail	en	selected.
 selected date range (with quicksearch)	mail	en	Selected date range (with quicksearch)
+self-signed certificate created.	mail	en	Self-signed certificate created.
 send a reject message:	mail	en	Send a reject message:
 send attachments greater than given size as download link instead (in mb)	mail	en	Send attachments greater than given size as download link instead (in MB)
 send files as	mail	en	Send files as
@@ -710,8 +727,8 @@ when deleting messages	mail	en	When deleting messages
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	en	When displaying messages in a popup, re-use the same popup for all or open a new popup for each message
 when saving messages as item of a different app	mail	en	When saving messages as item of a different EGroupware app.
 when sending messages	mail	en	When sending messages
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which folders - in general - should not be automatically created, if not existing	mail	en	which folders - in general - should NOT be automatically created, if not existing
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	en	which folders (additional to the Sent Folder) should be displayed using the Sent Folder view schema
 which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	en	Which mail identity (signature) do you want to start with. For personal signature we always use the first personal signature.
 which method to use when forwarding a message	mail	en	Which method to use when forwarding a message
 whitelisted mails are not marked as spam	mail	en	Whitelisted emails are not marked as spam
@@ -720,8 +737,8 @@ with message:	mail	en	With message:
 wizard	mail	en	Wizard
 writable sharing requires epl version!	mail	en	Writable sharing requires EPL version!
 write	mail	en	write
-write & delete	mail	en	write & delete
 write (set or clear flags other than \seen and \deleted via store, also set them during append/copy)	mail	en	Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)
+write & delete	mail	en	write & delete
 wrote	mail	en	wrote
 yes, offer copy option	mail	en	Yes, offer copy option
 you can select what info to be displayed on email tag	mail	en	You can select what info to be displayed on email tag.
@@ -734,21 +751,3 @@ you need to select some folders first (by clicking on them)!	mail	en	You need to
 you will loose current message body, unless you save it to your clipboard!	mail	en	You will loose current message body, unless you save it to your clipboard!
 you've got new mail	mail	en	You've got new email
 your remaining quota %1 is too low, you may not be able to send/receive further emails.\n although cleaning up emails in trash or junk folder might help you to get some free space back.\n if that didn't help, please ask your administrator for more quota.	mail	en	Your remaining quota %1 is too low, you may not be able to send/receive further emails.\nAlthough cleaning up emails in trash or junk folder might help you to get some free space back.\nIf that didn't help, please ask your administrator for more quota.
-no s/mime private key stored for this account.	mail	en	No S/MIME private key stored for this account.
-could not generate csr.	mail	en	Could not generate CSR.
-create self-signed certificate	mail	en	Create self-signed certificate
-export csr	mail	en	Export CSR
-import ca-signed certificate for this key	mail	en	Import CA-signed certificate for this key
-passphrase, if private key is protected	mail	en	Passphrase, if private key is protected
-import certificate	mail	en	Import certificate
-create private key and export csr	mail	en	Create private key and export CSR
-private key created, downloading csr...	mail	en	Private key created, downloading CSR...
-self-signed certificate created.	mail	en	Self-signed certificate created.
-certificate imported.	mail	en	Certificate imported.
-could not generate certificate!	mail	en	Could not generate certificate!
-common name and email address are required!	mail	en	Common name and email address are required!
-no private key stored to import a certificate for!	mail	en	No private key stored to import a certificate for!
-could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
-could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
-certificate does not match the stored private key!	mail	en	Certificate does not match the stored private key!
-certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.	mail	en	Certificate chain too large to store (%1 certificates incl. retired ones) - contact an administrator.

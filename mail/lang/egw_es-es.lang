@@ -1,3 +1,7 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	es-es	(*) Por favor considere, reenviar a varias direcciones no funcionará si el número de direcciones excede el límite. Para la mayoría de los servidores de correo, el límite es 4 por defecto; póngase en contacto con el administrador del servidor de correo para obtener más información.
+(leave empty for no quota)	mail	es-es	(Dejar vacío para sin cuota)
+(no subject)	mail	es-es	(sin asunto)
+(not connected)	mail	es-es	(no conectado)
 %1 attachments	mail	es-es	%1 adjuntos
 %1 for all users	mail	es-es	%1 para todos los usuarios
 %1 has been added to blacklisted email addresses	mail	es-es	%1 se ha añadido a las direcciones de correo-e en la lista negra
@@ -7,10 +11,6 @@
 %1 is not writable by you!	mail	es-es	¡NO tiene permiso de escritura en %1!
 %1 mails selected	mail	es-es	%1 correos seleccionados
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	es-es	%1 requiere la extensión Sieve %2, pruebe con %1 o con un número mayor de días.
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	es-es	(*) Por favor considere, reenviar a varias direcciones no funcionará si el número de direcciones excede el límite. Para la mayoría de los servidores de correo, el límite es 4 por defecto; póngase en contacto con el administrador del servidor de correo para obtener más información.
-(leave empty for no quota)	mail	es-es	(Dejar vacío para sin cuota)
-(no subject)	mail	es-es	(sin asunto)
-(not connected)	mail	es-es	(no conectado)
 account editable by user	mail	es-es	cuenta editable por el usuario
 acl rights retrieve failed, seems there are no rights set!	mail	es-es	La recuperación de los derechos de la lista de control de acceso falló, ¡parece que no hay derechos establecidos!
 acl rights retrieved successfully	mail	es-es	Derechos de la lista de control e acceso recuperados correctamente
@@ -102,7 +102,6 @@ choose file	mail	es-es	Elija el archivo
 common acl	mail	es-es	Lista de control de acceso común
 compose	mail	es-es	Redactar
 compose as new	mail	es-es	Redactar como nuevo
-compress folder	mail	es-es	Comprimir carpeta
 condition	mail	es-es	Condición
 configuration settings	mail	es-es	Ajustes de la configuración
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	es-es	Los valores configurados se establecerán automáticamente en el diálogo de composición para el campo respetado al componer un nuevo correo electrónico.
@@ -128,8 +127,6 @@ current folder	mail	es-es	carpeta actual
 current subject	mail	es-es	Asunto actual
 currently:	mail	es-es	Actualmente:
 deactive	mail	es-es	Desactivar
-default identity for compose	mail	es-es	Identidad predeterminada para redactar mensajes
-default signature	mail	es-es	Firma predeterminada
 default sorting order	mail	es-es	Modo de ordenar predeterminado
 default toolbar actions shown in mail's html editor	mail	es-es	Funciones habilitadas en la barra de herramientas del editor HTML al redactar un correo electrónico
 default value for remembering s/mime passphrase in minutes	mail	es-es	Valor predeterminado para recordar la frase de contraseña S/MIME en minutos
@@ -244,10 +241,10 @@ files	mail	es-es	Archivos
 flag / unflag	mail	es-es	Marcar / Desmarcar
 flag or unflag a mail	mail	es-es	Marcar o desmarcar un correo
 flagged	mail	es-es	marcado
+flagged / unflagged	mail	es-es	Marcado / Desmarcado
 flagged %1 messages as %2 in %3	mail	es-es	Marcado %1 mensaje(s) como "%2" en %3.
 flagged %1 messages as flagged in %2	mail	es-es	marcado %1 mensaje(s) como marcado en %2
 flagged %1 messages as unflagged in %2	mail	es-es	marcado %1 mensaje(s) como desmarcado en %2
-flagged / unflagged	mail	es-es	Marcado / Desmarcado
 folder	mail	es-es	Carpeta
 folder %1 %2 failed because of %3!	mail	es-es	¡Carpeta %1 %2 falló debido a 3%!
 folder %1 %2 failed!	mail	es-es	¡Carpeta %1 %2 falló!
@@ -330,7 +327,6 @@ junk folder	mail	es-es	Carpeta de correo basura
 keep a copy	mail	es-es	Conserve una copia
 keep a copy of the message in your inbox	mail	es-es	Guardar una copia del mensaje en la bandeja de entrada
 kilobytes	mail	es-es	kilobytes
-last used signature	mail	es-es	Última firma utilizada
 later	mail	es-es	Más tarde
 learning as ham (not spam) failed because of %1	mail	es-es	El aprendizaje como ham (no spam) falló debido a %1
 learning as spam failed because of %1	mail	es-es	El aprendizaje como spam falló debido a %1
@@ -437,7 +433,6 @@ original message	mail	es-es	Mensaje original
 outbox	mail	es-es	Bandeja de salida
 password protect	mail	es-es	protegido por contraseña
 permission denied	mail	es-es	Permiso denegado
-personal signature	mail	es-es	Firma personal
 please configure access to an existing individual imap account.	mail	es-es	Por favor, configure el acceso a una cuenta individual IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	es-es	Por favor, configure su certificado S/MIME en la pestaña Cifrado del cuadro de diálogo Editar cuenta.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	es-es	Póngase en contacto con su administrador para comprobar si su servidor admite reglas de filtrado en el servidor y cómo habilitarlas en EGroupware para su cuenta activa (%1) con ID:%2.
@@ -556,7 +551,7 @@ select files to upload	mail	es-es	Seleccionar archivos para subir
 select mail addresses from addressbook	mail	es-es	Seleccione la(s) dirección(es) de correo electrónico de la libreta de direcciones
 select multiple	mail	es-es	Seleccionar varios
 select or insert email address	mail	es-es	Seleccionar o insertar la dirección de correo electrónico
-selected	mail	es-es	seleccionado.
+selected	mail	es-es	seleccionado
 selected date range (with quicksearch)	mail	es-es	Rango de fechas seleccionado (con búsqueda rápida)
 send a reject message:	mail	es-es	Enviar un mensaje de rechazo:
 send files as	mail	es-es	Enviar archivos como
@@ -690,9 +685,8 @@ when deleting messages	mail	es-es	Al borrar mensajes
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	es-es	Cuando se muestran mensajes en un pop-up, reutilizar el mismo pop-up para todos o abrir un nuevo pop-up para cada mensaje
 when saving messages as item of a different app	mail	es-es	Al guardar mensajes como elemento de una aplicación diferente
 when sending messages	mail	es-es	Al enviar mensajes
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el equema de la vista de Enviados
 which folders - in general - should not be automatically created, if not existing	mail	es-es	qué carpetas, en general, NO deben crearse automáticamente si no existen
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	es-es	¿Con qué identidad de correo (firma) quieres empezar?\nEn el caso de las firmas personales, siempre utilizamos la primera firma personal.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	es-es	qué carpetas (además de la de Enviados) debe mostrarse usando el equema de la vista de Enviados
 which method to use when forwarding a message	mail	es-es	Cuál método utilizar al reenviar un mensaje
 whitelisted mails are not marked as spam	mail	es-es	Los correos de la lista blanca no están marcados como spam
 whole message	mail	es-es	mensaje completo

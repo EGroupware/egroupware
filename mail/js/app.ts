@@ -2885,22 +2885,6 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_compressFolder
-	 *
-	 * @param {object} action
-	 * @param {object} _senders
-	 *
-	 */
-	mail_compressFolder(action,_senders) {
-		this.egw.message(this.egw.lang('compress folder'), 'success');
-		egw.jsonq('mail.mail_ui.ajax_compressFolder',[_senders[0].id]);
-		//	.sendRequest(true);
-		// since the json reply is using this.egw.refresh, we should not need to call refreshFolderStatus
-		// as the actions thereof are now bound to run after grid refresh
-		//this.mail_refreshFolderStatus();
-	}
-
-	/**
 	 * mail_changeProfile
 	 *
 	 * @param {string} folder the ID of the selected Node -> should be an integer

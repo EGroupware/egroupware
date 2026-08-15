@@ -1,12 +1,12 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt-br	(*) Leve em consideração que o encaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de e-mail, o limite é 4 por padrão. Entre em contato com o administrador do servidor de e-mail para obter mais informações.
+(leave empty for no quota)	mail	pt-br	(Deixe em branco para nenhuma quota)
+(no subject)	mail	pt-br	(sem assunto)
+(not connected)	mail	pt-br	(não conectado)
 %1 attachments	mail	pt-br	%1 anexos
 %1 for all users	mail	pt-br	%1 para todos os usuários
 %1 is not writable by you!	mail	pt-br	% 1 não é gravável por você!
 %1 mails selected	mail	pt-br	% 1 e-mails selecionados
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	pt-br	%1 requer a extensão Sieve %2, talvez seja necessário tentar %1 ou um número maior de dias.
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	pt-br	(*) Leve em consideração que o encaminhamento para vários endereços não funcionará se o número de endereços exceder o limite. Na maioria dos servidores de e-mail, o limite é 4 por padrão. Entre em contato com o administrador do servidor de e-mail para obter mais informações.
-(leave empty for no quota)	mail	pt-br	(Deixe em branco para nenhuma quota)
-(no subject)	mail	pt-br	(sem assunto)
-(not connected)	mail	pt-br	(não conectado)
 account editable by user	mail	pt-br	conta editável pelo usuário
 acl rights retrieve failed, seems there are no rights set!	mail	pt-br	A recuperação de direitos de ACL falhou, parece que não há direitos definidos!
 acl rights retrieved successfully	mail	pt-br	Direitos ACL retrieved com sucesso
@@ -81,7 +81,6 @@ choose file	mail	pt-br	Selecionar arquivo
 common acl	mail	pt-br	ACL comum
 compose	mail	pt-br	Compor
 compose as new	mail	pt-br	Compor como novo
-compress folder	mail	pt-br	Compactar pasta
 condition	mail	pt-br	Condição
 configuration settings	mail	pt-br	As definições de configuração
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	pt-br	Os valores configurados serão definidos automaticamente no diálogo de composição para o respeitado campo ao compor um novo e-mail.
@@ -106,8 +105,6 @@ current folder	mail	pt-br	pasta atual
 current subject	mail	pt-br	Assunto atual
 currently:	mail	pt-br	Atualmente:
 deactive	mail	pt-br	Desativado
-default identity for compose	mail	pt-br	Identidade padrão para redigir mensagens
-default signature	mail	pt-br	Assinatura padrão
 default sorting order	mail	pt-br	Ordem padrão de classificação
 default toolbar actions shown in mail's html editor	mail	pt-br	Funções habilitadas na barra de ferramentas do editor HTML ao compor um e-mail
 default value for remembering s/mime passphrase in minutes	mail	pt-br	Valor padrão para lembrar a senha S/MIME em minutos
@@ -230,7 +227,6 @@ high	mail	pt-br	Alto
 high priority	mail	pt-br	Alta prioridade
 hostname or ip	mail	pt-br	Nome do host ou IP
 how often to check with the server for new mail	mail	pt-br	Com que frequência verificar se há novos e-mails no servidor
-how should the available information on identities be displayed	admin	pt-br	Como as informações disponíveis sobre as identidades devem ser exibidas
 how to forward messages	mail	pt-br	Como encaminhar mensagens
 html	mail	pt-br	HTML
 html mode	mail	pt-br	Modo HTML
@@ -239,7 +235,6 @@ ident name email	mail	pt-br	Nome de identificação [E-mail]
 ident name organization email	mail	pt-br	Nome do usuário Nome do usuário Organização [E-mail]
 identity	mail	pt-br	Identificar
 identity label	mail	pt-br	Etiqueta de identidade
-identity+signature	mail	pt-br	Identidade + Assinatura
 if	mail	pt-br	SE
 if different from email address	mail	pt-br	Se for diferente do endereço de e-mail
 if mail header	mail	pt-br	se cabeçalho de e-mail
@@ -266,7 +261,6 @@ junk folder	mail	pt-br	Pasta de lixo
 keep a copy	mail	pt-br	Manter uma cópia
 keep a copy of the message in your inbox	mail	pt-br	Manter uma cópia da mensagem em sua caixa de entrada
 kilobytes	mail	pt-br	Kbytes
-last used signature	mail	pt-br	Última assinatura usada
 later	mail	pt-br	Depois
 learning as ham (not spam) failed because of %1	mail	pt-br	O aprendizado como ham (não spam) falhou por causa de %1
 learning as spam failed because of %1	mail	pt-br	O aprendizado como spam falhou por causa de %1
@@ -295,7 +289,6 @@ matches regexp	mail	pt-br	coincidentes com a expressão
 message learned as spam and moved to spam folder	mail	pt-br	Mensagem identificada como spam e movida para a pasta de spam
 modify subject	mail	pt-br	Modificar o assunto
 modify subject of this message	mail	pt-br	Modificar o assunto desta mensagem
-move selected mails to archive	mail	pt-br	Mover e-mails selecionados para o arquivo
 move selected to	mail	pt-br	Mover selecionados para
 move to	mail	pt-br	Mover selecionados para
 move to trash	mail	pt-br	Mover para a lixeira
@@ -340,7 +333,6 @@ organization | real name email	mail	pt-br	Organização | Nome real [E-mail]
 original message	mail	pt-br	Mensagem original
 outbox	mail	pt-br	Caixa de saída
 permission denied	mail	pt-br	Permissão negada
-personal signature	mail	pt-br	Assinatura pessoal
 please configure access to an existing individual imap account.	mail	pt-br	Configure o acesso a uma conta IMAP individual existente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	pt-br	Configure seu certificado S/MIME na guia Encryption (Criptografia) localizada na caixa de diálogo Edit Account (Editar conta).
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	pt-br	Entre em contato com o administrador para validar se o servidor suporta regras de filtragem no servidor e como ativá-las no EGroupware para sua conta ativa (%1) com ID: %2.
@@ -393,7 +385,6 @@ required to disable if you use dovecot with private seen flags on shared or user
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	pt-br	A criptografia S/MIME falhou porque nenhum certificado foi encontrado para o endereço do remetente: %1
 save all attachments to filemanager	mail	pt-br	Salvar todos os anexos para o gerenciador de arquivos
 save as draft	mail	pt-br	Salvar como rascunho
-save as draft and print	mail	pt-br	Salve como rascunho e imprima
 save as infolog	mail	pt-br	Salvar como InfoLog
 save as infolog on send	mail	pt-br	Verificar o botão para criar como InfoLog após o envio
 save as tracker on send	mail	pt-br	Marque o botão para criar um tíquete após o envio
@@ -410,7 +401,6 @@ select an item to read	mail	pt-br	Selecione um item para ler
 select file(s) from vfs	mail	pt-br	Selecione o(s) arquivo(s) no Gerenciador de Arquivos do EGroupware
 select mail addresses from addressbook	mail	pt-br	Selecione o(s) endereço(s) de e-mail do catálogo de endereços
 select or insert email address	mail	pt-br	Selecione ou insira um endereço de e-mail
-selected	mail	pt-br	selecionado.
 selected date range (with quicksearch)	mail	pt-br	Intervalo de datas selecionado (com pesquisa rápida)
 send message and move to send folder (if configured)	mail	pt-br	Enviar mensagem e mover para a pasta de envio (se configurado)
 send message pgp encrypted: requires keys from all recipients!	mail	pt-br	Enviar mensagem criptografada por PGP: requer chaves de todos os destinatários!
@@ -476,11 +466,9 @@ vacation notice	mail	pt-br	Notícia de ausência
 vacation notice is active	mail	pt-br	Notícia de ausência está ativa
 vacation start-date must be before the end-date!	mail	pt-br	Data inicial de ausência deve ser ANTERIOR à data final!
 validate addresses on submit:	mail	pt-br	Valide os endereços ao enviá-los:
-validate selected addresses on submit:	mail	pt-br	Validar endereços selecionados ao enviar:
 view header lines	mail	pt-br	Exibir linhas de cabeçalho
 what to do when you delete a message	mail	pt-br	O que fazer quando você exclui uma mensagem.
 when deleting messages	mail	pt-br	Ao remover mensagens
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	pt-br	Com qual identidade de e-mail (assinatura) você deseja começar?\nPara “Assinatura pessoal”, sempre usamos a primeira assinatura pessoal.
 write	mail	pt-br	Gravar
 write & delete	mail	pt-br	escrever e excluir
 wrote	mail	pt-br	escreveu

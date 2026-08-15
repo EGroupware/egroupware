@@ -1,3 +1,6 @@
+(leave empty for no quota)	mail	el	(Αφήστε κενό για μην οριστεί όριο)
+(no subject)	mail	el	(χωρίς θέμα)
+(not connected)	mail	el	(χωρίς σύνδεση)
 %1 attachments	mail	el	%1 συννημένα
 %1 for all users	mail	el	%1 για όλους τους χρήστες
 %1 has been added to blacklisted email addresses	mail	el	%1 προστέθηκε στη μαύρη λίστα (blacklist) των διευθύνσεων ηλεκτρονικού ταχυδρομείου
@@ -7,9 +10,6 @@
 %1 is not writable by you!	mail	el	%1 δεν μπορεί να εγγραφεί από εσάς!
 %1 mails selected	mail	el	%1 μηνύματα έχουν επιλεγεί
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	el	Το %1 απαιτεί επέκταση Sieve %2, ίσως δοκιμάσετε %1 ή μεγαλύτερο αριθμό ημερών.
-(leave empty for no quota)	mail	el	(Αφήστε κενό για μην οριστεί όριο)
-(no subject)	mail	el	(χωρίς θέμα)
-(not connected)	mail	el	(χωρίς σύνδεση)
 account editable by user	mail	el	ο λογαριασμός είναι επεξεργάσιμος από τον χρήστη
 acl rights retrieve failed, seems there are no rights set!	mail	el	Η λήψη των δικαιωμάτων ACL απέτυχε, φαίνεται πως δεν έχουν οριστεί δικαιώματα!
 acl rights retrieved successfully	mail	el	Οι ορισμοί δικαιώματων (ACL) ελήφθησαν επιτυχώς
@@ -101,7 +101,6 @@ choose file	mail	el	Επιλογή αρχείου
 common acl	mail	el	Κοινά δικαιώματα
 compose	mail	el	Σύνταξη
 compose as new	mail	el	Σύνταξη ως νεό μήνυμα
-compress folder	mail	el	Συμπίεση φακέλου
 condition	mail	el	Συνθήκη
 configuration settings	mail	el	Παραμετροποίηση ρυθμίσεων
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	el	Οι προκαθορισμένες τιμές θα οριστούν αυτόματα στο διάλογο σύνταξης για το σεβαστό πεδίο κατά τη σύνταξη ενός νέου email.
@@ -127,8 +126,6 @@ current folder	mail	el	Τρέχον φάκελος
 current subject	mail	el	Τρέχον θέμα
 currently:	mail	el	Αυτή τη στιγμή:
 deactive	mail	el	Απενεργοποίηση
-default identity for compose	mail	el	Προεπιλεγμένη ταυτότητα για σύνταξη μηνύματος
-default signature	mail	el	Προεπιλεγμένη υπογραφή
 default sorting order	mail	el	Προεπιλεγμένη σειρά ταξινόμησης
 default toolbar actions shown in mail's html editor	mail	el	Ενεργοποίηση λειτουργιών στη γραμμή εργαλείων του επεξεργαστή HTML κατά τη σύνταξη ενός email
 default value for remembering s/mime passphrase in minutes	mail	el	Προεπιλεγμένη τιμή σε λεπτά για την απομνημόνευση του κωδικού S/MIME
@@ -238,10 +235,10 @@ files	mail	el	Αρχεία
 flag / unflag	mail	el	Σήμανση / αποσήμανση
 flag or unflag a mail	mail	el	Σήμανση ή αποσήμανση ενός μηνύματος
 flagged	mail	el	με σήμανση
+flagged / unflagged	mail	el	Με σήμανση / Χωρίς σήμανση
 flagged %1 messages as %2 in %3	mail	el	Τέθηκε η σήμανση "%2" σε %1 μήνυμα(τα) στο %3.
 flagged %1 messages as flagged in %2	mail	el	Σημάνθηκαν %1 μήνυμα(τα) στο %2
 flagged %1 messages as unflagged in %2	mail	el	Αφαιρέθηκε ή σημάνση από %1 μήνυμα(τα) στο %2
-flagged / unflagged	mail	el	Με σήμανση / Χωρίς σήμανση
 folder	mail	el	Φάκελος
 folder %1 %2 failed because of %3!	mail	el	Αποτυχία φακέλου %1 %2 εξαιτίας %3!
 folder %1 %2 failed!	mail	el	Αποτυχία φακέλου %1 %2!
@@ -321,7 +318,6 @@ junk folder	mail	el	Φάκελος Junk
 keep a copy	mail	el	Διατήρηση αντιγράφου
 keep a copy of the message in your inbox	mail	el	κρατήστε ένα αντίγραφο του μηνύματος στα εισερχόμενα
 kilobytes	mail	el	kilobytes
-last used signature	mail	el	Τελευταία χρησιμοποιημένη υπογραφή
 later	mail	el	Αργότερα
 learning as ham (not spam) failed because of %1	mail	el	Η εκμάθηση ως ham (όχι spam) απέτυχε λόγω %1
 learning as spam failed because of %1	mail	el	Η εκμάθηση ως spam απέτυχε λόγω %1
@@ -420,7 +416,6 @@ original message	mail	el	Αρχικό μήνυμα
 outbox	mail	el	Εξερχόμενα
 password protect	mail	el	προστασία με συνθηματικό
 permission denied	mail	el	Άδεια απορρίπτεται
-personal signature	mail	el	Προσωπική υπογραφή
 please configure access to an existing individual imap account.	mail	el	Παρακαλούμε ρυθμίστε την πρόσβαση σε έναν υπάρχοντα μεμονωμένο λογαριασμό IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	el	Παρακαλούμε ρυθμίστε το πιστοποιητικό S/MIME στην καρτέλα Κρυπτογράφηση που βρίσκεται στο παράθυρο διαλόγου Επεξεργασία λογαριασμού.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	el	Παρακαλούμε επικοινωνήστε με τον διαχειριστή σας για να επιβεβαιώσετε αν ο διακομιστής σας υποστηρίζει κανόνες φίλτρων σε επίπεδο διακομιστή και πώς να τους ενεργοποιήσετε στο EGroupware για τον ενεργό λογαριασμό σας (%1) με ID: %2.
@@ -527,7 +522,7 @@ select files to upload	mail	el	Επιλογή αρχείων για αναφόρ
 select mail addresses from addressbook	mail	el	Επιλέξτε διεύθυνση(ες) ηλεκτρονικού ταχυδρομείου από το βιβλίο διευθύνσεων
 select multiple	mail	el	Επιλογή πολλαπλών
 select or insert email address	mail	el	Επιλογή ή εισαγωγή διεύθυνσης ηλεκτρονικού ταχυδρομείου
-selected	mail	el	επιλεγμένο.
+selected	mail	el	επιλεγμένο
 selected date range (with quicksearch)	mail	el	Επιλεγμένο διάστημα ημερομηνιών (με γρήγορη αναζήτηση)
 send a reject message:	mail	el	Αποστολή ενός μηνύματος απόρριψης:
 send files as	mail	el	Αποστολή αρχείου ως
@@ -632,7 +627,6 @@ what to do when you delete a message	mail	el	Τι να συμβαίνει ότα
 what to do when you send a message	mail	el	Τι να συμβαίνει όταν στέλνετε ένα μήνυμα.
 when deleting messages	mail	el	όταν γίνεται διαγραφή μηνυμάτων
 when sending messages	mail	el	όταν στέλνονται μηνύματα
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	el	Με ποια ταυτότητα αλληλογραφίας (υπογραφή) θέλετε να ξεκινήσετε.\nΓια την «Προσωπική υπογραφή» χρησιμοποιούμε πάντα την πρώτη προσωπική υπογραφή.
 which method to use when forwarding a message	mail	el	Ποια μέθοδο να χρησιμοποιείται κατά την προώθηση μηνυμάτων
 whole message	mail	el	ολόκληρο μήνυμα
 with message:	mail	el	Με μήνυμα:

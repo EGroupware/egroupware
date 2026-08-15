@@ -94,11 +94,19 @@ either can be picked up first.
   `Mailbox/query`, `Email/query`, `Email/get`, `Email/set`, `Email/import`), so the local-shim side
   of this is a real implementation gap, not just a client-side change - mirrors the amount of new
   server-side shim work the original row-listing/body-rendering phases each needed.
-- **Not yet clear if these move**: `ajax_compressFolder`, `ajax_emptySpam`, `ajax_emptyTrash` - these
-  are closer to the existing bulk-message-action JMAP paths (`deleteAllMatching()`/`purgeFolder()`,
-  already JMAP-native per [[mail-jmap-modernization]]) than to folder-tree structure - likely already
-  mostly covered or a small extension of that existing code, needs checking before assuming they're
-  in scope here.
+- **Resolved (2026-08-15)**: `ajax_emptySpam`/`ajax_emptyTrash` are already covered - `app.ts`'s
+  `mail_emptySpam()`/`mail_emptyTrash()` already try a JMAP fast path first (`MailJmap.purgeFolder()`,
+  paginated `Email/set` destroy) and only fall back to the classic `ajax_*` methods on
+  failure/inapplicability, same interception shape [[mail-jmap-modernization]] already uses for
+  move/delete/flag. So these two are permanent classic-fallbacks, not folder-tree-structure code -
+  **not blocked on this migration at all**, and could be decoupled into
+  [[mail-bo-decoupling]]-style handler classes independently, any time.
+  `ajax_compressFolder()` (manual "compress this folder" = mark-\Deleted-then-EXPUNGE) has **no**
+  JMAP fast path anywhere client-side, and probably never can - JMAP's `Email/set` destroy is
+  immediate/one-phase, so IMAP's two-phase delete model has no JMAP equivalent to translate to. Ralf
+  decided (2026-08-15) to remove this feature outright rather than migrate or keep it classic: it's
+  "an old IMAP-inspired workflow", no known users, everyone works with a Trash folder now. See
+  removal tracked separately (not part of this migration).
 
 ## What stays server-side
 
@@ -123,19 +131,37 @@ either can be picked up first.
 - Consider debouncing the preference write - expanding several nodes in quick succession shouldn't
   fire a preference write per click.
 
-## Open questions / needs investigation before implementation
+## Open questions - resolved (2026-08-15)
 
-- Real JMAP (Stalwart) `Mailbox/set` support for create/rename/delete/subscribe - assumed available
-  per RFC 8621, not yet live-verified against Stalwart specifically.
-- `JmapShim`'s `Mailbox/get`/`Mailbox/set` need to be implemented from scratch for the local-shim
-  path - scope that against Horde's `Horde_Imap_Client_Socket` mailbox primitives
-  (`createMailbox()`/`renameMailbox()`/`deleteMailbox()`/`subscribeMailbox()`, already used by
-  `Api\Mail`'s classic folder methods) the same way `Email/set` already wraps the message-level ones.
-- Exact fate of `ajax_compressFolder`/`ajax_emptySpam`/`ajax_emptyTrash` - check against existing
-  JMAP-native bulk-delete/purge paths before assuming new work is needed.
-- Where `mail_tree.inc.php` ends up - likely deleted or drastically shrunk once tree structure is
-  client-side; anything of its logic still needed (e.g. `sortByMailbox`-style folder ordering) should
-  land in the client-side TS, not stay as unused PHP.
+- **Real JMAP (Stalwart) `Mailbox/set` support** - confirmed via Stalwart's own docs/source
+  (`crates/jmap/src/mailbox/set.rs`): implemented, including quota enforcement (`object_quota`) and
+  ACL validation for shared mailboxes. Nothing in this codebase calls it yet, but the server-side
+  capability itself is real, not just assumed-per-RFC.
+- **`JmapShim`'s actual gap is narrower than "Mailbox namespace"**: `Mailbox/get` is already
+  implemented and in production use (`Api\Mail\Jmap`'s folder id↔path resolution calls it today),
+  and `Mailbox/query` already exists (`JmapShim::mailboxQuery()`). Only `Mailbox/set` (create/
+  rename/delete/subscribe) is a real gap - still needs scoping against Horde's
+  `Horde_Imap_Client_Socket` mailbox primitives (`createMailbox()`/`renameMailbox()`/
+  `deleteMailbox()`/`subscribeMailbox()`) the same way `Email/set` already wraps the message-level
+  ones, but it's one method family, not the whole namespace.
+- **`ajax_compressFolder`/`ajax_emptySpam`/`ajax_emptyTrash` fate** - see the corrected note in
+  "Scope: what moves client-side" above: `emptySpam`/`emptyTrash` are already properly covered
+  (client-side JMAP fast path + classic fallback, not blocked here); `compressFolder` has no JMAP
+  path and is being removed outright as an unwanted legacy feature, not migrated.
+- **Where `mail_tree.inc.php` ends up** - read in full (610 lines); splits cleanly:
+  - Deleted entirely, replaced by client-side JMAP querying: `getTree()`, `setOutStructure()`,
+    `treeLeafNoConnectionArray()`, `nodeHasChildren()`, `getNodeLevel()`, `isAccountNode()` - all just
+    walk classic `getFolderArrays()`/`_getNameSpaces()` IMAP data into Et2Tree node shape.
+  - Survives, needs shrinking: `getAccountsRootNode()` - builds the account/profile root nodes (the
+    tree "base" that already stays server-side per "What stays server-side" below), but currently
+    also self-nests via `setOutStructure()`; needs a smaller return contract once children are
+    attached purely client-side.
+  - Pure formatting, unrelated to tree structure: `getIdentityName()` - no IMAP calls at all, just
+    formats an account's display label from the `identLabel` preference bitmask. Candidate to move to
+    `Mail\Account` independently of this migration, not part of "delete on migration".
+  - Needs re-scoping: `getInitialIndexTree()` currently glues account-roots + first-level branches
+    together for sidebox init; shrinks to just the surviving account-root call once branch-fetching
+    moves client-side.
 
 ## Related
 

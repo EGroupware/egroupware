@@ -1,3 +1,7 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	km	(*) សូមពិចារណា ការបញ្ជូនបន្តទៅកាន់អាសយដ្ឋានច្រើននឹងមិនដំណើរការទេ ប្រសិនបើចំនួនអាសយដ្ឋានលើសពីដែនកំណត់។ សម្រាប់ម៉ាស៊ីនមេសំបុត្រភាគច្រើនដែនកំណត់គឺ 4 តាមលំនាំដើម សូមទាក់ទងអ្នកគ្រប់គ្រងម៉ាស៊ីនមេរបស់អ្នកសម្រាប់ព័ត៌មានបន្ថែម។
+(leave empty for no quota)	mail	km	(ទុកឲ្យទទេ ដោយគ្មានកូតា)
+(no subject)	mail	km	(គ្មាន​ប្រធាន)
+(not connected)	mail	km	(មិនបាន​តភ្ជាប់)
 %1 attachments	mail	km	ឯកសារភ្ជាប់ %1
 %1 has been added to blacklisted email addresses	mail	km	%1 ត្រូវ​បាន​បន្ថែម​ទៅ​អាសយដ្ឋាន​អុីមែល​ក្នុង​បញ្ជី​ខ្មៅ
 %1 has been added to whiltelisted email addresses	mail	km	%1 ត្រូវ​បាន​បន្ថែម​ទៅ​អាសយដ្ឋាន​អុីមែល​ដែល​ត្រូវ​បាន​គេ​ដាក់​ក្នុង​បញ្ជី
@@ -5,10 +9,6 @@
 %1 has been removed from whiltelisted email addresses	mail	km	%1 ត្រូវ​បាន​យក​ចេញ​ពី​អាសយដ្ឋាន​អុីមែល​ដែល​ត្រូវ​បាន​គេ​រាយ​បញ្ជី
 %1 is not writable by you!	mail	km	%1 មិនអាចសរសេរដោយអ្នកបានទេ!
 %1 mails selected	mail	km	%1 បានជ្រើសរើសសំបុត្រ
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	km	(*) សូមពិចារណា ការបញ្ជូនបន្តទៅកាន់អាសយដ្ឋានច្រើននឹងមិនដំណើរការទេ ប្រសិនបើចំនួនអាសយដ្ឋានលើសពីដែនកំណត់។ សម្រាប់ម៉ាស៊ីនមេសំបុត្រភាគច្រើនដែនកំណត់គឺ 4 តាមលំនាំដើម សូមទាក់ទងអ្នកគ្រប់គ្រងម៉ាស៊ីនមេរបស់អ្នកសម្រាប់ព័ត៌មានបន្ថែម។
-(leave empty for no quota)	mail	km	(ទុកឲ្យទទេ ដោយគ្មានកូតា)
-(no subject)	mail	km	(គ្មាន​ប្រធាន)
-(not connected)	mail	km	(មិនបាន​តភ្ជាប់)
 account editable by user	mail	km	គណនីដែលអាចកែសម្រួលបានដោយអ្នកប្រើប្រាស់
 acl rights retrieve failed, seems there are no rights set!	mail	km	ការទាញយកសិទ្ធិ ACL បានបរាជ័យ ហាក់ដូចជាមិនមានសិទ្ធិកំណត់ទេ!
 acl rights retrieved successfully	mail	km	ទទួលបានសិទ្ធិ ACL ដោយជោគជ័យ
@@ -94,7 +94,6 @@ choose file	mail	km	ជ្រើសរើស​ឯកសារ
 common acl	mail	km	ACL ទូទៅ
 compose	mail	km	តែង
 compose as new	mail	km	តែងដូចថ្មី។
-compress folder	mail	km	បង្ហាប់ថត
 condition	mail	km	លក្ខខណ្ឌ
 configuration settings	mail	km	ការកំណត់រចនាសម្ព័ន្ធ
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	km	តម្លៃដែលបានកំណត់រចនាសម្ព័ន្ធនឹងត្រូវបានកំណត់ដោយស្វ័យប្រវត្តិនៅលើប្រអប់សរសេរសម្រាប់វាលដែលគោរពនៅពេលសរសេរអុីមែលថ្មី។
@@ -167,6 +166,7 @@ does not contain	mail	km	មិនមាន
 does not exist on imap server.	mail	km	មិនមាននៅលើម៉ាស៊ីនមេ IMAP ទេ។
 does not match	mail	km	មិនត្រូវគ្នា។
 does not match regexp	mail	km	មិនត្រូវគ្នានឹង regexp
+don't use draft folder	mail	km	កុំប្រើថតព្រាង
 don't use sent	mail	km	កុំប្រើ Sent
 don't use template folder	mail	km	កុំប្រើថតពុម្ព
 don't use trash	mail	km	កុំប្រើធុងសំរាម
@@ -228,10 +228,10 @@ files	mail	km	ឯកសារ
 flag / unflag	mail	km	Flag / Unflag
 flag or unflag a mail	mail	km	Flag ឬUnflagសំបុត្រ
 flagged	mail	km	flagged
+flagged / unflagged	mail	km	Flagged / Unflagged
 flagged %1 messages as %2 in %3	mail	km	បានដាក់ទង់សារ %1 ជា%2 ក្នុង % 3
 flagged %1 messages as flagged in %2	mail	km	បាន​ដាក់​ទង់​សារ %1 ដែល​បាន​ដាក់​ទង់​ក្នុង %2
 flagged %1 messages as unflagged in %2	mail	km	បាន​ដាក់​ទង់ %1 សារ​ថា​មិន​បាន​ដាក់​ទង់​នៅ​ក្នុង %2
-flagged / unflagged	mail	km	Flagged / Unflagged
 folder	mail	km	ថតឯកសារ
 folder %1 %2 failed because of %3!	mail	km	ថត %1 %2 បរាជ័យ ដោយសារ % 3!
 folder %1 %2 failed!	mail	km	ថត%1%2 បានបរាជ័យ!
@@ -647,8 +647,8 @@ when deleting messages	mail	km	នៅពេលលុបសារ
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	km	នៅពេលបង្ហាញសារនៅក្នុងផ្ទាំងលេចឡើង សូមប្រើការលេចឡើងដដែលសម្រាប់ទាំងអស់ ឬបើកផ្ទាំងលេចឡើងថ្មីសម្រាប់សារនីមួយៗ
 when saving messages as item of a different app	mail	km	នៅពេលរក្សាទុកសារជាធាតុនៃកម្មវិធីផ្សេង
 when sending messages	mail	km	នៅពេលផ្ញើសារ
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	km	ថតមួយណា (បន្ថែមទៅថតដែលបានផ្ញើ) គួរតែត្រូវបានបង្ហាញដោយប្រើ Sent Folder View Schema
 which folders - in general - should not be automatically created, if not existing	mail	km	ថតណាមួយ - ជាទូទៅ - មិនគួរត្រូវបានបង្កើតដោយស្វ័យប្រវត្តិទេ ប្រសិនបើមិនមាន
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	km	ថតមួយណា (បន្ថែមទៅថតដែលបានផ្ញើ) គួរតែត្រូវបានបង្ហាញដោយប្រើ Sent Folder View Schema
 which method to use when forwarding a message	mail	km	តើវិធីណាដែលត្រូវប្រើនៅពេលបញ្ជូនបន្តសារ
 whitelisted mails are not marked as spam	mail	km	សំបុត្រក្នុងបញ្ជីសមិនត្រូវបានសម្គាល់ថាជាសារឥតបានការទេ។
 whole message	mail	km	សារទាំងមូល

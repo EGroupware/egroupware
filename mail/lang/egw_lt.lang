@@ -1,9 +1,9 @@
+(leave empty for no quota)	mail	lt	(palikite tuščią, jei kvotos nėra)
 %1 attachments	mail	lt	%1 priedai
 %1 for all users	mail	lt	%1 visiems naudotojams
 %1 is not writable by you!	mail	lt	%1 NEGALIMA rašyti!
 %1 mails selected	mail	lt	pasirinktas %1 el. laiškas
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	lt	%1 reikia "Sieve" plėtinio %2, galbūt pabandykite %1 arba didesnį dienų skaičių.
-(leave empty for no quota)	mail	lt	(palikite tuščią, jei kvotos nėra)
 acl rights retrieve failed, seems there are no rights set!	mail	lt	ACL teisių atkūrimas nepavyko, atrodo, kad nėra nustatytų teisių!
 activating by date requires a start- and end-date!	mail	lt	Aktyvinant pagal datą reikia nurodyti pradžios ir pabaigos datą!
 add all my aliases	mail	lt	Pridėti visus mano slapyvardžius
@@ -17,7 +17,6 @@ after reply, visible during compose	mail	lt	Po atsakymo, matomas sudarymo metu
 aliases+forwards	mail	lt	Slapyvardžiai + persiuntimas
 all my email addresses	mail	lt	visi mano el. pašto adresai
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	lt	Taip pat bus ištrinti visi pakatalogiai, o visos žinutės iš visų paveiktų aplankų bus prarastos.
-allow users to create further identities	mail	lt	Leisti vartotojams kurti naujus tapatybės profilius
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	lt	Leidžia naudotojui skaityti, rašyti ir kurti aplankus ir laiškus, rašyti į juos, pridėti prie jų pranešimus ir juos ištrinti
 always show notifiction	mail	lt	Visada rodyti pranešimą
 answered	mail	lt	Atsakyta
@@ -51,8 +50,6 @@ convert only mail to item (ignore possible attachments)	mail	lt	Konvertuoti tik 
 copied %1 message(s) from %2 to %3	mail	lt	Nukopijuotas %1 pranešimas (-ai) iš %2 į %3.
 cross account forward attachment is not allowed!	mail	lt	Kryžminės paskyros pirmyn priedas neleidžiamas!
 current subject	mail	lt	Dabartinė tema
-default identity for compose	mail	lt	Numatytasis tapatybės profilis laiškams rašyti
-default signature	mail	lt	Numatytasis parašas
 default toolbar actions shown in mail's html editor	mail	lt	HTML redaktoriaus įrankių juostoje įjungtos funkcijos kuriant el. laišką
 default value for remembering s/mime passphrase in minutes	mail	lt	Numatytoji S/MIME slaptažodžio įsiminimo reikšmė minutėmis
 defines what to show as contact label for added contact into to/cc/bcc when composing an email. default is firstname lastname and empty means include eveything available.	mail	lt	Nustato, ką rodyti kaip pridėto kontakto etiketę į To/Copy/Blind copy (Į / Kopijuoti / Akloji kopija) kuriant el. laišką. Numatytoji reikšmė yra vardas pavardė pavardė, o tuščia reiškia, kad įtraukiama viskas, kas įmanoma.
@@ -64,11 +61,6 @@ do you really want to toggle label %1 for all messages in the current view?	mail
 do you want to be asked for confirmation before attaching selected messages to new mail?	mail	lt	Ar norite, kad prieš prisegant pasirinktus pranešimus prie naujo el. pašto būtų prašoma patvirtinimo?
 do you want to be asked for confirmation before moving selected messages to another folder?	mail	lt	Ar norite, kad prieš perkeliant pasirinktus laiškus į kitą aplanką būtų prašoma patvirtinimo?
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	lt	Ar norite neleisti redaguoti ir (arba) nustatyti pranešimo el. paštu kitiems el. pašto adresams, jei gaunami el. laiškai(, net jei „Sieve“ įjungtas)?
-don't use draft folder	mail	lt	Nenaudoti juodraščių aplanko
-draft	mail	lt	Juodraštis
-draft folder	mail	lt	Juodraščių aplankas
-drafts	mail	lt	Juodraščiai
-drafts folder	mail	lt	Juodraščių aplankas
 email address	mail	lt	El. pašto adresas
 email notification update failed! you need to set an email address!	mail	lt	Pranešimų el. paštu atnaujinimas nepavyko! Reikia nustatyti el. pašto adresą!
 emailaddress	admin	lt	El. pašto adresas
@@ -77,7 +69,6 @@ emails in whitelisted domains are not marked as spam	mail	lt	Į baltąjį sąra�
 enable	mail	lt	Įjungti
 enabled	mail	lt	Įjungta
 encrypt your message with smime certificate	mail	lt	Užšifruokite pranešimą naudodami S/MIME sertifikatą
-error: could not save message as draft	mail	lt	Klaida: Nepavyko išsaugoti pranešimo kaip juodraščio
 everyone	mail	lt	Visi
 examine namespace to retrieve folders in others and shared	mail	lt	Išnagrinėti vardų sritį, kad gautumėte aplankus kituose ir bendrintuose
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	lt	Neįtraukti priedų, kurių dydis didesnis nei nurodytas, į automatinį išsaugojimą kaip juodraštį (MB)
@@ -101,14 +92,11 @@ header	mail	lt	Antraštė
 header lines	mail	lt	Antraštės eilutės
 hide from	mail	lt	Paslėpti Nuo
 high priority	mail	lt	Aukštas prioritetas
-how should the available information on identities be displayed	admin	lt	Kaip turėtų būti rodomi turimi duomenys apie tapatybės profilius
 html	mail	lt	HTML
 ident name	mail	lt	Identifikatoriaus pavadinimas
 ident name email	mail	lt	Identifikatoriaus pavadinimas [El. paštas]
 ident name organization email	mail	lt	Identifikatoriaus pavadinimas Organizacija [El. paštas]
-identity	mail	lt	Tapatybės profilis
 identity label	mail	lt	Tapatybės ženklas
-identity+signature	mail	lt	Tapatybės profilis + parašas
 if different from email address	mail	lt	Jei skiriasi nuo el. pašto adreso
 if mail header	mail	lt	jei e-pašto antraštė
 if you want to see a preview of a mail by single clicking onto the subject, enable this.	mail	lt	Jei norite matyti laiško peržiūrą vienu spustelėjimu ant temos, įjunkite šią funkciją.
@@ -133,7 +121,6 @@ junk folder	mail	lt	Šiukšlių aplankas
 keep a copy	mail	lt	Pasilikti kopiją
 keep a copy of the message in your inbox	mail	lt	Laikykite žinutės kopiją gautųjų laiškų dėžutėje
 kilobytes	mail	lt	kilobaitai
-last used signature	mail	lt	Paskutinis naudotas parašas
 later	mail	lt	Vėliau
 learning as ham (not spam) failed because of %1	mail	lt	Mokytis kaip šlamšto (ne šlamšto) nepavyko dėl %1
 learning as spam failed because of %1	mail	lt	Mokymasis kaip šlamštas nepavyko dėl %1
@@ -160,7 +147,6 @@ mark as deleted	mail	lt	Pažymėti kaip ištrintus
 message learned as spam and moved to spam folder	mail	lt	Pranešimas išaiškintas kaip šlamštas ir perkeltas į šlamšto aplanką
 modify subject	mail	lt	Pakeisti temą
 modify subject of this message	mail	lt	Pakeiskite šio pranešimo temą
-move selected mails to archive	mail	lt	Perkelti pasirinktus laiškus į archyvą
 move selected to	mail	lt	Pasirinktas perkėlimas į
 move to	mail	lt	Perkelti į
 moved %1 message(s) from %2 to %3	mail	lt	Perkeltas %1 pranešimas (-ai) iš %2 į %3.
@@ -192,7 +178,6 @@ organisation	admin	lt	Organizacija
 organization | real name email	mail	lt	Organizacija | Tikrasis vardas [El. paštas]
 original message	mail	lt	Originali žinutė
 outbox	mail	lt	Gautų laiškų dėžutė
-personal signature	mail	lt	Asmeninis parašas
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lt	Sukonfigūruokite S/MIME sertifikatą paskyros redagavimo dialogo lange esančiame skirtuke Šifravimas.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lt	Susisiekite su administratoriumi, kad patikrintumėte, ar jūsų serveris palaiko serverio filtravimo taisykles ir kaip jas įjungti "EGroupware" aktyviajai paskyrai (%1) su ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lt	Susisiekite su administratoriumi, kad patvirtintumėte, ar jūsų serveris palaiko serverio atostogų pranešimus ir kaip juos įjungti "EGroupware" aktyvioje paskyroje (%1) su ID: %2.
@@ -228,8 +213,6 @@ required pear class mail/mimedecode.php not found.	mail	lt	Reikalinga PEAR klas�
 required to disable if you use dovecot with private seen flags on shared or user folder!	mail	lt	Būtina išjungti, jei naudojate Dovecot su private seen vėliavėlėmis bendrajame arba naudotojo aplanke!
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	lt	S/MIME šifravimas nepavyko, nes siuntėjo adresui nerasta sertifikato: %1
 save all attachments to filemanager	mail	lt	Įrašyti visus priedus į failų tvarkyklę
-save as draft	mail	lt	Išsaugoti kaip juodraštį
-save as draft and print	mail	lt	Išsaugoti kaip juodraštį ir spausdinti
 save as infolog on send	mail	lt	Pažymėti mygtuką, kad po išsiuntimo būtų sukurtas kaip InfoLog
 save as tracker on send	mail	lt	Pažymėkite mygtuką, kad po išsiuntimo būtų sukurtas kaip bilietas
 save the drafted message as eml file into vfs	mail	lt	Išsaugokite parengtą pranešimą kaip eml failą failų tvarkyklėje
@@ -242,7 +225,6 @@ select an existing entry in order to append mail content to it	mail	lt	Pasirinki
 select an item to read	mail	lt	Pasirinkite elementą, kurį norite perskaityti
 select mail addresses from addressbook	mail	lt	Pasirinkite el. pašto adresą (-us) iš adresų knygos
 select or insert email address	mail	lt	Pasirinkite arba įterpkite el. pašto adresą
-selected	mail	lt	pasirinkta.
 selected date range (with quicksearch)	mail	lt	Pasirinktas datos intervalas (naudojant greitąją paiešką)
 send message and move to send folder (if configured)	mail	lt	Siųsti žinutę ir perkelti į siuntimo aplanką (jei sukonfigūruota)
 send message pgp encrypted: requires keys from all recipients!	mail	lt	Siųsti žinutę užšifruotą PGP: reikia visų gavėjų raktų!
@@ -286,10 +268,8 @@ trash	mail	lt	Šiukšliadėžė
 trash folder	mail	lt	Aplankas šiukšliadėžė
 unconditional	mail	lt	Visada
 validate addresses on submit:	mail	lt	Patvirtinkite adresus pateikdami:
-validate selected addresses on submit:	mail	lt	Patvirtinti pasirinktus adresus pateikiant:
 view header lines	mail	lt	Peržiūrėti antraštės eilutes
 what to do when you delete a message	mail	lt	Ką daryti ištrynus pranešimą.
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	lt	Kokiu tapatybės profiliu (parašu) norite pradėti?\nPasirinkus „Asmeninis parašas“, visada naudojamas pirmasis asmeninis parašas.
 write & delete	mail	lt	rašyti ir ištrinti
 you can select what info to be displayed on email tag	mail	lt	Galite pasirinkti, kokia informacija bus rodoma el. pašto žymoje.
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	lt	Pirmiau nurodytai pradžios datai galite naudoti $$start$$, o pabaigos datai - $$end$$.

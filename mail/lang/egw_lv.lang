@@ -1,10 +1,10 @@
+(leave empty for no quota)	mail	lv	(atstājiet tukšu, ja kvotas nav)
+(no subject)	mail	lv	(nav temata)
 %1 attachments	mail	lv	%1 pielikumi
 %1 for all users	mail	lv	%1 visiem lietotājiem
 %1 is not writable by you!	mail	lv	%1 jums NAV rakstāms!
 %1 mails selected	mail	lv	atlasīti %1 e-pasti
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	lv	%1 nepieciešams Sieve paplašinājums %2, varbūt izmēģiniet %1 vai lielāku dienu skaitu.
-(leave empty for no quota)	mail	lv	(atstājiet tukšu, ja kvotas nav)
-(no subject)	mail	lv	(nav temata)
 acl rights retrieve failed, seems there are no rights set!	mail	lv	ACL tiesību atgūšana neizdevās, šķiet, nav iestatītas tiesības!
 activating by date requires a start- and end-date!	mail	lv	Aktivizēšana pēc datuma prasa sākuma un beigu datumu!
 add all my aliases	mail	lv	Pievienot visus manus pseidonīmus
@@ -19,7 +19,6 @@ after reply, visible during compose	mail	lv	Pēc atbildes, redzams sastādīšan
 aliases+forwards	mail	lv	Aliases+Forwards
 all my email addresses	mail	lv	visas manas e-pasta adreses
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	lv	Tiks dzēstas arī visas apakšmapes, un visi ziņojumi visās attiecīgajās mapēs tiks zaudēti
-allow users to create further identities	mail	lv	Ļaut lietotājiem izveidot papildu identitātes
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	lv	Ļauj lietotājam lasīt, rakstīt un veidot mapes un e-pastus, ievietot tajās ziņojumus, pievienot tiem ziņojumus un dzēst ziņojumus
 always show html emails	mail	lv	Vienmēr rādīt HTML e-pasta vēstules
 always show notifiction	mail	lv	Vienmēr rādīt paziņojumu
@@ -43,7 +42,6 @@ changing subject failed because of %1	mail	lv	Tēmas maiņa neizdevās, jo %1
 changing subject failed folder %1 does not exist	mail	lv	Mainīt tēmu neizdevās mape %1 neeksistē
 checking admin credentials failed	mail	lv	Pārbaudīt administratora akreditācijas datus neizdevās
 compose	mail	lv	Rakstīt jaunu
-compress folder	mail	lv	Kompresēt mapi
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	lv	Konfigurētās vērtības tiks automātiski iestatītas sastādīšanas dialoglodziņā respektējamajam laukam, sastādot jaunu e-pastu.
 contact label	mail	lv	Kontakta etiķete
 contains	mail	lv	satur
@@ -55,8 +53,6 @@ copied %1 message(s) from %2 to %3	mail	lv	Nokopēts %1 ziņojums(-i) no %2 uz %
 copy to	mail	lv	Kopēt Uz:
 cross account forward attachment is not allowed!	mail	lv	Nav atļauts pievienot starpkonta priekšējo pielikumu!
 current subject	mail	lv	Pašreizējais temats
-default identity for compose	mail	lv	Noklusējuma identitāte vēstules sastādīšanai
-default signature	mail	lv	Noklusējuma paraksts
 default sorting order	mail	lv	Noklusētā kārtošanas secība
 default toolbar actions shown in mail's html editor	mail	lv	HTML redaktora rīkjoslā iespējotās funkcijas, veidojot e-pasta vēstuli
 default value for remembering s/mime passphrase in minutes	mail	lv	S/MIME paroles frāzes atcerēšanās noklusējuma vērtība minūtēs
@@ -76,13 +72,8 @@ do you want to be asked for confirmation before moving selected messages to anot
 do you want to prevent the editing/setup of notification by mail to other emailadresses if emails arrive (, even if sieve is enabled)?	mail	lv	Vai jūs vēlaties novērst rediģēšanu/iestatīšanu, ja e-pastā tiek saņemti paziņojumi uz citām e-pasta adresēm, ja e-pasts pienāk(, pat ja ir iespējota Sieve)?
 does not contain	mail	lv	nesatur
 does not match	mail	lv	neatbilst
-don't use draft folder	mail	lv	Nelietot izstrādājumu mapi
 don't use sent	mail	lv	Nelieto nosūtīts
 don't use trash	mail	lv	Nelieto atkritui
-draft	mail	lv	Izstrādājums
-draft folder	mail	lv	Izstrādājumu mape
-drafts	mail	lv	Izstrādājumi
-drafts folder	mail	lv	Izstrādājumu mape
 edit account	mail	lv	Rediģēt kontu
 email address	mail	lv	E-pasta adrese
 email notification update failed! you need to set an email address!	mail	lv	E-pasta paziņojumu atjaunināšana neizdevās! Jums ir jāiestata e-pasta adrese!
@@ -93,7 +84,6 @@ empty trash	mail	lv	atbrīvot atkritumus
 enable	mail	lv	Ieslēgt
 enabled	mail	lv	Ieslēgts
 encrypt your message with smime certificate	mail	lv	Šifrējiet ziņu ar S/MIME sertifikātu
-error: could not save message as draft	mail	lv	Kļūda: Nevar saglabāt ziņojumu kā izstrādājumu
 everyone	mail	lv	Visi
 examine namespace to retrieve folders in others and shared	mail	lv	Pārbaudīt nosaukumu telpu, lai iegūtu mapes citos un koplietojamajos
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	lv	Izslēgt pielikumus, kuru izmērs pārsniedz norādīto, no automātiskas saglabāšanas kā melnrakstu (MB)
@@ -125,14 +115,11 @@ handling of external http images / mixed content in mails	mail	lv	Ārējo http a
 header	mail	lv	Virsraksts
 header lines	mail	lv	Galvenes rindas
 hide from	mail	lv	Paslēpt No
-how should the available information on identities be displayed	admin	lv	Kā rādīt pieejamo informāciju par identitātēm
 html	mail	lv	HTML
 ident name	mail	lv	Identitātes nosaukums
 ident name email	mail	lv	Identitātes nosaukums [E-pasts]
 ident name organization email	mail	lv	Identitātes nosaukums Organizācija [E-pasts]
-identity	mail	lv	Identitāte
 identity label	mail	lv	Identitātes etiķete
-identity+signature	mail	lv	Identitāte + paraksts
 if	mail	lv	Ja
 if different from email address	mail	lv	Ja atšķiras no e-pasta adreses
 if mail header	mail	lv	ja e-pasta virsraksts
@@ -158,7 +145,6 @@ junk folder	mail	lv	Surogātpasta mape
 keep a copy	mail	lv	Saglabāt kopiju
 keep a copy of the message in your inbox	mail	lv	saglabājiet ziņojuma kopiju savā iesūtnē
 kilobytes	mail	lv	kb
-last used signature	mail	lv	Pēdējā izmantotā paraksta
 later	mail	lv	Vēlāk
 learning as ham (not spam) failed because of %1	mail	lv	Izmeklēšana kā šķipsnu (ne surogātpasta) neizdevās %1 dēļ
 learning as spam failed because of %1	mail	lv	Mācīšanās kā surogātpasts neizdevās %1 dēļ
@@ -184,7 +170,6 @@ mark as deleted	mail	lv	Atzīmēt kā izdzēstu
 message learned as spam and moved to spam folder	mail	lv	Ziņa tika uztverta kā surogātpasts un pārvietota uz surogātpasta mapi
 modify subject	mail	lv	Mainīt tematu
 modify subject of this message	mail	lv	Mainīt šī ziņojuma tematu
-move selected mails to archive	mail	lv	Pārvietot izvēlētos e-pastus uz arhīvu
 move selected to	mail	lv	Pārvietot atlasītās uz
 move to	mail	lv	Pārvietot atlasītās uz
 move to trash	mail	lv	Pārvietot uz atkritumiem
@@ -221,7 +206,6 @@ organization | real name email	mail	lv	Organizācija | Īstais vārds [E-pasts]
 original message	mail	lv	Sākotnējā ziņa
 outbox	mail	lv	Iesūtne
 permission denied	mail	lv	Atļauja liegta
-personal signature	mail	lv	Personīgais paraksts
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	lv	Lūdzu, konfigurējiet savu S/MIME sertifikātu Encryption cilnē, kas atrodas konta rediģēšanas dialoglodziņā.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lv	Lūdzu, sazinieties ar savu administratoru, lai pārliecinātos, vai jūsu serveris atbalsta servera filtrēšanas noteikumus un kā tos iespējot EGroupware aktīvajam kontam (%1) ar ID: %2.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	lv	Lūdzu, sazinieties ar savu administratoru, lai pārbaudītu, vai jūsu serveris atbalsta servera brīvdienu ziņojumus un kā tos iespējot EGroupware jūsu aktīvajam kontam (%1) ar ID: %2.
@@ -266,8 +250,6 @@ required to disable if you use dovecot with private seen flags on shared or user
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	lv	S/MIME Šifrēšana neizdevās, jo sūtītāja adresei nav atrasts sertifikāts: %1
 save all	mail	lv	Saglabāt visus
 save all attachments to filemanager	mail	lv	Saglabāt visus pielikumus failu pārvaldniekā
-save as draft	mail	lv	Saglabāt kā izstrādājumu
-save as draft and print	mail	lv	Saglabāt kā izstrādājumu un izdrukāt
 save as infolog on send	mail	lv	Atzīmējiet pogu pēc nosūtīšanas izveidot kā InfoLog
 save as tracker on send	mail	lv	Atzīmējiet pogu pēc nosūtīšanas izveidot kā biļeti
 save the drafted message as eml file into vfs	mail	lv	Saglabājiet sagatavoto ziņojumu kā eml failu failu failu pārvaldītājā
@@ -281,7 +263,6 @@ select an existing entry in order to append mail content to it	mail	lv	Izvēliet
 select an item to read	mail	lv	Izvēlieties elementu, lai izlasītu
 select mail addresses from addressbook	mail	lv	Izvēlieties e-pasta adresi(-es) no adrešu grāmatas
 select or insert email address	mail	lv	Izvēlieties vai ievietojiet e-pasta adresi
-selected	mail	lv	izvēlēts.
 selected date range (with quicksearch)	mail	lv	Izvēlētais datuma diapazo
 send message and move to send folder (if configured)	mail	lv	Nosūtīt ziņu un pārvietot uz nosūtīšanas mapi (ja konfigurēts)
 send message pgp encrypted: requires keys from all recipients!	mail	lv	Nosūtīt ziņu šifrētu ar PGP: nepieciešamas atslēgas no visiem saņēmējiem!
@@ -331,11 +312,9 @@ unconditional	mail	lv	Vienmēr
 unread	mail	lv	Nelasīts
 vacation notice	mail	lv	Norāde par atrašanos atvaļinājumā
 validate addresses on submit:	mail	lv	Pārbaudiet adreses, kad nosūtāt:
-validate selected addresses on submit:	mail	lv	Apstiprināt izvēlētos adreses pēc nosūtīšanas:
 view header lines	mail	lv	Skatīt virsraksta rindas
 what to do when you delete a message	mail	lv	Ko darīt, dzēšot ziņojumu.
 when deleting messages	mail	lv	Kad dzēš vēstules
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	lv	Ar kuru e-pasta identitāti (parakstu) vēlaties sākt?\nIzvēloties „Personīgais paraksts”, mēs vienmēr izmantojam pirmo personīgo parakstu.
 write	mail	lv	Rakstīt
 write & delete	mail	lv	rakstīt un dzēst
 wrote	mail	lv	rakstīja

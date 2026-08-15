@@ -7,7 +7,6 @@ attachments	mail	ca	Adjunts
 by date	mail	ca	En data
 check message against next rule also	mail	ca	aplica la següent regla a aquest missatge
 compose	mail	ca	Redactar
-compress folder	mail	ca	Comprimir carpeta
 contains	mail	ca	conté
 copy to	mail	ca	Copiar A
 default sorting order	mail	ca	Mode d'ordenació predeterminat

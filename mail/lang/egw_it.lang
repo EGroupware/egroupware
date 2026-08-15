@@ -1,3 +1,7 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	it	(*) Per favore considerare che l'inoltro a indirizzi multipli non funzionerà se il limite di indirizzi venisse superato. Per la maggior parte dei server di posta il limite predefinito è di 4. Per favore contattare l'amministratore del proprio server di posta per delucidazioni.
+(leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
+(no subject)	mail	it	(nessun oggetto)
+(not connected)	mail	it	(non connesso)
 %1 attachments	mail	it	%1 allegati
 %1 for all users	mail	it	%1 per tutti gli utenti
 %1 has been added to blacklisted email addresses	mail	it	%1 è stato aggiunto alla blacklist della posta elettronica
@@ -7,10 +11,6 @@
 %1 is not writable by you!	mail	it	%1 non è scrivibile da te!
 %1 mails selected	mail	it	%1 messaggi selezionati
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	it	%1 richiede l'estensione %2 di Sieve, provare %1 o un numero di giorni superiore.
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	it	(*) Per favore considerare che l'inoltro a indirizzi multipli non funzionerà se il limite di indirizzi venisse superato. Per la maggior parte dei server di posta il limite predefinito è di 4. Per favore contattare l'amministratore del proprio server di posta per delucidazioni.
-(leave empty for no quota)	mail	it	(Lasciare vuoto per non assegnare una quota)
-(no subject)	mail	it	(nessun oggetto)
-(not connected)	mail	it	(non connesso)
 account editable by user	mail	it	Account modificabile dall'utente
 acl rights retrieve failed, seems there are no rights set!	mail	it	I permessi non sono stati rilevati. Sembra non siano ancora stati impostati!
 acl rights retrieved successfully	mail	it	Diritti ACL recuperati con successo
@@ -102,7 +102,6 @@ choose file	mail	it	Seleziona file
 common acl	mail	it	Permessi ACL comuni
 compose	mail	it	Componi
 compose as new	mail	it	Componi come nuovo
-compress folder	mail	it	Comprimi cartella
 condition	mail	it	Condizione
 configuration settings	mail	it	Impostazioni di configurazione
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	it	I valori configurati saranno impostati automaticamente nel dialogo di composizione per il campo rispettato quando si compone una nuova email.
@@ -128,8 +127,6 @@ current folder	mail	it	cartella corrente
 current subject	mail	it	Oggetto corrente
 currently:	mail	it	Al momento:
 deactive	mail	it	Disattiva
-default identity for compose	mail	it	Identità predefinita per la composizione dei messaggi
-default signature	mail	it	Firma predefinita
 default sorting order	mail	it	Ordinamento predefinito
 default toolbar actions shown in mail's html editor	mail	it	Funzioni abilitate nella barra degli strumenti dell'editor HTML durante la composizione di un'email
 default value for remembering s/mime passphrase in minutes	mail	it	Valore predefinito per la memorizzazione della passphrase S/MIME in minuti
@@ -244,10 +241,10 @@ files	mail	it	File
 flag / unflag	mail	it	Spunta / Togli spunta
 flag or unflag a mail	mail	it	Spunta / Togli spunta un messaggio
 flagged	mail	it	contrassegnato
+flagged / unflagged	mail	it	Spuntato / Non spuntato
 flagged %1 messages as %2 in %3	mail	it	Contrassegnato %1 messaggi come "%2" in %3.
 flagged %1 messages as flagged in %2	mail	it	Contrassegnato %1 messaggi come contrassegnati in %2
 flagged %1 messages as unflagged in %2	mail	it	Contrassegnato %1 messaggi come non conrassegnati in %2
-flagged / unflagged	mail	it	Spuntato / Non spuntato
 folder	mail	it	Cartella
 folder %1 %2 failed because of %3!	mail	it	Cartella %1 %2 fallita a causa di %3!
 folder %1 %2 failed!	mail	it	Cartella %1 %2 fallita!
@@ -330,7 +327,6 @@ junk folder	mail	it	Cartella mail spazzatura
 keep a copy	mail	it	Conserva una copia
 keep a copy of the message in your inbox	mail	it	Mantieni una copia del messaggio nella posta in arrivo
 kilobytes	mail	it	kilobyte
-last used signature	mail	it	Ultima firma utilizzata
 later	mail	it	Più tardi
 learning as ham (not spam) failed because of %1	mail	it	Apprendimento come Ham (non Spam) fallito a causa di %1
 learning as spam failed because of %1	mail	it	Apprendimento come Spam fallito a causa di %1
@@ -437,7 +433,6 @@ original message	mail	it	Messaggio originale
 outbox	mail	it	Posta in uscita
 password protect	mail	it	proteggi con password
 permission denied	mail	it	Permesso negato
-personal signature	mail	it	Firma personale
 please configure access to an existing individual imap account.	mail	it	Configura l'accesso ad un account IMAP esistente.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	it	Per favore configurare il certificato S/MIME nel tab "Cifratura" che si trova nella finestra "modifica account".
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	it	Per favore contattare il proprio amministratore per validare il supporto di regole di filtri lato Server, e come abilitarli in EGroupware per il tuo account attivo (%1) con ID: %2.
@@ -556,7 +551,7 @@ select files to upload	mail	it	Seleziona file da caricare
 select mail addresses from addressbook	mail	it	Selezionare l'indirizzo o gli indirizzi e-mail dalla rubrica
 select multiple	mail	it	Selezione multipla
 select or insert email address	mail	it	Selezionare o inserire l'indirizzo e-mail
-selected	mail	it	selezionato.
+selected	mail	it	selezionato
 selected date range (with quicksearch)	mail	it	Selezionare intervallo di date
 send a reject message:	mail	it	Invia un messaggio di rigetto:
 send files as	mail	it	Invia i file come
@@ -667,7 +662,6 @@ upload files...	mail	it	Carica file ...
 use default timeout (20 seconds)	mail	it	Usa il timeout predefinito (20 secondi)
 use regular expressions (see wikipedia for information on posix regular expressions)	mail	it	Usa espressioni regolari (v. wikipedia per informazioni sulle espressioni regolari POSIX)
 use source as displayed, if applicable	mail	it	Usa le sorgenti come mostrate, se applicabile
-use tokenised search syntax (+word required, -word forbidden, "..." literal phrase; same as the egroupware search box)	mail	it	Usa la sintassi di ricerca tokenizzata (+parola obbligatoria, -parola esclusa, "..." frase letterale; come nella casella di ricerca di EGroupware)
 use username+password from current user	mail	it	Utilizza nome utente+password dell'utente attuale
 use wizard to detect or verify configuration	mail	it	Usa la procedura guidata oppure verifica la connessione
 vacation messages with start and end date require an admin account to be set!	mail	it	Messaggi di ferie con data inizio e fine, richiedono l'impostazione di un account amministrativo!
@@ -691,9 +685,8 @@ when deleting messages	mail	it	Durante la cancellazione dei messaggi
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	it	Quando si visualizzano messaggi in una finestra popup, riutilizzarlo oppure aprirne uno nuovo per ogni messaggio
 when saving messages as item of a different app	mail	it	quando si salvano messaggi in una applicazione diversa.
 when sending messages	mail	it	Quando si inviano messaggi
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	it	Quali cartelle oltre alla cartella della posta inviata dovrebbe essere mostrata usando lo schema di visualizzazione della posta inviata
 which folders - in general - should not be automatically created, if not existing	mail	it	Quali cartelle in generale non dovrebbero essere automaticamente create se non esistono
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	it	Con quale identità di posta (firma) desideri iniziare?\nPer la “Firma personale” viene sempre utilizzata la prima firma personale.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	it	Quali cartelle oltre alla cartella della posta inviata dovrebbe essere mostrata usando lo schema di visualizzazione della posta inviata
 which method to use when forwarding a message	mail	it	Quale metodo usare quando si inoltra un messaaggio
 whitelisted mails are not marked as spam	mail	it	I messaggi in whitelist non vengono segnati come spam
 whole message	mail	it	intero messaggio

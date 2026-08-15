@@ -1,10 +1,10 @@
+(leave empty for no quota)	mail	hu	(Ha nincs kvóta, hagyja üresen)
+(no subject)	mail	hu	(nincs tárgy)
 %1 attachments	mail	hu	%1 mellékletek
 %1 for all users	mail	hu	%1 minden felhasználó számára
 %1 is not writable by you!	mail	hu	%1-hez nincs írási jogosultságod!
 %1 mails selected	mail	hu	%1 kiválasztott e-mail
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	hu	%1 Sieve kiterjesztést igényel %2, esetleg próbálja meg %1 vagy magasabb számú napot.
-(leave empty for no quota)	mail	hu	(Ha nincs kvóta, hagyja üresen)
-(no subject)	mail	hu	(nincs tárgy)
 acl rights retrieve failed, seems there are no rights set!	mail	hu	Az ACL-jogok lekérdezése sikertelen, úgy tűnik, nincsenek jogok beállítva!
 activating by date requires a start- and end-date!	mail	hu	Dátum szeretni aktiváláshoz kezdés ÉS befejezés időpont is szükséges!
 add all my aliases	mail	hu	Az összes álnevem hozzáadása
@@ -21,7 +21,6 @@ all my email addresses	mail	hu	minden e-mail címem
 all of	mail	hu	összes innnen
 all subfolders will be deleted too, and all messages in all affected folders will be lost	mail	hu	Az összes almappa is törlődik, és az összes érintett mappában lévő összes üzenet elveszik.
 allow images from external sources in html emails	mail	hu	Külső forrásból származó képek megjelenítése a HTML email-ekben.
-allow users to create further identities	mail	hu	Lehetővé teszi a felhasználók számára további identitások létrehozását
 allows a user to read, write and create folders and mails, post to it, append messages to it and delete messages.	mail	hu	Lehetővé teszi a felhasználó számára, hogy mappákat és leveleket olvasson, írjon és hozzon létre, hozzászóljon, üzeneteket csatoljon hozzájuk és üzeneteket töröljön.
 always respond / auto-responder	mail	hu	Mindig válaszolni / automatikus válaszadó
 always show html emails	mail	hu	Mindig jelenítse meg a HTML üzenetet
@@ -55,7 +54,6 @@ check to save as tracker entry on send	mail	hu	Ellenőrizze a gombot a ticketké
 checking admin credentials failed	mail	hu	Az admin hitelesítő adatok ellenőrzése sikertelen
 compose	mail	hu	Szerkeszt
 compose as new	mail	hu	Szerkesztés újként
-compress folder	mail	hu	Mappa tömörítése
 condition	mail	hu	Feltétel
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	hu	A beállított értékek automatikusan beállítódnak a kompozíció párbeszédpanelen az adott mezőhöz, amikor új e-mailt állít össze.
 contact label	mail	hu	Kapcsolat címke
@@ -68,8 +66,6 @@ copied %1 message(s) from %2 to %3	mail	hu	%1 üzenet(ek) átmásolása %2-ből 
 copy to	mail	hu	Másold ide:
 cross account forward attachment is not allowed!	mail	hu	Kereszt számla előre csatolása nem megengedett!
 current subject	mail	hu	Jelenlegi téma
-default identity for compose	mail	hu	Alapértelmezett identitás az üzenetíráshoz
-default signature	mail	hu	Alapértelmezett aláírás
 default sorting order	mail	hu	Alapértelmezett rendezési sor
 default toolbar actions shown in mail's html editor	mail	hu	A HTML-szerkesztő eszköztárban e-mail készítésekor engedélyezett funkciók
 default value for remembering s/mime passphrase in minutes	mail	hu	Az S/MIME jelszó megjegyzésére szolgáló alapértelmezett érték percekben
@@ -105,7 +101,6 @@ download attachments	mail	hu	Letöltés mellékletek
 draft	mail	hu	Vázlat
 draft folder	mail	hu	Vázlat mappa
 drafts	mail	hu	Piszkozatok
-drafts folder	mail	hu	Vázlatok mappa
 edit account	mail	hu	Azonosító szerkesztése
 edit vacation settings	mail	hu	Szabadság beállítások szerkesztése
 email address	mail	hu	E-Mail cím
@@ -160,7 +155,6 @@ header	mail	hu	Fejléc
 header lines	mail	hu	Email fejléce
 hide from	mail	hu	Elrejteni Tőle
 high priority	mail	hu	Kiemelt prioritás
-how should the available information on identities be displayed	admin	hu	Hogyan jelenjenek meg az identitásokkal kapcsolatos elérhető információk
 how to forward messages	mail	hu	Üzenet továbbítás módja
 html	mail	hu	HTML
 ident name	mail	hu	Azonosító neve
@@ -168,7 +162,6 @@ ident name email	mail	hu	Azonosító neve [Email]
 ident name organization email	mail	hu	Azonosító neve Szervezet [Email]
 identity	mail	hu	Azonosító
 identity label	mail	hu	Azonosító címke
-identity+signature	mail	hu	Identitás+Aláírás
 if	mail	hu	HA
 if different from email address	mail	hu	Ha eltér az
 if mail header	mail	hu	ha a levél fejléce
@@ -193,7 +186,6 @@ junk folder	mail	hu	Szemét mappa
 keep a copy	mail	hu	Megtartani egy másolatot
 keep a copy of the message in your inbox	mail	hu	Másolat megőrzése a Bejövő postafiókban
 kilobytes	mail	hu	kilobájt
-last used signature	mail	hu	Legutóbb használt aláírás
 later	mail	hu	Később
 learning as ham (not spam) failed because of %1	mail	hu	A sonkaként (nem spamként) való tanulás sikertelen a %1 miatt
 learning as spam failed because of %1	mail	hu	A spamként való tanulás %1 miatt nem sikerült
@@ -222,7 +214,6 @@ matches regexp	mail	hu	reguláris kifejezés egyezése
 message learned as spam and moved to spam folder	mail	hu	Az üzenetet spamnek tanulták és a spam mappába helyezték át
 modify subject	mail	hu	Tárgy módosítása
 modify subject of this message	mail	hu	Az üzenet tárgyának módosítása
-move selected mails to archive	mail	hu	A kiválasztott e-mailek áthelyezése az archívumba
 move selected to	mail	hu	Kijelöltek mozgatása
 move to	mail	hu	Kijelöltek mozgatása
 move to archive	mail	hu	Áthelyezés az archív mappába
@@ -269,7 +260,6 @@ organization | real name email	mail	hu	Szervezet | Valódi név [Email]
 original message	mail	hu	Eredeti üzenet
 outbox	mail	hu	Kimenő postaláda
 permission denied	mail	hu	Hozzáférés megtagadva
-personal signature	mail	hu	Személyes aláírás
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	hu	Kérjük, konfigurálja az S/MIME tanúsítványt a Fiók szerkesztése párbeszédpanelen található Titkosítás fülön.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	hu	Kérjük, forduljon a rendszergazdához, hogy ellenőrizze, támogatja-e a szerver a szerveroldali szűrőszabályokat, és hogyan engedélyezheti azokat az EGroupware-ben az Ön aktív fiókja (%1) számára az ID: %2 azonosítóval.
 please contact your administrator to validate if your server supports serverside vacationmessages, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	hu	Kérjük, lépjen kapcsolatba a rendszergazdával annak ellenőrzéséhez, hogy a kiszolgáló támogatja-e a kiszolgálói holidaymessages-t, és hogyan engedélyezheti azokat az EGroupware-ben az ID: %2 azonosítóval rendelkező aktív fiókja (%1) számára.
@@ -317,7 +307,6 @@ required to disable if you use dovecot with private seen flags on shared or user
 save all	mail	hu	Összes mentése
 save all attachments to filemanager	mail	hu	Minden melléklet mentése a fájlkezelőbe
 save as draft	mail	hu	Mentés vázlatként
-save as draft and print	mail	hu	Mentés vázlatként és nyomtatás
 save as infolog	mail	hu	Mentés InfoLog-ként
 save as infolog on send	mail	hu	Ellenőrizze a gombot az InfoLog létrehozásához küldés után
 save as tracker on send	mail	hu	Ellenőrizze a gombot, hogy a küldés után jegyként hozza létre
@@ -333,7 +322,6 @@ select an existing entry in order to append mail content to it	mail	hu	Válasszo
 select an item to read	mail	hu	Válasszon ki egy elemet az olvasáshoz
 select mail addresses from addressbook	mail	hu	e-mail címtől Válassza ki az e-mail cím(eke)t a címjegyzékből
 select or insert email address	mail	hu	E-mail cím kiválasztása vagy beillesztése
-selected	mail	hu	kiválasztva.
 selected date range (with quicksearch)	mail	hu	Kiválasztott dátumtartomány (gyorskereséssel)
 send message and move to send folder (if configured)	mail	hu	Üzenet küldése és áthelyezése a küldési mappába (ha konfigurálva van)
 send message pgp encrypted: requires keys from all recipients!	mail	hu	Üzenet küldése PGP titkosítással: minden címzettől kulcsot igényel!
@@ -394,13 +382,11 @@ vacation notice	mail	hu	Szabadság értesítés
 vacation notice is active	mail	hu	Szabadság értesítő aktív
 vacation start-date must be before the end-date!	mail	hu	Szabadság kezdete korábban legyen mint a vége!
 validate addresses on submit:	mail	hu	Érvényesítse a címeket az elküldéskor:
-validate selected addresses on submit:	mail	hu	A kiválasztott címek érvényesítése elküldéskor:
 view header lines	mail	hu	Fejléc tartalom megjelenítése
 what to do when you delete a message	mail	hu	Mi a teendő, ha töröl egy üzenetet.
 when deleting messages	mail	hu	Üzenet törlése esetén
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve
 which folders - in general - should not be automatically created, if not existing	mail	hu	melyik mappa ne legyen automatikusan létrehozva
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	hu	Melyik e-mail identitással (aláírással) szeretne kezdeni?\nA „Személyes aláírás” esetén mindig az első személyes aláírást használjuk.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	hu	melyik mappa legyen az Elküldött levelek mappa szerint megjelenítve
 write	mail	hu	Írás
 write & delete	mail	hu	írás és törlés
 wrote	mail	hu	írta

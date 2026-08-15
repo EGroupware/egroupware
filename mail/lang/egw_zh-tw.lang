@@ -9,7 +9,6 @@ attachments	mail	zh-tw	附加檔案
 by date	mail	zh-tw	按日期
 check message against next rule also	mail	zh-tw	也用下一個規則檢查郵件
 compose	mail	zh-tw	建立
-compress folder	mail	zh-tw	壓縮資料夾
 condition	mail	zh-tw	條件
 contains	mail	zh-tw	包含
 copy to	mail	zh-tw	複製到
@@ -25,6 +24,7 @@ displaying html messages is disabled	mail	zh-tw	顯示 html 信件的功能停�
 does not contain	mail	zh-tw	不包含
 does not match	mail	zh-tw	不符合
 does not match regexp	mail	zh-tw	不符合條件
+don't use draft folder	mail	zh-tw	不使用草稿夾
 don't use sent	mail	zh-tw	不使用寄件備份
 don't use trash	mail	zh-tw	不使用垃圾桶
 draft folder	mail	zh-tw	草稿夾

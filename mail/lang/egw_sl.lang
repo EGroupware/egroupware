@@ -1,3 +1,7 @@
+(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	sl	(*) Upoštevajte, posredovanje več naslovom ne bo delovalo, če število naslovov presega omejitev. Za večino poštnih strežnikov je omejitev 4 privzeto, za dodatne informacije se obrnite na skrbnika poštnega strežnika.
+(leave empty for no quota)	mail	sl	(Pusti prazno brez kvote)
+(no subject)	mail	sl	(brez zadeve)
+(not connected)	mail	sl	(brez povezave)
 %1 attachments	mail	sl	%1 priloge
 %1 for all users	mail	sl	%1 za vse uporabnike
 %1 has been added to blacklisted email addresses	mail	sl	%1 je bilo dodanih na črno listirane e-poštne naslove
@@ -7,10 +11,6 @@
 %1 is not writable by you!	mail	sl	Nimate pravice pisanja v %1!
 %1 mails selected	mail	sl	%1 Izbrane e-pošte
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	sl	%1 zahteva razširitev Sieve %2, morda poskusite %1 ali večje število dn
-(*) please consider, forward to multiple addresses will not work if number of addresses exceeds the limit. for most mail servers the limit is 4 by default, please contact your mail server administrator for further info.	mail	sl	(*) Upoštevajte, posredovanje več naslovom ne bo delovalo, če število naslovov presega omejitev. Za večino poštnih strežnikov je omejitev 4 privzeto, za dodatne informacije se obrnite na skrbnika poštnega strežnika.
-(leave empty for no quota)	mail	sl	(Pusti prazno brez kvote)
-(no subject)	mail	sl	(brez zadeve)
-(not connected)	mail	sl	(brez povezave)
 account editable by user	mail	sl	Račun, ki ga lahko uredi uporabnik
 acl rights retrieve failed, seems there are no rights set!	mail	sl	Pridobitev pravic ACL ni bila uspešna, zdi se, da ni nastavljenih nobenih pravic!
 acl rights retrieved successfully	mail	sl	ACL pravice so bile uspešno pridobljene
@@ -102,7 +102,6 @@ choose file	mail	sl	Izberite datoteko
 common acl	mail	sl	Skupni ACL
 compose	mail	sl	Novo sporočilo
 compose as new	mail	sl	Sestavi kot novo
-compress folder	mail	sl	Stisni mapo
 condition	mail	sl	Pogoj
 configuration settings	mail	sl	Nastavitve konfiguracije
 configured values will be set automatically on compose dialog for respected field when composing a new email.	mail	sl	Prednastavljene vrednosti se bodo samodejno nastavile v pogovornem oknu compose za upoštevano polje pri sestavljanju novega e-poštnega sporočila.
@@ -128,8 +127,6 @@ current folder	mail	sl	trenutna mapa
 current subject	mail	sl	Trenutna tema
 currently:	mail	sl	Trenutno:
 deactive	mail	sl	Neaktiven
-default identity for compose	mail	sl	Privzeta identiteta za pisanje sporočil
-default signature	mail	sl	Privzeti podpis
 default sorting order	mail	sl	Privzet način razvrščanja
 default toolbar actions shown in mail's html editor	mail	sl	Funkcije, omogočene v orodni vrstici urejevalnika HTML pri sestavljanju e-pošte
 default value for remembering s/mime passphrase in minutes	mail	sl	Privzeta vrednost za pomnjenje gesla S/MIME v minutah
@@ -244,10 +241,10 @@ files	mail	sl	Datoteke
 flag / unflag	mail	sl	Oznaka / BrezOznake
 flag or unflag a mail	mail	sl	Oznaka ali BrezOznake v ePošti
 flagged	mail	sl	Označeno
+flagged / unflagged	mail	sl	Označeno / neoznačeno
 flagged %1 messages as %2 in %3	mail	sl	Označil %1 sporočilo kot "%2" v %3.
 flagged %1 messages as flagged in %2	mail	sl	Označene oznake %1 označene kot označene v %2
 flagged %1 messages as unflagged in %2	mail	sl	Označil %1 sporočilo kot neuglagano v %2
-flagged / unflagged	mail	sl	Označeno / neoznačeno
 folder	mail	sl	Mapa
 folder %1 %2 failed because of %3!	mail	sl	Mapa %1 %2 ni uspela zaradi %3!
 folder %1 %2 failed!	mail	sl	Mapa %1 %2 ni uspela!
@@ -330,7 +327,6 @@ junk folder	mail	sl	Neželena mapa
 keep a copy	mail	sl	Ohrani kopijo
 keep a copy of the message in your inbox	mail	sl	Obdrži kopijo sporočila v mapi Prejeto
 kilobytes	mail	sl	Kilobajtov
-last used signature	mail	sl	Zadnji uporabljeni podpis
 later	mail	sl	Pozneje
 learning as ham (not spam) failed because of %1	mail	sl	Učenje kot ham (ni vsiljena pošta) ni uspelo zaradi %1
 learning as spam failed because of %1	mail	sl	Učenje kot spam ni uspelo zaradi %1
@@ -437,7 +433,6 @@ original message	mail	sl	Izvirno sporočilo
 outbox	mail	sl	V pošiljanju
 password protect	mail	sl	zaščita z geslom
 permission denied	mail	sl	Dostop zavrnjen
-personal signature	mail	sl	Osebni podpis
 please configure access to an existing individual imap account.	mail	sl	Nastavite dostop do obstoječega računa IMAP.
 please configure your s/mime certificate in encryption tab located at edit account dialog.	mail	sl	Konfigurirajte svoj S/MIME potrdilo na kartici Šifriranje, ki se nahaja v pogovornem oknu Urejanje računa.
 please contact your administrator to validate if your server supports serverside filterrules, and how to enable them in egroupware for your active account (%1) with id:%2.	mail	sl	Obrnite se na skrbnika, da potrdite, ali vaš strežnik podpira filtre za strežnike in kako jih omogočite v programu EGroupware za vaš aktivni račun (%1) z ID: %2.
@@ -556,7 +551,7 @@ select files to upload	mail	sl	Izberite datoteke za nalaganje
 select mail addresses from addressbook	mail	sl	Izberite e-poštne naslove iz imenika
 select multiple	mail	sl	Izberite več
 select or insert email address	mail	sl	Izberite ali vstavite e-poštni naslov
-selected	mail	sl	izbran.
+selected	mail	sl	izbran
 selected date range (with quicksearch)	mail	sl	Izbrano časovno obdobje (s hitrim iskanjem)
 send a reject message:	mail	sl	Pošiljanje zavrnjenega sporočila:
 send files as	mail	sl	Pošiljanje datotek kot
@@ -690,9 +685,8 @@ when deleting messages	mail	sl	Ob brisanju sporočil
 when displaying messages in a popup, re-use the same popup for all or open a new popup for each message	mail	sl	Pri prikazu sporočil v pojavnem okencu ponovno uporabite isti pojavni okni ali za vsako sporočilo odpirajte novo pojavno okno
 when saving messages as item of a different app	mail	sl	Pri shranjevanju sporočil kot elementa druge aplikacije.
 when sending messages	mail	sl	Pri pošiljanju sporočil
-which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
 which folders - in general - should not be automatically created, if not existing	mail	sl	Katere mape - na splošno - naj ne bodo samodejno ustvarjene, če že ne obstajajo
-which mail identity (signature) do you want to start with. for personal we always use the first personal signature.	mail	sl	S katero identiteto (podpisom) želite začeti.\nPri »Osebni podpis« vedno uporabimo prvi osebni podpis.
+which folders (additional to the sent folder) should be displayed using the sent folder view schema	mail	sl	Katere mape (poleg Poslano) naj bodo prikazane z uporabo sheme Pogled mape Poslano
 which method to use when forwarding a message	mail	sl	Katero metodo uporabite pri posredovanju sporočila
 whitelisted mails are not marked as spam	mail	sl	Sporočila z belim seznamom niso označena kot vsiljena pošta
 whole message	mail	sl	Celotno sporočilo

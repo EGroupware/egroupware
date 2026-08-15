@@ -3320,43 +3320,6 @@ class mail_ui
 	}
 
 	/**
-	 * compress folder - its called via json, so the function must start with ajax (or the class-name must contain ajax)
-	 * fetches the current folder from session and compresses it
-	 * @param string $_folderName id of the folder to compress
-	 * @return nothing
-	 */
-	function ajax_compressFolder($_folderName)
-	{
-		//error_log(__METHOD__.__LINE__.' '.$_folderName);
-		Api\Translation::add_app('mail');
-
-		$this->mail_bo->restoreSessionData();
-		$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
-		list($icServerID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
-
-		if (empty($folderName)) $folderName = $this->mail_bo->sessionData['mailbox'];
-		if ($this->mail_bo->folderExists($folderName))
-		{
-			$rememberServerID = $this->mail_bo->profileID;
-			if ($icServerID && $icServerID != $this->mail_bo->profileID)
-			{
-				//error_log(__METHOD__.__LINE__.' change Profile to ->'.$icServerID);
-				$this->changeProfile($icServerID);
-			}
-			if(!empty($_folderName)) {
-				$this->mail_bo->compressFolder($folderName);
-			}
-			if ($rememberServerID != $this->mail_bo->profileID)
-			{
-				//error_log(__METHOD__.__LINE__.' change Profile back to where we came from ->'.$rememberServerID);
-				$this->changeProfile($rememberServerID);
-			}
-			$response = Api\Json\Response::get();
-			$response->call('egw.refresh',lang('compress folder').': '.$folderName,'mail');
-		}
-	}
-
-	/**
 	 * sendMDN, ...
 	 *
 	 * @param array _messageList list of UID's
