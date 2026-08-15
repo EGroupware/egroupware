@@ -536,6 +536,17 @@ abstract class CalDAVTest extends TestCase
 
 		if(self::$setup && self::$created_users)
 		{
+			// admin_cmd_delete_account requires the CURRENT in-process identity to be a real admin.
+			// This class never establishes a real login session (createUser() uses setup::add_account()
+			// directly, bypassing ACL entirely, and there's no LoggedInTest::switchUser() available
+			// here) - temporarily borrow the dedicated admin test account's identity for just this
+			// cleanup loop, then restore whatever was there before.
+			$saved_account_id = $GLOBALS['egw_info']['user']['account_id'] ?? null;
+			if ($GLOBALS['egw']->accounts ?? null)
+			{
+				$GLOBALS['egw_info']['user']['account_id'] = $GLOBALS['egw']->accounts->name2id($GLOBALS['EGW_ADMIN_USER']);
+			}
+
 			foreach(self::$created_users as $account_lid => $data)
 			{
 				if (!empty($data['id']))
@@ -553,6 +564,8 @@ abstract class CalDAVTest extends TestCase
 				}
 				unset(self::$created_users[$account_lid]);
 			}
+
+			$GLOBALS['egw_info']['user']['account_id'] = $saved_account_id;
 		}
 		self::$created_users = [];
 		self::resetSharedRuntimeState();
