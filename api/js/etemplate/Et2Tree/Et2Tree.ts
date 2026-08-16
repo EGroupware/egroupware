@@ -692,25 +692,22 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 */
 	refreshItem(_id, data)
 	{
-		/* TODO currently always ask the sever
-		if (typeof data != "undefined" && data != null)
+		let item = this.getNode(_id);
+		// if the item does not exist in the tree yet no need to refresh
+		if(item == null)
 		{
-
-			//data seems never to be used
-			this.refreshItem(_id, null)
-		} else*/
-		{
-			let item = this.getNode(_id);
-			// if the item does not exist in the tree yet no need to refresh
-			if(item == null)
-			{
-				return Promise.resolve();
-			}
-			return this.handleLazyLoading(item).then((result) => {
-				Object.assign(item, result);
-				this.requestUpdate("_selectOptions")
-			})
+			return Promise.resolve();
 		}
+		if (typeof data !== "undefined" && data !== null)
+		{
+			Object.assign(item, data);
+			this.requestUpdate("_selectOptions");
+			return Promise.resolve();
+		}
+		return this.handleLazyLoading(item).then((result) => {
+			Object.assign(item, result);
+			this.requestUpdate("_selectOptions")
+		})
 	}
 
 	/**

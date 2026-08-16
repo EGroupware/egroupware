@@ -234,6 +234,204 @@ export class MailJmap
 	}
 
 	/**
+	 * Resolve a canonical "/"-joined folder path to a JMAP Mailbox id, or null for the top level -
+	 * thin wrapper around mailboxId() that avoids its per-segment walk choking on an empty path
+	 * (folderPath.split('/') on '' yields [''], which would wrongly query for a mailbox literally
+	 * named '').
+	 */
+	private async mailboxIdOrNull(client : JamClient, accountId : string, profileID : string, path : string) : Promise<string | null>
+	{
+		return path === '' ? null : this.mailboxId(client, accountId, profileID, path);
+	}
+
+	/**
+	 * Public counterpart of mailboxIdOrNull() for callers outside this class (mail/js/app.ts's
+	 * mail_refreshFolderLevel(), which needs a parent's JMAP id to re-fetch its children after a
+	 * folder CRUD change, without necessarily having one already cached on a tree node).
+	 *
+	 * @return null if this account has no usable JMAP access-token, *or* if path is '' (top level)
+	 *  - same "null is a valid answer, not just a failure" contract getMailboxChildren() already has
+	 */
+	async resolveMailboxId(profileID : string, path : string) : Promise<string | null>
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token) return null;
+		return this.mailboxIdOrNull(this.clients[profileID], token.accountId, profileID, path);
+	}
+
+	/**
+	 * Drop every cached mailboxId() entry for `path` and anything nested under it (a rename/move/
+	 * delete invalidates not just the folder itself but every descendant path cached under its old
+	 * location) - without this, a later row-fetch for the old path would resolve a stale or
+	 * now-wrong/nonexistent mailbox id.
+	 */
+	private invalidateMailboxIdCache(profileID : string, path : string) : void
+	{
+		const prefix = profileID + '::' + path;
+		Object.keys(this.mailboxIds)
+			.filter((key) => key === prefix || key.startsWith(prefix + '/'))
+			.forEach((key) => delete this.mailboxIds[key]);
+	}
+
+	/**
+	 * Create a new mailbox - the JMAP fast path for mail_AddFolder() (mail/js/app.ts), falling
+	 * back to the classic ajax_addFolder on failure/ineligibility.
+	 *
+	 * @param profileID
+	 * @param parentPath canonical path of the parent folder, '' for the top level
+	 * @param name new folder's (leaf) name
+	 * @return false on any failure (never throws) - the caller falls back to classic
+	 */
+	async createMailbox(profileID : string, parentPath : string, name : string) : Promise<boolean>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return false;
+			const client = this.clients[profileID];
+			const parentId = await this.mailboxIdOrNull(client, token.accountId, profileID, parentPath);
+
+			const [{result}] = await client.requestMany((t) => ({
+				result: t.Mailbox.set({accountId: token.accountId, create: {c0: {name, parentId}}}),
+			}));
+			return !!(result.created && result.created['c0']);
+		}
+		catch (e)
+		{
+			console.error('MailJmap.createMailbox(): failed, falling back to the classic ajax_addFolder', e);
+			return false;
+		}
+	}
+
+	/**
+	 * Rename a mailbox in place (same parent) - the JMAP fast path for mail_RenameFolder().
+	 *
+	 * @param profileID
+	 * @param path canonical path of the folder to rename
+	 * @param newName
+	 */
+	async renameMailbox(profileID : string, path : string, newName : string) : Promise<boolean>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return false;
+			const client = this.clients[profileID];
+			const id = await this.mailboxId(client, token.accountId, profileID, path);
+
+			const [{result}] = await client.requestMany((t) => ({
+				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {name: newName}}}),
+			}));
+			const success = !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
+			if (success)
+			{
+				this.invalidateMailboxIdCache(profileID, path);
+			}
+			return success;
+		}
+		catch (e)
+		{
+			console.error('MailJmap.renameMailbox(): failed, falling back to the classic ajax_renameFolder', e);
+			return false;
+		}
+	}
+
+	/**
+	 * Move a mailbox to a new parent - the JMAP fast path for mail_MoveFolder(). Same-account only
+	 * (mail_MoveFolder() already rejects a cross-account move before ever calling this).
+	 *
+	 * @param profileID
+	 * @param path canonical path of the folder to move
+	 * @param newParentPath canonical path of the new parent, '' for the top level
+	 */
+	async moveMailbox(profileID : string, path : string, newParentPath : string) : Promise<boolean>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return false;
+			const client = this.clients[profileID];
+			const id = await this.mailboxId(client, token.accountId, profileID, path);
+			const newParentId = await this.mailboxIdOrNull(client, token.accountId, profileID, newParentPath);
+
+			const [{result}] = await client.requestMany((t) => ({
+				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {parentId: newParentId}}}),
+			}));
+			const success = !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
+			if (success)
+			{
+				this.invalidateMailboxIdCache(profileID, path);
+			}
+			return success;
+		}
+		catch (e)
+		{
+			console.error('MailJmap.moveMailbox(): failed, falling back to the classic ajax_MoveFolder', e);
+			return false;
+		}
+	}
+
+	/**
+	 * Delete a mailbox - the JMAP fast path for mail_DeleteFolder().
+	 *
+	 * @param profileID
+	 * @param path canonical path of the folder to delete
+	 */
+	async deleteMailbox(profileID : string, path : string) : Promise<boolean>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return false;
+			const client = this.clients[profileID];
+			const id = await this.mailboxId(client, token.accountId, profileID, path);
+
+			const [{result}] = await client.requestMany((t) => ({
+				result: t.Mailbox.set({accountId: token.accountId, destroy: [id]}),
+			}));
+			const success = Array.isArray(result.destroyed) && result.destroyed.includes(id);
+			if (success)
+			{
+				this.invalidateMailboxIdCache(profileID, path);
+			}
+			return success;
+		}
+		catch (e)
+		{
+			console.error('MailJmap.deleteMailbox(): failed, falling back to the classic ajax_deleteFolder', e);
+			return false;
+		}
+	}
+
+	/**
+	 * (Un)subscribe a mailbox - the JMAP fast path for subscribe_folder()/unsubscribe_folder().
+	 *
+	 * @param profileID
+	 * @param path canonical path of the folder
+	 * @param subscribed
+	 */
+	async setMailboxSubscribed(profileID : string, path : string, subscribed : boolean) : Promise<boolean>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return false;
+			const client = this.clients[profileID];
+			const id = await this.mailboxId(client, token.accountId, profileID, path);
+
+			const [{result}] = await client.requestMany((t) => ({
+				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {isSubscribed: subscribed}}}),
+			}));
+			return !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
+		}
+		catch (e)
+		{
+			console.error('MailJmap.setMailboxSubscribed(): failed, falling back to the classic ajax_foldersubscription', e);
+			return false;
+		}
+	}
+
+	/**
 	 * egw.dataRegisterFetch('mail', ...) callback: the only way NextMatch's row-fetch gets
 	 * answered - there is no server-side row-fetch fallback (see class docblock).
 	 *

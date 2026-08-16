@@ -4609,7 +4609,7 @@ export class MailApp extends EgwApp
 			{label: this.egw.lang("Add"), id: "add", image:'plus', "class": "ui-priority-primary", "default": true},
 			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
-		Et2Dialog.show_prompt(function (_button_id, _value)
+		Et2Dialog.show_prompt((_button_id, _value) =>
 			{
 				var NewFolderName = null;
 				if (_value.length > 0)
@@ -4622,8 +4622,8 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "add":
-							egw.json('mail.mail_ui.ajax_addFolder', [_senders[0].id, NewFolderName])
-								.sendRequest(true);
+							(this.mail_tryJmapAddFolder(_senders[0].id, NewFolderName) ??
+								egw.json('mail.mail_ui.ajax_addFolder', [_senders[0].id, NewFolderName]).sendRequest(true));
 							return;
 					case "cancel":
 				}
@@ -4632,6 +4632,31 @@ export class MailApp extends EgwApp
 		this.egw.lang("Enter the name for the new Folder:"),
 		this.egw.lang("Add a new Folder to %1:",OldFolderName),
 		'', buttons);
+	}
+
+	/**
+	 * Try the fast client-side JMAP create-folder path - MailJmap.createMailbox(). Returns null if
+	 * the parent isn't itself under a JMAP-capable profile at all (never happens in practice here,
+	 * since createMailbox() itself resolves via ensureToken() and only returns false, not null -
+	 * kept for symmetry with the other mail_tryJmapXxx() helpers, which do have a real null case);
+	 * otherwise a Promise that refreshes the parent's tree level on success, or falls back to the
+	 * classic ajax_addFolder on any failure.
+	 */
+	private mail_tryJmapAddFolder(parentTreeId : string, name : string) : Promise<any> | null
+	{
+		const [profileID, parentPath] : [string, string] = parentTreeId.indexOf('::') !== -1 ?
+			parentTreeId.split('::', 2) as [string, string] : [parentTreeId, ''];
+		const fallback = () => egw.json('mail.mail_ui.ajax_addFolder', [parentTreeId, name]).sendRequest(true);
+
+		return this.jmap.createMailbox(profileID, parentPath, name).then((success) =>
+		{
+			if (!success) return fallback();
+			return this.mail_refreshFolderLevel(profileID, parentPath);
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapAddFolder(): JMAP create failed, falling back to server', e);
+			return fallback();
+		});
 	}
 
 	/**
@@ -4649,7 +4674,7 @@ export class MailApp extends EgwApp
 			{label: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
 			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
-		Et2Dialog.show_prompt(function (_button_id, _value)
+		Et2Dialog.show_prompt((_button_id, _value) =>
 			{
 				var NewFolderName = null;
 				if (_value.length > 0)
@@ -4662,8 +4687,8 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "rename":
-							egw.json('mail.mail_ui.ajax_renameFolder', [_senders[0].id, NewFolderName])
-								.sendRequest(true);
+							(this.mail_tryJmapRenameFolder(_senders[0].id, NewFolderName) ??
+								egw.json('mail.mail_ui.ajax_renameFolder', [_senders[0].id, NewFolderName]).sendRequest(true));
 							return;
 					case "cancel":
 				}
@@ -4672,6 +4697,29 @@ export class MailApp extends EgwApp
 		this.egw.lang("Rename Folder %1 to:",OldFolderName),
 		this.egw.lang("Rename Folder %1 ?",OldFolderName),
 		OldFolderName, buttons);
+	}
+
+	/**
+	 * Try the fast client-side JMAP rename path - MailJmap.renameMailbox() (same parent, new leaf
+	 * name only - matches classic ajax_renameFolder()'s own "rename in place" semantics, no move).
+	 * Refreshes the parent's tree level on success; falls back to the classic ajax on any failure.
+	 */
+	private mail_tryJmapRenameFolder(treeId : string, newName : string) : Promise<any> | null
+	{
+		if (treeId.indexOf('::') === -1) return null;	// an account root can't be renamed
+		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
+		const parentPath = path.includes('/') ? path.substring(0, path.lastIndexOf('/')) : '';
+		const fallback = () => egw.json('mail.mail_ui.ajax_renameFolder', [treeId, newName]).sendRequest(true);
+
+		return this.jmap.renameMailbox(profileID, path, newName).then((success) =>
+		{
+			if (!success) return fallback();
+			return this.mail_refreshFolderLevel(profileID, parentPath);
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapRenameFolder(): JMAP rename failed, falling back to server', e);
+			return fallback();
+		});
 	}
 
 	/**
@@ -4698,7 +4746,7 @@ export class MailApp extends EgwApp
 		var src_label = _senders[0].id.replace(/^[0-9]+::/,'');
 		var dest_label = destination.id.replace(/^[0-9]+::/,'');
 
-		var callback = function (_button)
+		var callback = (_button) =>
 		{
 			if (_button == Et2Dialog.YES_BUTTON)
 			{
@@ -4707,7 +4755,8 @@ export class MailApp extends EgwApp
 				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
 				for (var i = 0; i < _senders.length; i++)
 				{
-					egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id])
+					(this.mail_tryJmapMoveFolder(_senders[i].id, destination.id) ??
+						egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id]))
 						.finally(() =>
 							{
 								// Move is done (successfully or not), remove loading
@@ -4722,6 +4771,35 @@ export class MailApp extends EgwApp
 		};
 		Et2Dialog.show_dialog(callback, this.egw.lang('Are you sure you want to move folder %1 to folder %2?',
 			src_label, dest_label), this.egw.lang('Move folder'), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
+	}
+
+	/**
+	 * Try the fast client-side JMAP move path - MailJmap.moveMailbox(). Same-account only
+	 * (mail_MoveFolder() already rejected a cross-account move before ever reaching this).
+	 * Refreshes *both* the source's old parent level and the destination level on success (the
+	 * moved node disappears from one, appears in the other) - falls back to the classic ajax
+	 * (per-sender, matching the caller's own per-sender loop) on any failure.
+	 */
+	private mail_tryJmapMoveFolder(sourceTreeId : string, destTreeId : string) : Promise<any> | null
+	{
+		if (sourceTreeId.indexOf('::') === -1) return null;	// an account root can't be moved
+		const [profileID, sourcePath] : [string, string] = sourceTreeId.split('::', 2) as [string, string];
+		const sourceParentPath = sourcePath.includes('/') ? sourcePath.substring(0, sourcePath.lastIndexOf('/')) : '';
+		const destPath = destTreeId.indexOf('::') !== -1 ? destTreeId.split('::', 2)[1] : '';
+		const fallback = () => egw.request('mail.mail_ui.ajax_MoveFolder', [sourceTreeId, destTreeId]);
+
+		return this.jmap.moveMailbox(profileID, sourcePath, destPath).then((success) =>
+		{
+			if (!success) return fallback();
+			return Promise.all([
+				this.mail_refreshFolderLevel(profileID, sourceParentPath),
+				this.mail_refreshFolderLevel(profileID, destPath),
+			]);
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapMoveFolder(): JMAP move failed, falling back to server', e);
+			return fallback();
+		});
 	}
 
 	/**
@@ -4740,13 +4818,13 @@ export class MailApp extends EgwApp
 			{label: this.egw.lang("Yes"), id: "delete", "class": "ui-priority-primary", "default": true, image: "check"},
 			{label: this.egw.lang("Cancel"), id: "cancel", image: "cancel"}
 		];
-		Et2Dialog.show_dialog(function (_button_id, _value)
+		Et2Dialog.show_dialog((_button_id, _value) =>
 			{
 				switch (_button_id)
 				{
 					case "delete":
-						egw.json('mail.mail_ui.ajax_deleteFolder', [_senders[0].id])
-							.sendRequest(true);
+						(this.mail_tryJmapDeleteFolder(_senders[0].id) ??
+							egw.json('mail.mail_ui.ajax_deleteFolder', [_senders[0].id]).sendRequest(true));
 						return;
 					case "cancel":
 				}
@@ -4754,6 +4832,28 @@ export class MailApp extends EgwApp
 			this.egw.lang("Do you really want to DELETE Folder %1 ?", OldFolderName) + " " + (ftree.hasChildren(_senders[0].id) ? this.egw.lang("All subfolders will be deleted too, and all messages in all affected folders will be lost") : this.egw.lang("All messages in the folder will be lost")),
 			this.egw.lang("DELETE Folder %1 ?", OldFolderName),
 			OldFolderName, buttons);
+	}
+
+	/**
+	 * Try the fast client-side JMAP delete path - MailJmap.deleteMailbox(). Refreshes the parent's
+	 * tree level on success; falls back to the classic ajax_deleteFolder on any failure.
+	 */
+	private mail_tryJmapDeleteFolder(treeId : string) : Promise<any> | null
+	{
+		if (treeId.indexOf('::') === -1) return null;	// an account root can't be deleted
+		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
+		const parentPath = path.includes('/') ? path.substring(0, path.lastIndexOf('/')) : '';
+		const fallback = () => egw.json('mail.mail_ui.ajax_deleteFolder', [treeId]).sendRequest(true);
+
+		return this.jmap.deleteMailbox(profileID, path).then((success) =>
+		{
+			if (!success) return fallback();
+			return this.mail_refreshFolderLevel(profileID, parentPath);
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapDeleteFolder(): JMAP delete failed, falling back to server', e);
+			return fallback();
+		});
 	}
 
 	/**
@@ -5157,8 +5257,38 @@ export class MailApp extends EgwApp
 		var folder = mailbox[1], acc_id = mailbox[0];
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
-		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true])
-			.sendRequest();
+		(this.mail_tryJmapSetSubscribed(_senders[0].id, true) ??
+			egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true]).sendRequest());
+	}
+
+	/**
+	 * Try the fast client-side JMAP (un)subscribe path - MailJmap.setMailboxSubscribed(). No tree
+	 * level refresh needed (unlike add/rename/move/delete) - the node's own id doesn't change, so
+	 * just flip its `checked` field locally for instant feedback, matching the classic path's own
+	 * fire-and-forget behaviour (it doesn't reshuffle the tree live either). Falls back to the
+	 * classic ajax_foldersubscription on any failure.
+	 */
+	private mail_tryJmapSetSubscribed(treeId : string, subscribed : boolean) : Promise<any> | null
+	{
+		if (treeId.indexOf('::') === -1) return null;	// an account root has no subscription state
+		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
+		const fallback = () => egw.json('mail.mail_ui.ajax_foldersubscription', [profileID, path, subscribed]).sendRequest();
+
+		return this.jmap.setMailboxSubscribed(profileID, path, subscribed).then((success) =>
+		{
+			if (!success) return fallback();
+			const ftree = this.et2?.getWidgetById(this.nm_index + '[foldertree]');
+			const node = ftree?.getNode(treeId);
+			if (node)
+			{
+				node.checked = subscribed;
+				ftree.requestUpdate();
+			}
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_tryJmapSetSubscribed(): JMAP (un)subscribe failed, falling back to server', e);
+			return fallback();
+		});
 	}
 
 	/**
@@ -5173,8 +5303,8 @@ export class MailApp extends EgwApp
 		var folder = mailbox[1], acc_id = mailbox[0];
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
-		egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false])
-			.sendRequest();
+		(this.mail_tryJmapSetSubscribed(_senders[0].id, false) ??
+			egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false]).sendRequest());
 	}
 
 	/**
@@ -5481,15 +5611,8 @@ export class MailApp extends EgwApp
 		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
 		const parentId : string | null = hasParent ? item.jmapId : null;
 
-		return this.jmap.getMailboxChildren(profileID, parentId).then((mailboxes) =>
-		{
-			if (mailboxes === null)
-			{
-				return this.mail_classicFolderLoad(item);
-			}
-			const subscribedOnly = !egw.preference('showAllFoldersInFolderPane', 'mail');
-			return {item: buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly}, egw)};
-		});
+		return this.mail_buildFolderLevelData(profileID, parentPath, parentId).then((data) =>
+			data === null ? this.mail_classicFolderLoad(item) : {item: data});
 	}
 
 	/**
@@ -5501,6 +5624,53 @@ export class MailApp extends EgwApp
 	{
 		const requestLink = egw.link(egw.ajaxUrl('mail.mail_ui.ajax_foldertree'), {id: item.id ?? item.value});
 		return egw.request(requestLink, []);
+	}
+
+	/**
+	 * Fetch + build one folder-tree level (shared by mail_folderTreeAutoload() and
+	 * mail_refreshFolderLevel()) - null means "JMAP not reachable", same contract
+	 * MailJmap.getMailboxChildren() itself has, for the caller to decide its own fallback.
+	 */
+	private mail_buildFolderLevelData(profileID : string, parentPath : string, parentId : string | null) : Promise<FolderTreeNode[] | null>
+	{
+		return this.jmap.getMailboxChildren(profileID, parentId).then((mailboxes) =>
+		{
+			if (mailboxes === null) return null;
+			const subscribedOnly = !egw.preference('showAllFoldersInFolderPane', 'mail');
+			return buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly}, egw);
+		});
+	}
+
+	/**
+	 * Re-fetch one folder-tree level via JMAP and push it directly into the tree (Et2Tree's
+	 * refreshItem() with data, not a lazy-load re-trigger) - used after a successful folder CRUD
+	 * fast path (create/rename/move/delete) to reflect the change immediately, without a full
+	 * page reload. Resolves false (never throws) on any failure - callers that care already ran
+	 * the actual mutation via a separate JMAP call before calling this; a refresh failure here
+	 * just means the tree looks stale until the user next expands/reloads, not that the mutation
+	 * itself failed.
+	 *
+	 * @param profileID
+	 * @param parentPath canonical path of the level to refresh, '' for the top level
+	 */
+	private mail_refreshFolderLevel(profileID : string, parentPath : string) : Promise<boolean>
+	{
+		const ftree = this.et2?.getWidgetById(this.nm_index + '[foldertree]');
+		if (!ftree) return Promise.resolve(false);
+
+		return this.jmap.resolveMailboxId(profileID, parentPath)
+			.then((parentId) => this.mail_buildFolderLevelData(profileID, parentPath, parentId))
+			.then((data) =>
+			{
+				if (data === null) return false;
+				const parentTreeId = parentPath !== '' ? profileID + '::' + parentPath : profileID;
+				return ftree.refreshItem(parentTreeId, {item: data}).then(() => true);
+			})
+			.catch((e) =>
+			{
+				console.error('MailApp.mail_refreshFolderLevel(): failed to refresh the tree after a folder change', e);
+				return false;
+			});
 	}
 
 	/**

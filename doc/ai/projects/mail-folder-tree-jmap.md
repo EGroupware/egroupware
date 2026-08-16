@@ -186,6 +186,27 @@ either can be picked up first.
     local-shim side of this is a real implementation gap, not just a client-side change - mirrors
     the amount of new server-side shim work the original row-listing/body-rendering phases each
     needed.
+  - **Client-side wiring done (2026-08-16)** - no server-side changes needed at all for this part
+    (`mailboxSet()`/real JMAP `Mailbox/set` already covered everything). `mail/js/jmap.ts` gained
+    five thin `MailJmap` methods (`createMailbox`/`renameMailbox`/`moveMailbox`/`deleteMailbox`/
+    `setMailboxSubscribed`), all resolving ids via the *existing* `mailboxId()` per-path cache
+    (not requiring a tree node to already carry a cached JMAP id) so the fast path works for
+    every node, including ones never touched by Phase 1's lazy loading. `mail/js/app.ts`'s six
+    existing tree actions (`mail_AddFolder`/`mail_RenameFolder`/`mail_MoveFolder`/
+    `mail_DeleteFolder`/`subscribe_folder`/`unsubscribe_folder`) each gained a
+    `mail_tryJmapXxx()` fast-path helper mirroring the exact `mail_tryJmapDelete()` pattern
+    already established for message bulk actions (`Promise<any> | null`, `??` fallback to the
+    unchanged classic ajax call) - refreshing the affected tree level(s) via a new shared
+    `mail_refreshFolderLevel()` helper (factored out of `mail_folderTreeAutoload()`) on success,
+    rather than reloading the page. Rename/move/delete also invalidate the affected
+    `mailboxId()` cache entries (the node itself and every descendant path cached under its old
+    location) so a later row-fetch never resolves a stale id.
+  - **`Et2Tree::refreshItem(_id, data)`'s bug (see Phase 1 above) actually got fixed this time** -
+    the earlier note claiming it was fixed during Phase 1 was wrong (the fix was designed for an
+    eager whole-tree-fetch draft and got dropped when the design pivoted to lazy per-level
+    loading before shipping; the code was still the original broken version). It's a real
+    prerequisite for `mail_refreshFolderLevel()`'s data-push approach here, so it's actually fixed
+    now, not just documented as such.
 - **Resolved (2026-08-15)**: `ajax_emptySpam`/`ajax_emptyTrash` are already covered - `app.ts`'s
   `mail_emptySpam()`/`mail_emptyTrash()` already try a JMAP fast path first (`MailJmap.purgeFolder()`,
   paginated `Email/set` destroy) and only fall back to the classic `ajax_*` methods on
