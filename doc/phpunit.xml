@@ -11,12 +11,20 @@
         <var name="EGW_DOMAIN" value="default" />
         <var name="EGW_USER" value="demo" />
         <var name="EGW_PASSWORD" value="guest" />
-        <!-- dedicated account with real, DB-backed admin app rights - for tests exercising
-             admin-only functionality (eg. admin_cmd_edit_user/_edit_group), switch to this via
-             LoggedInTest::switchUser() rather than granting EGW_USER admin rights, which would
-             short-circuit the many tests relying on EGW_USER NOT being an admin -->
-        <var name="EGW_ADMIN_USER" value="demoadmin" />
-        <var name="EGW_ADMIN_PASSWORD" value="guest" />
+        <!-- Real, DB-backed admin account - for tests exercising admin-only functionality
+             (eg. admin_cmd_edit_user/_edit_group), switch to this via LoggedInTest::switchUser()
+             rather than granting EGW_USER admin rights, which would short-circuit the many tests
+             relying on EGW_USER NOT being an admin.
+             This is "sysop", the account every EGroupware install already creates during setup -
+             NOT a separate test-only account: a dedicated "demoadmin"-style account previously
+             used here collided with "demo" in several apps' generous name-matching lookups
+             (eg. calendar_import_csv::parse_participants(), which resolves "demo" via an
+             addressbook LIKE '%demo%' search that a same-prefixed second account also matches),
+             causing spurious failures across calendar/infolog/projectmanager tests.
+             sysop's password is generated fresh per install, so it can't be committed here -
+             override via shell: EGW_ADMIN_PASSWORD="..." vendor/bin/phpunit -c doc/phpunit.xml -->
+        <var name="EGW_ADMIN_USER" value="sysop" />
+        <env name="EGW_ADMIN_PASSWORD" value=""/>
     </php>
 	    <testsuites>
 	        <testsuite name="Api">

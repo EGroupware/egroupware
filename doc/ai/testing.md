@@ -69,16 +69,32 @@ config:
 rely on `demo` genuinely lacking admin rights (broken-ACL-check regression tests, permission-boundary
 tests, etc.), and would silently stop testing anything if `demo` became an admin.
 
-Instead, `phpunit.xml` also defines a dedicated, real, DB-backed admin account:
+Instead, `phpunit.xml` points admin-only tests at `sysop` - the real admin account every EGroupware
+install already creates during setup, not a separate test-only account:
 
 ```xml
-<var name="EGW_ADMIN_USER" value="demoadmin" />
-<var name="EGW_ADMIN_PASSWORD" value="guest" />
+<var name="EGW_ADMIN_USER" value="sysop" />
+<env name="EGW_ADMIN_PASSWORD" value=""/>
 ```
 
-CI provisions this account the same way it provisions `demo` (`admin/admin-cli.php --edit-user` +
-`--allow-app ...,admin`), so `$GLOBALS['egw_info']['user']['apps']['admin']` and the underlying
-`egw_acl` `'run'` row are both genuinely populated - not a shortcut/mock.
+`sysop`'s password is generated fresh per install (in Docker installs, written to
+`/var/lib/egroupware/egroupware-docker.install.log`), so it can't be committed to `phpunit.xml`.
+It must be supplied via environment instead: `EGW_ADMIN_PASSWORD="..." vendor/bin/phpunit -c
+doc/phpunit.xml`. `doc/phpunit_bootstrap.php` normalizes `getenv('EGW_ADMIN_PASSWORD')`/`$_ENV` into
+`$GLOBALS['EGW_ADMIN_PASSWORD']`, so test code keeps reading it like any other `phpunit.xml` `<var>`.
+CI extracts `sysop`'s password from the install log (as `SYSOP_PASS`, already used elsewhere in the
+workflow to provision `EGW_TEST_USER`) and passes it straight through as `EGW_ADMIN_PASSWORD`.
+
+**A previous version of this used a dedicated `demoadmin` test account instead of `sysop`.** That
+collided with `demo` in several apps' generous name-matching lookups - eg.
+`calendar_import_csv::parse_participants()` resolves a bare name like "demo" via
+`importexport_helper_functions::account_name2id()`, which falls back to an `addressbook_bo::search()`
+using a `%`-wildcard `LIKE` across `org_name,n_family,n_given,cat_id,contact_email`. `demo`'s email
+(`demo@example.org`) and `demoadmin`'s (`demoadmin@example.invalid`) both match `LIKE '%demo%'`, and
+with two candidates the wrong one (sorted by surname) could win - causing `calendar`, `infolog`, and
+`projectmanager` tests that resolve participants/project-contacts by name to silently look up the
+wrong account. Any future dedicated test account name must avoid being a prefix/substring of `demo`
+(or of any other real account name) for the same reason.
 
 **Why this exists:** `admin/inc/class.admin_cmd.inc.php::_check_admin()` (called by
 `admin_cmd_edit_user`, `admin_cmd_edit_group`, `admin_cmd_delete_account`, `admin_cmd_account_app`,

@@ -216,16 +216,7 @@ jobs:
           EGW_TEST_PASS="$(
             sed -n 's/.*<var name="EGW_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
           )"
-          # Dedicated admin test user (real, DB-backed admin rights) - kept separate from
-          # EGW_TEST_USER so most tests keep running as a genuine non-admin
-          EGW_ADMIN_USER="$(
-            sed -n 's/.*<var name="EGW_ADMIN_USER" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
-          )"
-          EGW_ADMIN_PASS="$(
-            sed -n 's/.*<var name="EGW_ADMIN_PASSWORD" value="\([^"]*\)".*/\1/p' "$GITHUB_WORKSPACE/sources/doc/phpunit.xml"
-          )"
-
-          for v in SYSOP_USER SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS EGW_ADMIN_USER EGW_ADMIN_PASS; do
+          for v in SYSOP_USER SYSOP_PASS EGW_TEST_USER EGW_TEST_PASS; do
             if [ -z "${!v}" ]; then
               echo "::error::Missing $v"
               exit 1
@@ -241,10 +232,11 @@ jobs:
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
             --allow-app "$SYSOP_USER,$SYSOP_PASS,$EGW_TEST_USER,projectmanager"
 
-          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
-            --edit-user "$SYSOP_USER,$SYSOP_PASS,$EGW_ADMIN_USER,Test,Admin,$EGW_ADMIN_PASS,$EGW_ADMIN_USER@example.invalid"
-          $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php admin/admin-cli.php \
-            --allow-app "$SYSOP_USER,$SYSOP_PASS,$EGW_ADMIN_USER,admin"
+          # No separate admin test account needed: "sysop" (SYSOP_USER/SYSOP_PASS, extracted
+          # above from the install log) already has real admin rights from setup and is used
+          # directly as EGW_ADMIN_USER/EGW_ADMIN_PASSWORD in the "Run PHPUnit" step below.
+          # A dedicated "demoadmin"-style account previously used here collided with "demo" in
+          # several apps' generous name-matching lookups (see doc/phpunit.xml).
 
           # Ensure share links resolve locally in CI
           $COMPOSE exec -T -w "$EGW_SRC_DIR" egroupware php setup/setup-cli.php \
@@ -370,6 +362,7 @@ jobs:
             -e EGW_URL=http://127.0.0.1:8081 \
             -e EGW_CONFIG_USER="$EGW_CONFIG_USER" \
             -e EGW_CONFIG_PASSWD="$EGW_CONFIG_PASSWD" \
+            -e EGW_ADMIN_PASSWORD="$SYSOP_PASS" \
             -w "$EGW_SRC_DIR" egroupware \
             bash -lc '
               set -euo pipefail
