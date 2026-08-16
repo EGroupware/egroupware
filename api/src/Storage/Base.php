@@ -577,10 +577,6 @@ class Base
 			{
 				$this->data[$col] = $row[$db_col];
 			}
-			if ($this->table_name === 'egw_pm_projects' && ($row['pm_number'] ?? null) === 'TEST')
-			{
-				error_log(__METHOD__."() DEBUG read TEST project pm_id=".var_export($row['pm_id'],true)." from:\n".(new \Exception())->getTraceAsString());
-			}
 			$this->db2data();
 
 			// store user timezone used for reading
