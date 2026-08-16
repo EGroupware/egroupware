@@ -55,7 +55,11 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 			$project = $this->pm_bo->read(Array('pm_number' => $number));
 			if($project && $project['pm_id'])
 			{
-				$this->pm_bo->delete($project);
+				// Delete by id only: passing the full row lets Storage\Base::delete() build a
+				// WHERE clause matching every column (incl. timezone-converted timestamps), which
+				// can silently match zero rows and leave this fixture number permanently taken for
+				// the rest of the suite.
+				$this->pm_bo->delete($project['pm_id']);
 			}
 		}
 
@@ -728,12 +732,11 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		$this->assertFalse((boolean)$result, 'Error making test project');
 		$this->assertArrayHasKey('pm_id', $this->pm_bo->data, 'Could not make test project');
-		$this->assertThat($this->pm_bo->data['pm_id'],
-			$this->logicalAnd(
-				$this->isType('integer'),
-				$this->greaterThan(0)
-			)
-		);
+		// Accept int or numeric string: Storage\Base::read() never casts DB columns (they come
+		// back as strings from mysqli), and any intervening read of this project - eg. via
+		// notification processing - re-hydrates pm_id as a string. Only the numeric value matters.
+		$this->assertTrue(is_numeric($this->pm_bo->data['pm_id']) && $this->pm_bo->data['pm_id'] > 0,
+			'pm_id is not a positive number: '.var_export($this->pm_bo->data['pm_id'], true));
 		$this->pm_id = $this->pm_bo->data['pm_id'];
 	}
 
