@@ -2397,12 +2397,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/EGroupware/projectmanager.git",
-                "reference": "d8e718f861a333694e6b4aac4543c4b3d1968306"
+                "reference": "8d44d2270880f492af2d54c197baddd3b5cce24d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/d8e718f861a333694e6b4aac4543c4b3d1968306",
-                "reference": "d8e718f861a333694e6b4aac4543c4b3d1968306",
+                "url": "https://api.github.com/repos/EGroupware/projectmanager/zipball/8d44d2270880f492af2d54c197baddd3b5cce24d",
+                "reference": "8d44d2270880f492af2d54c197baddd3b5cce24d",
                 "shasum": ""
             },
             "require": {
