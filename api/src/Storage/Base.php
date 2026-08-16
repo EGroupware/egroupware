@@ -657,7 +657,6 @@ class Base
 			if ($this->autoinc_id)
 			{
 				$this->data[$this->db_key_cols[$this->autoinc_id]] = $this->db->get_last_insert_id($this->table_name,$this->autoinc_id);
-				error_log(__METHOD__."() DEBUG autoinc set: table=$this->table_name col=".$this->db_key_cols[$this->autoinc_id]." value=".var_export($this->data[$this->db_key_cols[$this->autoinc_id]],true)." type=".gettype($this->data[$this->db_key_cols[$this->autoinc_id]]));
 			}
 		}
 		else // insert in table without auto id or update of existing row, dont write colums unset in $this->data
@@ -709,10 +708,6 @@ class Base
 			}
 		}
 		$this->db2data();
-		if ($this->autoinc_id && $this->table_name === 'egw_pm_projects')
-		{
-			error_log(__METHOD__."() DEBUG after db2data: value=".var_export($this->data[$this->db_key_cols[$this->autoinc_id]],true)." type=".gettype($this->data[$this->db_key_cols[$this->autoinc_id]]));
-		}
 
 		return $this->db->Errno;
 	}
