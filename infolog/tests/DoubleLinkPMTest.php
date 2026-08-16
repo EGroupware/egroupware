@@ -66,6 +66,10 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 				// WHERE clause matching every column (incl. timezone-converted timestamps), which
 				// can silently match zero rows and leave this fixture number permanently taken for
 				// the rest of the suite.
+				// Also force history off: with it on, delete() only soft-deletes (pm_status=
+				// 'deleted') on the first call and keeps pm_number - a real purge needs a second
+				// delete() once already-deleted.
+				$this->pm_bo->history = '';
 				$this->pm_bo->delete($project['pm_id']);
 			}
 		}
