@@ -767,13 +767,18 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	 */
 	protected function deleteProject()
 	{
+		error_log(__METHOD__."() DEBUG entry pm_id=".var_export($this->pm_id, true));
 		// Force links to run notification now, or elements might stay
 		// usually waits until Egw::on_shutdown();
-		Api\Link::run_notifies();
+		try { Api\Link::run_notifies(); }
+		catch (\Throwable $e) { error_log(__METHOD__."() DEBUG run_notifies() THREW: ".$e); }
 
 		// Force to ignore setting
 		$this->pm_bo->history = '';
-		$this->pm_bo->delete($this->pm_id, true);
+		$del_ret = $this->pm_bo->delete($this->pm_id, true);
+		error_log(__METHOD__."() DEBUG delete() returned ".var_export($del_ret, true));
+		$check = $this->pm_bo->read(['pm_number' => 'TEST']);
+		error_log(__METHOD__."() DEBUG post-delete read('TEST') = ".var_export($check, true));
 
 		// Force links to run notification now, or elements might stay
 		// usually waits until Egw::on_shutdown();
