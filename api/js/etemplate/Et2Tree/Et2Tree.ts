@@ -145,12 +145,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 	@property({type: Boolean})
 	highlighting: Boolean = false   // description: "Add highlighting class on hovered over item, highlighting is disabled by default"
-	@property({type: String})
-	autoloading: string = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id"
+	@property()
+	autoloading: string | ((item : TreeItemData) => Promise<any>) = ""  //description: "JSON URL or menuaction to be called for nodes marked with child=1, but not having children, getSelectedNode() contains node-id - or a Javascript callback function(item) returning a Promise of the same {item: [...]} / {children: [...]} shape, for a caller that wants to supply children itself instead of an ajax round-trip"
 	@property({type: Function})
 	onopenstart //description: "Javascript function executed when user opens a node: function(_id, _widget, _hasChildren) returning true to allow opening!"
 	@property({type: Function})
 	onopenend   //description: "Javascript function executed when opening a node is finished: function(_id, _widget, _hasChildren)"
+	@property({type: String})
+	openStatePreference: string = ""  //description: "'app.prefName' - if set, the tree automatically restores which nodes were expanded from this preference on load, and (debounced) saves the current expand-state back to it on every node open/close"
 	@property({type: String})
 	imagePath : string = egw?.webserverUrl + "/api/templates/default/images/dhtmlxtree/" //TODO we will need a different path here! maybe just rename the path?
 	//     description: "Directory for tree structure images, set on server-side to 'dhtmlx' subdir of templates image-directory"
@@ -173,6 +175,9 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 	private _actionManager: EgwAction;
 	widget_object: EgwActionObject;
+	// openStatePreference bookkeeping - see applyOpenState()/saveOpenState()
+	private _openIds : Set<string>;
+	private _openStateSaveTimer : number;
 	/***
 	 * If you alter the pictures used as expand/collapse icons
 	 * you need to increase this number to cache bust Browser-caching
@@ -233,7 +238,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	}
 	firstUpdated()
 	{
-		if (this.autoloading)
+		if (this.autoloading && typeof this.autoloading === "string")
 		{
 			// @ts-ignore from static get properties
 			let url = this.autoloading;
@@ -243,6 +248,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				url = '/json.php?menuaction=' + url;
 			}
 			this.autoloading = url;
+		}
+
+		if (this.openStatePreference)
+		{
+			this.applyOpenState();
 		}
 
 		// Check if top level should be autoloaded
@@ -272,9 +282,120 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}
 	}
 
+	/**
+	 * Split "app.prefName" (openStatePreference) into its [app, name] parts.
+	 *
+	 * App names never contain a dot, so splitting on the first one is unambiguous.
+	 */
+	private openStatePreferenceParts() : [string, string] | null
+	{
+		const dot = this.openStatePreference.indexOf('.');
+		if (dot < 1 || dot === this.openStatePreference.length - 1)
+		{
+			return null;
+		}
+		return [this.openStatePreference.substring(0, dot), this.openStatePreference.substring(dot + 1)];
+	}
+
+	/**
+	 * Lazily parse and cache openStatePreference's persisted expanded-node-ids, once per widget
+	 * instance - reused by every applyOpenState() call (initial render, and again after every
+	 * lazy-load merge, see handleItemLazyLoad()).
+	 */
+	private loadOpenIds() : Set<string>
+	{
+		if (this._openIds) return this._openIds;
+		const parts = this.openStatePreferenceParts();
+		let ids : string[] = [];
+		if (parts)
+		{
+			try
+			{
+				ids = JSON.parse(egw().preference(parts[1], parts[0]) || "[]") || [];
+			}
+			catch (e)
+			{
+				ids = [];
+			}
+		}
+		return this._openIds = new Set(ids);
+	}
+
+	/**
+	 * Apply openStatePreference's persisted expanded-node-ids to whatever's currently in
+	 * _selectOptions. Restoring a *deep* expand path (e.g. "INBOX > Project > 2026") needs more
+	 * than a single pass at first render: with lazy per-level loading, "Project"/"2026" don't
+	 * exist client-side at all until "INBOX" has actually been expanded once and its children
+	 * have arrived - so this must be re-run every time a lazy-load merge brings new nodes into
+	 * _selectOptions (see handleItemLazyLoad()), not just once in firstUpdated(). Each pass only
+	 * ever marks nodes already present; _optionTemplate()'s own expandState-driven eager
+	 * lazy-load dispatch (see its docblock) is what actually drives the next level's fetch once
+	 * a matching node gets marked open here, continuing the cascade level by level as each
+	 * fetch resolves.
+	 */
+	private applyOpenState() : void
+	{
+		if (!this.openStatePreferenceParts()) return;
+		const ids = this.loadOpenIds();
+		if (!ids.size) return;
+
+		const applyRecursive = (options : TreeItemData[]) =>
+		{
+			(options ?? []).forEach((option : any) =>
+			{
+				if (ids.has(option.id ?? option.value))
+				{
+					option.open = 1;
+				}
+				applyRecursive(option.item ?? option.children);
+			});
+		};
+		applyRecursive(this._selectOptions);
+		this.requestUpdate("_selectOptions");
+	}
+
+	/**
+	 * Collect every currently-open node's id (recursively) and (debounced) write it back to
+	 * openStatePreference - called from handleItemExpand()/handleItemCollapse().
+	 */
+	private saveOpenState() : void
+	{
+		const parts = this.openStatePreferenceParts();
+		if (!parts) return;
+		const [app, name] = parts;
+
+		const ids : string[] = [];
+		const collect = (options : TreeItemData[]) =>
+		{
+			(options ?? []).forEach((option : any) =>
+			{
+				if (option.open)
+				{
+					ids.push(option.id ?? option.value);
+				}
+				collect(option.item ?? option.children);
+			});
+		};
+		collect(this._selectOptions);
+
+		window.clearTimeout(this._openStateSaveTimer);
+		this._openStateSaveTimer = window.setTimeout(() =>
+		{
+			egw().set_preference(app, name, JSON.stringify(ids));
+		}, 300);
+	}
+
 	protected updated(_changedProperties: PropertyValues)
 	{
 		super.updated(_changedProperties);
+
+		// openStatePreference is often assigned imperatively (eg. mail's app.ts, right after
+		// getWidgetById()) - possibly after firstUpdated() already ran and found it empty, so
+		// also (re-)apply here whenever it actually changes, not just once on first render
+		if (_changedProperties.has("openStatePreference") && this.openStatePreference)
+		{
+			this.applyOpenState();
+		}
 	}
 
 	//Sl-Trees handle their own onClick events
@@ -945,6 +1066,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 			this.requestUpdate("_selectOptions")
 		}
+		if (this.openStatePreference)
+		{
+			this.saveOpenState();
+		}
 	}
 
 	protected handleItemExpand(event)
@@ -954,6 +1079,10 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		if(selectOption)
 		{
 			selectOption.open = 1;
+		}
+		if (this.openStatePreference)
+		{
+			this.saveOpenState();
 		}
 	}
 
@@ -975,6 +1104,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				this.requestUpdate("lazy", "true");
 			}
 			this.getDomNode(parentNode.value ?? parentNode.id).loading = false
+			if (this.openStatePreference)
+			{
+				// cascade the restore: newly-arrived children may themselves be in the
+				// persisted expanded-ids set, continuing a deep expand path level by level
+				// as each fetch resolves (see applyOpenState()'s docblock)
+				this.applyOpenState();
+			}
 			this.requestUpdate("_selectOptions")
 		});
 	}
@@ -1205,13 +1341,20 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 
 	handleLazyLoading(_item: TreeItemData)
 	{
-		let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading)),
-			{
-				id: _item.value ?? _item.id
-			})
+		let result: Promise<TreeItemData>;
+		if (typeof this.autoloading === "function")
+		{
+			result = Promise.resolve(this.autoloading(_item));
+		}
+		else
+		{
+			let requestLink = egw().link(egw().ajaxUrl(egw().decodePath(this.autoloading)),
+				{
+					id: _item.value ?? _item.id
+				})
 
-		let result: Promise<TreeItemData> = egw().request(requestLink, [])
-
+			result = egw().request(requestLink, [])
+		}
 
 		return result
 			.then((results) => {

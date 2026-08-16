@@ -187,6 +187,53 @@ export class MailJmap
 	}
 
 	/**
+	 * Fetch one level's worth of a mailbox's direct children - lazy per-level folder-tree
+	 * loading (see doc/ai/projects/mail-folder-tree-jmap.md), the JMAP counterpart of the
+	 * classic ajax_foldertree/ajax_tree_autoloading per-level IMAP LIST. Batches Mailbox/query
+	 * (list children of parentId) + Mailbox/get (full node data for those ids) in one request,
+	 * the same result-reference pattern getRows() already uses for Email/query+Email/get.
+	 *
+	 * Never throws for "this account isn't reachable right now" - returns null so the caller
+	 * (mail_ui's Et2Tree instance, via its now-callback-capable `autoloading`) can fall back to
+	 * the classic ajax_foldertree fetch for that one node.
+	 *
+	 * @param profileID
+	 * @param parentId JMAP Mailbox id of the parent, or null for the top level
+	 * @return null if this account has no usable JMAP access-token (server unreachable, MFA, ...)
+	 */
+	async getMailboxChildren(profileID : string, parentId : string | null) : Promise<any[] | null>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token)
+			{
+				return null;
+			}
+			const client = this.clients[profileID];
+
+			const [{mailboxes}] = await client.requestMany((t) =>
+			{
+				const ids = t.Mailbox.query({
+					accountId: token.accountId,
+					filter: {parentId},
+				});
+				const mailboxes = t.Mailbox.get({
+					accountId: token.accountId,
+					ids: ids.$ref('/ids'),
+				});
+				return {mailboxes};
+			});
+			return mailboxes.list || [];
+		}
+		catch (e)
+		{
+			console.error('MailJmap.getMailboxChildren(): failed, falling back to the classic ajax_foldertree fetch', e);
+			return null;
+		}
+	}
+
+	/**
 	 * egw.dataRegisterFetch('mail', ...) callback: the only way NextMatch's row-fetch gets
 	 * answered - there is no server-side row-fetch fallback (see class docblock).
 	 *

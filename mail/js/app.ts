@@ -25,6 +25,7 @@ import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatc
 import {MailCompose} from "./compose";
 import {JmapBodyResult, JmapMessageReference, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
+import {buildFolderLevel, FolderTreeNode} from "./folderTree";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -325,6 +326,16 @@ export class MailApp extends EgwApp
 					//TODO check if there are changes necessary
 					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					this.tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+
+					// Lazy per-level JMAP folder loading (see doc/ai/projects/mail-folder-tree-jmap.md):
+					// replaces the classic ajax_foldertree menuaction with a callback that tries
+					// JMAP first and falls back to the classic endpoint per-node on failure -
+					// same "new path alongside old, fall back" precedent as the rest of the JMAP
+					// modernization work. One preference for the whole tree (not per-profile):
+					// node ids already carry "profileID::path", so a single flat expanded-ids
+					// list already covers every account shown in this one tree instance.
+					this.tree_wdg.autoloading = this.mail_folderTreeAutoload.bind(this);
+					this.tree_wdg.openStatePreference = 'mail.ExpandedFolders';
 				}
 				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
 				const cat_id = this.et2.getWidgetById('cat_id');
@@ -5444,6 +5455,52 @@ export class MailApp extends EgwApp
 		{
 			this.unlock_tree();
 		}
+	}
+
+	/**
+	 * Et2Tree autoloading callback (see et2_ready()'s 'mail.index' case) - lazy per-level JMAP
+	 * folder loading, one level per expand, instead of the classic ajax_foldertree menuaction
+	 * (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * item.id is either a bare profileID (an account root node, seeded server-side - expanding
+	 * it means "list its top-level folders", parentId null) or "profileID::canonical/path" (a
+	 * folder node built by this same callback on an earlier level - item.jmapId is then the raw
+	 * JMAP Mailbox id to pass as parentId, not derived from the path: a real JMAP/Stalwart
+	 * mailbox id is server-assigned and opaque, see FolderTreeNode's docblock in ./folderTree).
+	 *
+	 * Falls back to the classic ajax_foldertree fetch for this one node if JMAP isn't reachable
+	 * (network error, non-JMAP-capable account) - same "new path alongside old, fall back"
+	 * precedent as the rest of the JMAP modernization work.
+	 *
+	 * @param item the node being expanded
+	 * @return {item: FolderTreeNode[]} - Et2Tree's expected handleLazyLoading() result shape
+	 */
+	mail_folderTreeAutoload(item : any) : Promise<{ item : FolderTreeNode[] } | any>
+	{
+		const hasParent = typeof item.id === "string" && item.id.indexOf('::') !== -1;
+		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
+		const parentId : string | null = hasParent ? item.jmapId : null;
+
+		return this.jmap.getMailboxChildren(profileID, parentId).then((mailboxes) =>
+		{
+			if (mailboxes === null)
+			{
+				return this.mail_classicFolderLoad(item);
+			}
+			const subscribedOnly = !egw.preference('showAllFoldersInFolderPane', 'mail');
+			return {item: buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly}, egw)};
+		});
+	}
+
+	/**
+	 * Classic ajax_foldertree fetch for a single node - mail_folderTreeAutoload()'s fallback,
+	 * replicating exactly what Et2Tree's own string-based `autoloading` used to do before it was
+	 * replaced with the JMAP-native callback above.
+	 */
+	private mail_classicFolderLoad(item : any) : Promise<any>
+	{
+		const requestLink = egw.link(egw.ajaxUrl('mail.mail_ui.ajax_foldertree'), {id: item.id ?? item.value});
+		return egw.request(requestLink, []);
 	}
 
 	/**

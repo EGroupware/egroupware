@@ -126,7 +126,11 @@ class JmapShim
 				switch ($method)
 				{
 					case 'Mailbox/query':
-						$result = self::mailboxQuery($args);
+						$result = self::mailboxQuery($accountId, $args);
+						break;
+					case 'Mailbox/get':
+						// $calledFor deliberately omitted, same reasoning as Mailbox/set below
+						$result = self::mailboxGet($accountId, $args);
 						break;
 					case 'Mailbox/set':
 						// $calledFor deliberately omitted (stays null = caller's own mailbox) -
@@ -211,22 +215,67 @@ class JmapShim
 	}
 
 	/**
-	 * Mailbox/query: resolve a single path-segment (optionally under a parent) to a folder id
+	 * Mailbox/query - two modes, matching real JMAP's own MailboxFilterCondition semantics
+	 * (parentId and name are independent, combinable filter keys):
 	 *
-	 * Id is just base64(EGroupware-canonical "/"-joined folder path) - a pure encoding,
-	 * not a lookup, so no IMAP round-trip is needed here. Existence is implicitly
-	 * verified later, when Email/query actually searches that mailbox.
+	 * - filter.name given (optionally with parentId): resolve a single known path-segment to a
+	 *   folder id. Id is just base64(EGroupware-canonical "/"-joined folder path) - a pure
+	 *   encoding, not a lookup, so no IMAP round-trip is needed. Existence is implicitly
+	 *   verified later, when Email/query actually searches that mailbox. This is the mode
+	 *   MailJmap.mailboxId() (mail/js/jmap.ts) uses for per-segment path resolution - must stay
+	 *   exactly as cheap as before, no regression.
+	 * - filter.name absent (only parentId, or neither for the top level): list every direct
+	 *   child of that parent - a real one-level Horde listMailboxes() LIST call, the lazy
+	 *   per-level folder-tree loading primitive (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *   Requesting the 'children' option lets mailboxGet() report hasChildren cheaply from the
+	 *   same attributes, mirroring mail_tree.inc.php's own nodeHasChildren().
 	 *
-	 * @param array $args {filter: {name: string, parentId?: string}}
+	 * @param string $accountId
+	 * @param array $args {filter?: {name?: string, parentId?: string}}
 	 * @return array {ids: string[]}
 	 */
-	public static function mailboxQuery(array $args) : array
+	public static function mailboxQuery(string $accountId, array $args) : array
 	{
 		$name = (string)($args['filter']['name'] ?? '');
 		$parentPath = !empty($args['filter']['parentId']) ? self::folderPath($args['filter']['parentId']) : '';
-		$path = $parentPath !== '' ? $parentPath.'/'.$name : $name;
 
-		return ['ids' => [base64_encode($path)]];
+		if ($name !== '')
+		{
+			$path = $parentPath !== '' ? $parentPath.'/'.$name : $name;
+			return ['ids' => [base64_encode($path)]];
+		}
+
+		if ($accountId === '0' || !($imap = self::imapServer($accountId)))
+		{
+			return ['ids' => []];
+		}
+		return ['ids' => self::listChildIds($imap, $parentPath)];
+	}
+
+	/**
+	 * The IMAP side of mailboxQuery()'s "list children" mode, split out so it can be exercised
+	 * directly (via ReflectionMethod) against a mocked connection in tests, same pattern
+	 * mailboxCreate()/mailboxUpdate()/mailboxDestroy() already use.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $parentPath canonical "/"-joined path, '' for the top level
+	 * @return string[] base64-encoded canonical paths of every direct child
+	 */
+	private static function listChildIds(\Horde_Imap_Client_Socket $imap, string $parentPath) : array
+	{
+		$parentMailbox = self::hordeMailbox($imap, $parentPath);
+		$delimiter = self::namespaceDelimiter($imap, 'personal');
+		// IMAP '%' matches any characters except the hierarchy delimiter - i.e. exactly one
+		// level, never grandchildren, and never the parent itself (which needs at least one
+		// more character after the delimiter to match)
+		$pattern = $parentPath === '' ? '%' : $parentMailbox.$delimiter.'%';
+
+		$ids = [];
+		foreach ($imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]) as $mailboxName => $info)
+		{
+			$ids[] = base64_encode(self::canonicalPath($imap, $mailboxName));
+		}
+		return $ids;
 	}
 
 	/**
@@ -236,6 +285,190 @@ class JmapShim
 	public static function folderPath(string $folderId) : string
 	{
 		return $folderId === '' ? '' : (string)base64_decode($folderId);
+	}
+
+	/**
+	 * Translate a real IMAP mailbox name to the EGroupware-canonical "/"-joined folder path -
+	 * the reverse of hordeMailbox(), needed to build id/parentId for mailboxGet()'s results.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailboxName
+	 * @return string
+	 */
+	public static function canonicalPath(\Horde_Imap_Client_Socket $imap, string $mailboxName) : string
+	{
+		if (strtoupper($mailboxName) === 'INBOX')
+		{
+			return 'INBOX';
+		}
+		$delimiter = self::namespaceDelimiter($imap, 'personal');
+		return $delimiter === '/' ? $mailboxName : str_replace($delimiter, '/', $mailboxName);
+	}
+
+	/**
+	 * Resolve a mailbox's JMAP role from IMAP SPECIAL-USE attributes, falling back to the
+	 * account's own configured special-folder names when the server doesn't support
+	 * SPECIAL-USE (Horde silently drops the 'special_use' listMailboxes() option in that case -
+	 * see Base.php's createMailbox()/listMailboxes() - so live attributes alone aren't reliable
+	 * across all servers). Same information Api\Mail::getSpecialUseFolders() uses classically,
+	 * reached directly off $imap (acc_folder_*) rather than through Api\Mail/mail_bo, to keep
+	 * this class's "never goes through mail_ui/Api\Mail" discipline.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailboxName real IMAP mailbox name
+	 * @param string[] $attributes lower-cased LIST attributes for this mailbox
+	 * @return string|null one of inbox/trash/sent/drafts/junk/archive (JMAP MailboxRole values
+	 *  this shim can determine), or null
+	 */
+	public static function roleFor(\Horde_Imap_Client_Socket $imap, string $mailboxName, array $attributes) : ?string
+	{
+		if (strtoupper($mailboxName) === 'INBOX')
+		{
+			return 'inbox';
+		}
+		static $specialUse = [
+			'\\trash' => 'trash', '\\sent' => 'sent', '\\drafts' => 'drafts',
+			'\\junk' => 'junk', '\\archive' => 'archive',
+		];
+		foreach ($attributes as $attribute)
+		{
+			if (isset($specialUse[strtolower($attribute)]))
+			{
+				return $specialUse[strtolower($attribute)];
+			}
+		}
+		static $accFolders = [
+			'acc_folder_trash' => 'trash', 'acc_folder_sent' => 'sent', 'acc_folder_draft' => 'drafts',
+			'acc_folder_junk' => 'junk', 'acc_folder_archive' => 'archive',
+		];
+		foreach ($accFolders as $property => $role)
+		{
+			// read into a local var first - Mail\Imap has no __isset(), so empty()/isset()
+			// directly on the magic property would never even call __get() and always report
+			// "not set", silently defeating this whole fallback
+			$folderName = $imap->$property;
+			if (!empty($folderName) && strcasecmp($folderName, $mailboxName) === 0)
+			{
+				return $role;
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Mailbox/get (RFC 8621 §2.6) for the local plain-IMAP shim - full node data for a set of
+	 * mailboxes, typically the ids a preceding Mailbox/query just listed (see mailboxQuery()'s
+	 * "list children" mode) - the lazy per-level folder-tree loading pair, batched together the
+	 * same way MailJmap.getRows() already batches Email/query+Email/get via a result-reference
+	 * (see MailJmap.getMailboxChildren(), mail/js/jmap.ts).
+	 *
+	 * SECURITY: see mailboxSet()'s docblock - $calledFor is never derived from client-supplied
+	 * $args, and dispatch()'s own 'Mailbox/get' case never passes it.
+	 *
+	 * @param string $accountId
+	 * @param array $args {ids?: string[]|null} null (or omitted) means "all mailboxes" (RFC 8620
+	 *  Get semantics) - supported for completeness, though the lazy per-level path above always
+	 *  passes explicit ids from a preceding query.
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only,
+	 *  see mailboxSet()), or null for the caller's own mailbox
+	 * @return array {list: array[], notFound: string[]}
+	 */
+	public static function mailboxGet(string $accountId, array $args, ?string $calledFor = null) : array
+	{
+		if ($accountId === '0' || !($imap = self::imapServer($accountId, $calledFor)))
+		{
+			return ['list' => [], 'notFound' => array_values((array)($args['ids'] ?? []))];
+		}
+		$requestedIds = array_key_exists('ids', $args) ? $args['ids'] : null;
+		return self::mailboxGetInternal($imap, $requestedIds, $calledFor);
+	}
+
+	/**
+	 * The IMAP side of mailboxGet(), split out so it can be exercised directly (via
+	 * ReflectionMethod) against a mocked connection in tests, same pattern
+	 * mailboxCreate()/mailboxUpdate()/mailboxDestroy() already use.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string[]|null $requestedIds null = every mailbox (RFC 8620 "ids: null")
+	 * @param string|null $calledFor see mailboxGet()
+	 * @return array {list: array[], notFound: string[]}
+	 */
+	private static function mailboxGetInternal(\Horde_Imap_Client_Socket $imap, ?array $requestedIds, ?string $calledFor) : array
+	{
+		if ($requestedIds === null)
+		{
+			// RFC 8620 "ids: null" = all - a full-account scan is the correct/only way to
+			// answer this, unlike the explicit-ids case below
+			$list = [];
+			foreach ($imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED,
+				['attributes' => true, 'special_use' => true, 'children' => true]) as $mailboxName => $info)
+			{
+				$list[] = self::mailboxNode($imap, $mailboxName, (array)($info['attributes'] ?? []));
+			}
+			return ['list' => $list, 'notFound' => []];
+		}
+
+		// explicit ids (the lazy per-level path's normal case): look up each mailbox by its own
+		// exact (non-wildcard) name individually - critically, NOT a '*' full-account scan,
+		// which would defeat the whole point of lazy per-level loading for accounts with
+		// hundreds of folders
+		$list = [];
+		$notFound = [];
+		foreach ($requestedIds as $id)
+		{
+			$path = self::folderPath((string)$id);
+			$mailboxName = self::hordeMailbox($imap, $path, $calledFor);
+			$info = $imap->listMailboxes($mailboxName, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED,
+				['attributes' => true, 'special_use' => true, 'children' => true]);
+			if (empty($info))
+			{
+				$notFound[] = (string)$id;
+				continue;
+			}
+			$list[] = self::mailboxNode($imap, $mailboxName, (array)(reset($info)['attributes'] ?? []));
+		}
+		return ['list' => $list, 'notFound' => $notFound];
+	}
+
+	/**
+	 * Build one Mailbox/get result entry - shared by both mailboxGet() modes
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailboxName real IMAP mailbox name
+	 * @param string[] $rawAttributes LIST attributes as returned by Horde (mixed case)
+	 * @return array
+	 */
+	private static function mailboxNode(\Horde_Imap_Client_Socket $imap, string $mailboxName, array $rawAttributes) : array
+	{
+		$path = self::canonicalPath($imap, $mailboxName);
+		[$parentPath, $leafName] = self::splitPath($path);
+		$attributes = array_map('strtolower', $rawAttributes);
+
+		$counts = ['messages' => 0, 'unseen' => 0];
+		try
+		{
+			$status = $imap->status($mailboxName, \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN);
+			$counts['messages'] = (int)($status['messages'] ?? 0);
+			$counts['unseen'] = (int)($status['unseen'] ?? 0);
+		}
+		catch (\Throwable $e)
+		{
+			// \Noselect namespace-separator mailboxes (and similar) can throw on STATUS - leave
+			// the zero-defaults rather than failing the whole mailboxGet() call
+		}
+
+		return [
+			'id' => base64_encode($path),
+			'name' => $path === 'INBOX' ? 'INBOX' : $leafName,
+			'parentId' => $parentPath !== '' ? base64_encode($parentPath) : null,
+			'sortOrder' => 0,
+			'isSubscribed' => in_array('\\subscribed', $attributes, true),
+			'totalEmails' => $counts['messages'],
+			'unreadEmails' => $counts['unseen'],
+			'role' => self::roleFor($imap, $mailboxName, $attributes),
+			'hasChildren' => in_array('\\haschildren', $attributes, true) ? true :
+				(in_array('\\hasnochildren', $attributes, true) ? false : true),
+		];
 	}
 
 	/**
@@ -529,22 +762,32 @@ class JmapShim
 			{
 				return $imap->getUserMailboxString($calledFor);
 			}
-			static $othersDelimiters = [];
-			$key = spl_object_id($imap);
-			$othersDelimiters[$key] ??= $imap->getNameSpaceArray()['others'][0]['delimiter'] ?? '/';
+			$delimiter = self::namespaceDelimiter($imap, 'others');
 
-			return $imap->getUserMailboxString($calledFor, str_replace('/', $othersDelimiters[$key], $path));
+			return $imap->getUserMailboxString($calledFor, str_replace('/', $delimiter, $path));
 		}
 
 		if ($path === '' || strtoupper($path) === 'INBOX')
 		{
 			return 'INBOX';
 		}
-		static $delimiters = [];
-		$key = spl_object_id($imap);
-		$delimiters[$key] ??= $imap->getNameSpaceArray()['personal'][0]['delimiter'] ?? '/';
+		$delimiter = self::namespaceDelimiter($imap, 'personal');
 
-		return $delimiters[$key] === '/' ? $path : str_replace('/', $delimiters[$key], $path);
+		return $delimiter === '/' ? $path : str_replace('/', $delimiter, $path);
+	}
+
+	/**
+	 * Get (and cache, per request/connection) one of $imap's namespace delimiters
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $namespace 'personal'|'others'|'shared' (Horde_Imap_Client_Socket::getNameSpaceArray()'s keys)
+	 * @return string
+	 */
+	private static function namespaceDelimiter(\Horde_Imap_Client_Socket $imap, string $namespace) : string
+	{
+		static $delimiters = [];
+		$key = spl_object_id($imap).'|'.$namespace;
+		return $delimiters[$key] ??= $imap->getNameSpaceArray()[$namespace][0]['delimiter'] ?? '/';
 	}
 
 	/**

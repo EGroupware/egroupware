@@ -1,6 +1,6 @@
 # Mail: folder-tree JMAP migration + persisted expand state
 
-## Status: planned, not started (2026-08-14)
+## Status: Phase 1 (lazy per-level JMAP tree loading) implemented (2026-08-16)
 
 Continuation of [[mail-jmap-modernization]] - that project explicitly deferred "Folder/mailbox
 administration" as "a separate, larger concern, not started". This doc is that concern, scoped, plus
@@ -84,8 +84,65 @@ either can be picked up first.
   `MailJmap`, via `Mailbox/query` (real JMAP already supported; `JmapShim::mailboxQuery()` already
   exists for the local shim - see [[mail-jmap-modernization]]'s row-listing section for the existing
   registered-fetch-callback pattern this can likely reuse/mirror for a "mailbox" prefix).
+  - **Done (2026-08-16), lazy per-level, not a whole-subtree eager fetch** - ralf's explicit
+    direction: some users have hundreds of folders across many levels, so the tree loads one
+    level at a time on expand, exactly like the classic `ajax_foldertree` behaviour it replaces
+    (an *earlier* draft of this plan had this backwards - eager whole-account fetch - corrected
+    before implementation). Chain: `JmapShim::mailboxQuery()` gained a second mode (list every
+    direct child of a parent, a real one-level Horde `listMailboxes()` call, when no `name`
+    filter is given - the existing single-name-resolution mode `MailJmap.mailboxId()` needs is
+    untouched) + new `JmapShim::mailboxGet()` (RFC 8621 §2.6, explicit ids looked up
+    individually - **never** a `'*'` full-account scan, which would defeat the whole point for
+    large accounts) → client `MailJmap.getMailboxChildren(profileID, parentId)` (`mail/js/jmap.ts`,
+    batches `Mailbox/query`+`Mailbox/get` via a result-reference, mirroring `getRows()`'s
+    `Email/query`+`Email/get` pattern) → new pure module `mail/js/folderTree.ts`'s
+    `buildFolderLevel()` (converts one level to mail's `Et2Tree` node shape - `id`/`text`/
+    `tooltip`/`item`/`child`, matching `mail/src/Tree.php`'s override of the base widget's field
+    names) → wired into `mail_ui`'s `Et2Tree` instance as `MailApp.mail_folderTreeAutoload()`
+    (`mail/js/app.ts`), falling back per-node to the classic `ajax_foldertree` menuaction on any
+    JMAP failure. Tests: `mail/tests/JmapShimMailboxGetTest.php` (mocks `Mail\Imap`),
+    `mail/js/test/BuildFolderLevel.test.ts` (web-test-runner).
+  - **`Et2Tree.ts` (the shared, cross-app tree widget) gained a real capability, not a
+    mail-specific workaround**, per ralf's explicit direction ("we need to add two things into
+    et2-tree"): its `autoloading` property now accepts a Javascript callback function
+    (`(item) => Promise<{item: [...]}>`) as an alternative to the existing menuaction/URL string
+    - `handleLazyLoading()` branches on `typeof this.autoloading`, everything else (including
+      every other app's existing string-based usage) is unchanged. Confirmed first that
+      Shoelace's own `sl-tree-item` has no built-in callback mechanism to piggy-back on (purely
+      event-driven: a `lazy` flag + `sl-lazy-load` event, consumer populates children itself),
+      so this had to be a real (small, additive) `Et2Tree.ts` change, not something already
+      latent in the underlying web component.
+  - JMAP's `Mailbox` object has no "has children" hint at all (checked the full field list) -
+    real JMAP (Stalwart) mailboxes default to `child: true` (assume expandable); the local shim
+    gets a real hint from Horde's `listMailboxes()` `children` option (`\HasChildren`/
+    `\HasNoChildren`, same attribute classic `mail_tree.inc.php`'s `nodeHasChildren()` reads),
+    falling back to the same "assume expandable" default when a server doesn't support
+    LIST-EXTENDED. Either way this is safe, not a compromise: `Et2Tree`'s own
+    `handleItemLazyLoad()` already self-corrects (clears the flag) if a first expand comes back
+    with zero children - a guaranteed-leaf folder just briefly shows an expand affordance.
+  - Tree-node ids stay `profileID::canonical/path` (matching what `mail_changeFolder()`/
+    `MailJmap.getRows()`'s own folder-path parsing already expect) - **never** derived from the
+    raw JMAP Mailbox id, which is opaque and server-assigned for real JMAP/Stalwart accounts
+    (can't be reconstructed into a path at all). Each node keeps its raw JMAP id in a separate
+    `jmapId` field purely so *its own* later expand can pass it straight back as
+    `getMailboxChildren()`'s `parentId` (see `mail/js/folderTree.ts`'s `FolderTreeNode` docblock).
+  - Found and fixed a real, pre-existing bug in `Et2Tree.ts::refreshItem(_id, data)` while
+    building this: its docblock promises "if data is provided, use it directly instead of
+    re-fetching", but the implementation had that branch entirely commented out, always
+    re-fetching via the server regardless of `data` - not just unused/dead code: three live PHP
+    call paths (`mail_ui::ajax_reloadNode()`, the subscription screen, the move-folder handler)
+    already compute a full tree result and pass it through `mail_reloadNode()` →
+    `refreshItem(id, data)`, where it was silently discarded in favour of a shallower re-fetch.
+    Fixed as real logic (not a plain uncomment, since the old dead branch itself re-discarded
+    `data` too) - a correctness fix for those three existing callers, not just new-code
+    enablement.
 - **Node autoloading** (`ajax_tree_autoloading`, `ajax_folderMgmtTree_autoloading`) → client-side,
-  a JMAP query scoped to the expanding parent.
+  a JMAP query scoped to the expanding parent. **Partially superseded by the above** - regular
+  index-tree autoloading (`ajax_foldertree`, the live index template's actual `autoloading`
+  target - `ajax_tree_autoloading` itself turned out to only be referenced by legacy/mobile
+  subscribe templates, not the live one) now has its JMAP-native replacement; the folder
+  *management* dialog's autoloading (`ajax_folderMgmtTree_autoloading`) is untouched, still
+  classic.
 - **Folder status/counters refresh** (`ajax_reloadNode`, `ajax_setFolderStatus`) → client-side +
   JMAP `Mailbox/get` (unread/total counts are standard JMAP Mailbox properties).
 - **Folder CRUD** (`ajax_addFolder`, `ajax_renameFolder`, `ajax_MoveFolder`, `ajax_deleteFolder`,
@@ -155,19 +212,32 @@ either can be picked up first.
 
 ## New feature: persisted tree expand/collapse state
 
-- **Precedent to build on**: `<profileID>_LastFolder` egw preference (commit `86b82d18bf`, "Mail:
+- **Precedent it built on**: `<profileID>_LastFolder` egw preference (commit `86b82d18bf`, "Mail:
   fix broken 'remember last opened folder' via egw preferences") - written client-side in
   `MailApp.mail_changeFolder()`, read back server-side in `mail_ui::index()` to seed the initial
   `selectedFolder`. Same shape, different granularity.
-- **Proposed**: a `<profileID>_ExpandedFolders` (or similar) preference holding the set of expanded
-  node paths/ids, written client-side on every node expand/collapse toggle, read back once at
-  tree-init to auto-expand matching nodes as they're created.
-- **The tricky part**: the tree is lazily autoloaded - a node's children don't exist client-side
-  until it's expanded once. Restoring a deep expand path (e.g., `INBOX > Project > 2026`) means
-  triggering each level's autoload in sequence as the previous level's children arrive, not just
-  setting a bunch of "expanded" flags on nodes that don't exist yet.
-- Consider debouncing the preference write - expanding several nodes in quick succession shouldn't
-  fire a preference write per click.
+- **Done (2026-08-16), as a generic `Et2Tree.ts` capability, not mail-specific glue** - per
+  ralf's explicit direction, the second of the "two things to add into et2-tree": a new
+  `openStatePreference` property (`"app.prefName"`, empty = feature off). When set: on first
+  render (and again whenever the property itself is assigned/changed later, via `updated()` -
+  needed because mail sets it imperatively from `app.ts` right after `getWidgetById()`, which can
+  run after the widget's own `firstUpdated()` already fired), it reads the preference (a JSON
+  array of node ids) and marks matching already-present nodes `open`; on every `sl-expand`/
+  `sl-collapse` (the existing `handleItemExpand()`/`handleItemCollapse()`) it collects every
+  currently-open node id and writes them back, debounced (~300ms via a plain `setTimeout`).
+  Wired to a single tree-wide `'mail.ExpandedFolders'` preference (not per-profile, despite the
+  `_LastFolder` precedent's per-profile keying) - node ids already carry `profileID::path`, and
+  the one tree instance shows every account's subtree simultaneously, so one flat list covers
+  all of them; a per-profile key would need swapping in/out on profile-switch for no benefit.
+- **The tricky part, solved**: the tree is lazily autoloaded - a node's children don't exist
+  client-side until it's expanded once, so restoring a deep expand path (e.g.
+  `INBOX > Project > 2026`) can't just set a bunch of "expanded" flags on nodes that don't exist
+  yet. Solved by re-running the restore pass every time a lazy-load merge brings new nodes into
+  the tree (`handleItemLazyLoad()`'s completion callback), not just once at first render - each
+  pass only marks nodes already present, and `_optionTemplate()`'s own existing expandState-driven
+  eager lazy-load dispatch is what actually drives the *next* level's fetch once a matching node
+  gets marked open, continuing the cascade level by level as each fetch resolves.
+- Debounced, per the original concern about a write-per-click - see above.
 
 ## Open questions - resolved (2026-08-15)
 
