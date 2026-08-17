@@ -19,8 +19,8 @@ import {
 	EGW_KEY_ARROW_UP
 } from "../../api/js/egw_action/egw_action_constants";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
-import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
-import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
+import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
+import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
 import {isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";

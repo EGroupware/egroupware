@@ -10,7 +10,7 @@
 
 import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
-import type {Et2DatagridUpdateType, Et2DatagridView} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
+import type {Et2DatagridUpdateType, Et2DatagridView} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";

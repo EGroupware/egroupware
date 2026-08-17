@@ -1,4 +1,4 @@
-import {Et2DatagridColumn} from "./Et2Datagrid.types";
+import {Et2DatagridColumn} from "../Et2Datagrid/Et2Datagrid.types";
 import {CUSTOMFIELD_PREFIX} from "../Et2Customfields/Et2CustomfieldsBase";
 
 export type Et2NextmatchResolvedColumn = Et2DatagridColumn & {

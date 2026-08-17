@@ -12,8 +12,8 @@
 import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
-import {Et2Datagrid} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid";
-import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
+import {Et2Datagrid} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid";
+import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import {egw} from "../../api/js/jsapi/egw_global.js";
 
 /**

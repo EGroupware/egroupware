@@ -4,7 +4,7 @@ import {property} from "lit/decorators/property.js";
 import {state} from "lit/decorators/state.js";
 import {Et2Widget, loadWebComponent} from "../Et2Widget/Et2Widget";
 import {loadStylesheet} from "../Et2Widget/cssTools";
-import {Et2Datagrid, type Et2DatagridRowsSnapshot} from "./Et2Datagrid";
+import {Et2Datagrid, type Et2DatagridRowsSnapshot} from "../Et2Datagrid/Et2Datagrid";
 import {
 	Et2DatagridColumn,
 	Et2DatagridDataProvider,
@@ -15,9 +15,9 @@ import {
 	Et2DatagridUpdateType,
 	Et2DatagridUpdateTypes,
 	Et2DatagridView
-} from "./Et2Datagrid.types";
-import {type Et2DatagridColumnSelectionItem, Et2DatagridColumnState} from "./Et2DatagridColumnState";
-import {Et2RowProvider} from "./Et2RowProvider";
+} from "../Et2Datagrid/Et2Datagrid.types";
+import {type Et2DatagridColumnSelectionItem, Et2DatagridColumnState} from "../Et2Datagrid/Et2DatagridColumnState";
+import {Et2RowProvider} from "../Et2Datagrid/Et2RowProvider";
 import {Et2NextmatchDataProvider} from "./Et2NextmatchDataProvider";
 import {EgwAction} from "../../egw_action/EgwAction";
 import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";

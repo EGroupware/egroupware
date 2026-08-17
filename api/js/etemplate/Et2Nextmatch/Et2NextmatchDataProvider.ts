@@ -4,7 +4,7 @@ import {
 	Et2DatagridRefreshResult,
 	Et2DatagridRow,
 	Et2DatagridUpdateType
-} from "./Et2Datagrid.types";
+} from "../Et2Datagrid/Et2Datagrid.types";
 import {Et2Nextmatch} from "./Et2Nextmatch";
 import {IegwData} from "../../jsapi/egw_global";
 

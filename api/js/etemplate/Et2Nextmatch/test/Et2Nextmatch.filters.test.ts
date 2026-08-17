@@ -2,7 +2,7 @@ import {assert} from "@open-wc/testing";
 import {render} from "lit";
 import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
-import type {Et2Datagrid} from "../Et2Datagrid";
+import type {Et2Datagrid} from "../../Et2Datagrid/Et2Datagrid";
 import {ET2_NEXTMATCH_FILTER_EVENT, ET2_NEXTMATCH_SORT_EVENT, Et2NextmatchSortEventDetail} from "../Headers/events";
 import {et2_IInput, et2_implements_registry} from "../../et2_core_interfaces";
 import * as sinon from "sinon";
