@@ -538,29 +538,24 @@ class mail_tree
 	/**
 	 * Initialization tree for index sidebox menu
 	 *
-	 * This function gets all accounts root nodes and then
-	 * fill the active accounts with its children.
+	 * Returns every account's root node (getAccountsRootNode(), via getTree()) - the active
+	 * account's own root node is already marked open/autoload-children by getAccountsRootNode()'s
+	 * $openActiveAccount logic, so its top-level folders get lazy-loaded client-side exactly like
+	 * every other account's, instead of being fetched eagerly here. Et2Tree.ts's _optionTemplate()
+	 * already self-triggers a lazy-load for any node rendered open+childless+autoloadable, so no
+	 * client-side change is needed for this to keep working (see
+	 * doc/ai/projects/mail-folder-tree-jmap.md's "active-account eager expand" note).
 	 *
 	 * @param string $_parent = null no parent node means root with the first level of folders
 	 * @param string $_profileID = '' active profile / acc_id
 	 * @param int|boolean $_openTopLevel = 1 Open top level folders on load if it's set to 1|true,
 	 *  false|0 leaves them in closed state
 	 * @param boolean $_subscribedOnly = false get only subscribed folders
-	 * @param boolean $_allInOneGo = false, true will get all folders (dependes on subscribedOnly option) of the account in one go
 	 * @return type an array of tree
 	 */
 	function getInitialIndexTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_subscribedOnly= false)
 	{
-		$tree = $this->getTree($_parent, '', $_openTopLevel, false, $_subscribedOnly);
-		$branches = $this->getTree($_profileID, $_profileID,1,false, $_subscribedOnly);
-		foreach ($tree[Tree::CHILDREN] as &$account)
-		{
-			if ($account[Tree::ID] == $_profileID)
-			{
-				$account = array_merge($account , $branches);
-			}
-		}
-		return $tree;
+		return $this->getTree($_parent, '', $_openTopLevel, false, $_subscribedOnly);
 	}
 
 	/**

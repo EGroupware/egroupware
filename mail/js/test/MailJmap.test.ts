@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {MailJmap} from "../jmap";
+import {describeJmapError, describeSetError, MailJmap} from "../jmap";
 import type {MailApp} from "../app";
 
 const egw = {
@@ -198,5 +198,64 @@ describe("MailJmap.email2row() - suspect address field detection", () =>
 			{filter2: ""}, "widget", [], 0);
 
 		assert.deepEqual(result.data["1::1::mbox1::email1"].suspectAddressFields, []);
+	});
+});
+
+describe("describeJmapError() - classify a caught jmap-jam rejection", () =>
+{
+	it("formats a single {type, description} error object using description", () =>
+	{
+		assert.equal(describeJmapError({type: "invalidArguments", description: "bad name"}), "bad name");
+	});
+
+	it("falls back to type when description is missing", () =>
+	{
+		assert.equal(describeJmapError({type: "accountNotFound"}), "accountNotFound");
+	});
+
+	it("joins an array of error objects (requestMany()'s shape) with '; '", () =>
+	{
+		assert.equal(
+			describeJmapError([{type: "invalidArguments", description: "bad name"}, {type: "forbidden"}]),
+			"bad name; forbidden");
+	});
+
+	it("returns null for a plain network-failure Error/TypeError (no .type) - keeps silent fallback", () =>
+	{
+		assert.isNull(describeJmapError(new TypeError("Failed to fetch")));
+		assert.isNull(describeJmapError(new Error("boom")));
+	});
+
+	it("returns null for a non-object/string throw", () =>
+	{
+		assert.isNull(describeJmapError("plain string error"));
+		assert.isNull(describeJmapError(undefined));
+	});
+
+	it("returns null for an empty array", () =>
+	{
+		assert.isNull(describeJmapError([]));
+	});
+});
+
+describe("describeSetError() - format a Mailbox/set or Email/set per-item SetError map", () =>
+{
+	it("formats a single SetError entry", () =>
+	{
+		assert.equal(describeSetError({c0: {type: "invalidProperties", description: "name already exists"}}),
+			"name already exists");
+	});
+
+	it("joins multiple SetError entries with '; '", () =>
+	{
+		assert.equal(
+			describeSetError({id1: {type: "notFound"}, id2: {type: "forbidden", description: "no access"}}),
+			"notFound; no access");
+	});
+
+	it("returns null for undefined or an empty map", () =>
+	{
+		assert.isNull(describeSetError(undefined));
+		assert.isNull(describeSetError({}));
 	});
 });

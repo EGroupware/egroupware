@@ -325,9 +325,60 @@ either can be picked up first.
   - Pure formatting, unrelated to tree structure: `getIdentityName()` - no IMAP calls at all, just
     formats an account's display label from the `identLabel` preference bitmask. Candidate to move to
     `Mail\Account` independently of this migration, not part of "delete on migration".
-  - Needs re-scoping: `getInitialIndexTree()` currently glues account-roots + first-level branches
-    together for sidebox init; shrinks to just the surviving account-root call once branch-fetching
-    moves client-side.
+  - **Done (2026-08-17)**: `getInitialIndexTree()` now just returns `getTree()`'s account-root list
+    unchanged - the "glue on the active account's first-level branches eagerly" half was removed
+    entirely, closing the one remaining server-side eager-fetch this migration had left in place.
+    Triggered by a real production incident: an account with severely elevated per-command IMAP
+    latency (root cause still under separate infra investigation - unrelated to this migration)
+    made the *active* account's eager top-level-folder fetch (dozens of sequential round-trips for
+    an account with ~19 top-level folders) stall the entire `mail_ui::index()` page render, since
+    it was the one account still fetched synchronously rather than lazily. Fix confirmed safe by
+    reading `Et2Tree.ts::_optionTemplate()` (`api/js/etemplate/Et2Tree/Et2Tree.ts:1249`): any node
+    rendered `open=1`+childless+autoloadable already self-triggers a synthetic `sl-lazy-load`
+    dispatch on render - the same mechanism the persisted-expand-state feature above relies on - so
+    the active account (already marked open by `getAccountsRootNode()`'s `$openActiveAccount`
+    logic) now picks up its own top-level folders via the ordinary client-side
+    `mail_folderTreeAutoload()` lazy path, exactly like every other account, with no client-side
+    change needed. Tradeoff: the active account's folders now appear via a brief loading moment
+    after render instead of instantly - accepted as a strict improvement over the alternative
+    (an unbounded page-load stall whenever that account's IMAP connection is slow/unreachable).
+
+## Surfacing real JMAP errors to the user (2026-08-17)
+
+The above incident also surfaced a related, longstanding gap: the "JMAP fast-path + classic-
+fallback" pattern used throughout `mail/js/jmap.ts`/`mail/js/app.ts` never distinguished "JMAP is
+unreachable" (silent classic-fallback is correct) from "JMAP was reached and returned a real error"
+(silently falling back too meant the user got zero feedback, even though the fallback would often
+fail for the exact same underlying reason). Fixed:
+
+- New `MailJmap.JmapUserError` class + `describeJmapError()`/`describeSetError()` helpers
+  (`mail/js/jmap.ts`) - classify a caught jmap-jam rejection (which already throws a real,
+  inspectable `{type, description}` object, or an array of them from `requestMany()`, whenever the
+  JMAP response itself is `["error", ...]`) into a human message, or `null` for a plain network/
+  eligibility failure (kept as today's silent-fallback signal, unchanged).
+- Applied uniformly across every `MailJmap` method with the `catch (e) { console.error(...); return
+  null/false; }` shape - a real error now `throw`s `JmapUserError` instead of returning null/false.
+- The five mailbox-CRUD methods (`createMailbox`/`renameMailbox`/`moveMailbox`/`deleteMailbox`/
+  `setMailboxSubscribed`) also now check `Mailbox/set`'s per-item `notCreated`/`notUpdated`/
+  `notDestroyed` (previously silently discarded even on an otherwise-successful response) and
+  throw a `JmapUserError` built from the real `SetError` detail. `updateKeywords()`/`destroyIds()`/
+  `deleteMessages()`'s inline destroy branch (message actions) similarly upgraded from a generic
+  translated string to the real per-item error detail.
+- Root-level folder-tree fetch (`mail_folderTreeAutoload()`, `mail/js/app.ts`): a `JmapUserError`
+  now builds an error leaf (`folderTree.ts`'s new `buildErrorNode()`, mirroring
+  `mail_tree.inc.php::treeLeafNoConnectionArray()`'s exact field shape/icons) instead of silently
+  falling back to `ajax_foldertree`.
+- Row-fetch path (`fetchRows()`/`refreshRows()`) and every `mail_tryJmapXxx()` action wrapper (new
+  shared `MailApp.mail_handleJmapError()` helper) now call `egw.message(text, 'error')` on a real
+  `JmapUserError` - and, for the action wrappers, skip the classic fallback in that case (a
+  definitive server answer isn't a reason to retry via a different path that would likely fail the
+  same way) - except `mail_subscriptionSave()` (the subscribe-popup's save), which deliberately
+  still runs the classic submit afterward since that's a diff-and-reconcile step, not a repeat of
+  the same action.
+- Not touched: `fetchBody()`/`repairAddressField()` (their "failure" return value is a meaningful
+  result - `{special: true}` - not a bare null/false, so they don't fit this pattern without a
+  caller-side redesign) and `resolveInlineImages()`/`downloadAttachment()`/`fetchRawHeader()`
+  (already-established different shapes, not enumerated in this pass).
 
 ## Related
 

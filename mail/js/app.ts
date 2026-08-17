@@ -23,9 +23,9 @@ import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Nextmatch/Et
 import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
-import {JmapBodyResult, JmapMessageReference, MailJmap} from "./jmap";
+import {JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
-import {buildFolderLevel, buildFolderTree, FolderTreeNode} from "./folderTree";
+import {buildErrorNode, buildFolderLevel, buildFolderTree, FolderTreeNode} from "./folderTree";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -2664,6 +2664,28 @@ export class MailApp extends EgwApp
 	 * @param {object} _calledFromPopup
 	 */
 	/**
+	 * Shared catch handler for every mail_tryJmapXxx() fast-path wrapper: a JmapUserError means
+	 * JMAP was actually reached and gave a definitive answer (a real ["error",...] response, or a
+	 * Mailbox/set|Email/set per-item SetError) - show it to the user instead of also attempting
+	 * the classic fallback, which would very likely fail the same way for the same reason. Any
+	 * other caught value (network failure, ineligible account) keeps today's silent-fallback
+	 * behaviour unchanged.
+	 *
+	 * @param e the caught rejection
+	 * @param fallback the classic ajax call to run when e is NOT a JmapUserError
+	 */
+	private mail_handleJmapError(e : any, fallback : () => any) : any
+	{
+		if (e instanceof JmapUserError)
+		{
+			this.egw.message(e.message, 'error');
+			return;
+		}
+		console.error('MailApp: JMAP action failed, falling back to classic', e);
+		return fallback();
+	}
+
+	/**
 	 * Try the fast client-side JMAP delete path - MailJmap.deleteMessages() for an explicit
 	 * selection, or deleteAllMatching() for "select all matching the current filter". Returns null
 	 * if not applicable at all (caller falls back to the unchanged ajax_deleteMessages() call
@@ -2681,11 +2703,8 @@ export class MailApp extends EgwApp
 
 		if (_msg['all'])
 		{
-			return this.jmap.deleteAllMatching(this.mail_buildJmapQuery(_msg), mode).catch((e) =>
-			{
-				console.error('MailApp.mail_tryJmapDelete(): JMAP bulk delete failed, falling back to server', e);
-				return fallback();
-			});
+			return this.jmap.deleteAllMatching(this.mail_buildJmapQuery(_msg), mode)
+				.catch((e) => this.mail_handleJmapError(e, fallback));
 		}
 		if (!Array.isArray(_msg['msg']) || !_msg['msg'].length)
 		{
@@ -2700,11 +2719,8 @@ export class MailApp extends EgwApp
 		{
 			return null;
 		}
-		return this.jmap.deleteMessages(references, mode).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapDelete(): JMAP delete failed, falling back to server', e);
-			return fallback();
-		});
+		return this.jmap.deleteMessages(references, mode)
+			.catch((e) => this.mail_handleJmapError(e, fallback));
 	}
 
 	mail_deleteMessages(_msg,_action,_calledFromPopup)
@@ -2830,11 +2846,7 @@ export class MailApp extends EgwApp
 				this.mail_refreshMessageGrid();
 			}
 			onSuccess();
-		}, (e) =>
-		{
-			console.error('MailApp.mail_tryJmapPurgeFolder(): JMAP purge failed, falling back to server', e);
-			return fallback();
-		});
+		}, (e) => this.mail_handleJmapError(e, fallback));
 	}
 
 	/**
@@ -3766,11 +3778,7 @@ export class MailApp extends EgwApp
 			popup.document.open();
 			popup.document.write('<pre>'+escaped+'</pre>');
 			popup.document.close();
-		}).catch((e) =>
-		{
-			console.error('MailApp.mail_header(): JMAP failed, falling back to server', e);
-			classicHeaderPopup();
-		});
+		}).catch((e) => this.mail_handleJmapError(e, classicHeaderPopup));
 	}
 
 	/**
@@ -4115,11 +4123,7 @@ export class MailApp extends EgwApp
 						break;
 					}
 					this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type)
-						.catch((e) =>
-						{
-							console.error('MailApp.saveAttachmentHandler(): JMAP download failed, falling back to server', e);
-							classicDownload();
-						});
+						.catch((e) => this.mail_handleJmapError(e, classicDownload));
 					break;
 				}
 				classicDownload();
@@ -4398,11 +4402,8 @@ export class MailApp extends EgwApp
 		}
 		if (messages['all'])
 		{
-			return this.jmap.moveAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath).catch((e) =>
-			{
-				console.error('MailApp.mail_tryJmapMove(): JMAP bulk move failed, falling back to server', e);
-				return classicMove();
-			});
+			return this.jmap.moveAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath)
+				.catch((e) => this.mail_handleJmapError(e, classicMove));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
 		{
@@ -4417,11 +4418,8 @@ export class MailApp extends EgwApp
 		{
 			return null;
 		}
-		return this.jmap.moveMessages(references, targetProfileID, targetFolderPath).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapMove(): JMAP move failed, falling back to server', e);
-			return classicMove();
-		});
+		return this.jmap.moveMessages(references, targetProfileID, targetFolderPath)
+			.catch((e) => this.mail_handleJmapError(e, classicMove));
 	}
 
 	/**
@@ -4444,11 +4442,7 @@ export class MailApp extends EgwApp
 			classicFallback();
 			return;
 		}
-		this.jmap.setMdnFlag(references, sent).catch((e) =>
-		{
-			console.error('MailApp.mail_trySetMdnFlag(): JMAP failed, falling back to server', e);
-			classicFallback();
-		});
+		this.jmap.setMdnFlag(references, sent).catch((e) => this.mail_handleJmapError(e, classicFallback));
 	}
 
 	/**
@@ -4551,11 +4545,8 @@ export class MailApp extends EgwApp
 		}
 		if (messages['all'])
 		{
-			return this.jmap.copyAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath).catch((e) =>
-			{
-				console.error('MailApp.mail_tryJmapCopy(): JMAP bulk copy failed, falling back to server', e);
-				return classicCopy();
-			});
+			return this.jmap.copyAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath)
+				.catch((e) => this.mail_handleJmapError(e, classicCopy));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
 		{
@@ -4570,11 +4561,8 @@ export class MailApp extends EgwApp
 		{
 			return null;
 		}
-		return this.jmap.copyMessages(references, targetProfileID, targetFolderPath).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapCopy(): JMAP copy failed, falling back to server', e);
-			return classicCopy();
-		});
+		return this.jmap.copyMessages(references, targetProfileID, targetFolderPath)
+			.catch((e) => this.mail_handleJmapError(e, classicCopy));
 	}
 
 	/**
@@ -4662,11 +4650,7 @@ export class MailApp extends EgwApp
 		{
 			if (!success) return fallback();
 			return this.mail_refreshFolderLevel(profileID, parentPath);
-		}).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapAddFolder(): JMAP create failed, falling back to server', e);
-			return fallback();
-		});
+		}).catch((e) => this.mail_handleJmapError(e, fallback));
 	}
 
 	/**
@@ -4725,11 +4709,7 @@ export class MailApp extends EgwApp
 		{
 			if (!success) return fallback();
 			return this.mail_refreshFolderLevel(profileID, parentPath);
-		}).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapRenameFolder(): JMAP rename failed, falling back to server', e);
-			return fallback();
-		});
+		}).catch((e) => this.mail_handleJmapError(e, fallback));
 	}
 
 	/**
@@ -4805,11 +4785,7 @@ export class MailApp extends EgwApp
 				this.mail_refreshFolderLevel(profileID, sourceParentPath),
 				this.mail_refreshFolderLevel(profileID, destPath),
 			]);
-		}).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapMoveFolder(): JMAP move failed, falling back to server', e);
-			return fallback();
-		});
+		}).catch((e) => this.mail_handleJmapError(e, fallback));
 	}
 
 	/**
@@ -4859,11 +4835,7 @@ export class MailApp extends EgwApp
 		{
 			if (!success) return fallback();
 			return this.mail_refreshFolderLevel(profileID, parentPath);
-		}).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapDeleteFolder(): JMAP delete failed, falling back to server', e);
-			return fallback();
-		});
+		}).catch((e) => this.mail_handleJmapError(e, fallback));
 	}
 
 	/**
@@ -5294,11 +5266,7 @@ export class MailApp extends EgwApp
 				node.checked = subscribed;
 				ftree.requestUpdate();
 			}
-		}).catch((e) =>
-		{
-			console.error('MailApp.mail_tryJmapSetSubscribed(): JMAP (un)subscribe failed, falling back to server', e);
-			return fallback();
-		});
+		}).catch((e) => this.mail_handleJmapError(e, fallback));
 	}
 
 	/**
@@ -5377,6 +5345,10 @@ export class MailApp extends EgwApp
 			this._subscriptionOriginal = {profileID, ids: subscribedIds};
 		}).catch((e) =>
 		{
+			if (e instanceof JmapUserError)
+			{
+				this.egw.message(e.message, 'error');
+			}
 			console.error('MailApp.mail_subscriptionLoad(): JMAP tree load failed, keeping the classic server-rendered tree', e);
 		});
 	}
@@ -5428,6 +5400,15 @@ export class MailApp extends EgwApp
 			}
 		}).catch((e) =>
 		{
+			// unlike the other mail_tryJmapXxx() wrappers, the classic submit here re-derives and
+			// applies its own diff from the submitted tree state rather than repeating the same
+			// JMAP action - it's a safe reconciliation step even after a genuine JMAP error, so it
+			// still runs (unlike mail_handleJmapError()'s "don't also retry" default), just after
+			// telling the user what actually went wrong
+			if (e instanceof JmapUserError)
+			{
+				this.egw.message(e.message, 'error');
+			}
 			console.error('MailApp.mail_subscriptionSave(): JMAP save failed, falling back to the classic submit', e);
 			this.et2._inst.submit();
 		});
@@ -5704,7 +5685,10 @@ export class MailApp extends EgwApp
 	 *
 	 * Falls back to the classic ajax_foldertree fetch for this one node if JMAP isn't reachable
 	 * (network error, non-JMAP-capable account) - same "new path alongside old, fall back"
-	 * precedent as the rest of the JMAP modernization work.
+	 * precedent as the rest of the JMAP modernization work. If JMAP *was* reached and answered
+	 * with a real error (MailJmap throws a JmapUserError - see jmap.ts), that's a definitive
+	 * answer, not a reason to retry via classic: shows an error leaf instead (mirroring
+	 * mail_tree.inc.php's own treeLeafNoConnectionArray()).
 	 *
 	 * @param item the node being expanded
 	 * @return {item: FolderTreeNode[]} - Et2Tree's expected handleLazyLoading() result shape
@@ -5716,7 +5700,15 @@ export class MailApp extends EgwApp
 		const parentId : string | null = hasParent ? item.jmapId : null;
 
 		return this.mail_buildFolderLevelData(profileID, parentPath, parentId).then((data) =>
-			data === null ? this.mail_classicFolderLoad(item) : {item: data});
+			data === null ? this.mail_classicFolderLoad(item) : {item: data}
+		).catch((e) =>
+		{
+			if (e instanceof JmapUserError)
+			{
+				return {item: [buildErrorNode(profileID, parentPath, e.message, egw)]};
+			}
+			throw e;
+		});
 	}
 
 	/**

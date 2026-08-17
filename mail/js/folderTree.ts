@@ -198,3 +198,32 @@ export function buildFolderTree(mailboxes : JmapMailboxNode[], profileID : strin
 
 	return build(null, '');
 }
+
+/**
+ * Build a single error leaf for a folder-tree level that failed to load via JMAP with a real,
+ * user-facing error (see MailJmap's JmapUserError) - the client-side counterpart of
+ * mail_tree.inc.php's treeLeafNoConnectionArray(), used the same way: puts the error text directly
+ * into the visible label/tooltip, using the same "no-select" icon variant classic already uses
+ * (mail_tree.inc.php:112-114) rather than an ordinary folder icon, so it reads as an error, not a
+ * normal (empty) folder.
+ *
+ * @param profileID owning mail account's profile id
+ * @param parentPath the level that failed to load, '' for the top level
+ * @param message human-readable error text (MailJmap's JmapUserError#message)
+ * @param egw only .image(name, app) is used
+ */
+export function buildErrorNode(profileID : string, parentPath : string, message : string, egw : Egw) : FolderTreeNode
+{
+	return {
+		id: profileID + '::' + (parentPath || 'INBOX'),
+		jmapId: '',
+		text: message,
+		tooltip: message,
+		checked: false,
+		child: false,
+		item: [],
+		im0: egw.image('folderNoSelectClosed', 'mail'),
+		im1: egw.image('folderNoSelectOpen', 'mail'),
+		im2: egw.image('folderNoSelectClosed', 'mail'),
+	};
+}

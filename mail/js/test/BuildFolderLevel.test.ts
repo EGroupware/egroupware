@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {buildFolderLevel, buildFolderTree, JmapMailboxNode} from "../folderTree";
+import {buildErrorNode, buildFolderLevel, buildFolderTree, JmapMailboxNode} from "../folderTree";
 
 /**
  * Test buildFolderLevel() - converts one level's worth of JMAP Mailbox objects (already fetched
@@ -227,5 +227,43 @@ describe("buildFolderTree()", () =>
 	{
 		assert.deepEqual(buildFolderTree([], "42", egw), []);
 		assert.deepEqual(buildFolderTree(undefined as any, "42", egw), []);
+	});
+});
+
+describe("buildErrorNode()", () =>
+{
+	it("puts the error message into both text and tooltip", () =>
+	{
+		const node = buildErrorNode("42", "INBOX/Project", "Server unreachable", egw);
+
+		assert.equal(node.text, "Server unreachable");
+		assert.equal(node.tooltip, "Server unreachable");
+	});
+
+	it("builds its id from profileID + parentPath, falling back to INBOX at the top level", () =>
+	{
+		const nested = buildErrorNode("42", "INBOX/Project", "boom", egw);
+		const topLevel = buildErrorNode("42", "", "boom", egw);
+
+		assert.equal(nested.id, "42::INBOX/Project");
+		assert.equal(topLevel.id, "42::INBOX");
+	});
+
+	it("is never checked, never expandable, and has no children", () =>
+	{
+		const node = buildErrorNode("42", "", "boom", egw);
+
+		assert.isFalse(node.checked);
+		assert.isFalse(node.child);
+		assert.deepEqual(node.item, []);
+	});
+
+	it("uses the no-select icon variant, same as classic's treeLeafNoConnectionArray()", () =>
+	{
+		const node = buildErrorNode("42", "", "boom", egw);
+
+		assert.include(node.im0, "folderNoSelectClosed");
+		assert.include(node.im1, "folderNoSelectOpen");
+		assert.include(node.im2, "folderNoSelectClosed");
 	});
 });

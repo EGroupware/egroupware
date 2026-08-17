@@ -74,6 +74,51 @@ type EmailFilterCondition = Record<string, any>;
 type EmailFilter = EmailFilterCondition | {operator : 'AND' | 'OR' | 'NOT', conditions : EmailFilter[]};
 
 /**
+ * Thrown by MailJmap methods when JMAP was actually reached and answered with a real error (an
+ * RFC 8620 method-level ["error", {type, description}] response, or a Mailbox/set|Email/set
+ * per-item SetError) - as opposed to a plain network/eligibility failure, which still just
+ * resolves null/false so callers keep falling back to the classic ajax_* endpoint silently.
+ * Callers that catch a JmapUserError should surface `.message` to the user (egw.message(),
+ * a tree error-node, ...) rather than silently retrying via classic - the server has already
+ * given a definitive answer, so retrying elsewhere would very likely fail the same way.
+ */
+export class JmapUserError extends Error {}
+
+/**
+ * Format one JMAP-shaped error object ({type, description?}) as a human string, or null if it
+ * doesn't actually look like a JMAP/HTTP error object (eg. a plain fetch-failure Error/TypeError -
+ * jmap-jam's own signal for "couldn't even talk to the server", left as the existing silent-
+ * fallback path).
+ */
+function formatProblem(problem : any) : string | null
+{
+	if (!problem || typeof problem !== 'object' || typeof problem.type !== 'string') return null;
+	return problem.description || problem.type;
+}
+
+/**
+ * Classify a caught jmap-jam rejection: a real JMAP/HTTP error (single object or, from
+ * requestMany(), an array of them) → human message; anything else (network failure, ineligible
+ * account) → null, meaning "keep the existing silent-fallback behaviour".
+ */
+export function describeJmapError(e : any) : string | null
+{
+	if (Array.isArray(e))
+	{
+		const messages = e.map(formatProblem).filter((m) : m is string => m !== null);
+		return messages.length ? messages.join('; ') : null;
+	}
+	return formatProblem(e);
+}
+
+/** Format one Mailbox/set or Email/set per-item SetError map (notCreated/notUpdated/notDestroyed), or null if absent/empty. */
+export function describeSetError(setErrors : Record<string, any> | undefined) : string | null
+{
+	if (!setErrors || !Object.keys(setErrors).length) return null;
+	return Object.values(setErrors).map(formatProblem).filter((m) : m is string => m !== null).join('; ') || null;
+}
+
+/**
  * Direct JMAP access, using Stalwart or the local plain-IMAP JMAP shim selected by the bootstrap.
  */
 export class MailJmap
@@ -228,6 +273,13 @@ export class MailJmap
 		}
 		catch (e)
 		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.getMailboxChildren(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
 			console.error('MailJmap.getMailboxChildren(): failed, falling back to the classic ajax_foldertree fetch', e);
 			return null;
 		}
@@ -260,6 +312,13 @@ export class MailJmap
 		}
 		catch (e)
 		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.getMailboxTree(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
 			console.error('MailJmap.getMailboxTree(): failed, falling back to the classic server-rendered tree', e);
 			return null;
 		}
@@ -326,10 +385,23 @@ export class MailJmap
 			const [{result}] = await client.requestMany((t) => ({
 				result: t.Mailbox.set({accountId: token.accountId, create: {c0: {name, parentId}}}),
 			}));
-			return !!(result.created && result.created['c0']);
+			const success = !!(result.created && result.created['c0']);
+			if (!success)
+			{
+				const message = describeSetError(result.notCreated);
+				if (message) throw new JmapUserError(message);
+			}
+			return success;
 		}
 		catch (e)
 		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.createMailbox(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
 			console.error('MailJmap.createMailbox(): failed, falling back to the classic ajax_addFolder', e);
 			return false;
 		}
@@ -359,10 +431,22 @@ export class MailJmap
 			{
 				this.invalidateMailboxIdCache(profileID, path);
 			}
+			else
+			{
+				const message = describeSetError(result.notUpdated);
+				if (message) throw new JmapUserError(message);
+			}
 			return success;
 		}
 		catch (e)
 		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.renameMailbox(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
 			console.error('MailJmap.renameMailbox(): failed, falling back to the classic ajax_renameFolder', e);
 			return false;
 		}
@@ -394,10 +478,22 @@ export class MailJmap
 			{
 				this.invalidateMailboxIdCache(profileID, path);
 			}
+			else
+			{
+				const message = describeSetError(result.notUpdated);
+				if (message) throw new JmapUserError(message);
+			}
 			return success;
 		}
 		catch (e)
 		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.moveMailbox(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
 			console.error('MailJmap.moveMailbox(): failed, falling back to the classic ajax_MoveFolder', e);
 			return false;
 		}
@@ -426,10 +522,22 @@ export class MailJmap
 			{
 				this.invalidateMailboxIdCache(profileID, path);
 			}
+			else
+			{
+				const message = describeSetError(result.notDestroyed);
+				if (message) throw new JmapUserError(message);
+			}
 			return success;
 		}
 		catch (e)
 		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.deleteMailbox(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
 			console.error('MailJmap.deleteMailbox(): failed, falling back to the classic ajax_deleteFolder', e);
 			return false;
 		}
@@ -454,10 +562,23 @@ export class MailJmap
 			const [{result}] = await client.requestMany((t) => ({
 				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {isSubscribed: subscribed}}}),
 			}));
-			return !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
+			const success = !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
+			if (!success)
+			{
+				const message = describeSetError(result.notUpdated);
+				if (message) throw new JmapUserError(message);
+			}
+			return success;
 		}
 		catch (e)
 		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.setMailboxSubscribed(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
 			console.error('MailJmap.setMailboxSubscribed(): failed, falling back to the classic ajax_foldersubscription', e);
 			return false;
 		}
@@ -554,6 +675,8 @@ export class MailJmap
 			};
 		}).catch((e) =>
 		{
+			const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
+			if (message) this.egw.message(message, 'error');
 			console.error('MailJmap.fetchRows(): failed, resolving as an empty result', e);
 			return false;
 		});
@@ -688,6 +811,8 @@ export class MailJmap
 		}
 		catch (e)
 		{
+			const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
+			if (message) this.egw.message(message, 'error');
 			console.error('MailJmap.refreshRows(): failed, resolving as an empty result', e);
 			return false;
 		}
@@ -1491,9 +1616,7 @@ export class MailJmap
 		}));
 		if (result?.notUpdated && Object.keys(result.notUpdated).length)
 		{
-			const error : any = new Error(this.egw.lang('Failed to update one or more messages'));
-			error.notUpdated = result.notUpdated;
-			throw error;
+			throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to update one or more messages'));
 		}
 		return result;
 	}
@@ -1710,9 +1833,7 @@ export class MailJmap
 			}));
 			if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
 			{
-				const error : any = new Error(this.egw.lang('Failed to delete one or more messages'));
-				error.notDestroyed = result.notDestroyed;
-				throw error;
+				throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages'));
 			}
 		}));
 	}
@@ -1782,9 +1903,7 @@ export class MailJmap
 			}));
 			if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
 			{
-				const error : any = new Error(this.egw.lang('Failed to delete one or more messages'));
-				error.notDestroyed = result.notDestroyed;
-				throw error;
+				throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages'));
 			}
 		}
 	}
