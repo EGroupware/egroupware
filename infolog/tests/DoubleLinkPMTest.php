@@ -5,7 +5,7 @@ namespace EGroupware\Infolog;
 
 use EGroupware\Api\Categories;
 use EGroupware\Api\Etemplate;
-use Egroupware\Api\Link;
+use EGroupware\Api\Link;
 use EGroupware\Api\TestEtemplate;
 
 require_once realpath(__DIR__ . '/../../api/tests/EtemplateTest.php');
