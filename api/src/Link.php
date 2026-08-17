@@ -1647,7 +1647,16 @@ class Link extends Link\Storage
 			$method = $args['method'];
 			unset($args['method']);
 			//error_log(__METHOD__."() calling $method(".array2string($args).')');
-			self::exec($method, array($args));
+			try {
+				self::exec($method, array($args));
+			}
+			// one app's notify handler failing (eg. a bug in its hook, or an unrelated
+			// infrastructure issue like a broken mail backend) must not also silently drop
+			// every other unrelated notification still queued behind it - same isolation
+			// already used for title() failures in get_titles() above
+			catch (\Throwable $e) {
+				error_log(__METHOD__."() calling $method(".array2string($args).') threw '.$e);
+			}
 		}
 	}
 
