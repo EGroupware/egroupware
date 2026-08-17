@@ -18,6 +18,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Link;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\AddressList;
+use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Vfs;
 use EGroupware\Mail\Ui\BodyHandler;
 
@@ -799,7 +800,7 @@ class mail_compose
 				if ($_currentMode == 'html')
 				{
 					$content['body'] = str_replace("\n",'\n',$content['body']);	// dont know why, but \n screws up preg_replace
-					$styles = Mail::getStyles(array(array('body'=>$content['body'])));
+					$styles = BodyDecoding::getStyles(array(array('body'=>$content['body'])));
 					if (stripos($content['body'],'style')!==false) Api\Mail\Html::replaceTagsCompletley($content['body'],'style',$endtag='',true); // clean out empty or pagewide style definitions / left over tags
 				}
 				$content['body'] = str_replace(array("\r", "\t", "<br />\n", ": "), array("", "", "<br />", ":"),
@@ -2428,7 +2429,7 @@ class mail_compose
 				' attachment instead.'),'error');
 		}
 		//_debug_array($bodyParts);
-		$styles = Mail::getStyles($bodyParts);
+		$styles = BodyDecoding::getStyles($bodyParts);
 
 		$fromAddress = $toAddress = $ccAddress = '';
 		foreach(['FROM' => 'fromAddress', 'TO' => 'toAddress', 'CC' => 'ccAddress'] as $header => $var)
