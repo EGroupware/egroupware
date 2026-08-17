@@ -103,6 +103,12 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->pm_bo = new \projectmanager_bo();
 
 		$this->mockTracking($this->bo, 'infolog_tracking');
+		// Unlike $this->bo, this wasn't mocked before - projectmanager_bo::save() lazily
+		// creates a real projectmanager_tracking and calls its (real, unmocked) track(), which
+		// can fail under heavy load and make save() return a truthy error string instead of 0,
+		// failing makeProject()'s assertFalse() check. DeleteTest.php/TemplateTest.php already
+		// mock this for their own projectmanager_bo - do the same here.
+		$this->mockTracking($this->pm_bo, 'projectmanager_tracking');
 
 		// Make sure projects are not there first
 		foreach(array('TEST', 'SUB-TEST') as $number)

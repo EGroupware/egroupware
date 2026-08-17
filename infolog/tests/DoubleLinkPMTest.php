@@ -50,6 +50,11 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 
 		$this->bo->tracking = $this->createStub(\infolog_tracking::class);
 		$this->bo->tracking->method('track')->willReturn(0);
+		// projectmanager_bo::save() lazily creates a real projectmanager_tracking and calls its
+		// (real, unmocked) track(), which can fail under heavy load and make save() return a
+		// truthy error string instead of 0, failing makeProject()'s assertFalse() check.
+		$this->pm_bo->tracking = $this->createStub(\projectmanager_tracking::class);
+		$this->pm_bo->tracking->method('track')->willReturn(0);
 
 		// Make sure projects are not there first
 		foreach(array('TEST 1', 'TEST 2', 'TEST 3') as $number)
