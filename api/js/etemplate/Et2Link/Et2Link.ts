@@ -360,27 +360,36 @@ export class Et2Link extends ExposeMixin<Et2Widget>(Et2Widget(LitElement)) imple
 		super.requestUpdate();
 		if(changedProperties.has("app") || changedProperties.has("entryId"))
 		{
-			if(this.app && this.entryId && !this._title)
+			if(!this.app || !this.entryId)
 			{
-				this._title = Et2Link.MISSING_TITLE;
+				// Incomplete - not enough information to look anything up, so there's no value to show
+				this._title = "";
+				this._titlePromise = null;
 			}
-			if(this.app && this.entryId && this._title == Et2Link.MISSING_TITLE)
+			else
 			{
-				// Title will be fetched from server and then set
-				const app = this.app;
-				const entryId = this.entryId;
-				const titlePromise = this.egw()?.link_title(app, entryId, true).then(title =>
+				if(!this._title)
 				{
-					if(this.app !== app || this.entryId !== entryId || this._titlePromise !== titlePromise)
+					this._title = Et2Link.MISSING_TITLE;
+				}
+				if(this._title == Et2Link.MISSING_TITLE)
+				{
+					// Title will be fetched from server and then set
+					const app = this.app;
+					const entryId = this.entryId;
+					const titlePromise = this.egw()?.link_title(app, entryId, true).then(title =>
 					{
-						return;
-					}
-					this._title = title || "";
-					this._titlePromise = null;
-					// It's probably already been rendered
-					this.requestUpdate();
-				});
-				this._titlePromise = titlePromise ?? null;
+						if(this.app !== app || this.entryId !== entryId || this._titlePromise !== titlePromise)
+						{
+							return;
+						}
+						this._title = title || "";
+						this._titlePromise = null;
+						// It's probably already been rendered
+						this.requestUpdate();
+					});
+					this._titlePromise = titlePromise ?? null;
+				}
 			}
 		}
 	}

@@ -190,7 +190,7 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		// CSV list of IDs for one app
 		if(typeof _value === "string")
 		{
-			let ids = _value.split(",");
+			let ids = _value.split(",").filter(id => id !== "");
 			ids.forEach((id) => (<LinkInfo[]>this._link_list).push(<LinkInfo>{app: this.application, id: id}));
 		}
 		// List of LinkInfo
