@@ -301,6 +301,10 @@ class JmapShim
 		{
 			$mailboxes = $imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
 		}
+		elseif ($subscribedOnly && $parentPath === '')
+		{
+			$mailboxes += self::namespaceRootsMissingFrom($imap, $mailboxes);
+		}
 
 		$ids = [];
 		foreach ($mailboxes as $mailboxName => $info)
@@ -308,6 +312,53 @@ class JmapShim
 			$ids[] = base64_encode(self::canonicalPath($imap, $mailboxName));
 		}
 		return $ids;
+	}
+
+	/**
+	 * Namespace roots ("user"/"shared" style Other-Users/Shared containers) are structural
+	 * navigation doorways, not individually-subscribable mailboxes in the normal IMAP sense -
+	 * classic mail_tree.inc.php's own namespace handling (setOutStructure()) always shows them
+	 * regardless of subscription state. filter.isSubscribed's strict MBOX_SUBSCRIBED mode would
+	 * otherwise hide the only way into "Other Users"/"Shared Folders" entirely, since the
+	 * namespace root itself is essentially never individually \Subscribed.
+	 *
+	 * Matches by the conventional literal names ("user"/"shared", same as jmap.ts's own
+	 * sortTopLevel()'s isNamespaceRoot check) rather than $imap->getNameSpaceArray()'s reported
+	 * NAMESPACE-extension prefixes: a real account hit exactly this gap - IMAP NAMESPACE either
+	 * wasn't advertised or wasn't reported as an "others" entry for that server, even though
+	 * "user" was a perfectly real, browsable mailbox with real accessible children underneath it.
+	 *
+	 * Only included when the namespace actually has at least one accessible child (some other
+	 * user's folder shared with this one via IMAP ACL) - classic suppresses an empty namespace
+	 * root the same way, since an always-visible-but-empty "user"/"shared" entry is a confusing
+	 * dead end for the (much more common) case of a user with nothing granted to them at all.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param array $mailboxes already-found top-level mailboxes, keyed by real IMAP name
+	 * @return array additional {mailboxName: info} entries for any missing, non-empty namespace root
+	 */
+	private static function namespaceRootsMissingFrom(\Horde_Imap_Client_Socket $imap, array $mailboxes) : array
+	{
+		$missing = [];
+		$delimiter = self::namespaceDelimiter($imap, 'others');
+		foreach (['user', 'shared'] as $name)
+		{
+			if (isset($mailboxes[$name]))
+			{
+				continue;
+			}
+			$hasGrantedChildren = $imap->listMailboxes($name.$delimiter.'%', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, []);
+			if (empty($hasGrantedChildren))
+			{
+				continue;
+			}
+			$info = $imap->listMailboxes($name, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
+			if (!empty($info))
+			{
+				$missing += $info;
+			}
+		}
+		return $missing;
 	}
 
 	/**

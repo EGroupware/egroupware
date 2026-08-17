@@ -283,10 +283,19 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	 */
 	public function testListChildIdsSubscribedOnlyUsesSubscribedMode()
 	{
-		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
-		$imap->expects($this->once())->method('listMailboxes')
-			->with('%', \Horde_Imap_Client::MBOX_SUBSCRIBED, ['children' => true])
-			->willReturn(['INBOX' => []]);
+		// top-level + subscribedOnly also probes for a namespace root (see
+		// namespaceRootsMissingFrom()) - irrelevant to what this test checks, so it just returns
+		// empty for those and asserts only the main call's args/result
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']], 'others' => [['delimiter' => '/']]]);
+		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
+		{
+			if ($pattern === '%' && $mode === \Horde_Imap_Client::MBOX_SUBSCRIBED)
+			{
+				return ['INBOX' => []];
+			}
+			$this->assertContains($pattern, ['user/%', 'shared/%']);
+			return [];
+		});
 
 		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
 
@@ -314,6 +323,65 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
 
 		$this->assertSame([base64_encode('INBOX')], $ids);
+	}
+
+	/**
+	 * A namespace root with zero accessible children (nothing granted to this user via IMAP ACL,
+	 * by far the more common case) must stay suppressed, exactly like classic - an
+	 * always-visible-but-empty "user"/"shared" entry is a confusing dead end most users would
+	 * never understand. Both "user" and "shared" are always checked (matched by literal name, see
+	 * namespaceRootsMissingFrom()'s own docblock), regardless of what getNameSpaceArray() reports.
+	 */
+	public function testListChildIdsSuppressesNamespaceRootWithNoGrantedChildren()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '/']], 'others' => [['delimiter' => '/']]]);
+		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
+		{
+			if ($mode === \Horde_Imap_Client::MBOX_SUBSCRIBED)
+			{
+				return $pattern === '%' ? ['INBOX' => []] : [];
+			}
+			// nothing granted under either namespace - the exact-name lookups must never even be
+			// reached in this case
+			$this->assertContains($pattern, ['user/%', 'shared/%']);
+			return [];
+		});
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
+
+		$this->assertSame([base64_encode('INBOX')], $ids);
+	}
+
+	/**
+	 * The real regression this whole method exists for: a server that doesn't report "user" as a
+	 * formal IMAP NAMESPACE-extension entry at all (getNameSpaceArray() only has 'personal') must
+	 * still show it once it has real accessible children - matched by its conventional literal
+	 * name, not by relying on the server correctly advertising it as a namespace.
+	 */
+	public function testListChildIdsFindsNamespaceRootByNameEvenWhenNotReportedAsANamespace()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '/']], 'others' => [['delimiter' => '/']]]);
+		$imap->method('listMailboxes')->willReturnCallback(function($pattern, $mode, $opts)
+		{
+			if ($mode === \Horde_Imap_Client::MBOX_SUBSCRIBED)
+			{
+				return $pattern === '%' ? ['INBOX' => []] : [];
+			}
+			if ($pattern === 'user/%')
+			{
+				return ['user/birgit' => []];
+			}
+			if ($pattern === 'shared/%')
+			{
+				return [];
+			}
+			$this->assertSame('user', $pattern);
+			return ['user' => []];
+		});
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
+
+		$this->assertSame([base64_encode('INBOX'), base64_encode('user')], $ids);
 	}
 
 	public function testMailboxQueryPassesIsSubscribedFilterThroughToListChildIds()

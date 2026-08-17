@@ -206,8 +206,18 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : string, parentPath : string,
 	options : BuildFolderLevelOptions = {}, egw : Egw) : FolderTreeNode[]
 {
+	// the shared/other-users namespace root ("user" on Dovecot/JmapShim's local shim, "shared" on
+	// a real JMAP server like Stalwart) is a structural navigation doorway, not an individually-
+	// subscribable mailbox in the normal sense - it's essentially never itself isSubscribed, so
+	// the subscribedOnly filter below would otherwise hide the only way into that whole
+	// namespace. Still gated on hasChildren !== false as a client-side belt-and-braces check
+	// (JmapShim::namespaceRootsMissingFrom() already only reports it server-side when it has real
+	// accessible children, but an empty, dead-end namespace root is exactly what this whole
+	// exemption must never show for any other backend path that doesn't apply the same check)
+	const isVisibleNamespaceRoot = (mailbox : JmapMailboxNode) =>
+		['user', 'shared'].includes((mailbox.name || '').toLowerCase()) && mailbox.hasChildren !== false;
 	return (mailboxes || [])
-		.filter((mailbox) => !options.subscribedOnly || mailbox.isSubscribed)
+		.filter((mailbox) => !options.subscribedOnly || mailbox.isSubscribed || isVisibleNamespaceRoot(mailbox))
 		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + mailbox.name : mailbox.name, egw,
 			!!options.isTopLevel));
 }

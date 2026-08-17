@@ -78,6 +78,40 @@ describe("buildFolderLevel()", () =>
 		assert.equal(nodes.length, 2);
 	});
 
+	/**
+	 * The shared/other-users namespace root ("user"/"shared") is a structural navigation doorway,
+	 * essentially never itself isSubscribed - subscribedOnly must never hide it, since JmapShim
+	 * already only reports it here when it has real accessible children (see
+	 * JmapShim::namespaceRootsMissingFrom()'s own docblock). Real regression found live: acc_id=42's
+	 * "user" sibling of INBOX still disappeared after the server-side fix, because this client-side
+	 * filter had the exact same gap.
+	 */
+	it("never filters out the namespace root even when unsubscribed", () =>
+	{
+		const nodes = build([
+			mailbox({name: "INBOX", role: "inbox", isSubscribed: true}),
+			mailbox({name: "user", isSubscribed: false}),
+			mailbox({name: "Sent", role: "sent", isSubscribed: false}),
+		], {subscribedOnly: true});
+
+		assert.deepEqual(nodes.map((n) => n.text), ["translated(INBOX)", "user"]);
+	});
+
+	/**
+	 * Belt-and-braces: the namespace-root subscribedOnly exemption above must not resurrect a
+	 * namespace root with no children at all (hasChildren === false) - an always-visible-but-empty
+	 * "user"/"shared" entry is exactly the confusing dead end this whole exemption must avoid.
+	 */
+	it("still filters out an unsubscribed namespace root with no children", () =>
+	{
+		const nodes = build([
+			mailbox({name: "INBOX", role: "inbox", isSubscribed: true}),
+			mailbox({name: "user", isSubscribed: false, hasChildren: false}),
+		], {subscribedOnly: true});
+
+		assert.deepEqual(nodes.map((n) => n.text), ["translated(INBOX)"]);
+	});
+
 	it("marks child=true when hasChildren is true", () =>
 	{
 		const [node] = build([mailbox({hasChildren: true})]);
