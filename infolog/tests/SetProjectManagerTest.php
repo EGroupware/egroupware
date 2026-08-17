@@ -147,6 +147,13 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 			{
 				$this->bo = null;
 				$this->pm_bo = null;
+
+				// testSetProjectViaURL() sets these to simulate a URL-based call. $_REQUEST is a
+				// process-wide superglobal that PHPUnit does not reset between tests, so leaving
+				// them set leaks into infolog_ui::edit() calls made by later tests in the same
+				// process (eg. ContactTest), silently overwriting their info_contact/pm_id via
+				// the 'projectmanager' case in edit()'s action switch.
+				unset($_REQUEST['action'], $_REQUEST['action_id']);
 			}
 		}
 	}

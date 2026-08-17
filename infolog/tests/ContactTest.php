@@ -48,6 +48,14 @@ class ContactTest extends \EGroupware\Api\AppTest
 			$this->bo->delete($this->info_id);
 		}
 		$this->bo = null;
+
+		// testFreeText()/testLinkedEntry()/testSubEntry() set these to simulate a URL-based
+		// edit() call. $_REQUEST is a process-wide superglobal that PHPUnit does not reset
+		// between tests, so leaving them set leaks into the next test's edit() call - and since
+		// tearDown() runs even when a test fails partway through an assertion, this catches the
+		// leak even when the in-method unset() (eg. testLinkedEntry()) got skipped by a thrown
+		// expectation failure.
+		unset($_REQUEST['info_id'], $_REQUEST['action'], $_REQUEST['action_id']);
 	}
 
 	/**
