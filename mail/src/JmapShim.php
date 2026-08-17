@@ -183,10 +183,21 @@ class JmapShim
 
 			foreach ($responses as $response)
 			{
-				if ($response[2] === $ref['resultOf'] && $response[0] === $ref['name'])
+				if ($response[2] !== $ref['resultOf'])
+				{
+					continue;
+				}
+				if ($response[0] === $ref['name'])
 				{
 					$args[$name] = self::jsonPath($response[1], $ref['path']);
 					continue 2;
+				}
+				// the referenced call itself failed (recorded as an "error" response, so its
+				// method name never matches $ref['name']) - propagate its real error instead of
+				// the generic, misleading "failed to resolve reference" message below
+				if ($response[0] === 'error')
+				{
+					throw new \Exception($response[1]['description'] ?? $response[1]['type'] ?? "referenced call '{$ref['resultOf']}' failed");
 				}
 			}
 			throw new \Exception("Failed to resolve result reference for '$name'");

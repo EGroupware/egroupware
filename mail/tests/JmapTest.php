@@ -252,6 +252,24 @@ class JmapTest extends \PHPUnit\Framework\TestCase
 		], []);
 	}
 
+	/**
+	 * If the referenced call itself failed (recorded as an "error" response by dispatch()'s
+	 * catch block), resolveRefs() must propagate that call's real error/description instead of
+	 * the generic "Failed to resolve result reference" message - the previous behaviour masked
+	 * the actual cause (e.g. a transient IMAP failure inside Mailbox/query) behind a misleading,
+	 * unrelated-looking error.
+	 */
+	public function testResolveRefsPropagatesReferencedCallsRealError()
+	{
+		$responses = [['error', ['type' => 'serverFail', 'description' => 'IMAP connection lost'], 'q0']];
+
+		$this->expectException(\Exception::class);
+		$this->expectExceptionMessage('IMAP connection lost');
+		JmapShim::resolveRefs([
+			'#ids' => ['name' => 'Mailbox/query', 'resultOf' => 'q0', 'path' => '/ids'],
+		], $responses);
+	}
+
 	public function testJsonPath()
 	{
 		$this->assertSame('c', JmapShim::jsonPath(['a' => ['b' => 'c']], '/a/b'));

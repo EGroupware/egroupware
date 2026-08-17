@@ -78,13 +78,19 @@ class AttachmentJmap
 				$attachmentHTML[$key]['mimetype'] = Api\MimeMagic::mime2label($value['mimeType']);
 				$onlyOwnHandlers = preg_match(\mail_ui::$mimeTypesHandledOnlyByMail, $value['mimeType']) ? 'mail' : null;
 				// JMAP-native attachment content fetch (blobId set by jmapAttachmentsToLegacy()/
-				// resolveWinmailJmap() for a Stalwart-sourced row) instead of the classic
-				// Api\Mail::getAttachmentAccount() IMAP fetch - same target for both mime_data and
-				// invoice_data below, and for link_save/downloadOneAsFile client-side (blobId is
-				// passed through to the browser via $attachmentHTML[$key]['blobId'])
+				// resolveWinmailJmap() for a JMAP-listed row - Stalwart real JMAP *or* the local
+				// shim for a plain-IMAP account, see fetchBlobBytes()'s own docblock for the two
+				// blobId shapes) instead of the classic Api\Mail::getAttachmentAccount() IMAP fetch -
+				// same target for both mime_data and invoice_data below, and for link_save/
+				// downloadOneAsFile client-side (blobId is passed through to the browser via
+				// $attachmentHTML[$key]['blobId']). Must go through fetchBlobBytes() (backend-uniform
+				// dispatch), not Imap\Jmap::downloadBlobAccount() directly - that one assumes every
+				// blobId is a real, opaque Stalwart id and fatals via __call() for a local-shim
+				// self-describing one (a plain-IMAP account's JMAP-listed row).
 				if (!empty($value['blobId']))
 				{
-					$attachmentTarget = ['EGroupware\\Api\\Mail\\Imap\\Jmap::downloadBlobAccount', [$acc_id, $value['blobId'], $attachmentHTML[$key]['filename'], $value['mimeType']]];
+					$attachmentTarget = ['EGroupware\\Mail\\Ui\\AttachmentJmap::fetchBlobBytes',
+						[$acc_id, $value['blobId'], $attachmentHTML[$key]['filename'], $value['mimeType']]];
 				}
 				else
 				{
@@ -468,11 +474,18 @@ class AttachmentJmap
 	 * base64(mailbox):uid:partId (local shim, see JmapShim::bodyPartToJmap()/download() - empty
 	 * partId means the whole raw message, not one part).
 	 *
+	 * $filename/$mimeType are only ever substituted into the Stalwart download URL (Mail\Jmap::
+	 * downloadBlob()'s own docblock) - harmless, generic defaults for callers (fetchMessageBytesJmap(),
+	 * the winmail resolver below) that don't have a real filename/mimetype to hand; createAttachmentBlock()
+	 * passes the real ones through for a proper download filename.
+	 *
 	 * @param string $acc_id
 	 * @param string $blobId
+	 * @param string $filename
+	 * @param string $mimeType
 	 * @return ?string null on any failure - caller falls back to its classic fetch
 	 */
-	public static function fetchBlobBytes(string $acc_id, string $blobId) : ?string
+	public static function fetchBlobBytes(string $acc_id, string $blobId, string $filename='blob', string $mimeType='application/octet-stream') : ?string
 	{
 		try
 		{
@@ -483,7 +496,7 @@ class AttachmentJmap
 			}
 			if ($icServer instanceof Mail\Imap\Jmap)
 			{
-				return $icServer->jmapClient()->downloadBlob($blobId, 'blob', 'application/octet-stream');
+				return $icServer->jmapClient()->downloadBlob($blobId, $filename, $mimeType);
 			}
 			[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
 			if ($mailboxB64 === null || !$uid)
