@@ -183,7 +183,7 @@ export abstract class EgwApp
 	/**
 	 * reference to nextmatch with id="nm"
 	 */
-	nm : et2_nextmatch = null;
+	nm : Et2Nextmatch | et2_nextmatch = null;
 
 	/**
 	 * Initialization and setup goes here, but the etemplate2 object
