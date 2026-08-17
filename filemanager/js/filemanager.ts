@@ -1148,6 +1148,11 @@ export class filemanagerAPP extends EgwApp
 			nm.applyFilters({view: view}, {reload: false, clearActions: false});
 			this.scheduleChangeViewButtonUpdate(nm, view);
 			this.updateTileColumns(nm);
+
+			// {reload: false} above means get_rows() never runs server-side, so it never
+			// persists the view via its own nm_view preference save. Save it directly here
+			// so we can skip the unneeded reload
+			this.egw.set_preference('filemanager', 'nm_view', view);
 		});
 	}
 
