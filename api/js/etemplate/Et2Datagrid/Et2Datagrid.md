@@ -736,7 +736,7 @@ interactive DOM node.
 
 ### Construction
 
-`constructor()` ([Et2Datagrid.ts:490](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L490))
+`constructor()` ([Et2Datagrid.ts:490](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L490))
 is intentionally light: it measures the browser scrollbar
 width once and binds stable method references so listeners and the virtualizer can add/remove them
 cleanly. No DOM or data work happens here. The default properties (`columns`, `dataProvider`,
@@ -745,7 +745,7 @@ the property decorators above.
 
 ### First paint
 
-`firstUpdated()` ([Et2Datagrid.ts:542](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L542))
+`firstUpdated()` ([Et2Datagrid.ts:542](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L542))
 runs once after the first render. It:
 
 - attaches the passive scroll listener (`_maybePrefetchOnScroll`) to the scroll body,
@@ -754,7 +754,7 @@ runs once after the first render. It:
 
 ### Structural change detection
 
-`willUpdate()` ([Et2Datagrid.ts:556](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L556))
+`willUpdate()` ([Et2Datagrid.ts:556](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L556))
 runs before each render whenever a reactive property changed.
 For structure-defining inputs — `templateData`, `view`, `rowIdField`, `columns`,
 `columnPreferenceName`, `noColumnPersistence`, `noVisibleHeader` — it:
@@ -768,7 +768,7 @@ For structure-defining inputs — `templateData`, `view`, `rowIdField`, `columns
 When `columns` change it also rebuilds the cached customfield column state
 (`_rebuildCustomfieldColumnStateCache()`), which row hydration reads to avoid per-row header scans.
 
-`updated()` ([Et2Datagrid.ts:618](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L618))
+`updated()` ([Et2Datagrid.ts:618](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L618))
 performs the post-render structure sync (column sizes,
 visibility), re-adopts `rowStylesheets`, re-runs the row-upgrade observer/scan, and restores focus
 to the active row after a render if needed.
@@ -778,15 +778,15 @@ to the active row after a render if needed.
 There are two ways rows start loading:
 
 1. **Owner-driven** —
-   `loadMore()` ([Et2Datagrid.ts:4197](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L4197))
+   `loadMore()` ([Et2Datagrid.ts:4197](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L4197))
    and
-   `reload()` ([Et2Datagrid.ts:3982](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L3982))
+   `reload()` ([Et2Datagrid.ts:3982](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L3982))
    request from index `0`. `reload()` wipes all loaded rows (`_clearRows()`), resets `total`, and
    re-fetches. These are the public entry points an owner widget calls.
 2. **Virtualizer-driven** — when the virtualizer renders an index that has no loaded row,
-   `_renderVirtualRow()` ([Et2Datagrid.ts:1835](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1835))
+   `_renderVirtualRow()` ([Et2Datagrid.ts:1835](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1835))
    emits a placeholder and calls
-   `_requestChunkForRowIndex()` ([Et2Datagrid.ts:1934](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1934)).
+   `_requestChunkForRowIndex()` ([Et2Datagrid.ts:1934](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1934)).
    This is how infinite-scroll paging and
    scroll-into-view prefetch happen. `scroll` events also re-arm queued-request processing via
    `_maybePrefetchOnScroll()`.
@@ -798,18 +798,18 @@ Both paths funnel into the same debounced queue.
 The request queue coalesces bursts (fast scrolling) and dedupes by a deterministic key built from
 start, count, and provider query signature (`_requestKey()`):
 
-`_queueRequest()` ([Et2Datagrid.ts:1205](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1205))
+`_queueRequest()` ([Et2Datagrid.ts:1205](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1205))
 records the request and bumps `_pendingPlaceholderCount`
 (embedded grids reserve a single loading row).
 
-`_scheduleQueuedRequestProcessing()` ([Et2Datagrid.ts:1219](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1219))
+`_scheduleQueuedRequestProcessing()` ([Et2Datagrid.ts:1219](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1219))
 debounces (default 100 ms).
 
-`_processQueuedRequests()` ([Et2Datagrid.ts:1349](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1349))
+`_processQueuedRequests()` ([Et2Datagrid.ts:1349](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1349))
 marks the request in-flight, sets `loading` /
 `fetching`, dispatches `et2-loading-start`, and calls `_fetchPage()`.
 
-`_fetchPage()` ([Et2Datagrid.ts:1243](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1243))
+`_fetchPage()` ([Et2Datagrid.ts:1243](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1243))
 awaits `dataProvider.fetchPage(start, count)` and:
 
 - sets `fetchFailed` / `fetchErrorMessage` and `_hasFetchedOnce`,
@@ -819,58 +819,58 @@ awaits `dataProvider.fetchPage(start, count)` and:
 - in `finally`, decrements placeholders, removes the in-flight key, fires `et2-loading-done` or
   `et2-loading-error`, and calls `_reconcileRowRenderState()`.
 
-`_reconcileRowRenderState()` ([Et2Datagrid.ts:1394](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1394))
+`_reconcileRowRenderState()` ([Et2Datagrid.ts:1394](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1394))
 prunes expanded rows that became non-expandable
 after refresh and, when `autoActivateFirstRow` is set and no active row exists, pins `activeRowIndex
 = 0` so keyboard navigation works as soon as the first row appears.
 
 `loading`, `fetching`, and `total` are `@state()` so the relevant templates re-render. The
-`_stateTemplate()` ([Et2Datagrid.ts:4250](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L4250))
+`_stateTemplate()` ([Et2Datagrid.ts:4250](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L4250))
 resolves the high-level visual state — initial loading,
 fetch error, missing template, or empty — and renders the loader, error, or no-results UI accordingly.
 
 ### Row generation
 
-`render()` ([Et2Datagrid.ts:4444](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L4444))
+`render()` ([Et2Datagrid.ts:4444](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L4444))
 is the heart of presentation. For each render it:
 
 - computes `visibleColumns` and resolves CSS custom properties (`--column-sizes`, `--column-count`,
   `--scrollbar-space`, `--embedded-virtualized-height`),
 - computes
-  `rowCount = _virtualRowCount()` ([Et2Datagrid.ts:2022](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2022)),
+  `rowCount = _virtualRowCount()` ([Et2Datagrid.ts:2022](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2022)),
   which is `total` when known or the
   materialized count otherwise,
 - builds the virtualizer `items` via
-  `_getVirtualItems()` ([Et2Datagrid.ts:1982](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1982)) —
+  `_getVirtualItems()` ([Et2Datagrid.ts:1982](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1982)) —
   inserting an
   `expanded` item immediately after each expanded parent,
 - passes a stable `keyFunction` (
-  `_virtualRowKey`, [Et2Datagrid.ts:2062](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2062))
+  `_virtualRowKey`, [Et2Datagrid.ts:2062](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2062))
   and the
   `renderItem` callback (`_renderVirtualRow`) to `virtualize()`.
 
-`_renderVirtualRow()` ([Et2Datagrid.ts:1835](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1835))
+`_renderVirtualRow()` ([Et2Datagrid.ts:1835](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1835))
 is invoked by the virtualizer for every visible slot:
 
 - if the row exists in `_rowsByIndex`, it calls `_buildRowElement()` and serializes the result with
   `unsafeHTML` (rows are stamped as fast, inert DOM strings for throughput),
 - otherwise it renders a placeholder (skeleton or the slot loader) and triggers a chunk request.
 
-`_buildRowElement()` ([Et2Datagrid.ts:1544](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1544))
+`_buildRowElement()` ([Et2Datagrid.ts:1544](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1544))
 is where a logical row becomes a DOM node:
 
 1. It clones the prepared `<template>` (`document.importNode(template.content, true)`) — or falls back
    to a simple `<tr>` built from column values when no template exists.
-2. `_populateCloneWithRow()` ([Et2Datagrid.ts:2401](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2401))
+2. `_populateCloneWithRow()` ([Et2Datagrid.ts:2401](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2401))
    walks text nodes and resolves direct and legacy row placeholders via
    `Et2RowProvider.resolveSimpleRowPlaceholders()`.
-3. `_populateRowRootAttributes()` ([Et2Datagrid.ts:2423](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2423))
+3. `_populateRowRootAttributes()` ([Et2Datagrid.ts:2423](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2423))
    resolves root-level placeholder attributes (e.g. dynamic row classes) via
    `Et2RowProvider.customizeRowRootAttributes()`.
-4. `_markRowElement()` ([Et2Datagrid.ts:2116](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2116))
+4. `_markRowElement()` ([Et2Datagrid.ts:2116](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2116))
    stamps accessibility/identity attributes: `role`, `data-row-id`, `data-row-index`,
    `aria-rowindex`, `aria-selected`, and `tabindex`.
-5. `_ensureMetaCell()` ([Et2Datagrid.ts:1602](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1602))
+5. `_ensureMetaCell()` ([Et2Datagrid.ts:1602](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1602))
    ensures the leading metadata cell exists and wires the row expander when the row is expandable;
    it also invokes `rowCustomizer` (see [Customization points](#customization-points-and-overrides)).
 6. The node is tagged with the `loading` class and `_applyColumnLayoutToRowElement()` applies column
@@ -882,20 +882,20 @@ Row templates are stamped as inert strings, so widget binding is deferred to kee
 row bindings are resolved from the current `rowData` during that deferred pass; an ArrayMgr perspective is only a
 compatibility fallback.
 
-`_initRowUpgradeObserver()` ([Et2Datagrid.ts:1755](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L1755))
+`_initRowUpgradeObserver()` ([Et2Datagrid.ts:1755](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L1755))
 installs a `MutationObserver` on the scroll body
 that calls `_upgradeRenderedRows()` whenever rows are added/moved.
 
-`_upgradeRenderedRows()` ([Et2Datagrid.ts:2211](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2211))
+`_upgradeRenderedRows()` ([Et2Datagrid.ts:2211](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2211))
 finds newly realized physical rows, skips already-upgraded
 nodes for the same row identity, and enqueues them.
 
-`_processRowUpgradeQueue()` ([Et2Datagrid.ts:2326](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2326))
+`_processRowUpgradeQueue()` ([Et2Datagrid.ts:2326](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2326))
 processes a bounded batch per animation frame
 (≤ 8 rows, 8 ms budget) so input/paint stay smooth. For each row it calls
 `_applyRowElementAttributes()`.
 
-`_applyRowElementAttributes()` ([Et2Datagrid.ts:2436](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2436))
+`_applyRowElementAttributes()` ([Et2Datagrid.ts:2436](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2436))
 is the hydration core. It:
 
 - reads `rowTemplateAttrMap` for each element carrying `data-et2nm-id`,
@@ -911,22 +911,22 @@ is the hydration core. It:
 - re-runs the row customizer and finally removes the `loading` class.
 
 Because the virtualizer can materialize rows after `updated()`, `_scheduleRenderedRowsUpgradeScan()`
-([Et2Datagrid.ts:2249](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2249))
+([Et2Datagrid.ts:2249](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2249))
 re-scans for up to ~30 frames to catch late handoff.
 
 ### Refresh and reload
 
-`refresh(row_ids, type)` ([Et2Datagrid.ts:4001](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L4001))
+`refresh(row_ids, type)` ([Et2Datagrid.ts:4001](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L4001))
 applies a targeted refresh without a full reload.
 For `DELETE` it removes rows client-side (
-`_removeRowsById`, [Et2Datagrid.ts:4121](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L4121));
+`_removeRowsById`, [Et2Datagrid.ts:4121](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L4121));
 otherwise it
 awaits `dataProvider.refresh()` and merges results via
-`_applyRefreshedRows()` ([Et2Datagrid.ts:4048](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L4048)),
+`_applyRefreshedRows()` ([Et2Datagrid.ts:4048](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L4048)),
 which swaps row data in place, bumps a render version (triggering a re-render of that row via the
 virtual key), and pulses the changed rows for visual feedback.
 
-`reload()` ([Et2Datagrid.ts:3982](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L3982))
+`reload()` ([Et2Datagrid.ts:3982](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L3982))
 wipes loaded state and re-fetches from index 0.
 
 ---
@@ -1001,7 +1001,7 @@ Visibility legend: **public** (called by owner widgets), **private** (internal o
 
 `rowCustomizer` is a `Et2DatagridRowCustomizer` callback invoked for every realized row, both during
 row generation (`_ensureMetaCell`) and again after hydration (`_rerunRowCustomizer`,
-[Et2Datagrid.ts:2530](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2530)).
+[Et2Datagrid.ts:2530](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2530)).
 Use it for presentation tweaks that depend on row data — badges, meta-cell
 indicators, or DOM adjustments the row template cannot express.
 
@@ -1183,7 +1183,7 @@ chooser) and a `hidden` flag (currently hidden but user-toggleable). Headers are
 (`column.header`) and may expose methods such as `getCustomfieldVisibility()` — used by the datagrid
 to cache customfield state per column (`_rebuildCustomfieldColumnStateCache`). Column hide/show
 expressions are evaluated by
-`_parseColumnBooleanExpression()` ([Et2Datagrid.ts:2709](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Nextmatch/Et2Datagrid.ts#L2709))
+`_parseColumnBooleanExpression()` ([Et2Datagrid.ts:2709](https://github.com/EGroupware/egroupware/blob/master/api/js/etemplate/Et2Datagrid/Et2Datagrid.ts#L2709))
 against the
 content array manager. Custom column widgets can therefore drive visibility and sizing through their
 own header element.

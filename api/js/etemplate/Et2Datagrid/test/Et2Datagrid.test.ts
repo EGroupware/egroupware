@@ -3,7 +3,6 @@ import {html, LitElement, render} from "lit";
 import * as sinon from "sinon";
 import {Et2Datagrid} from "../Et2Datagrid";
 import datagridStyles from "../Et2Datagrid.styles.ts";
-import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2RowProvider} from "../Et2RowProvider.ts";
 import {et2_arrayMgr} from "../../et2_core_arrayMgr";
 import {Et2CustomfieldsBase} from "../../Et2Customfields/Et2CustomfieldsBase";
@@ -1453,58 +1452,6 @@ describe("Et2Datagrid row rendering", () =>
 		assert.isNotNull(
 			templateData?.noResultsTemplate?.content.querySelector(".tile-no-results-message"),
 			"noResults template should contain declared empty-state content"
-		);
-	});
-
-	/**
-	 * Contract: template-local row styles replace app.css for datagrid rows.
-	 * Setup: compose row styles with both an app stylesheet and a template
-	 * stylesheet present.
-	 * Pass: the template stylesheet is included and the app stylesheet is not.
-	 */
-	it("uses template row styles instead of app.css in datagrid row stylesheets", async() =>
-	{
-		const nextmatch = new Et2Nextmatch() as any;
-		const appSheet = new CSSStyleSheet();
-		await appSheet.replace(".from-app-css { color: red; }");
-		const templateSheet = new CSSStyleSheet();
-		await templateSheet.replace(".from-template { color: green; }");
-
-		nextmatch._appRowStylesheet = appSheet;
-		nextmatch._templateData = {rowStylesheets: [templateSheet]};
-		nextmatch._syncDatagridRowStylesheets();
-
-		assert.include(nextmatch._rowStylesheets, templateSheet, "template row stylesheet should be adopted");
-		assert.notInclude(nextmatch._rowStylesheets, appSheet, "app.css should not be adopted when template row styles exist");
-	});
-
-	/**
-	 * Contract: runtime row styles added through the public API survive later internal stylesheet synchronization.
-	 * Setup: add a constructed stylesheet, then synchronize the template styles again and add the same sheet twice.
-	 * Pass: the runtime sheet remains last, so it can override static rules, and is included only once.
-	 */
-	it("retains additional row stylesheets across synchronization", async() =>
-	{
-		const nextmatch = new Et2Nextmatch() as any;
-		const templateSheet = new CSSStyleSheet();
-		await templateSheet.replace(".from-template { color: green; }");
-		const additionalSheet = new CSSStyleSheet();
-		await additionalSheet.replace(".from-runtime { color: purple; }");
-
-		nextmatch._templateData = {rowStylesheets: [templateSheet]};
-		nextmatch.addRowStylesheet(additionalSheet);
-		nextmatch._syncDatagridRowStylesheets();
-		nextmatch.addRowStylesheet(additionalSheet);
-
-		assert.strictEqual(
-			nextmatch._rowStylesheets[nextmatch._rowStylesheets.length - 1],
-			additionalSheet,
-			"runtime stylesheet should remain after the template styles"
-		);
-		assert.equal(
-			nextmatch._rowStylesheets.filter((style : CSSStyleSheet) => style === additionalSheet).length,
-			1,
-			"the same runtime stylesheet should only be adopted once"
 		);
 	});
 
