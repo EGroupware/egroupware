@@ -69,8 +69,10 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 				// Also force history off: with it on, delete() only soft-deletes (pm_status=
 				// 'deleted') on the first call and keeps pm_number - a real purge needs a second
 				// delete() once already-deleted.
+				// $delete_sources=true so a leftover project's linked entries get cascade-cleaned
+				// too, instead of orphaned.
 				$this->pm_bo->history = '';
-				$this->pm_bo->delete($project['pm_id']);
+				$this->pm_bo->delete($project['pm_id'], true);
 			}
 		}
 
@@ -82,24 +84,38 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 
 	protected function tearDown() : void
 	{
-		// Remove infolog under test
-		if($this->info_id)
+		// Nested try/finally: if deleting the infolog entry throws, the projects must still
+		// get a cleanup attempt, and the bo's/request globals must still get reset either way -
+		// otherwise a stuck 'TEST N'-numbered project or global bo silently breaks unrelated
+		// tests running later in the same PHPUnit process.
+		try
 		{
-			$this->bo->delete($this->info_id, False, False, True);
-			// One more time for history
-			$this->bo->delete($this->info_id, False, False, True);
+			// Remove infolog under test
+			if($this->info_id)
+			{
+				$this->bo->delete($this->info_id, False, False, True);
+				// One more time for history
+				$this->bo->delete($this->info_id, False, False, True);
+			}
 		}
+		finally
+		{
+			try
+			{
+				// Remove the test projects
+				$this->deleteProject();
+			}
+			finally
+			{
+				$this->bo = null;
+				$this->pm_bo = null;
 
-		// Remove the test projects
-		$this->deleteProject();
+				// Clean up the request
+				$_GET = $_POST = $_REQUEST = array();
 
-		$this->bo = null;
-		$this->pm_bo = null;
-
-		// Clean up the request
-		$_GET = $_POST = $_REQUEST = array();
-
-		parent::tearDown();
+				parent::tearDown();
+			}
+		}
 	}
 
 
@@ -358,14 +374,28 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 
 		// Force to ignore setting
 		$this->pm_bo->history = '';
-		foreach($this->pm_id as $pm_id)
+		try
 		{
-			$this->pm_bo->delete($pm_id, true);
+			foreach($this->pm_id as $pm_id)
+			{
+				// One project's delete failing (eg. an ACL check, or any other exception)
+				// must not abort the loop and leave later projects in $this->pm_id undeleted.
+				try
+				{
+					$this->pm_bo->delete($pm_id, true);
+				}
+				catch (\Throwable $e)
+				{
+					error_log(__METHOD__."() failed to delete pm_id=$pm_id: ".$e);
+				}
+			}
 		}
-
-		// Force links to run notification now, or elements might stay
-		// usually waits until Egw::on_shutdown();
-		Link::run_notifies();
+		finally
+		{
+			// Force links to run notification now, or elements might stay
+			// usually waits until Egw::on_shutdown();
+			Link::run_notifies();
+		}
 	}
 
 }

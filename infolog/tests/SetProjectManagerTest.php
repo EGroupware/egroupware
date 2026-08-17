@@ -62,8 +62,10 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 				// Also force history off: with it on, delete() only soft-deletes (pm_status=
 				// 'deleted') on the first call and keeps pm_number - a real purge needs a second
 				// delete() once already-deleted, same as deleteProject() below does.
+				// $delete_sources=true so a leftover project's linked entries get cascade-cleaned
+				// too, instead of orphaned.
 				$this->pm_bo->history = '';
-				$this->pm_bo->delete($project['pm_id']);
+				$this->pm_bo->delete($project['pm_id'], true);
 			}
 		}
 

@@ -308,6 +308,10 @@ abstract class LoggedInTest extends TestCase
 	/**
 	 * Log out the current user, log in as the given user
 	 *
+	 * For admin actions, prefer asAdmin()/asAdminStatic() over calling this directly with the admin test account
+	 * and switching back manually afterwards - see their docblocks for why pairing two bare
+	 * switchUser() calls around admin_cmd_* usage is a hazard.
+	 *
 	 * @param $account_lid
 	 * @param $password
 	 */
@@ -318,5 +322,66 @@ abstract class LoggedInTest extends TestCase
 
 		// Log in
 		static::load_egw($account_lid,$password);
+	}
+
+	/**
+	 * Run a callback while switched to the configured admin test account, then always switch
+	 * back to the original session afterwards - even if the callback throws.
+	 *
+	 * admin_cmd_edit_user/_edit_group/_delete_account/etc. require the CURRENT session to be a
+	 * real admin (see the "Admin-only functionality" section of doc/ai/testing.md). Pairing a
+	 * switchUser() to admin with a later switchUser() back, as two independent statements, is a
+	 * hazard: if anything in between throws, the switch-back never runs, and the session stays
+	 * stuck as admin for every later test in the same PHPUnit process (a stray fixture row
+	 * created by the real test user can then become ACL-invisible to whatever's stuck, breaking
+	 * unrelated cleanup/lookup code far away from the original test). Route all admin_cmd_*
+	 * usage through this helper instead of pairing manual switchUser() calls, so the restore is
+	 * guaranteed by construction rather than by remembering a try/finally each time.
+	 *
+	 * @param callable $callback Runs while logged in as $GLOBALS['EGW_ADMIN_USER']. Use
+	 *   `function() use (&$var) {...}` to get local values back out, or set $this->... properties
+	 *   directly - both work as usual since the closure is defined in the calling method.
+	 * @return mixed the callback's return value
+	 */
+	protected function asAdmin(callable $callback)
+	{
+		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			return $callback();
+		}
+		finally
+		{
+			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
+	}
+
+	/**
+	 * Static counterpart to asAdmin(), for setUpBeforeClass()/setUpBeforeClass()-style contexts
+	 * where switchUser() (an instance method) isn't available.
+	 *
+	 * IMPORTANT: this deliberately uses `self::tearDownAfterClass()`, NOT `static::`. `self::` is
+	 * resolved at compile time to THIS class (LoggedInTest), regardless of which subclass calls
+	 * asAdminStatic() - `static::` would follow late static binding to the CALLING subclass
+	 * instead, and some subclasses (eg. MailImportTest) override tearDownAfterClass() with
+	 * destructive account/contact cleanup that must NOT run here, only the harmless base
+	 * session-logout logic.
+	 *
+	 * @param callable $callback Runs while logged in as $GLOBALS['EGW_ADMIN_USER'].
+	 * @return mixed the callback's return value
+	 */
+	protected static function asAdminStatic(callable $callback)
+	{
+		self::tearDownAfterClass();
+		static::load_egw($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		try
+		{
+			return $callback();
+		}
+		finally
+		{
+			self::tearDownAfterClass();
+			static::load_egw($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		}
 	}
 }

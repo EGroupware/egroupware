@@ -64,12 +64,13 @@ class GroupCommandTest extends CommandBase {
 
 		// Execute
 		// admin_cmd_edit_group requires the CURRENT session to be a real admin
-		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
-		$command = new admin_cmd_edit_group(false, $this->group);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->group_id = $command->account;
-		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		$this->asAdmin(function() use (&$command)
+		{
+			$command = new admin_cmd_edit_group(false, $this->group);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->group_id = $command->account;
+		});
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -91,21 +92,16 @@ class GroupCommandTest extends CommandBase {
 		$this->expectException(Api\Exception\WrongUserinput::class);
 
 		// Execute
-		// admin_cmd_edit_group requires the CURRENT session to be a real admin - use try/finally
-		// since this call is expected to throw
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin. This call is
+		// expected to throw.
 		$this->account['account_lid'] = 'Default';
-		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
-		try
+		$this->asAdmin(function()
 		{
 			$command = new admin_cmd_edit_group(false, $this->account);
 			$command->comment = 'Needed for unit test ' . $this->name();
 			$command->run();
 			$this->group_id = $command->account;
-		}
-		finally
-		{
-			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
-		}
+		});
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -125,20 +121,15 @@ class GroupCommandTest extends CommandBase {
 		unset($account['account_lid']);
 
 		// Execute
-		// admin_cmd_edit_group requires the CURRENT session to be a real admin - use try/finally
-		// since this call is expected to throw
-		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
-		try
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin. This call is
+		// expected to throw.
+		$this->asAdmin(function() use ($account)
 		{
 			$command = new admin_cmd_edit_group(false, $account);
 			$command->comment = 'Needed for unit test ' . $this->name();
 			$command->run();
 			$this->group_id = $command->account;
-		}
-		finally
-		{
-			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
-		}
+		});
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -158,20 +149,15 @@ class GroupCommandTest extends CommandBase {
 		unset($account['account_members']);
 
 		// Execute
-		// admin_cmd_edit_group requires the CURRENT session to be a real admin - use try/finally
-		// since this call is expected to throw
-		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
-		try
+		// admin_cmd_edit_group requires the CURRENT session to be a real admin. This call is
+		// expected to throw.
+		$this->asAdmin(function() use ($account)
 		{
 			$command = new admin_cmd_edit_group(false, $account);
 			$command->comment = 'Needed for unit test ' . $this->name();
 			$command->run();
 			$this->group_id = $command->account;
-		}
-		finally
-		{
-			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
-		}
+		});
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
@@ -202,46 +188,46 @@ class GroupCommandTest extends CommandBase {
 			$GLOBALS['egw']->accounts->delete($account_id);
 		}
 
-		// admin_cmd_edit_user/_edit_group require the CURRENT session to be a real admin
-		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
+		// admin_cmd_edit_user/_edit_group require the CURRENT session to be a real admin.
+		// Everything that runs as admin, including the in-between assertions, stays inside
+		// the callback.
+		$this->asAdmin(function() use ($account, &$command, &$pre_search, &$log_count)
+		{
+			$command = new admin_cmd_edit_user(false, $account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->account_id = $command->account;
 
-		$command = new admin_cmd_edit_user(false, $account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->account_id = $command->account;
+			$command = new admin_cmd_edit_group(false, $this->group);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->group_id = $command->account;
 
-		$command = new admin_cmd_edit_group(false, $this->group);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->group_id = $command->account;
+			// Count accounts
+			$pre_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
+			$log_count = $this->get_log_count();
 
-		// Count accounts
-		$pre_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
-		$log_count = $this->get_log_count();
+			// Execute
+			$account = $this->group;
+			$account['account_members'][] = $this->account_id;
+			$command = new admin_cmd_edit_group($this->group_id, $account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
 
-		// Execute
-		$account = $this->account;
-		$account['account_members'][] = $this->account_id;
-		$command = new admin_cmd_edit_group($this->group_id, $account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
+			// Check
+			$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
+			$this->assertEquals(count($pre_search), count($post_search), 'Should have same number of accounts as before');
+			$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
 
-		// Check
-		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
-		$this->assertEquals(count($pre_search), count($post_search), 'Should have same number of accounts as before');
-		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
+			// Now remove
+			$pre_search = $post_search;
+			$log_count = $this->get_log_count();
 
-		// Now remove
-		$pre_search = $post_search;
-		$log_count = $this->get_log_count();
-
-		$account = $this->account;
-		$command = new admin_cmd_edit_group($this->group_id, $account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-
-		// restore the base test session (same fallback identity used everywhere else)
-		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+			$account = $this->group;
+			$command = new admin_cmd_edit_group($this->group_id, $account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+		});
 
 		// Check
 		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));

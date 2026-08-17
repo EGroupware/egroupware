@@ -47,16 +47,13 @@ class SharingACLTest extends SharingBase
 		}
 
 		// admin_cmd_edit_user requires the CURRENT session to be a real admin
-		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
-
-		// Execute
-		$command = new \admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->name();
-		$command->run();
-		$this->account_id = $command->account;
-
-		// restore the base test session (same fallback identity used everywhere else, eg. tearDown())
-		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+		$this->asAdmin(function()
+		{
+			$command = new \admin_cmd_edit_user(false, $this->account);
+			$command->comment = 'Needed for unit test ' . $this->name();
+			$command->run();
+			$this->account_id = $command->account;
+		});
 	}
 
 	protected function tearDown() : void

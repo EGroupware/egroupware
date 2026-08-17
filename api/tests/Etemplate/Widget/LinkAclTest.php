@@ -104,11 +104,12 @@ class LinkAclTest extends LoggedInTest
 		if ($this->account_id)
 		{
 			// admin_cmd_delete_account requires the CURRENT session to be a real admin
-			$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
-			$command = new \admin_cmd_delete_account($this->account_id, null, true);
-			$command->comment = 'Removing in tearDown for unit test ' . $this->getName();
-			$command->run();
-			$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+			$this->asAdmin(function()
+			{
+				$command = new \admin_cmd_delete_account($this->account_id, null, true);
+				$command->comment = 'Removing in tearDown for unit test ' . $this->getName();
+				$command->run();
+			});
 			$this->account_id = null;
 		}
 
@@ -129,30 +130,28 @@ class LinkAclTest extends LoggedInTest
 		$original_account_id = $GLOBALS['egw_info']['user']['account_id'];
 
 		// admin_cmd_edit_group/_edit_user require the CURRENT session to be a real admin
-		$this->switchUser($GLOBALS['EGW_ADMIN_USER'], $GLOBALS['EGW_ADMIN_PASSWORD']);
-
-		if (!$GLOBALS['egw']->accounts->exists($this->account['account_primary_group']))
+		$this->asAdmin(function() use ($original_account_id)
 		{
-			$group = new \admin_cmd_edit_group(false, [
+			if (!$GLOBALS['egw']->accounts->exists($this->account['account_primary_group']))
+			{
+				$group = new \admin_cmd_edit_group(false, [
+					'account_lid' => 'Testers',
+					'account_members' => [$original_account_id],
+				]);
+				$group->run();
+			}
+			$command = new \admin_cmd_edit_user(false, $this->account);
+			$command->comment = 'Needed for unit test ' . $this->getName();
+			$command->run();
+			$this->account_id = $command->account;
+
+			// don't leave the current (admin) user in the Testers group, it could interfere with other tests
+			$remove_group = new \admin_cmd_edit_group('Testers', [
 				'account_lid' => 'Testers',
-				'account_members' => [$original_account_id],
+				'account_members' => [$this->account_id],
 			]);
-			$group->run();
-		}
-		$command = new \admin_cmd_edit_user(false, $this->account);
-		$command->comment = 'Needed for unit test ' . $this->getName();
-		$command->run();
-		$this->account_id = $command->account;
-
-		// don't leave the current (admin) user in the Testers group, it could interfere with other tests
-		$remove_group = new \admin_cmd_edit_group('Testers', [
-			'account_lid' => 'Testers',
-			'account_members' => [$this->account_id],
-		]);
-		$remove_group->run();
-
-		// restore the base test session (same fallback identity used everywhere else)
-		$this->switchUser($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD']);
+			$remove_group->run();
+		});
 
 		return $this->account_id;
 	}
