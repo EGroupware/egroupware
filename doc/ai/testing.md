@@ -170,6 +170,24 @@ For targeted frontend work:
 * Preserve existing test conventions.
 * Avoid broad rewrites of tests unless the component behaviour changed significantly.
 
+## Browser / manual verification
+
+When a checklist or task calls for verifying UI behavior "at mobile viewport" or "on mobile":
+
+* Shrinking a desktop browser window's width is **not** a mobile test, even at phone-sized dimensions (e.g.
+  390-500px). EGroupware selects its mobile template/skin server-side based on the request's `User-Agent` header at
+  page load — a plain window resize only changes the viewport of the already-rendered desktop template's CSS. The
+  desktop layout was never designed to reflow that narrow, so a resized-but-not-emulated window can show rows/columns
+  collapsing or content disappearing that has nothing to do with the real mobile template and does not reproduce for
+  actual mobile users.
+* To test mobile for real: use a tool that does full device emulation (mobile `User-Agent` override, touch input,
+  device pixel ratio) — e.g. the Browser pane's `resize_window` with the `mobile` preset — **and then reload the
+  page**, so the server-side template selection re-runs against the emulated user agent. A resize alone, without a
+  reload, leaves the already-fetched desktop template in place.
+* A window-resize-only pass (no UA emulation, no reload) is not sufficient evidence to mark a "mobile viewport"
+  checklist item verified. If only that kind of check was possible, say so explicitly rather than reporting the item
+  as covered.
+
 ## When changing setup or schema code
 
 For changes involving setup, database schema, migrations, or upgrade paths:
