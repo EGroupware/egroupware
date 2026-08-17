@@ -259,8 +259,7 @@ either can be picked up first.
   - Tests: `mail/js/test/BuildFolderLevel.test.ts` gained a `buildFolderTree()` describe block
     (pure nesting/id-construction logic, no network involved - same posture as the rest of that
     file).
-  - **Not yet done**: manual smoke test against acc_id=1 (Stalwart) and a plain-IMAP/JmapShim
-    account, and committing.
+  - **Done (2026-08-17)**: smoke-tested on the dev-box, committed+pushed (`e769d2c355`).
 
 ## What stays server-side
 

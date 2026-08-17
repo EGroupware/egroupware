@@ -26,11 +26,12 @@ use mail_ui;
  *
  * Like ImportHandler, this takes the owning mail_ui as a constructor dependency rather than being
  * a zero-dependency class - see the "session dependency shape" note in mail-bo-decoupling.md.
- * flagMessages()/deleteMessages()/copyMessages() call back into `mail_ui`'s own
- * `ajax_setFolderStatus()`/`get_actions()` (the latter's visibility was widened from private to
- * package-default so this class could call it via `$this->ui->get_actions()` - it's pure UI-action
- * array construction, nothing security-sensitive) and the still-`mail_ui`-static
- * `generateRowID()`/`$delimiter` (the "Row-id helpers" group, not yet extracted).
+ * flagMessages()/deleteMessages()/copyMessages() call back into `mail_ui`'s own `get_actions()`
+ * (widened from private to package-default so this class could call it via
+ * `$this->ui->get_actions()` - it's pure UI-action array construction, nothing security-sensitive),
+ * `Mail\Ui\FolderHandler::setFolderStatus()` (via `$this->ui->folderHandler()`, package-default for
+ * the same reason), and the still-`mail_ui`-static `generateRowID()`/`$delimiter` (the "Row-id
+ * helpers" group, deliberately left in place - see mail-bo-decoupling.md).
  *
  * emptySpam()/emptyTrash() (from mail_ui's `ajax_emptySpam`/`ajax_emptyTrash`) joined this group
  * later - see doc/ai/projects/mail-folder-tree-jmap.md's "Resolved" note: `app.ts`'s
@@ -332,7 +333,7 @@ class MessageActionHandler
 			}
 			elseif ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check == $query['filter'] || stripos($query['filter'], $flag2check) !== false)))
 			{
-				$this->ui->ajax_setFolderStatus([$profileID."::".$folder], true);
+				$this->ui->folderHandler()->setFolderStatus([$profileID."::".$folder], true);
 				$response->call('egw.refresh', lang('flagged %1 messages as %2 in %3', (isset($_messageList['all']) && $_messageList['all'] ? lang('all') : count($_messageList['msg'])), lang(($flag[$_flag] ?: $_flag)), lang($folder)), 'mail');
 			}
 			else
@@ -464,7 +465,7 @@ class MessageActionHandler
 			$response = Api\Json\Response::get();
 			if (empty($error))
 			{
-				$this->ui->ajax_setFolderStatus([$uidA['profileID']."::".$folder], true);
+				$this->ui->folderHandler()->setFolderStatus([$uidA['profileID']."::".$folder], true);
 				$response->call('app.mail.mail_deleteMessagesShowResult', ['egw_message' => '', 'msg' => $_messageList['msg']]);
 			}
 			else

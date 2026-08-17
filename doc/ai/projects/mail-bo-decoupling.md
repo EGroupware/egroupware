@@ -1,6 +1,6 @@
 # Mail: `Api\Mail`/`mail_ui` decomposition for testability
 
-## Status: Phase 1 complete, Phase 2 complete for all groups not blocked on mail-folder-tree-jmap (started 2026-08-14)
+## Status: Phase 1 complete, Phase 2 complete except Api\Mail's "Folder management" group (started 2026-08-14)
 
 This doc captures an analysis of `api/src/Mail.php` (`Api\Mail`, the `mail_bo` business-object class)
 and `mail/inc/class.mail_ui.inc.php` (`mail_ui`, the Etemplate app class), aimed at breaking both apart
@@ -285,15 +285,55 @@ Per [[mail-folder-tree-jmap]], the "Folder ajax handlers"/"Row-id helpers" `mail
     unit tests added (this group is IMAP/S/MIME/JMAP-connection-coupled end to end, same as batches 1
     and 2 - not unit-testable without a live/fake backend, consistent with those batches' approach).
 
+- [x] **Folder ajax handlers** (2026-08-17, once [[mail-folder-tree-jmap]] fully landed) →
+  `mail/src/Ui/FolderHandler.php` (`ajax_tree_autoloading`→`treeAutoloading`,
+  `ajax_foldersubscription`→`folderSubscription`, `ajax_foldertree`→`folderTree`,
+  `ajax_reloadNode`→`reloadNode`, `ajax_setFolderStatus`→`setFolderStatus`,
+  `ajax_addFolder`→`addFolder`, `ajax_renameFolder`→`renameFolder`,
+  `ajax_MoveFolder`→`moveFolder`, `ajax_deleteFolder`→`deleteFolder`,
+  `ajax_folderMgmtTree_autoloading`→`folderMgmtTreeAutoloading`,
+  `ajax_folderMgmt_delete`→`folderMgmtDelete`) - the `mail_ui`-constructor-injection shape, same as
+  ImportHandler/MessageActionHandler/AttachmentHandler/MessageDisplayHandler. Every one of these 11
+  methods is dispatched by exact name from client JS or a `.xet` template `autoloading=` attribute
+  (none were removable), so `mail_ui` keeps a one-line `ajax_*` wrapper for every one - the largest
+  "all-wrappers-kept" group so far. `folderHandler()` widened to package-default (like
+  `attachmentHandler()`) so `MessageActionHandler` can reach `setFolderStatus()` cross-class - its 2
+  call sites (previously `$this->ui->ajax_setFolderStatus(...)`) repointed to
+  `$this->ui->folderHandler()->setFolderStatus(...)`. Two internal self-calls
+  (`ajax_foldersubscription`→`ajax_reloadNode`, `ajax_folderMgmt_delete`→`ajax_deleteFolder`) moved
+  with their callers and now call each other directly inside `FolderHandler` (`$this->reloadNode(...)`/
+  `$this->deleteFolder(...)`). `findNode` (was in "Row-id helpers", see below) turned out to be
+  genuinely dead code - its only reference anywhere in the repo was its own recursive self-call, no
+  external caller at all (not even a template attribute) - deleted outright rather than moved, same
+  discipline as `encodeFolderName` in Phase 1. No new unit tests (same posture as
+  ImportHandler/MessageActionHandler - fully `mail_ui`+`mail_bo`+IMAP-coupled, not independently
+  testable); existing 183-assertion `api/tests/Mail`+`mail/tests` suite stays green.
+  - **Deliberately NOT done**: the rest of "Row-id helpers" (`createRowID`/`generateRowID`/
+    `generateJmapRowID`) - ralf's choice: `generateRowID` alone has 15+ call sites across many
+    files (`mail_compose`, `mail_hooks`, `ApiHandler`, `Storage/Merge.php`, `MessageActionHandler`,
+    `MessageDisplayHandler`) for a purely organizational move that adds no testability (both are
+    already `static`/pure and trivially testable in place). Left on `mail_ui` exactly as-is.
+
 ## Next up
 
-`mail_ui`'s ajax-handler regrouping (Phase 2) is now **complete** for every group not blocked on
-[[mail-folder-tree-jmap]]: S/MIME, Import, Message action, Account/session/profile, and
-Attachment/body-fetch are all done (the first four partially - see their notes above for what
-deliberately stayed on `mail_ui` and why). Next: the higher-risk `Api\Mail` groups (header/search,
-body/attachment IMAP fetch) - those need the `$icServer` coupling question answered first, see
-"Recommended approach" above. Folder-related groups (`Api\Mail`'s folder management, `mail_ui`'s
-folder ajax handlers and row-id helpers) wait on [[mail-folder-tree-jmap]].
+`mail_ui`'s ajax-handler regrouping (Phase 2) is now **fully complete**: S/MIME, Import, Message
+action, Account/session/profile, Attachment/body-fetch, and Folder ajax handlers are all done (most
+partially - see their notes above for what deliberately stayed on `mail_ui` and why; Row-id helpers
+deliberately left untouched). Remaining: the higher-risk `Api\Mail` groups -
+
+- **Header/search, body/attachment IMAP fetch** - need the `$icServer` coupling question answered
+  first, see "Recommended approach" above.
+- **`Api\Mail`'s "Folder management" group** (`createFolder`/`renameFolder`/`deleteFolder`/
+  `getFolderObjects`/`getFolderArrays`/`getFolderStatus`/`getMailBoxCounters`/`_getNameSpaces`/
+  `getSpecialUseFolders`/`getQuotaRoot`) - no longer blocked ([[mail-folder-tree-jmap]] fully
+  landed 2026-08-17), but a harder follow-up than the `mail_ui` group above: it would be the first
+  time this project's constructor-injection pattern applies to `Api\Mail` itself rather than
+  `mail_ui`, and two of its static properties (`self::$specialUseFolders`, `self::$profileDefunct`)
+  are also read/written by two methods staying behind (`_getSpecialUseFolder()`, `folderExists()`)
+  - resolvable by leaving those property *declarations* on `Api\Mail` and having the new class
+    reference them as `Mail::$specialUseFolders`/`Mail::$profileDefunct` (PHP allows any class to
+    touch another class's public static property by name), not by moving the declarations. Not
+    started.
 
 ## Scale
 
@@ -340,7 +380,7 @@ column is the rough blocker to extracting it as a standalone, `Api\Mail`-indepen
 | **Folder-type/naming helpers** | `isDraftFolder`, `isTrashFolder`, `isSentFolder`, `isOutbox`, `isTemplateFolder`, `getFolderByType`, `pathToFolderData`, `sortByMailbox`/`sortByDisplayName`/etc., `encodeFolderName`/`decodeEntityFolderName` | Low-medium - mostly string logic against folder names/preferences, a few call `folderExists()` which needs `$icServer` | **Low-medium.** Splitting the pure-string subset first, leaving the existence-checking variants as thin wrappers that delegate, is a safe first cut. |
 | **Custom labels/keywords** | `getCustomLabels`, `categoriesToCustomLabels`, `validateKeyword`, `customLabelId`, `isLabelKeyword`, `labelSearchCriterion`, `labelSearchFromStatus` | Low - already mostly `static`, touches `Categories` (a different app's API), not `$icServer` | **Low.** Already has `api/tests/Mail/CustomLabelsTest.php`; formalizing the class boundary is mostly organizational. |
 | **JMAP-dispatch helpers** | all `jmap<MethodName>()` privates (`jmapGetMessageHeader`, `jmapGetMessageBody`, `jmapFlagMessages`, `jmapMoveMessages`, ...) | Medium - depend on `$icServer instanceof Mail\Imap\Jmap`, but not on the wider IMAP connection state the classic half needs | **Medium, but arguably shouldn't move.** These already form their own conceptual unit (documented dispatch pattern); extracting them fully would mean re-plumbing every classic-method call site's `if (($r = $this->jmap...()) !== null) return $r;` header. Lower-value than the pure-utility groups above for the test-coverage goal, since they're already reasonably testable in place given a fake `Mail\Imap\Jmap`. |
-| **Folder management (existence/CRUD/listing)** | `createFolder`, `renameFolder`, `deleteFolder`, `getFolderObjects`, `getFolderArrays`, `getFolderStatus`, `getMailBoxCounters`, `_getNameSpaces`, `getSpecialUseFolders`, `getQuotaRoot` | High - real IMAP calls via `$icServer`, heavy internal caching keyed by `ImapServerId` | **Blocked, not just high-risk.** [[mail-folder-tree-jmap]] (planned) replaces most of this group with client-side + JMAP folder handling - decoupling it in place first would be wasted work. Wait for that migration. |
+| **Folder management (existence/CRUD/listing)** | `createFolder`, `renameFolder`, `deleteFolder`, `getFolderObjects`, `getFolderArrays`, `getFolderStatus`, `getMailBoxCounters`, `_getNameSpaces`, `getSpecialUseFolders`, `getQuotaRoot` | High - real IMAP calls via `$icServer`, heavy internal caching keyed by `ImapServerId` | **No longer blocked** ([[mail-folder-tree-jmap]] fully landed 2026-08-17) but still High/not started - none of these 10 have external callers outside `mail/` (no tracker dependency), but 2 static properties (`self::$specialUseFolders`, `self::$profileDefunct`) are also touched by `_getSpecialUseFolder()`/`folderExists()`, which stay on `Api\Mail` - see "Next up". |
 | **Header/list/search** | `getHeaders`, `getSortedList`, `createIMAPFilter`, `_getSortString`, `buildTokenizedSearch`, `parseSearchTokens` | High - `$icServer` IMAP search/fetch calls, feeds `getSortedList()`'s numeric-UID contract other callers assume (see [[mail-jmap-modernization]] on why `getSortedList()` couldn't just be swapped for JMAP everywhere) | **High.** Same caution as folder management, compounded by the numeric-UID assumption already documented as a constraint. |
 | **Body/attachment fetch (classic IMAP halves)** | `getMessageBody`, `getMessageAttachments`, `getAttachment`, `getAttachmentByCID`, `getMultipartAlternative/Mixed/Related`, `getBodyPart`, `getTextPart`, `getStructure` | High - real IMAP fetches plus TNEF/S-MIME special-casing already threaded through `jmapResolveUid()`'s bail-to-classic trap (see [[mail-jmap-modernization]]) | **High.** The MIME-parsing sub-logic (walking a `Horde_Mime_Part` tree once already fetched) is more separable than the IMAP-fetch shell around it - a `Mail\BodyRenderer` that takes a `Horde_Mime_Part` and returns rendered HTML/text, independent of how that part was fetched, is plausible and would let the JMAP path (which already gets pre-parsed structure per RFC 8621, no `Horde_Mime_Part` walk needed) and the classic path share test coverage of the transform logic even though they can't share the fetch. |
 | **Compose/send helpers** | `get_mailcontent`, `appendMessage`, `importMessageToMergeAndSend`, `parseFileIntoMailObject`, `parseRawMessageIntoMailObject`, `processURL2InlineImages`, `checkFileBasics` | High - `Mailer`, VFS, merge-print integration, several other apps' hooks | **High, lower priority** - explicitly out of scope for the current JMAP project too (`mail_compose.inc.php` audited and left classic, see [[mail-jmap-modernization]]); no reason to prioritize decoupling code that isn't being actively modified. |
@@ -357,13 +397,13 @@ menuaction router requires:
 | Group | Representative methods | Notes |
 |---|---|---|
 | **Etemplate page rendering** | `index`, `subscription`, `displayHeader`, `displayMessage`, `showBody`, `folderManagement`, `get_actions`, `get_toolbar_actions`, `get_tree_actions`, `getDisplayToolbarActions` | Stays on `mail_ui` - genuinely needs to be the menuaction-routed class. |
-| **Folder ajax handlers** | `ajax_tree_autoloading`, `ajax_foldersubscription`, `ajax_foldertree`, `ajax_reloadNode`, `ajax_setFolderStatus`, `ajax_addFolder`, `ajax_renameFolder`, `ajax_MoveFolder`, `ajax_deleteFolder`, `ajax_folderMgmtTree_autoloading`, `ajax_folderMgmt_delete` | Candidate `Mail\Ui\FolderHandler`, taking `Api\Mail` as a constructor dependency; `mail_ui`'s `ajax_*` methods become one-line delegations (needed anyway since EGroupware's ajax dispatch resolves `mail_ui::ajax_foo` by name - can't move the method entirely, only its body). `ajax_compressFolder` (was here) was removed outright, not migrated - see [[mail-folder-tree-jmap]] ("Resolved" note - unwanted legacy IMAP-only workflow). `ajax_emptySpam`/`ajax_emptyTrash` (were here) turned out not to be folder-tree code at all - **done**, moved to `mail/src/Ui/MessageActionHandler.php` (see "Message action ajax handlers" above). |
+| **Folder ajax handlers** | `ajax_tree_autoloading`, `ajax_foldersubscription`, `ajax_foldertree`, `ajax_reloadNode`, `ajax_setFolderStatus`, `ajax_addFolder`, `ajax_renameFolder`, `ajax_MoveFolder`, `ajax_deleteFolder`, `ajax_folderMgmtTree_autoloading`, `ajax_folderMgmt_delete` | **Done** (2026-08-17) → `mail/src/Ui/FolderHandler.php`, taking `mail_ui` (not `Api\Mail` directly) as a constructor dependency, same shape as ImportHandler/MessageActionHandler; every method kept a one-line `mail_ui::ajax_*` delegation (all 11 are dispatched by exact name from client JS or a template `autoloading=` attribute - none removable). `ajax_compressFolder` (was here) was removed outright earlier, not migrated - see [[mail-folder-tree-jmap]] ("Resolved" note - unwanted legacy IMAP-only workflow). `ajax_emptySpam`/`ajax_emptyTrash` (were here) turned out not to be folder-tree code at all - moved to `mail/src/Ui/MessageActionHandler.php` earlier (see "Message action ajax handlers" below). |
 | **Message action ajax handlers** | `ajax_flagMessages`, `ajax_deleteMessages`, `ajax_copyMessages`, `ajax_sendMDN`, `ajax_saveModifiedMessageSubject`, `saveMessage` | **Done**, except `ajax_saveModifiedMessageSubject` which actually belongs with "Attachment/body-fetch ajax handlers" (depends on that group's `fetchMessageBytesJmap`/`replaceMessageJmap`) - all 5 others → `mail/src/Ui/MessageActionHandler.php`. `ajax_flagMessages`/`ajax_deleteMessages`/`ajax_copyMessages` (the ones originally left behind, see below) turned out extractable once `AttachmentJmap`'s methods became public and `mail_ui::get_actions()`'s visibility was widened from `private` to package-default. |
 | **Attachment/body-fetch ajax handlers** | `getAttachment`, `ajax_resolveWinmail`, `resolveWinmailJmap`, `resolveAttachmentsBlock`, `resolveAttachmentsJmap`, `jmapAttachmentsToLegacy`, `fetchBlobBytes`, `fetchMessageBytesJmap`, `fetchAttachmentJmap`, `ajax_fetchAttachments`, `createAttachmentBlock`, `download_zip`, `ajax_vfsOpen`, `ajax_vfsSave`, `vfsSaveMessages`, `vfsSaveAttachments`, `displayImage`, `get_load_email_data`, `tryJmapNativeSpecialCase`, `loadEmailBody`, `getdisplayableBody`, `resolve_inline_images`, `resolve_inline_image_byType`, `ajax_fetchMessageDetails`, `ajax_parseAddressList`, `ajax_saveModifiedMessageSubject` (moved here from "Message action ajax handlers" - depends on this group's `fetchMessageBytesJmap`/`replaceMessageJmap`) | **Done** - see Phase 2 progress notes below. Three passes: the zero-dependency JMAP fast-path sub-cluster (10 methods, `Mail\Ui\AttachmentJmap`/`Mail\Ui\BodyHandler`), a second batch of classic-fallback methods (`resolveAttachmentsBlock`, `vfsSaveMessages`/`vfsSaveAttachments`/`ajax_vfsOpen`/`ajax_vfsSave`, `getdisplayableBody`, `ajax_saveModifiedMessageSubject`, `ajax_fetchMessageDetails` → `Mail\Ui\AttachmentHandler`), and the final batch (`getAttachment`, `displayImage`, `download_zip`, `get_load_email_data`, `tryJmapNativeSpecialCase`, `loadEmailBody`, `get_email_header`, `showBody` → `Mail\Ui\MessageDisplayHandler`). |
 | **S/MIME ajax handlers** | `ajax_smimeAttachmentsChecker`, `ajax_smimeAddCertToContact`, `smimeAccountId`, `smimeExportCert`, `smimeExportCsr`, `smimePassphraseFormHtml` | **Done** → `mail/src/Ui/SmimeHandler.php`, except `smimePassphraseFormHtml` (stayed, coupled to `mail_ui` instance state - see Phase 2 progress notes). |
 | **Import handlers** | `importMessage`, `importMessageToFolder`, `importMessageFromVFS2DraftAndEdit`, `importMessageFromVFS2DraftAndDisplay` | **Done** (partial) → `mail/src/Ui/ImportHandler.php`, constructor-injected with `mail_ui` (not zero-coupling like S/MIME - see Phase 2 progress notes). `importMessage` stayed (dual template+ajax entry point); `importMessageFromVFS2DraftAndEdit` was dead code, deleted. |
 | **Account/session/profile ajax handlers** | `changeProfile`, `ajax_jmapBootstrap`, `jmapLocalBootstrap`, `ajax_enablePush`, `ajax_changeProfile`, `ajax_refreshVacationNotice`, `gatherVacation`, `ajax_refreshFilters`, `ajax_refreshQuotaDisplay`, `quotaDisplay` | **Partially done** → `mail/src/Ui/ProfileHandler.php` got `ajax_jmapBootstrap`→`jmapBootstrap`, `jmapLocalBootstrap`→`localBootstrap`, `ajax_enablePush`→`enablePush`, `quotaDisplay` - the four that were already written to take an explicit profile id rather than depend on `mail_ui`'s connected `mail_bo`, so this class needs no `mail_ui` instance at all (zero-dependency like Phase 1, not constructor-injected like ImportHandler/MessageActionHandler - see Phase 2 progress notes). The other six stayed - each either mutates `mail_ui`'s own instance state directly or explicitly constructs a full `mail_ui` instance internally. |
-| **Row-id helpers** | `createRowID`, `generateRowID`, `generateJmapRowID`, `findNode` | Already static, low coupling - could move to `Mail\RowIdParts`/a sibling of `Api\Mail::splitRowID()` (the inverse operation, currently oddly far from it in the codebase - `splitRowID` lives on `Api\Mail`, `generateRowID` on `mail_ui`). |
+| **Row-id helpers** | `createRowID`, `generateRowID`, `generateJmapRowID` (`findNode` was also here - **deleted**, see below) | **Decided against moving** (2026-08-17) - `generateRowID` alone has 15+ call sites across many files for a purely organizational move that adds no testability (already `static`/pure, trivially testable in place). Stays on `mail_ui` exactly as-is. `findNode` turned out to be genuinely dead code (zero callers anywhere, not even from outside its own recursion) and was deleted outright rather than moved, while working through this group. |
 
 ## Recommended approach (if this goes ahead)
 

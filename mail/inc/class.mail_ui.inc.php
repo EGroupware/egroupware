@@ -26,6 +26,7 @@ use EGroupware\Mail\JmapShim;
 use EGroupware\Mail\Ui\AttachmentHandler;
 use EGroupware\Mail\Ui\AttachmentJmap;
 use EGroupware\Mail\Ui\BodyHandler;
+use EGroupware\Mail\Ui\FolderHandler;
 use EGroupware\Mail\Ui\ImportHandler;
 use EGroupware\Mail\Ui\MessageActionHandler;
 use EGroupware\Mail\Ui\MessageDisplayHandler;
@@ -265,6 +266,19 @@ class mail_ui
 		return $this->_messageDisplayHandler ??= new MessageDisplayHandler($this);
 	}
 
+	private ?FolderHandler $_folderHandler = null;
+
+	/**
+	 * Folder ajax-handler sub-object (gets automatically instantiated, if used)
+	 *
+	 * Package-default visibility (not private): MessageActionHandler::setFolderStatus() reaches
+	 * this cross-class, same reason attachmentHandler() was widened.
+	 */
+	function folderHandler() : FolderHandler
+	{
+		return $this->_folderHandler ??= new FolderHandler($this);
+	}
+
 	/**
 	 * callWizard
 	 *
@@ -374,9 +388,7 @@ class mail_ui
 	 */
 	static function ajax_tree_autoloading ($_id = null)
 	{
-		$mail_ui = new mail_ui();
-		$id = $_id ? $_id : $_GET['id'];
-		Etemplate\Widget\Tree::send_quote_json($mail_ui->mail_tree->getTree($id,'',1,false));
+		(new mail_ui())->folderHandler()->treeAutoloading($_id);
 	}
 
 	/**
@@ -966,16 +978,7 @@ class mail_ui
 	 */
 	public function ajax_foldersubscription($_acc_id,$_folderName, $_status)
 	{
-		//Change the Mail object to related profileId
-		$this->changeProfile($_acc_id);
-		try{
-			$this->mail_bo->icServer->subscribeMailbox($_folderName, $_status);
-			$this->mail_bo->resetFolderObjectCache($_acc_id);
-			$this->ajax_reloadNode($_acc_id,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-		} catch (Horde_Imap_Client_Exception $ex) {
-			error_log(__METHOD__.__LINE__."()". lang('Folder %1 %2 failed because of %3!',$_folderName,$_status?'subscribed':'unsubscribed', $ex));
-			Framework::message(lang('Folder %1 %2 failed!',$_folderName,$_status));
-		}
+		$this->folderHandler()->folderSubscription($_acc_id, $_folderName, $_status);
 	}
 
 	/**
@@ -988,51 +991,7 @@ class mail_ui
 	 */
 	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=null)
 	{
-		$nodeID = $_GET['id'];
-		if (!is_null($_nodeID)) $nodeID = $_nodeID;
-		$subscribedOnly = (bool)($_subscribedOnly ?? !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-		$fetchCounters = !is_null($_nodeID);
-		list($_profileID,$_folderName) = explode(self::$delimiter,$nodeID,2);
-
-		if (!empty($_folderName)) $fetchCounters = true;
-
-		// Check if it is called for refresh root
-		// then we need to reinitialized the index tree
-		if(!$nodeID && !$_profileID)
-		{
-			$data = $this->mail_tree->getInitialIndexTree(null, null, null, $subscribedOnly);
-		}
-		else
-		{
-			$data = $this->mail_tree->getTree($nodeID,$_profileID, 0, false, $subscribedOnly,);
-		}
-		if (!is_null($_nodeID)) return $data;
-		Etemplate\Widget\Tree::send_quote_json($data);
-	}
-
-	/**
-	 * findNode - helper function to return only a branch of the tree
-	 *
-	 * @param array $_out out array (to be searched)
-	 * @param string $_nodeID node to search for
-	 * @param boolean $childElements return node itself, or only its child items
-	 * @return array structured subtree
-	 */
-	static function findNode($_out, $_nodeID, $childElements = false)
-	{
-		foreach($_out['item'] as $node)
-		{
-			if (strcmp($node['id'],$_nodeID)===0)
-			{
-				//error_log(__METHOD__.__LINE__.':'.$_nodeID.'->'.$node['id']);
-				return ($childElements?$node['item']:$node);
-			}
-			elseif (is_array($node['item']) && strncmp($node['id'],$_nodeID,strlen($node['id']))===0 && strlen($_nodeID)>strlen($node['id']))
-			{
-				//error_log(__METHOD__.__LINE__.' descend into '.$node['id']);
-				return self::findNode($node,$_nodeID,$childElements);
-			}
-		}
+		return $this->folderHandler()->folderTree($_nodeID, $_subscribedOnly);
 	}
 
 	/**
@@ -2319,45 +2278,7 @@ class mail_ui
 	 */
 	function ajax_setFolderStatus($_folder, $force_change = false)
 	{
-		Api\Translation::add_app('mail');
-		//error_log(__METHOD__.__LINE__.array2string($_folder));
-		if ($_folder)
-		{
-			$this->mail_bo->getHierarchyDelimiter(false);
-			$oA = array();
-			foreach ($_folder as $_folderName)
-			{
-				list($profileID,$folderName) = explode(self::$delimiter,$_folderName,2);
-				if (is_numeric($profileID)) //things like mail::xxx will be ignored
-				{
-					if ($profileID != $this->mail_bo->profileID) continue; // only current connection
-					if ($folderName)
-					{
-						try
-						{
-							$fS = $this->mail_bo->getFolderStatus($folderName,false,false,false);
-						}
-						catch (Exception $e)
-						{
-							if (Mail::$debug) error_log(__METHOD__,' ()'.$e->getMessage ());
-							continue;
-						}
-						//error_log(__METHOD__.__LINE__.array2string($fS));
-						if ($fS['unseen'] || $force_change)
-						{
-							$oA[$_folderName] = ''.$fS['unseen'];
-						}
-
-					}
-				}
-			}
-			//error_log(__METHOD__.__LINE__.array2string($oA));
-			if ($oA)
-			{
-				$response = Api\Json\Response::get();
-				$response->call('app.mail.mail_setFolderStatus',$oA);
-			}
-		}
+		$this->folderHandler()->setFolderStatus($_folder, $force_change);
 	}
 
 	/**
@@ -2369,106 +2290,7 @@ class mail_ui
 	 */
 	function ajax_addFolder($_parent, $_new)
 	{
-		$error='';
-		$created = false;
-		$response = Api\Json\Response::get();
-		$del = $this->mail_bo->getHierarchyDelimiter(false);
-		if (strpos($_new, $del) !== FALSE)
-		{
-			return $response->call('egw.message', lang('failed to rename %1 ! Reason: %2 is not allowed!',$_parent, $del));
-		}
-		if ($_parent)
-		{
-			$parent = FolderHelpers::decodeEntityFolderName($_parent);
-			//the conversion is handeled by horde, frontend interaction is all utf-8
-			$new = FolderHelpers::decodeEntityFolderName($_new);
-
-			list($profileID,$p_no_delimiter) = explode(self::$delimiter,$parent,2);
-
-			if (is_numeric($profileID))
-			{
-				if ($profileID != $this->mail_bo->profileID) $this->changeProfile ($profileID);
-				$delimiter = $this->mail_bo->getHierarchyDelimiter(false);
-				$parts = explode($delimiter,$new);
-
-				if (!!empty($parent)) $folderStatus = $this->mail_bo->getFolderStatus($parent,false);
-
-				//open the INBOX
-				$this->mail_bo->reopen('INBOX');
-
-				// if $new has delimiter ($del) in it, we need to create the subtree
-				if (!empty($parts))
-				{
-					$counter = 0;
-					foreach($parts as $subTree)
-					{
-						$err = null;
-						if(($new = $this->mail_bo->createFolder($p_no_delimiter, $subTree, $err)))
-						{
-							$counter++;
-							if (!$p_no_delimiter)
-							{
-								// we first test below INBOX, because testing just the name wrongly reports it as subscribed
-								// for servers not allowing to create folders parallel to INBOX
-								$status = $this->mail_bo->getFolderStatus('INBOX'.$delimiter.$new,false, true, true) ?:
-									$this->mail_bo->getFolderStatus($new,false, true, true);
-								if (!$status['subscribed'])
-								{
-									try
-									{
-										$this->mail_bo->icServer->subscribeMailbox ('INBOX'.$delimiter.$new);
-									}
-									catch(Horde_Imap_Client_Exception $e)
-									{
-										$error = Lang('Folder %1 has been created successfully,'.
-												' although the subscription failed because of %2', $new, $e->getMessage());
-									}
-								}
-							}
-						}
-						else
-						{
-							if (!$p_no_delimiter)
-							{
-								$new = $this->mail_bo->createFolder('INBOX', $subTree, $err);
-								if ($new) $counter++;
-							}
-							else
-							{
-								$error .= $err;
-							}
-						}
-					}
-					if ($counter == count($parts)) $created=true;
-				}
-				if (!empty($new)) $this->mail_bo->reopen($new);
-			}
-
-
-			if ($created===true && $error =='')
-			{
-				$this->mail_bo->resetFolderObjectCache($profileID);
-				if ( $folderStatus['shortDisplayName'])
-				{
-					$nodeInfo = array($parent=>$folderStatus['shortDisplayName']);
-				}
-				else
-				{
-					$nodeInfo = array($profileID=>lang('INBOX'));
-				}
-				$response->call('app.mail.mail_reloadNode',$nodeInfo);
-			}
-			else
-			{
-				if ($error)
-				{
-					$response->call('egw.message',$error);
-				}
-			}
-		}
-		else {
-			error_log(__METHOD__.__LINE__."()"."This function needs a parent folder to work!");
-		}
+		$this->folderHandler()->addFolder($_parent, $_new);
 	}
 
 	/**
@@ -2479,146 +2301,7 @@ class mail_ui
 	 */
 	function ajax_renameFolder($_folderName, $_newName)
 	{
-		if (Mail::$debug) error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName).' NewName:'.array2string($_newName));
-		//error_log(__METHOD__.__LINE__.array2string($oA));
-		$response = Api\Json\Response::get();
-		$del = $this->mail_bo->getHierarchyDelimiter(false);
-		if (strpos($_newName, $del) !== FALSE)
-		{
-			return $response->call('egw.message', lang('failed to rename %1 ! Reason: %2 is not allowed!',$_folderName, $del));
-		}
-
-		if ($_folderName)
-		{
-			Api\Translation::add_app('mail');
-			$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
-			$_newName = FolderHelpers::decodeEntityFolderName($_newName);
-
-			$oA = array();
-			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
-			$hasChildren = false;
-			if (is_numeric($profileID))
-			{
-				if ($profileID != $this->mail_bo->profileID) $this->changeProfile ($profileID);
-				$pA = explode($del,$folderName);
-				array_pop($pA);
-				$parentFolder = implode($del,$pA);
-				if (strtoupper($folderName)!= 'INBOX')
-				{
-					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
-					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false);
-					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
-					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
-					{
-						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
-						$delimiter = $this->mail_bo->getHierarchyDelimiter();
-						$nameSpace = $this->mail_bo->_getNameSpaces();
-						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
-						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
-						$fragments = array();
-						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
-						foreach ($subFolders as $k => $folder)
-						{
-							// we do not monitor failure or success on subfolders
-							if ($folder == $folderName)
-							{
-								unset($subFolders[$k]);
-							}
-							else
-							{
-								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, false);
-								$fragments[$profileID.self::$delimiter.$folder] = substr($folder,strlen($folderName));
-							}
-						}
-						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($fragments));
-					}
-
-					$this->mail_bo->reopen('INBOX');
-					$success = false;
-					try
-					{
-						if(($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)))
-						{
-							$this->mail_bo->resetFolderObjectCache($profileID);
-							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
-							$this->mail_bo->icServer->subscribeMailbox($newFolderName, true);
-							$this->mail_bo->icServer->subscribeMailbox($folderName, false);
-							$success = true;
-						}
-					}
-					catch (Exception $e)
-					{
-						$newFolderName=$folderName;
-						$msg = $e->getMessage();
-					}
-					$this->mail_bo->reopen($newFolderName);
-					$fS = $this->mail_bo->getFolderStatus($newFolderName,false);
-					//error_log(__METHOD__.__LINE__.array2string($fS));
-					if ($hasChildren)
-					{
-						$subFolders = $this->mail_bo->getMailBoxesRecursive($newFolderName, $delimiter, $prefix);
-						foreach ($subFolders as $k => $folder)
-						{
-							// we do not monitor failure or success on subfolders
-							if ($folder == $folderName)
-							{
-								unset($subFolders[$k]);
-							}
-							else
-							{
-								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, true);
-							}
-						}
-						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
-					}
-
-					$oA[$_folderName]['id'] = $profileID.self::$delimiter.$newFolderName;
-					$oA[$_folderName]['olddesc'] = $oldFolderInfo['shortDisplayName'];
-					if ($fS['unseen'])
-					{
-						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
-						$oA[$_folderName]['unseenCount'] = $fS['unseen'];
-
-					}
-					else
-					{
-						$oA[$_folderName]['desc'] = $fS['shortDisplayName'];
-					}
-					foreach($fragments as $oldFolderName => $fragment)
-					{
-						//error_log(__METHOD__.__LINE__.':'.$oldFolderName.'->'.$profileID.self::$delimiter.$newFolderName.$fragment);
-						$oA[$oldFolderName]['id'] = $profileID.self::$delimiter.$newFolderName.$fragment;
-						$oA[$oldFolderName]['olddesc'] = '#skip-user-interaction-message#';
-						$fS = $this->mail_bo->getFolderStatus($newFolderName.$fragment,false);
-						if ($fS['unseen'])
-						{
-							$oA[$oldFolderName]['desc'] = $fS['shortDisplayName'].' ('.$fS['unseen'].')';
-
-						}
-						else
-						{
-							$oA[$oldFolderName]['desc'] = $fS['shortDisplayName'];
-						}
-					}
-				}
-			}
-			if ($folderName==$this->mail_bo->sessionData['mailbox'])
-			{
-				$this->mail_bo->sessionData['mailbox']=$newFolderName;
-				$this->mail_bo->saveSessionData();
-				Api\Framework::ajax_set_preference('mail', $this->mail_bo->profileID.'_LastFolder', $newFolderName);
-			}
-			//error_log(__METHOD__.__LINE__.array2string($oA));
-			$response = Api\Json\Response::get();
-			if ($oA && $success)
-			{
-				$response->call('app.mail.mail_setLeaf',$oA);
-			}
-			else
-			{
-				$response->call('egw.refresh',lang('failed to rename %1 ! Reason: %2',$oldFolderName,$msg),'mail');
-			}
-		}
+		$this->folderHandler()->renameFolder($_folderName, $_newName);
 	}
 
 	/**
@@ -2630,46 +2313,7 @@ class mail_ui
 	 */
 	function ajax_reloadNode($_folderName,$_subscribedOnly=true)
 	{
-		Api\Translation::add_app('mail');
-		$oldPrefForSubscribedOnly = !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'];
-		$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
-		list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
-		if ($profileID != $this->mail_bo->profileID) $this->changeProfile($profileID);
-
-		// if pref and required mode dont match -> reset the folderObject cache to ensure
-		// that we get what we request
-		if ($_subscribedOnly != $oldPrefForSubscribedOnly) $this->mail_bo->resetFolderObjectCache($profileID);
-
-		if (!empty($folderName))
-		{
-			$parentFolder=(!empty($folderName)?$folderName:'INBOX');
-			$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false,false,false);
-			if ($folderInfo['unseen'])
-			{
-				$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
-			}
-			if ($folderInfo['unseen']==0 && $folderInfo['shortDisplayName'])
-			{
-				$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
-			}
-
-			$refreshData = array(
-				$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
-		}
-		else
-		{
-			$refreshData = array(
-				$profileID=>lang('INBOX')//string with no meaning lateron
-			);
-		}
-		// Send full info back in the response
-		$response = Api\Json\Response::get();
-		foreach($refreshData as $folder => &$name)
-		{
-			$name = $this->mail_tree->getTree($folder,$profileID,1,false, $_subscribedOnly,true);
-		}
-		$response->call('app.mail.mail_reloadNode',$refreshData);
-
+		$this->folderHandler()->reloadNode($_folderName, $_subscribedOnly);
 	}
 
 
@@ -2773,131 +2417,7 @@ class mail_ui
 	 */
 	function ajax_MoveFolder($_folderName, $_target)
 	{
-		if (Mail::$debug) error_log(__METHOD__.__LINE__."Move Folder: $_folderName to Target: $_target");
-		if ($_folderName)
-		{
-			$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
-			$_newLocation2 = FolderHelpers::decodeEntityFolderName($_target);
-			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
-			list($newProfileID,$_newLocation) = explode(self::$delimiter,$_newLocation2,2);
-			if ($profileID != $this->mail_bo->profileID || $profileID != $newProfileID) $this->changeProfile($profileID);
-			$del = $this->mail_bo->getHierarchyDelimiter(false);
-			$hasChildren = false;
-			if (is_numeric($profileID))
-			{
-				$pA = explode($del,$folderName);
-				$namePart = array_pop($pA);
-				$_newName = $namePart;
-				$oldParentFolder = implode($del,$pA);
-				$parentFolder = $_newLocation;
-
-				if (strtoupper($folderName)!= 'INBOX' &&
-					(($oldParentFolder === $parentFolder) || //$oldParentFolder == $parentFolder means move on same level
-					(($oldParentFolder != $parentFolder &&
-					strlen($parentFolder)>0 && strlen($folderName)>0 &&
-					strpos($parentFolder,$folderName)===false)))) // indicates that we move the older up the tree within its own branch
-				{
-					//error_log(__METHOD__.__LINE__."$folderName, $parentFolder, $_newName");
-					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false,false,false);
-					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
-					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
-					{
-						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
-						$delimiter = $this->mail_bo->getHierarchyDelimiter();
-						$nameSpace = $this->mail_bo->_getNameSpaces();
-						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
-						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
-
-						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
-						foreach ($subFolders as $k => $folder)
-						{
-							// we do not monitor failure or success on subfolders
-							if ($folder == $folderName)
-							{
-								unset($subFolders[$k]);
-							}
-							else
-							{
-								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, false);
-							}
-						}
-					}
-
-					$this->mail_bo->reopen('INBOX');
-					$success = false;
-					try
-					{
-						if(($newFolderName = $this->mail_bo->renameFolder($folderName, $parentFolder, $_newName)))
-						{
-							$this->mail_bo->resetFolderObjectCache($profileID);
-							//enforce the subscription to the newly named server, as it seems to fail for names with umlauts
-							$this->mail_bo->icServer->subscribeMailbox($newFolderName, true);
-							$this->mail_bo->icServer->subscribeMailbox($folderName, false);
-							$this->mail_bo->resetFolderObjectCache($profileID);
-							$success = true;
-						}
-					}
-					catch (Exception $e)
-					{
-						$newFolderName=$folderName;
-						$msg = $e->getMessage();
-					}
-					$this->mail_bo->reopen($parentFolder);
-					$this->mail_bo->getFolderStatus($parentFolder,false,false,false);
-					//error_log(__METHOD__.__LINE__.array2string($fS));
-					if ($hasChildren)
-					{
-						$subFolders = $this->mail_bo->getMailBoxesRecursive($parentFolder, $delimiter, $prefix);
-						foreach ($subFolders as $k => $folder)
-						{
-							// we do not monitor failure or success on subfolders
-							if ($folder == $folderName)
-							{
-								unset($subFolders[$k]);
-							}
-							else
-							{
-								$rv = $this->mail_bo->icServer->subscribeMailbox($folder, true);
-							}
-						}
-						//error_log(__METHOD__.__LINE__.' Fetched Subfolders->'.array2string($subFolders));
-					}
-				}
-			}
-			if ($folderName==$this->mail_bo->sessionData['mailbox'])
-			{
-				$this->mail_bo->sessionData['mailbox']=$newFolderName;
-				$this->mail_bo->saveSessionData();
-				Api\Framework::ajax_set_preference('mail', $this->mail_bo->profileID.'_LastFolder', $newFolderName);
-			}
-			//error_log(__METHOD__.__LINE__.array2string($oA));
-			$response = Api\Json\Response::get();
-			if ($success)
-			{
-				Api\Translation::add_app('mail');
-
-				$oldFolderInfo = $this->mail_bo->getFolderStatus($oldParentFolder,false,false,false);
-				$folderInfo = $this->mail_bo->getFolderStatus($parentFolder,false,false,false);
-				$refreshData = array(
-					$profileID.self::$delimiter.$oldParentFolder=>$oldFolderInfo['shortDisplayName'],
-					$profileID.self::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
-				// if we move the folder within the same parent-branch of the tree, there is no need no refresh the upper part
-				if (strlen($parentFolder)>strlen($oldParentFolder) && strpos($parentFolder,$oldParentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$parentFolder]);
-				if (count($refreshData)>1 && strlen($oldParentFolder)>strlen($parentFolder) && strpos($oldParentFolder,$parentFolder)!==false) unset($refreshData[$profileID.self::$delimiter.$oldParentFolder]);
-
-				// Send full info back in the response
-				foreach($refreshData as $folder => &$name)
-				{
-					$name = $this->mail_tree->getTree($folder,$profileID,1,false,!$this->mail_bo->mailPreferences['showAllFoldersInFolderPane'],true);
-				}
-				$response->call('app.mail.mail_reloadNode',$refreshData);
-
-			}
-			else
-			{
-				$response->call('egw.refresh',lang('failed to move %1 ! Reason: %2',$folderName,$msg),'mail');
-			}
-		}
+		$this->folderHandler()->moveFolder($_folderName, $_target);
 	}
 
 	/**
@@ -2908,94 +2428,7 @@ class mail_ui
 	 */
 	function ajax_deleteFolder($_folderName, $_return = false)
 	{
-		//error_log(__METHOD__.__LINE__.' OldFolderName:'.array2string($_folderName));
-		$success = false;
-		if ($_folderName)
-		{
-			$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
-			$oA = array();
-			list($profileID,$folderName) = explode(self::$delimiter,$decodedFolderName,2);
-			if (is_numeric($profileID) && $profileID != $this->mail_bo->profileID) $this->changeProfile ($profileID);
-			$del = $this->mail_bo->getHierarchyDelimiter(false);
-			$hasChildren = false;
-			if (is_numeric($profileID))
-			{
-				$pA = explode($del,$folderName);
-				array_pop($pA);
-				if (strtoupper($folderName)!= 'INBOX')
-				{
-					//error_log(__METHOD__.__LINE__."$folderName,  implode($del,$pA), $_newName");
-					$oA = array();
-					$subFolders = array();
-					$oldFolderInfo = $this->mail_bo->getFolderStatus($folderName,false,false,false);
-					//error_log(__METHOD__.__LINE__.array2string($oldFolderInfo));
-					if (!empty($oldFolderInfo['attributes']) && stripos(array2string($oldFolderInfo['attributes']),'\hasnochildren')=== false)
-					{
-						$hasChildren=true; // translates to: hasChildren -> dynamicLoading
-						$ftD = array();
-						$delimiter = $this->mail_bo->getHierarchyDelimiter();
-						$nameSpace = $this->mail_bo->_getNameSpaces();
-						$prefix = $this->mail_bo->getFolderPrefixFromNamespace($nameSpace, $folderName);
-						//error_log(__METHOD__.__LINE__.'->'."$_folderName, $delimiter, $prefix");
-						$subFolders = $this->mail_bo->getMailBoxesRecursive($folderName, $delimiter, $prefix);
-						//error_log(__METHOD__.__LINE__.'->'."$folderName, $delimiter, $prefix");
-						foreach ($subFolders as $k => $f)
-						{
-							$ftD[substr_count($f,$delimiter)][]=$f;
-						}
-						krsort($ftD,SORT_NUMERIC);//sort per level
-						//we iterate per level of depth of the subtree, deepest nesting is to be deleted first, and then up the tree
-						foreach($ftD as $k => $lc)//collection per level
-						{
-							foreach($lc as $f)//folders contained in that level
-							{
-								try
-								{
-									//error_log(__METHOD__.__LINE__.array2string($f).'<->'.$folderName);
-									$this->mail_bo->deleteFolder($f);
-									$success = true;
-									if ($f==$folderName) $oA[$_folderName] = $oldFolderInfo['shortDisplayName'];
-								}
-								catch (Exception $e)
-								{
-									$msg .= ($msg?' ':'').lang("Failed to delete %1. Server responded:",$f).$e->getMessage();
-									$success = false;
-								}
-							}
-						}
-					}
-					else
-					{
-						try
-						{
-							$this->mail_bo->deleteFolder($folderName);
-							$success = true;
-							$oA[$_folderName] = $oldFolderInfo['shortDisplayName'];
-						}
-						catch (Exception $e)
-						{
-							$msg = $e->getMessage();
-							$success = false;
-						}
-					}
-				}
-				else
-				{
-					$msg = lang("refused to delete folder INBOX");
-				}
-			}
-			if ($_return) return $success;
-			$response = Api\Json\Response::get();
-			if ($success)
-			{
-				//error_log(__METHOD__.__LINE__.array2string($oA));
-				$response->call('app.mail.mail_removeLeaf',$oA);
-			}
-			else
-			{
-				$response->call('egw.refresh',lang('failed to delete %1 ! Reason: %2',$oldFolderInfo['shortDisplayName'],$msg),'mail');
-			}
-		}
+		return $this->folderHandler()->deleteFolder($_folderName, $_return);
 	}
 
 	/**
@@ -3313,9 +2746,7 @@ class mail_ui
 	 */
 	function ajax_folderMgmtTree_autoloading ($_id = null)
 	{
-		$mail_ui = new mail_ui();
-		$id = $_id? $_id : $_GET['id'];
-		Etemplate\Widget\Tree::send_quote_json($mail_ui->mail_tree->getTree($id,'',1,true,false,false,false));
+		(new mail_ui())->folderHandler()->folderMgmtTreeAutoloading($_id);
 	}
 
 	/**
@@ -3351,20 +2782,6 @@ class mail_ui
 	 */
 	function ajax_folderMgmt_delete ($_folderName)
 	{
-		if ($_folderName)
-		{
-			$success = $this->ajax_deleteFolder($_folderName,true);
-			$response = Api\Json\Response::get();
-			list(,$folderName) = explode(self::$delimiter, $_folderName);
-			if ($success)
-			{
-				$res = $folderName;
-			}
-			else
-			{
-				$res = lang("Failed to delete %1",$folderName);
-			}
-			$response->data($res);
-		}
+		$this->folderHandler()->folderMgmtDelete($_folderName);
 	}
 }
