@@ -1194,7 +1194,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 		}
 		if(this._tinyMceEditor?.setContent)
 		{
-			const nextValue = this.value ?? "";
+			const nextValue = this.value || "";
 			if(this._tinyMceEditor.getContent() !== nextValue)
 			{
 				this._tinyMceEditor.setContent(nextValue);
@@ -1202,7 +1202,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 		}
 		else if(this._editorElement)
 		{
-			this._editorElement.value = this.value ?? "";
+			this._editorElement.value = this.value || "";
 		}
 	}
 
