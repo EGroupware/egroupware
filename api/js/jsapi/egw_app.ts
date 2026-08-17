@@ -1067,7 +1067,7 @@ export abstract class EgwApp
 			vars.document = document.documents[0].path;
 			// Remove not applicable options
 			['pdf', 'download'].forEach(k => delete vars.options[k]);
-			return this._mergeEmail(_action.clone(), vars);
+			return this._mergeEmail(nm, _action.clone(), vars);
 		}
 		else
 		{
@@ -1196,10 +1196,11 @@ export abstract class EgwApp
 	/**
 	 * Merge into an email, then open it in compose for a single, send directly for multiple
 	 *
+	 * @param {Et2Nextmatch|et2_nextmatch} nm nextmatch the merge action came from, or null
 	 * @param {object} data
 	 * @protected
 	 */
-	protected _mergeEmail(action, data : object)
+	protected _mergeEmail(nm, action, data : object)
 	{
 		const ids = data['id'];
 		// egw.open() used if only 1 row selected
@@ -1217,7 +1218,20 @@ export abstract class EgwApp
 		if(data['select_all'] || ids.length > 1)
 		{
 			data['menuaction'] += "&document=" + data.document + "&merge=" + data.merge;
-			nm_action(action, null, data['target'], {all: data['select_all'], ids: ids});
+			if(nm instanceof Et2Nextmatch)
+			{
+				// executeAction() re-reads the action fresh from the actionManager, which would
+				// discard the menuaction/egw_open/message etc. set above - run the long-task
+				// step directly instead, same as Et2NextmatchActionController.executeLongTaskAction()
+				const idsPromise = data['select_all'] ? nm.fetchAllIds() : Promise.resolve(ids);
+				idsPromise.then(idsArr => Et2Dialog.long_task(
+					null, data['message'] || action.caption, data['title'], data['menuaction'], idsArr, this.egw
+				)).catch(() => {});
+			}
+			else
+			{
+				nm_action(action, null, data['target'], {all: data['select_all'], ids: ids});
+			}
 		}
 		else
 		{

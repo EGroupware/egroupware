@@ -1335,17 +1335,18 @@ class AddressbookApp extends EgwApp
 	 * Normally we let the framework handle this, but in addressbook we want to
 	 * interfere and customize things a little to save to infolog.
 	 *
+	 * @param {Et2Nextmatch|et2_nextmatch} nm - Nextmatch the merge action came from, or null
 	 * @param {egwAction} action - The document they clicked
 	 * @param {egwActionObject[]} selected - Rows selected
 	 */
-	_mergeEmail(action, data)
+	_mergeEmail(nm, action, data)
 	{
 		if(data.options.info_type)
 		{
 			data.merge += '&to_app=infolog&info_type=' + data.options.info_type;
 		}
 		// Normal processing otherwise
-		return super._mergeEmail(action, data);
+		return super._mergeEmail(nm, action, data);
 	}
 
 	/**
