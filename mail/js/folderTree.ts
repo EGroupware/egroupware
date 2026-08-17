@@ -96,6 +96,38 @@ function icons(role : string | null, egw : { image(name : string, app? : string)
 	};
 }
 
+type Egw = { image(name : string, app? : string) : string };
+
+/**
+ * Build one FolderTreeNode - shared by buildFolderLevel() (lazy, one level at a time) and
+ * buildFolderTree() (eager, the whole account at once). `item`/`child` are left at their
+ * lazy-loading defaults (empty/"assume expandable", see buildFolderLevel()'s docblock);
+ * buildFolderTree() overrides both once it knows the real children.
+ *
+ * @param mailbox
+ * @param profileID owning mail account's profile id
+ * @param path this node's own canonical "/"-joined path (already including its own name)
+ * @param egw only .image(name, app) is used, kept minimal so callers/tests don't need a full
+ *  egw instance (same pattern attachmentIndex.ts's renderAttachmentIndex() uses)
+ */
+function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string, egw : Egw) : FolderTreeNode
+{
+	return {
+		id: profileID + '::' + path,
+		jmapId: mailbox.id,
+		text: mailbox.name,
+		tooltip: mailbox.name,
+		checked: !!mailbox.isSubscribed,
+		child: mailbox.hasChildren !== false,
+		item: [],
+		// unread count, same information mail_tree.inc.php's classic setOutStructure()
+		// showed via a "(n)" label suffix + bold style - a badge is Et2Tree's more modern
+		// equivalent (_optionTemplate() already renders selectOption.badge as an sl-badge)
+		...(mailbox.unreadEmails ? {badge: mailbox.unreadEmails} : {}),
+		...icons(mailbox.role, egw),
+	};
+}
+
 /**
  * Convert one level's worth of sibling JMAP Mailbox nodes (already fetched via
  * MailJmap.getMailboxChildren()) into mail's Et2Tree node shape.
@@ -123,26 +155,46 @@ function icons(role : string | null, egw : { image(name : string, app? : string)
  * @return Et2Tree node data (mail's field names - see FolderTreeNode)
  */
 export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : string, parentPath : string,
-	options : BuildFolderLevelOptions = {}, egw : { image(name : string, app? : string) : string }) : FolderTreeNode[]
+	options : BuildFolderLevelOptions = {}, egw : Egw) : FolderTreeNode[]
 {
 	return (mailboxes || [])
 		.filter((mailbox) => !options.subscribedOnly || mailbox.isSubscribed)
-		.map((mailbox) : FolderTreeNode =>
+		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + mailbox.name : mailbox.name, egw));
+}
+
+/**
+ * Convert an *entire* account's flat JMAP Mailbox list (already fetched via
+ * MailJmap.getMailboxTree()) into a fully-nested Et2Tree structure, for the mail.subscribe
+ * popup's multi-select tree - unlike buildFolderLevel(), every node's real children are already
+ * known, so `item` holds the actual nested subtree (not left empty for lazy loading) and `child`
+ * reflects whether it *actually* has children, not the "assume expandable" default
+ * buildFolderLevel() needs. Subscribed-state filtering doesn't apply here - this popup always
+ * shows every folder, subscribed or not, since that's the whole point of a subscription manager.
+ *
+ * @param mailboxes every mailbox in the account, flat
+ * @param profileID owning mail account's profile id
+ * @param egw only .image(name, app) is used
+ * @return Et2Tree node data (mail's field names - see FolderTreeNode), nested from the top level down
+ */
+export function buildFolderTree(mailboxes : JmapMailboxNode[], profileID : string, egw : Egw) : FolderTreeNode[]
+{
+	const byParent = new Map<string | null, JmapMailboxNode[]>();
+	(mailboxes || []).forEach((mailbox) =>
+	{
+		const key = mailbox.parentId ?? null;
+		if (!byParent.has(key)) byParent.set(key, []);
+		byParent.get(key).push(mailbox);
+	});
+
+	const build = (parentId : string | null, parentPath : string) : FolderTreeNode[] =>
+		(byParent.get(parentId) || []).map((mailbox) =>
 		{
 			const path = parentPath ? parentPath + '/' + mailbox.name : mailbox.name;
-			return {
-				id: profileID + '::' + path,
-				jmapId: mailbox.id,
-				text: mailbox.name,
-				tooltip: mailbox.name,
-				checked: !!mailbox.isSubscribed,
-				child: mailbox.hasChildren !== false,
-				item: [],
-				// unread count, same information mail_tree.inc.php's classic setOutStructure()
-				// showed via a "(n)" label suffix + bold style - a badge is Et2Tree's more modern
-				// equivalent (_optionTemplate() already renders selectOption.badge as an sl-badge)
-				...(mailbox.unreadEmails ? {badge: mailbox.unreadEmails} : {}),
-				...icons(mailbox.role, egw),
-			};
+			const node = buildNode(mailbox, profileID, path, egw);
+			node.item = build(mailbox.id, path);
+			node.child = node.item.length > 0;
+			return node;
 		});
+
+	return build(null, '');
 }

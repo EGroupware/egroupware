@@ -224,6 +224,44 @@ either can be picked up first.
   "an old IMAP-inspired workflow", no known users, everyone works with a Trash folder now. See
   removal tracked separately (not part of this migration).
 
+- **The `mail.subscribe` popup** (`mail_ui::subscription()`) - the last classic-PHP-rendered piece
+  of folder handling: a full-account subscription manager showing every folder in a multi-select
+  checkbox tree (pre-checked = subscribed), diffing the submission on Save/Apply.
+  - **Implemented (2026-08-16), full scope** - ralf confirmed both the initial tree load *and* the
+    save/apply step should go JMAP-native, not just persistence. `MailJmap.getMailboxTree()`: one
+    `Mailbox/get{ids: null}` call (the "get everything" mode `mailboxGet()` already supported but
+    flagged during Phase 1 as secondary - this is its intended use case). `mail/js/folderTree.ts`
+    gained `buildFolderTree()` (nests the *entire* flat list recursively by `parentId`, unlike
+    `buildFolderLevel()`'s one-level scope, so `child`/`item` reflect real children, not the
+    lazy-loading "assume expandable" default) sharing a new `buildNode()` helper with
+    `buildFolderLevel()`. `mail/templates/default/subscribe.xet`'s Save/Apply buttons wired to a
+    single `app.mail.mail_subscriptionSave` handler, mirroring `acl.xet`/`acl_save()`'s exact
+    precedent (same handler for both, `_widget.id` disambiguates). `mail/js/app.ts` gained
+    `mail_subscriptionLoad()` (new `et2_ready()` case `'mail.subscribe'`; reads `profileId` via
+    `getArrayMgr('content').getEntry('profileId')` - it's a plain, widget-less content key per
+    `mail_ui::subscription()`, so `getValues()`, which only walks the *widget* tree, can never see
+    it) and `mail_subscriptionSave()` (diffs the tree's current `.value` selection against the
+    remembered original id set, applies each change via the existing
+    `MailJmap.setMailboxSubscribed()`, refreshes the opener's tree top level, then
+    close-or-resubmit exactly like `acl_save()`). Both fully no-op back to the classic path on any
+    failure (JMAP load failure leaves the server-rendered tree untouched;
+    `mail_subscriptionSave()` returns `true` whenever the JMAP load never ran, and falls back to
+    `this.et2._inst.submit()` - the same classic save/diff path, safe regardless of where the
+    tree's *options* came from - on any save-time failure too).
+  - **Deliberate, documented scope reduction: namespace-root (un)subscribe protection dropped.**
+    Classic code excludes IMAP namespace-root pseudo-folders ("Other Users" etc.) from the
+    save-diff via `Api\Mail::_getNameSpaces()` (UW-IMAP-specific quirks, no JMAP equivalent
+    concept - real JMAP/Stalwart models shared mail via ACL/`myRights` on ordinary Mailbox
+    entries, not a separate namespace tier). Reimplementing this blind, with no live
+    namespace-having server to verify against, was judged not worth the risk for a
+    (un)subscribing-a-namespace-root action that's harmless (no data loss), just not meaningful.
+    Every mailbox JMAP reports is toggleable in the new tree, namespace roots included.
+  - Tests: `mail/js/test/BuildFolderLevel.test.ts` gained a `buildFolderTree()` describe block
+    (pure nesting/id-construction logic, no network involved - same posture as the rest of that
+    file).
+  - **Not yet done**: manual smoke test against acc_id=1 (Stalwart) and a plain-IMAP/JmapShim
+    account, and committing.
+
 ## What stays server-side
 
 - The account/profile list itself (tree "base") - `Api\Mail\Account` config data, not IMAP-derived.

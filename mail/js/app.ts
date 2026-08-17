@@ -25,7 +25,7 @@ import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatc
 import {MailCompose} from "./compose";
 import {JmapBodyResult, JmapMessageReference, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
-import {buildFolderLevel, FolderTreeNode} from "./folderTree";
+import {buildFolderLevel, buildFolderTree, FolderTreeNode} from "./folderTree";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -122,6 +122,13 @@ export class MailApp extends EgwApp
 
 	private _compose : MailCompose;
 	private _jmap : MailJmap;
+
+	/**
+	 * Subscribed-folder tree ids as loaded via JMAP for the currently open mail.subscribe popup,
+	 * remembered so mail_subscriptionSave() can diff against them - null means the JMAP load
+	 * never ran/succeeded, so mail_subscriptionSave() must leave the classic submit untouched.
+	 */
+	private _subscriptionOriginal : { profileID : string, ids : Set<string> } | null = null;
 	et2_obj: etemplate2;
 // defer calls to mail_refreshFolderStatus,
 // to accumulate updates of multiple rows e.g. deleting multiple emails
@@ -510,7 +517,10 @@ export class MailApp extends EgwApp
 				// this means mobileView() was called earlier and not this is set
 				//@ts-ignore
 				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
-
+				break;
+			case 'mail.subscribe':
+				this.mail_subscriptionLoad();
+				break;
 		}
 		this.customLabels = this.et2.getArrayMgr('content').getEntry('customLabels') ||
 			window.opener?.app?.mail?.customLabels || this.customLabels;
@@ -5328,6 +5338,100 @@ export class MailApp extends EgwApp
 		{
 			_widget.setSubChecked(_id, "toggle");
 		}
+	}
+
+	/**
+	 * mail.subscribe popup load (et2_ready()'s 'mail.subscribe' case): try to replace the
+	 * classic server-rendered subscription tree with one built from a single JMAP
+	 * Mailbox/get{ids:null} fetch (MailJmap.getMailboxTree()) - every folder in the account,
+	 * fully nested, subscribed or not (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 *
+	 * On any failure (network, non-JMAP-capable account) this is a no-op: the tree the server
+	 * already rendered (with the right initial selection) is left exactly as-is, and
+	 * mail_subscriptionSave() falls back to a plain classic submit since
+	 * _subscriptionOriginal stays null.
+	 */
+	private mail_subscriptionLoad() : void
+	{
+		const ftree = this.et2.getWidgetById('foldertree');
+		// no widget carries profileId (see mail_ui::subscription()'s $content['profileId']) -
+		// it's a plain content key, only reachable via the array manager, not getValues()
+		const profileID = String(this.et2.getArrayMgr('content').getEntry('profileId') ?? '');
+		if (!ftree || !profileID) return;
+
+		this.jmap.getMailboxTree(profileID).then((mailboxes) =>
+		{
+			if (mailboxes === null) return;
+
+			const tree = buildFolderTree(mailboxes, profileID, egw);
+			const subscribedIds = new Set<string>();
+			const collect = (nodes : FolderTreeNode[]) => nodes.forEach((node) =>
+			{
+				if (node.checked) subscribedIds.add(node.id);
+				collect(node.item);
+			});
+			collect(tree);
+
+			ftree.select_options = tree;
+			ftree.value = [...subscribedIds];
+			this._subscriptionOriginal = {profileID, ids: subscribedIds};
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_subscriptionLoad(): JMAP tree load failed, keeping the classic server-rendered tree', e);
+		});
+	}
+
+	/**
+	 * Save/Apply button handler for the mail.subscribe popup (button[save] / button[apply]) -
+	 * mirrors acl_save()'s exact shape/contract (same handler for both buttons, disambiguated
+	 * by _widget.id, true/false return controls whether the normal submit proceeds).
+	 *
+	 * If mail_subscriptionLoad() never replaced the tree with JMAP data (_subscriptionOriginal
+	 * is null), this is a complete no-op: return true and let the classic submit/server-side
+	 * diff-and-apply run exactly as before. Otherwise, diff the tree's current selection against
+	 * the remembered original set and apply just the changes via MailJmap.setMailboxSubscribed()
+	 * - on full success, refresh the opener's own tree and close/re-submit like acl_save() does;
+	 * on any failure, fall back to the classic submit, which re-derives the diff server-side from
+	 * the submitted foldertree value regardless of whether its options came from JMAP or the
+	 * server (safe either way, since the classic save path only reads the submitted .value array).
+	 *
+	 * @param {Event} _event
+	 * @param {Et2Button} _widget button[save] or button[apply]
+	 * @return {boolean} true to let the normal submit proceed, false to block it (this handler
+	 *	already triggers the submit/close itself once the JMAP calls finish)
+	 */
+	mail_subscriptionSave(_event, _widget) : boolean
+	{
+		if (!this._subscriptionOriginal) return true;
+
+		const ftree = this.et2.getWidgetById('foldertree');
+		const {profileID, ids: originalIds} = this._subscriptionOriginal;
+		const currentIds = new Set<string>((ftree?.value || []) as string[]);
+
+		const changed = [...new Set([...originalIds, ...currentIds])]
+			.filter((id) => originalIds.has(id) !== currentIds.has(id));
+
+		Promise.all(changed.map((id) =>
+		{
+			const path = id.split('::', 2)[1] ?? '';
+			return this.jmap.setMailboxSubscribed(profileID, path, currentIds.has(id));
+		})).then((results) =>
+		{
+			if (results.every((ok) => ok))
+			{
+				window.opener?.app?.mail?.mail_refreshFolderLevel?.(profileID, '');
+				_widget.id === 'button[save]' ? window.close() : this.et2._inst.submit();
+			}
+			else
+			{
+				this.et2._inst.submit();
+			}
+		}).catch((e) =>
+		{
+			console.error('MailApp.mail_subscriptionSave(): JMAP save failed, falling back to the classic submit', e);
+			this.et2._inst.submit();
+		});
+		return false;
 	}
 
 	/**
