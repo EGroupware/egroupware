@@ -167,6 +167,26 @@ class User implements UserModule
 	#accountData : any = {};
 	#resolveGroup : any = {};
 
+	/**
+	 * Ids queued for a not-yet-sent accountData() batch, keyed by field+resolve_groups
+	 * (see accountDataBeforeSend()), then by account_id, holding the resolve functions
+	 * of everyone currently waiting for that id.
+	 *
+	 * Entries are only ever added here (accountData()) or removed once actually
+	 * answered by a response (accountDataResponse()) - never wholesale replaced -
+	 * so an id queued right as an in-flight batch is being sent (and therefore not
+	 * part of that batch) safely survives to be picked up by the next one, instead
+	 * of being silently dropped.
+	 */
+	#accountDataQueue : {[key : string] : {[account_id : string] : ((value : any) => void)[]}} = {};
+
+	/**
+	 * Whether a jsonq() batch is already queued/in-flight for a given
+	 * field+resolve_groups key - avoids starting a second one before the next
+	 * jsonq flush (~100ms) picks up everyone queued so far.
+	 */
+	#accountDataPending : {[key : string] : boolean} = {};
+
 	// Hold in-progress request to avoid making more
 	#request : Promise<any> = null;
 
@@ -336,29 +356,68 @@ class User implements UserModule
 		// something not found in cache --> ask server
 		if (ids.length)
 		{
-			promise = egw.request('EGroupware\\Api\\Framework::ajax_account_data',[ids, _field, _resolve_groups]).then(_data =>
+			// Resolving the members of a single group returns a merged member-map
+			// that can't be safely combined with other requests in a shared batch
+			// (we'd lose which member belongs to which group) --> ask directly.
+			if (_resolve_groups && ids.length === 1 && ids[0] < 0)
 			{
-				for(let account_id in _data)
+				promise = egw.request('EGroupware\\Api\\Framework::ajax_account_data',[ids, _field, _resolve_groups]).then(_data =>
 				{
-					if (typeof this.#accountData[account_id] === 'undefined')
+					for(let account_id in _data)
 					{
-						this.#accountData[account_id] = {};
+						if (typeof this.#accountData[account_id] === 'undefined')
+						{
+							this.#accountData[account_id] = {};
+						}
+						data[account_id] = this.#accountData[account_id][_field] = _data[account_id];
 					}
-					data[account_id] = this.#accountData[account_id][_field] = _data[account_id];
-				}
-				// If resolving for 1 group, cache the whole answer too
-				// (More than 1 group, we can't split to each group)
-				if(_resolve_groups && ids.length === 1 && ids[0] < 0)
-				{
+					// cache the whole answer too, so it can be re-resolved locally next time
 					const group_id = ids[0];
 					if (typeof this.#resolveGroup[group_id] === 'undefined')
 					{
 						this.#resolveGroup[group_id] = {};
 					}
 					this.#resolveGroup[group_id][_field] = _data;
+					return data;
+				});
+				this.#resolveGroup[ids[0]] = promise;
+			}
+			else
+			{
+				// Queue ids into a shared batch per field+resolve_groups, so several
+				// accountData() calls arriving within jsonq's ~100ms batching window
+				// (eg. one per row of a list showing many users) become a single
+				// ajax_account_data() call instead of one request each.
+				const key = _field+'|'+(_resolve_groups ? 1 : 0);
+				if (typeof this.#accountDataQueue[key] === 'undefined')
+				{
+					this.#accountDataQueue[key] = {};
 				}
-				return data;
-			});
+				const perId : {[account_id : string] : Promise<any>} = {};
+				ids.forEach(account_id =>
+				{
+					perId[account_id] = new Promise(resolve =>
+					{
+						if (typeof this.#accountDataQueue[key][account_id] === 'undefined')
+						{
+							this.#accountDataQueue[key][account_id] = [];
+						}
+						this.#accountDataQueue[key][account_id].push(resolve);
+					});
+				});
+				if (!this.#accountDataPending[key])
+				{
+					this.#accountDataPending[key] = true;
+					egw.jsonq('EGroupware\\Api\\Framework::ajax_account_data', [[], _field, _resolve_groups],
+						undefined, this, (params) => this.#accountDataBeforeSend(key, params)
+					).then(_data => this.#accountDataResponse(key, _field, _data));
+				}
+				promise = Promise.all(ids.map(account_id => perId[account_id])).then(values =>
+				{
+					ids.forEach((account_id, i) => { data[account_id] = values[i]; });
+					return data;
+				});
+			}
 
 			// store promise, in case someone asks while the request is pending, to not query the server again
 			ids.forEach(account_id =>
@@ -376,10 +435,6 @@ class User implements UserModule
 					return result;
 				}.bind({ account_id: account_id }));
 			});
-			if (_resolve_groups && ids.length === 1 && ids[0] < 0)
-			{
-				this.#resolveGroup[ids[0]] = promise;
-			}
 		}
 		else
 		{
@@ -423,6 +478,54 @@ class User implements UserModule
 			});
 		}
 		return promise;
+	}
+
+	/**
+	 * Called by jsonq just before an accountData() batch is sent, to sweep up every
+	 * id queued for this field+resolve_groups key since the batch was started, and
+	 * free up the key so the next accountData() call starts a fresh batch for
+	 * whatever gets queued afterward.
+	 *
+	 * @param _key field+resolve_groups this batch is for, see accountData()
+	 * @param _params jsonq's [account_ids, field, resolve_groups] parameters, mutated in place
+	 */
+	#accountDataBeforeSend = (_key : string, _params : any[]) : void =>
+	{
+		_params[0] = Object.keys(this.#accountDataQueue[_key] ?? {}).map(id => +id);
+		this.#accountDataPending[_key] = false;
+	}
+
+	/**
+	 * Callback for an accountData() batch's server response
+	 *
+	 * Caches every returned id and resolves whoever is still waiting for it in
+	 * #accountDataQueue - regardless of whether their id ended up in this
+	 * particular batch or a later one, so nothing queued in the narrow race
+	 * window around accountDataBeforeSend() ever gets silently dropped.
+	 *
+	 * @param _key field+resolve_groups this batch was for, see accountData()
+	 * @param _field
+	 * @param _data account_id => value pairs returned by the server
+	 */
+	#accountDataResponse = (_key : string, _field : string, _data : any) : void =>
+	{
+		if (!_data) return;
+
+		const queue = this.#accountDataQueue[_key] ?? {};
+		for (let account_id in _data)
+		{
+			if (typeof this.#accountData[account_id] === 'undefined')
+			{
+				this.#accountData[account_id] = {};
+			}
+			this.#accountData[account_id][_field] = _data[account_id];
+
+			if (typeof queue[account_id] !== 'undefined')
+			{
+				queue[account_id].forEach(resolve => resolve(_data[account_id]));
+				delete queue[account_id];
+			}
+		}
 	}
 
 	/**

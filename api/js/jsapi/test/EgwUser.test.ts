@@ -1,8 +1,10 @@
 /**
  * Tests for egw_user.js ("user" module) - MODULE_GLOBAL.
  *
- * See EgwLinksPrefsUserHarness for how egw.request() (used by accounts()/
- * accountData()) is stubbed with a controllable Promise.
+ * See EgwLinksPrefsUserHarness for how egw.request() (used by accounts(), and
+ * by accountData()'s single-group-resolution branch) and egw.jsonq() (used by
+ * accountData()'s general, batched branch - see accountDataBeforeSend()) are
+ * each stubbed with a controllable Promise.
  *
  * NOT covered (documented residual risk): set_account_data()'s "{template}"
  * placeholder-resolution recursive branch (only the plain-field branch is
@@ -152,10 +154,11 @@ describe('egw_user.js (user)', () =>
 
 			const promise = env.egw().accountData([5, 9], 'account_email', false, undefined, undefined);
 
-			assert.equal(env.requestCalls.length, 1);
-			assert.deepEqual(env.requestCalls[0].parameters[0], [9], 'only the uncached id must be requested');
+			assert.equal(env.jsonqCalls.length, 1);
+			env.jsonqCalls[0].flush();
+			assert.deepEqual(env.jsonqCalls[0].parameters[0], [9], 'only the uncached id must be requested');
 
-			env.requestCalls[0].resolve({9: 'nine@example.com'});
+			env.jsonqCalls[0].respond({9: 'nine@example.com'});
 
 			assert.deepEqual(await promise, {5: 'five@example.com', 9: 'nine@example.com'});
 		});
@@ -163,15 +166,70 @@ describe('egw_user.js (user)', () =>
 		it('a second call for the same pending id/field reuses the in-flight promise instead of re-requesting', async() =>
 		{
 			const p1 = env.egw().accountData(7, 'account_email', false, undefined, undefined);
-			assert.equal(env.requestCalls.length, 1);
+			assert.equal(env.jsonqCalls.length, 1);
 
 			const p2 = env.egw().accountData(7, 'account_email', false, undefined, undefined);
-			assert.equal(env.requestCalls.length, 1, 'must not send a second request for the same pending id/field');
+			assert.equal(env.jsonqCalls.length, 1, 'must not send a second request for the same pending id/field');
 
-			env.requestCalls[0].resolve({7: 'seven@example.com'});
+			env.jsonqCalls[0].flush();
+			env.jsonqCalls[0].respond({7: 'seven@example.com'});
 
 			assert.deepEqual(await p1, {7: 'seven@example.com'});
 			assert.deepEqual(await p2, {7: 'seven@example.com'});
+		});
+
+		it('batches concurrent calls for different ids/same field into a single jsonq request', async() =>
+		{
+			const p1 = env.egw().accountData(7, 'account_lid', false, undefined, undefined);
+			const p2 = env.egw().accountData(9, 'account_lid', false, undefined, undefined);
+
+			assert.equal(env.jsonqCalls.length, 1, 'both calls must share one jsonq batch');
+
+			env.jsonqCalls[0].flush();
+			assert.deepEqual(env.jsonqCalls[0].parameters[0], [7, 9], 'both ids must be merged into the one request');
+
+			env.jsonqCalls[0].respond({7: 'ralf', 9: 'nine'});
+
+			assert.deepEqual(await p1, {7: 'ralf'});
+			assert.deepEqual(await p2, {9: 'nine'});
+		});
+
+		it('a call arriving after flush but before the response starts its own batch, without losing the earlier one', async() =>
+		{
+			const p1 = env.egw().accountData(7, 'account_lid', false, undefined, undefined);
+			env.jsonqCalls[0].flush();
+
+			// second call arrives after the first batch was already sent (flushed) but
+			// before its response --> must start a new batch rather than being lost
+			const p2 = env.egw().accountData(9, 'account_lid', false, undefined, undefined);
+			assert.equal(env.jsonqCalls.length, 2, 'a call after flush must start its own batch');
+
+			env.jsonqCalls[1].flush();
+			// the still-unresolved id from the first (already-sent) batch is
+			// harmlessly re-requested too - the queue is only pruned by responses
+			assert.deepEqual(env.jsonqCalls[1].parameters[0], [7, 9]);
+
+			env.jsonqCalls[0].respond({7: 'ralf'});
+			env.jsonqCalls[1].respond({7: 'ralf', 9: 'nine'});
+
+			assert.deepEqual(await p1, {7: 'ralf'});
+			assert.deepEqual(await p2, {9: 'nine'});
+		});
+
+		it('different fields for the same id use separate batches', async() =>
+		{
+			const p1 = env.egw().accountData(7, 'account_lid', false, undefined, undefined);
+			const p2 = env.egw().accountData(7, 'account_email', false, undefined, undefined);
+
+			assert.equal(env.jsonqCalls.length, 2, 'account_lid and account_email must not share a batch');
+
+			env.jsonqCalls[0].flush();
+			env.jsonqCalls[1].flush();
+			env.jsonqCalls[0].respond({7: 'ralf'});
+			env.jsonqCalls[1].respond({7: 'ralf@example.com'});
+
+			assert.deepEqual(await p1, {7: 'ralf'});
+			assert.deepEqual(await p2, {7: 'ralf@example.com'});
 		});
 
 		it('caches the full response for a single resolved group, for later local re-resolution', async() =>
@@ -190,7 +248,8 @@ describe('egw_user.js (user)', () =>
 			const cb = sinon.stub();
 			const ctx = {};
 			const promise = env.egw().accountData(7, 'account_email', false, cb, ctx);
-			env.requestCalls[0].resolve({7: 'seven@example.com'});
+			env.jsonqCalls[0].flush();
+			env.jsonqCalls[0].respond({7: 'seven@example.com'});
 			await promise;
 
 			assert.isTrue(cb.calledOnceWith({7: 'seven@example.com'}));
@@ -200,7 +259,7 @@ describe('egw_user.js (user)', () =>
 		it('defaults _field to "account_email" when omitted', () =>
 		{
 			env.egw().accountData(7, undefined as any, false, undefined, undefined);
-			assert.equal(env.requestCalls[0].parameters[1], 'account_email');
+			assert.equal(env.jsonqCalls[0].parameters[1], 'account_email');
 		});
 	});
 
@@ -211,12 +270,13 @@ describe('egw_user.js (user)', () =>
 			env.egw().set_account_cache({7: 'seven@example.com'}, 'account_email');
 			let data : any = await env.egw().accountData(7, 'account_email', false, undefined, undefined);
 			assert.deepEqual(data, {7: 'seven@example.com'});
-			assert.equal(env.requestCalls.length, 0);
+			assert.equal(env.jsonqCalls.length, 0);
 
 			env.egw().invalidate_account(7);
 			const promise = env.egw().accountData(7, 'account_email', false, undefined, undefined);
-			assert.equal(env.requestCalls.length, 1, 'after invalidation, the cache miss must ask the server');
-			env.requestCalls[0].resolve({7: 'fresh@example.com'});
+			assert.equal(env.jsonqCalls.length, 1, 'after invalidation, the cache miss must ask the server');
+			env.jsonqCalls[0].flush();
+			env.jsonqCalls[0].respond({7: 'fresh@example.com'});
 			data = await promise;
 			assert.deepEqual(data, {7: 'fresh@example.com'});
 		});
@@ -264,8 +324,9 @@ describe('egw_user.js (user)', () =>
 			env.egw().invalidate_account();
 
 			env.egw().accountData([7, 8], 'account_email', false, undefined, undefined);
-			assert.equal(env.requestCalls.length, 1);
-			assert.deepEqual(env.requestCalls[0].parameters[0], [7, 8]);
+			assert.equal(env.jsonqCalls.length, 1);
+			env.jsonqCalls[0].flush();
+			assert.deepEqual(env.jsonqCalls[0].parameters[0], [7, 8]);
 		});
 	});
 
