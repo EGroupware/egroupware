@@ -6,11 +6,12 @@ import {buildErrorNode, buildFolderLevel, buildFolderTree, JmapMailboxNode} from
  * via MailJmap.getMailboxChildren()) into Et2Tree's node shape for mail's lazy per-level
  * folder-tree loading (see doc/ai/projects/mail-folder-tree-jmap.md).
  *
- * Pure data transform, no DOM/network involved - only a minimal egw.image() stub is needed.
+ * Pure data transform, no DOM/network involved - only minimal egw.image()/lang() stubs are needed.
  */
 
 const egw = {
 	image: (name : string, app? : string) => `https://example.com/${app}/${name}.svg`,
+	lang: (key : string) => `translated(${key})`,
 };
 
 function mailbox(overrides : Partial<JmapMailboxNode>) : JmapMailboxNode
@@ -28,10 +29,12 @@ function mailbox(overrides : Partial<JmapMailboxNode>) : JmapMailboxNode
 
 /** build() wraps buildFolderLevel() with a fixed profileID/parentPath, since most tests here
  *  only care about the per-mailbox fields, not the id-construction itself (that's covered by
- *  its own describe() block below) */
-function build(mailboxes : JmapMailboxNode[], options : { subscribedOnly? : boolean } = {})
+ *  its own describe() block below). Defaults isTopLevel:true - most of these tests are exactly
+ *  about the top-level role-based icon/label behaviour; its own describe() block below covers
+ *  the isTopLevel:false restriction specifically. */
+function build(mailboxes : JmapMailboxNode[], options : { subscribedOnly? : boolean, isTopLevel? : boolean } = {})
 {
-	return buildFolderLevel(mailboxes, "42", "", options, egw);
+	return buildFolderLevel(mailboxes, "42", "", {isTopLevel: true, ...options}, egw);
 }
 
 describe("buildFolderLevel()", () =>
@@ -105,39 +108,132 @@ describe("buildFolderLevel()", () =>
 	it("uses the inbox icon for role=inbox", () =>
 	{
 		const [node] = build([mailbox({role: "inbox"})]);
-		assert.include(node.im0, "kfm_home");
+		assert.include(node.im0, "download");
 	});
 
-	it("uses the matching special-folder icon for trash/sent/drafts/junk roles", () =>
+	/**
+	 * An open mail account's INBOX should always auto-expand alongside it if it has children,
+	 * regardless of whether "profileID::INBOX" happens to also be in the persisted expand-state
+	 * set - every Dovecot/IMAP account has an INBOX and (per ralf) it always has children in
+	 * practice, so this shouldn't need a manual re-expand click every time.
+	 */
+	it("auto-opens INBOX when it has children, but not otherwise", () =>
+	{
+		const [withChildren] = build([mailbox({role: "inbox", hasChildren: true})]);
+		const [unknownChildren] = build([mailbox({role: "inbox", hasChildren: undefined})]);
+		const [noChildren] = build([mailbox({role: "inbox", hasChildren: false})]);
+
+		assert.isTrue(withChildren.open);
+		assert.isTrue(unknownChildren.open, "hasChildren unknown (real JMAP) still assumes expandable, same as `child`");
+		assert.isUndefined(noChildren.open);
+	});
+
+	it("does not auto-open a non-inbox folder, even one with children", () =>
+	{
+		const [trash] = build([mailbox({role: "trash", hasChildren: true})]);
+		const [plain] = build([mailbox({role: null, hasChildren: true})]);
+
+		assert.isUndefined(trash.open);
+		assert.isUndefined(plain.open);
+	});
+
+	it("does not auto-open INBOX at a deeper level (isTopLevel:false)", () =>
+	{
+		const [node] = buildFolderLevel([mailbox({role: "inbox", hasChildren: true, name: "INBOX"})],
+			"42", "Archives/2020", {isTopLevel: false}, egw);
+
+		assert.isUndefined(node.open);
+	});
+
+	/**
+	 * Uses the RESOLVED bootstrap-icon name directly (the right-hand side of Api\Image::find()'s
+	 * $global2bootstrap map, api/src/Image.php - eg. "dhtmlxtree/MailFolderTrash" => "trash"),
+	 * not the legacy "dhtmlxtree/..." alias classic mail_tree.inc.php still goes through.
+	 */
+	it("uses the matching special-folder icon for trash/sent/drafts/junk/templates/outbox roles", () =>
 	{
 		const [trash] = build([mailbox({role: "trash"})]);
 		const [sent] = build([mailbox({role: "sent"})]);
 		const [drafts] = build([mailbox({role: "drafts"})]);
 		const [junk] = build([mailbox({role: "junk"})]);
+		const [templates] = build([mailbox({role: "templates"})]);
+		const [outbox] = build([mailbox({role: "outbox"})]);
 
-		assert.include(trash.im0, "MailFolderTrash");
-		assert.include(sent.im0, "MailFolderSent");
-		assert.include(drafts.im0, "MailFolderDrafts");
-		assert.include(junk.im0, "MailFolderJunk");
+		assert.include(trash.im0, "trash");
+		assert.include(sent.im0, "send");
+		assert.include(drafts.im0, "pencil-square");
+		assert.include(junk.im0, "exclamation-octagon");
+		assert.include(templates.im0, "file-earmark-text");
+		assert.include(outbox.im0, "upload");
+	});
+
+
+	/**
+	 * Classic mail_tree.inc.php always substituted the UI-language lang() translation for a
+	 * role-identifiable special folder, discarding the account's own real IMAP/JMAP name - not a
+	 * preference, a guarantee that eg. Trash reads the same across every account regardless of
+	 * what that particular account's server happens to literally call it (some accounts' real
+	 * folder names are already in the UI language, some aren't - passing the raw name through
+	 * unconditionally, as buildNode() briefly did, showed inconsistent per-account translation).
+	 */
+	it("translates the label for role-identifiable special folders, discarding the raw name", () =>
+	{
+		const [inbox] = build([mailbox({role: "inbox", name: "Posteingang"})]);
+		const [trash] = build([mailbox({role: "trash", name: "Papierkorb"})]);
+		const [templates] = build([mailbox({role: "templates", name: "Vorlagen"})]);
+
+		assert.equal(inbox.text, "translated(INBOX)");
+		assert.equal(trash.text, "translated(Trash)");
+		assert.equal(trash.tooltip, "translated(Trash)");
+		assert.equal(templates.text, "translated(Templates)");
+	});
+
+	it("keeps the raw name for a role with no translation mapping (eg. archive) or no role at all", () =>
+	{
+		const [archive] = build([mailbox({role: "archive", name: "Archives"})]);
+		const [plain] = build([mailbox({role: null, name: "Projects"})]);
+
+		assert.equal(archive.text, "Archives");
+		assert.equal(plain.text, "Projects");
 	});
 
 	it("falls back to the generic folder icon for a role with no dedicated icon (eg. archive)", () =>
 	{
 		const [node] = build([mailbox({role: "archive"})]);
-		assert.include(node.im0, "MailFolderClosed");
+		assert.include(node.im0, "folder2");
 	});
 
 	it("falls back to the generic folder icon for a plain (non-special) folder", () =>
 	{
 		const [node] = build([mailbox({role: null})]);
-		assert.include(node.im0, "MailFolderClosed");
-		assert.include(node.im1, "folderOpen");
+		assert.include(node.im0, "folder2");
+		assert.include(node.im1, "folder2-open");
 	});
 
 	it("returns an empty array for an empty/missing input", () =>
 	{
 		assert.deepEqual(build([]), []);
 		assert.deepEqual(buildFolderLevel(undefined as any, "42", "", {}, egw), []);
+	});
+
+	/**
+	 * Classic mail_tree.inc.php only ever special-cases folder icons/names at the top level
+	 * (account root or INBOX's own direct children, Api\Mail::getFolderArrays()'s
+	 * $_onlyTopLevel mode) - a deeper level always uses plain generic icons and the raw name,
+	 * even for a mailbox that happens to carry a matching role (eg. a real \Trash-attributed
+	 * folder several levels deep would still get no special treatment classically).
+	 */
+	describe("isTopLevel:false - deeper levels never get role-based icon/label treatment", () =>
+	{
+		it("ignores a reported role entirely, even trash/inbox", () =>
+		{
+			const [trash] = buildFolderLevel([mailbox({role: "trash", name: "Trash"})], "42", "Archives/2020", {isTopLevel: false}, egw);
+			const [inbox] = buildFolderLevel([mailbox({role: "inbox", name: "INBOX"})], "42", "Archives/2020", {isTopLevel: false}, egw);
+
+			assert.equal(trash.text, "Trash", "must keep the raw name, not translated(Trash)");
+			assert.include(trash.im0, "folder2", "must use the generic icon, not the trash icon");
+			assert.include(inbox.im0, "folder2", "must use the generic icon, not the home icon");
+		});
 	});
 });
 
@@ -171,6 +267,28 @@ describe("buildFolderLevel() id construction", () =>
 
 describe("buildFolderTree()", () =>
 {
+	/**
+	 * Same "top level" restriction as buildFolderLevel()'s isTopLevel option, computed per-node
+	 * here since this builds the whole nested tree in one pass: INBOX's own direct child gets
+	 * role-based treatment, but a grandchild (two levels deep) does not, even with a matching role.
+	 */
+	it("only applies role-based icon/label treatment at the account root or INBOX's own children", () =>
+	{
+		const tree = buildFolderTree([
+			mailbox({id: "inbox", name: "INBOX", role: "inbox", parentId: null}),
+			mailbox({id: "trash", name: "Trash", role: "trash", parentId: "inbox"}),
+			mailbox({id: "old", name: "Trash", role: "trash", parentId: "trash"}),
+		], "42", egw);
+
+		const trashNode = tree[0].item[0];
+		const deepNode = trashNode.item[0];
+
+		assert.equal(tree[0].text, "translated(INBOX)");
+		assert.equal(trashNode.text, "translated(Trash)");
+		assert.equal(deepNode.text, "Trash", "two levels deep must keep the raw name");
+		assert.include(deepNode.im0, "folder2", "two levels deep must use the generic icon");
+	});
+
 	it("nests children under their parent via parentId, all the way down", () =>
 	{
 		const tree = buildFolderTree([

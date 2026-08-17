@@ -239,10 +239,17 @@ class JmapShim
 	 *   child of that parent - a real one-level Horde listMailboxes() LIST call, the lazy
 	 *   per-level folder-tree loading primitive (see doc/ai/projects/mail-folder-tree-jmap.md).
 	 *   Requesting the 'children' option lets mailboxGet() report hasChildren cheaply from the
-	 *   same attributes, mirroring mail_tree.inc.php's own nodeHasChildren().
+	 *   same attributes, mirroring mail_tree.inc.php's own nodeHasChildren(). filter.isSubscribed
+	 *   (RFC 8621 MailboxFilterCondition) mirrors classic mail_ui's own default: normal browsing
+	 *   only lists subscribed mailboxes unless the "show all folders" preference is on (see
+	 *   MailJmap.getMailboxChildren(), mail/js/jmap.ts, which sets this from that preference) -
+	 *   without it, MBOX_ALL_SUBSCRIBED below returns literally everything regardless of
+	 *   subscription (a confusingly-named Horde constant - "ALL" is the operative word, it does
+	 *   NOT mean "only subscribed"), flooding the tree with stale/unsubscribed mailboxes classic
+	 *   never showed by default.
 	 *
 	 * @param string $accountId
-	 * @param array $args {filter?: {name?: string, parentId?: string}}
+	 * @param array $args {filter?: {name?: string, parentId?: string, isSubscribed?: bool}}
 	 * @return array {ids: string[]}
 	 */
 	public static function mailboxQuery(string $accountId, array $args) : array
@@ -260,7 +267,9 @@ class JmapShim
 		{
 			return ['ids' => []];
 		}
-		return ['ids' => self::listChildIds($imap, $parentPath)];
+		$subscribedOnly = array_key_exists('isSubscribed', (array)($args['filter'] ?? [])) &&
+			(bool)$args['filter']['isSubscribed'];
+		return ['ids' => self::listChildIds($imap, $parentPath, $subscribedOnly)];
 	}
 
 	/**
@@ -270,9 +279,10 @@ class JmapShim
 	 *
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $parentPath canonical "/"-joined path, '' for the top level
+	 * @param bool $subscribedOnly see mailboxQuery()'s docblock
 	 * @return string[] base64-encoded canonical paths of every direct child
 	 */
-	private static function listChildIds(\Horde_Imap_Client_Socket $imap, string $parentPath) : array
+	private static function listChildIds(\Horde_Imap_Client_Socket $imap, string $parentPath, bool $subscribedOnly = false) : array
 	{
 		$parentMailbox = self::hordeMailbox($imap, $parentPath);
 		$delimiter = self::namespaceDelimiter($imap, 'personal');
@@ -281,8 +291,19 @@ class JmapShim
 		// more character after the delimiter to match)
 		$pattern = $parentPath === '' ? '%' : $parentMailbox.$delimiter.'%';
 
+		$mailboxes = $subscribedOnly ?
+			$imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_SUBSCRIBED, ['children' => true]) : null;
+		// same defensive fallback as Api\Mail\Imap::getMailboxes()'s own "cyrus workaround": some
+		// accounts/servers never report ANY mailbox (not even INBOX) as subscribed at all - rather
+		// than show a folder level that's completely empty (including the account's OWN top
+		// level, which classic never did), fall back to the unfiltered listing for this request
+		if ($mailboxes === null || empty($mailboxes))
+		{
+			$mailboxes = $imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]);
+		}
+
 		$ids = [];
-		foreach ($imap->listMailboxes($pattern, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true]) as $mailboxName => $info)
+		foreach ($mailboxes as $mailboxName => $info)
 		{
 			$ids[] = base64_encode(self::canonicalPath($imap, $mailboxName));
 		}
@@ -328,8 +349,10 @@ class JmapShim
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $mailboxName real IMAP mailbox name
 	 * @param string[] $attributes lower-cased LIST attributes for this mailbox
-	 * @return string|null one of inbox/trash/sent/drafts/junk/archive (JMAP MailboxRole values
-	 *  this shim can determine), or null
+	 * @return string|null one of inbox/trash/sent/drafts/junk/archive (real RFC 8621 MailboxRole
+	 *  values) plus the EGroupware-specific extensions templates/outbox (classic mail_tree.inc.php's
+	 *  own $definedFolders concept - no IMAP SPECIAL-USE or JMAP role exists for either, only the
+	 *  account's own acc_folder_template/acc_folder_outbox config), or null
 	 */
 	public static function roleFor(\Horde_Imap_Client_Socket $imap, string $mailboxName, array $attributes) : ?string
 	{
@@ -351,6 +374,7 @@ class JmapShim
 		static $accFolders = [
 			'acc_folder_trash' => 'trash', 'acc_folder_sent' => 'sent', 'acc_folder_draft' => 'drafts',
 			'acc_folder_junk' => 'junk', 'acc_folder_archive' => 'archive',
+			'acc_folder_template' => 'templates', 'acc_folder_outbox' => 'outbox',
 		];
 		foreach ($accFolders as $property => $role)
 		{
@@ -409,34 +433,55 @@ class JmapShim
 		if ($requestedIds === null)
 		{
 			// RFC 8620 "ids: null" = all - a full-account scan is the correct/only way to
-			// answer this, unlike the explicit-ids case below
+			// answer this, unlike the explicit-ids case below. 'status' batches message/unseen
+			// counts into this same LIST call (same fix as the explicit-ids branch below) -
+			// without it, an account with hundreds of folders (the exact case this whole-account
+			// mode exists for, see the subscribe-management popup) would need hundreds of
+			// separate STATUS round-trips just to render the popup.
 			$list = [];
-			foreach ($imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED,
-				['attributes' => true, 'special_use' => true, 'children' => true]) as $mailboxName => $info)
+			foreach ($imap->listMailboxes('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+				'attributes' => true, 'special_use' => true, 'children' => true,
+				'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
+			]) as $mailboxName => $info)
 			{
-				$list[] = self::mailboxNode($imap, $mailboxName, (array)($info['attributes'] ?? []));
+				$list[] = self::mailboxNode($imap, $mailboxName, (array)($info['attributes'] ?? []), $info['status'] ?? null);
 			}
 			return ['list' => $list, 'notFound' => []];
 		}
 
-		// explicit ids (the lazy per-level path's normal case): look up each mailbox by its own
-		// exact (non-wildcard) name individually - critically, NOT a '*' full-account scan,
-		// which would defeat the whole point of lazy per-level loading for accounts with
-		// hundreds of folders
-		$list = [];
-		$notFound = [];
+		// explicit ids (the lazy per-level path's normal case): look up every requested mailbox
+		// in ONE batched LIST(+STATUS, via Horde's LIST-STATUS support) call - critically, NOT a
+		// '*' full-account scan, which would defeat the whole point of lazy per-level loading for
+		// accounts with hundreds of folders. Previously this looped one listMailboxes() +
+		// mailboxNode()'s own separate status() call PER id - up to 2 sequential IMAP round-trips
+		// for every single mailbox, which for a level with dozens of siblings could take many
+		// seconds and made the whole request likely to time out or exceed the client's own
+		// timeout, causing a SILENT fallback to the classic ajax_foldertree path with no visible
+		// error at all (see doc/ai/projects/mail-folder-tree-jmap.md).
+		$mailboxNames = [];
+		$idByName = [];
 		foreach ($requestedIds as $id)
 		{
-			$path = self::folderPath((string)$id);
-			$mailboxName = self::hordeMailbox($imap, $path, $calledFor);
-			$info = $imap->listMailboxes($mailboxName, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED,
-				['attributes' => true, 'special_use' => true, 'children' => true]);
-			if (empty($info))
+			$mailboxName = self::hordeMailbox($imap, self::folderPath((string)$id), $calledFor);
+			$mailboxNames[] = $mailboxName;
+			$idByName[$mailboxName] = (string)$id;
+		}
+		$infos = $mailboxNames ? $imap->listMailboxes($mailboxNames, \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+			'attributes' => true, 'special_use' => true, 'children' => true,
+			'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
+		]) : [];
+
+		$list = [];
+		$notFound = [];
+		foreach ($mailboxNames as $mailboxName)
+		{
+			if (empty($infos[$mailboxName]))
 			{
-				$notFound[] = (string)$id;
+				$notFound[] = $idByName[$mailboxName];
 				continue;
 			}
-			$list[] = self::mailboxNode($imap, $mailboxName, (array)(reset($info)['attributes'] ?? []));
+			$list[] = self::mailboxNode($imap, $mailboxName, (array)($infos[$mailboxName]['attributes'] ?? []),
+				$infos[$mailboxName]['status'] ?? null);
 		}
 		return ['list' => $list, 'notFound' => $notFound];
 	}
@@ -447,26 +492,34 @@ class JmapShim
 	 * @param \Horde_Imap_Client_Socket $imap
 	 * @param string $mailboxName real IMAP mailbox name
 	 * @param string[] $rawAttributes LIST attributes as returned by Horde (mixed case)
+	 * @param array|null $status pre-fetched {messages, unseen} (from listMailboxes()'s own
+	 *  'status' option, see mailboxGetInternal()'s explicit-ids batch) - avoids a separate STATUS
+	 *  round-trip per mailbox; null means "fetch it here" (the ids:null full-scan mode, which
+	 *  doesn't request 'status' on its own listMailboxes() call)
 	 * @return array
 	 */
-	private static function mailboxNode(\Horde_Imap_Client_Socket $imap, string $mailboxName, array $rawAttributes) : array
+	private static function mailboxNode(\Horde_Imap_Client_Socket $imap, string $mailboxName, array $rawAttributes, ?array $status = null) : array
 	{
 		$path = self::canonicalPath($imap, $mailboxName);
 		[$parentPath, $leafName] = self::splitPath($path);
 		$attributes = array_map('strtolower', $rawAttributes);
 
 		$counts = ['messages' => 0, 'unseen' => 0];
-		try
+		if ($status === null)
 		{
-			$status = $imap->status($mailboxName, \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN);
-			$counts['messages'] = (int)($status['messages'] ?? 0);
-			$counts['unseen'] = (int)($status['unseen'] ?? 0);
+			try
+			{
+				$status = $imap->status($mailboxName, \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN);
+			}
+			catch (\Throwable $e)
+			{
+				// \Noselect namespace-separator mailboxes (and similar) can throw on STATUS -
+				// leave the zero-defaults rather than failing the whole mailboxGet() call
+				$status = [];
+			}
 		}
-		catch (\Throwable $e)
-		{
-			// \Noselect namespace-separator mailboxes (and similar) can throw on STATUS - leave
-			// the zero-defaults rather than failing the whole mailboxGet() call
-		}
+		$counts['messages'] = (int)($status['messages'] ?? 0);
+		$counts['unseen'] = (int)($status['unseen'] ?? 0);
 
 		return [
 			'id' => base64_encode($path),

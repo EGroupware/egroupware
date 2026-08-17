@@ -115,6 +115,19 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	private lazyLoading: Promise<void>;
 
 	/**
+	 * Node ids (value ?? id) with a handleItemLazyLoad() fetch currently in flight.
+	 *
+	 * A node stays "lazy" (see _optionTemplate()) until its own fetch resolves and updates its
+	 * item/child state - but every OTHER node's fetch completing also triggers a tree-wide
+	 * requestUpdate("_selectOptions"), which re-renders every item and, via _optionTemplate()'s
+	 * own autoload self-trigger, re-dispatches "sl-lazy-load" for this node again even though it's
+	 * already loading. Without this guard, N concurrently-loading nodes (eg. many
+	 * persisted-open folders self-triggering at once) produce a multiplying storm of redundant,
+	 * duplicate fetches for the same nodes as their siblings resolve one by one.
+	 */
+	private _lazyLoadPending = new Set<string>();
+
+	/**
 	 * get the first selected node using attributes on the shadow root elements
 	 */
 	private get selected(){
@@ -177,6 +190,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	widget_object: EgwActionObject;
 	// openStatePreference bookkeeping - see applyOpenState()/saveOpenState()
 	private _openIds : Set<string>;
+	private _hasSavedOpenState : boolean = false;
 	private _openStateSaveTimer : number;
 	/***
 	 * If you alter the pictures used as expand/collapse icons
@@ -300,7 +314,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	/**
 	 * Lazily parse and cache openStatePreference's persisted expanded-node-ids, once per widget
 	 * instance - reused by every applyOpenState() call (initial render, and again after every
-	 * lazy-load merge, see handleItemLazyLoad()).
+	 * lazy-load merge, see handleItemLazyLoad()). Also records (_hasSavedOpenState) whether a
+	 * preference value was ever actually saved at all, as opposed to merely being unset - an
+	 * explicitly-saved empty list is still the non-empty raw string "[]", distinct from a raw
+	 * value of "" /undefined/null for "never saved anything yet". applyOpenState() needs this
+	 * distinction: see its own docblock for why.
 	 */
 	private loadOpenIds() : Set<string>
 	{
@@ -309,9 +327,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		let ids : string[] = [];
 		if (parts)
 		{
+			const raw = egw().preference(parts[1], parts[0]);
+			this._hasSavedOpenState = !!raw;
 			try
 			{
-				ids = JSON.parse(egw().preference(parts[1], parts[0]) || "[]") || [];
+				ids = JSON.parse(raw || "[]") || [];
 			}
 			catch (e)
 			{
@@ -332,14 +352,36 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	 * lazy-load dispatch (see its docblock) is what actually drives the next level's fetch once
 	 * a matching node gets marked open here, continuing the cascade level by level as each
 	 * fetch resolves.
+	 *
+	 * The top level (_selectOptions itself) is authoritative both ways - closed AND open - but
+	 * only once a preference value has actually ever been saved (_hasSavedOpenState, see
+	 * loadOpenIds()). A caller's own initial data can carry its own "open by default" flag (eg.
+	 * mail's active-account row, or its sole account if there's only one) that would otherwise
+	 * never get overridden by an explicit user close: closing a top-level item removes it from
+	 * the persisted set, but with only an additive apply, the caller's own default `open` would
+	 * just reassert itself again on the next page load, making it impossible to ever permanently
+	 * close that item. That authoritative reset must NOT kick in before anything's ever been
+	 * saved though - a brand-new user (nothing saved yet) should still see the caller's own
+	 * sensible defaults (eg. their one and only account starting open), not everything
+	 * force-closed just because the preference happens to not exist yet. Deeper levels stay
+	 * additive-only regardless (never reset to closed) - they have no such caller-supplied
+	 * default to override, and a fresh fetch may have deliberately set its own `open` (eg. mail's
+	 * INBOX-always-open-if-it-has-children behaviour, folderTree.ts's buildNode()) that must not
+	 * be clobbered.
+	 *
+	 * At least one top-level item always ends up open (falls back to the first one if the
+	 * authoritative pass above would otherwise leave zero) - a saved state can end up with none
+	 * open (eg. one saved before handleItemCollapse()'s own "can't close the last one" guard
+	 * existed), and a completely-collapsed top level would leave the user looking at an empty
+	 * tree with nothing to click.
 	 */
 	private applyOpenState() : void
 	{
 		if (!this.openStatePreferenceParts()) return;
 		const ids = this.loadOpenIds();
-		if (!ids.size) return;
+		const authoritative = this._hasSavedOpenState;
 
-		const applyRecursive = (options : TreeItemData[]) =>
+		const applyRecursive = (options : TreeItemData[], isTopLevel : boolean) =>
 		{
 			(options ?? []).forEach((option : any) =>
 			{
@@ -347,10 +389,18 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				{
 					option.open = 1;
 				}
-				applyRecursive(option.item ?? option.children);
+				else if (isTopLevel && authoritative)
+				{
+					option.open = 0;
+				}
+				applyRecursive(option.item ?? option.children, false);
 			});
 		};
-		applyRecursive(this._selectOptions);
+		applyRecursive(this._selectOptions, true);
+		if (authoritative && this._selectOptions?.length && !this._selectOptions.some((o : any) => o.open))
+		{
+			(this._selectOptions[0] as any).open = 1;
+		}
 		this.requestUpdate("_selectOptions");
 	}
 
@@ -1059,7 +1109,19 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 			this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'id', 'item');
 		if(selectOption)
 		{
-			selectOption.open = 0;
+			// never let the last remaining open top-level item collapse (only matters once
+			// openStatePreference is in use, eg. mail's account list - a single account, or the
+			// last one still open among several, must always stay open so the user never ends up
+			// looking at a completely empty tree with nothing left to click). Not clearing .open
+			// here still forces a re-render below, which reasserts ?expanded=true on the DOM node
+			// and snaps it straight back open, undoing Shoelace's own already-applied collapse.
+			const isLastOpenTopLevel = this.openStatePreferenceParts() &&
+				this._selectOptions.includes(selectOption as any) &&
+				!this._selectOptions.some((o : any) => o !== selectOption && o.open);
+			if (!isLastOpenTopLevel)
+			{
+				selectOption.open = 0;
+			}
 
 			this.requestUpdate("_selectOptions")
 		}
@@ -1090,6 +1152,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		const selectOption = this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'value', 'children') ??
 			this.optionSearch(event.target.value ?? event.target.id, this._selectOptions, 'id', 'item');
 
+		const key = selectOption?.value ?? selectOption?.id ?? (event.target.value ?? event.target.id);
+		if(this._lazyLoadPending.has(key))
+		{
+			// a fetch for this exact node is already in flight - see _lazyLoadPending's docblock
+			return;
+		}
+		this._lazyLoadPending.add(key);
+
 		this.lazyLoading = this.handleLazyLoading(selectOption).then((result) =>
 		{
 			// TODO: We already have the right option in context.  Look into this.getNode(), find out why it's there.  It doesn't do a deep search.
@@ -1100,7 +1170,14 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				parentNode.open = false;
 				this.requestUpdate("lazy", "true");
 			}
-			this.getDomNode(parentNode.value ?? parentNode.id).loading = false
+			// the DOM node may not exist right now (e.g. an ancestor's own re-render is still
+			// pending while this and another lazy-load resolve close together) - nothing to reset
+			// in that case, and crashing here would also skip the openState cascade/requestUpdate below
+			const domNode = this.getDomNode(parentNode.value ?? parentNode.id);
+			if(domNode)
+			{
+				domNode.loading = false;
+			}
 			if (this.openStatePreference)
 			{
 				// cascade the restore: newly-arrived children may themselves be in the
@@ -1109,7 +1186,7 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 				this.applyOpenState();
 			}
 			this.requestUpdate("_selectOptions")
-		});
+		}).finally(() => this._lazyLoadPending.delete(key));
 	}
 
 	/**

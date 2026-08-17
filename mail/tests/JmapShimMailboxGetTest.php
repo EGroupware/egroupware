@@ -87,24 +87,27 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * The whole point of lazy per-level loading: fetching details for a small explicit set of
-	 * ids must look each one up individually (exact, non-wildcard name), never scan the whole
-	 * account with a '*' pattern - that would defeat the point for accounts with hundreds of
-	 * folders.
+	 * ids must look every one of them up in ONE batched LIST(+STATUS) call, exact (non-wildcard)
+	 * names, never a '*' full-account scan (that would defeat the point for accounts with
+	 * hundreds of folders) - and, since the fix, never a separate status() round-trip per
+	 * mailbox either. The previous per-id loop (one listMailboxes() + one status() call PER
+	 * requested mailbox) could take many sequential IMAP round-trips for a single folder-tree
+	 * level, slow enough on a real account with dozens of siblings to time out the whole request
+	 * and silently fall back to the classic ajax_foldertree path with no visible error at all.
 	 */
-	public function testMailboxGetInternalExplicitIdsNeverScansWholeAccount()
+	public function testMailboxGetInternalExplicitIdsUsesOneBatchedListCall()
 	{
 		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
-		$imap->expects($this->exactly(2))->method('listMailboxes')
-			->willReturnCallback(function($pattern, $mode, $opts)
-			{
-				$this->assertNotSame('*', $pattern);
-				$fixtures = [
-					'INBOX' => ['INBOX' => ['attributes' => ['\\subscribed']]],
-					'INBOX.Sent' => ['INBOX.Sent' => ['attributes' => ['\\subscribed', '\\sent']]],
-				];
-				return $fixtures[$pattern] ?? [];
-			});
-		$imap->method('status')->willReturn(['messages' => 0, 'unseen' => 0]);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with(['INBOX', 'INBOX.Sent'], \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+				'attributes' => true, 'special_use' => true, 'children' => true,
+				'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
+			])
+			->willReturn([
+				'INBOX' => ['attributes' => ['\\subscribed'], 'status' => ['messages' => 3, 'unseen' => 1]],
+				'INBOX.Sent' => ['attributes' => ['\\subscribed', '\\sent'], 'status' => ['messages' => 0, 'unseen' => 0]],
+			]);
+		$imap->expects($this->never())->method('status');
 
 		$result = $this->invokePrivate('mailboxGetInternal', [
 			$imap, [base64_encode('INBOX'), base64_encode('INBOX/Sent')], null,
@@ -112,6 +115,8 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertCount(2, $result['list']);
 		$this->assertSame([], $result['notFound']);
+		$this->assertSame(3, $result['list'][0]['totalEmails']);
+		$this->assertSame(1, $result['list'][0]['unreadEmails']);
 	}
 
 	public function testMailboxGetInternalReportsNotFound()
@@ -129,12 +134,15 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	{
 		$imap = $this->mockImap();
 		$imap->expects($this->once())->method('listMailboxes')
-			->with('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['attributes' => true, 'special_use' => true, 'children' => true])
+			->with('*', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, [
+				'attributes' => true, 'special_use' => true, 'children' => true,
+				'status' => \Horde_Imap_Client::STATUS_MESSAGES | \Horde_Imap_Client::STATUS_UNSEEN,
+			])
 			->willReturn([
-				'INBOX' => ['attributes' => ['\\subscribed']],
-				'INBOX.Sent' => ['attributes' => ['\\subscribed', '\\sent']],
+				'INBOX' => ['attributes' => ['\\subscribed'], 'status' => ['messages' => 0, 'unseen' => 0]],
+				'INBOX.Sent' => ['attributes' => ['\\subscribed', '\\sent'], 'status' => ['messages' => 0, 'unseen' => 0]],
 			]);
-		$imap->method('status')->willReturn(['messages' => 0, 'unseen' => 0]);
+		$imap->expects($this->never())->method('status');
 
 		$result = $this->invokePrivate('mailboxGetInternal', [$imap, null, null]);
 
@@ -227,6 +235,94 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('trash', JmapShim::roleFor($imap, 'Papierkorb', []));
 		$this->assertSame('sent', JmapShim::roleFor($imap, 'Gesendet', []));
 		$this->assertNull(JmapShim::roleFor($imap, 'SomeOtherFolder', []));
+	}
+
+	/**
+	 * Templates/Outbox have neither an IMAP SPECIAL-USE attribute nor a JMAP role at all (RFC 8621
+	 * doesn't define either) - classic mail_tree.inc.php's own $definedFolders identifies them
+	 * purely via the account's own acc_folder_template/acc_folder_outbox config, same mechanism
+	 * as trash/sent/drafts/junk's acc_folder_* fallback above.
+	 */
+	public function testRoleForTemplatesAndOutboxViaAccFolderConfig()
+	{
+		$imap = $this->getMockBuilder(Imap::class)
+			->disableOriginalConstructor()
+			->onlyMethods(['__get'])
+			->getMock();
+		$imap->method('__get')->willReturnCallback(static fn($name) => [
+			'acc_folder_template' => 'Vorlagen',
+			'acc_folder_outbox' => 'Postausgang',
+		][$name] ?? null);
+
+		$this->assertSame('templates', JmapShim::roleFor($imap, 'Vorlagen', []));
+		$this->assertSame('outbox', JmapShim::roleFor($imap, 'Postausgang', []));
+	}
+
+	/**
+	 * Horde's MBOX_ALL_SUBSCRIBED is a confusingly-named constant: per its own docblock it
+	 * returns "all mailboxes regardless of subscription status", not "only subscribed" - the
+	 * default (no isSubscribed filter) must keep using it unchanged, matching mailboxQuery()'s
+	 * long-standing behaviour before this filter existed.
+	 */
+	public function testListChildIdsDefaultsToAllRegardlessOfSubscription()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with('%', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, ['children' => true])
+			->willReturn([]);
+
+		$this->invokePrivate('listChildIds', [$imap, '']);
+	}
+
+	/**
+	 * filter.isSubscribed:true (RFC 8621 MailboxFilterCondition) must switch to Horde's
+	 * MBOX_SUBSCRIBED mode - matching classic mail_ui's own default browsing behaviour
+	 * (mail_tree.inc.php's getInitialIndexTree() call: $_subscribedOnly =
+	 * !showAllFoldersInFolderPane), which JmapShim ignored entirely before this fix, flooding the
+	 * tree with every unsubscribed/stale mailbox on the account.
+	 */
+	public function testListChildIdsSubscribedOnlyUsesSubscribedMode()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->expects($this->once())->method('listMailboxes')
+			->with('%', \Horde_Imap_Client::MBOX_SUBSCRIBED, ['children' => true])
+			->willReturn(['INBOX' => []]);
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
+
+		$this->assertSame([base64_encode('INBOX')], $ids);
+	}
+
+	/**
+	 * Same defensive fallback as Api\Mail\Imap::getMailboxes()'s own "cyrus workaround": some
+	 * accounts/servers never report ANY mailbox (not even INBOX) as subscribed at all - a real
+	 * account hit this exactly (isSubscribed:true returned zero mailboxes, including its own
+	 * INBOX, leaving the tree looking permanently empty with no way to recover). Rather than show
+	 * a folder level that's completely empty, fall back to the unfiltered listing.
+	 */
+	public function testListChildIdsFallsBackToAllWhenSubscribedModeReturnsNothing()
+	{
+		$imap = $this->mockImap(['personal' => [['delimiter' => '.']]]);
+		$imap->expects($this->exactly(2))->method('listMailboxes')
+			->willReturnCallback(function($pattern, $mode, $opts)
+			{
+				if ($mode === \Horde_Imap_Client::MBOX_SUBSCRIBED) return [];
+				$this->assertSame(\Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, $mode);
+				return ['INBOX' => []];
+			});
+
+		$ids = $this->invokePrivate('listChildIds', [$imap, '', true]);
+
+		$this->assertSame([base64_encode('INBOX')], $ids);
+	}
+
+	public function testMailboxQueryPassesIsSubscribedFilterThroughToListChildIds()
+	{
+		$result = JmapShim::mailboxQuery('0', ['filter' => ['parentId' => base64_encode('INBOX'), 'isSubscribed' => true]]);
+		// accountId '0' returns early (no connection) - this only confirms mailboxQuery() doesn't
+		// choke on the new filter key; the mode-switch itself is covered by the listChildIds()
+		// tests above
+		$this->assertSame([], $result['ids']);
 	}
 
 	public function testMailboxQueryNameGivenStaysPureEncodingNoImapCall()

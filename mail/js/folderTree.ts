@@ -36,6 +36,14 @@ export interface BuildFolderLevelOptions
 {
 	/** drop mailboxes with isSubscribed:false from this level */
 	subscribedOnly? : boolean;
+	/**
+	 * classic mail_tree.inc.php only ever special-cases folder icons/names (Trash, Sent,
+	 * Templates, ...) at the account root or INBOX's own direct children - never at any deeper
+	 * level, even for a folder that happens to carry a matching name/role. Defaults to false
+	 * (safe default for callers that don't pass it, eg. tests) - MailApp.mail_buildFolderLevelData()
+	 * always computes and passes this explicitly.
+	 */
+	isTopLevel? : boolean;
 }
 
 /**
@@ -60,17 +68,31 @@ export interface FolderTreeNode
 	im0 : string;
 	im1 : string;
 	im2 : string;
+	/** only ever set true - see buildNode()'s INBOX auto-open comment; omitted (not false)
+	 *  otherwise, so it never fights Et2Tree.ts's own openStatePreference-driven state */
+	open? : true;
 }
 
-// role -> classic mail_tree.inc.php $definedFolders special-folder icon name ("MailFolder"+key) -
-// only the roles classic code already special-cased (Templates/Outbox/Ham have no JMAP role
-// equivalent; "archive" was never special-cased classically either, so it falls through to the
-// generic folder icon below rather than inventing new icon art)
+// role -> bootstrap-icon name, i.e. the RIGHT-hand (already-translated) side of Api\Image::find()'s
+// $global2bootstrap map (api/src/Image.php) - eg. 'dhtmlxtree/MailFolderTrash' => 'trash' there,
+// used here as just 'trash' directly, skipping the legacy "dhtmlxtree/" alias indirection that
+// classic mail_tree.inc.php still goes through for historical reasons. "templates"/"outbox" are
+// EGroupware-specific extensions (see roleFor()'s docblock, mail/src/JmapShim.php): neither has
+// an IMAP SPECIAL-USE attribute or a JMAP role at all - JmapShim resolves them server-side via the
+// account's own acc_folder_template/acc_folder_outbox config, and for a real JMAP server
+// (Stalwart, no equivalent mechanism) MailJmap.getMailboxChildren() (mail/js/jmap.ts) matches by
+// the account's own configured folder name (from the JMAP bootstrap payload) before this shape
+// even reaches buildNode() - so `mailbox.role` is already correctly set by the time it gets here
+// for both backends, no name-guessing needed in this shared code. "archive" was never
+// special-cased classically either, so it falls through to the generic folder icon below rather
+// than inventing new icon art.
 const ROLE_ICON_NAMES : Record<string, string> = {
-	trash: 'MailFolderTrash',
-	sent: 'MailFolderSent',
-	drafts: 'MailFolderDrafts',
-	junk: 'MailFolderJunk',
+	trash: 'trash',
+	sent: 'send',
+	drafts: 'pencil-square',
+	junk: 'exclamation-octagon',
+	templates: 'file-earmark-text',
+	outbox: 'upload',
 };
 
 /**
@@ -81,7 +103,7 @@ function icons(role : string | null, egw : { image(name : string, app? : string)
 {
 	if (role === 'inbox')
 	{
-		const home = egw.image('kfm_home', 'mail');
+		const home = egw.image('download', 'mail');
 		return {im0: home, im1: home, im2: home};
 	}
 	const roleIcon = role && ROLE_ICON_NAMES[role] ? egw.image(ROLE_ICON_NAMES[role], 'mail') : null;
@@ -90,13 +112,23 @@ function icons(role : string | null, egw : { image(name : string, app? : string)
 		return {im0: roleIcon, im1: roleIcon, im2: roleIcon};
 	}
 	return {
-		im0: egw.image('MailFolderClosed', 'mail'),
-		im1: egw.image('folderOpen', 'mail'),
-		im2: egw.image('MailFolderClosed', 'mail'),
+		im0: egw.image('folder2', 'mail'),
+		im1: egw.image('folder2-open', 'mail'),
+		im2: egw.image('folder2', 'mail'),
 	};
 }
 
-type Egw = { image(name : string, app? : string) : string };
+type Egw = { image(name : string, app? : string) : string, lang(key : string) : string };
+
+// role -> lang() key for special-folder label translation, matching classic mail_tree.inc.php's
+// own lang($key)/lang($folderName) calls (setOutStructure()) - a JMAP-native server may return an
+// already-localized/custom Mailbox.name (this project's own Stalwart test account happens to
+// store German names directly), but JmapShim (the local plain-IMAP shim) always reports the
+// server's own literal English IMAP name, which was never translated without this.
+const ROLE_LABEL_KEYS : Record<string, string> = {
+	inbox: 'INBOX', trash: 'Trash', sent: 'Sent', drafts: 'Drafts', junk: 'Junk',
+	templates: 'Templates', outbox: 'Outbox',
+};
 
 /**
  * Build one FolderTreeNode - shared by buildFolderLevel() (lazy, one level at a time) and
@@ -109,14 +141,24 @@ type Egw = { image(name : string, app? : string) : string };
  * @param path this node's own canonical "/"-joined path (already including its own name)
  * @param egw only .image(name, app) is used, kept minimal so callers/tests don't need a full
  *  egw instance (same pattern attachmentIndex.ts's renderAttachmentIndex() uses)
+ * @param isTopLevel classic mail_tree.inc.php only ever special-cases folder icons/names at the
+ *  account root or INBOX's own direct children - never at any deeper level (see
+ *  BuildFolderLevelOptions.isTopLevel's docblock). false ignores mailbox.role entirely, even if
+ *  the server reported one, matching classic's exact scope.
  */
-function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string, egw : Egw) : FolderTreeNode
+function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string, egw : Egw, isTopLevel : boolean) : FolderTreeNode
 {
+	const role = isTopLevel ? mailbox.role : null;
+	// classic mail_tree.inc.php always substituted the UI-language translation for a
+	// role-identifiable special folder, discarding whatever the account's own real IMAP/JMAP
+	// name was - not just a preference, a guarantee that eg. Trash reads the same across every
+	// account regardless of what that account's server happens to literally call it
+	const label = (role && ROLE_LABEL_KEYS[role]) ? egw.lang(ROLE_LABEL_KEYS[role]) : mailbox.name;
 	return {
 		id: profileID + '::' + path,
 		jmapId: mailbox.id,
-		text: mailbox.name,
-		tooltip: mailbox.name,
+		text: label,
+		tooltip: label,
 		checked: !!mailbox.isSubscribed,
 		child: mailbox.hasChildren !== false,
 		item: [],
@@ -124,7 +166,14 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 		// showed via a "(n)" label suffix + bold style - a badge is Et2Tree's more modern
 		// equivalent (_optionTemplate() already renders selectOption.badge as an sl-badge)
 		...(mailbox.unreadEmails ? {badge: mailbox.unreadEmails} : {}),
-		...icons(mailbox.role, egw),
+		// an open mail account's INBOX should always auto-expand alongside it if it has children
+		// (ralf's explicit ask) - regardless of whether "profileID::INBOX" happens to also be in
+		// the persisted expand-state set (Et2Tree.ts's openStatePreference), since every Dovecot/
+		// IMAP account has an INBOX and (per ralf) it always has children in practice. Only ever
+		// `true`, never `false` - omitting it otherwise means this can't fight a `true` a later
+		// openStatePreference restore pass sets for a NON-inbox node.
+		...(role === 'inbox' && mailbox.hasChildren !== false ? {open: true} : {}),
+		...icons(role, egw),
 	};
 }
 
@@ -159,7 +208,8 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 {
 	return (mailboxes || [])
 		.filter((mailbox) => !options.subscribedOnly || mailbox.isSubscribed)
-		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + mailbox.name : mailbox.name, egw));
+		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + mailbox.name : mailbox.name, egw,
+			!!options.isTopLevel));
 }
 
 /**
@@ -186,11 +236,15 @@ export function buildFolderTree(mailboxes : JmapMailboxNode[], profileID : strin
 		byParent.get(key).push(mailbox);
 	});
 
+	// same "top level" scope as buildFolderLevel()'s isTopLevel option (see its docblock) -
+	// computed per-node here since this builds the whole nested tree in one pass
+	const isTopLevel = (parentPath : string) => parentPath === '' || parentPath === 'INBOX';
+
 	const build = (parentId : string | null, parentPath : string) : FolderTreeNode[] =>
 		(byParent.get(parentId) || []).map((mailbox) =>
 		{
 			const path = parentPath ? parentPath + '/' + mailbox.name : mailbox.name;
-			const node = buildNode(mailbox, profileID, path, egw);
+			const node = buildNode(mailbox, profileID, path, egw, isTopLevel(parentPath));
 			node.item = build(mailbox.id, path);
 			node.child = node.item.length > 0;
 			return node;

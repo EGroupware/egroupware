@@ -78,12 +78,19 @@ class ProfileHandler
 				// acc_folder_trash/acc_folder_junk
 				$bootstrap['trashFolder'] = $imapServer->acc_folder_trash ?: 'Trash';
 				$bootstrap['junkFolder'] = $imapServer->acc_folder_junk ?: null;
+				// Templates/Outbox have neither an IMAP SPECIAL-USE attribute nor a JMAP role at
+				// all (RFC 8621 defines neither) - unlike trash/junk above, there's no
+				// role-based fallback whatsoever for a real JMAP server (Stalwart), so the
+				// client (folderTree.ts's buildNode()) needs the account's own configured name
+				// to identify these two by name instead
+				$bootstrap['templatesFolder'] = $imapServer->acc_folder_template ?: 'Templates';
+				$bootstrap['outboxFolder'] = $imapServer->acc_folder_outbox ?: 'Outbox';
 			}
 			$response->data($bootstrap);
 		}
 		catch (\Exception $e)
 		{
-			unset($e);
+			_egw_log_exception($e);
 			$response->data(null);
 		}
 	}

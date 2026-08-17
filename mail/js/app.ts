@@ -23,7 +23,7 @@ import type {Et2DatagridUpdateType} from "../../api/js/etemplate/Et2Nextmatch/Et
 import {Et2DatagridUpdateTypes} from "../../api/js/etemplate/Et2Nextmatch/Et2Datagrid.types";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 import {MailCompose} from "./compose";
-import {JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
+import {isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {buildErrorNode, buildFolderLevel, buildFolderTree, FolderTreeNode} from "./folderTree";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
@@ -5729,11 +5729,18 @@ export class MailApp extends EgwApp
 	 */
 	private mail_buildFolderLevelData(profileID : string, parentPath : string, parentId : string | null) : Promise<FolderTreeNode[] | null>
 	{
-		return this.jmap.getMailboxChildren(profileID, parentId).then((mailboxes) =>
+		// classic mail_tree.inc.php only ever special-cases folder icons/names (Trash, Sent,
+		// Templates, ...) at this same "top level" scope (Api\Mail::getFolderArrays()'s
+		// $_onlyTopLevel mode) - never at any deeper level, even for a folder that happens to
+		// carry a matching name/role. Which path counts as "top" depends on the mail server: some
+		// put special folders as siblings of INBOX (parentPath === ''), others nest them under it
+		// (parentPath === 'INBOX') - both are covered.
+		const isTopLevel = parentPath === '' || parentPath === 'INBOX';
+		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel).then((mailboxes) =>
 		{
 			if (mailboxes === null) return null;
-			const subscribedOnly = !egw.preference('showAllFoldersInFolderPane', 'mail');
-			return buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly}, egw);
+			const subscribedOnly = !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			return buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly, isTopLevel}, egw);
 		});
 	}
 

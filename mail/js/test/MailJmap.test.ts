@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {describeJmapError, describeSetError, MailJmap} from "../jmap";
+import {describeJmapError, describeSetError, isPreferenceOn, MailJmap} from "../jmap";
 import type {MailApp} from "../app";
 
 const egw = {
@@ -80,6 +80,245 @@ function primeToken(jmap : MailJmap, profileID : string, client : any) : void
 	};
 	(jmap as any).clients[profileID] = client;
 }
+
+/**
+ * jmap-jam's requestMany(callback) only assigns a resolvable callId - and only actually sends
+ * as a method call at all - to an invocation that is a property of the object the callback
+ * returns. getMailboxChildren() built a Mailbox/query invocation ("ids"), used it via
+ * ids.$ref('/ids') inside the Mailbox/get call, but only `return {mailboxes}`, silently dropping
+ * the Mailbox/query call from the outgoing batch entirely. The result: the server saw a
+ * Mailbox/get with an unresolvable "#ids" result-reference - a real JMAP server (Stalwart)
+ * rejected it with "missing field `resultOf`"; JmapShim.php (the local plain-IMAP shim) rejected
+ * it with the less specific "Failed to resolve result reference for 'ids'" - both symptoms of
+ * this one client-side bug, not a server-side issue.
+ */
+describe("MailJmap.getMailboxChildren() - jmap-jam requestMany() invocation shape", () =>
+{
+	function createMailboxProxyStub()
+	{
+		const invocation = () => ({$ref: (_path : string) => ({})});
+		return {Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}};
+	}
+
+	function createCapturingClient(capture : { returned? : any })
+	{
+		return {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				capture.returned = buildFn(createMailboxProxyStub());
+				return [{mailboxes: {list: []}}];
+			}
+		};
+	}
+
+	it("returns both the Mailbox/query and Mailbox/get invocations from the requestMany() callback", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { returned? : any } = {};
+		primeToken(jmap, "1", createCapturingClient(capture));
+
+		await jmap.getMailboxChildren("1", null, true);
+
+		assert.property(capture.returned, "ids",
+			"the Mailbox/query invocation must be a key of the returned object, or jmap-jam never " +
+			"sends it as part of the batch and the '#ids' result-reference in Mailbox/get breaks");
+		assert.property(capture.returned, "mailboxes");
+	});
+});
+
+/**
+ * Fixed top-level display order (ralf's explicit spec, confirmed independent of the folder's
+ * actual name/translation): INBOX, Drafts, Templates, Sent, Trash, Junk, Outbox in that exact
+ * sequence, then every other folder alphabetically, then the shared/other-users namespace root
+ * ("user" on Dovecot/JmapShim's local shim, "shared" on a real JMAP server like Stalwart) always
+ * last. Only applies at the top level (isTopLevel) - classic mail_tree.inc.php never reorders
+ * anything at a deeper level either.
+ */
+describe("MailJmap.getMailboxChildren() - top-level sort order", () =>
+{
+	function createListClient(list : any[])
+	{
+		return {requestMany: async() => [{mailboxes: {list}}]};
+	}
+
+	it("orders special-role folders first in the exact fixed sequence, then alphabetical, then the namespace root last", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createListClient([
+			{id: "1", name: "user"},
+			{id: "2", name: "Zebra"},
+			{id: "3", name: "Junk", role: "junk"},
+			{id: "4", name: "Posteingang", role: "inbox"},
+			{id: "5", name: "Archives"},
+			{id: "6", name: "Papierkorb", role: "trash"},
+			{id: "7", name: "Vorlagen", role: "templates"},
+			{id: "8", name: "Gesendet", role: "sent"},
+			{id: "9", name: "Entwürfe", role: "drafts"},
+			{id: "10", name: "Postausgang", role: "outbox"},
+		]));
+
+		const result : any = await jmap.getMailboxChildren("1", null, true);
+
+		assert.deepEqual(result.map((m : any) => m.id),
+			["4", "9", "7", "8", "6", "3", "10", "5", "2", "1"]);
+	});
+
+	it("does not reorder a non-top-level fetch", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createListClient([{id: "a", name: "shared"}, {id: "b", name: "alice"}]));
+
+		const result = await jmap.getMailboxChildren("1", "someParentId", false);
+
+		assert.deepEqual(result.map((m : any) => m.name), ["shared", "alice"]);
+	});
+});
+
+/**
+ * RFC 8621's Mailbox object has no hasChildren property at all - unlike JmapShim's local IMAP
+ * LIST attributes, a real JMAP server (Stalwart) never tells the client whether a mailbox has
+ * children, so every node looked "expandable" until clicked once and found empty. Resolved via
+ * one extra batched Mailbox/query{parentId, limit:1} per still-unknown node, in a single
+ * additional round-trip (JMAP's own method-call batching) - deliberately skipped for
+ * JmapShim/local-shim accounts, whose "list children" mode does a real per-call IMAP LIST and
+ * would reintroduce the N+1 problem JmapShim::mailboxGetInternal()'s own batching fix just
+ * solved (mail/src/JmapShim.php).
+ */
+describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accounts", () =>
+{
+	function createSequencedClient(responses : any[])
+	{
+		let call = 0;
+		return {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [responses[call++]];
+			}
+		};
+	}
+
+	it("resolves hasChildren via one extra batched query for a real (non-local) JMAP account", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createSequencedClient([
+			{mailboxes: {list: [{id: "a", name: "Leaf"}, {id: "b", name: "Parent"}]}},
+			{c0: {ids: []}, c1: {ids: ["grandchild"]}},
+		]));
+
+		const result : any = await jmap.getMailboxChildren("1", null, true);
+
+		assert.isFalse(result.find((m : any) => m.id === "a").hasChildren);
+		assert.isTrue(result.find((m : any) => m.id === "b").hasChildren);
+	});
+
+	it("does not issue the extra query for a local-shim account", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let calls = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				calls++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [{mailboxes: {list: [{id: "a", name: "Leaf"}]}}];
+			}
+		};
+		(jmap as any).tokens["1"] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal: true, customLabels: {},
+		};
+		(jmap as any).clients["1"] = client;
+
+		const result : any = await jmap.getMailboxChildren("1", null, true);
+
+		assert.equal(calls, 1, "must not issue a second batch for a local-shim account");
+		assert.isUndefined(result[0].hasChildren);
+	});
+
+	it("leaves an already-known hasChildren value alone (no extra query needed)", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let calls = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				calls++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [{mailboxes: {list: [{id: "a", name: "Leaf", hasChildren: false}]}}];
+			}
+		};
+		primeToken(jmap, "1", client);
+
+		const result : any = await jmap.getMailboxChildren("1", null, true);
+
+		assert.equal(calls, 1, "already-known hasChildren must not trigger the extra batch");
+		assert.isFalse(result[0].hasChildren);
+	});
+});
+
+/**
+ * Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - JmapShim already
+ * resolves them server-side via acc_folder_template/acc_folder_outbox for the local shim, but a
+ * real JMAP server (Stalwart) has no equivalent mechanism. getMailboxChildren() matches by the
+ * account's own configured folder name instead (from the JMAP bootstrap payload, see
+ * ProfileHandler::jmapBootstrap()), case-insensitively, so folderTree.ts's buildNode() sees an
+ * already-correct mailbox.role regardless of backend.
+ */
+describe("MailJmap.getMailboxChildren() - templates/outbox role resolution by account-configured name", () =>
+{
+	function createListClient(list : any[])
+	{
+		return {requestMany: async() => [{mailboxes: {list}}]};
+	}
+
+	it("assigns role='templates'/'outbox' by matching the account's configured folder name", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		(jmap as any).tokens["1"] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal: false, customLabels: {},
+			templatesFolder: "Vorlagen", outboxFolder: "Postausgang",
+		};
+		(jmap as any).clients["1"] = createListClient([
+			{id: "a", name: "Vorlagen"}, {id: "b", name: "Postausgang"}, {id: "c", name: "INBOX", role: "inbox"},
+		]);
+
+		const result : any = await jmap.getMailboxChildren("1", "someParentId", true);
+
+		assert.equal(result.find((m : any) => m.id === "a").role, "templates");
+		assert.equal(result.find((m : any) => m.id === "b").role, "outbox");
+		assert.equal(result.find((m : any) => m.id === "c").role, "inbox", "an already-set role must not be overwritten");
+	});
+
+	it("does not assign a role when the account has no configured templates/outbox folder", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createListClient([{id: "a", name: "Vorlagen"}]));
+
+		const result : any = await jmap.getMailboxChildren("1", "someParentId", true);
+
+		assert.isUndefined(result[0].role);
+	});
+
+	it("does not match at all when isTopLevel is false", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		(jmap as any).tokens["1"] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal: false, customLabels: {},
+			templatesFolder: "Vorlagen", outboxFolder: "Postausgang",
+		};
+		(jmap as any).clients["1"] = createListClient([{id: "a", name: "Vorlagen"}]);
+
+		const result : any = await jmap.getMailboxChildren("1", "someDeepParentId", false);
+
+		assert.isUndefined(result[0].role);
+	});
+});
 
 describe("MailJmap.fetchRows() held-back push refresh - preview snippet", () =>
 {
@@ -198,6 +437,34 @@ describe("MailJmap.email2row() - suspect address field detection", () =>
 			{filter2: ""}, "widget", [], 0);
 
 		assert.deepEqual(result.data["1::1::mbox1::email1"].suspectAddressFields, []);
+	});
+});
+
+/**
+ * A checkbox-style egw preference's stored value is the server's raw string, often literally "0"
+ * for "off" - a non-empty JS string is otherwise always truthy, so a plain `!egw.preference(...)`
+ * silently treats a "0"-stored (off) preference as on. Bit both MailJmap.getMailboxChildren()'s
+ * isSubscribed filter and MailApp.mail_buildFolderLevelData()'s display filter, which both used
+ * the preference value directly - confirmed live against a real "showAllFoldersInFolderPane"
+ * preference stored as "0".
+ */
+describe("isPreferenceOn() - PHP-style boolean preference string", () =>
+{
+	it("is false for a '0'-stored (off) preference, unlike plain JS truthiness", () =>
+	{
+		assert.isFalse(isPreferenceOn("0"));
+	});
+
+	it("is true for a '1'-stored (on) preference", () =>
+	{
+		assert.isTrue(isPreferenceOn("1"));
+	});
+
+	it("is false for an empty/missing preference", () =>
+	{
+		assert.isFalse(isPreferenceOn(""));
+		assert.isFalse(isPreferenceOn(undefined));
+		assert.isFalse(isPreferenceOn(null));
 	});
 });
 

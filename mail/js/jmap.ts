@@ -33,6 +33,11 @@ interface JmapToken
 	customLabels : Record<string, {name : string, color : string, icon? : string}>;
 	trashFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Trash" - see deleteMessages()
 	junkFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Junk" - null if not configured
+	// Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - the account's own
+	// configured (or default) name is the only way folderTree.ts's buildNode() can identify them
+	// for a real JMAP server; see ProfileHandler::jmapBootstrap()'s docblock
+	templatesFolder? : string;
+	outboxFolder? : string;
 }
 
 export interface JmapMessageReference
@@ -119,6 +124,19 @@ export function describeSetError(setErrors : Record<string, any> | undefined) : 
 }
 
 /**
+ * egw.preference() for a checkbox-style preference returns the server's raw stored value, often
+ * the literal string "0" for "off" - PHP's own !$value treats that as falsy, but a non-empty JS
+ * string is ALWAYS truthy (only "", 0, null, undefined, NaN, false are falsy), so plain `!value`
+ * silently inverts to the wrong answer for a "0"-stored preference. Bit us both in
+ * MailJmap.getMailboxChildren()'s isSubscribed filter and MailApp.mail_buildFolderLevelData()'s
+ * client-side display filter - both used `!egw.preference(...)` directly.
+ */
+export function isPreferenceOn(value : any) : boolean
+{
+	return !!value && value !== '0';
+}
+
+/**
  * Direct JMAP access, using Stalwart or the local plain-IMAP JMAP shim selected by the bootstrap.
  */
 export class MailJmap
@@ -150,6 +168,14 @@ export class MailJmap
 	// JmapShim::MDN_HEADER_PROPERTY (mail/src/JmapShim.php), which echoes this same key back for
 	// local-shim accounts; a real JMAP server (Stalwart) does so natively per spec
 	private static readonly MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
+	// Fixed top-level display order (ralf's explicit spec, confirmed independent of the folder's
+	// actual name/translation): INBOX, then these special-role folders in this exact sequence,
+	// then every other folder alphabetically (see sortTopLevel()), then the shared/other-users
+	// namespace root last. Only applies at the top level (see getMailboxChildren()'s own
+	// docblock) - classic mail_tree.inc.php never reorders anything at a deeper level either.
+	private static readonly TOP_LEVEL_SORT_ORDER : Record<string, number> = {
+		inbox: 0, drafts: 1, templates: 2, sent: 3, trash: 4, junk: 5, outbox: 6,
+	};
 
 	get egw() : IegwAppLocal
 	{
@@ -244,9 +270,14 @@ export class MailJmap
 	 *
 	 * @param profileID
 	 * @param parentId JMAP Mailbox id of the parent, or null for the top level
+	 * @param isTopLevel true for the account root (parentId===null) or INBOX's own direct
+	 *  children - classic mail_tree.inc.php only ever special-cases folder names/roles at this
+	 *  same "top level" scope (Api\Mail::getFolderArrays()'s $_onlyTopLevel mode); any deeper
+	 *  level always uses plain generic icons and the raw name, even for a folder that happens to
+	 *  carry a matching name/role - see the templates/outbox name-matching below
 	 * @return null if this account has no usable JMAP access-token (server unreachable, MFA, ...)
 	 */
-	async getMailboxChildren(profileID : string, parentId : string | null) : Promise<any[] | null>
+	async getMailboxChildren(profileID : string, parentId : string | null, isTopLevel : boolean) : Promise<any[] | null>
 	{
 		try
 		{
@@ -256,20 +287,62 @@ export class MailJmap
 				return null;
 			}
 			const client = this.clients[profileID];
+			// matches classic mail_ui's own default (mail_tree.inc.php's getInitialIndexTree()
+			// call: $_subscribedOnly = !showAllFoldersInFolderPane) - without this, JmapShim's
+			// underlying IMAP LIST mode returns literally every mailbox regardless of
+			// subscription, flooding the tree with stale/unsubscribed folders classic never
+			// showed by default; a real JMAP server filters the same way via RFC 8621's standard
+			// isSubscribed MailboxFilterCondition
+			const filter : Record<string, any> = {parentId};
+			if (!isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
+			{
+				filter.isSubscribed = true;
+			}
 
 			const [{mailboxes}] = await client.requestMany((t) =>
 			{
 				const ids = t.Mailbox.query({
 					accountId: token.accountId,
-					filter: {parentId},
+					filter,
 				});
 				const mailboxes = t.Mailbox.get({
 					accountId: token.accountId,
 					ids: ids.$ref('/ids'),
 				});
-				return {mailboxes};
+				// both invocations must be in the returned object - jmap-jam only assigns a
+				// resolvable callId (and therefore only actually sends) an invocation that's a key
+				// of this return value, so omitting "ids" here left the query out of the batch
+				// entirely and broke the result-reference ("missing field `resultOf`" from a real
+				// JMAP server, "Failed to resolve result reference" from JmapShim's local one)
+				return {ids, mailboxes};
 			});
-			return mailboxes.list || [];
+			const list = mailboxes.list || [];
+			// Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - JmapShim
+			// already resolves them server-side via acc_folder_template/acc_folder_outbox for the
+			// local shim, but a real JMAP server (Stalwart) has no equivalent mechanism, so match
+			// by the account's own configured (or default) folder name here instead, before this
+			// shape reaches folderTree.ts's buildNode() - case-insensitive, matching classic
+			// roleFor()'s own strcasecmp() convention. Only at the top level (see this method's
+			// own docblock) - classic never applies this at any deeper level either.
+			if (isTopLevel)
+			{
+				list.forEach((m : any) =>
+				{
+					if (m.role) return;
+					const name = (m.name || '').toLowerCase();
+					if (token.templatesFolder && name === token.templatesFolder.toLowerCase()) m.role = 'templates';
+					else if (token.outboxFolder && name === token.outboxFolder.toLowerCase()) m.role = 'outbox';
+				});
+			}
+			if (isTopLevel)
+			{
+				this.sortTopLevel(list);
+			}
+			if (!token.isLocal)
+			{
+				await this.resolveHasChildren(client, token.accountId, list);
+			}
+			return list;
 		}
 		catch (e)
 		{
@@ -282,6 +355,63 @@ export class MailJmap
 			}
 			console.error('MailJmap.getMailboxChildren(): failed, falling back to the classic ajax_foldertree fetch', e);
 			return null;
+		}
+	}
+
+	/**
+	 * Sort a top-level mailbox list (see getMailboxChildren()'s own isTopLevel docblock) into
+	 * TOP_LEVEL_SORT_ORDER's fixed sequence: INBOX/Drafts/Templates/Sent/Trash/Junk/Outbox in
+	 * that exact order, then every other folder alphabetically by name, then the shared/
+	 * other-users namespace root ("user" on Dovecot/JmapShim's local shim, "shared" on a real
+	 * JMAP server like Stalwart) always last - ralf's explicit spec, confirmed independent of the
+	 * folder's actual name/translation. Mutates `list` in place.
+	 */
+	private sortTopLevel(list : any[]) : void
+	{
+		const priority = (m : any) : number =>
+		{
+			if (m.role && m.role in MailJmap.TOP_LEVEL_SORT_ORDER) return MailJmap.TOP_LEVEL_SORT_ORDER[m.role];
+			if (['user', 'shared'].includes((m.name || '').toLowerCase())) return 8;
+			return 7;
+		};
+		list.sort((a : any, b : any) =>
+		{
+			const pa = priority(a), pb = priority(b);
+			return pa !== pb ? pa - pb : (pa === 7 ? (a.name || '').localeCompare(b.name || '') : 0);
+		});
+	}
+
+	/**
+	 * Resolve "does this mailbox have children" for a level's worth of real-JMAP (RFC 8621)
+	 * mailboxes - unlike JmapShim's local IMAP LIST attributes (\HasChildren/\HasNoChildren),
+	 * standard JMAP's Mailbox object has NO hasChildren property at all, so every node would
+	 * otherwise stay "assume expandable" until the user clicks it once and finds nothing (still
+	 * correct, just a worse first impression). Batches one Mailbox/query{parentId, limit:1} per
+	 * still-unknown node into a SINGLE extra HTTP round-trip via JMAP's own method-call batching
+	 * (RFC 8620's core reason to exist) - not one round-trip per node. Deliberately NOT called
+	 * for JmapShim/local-shim accounts (see getMailboxChildren()'s `!token.isLocal` guard): the
+	 * shim's Mailbox/query "list children" mode does a real IMAP LIST per call, so doing this for
+	 * every node in a level would reintroduce the exact N+1 IMAP round-trip problem
+	 * JmapShim::mailboxGetInternal()'s own batching fix (mail/src/JmapShim.php) just solved.
+	 * Best-effort: leaves hasChildren untouched (mutates in place) on any failure, since this is
+	 * a cosmetic improvement over the already-correct self-correcting default, not worth failing
+	 * the whole level fetch over.
+	 */
+	private async resolveHasChildren(client : JamClient, accountId : string, list : any[]) : Promise<void>
+	{
+		const unknown = list.filter((m) => m.hasChildren === undefined || m.hasChildren === null);
+		if (!unknown.length) return;
+
+		try
+		{
+			const [checks] = await client.requestMany((t) => Object.fromEntries(
+				unknown.map((m, i) => [`c${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id}, limit: 1})])
+			));
+			unknown.forEach((m, i) => m.hasChildren = ((checks as any)[`c${i}`]?.ids?.length ?? 0) > 0);
+		}
+		catch (e)
+		{
+			console.error('MailJmap.resolveHasChildren(): failed, leaving hasChildren unresolved', e);
 		}
 	}
 
@@ -1221,6 +1351,8 @@ export class MailJmap
 						customLabels: data.customLabels || {},
 						trashFolder: data.trashFolder,
 						junkFolder: data.junkFolder,
+						templatesFolder: data.templatesFolder,
+						outboxFolder: data.outboxFolder,
 					};
 					if (Object.keys(token.customLabels).length)
 					{
