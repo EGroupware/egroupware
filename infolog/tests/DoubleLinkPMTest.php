@@ -52,28 +52,9 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 		$this->bo->tracking->method('track')->willReturn(0);
 
 		// Make sure projects are not there first
-		$pm_numbers = array(
-			'TEST 1',
-			'TEST 2',
-			'TEST 3'
-		);
-		foreach($pm_numbers as $number)
+		foreach(array('TEST 1', 'TEST 2', 'TEST 3') as $number)
 		{
-			$project = $this->pm_bo->read(array('pm_number' => $number));
-			if($project && $project['pm_id'])
-			{
-				// Delete by id only: passing the full row lets Storage\Base::delete() build a
-				// WHERE clause matching every column (incl. timezone-converted timestamps), which
-				// can silently match zero rows and leave this fixture number permanently taken for
-				// the rest of the suite.
-				// Also force history off: with it on, delete() only soft-deletes (pm_status=
-				// 'deleted') on the first call and keeps pm_number - a real purge needs a second
-				// delete() once already-deleted.
-				// $delete_sources=true so a leftover project's linked entries get cascade-cleaned
-				// too, instead of orphaned.
-				$this->pm_bo->history = '';
-				$this->pm_bo->delete($project['pm_id'], true);
-			}
+			$this->purgeStaleProjectFixture($this->pm_bo, $number);
 		}
 
 		$this->makeProject("1");
@@ -395,7 +376,58 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 			// Force links to run notification now, or elements might stay
 			// usually waits until Egw::on_shutdown();
 			Link::run_notifies();
+
+			foreach($this->pm_id as $pm_id)
+			{
+				$this->forcePurgeProjectIfStillThere($pm_id);
+			}
 		}
 	}
 
+	/**
+	 * Force-purge a stray projectmanager project by id, bypassing ACL, IF it's still there
+	 * after a normal projectmanager_bo delete attempt.
+	 *
+	 * Same helper as \EGroupware\Api\AppTest::forcePurgeProjectIfStillThere() - duplicated here
+	 * because this class extends EtemplateTest, not AppTest. See that method's docblock for why
+	 * this is needed.
+	 *
+	 * @param int|string|null $pm_id
+	 */
+	protected function forcePurgeProjectIfStillThere($pm_id)
+	{
+		if (!$pm_id)
+		{
+			return;
+		}
+		$so = new \projectmanager_so();
+		if ($so->read($pm_id))
+		{
+			$so->delete($pm_id);
+		}
+	}
+
+	/**
+	 * Make sure no stray projectmanager project with the given pm_number is left over from an
+	 * earlier, interrupted test run, before a fresh fixture gets created under the same number.
+	 *
+	 * Same helper as \EGroupware\Api\AppTest::purgeStaleProjectFixture() - duplicated here
+	 * because this class extends EtemplateTest, not AppTest. See that method's docblock for why
+	 * this is needed.
+	 *
+	 * @param \projectmanager_bo $bo used for the normal (cascade-aware) delete attempt
+	 * @param string $pm_number
+	 */
+	protected function purgeStaleProjectFixture(\projectmanager_bo $bo, $pm_number)
+	{
+		$so = new \projectmanager_so();
+		$project = $so->read(array('pm_number' => $pm_number));
+		if (!$project || !$project['pm_id'])
+		{
+			return;
+		}
+		$bo->history = '';
+		$bo->delete($project['pm_id'], true);
+		$this->forcePurgeProjectIfStillThere($project['pm_id']);
+	}
 }

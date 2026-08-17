@@ -33,6 +33,65 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 	// Project used to test
 	protected $pm_id = null;
 
+	/**
+	 * Force-purge a stray projectmanager project by id, bypassing ACL, IF it's still there
+	 * after a normal projectmanager_bo delete attempt.
+	 *
+	 * projectmanager_bo::delete() calls projectmanager_bo::read() first, which enforces an ACL
+	 * check against the CURRENT session user. Observed (but not yet root-caused) in the full
+	 * PHPUnit suite: that check can return false for a project this same test just created a
+	 * moment earlier, apparently after enough other tests have run before it in the same
+	 * process. When that happens, delete() silently no-ops (returns 0, no exception) and the
+	 * row survives, later colliding with the next test's fixture INSERT under the same
+	 * pm_number. This is test-fixture cleanup, where "get rid of it no matter what" is the
+	 * correct semantics - projectmanager_so's delete() is a plain, ACL-free row delete, used
+	 * here ONLY as a last-resort safety net *after* the normal, cascade-aware bo-level delete
+	 * has already had its chance to clean up members/elements/links properly.
+	 *
+	 * @param int|string|null $pm_id
+	 */
+	protected function forcePurgeProjectIfStillThere($pm_id)
+	{
+		if (!$pm_id)
+		{
+			return;
+		}
+		$so = new \projectmanager_so();
+		if ($so->read($pm_id))
+		{
+			$so->delete($pm_id);
+		}
+	}
+
+	/**
+	 * Make sure no stray projectmanager project with the given pm_number is left over from an
+	 * earlier, interrupted test run, before a fresh fixture gets created under the same number.
+	 *
+	 * Looks the project up via projectmanager_so, NOT projectmanager_bo: a stray row can be
+	 * ACL-invisible to the ACL-gated bo::read() used for the lookup in the original version of
+	 * this pre-cleanup, for the same not-yet-root-caused reason documented on
+	 * forcePurgeProjectIfStillThere() - which would otherwise skip cleanup entirely rather than
+	 * just no-op the delete. If found, attempts the normal cascade-aware bo-level delete first
+	 * (proper member/element/link cleanup when the ACL check happens to succeed), then falls
+	 * back to a forced purge if the row is still there afterwards.
+	 *
+	 * @param \projectmanager_bo $bo used for the normal (cascade-aware) delete attempt;
+	 *   its history property is forced to '' so a single delete() call always purges rather
+	 *   than soft-deleting
+	 * @param string $pm_number
+	 */
+	protected function purgeStaleProjectFixture(\projectmanager_bo $bo, $pm_number)
+	{
+		$so = new \projectmanager_so();
+		$project = $so->read(array('pm_number' => $pm_number));
+		if (!$project || !$project['pm_id'])
+		{
+			return;
+		}
+		$bo->history = '';
+		$bo->delete($project['pm_id'], true);
+		$this->forcePurgeProjectIfStillThere($project['pm_id']);
+	}
 
 	protected function setUp() : void
 	{
@@ -46,27 +105,9 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$this->mockTracking($this->bo, 'infolog_tracking');
 
 		// Make sure projects are not there first
-		$pm_numbers = array(
-			'TEST',
-			'SUB-TEST'
-		);
-		foreach($pm_numbers as $number)
+		foreach(array('TEST', 'SUB-TEST') as $number)
 		{
-			$project = $this->pm_bo->read(Array('pm_number' => $number));
-			if($project && $project['pm_id'])
-			{
-				// Delete by id only: passing the full row lets Storage\Base::delete() build a
-				// WHERE clause matching every column (incl. timezone-converted timestamps), which
-				// can silently match zero rows and leave this fixture number permanently taken for
-				// the rest of the suite.
-				// Also force history off: with it on, delete() only soft-deletes (pm_status=
-				// 'deleted') on the first call and keeps pm_number - a real purge needs a second
-				// delete() once already-deleted, same as deleteProject() below does.
-				// $delete_sources=true so a leftover project's linked entries get cascade-cleaned
-				// too, instead of orphaned.
-				$this->pm_bo->history = '';
-				$this->pm_bo->delete($project['pm_id'], true);
-			}
+			$this->purgeStaleProjectFixture($this->pm_bo, $number);
 		}
 
 
@@ -798,6 +839,8 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 			// Force links to run notification now, or elements might stay
 			// usually waits until Egw::on_shutdown();
 			Api\Link::run_notifies();
+
+			$this->forcePurgeProjectIfStillThere($this->pm_id);
 		}
 	}
 
