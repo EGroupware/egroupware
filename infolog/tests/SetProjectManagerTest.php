@@ -73,19 +73,33 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 	protected function tearDown() : void
 	{
-		// Remove infolog under test
-		if($this->info_id)
+		// Nested try/finally: if deleting the infolog entry throws, the project must still
+		// get a cleanup attempt, and the bo's must still get unset either way - otherwise a
+		// stuck 'TEST'-numbered project or global bo silently breaks unrelated tests running
+		// later in the same PHPUnit process.
+		try
 		{
-			$this->bo->delete($this->info_id, False, False, True);
-			// One more time for history
-			$this->bo->delete($this->info_id, False, False, True);
+			// Remove infolog under test
+			if($this->info_id)
+			{
+				$this->bo->delete($this->info_id, False, False, True);
+				// One more time for history
+				$this->bo->delete($this->info_id, False, False, True);
+			}
 		}
-
-		// Remove the test project
-		$this->deleteProject();
-
-		$this->bo = null;
-		$this->pm_bo = null;
+		finally
+		{
+			try
+			{
+				// Remove the test project
+				$this->deleteProject();
+			}
+			finally
+			{
+				$this->bo = null;
+				$this->pm_bo = null;
+			}
+		}
 	}
 
 	/**
@@ -773,11 +787,16 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 
 		// Force to ignore setting
 		$this->pm_bo->history = '';
-		$this->pm_bo->delete($this->pm_id, true);
-
-		// Force links to run notification now, or elements might stay
-		// usually waits until Egw::on_shutdown();
-		Api\Link::run_notifies();
+		try
+		{
+			$this->pm_bo->delete($this->pm_id, true);
+		}
+		finally
+		{
+			// Force links to run notification now, or elements might stay
+			// usually waits until Egw::on_shutdown();
+			Api\Link::run_notifies();
+		}
 	}
 
 }
