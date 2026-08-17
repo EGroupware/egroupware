@@ -46,7 +46,10 @@ class infolog_datasource extends datasource
 		$this->valid = PM_COMPLETION|PM_PLANNED_START|PM_PLANNED_END|PM_REAL_END|PM_PLANNED_TIME|PM_REPLANNED_TIME|PM_USED_TIME|PM_RESOURCES|PM_CAT_ID;
 
 		// we use $GLOBALS['infolog_bo'] as an already running instance might be availible there
-		if (!is_object($GLOBALS['infolog_bo']))
+		// but its ACL grants are cached at construction time, so a stale instance left behind
+		// by a since-restored user-switch (eg. LoggedInTest::asAdmin()) must not be reused,
+		// or check_acl() silently denies read-access to entries owned by the current user
+		if (!is_object($GLOBALS['infolog_bo']) || $GLOBALS['infolog_bo']->user != (int)$GLOBALS['egw_info']['user']['account_id'])
 		{
 			$GLOBALS['infolog_bo'] = new infolog_bo();
 		}
@@ -238,7 +241,10 @@ class infolog_datasource extends datasource
 	 */
 	function delete($id)
 	{
-		if (!is_object($GLOBALS['infolog_bo']))
+		// its ACL grants are cached at construction time, so a stale instance left behind
+		// by a since-restored user-switch (eg. LoggedInTest::asAdmin()) must not be reused,
+		// or check_acl() silently denies read-access to entries owned by the current user
+		if (!is_object($GLOBALS['infolog_bo']) || $GLOBALS['infolog_bo']->user != (int)$GLOBALS['egw_info']['user']['account_id'])
 		{
 			include_once(EGW_INCLUDE_ROOT.'/infolog/inc/class.infolog_bo.inc.php');
 			$GLOBALS['infolog_bo'] = new infolog_bo();

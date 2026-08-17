@@ -42,7 +42,10 @@ class calendar_datasource extends datasource
 	function get($data_id)
 	{
 		// we use $cal as an already running instance is availible there
-		if (!is_object($GLOBALS['calendar_bo']))
+		// but its ACL grants are cached at construction time, so a stale instance left behind
+		// by a since-restored user-switch (eg. LoggedInTest::asAdmin()) must not be reused,
+		// or check_acl() silently denies read-access to entries owned by the current user
+		if (!is_object($GLOBALS['calendar_bo']) || $GLOBALS['calendar_bo']->user != (int)$GLOBALS['egw_info']['user']['account_id'])
 		{
 			$GLOBALS['calendar_bo'] = new calendar_bo();
 		}
