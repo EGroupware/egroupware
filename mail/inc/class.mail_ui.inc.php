@@ -24,6 +24,7 @@ use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Api\Mail\Imap\Jmap as ImapJmap;
 use EGroupware\Mail\JmapShim;
+use EGroupware\Mail\Tree;
 use EGroupware\Mail\Ui\AttachmentHandler;
 use EGroupware\Mail\Ui\AttachmentJmap;
 use EGroupware\Mail\Ui\BodyHandler;
@@ -724,13 +725,50 @@ class mail_ui
 				}
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
 			}
+			else
+			{
+				// the active profile's own connection failed entirely (eg. the mail server is
+				// down) - still render every configured account's root node
+				// (mail_tree::getAccountsRootNode() only reads account config, no live connection
+				// needed) with the broken/active account shown as a connection-error leaf, instead
+				// of leaving the client with no content at all: callWizard() below only opens its
+				// popup via response.call(), not a user gesture, so it can be silently blocked -
+				// the mail app itself (tree + empty row list) must render regardless.
+				$tree = mail_tree::getAccountsRootNode();
+				foreach ($tree[Tree::CHILDREN] as &$accountNode)
+				{
+					if ((string)$accountNode[Tree::ID] !== (string)self::$icServerID)
+					{
+						continue;
+					}
+					$accountNode[Tree::LABEL] = lang('Error').': '.$accountNode[Tree::LABEL];
+					$accountNode[Tree::TOOLTIP] = $e->getMessage();
+					$accountNode[Tree::AUTOLOAD_CHILDREN] = false;
+					$accountNode[Tree::OPEN] = 0;
+					$accountNode[Tree::IMAGE_LEAF] = $accountNode[Tree::IMAGE_FOLDER_OPEN] =
+						$accountNode[Tree::IMAGE_FOLDER_CLOSED] = mail_tree::$leafImages['folderNoSelectClosed'];
+				}
+				unset($accountNode);
+				$sel_options[self::$nm_index]['foldertree'] = $tree;
+				$etpl = new Etemplate('mail.index');
+				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
+				if (!is_array($content)) $content = array();
+				$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'] =
+					self::$icServerID.self::$delimiter.'INBOX';
+				// get_actions() assumes a connected $this->mail_bo throughout (getArchiveFolder(),
+				// profileID, ...) - nothing meaningful to act on anyway until the connection is
+				// fixed or the user switches to a different, working account
+				$content[self::$nm_index]['actions'] = array();
+				$content['customLabels'] = array();
+			}
 			$readonlys = $preserv = array();
 			if (empty($content)) $content=array();
 
-			self::callWizard($e->getMessage().($e->details?', '.$e->details:''),(isset($this->mail_bo)?false:true), 'error',false);
-			//return false;
+			// still show the wizard link to fix the account, but never exit() - the mail app
+			// itself (tree, with an error leaf for the broken account) must render either way
+			self::callWizard($e->getMessage().($e->details?', '.$e->details:''), false, 'error',false);
 		}
-		switch ($this->mail_bo->mailPreferences['previewPane'])
+		switch ($this->mail_bo->mailPreferences['previewPane'] ?? '')
 		{
 			case "1"://preference used to be '1', now 'hide'
 			case "hide":
