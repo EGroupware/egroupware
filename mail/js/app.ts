@@ -5473,7 +5473,11 @@ export class MailApp extends EgwApp
 		tree.autoloading = this.mail_folderTreeAutoload.bind(this);
 		this.mail_buildRootFolderData(profileID).then((data) =>
 		{
-			if (data === null) return;
+			if (data === null)
+			{
+				console.error('MailApp.mail_folderManagementLoad(): account not JMAP-reachable, keeping the classic server-rendered tree');
+				return;
+			}
 			tree.select_options = data;
 		}).catch((e) =>
 		{
@@ -5753,6 +5757,16 @@ export class MailApp extends EgwApp
 	 * JMAP Mailbox id to pass as parentId, not derived from the path: a real JMAP/Stalwart
 	 * mailbox id is server-assigned and opaque, see FolderTreeNode's docblock in ./folderTree).
 	 *
+	 * A "profileID::path" node with no jmapId at all means this node was never built by this
+	 * callback (or mail_buildRootFolderData()) in the first place - eg. the classic server-
+	 * rendered tree mail_ui::folderManagement()/subscription() seed as a fallback while their own
+	 * JMAP root fetch is still in flight (or declined), which uses the same "profileID::path" id
+	 * scheme but has no concept of a JMAP Mailbox id at all. Sending `parentId: undefined` to
+	 * getMailboxChildren() would silently serialize to a missing filter key, which both JmapShim
+	 * and a real JMAP server treat as "no parentId constraint" (ie. the top level) - so a bare
+	 * classic node like this must fall back to classic immediately instead, the same as an
+	 * explicit JMAP decline.
+	 *
 	 * Falls back to the classic ajax_foldertree fetch for this one node if JMAP isn't reachable
 	 * (network error, non-JMAP-capable account) - same "new path alongside old, fall back"
 	 * precedent as the rest of the JMAP modernization work. If JMAP *was* reached and answered
@@ -5768,6 +5782,11 @@ export class MailApp extends EgwApp
 		const hasParent = typeof item.id === "string" && item.id.indexOf('::') !== -1;
 		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
 		const parentId : string | null = hasParent ? item.jmapId : null;
+
+		if (hasParent && !parentId)
+		{
+			return this.mail_classicFolderLoad(item);
+		}
 
 		const fetchLevel = hasParent
 			? this.mail_buildFolderLevelData(profileID, parentPath, parentId)
