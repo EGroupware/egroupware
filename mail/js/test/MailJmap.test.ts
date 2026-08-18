@@ -7,6 +7,7 @@ const egw = {
 	lang: (label : string) => label,
 	preference: (_key : string, _app? : string) => null,
 	request: async() => ({}),
+	message: (_msg : string, _type? : string) => {},
 };
 
 function createFakeApp() : MailApp
@@ -371,6 +372,67 @@ describe("MailJmap.fetchRows() held-back push refresh - preview snippet", () =>
 			"Email/get must request 'preview' when filter2 is truthy");
 		assert.equal(result.data["1::1::mbox1::email1"].bodypreview, "a body snippet",
 			"row must carry the server's snippet when the setting is on");
+	});
+});
+
+/**
+ * Contract: mail no longer registers a server-side 'get_rows' callback (see
+ * ProfileHandler::jmapBootstrap()'s docblock: "there is no server-side row-fetch fallback
+ * anymore, the client surfaces this as an error") - egw.dataFetch() (api/js/jsapi/egw_data.ts)
+ * only falls back to the classic (dead) ajax_get_rows POST when a registered fetch callback
+ * resolves/returns a falsy value, so fetchRows()/refreshRows() must never do that: every decline
+ * is answered directly, with a real error message for the cases that are genuine failures.
+ */
+describe("MailJmap.fetchRows() - never falls back to the dead classic ajax_get_rows endpoint", () =>
+{
+	it("resolves a real (empty) result and surfaces an error when the account has no JMAP token", async() =>
+	{
+		const messages : Array<[string, string]> = [];
+		const app = createFakeApp();
+		(app as any).egw = {...egw, message: (msg : string, type : string) => messages.push([msg, type])};
+		const jmap = new MailJmap(app);
+
+		const result : any = await jmap.fetchRows("exec", {start: 0, num_rows: 50},
+			{selectedFolder: "1::INBOX"}, "widget", [], 0);
+
+		assert.isOk(result, "fetchRows() must resolve a real result, never false");
+		assert.deepEqual(result.order, []);
+		assert.equal(messages.length, 1, "a genuine failure must surface exactly one error message");
+		assert.equal(messages[0][1], "error");
+	});
+
+	it("resolves a real (empty) result without an error when selectedFolder can't be determined yet", async() =>
+	{
+		const messages : Array<[string, string]> = [];
+		const app = createFakeApp();
+		(app as any).egw = {...egw, message: (msg : string, type : string) => messages.push([msg, type])};
+		const jmap = new MailJmap(app);
+
+		const result : any = await jmap.fetchRows("exec", {start: 0, num_rows: 50}, {}, "widget", [], 0);
+
+		assert.isOk(result, "fetchRows() must resolve a real result, never false");
+		assert.deepEqual(result.order, []);
+		assert.equal(messages.length, 0, "a one-time startup race is not a failure worth surfacing");
+	});
+
+	it("resolves a real (empty) result for the unused parent/children (csv_export) branch", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+
+		const result : any = await jmap.fetchRows("exec", {parent_id: "1"}, {}, "widget", [], 0);
+
+		assert.isOk(result, "fetchRows() must resolve a real result, never false");
+		assert.deepEqual(result.order, []);
+	});
+
+	it("resolves a real (empty) result when every row id in a refresh batch is malformed", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+
+		const result : any = await jmap.fetchRows("exec", {refresh: ["bogus"]}, {}, "widget", [], 0);
+
+		assert.isOk(result, "fetchRows() must resolve a real result, never false");
+		assert.deepEqual(result.order, []);
 	});
 });
 

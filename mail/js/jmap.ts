@@ -715,13 +715,25 @@ export class MailJmap
 	}
 
 	/**
+	 * Build an empty-but-truthy get_rows-shaped result, so `fetchRows()` never returns `false`/
+	 * a falsy resolution to `egw.dataFetch()` (api/js/jsapi/egw_data.ts) - a falsy answer there
+	 * makes it fall through to a classic `ajax_get_rows` POST, but mail no longer registers a
+	 * server-side `get_rows` callback (see class docblock), so that "fallback" only ever silently
+	 * renders an empty grid with no explanation. Answering with this instead means every decline
+	 * shows as a (possibly still empty, but at least explained) result, never a second, dead
+	 * network round-trip.
+	 */
+	private static emptyRowsResult() : any
+	{
+		return {order: [], data: {}, total: 0, lastModification: Math.floor(Date.now() / 1000), readonlys: {}};
+	}
+
+	/**
 	 * egw.dataRegisterFetch('mail', ...) callback: the only way NextMatch's row-fetch gets
-	 * answered - there is no server-side row-fetch fallback (see class docblock).
-	 *
-	 * Falls back (resolves false) for parent/children (csv_export, unused by mail), or if
-	 * `selectedFolder` genuinely can't be determined yet (see below) - egw_data.js's dataFetch()
-	 * then still POSTs to ajax_get_rows, but mail no longer registers a 'get_rows' callback, so
-	 * that resolves as an empty result rather than real rows. Never rejects.
+	 * answered - there is no server-side row-fetch fallback (see class docblock), and this never
+	 * falls through to the classic ajax_get_rows request either (see emptyRowsResult()): every
+	 * decline is answered directly, with a surfaced error for the cases that are genuine failures.
+	 * Never rejects.
 	 *
 	 * @param _execId unused
 	 * @param _queriedRange {start, num_rows} or {refresh: [...]}
@@ -731,7 +743,7 @@ export class MailJmap
 	 * @param _lastModification unused - we don't support incremental/only-changed fetches yet
 	 */
 	fetchRows(_execId : string, _queriedRange : any, _filters : any, _widgetId : string,
-		_knownUids : string[], _lastModification : number) : false | Promise<any>
+		_knownUids : string[], _lastModification : number) : Promise<any>
 	{
 		if (_queriedRange.refresh)
 		{
@@ -740,7 +752,9 @@ export class MailJmap
 		}
 		if (_queriedRange.parent_id)
 		{
-			return false;
+			// parent/children (csv_export) is unused by mail - answer empty rather than falling
+			// through to the dead classic endpoint
+			return Promise.resolve(MailJmap.emptyRowsResult());
 		}
 		// _filters.selectedFolder is only set once the user actively picks a folder in this
 		// session (see app.ts's "nm.activeFilters['selectedFolder'] = ..." call-sites) - same
@@ -751,13 +765,15 @@ export class MailJmap
 		// synchronously here since preferences are already loaded at this point, no
 		// widget-readiness dependency needed). It won't reflect the last-viewed *folder* within
 		// an account (nothing writes that anymore), only the last-viewed account - acceptable
-		// for this one-time startup race, since a real folder click follows immediately after.
+		// for this one-time startup race, since a real folder click follows immediately after -
+		// answer empty rather than falling through to the dead classic endpoint; no error, since
+		// this is an expected transient state, not a failure.
 		let selectedFolder = _filters.selectedFolder ||
 			this.app.et2?.getWidgetById(this.app.nm_index + '[foldertree]')?.getValue() ||
 			this.egw.preference('ActiveProfileID', 'mail');
 		if (!selectedFolder)
 		{
-			return false;
+			return Promise.resolve(MailJmap.emptyRowsResult());
 		}
 		// egw.preference() auto-casts a purely-numeric stored value (just "42", no "::folder"
 		// suffix yet - happens right after switching account, before a folder click persists
@@ -790,7 +806,13 @@ export class MailJmap
 		{
 			if (!result)
 			{
-				return false;
+				// account genuinely not reachable/JMAP-eligible right now (see
+				// ensureToken()/getRows() docblocks) - there is no working classic fallback
+				// anymore (see ProfileHandler::jmapBootstrap()'s own docblock: "the client
+				// surfaces this as an error"), so say so instead of silently rendering an empty
+				// grid with no explanation
+				this.egw.message(this.egw.lang('Unable to connect to the mail server'), 'error');
+				return MailJmap.emptyRowsResult();
 			}
 			this.enablePushOnce(selectedFolder);
 			const data : Record<string, any> = {};
@@ -806,9 +828,9 @@ export class MailJmap
 		}).catch((e) =>
 		{
 			const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
-			if (message) this.egw.message(message, 'error');
+			this.egw.message(message || this.egw.lang('Unable to connect to the mail server'), 'error');
 			console.error('MailJmap.fetchRows(): failed, resolving as an empty result', e);
-			return false;
+			return MailJmap.emptyRowsResult();
 		});
 	}
 
@@ -857,7 +879,7 @@ export class MailJmap
 	 *  updated via this path (e.g. a push 'add' held back while this tab wasn't active, then
 	 *  applied on return) would show a snippet the user has explicitly turned off.
 	 */
-	private async refreshRows(rowIds : string[], fetchPreview : boolean) : Promise<false | any>
+	private async refreshRows(rowIds : string[], fetchPreview : boolean) : Promise<any>
 	{
 		try
 		{
@@ -878,7 +900,10 @@ export class MailJmap
 			}
 			if (!references.length)
 			{
-				return false;
+				// nothing valid left to refresh - not an error, but still answer directly rather
+				// than falling through to the dead classic ajax_get_rows endpoint (see
+				// fetchRows()/emptyRowsResult())
+				return MailJmap.emptyRowsResult();
 			}
 			const groups = this.groupReferences(references);
 
@@ -942,9 +967,9 @@ export class MailJmap
 		catch (e)
 		{
 			const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
-			if (message) this.egw.message(message, 'error');
+			this.egw.message(message || this.egw.lang('Unable to connect to the mail server'), 'error');
 			console.error('MailJmap.refreshRows(): failed, resolving as an empty result', e);
-			return false;
+			return MailJmap.emptyRowsResult();
 		}
 	}
 
