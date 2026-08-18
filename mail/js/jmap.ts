@@ -1090,8 +1090,14 @@ export class MailJmap
 	 * body content itself, so a malicious/buggy message can't smuggle in a competing CSP, a
 	 * `<meta http-equiv="refresh">`, or hijack relative URLs.
 	 *
-	 * cid: image references are left as-is here - resolved asynchronously after render by
-	 * resolveInlineImages(), same as external images already are (resolveExternalImages()).
+	 * cid: image references are rewritten to a data-cid attribute here (src is cleared) -
+	 * resolved asynchronously after render by resolveInlineImages(), same as external images
+	 * already are (resolveExternalImages(), which stashes the blocked URL in `alt` rather than
+	 * `src` for the same reason). Leaving the real "cid:" value in `src` would still work once
+	 * resolveInlineImages() replaces it on load, but the browser attempts to fetch every `src` the
+	 * moment the srcdoc HTML is parsed - long before the 'load' event resolveInlineImages() waits
+	 * for - and "cid:" isn't a scheme any img-src CSP can allow, so that doomed attempt always
+	 * logs a CSP violation first regardless of how quickly it's swapped out afterward.
 	 */
 	private assembleBodyHtml(email : any, htmlOptions? : string) : string
 	{
@@ -1109,12 +1115,29 @@ export class MailJmap
 				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
 				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
 			});
+			body = MailJmap.deferCidImages(body);
 		}
 		else
 		{
 			body = MailJmap.textToHtml(raw);
 		}
 		return this.wrapDocument(body);
+	}
+
+	/**
+	 * Move every `<img src="cid:...">` to `data-cid="..."` with `src` cleared, so the browser
+	 * never attempts (and CSP-blocks) the "cid:" scheme on initial render - see
+	 * assembleBodyHtml()'s own docblock. resolveInlineImages() looks for `img[data-cid]` instead.
+	 */
+	private static deferCidImages(html : string) : string
+	{
+		const doc = new DOMParser().parseFromString(html, 'text/html');
+		doc.querySelectorAll('img[src^="cid:"]').forEach((img) =>
+		{
+			img.setAttribute('data-cid', img.getAttribute('src').substring(4));
+			img.removeAttribute('src');
+		});
+		return doc.body.innerHTML;
 	}
 
 	/**
@@ -1180,7 +1203,10 @@ export class MailJmap
 		(this.objectUrls[rowId] || []).forEach(url => URL.revokeObjectURL(url));
 		this.objectUrls[rowId] = [];
 
-		const images = Array.from(doc.querySelectorAll('img[src^="cid:"]')) as HTMLImageElement[];
+		// assembleBodyHtml()'s deferCidImages() already moved "cid:..." out of src into data-cid
+		// (and cleared src) before this HTML ever reached the iframe, so the browser never
+		// attempted - and CSP-blocked - the "cid:" scheme in the first place
+		const images = Array.from(doc.querySelectorAll('img[data-cid]')) as HTMLImageElement[];
 		if (!images.length)
 		{
 			return;
@@ -1188,9 +1214,8 @@ export class MailJmap
 		// RFC 2045's Content-ID header value is conventionally written wrapped in angle brackets
 		// (eg. "<checkmk_logo.png>"), and a real JMAP server (Stalwart) can return
 		// EmailBodyPart.cid as that raw header value verbatim - but the "cid:" URI scheme
-		// (RFC 2392) never includes the brackets, so an HTML body's <img src="cid:checkmk_logo.png">
-		// wouldn't match an unstripped "<checkmk_logo.png>" key here, silently leaving the cid:
-		// URL unresolved (and CSP-blocked - img-src has no "cid:" scheme to allow at all)
+		// (RFC 2392, and this widget's own data-cid attribute) never includes the brackets, so an
+		// unstripped "<checkmk_logo.png>" key here would never match
 		const stripCidBrackets = (cid : string) => cid.trim().replace(/^</, '').replace(/>$/, '');
 
 		const byCid : Record<string, any> = {};
@@ -1204,7 +1229,7 @@ export class MailJmap
 
 		await Promise.all(images.map(async(img) =>
 		{
-			const cid = stripCidBrackets(decodeURIComponent(img.getAttribute('src').substring(4)));
+			const cid = stripCidBrackets(decodeURIComponent(img.getAttribute('data-cid')));
 			const attachment = byCid[cid];
 			if (!attachment)
 			{
