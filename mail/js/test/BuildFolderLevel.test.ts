@@ -44,7 +44,7 @@ describe("buildFolderLevel()", () =>
 		const [node] = build([mailbox({name: "Inbox"})]);
 
 		assert.equal(node.text, "Inbox");
-		assert.equal(node.tooltip, "", "no role - tooltip would equal the label, so it's omitted");
+		assert.equal(node.tooltip, "Inbox");
 		assert.deepEqual(node.item, []);
 	});
 
@@ -231,42 +231,17 @@ describe("buildFolderLevel()", () =>
 
 		assert.equal(inbox.text, "translated(INBOX)");
 		assert.equal(trash.text, "translated(Trash)");
+		assert.equal(trash.tooltip, "translated(Trash)");
 		assert.equal(templates.text, "translated(Templates)");
 	});
 
-	/**
-	 * Classic mail_tree.inc.php's own tooltip for a role-identifiable folder was the untranslated
-	 * canonical key (eg. "Trash"), not the lang()-translated label ("Papierkorb") - a fixed,
-	 * language-independent reference to what the folder actually is. INBOX was the one exception:
-	 * its tooltip was translated too, same as its label.
-	 */
-	it("uses the untranslated role key as tooltip when it differs from the translated label", () =>
-	{
-		const [trash] = build([mailbox({role: "trash", name: "Papierkorb"})]);
-
-		assert.equal(trash.tooltip, "Trash", "must be the raw canonical key, not translated(Trash)");
-	});
-
-	it("omits the tooltip (empty string) whenever it would be identical to the label", () =>
-	{
-		const [plain] = build([mailbox({role: null, name: "Projects"})]);
-
-		assert.equal(plain.text, "Projects");
-		assert.equal(plain.tooltip, "", "raw name already equals the label - no point duplicating it");
-	});
-
-	it("keeps the raw name for a folder with no role at all", () =>
-	{
-		const [plain] = build([mailbox({role: null, name: "Projects"})]);
-
-		assert.equal(plain.text, "Projects");
-	});
-
-	it("translates the label for an archive-role folder too, discarding the raw name", () =>
+	it("keeps the raw name for a role with no translation mapping (eg. archive) or no role at all", () =>
 	{
 		const [archive] = build([mailbox({role: "archive", name: "Archives"})]);
+		const [plain] = build([mailbox({role: null, name: "Projects"})]);
 
-		assert.equal(archive.text, "translated(Archive)");
+		assert.equal(archive.text, "Archives");
+		assert.equal(plain.text, "Projects");
 	});
 
 	it("falls back to the generic folder icon for a plain (non-special) folder", () =>

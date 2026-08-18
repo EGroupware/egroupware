@@ -1333,18 +1333,13 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		const selected = typeof this.value == "string" && this.value == value || Array.isArray(this.value) && this.value.includes(value);
 		const draggable = this.widget_object?.actionLinks?.filter(al => al.actionObj?.type == "drag").length > 0
 
-		// title uses ?? below, not || : an explicit "" must render as title="" to block the
-		// browser's native title-attribute inheritance from a DOM ancestor (a child node with no
-		// tooltip of its own would otherwise silently show its parent's - eg. mail's INBOX node,
-		// whose own children live inside its DOM subtree). Only the genuinely-unset case
-		// (undefined/null) should fall through to .title/nothing.
 		return html`
             <sl-tree-item
                     part="item"
                     exportparts="checkbox, label, item:item-item"
                     id=${value}
                     value="${value}"
-                    title=${selectOption.tooltip ?? selectOption.title ?? nothing}
+                    title=${selectOption.tooltip ||selectOption.title || nothing}
                     class=${selectOption.class || nothing}
                     ?selected=${selected && !selectOption.unselectable}
                     ?unselectable=${selectOption.unselectable}

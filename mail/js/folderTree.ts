@@ -135,7 +135,7 @@ type Egw = { image(name : string, app? : string) : string, lang(key : string) : 
 // server's own literal English IMAP name, which was never translated without this.
 const ROLE_LABEL_KEYS : Record<string, string> = {
 	inbox: 'INBOX', trash: 'Trash', sent: 'Sent', drafts: 'Drafts', junk: 'Junk',
-	templates: 'Templates', outbox: 'Outbox', archive: 'Archive',
+	templates: 'Templates', outbox: 'Outbox',
 };
 
 // Fixed top-level display order (ralf's explicit spec, confirmed independent of the folder's
@@ -208,26 +208,17 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 	// deeper role was meaningless; JMAP has no such limitation, role is already known for every
 	// mailbox in the same response.
 	const role = mailbox.role;
-	const roleLabelKey = role ? ROLE_LABEL_KEYS[role] : undefined;
 	// classic mail_tree.inc.php always substituted the UI-language translation for a
 	// role-identifiable special folder, discarding whatever the account's own real IMAP/JMAP
 	// name was - not just a preference, a guarantee that eg. Trash reads the same across every
 	// account regardless of what that account's server happens to literally call it
-	const label = roleLabelKey ? egw.lang(roleLabelKey) : mailbox.name;
-	// classic mail_tree.inc.php's own tooltip for a role-identifiable folder was the untranslated
-	// canonical key (eg. "Trash", not "Papierkorb") - a fixed, language-independent reference to
-	// what this folder actually is, regardless of the UI's current language. Only shown when it
-	// actually differs from the (possibly translated) label - an identical tooltip is a pointless
-	// duplicate, and Et2Tree's own _optionTemplate() already treats an empty string as "no
-	// tooltip" (`title=${selectOption.tooltip || selectOption.title || nothing}`).
-	const tooltipCandidate = roleLabelKey ?? mailbox.name;
-	const tooltip = tooltipCandidate !== label ? tooltipCandidate : '';
+	const label = (role && ROLE_LABEL_KEYS[role]) ? egw.lang(ROLE_LABEL_KEYS[role]) : mailbox.name;
 	const isNamespaceRoot = isNamespaceRootName(mailbox.name);
 	return {
 		id: profileID + '::' + path,
 		jmapId: mailbox.id,
 		text: label,
-		tooltip,
+		tooltip: label,
 		checked: !!mailbox.isSubscribed,
 		child: mailbox.hasChildren !== false,
 		item: [],
