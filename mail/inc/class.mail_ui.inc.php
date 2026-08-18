@@ -752,14 +752,11 @@ class mail_ui
 				$sel_options[self::$nm_index]['foldertree'] = $tree;
 				$etpl = new Etemplate('mail.index');
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
-				if (!is_array($content)) $content = array();
-				$content[self::$nm_index]['foldertree'] = $content[self::$nm_index]['selectedFolder'] =
-					self::$icServerID.self::$delimiter.'INBOX';
-				// get_actions() assumes a connected $this->mail_bo throughout (getArchiveFolder(),
-				// profileID, ...) - nothing meaningful to act on anyway until the connection is
-				// fixed or the user switches to a different, working account
-				$content[self::$nm_index]['actions'] = array();
-				$content['customLabels'] = array();
+				// leave $content[self::$nm_index] alone otherwise (no foldertree/selectedFolder/
+				// actions) - same as the isset($this->mail_bo) branch above already does; setting
+				// selectedFolder here would just have the client immediately retry (and fail) a
+				// JMAP fetch for the known-broken account's INBOX, and get_actions() assumes a
+				// connected $this->mail_bo throughout (getArchiveFolder(), profileID, ...) anyway
 			}
 			$readonlys = $preserv = array();
 			if (empty($content)) $content=array();
