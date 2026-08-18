@@ -993,6 +993,22 @@ export class EgwActionObject {
         const actionLinks:any = {};
         const testedSelected = [];
 
+        // An app's enabled callback may assume its object is a data row - eg. filemanager's
+        // isEditable() reads egw.dataGetUIDdata(id).data - and throws for an object that is
+        // not one, like the datagrid's empty-list placeholder (which offers mkdir/paste/share).
+        // A single throwing callback used to abort the whole popup, so no context menu opened
+        // at all.  Treat it as "not enabled" and keep building the rest of the menu.
+        const isEnabledFor = function (actionObj, obj) {
+            try {
+                return actionObj.enabled.exec(actionObj, _objs, obj);
+            }
+            catch (e) {
+                console.error("egw_action: enabled callback of action '" + actionObj.id +
+                    "' threw, treating it as disabled", e);
+                return false;
+            }
+        };
+
         const test = function (olink,obj) {
             // Test whether the action type is of the given implementation type
             if (olink.actionObj.type == _actionType) {
@@ -1007,7 +1023,7 @@ export class EgwActionObject {
 
                 // Accumulate the action link properties
                 const llink = actionLinks[olink.actionId];
-                llink.enabled = llink.enabled && olink.actionObj.enabled.exec(olink.actionObj, _objs, obj) && olink.enabled && olink.visible;
+                llink.enabled = llink.enabled && isEnabledFor(olink.actionObj, obj) && olink.enabled && olink.visible;
                 llink.visible = (llink.visible || olink.visible);
                 llink.cnt++;
 
