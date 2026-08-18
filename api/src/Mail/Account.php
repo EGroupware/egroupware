@@ -341,12 +341,13 @@ class Account implements \ArrayAccess
 				$this->params = array_merge($this->params, $data);
 			}
 		}
-		catch(\Throwable $e) {
+		catch(Horde_Imap_Client_Exception $e) {
 			unset($e);
-			// ignore any failure fetching this optional enrichment (eg. Horde_Imap_Client_Exception/
-			// connection errors, InvalidArgumentException/missing admin user, \HttpException from
-			// Api\Mail\Jmap's HTTP client if the JMAP server is unreachable or returns a non-2xx
-			// status) - quota/aliases/forwards just aren't available right now, never fatal
+			// ignore eg. connection errors
+		}
+		catch(\InvalidArgumentException $e) {
+			unset($e);
+			// ignore eg. missing admin user
 		}
 		$this->params += array_fill_keys(self::$user_data, null);	// make sure all keys exist now
 

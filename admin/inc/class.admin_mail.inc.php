@@ -929,7 +929,21 @@ class admin_mail
 				try {
 					$account = Mail\Account::read($content['acc_id'], $this->is_admin && !empty($content['called_for']) ?
 						$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
-					$account->getUserData();	// quota, aliases, forwards etc.
+					try {
+						$account->getUserData();	// quota, aliases, forwards etc.
+					}
+					catch (\Throwable $ex) {
+						// connection-dependent info (quota/aliases/forwards) is not available if
+						// the account can't connect right now (eg. mail server down) - the wizard's
+						// whole purpose is letting the user fix that, so it must not abort/close
+						// itself over this the way the outer catch below does for a real failure.
+						// Deliberately NOT fixed inside getUserData() itself: mail_tree's account
+						// enumeration (mail_tree::getAccountsRootNode()) relies on this same kind
+						// of failure propagating out of it to render a broken-account error leaf -
+						// this needs to stay scoped to just this wizard call site.
+						if (self::$debug) _egw_log_exception($ex);
+						Framework::message($ex->getMessage(), 'error');
+					}
 					$content += $account->params;
 					foreach(['acc_imap_password', 'acc_smtp_password'] as $n)
 					{
