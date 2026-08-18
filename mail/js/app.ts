@@ -5726,7 +5726,11 @@ export class MailApp extends EgwApp
 		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
 		const parentId : string | null = hasParent ? item.jmapId : null;
 
-		return this.mail_buildFolderLevelData(profileID, parentPath, parentId).then((data) =>
+		const fetchLevel = hasParent
+			? this.mail_buildFolderLevelData(profileID, parentPath, parentId)
+			: this.mail_buildRootFolderData(profileID);
+
+		return fetchLevel.then((data) =>
 			data === null ? this.mail_classicFolderLoad(item) : {item: data}
 		).catch((e) =>
 		{
@@ -5735,6 +5739,36 @@ export class MailApp extends EgwApp
 				return {item: [buildErrorNode(profileID, parentPath, e.message, egw)]};
 			}
 			throw e;
+		});
+	}
+
+	/**
+	 * Root-level folder-tree autoload: fetches the account root AND INBOX's own direct children
+	 * in one proactive pass (MailJmap.getRootFolders()) instead of leaving Et2Tree to reactively
+	 * fire its own separate lazy-load request for INBOX right after the root level renders (INBOX
+	 * is always auto-expanded - see folderTree.ts's buildNode()). Embeds INBOX's children
+	 * directly into its node's `item` before this data ever reaches Et2Tree, so INBOX's own
+	 * `lazy` flag (Et2Tree.ts's _optionTemplate()) reads false and no further autoload fires for
+	 * it - see MailJmap.getRootFolders()'s own docblock for why this still costs two requests, not
+	 * one, and why that's still strictly better than today's reactive round trip.
+	 */
+	private mail_buildRootFolderData(profileID : string) : Promise<FolderTreeNode[] | null>
+	{
+		return this.jmap.getRootFolders(profileID).then((result) =>
+		{
+			if (result === null) return null;
+			const subscribedOnly = !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			const top = buildFolderLevel(result.top, profileID, '', {subscribedOnly, isTopLevel: true}, egw);
+			if (result.inboxChildren !== null)
+			{
+				const inboxNode = top.find((node) => node.id === profileID + '::INBOX');
+				if (inboxNode)
+				{
+					inboxNode.item = buildFolderLevel(result.inboxChildren, profileID, 'INBOX', {subscribedOnly, isTopLevel: true}, egw);
+					inboxNode.child = inboxNode.item.length > 0;
+				}
+			}
+			return top;
 		});
 	}
 

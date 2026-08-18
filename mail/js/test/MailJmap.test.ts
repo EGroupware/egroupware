@@ -322,6 +322,90 @@ describe("MailJmap.getMailboxChildren() - templates/outbox role resolution by ac
 	});
 });
 
+/**
+ * INBOX is always auto-expanded on initial render (folderTree.ts's buildNode()), so without this,
+ * Et2Tree would immediately fire its own separate, purely reactive lazy-load request for it right
+ * after the root level renders - ralf's observation: an extra "2nd request" on every single page
+ * load. getRootFolders() folds "find INBOX's id" into the very same request as the root-level
+ * fetch (independent of it, so no extra round trip), then fires the children request immediately
+ * once that resolves - still two requests (a JMAP result reference can't target a field nested
+ * inside another argument, like filter.parentId, so the children query can't be chained into the
+ * very first request), but both fire back-to-back in one code path instead of only the first
+ * being followed by a full render + Et2Tree lazy-load-event round trip before the second starts.
+ */
+describe("MailJmap.getRootFolders() - combined root + INBOX-children fetch", () =>
+{
+	function createRootClient(rootResponse : any, childrenResponse : any)
+	{
+		let calls = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				calls++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [calls === 1 ? rootResponse : childrenResponse];
+			},
+		};
+		return {client, calls: () => calls};
+	}
+
+	function primeLocalToken(jmap : MailJmap, profileID : string, client : any) : void
+	{
+		// isLocal:true so resolveHasChildren() never fires here - that mechanism (and its own
+		// separate requestMany() call) is already covered by its own describe block above; this
+		// suite only cares about the root+INBOX request-count/wiring, not hasChildren resolution
+		(jmap as any).tokens[profileID] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal: true, customLabels: {},
+		};
+		(jmap as any).clients[profileID] = client;
+	}
+
+	it("fetches the root level and INBOX's id in one request, then INBOX's children in a second", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const {client, calls} = createRootClient(
+			{
+				topMailboxes: {list: [{id: "root1", name: "INBOX", role: "inbox"}, {id: "root2", name: "Archive"}]},
+				inboxIds: {ids: ["root1"]},
+			},
+			{mailboxes: {list: [{id: "child1", name: "Sub"}]}}
+		);
+		primeLocalToken(jmap, "1", client);
+
+		const result = await jmap.getRootFolders("1");
+
+		assert.equal(calls(), 2, "must be exactly two requests: root+inboxId together, then inbox children");
+		assert.deepEqual(result.top.map((m : any) => m.id), ["root1", "root2"]);
+		assert.deepEqual(result.inboxChildren.map((m : any) => m.id), ["child1"]);
+		assert.equal((jmap as any).mailboxIds["1::INBOX"], "root1",
+			"resolved INBOX id must be cached so a later mailboxId('INBOX') lookup doesn't repeat it");
+	});
+
+	it("resolves inboxChildren: null and skips the second request when INBOX can't be found", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const {client, calls} = createRootClient(
+			{topMailboxes: {list: [{id: "root2", name: "Archive"}]}, inboxIds: {ids: []}},
+			null
+		);
+		primeLocalToken(jmap, "1", client);
+
+		const result = await jmap.getRootFolders("1");
+
+		assert.equal(calls(), 1, "must not issue a second request when no INBOX id was found");
+		assert.isNull(result.inboxChildren);
+	});
+
+	it("resolves null (same contract as getMailboxChildren) when the account has no usable token", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const result = await jmap.getRootFolders("nonexistent-profile");
+		assert.isNull(result);
+	});
+});
+
 describe("MailJmap.fetchRows() held-back push refresh - preview snippet", () =>
 {
 	/**

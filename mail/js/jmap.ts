@@ -473,25 +473,9 @@ export class MailJmap
 				return {ids, mailboxes};
 			});
 			const list = mailboxes.list || [];
-			// Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - JmapShim
-			// already resolves them server-side via acc_folder_template/acc_folder_outbox for the
-			// local shim, but a real JMAP server (Stalwart) has no equivalent mechanism, so match
-			// by the account's own configured (or default) folder name here instead, before this
-			// shape reaches folderTree.ts's buildNode() - case-insensitive, matching classic
-			// roleFor()'s own strcasecmp() convention. Only at the top level (see this method's
-			// own docblock) - classic never applies this at any deeper level either.
 			if (isTopLevel)
 			{
-				list.forEach((m : any) =>
-				{
-					if (m.role) return;
-					const name = (m.name || '').toLowerCase();
-					if (token.templatesFolder && name === token.templatesFolder.toLowerCase()) m.role = 'templates';
-					else if (token.outboxFolder && name === token.outboxFolder.toLowerCase()) m.role = 'outbox';
-				});
-			}
-			if (isTopLevel)
-			{
+				this.applyTemplateOutboxRoles(list, token);
 				this.sortTopLevel(list);
 			}
 			if (!token.isLocal)
@@ -510,6 +494,111 @@ export class MailJmap
 				throw new JmapUserError(message);
 			}
 			console.error('MailJmap.getMailboxChildren(): failed, falling back to the classic ajax_foldertree fetch', e);
+			return null;
+		}
+	}
+
+	/**
+	 * Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - JmapShim already
+	 * resolves them server-side via acc_folder_template/acc_folder_outbox for the local shim, but
+	 * a real JMAP server (Stalwart) has no equivalent mechanism, so match by the account's own
+	 * configured (or default) folder name here instead, before this shape reaches folderTree.ts's
+	 * buildNode() - case-insensitive, matching classic roleFor()'s own strcasecmp() convention.
+	 * Only ever called for a top-level list (see getMailboxChildren()'s own isTopLevel docblock) -
+	 * classic never applies this at any deeper level either. Mutates `list` in place.
+	 */
+	private applyTemplateOutboxRoles(list : any[], token : JmapToken) : void
+	{
+		list.forEach((m : any) =>
+		{
+			if (m.role) return;
+			const name = (m.name || '').toLowerCase();
+			if (token.templatesFolder && name === token.templatesFolder.toLowerCase()) m.role = 'templates';
+			else if (token.outboxFolder && name === token.outboxFolder.toLowerCase()) m.role = 'outbox';
+		});
+	}
+
+	/**
+	 * Combined single-pass fetch of the account root level AND INBOX's own direct children -
+	 * INBOX is always auto-expanded on initial render (see folderTree.ts's buildNode(), "open:
+	 * true" for role 'inbox'), so without this, Et2Tree would immediately fire its own separate,
+	 * purely reactive lazy-load request for INBOX right after the root level renders (ralf's
+	 * observation: this always shows up as an extra "2nd request" in the network tab, on every
+	 * single page load). MailApp.mail_buildRootFolderData() (app.ts) embeds inboxChildren directly
+	 * into the root INBOX node's `item` before ever handing the array to Et2Tree, so INBOX's own
+	 * `lazy` flag (Et2Tree.ts's _optionTemplate()) reads false and it never dispatches that
+	 * lazy-load event at all - not just "faster", the second request is eliminated outright.
+	 *
+	 * Still two HTTP requests, not one: RFC 8620 result references can only substitute a whole
+	 * top-level method argument, not a single field nested inside another argument (`filter.
+	 * parentId` here), so "list the children of whatever mailbox has role=inbox" can't be
+	 * expressed as a single chained JMAP call - the id has to come back from the server before a
+	 * query for its children can even be built. What this DOES do is (a) fold the "find INBOX's
+	 * id" lookup into the very same request as the root-level fetch (it's independent of that
+	 * fetch, so it rides along for free instead of needing its own separate round trip the way
+	 * mailboxId('INBOX') normally would), and (b) fire the children request immediately once that
+	 * resolves, in this one code path - instead of only finding out INBOX needs its children once
+	 * Et2Tree has already rendered the root level, noticed the (still-empty) INBOX node is marked
+	 * open, and reactively dispatched a lazy-load event for it (a full Lit render + updateComplete
+	 * + DOM CustomEvent round trip, on top of the request that event then triggers).
+	 *
+	 * @return null if this account has no usable JMAP access-token (same contract as getMailboxChildren())
+	 */
+	async getRootFolders(profileID : string) : Promise<{ top : any[], inboxChildren : any[] | null } | null>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) return null;
+			const client = this.clients[profileID];
+			const filter : Record<string, any> = {parentId: null};
+			if (!isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
+			{
+				filter.isSubscribed = true;
+			}
+
+			const [{topMailboxes, inboxIds}] = await client.requestMany((t) =>
+			{
+				const topIds = t.Mailbox.query({accountId: token.accountId, filter});
+				const topMailboxes = t.Mailbox.get({accountId: token.accountId, ids: topIds.$ref('/ids')});
+				// same plain name lookup mailboxId() already uses to resolve any single path
+				// segment - not role-based: this is the one mechanism already proven correct for
+				// both backends (getRows()' own folder resolution goes through it for INBOX too),
+				// and it's independent of the root query above, so it costs nothing extra here
+				const inboxIds = t.Mailbox.query({accountId: token.accountId, filter: {name: 'INBOX'}});
+				return {topIds, topMailboxes, inboxIds};
+			});
+
+			const top = topMailboxes.list || [];
+			this.applyTemplateOutboxRoles(top, token);
+			this.sortTopLevel(top);
+			if (!token.isLocal)
+			{
+				await this.resolveHasChildren(client, token.accountId, top);
+			}
+
+			const inboxId = inboxIds.ids?.[0] ?? null;
+			if (!inboxId)
+			{
+				return {top, inboxChildren: null};
+			}
+			// getMailboxChildren() would otherwise have to re-resolve this exact id itself the
+			// next time anything needs it (eg. a row-fetch for INBOX, which happens almost
+			// immediately since INBOX is the default selected folder)
+			this.mailboxIds[profileID + '::INBOX'] = inboxId;
+			const inboxChildren = await this.getMailboxChildren(profileID, inboxId, true);
+			return {top, inboxChildren};
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			if (message)
+			{
+				console.error('MailJmap.getRootFolders(): JMAP error', e);
+				throw new JmapUserError(message);
+			}
+			console.error('MailJmap.getRootFolders(): failed, falling back to the classic ajax_foldertree fetch', e);
 			return null;
 		}
 	}
