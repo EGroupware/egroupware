@@ -2509,7 +2509,7 @@ class mail_compose
 					$numberOfChars = strspn(trim($value), ">");
 					$appendString = str_repeat('>', $numberOfChars + 1);
 
-					$bodyAppend = $this->mail_bo->wordwrap($value, 76-strlen("\r\n$appendString "), "\r\n$appendString ",'>');
+					$bodyAppend = BodyDecoding::wordwrap($value, 76-strlen("\r\n$appendString "), "\r\n$appendString ",'>');
 
 					if($bodyAppend[0] == '>') {
 						$bodyAppend = '>'. $bodyAppend;
