@@ -386,14 +386,6 @@ class mail_ui
 	}
 
 	/**
-	 * Ajax function to request next branch of a tree branch
-	 */
-	static function ajax_tree_autoloading ($_id = null)
-	{
-		(new mail_ui())->folderHandler()->treeAutoloading($_id);
-	}
-
-	/**
 	 * Subscription popup window
 	 *
 	 * @param ?array $content

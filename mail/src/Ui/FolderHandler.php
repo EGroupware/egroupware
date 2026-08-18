@@ -44,19 +44,6 @@ class FolderHandler
 	}
 
 	/**
-	 * Ajax function to request next branch of a tree branch
-	 *
-	 * Legacy/mobile-only today - the live desktop index template's tree autoloading goes through
-	 * folderTree() (mail_ui::ajax_foldertree), not this - only mail/templates/mobile/subscribe.xet
-	 * still declares `autoloading="mail_ui::ajax_tree_autoloading"`.
-	 */
-	public function treeAutoloading($_id = null)
-	{
-		$id = $_id ? $_id : $_GET['id'];
-		Etemplate\Widget\Tree::send_quote_json($this->ui->mail_tree->getTree($id, '', 1, false));
-	}
-
-	/**
 	 * Ajax callback to subscribe / unsubscribe a Mailbox of an account
 	 *
 	 * @param {int} $_acc_id profile Id of selected mailbox
