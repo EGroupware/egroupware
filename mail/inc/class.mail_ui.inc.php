@@ -2341,19 +2341,6 @@ class mail_ui
 	}
 
 	/**
-	 * reload node
-	 *
-	 * @param string _folderName  folder to reload
-	 * @param boolean $_subscribedOnly = true
-	 * @return void
-	 */
-	function ajax_reloadNode($_folderName,$_subscribedOnly=true)
-	{
-		$this->folderHandler()->reloadNode($_folderName, $_subscribedOnly);
-	}
-
-
-	/**
 	 * ResolveWinmail fetches the encoded attachments
 	 * from winmail.dat and will response expected structure back
 	 * to client in order to display them.

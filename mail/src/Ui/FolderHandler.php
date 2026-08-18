@@ -71,7 +71,11 @@ class FolderHandler
 		{
 			$this->ui->mail_bo->icServer->subscribeMailbox($_folderName, $_status);
 			$this->ui->mail_bo->resetFolderObjectCache($_acc_id);
-			$this->reloadNode($_acc_id, !$this->ui->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+			// same "account changed, please refresh" signal admin_mail/mail_wizard already send
+			// after saving an account (mail/js/app.ts's observer() 'mail-account' case) - reloads
+			// this account's tree node via its own JMAP-first autoloading callback, no need for a
+			// server-computed subtree just to add/remove one folder
+			Framework::refresh_opener('', 'mail-account', $_acc_id, 'update');
 		}
 		catch (Horde_Imap_Client_Exception $ex)
 		{
@@ -406,56 +410,6 @@ class FolderHandler
 				$response->call('egw.refresh',lang('failed to rename %1 ! Reason: %2',$oldFolderName,$msg),'mail');
 			}
 		}
-	}
-
-	/**
-	 * reload node
-	 *
-	 * @param string _folderName  folder to reload
-	 * @param boolean $_subscribedOnly = true
-	 * @return void
-	 */
-	public function reloadNode($_folderName, $_subscribedOnly = true)
-	{
-		Api\Translation::add_app('mail');
-		$oldPrefForSubscribedOnly = !$this->ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'];
-		$decodedFolderName = FolderHelpers::decodeEntityFolderName($_folderName);
-		list($profileID,$folderName) = explode(mail_ui::$delimiter,$decodedFolderName,2);
-		if ($profileID != $this->ui->mail_bo->profileID) $this->ui->changeProfile($profileID);
-
-		// if pref and required mode dont match -> reset the folderObject cache to ensure
-		// that we get what we request
-		if ($_subscribedOnly != $oldPrefForSubscribedOnly) $this->ui->mail_bo->resetFolderObjectCache($profileID);
-
-		if (!empty($folderName))
-		{
-			$parentFolder=(!empty($folderName)?$folderName:'INBOX');
-			$folderInfo = $this->ui->mail_bo->getFolderStatus($parentFolder,false,false,false);
-			if ($folderInfo['unseen'])
-			{
-				$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'].' ('.$folderInfo['unseen'].')';
-			}
-			if ($folderInfo['unseen']==0 && $folderInfo['shortDisplayName'])
-			{
-				$folderInfo['shortDisplayName'] = $folderInfo['shortDisplayName'];
-			}
-
-			$refreshData = array(
-				$profileID.mail_ui::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
-		}
-		else
-		{
-			$refreshData = array(
-				$profileID=>lang('INBOX')//string with no meaning lateron
-			);
-		}
-		// Send full info back in the response
-		$response = Api\Json\Response::get();
-		foreach($refreshData as $folder => &$name)
-		{
-			$name = $this->ui->mail_tree->getTree($folder,$profileID,1,false, $_subscribedOnly,true);
-		}
-		$response->call('app.mail.mail_reloadNode',$refreshData);
 	}
 
 	/**

@@ -761,9 +761,12 @@ export class MailApp extends EgwApp
 					case 'edit':
 						if (node)	// we dont care for updated accounts not shown (eg. other users)
 						{
-							//tree.refreshItem(_id);
-							egw.json('mail.mail_ui.ajax_reloadNode',[_id])
-								.sendRequest(true);
+							// refreshItem() with no data re-runs the tree's own autoloading
+							// callback (mail_folderTreeAutoload(), JMAP-first with a classic
+							// ajax_foldertree fallback) for this account's root node - same
+							// mechanism the 'add' case below already uses successfully, no need
+							// for the classic-only ajax_reloadNode round trip anymore
+							tree.refreshItem(_id);
 						}
 						break;
 					case 'add':
