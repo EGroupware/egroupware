@@ -872,6 +872,7 @@ class admin_mail
 		if (empty($content) && $_GET['acc_id'] && empty($msg) && !empty( $_GET['msg']))
 		{
 			if (stripos($_GET['msg'],'fatal error:')!==false || $_GET['msg_type'] == 'error') $msg_type = 'error';
+			$msg = $_GET['msg'];
 		}
 		if ($content['acc_id'] || (isset($_GET['acc_id']) && (int)$_GET['acc_id'] > 0) ) Mail::unsetCachedObjects($content['acc_id']?$content['acc_id']:$_GET['acc_id']);
 		$tpl = new Etemplate('admin.mailaccount');
