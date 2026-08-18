@@ -1288,16 +1288,19 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	 * @param {string} _message Message to be place in the dialog.  Usually just
 	 *	text, but DOM nodes will work too.
 	 * @param {string} _title Text in the top bar of the dialog.
-	 * @param {string} _menuaction the menuaction function which should be called and
-	 * 	which handles the actual request. If the menuaction is a full featured
-	 * 	url, this one will be used instead.
+	 * @param {string|function} _item_callback either a menuaction which should be called for each
+	 * 	item and which handles the actual request (if the menuaction is a full featured url, this
+	 * 	one will be used instead), or a client-side function(...parameters) returning a Promise -
+	 * 	called directly instead of a server round-trip, resolving with a success message (string,
+	 * 	displayed the same way a successful server response would be) or rejecting/throwing with an
+	 * 	Error (its .message displayed the same way a server-side error response would be).
 	 * @param {Array[]} _list - List of parameters, one for each call to the
 	 *	address.  Multiple parameters are allowed, in an array.
 	 * @param {string|egw} _egw_or_appname egw object with already laoded translations or application name to load translations for
 	 *
 	 * @return {Et2Dialog}
 	 */
-	static long_task(_callback, _message, _title, _menuaction, _list, _egw_or_appname)
+	static long_task(_callback, _message, _title, _item_callback, _list, _egw_or_appname)
 	{
 		// Special action for cancel
 		let buttons = [
@@ -1478,11 +1481,32 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 				updateUi({type: 'error', data: dialog.egw().lang("failed") + " " + JSON.stringify(parameters)}, index + 1)
 			}, 30000);
 
+			if(typeof _item_callback === 'function')
+			{
+				// client-side callback, no server round-trip: resolves with a success message
+				// (string) or rejects/throws with an Error, same as _item_callback.apply() would
+				// do for a real function - not the {response: [...]} envelope a server JSON
+				// response uses, since there's no server dispatcher wrapping this result
+				request = Promise.resolve()
+					.then(() => _item_callback.apply(null, parameters))
+					.then(async(response) =>
+					{
+						clearTimeout(timeout_id);
+						await updateUi(response, index + 1);
+					})
+					.catch(async(error) =>
+					{
+						clearTimeout(timeout_id);
+						updateUi({type: 'error', data: error?.message ?? error}, index + 1);
+					});
+				return request;
+			}
+
 				// Async request, we'll take the next step in the callback
 				// We can't pass index = 0, it looks like false and causes issues
 			try
 			{
-				request = dialog.egw().json(_menuaction, parameters).sendRequest()
+				request = dialog.egw().json(_item_callback, parameters).sendRequest()
 					.then(async(response) =>
 					{
 						if(response && response.response)

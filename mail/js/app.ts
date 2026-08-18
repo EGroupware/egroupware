@@ -521,6 +521,9 @@ export class MailApp extends EgwApp
 			case 'mail.subscribe':
 				this.mail_subscriptionLoad();
 				break;
+			case 'mail.folder_management':
+				this.mail_folderManagementLoad();
+				break;
 		}
 		this.customLabels = this.et2.getArrayMgr('content').getEntry('customLabels') ||
 			window.opener?.app?.mail?.customLabels || this.customLabels;
@@ -5443,6 +5446,46 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Populate the folder-management dialog's multi-select tree via JMAP - lazily, exactly like
+	 * the main index tree (mail_folderTreeAutoload()/getRootFolders()): the top level and INBOX's
+	 * own direct children load immediately, everything deeper loads on demand as the user expands
+	 * a node. Deliberately NOT mail_subscriptionLoad()'s eager getMailboxTree() approach - that
+	 * popup genuinely needs every folder at once for its multi-toggle-then-save UI, this one
+	 * doesn't, and eagerly fetching a large account's entire tree just to populate a dialog the
+	 * user might only use to delete one folder would be wasteful.
+	 *
+	 * mail_folderTreeAutoload() is reused as-is for expanding any deeper node - its classic
+	 * fallback (mail_classicFolderLoad(), 'mail.mail_ui.ajax_foldertree') isn't the dialog's own
+	 * ajax_folderMgmtTree_autoloading endpoint, but both ultimately return the same tree-node
+	 * shape from mail_tree.inc.php's getTree(), and this dialog's plain multi-select tree has no
+	 * checkbox-specific rendering to lose - not worth a second, near-identical autoload function
+	 * just for the rare case JMAP itself is unreachable.
+	 *
+	 * On any failure (network, non-JMAP-capable account), this is a no-op: the tree keeps whatever
+	 * the server already rendered (mail_ui::folderManagement()'s own mail_tree->getTree() call).
+	 */
+	private mail_folderManagementLoad() : void
+	{
+		const tree : any = this.et2.getWidgetById('tree');
+		const profileID = String(this.et2.getArrayMgr('content').getEntry('acc_id') ?? '');
+		if (!tree || !profileID) return;
+
+		tree.autoloading = this.mail_folderTreeAutoload.bind(this);
+		this.mail_buildRootFolderData(profileID).then((data) =>
+		{
+			if (data === null) return;
+			tree.select_options = data;
+		}).catch((e) =>
+		{
+			if (e instanceof JmapUserError)
+			{
+				this.egw.message(e.message, 'error');
+			}
+			console.error('MailApp.mail_folderManagementLoad(): JMAP tree load failed, keeping the classic server-rendered tree', e);
+		});
+	}
+
+	/**
 	 * Edit a folder acl for account(s)
 	 *
 	 * @param _action
@@ -6284,7 +6327,6 @@ export class MailApp extends EgwApp
 	folderMgmt_deleteBtn()
 	{
 		const tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
-		const menuaction= 'mail.mail_ui.ajax_folderMgmt_delete';
 
 		if (!tree.value.length)
 		{
@@ -6292,7 +6334,7 @@ export class MailApp extends EgwApp
 			return;
 		}
 
-		const callbackDialog = function(_btn)
+		const callbackDialog = (_btn) =>
 		{
 			egw.appName='mail';
 			if (_btn === Et2Dialog.YES_BUTTON)
@@ -6316,7 +6358,7 @@ export class MailApp extends EgwApp
 								// submit
 								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
 							}
-						}, msg, egw.lang('Deleting folders'), menuaction, selFolders, 'mail');
+						}, msg, egw.lang('Deleting folders'), (treeId : string) => this.mail_folderMgmtDeleteOne(treeId), selFolders, 'mail');
 						return true;
 					}
 				}
@@ -6324,6 +6366,38 @@ export class MailApp extends EgwApp
 		};
 		Et2Dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
 			Et2Dialog.BUTTON_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, egw);
+	}
+
+	/**
+	 * Per-folder delete for the folder-management dialog's long_task() batch (folderMgmt_deleteBtn())
+	 * - the JMAP-first counterpart of the classic ajax_folderMgmt_delete/FolderHandler::folderMgmtDelete(),
+	 * now called directly client-side instead of driving long_task's per-item server round-trip
+	 * (see Et2Dialog.long_task()'s _item_callback param). Resolves the deleted folder's own (leaf)
+	 * name on success - the exact same per-item contract folderMgmtDelete() already had, so
+	 * folderMgmt_deleteBtn()'s own success-handling (mail_removeLeaf()) needs no change at all.
+	 *
+	 * Falls back to the classic single-folder ajax_deleteFolder (already used by
+	 * mail_tryJmapDeleteFolder() for the exact same "JMAP declined" case) rather than the batch-
+	 * shaped ajax_folderMgmt_delete - functionally identical (both end up in FolderHandler::
+	 * deleteFolder()), and avoids needing a second, near-duplicate classic endpoint here.
+	 */
+	private mail_folderMgmtDeleteOne(treeId : string) : Promise<string>
+	{
+		const [profileID, path] = treeId.split('::', 2) as [string, string];
+		const folderName = path.includes('/') ? path.substring(path.lastIndexOf('/') + 1) : path;
+
+		return this.jmap.deleteMailbox(profileID, path).then((success) =>
+		{
+			if (success) return folderName;
+			return egw.json('mail.mail_ui.ajax_deleteFolder', [treeId]).sendRequest(true).then(() => folderName);
+		}).catch((e) =>
+		{
+			if (e instanceof JmapUserError)
+			{
+				throw new Error(this.egw.lang('Failed to delete %1', folderName) + ': ' + e.message);
+			}
+			throw e;
+		});
 	}
 
 	/**

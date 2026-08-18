@@ -27,12 +27,12 @@ use mail_ui;
  *
  * These are all classic-fallback paths: the folder-tree JMAP migration
  * (doc/ai/projects/mail-folder-tree-jmap.md) made the main index tree's browsing, create/rename/
- * move/delete/subscribe actions, and the subscribe popup all JMAP-first client-side - every method
- * here is what they fall back to when JMAP isn't reachable, plus the folder-management dialog and
- * mobile subscribe template, which stay classic-only. Every `mail_ui::ajax_*` method name stays in
- * place as a one-line delegation - required because EGroupware's ajax dispatcher and the .xet
- * template `autoloading=` attribute both resolve handlers by `mail_ui::methodName`, not by
- * class-agnostic name.
+ * move/delete/subscribe actions, the subscribe popup, and the folder-management dialog's tree/
+ * delete all JMAP-first client-side - every method here is what they fall back to when JMAP isn't
+ * reachable, plus the mobile subscribe template, which stays classic-only. Every `mail_ui::ajax_*`
+ * method name stays in place as a one-line delegation - required because EGroupware's ajax
+ * dispatcher and the .xet template `autoloading=` attribute both resolve handlers by
+ * `mail_ui::methodName`, not by class-agnostic name.
  */
 class FolderHandler
 {
@@ -679,40 +679,4 @@ class FolderHandler
 		}
 	}
 
-	/**
-	 * Autoloading function to load branches of tree node of management folder tree
-	 *
-	 * @param type $_id
-	 */
-	public function folderMgmtTreeAutoloading($_id = null)
-	{
-		$id = $_id? $_id : $_GET['id'];
-		Etemplate\Widget\Tree::send_quote_json($this->ui->mail_tree->getTree($id,'',1,true,false,false,false));
-	}
-
-	/**
-	 * Function to delete folder for management longTask dialog
-	 * it sends successfully deleted folder as response to be
-	 * used in long task response handler.
-	 *
-	 * @param type $_folderName
-	 */
-	public function folderMgmtDelete($_folderName)
-	{
-		if ($_folderName)
-		{
-			$success = $this->deleteFolder($_folderName,true);
-			$response = Api\Json\Response::get();
-			list(,$folderName) = explode(mail_ui::$delimiter, $_folderName);
-			if ($success)
-			{
-				$res = $folderName;
-			}
-			else
-			{
-				$res = lang("Failed to delete %1",$folderName);
-			}
-			$response->data($res);
-		}
-	}
 }

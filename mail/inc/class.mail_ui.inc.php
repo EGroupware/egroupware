@@ -2787,18 +2787,11 @@ class mail_ui
 
 
 	/**
-	 * Autoloading function to load branches of tree node
-	 * of management folder tree
-	 *
-	 * @param type $_id
-	 */
-	function ajax_folderMgmtTree_autoloading ($_id = null)
-	{
-		(new mail_ui())->folderHandler()->folderMgmtTreeAutoloading($_id);
-	}
-
-	/**
 	 * Main function to handle folder management dialog
+	 *
+	 * Tree population and folder deletion are handled client-side via JMAP
+	 * (MailApp.mail_folderManagementLoad()/mail_folderMgmtDeleteOne(), mail/js/app.ts) - the
+	 * server-rendered tree below is only the classic fallback for a non-JMAP-reachable account.
 	 *
 	 * @param array $content content of dialog
 	 */
@@ -2819,17 +2812,5 @@ class mail_ui
 			'acc_id' => $content['acc_id'] // preserve acc id to be used in client-side
 		);
 		$dtmpl->exec('mail.mail_ui.folderManagement', $content,$sel_options,$readonlys,$preserv,2);
-	}
-
-	/**
-	 * Function to delete folder for management longTask dialog
-	 * it sends successfully deleted folder as response to be
-	 * used in long task response handler.
-	 *
-	 * @param type $_folderName
-	 */
-	function ajax_folderMgmt_delete ($_folderName)
-	{
-		$this->folderHandler()->folderMgmtDelete($_folderName);
 	}
 }
