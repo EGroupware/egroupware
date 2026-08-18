@@ -61,6 +61,7 @@ appended after reply before sending	mail	de	Einfügen unter dem zitierten Text i
 application mail expected but got: %1	mail	de	Anwendung E-Mail erwarted, aber %1 erhalten
 applying rights	mail	de	Rechte werden angewendet
 applying rights to %1 folders ...	mail	de	Rechte werden auf %1 Ordner angewendet ...
+archive	mail	de	Archiv
 archive folder	mail	de	Archivordner
 are you sure you want to delete all selected folders?	mail	de	Sollen alle selektierten Ordner gelöcht werden?
 are you sure you want to move folder %1 to folder %2?	mail	de	Soll der Ordner %1 in den Ordner %2 verschoben werden?
