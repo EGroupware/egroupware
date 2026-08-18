@@ -184,7 +184,7 @@ describe("buildFolderLevel()", () =>
 	 * $global2bootstrap map, api/src/Image.php - eg. "dhtmlxtree/MailFolderTrash" => "trash"),
 	 * not the legacy "dhtmlxtree/..." alias classic mail_tree.inc.php still goes through.
 	 */
-	it("uses the matching special-folder icon for trash/sent/drafts/junk/templates/outbox roles", () =>
+	it("uses the matching special-folder icon for trash/sent/drafts/junk/templates/outbox/archive roles", () =>
 	{
 		const [trash] = build([mailbox({role: "trash"})]);
 		const [sent] = build([mailbox({role: "sent"})]);
@@ -192,6 +192,7 @@ describe("buildFolderLevel()", () =>
 		const [junk] = build([mailbox({role: "junk"})]);
 		const [templates] = build([mailbox({role: "templates"})]);
 		const [outbox] = build([mailbox({role: "outbox"})]);
+		const [archive] = build([mailbox({role: "archive"})]);
 
 		assert.include(trash.im0, "trash");
 		assert.include(sent.im0, "send");
@@ -199,6 +200,18 @@ describe("buildFolderLevel()", () =>
 		assert.include(junk.im0, "exclamation-octagon");
 		assert.include(templates.im0, "file-earmark-text");
 		assert.include(outbox.im0, "upload");
+		assert.include(archive.im0, "archive");
+	});
+
+	it("uses the people icon for the shared/other-users namespace root ('user'/'shared'), regardless of case", () =>
+	{
+		const [user] = build([mailbox({name: "user", role: null})]);
+		const [shared] = build([mailbox({name: "Shared", role: null})]);
+		const [notARoot] = build([mailbox({name: "username", role: null})]);
+
+		assert.include(user.im0, "people");
+		assert.include(shared.im0, "people");
+		assert.notInclude(notARoot.im0, "people", "must match the literal namespace-root name only, not a substring/prefix");
 	});
 
 
@@ -231,12 +244,6 @@ describe("buildFolderLevel()", () =>
 		assert.equal(plain.text, "Projects");
 	});
 
-	it("falls back to the generic folder icon for a role with no dedicated icon (eg. archive)", () =>
-	{
-		const [node] = build([mailbox({role: "archive"})]);
-		assert.include(node.im0, "folder2");
-	});
-
 	it("falls back to the generic folder icon for a plain (non-special) folder", () =>
 	{
 		const [node] = build([mailbox({role: null})]);
@@ -251,22 +258,26 @@ describe("buildFolderLevel()", () =>
 	});
 
 	/**
-	 * Classic mail_tree.inc.php only ever special-cases folder icons/names at the top level
-	 * (account root or INBOX's own direct children, Api\Mail::getFolderArrays()'s
-	 * $_onlyTopLevel mode) - a deeper level always uses plain generic icons and the raw name,
-	 * even for a mailbox that happens to carry a matching role (eg. a real \Trash-attributed
-	 * folder several levels deep would still get no special treatment classically).
+	 * Classic mail_tree.inc.php only ever special-cased folder icons/names at the top level
+	 * because ITS OWN role detection (an expensive IMAP attribute lookup) was only ever computed
+	 * there - not because a deeper role was meaningless. JMAP has no such limitation: a real or
+	 * shim-reported role is trustworthy at any depth (eg. a shared/other-user mailbox's own
+	 * INBOX/Trash, several levels deep under "Shared Folders"), so label/icon treatment now
+	 * applies regardless of isTopLevel. Only the INBOX auto-open behaviour stays isTopLevel-gated
+	 * (see the "does not auto-open INBOX at a deeper level" test above) - the current account's
+	 * own INBOX should auto-expand, not every shared mailbox's own INBOX nested in the tree.
 	 */
-	describe("isTopLevel:false - deeper levels never get role-based icon/label treatment", () =>
+	describe("isTopLevel:false - label/icon treatment still applies, only auto-open stays gated", () =>
 	{
-		it("ignores a reported role entirely, even trash/inbox", () =>
+		it("still translates the label and uses the role icon for trash/inbox", () =>
 		{
 			const [trash] = buildFolderLevel([mailbox({role: "trash", name: "Trash"})], "42", "Archives/2020", {isTopLevel: false}, egw);
 			const [inbox] = buildFolderLevel([mailbox({role: "inbox", name: "INBOX"})], "42", "Archives/2020", {isTopLevel: false}, egw);
 
-			assert.equal(trash.text, "Trash", "must keep the raw name, not translated(Trash)");
-			assert.include(trash.im0, "folder2", "must use the generic icon, not the trash icon");
-			assert.include(inbox.im0, "folder2", "must use the generic icon, not the home icon");
+			assert.equal(trash.text, "translated(Trash)");
+			assert.include(trash.im0, "trash");
+			assert.include(inbox.im0, "download", "still uses the inbox/home icon");
+			assert.isUndefined(inbox.open, "must not auto-open - that's still isTopLevel-gated");
 		});
 	});
 });
@@ -302,25 +313,28 @@ describe("buildFolderLevel() id construction", () =>
 describe("buildFolderTree()", () =>
 {
 	/**
-	 * Same "top level" restriction as buildFolderLevel()'s isTopLevel option, computed per-node
-	 * here since this builds the whole nested tree in one pass: INBOX's own direct child gets
-	 * role-based treatment, but a grandchild (two levels deep) does not, even with a matching role.
+	 * Role-based label/icon treatment applies at any depth (a real or shim-reported role is
+	 * trustworthy regardless of nesting - see buildNode()'s own docblock), matching a shared/
+	 * other-user mailbox's own special-folder set nested several levels under eg. "Shared
+	 * Folders/name@example.com". Only auto-open stays restricted to the genuine top level/INBOX's
+	 * own children (isTopLevel(parentPath) - see its own docblock).
 	 */
-	it("only applies role-based icon/label treatment at the account root or INBOX's own children", () =>
+	it("applies role-based icon/label treatment at any depth, but only auto-opens the genuine top-level INBOX", () =>
 	{
 		const tree = buildFolderTree([
-			mailbox({id: "inbox", name: "INBOX", role: "inbox", parentId: null}),
+			mailbox({id: "inbox", name: "INBOX", role: "inbox", parentId: null, hasChildren: true}),
 			mailbox({id: "trash", name: "Trash", role: "trash", parentId: "inbox"}),
-			mailbox({id: "old", name: "Trash", role: "trash", parentId: "trash"}),
+			mailbox({id: "old", name: "Trash", role: "trash", parentId: "trash", hasChildren: true}),
 		], "42", egw);
 
 		const trashNode = tree[0].item[0];
 		const deepNode = trashNode.item[0];
 
 		assert.equal(tree[0].text, "translated(INBOX)");
+		assert.isTrue(tree[0].open, "the genuine top-level INBOX still auto-opens");
 		assert.equal(trashNode.text, "translated(Trash)");
-		assert.equal(deepNode.text, "Trash", "two levels deep must keep the raw name");
-		assert.include(deepNode.im0, "folder2", "two levels deep must use the generic icon");
+		assert.equal(deepNode.text, "translated(Trash)", "two levels deep still gets the role translation");
+		assert.include(deepNode.im0, "trash", "two levels deep still gets the role icon");
 	});
 
 	it("nests children under their parent via parentId, all the way down", () =>

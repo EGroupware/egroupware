@@ -5461,6 +5461,12 @@ export class MailApp extends EgwApp
 	 * checkbox-specific rendering to lose - not worth a second, near-identical autoload function
 	 * just for the rare case JMAP itself is unreachable.
 	 *
+	 * Always shows every folder regardless of the showAllFoldersInFolderPane preference - this
+	 * dialog manages folders, including unsubscribed ones, so it must never hide any of them (see
+	 * mail_folderTreeAutoload()'s own subscribedOnly param docblock; matches classic
+	 * mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading() calls, which
+	 * hardcoded $_subscribedOnly=false the same way).
+	 *
 	 * On any failure (network, non-JMAP-capable account), this is a no-op: the tree keeps whatever
 	 * the server already rendered (mail_ui::folderManagement()'s own mail_tree->getTree() call).
 	 */
@@ -5470,8 +5476,8 @@ export class MailApp extends EgwApp
 		const profileID = String(this.et2.getArrayMgr('content').getEntry('acc_id') ?? '');
 		if (!tree || !profileID) return;
 
-		tree.autoloading = this.mail_folderTreeAutoload.bind(this);
-		this.mail_buildRootFolderData(profileID).then((data) =>
+		tree.autoloading = (item : any) => this.mail_folderTreeAutoload(item, false);
+		this.mail_buildRootFolderData(profileID, false).then((data) =>
 		{
 			if (data === null)
 			{
@@ -5775,9 +5781,15 @@ export class MailApp extends EgwApp
 	 * mail_tree.inc.php's own treeLeafNoConnectionArray()).
 	 *
 	 * @param item the node being expanded
+	 * @param subscribedOnly explicit override - omit to fall back to the showAllFoldersInFolderPane
+	 *  preference (this callback's own default, used as-is by the main browsing tree). The
+	 *  folder-management dialog (mail_folderManagementLoad()) binds this with `false` instead,
+	 *  matching classic mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading()
+	 *  calls (hardcoded $_subscribedOnly=false) - that dialog manages folders, including
+	 *  unsubscribed ones, so every level of its tree must always show everything.
 	 * @return {item: FolderTreeNode[]} - Et2Tree's expected handleLazyLoading() result shape
 	 */
-	mail_folderTreeAutoload(item : any) : Promise<{ item : FolderTreeNode[] } | any>
+	mail_folderTreeAutoload(item : any, subscribedOnly? : boolean) : Promise<{ item : FolderTreeNode[] } | any>
 	{
 		const hasParent = typeof item.id === "string" && item.id.indexOf('::') !== -1;
 		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
@@ -5789,8 +5801,8 @@ export class MailApp extends EgwApp
 		}
 
 		const fetchLevel = hasParent
-			? this.mail_buildFolderLevelData(profileID, parentPath, parentId)
-			: this.mail_buildRootFolderData(profileID);
+			? this.mail_buildFolderLevelData(profileID, parentPath, parentId, subscribedOnly)
+			: this.mail_buildRootFolderData(profileID, subscribedOnly);
 
 		return fetchLevel.then((data) =>
 			data === null ? this.mail_classicFolderLoad(item) : {item: data}
@@ -5813,13 +5825,15 @@ export class MailApp extends EgwApp
 	 * `lazy` flag (Et2Tree.ts's _optionTemplate()) reads false and no further autoload fires for
 	 * it - see MailJmap.getRootFolders()'s own docblock for why this still costs two requests, not
 	 * one, and why that's still strictly better than today's reactive round trip.
+	 *
+	 * @param subscribedOnlyOverride see mail_folderTreeAutoload()'s own param docblock
 	 */
-	private mail_buildRootFolderData(profileID : string) : Promise<FolderTreeNode[] | null>
+	private mail_buildRootFolderData(profileID : string, subscribedOnlyOverride? : boolean) : Promise<FolderTreeNode[] | null>
 	{
-		return this.jmap.getRootFolders(profileID).then((result) =>
+		return this.jmap.getRootFolders(profileID, subscribedOnlyOverride).then((result) =>
 		{
 			if (result === null) return null;
-			const subscribedOnly = !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			const subscribedOnly = subscribedOnlyOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
 			const top = buildFolderLevel(result.top, profileID, '', {subscribedOnly, isTopLevel: true}, egw);
 			if (result.inboxChildren !== null)
 			{
@@ -5849,8 +5863,11 @@ export class MailApp extends EgwApp
 	 * Fetch + build one folder-tree level (shared by mail_folderTreeAutoload() and
 	 * mail_refreshFolderLevel()) - null means "JMAP not reachable", same contract
 	 * MailJmap.getMailboxChildren() itself has, for the caller to decide its own fallback.
+	 *
+	 * @param subscribedOnlyOverride see mail_folderTreeAutoload()'s own param docblock
 	 */
-	private mail_buildFolderLevelData(profileID : string, parentPath : string, parentId : string | null) : Promise<FolderTreeNode[] | null>
+	private mail_buildFolderLevelData(profileID : string, parentPath : string, parentId : string | null,
+		subscribedOnlyOverride? : boolean) : Promise<FolderTreeNode[] | null>
 	{
 		// classic mail_tree.inc.php only ever special-cases folder icons/names (Trash, Sent,
 		// Templates, ...) at this same "top level" scope (Api\Mail::getFolderArrays()'s
@@ -5859,10 +5876,10 @@ export class MailApp extends EgwApp
 		// put special folders as siblings of INBOX (parentPath === ''), others nest them under it
 		// (parentPath === 'INBOX') - both are covered.
 		const isTopLevel = parentPath === '' || parentPath === 'INBOX';
-		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel).then((mailboxes) =>
+		return this.jmap.getMailboxChildren(profileID, parentId, isTopLevel, subscribedOnlyOverride).then((mailboxes) =>
 		{
 			if (mailboxes === null) return null;
-			const subscribedOnly = !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
+			const subscribedOnly = subscribedOnlyOverride ?? !isPreferenceOn(egw.preference('showAllFoldersInFolderPane', 'mail'));
 			return buildFolderLevel(mailboxes, profileID, parentPath, {subscribedOnly, isTopLevel}, egw);
 		});
 	}

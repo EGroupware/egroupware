@@ -22,6 +22,7 @@ import type {MailApp} from "./app";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
 import JamClient from "jmap-jam";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
+import {sortTopLevel} from "./folderTree";
 
 interface JmapToken
 {
@@ -168,14 +169,6 @@ export class MailJmap
 	// JmapShim::MDN_HEADER_PROPERTY (mail/src/JmapShim.php), which echoes this same key back for
 	// local-shim accounts; a real JMAP server (Stalwart) does so natively per spec
 	private static readonly MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
-	// Fixed top-level display order (ralf's explicit spec, confirmed independent of the folder's
-	// actual name/translation): INBOX, then these special-role folders in this exact sequence,
-	// then every other folder alphabetically (see sortTopLevel()), then the shared/other-users
-	// namespace root last. Only applies at the top level (see getMailboxChildren()'s own
-	// docblock) - classic mail_tree.inc.php never reorders anything at a deeper level either.
-	private static readonly TOP_LEVEL_SORT_ORDER : Record<string, number> = {
-		inbox: 0, drafts: 1, templates: 2, sent: 3, trash: 4, junk: 5, outbox: 6,
-	};
 	// JMAP Quota extension (RFC 9425) - matches Mail\Jmap::JMAP_QUOTA (api/src/Mail/Jmap.php)
 	private static readonly JMAP_QUOTA = 'urn:ietf:params:jmap:quota';
 	// Per-profile cache of getQuota()'s formatted result - mail_refreshQuotaDisplay() (app.ts)
@@ -431,9 +424,16 @@ export class MailJmap
 	 *  same "top level" scope (Api\Mail::getFolderArrays()'s $_onlyTopLevel mode); any deeper
 	 *  level always uses plain generic icons and the raw name, even for a folder that happens to
 	 *  carry a matching name/role - see the templates/outbox name-matching below
+	 * @param subscribedOnly explicit override - omit to fall back to the showAllFoldersInFolderPane
+	 *  preference (the main browsing tree's own behaviour). The folder-management dialog always
+	 *  passes `false` here regardless of that preference, matching classic mail_tree.inc.php's own
+	 *  folderManagement()/ajax_folderMgmtTree_autoloading() calls (which hardcoded
+	 *  $_subscribedOnly=false): that dialog manages folders, including unsubscribed ones, so it
+	 *  must never hide any of them.
 	 * @return null if this account has no usable JMAP access-token (server unreachable, MFA, ...)
 	 */
-	async getMailboxChildren(profileID : string, parentId : string | null, isTopLevel : boolean) : Promise<any[] | null>
+	async getMailboxChildren(profileID : string, parentId : string | null, isTopLevel : boolean,
+		subscribedOnly? : boolean) : Promise<any[] | null>
 	{
 		try
 		{
@@ -450,7 +450,7 @@ export class MailJmap
 			// showed by default; a real JMAP server filters the same way via RFC 8621's standard
 			// isSubscribed MailboxFilterCondition
 			const filter : Record<string, any> = {parentId};
-			if (!isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
+			if (subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
 			{
 				filter.isSubscribed = true;
 			}
@@ -476,7 +476,17 @@ export class MailJmap
 			if (isTopLevel)
 			{
 				this.applyTemplateOutboxRoles(list, token);
-				this.sortTopLevel(list);
+			}
+			// sort role-tagged siblings into their fixed order (see folderTree.ts's sortTopLevel())
+			// whenever this level actually has any - not gated on isTopLevel: a shared/other-user
+			// mailbox's own special-folder set (eg. a folder nested under "Shared Folders") still
+			// gets a real role from the server at any depth, and deserves the same ordering as the
+			// account's own top level. A level of ordinary personal subfolders has no role-tagged
+			// entries at all, so this is a no-op for them, unlike applyTemplateOutboxRoles() above
+			// (an account-specific name-match that must stay isTopLevel-only).
+			if (isTopLevel || list.some((m : any) => !!m.role))
+			{
+				sortTopLevel(list);
 			}
 			if (!token.isLocal)
 			{
@@ -542,9 +552,11 @@ export class MailJmap
 	 * open, and reactively dispatched a lazy-load event for it (a full Lit render + updateComplete
 	 * + DOM CustomEvent round trip, on top of the request that event then triggers).
 	 *
+	 * @param subscribedOnly explicit override - omit to fall back to the showAllFoldersInFolderPane
+	 *  preference, same meaning and default as getMailboxChildren()'s own param (see its docblock)
 	 * @return null if this account has no usable JMAP access-token (same contract as getMailboxChildren())
 	 */
-	async getRootFolders(profileID : string) : Promise<{ top : any[], inboxChildren : any[] | null } | null>
+	async getRootFolders(profileID : string, subscribedOnly? : boolean) : Promise<{ top : any[], inboxChildren : any[] | null } | null>
 	{
 		try
 		{
@@ -552,7 +564,7 @@ export class MailJmap
 			if (!token) return null;
 			const client = this.clients[profileID];
 			const filter : Record<string, any> = {parentId: null};
-			if (!isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
+			if (subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
 			{
 				filter.isSubscribed = true;
 			}
@@ -571,7 +583,7 @@ export class MailJmap
 
 			const top = topMailboxes.list || [];
 			this.applyTemplateOutboxRoles(top, token);
-			this.sortTopLevel(top);
+			sortTopLevel(top);
 			if (!token.isLocal)
 			{
 				await this.resolveHasChildren(client, token.accountId, top);
@@ -586,7 +598,7 @@ export class MailJmap
 			// next time anything needs it (eg. a row-fetch for INBOX, which happens almost
 			// immediately since INBOX is the default selected folder)
 			this.mailboxIds[profileID + '::INBOX'] = inboxId;
-			const inboxChildren = await this.getMailboxChildren(profileID, inboxId, true);
+			const inboxChildren = await this.getMailboxChildren(profileID, inboxId, true, subscribedOnly);
 			return {top, inboxChildren};
 		}
 		catch (e)
@@ -601,29 +613,6 @@ export class MailJmap
 			console.error('MailJmap.getRootFolders(): failed, falling back to the classic ajax_foldertree fetch', e);
 			return null;
 		}
-	}
-
-	/**
-	 * Sort a top-level mailbox list (see getMailboxChildren()'s own isTopLevel docblock) into
-	 * TOP_LEVEL_SORT_ORDER's fixed sequence: INBOX/Drafts/Templates/Sent/Trash/Junk/Outbox in
-	 * that exact order, then every other folder alphabetically by name, then the shared/
-	 * other-users namespace root ("user" on Dovecot/JmapShim's local shim, "shared" on a real
-	 * JMAP server like Stalwart) always last - ralf's explicit spec, confirmed independent of the
-	 * folder's actual name/translation. Mutates `list` in place.
-	 */
-	private sortTopLevel(list : any[]) : void
-	{
-		const priority = (m : any) : number =>
-		{
-			if (m.role && m.role in MailJmap.TOP_LEVEL_SORT_ORDER) return MailJmap.TOP_LEVEL_SORT_ORDER[m.role];
-			if (['user', 'shared'].includes((m.name || '').toLowerCase())) return 8;
-			return 7;
-		};
-		list.sort((a : any, b : any) =>
-		{
-			const pa = priority(a), pb = priority(b);
-			return pa !== pb ? pa - pb : (pa === 7 ? (a.name || '').localeCompare(b.name || '') : 0);
-		});
 	}
 
 	/**

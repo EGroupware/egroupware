@@ -406,6 +406,102 @@ describe("MailJmap.getRootFolders() - combined root + INBOX-children fetch", () 
 	});
 });
 
+/**
+ * The folder-management dialog manages folders, including unsubscribed ones, so it must always
+ * see every folder regardless of the showAllFoldersInFolderPane preference - matching classic
+ * mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading() calls, which
+ * hardcoded $_subscribedOnly=false the same way. The main browsing tree passes no override at all
+ * and keeps following that preference exactly as before.
+ */
+describe("MailJmap.getMailboxChildren()/getRootFolders() - subscribedOnly override", () =>
+{
+	function createFilterCapturingClient(capture : { filters : any[] })
+	{
+		return {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({
+					Mailbox: {
+						query: (args : any) => { capture.filters.push(args.filter); return invocation(); },
+						get: (_args : any) => invocation(),
+					}
+				});
+				return [{mailboxes: {list: []}}];
+			}
+		};
+	}
+
+	it("getMailboxChildren(): adds isSubscribed:true when subscribedOnly is explicitly true, ignoring preference", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { filters : any[] } = {filters: []};
+		primeToken(jmap, "1", createFilterCapturingClient(capture));
+
+		await jmap.getMailboxChildren("1", null, true, true);
+
+		assert.isTrue(capture.filters[0].isSubscribed);
+	});
+
+	it("getMailboxChildren(): omits isSubscribed when subscribedOnly is explicitly false, ignoring preference", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { filters : any[] } = {filters: []};
+		primeToken(jmap, "1", createFilterCapturingClient(capture));
+
+		await jmap.getMailboxChildren("1", null, true, false);
+
+		assert.isUndefined(capture.filters[0].isSubscribed);
+	});
+
+	it("getMailboxChildren(): falls back to the showAllFoldersInFolderPane preference when omitted", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { filters : any[] } = {filters: []};
+		primeToken(jmap, "1", createFilterCapturingClient(capture));
+
+		await jmap.getMailboxChildren("1", null, true);
+
+		assert.isTrue(capture.filters[0].isSubscribed,
+			"shared egw stub's preference() returns null -> showAllFoldersInFolderPane off -> subscribedOnly");
+	});
+
+	it("getRootFolders(): propagates subscribedOnly:false to both the root query and the INBOX-children fetch", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let call = 0;
+		const filters : any[] = [];
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				call++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({
+					Mailbox: {
+						query: (args : any) => { filters.push(args.filter); return invocation(); },
+						get: (_args : any) => invocation(),
+					}
+				});
+				return call === 1
+					? [{topMailboxes: {list: [{id: "root1", name: "INBOX", role: "inbox"}]}, inboxIds: {ids: ["root1"]}}]
+					: [{mailboxes: {list: []}}];
+			}
+		};
+		(jmap as any).tokens["1"] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal: true, customLabels: {},
+		};
+		(jmap as any).clients["1"] = client;
+
+		await jmap.getRootFolders("1", false);
+
+		// filters[0] = root query, filters[1] = INBOX-id lookup ({name:'INBOX'}, never has isSubscribed),
+		// filters[2] = INBOX-children query
+		assert.isUndefined(filters[0].isSubscribed, "root query must omit isSubscribed");
+		assert.isUndefined(filters[2].isSubscribed, "INBOX-children query must also omit isSubscribed");
+	});
+});
+
 describe("MailJmap.fetchRows() held-back push refresh - preview snippet", () =>
 {
 	/**

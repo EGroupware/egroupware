@@ -83,9 +83,7 @@ export interface FolderTreeNode
 // (Stalwart, no equivalent mechanism) MailJmap.getMailboxChildren() (mail/js/jmap.ts) matches by
 // the account's own configured folder name (from the JMAP bootstrap payload) before this shape
 // even reaches buildNode() - so `mailbox.role` is already correctly set by the time it gets here
-// for both backends, no name-guessing needed in this shared code. "archive" was never
-// special-cased classically either, so it falls through to the generic folder icon below rather
-// than inventing new icon art.
+// for both backends, no name-guessing needed in this shared code.
 const ROLE_ICON_NAMES : Record<string, string> = {
 	trash: 'trash',
 	sent: 'send',
@@ -93,18 +91,28 @@ const ROLE_ICON_NAMES : Record<string, string> = {
 	junk: 'exclamation-octagon',
 	templates: 'file-earmark-text',
 	outbox: 'upload',
+	archive: 'archive',
 };
 
 /**
+ * @param role
+ * @param isNamespaceRoot the shared/other-users namespace root ("user"/"shared" - see
+ *  buildFolderLevel()'s own isVisibleNamespaceRoot()) gets its own icon regardless of role (it
+ *  never has one anyway - it's a structural navigation doorway, not a real mailbox)
  * @param egw only .image(name, app) is used, kept minimal so callers/tests don't need a full
  *  egw instance (same pattern attachmentIndex.ts's renderAttachmentIndex() uses)
  */
-function icons(role : string | null, egw : { image(name : string, app? : string) : string })
+function icons(role : string | null, isNamespaceRoot : boolean, egw : { image(name : string, app? : string) : string })
 {
 	if (role === 'inbox')
 	{
 		const home = egw.image('download', 'mail');
 		return {im0: home, im1: home, im2: home};
+	}
+	if (isNamespaceRoot)
+	{
+		const people = egw.image('people', 'mail');
+		return {im0: people, im1: people, im2: people};
 	}
 	const roleIcon = role && ROLE_ICON_NAMES[role] ? egw.image(ROLE_ICON_NAMES[role], 'mail') : null;
 	if (roleIcon)
@@ -130,6 +138,49 @@ const ROLE_LABEL_KEYS : Record<string, string> = {
 	templates: 'Templates', outbox: 'Outbox',
 };
 
+// Fixed top-level display order (ralf's explicit spec, confirmed independent of the folder's
+// actual name/translation): INBOX, then these special-role folders in this exact sequence, then
+// every other folder alphabetically, then the shared/other-users namespace root last.
+const TOP_LEVEL_SORT_ORDER : Record<string, number> = {
+	inbox: 0, drafts: 1, templates: 2, sent: 3, trash: 4, junk: 5, outbox: 6,
+};
+
+// the shared/other-users namespace root ("user" on Dovecot/JmapShim's local shim, "shared" on a
+// real JMAP server like Stalwart) is a structural navigation doorway, not a real mailbox - it
+// never has a role, is matched purely by its literal (untranslated) name, same convention used
+// throughout this file (sortTopLevel(), buildFolderLevel()'s own visibility exemption, buildNode()'s
+// icon choice)
+function isNamespaceRootName(name : string) : boolean
+{
+	return ['user', 'shared'].includes((name || '').toLowerCase());
+}
+
+/**
+ * Sort a level's sibling JMAP Mailbox nodes into TOP_LEVEL_SORT_ORDER's fixed sequence:
+ * INBOX/Drafts/Templates/Sent/Trash/Junk/Outbox in that exact order, then every other folder
+ * alphabetically by name, then the shared/other-users namespace root ("user" on Dovecot/JmapShim's
+ * local shim, "shared" on a real JMAP server like Stalwart) always last - ralf's explicit spec.
+ * Not scoped to any particular depth: used for the account's own top level/INBOX's own children
+ * (MailJmap.getMailboxChildren()) and equally for any shared/other-user mailbox's own special-
+ * folder set nested deeper in the tree, wherever the server actually tagged a sibling with a role
+ * (see buildNode()'s own docblock on why a role at any depth is trustworthy), and for the
+ * subscribe popup's whole-tree eager build (buildFolderTree()). Mutates `list` in place.
+ */
+export function sortTopLevel(list : JmapMailboxNode[]) : void
+{
+	const priority = (m : JmapMailboxNode) : number =>
+	{
+		if (m.role && m.role in TOP_LEVEL_SORT_ORDER) return TOP_LEVEL_SORT_ORDER[m.role];
+		if (isNamespaceRootName(m.name)) return 8;
+		return 7;
+	};
+	list.sort((a, b) =>
+	{
+		const pa = priority(a), pb = priority(b);
+		return pa !== pb ? pa - pb : (pa === 7 ? (a.name || '').localeCompare(b.name || '') : 0);
+	});
+}
+
 /**
  * Build one FolderTreeNode - shared by buildFolderLevel() (lazy, one level at a time) and
  * buildFolderTree() (eager, the whole account at once). `item`/`child` are left at their
@@ -141,19 +192,28 @@ const ROLE_LABEL_KEYS : Record<string, string> = {
  * @param path this node's own canonical "/"-joined path (already including its own name)
  * @param egw only .image(name, app) is used, kept minimal so callers/tests don't need a full
  *  egw instance (same pattern attachmentIndex.ts's renderAttachmentIndex() uses)
- * @param isTopLevel classic mail_tree.inc.php only ever special-cases folder icons/names at the
- *  account root or INBOX's own direct children - never at any deeper level (see
- *  BuildFolderLevelOptions.isTopLevel's docblock). false ignores mailbox.role entirely, even if
- *  the server reported one, matching classic's exact scope.
+ * @param isTopLevel only gates the auto-open behaviour below (the current account's OWN INBOX
+ *  should auto-expand, not every shared/other-user mailbox's own INBOX nested somewhere in the
+ *  tree) - label/icon treatment uses mailbox.role unconditionally regardless of depth (see below).
  */
 function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string, egw : Egw, isTopLevel : boolean) : FolderTreeNode
 {
-	const role = isTopLevel ? mailbox.role : null;
+	// A mailbox nested inside a shared/other-user's own namespace (eg. "Shared Folders/name@
+	// example.com/INBOX") still has its own genuine special-folder set - the server (real JMAP or
+	// JmapShim's roleFor()) already scopes `.role` correctly to the actual special mailbox
+	// regardless of depth, it's a per-mailbox protocol semantic, not something scoped to "top of
+	// MY OWN account" - classic mail_tree.inc.php only ever special-cased icons/names at the
+	// account root or INBOX's own direct children because ITS OWN role detection (an expensive
+	// IMAP attribute lookup) was only ever computed there in the first place, not because a
+	// deeper role was meaningless; JMAP has no such limitation, role is already known for every
+	// mailbox in the same response.
+	const role = mailbox.role;
 	// classic mail_tree.inc.php always substituted the UI-language translation for a
 	// role-identifiable special folder, discarding whatever the account's own real IMAP/JMAP
 	// name was - not just a preference, a guarantee that eg. Trash reads the same across every
 	// account regardless of what that account's server happens to literally call it
 	const label = (role && ROLE_LABEL_KEYS[role]) ? egw.lang(ROLE_LABEL_KEYS[role]) : mailbox.name;
+	const isNamespaceRoot = isNamespaceRootName(mailbox.name);
 	return {
 		id: profileID + '::' + path,
 		jmapId: mailbox.id,
@@ -171,9 +231,11 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 		// the persisted expand-state set (Et2Tree.ts's openStatePreference), since every Dovecot/
 		// IMAP account has an INBOX and (per ralf) it always has children in practice. Only ever
 		// `true`, never `false` - omitting it otherwise means this can't fight a `true` a later
-		// openStatePreference restore pass sets for a NON-inbox node.
-		...(role === 'inbox' && mailbox.hasChildren !== false ? {open: true} : {}),
-		...icons(role, egw),
+		// openStatePreference restore pass sets for a NON-inbox node. Gated on isTopLevel (unlike
+		// the label/icon above) - only the CURRENT account's own INBOX auto-expands, not every
+		// shared/other-user mailbox's own INBOX.
+		...(role === 'inbox' && isTopLevel && mailbox.hasChildren !== false ? {open: true} : {}),
+		...icons(role, isNamespaceRoot, egw),
 	};
 }
 
@@ -215,7 +277,7 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// accessible children, but an empty, dead-end namespace root is exactly what this whole
 	// exemption must never show for any other backend path that doesn't apply the same check)
 	const isVisibleNamespaceRoot = (mailbox : JmapMailboxNode) =>
-		['user', 'shared'].includes((mailbox.name || '').toLowerCase()) && mailbox.hasChildren !== false;
+		isNamespaceRootName(mailbox.name) && mailbox.hasChildren !== false;
 	return (mailboxes || [])
 		.filter((mailbox) => !options.subscribedOnly || mailbox.isSubscribed || isVisibleNamespaceRoot(mailbox))
 		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + mailbox.name : mailbox.name, egw,
@@ -246,12 +308,19 @@ export function buildFolderTree(mailboxes : JmapMailboxNode[], profileID : strin
 		byParent.get(key).push(mailbox);
 	});
 
-	// same "top level" scope as buildFolderLevel()'s isTopLevel option (see its docblock) -
-	// computed per-node here since this builds the whole nested tree in one pass
+	// only gates buildNode()'s auto-open behaviour (see its own docblock) - computed per-node here
+	// since this builds the whole nested tree in one pass
 	const isTopLevel = (parentPath : string) => parentPath === '' || parentPath === 'INBOX';
 
 	const build = (parentId : string | null, parentPath : string) : FolderTreeNode[] =>
-		(byParent.get(parentId) || []).map((mailbox) =>
+	{
+		const siblings = byParent.get(parentId) || [];
+		// same fixed role-based ordering as the lazy per-level tree (MailJmap.getMailboxChildren())
+		// - applies whenever this level actually contains a role-tagged mailbox (the account's own
+		// top level, INBOX's own children, or any shared/other-user mailbox's own special-folder
+		// set), leaving a level of ordinary personal subfolders in the server's own default order
+		if (siblings.some((mailbox) => !!mailbox.role)) sortTopLevel(siblings);
+		return siblings.map((mailbox) =>
 		{
 			const path = parentPath ? parentPath + '/' + mailbox.name : mailbox.name;
 			const node = buildNode(mailbox, profileID, path, egw, isTopLevel(parentPath));
@@ -259,6 +328,7 @@ export function buildFolderTree(mailboxes : JmapMailboxNode[], profileID : strin
 			node.child = node.item.length > 0;
 			return node;
 		});
+	};
 
 	return build(null, '');
 }
