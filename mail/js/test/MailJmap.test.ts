@@ -526,3 +526,64 @@ describe("describeSetError() - format a Mailbox/set or Email/set per-item SetErr
 		assert.isNull(describeSetError({}));
 	});
 });
+
+/**
+ * RFC 2045's Content-ID header value is conventionally written wrapped in angle brackets (eg.
+ * "<checkmk_logo.png>"), and a real JMAP server (Stalwart) can return EmailBodyPart.cid as that
+ * raw header value verbatim - but the "cid:" URI scheme (RFC 2392) never includes the brackets,
+ * so an HTML body's <img src="cid:checkmk_logo.png"> silently failed to match, leaving the cid:
+ * URL unresolved in the rendered DOM - a CSP violation, since img-src has no "cid:" scheme to
+ * allow at all. Real bug found live against a Stalwart account.
+ */
+describe("MailJmap.resolveInlineImages() - cid: matching", () =>
+{
+	function createDoc(html : string) : Document
+	{
+		return new DOMParser().parseFromString(html, "text/html");
+	}
+
+	function bodyResult(attachments : any[]) : any
+	{
+		return {special: false, html: "", profileID: "1", accountId: "acc1", isLocal: false, attachments};
+	}
+
+	it("resolves an <img cid:...> even when the attachment's own cid is wrapped in angle brackets", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const doc = createDoc('<img src="cid:checkmk_logo.png">');
+		(jmap as any).clients["1"] = {downloadBlob: async(_args : any) => ({blob: async() => new Blob(["x"])})};
+
+		await jmap.resolveInlineImages(doc, "row1",
+			bodyResult([{cid: "<checkmk_logo.png>", blobId: "b1", type: "image/png", name: "checkmk_logo.png"}]));
+
+		assert.match(doc.querySelector("img").src, /^blob:/);
+	});
+
+	it("still resolves when neither side has angle brackets", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const doc = createDoc('<img src="cid:checkmk_logo.png">');
+		(jmap as any).clients["1"] = {downloadBlob: async() => ({blob: async() => new Blob(["x"])})};
+
+		await jmap.resolveInlineImages(doc, "row1",
+			bodyResult([{cid: "checkmk_logo.png", blobId: "b1", type: "image/png", name: "checkmk_logo.png"}]));
+
+		assert.match(doc.querySelector("img").src, /^blob:/);
+	});
+
+	it("leaves the cid: src untouched when there is genuinely no matching attachment", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const doc = createDoc('<img src="cid:unknown.png">');
+		let called = false;
+		(jmap as any).clients["1"] = {
+			downloadBlob: async() => { called = true; return {blob: async() => new Blob(["x"])}; }
+		};
+
+		await jmap.resolveInlineImages(doc, "row1",
+			bodyResult([{cid: "checkmk_logo.png", blobId: "b1", type: "image/png", name: "checkmk_logo.png"}]));
+
+		assert.isFalse(called, "must not attempt a download for a cid with no matching attachment");
+		assert.equal(doc.querySelector("img").getAttribute("src"), "cid:unknown.png");
+	});
+});

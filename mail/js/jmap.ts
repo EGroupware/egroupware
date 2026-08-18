@@ -1185,18 +1185,26 @@ export class MailJmap
 		{
 			return;
 		}
+		// RFC 2045's Content-ID header value is conventionally written wrapped in angle brackets
+		// (eg. "<checkmk_logo.png>"), and a real JMAP server (Stalwart) can return
+		// EmailBodyPart.cid as that raw header value verbatim - but the "cid:" URI scheme
+		// (RFC 2392) never includes the brackets, so an HTML body's <img src="cid:checkmk_logo.png">
+		// wouldn't match an unstripped "<checkmk_logo.png>" key here, silently leaving the cid:
+		// URL unresolved (and CSP-blocked - img-src has no "cid:" scheme to allow at all)
+		const stripCidBrackets = (cid : string) => cid.trim().replace(/^</, '').replace(/>$/, '');
+
 		const byCid : Record<string, any> = {};
 		result.attachments.forEach((att : any) =>
 		{
 			if (att.cid)
 			{
-				byCid[att.cid] = att;
+				byCid[stripCidBrackets(att.cid)] = att;
 			}
 		});
 
 		await Promise.all(images.map(async(img) =>
 		{
-			const cid = decodeURIComponent(img.getAttribute('src').substring(4));
+			const cid = stripCidBrackets(decodeURIComponent(img.getAttribute('src').substring(4)));
 			const attachment = byCid[cid];
 			if (!attachment)
 			{
