@@ -63,6 +63,7 @@ appended after reply before sending	mail	en	Appended after reply before sending
 application mail expected but got: %1	mail	en	Application email expected but got: %1
 applying rights	mail	en	Applying rights
 applying rights to %1 folders ...	mail	en	Applying rights to %1 folders ...
+archive	mail	en	Archive
 archive folder	mail	en	Archive Folder
 are you sure you want to delete all selected folders?	mail	en	Are you sure you want to delete all selected folders?
 are you sure you want to move folder %1 to folder %2?	mail	en	Are you sure you want to move folder %1 to folder %2?
