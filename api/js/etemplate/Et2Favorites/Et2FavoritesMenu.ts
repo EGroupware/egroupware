@@ -146,9 +146,12 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	{
 		if(!menu || !this.sortable)
 		{
-			if(this._sortable)
+			try
 			{
-				this._sortable.destroy();
+				this._sortable?.destroy?.();
+			} finally
+			{
+				this._sortable = null;
 			}
 			return;
 		}
