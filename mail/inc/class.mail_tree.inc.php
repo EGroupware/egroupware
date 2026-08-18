@@ -117,15 +117,10 @@ class mail_tree
 		);
 		self::setOutStructure($leaf, $baseNode, self::DELIMITER);
 
-		return ($baseNode?$baseNode:array( // fallback not connected array
-						'id'=>0,
-						'item'=> array(
-							'text'=>'INBOX',
-							'tooltip'=>'INBOX'.' '.lang('(not connected)'),
-							'im0'=> self::$leafImages['folderHome']
-						)
-					)
-		);
+		// $baseNode always has at least its 'id' key set above, before setOutStructure() ever
+		// runs - the "not connected" fallback array this ternary used to guard against was
+		// unreachable dead code
+		return $baseNode;
 	}
 
 	/**
