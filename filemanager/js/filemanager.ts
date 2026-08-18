@@ -1743,10 +1743,10 @@ export class filemanagerAPP extends EgwApp
 			return false;
 		}
 		let data = egw.dataGetUIDdata(_senders[0].id);
-		let readonly = (data?.data.class || '').split(/ +/).indexOf('noEdit') >= 0;
+		let readonly = (data?.data?.class || '').split(/ +/).indexOf('noEdit') >= 0;
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
-		return (!_senders[0].id || data.data.is_dir && !readonly);
+		return (!_senders[0].id || data?.data?.is_dir && !readonly);
 	}
 
 	hiddenUploadComplete(event)
@@ -1847,16 +1847,19 @@ export class filemanagerAPP extends EgwApp
 	isEditable(_egwAction, _senders) : boolean
 	{
 		if (_senders.length>1) return false;
-		let data = egw.dataGetUIDdata(_senders[0].id);
+		// no row data: the sender is not a file row (eg. the datagrid's empty-list
+		// placeholder, which still offers mkdir/paste/share) - nothing to edit
+		let data = egw.dataGetUIDdata(_senders[0]?.id);
+		if (!data?.data?.mime) return false;
 		let fe = egw.file_editor_prefered_mimes(data.data.mime);
-		return data?.data?.mime && fe?.mime && typeof fe.mime[data.data.mime] !== "undefined";
+		return !!(fe?.mime && typeof fe.mime[data.data.mime] !== "undefined");
 	}
 
 	checkInvoice(_egwAction, _senders) : boolean
 	{
 		if (_senders.length>1) return false;
-		let data = egw.dataGetUIDdata(_senders[0].id);
-		return data.data?.mime && ['application/pdf', 'text/xml', 'application/xml'].includes(data.data.mime);
+		let data = egw.dataGetUIDdata(_senders[0]?.id);
+		return !!(data?.data?.mime && ['application/pdf', 'text/xml', 'application/xml'].includes(data.data.mime));
 	}
 
 	/**
