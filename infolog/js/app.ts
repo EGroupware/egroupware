@@ -185,8 +185,8 @@ class InfologApp extends EgwApp
 		let nm : any = {};
 
 		// Get index etemplate
-		var et2 = etemplate2.getById('infolog-index');
-		if(et2)
+		const et2 = etemplate2.getById('infolog-index');
+		if(et2 && et2.widgetContainer?.getWidgetById("nm") !=null)
 		{
 			state = et2.widgetContainer.getWidgetById("nm").getValue();
 			let content = et2.widgetContainer.getArrayMgr('content');
