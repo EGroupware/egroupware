@@ -1999,13 +1999,37 @@ export class MailApp extends EgwApp
 	/**
 	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
 	 *
-	 * @param {object} _server omitting uses this->mail_bo->profileID on serverside
+	 * Tries MailJmap.getQuota() (direct JMAP, no server round-trip at all when it resolves) first
+	 * - falls back to the classic ajax_refreshQuotaDisplay() round-trip only if that declines
+	 * (not JMAP-eligible, or the server doesn't advertise the Quota extension).
+	 *
+	 * @param {object} _server omitting uses the currently active profile
 	 *
 	 */
 	mail_refreshQuotaDisplay(_server?: any)
 	{
-		egw.json('mail.mail_ui.ajax_refreshQuotaDisplay',[_server])
-			.sendRequest(true);
+		// same "not always set, read it from foldertree" fallback fetchRows()/mail_buildJmapQuery()
+		// already use for resolving the currently active profile client-side
+		const profileID = String(_server ||
+			this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
+			this.egw.preference('ActiveProfileID', 'mail') || '').split('::')[0];
+
+		const classicFallback = () => egw.json('mail.mail_ui.ajax_refreshQuotaDisplay', [_server]).sendRequest(true);
+
+		if (!profileID)
+		{
+			classicFallback();
+			return;
+		}
+		this.jmap.getQuota(profileID).then((data) =>
+		{
+			if (data)
+			{
+				this.mail_setQuotaDisplay(data);
+				return;
+			}
+			classicFallback();
+		});
 	}
 
 	/**
@@ -2860,6 +2884,7 @@ export class MailApp extends EgwApp
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
 
+		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty junk'), 'success');
 		const classicEmptySpam = () => egw.json('mail.mail_ui.ajax_emptySpam',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
@@ -2894,6 +2919,7 @@ export class MailApp extends EgwApp
 		var activeFilters = this.mail_getActiveFilters();
 		var self = this;
 
+		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty trash'), 'success');
 		const classicEmptyTrash = () => egw.json('mail.mail_ui.ajax_emptyTrash',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
@@ -4809,6 +4835,7 @@ export class MailApp extends EgwApp
 				switch (_button_id)
 				{
 					case "delete":
+						this.jmap.invalidateQuota(_senders[0].id.split('::', 1)[0]);
 						(this.mail_tryJmapDeleteFolder(_senders[0].id) ??
 							egw.json('mail.mail_ui.ajax_deleteFolder', [_senders[0].id]).sendRequest(true));
 						return;

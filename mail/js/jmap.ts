@@ -176,6 +176,15 @@ export class MailJmap
 	private static readonly TOP_LEVEL_SORT_ORDER : Record<string, number> = {
 		inbox: 0, drafts: 1, templates: 2, sent: 3, trash: 4, junk: 5, outbox: 6,
 	};
+	// JMAP Quota extension (RFC 9425) - matches Mail\Jmap::JMAP_QUOTA (api/src/Mail/Jmap.php)
+	private static readonly JMAP_QUOTA = 'urn:ietf:params:jmap:quota';
+	// Per-profile cache of getQuota()'s formatted result - mail_refreshQuotaDisplay() (app.ts)
+	// is called on every single folder click, not just an actual account switch, and quota
+	// rarely changes visibly between those - a long TTL avoids a fresh (comparatively expensive)
+	// JMAP round-trip (or worse, falling back to the classic IMAP connect+examine chain) on
+	// every one of those.
+	private quotaCache : Record<string, { data : Record<string, any>, expires : number }> = {};
+	private static readonly QUOTA_CACHE_TTL = 2 * 60 * 60 * 1000;
 
 	get egw() : IegwAppLocal
 	{
@@ -255,6 +264,153 @@ export class MailJmap
 			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId)),
 			total: ids.total ?? (emails.list || []).length,
 		};
+	}
+
+	/**
+	 * Get formatted quota-display data for $profileID directly via JMAP, avoiding the classic
+	 * IMAP connect+examine round-trip mail_ui::ajax_refreshQuotaDisplay() would otherwise need
+	 * (that path was the source of a real production hang/error against a flaky IMAP backend).
+	 * Result shape matches what MailApp.mail_setQuotaDisplay() (app.ts) expects, so a caller can
+	 * hand it straight through with no PHP round-trip at all when this resolves non-null.
+	 *
+	 * Briefly cached (see quotaCache): mail_refreshQuotaDisplay() is called on every folder
+	 * click, not just an actual account switch.
+	 *
+	 * @return null only when a genuinely different code path is worth trying: the account has no
+	 *  usable JMAP token right now, or it's a real JMAP server (Stalwart, token.isLocal false)
+	 *  that doesn't advertise the Quota extension (RFC 9425) - caller falls back to the classic
+	 *  ajax_refreshQuotaDisplay() round-trip (real IMAP protocol against the same server) in that
+	 *  case. Never null for a local/shim account (token.isLocal true): JmapShim implements
+	 *  Quota/get by wrapping the exact same classic IMAP QUOTA lookup ajax_refreshQuotaDisplay()
+	 *  would otherwise fall back to, so declining there would only repeat an identical lookup for
+	 *  no benefit - answers "not supported" directly instead (mirrors the classic path's own
+	 *  "$quota===false" display).
+	 */
+	async getQuota(profileID : string) : Promise<Record<string, any> | null>
+	{
+		const cached = this.quotaCache[profileID];
+		if (cached && cached.expires > Date.now())
+		{
+			return cached.data;
+		}
+		const token = await this.ensureToken(profileID);
+		if (!token)
+		{
+			return null;
+		}
+		const client = this.clients[profileID];
+		const session = await client.session;
+		let quota : any = null;
+		if (session.capabilities?.[MailJmap.JMAP_QUOTA])
+		{
+			// jmap-jam's fluent t.Entity.method() builder only knows the handful of entities it
+			// ships types for (Email, Mailbox, ...) - Quota (RFC 9425) isn't one of them, so this
+			// uses the lower-level request() escape hatch instead, same as Mail\Jmap's own raw
+			// jmapCall() array form server-side (api/src/Mail/Jmap.php's getQuota())
+			const [{list}] : any = await (client.request as any)(['Quota/get', {
+				accountId: token.accountId,
+				ids: null,
+			}], {using: [MailJmap.JMAP_QUOTA]});
+			quota = (list || []).find((q : any) => q.resourceType === 'octets' && (q.scope ?? 'account') === 'account');
+		}
+		else if (!token.isLocal)
+		{
+			return null;
+		}
+		const data = quota
+			? this.formatQuotaDisplay(Math.round(quota.used / 1024), Math.round(quota.hardLimit / 1024), profileID)
+			: (token.isLocal ? this.notSupportedQuotaDisplay(profileID) : null);
+		if (data)
+		{
+			this.quotaCache[profileID] = {data, expires: Date.now() + MailJmap.QUOTA_CACHE_TTL};
+		}
+		return data;
+	}
+
+	/**
+	 * Invalidate the cached quota for $profileID (see getQuota()'s quotaCache) - call after an
+	 * action that can actually change usage (emptying trash/junk, deleting a whole folder), so
+	 * the next mail_refreshQuotaDisplay() call (app.ts) fetches a fresh value instead of serving
+	 * the last (up to QUOTA_CACHE_TTL old) cached one.
+	 */
+	invalidateQuota(profileID : string) : void
+	{
+		delete this.quotaCache[profileID];
+	}
+
+	/**
+	 * "Quota not available" display data, matching mail_ui::ajax_refreshQuotaDisplay()'s own
+	 * "$quota===false" branch shape.
+	 */
+	private notSupportedQuotaDisplay(profileID : string) : Record<string, any>
+	{
+		return {
+			data: {
+				quota: this.egw.lang('Quota not provided by server'),
+				quotainpercent: '0',
+				quotaclass: 'mail_DisplayNone',
+				profileid: profileID,
+				quotafreespace: '',
+			},
+			quotawarning: false,
+		};
+	}
+
+	/**
+	 * Format usage/limit (both in KB, matching Api\Mail::getQuotaRoot()'s units) into the shape
+	 * MailApp.mail_setQuotaDisplay() (app.ts) expects - client-side port of
+	 * ProfileHandler::quotaDisplay() + mail_ui::ajax_refreshQuotaDisplay()'s own content-building
+	 * (mail/src/Ui/ProfileHandler.php, mail/inc/class.mail_ui.inc.php), so a JMAP-direct quota
+	 * fetch never needs the server round-trip just to format the numbers. Unlike the classic
+	 * path, "quotawarning" is returned at the top level (not nested under "data") to match what
+	 * mail_setQuotaDisplay() actually reads.
+	 */
+	private formatQuotaDisplay(usageKB : number, limitKB : number, profileID : string) : Record<string, any>
+	{
+		const percent = limitKB === 0 ? 100 : Math.round(usageKB * 100 / limitKB);
+		const usageText = MailJmap.showReadableSize(usageKB * 1024);
+		const text = limitKB > 0 ? `${usageText}/${MailJmap.showReadableSize(limitKB * 1024)}` : usageText;
+		const cls = limitKB > 0
+			? (percent > 90 ? 'mail-index_QuotaRed' : percent > 80 ? 'mail-index_QuotaYellow' : 'mail-index_QuotaGreen')
+			: 'mail-index_QuotaGreen';
+		const freespace = limitKB * 1024 - usageKB * 1024;
+		const quotaLimitWarning = Number(this.egw.config('quota_limit_warning', 'mail')) || 30;
+
+		return {
+			data: {
+				quota: this.egw.lang('Quota: %1', text),
+				quotainpercent: String(percent),
+				quotaclass: cls,
+				profileid: profileID,
+				quotafreespace: MailJmap.showReadableSize(freespace),
+			},
+			quotawarning: Math.ceil(freespace / (1024 * 1024)) < quotaLimitWarning,
+		};
+	}
+
+	/**
+	 * Client-side port of Api\Mail::show_readable_size() (api/src/Mail.php) - must stay in sync
+	 * with the exact same (slightly unusual: MB is truncated to one decimal BEFORE the GB
+	 * conversion) rounding behaviour, so quota text looks identical regardless of whether it came
+	 * from the classic PHP path or this direct-JMAP one.
+	 */
+	private static showReadableSize(bytes : number) : string
+	{
+		bytes /= 1024;
+		let type = 'k';
+		if (bytes / 1024 > 1)
+		{
+			bytes /= 1024;
+			type = 'M';
+			if (bytes / 1024 > 1)
+			{
+				bytes = Math.trunc(bytes * 10) / 10;
+				bytes /= 1024;
+				type = 'G';
+			}
+		}
+		bytes = bytes < 10 ? Math.trunc(bytes * 10) / 10 : Math.trunc(bytes);
+		return bytes + ' ' + type;
 	}
 
 	/**

@@ -86,6 +86,7 @@ class JmapShim
 			'capabilities' => [
 				Api\Mail\Jmap::JMAP_CORE => new \stdClass(),
 				'urn:ietf:params:jmap:mail' => new \stdClass(),
+				Api\Mail\Jmap::JMAP_QUOTA => new \stdClass(),
 			],
 			'accounts' => $accounts,
 			'primaryAccounts' => $primaryAccounts,
@@ -149,6 +150,9 @@ class JmapShim
 						break;
 					case 'Email/import':
 						$result = self::emailImport($accountId, $args);
+						break;
+					case 'Quota/get':
+						$result = self::quotaGet($accountId, $args);
 						break;
 					default:
 						throw new \Exception("Unsupported method '$method'");
@@ -270,6 +274,62 @@ class JmapShim
 		$subscribedOnly = array_key_exists('isSubscribed', (array)($args['filter'] ?? [])) &&
 			(bool)$args['filter']['isSubscribed'];
 		return ['ids' => self::listChildIds($imap, $parentPath, $subscribedOnly)];
+	}
+
+	/**
+	 * Quota/get (RFC 9425) for the local plain-IMAP shim - wraps the same classic IMAP QUOTA
+	 * extension lookup Api\Mail::getQuotaRoot() already uses, so a plain-IMAP account exposes
+	 * quota via JMAP too instead of the client needing a classic ajax_refreshQuotaDisplay()
+	 * fallback: for a shim account, that fallback would just run the exact same IMAP QUOTA
+	 * lookup anyway, one layer further down - there's nothing to be gained by declining here.
+	 *
+	 * @param string $accountId
+	 * @param array $args {ids?: ?string[]}
+	 * @return array {accountId, state, list: array[], notFound: string[]}
+	 */
+	public static function quotaGet(string $accountId, array $args) : array
+	{
+		$ids = $args['ids'] ?? null;
+		$list = ($accountId !== '0' && ($imap = self::imapServer($accountId))) ? self::quotaFromImap($imap) : [];
+		if (is_array($ids))
+		{
+			$list = array_values(array_filter($list, static fn($q) => in_array($q['id'], $ids)));
+		}
+		return [
+			'accountId' => $accountId,
+			'state' => '0',
+			'list' => $list,
+			'notFound' => is_array($ids) ? array_values(array_diff($ids, array_column($list, 'id'))) : [],
+		];
+	}
+
+	/**
+	 * The IMAP side of quotaGet(), split out so it can be exercised directly (via ReflectionMethod)
+	 * against a mocked connection in tests, same pattern listChildIds() already uses.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @return array[] empty if the server has no QUOTA capability or no quota root on INBOX
+	 */
+	private static function quotaFromImap(\Horde_Imap_Client_Socket $imap) : array
+	{
+		if (!$imap->hasCapability('QUOTA'))
+		{
+			return [];
+		}
+		$quota = $imap->getStorageQuotaRoot('INBOX');
+		if (!is_array($quota) || !isset($quota['QMAX']))
+		{
+			return [];
+		}
+		return [[
+			'id' => 'mail',
+			'resourceType' => 'octets',
+			'used' => (int)$quota['USED'] * 1024,
+			'hardLimit' => (int)$quota['QMAX'] * 1024,
+			'scope' => 'account',
+			'name' => 'Mail',
+			'types' => ['Mailbox', 'Email'],
+		]];
 	}
 
 	/**

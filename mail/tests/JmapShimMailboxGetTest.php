@@ -414,4 +414,44 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame([], $result['list']);
 		$this->assertSame([base64_encode('INBOX')], $result['notFound']);
 	}
+
+	public function testQuotaFromImapReturnsOctetsAccountQuotaInBytes()
+	{
+		$imap = $this->mockImap([], ['hasCapability', 'getStorageQuotaRoot']);
+		$imap->method('hasCapability')->with('QUOTA')->willReturn(true);
+		$imap->method('getStorageQuotaRoot')->with('INBOX')->willReturn(['USED' => 100, 'QMAX' => 1000]);
+
+		$list = $this->invokePrivate('quotaFromImap', [$imap]);
+
+		$this->assertCount(1, $list);
+		$this->assertSame('octets', $list[0]['resourceType']);
+		$this->assertSame('account', $list[0]['scope']);
+		$this->assertSame(100 * 1024, $list[0]['used']);
+		$this->assertSame(1000 * 1024, $list[0]['hardLimit']);
+	}
+
+	public function testQuotaFromImapEmptyWhenServerHasNoQuotaCapability()
+	{
+		$imap = $this->mockImap([], ['hasCapability', 'getStorageQuotaRoot']);
+		$imap->method('hasCapability')->with('QUOTA')->willReturn(false);
+		$imap->expects($this->never())->method('getStorageQuotaRoot');
+
+		$this->assertSame([], $this->invokePrivate('quotaFromImap', [$imap]));
+	}
+
+	public function testQuotaFromImapEmptyWhenNoQuotaRootOnInbox()
+	{
+		$imap = $this->mockImap([], ['hasCapability', 'getStorageQuotaRoot']);
+		$imap->method('hasCapability')->with('QUOTA')->willReturn(true);
+		$imap->method('getStorageQuotaRoot')->with('INBOX')->willReturn(false);
+
+		$this->assertSame([], $this->invokePrivate('quotaFromImap', [$imap]));
+	}
+
+	public function testQuotaGetNoConnectionReturnsEmptyList()
+	{
+		$result = JmapShim::quotaGet('0', ['ids' => null]);
+		$this->assertSame([], $result['list']);
+		$this->assertSame([], $result['notFound']);
+	}
 }

@@ -6,6 +6,7 @@ const egw = {
 	user: (_key : string) => 1,
 	lang: (label : string) => label,
 	preference: (_key : string, _app? : string) => null,
+	config: (_name : string, _app? : string) => null,
 	request: async() => ({}),
 	message: (_msg : string, _type? : string) => {},
 };
@@ -433,6 +434,110 @@ describe("MailJmap.fetchRows() - never falls back to the dead classic ajax_get_r
 
 		assert.isOk(result, "fetchRows() must resolve a real result, never false");
 		assert.deepEqual(result.order, []);
+	});
+});
+
+/**
+ * Contract: MailJmap.getQuota() fetches quota directly via JMAP, never falling back to the
+ * classic ajax_refreshQuotaDisplay() round-trip for a local/shim account (JmapShim implements
+ * Quota/get by wrapping the exact same classic IMAP lookup that fallback would otherwise use -
+ * see mail/src/JmapShim.php's quotaGet()/quotaFromImap()) - only a real JMAP server without the
+ * Quota extension is worth falling back for.
+ */
+describe("MailJmap.getQuota()", () =>
+{
+	function primeQuotaToken(jmap : MailJmap, profileID : string, isLocal : boolean, client : any) : void
+	{
+		(jmap as any).tokens[profileID] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal, customLabels: {},
+		};
+		(jmap as any).clients[profileID] = client;
+	}
+
+	function fakeQuotaClient(capabilities : Record<string, any>, list : any[], requestCalls : any[]) : any
+	{
+		return {
+			session: Promise.resolve({capabilities}),
+			request: async([method, args] : any) =>
+			{
+				requestCalls.push([method, args]);
+				return [{list}, {}];
+			},
+		};
+	}
+
+	it("returns formatted data from a real JMAP server that advertises the Quota extension", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const requestCalls : any[] = [];
+		const client = fakeQuotaClient(
+			{"urn:ietf:params:jmap:quota": {}},
+			[{id: "mail", resourceType: "octets", scope: "account", used: 100 * 1024, hardLimit: 1000 * 1024}],
+			requestCalls);
+		primeQuotaToken(jmap, "1", false, client);
+
+		const result : any = await jmap.getQuota("1");
+
+		assert.equal(requestCalls.length, 1);
+		assert.equal(requestCalls[0][0], "Quota/get");
+		assert.equal(result.data.profileid, "1");
+		assert.equal(result.data.quotainpercent, "10");
+		assert.equal(result.data.quotaclass, "mail-index_QuotaGreen");
+	});
+
+	it("resolves null (caller falls back to classic) for a real JMAP server without the Quota extension", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client = fakeQuotaClient({}, [], []);
+		primeQuotaToken(jmap, "1", false, client);
+
+		assert.isNull(await jmap.getQuota("1"));
+	});
+
+	it("never falls back for a local/shim account - answers 'not supported' directly instead", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const client = fakeQuotaClient({}, [], []);
+		primeQuotaToken(jmap, "1", true, client);
+
+		const result : any = await jmap.getQuota("1");
+
+		assert.isOk(result, "must resolve a real result, never null, for a local/shim account");
+		assert.equal(result.data.quotaclass, "mail_DisplayNone");
+	});
+
+	it("caches the result so a second call within the TTL doesn't re-fetch", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const requestCalls : any[] = [];
+		const client = fakeQuotaClient(
+			{"urn:ietf:params:jmap:quota": {}},
+			[{id: "mail", resourceType: "octets", scope: "account", used: 1024, hardLimit: 1024 * 1024}],
+			requestCalls);
+		primeQuotaToken(jmap, "1", false, client);
+
+		await jmap.getQuota("1");
+		await jmap.getQuota("1");
+
+		assert.equal(requestCalls.length, 1, "second call within the TTL must be served from cache");
+	});
+
+	it("invalidateQuota() forces the next call to re-fetch instead of serving the cache", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const requestCalls : any[] = [];
+		const client = fakeQuotaClient(
+			{"urn:ietf:params:jmap:quota": {}},
+			[{id: "mail", resourceType: "octets", scope: "account", used: 1024, hardLimit: 1024 * 1024}],
+			requestCalls);
+		primeQuotaToken(jmap, "1", false, client);
+
+		await jmap.getQuota("1");
+		jmap.invalidateQuota("1");
+		await jmap.getQuota("1");
+
+		assert.equal(requestCalls.length, 2, "invalidateQuota() must clear the cached entry");
 	});
 });
 
