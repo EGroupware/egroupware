@@ -447,7 +447,27 @@ class Jmap extends Mail\Imap
 		unset($GLOBALS['egw_info']['server']['sessions_checkip']);
 		if (!$GLOBALS['egw']->session->verify($client_data['sessionid']))
 		{
-			throw new Api\Exception('Invalid sessionid!');
+			// session that registered this push has since expired - unsubscribe instead of erroring on
+			// every future retry (Stalwart otherwise keeps calling us until the subscription itself
+			// expires); best-effort only, quietly log instead of throwing to avoid error-log noise
+			try
+			{
+				$jmap = Mail\Account::read($client_data['acc_id'], $client_data['account_id'])->imapServer()->jmapClient();
+				$subscription = current(array_filter($jmap->getPushSubscriptions()['list'] ?? [],
+					static fn($s) => $s['deviceClientId'] === $client_data['client_id'])) ?: null;
+				if ($subscription)
+				{
+					$jmap->destroyPushSubscription($subscription['id']);
+				}
+				error_log(__METHOD__."() sessionid expired for acc_id={$client_data['acc_id']}, account_id={$client_data['account_id']}".
+					($subscription ? ', unsubscribed push' : ', no matching subscription found'));
+			}
+			catch (\Exception $e)
+			{
+				error_log(__METHOD__."() sessionid expired for acc_id={$client_data['acc_id']}, account_id={$client_data['account_id']}".
+					', failed to unsubscribe push: '.$e->getMessage());
+			}
+			return;
 		}
 		// finish the request towards the mail server but continue processing it
 		if (function_exists('fastcgi_finish_request'))
@@ -494,16 +514,29 @@ class Jmap extends Mail\Imap
 					[$what, $type] = explode('-', $type);   // "mailbox-created", "email-updated", ...
 					foreach($change['list'] ?? [] as $i => $item)
 					{
-						if ($what === 'email')
+						if ($what !== 'email' && $what !== 'mailbox')
 						{
-							$uid = $stalwart->emailId2uid($item['id'], $item['messageId'][0], key($item['mailboxIds']), $folder);
+							continue;
 						}
-						elseif ($what === 'mailbox')
+						try
 						{
-							$folder = $jmap->folderId2path($item['id']);
+							if ($what === 'email')
+							{
+								$uid = $stalwart->emailId2uid($item['id'], $item['messageId'][0], key($item['mailboxIds']), $folder);
+							}
+							else
+							{
+								$folder = $jmap->folderId2path($item['id']);
+							}
 						}
-						else
+						catch (\Horde_Imap_Client_Exception $e)
 						{
+							// the mailbox behind this push item's mailboxId/folderId is not (or no longer)
+							// a real, selectable IMAP mailbox (eg. a JMAP-only virtual mailbox like Outbox,
+							// or a genuine delete/rename race) - skip just this item, not the whole batch
+							error_log(__METHOD__."() skipping $what-$type change[list][$i]=".json_encode($item).
+								', folderId='.($what === 'email' ? key($item['mailboxIds']) : $item['id']).
+								', folder='.($folder ?? '?').': '.$e->getMessage());
 							continue;
 						}
 						$id = $client_data['account_id'].'::'.$client_data['acc_id'].'::'.base64_encode($folder);

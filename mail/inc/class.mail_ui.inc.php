@@ -22,6 +22,7 @@ use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
+use EGroupware\Api\Mail\Imap\Jmap as ImapJmap;
 use EGroupware\Mail\JmapShim;
 use EGroupware\Mail\Ui\AttachmentHandler;
 use EGroupware\Mail\Ui\AttachmentJmap;
@@ -2612,11 +2613,17 @@ class mail_ui
 		$rememberServerID = $this->mail_bo->profileID;
 		try
 		{
-			if ($icServerID && $icServerID != $this->mail_bo->profileID)
+			// try JMAP first, so we don't pay for a classic IMAP connect+examine round-trip
+			// (and its occasional flakiness) just to display quota on a JMAP-native account
+			$quota = $this->jmapQuota($icServerID);
+			if ($quota === null)
 			{
-				$this->changeProfile($icServerID);
+				if ($icServerID && $icServerID != $this->mail_bo->profileID)
+				{
+					$this->changeProfile($icServerID);
+				}
+				$quota = $this->mail_bo->getQuotaRoot();
 			}
-			$quota = $this->mail_bo->getQuotaRoot();
 		} catch (Exception $e) {
 			$quota['limit'] = 'NOT SET';
 			error_log(__METHOD__.__LINE__." ".$e->getMessage());
@@ -2656,6 +2663,47 @@ class mail_ui
 		}
 		$response = Api\Json\Response::get();
 		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content));
+	}
+
+	/**
+	 * Try to get quota via the JMAP Quota extension, without touching the classic IMAP
+	 * connection/profile machinery at all - avoids ajax_refreshQuotaDisplay() paying for a
+	 * classic IMAP connect+examine round-trip (and its occasional flakiness/latency) just to
+	 * display quota on a JMAP-native (Stalwart) account.
+	 *
+	 * @param string|int $icServerID
+	 * @return array|null with keys "usage"/"limit" in KB (same shape/units as
+	 *  Api\Mail::getQuotaRoot()), or null if not applicable (not a JMAP account, server doesn't
+	 *  advertise the Quota extension, or no account-level "octets" quota found) - the caller
+	 *  falls back to the classic path unchanged in that case
+	 */
+	private function jmapQuota($icServerID) : ?array
+	{
+		try
+		{
+			$icServer = Mail::getInstance(false, $icServerID, true, false, true)->icServer;
+			if (!$icServer instanceof ImapJmap)
+			{
+				return null;
+			}
+			if (($list = $icServer->jmapClient()->getQuota()) === null)
+			{
+				return null;   // server does not support the JMAP Quota extension
+			}
+			foreach ($list as $q)
+			{
+				if (($q['resourceType'] ?? null) === 'octets' && ($q['scope'] ?? 'account') === 'account')
+				{
+					return ['usage' => (int)round($q['used'] / 1024), 'limit' => (int)round($q['hardLimit'] / 1024)];
+				}
+			}
+			return null;
+		}
+		catch (\Exception $e)
+		{
+			error_log(__METHOD__.'() failed, falling back to classic IMAP quota: '.$e->getMessage());
+			return null;
+		}
 	}
 
 	/**

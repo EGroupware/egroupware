@@ -376,6 +376,10 @@ class Jmap
 	 * JMAP mail (includes core!)
 	 */
 	const JMAP_MAIL = [self::JMAP_CORE, "urn:ietf:params:jmap:mail"];
+	/**
+	 * JMAP quota extension, see https://www.rfc-editor.org/rfc/rfc9425
+	 */
+	const JMAP_QUOTA = "urn:ietf:params:jmap:quota";
 
 	/**
 	 * Make a JMAP call - emulating multiple methodCalls with single calls and resolving references
@@ -443,6 +447,28 @@ class Jmap
 			'methodResponses' => $responses,
 			'sessionState' => $response['sessionState'] ?? null,
 		];
+	}
+
+	/**
+	 * Get quota via the JMAP Quota extension (RFC 9425), if the server advertises it
+	 *
+	 * @param string|null $accountId
+	 * @return array[]|null list of Quota objects (keys "id", "resourceType", "used", "hardLimit",
+	 *  "scope", ...), or null if the server does NOT advertise the urn:ietf:params:jmap:quota
+	 *  capability - callers should fall back to a non-JMAP way of getting the quota in that case
+	 * @throws Api\Exception on error
+	 */
+	public function getQuota(?string $accountId=null) : ?array
+	{
+		if (!in_array(self::JMAP_QUOTA, $this->capabilities))
+		{
+			return null;
+		}
+		$response = $this->jmapCall([[ "Quota/get", [
+			"accountId" => $accountId ?: $this->accountId,
+			"ids" => null,
+		], "0" ]], [self::JMAP_CORE, self::JMAP_QUOTA]);
+		return $response['methodResponses'][0][1]['list'] ?? throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
 	}
 
 	/**
@@ -523,6 +549,23 @@ class Jmap
 			"update" => [
 				$pushSubscriptionId => $values,
 			]
+		], "0"]], self::JMAP_MAIL);
+		$sessionState = $response['sessionState'] ?? null;
+		return $response['methodResponses'][0][1] ?? throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
+	}
+
+	/**
+	 * Destroy a push subscription, so the JMAP server stops calling us
+	 *
+	 * @param string $pushSubscriptionId
+	 * @param string|null &$sessionState
+	 * @return array with values for keys "destroyed" and "notDestroyed"
+	 * @throws Api\Exception
+	 */
+	public function destroyPushSubscription(string $pushSubscriptionId, ?string &$sessionState=null)
+	{
+		$response = $this->jmapCall([[ "PushSubscription/set", [
+			"destroy" => [$pushSubscriptionId],
 		], "0"]], self::JMAP_MAIL);
 		$sessionState = $response['sessionState'] ?? null;
 		return $response['methodResponses'][0][1] ?? throw new Api\Exception(__METHOD__.': Unexpected response: '.json_encode($response));
