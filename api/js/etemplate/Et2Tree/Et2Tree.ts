@@ -439,6 +439,19 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 	{
 		super.updated(_changedProperties);
 
+		// Et2WidgetWithSelectMixin's own select_options getter/setter (Object.defineProperty via
+		// @property()) is a completely separate property from this class's own _selectOptions,
+		// which _optionTemplate()/getNode()/etc. actually render/search - loadFromXML() (this
+		// class's own override, called for the classic server-rendered XML seed) never goes
+		// through the mixin's select_options at all, so this only ever matters for a caller doing
+		// a client-side bulk replacement (eg. mail's app.ts, `tree.select_options = data` after a
+		// JMAP fetch) - without this sync that assignment was a silent no-op: nothing crashed or
+		// even logged, the tree just kept showing whatever it already had.
+		if (_changedProperties.has("select_options"))
+		{
+			this._selectOptions = <TreeItemData[]><unknown>this.select_options ?? [];
+		}
+
 		// openStatePreference is often assigned imperatively (eg. mail's app.ts, right after
 		// getWidgetById()) - possibly after firstUpdated() already ran and found it empty, so
 		// also (re-)apply here whenever it actually changes, not just once on first render
