@@ -433,12 +433,12 @@ class infolog_bo
 				else
 				{
 					// undelete requires edit rights
-					$access = $this->so->check_access( $info,Acl::EDIT,$this->implicit_rights == 'edit',$grants,$user );
+					$access = $this->checkAccessGrants( $info,Acl::EDIT,$this->implicit_rights == 'edit',$grants,$user );
 				}
 			}
 			if (!isset($access))
 			{
-				$access = $this->so->check_access( $info,$required_rights,$this->implicit_rights == 'edit',$grants,$user );
+				$access = $this->checkAccessGrants( $info,$required_rights,$this->implicit_rights == 'edit',$grants,$user );
 			}
 		}
 		// else $cached = ' (from cache)';
@@ -447,14 +447,177 @@ class infolog_bo
 	}
 
 	/**
+	 * Core ACL decision for a single already-loaded entry: is $required_rights granted to $user,
+	 * given $grants and whether $user is (implicitly) responsible for the entry.
+	 *
+	 * Moved here from infolog_so::check_access() (2026-08-19, InfoLog storage migration project,
+	 * see doc/ai/projects/infolog-storage-migration.md decision #4) - ACL decisions belong in the
+	 * BO layer, like every other app, not in the storage class. $info is always an array here
+	 * (guaranteed by check_access() above, which reads it from $this->so first if needed) - the
+	 * original so-side scalar/instance-cache handling was dead code from this call site and was
+	 * dropped, not ported.
+	 *
+	 * @param array $info infolog entry as array (must have info_owner/info_access/info_responsible)
+	 * @param int $required_rights EGW_ACL_xyz anded together
+	 * @param boolean $implicit_edit responsible has only implicit read and add rigths, unless this is set to true
+	 * @param array $grants grants of $user to use
+	 * @param int $user user to check
+	 * @return boolean True if access is granted else False
+	 */
+	protected function checkAccessGrants(array $info, $required_rights, $implicit_edit, array $grants, $user)
+	{
+		$owner = $info['info_owner'];
+
+		return $owner == $user ||	// user has all rights
+			// ACL only on public entrys || $owner granted _PRIVATE
+			(!!($grants[$owner] & $required_rights) ||
+				$this->is_responsible($info,$user) &&	// implicite rights for responsible user(s) and his memberships
+				($required_rights == Acl::READ || $required_rights == Acl::ADD || $implicit_edit && $required_rights == Acl::EDIT)) &&
+			($info['info_access'] == 'public' || !!($this->grants[$user] & Acl::PRIVAT));
+	}
+
+	/**
 	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
 	 *
 	 * @param array $info infolog entry as array
+	 * @param int $user =null user to check for, default $this->user
 	 * @return boolean
 	 */
-	function is_responsible($info)
+	function is_responsible($info, $user=null)
 	{
-		return $this->so->is_responsible($info);
+		if (!$user) $user = $this->user;
+
+		return self::is_responsible_user($info, $user);
+	}
+
+	/**
+	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
+	 *
+	 * Moved here from infolog_so (2026-08-19, see doc/ai/projects/infolog-storage-migration.md
+	 * decision #4).
+	 *
+	 * @param array $info infolog entry as array
+	 * @param int $user user to check for
+	 * @return boolean
+	 */
+	static function is_responsible_user($info, $user)
+	{
+		static $um_cache = array();
+		$user_and_memberships =& $um_cache[$user];
+		if (!isset($user_and_memberships))
+		{
+			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user,true);
+			$user_and_memberships[] = $user;
+		}
+		return $info['info_responsible'] && array_intersect((array)$info['info_responsible'],$user_and_memberships);
+	}
+
+	/**
+	 * Cache for aclFilter(), keyed by filter-type+user (same cache key shape as the original
+	 * infolog_so::$acl_filter it replaces).
+	 *
+	 * @var array
+	 */
+	protected $acl_filter = array();
+
+	/**
+	 * generate sql to be AND'ed into a search query to ensure ACL is respected (incl. _PRIVATE)
+	 *
+	 * Moved here from infolog_so::aclFilter() (2026-08-19, InfoLog storage migration project, see
+	 * doc/ai/projects/infolog-storage-migration.md decision #4) - ACL decisions belong in the BO
+	 * layer; infolog_so (and its eventual Api\Storage-based replacement) has no ACL awareness of
+	 * its own. Builds on $this->so's db connection/table names since this class doesn't have its
+	 * own (this class is composition-based, not an Api\Storage subclass - see decision #1); the
+	 * ACL *decision* logic (which grants apply, ownership, PRIVAT) is what actually lives here now,
+	 * which is the part that matters for decision #4.
+	 *
+	 * @param string $_filter ''|all - list all entrys user have rights to see<br>
+	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!),
+	 *  responsible|my = entries the user is responsible for
+	 *  delegated = entries the user delegated to someone else
+	 * @return string the necesary sql
+	 */
+	function aclFilter($_filter = false)
+	{
+		$vars = null;
+		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)(\+deleted)?/',$_filter ?? '',$vars);
+		$filter = $vars[1] ?? null;
+		$f_user = $vars[2] ?? '';
+		$deleted_too = !empty($vars[3]);
+
+		if (isset($this->acl_filter[$filter.$f_user]))
+		{
+			return $this->acl_filter[$filter.$f_user];  // used cached filter if found
+		}
+		if ($f_user && strpos($f_user,',') !== false)
+		{
+			$f_user = explode(',',$f_user);
+		}
+
+		$filtermethod = " (info_owner=$this->user"; // user has all rights
+
+		if ($filter == 'my' || $filter == 'responsible')
+		{
+			$filtermethod .= " AND {$this->so->users_table}.account_id IS NULL";
+		}
+		if ($filter == 'delegated')
+		{
+			$filtermethod .= " AND {$this->so->users_table}.account_id IS NOT NULL)";
+		}
+		else
+		{
+			$public_user_list = $private_user_list = $has_private_access = null;
+			if (is_array($this->grants))
+			{
+				foreach($this->grants as $grant_user => $grant)
+				{
+					if ($grant & (EGW_ACL_READ|EGW_ACL_EDIT))
+					{
+						$public_user_list[] = $grant_user;
+					}
+					if ($grant & Acl::PRIVAT)
+					{
+						$private_user_list[] = $grant_user;
+					}
+				}
+				if (count((array)$private_user_list))
+				{
+					$has_private_access = $this->so->db->expression($this->so->info_table,array('info_owner' => $private_user_list));
+				}
+			}
+			$public_access = $this->so->db->expression($this->so->info_table,array('info_owner' => $public_user_list));
+			// implicit read-rights for responsible user
+			$filtermethod .= " OR (".$this->so->responsible_filter($this->user, $deleted_too).')';
+
+			// private: own entries plus the one user is responsible for
+			if ($filter == 'private' || $filter == 'privat' || $filter == 'own')
+			{
+				$filtermethod .= " OR (".$this->so->responsible_filter($this->user, $deleted_too).
+					($filter == 'own' && count((array)$public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
+						" OR info_status = 'offer' AND $public_access" : '').")".
+				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
+			}
+			elseif ($filter != 'my' && $filter != 'responsible')	// none --> all entrys user has rights to see
+			{
+				if ($has_private_access)
+				{
+					$filtermethod .= " OR $has_private_access";
+				}
+				if (count((array)$public_user_list))
+				{
+					$filtermethod .= " OR (info_access='public' AND $public_access)";
+				}
+			}
+			$filtermethod .= ') ';
+
+			if ($filter == 'user' && $f_user)
+			{
+				$filtermethod .= $this->so->db->expression($this->so->info_table,' AND (',array(
+					'info_owner' => $f_user,
+				)." AND {$this->so->users_table}.account_id IS NULL OR ",$this->so->responsible_filter($f_user, $deleted_too),')');
+			}
+		}
+		return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
 	}
 
 	/**
@@ -1425,6 +1588,7 @@ class infolog_bo
 
 		$q = $query;
 		unset($q['limit_modified_n_month']);
+		$acl_filter = $no_acl ? null : $this->aclFilter($query['filter']);
 		for($n = 1; $n <= self::LIMIT_MODIFIED_RETRY; $n *= 2)
 		{
 			// apply modified limit only if requested AND we're sorting by modified AND NOT (searching, CRM-view, ...)
@@ -1436,7 +1600,7 @@ class infolog_bo
 				$q['col_filter'][99] = 'info_datemodified > '.
 					(new Api\DateTime((-$n*$query['limit_modified_n_month']).' month'))->format('server');
 			}
-			$ret = $this->so->search($q, $no_acl);
+			$ret = $this->so->search($q, $no_acl, $acl_filter);
 			$this->total = $query['total'] = $q['total'];
 			if (!isset($q['col_filter'][99]) || is_array($ret) && count($ret) >= $query['num_rows'])
 			{
@@ -1990,7 +2154,7 @@ class infolog_bo
 				//error_log(__METHOD__."() checking with filter '$filter' ($pref_value) for user $user ($email)");
 
 				$params = array('filter' => $filter, 'custom_fields' => true, 'subs' => true);
-				foreach($this->so->search($params) as $info)
+				foreach($this->so->search($params, false, $this->aclFilter($filter)) as $info)
 				{
 					// check if we already send a notification for that infolog entry, eg. starting and due on same day
 					if (in_array($info['info_id'],$notified_info_ids)) continue;
@@ -2212,7 +2376,7 @@ class infolog_bo
 		if (!$relax && !empty($infoData['info_uid']))
 		{
 			$filter = array('col_filter' => array('info_uid' => $infoData['info_uid']));
-			foreach($this->so->search($filter) as $egwData)
+			foreach($this->so->search($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $egwData)
 			{
 				if (!$this->check_access($egwData,Acl::READ)) continue;
 				$foundInfoLogs[$egwData['info_id']] = $egwData['info_id'];
@@ -2264,7 +2428,7 @@ class infolog_bo
 		unset($filter['col_filter']['info_des']);
 		unset($filter['col_filter']['info_location']);
 
-		foreach ($this->so->search($filter) as $itemID => $egwData)
+		foreach ($this->so->search($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
 		{
 			if (!$this->check_access($egwData,Acl::READ)) continue;
 
@@ -2337,7 +2501,7 @@ class infolog_bo
 		// Horde::logMessage("findVTODO Filter\n"
 		//	. print_r($filter, true),
 		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-		foreach ($this->so->search($filter) as $itemID => $egwData)
+		foreach ($this->so->search($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
 		{
 			if (!$this->check_access($egwData,Acl::READ)) continue;
 			// Horde::logMessage("findVTODO Trying\n"

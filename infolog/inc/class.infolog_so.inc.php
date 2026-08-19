@@ -11,7 +11,6 @@
 
 use EGroupware\Api;
 use EGroupware\Api\Link;
-use EGroupware\Api\Acl;
 
 /**
  * storage object / db-layer for InfoLog
@@ -93,89 +92,6 @@ class infolog_so
 	}
 
 	/**
-	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
-	 *
-	 * @param array $info infolog entry as array
-	 * @param int $user =null user to check for, default $this->user
-	 * @return boolean
-	 */
-	function is_responsible($info,$user=null)
-	{
-		if (!$user) $user = $this->user;
-
-		return self::is_responsible_user($info, $user);
-	}
-
-	/**
-	 * Check if user is responsible for an entry: he or one of his memberships is in responsible
-	 *
-	 * @param array $info infolog entry as array
-	 * @param int $user =null user to check for
-	 * @return boolean
-	 */
-	static function is_responsible_user($info, $user)
-	{
-
-		static $um_cache = array();
-		$user_and_memberships =& $um_cache[$user];
-		if (!isset($user_and_memberships))
-		{
-			$user_and_memberships = $GLOBALS['egw']->accounts->memberships($user,true);
-			$user_and_memberships[] = $user;
-		}
-		return $info['info_responsible'] && array_intersect((array)$info['info_responsible'],$user_and_memberships);
-	}
-
-	/**
-	 * checks if user has the $required_rights to access $info_id (private access is handled too)
-	 *
-	 * @param array|int $info data or info_id of InfoLog entry
-	 * @param int $required_rights EGW_ACL_xyz anded together
-	 * @param boolean $implicit_edit =false responsible has only implicit read and add rigths, unless this is set to true
-	 * @param ?array $grants =null grants to use, default (null) $this->grants
-	 * @param int $user =null user to check, default (null) $this->user
-	 * @return boolean True if access is granted else False
-	 */
-	function check_access( $info, $required_rights, $implicit_edit=false, ?array $grants=null, $user=null )
-	{
-		if (is_null($grants)) $grants = $this->grants;
-		if (!$user) $user = $this->user;
-
-		// if info-array, but no owner given, force reading of info from db
-		if (is_array($info) && !$info['info_owner']) $info = $info['info_id'];
-
-		if (is_array($info))
-		{
-
-		}
-		elseif ((int) $info != $this->data['info_id'])      	// already loaded?
-		{
-			// dont change our own internal data,
-			$backup_data = $this->data;
-			$info = $this->read(array('info_id'=>$info));
-			$this->data = $backup_data;
-		}
-		else
-		{
-			$info = $this->data;
-		}
-		if (!$info)
-		{
-			return False;
-		}
-		$owner = $info['info_owner'];
-		$access_ok = $owner == $user ||	// user has all rights
-			// ACL only on public entrys || $owner granted _PRIVATE
-			(!!($grants[$owner] & $required_rights) ||
-				$this->is_responsible($info,$user) &&	// implicite rights for responsible user(s) and his memberships
-				($required_rights == Acl::READ || $required_rights == Acl::ADD || $implicit_edit && $required_rights == Acl::EDIT)) &&
-			($info['info_access'] == 'public' || !!($this->grants[$user] & Acl::PRIVAT));
-
-		// error_log(__METHOD__."($info[info_id],$required_rights,$implicit_edit,".array2string($grants).",$user) returning ".array2string($access_ok));
-		return $access_ok;
-	}
-
-	/**
 	 * Filter for a given responsible user: info_responsible either contains a the user or one of his memberships
 	 *
 	 * @param int|array $users one or more account_ids
@@ -206,99 +122,6 @@ class infolog_so
 			$sql .= " AND $this->users_table.info_res_deleted IS NULL";
 		}
 		return $sql;
-	}
-
-	/**
-	 * generate sql to be AND'ed into a query to ensure ACL is respected (incl. _PRIVATE)
-	 *
-	 * @param string $_filter ''|all - list all entrys user have rights to see<br>
-	 * 	private|own - list only his personal entrys (incl. those he is responsible for !!!),
-	 *  responsible|my = entries the user is responsible for
-	 *  delegated = entries the user delegated to someone else
-	 * @return string the necesary sql
-	 */
-	function aclFilter($_filter = False)
-	{
-		$vars = null;
-		preg_match('/(my|responsible|delegated|own|privat|private|all|user)([0-9,-]*)(\+deleted)?/',$_filter,$vars);
-		$filter = $vars[1];
-		$f_user = $vars[2];
-		$deleted_too = !empty($vars[3]);
-
-		if (isset($this->acl_filter[$filter.$f_user]))
-		{
-			return $this->acl_filter[$filter.$f_user];  // used cached filter if found
-		}
-		if ($f_user && strpos($f_user,',') !== false)
-		{
-			$f_user = explode(',',$f_user);
-		}
-
-		$filtermethod = " (info_owner=$this->user"; // user has all rights
-
-		if ($filter == 'my' || $filter == 'responsible')
-		{
-			$filtermethod .= " AND $this->users_table.account_id IS NULL";
-		}
-		if ($filter == 'delegated')
-		{
-			$filtermethod .= " AND $this->users_table.account_id IS NOT NULL)";
-		}
-		else
-		{
-			if (is_array($this->grants))
-			{
-				foreach($this->grants as $user => $grant)
-				{
-					// echo "<p>grants: user=$user, grant=$grant</p>";
-					if ($grant & (EGW_ACL_READ|EGW_ACL_EDIT))
-					{
-						$public_user_list[] = $user;
-					}
-					if ($grant & Acl::PRIVAT)
-					{
-						$private_user_list[] = $user;
-					}
-				}
-				if (count($private_user_list))
-				{
-					$has_private_access = $this->db->expression($this->info_table,array('info_owner' => $private_user_list));
-				}
-			}
-			$public_access = $this->db->expression($this->info_table,array('info_owner' => $public_user_list));
-			// implicit read-rights for responsible user
-			$filtermethod .= " OR (".$this->responsible_filter($this->user, $deleted_too).')';
-
-			// private: own entries plus the one user is responsible for
-			if ($filter == 'private' || $filter == 'privat' || $filter == 'own')
-			{
-				$filtermethod .= " OR (".$this->responsible_filter($this->user, $deleted_too).
-					($filter == 'own' && count($public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
-						" OR info_status = 'offer' AND $public_access" : '').")".
-				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
-			}
-			elseif ($filter != 'my' && $filter != 'responsible')	// none --> all entrys user has rights to see
-			{
-				if ($has_private_access)
-				{
-					$filtermethod .= " OR $has_private_access";
-				}
-				if (count($public_user_list))
-				{
-					$filtermethod .= " OR (info_access='public' AND $public_access)";
-				}
-			}
-			$filtermethod .= ') ';
-
-			if ($filter == 'user' && $f_user)
-			{
-				$filtermethod .= $this->db->expression($this->info_table,' AND (',array(
-					'info_owner' => $f_user,
-				)," AND $this->users_table.account_id IS NULL OR ",$this->responsible_filter($f_user, $deleted_too),')');
-			}
-		}
-		//echo "<p>aclFilter(filter='$_filter',user='$f_user') = '$filtermethod', privat_user_list=".print_r($privat_user_list,True).", public_user_list=".print_r($public_user_list,True)."</p>\n";
-		return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
 	}
 
 	/**
@@ -820,9 +643,13 @@ class infolog_so
 	 * @param string $query[append]=null get's appended to sql query, eg. for GROUP BY
 	 * @param boolean $query['custom_fields']=false query custom-fields too, default not
 	 * @param boolean $no_acl =false true: ignore all acl
+	 * @param ?string $acl_filter =null pre-built ACL sql fragment to AND into the query, required unless
+	 * 	$no_acl is true - ACL decisions are made by infolog_bo::aclFilter(), not here (this class has no
+	 * 	ACL awareness of its own); defaults to '0=1' (matches nothing) rather than '1=1' if omitted, so a
+	 * 	caller that forgets to pass it fails closed, not open
 	 * @return array|iterator with id's as key of the matching log-entries or recordset/iterator if cols is set
 	 */
-	function search(&$query, $no_acl=false)
+	function search(&$query, $no_acl=false, $acl_filter=null)
 	{
 		//error_log(__METHOD__.'('.array2string($query).')');
 		$action2app = array(
@@ -879,7 +706,7 @@ class infolog_so
 		{
 			$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
 		}
-		$filtermethod = $no_acl ? '1=1' : $this->aclFilter($query['filter']);
+		$filtermethod = $no_acl ? '1=1' : ($acl_filter ?? '0=1');
 		if (empty($query['col_filter']['info_status']))  $filtermethod .= $this->statusFilter($query['filter']);
 		$filtermethod .= $this->dateFilter($query['filter']);
 		$cfcolfilter=0;

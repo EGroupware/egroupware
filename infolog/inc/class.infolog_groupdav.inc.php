@@ -388,7 +388,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 				if ($task['info_status'] == 'deleted' ||
 					// or event is reported as removed from collection, because collection owner is no longer an attendee
 					$check_responsible && $task['info_owner'] != $check_responsible &&
-						!infolog_so::is_responsible_user($task, $check_responsible))
+						!infolog_bo::is_responsible_user($task, $check_responsible))
 				{
 					yield ['path' => $path.urldecode($this->get_path($task))];
 				}
