@@ -662,7 +662,7 @@ abstract class CalDAVTest extends TestCase
 			}
 			// api/src/loader.php can unset $GLOBALS['egw_domain'] for security.
 			// CalDAV test helpers still need DB connection details to create fixture users.
-			if (empty($GLOBALS['egw_domain'][$_REQUEST['domain']]['db_host']) &&
+			if (empty($GLOBALS['egw_domain']) &&
 				($header = @file_get_contents(__DIR__ . '/../../header.inc.php')))
 			{
 				$domain_pattern = "/\\\$GLOBALS\\['egw_domain'\\]\\['([^']+)'\\]\\s*=\\s*array\\((.*?)\\);/s";
@@ -685,6 +685,21 @@ abstract class CalDAVTest extends TestCase
 						}
 					}
 				}
+			}
+			// Resolve the requested domain (eg. phpunit.xml's literal "default") against
+			// whatever domains are actually configured, the same way
+			// LoggedInTest::load_egw() resolves EGW_DOMAIN via Api\Session::search_instance() -
+			// a domain literally named "default" need not exist (this repo's header.inc.php
+			// commonly only has real, named domains like "boulder.egroupware.org");
+			// search_instance() falls back to matching HTTP_HOST/SERVER_NAME or, failing that,
+			// the first configured domain, instead of a literal string match.
+			if (!empty($GLOBALS['egw_domain']) && empty($GLOBALS['egw_domain'][$_REQUEST['domain']]['db_host']))
+			{
+				$default_domain = $GLOBALS['egw_info']['server']['default_domain'] ?? null;
+				$_REQUEST['domain'] = $_REQUEST['ConfigDomain'] = Session::search_instance(
+					null, $_REQUEST['domain'], $default_domain,
+					array($_SERVER['HTTP_HOST'] ?? '', $_SERVER['SERVER_NAME'] ?? ''),
+					$GLOBALS['egw_domain']);
 			}
 			// Some setup / account code paths (eg. push token generation) require an install_id
 			// in egw_info['server'], which may not yet be populated in CLI test bootstrap.
