@@ -1566,6 +1566,12 @@ export class MailApp extends EgwApp
 
 		if (selected && selected.length>1)
 		{
+			// A pending single-selection body-load timer
+			// (scheduled below, in the plain-selection branch) targets a rowId that is no longer selected now
+			// without this, it can still
+			// fire ~300ms later and load that stale row's body into the iframe this branch just
+			// blanked/disabled.
+			for (const t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
 			// Leave if we're here and there is nothing selected, too many, or no data
 			if (attachmentsBlock)
 			{
