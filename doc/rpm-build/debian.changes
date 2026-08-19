@@ -1,3 +1,13 @@
+egroupware-docker (26.8.20260819) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+  * Mail: add S/MIME CSR export/import and self-signed certificate generation
+  * Mail: S/MIME .cer/PKCS#7 upload support, intermediate CA cert, passphrase UX
+  * Mail: fix folder-management delete confirmation opening in the wrong window
+  * Import/Export: fix definitions with a link filter with app but no entry would limit to 0 results
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 19 Aug 2026 07:32:23 +0200
+
 egroupware-docker (26.8.20260811) hardy; urgency=low
 
   * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
