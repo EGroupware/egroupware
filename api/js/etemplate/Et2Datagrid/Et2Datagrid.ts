@@ -3960,10 +3960,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		const dataStoreRowId = this._dataStoreRowIdFor(row.id ?? rowIndex);
 		rowElement.classList.toggle("dg-row-active", row.id == this.activeRowId);
-		// Set alongside aria-selected below, not just left for the next deferred
-		// _syncRowAccessibilityState() pass - otherwise a row rebuilt by a render-version bump
-		// (eg. Et2Datagrid.updateRowData(), used for optimistic in-place updates) mounts without
-		// its highlight for a frame and visibly flashes it back in once that pass catches up.
+		// Set alongside aria-selected below, not just left for the next deferred _syncRowAccessibilityState() pass:
+		// otherwise a row rebuilt by a render-version bump (eg. Et2Datagrid.refresh() applying an in-place update)mounts without its highlight for 1 frame, and visibly flashes it back in once that pass catches up.
 		rowElement.classList.toggle("dg-row-selected", this.allSelected || this.selectedRowIds.has(row.id));
 		rowElement.setAttribute("role", "row");
 		rowElement.setAttribute("data-row-id", dataStoreRowId);
@@ -6329,39 +6327,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this.egw().debug("error", e.message);
 		}
-	}
-
-	/**
-	 * Apply already-known-fresh data to one loaded row and re-render it, without a server round-trip.
-	 *
-	 * For providers with a lazy `getRowData()` (eg. Mail's `Et2NextmatchDataProvider` reads from
-	 * egw's central UID cache), the caller should have already written `data` there (eg. via
-	 * `egw.dataStoreUID()`) - this just bumps the row's render version so the virtualizer's stable
-	 * key (`_virtualRowKey()`) treats it as changed and re-renders it from that data on the next
-	 * paint. For a plain data-array provider (no `getRowData`), `data` is stored directly.
-	 *
-	 * Use this for optimistic, client-known-correct updates (eg. a flag toggle about to be confirmed
-	 * over the network) where waiting for `refresh()`'s real fetch would be too slow. Call
-	 * `refresh()` afterward to reconcile if the optimistic guess turns out wrong.
-	 */
-	updateRowData(rowId : string, data : any) : void
-	{
-		if(!this.dataProvider)
-		{
-			return;
-		}
-		const normalizedId = this._dataStoreRowIdFor(rowId, true);
-		const index = this._rowsByIndex.findIndex((row) => row?.id === normalizedId);
-		if(index === -1)
-		{
-			return;
-		}
-		this._rowsByIndex[index] = this.dataProvider?.getRowData ? {id: normalizedId} : {id: normalizedId, data};
-		this._rowRenderVersionById.set(normalizedId, (this._rowRenderVersionById.get(normalizedId) || 0) + 1);
-		this.displayedRowIds.add(normalizedId);
-		this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
-		this._finalizeRefreshedRows();
-		this._scheduleRenderedRowPulse([normalizedId]);
 	}
 
 	/**

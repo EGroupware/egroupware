@@ -1076,8 +1076,118 @@ export class MailJmap
 	}
 
 	/**
-	 * Handle NextMatch's single/multi-row refresh fetch (egw.dataRefreshUID(), fired after row
-	 * actions like flag/delete and by push "update" events) directly via JMAP Email/get.
+	 * Rows a caller has patched into the egw data cache with a guess it is confident about ahead of confirmation.
+	 * Keyed by storage uid (toStorageUid()), valued with Date.now() at the time of marking
+	 * see markOptimistic().
+	 *
+	 * The guess is echoed back once and then trusted.
+	 * That write's own success/failure is the real signal,
+	 * and on failure it calls mail_refreshRows() - an unmarked, genuinely fetching refresh.
+	 *
+	 * Markers expire because consumption is not guaranteed:
+	 * Et2NextmatchDataProvider may fold our refresh into an in-flight one for the same row and never call us.
+	 * Without the expiry, a leftover marker would make some later, genuine refresh
+	 * (e.g. a push from another session) serve cached data instead of the server's real state.
+	 */
+	private optimisticRows = new Map<string, number>();
+
+	/** How long an unconsumed markOptimistic() marker stays valid, ms - see optimisticRows. */
+	private static readonly OPTIMISTIC_MAX_AGE = 1000;
+
+	/** refreshRows() deals in bare (un-prefixed) provider row ids - see toProviderRowId(). */
+	private toStorageUid(rowId : string) : string
+	{
+		return rowId.startsWith('mail::') ? rowId : `mail::${rowId}`;
+	}
+
+	/**
+	 * Mark a row's egw data cache entry as an unconfirmed optimistic guess:
+	 * the refresh the caller fires next (nm.refresh([uid], UPDATE_IN_PLACE), see MailApp.mail_patchRow()) then re-renders from the cache instead of doing a JMAP round-trip.
+	 * See optimisticRows for why that guess is trusted rather than verified.
+	 */
+	markOptimistic(uid : string) : void
+	{
+		this.optimisticRows.set(this.toStorageUid(uid), Date.now());
+	}
+
+	/**
+	 * Consume rowId's marker and return the guessed row data it vouches for.
+	 * Returns null if the row was never marked, the marker expired, or the cache entry is gone.
+	 * The marker is consumed either way, so it can never outlive the one refresh it was made for.
+	 */
+	private takeOptimistic(rowId : string) : any
+	{
+		const uid = this.toStorageUid(rowId);
+		const markedAt = this.optimisticRows.get(uid);
+		this.optimisticRows.delete(uid);
+		return markedAt !== undefined && Date.now() - markedAt < MailJmap.OPTIMISTIC_MAX_AGE ?
+			this.egw.dataGetUIDdata(uid)?.data ?? null : null;
+	}
+
+	/**
+	 * Handle NextMatch's single/multi-row refresh fetch
+	 * (egw.dataRefreshUID(), fired after row actions like flag/delete and by push "update" events):
+	 * a row carrying an optimistic guess (markOptimistic()) is echoed straight from the cache with no JMAP call,
+	 * the rest are fetched via JMAP Email/get.
+	 *
+	 * @param fetchPreview matches getRows()'s "fetchPreview" behaviour:
+	 *  only include the (comparatively expensive) message-body preview snippet
+	 *  when the "Sneak preview in list" toggle (filter2 / mail.ShowDetails preference) is on.
+	 *  Otherwise a row added or updated via this path
+	 *  (e.g. a push 'add' held back while this tab wasn't active, then applied on return)
+	 *  would show a snippet the user has explicitly turned off.
+	 */
+	private async refreshRows(rowIds : string[], fetchPreview : boolean) : Promise<any>
+	{
+		// Bare (un-prefixed) row ids as keys, like fetchRealRows():
+		// dataFetch()'s parseServerResponse() prepends the storage prefix itself and would double-prefix.
+		const data : Record<string, any> = {};
+		const order : string[] = [];
+		const fetchIds : string[] = [];
+		for (const rowId of rowIds)
+		{
+			const guessed = this.takeOptimistic(rowId);
+			if (guessed)
+			{
+				data[rowId] = guessed;
+				order.push(rowId);
+			}
+			else
+			{
+				fetchIds.push(rowId);
+			}
+		}
+
+		// Nothing optimistic - a plain fetch, passed straight through
+		// (fetchRealRows() already resolves a real empty result and surfaces its own error message on failure).
+		if (!order.length)
+		{
+			return this.fetchRealRows(fetchIds, fetchPreview);
+		}
+
+		if (fetchIds.length)
+		{
+			const fetched = await this.fetchRealRows(fetchIds, fetchPreview);
+			if (fetched)
+			{
+				Object.assign(data, fetched.data);
+				order.push(...fetched.order);
+			}
+		}
+
+		return {
+			order,
+			data,
+			total: order.length,
+			lastModification: Math.floor(Date.now() / 1000),
+			readonlys: {},
+		};
+	}
+
+	/**
+	 * The real JMAP Email/get round-trip refreshRows() uses for rows with no optimistic guess to echo -
+	 * a reconciliation after a failed guess, a push notification from another session, or
+	 * any other refresh with nothing already known locally.
 	 *
 	 * Rows JMAP no longer returns (deleted/moved) are simply left out of the result -
 	 * dataFetch()'s parseServerResponse() already treats a requested-but-missing row as "gone"
@@ -1094,7 +1204,7 @@ export class MailJmap
 	 *  updated via this path (e.g. a push 'add' held back while this tab wasn't active, then
 	 *  applied on return) would show a snippet the user has explicitly turned off.
 	 */
-	private async refreshRows(rowIds : string[], fetchPreview : boolean) : Promise<any>
+	private async fetchRealRows(rowIds : string[], fetchPreview : boolean) : Promise<any>
 	{
 		try
 		{
@@ -1110,7 +1220,7 @@ export class MailJmap
 				}
 				catch (e)
 				{
-					console.warn('MailJmap.refreshRows(): dropping malformed row id', rowId);
+					console.warn('MailJmap.fetchRealRows(): dropping malformed row id', rowId);
 				}
 			}
 			if (!references.length)
@@ -1131,7 +1241,7 @@ export class MailJmap
 				const token = await this.ensureToken(profileID);
 				if (!token)
 				{
-					throw new Error(`MailJmap.refreshRows(): profile ${profileID} is not JMAP-eligible`);
+					throw new Error(`MailJmap.fetchRealRows(): profile ${profileID} is not JMAP-eligible`);
 				}
 				const properties = [
 					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
@@ -1183,7 +1293,7 @@ export class MailJmap
 		{
 			const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
 			this.egw.message(message || this.egw.lang('Unable to connect to the mail server'), 'error');
-			console.error('MailJmap.refreshRows(): failed, resolving as an empty result', e);
+			console.error('MailJmap.fetchRealRows(): failed, resolving as an empty result', e);
 			return MailJmap.emptyRowsResult();
 		}
 	}

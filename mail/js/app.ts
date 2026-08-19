@@ -179,10 +179,9 @@ export class MailApp extends EgwApp
 				this
 			);
 
-			// Let mail's direct-JMAP path (see jmap.ts) answer NextMatch's regular row-fetch
-			// itself for Stalwart-backed accounts, instead of round-tripping through get_rows
-			// this also should not be done for a popup, since they share the same dataRegister
-		this.egw.dataRegisterFetch('mail', this.jmap.fetchRows, this.jmap);
+			// Let mail's direct-JMAP path (see jmap.ts) answer NextMatch's regular row-fetch itself for Stalwart-backed accounts, instead of round-tripping through get_rows.
+			// Not from a popup: it shares this dataRegister with the window that opened it.
+			this.egw.dataRegisterFetch('mail', this.jmap.fetchRows, this.jmap);
 		}
 	}
 
@@ -193,8 +192,8 @@ export class MailApp extends EgwApp
 	{
 
 		// Only if we are the window that registered them (see constructor):
-		// both of these reset the *entire* callback list for the 'mail' prefix, and that list is shared with popups -
-		// so doing it from a closing popup tore down the main window's row-fetch wiring too
+		// dataCacheUnregister() resets the *entire* callback list for the 'mail' prefix, and that list is shared with popups,
+		// so calling it from a closing popup tore down the main window's wiring too.
 		if (!this.egw.is_popup())
 		{
 			this.egw.dataCacheUnregister('mail');
@@ -3337,32 +3336,54 @@ export class MailApp extends EgwApp
 	 * mail_patchRow() is for) - use this to reconcile back to truth after a failed optimistic
 	 * change, or for changes with no local guess to make (push notifications from other sessions).
 	 */
-	mail_refreshRows(_ids : string[], _popup? : boolean) : void
+	mail_refreshRows(_ids: string[]): void
 	{
 		if (!_ids?.length) return;
-		const mailApp = _popup ? (window.opener?.app?.mail ?? this) : this;
-		const nm : Et2Nextmatch = mailApp.et2?.getWidgetById(mailApp.nm_index);
-		nm?.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+		this.mail_listOwner()?.nm.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 	}
 
 	/**
-	 * Instantly reflect a keyword/class change on an already-rendered row, without waiting for the
-	 * JMAP round-trip mail_refreshRows() would need. Caller must already have written the row's
-	 * *new* flags/class into dataElem.data (the "what should this look like now" computation stays
-	 * with the caller, e.g. mail_callFlagMessages's toggle logic) - this pushes that into the
-	 * central cache (which Et2NextmatchDataProvider.getRowData() reads at render time) and asks the
-	 * nextmatch to re-render just this row from that data via Et2Nextmatch.updateRowData(), which
-	 * needs no server round-trip and no shadow-DOM traversal - the row template's own bindings
-	 * ($row_cont[class], $row_cont[flagged_icon], $row_cont[status_icon]) do the rest.
+	 * The mail app instance owning the nextmatch, plus that nextmatch:
+	 * `this` instance in the main window, the opener's when called from a "view" popup (which has no list itself).
 	 *
-	 * This is a same-tick visual guess, not a confirmed state - mail_flagMessages() calls
-	 * mail_refreshRows() on JMAP failure to reconcile back to the server's real state for whichever
-	 * rows the optimistic guess got wrong.
+	 * egw  data cache is shared with the opener
+	 * (api/js/jsapi/egw.js does window.egw = window.opener.top.egw),
+	 * but window.app is not: a popup builds its own MailApp and MailJmap.
+	 * So whatever does changes on the nm has to use the owner nm.
+	 * the optimistic marker the fetch() handler reads has to go through the owning instance, not `this`.
+	 *
+	 * @return null if no reachable window has a message list (e.g. popup whose opener is gone)
+	 */
+	private mail_listOwner(): { app: MailApp, nm: Et2Nextmatch } | null
+	{
+		for (const app of [this, window.opener?.app?.mail as MailApp])
+		{
+			const nm = (app?.nm ?? app?.et2?.getWidgetById(app?.nm_index)) as Et2Nextmatch;
+			if (nm) return {app, nm};
+		}
+		return null;
+	}
+
+	/**
+	 * Instantly reflect a keyword/class change on an already-rendered row
+	 * Caller must already have written the row's
+	 * *new* flags/class into dataElem.data (the "what should this look like now" computation stays
+	 * with the caller, e.g. mail_callFlagMessages's toggle logic).
+	 * mark the row as an unconfirmed guess (MailJmap.markOptimistic()), and asks the nextmatch to refresh it.
+	 * jmap.ts's fetchRows()/refreshRows() (registered via egw.dataRegisterFetch()) sees the guess
+	 * and echoes it straight back with no JMAP round-trip, so the row re-renders without one -
+	 * see MailJmap.optimisticRows for why the guess is then trusted rather than re-checked.
+	 *
+	 * Works from the "view" popup too: the data cache is shared with the opener, and the marker
 	 *
 	 * @param _uid row uid, already updated in egw's central data cache
 	 */
 	mail_patchRow(_uid: string): void
 	{
+		// Nothing anywhere renders this row - skip, rather than mark a guess no refresh can consume
+		const owner = this.mail_listOwner();
+		if (!owner) return;
+
 		const dataElem = egw.dataGetUIDdata(_uid);
 		if (!dataElem) return;
 
@@ -3376,7 +3397,8 @@ export class MailApp extends EgwApp
 		dataElem.data.flagged_icon = hasFlag ? 'unread_flagged_small' : '';
 
 		egw.dataStoreUID(_uid, dataElem.data, false);
-		(this.nm??this.et2?.getWidgetById(this.nm_index) as Et2Nextmatch)?.updateRowData(_uid, dataElem.data);
+		owner.app.jmap.markOptimistic(_uid);
+		owner.nm.refresh([_uid], Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 	}
 
 	/**
@@ -3751,7 +3773,7 @@ export class MailApp extends EgwApp
 				// The optimistic patch (or "all" case) may now be showing the wrong thing - reconcile
 				// with the server's real current state.
 				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
-				else this.mail_refreshRows(_elems.msg, !!_elems.popup);
+				else this.mail_refreshRows(_elems.msg);
 			});
 			return;
 		}
