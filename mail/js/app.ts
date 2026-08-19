@@ -3339,7 +3339,7 @@ export class MailApp extends EgwApp
 	mail_refreshRows(_ids: string[]): void
 	{
 		if (!_ids?.length) return;
-		this.mail_listOwner()?.nm.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+		this.mail_nmOwner()?.nm.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 	}
 
 	/**
@@ -3354,7 +3354,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @return null if no reachable window has a message list (e.g. popup whose opener is gone)
 	 */
-	private mail_listOwner(): { app: MailApp, nm: Et2Nextmatch } | null
+	private mail_nmOwner(): { app: MailApp, nm: Et2Nextmatch } | null
 	{
 		for (const app of [this, window.opener?.app?.mail as MailApp])
 		{
@@ -3381,7 +3381,7 @@ export class MailApp extends EgwApp
 	mail_patchRow(_uid: string): void
 	{
 		// Nothing anywhere renders this row - skip, rather than mark a guess no refresh can consume
-		const owner = this.mail_listOwner();
+		const owner = this.mail_nmOwner();
 		if (!owner) return;
 
 		const dataElem = egw.dataGetUIDdata(_uid);
