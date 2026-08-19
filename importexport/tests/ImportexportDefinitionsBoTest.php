@@ -152,6 +152,58 @@ class ImportexportDefinitionsBoTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * GHSA-8gq3-q94v-3qw7: a user with only read access to a globally-shared definition
+	 * (owner=0, allowed_users=['all']) must not be able to seize it by resubmitting the
+	 * read data with 'owner' changed to their own account_id through
+	 * importexport_definitions_bo::save() - the path used by the definition list's
+	 * "Change owner"/"Change allowed users" bulk actions.
+	 *
+	 * Setup: insert the shared definition directly via Api\Storage\Base, bypassing
+	 * bo::save(), so its owner=0 is never subject to the guard under test.
+	 *
+	 * Pass criteria: save() throws, and the row's owner in the DB is still 0 afterwards.
+	 */
+	public function testNonOwnerCannotSeizeSharedDefinition()
+	{
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		$name = $this->uniqueName();
+
+		$so = new EGroupware\Api\Storage\Base(importexport_definitions_bo::_appname, importexport_definitions_bo::_defintion_table);
+		$so->data = array(
+			'name' => $name,
+			'application' => 'infolog',
+			'plugin' => 'infolog_export_csv',
+			'type' => 'export',
+			'plugin_options' => importexport_arrayxml::array2xml(array()),
+			'filter' => importexport_arrayxml::array2xml(array()),
+			'owner' => 0,
+			// stored wrapped in commas, per importexport_definition::set_allowed_users()
+			'allowed_users' => ',all,',
+			'modified' => time(),
+		);
+		$so->save();
+		$this->definition_id = (int)$so->data['definition_id'];
+
+		// Sanity check: demo can read the shared definition (read-level access via 'all').
+		$read = (new importexport_definitions_bo())->read($this->definition_id);
+		$this->assertSame(0, (int)$read['owner']);
+
+		$read['owner'] = $account_id;
+		try
+		{
+			(new importexport_definitions_bo())->save($read);
+			$this->fail('save() must reject a non-owner/non-admin reassigning owner of a shared definition');
+		}
+		catch (\Exception $e)
+		{
+			// expected
+		}
+
+		$still = (new importexport_definitions_bo())->read($this->definition_id);
+		$this->assertSame(0, (int)$still['owner'], 'owner must be unchanged after the rejected save()');
+	}
+
+	/**
 	 * delete() removes the definition; reading it afterwards must fail, and it must no
 	 * longer be findable by name.
 	 */
