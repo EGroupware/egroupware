@@ -12,6 +12,7 @@
 %1 mails selected	mail	de	%1 E-Mail(s) ausgewählt
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	de	%1 benötigt die Sieve Erweiterung %2, versuchen Sie statt dessen %3 oder eine höhere Anzahl von Tagen.
 account editable by user	mail	de	Benutzer kann dieses Konto bearbeiten
+account not reachable	mail	de	Konto nicht erreichbar
 acl rights retrieve failed, seems there are no rights set!	mail	de	Die Zugriffsrechte konnten nicht gelesen werden!
 acl rights retrieved successfully	mail	de	Zugriffsrechte erfolgreich gelesen
 activating by date requires a start- and end-date!	mail	de	Die Aktivierung nach Datum erfordert ein Start- UND Enddatum!
@@ -241,12 +242,17 @@ exclude attachments greater than given size from automatic saving as draft (in m
 export csr	mail	de	CSR exportieren
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet-Ordner
+failed to create folder %1	mail	de	Anlegen des Ordners %1 fehlgeschlagen
 failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
 failed to delete %1 ! reason: %2	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
 failed to delete %1. server responded:	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
+failed to delete folder %1	mail	de	Löschen des Ordners %1 fehlgeschlagen
 failed to move %1 ! reason: %2	mail	de	Verschieben von %1 fehlgeschlagen! Grund: %2
+failed to move folder %1	mail	de	Verschieben des Ordners %1 fehlgeschlagen
 failed to rename %1 ! reason: %2	mail	de	Umbenennen zu %1 fehlgeschlagen! Grund: %2
+failed to rename folder %1	mail	de	Umbenennen des Ordners %1 fehlgeschlagen
 failed to subscribe folder %1!	mail	de	Fehler beim Abonnieren des Folders %1!
+failed to subscribe/unsubscribe folder %1	mail	de	Abonnieren/Abbestellen des Ordners %1 fehlgeschlagen
 failed to unsubscribe folder %1!	mail	de	Fehler beim Abbestellen des Folders %1!
 file into	mail	de	Verschiebe nach
 file into:	mail	de	Verschieben nach:

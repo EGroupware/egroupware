@@ -13,6 +13,7 @@
 %1 mails selected	mail	en	%1 emails selected
 %1 requires sieve extension %2, maybe try %1 or higher number of days.	mail	en	%1 requires Sieve extension %2, maybe try %1 or higher number of days.
 account editable by user	mail	en	Account editable by user
+account not reachable	mail	en	Account not reachable
 acl rights retrieve failed, seems there are no rights set!	mail	en	ACL rights retrieve failed, seems there are no rights set!
 acl rights retrieved successfully	mail	en	ACL rights retrieved successfully
 activating by date requires a start- and end-date!	mail	en	Activating by date requires a start- AND end-date!
@@ -247,12 +248,17 @@ exclude attachments greater than given size from automatic saving as draft (in m
 export csr	mail	en	Export CSR
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra Sent Folders
+failed to create folder %1	mail	en	Failed to create folder %1
 failed to delete %1	mail	en	Failed to delete %1
 failed to delete %1 ! reason: %2	mail	en	Failed to delete %1! Reason: %2
 failed to delete %1. server responded:	mail	en	Failed to delete %1! Server responded:
+failed to delete folder %1	mail	en	Failed to delete folder %1
 failed to move %1 ! reason: %2	mail	en	Failed to move %1! Reason: %2
+failed to move folder %1	mail	en	Failed to move folder %1
 failed to rename %1 ! reason: %2	mail	en	Failed to rename %1! Reason: %2
+failed to rename folder %1	mail	en	Failed to rename folder %1
 failed to subscribe folder %1!	mail	en	Failed to subscribe folder %1!
+failed to subscribe/unsubscribe folder %1	mail	en	Failed to subscribe/unsubscribe folder %1
 failed to unsubscribe folder %1!	mail	en	Failed to unsubscribe folder %1!
 file into	mail	en	Move to
 file into:	mail	en	Move to:

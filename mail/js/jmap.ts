@@ -728,107 +728,106 @@ export class MailJmap
 	}
 
 	/**
-	 * Create a new mailbox - the JMAP fast path for mail_AddFolder() (mail/js/app.ts), falling
-	 * back to the classic ajax_addFolder on failure/ineligibility.
+	 * Every account is JMAP-eligible in principle (a real JMAP server, or JmapShim wrapping the
+	 * exact same IMAP connection classic code would use) - "no usable token right now" means the
+	 * underlying connection itself is down, not a reason to retry the identical operation via a
+	 * second, classic code path (which would either hit the same failure, or silently mask a real
+	 * bug in the JMAP/shim layer). Used by every mailbox-CRUD method below for their "no token"
+	 * branch, in place of the classic-fallback `return false` they used to resolve there.
+	 */
+	private unreachableError() : JmapUserError
+	{
+		return new JmapUserError(this.egw.lang('Account not reachable'));
+	}
+
+	/**
+	 * Create a new mailbox - the JMAP path for mail_AddFolder() (mail/js/app.ts).
 	 *
 	 * @param profileID
 	 * @param parentPath canonical path of the parent folder, '' for the top level
 	 * @param name new folder's (leaf) name
-	 * @return false on any failure (never throws) - the caller falls back to classic
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock for why there's no
+	 *  classic fallback to retry via
 	 */
-	async createMailbox(profileID : string, parentPath : string, name : string) : Promise<boolean>
+	async createMailbox(profileID : string, parentPath : string, name : string) : Promise<void>
 	{
 		try
 		{
 			const token = await this.ensureToken(profileID);
-			if (!token) return false;
+			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
 			const parentId = await this.mailboxIdOrNull(client, token.accountId, profileID, parentPath);
 
 			const [{result}] = await client.requestMany((t) => ({
 				result: t.Mailbox.set({accountId: token.accountId, create: {c0: {name, parentId}}}),
 			}));
-			const success = !!(result.created && result.created['c0']);
-			if (!success)
+			if (!(result.created && result.created['c0']))
 			{
-				const message = describeSetError(result.notCreated);
-				if (message) throw new JmapUserError(message);
+				throw new JmapUserError(describeSetError(result.notCreated) ?? this.egw.lang('Failed to create folder %1', name));
 			}
-			return success;
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
 			const message = describeJmapError(e);
-			if (message)
-			{
-				console.error('MailJmap.createMailbox(): JMAP error', e);
-				throw new JmapUserError(message);
-			}
-			console.error('MailJmap.createMailbox(): failed, falling back to the classic ajax_addFolder', e);
-			return false;
+			console.error('MailJmap.createMailbox(): failed', e);
+			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
 	}
 
 	/**
-	 * Rename a mailbox in place (same parent) - the JMAP fast path for mail_RenameFolder().
+	 * Rename a mailbox in place (same parent) - the JMAP path for mail_RenameFolder().
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder to rename
 	 * @param newName
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
 	 */
-	async renameMailbox(profileID : string, path : string, newName : string) : Promise<boolean>
+	async renameMailbox(profileID : string, path : string, newName : string) : Promise<void>
 	{
 		try
 		{
 			const token = await this.ensureToken(profileID);
-			if (!token) return false;
+			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
 			const id = await this.mailboxId(client, token.accountId, profileID, path);
 
 			const [{result}] = await client.requestMany((t) => ({
 				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {name: newName}}}),
 			}));
-			const success = !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
-			if (success)
+			if (result.updated && Object.prototype.hasOwnProperty.call(result.updated, id))
 			{
 				this.invalidateMailboxIdCache(profileID, path);
 			}
 			else
 			{
-				const message = describeSetError(result.notUpdated);
-				if (message) throw new JmapUserError(message);
+				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to rename folder %1', path));
 			}
-			return success;
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
 			const message = describeJmapError(e);
-			if (message)
-			{
-				console.error('MailJmap.renameMailbox(): JMAP error', e);
-				throw new JmapUserError(message);
-			}
-			console.error('MailJmap.renameMailbox(): failed, falling back to the classic ajax_renameFolder', e);
-			return false;
+			console.error('MailJmap.renameMailbox(): failed', e);
+			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
 	}
 
 	/**
-	 * Move a mailbox to a new parent - the JMAP fast path for mail_MoveFolder(). Same-account only
+	 * Move a mailbox to a new parent - the JMAP path for mail_MoveFolder(). Same-account only
 	 * (mail_MoveFolder() already rejects a cross-account move before ever calling this).
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder to move
 	 * @param newParentPath canonical path of the new parent, '' for the top level
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
 	 */
-	async moveMailbox(profileID : string, path : string, newParentPath : string) : Promise<boolean>
+	async moveMailbox(profileID : string, path : string, newParentPath : string) : Promise<void>
 	{
 		try
 		{
 			const token = await this.ensureToken(profileID);
-			if (!token) return false;
+			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
 			const id = await this.mailboxId(client, token.accountId, profileID, path);
 			const newParentId = await this.mailboxIdOrNull(client, token.accountId, profileID, newParentPath);
@@ -836,114 +835,92 @@ export class MailJmap
 			const [{result}] = await client.requestMany((t) => ({
 				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {parentId: newParentId}}}),
 			}));
-			const success = !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
-			if (success)
+			if (result.updated && Object.prototype.hasOwnProperty.call(result.updated, id))
 			{
 				this.invalidateMailboxIdCache(profileID, path);
 			}
 			else
 			{
-				const message = describeSetError(result.notUpdated);
-				if (message) throw new JmapUserError(message);
+				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to move folder %1', path));
 			}
-			return success;
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
 			const message = describeJmapError(e);
-			if (message)
-			{
-				console.error('MailJmap.moveMailbox(): JMAP error', e);
-				throw new JmapUserError(message);
-			}
-			console.error('MailJmap.moveMailbox(): failed, falling back to the classic ajax_MoveFolder', e);
-			return false;
+			console.error('MailJmap.moveMailbox(): failed', e);
+			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
 	}
 
 	/**
-	 * Delete a mailbox - the JMAP fast path for mail_DeleteFolder().
+	 * Delete a mailbox - the JMAP path for mail_DeleteFolder().
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder to delete
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
 	 */
-	async deleteMailbox(profileID : string, path : string) : Promise<boolean>
+	async deleteMailbox(profileID : string, path : string) : Promise<void>
 	{
 		try
 		{
 			const token = await this.ensureToken(profileID);
-			if (!token) return false;
+			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
 			const id = await this.mailboxId(client, token.accountId, profileID, path);
 
 			const [{result}] = await client.requestMany((t) => ({
 				result: t.Mailbox.set({accountId: token.accountId, destroy: [id]}),
 			}));
-			const success = Array.isArray(result.destroyed) && result.destroyed.includes(id);
-			if (success)
+			if (Array.isArray(result.destroyed) && result.destroyed.includes(id))
 			{
 				this.invalidateMailboxIdCache(profileID, path);
 			}
 			else
 			{
-				const message = describeSetError(result.notDestroyed);
-				if (message) throw new JmapUserError(message);
+				throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete folder %1', path));
 			}
-			return success;
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
 			const message = describeJmapError(e);
-			if (message)
-			{
-				console.error('MailJmap.deleteMailbox(): JMAP error', e);
-				throw new JmapUserError(message);
-			}
-			console.error('MailJmap.deleteMailbox(): failed, falling back to the classic ajax_deleteFolder', e);
-			return false;
+			console.error('MailJmap.deleteMailbox(): failed', e);
+			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
 	}
 
 	/**
-	 * (Un)subscribe a mailbox - the JMAP fast path for subscribe_folder()/unsubscribe_folder().
+	 * (Un)subscribe a mailbox - the JMAP path for subscribe_folder()/unsubscribe_folder().
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder
 	 * @param subscribed
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
 	 */
-	async setMailboxSubscribed(profileID : string, path : string, subscribed : boolean) : Promise<boolean>
+	async setMailboxSubscribed(profileID : string, path : string, subscribed : boolean) : Promise<void>
 	{
 		try
 		{
 			const token = await this.ensureToken(profileID);
-			if (!token) return false;
+			if (!token) throw this.unreachableError();
 			const client = this.clients[profileID];
 			const id = await this.mailboxId(client, token.accountId, profileID, path);
 
 			const [{result}] = await client.requestMany((t) => ({
 				result: t.Mailbox.set({accountId: token.accountId, update: {[id]: {isSubscribed: subscribed}}}),
 			}));
-			const success = !!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id));
-			if (!success)
+			if (!(result.updated && Object.prototype.hasOwnProperty.call(result.updated, id)))
 			{
-				const message = describeSetError(result.notUpdated);
-				if (message) throw new JmapUserError(message);
+				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to subscribe/unsubscribe folder %1', path));
 			}
-			return success;
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
 			const message = describeJmapError(e);
-			if (message)
-			{
-				console.error('MailJmap.setMailboxSubscribed(): JMAP error', e);
-				throw new JmapUserError(message);
-			}
-			console.error('MailJmap.setMailboxSubscribed(): failed, falling back to the classic ajax_foldersubscription', e);
-			return false;
+			console.error('MailJmap.setMailboxSubscribed(): failed', e);
+			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
 	}
 
