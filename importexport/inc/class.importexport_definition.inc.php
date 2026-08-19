@@ -317,6 +317,14 @@ class importexport_definition implements importexport_iface_egw_record {
 		{
 			throw new Exception('Error: Can\'t save definition, "' . $this->definition['plugin'] . '" is not a valid plugin!');
 		}
+		if ((int)$_dst_identifier)
+		{
+			$existing = $this->so_sql->read(array('definition_id' => (int)$_dst_identifier));
+			if ($existing && $this->user != $existing['owner'] && !$this->is_admin)
+			{
+				throw new Api\Exception\NoPermission('Error: User '. $this->user. ' does not have permissions to save definition '.$_dst_identifier);
+			}
+		}
 
 		$this->so_sql->data = $this->definition;
 		$this->so_sql->data['plugin_options'] = importexport_arrayxml::array2xml( $this->definition['plugin_options'] );
