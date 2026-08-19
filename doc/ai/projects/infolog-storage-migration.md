@@ -1,7 +1,9 @@
 # InfoLog: replace `infolog_so` with `Api\Storage`
 
-## Status: Phase 0 complete; Phase 1's ACL relocation done (2026-08-19, uncommitted -
-pending smoke test), `Infolog\Storage`/persistence swap not yet started
+## Status: Phase 0 complete and committed; Phase 1's ACL relocation committed but caused a
+**real CI regression, now fixed uncommitted** (see "ACL relocation - CI regression" below);
+`Infolog\Storage`/persistence swap implemented 2026-08-19, **uncommitted, pending smoke
+test** - `infolog_so.inc.php` still not deleted (see blockers below)
 
 This doc captures the research behind, and the proposed plan for, replacing InfoLog's
 hand-rolled SQL storage backend (`infolog/inc/class.infolog_so.inc.php`, 1168 lines/17
@@ -376,49 +378,176 @@ Moved from `infolog_so` to `infolog_bo`, in `infolog/inc/class.infolog_so.inc.ph
   in place) and all its persistence internals (`read`/`write`/`delete`/`search`'s SQL,
   CF handling) - `Infolog\Storage`/the `Api\Storage` swap below has not been started.
 
-#### `Infolog\Storage`/persistence swap — not started
+#### ACL relocation — CI regression found and fixed, 2026-08-19 (uncommitted)
 
-- New `Infolog\Storage extends Api\Storage` (proposed location `infolog/src/Storage.php`,
-  matching the `timesheet/src/Events.php` app-`src/` convention) — a **plain persistence
-  class with no ACL awareness at all**, per decision #4. It reimplements `infolog_so`'s
-  non-ACL public surface (`read`/`write`/`search`/`delete`/`get_children`/
-  `change_delete_owner`/`anzSubs`/`users_with_open_entries`), delegating to inherited
-  `Api\Storage` methods wherever possible.
-- **Moved to `infolog_bo`, not carried into `Infolog\Storage`** (decision #4):
-  `check_access()` (already lives on `infolog_bo` today, calling `so->check_access()` -
-  the `so`-side half folds into `infolog_bo` instead), `is_responsible()`/
-  `is_responsible_user()`, `aclFilter()`, `responsible_filter()`, and the status/date
-  SQL-fragment role of `statusFilter()`/`dateFilter()` (their non-ACL date-shortcut math
-  can stay a helper, but building the ACL/status/date WHERE fragments and handing them to
-  `search()` becomes `infolog_bo`'s job, matching how `timesheet_bo`/`calendar_boupdate`
-  build `$this->grants`-derived filtering themselves on top of an ACL-blind storage
-  class). `infolog_bo::search()` calls `Infolog\Storage::search()` with plain criteria
-  (or a `infolog_bo`-built SQL filter fragment passed through `Api\Storage::search()`'s
-  existing `$filter`/`col_filter`/free-form-criteria params - it doesn't need a new
-  extension point for this, just to stop asking the storage class to build the fragment
-  itself).
-- **Delete, don't port**: the hand-rolled CF read/write logic (→ inherited
-  `read_customfields()`/`save_customfields()`/`cf_filter()`/`cf_match()`), the duplicate
-  CF-date-time UTC-`Z` logic (already native to `Api\Storage`).
+The ACL-relocation commit (`0d7f5bab72`, already pushed) broke CI:
+`EGroupware\Infolog\CalDAVImportTest::testImportDeniedForForeignCollectionWithoutAcl` and its
+REST counterpart both went from passing to `Failed asserting that 201 matches expected 403` -
+a real authorization bypass letting a user with `run` rights but no ACL grant create a task in
+another user's InfoLog collection via CalDAV/REST PUT. Traced (see `gh run view` on the CI job,
+plus a dedicated investigation comparing old `infolog_so::check_access()` against the new
+`infolog_bo::checkAccessGrants()`) to a genuinely subtle root cause, **not** a simple porting
+mistake:
+
+- `infolog_ical::importVTODO()` (line ~585) and its JSON-path mirror in
+  `infolog_groupdav.inc.php` (line ~725) each had: for a brand-new task (no `info_owner` yet),
+  `if ($this->check_access($taskData, Acl::ADD)) { $taskData['info_owner'] = $user; } elseif
+  (...) { $taskData['info_responsible'][] = $user; }` - where `$user` is the *target collection
+  owner* resolved from the URL, not the acting/session user.
+- The OLD `infolog_so::check_access()` had a branch, `if (is_array($info) && !$info['info_owner'])
+  $info = $info['info_id'];`, which for this ownerless-array case fell through to
+  `$info = $this->data` (the SO instance's own cached data) - and that cache, freshly set by
+  `init()` at construction time, holds `info_owner = $this->user` (the SO's own, i.e. the
+  *acting*, user). So `$owner == $user` compared the acting user against themselves and was
+  **always true for any authenticated caller** - not a real grants check at all, just an
+  accidental self-match. This judged-dead branch was dropped when ACL moved to `infolog_bo`
+  (see decision #4 above) - it was not actually dead for this call site.
+- That accidental `true` had a real, load-bearing side effect: it made `importVTODO()` always
+  stamp `info_owner = $user` (the real target collection owner) on new tasks. That correct
+  stamp is what let the **actual**, correct, untouched security gate downstream in
+  `infolog_bo::write()` (`check_access(0, Acl::EDIT/ADD, $values['info_owner'])`) correctly
+  reject cross-user writes - it checks the acting user's grants *against the real target
+  owner*.
+- The new `checkAccessGrants()` correctly returns `false` for a data-only array with no owner
+  (there is no legitimate owner to compare against) - objectively the right answer to the
+  question actually being asked. But removing the accidental `true` means `importVTODO()` now
+  takes the `elseif` branch instead, leaving `info_owner` **unset**. `write()`'s gate then
+  degenerates: `check_access(0, Acl::ADD, null)`'s `$other` param is falsy, so it defaults
+  `$owner = $user` (the *acting* user checking rights over *themselves* - trivially always
+  true) instead of checking rights over the real target owner. The real gate never fires, and
+  the write silently succeeds, owned by the acting user, regardless of the URL's target
+  collection.
+- **Conclusion**: `importVTODO()`'s `check_access($taskData, Acl::ADD)` call was never a
+  meaningful gate - given an ownerless array, it could only ever evaluate to an accidental
+  self-match, so it was `true` for literally any authenticated caller, always. The `elseif`
+  branch (add as responsible instead of owner) was practically dead code for this entire
+  quirk's lifetime, for an unrelated, pre-existing reason that has nothing to do with this
+  migration.
+- **Fix** (ralf's explicit choice over restoring the old accidental behavior): removed the
+  conditional entirely in both `infolog_ical::importVTODO()` and the JSON-path mirror in
+  `infolog_groupdav.inc.php` - new tasks now **unconditionally** get `info_owner` stamped to
+  the target collection owner, with `infolog_bo::write()`'s own (correct, untouched) ACL gate
+  as the sole enforcement point. This is behaviorally identical to what the old code *actually
+  did in practice* (since its gate was always true anyway), just without the fragile
+  mechanism. `infolog_ical.inc.php`'s now-unused `use EGroupware\Api\Acl;` import removed too.
+- **Second, related but non-triggering bug fixed in the same pass**: `Infolog\Storage`'s
+  constructor set `$this->user` *after* calling `parent::__construct()` - but
+  `Storage\Base::__construct()` calls `$this->init()` internally, and `Infolog\Storage::init()`
+  reads `$this->user` to seed `$this->data['info_owner']`. That first `init()` call therefore
+  always saw `$this->user` as still null. Didn't affect the CI regression itself (the new
+  `checkAccessGrants()` never reads `$this->so->data` at all), but is a real correctness gap in
+  the same area - fixed by moving the `$this->user`/`$this->tz_offset` assignments before the
+  `parent::__construct()` call.
+- **Not yet verified against the actual regression**: local `infolog/tests/` still passes
+  (53/407, same 4 pre-existing unrelated `No DB host set!` errors) but cannot exercise this
+  specific test (`CalDAVImportTest`/`SyncCollectionReportTest` need DB credentials
+  `CalDAVTest.php::getSetup()` can't resolve in this sandbox). Needs either a dev-box smoke
+  test or a CI re-run to confirm before this is considered done.
+
+#### `Infolog\Storage`/persistence swap — **implemented 2026-08-19, uncommitted pending smoke test**
+
+`infolog/src/Storage.php` (`EGroupware\Infolog\Storage extends Api\Storage`) now exists and is
+wired in: `infolog_bo::__construct()`/`async_notification()` construct it instead of
+`infolog_so`. `infolog_so.inc.php` is **left in place, untouched beyond the earlier ACL
+removal** - not deleted yet (see "Not yet done" below).
+
+What actually landed, vs. the original bullets above (kept for history - reality diverged in a
+few places once real PHP/DB constraints showed up):
+
+- **CF delegation, done, with one correction**: `read()`/`write()`/`search()` delegate
+  *registered* custom fields to the inherited `read_customfields()`/`save_customfields()` -
+  exactly the "don't re-implement it" goal. But `infolog_ical.inc.php` turned out to rely on
+  an **unregistered** `#`-prefixed convention (`"##propertyname"`, storing raw iCal X-property
+  data as a pseudo-cf not present in `Api\Storage\Customfields::get('infolog')`) that
+  `read_customfields()`/`save_customfields()` silently ignore (they only iterate
+  `$this->customfields`). Missing this would have silently dropped CalDAV/iCal extended
+  properties on every read/write/search. Fixed by keeping the *exact* old raw insert/delete
+  (write) and raw select (read/search) logic as a fallback specifically for `#`-prefixed keys
+  not found in `$this->customfields`, alongside the new delegation for registered ones.
+- **`timestamp_type`/`$this->timestamps` NOT used for main-table columns** - deliberately
+  simpler than the original bullet: main-table date columns stay raw ints exactly as before
+  (no `Api\DateTime` objects internally), so `infolog_bo`'s `time2time()`/`date2usertime()`
+  needed zero changes and decision #3's "no consumer sees a behavior change" holds with less
+  moving at once. Switching main-table columns to `Api\DateTime` internally is explicitly
+  deferred to Phase 2 (cleaning up `infolog_bo`'s own manual date math), not bundled in here.
+- **`search()` renamed to `searchInfolog()`** on the new class - not kept as an override of
+  `Api\Storage::search()`. PHP fatals if an overriding method isn't parameter-compatible with
+  its parent (arity, by-ref-ness), and this method's `&$query` by-reference parameter (every
+  `infolog_bo` call site relies on `$query['total']`/`$query['start']` being written back) is
+  fundamentally incompatible with `Api\Storage::search($criteria, ...)`'s by-value contract -
+  matching arity would need reproducing 11 meaningless parameters. Renaming avoids the
+  override entirely. All 5 `infolog_bo` call sites updated accordingly.
+- **Three other signature-compatibility fatals fixed the same way** (found by iterating -
+  PHP's override-compatibility check reports one at a time): `read($where)` needed
+  `$extra_cols=''`/`$join=''` added (unused, just present) to match
+  `Api\Storage::read($keys,$extra_cols='',$join='')`'s arity; `delete($info_id,...)` needed
+  `$info_id=null` (was required) to match `Api\Storage::delete($keys=null,...)`;
+  `init()` needed a `$keys=array()` param to match `Storage\Base::init($keys=array())`. None
+  of these change real behavior (`infolog_bo` never calls with fewer/different args), it's
+  purely about satisfying PHP's inheritance signature check.
+- **`$this->db` widened to public** on `Infolog\Storage` (`Storage\Base` declares it
+  `protected`) - `infolog_bo::aclFilter()` needs `$this->so->db` directly to build raw ACL SQL
+  (per decision #1, `infolog_bo` has no `$this->db` of its own).
+- **Real bug found, fixed correctly on the second pass**: `Db::update()`/`insert()`/`delete()`/
+  `select()` resolve a table's column definitions via an explicit `$app` parameter (their own
+  `get_table_definitions($app, $table)` call), not via any state cached on the db *object*
+  itself. `Storage\Base::save()`/`delete()` always pass `$this->app` explicitly on every such
+  call - confirmed by reading `api/src/Storage/Base.php:655,698,707,816` - which is exactly why
+  `$no_clone=true` (`Api\Storage`'s own default, used safely by many other apps) is fine for
+  code that goes through those inherited methods. This class's *own* ported `read()`/`write()`/
+  `delete()`/etc. methods (verbatim from `infolog_so`, which instead cloned the db object and
+  called `set_app('infolog')` on the clone once, relying on that implicit context for every
+  call after) had several `Db::update()`/`insert()`/`delete()`/`select()` calls missing that
+  explicit `$app` argument - silently producing an **empty SET clause** on affected `update()`
+  calls (a real SQL error caught immediately by `AclCheckAccessTest.php`, not a silent
+  data-loss bug - but would have been one without that test). First fix attempt used
+  `$no_clone=false` to restore the old implicit-clone behavior - technically worked, but ralf
+  correctly pushed back that it papers over the real gap rather than matching the idiomatic,
+  already-established pattern. Properly fixed by reverting to `$no_clone`'s default (`true`)
+  and instead auditing every `$this->db->select()/update()/insert()/delete()` call in this
+  class, adding the explicit `'infolog'` argument wherever it was missing (roughly a dozen call
+  sites across `read()`/`get_children()`/`delete()`/`write()`/`searchInfolog()`/
+  `users_with_open_entries()`) - `query()` calls need no such argument, since raw SQL has no
+  `$data`/`$where` array to filter against a schema in the first place.
+- **Real bug found and fixed**: `aclFilter()`'s cache (`infolog_bo::$acl_filter`, added when
+  ACL moved off `infolog_so`) is keyed only by filter-type+user, not by grants/user - safe on
+  `infolog_so` because `async_notification()` re-instantiated a *fresh* `so` per impersonated
+  user (implicitly clearing its cache), but `aclFilter()` now lives on `infolog_bo`, whose
+  `$this` persists across that whole per-user loop. Without clearing it explicitly, a later
+  impersonated user could get served an earlier user's cached ACL SQL fragment. Fixed by
+  adding `$this->acl_filter = array();` right where the `so` used to get recreated.
 - Keep InfoLog-specific, non-ACL SQL (responsible/attendee joins, category/free-text/RAG
-  search, CF multi-select filter, links-by-app/id) as overrides of `Api\Storage`'s
-  `process_search()`/`search()`, per its documented reuse pattern.
-- Internally use `timestamp_type='object'` + a manual `$this->timestamps` array
-  (`info_startdate`/`enddate`/`datecompleted`/`created`/`datemodified` — `int` columns,
-  not DB-type `timestamp`) so date fields become `Api\DateTime` objects internally.
-- `infolog_bo`'s `read()`/`write()`/`search()` translate that `Api\DateTime` back into
-  whatever the caller's existing contract expects (raw int / `date_format` param) — no
-  consumer sees a behavior change in Phase 1 (per decision #3).
-- Re-verify `infolog_ical` (real inheritance of `infolog_bo`) specifically, since it's
-  not just a caller.
-- Verification: a comparison test running old `infolog_so` and new `Infolog\Storage`
-  against the same fixture data, asserting identical `read()`/`search()` results,
-  before switching — same discipline as the mail JMAP dual-path work (add new path
-  alongside old, verify parity, then cut over — never a flag-day rewrite). Given the ACL
-  relocation is a real behavior-surface move (not just a mechanical one), this parity
-  check needs to run through `infolog_bo`'s ACL-gated methods, not just the raw storage
-  class, to prove ACL enforcement itself didn't change, only where it lives. Run Phase 0
-  tests + full `infolog/tests` + CalDAV/REST suites; all must stay green.
+  search, CF multi-select filter, links-by-app/id) exactly as `infolog_so` had it - **not**
+  rewritten to use `Api\Storage`'s generic `search()`/`process_search()` machinery. This
+  remains deliberately out of scope for this pass (see "Not yet done").
+- **Verification so far**: full `infolog/tests/` suite - 53 tests / 407 assertions, all green
+  except the same 4 pre-existing, unrelated `CalDAV`/`REST` `No DB host set!` errors from
+  before any of this work. Also ran, green: `importexport/tests/ImportexportBasicImportCsvRegressionTest.php`
+  (real `write()`/`delete()` via the new backend through the CSV import path);
+  `api/tests/Vfs/SharingBackendTest.php` (its `infolog_bo::write()` call via `make_infolog()`
+  succeeds - the test's own failures are pre-existing VFS filesystem-permission issues in this
+  sandbox, unrelated to InfoLog, confirmed by grepping the failures for "infolog" and finding
+  only the expected pre-existing `Rag\Embedding::logError()` noise, not a storage error).
+  `api/tests/Vfs/Links/StreamWrapperTest.php`'s admin-only test case couldn't be run (needs
+  `EGW_ADMIN_PASSWORD`, not supplied this session) - not a regression signal either way; that
+  file also uses `infolog_so` directly (unaffected by this swap regardless).
+- **Not yet done, explicitly out of scope for this pass**:
+  - Rewriting `search()`'s (now `searchInfolog()`'s) internals to use `Api\Storage`'s generic
+    `search()`/`process_search()` machinery instead of the ported-as-is bespoke SQL. Still the
+    "High risk, the search() monster" item from §1/§2 - unstarted.
+  - Deleting `infolog_so.inc.php`. Two known blockers first: `infolog/setup/setup.inc.php`'s
+    `deleteaccount` hook still dispatches to `infolog.infolog_so.change_delete_owner` by class
+    name (works fine today since the old class is untouched, but needs repointing before
+    deletion); `api/tests/Vfs/Links/StreamWrapperTest.php:86` still does `new \infolog_so()`
+    directly and needs updating to the new class or to go through `infolog_bo` instead.
+  - The comparison/parity test between old `infolog_so` and new `Infolog\Storage` originally
+    planned here didn't end up happening as a separate artifact - the existing
+    `infolog/tests/` suite (pre-existing tests plus this project's Phase 0 additions) already
+    exercises `read`/`write`/`search`/`delete` through `infolog_bo` extensively and passed
+    unchanged before/after the swap, which is the parity check in practice. A dedicated
+    old-vs-new comparison test remains a nice-to-have, not done.
+  - Phase 2's date-math cleanup (per decision #3, deliberately deferred - main-table columns
+    still raw ints, `time2time()` untouched).
 
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 
