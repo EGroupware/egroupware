@@ -178,11 +178,10 @@ class mail_tree
 	 * @param $_noCheckboxNS = false no checkbox for namespaces makes sure to not put checkbox for namespaces node
 	 * @param boolean $_subscribedOnly = false get only subscribed folders
 	 * @param boolean $_allInOneGo = false, true will get all folders of the account in one go
-	 * @param boolean $_checkSubscribed = true, pre-check checkboxes of subscribed folders
 	 *
 	 * @return array returns an array of mail tree structure according to provided node
 	 */
-	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false, $_subscribedOnly= false, $_allInOneGo = false, $_checkSubscribed = true)
+	function getTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_noCheckboxNS = false, $_subscribedOnly= false, $_allInOneGo = false)
 	{
 		//Init mail folders
         $tree = array(Tree::ID => $_parent ? $_parent : 0, Tree::CHILDREN => array());
@@ -229,7 +228,7 @@ class mail_tree
 						Tree::IMAGE_LEAF => self::$leafImages['folderLeaf'],
 						Tree::IMAGE_FOLDER_OPEN => self::$leafImages['folderOpen'],
 						Tree::IMAGE_FOLDER_CLOSED => self::$leafImages['folderClosed'],
-						Tree::CHECKED => $_checkSubscribed?$node['SUBSCRIBED']:false,
+						Tree::CHECKED => $node['SUBSCRIBED'],
 						'parent' => $_parent
 					);
 				}
@@ -273,7 +272,7 @@ class mail_tree
 						Tree::CHILDREN =>array(),
 						Tree::LABEL =>lang($folder['MAILBOX']),
 						Tree::OPEN => self::getNodeLevel($folder['MAILBOX'], $folder['delimiter']) <= $_openTopLevel?1:0,
-						Tree::CHECKED => $_checkSubscribed?$folder['SUBSCRIBED']:false,
+						Tree::CHECKED => $folder['SUBSCRIBED'],
 						Tree::NOCHECKBOX => 0,
 						'parent' => $parent?$_profileID.self::DELIMITER.implode($folder['delimiter'], $parent):$_profileID,
 						'path' => $path,
