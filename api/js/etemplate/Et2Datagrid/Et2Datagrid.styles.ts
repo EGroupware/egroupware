@@ -246,7 +246,7 @@ export default css`
 		}
 
 		tbody > *[aria-selected="true"] {
-			background: var(--sl-color-primary-50, #eef5ff);
+			background: var(--sl-color-primary-200, #d4dfe8);
 		}
 
 		tbody > [data-row-id].dg-row-active {
@@ -471,8 +471,9 @@ export default css`
 		overflow: hidden;
 	}
 
+	/* Same selection tint as the table view above - see the comment there. */
 	.dg-tile-grid > [data-row-id][aria-selected="true"] {
-		background: var(--sl-color-primary-50, #eef5ff);
+		background: var(--highlight-background-color, var(--sl-color-primary-100, #eef5ff));
 	}
 
 	.dg-tile-grid > [data-row-id].dg-row-active {
