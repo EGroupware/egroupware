@@ -137,6 +137,13 @@ similar scope.
   expand/collapse state per user. Covers why this must happen before decoupling the overlapping
   `Api\Mail`/`mail_ui` folder groups, and the hard constraint that admin-impersonation of another
   user's mailbox (`mail_acl.inc.php`) can never move client-side.
+- `doc/ai/projects/infolog-storage-migration.md` - planned replacement of InfoLog's hand-rolled
+  `infolog_so` SQL backend with the generic `Api\Storage` class, to get automatic `Api\DateTime`/
+  timezone handling and built-in custom-field support instead of InfoLog's parallel
+  implementations of both. Covers the full `infolog_so`/`infolog_bo` method inventory, the
+  non-UI consumer map (CalDAV/REST, ActiveSync/z-push, cross-app callers), the all-day-across-
+  timezones semantic gap that needs a product decision, and the phased plan (test harness first,
+  then swap only what's behind `$this->so`, external contract unchanged until a later phase).
 
 ## Security and data handling
 
