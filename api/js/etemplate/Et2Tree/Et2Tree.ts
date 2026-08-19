@@ -1273,7 +1273,11 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		})
 	}
 
-	protected async finishedLazyLoading()
+	/**
+	 * Resolves once the initial autoloading fetch (if any) has populated _selectOptions.
+	 * Public so callers like Et2TreeDropdown can wait for data before eg. scrolling to a selection.
+	 */
+	public async finishedLazyLoading()
 	{
 		await this.lazyLoading;
 		return this.lazyLoading
