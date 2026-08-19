@@ -31,7 +31,7 @@ class infolog_bo
 	/**
 	 * Instance of our so class
 	 *
-	 * @var infolog_so
+	 * @var \EGroupware\Infolog\Storage
 	 */
 	var $so;
 	/**
@@ -344,7 +344,7 @@ class infolog_bo
 		$this->user_time_now = Api\DateTime::server2user($this->now,'ts');
 
 		$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-		$this->so = new infolog_so($this->grants);
+		$this->so = new \EGroupware\Infolog\Storage();
 
 		if ($info_id)
 		{
@@ -1600,7 +1600,7 @@ class infolog_bo
 				$q['col_filter'][99] = 'info_datemodified > '.
 					(new Api\DateTime((-$n*$query['limit_modified_n_month']).' month'))->format('server');
 			}
-			$ret = $this->so->search($q, $no_acl, $acl_filter);
+			$ret = $this->so->searchInfolog($q, $no_acl, $acl_filter);
 			$this->total = $query['total'] = $q['total'];
 			if (!isset($q['col_filter'][99]) || is_array($ret) && count($ret) >= $query['num_rows'])
 			{
@@ -2138,7 +2138,14 @@ class infolog_bo
 			$GLOBALS['egw_info']['user']['preferences'] = $GLOBALS['egw']->preferences->read_repository();
 			$GLOBALS['egw']->acl->__construct($user);
 			$this->grants = $GLOBALS['egw']->acl->get_grants('infolog',$this->group_owners ? $this->group_owners : true);
-			$this->so = new infolog_so($this->grants);	// so caches it's filters
+			$this->so = new \EGroupware\Infolog\Storage();
+			// aclFilter()'s cache is keyed by filter-type+f_user only, not by grants/user - it
+			// must be cleared on every impersonated user in this loop, or a later user could get
+			// served a previous user's cached ACL SQL fragment. Used to happen implicitly because
+			// infolog_so (which used to own this cache) was re-instantiated fresh every iteration;
+			// now that aclFilter() lives on infolog_bo (this same $this, across the whole loop),
+			// it needs clearing explicitly.
+			$this->acl_filter = array();
 
 			$notified_info_ids = array();
 			foreach(array(
@@ -2154,7 +2161,7 @@ class infolog_bo
 				//error_log(__METHOD__."() checking with filter '$filter' ($pref_value) for user $user ($email)");
 
 				$params = array('filter' => $filter, 'custom_fields' => true, 'subs' => true);
-				foreach($this->so->search($params, false, $this->aclFilter($filter)) as $info)
+				foreach($this->so->searchInfolog($params, false, $this->aclFilter($filter)) as $info)
 				{
 					// check if we already send a notification for that infolog entry, eg. starting and due on same day
 					if (in_array($info['info_id'],$notified_info_ids)) continue;
@@ -2376,7 +2383,7 @@ class infolog_bo
 		if (!$relax && !empty($infoData['info_uid']))
 		{
 			$filter = array('col_filter' => array('info_uid' => $infoData['info_uid']));
-			foreach($this->so->search($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $egwData)
+			foreach($this->so->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $egwData)
 			{
 				if (!$this->check_access($egwData,Acl::READ)) continue;
 				$foundInfoLogs[$egwData['info_id']] = $egwData['info_id'];
@@ -2428,7 +2435,7 @@ class infolog_bo
 		unset($filter['col_filter']['info_des']);
 		unset($filter['col_filter']['info_location']);
 
-		foreach ($this->so->search($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
+		foreach ($this->so->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
 		{
 			if (!$this->check_access($egwData,Acl::READ)) continue;
 
@@ -2501,7 +2508,7 @@ class infolog_bo
 		// Horde::logMessage("findVTODO Filter\n"
 		//	. print_r($filter, true),
 		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-		foreach ($this->so->search($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
+		foreach ($this->so->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
 		{
 			if (!$this->check_access($egwData,Acl::READ)) continue;
 			// Horde::logMessage("findVTODO Trying\n"
