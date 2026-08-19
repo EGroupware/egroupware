@@ -245,7 +245,6 @@ class mail_tree
 				else // Initial accounts|root nodes
 				{
 					$tree = self::getAccountsRootNode($_profileID, $_noCheckboxNS, $_openTopLevel);
-					if (!$_profileID && !$_openTopLevel) return $tree;
 				}
 
 				//List of folders
