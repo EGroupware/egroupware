@@ -468,30 +468,18 @@ class FolderHandler
 				$this->ui->mail_bo->saveSessionData();
 				Framework::ajax_set_preference('mail', $this->ui->mail_bo->profileID.'_LastFolder', $newFolderName);
 			}
-			$response = Api\Json\Response::get();
 			if ($success)
 			{
-				Api\Translation::add_app('mail');
-
-				$oldFolderInfo = $this->ui->mail_bo->getFolderStatus($oldParentFolder,false,false,false);
-				$folderInfo = $this->ui->mail_bo->getFolderStatus($parentFolder,false,false,false);
-				$refreshData = array(
-					$profileID.mail_ui::$delimiter.$oldParentFolder=>$oldFolderInfo['shortDisplayName'],
-					$profileID.mail_ui::$delimiter.$parentFolder=>$folderInfo['shortDisplayName']);
-				// if we move the folder within the same parent-branch of the tree, there is no need no refresh the upper part
-				if (strlen($parentFolder)>strlen($oldParentFolder) && strpos($parentFolder,$oldParentFolder)!==false) unset($refreshData[$profileID.mail_ui::$delimiter.$parentFolder]);
-				if (count($refreshData)>1 && strlen($oldParentFolder)>strlen($parentFolder) && strpos($oldParentFolder,$parentFolder)!==false) unset($refreshData[$profileID.mail_ui::$delimiter.$oldParentFolder]);
-
-				// Send full info back in the response
-				foreach($refreshData as $folder => &$name)
-				{
-					$name = $this->ui->mail_tree->getTree($folder,$profileID,1,false,!$this->ui->mail_bo->mailPreferences['showAllFoldersInFolderPane'],true);
-				}
-				$response->call('app.mail.mail_reloadNode',$refreshData);
+				// same "account changed, please refresh" signal admin_mail/mail_wizard/
+				// folderSubscription() already send (mail/js/app.ts's observer() 'mail-account'
+				// case) - reloads this account's tree node via its own JMAP-first autoloading
+				// callback, no need for a server-computed subtree just to reflect one folder's
+				// new position
+				Framework::refresh_opener('', 'mail-account', $profileID, 'update');
 			}
 			else
 			{
-				$response->call('egw.refresh',lang('failed to move %1 ! Reason: %2',$folderName,$msg),'mail');
+				Framework::message(lang('failed to move %1 ! Reason: %2',$folderName,$msg), 'error');
 			}
 		}
 	}
