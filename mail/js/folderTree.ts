@@ -163,8 +163,8 @@ function isNamespaceRootName(name : string) : boolean
  * Not scoped to any particular depth: used for the account's own top level/INBOX's own children
  * (MailJmap.getMailboxChildren()) and equally for any shared/other-user mailbox's own special-
  * folder set nested deeper in the tree, wherever the server actually tagged a sibling with a role
- * (see buildNode()'s own docblock on why a role at any depth is trustworthy), and for the
- * subscribe popup's whole-tree eager build (buildFolderTree()). Mutates `list` in place.
+ * (see buildNode()'s own docblock on why a role at any depth is trustworthy). Mutates `list`
+ * in place.
  */
 export function sortTopLevel(list : JmapMailboxNode[]) : void
 {
@@ -182,10 +182,9 @@ export function sortTopLevel(list : JmapMailboxNode[]) : void
 }
 
 /**
- * Build one FolderTreeNode - shared by buildFolderLevel() (lazy, one level at a time) and
- * buildFolderTree() (eager, the whole account at once). `item`/`child` are left at their
- * lazy-loading defaults (empty/"assume expandable", see buildFolderLevel()'s docblock);
- * buildFolderTree() overrides both once it knows the real children.
+ * Build one FolderTreeNode, used by buildFolderLevel() for one level at a time. `item`/`child`
+ * are left at their lazy-loading defaults (empty/"assume expandable", see buildFolderLevel()'s
+ * docblock).
  *
  * @param mailbox
  * @param profileID owning mail account's profile id
@@ -291,55 +290,6 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 		.filter((mailbox) => !options.subscribedOnly || mailbox.isSubscribed || isVisibleNamespaceRoot(mailbox))
 		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + mailbox.name : mailbox.name, egw,
 			!!options.isTopLevel));
-}
-
-/**
- * Convert an *entire* account's flat JMAP Mailbox list (already fetched via
- * MailJmap.getMailboxTree()) into a fully-nested Et2Tree structure, for the mail.subscribe
- * popup's multi-select tree - unlike buildFolderLevel(), every node's real children are already
- * known, so `item` holds the actual nested subtree (not left empty for lazy loading) and `child`
- * reflects whether it *actually* has children, not the "assume expandable" default
- * buildFolderLevel() needs. Subscribed-state filtering doesn't apply here - this popup always
- * shows every folder, subscribed or not, since that's the whole point of a subscription manager.
- *
- * @param mailboxes every mailbox in the account, flat
- * @param profileID owning mail account's profile id
- * @param egw only .image(name, app) is used
- * @return Et2Tree node data (mail's field names - see FolderTreeNode), nested from the top level down
- */
-export function buildFolderTree(mailboxes : JmapMailboxNode[], profileID : string, egw : Egw) : FolderTreeNode[]
-{
-	const byParent = new Map<string | null, JmapMailboxNode[]>();
-	(mailboxes || []).forEach((mailbox) =>
-	{
-		const key = mailbox.parentId ?? null;
-		if (!byParent.has(key)) byParent.set(key, []);
-		byParent.get(key).push(mailbox);
-	});
-
-	// only gates buildNode()'s auto-open behaviour (see its own docblock) - computed per-node here
-	// since this builds the whole nested tree in one pass
-	const isTopLevel = (parentPath : string) => parentPath === '' || parentPath === 'INBOX';
-
-	const build = (parentId : string | null, parentPath : string) : FolderTreeNode[] =>
-	{
-		const siblings = byParent.get(parentId) || [];
-		// same fixed role-based ordering as the lazy per-level tree (MailJmap.getMailboxChildren())
-		// - applies whenever this level actually contains a role-tagged mailbox (the account's own
-		// top level, INBOX's own children, or any shared/other-user mailbox's own special-folder
-		// set), leaving a level of ordinary personal subfolders in the server's own default order
-		if (siblings.some((mailbox) => !!mailbox.role)) sortTopLevel(siblings);
-		return siblings.map((mailbox) =>
-		{
-			const path = parentPath ? parentPath + '/' + mailbox.name : mailbox.name;
-			const node = buildNode(mailbox, profileID, path, egw, isTopLevel(parentPath));
-			node.item = build(mailbox.id, path);
-			node.child = node.item.length > 0;
-			return node;
-		});
-	};
-
-	return build(null, '');
 }
 
 /**

@@ -25,7 +25,7 @@ import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatc
 import {MailCompose} from "./compose";
 import {isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
-import {buildErrorNode, buildFolderLevel, buildFolderTree, FolderTreeNode} from "./folderTree";
+import {buildErrorNode, buildFolderLevel, FolderTreeNode} from "./folderTree";
 import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
@@ -124,9 +124,13 @@ export class MailApp extends EgwApp
 	private _jmap : MailJmap;
 
 	/**
-	 * Subscribed-folder tree ids as loaded via JMAP for the currently open mail.subscribe popup,
-	 * remembered so mail_subscriptionSave() can diff against them - null means the JMAP load
-	 * never ran/succeeded, so mail_subscriptionSave() must leave the classic submit untouched.
+	 * Subscribed-folder tree ids for the currently open mail.subscribe popup, as discovered so far
+	 * via JMAP - remembered so mail_subscriptionSave() can diff against them. Populated
+	 * progressively (mail_subscriptionLoad()'s own root fetch, every interactive expand, and
+	 * mail_subscriptionSave()'s own "load everything still unloaded" sweep all add to the same
+	 * Set) rather than snapshotted once, since the tree now loads lazily one level at a time
+	 * instead of the whole account up front. null means the JMAP load never ran/succeeded, so
+	 * mail_subscriptionSave() must leave the classic submit untouched.
 	 */
 	private _subscriptionOriginal : { profileID : string, ids : Set<string> } | null = null;
 	et2_obj: etemplate2;
@@ -5366,10 +5370,18 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail.subscribe popup load (et2_ready()'s 'mail.subscribe' case): try to replace the
-	 * classic server-rendered subscription tree with one built from a single JMAP
-	 * Mailbox/get{ids:null} fetch (MailJmap.getMailboxTree()) - every folder in the account,
-	 * fully nested, subscribed or not (see doc/ai/projects/mail-folder-tree-jmap.md).
+	 * mail.subscribe popup load (et2_ready()'s 'mail.subscribe' case): try to replace the classic
+	 * server-rendered subscription tree with one loaded via JMAP - lazily, one level at a time,
+	 * exactly like the main index tree/folder-management dialog (mail_folderTreeAutoload()/
+	 * mail_folderManagementLoad()), not the whole account fetched up front. Always shows every
+	 * folder regardless of showAllFoldersInFolderPane, same reasoning as
+	 * mail_folderManagementLoad() - this dialog manages subscriptions, including for currently
+	 * unsubscribed folders.
+	 *
+	 * A checkbox tree's rendering only ever consults its own .value array, never a node's own
+	 * .checked field (Et2Tree.ts's _optionTemplate()) - mail_recordSubscriptionOriginal() is what
+	 * seeds .value from freshly-loaded .checked data, both here and for every later interactive
+	 * expand (see the tree.autoloading wrapper below).
 	 *
 	 * On any failure (network, non-JMAP-capable account) this is a no-op: the tree the server
 	 * already rendered (with the right initial selection) is left exactly as-is, and
@@ -5378,30 +5390,35 @@ export class MailApp extends EgwApp
 	 */
 	private mail_subscriptionLoad() : void
 	{
-		const ftree = this.et2.getWidgetById('foldertree');
+		const ftree : any = this.et2.getWidgetById('foldertree');
 		// no widget carries profileId (see mail_ui::subscription()'s $content['profileId']) -
 		// it's a plain content key, only reachable via the array manager, not getValues()
 		const profileID = String(this.et2.getArrayMgr('content').getEntry('profileId') ?? '');
 		if (!ftree || !profileID) return;
 
-		this.jmap.getMailboxTree(profileID).then((mailboxes) =>
+		this._subscriptionOriginal = {profileID, ids: new Set()};
+		ftree.autoloading = (item : any) => this.mail_folderTreeAutoload(item, false).then((result) =>
 		{
-			if (mailboxes === null) return;
+			this.mail_recordSubscriptionOriginal(ftree, result?.item ?? []);
+			return result;
+		});
 
-			const tree = buildFolderTree(mailboxes, profileID, egw);
-			const subscribedIds = new Set<string>();
-			const collect = (nodes : FolderTreeNode[]) => nodes.forEach((node) =>
+		this.mail_buildRootFolderData(profileID, false).then((data) =>
+		{
+			if (data === null)
 			{
-				if (node.checked) subscribedIds.add(node.id);
-				collect(node.item);
-			});
-			collect(tree);
-
-			ftree.select_options = tree;
-			ftree.value = [...subscribedIds];
-			this._subscriptionOriginal = {profileID, ids: subscribedIds};
+				this._subscriptionOriginal = null;
+				return;
+			}
+			ftree.select_options = data;
+			this.mail_recordSubscriptionOriginal(ftree, data);
+			// mail_buildRootFolderData() already eagerly embeds INBOX's own children (it's always
+			// auto-opened) - record those too, since they never go through the autoloading wrapper
+			const inbox = data.find((node) => node.id === profileID + '::INBOX');
+			if (inbox) this.mail_recordSubscriptionOriginal(ftree, inbox.item);
 		}).catch((e) =>
 		{
+			this._subscriptionOriginal = null;
 			if (e instanceof JmapUserError)
 			{
 				this.egw.message(e.message, 'error');
@@ -5411,18 +5428,84 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Record freshly-loaded nodes' subscribed state into _subscriptionOriginal (the "before any
+	 * user edit" baseline mail_subscriptionSave() diffs against) and seed the tree widget's own
+	 * .value array from them, since Et2Tree's checkbox rendering only ever consults .value, never
+	 * a node's own .checked field. Called for every batch of nodes as soon as it's loaded -
+	 * the initial root fetch, every interactive expand, and mail_subscriptionSave()'s own
+	 * "load everything still unloaded" sweep alike - so a node's ORIGINAL state is always
+	 * captured before the user (or the sweep) can have touched its checkbox.
+	 */
+	private mail_recordSubscriptionOriginal(ftree : any, nodes : FolderTreeNode[]) : void
+	{
+		if (!this._subscriptionOriginal || !nodes.length) return;
+		const value = new Set<string>(ftree.value || []);
+		nodes.forEach((node) =>
+		{
+			if (node.checked)
+			{
+				this._subscriptionOriginal.ids.add(node.id);
+				value.add(node.id);
+			}
+		});
+		ftree.value = [...value];
+	}
+
+	/**
+	 * Recursively load every tree level mail_subscriptionSave() hasn't seen yet, so its diff
+	 * covers the account's full folder set, not just whatever the user happened to expand while
+	 * browsing. Bypasses mail_folderTreeAutoload()'s error-leaf UX deliberately: a leaf's fake
+	 * "not subscribed, no real jmapId" data would otherwise look like real folder data to the
+	 * diff below, silently unsubscribing a folder we actually just failed to reach - throwing
+	 * instead lets mail_subscriptionSave()'s own catch abort the save with a clear error (same
+	 * "no silent 2nd path" reasoning as mail_folderTreeAutoload()'s own docblock).
+	 *
+	 * Also re-loads a node whose only child is itself an error leaf (jmapId `''`) left over from
+	 * an earlier *interactive* expand that failed - otherwise that placeholder would look
+	 * "already loaded" and never get retried before the diff runs.
+	 */
+	private mail_loadAllSubscriptionLevels(profileID : string, ftree : any, nodes : FolderTreeNode[]) : Promise<void>
+	{
+		const needsLoad = (node : FolderTreeNode) => node.child &&
+			(node.item.length === 0 || (node.item.length === 1 && !node.item[0].jmapId));
+
+		return Promise.all(nodes.map((node) =>
+		{
+			if (!needsLoad(node))
+			{
+				return this.mail_loadAllSubscriptionLevels(profileID, ftree, node.item || []);
+			}
+			const parentPath = node.id.split('::', 2)[1] ?? '';
+			return this.mail_buildFolderLevelData(profileID, parentPath, node.jmapId || null, false).then((children) =>
+			{
+				if (children === null)
+				{
+					throw new JmapUserError(this.egw.lang('Account not reachable'));
+				}
+				node.item = children;
+				node.child = children.length > 0;
+				this.mail_recordSubscriptionOriginal(ftree, children);
+				return this.mail_loadAllSubscriptionLevels(profileID, ftree, children);
+			});
+		})).then(() => {});
+	}
+
+	/**
 	 * Save/Apply button handler for the mail.subscribe popup (button[save] / button[apply]) -
 	 * mirrors acl_save()'s exact shape/contract (same handler for both buttons, disambiguated
 	 * by _widget.id, true/false return controls whether the normal submit proceeds).
 	 *
 	 * If mail_subscriptionLoad() never replaced the tree with JMAP data (_subscriptionOriginal
 	 * is null), this is a complete no-op: return true and let the classic submit/server-side
-	 * diff-and-apply run exactly as before. Otherwise, diff the tree's current selection against
-	 * the remembered original set and apply just the changes via MailJmap.setMailboxSubscribed()
-	 * - on full success, refresh the opener's own tree and close/re-submit like acl_save() does;
-	 * on any failure, fall back to the classic submit, which re-derives the diff server-side from
-	 * the submitted foldertree value regardless of whether its options came from JMAP or the
-	 * server (safe either way, since the classic save path only reads the submitted .value array).
+	 * diff-and-apply run exactly as before. Otherwise, first load every tree level the user hasn't
+	 * expanded yet (mail_loadAllSubscriptionLevels()) - the diff needs to know the account's
+	 * *complete* folder set, not just what's been lazily loaded so far - then diff the tree's
+	 * current selection against the remembered original set and apply just the changes via
+	 * MailJmap.setMailboxSubscribed() - on full success, refresh the opener's own tree and
+	 * close/re-submit like acl_save() does; on any failure (including the load-everything sweep),
+	 * fall back to the classic submit, which re-derives the diff server-side from the submitted
+	 * foldertree value regardless of whether its options came from JMAP or the server (safe either
+	 * way, since the classic save path only reads the submitted .value array).
 	 *
 	 * @param {Event} _event
 	 * @param {Et2Button} _widget button[save] or button[apply]
@@ -5433,18 +5516,21 @@ export class MailApp extends EgwApp
 	{
 		if (!this._subscriptionOriginal) return true;
 
-		const ftree = this.et2.getWidgetById('foldertree');
+		const ftree : any = this.et2.getWidgetById('foldertree');
 		const {profileID, ids: originalIds} = this._subscriptionOriginal;
-		const currentIds = new Set<string>((ftree?.value || []) as string[]);
 
-		const changed = [...new Set([...originalIds, ...currentIds])]
-			.filter((id) => originalIds.has(id) !== currentIds.has(id));
-
-		Promise.all(changed.map((id) =>
+		this.mail_loadAllSubscriptionLevels(profileID, ftree, ftree.select_options || []).then(() =>
 		{
-			const path = id.split('::', 2)[1] ?? '';
-			return this.jmap.setMailboxSubscribed(profileID, path, currentIds.has(id));
-		})).then(() =>
+			const currentIds = new Set<string>((ftree?.value || []) as string[]);
+			const changed = [...new Set([...originalIds, ...currentIds])]
+				.filter((id) => originalIds.has(id) !== currentIds.has(id));
+
+			return Promise.all(changed.map((id) =>
+			{
+				const path = id.split('::', 2)[1] ?? '';
+				return this.jmap.setMailboxSubscribed(profileID, path, currentIds.has(id));
+			}));
+		}).then(() =>
 		{
 			window.opener?.app?.mail?.mail_refreshFolderLevel?.(profileID, '');
 			_widget.id === 'button[save]' ? window.close() : this.et2._inst.submit();
@@ -5467,12 +5553,11 @@ export class MailApp extends EgwApp
 
 	/**
 	 * Populate the folder-management dialog's multi-select tree via JMAP - lazily, exactly like
-	 * the main index tree (mail_folderTreeAutoload()/getRootFolders()): the top level and INBOX's
-	 * own direct children load immediately, everything deeper loads on demand as the user expands
-	 * a node. Deliberately NOT mail_subscriptionLoad()'s eager getMailboxTree() approach - that
-	 * popup genuinely needs every folder at once for its multi-toggle-then-save UI, this one
-	 * doesn't, and eagerly fetching a large account's entire tree just to populate a dialog the
-	 * user might only use to delete one folder would be wasteful.
+	 * the main index tree and the mail.subscribe popup (mail_folderTreeAutoload()/
+	 * getRootFolders()): the top level and INBOX's own direct children load immediately,
+	 * everything deeper loads on demand as the user expands a node - eagerly fetching a large
+	 * account's entire tree just to populate a dialog the user might only use to delete one
+	 * folder would be wasteful.
 	 *
 	 * mail_folderTreeAutoload() is reused as-is for expanding any deeper node - on a JMAP failure
 	 * it shows an error leaf rather than falling back to a second, classic code path (see its own

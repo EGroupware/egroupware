@@ -654,45 +654,6 @@ export class MailJmap
 	}
 
 	/**
-	 * Fetch *every* mailbox in the account in one call - unlike getMailboxChildren()'s
-	 * lazy per-level fetch (the right choice for browsing an account with hundreds of folders),
-	 * the subscribe-management popup (mail.subscribe, mail_ui::subscription()) genuinely needs
-	 * the whole tree at once, since the user toggles subscriptions across the entire account in
-	 * one multi-select tree before saving. Uses `ids: null` (RFC 8620 "all"), the same
-	 * mailboxGet() mode kept (but not used as the primary path) since Phase 1 of the folder-tree
-	 * migration for exactly this future use.
-	 *
-	 * @param profileID
-	 * @return null if this account has no usable JMAP access-token (server unreachable, MFA, ...)
-	 */
-	async getMailboxTree(profileID : string) : Promise<any[] | null>
-	{
-		try
-		{
-			const token = await this.ensureToken(profileID);
-			if (!token) return null;
-			const client = this.clients[profileID];
-
-			const [{mailboxes}] = await client.requestMany((t) => ({
-				mailboxes: t.Mailbox.get({accountId: token.accountId, ids: null}),
-			}));
-			return mailboxes.list || [];
-		}
-		catch (e)
-		{
-			if (e instanceof JmapUserError) throw e;
-			const message = describeJmapError(e);
-			if (message)
-			{
-				console.error('MailJmap.getMailboxTree(): JMAP error', e);
-				throw new JmapUserError(message);
-			}
-			console.error('MailJmap.getMailboxTree(): failed, falling back to the classic server-rendered tree', e);
-			return null;
-		}
-	}
-
-	/**
 	 * Resolve a canonical "/"-joined folder path to a JMAP Mailbox id, or null for the top level -
 	 * thin wrapper around mailboxId() that avoids its per-segment walk choking on an empty path
 	 * (folderPath.split('/') on '' yields [''], which would wrongly query for a mailbox literally

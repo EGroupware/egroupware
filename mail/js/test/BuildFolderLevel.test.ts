@@ -1,5 +1,5 @@
 import {assert} from "@open-wc/testing";
-import {buildErrorNode, buildFolderLevel, buildFolderTree, JmapMailboxNode} from "../folderTree";
+import {buildErrorNode, buildFolderLevel, JmapMailboxNode} from "../folderTree";
 
 /**
  * Test buildFolderLevel() - converts one level's worth of JMAP Mailbox objects (already fetched
@@ -332,92 +332,6 @@ describe("buildFolderLevel() id construction", () =>
 
 		assert.equal(node.id, "7::INBOX/Projects");
 		assert.equal(node.jmapId, "aBcD123");
-	});
-});
-
-describe("buildFolderTree()", () =>
-{
-	/**
-	 * Role-based label/icon treatment applies at any depth (a real or shim-reported role is
-	 * trustworthy regardless of nesting - see buildNode()'s own docblock), matching a shared/
-	 * other-user mailbox's own special-folder set nested several levels under eg. "Shared
-	 * Folders/name@example.com". Only auto-open stays restricted to the genuine top level/INBOX's
-	 * own children (isTopLevel(parentPath) - see its own docblock).
-	 */
-	it("applies role-based icon/label treatment at any depth, but only auto-opens the genuine top-level INBOX", () =>
-	{
-		const tree = buildFolderTree([
-			mailbox({id: "inbox", name: "INBOX", role: "inbox", parentId: null, hasChildren: true}),
-			mailbox({id: "trash", name: "Trash", role: "trash", parentId: "inbox"}),
-			mailbox({id: "old", name: "Trash", role: "trash", parentId: "trash", hasChildren: true}),
-		], "42", egw);
-
-		const trashNode = tree[0].item[0];
-		const deepNode = trashNode.item[0];
-
-		assert.equal(tree[0].text, "translated(INBOX)");
-		assert.isTrue(tree[0].open, "the genuine top-level INBOX still auto-opens");
-		assert.equal(trashNode.text, "translated(Trash)");
-		assert.equal(deepNode.text, "translated(Trash)", "two levels deep still gets the role translation");
-		assert.include(deepNode.im0, "trash", "two levels deep still gets the role icon");
-	});
-
-	it("nests children under their parent via parentId, all the way down", () =>
-	{
-		const tree = buildFolderTree([
-			mailbox({id: "inbox", name: "INBOX", parentId: null}),
-			mailbox({id: "projects", name: "Projects", parentId: "inbox"}),
-			mailbox({id: "2026", name: "2026", parentId: "projects"}),
-		], "42", egw);
-
-		assert.equal(tree.length, 1);
-		assert.equal(tree[0].text, "INBOX");
-		assert.equal(tree[0].item.length, 1);
-		assert.equal(tree[0].item[0].text, "Projects");
-		assert.equal(tree[0].item[0].item[0].text, "2026");
-		assert.equal(tree[0].item[0].item[0].item.length, 0);
-	});
-
-	it("builds ids from the real nested path, not the flat list's order", () =>
-	{
-		const tree = buildFolderTree([
-			mailbox({id: "inbox", name: "INBOX", parentId: null}),
-			mailbox({id: "projects", name: "Projects", parentId: "inbox"}),
-		], "42", egw);
-
-		assert.equal(tree[0].id, "42::INBOX");
-		assert.equal(tree[0].item[0].id, "42::INBOX/Projects");
-		assert.equal(tree[0].item[0].jmapId, "projects");
-	});
-
-	it("sets child from the real children, not the hasChildren hint", () =>
-	{
-		const tree = buildFolderTree([
-			mailbox({id: "a", name: "a", parentId: null, hasChildren: true}),
-			mailbox({id: "b", name: "b", parentId: null, hasChildren: undefined}),
-			mailbox({id: "c", name: "c", parentId: "a"}),
-		], "42", egw);
-
-		const [a, b] = tree;
-		assert.isTrue(a.child, "a has a real child in the flat list");
-		assert.isFalse(b.child, "b's hasChildren hint is ignored - it has no real children here");
-	});
-
-	it("keeps multiple root-level mailboxes as siblings", () =>
-	{
-		const tree = buildFolderTree([
-			mailbox({id: "a", name: "INBOX", parentId: null}),
-			mailbox({id: "b", name: "Sent", parentId: null}),
-		], "42", egw);
-
-		assert.equal(tree.length, 2);
-		assert.sameMembers(tree.map((n) => n.text), ["INBOX", "Sent"]);
-	});
-
-	it("returns an empty array for an empty/missing input", () =>
-	{
-		assert.deepEqual(buildFolderTree([], "42", egw), []);
-		assert.deepEqual(buildFolderTree(undefined as any, "42", egw), []);
 	});
 });
 
