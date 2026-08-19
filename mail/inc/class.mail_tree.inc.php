@@ -533,24 +533,24 @@ class mail_tree
 	/**
 	 * Initialization tree for index sidebox menu
 	 *
-	 * Returns every account's root node (getAccountsRootNode(), via getTree()) - the active
-	 * account's own root node is already marked open/autoload-children by getAccountsRootNode()'s
-	 * $openActiveAccount logic, so its top-level folders get lazy-loaded client-side exactly like
-	 * every other account's, instead of being fetched eagerly here. Et2Tree.ts's _optionTemplate()
-	 * already self-triggers a lazy-load for any node rendered open+childless+autoloadable, so no
-	 * client-side change is needed for this to keep working (see
-	 * doc/ai/projects/mail-folder-tree-jmap.md's "active-account eager expand" note).
+	 * Returns every account's root node (getAccountsRootNode()) directly, not via getTree()'s
+	 * shared multi-mode logic - every real caller passes no parent, so getTree() always took its
+	 * own "no parent, no open-top-level" early-return branch anyway, meaning the classic
+	 * single-node-loader/eager-subtree-building code it also contains was never actually
+	 * reachable from here.
 	 *
-	 * @param string $_parent = null no parent node means root with the first level of folders
-	 * @param string $_profileID = '' active profile / acc_id
-	 * @param int|boolean $_openTopLevel = 1 Open top level folders on load if it's set to 1|true,
-	 *  false|0 leaves them in closed state
-	 * @param boolean $_subscribedOnly = false get only subscribed folders
-	 * @return type an array of tree
+	 * The active account's own root node is already marked open/autoload-children by
+	 * getAccountsRootNode()'s $openActiveAccount logic, so its top-level folders get lazy-loaded
+	 * client-side exactly like every other account's, instead of being fetched eagerly here.
+	 * Et2Tree.ts's _optionTemplate() already self-triggers a lazy-load for any node rendered
+	 * open+childless+autoloadable, so no client-side change is needed for this to keep working
+	 * (see doc/ai/projects/mail-folder-tree-jmap.md's "active-account eager expand" note).
+	 *
+	 * @return array an array of tree
 	 */
-	function getInitialIndexTree ($_parent = null, $_profileID = '', $_openTopLevel = 1, $_subscribedOnly= false)
+	function getInitialIndexTree()
 	{
-		return $this->getTree($_parent, '', $_openTopLevel, false, $_subscribedOnly);
+		return self::getAccountsRootNode();
 	}
 
 	/**

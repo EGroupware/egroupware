@@ -628,7 +628,7 @@ class mail_ui
 				}
 
 				//$zstarttime = microtime (true);
-				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+				$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree();
 				//$zendtime = microtime(true) - $zstarttime;
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
@@ -712,7 +712,7 @@ class mail_ui
 			{
 				if (empty($etpl))
 				{
-					$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree(null, $this->mail_bo->profileID, null, !$this->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
+					$sel_options[self::$nm_index]['foldertree'] = $this->mail_tree->getInitialIndexTree();
 					$etpl = new Etemplate('mail.index');
 				}
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions(false));
