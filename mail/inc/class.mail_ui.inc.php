@@ -403,9 +403,10 @@ class mail_ui
 		{
 			Framework::window_close('Missing acc_id!');
 		}
-		// Initial tree's options, the rest would be loaded dynamically by autoloading,
-		// triggered from client-side. Also, we keep this here as
-		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true,false,true);
+		// Tree population is handled client-side via JMAP (MailApp.mail_subscriptionLoad(),
+		// mail/js/app.ts) - the server-rendered tree below is only the classic fallback for a
+		// non-JMAP-reachable account, same as mail_ui::folderManagement()'s own seed.
+		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true,false,false);
 
 		//Get all subscribed folders
 		// as getting all subscribed folders is very fast operation
@@ -482,21 +483,12 @@ class mail_ui
 							$msg = lang('Nothing to change.');
 						}
 					}
-					// update foldertree in main window
-					$parentFolder='INBOX';
-					$refreshData = array(
-						$profileId => lang($parentFolder),
-					);
-					$response = Api\Json\Response::get();
-					foreach($refreshData as $folder => &$name)
-					{
-						$name = $this->mail_tree->getTree($folder, $profileId,1,true,true,true);
-					}
-					// give success/error message to opener and popup itself
-					//$response->call('opener.app.mail.subscription_refresh',$refreshData);
-					$response->call('opener.app.mail.mail_reloadNode',$refreshData);
-
-					Framework::refresh_opener($msg, 'mail', null, null, null, null, null, $msg_type);
+					// same "account changed, please refresh" signal admin_mail/mail_wizard/
+					// folderSubscription() already send (mail/js/app.ts's observer()
+					// 'mail-account' case) - reloads this account's tree node via its own
+					// JMAP-first autoloading callback, no need for a server-computed subtree;
+					// also carries the success/error message to the opener and popup itself
+					Framework::refresh_opener($msg, 'mail', $profileId, 'mail-account', null, null, null, $msg_type);
 					if ($button == 'apply')
 					{
 						Framework::message($msg, $msg_type);

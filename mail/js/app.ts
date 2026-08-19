@@ -121,15 +121,27 @@ export class MailApp extends EgwApp
 	private _jmap : MailJmap;
 
 	/**
-	 * Subscribed-folder tree ids for the currently open mail.subscribe popup, as discovered so far
-	 * via JMAP - remembered so mail_subscriptionSave() can diff against them. Populated
-	 * progressively (mail_subscriptionLoad()'s own root fetch, every interactive expand, and
-	 * mail_subscriptionSave()'s own "load everything still unloaded" sweep all add to the same
-	 * Set) rather than snapshotted once, since the tree now loads lazily one level at a time
-	 * instead of the whole account up front. null means the JMAP load never ran/succeeded, so
+	 * Pending subscribe/unsubscribe changes for the currently open mail.subscribe popup, recorded
+	 * directly as the user toggles checkboxes (id -> desired subscribed state) rather than diffed
+	 * from a full "original vs current" tree snapshot at save time - an unloaded/never-touched
+	 * node simply never fires a toggle, so there's no need to eagerly load the whole account
+	 * before Save can know what changed. null means the JMAP load never ran/succeeded, so
 	 * mail_subscriptionSave() must leave the classic submit untouched.
 	 */
-	private _subscriptionOriginal : { profileID : string, ids : Set<string> } | null = null;
+	private _subscriptionChanges : Map<string, boolean> | null = null;
+
+	/**
+	 * The subscribe popup's own profileID (mail_ui::subscription()'s $content['profileId']),
+	 * remembered alongside _subscriptionChanges since it's needed to apply them on Save.
+	 */
+	private _subscriptionProfileID : string | null = null;
+
+	/**
+	 * The subscribe popup tree's own .value array as of the last time it was inspected (either
+	 * freshly-loaded original data being seeded in, or an actual user toggle already recorded) -
+	 * the baseline mail_recordSubscriptionChange() diffs against to find what's new since then.
+	 */
+	private _subscriptionKnownValue : Set<string> = new Set();
 	et2_obj: etemplate2;
 // defer calls to mail_refreshFolderStatus,
 // to accumulate updates of multiple rows e.g. deleting multiple emails
@@ -5367,52 +5379,75 @@ export class MailApp extends EgwApp
 	 * @param {string} _id id of clicked node
 	 * @param {et2_tree} _widget reference to tree widget
 	 * @param {PoinerEvent} _ev
+	 * @return {Promise<any>} resolves once the (un)check - including the "autoload subitems
+	 *  first" case - is fully applied; mail_subscriptionSubselect() chains onto this to know when
+	 *  it's safe to record what changed.
 	 */
-	foldertree_subselect(_id, _widget, _ev)
+	foldertree_subselect(_id, _widget, _ev) : Promise<any>
 	{
 		const node = _widget.getNode(_id);
 		// do we need to autoload the subitems first
 		if (node.child && !node.item.length)
 		{
-			_widget.refreshItem(_id).then(() =>_widget.setSubChecked(_id, "toggle"));
+			return _widget.refreshItem(_id).then(() => _widget.setSubChecked(_id, "toggle"));
 		}
-		else
-		{
-			_widget.setSubChecked(_id, "toggle");
-		}
+		return Promise.resolve(_widget.setSubChecked(_id, "toggle"));
+	}
+
+	/**
+	 * mail.subscribe popup's own onclick (bound in mail_subscriptionLoad(), replacing the
+	 * template's static onclick="app.mail.foldertree_subselect") - runs the same "(un)check
+	 * including all children" behaviour, then records whatever it just changed.
+	 */
+	private mail_subscriptionSubselect(_id : string, _widget : any, _ev : any) : void
+	{
+		Promise.resolve(this.foldertree_subselect(_id, _widget, _ev)).then(() =>
+			this.mail_recordSubscriptionChange(_widget));
 	}
 
 	/**
 	 * mail.subscribe popup load (et2_ready()'s 'mail.subscribe' case): try to replace the classic
 	 * server-rendered subscription tree with one loaded via JMAP - lazily, one level at a time,
 	 * exactly like the main index tree/folder-management dialog (mail_folderTreeAutoload()/
-	 * mail_folderManagementLoad()), not the whole account fetched up front. Always shows every
+	 * mail_folderManagementLoad()), not the whole account fetched up front.  Always shows every
 	 * folder regardless of showAllFoldersInFolderPane, same reasoning as
 	 * mail_folderManagementLoad() - this dialog manages subscriptions, including for currently
 	 * unsubscribed folders.
 	 *
 	 * A checkbox tree's rendering only ever consults its own .value array, never a node's own
-	 * .checked field (Et2Tree.ts's _optionTemplate()) - mail_recordSubscriptionOriginal() is what
-	 * seeds .value from freshly-loaded .checked data, both here and for every later interactive
-	 * expand (see the tree.autoloading wrapper below).
+	 * .checked field (Et2Tree.ts's _optionTemplate()) - mail_seedSubscriptionValue() is what seeds
+	 * .value from freshly-loaded .checked data, both here and for every later interactive expand
+	 * (see the tree.autoloading wrapper below). Since a not-yet-loaded node obviously can't have
+	 * been toggled, mail_subscriptionSave() never needs to force-load the rest of the account
+	 * first - see mail_recordSubscriptionChange()'s own docblock.
 	 *
 	 * On any failure (network, non-JMAP-capable account) this is a no-op: the tree the server
 	 * already rendered (with the right initial selection) is left exactly as-is, and
-	 * mail_subscriptionSave() falls back to a plain classic submit since
-	 * _subscriptionOriginal stays null.
+	 * mail_subscriptionSave() falls back to a plain classic submit since _subscriptionChanges
+	 * stays null.
 	 */
 	private mail_subscriptionLoad() : void
 	{
 		const ftree : any = this.et2.getWidgetById('foldertree');
-		// no widget carries profileId (see mail_ui::subscription()'s $content['profileId']) -
-		// it's a plain content key, only reachable via the array manager, not getValues()
-		const profileID = String(this.et2.getArrayMgr('content').getEntry('profileId') ?? '');
+		// mail_ui::subscription() only ever sets profileId into $preserv (for its own next
+		// submit round-trip), not into $content directly - that never actually surfaces via
+		// getArrayMgr('content') on the initial load, so read the same acc_id the PHP side
+		// itself resolved from, straight off this popup's own URL (edit_subscribe() always
+		// opens it as .../mail.mail_ui.subscription&acc_id=X)
+		const profileID = new URLSearchParams(window.location.search).get('acc_id') ??
+			String(this.et2.getArrayMgr('content').getEntry('profileId') ?? '');
 		if (!ftree || !profileID) return;
 
-		this._subscriptionOriginal = {profileID, ids: new Set()};
+		this._subscriptionChanges = new Map();
+		this._subscriptionProfileID = profileID;
+		this._subscriptionKnownValue = new Set();
+		// replaces the template's static onclick="app.mail.foldertree_subselect" - same "(un)check
+		// including all children" behaviour, plus recording what that changed
+		ftree.onclick = (id : string, widget : any, ev : any) => this.mail_subscriptionSubselect(id, widget, ev);
+		ftree.addEventListener('et2-selection-change', () => this.mail_recordSubscriptionChange(ftree));
 		ftree.autoloading = (item : any) => this.mail_folderTreeAutoload(item, false).then((result) =>
 		{
-			this.mail_recordSubscriptionOriginal(ftree, result?.item ?? []);
+			this.mail_seedSubscriptionValue(ftree, result?.item ?? []);
 			return result;
 		});
 
@@ -5420,18 +5455,18 @@ export class MailApp extends EgwApp
 		{
 			if (data === null)
 			{
-				this._subscriptionOriginal = null;
+				this._subscriptionChanges = null;
 				return;
 			}
 			ftree.select_options = data;
-			this.mail_recordSubscriptionOriginal(ftree, data);
+			this.mail_seedSubscriptionValue(ftree, data);
 			// mail_buildRootFolderData() already eagerly embeds INBOX's own children (it's always
-			// auto-opened) - record those too, since they never go through the autoloading wrapper
+			// auto-opened) - seed those too, since they never go through the autoloading wrapper
 			const inbox = data.find((node) => node.id === profileID + '::INBOX');
-			if (inbox) this.mail_recordSubscriptionOriginal(ftree, inbox.item);
+			if (inbox) this.mail_seedSubscriptionValue(ftree, inbox.item);
 		}).catch((e) =>
 		{
-			this._subscriptionOriginal = null;
+			this._subscriptionChanges = null;
 			if (e instanceof JmapUserError)
 			{
 				this.egw.message(e.message, 'error');
@@ -5441,66 +5476,47 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Record freshly-loaded nodes' subscribed state into _subscriptionOriginal (the "before any
-	 * user edit" baseline mail_subscriptionSave() diffs against) and seed the tree widget's own
-	 * .value array from them, since Et2Tree's checkbox rendering only ever consults .value, never
-	 * a node's own .checked field. Called for every batch of nodes as soon as it's loaded -
-	 * the initial root fetch, every interactive expand, and mail_subscriptionSave()'s own
-	 * "load everything still unloaded" sweep alike - so a node's ORIGINAL state is always
-	 * captured before the user (or the sweep) can have touched its checkbox.
+	 * Seed the tree widget's own .value array from freshly-loaded nodes' .checked state, since
+	 * Et2Tree's checkbox rendering only ever consults .value, never a node's own .checked field -
+	 * called for every batch of nodes as soon as it's loaded (the initial root fetch and every
+	 * later interactive expand). Also updates _subscriptionKnownValue to match, so this seeding
+	 * itself is never mistaken for a user-driven change by mail_recordSubscriptionChange() - only
+	 * an actual toggle *after* a node is already known moves it into _subscriptionChanges.
 	 */
-	private mail_recordSubscriptionOriginal(ftree : any, nodes : FolderTreeNode[]) : void
+	private mail_seedSubscriptionValue(ftree : any, nodes : FolderTreeNode[]) : void
 	{
-		if (!this._subscriptionOriginal || !nodes.length) return;
+		if (!this._subscriptionChanges || !nodes.length) return;
 		const value = new Set<string>(ftree.value || []);
 		nodes.forEach((node) =>
 		{
-			if (node.checked)
-			{
-				this._subscriptionOriginal.ids.add(node.id);
-				value.add(node.id);
-			}
+			if (node.checked) value.add(node.id);
 		});
 		ftree.value = [...value];
+		this._subscriptionKnownValue = value;
 	}
 
 	/**
-	 * Recursively load every tree level mail_subscriptionSave() hasn't seen yet, so its diff
-	 * covers the account's full folder set, not just whatever the user happened to expand while
-	 * browsing. Bypasses mail_folderTreeAutoload()'s error-leaf UX deliberately: a leaf's fake
-	 * "not subscribed, no real jmapId" data would otherwise look like real folder data to the
-	 * diff below, silently unsubscribing a folder we actually just failed to reach - throwing
-	 * instead lets mail_subscriptionSave()'s own catch abort the save with a clear error (same
-	 * "no silent 2nd path" reasoning as mail_folderTreeAutoload()'s own docblock).
+	 * Record whatever just changed in the tree's .value array (since the last time it was
+	 * inspected, either by this method or by mail_seedSubscriptionValue()'s own baseline update)
+	 * into _subscriptionChanges - called after every user-driven toggle, both a plain click
+	 * (the 'et2-selection-change' listener mail_subscriptionLoad() attaches, which fires once
+	 * .value already reflects the single clicked node's new state) and the "(un)check all
+	 * children" cascade (mail_subscriptionSubselect(), which can flip several already-loaded
+	 * descendants' state at once without firing that event for each one).
 	 *
-	 * Also re-loads a node whose only child is itself an error leaf (jmapId `''`) left over from
-	 * an earlier *interactive* expand that failed - otherwise that placeholder would look
-	 * "already loaded" and never get retried before the diff runs.
+	 * This is the whole point of tracking changes as they happen instead of diffing a full
+	 * "original vs current" snapshot at Save time: an unloaded node's checkbox can never have
+	 * been clicked, so it can never appear here - no need to eagerly load the rest of the account
+	 * first.
 	 */
-	private mail_loadAllSubscriptionLevels(profileID : string, ftree : any, nodes : FolderTreeNode[]) : Promise<void>
+	private mail_recordSubscriptionChange(ftree : any) : void
 	{
-		const needsLoad = (node : FolderTreeNode) => node.child &&
-			(node.item.length === 0 || (node.item.length === 1 && !node.item[0].jmapId));
-
-		return Promise.all(nodes.map((node) =>
-		{
-			if (!needsLoad(node))
-			{
-				return this.mail_loadAllSubscriptionLevels(profileID, ftree, node.item || []);
-			}
-			const parentPath = node.id.split('::', 2)[1] ?? '';
-			return this.mail_buildFolderLevelData(profileID, parentPath, node.jmapId || null, false).then((children) =>
-			{
-				if (children === null)
-				{
-					throw new JmapUserError(this.egw.lang('Account not reachable'));
-				}
-				node.item = children;
-				node.child = children.length > 0;
-				this.mail_recordSubscriptionOriginal(ftree, children);
-				return this.mail_loadAllSubscriptionLevels(profileID, ftree, children);
-			});
-		})).then(() => {});
+		if (!this._subscriptionChanges) return;
+		const current = new Set<string>(ftree.value || []);
+		[...new Set([...this._subscriptionKnownValue, ...current])]
+			.filter((id) => this._subscriptionKnownValue.has(id) !== current.has(id))
+			.forEach((id) => this._subscriptionChanges.set(id, current.has(id)));
+		this._subscriptionKnownValue = current;
 	}
 
 	/**
@@ -5508,17 +5524,25 @@ export class MailApp extends EgwApp
 	 * mirrors acl_save()'s exact shape/contract (same handler for both buttons, disambiguated
 	 * by _widget.id, true/false return controls whether the normal submit proceeds).
 	 *
-	 * If mail_subscriptionLoad() never replaced the tree with JMAP data (_subscriptionOriginal
-	 * is null), this is a complete no-op: return true and let the classic submit/server-side
-	 * diff-and-apply run exactly as before. Otherwise, first load every tree level the user hasn't
-	 * expanded yet (mail_loadAllSubscriptionLevels()) - the diff needs to know the account's
-	 * *complete* folder set, not just what's been lazily loaded so far - then diff the tree's
-	 * current selection against the remembered original set and apply just the changes via
-	 * MailJmap.setMailboxSubscribed() - on full success, refresh the opener's own tree and
-	 * close/re-submit like acl_save() does; on any failure (including the load-everything sweep),
-	 * fall back to the classic submit, which re-derives the diff server-side from the submitted
-	 * foldertree value regardless of whether its options came from JMAP or the server (safe either
-	 * way, since the classic save path only reads the submitted .value array).
+	 * If mail_subscriptionLoad() never replaced the tree with JMAP data (_subscriptionChanges is
+	 * null), this is a complete no-op: return true and let the classic submit/server-side
+	 * diff-and-apply run exactly as before - that classic diff needs the *complete* submitted
+	 * foldertree value to be trustworthy (everything not present in it is treated as
+	 * unsubscribed), which only holds when the whole dialog stayed classic-only.
+	 *
+	 * Once JMAP has taken over, falling back to that same classic submit on a failure would be
+	 * actively wrong now that the tree loads lazily: the submitted .value only reflects whatever
+	 * happened to be loaded/toggled, so the classic diff would read every untouched, never-loaded
+	 * folder as "now unsubscribed" and mass-unsubscribe the account - so on any failure this just
+	 * shows the error and leaves the popup open instead (same "no silent 2nd path" reasoning as
+	 * everywhere else this session). _subscriptionChanges is left intact, so simply pressing
+	 * Save again retries the exact same changes - reapplying an already-successful one is a
+	 * harmless no-op.
+	 *
+	 * On success, applies exactly the changes recorded in _subscriptionChanges (no reason to
+	 * eagerly load/diff the rest of the account first - an unloaded node was never touched, so it
+	 * can't be in there) via MailJmap.setMailboxSubscribed(), then refreshes the opener's own tree
+	 * and closes/re-submits like acl_save() does.
 	 *
 	 * @param {Event} _event
 	 * @param {Et2Button} _widget button[save] or button[apply]
@@ -5527,39 +5551,23 @@ export class MailApp extends EgwApp
 	 */
 	mail_subscriptionSave(_event, _widget) : boolean
 	{
-		if (!this._subscriptionOriginal) return true;
+		if (!this._subscriptionChanges) return true;
 
-		const ftree : any = this.et2.getWidgetById('foldertree');
-		const {profileID, ids: originalIds} = this._subscriptionOriginal;
+		const profileID = this._subscriptionProfileID;
+		const changes = [...this._subscriptionChanges];
 
-		this.mail_loadAllSubscriptionLevels(profileID, ftree, ftree.select_options || []).then(() =>
+		Promise.all(changes.map(([id, subscribed]) =>
 		{
-			const currentIds = new Set<string>((ftree?.value || []) as string[]);
-			const changed = [...new Set([...originalIds, ...currentIds])]
-				.filter((id) => originalIds.has(id) !== currentIds.has(id));
-
-			return Promise.all(changed.map((id) =>
-			{
-				const path = id.split('::', 2)[1] ?? '';
-				return this.jmap.setMailboxSubscribed(profileID, path, currentIds.has(id));
-			}));
-		}).then(() =>
+			const path = id.split('::', 2)[1] ?? '';
+			return this.jmap.setMailboxSubscribed(profileID, path, subscribed);
+		})).then(() =>
 		{
 			window.opener?.app?.mail?.mail_refreshFolderLevel?.(profileID, '');
 			_widget.id === 'button[save]' ? window.close() : this.et2._inst.submit();
 		}).catch((e) =>
 		{
-			// unlike the other mail_tryJmapXxx() wrappers, the classic submit here re-derives and
-			// applies its own diff from the submitted tree state rather than repeating the same
-			// JMAP action - it's a safe reconciliation step even after a genuine JMAP error, so it
-			// still runs (unlike mail_handleJmapError()'s "don't also retry" default), just after
-			// telling the user what actually went wrong
-			if (e instanceof JmapUserError)
-			{
-				this.egw.message(e.message, 'error');
-			}
-			console.error('MailApp.mail_subscriptionSave(): JMAP save failed, falling back to the classic submit', e);
-			this.et2._inst.submit();
+			this.egw.message(e?.message || this.egw.lang('Account not reachable'), 'error');
+			console.error('MailApp.mail_subscriptionSave(): JMAP save failed', e);
 		});
 		return false;
 	}
