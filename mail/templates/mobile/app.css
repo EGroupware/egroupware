@@ -272,11 +272,6 @@ pre {
   position: relative;
   --size: 2.75em;
 }
-/*Keeps the scrollbar in the window in Firefox*/
-#mail-index table.egwGridView_outer {
-  -moz-margin-end: 10px;
-  margin-right: -10px;
-}
 .mail-index_quotabox {
   display: inline-block;
 }
@@ -328,18 +323,6 @@ pre {
 }
 .mail-index_QuotaRed > div {
   background-color: var(--sl-color-red-600, red) !important;
-}
-#mail-index #mail-index_nm .status_icons {
-  margin-right: 1em;
-}
-#mail-index #mail-index_nm .status_icons et2-image {
-  font-size: calc(1em + 2px);
-  height: calc(1em + 2px);
-}
-#mail-index #mail-index_nm et2-image.horizontal_smime {
-  display: block;
-  width: calc(1em + 2px);
-  font-size: calc(1em + 2px);
 }
 /*
  influence the tree display and scrolling behavior
@@ -824,8 +807,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote {
   }
 }
 /* MOBILE and tablets (Portrait & Landscape) View --------------*/
-/* tablets and smartphones (portrait) ----------- */
-/* Smartphones (landscape) ----------- */
 /* Mobile (landscape) Tablet----------- */
 #popupMainDiv .et2_container .mailComposeHeaderSection et2-hbox {
   border-bottom: 1px solid;
@@ -940,9 +921,6 @@ et2-image.smime_cert_unknownemail svg {
 .et2_vbox.et2_box_widget.mailComposeBodySection .mailComposeHtmlContainer .tox.tox-tinymce {
   width: 100%;
 }
-div#mail-index_nm.splitter-pane {
-  min-height: 100px;
-}
 #mail-index_mailSplitter .splitter-bar-horizontal {
   background: white;
 }
@@ -953,20 +931,6 @@ div#mail-index_nm.splitter-pane {
   flex: 2 1 auto;
   border-top: 1px solid silver;
   margin-bottom: 0;
-}
-#mail-index_nm .et2_label.et2_vfs {
-  text-align: center;
-}
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr[class*="label"].row_category td:first-child > div,
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.flagged.row_category td:first-child > div {
-  margin-left: -1px;
-}
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child > div {
-  margin-left: 0px;
-}
-#mail-index_nm tbody tr et2-lavatar {
-  max-width: 3.7em;
-  min-width: 3.7em !important;
 }
 .previewWrapper .firstColumnTitle {
   max-width: 7em;
@@ -1240,12 +1204,6 @@ et2-menu-item#mark et2-menu-item#customFlag et2-image[slot='prefix'] {
   }
   #mail-index td {
     padding: 0;
-  }
-  #mail-index tr.mail div.innerContainer,
-  #mail-index tr.mail et2-description {
-    margin: 0;
-    padding: 0;
-    width: 100%;
   }
   #mail-index .mail-index_vacation {
     z-index: 99;

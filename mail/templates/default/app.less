@@ -343,11 +343,6 @@ pre {
 	position: relative;
 	--size: 2.75em;
 }
-/*Keeps the scrollbar in the window in Firefox*/
-#mail-index	table.egwGridView_outer {
-	-moz-margin-end: 10px;
-	margin-right: -10px;
-}
 .mail-index_quotabox {
 	display: inline-block;
 }
@@ -401,19 +396,6 @@ pre {
 	background-color: var(--sl-color-red-600,red )!important;
 }
 
-#mail-index #mail-index_nm .status_icons {
-	margin-right: 1em;
-}
-
-#mail-index #mail-index_nm .status_icons et2-image {
-	font-size: calc(1em + 2px);
-	height: calc(1em + 2px);
-}
-#mail-index #mail-index_nm et2-image.horizontal_smime{
-	display: block;
-	width: calc(1em + 2px);
-	font-size: calc(1em + 2px);
-}
 /*
  influence the tree display and scrolling behavior
 */
@@ -938,24 +920,6 @@ blockquote blockquote blockquote blockquote blockquote blockquote{
 
 
 }
-/* tablets and smartphones (portrait) ----------- */
-@media only screen
-and (max-device-width : 1024px)
-and (orientation : portrait) {
-	#mail-index div#mail-index_nm tr.mail.row {
-
-	}
-}
-
-/* Smartphones (landscape) ----------- */
-@media only screen
-and (min-width : 321px)
-and (max-device-width:768px){
-	#mail-index div#mail-index_nm tr.mail.row {
-
-	}
-}
-
 /* Mobile (landscape) Tablet----------- */
 @media only screen
 and (max-device-width : 1024px)
@@ -1079,7 +1043,6 @@ et2-image.smime_cert_unknownemail, et2-image.smime_cert_unknownemail svg {
     width: 100%;
 }
 
-div#mail-index_nm.splitter-pane {min-height: 100px;}
 #mail-index_mailSplitter .splitter-bar-horizontal {background: white;}
 
 #calendar-meeting table.et2_grid.meetingRequest td {
@@ -1090,16 +1053,6 @@ div#mail-index_nm.splitter-pane {min-height: 100px;}
 	border-top: 1px solid silver;
 	margin-bottom: 0;
 }
-
-#mail-index_nm  .et2_label.et2_vfs {text-align: center}
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr[class*="label"].row_category td:first-child>div,
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.flagged.row_category td:first-child>div{
-	margin-left: -1px;
-}
-.et2_nextmatch .egwGridView_outer .egwGridView_scrollarea tbody tr.row_category td:first-child>div {
-	margin-left: 0px;
-}
-#mail-index_nm tbody tr et2-lavatar {max-width: 3.7em; min-width:3.7em !important;}
 
 .previewWrapper .firstColumnTitle {
 	max-width: 7em;

@@ -176,3 +176,8 @@ tr.mail .status_icons et2-image {
   height: calc(1em + 2px);
   width: calc(1em + 2px);
 }
+tr.mail et2-image.horizontal_smime {
+  display: block;
+  width: calc(1em + 2px);
+  font-size: calc(1em + 2px);
+}
