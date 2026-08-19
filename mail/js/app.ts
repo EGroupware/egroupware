@@ -3814,7 +3814,7 @@ export class MailApp extends EgwApp
 			popup.document.open();
 			popup.document.write('<pre>'+escaped+'</pre>');
 			popup.document.close();
-		}).catch((e) => this.mail_handleJmapError(e, classicHeaderPopup));
+		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
 	/**
@@ -4143,9 +4143,12 @@ export class MailApp extends EgwApp
 					window.etemplate2.prototype.download(url);
 				};
 				// Fast client-side JMAP path for a single attachment with a known blobId (set by
-				// mail_ui::jmapAttachmentsToLegacy(), both backends) - falls back to the classic
-				// getAttachment() URL on any failure. downloadAllToZip stays on the classic path
-				// (server-side zip assembly, not a per-file fetch).
+				// mail_ui::jmapAttachmentsToLegacy(), both backends). downloadAllToZip stays on the
+				// classic path (server-side zip assembly, not a per-file fetch); an unparseable
+				// mail_id or missing blobId falls back to it too (not a JMAP failure, just not
+				// applicable) - but once the JMAP download itself is attempted, any failure shows
+				// the error directly, there's no classic fallback (see mail_folderTreeAutoload()'s
+				// docblock for why).
 				if (action === 'downloadOneAsFile' && attachment.blobId)
 				{
 					let profileID : string;
@@ -4159,7 +4162,7 @@ export class MailApp extends EgwApp
 						break;
 					}
 					this.jmap.downloadAttachment(profileID, attachment.blobId, attachment.filename, attachment.type)
-						.catch((e) => this.mail_handleJmapError(e, classicDownload));
+						.catch((e) => this.egw.message(e.message, 'error'));
 					break;
 				}
 				classicDownload();

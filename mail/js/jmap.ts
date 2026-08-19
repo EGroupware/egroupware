@@ -1504,22 +1504,33 @@ export class MailJmap
 	 * @param blobId as returned by mail_ui::jmapAttachmentsToLegacy() in the row's attachmentsBlock
 	 * @param filename suggested filename for the save dialog
 	 * @param mimeType
-	 * @throws Error on any failure - caller falls back to the classic getAttachment() URL
+	 * @throws JmapUserError on any failure - there's no classic fallback (see
+	 *  mail_folderTreeAutoload()'s docblock in app.ts for why)
 	 */
 	async downloadAttachment(profileID : string, blobId : string, filename : string, mimeType : string) : Promise<void>
 	{
-		const token = await this.ensureToken(profileID);
-		if (!token)
+		let url : string;
+		try
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			const token = await this.ensureToken(profileID);
+			if (!token)
+			{
+				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+			}
+			const response = await this.clients[profileID].downloadBlob({
+				accountId: token.accountId,
+				blobId,
+				mimeType: mimeType || 'application/octet-stream',
+				fileName: filename || 'attachment',
+			});
+			url = URL.createObjectURL(await response.blob());
 		}
-		const response = await this.clients[profileID].downloadBlob({
-			accountId: token.accountId,
-			blobId,
-			mimeType: mimeType || 'application/octet-stream',
-			fileName: filename || 'attachment',
-		});
-		const url = URL.createObjectURL(await response.blob());
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.downloadAttachment(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+		}
 		try
 		{
 			const link = document.createElement('a');
@@ -1544,40 +1555,50 @@ export class MailJmap
 	 * dedicated IMAP HEADERTEXT fetch needed.
 	 *
 	 * @param rowId
-	 * @throws Error on any failure - caller falls back to the classic displayHeader popup
+	 * @throws JmapUserError on any failure - there's no classic fallback (see
+	 *  mail_folderTreeAutoload()'s docblock in app.ts for why)
 	 */
 	async fetchRawHeader(rowId : string) : Promise<string>
 	{
-		const reference = this.messageReference(rowId);
-		const token = await this.ensureToken(reference.profileID);
-		if (!token)
+		try
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			const reference = this.messageReference(rowId);
+			const token = await this.ensureToken(reference.profileID);
+			if (!token)
+			{
+				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+			}
+			const args : any = {accountId: token.accountId, ids: [reference.emailId], properties: ['blobId']};
+			if (token.isLocal)
+			{
+				// standalone Email/get (no preceding Email/query in this request) needs our shim's
+				// local-only mailboxId extension - see JmapShim::emailGet(), same as refreshRows()
+				args.mailboxId = reference.mailboxId;
+			}
+			const [{emails}] = await this.clients[reference.profileID].requestMany((t) => ({
+				emails: t.Email.get(args) as any,
+			}));
+			const blobId = (emails.list || [])[0]?.blobId;
+			if (!blobId)
+			{
+				throw new JmapUserError(this.egw.lang('Unable to resolve the message blobId'));
+			}
+			const response = await this.clients[reference.profileID].downloadBlob({
+				accountId: token.accountId,
+				blobId,
+				mimeType: 'message/rfc822',
+				fileName: 'header',
+			});
+			const text = await response.text();
+			const match = text.match(/\r?\n\r?\n/);
+			return match ? text.slice(0, match.index) : text;
 		}
-		const args : any = {accountId: token.accountId, ids: [reference.emailId], properties: ['blobId']};
-		if (token.isLocal)
+		catch (e)
 		{
-			// standalone Email/get (no preceding Email/query in this request) needs our shim's
-			// local-only mailboxId extension - see JmapShim::emailGet(), same as refreshRows()
-			args.mailboxId = reference.mailboxId;
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.fetchRawHeader(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
 		}
-		const [{emails}] = await this.clients[reference.profileID].requestMany((t) => ({
-			emails: t.Email.get(args) as any,
-		}));
-		const blobId = (emails.list || [])[0]?.blobId;
-		if (!blobId)
-		{
-			throw new Error('Unable to resolve the message blobId');
-		}
-		const response = await this.clients[reference.profileID].downloadBlob({
-			accountId: token.accountId,
-			blobId,
-			mimeType: 'message/rfc822',
-			fileName: 'header',
-		});
-		const text = await response.text();
-		const match = text.match(/\r?\n\r?\n/);
-		return match ? text.slice(0, match.index) : text;
 	}
 
 	/**
@@ -1663,24 +1684,33 @@ export class MailJmap
 		{
 			return this.mailboxIds[cacheKey];
 		}
-		let parentId : string;
-		let id : string;
-		for (const part of folderPath.split('/'))
+		try
 		{
-			const [{ids}] = await client.requestMany((t) => ({
-				ids: t.Mailbox.query({
-					accountId,
-					filter: parentId ? {name: part, parentId} : {name: part},
-				}),
-			}));
-			id = ids.ids?.[0];
-			if (!id)
+			let parentId : string;
+			let id : string;
+			for (const part of folderPath.split('/'))
 			{
-				throw new Error(`MailJmap: folder '${folderPath}' not found`);
+				const [{ids}] = await client.requestMany((t) => ({
+					ids: t.Mailbox.query({
+						accountId,
+						filter: parentId ? {name: part, parentId} : {name: part},
+					}),
+				}));
+				id = ids.ids?.[0];
+				if (!id)
+				{
+					throw new JmapUserError(this.egw.lang("Folder '%1' not found", folderPath));
+				}
+				parentId = id;
 			}
-			parentId = id;
+			return this.mailboxIds[cacheKey] = id;
 		}
-		return this.mailboxIds[cacheKey] = id;
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.mailboxId(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+		}
 	}
 
 	/**
@@ -2009,21 +2039,30 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const args : any = {accountId: token.accountId, update};
 		if (token.isLocal)
 		{
 			args.mailboxId = mailboxId;
 		}
-		const [{result}] = await this.clients[profileID].requestMany((t) => ({
-			result: t.Email.set(args),
-		}));
-		if (result?.notUpdated && Object.keys(result.notUpdated).length)
+		try
 		{
-			throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to update one or more messages'));
+			const [{result}] = await this.clients[profileID].requestMany((t) => ({
+				result: t.Email.set(args),
+			}));
+			if (result?.notUpdated && Object.keys(result.notUpdated).length)
+			{
+				throw new JmapUserError(describeSetError(result.notUpdated) ?? this.egw.lang('Failed to update one or more messages'));
+			}
+			return result;
 		}
-		return result;
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.updateKeywords(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+		}
 	}
 
 	private groupReferences(references : JmapMessageReference[]) : Record<string, JmapMessageReference[]>
@@ -2148,7 +2187,7 @@ export class MailJmap
 		const token = await this.ensureToken(targetProfileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const targetMailboxId = await this.mailboxId(
 			this.clients[targetProfileID], token.accountId, targetProfileID, targetFolderPath);
@@ -2176,7 +2215,7 @@ export class MailJmap
 		const token = await this.ensureToken(targetProfileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const targetMailboxId = await this.mailboxId(
 			this.clients[targetProfileID], token.accountId, targetProfileID, targetFolderPath);
@@ -2207,40 +2246,18 @@ export class MailJmap
 				const token = await this.ensureToken(profileID);
 				if (!token)
 				{
-					throw new Error(this.egw.lang('Unable to connect to the mail server'));
+					throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 				}
 				if (!token.trashFolder)
 				{
-					throw new Error('MailJmap.deleteMessages(): no trash folder known for this profile');
+					throw new JmapUserError(this.egw.lang('No valid %1 folder configured!', this.egw.lang('trash')));
 				}
 				return this.moveMessages(group, profileID, token.trashFolder);
 			}));
 			return;
 		}
-		await Promise.all(Object.values(this.groupReferences(references)).map(async(group) =>
-		{
-			const profileID = group[0].profileID;
-			const token = await this.ensureToken(profileID);
-			if (!token)
-			{
-				throw new Error(this.egw.lang('Unable to connect to the mail server'));
-			}
-			const args : any = {
-				accountId: token.accountId,
-				destroy: group.map(ref => ref.emailId),
-			};
-			if (token.isLocal)
-			{
-				args.mailboxId = group[0].mailboxId;
-			}
-			const [{result}] = await this.clients[profileID].requestMany((t) => ({
-				result: t.Email.set(args) as any,
-			}));
-			if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
-			{
-				throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages'));
-			}
-		}));
+		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
+			this.destroyIds(group[0].profileID, group[0].mailboxId, group.map(ref => ref.emailId))));
 	}
 
 	private withKeyword(filter : EmailFilter, keyword : string, set : boolean) : EmailFilter
@@ -2250,28 +2267,37 @@ export class MailJmap
 
 	private async queryAllIds(client : JamClient, accountId : string, filter : EmailFilter) : Promise<string[]>
 	{
-		const ids : string[] = [];
-		let total = 0;
-		do
+		try
 		{
-			const [{page}] = await client.requestMany((t) => ({
-				page: t.Email.query({
-					accountId,
-					filter,
-					position: ids.length,
-					limit: MailJmap.QUERY_PAGE_SIZE,
-					calculateTotal: true,
-				}),
-			}));
-			ids.push(...(page.ids || []));
-			total = page.total ?? ids.length;
-			if (!page.ids?.length)
+			const ids : string[] = [];
+			let total = 0;
+			do
 			{
-				break;
+				const [{page}] = await client.requestMany((t) => ({
+					page: t.Email.query({
+						accountId,
+						filter,
+						position: ids.length,
+						limit: MailJmap.QUERY_PAGE_SIZE,
+						calculateTotal: true,
+					}),
+				}));
+				ids.push(...(page.ids || []));
+				total = page.total ?? ids.length;
+				if (!page.ids?.length)
+				{
+					break;
+				}
 			}
+			while (ids.length < total);
+			return ids;
 		}
-		while (ids.length < total);
-		return ids;
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.queryAllIds(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+		}
 	}
 
 	private async updateIds(profileID : string, mailboxId : string, ids : string[],
@@ -2291,25 +2317,34 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
-		for (let start = 0; start < ids.length; start += MailJmap.QUERY_PAGE_SIZE)
+		try
 		{
-			const args : any = {
-				accountId: token.accountId,
-				destroy: ids.slice(start, start + MailJmap.QUERY_PAGE_SIZE),
-			};
-			if (token.isLocal)
+			for (let start = 0; start < ids.length; start += MailJmap.QUERY_PAGE_SIZE)
 			{
-				args.mailboxId = mailboxId;
+				const args : any = {
+					accountId: token.accountId,
+					destroy: ids.slice(start, start + MailJmap.QUERY_PAGE_SIZE),
+				};
+				if (token.isLocal)
+				{
+					args.mailboxId = mailboxId;
+				}
+				const [{result}] = await this.clients[profileID].requestMany((t) => ({
+					result: t.Email.set(args) as any,
+				}));
+				if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
+				{
+					throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages'));
+				}
 			}
-			const [{result}] = await this.clients[profileID].requestMany((t) => ({
-				result: t.Email.set(args) as any,
-			}));
-			if (result?.notDestroyed && Object.keys(result.notDestroyed).length)
-			{
-				throw new JmapUserError(describeSetError(result.notDestroyed) ?? this.egw.lang('Failed to delete one or more messages'));
-			}
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.destroyIds(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
 		}
 	}
 
@@ -2332,7 +2367,7 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
 		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
@@ -2356,7 +2391,7 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
 		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
@@ -2376,13 +2411,13 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		if (mode === 'trash')
 		{
 			if (!token.trashFolder)
 			{
-				throw new Error('MailJmap.deleteAllMatching(): no trash folder known for this profile');
+				throw new JmapUserError(this.egw.lang('No valid %1 folder configured!', this.egw.lang('trash')));
 			}
 			await this.moveAllMatching(query, profileID, token.trashFolder);
 			return;
@@ -2411,12 +2446,12 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const folder = which === 'trash' ? token.trashFolder : token.junkFolder;
 		if (!folder)
 		{
-			throw new Error(`MailJmap.purgeFolder(): no ${which} folder known for this profile`);
+			throw new JmapUserError(this.egw.lang('No valid %1 folder configured!', this.egw.lang(which)));
 		}
 		const selectedFolder = profileID + '::' + folder;
 		await this.deleteAllMatching({selectedFolder}, 'destroy');
@@ -2430,7 +2465,7 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
 		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
@@ -2471,7 +2506,7 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			throw new Error(this.egw.lang('Unable to connect to the mail server'));
+			throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
 		}
 		const client = this.clients[profileID];
 		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
