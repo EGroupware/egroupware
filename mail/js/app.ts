@@ -169,25 +169,21 @@ export class MailApp extends EgwApp
 		super('mail', _wnd);
 
 		if (!this.egw.is_popup())
+		{
 			// Turn on client side, persistent cache
 			// egw.data system runs encapsulated below etemplate, so this must be
 			// done before the nextmatch is created.
 			this.egw.dataCacheRegister('mail',
 				// Called to determine cache key
 				this.nm_cache,
-				// Called whenever cache is used
-				// TODO: Change this as needed
-				function(server_query)
-				{
-					// Unlock tree if using a cache, since the server won't
-					if(!server_query) this.unlock_tree();
-				},
 				this
 			);
 
-		// Let mail's direct-JMAP path (see jmap.ts) answer NextMatch's regular row-fetch
-		// itself for Stalwart-backed accounts, instead of round-tripping through get_rows
+			// Let mail's direct-JMAP path (see jmap.ts) answer NextMatch's regular row-fetch
+			// itself for Stalwart-backed accounts, instead of round-tripping through get_rows
+			// this also should not be done for a popup, since they share the same dataRegister
 		this.egw.dataRegisterFetch('mail', this.jmap.fetchRows, this.jmap);
+		}
 	}
 
 	/**
@@ -195,9 +191,16 @@ export class MailApp extends EgwApp
 	 */
 	destroy()
 	{
-		// Unregister client side cache
-		this.egw.dataCacheUnregister('mail');
-		this.egw.dataUnregisterFetch('mail');
+
+		// Only if we are the window that registered them (see constructor):
+		// both of these reset the *entire* callback list for the 'mail' prefix, and that list is shared with popups -
+		// so doing it from a closing popup tore down the main window's row-fetch wiring too
+		if (!this.egw.is_popup())
+		{
+			this.egw.dataCacheUnregister('mail');
+			//only unregister the fetch that was actually registered
+			this.egw.dataUnregisterFetch('mail',this.jmap.fetchRows, this.jmap);
+		}
 
 		this.tree_wdg?.destroy && this.tree_wdg.destroy();
 		this.tree_wdg?.remove && this.tree_wdg.remove();
