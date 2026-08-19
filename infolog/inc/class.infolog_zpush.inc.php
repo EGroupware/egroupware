@@ -412,8 +412,13 @@ class infolog_zpush implements activesync_plugin_write
 			return false;
 		}
 		$infolog = array();
+		// read in server-time, as that's the format GetMessage() gave the device for
+		// info_startdate/info_enddate (SyncTask::$startdate/$duedate below) - an unmodified
+		// sync just echoes those values back, so write() must be told they're already
+		// server-time (see the matching $user2server=false a few lines down), or they get
+		// silently shifted by the client/server timezone offset on every sync.
 		if (empty($id) && $this->infolog->check_access(0, Acl::EDIT, $account) ||
-			($infolog = $this->infolog->read($id)) && $this->infolog->check_access($infolog, Acl::EDIT))
+			($infolog = $this->infolog->read($id, true, 'server')) && $this->infolog->check_access($infolog, Acl::EDIT))
 		{
 			if (!$infolog) $infolog = array();
 			foreach (self::$mapping as $key => $attr)
@@ -458,7 +463,12 @@ class infolog_zpush implements activesync_plugin_write
 			}
 			// $infolog['info_owner'] = $account;
 			if (!empty($id)) $infolog['info_id'] = $id;
-			$newid = $this->infolog->write($infolog);
+			// $infolog is server-time for an edit of an existing entry (read(..., 'server')
+			// above, overlaid with $message's server-time date fields) - tell write() not to
+			// re-interpret it as user-time. For a brand new entry (empty $id, $infolog started
+			// as array()) there is no prior server-time read to be consistent with, so keep
+			// write()'s normal user2server=true default there, unchanged from before this fix.
+			$newid = $this->infolog->write($infolog, true, true, empty($id));
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id) infolog(".array2string($infolog).") returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}
