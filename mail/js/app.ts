@@ -5460,12 +5460,9 @@ export class MailApp extends EgwApp
 	 * doesn't, and eagerly fetching a large account's entire tree just to populate a dialog the
 	 * user might only use to delete one folder would be wasteful.
 	 *
-	 * mail_folderTreeAutoload() is reused as-is for expanding any deeper node - its classic
-	 * fallback (mail_classicFolderLoad(), 'mail.mail_ui.ajax_foldertree') isn't the dialog's own
-	 * ajax_folderMgmtTree_autoloading endpoint, but both ultimately return the same tree-node
-	 * shape from mail_tree.inc.php's getTree(), and this dialog's plain multi-select tree has no
-	 * checkbox-specific rendering to lose - not worth a second, near-identical autoload function
-	 * just for the rare case JMAP itself is unreachable.
+	 * mail_folderTreeAutoload() is reused as-is for expanding any deeper node - on a JMAP failure
+	 * it shows an error leaf rather than falling back to a second, classic code path (see its own
+	 * docblock).
 	 *
 	 * Always shows every folder regardless of the showAllFoldersInFolderPane preference - this
 	 * dialog manages folders, including unsubscribed ones, so it must never hide any of them (see
@@ -5771,20 +5768,18 @@ export class MailApp extends EgwApp
 	 *
 	 * A "profileID::path" node with no jmapId at all means this node was never built by this
 	 * callback (or mail_buildRootFolderData()) in the first place - eg. the classic server-
-	 * rendered tree mail_ui::folderManagement()/subscription() seed as a fallback while their own
-	 * JMAP root fetch is still in flight (or declined), which uses the same "profileID::path" id
-	 * scheme but has no concept of a JMAP Mailbox id at all. Sending `parentId: undefined` to
-	 * getMailboxChildren() would silently serialize to a missing filter key, which both JmapShim
-	 * and a real JMAP server treat as "no parentId constraint" (ie. the top level) - so a bare
-	 * classic node like this must fall back to classic immediately instead, the same as an
-	 * explicit JMAP decline.
+	 * rendered tree mail_ui::folderManagement()/subscription() seed shown while their own JMAP
+	 * root fetch is still in flight (or already declined), which uses the same "profileID::path"
+	 * id scheme but has no concept of a JMAP Mailbox id at all.
 	 *
-	 * Falls back to the classic ajax_foldertree fetch for this one node if JMAP isn't reachable
-	 * (network error, non-JMAP-capable account) - same "new path alongside old, fall back"
-	 * precedent as the rest of the JMAP modernization work. If JMAP *was* reached and answered
-	 * with a real error (MailJmap throws a JmapUserError - see jmap.ts), that's a definitive
-	 * answer, not a reason to retry via classic: shows an error leaf instead (mirroring
-	 * mail_tree.inc.php's own treeLeafNoConnectionArray()).
+	 * Every account is JMAP-eligible in principle (a real JMAP server, or JmapShim wrapping the
+	 * exact same IMAP connection classic code would use) - "JMAP isn't reachable right now" means
+	 * the underlying connection itself is down, not that JMAP specifically is broken while classic
+	 * would still work. Retrying via the classic ajax_foldertree fetch would either hit the exact
+	 * same failure one layer down, or - worse - silently paper over a genuine bug in the JMAP/shim
+	 * code path by making it look like things still work. Shows an error leaf instead (mirroring
+	 * mail_tree.inc.php's own treeLeafNoConnectionArray()) for both a definitive JmapUserError and
+	 * a plain decline (no usable token) - no classic fallback for folder-tree browsing anymore.
 	 *
 	 * @param item the node being expanded
 	 * @param subscribedOnly explicit override - omit to fall back to the showAllFoldersInFolderPane
@@ -5800,10 +5795,11 @@ export class MailApp extends EgwApp
 		const hasParent = typeof item.id === "string" && item.id.indexOf('::') !== -1;
 		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
 		const parentId : string | null = hasParent ? item.jmapId : null;
+		const errorLeaf = () => ({item: [buildErrorNode(profileID, parentPath, this.egw.lang('(not connected)'), egw)]});
 
 		if (hasParent && !parentId)
 		{
-			return this.mail_classicFolderLoad(item);
+			return Promise.resolve(errorLeaf());
 		}
 
 		const fetchLevel = hasParent
@@ -5811,7 +5807,7 @@ export class MailApp extends EgwApp
 			: this.mail_buildRootFolderData(profileID, subscribedOnly);
 
 		return fetchLevel.then((data) =>
-			data === null ? this.mail_classicFolderLoad(item) : {item: data}
+			data === null ? errorLeaf() : {item: data}
 		).catch((e) =>
 		{
 			if (e instanceof JmapUserError)
@@ -5852,17 +5848,6 @@ export class MailApp extends EgwApp
 			}
 			return top;
 		});
-	}
-
-	/**
-	 * Classic ajax_foldertree fetch for a single node - mail_folderTreeAutoload()'s fallback,
-	 * replicating exactly what Et2Tree's own string-based `autoloading` used to do before it was
-	 * replaced with the JMAP-native callback above.
-	 */
-	private mail_classicFolderLoad(item : any) : Promise<any>
-	{
-		const requestLink = egw.link(egw.ajaxUrl('mail.mail_ui.ajax_foldertree'), {id: item.id ?? item.value});
-		return egw.request(requestLink, []);
 	}
 
 	/**
