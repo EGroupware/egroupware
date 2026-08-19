@@ -435,39 +435,26 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}, 300);
 	}
 
-	/**
-	 * Override Et2WidgetWithSelectMixin's own select_options getter/setter entirely, redirecting
-	 * straight to this class's own _selectOptions (what _optionTemplate()/getNode()/etc. actually
-	 * render/search) instead of the mixin's __select_options/cleanSelectOptions() pipeline.
-	 *
-	 * That pipeline is built for flat SelectOption {value, label} lists, not this widget's
-	 * hierarchical {id, item} node shape - fed a tree's root wrapper object directly,
-	 * cleanSelectOptions() iterates its OWN keys as if they were option entries ("id"/"item"),
-	 * turning eg. classic mail_tree.inc.php's `{id: 0, item: [...]}` seed into a single bogus
-	 * `{value: "id", label: "0"}` option (exactly the "shows a lone 0 instead of the tree" bug)
-	 * plus a second, blank one. Since nothing in this class ever reads the mixin's own
-	 * __select_options either, bypassing it entirely for both directions is the correct fix, not
-	 * papering over cleanSelectOptions()'s output after the fact.
-	 *
-	 * Accepts either a plain array of top-level nodes (eg. mail's app.ts, building its own JMAP
-	 * tree data) or a root *wrapper* object - {id, item} or {id, children} - the shape a
-	 * server-rendered tree (classic mail_tree.inc.php et al) actually emits, same unwrapping
-	 * firstUpdated()'s own lazy-load merge already does for its fetched results.
-	 */
-	set select_options(new_options : TreeItemData[] | {item?: TreeItemData[], children?: TreeItemData[]})
-	{
-		this._selectOptions = (new_options as any)?.item ?? (new_options as any)?.children ??
-			(Array.isArray(new_options) ? new_options : []);
-	}
-
-	get select_options() : TreeItemData[]
-	{
-		return this._selectOptions;
-	}
 
 	protected updated(_changedProperties: PropertyValues)
 	{
-		super.updated(_changedProperties);
+		// Et2WidgetWithSelectMixin's own updated() re-derives select_options from sel_options
+		// (via find_select_options(), a generic "find this widget's flat option list" utility)
+		// whenever "id" changed and select_options itself didn't change in the SAME batch - eg.
+		// exactly what happens here, since this widget's id is typically set well before its
+		// data is. find_select_options() does its own independent widget.getArrayMgr("sel_options")
+		// lookup (ignoring the _xmlOptions this mixin method passes it, which stays empty for a
+		// tree - see loadFromXML()'s own override), re-fetching the SAME root wrapper object
+		// ({id, item}) this class's own select_options override already unwrapped correctly, and
+		// mangles it the exact same way cleanSelectOptions() does (iterating the wrapper's own
+		// keys as option entries) - then assigns the mangled result right back through
+		// select_options, silently clobbering the correct tree data. "id" is hidden from the
+		// super call to suppress this - Et2Tree fully owns its own data (select_options,
+		// loadFromXML(), the lazy autoloading pipeline) and has no other use for the mixin's
+		// id-driven re-derivation.
+		const withoutId = new Map(_changedProperties);
+		withoutId.delete("id");
+		super.updated(withoutId as PropertyValues);
 
 		// openStatePreference is often assigned imperatively (eg. mail's app.ts, right after
 		// getWidgetById()) - possibly after firstUpdated() already ran and found it empty, so
@@ -1663,5 +1650,47 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		return {target: target, action: action};
 	}
 }
+
+/**
+ * Override Et2WidgetWithSelectMixin's own select_options getter/setter entirely, redirecting
+ * straight to this class's own _selectOptions (what _optionTemplate()/getNode()/etc. actually
+ * render/search) instead of the mixin's __select_options/cleanSelectOptions() pipeline.
+ *
+ * That pipeline is built for flat SelectOption {value, label} lists, not this widget's
+ * hierarchical {id, item} node shape - fed a tree's root wrapper object directly,
+ * cleanSelectOptions() iterates its OWN keys as if they were option entries ("id"/"item"),
+ * turning eg. classic mail_tree.inc.php's `{id: 0, item: [...]}` seed into a single bogus
+ * `{value: "id", label: "0"}` option (exactly the "shows a lone 0 instead of the tree" bug) plus
+ * a second, blank one. Since nothing in this class ever reads the mixin's own __select_options
+ * either, bypassing it entirely for both directions is the correct fix, not papering over
+ * cleanSelectOptions()'s output after the fact.
+ *
+ * Accepts either a plain array of top-level nodes (eg. mail's app.ts, building its own JMAP tree
+ * data) or a root *wrapper* object - {id, item} or {id, children} - the shape a server-rendered
+ * tree (classic mail_tree.inc.php et al) actually emits, same unwrapping firstUpdated()'s own
+ * lazy-load merge already does for its fetched results.
+ *
+ * Done as a plain Object.defineProperty() on the prototype, deliberately NOT a class-body
+ * get/set pair with a @property() decorator: this project's actual production build (rollup.config.js,
+ * @babel/core with the legacy decorators transform) silently dropped an accessor pair declared
+ * that way from the compiled output entirely - both with and without the decorator - even though
+ * it compiled and worked correctly under the plain TS/esbuild path this repo's own *tests* run
+ * under. That toolchain divergence is exactly how this shipped broken once already (the "why
+ * doesn't ralf see the fix" incident) despite every test passing. A plain prototype assignment
+ * after the class body has no class-transform/decorator machinery to get lost in.
+ */
+Object.defineProperty(Et2Tree.prototype, "select_options", {
+	configurable: true,
+	enumerable: true,
+	get() : TreeItemData[]
+	{
+		return (this as any)._selectOptions;
+	},
+	set(new_options : TreeItemData[] | {item? : TreeItemData[], children? : TreeItemData[]})
+	{
+		(this as any)._selectOptions = (new_options as any)?.item ?? (new_options as any)?.children ??
+			(Array.isArray(new_options) ? new_options : []);
+	},
+});
 
 customElements.define("et2-tree", Et2Tree);
