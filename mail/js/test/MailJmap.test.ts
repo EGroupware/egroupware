@@ -968,3 +968,97 @@ describe("MailJmap.resolveInlineImages() - cid: matching", () =>
 		assert.equal(doc.querySelector("img").getAttribute("src"), null);
 	});
 });
+
+/**
+ * fetchBody()'s optional `signal` (added so MailApp.mail_preview() can cancel a body-fetch
+ * once the user has already selected a different message, instead of letting it run to
+ * completion on the network for nothing). Verifies the signal actually reaches the
+ * transport (requestMany()'s fetchInit - jmap-jam spreads that straight into its fetch()
+ * call) and that an intentional abort is handled differently from a genuine failure: both
+ * fall back to {special:true} (the caller decides whether to act on it via signal.aborted),
+ * but only a genuine failure should be logged.
+ */
+describe("MailJmap.fetchBody() - AbortSignal handling", () =>
+{
+	function createStubbedClient(capture : { options? : any }, behavior : "resolve" | "throw-abort" | "throw-error")
+	{
+		return {
+			requestMany : async(buildFn : (t : any) => any, options? : any) =>
+			{
+				capture.options = options;
+				buildFn({Email: {get: (_args : any) => null}});
+				if (behavior === "throw-abort")
+				{
+					throw new DOMException("The operation was aborted.", "AbortError");
+				}
+				if (behavior === "throw-error")
+				{
+					throw new Error("network error");
+				}
+				return [{emails: {list: []}}];
+			}
+		};
+	}
+
+	it("forwards its signal into requestMany()'s fetchInit, so the underlying fetch() can be cancelled", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { options? : any } = {};
+		primeToken(jmap, "1", createStubbedClient(capture, "resolve"));
+		const controller = new AbortController();
+
+		await jmap.fetchBody("mail::0::1::MBOX::1", undefined, controller.signal);
+
+		assert.strictEqual(capture.options?.fetchInit?.signal, controller.signal,
+			"fetchBody() must pass its signal through to requestMany()'s fetchInit, or a superseded " +
+			"selection's HTTP request keeps running instead of being cancelled");
+	});
+
+	it("resolves {special:true} without logging when the request was aborted", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createStubbedClient({}, "throw-abort"));
+		const controller = new AbortController();
+		controller.abort();
+
+		const originalConsoleError = console.error;
+		let loggedCalls = 0;
+		console.error = () => { loggedCalls++; };
+		let result : any;
+		try
+		{
+			result = await jmap.fetchBody("mail::0::1::MBOX::1", undefined, controller.signal);
+		}
+		finally
+		{
+			console.error = originalConsoleError;
+		}
+
+		assert.deepEqual(result, {special: true});
+		assert.strictEqual(loggedCalls, 0,
+			"an intentional abort (the user already moved on) must not be logged as a failure");
+	});
+
+	it("still logs and falls back to {special:true} on a genuine (non-abort) failure", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createStubbedClient({}, "throw-error"));
+
+		const originalConsoleError = console.error;
+		let loggedCalls = 0;
+		console.error = () => { loggedCalls++; };
+		let result : any;
+		try
+		{
+			result = await jmap.fetchBody("mail::0::1::MBOX::1");
+		}
+		finally
+		{
+			console.error = originalConsoleError;
+		}
+
+		assert.deepEqual(result, {special: true});
+		assert.strictEqual(loggedCalls, 1,
+			"a genuine failure (no signal involved) must still be logged, unlike an intentional abort");
+	});
+});

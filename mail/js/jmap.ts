@@ -1283,7 +1283,7 @@ export class MailJmap
 	 * failure (unreachable profile, network error) also resolves {special:true}, for the same
 	 * fallback reason.
 	 */
-	async fetchBody(rowId : string, htmlOptions? : string) : Promise<JmapBodyResult>
+	async fetchBody(rowId: string, htmlOptions?: string, signal?: AbortSignal): Promise<JmapBodyResult>
 	{
 		try
 		{
@@ -1305,7 +1305,7 @@ export class MailJmap
 			}
 			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
 				emails: t.Email.get(args) as any,
-			}));
+			}), signal ? {fetchInit: {signal}} : undefined);
 			const email = (emails.list || [])[0];
 			if (!email || this.isSpecialCase(email.bodyStructure))
 			{
@@ -1331,6 +1331,11 @@ export class MailJmap
 		}
 		catch (e)
 		{
+			if (signal?.aborted)
+			{
+				// caller ignores an aborted request's result - skip the noisy log
+				return {special: true};
+			}
 			console.error('MailJmap.fetchBody(): failed, falling back to the server-rendered body', e);
 			return {special: true};
 		}

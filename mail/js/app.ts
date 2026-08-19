@@ -71,11 +71,8 @@ export class MailApp extends EgwApp
 	mail_fileSelectorWindow : any = null;
 	mail_isMainWindow : any = true;
 
-	// Some state variables to track preview pre-loading
-	preview_preload : any = {
-		timeout: null,
-		request: null
-	}
+	// Aborts the in-flight fetchBody() request when a newer selection supersedes it.
+	previewFetchAbort : AbortController = null;
 	/**
 	 *
 	 */
@@ -1555,6 +1552,13 @@ export class MailApp extends EgwApp
 		// don't go further if the preview is supposed to be disabled and we're not in mobile view
 		if (previewPane == 'hide' && !egwIsMobile()) return;
 
+		// A newer selection supersedes any body-fetch still in flight for the previous one
+		if (this.previewFetchAbort)
+		{
+			this.previewFetchAbort.abort();
+			this.previewFetchAbort = null;
+		}
+
 		if(typeof selected != 'undefined' && selected.length == 1 && selected[0])
 		{
 			rowId = this.mail_fetchCurrentlyFocussed(selected);
@@ -1611,18 +1615,19 @@ export class MailApp extends EgwApp
 			{
 				this.mail_selectedMails.push(rowId);
 			}
-			var self = this;
 
 			// Try to avoid sending so many request when user tries to scroll on list
 			// via key up/down quite fast.
-			for (var t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
-			this.W_TIMEOUTS.push(window.setTimeout(function(){
+			for (const t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
+			this.W_TIMEOUTS.push(window.setTimeout(()=>{
 
-				self.loadMessageBody(IframeHandle, rowId, (doc) =>
+				const controller = new AbortController();
+				this.previewFetchAbort = controller;
+				this.loadMessageBody(IframeHandle, rowId, (doc) =>
 				{
-					self.resolveExternalImages(doc);
-					renderAttachmentIndex(doc, data.attachmentsBlock, self.egw);
-				});
+					this.resolveExternalImages(doc);
+					renderAttachmentIndex(doc, data.attachmentsBlock, this.egw);
+				}, controller.signal);
 			}, 300));
 		}
 
@@ -1644,16 +1649,16 @@ export class MailApp extends EgwApp
 					{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
 					{label: this.egw.lang("No"), id: "mdnnotsent", image: "cancelled"}
 				];
-				Et2Dialog.show_dialog(function (_button_id, _value)
+				Et2Dialog.show_dialog((_button_id, _value) =>
 					{
 						switch (_button_id)
 						{
 							case "mdnsent":
 								egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
-								self.mail_trySetMdnFlag(messages, true);
+								this.mail_trySetMdnFlag(messages, true);
 								return;
 							case "mdnnotsent":
-								self.mail_trySetMdnFlag(messages, false);
+								this.mail_trySetMdnFlag(messages, false);
 						}
 					},
 				this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
@@ -1756,12 +1761,20 @@ export class MailApp extends EgwApp
 	 * @param iframeWidget the et2 iframe widget (messageIFRAME)
 	 * @param rowId
 	 * @param onLoad called with the iframe's contentDocument once loaded, either path
+	 * @param signal aborted if a newer selection supersedes this fetch before it resolves; when
+	 *        given, the result is also dropped if rowId no longer matches mail_currentlyFocussed
 	 */
-	private loadMessageBody(iframeWidget : any, rowId : string, onLoad : (doc : Document) => void) : void
+	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal): void
 	{
 		const iframe = iframeWidget.getDOMNode() as HTMLIFrameElement;
-		this.jmap.fetchBody(rowId).then((result) =>
+		this.jmap.fetchBody(rowId, undefined, signal).then((result) =>
 		{
+			// superseded by a newer selection while this request was in flight - drop it
+			if (signal?.aborted) return;
+			// belt-and-suspenders alongside the abort check above, scoped to the preview-pane
+			// call site (the only one that passes a signal) - mobileView()'s single-message
+			// dialog has no comparable "currently selected" concept to check against.
+			if (signal && rowId !== this.mail_currentlyFocussed) return;
 			if (result.special)
 			{
 				iframe.addEventListener('load', () =>
