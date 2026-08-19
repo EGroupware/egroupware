@@ -478,9 +478,13 @@ class mail_tree
 
 		foreach(Mail\Account::search(true, 'params') as $acc_id => $params)
 		{
+			// checking a single requested account only: skip everything else before it can
+			// trigger a live is_imap() connection attempt for accounts we don't even want
+			if ($_profileID && $acc_id != $_profileID) continue;
+
 			try {
 				$accObj = new Mail\Account($params);
-				if (!$accObj->is_imap()|| $_profileID && $acc_id != $_profileID) continue;
+				if (!$accObj->is_imap()) continue;
 				$identity = self::getIdentityName(Mail\Account::identity_name($accObj,true, $GLOBALS['egw_info']['user']['account_id'], true));
 				// Open top level folders for active account
 				$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
