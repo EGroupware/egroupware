@@ -2007,9 +2007,11 @@ export class MailApp extends EgwApp
 	/**
 	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
 	 *
-	 * Tries MailJmap.getQuota() (direct JMAP, no server round-trip at all when it resolves) first
-	 * - falls back to the classic ajax_refreshQuotaDisplay() round-trip only if that declines
-	 * (not JMAP-eligible, or the server doesn't advertise the Quota extension).
+	 * Tries MailJmap.getQuota() (direct JMAP, no server round-trip at all) first - falls back to
+	 * the classic ajax_refreshQuotaDisplay() round-trip only if that declines, which now only
+	 * happens for a real JMAP server not advertising the Quota extension (a genuinely different
+	 * capability, worth trying via classic IMAP) - an unreachable account gets a "not reachable"
+	 * display directly from getQuota() instead of falling back (see its own docblock for why).
 	 *
 	 * @param {object} _server omitting uses the currently active profile
 	 *

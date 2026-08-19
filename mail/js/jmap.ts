@@ -269,15 +269,18 @@ export class MailJmap
 	 * Briefly cached (see quotaCache): mail_refreshQuotaDisplay() is called on every folder
 	 * click, not just an actual account switch.
 	 *
-	 * @return null only when a genuinely different code path is worth trying: the account has no
-	 *  usable JMAP token right now, or it's a real JMAP server (Stalwart, token.isLocal false)
-	 *  that doesn't advertise the Quota extension (RFC 9425) - caller falls back to the classic
-	 *  ajax_refreshQuotaDisplay() round-trip (real IMAP protocol against the same server) in that
-	 *  case. Never null for a local/shim account (token.isLocal true): JmapShim implements
-	 *  Quota/get by wrapping the exact same classic IMAP QUOTA lookup ajax_refreshQuotaDisplay()
-	 *  would otherwise fall back to, so declining there would only repeat an identical lookup for
-	 *  no benefit - answers "not supported" directly instead (mirrors the classic path's own
-	 *  "$quota===false" display).
+	 * @return null only when a genuinely different code path is worth trying: it's a real JMAP
+	 *  server (Stalwart, token.isLocal false) that doesn't advertise the Quota extension
+	 *  (RFC 9425) - caller falls back to the classic ajax_refreshQuotaDisplay() round-trip (real
+	 *  IMAP protocol against the same server) in that case, a genuinely different capability, not
+	 *  a broken/unreachable connection. Never null for a local/shim account (token.isLocal true):
+	 *  JmapShim implements Quota/get by wrapping the exact same classic IMAP QUOTA lookup
+	 *  ajax_refreshQuotaDisplay() would otherwise fall back to, so declining there would only
+	 *  repeat an identical lookup for no benefit - answers "not supported" directly instead
+	 *  (mirrors the classic path's own "$quota===false" display). Likewise, no usable token at all
+	 *  (account unreachable) answers "not reachable" directly rather than resolving null - retrying
+	 *  the identical IMAP connection classically would just hit the same failure (see
+	 *  mail_folderTreeAutoload()'s docblock in app.ts for why there's no classic fallback for that).
 	 */
 	async getQuota(profileID : string) : Promise<Record<string, any> | null>
 	{
@@ -289,7 +292,7 @@ export class MailJmap
 		const token = await this.ensureToken(profileID);
 		if (!token)
 		{
-			return null;
+			return this.unavailableQuotaDisplay(profileID, this.egw.lang('Account not reachable'));
 		}
 		const client = this.clients[profileID];
 		const session = await client.session;
@@ -312,7 +315,7 @@ export class MailJmap
 		}
 		const data = quota
 			? this.formatQuotaDisplay(Math.round(quota.used / 1024), Math.round(quota.hardLimit / 1024), profileID)
-			: (token.isLocal ? this.notSupportedQuotaDisplay(profileID) : null);
+			: (token.isLocal ? this.unavailableQuotaDisplay(profileID, this.egw.lang('Quota not provided by server')) : null);
 		if (data)
 		{
 			this.quotaCache[profileID] = {data, expires: Date.now() + MailJmap.QUOTA_CACHE_TTL};
@@ -332,14 +335,16 @@ export class MailJmap
 	}
 
 	/**
-	 * "Quota not available" display data, matching mail_ui::ajax_refreshQuotaDisplay()'s own
-	 * "$quota===false" branch shape.
+	 * "Quota not available" display data (hidden via quotaclass, same as mail_ui::
+	 * ajax_refreshQuotaDisplay()'s own "$quota===false" branch) - used both for a real JMAP server
+	 * not advertising the Quota extension and for an unreachable account, distinguished only by
+	 * $message.
 	 */
-	private notSupportedQuotaDisplay(profileID : string) : Record<string, any>
+	private unavailableQuotaDisplay(profileID : string, message : string) : Record<string, any>
 	{
 		return {
 			data: {
-				quota: this.egw.lang('Quota not provided by server'),
+				quota: message,
 				quotainpercent: '0',
 				quotaclass: 'mail_DisplayNone',
 				profileid: profileID,
