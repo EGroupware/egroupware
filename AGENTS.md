@@ -72,6 +72,10 @@ Primary expectations:
     (`Api\Translation::add_app('admin')`), so for this particular pair both lang files are cross-loaded regardless
     of entry point, and a phrase used by either class can go in either `admin/lang/*` or `mail/lang/*`. Don't
     assume a one-directional gap from checking only the class you're touching - check the other side too.
+- When modifying a `.xet` file under an app's `templates/default/`, check for a `templates/mobile/` counterpart
+  with the same template id (`<template id="...">`) and apply the equivalent change there too, and vice versa.
+  These commonly drift independently - eg. a stale `autoloading=`/menuaction attribute cleaned up on one device's
+  template but left behind on the other's, even though both share the same JS app class and `et2_ready()` logic.
 - Do not make commits without explicit instructions.
 - For major/user-visible features (not routine fixes/refactors), the commit message's first line must be
   `* <app-name>: <message>` (eg. `* mail: add S/MIME CSR export/import`), so it gets picked up by the automated
