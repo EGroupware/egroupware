@@ -5394,6 +5394,18 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			this._selectRange(this.anchorRowIndex >= 0 ? this.anchorRowIndex : previous, nextIndex);
 		}
+		else if(this.selectionMode !== "none" && !event.ctrlKey && !event.metaKey && this.activeRowId)
+		{
+			// Plain navigation (no modifier) replaces the selection with the newly active row.
+			// same as a plain click - so anything reacting to selection (e.g. a preview pane) keeps following the keyboard cursor.
+			// Must happen synchronously here, not via the capture-phase action-shortcut handler further up the dispatch chain
+			// that runs *before* _moveActiveRow() above and would act on the row that was active before this keypress, one step behind.
+			this.allSelected = false;
+			this.selectedRowIds = new Set([this.activeRowId]);
+			this.anchorRowIndex = nextIndex;
+			this._syncRowAccessibilityState();
+			this._emitSelectionChanged(true);
+		}
 	}
 
 	/**

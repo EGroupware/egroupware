@@ -291,6 +291,16 @@ export class Et2NextmatchActionController
 	}
 
 	/**
+	 * Keys the datagrid itself consumes for row navigation/selection (see
+	 * Et2Datagrid._handleTableKeydown()). handleShortcut() must leave these alone -
+	 * see the comment on the early return below for why.
+	 */
+	private static readonly GRID_OWNED_KEYS = new Set([
+		"ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight",
+		"PageUp", "PageDown", "Home", "End", " ", "a", "A"
+	]);
+
+	/**
 	 * Execute an action shortcut originating in this nextmatch.
 	 *
 	 * This is called while the event is being captured by Et2Nextmatch.  The
@@ -302,6 +312,16 @@ export class Et2NextmatchActionController
 	{
 		const keyCode = event.keyCode;
 		if(!keyCode)
+		{
+			return false;
+		}
+
+		// This runs in the capture phase, before the datagrid's own bubble-phase keydown handler processes the same event and moves/selects rows accordingly
+		// (see Et2Datagrid._handleTableKeydown()).
+		// Calling forceActiveRowSelected() here for a grid-owned key would act on the *pre-move* active row, one step behind the row the datagrid is about to make active.
+		//for selection-toggle keys (Space,Ctrl+A) it would corrupt the pre-existing selection the datagrid's own handler still needs to read.
+		// Leave these keys to the datagrid entirely.
+		if(Et2NextmatchActionController.GRID_OWNED_KEYS.has(event.key))
 		{
 			return false;
 		}
