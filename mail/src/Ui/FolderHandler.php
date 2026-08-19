@@ -72,38 +72,6 @@ class FolderHandler
 	}
 
 	/**
-	 * Ajax callback to fetch folders for given profile
-	 *
-	 * We currently load all folders of a given profile, tree can also load parts of a tree.
-	 *
-	 * @param string $_nodeID if of node whose children are requested
-	 * @param boolean $_subscribedOnly flag to tell whether to fetch all or only subscribed (default)
-	 */
-	public function folderTree($_nodeID = null, $_subscribedOnly = null)
-	{
-		$nodeID = $_GET['id'];
-		if (!is_null($_nodeID)) $nodeID = $_nodeID;
-		$subscribedOnly = (bool)($_subscribedOnly ?? !$this->ui->mail_bo->mailPreferences['showAllFoldersInFolderPane']);
-		$fetchCounters = !is_null($_nodeID);
-		list($_profileID,$_folderName) = explode(mail_ui::$delimiter,$nodeID,2);
-
-		if (!empty($_folderName)) $fetchCounters = true;
-
-		// Check if it is called for refresh root
-		// then we need to reinitialized the index tree
-		if(!$nodeID && !$_profileID)
-		{
-			$data = $this->ui->mail_tree->getInitialIndexTree(null, null, null, $subscribedOnly);
-		}
-		else
-		{
-			$data = $this->ui->mail_tree->getTree($nodeID,$_profileID, 0, false, $subscribedOnly,);
-		}
-		if (!is_null($_nodeID)) return $data;
-		Etemplate\Widget\Tree::send_quote_json($data);
-	}
-
-	/**
 	 * ajax_setFolderStatus - gets the counters and sets the text of a treenode if needed (unread
 	 * Messages found)
 	 *

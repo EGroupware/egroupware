@@ -408,14 +408,13 @@ export class MailJmap
 
 	/**
 	 * Fetch one level's worth of a mailbox's direct children - lazy per-level folder-tree
-	 * loading (see doc/ai/projects/mail-folder-tree-jmap.md), the JMAP counterpart of the
-	 * classic ajax_foldertree/ajax_tree_autoloading per-level IMAP LIST. Batches Mailbox/query
-	 * (list children of parentId) + Mailbox/get (full node data for those ids) in one request,
-	 * the same result-reference pattern getRows() already uses for Email/query+Email/get.
+	 * loading (see doc/ai/projects/mail-folder-tree-jmap.md). Batches Mailbox/query (list
+	 * children of parentId) + Mailbox/get (full node data for those ids) in one request, the
+	 * same result-reference pattern getRows() already uses for Email/query+Email/get.
 	 *
 	 * Never throws for "this account isn't reachable right now" - returns null so the caller
-	 * (mail_ui's Et2Tree instance, via its now-callback-capable `autoloading`) can fall back to
-	 * the classic ajax_foldertree fetch for that one node.
+	 * (MailApp.mail_folderTreeAutoload(), mail/js/app.ts) can show an error leaf for that one
+	 * node instead of silently retrying via a second, classic code path.
 	 *
 	 * @param profileID
 	 * @param parentId JMAP Mailbox id of the parent, or null for the top level
@@ -503,7 +502,7 @@ export class MailJmap
 				console.error('MailJmap.getMailboxChildren(): JMAP error', e);
 				throw new JmapUserError(message);
 			}
-			console.error('MailJmap.getMailboxChildren(): failed, falling back to the classic ajax_foldertree fetch', e);
+			console.error('MailJmap.getMailboxChildren(): failed, caller shows an error leaf', e);
 			return null;
 		}
 	}
@@ -610,7 +609,7 @@ export class MailJmap
 				console.error('MailJmap.getRootFolders(): JMAP error', e);
 				throw new JmapUserError(message);
 			}
-			console.error('MailJmap.getRootFolders(): failed, falling back to the classic ajax_foldertree fetch', e);
+			console.error('MailJmap.getRootFolders(): failed, caller shows an error leaf', e);
 			return null;
 		}
 	}

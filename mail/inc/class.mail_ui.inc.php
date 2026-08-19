@@ -1010,19 +1010,6 @@ class mail_ui
 	}
 
 	/**
-	 * Ajax callback to fetch folders for given profile
-	 *
-	 * We currently load all folders of a given profile, tree can also load parts of a tree.
-	 *
-	 * @param string $_nodeID if of node whose children are requested
-	 * @param boolean $_subscribedOnly flag to tell whether to fetch all or only subscribed (default)
-	 */
-	public function ajax_foldertree($_nodeID = null,$_subscribedOnly=null)
-	{
-		return $this->folderHandler()->folderTree($_nodeID, $_subscribedOnly);
-	}
-
-	/**
 	 * Method to execute spam actions
 	 *
 	 * @param type $_action action id

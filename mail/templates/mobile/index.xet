@@ -101,7 +101,7 @@
                   onchange="widget.getParent().getWidgetById('startdate').set_max(widget.getValue());return true;"></et2-date>
     </et2-template>
 	<template id="mail.index" template="" lang="" group="0" version="1.9.001">
-        <et2-tree autoloading="mail.mail_ui.ajax_foldertree" id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target" slot="left"/>
+        <et2-tree id="nm[foldertree]" onclick="app.mail.mail_changeFolder" parent_node="mail-tree_target" slot="left"/>
 		<html id="msg"/>
 		<et2-hbox  class="mail-index_vacation"><et2-vbox>
 			<et2-description  id="nm[vacationnotice]" class="@nm[vacationclass]"></et2-description>

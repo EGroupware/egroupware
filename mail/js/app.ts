@@ -337,13 +337,12 @@ export class MailApp extends EgwApp
 					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
 					this.tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
 
-					// Lazy per-level JMAP folder loading (see doc/ai/projects/mail-folder-tree-jmap.md):
-					// replaces the classic ajax_foldertree menuaction with a callback that tries
-					// JMAP first and falls back to the classic endpoint per-node on failure -
-					// same "new path alongside old, fall back" precedent as the rest of the JMAP
-					// modernization work. One preference for the whole tree (not per-profile):
-					// node ids already carry "profileID::path", so a single flat expanded-ids
-					// list already covers every account shown in this one tree instance.
+					// Lazy per-level JMAP folder loading (see doc/ai/projects/mail-folder-tree-jmap.md),
+					// replacing the classic ajax_foldertree menuaction (now removed) for both
+					// desktop and mobile, which share this same template id/case. One preference
+					// for the whole tree (not per-profile): node ids already carry
+					// "profileID::path", so a single flat expanded-ids list already covers every
+					// account shown in this one tree instance.
 					this.tree_wdg.autoloading = this.mail_folderTreeAutoload.bind(this);
 					this.tree_wdg.openStatePreference = 'mail.ExpandedFolders';
 				}
@@ -764,11 +763,11 @@ export class MailApp extends EgwApp
 					case 'edit':
 						if (node)	// we dont care for updated accounts not shown (eg. other users)
 						{
-							// refreshItem() with no data re-runs the tree's own autoloading
-							// callback (mail_folderTreeAutoload(), JMAP-first with a classic
-							// ajax_foldertree fallback) for this account's root node - same
-							// mechanism the 'add' case below already uses successfully, no need
-							// for the classic-only ajax_reloadNode round trip anymore
+							// refreshItem() with no data re-runs the tree's own JMAP-first
+							// autoloading callback (mail_folderTreeAutoload()) for this account's
+							// root node - same mechanism the 'add' case below already uses
+							// successfully, no need for the classic-only ajax_reloadNode round
+							// trip anymore
 							tree.refreshItem(_id);
 						}
 						break;
