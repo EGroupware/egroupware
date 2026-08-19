@@ -1,3 +1,10 @@
+egroupware-docker (23.1.20260819) hardy; urgency=low
+
+  * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+  * IMPORTANT: this is the final security release for 23.1, update to 26.x to continue receiving security updates!
+
+ -- Ralf Becker <rb@egroupware.org>  Wed, 19 Aug 2026 07:51:32 +0200
+
 egroupware-docker (23.1.20260804) hardy; urgency=low
 
   * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
