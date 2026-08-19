@@ -435,22 +435,39 @@ export class Et2Tree extends Et2WidgetWithSelectMixin(LitElement) implements Fin
 		}, 300);
 	}
 
+	/**
+	 * Override Et2WidgetWithSelectMixin's own select_options getter/setter entirely, redirecting
+	 * straight to this class's own _selectOptions (what _optionTemplate()/getNode()/etc. actually
+	 * render/search) instead of the mixin's __select_options/cleanSelectOptions() pipeline.
+	 *
+	 * That pipeline is built for flat SelectOption {value, label} lists, not this widget's
+	 * hierarchical {id, item} node shape - fed a tree's root wrapper object directly,
+	 * cleanSelectOptions() iterates its OWN keys as if they were option entries ("id"/"item"),
+	 * turning eg. classic mail_tree.inc.php's `{id: 0, item: [...]}` seed into a single bogus
+	 * `{value: "id", label: "0"}` option (exactly the "shows a lone 0 instead of the tree" bug)
+	 * plus a second, blank one. Since nothing in this class ever reads the mixin's own
+	 * __select_options either, bypassing it entirely for both directions is the correct fix, not
+	 * papering over cleanSelectOptions()'s output after the fact.
+	 *
+	 * Accepts either a plain array of top-level nodes (eg. mail's app.ts, building its own JMAP
+	 * tree data) or a root *wrapper* object - {id, item} or {id, children} - the shape a
+	 * server-rendered tree (classic mail_tree.inc.php et al) actually emits, same unwrapping
+	 * firstUpdated()'s own lazy-load merge already does for its fetched results.
+	 */
+	set select_options(new_options : TreeItemData[] | {item?: TreeItemData[], children?: TreeItemData[]})
+	{
+		this._selectOptions = (new_options as any)?.item ?? (new_options as any)?.children ??
+			(Array.isArray(new_options) ? new_options : []);
+	}
+
+	get select_options() : TreeItemData[]
+	{
+		return this._selectOptions;
+	}
+
 	protected updated(_changedProperties: PropertyValues)
 	{
 		super.updated(_changedProperties);
-
-		// Et2WidgetWithSelectMixin's own select_options getter/setter (Object.defineProperty via
-		// @property()) is a completely separate property from this class's own _selectOptions,
-		// which _optionTemplate()/getNode()/etc. actually render/search - loadFromXML() (this
-		// class's own override, called for the classic server-rendered XML seed) never goes
-		// through the mixin's select_options at all, so this only ever matters for a caller doing
-		// a client-side bulk replacement (eg. mail's app.ts, `tree.select_options = data` after a
-		// JMAP fetch) - without this sync that assignment was a silent no-op: nothing crashed or
-		// even logged, the tree just kept showing whatever it already had.
-		if (_changedProperties.has("select_options"))
-		{
-			this._selectOptions = <TreeItemData[]><unknown>this.select_options ?? [];
-		}
 
 		// openStatePreference is often assigned imperatively (eg. mail's app.ts, right after
 		// getWidgetById()) - possibly after firstUpdated() already ran and found it empty, so
