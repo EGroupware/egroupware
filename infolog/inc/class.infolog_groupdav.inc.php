@@ -722,19 +722,18 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		if (($is_json=Api\CalDAV::isJSON($type)))
 		{
 			$task = Api\CalDAV\JsCalendar::parseJsTask($options['content'], $oldTask ?? [], $type, $method, $user) + ($oldTask??[]);
-			// setting owner or responsible for new tasks based on folder (mirrors infolog_ical::importVTODO(),
-			// as parseJsTask() itself does NOT set info_owner - without this, bo::write()'s ACL check for a
-			// new task silently falls back to the acting user's own grants, bypassing the collection owner's)
+			// setting owner for new tasks based on folder (mirrors infolog_ical::importVTODO(), see
+			// its comment for the full history), as parseJsTask() itself does NOT set info_owner -
+			// without this, bo::write()'s ACL check for a new task degenerates into a self-check
+			// (the acting user checking rights over themselves), bypassing the collection owner's.
+			// bo::write()'s own ACL gate (check_access(0, Acl::EDIT/ADD, $values['info_owner']),
+			// called internally a few lines into write()) is the real, authoritative enforcement
+			// point - this just needs to stamp the intended owner so that gate checks the right
+			// thing, not gate the stamping itself on a check_access() call that (given task data
+			// with no owner at all) can only ever be a meaningless self-check.
 			if (!is_null($user) && !$oldTask)
 			{
-				if ($this->bo->check_access($task, Acl::ADD))
-				{
-					$task['info_owner'] = $user;
-				}
-				elseif (!in_array($user, (array)$task['info_responsible']))
-				{
-					$task['info_responsible'][] = $user;
-				}
+				$task['info_owner'] = $user;
 			}
 			if ($callback_data)
 			{
