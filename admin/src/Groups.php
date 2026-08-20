@@ -143,6 +143,12 @@ class Groups
 			{
 				case 'apply':
 				case 'save':
+					// gate the actual save, not just the button's readonly state below - otherwise a
+					// restricted admin (denied group_access add/edit) could still save via a direct POST
+					if ($GLOBALS['egw']->acl->checkAdminDeny('group_access', $content['account_id'] ? 16 : 4))    // no edit / add
+					{
+						Framework::window_close(lang('Permission denied!'));
+					}
 					try {
 						$refresh_type = !$content['old'] ? 'add' : 'edit';
 						// check if some account-data changed
