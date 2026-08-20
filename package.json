@@ -49,7 +49,6 @@
     "globby": "^14.0.1",
     "jsdom": "^28.1.0",
     "lunr": "^2.3.9",
-    "markdown-it": "^14.1.1",
     "markdown-it-container": "^3.0.0",
     "markdown-it-ins": "^3.0.1",
     "markdown-it-kbd": "^2.2.2",
@@ -100,6 +99,7 @@
     "jmap-jam": "^0.13.3",
     "lit": "^2.7.5",
     "lit-flatpickr": "^0.3.0",
+    "markdown-it": "^14.1.1",
     "shortcut-buttons-flatpickr": "^0.4.0",
     "sortablejs": "^1.14.0",
     "tinymce": "^8.6.0"
