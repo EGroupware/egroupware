@@ -656,12 +656,71 @@ pagination, `sortbycf`, action-link filtering) stays exactly as ported - no big-
   `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` (green) and
   `api/tests/Vfs/SharingBackendTest.php` (same pre-existing, unrelated VFS
   filesystem-permission failures on this dev box as before, not an InfoLog/storage error).
-- **Not yet done**: `sortbycf` (still a correlated subquery, not delegated to
-  `process_search()`'s `extra_order`-join equivalent); free-text/RAG search still calls
-  `search2criteria()` directly rather than through `process_search()`'s orchestration (not a
-  duplication, just not centralized); responsible/cc joins, category filtering, ACL/status/date
-  fragment building, and action-link filtering remain deliberately bespoke - no generic
-  `Api\Storage` equivalent exists for InfoLog's specific join/aggregation shape.
+- **Not yet done** (at the time of this section; `sortbycf` was done in the very next
+  increment, see below): free-text/RAG search still calls `search2criteria()` directly rather
+  than through `process_search()`'s orchestration (not a duplication, just not centralized);
+  responsible/cc joins, category filtering, ACL/status/date fragment building, and action-link
+  filtering remain deliberately bespoke - no generic `Api\Storage` equivalent exists for
+  InfoLog's specific join/aggregation shape.
+
+### `searchInfolog()` — delegate `sortbycf` to `Api\Storage::order_by_cf()`, 2026-08-20
+
+Second slice of the `search()` rewrite, immediately following the `cf_filter()` one above.
+Unlike `cf_filter()`, the CF-order-by logic wasn't exposed as a standalone reusable method on
+`Api\Storage` - it was an inline block inside `process_search()`
+(`api/src/Storage.php`, now extracted). Ralf's explicit call on how to handle that: extract a
+shared method rather than duplicate the logic in InfoLog, accepting the bigger blast radius
+(shared base class, used by every `Api\Storage`-derived app, not just InfoLog).
+
+- **Refactor**: extracted the inline "order by a `#name`-prefixed customfield" block out of
+  `Api\Storage::process_search()` into a new `protected function order_by_cf(&$order_by, &$join,
+  &$extra_cols)`, called from the same place `process_search()` used it inline. Verbatim
+  extraction, no logic change - same string manipulation, same `extra_order`-aliased JOIN, same
+  `int`/`float`/default type-cast switch, same postgres-only `$extra_cols` handling.
+- **New test for the refactor itself**: `SearchCustomFieldFilterTest::testGenericSearchOrdersBySelectCf()`
+  calls the generic *inherited* `Api\Storage::search()` directly on an `Infolog\Storage`
+  instance (not `searchInfolog()`), ordering by a `select`-type cf - this is the only test
+  anywhere in the framework that exercises CF-based `order_by`, so it locks down the refactor's
+  behavior across every app that extends `Api\Storage`, not just InfoLog.
+- **`infolog/src/Storage.php::searchInfolog()` changes**: replaced the old `cfsortcrit`
+  correlated-subquery approach (a `(SELECT DISTINCT info_extra_value FROM egw_infolog_extra sub2
+  WHERE sub2.info_id=main.info_id AND info_extra_name=...)` added as an extra SELECT column,
+  referenced via a placeholder token in the `ORDER BY` list) with a call to
+  `$this->order_by_cf($order_by, $join, $extra_order_cols)`, using the same
+  `extra_join_order`-table-alias-swap trick already used for `cf_filter()`'s `extra_join_filter`
+  (aliasing `$this->table_name.'.'` to `'main.'` for the duration of the call, since
+  `extra_join_order` is also built once at construct time against the real table name).
+- **Order-building restructured to support delegation**: the old code built one shared trailing
+  direction for the whole `ORDER BY` list (`implode(',',$order) . ' ' . $query['sort']` - only
+  the *last* field in a multi-field order actually got that direction in the resulting SQL, a
+  latent quirk, harmless in practice since `$query['order']` is realistically always a single
+  field). `order_by_cf()` expects each comma-separated criterion to carry its own direction
+  suffix (it inspects the last space-separated token per segment), so each field now gets
+  `' '.$query['sort']` appended individually before the list is joined - a side-effect
+  improvement for the (unused in practice) multi-field case, not just a delegation requirement.
+- **Removed**: the `$sortbycf` variable, the `cfsortcrit`/`$info_customfield` correlated
+  subquery block, and its splice into the `SELECT` column list - all dead code once ordering
+  moved to the JOIN-based approach.
+- **Verification**: two new tests exercising the real `infolog_bo::search()` /
+  `searchInfolog()` path directly (`testSearchInfologOrdersBySelectCfAscending`/`...Descending`)
+  - both green. Full `infolog/tests/` suite - 75 tests / 544 assertions, same 6 pre-existing
+  `CalDAVImportTest` failures and same pre-existing `ProjectTemplateTest` risky warning as the
+  established baseline (test names checked, no new regressions). `api/tests/Storage/` suite -
+  same pre-existing `BaseTest`  "No DB host set!" CLI-harness error as always, nothing new.
+  `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` and `addressbook/tests/` -
+  both green (chosen as the broadest sanity check for the shared `Api\Storage` base-class
+  refactor, since both apps exercise generic `search()`/`process_search()` heavily).
+- **Not yet done**: free-text/RAG search consolidation into `process_search()`'s orchestration;
+  responsible/cc joins, category filtering, ACL/status/date fragment building, and action-link
+  filtering remain deliberately bespoke.
+- **Bigger idea raised by ralf, not started**: the two-pass "fetch matching IDs, then fetch full
+  rows for those IDs" shape of `searchInfolog()` exists because the responsible/cc joins
+  (`egw_infolog_users` via `attendees`) can multiply rows per `egw_infolog` row. Ralf's
+  observation: this might be avoidable higher up (e.g. aggregating responsible/cc without a
+  row-multiplying join), which would let InfoLog use `Api\Storage::search()`/`process_search()`
+  directly (or a thin extension of it) instead of `searchInfolog()`'s fully bespoke query
+  builder - a materially bigger architectural change than anything done in this project so far,
+  not started, needs its own design pass before touching.
 
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 

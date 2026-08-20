@@ -9,11 +9,13 @@
  *
  * Custom-field read/write is delegated to the inherited read_customfields()/save_customfields()
  * (Api\Storage already implements the exact date-time-with-UTC-"Z"-suffix convention InfoLog's
- * own hand-rolled code used to duplicate) rather than re-implemented. The bespoke main-table SQL
- * (responsible/cc joins via egw_infolog_users, category/free-text/RAG search, custom-field
- * multi-select filtering, sortbycf, action-based link filtering) is a faithful port of
- * infolog_so's logic, NOT yet rewritten to use Api\Storage's generic search()/process_search()
- * machinery - that is deliberately out of scope for this pass, see the migration doc.
+ * own hand-rolled code used to duplicate) rather than re-implemented. searchInfolog()'s
+ * custom-field col_filter and sort-by-cf are likewise delegated to Api\Storage's
+ * cf_filter()/order_by_cf(). The remaining bespoke main-table SQL (responsible/cc joins via
+ * egw_infolog_users, category/free-text/RAG search, action-based link filtering) is still a
+ * faithful port of infolog_so's logic, NOT yet rewritten to use Api\Storage's generic
+ * search()/process_search() machinery - that is deliberately out of scope for this pass, see
+ * the migration doc.
  *
  * @link http://www.egroupware.org
  * @package infolog
@@ -682,7 +684,11 @@ class Storage extends Api\Storage
 				}
 			}
 		}
-		$sortbycf='';
+		// $order_by is built up here (each field with its own direction, since it's passed
+		// through Api\Storage::order_by_cf() below, which - like the rest of process_search() -
+		// expects a comma list of "field {ASC|DESC}" criteria, not one trailing direction for
+		// the whole list) and turned into the final "ORDER BY ..." $ordermethod further down,
+		// once $join has been initialised for order_by_cf()'s possible cf JOIN to append to.
 		if (!empty($query['order']) && preg_match('/^#?[a-z_0-9, ]+$/i',$query['order']) &&
 			(empty($query['sort']) || is_string($query['sort']) && preg_match('/^(DESC|ASC)$/i',$query['sort'])))
 		{
@@ -690,12 +696,7 @@ class Storage extends Api\Storage
 			foreach(explode(',',$query['order']) as $val)
 			{
 				$val = trim($val);
-				if ($val[0] == '#')
-				{
-					$sortbycf = substr($val,1);
-					$val = "cfsortcrit IS NULL,cfsortcrit";
-				}
-				else
+				if ($val[0] != '#')
 				{
 					static $table_def = null;
 					if (is_null($table_def)) $table_def = $this->db->get_table_definitions('infolog',$this->table_name);
@@ -707,13 +708,13 @@ class Storage extends Api\Storage
 						$val = sprintf($this->db->capabilities['order_on_text'],$val);
 					}
 				}
-				$order[] = $val;
+				$order[] = $val.' '.$query['sort'];
 			}
-			$ordermethod = 'ORDER BY ' . implode(',',$order) . ' ' . $query['sort'];
+			$order_by = implode(',',$order);
 		}
 		else
 		{
-			$ordermethod = 'ORDER BY info_datemodified DESC';   // newest first
+			$order_by = 'info_datemodified DESC';   // newest first
 		}
 		$filtermethod = $no_acl ? '1=1' : ($acl_filter ?? '0=1');
 		if (empty($query['col_filter']['info_status']))  $filtermethod .= $this->statusFilter($query['filter']);
@@ -750,6 +751,14 @@ class Storage extends Api\Storage
 			$this->cf_filter($cf_col_filter, $join, '');
 			$this->extra_join_filter = $real_extra_join_filter;
 		}
+		// delegate custom-field sorting to Api\Storage's own order_by_cf() (extracted out of
+		// process_search() specifically for this), instead of the old hand-rolled correlated
+		// subquery ("cfsortcrit") - same table-alias caveat as extra_join_filter above.
+		$real_extra_join_order = $this->extra_join_order;
+		$this->extra_join_order = str_replace($this->table_name.'.', 'main.', $this->extra_join_order);
+		$this->order_by_cf($order_by, $join, $extra_order_cols);
+		$this->extra_join_order = $real_extra_join_order;
+		$ordermethod = 'ORDER BY '.$order_by;
 		if (isset($query['col_filter']) && is_array($query['col_filter']))
 		{
 			foreach($query['col_filter'] as $col => $data)
@@ -870,21 +879,6 @@ class Storage extends Api\Storage
 			{
 				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query.$group_by,__LINE__,__FILE__)->NumRows();
 			}
-			$info_customfield = '';
-			if ($sortbycf != '')
-			{
-				$sort_col = "(SELECT DISTINCT info_extra_value FROM $this->extra_table sub2 WHERE sub2.info_id=main.info_id AND info_extra_name=".$this->db->quote($sortbycf).")";
-				switch($this->customfields[$sortbycf]['type'])
-				{
-					case 'int':
-						$sort_col = $this->db->to_int($sort_col);
-						break;
-					case 'float':
-						$sort_col = $this->db->to_double($sort_col);
-						break;
-				}
-				$info_customfield = ", $sort_col AS cfsortcrit ";
-			}
 			do
 			{
 				if (isset($query['start']) && isset($query['total']) && $query['start'] > $query['total'])
@@ -896,7 +890,8 @@ class Storage extends Api\Storage
 				$cols .= ','.$this->db->group_concat('attendees.account_id').' AS info_responsible';
 				$cols .= ','.$this->db->group_concat('attendees.info_res_attendee').' AS info_cc';
 				if (!empty($extra_cols)) $cols .= ','.implode(',', $extra_cols);    // join relevance/distance from RAG search
-				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$info_customfield.' '.$sql_query.
+				if (!empty($extra_order_cols)) $cols .= ','.implode(',', $extra_order_cols);  // postgres DISTINCT needs order-by expressions selected
+				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$sql_query.
 					$query['append'].$ordermethod,__LINE__,__FILE__,
 					(int)($query['start']??0),isset($query['start']) ? (int) $query['num_rows'] : -1,false,Api\Db::FETCH_ASSOC);
 

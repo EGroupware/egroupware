@@ -190,4 +190,73 @@ class SearchCustomFieldFilterTest extends \EGroupware\Api\AppTest
 		$this->assertArrayHasKey($info_id, $ret,
 			'a "text" cf filter is case-insensitive under this schema\'s default collation, both before and after delegating to cf_filter()');
 	}
+
+	/**
+	 * Exercises the generic inherited Api\Storage::search() (not searchInfolog()) directly, to
+	 * verify Api\Storage::order_by_cf() - extracted out of process_search() as a standalone,
+	 * reusable method during the sortbycf delegation work
+	 * (doc/ai/projects/infolog-storage-migration.md) - still orders correctly by a "select"-type
+	 * custom field after that extraction. Nothing anywhere in the framework's test suite
+	 * exercised this code path before, so this locks down the pre-existing behavior across the
+	 * refactor, not just for InfoLog.
+	 */
+	public function testGenericSearchOrdersBySelectCf()
+	{
+		$blue_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'blue'));
+		$red_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'red'));
+		$green_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'green'));
+
+		$so = new Storage();
+		$rows = $so->search(
+			array('info_subject' => 'SearchCustomFieldFilterTest '.$this->name()),
+			true, '#'.self::SELECT_CF.' ASC'
+		);
+
+		$ids = array_map(static fn($row) => (int)$row['info_id'], (array)$rows);
+
+		$this->assertSame(array($blue_id, $green_id, $red_id), $ids,
+			'ordering by a "select" cf ascending must sort alphabetically by its stored value ("blue" < "green" < "red")');
+	}
+
+	/**
+	 * Exercises sortbycf through the real InfoLog UI path - infolog_bo::search() /
+	 * searchInfolog(), which now delegates to Api\Storage::order_by_cf() instead of the old
+	 * hand-rolled "cfsortcrit" correlated subquery.
+	 */
+	public function testSearchInfologOrdersBySelectCfAscending()
+	{
+		$blue_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'blue'));
+		$red_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'red'));
+		$green_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'green'));
+
+		$query = array(
+			'col_filter' => array('info_subject' => 'SearchCustomFieldFilterTest '.$this->name()),
+			'order' => '#'.self::SELECT_CF, 'sort' => 'ASC',
+		);
+		$ret = $this->bo->search($query);
+
+		$this->assertSame(array($blue_id, $green_id, $red_id), array_keys($ret),
+			'ordering by a "select" cf ascending, via searchInfolog(), must sort alphabetically by its stored value');
+	}
+
+	/**
+	 * Same as above, but descending - and mixed with a non-cf field afterwards, to exercise the
+	 * multi-field order_by path (each field now carries its own direction suffix rather than one
+	 * shared trailing direction for the whole ORDER BY list, a side effect of delegating to
+	 * order_by_cf(), which expects that format).
+	 */
+	public function testSearchInfologOrdersBySelectCfDescending()
+	{
+		$blue_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'blue'));
+		$red_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'red'));
+		$green_id = $this->makeInfolog(array('#'.self::SELECT_CF => 'green'));
+
+		$query = array(
+			'col_filter' => array('info_subject' => 'SearchCustomFieldFilterTest '.$this->name()),
+			'order' => '#'.self::SELECT_CF, 'sort' => 'DESC',
+		);
+		$ret = $this->bo->search($query);
+
+		$this->assertSame(array($red_id, $green_id, $blue_id), array_keys($ret));
+	}
 }
