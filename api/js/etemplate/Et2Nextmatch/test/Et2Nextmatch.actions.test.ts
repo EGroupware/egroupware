@@ -2747,7 +2747,10 @@ describe("Et2Nextmatch action setup", () =>
 				}
 			}),
 			_dataProvider: {getDataStorePrefix: () => "addressbook"},
-			refresh: () => {}
+			refresh: () => {},
+			// ajax_link() is passed the exec_id so the server can check the request against
+			// the currently edited entry, see 27d552b103
+			getInstanceManager: () => ({etemplate_exec_id: "test-exec-id"})
 		};
 		const controller : any = new Et2NextmatchActionController(host);
 		controller.actionManager = {
@@ -2773,7 +2776,7 @@ describe("Et2Nextmatch action setup", () =>
 			["addressbook", "target", [
 				{app: "addressbook", id: "source-1"},
 				{app: "calendar", id: "source-2"}
-			]],
+			], "test-exec-id"],
 			"drop adapter should preserve both selected sources and the target row"
 		);
 	});
