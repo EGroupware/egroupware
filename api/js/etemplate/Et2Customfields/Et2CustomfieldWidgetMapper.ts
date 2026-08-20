@@ -152,10 +152,14 @@ export function mapCustomfieldToWidget(
 			break;
 
 		case "date":
+			// the container renders the label column itself - a label attr would show twice
+			// (filters re-set it after the switch, they have no label column)
+			delete attrs.label;
 			attrs.data_format = field.values?.format || "Y-m-d";
 			break;
 
 		case "date-time":
+			delete attrs.label;
 			attrs.data_format = field.values?.format || "Y-m-d H:i:s";
 			break;
 
