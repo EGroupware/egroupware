@@ -394,17 +394,14 @@ export class etemplate2
 		while(this.DOMContainer.lastChild) this.DOMContainer.lastChild.remove();
 
 		// Remove self from the index
-		for(const name in Et2Template.templateCache)
+		for(const name in etemplate2._byTemplate)
 		{
-			if(typeof etemplate2._byTemplate[name] == "undefined")
+			const list = etemplate2._byTemplate[name];
+			for(let i = list.length - 1; i >= 0; i--)
 			{
-				continue;
-			}
-			for(let i = 0; i < etemplate2._byTemplate[name].length; i++)
-			{
-				if(etemplate2._byTemplate[name][i] === this)
+				if(list[i] === this)
 				{
-					etemplate2._byTemplate[name].splice(i, 1);
+					list.splice(i, 1);
 				}
 			}
 		}
@@ -531,7 +528,7 @@ export class etemplate2
 				{
 					// Clean up the iframe
 					iframe.remove();
-				});
+				}, {once: true});
 			}
 		}
 	}
@@ -563,6 +560,7 @@ export class etemplate2
 	unbind_unload()
 	{
 		window.removeEventListener("beforeunload", this.destroy_session);
+		window.removeEventListener("pagehide", this.destroy_session);
 		window.removeEventListener("beforeunload", this.close_prompt);
 		if(window.onbeforeunload === this.destroy_session)
 		{
