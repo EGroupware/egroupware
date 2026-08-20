@@ -131,8 +131,14 @@ export class filemanagerAPP extends EgwApp
 		}
 		if(name === 'filemanager.index' && !et2.DOMContainer.closest("egw-app"))
 		{
-			// Anonymous view - reorder the DOM nodes
-			et2.DOMContainer.parentElement.append(et2.DOMContainer);
+			// Anonymous view - with no egw-app to slot into, the toolbar gets relocated after
+			// the form instead. Move just the toolbar back before it (not the form - moving the
+			// form disconnects/reconnects the nextmatch and breaks tile view's first render).
+			const toolbar = document.querySelector("#filemanager-index_filemanager-index-app-toolbar");
+			if(toolbar && toolbar.parentElement === et2.DOMContainer.parentElement)
+			{
+				et2.DOMContainer.parentElement.insertBefore(toolbar, et2.DOMContainer);
+			}
 			const button_widget: Et2Button = document?.querySelector("#filemanager-index_toolbar_button\\[change_view\\]")
 			if (button_widget)
 			{
