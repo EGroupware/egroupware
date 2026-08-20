@@ -101,10 +101,17 @@ export class MailApp extends EgwApp
 	W_INTERVALS : any = [];
 
 	/**
-	 *
-	 * @array of setted timeouts
+	 * Pending preview-body-load debounce timers, see mail_preview().
+	 * Cleared entries are spliced out there too, so this doesn't just grow forever.
 	 */
-	W_TIMEOUTS : any = [];
+	W_TIMEOUTS: number[] = [];
+	/**
+	 * the number of currently in flight requests for fetchEmailBody() in the mail preview
+	 * this should usually be 0 or 1,
+	 * since we abort the last request, when sending a new one
+	 * used to calculate if we should wait before sending a new one
+	 * */
+	inFlightRequests: number = 0;
 
 	/**
 	 * Replace http:// in external image urls with
@@ -1668,7 +1675,9 @@ export class MailApp extends EgwApp
 			// without this, it can still
 			// fire ~300ms later and load that stale row's body into the iframe this branch just
 			// blanked/disabled.
-			for (const t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
+			this.W_TIMEOUTS.forEach((t) => window.clearTimeout(t));
+			//empty the array
+			this.W_TIMEOUTS.length = 0;
 			// Leave if we're here and there is nothing selected, too many, or no data
 			if (attachmentsBlock)
 			{
@@ -1710,17 +1719,24 @@ export class MailApp extends EgwApp
 
 			// Try to avoid sending so many request when user tries to scroll on list
 			// via key up/down quite fast.
-			for (const t in this.W_TIMEOUTS) {window.clearTimeout(this.W_TIMEOUTS[t]);}
-			this.W_TIMEOUTS.push(window.setTimeout(()=>{
-
-				const controller = new AbortController();
-				this.previewFetchAbort = controller;
-				this.loadMessageBody(IframeHandle, rowId, (doc) =>
+			this.W_TIMEOUTS.forEach((t) => window.clearTimeout(t));
+			this.W_TIMEOUTS.length = 0;
+			this.W_TIMEOUTS.push(window.setTimeout(() =>
 				{
-					this.resolveExternalImages(doc);
-					renderAttachmentIndex(doc, data.attachmentsBlock, this.egw);
-				}, controller.signal);
-			}, 300));
+					// an actual request will be started by loadMessageBody() that will execute
+					// the supplied onload function and might set the iframe content after the requestPromise resolves
+					const controller = new AbortController();
+					this.previewFetchAbort = controller;
+					this.loadMessageBody(IframeHandle, rowId,
+						(doc) =>
+						{
+							this.resolveExternalImages(doc);
+							renderAttachmentIndex(doc, data.attachmentsBlock, this.egw);
+						},
+						controller.signal);
+				},
+				Math.min(this.inFlightRequests * 200, 300)
+			));
 		}
 
 		const messages = {};
@@ -1858,9 +1874,14 @@ export class MailApp extends EgwApp
 	 */
 	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal): void
 	{
+		//we now fire the request so increase inFlight request by one
+		this.inFlightRequests += 1;
 		const iframe = iframeWidget.getDOMNode() as HTMLIFrameElement;
 		this.jmap.fetchBody(rowId, undefined, signal).then((result) =>
 		{
+			//a request returned so we have one less in flight.
+			// Sanity checked to never have negative requests in flight
+			this.inFlightRequests = Math.max(0, this.inFlightRequests - 1);
 			// superseded by a newer selection while this request was in flight - drop it
 			if (signal?.aborted) return;
 			// belt-and-suspenders alongside the abort check above, scoped to the preview-pane
