@@ -294,7 +294,7 @@ window.app = {classes: {}};
 
 		// Make sure opener knows when we close - start a heartbeat
 		try {
-			if ((window.opener && window.opener.framework || popup) && window.name != '') {
+			if (window.opener && window.opener.framework || popup) {
 				// capture the opener's framework instance now, to notice later if the opener reloads/navigates
 				var opener_framework_at_init = window.opener && window.opener.framework;
 				// Timeout is 5 seconds, but it iks only applied(egw_utils) when something asks for the window list
@@ -311,10 +311,13 @@ window.app = {classes: {}};
 					catch(e) {
 						// ignore SecurityError exception if opener is different security context / cross-origin
 					}
-					if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile()) {
-						window.opener.framework.popups.add(window);
+					// Only track named windows in the opener's window list
+					if (window.name != '') {
+						if (window.opener && window.opener.framework && typeof window.opener.framework.popup_idx(window) == 'undefined' && !egwIsMobile()) {
+							window.opener.framework.popups.add(window);
+						}
+						egw().storeWindow(this.egw_appName, this);
 					}
-					egw().storeWindow(this.egw_appName, this);
 				}, 2000);
 			}
 		}
@@ -583,4 +586,96 @@ window.egw_rejoin = function ()
 window.egw_import = function (url)
 {
 	return import(url);
+}
+/**
+ * Run a JSON request in *this* window's realm, calling back with the parsed response
+ *
+ * Popups adopt the opener's egw object (see the bootstrap at the top of this file), so the
+ * egw modules' code - and every closure it creates, including its .then() callbacks - belongs
+ * to the opener's realm, not the popup's. Once the opener navigates, promise reactions queued
+ * while that no-longer-fully-active document is on the call stack are silently discarded: the
+ * request still reaches the server and is processed, but its response is never handled, so eg.
+ * a save in a reconnected popup would neither close the popup nor show its confirmation.
+ *
+ * Starting the chain here, in a realm that is still fully active, is what fixes it: the
+ * reactions registered below are functions of *this* realm. The onSuccess/onError handed in
+ * may well belong to a dead realm - that is fine, dead-realm functions execute normally when
+ * *called*, they just never get *scheduled*.
+ *
+ * The returned promise is passed through egw_chainable() so callers can still .then() onto it
+ * with callbacks of their own (dead) realm - see there.
+ *
+ * @param url
+ * @param init fetch() init object
+ * @param onSuccess called with the parsed JSON; its return value resolves the promise
+ * @param onError called with (error, response_ok)
+ * @returns {Promise<*>} resolving to onSuccess's return value
+ */
+window.egw_fetch_json = function (url, init, onSuccess, onError)
+{
+	let response_ok = false;
+	return window.egw_chainable(fetch(url, init)
+		.then(function (response) {
+			response_ok = response.ok;
+			if (!response.ok) {
+				throw response;
+			}
+			return response.json();
+		})
+		.then(function (data) { return onSuccess(data); })
+		.catch(function (_err) { return onError(_err, response_ok); }));
+}
+/**
+ * Wrap a callback so it can be used as a promise reaction from a document that may no longer
+ * be fully active
+ *
+ * A promise reaction whose callback function belongs to a non-fully-active document is never
+ * invoked - it is the *callback's* realm that decides, not who called then(), and not whether
+ * the promise was still pending. So a popup whose opener has navigated cannot schedule its own
+ * continuations at all: they are silently dropped, no error (verified).
+ *
+ * The returned wrapper belongs to THIS realm, so it is what actually gets scheduled, and it
+ * merely *calls* the original - dead-realm functions execute normally when called, they just
+ * never get scheduled themselves.
+ *
+ * @param {function(...*):*} _callback callback which may belong to another (dead) realm
+ * @returns {function(...*):*} wrapper of this realm, calling _callback with the same args/this
+ */
+window.egw_wrap_callback = function (_callback)
+{
+	return function () { return _callback.apply(this, arguments); };
+}
+/**
+ * Make a promise of this realm safe to chain from a document that may no longer be fully active
+ *
+ * @see window.egw_wrap_callback for why this is needed - this is the same trick applied to a
+ * whole promise instead of a single callback.
+ *
+ * @param {Promise<*>} _promise promise created in this realm
+ * @returns {Promise<*>} the same promise, with a then() that realm-wraps its callbacks
+ */
+window.egw_chainable = function (_promise)
+{
+	const native_then = _promise.then.bind(_promise);
+
+	/**
+	 * @param {function(*):*} [_onFulfilled]
+	 * @param {function(*):*} [_onRejected]
+	 * @returns {Promise<*>}
+	 */
+	_promise.then = function (_onFulfilled, _onRejected)
+	{
+		const chained = window.egw_chainable(native_then(
+			typeof _onFulfilled === 'function' ? function (_value) { return _onFulfilled(_value); } : _onFulfilled,
+			typeof _onRejected === 'function' ? function (_reason) { return _onRejected(_reason); } : _onRejected
+		));
+		// keep abort() reachable after chaining: callers hold on to the chained promise, but
+		// abort() is assigned to the original one by egw_json's sendRequest()
+		if (typeof _promise.abort === 'function' && typeof chained.abort !== 'function')
+		{
+			chained.abort = function () { return _promise.abort(); };
+		}
+		return chained;
+	};
+	return _promise;
 }

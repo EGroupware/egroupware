@@ -162,6 +162,19 @@ class JsonRequest
 	}
 
 	/**
+	 * Wrap a callback so it still runs when used as a promise reaction
+	 *
+	 * For a popup our realm is the opener's and may already be destroyed, in which case
+	 * reactions belonging to it are silently never invoked. Delegates to the target window's
+	 * helper, falling back to the bare callback where unavailable (older cached egw.js, tests).
+	 */
+	#wrapCallback(_callback : Function) : any
+	{
+		const wnd : any = this.#json.wnd;
+		return typeof wnd.egw_wrap_callback === 'function' ? wnd.egw_wrap_callback(_callback) : _callback;
+	}
+
+	/**
 	 * Function which is currently used to display alerts -- may be replaced by
 	 * some API function.
 	 */
@@ -188,11 +201,14 @@ class JsonRequest
 	openWebSocket(url : string, tokens : string[], account_id : number, error? : Function, reconnect? : number) : void
 	{
 		this.#json.reconnectTime = reconnect || MIN_RECONNECT_TIME;
+		// timers/WebSocket on #wnd, not our own realm, which may already be gone for a popup
+		// whose opener navigated - a dead document's timers never fire (see egw.js)
+		const wnd : any = this.#json.wnd;
 		let check_timer : any;
 		const check = () =>
 		{
 			this.websocket.send('ping');
-			check_timer = window.setTimeout(() =>
+			check_timer = wnd.setTimeout(() =>
 			{
 				console.log("Server did not respond to ping in "+MAX_PING_RESPONSE_TIME+" seconds --> try reconnecting");
 				check_timer = null;
@@ -205,10 +221,10 @@ class JsonRequest
 			}, MAX_PING_RESPONSE_TIME);
 		};
 
-		this.websocket = this.#json.websocket = new WebSocket(url);
+		this.websocket = this.#json.websocket = new wnd.WebSocket(url);
 		this.websocket.onopen = (e) =>
 		{
-			check_timer = window.setTimeout(check, CHECK_INTERVAL);
+			check_timer = wnd.setTimeout(check, CHECK_INTERVAL);
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
 				account_id: parseInt(<any>account_id)
@@ -219,8 +235,8 @@ class JsonRequest
 		{
 			this.#json.reconnectTime = MIN_RECONNECT_TIME;
 			console.log(event);
-			if (check_timer) window.clearTimeout(check_timer);
-			check_timer = window.setTimeout(check, CHECK_INTERVAL);
+			if (check_timer) wnd.clearTimeout(check_timer);
+			check_timer = wnd.setTimeout(check, CHECK_INTERVAL);
 			if (event.data === 'pong') return;	// just a keepalive message
 			let data = JSON.parse(event.data);
 			if (data && data.type)
@@ -251,9 +267,9 @@ class JsonRequest
 				// e.g. server process killed or network down
 				// event.code is usually 1006 in this case
 				console.log('[close] Connection died --> reconnect in '+this.#json.reconnectTime+'ms');
-				if (check_timer) window.clearTimeout(check_timer);
+				if (check_timer) wnd.clearTimeout(check_timer);
 				check_timer = null;
-				window.setTimeout(() => this.openWebSocket(url, tokens, account_id, error, this.#json.reconnectTime), this.#json.reconnectTime);
+				wnd.setTimeout(() => this.openWebSocket(url, tokens, account_id, error, this.#json.reconnectTime), this.#json.reconnectTime);
 			}
 		};
 	}
@@ -284,13 +300,18 @@ class JsonRequest
 			}
 		});
 
+		// the window this request is for: NOT necessarily the window our own code lives in, as
+		// popups adopt the opener's egw object. Use it for everything realm-sensitive (fetch,
+		// sendBeacon, FormData, timers) instead of the globals - see egw_fetch_json() in egw.js
+		const wnd : any = this.#json.wnd;
+
 		// send with keepalive===true for sendBeacon to be used in beforeunload event
-		if (this.async === "keepalive" && typeof navigator.sendBeacon !== "undefined")
+		if (this.async === "keepalive" && typeof wnd.navigator.sendBeacon !== "undefined")
 		{
-			const data = new FormData();
+			const data = new wnd.FormData();
 			data.append('json_data', request_obj);
 			//(window.opener||window).console.log("navigator.sendBeacon", this.url, request_obj, data.getAll('json_data'));
-			return navigator.sendBeacon(this.url, data);
+			return wnd.navigator.sendBeacon(this.url, data);
 		}
 
 		let url = this.url;
@@ -316,34 +337,46 @@ class JsonRequest
 		{
 			const controller = new AbortController();
 			const signal = controller.signal;
-			let response_ok = false;
-			promise = this.#json.wnd.fetch(url, {...init, signal})
-				.then((response) => {
-					response_ok = response.ok;
-					if (!response.ok) {
-						throw response;
-					}
-					return response.json();
-				})
-				.then((data) => this.handleResponse(data) || data)
-				.catch((_err) => {
-					if (!response_ok)
+			const onSuccess = (data) => this.handleResponse(data) || data;
+			const onError = (_err, response_ok : boolean) =>
+			{
+				if (!response_ok)
+				{
+					// request was aborted via promise.abort(), or browser cancelled it (eg. navigation): ignore
+					if (_err && _err.name === 'AbortError')
 					{
-						// request was aborted via promise.abort(), or browser cancelled it (eg. navigation): ignore
-						if (_err && _err.name === 'AbortError')
-						{
-							return;
+						return;
+					}
+					// HTTP-level error (eg. 400 from a thrown InvalidArgumentException): _err is the Response object
+					// or a network-level failure (eg. TypeError "Failed to fetch"): _err is the Error object
+					(error || this.handleError).call(this, _err, 'error');
+				}
+				// no response / empty body causing response.json() to throw (a different error per browser!)
+				else if (!_err.message.match(/Unexpected end of/i))
+				{
+					(error || this.handleError).call(this, _err)
+				}
+			};
+			if (typeof wnd.egw_fetch_json === 'function')
+			{
+				promise = wnd.egw_fetch_json(url, {...init, signal}, onSuccess, onError);
+			}
+			else
+			{
+				// no helper (eg. an older cached egw.js, or a test environment): same chain,
+				// but owned by whatever realm we are running in
+				let response_ok = false;
+				promise = wnd.fetch(url, {...init, signal})
+					.then((response) => {
+						response_ok = response.ok;
+						if (!response.ok) {
+							throw response;
 						}
-						// HTTP-level error (eg. 400 from a thrown InvalidArgumentException): _err is the Response object
-						// or a network-level failure (eg. TypeError "Failed to fetch"): _err is the Error object
-						(error || this.handleError).call(this, _err, 'error');
-					}
-					// no response / empty body causing response.json() to throw (a different error per browser!)
-					else if (!_err.message.match(/Unexpected end of/i))
-					{
-						(error || this.handleError).call(this, _err)
-					}
-				});
+						return response.json();
+					})
+					.then(onSuccess)
+					.catch((_err) => onError(_err, response_ok));
+			}
 
 			// offering a simple abort mechanism and compatibility with jQuery.ajax
 			promise.abort = () => controller.abort();
@@ -441,8 +474,14 @@ class JsonRequest
 			if(js_files.length > 0)
 			{
 				var start_time = (new Date).getTime();
+				// aggregate and continue in #wnd's realm: ours may already be gone for a popup
+				// whose opener navigated, and a dropped continuation here silently skips the
+				// ENTIRE rest of the response (we return below), incl. window-close - ie. the
+				// popup would just stay open. See egw_wrap_callback() in egw.js
+				const js_wnd : any = this.#json.wnd;
 				// Need to use this.egw.window.egw_import() to make sure file is loaded in correct window
-				Promise.all(js_files.map((file) => this.egw.window.egw_import(file))).then(() =>
+				const js_loaded = (js_wnd.Promise || Promise).all(js_files.map((file) => this.egw.window.egw_import(file)));
+				js_loaded.then(this.#wrapCallback(() =>
 				{
 					var end_time = (new Date).getTime();
 					this.handleResponse(data);
@@ -455,7 +494,7 @@ class JsonRequest
 							gen_time_div.append('<span class="asyncIncludeTime"></span>').find('.asyncIncludeTime');
 						gen_time_async.text(egw.lang('async includes took %1s', (end_time-start_time)/1000));
 					}*/
-				});
+				}));
 				return;
 			}
 
@@ -517,7 +556,8 @@ class JsonRequest
 								// defer apply_app's after et2_load is finished (it returns a promise for that)
 								if (res.type === 'et2_load' && apply_app.length && typeof promise.then === 'function')
 								{
-									promise.then(() => this.handleResponse({response: apply_app}));
+									// wrapped for the same reason as the js_files branch above
+									promise.then(this.#wrapCallback(() => this.handleResponse({response: apply_app})));
 								}
 							} catch(e) {
 								var msg = e.message ? e.message : e + '';

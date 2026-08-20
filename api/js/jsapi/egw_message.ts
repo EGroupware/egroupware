@@ -145,7 +145,8 @@ class Message implements MessageModule
 		this.#wnd = _wnd;
 
 		// Register an 'error' plugin, displaying using the message system
-		window.setTimeout(() =>
+		// deferred on #wnd, not our own realm, which may already be gone (see egw.js)
+		this.#wnd.setTimeout(() =>
 		{
 			egw(this.#wnd).registerJSONPlugin(function (type, res, req) : boolean
 			{
@@ -183,17 +184,23 @@ class Message implements MessageModule
 		{
 			return egw(egw.top).message(_msg, _type);
 		}
-		if ((<any>window).egw_getFramework() && typeof (<any>window).egw_getFramework().message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
+		// look the framework up on #wnd, not our own realm: for a popup whose opener navigated
+		// ours is gone, and missing the framework here silently downgrades to the fallback
+		// below, which toasts without a duration - ie. a message that never auto-closes
+		const wnd : any = self.#wnd;
+		const framework = typeof wnd.egw_getFramework === 'function' ? wnd.egw_getFramework() : null;
+		if (framework && typeof framework.message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
 		{
-			message = (<any>window).framework.message(_msg, _type, null, true, _discardID, self.#wnd);
+			message = wnd.framework.message(_msg, _type, null, true, _discardID, self.#wnd);
 		}
 		// Add popup message styling
-		if (message && (!(<any>window).egw_getFramework() || !self.#wnd.document.body.contains((<any>window).framework)))
+		if (message && (!framework || !self.#wnd.document.body.contains(wnd.framework)))
 		{
 			return message.then(m =>
 			{
 				m.toast();
-				setTimeout(() =>
+				// on #wnd's realm, see the constructor
+				self.#wnd.setTimeout(() =>
 				{
 					self.#wnd.document.body.querySelector('.sl-toast-stack')?.classList.add('isPopup');
 				}, 0);
