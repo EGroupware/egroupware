@@ -713,14 +713,113 @@ shared method rather than duplicate the logic in InfoLog, accepting the bigger b
 - **Not yet done**: free-text/RAG search consolidation into `process_search()`'s orchestration;
   responsible/cc joins, category filtering, ACL/status/date fragment building, and action-link
   filtering remain deliberately bespoke.
-- **Bigger idea raised by ralf, not started**: the two-pass "fetch matching IDs, then fetch full
-  rows for those IDs" shape of `searchInfolog()` exists because the responsible/cc joins
-  (`egw_infolog_users` via `attendees`) can multiply rows per `egw_infolog` row. Ralf's
-  observation: this might be avoidable higher up (e.g. aggregating responsible/cc without a
-  row-multiplying join), which would let InfoLog use `Api\Storage::search()`/`process_search()`
-  directly (or a thin extension of it) instead of `searchInfolog()`'s fully bespoke query
-  builder - a materially bigger architectural change than anything done in this project so far,
-  not started, needs its own design pass before touching.
+- **Bigger idea raised by ralf**: could the responsible/cc row-multiplication be avoided higher
+  up so InfoLog could use `Api\Storage::search()`/`process_search()` directly (or a thin
+  extension of it) instead of `searchInfolog()`'s fully bespoke query builder? Research and a
+  phased plan for this - see the next section.
+
+### Research — eliminating `searchInfolog()`'s row-duplicating JOINs, 2026-08-20
+
+Ralf asked to research and plan (not yet implement) how to avoid the responsible/cc
+row-duplication so `Api\Storage::search()` could be used for InfoLog's main query, since that's
+the biggest remaining obstacle to using the generic machinery directly instead of a bespoke
+query builder.
+
+**Correcting a premise first**: ralf described the current design as "first retrieves all IDs
+and then queries the full rows for these IDs." Checked thoroughly (`infolog_bo::search()`,
+`searchInfolog()`, `read()`, `infolog_ui::get_rows()`) - that two-pass shape does **not** exist
+anywhere in InfoLog today. Both `read()` and `searchInfolog()` use a single query with
+`LEFT JOIN egw_infolog_users` (aliased `attendees` for display) + `GROUP_CONCAT()`/`GROUP BY` to
+aggregate the 1:N responsible-delegate/cc-attendee relationship into the result row - confirmed
+via git history that this was already `infolog_so`'s design well before this migration started,
+not something introduced by it.
+
+**Where the real precedent lives**: `calendar_so` - structurally the closest analog, since
+`egw_cal_user` (participants) is 1:N per event exactly like `egw_infolog_users` is 1:N per info
+entry. Both `calendar_so::read()` (`calendar/inc/class.calendar_so.inc.php:561-579`) and
+`calendar_so::search()` (`:1240-1310`) use the two-pass shape ralf described: the main query
+never joins the participants table at all; a separate batch query
+(`... WHERE cal_id IN (<ids from the main query's result>) ...`, no join to `egw_cal_events`)
+fetches every participant row for the whole result set in one go, merged into
+`$events[$id]['participants']` in PHP. This is the concrete, already-battle-tested model to
+copy for InfoLog's responsible/cc, not something to invent from scratch.
+
+**Why the row-duplication currently blocks a bare `Api\Storage::search()` call**: `process_search()`'s
+only row-multiplication safeguard is `DISTINCT` (auto-added when `$join` includes `extra_join`,
+`api/src/Storage.php:700-713`) - it works *only* because the customfield extra-table join is
+used exclusively for filtering/sorting, never to project a value into the output row, so
+duplicate rows are byte-identical and collapse under `DISTINCT`. InfoLog's case is fundamentally
+different: the joined columns (`account_id`, `info_res_attendee`) **are** the desired output
+(`info_responsible`/`info_cc`) - `DISTINCT` can't collapse rows that differ in the very column
+being selected. `GROUP_CONCAT`/`GROUP BY` is the only single-query way to do that, which is
+exactly why the current code needs it and why it can't be replaced by a bare call to the
+generic `search()` as-is. Teaching `Api\Storage` a generic "aggregate a 1:N join into an
+array/CSV column" mechanism would be a new capability added to the shared base class, not an
+extraction of something that already exists (like `cf_filter()`/`order_by_cf()` were) - a
+materially bigger and riskier change than either of those two increments.
+
+**Proposed design** - decouple `egw_infolog_users` into its own read-path helper, mirroring
+`calendar_so`, instead of teaching `Api\Storage` a new aggregation capability:
+
+- New `read_responsible(array $info_ids): array` on `Infolog\Storage`: one plain
+  `SELECT * FROM egw_infolog_users WHERE info_id IN (...) AND info_res_deleted IS NULL` - no
+  join to `egw_infolog` at all - returning `[info_id => ['info_responsible' => [...], 'info_cc' => [...]]]`,
+  mirroring `read_customfields()`'s per-id return shape (already established for CFs) and
+  `calendar_so`'s participant-fetch shape.
+- `read()`: drop its `LEFT JOIN egw_infolog_users`/`GROUP_CONCAT`, call `read_responsible([$info_id])`
+  instead and merge the result - symmetric with how CF hydration already works via
+  `read_customfields()`.
+- `searchInfolog()`: drop *both* `users_table` `LEFT JOIN`s and the `GROUP BY` from the main
+  query entirely.
+  - `col_filter['info_responsible']` (the *only* place `info_responsible` is used as a filter -
+    never as an `order_by` target) becomes an `EXISTS (SELECT 1 FROM egw_infolog_users WHERE
+    info_id=main.info_id AND ...)`-style fragment instead of a `JOIN` + `OR ... IS NULL AND
+    owner-match` condition - semantically equivalent, no row multiplication, no `GROUP BY`
+    needed to support it either. Currently has **zero** test coverage (not even before this
+    migration) - needs a dedicated test locking down today's behavior (plain user match,
+    group/membership expansion, the owner-fallback-when-no-delegation-row-exists branch, the
+    `+deleted` variant) *before* touching it, same discipline as the `cf_filter()`/`order_by_cf()`
+    work.
+  - After the main query returns matching rows, call `read_responsible()` once for the whole
+    result batch and merge `info_responsible`/`info_cc` into each row - mirroring
+    `calendar_so::search()`'s post-query participant merge exactly.
+  - Side benefit, not just enablement: once the join is gone, the main query no longer needs
+    `egw_infolog` aliased as `main` at all (that alias only ever existed to disambiguate
+    `info_id` against the `users_table` joins) - which also retires the
+    `extra_join_filter`/`extra_join_order` alias-swapping workarounds the `cf_filter()`/
+    `order_by_cf()` increments had to introduce specifically to cope with that alias.
+    `cf_filter()`/`order_by_cf()` could then reference the real table name directly, no swap
+    needed - removing debt those two increments introduced, not just avoiding new debt.
+  - With the join gone, what's left of `searchInfolog()` (action-link filtering, category
+    filter, free-text/RAG search, parent/subs filtering, pagination) is plain WHERE-fragments
+    and criteria `process_search()` already knows how to carry (raw SQL fragments as
+    numeric-keyed criteria elements) - close enough to `Api\Storage::search()`'s
+    `$criteria`/`$filter`/`$join`/`$order_by` contract that delegating the main query to the
+    *inherited* `search()` looks realistic, with only link/category/RAG/pid-filtering and the
+    responsible-batch-merge left as InfoLog-specific pre/post-processing around that call - but
+    this is its own, separate, larger follow-up phase (see plan below), not bundled with the
+    join removal itself.
+
+**What does NOT change**: `write()`'s persistence of `info_responsible`/`info_cc` into
+`egw_infolog_users` (a separate, already-correct code path); `users_with_open_entries()` (a
+different, `DISTINCT account_id`-only query shape with no row-multiplication issue);
+`change_delete_owner()` (doesn't touch read/search).
+
+**Proposed phased plan**:
+1. Add `read_responsible()`; switch `read()` to use it, dropping its `JOIN`+`GROUP_CONCAT`. Test:
+   existing `read()` coverage plus a new case with multiple responsible/cc entries on one entry.
+2. In `searchInfolog()`: replace the responsible-filter `JOIN` with an `EXISTS`-fragment; drop
+   the display `JOIN`+`GROUP_CONCAT`+`GROUP BY`; call `read_responsible()` on the result batch.
+   Test: a new `SearchResponsibleTest.php` covering every `col_filter['info_responsible']` path
+   (plain user, group/membership expansion, owner-fallback, `+deleted`), run against the
+   *current* code first to lock down today's behavior (zero existing coverage), then against the
+   change.
+3. (Separate, later phase, only after 1+2 are solid on their own) Explore delegating
+   `searchInfolog()`'s remaining FROM/WHERE/ORDER BY assembly to the inherited
+   `Api\Storage::search()`/`process_search()`, now that the row-multiplying join and the `main`
+   alias workaround are gone.
+
+Not started - awaiting ralf's go-ahead on scope/sequencing before implementing.
 
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 
