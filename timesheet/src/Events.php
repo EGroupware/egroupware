@@ -99,6 +99,10 @@ class Events extends Api\Storage\Base
 			list($app, $id) = explode('::', $state['specific']['app_id'], 2);
 			if ($app === self::APP)
 			{
+				if (!(new \timesheet_bo())->check_acl(Api\Acl::EDIT, (int)$id))
+				{
+					throw new Api\Exception\NoPermission("No EDIT permission for timesheet #$id!");
+				}
 				$ts_id = $id;
 			}
 		}

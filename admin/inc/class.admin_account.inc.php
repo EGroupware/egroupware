@@ -469,6 +469,13 @@ class admin_account
 	 */
 	public static function ajax_check(array $data, $changed)
 	{
+		// this is a static method with no constructor to gate it, and admin_cmd::_check_admin()
+		// (run further down via admin_cmd_edit_user::exec()) fails open for a caller with no
+		// admin ACL rows at all - require granted admin rights explicitly here
+		if(!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 		// warn if anonymous user is renamed, as it breaks eg. sharing and Collabora
 		if ($changed == 'account_lid' && Api\Accounts::id2name($data['account_id']) === 'anonymous' && $data['account_lid'] !== 'anonymous')
 		{

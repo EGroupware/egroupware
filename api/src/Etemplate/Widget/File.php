@@ -218,6 +218,23 @@ class File extends Etemplate\Widget
 	}
 
 	/**
+	 * Chunk-upload temp directory for the given resumableIdentifier
+	 *
+	 * resumableIdentifier is client-generated (by default just size+filename, no
+	 * randomness) and otherwise used as-is, making it a predictable, shared namespace
+	 * across all users. Scoping it under the current user's account_id keeps two users'
+	 * concurrently-uploaded same-named/same-sized files from colliding or being probed.
+	 *
+	 * @param string $resumable_identifier
+	 * @return string
+	 */
+	private static function chunkTempDir($resumable_identifier): string
+	{
+		return $GLOBALS['egw_info']['server']['temp_dir'].'/'.
+			(int)$GLOBALS['egw_info']['user']['account_id'].'-'.self::sanitizePathSegment($resumable_identifier);
+	}
+
+	/**
 	 * Resumable uploads, check if a chunk is already present
 	 *
 	 * @return void
@@ -234,7 +251,7 @@ class File extends Etemplate\Widget
 
 		// check the destination file (format <filename.ext>.part<#chunk>
 		// the file is stored in a temporary directory
-		$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'] . '/' . self::sanitizePathSegment($_REQUEST['resumableIdentifier']);
+		$temp_dir = self::chunkTempDir($_REQUEST['resumableIdentifier']);
 		if(!file_exists($temp_dir))
 		{
 			//No content, file is not there
@@ -323,7 +340,7 @@ class File extends Etemplate\Widget
 			// Resumable / chunked uploads
 			// init the destination file (format <filename.ext>.part<#chunk>
 			// the file is stored in a temporary directory
-			$temp_dir = $GLOBALS['egw_info']['server']['temp_dir'].'/'.self::sanitizePathSegment($_POST['resumableIdentifier']);
+			$temp_dir = self::chunkTempDir($_POST['resumableIdentifier']);
 			$dest_file = $temp_dir.'/'.str_replace('/','_',$_POST['resumableFilename']).'.part'.(int)$_POST['resumableChunkNumber'];
 
 			// create the temporary directory

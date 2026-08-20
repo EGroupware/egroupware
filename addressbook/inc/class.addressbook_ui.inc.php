@@ -1266,8 +1266,16 @@ class addressbook_ui extends addressbook_bo
 		if($list_id)
 		{
 			$list = $this->read_list((int)$list_id);
+			// changing a list-owner requires DELETE rights of the current owner and ADD rights for the new one
+			if ((int)$owner !== (int)$list['list_owner'] &&
+				(!$this->check_list((int)$list_id, Acl::DELETE, (int)$list['list_owner']) ||
+					!$this->check_list(null, Acl::ADD, (int)$owner)))
+			{
+				Api\Json\Response::get()->apply('egw.message', array(  lang('Insufficent rights to edit this list!'),'error'));
+				return;
+			}
 			//also change to owner to the now selected value
-			$list['list_owner']=$owner;
+			$list['list_owner'] = $owner;
 		}
 		$list['list_name'] = $new_name;
 

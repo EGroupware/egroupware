@@ -408,7 +408,11 @@ class timesheet_bo extends Api\Storage
 	{
 		if (is_null($data) || (int)$data == $this->data['ts_id'])
 		{
-			$data =& $this->data;
+			// for an existing entry, always check against the persisted owner, not
+			// $this->data, which may already hold not-yet-saved / client-supplied values.
+			// Use a throwaway instance for the re-read: $this->read() short-circuits and
+			// just returns $this->data again if asked for the same, already-loaded ts_id.
+			$data = $this->data['ts_id'] ? (new self)->read((int)$this->data['ts_id'], true) : $this->data;
 		}
 		if (!$data)
 		{

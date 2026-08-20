@@ -1711,6 +1711,17 @@ class filemanager_ui
 				break;
 			case 'shareWritableLink':
 			case 'shareReadonlyLink':
+				// filemanager only ever deals in VFS paths - reject a raw server filesystem
+				// path here, instead of relying on Vfs\Sharing::validate_path()'s temp_dir
+				// branch (which mail_compose legitimately uses for not-yet-in-VFS attachments).
+				// We can't actually tell a VFS path apart from a real temp_dir path by string
+				// content alone (VFS paths are plain absolute paths too) - this is a prefix
+				// guess that assumes temp_dir isn't itself a reachable VFS mount point, which
+				// holds for any realistic config (VFS content lives under /home, /apps, etc.)
+				if (str_starts_with($selected, $GLOBALS['egw_info']['server']['temp_dir'].'/'))
+				{
+					throw new Api\Exception\WrongParameter('Invalid path for sharing!');
+				}
 				if ($action === 'shareWritableLink')
 				{
 					$share = Vfs\Sharing::create(
