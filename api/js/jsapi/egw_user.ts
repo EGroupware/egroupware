@@ -187,6 +187,45 @@ class User implements UserModule
 	 */
 	#accountDataPending : {[key : string] : boolean} = {};
 
+	/**
+	 * Promise.all() replacement that survives our own realm being gone
+	 *
+	 * Promise.all()'s internal resolve-element functions belong to the realm that called it,
+	 * and ours is the *opener's* for anything running in a popup (see the bootstrap in
+	 * egw.js). Once that document is replaced they are never invoked, so the aggregate never
+	 * settles and every caller waits forever - even though a wrapped reaction on each single
+	 * input still runs fine. Verified both ways, so we aggregate by hand instead.
+	 *
+	 * The returned promise is made chainable, so callers can .then()/await it from a realm of
+	 * their own that is already gone. See egw_wrap_callback()/egw_chainable() in egw.js.
+	 */
+	#allValues(_promises : any[]) : Promise<any[]>
+	{
+		const live : any = window;
+		const wrap = (_callback : Function) : any => typeof live.egw_wrap_callback === 'function'
+			? live.egw_wrap_callback(_callback) : _callback;
+
+		const result = new Promise<any[]>(resolve =>
+		{
+			const values = new Array(_promises.length);
+			let outstanding = _promises.length;
+			if (!outstanding) return resolve(values);
+			_promises.forEach((promise, i) =>
+			{
+				const collect = (value) =>
+				{
+					values[i] = value;
+					if (--outstanding === 0) resolve(values);
+				};
+				// .then() straight on the input: any adoption machinery (Promise.resolve(),
+				// Promise.all()) would be our realm's and could be dropped the same way
+				if (promise && typeof promise.then === 'function') promise.then(wrap(collect));
+				else collect(promise);
+			});
+		});
+		return typeof live.egw_chainable === 'function' ? live.egw_chainable(result) : result;
+	}
+
 	// Hold in-progress request to avoid making more
 	#request : Promise<any> = null;
 
@@ -412,7 +451,7 @@ class User implements UserModule
 						undefined, this, (params) => this.#accountDataBeforeSend(key, params)
 					).then(_data => this.#accountDataResponse(key, _field, _data));
 				}
-				promise = Promise.all(ids.map(account_id => perId[account_id])).then(values =>
+				promise = this.#allValues(ids.map(account_id => perId[account_id])).then(values =>
 				{
 					ids.forEach((account_id, i) => { data[account_id] = values[i]; });
 					return data;
@@ -454,7 +493,7 @@ class User implements UserModule
 						promises.push(_data[account_id]);
 					}
 				}
-				return Promise.all(promises).then(_results =>
+				return this.#allValues(promises).then(_results =>
 				{
 					_results.forEach(result =>
 					{

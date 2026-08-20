@@ -1055,7 +1055,12 @@ class DataStorage implements DataStorageModule
 					// through the same instance dataRegisterUID() was invoked through
 					var egwInstance = this;
 					self.#queue[hash] = {"uids": [], "timer": null};
-					self.#queue[hash].timer = window.setTimeout(function () {
+					// scheduled BY the calling instance's window, not by us: a timer only fires
+					// if both its callback and the setTimeout() call belong to a fully active
+					// document, and our realm is the opener's for anything running in a popup,
+					// so it may already be gone. See egw_set_timeout() in egw.js
+					const timerWnd : any = (egwInstance && egwInstance.window) || window;
+					const fetchQueued = function () {
 						// Fetch the data - failure is already reported via the default error
 						// message/logging, nothing more to do here.
 						egwInstance.dataFetch(_execId, {
@@ -1068,7 +1073,9 @@ class DataStorage implements DataStorageModule
 
 						// Delete the queue entry
 						delete self.#queue[hash];
-					}, 100);
+					};
+					self.#queue[hash].timer = typeof timerWnd.egw_set_timeout === 'function'
+						? timerWnd.egw_set_timeout(fetchQueued, 100) : timerWnd.setTimeout(fetchQueued, 100);
 				}
 
 				// Push the uid onto the queue, removing the prefix
