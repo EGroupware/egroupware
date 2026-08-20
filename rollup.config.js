@@ -13,7 +13,9 @@ import path from 'path';
 import babel from '@babel/core';
 import { readFileSync, readdirSync, statSync, unlinkSync, writeFileSync  } from "fs";
 //import rimraf from 'rimraf';
-import { minify } from 'terser';
+// Default import: terser 4.x ships a minified CJS bundle with no exports map, so Node
+// cannot detect its named exports and "import { minify }" fails to load this config.
+import terser from 'terser';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
 
@@ -92,7 +94,12 @@ const config = {
             {
                 return;
             }
-            if (!parentId || parentId.indexOf(path.sep + 'node_modules' + path.sep) !== -1)
+            // Leave node_modules alone, whether we got here from one or resolved into one.
+            // Another plugin can re-resolve an already-absolute dependency path through this
+            // hook, and the extension rewriting below only makes sense for first-party source -
+            // without this a dependency resolving to index.mjs becomes index.mjs.js.
+            const nodeModules = path.sep + 'node_modules' + path.sep;
+            if (!parentId || parentId.indexOf(nodeModules) !== -1 || id.indexOf(nodeModules) !== -1)
             {
                 return;
             }
@@ -111,11 +118,19 @@ const config = {
                 const jsPath =path.resolve(path.dirname(parentId), id + '.js');
                 try {
                     readFileSync(tsPath);
+                    return tsPath;
                 }
-                catch (e) {
+                catch (e) {}
+                try {
+                    readFileSync(jsPath);
                     return jsPath;
                 }
-                return tsPath;
+                catch (e) {}
+                // Neither exists, so this is not an extensionless module import - it is a file
+                // that already names its own extension (eg. a .css imported for its text).
+                // Leave it to the other plugins rather than inventing a ".js" path
+                // that isn't there.
+                return;
             }
         }
     },
@@ -173,7 +188,7 @@ const config = {
             {
                 return;
             }
-            return minify(code, {
+            return terser.minify(code, {
                 mangle: false,
                 sourceMap: true,
                 output: {
