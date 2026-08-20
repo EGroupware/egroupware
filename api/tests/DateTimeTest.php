@@ -21,6 +21,8 @@ class DateTimeTest extends TestCase {
 
 	protected static $usertime;
 	protected static $server_tz;
+	protected static $user_dateformat;
+	protected static $user_timeformat;
 
 	/**
 	 * Work in server time, so tests match expectations
@@ -30,21 +32,23 @@ class DateTimeTest extends TestCase {
 		parent::setUpBeforeClass();
 
 		static::$usertime = DateTime::$user_timezone;
+		static::$user_dateformat = DateTime::$user_dateformat;
+		static::$user_timeformat = DateTime::$user_timeformat;
 
 		static::$server_tz = date_default_timezone_get();
 
 		// Set time to UTC time for consistency
-		DateTime::setUserPrefs('UTC');
+		DateTime::setUserPrefs('UTC', 'Y-m-d', 'H:i');
 		date_default_timezone_set('UTC');
 		DateTime::$server_timezone = new \DateTimeZone('UTC');
 
 		// Set user time to server time for consistency
-		DateTime::setUserPrefs(date_default_timezone_get());
+		DateTime::setUserPrefs(date_default_timezone_get(), 'Y-m-d', 'H:i');
 	}
 	public static function tearDownAfterClass() : void
 	{
 		// Reset
-		DateTime::setUserPrefs(static::$usertime->getName());
+		DateTime::setUserPrefs(static::$usertime->getName(), static::$user_dateformat, static::$user_timeformat);
 		date_default_timezone_set(static::$server_tz);
 
 		unset($GLOBALS['egw']);

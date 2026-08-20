@@ -227,11 +227,10 @@ class GroupCommandTest extends CommandBase {
 			$command = new admin_cmd_edit_group($this->group_id, $account);
 			$command->comment = 'Needed for unit test ' . $this->name();
 			$command->run();
-		});
 
-		// Check
-		$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
-		$this->assertEquals(count($pre_search), count($post_search), 'Should have same number of accounts as before');
-		$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
+			$post_search = $GLOBALS['egw']->accounts->search(array('type' => 'both'));
+			$this->assertEquals(count($pre_search), count($post_search), 'Should have same number of accounts as before');
+			$this->assertGreaterThan($log_count, $this->get_log_count(), "Command ($command) did not log");
+		});
 	}
 }
