@@ -1,9 +1,13 @@
 # InfoLog: replace `infolog_so` with `Api\Storage`
 
-## Status: Phase 0 complete and committed; Phase 1's ACL relocation committed but caused a
-**real CI regression, now fixed uncommitted** (see "ACL relocation - CI regression" below);
-`Infolog\Storage`/persistence swap implemented 2026-08-19, **uncommitted, pending smoke
-test** - `infolog_so.inc.php` still not deleted (see blockers below)
+## Status: Phase 0 and Phase 1 (ACL relocation + `Infolog\Storage`/persistence swap) done,
+committed, and pushed; the CI regression the ACL relocation caused is fixed and **confirmed
+green in CI** (run 32293037489, `phpunit` job passed 2026-08-19). `infolog_so.inc.php` is now
+a permanent zero-logic compatibility shim (`class infolog_so extends \EGroupware\Infolog\Storage {}`)
+rather than something planned for deletion - ralf's explicit call, since an installation's hook
+registration can't be assumed refreshed. Remaining open work: `search()`'s bespoke SQL rewrite,
+Phase 2 (TZ/date-math cleanup), the z-push object-based modernization, and Phase 3 - see
+"Not yet done" and the Phase 2/3 sections below.
 
 This doc captures the research behind, and the proposed plan for, replacing InfoLog's
 hand-rolled SQL storage backend (`infolog/inc/class.infolog_so.inc.php`, 1168 lines/17
@@ -378,7 +382,7 @@ Moved from `infolog_so` to `infolog_bo`, in `infolog/inc/class.infolog_so.inc.ph
   in place) and all its persistence internals (`read`/`write`/`delete`/`search`'s SQL,
   CF handling) - `Infolog\Storage`/the `Api\Storage` swap below has not been started.
 
-#### ACL relocation — CI regression found and fixed, 2026-08-19 (uncommitted)
+#### ACL relocation — CI regression found and fixed, 2026-08-19 (committed, CI-confirmed)
 
 The ACL-relocation commit (`0d7f5bab72`, already pushed) broke CI:
 `EGroupware\Infolog\CalDAVImportTest::testImportDeniedForForeignCollectionWithoutAcl` and its
@@ -438,18 +442,45 @@ mistake:
   `checkAccessGrants()` never reads `$this->so->data` at all), but is a real correctness gap in
   the same area - fixed by moving the `$this->user`/`$this->tz_offset` assignments before the
   `parent::__construct()` call.
-- **Not yet verified against the actual regression**: local `infolog/tests/` still passes
-  (53/407, same 4 pre-existing unrelated `No DB host set!` errors) but cannot exercise this
-  specific test (`CalDAVImportTest`/`SyncCollectionReportTest` need DB credentials
-  `CalDAVTest.php::getSetup()` can't resolve in this sandbox). Needs either a dev-box smoke
-  test or a CI re-run to confirm before this is considered done.
+- **Verified**: local `infolog/tests/` couldn't exercise this specific test at first
+  (`CalDAVImportTest`/`SyncCollectionReportTest` need DB credentials
+  `CalDAVTest.php::getSetup()` couldn't resolve in this sandbox - separately fixed, see
+  "CalDAVTest::getSetup() domain resolution" below) - confirmed instead via a CI re-run
+  after pushing: `testImportDeniedForForeignCollectionWithoutAcl` and its REST counterpart
+  both pass in CI run 32293037489 (`phpunit` job green, 2026-08-19).
 
-#### `Infolog\Storage`/persistence swap — **implemented 2026-08-19, uncommitted pending smoke test**
+#### `CalDAVTest::getSetup()` domain resolution — fixed and committed, 2026-08-19
+
+Separately from the ACL fix, `api/tests/CalDAVTest.php::getSetup()` (used by
+`createUser()` to spin up fixture accounts for CalDAV/REST tests) looked up
+`$GLOBALS['egw_domain'][$_REQUEST['domain']]` using the literal domain string from
+`phpunit.xml` (`EGW_DOMAIN=default`), but this repo's `header.inc.php` commonly only
+defines real, named domains (e.g. `boulder.egroupware.org`) - no domain literally named
+`default` needs to exist. Every other test path (`LoggedInTest::load_egw()`) already
+resolves this correctly via `Api\Session::search_instance()`, which falls back to matching
+`HTTP_HOST`/`SERVER_NAME` or, failing that, the first configured domain, instead of a
+literal string match. `getSetup()` now does the same resolution. Verified the resolved
+domain/`db_host`/`db_name` matches exactly what the rest of the already-passing suite
+resolves to via `load_egw()` - not diverting fixture-account creation to a different
+environment. This fix alone unblocked several previously-`No DB host set!`-erroring test
+files locally (`infolog/tests/` went from 53 to 68 runnable tests).
+
+Separately, `CalDAVImportTest`'s own `runCaldavRequest()` helper has an unrelated,
+pre-existing limitation in this sandbox: it calls `Api\CalDAV::runRequest()`, which
+simulates the request in-process and reports status via PHP's `http_response_code()`
+(`api/src/CalDAV.php:2800`) - that returns `false`/`0` here rather than a real code, for
+reasons not further investigated (out of scope - a CLI-harness quirk, not a app bug). 6 of
+`CalDAVImportTest`'s tests still can't be exercised locally because of this; CI (which runs
+against a full web server, not this in-process simulation) is unaffected and is the
+authoritative signal.
+
+#### `Infolog\Storage`/persistence swap — **implemented, committed, and pushed 2026-08-19**
 
 `infolog/src/Storage.php` (`EGroupware\Infolog\Storage extends Api\Storage`) now exists and is
 wired in: `infolog_bo::__construct()`/`async_notification()` construct it instead of
-`infolog_so`. `infolog_so.inc.php` is **left in place, untouched beyond the earlier ACL
-removal** - not deleted yet (see "Not yet done" below).
+`infolog_so`. `infolog_so.inc.php` was left in place at this point (untouched beyond the
+earlier ACL removal) - later turned into a permanent zero-logic compatibility shim, see
+"`infolog_so.inc.php` → zero-logic compatibility shim" below.
 
 What actually landed, vs. the original bullets above (kept for history - reality diverged in a
 few places once real PHP/DB constraints showed up):
@@ -535,11 +566,6 @@ few places once real PHP/DB constraints showed up):
   - Rewriting `search()`'s (now `searchInfolog()`'s) internals to use `Api\Storage`'s generic
     `search()`/`process_search()` machinery instead of the ported-as-is bespoke SQL. Still the
     "High risk, the search() monster" item from §1/§2 - unstarted.
-  - Deleting `infolog_so.inc.php`. Two known blockers first: `infolog/setup/setup.inc.php`'s
-    `deleteaccount` hook still dispatches to `infolog.infolog_so.change_delete_owner` by class
-    name (works fine today since the old class is untouched, but needs repointing before
-    deletion); `api/tests/Vfs/Links/StreamWrapperTest.php:86` still does `new \infolog_so()`
-    directly and needs updating to the new class or to go through `infolog_bo` instead.
   - The comparison/parity test between old `infolog_so` and new `Infolog\Storage` originally
     planned here didn't end up happening as a separate artifact - the existing
     `infolog/tests/` suite (pre-existing tests plus this project's Phase 0 additions) already
@@ -548,6 +574,39 @@ few places once real PHP/DB constraints showed up):
     old-vs-new comparison test remains a nice-to-have, not done.
   - Phase 2's date-math cleanup (per decision #3, deliberately deferred - main-table columns
     still raw ints, `time2time()` untouched).
+
+#### `infolog_so.inc.php` → zero-logic compatibility shim, 2026-08-20 (ralf's explicit call)
+
+Revised plan: `infolog_so.inc.php` is **not** going away - ralf's call, since "there's no
+guarantee the new hooks have been registered" (an installation's hooks table caches its
+registration string at the last setup/upgrade run; an already-running instance won't get the
+new one until its next upgrade). `class.infolog_so.inc.php` now contains nothing but
+`class infolog_so extends \EGroupware\Infolog\Storage {}` plus a docblock pointing anyone
+tempted to add logic there at the real class instead.
+
+- `infolog/setup/setup.inc.php`'s `deleteaccount` hook now points directly at
+  `EGroupware\Infolog\Storage::change_delete_owner` (was `infolog.infolog_so.change_delete_owner`).
+  Investigated `Api\Hooks::single()`'s two dispatch paths first (`api/src/Hooks.php`): a
+  `Class::method` hook value is checked with `is_callable()` and dispatched as a genuinely
+  *static* call - which silently no-ops (no error, no log) for a non-static method - while the
+  legacy dotted `app.class.method` format goes through `ExecMethod2()`, which instantiates the
+  class and calls the method as an *instance* method. Every other namespaced hook already in
+  this codebase (`api/setup/setup.inc.php:60`, `mail/setup/setup.inc.php`, etc.) uses the
+  `Class::method` static form exclusively - no precedent anywhere for combining a namespaced
+  class with the dotted format. So `Storage::change_delete_owner()` was converted to `static`
+  (instantiates `new self()` internally; had exactly one caller - the hook itself, confirmed by
+  grep - so nothing else depends on instance semantics) to match that established convention,
+  rather than introduce an untested hybrid syntax.
+- The `infolog_so` shim still resolves the *old*, cached dotted hook string correctly even
+  after that method became static: PHP allows calling a static method via an instance-shaped
+  callable array (`[$obj, 'method']`), which is exactly what `ExecMethod2()` uses. Verified
+  directly: `ExecMethod2('infolog.infolog_so.change_delete_owner', $args)` and
+  `call_user_func('EGroupware\Infolog\Storage::change_delete_owner', $args)` both dispatch
+  correctly, and `new \infolog_so()`'s inherited `read()`/`write()` work identically to calling
+  them on `\EGroupware\Infolog\Storage` directly.
+- `api/tests/Vfs/Links/StreamWrapperTest.php:86` (the one remaining direct `new \infolog_so()`
+  call outside the shim's own file) updated to `new \EGroupware\Infolog\Storage()` - the only
+  test that still had a live dependency on the old class name.
 
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 
