@@ -608,6 +608,61 @@ tempted to add logic there at the real class instead.
   call outside the shim's own file) updated to `new \EGroupware\Infolog\Storage()` - the only
   test that still had a live dependency on the old class name.
 
+### `searchInfolog()` — delegate custom-field `col_filter` to `Api\Storage::cf_filter()`, 2026-08-20
+
+First scoped slice of "the `search()` monster" (§1/§2's highest-risk remaining item, "start at
+the top" per ralf). Deliberately narrow: only the `#`-prefixed custom-field entries in
+`col_filter` are delegated to `Api\Storage::cf_filter()`; everything else in `searchInfolog()`
+(responsible/cc joins, category filter, free-text/RAG search, ACL/status/date fragments,
+pagination, `sortbycf`, action-link filtering) stays exactly as ported - no big-bang rewrite.
+
+- Wrote `infolog/tests/SearchCustomFieldFilterTest.php` (4 tests: single-value select-cf match,
+  multi-value select-cf match-any, exact text-cf match, text-cf case-insensitivity) *before* the
+  change, run once against the unmodified code to establish a baseline.
+- Wrong assumption caught by that baseline run: expected `cf_filter()`'s case-insensitive `LIKE`
+  for `text`-type cfs to be a behavior change from the old code's exact `=` match. It isn't -
+  MySQL's default column collation (`_ci`) already makes a plain `=` comparison
+  case-insensitive on this schema, so both the old and new code paths were already
+  case-insensitive. Test corrected to document the true (pre-existing) behavior rather than
+  leaving a wrong assumption baked into a comment/assertion.
+- Implementation in `infolog/src/Storage.php::searchInfolog()`: moved the `$join` initialization
+  earlier (it was previously built later, right before the free-text search block, but
+  `cf_filter()` needs it initialized before that point so it can append its own JOIN
+  fragments); collected `#`-prefixed `col_filter` entries into `$cf_col_filter` and called
+  `$this->cf_filter($cf_col_filter, $join, '')`; removed the old hand-rolled
+  correlated-IN-subquery CF filter block entirely.
+- **`extra_join_filter` table-alias mismatch**: `cf_filter()`'s JOIN fragment
+  (`$this->extra_join_filter`) is built once at `Api\Storage::__construct()` time using the real
+  table name, but `searchInfolog()`'s `FROM` clause aliases the table as `main`. Fixed by
+  temporarily string-replacing `$this->table_name.'.'` with `'main.'` in a saved/restored copy of
+  `$this->extra_join_filter` around the `cf_filter()` call (same reason the free-text/RAG search
+  block further down needs a throwaway `Api\Storage` instance with `table_name` overridden to
+  `'main'`).
+- **Mutation-safety fix**: the first version of this change removed the `#`-prefixed entries
+  from `$query['col_filter']` via `unset()` after copying them into `$cf_col_filter`, on the
+  reasoning that the main `col_filter` loop shouldn't also try to handle them. That's unsafe:
+  `searchInfolog(&$query, ...)` takes `$query` by reference, and `infolog_bo::search()`'s
+  `limit_modified_n_month` retry loop can call `searchInfolog()` again with that *same* `$query`
+  variable - destructively removing the CF entries on the first call would silently drop the CF
+  filter on any retry. Fixed by leaving `$query['col_filter']` untouched and instead relying on
+  the main loop's existing `preg_match('/^[a-z_0-9]+$/i', $col)` guard, which already rejects any
+  `#`-prefixed column before it reaches the `switch`/`db->expression()` code - so no separate
+  skip was even needed there, just not mutating the shared array.
+- **Verification**: `SearchCustomFieldFilterTest.php` re-run against the modified code - 4/4
+  pass. Full `infolog/tests/` suite - 72 tests / 538 assertions, same 6 pre-existing
+  `CalDAVImportTest` failures (unrelated `http_response_code()` CLI-harness limitation) and same
+  pre-existing `ProjectTemplateTest` risky-test warning as the established baseline, confirmed by
+  test name - no new regressions. Also re-ran
+  `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` (green) and
+  `api/tests/Vfs/SharingBackendTest.php` (same pre-existing, unrelated VFS
+  filesystem-permission failures on this dev box as before, not an InfoLog/storage error).
+- **Not yet done**: `sortbycf` (still a correlated subquery, not delegated to
+  `process_search()`'s `extra_order`-join equivalent); free-text/RAG search still calls
+  `search2criteria()` directly rather than through `process_search()`'s orchestration (not a
+  duplication, just not centralized); responsible/cc joins, category filtering, ACL/status/date
+  fragment building, and action-link filtering remain deliberately bespoke - no generic
+  `Api\Storage` equivalent exists for InfoLog's specific join/aggregation shape.
+
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 
 Not gated on the SO swap itself, but natural to do once `infolog_bo` reliably hands

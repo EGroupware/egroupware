@@ -718,6 +718,38 @@ class Storage extends Api\Storage
 		$filtermethod = $no_acl ? '1=1' : ($acl_filter ?? '0=1');
 		if (empty($query['col_filter']['info_status']))  $filtermethod .= $this->statusFilter($query['filter']);
 		$filtermethod .= $this->dateFilter($query['filter']);
+		// $join is normally built up further down (right before the free-text search block),
+		// but cf_filter() below needs it initialised already so it can append its own JOINs.
+		$join = $query['join'] ?? '';
+		// delegate custom-field filtering to Api\Storage's own cf_filter(), instead of
+		// re-implementing its correlated-IN-subquery equivalent - collect the "#"-prefixed
+		// col_filter entries into a separate array (the main loop below skips them, rather
+		// than having them unset()'d from $query['col_filter'] here: $query is passed in by
+		// reference and infolog_bo::search()'s limit_modified_n_month retry loop can call
+		// searchInfolog() again with that SAME $query, so destructively removing them would
+		// silently drop the cf filter on any retry).
+		$cf_col_filter = array();
+		if (isset($query['col_filter']) && is_array($query['col_filter']))
+		{
+			foreach($query['col_filter'] as $col => $data)
+			{
+				if (is_string($col) && $col !== '' && $col[0] == '#')
+				{
+					$cf_col_filter[$col] = $data;
+				}
+			}
+		}
+		if ($cf_col_filter)
+		{
+			// cf_filter()'s JOIN fragment (extra_join_filter) has the real table name baked in
+			// from construct time, but this query's FROM clause aliases it as "main" - alias it
+			// for the duration of this one call only (same reason search2criteria() below needs
+			// a throwaway instance with table_name overridden to "main").
+			$real_extra_join_filter = $this->extra_join_filter;
+			$this->extra_join_filter = str_replace($this->table_name.'.', 'main.', $this->extra_join_filter);
+			$this->cf_filter($cf_col_filter, $join, '');
+			$this->extra_join_filter = $real_extra_join_filter;
+		}
 		if (isset($query['col_filter']) && is_array($query['col_filter']))
 		{
 			foreach($query['col_filter'] as $col => $data)
@@ -750,29 +782,6 @@ class Storage extends Api\Storage
 							break;
 					}
 				}
-				if($col[0] == '#' && $data)
-				{
-					$filtermethod .= " AND main.info_id IN (SELECT DISTINCT info_id FROM $this->extra_table WHERE ";
-
-					if($this->customfields[substr($col, 1)]['type'] == 'select')
-					{
-						// Multi-select - any entry with the filter value selected matches
-						$filtermethod .= $this->db->expression($this->extra_table, array(
-								'info_extra_name' => substr($col, 1),
-								'(' . implode(' OR ', array_map(function ($v)
-								{
-									return "INSTR(CONCAT(',', info_extra_value, ','), CONCAT(',', " . $this->db->quote($v) . ", ',')) > 0";
-								}, is_array($data) ? $data : explode(',', $data))) . ')',
-						)).')';
-					}
-					else
-					{
-						$filtermethod .= $this->db->expression($this->extra_table,array(
-							'info_extra_name'  => substr($col,1),
-							'info_extra_value' => $data,
-						)).')';
-					}
-				}
 			}
 		}
 
@@ -782,7 +791,7 @@ class Storage extends Api\Storage
 			$cats = $categories->return_all_children((int)$query['cat_id']);
 			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
 		}
-		$join = $query['join'] ?? '';
+		// $join was already initialised above, before the cf_filter() delegation
 		$distinct = '';
 		if (!empty($query['query'])) $query['search'] = $query['query'];	// allow both names
 		if (!empty($query['search']))			  // we search in _from, _subject, _des and _extra_value for $query
