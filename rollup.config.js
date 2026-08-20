@@ -134,6 +134,17 @@ const config = {
             }
         }
     },
+    {
+        // Let a component import a stylesheet as text, for lit's unsafeCSS().
+        // Keeps a .less/.css file the single source of truth for styles that are needed
+        // both in a shadow root and in the document.
+        load (id) {
+            if (id.endsWith('.css') && id.indexOf(path.sep + 'node_modules' + path.sep) === -1)
+            {
+                return 'export default ' + JSON.stringify(readFileSync(id, 'utf-8')) + ';';
+            }
+        }
+    },
     // resolve (external) node modules from node_modules directory
     resolve({
         browser: true

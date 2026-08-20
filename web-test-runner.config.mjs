@@ -170,6 +170,7 @@ export default {
 			}
 		},
 		// Handles typescript
-		esbuildPlugin({ts: true, tsconfig: 'tsconfig.json'})
+		// .css as text mirrors the rollup load hook, so unsafeCSS() imports work in tests too
+		esbuildPlugin({ts: true, tsconfig: 'tsconfig.json', loaders: {'.css': 'text'}})
 	],
 };
