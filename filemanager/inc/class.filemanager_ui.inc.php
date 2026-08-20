@@ -816,6 +816,11 @@ class filemanager_ui
 						}
 					}
 					if ($target[0] != '/') $target = Vfs::concat($dir, $target);
+					if ($target === $link || str_starts_with(rtrim($link,'/').'/', rtrim($target,'/').'/') ||
+						str_starts_with(rtrim($target,'/').'/', rtrim($link,'/').'/'))
+					{
+						return lang('Cannot create symlink: %1 and %2 would create a loop!', Vfs::decodePath($target), Vfs::decodePath($link));
+					}
 					if (!Vfs::stat($target))
 					{
 						return lang('Link target %1 not found!', Vfs::decodePath($target));

@@ -440,6 +440,53 @@ abstract class StreamWrapperBase extends LoggedInTest
 		$this->assertEquals($contents, file_get_contents(Vfs::PREFIX . $files[0]), "File contents are wrong");
 	}
 
+	/**
+	 * Test that a symlink nested inside its own target's directory tree is
+	 * refused, instead of later hanging / exhausting memory via infinite
+	 * recursion when something tries to resolve it (see Vfs::symlink() and
+	 * Vfs\StreamWrapper::check_symlink_components()).
+	 *
+	 * @throws Api\Exception\AssertionFailed
+	 */
+	public function testSymlinkSelfReferential() : void
+	{
+		// Setup
+		$test_file = Vfs::get_home_dir();
+		$ns = explode('\\', __NAMESPACE__);
+		$test_base_dir = $test_file . '/'.array_pop($ns).'/'.$this->getName();
+		$link_dir = $test_base_dir . '/loop';
+
+		// Check if backend supports it
+		$url = Vfs::resolve_url_symlinks($test_base_dir,false,false);
+		$scheme = (string)Vfs::parse_url($url,PHP_URL_SCHEME);
+		if (!class_exists($class = Vfs\StreamWrapper::scheme2class($scheme)) || !method_exists($class,'symlink'))
+		{
+			$this->markTestIncomplete($scheme . " StreamWrapper ($class) does not support symlink");
+		}
+
+		// Try to remove if it's there already
+		if(Vfs::is_dir($test_base_dir))
+		{
+			Vfs::remove($test_base_dir);
+		}
+		$this->assertTrue(
+			Vfs::mkdir($test_base_dir),
+			"Could not create base test directory '$test_base_dir', delete it if it's there already."
+		);
+
+		// Add into files list: link first, dir last (link before its parent
+		// directory), so cleanup unlinks the link before rmdir'ing its parent
+		$this->files[] = $link_dir;
+		$this->files[] = $test_base_dir;
+
+		// Test - a link nested inside its own target's tree must be refused at creation time
+		$this->assertFalse(
+			Vfs::symlink($test_base_dir, $link_dir),
+			"Vfs::symlink() should refuse to create a link nested inside its own target"
+		);
+		$this->assertFalse(Vfs::file_exists($link_dir), "Rejected symlink should not have been created");
+	}
+
 
 	////// Handy functions ///////
 

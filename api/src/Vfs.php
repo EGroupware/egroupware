@@ -2271,6 +2271,19 @@ class Vfs extends Vfs\Base
 	 */
 	static function symlink($target,$link)
 	{
+		// reject links that would create a symlink-resolution cycle: either path nested inside the other's tree
+		$link_path = rtrim(self::parse_url($link, PHP_URL_PATH) ?: $link, '/');
+		$abs_target = $target !== '' && $target[0] === '/' ? $target : self::concat(self::dirname($link), $target);
+		$target_path = rtrim(self::parse_url($abs_target, PHP_URL_PATH) ?: $abs_target, '/');
+
+		if ($link_path === $target_path ||
+			str_starts_with($link_path.'/', $target_path.'/') ||
+			str_starts_with($target_path.'/', $link_path.'/'))
+		{
+			if (self::LOG_LEVEL > 0) error_log(__METHOD__."('$target','$link') refusing to create cyclic/self-referential symlink!");
+			return false;
+		}
+
 		if (($ret = self::_call_on_backend('symlink', [$target, $link],false,1, true)))	// 1=path is in $link!
 		{
 			Vfs\StreamWrapper::symlinkCache_remove($link);

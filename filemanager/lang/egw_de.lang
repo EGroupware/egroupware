@@ -46,6 +46,7 @@ basedirectory	filemanager	de	Basisordner
 can't open directory %1!	filemanager	de	Kann Ordner %1 nicht öffnen!
 cancel editing %1 without saving	filemanager	de	Beende das Bearbeiten von %1 ohne zu Speichern
 cannot create directory because it begins or ends in a space	filemanager	de	Die Erstellung des Ordners schlug fehl, da es mit einem Leerzeichen beginnt oder endet
+cannot create symlink: %1 and %2 would create a loop!	filemanager	de	Symlink kann nicht erstellt werden: %1 und %2 würden eine Schleife erzeugen!
 cautiously rejecting to remove folder '%1'!	filemanager	de	Löschen des Ordners '%1' aus Vorsicht zurück gewiesen!
 check all	filemanager	de	Alle auswählen
 check virtual filesystem	common	de	Virtuelles Dateisystem überprüfen
