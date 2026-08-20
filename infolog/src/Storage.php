@@ -351,36 +351,49 @@ class Storage extends Api\Storage
 	/**
 	 * changes or deletes entries with a spezified owner (for hook_delete_account)
 	 *
+	 * static (registered directly as the 'deleteaccount' hook via
+	 * 'EGroupware\Infolog\Storage::change_delete_owner' in infolog/setup/setup.inc.php,
+	 * matching every other namespaced hook's convention in this codebase - a
+	 * Class::method hook value is dispatched as a genuinely static call, which silently
+	 * no-ops for a non-static method). infolog_so (kept only as a zero-logic compatibility
+	 * subclass for installations whose hook registration is still the pre-migration
+	 * dotted 'infolog.infolog_so.change_delete_owner' string until their next setup/
+	 * upgrade run) still resolves this correctly too - PHP allows calling a static method
+	 * via an instance-shaped callable array, which is exactly what that older dispatch
+	 * path uses.
+	 *
 	 * @param array $args hook arguments
 	 * @param int $args['account_id'] account to delete
 	 * @param int $args['new_owner']=0 new owner
 	 */
-	function change_delete_owner(array $args)  // new_owner=0 means delete
+	static function change_delete_owner(array $args)  // new_owner=0 means delete
 	{
+		$so = new self();
+
 		if (!(int) $args['new_owner'])
 		{
-			foreach($this->db->select($this->table_name,'info_id',array('info_owner'=>$args['account_id']),__LINE__,__FILE__,false,'','infolog') as $row)
+			foreach($so->db->select($so->table_name,'info_id',array('info_owner'=>$args['account_id']),__LINE__,__FILE__,false,'','infolog') as $row)
 			{
-				$this->delete($row['info_id'],False);
+				$so->delete($row['info_id'],False);
 			}
 		}
 		else
 		{
-			$this->db->update($this->table_name,array('info_owner'=>$args['new_owner']),array('info_owner'=>$args['account_id']),__LINE__,__FILE__,'infolog');
+			$so->db->update($so->table_name,array('info_owner'=>$args['new_owner']),array('info_owner'=>$args['account_id']),__LINE__,__FILE__,'infolog');
 		}
 
 		if ($args['new_owner'])
 		{
 			// we cant just set the new owner, as he might be already set and we have a unique index
-			$this->db->query('UPDATE '.$this->users_table.
-				" LEFT JOIN $this->users_table new_owner ON new_owner.info_id=$this->users_table.info_id".
-					" AND new_owner.account_id=".$this->db->quote($args['new_owner']).
-				' SET '.$this->users_table.'.account_id='.$this->db->quote($args['new_owner']).
-				' WHERE '.$this->users_table.'.account_id='.$this->db->quote($args['account_id']).
+			$so->db->query('UPDATE '.$so->users_table.
+				" LEFT JOIN $so->users_table new_owner ON new_owner.info_id=$so->users_table.info_id".
+					" AND new_owner.account_id=".$so->db->quote($args['new_owner']).
+				' SET '.$so->users_table.'.account_id='.$so->db->quote($args['new_owner']).
+				' WHERE '.$so->users_table.'.account_id='.$so->db->quote($args['account_id']).
 					' AND new_owner.account_id IS NULL',
 				__LINE__, __FILE__);
 		}
-		$this->db->delete($this->users_table, array('account_id' => $args['account_id']), __LINE__, __FILE__, 'infolog');
+		$so->db->delete($so->users_table, array('account_id' => $args['account_id']), __LINE__, __FILE__, 'infolog');
 	}
 
 	/**

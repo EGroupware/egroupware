@@ -83,7 +83,7 @@ class StreamWrapperTest extends Vfs\StreamWrapperBase
 		$command->run();
 
 		// We'll allow access by putting test user in responsible
-		$so = new \infolog_so();
+		$so = new \EGroupware\Infolog\Storage();
 		$element = $so->read(Array('info_id' => $this->entries[0]));
 		$element['info_responsible'] = [$test_user];
 		$so->write($element);
