@@ -70,6 +70,19 @@ class Jsonq implements JsonqModule
 	#jsonqTimer : any = null;
 
 	/**
+	 * Document #jsonqTimer was armed on
+	 *
+	 * `window` is a WindowProxy, so it keeps resolving to whatever document that browsing
+	 * context currently holds - but an interval belongs to the document it was armed on and
+	 * is discarded when that document is replaced. As our code's realm is the *opener's* for
+	 * anything running in a popup (see the bootstrap in egw.js), a reload of the main window
+	 * silently kills our interval while #jsonqTimer stays set, so we would never re-arm and
+	 * the queue would never be sent again - eg. set_preference() quietly doing nothing.
+	 * Comparing documents is how we notice and re-arm.
+	 */
+	#jsonqTimerDoc : any = null;
+
+	/**
 	 * Send the whole job-queue to the server in a single json request with menuaction=queue
 	 */
 	private jsonqSend() : void
@@ -148,8 +161,15 @@ class Jsonq implements JsonqModule
 					// if nothing left in queue, stop interval-timer to give browser a rest
 					if (this.#jsonqTimer && typeof this.#jsonqQueue['u'+(this.#jsonqUid-1)] != 'object')
 					{
-						window.clearInterval(this.#jsonqTimer);
+						// only if we are still on the document we armed it on - the id would
+						// otherwise be stale and could match an unrelated timer, see #jsonqTimerDoc
+						// clearing needs no live-realm helper, unlike arming it
+						if (this.#jsonqTimerDoc === window.document)
+						{
+							window.clearInterval(this.#jsonqTimer);
+						}
 						this.#jsonqTimer = null;
+						this.#jsonqTimerDoc = null;
 					}
 				});
 			}
@@ -178,19 +198,34 @@ class Jsonq implements JsonqModule
 		let promise : any = new Promise(resolve => {
 			this.#jsonqQueue[uid].resolve = resolve;
 		});
+		// make it chainable in the *current* document's realm: our caller may well be a popup
+		// whose own realm is gone, and a reaction belonging to a destroyed document is never
+		// invoked - so plain .then()/await on this promise would silently never fire.
+		// See egw_chainable() in egw.js
+		const live : any = window;
+		if (typeof live.egw_chainable === 'function')
+		{
+			promise = live.egw_chainable(promise);
+		}
 		if (typeof _callback === 'function')
 		{
 			const callback = _callback.bind(_sender);
+			// egw_chainable() above wraps this reaction for us
 			promise = promise.then(_data => {
 				callback(_data);
 				return _data;
 			});
 		}
 
-		if (this.#jsonqTimer == null)
+		// re-arm whenever the document we armed on is gone, see #jsonqTimerDoc
+		if (this.#jsonqTimer == null || this.#jsonqTimerDoc !== window.document)
 		{
-			// check / send queue every N ms
-			this.#jsonqTimer = window.setInterval(() => this.jsonqSend(), 100);
+			// check / send queue every N ms - scheduled *by* the live realm, see
+			// egw_set_interval() in egw.js: calling setInterval ourselves would never fire
+			const tick = () => this.jsonqSend();
+			this.#jsonqTimerDoc = window.document;
+			this.#jsonqTimer = typeof live.egw_set_interval === 'function'
+				? live.egw_set_interval(tick, 100) : window.setInterval(tick, 100);
 		}
 		return promise;
 	}

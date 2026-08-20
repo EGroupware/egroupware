@@ -175,6 +175,20 @@ class JsonRequest
 	}
 
 	/**
+	 * Schedule a timeout on _wnd's realm
+	 *
+	 * A timer only fires if BOTH its callback and the setTimeout() call belong to a fully
+	 * active document, so calling _wnd.setTimeout() from here is not enough when our own
+	 * realm is gone. See egw_set_timeout() in egw.js.
+	 */
+	#setTimeoutOn(_wnd : any, _callback : Function, _ms? : number) : any
+	{
+		return typeof _wnd.egw_set_timeout === 'function' ? _wnd.egw_set_timeout(_callback, _ms)
+			: _wnd.setTimeout(_callback, _ms);
+	}
+
+
+	/**
 	 * Function which is currently used to display alerts -- may be replaced by
 	 * some API function.
 	 */
@@ -208,7 +222,7 @@ class JsonRequest
 		const check = () =>
 		{
 			this.websocket.send('ping');
-			check_timer = wnd.setTimeout(() =>
+			check_timer = this.#setTimeoutOn(wnd, () =>
 			{
 				console.log("Server did not respond to ping in "+MAX_PING_RESPONSE_TIME+" seconds --> try reconnecting");
 				check_timer = null;
@@ -224,7 +238,7 @@ class JsonRequest
 		this.websocket = this.#json.websocket = new wnd.WebSocket(url);
 		this.websocket.onopen = (e) =>
 		{
-			check_timer = wnd.setTimeout(check, CHECK_INTERVAL);
+			check_timer = this.#setTimeoutOn(wnd, check, CHECK_INTERVAL);
 			this.websocket.send(JSON.stringify({
 				subscribe: tokens,
 				account_id: parseInt(<any>account_id)
@@ -236,7 +250,7 @@ class JsonRequest
 			this.#json.reconnectTime = MIN_RECONNECT_TIME;
 			console.log(event);
 			if (check_timer) wnd.clearTimeout(check_timer);
-			check_timer = wnd.setTimeout(check, CHECK_INTERVAL);
+			check_timer = this.#setTimeoutOn(wnd, check, CHECK_INTERVAL);
 			if (event.data === 'pong') return;	// just a keepalive message
 			let data = JSON.parse(event.data);
 			if (data && data.type)
@@ -269,7 +283,7 @@ class JsonRequest
 				console.log('[close] Connection died --> reconnect in '+this.#json.reconnectTime+'ms');
 				if (check_timer) wnd.clearTimeout(check_timer);
 				check_timer = null;
-				wnd.setTimeout(() => this.openWebSocket(url, tokens, account_id, error, this.#json.reconnectTime), this.#json.reconnectTime);
+				this.#setTimeoutOn(wnd, () => this.openWebSocket(url, tokens, account_id, error, this.#json.reconnectTime), this.#json.reconnectTime);
 			}
 		};
 	}

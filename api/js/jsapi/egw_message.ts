@@ -140,13 +140,27 @@ class Message implements MessageModule
 {
 	#wnd : Window;
 
+	/**
+	 * Defer a callback onto _wnd's realm
+	 *
+	 * A timer only fires if BOTH its callback and the setTimeout() call itself belong to a
+	 * fully active document - and our realm is the opener's for anything in a popup, so it
+	 * may already be gone. See egw_set_timeout() in egw.js.
+	 */
+	#deferOn(_wnd : any, _callback : Function) : void
+	{
+		if (typeof _wnd.egw_set_timeout === 'function') _wnd.egw_set_timeout(_callback, 0);
+		else _wnd.setTimeout(_callback, 0);
+	}
+
 	constructor(_wnd : Window)
 	{
 		this.#wnd = _wnd;
 
 		// Register an 'error' plugin, displaying using the message system
-		// deferred on #wnd, not our own realm, which may already be gone (see egw.js)
-		this.#wnd.setTimeout(() =>
+		// scheduled BY #wnd's realm, not ours which may already be gone: see
+		// egw_set_timeout() in egw.js, calling #wnd.setTimeout() ourselves would never fire
+		this.#deferOn(this.#wnd, () =>
 		{
 			egw(this.#wnd).registerJSONPlugin(function (type, res, req) : boolean
 			{
@@ -157,7 +171,7 @@ class Message implements MessageModule
 				}
 				throw 'Invalid parameters';
 			}, null, 'error');
-		}, 0);
+		});
 	}
 
 	/**
@@ -200,10 +214,10 @@ class Message implements MessageModule
 			{
 				m.toast();
 				// on #wnd's realm, see the constructor
-				self.#wnd.setTimeout(() =>
+				self.#deferOn(self.#wnd, () =>
 				{
 					self.#wnd.document.body.querySelector('.sl-toast-stack')?.classList.add('isPopup');
-				}, 0);
+				});
 			});
 		}
 		else if (!message)

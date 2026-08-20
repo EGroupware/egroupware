@@ -646,6 +646,37 @@ window.egw_wrap_callback = function (_callback)
 	return function () { return _callback.apply(this, arguments); };
 }
 /**
+ * Schedule a timer in *this* window's realm
+ *
+ * Timers are stricter than promises: the callback has to belong to a fully active document
+ * (as with egw_wrap_callback) AND the setTimeout/setInterval call itself has to be made from
+ * one. Calling `someLiveWindow.setInterval(...)` from a document that has been replaced is
+ * NOT enough - the timer never fires, silently. Verified both ways.
+ *
+ * So a module whose realm may be gone (anything running in a popup, see the bootstrap at the
+ * top of this file) has to route through these, which do the scheduling here and wrap the
+ * callback for good measure. Clearing needs no such helper - cancelling does not schedule
+ * anything, so clearInterval()/clearTimeout() work fine from a dead realm (verified).
+ *
+ * @param {function():void} _callback may belong to another (dead) realm
+ * @param {number} _ms
+ * @returns {number} handle for the plain clearInterval()/clearTimeout()
+ */
+window.egw_set_interval = function (_callback, _ms)
+{
+	return setInterval(window.egw_wrap_callback(_callback), _ms);
+}
+/**
+ * @see window.egw_set_interval
+ * @param {function():void} _callback
+ * @param {number} _ms
+ * @returns {number}
+ */
+window.egw_set_timeout = function (_callback, _ms)
+{
+	return setTimeout(window.egw_wrap_callback(_callback), _ms);
+}
+/**
  * Make a promise of this realm safe to chain from a document that may no longer be fully active
  *
  * @see window.egw_wrap_callback for why this is needed - this is the same trick applied to a
