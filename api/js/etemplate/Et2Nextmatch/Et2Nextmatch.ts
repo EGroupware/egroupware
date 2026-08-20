@@ -1175,6 +1175,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				{
 					throw new DOMException("Canceled", "AbortError");
 				}
+				if(page.rows.length === 0)
+				{
+					// A lying/broken `total` that never shrinks toward ids.length would
+					// otherwise loop forever here; an empty page is a more reliable
+					// end-of-data signal than a server-reported count.
+					break;
+				}
 				ids.push(...page.rows.map((row) => this._dataProvider.toProviderRowId(row.id)));
 				total = typeof page.total === "number" ? page.total : ids.length;
 				start += pageSize;
@@ -2532,6 +2539,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _forgetExpandedBranch(parentRowId : string)
 	{
 		const childExpandedRowIds = this._expandedRowIdsByParent.get(parentRowId);
+		// Delete before recursing: if server hierarchy data contains a cycle (a row
+		// listing itself, or A->B->A), the entry is already gone by the time the
+		// recursion could loop back to it, so it terminates instead of recursing forever.
+		this._expandedRowIdsByParent.delete(parentRowId);
 		if(childExpandedRowIds)
 		{
 			for(const childRowId of childExpandedRowIds)
@@ -2539,7 +2550,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 				this._forgetExpandedBranch(childRowId);
 			}
 		}
-		this._expandedRowIdsByParent.delete(parentRowId);
 		this._subgridColumnSnapshots.delete(parentRowId);
 		this._childDataProviders.delete(parentRowId);
 		this._childGridRowsSnapshots.delete(parentRowId);

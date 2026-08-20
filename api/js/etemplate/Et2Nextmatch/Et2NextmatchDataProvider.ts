@@ -490,7 +490,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	 * Fetch one page of rows through Nextmatch APIs and return normalized datagrid rows.
 	 * We preserve server order by resolving rows into an indexed array before emitting.
 	 */
-	async fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult>
+	fetchPage(start : number, pageSize : number) : Promise<Et2DatagridPageResult> & { abort? : () => void }
 	{
 		return this._fetchPageWithRange(start, pageSize);
 	}
@@ -498,11 +498,11 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	/**
 	 * Fetch a page of rows with optional Nextmatch range fields such as `parent_id`.
 	 */
-	private async _fetchPageWithRange(
+	private _fetchPageWithRange(
 		start : number,
 		pageSize : number,
 		rangeOverrides : Record<string, any> = {}
-	) : Promise<Et2DatagridPageResult>
+	) : Promise<Et2DatagridPageResult> & { abort? : () => void }
 	{
 		const {execId, widgetId, filters} = this._requestContext();
 		const context = {prefix: this.getDataStorePrefix()};
@@ -512,11 +512,17 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 			...rangeOverrides
 		};
 
-		return await new Promise((resolve, reject) =>
+		// Not async/await here: an async function always adopts a returned thenable's
+		// *resolution* into a brand-new Promise object, discarding any extra property
+		// (like the .abort attached below) from what was actually returned. Both this
+		// method and fetchPage() must return the exact same Promise object all the way
+		// out for a caller (Et2Datagrid._fetchPage()) to be able to abort the request.
+		let fetchPromise : any;
+		const resultPromise : any = new Promise((resolve, reject) =>
 		{
 			try
 			{
-				const fetchPromise = this.host.egw().dataFetch(
+				fetchPromise = this.host.egw().dataFetch(
 					execId,
 					request,
 					filters,
@@ -586,6 +592,11 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 				reject(e);
 			}
 		});
+		if(typeof fetchPromise?.abort === "function")
+		{
+			resultPromise.abort = () => fetchPromise.abort();
+		}
+		return resultPromise;
 	}
 
 	/**

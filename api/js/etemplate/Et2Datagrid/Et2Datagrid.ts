@@ -15,6 +15,7 @@ import {
 	Et2DatagridColumn,
 	Et2DatagridDataProvider,
 	Et2DatagridExpansionConfig,
+	Et2DatagridPageResult,
 	Et2DatagridRefreshResult,
 	Et2DatagridRow,
 	Et2DatagridRowCustomizer,
@@ -607,6 +608,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _deferredEmbeddedRemeasureChildGrids : Set<Et2Datagrid> = new Set();
 	private _inFlightRequestKeys : Set<string> = new Set();
 	private _completedRequestKeys : Set<string> = new Set();
+	private static readonly SLOW_FETCH_TIMEOUT_MS = 30000;
+	/** Every fetch currently in flight for this grid, so "give up" can abort all of them
+	 *  at once. Membership doubles as the "was this discarded?" signal for catch blocks -
+	 *  see _giveUpOnPendingFetches(). */
+	private _inFlightFetchPromises : Set<Promise<Et2DatagridPageResult> & { abort? : () => void }> = new Set();
+	private _slowFetchTimers : Set<number> = new Set();
+	/** At most one at a time - a later timer firing while this is set just no-ops. */
+	private _slowFetchDialog : Et2Dialog | null = null;
 	private _queuedRequestTimer : number | null = null;
 	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
 	private _requestDispatchDelayMs : number = 100;
@@ -855,6 +864,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			cancelAnimationFrame(this._sparseVirtualizerLayoutFrame);
 			this._sparseVirtualizerLayoutFrame = null;
 		}
+		for(const timer of this._slowFetchTimers)
+		{
+			window.clearTimeout(timer);
+		}
+		this._slowFetchTimers.clear();
+		this._slowFetchDialog?.destroy?.();
+		this._slowFetchDialog = null;
+		this._inFlightFetchPromises.clear();
 		super.disconnectedCallback();
 	}
 
@@ -2795,6 +2812,93 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
+	 * Starts this fetch's own 60s timer. If it fires and the fetch is still pending,
+	 * show the shared dialog - but only if none is already showing (a second slow
+	 * fetch's timer firing while one dialog is already up just no-ops; that fetch is
+	 * still in _inFlightFetchPromises, so the existing dialog's "give up" covers it too).
+	 */
+	private _armSlowFetchTimer(fetchPromise : Promise<Et2DatagridPageResult> & { abort? : () => void }) : void
+	{
+		const timer = window.setTimeout(() =>
+		{
+			this._slowFetchTimers.delete(timer);
+			if(!this._inFlightFetchPromises.has(fetchPromise) || this._slowFetchDialog)
+			{
+				return;	// already settled/discarded, or another dialog is already asking
+			}
+			this._slowFetchDialog = this._showSlowFetchDialog(() => this._giveUpOnPendingFetches());
+		}, Et2Datagrid.SLOW_FETCH_TIMEOUT_MS);
+		this._slowFetchTimers.add(timer);
+	}
+
+	/**
+	 * "Give up": abort everything currently in flight and forget about it immediately -
+	 * no separate bookkeeping of what was aborted, just remove it so it's plain
+	 * untracked state, exactly as if it had never been requested. Any other fetch's
+	 * still-pending timer will find it's no longer tracked when it fires and no-op.
+	 */
+	private _giveUpOnPendingFetches() : void
+	{
+		const pending = Array.from(this._inFlightFetchPromises);
+		this._inFlightFetchPromises.clear();
+		for(const fetchPromise of pending)
+		{
+			fetchPromise.abort?.();
+		}
+	}
+
+	/**
+	 * Normal settle path (success or a real error) - a no-op if this fetch was already
+	 * removed by _giveUpOnPendingFetches(). If this was the last fetch pending and a
+	 * dialog is still up (unanswered), its question is now moot - dismiss it.
+	 */
+	private _untrackInFlightFetch(fetchPromise : Promise<Et2DatagridPageResult> & { abort? : () => void }) : void
+	{
+		this._inFlightFetchPromises.delete(fetchPromise);
+		if(this._inFlightFetchPromises.size === 0 && this._slowFetchDialog)
+		{
+			this._slowFetchDialog.destroy();
+			this._slowFetchDialog = null;
+		}
+	}
+
+	/**
+	 * Show a "still waiting?" confirmation after a slow fetch. Yes/dismiss = keep
+	 * waiting, No = give up and abort every fetch currently in flight for this grid.
+	 *
+	 * Answered via getComplete() rather than the constructor `callback` param: callback
+	 * only fires on an actual button click, but _slowFetchDialog must be cleared on
+	 * EVERY dismissal path (X, Escape, backdrop click too) or the single-dialog guard
+	 * in _armSlowFetchTimer() would permanently block any future dialog for this grid
+	 * the first time someone dismisses one without clicking Yes/No. getComplete()
+	 * resolves on every close path, covering all of them.
+	 */
+	private _showSlowFetchDialog(onGiveUp : () => void) : Et2Dialog
+	{
+		const dialog = Et2Dialog.show_dialog(
+			undefined,
+			this.egw().lang("This request is taking longer than expected. Keep waiting?"),
+			this.egw().lang("Still working"),
+			{},
+			Et2Dialog.BUTTONS_YES_NO,
+			Et2Dialog.WARNING_MESSAGE,
+			undefined,
+			this.egw()
+		);
+		dialog.getComplete().then(([button_id] : [number, object]) =>
+		{
+			this._slowFetchDialog = null;
+			if(button_id === Et2Dialog.NO_BUTTON)
+			{
+				onGiveUp();
+			}
+			// YES_BUTTON, or dismissed via X/escape/backdrop (button_id null): keep
+			// waiting - the safe default, no-op.
+		});
+		return dialog;
+	}
+
+	/**
 	 * Request one page from provider and merge rows preserving uniqueness.
 	 */
 	private async _fetchPage(start : number, requestedCount : number = 0, requestKey : string = "")
@@ -2810,18 +2914,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 
-		// Capture the query this request was issued for. There is no cancellation/abort path
-		// for the underlying provider request itself (e.g. a JMAP/shim get_rows call), so a
-		// response that arrives after the query has since changed (the user switched mail
-		// folders, or any other filter change, while this fetch was still in flight) must be
-		// detected and discarded here instead of being merged into what is by then a
-		// different query's grid.
+		// Capture the query this request was issued for. A response that arrives after
+		// the query has since changed (the user switched mail folders, or any other
+		// filter change, while this fetch was still in flight) must be detected and
+		// discarded here instead of being merged into what is by then a different
+		// query's grid.
 		const dispatchQuerySignature = this.dataProvider?.getQuerySignature?.() || "";
 		let stale = false;
+		let discarded = false;
+		let fetchPromise : (Promise<Et2DatagridPageResult> & { abort? : () => void }) | undefined;
 
 		try
 		{
-			const response = await this.dataProvider.fetchPage(start, requestedCount || this.pageSize);
+			fetchPromise = this.dataProvider.fetchPage(start, requestedCount || this.pageSize) as any;
+			this._inFlightFetchPromises.add(fetchPromise);
+			this._armSlowFetchTimer(fetchPromise);
+
+			const response = await fetchPromise;
 			stale = (this.dataProvider?.getQuerySignature?.() || "") !== dispatchQuerySignature;
 			if(stale)
 			{
@@ -2851,23 +2960,38 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		catch(e)
 		{
-			this.fetchFailed = true;
-			this._hasFetchedOnce = true;
-			// Store message so state template can surface meaningful diagnostics.
-			this.fetchErrorMessage = e?.message || "";
+			if(fetchPromise && this._inFlightFetchPromises.has(fetchPromise))
+			{
+				this.fetchFailed = true;
+				this._hasFetchedOnce = true;
+				// Store message so state template can surface meaningful diagnostics.
+				this.fetchErrorMessage = e?.message || "";
+			}
+			else
+			{
+				// Already removed by a deliberate "give up" (see _giveUpOnPendingFetches())
+				// - discard silently.  Leave fetchFailed/fetchErrorMessage untouched, and
+				// don't let requestKey be marked completed below, so this range is retried
+				// whenever it's next requested.
+				discarded = true;
+			}
 		}
 		finally
 		{
+			if(fetchPromise)
+			{
+				this._untrackInFlightFetch(fetchPromise);
+			}
 			if(requestedCount > 0)
 			{
 				this._pendingPlaceholderCount = Math.max(0, this._pendingPlaceholderCount - requestedCount);
 			}
 			if(requestKey)
 			{
-				// A discarded stale response must NOT be marked completed - it never
-				// contributed rows to the (now current) query, so a later request for the
-				// same requestKey (e.g. switching back to this folder) must still fetch it.
-				if(!this.fetchFailed && !stale)
+				// A discarded stale/given-up response must NOT be marked completed - it
+				// never contributed rows to the (now current) query, so a later request for
+				// the same requestKey (e.g. switching back to this folder) must still fetch it.
+				if(!this.fetchFailed && !stale && !discarded)
 				{
 					this._completedRequestKeys.add(requestKey);
 				}

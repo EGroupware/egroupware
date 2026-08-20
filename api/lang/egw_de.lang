@@ -1353,6 +1353,7 @@ start time	common	de	Startzeit
 start with	common	de	Beginnt mit
 starting up...	common	de	Starte ...
 status	common	de	Status
+still working	common	de	Läuft noch
 store your public key in addressbook?	common	de	Öffentlichen Schlüssel im Adressbuch speichern?
 stretched	common	de	Gedehnt
 strikethrough	common	de	Durchgestrichen
@@ -1410,6 +1411,7 @@ they will be sub-folders in users home (%1 attribute).	common	de	Diese werden Un
 this feature is only available in epl version.	common	de	Diese Funktion ist in der EGroupware EPL-Version verfügbar.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	de	Dies ist Ihre eigene Freigabe. Verwenden Sie zum Testen ein anonymes / Inkognito-Fenster.\n%1
 this name has been used already	common	de	Dieser Name ist bereits in Benutzung!
+this request is taking longer than expected. keep waiting?	common	de	Diese Anfrage dauert länger als erwartet. Weiter warten?
 this text gets displayed if the input-field is empty and has no focus (blur)	common	de	Dieser Text wird im Eingabefeld angezeigt, wenn es leer ist und nicht im Fokus ist (engl. blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	de	Hiermit werden die Toolbar-Einstellungen für alle Benutzer zurückgesetzt und auf die konfigurierten Standardeinstellungen gesetzt.
 thursday	common	de	Donnerstag

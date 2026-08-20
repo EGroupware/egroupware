@@ -1353,6 +1353,7 @@ start time	common	en	Start time
 start with	common	en	Start with
 starting up...	common	en	Starting up ...
 status	common	en	Status
+still working	common	en	Still working
 store your public key in addressbook?	common	en	Store your public key in Addressbook?
 stretched	common	en	Stretched
 strikethrough	common	en	Strikethrough
@@ -1410,6 +1411,7 @@ they will be sub-folders in users home (%1 attribute).	common	en	They will be su
 this feature is only available in epl version.	common	en	This feature is available in EGroupware EPL version.
 this is your own share.  to test it, use an anonymous / incognito window.<br/>%1	common	en	This is your own share. To test it, use an anonymous / incognito window.\n%1
 this name has been used already	common	en	This name has been used already!
+this request is taking longer than expected. keep waiting?	common	en	This request is taking longer than expected. Keep waiting?
 this text gets displayed if the input-field is empty and has no focus (blur)	common	en	Text gets displayed if the input field is empty and has no focus (blur)
 this will reset toolbar preferences for all users and set them to configured default prefs.	common	en	This will reset toolbar preferences for all users and set them to configured default prefs.
 thursday	common	en	Thursday
