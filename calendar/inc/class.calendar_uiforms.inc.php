@@ -2260,9 +2260,9 @@ class calendar_uiforms extends calendar_ui
 		$lock_path = Vfs::app_entry_lock_path('calendar',$id);
 		$lock_owner = 'mailto:'.$GLOBALS['egw_info']['user']['account_email'];
 
-		if (($lock = Vfs::checkLock($lock_path)) && $lock['owner'] == $lock_owner || $lock['token'] == $token)
+		if (($lock = Vfs::checkLock($lock_path)) && ($lock['owner'] == $lock_owner || $lock['token'] == $token))
 		{
-			Vfs::unlock($lock_path,$token,false);
+			Vfs::unlock($lock_path,$token);
 		}
 	}
 

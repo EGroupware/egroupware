@@ -321,6 +321,13 @@ class Groups
 	 */
 	public static function ajax_check(array $data)
 	{
+		// this is a static method with no constructor to gate it, and admin_cmd::_check_admin()
+		// (run further down via admin_cmd_edit_group::exec()) fails open for a caller with no
+		// admin ACL rows at all - require granted admin rights explicitly here
+		if(!isset($GLOBALS['egw_info']['user']['apps']['admin']))
+		{
+			throw new Api\Exception\NoPermission\Admin();
+		}
 		// set dummy member to get no error about no members yet
 		$data['account_members'] = array($GLOBALS['egw_info']['user']['account_id']);
 

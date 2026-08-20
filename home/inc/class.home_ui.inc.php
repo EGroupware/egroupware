@@ -257,6 +257,10 @@ class home_ui
 		}
 
 		$classname = $context['class'];
+		if (!class_exists($classname) || !in_array('home_portlet', class_parents($classname, false)))
+		{
+			throw new Api\Exception\WrongParameter("Invalid portlet class '$classname'!");
+		}
 		$portlet = new $classname($context, $full_exec);
 
 		$desc = $portlet->get_description();

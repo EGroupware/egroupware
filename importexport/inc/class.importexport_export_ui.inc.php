@@ -428,14 +428,14 @@ class importexport_export_ui {
 
 	public function ajax_get_plugin_description($_plugin) {
 		$_response = Api\Json\Response::get();
+		$description = '';
 
-		$plugin_object = new $_plugin;
-		if (is_a($plugin_object, 'importexport_iface_export_plugin')) {
+		if (class_exists($_plugin) && is_a($_plugin, 'importexport_iface_export_plugin', true)) {
+			$plugin_object = new $_plugin;
 			$description = $plugin_object->get_description();
+			unset ($plugin_object);
 		}
-		$_response->addAssign('importexport-export_dialog_plugin_description','innerHTML',$description);
-
-		unset ($plugin_object);
+		$_response->assign('importexport-export_dialog_plugin_description','innerHTML',$description);
 	}
 
 	/**
