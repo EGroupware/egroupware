@@ -118,6 +118,11 @@ class JmapShim
 
 		foreach ($methodCalls as $call)
 		{
+			// the client already gave up on this whole batch (eg. closed the preview before a
+			// slower earlier call in it finished) - no point doing further IMAP work for calls
+			// whose result will never be read
+			if (connection_aborted()) exit;
+
 			[$method, $args, $callId] = ((array)$call) + [null, [], null];
 			try
 			{
@@ -1255,6 +1260,10 @@ class JmapShim
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
 		]);
+		// the client may have already navigated away while this (pre)view fetch was in flight -
+		// the further per-message IMAP round trips below (preview()/emailBodyFields()) are the
+		// expensive part, not worth starting for a response nobody will read
+		if (connection_aborted()) exit;
 
 		// IMAP FETCH responses come back in whatever order the server chooses (typically ascending
 		// UID, NOT the order of the id-set given), so $results must NOT be iterated directly - that
@@ -1815,6 +1824,7 @@ class JmapShim
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
 		]);
+		if (connection_aborted()) exit;
 		$partData = $results[(int)$uid] ?? null;
 		$raw = $partData ? (string)$partData->getBodyPart($partId) : '';
 		$encoding = $partData ? $partData->getBodyPartDecode($partId) : null;
@@ -2289,6 +2299,7 @@ class JmapShim
 				$partResults = $imap->fetch($mailbox, $partQuery, [
 					'ids' => new \Horde_Imap_Client_Ids([(int)$uid]),
 				]);
+				if (connection_aborted()) exit;
 				if (($partData = $partResults[(int)$uid] ?? null))
 				{
 					/** @var \Horde_Imap_Client_Data_Fetch $partData */

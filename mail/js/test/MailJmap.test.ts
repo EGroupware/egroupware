@@ -1062,3 +1062,99 @@ describe("MailJmap.fetchBody() - AbortSignal handling", () =>
 			"a genuine failure (no signal involved) must still be logged, unlike an intentional abort");
 	});
 });
+
+/**
+ * fetchBody()'s local-shim path (mail/src/JmapShim.php via mail/jmap.php) - unlike a real JMAP
+ * server, the shim answers a plain GET with Cache-Control/ETag headers (see jmap.php), so the
+ * browser's own HTTP cache can serve a re-opened message without another round trip. jmap-jam's
+ * request()/requestMany() always POST, so this path bypasses them and calls fetch() directly -
+ * verified here at the fetch() level, since there is no client.requestMany() call to stub.
+ */
+describe("MailJmap.fetchBody() - local shim uses a cacheable GET, not requestMany()", () =>
+{
+	const originalFetch = globalThis.fetch;
+
+	afterEach(() =>
+	{
+		globalThis.fetch = originalFetch;
+	});
+
+	function primeLocalTokenWithSession(jmap : MailJmap, profileID : string, apiUrl : string) : void
+	{
+		(jmap as any).tokens[profileID] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal: true, customLabels: {},
+		};
+		(jmap as any).clients[profileID] = {session: Promise.resolve({apiUrl})};
+	}
+
+	it("GETs the shim's own apiUrl with methodCalls/using in the query string, never a POST body", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeLocalTokenWithSession(jmap, "1", "https://example.com/mail/jmap.php");
+
+		let capturedUrl : string | undefined;
+		let capturedInit : any;
+		globalThis.fetch = (async(url : any, init? : any) =>
+		{
+			capturedUrl = String(url);
+			capturedInit = init;
+			return {
+				ok: true,
+				json: async() => ({
+					methodResponses: [["Email/get", {accountId: "acc1", list: [], notFound: ["1"]}, "emails"]],
+					sessionState: "0",
+				}),
+			};
+		}) as any;
+
+		await jmap.fetchBody("mail::0::1::MBOX::1");
+
+		assert.isTrue(capturedUrl?.startsWith("https://example.com/mail/jmap.php?"),
+			"must GET the shim's own apiUrl, not jmap-jam's POST transport");
+		assert.strictEqual(capturedInit.method, "GET");
+		assert.isUndefined(capturedInit.body, "a GET must never carry a body");
+
+		// PHP http_build_query()-style bracket keys, not JSON - see phpBuildQuery()'s docblock.
+		// URLSearchParams decodes percent-encoding on both keys and values, so the literal
+		// bracket-key strings below can be looked up directly.
+		const params = new URLSearchParams(capturedUrl!.split("?")[1]);
+		assert.strictEqual(params.get("methodCalls[0][0]"), "Email/get");
+		assert.strictEqual(params.get("methodCalls[0][1][accountId]"), "acc1");
+		assert.deepEqual(params.getAll("methodCalls[0][1][ids][]"), ["1"],
+			"a scalar-only array (ids) must use PHP's bare '[]', not an explicit index");
+		assert.strictEqual(params.get("methodCalls[0][1][mailboxId]"), "MBOX",
+			"local-shim requests need the mailboxId extension JmapShim::emailGet() requires");
+		assert.strictEqual(params.get("methodCalls[0][2]"), "emails");
+		assert.isAbove(params.getAll("using[]").length, 0,
+			"using must be sent too, for parity with a real JMAP POST body");
+	});
+
+	it("falls back to {special:true} when the GET response carries a JMAP error", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeLocalTokenWithSession(jmap, "1", "https://example.com/mail/jmap.php");
+
+		globalThis.fetch = (async() => ({
+			ok: true,
+			json: async() => ({
+				methodResponses: [["error", {type: "serverFail", description: "boom"}, "emails"]],
+				sessionState: "0",
+			}),
+		})) as any;
+
+		const originalConsoleError = console.error;
+		console.error = () => {};
+		let result : any;
+		try
+		{
+			result = await jmap.fetchBody("mail::0::1::MBOX::1");
+		}
+		finally
+		{
+			console.error = originalConsoleError;
+		}
+
+		assert.deepEqual(result, {special: true});
+	});
+});

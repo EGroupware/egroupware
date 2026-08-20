@@ -1274,6 +1274,94 @@ export class MailJmap
 	]);
 
 	/**
+	 * Cacheable Email/get, local shim only - never sent to a real JMAP server, which requires POST
+	 * (RFC 8620 §3.3)
+	 *
+	 * jmap-jam's request()/requestMany() always POST, with no way to redirect the methodCalls into
+	 * a URL query string, so this bypasses them entirely for this one call - sending methodCalls
+	 * (and using, for parity/spec-shape) as GET query parameters instead, matching the GET branch
+	 * mail/jmap.php now answers with Cache-Control/ETag headers. That lets the browser's own HTTP
+	 * cache serve a previously viewed message's body without ever reaching jmap.php again - not an
+	 * in-memory cache of our own (which would just grow forever across requests). Replicates only
+	 * as much of jmap-jam's wire format/response demux (see its request-drafts.ts/helpers.ts) as
+	 * this single, non-referenced call needs.
+	 *
+	 * The query string is built PHP http_build_query()-style (phpBuildQuery() below), not JSON -
+	 * jmap.php reads it back via plain $_GET, no json_decode() needed - since a URL's length is
+	 * bounded and JSON's quotes/braces/colons all cost 3 percent-encoded bytes each for no benefit
+	 * here.
+	 *
+	 * @param client the profile's JamClient, only used here for its already-resolved session/apiUrl
+	 * @param args Email/get args (accountId, ids, properties, ...)
+	 * @param signal optional AbortSignal, same as the requestMany() path this replaces
+	 * @return the raw Email/get result data ({accountId, list, notFound})
+	 */
+	private async emailGetViaCacheableGet(client : JamClient, args : any, signal? : AbortSignal) : Promise<any>
+	{
+		const {apiUrl} = await client.session;
+		const methodCalls = [["Email/get", args, "emails"]];
+		const using = ["urn:ietf:params:jmap:core", "urn:ietf:params:jmap:mail"];
+		const response = await fetch(apiUrl+'?'+this.phpBuildQuery({methodCalls, using}), {
+			method: 'GET',
+			headers: {Accept: 'application/json'},
+			signal,
+		});
+		if (!response.ok)
+		{
+			throw await response.json().catch(() => response.statusText);
+		}
+		const {methodResponses} = await response.json();
+		const found = (methodResponses || []).find((r : any) => r[2] === 'emails');
+		if (!found)
+		{
+			throw new Error('Email/get: no matching response');
+		}
+		if (found[0] === 'error')
+		{
+			throw found[1];
+		}
+		return found[1];
+	}
+
+	/**
+	 * PHP http_build_query()-equivalent query string, for emailGetViaCacheableGet() above
+	 *
+	 * A plain array of scalars uses PHP's bare "[]" (each occurrence just appends) - eg.
+	 * using[]=urn1&using[]=urn2 - since nothing else needs to correlate with its index. An array
+	 * containing objects/arrays (methodCalls: one triple per call) instead needs an explicit index
+	 * per element - eg. methodCalls[0][0]=...&methodCalls[0][1][accountId]=... - so that a call's
+	 * several fields land back together under the same $_GET['methodCalls'][0] on the PHP side:
+	 * bare "[]" allocates a fresh top-level index on EVERY occurrence, even for sibling keys of the
+	 * same element, so eg. "a[][b]=1&a[][c]=2" parses back as two separate entries, not one {b,c}.
+	 *
+	 * @param params
+	 * @return the query string, without a leading "?"
+	 */
+	private phpBuildQuery(params : Record<string, any>) : string
+	{
+		return Object.entries(params).flatMap(([key, value]) => this.phpQueryParts(value, key)).join('&');
+	}
+
+	/** Recursive helper for phpBuildQuery() - one PHP-style bracket key per scalar leaf value */
+	private phpQueryParts(value : any, prefix : string) : string[]
+	{
+		if (Array.isArray(value))
+		{
+			const scalarList = value.every((v) => v === null || typeof v !== 'object');
+			return value.flatMap((v, i) => this.phpQueryParts(v, scalarList ? `${prefix}[]` : `${prefix}[${i}]`));
+		}
+		if (value !== null && typeof value === 'object')
+		{
+			return Object.entries(value).flatMap(([k, v]) => this.phpQueryParts(v, `${prefix}[${k}]`));
+		}
+		if (typeof value === 'boolean')
+		{
+			value = value ? 1 : 0;
+		}
+		return [`${encodeURIComponent(prefix)}=${encodeURIComponent(String(value))}`];
+	}
+
+	/**
 	 * Fetch and assemble one message's body directly via JMAP (Stalwart, or the local IMAP shim)
 	 *
 	 * Fetches bodyStructure/textBody/htmlBody/attachments/bodyValues in one optimistic round trip
@@ -1303,9 +1391,16 @@ export class MailJmap
 			{
 				args.mailboxId = ref.mailboxId;
 			}
-			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
-				emails: t.Email.get(args) as any,
-			}), signal ? {fetchInit: {signal}} : undefined);
+			// the local shim's body content is immutable per uid/part, so route it through a plain
+			// GET (see emailGetViaCacheableGet()'s docblock) instead of jmap-jam's usual POST -
+			// lets the browser's own HTTP cache serve a re-opened message without hitting jmap.php
+			// again at all. A real JMAP server (Stalwart) always requires POST, so keep using
+			// jmap-jam's requestMany() there unchanged.
+			const emails = token.isLocal ?
+				await this.emailGetViaCacheableGet(this.clients[ref.profileID], args, signal) :
+				(await this.clients[ref.profileID].requestMany((t) => ({
+					emails: t.Email.get(args) as any,
+				}), signal ? {fetchInit: {signal}} : undefined))[0].emails;
 			const email = (emails.list || [])[0];
 			if (!email || this.isSpecialCase(email.bodyStructure))
 			{
