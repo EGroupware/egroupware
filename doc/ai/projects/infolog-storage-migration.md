@@ -819,7 +819,44 @@ different, `DISTINCT account_id`-only query shape with no row-multiplication iss
    `Api\Storage::search()`/`process_search()`, now that the row-multiplying join and the `main`
    alias workaround are gone.
 
-Not started - awaiting ralf's go-ahead on scope/sequencing before implementing.
+Ralf's go-ahead: implement phase 1+2 now (see below); phase 3 (delegating to the inherited
+`Api\Storage::search()`) stays a separate, later step.
+
+#### Phase 1 — `read_responsible()` + `read()`, 2026-08-20
+
+- Added `Infolog\Storage::read_responsible(array $info_ids): array` - one plain `SELECT * FROM
+  egw_infolog_users WHERE info_id IN (...) AND info_res_deleted IS NULL`, no join, returning
+  `[info_id => ['info_responsible' => int[], 'info_cc' => string]]`.
+- **Behavior-matching details, found while writing this**: `info_cc` must stay a
+  comma-separated *string* (not an array) - `infolog_ui.inc.php`/`infolog_tracking.inc.php` both
+  `explode()`/`preg_split()` it as a string. `GROUP_CONCAT()` silently skips `NULL` values (but
+  keeps `''` ones), so `read_responsible()` filters out `null` `info_res_attendee` rows before
+  imploding, to match.
+- `read()` now calls `read_responsible()` instead of its own `LEFT JOIN`+`GROUP_CONCAT()`/
+  `GROUP BY`.
+- **Verified difference from old behavior (intentional, confirmed harmless)**: old `read()`
+  returned `info_responsible` values as numeric *strings* (`explode()` of a `GROUP_CONCAT()`
+  result, never cast) and `info_cc` as `null` (not `''`) when an entry has no cc at all (a
+  `GROUP_CONCAT()` over zero `LEFT JOIN`-ed rows is `NULL`). `read_responsible()` returns `int`s
+  and `''` respectively. Checked every caller
+  (`infolog_bo`/`infolog_ical`/`infolog_groupdav`/`infolog_ui`/`infolog_tracking`/
+  `infolog_import_infologs_csv`/`infolog_export_csv`/`infolog_datasource`) - all comparisons are
+  loose (`==`/`array_intersect()`/`array_search()`/`empty()`/truthiness), never `===` or strict
+  array functions, so neither difference changes behavior anywhere. Confirmed empirically too:
+  wrote `infolog/tests/ReadResponsibleTest.php` (4 tests: single responsible, multiple
+  responsible, `info_cc` string shape, no responsible/cc at all), ran it against the *old* code
+  first (`git stash` on just `Storage.php`) - 2 of 4 failed exactly on those two differences,
+  confirming they're real but (per the caller audit) safe - then against the new code, 4/4 green.
+- Full `infolog/tests/` suite: 79 tests / 557 assertions, same 6 pre-existing `CalDAVImportTest`
+  failures and same pre-existing `ProjectTemplateTest` risky warning as the established
+  baseline - no new regressions.
+
+#### Phase 2 — `searchInfolog()`'s responsible JOIN removal (next)
+
+Not started yet in this session - see the plan above (`EXISTS`-fragment for
+`col_filter['info_responsible']`, drop the display `JOIN`+`GROUP_CONCAT`+`GROUP BY`, batch
+`read_responsible()` call after the main query, new `SearchResponsibleTest.php` locking down
+today's filter behavior first).
 
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 

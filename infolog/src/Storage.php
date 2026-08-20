@@ -211,6 +211,56 @@ class Storage extends Api\Storage
 	}
 
 	/**
+	 * Read responsible (delegated-to accounts) and cc (attendee) values for a batch of info_ids
+	 *
+	 * A plain SELECT against egw_infolog_users, with NO join to egw_infolog: info_id is 1:N to
+	 * egw_infolog_users, so joining it into a main-table query would multiply that query's rows
+	 * (which is exactly why read()/searchInfolog() used to join it in and aggregate the
+	 * duplicates back with GROUP_CONCAT()/GROUP BY instead of doing this). Fetching it
+	 * separately - for one id from read(), or for a whole result batch at once from
+	 * searchInfolog() - mirrors how calendar_so fetches participants for egw_cal_user (the same
+	 * 1:N shape) entirely separately from its main event query/read(), rather than joining and
+	 * aggregating in SQL.
+	 *
+	 * @param int[] $info_ids
+	 * @return array info_id => array('info_responsible' => int[] account_ids, 'info_cc' => string comma-separated attendee values)
+	 */
+	function read_responsible(array $info_ids)
+	{
+		$ret = array();
+		if (!$info_ids) return $ret;
+
+		$cc = array();
+		foreach($this->db->select($this->users_table, 'info_id,account_id,info_res_attendee', array(
+			'info_id' => $info_ids,
+			'info_res_deleted' => null,
+		), __LINE__, __FILE__, false, '', 'infolog') as $row)
+		{
+			if (!isset($ret[$row['info_id']]))
+			{
+				$ret[$row['info_id']] = array('info_responsible' => array(), 'info_cc' => '');
+				$cc[$row['info_id']] = array();
+			}
+			if (is_numeric($row['account_id']))
+			{
+				$ret[$row['info_id']]['info_responsible'][] = (int)$row['account_id'];
+			}
+			// info_cc is a comma-separated string, like the old GROUP_CONCAT() gave callers -
+			// infolog_ui.inc.php/infolog_tracking.inc.php both expect a string, not an array.
+			// GROUP_CONCAT() silently skips NULL values (but keeps '' ones) - match that here.
+			if ($row['info_res_attendee'] !== null)
+			{
+				$cc[$row['info_id']][] = $row['info_res_attendee'];
+			}
+		}
+		foreach($cc as $info_id => $values)
+		{
+			$ret[$info_id]['info_cc'] = implode(',', $values);
+		}
+		return $ret;
+	}
+
+	/**
 	 * read InfoLog entry $info_id
 	 *
 	 * some caching is done to prevent multiple reads of the same entry
@@ -238,12 +288,8 @@ class Storage extends Api\Storage
 		}
 
 		if (!$where ||
-			!($this->data = $this->db->select($this->table_name,
-			$this->table_name.'.*,'.$this->db->group_concat('account_id').' AS info_responsible,'.
-			$this->db->group_concat('info_res_attendee').' AS info_cc,'.
-			$this->table_name.'.info_id AS info_id',
-			$where, __LINE__, __FILE__, false, "GROUP BY $this->table_name.info_id", 'infolog', 1,
-			"LEFT JOIN $this->users_table ON $this->table_name.info_id=$this->users_table.info_id AND $this->users_table.info_res_deleted IS NULL")->fetch()))
+			!($this->data = $this->db->select($this->table_name, $this->table_name.'.*', $where,
+			__LINE__, __FILE__, false, '', 'infolog', 1)->fetch()))
 		{
 			$this->init( );
 			return False;
@@ -256,15 +302,11 @@ class Storage extends Api\Storage
 				array('info_uid' => $this->data['info_uid']),
 				array('info_id' => $this->data['info_id']), __LINE__,__FILE__,'infolog');
 		}
-		if (!is_array($this->data['info_responsible']))
-		{
-			$this->data['info_responsible'] = $this->data['info_responsible'] ? explode(',',$this->data['info_responsible']) : array();
-			foreach($this->data['info_responsible'] as $k => $v)
-			{
-				if (!is_numeric($v)) unset($this->data['info_responsible'][$k]);
-			}
-			$this->data['info_responsible'] = array_values($this->data['info_responsible']);
-		}
+		// delegate responsible/cc hydration to read_responsible(), instead of the old
+		// LEFT JOIN+GROUP_CONCAT() approach (see read_responsible()'s docblock for why)
+		$responsible = $this->read_responsible(array($this->data['info_id']));
+		$this->data['info_responsible'] = $responsible[$this->data['info_id']]['info_responsible'] ?? array();
+		$this->data['info_cc'] = $responsible[$this->data['info_id']]['info_cc'] ?? '';
 		// Cast back to integer
 		$this->data['info_id_parent'] = (int)$this->data['info_id_parent'];
 
