@@ -302,12 +302,11 @@ export class filemanagerAPP extends EgwApp
 			// Et2VfsUpload needs the trailing /
 			upload.path = dir + '/';
 		}
-		if(state.state)
-		{
-			state.state.col_filter ??= {};
-			// Client side uses dir, not path
-			state.state.col_filter.dir = dir;
-		}
+		if(typeof state.state === "undefined") state.state = {};
+
+		state.state.col_filter ??= {};
+		// Client side uses dir, not path
+		state.state.col_filter.dir = dir;
 
 		let result = super.setState(state, 'filemanager.index');
 
