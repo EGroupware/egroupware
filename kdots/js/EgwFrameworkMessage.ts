@@ -44,8 +44,11 @@ export class EgwFrameworkMessage extends LitElement
 	closable = true;
 
 	/**
-	 * Length of time, in seconds, before the message closes automatically.
+	 * Length of time, in milliseconds, before the message closes automatically.
 	 * Success messages close in 5s, for other types the default is never close.
+	 *
+	 * Note EgwFramework.message()'s duration parameter is in *seconds* - it converts before
+	 * setting this.
 	 * @type {number}
 	 */
 	@property()
@@ -92,6 +95,28 @@ export class EgwFrameworkMessage extends LitElement
 			textarea.innerHTML = this.message;
 			this.message = textarea.value;
 		}
+		// An empty type is not one of the declared values, and render() only applies the 5s
+		// success default to "success" - so an empty type would give an sl-alert with no
+		// duration at all, ie. a toast that never auto-closes.  Callers are allowed to pass
+		// one (egw.message()'s _type defaults to ""), so normalise it here in the element
+		// rather than relying on every call site to do it.
+		if (!this.type)
+		{
+			this.type = EgwFrameworkMessage.detectType(this.message);
+		}
+	}
+
+	/**
+	 * Guess a message's type from its text: anything that looks like an error is an error,
+	 * everything else is a success.
+	 *
+	 * @param {string} _message
+	 * @returns {"error" | "success"}
+	 */
+	public static detectType(_message : string) : "error" | "success"
+	{
+		const error = typeof window.egw?.lang == "function" ? window.egw.lang('error') : 'error';
+		return (_message ?? "").match(new RegExp('(error|' + error + ')', 'i')) ? 'error' : 'success';
 	}
 
 	/**
@@ -157,6 +182,26 @@ export class EgwFrameworkMessage extends LitElement
 	public close(): Promise<void>
 	{
 		return this.hide();
+	}
+
+	/**
+	 * Restart the auto-close countdown, if this message auto-closes at all.
+	 *
+	 * Needed when the same message is shown again: sl-alert only arms auto-hide on the
+	 * open false->true transition, and show() early-returns while it is already open, so a
+	 * repeated message would otherwise inherit what is left of the first one's countdown.
+	 *
+	 * sl-alert marks restartAutoHide() private (it is not part of its documented API), hence
+	 * the cast - and the guard, so a Shoelace rename degrades to "no re-arm" instead of throwing.
+	 * It is a no-op for messages that never auto-close.
+	 */
+	public restartAutoHide(): void
+	{
+		const alert: any = this.alert;
+		if (typeof alert?.restartAutoHide == "function")
+		{
+			alert.restartAutoHide();
+		}
 	}
 
 	get alert(): SlAlert

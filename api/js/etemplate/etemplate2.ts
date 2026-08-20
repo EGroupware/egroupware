@@ -1633,8 +1633,13 @@ export class etemplate2
 		{
 			if(!data['window-close'] && window.opener && data['refresh-opener'][0])
 			{
-				// Show the message in popup
-				window.egw(window).message(data['refresh-opener'][0]);
+				// Show the message in popup - this is the "apply" case, the window stays open.
+				// [7] is Api\Framework::refresh_opener()'s $msg_type: without passing it an
+				// explicit 'error'/'warning' was lost here (while the egw.refresh() call below
+				// does honour it), so the same save showed a correctly typed toast in the opener
+				// and a text-sniffed one in the popup.  func_get_args() only returns arguments
+				// actually passed, so it is undefined for callers that don't specify one.
+				window.egw(window).message(data['refresh-opener'][0], data['refresh-opener'][7]);
 			}
 			if(window.opener || dialog)// && typeof window.opener.egw_refresh == 'function')
 			{

@@ -200,7 +200,8 @@ class Message implements MessageModule
 		}
 		// look the framework up on #wnd, not our own realm: for a popup whose opener navigated
 		// ours is gone, and missing the framework here silently downgrades to the fallback
-		// below, which toasts without a duration - ie. a message that never auto-closes
+		// below - which is now equivalent for typing/duration (EgwFrameworkMessage resolves
+		// an empty type itself), but still has no dedupe or discard handling
 		const wnd : any = self.#wnd;
 		const framework = typeof wnd.egw_getFramework === 'function' ? wnd.egw_getFramework() : null;
 		if (framework && typeof framework.message == 'function' && _msg && typeof _msg == "string" && _msg.trim())
@@ -229,10 +230,10 @@ class Message implements MessageModule
 				return;
 			}
 			const alert : any = Object.assign(self.#wnd.document.createElement("egw-message"), {message: _msg, type: _type});
-			alert.addEventListener("sl-hide", (e) =>
-			{
-				delete this._messages[(e.target).dataset.hash ?? ""];
-			});
+			// NO sl-hide handler here: there used to be one deleting from `this._messages`,
+			// but that registry only exists on EgwFramework - on the egw object it is
+			// undefined, so the handler threw a TypeError on every hide.  This path has no
+			// registry to clean up (it never set dataset.hash either), so there is nothing to do.
 			self.#wnd.document.body.append(alert);
 			message = alert.updateComplete.then(() =>
 			{
