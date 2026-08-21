@@ -14,6 +14,7 @@ import {
 	EGW_AO_FLAG_IS_CONTAINER,
 	EGW_AO_STATE_VISIBLE
 } from "../../egw_action/egw_action_constants";
+import type {ReactiveController} from "lit";
 import type {Et2Nextmatch} from "./Et2Nextmatch";
 
 /**
@@ -206,7 +207,7 @@ class Et2NextmatchRowAOI extends Et2NextmatchBaseAOI
  * drag/drop registration. Et2Nextmatch remains responsible for data loading and
  * rendering; this class only adapts rendered rows to the legacy action framework.
  */
-export class Et2NextmatchActionController
+export class Et2NextmatchActionController implements ReactiveController
 {
 	private static readonly PLACEHOLDER_ACTION_OBJECT_ID = "__placeholder__";
 	private _placeholderActionIds : string[] = ["add"];
@@ -232,6 +233,17 @@ export class Et2NextmatchActionController
 	constructor(host : Et2Nextmatch)
 	{
 		this.host = host;
+		// Optional chaining because some tests construct this against a bare mock
+		// object rather than a real (LitElement-backed) Et2Nextmatch.
+		host.addController?.(this);
+	}
+
+	/**
+	 * No-op - setup is already fully lazy via `ensureActionManagers()`, triggered
+	 * by `initActions()`/`syncDragDropRegistration()` rather than host connection.
+	 */
+	hostConnected() : void
+	{
 	}
 
 	/**
@@ -830,7 +842,7 @@ export class Et2NextmatchActionController
 	/**
 	 * Release action objects, transient drag state and action-framework bindings.
 	 */
-	destroy()
+	hostDisconnected() : void
 	{
 		this.clearPreparedDragRow();
 		this.cancelLongPress();

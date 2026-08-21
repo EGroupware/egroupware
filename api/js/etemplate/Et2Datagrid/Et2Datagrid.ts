@@ -26,13 +26,12 @@ import {
 	Et2DatagridUpdateTypes,
 	Et2DatagridView
 } from "./Et2Datagrid.types";
-import {Et2DatagridColumnManager, Et2DatagridColumnResizeDragState} from "./Et2DatagridColumnManager";
+import {Et2DatagridColumnManager} from "./Et2DatagridColumnManager";
 import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
+import {Et2DatagridColumnResizeController} from "./Et2DatagridColumnResizeController";
 import {Et2RowProvider} from "./Et2RowProvider";
 import {styleMap} from "lit/directives/style-map.js";
-import interact from "@interactjs/interactjs";
-import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_compileLegacyJS} from "../et2_core_legacyJSFunctions";
 
@@ -355,15 +354,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _pendingPlaceholderCount : number = 0;
 	private _pendingPlaceholderRequests : Map<string, { start : number; requestedCount : number }> = new Map();
 
-	@state()
-	private _resizeHelperLeftPx : number | null = null;
-
-	@state()
-	private _resizeHelperWidthPx : number | null = null;
-
-	@state()
-	private _resizeLimitState : "min" | "max" | null = null;
-
 	/**
 	 * Visible column configuration, including sizing and optional hide expressions.
 	 */
@@ -634,10 +624,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
 	private _pendingOffscreenKeyboardNavigation : boolean = false;
-	private _columnResizeDrag : Et2DatagridColumnResizeDragState | null = null;
-	private _columnResizeHandles : HTMLElement[] = [];
-	private _columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
+	_columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
+	private _columnResize : Et2DatagridColumnResizeController = new Et2DatagridColumnResizeController(this);
 	private _scrollbarSpacePx : number = 0;
 	private _customfieldColumnStateByKey : Map<string, Et2DatagridCustomfieldColumnState> = new Map();
 	private _internalExpandedRowIds : Set<string> = new Set();
@@ -765,9 +754,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._handleTableClick = this._handleTableClick.bind(this);
 		this._handleTablePointerDown = this._handleTablePointerDown.bind(this);
 		this._handleTableKeydown = this._handleTableKeydown.bind(this);
-		this._handleColumnResizeStart = this._handleColumnResizeStart.bind(this);
-		this._handleColumnResizeMove = this._handleColumnResizeMove.bind(this);
-		this._handleColumnResizeEnd = this._handleColumnResizeEnd.bind(this);
 		this._scrollListener = () =>
 		{
 			this._bodyScrollVersion++;
@@ -847,8 +833,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		this._syncTemplateHandlerListeners(new Set());
 		this.removeEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
-		this._teardownColumnResizeInteract();
-		this._clearColumnResizeDragState();
 		this._rowUpgradeObserver?.disconnect();
 		this._rowUpgradeObserver = null;
 		if(this._rowUpgradeRangeListener)
@@ -939,7 +923,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		super.firstUpdated(changedProperties);
 		this._syncDomEventTargets();
 		this._scheduleSparseVirtualizerLayoutActivation();
-		this._setupColumnResizeInteract();
 	}
 
 	/**
@@ -1228,14 +1211,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(this._restoreFocusAfterRender && this.activeRowIndex >= 0)
 		{
 			this._focusRowByIndex(this.activeRowIndex, 10);
-		}
-		if(this._isColumnResizeDisabled())
-		{
-			this._teardownColumnResizeInteract();
-		}
-		else
-		{
-			this._setupColumnResizeInteract();
 		}
 		this._syncEmbeddedVirtualizedHostHeight();
 		if(this.embeddedVirtualized)
@@ -2611,7 +2586,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Check whether interactive column resizing should be disabled for this grid.
 	 */
-	private _isColumnResizeDisabled() : boolean
+	_isColumnResizeDisabled() : boolean
 	{
 		return this.noColumnResize || this.noVisibleHeader;
 	}
@@ -2786,7 +2761,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Persist current column state for later restore.
 	 */
-	private _persistColumnPreferences()
+	_persistColumnPreferences()
 	{
 		if(this._isColumnPersistenceDisabled())
 		{
@@ -4877,7 +4852,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Build CSS grid track definitions from visible column widths.
 	 */
-	private _columnWidthDescriptor(raw? : string) : {
+	_columnWidthDescriptor(raw? : string) : {
 		kind : "pixel" | "relative";
 		unit : "px" | "%" | "fr";
 		value : number | null
@@ -4905,7 +4880,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Clamp a numeric value between min and max boundaries.
 	 */
-	private _clamp(value : number, min : number, max : number) : number
+	_clamp(value : number, min : number, max : number) : number
 	{
 		return this._columnManager.clamp(value, min, max);
 	}
@@ -4913,7 +4888,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Convert a column length to pixels using current grid context.
 	 */
-	private _columnLengthToPx(
+	_columnLengthToPx(
 		raw : string | undefined,
 		totalVisibleWidthPx : number,
 		availableRelativeWidthPx : number,
@@ -4928,7 +4903,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Build aggregate width metrics for visible columns.
 	 */
-	private _visibleColumnWidthMetrics(visibleColumns : Et2DatagridColumn[]) : {
+	_visibleColumnWidthMetrics(visibleColumns : Et2DatagridColumn[]) : {
 		totalVisibleWidthPx : number;
 		fixedWidthPx : number;
 		relativeWidthUnits : number;
@@ -4951,7 +4926,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Hard lower bound for interactive column resizing/stealing.
 	 * This does not change configured minWidth semantics.
 	 */
-	private _columnResizeFloorPx() : number
+	_columnResizeFloorPx() : number
 	{
 		const fontSizePx = parseFloat(getComputedStyle(this).fontSize || "16");
 		return Number.isFinite(fontSizePx) && fontSizePx > 0 ? fontSizePx : 16;
@@ -5040,187 +5015,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Remove interact.js handlers attached to previous resize handles.
-	 */
-	private _teardownColumnResizeInteract()
-	{
-		for(const handle of this._columnResizeHandles)
-		{
-			interact(handle).unset();
-		}
-		this._columnResizeHandles = [];
-	}
-
-	/**
-	 * Bind interact.js draggable listeners for current header resize handles.
-	 */
-	private _setupColumnResizeInteract()
-	{
-		if(this._isColumnResizeDisabled())
-		{
-			this._teardownColumnResizeInteract();
-			return;
-		}
-		const handles = Array.from(this.shadowRoot?.querySelectorAll(".dg-col-resize-handle") || []) as HTMLElement[];
-		if(!handles.length)
-		{
-			this._teardownColumnResizeInteract();
-			return;
-		}
-		const sameHandles =
-			handles.length === this._columnResizeHandles.length &&
-			handles.every((handle, index) => handle === this._columnResizeHandles[index]);
-		if(sameHandles)
-		{
-			return;
-		}
-		this._teardownColumnResizeInteract();
-		for(const handle of handles)
-		{
-			interact(handle)
-				.styleCursor(false)
-				.draggable({
-					startAxis: "x",
-					lockAxis: "x",
-					listeners: {
-						start: this._handleColumnResizeStart,
-						move: this._handleColumnResizeMove,
-						end: this._handleColumnResizeEnd
-					}
-				});
-		}
-		this._columnResizeHandles = handles;
-	}
-
-	/**
-	 * Reset drag-resize temporary state.
-	 */
-	private _clearColumnResizeDragState()
-	{
-		this._columnResizeDrag = null;
-		this._resizeHelperLeftPx = null;
-		this._resizeHelperWidthPx = null;
-		this._resizeLimitState = null;
-		this.classList.remove("dg-resizing");
-		this.classList.remove("dg-resize-limit-min");
-		this.classList.remove("dg-resize-limit-max");
-	}
-
-	/**
-	 * Begin header column resize drag by caching current column sizing context.
-	 */
-	private _handleColumnResizeStart(event : InteractEvent)
-	{
-		const handle = event.target as HTMLElement | null;
-		const headerColumn = handle?.closest(".dg-col") as HTMLElement | null;
-		const root = this.shadowRoot?.querySelector(".dg-root") as HTMLElement | null;
-		const columnIndexRaw = handle?.getAttribute("data-column-index") || "";
-		const columnIndex = parseInt(columnIndexRaw, 10);
-		if(!handle || !headerColumn || !root || Number.isNaN(columnIndex) || !this.columns[columnIndex])
-		{
-			return;
-		}
-		const visibleColumns = this._visibleColumns();
-		const metrics = this._visibleColumnWidthMetrics(visibleColumns);
-		const availableRelativeWidthPx = Math.max(0, metrics.totalVisibleWidthPx - metrics.fixedWidthPx);
-		const column = this.columns[columnIndex];
-		const parsedWidth = this._columnWidthDescriptor(column.width);
-		const rootRect = root.getBoundingClientRect();
-		const headerColumnRect = headerColumn.getBoundingClientRect();
-		const startWidthPx = Math.max(1, headerColumnRect.width);
-		const minWidthPx = this._columnLengthToPx(
-			column.minWidth,
-			metrics.totalVisibleWidthPx,
-			availableRelativeWidthPx,
-			metrics.relativeWidthUnits
-		);
-		const maxWidthPx = this._columnLengthToPx(
-			column.maxWidth,
-			metrics.totalVisibleWidthPx,
-			availableRelativeWidthPx,
-			metrics.relativeWidthUnits
-		);
-		const min = Math.max(1, this._columnResizeFloorPx(), minWidthPx ?? 1);
-		const max = Math.max(min, maxWidthPx ?? Number.POSITIVE_INFINITY);
-		this._columnResizeDrag = {
-			columnIndex,
-			columnKey: String(column.key || ""),
-			startWidthPx,
-			currentWidthPx: startWidthPx,
-			totalVisibleWidthPx: metrics.totalVisibleWidthPx,
-			fixedWidthPx: metrics.fixedWidthPx,
-			relativeWidthUnits: metrics.relativeWidthUnits,
-			minWidthPx: min,
-			maxWidthPx: max,
-			widthKind: parsedWidth.kind,
-			widthUnit: parsedWidth.unit
-		};
-		this._resizeHelperLeftPx = headerColumnRect.left - rootRect.left;
-		this._resizeHelperWidthPx = startWidthPx;
-		this._resizeLimitState = null;
-		this.classList.remove("dg-resize-limit-min");
-		this.classList.remove("dg-resize-limit-max");
-		this.classList.add("dg-resizing");
-	}
-
-	/**
-	 * Update helper position while dragging without applying live column size changes.
-	 */
-	private _handleColumnResizeMove(event : InteractEvent)
-	{
-		const drag = this._columnResizeDrag;
-		if(!drag)
-		{
-			return;
-		}
-		const requestedWidthPx = drag.currentWidthPx + event.dx;
-		const nextWidthPx = this._clamp(requestedWidthPx, drag.minWidthPx, drag.maxWidthPx);
-		drag.currentWidthPx = nextWidthPx;
-		this._resizeHelperWidthPx = nextWidthPx;
-		const limitState = requestedWidthPx < drag.minWidthPx ? "min"
-		                                                      : requestedWidthPx > drag.maxWidthPx ? "max"
-		                                                                                           : null;
-		this._resizeLimitState = limitState;
-		this.classList.toggle("dg-resize-limit-min", limitState === "min");
-		this.classList.toggle("dg-resize-limit-max", limitState === "max");
-	}
-
-	/**
-	 * Commit resized width at drag end and preserve original width unit type.
-	 */
-	private _handleColumnResizeEnd(_event : InteractEvent)
-	{
-		const drag = this._columnResizeDrag;
-		if(!drag)
-		{
-			return;
-		}
-		const committed = this._columnManager.commitResize(
-			this.columns || [],
-			this._visibleColumns(),
-			drag,
-			this._columnResizeFloorPx()
-		);
-		if(committed)
-		{
-			this.columns = committed.columns;
-			this.dispatchEvent(new CustomEvent("et2-columns-changed", {
-				detail: {
-					columns: this.columns,
-					column: committed.resizedColumn
-				},
-				bubbles: true,
-				composed: true
-			}));
-			this._persistColumnPreferences();
-		}
-		this._clearColumnResizeDragState();
-	}
-
-	/**
 	 * Return columns that should be rendered, based on hidden/disabled state.
 	 */
-	private _visibleColumns() : Et2DatagridColumn[]
+	_visibleColumns() : Et2DatagridColumn[]
 	{
 		return this._columnState.visibleColumns(this.columns || [], this._parseColumnBooleanExpression.bind(this));
 	}
@@ -7120,10 +6917,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	            <div class="dg-root" part="base" style=${styleMap(styles)}>
 					<!-- Visible header for users -->
 					${headerTemplate}
-	                ${this._resizeHelperLeftPx === null || this._resizeHelperWidthPx === null ? nothing : html`
+	                ${this._columnResize.helperLeftPx === null || this._columnResize.helperWidthPx === null ? nothing : html`
 	                    <div class="dg-resize-helper" part="resize-helper" style=${styleMap({
-	                        left: `${this._resizeHelperLeftPx}px`,
-	                        width: `${this._resizeHelperWidthPx}px`
+	                        left: `${this._columnResize.helperLeftPx}px`,
+	                        width: `${this._columnResize.helperWidthPx}px`
 	                    })}></div>
 	                `}
 
@@ -7171,10 +6968,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
             <div class="dg-root" part="base" style=${styleMap(styles)}>
 				<!-- Visible header for users -->
 				${headerTemplate}
-                ${this._resizeHelperLeftPx === null || this._resizeHelperWidthPx === null ? nothing : html`
+                ${this._columnResize.helperLeftPx === null || this._columnResize.helperWidthPx === null ? nothing : html`
                     <div class="dg-resize-helper" part="resize-helper" style=${styleMap({
-                        left: `${this._resizeHelperLeftPx}px`,
-                        width: `${this._resizeHelperWidthPx}px`
+                        left: `${this._columnResize.helperLeftPx}px`,
+                        width: `${this._columnResize.helperWidthPx}px`
                     })}></div>
                 `}
 

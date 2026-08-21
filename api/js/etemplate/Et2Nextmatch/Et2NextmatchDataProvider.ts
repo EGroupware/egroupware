@@ -5,6 +5,7 @@ import {
 	Et2DatagridRow,
 	Et2DatagridUpdateType
 } from "../Et2Datagrid/Et2Datagrid.types";
+import type {ReactiveController} from "lit";
 import {Et2Nextmatch} from "./Et2Nextmatch";
 import {IegwData} from "../../jsapi/egw_global";
 
@@ -12,7 +13,7 @@ import {IegwData} from "../../jsapi/egw_global";
  * Nextmatch server adapter for Et2Datagrid.
  * It wraps dataFetch + dataRegisterUID in a generic page provider API.
  */
-export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
+export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, ReactiveController
 {
 	private host : Et2Nextmatch;
 	/**
@@ -109,6 +110,22 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider
 	constructor(host : Et2Nextmatch)
 	{
 		this.host = host;
+		// Optional chaining because some tests construct this against a bare mock
+		// object rather than a real (LitElement-backed) Et2Nextmatch.
+		host.addController?.(this);
+	}
+
+	/**
+	 * No-op - fetching/caching is entirely on-demand, triggered by page/refresh
+	 * requests rather than host connection.
+	 */
+	hostConnected() : void
+	{
+	}
+
+	hostDisconnected() : void
+	{
+		this.clearInitialRowRegistrations();
 	}
 
 	/** Release the UID listeners used to retain this query's rows (preloaded or refreshed-in). */

@@ -759,7 +759,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	 */
 	disconnectedCallback()
 	{
-		this._dataProvider?.clearInitialRowRegistrations?.();
 		this._slotObserver?.disconnect();
 		this._slotObserver = null;
 		this._filterbox?.remove();
@@ -790,7 +789,6 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this.removeEventListener("dragover", this._handleFileDragOver as EventListener, true);
 		this.removeEventListener("drop", this._handleFileDrop as EventListener, true);
 		this.removeEventListener("dragleave", this._handleFileDragLeave as EventListener, true);
-		this._actionController.destroy();
 		super.disconnectedCallback();
 	}
 
