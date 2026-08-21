@@ -931,7 +931,7 @@ export class MailJmap
 	}
 
 	/**
-	 * (Un)subscribe a mailbox - the JMAP path for subscribe_folder()/unsubscribe_folder().
+	 * (Un)subscribe a mailbox - the JMAP path for subscribeFolder()/unsubscribeFolder().
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder

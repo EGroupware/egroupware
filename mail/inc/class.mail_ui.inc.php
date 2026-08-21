@@ -403,7 +403,7 @@ class mail_ui
 		{
 			Framework::window_close('Missing acc_id!');
 		}
-		// Tree population is handled client-side via JMAP (MailApp.mail_subscriptionLoad(),
+		// Tree population is handled client-side via JMAP (MailApp.subscriptionLoad(),
 		// mail/js/app.ts) - the server-rendered tree below is only the classic fallback for a
 		// non-JMAP-reachable account, same as mail_ui::folderManagement()'s own seed.
 		$sel_options['foldertree'] =  $this->mail_tree->getTree(null,$profileId,1,true,false,false);
@@ -856,13 +856,13 @@ class mail_ui
 				'caption' => 'Subscribe folder ...',
 				//'icon' => 'configure',
 				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-				'onExecute' => 'javaScript:app.mail.edit_subscribe',
+				'onExecute' => 'javaScript:app.mail.editSubscribe',
 				'group'		=> $group
 			),
 			'unsubscribe' => array(
 				'caption' => 'Unsubscribe folder',
 				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-				'onExecute' => 'javaScript:app.mail.unsubscribe_folder',
+				'onExecute' => 'javaScript:app.mail.unsubscribeFolder',
 				'group'		=> $group,
 			),
 			'foldermanagement' => array(

@@ -310,7 +310,7 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// confusing a dead end as a missing one though (ralf's report), so this is its OWN check,
 	// never just "not filtered" - gated on hasChildren !== false unconditionally (an empty root
 	// must never show, even with subscribedOnly off - eg. the "show all folders" preference or the
-	// subscription dialog's own explicit override, see mail_subscriptionLoad()), and additionally
+	// subscription dialog's own explicit override, see subscriptionLoad()), and additionally
 	// on hasSubscribedChildren when subscribedOnly is on: a root that only has UNSUBSCRIBED shared
 	// mailboxes under it is just as much a dead end in the main index (nothing will render if it's
 	// expanded, since the same subscribedOnly filter applies one level down) - it's still findable
