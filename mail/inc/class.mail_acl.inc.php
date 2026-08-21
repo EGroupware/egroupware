@@ -358,7 +358,7 @@ class mail_acl
 
 	/**
 	 * Autocomplete for folder taglist, also used to enumerate all subfolders of a given
-	 * mailbox for the "recursive" grant/delete long-running task (mail/js/app.ts acl_run_recursive)
+	 * mailbox for the "recursive" grant/delete long-running task (mail/js/app.ts aclRunRecursive)
 	 *
 	 * @param ?string $_GET['mailbox'] restrict the search to subfolders of this mailbox, defaults to the account root
 	 * @throws Api\Exception\NoPermission\Admin
@@ -582,7 +582,7 @@ class mail_acl
 	/**
 	 * Ajax callback deleting the ACL of a single folder for one identifier
 	 *
-	 * Used by the "recursive" delete long-running task (mail/js/app.ts acl_delete_row):
+	 * Used by the "recursive" delete long-running task (mail/js/app.ts aclDeleteRow):
 	 * the client already expanded the folder tree into one call per folder, so this
 	 * never recurses itself.
 	 *
@@ -685,7 +685,7 @@ class mail_acl
 	/**
 	 * Ajax callback setting the ACL rights of all grid rows on a single folder
 	 *
-	 * Used by the "recursive" save/apply long-running task (mail/js/app.ts acl_save):
+	 * Used by the "recursive" save/apply long-running task (mail/js/app.ts aclSave):
 	 * the client already expanded the folder tree into one call per folder (with each
 	 * row's acl_recursive forced to false), so this never recurses itself.
 	 *

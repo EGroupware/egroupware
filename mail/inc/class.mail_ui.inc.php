@@ -887,16 +887,16 @@ class mail_ui
 				'onExecute' => 'javaScript:app.mail.editVacation',
 				'enabled'	=> 'javaScript:app.mail.sieveEnabled',
 			),
-			'edit_account' => array(
+			'editAccount' => array(
 				'caption' => 'Edit account ...',
 				'icon' => 'configure',
-				'onExecute' => 'javaScript:app.mail.edit_account',
+				'onExecute' => 'javaScript:app.mail.editAccount',
 			),
-			'edit_acl'	=> array(
+			'editAcl'	=> array(
 				'caption' => 'Edit folder ACL ...',
 				'icon'	=> 'lock',
 				'enabled'	=> 'javaScript:app.mail.acl_enabled',
-				'onExecute' => 'javaScript:app.mail.edit_acl',
+				'onExecute' => 'javaScript:app.mail.editAcl',
 			),
 			'predefined-addresses' => array(
 				'caption' => 'Set predefined values for compose...',
@@ -955,14 +955,14 @@ class mail_ui
 			);
 		}
 		$tree_actions['sieve']['group']	= $tree_actions['vacation']['group'] = ++$group;	// new group for filter
-		$tree_actions['edit_account']['group'] = $tree_actions['edit_acl']['group']	=
+		$tree_actions['editAccount']['group'] = $tree_actions['editAcl']['group']	=
 				$tree_actions['predefined-addresses']['group'] = ++$group;
 
 
 		// enforce global (group-specific) ACL
 		if (!mail_hooks::access('aclmanagement'))
 		{
-			unset($tree_actions['edit_acl']);
+			unset($tree_actions['editAcl']);
 		}
 		if (!mail_hooks::access('editfilterrules'))
 		{

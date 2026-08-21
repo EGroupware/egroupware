@@ -5109,7 +5109,7 @@ export class MailApp extends EgwApp
 	 * @param {widget} widget common right selectBox
 	 *
 	 */
-	acl_common_rights_selector(event,widget)
+	aclCommonRightsSelector(event,widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var rights = [];
@@ -5147,7 +5147,7 @@ export class MailApp extends EgwApp
 	 * @param {widget} widget radioButton rights
 	 *
 	 */
-	acl_common_rights(event, widget)
+	aclCommonRights(event, widget)
 	{
 		var rowId = widget.id.replace(/[^0-9.]+/g, '');
 		var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
@@ -5521,7 +5521,7 @@ export class MailApp extends EgwApp
 
 	/**
 	 * Save/Apply button handler for the mail.subscribe popup (button[save] / button[apply]) -
-	 * mirrors acl_save()'s exact shape/contract (same handler for both buttons, disambiguated
+	 * mirrors aclSave()'s exact shape/contract (same handler for both buttons, disambiguated
 	 * by _widget.id, true/false return controls whether the normal submit proceeds).
 	 *
 	 * If mail_subscriptionLoad() never replaced the tree with JMAP data (_subscriptionChanges is
@@ -5542,7 +5542,7 @@ export class MailApp extends EgwApp
 	 * On success, applies exactly the changes recorded in _subscriptionChanges (no reason to
 	 * eagerly load/diff the rest of the account first - an unloaded node was never touched, so it
 	 * can't be in there) via MailJmap.setMailboxSubscribed(), then refreshes the opener's own tree
-	 * and closes/re-submits like acl_save() does.
+	 * and closes/re-submits like aclSave() does.
 	 *
 	 * @param {Event} _event
 	 * @param {Et2Button} _widget button[save] or button[apply]
@@ -5624,7 +5624,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	edit_acl(_action, _senders)
+	editAcl(_action, _senders)
 	{
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
@@ -5634,7 +5634,7 @@ export class MailApp extends EgwApp
 	/**
 	 * Submit new selected folder back to server in order to read its acl's rights
 	 */
-	acl_folderChange()
+	aclFolderChange()
 	{
 		var mailbox = this.et2.getWidgetById('mailbox');
 
@@ -5651,7 +5651,7 @@ export class MailApp extends EgwApp
 	 * Enumerate all subfolders of the currently selected mailbox, then run one menuaction
 	 * call per folder through a long-task progress dialog.
 	 *
-	 * Shared by acl_save() (grant) and acl_delete_row() (revoke): both need to expand the
+	 * Shared by aclSave() (grant) and aclDeleteRow() (revoke): both need to expand the
 	 * mailbox tree client-side, so the server never has to recurse through possibly
 	 * thousands of IMAP folders inside a single request (which used to be able to run into
 	 * PHP's execution-time limit with no feedback to the user).
@@ -5666,7 +5666,7 @@ export class MailApp extends EgwApp
 	 * @param {function} msgFor(count) long_task dialog message
 	 * @param {function} callback long_task completion callback
 	 */
-	acl_run_recursive(menuaction, buildItem, title, msgFor, callback)
+	aclRunRecursive(menuaction, buildItem, title, msgFor, callback)
 	{
 		// acc_id/account_id are preserved server-side state for this etemplate, not part of
 		// the submitted content - getValues() never has them. The Folder field itself is
@@ -5707,7 +5707,7 @@ export class MailApp extends EgwApp
 	 * @return {boolean} true to let the normal submit proceed, false to block it (this
 	 *	handler already triggers the submit itself once the long task finishes)
 	 */
-	acl_save(_event, _widget)
+	aclSave(_event, _widget)
 	{
 		const values = this.et2._inst.getValues(this.et2);
 		// acc_id is only present in getValues() for a row added this session - once a row
@@ -5722,7 +5722,7 @@ export class MailApp extends EgwApp
 			return true;
 		}
 
-		this.acl_run_recursive('mail.mail_acl.ajax_setACL',
+		this.aclRunRecursive('mail.mail_acl.ajax_setACL',
 			(folder, isRoot, acc_id, account_id) => ({
 				...values,
 				mailbox: folder,
@@ -5770,7 +5770,7 @@ export class MailApp extends EgwApp
 	 * @return {boolean|void} always falsy: submitting is either delegated to
 	 *	Et2Dialog.confirm() or triggered manually once the long task finishes
 	 */
-	acl_delete_row(_event, _widget)
+	aclDeleteRow(_event, _widget)
 	{
 		const rowId = _widget.id.replace(/[^0-9.]+/g, '');
 		const values = this.et2._inst.getValues(this.et2);
@@ -5789,7 +5789,7 @@ export class MailApp extends EgwApp
 		{
 			if (button_id !== Et2Dialog.YES_BUTTON) return;
 
-			this.acl_run_recursive('mail.mail_acl.ajax_deleteACL',
+			this.aclRunRecursive('mail.mail_acl.ajax_deleteACL',
 				(folder, isRoot, acc_id, account_id) => ({
 					mailbox: folder,
 					identifier: identifier,
@@ -5802,7 +5802,7 @@ export class MailApp extends EgwApp
 				{
 					if (val)
 					{
-						// same reasoning as acl_save(): never let a still-checked
+						// same reasoning as aclSave(): never let a still-checked
 						// "recursive" box re-trigger the old synchronous loop on refresh
 						const cb = this.et2.getWidgetById(rowId + '[acl_recursive]');
 						if (cb) cb.set_value(false);
@@ -5820,7 +5820,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	edit_account(_action, _senders)
+	editAccount(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '740x670');
