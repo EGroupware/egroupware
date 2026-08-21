@@ -1,8 +1,8 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
 ## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
-(delete/flag/move/copy/save/header/integrate), folder-CRUD, and sieve/vacation groups renamed
-(2026-08-21), rest not started
+(delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, and ACL-dialog groups
+renamed (2026-08-21), rest not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -191,8 +191,8 @@ rename time per the caveat above).
 | ~~`sieve_focus_radioBtn`~~ | `sieveFocusRadioBtn` | 3 | 0 | 0 | high | **done 2026-08-21** |
 | ~~`sieve_vac_all_aliases`~~ | `sieveVacAllAliases` | 2 | 0 | 0 | high | **done 2026-08-21** |
 | ~~`sieve_refresh`~~ | `sieveRefresh` | 0 | 2 | 0 | high | **done 2026-08-21** |
-| `acl_common_rights_selector` | `aclCommonRightsSelector` | 2 | 0 | 0 | high | |
-| `acl_common_rights` | `aclCommonRights` | 22 | 0 | 0 | **high** | 22 `.xet` bindings — the ACL dialog just reworked this session |
+| ~~`acl_common_rights_selector`~~ | `aclCommonRightsSelector` | 2 | 0 | 0 | high | **done 2026-08-21** |
+| ~~`acl_common_rights`~~ | `aclCommonRights` | 22 | 0 | 0 | **high** | **done 2026-08-21** |
 | ~~`edit_sieve`~~ | `editSieve` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`edit_vacation`~~ | `editVacation` | 2 | 1 | 0 | high | **done 2026-08-21** |
 | `subscription_refresh` | `subscriptionRefresh` | 0 | 0 | 0 | low | |
@@ -200,12 +200,12 @@ rename time per the caveat above).
 | `subscribe_folder` | `subscribeFolder` | 0 | 0 | 1 | low | |
 | `unsubscribe_folder` | `unsubscribeFolder` | 0 | 1 | 1 | high | |
 | `foldertree_subselect` | `folderTreeSubselect` | 2 | 0 | 0 | high | also fixes `foldertree`→`folderTree` |
-| `edit_acl` | `editAcl` | 0 | 6 | 0 | high | |
-| `acl_folderChange` | `aclFolderChange` | 2 | 0 | 0 | high | |
-| `acl_run_recursive` | `aclRunRecursive` | 0 | 1 | 0 | high | |
-| `acl_save` | `aclSave` | 4 | 1 | 0 | high | just-reworked ACL dialog |
-| `acl_delete_row` | `aclDeleteRow` | 2 | 1 | 0 | high | just-reworked ACL dialog |
-| `edit_account` | `editAccount` | 0 | 3 | 0 | high | |
+| ~~`edit_acl`~~ | `editAcl` | 0 | 6 | 0 | high | **done 2026-08-21** |
+| ~~`acl_folderChange`~~ | `aclFolderChange` | 2 | 0 | 0 | high | **done 2026-08-21** |
+| ~~`acl_run_recursive`~~ | `aclRunRecursive` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`acl_save`~~ | `aclSave` | 4 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`acl_delete_row`~~ | `aclDeleteRow` | 2 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`edit_account`~~ | `editAccount` | 0 | 3 | 0 | high | **done 2026-08-21** |
 | `lock_tree` | `lockTree` | 0 | 2 | 0 | high | |
 | `unlock_tree` | `unlockTree` | 0 | 0 | 0 | low | |
 | `openstart_tree` | `openStartTree` | 0 | 0 | 0 | low | only self-wired via `jQuery.proxy` in the same file |
