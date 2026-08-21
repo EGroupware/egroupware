@@ -193,7 +193,9 @@ function api(string $url, string $method='GET', $body='', array $header=['Conten
 	    [, $http_status] = explode(' ', $response_header[0], 2);
 
 		// if we got a redirect, check that the location is either on the same server or also has a valid public IP
-		if ($only_public && $http_status[0] === '3' && $follow && $response_header['location'][0] !== '/')
+		// (a 3xx status without a Location header, eg. 304 Not Modified, has nothing to check)
+		if ($only_public && $http_status[0] === '3' && $follow && isset($response_header['location']) &&
+			$response_header['location'][0] !== '/')
 		{
 			checkPublicIP($response_header['location']);
 		}
@@ -272,11 +274,13 @@ function checkPublicIP(string $url)
 	{
 		foreach (dns_get_record($host) as $record)
 		{
-			if (in_array($record['type'], ['A', 'AAAA'], true) &&
-				!filter_var($record['ip'], FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 |
+			// dns_get_record() returns the address under 'ip' for A records, but 'ipv6' for AAAA
+			$ip = $record['type'] === 'AAAA' ? ($record['ipv6'] ?? null) : ($record['ip'] ?? null);
+			if (in_array($record['type'], ['A', 'AAAA'], true) && $ip !== null &&
+				!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 | FILTER_FLAG_IPV6 |
 					FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE))
 			{
-				throw new \InvalidArgumentException("Host '{$host}' resolves to private or reserved IP address '{$record['ip']}'!");
+				throw new \InvalidArgumentException("Host '{$host}' resolves to private or reserved IP address '{$ip}'!");
 			}
 		}
 	}
