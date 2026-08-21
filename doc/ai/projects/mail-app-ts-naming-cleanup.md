@@ -1,8 +1,8 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
 ## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
-(delete/flag/move/copy/save/header/integrate), and folder-CRUD groups renamed (2026-08-21), rest
-not started
+(delete/flag/move/copy/save/header/integrate), folder-CRUD, and sieve/vacation groups renamed
+(2026-08-21), rest not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -183,18 +183,18 @@ rename time per the caveat above).
 | `drag_attachment` | `dragAttachment` | 0 | 1 | 0 | high | |
 | `spamfolder_enabled` | `spamfolderEnabled` | 0 | 1 | 0 | high | |
 | `archivefolder_enabled` | `archivefolderEnabled` | 0 | 1 | 0 | high | |
-| `sieve_enabled` | `sieveEnabled` | 0 | 2 | 2 | high | |
+| ~~`sieve_enabled`~~ | `sieveEnabled` | 0 | 2 | 2 | high | **done 2026-08-21** |
 | `acl_enabled` | `aclEnabled` | 0 | 2 | 6 | high | |
 | `updateFilter_data` | `updateFilterData` | 0 | 0 | 0 | low | |
 | `address_click` | `addressClick` | 12 | 0 | 0 | **high** | 12 `.xet` bindings |
 | `integrate_checkAppEntry` | `integrateCheckAppEntry` | 0 | 0 | 1 | low | |
-| `sieve_focus_radioBtn` | `sieveFocusRadioBtn` | 3 | 0 | 0 | high | |
-| `sieve_vac_all_aliases` | `sieveVacAllAliases` | 2 | 0 | 0 | high | |
-| `sieve_refresh` | `sieveRefresh` | 0 | 2 | 0 | high | |
+| ~~`sieve_focus_radioBtn`~~ | `sieveFocusRadioBtn` | 3 | 0 | 0 | high | **done 2026-08-21** |
+| ~~`sieve_vac_all_aliases`~~ | `sieveVacAllAliases` | 2 | 0 | 0 | high | **done 2026-08-21** |
+| ~~`sieve_refresh`~~ | `sieveRefresh` | 0 | 2 | 0 | high | **done 2026-08-21** |
 | `acl_common_rights_selector` | `aclCommonRightsSelector` | 2 | 0 | 0 | high | |
 | `acl_common_rights` | `aclCommonRights` | 22 | 0 | 0 | **high** | 22 `.xet` bindings — the ACL dialog just reworked this session |
-| `edit_sieve` | `editSieve` | 0 | 1 | 0 | high | |
-| `edit_vacation` | `editVacation` | 2 | 1 | 0 | high | |
+| ~~`edit_sieve`~~ | `editSieve` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`edit_vacation`~~ | `editVacation` | 2 | 1 | 0 | high | **done 2026-08-21** |
 | `subscription_refresh` | `subscriptionRefresh` | 0 | 0 | 0 | low | |
 | `edit_subscribe` | `editSubscribe` | 0 | 1 | 0 | high | |
 | `subscribe_folder` | `subscribeFolder` | 0 | 0 | 1 | low | |
@@ -210,7 +210,7 @@ rename time per the caveat above).
 | `unlock_tree` | `unlockTree` | 0 | 0 | 0 | low | |
 | `openstart_tree` | `openStartTree` | 0 | 0 | 0 | low | only self-wired via `jQuery.proxy` in the same file |
 | `openend_tree` | `openEndTree` | 0 | 0 | 0 | low | only self-wired via `jQuery.proxy` in the same file |
-| `vacation_change_account` | `vacationChangeAccount` | 2 | 0 | 0 | high | |
+| ~~`vacation_change_account`~~ | `vacationChangeAccount` | 2 | 0 | 0 | high | **done 2026-08-21** |
 | `clearIntevals` | `clearIntervals` | 0 | 1 | 0 | high | also fixes a typo (`Intevals`→`Intervals`), not just casing |
 | `folderMgmt_onSelect` | `folderMgmtOnSelect` | 1 | 0 | 0 | high | |
 | `folderMgmt_deleteBtn` | `folderMgmtDeleteBtn` | 1 | 0 | 0 | high | |
