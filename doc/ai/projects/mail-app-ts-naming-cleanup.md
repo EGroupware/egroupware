@@ -1,8 +1,8 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
 ## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
-(delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, and ACL-dialog groups
-renamed (2026-08-21), rest not started
+(delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, ACL-dialog, and
+subscription groups renamed (2026-08-21), rest not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -160,12 +160,12 @@ rename time per the caveat above).
 | ~~`mail_tryJmapMoveFolder`~~ | `tryJmapMoveFolder` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
 | ~~`mail_DeleteFolder`~~ | `deleteFolder` | 0 | 1 | 1 | high | **done 2026-08-21**, fixed casing |
 | ~~`mail_tryJmapDeleteFolder`~~ | `tryJmapDeleteFolder` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
-| `mail_tryJmapSetSubscribed` | `tryJmapSetSubscribed` | 0 | 0 | 0 | low | private |
-| `mail_subscriptionSubselect` | `subscriptionSubselect` | 0 | 0 | 0 | low | private |
-| `mail_subscriptionLoad` | `subscriptionLoad` | 0 | 1 | 1 | high | private |
-| `mail_seedSubscriptionValue` | `seedSubscriptionValue` | 0 | 0 | 0 | low | private |
-| `mail_recordSubscriptionChange` | `recordSubscriptionChange` | 0 | 0 | 0 | low | private |
-| `mail_subscriptionSave` | `subscriptionSave` | 2 | 0 | 0 | high | |
+| ~~`mail_tryJmapSetSubscribed`~~ | `tryJmapSetSubscribed` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_subscriptionSubselect`~~ | `subscriptionSubselect` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_subscriptionLoad`~~ | `subscriptionLoad` | 0 | 1 | 1 | high | **done 2026-08-21**, private |
+| ~~`mail_seedSubscriptionValue`~~ | `seedSubscriptionValue` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_recordSubscriptionChange`~~ | `recordSubscriptionChange` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_subscriptionSave`~~ | `subscriptionSave` | 2 | 0 | 0 | high | **done 2026-08-21** |
 | `mail_folderManagementLoad` | `folderManagementLoad` | 0 | 1 | 0 | high | private |
 | `mail_buildRootFolderData` | `buildRootFolderData` | 0 | 0 | 2 | low | private |
 | `mail_refreshFolderLevel` | `refreshFolderLevel` | 0 | 0 | 1 | low | private |
@@ -195,11 +195,11 @@ rename time per the caveat above).
 | ~~`acl_common_rights`~~ | `aclCommonRights` | 22 | 0 | 0 | **high** | **done 2026-08-21** |
 | ~~`edit_sieve`~~ | `editSieve` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`edit_vacation`~~ | `editVacation` | 2 | 1 | 0 | high | **done 2026-08-21** |
-| `subscription_refresh` | `subscriptionRefresh` | 0 | 0 | 0 | low | |
-| `edit_subscribe` | `editSubscribe` | 0 | 1 | 0 | high | |
-| `subscribe_folder` | `subscribeFolder` | 0 | 0 | 1 | low | |
-| `unsubscribe_folder` | `unsubscribeFolder` | 0 | 1 | 1 | high | |
-| `foldertree_subselect` | `folderTreeSubselect` | 2 | 0 | 0 | high | also fixes `foldertree`→`folderTree` |
+| ~~`subscription_refresh`~~ | `subscriptionRefresh` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`edit_subscribe`~~ | `editSubscribe` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`subscribe_folder`~~ | `subscribeFolder` | 0 | 0 | 1 | low | **done 2026-08-21** |
+| ~~`unsubscribe_folder`~~ | `unsubscribeFolder` | 0 | 1 | 1 | high | **done 2026-08-21** |
+| ~~`foldertree_subselect`~~ | `folderTreeSubselect` | 2 | 0 | 0 | high | **done 2026-08-21**, also fixed `foldertree`→`folderTree` |
 | ~~`edit_acl`~~ | `editAcl` | 0 | 6 | 0 | high | **done 2026-08-21** |
 | ~~`acl_folderChange`~~ | `aclFolderChange` | 2 | 0 | 0 | high | **done 2026-08-21** |
 | ~~`acl_run_recursive`~~ | `aclRunRecursive` | 0 | 1 | 0 | high | **done 2026-08-21** |
