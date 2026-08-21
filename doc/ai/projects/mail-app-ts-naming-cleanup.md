@@ -1,8 +1,8 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
 ## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
-(delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, ACL-dialog, and
-subscription groups renamed (2026-08-21), rest not started
+(delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, ACL-dialog,
+subscription, and folder-management/tree-lock groups renamed (2026-08-21), rest not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -166,14 +166,14 @@ rename time per the caveat above).
 | ~~`mail_seedSubscriptionValue`~~ | `seedSubscriptionValue` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
 | ~~`mail_recordSubscriptionChange`~~ | `recordSubscriptionChange` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
 | ~~`mail_subscriptionSave`~~ | `subscriptionSave` | 2 | 0 | 0 | high | **done 2026-08-21** |
-| `mail_folderManagementLoad` | `folderManagementLoad` | 0 | 1 | 0 | high | private |
-| `mail_buildRootFolderData` | `buildRootFolderData` | 0 | 0 | 2 | low | private |
-| `mail_refreshFolderLevel` | `refreshFolderLevel` | 0 | 0 | 1 | low | private |
+| ~~`mail_folderManagementLoad`~~ | `folderManagementLoad` | 0 | 1 | 0 | high | **done 2026-08-21**, private |
+| ~~`mail_buildRootFolderData`~~ | `buildRootFolderData` | 0 | 0 | 2 | low | **done 2026-08-21**, private |
+| ~~`mail_refreshFolderLevel`~~ | `refreshFolderLevel` | 0 | 0 | 1 | low | **done 2026-08-21**, private |
 | `mail_print` | `print` | 0 | 1 | 0 | high | |
 | `mail_prepare_print` | `preparePrint` | 0 | 0 | 0 | low | also fixes snake_case |
 | `mail_display_print` | `displayPrint` | 0 | 0 | 0 | low | also fixes snake_case |
 | `mail_prev_print` | `prevPrint` | 0 | 0 | 0 | low | also fixes snake_case |
-| `mail_folderMgmtDeleteOne` | `folderMgmtDeleteOne` (or `folderManagementDeleteOne`) | 0 | 1 | 0 | high | see Mgmt/Management consistency note above |
+| ~~`mail_folderMgmtDeleteOne`~~ | `folderManagementDeleteOne` | 0 | 1 | 0 | high | **done 2026-08-21** (ralf confirmed expanding Mgmt→Management) |
 
 ### Bucket D — snake_case (no `mail_` prefix) to fix (~35 methods)
 
@@ -206,14 +206,14 @@ rename time per the caveat above).
 | ~~`acl_save`~~ | `aclSave` | 4 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`acl_delete_row`~~ | `aclDeleteRow` | 2 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`edit_account`~~ | `editAccount` | 0 | 3 | 0 | high | **done 2026-08-21** |
-| `lock_tree` | `lockTree` | 0 | 2 | 0 | high | |
-| `unlock_tree` | `unlockTree` | 0 | 0 | 0 | low | |
-| `openstart_tree` | `openStartTree` | 0 | 0 | 0 | low | only self-wired via `jQuery.proxy` in the same file |
-| `openend_tree` | `openEndTree` | 0 | 0 | 0 | low | only self-wired via `jQuery.proxy` in the same file |
+| ~~`lock_tree`~~ | `lockTree` | 0 | 2 | 0 | high | **done 2026-08-21** |
+| ~~`unlock_tree`~~ | `unlockTree` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`openstart_tree`~~ | `openStartTree` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`openend_tree`~~ | `openEndTree` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`vacation_change_account`~~ | `vacationChangeAccount` | 2 | 0 | 0 | high | **done 2026-08-21** |
 | `clearIntevals` | `clearIntervals` | 0 | 1 | 0 | high | also fixes a typo (`Intevals`→`Intervals`), not just casing |
-| `folderMgmt_onSelect` | `folderMgmtOnSelect` | 1 | 0 | 0 | high | |
-| `folderMgmt_deleteBtn` | `folderMgmtDeleteBtn` | 1 | 0 | 0 | high | |
+| ~~`folderMgmt_onSelect`~~ | `folderManagementOnSelect` | 1 | 0 | 0 | high | **done 2026-08-21** (expanded Mgmt→Management) |
+| ~~`folderMgmt_deleteBtn`~~ | `folderManagementDeleteBtn` | 1 | 0 | 0 | high | **done 2026-08-21** (expanded Mgmt→Management) |
 | `spam_actions` | `spamActions` | 0 | 7 | 0 | high | |
 | `spamTitan_setActionTitle` | `spamTitanSetActionTitle` | 0 | 0 | 0 | low | (only mixed-case fix, no real snake_case) |
 | `set_smimeAttachmentsMobile` | `setSmimeAttachmentsMobile` | 0 | 0 | 0 | low | |
@@ -223,7 +223,7 @@ rename time per the caveat above).
 | `smime_certAddToContact` | `smimeCertAddToContact` | 0 | 2 | 0 | high | |
 | `set_predefined_addresses` | `setPredefinedAddresses` | 0 | 1 | 0 | high | |
 | `print_for_compose` | `printForCompose` | 0 | 1 | 0 | high | |
-| `nm_cache` | `nmCache` | 0 | 0 | 0 | low | only self-wired via `this.nm_cache` reference in constructor, same file |
+| ~~`nm_cache`~~ | `nmCache` | 0 | 0 | 0 | low | **done 2026-08-21** |
 
 ## Collision / high-attention flags
 
