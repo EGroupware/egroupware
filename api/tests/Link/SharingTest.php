@@ -36,6 +36,7 @@ class LinkSharingTest extends \EGroupware\Api\AppTest
 
 			// clean up any share row created for it, in case a test unexpectedly succeeded
 			(new Base('api', 'egw_sharing'))->delete(array('share_path' => 'timesheet::'.$this->ts_id));
+			(new Base('api', 'egw_sharing'))->delete(array('share_path' => '/apps/timesheet/'.$this->ts_id));
 
 			$this->ts_id = null;
 		}
@@ -98,5 +99,46 @@ class LinkSharingTest extends \EGroupware\Api\AppTest
 		$this->assertNotEmpty($share['share_token'] ?? null, 'a share token must be created for a readable entry');
 
 		(new Base('api', 'egw_sharing'))->delete(array('share_path' => $path));
+	}
+
+	/**
+	 * Storage\Merge::create_share() uses a "/apps/$app/$id" path (not "app::id") for its
+	 * "-files_only" share variant (see Merge.php's $$share-files_only$$ placeholder handling).
+	 * Regression: create()'s path parsing must recognize this format too, not just reject it.
+	 */
+	public function testCreateAllowsOwnEntryViaAppsPathFormat()
+	{
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		$this->ts_id = $this->createTimesheet($account_id);
+		$path = '/apps/timesheet/'.$this->ts_id;
+
+		$share = Sharing::create('', $path, Sharing::READONLY, null, array());
+
+		$this->assertNotEmpty($share['share_token'] ?? null, 'a share token must be created for a readable entry');
+
+		(new Base('api', 'egw_sharing'))->delete(array('share_path' => $path));
+	}
+
+	/**
+	 * Same "/apps/$app/$id" path format, but for an entry the caller can not read - must
+	 * still be rejected, not silently treated as unparsable-and-allowed.
+	 */
+	public function testCreateRejectsEntryWithoutReadAccessViaAppsPathFormat()
+	{
+		$this->ts_id = $this->createTimesheet(999999);
+		$path = '/apps/timesheet/'.$this->ts_id;
+
+		try
+		{
+			Sharing::create('', $path, Sharing::READONLY, null, array());
+			$this->fail('create() must reject sharing an entry the caller can not read');
+		}
+		catch (\Exception $e)
+		{
+			// expected
+		}
+
+		$row = (new Base('api', 'egw_sharing'))->read(array('share_path' => $path));
+		$this->assertEmpty($row, 'no share row must be created for an unreadable entry');
 	}
 }

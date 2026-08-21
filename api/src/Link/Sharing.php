@@ -71,15 +71,23 @@ class Sharing extends \EGroupware\Api\Sharing
 	/**
 	 * Check the caller has at least read access to the entry before creating a share for it
 	 *
-	 * The base Sharing::create() has no idea what "$path" (here "app::id") means and can not
-	 * check access itself, unlike Vfs\Sharing::create(), which validates via Vfs::check_access()
-	 * before persisting a share row.
+	 * The base Sharing::create() has no idea what "$path" (here "app::id", or "/apps/app/id"
+	 * for Storage\Merge's "-files_only" share variant, see Merge::create_share()) means and
+	 * can not check access itself, unlike Vfs\Sharing::create(), which validates via
+	 * Vfs::check_access() before persisting a share row.
 	 *
 	 * @throws \EGroupware\Api\Exception\NoPermission if the caller can not read the entry
 	 */
 	public static function create(string $action_id, $path, $mode, $name, $recipients, $extra = array())
 	{
-		list($app, $id) = explode('::', $path, 2);
+		if (preg_match('#^/apps/([^/]+)/([^/]+)$#', $path, $matches))
+		{
+			list(, $app, $id) = $matches;
+		}
+		else
+		{
+			list($app, $id) = explode('::', $path, 2);
+		}
 		if (!$app || !$id || !\EGroupware\Api\Link::file_access($app, $id, \EGroupware\Api\Acl::READ))
 		{
 			throw new \EGroupware\Api\Exception\NoPermission("No read access to '$path'!");
