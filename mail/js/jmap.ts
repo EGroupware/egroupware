@@ -21,6 +21,7 @@
 import type {MailApp} from "./app";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
 import JamClient from "jmap-jam";
+import {JamWebSocketClient} from "./jmap-jam-websocket";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 
@@ -150,7 +151,7 @@ export class MailJmap
 	// keyed by profileID, since a user may have several JMAP-backed mail accounts
 	private tokens : Record<string, JmapToken> = {};
 	private tokenPromises : Record<string, Promise<JmapToken | null>> = {};
-	private clients : Record<string, JamClient> = {};
+	private clients : Record<string, JamWebSocketClient> = {};
 	private refreshTimers : Record<string, number> = {};
 	private ineligibleUntil : Record<string, number> = {};
 	// whether ajax_enablePush has already been (fire-and-forget) triggered for the profile's
@@ -1899,9 +1900,28 @@ export class MailJmap
 						this.app.updateCustomLabelStylesheet();
 					}
 					this.tokens[profileID] = token;
-					this.clients[profileID] = new JamClient({
+					// close the outgoing client's WebSocket (if any) explicitly, rather than leaving
+					// it to be garbage-collected - this replacement happens on every token refresh
+					// (~hourly), and the old socket has nothing more to do once its bearer token
+					// stops being valid.
+					this.clients[profileID]?.close();
+					this.clients[profileID] = new JamWebSocketClient({
 						sessionUrl: token.sessionUrl,
 						bearerToken: token.access_token,
+						// Stalwart's JMAP-over-WebSocket upgrade only accepts credentials via a real
+						// Authorization header (confirmed against its source - see
+						// doc/ai/projects/mail-jmap-jam-websocket.md), which browsers cannot set on a
+						// WebSocket handshake. Our nginx vhost in front of Stalwart converts an
+						// access_token query parameter back into that header for exactly this path
+						// (/jmap/ws only - every other JMAP request keeps using the real header
+						// directly, unaffected). No-op for the local IMAP shim: it never advertises
+						// the websocket capability, so this transform is simply never invoked.
+						transformWebSocketUrl: (url : string) : string =>
+						{
+							const transformed = new URL(url);
+							transformed.searchParams.set('access_token', token.access_token);
+							return transformed.toString();
+						}
 					});
 					// fresh token: renew the mail server's push subscription/token again too,
 					// next time we know which folder is being viewed (see fetchRows())
