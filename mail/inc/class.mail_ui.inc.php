@@ -815,18 +815,18 @@ class mail_ui
 				'hideOnDisabled' => true,
 				'type' => 'drop',
 				'acceptedTypes' => 'mailFolder',
-				'onExecute' => 'javaScript:app.mail.mail_MoveFolder'
+				'onExecute' => 'javaScript:app.mail.moveFolder'
 			),
 			// Tree does support this one
 			'add' => array(
 				'caption' => 'Add Folder',
-				'onExecute' => 'javaScript:app.mail.mail_AddFolder',
+				'onExecute' => 'javaScript:app.mail.addFolder',
 				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 				'group'		=> $group,
 			),
 			'edit' => array(
 				'caption' => 'Rename Folder',
-				'onExecute' => 'javaScript:app.mail.mail_RenameFolder',
+				'onExecute' => 'javaScript:app.mail.renameFolder',
 				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
 				'group'		=> $group,
 			),
@@ -840,7 +840,7 @@ class mail_ui
 			'delete' => array(
 				'caption' => 'Delete Folder',
 				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
-				'onExecute' => 'javaScript:app.mail.mail_DeleteFolder',
+				'onExecute' => 'javaScript:app.mail.deleteFolder',
 				'group'		=> $group,
 			),
 			'readall' => array(

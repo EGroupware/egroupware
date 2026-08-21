@@ -781,7 +781,7 @@ export class MailJmap
 	}
 
 	/**
-	 * Create a new mailbox - the JMAP path for mail_AddFolder() (mail/js/app.ts).
+	 * Create a new mailbox - the JMAP path for addFolder() (mail/js/app.ts).
 	 *
 	 * @param profileID
 	 * @param parentPath canonical path of the parent folder, '' for the top level
@@ -816,7 +816,7 @@ export class MailJmap
 	}
 
 	/**
-	 * Rename a mailbox in place (same parent) - the JMAP path for mail_RenameFolder().
+	 * Rename a mailbox in place (same parent) - the JMAP path for renameFolder().
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder to rename
@@ -854,8 +854,8 @@ export class MailJmap
 	}
 
 	/**
-	 * Move a mailbox to a new parent - the JMAP path for mail_MoveFolder(). Same-account only
-	 * (mail_MoveFolder() already rejects a cross-account move before ever calling this).
+	 * Move a mailbox to a new parent - the JMAP path for moveFolder(). Same-account only
+	 * (moveFolder() already rejects a cross-account move before ever calling this).
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder to move
@@ -894,7 +894,7 @@ export class MailJmap
 	}
 
 	/**
-	 * Delete a mailbox - the JMAP path for mail_DeleteFolder().
+	 * Delete a mailbox - the JMAP path for deleteFolder().
 	 *
 	 * @param profileID
 	 * @param path canonical path of the folder to delete

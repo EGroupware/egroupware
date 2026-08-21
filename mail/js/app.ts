@@ -4689,12 +4689,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_AddFolder - implementation of the AddFolder action of right click options on the tree
+	 * addFolder - implementation of the AddFolder action of right click options on the tree
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_AddFolder(_action,_senders) {
+	addFolder(_action,_senders) {
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -4716,7 +4716,7 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "add":
-							(this.mail_tryJmapAddFolder(_senders[0].id, NewFolderName) ??
+							(this.tryJmapAddFolder(_senders[0].id, NewFolderName) ??
 								egw.json('mail.mail_ui.ajax_addFolder', [_senders[0].id, NewFolderName]).sendRequest(true));
 							return;
 					case "cancel":
@@ -4733,7 +4733,7 @@ export class MailApp extends EgwApp
 	 * parent's tree level on success; on failure shows the error directly, there's no classic
 	 * fallback (see mail_folderTreeAutoload()'s docblock for why).
 	 */
-	private mail_tryJmapAddFolder(parentTreeId : string, name : string) : Promise<any> | null
+	private tryJmapAddFolder(parentTreeId : string, name : string) : Promise<any> | null
 	{
 		const [profileID, parentPath] : [string, string] = parentTreeId.indexOf('::') !== -1 ?
 			parentTreeId.split('::', 2) as [string, string] : [parentTreeId, ''];
@@ -4745,12 +4745,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_RenameFolder - implementation of the RenameFolder action of right click options on the tree
+	 * renameFolder - implementation of the RenameFolder action of right click options on the tree
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_RenameFolder(_action,_senders) {
+	renameFolder(_action,_senders) {
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
@@ -4772,7 +4772,7 @@ export class MailApp extends EgwApp
 					switch (_button_id)
 					{
 						case "rename":
-							(this.mail_tryJmapRenameFolder(_senders[0].id, NewFolderName) ??
+							(this.tryJmapRenameFolder(_senders[0].id, NewFolderName) ??
 								egw.json('mail.mail_ui.ajax_renameFolder', [_senders[0].id, NewFolderName]).sendRequest(true));
 							return;
 					case "cancel":
@@ -4790,7 +4790,7 @@ export class MailApp extends EgwApp
 	 * Refreshes the parent's tree level on success; on failure shows the error directly, there's no
 	 * classic fallback (see mail_folderTreeAutoload()'s docblock for why).
 	 */
-	private mail_tryJmapRenameFolder(treeId : string, newName : string) : Promise<any> | null
+	private tryJmapRenameFolder(treeId : string, newName : string) : Promise<any> | null
 	{
 		if (treeId.indexOf('::') === -1) return null;	// an account root can't be renamed
 		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
@@ -4803,13 +4803,13 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_MoveFolder - implementation of the MoveFolder action on the tree
+	 * moveFolder - implementation of the MoveFolder action on the tree
 	 *
 	 * @param {egwAction} _action
 	 * @param {egwActionObject[]} _senders - the representation of the tree leaf to be manipulated
 	 * @param {egwActionObject} destination Drop target egwActionObject representing the destination
 	 */
-	mail_MoveFolder(_action,_senders,destination) {
+	moveFolder(_action,_senders,destination) {
 		if(!destination || !destination.id)
 		{
 			egw.debug('warn', "Move folder, but no target");
@@ -4835,7 +4835,7 @@ export class MailApp extends EgwApp
 				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
 				for (var i = 0; i < _senders.length; i++)
 				{
-					(this.mail_tryJmapMoveFolder(_senders[i].id, destination.id) ??
+					(this.tryJmapMoveFolder(_senders[i].id, destination.id) ??
 						egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id]))
 						.finally(() =>
 							{
@@ -4855,12 +4855,12 @@ export class MailApp extends EgwApp
 
 	/**
 	 * Try the fast client-side JMAP move path - MailJmap.moveMailbox(). Same-account only
-	 * (mail_MoveFolder() already rejected a cross-account move before ever reaching this).
+	 * (moveFolder() already rejected a cross-account move before ever reaching this).
 	 * Refreshes *both* the source's old parent level and the destination level on success (the
 	 * moved node disappears from one, appears in the other); on failure shows the error directly,
 	 * there's no classic fallback (see mail_folderTreeAutoload()'s docblock for why).
 	 */
-	private mail_tryJmapMoveFolder(sourceTreeId : string, destTreeId : string) : Promise<any> | null
+	private tryJmapMoveFolder(sourceTreeId : string, destTreeId : string) : Promise<any> | null
 	{
 		if (sourceTreeId.indexOf('::') === -1) return null;	// an account root can't be moved
 		const [profileID, sourcePath] : [string, string] = sourceTreeId.split('::', 2) as [string, string];
@@ -4877,12 +4877,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_DeleteFolder - implementation of the DeleteFolder action of right click options on the tree
+	 * deleteFolder - implementation of the DeleteFolder action of right click options on the tree
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 */
-	mail_DeleteFolder(_action,_senders)
+	deleteFolder(_action,_senders)
 	{
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
@@ -4898,7 +4898,7 @@ export class MailApp extends EgwApp
 				{
 					case "delete":
 						this.jmap.invalidateQuota(_senders[0].id.split('::', 1)[0]);
-						(this.mail_tryJmapDeleteFolder(_senders[0].id) ??
+						(this.tryJmapDeleteFolder(_senders[0].id) ??
 							egw.json('mail.mail_ui.ajax_deleteFolder', [_senders[0].id]).sendRequest(true));
 						return;
 					case "cancel":
@@ -4914,7 +4914,7 @@ export class MailApp extends EgwApp
 	 * tree level on success; on failure shows the error directly, there's no classic fallback (see
 	 * mail_folderTreeAutoload()'s docblock for why).
 	 */
-	private mail_tryJmapDeleteFolder(treeId : string) : Promise<any> | null
+	private tryJmapDeleteFolder(treeId : string) : Promise<any> | null
 	{
 		if (treeId.indexOf('::') === -1) return null;	// an account root can't be deleted
 		const [profileID, path] : [string, string] = treeId.split('::', 2) as [string, string];
