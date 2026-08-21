@@ -698,7 +698,7 @@ class MessageActionHandler
 			{
 				Api\Cache::setCache(Api\Cache::INSTANCE, 'email', 'lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']), $lastFoldersUsedForMoveCont, $expiration = 60*60*1);
 				$actionsnew = Nextmatch::egw_actions($this->ui->get_actions());
-				$response->call('app.mail.mail_rebuildActionsOnList', $actionsnew);
+				$response->call('app.mail.rebuildActionsOnList', $actionsnew);
 			}
 		}
 	}

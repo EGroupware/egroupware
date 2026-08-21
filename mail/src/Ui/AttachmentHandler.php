@@ -465,7 +465,7 @@ class AttachmentHandler
 
 	/**
 	 * Fetch a single row's full header/address/attachment detail, shaped exactly like
-	 * mail_preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
+	 * preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
 	 * email2row() (mail/js/jmap.ts) produces for list rows.
 	 *
 	 * Fallback for the "view" popup (mail_ui::displayMessage()) when window.opener's row cache

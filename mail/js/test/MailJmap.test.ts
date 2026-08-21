@@ -1120,7 +1120,7 @@ describe("MailJmap.resolveInlineImages() - cid: matching", () =>
 });
 
 /**
- * fetchBody()'s optional `signal` (added so MailApp.mail_preview() can cancel a body-fetch
+ * fetchBody()'s optional `signal` (added so MailApp.preview() can cancel a body-fetch
  * once the user has already selected a different message, instead of letting it run to
  * completion on the network for nothing). Verifies the signal actually reaches the
  * transport (requestMany()'s fetchInit - jmap-jam spreads that straight into its fetch()

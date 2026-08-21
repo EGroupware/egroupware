@@ -302,7 +302,7 @@ export class MailApp extends EgwApp
 					});
 				}
 				// Set preview pane state
-				this.mail_disablePreviewArea(!this.getPreviewPaneState());
+				this.disablePreviewArea(!this.getPreviewPaneState());
 
 				//Get initial folder status
 				this.refreshFolderStatus(undefined, undefined, false);
@@ -384,7 +384,7 @@ export class MailApp extends EgwApp
 				});
 
 				this.mail_isMainWindow = false;
-				this.mail_display();
+				this.display();
 
 				break;
 			case 'mail.compose':
@@ -929,7 +929,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @param _actions
 	 */
-	mail_rebuildActionsOnList(_actions)
+	rebuildActionsOnList(_actions)
 	{
 		this.et2.getWidgetById(this.nm_index).set_actions(_actions);
 	}
@@ -941,7 +941,7 @@ export class MailApp extends EgwApp
 	 * out anything else (e.g. a bare folder id) before handing it to egw.dataRefreshUID(), which
 	 * has no validation of its own. See feedback_et2nextmatch_mail_regression memory.
 	 */
-	private mail_isValidRowId(id : string) : boolean
+	private isValidRowId(id : string) : boolean
 	{
 		let parts = String(id || '').split('::');
 		if (parts[0] === 'mail') parts = parts.slice(1);
@@ -949,12 +949,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
+	 * fetchCurrentlyFocussed - implementation to decide wich mail of all the selected ones is the current
 	 *
 	 * @param _selected array of the selected mails
 	 * @param _reset bool - tell the function to reset the global vars used
 	 */
-	mail_fetchCurrentlyFocussed(_selected, _reset) {
+	fetchCurrentlyFocussed(_selected, _reset) {
 		// reinitialize the buffer-info on selected mails
 		if (_reset == true || typeof _selected == 'undefined')
 		{
@@ -964,10 +964,10 @@ export class MailApp extends EgwApp
 				// message row id (a known, not yet root-caused issue can leave something else
 				// here instead, e.g. a folder id - see feedback_et2nextmatch_mail_regression
 				// memory; dataRefreshUID() has no validation of its own)
-				if (this.mail_currentlyFocussed!='' && this.mail_isValidRowId(this.mail_currentlyFocussed)) egw.dataRefreshUID(this.mail_currentlyFocussed);
+				if (this.mail_currentlyFocussed!='' && this.isValidRowId(this.mail_currentlyFocussed)) egw.dataRefreshUID(this.mail_currentlyFocussed);
 				for(let k = 0; k < this.mail_selectedMails.length; k++)
 				{
-					if (this.mail_isValidRowId(this.mail_selectedMails[k])) egw.dataRefreshUID(this.mail_selectedMails[k]);
+					if (this.isValidRowId(this.mail_selectedMails[k])) egw.dataRefreshUID(this.mail_selectedMails[k]);
 				}
 				//nm.refresh(this.mail_selectedMails,'delete');
 			}
@@ -988,13 +988,13 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_open - implementation of the open action
+	 * openMessage - implementation of the open action
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements(s) the action is to be performed on
 	 * @param _mode - you may pass the mode. if not given view is used (tryastext|tryashtml are supported)
 	 */
-	mail_open(_action, _senders, _mode)
+	openMessage(_action, _senders, _mode)
 	{
 		if(typeof _senders == 'undefined' || _senders.length == 0)
 		{
@@ -1065,9 +1065,9 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_openAsHtml(_action, _elems)
+	openAsHtml(_action, _elems)
 	{
-		this.mail_open(_action, _elems,'tryashtml');
+		this.openMessage(_action, _elems,'tryashtml');
 	}
 
 	/**
@@ -1076,9 +1076,9 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_openAsText(_action, _elems)
+	openAsText(_action, _elems)
 	{
-		this.mail_open(_action, _elems,'tryastext');
+		this.openMessage(_action, _elems,'tryastext');
 	}
 
 	/**
@@ -1089,7 +1089,7 @@ export class MailApp extends EgwApp
 	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_compose(_action, _elems)
+	compose(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -1128,7 +1128,7 @@ export class MailApp extends EgwApp
 				}
 				else
 				{
-					return this.mail_compose('forward',_elems);
+					return this.compose('forward',_elems);
 				}
 				break;
 			case 'forward':
@@ -1270,11 +1270,11 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_disablePreviewArea - implementation of the disablePreviewArea action
+	 * disablePreviewArea - implementation of the disablePreviewArea action
 	 *
 	 * @param _value
 	 */
-	mail_disablePreviewArea(_value) {
+	disablePreviewArea(_value) {
 		var splitter = this.et2.getWidgetById('mailSplitter');
 		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		// return if there's no splitter we maybe in mobile mode
@@ -1297,7 +1297,7 @@ export class MailApp extends EgwApp
 		//Dock the splitter always if we are browsing with mobile
 		if (egwIsMobile())
 		{
-			this.mail_disablePreviewArea = _value = true;
+			this.disablePreviewArea = _value = true;
 		}
 
 		if (_value==true)
@@ -1321,7 +1321,7 @@ export class MailApp extends EgwApp
 	 * Additionally, apply expand on click feature on thier widgets
 	 *
 	 */
-	mail_display()
+	display()
 	{
 		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		var content = this.et2.getArrayMgr('content').data;
@@ -1419,8 +1419,8 @@ export class MailApp extends EgwApp
 	 * template with it: address concat, on-demand attachmentsBlock resolution (winmail.dat or
 	 * JMAP rows missing a resolved block - see mail/js/jmap.ts), then template.set_value().
 	 *
-	 * Shared by mail_preview() (below, sourcing data from this window's own row cache) and the
-	 * "view" popup (mail_open()'s target page, sourcing data from window.opener's cache or a
+	 * Shared by preview() (below, sourcing data from this window's own row cache) and the
+	 * "view" popup (openMessage()'s target page, sourcing data from window.opener's cache or a
 	 * server fallback) - both render the same message the same way, from the same data shape.
 	 *
 	 * @param template et2 widget with set_value({content, sel_options}), e.g. the mailPreview grid
@@ -1550,12 +1550,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_preview - implementation of the preview action
+	 * preview - implementation of the preview action
 	 *
 	 * @param nextmatch Et2Nextmatch The widget whose row was selected
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
-	mail_preview(selected, nextmatch) {
+	preview(selected, nextmatch) {
 		let data:any = {};
 		let rowId = '';
 		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
@@ -1573,7 +1573,7 @@ export class MailApp extends EgwApp
 
 		if(typeof selected != 'undefined' && selected.length == 1 && selected[0])
 		{
-			rowId = this.mail_fetchCurrentlyFocussed(selected);
+			rowId = this.fetchCurrentlyFocussed(selected);
 			data = this.renderMessageInto(mailPreview, rowId);
 		}
 		else if (!egwIsMobile() && mailPreview)
@@ -1602,7 +1602,7 @@ export class MailApp extends EgwApp
 				}
 				const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 				if(IframeHandle) IframeHandle.set_src('about:blank');
-				this.mail_disablePreviewArea(true);
+				this.disablePreviewArea(true);
 			}
 			if (!egwIsMobile())return;
 		}
@@ -1620,7 +1620,7 @@ export class MailApp extends EgwApp
 				.next(this.mailvelope_iframe_selector).remove();
 
 			// need to have the DOM ready for calculation.
-			this.mail_disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
+			this.disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
 
 			// Update the internal list of selected mails, if needed
 			if(this.mail_selectedMails.indexOf(rowId) < 0)
@@ -1992,7 +1992,7 @@ export class MailApp extends EgwApp
 		});
 	}
 
-	mail_setMailBody(content) {
+	setMailBody(content) {
 		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
 	}
@@ -2881,7 +2881,7 @@ export class MailApp extends EgwApp
 			this.egw.message(this.egw.lang('canceled deletion due to user interaction'), 'success');
 		}
 		this.mail_refreshMessageGrid();
-		this.mail_preview();
+		this.preview();
 	}
 
 	/**
@@ -3088,7 +3088,7 @@ export class MailApp extends EgwApp
 		// Update non-grid
 		this.refreshFolderStatus(_folder,'forced',false,false);
 		this.refreshQuotaDisplay(server[0]);
-		this.mail_preview();
+		this.preview();
 		this.callRefreshVacationNotice(server[0]);
 		if (previousServer && server[0] != previousServer[0])
 		{
@@ -4585,7 +4585,7 @@ export class MailApp extends EgwApp
 		nm.addEventListener("et2-selection-changed", suppressPreview, {capture: true, once: true});
 		_senders[0].parent.setAllSelected(false);
 		queueMicrotask(() => nm.removeEventListener("et2-selection-changed", suppressPreview, {capture: true}));
-		this.mail_preview([], nm);
+		this.preview([], nm);
 
 		// Remove from nm immediately so the user gets immediate feedback, we send an error message later in case something went wrong
 		this.refresh(nm, messages.msg, Et2DatagridUpdateTypes.DELETE);
@@ -6137,7 +6137,7 @@ export class MailApp extends EgwApp
 	 */
 	prevPrint(_action, _elems)
 	{
-		this.mail_open(_action, _elems, _action.data.images ? 'print_images' : 'print');
+		this.openMessage(_action, _elems, _action.data.images ? 'print_images' : 'print');
 	}
 
 	/**
@@ -6841,13 +6841,13 @@ export class MailApp extends EgwApp
 		{
 			selected = [_attachments[0]['mail_id']];
 			data = egw.dataGetUIDdata(selected[0]);
-			// do not call mail_preview if we have the attachments already resolved, avoid infinit loop
+			// do not call preview if we have the attachments already resolved, avoid infinit loop
 			if (data.data.attachmentsBlock.length>0 && cmprAttchObjs(data.data.attachmentsBlock, _attachments)) return;
 
 			data.data.attachmentsBlock = _attachments;
 			data.data.attachmentsBlockTitle = _attachments.lenght;
 			egw.dataStoreUID(selected[0], data.data);
-			this.mail_preview(selected, this.et2.getWidgetById('nm'));
+			this.preview(selected, this.et2.getWidgetById('nm'));
 		}
 	}
 	/**

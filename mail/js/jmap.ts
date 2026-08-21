@@ -2895,7 +2895,7 @@ export class MailJmap
 		else if (keywords['$answered']) status_icon = 'mail_reply';
 		else if (!keywords['$seen']) status_icon = 'mail_unseen';
 
-		// mail_ui::header2gridelements()'s convention (relied on by app.ts's mail_preview(), which
+		// mail_ui::header2gridelements()'s convention (relied on by app.ts's preview(), which
 		// concats "primary address" + "additional addresses" into one list for the preview panel):
 		// toaddress/fromaddress hold only the *first* address as a single string, any further
 		// recipients go in additionaltoaddress/additionalfromaddress as one string each. cc/bcc
@@ -2922,7 +2922,7 @@ export class MailJmap
 			modified: this.jmapUtcToUserTz(email.receivedAt),
 			size: email.size,
 			bodypreview: email.preview || '',
-			// MDN (read-receipt) prompt trigger - mail_preview() (app.ts) checks this against the
+			// MDN (read-receipt) prompt trigger - preview() (app.ts) checks this against the
 			// mdnsent/mdnnotsent keywords below to decide whether to show the Yes/No dialog
 			dispositionnotificationto: email[MailJmap.MDN_HEADER_PROPERTY] || '',
 			// Kept for the preview's attachment-presence check.  Row templates use
@@ -2931,7 +2931,7 @@ export class MailJmap
 			attachment_icon: email.hasAttachment ? 'attach' : '',
 			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
-			// mail_preview() unconditionally reads data.attachmentsBlock[0], so this must at
+			// preview() unconditionally reads data.attachmentsBlock[0], so this must at
 			// least exist as an array or clicking a row throws and the preview never loads
 			attachmentsBlock: [],
 			class: css.join(' '),

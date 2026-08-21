@@ -1265,7 +1265,7 @@ class mail_ui
 				'caption' => lang('Open'),
 				'icon' => 'view',
 				'group' => ++$group,
-				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.mail.mobileView':'javaScript:app.mail.mail_open',
+				'onExecute' => Api\Header\UserAgent::mobile()?'javaScript:app.mail.mobileView':'javaScript:app.mail.openMessage',
 				'allowOnMultiple' => false,
 				'default' => true,
 				'mobileViewTemplate' => 'view?'.filemtime(Api\Etemplate\Widget\Template::rel2path('/mail/templates/mobile/view.xet'))
@@ -1274,20 +1274,20 @@ class mail_ui
 				'caption' => 'Reply',
 				'icon' => 'mail_reply',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_compose',
+				'onExecute' => 'javaScript:app.mail.compose',
 				'allowOnMultiple' => false,
 				'children' => [
 					'reply' => [
 						'caption' => 'Reply',
 						'icon' => 'mail_reply',
-						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'onExecute' => 'javaScript:app.mail.compose',
 						'allowOnMultiple' => false,
 						'toolbarDefault' => true,
 					],
 					'reply_all' => [
 						'caption' => 'Reply All',
 						'icon' => 'mail_replyall',
-						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'onExecute' => 'javaScript:app.mail.compose',
 						'allowOnMultiple' => false,
 						'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => KeyManager::shortcut_caption(KeyManager::A,true,true)),
 						'toolbarDefault' => true,
@@ -1295,7 +1295,7 @@ class mail_ui
 					'reply_attachments' => [
 						'caption' => 'Reply With Attachments',
 						'icon' => 'attach',
-						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'onExecute' => 'javaScript:app.mail.compose',
 						'allowOnMultiple' => false,
 					],
 				],
@@ -1310,7 +1310,7 @@ class mail_ui
 						'icon' => 'mail_forward',
 						'group' => $group,
 						'hint' => 'forward inline',
-						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'onExecute' => 'javaScript:app.mail.compose',
 						'allowOnMultiple' => false,
 						'shortcut' => array('ctrl' => true, 'keyCode' => 70, 'caption' => KeyManager::shortcut_caption(KeyManager::F,false,true)),
 						'toolbarDefault' => true
@@ -1320,7 +1320,7 @@ class mail_ui
 						'hint' => 'forward as attachment',
 						'icon' => 'mail_forward_attach',
 						'group' => $group,
-						'onExecute' => 'javaScript:app.mail.mail_compose',
+						'onExecute' => 'javaScript:app.mail.compose',
 					),
 				),
 				'hideOnMobile' => true
@@ -1330,7 +1330,7 @@ class mail_ui
 				'icon' => 'new',
 				'hint' => 'Compose as new',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.mail.mail_compose',
+				'onExecute' => 'javaScript:app.mail.compose',
 				'allowOnMultiple' => false,
 			),
 			'modifysubject' => array(
@@ -1486,7 +1486,7 @@ class mail_ui
 						'hint' => 'Open in Text mode',
 						'group' => ++$group,
 						'icon' => 'textmode',
-						'onExecute' => 'javaScript:app.mail.mail_openAsText',
+						'onExecute' => 'javaScript:app.mail.openAsText',
 						'allowOnMultiple' => false,
 					),
 					'openashtml' => array(
@@ -1494,7 +1494,7 @@ class mail_ui
 						'hint' => 'Open in HTML mode',
 						'group' => $group,
 						'icon' => 'htmlmode',
-						'onExecute' => 'javaScript:app.mail.mail_openAsHtml',
+						'onExecute' => 'javaScript:app.mail.openAsHtml',
 						'allowOnMultiple' => false,
 					),
 				),
@@ -2342,7 +2342,7 @@ class mail_ui
 	 * carry a "does it have attachments" flag, not a resolved attachmentsBlock - building that
 	 * needs a server-side download token (Link::set_data(), see createAttachmentBlock()), which
 	 * isn't something the JMAP metadata alone can provide. The preview panel (app.ts's
-	 * mail_preview()) calls this on demand, once, for whichever single row is being previewed.
+	 * preview()) calls this on demand, once, for whichever single row is being previewed.
 	 *
 	 * @param string $_rowid row id from nm
 	 * @return void
@@ -2386,7 +2386,7 @@ class mail_ui
 
 	/**
 	 * Fetch a single row's full header/address/attachment detail, shaped exactly like
-	 * mail_preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
+	 * preview() / MailApp.renderMessageInto() (mail/js/app.ts) expect - the same fields
 	 * email2row() (mail/js/jmap.ts) produces for list rows.
 	 *
 	 * Fallback for the "view" popup (mail_ui::displayMessage()) when window.opener's row cache
