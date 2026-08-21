@@ -1198,14 +1198,48 @@ conversion of that correct instant into the resolved iCal TZID's wall-clock digi
 performance benefit, but *is* exercising genuine alias-resolution logic that a naive
 `new \DateTimeZone($tzid)` replacement would silently break for non-IANA TZIDs.
 
-**Not yet started.** Ralf's direction: write characterization tests for the truthy-`$fromTZId`
-path (iCal import via a non-UTC/non-IANA-alias TZID, and `findInfo()`'s matching use) *first*,
-establishing a safety net for behavior neither Phase 0 nor any later increment has actually
-exercised, before attempting any refactor - same discipline as every other increment in this
-project. The eventual refactor should still preserve the redundant-but-safe `calendar_timezones`
-alias resolution and the all-day/midnight-preserving semantics decision #2 requires exactly as
-today; the `self::$tz_cache` micro-cache is a plausible target to simplify away once the
-alias-resolution behavior itself is locked down by tests.
+**Characterization tests landed 2026-08-22** (`infolog/tests/Time2TimeTzidTest.php`, 5 tests) -
+refactor itself still not started. Per ralf's direction, written *before* touching any
+`time2time()` code, calling it directly (it's a plain public method) with synthetic `$values`
+rather than through the full VTODO-import/`Horde_Icalendar` pipeline - `vtodotoegw()`'s *own*
+date parsing (`Horde_Icalendar::_parseDateTime()` falling back to PHP's *current default
+timezone* when a VTODO value has neither "Z" nor a TZID param, which is exactly why
+`importVTODO()` temporarily calls `date_default_timezone_set($this->tzid)` around its
+`vtodotoegw()` call) is a separate, independently-confusing piece of legacy logic, not itself
+part of what Phase 2 refactors - characterizing `time2time()` as a pure
+`($values, $fromTZId, $toTZId, $type) -> $values` transformation, independent of how its inputs
+get constructed upstream, is the correctly-scoped target.
+
+Every assertion below was verified by actually *running* the test against the current,
+unmodified `time2time()` and recording the observed result, not derived from reading the code
+alone (the theoretical prediction happened to match the observed result on the first run this
+time, unlike the text-CF case-sensitivity finding earlier in this project - but it was still
+verified empirically, not just trusted):
+- A **timed** (non-midnight) value converted server → a real TZID → server (the exact shape
+  `importVTODO()`/`findInfo()`'s calls use) round-trips back **unchanged** - `$fromTZId` only
+  performs a *real* timezone conversion for a timed value (not a "reinterpret these digits as
+  authored in that zone" relabel), and converting to a zone and back to the same original zone
+  necessarily cancels out, for a non-DST-transition date.
+- A value that is **midnight when displayed in the TZID** (but not midnight in server/UTC
+  time) comes out as *that same calendar date, at server-time midnight* - not the raw UTC
+  instant the value truly represents. Verified in both offset directions (TZID behind server:
+  `America/New_York`; TZID ahead of server: `Europe/Berlin`) to confirm this isn't an artifact
+  of one particular offset direction. This is decision #2's all-day-preserving behavior,
+  working exactly as intended for the truthy-`$fromTZId` case too, not just `read()`/`write()`'s
+  null/false branches `DateHandlingTest.php` already covered.
+- A legacy **Windows-style TZID alias** (`'GMT Standard Time'`, resolving via
+  `calendar_timezones`' alias table to `Europe/London`) round-trips without throwing -
+  confirming `time2time()` really does go through that alias-resolving lookup for the truthy
+  branch, not a bare `new \DateTimeZone($fromTZId)` a naive refactor could accidentally
+  substitute (which would throw for any non-IANA name a real CalDAV/ActiveSync client might
+  send).
+- A **falsy** raw value (`0`/`null`) is left untouched, not converted into a spurious epoch
+  date.
+
+**Refactor itself: not yet started.** Should preserve the redundant-but-safe
+`calendar_timezones` alias resolution and the all-day/midnight-preserving semantics exactly as
+characterized above; `self::$tz_cache` (the redundant micro-cache identified in the research
+above) is a plausible, now-safely-testable target to simplify away.
 
 ### Phase 3 (not started, out of scope unless separately requested)
 
