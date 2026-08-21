@@ -543,7 +543,7 @@ export class MailJmap
 	 * true" for role 'inbox'), so without this, Et2Tree would immediately fire its own separate,
 	 * purely reactive lazy-load request for INBOX right after the root level renders (ralf's
 	 * observation: this always shows up as an extra "2nd request" in the network tab, on every
-	 * single page load). MailApp.mail_buildRootFolderData() (app.ts) embeds inboxChildren directly
+	 * single page load). MailApp.buildRootFolderData() (app.ts) embeds inboxChildren directly
 	 * into the root INBOX node's `item` before ever handing the array to Et2Tree, so INBOX's own
 	 * `lazy` flag (Et2Tree.ts's _optionTemplate()) reads false and it never dispatches that
 	 * lazy-load event at all - not just "faster", the second request is eliminated outright.
@@ -740,7 +740,7 @@ export class MailJmap
 
 	/**
 	 * Public counterpart of mailboxIdOrNull() for callers outside this class (mail/js/app.ts's
-	 * mail_refreshFolderLevel(), which needs a parent's JMAP id to re-fetch its children after a
+	 * refreshFolderLevel(), which needs a parent's JMAP id to re-fetch its children after a
 	 * folder CRUD change, without necessarily having one already cached on a tree node).
 	 *
 	 * @return null if this account has no usable JMAP access-token, *or* if path is '' (top level)

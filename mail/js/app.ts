@@ -188,7 +188,7 @@ export class MailApp extends EgwApp
 			// done before the nextmatch is created.
 			this.egw.dataCacheRegister('mail',
 				// Called to determine cache key
-				this.nm_cache,
+				this.nmCache,
 				this
 			);
 
@@ -346,8 +346,8 @@ export class MailApp extends EgwApp
 						path_parts && do_open(parts[0]+'::'+path_parts.shift());
 					}
 					//TODO check if there are changes necessary
-					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openstart_tree, this));
-					this.tree_wdg.set_onopenend(jQuery.proxy(this.openend_tree, this));
+					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openStartTree, this));
+					this.tree_wdg.set_onopenend(jQuery.proxy(this.openEndTree, this));
 
 					// Lazy per-level JMAP folder loading (see doc/ai/projects/mail-folder-tree-jmap.md),
 					// replacing the classic ajax_foldertree menuaction (now removed) for both
@@ -536,7 +536,7 @@ export class MailApp extends EgwApp
 				this.subscriptionLoad();
 				break;
 			case 'mail.folder_management':
-				this.mail_folderManagementLoad();
+				this.folderManagementLoad();
 				break;
 		}
 		this.customLabels = this.et2.getArrayMgr('content').getEntry('customLabels') ||
@@ -845,7 +845,7 @@ export class MailApp extends EgwApp
 	 * @param {object} query_context Query information from egw.dataFetch()
 	 * @returns {string|false} Cache key, or false to not cache
 	 */
-	nm_cache(query_context)
+	nmCache(query_context)
 	{
 		// Only cache first chunk of rows, if no search filter
 		if((!query_context || !query_context.start) && query_context.count == 0 &&
@@ -2340,7 +2340,7 @@ export class MailApp extends EgwApp
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
 		window.setTimeout(function() {
-			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlock_tree();});
+			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlockTree();});
 		}, 500);
 	}
 
@@ -2898,7 +2898,7 @@ export class MailApp extends EgwApp
 	 * always applicable (no "select all"/single-selection distinction, it's a whole-folder purge),
 	 * but purgeFolder() throws if the profile has no junk/trash folder configured, or on any JMAP
 	 * failure - either way this falls back to the given classic ajax call unchanged, which has its
-	 * own completion callback (unlock_tree()) already - not duplicated here. On success, replicates
+	 * own completion callback (unlockTree()) already - not duplicated here. On success, replicates
 	 * the two client-visible effects the classic call's server response used to push: clear the
 	 * folder-tree badge (mail_setFolderStatus - the folder is now empty) and, if the purged folder
 	 * is the one currently displayed, refresh the grid (classic path's conditional egw.refresh()).
@@ -2932,8 +2932,8 @@ export class MailApp extends EgwApp
 		this.egw.message(this.egw.lang('empty junk'), 'success');
 		const classicEmptySpam = () => egw.json('mail.mail_ui.ajax_emptySpam',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
-			function(){self.unlock_tree();}).sendRequest(true);
-		this.mail_tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlock_tree(), classicEmptySpam);
+			function(){self.unlockTree();}).sendRequest(true);
+		this.mail_tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam);
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
@@ -2967,8 +2967,8 @@ export class MailApp extends EgwApp
 		this.egw.message(this.egw.lang('empty trash'), 'success');
 		const classicEmptyTrash = () => egw.json('mail.mail_ui.ajax_emptyTrash',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
-			function(){self.unlock_tree();}).sendRequest(true);
-		this.mail_tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlock_tree(), classicEmptyTrash);
+			function(){self.unlockTree();}).sendRequest(true);
+		this.mail_tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash);
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
@@ -3007,13 +3007,13 @@ export class MailApp extends EgwApp
 		//Open unloaded tree to get loaded
             _widget.getSelectedNode().expanded = true;
 
-		this.lock_tree();
+		this.lockTree();
 		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
 			// Profile changed, select inbox
 			var inbox = folder + '::INBOX';
                 //_widget.reSelectItem(inbox);
 
-			this.unlock_tree();
+			this.unlockTree();
 		},this))
 			.sendRequest(true);
             _widget.finishedLazyLoading().then (() => {
@@ -3069,7 +3069,7 @@ export class MailApp extends EgwApp
 		var nm = _widget.getRoot().getWidgetById(this.nm_index);
 		if(nm)
 		{
-			this.lock_tree();
+			this.lockTree();
 			nm.applyFilters({'selectedFolder': _folder});
 		}
 
@@ -3208,7 +3208,7 @@ export class MailApp extends EgwApp
 					}
 					if (rv != "cancel")
 					{
-						that.lock_tree();
+						that.lockTree();
 					}
 					switch (_action.id)
 					{
@@ -4593,7 +4593,7 @@ export class MailApp extends EgwApp
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		const isArchiveShortcut = _action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2';
 		const classicMove = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (isArchiveShortcut?'2':'_') ], function(){
-			self.unlock_tree();
+			self.unlockTree();
 
 			// Server response may contain refresh, but it's always delete
 			// Refresh list if current view is the target (happens when pasting)
@@ -4679,7 +4679,7 @@ export class MailApp extends EgwApp
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.getActiveFilters(_action);
 		var self = this;
-		const classicCopy = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
+		const classicCopy = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlockTree();})
 			.sendRequest();
 		// Server response contains refresh
 
@@ -4740,7 +4740,7 @@ export class MailApp extends EgwApp
 
 		return this.jmap.createMailbox(profileID, parentPath, name).then(() =>
 		{
-			return this.mail_refreshFolderLevel(profileID, parentPath);
+			return this.refreshFolderLevel(profileID, parentPath);
 		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
@@ -4798,7 +4798,7 @@ export class MailApp extends EgwApp
 
 		return this.jmap.renameMailbox(profileID, path, newName).then(() =>
 		{
-			return this.mail_refreshFolderLevel(profileID, parentPath);
+			return this.refreshFolderLevel(profileID, parentPath);
 		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
@@ -4870,8 +4870,8 @@ export class MailApp extends EgwApp
 		return this.jmap.moveMailbox(profileID, sourcePath, destPath).then(() =>
 		{
 			return Promise.all([
-				this.mail_refreshFolderLevel(profileID, sourceParentPath),
-				this.mail_refreshFolderLevel(profileID, destPath),
+				this.refreshFolderLevel(profileID, sourceParentPath),
+				this.refreshFolderLevel(profileID, destPath),
 			]);
 		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
@@ -4922,7 +4922,7 @@ export class MailApp extends EgwApp
 
 		return this.jmap.deleteMailbox(profileID, path).then(() =>
 		{
-			return this.mail_refreshFolderLevel(profileID, parentPath);
+			return this.refreshFolderLevel(profileID, parentPath);
 		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
@@ -5409,9 +5409,9 @@ export class MailApp extends EgwApp
 	 * mail.subscribe popup load (et2_ready()'s 'mail.subscribe' case): try to replace the classic
 	 * server-rendered subscription tree with one loaded via JMAP - lazily, one level at a time,
 	 * exactly like the main index tree/folder-management dialog (mail_folderTreeAutoload()/
-	 * mail_folderManagementLoad()), not the whole account fetched up front.  Always shows every
+	 * folderManagementLoad()), not the whole account fetched up front.  Always shows every
 	 * folder regardless of showAllFoldersInFolderPane, same reasoning as
-	 * mail_folderManagementLoad() - this dialog manages subscriptions, including for currently
+	 * folderManagementLoad() - this dialog manages subscriptions, including for currently
 	 * unsubscribed folders.
 	 *
 	 * A checkbox tree's rendering only ever consults its own .value array, never a node's own
@@ -5451,7 +5451,7 @@ export class MailApp extends EgwApp
 			return result;
 		});
 
-		this.mail_buildRootFolderData(profileID, false).then((data) =>
+		this.buildRootFolderData(profileID, false).then((data) =>
 		{
 			if (data === null)
 			{
@@ -5460,7 +5460,7 @@ export class MailApp extends EgwApp
 			}
 			ftree.select_options = data;
 			this.seedSubscriptionValue(ftree, data);
-			// mail_buildRootFolderData() already eagerly embeds INBOX's own children (it's always
+			// buildRootFolderData() already eagerly embeds INBOX's own children (it's always
 			// auto-opened) - seed those too, since they never go through the autoloading wrapper
 			const inbox = data.find((node) => node.id === profileID + '::INBOX');
 			if (inbox) this.seedSubscriptionValue(ftree, inbox.item);
@@ -5562,7 +5562,7 @@ export class MailApp extends EgwApp
 			return this.jmap.setMailboxSubscribed(profileID, path, subscribed);
 		})).then(() =>
 		{
-			window.opener?.app?.mail?.mail_refreshFolderLevel?.(profileID, '');
+			window.opener?.app?.mail?.refreshFolderLevel?.(profileID, '');
 			_widget.id === 'button[save]' ? window.close() : this.et2._inst.submit();
 		}).catch((e) =>
 		{
@@ -5593,18 +5593,18 @@ export class MailApp extends EgwApp
 	 * On any failure (network, non-JMAP-capable account), this is a no-op: the tree keeps whatever
 	 * the server already rendered (mail_ui::folderManagement()'s own mail_tree->getTree() call).
 	 */
-	private mail_folderManagementLoad() : void
+	private folderManagementLoad() : void
 	{
 		const tree : any = this.et2.getWidgetById('tree');
 		const profileID = String(this.et2.getArrayMgr('content').getEntry('acc_id') ?? '');
 		if (!tree || !profileID) return;
 
 		tree.autoloading = (item : any) => this.mail_folderTreeAutoload(item, false);
-		this.mail_buildRootFolderData(profileID, false).then((data) =>
+		this.buildRootFolderData(profileID, false).then((data) =>
 		{
 			if (data === null)
 			{
-				console.error('MailApp.mail_folderManagementLoad(): account not JMAP-reachable, keeping the classic server-rendered tree');
+				console.error('MailApp.folderManagementLoad(): account not JMAP-reachable, keeping the classic server-rendered tree');
 				return;
 			}
 			tree.select_options = data;
@@ -5614,7 +5614,7 @@ export class MailApp extends EgwApp
 			{
 				this.egw.message(e.message, 'error');
 			}
-			console.error('MailApp.mail_folderManagementLoad(): JMAP tree load failed, keeping the classic server-rendered tree', e);
+			console.error('MailApp.folderManagementLoad(): JMAP tree load failed, keeping the classic server-rendered tree', e);
 		});
 	}
 
@@ -5829,17 +5829,17 @@ export class MailApp extends EgwApp
 	/**
 	 * Lock tree so it does NOT receive any more mouse-clicks
 	 */
-	lock_tree()
+	lockTree()
 	{
 		// No-op.  Tree could be set disabled or readonly, but those were not implemented.
 	}
 
 	/**
-	 * Unlock tree so it receives again mouse-clicks after calling lock_tree()
+	 * Unlock tree so it receives again mouse-clicks after calling lockTree()
 	 */
-	unlock_tree()
+	unlockTree()
 	{
-		// No-op, see lock_tree()
+		// No-op, see lockTree()
 	}
 
 	/**
@@ -5849,12 +5849,12 @@ export class MailApp extends EgwApp
 	 * @param {et2_widget_tree} _widget
 	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
 	 */
-	openstart_tree(_id, _widget, _hasChildren)
+	openStartTree(_id, _widget, _hasChildren)
 	{
 		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
 			!_hasChildren)
 		{
-			this.lock_tree();
+			this.lockTree();
 		}
 		return true;	// allow opening of node
 	}
@@ -5866,12 +5866,12 @@ export class MailApp extends EgwApp
 	 * @param {et2_widget_tree} _widget
 	 * @param {Number} _hasChildren 0 - item has no child nodes, -1 - item is closed, 1 - item is opened
 	 */
-	openend_tree(_id, _widget, _hasChildren)
+	openEndTree(_id, _widget, _hasChildren)
 	{
 		if (_id.indexOf('::') == -1 &&	// it's an account, not a folder in an account
 			_hasChildren == 1)
 		{
-			this.unlock_tree();
+			this.unlockTree();
 		}
 	}
 
@@ -5887,7 +5887,7 @@ export class MailApp extends EgwApp
 	 * mailbox id is server-assigned and opaque, see FolderTreeNode's docblock in ./folderTree).
 	 *
 	 * A "profileID::path" node with no jmapId at all means this node was never built by this
-	 * callback (or mail_buildRootFolderData()) in the first place - eg. the classic server-
+	 * callback (or buildRootFolderData()) in the first place - eg. the classic server-
 	 * rendered tree mail_ui::folderManagement()/subscription() seed shown while their own JMAP
 	 * root fetch is still in flight (or already declined), which uses the same "profileID::path"
 	 * id scheme but has no concept of a JMAP Mailbox id at all.
@@ -5904,7 +5904,7 @@ export class MailApp extends EgwApp
 	 * @param item the node being expanded
 	 * @param subscribedOnly explicit override - omit to fall back to the showAllFoldersInFolderPane
 	 *  preference (this callback's own default, used as-is by the main browsing tree). The
-	 *  folder-management dialog (mail_folderManagementLoad()) binds this with `false` instead,
+	 *  folder-management dialog (folderManagementLoad()) binds this with `false` instead,
 	 *  matching classic mail_tree.inc.php's own folderManagement()/ajax_folderMgmtTree_autoloading()
 	 *  calls (hardcoded $_subscribedOnly=false) - that dialog manages folders, including
 	 *  unsubscribed ones, so every level of its tree must always show everything.
@@ -5924,7 +5924,7 @@ export class MailApp extends EgwApp
 
 		const fetchLevel = hasParent
 			? this.mail_buildFolderLevelData(profileID, parentPath, parentId, subscribedOnly)
-			: this.mail_buildRootFolderData(profileID, subscribedOnly);
+			: this.buildRootFolderData(profileID, subscribedOnly);
 
 		return fetchLevel.then((data) =>
 			data === null ? errorLeaf() : {item: data}
@@ -5950,7 +5950,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @param subscribedOnlyOverride see mail_folderTreeAutoload()'s own param docblock
 	 */
-	private mail_buildRootFolderData(profileID : string, subscribedOnlyOverride? : boolean) : Promise<FolderTreeNode[] | null>
+	private buildRootFolderData(profileID : string, subscribedOnlyOverride? : boolean) : Promise<FolderTreeNode[] | null>
 	{
 		return this.jmap.getRootFolders(profileID, subscribedOnlyOverride).then((result) =>
 		{
@@ -5972,7 +5972,7 @@ export class MailApp extends EgwApp
 
 	/**
 	 * Fetch + build one folder-tree level (shared by mail_folderTreeAutoload() and
-	 * mail_refreshFolderLevel()) - null means "JMAP not reachable", same contract
+	 * refreshFolderLevel()) - null means "JMAP not reachable", same contract
 	 * MailJmap.getMailboxChildren() itself has, for the caller to decide its own fallback.
 	 *
 	 * @param subscribedOnlyOverride see mail_folderTreeAutoload()'s own param docblock
@@ -6007,7 +6007,7 @@ export class MailApp extends EgwApp
 	 * @param profileID
 	 * @param parentPath canonical path of the level to refresh, '' for the top level
 	 */
-	private mail_refreshFolderLevel(profileID : string, parentPath : string) : Promise<boolean>
+	private refreshFolderLevel(profileID : string, parentPath : string) : Promise<boolean>
 	{
 		const ftree = this.et2?.getWidgetById(this.nm_index + '[foldertree]');
 		if (!ftree) return Promise.resolve(false);
@@ -6022,7 +6022,7 @@ export class MailApp extends EgwApp
 			})
 			.catch((e) =>
 			{
-				console.error('MailApp.mail_refreshFolderLevel(): failed to refresh the tree after a folder change', e);
+				console.error('MailApp.refreshFolderLevel(): failed to refresh the tree after a folder change', e);
 				return false;
 			});
 	}
@@ -6415,7 +6415,7 @@ export class MailApp extends EgwApp
 	 * @param {type} _widget
 	 * @returns {undefined}
 	 */
-	folderMgmt_onSelect(_ids, _widget)
+	folderManagementOnSelect(_ids, _widget)
 	{
 		// Flag to reset selected items
 		var resetSelection = false;
@@ -6471,7 +6471,7 @@ export class MailApp extends EgwApp
 	 * triggers longTask dialog and send delete operation url
 	 *
 	 */
-	folderMgmt_deleteBtn()
+	folderManagementDeleteBtn()
 	{
 		const tree = etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById('tree');
 
@@ -6505,7 +6505,7 @@ export class MailApp extends EgwApp
 								// submit
 								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
 							}
-						}, msg, egw.lang('Deleting folders'), (treeId : string) => this.mail_folderMgmtDeleteOne(treeId), selFolders, 'mail');
+						}, msg, egw.lang('Deleting folders'), (treeId : string) => this.folderManagementDeleteOne(treeId), selFolders, 'mail');
 						return true;
 					}
 				}
@@ -6516,18 +6516,18 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Per-folder delete for the folder-management dialog's long_task() batch (folderMgmt_deleteBtn())
+	 * Per-folder delete for the folder-management dialog's long_task() batch (folderManagementDeleteBtn())
 	 * - the JMAP-first counterpart of the classic ajax_folderMgmt_delete/FolderHandler::folderMgmtDelete(),
 	 * now called directly client-side instead of driving long_task's per-item server round-trip
 	 * (see Et2Dialog.long_task()'s _item_callback param). Resolves the deleted folder's own (leaf)
 	 * name on success - the exact same per-item contract folderMgmtDelete() already had, so
-	 * folderMgmt_deleteBtn()'s own success-handling (mail_removeLeaf()) needs no change at all.
+	 * folderManagementDeleteBtn()'s own success-handling (mail_removeLeaf()) needs no change at all.
 	 *
 	 * On any failure throws a plain Error (long_task()'s own per-item failure contract) with the
 	 * folder name and JMAP's error message - there's no classic fallback (see
 	 * mail_folderTreeAutoload()'s docblock for why).
 	 */
-	private mail_folderMgmtDeleteOne(treeId : string) : Promise<string>
+	private folderManagementDeleteOne(treeId : string) : Promise<string>
 	{
 		const [profileID, path] = treeId.split('::', 2) as [string, string];
 		const folderName = path.includes('/') ? path.substring(path.lastIndexOf('/') + 1) : path;

@@ -327,7 +327,7 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// without this, the account's own INBOX tree node id would be "profileID::Inbox" for a real
 	// JMAP account, silently breaking every one of those lookups (ralf's report: the ACL tree
 	// action's own node.data lookup, mail/js/app.ts's acl_enabled(), was the first one caught, but
-	// mail_buildRootFolderData()'s INBOX-children-preload optimization matches the exact same
+	// buildRootFolderData()'s INBOX-children-preload optimization matches the exact same
 	// pattern and would have silently stopped working for Stalwart too).
 	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;
 	return (mailboxes || [])

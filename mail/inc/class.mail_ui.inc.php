@@ -2783,7 +2783,7 @@ class mail_ui
 	 * Main function to handle folder management dialog
 	 *
 	 * Tree population and folder deletion are handled client-side via JMAP
-	 * (MailApp.mail_folderManagementLoad()/mail_folderMgmtDeleteOne(), mail/js/app.ts) - the
+	 * (MailApp.folderManagementLoad()/folderManagementDeleteOne(), mail/js/app.ts) - the
 	 * server-rendered tree below is only the classic fallback for a non-JMAP-reachable account.
 	 *
 	 * @param array $content content of dialog

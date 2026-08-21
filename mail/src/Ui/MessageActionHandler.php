@@ -724,7 +724,7 @@ class MessageActionHandler
 			if ($selectedFolder == $icServerID.mail_ui::$delimiter.$junkFolder)
 			{
 				// Lock the tree if the active folder is junk folder
-				$response->call('app.mail.lock_tree');
+				$response->call('app.mail.lockTree');
 			}
 			$this->ui->mail_bo->deleteMessages('all',$junkFolder,'remove_immediately');
 			$fStatus = array(
@@ -768,7 +768,7 @@ class MessageActionHandler
 			if ($selectedFolder == $icServerID.mail_ui::$delimiter.$trashFolder)
 			{
 				// Lock the tree if the active folder is Trash folder
-				$response->call('app.mail.lock_tree');
+				$response->call('app.mail.lockTree');
 			}
 			$this->ui->mail_bo->compressFolder($trashFolder);
 			$fStatus = array(
