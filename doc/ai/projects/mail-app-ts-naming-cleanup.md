@@ -2,7 +2,7 @@
 
 ## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
 (delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, ACL-dialog,
-subscription, and folder-management/tree-lock groups renamed (2026-08-21), rest not started
+subscription, folder-management/tree-lock, and print groups renamed (2026-08-21), rest not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -169,10 +169,10 @@ rename time per the caveat above).
 | ~~`mail_folderManagementLoad`~~ | `folderManagementLoad` | 0 | 1 | 0 | high | **done 2026-08-21**, private |
 | ~~`mail_buildRootFolderData`~~ | `buildRootFolderData` | 0 | 0 | 2 | low | **done 2026-08-21**, private |
 | ~~`mail_refreshFolderLevel`~~ | `refreshFolderLevel` | 0 | 0 | 1 | low | **done 2026-08-21**, private |
-| `mail_print` | `print` | 0 | 1 | 0 | high | |
-| `mail_prepare_print` | `preparePrint` | 0 | 0 | 0 | low | also fixes snake_case |
-| `mail_display_print` | `displayPrint` | 0 | 0 | 0 | low | also fixes snake_case |
-| `mail_prev_print` | `prevPrint` | 0 | 0 | 0 | low | also fixes snake_case |
+| ~~`mail_print`~~ | `print` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_prepare_print`~~ | `preparePrint` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_display_print`~~ | `displayPrint` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_prev_print`~~ | `prevPrint` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_folderMgmtDeleteOne`~~ | `folderManagementDeleteOne` | 0 | 1 | 0 | high | **done 2026-08-21** (ralf confirmed expanding Mgmt→Management) |
 
 ### Bucket D — snake_case (no `mail_` prefix) to fix (~35 methods)
@@ -222,7 +222,7 @@ rename time per the caveat above).
 | `smime_clear_flags` | `smimeClearFlags` | 0 | 0 | 0 | low | |
 | `smime_certAddToContact` | `smimeCertAddToContact` | 0 | 2 | 0 | high | |
 | `set_predefined_addresses` | `setPredefinedAddresses` | 0 | 1 | 0 | high | |
-| `print_for_compose` | `printForCompose` | 0 | 1 | 0 | high | |
+| ~~`print_for_compose`~~ | `printForCompose` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`nm_cache`~~ | `nmCache` | 0 | 0 | 0 | low | **done 2026-08-21** |
 
 ## Collision / high-attention flags
