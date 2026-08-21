@@ -323,7 +323,7 @@ class Jmap extends Mail\Imap
 	 * @param string $passphrase
 	 * @return array{body: string, smime: ?array} sanitized HTML body, plus the decrypt/verify
 	 *  metadata (Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for the caller to
-	 *  push to the client (app.mail.set_smimeFlags) - never sent to the client itself
+	 *  push to the client (app.mail.setSmimeFlags) - never sent to the client itself
 	 * @throws Mail\Smime\PassphraseMissing
 	 * @throws Api\Exception
 	 */

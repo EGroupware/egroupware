@@ -2230,7 +2230,7 @@ class JmapShim
 	 * @param string $passphrase
 	 * @return array{body: string, smime: ?array} sanitized HTML body, plus the decrypt/verify
 	 *  metadata (Api\Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention) for the
-	 *  caller to push to the client (app.mail.set_smimeFlags) - never sent to the client itself
+	 *  caller to push to the client (app.mail.setSmimeFlags) - never sent to the client itself
 	 * @throws Api\Mail\Smime\PassphraseMissing
 	 * @throws \Exception message/mailbox not found
 	 */

@@ -448,9 +448,9 @@ class MessageDisplayHandler
 					$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
 					if (!empty($smime['addtocontact']) && !empty(Mail\Smime::get_acc_smime($this->ui->mail_bo->profileID)))
 					{
-						$push->call('app.mail.smime_certAddToContact', $smime);
+						$push->call('app.mail.smimeCertAddToContact', $smime);
 					}
-					$push->call('app.mail.set_smimeFlags', $smime);
+					$push->call('app.mail.setSmimeFlags', $smime);
 				}
 			}
 			else	// 'tnef'
@@ -522,12 +522,12 @@ class MessageDisplayHandler
 				$acc_smime = Mail\Smime::get_acc_smime($this->ui->mail_bo->profileID);
 				$attachments = $this->ui->mail_bo->getMessageAttachments($uid, $partID, $structure,false,true,true, $mailbox);
 				$push = new Api\Json\Push($GLOBALS['egw_info']['user']['account_id']);
-				if (!empty($acc_smime) && !empty($smime['addtocontact'])) $push->call('app.mail.smime_certAddToContact', $smime);
+				if (!empty($acc_smime) && !empty($smime['addtocontact'])) $push->call('app.mail.smimeCertAddToContact', $smime);
 				if (is_array($attachments))
 				{
-					$push->call('app.mail.set_smimeAttachments', AttachmentJmap::createAttachmentBlock($attachments, $_GET['_messageID'], $uid, $mailbox));
+					$push->call('app.mail.setSmimeAttachments', AttachmentJmap::createAttachmentBlock($attachments, $_GET['_messageID'], $uid, $mailbox));
 				}
-				$push->call('app.mail.set_smimeFlags', $smime);
+				$push->call('app.mail.setSmimeFlags', $smime);
 			}
 		}
 		catch(Mail\Smime\PassphraseMissing $e)

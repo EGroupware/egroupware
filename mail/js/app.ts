@@ -1613,7 +1613,7 @@ export class MailApp extends EgwApp
 			const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 			IframeHandle.set_src('about:blank');
 
-			this.smime_clear_flags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
+			this.smimeClearFlags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
 
 			// show iframe, in case we hide it from mailvelopes one and remove that
 			jQuery(IframeHandle.getDOMNode()).show()
@@ -6802,7 +6802,7 @@ export class MailApp extends EgwApp
 	 * set attachments of smime message for mobile view
 	 * @param {type} _attachments
 	 */
-	set_smimeAttachmentsMobile(_attachments)
+	setSmimeAttachmentsMobile(_attachments)
 	{
 		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
 		var $attachment = jQuery('.et2_details.attachments');
@@ -6818,11 +6818,11 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {object} _attachments
 	 */
-	set_smimeAttachments(_attachments)
+	setSmimeAttachments(_attachments)
 	{
 		if (egwIsMobile())
 		{
-			this.set_smimeAttachmentsMobile(_attachments);
+			this.setSmimeAttachmentsMobile(_attachments);
 			return;
 		}
 		let data = {};
@@ -6874,7 +6874,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _data smime resolved certificate data
 	 * @returns {undefined}
 	 */
-	set_smimeFlags(_data)
+	setSmimeFlags(_data)
 	{
 		if (!_data) return;
 		var self = this;
@@ -6891,7 +6891,7 @@ export class MailApp extends EgwApp
 		smime_encryption.set_disabled(!data.encrypted);
 		if (!data.signed)
 		{
-			this.smime_clear_flags([mail_container]);
+			this.smimeClearFlags([mail_container]);
 			return;
 		}
 		else if (data.verify)
@@ -6919,10 +6919,10 @@ export class MailApp extends EgwApp
 		}
 		data.class = data.class ? data.class : "";
 		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).off().on('click',function(){
-			self.smime_certAddToContact(data,true);
+			self.smimeCertAddToContact(data,true);
 		}).addClass('et2_clickable');
 		jQuery(smime_encryption.getDOMNode()).off().on('click',function(){
-			self.smime_certAddToContact(data, true);
+			self.smimeCertAddToContact(data, true);
 		}).addClass('et2_clickable');
 	}
 
@@ -6931,7 +6931,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {jQuery Object} _nodes
 	 */
-	smime_clear_flags(_nodes)
+	smimeClearFlags(_nodes)
 	{
 		for(var i=0;i<_nodes.length;i++)
 		{
@@ -6948,7 +6948,7 @@ export class MailApp extends EgwApp
 	 * @param {type} _metadata
 	 * @param {boolean} _display if set to true will only show close button
 	 */
-	smime_certAddToContact(_metadata, _display)
+	smimeCertAddToContact(_metadata, _display)
 	{
 		//do not show the dialog on mobile
 		if(egwIsMobile()){
