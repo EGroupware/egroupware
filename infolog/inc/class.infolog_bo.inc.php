@@ -554,15 +554,29 @@ class infolog_bo
 			$f_user = explode(',',$f_user);
 		}
 
+		// No more users_table JOIN in searchInfolog()'s main query (removed along with the
+		// row-duplicating responsible/cc display join - see the migration doc's "eliminating
+		// searchInfolog()'s row-duplicating JOINs" research) - build EXISTS-subquery equivalents
+		// of the old "users_table.account_id IS NULL/NOT NULL" join-column checks instead.
+		// main.info_id is safe to hardcode here: every aclFilter() caller feeds the result
+		// straight into searchInfolog(), whose FROM clause always aliases the table as "main".
+		$active_delegation_exists = "EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id=main.info_id".
+			($deleted_too ? '' : ' AND info_res_deleted IS NULL').')';
+		$responsible_exists = function($users) use ($deleted_too)
+		{
+			return "EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id=main.info_id AND ".
+				$this->so->responsible_filter($users, $deleted_too).')';
+		};
+
 		$filtermethod = " (info_owner=$this->user"; // user has all rights
 
 		if ($filter == 'my' || $filter == 'responsible')
 		{
-			$filtermethod .= " AND {$this->so->users_table}.account_id IS NULL";
+			$filtermethod .= " AND NOT $active_delegation_exists";
 		}
 		if ($filter == 'delegated')
 		{
-			$filtermethod .= " AND {$this->so->users_table}.account_id IS NOT NULL)";
+			$filtermethod .= " AND $active_delegation_exists)";
 		}
 		else
 		{
@@ -587,12 +601,12 @@ class infolog_bo
 			}
 			$public_access = $this->so->db->expression($this->so->info_table,array('info_owner' => $public_user_list));
 			// implicit read-rights for responsible user
-			$filtermethod .= " OR (".$this->so->responsible_filter($this->user, $deleted_too).')';
+			$filtermethod .= " OR (".$responsible_exists($this->user).')';
 
 			// private: own entries plus the one user is responsible for
 			if ($filter == 'private' || $filter == 'privat' || $filter == 'own')
 			{
-				$filtermethod .= " OR (".$this->so->responsible_filter($this->user, $deleted_too).
+				$filtermethod .= " OR (".$responsible_exists($this->user).
 					($filter == 'own' && count((array)$public_user_list) ?	// offer's should show up in own, eg. startpage, but need read-access
 						" OR info_status = 'offer' AND $public_access" : '').")".
 				                 " AND (info_access='public'".($has_private_access?" OR $has_private_access":'').')';
@@ -614,7 +628,7 @@ class infolog_bo
 			{
 				$filtermethod .= $this->so->db->expression($this->so->info_table,' AND (',array(
 					'info_owner' => $f_user,
-				)." AND {$this->so->users_table}.account_id IS NULL OR ",$this->so->responsible_filter($f_user, $deleted_too),')');
+				)." AND NOT $active_delegation_exists OR ",$responsible_exists($f_user),')');
 			}
 		}
 		return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter

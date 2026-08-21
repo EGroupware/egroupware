@@ -818,10 +818,20 @@ class Storage extends Api\Storage
 						case 'info_responsible':
 							$data = (int) $data;
 							if (!$data) continue 2;	// +1 for switch
-							$filtermethod .= ' AND ('.$this->responsible_filter($data)." OR $this->users_table.account_id IS NULL AND ".
+							// EXISTS-subquery instead of the (removed) users_table JOIN, to avoid
+							// multiplying main-query rows - see the migration doc's "eliminating
+							// searchInfolog()'s row-duplicating JOINs" research. Same semantics as
+							// before: match either an active delegation to the given user/one of
+							// their memberships, or - if the entry has NO active delegation row at
+							// all - fall back to an owner match.
+							$deleted_filter = strpos($query['filter'], '+deleted') === false ? ' AND info_res_deleted IS NULL' : '';
+							$filtermethod .= ' AND ('.
+								"EXISTS (SELECT 1 FROM $this->users_table WHERE info_id=main.info_id AND ".$this->responsible_filter($data).') OR '.
+								"NOT EXISTS (SELECT 1 FROM $this->users_table WHERE info_id=main.info_id$deleted_filter) AND ".
 								$this->db->expression($this->table_name,array(
 									'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
-								)).')';
+								)).
+							')';
 							break;
 
 						case 'info_id':	// info_id itself is ambigous
@@ -878,22 +888,20 @@ class Storage extends Api\Storage
 				$ordermethod = 'ORDER BY '.$order_by;
 			}
 		}
-		$join .= " LEFT JOIN $this->users_table ON main.info_id=$this->users_table.info_id";
-		if (strpos($query['filter'], '+deleted') === false)
-		{
-			$join .= " AND $this->users_table.info_res_deleted IS NULL";
-		}
-		// do not return deleted attendees
-		$join .= " LEFT JOIN $this->users_table attendees ON main.info_id=attendees.info_id AND attendees.info_res_deleted IS NULL";
-		$group_by = ' GROUP BY main.info_id ';
-		// check if $query['append'] already contains a GROUP BY clause
+		// No more users_table JOIN here (removed along with the responsible-filter one above,
+		// see the migration doc's "eliminating searchInfolog()'s row-duplicating JOINs"
+		// research) - info_responsible/info_cc are hydrated after the main query via a batch
+		// read_responsible() call instead, so this query no longer multiplies rows and no
+		// longer needs a default GROUP BY to undo that. $query['append']/$query['having'] are
+		// still honoured as caller-supplied escape hatches (undocumented as actually used by
+		// any current caller, kept for signature/contract compatibility).
 		if (!empty($query['append']) && stripos($query['append'], 'group by') !== false)
 		{
 			$query['append'] .= ',main.info_id ';
 		}
 		else
 		{
-			$query['append'] = $group_by;
+			$query['append'] ??= '';
 		}
 		if (!empty($query['having']))
 		{
@@ -919,7 +927,7 @@ class Storage extends Api\Storage
 			}
 			else
 			{
-				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query.$group_by,__LINE__,__FILE__)->NumRows();
+				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__)->NumRows();
 			}
 			do
 			{
@@ -929,8 +937,6 @@ class Storage extends Api\Storage
 				}
 				$cols = isset($query['cols']) ? $query['cols'] : 'main.*';
 				if (is_array($cols)) $cols = implode(',',$cols);
-				$cols .= ','.$this->db->group_concat('attendees.account_id').' AS info_responsible';
-				$cols .= ','.$this->db->group_concat('attendees.info_res_attendee').' AS info_cc';
 				if (!empty($extra_cols)) $cols .= ','.implode(',', $extra_cols);    // join relevance/distance from RAG search
 				if (!empty($extra_order_cols)) $cols .= ','.implode(',', $extra_order_cols);  // postgres DISTINCT needs order-by expressions selected
 				$rs = $this->db->query($sql='SELECT '.$mysql_calc_rows.' '.$distinct.' '.$cols.' '.$sql_query.
@@ -951,14 +957,21 @@ class Storage extends Api\Storage
 			}
 			foreach($rs as $info)
 			{
-				$info['info_responsible'] = $info['info_responsible'] ? array_unique(explode(',',$info['info_responsible'])) : array();
-				foreach($info['info_responsible'] as $k => $v)
-				{
-					if (!is_numeric($v)) unset($info['info_responsible'][$k]);
-				}
-				$info['info_responsible'] = array_values($info['info_responsible']);
-
 				$ids[$info['info_id']] = $info;
+			}
+			// batch-hydrate info_responsible/info_cc for the whole result set in one go, instead
+			// of joining egw_infolog_users into the main query above (which would multiply its
+			// rows) - see the migration doc's "eliminating searchInfolog()'s row-duplicating
+			// JOINs" research, and read_responsible()'s docblock.
+			if ($ids)
+			{
+				$responsible = $this->read_responsible(array_keys($ids));
+				foreach($ids as $info_id => &$info)
+				{
+					$info['info_responsible'] = $responsible[$info_id]['info_responsible'] ?? array();
+					$info['info_cc'] = $responsible[$info_id]['info_cc'] ?? '';
+				}
+				unset($info);
 			}
 			static $index_load_cfs = null;
 			if (is_null($index_load_cfs) && !empty($query['col_filter']['info_type']))

@@ -851,12 +851,60 @@ Ralf's go-ahead: implement phase 1+2 now (see below); phase 3 (delegating to the
   failures and same pre-existing `ProjectTemplateTest` risky warning as the established
   baseline - no new regressions.
 
-#### Phase 2 — `searchInfolog()`'s responsible JOIN removal (next)
+#### Phase 2 — `searchInfolog()`'s responsible JOIN removal, 2026-08-21
 
-Not started yet in this session - see the plan above (`EXISTS`-fragment for
-`col_filter['info_responsible']`, drop the display `JOIN`+`GROUP_CONCAT`+`GROUP BY`, batch
-`read_responsible()` call after the main query, new `SearchResponsibleTest.php` locking down
-today's filter behavior first).
+- New `infolog/tests/SearchResponsibleTest.php` (5 tests: direct delegation match, delegation-to-
+  someone-else does NOT fall back to owner, no-delegation owner-fallback, fallback doesn't match
+  a different user, a *retracted* (soft-deleted) delegation still falls back to owner) - run
+  against the pre-Phase-2 code first (`git stash` on `Storage.php` only) to lock down today's
+  behavior (zero prior coverage) - 5/5 green - then against the change - 5/5 green.
+- `searchInfolog()`'s `col_filter['info_responsible']` case: replaced the
+  `responsible_filter($data) OR $this->users_table.account_id IS NULL AND <owner match>`
+  condition (relying on the JOIN) with `EXISTS (SELECT 1 FROM egw_infolog_users WHERE
+  info_id=main.info_id AND <responsible_filter($data)>) OR NOT EXISTS (SELECT 1 FROM
+  egw_infolog_users WHERE info_id=main.info_id<+deleted-aware filter>) AND <owner match>` -
+  same semantics, no JOIN needed. `responsible_filter()` itself (the membership-expansion logic)
+  is unchanged, just called from inside the `EXISTS` instead of relying on an outer JOIN.
+- Dropped both `LEFT JOIN egw_infolog_users`/`attendees` joins, the `GROUP_CONCAT()` columns, and
+  the default `GROUP BY main.info_id` (kept the pre-existing `$query['append']`/`$query['having']`
+  escape hatches for callers that supply their own - unused by any current caller, kept for
+  signature/contract compatibility only). The non-mysql total-count query's now-dangling
+  reference to the removed `$group_by` variable was fixed too (it's simply not needed any more,
+  since the query no longer multiplies rows).
+- Added a batch `read_responsible()` call right after the main query executes (only in the
+  default-columns path - the early-return-with-custom-`$query['cols']` path never selected
+  `info_responsible`/`info_cc` before either, so nothing changes there), merging
+  `info_responsible`/`info_cc` into every returned row - mirrors `calendar_so::search()`'s
+  post-query participant merge exactly.
+- **Real, unplanned complication found via the test suite**: `infolog_bo::aclFilter()` - the
+  ACL SQL builder applied on *every* search via `$acl_filter`, not just the
+  `col_filter['info_responsible']` case - also referenced `{$this->so->users_table}.account_id
+  IS NULL`/`IS NOT NULL` directly (twice) and called the bare `responsible_filter()` (twice
+  more), all assuming the now-removed JOIN was present in the query. Removing the JOIN broke
+  ACL filtering outright (`Unknown column 'egw_infolog_users.account_id'`), caught immediately
+  by the existing `AclCheckAccessTest.php`/`SearchCustomFieldFilterTest.php` suites. Flagged to
+  ralf before proceeding, since this expanded the change into ACL-sensitive code beyond what was
+  originally planned; ralf's call: fix `aclFilter()` too rather than revert or half-measure it.
+  Fixed the same way - two local closures/fragments (`$active_delegation_exists`,
+  `$responsible_exists($users)`) building `EXISTS`/`NOT EXISTS` subqueries against
+  `egw_infolog_users`, hardcoding `main.info_id` (safe: every `aclFilter()` caller feeds its
+  result straight into `searchInfolog()`, whose `FROM` clause always aliases the table `main`) -
+  substituted into all 4 call sites, `responsible_filter()` itself untouched.
+- **Pre-existing, unrelated bug noticed while touching this code (NOT fixed, out of scope)**:
+  `aclFilter()`'s `$filter == 'user'` branch (used by `infolog_groupdav`/`infolog_zpush`/the
+  calendar-include-todos hook to view a *specific other* user's tasks) builds one of its
+  `Db::expression()` arguments as `array('info_owner' => $f_user,)." AND ...`  - concatenating a
+  string directly onto an array literal with `.`, which PHP silently converts to the literal
+  string `"Array"` (with an `E_WARNING`, confirmed via `php -r`) instead of passing a real
+  column-data array to `expression()`. This predates this migration (present in the very first
+  commit of the migrated code) and reproduces identically before and after this phase's edit -
+  preserved as-is (same broken shape, just the substituted `users_table` fragment text updated)
+  rather than fixed in this pass, to avoid an unplanned, unreviewed ACL behavior change riding
+  along with the JOIN removal. Worth a dedicated look separately.
+- Full `infolog/tests/` suite: 84 tests / 567 assertions, same 6 pre-existing `CalDAVImportTest`
+  failures and same pre-existing `ProjectTemplateTest` risky warning as the established
+  baseline - no new regressions. Also re-ran
+  `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` (green).
 
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 
