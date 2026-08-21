@@ -1,12 +1,33 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
-## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions,
-folder-CRUD, sieve/vacation, ACL-dialog, subscription, folder-management/tree-lock, print, misc-UI,
-S/MIME, and the open/preview/compose cluster all renamed (2026-08-21). mailvelope methods needed no
-renaming (already Bucket A/B). **Still remaining**: a handful of folder-tree/status methods
-(`mail_CheckFolderNoSelect`, `mail_setFolderStatus`, `mail_setLeaf`, `mail_removeLeaf`,
-`mail_reloadNode`, `mail_refreshMessageGrid`) plus `acl_enabled` and `clearIntevals` (Bucket D) -
-small tail, not yet done.
+## Status: DONE (2026-08-21). Every Bucket C (`mail_`-prefixed) and Bucket D (snake_case) method
+has been renamed, verified (whole-repo grep for stray old names + `php -l`/`tsc`/`xmllint` on every
+touched file), committed, and pushed to master across 13 commits. Bucket A (12 methods - inherited
+`EgwApp` overrides, must never rename) and Bucket B (~30 methods - already camelCase) were
+intentionally left untouched. mailvelope methods needed no work: `mailvelopeGetCheckRecipients` is
+Bucket A, `mailvelopeDisplay`/`mailvelopeCompose`/`prepareMailvelopePrint` are Bucket B.
+
+Notable rename-time findings not visible from the original grep-only inventory:
+- `mail_open` → `openMessage` (not bare `open` - would've collided with `EgwApp.open()`).
+- `mail_compose`'s "37 php + 7 xet" hit count was mostly a false positive: the bare string
+  `mail_compose` is *also* the PHP controller class name (`class.mail_compose.inc.php`), referenced
+  via `'menuaction' => 'mail.mail_compose.compose'` strings and matching regexes all over the
+  codebase (compose.ts, addressbook, filemanager, egw_open.ts, egw_config.ts) - none of those were
+  touched. Only the real JS method + its 9 genuine `app.mail.mail_compose` action bindings were
+  renamed.
+- `spam_actions`'s "7 php hits" was similarly mostly a false positive: an unrelated PHP-local
+  `$spam_actions` variable in mail_ui.inc.php accounted for 5 of them; only the 2 real
+  `app.mail.spam_actions` action bindings were renamed.
+- `admin/js/app.ts` has its own unrelated local variable named `sieve_enabled` - left untouched.
+- `infolog_ui.inc.php` has its own unrelated local variable named `edit_acl` - left untouched.
+- Kept the `2`-shorthand style (`save2Fm`, `move2Folder`) and expanded `Mgmt`→`Management`
+  (`folderManagementDeleteOne`, `folderManagementOnSelect`, `folderManagementDeleteBtn`) per ralf's
+  explicit confirmation.
+
+**Lesson for future naming-cleanup work**: a raw whole-repo `grep -w` for a bare method name is not
+enough to scope a rename safely when that name might double as a PHP class name, a menuaction
+string, or an unrelated local variable elsewhere in the codebase - always re-check each "hit" file's
+actual context before touching it, not just before trusting the inventory's hit count.
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -113,12 +134,12 @@ rename time per the caveat above).
 | ~~`mail_refreshFilterOptions`~~ | `refreshFilterOptions` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`mail_refreshCatIdOptions`~~ | `refreshCatIdOptions` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`mail_queueRefreshFolderList`~~ | `queueRefreshFolderList` | 0 | 0 | 0 | low | **done 2026-08-21** |
-| `mail_CheckFolderNoSelect` | `checkFolderNoSelect` | 0 | 7 | 0 | **high** | also fixes bad capitalization; 7 PHP call sites |
-| `mail_setFolderStatus` | `setFolderStatus` | 0 | 3 | 1 | high | |
-| `mail_setLeaf` | `setLeaf` | 0 | 1 | 0 | high | |
-| `mail_removeLeaf` | `removeLeaf` | 0 | 1 | 0 | high | |
-| `mail_reloadNode` | `reloadNode` | 0 | 3 | 0 | high | |
-| `mail_refreshMessageGrid` | `refreshMessageGrid` | 0 | 0 | 0 | low | |
+| ~~`mail_CheckFolderNoSelect`~~ | `checkFolderNoSelect` | 0 | 7 | 0 | **high** | **done 2026-08-21**, also fixed bad capitalization |
+| ~~`mail_setFolderStatus`~~ | `setFolderStatus` | 0 | 3 | 1 | high | **done 2026-08-21** |
+| ~~`mail_setLeaf`~~ | `setLeaf` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_removeLeaf`~~ | `removeLeaf` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_reloadNode`~~ | `reloadNode` | 0 | 3 | 0 | high | **done 2026-08-21** |
+| ~~`mail_refreshMessageGrid`~~ | `refreshMessageGrid` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_getMsg`~~ | `getMsg` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_setMsg`~~ | `setMsg` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_delete`~~ | `deleteMessage` | 0 | 1 | 0 | high | **done 2026-08-21** (used `deleteMessage`, not bare `delete`, for clarity/distinctness from `deleteMessages`) |
@@ -188,7 +209,7 @@ rename time per the caveat above).
 | ~~`spamfolder_enabled`~~ | `spamfolderEnabled` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`archivefolder_enabled`~~ | `archivefolderEnabled` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`sieve_enabled`~~ | `sieveEnabled` | 0 | 2 | 2 | high | **done 2026-08-21** |
-| `acl_enabled` | `aclEnabled` | 0 | 2 | 6 | high | |
+| ~~`acl_enabled`~~ | `aclEnabled` | 0 | 2 | 6 | high | **done 2026-08-21** |
 | ~~`updateFilter_data`~~ | `updateFilterData` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`address_click`~~ | `addressClick` | 12 | 0 | 0 | **high** | **done 2026-08-21**, 12 `.xet` bindings |
 | ~~`integrate_checkAppEntry`~~ | `integrateCheckAppEntry` | 0 | 0 | 1 | low | **done 2026-08-21** |
@@ -215,7 +236,7 @@ rename time per the caveat above).
 | ~~`openstart_tree`~~ | `openStartTree` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`openend_tree`~~ | `openEndTree` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`vacation_change_account`~~ | `vacationChangeAccount` | 2 | 0 | 0 | high | **done 2026-08-21** |
-| `clearIntevals` | `clearIntervals` | 0 | 1 | 0 | high | also fixes a typo (`Intevals`→`Intervals`), not just casing |
+| ~~`clearIntevals`~~ | `clearIntervals` | 0 | 1 | 0 | high | **done 2026-08-21**, also fixed the typo (`Intevals`→`Intervals`) |
 | ~~`folderMgmt_onSelect`~~ | `folderManagementOnSelect` | 1 | 0 | 0 | high | **done 2026-08-21** (expanded Mgmt→Management) |
 | ~~`folderMgmt_deleteBtn`~~ | `folderManagementDeleteBtn` | 1 | 0 | 0 | high | **done 2026-08-21** (expanded Mgmt→Management) |
 | ~~`spam_actions`~~ | `spamActions` | 0 | 7 | 0 | high | **done 2026-08-21** - re-verifying at rename time found only 2 real `app.mail.spam_actions` action bindings; the other 5 "hits" were an unrelated PHP-local `$spam_actions` variable in mail_ui.inc.php, left untouched |
