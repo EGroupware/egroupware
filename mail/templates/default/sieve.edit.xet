@@ -72,18 +72,18 @@
 				<row>
 					<radio label="File into:" id="action" set_value="folder" />
 					<et2-hbox>
-						<et2-select  id="action_folder_text" allowFreeEntries="false" onfocus="app.mail.sieve_focus_radioBtn" searchUrl="mail.mail_sieve.ajax_getFolders" searchOptions=""></et2-select>
+						<et2-select  id="action_folder_text" allowFreeEntries="false" onfocus="app.mail.sieveFocusRadioBtn" searchUrl="mail.mail_sieve.ajax_getFolders" searchOptions=""></et2-select>
 					</et2-hbox>
 				</row>
 				<row disabled="@no_forward">
 					<radio label="Forward to address (*):" id="action" set_value="address" />
 					<et2-hbox>
-						<et2-email  allowFreeEntries="true" id="action_address_text" onfocus="app.mail.sieve_focus_radioBtn" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
+						<et2-email  allowFreeEntries="true" id="action_address_text" onfocus="app.mail.sieveFocusRadioBtn" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 					</et2-hbox>
 				</row>
 				<row>
 					<radio label="Send a reject message:" id="action" set_value="reject" />
-					<et2-textarea  id="action_reject_text" onfocus="app.mail.sieve_focus_radioBtn" height="100" ></et2-textarea>
+					<et2-textarea  id="action_reject_text" onfocus="app.mail.sieveFocusRadioBtn" height="100" ></et2-textarea>
 				</row>
 				<row>
 					<radio label="Discard message" id="action" set_value="discard" />

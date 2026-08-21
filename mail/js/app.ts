@@ -745,7 +745,7 @@ export class MailApp extends EgwApp
 						var contentWindow = iframe.getDOMNode().contentWindow;
 						if (contentWindow && contentWindow.app && contentWindow.app.mail)
 						{
-							contentWindow.app.mail.sieve_refresh();
+							contentWindow.app.mail.sieveRefresh();
 						}
 					}
 					return false;	// mail nextmatch needs NOT to be refreshed
@@ -2417,7 +2417,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	sieve_enabled(_action,_senders,_currentNode)
+	sieveEnabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _senders[0].id.split('::')[0];
@@ -4972,7 +4972,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _widget taglist
 	 *
 	 */
-	sieve_focus_radioBtn(_ev, _widget)
+	sieveFocusRadioBtn(_ev, _widget)
 	{
 		_widget.getRoot().getWidgetById('action').set_value(_widget.id.replace(/^action_([^_]+)_text$/, '$1'));
 	}
@@ -4981,7 +4981,7 @@ export class MailApp extends EgwApp
 	 * Select all aliases
 	 *
 	 */
-	sieve_vac_all_aliases()
+	sieveVacAllAliases()
 	{
 		var aliases = [];
 		var tmp = [];
@@ -5097,7 +5097,7 @@ export class MailApp extends EgwApp
 	/**
 	* Send ajax request to server to refresh the sieve grid
 	*/
-	sieve_refresh()
+	sieveRefresh()
 	{
 		this.et2._inst.submit();
 	}
@@ -5199,7 +5199,7 @@ export class MailApp extends EgwApp
 	 * @param {sender} _senders
 	 *
 	 */
-	edit_sieve(_action, _senders)
+	editSieve(_action, _senders)
 	{
 		var acc_id = parseInt(_senders[0].id);
 
@@ -5282,7 +5282,7 @@ export class MailApp extends EgwApp
 	 * @param {action} _action
 	 * @param {sender} _senders
 	 */
-	edit_vacation(_action, _senders)
+	editVacation(_action, _senders)
 	{
 		let acc_id;
 		if (!Array.isArray(_senders))
@@ -6147,7 +6147,7 @@ export class MailApp extends EgwApp
 	 * @param {widget object} _widget mail account selectbox
 	 *
 	 */
-	vacation_change_account(_egw, _widget)
+	vacationChangeAccount(_egw, _widget)
 	{
 		_widget.getInstanceManager().submit();
 	}

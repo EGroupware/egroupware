@@ -875,17 +875,17 @@ class mail_ui
 			),
 			'sieve' => array(
 				'caption' => 'Mail filter',
-				'onExecute' => 'javaScript:app.mail.edit_sieve',
+				'onExecute' => 'javaScript:app.mail.editSieve',
 
-				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
+				'enabled'	=> 'javaScript:app.mail.sieveEnabled',
 				'icon' => 'mail/filter',	// funnel
 				'hideOnMobile' => true
 			),
 			'vacation' => array(
 				'caption' => 'Vacation notice',
 				'icon' => 'mail/navbar',	// mail as in admin
-				'onExecute' => 'javaScript:app.mail.edit_vacation',
-				'enabled'	=> 'javaScript:app.mail.sieve_enabled',
+				'onExecute' => 'javaScript:app.mail.editVacation',
+				'enabled'	=> 'javaScript:app.mail.sieveEnabled',
 			),
 			'edit_account' => array(
 				'caption' => 'Edit account ...',

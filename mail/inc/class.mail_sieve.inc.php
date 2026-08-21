@@ -987,7 +987,7 @@ class mail_sieve
 
 		//Calling to referesh after move action
 		$response = Api\Json\Response::get();
-		$response->call('app.mail.sieve_refresh');
+		$response->call('app.mail.sieveRefresh');
 	}
 
 	/**
@@ -1041,7 +1041,7 @@ class mail_sieve
 		}
 		$this->saveSessionData();
 
-		$response->call('app.mail.sieve_refresh');
+		$response->call('app.mail.sieveRefresh');
 	}
 
 	/**

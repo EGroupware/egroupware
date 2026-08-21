@@ -17,7 +17,7 @@
 				<row>
 					<et2-hbox>
 						<et2-description  align="right" disabled="!@is_admin_vac" for="acc_id" value="Mail account"></et2-description>
-						<et2-select  id="acc_id" disabled="!@is_admin_vac" onchange="app.mail.vacation_change_account"></et2-select>
+						<et2-select  id="acc_id" disabled="!@is_admin_vac" onchange="app.mail.vacationChangeAccount"></et2-select>
 					</et2-hbox>
 				</row>
 				<row>
@@ -36,7 +36,7 @@
 				<row>
 					<et2-vbox>
 						<et2-email  id="addresses" class="et2_required" allowFreeEntries="true" span="2" multiple="true" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email" placeholder="all my email addresses" required="true"></et2-email>
-						<et2-button  class="$cont[hideIfSieveDisabled]" label="Add all my aliases" id="AllAddresses" onclick="app.mail.sieve_vac_all_aliases()"></et2-button>
+						<et2-button  class="$cont[hideIfSieveDisabled]" label="Add all my aliases" id="AllAddresses" onclick="app.mail.sieveVacAllAliases()"></et2-button>
 					</et2-vbox>
 				</row>
 				<row>

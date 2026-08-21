@@ -222,10 +222,10 @@
         <et2-button-toggle id="details" icon="card-text" statustext="Sneak preview in list" onchange="app.mail.toggleDetails"></et2-button-toggle>
         <et2-dropdown id="mail.index.vacationnotice" disabled="true" class="vacationnotice" hoist="true">
             <et2-hbox slot="trigger">
-                <et2-description value="on vacation" onclick="app.mail.edit_vacation"></et2-description>
+                <et2-description value="on vacation" onclick="app.mail.editVacation"></et2-description>
                 <et2-button-icon image="chevron-down" noSubmit="true"></et2-button-icon>
             </et2-hbox>
-            <et2-vbox onclick="app.mail.edit_vacation">
+            <et2-vbox onclick="app.mail.editVacation">
                 <et2-description id="nm[vacationnotice]" class="@nm[vacationclass]"></et2-description>
                 <et2-description id="nm[vacationrange]" class="@nm[vacationrangeclass]"></et2-description>
             </et2-vbox>
