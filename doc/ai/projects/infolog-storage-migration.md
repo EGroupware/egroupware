@@ -909,6 +909,52 @@ Ralf's go-ahead: implement phase 1+2 now (see below); phase 3 (delegating to the
   baseline - no new regressions. Also re-ran
   `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` (green).
 
+### Phase 3 — drop the `main` table alias, 2026-08-21
+
+First slice of Phase 3 ("delegate `searchInfolog()`'s remaining query assembly to the inherited
+`Api\Storage::search()`", per ralf's "please start phase 3"). The `main` alias in
+`searchInfolog()`'s `FROM $this->table_name main $join` only ever existed to disambiguate
+`info_id` against the (now-removed, Phase 1/2) `users_table` JOINs - with those gone, dropping
+it is prerequisite cleanup: `Api\Storage::search()`'s inherited machinery builds its own
+unaliased `FROM $this->table_name` and has no way to inject an alias, so keeping `main` around
+would have blocked delegating to it later regardless.
+
+- **Real, unplanned cross-app complication found while doing this**: the separate `rag` app
+  (not tracked in this git repo - `.gitignore`'d, a proprietary/separately-distributed
+  component) has `rag/src/Embedding/Infolog.php::table()`, explicitly overridden with the
+  docblock "Reimplemented as InfoLog aliases egw_infolog as main" - hardcoding `'main'` so its
+  own generated SQL fragment (used by the RAG/fulltext search branch of `searchInfolog()`)
+  matches. Flagged to ralf before proceeding (cross-app blast radius, not just internal
+  cleanup); his call: remove the override, since it becomes dead weight once InfoLog stops
+  aliasing. Confirmed the coupling empirically: ran a throwaway probe test (not committed) with
+  the *old* infolog code against the *already-fixed* rag plugin - reproduced exactly the
+  predicted `Unknown column 'egw_infolog.info_id'` SQL error - then with both sides consistent -
+  clean SQL, no error (the search itself returned no rows, but that's `searchFulltext()`'s
+  separate, async-indexed fulltext table not yet containing the freshly-written test row -
+  unrelated to this change, confirmed by reading `rag/src/Embedding.php::searchFulltext()`).
+  Since `rag/` isn't part of this repo, that fix isn't captured by this project's commits -
+  ralf, make sure the same change (delete the `table()` override) lands wherever `rag`'s real
+  source is tracked.
+- Mechanical replacement of every `main.` reference with the real table name
+  (`$this->table_name`/`egw_infolog`) across `infolog/src/Storage.php` (the `FROM` clause
+  itself, the link-filter fragment, the `info_responsible`/`info_id` `col_filter` fragments, the
+  free-text/RAG search fragments, the append/count/default-`cols` fragments) and
+  `infolog_bo.inc.php`'s `aclFilter()` (the two `EXISTS`/`NOT EXISTS` fragments) and two
+  caller-supplied `$query['cols']` sites (`infolog_bo::pm_icons()`,
+  `infolog_groupdav::propfind_generator()`'s helper).
+- Side cleanup this enabled: removed the `extra_join_filter`/`extra_join_order` alias-swap
+  hacks the `cf_filter()`/`order_by_cf()` increments had to introduce (no longer needed - those
+  fragments already reference the real table name, which now matches the `FROM` clause too),
+  and removed the throwaway `Api\Storage` instance in the free-text search block (its only
+  purpose was overriding `table_name` to `'main'` for `search2criteria()`; calls `$this->
+  search2criteria()` directly now).
+- Verification: full `infolog/tests/` suite (87 tests) - same 6 pre-existing `CalDAVImportTest`
+  failures, same pre-existing risky-test warning, no new regressions.
+  `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` - green.
+- **Not yet done**: the actual delegation to the inherited `Api\Storage::search()`/
+  `process_search()` for the main query build (criteria array assembly, pagination) - this
+  alias removal was prerequisite cleanup, not the delegation itself. Next.
+
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 
 Not gated on the SO swap itself, but natural to do once `infolog_bo` reliably hands

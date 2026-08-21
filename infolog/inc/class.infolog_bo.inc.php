@@ -558,13 +558,13 @@ class infolog_bo
 		// row-duplicating responsible/cc display join - see the migration doc's "eliminating
 		// searchInfolog()'s row-duplicating JOINs" research) - build EXISTS-subquery equivalents
 		// of the old "users_table.account_id IS NULL/NOT NULL" join-column checks instead.
-		// main.info_id is safe to hardcode here: every aclFilter() caller feeds the result
-		// straight into searchInfolog(), whose FROM clause always aliases the table as "main".
-		$active_delegation_exists = "EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id=main.info_id".
+		// $this->so->table_name (not an alias any more, see the same research) is safe to
+		// hardcode here: every aclFilter() caller feeds the result straight into searchInfolog().
+		$active_delegation_exists = "EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id={$this->so->table_name}.info_id".
 			($deleted_too ? '' : ' AND info_res_deleted IS NULL').')';
 		$responsible_exists = function($users) use ($deleted_too)
 		{
-			return "EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id=main.info_id AND ".
+			return "EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id={$this->so->table_name}.info_id AND ".
 				$this->so->responsible_filter($users, $deleted_too).')';
 		};
 
@@ -2002,7 +2002,7 @@ class infolog_bo
 			$query = array(
 				'col_filter' => array('info_id' => $args['infolog']),
 				'subs' => true,
-				'cols' => 'main.info_id,info_type,info_status,info_percent,info_id_parent',
+				'cols' => 'egw_infolog.info_id,info_type,info_status,info_percent,info_id_parent',
 			);
 			$infos = array();
 			foreach($this->search($query) as $row)

@@ -722,7 +722,7 @@ class Storage extends Api\Storage
 				if (count($links))
 				{
 					$links = call_user_func_array('array_merge',$links);	// flatten the array
-					$link_extra = ($action == 'sp' ? 'OR' : 'AND')." main.info_id IN (".implode(',',$links).')';
+					$link_extra = ($action == 'sp' ? 'OR' : 'AND')." $this->table_name.info_id IN (".implode(',',$links).')';
 				}
 			}
 		}
@@ -784,22 +784,17 @@ class Storage extends Api\Storage
 		}
 		if ($cf_col_filter)
 		{
-			// cf_filter()'s JOIN fragment (extra_join_filter) has the real table name baked in
-			// from construct time, but this query's FROM clause aliases it as "main" - alias it
-			// for the duration of this one call only (same reason search2criteria() below needs
-			// a throwaway instance with table_name overridden to "main").
-			$real_extra_join_filter = $this->extra_join_filter;
-			$this->extra_join_filter = str_replace($this->table_name.'.', 'main.', $this->extra_join_filter);
+			// cf_filter()'s JOIN fragment (extra_join_filter) already references the real table
+			// name from construct time - no more alias-swap needed now that this query's FROM
+			// clause doesn't alias the table as "main" any more either (that alias only ever
+			// existed to disambiguate against the now-removed users_table JOIN, see the migration
+			// doc's "eliminating searchInfolog()'s row-duplicating JOINs" research).
 			$this->cf_filter($cf_col_filter, $join, '');
-			$this->extra_join_filter = $real_extra_join_filter;
 		}
 		// delegate custom-field sorting to Api\Storage's own order_by_cf() (extracted out of
 		// process_search() specifically for this), instead of the old hand-rolled correlated
-		// subquery ("cfsortcrit") - same table-alias caveat as extra_join_filter above.
-		$real_extra_join_order = $this->extra_join_order;
-		$this->extra_join_order = str_replace($this->table_name.'.', 'main.', $this->extra_join_order);
+		// subquery ("cfsortcrit")
 		$this->order_by_cf($order_by, $join, $extra_order_cols);
-		$this->extra_join_order = $real_extra_join_order;
 		$ordermethod = 'ORDER BY '.$order_by;
 		if (isset($query['col_filter']) && is_array($query['col_filter']))
 		{
@@ -826,8 +821,8 @@ class Storage extends Api\Storage
 							// all - fall back to an owner match.
 							$deleted_filter = strpos($query['filter'], '+deleted') === false ? ' AND info_res_deleted IS NULL' : '';
 							$filtermethod .= ' AND ('.
-								"EXISTS (SELECT 1 FROM $this->users_table WHERE info_id=main.info_id AND ".$this->responsible_filter($data).') OR '.
-								"NOT EXISTS (SELECT 1 FROM $this->users_table WHERE info_id=main.info_id$deleted_filter) AND ".
+								"EXISTS (SELECT 1 FROM $this->users_table WHERE info_id=$this->table_name.info_id AND ".$this->responsible_filter($data).') OR '.
+								"NOT EXISTS (SELECT 1 FROM $this->users_table WHERE info_id=$this->table_name.info_id$deleted_filter) AND ".
 								$this->db->expression($this->table_name,array(
 									'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
 								)).
@@ -835,7 +830,7 @@ class Storage extends Api\Storage
 							break;
 
 						case 'info_id':	// info_id itself is ambigous
-							$filtermethod .= ' AND '.$this->db->expression($this->table_name,'main.',array('info_id' => $data));
+							$filtermethod .= ' AND '.$this->db->expression($this->table_name,$this->table_name.'.',array('info_id' => $data));
 							break;
 
 						default:
@@ -868,18 +863,17 @@ class Storage extends Api\Storage
 				if ($this->db->capabilities['like_on_text']) $columns[] = 'info_des';
 
 				$wildcard = '%'; $op = null;
-				// a throwaway instance, not $this: search2criteria() qualifies columns with
-				// $this->table_name, but this query uses the "main" alias, not the real
-				// egw_infolog table name $this->table_name holds everywhere else in this method
-				$so_sql = new Api\Storage('infolog', $this->table_name, $this->extra_table, '', 'info_extra_name', 'info_extra_value', 'info_id', $this->db);
-				$so_sql->table_name = 'main';
-				$search = $so_sql->search2criteria($query['search'], $wildcard, $op, null, $columns, order_by: $order_by);
-				$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
+				// search2criteria() qualifies columns with $this->table_name - no more throwaway
+				// instance needed to override that to a "main" alias, now that this query's FROM
+				// clause doesn't alias the table any more either (see the migration doc's
+				// "eliminating searchInfolog()'s row-duplicating JOINs" research).
+				$search = $this->search2criteria($query['search'], $wildcard, $op, null, $columns, order_by: $order_by);
+				$sql_query = 'AND ('.(is_numeric($query['search']) ? "$this->table_name.info_id=".(int)$query['search'].' OR ' : '').
 					implode($op, $search) .')';
 			}
 			else
 			{
-				$sql_query = 'AND ('.(is_numeric($query['search']) ? 'main.info_id='.(int)$query['search'].' OR ' : '').
+				$sql_query = 'AND ('.(is_numeric($query['search']) ? "$this->table_name.info_id=".(int)$query['search'].' OR ' : '').
 					current($filter).')';
 			}
 			// check if RAG-search changed order
@@ -897,7 +891,7 @@ class Storage extends Api\Storage
 		// any current caller, kept for signature/contract compatibility).
 		if (!empty($query['append']) && stripos($query['append'], 'group by') !== false)
 		{
-			$query['append'] .= ',main.info_id ';
+			$query['append'] .= ",$this->table_name.info_id ";
 		}
 		else
 		{
@@ -918,7 +912,7 @@ class Storage extends Api\Storage
 		$ids = array( );
 		if ($action == '' || $action == 'sp' || count($links))
 		{
-			$sql_query = "FROM $this->table_name main $join WHERE ($filtermethod $pid ".($sql_query ?? '').') '.($link_extra??'');
+			$sql_query = "FROM $this->table_name $join WHERE ($filtermethod $pid ".($sql_query ?? '').') '.($link_extra??'');
 
 			if (substr($this->db->Type, 0, 5) === 'mysql' && (float)$this->db->ServerInfo['version'] >= 4.0)
 			{
@@ -927,7 +921,7 @@ class Storage extends Api\Storage
 			}
 			else
 			{
-				$query['total'] = $this->db->query($sql="SELECT $distinct main.info_id ".$sql_query,__LINE__,__FILE__)->NumRows();
+				$query['total'] = $this->db->query($sql="SELECT $distinct $this->table_name.info_id ".$sql_query,__LINE__,__FILE__)->NumRows();
 			}
 			do
 			{
@@ -935,7 +929,7 @@ class Storage extends Api\Storage
 				{
 					$query['start'] = 0;
 				}
-				$cols = isset($query['cols']) ? $query['cols'] : 'main.*';
+				$cols = isset($query['cols']) ? $query['cols'] : "$this->table_name.*";
 				if (is_array($cols)) $cols = implode(',',$cols);
 				if (!empty($extra_cols)) $cols .= ','.implode(',', $extra_cols);    // join relevance/distance from RAG search
 				if (!empty($extra_order_cols)) $cols .= ','.implode(',', $extra_order_cols);  // postgres DISTINCT needs order-by expressions selected
