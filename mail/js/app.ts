@@ -282,7 +282,7 @@ export class MailApp extends EgwApp
 				{
 					// decrypt preview body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
-					self.mail_prepare_print();
+					self.preparePrint();
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
@@ -372,14 +372,14 @@ export class MailApp extends EgwApp
 				{
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
-					self.mail_prepare_print();
+					self.preparePrint();
 					self.resolveExternalImages((this as HTMLIFrameElement).contentWindow.document, window.location.search.endsWith('&mode=print_images'));
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
 					// Check if the iframe content is loaded then trigger the print command
 					if (window.location.search.search('&print=') >= 0 && jQuery((this as HTMLIFrameElement).contentWindow.document.body).children().length > 0)
 					{
-						self.mail_print();
+						self.print();
 					}
 				});
 
@@ -6034,17 +6034,17 @@ export class MailApp extends EgwApp
 	 * @param _senders - the representation of the tree leaf to be manipulated
 	 * both parameters can be ommited if we are in a mail.display and not in mail.index
 	 */
-	mail_print(_action?, _senders?)
+	print(_action?, _senders?)
 	{
 		const currentTemp = this.et2_obj.name;
 
 		switch (currentTemp)
 		{
 			case 'mail.index':
-				this.mail_prev_print(_action, _senders);
+				this.prevPrint(_action, _senders);
 				break;
 			case 'mail.display':
-				this.mail_display_print();
+				this.displayPrint();
 		}
 
 	}
@@ -6053,7 +6053,7 @@ export class MailApp extends EgwApp
 	 * Bind special handler on print media.
 	 * -FF and IE have onafterprint event, and as Chrome does not have that event we bind afterprint function to onFocus
 	 */
-	print_for_compose()
+	printForCompose()
 	{
 		var afterprint = function (){
 			egw(window).close();
@@ -6078,7 +6078,7 @@ export class MailApp extends EgwApp
 	 * trouble for multipage printing
 	 * @param _iframe mail body iframe, can be ommited to use querySelector
 	 */
-	mail_prepare_print(_iframe?: HTMLIFrameElement)
+	preparePrint(_iframe?: HTMLIFrameElement)
 	{
 		const mainIframe = _iframe || document.body.querySelector('#mail-display_mailDisplayBodySrc');
 		let tmpPrintDiv = document.body.querySelector('#tempPrintDiv');
@@ -6118,7 +6118,7 @@ export class MailApp extends EgwApp
 	/**
 	 * Print a mail from Display
 	 */
-	mail_display_print()
+	displayPrint()
 	{
 		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
@@ -6135,7 +6135,7 @@ export class MailApp extends EgwApp
 	 * @param {Object} _elems
 	 *
 	 */
-	mail_prev_print(_action, _elems)
+	prevPrint(_action, _elems)
 	{
 		this.mail_open(_action, _elems, _action.data.images ? 'print_images' : 'print');
 	}

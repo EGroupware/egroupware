@@ -1431,7 +1431,7 @@ class mail_ui
 			'print' => array(
 				'caption' => 'Print',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_print',
+				'onExecute' => 'javaScript:app.mail.print',
 				'allowOnMultiple' => false,
 				'hideOnMobile' => true
 			),
@@ -1911,7 +1911,7 @@ class mail_ui
 		if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
 		{
 			$response = Api\Json\Response::get();
-			$response->call('app.mail.print_for_compose', $rowID);
+			$response->call('app.mail.printForCompose', $rowID);
 		}
 		if (!$preventRedirect && ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox)))
 		{
