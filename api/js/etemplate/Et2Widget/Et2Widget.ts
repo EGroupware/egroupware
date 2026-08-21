@@ -1783,10 +1783,16 @@ export function loadWebComponent(_nodeName : string, _template_node : Element|{[
 		//return null;
 	}
 
+	// Avoid parent.options, which is deprecated and logs a warning - only legacy (non-WebComponent)
+	// widgets need it, since WebComponent parents either declare readonly as a property (caught above)
+	// or have it as a plain DOM attribute (checked here via the native getAttribute, not et2_widget's
+	// schema-checked getAttribute() which logs its own error for unregistered attributes)
+	const parentReadonly = typeof parent?.readonly !== "undefined" ? parent.readonly :
+						   parent instanceof HTMLElement ? parent.getAttribute("readonly") :
+						   (<any>parent)?.options?.readonly;
 	const readonly = parent?.getArrayMgr("readonlys") ?
 					 (<any>parent.getArrayMgr("readonlys")).isReadOnly(
-						 attrs["id"], attrs["readonly"],
-						 typeof parent?.readonly !== "undefined" ? parent.readonly : parent.options?.readonly || false) : false;
+						 attrs["id"], attrs["readonly"], parentReadonly || false) : false;
 	if(readonly === true && typeof window.customElements.get(_nodeName + "_ro") != "undefined")
 	{
 		_nodeName += "_ro";
