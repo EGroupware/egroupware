@@ -324,6 +324,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedSelfScrollSyncFrame : number | null = null;
 	private _rowsMinHeightFrame : number | null = null;
 	private _virtualizerLayoutSyncFrame : number | null = null;
+	private _reconnectStuckVirtualizerScheduled : boolean = false;
 	private _templateHandlerListeners : Map<string, EventListener> = new Map();
 	private _templateHandlerCache : Map<string, Function | false> = new Map();
 	private _rowTemplateHandlerCache : WeakMap<HTMLElement, Map<string, Function | false>> = new WeakMap();
@@ -782,6 +783,61 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._syncTemplateRowHeightHint();
 		this._syncTemplateHandlerListeners();
 		this.addEventListener("et2-embedded-height", this._handleEmbeddedHeightEvent as EventListener);
+		this._reconnectStuckVirtualizer();
+	}
+
+	/**
+	 * A caller reparenting an ancestor of this element (eg. an anonymous filemanager
+	 * share moving its containing form) can leave the virtualizer's AsyncDirective
+	 * disconnected without this host ever receiving a matching reconnect - confirmed
+	 * live against a real anonymous filemanager share. The virtualizer's own
+	 * _connected flag (and the ResizeObserver it tore down in disconnected()) never
+	 * come back on their own, so every later data arrival is silently dropped by
+	 * _updateLayout()'s `this._layout && this._connected` guard, and #rows stays
+	 * empty forever - not fixable by a window resize, since the virtualizer is
+	 * asleep rather than mismeasuring. Detect that specific stuck state and wake it
+	 * back up directly. Checked from both connectedCallback() (a real host
+	 * disconnect/reconnect) and updated() (the confirmed failure path: the stuck
+	 * disconnect happens at the directive/part level, without this host ever
+	 * reconnecting again, so connectedCallback() alone never gets another chance).
+	 *
+	 * Deferred to a microtask: calling virtualizer.connected() synchronously from
+	 * inside updated() re-enters the virtualizer's own update cascade while Lit is
+	 * still mid-commit, which can leave it perpetually scheduling another update
+	 * instead of settling. requestAnimationFrame would also defer past that, but a
+	 * backgrounded/non-rendering tab can leave it unfired indefinitely (confirmed
+	 * live); a microtask always runs promptly regardless of tab visibility.
+	 */
+	private _reconnectStuckVirtualizer() : void
+	{
+		if(this._reconnectStuckVirtualizerScheduled)
+		{
+			return;
+		}
+		this._reconnectStuckVirtualizerScheduled = true;
+		// A microtask, not requestAnimationFrame: this only needs to happen after the
+		// current synchronous update finishes (to avoid re-entering the virtualizer's
+		// own update cascade while Lit is still mid-commit - see class doc above). A
+		// rAF callback can go unfired indefinitely in a backgrounded/non-rendering tab
+		// (confirmed live: zero rAF callbacks fired for several seconds on a real
+		// anonymous-share tab), which a microtask is never subject to.
+		void Promise.resolve().then(() =>
+		{
+			this._reconnectStuckVirtualizerScheduled = false;
+			// Print rows intentionally stop rendering via virtualize() (render()'s
+			// `this._printRows ? ... : virtualize({...})` branch), which legitimately
+			// disconnects the directive - that must stay disconnected while printing,
+			// not get healed back to life here.
+			if(this._printRows)
+			{
+				return;
+			}
+			const virtualizer = this._virtualize as any;
+			if(this.isConnected && virtualizer?._connected === false && typeof virtualizer.connected === "function")
+			{
+				virtualizer.connected();
+			}
+		});
 	}
 
 	/**
@@ -1147,6 +1203,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	updated(changedProperties : PropertyValues)
 	{
 		super.updated(changedProperties);
+		this._reconnectStuckVirtualizer();
 
 		// Include new row stylesheet(s)
 		if(changedProperties.has("rowStylesheets"))
