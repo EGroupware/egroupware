@@ -1,7 +1,8 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
-## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, and message-actions
-(delete/flag/move/copy/save/header/integrate) groups renamed (2026-08-21), rest not started
+## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
+(delete/flag/move/copy/save/header/integrate), and folder-CRUD groups renamed (2026-08-21), rest
+not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -151,14 +152,14 @@ rename time per the caveat above).
 | ~~`mail_callMove`~~ | `callMove` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_copy`~~ | `copy` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`mail_callCopy`~~ | `callCopy` | 0 | 0 | 0 | low | **done 2026-08-21** |
-| `mail_AddFolder` | `addFolder` | 0 | 1 | 1 | high | fixes casing |
-| `mail_tryJmapAddFolder` | `tryJmapAddFolder` | 0 | 0 | 0 | low | private |
-| `mail_RenameFolder` | `renameFolder` | 0 | 1 | 1 | high | fixes casing |
-| `mail_tryJmapRenameFolder` | `tryJmapRenameFolder` | 0 | 0 | 0 | low | private |
-| `mail_MoveFolder` | `moveFolder` | 0 | 1 | 2 | high | fixes casing; distinct from `move2Folder` above but similar-looking — keep both clear in review |
-| `mail_tryJmapMoveFolder` | `tryJmapMoveFolder` | 0 | 0 | 0 | low | private |
-| `mail_DeleteFolder` | `deleteFolder` | 0 | 1 | 1 | high | fixes casing |
-| `mail_tryJmapDeleteFolder` | `tryJmapDeleteFolder` | 0 | 0 | 0 | low | private |
+| ~~`mail_AddFolder`~~ | `addFolder` | 0 | 1 | 1 | high | **done 2026-08-21**, fixed casing |
+| ~~`mail_tryJmapAddFolder`~~ | `tryJmapAddFolder` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_RenameFolder`~~ | `renameFolder` | 0 | 1 | 1 | high | **done 2026-08-21**, fixed casing |
+| ~~`mail_tryJmapRenameFolder`~~ | `tryJmapRenameFolder` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_MoveFolder`~~ | `moveFolder` | 0 | 1 | 2 | high | **done 2026-08-21**, fixed casing; distinct from `move2Folder` |
+| ~~`mail_tryJmapMoveFolder`~~ | `tryJmapMoveFolder` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_DeleteFolder`~~ | `deleteFolder` | 0 | 1 | 1 | high | **done 2026-08-21**, fixed casing |
+| ~~`mail_tryJmapDeleteFolder`~~ | `tryJmapDeleteFolder` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
 | `mail_tryJmapSetSubscribed` | `tryJmapSetSubscribed` | 0 | 0 | 0 | low | private |
 | `mail_subscriptionSubselect` | `subscriptionSubselect` | 0 | 0 | 0 | low | private |
 | `mail_subscriptionLoad` | `subscriptionLoad` | 0 | 1 | 1 | high | private |
