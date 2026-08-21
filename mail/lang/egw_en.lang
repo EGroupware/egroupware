@@ -135,6 +135,7 @@ could not generate certificate!	mail	en	Could not generate certificate!
 could not generate csr.	mail	en	Could not generate CSR.
 could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
 could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
+create folder	mail	en	Create folder
 create mailboxes (create new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb	mail	en	Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb
 create new account	mail	en	Create new account
 create private key and export csr	mail	en	Create private key and export CSR
@@ -155,6 +156,7 @@ defines what to show as identity label on mail folder header	common	en	Defines w
 delete folder	mail	en	Delete folder
 delete folder %1 ?	mail	en	DELETE folder %1?
 delete mailbox (delete mailbox, old mailbox name in rename)	mail	en	Delete mailbox (DELETE mailbox, old mailbox name in RENAME)
+delete messages	mail	en	Delete messages
 delete messages (set or clear \deleted flag via store, set \deleted flag during append/copy)	mail	en	Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)
 delete selected folders	mail	en	Delete selected folders
 delete this acl	mail	en	Delete this ACL
@@ -246,6 +248,7 @@ everyone	mail	en	Everyone
 examine namespace to retrieve folders in others and shared	mail	en	Examine namespace to retrieve folders in others and shared
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	en	Exclude attachments greater than given size from automatic saving as draft (in MB)
 export csr	mail	en	Export CSR
+expunge	mail	en	Expunge
 extended	mail	en	Extended
 extra sent folders	mail	en	Extra Sent Folders
 failed to create folder %1	mail	en	Failed to create folder %1
@@ -351,6 +354,7 @@ inbox	mail	en	Inbox
 information to show on email tag	mail	en	Information to show on email tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	en	The initialisation of the E-Mail module failed. Please use the configuration wizard to correct the configuration.
 inline	mail	en	Forward
+insert	mail	en	Insert
 insert (perform append, copy into mailbox)	mail	en	Insert (perform APPEND, COPY into mailbox)
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	en	insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)
 job	mail	en	Job
@@ -366,6 +370,7 @@ learning as spam failed because of %1	mail	en	Learning as spam failed because of
 less than	mail	en	less than
 limit mailing list results when searching for addresses	mail	en	Limit mailing list results when searching for addresses
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	en	List of actions to be switched/activated on by default (eg. email compose "Save as InfoLog" action).
+lookup	mail	en	Lookup
 lookup (mailbox is visible to list/lsub commands, subscribe mailbox)	mail	en	Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)
 low priority	mail	en	Low priority
 mail	common	en	Mail
@@ -586,6 +591,7 @@ saving of message %1 succeeded. check folder %2.	mail	en	Saving of message %1 su
 saving the rule failed:	mail	en	Saving the rule failed:
 security	mail	en	Security
 see attachments for content of the orignial mail	mail	en	See attachments for content of the original email
+seen	mail	en	Seen
 select a date	mail	en	Select a date
 select all	mail	en	Select all
 select an existing entry in order to append mail content to it	mail	en	Select an existing entry in order to append email content to it

@@ -380,6 +380,17 @@ class Jmap
 	 * JMAP quota extension, see https://www.rfc-editor.org/rfc/rfc9425
 	 */
 	const JMAP_QUOTA = "urn:ietf:params:jmap:quota";
+	/**
+	 * JMAP mail sharing extension (editable Mailbox shareWith/myRights), see
+	 * https://www.ietf.org/archive/id/draft-ietf-jmap-mail-sharing (base RFC 8621's myRights
+	 * is read-only)
+	 */
+	const JMAP_MAIL_SHARE = "urn:ietf:params:jmap:mail:share";
+	/**
+	 * JMAP principals extension, needed to resolve shareWith's identifiers (Principal ids, NOT
+	 * IMAP usernames/emails), see https://www.rfc-editor.org/rfc/rfc9670
+	 */
+	const JMAP_PRINCIPALS = "urn:ietf:params:jmap:principals";
 
 	/**
 	 * Make a JMAP call - emulating multiple methodCalls with single calls and resolving references
@@ -812,7 +823,7 @@ class Jmap
 	 * @param string|null $accountId
 	 * @return string|null null = not found
 	 */
-	protected function getMailboxId(string $folder, ?string $accountId=null) : ?string
+	public function getMailboxId(string $folder, ?string $accountId=null) : ?string
 	{
 		$methodCalls = [];
 		$key = 0;

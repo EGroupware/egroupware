@@ -22,7 +22,7 @@ import type {MailApp} from "./app";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
 import JamClient from "jmap-jam";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
-import {sortTopLevel} from "./folderTree";
+import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 
 interface JmapToken
 {
@@ -454,7 +454,8 @@ export class MailJmap
 			// showed by default; a real JMAP server filters the same way via RFC 8621's standard
 			// isSubscribed MailboxFilterCondition
 			const filter : Record<string, any> = {parentId};
-			if (subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
+			const effectiveSubscribedOnly = subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail'));
+			if (effectiveSubscribedOnly)
 			{
 				filter.isSubscribed = true;
 			}
@@ -494,7 +495,11 @@ export class MailJmap
 			}
 			if (!token.isLocal)
 			{
-				await this.resolveHasChildren(client, token.accountId, list);
+				await this.resolveHasChildren(client, token.accountId, list, effectiveSubscribedOnly);
+				if (parentId === null)
+				{
+					await this.resolveAclCapable(client, token, list);
+				}
 			}
 			return list;
 		}
@@ -568,7 +573,8 @@ export class MailJmap
 			if (!token) return null;
 			const client = this.clients[profileID];
 			const filter : Record<string, any> = {parentId: null};
-			if (subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail')))
+			const effectiveSubscribedOnly = subscribedOnly ?? !isPreferenceOn(this.egw.preference('showAllFoldersInFolderPane', 'mail'));
+			if (effectiveSubscribedOnly)
 			{
 				filter.isSubscribed = true;
 			}
@@ -590,7 +596,8 @@ export class MailJmap
 			sortTopLevel(top);
 			if (!token.isLocal)
 			{
-				await this.resolveHasChildren(client, token.accountId, top);
+				await this.resolveHasChildren(client, token.accountId, top, effectiveSubscribedOnly);
+				await this.resolveAclCapable(client, token, top);
 			}
 
 			const inboxId = inboxIds.ids?.[0] ?? null;
@@ -634,22 +641,89 @@ export class MailJmap
 	 * Best-effort: leaves hasChildren untouched (mutates in place) on any failure, since this is
 	 * a cosmetic improvement over the already-correct self-correcting default, not worth failing
 	 * the whole level fetch over.
+	 *
+	 * Also resolves hasSubscribedChildren for any namespace-root candidate ("user"/"shared", see
+	 * folderTree.ts's isNamespaceRootName()) whenever subscribedOnly is in effect - hasChildren
+	 * alone (any child, subscribed or not) isn't enough to decide whether that root belongs in a
+	 * subscribedOnly view: folderTree.ts's isVisibleNamespaceRoot() needs to know whether at least
+	 * one of its children is actually subscribed, or it would show an always-visible dead end
+	 * whenever something is shared with this user but they haven't subscribed to any of it yet
+	 * (ralf's report - still findable via the subscription dialog, which never sets
+	 * subscribedOnly). A second, separate batched query (not folded into the loop above) since it
+	 * only ever applies to the 0-2 namespace-root candidates a level can have, never worth doing
+	 * for every mailbox.
+	 *
+	 * @param subscribedOnly the effective value already resolved by the caller (own param or
+	 *  showAllFoldersInFolderPane preference, see getMailboxChildren()/getRootFolders())
 	 */
-	private async resolveHasChildren(client : JamClient, accountId : string, list : any[]) : Promise<void>
+	private async resolveHasChildren(client : JamClient, accountId : string, list : any[], subscribedOnly : boolean) : Promise<void>
 	{
 		const unknown = list.filter((m) => m.hasChildren === undefined || m.hasChildren === null);
-		if (!unknown.length) return;
+		if (unknown.length)
+		{
+			try
+			{
+				const [checks] = await client.requestMany((t) => Object.fromEntries(
+					unknown.map((m, i) => [`c${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id}, limit: 1})])
+				));
+				unknown.forEach((m, i) => m.hasChildren = ((checks as any)[`c${i}`]?.ids?.length ?? 0) > 0);
+			}
+			catch (e)
+			{
+				console.error('MailJmap.resolveHasChildren(): failed, leaving hasChildren unresolved', e);
+			}
+		}
 
+		if (!subscribedOnly) return;
+		const roots = list.filter((m) => isNamespaceRootName(m.name) && m.hasChildren !== false);
+		if (!roots.length) return;
 		try
 		{
 			const [checks] = await client.requestMany((t) => Object.fromEntries(
-				unknown.map((m, i) => [`c${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id}, limit: 1})])
+				roots.map((m, i) => [`s${i}`, t.Mailbox.query({accountId, filter: {parentId: m.id, isSubscribed: true}, limit: 1})])
 			));
-			unknown.forEach((m, i) => m.hasChildren = ((checks as any)[`c${i}`]?.ids?.length ?? 0) > 0);
+			roots.forEach((m, i) => m.hasSubscribedChildren = ((checks as any)[`s${i}`]?.ids?.length ?? 0) > 0);
 		}
 		catch (e)
 		{
-			console.error('MailJmap.resolveHasChildren(): failed, leaving hasChildren unresolved', e);
+			console.error('MailJmap.resolveHasChildren(): failed, leaving hasSubscribedChildren unresolved', e);
+		}
+	}
+
+	/**
+	 * Resolve whether ACL (folder access-rights) editing is available for this account, attaching
+	 * it as `aclCapable` on the top level's own INBOX entry - MailApp.acl_enabled() (mail/js/app.ts)
+	 * reads it from there (folderTree.ts's buildNode() copies it into the INBOX tree node's own
+	 * `data.acl`, matching classic mail_tree.inc.php's exact node shape - its own "Set Acl
+	 * capability for INBOX" comment - so acl_enabled() needed no changes at all). ACL editing is an
+	 * account-level feature, never per-folder, hence only ever attached to INBOX.
+	 *
+	 * The local shim's classic IMAP ACL capability is resolved server-side instead
+	 * (JmapShim::mailboxNode() - a live IMAP connection is already open by the time any mailbox is
+	 * fetched for that account, so queryCapability('ACL') is free there) and arrives as
+	 * `aclCapable` directly on its INBOX Mailbox object already - this only has anything to do for
+	 * the real-JMAP/Stalwart case, where mail:share is an account capability (see doc/ai memory
+	 * "mail-jmap-acl-plan"), not a per-mailbox property a plain Mailbox/get would ever return.
+	 *
+	 * A no-op if `list` isn't a top-level fetch (no role:'inbox' entry in it) - safe to call
+	 * unconditionally.
+	 *
+	 * @param list mailboxes just fetched at any level - only acts if one of them is the account's
+	 *  own top-level INBOX
+	 */
+	private async resolveAclCapable(client : JamClient, token : JmapToken, list : any[]) : Promise<void>
+	{
+		const inbox = list.find((m) => m.role === 'inbox');
+		if (!inbox) return;
+		try
+		{
+			const session = await client.session;
+			const accountCapabilities = session.accounts?.[token.accountId]?.accountCapabilities ?? {};
+			inbox.aclCapable = !!accountCapabilities['urn:ietf:params:jmap:mail:share'];
+		}
+		catch (e)
+		{
+			console.error('MailJmap.resolveAclCapable(): failed, leaving aclCapable unresolved', e);
 		}
 	}
 

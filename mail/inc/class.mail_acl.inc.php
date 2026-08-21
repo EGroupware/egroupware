@@ -153,6 +153,11 @@ class mail_acl
 
 		if (!is_array($content))
 		{
+			// must exist even when $mailbox/$acls end up empty (eg. a JMAP-backed folder with no
+			// shareWith entries at all - unlike classic IMAP GETACL, which typically includes at
+			// least the owner's own entry) - array_push()/count() below require an array
+			$content['grid'] = [];
+			$n = 1;
 			if (!empty($mailbox))
 			{
 				$content['mailbox'] = $mailbox;
@@ -160,7 +165,6 @@ class mail_acl
 				{
 					Api\Framework::window_close($msg);
 				}
-				$n = 1;
 				foreach ($acls as $key => $acl)
 				{
 					$rights = [];
@@ -201,14 +205,26 @@ class mail_acl
 				//error_log(__METHOD__."() acl=".array2string($acl).' --> grid='.array2string($content['grid']));
 			}
 			//Set the acl entry in the last row with lrs as default ACL
-			array_push($content['grid'], array(
+			// must be $content['grid'][$n], NOT array_push() - array_push() picks its own key
+			// (max existing int key + 1, ie. 0 for a still-empty grid), while the grid widget's
+			// own row numbering is 1-based unconditionally; a genuinely empty $acls (eg. a
+			// JMAP-backed folder with nothing shared yet) left $n at its initial value of 1 with
+			// nothing added to $content['grid'] yet, so array_push() put this row at key 0 -
+			// invisible to the widget's row-1 lookup, leaving every checkbox unbound/unchecked
+			// despite acl_l/acl_r/acl_s being true right here. $n already matches the widget's
+			// own numbering (1, or one past the last real ACL row if there were any).
+			$content['grid'][$n] = array(
 				'acc_id'=>'',
 				'acl_l' => true,
 				'acl_r' => true,
-				'acl_s' => true));
+				'acl_s' => true);
 		}
 		else
 		{
+			// see the matching comment in the !is_array($content) branch above - a postback with
+			// zero grid rows (eg. save clicked right after deleting the last one) can arrive with
+			// no 'grid' key at all
+			$content['grid'] = (array)($content['grid'] ?? []);
 			$button = !empty ($content['grid']['delete']) ? 'delete' : @key((array)$content['button']);
 			$data = $content;
 			$data['mailbox'] = self::_extract_mailbox($content['mailbox'], $acc_id);
@@ -287,6 +303,28 @@ class mail_acl
 		$preserv['acc_id'] = $acc_id;
 		$preserv['account_id'] = $account_id;
 		$content['grid']['account_type'] = $this->imap->supportsGroupAcl() ? 'both' : 'accounts';
+		// used by acl.xet's `class="@acl_hidden_class"`/`class="@acl_hidden_header_class"` widgets
+		// to hide rights JMAP's mail:share extension has no equivalent for at all (Lookup, the
+		// obsolete C/D virtual rights, and Expunge - see JMAP_RIGHT_TO_IMAP's docblock) - classic
+		// IMAP accounts (and JMAP-shim/local accounts, which still use the classic IMAP ACL path)
+		// keep seeing every right, in its normal RFC 4314 position, unchanged.
+		//
+		// Deliberately a CSS class (mailAclHidden, display:none), not <column disabled="@...">:
+		// disabled removes the cell from the row entirely but leaves its <col> in the shared
+		// <colgroup>, so every column after a disabled one silently inherits the WRONG width
+		// (positionally shifted by however many columns were disabled before it) - confirmed live,
+		// and only ever worked around before by moving the hidden columns to the end of the row,
+		// which put them behind the delete button even for classic accounts that never hide
+		// anything. A CSS-only hide keeps the DOM cell count (and therefore the <colgroup>
+		// alignment) identical regardless of $isJmap, so every right can stay in its natural
+		// RFC 4314 position for everyone.
+		//
+		// Must live under $content['grid'], not top-level $content - the inner <grid id="grid">'s
+		// own widgets resolve a bare "@fieldname" reference against ITS OWN array-manager scope
+		// (content['grid']), same as the pre-existing "@account_type" reference right above this line.
+		$isJmap = is_a($this->imap, Mail\Imap\Jmap::class) && $this->imap->mailShareSupported();
+		$content['grid']['acl_hidden_class'] = $isJmap ? 'mailAclHidden' : '';
+		$content['grid']['acl_hidden_header_class'] = 'mailAclRotatedHeader'.($isJmap ? ' mailAclHidden' : '');
 
 		// set a custom autocomplete method for mailbox taglist
 		if ($account_id)

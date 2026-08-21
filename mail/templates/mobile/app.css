@@ -1047,6 +1047,88 @@ et2-menu-item#mark et2-menu-item#customFlag et2-image[slot='prefix'] {
   padding: var(--sl-spacing-medium) 0;
   flex-grow: 0;
 }
+/*
+ * mail.acl dialog: rotate the ACL right column headers 90° instead of showing a single,
+ * for-users-meaningless letter (ralf's UX request) - the full statustext tooltip still explains
+ * each right on hover. Deliberately writing-mode, NOT transform:rotate() alone - a plain rotate()
+ * only repaints the box, it never changes the box's own layout footprint, so a rotated wide/short
+ * text run keeps occupying its original short/wide flow slot while being PAINTED as tall/narrow -
+ * every following cell in the row still lays out as if the rotation never happened, which is
+ * exactly the first "completely off"/overlapping header. writing-mode:vertical-rl actually lays
+ * the text out top-to-bottom (a real tall/narrow box, correct in flow), and rotating that 180°
+ * flips the reading direction to the usual bottom-to-top column-header convention.
+ *
+ * Et2Description renders its `value` as a real LIGHT-DOM child (`span.description--content`,
+ * confirmed live via its outerHTML), slotted into the shadow template rather than interpolated
+ * directly into shadow-root markup - and CSS inheritance for slotted content resolves against the
+ * FLATTENED tree (the <slot>'s position inside the shadow root), not the original light-DOM
+ * ancestor chain. So an INHERITED property like writing-mode set on the host
+ * (<et2-description class="mailAclRotatedHeader">) never reaches that span - only genuinely
+ * non-inherited, per-element properties applied straight to the host (like the host's own
+ * display/transform) still affect its own rendered box. That's why targeting only the host left
+ * the text itself laid out horizontally (its default, un-inherited writing-mode) inside a now
+ * artificially narrow box, overflowing into neighbouring cells. Targeting the actual light-DOM
+ * span directly (a normal descendant selector, unaffected by slotting) fixes this for real.
+ *
+ * tag-qualified (et2-description.mailAclRotatedHeader, not just .mailAclRotatedHeader): this
+ * repo's grid widget copies a widget's `class` attribute onto its wrapping <td> too (confirmed
+ * live: td.className was "mailAclRotatedHeader" too) - an unqualified rule also matched that
+ * <td>, turning it from the browser's real `display:table-cell` into `display:inline-block` and
+ * making it shrink-to-fit its own content instead of participating in the table's shared column
+ * width at all, independently of every other cell - that's what actually caused every rotated
+ * header to pile up in the first rights column (each collapsed <td> only took as much space as
+ * its own rotated text needed, ignoring its <col>'s width). Scoping to the element tag keeps this
+ * rule off the <td>.
+ */
+et2-description.mailAclRotatedHeader {
+  display: inline-block;
+}
+et2-description.mailAclRotatedHeader .description--content {
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  white-space: nowrap;
+  display: inline-block;
+  /* the checkbox below isn't actually centered within its own <td> either: shoelace's checkbox
+	 * reserves room for a (here empty) label to the right of its "control" part, so the VISIBLE
+	 * checkbox square sits ~3.5px left of the <td>'s true center (measured live: base part center
+	 * 1167.4px, control/visible-square part center 1163.9px) - without this, centering the label
+	 * on the <td>'s true center (which is what justify-content:center on the host does) puts it
+	 * ~4px right of the visible checkbox (ralf's report). Shifts the centered content 3.5px left
+	 * to match the checkbox's actual visible position instead of its wider hit/label area. */
+  margin-right: 7px;
+}
+/* the header row's height is set by its tallest rotated label ("Delete messages") - without this,
+ * every shorter label centers within that height (the <td>'s default vertical-align), floating
+ * above the checkboxes below instead of anchoring to the row's bottom edge right above them
+ * (ralf's preference) - this is the ONE place targeting the <td> itself is exactly what's wanted.
+ * Applies to every header cell (Name/Common ACL/Recursively/Action too, not just the rotated
+ * ones), so the whole header row shares one baseline right above the checkboxes. */
+#mail-acl_grid tr.th > td {
+  vertical-align: bottom;
+}
+/* Et2Description's align="center" sets text-align:center on the host, but the host's own shadow
+ * layout is `display:flex; justify-content:flex-start` (see Et2Description's own :host styles) -
+ * flex positions children via justify-content, not text-align, so align="center" alone left
+ * "Recursively" flush against the cell's left edge instead of centered over its checkbox. */
+#mail-acl_grid et2-description[align="center"] {
+  justify-content: center;
+}
+/* breathing room between Name/Common ACL and the (otherwise tightly-packed, which is fine there)
+ * rights checkboxes - without it the account-select/common-ACL dropdowns visually run straight
+ * into the first rights column. */
+#mail-acl_grid tr > td:nth-child(1),
+#mail-acl_grid tr > td:nth-child(2) {
+  padding-right: 1em;
+}
+/* JMAP-nonexistent rights (Lookup, obsolete virtual Create/Delete, Expunge - see
+ * mail_acl::edit()'s $isJmap comment) - a CSS-only hide (not <column disabled="@...">, which
+ * removes the cell and breaks the shared <colgroup> alignment for every column after it) keeps
+ * every right in its normal RFC 4314 position for everyone, JMAP accounts included. Also matches
+ * onto the wrapping <td> (this repo's grid widget copies a widget's own `class` there too), which
+ * is exactly what's wanted here - the whole cell collapses, not just the widget inside it. */
+.mailAclHidden {
+  display: none;
+}
 /* import */
 /* tablets and smartphones  */
 @media all {

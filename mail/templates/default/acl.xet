@@ -4,86 +4,75 @@
 	<template id="mail.acl" template="" lang="" group="0" version="1.9.001">
 		<grid width="100%" height="100%">
 			<columns>
-				<column width="10%"/>
-				<column width="90%"/>
+				<column/>
 			</columns>
 			<rows>
 				<row class="dialogHeader">
 					<et2-description  value="Mail ACL"></et2-description>
 				</row>
 				<row>
-					<et2-description  value="Folder"></et2-description>
 					<et2-select  id="mailbox" width="100%" height="150" allowFreeEntries="false" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_search" onchange="app.mail.acl_folderChange"></et2-select>
 				</row>
 				<row>
-					<et2-description  value="Rights"></et2-description>
 					<grid id="grid" width="100%">
 						<columns>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
-							<column/>
+							<column width="480"/>
+							<column width="290"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="24"/>
+							<column width="110"/>
 							<column/>
 						</columns>
 						<rows>
 							<row class="th">
 								<et2-description  value="Name"></et2-description>
 								<et2-description  value="Common ACL"></et2-description>
-								<et2-description  align="center" statustext="Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)" value="L"></et2-description>
-								<et2-description  align="center" statustext="Read (SELECT the mailbox, perform STATUS)" value="R"></et2-description>
-								<et2-description  align="center" statustext="Keep seen/unseen information across sessions (set or clear \SEEN flag via STORE, also set \SEEN during APPEND/COPY/ FETCH BODY[...])" value="S"></et2-description>
-								<et2-description  align="center" statustext="Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)" value="W"></et2-description>
-								<et2-description  align="center" statustext="Insert (perform APPEND, COPY into mailbox)" value="I"></et2-description>
-								<et2-description  align="center" statustext="Post (send mail to submission address for mailbox, not enforced by IMAP4 itself)" value="P"></et2-description>
-								<et2-description  align="center" statustext="Obsolet create right, combination rights of K and X" value="C"></et2-description>
-								<et2-description  align="center" statustext="Obsolete delete right, combination rights of E, T and X" value="D"></et2-description>
-								<et2-description  align="center" statustext="Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb" value="K"></et2-description>
-								<et2-description  align="center" statustext="Delete mailbox (DELETE mailbox, old mailbox name in RENAME)" value="X"></et2-description>
-								<et2-description  align="center" statustext="Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)" value="T"></et2-description>
-								<et2-description  align="center" statustext="Perform EXPUNGE and expunge as a part of CLOSE" value="E"></et2-description>
-								<et2-description  align="center" statustext="Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)" value="A"></et2-description>
+								<et2-description  class="@acl_hidden_header_class" align="center" statustext="Lookup (mailbox is visible to LIST/LSUB commands, SUBSCRIBE mailbox)" value="Lookup"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Read (SELECT the mailbox, perform STATUS)" value="Read"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Keep seen/unseen information across sessions (set or clear \SEEN flag via STORE, also set \SEEN during APPEND/COPY/ FETCH BODY[...])" value="Seen"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Write (set or clear flags other than \SEEN and \DELETED via STORE, also set them during APPEND/COPY)" value="Write"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Insert (perform APPEND, COPY into mailbox)" value="Insert"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Post (send mail to submission address for mailbox, not enforced by IMAP4 itself)" value="Post"></et2-description>
+								<et2-description  class="@acl_hidden_header_class" align="center" statustext="Obsolet create right, combination rights of K and X" value="Create"></et2-description>
+								<et2-description  class="@acl_hidden_header_class" align="center" statustext="Obsolete delete right, combination rights of E, T and X" value="Delete"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb" value="Create folder"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Delete mailbox (DELETE mailbox, old mailbox name in RENAME)" value="Delete folder"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Delete messages (set or clear \DELETED flag via STORE, set \DELETED flag during APPEND/COPY)" value="Delete messages"></et2-description>
+								<et2-description  class="@acl_hidden_header_class" align="center" statustext="Perform EXPUNGE and expunge as a part of CLOSE - JMAP has no separate mark-deleted/expunge two-step at all (messages are destroyed directly), so this right has no JMAP equivalent either" value="Expunge"></et2-description>
+								<et2-description  class="mailAclRotatedHeader" align="center" statustext="Administer (perform SETACL/DELETEACL/GETACL/LISTRIGHTS)" value="Admin"></et2-description>
 								<et2-description  align="center" statustext="Apply rights recursively to sub-folders" value="Recursively"></et2-description>
-								<et2-description  value="Action"></et2-description>
+								<et2-description></et2-description>
 							</row>
 							<row class="row">
 								<et2-select-account id="${row}[acc_id]" allowFreeEntries="true" emptyLabel="Select account" accountType="@account_type"></et2-select-account>
 								<et2-select  id="${row}[acl]" onchange="app.mail.acl_common_rights_selector"></et2-select>
-								<et2-checkbox  align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  class="@acl_hidden_class" align="center" id="${row}[acl_l]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_r]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_s]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_w]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_i]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_p]" onchange="app.mail.acl_common_rights"></et2-checkbox>
-								<et2-checkbox  align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"></et2-checkbox>
-								<et2-checkbox  align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  class="@acl_hidden_class" align="center" id="${row}[acl_c]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  class="@acl_hidden_class" align="center" id="${row}[acl_d]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_k]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_x]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_t]" onchange="app.mail.acl_common_rights"></et2-checkbox>
-								<et2-checkbox  align="center" id="${row}[acl_e]" onchange="app.mail.acl_common_rights"></et2-checkbox>
+								<et2-checkbox  class="@acl_hidden_class" align="center" id="${row}[acl_e]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_a]" onchange="app.mail.acl_common_rights"></et2-checkbox>
 								<et2-checkbox  align="center" id="${row}[acl_recursive]"></et2-checkbox>
                                 <et2-button align="right" statustext="Delete this ACL" label="Delete" id="delete[$row]" value="${row}" image="delete" onclick="app.mail.acl_delete_row"></et2-button>
 							</row>
-						</rows>
-					</grid>
-				</row>
-				<row>
-					<grid resize_ratio="1">
-						<columns><column/></columns>
-						<rows>
-							<row></row>
 						</rows>
 					</grid>
 				</row>

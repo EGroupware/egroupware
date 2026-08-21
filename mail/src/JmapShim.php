@@ -412,7 +412,13 @@ class JmapShim
 			{
 				continue;
 			}
-			$hasGrantedChildren = $imap->listMailboxes($name.$delimiter.'%', \Horde_Imap_Client::MBOX_ALL_SUBSCRIBED, []);
+			// MBOX_SUBSCRIBED (not MBOX_ALL_SUBSCRIBED - see this class's own listMailboxes() docs a
+			// few lines up) - this whole function only ever runs for a subscribedOnly request (see
+			// listChildIds()'s calling `elseif`), so "granted" here must mean "granted AND
+			// subscribed", or an always-visible root would be a dead end whenever something is
+			// shared with this user but they haven't subscribed to any of it yet (ralf's report) -
+			// still findable via the subscription dialog, which never calls with subscribedOnly true.
+			$hasGrantedChildren = $imap->listMailboxes($name.$delimiter.'%', \Horde_Imap_Client::MBOX_SUBSCRIBED, []);
 			if (empty($hasGrantedChildren))
 			{
 				continue;
@@ -648,6 +654,14 @@ class JmapShim
 			'role' => self::roleFor($imap, $mailboxName, $attributes),
 			'hasChildren' => in_array('\\haschildren', $attributes, true) ? true :
 				(in_array('\\hasnochildren', $attributes, true) ? false : true),
+			// classic mail_tree.inc.php's own "Set Acl capability for INBOX" - only ever checked
+			// there, since ACL editing is an account-level feature, not a per-folder one; a live
+			// IMAP connection to this account is already open by the time any of its mailboxes are
+			// fetched, so queryCapability() (an in-memory lookup against the already-fetched
+			// CAPABILITY response) costs nothing extra here - see mail/js/app.ts's acl_enabled()
+			// (reads it back via folderTree.ts's buildNode(), as node.data.acl) and
+			// MailJmap.resolveAclCapable() for the real-JMAP/Stalwart equivalent.
+			'aclCapable' => $path === 'INBOX' && $imap->queryCapability('ACL'),
 		];
 	}
 

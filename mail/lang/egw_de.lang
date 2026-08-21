@@ -133,6 +133,7 @@ could not generate certificate!	mail	de	Zertifikat konnte nicht erstellt werden!
 could not generate csr.	mail	de	CSR konnte nicht erstellt werden.
 could not read uploaded certificate!	mail	de	Hochgeladenes Zertifikat konnte nicht gelesen werden!
 could not save the acl because some names are empty	mail	de	Konnte die Zugriffsrechte nicht speichern! Grund: einige Bezeichnungen waren leer
+create folder	mail	de	Ordner erstellen
 create new account	mail	de	Konto hinzufügen
 create private key and export csr	mail	de	Privaten Schlüssel erstellen und CSR exportieren
 create self-signed certificate	mail	de	Selbstsigniertes Zertifikat erstellen
@@ -151,6 +152,7 @@ defines what to show as contact label for added contact into to/cc/bcc when comp
 defines what to show as identity label on mail folder header	common	de	Definiert, was im Kopf des E-Mail-Postfach angezeigt werden soll. Die Bezeichnungen beziehen sich auf die Felder im E-Mail-Konto.
 delete folder	mail	de	Ordner löschen
 delete folder %1 ?	mail	de	Ordner %1 löschen?
+delete messages	mail	de	Nachrichten löschen
 delete selected folders	mail	de	Ausgewählte Ordner löschen
 delete this acl	mail	de	Zugriffsrechte löschen
 deleted	mail	de	Gelöscht
@@ -240,6 +242,7 @@ everyone	mail	de	Alle Anwender
 examine namespace to retrieve folders in others and shared	mail	de	Den Namensraum untersuchen, um Ordner in anderen und gemeinsam genutzten Ordnern abzurufen
 exclude attachments greater than given size from automatic saving as draft (in mb)	admin	de	Schließe Anhänge größer als die angegebene Größe vom automatischen Speichern als Entwurf aus (in MB)
 export csr	mail	de	CSR exportieren
+expunge	mail	de	Bereinigen
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet-Ordner
 failed to create folder %1	mail	de	Anlegen des Ordners %1 fehlgeschlagen
@@ -345,6 +348,7 @@ inbox	mail	de	Posteingang
 information to show on email tag	mail	de	Informationsanzeige auf dem E-Mail-Tag
 initialization of mail failed. please use the wizard to cope with the problem.	mail	de	Die Initializierung des Mail-Moduls ist fehlgeschlagen. Bitte benutzen Sie den Konfigurationsassistenten um die Konfiguration zu korrigieren.
 inline	mail	de	Weiterleiten
+insert	mail	de	Einfügen
 insert the signature at top of the new (or reply) message when opening compose dialog (you may not be able to switch signatures)	mail	de	Einfügen der Signatur am Anfang einer neuen E-Mail (auch Antworten/Weiterleiten).\nDie Signatur ist dann Teil der E-Mail und kann möglicherweise nicht über die Funktionalität >Signatur ändern/auswählen< verändert werden
 job	mail	de	Dienstlich
 junk	mail	de	Spam
@@ -359,6 +363,7 @@ learning as spam failed because of %1	mail	de	Als Spam lernen fehlgeschlagen, da
 less than	mail	de	kleiner als
 limit mailing list results when searching for addresses	mail	de	Limitierung der Ergebnisse von Gruppen und Verteilerlisten bei der Suche nach Adressen
 list of actions to be switched/activated on by default (eg. mail compose save as infolog action)	mail	de	Liste der Aktionen, die standardmäßig eingeschaltet bzw. aktiviert werden sollen (z.B. E-Mail verfassen und als InfoLog speichern).
+lookup	mail	de	Sichtbar
 low priority	mail	de	Niedrige Priorität
 mail	common	de	E-Mail
 mail acl	mail	de	Zugriffsrechte
@@ -573,6 +578,7 @@ saving of message %1 succeeded. check folder %2.	mail	de	Speichern der Nachricht
 saving the rule failed:	mail	de	Speichern der Regel ist fehlgeschlagen:
 security	mail	de	Sicherheit
 see attachments for content of the orignial mail	mail	de	Die Original Nachricht wurde als Anhang an diese E-Mail angehängt
+seen	mail	de	Gesehen
 select a date	mail	de	Wählen Sie ein Datum
 select all	mail	de	Alle Auswählen
 select an existing entry in order to append mail content to it	mail	de	Bestehendes Ticket auswählen, zu dem die E-Mail als Kommentar hinzugefügt werden soll

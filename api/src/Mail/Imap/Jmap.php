@@ -372,6 +372,270 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * MailboxRights (RFC 8621 §2 "myRights", writable per-principal via the mail:share
+	 * extension's "shareWith") mapped to RFC 4314 IMAP ACL letters, so the existing ACL UI
+	 * (mail_acl.inc.php/acl.xet) keeps working unchanged against JMAP-native (Stalwart)
+	 * accounts too - see doc/ai memory "mail-jmap-acl-plan" for the full mapping rationale.
+	 *
+	 * JMAP has no separate rename vs delete mailbox right (both collapse onto 'x'), and no
+	 * lookup-only right (mayReadItems covers both IMAP 'l' and 'r') - real granularity losses
+	 * vs IMAP, not implementation gaps.
+	 *
+	 * @link https://www.rfc-editor.org/rfc/rfc8621#section-2 MailboxRights
+	 * @link https://www.rfc-editor.org/rfc/rfc4314#section-2.1 IMAP ACL rights
+	 */
+	const JMAP_RIGHT_TO_IMAP = [
+		'mayReadItems'   => 'lr',
+		'mayAddItems'    => 'i',
+		'mayRemoveItems' => 'te',
+		'maySetSeen'     => 's',
+		'maySetKeywords' => 'w',
+		'mayCreateChild' => 'k',
+		'mayRename'      => 'x',
+		'mayDelete'      => 'x',
+		'maySubmit'      => 'p',
+		'mayShare'       => 'a',
+	];
+
+	/**
+	 * Whether this account's Stalwart/JMAP session advertises the mail:share capability
+	 * (draft-ietf-jmap-mail-sharing) - if not, ACL falls back to classic IMAP
+	 * GETACL/SETACL/DELETEACL (eg. older Stalwart versions without the extension enabled).
+	 *
+	 * @return bool
+	 */
+	public function mailShareSupported() : bool
+	{
+		return array_key_exists(Mail\Jmap::JMAP_MAIL_SHARE, $this->jmapClient()->accountCapabilities ?? []);
+	}
+
+	/**
+	 * @param array $rights MailboxRights, eg. from Mailbox/get's myRights or a shareWith entry
+	 * @return string RFC 4314 IMAP ACL letters
+	 */
+	protected function jmapRightsToImap(array $rights) : string
+	{
+		$letters = '';
+		foreach (self::JMAP_RIGHT_TO_IMAP as $right => $imapLetters)
+		{
+			if (!empty($rights[$right]))
+			{
+				$letters .= $imapLetters;
+			}
+		}
+		return $letters;
+	}
+
+	/**
+	 * @param string $imapRights RFC 4314 IMAP ACL letters
+	 * @return array full MailboxRights object (every key set true/false, as required for a
+	 *  shareWith entry - JMAP has no "add"/"remove" patch semantics for individual rights)
+	 */
+	protected function imapRightsToJmap(string $imapRights) : array
+	{
+		$letters = str_split($imapRights);
+		$rights = [];
+		foreach (self::JMAP_RIGHT_TO_IMAP as $right => $imapLetters)
+		{
+			$rights[$right] = (bool)array_intersect(str_split($imapLetters), $letters);
+		}
+		return $rights;
+	}
+
+	/**
+	 * Resolve a JMAP Principal id to its email address (the identifier mail_acl.inc.php /
+	 * getMailBoxUserName() otherwise use for this account, which uses loginType 'email')
+	 *
+	 * @ToDo verify the exact Principal object shape (property name(s)) against a live Stalwart
+	 *  session - spec reading alone wasn't enough to confirm this, see doc/ai memory
+	 *  "mail-jmap-acl-plan"
+	 * @param string $principalId
+	 * @return ?string null if not found
+	 */
+	protected function jmapPrincipalEmail(string $principalId) : ?string
+	{
+		static $cache = [];
+		if (!array_key_exists($principalId, $cache))
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['Principal/get', [
+					'ids' => [$principalId],
+					'properties' => ['email'],
+				], '0'],
+			], [Mail\Jmap::JMAP_CORE, Mail\Jmap::JMAP_PRINCIPALS]);
+			$cache[$principalId] = $response['methodResponses'][0][1]['list'][0]['email'] ?? null;
+		}
+		return $cache[$principalId];
+	}
+
+	/**
+	 * Resolve an email address to its JMAP Principal id (shareWith's key, NOT the IMAP
+	 * username/email itself)
+	 *
+	 * @ToDo verify the exact Principal/query filter shape against a live Stalwart session -
+	 *  spec reading alone wasn't enough to confirm this, see doc/ai memory "mail-jmap-acl-plan"
+	 * @param string $email
+	 * @return ?string null if not found
+	 */
+	protected function jmapPrincipalId(string $email) : ?string
+	{
+		static $cache = [];
+		if (!array_key_exists($email, $cache))
+		{
+			$response = $this->jmapClient()->jmapCall([
+				['Principal/query', [
+					'filter' => ['email' => $email],
+				], '0'],
+			], [Mail\Jmap::JMAP_CORE, Mail\Jmap::JMAP_PRINCIPALS]);
+			$cache[$email] = $response['methodResponses'][0][1]['ids'][0] ?? null;
+		}
+		return $cache[$email];
+	}
+
+	/**
+	 * JMAP-native getACL() - Mailbox myRights/shareWith instead of IMAP GETACL, for accounts
+	 * whose session advertises mail:share. Falls back to the classic IMAP implementation
+	 * (inherited from Horde_Imap_Client_Base) otherwise.
+	 *
+	 * Unlike classic IMAP GETACL, shareWith never contains the mailbox owner's own entry (JMAP
+	 * has no concept of an explicit owner ACL row) - mail_acl.inc.php's owner-readonly handling
+	 * simply finds no matching row, which is a UI nuance (no owner row shown), not a functional
+	 * break.
+	 *
+	 * @param mixed $mailbox a mailbox, string (UTF-8)
+	 * @return \Horde_Imap_Client_Data_Acl[]|false identifiers (emails) as keys - same shape
+	 *  parent::getACL() returns, so mail_acl.inc.php needs no changes to consume either
+	 */
+	public function getACL($mailbox)
+	{
+		if (!$this->mailShareSupported())
+		{
+			return parent::getACL($mailbox);
+		}
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
+		{
+			return false;
+		}
+		$response = $client->jmapCall([
+			['Mailbox/get', [
+				'accountId' => $client->accountId,
+				'ids' => [$mailboxId],
+				'properties' => ['myRights', 'shareWith'],
+			], '0'],
+		], Mail\Jmap::JMAP_MAIL);
+		if (!($mbox = $response['methodResponses'][0][1]['list'][0] ?? null))
+		{
+			return false;
+		}
+		$acls = [];
+		foreach ((array)($mbox['shareWith'] ?? []) as $principalId => $rights)
+		{
+			if (($email = $this->jmapPrincipalEmail($principalId)))
+			{
+				$acls[$email] = new \Horde_Imap_Client_Data_Acl($this->jmapRightsToImap($rights));
+			}
+		}
+		return $acls;
+	}
+
+	/**
+	 * JMAP-native setACL() - patches Mailbox shareWith[principalId] instead of IMAP SETACL, for
+	 * accounts whose session advertises mail:share. Falls back to the classic IMAP
+	 * implementation otherwise.
+	 *
+	 * @param mixed $mailbox a mailbox, string (UTF-8)
+	 * @param string $identifier the identifier to alter - an email address (UTF-8), resolved to
+	 *  a Principal id via jmapPrincipalId()
+	 * @param array $options see parent::setACL()
+	 * @throws \Horde_Imap_Client_Exception mailbox/principal not found, or on any JMAP error
+	 */
+	public function setACL($mailbox, $identifier, $options)
+	{
+		if (!$this->mailShareSupported())
+		{
+			parent::setACL($mailbox, $identifier, $options);
+			return;
+		}
+		if (empty($options['rights']))
+		{
+			$this->deleteACL($mailbox, $identifier);
+			return;
+		}
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+		if (!($principalId = $this->jmapPrincipalId($identifier)))
+		{
+			throw new \Horde_Imap_Client_Exception("No JMAP principal found for '$identifier'");
+		}
+		$rights = ($options['rights'] instanceof \Horde_Imap_Client_Data_Acl)
+			? $options['rights']
+			: new \Horde_Imap_Client_Data_Acl(strval($options['rights']));
+		$response = $client->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $client->accountId,
+				'update' => [
+					$mailboxId => [
+						'shareWith/'.$principalId => $this->imapRightsToJmap(
+							$rights->getString(\Horde_Imap_Client_Data_AclCommon::RFC_4314)),
+					],
+				],
+			], '0'],
+		], [...Mail\Jmap::JMAP_MAIL, Mail\Jmap::JMAP_MAIL_SHARE]);
+		if (!empty($response['methodResponses'][0][1]['notUpdated'][$mailboxId]))
+		{
+			throw new \Horde_Imap_Client_Exception('Mailbox/set shareWith failed: '.
+				json_encode($response['methodResponses'][0][1]['notUpdated'][$mailboxId]));
+		}
+	}
+
+	/**
+	 * JMAP-native deleteACL() - clears Mailbox shareWith[principalId] instead of IMAP DELETEACL,
+	 * for accounts whose session advertises mail:share. Falls back to the classic IMAP
+	 * implementation otherwise.
+	 *
+	 * @param mixed $mailbox a mailbox, string (UTF-8)
+	 * @param string $identifier the identifier to delete - an email address (UTF-8), resolved
+	 *  to a Principal id via jmapPrincipalId()
+	 * @throws \Horde_Imap_Client_Exception mailbox not found, or on any JMAP error
+	 */
+	public function deleteACL($mailbox, $identifier)
+	{
+		if (!$this->mailShareSupported())
+		{
+			parent::deleteACL($mailbox, $identifier);
+			return;
+		}
+		$client = $this->jmapClient();
+		if (!($mailboxId = $client->getMailboxId((string)$mailbox)))
+		{
+			throw new \Horde_Imap_Client_Exception("Mailbox '$mailbox' not found");
+		}
+		if (!($principalId = $this->jmapPrincipalId($identifier)))
+		{
+			return;	// nothing to delete
+		}
+		$response = $client->jmapCall([
+			['Mailbox/set', [
+				'accountId' => $client->accountId,
+				'update' => [
+					$mailboxId => [
+						'shareWith/'.$principalId => null,
+					],
+				],
+			], '0'],
+		], [...Mail\Jmap::JMAP_MAIL, Mail\Jmap::JMAP_MAIL_SHARE]);
+		if (!empty($response['methodResponses'][0][1]['notUpdated'][$mailboxId]))
+		{
+			throw new \Horde_Imap_Client_Exception('Mailbox/set shareWith removal failed: '.
+				json_encode($response['methodResponses'][0][1]['notUpdated'][$mailboxId]));
+		}
+	}
+
+	/**
 	 * JMAP push subscription types to request
 	 */
 	const SUBSCRIBTION_TYPES = ['Email', 'Mailbox'];

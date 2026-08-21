@@ -140,7 +140,7 @@ describe("MailJmap.getMailboxChildren() - top-level sort order", () =>
 {
 	function createListClient(list : any[])
 	{
-		return {requestMany: async() => [{mailboxes: {list}}]};
+		return {requestMany: async() => [{mailboxes: {list}}], session: Promise.resolve({accounts: {}})};
 	}
 
 	it("orders special-role folders first in the exact fixed sequence, then alphabetical, then the namespace root last", async() =>
@@ -263,6 +263,156 @@ describe("MailJmap.getMailboxChildren() - resolveHasChildren for real JMAP accou
 });
 
 /**
+ * ralf's report: the "shared"/"user" namespace root must not look like a dead end in the main
+ * index when something is shared with this user but they haven't subscribed to any of it yet -
+ * see folderTree.ts's isVisibleNamespaceRoot(), which reads this hasSubscribedChildren field.
+ */
+describe("MailJmap.getMailboxChildren() - hasSubscribedChildren for a namespace root", () =>
+{
+	function createNamespaceRootClient(subscribedChildIds : string[])
+	{
+		let call = 0;
+		return {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				// call 0: the top-level Mailbox/query+get; call 1: resolveHasChildren's per-node
+				// "any child" check; call 2: resolveHasChildren's namespace-root "subscribed child" check
+				return [[
+					{mailboxes: {list: [{id: "a", name: "shared", hasChildren: true}]}},
+					{s0: {ids: subscribedChildIds}},
+				][call++]];
+			},
+			session: Promise.resolve({accounts: {}}),
+		};
+	}
+
+	it("sets hasSubscribedChildren:true when the root has at least one subscribed child", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createNamespaceRootClient(["c1"]));
+
+		const result : any = await jmap.getMailboxChildren("1", null, true, true);
+
+		assert.isTrue(result[0].hasSubscribedChildren);
+	});
+
+	it("sets hasSubscribedChildren:false when nothing under the root is subscribed", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createNamespaceRootClient([]));
+
+		const result : any = await jmap.getMailboxChildren("1", null, true, true);
+
+		assert.isFalse(result[0].hasSubscribedChildren);
+	});
+
+	it("never checks hasSubscribedChildren when subscribedOnly is off", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let calls = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				calls++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				return [{mailboxes: {list: [{id: "a", name: "shared", hasChildren: true}]}}];
+			},
+			session: Promise.resolve({accounts: {}}),
+		};
+		primeToken(jmap, "1", client);
+
+		const result : any = await jmap.getMailboxChildren("1", null, true, false);
+
+		assert.equal(calls, 1, "no extra query when subscribedOnly is off");
+		assert.isUndefined(result[0].hasSubscribedChildren);
+	});
+});
+
+/**
+ * ralf's report: the "Edit folder ACL" tree action vanished on master because nothing populated
+ * the INBOX node's `data.acl` any more after the initial-tree eager-branch-load was removed for
+ * performance (see MailApp.acl_enabled(), mail/js/app.ts, and folderTree.ts's buildNode()). For a
+ * real JMAP account this is resolved client-side from the JMAP session's own accountCapabilities.
+ */
+describe("MailJmap.getMailboxChildren() - resolveAclCapable for real JMAP accounts", () =>
+{
+	function createInboxClient(accountCapabilities : Record<string, any>)
+	{
+		return {
+			requestMany: async() => [{mailboxes: {list: [{id: "a", name: "Inbox", role: "inbox", hasChildren: false}]}}],
+			session: Promise.resolve({accounts: {acc1: {accountCapabilities}}}),
+		};
+	}
+
+	it("sets aclCapable:true when the session advertises mail:share for this account", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createInboxClient({"urn:ietf:params:jmap:mail:share": {}}));
+
+		const result : any = await jmap.getMailboxChildren("1", null, true);
+
+		assert.isTrue(result.find((m : any) => m.role === "inbox").aclCapable);
+	});
+
+	it("sets aclCapable:false when mail:share isn't advertised", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeToken(jmap, "1", createInboxClient({}));
+
+		const result : any = await jmap.getMailboxChildren("1", null, true);
+
+		assert.isFalse(result.find((m : any) => m.role === "inbox").aclCapable);
+	});
+
+	it("never touches aclCapable for a non-top-level fetch, even if it somehow contains role:inbox", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let sessionRead = false;
+		const client = {
+			requestMany: async() => [{mailboxes: {list: [{id: "a", name: "Inbox", role: "inbox", hasChildren: false}]}}],
+			get session()
+			{
+				sessionRead = true;
+				return Promise.resolve({accounts: {acc1: {accountCapabilities: {}}}});
+			},
+		};
+		primeToken(jmap, "1", client);
+
+		const result : any = await jmap.getMailboxChildren("1", "someParentId", false);
+
+		assert.isFalse(sessionRead, "resolveAclCapable must not run for a non-top-level fetch");
+		assert.isUndefined(result[0].aclCapable);
+	});
+
+	it("does not issue an extra query for a local-shim account (aclCapable already arrives from JmapShim)", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let sessionRead = false;
+		const client = {
+			requestMany: async() => [{mailboxes: {list: [{id: "a", name: "Inbox", role: "inbox", aclCapable: true}]}}],
+			get session()
+			{
+				sessionRead = true;
+				return Promise.resolve({accounts: {}});
+			},
+		};
+		(jmap as any).tokens["1"] = {
+			sessionUrl: "https://example.com", accountId: "acc1", access_token: "tok",
+			expires_at: Date.now() + 100000, isLocal: true, customLabels: {},
+		};
+		(jmap as any).clients["1"] = client;
+
+		const result : any = await jmap.getMailboxChildren("1", null, true);
+
+		assert.isFalse(sessionRead, "resolveAclCapable must never run for a local-shim account");
+		assert.isTrue(result[0].aclCapable);
+	});
+});
+
+/**
  * Templates/Outbox have no IMAP SPECIAL-USE attribute or JMAP role at all - JmapShim already
  * resolves them server-side via acc_folder_template/acc_folder_outbox for the local shim, but a
  * real JMAP server (Stalwart) has no equivalent mechanism. getMailboxChildren() matches by the
@@ -274,7 +424,7 @@ describe("MailJmap.getMailboxChildren() - templates/outbox role resolution by ac
 {
 	function createListClient(list : any[])
 	{
-		return {requestMany: async() => [{mailboxes: {list}}]};
+		return {requestMany: async() => [{mailboxes: {list}}], session: Promise.resolve({accounts: {}})};
 	}
 
 	it("assigns role='templates'/'outbox' by matching the account's configured folder name", async() =>

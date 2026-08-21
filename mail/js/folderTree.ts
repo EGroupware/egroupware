@@ -30,6 +30,21 @@ export interface JmapMailboxNode
 	unreadEmails? : number;
 	role : string | null;
 	hasChildren? : boolean;
+	/**
+	 * Only ever computed for a namespace-root candidate (see isNamespaceRootName()) when
+	 * subscribedOnly is in effect - see buildFolderLevel()'s isVisibleNamespaceRoot() for why
+	 * hasChildren alone isn't enough there. Undefined for every other node, and for a namespace
+	 * root on the local shim (JmapShim.php pre-filters those server-side instead, see
+	 * namespaceRootsMissingFrom()) - undefined is deliberately treated as "trust it", not "false".
+	 */
+	hasSubscribedChildren? : boolean;
+	/**
+	 * Whether ACL (folder access-rights) editing is available for this account - only ever set on
+	 * the account's own top-level INBOX entry (ACL editing is an account-level feature, never
+	 * per-folder), see MailJmap.resolveAclCapable()/JmapShim::mailboxNode()'s "Set Acl capability
+	 * for INBOX" precedent. Undefined everywhere else.
+	 */
+	aclCapable? : boolean;
 }
 
 export interface BuildFolderLevelOptions
@@ -71,6 +86,13 @@ export interface FolderTreeNode
 	/** only ever set true - see buildNode()'s INBOX auto-open comment; omitted (not false)
 	 *  otherwise, so it never fights Et2Tree.ts's own openStatePreference-driven state */
 	open? : true;
+	/**
+	 * Only ever set on the account's own top-level INBOX node - MailApp.acl_enabled() (mail/js/
+	 * app.ts) reads node.data.acl to decide whether to show the "Edit folder ACL" tree action,
+	 * matching classic mail_tree.inc.php's exact node shape (its own "Set Acl capability for
+	 * INBOX" comment) so that method needed no changes at all for the JMAP-native tree.
+	 */
+	data? : {acl : boolean};
 }
 
 // role -> bootstrap-icon name, i.e. the RIGHT-hand (already-translated) side of Api\Image::find()'s
@@ -150,7 +172,7 @@ const TOP_LEVEL_SORT_ORDER : Record<string, number> = {
 // never has a role, is matched purely by its literal (untranslated) name, same convention used
 // throughout this file (sortTopLevel(), buildFolderLevel()'s own visibility exemption, buildNode()'s
 // icon choice)
-function isNamespaceRootName(name : string) : boolean
+export function isNamespaceRootName(name : string) : boolean
 {
 	return ['user', 'shared'].includes((name || '').toLowerCase());
 }
@@ -243,6 +265,10 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 		// the label/icon above) - only the CURRENT account's own INBOX auto-expands, not every
 		// shared/other-user mailbox's own INBOX.
 		...(role === 'inbox' && isTopLevel && mailbox.hasChildren !== false ? {open: true} : {}),
+		// see FolderTreeNode's own docblock on `data` - only ever set on the account's own
+		// top-level INBOX, gated on isTopLevel same as `open` above (a shared/other-user
+		// mailbox's own nested INBOX is never what acl_enabled() looks up)
+		...(role === 'inbox' && isTopLevel ? {data: {acl: !!mailbox.aclCapable}} : {}),
 		...icons(role, isNamespaceRoot, egw),
 	};
 }
@@ -279,16 +305,35 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// the shared/other-users namespace root ("user" on Dovecot/JmapShim's local shim, "shared" on
 	// a real JMAP server like Stalwart) is a structural navigation doorway, not an individually-
 	// subscribable mailbox in the normal sense - it's essentially never itself isSubscribed, so
-	// the subscribedOnly filter below would otherwise hide the only way into that whole
-	// namespace. Still gated on hasChildren !== false as a client-side belt-and-braces check
-	// (JmapShim::namespaceRootsMissingFrom() already only reports it server-side when it has real
-	// accessible children, but an empty, dead-end namespace root is exactly what this whole
-	// exemption must never show for any other backend path that doesn't apply the same check)
+	// the plain isSubscribed filter below would otherwise hide the only way into that whole
+	// namespace even when it's genuinely non-empty. An always-visible-but-empty root is exactly as
+	// confusing a dead end as a missing one though (ralf's report), so this is its OWN check,
+	// never just "not filtered" - gated on hasChildren !== false unconditionally (an empty root
+	// must never show, even with subscribedOnly off - eg. the "show all folders" preference or the
+	// subscription dialog's own explicit override, see mail_subscriptionLoad()), and additionally
+	// on hasSubscribedChildren when subscribedOnly is on: a root that only has UNSUBSCRIBED shared
+	// mailboxes under it is just as much a dead end in the main index (nothing will render if it's
+	// expanded, since the same subscribedOnly filter applies one level down) - it's still findable
+	// via the subscription dialog, which always passes subscribedOnly:false.
 	const isVisibleNamespaceRoot = (mailbox : JmapMailboxNode) =>
-		isNamespaceRootName(mailbox.name) && mailbox.hasChildren !== false;
+		isNamespaceRootName(mailbox.name) && mailbox.hasChildren !== false &&
+		(!options.subscribedOnly || mailbox.hasSubscribedChildren !== false);
+	// mail/js/app.ts has ~10 call sites that hardcode `profileID + '::INBOX'` (canonical uppercase,
+	// matching the IMAP protocol's own case-insensitive special mailbox name) to find/select/
+	// default to the account's own INBOX node - JmapShim's local shim already canonicalizes to
+	// this exact literal server-side (JmapShim::mailboxNode()'s "Set Acl capability for INBOX"
+	// neighbourhood: `'name' => $path === 'INBOX' ? 'INBOX' : $leafName`), but real JMAP/Stalwart's
+	// own Mailbox.name comes back as whatever display casing the server uses (eg. "Inbox") -
+	// without this, the account's own INBOX tree node id would be "profileID::Inbox" for a real
+	// JMAP account, silently breaking every one of those lookups (ralf's report: the ACL tree
+	// action's own node.data lookup, mail/js/app.ts's acl_enabled(), was the first one caught, but
+	// mail_buildRootFolderData()'s INBOX-children-preload optimization matches the exact same
+	// pattern and would have silently stopped working for Stalwart too).
+	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;
 	return (mailboxes || [])
-		.filter((mailbox) => !options.subscribedOnly || mailbox.isSubscribed || isVisibleNamespaceRoot(mailbox))
-		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + mailbox.name : mailbox.name, egw,
+		.filter((mailbox) => isNamespaceRootName(mailbox.name) ? isVisibleNamespaceRoot(mailbox) :
+			(!options.subscribedOnly || mailbox.isSubscribed))
+		.map((mailbox) => buildNode(mailbox, profileID, parentPath ? parentPath + '/' + pathSegment(mailbox) : pathSegment(mailbox), egw,
 			!!options.isTopLevel));
 }
 

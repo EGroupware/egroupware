@@ -5628,7 +5628,7 @@ export class MailApp extends EgwApp
 	{
 		var mailbox = _senders[0].id.split('::');
 		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
-		this.egw.open_link('mail.mail_acl.edit&mailbox='+ btoa(folder)+'&acc_id='+acc_id, '_blank', '640x480');
+		this.egw.open_link('mail.mail_acl.edit&mailbox='+ btoa(folder)+'&acc_id='+acc_id, '_blank', '1150x600');
 	}
 
 	/**
