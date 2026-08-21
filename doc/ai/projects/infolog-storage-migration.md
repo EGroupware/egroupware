@@ -172,6 +172,34 @@ is a genuine SQL `timestamp` column (auto `current_timestamp`), unlike the other
 | `aiassistant/src/Bo.php` | `write($task_data)` | **manual `time()`/`strtotime()` on the caller side** before `write()` — scattered date logic outside bo, low-risk (new module) but should be flagged |
 | Link registry (`link_query`/`title`/`titles`/`file_access`, `cal_to_include`, `pm_icons`) | hook dispatch strings `infolog.infolog_bo.*` | date-safe except `cal_to_include()` (already `Api\DateTime`-native) |
 | Async timer `infolog.infolog_bo.async_notification` | `Api\Async::set_timer()` | raw `date()`/`time()` filter-string construction (item #6 above) — in scope for cleanup |
+| `stylite_infolog_calendar_integration` (EPL, separate repo, `stylite/inc/class.stylite_infolog_calendar_integration.inc.php`) | reaches directly into `$infolog->so` (`infolog_bo::$so`), bypassing the BO API entirely | **Missed by this migration's consumer map** - not caught until a live-environment fatal surfaced it, see the 2026-08-22 incident below |
+
+### Missed consumer: `stylite_infolog_calendar_integration` (EPL), 2026-08-22
+
+A production fatal (`Call to undefined method EGroupware\Infolog\Storage::aclFilter()`, calendar
+list view via `calendar_so::get_union_selects()`'s `calendar_search_union` hook) surfaced a
+consumer this migration's consumer map (§3 above) never accounted for:
+`stylite/inc/class.stylite_infolog_calendar_integration.inc.php` (EPL/Stylite, a separate git
+repo not covered by this project's test suite or grep sweeps) reaches directly into
+`infolog_bo::$so` rather than going through `infolog_bo`'s public API - `$infolog->so->aclFilter(...)`
+(broken by decision #4's ACL relocation, 2026-08-19 - `aclFilter()` moved from `infolog_so` to
+`infolog_bo`, `Infolog\Storage`/`$this->so` never had it) and `$infolog->so->info_table` (broken
+by the `Infolog\Storage` rewrite - the property is `table_name`, `info_table` never existed on
+it). Ralf fixed both directly in the `stylite` repo (`$infolog->so->aclFilter(...)` →
+`$infolog->aclFilter(...)`; `$infolog->so->info_table` → `$infolog->so->table_name`). Audited the
+rest of that file for the same pattern - `$infolog->so->statusFilter(...)` and
+`$infolog->so->db->expression(...)` are both still valid (`statusFilter()` untouched by any
+phase of this migration; `db` deliberately widened to `public` on `Infolog\Storage` specifically
+so `infolog_bo::aclFilter()` itself could reach it, so external reads of it are equally safe) -
+no further landmines in that file. Grepped the rest of `stylite/` for `->so->`/`infolog_so`/
+`Infolog\Storage` references - this was the only file touching InfoLog's storage internals.
+
+**Structural takeaway**: this migration's "consumer map" and test coverage can only ever see
+consumers inside *this* git repository - EPL/Stylite (and potentially other separately-repo'd
+add-ons) can hold direct references into `infolog_bo::$so`'s internals that no amount of
+grepping or testing here will catch. Worth a mention if/when doing further InfoLog storage
+changes: check with ralf whether EPL has other direct `$so`-reaching call sites before assuming
+a change is safe, rather than trusting this repo's test suite alone.
 
 ### Existing test baseline
 
