@@ -684,7 +684,7 @@ export class MailCompose
 		{
 			elem[0].id = content.lastDrafted;
 			elem[0].subject = subject.get_value();
-			this.app.mail_save2fm(_action, elem);
+			this.app.save2Fm(_action, elem);
 		}
 		else // need to save as draft first
 		{

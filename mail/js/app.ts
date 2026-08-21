@@ -818,7 +818,7 @@ export class MailApp extends EgwApp
 										}
 										else
 										{
-											this.mail_changeFolder(_id + '::INBOX', tree, current_id);
+											this.changeFolder(_id + '::INBOX', tree, current_id);
 											tree.reSelectItem(_id + '::INBOX');
 										}
 									}
@@ -1051,9 +1051,9 @@ export class MailApp extends EgwApp
 			if (typeof dataElem.data.flags != 'undefined') dataElem.data.flags.read = 'read';
 			dataElem.data['class'] = dataElem.data['class'].split(' ')
 				.filter((className) => className != 'unseen' && className != 'recent').join(' ');
-			this.mail_patchRow(_id);
+			this.patchRow(_id);
 			// reduce counter without server roundtrip
-			this.mail_reduceCounterWithoutServerRoundtrip();
+			this.reduceCounterWithoutServerRoundtrip();
 			// not needed, as an explizit read flags the message as seen anyhow
 			//egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
 		}
@@ -1651,9 +1651,9 @@ export class MailApp extends EgwApp
 		{
 			if (typeof data.flags != 'undefined') data.flags.read = 'read';
 			data['class'] = data['class'].split(' ').filter((className) => className != 'unseen' && className != 'recent').join(' ');
-			this.mail_patchRow(rowId);
+			this.patchRow(rowId);
 			// reduce counter without server roundtrip
-			this.mail_reduceCounterWithoutServerRoundtrip();
+			this.reduceCounterWithoutServerRoundtrip();
 			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
 				typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
 			{
@@ -1667,10 +1667,10 @@ export class MailApp extends EgwApp
 						{
 							case "mdnsent":
 								egw.jsonq('mail.mail_ui.ajax_sendMDN', [messages]);
-								this.mail_trySetMdnFlag(messages, true);
+								this.trySetMdnFlag(messages, true);
 								return;
 							case "mdnnotsent":
-								this.mail_trySetMdnFlag(messages, false);
+								this.trySetMdnFlag(messages, false);
 						}
 					},
 				this.egw.lang("The message sender has requested a response to indicate that you have read this message. Would you like to send a receipt?"),
@@ -2052,7 +2052,7 @@ export class MailApp extends EgwApp
 	 */
 	refreshQuotaDisplay(_server?: any)
 	{
-		// same "not always set, read it from foldertree" fallback fetchRows()/mail_buildJmapQuery()
+		// same "not always set, read it from foldertree" fallback fetchRows()/buildJmapQuery()
 		// already use for resolving the currently active profile client-side
 		const profileID = String(_server ||
 			this.et2?.getWidgetById(this.nm_index + '[foldertree]')?.getValue() ||
@@ -2107,8 +2107,8 @@ export class MailApp extends EgwApp
 					{
 						if (_button_id == "cleanup")
 						{
-							self.mail_emptySpam(null, server);
-							self.mail_emptyTrash(null, server);
+							self.emptySpam(null, server);
+							self.emptyTrash(null, server);
 						}
 						return;
 					},
@@ -2591,10 +2591,10 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_getMsg - gets the current Message
+	 * getMsg - gets the current Message
 	 * @return string
 	 */
-	mail_getMsg()
+	getMsg()
 	{
 		var msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
@@ -2605,10 +2605,10 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
+	 * setMsg - sets a Message, with the msg container, and controls if the container is enabled/disabled
 	 * @param {string} myMsg - the message
 	 */
-	mail_setMsg(myMsg)
+	setMsg(myMsg)
 	{
 		var msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
@@ -2624,9 +2624,9 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems
 	 */
-	mail_delete(_action,_elems)
+	deleteMessage(_action,_elems)
 	{
-		this.mail_checkAllSelected(_action,_elems,null,true);
+		this.checkAllSelected(_action,_elems,null,true);
 	}
 
 	/**
@@ -2636,7 +2636,7 @@ export class MailApp extends EgwApp
 	 * @param {array} _elems
 	 * @param {boolean} _allMessagesChecked
 	 */
-	mail_callDelete(_action,_elems,_allMessagesChecked)
+	callDelete(_action,_elems,_allMessagesChecked)
 	{
 		var calledFromPopup = false;
 		if (typeof _allMessagesChecked == 'undefined') _allMessagesChecked=false;
@@ -2657,12 +2657,12 @@ export class MailApp extends EgwApp
 				}
 			}
 		}
-		var msg = this.mail_getFormData(_elems);
+		var msg = this.getFormData(_elems);
 		msg['all'] = _allMessagesChecked;
 		if (msg['all']=='cancel') return false;
-		if (msg['all']) msg['activeFilters'] = this.mail_getActiveFilters(_action);
+		if (msg['all']) msg['activeFilters'] = this.getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
-		this.mail_deleteMessages(msg,'no',calledFromPopup);
+		this.deleteMessages(msg,'no',calledFromPopup);
 		if (calledFromPopup && this.mail_isMainWindow==false)
 		{
 			egw(window).close();
@@ -2676,7 +2676,7 @@ export class MailApp extends EgwApp
 	/**
 	 * function to find (and reduce) unseen count from folder-name
 	 */
-	mail_reduceCounterWithoutServerRoundtrip()
+	reduceCounterWithoutServerRoundtrip()
 	{
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		const _foldernode = ftree?.getSelectedItem();
@@ -2701,12 +2701,12 @@ export class MailApp extends EgwApp
 	_unseen_regexp = / \([0-9]+\)$/;
 
 	/**
-	 * mail_splitRowId
+	 * splitRowId
 	 *
 	 * @param {string} _rowID
 	 *
 	 */
-	mail_splitRowId(_rowID)
+	splitRowId(_rowID)
 	{
 		var res = _rowID.split('::');
 		// as a rowID is perceeded by app::, should be mail!
@@ -2761,7 +2761,7 @@ export class MailApp extends EgwApp
 	 * to that same classic call internally - so the caller can treat the return value uniformly
 	 * (e.g. .finally()) either way.
 	 */
-	private mail_tryJmapDelete(_msg : any, _action : any) : Promise<any> | null
+	private tryJmapDelete(_msg : any, _action : any) : Promise<any> | null
 	{
 		const mode : 'trash' | 'destroy' = _action === 'remove_immediately' ? 'destroy' :
 			_action === 'move_to_trash' ? 'trash' :
@@ -2771,7 +2771,7 @@ export class MailApp extends EgwApp
 
 		if (_msg['all'])
 		{
-			return this.jmap.deleteAllMatching(this.mail_buildJmapQuery(_msg), mode)
+			return this.jmap.deleteAllMatching(this.buildJmapQuery(_msg), mode)
 				.catch((e) => this.mail_handleJmapError(e, fallback));
 		}
 		if (!Array.isArray(_msg['msg']) || !_msg['msg'].length)
@@ -2791,7 +2791,7 @@ export class MailApp extends EgwApp
 			.catch((e) => this.mail_handleJmapError(e, fallback));
 	}
 
-	mail_deleteMessages(_msg,_action,_calledFromPopup)
+	deleteMessages(_msg,_action,_calledFromPopup)
 	{
 		let message, ftree, _foldernode, displayname;
 		if (_calledFromPopup)
@@ -2813,7 +2813,7 @@ export class MailApp extends EgwApp
 
                 displayname = _foldernode.text.replace(this._unseen_regexp, '');
             } else {
-			message = this.mail_splitRowId(_msg['msg'][0]);
+			message = this.splitRowId(_msg['msg'][0]);
 			if (message[3]) _foldernode = displayname = atob(message[3]);
 		}
 		// Mail only selects an adjacent row after the user's next arrow key.
@@ -2827,8 +2827,8 @@ export class MailApp extends EgwApp
 
 		// Tell server - fast client-side JMAP path for the common case (explicit selection, not
 		// "select all matching the current filter"), falling back to the classic ajax call
-		// unchanged for anything else or on any failure (see mail_tryJmapDelete())
-		(this.mail_tryJmapDelete(_msg, _action) ??
+		// unchanged for anything else or on any failure (see tryJmapDelete())
+		(this.tryJmapDelete(_msg, _action) ??
 			egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true));
 
 		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
@@ -2840,7 +2840,7 @@ export class MailApp extends EgwApp
 	 * takes in all arguments
 	 * @param _msg - message list
 	 */
-	mail_deleteMessagesShowResult(_msg)
+	deleteMessagesShowResult(_msg)
 	{
 		// Update list
 
@@ -2864,7 +2864,7 @@ export class MailApp extends EgwApp
 	 * 	 reason - reason to report
 	 * 	 messageList
 	 */
-	mail_retryForcedDelete(responseObject)
+	retryForcedDelete(responseObject)
 	{
 		// Start a full list refresh to show current data
 		const nm = this.et2.getWidgetById('nm');
@@ -2874,7 +2874,7 @@ export class MailApp extends EgwApp
 		var messageList = responseObject['messageList'];
 		if (confirm(reason))
 		{
-			this.mail_deleteMessages(messageList,'remove_immediately');
+			this.deleteMessages(messageList,'remove_immediately');
 		}
 		else
 		{
@@ -2889,7 +2889,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @param _messageList
 	 */
-	mail_undeleteMessages(_messageList) {
+	undeleteMessages(_messageList) {
 	// setting class of row, the old style
 	}
 
@@ -2918,14 +2918,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_emptySpam
+	 * emptySpam
 	 *
 	 * @param {object} action
 	 * @param {object} _senders
 	 */
-	mail_emptySpam(action,_senders) {
+	emptySpam(action,_senders) {
 		var server = _senders[0].id.split('::');
-		var activeFilters = this.mail_getActiveFilters();
+		var activeFilters = this.getActiveFilters();
 		var self = this;
 
 		this.jmap.invalidateQuota(server[0]);
@@ -2953,14 +2953,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_emptyTrash
+	 * emptyTrash
 	 *
 	 * @param {object} action
 	 * @param {object} _senders
 	 */
-	mail_emptyTrash(action,_senders) {
+	emptyTrash(action,_senders) {
 		var server = _senders[0].id.split('::');
-		var activeFilters = this.mail_getActiveFilters();
+		var activeFilters = this.getActiveFilters();
 		var self = this;
 
 		this.jmap.invalidateQuota(server[0]);
@@ -2988,7 +2988,7 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_changeProfile
+	 * changeProfile
 	 *
 	 * @param {string} folder the ID of the selected Node -> should be an integer
 	 * @param {object} _widget handle to the tree widget
@@ -2996,7 +2996,7 @@ export class MailApp extends EgwApp
 	 *		folders.  False means they're already loaded in the tree, and we don't need
 	 *		them again
 	 */
-	mail_changeProfile(folder,_widget, getFolders) {
+	changeProfile(folder,_widget, getFolders) {
 		if(typeof getFolders == 'undefined')
 		{
 			getFolders = true;
@@ -3017,7 +3017,7 @@ export class MailApp extends EgwApp
 		},this))
 			.sendRequest(true);
             _widget.finishedLazyLoading().then (() => {
-                this.mail_changeFolder(folder+"::INBOX", _widget, '');
+                this.changeFolder(folder+"::INBOX", _widget, '');
                 _widget.reSelectItem(folder+"::INBOX")
             });
 
@@ -3025,12 +3025,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_changeFolder
+	 * changeFolder
 	 * @param {string} _folder the ID of the selected Node
          * @param {Et2Tree} _widget handle to the tree widget
 	 * @param {string} _previous - Previously selected node ID
 	 */
-	mail_changeFolder(_folder,_widget, _previous) {
+	changeFolder(_folder,_widget, _previous) {
 
 		// to reset iframes to the normal status
 		this.loadIframe();
@@ -3061,8 +3061,8 @@ export class MailApp extends EgwApp
 		var profile_selected = (_folder.indexOf('::') === -1);
 		if ((!previousServer || server[0] != previousServer[0]) && profile_selected)
 		{
-			// mail_changeProfile triggers a refresh, no need to do any more
-			return this.mail_changeProfile(_folder,_widget, _widget.getSelectedNode().childsCount == 0);
+			// changeProfile triggers a refresh, no need to do any more
+			return this.changeProfile(_folder,_widget, _widget.getSelectedNode().childsCount == 0);
 		}
 
 		// Apply new selected folder to list, which updates data
@@ -3097,14 +3097,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_checkAllSelected
+	 * checkAllSelected
 	 *
 	 * @param _action
 	 * @param _elems
 	 * @param _target
 	 * @param _confirm
 	 */
-	mail_checkAllSelected(_action, _elems, _target, _confirm)
+	checkAllSelected(_action, _elems, _target, _confirm)
 	{
 		if (typeof _confirm == 'undefined') _confirm = false;
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
@@ -3213,7 +3213,7 @@ export class MailApp extends EgwApp
 					switch (_action.id)
 					{
 						case "delete":
-							that.mail_callDelete(_action, _elems, rv);
+							that.callDelete(_action, _elems, rv);
 							break;
 						case "readall":
 						case "unlabel":
@@ -3230,26 +3230,26 @@ export class MailApp extends EgwApp
 						case "flagged":
 						case "read":
 						case "undelete":
-							that.mail_callFlagMessages(_action, _elems, rv);
+							that.callFlagMessages(_action, _elems, rv);
 							break;
 						case "drop_move_mail":
-							that.mail_callMove(_action, _elems, _target, rv);
+							that.callMove(_action, _elems, _target, rv);
 							break;
 						case "drop_copy_mail":
-							that.mail_callCopy(_action, _elems, _target, rv);
+							that.callCopy(_action, _elems, _target, rv);
 							break;
 						default:
 							if (that.isCustomLabel(_action.id))
 							{
-								that.mail_callFlagMessages(_action, _elems, rv);
+								that.callFlagMessages(_action, _elems, rv);
 							}
 							else if (_action.id.substr(0, 4) == 'move')
 							{
-								that.mail_callMove(_action, _elems, _target, rv);
+								that.callMove(_action, _elems, _target, rv);
 							}
 							else if (_action.id.substr(0, 4) == 'copy')
 							{
-								that.mail_callCopy(_action, _elems, _target, rv);
+								that.callCopy(_action, _elems, _target, rv);
 							}
 					}
 				}, messageToDisplay, this.egw.lang("Confirm"), null, buttons);
@@ -3270,7 +3270,7 @@ export class MailApp extends EgwApp
 					egw.debug('warn',"Tried to delete a mail when no mail was selected. NoOp!")
 					break
 				}
-				this.mail_callDelete(_action, _elems,rvMain);
+				this.callDelete(_action, _elems,rvMain);
 				break;
 			case "unlabel":
 			case "label1":
@@ -3286,47 +3286,47 @@ export class MailApp extends EgwApp
 			case "flagged":
 			case "read":
 			case "undelete":
-				this.mail_callFlagMessages(_action, _elems,rvMain);
+				this.callFlagMessages(_action, _elems,rvMain);
 				break;
 			case "drop_move_mail":
-				this.mail_callMove(_action, _elems,_target, rvMain);
+				this.callMove(_action, _elems,_target, rvMain);
 				break;
 			case "drop_copy_mail":
-				this.mail_callCopy(_action, _elems,_target, rvMain);
+				this.callCopy(_action, _elems,_target, rvMain);
 				break;
 			default:
 				if (this.isCustomLabel(_action.id))
 				{
-					this.mail_callFlagMessages(_action, _elems,rvMain);
+					this.callFlagMessages(_action, _elems,rvMain);
 				}
 				else if (_action.id.substr(0,4)=='move')
 				{
-					this.mail_callMove(_action, _elems,_target, rvMain);
+					this.callMove(_action, _elems,_target, rvMain);
 				}
 				else if (_action.id.substr(0,4)=='copy')
 				{
-					this.mail_callCopy(_action, _elems,_target, rvMain);
+					this.callCopy(_action, _elems,_target, rvMain);
 				}
 		}
 	}
 
 	/**
-	 * mail_doActionCall
+	 * doActionCall
 	 *
 	 * @param _action
 	 * @param _elems
 	 */
-	mail_doActionCall(_action, _elems)
+	doActionCall(_action, _elems)
 	{
 	}
 
 	/**
-	 * mail_getActiveFilters
+	 * getActiveFilters
 	 *
 	 * @param _action
 	 * @return mixed boolean/activeFilters object
 	 */
-	mail_getActiveFilters(_action)
+	getActiveFilters(_action)
 	{
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
@@ -3352,9 +3352,9 @@ export class MailApp extends EgwApp
 	 * @param _action _action.id is 'read', 'unread', 'flagged' or 'unflagged'
 	 * @param _elems
 	 */
-	mail_flag(_action, _elems)
+	flag(_action, _elems)
 	{
-		this.mail_checkAllSelected(_action,_elems,null,true);
+		this.checkAllSelected(_action,_elems,null,true);
 	}
 
 	/**
@@ -3362,10 +3362,10 @@ export class MailApp extends EgwApp
 	 * actual current state - a real network round-trip (Et2NextmatchDataProvider.refresh(), which
 	 * for mail routes through MailApp's dataRegisterFetch('mail', jmap.fetchRows) wiring to a real
 	 * JMAP Email/get call). Too slow to use for every optimistic flag click (that's what
-	 * mail_patchRow() is for) - use this to reconcile back to truth after a failed optimistic
+	 * patchRow() is for) - use this to reconcile back to truth after a failed optimistic
 	 * change, or for changes with no local guess to make (push notifications from other sessions).
 	 */
-	mail_refreshRows(_ids: string[]): void
+	refreshRows(_ids: string[]): void
 	{
 		if (!_ids?.length) return;
 		this.mail_nmOwner()?.nm.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
@@ -3397,7 +3397,7 @@ export class MailApp extends EgwApp
 	 * Instantly reflect a keyword/class change on an already-rendered row
 	 * Caller must already have written the row's
 	 * *new* flags/class into dataElem.data (the "what should this look like now" computation stays
-	 * with the caller, e.g. mail_callFlagMessages's toggle logic).
+	 * with the caller, e.g. callFlagMessages's toggle logic).
 	 * mark the row as an unconfirmed guess (MailJmap.markOptimistic()), and asks the nextmatch to refresh it.
 	 * jmap.ts's fetchRows()/refreshRows() (registered via egw.dataRegisterFetch()) sees the guess
 	 * and echoes it straight back with no JMAP round-trip, so the row re-renders without one -
@@ -3407,7 +3407,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @param _uid row uid, already updated in egw's central data cache
 	 */
-	mail_patchRow(_uid: string): void
+	patchRow(_uid: string): void
 	{
 		// Nothing anywhere renders this row - skip, rather than mark a guess no refresh can consume
 		const owner = this.mail_nmOwner();
@@ -3437,7 +3437,7 @@ export class MailApp extends EgwApp
 	 * @param _elems
 	 * @param _allMessagesChecked
 	 */
-	mail_callFlagMessages(_action, _elems, _allMessagesChecked)
+	callFlagMessages(_action, _elems, _allMessagesChecked)
 	{
 		/**
 		 * vars
@@ -3447,7 +3447,7 @@ export class MailApp extends EgwApp
 				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
 				all: _allMessagesChecked || false,
 				popup: typeof this.et2_view!='undefined' || egw(window).is_popup() || false,
-				activeFilters: _action.id == 'readall'? false : this.mail_getActiveFilters(_action)
+				activeFilters: _action.id == 'readall'? false : this.getActiveFilters(_action)
 		}
 
 		if (typeof _elems === 'undefined' || _elems.length == 0)
@@ -3456,12 +3456,12 @@ export class MailApp extends EgwApp
 			{
 				data.msg = [this.mail_currentlyFocussed];
 				_elems = data;
-				data.msg = this.mail_getFormData(_elems).msg;
+				data.msg = this.getFormData(_elems).msg;
 			}
 		}
 		else // action called by contextmenu
 		{
-			data.msg = this.mail_getFormData(_elems).msg;
+			data.msg = this.getFormData(_elems).msg;
 		}
 		if (_action.id == 'read')
 		{
@@ -3484,8 +3484,8 @@ export class MailApp extends EgwApp
 		// starts with "un" - customFlag1-5/label1-5/flagged/read are all plain toggles handled below)
 		if (_action.id == 'unlabel')
 		{
-			// Optimistically clear all labels locally so the row updates instantly - mail_flagMessages()
-			// falls back to mail_refreshRows() (a real re-fetch) only if the JMAP call actually fails.
+			// Optimistically clear all labels locally so the row updates instantly - flagMessages()
+			// falls back to refreshRows() (a real re-fetch) only if the JMAP call actually fails.
 			const labels = this.getLabelIds();
 			for (const uid of data.msg)
 			{
@@ -3499,18 +3499,18 @@ export class MailApp extends EgwApp
 					classes = classes.filter(className => className != label && className != 'un' + label);
 				});
 				dataElem.data['class'] = classes.join(' ');
-				this.mail_patchRow(uid);
+				this.patchRow(uid);
 			}
-			this.mail_flagMessages(_action.id, data);
+			this.flagMessages(_action.id, data);
 		}
 		else if (_action.id=='readall')
 		{
-			this.mail_flagMessages('read',data);
+			this.flagMessages('read',data);
 		}
 		else
 		{
-			// Toggle flags/class locally first, for instant feedback - mail_flagMessages() falls back
-			// to mail_refreshRows() (a real re-fetch) only if the JMAP call it fires below actually
+			// Toggle flags/class locally first, for instant feedback - flagMessages() falls back
+			// to refreshRows() (a real re-fetch) only if the JMAP call it fires below actually
 			// fails, reconciling back to the server's real state for whichever rows the guess got wrong.
 			const customFlags = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
 			const rowClass = _action.id;
@@ -3541,7 +3541,7 @@ export class MailApp extends EgwApp
 						flags.read = 'read';
 					}
 					dataElem.data['class'] = classes.join(' ');
-					this.mail_patchRow(data.msg[i]);
+					this.patchRow(data.msg[i]);
 					this.updateFilter_data(data.msg[i], data.activeFilters, flags);
 					continue;
 				}
@@ -3603,7 +3603,7 @@ export class MailApp extends EgwApp
 				}
 
 				dataElem.data['class'] = classes.join(' ');
-				this.mail_patchRow(data.msg[i]);
+				this.patchRow(data.msg[i]);
 
 				// Hide this row now if it no longer matches the active status filter (e.g. viewing
 				// "Unread" and marking read) - independent of the class/icon patch above, and not
@@ -3614,7 +3614,7 @@ export class MailApp extends EgwApp
 			// Notify server of changes
 			if (msg_unset['msg'].length && !data['all'])
 			{
-				this.mail_flagMessages(
+				this.flagMessages(
 					this.isLabel(_action.id) ?
 						{customLabel: _action.id, set: false} : 'un'+_action.id,
 					msg_unset
@@ -3622,14 +3622,14 @@ export class MailApp extends EgwApp
 			}
 			if (msg_set['msg'].length && !data['all'])
 			{
-				this.mail_flagMessages(
+				this.flagMessages(
 					this.isLabel(_action.id) ?
 						{customLabel: _action.id, set: true} : _action.id,
 					msg_set
 				);
 			}
 			//server must do the toggle, as we apply to ALL, not only the visible
-			if (data['all']) this.mail_flagMessages(_action.id,data);
+			if (data['all']) this.flagMessages(_action.id,data);
 			// No further update needed, only in case of read, the counters should be refreshed
 			if (_action.id=='read') this.refreshFolderStatus(folder,'thisfolderonly',false,true);
 			return;
@@ -3708,7 +3708,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _elems _msg/_elems object with an .activeFilters property (only present/used
 	 *  when .all is truthy)
 	 */
-	private mail_buildJmapQuery(_elems) : any
+	private buildJmapQuery(_elems) : any
 	{
 		const filters = _elems.activeFilters || {};
 		let selectedFolder = filters.selectedFolder ||
@@ -3738,7 +3738,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _elems
 	 * @param {boolean} _isPopup
 	 */
-	mail_flagMessages(_flag, _elems,_isPopup?)
+	flagMessages(_flag, _elems,_isPopup?)
 	{
 		const labelOperation = typeof _flag === 'object' && typeof _flag?.customLabel === 'string' ? _flag : null;
 		const actionId = labelOperation?.customLabel || String(_flag);
@@ -3757,7 +3757,7 @@ export class MailApp extends EgwApp
 			let operation : Promise<void>;
 			if (_elems.all)
 			{
-				const query = this.mail_buildJmapQuery(_elems);
+				const query = this.buildJmapQuery(_elems);
 				operation = actionId === 'unlabel' ?
 					this.jmap.clearLabelsForAll(query) : this.jmap.toggleForAll(query, actionId);
 			}
@@ -3791,7 +3791,7 @@ export class MailApp extends EgwApp
 			operation.then(() =>
 			{
 				// Nothing to do here for an explicit selection - the caller already patched the
-				// row(s) optimistically (mail_patchRow()) before firing this JMAP call, and the
+				// row(s) optimistically (patchRow()) before firing this JMAP call, and the
 				// operation just confirmed that guess was correct. "select all matching filter" has
 				// no such local guess (arbitrarily many rows, not all loaded client-side), so it
 				// always needs the real refresh.
@@ -3802,7 +3802,7 @@ export class MailApp extends EgwApp
 				// The optimistic patch (or "all" case) may now be showing the wrong thing - reconcile
 				// with the server's real current state.
 				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
-				else this.mail_refreshRows(_elems.msg);
+				else this.refreshRows(_elems.msg);
 			});
 			return;
 		}
@@ -3819,7 +3819,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @param _url
 	 */
-	mail_displayHeaderLines(_url) {
+	displayHeaderLines(_url) {
 		// only used by right clickaction
 		egw.openPopup(_url, '870', '600', null, 'mail');
 	}
@@ -3830,7 +3830,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_header(_action, _elems)
+	header(_action, _elems)
 	{
 		if (typeof _elems == 'undefined'|| _elems.length==0)
 		{
@@ -3848,14 +3848,14 @@ export class MailApp extends EgwApp
 				}
 			}
 		}
-		//alert('mail_header('+_elems[0].id+')');
+		//alert('header('+_elems[0].id+')');
 		const rowId = _elems[0].id;
 		const classicHeaderPopup = () =>
 		{
 			let url = window.egw_webserverUrl+'/index.php?';
 			url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
 			url += '&id='+rowId;
-			this.mail_displayHeaderLines(url);
+			this.displayHeaderLines(url);
 		};
 		this.jmap.fetchRawHeader(rowId).then(async(text : string) =>
 		{
@@ -3880,7 +3880,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_mailsource(_action, _elems)
+	mailSource(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3898,12 +3898,12 @@ export class MailApp extends EgwApp
 				}
 			}
 		}
-		//alert('mail_mailsource('+_elems[0].id+')');
+		//alert('mailSource('+_elems[0].id+')');
 		var url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 		url += '&id='+_elems[0].id;
 		url += '&location=display';
-		this.mail_displayHeaderLines(url);
+		this.displayHeaderLines(url);
 	}
 
 	/**
@@ -3912,7 +3912,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_save(_action, _elems)
+	save(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -3933,7 +3933,7 @@ export class MailApp extends EgwApp
 
 		for (var i in _elems)
 		{
-			//alert('mail_save('+_elems[0].id+')');
+			//alert('save('+_elems[0].id+')');
 			var url = window.egw_webserverUrl+'/index.php?';
 			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+_elems[i].id;
@@ -4265,7 +4265,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_save2fm(_action, _elems)
+	save2Fm(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -4320,7 +4320,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	mail_integrate(_action, _elems)
+	integrate(_action, _elems)
 	{
 		const app = _action.id;
 		let w_h = ['750','580']; // define a default wxh if there's no popup size registered
@@ -4426,13 +4426,13 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_getFormData
+	 * getFormData
 	 *
 	 * @param {object} _actionObjects the senders
 	 *
 	 * @return structured array of message ids: array(msg=>message-ids)
 	 */
-	mail_getFormData(_actionObjects) {
+	getFormData(_actionObjects) {
 		var messages = {};
 		// if
 		if (typeof _actionObjects['msg'] != 'undefined' && _actionObjects['msg'].length>0) return _actionObjects;
@@ -4453,24 +4453,24 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_move2folder - implementation of the move action from action menu
+	 * move2Folder - implementation of the move action from action menu
 	 *
 	 * @param _action _action.id holds folder target information
 	 * @param _elems - the representation of the elements to be affected
 	 */
-	mail_move2folder(_action, _elems) {
-		this.mail_move(_action, _elems, null);
+	move2Folder(_action, _elems) {
+		this.move(_action, _elems, null);
 	}
 
 	/**
-	 * mail_move - implementation of the move action from drag n drop
+	 * move - implementation of the move action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 */
-	mail_move(_action,_senders,_target) {
-		this.mail_checkAllSelected(_action,_senders,_target,true);
+	move(_action,_senders,_target) {
+		this.checkAllSelected(_action,_senders,_target,true);
 	}
 
 	/**
@@ -4498,7 +4498,7 @@ export class MailApp extends EgwApp
 		}
 		if (messages['all'])
 		{
-			return this.jmap.moveAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath)
+			return this.jmap.moveAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
 				.catch((e) => this.mail_handleJmapError(e, classicMove));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
@@ -4524,7 +4524,7 @@ export class MailApp extends EgwApp
 	 * to the classic ajax_flagMessages() call on any failure (reference-building or the JMAP call
 	 * itself). ajax_sendMDN() (the actual outbound receipt) is unrelated and unchanged.
 	 */
-	private mail_trySetMdnFlag(messages : any, sent : boolean) : void
+	private trySetMdnFlag(messages : any, sent : boolean) : void
 	{
 		const classicFallback = () =>
 			egw.jsonq('mail.mail_ui.ajax_flagMessages', [sent ? 'mdnsent' : 'mdnnotsent', messages, true]);
@@ -4542,16 +4542,16 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_move - implementation of the move action from drag n drop
+	 * move - implementation of the move action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 * @param _allMessagesChecked
 	 */
-	mail_callMove(_action,_senders,_target,_allMessagesChecked) {
+	callMove(_action,_senders,_target,_allMessagesChecked) {
 		var target = _action.id == 'drop_move_mail' ? _target.id : _action.id.substr(5);
-		var messages = this.mail_getFormData(_senders);
+		var messages = this.getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 
 		// Directly delete any cache for target
@@ -4572,7 +4572,7 @@ export class MailApp extends EgwApp
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
-		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
+		if (messages['all']) messages['activeFilters'] = this.getActiveFilters(_action);
 
 		// Make sure a default target folder is set in case of drop target is parent 0 (mail account name)
 		if (!target.match(/::/g)) target += '::INBOX';
@@ -4611,14 +4611,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_copy - implementation of the move action from drag n drop
+	 * copy - implementation of the move action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 */
-	mail_copy(_action,_senders,_target) {
-		this.mail_checkAllSelected(_action,_senders,_target,true);
+	copy(_action,_senders,_target) {
+		this.checkAllSelected(_action,_senders,_target,true);
 	}
 
 	/**
@@ -4641,7 +4641,7 @@ export class MailApp extends EgwApp
 		}
 		if (messages['all'])
 		{
-			return this.jmap.copyAllMatching(this.mail_buildJmapQuery(messages), targetProfileID, targetFolderPath)
+			return this.jmap.copyAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
 				.catch((e) => this.mail_handleJmapError(e, classicCopy));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
@@ -4662,22 +4662,22 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_callCopy - implementation of the copy action from drag n drop
+	 * callCopy - implementation of the copy action from drag n drop
 	 *
 	 * @param _action
 	 * @param _senders - the representation of the elements dragged
 	 * @param _target - the representation of the target
 	 * @param _allMessagesChecked
 	 */
-	mail_callCopy(_action,_senders,_target,_allMessagesChecked) {
+	callCopy(_action,_senders,_target,_allMessagesChecked) {
 		var target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
-		var messages = this.mail_getFormData(_senders);
+		var messages = this.getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
-		if (messages['all']) messages['activeFilters'] = this.mail_getActiveFilters(_action);
+		if (messages['all']) messages['activeFilters'] = this.getActiveFilters(_action);
 		var self = this;
 		const classicCopy = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlock_tree();})
 			.sendRequest();
@@ -6550,7 +6550,7 @@ export class MailApp extends EgwApp
 		var id,fromaddress,domain, email = '';
 		var data = {};
 		var items = [];
-		//if call happens from a popup this.et2 is the wrong reference --- see mail_deleteMessages
+		//if call happens from a popup this.et2 is the wrong reference --- see deleteMessages
 		const nm = this.et2.getWidgetById(this.nm_index) ??
 			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index)
 		// called action for a single row from toolbar

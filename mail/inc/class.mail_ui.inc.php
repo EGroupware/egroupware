@@ -795,14 +795,14 @@ class mail_ui
 				'acceptedTypes' => 'mail',
 				'icon' => 'move',
 				'caption' => 'Move to',
-				'onExecute' => 'javaScript:app.mail.mail_move'
+				'onExecute' => 'javaScript:app.mail.move'
 			),
 			'drop_copy_mail' => array(
 				'type' => 'drop',
 				'acceptedTypes' => 'mail',
 				'icon' => 'copy',
 				'caption' => 'Copy to',
-				'onExecute' => 'javaScript:app.mail.mail_copy'
+				'onExecute' => 'javaScript:app.mail.copy'
 			),
 			'drop_cancel' => array(
 				'icon' => 'cancel',
@@ -848,7 +848,7 @@ class mail_ui
 				'caption' => lang('mark all as read'),
 				'color' => 'red',
 				'icon' => 'kmmsgread',
-				'onExecute' => 'javaScript:app.mail.mail_flag',
+				'onExecute' => 'javaScript:app.mail.flag',
 				'hint' => 'mark all messages in folder as read',
 				'toolbarDefault' => false
 			),
@@ -936,7 +936,7 @@ class mail_ui
 				$tree_actions['empty_trash'] = array(
 					'caption' => 'empty trash',
 					'icon' => 'dhtmlxtree/MailFolderTrash',
-					'onExecute' => 'javaScript:app.mail.mail_emptyTrash',
+					'onExecute' => 'javaScript:app.mail.emptyTrash',
 					'group'	=> $group,
 				);
 				break;
@@ -950,7 +950,7 @@ class mail_ui
 				'caption' => 'empty junk',
 				'icon' => 'dhtmlxtree/MailFolderJunk',
 				'enabled'	=> 'javaScript:app.mail.spamfolder_enabled',
-				'onExecute' => 'javaScript:app.mail.mail_emptySpam',
+				'onExecute' => 'javaScript:app.mail.emptySpam',
 				'group'	=> $group,
 			);
 		}
@@ -1359,7 +1359,7 @@ class mail_ui
 							'caption' => (!empty($lastFolderUsedForMove['profileName'])?$lastFolderUsedForMove['profileName']:'('.$lastFolderUsedForMove['profileID'].')').': '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
 							'icon' => 'move',
 							'group' => $group,
-							'onExecute' => 'javaScript:app.mail.mail_move2folder',
+							'onExecute' => 'javaScript:app.mail.move2Folder',
 							'allowOnMultiple' => true,
 						)
 					)
@@ -1391,7 +1391,7 @@ class mail_ui
 			'group' => $group++,
 			'enabled' => 'javaScript:app.mail.archivefolder_enabled',
 			//'hideOnDisabled' => true, // does not work as expected on message-list
-			'onExecute' => 'javaScript:app.mail.mail_move2folder',
+			'onExecute' => 'javaScript:app.mail.move2Folder',
 			'shortcut' => KeyManager::shortcut(KeyManager::V, true, true),
 			'allowOnMultiple' => true,
 			'toolbarDefault' => false
@@ -1403,7 +1403,7 @@ class mail_ui
 				'hint' => 'Save as InfoLog',
 				'icon' => 'infolog/navbar',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_integrate',
+				'onExecute' => 'javaScript:app.mail.integrate',
 				'popup' => Link::get_registry('infolog', 'add_popup'),
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
@@ -1413,7 +1413,7 @@ class mail_ui
 				'hint' => 'Save as ticket',
 				'group' => $group,
 				'icon' => 'tracker/navbar',
-				'onExecute' => 'javaScript:app.mail.mail_integrate',
+				'onExecute' => 'javaScript:app.mail.integrate',
 				'popup' => Link::get_registry('tracker', 'add_popup'),
 				'mail_import' => Api\Hooks::single(array('location' => 'mail_import'),'tracker'),
 				'allowOnMultiple' => false,
@@ -1423,7 +1423,7 @@ class mail_ui
 				'hint' => 'Save as Calendar',
 				'icon' => 'calendar/navbar',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.mail.mail_integrate',
+				'onExecute' => 'javaScript:app.mail.integrate',
 				'popup' => Link::get_registry('calendar', 'add_popup'),
 				'allowOnMultiple' => false,
 				'toolbarDefault' => true
@@ -1445,7 +1445,7 @@ class mail_ui
 						'hint' => 'Save message to disk',
 						'group' => $group,
 						'icon' => 'fileexport',
-						'onExecute' => 'javaScript:app.mail.mail_save',
+						'onExecute' => 'javaScript:app.mail.save',
 						'allowOnMultiple' => true,
 						'hideOnMobile' => true
 					),
@@ -1454,7 +1454,7 @@ class mail_ui
 						'hint' => 'Save to filemanager',
 						'group' => $group,
 						'icon' => 'filemanager/navbar',
-						'onExecute' => 'javaScript:app.mail.mail_save2fm',
+						'onExecute' => 'javaScript:app.mail.save2Fm',
 						'allowOnMultiple' => true,
 					),
 				),
@@ -1470,7 +1470,7 @@ class mail_ui
 						'hint' => 'View header lines',
 						'group' => $group,
 						'icon' => 'code-square',
-						'onExecute' => 'javaScript:app.mail.mail_header',
+						'onExecute' => 'javaScript:app.mail.header',
 						'allowOnMultiple' => false,
 					),
 					'mailsource' => array(
@@ -1478,7 +1478,7 @@ class mail_ui
 						'hint' => 'View full Mail Source',
 						'group' => $group,
 						'icon' => 'source',
-						'onExecute' => 'javaScript:app.mail.mail_mailsource',
+						'onExecute' => 'javaScript:app.mail.mailSource',
 						'allowOnMultiple' => false,
 					),
 					'openastext' => array(
@@ -1521,7 +1521,7 @@ class mail_ui
 								'group' => ++$group,
 								'caption' => lang('remove all'),
 								'icon' => 'tag_message',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'shortcut' => KeyManager::shortcut(KeyManager::_0, true, true),
 							),
 							'label1' => array(
@@ -1529,7 +1529,7 @@ class mail_ui
 								'caption' => lang('important'),
 								'color' => '#ff0000',
 								'icon' => 'mail_label1',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'shortcut' => KeyManager::shortcut(KeyManager::_1, true, true),
 							),
 							'label2' => array(
@@ -1537,7 +1537,7 @@ class mail_ui
 								'caption' => lang('job'),
 								'color' => '#ff8000',
 								'icon' => 'mail_label2',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'shortcut' => KeyManager::shortcut(KeyManager::_2, true, true),
 							),
 							'label3' => array(
@@ -1545,7 +1545,7 @@ class mail_ui
 								'caption' => lang('personal'),
 								'color' => '#008000',
 								'icon' => 'mail_label3',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'shortcut' => KeyManager::shortcut(KeyManager::_3, true, true),
 							),
 							'label4' => array(
@@ -1553,7 +1553,7 @@ class mail_ui
 								'caption' => lang('to do'),
 								'color' => '#0000ff',
 								'icon' => 'mail_label4',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'shortcut' => KeyManager::shortcut(KeyManager::_4, true, true),
 							),
 							'label5' => array(
@@ -1561,7 +1561,7 @@ class mail_ui
 								'caption' => lang('later'),
 								'color' => '#8000ff',
 								'icon' => 'mail_label5',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'shortcut' => KeyManager::shortcut(KeyManager::_5, true, true),
 							),
 						),
@@ -1575,7 +1575,7 @@ class mail_ui
 								'group' => ++$group,
 								'caption' => 'Flag / Unflag',
 								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'hint' => 'Flag or Unflag a mail',
 								'shortcut' => KeyManager::shortcut(KeyManager::F, true, true),
 								'toolbarDefault' => true
@@ -1585,7 +1585,7 @@ class mail_ui
 								'caption' => 'red',
 								'iconColor' => '#ff0000',
 								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
 								'hideOnDisabled' => true,
 							),
@@ -1594,7 +1594,7 @@ class mail_ui
 								'caption' => 'orange',
 								'iconColor' => '#ff8000',
 								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
 								'hideOnDisabled' => true,
 							),
@@ -1603,7 +1603,7 @@ class mail_ui
 								'caption' => 'green',
 								'iconColor' => '#008000',
 								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
 								'hideOnDisabled' => true,
 							),
@@ -1612,7 +1612,7 @@ class mail_ui
 								'caption' => 'blue',
 								'iconColor' => '#0000ff',
 								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
 								'hideOnDisabled' => true,
 							),
@@ -1621,7 +1621,7 @@ class mail_ui
 								'caption' => 'purple',
 								'iconColor' => '#8000ff',
 								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.mail_flag',
+								'onExecute' => 'javaScript:app.mail.flag',
 								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
 								'hideOnDisabled' => true,
 							),
@@ -1631,7 +1631,7 @@ class mail_ui
 						'group' => $group,
 						'caption' => 'Read / Unread',
 						'icon' => 'kmmsgread',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
+						'onExecute' => 'javaScript:app.mail.flag',
 						'shortcut' => KeyManager::shortcut(KeyManager::U, true, true),
 
 					),
@@ -1640,7 +1640,7 @@ class mail_ui
 						'caption' => lang('mark all as read'),
 						'color' => 'red',
 						'icon' => 'kmmsgread',
-						'onExecute' => 'javaScript:app.mail.mail_flag',
+						'onExecute' => 'javaScript:app.mail.flag',
 						'hint' => 'mark all messages in folder as read',
 						'toolbarDefault' => false
 					),
@@ -1650,7 +1650,7 @@ class mail_ui
 				'caption' => 'Delete',
 				'hint' => $deleteOptions[$this->mail_bo->mailPreferences['deleteOptions']],
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.mail_delete',
+				'onExecute' => 'javaScript:app.mail.deleteMessage',
 				'toolbarDefault' => true
 			),
 			'drag_mail' => array(
@@ -1667,7 +1667,7 @@ class mail_ui
 				'no_lang' => true,
 				'color' => $customLabel['color'],
 				'icon' => 'tag_message',//TODO maybe allow to use the custom icon set in the category
-				'onExecute' => 'javaScript:app.mail.mail_flag',
+				'onExecute' => 'javaScript:app.mail.flag',
 			);
 		}
 		//error_log(__METHOD__.__LINE__.array2string(array_keys($actions)));
@@ -2004,13 +2004,13 @@ class mail_ui
 			'group' => $actions['mark']['children']['flagged']['group'],
 			'caption' => 'Flagged',
 			'icon' => 'unread_flagged_small',
-			'onExecute' => 'javaScript:app.mail.mail_flag',
+			'onExecute' => 'javaScript:app.mail.flag',
 		);
 		$actions['mark']['children']['unflagged']=array(
 			'group' => $actions['mark']['children']['flagged']['group'],
 			'caption' => 'Unflagged',
 			'icon' => 'read_flagged_small',
-			'onExecute' => 'javaScript:app.mail.mail_flag',
+			'onExecute' => 'javaScript:app.mail.flag',
 		);
 		$actions['tracker']['toolbarDefault'] = true;
 		$actions['forward']['toolbarDefault'] = true;

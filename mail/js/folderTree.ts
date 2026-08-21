@@ -64,7 +64,7 @@ export interface BuildFolderLevelOptions
 /**
  * mail's tree-node id ("profileID::canonical/path") is a different scheme from the raw JMAP
  * Mailbox id (base64(path) for the local shim, an opaque server-assigned string for real JMAP/
- * Stalwart) - it's what the rest of the app (mail_changeFolder(), NextMatch's selectedFolder
+ * Stalwart) - it's what the rest of the app (changeFolder(), NextMatch's selectedFolder
  * filter, MailJmap.getRows()'s own folder-path parsing) already expects. Every node keeps its
  * raw JMAP id too (under `jmapId`), purely so a *later* expand of that same node can pass it
  * straight back as getMailboxChildren()'s parentId without having to re-derive it - Stalwart's

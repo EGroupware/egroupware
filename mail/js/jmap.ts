@@ -1117,7 +1117,7 @@ export class MailJmap
 	 *
 	 * The guess is echoed back once and then trusted.
 	 * That write's own success/failure is the real signal,
-	 * and on failure it calls mail_refreshRows() - an unmarked, genuinely fetching refresh.
+	 * and on failure it calls refreshRows() - an unmarked, genuinely fetching refresh.
 	 *
 	 * Markers expire because consumption is not guaranteed:
 	 * Et2NextmatchDataProvider may fold our refresh into an in-flight one for the same row and never call us.
@@ -1137,7 +1137,7 @@ export class MailJmap
 
 	/**
 	 * Mark a row's egw data cache entry as an unconfirmed optimistic guess:
-	 * the refresh the caller fires next (nm.refresh([uid], UPDATE_IN_PLACE), see MailApp.mail_patchRow()) then re-renders from the cache instead of doing a JMAP round-trip.
+	 * the refresh the caller fires next (nm.refresh([uid], UPDATE_IN_PLACE), see MailApp.patchRow()) then re-renders from the cache instead of doing a JMAP round-trip.
 	 * See optimisticRows for why that guess is trusted rather than verified.
 	 */
 	markOptimistic(uid : string) : void

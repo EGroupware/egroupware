@@ -35,7 +35,7 @@ use mail_ui;
  *
  * emptySpam()/emptyTrash() (from mail_ui's `ajax_emptySpam`/`ajax_emptyTrash`) joined this group
  * later - see doc/ai/projects/mail-folder-tree-jmap.md's "Resolved" note: `app.ts`'s
- * `mail_emptySpam()`/`mail_emptyTrash()` already try a JMAP fast path (`MailJmap.purgeFolder()`)
+ * `emptySpam()`/`emptyTrash()` already try a JMAP fast path (`MailJmap.purgeFolder()`)
  * first, so these are permanent classic-fallbacks, not folder-tree-migration-blocked code. They're
  * bulk message-clearing operations on a special folder (same domain as flagMessages()/
  * deleteMessages() above), not folder-tree code, hence living here rather than a new class.
@@ -466,12 +466,12 @@ class MessageActionHandler
 			if (empty($error))
 			{
 				$this->ui->folderHandler()->setFolderStatus([$uidA['profileID']."::".$folder], true);
-				$response->call('app.mail.mail_deleteMessagesShowResult', ['egw_message' => '', 'msg' => $_messageList['msg']]);
+				$response->call('app.mail.deleteMessagesShowResult', ['egw_message' => '', 'msg' => $_messageList['msg']]);
 			}
 			else
 			{
 				$error = str_replace('\n', "\n", lang('mailserver reported:\n%1 \ndo you want to proceed by deleting the selected messages immediately (click ok)?\nif not, please try to empty your trashfolder before continuing. (click cancel)', $error));
-				$response->call('app.mail.mail_retryForcedDelete', ['response' => $error, 'messageList' => $_messageList]);
+				$response->call('app.mail.retryForcedDelete', ['response' => $error, 'messageList' => $_messageList]);
 			}
 		}
 	}
