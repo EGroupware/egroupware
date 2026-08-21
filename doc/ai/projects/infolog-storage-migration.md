@@ -1079,17 +1079,71 @@ app-specific `$filter`/`$join`/`$criteria` internally, calls `parent::search()`)
   expansion, parent/subs `pid` logic, free-text/RAG search fragment construction, the
   `info_responsible`/`info_id` `col_filter` special-casing.
 
-### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
+### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract, done 2026-08-22
 
-Not gated on the SO swap itself, but natural to do once `infolog_bo` reliably hands
-back `Api\DateTime` objects via `date_format='object'`: update `infolog_zpush.inc.php`
-to read/write `SyncTask`'s `duedate`/`utcduedate`/`startdate`/`utcstartdate` as
-`Api\DateTime` objects directly, following `calendar_zpush.inc.php`'s existing pattern
-(`'date_format' => 'DateTime'` on read, direct assignment to `SyncAppointment`
-properties) — the z-push library's `STREAMER_TYPE_DATE` properties already accept
-`\DateTimeInterface` objects (`syncobject.php`), so `SyncTask` needs no library-side
-change. This removes `infolog_zpush`'s last remaining reliance on raw-int semantics
-entirely, rather than just avoiding breaking it.
+Ralf's redirect on how to approach this: since `infolog_zpush` merely composes
+`infolog_bo`, drive the change from `infolog_bo`'s already-supported `date_format='object'`
+mechanism outward to the consumer, rather than hand-rolling new date logic inside
+`infolog_zpush.inc.php` itself. Scope confirmed with ralf: only switch `infolog_zpush` to
+the existing per-call `date_format='object'` opt-in (already used by `infolog_groupdav`/
+`JsCalendar.php`) - `infolog_bo`'s default contract (`'ts'`) and every other consumer
+(classic web UI, `aiassistant`, `mail_compose`) stay untouched. The bigger "drop
+`date_format` entirely" version of Phase 3 (below) remains separately gated.
+
+- **Verified before writing any code** (via `vendor/egroupware/z-push-dev`'s actual
+  source, not assumed): `Streamer::Encode()` (`src/lib/core/streamer.php`) already
+  special-cases `instanceof \DateTime` property values on ANY `SyncObject` subclass -
+  `EGroupware\Api\DateTime::user2server($val, 'ts')` - before wire-encoding, converting a
+  real object into the wall-clock-int `formatDate()`/`gmstrftime()` expect. This is a
+  generic mechanism (not specific to `SyncAppointment`), confirming the doc's calendar
+  precedent transfers to `SyncTask` with zero z-push-library-side changes. `Decode()`
+  (wire → server), by contrast, never produces objects - `parseDate()` always returns a
+  raw int - so this modernization is asymmetric: `GetMessage()` (encode direction) needs
+  no manual conversion, `ChangeMessage()` (decode direction) must construct the
+  `Api\DateTime` object itself.
+- **Why `Api\Storage`/`time2time()`'s object-handling made the old fragile bookkeeping
+  unnecessary**: traced `Api\DateTime`'s constructor and `time2time()`'s per-key loop -
+  when a value is already a real `\DateTimeInterface` object, every `setTimezone()` call
+  in the chain re-displays the SAME real instant, never discarding it, regardless of which
+  `$fromTZId`/`$toTZId`/`$type` arguments `time2time()`/`write()` were called with. A real
+  object is therefore safe to hand to `write()` unconditionally - the old
+  `$user2server=empty($id)` special-casing (added 2026-08-19 to fix a real bug: an
+  unmodified sync silently shifting dates by the client/server tz offset) is no longer
+  needed at all once real objects are used consistently, rather than needing to be
+  preserved.
+- **`GetMessage()`**: `$this->infolog->read($id, true, 'server')` → `read($id, true, 'object')`.
+  No other code in the method needed to change - the existing `case 'info_startdate':`
+  branch's `empty()`/`<=` checks and the `default:` branch's `!empty()` check all continue
+  to work correctly on `Api\DateTime` objects exactly as they did on ints (`time2time()`
+  only converts a *truthy* raw value to an object, leaving a genuinely-unset `0`/`null`
+  alone, so `empty()` still correctly distinguishes "not set" either way; PHP's `<=`/`>=`
+  operators compare `DateTimeInterface` instances by real instant natively).
+- **`ChangeMessage()`**: `read($id, true, 'server')` → `read($id, true, 'object')`. Added
+  explicit `case 'info_startdate': case 'info_enddate': case 'info_datecompleted':` branches
+  (previously falling into `default:`) that wrap the raw int (or `null`) decoded from
+  `$message->$key` into `new Api\DateTime($message->$key, Api\DateTime::$server_timezone)` -
+  the same "server-time wall-clock digits" convention `GetMessage()` used to hand these
+  fields to the device in the first place, matching the ActiveSync protocol's own
+  "floating"/timezone-agnostic convention for task due-dates (`duedate`/`startdate`, as
+  opposed to the real-UTC-instant `utcduedate`/`utcstartdate` fields InfoLog has never
+  populated). `write()`'s final call dropped the `empty($id)` conditional entirely, now
+  always using its plain `true` default - correct uniformly for both edits and new entries,
+  a genuine simplification, not just a preserved special case.
+- **Test updates** (`infolog/tests/ZpushTaskTest.php`, the Phase 0 z-push harness): the 3
+  tests that asserted against raw ints failed immediately once the contract changed
+  (`SyncTask::$startdate` is now an object, not addable/comparable as an int) - confirming
+  the change actually took effect, not silently no-op'd. Rewrote them to assert on
+  `Api\DateTime` instances and compare real instants via `getTimestamp()` (representation-
+  agnostic) instead of raw ints; `testEditedRoundTripAppliesTheChange` deliberately still
+  assigns a *raw int* to `$this->lastMessage->startdate` to simulate a real device edit
+  (derived via `Api\DateTime::user2server()`, the same conversion z-push's own `Encode()`
+  would have performed) - the real wire `Decode()` path never produces objects, so a test
+  asserting the encode-side object contract must not accidentally also assume the decode
+  side got modernized (it didn't, and structurally can't, per the asymmetry above). All
+  10/10 z-push+date-handling tests green after the rewrite.
+- **Verification**: full `infolog/tests/` suite - 93 tests, same 6 pre-existing
+  `CalDAVImportTest` failures and pre-existing risky-test warning as the established
+  baseline, no new regressions.
 
 ### Phase 2 — clean up `infolog_bo`'s own manual date math
 

@@ -245,7 +245,15 @@ class infolog_zpush implements activesync_plugin_write
 		ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."('$folderid', $id, truncsize=$truncsize, bodyprefence=".json_encode($bodypreference).", mimesupport=$mimesupport)");
 		$type = $account = null;
 		$this->backend->splitID($folderid, $type, $account);
-		if ($type != 'infolog' || !($infolog = $this->infolog->read($id, true, 'server')))
+		// date_format='object' - info_startdate/info_enddate/info_datecompleted come back as
+		// real Api\DateTime objects (tagged in the user's timezone), assigned straight onto
+		// SyncTask's date properties below. z-push's own Streamer::Encode() already special-cases
+		// "instanceof \DateTime" property values and converts them via Api\DateTime::user2server()
+		// before wire-encoding - the same mechanism calendar_zpush.inc.php relies on for
+		// SyncAppointment - so this needs no per-field conversion here, unlike the old
+		// date_format='server' raw-int approach ChangeMessage() below used to require careful,
+		// easy-to-get-wrong $user2server bookkeeping to stay consistent with.
+		if ($type != 'infolog' || !($infolog = $this->infolog->read($id, true, 'object')))
 		{
 			error_log(__METHOD__."('$folderid',$id,...) Folder wrong (type=$type, account=$account) or contact not existing (read($id)=".array2string($infolog).")! returning false");
 			return false;
@@ -412,13 +420,11 @@ class infolog_zpush implements activesync_plugin_write
 			return false;
 		}
 		$infolog = array();
-		// read in server-time, as that's the format GetMessage() gave the device for
-		// info_startdate/info_enddate (SyncTask::$startdate/$duedate below) - an unmodified
-		// sync just echoes those values back, so write() must be told they're already
-		// server-time (see the matching $user2server=false a few lines down), or they get
-		// silently shifted by the client/server timezone offset on every sync.
+		// date_format='object', matching GetMessage() above - see the 'info_startdate'/
+		// 'info_enddate'/'info_datecompleted' case below for why this removes the need for
+		// write()'s old, easy-to-get-wrong $user2server bookkeeping entirely.
 		if (empty($id) && $this->infolog->check_access(0, Acl::EDIT, $account) ||
-			($infolog = $this->infolog->read($id, true, 'server')) && $this->infolog->check_access($infolog, Acl::EDIT))
+			($infolog = $this->infolog->read($id, true, 'object')) && $this->infolog->check_access($infolog, Acl::EDIT))
 		{
 			if (!$infolog) $infolog = array();
 			foreach (self::$mapping as $key => $attr)
@@ -453,6 +459,20 @@ class infolog_zpush implements activesync_plugin_write
 						}
 						break;
 
+					case 'info_startdate':
+					case 'info_enddate':
+					case 'info_datecompleted':
+						// $message->$key is a raw int (or null, if the device didn't send this
+						// field), decoded from the wire by z-push's own Streamer::Decode() -
+						// which never produces DateTime objects, unlike the Encode() side (see
+						// GetMessage() above) - wrap it into an Api\DateTime object in server
+						// timezone, the same convention GetMessage() used to hand these fields
+						// to the device in the first place (date_format='server' there prior to
+						// this change), so write() consistently gets real objects instead of
+						// ints under the old fragile "these are already server-time" convention.
+						$infolog[$attr] = $message->$key ? new Api\DateTime($message->$key, Api\DateTime::$server_timezone) : null;
+						break;
+
 					case 'info_priority':	// AS does not know 3=Urgent (only 0=Low, 1=Normal, 2=High)
 						if ($infolog[$attr] == 3 && $message->$key == 2) break;	// --> do NOT change Urgent, if AS reports High
 						// fall through
@@ -463,12 +483,15 @@ class infolog_zpush implements activesync_plugin_write
 			}
 			// $infolog['info_owner'] = $account;
 			if (!empty($id)) $infolog['info_id'] = $id;
-			// $infolog is server-time for an edit of an existing entry (read(..., 'server')
-			// above, overlaid with $message's server-time date fields) - tell write() not to
-			// re-interpret it as user-time. For a brand new entry (empty $id, $infolog started
-			// as array()) there is no prior server-time read to be consistent with, so keep
-			// write()'s normal user2server=true default there, unchanged from before this fix.
-			$newid = $this->infolog->write($infolog, true, true, empty($id));
+			// write() with its normal user2server=true default is correct for both edits and
+			// new entries now: info_startdate/info_enddate/info_datecompleted are real
+			// Api\DateTime objects (see the case above, and the read(..., 'object') above for
+			// any of the 3 NOT touched by this sync), which time2time() converts correctly
+			// regardless of the $user2server flag - a real DateTime object carries its own
+			// timezone, so there's no "was this already server-time?" ambiguity left to get
+			// wrong (unlike the old date_format='server' raw-int approach, which needed the
+			// $user2server=empty($id) special-casing this replaces).
+			$newid = $this->infolog->write($infolog, true, true);
 			ZLog::Write(LOGLEVEL_DEBUG, __METHOD__."($folderid,$id) infolog(".array2string($infolog).") returning ".array2string($newid));
 			return $this->StatMessage($folderid, $newid);
 		}

@@ -16,6 +16,11 @@
  * consumer with no defensive date-handling logic of its own - it trusts
  * infolog_bo's read()/write() date contract completely.
  *
+ * Updated 2026-08-22: infolog_zpush now uses date_format='object'
+ * (Api\DateTime objects) instead of date_format='server' (raw ints),
+ * mirroring calendar_zpush.inc.php's existing pattern - see the migration
+ * doc's z-push modernization section.
+ *
  * @link http://www.egroupware.org
  * @package infolog
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
@@ -112,16 +117,22 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
-	 * Classic path: GetMessage() must map info_startdate/info_enddate onto
-	 * SyncTask's startdate/duedate as the plain server-time ints that
-	 * infolog_bo::read($id, true, 'server') returns - infolog_zpush does
-	 * zero date-conversion of its own (per the migration doc's consumer
-	 * map), it just copies the array value onto the SyncTask property.
+	 * GetMessage() must map info_startdate/info_enddate onto SyncTask's
+	 * startdate/duedate as real Api\DateTime objects - infolog_bo::read($id,
+	 * true, 'object') is now what GetMessage() uses (2026-08-22 modernization,
+	 * see doc/ai/projects/infolog-storage-migration.md's z-push section),
+	 * mirroring calendar_zpush.inc.php's existing pattern for SyncAppointment.
+	 * z-push's own Streamer::Encode() special-cases "instanceof \DateTime"
+	 * property values and converts them via Api\DateTime::user2server()
+	 * immediately before wire-encoding, so infolog_zpush itself needs no
+	 * manual int conversion any more.
 	 *
-	 * Pass criteria: SyncTask::$startdate/$duedate equal
-	 * infolog_bo::read($id, true, 'server')'s raw ints for the same entry.
+	 * Pass criteria: SyncTask::$startdate/$duedate are Api\DateTime instances
+	 * representing the exact same real instant as
+	 * infolog_bo::read($id, true, 'object')'s objects for the same entry
+	 * (compared via getTimestamp(), which is representation/timezone-agnostic).
 	 */
-	public function testGetMessageMapsDatesAsServerTimeIntegers()
+	public function testGetMessageMapsDatesAsDateTimeObjects()
 	{
 		$this->setTimezones('UTC', 'Europe/Berlin');
 
@@ -136,15 +147,17 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 		);
 		$this->info_ids[] = $info_id = $this->bo->write($info, true, true, true, true);
 
-		$expected = $this->bo->read($info_id, true, 'server');
+		$expected = $this->bo->read($info_id, true, 'object');
 
 		$message = $this->zpush->GetMessage('folder', $info_id, $this->makeContentParameters());
 
 		$this->assertInstanceOf(\SyncTask::class, $message);
-		$this->assertEquals($expected['info_startdate'], $message->startdate,
-			'SyncTask::$startdate must equal the server-time int, unconverted');
-		$this->assertEquals($expected['info_enddate'], $message->duedate,
-			'SyncTask::$duedate must equal the server-time int, unconverted');
+		$this->assertInstanceOf(Api\DateTime::class, $message->startdate);
+		$this->assertInstanceOf(Api\DateTime::class, $message->duedate);
+		$this->assertSame($expected['info_startdate']->getTimestamp(), $message->startdate->getTimestamp(),
+			'SyncTask::$startdate must represent the same real instant as read(..., "object")');
+		$this->assertSame($expected['info_enddate']->getTimestamp(), $message->duedate->getTimestamp(),
+			'SyncTask::$duedate must represent the same real instant as read(..., "object")');
 	}
 
 	/**
@@ -209,13 +222,17 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 	 * syncs back what it received) silently shifted info_startdate/
 	 * info_enddate by the client/server offset, on every sync.
 	 *
-	 * Fix: ChangeMessage() now reads the existing entry via
-	 * read($id, true, 'server') (matching GetMessage()'s format) and calls
-	 * write($infolog, true, true, false) for edits of an existing entry, so
-	 * $infolog stays server-time-consistent throughout instead of mixing
-	 * representations. New-entry creation (empty $id) is deliberately left
-	 * on the old $user2server=true default, since there is no prior
-	 * server-time read to be consistent with there.
+	 * Updated 2026-08-22 for the date_format='object' modernization: both
+	 * GetMessage() and ChangeMessage() now read via 'object', and
+	 * ChangeMessage() wraps whatever raw int it decodes from $message back
+	 * into a real Api\DateTime object (server timezone) before handing it to
+	 * write() - which then converts correctly regardless of $user2server,
+	 * since a real DateTime object carries its own timezone. This removes
+	 * the original fix's $user2server=empty($id) special-casing entirely
+	 * (see infolog_zpush.inc.php::ChangeMessage()), rather than just
+	 * preserving it - this test still guards the same underlying behavior
+	 * (no silent timezone-offset drift on an unmodified round trip), just
+	 * through the new object-based mechanism.
 	 */
 	public function testUnmodifiedGetChangeRoundTripPreservesDatesWhenTimezonesDiffer()
 	{
@@ -223,32 +240,40 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 
 		list($info_id) = $this->writeAndGetMessage();
 
-		// What GetMessage() actually handed the device - the server-time int -
-		// is the right thing to compare against, NOT the original user-format
-		// $start/$end literal used to create the fixture: 'server' and 'ts'
-		// are two legitimately different int representations of the same
-		// instant (offset by the client/server tz difference), so comparing
-		// the round trip against the wrong one would just reintroduce this
-		// test as a false failure.
-		$given_start = $this->lastMessage->startdate;
-		$given_end = $this->lastMessage->duedate;
+		// the real instant GetMessage() actually handed the device - NOT the
+		// original user-format $start/$end literal used to create the fixture,
+		// which would be the same instant but isn't what's being round-tripped
+		// here - getTimestamp() is representation/timezone-agnostic, so this
+		// comparison can't be fooled by a display-timezone difference alone.
+		$given_start = $this->lastMessage->startdate->getTimestamp();
+		$given_end = $this->lastMessage->duedate->getTimestamp();
 
 		$stat = $this->zpush->ChangeMessage('folder', $info_id, $this->lastMessage, $this->makeContentParameters());
 		$this->assertNotFalse($stat, 'ChangeMessage() rejected an unmodified round trip');
 
-		$saved = $this->bo->read($info_id, true, 'server');
+		$saved = $this->bo->read($info_id, true, 'object');
 
-		$this->assertEquals($given_start, $saved['info_startdate'],
+		$this->assertSame($given_start, $saved['info_startdate']->getTimestamp(),
 			'an unmodified GetMessage()->ChangeMessage() round trip must not move info_startdate when client tz != server tz');
-		$this->assertEquals($given_end, $saved['info_enddate'],
+		$this->assertSame($given_end, $saved['info_enddate']->getTimestamp(),
 			'an unmodified GetMessage()->ChangeMessage() round trip must not move info_enddate when client tz != server tz');
 	}
 
 	/**
 	 * A real edit (not just an untouched echo) must still take effect
-	 * correctly under the same server-time-consistent representation the
-	 * fix above relies on - guards against a fix that merely made the
-	 * no-op case pass by coincidence.
+	 * correctly under the new object-based representation - guards against a
+	 * fix that merely made the no-op case pass by coincidence.
+	 *
+	 * $this->lastMessage->startdate is set to a raw int here, not an
+	 * Api\DateTime object, deliberately: this file exercises infolog_zpush's
+	 * OWN methods directly (see class docblock), not the real WBXML wire
+	 * layer, and the real wire layer's Decode() never produces DateTime
+	 * objects (only Encode() does, via the instanceof-\DateTime special case
+	 * this test isn't exercising) - so a raw int is what ChangeMessage() must
+	 * actually be able to handle from a real device, and is the accurate
+	 * simulation here. Api\DateTime::user2server() derives that int from the
+	 * current SyncTask value the same way z-push's own Streamer::Encode()
+	 * would have when originally putting it on the wire.
 	 */
 	public function testEditedRoundTripAppliesTheChange()
 	{
@@ -256,16 +281,17 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 
 		list($info_id) = $this->writeAndGetMessage();
 
-		$new_start = $this->lastMessage->startdate + 3600;	// move start 1h later, server-time int
-		$this->lastMessage->startdate = $new_start;
+		$new_start_ts = Api\DateTime::user2server($this->lastMessage->startdate, 'ts') + 3600;	// move start 1h later
+		$this->lastMessage->startdate = $new_start_ts;
 
 		$stat = $this->zpush->ChangeMessage('folder', $info_id, $this->lastMessage, $this->makeContentParameters());
 		$this->assertNotFalse($stat, 'ChangeMessage() rejected the edit');
 
-		$saved = $this->bo->read($info_id, true, 'server');
+		$saved = $this->bo->read($info_id, true, 'object');
 
-		$this->assertEquals($new_start, $saved['info_startdate'],
-			'a genuine edit to info_startdate must be persisted as given, server-time-for-server-time');
+		$expected_start = new Api\DateTime($new_start_ts, Api\DateTime::$server_timezone);
+		$this->assertSame($expected_start->getTimestamp(), $saved['info_startdate']->getTimestamp(),
+			'a genuine edit to info_startdate must be persisted as given');
 	}
 
 	protected $lastMessage;
