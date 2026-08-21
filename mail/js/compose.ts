@@ -607,7 +607,7 @@ export class MailCompose
 
 				wait.push(new Promise((resolve) =>
 				{
-					this.app.integrate_checkAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook, function (args)
+					this.app.integrateCheckAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook, function (args)
 					{
 						const oldValue = to_integrate_ids.get_value() || [];
 						to_integrate_ids.set_value([integApps[index] + ":" + args.entryid, ...oldValue]);

@@ -900,7 +900,7 @@ class mail_ui
 			),
 			'predefined-addresses' => array(
 				'caption' => 'Set predefined values for compose...',
-				'onExecute' => 'javaScript:app.mail.set_predefined_addresses',
+				'onExecute' => 'javaScript:app.mail.setPredefinedAddresses',
 				'icon' => 'edit',
 			)
 		);
@@ -949,7 +949,7 @@ class mail_ui
 			$tree_actions['empty_spam'] = array(
 				'caption' => 'empty junk',
 				'icon' => 'dhtmlxtree/MailFolderJunk',
-				'enabled'	=> 'javaScript:app.mail.spamfolder_enabled',
+				'enabled'	=> 'javaScript:app.mail.spamfolderEnabled',
 				'onExecute' => 'javaScript:app.mail.emptySpam',
 				'group'	=> $group,
 			);
@@ -1131,14 +1131,14 @@ class mail_ui
 					'spam' => array (
 						'caption'	=> 'Report as Spam',
 						'icon'		=> 'dhtmlxtree/MailFolderJunk',
-						'onExecute' => 'javaScript:app.mail.spam_actions',
+						'onExecute' => 'javaScript:app.mail.spamActions',
 						'hint'		=> 'Report this email content as Spam - spam solutions like spamTitan will learn',
 						'allowOnMultiple' => true
 					),
 					'ham' => array (
 						'caption'	=> 'Report as Ham',
 						'icon'		=> 'dhtmlxtree/MailFolderHam',
-						'onExecute' => 'javaScript:app.mail.spam_actions',
+						'onExecute' => 'javaScript:app.mail.spamActions',
 						'hint'		=> 'Report this email content as Ham (not spam) - spam solutions like spamTitan will learn',
 						'allowOnMultiple' => true
 					)
@@ -1389,7 +1389,7 @@ class mail_ui
 			'hint' => 'move selected mails to archive',
 			'icon' => 'archive',
 			'group' => $group++,
-			'enabled' => 'javaScript:app.mail.archivefolder_enabled',
+			'enabled' => 'javaScript:app.mail.archivefolderEnabled',
 			//'hideOnDisabled' => true, // does not work as expected on message-list
 			'onExecute' => 'javaScript:app.mail.move2Folder',
 			'shortcut' => KeyManager::shortcut(KeyManager::V, true, true),
@@ -1948,7 +1948,7 @@ class mail_ui
 			'file_drag' => array(
 				'dragType' => 'file',
 				'type' => 'drag',
-				'onExecute' => 'javaScript:app.mail.drag_attachment'
+				'onExecute' => 'javaScript:app.mail.dragAttachment'
 			)
 		));
 		$etpl->exec('mail.mail_ui.displayMessage', $content, array(), array(), $content, 2);

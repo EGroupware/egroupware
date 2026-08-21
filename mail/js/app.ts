@@ -1377,7 +1377,7 @@ export class MailApp extends EgwApp
 		if (openerData && Object.keys(openerData).length)
 		{
 			const data = this.renderMessageInto(template, rowId, openerData);
-			this.register_for_drag(rowId, data.attachmentsBlock);
+			this.registerForDrag(rowId, data.attachmentsBlock);
 		}
 		else
 		{
@@ -1392,7 +1392,7 @@ export class MailApp extends EgwApp
 				{
 					egw.dataStoreUID(_data.uid ?? rowId, _data);
 					const data = this.renderMessageInto(template, rowId, _data);
-					this.register_for_drag(rowId, data.attachmentsBlock);
+					this.registerForDrag(rowId, data.attachmentsBlock);
 				}
 			});
 		}
@@ -2136,7 +2136,7 @@ export class MailApp extends EgwApp
 	 * @param {string} mail_id Mail UID
 	 * @param {array} attachments Attachment information.
 	 */
-	register_for_drag(mail_id, attachments)
+	registerForDrag(mail_id, attachments)
 	{
 		// Put required info in global store
 		var data = {};
@@ -2165,7 +2165,7 @@ export class MailApp extends EgwApp
 	 * @param {egwActionElement[]} _elems
 	 * @returns {DOMNode}
 	 */
-	drag_attachment(_action, _elems)
+	dragAttachment(_action, _elems)
 	{
 		var div = jQuery(document.createElement("div"))
 			.css({
@@ -2380,7 +2380,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	spamfolder_enabled(_action,_senders,_currentNode)
+	spamfolderEnabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _senders[0].id.split('::')[0];
@@ -2399,7 +2399,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	archivefolder_enabled(_action,_senders,_currentNode)
+	archivefolderEnabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var acc_id = _currentNode.id.split('::')[2]; // this is operating on mails
@@ -3542,7 +3542,7 @@ export class MailApp extends EgwApp
 					}
 					dataElem.data['class'] = classes.join(' ');
 					this.patchRow(data.msg[i]);
-					this.updateFilter_data(data.msg[i], data.activeFilters, flags);
+					this.updateFilterData(data.msg[i], data.activeFilters, flags);
 					continue;
 				}
 
@@ -3608,7 +3608,7 @@ export class MailApp extends EgwApp
 				// Hide this row now if it no longer matches the active status filter (e.g. viewing
 				// "Unread" and marking read) - independent of the class/icon patch above, and not
 				// knowable from a server response since the server doesn't know our active filter.
-				this.updateFilter_data(data.msg[i], data.activeFilters, flags);
+				this.updateFilterData(data.msg[i], data.activeFilters, flags);
 			}
 
 			// Notify server of changes
@@ -3651,7 +3651,7 @@ export class MailApp extends EgwApp
 	 * @param {type} _filters activefilters
 	 * @param {type} _flags the row's flags, already updated to reflect this action
 	 */
-	updateFilter_data(_uid, _filters, _flags)
+	updateFilterData(_uid, _filters, _flags)
 	{
 		if (!_filters?.filter) return;
 		const uid = _uid.replace('mail::','');
@@ -3957,7 +3957,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @todo seems this function is not implemented, need to be checked if it is neccessary at all
 	 */
-	address_click(tag_info, widget)
+	addressClick(tag_info, widget)
 	{
 
 	}
@@ -4355,7 +4355,7 @@ export class MailApp extends EgwApp
 			var data = egw.dataGetUIDdata(_elems[0].id);
 			var title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
 			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
-			this.integrate_checkAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, function (args){
+			this.integrateCheckAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, function (args){
 				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 			});
 		}
@@ -4378,7 +4378,7 @@ export class MailApp extends EgwApp
 	* @param {string} _appCheckCallback registered mail_import hook method
 	* @param {function} _execCallback function to get called on dialog actions
 	*/
-	integrate_checkAppEntry(_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
+	integrateCheckAppEntry(_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
 	{
 	   var subject = _subject || '';
 	   var execCallback = _execCallback;
@@ -6589,7 +6589,7 @@ export class MailApp extends EgwApp
 		}).sendRequest(true);
 	}
 
-	spamTitan_setActionTitle(_action, _sender)
+	spamTitanSetActionTitle(_action, _sender)
 	{
 		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
 		var email = this.egw.lang('emails');
@@ -7095,7 +7095,7 @@ export class MailApp extends EgwApp
 	 * @param {type} _senders
 	 * @returns {undefined}
 	 */
-	set_predefined_addresses(action, _senders)
+	setPredefinedAddresses(action, _senders)
 	{
 		const pref_id = _senders[0].id.split('::')[0] + '_predefined_compose_addresses';
 		const prefs = egw.deepExtend({}, egw.preference(pref_id, 'mail'));

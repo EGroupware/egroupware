@@ -38,11 +38,11 @@
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryReplyto">
 						<et2-description  value="Reply to"></et2-description>
-						<et2-email  id="replyto" width="100%" onclick="app.mail.address_click" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
+						<et2-email  id="replyto" width="100%" onclick="app.mail.addressClick" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryFolder">
 						<et2-description  value="Folder"></et2-description>
-						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.address_click" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
+						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.addressClick" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
 					</row>
 					<row class="mailComposeHeaders" >
 						<et2-dropdown>
@@ -55,19 +55,19 @@
 							<et2-button id="replyto_expander" label="Reply to" onclick="app.mail.compose.fieldExpander"></et2-button>
 							<et2-button id="folder_expander" label="Folder" onclick="app.mail.compose.fieldExpander"></et2-button>
 						</et2-dropdown>
-                        <et2-email id="to" width="100%" onclick="app.mail.address_click" autofocus="true"
+                        <et2-email id="to" width="100%" onclick="app.mail.addressClick" autofocus="true"
                                    onchange="app.mail.compose.recipientsOnChange"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
 					</row>
 					<row class="mailComposeHeaders mailComposeJQueryCc">
 						<et2-description  value="Cc"></et2-description>
-                        <et2-email id="cc" width="100%" onclick="app.mail.address_click"
+                        <et2-email id="cc" width="100%" onclick="app.mail.addressClick"
                                           onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
                     </row>
                     <row class="mailComposeHeaders mailComposeJQueryBcc">
                         <et2-description value="Bcc"></et2-description>
-                        <et2-email id="bcc" width="100%" onclick="app.mail.address_click"
+                        <et2-email id="bcc" width="100%" onclick="app.mail.addressClick"
                                           onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
                     </row>
