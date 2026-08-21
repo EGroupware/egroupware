@@ -1,6 +1,7 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
-## Status: scoped (2026-08-21); custom-labels and quota/vacation/filter-refresh groups renamed (2026-08-21), rest not started
+## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, and message-actions
+(delete/flag/move/copy/save/header/integrate) groups renamed (2026-08-21), rest not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -113,43 +114,43 @@ rename time per the caveat above).
 | `mail_removeLeaf` | `removeLeaf` | 0 | 1 | 0 | high | |
 | `mail_reloadNode` | `reloadNode` | 0 | 3 | 0 | high | |
 | `mail_refreshMessageGrid` | `refreshMessageGrid` | 0 | 0 | 0 | low | |
-| `mail_getMsg` | `getMsg` | 0 | 0 | 0 | low | |
-| `mail_setMsg` | `setMsg` | 0 | 0 | 0 | low | |
-| `mail_delete` | `delete` | 0 | 1 | 0 | high | consider `deleteMessage` instead of bare `delete` for clarity, distinct from `deleteMessages` below |
-| `mail_callDelete` | `callDelete` | 0 | 0 | 0 | low | |
-| `mail_reduceCounterWithoutServerRoundtrip` | `reduceCounterWithoutServerRoundtrip` | 0 | 0 | 0 | low | |
-| `mail_splitRowId` | `splitRowId` | 0 | 0 | 0 | low | |
-| `mail_tryJmapDelete` | `tryJmapDelete` | 0 | 0 | 0 | low | private |
-| `mail_deleteMessages` | `deleteMessages` | 0 | 0 | 0 | low | |
-| `mail_deleteMessagesShowResult` | `deleteMessagesShowResult` | 0 | 1 | 0 | high | |
-| `mail_retryForcedDelete` | `retryForcedDelete` | 0 | 1 | 0 | high | |
-| `mail_undeleteMessages` | `undeleteMessages` | 0 | 0 | 0 | low | |
-| `mail_emptySpam` | `emptySpam` | 0 | 2 | 0 | high | |
-| `mail_emptyTrash` | `emptyTrash` | 0 | 2 | 0 | high | |
-| `mail_changeProfile` | `changeProfile` | 0 | 0 | 0 | low | |
-| `mail_changeFolder` | `changeFolder` | 2 | 0 | 1 | high | |
-| `mail_checkAllSelected` | `checkAllSelected` | 0 | 0 | 0 | low | |
-| `mail_doActionCall` | `doActionCall` | 0 | 0 | 0 | low | |
-| `mail_getActiveFilters` | `getActiveFilters` | 0 | 0 | 0 | low | |
-| `mail_flag` | `flag` | 0 | 18 | 0 | **high** | 18 PHP call sites |
-| `mail_refreshRows` | `refreshRows` | 0 | 0 | 1 | low | |
-| `mail_patchRow` | `patchRow` | 0 | 0 | 1 | low | |
-| `mail_callFlagMessages` | `callFlagMessages` | 0 | 0 | 0 | low | |
-| `mail_buildJmapQuery` | `buildJmapQuery` | 0 | 0 | 0 | low | private |
-| `mail_flagMessages` | `flagMessages` | 0 | 0 | 0 | low | |
-| `mail_displayHeaderLines` | `displayHeaderLines` | 0 | 0 | 0 | low | |
-| `mail_header` | `header` | 0 | 1 | 0 | high | |
-| `mail_mailsource` | `mailSource` | 0 | 1 | 0 | high | fixes casing |
-| `mail_save` | `save` | 0 | 1 | 0 | high | |
-| `mail_save2fm` | `save2Fm` (or `saveToFilemanager`) | 0 | 1 | 1 | high | ask ralf which style he prefers for the `2` |
-| `mail_integrate` | `integrate` | 0 | 5 | 0 | high | |
-| `mail_getFormData` | `getFormData` | 0 | 0 | 0 | low | |
-| `mail_move2folder` | `move2Folder` (or `moveToFolder`) | 0 | 2 | 0 | high | same `2` question as `save2fm` |
-| `mail_move` | `move` | 0 | 1 | 6 | high | |
-| `mail_trySetMdnFlag` | `trySetMdnFlag` | 0 | 0 | 0 | low | private |
-| `mail_callMove` | `callMove` | 0 | 0 | 0 | low | |
-| `mail_copy` | `copy` | 0 | 1 | 0 | high | |
-| `mail_callCopy` | `callCopy` | 0 | 0 | 0 | low | |
+| ~~`mail_getMsg`~~ | `getMsg` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_setMsg`~~ | `setMsg` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_delete`~~ | `deleteMessage` | 0 | 1 | 0 | high | **done 2026-08-21** (used `deleteMessage`, not bare `delete`, for clarity/distinctness from `deleteMessages`) |
+| ~~`mail_callDelete`~~ | `callDelete` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_reduceCounterWithoutServerRoundtrip`~~ | `reduceCounterWithoutServerRoundtrip` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_splitRowId`~~ | `splitRowId` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_tryJmapDelete`~~ | `tryJmapDelete` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_deleteMessages`~~ | `deleteMessages` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_deleteMessagesShowResult`~~ | `deleteMessagesShowResult` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_retryForcedDelete`~~ | `retryForcedDelete` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_undeleteMessages`~~ | `undeleteMessages` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_emptySpam`~~ | `emptySpam` | 0 | 2 | 0 | high | **done 2026-08-21** |
+| ~~`mail_emptyTrash`~~ | `emptyTrash` | 0 | 2 | 0 | high | **done 2026-08-21** |
+| ~~`mail_changeProfile`~~ | `changeProfile` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_changeFolder`~~ | `changeFolder` | 2 | 0 | 1 | high | **done 2026-08-21** |
+| ~~`mail_checkAllSelected`~~ | `checkAllSelected` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_doActionCall`~~ | `doActionCall` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_getActiveFilters`~~ | `getActiveFilters` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_flag`~~ | `flag` | 0 | 18 | 0 | **high** | **done 2026-08-21**, 18 PHP call sites |
+| ~~`mail_refreshRows`~~ | `refreshRows` | 0 | 0 | 1 | low | **done 2026-08-21** |
+| ~~`mail_patchRow`~~ | `patchRow` | 0 | 0 | 1 | low | **done 2026-08-21** |
+| ~~`mail_callFlagMessages`~~ | `callFlagMessages` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_buildJmapQuery`~~ | `buildJmapQuery` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_flagMessages`~~ | `flagMessages` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_displayHeaderLines`~~ | `displayHeaderLines` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_header`~~ | `header` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_mailsource`~~ | `mailSource` | 0 | 1 | 0 | high | **done 2026-08-21**, fixed casing |
+| ~~`mail_save`~~ | `save` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_save2fm`~~ | `save2Fm` | 0 | 1 | 1 | high | **done 2026-08-21** (ralf confirmed keeping the `2` shorthand) |
+| ~~`mail_integrate`~~ | `integrate` | 0 | 5 | 0 | high | **done 2026-08-21** for the 3 real `app.mail.mail_integrate` action bindings in mail_ui.inc.php; left the 2 unrelated `tempnam()` prefix-string uses of the literal `"mail_integrate"` in mail_compose.inc.php/mail_integration.inc.php untouched (not method calls) |
+| ~~`mail_getFormData`~~ | `getFormData` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_move2folder`~~ | `move2Folder` | 0 | 2 | 0 | high | **done 2026-08-21** (ralf confirmed keeping the `2` shorthand) |
+| ~~`mail_move`~~ | `move` | 0 | 1 | 6 | high | **done 2026-08-21** |
+| ~~`mail_trySetMdnFlag`~~ | `trySetMdnFlag` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_callMove`~~ | `callMove` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_copy`~~ | `copy` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_callCopy`~~ | `callCopy` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | `mail_AddFolder` | `addFolder` | 0 | 1 | 1 | high | fixes casing |
 | `mail_tryJmapAddFolder` | `tryJmapAddFolder` | 0 | 0 | 0 | low | private |
 | `mail_RenameFolder` | `renameFolder` | 0 | 1 | 1 | high | fixes casing |
