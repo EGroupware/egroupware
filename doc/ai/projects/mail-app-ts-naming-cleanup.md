@@ -2,9 +2,9 @@
 
 ## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
 (delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, ACL-dialog,
-subscription, folder-management/tree-lock, print, and misc-UI groups renamed (2026-08-21).
-Remaining: mailvelope, S/MIME, and the highest-risk open/preview/compose cluster (`mail_open` needs
-the `openMessage` rename, not bare `open` - collides with `EgwApp.open()`).
+subscription, folder-management/tree-lock, print, misc-UI, and S/MIME groups renamed (2026-08-21).
+Remaining: mailvelope, and the highest-risk open/preview/compose cluster (`mail_open` needs the
+`openMessage` rename, not bare `open` - collides with `EgwApp.open()`).
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -218,11 +218,11 @@ rename time per the caveat above).
 | ~~`folderMgmt_deleteBtn`~~ | `folderManagementDeleteBtn` | 1 | 0 | 0 | high | **done 2026-08-21** (expanded Mgmt→Management) |
 | ~~`spam_actions`~~ | `spamActions` | 0 | 7 | 0 | high | **done 2026-08-21** - re-verifying at rename time found only 2 real `app.mail.spam_actions` action bindings; the other 5 "hits" were an unrelated PHP-local `$spam_actions` variable in mail_ui.inc.php, left untouched |
 | ~~`spamTitan_setActionTitle`~~ | `spamTitanSetActionTitle` | 0 | 0 | 0 | low | **done 2026-08-21** |
-| `set_smimeAttachmentsMobile` | `setSmimeAttachmentsMobile` | 0 | 0 | 0 | low | |
-| `set_smimeAttachments` | `setSmimeAttachments` | 0 | 1 | 0 | high | |
-| `set_smimeFlags` | `setSmimeFlags` | 0 | 4 | 0 | high | |
-| `smime_clear_flags` | `smimeClearFlags` | 0 | 0 | 0 | low | |
-| `smime_certAddToContact` | `smimeCertAddToContact` | 0 | 2 | 0 | high | |
+| ~~`set_smimeAttachmentsMobile`~~ | `setSmimeAttachmentsMobile` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`set_smimeAttachments`~~ | `setSmimeAttachments` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`set_smimeFlags`~~ | `setSmimeFlags` | 0 | 4 | 0 | high | **done 2026-08-21** |
+| ~~`smime_clear_flags`~~ | `smimeClearFlags` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`smime_certAddToContact`~~ | `smimeCertAddToContact` | 0 | 2 | 0 | high | **done 2026-08-21** |
 | ~~`set_predefined_addresses`~~ | `setPredefinedAddresses` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`print_for_compose`~~ | `printForCompose` | 0 | 1 | 0 | high | **done 2026-08-21** |
 | ~~`nm_cache`~~ | `nmCache` | 0 | 0 | 0 | low | **done 2026-08-21** |
