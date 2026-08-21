@@ -3283,7 +3283,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return Math.max(
 			this._rowHeightPx || 0,
 			this._resolveTemplateRowHeightPx() || 0,
-			44
+			this._lengthToPx("2em") || 1
 		);
 	}
 

@@ -235,7 +235,7 @@ export default css`
 			box-sizing: border-box;
 			outline: none;
 			width: 100%;
-			min-height: max(44px, var(--row-height, 44px));
+			min-height: max(2em, var(--row-height, 35px));
 			border-bottom: var(--sl-panel-border-width) solid var(--sl-color-neutral-200);
 		}
 
