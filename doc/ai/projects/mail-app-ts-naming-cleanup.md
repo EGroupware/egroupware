@@ -1,6 +1,6 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
-## Status: scoped (2026-08-21), custom-labels group renamed (2026-08-21), rest not started
+## Status: scoped (2026-08-21); custom-labels and quota/vacation/filter-refresh groups renamed (2026-08-21), rest not started
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -97,16 +97,16 @@ rename time per the caveat above).
 | `mail_display` | `display` | 0 | 0 | 0 | low | |
 | `mail_preview` | `preview` | 3 | 3 | 4 | high | |
 | `mail_setMailBody` | `setMailBody` | 0 | 0 | 0 | low | |
-| `mail_refreshFolderStatus` | `refreshFolderStatus` | 0 | 0 | 0 | low | |
-| `mail_refreshQuotaDisplay` | `refreshQuotaDisplay` | 0 | 0 | 3 | low | |
-| `mail_setQuotaDisplay` | `setQuotaDisplay` | 0 | 1 | 3 | high | |
-| `mail_callRefreshVacationNotice` | `callRefreshVacationNotice` | 0 | 1 | 0 | high | |
-| `mail_refreshVacationNotice` | `refreshVacationNotice` | 0 | 1 | 0 | high | |
-| `mail_searchtype_change` | `searchtypeChange` | 0 | 1 | 0 | high | also fixes trailing snake_case |
-| `mail_refreshFilter2Options` | `refreshFilter2Options` | 0 | 1 | 0 | high | |
-| `mail_refreshFilterOptions` | `refreshFilterOptions` | 0 | 1 | 0 | high | |
-| `mail_refreshCatIdOptions` | `refreshCatIdOptions` | 0 | 1 | 0 | high | |
-| `mail_queueRefreshFolderList` | `queueRefreshFolderList` | 0 | 0 | 0 | low | |
+| ~~`mail_refreshFolderStatus`~~ | `refreshFolderStatus` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_refreshQuotaDisplay`~~ | `refreshQuotaDisplay` | 0 | 0 | 3 | low | **done 2026-08-21** |
+| ~~`mail_setQuotaDisplay`~~ | `setQuotaDisplay` | 0 | 1 | 3 | high | **done 2026-08-21** |
+| ~~`mail_callRefreshVacationNotice`~~ | `callRefreshVacationNotice` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_refreshVacationNotice`~~ | `refreshVacationNotice` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_searchtype_change`~~ | `searchtypeChange` | 0 | 1 | 0 | high | **done 2026-08-21**, also fixed trailing snake_case |
+| ~~`mail_refreshFilter2Options`~~ | `refreshFilter2Options` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_refreshFilterOptions`~~ | `refreshFilterOptions` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_refreshCatIdOptions`~~ | `refreshCatIdOptions` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_queueRefreshFolderList`~~ | `queueRefreshFolderList` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | `mail_CheckFolderNoSelect` | `checkFolderNoSelect` | 0 | 7 | 0 | **high** | also fixes bad capitalization; 7 PHP call sites |
 | `mail_setFolderStatus` | `setFolderStatus` | 0 | 3 | 1 | high | |
 | `mail_setLeaf` | `setLeaf` | 0 | 1 | 0 | high | |
