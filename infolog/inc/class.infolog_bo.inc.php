@@ -1621,7 +1621,7 @@ class infolog_bo
 				$q['col_filter'][99] = 'info_datemodified > '.
 					(new Api\DateTime((-$n*$query['limit_modified_n_month']).' month'))->format('server');
 			}
-			$ret = $this->so->searchInfolog($q, $no_acl, $acl_filter);
+			$ret = $this->searchInfolog($q, $no_acl, $acl_filter);
 			$this->total = $query['total'] = $q['total'];
 			if (!isset($q['col_filter'][99]) || is_array($ret) && count($ret) >= $query['num_rows'])
 			{
@@ -1638,7 +1638,13 @@ class infolog_bo
 			}
 		}
 
-		if (is_array($ret))
+		// $q['cols']/'return-iterator' means the caller wants raw column data as-is (matches
+		// searchInfolog()'s own early-return for that same case) - skip the READ-access
+		// re-check and timestamp conversion below, both of which assume a full info row
+		// (info_owner/info_access for check_access(), the app's normal timestamp columns for
+		// the conversion), neither of which a caller-supplied narrow $cols list necessarily
+		// includes.
+		if (is_array($ret) && !($q['return-iterator'] ?? isset($q['cols'])))
 		{
 			foreach ($ret as $id => &$data)
 			{
@@ -1683,6 +1689,321 @@ class infolog_bo
 		}
 		//echo "<p>boinfolog::search(".print_r($query,True).")=<pre>".print_r($ret,True)."</pre>\n";
 		return $ret;
+	}
+
+	/**
+	 * search InfoLog for a certain pattern in $query
+	 *
+	 * Builds the InfoLog-specific WHERE/JOIN/ORDER BY pieces (ACL fold-in, status/date filters,
+	 * category, CRM-view link filtering, responsible-user filtering, free-text/RAG search) and
+	 * delegates the actual SQL assembly, execution and pagination to the inherited
+	 * Api\Storage::search() (via $this->so, unoverridden) - the "override search(), call
+	 * parent::search()" convention most Api\Storage-based apps use, adapted here: this method
+	 * itself can't literally be that override (it needs $query by reference for the start/total
+	 * writeback every caller relies on - an incompatible signature with
+	 * Api\Storage::search($criteria, ...)'s by-value first parameter), so it builds the generic
+	 * args a normal override would build internally, then calls $this->so->search(...) with them,
+	 * same as e.g. projectmanager_so::search() building $filter/$join before its own
+	 * parent::search() call.
+	 *
+	 * Custom-field col_filter/order_by ("#name") entries are passed straight through as plain
+	 * $filter/$order_by entries - Api\Storage::search()'s own process_search() already detects
+	 * and delegates them to cf_filter()/order_by_cf() automatically, so no manual call is needed
+	 * here (nor possible: both are protected methods on Infolog\Storage, only callable from
+	 * within its own inheritance chain, not via the $this->so composition used here).
+	 *
+	 * @param array $query[order] column-name to sort after
+	 * @param string $query[sort] sort-order DESC or ASC
+	 * @param string $query[filter] string with combination of acl-, date- and status-filters, eg. 'own-open-today' or ''
+	 * @param int $query[cat_id] category to use or 0 or unset
+	 * @param string $query[search] pattern to search, search is done in info_from, info_subject and info_des
+	 * @param string $query[action] / $query[action_id] if only entries linked to a specified app/entry show be used
+	 * @param int &$query[start], &$query[total] nextmatch-parameters will be used and set if query returns less entries
+	 * @param array $query[col_filter] array with column-name - data pairs, data == '' means no filter (!)
+	 * @param boolean $query[subs] return subs or not, if unset the user preference is used
+	 * @param int $query[num_rows] number of rows to return if $query[start] is set, default is to use the value from the general prefs
+	 * @param string|array $query[cols]=null what to query, if set the raw rows get returned as-is,
+	 * 	NOT hydrated with responsible/cc/customfields (matches the pre-existing "$query[cols] means the
+	 * 	caller wants raw column data" contract)
+	 * @param ?string $query['join'] additional join(s)
+	 * @param boolean $query['custom_fields']=false query custom-fields too, default not
+	 * @param boolean $no_acl =false true: ignore all acl
+	 * @param ?string $acl_filter =null pre-built ACL sql fragment to AND into the query, required unless
+	 * 	$no_acl is true - ACL decisions are made here (aclFilter()), not on $this->so (that class has no
+	 * 	ACL awareness of its own); defaults to '0=1' (matches nothing) rather than '1=1' if omitted, so a
+	 * 	caller that forgets to pass it fails closed, not open
+	 * @return array with id's as key of the matching log-entries, or the raw rows if $query[cols] is set
+	 */
+	protected function searchInfolog(&$query, $no_acl=false, $acl_filter=null)
+	{
+		$action2app = array(
+			'addr'        => 'addressbook',
+			'proj'        => 'projects',
+			'event'       => 'calendar'
+		);
+		$links = null;
+		$link_extra = null;
+		// query children independent of action
+		if (empty($query['col_filter']['info_id_parent']))
+		{
+			$action = isset($action2app[$query['action']??null]) ? $action2app[$query['action']] : ($query['action'] ?? null);
+			if ($action)
+			{
+				$links = Link\Storage::get_links($action=='sp'?'infolog':$action,
+					is_array($query['action_id']) ? $query['action_id'] : explode(',',$query['action_id']),'infolog','',$query['col_filter']['info_status'] =='deleted');
+
+				if (count($links))
+				{
+					$links = call_user_func_array('array_merge',$links);	// flatten the array
+					$link_extra = ($action == 'sp' ? 'OR' : 'AND')." {$this->so->table_name}.info_id IN (".implode(',',$links).')';
+				}
+			}
+		}
+		else
+		{
+			$action = null;
+		}
+
+		if (!($action == '' || $action == 'sp' || count((array)$links)))
+		{
+			// action/action_id filter with zero linked entries --> nothing can possibly match
+			$query['start'] = $query['total'] = 0;
+			return array();
+		}
+
+		// $order_by: each field with its own direction - Api\Storage::order_by_cf(), called
+		// automatically inside process_search() below, expects a comma list of "field
+		// {ASC|DESC}" criteria, not one trailing direction for the whole list
+		if (!empty($query['order']) && preg_match('/^#?[a-z_0-9, ]+$/i',$query['order']) &&
+			(empty($query['sort']) || is_string($query['sort']) && preg_match('/^(DESC|ASC)$/i',$query['sort'])))
+		{
+			$order = array();
+			foreach(explode(',',$query['order']) as $val)
+			{
+				$val = trim($val);
+				if ($val[0] != '#')
+				{
+					static $table_def = null;
+					if (is_null($table_def)) $table_def = $this->so->db->get_table_definitions('infolog',$this->so->table_name);
+					if (substr($val,0,5) != 'info_' && isset($table_def['fd']['info_'.$val])) $val = 'info_'.$val;
+					if ($val == 'info_des' && $this->so->db->capabilities['order_on_text'] !== true)
+					{
+						if (!$this->so->db->capabilities['order_on_text']) continue;
+
+						$val = sprintf($this->so->db->capabilities['order_on_text'],$val);
+					}
+				}
+				$order[] = $val.' '.$query['sort'];
+			}
+			$order_by = implode(',',$order);
+		}
+		else
+		{
+			$order_by = 'info_datemodified DESC';   // newest first
+		}
+
+		$filtermethod = $no_acl ? '1=1' : ($acl_filter ?? '0=1');
+		if (empty($query['col_filter']['info_status']))  $filtermethod .= $this->so->statusFilter($query['filter']);
+		$filtermethod .= $this->so->dateFilter($query['filter']);
+
+		// "#"-prefixed col_filter entries stay as plain string keys in $filter, for
+		// Api\Storage's own process_search()/cf_filter() to pick up automatically - see this
+		// method's docblock
+		$filter = array();
+		if (isset($query['col_filter']) && is_array($query['col_filter']))
+		{
+			foreach($query['col_filter'] as $col => $data)
+			{
+				if (is_int($col))
+				{
+					$filtermethod .= ' AND '.$data;
+					continue;
+				}
+				if ($col !== '' && $col[0] == '#')
+				{
+					$filter[$col] = $data;
+					continue;
+				}
+				if (substr($col,0,5) != 'info_' && isset($table_def['fd']['info_'.$col])) $col = 'info_'.$col;
+				if ((!empty($data) || (string)$data !== '') && preg_match('/^[a-z_0-9]+$/i',$col))
+				{
+					switch ($col)
+					{
+						case 'info_responsible':
+							$data = (int) $data;
+							if (!$data) continue 2;	// +1 for switch
+							// EXISTS-subquery instead of a row-multiplying JOIN - see the migration
+							// doc's "eliminating searchInfolog()'s row-duplicating JOINs" research.
+							// Match either an active delegation to the given user/one of their
+							// memberships, or - if the entry has NO active delegation row at all -
+							// fall back to an owner match.
+							$deleted_filter = strpos($query['filter'], '+deleted') === false ? ' AND info_res_deleted IS NULL' : '';
+							$filtermethod .= ' AND ('.
+								"EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id={$this->so->table_name}.info_id AND ".$this->so->responsible_filter($data).') OR '.
+								"NOT EXISTS (SELECT 1 FROM {$this->so->users_table} WHERE info_id={$this->so->table_name}.info_id$deleted_filter) AND ".
+								$this->so->db->expression($this->so->table_name,array(
+									'info_owner' => $data > 0 ? $data : $GLOBALS['egw']->accounts->members($data,true)
+								)).
+							')';
+							break;
+
+						case 'info_id':	// info_id itself is ambiguous once a cf_filter()/order_by_cf() JOIN is active
+							$filtermethod .= ' AND '.$this->so->db->expression($this->so->table_name,$this->so->table_name.'.',array('info_id' => $data));
+							break;
+
+						default:
+							$filtermethod .= ' AND '.$this->so->db->expression($this->so->table_name,array($col => $data));
+							break;
+					}
+				}
+			}
+		}
+
+		if (!empty($query['cat_id']) && (int)$query['cat_id'])
+		{
+			$categories = new Api\Categories('','infolog');
+			$cats = $categories->return_all_children((int)$query['cat_id']);
+			$filtermethod .= ' AND info_cat'.(count($cats)>1? ' IN ('.implode(',',$cats).') ' : '='.(int)$query['cat_id']);
+		}
+
+		$extra_cols = array();
+		$search_fragment = null;
+		if (!empty($query['query'])) $query['search'] = $query['query'];	// allow both names
+		if (!empty($query['search']))			  // we search in _from, _subject, _des and _extra_value for $query
+		{
+			$rag_filter = $extra_cols = [];
+			$search_order_by = null;
+			if (!class_exists('EGroupware\\Rag\\Embedding') ||
+				!Rag\Embedding::search2criteria('infolog', $query['search'], $search_order_by, $extra_cols, $rag_filter))
+			{
+				// legacy search
+				$columns = array('info_from','info_location','info_subject');
+				// at the moment MaxDB 7.5 cant cast nor search text columns, it's suppost to change in 7.6
+				if ($this->so->db->capabilities['like_on_text']) $columns[] = 'info_des';
+
+				$wildcard = '%'; $op = null;
+				$search = $this->so->search2criteria($query['search'], $wildcard, $op, null, $columns, order_by: $search_order_by);
+				$search_fragment = 'AND ('.(is_numeric($query['search']) ? "{$this->so->table_name}.info_id=".(int)$query['search'].' OR ' : '').
+					implode($op, $search) .')';
+			}
+			else
+			{
+				$search_fragment = 'AND ('.(is_numeric($query['search']) ? "{$this->so->table_name}.info_id=".(int)$query['search'].' OR ' : '').
+					current($rag_filter).')';
+			}
+			// check if RAG-search changed order
+			if (isset($search_order_by))
+			{
+				$order_by = $search_order_by;
+			}
+		}
+
+		$join = $query['join'] ?? '';
+
+		$pid = 'AND ' . $this->so->db->expression($this->so->table_name,array('info_id_parent' => ($action == 'sp' ? $query['action_id'] : 0)));
+
+		if ($GLOBALS['egw_info']['user']['preferences']['infolog']['listNoSubs'] != '1' && $action != 'sp' ||
+			($query['col_filter']['info_id_parent']??'') !== '' ||
+			 isset($query['subs']) && $query['subs'] || $action != 'sp' && !empty($query['search']))
+		{
+			$pid = '';
+		}
+
+		// everything AND-ed together as ONE opaque fragment (exactly as before this method's
+		// SQL got delegated to Api\Storage::search()) - $link_extra is deliberately OUTSIDE the
+		// enclosing parens: for the "sp" (subtask) action it's a top-level OR ("also show the
+		// parent entries"), not another AND-ed condition
+		$filter[0] = '('.$filtermethod.' '.$pid.' '.($search_fragment ?? '').')'.($link_extra ?? '');
+
+		$only_keys = isset($query['cols']) ? $query['cols'] : false;
+		$start = array((int)($query['start']??0), isset($query['start']) ? (int)$query['num_rows'] : -1);
+
+		$rs = $this->so->search(array(), $only_keys, $order_by, $extra_cols, '', false, 'AND', $start, $filter, $join);
+		$query['total'] = $this->so->total;
+
+		// check if start is behind total --> reset to 0 and retry once
+		if (isset($query['start']) && $query['start'] > $query['total'])
+		{
+			$query['start'] = $start[0] = 0;
+			$rs = $this->so->search(array(), $only_keys, $order_by, $extra_cols, '', false, 'AND', $start, $filter, $join);
+			$query['total'] = $this->so->total;
+		}
+
+		if ($query['return-iterator'] ?? isset($query['cols']))
+		{
+			return $rs;
+		}
+		$ids = array();
+		foreach((array)$rs as $info)
+		{
+			$ids[$info['info_id']] = $info;
+		}
+		// batch-hydrate info_responsible/info_cc for the whole result set in one go, instead of
+		// joining egw_infolog_users into the main query above (which would multiply its rows) -
+		// see the migration doc's "eliminating searchInfolog()'s row-duplicating JOINs" research,
+		// and Infolog\Storage::read_responsible()'s docblock.
+		if ($ids)
+		{
+			$responsible = $this->so->read_responsible(array_keys($ids));
+			foreach($ids as $info_id => &$info)
+			{
+				$info['info_responsible'] = $responsible[$info_id]['info_responsible'] ?? array();
+				$info['info_cc'] = $responsible[$info_id]['info_cc'] ?? '';
+			}
+			unset($info);
+		}
+		static $index_load_cfs = null;
+		if (is_null($index_load_cfs) && !empty($query['col_filter']['info_type']))
+		{
+			$config_data = Api\Config::read('infolog');
+			$index_load_cfs = $config_data['index_load_cfs'] ?? [];
+			if (!is_array($index_load_cfs)) $index_load_cfs = explode(',', $index_load_cfs);
+		}
+		// if no specific custom field is selected, show/query all custom fields
+		if ($ids && (!empty($query['custom_fields']) || !empty($query['csv_export']) ||
+			$index_load_cfs && !empty($query['col_filter']['info_type']) && in_array($query['col_filter']['info_type'],$index_load_cfs)))
+		{
+			// delegate REGISTERED cfs to Api\Storage's own read_customfields(), instead of
+			// re-implementing the date-time-with-UTC-"Z"-suffix hydration infolog_so used to
+			$field_names = null;	// null = all cfs, matching read_customfields()'s default
+			if (!($query['csv_export'] || strchr(is_array($query['selectcols']) ? implode(',',$query['selectcols']):$query['selectcols'],'#') === false ||
+				$index_load_cfs && $query['col_filter']['info_type'] && in_array($query['col_filter']['info_type'],$index_load_cfs)))
+			{
+				$field_names = array();
+				foreach(is_array($query['selectcols']) ? $query['selectcols'] : explode(',',$query['selectcols']) as $col)
+				{
+					if ($col[0] == '#') $field_names[] = substr($col,1);
+				}
+			}
+			foreach($this->so->read_customfields(array_keys($ids), $field_names) as $id => $data)
+			{
+				$ids[$id] = array_merge($ids[$id], $data);
+			}
+			// UNREGISTERED "#"-prefixed values (eg. infolog_ical.inc.php's "##propertyname"
+			// iCal X-property storage) aren't in $this->so->customfields, so read_customfields()
+			// never returns them - fetch them separately, same raw plain-string hydration
+			// infolog_so used to (they're never date-time typed, since there's no registered
+			// type info for them to begin with).
+			$unregistered_names = $field_names === null ? null : array_values(array_diff($field_names, array_keys($this->so->customfields)));
+			if ($unregistered_names === null || $unregistered_names)
+			{
+				$where = array('info_id' => array_keys($ids));
+				if ($unregistered_names)
+				{
+					$where['info_extra_name'] = $unregistered_names;
+				}
+				elseif ($this->so->customfields)
+				{
+					$where[] = 'info_extra_name NOT IN ('.
+						implode(',', array_map(array($this->so->db,'quote'), array_keys($this->so->customfields))).')';
+				}
+				foreach($this->so->db->select($this->so->extra_table,'info_id,info_extra_name,info_extra_value',$where,__LINE__,__FILE__,false,'','infolog') as $row)
+				{
+					$ids[$row['info_id']]['#'.$row['info_extra_name']] = $row['info_extra_value'];
+				}
+			}
+		}
+		return $ids;
 	}
 
 	/**
@@ -2002,7 +2323,7 @@ class infolog_bo
 			$query = array(
 				'col_filter' => array('info_id' => $args['infolog']),
 				'subs' => true,
-				'cols' => 'egw_infolog.info_id,info_type,info_status,info_percent,info_id_parent',
+				'cols' => 'egw_infolog.info_id AS info_id,info_type,info_status,info_percent,info_id_parent',
 			);
 			$infos = array();
 			foreach($this->search($query) as $row)
@@ -2182,7 +2503,7 @@ class infolog_bo
 				//error_log(__METHOD__."() checking with filter '$filter' ($pref_value) for user $user ($email)");
 
 				$params = array('filter' => $filter, 'custom_fields' => true, 'subs' => true);
-				foreach($this->so->searchInfolog($params, false, $this->aclFilter($filter)) as $info)
+				foreach($this->searchInfolog($params, false, $this->aclFilter($filter)) as $info)
 				{
 					// check if we already send a notification for that infolog entry, eg. starting and due on same day
 					if (in_array($info['info_id'],$notified_info_ids)) continue;
@@ -2404,7 +2725,7 @@ class infolog_bo
 		if (!$relax && !empty($infoData['info_uid']))
 		{
 			$filter = array('col_filter' => array('info_uid' => $infoData['info_uid']));
-			foreach($this->so->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $egwData)
+			foreach($this->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $egwData)
 			{
 				if (!$this->check_access($egwData,Acl::READ)) continue;
 				$foundInfoLogs[$egwData['info_id']] = $egwData['info_id'];
@@ -2456,7 +2777,7 @@ class infolog_bo
 		unset($filter['col_filter']['info_des']);
 		unset($filter['col_filter']['info_location']);
 
-		foreach ($this->so->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
+		foreach ($this->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
 		{
 			if (!$this->check_access($egwData,Acl::READ)) continue;
 
@@ -2529,7 +2850,7 @@ class infolog_bo
 		// Horde::logMessage("findVTODO Filter\n"
 		//	. print_r($filter, true),
 		//	__FILE__, __LINE__, PEAR_LOG_DEBUG);
-		foreach ($this->so->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
+		foreach ($this->searchInfolog($filter, false, $this->aclFilter($filter['filter'] ?? null)) as $itemID => $egwData)
 		{
 			if (!$this->check_access($egwData,Acl::READ)) continue;
 			// Horde::logMessage("findVTODO Trying\n"

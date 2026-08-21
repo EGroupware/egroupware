@@ -955,6 +955,102 @@ would have blocked delegating to it later regardless.
   `process_search()` for the main query build (criteria array assembly, pagination) - this
   alias removal was prerequisite cleanup, not the delegation itself. Next.
 
+### Phase 3 continued — delegate the main query build to the inherited `Api\Storage::search()`, 2026-08-21/22
+
+(Naming note: this "phase 3" - the `search()` rewrite/row-duplication-elimination work started
+by "start at the top ;)" - is unrelated to the *other* "Phase 3" further down in this doc, which
+is the original plan's separate, not-started "modernize `infolog_bo`'s external date contract"
+item. Two different pieces of work ended up sharing the name; kept as-is rather than renumbering
+everything retroactively.)
+
+Ralf's direction: "I'd like to use the inherited Api/Storage::search(), if necessary overwriting
+and calling parent::search() in the overwritten function, as we do in most apps" (e.g.
+`projectmanager_so::search()`: matches `Api\Storage::search()`'s exact signature, builds up
+app-specific `$filter`/`$join`/`$criteria` internally, calls `parent::search()`).
+
+- **Where the logic actually landed**: `Infolog\Storage` does **not** override `search()`.
+  Investigated whether it needed to (matching the "if necessary" framing) and concluded no:
+  every InfoLog-specific piece (ACL fold-in, status/date/category/responsible/action-link
+  filtering, free-text/RAG search) can be built as generic `$filter`/`$join`/`$order_by`
+  arguments by `infolog_bo` itself (composing with `$this->so`'s public utility methods -
+  `statusFilter()`/`dateFilter()`/`responsible_filter()`/`search2criteria()`/`db`/`table_name`
+  - the same composition pattern `aclFilter()` already used), then handed straight to the
+  *inherited*, unoverridden `Api\Storage::search()`. `infolog_bo::searchInfolog()` (moved from
+  `Infolog\Storage`, kept the same name for continuity - all 5 internal call sites just changed
+  `$this->so->searchInfolog(...)` to `$this->searchInfolog(...)`) is where this now lives - it
+  can't itself literally *be* the `search()` override most apps use, since it needs `$query` by
+  reference for the start/total writeback every caller relies on, incompatible with
+  `Api\Storage::search($criteria, ...)`'s by-value signature (the same constraint that led to
+  the `searchInfolog()` name in the first place, back in Phase 1).
+- **Why no manual `cf_filter()`/`order_by_cf()` calls are needed any more**: both are `protected`
+  methods on `Api\Storage`/`Infolog\Storage` - `infolog_bo` (composition, not inheritance) can't
+  call them directly at all. Turns out unnecessary anyway: `Api\Storage::search()`'s own body
+  calls `process_search()` (which calls both) automatically on whatever `$this->so->search()`
+  receives, PHP resolving `$this` to the real `Infolog\Storage` instance regardless of which
+  code (BO or SO) initiated the call. `#`-prefixed `col_filter` entries are passed straight
+  through as plain `$filter` array keys - `cf_filter()` picks them out and appends its own
+  `JOIN`; `#name` markers in `$order_by` are handled the same way by `order_by_cf()`. Verified
+  this actually works, not just assumed: `SearchCustomFieldFilterTest.php`'s existing 7 tests
+  all still pass through the new plumbing unchanged.
+- **What's still built as one opaque SQL fragment, not decomposed into the generic `$filter`
+  array**: the ACL/status/date/category/responsible/`info_id` conditions are concatenated into
+  one `$filtermethod` string (exactly as `searchInfolog()` used to build it), passed as a single
+  numeric-keyed `$filter[0]` element - *not* split into separate `$filter` entries. Reason:
+  `statusFilter()`/`dateFilter()`/the responsible `EXISTS` fragment all come pre-fixed with their
+  own leading `" AND "` (built for string concatenation), and the generic `$filter` array
+  mechanism already inserts its own `" AND "` *between* array elements - mixing the two would
+  produce literal `"... AND  AND ..."`, invalid SQL. Bundling them into one opaque fragment
+  sidesteps that entirely, at the cost of not individually benefiting from the generic
+  machinery's per-column handling for *those specific* conditions (CF filtering doesn't have
+  this problem, since `cf_filter()` extracts its own entries from the array by key, never
+  relying on the generic AND-joining for them).
+- **`$link_extra` (CRM "sp"/subtask view) placement**: deliberately kept *outside* the
+  `$filtermethod` fragment's enclosing parens (`'('.$filtermethod.'...'.')'.($link_extra??'')`)
+  - for the "sp" action it's a top-level `OR` ("also show the parent entries"), not another
+  `AND`-ed condition; folding it inside the parens would have silently changed that to an `AND`.
+- **Pagination**: `Storage\Base::search()` already does `SQL_CALC_FOUND_ROWS`/count-query
+  handling generically whenever `$start !== false` - always passed a `[start, num_rows]` array
+  (never bare `false`) specifically to keep that path active unconditionally, matching
+  `searchInfolog()`'s old always-compute-total behavior. The old "$query['start'] > total -->
+  reset to 0 and retry" one-off retry loop has no generic equivalent and was kept, just
+  wrapping the new `$this->so->search()` call instead of a raw query.
+- **Two real bugs found and fixed via testing, not by inspection**:
+  1. `pm_icons()`'s custom `$query['cols']` string (`'egw_infolog.info_id,info_type,...'`, no
+     explicit `AS` aliasing) silently produced a data array keyed by the literal string
+     `"egw_infolog.info_id"` with a `null` value once routed through
+     `Api\Storage\Base::_get_columns()` (which doesn't strip a table-qualifier off a *plain*,
+     non-aliased column name - it only recognizes the alias form). `infolog_groupdav`'s
+     equivalent cols string already used explicit `AS info_id` aliasing and was unaffected.
+     Fixed by aliasing `pm_icons()`'s cols string the same way.
+  2. `infolog_bo::search()`'s post-processing (`check_access()` READ re-check + timestamp
+     conversion) used to be skipped for the `$query['cols']` early-return case *by accident*:
+     the old `searchInfolog()` returned a raw ADODB recordset *object* for that path, and
+     `search()`'s own `is_array($ret)` guard is false for an object - so the loop never ran.
+     Once `searchInfolog()` started returning a plain, always-materialized array (from the
+     inherited `Api\Storage::search()`), that same guard became true, turning on `check_access()`
+     filtering that had never actually run before - which rejected every row, since
+     `checkAccessGrants()` needs `info_owner`/`info_access` and a narrow `$cols` list doesn't
+     include them by design. Fixed by making `search()`'s guard explicitly check
+     `$q['return-iterator'] ?? isset($q['cols'])` (mirroring `searchInfolog()`'s own early-return
+     condition) instead of relying on the accidental object-vs-array behavior. New
+     `infolog/tests/SearchCustomColsTest.php` (2 tests) locks both fixes down; found via a
+     targeted smoke-test probe (`pm_icons()` had zero existing test coverage) after the full
+     regression suite alone didn't catch it - no existing test exercised the `$cols` path.
+- **Verification**: `infolog/tests/` full suite - 93 tests, same 6 pre-existing
+  `CalDAVImportTest` failures and pre-existing risky-test warning as the established baseline,
+  no new regressions. All of `SearchCustomFieldFilterTest.php` (7),
+  `SearchResponsibleTest.php` (5), `AclCheckAccessTest.php`, `AclUserFilterTest.php` (3),
+  `ReadResponsibleTest.php` (4), `SearchCategoryAndLinkFilterTest.php` (4, new - category incl.
+  sub-categories, action/action_id link filtering, pagination total/non-overlapping-pages) all
+  pass unchanged through the new architecture.
+  `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` - green.
+- **Deleted**: `Infolog\Storage::searchInfolog()` (374 lines net removed from `Storage.php`,
+  moved/adapted into `infolog_bo::searchInfolog()`).
+- **What's still deliberately bespoke** (unchanged from before, no generic `Api\Storage`
+  equivalent exists for InfoLog's specific shape): action-link/CRM-view filtering, category
+  expansion, parent/subs `pid` logic, free-text/RAG search fragment construction, the
+  `info_responsible`/`info_id` `col_filter` special-casing.
+
 ### Alongside Phase 1 — modernize `infolog_zpush` to the object-based date contract
 
 Not gated on the SO swap itself, but natural to do once `infolog_bo` reliably hands
