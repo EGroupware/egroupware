@@ -22,6 +22,7 @@ import type {MailApp} from "./app";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
 import JamClient from "jmap-jam";
 import {JamWebSocketClient} from "./jmap-jam-websocket";
+import type {StateChange} from "./jmap-jam-websocket";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 
@@ -32,6 +33,11 @@ interface JmapToken
 	access_token : string;
 	expires_at : number;	// ms epoch, with our own safety-margin already subtracted
 	isLocal : boolean;
+	// true if the server has no working push-server (Api\Json\Push::onlyFallback()) - in that case,
+	// and only in that case, MailJmap tries JamWebSocketClient's client-side onPush() instead of the
+	// classic server-side JMAP push subscription (mail_ui::ajax_enablePush()), since there's nothing
+	// working to lose: no regression risk even if a given browser's WebSocket also doesn't connect.
+	enableWsPush : boolean;
 	customLabels : Record<string, {name : string, color : string, icon? : string}>;
 	trashFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Trash" - see deleteMessages()
 	junkFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Junk" - null if not configured
@@ -161,6 +167,12 @@ export class MailJmap
 	private pushEnabled : Record<string, boolean> = {};
 	// "profileID::folder/path" -> JMAP Mailbox id
 	private mailboxIds : Record<string, string> = {};
+	// profileID -> JMAP folderId -> path ("INBOX", "INBOX/Sub", ...) - see folderId2path()
+	private folderPaths : Record<string, Record<string, string>> = {};
+	// profileID -> JMAP accountId -> dataType ("Email"/"Mailbox") -> last-seen JMAP state string -
+	// the baseline enableWsPush()'s onPush() callback diffs each new StateChange against, see
+	// processWsPushStates()
+	private wsPushStates : Record<string, Record<string, Record<string, string>>> = {};
 	private static readonly CUSTOM_FLAGS = ['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
 	// standard (non-label, non-custom-flag) system flags the UI can bulk-toggle for an explicit
 	// selection - keyed by the base ("un"-stripped) action id used throughout mail/js/app.ts
@@ -1086,15 +1098,23 @@ export class MailJmap
 	}
 
 	/**
-	 * Fire-and-forget (re-)enable server push for $selectedFolder's account, at most once per
-	 * profile per JMAP-token lifetime (reset by ensureToken() whenever it gets a fresh token -
-	 * comfortably more often than the mail server's own push subscription/token needs renewing,
-	 * without doing so on every single row fetch like the old server-side get_rows() did).
+	 * Fire-and-forget (re-)enable push for $selectedFolder's account, at most once per profile per
+	 * JMAP-token lifetime (reset by ensureToken() whenever it gets a fresh token - comfortably more
+	 * often than the mail server's own push subscription/token needs renewing, without doing so on
+	 * every single row fetch like the old server-side get_rows() did).
 	 *
-	 * Covers both push mechanisms Api\Mail\Imap\PushIface implementors may use: Stalwart's native
-	 * JMAP push subscriptions, and plain IMAP/Dovecot's mailbox-metadata push token registration
-	 * (opt-in via the "imap_hosts_with_push" site config) - mail_ui::ajax_enablePush() itself just
-	 * calls whichever the account's actual server class implements.
+	 * Two mutually-exclusive paths, chosen by token.enableWsPush (Api\Json\Push::onlyFallback(),
+	 * see ProfileHandler::jmapBootstrap()):
+	 * - false (the normal/working case): the classic server-side path, covering both push
+	 *   mechanisms Api\Mail\Imap\PushIface implementors may use - Stalwart's native JMAP push
+	 *   subscriptions, and plain IMAP/Dovecot's mailbox-metadata push token registration (opt-in via
+	 *   the "imap_hosts_with_push" site config) - mail_ui::ajax_enablePush() itself just calls
+	 *   whichever the account's actual server class implements.
+	 * - true (no working push-server for this instance, e.g. shared hosting with no push-server
+	 *   process): try enableWsPush() instead - client-side JMAP push over the same WebSocket
+	 *   connection already used for requests, no server-side subscription/webhook needed at all.
+	 *   No regression risk either way: if this browser's WebSocket doesn't connect, the account had
+	 *   no working push before this either.
 	 */
 	private enablePushOnce(selectedFolder : string) : void
 	{
@@ -1104,11 +1124,280 @@ export class MailJmap
 			return;
 		}
 		this.pushEnabled[profileID] = true;
+		if (this.tokens[profileID]?.enableWsPush)
+		{
+			this.enableWsPush(profileID).catch((e) =>
+			{
+				console.error('MailJmap.enablePushOnce(): client-side WS push setup failed', e);
+				delete this.pushEnabled[profileID];
+			});
+			return;
+		}
 		this.egw.request('mail.mail_ui.ajax_enablePush', [profileID, selectedFolder]).catch((e) =>
 		{
 			console.error('MailJmap.enablePushOnce(): failed', e);
 			delete this.pushEnabled[profileID];
 		});
+	}
+
+	/**
+	 * Register for JMAP push over the WebSocket transport (RFC 8887, JamWebSocketClient.onPush()) -
+	 * only ever called when enablePushOnce() found token.enableWsPush true. Never fires if this
+	 * profile's client never actually connects over WebSocket (see JamWebSocketClient's own
+	 * transport-fallback design) - a callback registered while stuck on HTTP just never gets called.
+	 */
+	private async enableWsPush(profileID : string) : Promise<void>
+	{
+		const token = this.tokens[profileID];
+		const client = this.clients[profileID];
+		if (!token || !client)
+		{
+			return;
+		}
+		// Seed a baseline state before registering the callback, so the first real StateChange has
+		// something to diff against - Foo/get's "state" reflects the current server-side state for
+		// that type regardless of which (if any) ids were actually requested, so an empty ids list
+		// is a cheap way to get it with no data transferred. Mirrors Api\Mail\Imap\Jmap::enablePush()
+		// calling getStates() upfront, for the same reason.
+		const [{emailState, mailboxState}] = await client.requestMany((t : any) => ({
+			emailState: t.Email.get({accountId: token.accountId, ids: []}),
+			mailboxState: t.Mailbox.get({accountId: token.accountId, ids: []})
+		}));
+		this.wsPushStates[profileID] = {
+			[token.accountId]: {
+				Email: emailState.state,
+				Mailbox: mailboxState.state
+			}
+		};
+
+		client.onPush((change : StateChange) => this.handleWsPush(profileID, change));
+	}
+
+	/** client.onPush() callback - fans out one StateChange frame's "changed" map by JMAP accountId. */
+	private handleWsPush(profileID : string, change : StateChange) : void
+	{
+		Object.entries(change.changed || {}).forEach(([accountId, states]) =>
+		{
+			this.processWsPushStates(profileID, accountId, states as Record<string, string>).catch((e) =>
+				console.error('MailJmap.handleWsPush(): failed to process a push notification', e));
+		});
+	}
+
+	/**
+	 * Diff a StateChange's new per-dataType states against the last known baseline, and - if
+	 * anything actually changed since then - fetch and apply the delta. Updates the baseline
+	 * unconditionally (even when there's nothing to diff against yet, or nothing changed), so a
+	 * missing baseline only ever costs one skipped StateChange, never a stuck/repeated one.
+	 */
+	private async processWsPushStates(profileID : string, accountId : string, states : Record<string, string>) : Promise<void>
+	{
+		const client = this.clients[profileID];
+		if (!client)
+		{
+			return;
+		}
+		const accountStates = this.wsPushStates[profileID] ??= {};
+		const known = accountStates[accountId] ??= {};
+
+		const sinceStates : Record<string, string> = {};
+		Object.entries(states).forEach(([dataType, newState]) =>
+		{
+			// same scope as pushDataTypes passed to JamWebSocketClient above - Thread/Identity/... are
+			// never subscribed to, but a defensive check costs nothing if the server ever sends one
+			if (dataType !== 'Email' && dataType !== 'Mailbox')
+			{
+				return;
+			}
+			if (known[dataType] && known[dataType] !== newState)
+			{
+				sinceStates[dataType] = known[dataType];
+			}
+			known[dataType] = newState;
+		});
+		if (!Object.keys(sinceStates).length)
+		{
+			return;
+		}
+
+		const pushPayload = await this.buildWsPushPayload(client, profileID, accountId, sinceStates);
+		pushPayload.forEach((pushData) => this.app.push(pushData));
+	}
+
+	/**
+	 * JMAP Email/Mailbox changes -> classic egw_app.push() envelopes, client-side equivalent of
+	 * Api\Mail\Imap\Jmap::pushCallback()'s "StateChange" case (which this deliberately mirrors
+	 * property-for-property) - one requestMany() batch chaining {Email,Mailbox}/changes into
+	 * {Email,Mailbox}/get via $ref(), same shape as Api\Mail\Jmap::getChanges().
+	 *
+	 * Deliberately uses this client's own native JMAP row-id shape
+	 * (accountId::profileID::folderId::emailId, see messageReference()) for pushData.id, NOT the
+	 * classic accountId::profileID::base64(folder)::uid shape pushCallback() builds server-side via
+	 * emailId2uid() - this id is what NextMatch's nm.refresh() looks the row up by, and Stalwart rows
+	 * are cached under the native JMAP shape (see mail-jmap-modernization.md's "Row-id scheme").
+	 */
+	private async buildWsPushPayload(client : JamWebSocketClient, profileID : string, accountId : string, sinceStates : Record<string, string>) : Promise<any[]>
+	{
+		const [result] = await client.requestMany((t : any) =>
+		{
+			const calls : Record<string, any> = {};
+			if (sinceStates.Mailbox)
+			{
+				const mailboxChanges = t.Mailbox.changes({accountId, sinceState: sinceStates.Mailbox});
+				calls.mailboxChanges = mailboxChanges;
+				calls.mailboxCreated = t.Mailbox.get({accountId, ids: mailboxChanges.$ref('/created')});
+				calls.mailboxUpdated = t.Mailbox.get({accountId, ids: mailboxChanges.$ref('/updated')});
+				calls.mailboxDestroyed = t.Mailbox.get({accountId, ids: mailboxChanges.$ref('/destroyed')});
+			}
+			if (sinceStates.Email)
+			{
+				const emailChanges = t.Email.changes({accountId, sinceState: sinceStates.Email, maxChanges: 30});
+				calls.emailChanges = emailChanges;
+				calls.emailCreated = t.Email.get({
+					accountId, ids: emailChanges.$ref('/created'),
+					properties: ['id', 'mailboxIds', 'from', 'subject', 'preview', 'messageId']
+				});
+				calls.emailUpdated = t.Email.get({
+					accountId, ids: emailChanges.$ref('/updated'),
+					properties: ['id', 'mailboxIds', 'messageId', 'keywords']
+				});
+				calls.emailDestroyed = t.Email.get({
+					accountId, ids: emailChanges.$ref('/destroyed'),
+					properties: ['id', 'mailboxIds', 'messageId']
+				});
+			}
+			return calls;
+		});
+
+		const pushPayload : any[] = [];
+		for (const [list, type] of [
+			[result.mailboxCreated?.list, 'add'], [result.mailboxUpdated?.list, 'update'], [result.mailboxDestroyed?.list, 'delete']
+		] as [any[] | undefined, string][])
+		{
+			for (const mailbox of list || [])
+			{
+				const pushData = await this.buildMailboxPush(client, profileID, accountId, mailbox, type);
+				if (pushData)
+				{
+					pushPayload.push(pushData);
+				}
+			}
+		}
+		for (const [list, type] of [
+			[result.emailCreated?.list, 'add'], [result.emailUpdated?.list, 'update'], [result.emailDestroyed?.list, 'delete']
+		] as [any[] | undefined, string][])
+		{
+			for (const email of list || [])
+			{
+				const pushData = await this.buildEmailPush(client, profileID, accountId, email, type);
+				if (pushData)
+				{
+					pushPayload.push(pushData);
+				}
+			}
+		}
+		return pushPayload;
+	}
+
+	/** One Email/get result item -> a push() envelope - mirrors pushCallback()'s "email" switch branch. */
+	private async buildEmailPush(client : JamWebSocketClient, profileID : string, accountId : string, email : any, type : string) : Promise<any | null>
+	{
+		const folderId = Object.keys(email.mailboxIds || {})[0];
+		if (!folderId)
+		{
+			return null;
+		}
+		const folder = await this.folderId2path(client, profileID, accountId, folderId);
+		if (folder === null)
+		{
+			return null;
+		}
+		const acl : Record<string, any> = {folder};
+		switch (type)
+		{
+			case 'add':
+				acl.event = 'MessageNew';
+				acl.from = !email.from?.[0]?.name ? email.from?.[0]?.email : `${email.from[0].name} <${email.from[0].email}>`;
+				acl.subject = email.subject;
+				acl.snippet = (email.preview || '').trim();
+				break;
+			case 'update':
+				// as with the classic path, we can't know the old flags - send the currently-set ones
+				acl.event = 'Flags';
+				acl.flags = Object.keys(email.keywords || {});
+				break;
+			case 'delete':
+				acl.event = 'MessageDeleted';
+				break;
+		}
+		return {
+			app: 'mail',
+			id: `${accountId}::${profileID}::${folderId}::${email.id}`,
+			type,
+			acl
+		};
+	}
+
+	/** One Mailbox/get result item -> a push() envelope - mirrors pushCallback()'s "mailbox" switch branch. */
+	private async buildMailboxPush(client : JamWebSocketClient, profileID : string, accountId : string, mailbox : any, type : string) : Promise<any | null>
+	{
+		const folder = await this.folderId2path(client, profileID, accountId, mailbox.id);
+		if (folder === null)
+		{
+			return null;
+		}
+		const acl : Record<string, any> = {folder};
+		if (type === 'update')
+		{
+			acl.unseen = mailbox.unreadEmails;
+		}
+		return {
+			app: 'mail',
+			id: `${accountId}::${profileID}::${mailbox.id}`,
+			type,
+			acl
+		};
+	}
+
+	/**
+	 * Resolve a JMAP Mailbox id to its full "/"-joined path (e.g. "INBOX/Sub") - client-side
+	 * equivalent of Api\Mail\Jmap::folderId2path(), same batched-Mailbox/get-chain-via-$ref()
+	 * approach (4 ancestor levels per requestMany() round trip, looping for anything deeper),
+	 * cached per profile for this MailJmap instance's lifetime. Returns null if the folder is gone
+	 * by the time this resolves (a real race for a "destroyed" push item - see buildEmailPush()/
+	 * buildMailboxPush() callers, which just drop that one item rather than push a broken envelope).
+	 */
+	private async folderId2path(client : JamWebSocketClient, profileID : string, accountId : string, folderId : string) : Promise<string | null>
+	{
+		const cache = this.folderPaths[profileID] ??= {};
+		if (cache[folderId])
+		{
+			return cache[folderId];
+		}
+
+		// One Mailbox/get per ancestor level rather than jmap-jam's $ref() batching: $ref() resolves
+		// a JSON pointer to a single scalar (here, the parent's own id) into the *value* of the next
+		// call's "ids" argument, but Mailbox/get's ids must be an array - there's no JSON-pointer-only
+		// way to wrap a resolved scalar back into a one-element array, so batching this walk into one
+		// round trip isn't actually expressible via $ref(). Not worth the round-trip cost of a
+		// deeper batched-ref scheme either: this only runs on push events, aggressively cached below.
+		const parts : string[] = [];
+		let id : string | null = folderId;
+		while (id)
+		{
+			const [{list}] = await client.request(["Mailbox/get", {accountId, ids: [id], properties: ['parentId', 'name']}]);
+			const mailbox = list?.[0];
+			if (!mailbox)
+			{
+				break;	// folder no longer exists (a genuine race for a "destroyed" push item)
+			}
+			parts.push(parts.length === 0 && mailbox.name.toLowerCase() === 'inbox' ? 'INBOX' : mailbox.name);
+			id = mailbox.parentId || null;
+		}
+		if (!parts.length)
+		{
+			return null;
+		}
+		return cache[folderId] = parts.reverse().join('/');
 	}
 
 	/**
@@ -1893,6 +2182,7 @@ export class MailJmap
 						junkFolder: data.junkFolder,
 						templatesFolder: data.templatesFolder,
 						outboxFolder: data.outboxFolder,
+						enableWsPush: !!data.enableWsPush,
 					};
 					if (Object.keys(token.customLabels).length)
 					{
@@ -1921,11 +2211,18 @@ export class MailJmap
 							const transformed = new URL(url);
 							transformed.searchParams.set('access_token', token.access_token);
 							return transformed.toString();
-						}
+						},
+						// Same scope as the classic server-side subscription's SUBSCRIBTION_TYPES
+						// (Api\Mail\Imap\Jmap) - only relevant if enableWsPush actually registers a
+						// callback (see enableWsPush() below), otherwise never sent at all.
+						pushDataTypes: ['Email', 'Mailbox']
 					});
 					// fresh token: renew the mail server's push subscription/token again too,
-					// next time we know which folder is being viewed (see fetchRows())
+					// next time we know which folder is being viewed (see fetchRows()) - and forget
+					// any client-side WS push baseline, a fresh client means a fresh onPush()
+					// registration is needed too
 					delete this.pushEnabled[profileID];
+					delete this.wsPushStates[profileID];
 					// proactively refresh before expiry, so we never react to a 401
 					this.refreshTimers[profileID] = window.setTimeout(
 						() => this.ensureToken(profileID), Math.max(10, data.expires_in - 60) * 1000);

@@ -425,27 +425,100 @@ and reloaded, though no boulder account currently routes through it, so it hasn'
 itself - the dev-box test above is the one that actually exercised the full JamWebSocketClient code
 path against a real Stalwart server.
 
-**Not yet done**: nothing else, from this project's original phasing - `onPush()` (Phase 3) still
-isn't invoked from anywhere in `mail/js/jmap.ts`/`app.ts` (no push-callback wiring was part of this
-Phase 4 pass), and the graceful-fallback-if-the-nginx-piece-is-missing behavior, while designed in
-from Phase 1 and exercised by the `acc_id=42`/no-capability test above, has not specifically been
-tested by *removing* the nginx `/jmap/ws` block on an account that *does* have the capability (i.e.
+**Not yet done**: the graceful-fallback-if-the-nginx-piece-is-missing behavior, while designed in from
+Phase 1 and exercised by the `acc_id=42`/no-capability test above, has not specifically been tested
+by *removing* the nginx `/jmap/ws` block on an account that *does* have the capability (i.e.
 simulating "capability present, but the auth workaround isn't deployed yet") - worth doing before
-recommending this configuration to anyone else.
+recommending this configuration to anyone else. The hosting-side (`stalwart.egroupware.org`/farmA)
+nginx change is applied and reloaded but not yet live-tested itself, since no boulder account
+currently routes through it. `onPush()` adoption (Phase 5, below) is done, but only actually exercises
+live on an instance where `Api\Json\Push::onlyFallback()` is true - not the case on `boulder`, which
+has a working push-server, so Phase 5's live testing was necessarily partial (see its own section).
 
-**Adopting `onPush()` for real - open design question (ralf, 2026-08-21), not started**: swapping the
-existing server-side JMAP push (`api/jmapPush.php`'s webhook-based `PushSubscription`, requiring
-EGroupware's own push-server process) for the client-side `onPush()`/`WebSocketPushEnable` channel
-this project already built isn't just a wiring task - two real considerations first:
-- **The server can't know in advance whether a given browser's WebSocket will actually succeed**
-  (network, proxy, browser support) - so it can't simply decide once, server-side, "this account uses
-  WS push, skip the webhook subscription." Whatever adoption path is chosen needs to handle that
-  uncertainty (e.g. the client signaling back once its own WS push is confirmed live, or the server
-  webhook staying as an always-on fallback regardless).
-- **The upside is real**: WS-based push needs no `PushSubscription`/webhook object and no EGroupware
-  push-server at all - just `onPush()` over the already-open connection. That's a meaningful
-  advantage specifically for shared-hosting deployments that don't run (or can't easily run) a
-  separate push-server process.
-- Adopting it would mean porting whatever `api/jmapPush.php` currently *does* on receiving a push
-  notification (server-side PHP today) to an equivalent client-side TS reaction to `onPush()`'s
-  `StateChange` callback - not just registering for push, but replicating the actual handling logic.
+## Phase 5: adopting `onPush()` for real accounts (done, 2026-08-21)
+
+Resolved the "server can't know in advance whether a given browser's WebSocket will succeed" concern
+(see the now-superseded open question this section replaces) with ralf's proposed design: use
+`Api\Json\Push::onlyFallback()` as the gate. It returns `true` specifically when no real push-server
+backend is registered (the `push-backends` hook comes back empty, e.g. EPL's real backend isn't
+installed) and the code falls through to the bare `notifications_push` class - i.e. "no working push
+for this instance already." Since client-side WS push is only ever *attempted* in that case, there's
+no regression path: if a given browser's WebSocket also fails, the account had no working push before
+either way.
+
+### Server-side
+
+- `ProfileHandler::jmapBootstrap()` (`mail/src/Ui/ProfileHandler.php`) adds
+  `$bootstrap['enableWsPush'] = Api\Json\Push::onlyFallback();` to the bootstrap payload.
+- No change to `mail_ui::ajax_enablePush()`/`Api\Mail\Imap\Jmap::enablePush()`/`pushCallback()` -
+  the classic path is completely untouched; it just doesn't get called when `enableWsPush` is true.
+
+### Client-side (`mail/js/jmap.ts`)
+
+- `JmapToken.enableWsPush` carries the flag; `enablePushOnce()` branches on it - `true` calls the new
+  `enableWsPush()` instead of `mail.mail_ui.ajax_enablePush`, reusing the *same* `pushEnabled` guard
+  map (once per profile per token lifetime) for both paths.
+- `enableWsPush()` seeds a baseline `Email`/`Mailbox` state per JMAP accountId via one cheap
+  `Email/get`/`Mailbox/get` call with `ids: []` (RFC 8620: a `Foo/get` response's `state` reflects the
+  server's current state for that type regardless of which/how many ids were requested - free
+  baseline, no data transferred), *then* registers `client.onPush(...)`. `JamWebSocketClient` is
+  constructed with `pushDataTypes: ['Email', 'Mailbox']`, matching
+  `Api\Mail\Imap\Jmap::SUBSCRIBTION_TYPES`'s scope exactly.
+- `handleWsPush()`/`processWsPushStates()` diff each `StateChange`'s new per-dataType state against
+  the cached baseline (updating the baseline unconditionally either way) and only do real work when
+  something actually changed since last time.
+- `buildWsPushPayload()` is the client-side equivalent of `Api\Mail\Imap\Jmap::pushCallback()`'s
+  `"StateChange"` case, deliberately mirroring `Api\Mail\Jmap::getChanges()` property-for-property:
+  one `requestMany()` batch chaining `{Email,Mailbox}/changes` into `{Email,Mailbox}/get` via
+  `$ref()` (`/created`, `/updated`, `/destroyed`) - exactly the pattern Phase 2 was built for.
+  `buildEmailPush()`/`buildMailboxPush()` turn each resulting item into the same `{app, id, type,
+  acl}` envelope shape `pushCallback()` builds, then calls **the existing, already-tested
+  `MailApp.push()`** with it (`this.app.push(pushData)`) - reusing the real UI-refresh/notification
+  code instead of duplicating it.
+- **Deliberately uses this client's own native JMAP row-id shape**
+  (`accountId::profileID::folderId::emailId`, see `messageReference()`) for `pushData.id`, **not**
+  the classic `accountId::profileID::base64(folder)::uid` shape `pushCallback()` builds server-side
+  via `emailId2uid()`. This matters: `nm.refresh(pushData.id, ...)` looks the row up by this id, and
+  Stalwart rows are cached under the native JMAP shape (see "Row-id scheme" in
+  [[project-mail-jmap-modernization]]) - the classic shape would silently fail to match any row.
+  Given `pushCallback()` produces the classic shape unconditionally even for Stalwart accounts, this
+  suggests the *existing* server-side push path's row-refresh has likely been silently non-functional
+  for real JMAP accounts since the row-id modernization landed - a pre-existing gap, not something
+  fixed here (out of scope, and only reachable when `enableWsPush` is false, i.e. a working
+  push-server already exists).
+- `folderId2path()` is the client-side equivalent of `Api\Mail\Jmap::folderId2path()`, but
+  **one `Mailbox/get` per ancestor level** rather than that PHP method's batched 4-level `$ref()`
+  chain: `$ref()` resolves a JSON pointer to a single scalar (a parent's own id) into the *value* of
+  the next call's `ids` argument, but `Mailbox/get`'s `ids` must be an array - there's no
+  JSON-pointer-only way to wrap a resolved scalar back into a one-element array. Found via a real bug
+  in an earlier draft of this method (attempted the batched approach, a bare-string `ids` value broke
+  against a real server) - simplified rather than chasing a more complex batching scheme, since this
+  only ever runs on push events with aggressive per-folderId caching, not a hot path. Live-verified
+  against real Stalwart's flat 6-mailbox test account (top-level resolution, incl. the
+  `Inbox`→`INBOX` case-normalization); multi-level chaining covered by unit tests only, since that
+  account has no nested folders.
+- **`MailApp.push()` fix** (`mail/js/app.ts`, one line): its folder-tree-badge derivation computed
+  `folder` by re-deriving it from `pushData.id`'s own third `::`-segment via `atob(...)`, assuming
+  the classic `base64(path)` shape unconditionally - silently produces garbage for the native JMAP
+  row-id shape (which puts a raw, non-base64 JMAP folderId there instead). Fixed to just use
+  `pushData.acl.folder` directly - already computed, already a real path, already relied on a few
+  lines later for the Trash/Junk/Drafts/Sent notification-suppression check - removing a
+  shape-dependent re-derivation of a value already available. Backend-agnostic fix: benefits the
+  classic server-side push path too, not just this new one.
+
+### Test coverage
+
+`mail/js/test/MailJmapWsPush.test.ts` - `folderId2path()` (root-level, multi-level chain, "folder
+gone" → null, per-profile caching) using a real `JamWebSocketClient` driven by a hand-rolled fake
+JMAP server (`FakeWebSocket` + a `respondToMailboxGet()` helper), and `processWsPushStates()`
+(baseline-seeding on first event, no-op on unchanged state, fetch-and-push on a real change, asserted
+against the exact expected `pushData` shape). `npx web-test-runner mail/js/test/*.test.ts
+--node-resolve` - 117 total, all passing, no regressions.
+
+### Known limitation, inherited from the classic path
+
+Mailbox-type pushes never set `acl.event`, so they fall through to `push()`'s `default:` branch
+calling `nm.refresh(pushData.id, ...)` on an id that was never a NextMatch row to begin with (mailbox
+folders aren't grid rows) - a harmless no-op, but not a meaningful refresh either. `pushCallback()`
+has this exact same shape server-side, so this is a faithfully-ported pre-existing characteristic,
+not a new gap - not fixed here.

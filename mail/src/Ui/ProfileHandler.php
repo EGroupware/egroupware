@@ -85,6 +85,13 @@ class ProfileHandler
 				// to identify these two by name instead
 				$bootstrap['templatesFolder'] = $imapServer->acc_folder_template ?: 'Templates';
 				$bootstrap['outboxFolder'] = $imapServer->acc_folder_outbox ?: 'Outbox';
+				// No working push-server for this instance (eg. shared hosting with none installed)?
+				// Tell the client to try JamWebSocketClient's client-side onPush() instead of the
+				// classic server-side JMAP push subscription (mail_ui::ajax_enablePush()) - no
+				// regression risk either way: if a given browser's WebSocket also doesn't connect,
+				// this account had no working push before this either. See
+				// doc/ai/projects/mail-jmap-jam-websocket.md for the full design.
+				$bootstrap['enableWsPush'] = Api\Json\Push::onlyFallback();
 			}
 			$response->data($bootstrap);
 		}

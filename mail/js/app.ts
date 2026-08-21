@@ -632,7 +632,14 @@ export class MailApp extends EgwApp
 
 		let id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
 		let acc_id = id0.split('::')[1];
-		let folder = acc_id+'::'+atob(id0.split('::')[2]);
+		// pushData.acl.folder (a real "/"-joined path, e.g. "INBOX/Sub") is already computed by
+		// every caller for the Trash/Junk/Drafts/Sent check below - use it here too instead of
+		// re-deriving it from id0's own third segment, which isn't reliably a base64(path) at all:
+		// JMAP-native row ids (accountId::profileID::folderId::emailId, used for real JMAP/Stalwart
+		// accounts) put the raw JMAP Mailbox id there, not base64(path) like the classic
+		// accountId::profileID::base64(path)::uid shape does - atob() on that would silently
+		// produce garbage instead of throwing, breaking folder-tree badge updates below.
+		let folder = acc_id+'::'+pushData.acl.folder;
 		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		this.push_active[acc_id] = true;
 
