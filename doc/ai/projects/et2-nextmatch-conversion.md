@@ -223,7 +223,7 @@ Legacy `et2_nextmatch` widget API usage that has no direct equivalent and must b
 | `nm.set_onfiledrop(jQuery.proxy(cb, this))` (2-arg legacy callback) | `nm.getDOMNode().addEventListener("et2-filedrop", (e: CustomEvent) => { if (e.cancelable) e.preventDefault(); cb(e.detail?.rowUid, e.detail?.files); })`. |
 | `nm.activeFilters["view"] = view` then wait on `nm.getWidgetById(template).loading` | `await nm.set_template(...)` then `nm.applyFilters({view}, {reload: false, clearActions: false})`. If the app has expandable child rows, also call the new `nm.collapseExpandedRows()` when switching views. |
 | `nm.controller._selectionMgr._getRegisteredRowsEntry(r)` / `.setSelected()` / `.setFocused()` / manual scroll-into-view for "select next row after delete" | Listen for the `et2-rows-deleted` CustomEvent (`detail: {previousRowId, nextRowId}`), then call `nm.selectSingleRow(id)` / `nm.focusRowById(id)`. |
-| `nm._get_autorefresh()` / `nm._set_autorefresh(0/n)` (pause auto-refresh during a long request) | **No replacement exists.** Decide per-app whether dropping this behavior is acceptable or needs a new API added to `Et2Nextmatch`. |
+| `nm._get_autorefresh()` / `nm._set_autorefresh(0/n)` (pause auto-refresh during a long request) | No direct equivalent - `Et2Nextmatch` now has a built-in background autorefresh poll instead (see "Autorefresh" below), driven entirely by the same `nextmatch-<pref>-autorefresh` preference and `disable_autorefresh` setting, with no per-app API to call. There is still no way to pause it mid-request from app code; raise this if an app actually needs it. |
 | `nm.controller._selectionMgr.resetSelection()` | `nm.clearSelection()`. |
 | `nm.options.onselect = null` (temporarily suppress auto-preview-on-select) | `nm.addEventListener("et2-selection-changed", e => e.preventDefault(), {capture: true, once: true})`. |
 | `et2_nextmatch.DELETE` constant | `Et2DatagridUpdateTypes.DELETE` from `Et2Datagrid.types`. |
@@ -231,6 +231,68 @@ Legacy `et2_nextmatch` widget API usage that has no direct equivalent and must b
 | `this.nm.controller.getObjectManager()` | `egw_getObjectManager(appname).getObjectById(nm_index)` — grep the app for `.controller.` before considering it converted; every remaining hit is a crash waiting to happen. |
 | jQuery `.on('refresh', (_event, _widget, _row_id, _type) => ...)` | `Et2Nextmatch.refresh()` dispatches a plain DOM `CustomEvent` with **no extra arguments** — `_widget`/`_row_id`/`_type` are always `undefined` now. Close over an already-captured reference instead of reading widget/row from the event. |
 | Guessing at a renamed setting (e.g. `nm.settings.foldertree`) | Verify the replacement property actually exists on `Et2Nextmatch` (check `Et2Nextmatch.ts`) before using it. |
+
+### Autorefresh
+
+`Et2Nextmatch` has a built-in background autorefresh poll (added after the gap noted below was
+identified), implemented as its own collaborator class, `Et2NextmatchAutoRefresh.ts`. Unlike this
+directory's older collaborators (`Et2NextmatchActionController`/`Et2NextmatchDataProvider`/
+`Et2RowProvider`, all manually wired via explicit calls from `connectedCallback()`/
+`disconnectedCallback()`), it's a Lit `ReactiveController` - constructed once in `Et2Nextmatch`'s
+constructor, registered via `host.addController(this)`, with `hostConnected()`/`hostDisconnected()`
+called by Lit itself on every connect/disconnect cycle rather than by hand. Same pattern already
+established by `Et2Ai/AiAssistantController.ts`. `restart()` is called from `_handleLoadingDone()`
+after every (re)load:
+
+- **Interval source**: the same preference legacy used, `nextmatch-<pref>-autorefresh` (seconds,
+  `<pref>` = `Et2NextmatchAutoRefresh.preferenceBase` = `settings.columnselection_pref` if the app
+  sets it, else the widget's own `template` attribute - matching `Nextmatch.php`'s own `'nextmatch-'
+  . ($columnselection_pref ?? $template)` formula exactly, so admin-configured defaults/forced
+  values keep working unchanged). `preferenceBase` is a small getter specifically so any further
+  Et2Nextmatch-owned preference this class grows can key off the same base instead of each one
+  inventing its own fallback - `Et2Nextmatch.ts`'s own `_lettersearchPreferenceKey` predates it and
+  still has its own (subtly different - falls back to `columnPreferenceName`, not `template`)
+  formula; left alone since changing it is a behavior change for existing installs, not something to
+  fold in incidentally. Note this
+  means an app whose `columnselection_pref` already includes a `nextmatch-` prefix (Infolog does,
+  `class.infolog_ui.inc.php:1162`) ends up with a doubled `nextmatch-nextmatch-...` key - that
+  matches what `Nextmatch.php` itself computes for the same app, so it's consistent, if odd; it's
+  moot for Infolog anyway since `disable_autorefresh` is set. Also note the fallback uses the
+  *widget's* `template` (set once from server attrs), not `columnPreferenceName` or any
+  per-view-mode row-template id - Mail's row template varies per view (`mail.index.rows.vertical`)
+  while its shipped default preference name does not (`nextmatch-mail.index.rows-autorefresh`,
+  `mail/setup/default_records.inc.php:32`), so that default currently never matches and is
+  effectively dead; fixing Mail's shipped key (or making the lookup view-independent) is an
+  open follow-up, not blocking since Mail also uses push as its primary mechanism.
+- **Opt-out**: `disable_autorefresh` was added to `ALLOWED_SETTINGS` - Infolog/Timesheet/Invoices'
+  existing `disable_autorefresh => true // we have push` now actually takes effect.
+- **What a tick does**: `refresh(undefined)` - a full reload, same as the toolbar refresh action,
+  exactly one `ajax_get_rows` request. Autorefresh exists specifically for instances where an admin
+  has disabled push, so it has to catch new/removed/reordered rows too, not just changes to rows
+  already loaded - the targeted per-row patch path (`refresh(ids, 'update')`, what push-driven
+  single-row updates use elsewhere) would miss exactly what autorefresh is for. An earlier version
+  of this used that per-row patch to avoid disturbing scroll position, but that fanned out into one
+  `ajax_get_rows` request *per row* (`Et2NextmatchDataProvider.refresh()` calls `_refreshSingleRow()`
+  once per id) and, more importantly, silently never surfaced new rows at all - wrong on both counts
+  for the no-push case this feature is actually for.
+- **Pause/resume**: two independent signals, both checked live via `Et2NextmatchAutoRefresh.shouldRun`
+  rather than tracked as a fragile toggled flag - the `hide`/`show` native `CustomEvent`s the framework
+  dispatches on the nearest `<egw-app>` ancestor when switching EGroupware app tabs
+  (`kdots/js/EgwFramework.ts`'s `showTab()`), and the standard `document.visibilitychange` (covers
+  the browser tab/window itself being backgrounded, and popups, neither of which legacy handled).
+  Resuming does one immediate refresh (data may be stale) then resumes the interval.
+- **Column-selection UI**: `api/templates/default/nm_column_selection.xet` already had an
+  `autoRefresh` `<et2-select>` (dead in the modern flow before this), now wired end-to-end.
+  `Et2Datagrid.openColumnSelection()` doesn't know about `autoRefresh` specifically - it passes
+  through whatever the template returns generically, so the template can grow new fields without
+  touching `Et2Datagrid.ts` again: `et2-column-selection-items`' `content` (an object listeners
+  fill in by widget id to seed the dialog) and `et2-column-selection-apply`'s `values` (the dialog's
+  full raw result, unfiltered). `Et2Nextmatch`'s column-selection handlers forward `content`/`values`
+  to `Et2NextmatchAutoRefresh.seedColumnSelection()`/`.applyColumnSelection()`, which read/write
+  `autoRefresh` and persist a changed value to the preference above. The select isn't visually disabled for
+  `disable_autorefresh` apps (legacy's dialog grayed it out) - a submitted value is just silently
+  ignored instead; closing that gap needs a way for `Et2Nextmatch` to reach into the dialog's
+  widgets, which isn't currently exposed by `openColumnSelection()`.
 
 ## Reference: settings allow-list
 

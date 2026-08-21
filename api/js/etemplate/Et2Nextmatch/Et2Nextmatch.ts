@@ -24,6 +24,7 @@ import {Et2Filterbox} from "../Et2Filterbox/Et2Filterbox";
 import {Et2Template} from "../Et2Template/Et2Template";
 import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 import {Et2NextmatchActionController} from "./Et2NextmatchActionController";
+import {Et2NextmatchAutoRefresh} from "./Et2NextmatchAutoRefresh";
 import {Et2VfsUpload} from "../Et2Vfs/Et2VfsUpload";
 import {
 	applyLegacyNextmatchColumnPreferences,
@@ -121,6 +122,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		"columns_forced",
 		"dataStorePrefix",
 		"default_cols",
+		"disable_autorefresh",
 		"extra_attributes",
 		"filter_template",
 		"is_parent",
@@ -471,6 +473,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _actionController : Et2NextmatchActionController;
 
 	/**
+	 * Background autorefresh poll - see `Et2NextmatchAutoRefresh` for the design
+	 * rationale (interval source, why a tick is a full reload, visibility pausing).
+	 */
+	private _autoRefresh : Et2NextmatchAutoRefresh;
+
+	/**
 	 * Row element currently highlighted as a native file drop target, so we can
 	 * move/clear the highlight without thrashing during dragover.
 	 */
@@ -705,6 +713,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._rowProvider = new Et2RowProvider(this as any);
 		this._dataProvider = new Et2NextmatchDataProvider(this as any);
 		this._actionController = new Et2NextmatchActionController(this as any);
+		this._autoRefresh = new Et2NextmatchAutoRefresh(this);
 	}
 
 	/**
@@ -2934,6 +2943,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			bubbles: true
 		}));
 		this._actionController.syncDragDropRegistration();
+		this._autoRefresh.restart();
 	};
 
 	/**
@@ -2984,9 +2994,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	/**
 	 * Add letter search as a pseudo-column in the root column chooser.
 	 */
-	private _handleColumnSelectionItems = (event : CustomEvent<{ columns : Et2DatagridColumnSelectionItem[] }>) =>
+	private _handleColumnSelectionItems = (event : CustomEvent<{ columns : Et2DatagridColumnSelectionItem[], content? : Record<string, any> }>) =>
 	{
-		if(!this.lettersearch || this._eventSourceDatagrid(event) !== this._datagrid)
+		if(this._eventSourceDatagrid(event) !== this._datagrid)
+		{
+			return;
+		}
+		if(event.detail.content)
+		{
+			this._autoRefresh.seedColumnSelection(event.detail.content);
+		}
+		if(!this.lettersearch)
 		{
 			return;
 		}
@@ -3001,11 +3019,17 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	};
 
 	/**
-	 * Consume the letter-search pseudo-column before real grid columns are applied.
+	 * Consume the letter-search pseudo-column, and persist a changed autorefresh
+	 * interval, before real grid columns are applied.
 	 */
-	private _handleColumnSelectionApply = (event : CustomEvent<{ selectedOrder : string[] }>) =>
+	private _handleColumnSelectionApply = (event : CustomEvent<{ selectedOrder : string[], values : Record<string, any> }>) =>
 	{
-		if(!this.lettersearch || this._eventSourceDatagrid(event) !== this._datagrid)
+		if(this._eventSourceDatagrid(event) !== this._datagrid)
+		{
+			return;
+		}
+		this._autoRefresh.applyColumnSelection(event.detail?.values);
+		if(!this.lettersearch)
 		{
 			return;
 		}

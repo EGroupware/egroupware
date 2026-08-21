@@ -5731,8 +5731,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this.columns || [],
 			this._parseColumnBooleanExpression.bind(this)
 		);
-		this.dispatchEvent(new CustomEvent<{ columns : Et2DatagridColumnSelectionItem[] }>("et2-column-selection-items", {
-			detail: {columns},
+		// `nm_column_selection.xet` can carry other widgets besides the column
+		// list (eg. Et2Nextmatch's autorefresh select) - listeners fill in `content`
+		// to seed those by widget id, rather than Et2Datagrid needing to know about
+		// each one, so the template can grow new fields without changes here.
+		const itemsDetail : { columns : Et2DatagridColumnSelectionItem[], content : Record<string, any> } = {columns, content: {}};
+		this.dispatchEvent(new CustomEvent<{ columns : Et2DatagridColumnSelectionItem[], content : Record<string, any> }>("et2-column-selection-items", {
+			detail: itemsDetail,
 			bubbles: true,
 			composed: true
 		}));
@@ -5744,6 +5749,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			isModal: true,
 			value: {
+				content: itemsDetail.content,
 				modifications: {
 					columns: {
 						columns: columns
@@ -5759,8 +5765,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		const selectedOrder = ((value as any)?.columns || [])
 			.map((value) => this._columnState.decodeSelectionId(String(value)));
-		const applyDetail = {selectedOrder};
-		this.dispatchEvent(new CustomEvent<{ selectedOrder : string[] }>("et2-column-selection-apply", {
+		// `values` carries everything else the template returned (by widget id),
+		// unfiltered - same reasoning as `content` above, listeners pick out
+		// whatever fields they care about.
+		const applyDetail = {selectedOrder, values: (value as any) || {}};
+		this.dispatchEvent(new CustomEvent<{ selectedOrder : string[], values : Record<string, any> }>("et2-column-selection-apply", {
 			detail: applyDetail,
 			bubbles: true,
 			composed: true
@@ -6400,6 +6409,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		this._clearQueuedRequests();
 		this._clearRows();
+		// A fetch dispatched for the *previous* query can still be in flight when reload()
+		// is called again (eg. two filter changes in quick succession). Its own
+		// stale-signature check in _fetchPage() discards that response once it lands, but
+		// until then it kept `this.fetching` true - and loadMore() below refuses to queue
+		// anything while fetching, silently dropping *this* reload's own request. With
+		// nothing left afterwards to trigger a retry, the grid was stuck on `total: null`
+		// permanently. Forgetting about that in-flight key (the old fetch settles on its
+		// own and self-discards via the signature check) lets this reload's loadMore()
+		// call actually dispatch.
+		this._inFlightRequestKeys.clear();
+		this._syncLoadingFromInFlight();
 		this.total = null;
 		this.fetchFailed = false;
 		this.fetchErrorMessage = "";
