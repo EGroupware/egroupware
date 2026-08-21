@@ -756,65 +756,75 @@ class infolog_bo
 	 * 			or false for timestamps in server-time
 	 * @param string $type 'ts' timestamp, 'object': DateTime objects
 	 */
-	 function time2time(&$values, $fromTZId=false, $toTZId=null, $type='ts')
-	 {
-		$tz = Api\DateTime::$server_timezone;
+	/**
+	 * Resolve a time2time()-style from/to timezone parameter to an actual \DateTimeZone.
+	 *
+	 * Deliberately does NOT use self::$tz_cache (infolog_ical.inc.php's own, separate
+	 * micro-cache, out of scope here) - calendar_timezones::DateTimeZone() already caches
+	 * its alias-resolution lookups internally (Api\Cache::getSession()), so a second,
+	 * request-local cache on top of it buys nothing beyond avoiding a handful of trivial
+	 * \DateTimeZone constructions.
+	 *
+	 * @param string|null|false $tzid false (server time, the default) or null (user time),
+	 * 	matching Api\DateTime::$server_timezone/$user_timezone - or a real TZID string,
+	 * 	resolved via calendar_timezones::DateTimeZone(), which also resolves legacy
+	 * 	Windows/Outlook-style zone names via its own alias table, not just IANA names
+	 * @return \DateTimeZone
+	 */
+	protected function resolveTZ($tzid)
+	{
+		if ($tzid)
+		{
+			return calendar_timezones::DateTimeZone($tzid);
+		}
+		return is_null($tzid) ? Api\DateTime::$user_timezone : Api\DateTime::$server_timezone;
+	}
 
-	 	if ($fromTZId)
+	/**
+	 * Convert an Api\DateTime already tagged with its "from" timezone to $toTZ - preserving
+	 * the wall-clock CALENDAR DATE (not the real instant) for all-day/midnight markers,
+	 * instead of letting a real timezone conversion shift them to a different calendar date.
+	 *
+	 * This is the migration doc's design decision #2: an all-day item must show the same
+	 * calendar date to every viewer regardless of timezone, unlike a normal timed instant.
+	 *
+	 * @param Api\DateTime $time already set to the "from" timezone
+	 * @param \DateTimeZone $toTZ
+	 * @return Api\DateTime
+	 */
+	protected function convertPreservingAllDay(Api\DateTime $time, \DateTimeZone $toTZ)
+	{
+		if ($time->format('Hi') == '0000')
 		{
-			if (!isset(self::$tz_cache[$fromTZId]))
+			// all-day marker: keep the same Y-m-d H:i:s digits, just re-tag them as $toTZ,
+			// instead of a real conversion that could land on a different calendar date
+			return new Api\DateTime(Api\DateTime::to($time, 'array'), $toTZ);
+		}
+		$time->setTimezone($toTZ);
+		return $time;
+	}
+
+	function time2time(&$values, $fromTZId=false, $toTZId=null, $type='ts')
+	{
+		// $tz is the context the RAW value's digits get interpreted in - user time only if
+		// $fromTZId is exactly null, server time otherwise (including a truthy TZID string,
+		// which only ever performs a REAL conversion below via $fromTZ, never changes how
+		// the raw digits themselves get read)
+		$tz = is_null($fromTZId) ? Api\DateTime::$user_timezone : Api\DateTime::$server_timezone;
+		$fromTZ = $this->resolveTZ($fromTZId);
+		$toTZ = $this->resolveTZ($toTZId);
+
+		foreach($this->timestamps as $key)
+		{
+			if ($values[$key])
 			{
-				self::$tz_cache[$fromTZId] = calendar_timezones::DateTimeZone($fromTZId);
+				$time = new Api\DateTime($values[$key], $tz);
+				$time->setTimezone($fromTZ);
+				$time = $this->convertPreservingAllDay($time, $toTZ);
+				$values[$key] = Api\DateTime::to($time, $type);
 			}
-			$fromTZ = self::$tz_cache[$fromTZId];
 		}
-		elseif (is_null($fromTZId))
-		{
-			$tz = Api\DateTime::$user_timezone;
-			$fromTZ = Api\DateTime::$user_timezone;
-		}
-		else
-		{
-			$fromTZ = Api\DateTime::$server_timezone;
-		}
-		if ($toTZId)
-		{
-			if (!isset(self::$tz_cache[$toTZId]))
-			{
-				self::$tz_cache[$toTZId] = calendar_timezones::DateTimeZone($toTZId);
-			}
-			$toTZ = self::$tz_cache[$toTZId];
-		}
-		elseif (is_null($toTZId))
-		{
-			$toTZ = Api\DateTime::$user_timezone;
-		}
-		else
-		{
-			$toTZ = Api\DateTime::$server_timezone;
-		}
-		//error_log(__METHOD__.'(values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']).", from=".array2string($fromTZId).", to=".array2string($toTZId).") tz=".$tz->getName().', fromTZ='.$fromTZ->getName().', toTZ='.$toTZ->getName().', userTZ='.Api\DateTime::$user_timezone->getName());
-	 	foreach($this->timestamps as $key)
-		{
-		 	if ($values[$key])
-		 	{
-			 	$time = new Api\DateTime($values[$key], $tz);
-			 	$time->setTimezone($fromTZ);
-			 	if ($time->format('Hi') == '0000')
-			 	{
-				 	// we keep dates the same in new timezone
-				 	$arr = Api\DateTime::to($time,'array');
-				 	$time = new Api\DateTime($arr, $toTZ);
-			 	}
-			 	else
-			 	{
-				 	$time->setTimezone($toTZ);
-			 	}
-			 	$values[$key] = Api\DateTime::to($time, $type);
-		 	}
-		}
-		//error_log(__METHOD__.'() --> values[info_enddate]='.date('Y-m-d H:i:s',$values['info_enddate']));
-	 }
+	}
 
 	/**
 	 * convert a date from server to user-time

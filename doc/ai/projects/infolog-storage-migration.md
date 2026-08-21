@@ -1236,10 +1236,33 @@ verified empirically, not just trusted):
 - A **falsy** raw value (`0`/`null`) is left untouched, not converted into a spurious epoch
   date.
 
-**Refactor itself: not yet started.** Should preserve the redundant-but-safe
-`calendar_timezones` alias resolution and the all-day/midnight-preserving semantics exactly as
-characterized above; `self::$tz_cache` (the redundant micro-cache identified in the research
-above) is a plausible, now-safely-testable target to simplify away.
+**Refactor done 2026-08-22**, on top of the characterization tests above:
+
+- Extracted `protected function resolveTZ($tzid)`: the from/to timezone-resolution branch
+  (truthy TZID string / `null` / `false`), previously duplicated near-identically for
+  `$fromTZId` and `$toTZId`, is now one shared method called twice. Drops the `self::$tz_cache`
+  lookup entirely *inside this method* - `calendar_timezones::DateTimeZone()` already caches
+  its own alias-resolution lookups (`Api\Cache::getSession()`), so the second, request-local
+  cache bought nothing beyond avoiding a handful of trivial `\DateTimeZone` constructions.
+  **`self::$tz_cache` itself (the property) was deliberately left in place** - it's also used by
+  two unrelated call sites in `infolog_ical.inc.php` (`:218`, `:485`), out of scope for this
+  phase; only `time2time()`'s own usage of it was removed.
+- Extracted `protected function convertPreservingAllDay(Api\DateTime $time, \DateTimeZone $toTZ)`:
+  the midnight-check/all-day-preserving branch, now a small, independently-named method instead
+  of an inline `if`/`else` inside `time2time()`'s loop body.
+- `time2time()` itself is now a ~15-line method: resolve `$tz`/`$fromTZ`/`$toTZ` once, then per
+  timestamp key: construct, convert-from, convert-preserving-all-day-to, format. Verbatim
+  behavior, no logic changes beyond the extraction and dropping the redundant cache lookup.
+- **Verification**: `Time2TimeTzidTest.php` (5/5) and `DateHandlingTest.php` (5/5) both green
+  against the refactored code - the exact safety net this characterization work existed to
+  provide. Full `infolog/tests/` suite - 102 tests, same 6 pre-existing `CalDAVImportTest`
+  failures and pre-existing risky-test warning as the established baseline, no new
+  regressions. Also ran `calendar/tests/TimezoneTest.php` (385 tests, all green) as a sanity
+  check on `calendar_timezones` itself, since `resolveTZ()` now calls
+  `calendar_timezones::DateTimeZone()` more directly (no change to that class, but worth
+  confirming its own test suite is unaffected by anything in this area).
+
+This closes out Phase 2 in full (both the `async_notification()` and `time2time()` items).
 
 ### Phase 3 (not started, out of scope unless separately requested)
 
