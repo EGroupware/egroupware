@@ -1147,12 +1147,65 @@ the existing per-call `date_format='object'` opt-in (already used by `infolog_gr
 
 ### Phase 2 — clean up `infolog_bo`'s own manual date math
 
-Only after Phase 1 is confirmed stable:
-- Replace `time2time()`'s manual midnight-check/tz-cache logic with direct
-  `Api\DateTime` formatting, keeping the all-day-preserving semantics as an explicit
-  small helper if decision #2 says to keep them.
-- Migrate `async_notification()`'s raw `date()`/`time()` filter-string construction to
-  `Api\DateTime`.
+#### `async_notification()`'s filter-string construction, done 2026-08-22
+
+- Extracted the inline `date('Y-m-d',time()+24*60*60*(int)$pref_value)` into a new,
+  directly-testable `protected function dateFilterSuffix(int $days_from_now)` -
+  `async_notification()` itself (impersonating every user with open entries, sending real
+  notifications) is a large, side-effecting method not worth exercising end-to-end just
+  to test a one-line date computation; extracting this specific piece lets it be unit-
+  tested in isolation.
+- `dateFilterSuffix()` uses `(new Api\DateTime('now', Api\DateTime::$server_timezone))->modify($n.' days')->format('Y-m-d')`
+  - calendar-day arithmetic (DST-aware), not the old fixed `24*60*60`-seconds-per-day
+    multiplication. **Deliberate, tiny, documented behavior difference**: the old code could
+    land on the wrong calendar day by up to an hour on a DST transition date, since adding
+    exactly N×86400 seconds isn't always the same as "N calendar days later" across a DST
+    boundary; the new calendar-aware arithmetic doesn't have that latent edge case. Judged
+    low-risk/an acceptable, natural side effect of using `Api\DateTime` properly rather than
+    something to painstakingly avoid by preserving the old arithmetic's quirk on purpose.
+- New `infolog/tests/AsyncNotificationDateFilterTest.php` (4 tests): `dateFilterSuffix()`'s
+  output directly (`N days from now`, `0 days from now`), plus two end-to-end tests
+  confirming a filter string built the same way `async_notification()` builds it
+  (`'open-responsible-enddate'`/`'open-responsible-date'` + `dateFilterSuffix($n)`) still
+  correctly drives `infolog_so::dateFilter()`'s existing, *unchanged* `'enddate'`/`'date'`
+  cases - i.e. the integration with `dateFilter()`'s own (separately-flagged, not-yet-
+  touched) `tz_offset`-based boundary math still works.
+- Full `infolog/tests/` suite - 97 tests, same 6 pre-existing `CalDAVImportTest` failures
+  and pre-existing risky-test warning as the established baseline, no new regressions.
+
+#### `time2time()`'s midnight-check/tz-cache logic - research, not yet started
+
+Investigated before touching any code, since the doc's own description ("manual midnight-
+check/tz-cache logic") undersold the actual risk here. `time2time()` isn't only used by the
+well-tested `read()`/`write()` paths (`$fromTZId`/`$toTZId` always `false`/`null` there) -
+`infolog_ical.inc.php:576` and `infolog_bo::findInfo()` (`class.infolog_bo.inc.php:~2771`)
+both call it with a **real, non-`null`/`false` TZID string** (`$this->tzid`/`$tzid`, from
+parsed iCal VTODO data) - a code path with **zero existing test coverage**.
+
+Traced the exact semantics of what a truthy `$fromTZId` does, since it's subtler than it
+looks: `Api\DateTime`'s integer-input constructor path always computes wall-clock digits via
+PHP's `date()` (i.e. relative to PHP's *current default* timezone, which EGroupware keeps set
+to the server timezone throughout a request) *regardless* of the `$tz` constructor argument -
+`$tz` only decides which timezone those digits get *tagged* as occurring in. `time2time()`
+exploits this: passing `$tz = Api\DateTime::$server_timezone` (its default, left unchanged
+for the truthy-TZID branch) means the first construction step is a self-consistent no-op
+(digits computed in server tz, tagged as server tz = the correct real instant, matching
+EGroupware's normal "ts" convention) - then `$time->setTimezone($fromTZ)` performs a *real*
+conversion of that correct instant into the resolved iCal TZID's wall-clock digits. Confirmed
+`calendar_timezones::DateTimeZone($tzid)` resolves Windows/Outlook-style legacy TZID aliases
+(not just IANA names) via its own already-cached (`Api\Cache::getSession`) lookup - meaning
+`time2time()`'s own `self::$tz_cache` is a redundant, second caching layer with no real
+performance benefit, but *is* exercising genuine alias-resolution logic that a naive
+`new \DateTimeZone($tzid)` replacement would silently break for non-IANA TZIDs.
+
+**Not yet started.** Ralf's direction: write characterization tests for the truthy-`$fromTZId`
+path (iCal import via a non-UTC/non-IANA-alias TZID, and `findInfo()`'s matching use) *first*,
+establishing a safety net for behavior neither Phase 0 nor any later increment has actually
+exercised, before attempting any refactor - same discipline as every other increment in this
+project. The eventual refactor should still preserve the redundant-but-safe `calendar_timezones`
+alias resolution and the all-day/midnight-preserving semantics decision #2 requires exactly as
+today; the `self::$tz_cache` micro-cache is a plausible target to simplify away once the
+alias-resolution behavior itself is locked down by tests.
 
 ### Phase 3 (not started, out of scope unless separately requested)
 

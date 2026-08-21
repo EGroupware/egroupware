@@ -2457,6 +2457,29 @@ class infolog_bo
 	}
 
 	/**
+	 * The "YYYY-MM-DD" date $days_from_now days after today, in server time - used to build
+	 * a dateFilter()-compatible filter suffix (eg. 'open-responsible-enddate2026-08-24').
+	 *
+	 * Extracted out of async_notification() (which used to inline
+	 * date('Y-m-d',time()+24*60*60*$days_from_now)) specifically so it's unit-testable
+	 * without needing to exercise the rest of that side-effecting method (user
+	 * impersonation, ACL, notification sending) - see the migration doc's Phase 2. Uses
+	 * calendar-day arithmetic (DateTime::modify(), DST-aware) rather than the old fixed
+	 * 24*60*60-seconds-per-day multiplication, which could land on the wrong calendar day
+	 * by up to an hour on a DST transition date - a deliberate, documented tiny behavior
+	 * difference, not an oversight.
+	 *
+	 * @param int $days_from_now
+	 * @return string
+	 */
+	protected function dateFilterSuffix(int $days_from_now)
+	{
+		return (new Api\DateTime('now', Api\DateTime::$server_timezone))
+			->modify($days_from_now.' days')
+			->format('Y-m-d');
+	}
+
+	/**
 	 * Send all async infolog notification
 	 *
 	 * Called via the async service job 'infolog-async-notification'
@@ -2499,7 +2522,7 @@ class infolog_bo
 			{
 				if (!($pref_value = $GLOBALS['egw_info']['user']['preferences']['infolog'][$pref])) continue;
 
-				$filter .= date('Y-m-d',time()+24*60*60*(int)$pref_value);
+				$filter .= $this->dateFilterSuffix((int)$pref_value);
 				//error_log(__METHOD__."() checking with filter '$filter' ($pref_value) for user $user ($email)");
 
 				$params = array('filter' => $filter, 'custom_fields' => true, 'subs' => true);
