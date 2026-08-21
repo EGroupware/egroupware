@@ -1,10 +1,12 @@
 # Mail: mail/js/app.ts naming cleanup (backlog)
 
-## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions
-(delete/flag/move/copy/save/header/integrate), folder-CRUD, sieve/vacation, ACL-dialog,
-subscription, folder-management/tree-lock, print, misc-UI, and S/MIME groups renamed (2026-08-21).
-Remaining: mailvelope, and the highest-risk open/preview/compose cluster (`mail_open` needs the
-`openMessage` rename, not bare `open` - collides with `EgwApp.open()`).
+## Status: scoped (2026-08-21); custom-labels, quota/vacation/filter-refresh, message-actions,
+folder-CRUD, sieve/vacation, ACL-dialog, subscription, folder-management/tree-lock, print, misc-UI,
+S/MIME, and the open/preview/compose cluster all renamed (2026-08-21). mailvelope methods needed no
+renaming (already Bucket A/B). **Still remaining**: a handful of folder-tree/status methods
+(`mail_CheckFolderNoSelect`, `mail_setFolderStatus`, `mail_setLeaf`, `mail_removeLeaf`,
+`mail_reloadNode`, `mail_refreshMessageGrid`) plus `acl_enabled` and `clearIntevals` (Bucket D) -
+small tail, not yet done.
 
 Ralf asked for this to be tracked as a future cleanup, explicitly *not* to reorder ahead of the
 folder-tree JMAP migration ([[mail-folder-tree-jmap]]) or other in-progress mail work. On
@@ -90,17 +92,17 @@ rename time per the caveat above).
 | ~~`mail_getLabelIds`~~ | `getLabelIds` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_isLabel`~~ | `isLabel` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_updateCustomLabelStylesheet`~~ | `updateCustomLabelStylesheet` | 0 | 0 | 2 | low | **done 2026-08-21** |
-| `mail_rebuildActionsOnList` | `rebuildActionsOnList` | 0 | 1 | 0 | **high** | PHP-string call site |
-| `mail_isValidRowId` | `isValidRowId` | 0 | 0 | 0 | low | private |
-| `mail_fetchCurrentlyFocussed` | `fetchCurrentlyFocussed` | 0 | 0 | 0 | low | |
-| `mail_open` | ⚠️ **do not call it `open`** | 0 | 1 | 0 | **high** | **Collision**: `EgwApp.open(_action,_senders)` is a base-class method (Bucket A). Stripping the prefix naively would silently turn this into an accidental override. Needs a different name, e.g. `openMessage`. |
-| `mail_openAsHtml` | `openAsHtml` | 0 | 1 | 0 | high | |
-| `mail_openAsText` | `openAsText` | 0 | 1 | 0 | high | |
-| `mail_compose` | `compose` | 7 | 37 | 10 | **high** | Widely referenced — plan this rename carefully |
-| `mail_disablePreviewArea` | `disablePreviewArea` | 0 | 0 | 0 | low | |
-| `mail_display` | `display` | 0 | 0 | 0 | low | |
-| `mail_preview` | `preview` | 3 | 3 | 4 | high | |
-| `mail_setMailBody` | `setMailBody` | 0 | 0 | 0 | low | |
+| ~~`mail_rebuildActionsOnList`~~ | `rebuildActionsOnList` | 0 | 1 | 0 | **high** | **done 2026-08-21** |
+| ~~`mail_isValidRowId`~~ | `isValidRowId` | 0 | 0 | 0 | low | **done 2026-08-21**, private |
+| ~~`mail_fetchCurrentlyFocussed`~~ | `fetchCurrentlyFocussed` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_open`~~ | `openMessage` | 0 | 1 | 0 | **high** | **done 2026-08-21** - used `openMessage`, not bare `open` (would've collided with `EgwApp.open()`) |
+| ~~`mail_openAsHtml`~~ | `openAsHtml` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_openAsText`~~ | `openAsText` | 0 | 1 | 0 | high | **done 2026-08-21** |
+| ~~`mail_compose`~~ | `compose` | 7 | 37 | 10 | **high** | **done 2026-08-21** - re-verified at rename time: only 9 of the "37 php + 7 xet" hits were real `app.mail.mail_compose` JS-method references (mail_ui.inc.php's 7 onExecute strings + 2 index.xet onclick handlers); the rest were the unrelated PHP controller class `mail_compose` (class.mail_compose.inc.php), referenced via `'menuaction' => 'mail.mail_compose.compose'` strings and matching regexes across compose.ts/addressbook/filemanager/egw_open/egw_config - left entirely untouched |
+| ~~`mail_disablePreviewArea`~~ | `disablePreviewArea` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_display`~~ | `display` | 0 | 0 | 0 | low | **done 2026-08-21** |
+| ~~`mail_preview`~~ | `preview` | 3 | 3 | 4 | high | **done 2026-08-21** |
+| ~~`mail_setMailBody`~~ | `setMailBody` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_refreshFolderStatus`~~ | `refreshFolderStatus` | 0 | 0 | 0 | low | **done 2026-08-21** |
 | ~~`mail_refreshQuotaDisplay`~~ | `refreshQuotaDisplay` | 0 | 0 | 3 | low | **done 2026-08-21** |
 | ~~`mail_setQuotaDisplay`~~ | `setQuotaDisplay` | 0 | 1 | 3 | high | **done 2026-08-21** |
