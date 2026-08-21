@@ -334,7 +334,7 @@ describe("MailJmap.getMailboxChildren() - hasSubscribedChildren for a namespace 
 /**
  * ralf's report: the "Edit folder ACL" tree action vanished on master because nothing populated
  * the INBOX node's `data.acl` any more after the initial-tree eager-branch-load was removed for
- * performance (see MailApp.acl_enabled(), mail/js/app.ts, and folderTree.ts's buildNode()). For a
+ * performance (see MailApp.aclEnabled(), mail/js/app.ts, and folderTree.ts's buildNode()). For a
  * real JMAP account this is resolved client-side from the JMAP session's own accountCapabilities.
  */
 describe("MailJmap.getMailboxChildren() - resolveAclCapable for real JMAP accounts", () =>

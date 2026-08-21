@@ -658,7 +658,7 @@ class JmapShim
 			// there, since ACL editing is an account-level feature, not a per-folder one; a live
 			// IMAP connection to this account is already open by the time any of its mailboxes are
 			// fetched, so queryCapability() (an in-memory lookup against the already-fetched
-			// CAPABILITY response) costs nothing extra here - see mail/js/app.ts's acl_enabled()
+			// CAPABILITY response) costs nothing extra here - see mail/js/app.ts's aclEnabled()
 			// (reads it back via folderTree.ts's buildNode(), as node.data.acl) and
 			// MailJmap.resolveAclCapable() for the real-JMAP/Stalwart equivalent.
 			'aclCapable' => $path === 'INBOX' && $imap->queryCapability('ACL'),

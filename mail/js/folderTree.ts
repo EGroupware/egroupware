@@ -87,7 +87,7 @@ export interface FolderTreeNode
 	 *  otherwise, so it never fights Et2Tree.ts's own openStatePreference-driven state */
 	open? : true;
 	/**
-	 * Only ever set on the account's own top-level INBOX node - MailApp.acl_enabled() (mail/js/
+	 * Only ever set on the account's own top-level INBOX node - MailApp.aclEnabled() (mail/js/
 	 * app.ts) reads node.data.acl to decide whether to show the "Edit folder ACL" tree action,
 	 * matching classic mail_tree.inc.php's exact node shape (its own "Set Acl capability for
 	 * INBOX" comment) so that method needed no changes at all for the JMAP-native tree.
@@ -267,7 +267,7 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 		...(role === 'inbox' && isTopLevel && mailbox.hasChildren !== false ? {open: true} : {}),
 		// see FolderTreeNode's own docblock on `data` - only ever set on the account's own
 		// top-level INBOX, gated on isTopLevel same as `open` above (a shared/other-user
-		// mailbox's own nested INBOX is never what acl_enabled() looks up)
+		// mailbox's own nested INBOX is never what aclEnabled() looks up)
 		...(role === 'inbox' && isTopLevel ? {data: {acl: !!mailbox.aclCapable}} : {}),
 		...icons(role, isNamespaceRoot, egw),
 	};
@@ -326,7 +326,7 @@ export function buildFolderLevel(mailboxes : JmapMailboxNode[], profileID : stri
 	// own Mailbox.name comes back as whatever display casing the server uses (eg. "Inbox") -
 	// without this, the account's own INBOX tree node id would be "profileID::Inbox" for a real
 	// JMAP account, silently breaking every one of those lookups (ralf's report: the ACL tree
-	// action's own node.data lookup, mail/js/app.ts's acl_enabled(), was the first one caught, but
+	// action's own node.data lookup, mail/js/app.ts's aclEnabled(), was the first one caught, but
 	// buildRootFolderData()'s INBOX-children-preload optimization matches the exact same
 	// pattern and would have silently stopped working for Stalwart too).
 	const pathSegment = (mailbox : JmapMailboxNode) => mailbox.role === 'inbox' ? 'INBOX' : mailbox.name;

@@ -641,7 +641,7 @@ export class MailApp extends EgwApp
 		{
 			let folder_id = {};
 			folder_id[folder] = pushData.acl.unseen;
-			this.mail_setFolderStatus(folder_id);
+			this.setFolderStatus(folder_id);
 		}
 
 		// only handle delete by default, for simple case of uid === "$app::$id"
@@ -2027,8 +2027,8 @@ export class MailApp extends EgwApp
 			{
 				// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
 				// would solve the refresh issue more accurately
-				//if (mode == "forced") this.mail_refreshMessageGrid();
-				this.mail_refreshMessageGrid();
+				//if (mode == "forced") this.refreshMessageGrid();
+				this.refreshMessageGrid();
 			}
 			if (_refreshQuotaDisplay)
 			{
@@ -2345,13 +2345,13 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_CheckFolderNoSelect - implementation of the mail_CheckFolderNoSelect action to control right click options on the tree
+	 * checkFolderNoSelect - implementation of the checkFolderNoSelect action to control right click options on the tree
 	 *
 	 * @param {object} action
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	mail_CheckFolderNoSelect(action,_senders,_currentNode) {
+	checkFolderNoSelect(action,_senders,_currentNode) {
 
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
@@ -2436,24 +2436,24 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders the representation of the tree leaf to be manipulated
 	 * @param {object} _currentNode
 	 */
-	acl_enabled(_action,_senders,_currentNode)
+	aclEnabled(_action,_senders,_currentNode)
 	{
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var inbox = _senders[0].id.split('::')[0]+'::INBOX';
 		var node = ftree ? ftree.getNode(inbox) : null;
 
-		return node && node.data && node.data.acl && this.mail_CheckFolderNoSelect(_action,_senders,_currentNode);
+		return node && node.data && node.data.acl && this.checkFolderNoSelect(_action,_senders,_currentNode);
 	}
 
 	/**
-	 * mail_setFolderStatus, function to set the status for the visible folders
+	 * setFolderStatus, function to set the status for the visible folders
 	 *
 	 * @param {array} _status
 	 *
 	 * type _status =
 	 * {'folderId':{displayName:String, unseenCount?:number}}
 	 */
-	mail_setFolderStatus(_status) {
+	setFolderStatus(_status) {
 		if (!this.et2 && !this.checkET2()) return;
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		if (!ftree) return;
@@ -2474,12 +2474,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_setLeaf, function to set the id and description for the folder given by status key
+	 * setLeaf, function to set the id and description for the folder given by status key
 	 * @param {array} _status status array with the required data (new id, desc, old desc)
 	 *		key is the original id of the leaf to change
-	 *		multiple sets can be passed to mail_setLeaf
+	 *		multiple sets can be passed to setLeaf
 	 */
-	mail_setLeaf(_status) {
+	setLeaf(_status) {
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
             var selectedNode = ftree.getSelectedItem();
 		for (var i in _status)
@@ -2498,12 +2498,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_removeLeaf, function to remove the leaf represented by the given ID
+	 * removeLeaf, function to remove the leaf represented by the given ID
 	 * @param {array} _status status array with the required data (KEY id, VALUE desc)
 	 *		key is the id of the leaf to delete
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
-	mail_removeLeaf(_status) {
+	removeLeaf(_status) {
 		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		var selectedNode = ftree.getSelectedNode();
 		for (var i in _status)
@@ -2522,11 +2522,11 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_reloadNode, function to reload the leaf represented by the given ID
+	 * reloadNode, function to reload the leaf represented by the given ID
 	 * @param {Object.<string,string>|Object.<string,Object}}  _status
 	 *		Object with the required data (KEY id, VALUE desc), or ID => {new data}
 	 */
-	mail_reloadNode(_status) {
+	reloadNode(_status) {
 		var ftree = this.et2?this.et2.getWidgetById(this.nm_index+'[foldertree]'):null;
 		if (!ftree) return;
 		var selectedNode = ftree.getSelectedNode();
@@ -2554,12 +2554,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshMessageGrid, function to call to reread ofthe current folder
+	 * refreshMessageGrid, function to call to reread ofthe current folder
 	 *
 	 * @param {boolean} _isPopup
 	 * @param {boolean} _refreshVacationNotice
 	 */
-	mail_refreshMessageGrid(_isPopup: boolean = false, _refreshVacationNotice: boolean = false)
+	refreshMessageGrid(_isPopup: boolean = false, _refreshVacationNotice: boolean = false)
 	{
 		let nm: Et2Nextmatch;
 		if (_isPopup && !this.mail_isMainWindow)
@@ -2880,7 +2880,7 @@ export class MailApp extends EgwApp
 		{
 			this.egw.message(this.egw.lang('canceled deletion due to user interaction'), 'success');
 		}
-		this.mail_refreshMessageGrid();
+		this.refreshMessageGrid();
 		this.preview();
 	}
 
@@ -2900,7 +2900,7 @@ export class MailApp extends EgwApp
 	 * failure - either way this falls back to the given classic ajax call unchanged, which has its
 	 * own completion callback (unlockTree()) already - not duplicated here. On success, replicates
 	 * the two client-visible effects the classic call's server response used to push: clear the
-	 * folder-tree badge (mail_setFolderStatus - the folder is now empty) and, if the purged folder
+	 * folder-tree badge (setFolderStatus - the folder is now empty) and, if the purged folder
 	 * is the one currently displayed, refresh the grid (classic path's conditional egw.refresh()).
 	 */
 	private mail_tryJmapPurgeFolder(profileID : string, which : 'trash' | 'junk', selectedFolder : string,
@@ -2908,10 +2908,10 @@ export class MailApp extends EgwApp
 	{
 		return this.jmap.purgeFolder(profileID, which).then((purgedFolder) =>
 		{
-			this.mail_setFolderStatus({[purgedFolder]: 0});
+			this.setFolderStatus({[purgedFolder]: 0});
 			if (purgedFolder === selectedFolder)
 			{
-				this.mail_refreshMessageGrid();
+				this.refreshMessageGrid();
 			}
 			onSuccess();
 		}, (e) => this.mail_handleJmapError(e, fallback));
@@ -3795,13 +3795,13 @@ export class MailApp extends EgwApp
 				// operation just confirmed that guess was correct. "select all matching filter" has
 				// no such local guess (arbitrarily many rows, not all loaded client-side), so it
 				// always needs the real refresh.
-				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
+				if (_elems.all) this.refreshMessageGrid(!!_elems.popup);
 			}).catch((error) =>
 			{
 				this.egw.message(error?.message || this.egw.lang('Failed to update messages'), 'error');
 				// The optimistic patch (or "all" case) may now be showing the wrong thing - reconcile
 				// with the server's real current state.
-				if (_elems.all) this.mail_refreshMessageGrid(!!_elems.popup);
+				if (_elems.all) this.refreshMessageGrid(!!_elems.popup);
 				else this.refreshRows(_elems.msg);
 			});
 			return;
@@ -6155,7 +6155,7 @@ export class MailApp extends EgwApp
 	/**
 	 * Clear intervals stored in W_INTERVALS which assigned to window
 	 */
-	clearIntevals()
+	clearIntervals()
 	{
 		for(var i=0;i<this.W_INTERVALS.length;i++)
 		{
@@ -6498,7 +6498,7 @@ export class MailApp extends EgwApp
 							{
 								const stat = selFolders.map(id => id.split('::')[1]);
 								// delete the item from index folderTree
-								egw.window.app.mail.mail_removeLeaf(stat);
+								egw.window.app.mail.removeLeaf(stat);
 							}
 							else
 							{
@@ -6521,7 +6521,7 @@ export class MailApp extends EgwApp
 	 * now called directly client-side instead of driving long_task's per-item server round-trip
 	 * (see Et2Dialog.long_task()'s _item_callback param). Resolves the deleted folder's own (leaf)
 	 * name on success - the exact same per-item contract folderMgmtDelete() already had, so
-	 * folderManagementDeleteBtn()'s own success-handling (mail_removeLeaf()) needs no change at all.
+	 * folderManagementDeleteBtn()'s own success-handling (removeLeaf()) needs no change at all.
 	 *
 	 * On any failure throws a plain Error (long_task()'s own per-item failure contract) with the
 	 * folder name and JMAP's error message - there's no classic fallback (see

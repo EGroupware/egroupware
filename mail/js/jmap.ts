@@ -693,10 +693,10 @@ export class MailJmap
 
 	/**
 	 * Resolve whether ACL (folder access-rights) editing is available for this account, attaching
-	 * it as `aclCapable` on the top level's own INBOX entry - MailApp.acl_enabled() (mail/js/app.ts)
+	 * it as `aclCapable` on the top level's own INBOX entry - MailApp.aclEnabled() (mail/js/app.ts)
 	 * reads it from there (folderTree.ts's buildNode() copies it into the INBOX tree node's own
 	 * `data.acl`, matching classic mail_tree.inc.php's exact node shape - its own "Set Acl
-	 * capability for INBOX" comment - so acl_enabled() needed no changes at all). ACL editing is an
+	 * capability for INBOX" comment - so aclEnabled() needed no changes at all). ACL editing is an
 	 * account-level feature, never per-folder, hence only ever attached to INBOX.
 	 *
 	 * The local shim's classic IMAP ACL capability is resolved server-side instead
@@ -2704,7 +2704,7 @@ export class MailJmap
 	 *  ajax_emptyTrash()/ajax_emptySpam() call) if the profile has no such folder configured
 	 * @return the resolved "profileID::folder" selectedFolder key that was purged, so the caller
 	 *  can update the folder-tree badge / refresh the grid without a server round trip (the classic
-	 *  ajax call's response used to push these via app.mail.mail_setFolderStatus/egw.refresh)
+	 *  ajax call's response used to push these via app.mail.setFolderStatus/egw.refresh)
 	 */
 	async purgeFolder(profileID : string, which : 'trash' | 'junk') : Promise<string>
 	{

@@ -112,7 +112,7 @@ class FolderHandler
 			if ($oA)
 			{
 				$response = Api\Json\Response::get();
-				$response->call('app.mail.mail_setFolderStatus',$oA);
+				$response->call('app.mail.setFolderStatus',$oA);
 			}
 		}
 	}
@@ -212,7 +212,7 @@ class FolderHandler
 				{
 					$nodeInfo = array($profileID=>lang('INBOX'));
 				}
-				$response->call('app.mail.mail_reloadNode',$nodeInfo);
+				$response->call('app.mail.reloadNode',$nodeInfo);
 			}
 			else
 			{
@@ -358,7 +358,7 @@ class FolderHandler
 			$response = Api\Json\Response::get();
 			if ($oA && $success)
 			{
-				$response->call('app.mail.mail_setLeaf',$oA);
+				$response->call('app.mail.setLeaf',$oA);
 			}
 			else
 			{
@@ -567,7 +567,7 @@ class FolderHandler
 			$response = Api\Json\Response::get();
 			if ($success)
 			{
-				$response->call('app.mail.mail_removeLeaf',$oA);
+				$response->call('app.mail.removeLeaf',$oA);
 			}
 			else
 			{

@@ -665,7 +665,7 @@ class mail_compose
 			{
 				$response = Api\Json\Response::get();
 				Framework::message(lang('Message send failed: %1',$message),'error');// maybe error is more appropriate
-				$response->call('app.mail.clearIntevals');
+				$response->call('app.mail.clearIntervals');
 			}
 		}
 

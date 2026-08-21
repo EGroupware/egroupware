@@ -732,13 +732,13 @@ class MessageActionHandler
 			);
 			//Call to reset folder status counter, after junkFolder triggered not from Junk folder
 			//-as we don't have junk folder specific information available on client-side we need to deal with it on server
-			$response->call('app.mail.mail_setFolderStatus',$fStatus);
+			$response->call('app.mail.setFolderStatus',$fStatus);
 		}
 		if ($rememberServerID != $this->ui->mail_bo->profileID)
 		{
 			$oldFolderInfo = $this->ui->mail_bo->getFolderStatus($junkFolder,false,false,false);
 			$response->call('egw.message',lang('empty junk'));
-			$response->call('app.mail.mail_reloadNode',array($icServerID.mail_ui::$delimiter.$junkFolder=>$oldFolderInfo['shortDisplayName']));
+			$response->call('app.mail.reloadNode',array($icServerID.mail_ui::$delimiter.$junkFolder=>$oldFolderInfo['shortDisplayName']));
 			$this->ui->changeProfile($rememberServerID);
 		}
 		else if ($selectedFolder == $icServerID.mail_ui::$delimiter.$junkFolder)
@@ -776,13 +776,13 @@ class MessageActionHandler
 			);
 			//Call to reset folder status counter, after emptyTrash triggered not from Trash folder
 			//-as we don't have trash folder specific information available on client-side we need to deal with it on server
-			$response->call('app.mail.mail_setFolderStatus',$fStatus);
+			$response->call('app.mail.setFolderStatus',$fStatus);
 		}
 		if ($rememberServerID != $this->ui->mail_bo->profileID)
 		{
 			$oldFolderInfo = $this->ui->mail_bo->getFolderStatus($trashFolder,false,false,false);
 			$response->call('egw.message',lang('empty trash'));
-			$response->call('app.mail.mail_reloadNode',array($icServerID.mail_ui::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
+			$response->call('app.mail.reloadNode',array($icServerID.mail_ui::$delimiter.$trashFolder=>$oldFolderInfo['shortDisplayName']));
 			$this->ui->changeProfile($rememberServerID);
 		}
 		else if ($selectedFolder == $icServerID.mail_ui::$delimiter.$trashFolder)

@@ -821,25 +821,25 @@ class mail_ui
 			'add' => array(
 				'caption' => 'Add Folder',
 				'onExecute' => 'javaScript:app.mail.addFolder',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'group'		=> $group,
 			),
 			'edit' => array(
 				'caption' => 'Rename Folder',
 				'onExecute' => 'javaScript:app.mail.renameFolder',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'group'		=> $group,
 			),
 			'move' => array(
 				'caption' => 'Move Folder',
 				'type' => 'drag',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'dragType' => array('mailFolder'),
 				'group'		=> $group,
 			),
 			'delete' => array(
 				'caption' => 'Delete Folder',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.deleteFolder',
 				'group'		=> $group,
 			),
@@ -855,20 +855,20 @@ class mail_ui
 			'subscribe' => array(
 				'caption' => 'Subscribe folder ...',
 				//'icon' => 'configure',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.editSubscribe',
 				'group'		=> $group
 			),
 			'unsubscribe' => array(
 				'caption' => 'Unsubscribe folder',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.unsubscribeFolder',
 				'group'		=> $group,
 			),
 			'foldermanagement' => array(
 				'caption' => 'Folder Management ...',
 				'icon' => 'folder_management',
-				'enabled'	=> 'javaScript:app.mail.mail_CheckFolderNoSelect',
+				'enabled'	=> 'javaScript:app.mail.checkFolderNoSelect',
 				'onExecute' => 'javaScript:app.mail.folderManagement',
 				'group'		=> $group,
 				'hideOnMobile' => true
@@ -895,7 +895,7 @@ class mail_ui
 			'editAcl'	=> array(
 				'caption' => 'Edit folder ACL ...',
 				'icon'	=> 'lock',
-				'enabled'	=> 'javaScript:app.mail.acl_enabled',
+				'enabled'	=> 'javaScript:app.mail.aclEnabled',
 				'onExecute' => 'javaScript:app.mail.editAcl',
 			),
 			'predefined-addresses' => array(
