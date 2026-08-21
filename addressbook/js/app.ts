@@ -1418,33 +1418,40 @@ class AddressbookApp extends EgwApp
 		}
 		else if (jQuery.isEmptyObject(state))
 		{
-			// Regular handling first to clear everything but advanced search
-			super.setState(state);
+			const nm = index?.widgetContainer?.getWidgetById("nm");
 
-			// Clear group view template since the change event is not fired when we programmatically change the value
-			let index = etemplate2.getById('addressbook-index');
-			if(index && index.widgetContainer)
-			{
-				const grouped = index.widgetContainer.getWidgetById('grouped_view');
-				const nm = index.widgetContainer.getWidgetById("nm");
-				this.change_grouped_view(null, grouped);
-			}
+			// Clear col_filter/search/etc. right away, but hold off on reloading -
+			// grouped view and advanced search below each need their own async
+			// round trip to clear too, and each would otherwise trigger its own nm
+			// reload.  Those reloads race: Et2Datagrid discards a fetch as "stale"
+			// as soon as a *later* reload starts before it resolves, so whichever
+			// of these finished last used to decide whether the grid ended up
+			// with rows or got stuck permanently empty.  Doing exactly one
+			// reload, after everything below has settled, removes the race
+			// instead of hoping the async steps resolve in the right order.
+			nm?.applyFilters({}, {reload: false});
+
+			// Clear group view template since the change event is not fired when we programmatically change the value.
+			// Only actually switch template (and pay for the column reset/reflow that
+			// causes) when we're leaving a grouped view - set_template() doesn't no-op
+			// on an unchanged name, so calling it unconditionally flickered the grid
+			// on every "No filters" click even when there was nothing to switch away from.
+			(<any>grouped).value = "";
+			const needsTemplateSwitch = nm && nm.template !== "addressbook.index.rows";
+			const groupedPromise = (needsTemplateSwitch ? nm.set_template("addressbook.index.rows") : Promise.resolve())
+				.then(() => nm?.applyFilters({grouped_view: ""}, {reload: false}));
 
 			// Clear advanced search, which is in session and etemplate
-			egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search',[], function() {
-				framework.setWebsiteTitle('addressbook','');
-				var index = etemplate2.getById('addressbook-index');
-				if(index && index.widgetContainer)
-				{
-					var nm = index.widgetContainer.getWidgetById('nm');
-					if(nm)
-					{
-						nm.applyFilters({
-							advanced_search: false
-						});
-					}
-				}
-			},this).sendRequest(true);
+			const advancedSearchPromise = new Promise<void>((resolve) =>
+			{
+				egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search', [], resolve, this).sendRequest(true);
+			});
+
+			Promise.all([groupedPromise, advancedSearchPromise]).then(() =>
+			{
+				framework.setWebsiteTitle('addressbook', '');
+				nm?.applyFilters({advanced_search: false});
+			});
 			return false;
 		}
 		else if (state.state.grouped_view)
