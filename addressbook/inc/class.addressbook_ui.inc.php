@@ -2119,14 +2119,14 @@ class addressbook_ui extends addressbook_bo
 					if ($show_custom_fields)
 					{
 						$selected_cfs = array();
-						if(in_array('customfields',$columselection))
+						foreach($columselection as $col)
 						{
-							foreach($columselection as $col)
-							{
-								if ($col[0] == '#') $selected_cfs[] = substr($col,1);
-							}
+							if ($col[0] == '#') $selected_cfs[] = substr($col,1);
 						}
 						$selected_cfs = array_unique(array_merge($selected_cfs, (array)$this->config['index_load_cfs']));
+						// no individual custom fields selected as their own columns: the "customfields"
+						// column shows them all, so load them all instead of nothing
+						if (!$selected_cfs) $selected_cfs = array_keys($this->customfields);
 						$customfields = $this->read_customfields($ids,$selected_cfs);
 					}
 					if ($show_calendar && !empty($ids)) $calendar = $this->read_calendar($calendar_participants);

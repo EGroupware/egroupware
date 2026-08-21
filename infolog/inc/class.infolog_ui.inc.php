@@ -499,7 +499,9 @@ class infolog_ui
 			$columselection = $query['selectcols'] ? (is_array($query['selectcols']) ? $query['selectcols'] : explode(',',$query['selectcols'])) : array();
 		}
 		// do we need to query the cf's
-		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection));
+		$config = Api\Config::read('infolog');
+		$query['custom_fields'] = $this->bo->customfields && (!$columselection || in_array('customfields',$columselection) ||
+			!empty($config['index_load_cfs']));
 		// How about cf filters when customfield colum is off
 		$query['custom_fields'] = $query['custom_fields'] || (
 			count(array_filter(
