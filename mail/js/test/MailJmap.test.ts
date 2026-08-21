@@ -15,8 +15,8 @@ function createFakeApp() : MailApp
 {
 	return {
 		egw,
-		mail_getCustomLabels: () => ({}),
-		mail_updateCustomLabelStylesheet: () => {}
+		getCustomLabels: () => ({}),
+		updateCustomLabelStylesheet: () => {}
 	} as unknown as MailApp;
 }
 

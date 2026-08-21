@@ -1896,7 +1896,7 @@ export class MailJmap
 					if (Object.keys(token.customLabels).length)
 					{
 						this.app.customLabels = token.customLabels;
-						this.app.mail_updateCustomLabelStylesheet();
+						this.app.updateCustomLabelStylesheet();
 					}
 					this.tokens[profileID] = token;
 					this.clients[profileID] = new JamClient({
@@ -2064,7 +2064,7 @@ export class MailJmap
 	/** Resolve a custom-label id case-insensitively. */
 	private customLabelId(id : string) : string | null
 	{
-		const labels = this.app.mail_getCustomLabels();
+		const labels = this.app.getCustomLabels();
 		return Object.keys(labels).find(label => label.toLowerCase() === id.toLowerCase()) || null;
 	}
 
@@ -2377,7 +2377,7 @@ export class MailJmap
 	async clearLabels(references : JmapMessageReference[]) : Promise<void>
 	{
 		const keywords = ['$label1', '$label2', '$label3', '$label4', '$label5',
-			...Object.keys(this.app.mail_getCustomLabels()).map(id => '$' + id.toLowerCase())];
+			...Object.keys(this.app.getCustomLabels()).map(id => '$' + id.toLowerCase())];
 		const patch : Record<string, boolean | null> = {};
 		keywords.forEach(keyword => Object.assign(patch, this.keywordPatch(keyword, false)));
 		await Promise.all(Object.values(this.groupReferences(references)).map(group =>
@@ -2758,7 +2758,7 @@ export class MailJmap
 		const ids = await this.queryAllIds(client, token.accountId, this.buildFilter(query, mailboxId));
 		const patch : Record<string, boolean | null> = {};
 		['$label1', '$label2', '$label3', '$label4', '$label5',
-			...Object.keys(this.app.mail_getCustomLabels()).map(id => '$' + id.toLowerCase())]
+			...Object.keys(this.app.getCustomLabels()).map(id => '$' + id.toLowerCase())]
 			.forEach(keyword => Object.assign(patch, this.keywordPatch(keyword, false)));
 		await this.updateIds(profileID, mailboxId, ids, patch);
 	}
@@ -2853,7 +2853,7 @@ export class MailJmap
 				css.push('label' + i);
 			}
 		}
-		Object.keys(this.app.mail_getCustomLabels()).forEach(labelId =>
+		Object.keys(this.app.getCustomLabels()).forEach(labelId =>
 		{
 			if (keywords['$' + labelId.toLowerCase()])
 			{

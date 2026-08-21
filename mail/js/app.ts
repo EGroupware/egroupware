@@ -541,7 +541,7 @@ export class MailApp extends EgwApp
 		}
 		this.customLabels = this.et2.getArrayMgr('content').getEntry('customLabels') ||
 			window.opener?.app?.mail?.customLabels || this.customLabels;
-		this.mail_updateCustomLabelStylesheet();
+		this.updateCustomLabelStylesheet();
 		// set image_proxy for resolveExternalImages
 		this.image_proxy = this.et2.getArrayMgr('content').getEntry('image_proxy') || 'https://';
 	}
@@ -549,7 +549,7 @@ export class MailApp extends EgwApp
 	/**
 	 * Get configured custom labels, including from the opener for popup actions
 	 */
-	mail_getCustomLabels(): CustomLabels
+	getCustomLabels(): CustomLabels
 	{
 		return Object.keys(this.customLabels).length ? this.customLabels :
 			window.opener?.app?.mail?.customLabels || {};
@@ -558,9 +558,9 @@ export class MailApp extends EgwApp
 	/**
 	 * Resolve a case-insensitive IMAP keyword to its category-name label ID
 	 */
-	mail_getCustomLabelId(_id: string)
+	getCustomLabelId(_id: string)
 	{
-		return Object.keys(this.mail_getCustomLabels()).find(
+		return Object.keys(this.getCustomLabels()).find(
 			labelId => labelId.toLowerCase() === _id.toLowerCase()
 		);
 	}
@@ -568,35 +568,35 @@ export class MailApp extends EgwApp
 	/**
 	 * Check if an action or IMAP keyword is a configured custom label
 	 */
-	mail_isCustomLabel(_id: string)
+	isCustomLabel(_id: string)
 	{
-		return typeof this.mail_getCustomLabelId(_id) !== 'undefined';
+		return typeof this.getCustomLabelId(_id) !== 'undefined';
 	}
 
 	/**
 	 * All labels represented in row flags
 	 */
-	mail_getLabelIds()
+	getLabelIds()
 	{
 		return ['label1', 'label2', 'label3', 'label4', 'label5',
-			...Object.keys(this.mail_getCustomLabels())];
+			...Object.keys(this.getCustomLabels())];
 	}
 
 	/**
 	 * Check if an action is a built-in or configured label
 	 */
-	mail_isLabel(_id: string)
+	isLabel(_id: string)
 	{
-		return this.mail_getLabelIds().includes(_id);
+		return this.getLabelIds().includes(_id);
 	}
 
 	/**
 	 * Add configured custom-label colors after the static Mail label rules
 	 */
-	mail_updateCustomLabelStylesheet()
+	updateCustomLabelStylesheet()
 	{
 		const style = new CSSStyleSheet();
-		const customLabels = this.mail_getCustomLabels();
+		const customLabels = this.getCustomLabels();
 		for (const labelId of Object.keys(customLabels))
 		{
 			const customLabel = customLabels[labelId];
@@ -3176,7 +3176,7 @@ export class MailApp extends EgwApp
 						if (_action.id.substr(0,5)=='label') messageToDisplay = this.egw.lang("Do you really want to toggle label %1 for ALL messages in the current view?",this.egw.lang(actionlabel))+" ";
 						break;
 					default:
-						if (this.mail_isCustomLabel(_action.id))
+						if (this.isCustomLabel(_action.id))
 						{
 							messageToDisplay = this.egw.lang(
 								"Do you really want to toggle label %1 for ALL messages in the current view?",
@@ -3239,7 +3239,7 @@ export class MailApp extends EgwApp
 							that.mail_callCopy(_action, _elems, _target, rv);
 							break;
 						default:
-							if (that.mail_isCustomLabel(_action.id))
+							if (that.isCustomLabel(_action.id))
 							{
 								that.mail_callFlagMessages(_action, _elems, rv);
 							}
@@ -3295,7 +3295,7 @@ export class MailApp extends EgwApp
 				this.mail_callCopy(_action, _elems,_target, rvMain);
 				break;
 			default:
-				if (this.mail_isCustomLabel(_action.id))
+				if (this.isCustomLabel(_action.id))
 				{
 					this.mail_callFlagMessages(_action, _elems,rvMain);
 				}
@@ -3486,7 +3486,7 @@ export class MailApp extends EgwApp
 		{
 			// Optimistically clear all labels locally so the row updates instantly - mail_flagMessages()
 			// falls back to mail_refreshRows() (a real re-fetch) only if the JMAP call actually fails.
-			const labels = this.mail_getLabelIds();
+			const labels = this.getLabelIds();
 			for (const uid of data.msg)
 			{
 				const dataElem = egw.dataGetUIDdata(uid);
@@ -3565,7 +3565,7 @@ export class MailApp extends EgwApp
 					{
 						delete flags['flagged'];
 						classes = classes.filter((className) => className != 'flagged' && className != 'unflagged');
-					} else if (!this.mail_isLabel(_action.id))
+					} else if (!this.isLabel(_action.id))
 					{
 						classes.push('un' + rowClass);
 						if (_action.id === 'flagged')
@@ -3615,7 +3615,7 @@ export class MailApp extends EgwApp
 			if (msg_unset['msg'].length && !data['all'])
 			{
 				this.mail_flagMessages(
-					this.mail_isLabel(_action.id) ?
+					this.isLabel(_action.id) ?
 						{customLabel: _action.id, set: false} : 'un'+_action.id,
 					msg_unset
 				);
@@ -3623,7 +3623,7 @@ export class MailApp extends EgwApp
 			if (msg_set['msg'].length && !data['all'])
 			{
 				this.mail_flagMessages(
-					this.mail_isLabel(_action.id) ?
+					this.isLabel(_action.id) ?
 						{customLabel: _action.id, set: true} : _action.id,
 					msg_set
 				);
@@ -3684,7 +3684,7 @@ export class MailApp extends EgwApp
 				break;
 			default:
 				// custom labels use their own id as both the flag key and the filter value
-				if (this.mail_isCustomLabel(_filters.filter))
+				if (this.isCustomLabel(_filters.filter))
 				{
 					matches = !!_flags[_filters.filter];
 				} else
@@ -3749,7 +3749,7 @@ export class MailApp extends EgwApp
 		// filter-aware (e.g. "mark all as read" while viewing the Unseen filter), not a plain
 		// per-row toggle - not replicated here
 		const systemFlagKeyword = !_elems.all ? MailJmap.systemFlagKeyword(actionId.replace(/^un/, '')) : null;
-		const jmapKeywordAction = !!labelOperation || this.mail_isLabel(actionId) || !!customFlag ||
+		const jmapKeywordAction = !!labelOperation || this.isLabel(actionId) || !!customFlag ||
 			actionId === 'unlabel' || !!systemFlagKeyword;
 
 		if (jmapKeywordAction)
