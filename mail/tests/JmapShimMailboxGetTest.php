@@ -30,7 +30,7 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$imap = $this->getMockBuilder(Imap::class)
 			->disableOriginalConstructor()
 			->onlyMethods(array_unique(array_merge(
-				['getNameSpaceArray', 'getUserMailboxString', 'listMailboxes', 'status', '__get'],
+				['getNameSpaceArray', 'getUserMailboxString', 'listMailboxes', 'status', '__get', 'queryCapability'],
 				$onlyMethods,
 			)))
 			->getMock();
@@ -38,6 +38,12 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 			'personal' => [['delimiter' => $namespaces['personal'][0]['delimiter'] ?? '.']],
 			'others' => [['delimiter' => $namespaces['others'][0]['delimiter'] ?? '\\']],
 		]);
+		// mailboxNode()'s 'aclCapable' field calls this for the INBOX path - stub it so tests
+		// that never construct a real connection don't fall through to the real
+		// Horde_Imap_Client_Base::queryCapability(), which tries to actually connect (this mock
+		// is built with disableOriginalConstructor(), so that would fail deep in Horde's socket
+		// client with a null config array, not a meaningful assertion failure)
+		$imap->method('queryCapability')->willReturn(false);
 		// no acc_folder_* configured unless a test explicitly overrides __get()
 		$imap->method('__get')->willReturn(null);
 		return $imap;
@@ -355,8 +361,13 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 	/**
 	 * The real regression this whole method exists for: a server that doesn't report "user" as a
 	 * formal IMAP NAMESPACE-extension entry at all (getNameSpaceArray() only has 'personal') must
-	 * still show it once it has real accessible children - matched by its conventional literal
-	 * name, not by relying on the server correctly advertising it as a namespace.
+	 * still show it once it has real accessible AND SUBSCRIBED children - matched by its
+	 * conventional literal name, not by relying on the server correctly advertising it as a
+	 * namespace. namespaceRootsMissingFrom()'s own "granted children" check uses MBOX_SUBSCRIBED
+	 * (not MBOX_ALL_SUBSCRIBED) - it only ever runs for a subscribedOnly request in the first
+	 * place, so "granted" here must mean "granted AND subscribed" (ralf's report: an unsubscribed
+	 * share showing an always-empty root in the main index is exactly the dead end this avoids) -
+	 * "user/birgit" below is this test's stand-in for a real, subscribed shared mailbox.
 	 */
 	public function testListChildIdsFindsNamespaceRootByNameEvenWhenNotReportedAsANamespace()
 	{
@@ -365,7 +376,9 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		{
 			if ($mode === \Horde_Imap_Client::MBOX_SUBSCRIBED)
 			{
-				return $pattern === '%' ? ['INBOX' => []] : [];
+				if ($pattern === '%') return ['INBOX' => []];
+				if ($pattern === 'user/%') return ['user/birgit' => []];
+				return [];
 			}
 			if ($pattern === 'user/%')
 			{
