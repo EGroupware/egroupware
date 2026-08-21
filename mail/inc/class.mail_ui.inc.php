@@ -672,7 +672,7 @@ class mail_ui
 
 				$etpl = new Etemplate('mail.index');
 				//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter
-				$content[self::$nm_index]['cat_id_onchange'] = "app.mail.mail_searchtype_change";
+				$content[self::$nm_index]['cat_id_onchange'] = "app.mail.searchtypeChange";
 				// set the actions on tree
 				$etpl->setElementAttribute(self::$nm_index.'[foldertree]','actions', $this->get_tree_actions());
 
@@ -2538,7 +2538,7 @@ class mail_ui
 			$refreshData = null;
 		}
 		$response = Api\Json\Response::get();
-		$response->call('app.mail.mail_refreshVacationNotice',$refreshData);
+		$response->call('app.mail.refreshVacationNotice',$refreshData);
 	}
 
 	/**
@@ -2585,9 +2585,9 @@ class mail_ui
 		}
 
 		$response = Api\Json\Response::get();
-		$response->call('app.mail.mail_refreshCatIdOptions',$this->searchTypes);
-		$response->call('app.mail.mail_refreshFilterOptions',$this->statusTypes);
-		$response->call('app.mail.mail_refreshFilter2Options',array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list')));
+		$response->call('app.mail.refreshCatIdOptions',$this->searchTypes);
+		$response->call('app.mail.refreshFilterOptions',$this->statusTypes);
+		$response->call('app.mail.refreshFilter2Options',array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list')));
 
 	}
 
@@ -2655,7 +2655,7 @@ class mail_ui
 			}
 		}
 		$response = Api\Json\Response::get();
-		$response->call('app.mail.mail_setQuotaDisplay',array('data'=>$content));
+		$response->call('app.mail.setQuotaDisplay',array('data'=>$content));
 	}
 
 	/**

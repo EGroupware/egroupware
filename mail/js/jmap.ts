@@ -171,7 +171,7 @@ export class MailJmap
 	private static readonly MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
 	// JMAP Quota extension (RFC 9425) - matches Mail\Jmap::JMAP_QUOTA (api/src/Mail/Jmap.php)
 	private static readonly JMAP_QUOTA = 'urn:ietf:params:jmap:quota';
-	// Per-profile cache of getQuota()'s formatted result - mail_refreshQuotaDisplay() (app.ts)
+	// Per-profile cache of getQuota()'s formatted result - refreshQuotaDisplay() (app.ts)
 	// is called on every single folder click, not just an actual account switch, and quota
 	// rarely changes visibly between those - a long TTL avoids a fresh (comparatively expensive)
 	// JMAP round-trip (or worse, falling back to the classic IMAP connect+examine chain) on
@@ -263,10 +263,10 @@ export class MailJmap
 	 * Get formatted quota-display data for $profileID directly via JMAP, avoiding the classic
 	 * IMAP connect+examine round-trip mail_ui::ajax_refreshQuotaDisplay() would otherwise need
 	 * (that path was the source of a real production hang/error against a flaky IMAP backend).
-	 * Result shape matches what MailApp.mail_setQuotaDisplay() (app.ts) expects, so a caller can
+	 * Result shape matches what MailApp.setQuotaDisplay() (app.ts) expects, so a caller can
 	 * hand it straight through with no PHP round-trip at all when this resolves non-null.
 	 *
-	 * Briefly cached (see quotaCache): mail_refreshQuotaDisplay() is called on every folder
+	 * Briefly cached (see quotaCache): refreshQuotaDisplay() is called on every folder
 	 * click, not just an actual account switch.
 	 *
 	 * @return null only when a genuinely different code path is worth trying: it's a real JMAP
@@ -326,7 +326,7 @@ export class MailJmap
 	/**
 	 * Invalidate the cached quota for $profileID (see getQuota()'s quotaCache) - call after an
 	 * action that can actually change usage (emptying trash/junk, deleting a whole folder), so
-	 * the next mail_refreshQuotaDisplay() call (app.ts) fetches a fresh value instead of serving
+	 * the next refreshQuotaDisplay() call (app.ts) fetches a fresh value instead of serving
 	 * the last (up to QUOTA_CACHE_TTL old) cached one.
 	 */
 	invalidateQuota(profileID : string) : void
@@ -356,12 +356,12 @@ export class MailJmap
 
 	/**
 	 * Format usage/limit (both in KB, matching Api\Mail::getQuotaRoot()'s units) into the shape
-	 * MailApp.mail_setQuotaDisplay() (app.ts) expects - client-side port of
+	 * MailApp.setQuotaDisplay() (app.ts) expects - client-side port of
 	 * ProfileHandler::quotaDisplay() + mail_ui::ajax_refreshQuotaDisplay()'s own content-building
 	 * (mail/src/Ui/ProfileHandler.php, mail/inc/class.mail_ui.inc.php), so a JMAP-direct quota
 	 * fetch never needs the server round-trip just to format the numbers. Unlike the classic
 	 * path, "quotawarning" is returned at the top level (not nested under "data") to match what
-	 * mail_setQuotaDisplay() actually reads.
+	 * setQuotaDisplay() actually reads.
 	 */
 	private formatQuotaDisplay(usageKB : number, limitKB : number, profileID : string) : Record<string, any>
 	{

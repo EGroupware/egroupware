@@ -734,7 +734,7 @@ class mail_sieve
 								}
 								// refresh vacationNotice on index
 								$response = Api\Json\Response::get();
-								$response->call('app.mail.mail_callRefreshVacationNotice',$icServer->ImapServerId);
+								$response->call('app.mail.callRefreshVacationNotice',$icServer->ImapServerId);
 								Framework::refresh_opener($msg, 'mail');
 								if ($button === 'apply' || $icServer->error !=="")
 								{

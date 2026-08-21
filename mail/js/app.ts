@@ -143,7 +143,7 @@ export class MailApp extends EgwApp
 	 */
 	private _subscriptionKnownValue : Set<string> = new Set();
 	et2_obj: etemplate2;
-// defer calls to mail_refreshFolderStatus,
+// defer calls to refreshFolderStatus,
 // to accumulate updates of multiple rows e.g. deleting multiple emails
 	refresh_timeout: any;
 	/**
@@ -305,7 +305,7 @@ export class MailApp extends EgwApp
 				this.mail_disablePreviewArea(!this.getPreviewPaneState());
 
 				//Get initial folder status
-				this.mail_refreshFolderStatus(undefined, undefined, false);
+				this.refreshFolderStatus(undefined, undefined, false);
 
 				// Bind to nextmatch refresh to update folder status
 				if (nm != null)
@@ -314,13 +314,13 @@ export class MailApp extends EgwApp
 					{
 						if (!self.push_active[nm.activeFilters.selectedFolder.split("::")[0]])
 						{
-							// defer calls to mail_refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
+							// defer calls to refreshFolderStatus for 2s, to accumulate updates of multiple rows e.g. deleting multiple emails
 							if (!self.refresh_timeout)
 							{
 								self.refresh_timeout = window.setTimeout(() =>
 								{
 									self.refresh_timeout = null;
-									self.mail_refreshFolderStatus.call(self, undefined, undefined, false);
+									self.refreshFolderStatus.call(self, undefined, undefined, false);
 								}, 2000);
 							}
 						}
@@ -358,10 +358,10 @@ export class MailApp extends EgwApp
 					this.tree_wdg.autoloading = this.mail_folderTreeAutoload.bind(this);
 					this.tree_wdg.openStatePreference = 'mail.ExpandedFolders';
 				}
-				// Show vacation notice on load for the current profile (if not called by mail_searchtype_change())
+				// Show vacation notice on load for the current profile (if not called by searchtypeChange())
 				const cat_id = this.et2.getWidgetById('cat_id');
-				const already_refreshed = this.mail_searchtype_change(null, cat_id);
-				if (!already_refreshed) this.mail_callRefreshVacationNotice();
+				const already_refreshed = this.searchtypeChange(null, cat_id);
+				if (!already_refreshed) this.callRefreshVacationNotice();
 				break;
 			case 'mail.display':
 				// Prepare display dialog for printing
@@ -1998,7 +1998,7 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshFolderStatus, function to call to read the counters of a folder and apply them
+	 * refreshFolderStatus, function to call to read the counters of a folder and apply them
 	 *
 	 * @param {string} _nodeID
 	 * @param {string} mode
@@ -2006,7 +2006,7 @@ export class MailApp extends EgwApp
 	 * @param {boolean} _refreshQuotaDisplay
 	 *
 	 */
-	mail_refreshFolderStatus(_nodeID: string, mode: string, _refreshGridArea = true, _refreshQuotaDisplay = true)
+	refreshFolderStatus(_nodeID: string, mode: string, _refreshGridArea = true, _refreshQuotaDisplay = true)
 	{
 		let nodeToRefresh: string | 0 = 0;
 		let mode2use = "none";
@@ -2022,7 +2022,7 @@ export class MailApp extends EgwApp
 
 			const activeFolders = this.tree_wdg.getTreeNodeOpenItems(nodeToRefresh,mode2use);
 			//alert(activeFolders.join('#,#'));
-			this.mail_queueRefreshFolderList((mode=='thisfolderonly'&&nodeToRefresh?[_nodeID]:activeFolders));
+			this.queueRefreshFolderList((mode=='thisfolderonly'&&nodeToRefresh?[_nodeID]:activeFolders));
 			if (_refreshGridArea)
 			{
 				// maybe to use the mode forced as trigger for grid reload and using the grids own autorefresh
@@ -2032,14 +2032,14 @@ export class MailApp extends EgwApp
 			}
 			if (_refreshQuotaDisplay)
 			{
-				this.mail_refreshQuotaDisplay();
+				this.refreshQuotaDisplay();
 			}
 		} catch(e) {
 		} // ignore the error; maybe the template is not loaded yet
 	}
 
 	/**
-	 * mail_refreshQuotaDisplay, function to call to read the quota for the active server
+	 * refreshQuotaDisplay, function to call to read the quota for the active server
 	 *
 	 * Tries MailJmap.getQuota() (direct JMAP, no server round-trip at all) first - falls back to
 	 * the classic ajax_refreshQuotaDisplay() round-trip only if that declines, which now only
@@ -2050,7 +2050,7 @@ export class MailApp extends EgwApp
 	 * @param {object} _server omitting uses the currently active profile
 	 *
 	 */
-	mail_refreshQuotaDisplay(_server?: any)
+	refreshQuotaDisplay(_server?: any)
 	{
 		// same "not always set, read it from foldertree" fallback fetchRows()/mail_buildJmapQuery()
 		// already use for resolving the currently active profile client-side
@@ -2069,7 +2069,7 @@ export class MailApp extends EgwApp
 		{
 			if (data)
 			{
-				this.mail_setQuotaDisplay(data);
+				this.setQuotaDisplay(data);
 				return;
 			}
 			classicFallback();
@@ -2077,12 +2077,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_setQuotaDisplay, function to call to read the quota for the active server
+	 * setQuotaDisplay, function to call to read the quota for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_setQuotaDisplay(_data)
+	setQuotaDisplay(_data)
 	{
 		if (!this.et2 && !this.checkET2()) return;
 
@@ -2120,12 +2120,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
+	 * callRefreshVacationNotice, function to call the serverside function to refresh the vacationnotice for the active server
 	 *
 	 * @param {object} _server
 	 *
 	 */
-	mail_callRefreshVacationNotice(_server?)
+	callRefreshVacationNotice(_server?)
 	{
 		egw.jsonq('mail_ui::ajax_refreshVacationNotice',[_server]);
 	}
@@ -2193,12 +2193,12 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
+	 * refreshVacationNotice, function to call with appropriate data to refresh the vacationnotice for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshVacationNotice(_data)
+	refreshVacationNotice(_data)
 	{
 		if (!this.et2 && !this.checkET2()) return;
 		if (_data == null)
@@ -2224,7 +2224,7 @@ export class MailApp extends EgwApp
 	 * @param ev : Event|undefined
 	 * @param filter : Et2Select cat_id filter
 	 */
-	mail_searchtype_change(ev, filter)
+	searchtypeChange(ev, filter)
 	{
 		const nm = this.et2.getWidgetById(this.nm_index);
 		const dates = this.et2.getWidgetById('mail.index.dates');
@@ -2243,14 +2243,14 @@ export class MailApp extends EgwApp
 						}
 						ev && window.setTimeout(() => dates.getWidgetById('startdate').focus());
 					}
-					this.mail_callRefreshVacationNotice();
+					this.callRefreshVacationNotice();
 					return true;
 				default:
 					if (dates)
 					{
 						dates.set_disabled(true);
 					}
-					this.mail_callRefreshVacationNotice();
+					this.callRefreshVacationNotice();
 					return true;
 			}
 		}
@@ -2258,14 +2258,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
+	 * refreshFilter2Options, function to call with appropriate data to refresh the filter2 options for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshFilter2Options(_data)
+	refreshFilter2Options(_data)
 	{
-		//alert('mail_refreshFilter2Options');
+		//alert('refreshFilter2Options');
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
@@ -2281,14 +2281,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
+	 * refreshFilterOptions, function to call with appropriate data to refresh the filter options for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshFilterOptions(_data)
+	refreshFilterOptions(_data)
 	{
-		//alert('mail_refreshFilterOptions');
+		//alert('refreshFilterOptions');
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
@@ -2305,14 +2305,14 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * mail_refreshCatIdOptions, function to call with appropriate data to refresh the filter options for the active server
+	 * refreshCatIdOptions, function to call with appropriate data to refresh the filter options for the active server
 	 *
 	 * @param {object} _data
 	 *
 	 */
-	mail_refreshCatIdOptions(_data)
+	refreshCatIdOptions(_data)
 	{
-		//alert('mail_refreshCatIdOptions');
+		//alert('refreshCatIdOptions');
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
@@ -2334,7 +2334,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @param {array} _folders description
 	 */
-	mail_queueRefreshFolderList(_folders)
+	queueRefreshFolderList(_folders)
 	{
 		var self = this;
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
@@ -2587,7 +2587,7 @@ export class MailApp extends EgwApp
 			}
 			nm.applyFilters(filters); // this should refresh the active folder
 		}
-		if (_refreshVacationNotice) this.mail_callRefreshVacationNotice();
+		if (_refreshVacationNotice) this.callRefreshVacationNotice();
 	}
 
 	/**
@@ -3086,10 +3086,10 @@ export class MailApp extends EgwApp
 		}
 
 		// Update non-grid
-		this.mail_refreshFolderStatus(_folder,'forced',false,false);
-		this.mail_refreshQuotaDisplay(server[0]);
+		this.refreshFolderStatus(_folder,'forced',false,false);
+		this.refreshQuotaDisplay(server[0]);
 		this.mail_preview();
-		this.mail_callRefreshVacationNotice(server[0]);
+		this.callRefreshVacationNotice(server[0]);
 		if (previousServer && server[0] != previousServer[0])
 		{
 			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
@@ -3631,7 +3631,7 @@ export class MailApp extends EgwApp
 			//server must do the toggle, as we apply to ALL, not only the visible
 			if (data['all']) this.mail_flagMessages(_action.id,data);
 			// No further update needed, only in case of read, the counters should be refreshed
-			if (_action.id=='read') this.mail_refreshFolderStatus(folder,'thisfolderonly',false,true);
+			if (_action.id=='read') this.refreshFolderStatus(folder,'thisfolderonly',false,true);
 			return;
 		}
 	}
@@ -7189,7 +7189,7 @@ export class MailApp extends EgwApp
 	 *
 	 * Use as onchange on these filters (named like the ones in NM!)
 	 *
-	 * Overwritten to call this.mail_searchtype_change() for cat_id.
+	 * Overwritten to call this.searchtypeChange() for cat_id.
 	 *
 	 * @param _ev
 	 * @param _widget
@@ -7201,7 +7201,7 @@ export class MailApp extends EgwApp
 		// open/close date filters
 		if (_widget.id === 'cat_id')
 		{
-				this.mail_searchtype_change(_ev, _widget);
+				this.searchtypeChange(_ev, _widget);
 		}
 	}
 }
