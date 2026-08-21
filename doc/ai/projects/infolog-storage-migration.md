@@ -890,18 +890,21 @@ Ralf's go-ahead: implement phase 1+2 now (see below); phase 3 (delegating to the
   `egw_infolog_users`, hardcoding `main.info_id` (safe: every `aclFilter()` caller feeds its
   result straight into `searchInfolog()`, whose `FROM` clause always aliases the table `main`) -
   substituted into all 4 call sites, `responsible_filter()` itself untouched.
-- **Pre-existing, unrelated bug noticed while touching this code (NOT fixed, out of scope)**:
-  `aclFilter()`'s `$filter == 'user'` branch (used by `infolog_groupdav`/`infolog_zpush`/the
-  calendar-include-todos hook to view a *specific other* user's tasks) builds one of its
-  `Db::expression()` arguments as `array('info_owner' => $f_user,)." AND ...`  - concatenating a
-  string directly onto an array literal with `.`, which PHP silently converts to the literal
-  string `"Array"` (with an `E_WARNING`, confirmed via `php -r`) instead of passing a real
-  column-data array to `expression()`. This predates this migration (present in the very first
-  commit of the migrated code) and reproduces identically before and after this phase's edit -
-  preserved as-is (same broken shape, just the substituted `users_table` fragment text updated)
-  rather than fixed in this pass, to avoid an unplanned, unreviewed ACL behavior change riding
-  along with the JOIN removal. Worth a dedicated look separately.
-- Full `infolog/tests/` suite: 84 tests / 567 assertions, same 6 pre-existing `CalDAVImportTest`
+- **Pre-existing, unrelated bug found while touching this code, fixed on ralf's explicit
+  request (2026-08-21)**: `aclFilter()`'s `$filter == 'user'` branch (used by
+  `infolog_groupdav`/`infolog_zpush`/the calendar-include-todos hook to view a *specific other*
+  user's tasks) built one of its `Db::expression()` arguments as
+  `array('info_owner' => $f_user,)." AND ...` - concatenating a string directly onto an array
+  literal with `.`, which PHP silently converts to the literal string `"Array"` (with an
+  `E_WARNING`, confirmed via `php -r`) instead of passing a real column-data array to
+  `expression()` as a separate argument. This predated this migration (present in the very
+  first commit of the migrated code). Fix: split into two separate `expression()` arguments
+  (`),"..."` instead of `)."..."`) so the array is processed as real column data. New
+  `infolog/tests/AclUserFilterTest.php` (3 tests: no SQL error, owner-with-no-delegation match,
+  delegation match) run against the *pre-fix* code first - all 3 failed with the exact predicted
+  `Unknown column 'Array' in 'WHERE'` SQL error, confirming the bug and that this test catches
+  it - then against the fix - 3/3 green.
+- Full `infolog/tests/` suite: 87 tests / 573 assertions, same 6 pre-existing `CalDAVImportTest`
   failures and same pre-existing `ProjectTemplateTest` risky warning as the established
   baseline - no new regressions. Also re-ran
   `importexport/tests/ImportexportBasicImportCsvRegressionTest.php` (green).

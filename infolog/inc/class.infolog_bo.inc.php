@@ -626,9 +626,16 @@ class infolog_bo
 
 			if ($filter == 'user' && $f_user)
 			{
+				// the array and the following string used to be concatenated with "." instead of
+				// being passed as separate arguments - PHP silently stringifies an array used with
+				// "." to "Array" (E_WARNING, not a fatal error), so this produced invalid SQL
+				// ("... AND (Array AND NOT EXISTS(...) OR ...") whenever this branch was reached
+				// (infolog_groupdav/infolog_zpush/the calendar-include-todos hook, viewing a
+				// specific other user's tasks) - pre-existing bug, unrelated to the JOIN removal
+				// that surfaced it; fixed here as requested.
 				$filtermethod .= $this->so->db->expression($this->so->info_table,' AND (',array(
 					'info_owner' => $f_user,
-				)." AND NOT $active_delegation_exists OR ",$responsible_exists($f_user),')');
+				)," AND NOT $active_delegation_exists OR ",$responsible_exists($f_user),')');
 			}
 		}
 		return $this->acl_filter[$filter.$f_user] = $filtermethod;  // cache the filter
