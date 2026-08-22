@@ -474,3 +474,147 @@ describe("JamWebSocketClient.onPush()", () =>
 		}
 	});
 });
+
+describe("JamWebSocketClient heartbeat", () =>
+{
+	const OriginalWebSocket = (globalThis as any).WebSocket;
+	let fetchStub : sinon.SinonStub;
+
+	afterEach(() =>
+	{
+		fetchStub?.restore();
+		(globalThis as any).WebSocket = OriginalWebSocket;
+		FakeWebSocket.instances = [];
+	});
+
+	it("probes an idle connection with Core/echo after heartbeatIntervalMs, and clears the timeout once answered", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+		const clock = sinon.useFakeTimers();
+
+		try
+		{
+			const client = new JamWebSocketClient({
+				sessionUrl : "https://example.com/session", bearerToken : "tok",
+				heartbeatIntervalMs : 1000, heartbeatTimeoutMs : 500
+			});
+			await client.session;
+			await clock.tickAsync(0);
+			const socket = FakeWebSocket.instances[0];
+			socket.simulateOpen();
+
+			await clock.tickAsync(1000);
+			assert.equal(socket.sent.length, 1, "the heartbeat interval elapsing on an idle connection must send a probe");
+			const frame = JSON.parse(socket.sent[0]);
+			assert.deepEqual(frame.methodCalls, [["Core/echo", {}, "e1"]]);
+
+			socket.simulateMessage({"@type" : "Response", requestId : frame.id, sessionState : "state1", methodResponses : [["Core/echo", {}, "e1"]]});
+
+			// The reply must count as activity - a second interval tick with no further traffic sends
+			// exactly one more probe, not more (i.e. the reply's own timeout was cleared, not left
+			// dangling to force-close the still-healthy socket later).
+			await clock.tickAsync(1000);
+			assert.equal(socket.sent.length, 2);
+			assert.equal(socket.readyState, FakeWebSocket.OPEN, "answering the heartbeat must not cause a reconnect");
+		}
+		finally
+		{
+			clock.restore();
+		}
+	});
+
+	it("does not probe again while other request traffic keeps the connection demonstrably alive", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+		const clock = sinon.useFakeTimers();
+
+		try
+		{
+			const client = new JamWebSocketClient({
+				sessionUrl : "https://example.com/session", bearerToken : "tok",
+				heartbeatIntervalMs : 1000, heartbeatTimeoutMs : 500
+			});
+			await client.session;
+			await clock.tickAsync(0);
+			const socket = FakeWebSocket.instances[0];
+			socket.simulateOpen();
+
+			await clock.tickAsync(900);
+			const pending = client.request(["Core/echo", {hello : "world"}]);
+			await clock.tickAsync(0);
+			const requestFrame = JSON.parse(socket.sent[socket.sent.length - 1]);
+			socket.simulateMessage({"@type" : "Response", requestId : requestFrame.id, sessionState : "state1", methodResponses : [["Core/echo", {hello : "world"}, "r1"]]});
+			await pending;
+
+			await clock.tickAsync(100);
+			assert.equal(socket.sent.length, 1, "recent real traffic within the interval must suppress the heartbeat tick");
+		}
+		finally
+		{
+			clock.restore();
+		}
+	});
+
+	it("force-closes and lets the normal reconnect-backoff take over when a heartbeat gets no response", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+		const clock = sinon.useFakeTimers();
+
+		try
+		{
+			const client = new JamWebSocketClient({
+				sessionUrl : "https://example.com/session", bearerToken : "tok",
+				heartbeatIntervalMs : 1000, heartbeatTimeoutMs : 500
+			});
+			await client.session;
+			await clock.tickAsync(0);
+			const firstSocket = FakeWebSocket.instances[0];
+			firstSocket.simulateOpen();
+
+			await clock.tickAsync(1000);
+			assert.equal(firstSocket.sent.length, 1, "the heartbeat probe must have been sent");
+
+			// No response is ever simulated - the connection is a zombie: readyState stays OPEN, but
+			// nothing answers.
+			await clock.tickAsync(500);
+			assert.equal(firstSocket.readyState, FakeWebSocket.CLOSED, "a timed-out heartbeat must force-close the dead socket");
+			assert.equal(client.transport, "http", "the client must fall back to HTTP immediately after the forced close");
+
+			await clock.tickAsync(1000);
+			assert.equal(FakeWebSocket.instances.length, 2, "the existing reconnect-backoff must still kick in after the forced close");
+		}
+		finally
+		{
+			clock.restore();
+		}
+	});
+
+	it("disables heartbeating entirely when heartbeatIntervalMs is 0", async() =>
+	{
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+		const clock = sinon.useFakeTimers();
+
+		try
+		{
+			const client = new JamWebSocketClient({
+				sessionUrl : "https://example.com/session", bearerToken : "tok",
+				heartbeatIntervalMs : 0
+			});
+			await client.session;
+			await clock.tickAsync(0);
+			const socket = FakeWebSocket.instances[0];
+			socket.simulateOpen();
+
+			await clock.tickAsync(60000);
+			assert.equal(socket.sent.length, 0, "no probe should ever be sent when heartbeating is disabled");
+		}
+		finally
+		{
+			clock.restore();
+		}
+	});
+});

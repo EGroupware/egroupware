@@ -22,7 +22,13 @@
  * onPush() - jmap-jam's own connectEventSource() is the unrelated, unaffected way to get push over
  * HTTP.
  *
- * Not wired into MailJmap/mail-app yet - see that doc for the full design rationale and phasing.
+ * A periodic Core/echo heartbeat (heartbeatIntervalMs/heartbeatTimeoutMs on JamWebSocketClientConfig)
+ * detects a connection a proxy or NAT device silently dropped without ever sending a close frame -
+ * readyState alone can't tell the difference from a genuinely idle-but-alive connection, since the
+ * browser was never told. A timed-out heartbeat force-closes the socket, handing off to the normal
+ * reconnect-backoff in #handleClose().
+ *
+ * Wired into MailJmap/mail-app - see that doc for the full design rationale and phasing.
  *
  * @link: https://www.egroupware.org
  * @author EGroupware GmbH [info@egroupware.org]
@@ -152,6 +158,22 @@ export type JamWebSocketClientConfig = ClientConfig &
 	 * to the caller.
 	 */
 	transformWebSocketUrl? : (url : string) => string;
+	/**
+	 * How often (ms) to probe an otherwise-idle WebSocket with a Core/echo call - detects a connection
+	 * a proxy or NAT device has silently dropped without ever sending a "close" frame, which otherwise
+	 * leaves readyState reporting OPEN forever (the browser was never told). A tick is skipped whenever
+	 * some other frame arrived more recently than this interval, so a busy connection never gets
+	 * redundant traffic. Core/echo is part of the mandatory JMAP Core capability (RFC 8620 §3.3) - every
+	 * compliant server, Stalwart included, already has to answer it, so this needs no server-side
+	 * support beyond ordinary JMAP compliance. Set to 0 to disable heartbeating entirely. Default: 30000.
+	 */
+	heartbeatIntervalMs? : number;
+	/**
+	 * How long (ms) to wait for a heartbeat's Core/echo response before treating the connection as dead
+	 * and forcibly closing it - #handleClose()'s normal reconnect-backoff then takes over exactly as it
+	 * would for a real close/error. Default: 10000.
+	 */
+	heartbeatTimeoutMs? : number;
 };
 
 /**
@@ -293,6 +315,10 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	#webSocketUrl : string | undefined;
 	#pushDataTypes : "*" | string[];
 	#transformWebSocketUrl : ((url : string) => string) | undefined;
+	#heartbeatIntervalMs : number;
+	#heartbeatTimeoutMs : number;
+	#heartbeatTimer : number | undefined;
+	#lastActivity = 0;
 	#socket : WebSocket | null = null;
 	#connecting : Promise<void> | null = null;
 	#pending = new Map<string, PendingEntry>();
@@ -310,6 +336,8 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		this.#webSocketUrl = config.webSocketUrl;
 		this.#pushDataTypes = config.pushDataTypes ?? "*";
 		this.#transformWebSocketUrl = config.transformWebSocketUrl;
+		this.#heartbeatIntervalMs = config.heartbeatIntervalMs ?? 30000;
+		this.#heartbeatTimeoutMs = config.heartbeatTimeoutMs ?? 10000;
 
 		this.session.then((session) =>
 		{
@@ -343,6 +371,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	{
 		this.#closedByUs = true;
 		window.clearTimeout(this.#reconnectTimer);
+		this.#stopHeartbeat();
 		this.#socket?.close();
 	}
 
@@ -401,6 +430,74 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		}
 	}
 
+	#startHeartbeat() : void
+	{
+		this.#stopHeartbeat();
+		if (!this.#heartbeatIntervalMs)
+		{
+			return;
+		}
+		this.#heartbeatTimer = window.setInterval(() => this.#sendHeartbeat(), this.#heartbeatIntervalMs);
+	}
+
+	#stopHeartbeat() : void
+	{
+		window.clearInterval(this.#heartbeatTimer);
+		this.#heartbeatTimer = undefined;
+	}
+
+	/**
+	 * Probes an otherwise-idle connection with a Core/echo call - see heartbeatIntervalMs's docblock
+	 * for why this is needed at all (a proxy/NAT-dropped connection keeps reporting readyState OPEN
+	 * forever). Skips the probe if any frame has arrived more recently than a full interval ago - a
+	 * busy connection is already proven alive. Force-closes the socket if no response arrives within
+	 * heartbeatTimeoutMs; #handleClose()'s normal reconnect-backoff takes it from there, same as for a
+	 * real close/error.
+	 */
+	#sendHeartbeat() : void
+	{
+		if (!this.#socket || this.#socket.readyState !== WebSocket.OPEN)
+		{
+			return;
+		}
+		if (Date.now() - this.#lastActivity < this.#heartbeatIntervalMs)
+		{
+			return;
+		}
+
+		const id = `H${this.#nextId++}`;
+		const frame : WebSocketRequestFrame =
+		{
+			"@type" : "Request",
+			id,
+			using : ["urn:ietf:params:jmap:core"],
+			methodCalls : [["Core/echo", {}, "e1"]]
+		};
+
+		let answered = false;
+		const timeoutTimer = window.setTimeout(() =>
+		{
+			if (answered)
+			{
+				return;
+			}
+			this.#pending.delete(id);
+			console.warn("JamWebSocketClient: heartbeat timed out - the WebSocket looks open but isn't responding, forcing a reconnect");
+			this.#socket?.close();
+		}, this.#heartbeatTimeoutMs);
+
+		// The heartbeat only cares that *some* response arrived (proof of life, recorded via
+		// #lastActivity in #handleMessage() regardless of outcome) - a RequestError still means the
+		// round trip works, so it's swallowed here rather than surfaced anywhere.
+		this.#send(id, frame)
+			.catch(() => {})
+			.finally(() =>
+			{
+				answered = true;
+				window.clearTimeout(timeoutTimer);
+			});
+	}
+
 	async #connect() : Promise<void>
 	{
 		if (this.#connecting)
@@ -456,6 +553,8 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			{
 				this.#socket = socket;
 				this.#reconnectAttempt = 0;
+				this.#lastActivity = Date.now();
+				this.#startHeartbeat();
 				// A fresh connection needs push re-enabling if there are still active onPush()
 				// callbacks from before this (re)connect - includes #lastPushState, so the server can
 				// immediately deliver anything that changed while disconnected.
@@ -484,6 +583,10 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			console.error("JamWebSocketClient: received a non-JSON WebSocket frame", event.data, e);
 			return;
 		}
+
+		// Any frame at all - including a heartbeat's own Core/echo Response - is proof of life, so a
+		// still-idle connection doesn't get probed again until a full interval after this.
+		this.#lastActivity = Date.now();
 
 		if (frame["@type"] === "StateChange")
 		{
@@ -522,6 +625,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	#handleClose() : void
 	{
 		this.#socket = null;
+		this.#stopHeartbeat();
 		// A new connection always starts unenabled - the "open" handler re-sends WebSocketPushEnable
 		// (with #lastPushState) if there are still active onPush() callbacks once reconnected.
 		this.#pushEnabled = false;

@@ -522,3 +522,57 @@ calling `nm.refresh(pushData.id, ...)` on an id that was never a NextMatch row t
 folders aren't grid rows) - a harmless no-op, but not a meaningful refresh either. `pushCallback()`
 has this exact same shape server-side, so this is a faithfully-ported pre-existing characteristic,
 not a new gap - not fixed here.
+
+## Phase 6: heartbeat / dead-connection detection (done, 2026-08-22)
+
+Prompted by ralf hitting a real "zombie" WebSocket live while debugging something unrelated: the
+connection had stopped working (no requests completing, no pushes arriving) but `readyState` kept
+reporting `OPEN` - a proxy or NAT device between the browser and Stalwart had silently dropped the
+underlying TCP connection without either side ever seeing a close/error event, which is a known,
+common failure mode for long-lived idle WebSocket connections through middleboxes (exactly the shape
+of infrastructure this deployment already has, given the nginx workaround in Phase 1). Nothing in
+this transport could detect that before this - it would just hang forever on the next request sent
+over it (`#send()`'s promise never resolves), never triggering `#handleClose()`'s reconnect logic
+since no close/error event was ever going to fire.
+
+Browsers give JS no access to the WebSocket protocol's own ping/pong control frames, so the fix is an
+application-level heartbeat instead: `JamWebSocketClient` now sends a `Core/echo` request over an
+otherwise-idle connection every `heartbeatIntervalMs` (default 30s, configurable, `0` disables it
+entirely), skipping the probe whenever any other frame (a real request's response, a push
+`StateChange`, or a previous heartbeat's own reply) already arrived more recently than a full
+interval - `#lastActivity` is updated unconditionally at the top of `#handleMessage()`, so a busy
+connection never gets redundant traffic. `Core/echo` was chosen deliberately: it's part of the
+mandatory JMAP Core capability (RFC 8620 §3.3, "MUST support"), so every compliant server already has
+to answer it - no Stalwart-specific or otherwise non-standard ping mechanism needed, and it reuses
+the exact same `#pending`/`#handleMessage()` request-tracking `#send()` already provides, rather than
+inventing a parallel correlation scheme.
+
+If no response (success *or* error - either still proves the round trip works) arrives within
+`heartbeatTimeoutMs` (default 10s), the socket is force-closed via `this.#socket?.close()`. This
+hands off to the *existing* `#handleClose()`/`RECONNECT_DELAYS_MS` reconnect-backoff path unchanged -
+a timed-out heartbeat is treated exactly like a real close/error, no separate reconnect logic needed.
+
+Implementation notes:
+- `#startHeartbeat()`/`#stopHeartbeat()` bracket the connection lifecycle: started in the "open"
+  handler (alongside resetting `#reconnectAttempt`), stopped in both `#handleClose()` and the public
+  `close()` - so heartbeating is only ever active while `transport === "websocket"`, matching
+  `onPush()`'s own transport-boundedness.
+- `#sendHeartbeat()` bypasses the `request()`/`#requestOverWebSocket()` wrapper (which builds
+  `[data, Meta]` tuples and throws on JMAP-level errors) and calls the lower-level `#send()` directly
+  - the heartbeat only cares that *a* response frame arrived, not its content, so a `RequestError`
+  reply is deliberately swallowed rather than surfaced anywhere.
+- No `super`/`async`+`#private` combination is involved in any of the three new methods, so neither
+  of the two Babel/Rollup miscompilation bugs from Phase 4 (see above / [[feedback-babel-async-super-
+  private-field-bug]]) applies here - confirmed via a clean `npx rollup -c` build.
+
+### Test coverage
+
+4 new tests in `JamWebSocketClient.test.ts` (`describe("JamWebSocketClient heartbeat")`), using
+`sinon.useFakeTimers()` the same way the existing "re-enables push … after a reconnect" test does:
+probe-after-idle-interval + reply counts as activity, probe-suppressed-by-recent-real-traffic,
+force-close-and-reconnect-on-timeout (asserts both the forced `readyState === CLOSED` and that the
+*existing* reconnect-backoff picks it up afterwards, i.e. no new/duplicate reconnect path was built),
+and `heartbeatIntervalMs: 0` fully disabling it. `npx web-test-runner mail/js/test/*.test.ts
+--node-resolve` - 123 total, all passing (up from 117 before this phase). Not yet live-verified against a real induced-zombie connection (hard to simulate deliberately without
+actually pulling a cable/killing a proxy mid-session) - covered by the fake-timer unit tests only for
+now.
