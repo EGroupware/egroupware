@@ -2771,10 +2771,19 @@ export class MailApp extends EgwApp
 	/**
 	 * Shared catch handler for every mail_tryJmapXxx() fast-path wrapper: a JmapUserError means
 	 * JMAP was actually reached and gave a definitive answer (a real ["error",...] response, or a
-	 * Mailbox/set|Email/set per-item SetError) - show it to the user instead of also attempting
-	 * the classic fallback, which would very likely fail the same way for the same reason. Any
-	 * other caught value (network failure, ineligible account) keeps today's silent-fallback
-	 * behaviour unchanged.
+	 * Mailbox/set|Email/set per-item SetError) - rethrown rather than also attempting the classic
+	 * fallback, which would very likely fail the same way for the same reason. Any other caught
+	 * value (network failure, ineligible account) keeps today's silent-fallback behaviour
+	 * unchanged - falls back to the classic ajax call, whose own success/failure is what the
+	 * returned promise now settles with.
+	 *
+	 * Deliberately shows no message and touches no UI itself - every caller optimistically
+	 * changes something before firing the request that ends up here, so only the caller knows
+	 * what needs reconciling on failure. Callers must catch the promise this feeds into, show
+	 * the resulting error (e.message for a JmapUserError, a generic one otherwise), and reconcile
+	 * their own optimistic change - this used to just swallow the error via a "silently keep the
+	 * optimistic UI change" default, leaving the UI showing something that was never actually
+	 * confirmed server-side.
 	 *
 	 * @param e the caught rejection
 	 * @param fallback the classic ajax call to run when e is NOT a JmapUserError
@@ -2783,8 +2792,7 @@ export class MailApp extends EgwApp
 	{
 		if (e instanceof JmapUserError)
 		{
-			this.egw.message(e.message, 'error');
-			return;
+			throw e;
 		}
 		console.error('MailApp: JMAP action failed, falling back to classic', e);
 		return fallback();
@@ -2864,12 +2872,21 @@ export class MailApp extends EgwApp
 
 		// Tell server - fast client-side JMAP path for the common case (explicit selection, not
 		// "select all matching the current filter"), falling back to the classic ajax call
-		// unchanged for anything else or on any failure (see tryJmapDelete())
-		(this.tryJmapDelete(_msg, _action) ??
-			egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true));
-
-		if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
-		this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
+		// unchanged for anything else. Reconciles the optimistic removal above on failure either
+		// way (below) - a message that was never actually deleted server-side must come back,
+		// not silently vanish until the next reload reveals it.
+		Promise.resolve(this.tryJmapDelete(_msg, _action) ??
+			egw.json('mail.mail_ui.ajax_deleteMessages', [_msg, (typeof _action == 'undefined' ? 'no' : _action)]).sendRequest(true))
+			.then(() =>
+			{
+				if (_msg['all']) this.egw.refresh(this.egw.lang("deleted %1 messages in %2",(_msg['all']?egw.lang('all'):_msg['msg'].length),(displayname?displayname:egw.lang('current folder'))),'mail');//,ids,'delete');
+				this.egw.message(this.egw.lang("deleted %1 messages in %2", (_msg['all'] ? egw.lang('all') : _msg['msg'].length), (displayname ? displayname : egw.lang('current Folder'))), 'success');
+			})
+			.catch((e) =>
+			{
+				this.egw.message(e?.message || this.egw.lang('Failed to delete messages'), 'error');
+				if (!_msg['all']) nm.refresh();
+			});
 	}
 
 	/**
@@ -2970,7 +2987,8 @@ export class MailApp extends EgwApp
 		const classicEmptySpam = () => egw.json('mail.mail_ui.ajax_emptySpam',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
 			function(){self.unlockTree();}).sendRequest(true);
-		this.mail_tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam);
+		this.mail_tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam)
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty junk'), 'error'));
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
@@ -3005,7 +3023,8 @@ export class MailApp extends EgwApp
 		const classicEmptyTrash = () => egw.json('mail.mail_ui.ajax_emptyTrash',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
 			function(){self.unlockTree();}).sendRequest(true);
-		this.mail_tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash);
+		this.mail_tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash)
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty trash'), 'error'));
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
@@ -4575,7 +4594,9 @@ export class MailApp extends EgwApp
 			classicFallback();
 			return;
 		}
-		this.jmap.setMdnFlag(references, sent).catch((e) => this.mail_handleJmapError(e, classicFallback));
+		this.jmap.setMdnFlag(references, sent)
+			.catch((e) => this.mail_handleJmapError(e, classicFallback))
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to update messages'), 'error'));
 	}
 
 	/**
@@ -4643,8 +4664,15 @@ export class MailApp extends EgwApp
 		}).sendRequest(true);
 
 		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
-		// unchanged for anything else or on any failure (see mail_tryJmapMove())
-		(this.mail_tryJmapMove(target, messages, isArchiveShortcut, classicMove) ?? classicMove());
+		// unchanged for anything else (see mail_tryJmapMove()). Reconciles the optimistic removal
+		// above on failure either way - a message that never actually moved must come back, not
+		// silently vanish until the next reload reveals it.
+		Promise.resolve(this.mail_tryJmapMove(target, messages, isArchiveShortcut, classicMove) ?? classicMove())
+			.catch((e) =>
+			{
+				this.egw.message(e?.message || this.egw.lang('Failed to move messages'), 'error');
+				if (!messages['all']) nm.refresh();
+			});
 	}
 
 	/**
@@ -4721,8 +4749,11 @@ export class MailApp extends EgwApp
 		// Server response contains refresh
 
 		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
-		// unchanged for anything else or on any failure (see mail_tryJmapCopy())
-		(this.mail_tryJmapCopy(target, messages, classicCopy) ?? classicCopy());
+		// unchanged for anything else (see mail_tryJmapCopy()). No optimistic UI change to
+		// reconcile here (copy never removes/alters the source row), but still needs a message on
+		// failure - mail_handleJmapError() no longer shows one itself.
+		Promise.resolve(this.mail_tryJmapCopy(target, messages, classicCopy) ?? classicCopy())
+			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to copy messages'), 'error'));
 	}
 
 	/**

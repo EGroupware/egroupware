@@ -245,18 +245,24 @@ export csr	mail	de	CSR exportieren
 expunge	mail	de	Bereinigen
 extended	mail	de	Erweitert
 extra sent folders	mail	de	Anzeigeschema Gesendet-Ordner
+failed to copy messages	mail	de	Kopieren der Nachrichten fehlgeschlagen
 failed to create folder %1	mail	de	Anlegen des Ordners %1 fehlgeschlagen
 failed to delete %1	mail	de	Löschen von %1 fehlgeschlagen
 failed to delete %1 ! reason: %2	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
 failed to delete %1. server responded:	mail	de	Löschen von %1 fehlgeschlagen! Grund: %2
 failed to delete folder %1	mail	de	Löschen des Ordners %1 fehlgeschlagen
+failed to delete messages	mail	de	Löschen der Nachrichten fehlgeschlagen
+failed to empty junk	mail	de	Leeren des Spam-Ordners fehlgeschlagen
+failed to empty trash	mail	de	Leeren des Papierkorbs fehlgeschlagen
 failed to move %1 ! reason: %2	mail	de	Verschieben von %1 fehlgeschlagen! Grund: %2
 failed to move folder %1	mail	de	Verschieben des Ordners %1 fehlgeschlagen
+failed to move messages	mail	de	Verschieben der Nachrichten fehlgeschlagen
 failed to rename %1 ! reason: %2	mail	de	Umbenennen zu %1 fehlgeschlagen! Grund: %2
 failed to rename folder %1	mail	de	Umbenennen des Ordners %1 fehlgeschlagen
 failed to subscribe folder %1!	mail	de	Fehler beim Abonnieren des Folders %1!
 failed to subscribe/unsubscribe folder %1	mail	de	Abonnieren/Abbestellen des Ordners %1 fehlgeschlagen
 failed to unsubscribe folder %1!	mail	de	Fehler beim Abbestellen des Folders %1!
+failed to update messages	mail	de	Aktualisieren der Nachrichten fehlgeschlagen
 file into	mail	de	Verschiebe nach
 file into:	mail	de	Verschieben nach:
 file rejected, no %2. is:%1	mail	de	Datei abgelehnt. Die vorliegende Datei ist nicht vom Typ %2. Sie ist vom Typ %1
