@@ -385,13 +385,13 @@ class Nextmatch extends Etemplate\Widget
 	 * @param array $queriedRange array with values for keys "start", "num_rows" and optional "refresh", "parent_id"
 	 * @param array $filters Search and filter parameters, passed to data source
 	 * @param string $form_name ='nm' full id of widget incl. all namespaces
-	 * @param array $knownUids =null uid's know to client
+	 * @param ?array $knownUids =null uid's know to client
 	 * @param int $lastModified =null date $knowUids last checked
 	 * @todo for $queriedRange[refresh] first check if there's any modification since $lastModified, return $result[order]===null
 	 * @return array with values for keys 'total', 'rows', 'readonlys', 'order', 'data' and 'lastModification'
 	 */
 	static public function ajax_get_rows($exec_id, array $queriedRange, array $filters = array(), $form_name='nm',
-		array $knownUids=null, $lastModified=null)
+		?array $knownUids=null, $lastModified=null)
 	{
 		self::$request = Etemplate\Request::read($exec_id);
 		// fix for somehow empty etemplate request content
@@ -417,34 +417,33 @@ class Nextmatch extends Etemplate\Widget
 		{
 			unset($filters['search']);
 		}
-		// Validate filters
+		// get_rows must always come from server-side widget content, never the client
+		unset($filters['get_rows']);
+
+		// require the referenced widget to actually resolve before trusting any of its filters
 		if (($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
 			$template = $template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'nextmatch');
-			$expand = array(
-				'cont' => array($form_name => $filters),
-			);
-			$valid_filters = array();
-
-			if($template)
-			{
-				$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
-				$filters = $valid_filters[$form_name];
-			}
-			// Avoid empty arrays, they cause problems with db filtering
-			foreach((array)$filters['col_filter'] as $col => $val)
-			{
-				if(is_array($val) && count($val) == 0)
-				{
-					unset($filters['col_filter'][$col]);
-				}
-			}
-			//error_log($this . " Valid filters: " . array2string($filters));
 		}
-		else
+		if (!$template)
 		{
-			$template = null;	// get_rows method requires null, not false
+			throw new \InvalidArgumentException("Unknown nextmatch/historylog widget '$form_name'!");
+		}
+		$expand = array(
+			'cont' => array($form_name => $filters),
+		);
+		$valid_filters = array();
+		$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
+		$filters = $valid_filters[$form_name];
+
+		// Avoid empty arrays, they cause problems with db filtering
+		foreach((array)$filters['col_filter'] as $col => $val)
+		{
+			if(is_array($val) && count($val) == 0)
+			{
+				unset($filters['col_filter'][$col]);
+			}
 		}
 
 		if ($filters) $value = $value_in = array_merge($value, $filters);
