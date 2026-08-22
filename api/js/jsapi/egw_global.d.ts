@@ -217,8 +217,17 @@ var egw_webserverUrl : string;
 function egw_refresh(_msg : string, app : string, id? : string|number, _type?, targetapp?, replace?, _with?, msgtype?);
 function egw_open();
 
-// implemented in api/js/jsapi/egw.min.js (legacy, not yet ported to TS)
+/**
+ * @deprecated implemented in api/js/jsapi/egw.min.js (legacy, frozen, not part of the current build) -
+ * use egw(app,wnd).openPopup(_url, _width, _height, _windowName, _app, _returnID, _status) instead
+ * (api/js/jsapi/egw_open.ts), the actively-maintained TS port of this exact centering/sizing logic.
+ */
 function egw_openWindowCentered(_url : string, _windowName? : string, _width? : number|string, _height? : number|string) : Window|null;
+/**
+ * @deprecated implemented in api/js/jsapi/egw.min.js (legacy, frozen, not part of the current build) -
+ * use egw(app,wnd).openPopup(_url, _width, _height, _windowName, _app, _returnID, _status) instead
+ * (api/js/jsapi/egw_open.ts), the actively-maintained TS port of this exact centering/sizing logic.
+ */
 function egw_openWindowCentered2(_url : string, _windowName? : string, _width? : number|string, _height? : number|string, _status? : string, _app? : string|boolean, _returnID? : boolean) : Window|null;
 
 function egw_getWindowLeft() : number;

@@ -137,7 +137,7 @@ class AttachmentJmap
 							'is_winmail' => $value['is_winmail'],
 						];
 						$windowName = 'displayMessage_'.$rowID.'_'.$value['partID'];
-						$linkView = "egw_openWindowCentered('".Api\Egw::link('/index.php', $linkData)."','$windowName',700,egw_getWindowOuterHeight());";
+						$linkView = "egw.openPopup('".Api\Egw::link('/index.php', $linkData)."',700,egw_getWindowOuterHeight(),'$windowName',false,true,'no');";
 						break;
 					case 'IMAGE/JPEG':
 					case 'IMAGE/PNG':
@@ -201,7 +201,7 @@ class AttachmentJmap
 						}
 						// apply to action
 						[$width, $height] = explode('x', (!empty($reg2) ? $reg2 : $reg));
-						$linkView = "egw_openWindowCentered('".Api\Egw::link('/index.php', $linkData)."','$windowName',$width,$height);";
+						$linkView = "egw.openPopup('".Api\Egw::link('/index.php', $linkData)."',$width,$height,'$windowName',false,true,'no');";
 						break;
 					default:
 						$linkData = [

@@ -3922,7 +3922,7 @@ export class MailApp extends EgwApp
 		const rowId = _elems[0].id;
 		const classicHeaderPopup = () =>
 		{
-			let url = window.egw_webserverUrl+'/index.php?';
+			let url = this.egw.webserverUrl+'/index.php?';
 			url += 'menuaction=mail.mail_ui.displayHeader';	// todo compose for Draft folder
 			url += '&id='+rowId;
 			this.displayHeaderLines(url);
@@ -3969,7 +3969,7 @@ export class MailApp extends EgwApp
 			}
 		}
 		//alert('mailSource('+_elems[0].id+')');
-		let url = window.egw_webserverUrl+'/index.php?';
+		let url = this.egw.webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 		url += '&id='+_elems[0].id;
 		url += '&location=display';
@@ -4004,7 +4004,7 @@ export class MailApp extends EgwApp
 		for (const i in _elems)
 		{
 			//alert('save('+_elems[0].id+')');
-			let url = window.egw_webserverUrl+'/index.php?';
+			let url = this.egw.webserverUrl+'/index.php?';
 			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+_elems[i].id;
 			const a = document.createElement('a');
@@ -4074,7 +4074,7 @@ export class MailApp extends EgwApp
 				}
 			}
 		}
-		let url = window.egw_webserverUrl+'/index.php?';
+		let url = this.egw.webserverUrl+'/index.php?';
 		let width;
 		let height;
 		let windowName ='mail';
@@ -4154,7 +4154,7 @@ export class MailApp extends EgwApp
 				height = 600;
 				break;
 		}
-		egw_openWindowCentered(url,windowName,width,height);
+		egw.openPopup(url, width, height, windowName, false, true, 'no');
 	}
 
 	/**
@@ -4256,7 +4256,7 @@ export class MailApp extends EgwApp
 				attachment = attachments[row_id];
 				const classicDownload = () =>
 				{
-					let url = window.egw_webserverUrl+'/index.php?';
+					let url = this.egw.webserverUrl+'/index.php?';
 					url += new URLSearchParams({
 						menuaction: action === 'downloadOneAsFile' ?
 							'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
@@ -4418,7 +4418,7 @@ export class MailApp extends EgwApp
 			}
 		}
 
-		const url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
+		const url = this.egw.webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
 
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
@@ -4426,12 +4426,12 @@ export class MailApp extends EgwApp
 			const title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
 			const subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
 			this.integrateCheckAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, (args) =>{
-				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+				egw.openPopup(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''), Number(w_h[0]), Number(w_h[1]), 'import_mail_'+_elems[0].id, false, true, 'no');
 			});
 		}
 		else
 		{
-			egw_openWindowCentered(url,'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
+			egw.openPopup(url, Number(w_h[0]), Number(w_h[1]), 'import_mail_'+_elems[0].id, false, true, 'no');
 		}
 
 	}
