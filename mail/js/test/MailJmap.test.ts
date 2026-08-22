@@ -941,7 +941,7 @@ describe("MailJmap.email2row() - suspect address field detection", () =>
  * A checkbox-style egw preference's stored value is the server's raw string, often literally "0"
  * for "off" - a non-empty JS string is otherwise always truthy, so a plain `!egw.preference(...)`
  * silently treats a "0"-stored (off) preference as on. Bit both MailJmap.getMailboxChildren()'s
- * isSubscribed filter and MailApp.mail_buildFolderLevelData()'s display filter, which both used
+ * isSubscribed filter and MailApp.buildFolderLevelData()'s display filter, which both used
  * the preference value directly - confirmed live against a real "showAllFoldersInFolderPane"
  * preference stored as "0".
  */

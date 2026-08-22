@@ -55,7 +55,7 @@ export interface BuildFolderLevelOptions
 	 * classic mail_tree.inc.php only ever special-cases folder icons/names (Trash, Sent,
 	 * Templates, ...) at the account root or INBOX's own direct children - never at any deeper
 	 * level, even for a folder that happens to carry a matching name/role. Defaults to false
-	 * (safe default for callers that don't pass it, eg. tests) - MailApp.mail_buildFolderLevelData()
+	 * (safe default for callers that don't pass it, eg. tests) - MailApp.buildFolderLevelData()
 	 * always computes and passes this explicitly.
 	 */
 	isTopLevel? : boolean;

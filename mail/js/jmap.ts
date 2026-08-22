@@ -137,7 +137,7 @@ export function describeSetError(setErrors : Record<string, any> | undefined) : 
  * the literal string "0" for "off" - PHP's own !$value treats that as falsy, but a non-empty JS
  * string is ALWAYS truthy (only "", 0, null, undefined, NaN, false are falsy), so plain `!value`
  * silently inverts to the wrong answer for a "0"-stored preference. Bit us both in
- * MailJmap.getMailboxChildren()'s isSubscribed filter and MailApp.mail_buildFolderLevelData()'s
+ * MailJmap.getMailboxChildren()'s isSubscribed filter and MailApp.buildFolderLevelData()'s
  * client-side display filter - both used `!egw.preference(...)` directly.
  */
 export function isPreferenceOn(value : any) : boolean
@@ -294,7 +294,7 @@ export class MailJmap
 	 *  (mirrors the classic path's own "$quota===false" display). Likewise, no usable token at all
 	 *  (account unreachable) answers "not reachable" directly rather than resolving null - retrying
 	 *  the identical IMAP connection classically would just hit the same failure (see
-	 *  mail_folderTreeAutoload()'s docblock in app.ts for why there's no classic fallback for that).
+	 *  folderTreeAutoload()'s docblock in app.ts for why there's no classic fallback for that).
 	 */
 	async getQuota(profileID : string) : Promise<Record<string, any> | null>
 	{
@@ -432,7 +432,7 @@ export class MailJmap
 	 * same result-reference pattern getRows() already uses for Email/query+Email/get.
 	 *
 	 * Never throws for "this account isn't reachable right now" - returns null so the caller
-	 * (MailApp.mail_folderTreeAutoload(), mail/js/app.ts) can show an error leaf for that one
+	 * (MailApp.folderTreeAutoload(), mail/js/app.ts) can show an error leaf for that one
 	 * node instead of silently retrying via a second, classic code path.
 	 *
 	 * @param profileID
@@ -2079,7 +2079,7 @@ export class MailJmap
 	 * @param filename suggested filename for the save dialog
 	 * @param mimeType
 	 * @throws JmapUserError on any failure - there's no classic fallback (see
-	 *  mail_folderTreeAutoload()'s docblock in app.ts for why)
+	 *  folderTreeAutoload()'s docblock in app.ts for why)
 	 */
 	async downloadAttachment(profileID : string, blobId : string, filename : string, mimeType : string) : Promise<void>
 	{
@@ -2130,7 +2130,7 @@ export class MailJmap
 	 *
 	 * @param rowId
 	 * @throws JmapUserError on any failure - there's no classic fallback (see
-	 *  mail_folderTreeAutoload()'s docblock in app.ts for why)
+	 *  folderTreeAutoload()'s docblock in app.ts for why)
 	 */
 	async fetchRawHeader(rowId : string) : Promise<string>
 	{
