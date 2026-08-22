@@ -287,6 +287,10 @@ export class MailApp extends EgwApp
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 
+				// Merge in the client-remembered "Copy selected to" quick-submenu, see
+				// rememberUsedCopyFolder()/updateCopyToAction().
+				this.updateCopyToAction();
+
 				// Stop list from focussing next row on keypress
 				let aom = egw_getObjectManager('mail').getObjectById('nm');
 				// @ts-ignore
@@ -4687,6 +4691,16 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * copy2Folder - implementation of the copy action from action menu
+	 *
+	 * @param _action _action.id holds folder target information
+	 * @param _elems - the representation of the elements to be affected
+	 */
+	copy2Folder(_action, _elems) {
+		this.copy(_action, _elems, null);
+	}
+
+	/**
 	 * Try the fast client-side JMAP copy path - MailJmap.copyMessages() for an explicit selection,
 	 * or copyAllMatching() for "select all matching the current filter" - within one account.
 	 * Cross-account copies fall through to the classic path (copyMessages()/copyAllMatching() both
@@ -4753,7 +4767,84 @@ export class MailApp extends EgwApp
 		// reconcile here (copy never removes/alters the source row), but still needs a message on
 		// failure - mail_handleJmapError() no longer shows one itself.
 		Promise.resolve(this.mail_tryJmapCopy(target, messages, classicCopy) ?? classicCopy())
+			.then(() => this.rememberUsedCopyFolder(target))
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to copy messages'), 'error'));
+	}
+
+	/**
+	 * Bump the use-counter for a copy target folder, entirely client-side: stored as an implicit
+	 * preference (mail/copyFolderUsage, {"<profileID>::<folder>": count, ...}) via egw.preference()/
+	 * set_preference() - same mechanism already used for e.g. the per-profile "last folder" pref
+	 * (see onNodeSelect() above) - and immediately reflected in the "Copy selected to" quick-submenu
+	 * via updateCopyToAction(), without waiting for any server round trip. Deliberately not tracked
+	 * server-side: the JMAP fast copy path (mail_tryJmapCopy()) never touches the server's
+	 * ajax_copyMessages() at all, so a server-side counter would silently stop updating for exactly
+	 * the common case.
+	 *
+	 * @param target string "<profileID>::<folder>" copy target, as built by callCopy()
+	 */
+	private rememberUsedCopyFolder(target : string) : void
+	{
+		if (!target || target.indexOf('::') < 0) return;
+		const usage : Record<string, number> = Object.assign({}, this.egw.preference('copyFolderUsage', 'mail') || {});
+		usage[target] = (usage[target] || 0) + 1;
+		// keep the stored list from growing without bound, well beyond the top 10 actually shown
+		const keys = Object.keys(usage);
+		if (keys.length > 30)
+		{
+			keys.sort((a, b) => usage[b] - usage[a]).slice(30).forEach(k => delete usage[k]);
+		}
+		this.egw.set_preference('mail', 'copyFolderUsage', usage);
+		this.updateCopyToAction(usage);
+	}
+
+	/**
+	 * (Re)build the "Copy selected to" quick-submenu from the copyFolderUsage preference, showing
+	 * the 10 highest-used target folders, and merge it into the nextmatch's live action definitions
+	 * (mirrors what rebuildActionsOnList() does for a server-pushed update, but computed here purely
+	 * client-side from nm.options.actions - see set_actions() in et2_extension_nextmatch.ts).
+	 *
+	 * @param usage optional already-loaded copyFolderUsage preference, to avoid re-reading it
+	 */
+	private updateCopyToAction(usage? : Record<string, number>) : void
+	{
+		usage = usage || this.egw.preference('copyFolderUsage', 'mail') || {};
+		const nm : any = this.et2.getWidgetById(this.nm_index);
+		if (!nm || typeof nm.set_actions !== 'function') return;
+		const currentFolder = nm.activeFilters?.selectedFolder;
+		const top = Object.keys(usage)
+			.filter(target => target !== currentFolder)
+			.sort((a, b) => (usage[b] || 0) - (usage[a] || 0))
+			.slice(0, 10);
+		const actions : any = Object.assign({}, nm.options.actions);
+		if (!top.length)
+		{
+			if (!actions.copyto) return;
+			delete actions.copyto;
+			nm.set_actions(actions);
+			return;
+		}
+		const ftree : any = this.et2.getWidgetById(this.nm_index + '[foldertree]');
+		const children = {};
+		top.forEach(target =>
+		{
+			let caption = target;
+			const label = ftree?.getLabel ? ftree.getLabel(target) : null;
+			if (label) caption = label.replace(this._unseen_regexp, '');
+			children['copy_' + target] = {
+				caption: caption,
+				icon: 'copy',
+				onExecute: 'javaScript:app.mail.copy2Folder',
+				allowOnMultiple: true,
+			};
+		});
+		actions.copyto = {
+			caption: this.egw.lang('Copy selected to'),
+			icon: 'copy',
+			group: actions.moveto ? actions.moveto.group : 2,
+			children: children,
+		};
+		nm.set_actions(actions);
 	}
 
 	/**

@@ -128,6 +128,7 @@ convert mail to item and attach its attachments to this item (standard)	mail	en	
 convert mail to item, attach its attachments and add raw message (message/rfc822 (.eml)) as attachment	mail	en	Convert email to item, attach its attachments and add raw message (.eml) as attachment
 convert only mail to item (ignore possible attachments)	mail	en	Convert only email to item (ignore possible attachments)
 copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3.
+copy selected to	mail	en	Copy selected to
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
