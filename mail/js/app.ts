@@ -278,7 +278,7 @@ export class MailApp extends EgwApp
 				this.vacationFilterStatusChange();
 				break;
 			case 'mail.index':
-				jQuery('iframe#mail-index_messageIFRAME').on('load', function ()
+				document.querySelector('iframe#mail-index_messageIFRAME')?.addEventListener('load', function ()
 				{
 					// decrypt preview body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
@@ -351,8 +351,8 @@ export class MailApp extends EgwApp
 						path_parts && do_open(parts[0]+'::'+path_parts.shift());
 					}
 					//TODO check if there are changes necessary
-					this.tree_wdg.set_onopenstart(jQuery.proxy(this.openStartTree, this));
-					this.tree_wdg.set_onopenend(jQuery.proxy(this.openEndTree, this));
+					this.tree_wdg.set_onopenstart(this.openStartTree.bind(this));
+					this.tree_wdg.set_onopenend(this.openEndTree.bind(this));
 
 					// Lazy per-level JMAP folder loading (see doc/ai/projects/mail-folder-tree-jmap.md),
 					// replacing the classic ajax_foldertree menuaction (now removed) for both
@@ -373,7 +373,7 @@ export class MailApp extends EgwApp
 				// copies iframe content to a DIV, as iframe causes
 				// trouble for multipage printing
 
-				jQuery('iframe#mail-display_mailDisplayBodySrc').on('load', function(e)
+				document.querySelector('iframe#mail-display_mailDisplayBodySrc')?.addEventListener('load', function(e)
 				{
 					// encrypt body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
@@ -382,7 +382,7 @@ export class MailApp extends EgwApp
 					// Trigger print command if the mail oppend for printing porpuse
 					// load event fires twice in IE and the first time the content is not ready
 					// Check if the iframe content is loaded then trigger the print command
-					if (window.location.search.search('&print=') >= 0 && jQuery((this as HTMLIFrameElement).contentWindow.document.body).children().length > 0)
+					if (window.location.search.search('&print=') >= 0 && (this as HTMLIFrameElement).contentWindow.document.body.children.length > 0)
 					{
 						self.print();
 					}
@@ -435,14 +435,12 @@ export class MailApp extends EgwApp
 				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 
 				/* Control focus actions on subject to handle expanders properly.*/
-				jQuery("#mail-compose_subject").on({
-					focus(){
-						that.compose.fieldExpanderInit();
-						that.compose.fieldExpander();
-					}
+				document.querySelector('#mail-compose_subject')?.addEventListener('focus', function(){
+					that.compose.fieldExpanderInit();
+					that.compose.fieldExpander();
 				});
 				/*Trigger after the TinyMCE is fully loaded*/
-				jQuery('#mail-compose').on ('load',function() {
+				document.querySelector('#mail-compose')?.addEventListener('load', function() {
 
 					if (textAreaWidget && textAreaWidget.tinymce)
 					{
@@ -450,7 +448,7 @@ export class MailApp extends EgwApp
 						{
 							if (textAreaWidget.editor)
 							{
-								jQuery(textAreaWidget.editor.iframeElement.contentWindow.document).on('dragenter', function ()
+								textAreaWidget.editor.iframeElement.contentWindow.document.addEventListener('dragenter', function ()
 								{
 									// anything to bind on tinymce iframe
 								});
@@ -464,7 +462,7 @@ export class MailApp extends EgwApp
 				});
 
 				//Resize compose after window resize to not getting scrollbar
-				jQuery(window).on ('resize',function(e) {
+				window.addEventListener('resize', function(e) {
 					// Stop immediately the resize event if we are in mobile template
 					if (egwIsMobile())
 					{
@@ -487,9 +485,11 @@ export class MailApp extends EgwApp
 					if (content.is_plain)
 					{
 						// focus
-						jQuery(plainText.getDOMNode()).focus();
+						plainText.getDOMNode().focus();
 						// get the cursor to the top of the textarea
-						if (typeof plainText.getDOMNode().setSelectionRange !='undefined' && !jQuery(plainText.getDOMNode()).is(":hidden"))
+						const plainTextNode = plainText.getDOMNode();
+						const isHidden = plainTextNode.offsetWidth === 0 && plainTextNode.offsetHeight === 0;
+						if (typeof plainTextNode.setSelectionRange !='undefined' && !isHidden)
 						{
 							setTimeout(function ()
 							{
@@ -506,7 +506,7 @@ export class MailApp extends EgwApp
 				}
 				else if(to)
 				{
-					jQuery('input',to.getDOMNode()).focus();
+					to.getDOMNode().querySelector('input')?.focus();
 					// set cursor to the begining of the textarea only for first focus
 					if (content.is_plain
 						&& typeof plainText.getDOMNode().setSelectionRange !='undefined')
@@ -1025,7 +1025,7 @@ export class MailApp extends EgwApp
 		}
 		for(let k = 0; k < _selected.length; k++)
 		{
-			if (jQuery.inArray(_selected[k],this.selectedMails)==-1)
+			if (this.selectedMails.indexOf(_selected[k])==-1)
 			{
 				this.currentlyFocussed = _selected[k];
 				break;
@@ -1285,9 +1285,9 @@ export class MailApp extends EgwApp
 
 				// Merge array values, replace strings
 				var value = widget.getValue() || content[field];
-				if(jQuery.isArray(value) || jQuery.isArray(content[field]))
+				if(Array.isArray(value) || Array.isArray(content[field]))
 				{
-					if(jQuery.isArray(content[field]))
+					if(Array.isArray(content[field]))
 					{
 						value = value.concat(content[field]);
 					}
@@ -1376,7 +1376,7 @@ export class MailApp extends EgwApp
 
 		if (typeof  content != 'undefiend')
 		{
-			dataElem.data = jQuery.extend(dataElem.data, content);
+			dataElem.data = Object.assign(dataElem.data, content);
 
 			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
 			if (toolbaractions)
@@ -1664,8 +1664,10 @@ export class MailApp extends EgwApp
 			this.smimeClearFlags([this.et2.getWidgetById('mailPreviewContainer').getDOMNode()]);
 
 			// show iframe, in case we hide it from mailvelopes one and remove that
-			jQuery(IframeHandle.getDOMNode()).show()
-				.next(this.mailvelope_iframe_selector).remove();
+			const iframeNode = IframeHandle.getDOMNode();
+			iframeNode.style.display = '';
+			const mailvelopeSibling = iframeNode.nextElementSibling;
+			if (mailvelopeSibling?.matches(this.mailvelope_iframe_selector)) mailvelopeSibling.remove();
 
 			// need to have the DOM ready for calculation.
 			this.disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
@@ -1877,12 +1879,12 @@ export class MailApp extends EgwApp
 			return;
 		}
 
-		var external_images = jQuery(_node).find('img[alt*="[blocked external image:"]');
-		if (external_images.length > 0 && jQuery(_node).find('.mail_externalImagesMsg').length == 0)
+		var external_images = _node.querySelectorAll('img[alt*="[blocked external image:"]');
+		if (external_images.length > 0 && _node.querySelector('.mail_externalImagesMsg') === null)
 		{
-			var container = jQuery(document.createElement('div'))
-					.click(function(){jQuery(this).remove();})
-					.addClass('mail_externalImagesMsg');
+			var container = document.createElement('div');
+			container.classList.add('mail_externalImagesMsg');
+			container.addEventListener('click', function(){ container.remove(); });
 			var getUrlParts = function (_rawUrl) {
 				var u = _rawUrl.split('[blocked external image:');
 				u = u[1].replace(']','');
@@ -1911,7 +1913,7 @@ export class MailApp extends EgwApp
 			var showImages = function (_images, _save)
 			{
 				var save = _save || false;
-				_images.each(function(i, node) {
+				_images.forEach(function(node) {
 					var parts = getUrlParts (node.alt);
 					if (save)
 					{
@@ -1944,14 +1946,14 @@ export class MailApp extends EgwApp
 				return;
 			}
 			let message = this.egw.lang('In order to protect your privacy all external sources within this email are blocked.');
-			for(let i in external_images)
+			for (const img of external_images)
 			{
-				if (!external_images[i].alt) continue;
-				let r = getUrlParts(external_images[i].alt);
+				if (!img.alt) continue;
+				let r = getUrlParts(img.alt);
 				if (r && r.protocol == 'http')
 				{
 					message = this.egw.lang('This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!');
-					container.addClass('red');
+					container.classList.add('red');
 					break;
 				}
 			}
@@ -1967,48 +1969,51 @@ export class MailApp extends EgwApp
 				}
 			}
 
-			jQuery(document.createElement('p'))
-					.text(message)
-					.appendTo(container);
-			jQuery(document.createElement('button'))
-					.addClass ('closeBtn')
-					.click (function (){
-						container.remove();
-					})
-					.appendTo(container);
-			jQuery(document.createElement('button'))
-					.text(this.egw.lang('Allow'))
-					.attr ('title', this.egw.lang('Always allow external sources from %1', host.domain))
-					.click (function (){
-						showImages(external_images, true);
-						container.remove();
-					})
-					.appendTo(container);
-			jQuery(document.createElement('button'))
-					.text(this.egw.lang('Show'))
-					.attr ('title', this.egw.lang('Show them this time only'))
-				.click(() =>
-				{
-					showImages(external_images);
-					container.remove();
-					if (_node.querySelector("body"))
-					{
-						_node.querySelector("body").dispatchEvent(new Event('load'));
-					}
-					const print = toolbar.getActionById('print');
-					if (print)
-					{
-						if (!print.data)
-						{
-							print.data = {};
-						}
-						print.data.images = true;
-						// Reload temp print
+			const messageP = document.createElement('p');
+			messageP.textContent = message;
+			container.appendChild(messageP);
 
+			const closeBtn = document.createElement('button');
+			closeBtn.classList.add('closeBtn');
+			closeBtn.addEventListener('click', function (){
+				container.remove();
+			});
+			container.appendChild(closeBtn);
+
+			const allowBtn = document.createElement('button');
+			allowBtn.textContent = this.egw.lang('Allow');
+			allowBtn.title = this.egw.lang('Always allow external sources from %1', host.domain);
+			allowBtn.addEventListener('click', function (){
+				showImages(external_images, true);
+				container.remove();
+			});
+			container.appendChild(allowBtn);
+
+			const showBtn = document.createElement('button');
+			showBtn.textContent = this.egw.lang('Show');
+			showBtn.title = this.egw.lang('Show them this time only');
+			showBtn.addEventListener('click', () =>
+			{
+				showImages(external_images);
+				container.remove();
+				if (_node.querySelector("body"))
+				{
+					_node.querySelector("body").dispatchEvent(new Event('load'));
+				}
+				const print = toolbar.getActionById('print');
+				if (print)
+				{
+					if (!print.data)
+					{
+						print.data = {};
 					}
-				})
-				.appendTo(container);
-			container.appendTo(_node.body? _node.body:_node);
+					print.data.images = true;
+					// Reload temp print
+
+				}
+			});
+			container.appendChild(showBtn);
+			(_node.body ? _node.body : _node).appendChild(container);
 		}
 	}
 
@@ -2020,24 +2025,20 @@ export class MailApp extends EgwApp
 	 *
 	 * requires: mainWindow, one mail selected for preview
 	 *
-	 * @param {jQuery event} event
+	 * @param {Event} event
 	 * @param {Object} widget
 	 * @param {DOMNode} button
 	 */
 	showAllHeader(event,widget,button) {
 		// Show list as a list
-		var list = jQuery(button).prev();
-	/*	if (list.length <= 0)
-		{
-			list = jQuery(button.target).prev();
-		}*/
+		var list = button.previousElementSibling;
 
-		list.toggleClass('visible');
+		list.classList.toggle('visible');
 
 		// Revert if user clicks elsewhere
-		jQuery('body').one('click', list, function(ev) {
-			ev.data.removeClass('visible');
-		});
+		document.body.addEventListener('click', function() {
+			list.classList.remove('visible');
+		}, {once: true});
 	}
 
 	setMailBody(content) {
@@ -2215,19 +2216,19 @@ export class MailApp extends EgwApp
 	 */
 	dragAttachment(_action, _elems)
 	{
-		var div = jQuery(document.createElement("div"))
-			.css({
-				position: 'absolute',
-				top: '0px',
-				left: '0px',
-				width: '300px'
-			});
+		var div = document.createElement("div");
+		div.style.position = 'absolute';
+		div.style.top = '0px';
+		div.style.left = '0px';
+		div.style.width = '300px';
 
 		var data = _elems[0].data || {};
 
-		var text = jQuery(document.createElement('div')).css({left: '30px', position: 'absolute'});
+		var text = document.createElement('div');
+		text.style.left = '30px';
+		text.style.position = 'absolute';
 		// add filename or number of files for multiple files
-		text.text(_elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '');
+		text.textContent = _elems.length > 1 ? _elems.length+' '+this.egw.lang('files') : data.name || '';
 		div.append(text);
 
 		// Add notice of Ctrl key, if supported
@@ -2235,7 +2236,7 @@ export class MailApp extends EgwApp
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
 			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
-			text.append('<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
+			text.insertAdjacentHTML('beforeend', '<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
 		}
 		return div;
 	}
@@ -3075,13 +3076,13 @@ export class MailApp extends EgwApp
             _widget.getSelectedNode().expanded = true;
 
 		this.lockTree();
-		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], jQuery.proxy(function() {
+		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], () => {
 			// Profile changed, select inbox
 			var inbox = folder + '::INBOX';
                 //_widget.reSelectItem(inbox);
 
 			this.unlockTree();
-		},this))
+		})
 			.sendRequest(true);
             _widget.finishedLazyLoading().then (() => {
                 this.changeFolder(folder+"::INBOX", _widget, '');
@@ -3544,7 +3545,6 @@ export class MailApp extends EgwApp
 			}
 			folder = tree.value;
 		}
-		// jQuery(data).extend({},data, formData);
 		if (data['all']=='cancel') return false;
 
 		// 'unlabel' is the only action id actually reaching this branch today (no other action id
@@ -4005,13 +4005,12 @@ export class MailApp extends EgwApp
 			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+_elems[i].id;
 			var a = document.createElement('a');
-			a = jQuery(a)
-				.prop('href', url)
-				.prop('download',"")
-				.appendTo(this.et2.getDOMNode());
+			a.href = url;
+			a.download = "";
+			this.et2.getDOMNode().appendChild(a);
 			var evt = document.createEvent('MouseEvent');
 			evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-			a[0].dispatchEvent(evt);
+			a.dispatchEvent(evt);
 			a.remove();
 		}
 	}
@@ -5148,7 +5147,7 @@ export class MailApp extends EgwApp
 		{
 			//_path = this.get_path();
 		}
-		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		if (_file_count && Object.keys(_event.data.getValue() || {}).length > 0)
 		{
 			var widget = _event.data;
 //			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
@@ -5166,8 +5165,8 @@ export class MailApp extends EgwApp
 	* @param {window object} _window
 	*/
 	vfsUploadForImport(_egw, _widget, _window) {
-		if (jQuery.isEmptyObject(_widget)) return;
-		if (!jQuery.isEmptyObject(_widget.getValue()))
+		if (!_widget || Object.keys(_widget).length === 0) return;
+		if (Object.keys(_widget.getValue() || {}).length > 0)
 		{
 			this.et2_obj.submit();
 		}
@@ -5313,7 +5312,7 @@ export class MailApp extends EgwApp
 	/**
 	 * Select the right combination of the rights for radio buttons from the selected common right
 	 *
-	 * @@param {jQuery event} event
+	 * @param {Event} event
 	 * @param {widget} widget common right selectBox
 	 *
 	 */
@@ -5337,7 +5336,7 @@ export class MailApp extends EgwApp
 			for (var i=0;i<this.aclRights.length;i++)
 			{
 				var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
-				rightsWidget.set_value((jQuery.inArray(this.aclRights[i],rights) != -1 )?true:false);
+				rightsWidget.set_value((rights.indexOf(this.aclRights[i]) != -1 )?true:false);
 				if ((rights.indexOf('c') == -1 && ['k','x'].indexOf(this.aclRights[i]) > -1)
 						|| (rights.indexOf('d') == -1 && ['e','x','t'].indexOf(this.aclRights[i]) > -1 ))
 				{
@@ -5351,7 +5350,7 @@ export class MailApp extends EgwApp
 	 *
 	 * Choose the right common right option for common ACL selecBox
 	 *
-	 * @param {jQuery event} event
+	 * @param {Event} event
 	 * @param {widget} widget radioButton rights
 	 *
 	 */
@@ -5386,7 +5385,7 @@ export class MailApp extends EgwApp
 			if (rights.split("").sort().toString() == this.aclCommonRights[i].split("").sort().toString())
 				rights = this.aclCommonRights[i];
 		}
-		if (jQuery.inArray(rights,this.aclCommonRights ) == -1 && rights !='lrswipcda')
+		if (this.aclCommonRights.indexOf(rights) == -1 && rights !='lrswipcda')
 		{
 			aclCommonWidget.set_value('custom');
 		}
@@ -6400,20 +6399,23 @@ export class MailApp extends EgwApp
 	 */
 	prepareMailvelopePrint()
 	{
-		var tempPrint = jQuery('div#tempPrintDiv');
-		var mailvelopeTopContainer = jQuery('div.mailDisplayContainer');
-		var originFrame = jQuery('#mail-display_mailDisplayBodySrc');
-		var iframe = jQuery(this.mailvelope_iframe_selector);
+		var tempPrint = document.querySelector('div#tempPrintDiv') as HTMLElement;
+		var originFrame = document.querySelector('#mail-display_mailDisplayBodySrc') as HTMLIFrameElement;
 
-		if (tempPrint.length >0)
+		if (tempPrint)
 		{
 			// Mailvelope iframe height is approximately equal to the height of encrypted origin message
 			// we add an arbitary plus pixels to make sure it's covering the full content in print view and
 			// it is not getting acrollbar in normal view
 			// @TODO: after Mailvelope plugin provides a hieght value, we can replace the height with an accurate value
-			iframe.addClass('mailvelopeIframe').height(originFrame[0].contentWindow.document.body.scrollHeight + 400);
-			tempPrint.hide();
-			mailvelopeTopContainer.addClass('mailvelopeTopContainer');
+			const height = originFrame.contentWindow.document.body.scrollHeight + 400;
+			document.querySelectorAll(this.mailvelope_iframe_selector).forEach((el : HTMLElement) =>
+			{
+				el.classList.add('mailvelopeIframe');
+				el.style.height = height + 'px';
+			});
+			tempPrint.style.display = 'none';
+			document.querySelectorAll('div.mailDisplayContainer').forEach(el => el.classList.add('mailvelopeTopContainer'));
 		}
 	}
 
@@ -6436,13 +6438,13 @@ export class MailApp extends EgwApp
 	mailvelopeDisplay(_keyring)
 	{
 		let self = this;
-		let iframe = jQuery('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME');
-		let armored = iframe.contents().find('td.td_display > pre').text().trim();
+		let iframe = document.querySelector('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME') as HTMLIFrameElement;
+		let armored = iframe?.contentDocument?.querySelector('td.td_display > pre')?.textContent?.trim() || '';
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
-		let container = iframe.parent()[0];
-		let container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${container.dom_id}`;
+		let container = iframe.parentElement;
+		let container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${(container as any).dom_id}`;
 		let options = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
@@ -6455,7 +6457,7 @@ export class MailApp extends EgwApp
 		window.mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
 		{
 			// hide our iframe to give space for mailvelope iframe with encrypted content
-			iframe.hide();
+			iframe.style.display = 'none';
 			self.prepareMailvelopePrint();
 		},
 		function(_err)
@@ -6539,7 +6541,7 @@ export class MailApp extends EgwApp
 				this.mailvelopeInstallationOffer();
 				// switch encrypt button off again
 				this.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(false);
-				jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+				document.querySelector('button#composeToolbar-pgp')?.classList.toggle('toolbar_toggled');
 				return;
 			}
 			// check if we have keys for all recipents, before switching
@@ -6562,7 +6564,7 @@ export class MailApp extends EgwApp
 			{
 				self.egw.message(_err.message, 'error');
 				self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(false);
-				jQuery('button#composeToolbar-pgp').toggleClass('toolbar_toggled');
+				document.querySelector('button#composeToolbar-pgp')?.classList.toggle('toolbar_toggled');
 				return;
 			});
 		}
@@ -6575,7 +6577,7 @@ export class MailApp extends EgwApp
 					{
 						self.et2.getWidgetById('mimeType').set_readonly(false);
 						self.et2.getWidgetById('mail_plaintext').set_disabled(false);
-						jQuery(self.mailvelope_iframe_selector).remove();
+						document.querySelectorAll(self.mailvelope_iframe_selector).forEach(el => el.remove());
 					}
 					else
 					{
@@ -6925,20 +6927,20 @@ export class MailApp extends EgwApp
 			self.loadMessageBody(iframe, id, (doc) =>
 			{
 				const frame = iframe.getDOMNode();
-				if (jQuery(doc.body).find('#calendar-meeting').length > 0)
+				if (doc.body.querySelector('#calendar-meeting') !== null)
 				{
-					jQuery(frame).show();
+					frame.style.display = '';
 					// calendar meeting mails still need to be in iframe, therefore, we calculate the height
 					// and set the iframe with a fixed height to be able to see all content without getting
 					// scrollbar becuase of scrolling issue in iframe
-					window.setTimeout(function(){jQuery(frame).height(doc.body.scrollHeight);}, 500);
+					window.setTimeout(function(){frame.style.height = doc.body.scrollHeight + 'px';}, 500);
 				}
 				else
 				{
 					self.resolveExternalImages(doc);
 					renderAttachmentIndex(doc, content.attachmentsBlock, self.egw);
 					// Deal with scrolling by setting iframe size to content height
-					jQuery(frame).height(doc.body.scrollHeight);
+					frame.style.height = doc.body.scrollHeight + 'px';
 				}
 			});
 		});
@@ -7013,11 +7015,10 @@ export class MailApp extends EgwApp
 	setSmimeAttachmentsMobile(_attachments)
 	{
 		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
-		var $attachment = jQuery('.et2_details.attachments');
 		if (attachmentsBlock && _attachments.length > 0)
 		{
 			attachmentsBlock.set_value({content:_attachments});
-			$attachment.show();
+			document.querySelectorAll('.et2_details.attachments').forEach((el : HTMLElement) => el.style.display = '');
 		}
 	}
 
@@ -7126,18 +7127,22 @@ export class MailApp extends EgwApp
 			smime_signature.set_class(data.class);
 		}
 		data.class = data.class ? data.class : "";
-		jQuery(smime_signature.getDOMNode(), smime_encryption.getDOMNode()).off().on('click',function(){
+		const smimeSignatureNode = smime_signature.getDOMNode();
+		smimeSignatureNode.onclick = function(){
 			self.smimeCertAddToContact(data,true);
-		}).addClass('et2_clickable');
-		jQuery(smime_encryption.getDOMNode()).off().on('click',function(){
+		};
+		smimeSignatureNode.classList.add('et2_clickable');
+		const smimeEncryptionNode = smime_encryption.getDOMNode();
+		smimeEncryptionNode.onclick = function(){
 			self.smimeCertAddToContact(data, true);
-		}).addClass('et2_clickable');
+		};
+		smimeEncryptionNode.classList.add('et2_clickable');
 	}
 
 	/**
 	 * Reset flags classes and click handler
 	 *
-	 * @param {jQuery Object} _nodes
+	 * @param {HTMLElement[]} _nodes
 	 */
 	smimeClearFlags(_nodes)
 	{
@@ -7164,7 +7169,7 @@ export class MailApp extends EgwApp
 		}
 		if (!_metadata || _metadata.length < 1) return;
 		var self = this;
-		var content = jQuery.extend(true, {message:_metadata.msg}, _metadata);
+		var content = this.egw.deepExtend({message:_metadata.msg}, _metadata);
 		var buttons = [
 
 			{label: this.egw.lang("Close"), id: "close", image:'cancelDialog'}

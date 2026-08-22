@@ -49,7 +49,7 @@ export class MailCompose
 		// Set autosaving interval to 2 minutes for compose message
 		this.autosaveInterval = window.setInterval(() =>
 		{
-			if(jQuery('.ms-editor-wrap').length === 0)
+			if(document.querySelector('.ms-editor-wrap') === null)
 			{
 				void this.saveAsDraft(null, 'autosaving');
 			}
@@ -90,7 +90,7 @@ export class MailCompose
 		{
 			//_path = this.get_path();
 		}
-		if (_file_count && !jQuery.isEmptyObject(_event.data.getValue()))
+		if (_file_count && Object.keys(_event.data.getValue() || {}).length > 0)
 		{
 			this.addAttachmentPlaceholder();
 			this.et2.getInstanceManager().submit();
@@ -122,8 +122,8 @@ export class MailCompose
 	 */
 	vfsUpload(_egw, _widget, _window)
 	{
-		if (jQuery.isEmptyObject(_widget)) return;
-		if (!jQuery.isEmptyObject(_widget.getValue()))
+		if (!_widget || Object.keys(_widget).length === 0) return;
+		if (Object.keys(_widget.getValue() || {}).length > 0)
 		{
 			this.addAttachmentPlaceholder();
 			this.et2.getInstanceManager().submit();
@@ -185,7 +185,7 @@ export class MailCompose
 	 */
 	submitOnChange(_egw, _widget)
 	{
-		if (!jQuery.isEmptyObject(_widget))
+		if (_widget && Object.keys(_widget).length > 0)
 		{
 			const widgetId = typeof _widget.id !== 'undefined' ? _widget.id : undefined;
 			switch (widgetId)
@@ -194,12 +194,21 @@ export class MailCompose
 					this.et2.getInstanceManager().submit();
 					break;
 				default:
-					if (!jQuery.isEmptyObject(_widget.getValue()))
+					if (Object.keys(_widget.getValue() || {}).length > 0)
 					{
 						this.et2.getInstanceManager().submit();
 					}
 			}
 		}
+	}
+
+	/**
+	 * Show/hide all elements matching selector - several compose header rows (Cc/Bcc/Folder/Reply-to/From)
+	 * are toggled by class rather than through their own widget, see fieldExpanderInit()/fieldExpander().
+	 */
+	private toggleRowVisibility(selector : string, show : boolean) : void
+	{
+		document.querySelectorAll(selector).forEach((el : HTMLElement) => el.style.display = show ? '' : 'none');
 	}
 
 	/**
@@ -211,23 +220,23 @@ export class MailCompose
 		const widgets = {
 			cc:{
 				widget:{},
-				jQClass: '.mailComposeJQueryCc'
+				selector: '.mailComposeJQueryCc'
 			},
 			bcc:{
 				widget:{},
-				jQClass: '.mailComposeJQueryBcc'
+				selector: '.mailComposeJQueryBcc'
 			},
 			folder:{
 				widget:{},
-				jQClass: '.mailComposeJQueryFolder'
+				selector: '.mailComposeJQueryFolder'
 			},
 			replyto:{
 				widget:{},
-				jQClass: '.mailComposeJQueryReplyto'
+				selector: '.mailComposeJQueryReplyto'
 			},
 			from:{
 				widget:{},
-				jQClass: '.mailComposeJQueryFrom'
+				selector: '.mailComposeJQueryFrom'
 			}
 		};
 		const maybe_actions = egw.preference('toggledOnActions', 'mail') ?? [];
@@ -252,11 +261,11 @@ export class MailCompose
 				expanderBtn === 'from_expander' && actions.includes('from_expander') && !this.keepFromExpander)
 			{
 				widgets[expanderBtn].widget?.set_disabled(false);
-				jQuery(widgets[widget].jQClass).hide();
+				this.toggleRowVisibility(widgets[widget].selector, false);
 			}
 			else
 			{
-				jQuery(widgets[widget].jQClass).show();
+				this.toggleRowVisibility(widgets[widget].selector, true);
 			}
 		}
 	}
@@ -264,7 +273,7 @@ export class MailCompose
 	/**
 	 * Display Folder,Cc or Bcc fields in compose popup
 	 *
-	 * @param {jQuery event} event unused
+	 * @param {Event} event unused
 	 * @param {widget} widget clicked label (Folder, Cc or Bcc) from compose popup. Can be ommited to show all widgets
 	 *
 	 */
@@ -281,35 +290,35 @@ export class MailCompose
 			switch (widget.id)
 			{
 				case 'cc_expander':
-					jQuery(".mailComposeJQueryCc").show();
+					this.toggleRowVisibility(".mailComposeJQueryCc", true);
 					if (typeof expWidgets.cc !='undefined')
 					{
 						//expWidgets.cc.set_disabled(true);
 					}
 					break;
 				case 'bcc_expander':
-					jQuery(".mailComposeJQueryBcc").show();
+					this.toggleRowVisibility(".mailComposeJQueryBcc", true);
 					if (typeof expWidgets.bcc !='undefined')
 					{
 						//expWidgets.bcc.set_disabled(true);
 					}
 					break;
 				case 'folder_expander':
-					jQuery(".mailComposeJQueryFolder").show();
+					this.toggleRowVisibility(".mailComposeJQueryFolder", true);
 					if (typeof expWidgets.folder !='undefined')
 					{
 						//expWidgets.folder.set_disabled(true);
 					}
 					break;
 				case 'replyto_expander':
-					jQuery(".mailComposeJQueryReplyto").show();
+					this.toggleRowVisibility(".mailComposeJQueryReplyto", true);
 					if (typeof expWidgets.replyto !='undefined')
 					{
 						//expWidgets.replyto.set_disabled(true);
 					}
 					break;
 				case 'from_expander':
-					(document.querySelector('.mailComposeJQueryFrom') as HTMLElement).style.display=''
+					this.toggleRowVisibility('.mailComposeJQueryFrom', true);
 					this.keepFromExpander = true;
 					break;
 			}
@@ -328,28 +337,28 @@ export class MailCompose
 					switch (widget)
 					{
 						case 'cc':
-							jQuery(".mailComposeJQueryCc").show();
+							this.toggleRowVisibility(".mailComposeJQueryCc", true);
 							if (typeof expWidgets.cc != 'undefined')
 							{
 								//expWidgets.cc.set_disabled(true);
 							}
 							break;
 						case 'bcc':
-							jQuery(".mailComposeJQueryBcc").show();
+							this.toggleRowVisibility(".mailComposeJQueryBcc", true);
 							if (typeof expWidgets.bcc != 'undefined')
 							{
 								//expWidgets.bcc.set_disabled(true);
 							}
 							break;
 						case 'folder':
-							jQuery(".mailComposeJQueryFolder").show();
+							this.toggleRowVisibility(".mailComposeJQueryFolder", true);
 							if (typeof expWidgets.folder != 'undefined')
 							{
 								//expWidgets.folder.set_disabled(true);
 							}
 							break;
 						case 'replyto':
-							jQuery(".mailComposeJQueryReplyto").show();
+							this.toggleRowVisibility(".mailComposeJQueryReplyto", true);
 							if (typeof expWidgets.replyto != 'undefined')
 							{
 								//expWidgets.replyto.set_disabled(true);
@@ -381,9 +390,15 @@ export class MailCompose
 
 	/**
 	 * Make recipients draggable
+	 *
+	 * Dead since jQuery UI stopped being bundled (see feedback_jquery_ui_no_longer_bundled memory) -
+	 * jQuery.fn.draggable is undefined, so this threw on every recipientsOnChange() call. Commented
+	 * out rather than deleted, to keep the intended behaviour (drag a recipient pill to reorder within
+	 * or copy - via Ctrl/Cmd - between To/Cc/Bcc) documented for the interactjs-based reimplementation.
 	 */
 	protected setDraggingDnDCompose()
 	{
+		/*
 		let zIndex = 100;
 		const dragItems = jQuery('div.ms-sel-item:not(div.ui-draggable)');
 		dragItems.each(function(i,item){
@@ -408,7 +423,7 @@ export class MailCompose
 				/**
 				 * function to act on draggable item on revert's event
 				 * @returns {Boolean} return true
-				 */
+				 *[/]
 				revert(){
 					this.parent().find('.ms-sel-item').css('position','relative');
 					const $input = this.parent().children('input');
@@ -421,7 +436,7 @@ export class MailCompose
 				 *
 				 * @param {type} event
 				 * @param {type} ui
-				 */
+				 *[/]
 				start(event, ui)
 				{
 					const dragItem = jQuery(this);
@@ -437,7 +452,7 @@ export class MailCompose
 				 *
 				 * @param {type} event
 				 * @param {type} ui
-				 */
+				 *[/]
 				create(event,ui)
 				{
 					jQuery(this).css('css','move');
@@ -448,6 +463,7 @@ export class MailCompose
 				if(dragItems && dragItems.data() && typeof dragItems.data()['uiDraggable'] !== 'undefined') dragItems.draggable('enable');
 			},100);
 		}
+		*/
 	}
 
 	/**
@@ -785,7 +801,7 @@ export class MailCompose
 	savingDraft_response(_responseData, _action)
 	{
 		//Make sure there's a response from server otherwise shoot an error message
-		if (jQuery.isEmptyObject(_responseData))
+		if (!_responseData || Object.keys(_responseData).length === 0)
 		{
 			this.egw.message('Could not saved the message. Because, the response from server failed.', 'error');
 			return false;
