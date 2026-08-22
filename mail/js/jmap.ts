@@ -240,6 +240,10 @@ export class MailJmap
 		{
 			return null;
 		}
+		// doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - cheap (cached boolean, no
+		// extra round trip), self-corrects on every fetch so switching to/from a
+		// (Phase 2+, not yet real) non-supporting profile always resolves to the right state
+		this.app.updateThreadingToggle?.(!!token.supportsThreading);
 		const client = this.clients[profileID];
 		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
 
@@ -346,7 +350,16 @@ export class MailJmap
 		// request via the '/list/*/emailIds' wildcard result-reference (live-verified against
 		// Stalwart, see doc/ai/projects/mail-threaded-view.md) - cheap, since only 'keywords' is
 		// requested for members other than the representative already fetched above.
-		const [{members}] = await client.requestMany((t) =>
+		//
+		// Both invocations MUST be properties of the returned object, not just 'members' - jmap-jam
+		// only actually sends an invocation as part of the outgoing batch if it's a property of the
+		// callback's return value, even though 'threads' is only ever used here via .$ref(), never
+		// read directly. Omitting it silently drops Thread/get from the request entirely, leaving
+		// Email/get's '#ids' pointing at a call that was never sent - live-reproduced while testing
+		// the UI toggle: requestMany() hung indefinitely rather than erroring (see
+		// doc/ai/projects/mail-threaded-view.md's "Live Stalwart verification" section for the
+		// unrelated, already-documented sibling instance of this exact jmap-jam contract).
+		const [{threads, members}] = await client.requestMany((t) =>
 		{
 			const threads = t.Thread.get({accountId: token.accountId, ids: threadIds});
 			const members = t.Email.get({
@@ -354,7 +367,7 @@ export class MailJmap
 				ids: threads.$ref('/list/*/emailIds'),
 				properties: ['id', 'threadId', 'keywords'],
 			});
-			return {members};
+			return {threads, members};
 		});
 
 		const membersByThread = new Map<string, { id : string, keywords? : Record<string, boolean> }[]>();
@@ -409,7 +422,9 @@ export class MailJmap
 		{
 			properties.push('preview');
 		}
-		const [{emails}] = await client.requestMany((t) =>
+		// both invocations must be properties of the returned object - see getThreadedRows()'s
+		// identical comment on the same jmap-jam requestMany() contract
+		const [{thread, emails}] = await client.requestMany((t) =>
 		{
 			const thread = t.Thread.get({accountId: token.accountId, ids: [threadId]});
 			const emails = t.Email.get({
@@ -417,7 +432,7 @@ export class MailJmap
 				ids: thread.$ref('/list/*/emailIds'),
 				properties,
 			});
-			return {emails};
+			return {thread, emails};
 		});
 
 		const rows = (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId));
@@ -484,7 +499,9 @@ export class MailJmap
 		}
 		try
 		{
-			const [{emails}] = await client.requestMany((t) =>
+			// both invocations must be properties of the returned object - see getThreadedRows()'s
+			// identical comment on the same jmap-jam requestMany() contract
+			const [{thread, emails}] = await client.requestMany((t) =>
 			{
 				const thread = t.Thread.get({accountId: token.accountId, ids: [threadId]});
 				const emails = t.Email.get({
@@ -492,7 +509,7 @@ export class MailJmap
 					ids: thread.$ref('/list/*/emailIds'),
 					properties: ['id'],
 				});
-				return {emails};
+				return {thread, emails};
 			});
 			return (emails.list || []).map((email : any) =>
 				this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id);
@@ -1297,6 +1314,10 @@ export class MailJmap
 			startdate: _filters.startdate,
 			enddate: _filters.enddate,
 			filter2: _filters.filter2,
+			// doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - _filters.threaded arrives
+			// as the same '1'/'' string convention as filter2 (MailApp.toggleThreaded()), coerced
+			// to a real boolean here since JmapGetRowsQuery declares it as one
+			threaded: !!_filters.threaded,
 		};
 		// sort is only split into order/sort strings server-side (Nextmatch.php), still a
 		// {id, asc} object at this point - same normalisation buildSort() expects as input

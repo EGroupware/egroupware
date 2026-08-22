@@ -1,6 +1,6 @@
 # Mail: threaded/conversation view
 
-## Status: Phase 1 in progress (2026-08-22) - row-building engine + bulk-action expansion landed, entirely feature-flagged off
+## Status: Phase 1 core work done (2026-08-22) - engine + bulk-action expansion + UI toggle landed, entirely feature-flagged off
 
 Ralf asked for a plan for an optional "group messages by thread" view in the mail list, using
 `Et2Nextmatch`'s existing hierarchical-row support (as used by filemanager/infolog/addressbook),
@@ -109,11 +109,73 @@ when only one thread row is checked) is now implemented:
   suite staying green (134 cases) plus `tsc --noEmit` clean (same one pre-existing, unrelated
   `IegwAppLocal` error as before).
 
-Next step to make this testable end-to-end (still without any production behaviour change): flip
-`THREADING_ENABLED` to `true` locally only (never commit that flip) and drive `query.threaded: true`
-directly, the same way the live-Stalwart-verification console session in this doc did - both the
-row-building engine and the bulk-action expansion above are real and ready for that, independent of
-whatever UI work is still pending (the toggle itself, and Phase 2/3 below).
+### UI toggle (2026-08-22, same day) - landed, icon-based, Thunderbird-style
+
+Ralf asked for the same mechanism the existing "sneak preview" toggle uses, but as a two-icon
+toggle button (flat-list icon vs. a threaded/hierarchy icon) rather than a text dropdown - modeled
+on Thunderbird's own threaded-view toolbar button:
+
+- `<et2-button-toggle id="threaded" icon="diagram-2" offIcon="list-ul" ...>` in
+  `mail/templates/default/index.xet`, right next to the existing `id="details"` sneak-preview
+  toggle - the same widget class already used for that toggle (and several other apps' details/
+  unread toggles), just with two distinct Bootstrap Icons instead of one dimmed/undimmed icon.
+  Ships with `style="display:none"` baked in - see below for why that's safe to leave as the
+  template's own default rather than something JS has to set up on first render.
+- **Not the literal `filter2` mechanism** - `filter2`/`ShowDetails` only works via
+  `Et2Nextmatch.ts`'s small hard-coded `FILTER_VALUE_SETTINGS` seeding allowlist
+  (`filter`/`filter2`/`cat_id`/`search`), which isn't extensible from app code. The generic,
+  app-usable equivalent mail already relies on for `selectedFolder` - nextmatch's
+  `extra_attributes` seeding - works identically for any name, so `'threaded'` was added
+  alongside `'selectedFolder'` in `mail_ui.inc.php`'s `extra_attributes` array, with its own
+  parallel persisted-preference seed (`mail.ShowThreaded`, mirroring `ShowDetails` exactly -
+  including that preference's existing, apparently-vestigial nature: nothing in this codebase
+  ever *writes* `ShowDetails` either, only reads it as an initial value, so the toggle's state is
+  session-scoped via nextmatch's own filter state, same as sneak-preview already is).
+- `MailApp.toggleThreaded()` (mirrors `toggleDetails()` exactly) and a `checkNmFilterChanged()`
+  sync branch (mirrors the existing `filter2`/`details` sync) - both trivial, following the
+  established pattern precisely.
+- `MailApp.updateThreadingToggle(supported)` - the one genuinely new piece, since this toggle
+  (unlike sneak-preview) needs to be hidden entirely for any account that can't actually support
+  it. Called from `MailJmap.getRows()` every time a profile's token resolves (cheap - a cached
+  boolean already sitting on the token, no extra round trip), so it self-corrects on every fetch
+  and every account switch. Resets the filter back off if a profile stops supporting it while the
+  toggle was left on (switching from a hypothetical Phase-2-supporting account to a non-supporting
+  one).
+- `_filters.threaded` (the `'1'`/`''` convention every nextmatch filter widget uses) reaches
+  `MailJmap.fetchRows()`'s query-building exactly like `filter2` does, coerced to the real boolean
+  `JmapGetRowsQuery.threaded` already expected.
+- Two new lang phrases (en+de): the toggle's `statustext` ("Group messages by thread") and the
+  bulk-action confirmation dialog's message text (added when that landed, lang entries were
+  missing until now).
+
+**A second real bug found and fixed while live-testing this** (same "manually flip
+`THREADING_ENABLED` to `true` locally, test against real Stalwart, flip back before committing"
+process the row-building engine itself was verified with) - clicking the toggle hung the entire UI
+behind an unresolvable "still waiting?" dialog. Root cause: all three `Thread/get` -> `Email/get`
+`requestMany()` chains in `jmap.ts` (`getThreadedRows()`, `getThreadMemberRows()`,
+`threadMemberRowIds()`) only returned the *dependent* invocation from the callback (`{members}`/
+`{emails}`), not the `Thread.get` invocation it referenced via `.$ref()` - the exact same jmap-jam
+`requestMany()` contract violation already documented and fixed once before in this file, for
+`getMailboxChildren()`'s `Mailbox/query` -> `Mailbox/get` chain (see the comment/test block right
+above "MailJmap.getRootFolders()" in `mail/js/test/MailJmap.test.ts`). Unlike that earlier case
+(which surfaced as a clean per-item JMAP error - "missing field `resultOf`"), this one just hung
+the WebSocket transport indefinitely with no error at all, which is what actually made it visible
+(a stuck confirmation dialog, not a console error) - worth remembering as a *second* failure mode
+for the same underlying mistake. Fixed by returning both invocations at all three call sites, with
+new regression tests (`mail/js/test/MailJmap.test.ts`, "Thread/get -> Email/get chains - jmap-jam
+requestMany() invocation shape") that assert on the exact property the bug was missing - the prior
+`createThreadedFakeClient()`-based tests couldn't have caught this class of bug at all, since that
+fake always answers with its canned fixture regardless of what the callback actually returned.
+
+Live-verified end-to-end against real Stalwart (profile/acc_id=1) with `THREADING_ENABLED`
+temporarily flipped `true` locally (never committed): toggle appears/disappears correctly per
+profile, clicking it switches the list into collapsed thread rows with the expand caret rendering
+correctly (confirmed via `Et2Nextmatch`'s existing `is_parent` fallback, no template change needed
+for that part), expanding a thread row fetches its real member messages, and toggling back off
+restores the flat list - all matching the design doc's predictions.
+
+Remaining Phase 1 gap: none identified. Phase 2 (IMAP `THREAD` via `JmapShim`) and Phase 3
+(live-update/push refinement) are still not started, per the phasing above.
 
 Continuation of [[mail-jmap-modernization]] and [[mail-folder-tree-jmap]] - both established the
 precedent this design leans on hardest: **mail's row-listing is already 100% client-side JMAP**

@@ -7330,6 +7330,45 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - same mechanism as toggleDetails()
+	 * above, an independent nextmatch filter key (not one of Et2Nextmatch's built-in filter/
+	 * filter2/cat_id/search names, seeded instead via mail_ui::index()'s 'extra_attributes').
+	 */
+	toggleThreaded(_ev, _widget)
+	{
+		this.nm && this.nm.applyFilters({threaded: _widget.value ? '1' : ''});
+	}
+
+	/**
+	 * Show/hide the "group by thread" toggle (id="threaded" in index.xet) for the given profile -
+	 * hidden by default (see the widget's own `style="display:none"`), only ever revealed once a
+	 * profile's JMAP bootstrap actually reports supportsThreading:true (nothing does yet, see
+	 * ProfileHandler::THREADING_ENABLED). Called by MailJmap.getRows() every time a profile's token
+	 * is resolved - cheap (a cached boolean, no extra round trip) and self-correcting on account
+	 * switch, since a different profile may support threading while another doesn't (Phase 2+).
+	 *
+	 * @param _supportsThreading
+	 */
+	updateThreadingToggle(_supportsThreading : boolean) : void
+	{
+		// modern (Lit-based) et2 widgets are themselves the custom element, so the object
+		// getWidgetById() returns already has a real .style - same assumption toggleDetails()'s
+		// sibling sync (checkNmFilterChanged(), just below) already makes for .value
+		const toggle = this.et2?.getWidgetById('threaded') as unknown as HTMLElement & { value? : boolean };
+		if (toggle)
+		{
+			toggle.style.display = _supportsThreading ? '' : 'none';
+		}
+		if (!_supportsThreading && toggle && toggle.value)
+		{
+			// don't leave a hidden toggle silently stuck "on" (e.g. after switching from a
+			// supporting to a non-supporting profile) - reset both the widget and the actual filter
+			toggle.value = false;
+			this.nm && this.nm.applyFilters({threaded: ''});
+		}
+	}
+
+	/**
 	 * Check if any NM filter or search in app-toolbar needs to be updated to reflect NM internal state
 	 *
 	 * Overwritten to support the details toggle.
@@ -7348,6 +7387,14 @@ export class MailApp extends EgwApp
 			const details_toggle = this.et2.getWidgetById('details');
 			if (details_toggle && details_toggle.value != (value === '1')) {
 				details_toggle.value = value === '1';
+			}
+		}
+		// doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - mirrors the details toggle sync
+		if (id === 'threaded')
+		{
+			const threaded_toggle = this.et2.getWidgetById('threaded');
+			if (threaded_toggle && threaded_toggle.value != (value === '1')) {
+				threaded_toggle.value = value === '1';
 			}
 		}
 	}

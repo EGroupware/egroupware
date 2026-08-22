@@ -220,6 +220,9 @@
         <et2-select id="cat_id" ariaLabel="Search" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
         <et2-select id="filter" ariaLabel="Status" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
         <et2-button-toggle id="details" icon="card-text" statustext="Sneak preview in list" onchange="app.mail.toggleDetails"></et2-button-toggle>
+        <!-- doc/ai/projects/mail-threaded-view.md, Phase 1 - hidden by default, MailApp.updateThreadingToggle()
+             reveals it only for a profile whose JMAP bootstrap reports supportsThreading (nothing does, yet) -->
+        <et2-button-toggle id="threaded" icon="diagram-2" offIcon="list-ul" statustext="Group messages by thread" onchange="app.mail.toggleThreaded" style="display:none"></et2-button-toggle>
         <et2-dropdown id="mail.index.vacationnotice" disabled="true" class="vacationnotice" hoist="true">
             <et2-hbox slot="trigger">
                 <et2-description value="on vacation" onclick="app.mail.editVacation"></et2-description>

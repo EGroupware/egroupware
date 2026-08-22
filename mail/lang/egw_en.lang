@@ -308,6 +308,7 @@ general	admin	en	General
 general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
 greater than	mail	en	Greater than
+group messages by thread	mail	en	Group messages by thread
 ham folder	mail	en	Ham folder
 handling of external http images / mixed content in mails	mail	en	Handling of external images / mixed content in emails
 header	mail	en	Header
@@ -702,6 +703,7 @@ the total size of the attachments exceeds the limit of %1 mb. switched to downlo
 then	mail	en	THEN
 there is no imap server configured.	mail	en	There is no IMAP server configured.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	en	There is no space left to store Sieve script, please check sieve_maxscriptsize option on your mailserver's config.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	en	This action affects every message in the selected thread(s) - %1 messages in total. Continue?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	en	This email contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!
 this message is smime encrypted and password protected.	mail	en	This message is S/MIME encrypted and password protected.
 timeout on connections to your imap server	mail	en	Timeout on connections to your IMAP Server

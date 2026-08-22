@@ -950,7 +950,8 @@ function invocationStub()
  * branching into threading logic at all), so responses are picked by which entity/method the
  * production code actually invoked in a given call, not by call order.
  */
-function createThreadedFakeClient(representatives : any[], membersByThread : Record<string, any[]>)
+function createThreadedFakeClient(representatives : any[], membersByThread : Record<string, any[]>,
+	threadGetCapture? : { returned? : any })
 {
 	return {
 		requestMany: async(buildFn : (t : any) => any) =>
@@ -964,7 +965,7 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
 				},
 				Thread: {get: (_args : any) => { calledThreadGet = true; return invocationStub(); }},
 			};
-			buildFn(t);
+			const returned = buildFn(t);
 			if (calledMailboxQuery)
 			{
 				return [{ids: {ids: ["mbox1"]}}];
@@ -978,9 +979,16 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
 			}
 			if (calledThreadGet)
 			{
-				// getThreadedRows() destructures {members}, getThreadMemberRows() destructures
-				// {emails} from this same first tuple element - both keys point at the same list
-				// so either caller's destructuring picks up what it needs.
+				// see the "jmap-jam requestMany() invocation shape" tests below for why this
+				// capture exists - production code must return BOTH the Thread.get and Email.get
+				// invocations as properties, not just the one it reads values from afterwards
+				if (threadGetCapture)
+				{
+					threadGetCapture.returned = returned;
+				}
+				// getThreadedRows() destructures {members}, getThreadMemberRows()/
+				// threadMemberRowIds() destructure {emails} from this same first tuple element -
+				// both keys point at the same list so any caller's destructuring picks up what it needs
 				const list = Object.values(membersByThread).flat();
 				return [{members: {list}, emails: {list}}];
 			}
@@ -990,6 +998,68 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
 }
 
 /**
+ * Live-reproduced regression (2026-08-22, while manually testing the UI toggle against real
+ * Stalwart with ProfileHandler::THREADING_ENABLED flipped on locally): the same jmap-jam
+ * requestMany() contract documented above for getMailboxChildren() also bit all three Thread/get
+ * -> Email/get chains in this file - each one only returned the Email/get invocation
+ * ({members}/{emails}), silently dropping Thread/get from the outgoing batch, which left Email/
+ * get's '#ids' pointing at a call that was never sent. Unlike the getMailboxChildren() case, this
+ * didn't surface as a clean per-item JMAP error - client.requestMany() (the WS transport,
+ * JamWebSocketClient) just hung indefinitely instead, which is what actually surfaced it (a
+ * confirmation dialog stuck on "still waiting"), not a console error. Fixed by returning both
+ * invocations everywhere; these tests are the regression coverage the existing
+ * createThreadedFakeClient()-based tests couldn't provide, since that fake always returns its
+ * canned fixture regardless of what the callback actually returned - it never asserts on the
+ * shape jmap-jam itself requires.
+ */
+describe("Thread/get -> Email/get chains - jmap-jam requestMany() invocation shape", () =>
+{
+	it("MailJmap.getThreadedRows() (via getRows()) returns both the Thread.get and Email.get invocations", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { returned? : any } = {};
+		const representative = fakeEmail({id: "email1", threadId: "t1"});
+		primeToken(jmap, "1", createThreadedFakeClient([representative], {t1: [{id: "email1"}, {id: "email2"}]}, capture));
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		await jmap.getRows({selectedFolder: "1::INBOX", threaded: true});
+
+		assert.property(capture.returned, "threads",
+			"the Thread.get invocation must be a key of the returned object, or jmap-jam never " +
+			"sends it as part of the batch and Email.get's result-reference breaks");
+		assert.property(capture.returned, "members");
+	});
+
+	it("MailJmap.getThreadMemberRows() (via fetchRows()'s parent_id branch) returns both invocations", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { returned? : any } = {};
+		primeToken(jmap, "1", createThreadedFakeClient([], {t1: [{id: "email1"}, {id: "email2"}]}, capture));
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		await jmap.fetchRows("exec", {parent_id: "1::1::mbox1::thread:t1"}, {selectedFolder: "1::INBOX"}, "widget", [], 0);
+
+		assert.property(capture.returned, "thread");
+		assert.property(capture.returned, "emails");
+	});
+
+	it("MailJmap.expandThreadRowIds() returns both invocations", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { returned? : any } = {};
+		const threadRowId = "1::1::mbox1::thread:t1";
+		const app = (jmap as any).app;
+		app.egw = {...egw, dataGetUIDdata: (id : string) => id === threadRowId ? {data: {is_parent: true, thread_id: "t1"}} : undefined};
+		primeToken(jmap, "1", createThreadedFakeClient([], {t1: [{id: "email1"}, {id: "email2"}]}, capture));
+
+		await jmap.expandThreadRowIds([threadRowId]);
+
+		assert.property(capture.returned, "thread");
+		assert.property(capture.returned, "emails");
+	});
+});
+
+/**
  * doc/ai/projects/mail-threaded-view.md, Phase 1 - dead code in production until
  * ProfileHandler::THREADING_ENABLED ships (nothing sets query.threaded, and no token reports
  * supportsThreading:true yet either way), but exercised directly here via getRows()/fetchRows()'s
@@ -997,6 +1067,55 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
  */
 describe("MailJmap.getRows() - threaded view (Phase 1)", () =>
 {
+	it("tells the app whether the resolved profile supports threading, for the UI toggle", async() =>
+	{
+		const calls : boolean[] = [];
+		const app = {...createFakeApp(), updateThreadingToggle: (supported : boolean) => calls.push(supported)} as unknown as MailApp;
+		const jmap = new MailJmap(app);
+		primeToken(jmap, "1", createThreadedFakeClient([fakeEmail({id: "email1"})], {}));
+
+		await jmap.getRows({selectedFolder: "1::INBOX"});
+
+		assert.deepEqual(calls, [false], "primeToken()'s default token has no supportsThreading");
+	});
+
+	it("MailApp.toggleThreaded()'s '1'/'' filter convention reaches getRows() as query.threaded via fetchRows()", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const email = fakeEmail({id: "email1", threadId: "t1"});
+		let sawCollapseThreads = false;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				let calledMailboxQuery = false, calledThreadGet = false;
+				const t = {
+					Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+					Email: {
+						query: (args : any) => { sawCollapseThreads = !!args.collapseThreads; return invocationStub(); },
+						get: (_args : any) => invocationStub(),
+					},
+					Thread: {get: (_args : any) => { calledThreadGet = true; return invocationStub(); }},
+				};
+				buildFn(t);
+				if (calledMailboxQuery)
+				{
+					return [{ids: {ids: ["mbox1"]}}];
+				}
+				if (calledThreadGet)
+				{
+					return [{members: {list: []}}];	// no member rollup needed for this test
+				}
+				return [{ids: {ids: [email.id], total: 1}, emails: {list: [email]}}];
+			}
+		};
+		primeToken(jmap, "1", client);
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		await jmap.fetchRows("exec", {start: 0, num_rows: 50}, {selectedFolder: "1::INBOX", threaded: "1"}, "widget", [], 0);
+
+		assert.isTrue(sawCollapseThreads, "_filters.threaded === '1' must reach Email/query as collapseThreads:true");
+	});
+
 	it("renders a single-message thread via the ordinary row shape, no is_parent/thread_id", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());

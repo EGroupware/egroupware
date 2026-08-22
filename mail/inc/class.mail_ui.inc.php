@@ -570,7 +570,11 @@ class mail_ui
 							'order'          =>	'date',	// IO name of the column to sort after (optional for the sortheaders)
 							'sort'           =>	'DESC',	// IO direction of the sort: 'ASC' or 'DESC'
 							'no_columnselection' => false,
-							'extra_attributes' => ['selectedFolder'],   // I non-standard attributes send via ajax_get_rows
+							// "threaded" is doc/ai/projects/mail-threaded-view.md's Phase 1 UI toggle -
+							// not seeded via the filter/filter2/cat_id/search allowlist Et2Nextmatch
+							// auto-applies (see Et2Nextmatch.ts's FILTER_VALUE_SETTINGS), so it needs to
+							// be listed here like selectedFolder already is
+							'extra_attributes' => ['selectedFolder', 'threaded'],   // I non-standard attributes send via ajax_get_rows
 						);
 					}
 //					if (Api\Header\UserAgent::mobile())
@@ -669,6 +673,10 @@ class mail_ui
 				$sel_options['filter'] = $this->statusTypes;
 				$sel_options['filter2'] = array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list'));
 				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
+				// doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - same mechanism as
+				// filter2/ShowDetails above, kept hidden client-side (MailApp.updateThreadingToggle())
+				// unless the active profile's JMAP bootstrap reports supportsThreading
+				$content[self::$nm_index]['threaded'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowThreaded'];
 
 				$etpl = new Etemplate('mail.index');
 				//apply infolog_filter_change javascript method (hide/show of date filter form) over onchange filter

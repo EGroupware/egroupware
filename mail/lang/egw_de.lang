@@ -302,6 +302,7 @@ general	admin	de	Allgemein
 general settings	mail	de	Allgemeine Einstellungen
 get acl rights failed from imap server!	mail	de	Die Zugriffsrechte konnten auf dem IMAP Server nicht gelesen werden!
 greater than	mail	de	Größer als
+group messages by thread	mail	de	Nachrichten nach Thread gruppieren
 ham folder	mail	de	Ordner für nicht Spam-Nachrichten
 handling of external http images / mixed content in mails	mail	de	Behandlung von externen Bilder per http / gemischter Inhalt in E-Mails
 header	mail	de	Kopfzeilen
@@ -689,6 +690,7 @@ the total size of the attachments exceeds the limit of %1 mb. switched to downlo
 then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server konfiguriert.
 there is no space left to store sieve script, please check sieve_maxscriptsize option on your mailserver's config.	mail	de	Es ist kein Platz mehr vorhanden, um das Sieve Skript zu speichern, bitte Sie Ihren Administrator die Option sieve_maxscriptsize in der Konfiguration Ihres Mailservers zu prüfen.
+this action affects every message in the selected thread(s) - %1 messages in total. continue?	mail	de	Diese Aktion betrifft jede Nachricht in den ausgewählten Thread(s) - insgesamt %1 Nachrichten. Fortfahren?
 this mail contains external images served via insecure http protocol. be aware showing or allowing them can compromise your security!	mail	de	Diese Mail enthält externe Bilder die über das unsichere HTTP-Protokoll ausgeliefert werden. Bitte seien Sie sich bewusst, dass Anzeigen oder Erlauben Ihre Sicherheit beeinträchtigen kann!
 this message is smime encrypted and password protected.	mail	de	Diese Nachricht ist S/MIME-verschlüsselt und mit Passwort geschützt.
 timeout on connections to your imap server	mail	de	Stellen Sie hier das Verbindungstimeout für IMAP Verbindungen ein.
