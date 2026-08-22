@@ -1,0 +1,840 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware SmallParT (ViDoTeach) REST API",
+    "description": "REST API for SmallParT / ViDoTeach: video- and document-based courses with participants (students, tutors, teachers, admins) and materials (videos, PDFs, audio). Supports course CRUD, participant subscribe/role management, and material CRUD incl. attachments. Categories, comments, questions/tests and live-feedback are not yet implemented via this REST API (see doc/REST-API.md).",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "AGPL-3.0-or-later",
+      "url": "https://spdx.org/licenses/AGPL-3.0-or-later.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "EGroupware GroupDAV/REST server"
+    }
+  ],
+  "security": [
+    { "basicAuth": [] },
+    { "bearerAuth": [] }
+  ],
+  "paths": {
+    "/smallpart/": {
+      "get": {
+        "tags": ["Courses"],
+        "operationId": "listCourses",
+        "summary": "List courses the current user has access to or has subscribed",
+        "description": "Returns all courses visible to the current user (owned, in a matching org-group, or subscribed), whether or not they have already subscribed. Use 'props[]=displayname' to return just id/name pairs, or 'filters[search]'/'filters[subscribed]' to narrow the result.",
+        "parameters": [
+          { "$ref": "#/components/parameters/props" },
+          { "$ref": "#/components/parameters/filters_search" },
+          { "$ref": "#/components/parameters/filters_subscribed" },
+          { "$ref": "#/components/parameters/accept" }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of courses",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/CourseCollection" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      },
+      "post": {
+        "tags": ["Courses"],
+        "operationId": "createCourse",
+        "summary": "Create a new course",
+        "description": "Creates a new course. Only 'name' is required. Requires the current user to hold the course-creation right (smallpart 'admin' ACL location) or be an EGroupware superadmin. The creating user is automatically subscribed as course-admin.",
+        "parameters": [
+          { "$ref": "#/components/parameters/contentTypeJson" },
+          { "$ref": "#/components/parameters/accept" },
+          { "$ref": "#/components/parameters/prefer" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CourseWrite" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Course created",
+            "headers": {
+              "Location": {
+                "description": "URL of the newly created course, e.g. /smallpart/123",
+                "schema": { "type": "string" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Course" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      }
+    },
+    "/smallpart/{id}": {
+      "parameters": [{ "$ref": "#/components/parameters/id" }],
+      "get": {
+        "tags": ["Courses"],
+        "operationId": "getCourse",
+        "summary": "Read a single course",
+        "description": "Requires the current user to be a participant of the course (or an EGroupware superadmin). A course the user can merely see (owner or matching org-group) but is not yet subscribed to may also be readable - see listCourses().",
+        "parameters": [{ "$ref": "#/components/parameters/accept" }],
+        "responses": {
+          "200": {
+            "description": "The course",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Course" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Courses"],
+        "operationId": "updateCourse",
+        "summary": "Fully update a course",
+        "description": "Requires the current user to be at least a teacher of the course.",
+        "parameters": [
+          { "$ref": "#/components/parameters/contentTypeJson" },
+          { "$ref": "#/components/parameters/prefer" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CourseWrite" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Course updated (with Prefer: return=representation)",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Course" }
+              }
+            }
+          },
+          "204": { "description": "Course updated" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Courses"],
+        "operationId": "patchCourse",
+        "summary": "Partially update a course",
+        "description": "Requires the current user to be at least a teacher of the course.",
+        "parameters": [
+          { "$ref": "#/components/parameters/contentTypeJson" },
+          { "$ref": "#/components/parameters/prefer" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CoursePatch" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Course updated (with Prefer: return=representation)",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Course" }
+              }
+            }
+          },
+          "204": { "description": "Course updated" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Courses"],
+        "operationId": "closeCourse",
+        "summary": "Close a course",
+        "description": "Never removes the course row, only sets its 'closed' flag. Requires the current user to be a course-admin (a plain teacher is not enough).",
+        "parameters": [{ "$ref": "#/components/parameters/accept" }],
+        "responses": {
+          "204": { "description": "Course closed" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/smallpart/{id}/participants/": {
+      "parameters": [{ "$ref": "#/components/parameters/id" }],
+      "get": {
+        "tags": ["Participants"],
+        "operationId": "listParticipants",
+        "summary": "List a course's participants",
+        "parameters": [{ "$ref": "#/components/parameters/accept" }],
+        "responses": {
+          "200": {
+            "description": "Participants indexed by numeric account-id",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": { "$ref": "#/components/schemas/Participant" }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "post": {
+        "tags": ["Participants"],
+        "operationId": "subscribeParticipant",
+        "summary": "Subscribe the current user, or register another participant",
+        "description": "An empty body subscribes the current user as a plain student (this is the ONLY outcome for a self-subscribe, regardless of any 'role' sent in the body - registering someone ELSE as a student requires being a teacher of the course, and as staff (teacher/tutor/admin) requires being a course-admin or the course-owner).",
+        "parameters": [
+          { "$ref": "#/components/parameters/contentTypeJson" },
+          { "$ref": "#/components/parameters/prefer" }
+        ],
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ParticipantWrite" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Participant subscribed",
+            "headers": {
+              "Location": {
+                "description": "URL of the participant, e.g. /smallpart/123/participants/456",
+                "schema": { "type": "string" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Participant" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" },
+          "422": { "description": "Wrong course access code, or malformed JSON" }
+        }
+      }
+    },
+    "/smallpart/{id}/participants/{account_id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/id" },
+        { "$ref": "#/components/parameters/account_id" }
+      ],
+      "put": {
+        "tags": ["Participants"],
+        "operationId": "updateParticipant",
+        "summary": "Grant a participant a higher role, or change their alias",
+        "description": "Changing 'role' to anything above student requires being a course-admin or the course-owner. Changing just 'alias' is allowed for the participant themselves.",
+        "parameters": [{ "$ref": "#/components/parameters/contentTypeJson" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ParticipantWrite" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Participant updated" },
+          "204": { "description": "Participant updated" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Participants"],
+        "operationId": "patchParticipant",
+        "summary": "Change a participant's alias (or, as course-admin/owner, their role)",
+        "parameters": [{ "$ref": "#/components/parameters/contentTypeJson" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ParticipantPatch" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Participant updated" },
+          "204": { "description": "Participant updated" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Participants"],
+        "operationId": "unsubscribeParticipant",
+        "summary": "Unsubscribe a participant",
+        "description": "Soft-delete only: sets the participant's 'unsubscribed' timestamp, the row is never removed. Unsubscribing someone else requires being a teacher of the course; unsubscribing oneself is always allowed.",
+        "parameters": [{ "$ref": "#/components/parameters/accept" }],
+        "responses": {
+          "204": { "description": "Participant unsubscribed" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/smallpart/{id}/": {
+      "parameters": [{ "$ref": "#/components/parameters/id" }],
+      "post": {
+        "tags": ["Materials"],
+        "operationId": "createMaterial",
+        "summary": "Create a new material (course-part) in a course",
+        "description": "Requires the current user to be at least a teacher of the course. Accepts either JSON metadata (schema below), or the main document directly as the request body with Content-Type 'video/mp4', 'video/webm', 'application/pdf' or 'audio/mpeg' (not modeled here, see doc/REST-API.md).",
+        "parameters": [
+          { "$ref": "#/components/parameters/contentTypeJson" },
+          { "$ref": "#/components/parameters/prefer" }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MaterialWrite" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Material created",
+            "headers": {
+              "Location": {
+                "description": "URL of the material collection, e.g. /smallpart/123/456",
+                "schema": { "type": "string" }
+              }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Material" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/smallpart/{id}/{material_id}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/id" },
+        { "$ref": "#/components/parameters/material_id" }
+      ],
+      "get": {
+        "tags": ["Materials"],
+        "operationId": "getMaterial",
+        "summary": "Read a material's JSON metadata, or (with a matching Accept header) redirect to its main document",
+        "parameters": [{ "$ref": "#/components/parameters/accept" }],
+        "responses": {
+          "200": {
+            "description": "The material metadata",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Material" }
+              }
+            }
+          },
+          "301": { "description": "Redirect to the main document's VFS URL" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Materials"],
+        "operationId": "updateMaterial",
+        "summary": "Fully update a material's metadata (or replace its main document)",
+        "description": "Requires the current user to be at least a teacher of the course. Content-Type selects JSON metadata vs. replacing the main document (see createMaterial()).",
+        "parameters": [{ "$ref": "#/components/parameters/contentTypeJson" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MaterialWrite" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Material updated" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Materials"],
+        "operationId": "patchMaterial",
+        "summary": "Partially update a material's metadata",
+        "parameters": [{ "$ref": "#/components/parameters/contentTypeJson" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/MaterialPatch" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Material updated" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Materials"],
+        "operationId": "deleteMaterial",
+        "summary": "Delete a material",
+        "description": "Requires the current user to be a teacher of the course, or the material's own uploader (student uploads).",
+        "parameters": [{ "$ref": "#/components/parameters/accept" }],
+        "responses": {
+          "204": { "description": "Material deleted" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/smallpart/{id}/{material_id}/attachments/": {
+      "parameters": [
+        { "$ref": "#/components/parameters/id" },
+        { "$ref": "#/components/parameters/material_id" }
+      ],
+      "get": {
+        "tags": ["Materials"],
+        "operationId": "listAttachments",
+        "summary": "List a material's attachments",
+        "parameters": [{ "$ref": "#/components/parameters/accept" }],
+        "responses": {
+          "200": {
+            "description": "Attachments indexed by filename",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": { "$ref": "#/components/schemas/Attachment" }
+                }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "post": {
+        "tags": ["Materials"],
+        "operationId": "addAttachment",
+        "summary": "Add an attachment to a material",
+        "description": "Redirects to the underlying WebDAV URL to actually upload the file content.",
+        "responses": {
+          "307": { "description": "Temporary redirect to /webdav.php/... to upload the file" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/smallpart/{id}/{material_id}/attachments/{filename}": {
+      "parameters": [
+        { "$ref": "#/components/parameters/id" },
+        { "$ref": "#/components/parameters/material_id" },
+        {
+          "name": "filename",
+          "in": "path",
+          "required": true,
+          "schema": { "type": "string" },
+          "description": "Attachment filename"
+        }
+      ],
+      "get": {
+        "tags": ["Materials"],
+        "operationId": "getAttachment",
+        "summary": "Download an attachment",
+        "responses": {
+          "307": { "description": "Temporary redirect to the file's WebDAV URL" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Materials"],
+        "operationId": "updateAttachment",
+        "summary": "Update (replace) an attachment",
+        "responses": {
+          "307": { "description": "Temporary redirect to /webdav.php/... to upload the new content" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Materials"],
+        "operationId": "deleteAttachment",
+        "summary": "Delete an attachment",
+        "responses": {
+          "204": { "description": "Attachment deleted" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": { "type": "http", "scheme": "basic" },
+      "bearerAuth": { "type": "http", "scheme": "bearer" }
+    },
+    "schemas": {
+      "Course": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "course" },
+          "id": { "type": "integer", "readOnly": true },
+          "name": { "type": "string" },
+          "info": { "type": "string", "description": "Multiple lines, HTML" },
+          "disclaimer": { "type": "string", "description": "Multiple lines, HTML" },
+          "owner": { "type": "string", "readOnly": true, "description": "Email if set, otherwise account-name" },
+          "org": { "type": "string", "description": "Account-name of the group limiting the course's visibility" },
+          "closed": { "type": "boolean", "default": false },
+          "options": { "$ref": "#/components/schemas/CourseOptions" },
+          "participants": {
+            "type": "object",
+            "readOnly": true,
+            "additionalProperties": { "$ref": "#/components/schemas/Participant" }
+          },
+          "materials": {
+            "type": "object",
+            "readOnly": true,
+            "additionalProperties": { "type": "string" },
+            "description": "material-id => name pairs"
+          }
+        },
+        "required": ["@type", "id", "name"]
+      },
+      "CourseOptions": {
+        "type": "object",
+        "properties": {
+          "recordWatched": { "type": "boolean", "description": "Record start-, end-time and position of watched videos" },
+          "videoWatermark": { "type": "boolean", "description": "Show a watermark on all videos" },
+          "cognitiveLoadMeasurement": { "type": "boolean" },
+          "allowNeutralLFcategories": { "type": "boolean" }
+        }
+      },
+      "CourseWrite": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "course" },
+          "name": { "type": "string" },
+          "info": { "type": "string" },
+          "disclaimer": { "type": "string" },
+          "password": { "type": "string", "description": "Write-only course access code" },
+          "org": { "type": "string" },
+          "closed": { "type": "boolean" },
+          "options": { "$ref": "#/components/schemas/CourseOptions" }
+        },
+        "required": ["name"]
+      },
+      "CoursePatch": {
+        "allOf": [{ "$ref": "#/components/schemas/CourseWrite" }],
+        "description": "Same fields as CourseWrite, all optional for a partial update",
+        "required": []
+      },
+      "CourseCollection": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "additionalProperties": {
+              "oneOf": [
+                { "$ref": "#/components/schemas/Course" },
+                { "type": "string", "description": "Just the name, when props[]=displayname was requested" }
+              ]
+            },
+            "description": "path (e.g. '/smallpart/123') => Course object or name pairs"
+          }
+        }
+      },
+      "Participant": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "participant" },
+          "account": { "type": "string", "description": "Email, user-name or account-id; write-only via POST" },
+          "role": { "type": "string", "enum": ["admin", "teacher", "tutor", "student"] },
+          "alias": { "type": "string", "description": "Name shown to other students (not used for staff)" },
+          "name": { "type": "string", "readOnly": true, "description": "Full name, only available to staff" },
+          "group": { "type": "integer", "readOnly": true, "description": "Sub-group id, if students are grouped" },
+          "subscribed": { "type": "string", "format": "date-time", "readOnly": true },
+          "unsubscribed": { "type": "string", "format": "date-time", "readOnly": true }
+        },
+        "required": ["@type"]
+      },
+      "ParticipantWrite": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "participant" },
+          "account": { "type": "string", "description": "Only settable via POST, to register another user" },
+          "password": { "type": "string", "description": "Only settable via POST, course access code" },
+          "role": {
+            "type": "string",
+            "enum": ["admin", "teacher", "tutor", "student"],
+            "description": "Setting more than 'student' for a self-subscribe is silently ignored - the caller always ends up a student. Registering someone else as student requires a teacher; as staff, a course-admin or the course-owner."
+          },
+          "alias": { "type": "string" }
+        }
+      },
+      "ParticipantPatch": {
+        "allOf": [{ "$ref": "#/components/schemas/ParticipantWrite" }],
+        "description": "Same fields as ParticipantWrite. Changing only 'alias' is allowed for the participant themselves."
+      },
+      "Material": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "material" },
+          "id": { "type": "integer", "readOnly": true },
+          "course": { "type": "integer", "readOnly": true },
+          "name": { "type": "string" },
+          "date": { "type": "string", "format": "date-time", "readOnly": true },
+          "question": { "type": "string" },
+          "hash": { "type": "string", "readOnly": true },
+          "url": { "type": "string", "description": "URL of the main document, can be an external video e.g. YouTube" },
+          "type": { "type": "string", "readOnly": true, "enum": ["mp4", "webm", "youtube", "mpeg", "pdf"] },
+          "commentType": {
+            "type": "string",
+            "enum": [
+              "show-all", "show-group", "hide-other-students", "hide-teachers",
+              "show-group-hide-teachers", "show-own", "forbid-students", "disabled"
+            ]
+          },
+          "published": { "type": "string", "enum": ["draft", "published", "unavailable", "readonly"] },
+          "publishedStart": { "type": "string", "format": "date-time" },
+          "publishedEnd": { "type": "string", "format": "date-time" },
+          "timezone": { "type": "string", "description": "Defaults to the user's timezone" },
+          "testDisplay": { "type": "string", "enum": ["instead-comments", "dialog", "video-overlay", "list"] },
+          "testOptions": {
+            "type": "object",
+            "properties": {
+              "allowPause": { "type": "boolean" },
+              "forbidSeek": { "type": "boolean" }
+            }
+          },
+          "testDuration": { "type": "integer", "description": "Seconds, if this material is a test/exam" },
+          "attachments": {
+            "type": "object",
+            "readOnly": true,
+            "additionalProperties": { "$ref": "#/components/schemas/Attachment" }
+          },
+          "limitAccess": {
+            "type": "object",
+            "additionalProperties": { "type": "boolean" },
+            "description": "account => true pairs; if given, limits access to published material to those students"
+          }
+        },
+        "required": ["@type", "id", "course", "name"]
+      },
+      "MaterialWrite": {
+        "type": "object",
+        "properties": {
+          "@type": { "type": "string", "const": "material" },
+          "name": { "type": "string" },
+          "question": { "type": "string" },
+          "url": { "type": "string" },
+          "commentType": { "$ref": "#/components/schemas/Material/properties/commentType" },
+          "published": { "$ref": "#/components/schemas/Material/properties/published" },
+          "publishedStart": { "type": "string", "format": "date-time" },
+          "publishedEnd": { "type": "string", "format": "date-time" },
+          "timezone": { "type": "string" },
+          "testDisplay": { "$ref": "#/components/schemas/Material/properties/testDisplay" },
+          "testOptions": { "$ref": "#/components/schemas/Material/properties/testOptions" },
+          "testDuration": { "type": "integer" },
+          "limitAccess": { "$ref": "#/components/schemas/Material/properties/limitAccess" }
+        },
+        "required": ["name"]
+      },
+      "MaterialPatch": {
+        "allOf": [{ "$ref": "#/components/schemas/MaterialWrite" }],
+        "description": "Same fields as MaterialWrite, all optional for a partial update",
+        "required": []
+      },
+      "Attachment": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "url": { "type": "string" },
+          "contentType": { "type": "string" },
+          "size": { "type": "integer" }
+        }
+      }
+    },
+    "parameters": {
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" },
+        "description": "Numeric course ID"
+      },
+      "material_id": {
+        "name": "material_id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" },
+        "description": "Numeric material/course-part ID"
+      },
+      "account_id": {
+        "name": "account_id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" },
+        "description": "Numeric account ID of the participant"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "array", "items": { "type": "string" } },
+        "description": "DAV properties to return, e.g. props[]=displayname to return only the course name",
+        "style": "form",
+        "explode": true
+      },
+      "filters_search": {
+        "name": "filters[search]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Search for a pattern in the courses, like the search in the GUI"
+      },
+      "filters_subscribed": {
+        "name": "filters[subscribed]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "boolean" },
+        "description": "filters[subscribed]=1 returns only courses the user has already subscribed"
+      },
+      "accept": {
+        "name": "Accept",
+        "in": "header",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "enum": ["application/json", "application/pretty+json"]
+        }
+      },
+      "contentTypeJson": {
+        "name": "Content-Type",
+        "in": "header",
+        "required": true,
+        "schema": { "type": "string", "enum": ["application/json"] }
+      },
+      "prefer": {
+        "name": "Prefer",
+        "in": "header",
+        "required": false,
+        "schema": { "type": "string", "enum": ["return=representation"] }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized — missing or invalid credentials",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "integer", "example": 401 },
+                "message": { "type": "string", "example": "Unauthorized" }
+              }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden — the course/material exists, but the current user lacks the necessary role",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "integer", "example": 403 },
+                "message": { "type": "string", "example": "Forbidden" }
+              }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found — course/material/participant ID does not exist",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "integer", "example": 404 },
+                "message": { "type": "string", "example": "Not Found" }
+              }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad Request — missing required field or malformed JSON",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "error": { "type": "integer", "example": 400 },
+                "message": { "type": "string", "example": "Required field(s) name missing" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
