@@ -333,6 +333,53 @@ hosting need the same change before this can be tested end-to-end):
 - Applied and reloaded on ralf's dev box; the equivalent hosting-side change is still pending (his
   own words: "change my own nginx proxy and the ones in our hosting first, so we can test").
 
+Example (trimmed to just the pieces this workaround needs - not a full vhost):
+
+```nginx
+http {
+    # Falls back to whatever real Authorization header the client sent directly when there's no
+    # access_token param, so $stalwart_ws_auth is always safe to reference unconditionally - ordinary
+    # JMAP HTTP requests (which already send a real header) are completely unaffected by this map.
+    map $arg_access_token $stalwart_ws_auth {
+        default   $http_authorization;
+        "~.+"     "Bearer $arg_access_token";
+    }
+
+    server {
+        listen 443 ssl;
+        server_name boulder.egroupware.org;
+
+        # Narrowly scoped ahead of the broader Stalwart location below - "^~" stops nginx from also
+        # evaluating that regex location, so this exact-prefix match always wins for /jmap/ws.
+        location ^~ /jmap/ws {
+            proxy_set_header Authorization $stalwart_ws_auth;
+            # The token-in-query-string workaround is the whole reason to keep this endpoint out of
+            # the access log - see the exposure discussion above.
+            access_log off;
+
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection "upgrade";
+            proxy_set_header Host $host;
+            proxy_read_timeout 3600;
+
+            proxy_pass https://stalwart_upstream;
+        }
+
+        # Existing broad Stalwart passthrough (JMAP HTTP, autoconfig, etc.) - unchanged, and never
+        # reached for /jmap/ws because of the ^~ location above.
+        location ~ ^/(stalwart|jmap|\.well-known/jmap|...) {
+            proxy_pass https://stalwart_upstream;
+            include proxy_params;
+        }
+    }
+}
+```
+
+The dedicated `boulder-stalwart.egroupware.org` passthrough server and the hosting-side
+`stalwart.egroupware.org` vhost (farmA) get the same `map` + `location ^~ /jmap/ws` pair, just against
+their own upstream/server-name - the workaround itself doesn't vary per vhost.
+
 **Client-side wiring** (`mail/js/jmap.ts`): `JamWebSocketClient` (not `JamClient`) is now constructed
 in `ensureToken()`'s token-refresh callback, with a generic `transformWebSocketUrl` hook (added to
 `JamWebSocketClientConfig` - see below) supplying `?access_token=<token.access_token>` on the
