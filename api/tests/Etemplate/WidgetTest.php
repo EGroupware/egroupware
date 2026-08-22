@@ -107,6 +107,32 @@ class WidgetTest extends WidgetBaseTest {
 			['grid', '$row', 'grid[0]'],
 			['grid', '$cont[$row]', 'grid[Array]'],
 			['grid', '$row_cont[id]', 'grid[row_id]'],
+			['', '$row_cont[id]', 'row_id'],
+			['container', '$row_cont[id]', 'container[row_id]'],
+
+			// ${row} / deprecated {$row} alias: literal substitution of $row's value,
+			// not a variable reference, so it also works embedded in surrounding text
+			['', '${row}', '0'],
+			['', '{$row}', '0'],
+			['', '${row}_suffix', '0_suffix'],
+			['grid', '${row}', 'grid[0]'],
+
+			// ${row}[key]: by far the most common real-world "id" attribute pattern in
+			// .xet files (grid row widget ids, eg. id="${row}[account_lid]") - $row's
+			// value is substituted literally first, the [key] part is untouched literal
+			// text, then form_name()'s own bracket-splitting turns it into a nested name
+			['', '${row}[account_lid]', '0[account_lid]'],
+			['grid', '${row}[account_lid]', 'grid[0][account_lid]'],
+
+			// $cont[key] direct (not wrapped in another container)
+			['', '$cont[expand_me]', 'expanded'],
+			['', '$cont[expand_2]', 'also_expanded'],
+
+			// Known quirk: simple double-quote interpolation only expands ONE level of
+			// [..], so a 2nd, chained [..] (as used e.g. by mail's "$cont[fromlavatar][fname]"
+			// et2-lavatar attrs) is NOT resolved - $cont[0] is an array, gets stringified to
+			// "Array", and the 2nd [id] is left as literal trailing text.
+			['', '$cont[0][id]', 'Array[id]'],
 
 			// Column
 			['', '$c', '0'],
@@ -117,6 +143,52 @@ class WidgetTest extends WidgetBaseTest {
 			['container', '@expand_me[input]', 'container[]'],
 			['container', 'input[@expand_me]', 'container[input][@expand_me]'],
 			['container', '@expand_2[@expand_me]', 'container[]']
+		);
+	}
+
+	/**
+	 * Characterize that PHP-code-injection attempts via a widget name/id/attribute
+	 * are never executed by expand_name(), which resolves $var / $var[key] / ${row} /
+	 * {$row} purely via preg_replace_callback() - there is no eval() left to break out
+	 * of, so these assert "left untouched/inert", not "specially disarmed".
+	 *
+	 * These do NOT necessarily give a "clean" or useful result, they just must never
+	 * execute attacker-supplied code.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('expandNameHardeningProvider')]
+	public function testExpandNameHardening($name, $expected)
+	{
+		$this->assertEquals($expected, Widget::form_name('', $name, self::$expand));
+	}
+
+	/**
+	 * Provides data for testExpandNameHardening
+	 *
+	 * Each dataset is the raw (attacker-influenced) name/id/attribute value, and the
+	 * expected (inert) result when using self::$expand to fill expansion variables.
+	 */
+	public static function expandNameHardeningProvider()
+	{
+		return array(
+			// ${...} / {$...} (other than the literal ${row}/{$row} alias) is PHP's
+			// variable-variable / complex-interpolation syntax - our regex only matches
+			// a bare '$' immediately followed by \w+, so '${...}' never matches at all
+			// and is left completely untouched, never executed
+			['${system(\'id\')}', '${system(\'id\')}'],
+			['${phpinfo()}', '${phpinfo()}'],
+			['${passthru("id")}', '${passthru("id")}'],
+			['{$row}${system(\'id\')}', '0${system(\'id\')}'],
+
+			// backtick shell-exec operator is source-code-only syntax, never shell-exec'd
+			// in a plain PHP string value - inert regardless of whether '$' is present
+			['`id`', '`id`'],
+			['a`whoami`b', 'a`whoami`b'],
+			['${row}`id`', '0`id`'],
+
+			// there is no eval()'d string to break out of any more, so quotes/backslashes
+			// are just literal characters the regex doesn't match against
+			['\\" . system("id") . "', '\\" . system("id") . "'],
+			['" . exec("id") . "', '" . exec("id") . "'],
 		);
 	}
 

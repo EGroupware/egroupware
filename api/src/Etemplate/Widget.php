@@ -702,36 +702,52 @@ class Widget
 	 */
 	protected static function expand_name($name,$c,$row,$c_=0,$row_=0,$cont=array())
 	{
-		$is_index_in_content = !empty($name) && $name[0] == '@';
-		if (($pos_var=strpos($name,'$')) !== false)
+		// fast path: nothing to expand, by far the most common case
+		if (empty($name) || ($name[0] !== '@' && strpos($name, '$') === false))
 		{
-			if (!$cont)
-			{
-				$cont = array();
-			}
-			if (!is_numeric($c)) $c = self::chrs2num($c);
-			$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
-			if (is_numeric($c_)) $col_ = self::num2chrs($c_-1);
-			$row_cont = $cont[$row] ?? null;
-			$col_row_cont = $cont[$col.$row] ?? null;
+			return $name;
+		}
+		$is_index_in_content = $name[0] == '@';
 
-			$er = error_reporting(0);
-			try {
-				eval('$name = "' . strtr($name, [
-					'\\' => '\\\\',       // escape backslashes, to gard against \" to be escaped as \\" and therefore not at all
-					'"' => '\\"',         // escape used double quotes
-					'`' => '',            // disarm/remove backtick operator allowed in strings
-					'${row}' => $row,     // this is the only necessary usage of ${...}, we replace it directly with $row
-					'{$row}' => $row,     // deprecated use '${row}'
-					'{' => '', '}' => '', // disarm ${...} usable to run PHP e.g. "${phpinfo()}" or "${system('id')}"
-				]) . '";');
+		if (strpos($name, '$') !== false)
+		{
+			// ${row} / deprecated {$row}: literal substitution of $row's value, not a variable reference
+			if (strpos($name, '{') !== false)
+			{
+				$name = strtr($name, ['${row}' => $row, '{$row}' => $row]);
 			}
-			catch(\Throwable $e) {
-				error_log(__METHOD__."() eval('\$name = \"".strtr($name, ['\\' => '\\\\', '"' => '\\"', '`' => '', '${row}' => $row, '{' => '', '}' => '']) . "\";)");
-				_egw_log_exception($e);
+			if (strpos($name, '$') !== false)
+			{
+				if (!$cont) $cont = array();
+				if (!is_numeric($c)) $c = self::chrs2num($c);
+				$col = self::num2chrs($c-1);	// $c-1 to get: 0:'@', 1:'A', ...
+				$col_ = is_numeric($c_) ? self::num2chrs($c_-1) : null;
+				$row_cont = $cont[$row] ?? null;
+				$col_row_cont = $cont[$col.$row] ?? null;
+				$vars = array(
+					'c' => $c, 'row' => $row, 'c_' => $c_, 'row_' => $row_,
+					'cont' => $cont, 'col' => $col, 'col_' => $col_,
+					'row_cont' => $row_cont, 'col_row_cont' => $col_row_cont,
+				);
+				// resolve $var and $var[key] (key may be a bareword or another $var), same
+				// single-level lookup PHP's own double-quote string interpolation gives us -
+				// anything else (${expr}, object/array chaining, ...) is simply left untouched,
+				// never executed
+				$name = preg_replace_callback('/\$(\w+)(?:\[(\$?\w+)\])?/', static function($matches) use ($vars)
+				{
+					$value = $vars[$matches[1]] ?? '';
+					if (isset($matches[2]) && $matches[2] !== '' && is_array($value))
+					{
+						$idx = $matches[2];
+						if ($idx[0] === '$')
+						{
+							$idx = $vars[substr($idx, 1)] ?? '';
+						}
+						$value = $value[$idx] ?? '';
+					}
+					return is_array($value) ? 'Array' : (string)$value;
+				}, $name);
 			}
-			error_reporting($er);
-			unset($col_, $row_, $row_cont, $col_row_cont);	// quieten IDE warning about used vars, they might be used in above eval!
 		}
 		if ($is_index_in_content)
 		{
