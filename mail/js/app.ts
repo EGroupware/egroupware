@@ -673,7 +673,16 @@ export class MailApp extends EgwApp
 				if (parts[2] === '*')
 				{
 					let escaped = [parts[0], parts[1], parts[3]].map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-					this.egw.dataRefreshUIDs(new RegExp(`^${this.appname}::${escaped[0]}::${escaped[1]}::.*::${escaped[2]}$`), 'delete');
+					let regexp = new RegExp(`^${this.appname}::${escaped[0]}::${escaped[1]}::.*::${escaped[2]}$`);
+					// dataRefreshUIDs() only notifies widgets that previously registered via
+					// dataRegisterUID() for that exact uid - our NextMatch doesn't use that
+					// mechanism, so it would silently do nothing (confirmed live). Use
+					// dataSearchUIDs() just to discover the real cached uid(s) instead, then feed
+					// each one through the same already-working exact-match delete below.
+					Object.keys(this.egw.dataSearchUIDs(regexp)).forEach(fullUid => {
+						pushData.id = fullUid.replace(new RegExp(`^${this.appname}::`), '');
+						super.push(pushData);
+					});
 					return;
 				}
 				pushData.id = uid;
