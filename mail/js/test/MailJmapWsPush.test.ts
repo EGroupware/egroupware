@@ -286,7 +286,10 @@ describe("MailJmap.processWsPushStates()", () =>
 		assert.equal(pushed.length, 1);
 		assert.deepEqual(pushed[0], {
 			app: "mail",
-			id: "acc1::1::inbox-id::email1",
+			// EGroupware's own account_id (egw.user('account_id'), mocked to 1 above), NOT Stalwart's
+			// own opaque JMAP accountId ("acc1") - see buildEmailPush()'s own comment for why using
+			// the latter here would mismatch every row cached by email2row().
+			id: "1::1::inbox-id::email1",
 			type: "add",
 			acl: {folder : "INBOX", event : "MessageNew", from : "Alice <alice@example.com>", subject : "Hi", snippet : "hello"}
 		});

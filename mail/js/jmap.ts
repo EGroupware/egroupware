@@ -1320,7 +1320,10 @@ export class MailJmap
 		}
 		return {
 			app: 'mail',
-			id: `${accountId}::${profileID}::${folderId}::${email.id}`,
+			// EGroupware's own numeric account_id, NOT the "accountId" param above - that one is
+			// Stalwart's own opaque JMAP accountId (e.g. "b"), a different value entirely, and using
+			// it here would silently mismatch every row cached by email2row() (see its row_id).
+			id: `${this.egw.user('account_id')}::${profileID}::${folderId}::${email.id}`,
 			type,
 			acl
 		};
@@ -1341,7 +1344,8 @@ export class MailJmap
 		}
 		return {
 			app: 'mail',
-			id: `${accountId}::${profileID}::${mailbox.id}`,
+			// see buildEmailPush()'s comment: EGroupware's account_id, not the JMAP accountId param
+			id: `${this.egw.user('account_id')}::${profileID}::${mailbox.id}`,
 			type,
 			acl
 		};
