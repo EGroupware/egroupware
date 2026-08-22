@@ -105,7 +105,7 @@ export interface UtilsModule
 	 *
 	 * @returns List of window names
 	 */
-	getOpenWindows(appname : string, regex? : string) : string[] | {[name : string] : number};
+	getOpenWindows(appname : string, regex? : string | RegExp) : string[] | {[name : string] : number};
 
 	/**
 	 * Notify egw of closing a named window, which removes it from the list
@@ -656,7 +656,7 @@ class Utils implements UtilsModule
 	 *
 	 * @returns List of window names
 	 */
-	getOpenWindows = function(this : any, appname : string, regex? : string)
+	getOpenWindows = function(this : any, appname : string, regex? : string | RegExp)
 	{
 		var open_windows = JSON.parse(this.getSessionItem(appname, 'windows')) || {};
 		if(typeof regex == 'undefined')

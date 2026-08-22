@@ -1279,7 +1279,7 @@ export class MailApp extends EgwApp
 							this.egw.lang(
 								'Be aware by adding all selected files as %1 mode, it will also change all existing attachments in the list to %2 mode as well. Would you like to proceed?',
 								filemode_label, filemode_label),
-							this.egw.lang('Add files as %1', filemode_label), '', Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
+							this.egw.lang('Add files as %1', filemode_label), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
 						return;
 					}
 					else
@@ -1352,7 +1352,7 @@ export class MailApp extends EgwApp
 		//Dock the splitter always if we are browsing with mobile
 		if (egwIsMobile())
 		{
-			this.disablePreviewArea = _value = true;
+			_value = true;
 		}
 
 		if (_value==true)
@@ -1378,10 +1378,10 @@ export class MailApp extends EgwApp
 	 */
 	display()
 	{
-		const dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
+		const dataElem : {data : any} = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
 		const content = this.et2.getArrayMgr('content').data;
 
-		if (typeof  content != 'undefiend')
+		if (typeof  content != 'undefined')
 		{
 			dataElem.data = Object.assign(dataElem.data, content);
 
@@ -2170,7 +2170,7 @@ export class MailApp extends EgwApp
 					},
 					this.egw.lang("Your remaining quota %1 is too low, you may not be able to send/receive further emails.\n Although cleaning up emails in trash or junk folder might help you to get some free space back.\n If that didn't help, please ask your administrator for more quota.", _data.data.quotafreespace),
 					this.egw.lang("Mail cleanup"),
-					'', buttons, Et2Dialog.WARNING_MESSAGE);
+					{}, buttons, Et2Dialog.WARNING_MESSAGE);
 			}
 		}
 	}
@@ -3268,7 +3268,7 @@ export class MailApp extends EgwApp
 				}
 				return Et2Dialog.show_dialog((_button_id) =>
 				{
-					let rv = false;
+					let rv : boolean | string = false;
 					switch (_button_id)
 					{
 						case "all":
@@ -3891,7 +3891,7 @@ export class MailApp extends EgwApp
 	 */
 	displayHeaderLines(_url) {
 		// only used by right clickaction
-		egw.openPopup(_url, '870', '600', null, 'mail');
+		egw.openPopup(_url, 870, 600, null, 'mail');
 	}
 
 	/**
@@ -4220,8 +4220,8 @@ export class MailApp extends EgwApp
 				}, this.et2 ?? app.mail.et2);
 				// Serious violation of type - methodId is a string
 				// Set it to an array here bypassing normal checking
-				vfs_select.methodId = ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
-					vfs_select.updateComplete.then(() => vfs_select.click());
+				(vfs_select as any).methodId = ids.length > 1 ? {ids: ids, action: 'attachment'} : {ids: ids[0], action: 'attachment'},
+					(vfs_select as any).updateComplete.then(() => vfs_select.click());
 				// Single use only, remove when done
 				vfs_select.addEventListener("change", () => vfs_select.remove());
 				break;
@@ -4377,8 +4377,8 @@ export class MailApp extends EgwApp
 		}, this.et2);
 		// Serious violation of type - methodId is a string
 		// Set it to an array here bypassing normal checking
-		vfs_select.methodId = _elems.length > 1 ? {ids: ids, action: 'message'} : {ids: ids[0], action: 'message'};
-		vfs_select.updateComplete.then(() => vfs_select.click());
+		(vfs_select as any).methodId = _elems.length > 1 ? {ids: ids, action: 'message'} : {ids: ids[0], action: 'message'};
+		(vfs_select as any).updateComplete.then(() => vfs_select.click());
 		// Single use only, remove when done
 		vfs_select.addEventListener("change", () => vfs_select.remove());
 	}
@@ -5259,7 +5259,7 @@ export class MailApp extends EgwApp
 						if (button_id == Et2Dialog.YES_BUTTON)
 						{
 							actionData = _type.parent.data.widget.getArrayMgr('content');
-							that._do_action(typeId, actionData['data'], ruleID);
+							that.sieveDoAction(typeId, actionData['data'], ruleID);
 						}
 					};
 					Et2Dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
@@ -5275,11 +5275,11 @@ export class MailApp extends EgwApp
 					break;
 				case 'enable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
-					this._do_action(typeId,actionData['data'],ruleID);
+					this.sieveDoAction(typeId,actionData['data'],ruleID);
 					break;
 				case 'disable':
 					actionData = _type.parent.data.widget.getArrayMgr('content');
-					this._do_action(typeId,actionData['data'],ruleID);
+					this.sieveDoAction(typeId,actionData['data'],ruleID);
 					break;
 
 			}
@@ -5290,13 +5290,19 @@ export class MailApp extends EgwApp
 	/**
 	* Send back sieve action result to server
 	*
+	* Named sieveDoAction() rather than _do_action() to avoid an incompatible-override collision
+	* with EgwApp._do_action(action_id, selected) - a documented generic extension point called by
+	* EgwApp.action(), but action() (see this class's own override just above) is ALSO fully
+	* overridden here to call this method directly with its own 4-arg sieve-specific shape, so
+	* there was never any real shared behavior between the two, just an accidental same name.
+	*
 	* @param {string} _typeID action name
 	* @param {object} _data content
 	* @param {string} _selectedID selected row id
 	* @param {string} _msg message
 	*
 	*/
-	_do_action(_typeID, _data,_selectedID,_msg)
+	sieveDoAction(_typeID, _data,_selectedID,_msg?)
 	{
 		if (_typeID && _data)
 		{
@@ -6456,7 +6462,7 @@ export class MailApp extends EgwApp
 
 		const container = iframe.parentElement;
 		const container_selector = this.et2.getInstanceManager().name == 'mail.display'  ? '.mailDisplayContainer' : `#${(container as any).dom_id}`;
-		const options = {
+		const options : {showExternalContent : boolean, senderAddress? : string} = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
 		// get sender address, so Mailvelope can check signature
@@ -6498,7 +6504,7 @@ export class MailApp extends EgwApp
 		const is_html = mimeType.get_value();
 		const container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
 		const editor = this.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
-		let options = { predefinedText: editor.get_value() };
+		let options : {predefinedText : any, quotedMailHeader? : string, quotedMail? : any, quotedMailIndent? : boolean, signMsg? : boolean} = { predefinedText: editor.get_value() };
 
 		// check if we have some sort of reply to an encrypted message
 		// --> parse header, encrypted mail to quote and signature so Mailvelope understands it
@@ -6711,7 +6717,7 @@ export class MailApp extends EgwApp
 	spam_actions(_action, _senders)
 	{
 		let id,fromaddress,domain, email = '';
-		let data = {};
+		let data : any = {};
 		const items = [];
 		//if call happens from a popup this.et2 is the wrong reference --- see deleteMessages
 		const nm = this.et2.getWidgetById(this.nm_index) ??
@@ -6958,7 +6964,7 @@ export class MailApp extends EgwApp
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false
 		},undefined);
-		document.body.append(dialog);
+		document.body.append(dialog as any);
 	}
 
 	/**
@@ -6987,7 +6993,7 @@ export class MailApp extends EgwApp
 			this.setSmimeAttachmentsMobile(_attachments);
 			return;
 		}
-		let data = {};
+		let data : any = {};
 		let selected = [];
 
 		const cmprAttchObjs = (_obj1,_obj2) =>
@@ -7123,7 +7129,7 @@ export class MailApp extends EgwApp
 		if (!_metadata || _metadata.length < 1) return;
 		const self = this;
 		const content = this.egw.deepExtend({message:_metadata.msg}, _metadata);
-		const buttons = [
+		const buttons : {label : any, id : string, image : string, class? : string, default? : boolean}[] = [
 
 			{label: this.egw.lang("Close"), id: "close", image:'cancelDialog'}
 		];
@@ -7169,7 +7175,7 @@ export class MailApp extends EgwApp
 			template: egw.webserverUrl+'/mail/templates/default/smimeCertAddToContact.xet?1',
 			resizable: false
 		});
-		document.body.append(dialog);
+		document.body.append(dialog as any);
 	}
 
 	/**
@@ -7251,7 +7257,7 @@ export class MailApp extends EgwApp
 			resizable: false,
 			width: 500
 		});
-		document.body.append(dialog);
+		document.body.append(dialog as any);
 	}
 
 	/**
@@ -7294,7 +7300,7 @@ export class MailApp extends EgwApp
 				template: egw.webserverUrl + '/mail/templates/default/predefinedAddressesDialog.xet?',
 				resizable: false,
 			});
-		document.body.append(dialog);
+		document.body.append(dialog as any);
 	}
 
 	/**
