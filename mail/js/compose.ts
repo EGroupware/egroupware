@@ -453,7 +453,11 @@ export class MailCompose
 	 */
 	submitAction(_action)
 	{
-		let wait = Promise.resolve();
+		// NOTE: wait === true can never be true (integrateSubmit() only ever returns a Promise,
+		// see its own return statement) - this condition is dead code, pre-existing before this
+		// typing fix (widened wait's type to fit both possible assignments without changing
+		// behavior). Flagged rather than "fixed" since the original intent is unclear.
+		let wait : any = Promise.resolve();
 		if (_action && (wait = this.integrateSubmit()) && wait === true)
 		{
 			return false;
@@ -500,7 +504,7 @@ export class MailCompose
 		const subject = this.et2.getWidgetById('subject');
 		const toolbar = this.et2.getWidgetById('composeToolbar');
 		const to_integrate_ids = this.et2.getWidgetById('to_integrate_ids');
-		let integWidget = {};
+		let integWidget : any = {};
 		for (let index = 0; index < integApps.length; index++)
 		{
 			integWidget = index < integApps.length ? toolbar.getWidgetById(integApps[index]) : null;
@@ -512,7 +516,7 @@ export class MailCompose
 				const mail_import_hook = action.data['mail_import']['app_entry_method'];
 				const title = egw.lang('Select') + ' ' + egw.lang(integApps[index]) + ' ' + (egw.link_get_registry(integApps[index], 'entry') ? egw.link_get_registry(integApps[index], 'entry') : egw.lang('entry'));
 
-				wait.push(new Promise((resolve) =>
+				wait.push(new Promise<void>((resolve) =>
 				{
 					this.app.integrateCheckAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook, (args) =>
 					{
@@ -561,7 +565,7 @@ export class MailCompose
 	 */
 	triggerWidget(_action)
 	{
-		const helpers = this.et2.querySelector(".mailComposeHeaderSection");
+		const helpers = this.et2.querySelector(".mailComposeHeaderSection") as any;
 		const widget = helpers.getWidgetById(_action.id);
 		if (widget)
 		{
@@ -615,7 +619,7 @@ export class MailCompose
 	saveAsDraft(_egw_action, _action)
 	{
 		const self = this;
-		return new Promise((_resolve, _reject) =>{
+		return new Promise<void>((_resolve, _reject) =>{
 			const content = self.et2.getArrayMgr('content').data;
 			let action = _action;
 			if (_egw_action && _action !== 'autosaving')

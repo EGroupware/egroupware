@@ -4180,7 +4180,7 @@ export class MailApp extends EgwApp
 
 		if (this.isMainWindow)
 		{
-			mail_id = this.currentlyFocussed || (app.mail as MailApp).currentlyFocussed;
+			mail_id = this.currentlyFocussed || (app.mail as unknown as MailApp).currentlyFocussed;
 			const p = widget.getParent();
 			attachments = p.getArrayMgr("content").data;
 		}
