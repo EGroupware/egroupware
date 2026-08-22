@@ -782,16 +782,12 @@ class Jmap extends Mail\Imap
 						{
 							continue;
 						}
+						$folderId = $what === 'email' ? key($item['mailboxIds']) : $item['id'];
 						try
 						{
-							if ($what === 'email')
-							{
-								$uid = $stalwart->emailId2uid($item['id'], $item['messageId'][0], key($item['mailboxIds']), $folder);
-							}
-							else
-							{
-								$folder = $jmap->folderId2path($item['id']);
-							}
+							// only needed for acl.folder (badge/special-folder use, see below) - the
+							// row id itself uses $folderId directly, see $id below
+							$folder = $jmap->folderId2path($folderId);
 						}
 						catch (\Horde_Imap_Client_Exception $e)
 						{
@@ -799,11 +795,16 @@ class Jmap extends Mail\Imap
 							// a real, selectable IMAP mailbox (eg. a JMAP-only virtual mailbox like Outbox,
 							// or a genuine delete/rename race) - skip just this item, not the whole batch
 							error_log(__METHOD__."() skipping $what-$type change[list][$i]=".json_encode($item).
-								', folderId='.($what === 'email' ? key($item['mailboxIds']) : $item['id']).
-								', folder='.($folder ?? '?').': '.$e->getMessage());
+								", folderId=$folderId: ".$e->getMessage());
 							continue;
 						}
-						$id = $client_data['account_id'].'::'.$client_data['acc_id'].'::'.base64_encode($folder);
+						// native JMAP row-id shape (mail_ui::generateJmapRowID()): account::acc_id::
+						// folderId::emailId - NOT the classic account::acc_id::base64(folder)::uid shape
+						// - this is what NextMatch's nm.refresh() looks the row up by, and Stalwart rows
+						// are cached client-side under the native JMAP shape (see
+						// mail-jmap-modernization.md's "Row-id scheme"; mirrors MailJmap.
+						// buildWsPushPayload()'s client-side equivalent of this same code)
+						$id = $client_data['account_id'].'::'.$client_data['acc_id'].'::'.$folderId;
 						// check if we can combine with the last change into a single push
 						if (!isset($push) || !str_starts_with($push['id'], $id))
 						{
@@ -821,7 +822,7 @@ class Jmap extends Mail\Imap
 						}
 						if ($what === 'email')
 						{
-							$push['id'] = $id.'::'.$uid;
+							$push['id'] = $id.'::'.$item['id'];
 							switch ($type)
 							{
 								case 'created':
