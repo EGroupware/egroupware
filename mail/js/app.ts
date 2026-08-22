@@ -968,11 +968,17 @@ export class MailApp extends EgwApp
 		/**
 	 * mail rebuild Action menu On nm-list
 	 *
+	 * Et2Nextmatch has no set_actions() (that was the legacy nextmatch_widget's API) - actions are
+	 * pushed through its reactive `actions` property instead, which merges by action id rather than
+	 * replacing wholesale (see updateCopyToAction() for the full explanation). Calling the no-longer-
+	 * existent set_actions() here silently threw, so a server-pushed "moveto" refresh (after a real
+	 * move) never actually reached the menu.
+	 *
 	 * @param _actions
 	 */
 	rebuildActionsOnList(_actions)
 	{
-		this.et2.getWidgetById(this.nm_index).set_actions(_actions);
+		(this.et2.getWidgetById(this.nm_index) as any).actions = _actions;
 	}
 
 	/**
@@ -4800,9 +4806,14 @@ export class MailApp extends EgwApp
 
 	/**
 	 * (Re)build the "Copy selected to" quick-submenu from the copyFolderUsage preference, showing
-	 * the 10 highest-used target folders, and merge it into the nextmatch's live action definitions
-	 * (mirrors what rebuildActionsOnList() does for a server-pushed update, but computed here purely
-	 * client-side from nm.options.actions - see set_actions() in et2_extension_nextmatch.ts).
+	 * the 10 highest-used target folders, and merge it into the nextmatch's live action definitions.
+	 *
+	 * Et2Nextmatch (unlike the legacy nextmatch_widget) has no set_actions()/options.actions - actions
+	 * are pushed through its reactive `actions` property (Et2Widget.ts's `set actions()`), which feeds
+	 * Et2NextmatchActionController.initActions() -> EgwAction.updateActions(). That's a real
+	 * add-or-update merge keyed by action id (see EgwAction.ts), not a destructive replace, so handing
+	 * it just the one `copyto` key here correctly leaves every other action (open/reply/moveto/...)
+	 * untouched - no need to read back/clone the current action set first.
 	 *
 	 * @param usage optional already-loaded copyFolderUsage preference, to avoid re-reading it
 	 */
@@ -4810,20 +4821,13 @@ export class MailApp extends EgwApp
 	{
 		usage = usage || this.egw.preference('copyFolderUsage', 'mail') || {};
 		const nm : any = this.et2.getWidgetById(this.nm_index);
-		if (!nm || typeof nm.set_actions !== 'function') return;
+		if (!nm) return;
 		const currentFolder = nm.activeFilters?.selectedFolder;
 		const top = Object.keys(usage)
 			.filter(target => target !== currentFolder)
 			.sort((a, b) => (usage[b] || 0) - (usage[a] || 0))
 			.slice(0, 10);
-		const actions : any = Object.assign({}, nm.options.actions);
-		if (!top.length)
-		{
-			if (!actions.copyto) return;
-			delete actions.copyto;
-			nm.set_actions(actions);
-			return;
-		}
+		if (!top.length) return;
 		const ftree : any = this.et2.getWidgetById(this.nm_index + '[foldertree]');
 		const children = {};
 		top.forEach(target =>
@@ -4838,13 +4842,13 @@ export class MailApp extends EgwApp
 				allowOnMultiple: true,
 			};
 		});
-		actions.copyto = {
-			caption: this.egw.lang('Copy selected to'),
-			icon: 'copy',
-			group: actions.moveto ? actions.moveto.group : 2,
-			children: children,
+		nm.actions = {
+			copyto: {
+				caption: this.egw.lang('Copy selected to'),
+				icon: 'copy',
+				children: children,
+			}
 		};
-		nm.set_actions(actions);
 	}
 
 	/**
