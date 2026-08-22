@@ -375,6 +375,21 @@ class Nextmatch extends Etemplate\Widget
 	}
 
 	/**
+	 * form_names that intentionally have NO backing nextmatch/historylog widget in
+	 * the current template, mapped to their trusted get_rows callback.
+	 *
+	 * Some apps use egw.dataFetch() directly (not via a real nextmatch/historylog
+	 * widget) for views that render their own rows client-side, eg. calendar's
+	 * day/week/month/planner views, passing the app name as form_name. Since there
+	 * is no widget to resolve $form_name against, the get_rows callback for those
+	 * has to come from this server-side allowlist instead - it is NEVER taken from
+	 * the client, same as for widget-backed form_names.
+	 */
+	protected static $raw_form_names = array(
+		'calendar' => 'calendar.calendar_uilist.get_rows',
+	);
+
+	/**
 	 * Callback to fetch more rows
 	 *
 	 * Callback uses existing get_rows callback, but requires now 'row_id' to be set.
@@ -420,23 +435,35 @@ class Nextmatch extends Etemplate\Widget
 		// get_rows must always come from server-side widget content, never the client
 		unset($filters['get_rows']);
 
-		// require the referenced widget to actually resolve before trusting any of its filters
+		// require the referenced widget to actually resolve before trusting any of its filters,
+		// unless form_name is a registered non-widget "raw" data-fetch, see self::$raw_form_names
 		if (($template = Template::instance(self::$request->template['name'], self::$request->template['template_set'],
 			self::$request->template['version'], self::$request->template['load_via'])))
 		{
 			$template = $template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'et2-nextmatch') ??
 				$template->getElementById($form_name, strpos($form_name, 'history') === 0 ? 'historylog' : 'nextmatch');
 		}
-		if (!$template)
+		else
+		{
+			$template = null;	// Template::instance() returns false, not null, if not found
+		}
+		if ($template)
+		{
+			$expand = array(
+				'cont' => array($form_name => $filters),
+			);
+			$valid_filters = array();
+			$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
+			$filters = $valid_filters[$form_name];
+		}
+		elseif (isset(self::$raw_form_names[$form_name]))
+		{
+			$filters['get_rows'] = self::$raw_form_names[$form_name];
+		}
+		else
 		{
 			throw new \InvalidArgumentException("Unknown nextmatch/historylog widget '$form_name'!");
 		}
-		$expand = array(
-			'cont' => array($form_name => $filters),
-		);
-		$valid_filters = array();
-		$template->run('validate', array('', $expand, $expand['cont'], &$valid_filters), false);	// $respect_disabled=false: as client may disable things, here we validate everything and leave it to the get_rows to interpret
-		$filters = $valid_filters[$form_name];
 
 		// Avoid empty arrays, they cause problems with db filtering
 		foreach((array)$filters['col_filter'] as $col => $val)
