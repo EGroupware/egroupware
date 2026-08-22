@@ -32,15 +32,15 @@
 					<column width="90%"/>
 				</columns>
 				<rows>
-					<row class="mailComposeHeaders mailComposeJQueryFrom" >
+					<row class="mailComposeHeaders mailComposeFrom" >
 						<et2-description  value="From"></et2-description>
 						<et2-select  id="mailaccount" onchange="app.mail.compose.submitOnChange"></et2-select>
 					</row>
-					<row class="mailComposeHeaders mailComposeJQueryReplyto">
+					<row class="mailComposeHeaders mailComposeReplyto">
 						<et2-description  value="Reply to"></et2-description>
 						<et2-email  id="replyto" width="100%" onclick="app.mail.addressClick" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"></et2-email>
 					</row>
-					<row class="mailComposeHeaders mailComposeJQueryFolder">
+					<row class="mailComposeHeaders mailComposeFolder">
 						<et2-description  value="Folder"></et2-description>
 						<et2-select  id="folder" allowFreeEntries="false" onclick="app.mail.addressClick" multiple="true" searchUrl="mail.mail_compose.ajax_searchFolder" searchOptions='{"noPrefixId": "true"}'></et2-select>
 					</row>
@@ -59,13 +59,13 @@
                                    onchange="app.mail.compose.recipientsOnChange"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
 					</row>
-					<row class="mailComposeHeaders mailComposeJQueryCc">
+					<row class="mailComposeHeaders mailComposeCc">
 						<et2-description  value="Cc"></et2-description>
                         <et2-email id="cc" width="100%" onclick="app.mail.addressClick"
                                           onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"
                                    placeholder="select or insert email address" includeLists="true" allowPlaceholder="true"></et2-email>
                     </row>
-                    <row class="mailComposeHeaders mailComposeJQueryBcc">
+                    <row class="mailComposeHeaders mailComposeBcc">
                         <et2-description value="Bcc"></et2-description>
                         <et2-email id="bcc" width="100%" onclick="app.mail.addressClick"
                                           onchange="app.mail.compose.recipientsOnChange" searchUrl="EGroupware\Api\Etemplate\Widget\Taglist::ajax_email"

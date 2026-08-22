@@ -207,7 +207,7 @@ export class MailCompose
 	 * are toggled by class rather than through their own widget, see fieldExpanderInit()/fieldExpander().
 	 *
 	 * These rows are real <tr> elements with a stylesheet rule hiding them by default
-	 * (app.less: "tr.mailComposeJQueryCc, ... { display: none; }") - clearing the inline style isn't
+	 * (app.less: "tr.mailComposeCc, ... { display: none; }") - clearing the inline style isn't
 	 * enough to show them again (falls straight back to that rule), so "table-row" is set explicitly,
 	 * matching what jQuery's .show() used to resolve to for a <tr>.
 	 */
@@ -225,23 +225,23 @@ export class MailCompose
 		const widgets = {
 			cc:{
 				widget:{},
-				selector: '.mailComposeJQueryCc'
+				selector: '.mailComposeCc'
 			},
 			bcc:{
 				widget:{},
-				selector: '.mailComposeJQueryBcc'
+				selector: '.mailComposeBcc'
 			},
 			folder:{
 				widget:{},
-				selector: '.mailComposeJQueryFolder'
+				selector: '.mailComposeFolder'
 			},
 			replyto:{
 				widget:{},
-				selector: '.mailComposeJQueryReplyto'
+				selector: '.mailComposeReplyto'
 			},
 			from:{
 				widget:{},
-				selector: '.mailComposeJQueryFrom'
+				selector: '.mailComposeFrom'
 			}
 		};
 		const maybe_actions = egw.preference('toggledOnActions', 'mail') ?? [];
@@ -284,49 +284,29 @@ export class MailCompose
 	 */
 	fieldExpander(event?:undefined,widget?)
 	{
-		const expWidgets = {cc:{},bcc:{},folder:{},replyto:{}};
-		for (const name in expWidgets)
-		{
-			expWidgets[name] = this.et2.getWidgetById(name+'_expander');
-		}
-
 		if (typeof widget !='undefined')
 		{
 			switch (widget.id)
 			{
 				case 'cc_expander':
-					this.toggleRowVisibility(".mailComposeJQueryCc", true);
-					if (typeof expWidgets.cc !='undefined')
-					{
-						//expWidgets.cc.set_disabled(true);
-					}
+					this.toggleRowVisibility(".mailComposeCc", true);
 					break;
 				case 'bcc_expander':
-					this.toggleRowVisibility(".mailComposeJQueryBcc", true);
-					if (typeof expWidgets.bcc !='undefined')
-					{
-						//expWidgets.bcc.set_disabled(true);
-					}
+					this.toggleRowVisibility(".mailComposeBcc", true);
 					break;
 				case 'folder_expander':
-					this.toggleRowVisibility(".mailComposeJQueryFolder", true);
-					if (typeof expWidgets.folder !='undefined')
-					{
-						//expWidgets.folder.set_disabled(true);
-					}
+					this.toggleRowVisibility(".mailComposeFolder", true);
 					break;
 				case 'replyto_expander':
-					this.toggleRowVisibility(".mailComposeJQueryReplyto", true);
-					if (typeof expWidgets.replyto !='undefined')
-					{
-						//expWidgets.replyto.set_disabled(true);
-					}
+					this.toggleRowVisibility(".mailComposeReplyto", true);
 					break;
 				case 'from_expander':
-					this.toggleRowVisibility('.mailComposeJQueryFrom', true);
+					this.toggleRowVisibility('.mailComposeFrom', true);
 					this.keepFromExpander = true;
 					break;
 			}
+			// widget's parent is the "..." dropdown listing the not-yet-shown fields - hide it now
+			// that one was picked, same as it closes after any other selection
 			widget.parentElement.hide()
 		}
 		else if (typeof widget == "undefined") //show all widgets
@@ -342,32 +322,16 @@ export class MailCompose
 					switch (widget)
 					{
 						case 'cc':
-							this.toggleRowVisibility(".mailComposeJQueryCc", true);
-							if (typeof expWidgets.cc != 'undefined')
-							{
-								//expWidgets.cc.set_disabled(true);
-							}
+							this.toggleRowVisibility(".mailComposeCc", true);
 							break;
 						case 'bcc':
-							this.toggleRowVisibility(".mailComposeJQueryBcc", true);
-							if (typeof expWidgets.bcc != 'undefined')
-							{
-								//expWidgets.bcc.set_disabled(true);
-							}
+							this.toggleRowVisibility(".mailComposeBcc", true);
 							break;
 						case 'folder':
-							this.toggleRowVisibility(".mailComposeJQueryFolder", true);
-							if (typeof expWidgets.folder != 'undefined')
-							{
-								//expWidgets.folder.set_disabled(true);
-							}
+							this.toggleRowVisibility(".mailComposeFolder", true);
 							break;
 						case 'replyto':
-							this.toggleRowVisibility(".mailComposeJQueryReplyto", true);
-							if (typeof expWidgets.replyto != 'undefined')
-							{
-								//expWidgets.replyto.set_disabled(true);
-							}
+							this.toggleRowVisibility(".mailComposeReplyto", true);
 							break;
 					}
 				}

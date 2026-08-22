@@ -1017,10 +1017,10 @@ table.et2_egw_action_ddHelper_row .innerContainer {
   gap: 1px;
 }
 /* hide by default hidden compose header-lines, to not show them briefly before hidden by app.js */
-tr.mailComposeJQueryCc,
-tr.mailComposeJQueryBcc,
-tr.mailComposeJQueryFolder,
-tr.mailComposeJQueryReplyto {
+tr.mailComposeCc,
+tr.mailComposeBcc,
+tr.mailComposeFolder,
+tr.mailComposeReplyto {
   display: none;
 }
 et2-menu-item#mark et2-menu-item#customFlag et2-image[slot='prefix'] {
