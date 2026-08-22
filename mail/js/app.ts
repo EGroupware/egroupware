@@ -1163,7 +1163,7 @@ export class MailApp extends EgwApp
 			}
 		}
 		// Extra info passed to egw.open()
-		const settings: { id: string; from: string;smime_type?:string } = {
+		const settings: { id: string; from: string; smime_type?: string; mode?: string } = {
 			// 'Source' Mail UID
 			id: '',
 			// How to pull data from the Mail IDs for the compose
@@ -1284,7 +1284,7 @@ export class MailApp extends EgwApp
 					}
 					else
 					{
-						return compose_et2[0].widgetContainer._inst.submit();
+						return compose_et2[0].widgetContainer.getInstanceManager().submit();
 					}
 				}
 
@@ -2195,7 +2195,7 @@ export class MailApp extends EgwApp
 	registerForDrag(mail_id, attachments)
 	{
 		// Put required info in global store
-		let data = {};
+		let data : any = {};
 		if (!attachments) return;
 		for (let i = 0; i < attachments.length; i++)
 		{
@@ -3083,7 +3083,7 @@ export class MailApp extends EgwApp
             _widget.getSelectedNode().expanded = true;
 
 		this.lockTree();
-		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], () => {
+		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2.getInstanceManager().etemplate_exec_id], () => {
 			// Profile changed, select inbox
 			const inbox = folder + '::INBOX';
                 //_widget.reSelectItem(inbox);
@@ -4358,7 +4358,7 @@ export class MailApp extends EgwApp
 			const _id = _elems[i].id;
 			const dataElem = egw.dataGetUIDdata(_id);
 			let subject = dataElem? dataElem.data.subject: _elems[i].subject;
-			if (this.egw.is_popup() && this.et2._inst.name == 'mail.display')
+			if (this.egw.is_popup() && this.et2.getInstanceManager().name == 'mail.display')
 			{
 				subject = this.et2.getArrayMgr('content').getEntry('subject');
 			}
@@ -5310,7 +5310,7 @@ export class MailApp extends EgwApp
 	*/
 	sieveRefresh()
 	{
-		this.et2._inst.submit();
+		this.et2.getInstanceManager().submit();
 	}
 
 	/**
@@ -5781,7 +5781,7 @@ export class MailApp extends EgwApp
 		})).then(() =>
 		{
 			window.opener?.app?.mail?.refreshFolderLevel?.(profileID, '');
-			_widget.id === 'button[save]' ? window.close() : this.et2._inst.submit();
+			_widget.id === 'button[save]' ? window.close() : this.et2.getInstanceManager().submit();
 		}).catch((e) =>
 		{
 			this.egw.message(e?.message || this.egw.lang('Account not reachable'), 'error');
@@ -5860,7 +5860,7 @@ export class MailApp extends EgwApp
 		{
 			if (mailbox.value.length > 0)
 			{
-				this.et2._inst.submit();
+				this.et2.getInstanceManager().submit();
 			}
 		}
 	}
@@ -5927,7 +5927,7 @@ export class MailApp extends EgwApp
 	 */
 	aclSave(_event, _widget)
 	{
-		const values = this.et2._inst.getValues(this.et2);
+		const values = this.et2.getInstanceManager().getValues(this.et2);
 		// acc_id is only present in getValues() for a row added this session - once a row
 		// has been saved once, the server marks its account picker readonly (edit(), to
 		// stop it being reassigned to a different account) and readonly widgets are
@@ -5968,7 +5968,7 @@ export class MailApp extends EgwApp
 						const cb = this.et2.getWidgetById(key + '[acl_recursive]');
 						if (cb) cb.set_value(false);
 					});
-					_widget.id === 'button[save]' ? window.close() : this.et2._inst.submit();
+					_widget.id === 'button[save]' ? window.close() : this.et2.getInstanceManager().submit();
 				}
 			}
 		);
@@ -5991,7 +5991,7 @@ export class MailApp extends EgwApp
 	aclDeleteRow(_event, _widget)
 	{
 		const rowId = _widget.id.replace(/[^0-9.]+/g, '');
-		const values = this.et2._inst.getValues(this.et2);
+		const values = this.et2.getInstanceManager().getValues(this.et2);
 		const row = values.grid?.[rowId];
 
 		if (!row || !row.acl_recursive)
@@ -6024,7 +6024,7 @@ export class MailApp extends EgwApp
 						// "recursive" box re-trigger the old synchronous loop on refresh
 						const cb = this.et2.getWidgetById(rowId + '[acl_recursive]');
 						if (cb) cb.set_value(false);
-						this.et2._inst.submit();
+						this.et2.getInstanceManager().submit();
 					}
 				}
 			);
@@ -6455,12 +6455,12 @@ export class MailApp extends EgwApp
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
 		const container = iframe.parentElement;
-		const container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${(container as any).dom_id}`;
+		const container_selector = this.et2.getInstanceManager().name == 'mail.display'  ? '.mailDisplayContainer' : `#${(container as any).dom_id}`;
 		const options = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
 		// get sender address, so Mailvelope can check signature
-		const from = this.et2._inst.name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
+		const from = this.et2.getInstanceManager().name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
 		if (from)
 		{
 			options.senderAddress = from[0].replace(/^.*<([^<>]+)>$/, '$1');
@@ -6563,7 +6563,7 @@ export class MailApp extends EgwApp
 				if (mimeType.get_value())
 				{
 					mimeType.set_value(false);
-					self.et2._inst.submit();
+					self.et2.getInstanceManager().submit();
 					return;	// ToDo: do that without reload
 				}
 				self.mailvelopeOpenKeyring().then((_keyring) =>
@@ -6666,7 +6666,7 @@ export class MailApp extends EgwApp
 							else
 							{
 								// submit
-								etemplate2.getByApplication('mail')[0].widgetContainer._inst.submit();
+								etemplate2.getByApplication('mail')[0].widgetContainer.getInstanceManager().submit();
 							}
 						}, msg, egw.lang('Deleting folders'), (treeId : string) => this.folderManagementDeleteOne(treeId), selFolders, 'mail');
 						return true;

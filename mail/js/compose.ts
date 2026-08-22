@@ -388,7 +388,7 @@ export class MailCompose
 			this.app.displayAttachment(tag_info, widget, true);
 			return;
 		}
-		const get_param = {
+		const get_param: {menuaction : string, tmpname : any, etemplate_exec_id : any, mode? : string} = {
 			menuaction: 'mail.mail_compose.getAttachment',	// todo compose for Draft folder
 			tmpname: attgrid.tmp_name,
 			etemplate_exec_id: this.et2.getInstanceManager().etemplate_exec_id
