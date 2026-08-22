@@ -930,7 +930,9 @@ class Jmap
 	 * @param ?string $accountId defaults to $this->accountId
 	 * @param array $states state-object (e.g. "Email" or "Mailbox") => sinceState pairs
 	 * @param string|null $sessionState
-	 * @return array[] with responses for keys "(email|mailbox=-(changes|created|updated|destroyed)"
+	 * @return array[] with responses for keys "(email|mailbox)-(changes|created|updated)" - no
+	 *  "-destroyed" key (see the "destroyed" comments in this method's body for why); the plain
+	 *  destroyed-id list is in "(email|mailbox)-changes"' own "destroyed" property instead
 	 */
 	public function getChanges(?string $accountId, array $states, string $mailbox='INBOX', ?string &$sessionState=null)
 	{
@@ -974,15 +976,11 @@ class Jmap
 					"resultOf" => "mailbox-changes"
 				]
 			], "mailbox-updated"],
-			// Fetch any mailboxes that have been deleted
-			["Mailbox/get", [
-				"accountId" => $accountId ?: $this->accountId,
-				"#ids" => [
-					"name" => "Mailbox/changes",
-					"path" => "/destroyed",
-					"resultOf" => "mailbox-changes"
-				]
-			], "mailbox-destroyed"],
+			// Deliberately no "mailbox-destroyed" Mailbox/get call: a destroyed mailbox can never
+			// be fetched (always resolves to notFound, never list - JMAP semantics), so it could
+			// only ever return an empty list even when it works. The plain destroyed-id list is
+			// already in "mailbox-changes" itself (its own "destroyed" property) - pushCallback()
+			// reads that directly instead.
 		];
 		if (isset($states['Email']))
 		{
@@ -1011,15 +1009,9 @@ class Jmap
 					],
 					"properties" => ["id", "mailboxIds", "messageId", "keywords"],
 				], "email-updated"],
-				["Email/get", [
-					"accountId" => $accountId ?: $this->accountId,
-					"#ids" => [
-						"name" => "Email/changes",
-						"path" => "/destroyed",
-						"resultOf" => "email-changes"
-					],
-					"properties" => ["id", "mailboxIds", "messageId"],
-				], "email-destroyed"],
+				// Deliberately no "email-destroyed" Email/get call - same reasoning as
+				// "mailbox-destroyed" above; pushCallback() reads "email-changes"' own "destroyed"
+				// property directly instead.
 			]);
 		}
 		$response = $this->jmapCall($methodCalls, self::JMAP_MAIL);

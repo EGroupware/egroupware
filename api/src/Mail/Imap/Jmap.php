@@ -766,8 +766,12 @@ class Jmap extends Mail\Imap
 					}, $states, array_keys($states))), $currentFolder, $sessionState);
 					//error_log(__METHOD__."() data=".json_encode($data)." --> changes=".json_encode($changes));
 				}
-				if (empty($changes['email-created']['list']) && empty($changes['email-updated']['list']) && empty($changes['email-deleted']['list']) &&
-					empty($changes['mailbox-created']['list']) && empty($changes['mailbox-updated']['list']) && empty($changes['mailbox-deleted']['list']))
+				// NOTE: was previously checking non-existent "email-deleted"/"mailbox-deleted" keys
+				// (typo for "-destroyed", itself gone now - see getChanges()) - always vacuously
+				// true, so this never actually short-circuited anything; fixed to check the real
+				// "destroyed" id lists too, now that they can produce a push on their own.
+				if (empty($changes['email-created']['list']) && empty($changes['email-updated']['list']) && empty($changes['email-changes']['destroyed']) &&
+					empty($changes['mailbox-created']['list']) && empty($changes['mailbox-updated']['list']) && empty($changes['mailbox-changes']['destroyed']))
 				{
 					break;  // no change or nothing we're interested in
 				}
@@ -839,10 +843,6 @@ class Jmap extends Mail\Imap
 									$push['acl']['event'] = 'Flags';
 									$push['acl']['flags'] = array_keys($item['keywords'] ?? []);
 									break;
-								case 'destroyed':
-									$push['type'] = 'delete';
-									$push['acl']['event'] = 'MessageDeleted';   // no used, not sure about Dovecot/Imap event-name
-									break;
 							}
 						}
 						else    // mailbox
@@ -856,9 +856,6 @@ class Jmap extends Mail\Imap
 									$push['type'] = 'update';
 									$push['acl']['unseen'] = $item['unreadEmails'];
 									break;
-								case'destroyed':
-									$push['type'] = 'delete';
-									break;
 							}
 						}
 						//error_log(__METHOD__."() $what-$type change[list][$i]=".json_encode($item).' --> push='.json_encode($push));
@@ -867,6 +864,41 @@ class Jmap extends Mail\Imap
 				if (isset($push))
 				{
 					$push_payload[] = $push;
+				}
+				// "destroyed" ids come straight from the *-changes responses above (see
+				// Api\Mail\Jmap::getChanges()'s own comments for why there's no "*-destroyed"
+				// Foo/get call to loop over instead). A destroyed email's folder can never be
+				// resolved via JMAP after the fact - MailApp.push() (mail/js/app.ts) resolves it
+				// client-side instead, via a wildcard egw.data search (email ids are unique per
+				// account), matching MailJmap.buildEmailDeletePush()'s WS-push equivalent.
+				foreach($changes['email-changes']['destroyed'] ?? [] as $emailId)
+				{
+					$push_payload[] = [
+						'app' => 'mail',
+						'id' => $client_data['account_id'].'::'.$client_data['acc_id'].'::*::'.$emailId,
+						'type' => 'delete',
+						'acl' => [],
+					];
+				}
+				// A destroyed mailbox's path, unlike an email's, is at least *sometimes* still
+				// resolvable here (no per-client egw.data cache to fall back on server-side) -
+				// try, and skip (same as any other stale-folder race) if it no longer resolves.
+				foreach($changes['mailbox-changes']['destroyed'] ?? [] as $folderId)
+				{
+					try
+					{
+						$folder = $jmap->folderId2path($folderId);
+					}
+					catch (\Horde_Imap_Client_Exception $e)
+					{
+						continue;
+					}
+					$push_payload[] = [
+						'app' => 'mail',
+						'id' => $client_data['account_id'].'::'.$client_data['acc_id'].'::'.$folderId,
+						'type' => 'delete',
+						'acl' => ['folder' => $folder],
+					];
 				}
 				$push = new Api\Json\Push($client_data['account_id']);
 				$push->call('egw.push', $push_payload);

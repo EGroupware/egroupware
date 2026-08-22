@@ -655,6 +655,27 @@ export class MailApp extends EgwApp
 		if (pushData.type === 'delete')
 		{
 			[].concat(pushData.id).forEach(uid => {
+				let parts = uid.split('::');
+				// a destroyed mailbox (id has no emailId segment) - only ever sent once its real
+				// path is known (see MailJmap.buildWsPushPayload()'s folderPaths-cache lookup), so
+				// remove its folder-tree node directly: egw.data has no notion of folder-tree
+				// nodes at all, there's no dataHasUID()-based path for this like there is for rows
+				if (parts.length === 3)
+				{
+					this.removeLeaf({[folder]: pushData.acl.folder});
+					return;
+				}
+				// a destroyed email's folder can never be resolved via JMAP after the fact (see
+				// MailJmap.buildEmailDeletePush()/Api\Mail\Imap\Jmap::pushCallback()'s own comments
+				// for why) - the folderId segment is a literal "*" wildcard in that case. Email ids
+				// are unique per account, so search the row cache directly instead of an exact-match
+				// lookup: whichever folder(s) currently have this row cached get it removed.
+				if (parts[2] === '*')
+				{
+					let escaped = [parts[0], parts[1], parts[3]].map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+					this.egw.dataRefreshUIDs(new RegExp(`^${this.appname}::${escaped[0]}::${escaped[1]}::.*::${escaped[2]}$`), 'delete');
+					return;
+				}
 				pushData.id = uid;
 				super.push(pushData);
 			});

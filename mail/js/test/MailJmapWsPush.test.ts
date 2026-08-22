@@ -294,4 +294,65 @@ describe("MailJmap.processWsPushStates()", () =>
 		});
 		assert.deepEqual((jmap as any).wsPushStates["1"]["acc1"], {Email : "new-state"}, "the baseline must advance to the new state");
 	});
+
+	it("pushes a wildcard delete for a destroyed email - folder can never be resolved via JMAP after the fact", async() =>
+	{
+		const pushed : any[] = [];
+		const jmap = new MailJmap(createFakeApp(pushed));
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const t = {
+					Email : {
+						changes: (_args : any) => ({$ref : (_p : string) => []}),
+						get: (_args : any) => ({$ref : (_p : string) => []})
+					}
+				};
+				buildFn(t);
+				return [{
+					emailChanges: {destroyed : ["email2"]},
+					emailCreated: {list : []},
+					emailUpdated: {list : []}
+				}];
+			}
+		};
+		primeWsPushToken(jmap, "1", client);
+		(jmap as any).wsPushStates = {"1" : {acc1 : {Email : "old-state"}}};
+
+		await (jmap as any).processWsPushStates("1", "acc1", {Email : "new-state"});
+
+		assert.equal(pushed.length, 1);
+		assert.deepEqual(pushed[0], {app : "mail", id : "1::1::*::email2", type : "delete", acl : {}});
+	});
+
+	it("pushes a delete for a destroyed mailbox only when its path is already cached", async() =>
+	{
+		const pushed : any[] = [];
+		const jmap = new MailJmap(createFakeApp(pushed));
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				const t = {
+					Mailbox : {
+						changes: (_args : any) => ({$ref : (_p : string) => []}),
+						get: (_args : any) => ({$ref : (_p : string) => []})
+					}
+				};
+				buildFn(t);
+				return [{
+					mailboxChanges: {destroyed : ["gone-id", "uncached-id"]},
+					mailboxCreated: {list : []},
+					mailboxUpdated: {list : []}
+				}];
+			}
+		};
+		primeWsPushToken(jmap, "1", client);
+		(jmap as any).wsPushStates = {"1" : {acc1 : {Mailbox : "old-state"}}};
+		(jmap as any).folderPaths = {"1" : {"gone-id" : "INBOX/Sub"}};	// "uncached-id" deliberately absent
+
+		await (jmap as any).processWsPushStates("1", "acc1", {Mailbox : "new-state"});
+
+		assert.equal(pushed.length, 1, "the uncached folder must be silently skipped, not guessed at");
+		assert.deepEqual(pushed[0], {app : "mail", id : "1::1::gone-id", type : "delete", acl : {folder : "INBOX/Sub"}});
+	});
 });

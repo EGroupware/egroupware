@@ -1289,7 +1289,48 @@ export class MailJmap
 				}
 			}
 		}
+		// "destroyed" ids come straight from the *Changes responses already captured above (no
+		// Foo/get - see this method's opening comment for why). A destroyed email's folder can
+		// never be resolved via JMAP after the fact - MailApp.push() resolves it client-side
+		// instead, via a wildcard egw.data search (email ids are unique per account), see
+		// buildEmailDeletePush(). A destroyed mailbox's path, if this MailJmap instance ever
+		// resolved it before, is already in folderPaths' cache; if not, nothing was ever
+		// displayed for it to remove, so it's skipped.
+		for (const emailId of result.emailChanges?.destroyed || [])
+		{
+			pushPayload.push(this.buildEmailDeletePush(profileID, emailId));
+		}
+		for (const folderId of result.mailboxChanges?.destroyed || [])
+		{
+			const folder = this.folderPaths[profileID]?.[folderId];
+			if (folder)
+			{
+				pushPayload.push({
+					app: 'mail',
+					id: `${this.egw.user('account_id')}::${profileID}::${folderId}`,
+					type: 'delete',
+					acl: {folder}
+				});
+			}
+		}
 		return pushPayload;
+	}
+
+	/**
+	 * Build a "delete" push envelope for a destroyed email whose folder is unknowable (see
+	 * buildWsPushPayload()'s own comment for why) - the folderId segment is a literal "*"
+	 * wildcard; MailApp.push() must resolve it via egw.dataRefreshUIDs() instead of an exact-match
+	 * lookup, since email ids are unique per account. Shared by the WS path and (indirectly, same
+	 * id shape) Api\Mail\Imap\Jmap::pushCallback()'s webhook equivalent.
+	 */
+	private buildEmailDeletePush(profileID : string, emailId : string) : any
+	{
+		return {
+			app: 'mail',
+			id: `${this.egw.user('account_id')}::${profileID}::*::${emailId}`,
+			type: 'delete',
+			acl: {}
+		};
 	}
 
 	/** One Email/get result item -> a push() envelope - mirrors pushCallback()'s "email" switch branch. */
