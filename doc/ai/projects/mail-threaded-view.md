@@ -1,6 +1,6 @@
 # Mail: threaded/conversation view
 
-## Status: Phase 1 core work done (2026-08-22) - engine + bulk-action expansion + UI toggle landed, entirely feature-flagged off
+## Status: Phase 1 + Phase 2 core work done (2026-08-22) - engine, bulk-action expansion, UI toggle, and IMAP THREAD emulation all landed, entirely feature-flagged off
 
 Ralf asked for a plan for an optional "group messages by thread" view in the mail list, using
 `Et2Nextmatch`'s existing hierarchical-row support (as used by filemanager/infolog/addressbook),
@@ -174,8 +174,84 @@ correctly (confirmed via `Et2Nextmatch`'s existing `is_parent` fallback, no temp
 for that part), expanding a thread row fetches its real member messages, and toggling back off
 restores the flat list - all matching the design doc's predictions.
 
-Remaining Phase 1 gap: none identified. Phase 2 (IMAP `THREAD` via `JmapShim`) and Phase 3
-(live-update/push refinement) are still not started, per the phasing above.
+Remaining Phase 1 gap: none identified.
+
+### Phase 2 (2026-08-22, same day) - IMAP THREAD emulation in JmapShim - landed
+
+Ralf asked to continue straight into Phase 2 the same day. `JmapShim.php` (the local JMAP-shim
+server for plain-IMAP accounts) now speaks the same `collapseThreads`/`threadId`/`Thread/get`
+vocabulary as real JMAP/Stalwart, backed by the vendored Horde library's already-present RFC 5256
+`THREAD` command support:
+
+- **`jsonPath()` gained RFC 8620 §3.7's "*" wildcard-flattening extension.** This was a real,
+  previously-invisible gap: the shim's own result-reference resolver only ever supported plain
+  paths (`/ids`), never the `/list/*/emailIds` list-flattening form Phase 1's client code already
+  relies on for `Thread/get` -> `Email/get` chaining. Without this fix, every local-shim account
+  would have silently failed the exact same "hangs/breaks" way the two live-reproduced client-side
+  bugs did in Phase 1 - this is the server-side half of the same underlying JMAP result-reference
+  machinery. Fixed with a small recursive `jsonPathParts()` helper; a plain (no "*") path behaves
+  exactly as before.
+- **`threadCriteria($imap)`** (private) - the best available server algorithm
+  (`Horde_Imap_Client::THREAD_REFERENCES`/`THREAD_REFS`, via `queryCapability('THREAD')`),
+  `THREAD=ORDEREDSUBJECT`-only deliberately still never counted as "supported" (same Phase 1
+  decision, enforced again here since JmapShim has its own independent capability check).
+- **`threadMap($imap, $mailbox, &$context, $accountId)`** (private) - uid -> threadId for every
+  message in a mailbox, via one real `$imap->thread()` call (Horde's own IMAP THREAD command,
+  which transparently uses Horde's existing IMAP result cache - **no new caching layer was needed**,
+  resolving the plan doc's earlier open "windowing/caching strategy - not designed yet" concern:
+  `search()` in this same file already relies on that identical Horde-level caching for the flat
+  list path, so this isn't a new kind of cost, just the same pattern applied to a different Horde
+  command). threadId is simply the thread's root/"base" uid (Horde's own RFC 5256 terminology); a
+  singleton thread is its own threadId, matching real JMAP's `Email.threadId` semantics for an
+  unthreaded message. Memoized per mailbox in `$context` so one request batch never issues the
+  underlying THREAD command twice. Returns an empty map (safe no-op for every caller) when
+  `threadCriteria()` finds nothing usable - **defense in depth**, independent of and not trusting
+  the bootstrap-level `supportsThreading` gate: live-verified that even a deliberately miscalculated
+  client-side `supportsThreading:true` against a real THREAD-unsupported server degrades gracefully
+  to "no grouping" rather than attempting (and failing) the unsupported IMAP command.
+- **`emailQuery()`** gained `collapseThreads` support: fold the already-sorted id list to one
+  representative per thread (first occurrence in sort order, matching real JMAP's own
+  collapse-after-sort semantics) via `threadMap()`, before the existing position/limit windowing -
+  which itself needed no changes, since this file already did PHP-side windowing over a
+  fully-fetched, fully-sorted id list even for the plain flat-list case (`search()`'s result isn't
+  paginated at the IMAP-protocol level either) - so threading isn't a new *kind* of cost here, just
+  reapplying an existing pattern.
+- **`emailGet()`** gained a `threadId` property, computed via `threadMap()` only when actually
+  requested (`in_array('threadId', $properties)`) - mirrors the existing `$wantPreview`/`$wantMdn`/
+  `$wantBlobId` conditional-extra-work pattern already used for every other optional property.
+- **New `threadGet()`** (public, `Thread/get` in `dispatch()`'s switch) - needs our own local-only
+  `mailboxId` extension in its args (same reasoning as `emailGet()`'s: IMAP threads are per-mailbox,
+  not globally unique the way real JMAP thread ids are) - `mail/js/jmap.ts`'s three `Thread.get()`
+  call sites (`getThreadedRows()`/`getThreadMemberRows()`/`threadMemberRowIds()`) now add it
+  whenever `token.isLocal`, mirroring `fetchRealRows()`'s identical existing pattern for `Email/get`
+  exactly (never sent to real JMAP/Stalwart).
+- **`ProfileHandler::jmapBootstrap()`**'s `supportsThreading` gate now actually checks IMAP
+  capability for local/shim accounts (`hasCapability('THREAD=REFERENCES')`/`'THREAD=REFS'`) instead
+  of hard-coding `false` for every non-real-JMAP account the way Phase 1 left it.
+- Tests: `mail/tests/JmapShimThreadTest.php` (new, 14 cases) covers `jsonPath()`'s wildcard
+  extension directly (pure function, no mocking) and `threadCriteria()`/`threadMap()` via
+  ReflectionMethod against a mocked `Mail\Imap` connection, the same style
+  `JmapShimMailboxGetTest.php`/`JmapShimMailboxSetTest.php` already use. **`emailQuery()`/
+  `emailGet()`/`threadGet()` themselves are not directly unit-tested** - like `mailboxSet()` in the
+  sibling test file, they call `self::imapServer($accountId)` internally for any real accountId,
+  which needs a live DB connection this test suite doesn't have; only the private helpers that take
+  an already-constructed `$imap` are reachable. 3 new `mail/js/test/MailJmap.test.ts` cases cover
+  the client-side `mailboxId` local-only extension (added only when `token.isLocal`, mirroring
+  `fetchRealRows()`). Full mail JS suite (142 cases) and full mail PHPUnit suite (124 cases, same 2
+  pre-existing environmental DB-connection errors as before this work, confirmed unrelated) both
+  green; `tsc --noEmit` clean (same pre-existing unrelated error as before).
+- **Not live-verified against a real THREAD-capable IMAP server** - both available local-shim test
+  accounts (acc_id=42, 85, both real Dovecot) were checked live and neither advertises
+  `THREAD=REFERENCES`/`THREAD=REFS`/any THREAD capability at all (confirmed via a temporary debug
+  probe, removed before committing) - `supportsThreading` correctly resolves `false` for both,
+  proving the capability-detection and graceful-fallback paths work correctly, but the actual
+  THREAD-command grouping logic (`threadMap()`'s real `$imap->thread()` call) has only been verified
+  against PHPUnit mocks, never a live server that actually exercises it. **Flagged as a real,
+  outstanding gap** - needs testing against a THREAD-capable IMAP server (e.g. a Dovecot instance
+  with `mail_attribute_dict`/threading enabled, or any other REFERENCES/REFS-supporting IMAP
+  server) before this phase can be considered fully proven, whenever one becomes available.
+
+Phase 3 (live-update/push refinement) is still not started.
 
 Continuation of [[mail-jmap-modernization]] and [[mail-folder-tree-jmap]] - both established the
 precedent this design leans on hardest: **mail's row-listing is already 100% client-side JMAP**

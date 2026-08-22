@@ -6,8 +6,9 @@
  * accounts, talking directly to Stalwart's real JMAP server. Plain IMAP accounts
  * (Dovecot, Cyrus, ...) have no JMAP server at all, so this class acts as one -
  * but only implements the handful of methods MailJmap actually sends
- * (Mailbox/query, Email/query, Email/get, Email/set, plus RFC 8620 §3.7 result-reference
- * resolution for its batched request), backed directly by
+ * (Mailbox/query, Email/query, Email/get, Email/set, Thread/get, plus RFC 8620 §3.7
+ * result-reference resolution (including the "*" list-flattening extension Thread/get ->
+ * Email/get chaining needs) for its batched request), backed directly by
  * Api\Mail\Account::read()->imapServer() (a Horde_Imap_Client_Socket) via plain
  * IMAP search()/fetch()/store() calls. It deliberately does NOT go through
  * mail_ui or Api\Mail (mail_bo).
@@ -150,6 +151,9 @@ class JmapShim
 					case 'Email/get':
 						$result = self::emailGet($accountId, $args, $context);
 						break;
+					case 'Thread/get':
+						$result = self::threadGet($accountId, $args, $context);
+						break;
 					case 'Email/set':
 						$result = self::emailSet($accountId, $args);
 						break;
@@ -217,21 +221,63 @@ class JmapShim
 	/**
 	 * Minimal JSON-pointer-ish path lookup, e.g. "/ids" -> $value['ids']
 	 *
+	 * RFC 8620 §3.7 result references also allow a "*" path segment: "if the result of the
+	 * previous path is a list, apply the following path to each item, and concatenate all the
+	 * resulting lists into a single list". Needed for Thread/get -> Email/get chaining
+	 * ("/list/*\/emailIds": flatten every returned thread's emailIds into one combined id list) -
+	 * doc/ai/projects/mail-threaded-view.md, Phase 2. A plain (no "*") path behaves exactly as
+	 * before.
+	 *
 	 * @param array $value
 	 * @param string $path
 	 * @return mixed|null
 	 */
 	public static function jsonPath(array $value, string $path)
 	{
-		foreach (explode('/', ltrim($path, '/')) as $part)
+		return self::jsonPathParts($value, explode('/', ltrim($path, '/')));
+	}
+
+	/**
+	 * @param mixed $value
+	 * @param string[] $parts remaining path segments
+	 * @return mixed|null
+	 */
+	private static function jsonPathParts($value, array $parts)
+	{
+		if (!$parts)
 		{
-			if (!isset($value[$part]))
+			return $value;
+		}
+		$part = array_shift($parts);
+		if ($part === '*')
+		{
+			if (!is_array($value))
 			{
 				return null;
 			}
-			$value = $value[$part];
+			$result = [];
+			foreach ($value as $item)
+			{
+				$resolved = self::jsonPathParts($item, $parts);
+				if (is_array($resolved))
+				{
+					// the referenced field is itself a list (e.g. Thread.emailIds) - concatenate,
+					// don't nest, per RFC 8620 §3.7's "list-of-lists ... concatenated into a
+					// single list"
+					array_push($result, ...array_values($resolved));
+				}
+				elseif ($resolved !== null)
+				{
+					$result[] = $resolved;
+				}
+			}
+			return $result;
 		}
-		return $value;
+		if (!is_array($value) || !isset($value[$part]))
+		{
+			return null;
+		}
+		return self::jsonPathParts($value[$part], $parts);
 	}
 
 	/**
@@ -985,11 +1031,87 @@ class JmapShim
 	}
 
 	/**
+	 * The best server-side IMAP THREAD algorithm this account can use, or null if none - ORDEREDSUBJECT
+	 * is deliberately never returned even if it's the only one advertised (doc/ai/projects/
+	 * mail-threaded-view.md, Phase 1 decision: too weak - subject+date only, no real reply-chain
+	 * awareness - to offer as "threading support" at all), matching
+	 * ProfileHandler::jmapBootstrap()'s identical REFERENCES/REFS-only capability gate for
+	 * supportsThreading.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @return int|null one of Horde_Imap_Client::THREAD_REFERENCES/THREAD_REFS (both plain int
+	 *  constants - NOT ?string, which would silently coerce them to "2"/"3")
+	 */
+	private static function threadCriteria(\Horde_Imap_Client_Socket $imap) : ?int
+	{
+		$algorithms = (array)($imap->queryCapability('THREAD') ?: []);
+		if (in_array('REFERENCES', $algorithms, true))
+		{
+			return \Horde_Imap_Client::THREAD_REFERENCES;
+		}
+		if (in_array('REFS', $algorithms, true))
+		{
+			return \Horde_Imap_Client::THREAD_REFS;
+		}
+		return null;
+	}
+
+	/**
+	 * uid -> threadId map for every message in $mailbox, via the server's real IMAP THREAD command
+	 * (Horde_Imap_Client_Base::thread(), which transparently uses Horde's own IMAP result cache -
+	 * no bespoke caching needed here, same as search() below already relies on). Memoized per
+	 * mailbox in $context so one dispatch() batch never issues the underlying THREAD command twice
+	 * (Email/query+Email/get both wanting it, or a standalone Thread/get).
+	 *
+	 * threadId is simply the thread's lowest/root uid (Horde's own "base", RFC 5256 terminology) -
+	 * a singleton thread (no other message references it) has no base, so it's its own threadId,
+	 * matching real JMAP's Email.threadId semantics for an unthreaded message.
+	 *
+	 * Servers with no THREAD=REFERENCES/REFS support (threadCriteria() returns null) get an empty
+	 * map back - every lookup then falls back to "this message is its own thread", i.e. behaves
+	 * exactly like collapseThreads/threadId were never requested. Reachable only defensively: real
+	 * callers only ever ask for this once ProfileHandler::jmapBootstrap() has already gated
+	 * supportsThreading on the same capability check.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox
+	 * @param array &$context see emailQuery()
+	 * @param string $accountId
+	 * @return array uid(string) => threadId(string)
+	 */
+	private static function threadMap(\Horde_Imap_Client_Socket $imap, string $mailbox, array &$context, string $accountId) : array
+	{
+		if (isset($context['threadMap'][$accountId][$mailbox]))
+		{
+			return $context['threadMap'][$accountId][$mailbox];
+		}
+		$criteria = self::threadCriteria($imap);
+		if (!$criteria)
+		{
+			return $context['threadMap'][$accountId][$mailbox] = [];
+		}
+		$map = [];
+		foreach ($imap->thread($mailbox, ['criteria' => $criteria])->getThreads() as $group)
+		{
+			foreach ($group as $uid => $info)
+			{
+				$map[(string)$uid] = (string)($info->base ?? $uid);
+			}
+		}
+		return $context['threadMap'][$accountId][$mailbox] = $map;
+	}
+
+	/**
 	 * Email/query: translate MailJmap.buildFilter()'s filter tree + buildSort()'s sort into a
 	 * single Horde_Imap_Client::search() call, mirroring mail_ui::get_rows()'s pagination.
 	 *
+	 * collapseThreads (RFC 8621 §4.4.4, doc/ai/projects/mail-threaded-view.md Phase 2): fold the
+	 * already-sorted id list down to one representative per thread, keeping each thread's first
+	 * (in sort order) message - same semantics real JMAP servers use, computed here via
+	 * threadMap() instead of a server-side collapse operation IMAP has no equivalent for.
+	 *
 	 * @param string $accountId
-	 * @param array $args {filter: array, sort?: array, position?: int, limit?: int}
+	 * @param array $args {filter: array, sort?: array, position?: int, limit?: int, collapseThreads?: bool}
 	 * @param array &$context request-scoped state, used by the matching Email/get to know which
 	 *  mailbox the returned ids belong to (our ids are plain per-mailbox IMAP UIDs, not the
 	 *  globally-unique ids real JMAP requires - see the class docblock)
@@ -1017,6 +1139,23 @@ class JmapShim
 		]);
 		$ids = array_values($sorted['match']->ids ?? []);
 		$total = (int)($sorted['count'] ?? count($ids));
+
+		if (!empty($args['collapseThreads']))
+		{
+			$map = self::threadMap($imap, $mailbox, $context, $accountId);
+			$seenThreads = $ids = [];
+			foreach (array_values($sorted['match']->ids ?? []) as $uid)
+			{
+				$threadId = $map[(string)$uid] ?? (string)$uid;
+				if (isset($seenThreads[$threadId]))
+				{
+					continue;
+				}
+				$seenThreads[$threadId] = true;
+				$ids[] = $uid;
+			}
+			$total = count($ids);
+		}
 
 		$position = max(0, (int)($args['position'] ?? 0));
 		$limit = (int)($args['limit'] ?? 50) ?: 50;
@@ -1220,6 +1359,10 @@ class JmapShim
 		// "view header" fast path, no extra IMAP work needed (same self-describing scheme
 		// bodyPartToJmap() uses per-part, just with an empty partId - see download())
 		$wantBlobId = !$properties || in_array('blobId', $properties, true);
+		// doc/ai/projects/mail-threaded-view.md, Phase 2 - only computed (an extra, Horde-cached
+		// IMAP THREAD command via threadMap()) when actually requested, since every ordinary
+		// (non-threaded) row fetch has no use for it
+		$wantThreadId = !$properties || in_array('threadId', $properties, true);
 
 		if ($accountId === '0')
 		{
@@ -1283,13 +1426,19 @@ class JmapShim
 		// UID, NOT the order of the id-set given), so $results must NOT be iterated directly - that
 		// would silently undo Email/query's sort (e.g. turning "newest first" into "oldest first"
 		// within the page). Rebuild the list in the order Email/query already determined instead.
+		$threadMap = $wantThreadId ? self::threadMap($imap, $mailbox, $context, $accountId) : [];
 		$list = [];
 		foreach ($ids as $id)
 		{
 			if (($data = $results[(int)$id] ?? null))
 			{
 				/** @var \Horde_Imap_Client_Data_Fetch $data */
-				$list[] = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId);
+				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId);
+				if ($wantThreadId)
+				{
+					$email['threadId'] = $threadMap[$id] ?? $id;
+				}
+				$list[] = $email;
 			}
 		}
 		$found = array_column($list, 'id');
@@ -1299,6 +1448,65 @@ class JmapShim
 			'list' => $list,
 			'notFound' => array_values(array_diff($ids, $found)),
 		];
+	}
+
+	/**
+	 * Thread/get (RFC 8621 §3.3), doc/ai/projects/mail-threaded-view.md Phase 2.
+	 *
+	 * Requires our own local-only 'mailboxId' extension (same reasoning as Email/get's - IMAP
+	 * UIDs/threads are per-mailbox, not globally unique the way real JMAP ids are): a real JMAP
+	 * thread id is inherently account-scoped, not mailbox-scoped, but this IMAP-backed emulation
+	 * has no way to know which mailbox to search without it. MailJmap only ever calls this for a
+	 * thread row it already knows the mailboxId of (embedded in the thread row's own row_id, see
+	 * jmap.ts's emails2threadRow()/getThreadMemberRows()/threadMemberRowIds()), so the extension
+	 * is always available in practice - falls back to a preceding Email/query's remembered mailbox
+	 * in the same batch otherwise, mirroring emailGet()'s identical fallback.
+	 *
+	 * @param string $accountId
+	 * @param array $args {ids: string[], mailboxId?: string}
+	 * @param array &$context see emailQuery()
+	 * @return array {accountId: string, list: {id: string, emailIds: string[]}[], notFound: string[]}
+	 */
+	public static function threadGet(string $accountId, array $args, array &$context) : array
+	{
+		$ids = array_map('strval', (array)($args['ids'] ?? []));
+		if ($accountId === '0' || !$ids)
+		{
+			return ['accountId' => $accountId, 'list' => [], 'notFound' => $ids];
+		}
+		$imap = self::imapServer($accountId);
+		if (!empty($args['mailboxId']))
+		{
+			$mailbox = self::hordeMailbox($imap, self::folderPath((string)$args['mailboxId']));
+		}
+		else
+		{
+			$mailbox = $context['mailbox'][$accountId] ?? null;
+			if ($mailbox === null)
+			{
+				throw new \Exception('Thread/get without a preceding Email/query or a mailboxId for the same accountId in this request');
+			}
+		}
+
+		$membersByThread = [];
+		foreach (self::threadMap($imap, $mailbox, $context, $accountId) as $uid => $threadId)
+		{
+			$membersByThread[$threadId][] = $uid;
+		}
+
+		$list = $notFound = [];
+		foreach ($ids as $threadId)
+		{
+			if (isset($membersByThread[$threadId]))
+			{
+				$list[] = ['id' => $threadId, 'emailIds' => $membersByThread[$threadId]];
+			}
+			else
+			{
+				$notFound[] = $threadId;
+			}
+		}
+		return ['accountId' => $accountId, 'list' => $list, 'notFound' => $notFound];
 	}
 
 	/**

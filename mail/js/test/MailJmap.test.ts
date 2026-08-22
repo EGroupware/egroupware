@@ -1060,6 +1060,77 @@ describe("Thread/get -> Email/get chains - jmap-jam requestMany() invocation sha
 });
 
 /**
+ * doc/ai/projects/mail-threaded-view.md, Phase 2 - JmapShim::threadGet() needs the mailboxId
+ * local-only extension (same reasoning as Email/get's - IMAP UIDs/threads are per-mailbox, not
+ * globally unique the way real JMAP ids are); real JMAP (Stalwart) must never receive it, mirroring
+ * fetchRealRows()'s identical isLocal-gated extension on Email/get.
+ */
+describe("Thread/get - local-only 'mailboxId' extension (Phase 2)", () =>
+{
+	function createThreadArgsCapturingClient(capture : { threadArgs? : any })
+	{
+		return {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				let calledMailboxQuery = false;
+				const t = {
+					Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+					Thread: {get: (args : any) => { capture.threadArgs = args; return invocationStub(); }},
+					Email: {get: (_args : any) => invocationStub()},
+				};
+				buildFn(t);
+				if (calledMailboxQuery)
+				{
+					return [{ids: {ids: ["mbox1"]}}];
+				}
+				return [{thread: {list: []}, emails: {list: []}}];
+			}
+		};
+	}
+
+	it("adds mailboxId for a local/shim profile", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { threadArgs? : any } = {};
+		primeToken(jmap, "1", createThreadArgsCapturingClient(capture));
+		(jmap as any).tokens["1"].isLocal = true;
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		await jmap.fetchRows("exec", {parent_id: "1::1::mbox1::thread:t1"}, {selectedFolder: "1::INBOX"}, "widget", [], 0);
+
+		assert.equal(capture.threadArgs.mailboxId, "mbox1");
+	});
+
+	it("omits mailboxId for a real-JMAP (non-local) profile", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { threadArgs? : any } = {};
+		primeToken(jmap, "1", createThreadArgsCapturingClient(capture));
+		// primeToken()'s default isLocal is false
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		await jmap.fetchRows("exec", {parent_id: "1::1::mbox1::thread:t1"}, {selectedFolder: "1::INBOX"}, "widget", [], 0);
+
+		assert.isUndefined(capture.threadArgs.mailboxId);
+	});
+
+	it("expandThreadRowIds() also adds mailboxId only for a local/shim profile", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const capture : { threadArgs? : any } = {};
+		const threadRowId = "1::1::mbox1::thread:t1";
+		const app = (jmap as any).app;
+		app.egw = {...egw, dataGetUIDdata: (id : string) => id === threadRowId ? {data: {is_parent: true, thread_id: "t1"}} : undefined};
+		primeToken(jmap, "1", createThreadArgsCapturingClient(capture));
+		(jmap as any).tokens["1"].isLocal = true;
+
+		await jmap.expandThreadRowIds([threadRowId]);
+
+		assert.equal(capture.threadArgs.mailboxId, "mbox1");
+	});
+});
+
+/**
  * doc/ai/projects/mail-threaded-view.md, Phase 1 - dead code in production until
  * ProfileHandler::THREADING_ENABLED ships (nothing sets query.threaded, and no token reports
  * supportsThreading:true yet either way), but exercised directly here via getRows()/fetchRows()'s

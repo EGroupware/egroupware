@@ -361,7 +361,15 @@ export class MailJmap
 		// unrelated, already-documented sibling instance of this exact jmap-jam contract).
 		const [{threads, members}] = await client.requestMany((t) =>
 		{
-			const threads = t.Thread.get({accountId: token.accountId, ids: threadIds});
+			const threadArgs : any = {accountId: token.accountId, ids: threadIds};
+			if (token.isLocal)
+			{
+				// JmapShim's ids are plain per-mailbox IMAP UIDs, not globally-unique real-JMAP
+				// ids - Thread/get needs this local-only extension to know which mailbox to
+				// search (see JmapShim::threadGet()); real JMAP (Stalwart) never receives it
+				threadArgs.mailboxId = mailboxId;
+			}
+			const threads = t.Thread.get(threadArgs);
 			const members = t.Email.get({
 				accountId: token.accountId,
 				ids: threads.$ref('/list/*/emailIds'),
@@ -426,7 +434,13 @@ export class MailJmap
 		// identical comment on the same jmap-jam requestMany() contract
 		const [{thread, emails}] = await client.requestMany((t) =>
 		{
-			const thread = t.Thread.get({accountId: token.accountId, ids: [threadId]});
+			const threadArgs : any = {accountId: token.accountId, ids: [threadId]};
+			if (token.isLocal)
+			{
+				// see getThreadedRows()'s identical comment
+				threadArgs.mailboxId = mailboxId;
+			}
+			const thread = t.Thread.get(threadArgs);
 			const emails = t.Email.get({
 				accountId: token.accountId,
 				ids: thread.$ref('/list/*/emailIds'),
@@ -503,7 +517,13 @@ export class MailJmap
 			// identical comment on the same jmap-jam requestMany() contract
 			const [{thread, emails}] = await client.requestMany((t) =>
 			{
-				const thread = t.Thread.get({accountId: token.accountId, ids: [threadId]});
+				const threadArgs : any = {accountId: token.accountId, ids: [threadId]};
+				if (token.isLocal)
+				{
+					// see getThreadedRows()'s identical comment
+					threadArgs.mailboxId = mailboxId;
+				}
+				const thread = t.Thread.get(threadArgs);
 				const emails = t.Email.get({
 					accountId: token.accountId,
 					ids: thread.$ref('/list/*/emailIds'),
