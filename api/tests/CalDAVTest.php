@@ -433,7 +433,7 @@ abstract class CalDAVTest extends TestCase
 	 */
 	protected static function createUsersACL(array &$users, $app = 'calendar')
 	{
-		foreach($users as $user => $data)
+		foreach($users as $user => &$data)
 		{
 			$data['id'] = self::createUser($user, $data);
 
@@ -442,6 +442,7 @@ abstract class CalDAVTest extends TestCase
 				self::addAcl('calendar', $data['id'], $grantee, $rights);
 			}
 		}
+		unset($data);
 	}
 
 	/**

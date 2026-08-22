@@ -212,6 +212,53 @@ abstract class RestBase extends CalDAVTest
 	}
 
 	/**
+	 * Full URL of an app's bare (not user-prefixed) REST collection, e.g. "/tracker/".
+	 *
+	 * @param string $app eg. "tracker"
+	 * @return string
+	 */
+	protected function appUrl(string $app) : string
+	{
+		return $this->url('/'.$app.'/');
+	}
+
+	/**
+	 * Raw "Location" response header, e.g. from a POST/PUT that created a resource.
+	 *
+	 * Unlike idFromResponse()/resourceIdFromResponse(), this returns the header verbatim
+	 * (server-relative or absolute, depending on the server) for callers that need to build
+	 * a full URL themselves, eg. by stripping a "/groupdav.php" prefix first.
+	 *
+	 * @param ResponseInterface $response
+	 * @return string empty string if no Location header is present
+	 */
+	protected function locationPath(ResponseInterface $response) : string
+	{
+		return $response->getHeaderLine('Location');
+	}
+
+	/**
+	 * Assert that a JSON response body contains the given key => value pairs.
+	 *
+	 * Uses loose comparison (assertEquals), as REST responses commonly round-trip
+	 * numeric/boolean fields through the database as strings.
+	 *
+	 * @param array $expected key => expected value pairs
+	 * @param ResponseInterface $response
+	 * @param string $message additional message prefix
+	 */
+	protected function assertJsonFields(array $expected, ResponseInterface $response, string $message='') : void
+	{
+		$body = $this->jsonDecode($response);
+		$prefix = $message !== '' ? $message.': ' : '';
+		foreach ($expected as $key => $value)
+		{
+			$this->assertArrayHasKey($key, $body, $prefix."Missing expected field '$key'");
+			$this->assertEquals($value, $body[$key], $prefix."Field '$key' mismatch");
+		}
+	}
+
+	/**
 	 * POST a JsEvent to a user's calendar collection to create a new event.
 	 *
 	 * By default "Prefer: return=representation" is requested, so the response
