@@ -26,7 +26,8 @@ import {MailCompose} from "./compose";
 import {isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
 import {buildErrorNode, buildFolderLevel, FolderTreeNode} from "./folderTree";
-import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
+// egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
+// unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 import type {Et2Details} from "../../api/js/etemplate/Layout/Et2Details/Et2Details";
 import type {Et2Tree} from "../../api/js/etemplate/Et2Tree/Et2Tree";
@@ -5353,11 +5354,18 @@ export class MailApp extends EgwApp
 	 *
 	 * Choose the right common right option for common ACL selecBox
 	 *
+	 * Named aclRightChanged() rather than aclCommonRights() to avoid colliding with the
+	 * aclCommonRights: any[] property above - a later same-named class member always
+	 * overwrites an earlier one on the prototype (same root cause as the compose/
+	 * MailCompose collision, see project-mail-jquery-removal memory), which had made
+	 * every `this.aclCommonRights.xxx` read below actually call this method's own
+	 * `.length`/(nonexistent) `.indexOf` instead of the real array.
+	 *
 	 * @param {Event} event
 	 * @param {widget} widget radioButton rights
 	 *
 	 */
-	aclCommonRights(event, widget)
+	aclRightChanged(event, widget)
 	{
 		const rowId = widget.id.replace(/[^0-9.]+/g, '');
 		const aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
@@ -6619,64 +6627,6 @@ export class MailApp extends EgwApp
 	{
 		const acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
-	}
-
-	/**
-	 * Range selection for old dhtmlx tree currently NOT used
-	 *
-	 * @param {type} _ids
-	 * @param {type} _widget
-	 * @returns {undefined}
-	 */
-	folderManagementOnSelect(_ids, _widget)
-	{
-		// Flag to reset selected items
-		let resetSelection = false;
-
-		const self = this;
-
-		/**
-		 * helper function to multiselect range of nodes in same level
-		 *
-		 * @param {string} _a start node id
-		 * @param {string} _b end node id
-		 * @param {string} _branch total node ids in the level
-		 */
-		const rangeSelector = (_a,_b, _branch) =>
-		{
-			const branchItems = _branch.split(_widget.input.dlmtr);
-			let _aIndex = _widget.input.getIndexById(_a);
-			let _bIndex = _widget.input.getIndexById(_b);
-			if (_bIndex<_aIndex)
-			{
-				const tmpIndex = _aIndex;
-				_aIndex = _bIndex;
-				_bIndex = tmpIndex;
-			}
-			for(let i =_aIndex;i<=_bIndex;i++)
-			{
-				self.folderMgmt_setCheckbox(_widget, branchItems[i], !_widget.input.isItemChecked(branchItems[i]));
-			}
-		};
-
-		// extract items ids
-		const itemIds = _ids.split(_widget.input.dlmtr);
-
-		if(itemIds.length == 2) // there's a range selected
-		{
-			const branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
-			// Set range of selected/unselected
-			rangeSelector(itemIds[0], itemIds[1], branch);
-		}
-		else if(itemIds.length != 1)
-		{
-			resetSelection = true;
-		}
-
-		if (resetSelection)
-		{
-			_widget.input._unselectItems();
-		}
 	}
 
 	/**

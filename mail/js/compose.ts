@@ -10,8 +10,9 @@
 
 import type {MailApp} from "./app";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
-import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
-import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
+// IegwAppLocal/egw/egw_getFramework are ambient globals (declare global {} in
+// egw_global.d.ts, unconditionally included via tsconfig's "**/*.d.ts") - no import
+// needed or possible.
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 

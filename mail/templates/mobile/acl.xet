@@ -36,15 +36,15 @@
 									</et2-hbox>
 
 									<et2-hbox  class="aclDetails">
-										<et2-checkbox  align="center" id="${row}[acl_l]" onchange="app.mail.aclCommonRights" label="L"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_r]" onchange="app.mail.aclCommonRights" label="R"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_s]" onchange="app.mail.aclCommonRights" label="S"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_w]" onchange="app.mail.aclCommonRights" label="W"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_i]" onchange="app.mail.aclCommonRights" label="I"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_p]" onchange="app.mail.aclCommonRights" label="P"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_c]" onchange="app.mail.aclCommonRights" label="C"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_d]" onchange="app.mail.aclCommonRights" label="D"></et2-checkbox>
-										<et2-checkbox  align="center" id="${row}[acl_a]" onchange="app.mail.aclCommonRights" label="A"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_l]" onchange="app.mail.aclRightChanged" label="L"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_r]" onchange="app.mail.aclRightChanged" label="R"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_s]" onchange="app.mail.aclRightChanged" label="S"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_w]" onchange="app.mail.aclRightChanged" label="W"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_i]" onchange="app.mail.aclRightChanged" label="I"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_p]" onchange="app.mail.aclRightChanged" label="P"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_c]" onchange="app.mail.aclRightChanged" label="C"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_d]" onchange="app.mail.aclRightChanged" label="D"></et2-checkbox>
+										<et2-checkbox  align="center" id="${row}[acl_a]" onchange="app.mail.aclRightChanged" label="A"></et2-checkbox>
 									</et2-hbox>
 								</et2-vbox>
 							</row>
