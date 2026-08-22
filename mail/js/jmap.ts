@@ -35,8 +35,9 @@ interface JmapToken
 	isLocal : boolean;
 	// true if the server has no working push-server (Api\Json\Push::onlyFallback()) - in that case,
 	// and only in that case, MailJmap tries JamWebSocketClient's client-side onPush() instead of the
-	// classic server-side JMAP push subscription (mail_ui::ajax_enablePush()), since there's nothing
-	// working to lose: no regression risk even if a given browser's WebSocket also doesn't connect.
+	// classic server-side JMAP push subscription (ProfileHandler::jmapBootstrap() calls that one
+	// directly, server-side), since there's nothing working to lose: no regression risk even if a
+	// given browser's WebSocket also doesn't connect.
 	enableWsPush : boolean;
 	customLabels : Record<string, {name : string, color : string, icon? : string}>;
 	trashFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Trash" - see deleteMessages()
@@ -160,10 +161,10 @@ export class MailJmap
 	private clients : Record<string, JamWebSocketClient> = {};
 	private refreshTimers : Record<string, number> = {};
 	private ineligibleUntil : Record<string, number> = {};
-	// whether ajax_enablePush has already been (fire-and-forget) triggered for the profile's
-	// current token - reset whenever ensureToken() obtains a fresh token, so the mail server's
-	// push subscription/token still gets renewed well within its expiry without doing so on
-	// every single row fetch (see fetchRows())
+	// whether enablePushOnce() has already (fire-and-forget) registered client-side WS push for the
+	// profile's current token - reset whenever ensureToken() obtains a fresh token. Only relevant
+	// when token.enableWsPush is true; the classic server-side path is handled entirely by
+	// ProfileHandler::jmapBootstrap() and needs no client-side bookkeeping at all.
 	private pushEnabled : Record<string, boolean> = {};
 	// "profileID::folder/path" -> JMAP Mailbox id
 	private mailboxIds : Record<string, string> = {};
@@ -1098,44 +1099,32 @@ export class MailJmap
 	}
 
 	/**
-	 * Fire-and-forget (re-)enable push for $selectedFolder's account, at most once per profile per
-	 * JMAP-token lifetime (reset by ensureToken() whenever it gets a fresh token - comfortably more
-	 * often than the mail server's own push subscription/token needs renewing, without doing so on
-	 * every single row fetch like the old server-side get_rows() did).
+	 * Fire-and-forget (re-)enable client-side WS push for $selectedFolder's account, at most once
+	 * per profile per JMAP-token lifetime (reset by ensureToken() whenever it gets a fresh token).
 	 *
-	 * Two mutually-exclusive paths, chosen by token.enableWsPush (Api\Json\Push::onlyFallback(),
-	 * see ProfileHandler::jmapBootstrap()):
-	 * - false (the normal/working case): the classic server-side path, covering both push
-	 *   mechanisms Api\Mail\Imap\PushIface implementors may use - Stalwart's native JMAP push
-	 *   subscriptions, and plain IMAP/Dovecot's mailbox-metadata push token registration (opt-in via
-	 *   the "imap_hosts_with_push" site config) - mail_ui::ajax_enablePush() itself just calls
-	 *   whichever the account's actual server class implements.
-	 * - true (no working push-server for this instance, e.g. shared hosting with no push-server
-	 *   process): try enableWsPush() instead - client-side JMAP push over the same WebSocket
-	 *   connection already used for requests, no server-side subscription/webhook needed at all.
-	 *   No regression risk either way: if this browser's WebSocket doesn't connect, the account had
-	 *   no working push before this either.
+	 * Only does anything when token.enableWsPush is true (Api\Json\Push::onlyFallback(), see
+	 * ProfileHandler::jmapBootstrap()) - i.e. no working push-server for this instance (e.g. shared
+	 * hosting with no push-server process), so it's worth trying client-side JMAP push over the
+	 * same WebSocket connection already used for requests instead. No regression risk either way:
+	 * if this browser's WebSocket doesn't connect, the account had no working push before this
+	 * either.
+	 *
+	 * The classic server-side path (Stalwart's native JMAP push subscriptions, or plain
+	 * IMAP/Dovecot's mailbox-metadata push token registration) needs no client-side trigger at
+	 * all - ProfileHandler::jmapBootstrap() calls it directly, server-side, whenever it's not
+	 * relying on this WS path instead.
 	 */
 	private enablePushOnce(selectedFolder : string) : void
 	{
 		const profileID = selectedFolder.split('::', 1)[0];
-		if (this.pushEnabled[profileID])
+		if (this.pushEnabled[profileID] || !this.tokens[profileID]?.enableWsPush)
 		{
 			return;
 		}
 		this.pushEnabled[profileID] = true;
-		if (this.tokens[profileID]?.enableWsPush)
+		this.enableWsPush(profileID).catch((e) =>
 		{
-			this.enableWsPush(profileID).catch((e) =>
-			{
-				console.error('MailJmap.enablePushOnce(): client-side WS push setup failed', e);
-				delete this.pushEnabled[profileID];
-			});
-			return;
-		}
-		this.egw.request('mail.mail_ui.ajax_enablePush', [profileID, selectedFolder]).catch((e) =>
-		{
-			console.error('MailJmap.enablePushOnce(): failed', e);
+			console.error('MailJmap.enablePushOnce(): client-side WS push setup failed', e);
 			delete this.pushEnabled[profileID];
 		});
 	}

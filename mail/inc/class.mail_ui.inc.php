@@ -2437,19 +2437,6 @@ class mail_ui
 	}
 
 	/**
-	 * (Re-)enable server push for a profile, if its mail server supports it
-	 *
-	 * @param int|string $icServerID profile / server ID
-	 * @param string|null $selectedFolder "profileID::folder/path", used to seed Stalwart's
-	 *  "current folder" for its push-state diffing - defaults to INBOX if not given
-	 * @return nothing
-	 */
-	public static function ajax_enablePush($icServerID, $selectedFolder=null)
-	{
-		ProfileHandler::enablePush($icServerID, $selectedFolder);
-	}
-
-	/**
 	 * empty changeProfile - its called via json, so the function must start with ajax (or the class-name must contain ajax)
 	 *
 	 * Made static to NOT call __construct, as it would connect to old server, before going to new one

@@ -16,10 +16,11 @@
  *
  * onPush() additionally exposes RFC 8887's WebSocket-native push channel (WebSocketPushEnable/
  * WebSocketPushDisable/StateChange) - purely additive and forward-looking, unrelated to and not a
- * replacement for EGroupware's existing server-side JMAP push (mail_ui::ajax_enablePush(),
- * api/jmapPush.php, the Dovecot mailbox-metadata push-token mechanism), which this file doesn't
- * touch. There is no HTTP-transport equivalent of onPush() - jmap-jam's own connectEventSource() is
- * the unrelated, unaffected way to get push over HTTP.
+ * replacement for EGroupware's existing server-side JMAP push (ProfileHandler::jmapBootstrap()'s
+ * direct Api\Mail\Imap\PushIface::enablePush() call, api/jmapPush.php, the Dovecot mailbox-metadata
+ * push-token mechanism), which this file doesn't touch. There is no HTTP-transport equivalent of
+ * onPush() - jmap-jam's own connectEventSource() is the unrelated, unaffected way to get push over
+ * HTTP.
  *
  * Not wired into MailJmap/mail-app yet - see that doc for the full design rationale and phasing.
  *

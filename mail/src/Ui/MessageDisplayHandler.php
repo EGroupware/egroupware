@@ -67,8 +67,8 @@ class MessageDisplayHandler
 	 * callers that rely on it defaulting to whatever profile this session's mail_bo already has
 	 * active - but is required for correctness when called from the client-side JMAP body-fetch
 	 * path (mail/js/jmap.ts's MailJmap.fetchBody()), which has no such session-affinity guarantee
-	 * (same pattern as mail_ui::ajax_enablePush(), which took an explicit icServerID for the same
-	 * reason).
+	 * (same pattern as ProfileHandler::enablePush(), which takes an explicit icServerID for the
+	 * same reason).
 	 */
 	public function displayImage() : void
 	{

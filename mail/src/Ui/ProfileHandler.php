@@ -60,7 +60,8 @@ class ProfileHandler
 				$response->data($bootstrap);
 				return;
 			}
-			$imapServer = Mail\Account::read($icServerID ?: mail_ui::$icServerID)->imapServer();
+			$resolvedID = $icServerID ?: mail_ui::$icServerID;
+			$imapServer = Mail\Account::read($resolvedID)->imapServer();
 			$local = !($imapServer instanceof Mail\Imap\Stalwart);
 			$bootstrap = $local
 				// any plain IMAP account is served by our own local JMAP shim
@@ -87,11 +88,14 @@ class ProfileHandler
 				$bootstrap['outboxFolder'] = $imapServer->acc_folder_outbox ?: 'Outbox';
 				// No working push-server for this instance (eg. shared hosting with none installed)?
 				// Tell the client to try JamWebSocketClient's client-side onPush() instead of the
-				// classic server-side JMAP push subscription (mail_ui::ajax_enablePush()) - no
+				// classic server-side JMAP push subscription (self::enablePush() below) - no
 				// regression risk either way: if a given browser's WebSocket also doesn't connect,
 				// this account had no working push before this either. See
 				// doc/ai/projects/mail-jmap-jam-websocket.md for the full design.
-				$bootstrap['enableWsPush'] = Api\Json\Push::onlyFallback();
+				if (!($bootstrap['enableWsPush'] = Api\Json\Push::onlyFallback()))
+				{
+					self::enablePush($imapServer, $resolvedID);
+				}
 			}
 			$response->data($bootstrap);
 		}
@@ -127,11 +131,15 @@ class ProfileHandler
 	}
 
 	/**
-	 * (Re-)enable server push for a profile, if its mail server supports it
+	 * (Re-)enable server push for a profile, if its mail server supports it and we're not
+	 * relying on client-side WS push instead (see jmapBootstrap()'s "enableWsPush" gate)
 	 *
-	 * Ported from the old get_rows()'s per-fetch call: now triggered client-side (fire-and-forget)
-	 * from mail/js/jmap.ts's MailJmap.enablePushOnce(), at most once per profile per JMAP-token
-	 * lifetime rather than on every row fetch.
+	 * Called directly from jmapBootstrap() - i.e. at most once per profile per JMAP-token
+	 * lifetime, same as jmapBootstrap() itself, rather than on every row fetch like the old
+	 * server-side get_rows() did. Originally triggered by a separate fire-and-forget client
+	 * call (mail_ui::ajax_enablePush()); folded in here since get_rows() removal left that as
+	 * the only caller and a redundant round-trip for something jmapBootstrap() already knows
+	 * how to do with the $imapServer object it already has in hand.
 	 *
 	 * Covers both push mechanisms Api\Mail\Imap\PushIface implementors may use: Stalwart's native
 	 * JMAP push subscriptions (Api\Mail\Imap\Jmap::enablePush(), always available), and plain
@@ -139,24 +147,21 @@ class ProfileHandler
 	 * opt-in via the "imap_hosts_with_push" site config) - whichever the account's server class
 	 * actually implements.
 	 *
-	 * Deliberately uses the same lightweight Mail\Account::read()->imapServer() object
-	 * jmapBootstrap() already uses (not mail_ui::changeProfile()), so this has no side effect on
-	 * the user's "active profile" session state - it may run for a profile that isn't the one
-	 * currently being viewed.
+	 * No selected-folder context is available this early (jmapBootstrap() runs before the
+	 * client has fetched any rows) - Stalwart's "current folder" push-state seed defaults to
+	 * INBOX, which only affects the very first push event right after bootstrap; state-diffing
+	 * self-corrects from there.
 	 *
+	 * @param Api\Mail\Imap $imapServer already-resolved server object (jmapBootstrap() has one)
 	 * @param int|string $icServerID profile / server ID
-	 * @param string|null $selectedFolder "profileID::folder/path", used to seed Stalwart's
-	 *  "current folder" for its push-state diffing - defaults to INBOX if not given
 	 */
-	public static function enablePush($icServerID, $selectedFolder=null) : void
+	private static function enablePush($imapServer, $icServerID) : void
 	{
 		try
 		{
-			$imapServer = Mail\Account::read($icServerID)->imapServer();
 			if ($imapServer instanceof Api\Mail\Imap\PushIface && $imapServer->pushAvailable())
 			{
-				$folder = explode(mail_ui::$delimiter, (string)$selectedFolder, 2)[1] ?? 'INBOX';
-				$imapServer->enablePush(null, $icServerID.mail_ui::$delimiter.($folder ?: 'INBOX'));
+				$imapServer->enablePush(null, $icServerID.mail_ui::$delimiter.'INBOX');
 			}
 		}
 		catch (\Exception $e)
