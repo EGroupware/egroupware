@@ -211,8 +211,15 @@ var mailvelope : any;
 
 var framework : any;
 
+// set once during bootstrap from the loading <script>'s data-url attribute, see api/js/jsapi/egw.js
+var egw_webserverUrl : string;
+
 function egw_refresh(_msg : string, app : string, id? : string|number, _type?, targetapp?, replace?, _with?, msgtype?);
 function egw_open();
+
+// implemented in api/js/jsapi/egw.min.js (legacy, not yet ported to TS)
+function egw_openWindowCentered(_url : string, _windowName? : string, _width? : number|string, _height? : number|string) : Window|null;
+function egw_openWindowCentered2(_url : string, _windowName? : string, _width? : number|string, _height? : number|string, _status? : string, _app? : string|boolean, _returnID? : boolean) : Window|null;
 
 function egw_getWindowLeft() : number;
 function egw_getWindowTop() : number;

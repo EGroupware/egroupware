@@ -2723,9 +2723,9 @@ export class MailApp extends EgwApp
 		{
 			egw(window).close();
 		}
-		else if (typeof this.et2_view!='undefined' && typeof this.et2_view.close == 'function')
+		else if (typeof this.et2_view!='undefined' && typeof (this.et2_view as any).close == 'function')
 		{
-			this.et2_view.close();
+			(this.et2_view as any).close();
 		}
 	}
 
@@ -4180,7 +4180,7 @@ export class MailApp extends EgwApp
 
 		if (this.isMainWindow)
 		{
-			mail_id = this.currentlyFocussed || app.mail.currentlyFocussed;
+			mail_id = this.currentlyFocussed || (app.mail as MailApp).currentlyFocussed;
 			const p = widget.getParent();
 			attachments = p.getArrayMgr("content").data;
 		}
@@ -4266,7 +4266,7 @@ export class MailApp extends EgwApp
 						is_winmail: attachment.winmailFlag,
 						smime_type: attachment.smime_type ?? ''
 					}).toString();
-					window.etemplate2.prototype.download(url);
+					etemplate2.prototype.download(url);
 				};
 				// Fast client-side JMAP path for a single attachment with a known blobId (set by
 				// mail_ui::jmapAttachmentsToLegacy(), both backends). downloadAllToZip stays on the
