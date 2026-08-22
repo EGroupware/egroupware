@@ -161,7 +161,7 @@ export class MailCompose
 				Et2Dialog.WARNING_MESSAGE);
 			const content = this.et2.getArrayMgr('content');
 			const attachments = this.et2.getWidgetById('attachments');
-			for (let i in content.data.attachments)
+			for (const i in content.data.attachments)
 			{
 				if (content.data.attachments[i] == null)
 				{
@@ -463,15 +463,15 @@ export class MailCompose
 			const self = this;
 			wait.then(() =>
 			{
-				this.app.mailvelopeGetCheckRecipients().then(function (_recipients)
+				this.app.mailvelopeGetCheckRecipients().then((_recipients) =>
 				{
 					return self.app.mailvelope_editor.encrypt(_recipients);
-				}).then(function (_armored)
+				}).then((_armored) =>
 				{
 					self.et2.getWidgetById('mimeType').set_value(false);
 					self.et2.getWidgetById('mail_plaintext').set_disabled(false);
 					self.et2.getWidgetById('mail_plaintext').set_value(_armored);
-				}).catch(function (_err)
+				}).catch((_err) =>
 				{
 					self.egw.message(_err.message, 'error');
 				});
@@ -513,7 +513,7 @@ export class MailCompose
 
 				wait.push(new Promise((resolve) =>
 				{
-					this.app.integrateCheckAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook, function (args)
+					this.app.integrateCheckAppEntry(title, integApps[index].substr(3), subject.get_value(), '', mail_import_hook, (args) =>
 					{
 						const oldValue = to_integrate_ids.get_value() || [];
 						to_integrate_ids.set_value([integApps[index] + ":" + args.entryid, ...oldValue]);
@@ -594,9 +594,9 @@ export class MailCompose
 		}
 		else // need to save as draft first
 		{
-			this.saveAsDraft(null, 'autosaving').then(function(){
+			this.saveAsDraft(null, 'autosaving').then(() =>{
 				self.saveDraft2fm(_action);
-			}, function(){
+			}, () =>{
 				void Et2Dialog.alert('You need to save the message as draft first before to be able to save it into VFS', 'Save to filemanager', 'info');
 			});
 		}
@@ -614,7 +614,7 @@ export class MailCompose
 	saveAsDraft(_egw_action, _action)
 	{
 		const self = this;
-		return new Promise(function(_resolve, _reject){
+		return new Promise((_resolve, _reject) =>{
 			const content = self.et2.getArrayMgr('content').data;
 			let action = _action;
 			if (_egw_action && _action !== 'autosaving')
@@ -629,10 +629,10 @@ export class MailCompose
 				// if we compose an encrypted message, we have to get the encrypted content
 				if (self.app.mailvelope_editor)
 				{
-					self.app.mailvelope_editor.encrypt([]).then(function(_armored)
+					self.app.mailvelope_editor.encrypt([]).then((_armored) =>
 					{
 						content['mail_plaintext'] = _armored;
-						void self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],function(_data){
+						void self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],(_data) =>{
 							const res = self.savingDraft_response(_data,action);
 							if (res)
 							{
@@ -643,7 +643,7 @@ export class MailCompose
 								_reject();
 							}
 						}).sendRequest(true);
-					}, function(_err)
+					}, (_err) =>
 					{
 						self.egw.message(_err.message, 'error');
 						_reject();
@@ -653,7 +653,7 @@ export class MailCompose
 				else
 				{
 					// Send request through framework main window, so it works even if the main window is reloaded
-					egw_getFramework().egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], function (_data)
+					egw_getFramework().egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], (_data) =>
 					{
 						const res = self.savingDraft_response(_data, action);
 						if (res)

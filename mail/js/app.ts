@@ -278,13 +278,13 @@ export class MailApp extends EgwApp
 				this.vacationFilterStatusChange();
 				break;
 			case 'mail.index':
-				document.querySelector('iframe#mail-index_messageIFRAME')?.addEventListener('load', function ()
+				document.querySelector('iframe#mail-index_messageIFRAME')?.addEventListener('load', () =>
 				{
 					// decrypt preview body if mailvelope is available
 					self.mailvelopeAvailable(self.mailvelopeDisplay);
 					self.preparePrint();
 				});
-				var nm = this.et2.getWidgetById(this.nm_index);
+				const nm = this.et2.getWidgetById(this.nm_index);
 				this.isMainWindow = true;
 
 				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
@@ -293,11 +293,11 @@ export class MailApp extends EgwApp
 				this.updateFolderQuickAction('copy');
 
 				// Stop list from focussing next row on keypress
-				let aom = egw_getObjectManager('mail').getObjectById('nm');
+				const aom = egw_getObjectManager('mail').getObjectById('nm');
 				// @ts-ignore
 				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
 
-				let splitter = this.et2.getWidgetById('mailSplitter');
+				const splitter = this.et2.getWidgetById('mailSplitter');
 				if (splitter && egw.preference('previewPane', 'mail') == 'expand')
 				{
 					splitter.style.setProperty('--max', '100%');
@@ -430,17 +430,17 @@ export class MailApp extends EgwApp
 
 				this.compose.subject2title();
 
-				var that = this;
-				var plainText = this.et2.getWidgetById('mail_plaintext');
-				var textAreaWidget = this.et2.getWidgetById('mail_htmltext');
+				const that = this;
+				const plainText = this.et2.getWidgetById('mail_plaintext');
+				const textAreaWidget = this.et2.getWidgetById('mail_htmltext');
 
 				/* Control focus actions on subject to handle expanders properly.*/
-				document.querySelector('#mail-compose_subject')?.addEventListener('focus', function(){
+				document.querySelector('#mail-compose_subject')?.addEventListener('focus', () =>{
 					that.compose.fieldExpanderInit();
 					that.compose.fieldExpander();
 				});
 				/*Trigger after the TinyMCE is fully loaded*/
-				document.querySelector('#mail-compose')?.addEventListener('load', function() {
+				document.querySelector('#mail-compose')?.addEventListener('load', () => {
 
 					if (textAreaWidget && textAreaWidget.tinymce)
 					{
@@ -448,7 +448,7 @@ export class MailApp extends EgwApp
 						{
 							if (textAreaWidget.editor)
 							{
-								textAreaWidget.editor.iframeElement.contentWindow.document.addEventListener('dragenter', function ()
+								textAreaWidget.editor.iframeElement.contentWindow.document.addEventListener('dragenter', () =>
 								{
 									// anything to bind on tinymce iframe
 								});
@@ -462,7 +462,7 @@ export class MailApp extends EgwApp
 				});
 
 				//Resize compose after window resize to not getting scrollbar
-				window.addEventListener('resize', function(e) {
+				window.addEventListener('resize', (e) => {
 					// Stop immediately the resize event if we are in mobile template
 					if (egwIsMobile())
 					{
@@ -491,7 +491,7 @@ export class MailApp extends EgwApp
 						const isHidden = plainTextNode.offsetWidth === 0 && plainTextNode.offsetHeight === 0;
 						if (typeof plainTextNode.setSelectionRange !='undefined' && !isHidden)
 						{
-							setTimeout(function ()
+							setTimeout(() =>
 							{
 								plainText.getDOMNode().setSelectionRange(0, 0)
 								plainText.focus();
@@ -501,7 +501,7 @@ export class MailApp extends EgwApp
 					}
 					else if(textAreaWidget && textAreaWidget.tinymce)
 					{
-						textAreaWidget.tinymce.then(()=>{setTimeout(function(){textAreaWidget.editor.focus()}, 500);});
+						textAreaWidget.tinymce.then(()=>{setTimeout(() =>{textAreaWidget.editor.focus()}, 500);});
 					}
 				}
 				else if(to)
@@ -635,8 +635,8 @@ export class MailApp extends EgwApp
 		// don't care about other apps data, reimplement if your app does care eg. calendar
 		if (pushData.app !== this.appname) return;
 
-		let id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
-		let acc_id = id0.split('::')[1];
+		const id0 = typeof pushData.id === 'string' ? pushData.id : pushData.id[0];
+		const acc_id = id0.split('::')[1];
 		// pushData.acl.folder (a real "/"-joined path, e.g. "INBOX/Sub") is already computed by
 		// every caller for the Trash/Junk/Drafts/Sent check below - use it here too instead of
 		// re-deriving it from id0's own third segment, which isn't reliably a base64(path) at all:
@@ -644,14 +644,14 @@ export class MailApp extends EgwApp
 		// accounts) put the raw JMAP Mailbox id there, not base64(path) like the classic
 		// accountId::profileID::base64(path)::uid shape does - atob() on that would silently
 		// produce garbage instead of throwing, breaking folder-tree badge updates below.
-		let folder = acc_id+'::'+pushData.acl.folder;
-		let foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
+		const folder = acc_id+'::'+pushData.acl.folder;
+		const foldertree = this.et2 ? this.et2.getWidgetById('nm[foldertree]') : null;
 		this.push_active[acc_id] = true;
 
 		// update unseen counter in folder-tree (also for delete)
 		if (foldertree && pushData.acl.folder && typeof pushData.acl.unseen !== 'undefined')
 		{
-			let folder_id = {};
+			const folder_id = {};
 			folder_id[folder] = pushData.acl.unseen;
 			this.setFolderStatus(folder_id);
 		}
@@ -660,7 +660,7 @@ export class MailApp extends EgwApp
 		if (pushData.type === 'delete')
 		{
 			[].concat(pushData.id).forEach(uid => {
-				let parts = uid.split('::');
+				const parts = uid.split('::');
 				// a destroyed mailbox (id has no emailId segment) - only ever sent once its real
 				// path is known (see MailJmap.buildWsPushPayload()'s folderPaths-cache lookup), so
 				// remove its folder-tree node directly: egw.data has no notion of folder-tree
@@ -677,8 +677,8 @@ export class MailApp extends EgwApp
 				// lookup: whichever folder(s) currently have this row cached get it removed.
 				if (parts[2] === '*')
 				{
-					let escaped = [parts[0], parts[1], parts[3]].map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
-					let regexp = new RegExp(`^${this.appname}::${escaped[0]}::${escaped[1]}::.*::${escaped[2]}$`);
+					const escaped = [parts[0], parts[1], parts[3]].map(s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+					const regexp = new RegExp(`^${this.appname}::${escaped[0]}::${escaped[1]}::.*::${escaped[2]}$`);
 					// dataRefreshUIDs() only notifies widgets that previously registered via
 					// dataRegisterUID() for that exact uid - our NextMatch doesn't use that
 					// mechanism, so it would silently do nothing (confirmed live). Use
@@ -702,14 +702,14 @@ export class MailApp extends EgwApp
 			// never notify for Trash, Junk, Drafts or Sent folder (user might use Sieve to move mails there!)
 			if (pushData.acl.folder.match(/^(INBOX.)?(Trash|Spam|Junk|Drafts|Sent)$/)) return;
 			// increment notification counter on (closed) mail tab
-			let framework = egw_getFramework();
+			const framework = egw_getFramework();
 			if (framework && framework.notifyAppTab) framework.notifyAppTab('mail');
 			// check if user wants a new mail notification
 			this.notifyNew(pushData);
 		}
 		// check if we might not see it because we are on a different mail account or folder
-		let nm = this.et2 ? this.et2.getWidgetById('nm') : null;
-		let nm_value = nm ? nm.getValue() : null;
+		const nm = this.et2 ? this.et2.getWidgetById('nm') : null;
+		const nm_value = nm ? nm.getValue() : null;
 
 		// nm_value.selectedFolder is not always set, read it from foldertree, if not
 		let displayed_folder = (nm_value ? nm_value.selectedFolder : null) || (foldertree ? foldertree.getValue() : '');
@@ -744,8 +744,8 @@ export class MailApp extends EgwApp
 	 */
 	notifyNew(pushData)
 	{
-		let framework = egw_getFramework();
-		let notify = this.egw.preference('new_mail_notification', 'mail');
+		const framework = egw_getFramework();
+		const notify = this.egw.preference('new_mail_notification', 'mail');
 		const message = egw.lang('New mail from %1', pushData.acl.from)+'\n'+pushData.acl.subject+'\n'+pushData.acl.snippet;
 		if (typeof notify === 'undefined' || notify === 'always' ||
 			notify === 'not-mail' && framework && framework.activeApp.appName !== 'mail')
@@ -781,10 +781,10 @@ export class MailApp extends EgwApp
 			case 'mail':
 				if (_id === 'sieve')
 				{
-					var iframe = this.et2.getWidgetById('extra_iframe');
+					const iframe = this.et2.getWidgetById('extra_iframe');
 					if (iframe && iframe.getDOMNode())
 					{
-						var contentWindow = iframe.getDOMNode().contentWindow;
+						const contentWindow = iframe.getDOMNode().contentWindow;
 						if (contentWindow && contentWindow.app && contentWindow.app.mail)
 						{
 							contentWindow.app.mail.sieveRefresh();
@@ -799,9 +799,9 @@ export class MailApp extends EgwApp
 				break;
 
 			case 'mail-account':	// update tree with given mail account _id and _type
-				var tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
+				const tree = this.et2 ? this.et2.getWidgetById(this.nm_index+'[foldertree]') : null;
 				if (!tree) break;
-				var node = tree.getNode(_id);
+				const node = tree.getNode(_id);
 				// Make sure ID is a string, that's what tree uses
 				_id = "" + _id;
 				switch(_type)
@@ -1060,7 +1060,7 @@ export class MailApp extends EgwApp
 				}
 			}
 		}
-		var _id = _senders[0].id;
+		const _id = _senders[0].id;
 		// reinitialize the buffer-info on selected mails
 		if(!['tryastext', 'tryashtml', 'view', 'print', 'print_images'].includes(_mode))
 		{
@@ -1070,15 +1070,15 @@ export class MailApp extends EgwApp
 		this.selectedMails.push(_id);
 		this.currentlyFocussed = _id;
 
-		var dataElem = egw.dataGetUIDdata(_id);
-		var subject = dataElem.data.subject;
+		const dataElem = egw.dataGetUIDdata(_id);
+		const subject = dataElem.data.subject;
 		let command = _mode;
 		if(command == 'print_images')
 		{
 			command = 'print';
 		}
 		//alert('Open Message:'+_id+' '+subject);
-		var h:any = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
+		const h:any = egw().open(_id, 'mail', 'view', command + '=' + _id.replace(/=/g, "_") + '&mode=' + _mode);
 		const setTitle = async(w) =>
 		{
 			await egw(w).ready;
@@ -1194,7 +1194,7 @@ export class MailApp extends EgwApp
 					settings.mode = 'forwardasattach';
 					if (typeof _elems != 'undefined' && _elems.length>1)
 					{
-						for(var j = 1; j < _elems.length; j++)
+						for(let j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
 					return egw.openWithinWindow("mail", "setCompose", {
@@ -1216,8 +1216,8 @@ export class MailApp extends EgwApp
 				// No further client side processing needed for these
 				settings.from = _action.id;
 		}
-		var compose_list = egw.getOpenWindows("mail", /^compose_/);
-		var window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
+		const compose_list = egw.getOpenWindows("mail", /^compose_/);
+		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
 		return egw().open('','mail','add',settings,window_name,'mail');
 	}
 
@@ -1243,32 +1243,32 @@ export class MailApp extends EgwApp
 		if(!compose || compose.closed) return false;
 
 		// Get etemplate of popup
-		var compose_et2 = compose.etemplate2.getByApplication('mail');
+		const compose_et2 = compose.etemplate2.getByApplication('mail');
 		if(!compose_et2 || compose_et2.length != 1 || !compose_et2[0].widgetContainer)
 		{
 			return false;
 		}
 
 		// Set each field provided
-		var success = true;
-		var arrContent = [];
-		for(var field in content)
+		let success = true;
+		let arrContent = [];
+		for(const field in content)
 		{
 			try
 			{
 				if (field == 'data')
 				{
-					var w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
+					const w = compose_et2[0].widgetContainer.getWidgetById('appendix_data');
 					w.set_value(JSON.stringify(content[field]));
-					var filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
+					const filemode = compose_et2[0].widgetContainer.getWidgetById('filemode');
 					if (content[field]['files'] && content[field]['files']['filemode']
 							&& filemode && filemode.get_value() != content[field]['files']['filemode'])
 					{
-						var filemode_label = filemode.select_options.filter(_item =>
+						const filemode_label = filemode.select_options.filter(_item =>
 						{
 							return _item.value == content[field]['files']['filemode']
                             })[0]['label'];
-						Et2Dialog.show_dialog(function (_button)
+						Et2Dialog.show_dialog((_button) =>
 							{
 								if (_button == Et2Dialog.YES_BUTTON)
 								{
@@ -1287,10 +1287,10 @@ export class MailApp extends EgwApp
 					}
 				}
 
-				var widget = compose_et2[0].widgetContainer.getWidgetById(field);
+				const widget = compose_et2[0].widgetContainer.getWidgetById(field);
 
 				// Merge array values, replace strings
-				var value = widget.getValue() || content[field];
+				let value = widget.getValue() || content[field];
 				if(Array.isArray(value) || Array.isArray(content[field]))
 				{
 					if(Array.isArray(content[field]))
@@ -1300,7 +1300,7 @@ export class MailApp extends EgwApp
 					else
 					{
 						arrContent = content[field].split(',');
-						for (var k=0;k < arrContent.length;k++)
+						for (let k=0;k < arrContent.length;k++)
 						{
 							value.push(arrContent[k]);
 						}
@@ -1329,15 +1329,15 @@ export class MailApp extends EgwApp
 	 * @param _value
 	 */
 	disablePreviewArea(_value) {
-		var splitter = this.et2.getWidgetById('mailSplitter');
-		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
+		const splitter = this.et2.getWidgetById('mailSplitter');
+		const previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
 		// return if there's no splitter we maybe in mobile mode
 		if (typeof splitter == 'undefined' || splitter == null || previewPane == 'vertical') return;
-		let dock = function(){
+		const dock = () =>{
 			splitter.style.setProperty('--max','100%');
 			splitter.dock();
 		};
-		let undock = function ()
+		const undock = () =>
 		{
 			splitter.style.setProperty('--max','70%');
 			splitter.undock();
@@ -1377,14 +1377,14 @@ export class MailApp extends EgwApp
 	 */
 	display()
 	{
-		var dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
-		var content = this.et2.getArrayMgr('content').data;
+		const dataElem = {data:{FROM:"",SENDER:"",TO:"",CC:"",BCC:""}};
+		const content = this.et2.getArrayMgr('content').data;
 
 		if (typeof  content != 'undefiend')
 		{
 			dataElem.data = Object.assign(dataElem.data, content);
 
-			var toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
+			const toolbaractions = ((typeof dataElem != 'undefined' && typeof dataElem.data != 'undefined' && typeof dataElem.data.displayToolbaractions != 'undefined')?JSON.parse(dataElem.data.displayToolbaractions):undefined);
 			if (toolbaractions)
 			{
 				this.et2.getWidgetById('displayToolbar').actions = toolbaractions;
@@ -1485,8 +1485,8 @@ export class MailApp extends EgwApp
 	 */
 	renderMessageInto(template, rowId : string, data? : any) : any
 	{
-		let sel_options = {};
-		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
+		const sel_options = {};
+		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
 		data = data ?? egw.dataGetUIDdata(rowId).data ?? {};
 		data.emailTag = egw.preference('emailTag', 'mail') ?? 'onlyname';
 
@@ -1612,9 +1612,9 @@ export class MailApp extends EgwApp
 	preview(selected, nextmatch) {
 		let data:any = {};
 		let rowId = '';
-		let attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
-		let mailPreview = this.et2.getWidgetById('mailPreview');
-		let previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
+		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
+		const mailPreview = this.et2.getWidgetById('mailPreview');
+		const previewPane = this.egw.preference('previewPane', 'mail')||'vertical';
 		// don't go further if the preview is supposed to be disabled and we're not in mobile view
 		if (previewPane == 'hide' && !egwIsMobile()) return;
 
@@ -1699,7 +1699,7 @@ export class MailApp extends EgwApp
 			}, 300));
 		}
 
-		var messages = {};
+		const messages = {};
 		messages['msg'] = [rowId];
 
 		// When body is requested, mail is marked as read by the mail server. Update UI to match instantly.
@@ -1713,7 +1713,7 @@ export class MailApp extends EgwApp
 			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
 				typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
 			{
-				var buttons = [
+				const buttons = [
 					{label: this.egw.lang("Yes"), id: "mdnsent", image: "check"},
 					{label: this.egw.lang("No"), id: "mdnnotsent", image: "cancelled"}
 				];
@@ -1876,26 +1876,26 @@ export class MailApp extends EgwApp
 		 */
 		resolveExternalImages(_node, show = null)
 	{
-		let image_proxy = this.image_proxy;
+		const image_proxy = this.image_proxy;
 		//Do not run resolve images if it's forced already to show them all
 		// or forced to not show them all.
-		var pref_img = egw.preference('allowExternalIMGs', 'mail');
+		const pref_img = egw.preference('allowExternalIMGs', 'mail');
 		if (!show && pref_img == 0)
 		{
 			return;
 		}
 
-		var external_images = _node.querySelectorAll('img[alt*="[blocked external image:"]');
+		const external_images = _node.querySelectorAll('img[alt*="[blocked external image:"]');
 		if (external_images.length > 0 && _node.querySelector('.mail_externalImagesMsg') === null)
 		{
-			var container = document.createElement('div');
+			const container = document.createElement('div');
 			container.classList.add('mail_externalImagesMsg');
-			container.addEventListener('click', function(){ container.remove(); });
-			var getUrlParts = function (_rawUrl) {
-				var u = _rawUrl.split('[blocked external image:');
+			container.addEventListener('click', () =>{ container.remove(); });
+			const getUrlParts = (_rawUrl) => {
+				let u = _rawUrl.split('[blocked external image:');
 				u = u[1].replace(']','');
-				var url = u;
-				var protocol = '';
+				let url = u;
+				let protocol = '';
 				if (u.substr(0,7) == 'http://')
 				{
 					u = u.replace ('http://','');
@@ -1907,7 +1907,7 @@ export class MailApp extends EgwApp
 					u = u.replace ('https://','');
 					protocol = 'https';
 				}
-				var url_parts = u.split('/');
+				const url_parts = u.split('/');
 				return {
 					url: url,
 					domain: url_parts[0],
@@ -1915,12 +1915,12 @@ export class MailApp extends EgwApp
 				};
 			};
 
-			var host = getUrlParts(external_images[0].alt);
-			var showImages = function (_images, _save)
+			const host = getUrlParts(external_images[0].alt);
+			const showImages = (_images, _save) =>
 			{
-				var save = _save || false;
-				_images.forEach(function(node) {
-					var parts = getUrlParts (node.alt);
+				const save = _save || false;
+				_images.forEach((node) => {
+					const parts = getUrlParts (node.alt);
 					if (save)
 					{
 						if (pref && pref.length)
@@ -1944,7 +1944,7 @@ export class MailApp extends EgwApp
 			{
 				return showImages(external_images, false);
 			}
-			var pref = egw.preference('allowExternalDomains', 'mail') || {};
+			let pref = egw.preference('allowExternalDomains', 'mail') || {};
 			pref = Object.values(pref);
 			if (pref.indexOf(host.domain)>-1)
 			{
@@ -1955,7 +1955,7 @@ export class MailApp extends EgwApp
 			for (const img of external_images)
 			{
 				if (!img.alt) continue;
-				let r = getUrlParts(img.alt);
+				const r = getUrlParts(img.alt);
 				if (r && r.protocol == 'http')
 				{
 					message = this.egw.lang('This mail contains external images served via insecure HTTP protocol. Be aware showing or allowing them can compromise your security!');
@@ -1981,7 +1981,7 @@ export class MailApp extends EgwApp
 
 			const closeBtn = document.createElement('button');
 			closeBtn.classList.add('closeBtn');
-			closeBtn.addEventListener('click', function (){
+			closeBtn.addEventListener('click', () =>{
 				container.remove();
 			});
 			container.appendChild(closeBtn);
@@ -1989,7 +1989,7 @@ export class MailApp extends EgwApp
 			const allowBtn = document.createElement('button');
 			allowBtn.textContent = this.egw.lang('Allow');
 			allowBtn.title = this.egw.lang('Always allow external sources from %1', host.domain);
-			allowBtn.addEventListener('click', function (){
+			allowBtn.addEventListener('click', () =>{
 				showImages(external_images, true);
 				container.remove();
 			});
@@ -2037,18 +2037,18 @@ export class MailApp extends EgwApp
 	 */
 	showAllHeader(event,widget,button) {
 		// Show list as a list
-		var list = button.previousElementSibling;
+		const list = button.previousElementSibling;
 
 		list.classList.toggle('visible');
 
 		// Revert if user clicks elsewhere
-		document.body.addEventListener('click', function() {
+		document.body.addEventListener('click', () => {
 			list.classList.remove('visible');
 		}, {once: true});
 	}
 
 	setMailBody(content) {
-		var IframeHandle = this.et2.getWidgetById('messageIFRAME');
+		const IframeHandle = this.et2.getWidgetById('messageIFRAME');
 		IframeHandle.set_value('');
 	}
 
@@ -2141,7 +2141,7 @@ export class MailApp extends EgwApp
 	{
 		if (!this.et2 && !this.checkET2()) return;
 
-		var quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
+		const quotabox = this.et2.getWidgetById(this.nm_index+'[quotainpercent]');
 
 		// Check to make sure it's there
 		if(quotabox)
@@ -2152,13 +2152,13 @@ export class MailApp extends EgwApp
 			quotabox.set_label(_data.data.quota);
 			if (_data.quotawarning)
 			{
-				var self = this;
-				var buttons = [
+				const self = this;
+				const buttons = [
 					{label: this.egw.lang("Empty Trash and Junk"), id: "cleanup", class: "ui-priority-primary", default: true, image: "delete"},
 					{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 				];
-				var server = [{iface:{id: _data.data.profileid+'::'}}];
-				Et2Dialog.show_dialog(function (_button_id)
+				const server = [{iface:{id: _data.data.profileid+'::'}}];
+				Et2Dialog.show_dialog((_button_id) =>
 					{
 						if (_button_id == "cleanup")
 						{
@@ -2194,7 +2194,7 @@ export class MailApp extends EgwApp
 	registerForDrag(mail_id, attachments)
 	{
 		// Put required info in global store
-		var data = {};
+		let data = {};
 		if (!attachments) return;
 		for (let i = 0; i < attachments.length; i++)
 		{
@@ -2222,15 +2222,15 @@ export class MailApp extends EgwApp
 	 */
 	dragAttachment(_action, _elems)
 	{
-		var div = document.createElement("div");
+		const div = document.createElement("div");
 		div.style.position = 'absolute';
 		div.style.top = '0px';
 		div.style.left = '0px';
 		div.style.width = '300px';
 
-		var data = _elems[0].data || {};
+		const data = _elems[0].data || {};
 
-		var text = document.createElement('div');
+		const text = document.createElement('div');
 		text.style.left = '30px';
 		text.style.position = 'absolute';
 		// add filename or number of files for multiple files
@@ -2241,7 +2241,7 @@ export class MailApp extends EgwApp
 		if(window.FileReader && 'draggable' in document.createElement('span') &&
 			navigator && navigator.userAgent.indexOf('Chrome') >= 0)
 		{
-			var key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
+			const key = ["Mac68K","MacPPC","MacIntel"].indexOf(window.navigator.platform) < 0 ? 'Ctrl' : 'Command';
 			text.insertAdjacentHTML('beforeend', '<br />' + this.egw.lang('Hold %1 to drag files to your computer',key));
 		}
 		return div;
@@ -2324,10 +2324,10 @@ export class MailApp extends EgwApp
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
-		var filter2 = this.et2.getWidgetById('filter2');
-		var current = filter2.value;
-		var currentexists=false;
-		for (var k in _data)
+		const filter2 = this.et2.getWidgetById('filter2');
+		const current = filter2.value;
+		let currentexists=false;
+		for (const k in _data)
 		{
 			if (k==current) currentexists=true;
 		}
@@ -2347,10 +2347,10 @@ export class MailApp extends EgwApp
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
-		var filter = this.et2.getWidgetById('filter');
-		var current = filter.value;
-		var currentexists=false;
-		for (var k in _data)
+		const filter = this.et2.getWidgetById('filter');
+		const current = filter.value;
+		let currentexists=false;
+		for (const k in _data)
 		{
 			if (k==current) currentexists=true;
 		}
@@ -2371,10 +2371,10 @@ export class MailApp extends EgwApp
 		if (_data == null) return;
 		if (!this.et2 && !this.checkET2()) return;
 
-		var filter = this.et2.getWidgetById('cat_id');
-		var current = filter.value;
-		var currentexists=false;
-		for (var k in _data)
+		const filter = this.et2.getWidgetById('cat_id');
+		const current = filter.value;
+		let currentexists=false;
+		for (const k in _data)
 		{
 			if (k==current) currentexists=true;
 		}
@@ -2391,11 +2391,11 @@ export class MailApp extends EgwApp
 	 */
 	queueRefreshFolderList(_folders)
 	{
-		var self = this;
+		const self = this;
 		// as jsonq is too fast wrap it to be delayed a bit, to ensure the folder actions
 		// are executed last of the queue
-		window.setTimeout(function() {
-			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], function (){self.unlockTree();});
+		window.setTimeout(() => {
+			egw.jsonq('mail.mail_ui.ajax_setFolderStatus',[_folders], () =>{self.unlockTree();});
 		}, 500);
 	}
 
@@ -2410,8 +2410,8 @@ export class MailApp extends EgwApp
 
 		// Abort if user selected an un-selectable node
 		// Use image over anything else because...?
-		var ftree, node;
-		ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		let node;
 		if (ftree)
 		{
 			node = ftree.getNode(_senders[0].id);
@@ -2437,9 +2437,9 @@ export class MailApp extends EgwApp
 	 */
 	spamfolderEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var acc_id = _senders[0].id.split('::')[0];
-		var node = ftree ? ftree.getNode(acc_id) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const acc_id = _senders[0].id.split('::')[0];
+		const node = ftree ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.spamfolder;
 	}
@@ -2456,9 +2456,9 @@ export class MailApp extends EgwApp
 	 */
 	archivefolderEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var acc_id = _currentNode.id.split('::')[2]; // this is operating on mails
-		var node = ftree && acc_id ? ftree.getNode(acc_id) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const acc_id = _currentNode.id.split('::')[2]; // this is operating on mails
+		const node = ftree && acc_id ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.archivefolder;
 	}
@@ -2474,9 +2474,9 @@ export class MailApp extends EgwApp
 	 */
 	sieveEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var acc_id = _senders[0].id.split('::')[0];
-		var node = ftree ? ftree.getNode(acc_id) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const acc_id = _senders[0].id.split('::')[0];
+		const node = ftree ? ftree.getNode(acc_id) : null;
 
 		return node && node.data && node.data.sieve;
 	}
@@ -2493,9 +2493,9 @@ export class MailApp extends EgwApp
 	 */
 	aclEnabled(_action,_senders,_currentNode)
 	{
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var inbox = _senders[0].id.split('::')[0]+'::INBOX';
-		var node = ftree ? ftree.getNode(inbox) : null;
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const inbox = _senders[0].id.split('::')[0]+'::INBOX';
+		const node = ftree ? ftree.getNode(inbox) : null;
 
 		return node && node.data && node.data.acl && this.checkFolderNoSelect(_action,_senders,_currentNode);
 	}
@@ -2535,9 +2535,9 @@ export class MailApp extends EgwApp
 	 *		multiple sets can be passed to setLeaf
 	 */
 	setLeaf(_status) {
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-            var selectedNode = ftree.getSelectedItem();
-		for (var i in _status)
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+            const selectedNode = ftree.getSelectedItem();
+		for (const i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i]['olddesc'] !== 'undefined' && _status[i]['olddesc'] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Renamed Folder %1 to %2",_status[i]['olddesc'],_status[i]['desc']), 'success');
@@ -2546,7 +2546,7 @@ export class MailApp extends EgwApp
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (_status[i]['id']==selectedNode.id)
 			{
-				var nm = this.et2.getWidgetById(this.nm_index);
+				const nm = this.et2.getWidgetById(this.nm_index);
 				nm.applyFilters({selectedFolder: _status[i]['id']});
 			}
 		}
@@ -2559,18 +2559,18 @@ export class MailApp extends EgwApp
 	 *		multiple sets can be passed to mail_deleteLeaf
 	 */
 	removeLeaf(_status) {
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var selectedNode = ftree.getSelectedNode();
-		for (var i in _status)
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const selectedNode = ftree.getSelectedNode();
+		for (const i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#') this.egw.message(this.egw.lang("Removed Folder %1 ",_status[i]), 'success');
 			ftree.deleteItem(i,(selectedNode.id==i));
-			var selectedNodeAfter = ftree.getSelectedNode();
+			const selectedNodeAfter = ftree.getSelectedNode();
 			//alert(i +'->'+_status[i]['id']+'+'+_status[i]['desc']);
 			if (selectedNodeAfter.id!=selectedNode.id && selectedNode.id==i)
 			{
-				var nm = this.et2.getWidgetById(this.nm_index);
+				const nm = this.et2.getWidgetById(this.nm_index);
 				nm.applyFilters({selectedFolder: selectedNodeAfter.id});
 			}
 		}
@@ -2582,10 +2582,10 @@ export class MailApp extends EgwApp
 	 *		Object with the required data (KEY id, VALUE desc), or ID => {new data}
 	 */
 	reloadNode(_status) {
-		var ftree = this.et2?this.et2.getWidgetById(this.nm_index+'[foldertree]'):null;
+		const ftree = this.et2?this.et2.getWidgetById(this.nm_index+'[foldertree]'):null;
 		if (!ftree) return;
-		var selectedNode = ftree.getSelectedNode();
-		for (var i in _status)
+		const selectedNode = ftree.getSelectedNode();
+		for (const i in _status)
 		{
 			// if olddesc is undefined or #skip# then skip the message, as we process subfolders
 			if (typeof _status[i] !== 'undefined' && _status[i] !== '#skip-user-interaction-message#')
@@ -2598,12 +2598,12 @@ export class MailApp extends EgwApp
 			if (typeof _status[i] == "string") ftree.setStyle(i, 'font-weight: '+(_status[i].match(this._unseen_regexp) ? 'bold' : 'normal'));
 		}
 
-		var selectedNodeAfter = ftree.getSelectedNode();
+		const selectedNodeAfter = ftree.getSelectedNode();
 
 		// If selected folder changed, refresh nextmatch
 		if (selectedNodeAfter != null && selectedNodeAfter.id!=selectedNode.id)
 		{
-			var nm = this.et2.getWidgetById(this.nm_index);
+			const nm = this.et2.getWidgetById(this.nm_index);
 			nm.applyFilters({selectedFolder: selectedNodeAfter.id});
 		}
 	}
@@ -2651,7 +2651,7 @@ export class MailApp extends EgwApp
 	 */
 	getMsg()
 	{
-		var msg_wdg = this.et2.getWidgetById('msg');
+		const msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
 		{
 			return msg_wdg.valueOf().htmlNode[0].innerHTML;
@@ -2665,7 +2665,7 @@ export class MailApp extends EgwApp
 	 */
 	setMsg(myMsg)
 	{
-		var msg_wdg = this.et2.getWidgetById('msg');
+		const msg_wdg = this.et2.getWidgetById('msg');
 		if (msg_wdg)
 		{
 			msg_wdg.set_value(myMsg);
@@ -2693,7 +2693,7 @@ export class MailApp extends EgwApp
 	 */
 	callDelete(_action,_elems,_allMessagesChecked)
 	{
-		var calledFromPopup = false;
+		let calledFromPopup = false;
 		if (typeof _allMessagesChecked == 'undefined') _allMessagesChecked=false;
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -2712,7 +2712,7 @@ export class MailApp extends EgwApp
 				}
 			}
 		}
-		var msg = this.getFormData(_elems);
+		const msg = this.getFormData(_elems);
 		msg['all'] = _allMessagesChecked;
 		if (msg['all']=='cancel') return false;
 		if (msg['all']) msg['activeFilters'] = this.getActiveFilters(_action);
@@ -2735,7 +2735,7 @@ export class MailApp extends EgwApp
 	{
 		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		const _foldernode = ftree?.getSelectedItem();
-		let counter = _foldernode?.badge;
+		const counter = _foldernode?.badge;
 		let icounter = 0;
 		if (counter) icounter = parseInt(counter);
 		if (icounter>0)
@@ -2763,7 +2763,7 @@ export class MailApp extends EgwApp
 	 */
 	splitRowId(_rowID)
 	{
-		var res = _rowID.split('::');
+		const res = _rowID.split('::');
 		// as a rowID is perceeded by app::, should be mail!
 		if (res.length==4 && !isNaN(parseInt(res[0])))
 		{
@@ -2923,7 +2923,7 @@ export class MailApp extends EgwApp
 		}
 		else
 		{
-			for (var i = 0; i < _msg['msg'].length; i++)
+			for (let i = 0; i < _msg['msg'].length; i++)
 			{
 				this.egw.refresh(_msg['egw_message'], 'mail', _msg['msg'][i].replace(/mail::/, ''), 'delete');
 			}
@@ -2942,8 +2942,8 @@ export class MailApp extends EgwApp
 		const nm = this.et2.getWidgetById('nm');
 		nm?.refresh();
 
-		var reason = responseObject['response'];
-		var messageList = responseObject['messageList'];
+		const reason = responseObject['response'];
+		const messageList = responseObject['messageList'];
 		if (confirm(reason))
 		{
 			this.deleteMessages(messageList,'remove_immediately');
@@ -2996,24 +2996,24 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders
 	 */
 	emptySpam(action,_senders) {
-		var server = _senders[0].id.split('::');
-		var activeFilters = this.getActiveFilters();
-		var self = this;
+		const server = _senders[0].id.split('::');
+		const activeFilters = this.getActiveFilters();
+		const self = this;
 
 		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty junk'), 'success');
 		const classicEmptySpam = () => egw.json('mail.mail_ui.ajax_emptySpam',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
-			function(){self.unlockTree();}).sendRequest(true);
+			() =>{self.unlockTree();}).sendRequest(true);
 		this.tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam)
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty junk'), 'error'));
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
 		{
-			for(var i = 0; i < window.localStorage.length; i++)
+			for(let i = 0; i < window.localStorage.length; i++)
 			{
-				var key = window.localStorage.key(i);
+				const key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
 				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+server[0]+'::') == 0 &&
@@ -3032,24 +3032,24 @@ export class MailApp extends EgwApp
 	 * @param {object} _senders
 	 */
 	emptyTrash(action,_senders) {
-		var server = _senders[0].id.split('::');
-		var activeFilters = this.getActiveFilters();
-		var self = this;
+		const server = _senders[0].id.split('::');
+		const activeFilters = this.getActiveFilters();
+		const self = this;
 
 		this.jmap.invalidateQuota(server[0]);
 		this.egw.message(this.egw.lang('empty trash'), 'success');
 		const classicEmptyTrash = () => egw.json('mail.mail_ui.ajax_emptyTrash',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
-			function(){self.unlockTree();}).sendRequest(true);
+			() =>{self.unlockTree();}).sendRequest(true);
 		this.tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash)
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty trash'), 'error'));
 
 		// Directly delete any trash cache for selected server
 		if(window.localStorage)
 		{
-			for(var i = 0; i < window.localStorage.length; i++)
+			for(let i = 0; i < window.localStorage.length; i++)
 			{
-				var key = window.localStorage.key(i);
+				const key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
 				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+server[0]+'::') == 0 &&
@@ -3084,7 +3084,7 @@ export class MailApp extends EgwApp
 		this.lockTree();
 		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2._inst.etemplate_exec_id], () => {
 			// Profile changed, select inbox
-			var inbox = folder + '::INBOX';
+			const inbox = folder + '::INBOX';
                 //_widget.reSelectItem(inbox);
 
 			this.unlockTree();
@@ -3130,9 +3130,9 @@ export class MailApp extends EgwApp
 
 		// Check if this is a top level node and
 		// change profile if server has changed
-		var server = _folder.split('::');
-		var previousServer = _previous?.split('::');
-		var profile_selected = (_folder.indexOf('::') === -1);
+		const server = _folder.split('::');
+		const previousServer = _previous?.split('::');
+		const profile_selected = (_folder.indexOf('::') === -1);
 		if ((!previousServer || server[0] != previousServer[0]) && profile_selected)
 		{
 			// changeProfile triggers a refresh, no need to do any more
@@ -3140,7 +3140,7 @@ export class MailApp extends EgwApp
 		}
 
 		// Apply new selected folder to list, which updates data
-		var nm = _widget.getRoot().getWidgetById(this.nm_index);
+		const nm = _widget.getRoot().getWidgetById(this.nm_index);
 		if(nm)
 		{
 			this.lockTree();
@@ -3154,8 +3154,8 @@ export class MailApp extends EgwApp
 		// Get nice folder name for message, if selected is not a profile
 		if(!profile_selected)
 		{
-			var displayname = _widget.getSelectedLabel();
-			var myMsg = (displayname?displayname:_folder).replace(this._unseen_regexp, '')+' '+this.egw.lang('selected');
+			const displayname = _widget.getSelectedLabel();
+			const myMsg = (displayname?displayname:_folder).replace(this._unseen_regexp, '')+' '+this.egw.lang('selected');
 			this.egw.message(myMsg, 'success');
 		}
 
@@ -3183,10 +3183,10 @@ export class MailApp extends EgwApp
 		if (typeof _confirm == 'undefined') _confirm = false;
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
-		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
-		let tree = this.et2.getWidgetById('nm[foldertree]');
-		var that = this;
-		var rvMain = false;
+		const obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
+		const tree = this.et2.getWidgetById('nm[foldertree]');
+		const that = this;
+		let rvMain = false;
 		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected() && !_action.paste) || _action.id=='readall')
 		{
 			try {
@@ -3209,12 +3209,18 @@ export class MailApp extends EgwApp
 
 			if (_confirm)
 			{
-				var buttons = [
+				const buttons = [
 					{label: this.egw.lang("Yes"), id: "all", "class": "ui-priority-primary", "default": true, image: 'check'},
 					{label: this.egw.lang("Cancel"), id: "cancel", image: 'cancelDialog'},
 				];
-				var messageToDisplay = '';
-				var actionlabel =_action.id;
+				let messageToDisplay = '';
+				// label1-5/customFlag1-5 just pick a human-readable name for the shared
+				// "toggle flag/label" confirmation below - not used for any other case.
+				const labelNames = {
+					label1: "important", label2: "job", label3: "personal", label4: "to do", label5: "later",
+					customFlag1: "red", customFlag2: "orange", customFlag3: "green", customFlag4: "blue", customFlag5: "purple"
+				};
+				const actionlabel = labelNames[_action.id] ?? _action.id;
 				switch (_action.id)
 				{
 					case "readall":
@@ -3224,25 +3230,15 @@ export class MailApp extends EgwApp
 						messageToDisplay = this.egw.lang("Do you really want to remove ALL labels from ALL messages in the current folder?")+" ";
 						break;
 					case "label1":
-						if (_action.id=="label1") actionlabel="important";
 					case "label2":
-						if (_action.id=="label2") actionlabel="job";
 					case "label3":
-						if (_action.id=="label3") actionlabel="personal";
 					case "label4":
-						if (_action.id=="label4") actionlabel="to do";
 					case "label5":
-						if (_action.id=="label5") actionlabel="later";
 					case "customFlag1":
-						if (_action.id=="customFlag1") actionlabel="red";
 					case "customFlag2":
-						if (_action.id=="customFlag2") actionlabel="orange";
 					case "customFlag3":
-						if (_action.id=="customFlag3") actionlabel="green";
 					case "customFlag4":
-						if (_action.id=="customFlag4") actionlabel="blue";
 					case "customFlag5":
-						if (_action.id=="customFlag5") actionlabel="purple";
 					case "flagged":
 					case "read":
 					case "undelete":
@@ -3258,7 +3254,7 @@ export class MailApp extends EgwApp
 							) + " ";
 							break;
 						}
-						var type = null;
+						let type = null;
 						if (_action.id.substr(0,4)=='move' || _action.id === "drop_move_mail")
 						{
 							type = 'Move';
@@ -3269,9 +3265,9 @@ export class MailApp extends EgwApp
 						}
 						messageToDisplay = this.egw.lang("Do you really want to apply %1 to ALL messages in the current view?",this.egw.lang(type?type:_action.id))+" ";
 				}
-				return Et2Dialog.show_dialog(function (_button_id)
+				return Et2Dialog.show_dialog((_button_id) =>
 				{
-					var rv = false;
+					let rv = false;
 					switch (_button_id)
 					{
 						case "all":
@@ -3404,10 +3400,10 @@ export class MailApp extends EgwApp
 	{
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
-		var obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
+		const obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		if (obj_manager && obj_manager.manager && obj_manager.manager.data && obj_manager.manager.data.nextmatch && obj_manager.manager.data.nextmatch.activeFilters)
 		{
-			var af = obj_manager.manager.data.nextmatch.activeFilters;
+			const af = obj_manager.manager.data.nextmatch.activeFilters;
 			// merge startdate and enddate into the active filters (if set)
 			['startdate','enddate'].forEach((date) => {
 				if (this.et2.getWidgetById(date)?.value)
@@ -3517,7 +3513,7 @@ export class MailApp extends EgwApp
 		 * vars
 		 */
 		let folder = '';
-		let data : any = {
+		const data : any = {
 				msg: [this.et2.getArrayMgr("content").getEntry('mail_id')] || '',
 				all: _allMessagesChecked || false,
 				popup: typeof this.et2_view!='undefined' || egw(window).is_popup() || false,
@@ -3972,7 +3968,7 @@ export class MailApp extends EgwApp
 			}
 		}
 		//alert('mailSource('+_elems[0].id+')');
-		var url = window.egw_webserverUrl+'/index.php?';
+		let url = window.egw_webserverUrl+'/index.php?';
 		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 		url += '&id='+_elems[0].id;
 		url += '&location=display';
@@ -4004,17 +4000,17 @@ export class MailApp extends EgwApp
 			}
 		}
 
-		for (var i in _elems)
+		for (const i in _elems)
 		{
 			//alert('save('+_elems[0].id+')');
-			var url = window.egw_webserverUrl+'/index.php?';
+			let url = window.egw_webserverUrl+'/index.php?';
 			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
 			url += '&id='+_elems[i].id;
-			var a = document.createElement('a');
+			const a = document.createElement('a');
 			a.href = url;
 			a.download = "";
 			this.et2.getDOMNode().appendChild(a);
-			var evt = document.createEvent('MouseEvent');
+			const evt = document.createEvent('MouseEvent');
 			evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
 			a.dispatchEvent(evt);
 			a.remove();
@@ -4043,16 +4039,16 @@ export class MailApp extends EgwApp
 	 */
 	displayAttachment(tag_info, widget, calledForCompose)
 	{
-		var mailid;
-		var attgrid;
+		let mailid;
+		let attgrid;
 		if (typeof calledForCompose == 'undefined' || typeof calledForCompose == 'object') calledForCompose=false;
 		if (calledForCompose===false)
 		{
 			if (this.isMainWindow)
 			{
 				mailid = this.currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
-				var p = widget.getParent();
-				var cont = p.getArrayMgr("content").data;
+				const p = widget.getParent();
+				const cont = p.getArrayMgr("content").data;
 				attgrid = cont[widget.id.replace(/\[filename\]/,'')];
 			}
 			else
@@ -4065,22 +4061,22 @@ export class MailApp extends EgwApp
 		{
 			// CALLED FOR COMPOSE; processedmail_id could hold several IDs seperated by comma
 			attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name\]/,'')];
-			var mailids = this.et2.getArrayMgr("content").getEntry('processedmail_id');
-			var mailida = mailids.split(',');
+			const mailids = this.et2.getArrayMgr("content").getEntry('processedmail_id');
+			const mailida = mailids.split(',');
 			// either several attachments of one email, or multiple emlfiles
 			mailid = mailida.length==1 ? mailida[0] : mailida[widget.id.replace(/\[name\]/,'')];
 			if (typeof attgrid.uid != 'undefined' && attgrid.uid && mailid.indexOf(attgrid.uid)==-1)
 			{
-				for (var i=0; i<mailida.length; i++)
+				for (let i=0; i<mailida.length; i++)
 				{
 					if (mailida[i].indexOf('::'+attgrid.uid)>-1) mailid = mailida[i];
 				}
 			}
 		}
-		var url = window.egw_webserverUrl+'/index.php?';
-		var width;
-		var height;
-		var windowName ='mail';
+		let url = window.egw_webserverUrl+'/index.php?';
+		let width;
+		let height;
+		let windowName ='mail';
 		switch(attgrid.type.toUpperCase())
 		{
 			case 'MESSAGE/RFC822':
@@ -4122,8 +4118,8 @@ export class MailApp extends EgwApp
 				url += '&part='+attgrid.partID;
 				url += '&is_winmail='+attgrid.winmailFlag;
 				windowName = windowName+'displayAttachment_'+mailid+'_'+attgrid.partID;
-				var reg = '800x600';
-				var reg2;
+				let reg = '800x600';
+				let reg2;
 				// handle calendar/vcard
 				if (attgrid.type.toUpperCase()=='TEXT/CALENDAR')
 				{
@@ -4143,7 +4139,7 @@ export class MailApp extends EgwApp
 						reg = reg2['add_popup'];
 					}
 				}
-				var w_h =reg.split('x');
+				const w_h =reg.split('x');
 				width = w_h[0];
 				height = w_h[1];
 				break;
@@ -4214,7 +4210,7 @@ export class MailApp extends EgwApp
 						ids.push(mail_id+'::'+attachment.partID+'::'+attachment.winmailFlag+'::'+attachment.filename);
 					}
 				}
-				let vfs_select = loadWebComponent('et2-vfs-select', {
+				const vfs_select = loadWebComponent('et2-vfs-select', {
 					mode: action === 'saveOneToVfs' ? 'saveas' : 'select-dir',
 					method: 'mail.mail_ui.ajax_vfsSave',
 					buttonLabel: this.egw.lang(action === 'saveOneToVfs' ? 'Save' : 'Save all'),
@@ -4230,7 +4226,7 @@ export class MailApp extends EgwApp
 				break;
 			case 'collabora':
 				attachment = attachments[row_id];
-				let id = mail_id + '::' + attachment.partID + '::' + attachment.winmailFlag + '::' + attachment.filename;
+				const id = mail_id + '::' + attachment.partID + '::' + attachment.winmailFlag + '::' + attachment.filename;
 
 				// This can take a few seconds, show loader
 				this.egw.loading_prompt('mail_open_file', true, attachment.filename);
@@ -4312,7 +4308,7 @@ export class MailApp extends EgwApp
 
 						// File is in VFS, put it in a compose window
 						const params = {};
-						let content = {data:{files:{file:[]}}};
+						const content = {data:{files:{file:[]}}};
 						params['preset[file][]'] = 'vfs://default'+vfs_path;
 						content.data.files.file.push('vfs://default'+vfs_path);
 						content.data.files["filemode"] = params['preset[filemode]'];
@@ -4355,7 +4351,7 @@ export class MailApp extends EgwApp
 				}
 			}
 		}
-		var ids = [], names = [];
+		const ids = [], names = [];
 		for (const i in _elems)
 		{
 			const _id = _elems[i].id;
@@ -4370,7 +4366,7 @@ export class MailApp extends EgwApp
 			ids.push(_id);
 			names.push(filename+'.eml');
 		}
-		let vfs_select = loadWebComponent('et2-vfs-select', {
+		const vfs_select = loadWebComponent('et2-vfs-select', {
 			mode: _elems.length > 1 ? 'select-dir' : 'saveas',
 			mime: 'message/rfc822',
 			method: 'mail.mail_ui.ajax_vfsSave',
@@ -4396,11 +4392,12 @@ export class MailApp extends EgwApp
 	{
 		const app = _action.id;
 		let w_h = ['750','580']; // define a default wxh if there's no popup size registered
+		let mail_import_hook;
 
 		if (typeof _action.data != 'undefined' )
 		{
 			if (typeof _action.data.popup != 'undefined' && _action.data.popup) w_h = _action.data.popup.split('x');
-			if (typeof _action.data.mail_import != 'undefined') var mail_import_hook = _action.data.mail_import;
+			if (typeof _action.data.mail_import != 'undefined') mail_import_hook = _action.data.mail_import;
 		}
 
 		if (typeof _elems == 'undefined' || _elems.length==0)
@@ -4420,14 +4417,14 @@ export class MailApp extends EgwApp
 			}
 		}
 
-		var url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
+		const url = window.egw_webserverUrl+ '/index.php?menuaction=mail.mail_integration.integrate&rowid=' + _elems[0].id + '&app='+app;
 
 		if (mail_import_hook && typeof mail_import_hook.app_entry_method != 'undefined')
 		{
-			var data = egw.dataGetUIDdata(_elems[0].id);
-			var title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
-			var subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
-			this.integrateCheckAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, function (args){
+			const data = egw.dataGetUIDdata(_elems[0].id);
+			const title = egw.lang('Select') + ' ' + egw.lang(app) + ' ' + (egw.link_get_registry(app, 'entry') ? egw.link_get_registry(app, 'entry') : egw.lang('entry'));
+			const subject = (data && typeof data.data != 'undefined')? data.data.subject : '';
+			this.integrateCheckAppEntry(title, app, subject, url,  mail_import_hook.app_entry_method, (args) =>{
 				egw_openWindowCentered(args.url+ (args.entryid ?'&entry_id=' + args.entryid: ''),'import_mail_'+_elems[0].id,w_h[0],w_h[1]);
 			});
 		}
@@ -4452,15 +4449,15 @@ export class MailApp extends EgwApp
 	*/
 	integrateCheckAppEntry(_title, _appName, _subject ,_url, _appCheckCallback, _execCallback)
 	{
-	   var subject = _subject || '';
-	   var execCallback = _execCallback;
+	   const subject = _subject || '';
+	   const execCallback = _execCallback;
 	   egw.json(_appCheckCallback, subject,function(_entryId){
 
 		   // if there's no entry saved already
 		   // open dialog in order to select one
 		   if (!_entryId)
 		   {
-			   var buttons = [
+			   const buttons = [
 				   {label: app.mail.egw.lang('Append'), id: 'append', image: 'check', default: true},
 				   {label: app.mail.egw.lang('Add as new'), id: 'new', image: 'check'},
 				   {label: app.mail.egw.lang('Cancel'), id: 'cancel', image: 'check'}
@@ -4505,7 +4502,7 @@ export class MailApp extends EgwApp
 	 * @return structured array of message ids: array(msg=>message-ids)
 	 */
 	getFormData(_actionObjects) {
-		var messages = {};
+		const messages = {};
 		// if
 		if (typeof _actionObjects['msg'] != 'undefined' && _actionObjects['msg'].length>0) return _actionObjects;
 		if (_actionObjects.length>0)
@@ -4513,7 +4510,7 @@ export class MailApp extends EgwApp
 			messages['msg'] = [];
 		}
 
-		for (var i = 0; i < _actionObjects.length; i++)
+		for (let i = 0; i < _actionObjects.length; i++)
 		{
 			if (_actionObjects[i].id.length>0)
 			{
@@ -4624,16 +4621,16 @@ export class MailApp extends EgwApp
 	 * @param _allMessagesChecked
 	 */
 	callMove(_action,_senders,_target,_allMessagesChecked) {
-		var target = _action.id == 'drop_move_mail' ? _target.id : _action.id.substr(5);
-		var messages = this.getFormData(_senders);
+		let target = _action.id == 'drop_move_mail' ? _target.id : _action.id.substr(5);
+		const messages = this.getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 
 		// Directly delete any cache for target
 		if(window.localStorage)
 		{
-			for(var i = 0; i < window.localStorage.length; i++)
+			for(let i = 0; i < window.localStorage.length; i++)
 			{
-				var key = window.localStorage.key(i);
+				const key = window.localStorage.key(i);
 
 				// Find directly by what the key would look like
 				if(key.indexOf('cached_fetch_mail::{"selectedFolder":"'+target+'"') == 0)
@@ -4651,8 +4648,8 @@ export class MailApp extends EgwApp
 		// Make sure a default target folder is set in case of drop target is parent 0 (mail account name)
 		if (!target.match(/::/g)) target += '::INBOX';
 
-		var self = this;
-		var nm = this.et2.getWidgetById(this.nm_index);
+		const self = this;
+		const nm = this.et2.getWidgetById(this.nm_index);
 		// The legacy callback is cancelable through its selection event, rather
 		// than changing the component's callback property.
 		const suppressPreview = (event : Event) => event.preventDefault();
@@ -4666,12 +4663,12 @@ export class MailApp extends EgwApp
 
 		// thev 4th param indicates if it is a normal move messages action. if not the action is a move2.... (archiveFolder) action
 		const isArchiveShortcut = _action.id.substr(0,4)=='move'&&_action.id.substr(4,1)=='2';
-		const classicMove = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (isArchiveShortcut?'2':'_') ], function(){
+		const classicMove = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages, 'move', (isArchiveShortcut?'2':'_') ], () =>{
 			self.unlockTree();
 
 			// Server response may contain refresh, but it's always delete
 			// Refresh list if current view is the target (happens when pasting)
-			var tree = self.et2.getWidgetById('nm[foldertree]');
+			const tree = self.et2.getWidgetById('nm[foldertree]');
 			if(nm && tree && target == tree.getValue())
 			{
 				// Can't trust the sorting, needs to be full refresh
@@ -4765,16 +4762,16 @@ export class MailApp extends EgwApp
 	 * @param _allMessagesChecked
 	 */
 	callCopy(_action,_senders,_target,_allMessagesChecked) {
-		var target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
-		var messages = this.getFormData(_senders);
+		const target = _action.id == 'drop_copy_mail' ? _target.id : _action.id.substr(5);
+		const messages = this.getFormData(_senders);
 		if (typeof _allMessagesChecked=='undefined') _allMessagesChecked=false;
 		// TODO: Write move/copy function which cares about doing the same stuff
 		// as the "onNodeSelect" function!
 		messages['all'] = _allMessagesChecked;
 		if (messages['all']=='cancel') return false;
 		if (messages['all']) messages['activeFilters'] = this.getActiveFilters(_action);
-		var self = this;
-		const classicCopy = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],function (){self.unlockTree();})
+		const self = this;
+		const classicCopy = () => egw.json('mail.mail_ui.ajax_copyMessages',[target, messages],() =>{self.unlockTree();})
 			.sendRequest();
 		// Server response contains refresh
 
@@ -4910,15 +4907,15 @@ export class MailApp extends EgwApp
 	addFolder(_action,_senders) {
 		//action.id == 'add'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
-		var buttons = [
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		const buttons = [
 			{label: this.egw.lang("Add"), id: "add", image:'plus', "class": "ui-priority-primary", "default": true},
 			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
 		Et2Dialog.show_prompt((_button_id, _value) =>
 			{
-				var NewFolderName = null;
+				let NewFolderName = null;
 				if (_value.length > 0)
 				{
 					NewFolderName = _value;
@@ -4966,15 +4963,15 @@ export class MailApp extends EgwApp
 	renameFolder(_action,_senders) {
 		//action.id == 'rename'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
-		var buttons = [
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'');
+		const buttons = [
 			{label: this.egw.lang("Rename"), id: "rename", "class": "ui-priority-primary", image: 'edit', "default": true},
 			{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
 		];
 		Et2Dialog.show_prompt((_button_id, _value) =>
 			{
-				var NewFolderName = null;
+				let NewFolderName = null;
 				if (_value.length > 0)
 				{
 					NewFolderName = _value;
@@ -5028,32 +5025,32 @@ export class MailApp extends EgwApp
 			egw.debug('warn', "Move folder, but no target");
 			return;
 		}
-		var sourceProfile = _senders[0].id.split('::');
-		var targetProfile = destination.id.split('::');
+		const sourceProfile = _senders[0].id.split('::');
+		const targetProfile = destination.id.split('::');
 		if (sourceProfile[0]!=targetProfile[0])
 		{
 			egw.message(this.egw.lang('Moving Folders from one Mailaccount to another is not supported'), 'error');
 			return;
 		}
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
-		var src_label = _senders[0].id.replace(/^[0-9]+::/,'');
-		var dest_label = destination.id.replace(/^[0-9]+::/,'');
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const src_label = _senders[0].id.replace(/^[0-9]+::/,'');
+		const dest_label = destination.id.replace(/^[0-9]+::/,'');
 
-		var callback = (_button) =>
+		const callback = (_button) =>
 		{
 			if (_button == Et2Dialog.YES_BUTTON)
 			{
 				egw.appName = 'mail';
 				egw.message(egw.lang('Folder %1 is moving to folder %2', src_label, dest_label));
 				egw.loading_prompt('mail_moveFolder', true, '', '#egw_fw_basecontainer');
-				for (var i = 0; i < _senders.length; i++)
+				for (let i = 0; i < _senders.length; i++)
 				{
 					(this.tryJmapMoveFolder(_senders[i].id, destination.id) ??
 						egw.request('mail.mail_ui.ajax_MoveFolder', [_senders[i].id, destination.id]))
 						.finally(() =>
 							{
 								// Move is done (successfully or not), remove loading
-								var id = destination.id.split('::');
+								const id = destination.id.split('::');
 								//refersh the top parent
 								ftree.refreshItem(id[0], null);
 								egw.loading_prompt('mail_moveFolder', false);
@@ -5099,9 +5096,9 @@ export class MailApp extends EgwApp
 	{
 		//action.id == 'delete'
 		//_senders.iface.id == target leaf / leaf to edit
-		var ftree = this.et2.getWidgetById(this.nm_index + '[foldertree]');
-		var OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp, '');
-		var buttons = [
+		const ftree = this.et2.getWidgetById(this.nm_index + '[foldertree]');
+		const OldFolderName = ftree.getLabel(_senders[0].id).replace(this._unseen_regexp, '');
+		const buttons = [
 			{label: this.egw.lang("Yes"), id: "delete", "class": "ui-priority-primary", "default": true, image: "check"},
 			{label: this.egw.lang("Cancel"), id: "cancel", image: "cancel"}
 		];
@@ -5155,7 +5152,7 @@ export class MailApp extends EgwApp
 		}
 		if (_file_count && Object.keys(_event.data.getValue() || {}).length > 0)
 		{
-			var widget = _event.data;
+			const widget = _event.data;
 //			var request = new egw_json_request('mail_ui::ajax_importMessage', ['upload', widget.getValue(), _path], this);
 //			widget.set_value('');
 //			request.sendRequest();//false, this._upload_callback, this);
@@ -5196,18 +5193,18 @@ export class MailApp extends EgwApp
 	 */
 	sieveVacAllAliases()
 	{
-		var aliases = [];
-		var tmp = [];
-		var addr = this.et2.getWidgetById('addresses');
-		var addresses = this.et2.getArrayMgr('sel_options').data.addresses;
+		let aliases = [];
+		let tmp = [];
+		const addr = this.et2.getWidgetById('addresses');
+		const addresses = this.et2.getArrayMgr('sel_options').data.addresses;
 
-		for(var id in addresses) aliases.push(id);
+		for(const id in addresses) aliases.push(id);
 		if (addr)
 		{
 			tmp = aliases.concat(addr.get_value());
 
 			// returns de-duplicate items of an array
-			var deDuplicator = function (item,pos)
+			const deDuplicator = (item,pos) =>
 			{
 				return tmp.indexOf(item) == pos;
 			};
@@ -5223,10 +5220,10 @@ export class MailApp extends EgwApp
 	 */
 	vacationFilterStatusChange()
 	{
-		var status = this.et2.getWidgetById('status');
-		var s_date = this.et2.getWidgetById('start_date');
-		var e_date = this.et2.getWidgetById('end_date');
-		var by_date_label = this.et2.getWidgetById('by_date_label');
+		const status = this.et2.getWidgetById('status');
+		const s_date = this.et2.getWidgetById('start_date');
+		const e_date = this.et2.getWidgetById('end_date');
+		const by_date_label = this.et2.getWidgetById('by_date_label');
 
 		if (status && s_date && e_date && by_date_label)
 		{
@@ -5244,11 +5241,11 @@ export class MailApp extends EgwApp
 	 */
 	action(_type, _selected)
 	{
-		var  actionData ;
-		var that = this;
-		var typeId = _type.id;
-		var linkData = '';
-		var ruleID = ((_selected[0].id.split("_").pop()) - 1); // subtract the row id from 1 because the first row id is reserved by grid header
+		let  actionData ;
+		const that = this;
+		const typeId = _type.id;
+		let linkData = '';
+		const ruleID = ((_selected[0].id.split("_").pop()) - 1); // subtract the row id from 1 because the first row id is reserved by grid header
 		if (_type)
 		{
 
@@ -5256,7 +5253,7 @@ export class MailApp extends EgwApp
 			{
 				case 'delete':
 
-					var callbackDeleteDialog = function (button_id)
+					const callbackDeleteDialog = (button_id) =>
 					{
 						if (button_id == Et2Dialog.YES_BUTTON)
 						{
@@ -5302,7 +5299,7 @@ export class MailApp extends EgwApp
 	{
 		if (_typeID && _data)
 		{
-			var request = this.egw.json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
+			const request = this.egw.json('mail.mail_sieve.ajax_action', [_typeID,_selectedID,_msg],null,null,true);
 			request.sendRequest();
 		}
 	}
@@ -5324,8 +5321,8 @@ export class MailApp extends EgwApp
 	 */
 	aclCommonRightsSelector(event,widget)
 	{
-		var rowId = widget.id.replace(/[^0-9.]+/g, '');
-		var rights = [];
+		const rowId = widget.id.replace(/[^0-9.]+/g, '');
+		let rights = [];
 
 		switch (widget.get_value())
 		{
@@ -5339,9 +5336,9 @@ export class MailApp extends EgwApp
 		}
 		if (rights.length > 0)
 		{
-			for (var i=0;i<this.aclRights.length;i++)
+			for (let i=0;i<this.aclRights.length;i++)
 			{
-				var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+				const rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
 				rightsWidget.set_value((rights.indexOf(this.aclRights[i]) != -1 )?true:false);
 				if ((rights.indexOf('c') == -1 && ['k','x'].indexOf(this.aclRights[i]) > -1)
 						|| (rights.indexOf('d') == -1 && ['e','x','t'].indexOf(this.aclRights[i]) > -1 ))
@@ -5362,16 +5359,16 @@ export class MailApp extends EgwApp
 	 */
 	aclCommonRights(event, widget)
 	{
-		var rowId = widget.id.replace(/[^0-9.]+/g, '');
-		var aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
-		var rights = '';
-		var selectedBox = widget.id;
-		var virtualDelete = ['e','t','x'];
-		var virtualCreate = ['k','x'];
+		const rowId = widget.id.replace(/[^0-9.]+/g, '');
+		const aclCommonWidget = this.et2.getWidgetById(rowId + '[acl]');
+		let rights = '';
+		const selectedBox = widget.id;
+		const virtualDelete = ['e','t','x'];
+		const virtualCreate = ['k','x'];
 
 		for (let i=0;i<this.aclRights.length;i++)
 		{
-			var rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
+			const rightsWidget = this.et2.getWidgetById(rowId+'[acl_' + this.aclRights[i]+ ']');
 			if (selectedBox == rowId+'[acl_c]' && virtualCreate.indexOf(this.aclRights[i])>-1)
 			{
 				rightsWidget.set_value(false);
@@ -5414,9 +5411,9 @@ export class MailApp extends EgwApp
 	 */
 	editSieve(_action, _senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
+		const acc_id = parseInt(_senders[0].id);
 
-		var url = this.egw.link('/index.php',{
+		const url = this.egw.link('/index.php',{
 					'menuaction': 'mail.mail_sieve.index',
 					'acc_id': acc_id,
 					'ajax': 'true'
@@ -5444,9 +5441,9 @@ export class MailApp extends EgwApp
 	 */
 	loadIframe(_url, _iFrame)
 	{
-		var mailSplitter = this.et2.getWidgetById('splitter');
-		var quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
-		var iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
+		const mailSplitter = this.et2.getWidgetById('splitter');
+		const quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
+		const iframe = _iFrame || this.et2.getWidgetById('extra_iframe');
 		if (typeof iframe != 'undefined' && iframe)
 		{
 			if (_url)
@@ -5467,7 +5464,7 @@ export class MailApp extends EgwApp
 			{
 				if (egwIsMobile())
 				{
-					var nm = this.et2.getWidgetById(this.nm_index);
+					const nm = this.et2.getWidgetById(this.nm_index);
 					nm.set_disabled(!!_url);
 					iframe.set_disabled(!_url);
 				}
@@ -5524,7 +5521,7 @@ export class MailApp extends EgwApp
 	 */
 	editSubscribe(_action,_senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
+		const acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_ui.subscription&acc_id='+acc_id, '_blank', '720x580');
 	}
 
@@ -5536,9 +5533,9 @@ export class MailApp extends EgwApp
 	 */
 	subscribeFolder(_action,_senders)
 	{
-		var mailbox = _senders[0].id.split('::');
-		var folder = mailbox[1], acc_id = mailbox[0];
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const mailbox = _senders[0].id.split('::');
+		const folder = mailbox[1], acc_id = mailbox[0];
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Subscribe to Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		(this.tryJmapSetSubscribed(_senders[0].id, true) ??
 			egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,true]).sendRequest());
@@ -5576,9 +5573,9 @@ export class MailApp extends EgwApp
 	 */
 	unsubscribeFolder(_action,_senders)
 	{
-		var mailbox = _senders[0].id.split('::');
-		var folder = mailbox[1], acc_id = mailbox[0];
-		var ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
+		const mailbox = _senders[0].id.split('::');
+		const folder = mailbox[1], acc_id = mailbox[0];
+		const ftree = this.et2.getWidgetById(this.nm_index+'[foldertree]');
 		this.egw.message(this.egw.lang('Unsubscribe from Folder %1',ftree.getLabel(_senders[0].id).replace(this._unseen_regexp,'')), 'success');
 		(this.tryJmapSetSubscribed(_senders[0].id, false) ??
 			egw.json('mail.mail_ui.ajax_foldersubscription',[acc_id,folder,false]).sendRequest());
@@ -5839,8 +5836,8 @@ export class MailApp extends EgwApp
 	 */
 	editAcl(_action, _senders)
 	{
-		var mailbox = _senders[0].id.split('::');
-		var folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
+		const mailbox = _senders[0].id.split('::');
+		const folder = mailbox[1] || 'INBOX', acc_id = mailbox[0];
 		this.egw.open_link('mail.mail_acl.edit&mailbox='+ btoa(folder)+'&acc_id='+acc_id, '_blank', '1150x600');
 	}
 
@@ -5849,7 +5846,7 @@ export class MailApp extends EgwApp
 	 */
 	aclFolderChange()
 	{
-		var mailbox = this.et2.getWidgetById('mailbox');
+		const mailbox = this.et2.getWidgetById('mailbox');
 
 		if (mailbox)
 		{
@@ -6035,7 +6032,7 @@ export class MailApp extends EgwApp
 	 */
 	editAccount(_action, _senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
+		const acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_wizard.edit&acc_id='+acc_id, '_blank', '740x670');
 	}
 
@@ -6268,14 +6265,14 @@ export class MailApp extends EgwApp
 	 */
 	printForCompose()
 	{
-		var afterprint = function (){
+		const afterprint = () =>{
 			egw(window).close();
 		};
 
 		if (!window.onafterprint)
 		{
 			// For browsers which does not support onafterprint event, eg. Chrome
-			setTimeout(function() {
+			setTimeout(() => {
 				egw(window).close();
 			}, 2000);
 		}
@@ -6307,10 +6304,10 @@ export class MailApp extends EgwApp
 
 		if (mainIframe && tmpPrintDiv)
 		{
-			const copyContent = function ()
+			const copyContent = () =>
 			{
 				// Wait a little longer
-				window.setTimeout(function ()
+				window.setTimeout(() =>
 				{
 					tmpPrintDiv.innerHTML = mainIframe.contentDocument.body.innerHTML;
 				}, 600);
@@ -6336,7 +6333,7 @@ export class MailApp extends EgwApp
 		this.egw.message(this.egw.lang('Printing')+' ...', 'success');
 
 		// Make sure the print happens after the content is loaded. Seems Firefox and IE can't handle timing for print command correctly
-		setTimeout(function(){
+		setTimeout(() =>{
 			egw(window).window.print();
 		},1000);
 	}
@@ -6370,7 +6367,7 @@ export class MailApp extends EgwApp
 	 */
 	clearIntervals()
 	{
-		for(var i=0;i<this.W_INTERVALS.length;i++)
+		for(let i=0;i<this.W_INTERVALS.length;i++)
 		{
 			clearInterval(this.W_INTERVALS[i]);
 			delete this.W_INTERVALS[i];
@@ -6405,8 +6402,8 @@ export class MailApp extends EgwApp
 	 */
 	prepareMailvelopePrint()
 	{
-		var tempPrint = document.querySelector('div#tempPrintDiv') as HTMLElement;
-		var originFrame = document.querySelector('#mail-display_mailDisplayBodySrc') as HTMLIFrameElement;
+		const tempPrint = document.querySelector('div#tempPrintDiv') as HTMLElement;
+		const originFrame = document.querySelector('#mail-display_mailDisplayBodySrc') as HTMLIFrameElement;
 
 		if (tempPrint)
 		{
@@ -6443,30 +6440,30 @@ export class MailApp extends EgwApp
 	 */
 	mailvelopeDisplay(_keyring)
 	{
-		let self = this;
-		let iframe = document.querySelector('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME') as HTMLIFrameElement;
-		let armored = iframe?.contentDocument?.querySelector('td.td_display > pre')?.textContent?.trim() || '';
+		const self = this;
+		const iframe = document.querySelector('iframe#mail-display_mailDisplayBodySrc,iframe#mail-index_messageIFRAME') as HTMLIFrameElement;
+		const armored = iframe?.contentDocument?.querySelector('td.td_display > pre')?.textContent?.trim() || '';
 
 		if (armored == "" || armored.indexOf(this.begin_pgp_message) === -1) return;
 
-		let container = iframe.parentElement;
-		let container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${(container as any).dom_id}`;
-		let options = {
+		const container = iframe.parentElement;
+		const container_selector = this.et2._inst.name == 'mail.display'  ? '.mailDisplayContainer' : `#${(container as any).dom_id}`;
+		const options = {
 			showExternalContent: this.egw.preference('allowExternalIMGs') == 1	// "1", or "0", undefined --> true or false
 		};
 		// get sender address, so Mailvelope can check signature
-		let from = this.et2._inst.name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
+		const from = this.et2._inst.name == 'mail.display' ? this.et2.getArrayMgr('content').data.from : this.et2.getWidgetById('additionalfromaddress').value;
 		if (from)
 		{
 			options.senderAddress = from[0].replace(/^.*<([^<>]+)>$/, '$1');
 		}
-		window.mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(function()
+		window.mailvelope.createDisplayContainer(container_selector, armored, _keyring, options).then(() =>
 		{
 			// hide our iframe to give space for mailvelope iframe with encrypted content
 			iframe.style.display = 'none';
 			self.prepareMailvelopePrint();
 		},
-		function(_err)
+		(_err) =>
 		{
 			self.egw.message(_err.message, 'error');
 		});
@@ -6489,18 +6486,18 @@ export class MailApp extends EgwApp
 		delete this.mailvelope_editor;
 
 		// currently Mailvelope only supports plain-text, to this is unnecessary
-		var mimeType = this.et2.getWidgetById('mimeType');
-		var is_html = mimeType.get_value();
-		var container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
-		var editor = this.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
-		var options = { predefinedText: editor.get_value() };
+		const mimeType = this.et2.getWidgetById('mimeType');
+		const is_html = mimeType.get_value();
+		const container = is_html ? '.mailComposeHtmlContainer' : '.mailComposeTextContainer';
+		const editor = this.et2.getWidgetById(is_html ? 'mail_htmltext' : 'mail_plaintext');
+		let options = { predefinedText: editor.get_value() };
 
 		// check if we have some sort of reply to an encrypted message
 		// --> parse header, encrypted mail to quote and signature so Mailvelope understands it
-		var start_pgp = options.predefinedText.indexOf(this.begin_pgp_message);
+		const start_pgp = options.predefinedText.indexOf(this.begin_pgp_message);
 		if (start_pgp != -1)
 		{
-			var end_pgp = options.predefinedText.indexOf(this.end_pgp_message);
+			const end_pgp = options.predefinedText.indexOf(this.end_pgp_message);
 			if (end_pgp != -1)
 			{
 				options = {
@@ -6511,7 +6508,7 @@ export class MailApp extends EgwApp
 					signMsg: true	// for now (no UI) always sign, when we encrypt
 				};
 				// set encrypted checkbox, if not already set
-				var composeToolbar = this.et2.getWidgetById('composeToolbar');
+				const composeToolbar = this.et2.getWidgetById('composeToolbar');
 				if (!composeToolbar.checkbox('pgp'))
 				{
 					composeToolbar.checkbox('pgp',true);
@@ -6519,14 +6516,14 @@ export class MailApp extends EgwApp
 			}
 		}
 
-		var self = this;
-		mailvelope.createEditorContainer(container, _keyring, options).then(function(_editor)
+		const self = this;
+		mailvelope.createEditorContainer(container, _keyring, options).then((_editor) =>
 		{
 			self.mailvelope_editor = _editor;
 			editor.set_disabled(true);
 			mimeType.set_readonly(true);
 		},
-		function(_err)
+		(_err) =>
 		{
 			self.egw.message(_err.message, 'error');
 		});
@@ -6539,7 +6536,7 @@ export class MailApp extends EgwApp
 	 */
 	togglePgpEncrypt(_action)
 	{
-		var self = this;
+		const self = this;
 		if (_action.checked)
 		{
 			if (typeof mailvelope == 'undefined')
@@ -6551,9 +6548,9 @@ export class MailApp extends EgwApp
 				return;
 			}
 			// check if we have keys for all recipents, before switching
-			this.mailvelopeGetCheckRecipients().then(function(_recipients)
+			this.mailvelopeGetCheckRecipients().then((_recipients) =>
 			{
-				var mimeType = self.et2.getWidgetById('mimeType');
+				const mimeType = self.et2.getWidgetById('mimeType');
 				// currently Mailvelope only supports plain-text, switch to it if necessary
 				if (mimeType.get_value())
 				{
@@ -6561,12 +6558,12 @@ export class MailApp extends EgwApp
 					self.et2._inst.submit();
 					return;	// ToDo: do that without reload
 				}
-				self.mailvelopeOpenKeyring().then(function(_keyring)
+				self.mailvelopeOpenKeyring().then((_keyring) =>
 				{
 					self.mailvelopeCompose(_keyring);
 				});
 			})
-			.catch(function(_err)
+			.catch((_err) =>
 			{
 				self.egw.message(_err.message, 'error');
 				self.et2.getWidgetById('composeToolbar')._actionManager.getActionById('pgp').set_checked(false);
@@ -6577,7 +6574,7 @@ export class MailApp extends EgwApp
 		else
 		{
 			// switch Mailvelop off again, but warn user he will loose his content
-			Et2Dialog.show_dialog(function (_button_id)
+			Et2Dialog.show_dialog((_button_id) =>
 				{
 					if (_button_id == Et2Dialog.YES_BUTTON)
 					{
@@ -6620,7 +6617,7 @@ export class MailApp extends EgwApp
 	 */
 	folderManagement(_action,_senders)
 	{
-		var acc_id = parseInt(_senders[0].id);
+		const acc_id = parseInt(_senders[0].id);
 		this.egw.open_link('mail.mail_ui.folderManagement&acc_id='+acc_id, '_blank', '720x580');
 	}
 
@@ -6634,9 +6631,9 @@ export class MailApp extends EgwApp
 	folderManagementOnSelect(_ids, _widget)
 	{
 		// Flag to reset selected items
-		var resetSelection = false;
+		let resetSelection = false;
 
-		var self = this;
+		const self = this;
 
 		/**
 		 * helper function to multiselect range of nodes in same level
@@ -6645,29 +6642,29 @@ export class MailApp extends EgwApp
 		 * @param {string} _b end node id
 		 * @param {string} _branch total node ids in the level
 		 */
-		var rangeSelector = function(_a,_b, _branch)
+		const rangeSelector = (_a,_b, _branch) =>
 		{
-			var branchItems = _branch.split(_widget.input.dlmtr);
-			var _aIndex = _widget.input.getIndexById(_a);
-			var _bIndex = _widget.input.getIndexById(_b);
+			const branchItems = _branch.split(_widget.input.dlmtr);
+			let _aIndex = _widget.input.getIndexById(_a);
+			let _bIndex = _widget.input.getIndexById(_b);
 			if (_bIndex<_aIndex)
 			{
-				var tmpIndex = _aIndex;
+				const tmpIndex = _aIndex;
 				_aIndex = _bIndex;
 				_bIndex = tmpIndex;
 			}
-			for(var i =_aIndex;i<=_bIndex;i++)
+			for(let i =_aIndex;i<=_bIndex;i++)
 			{
 				self.folderMgmt_setCheckbox(_widget, branchItems[i], !_widget.input.isItemChecked(branchItems[i]));
 			}
 		};
 
 		// extract items ids
-		var itemIds = _ids.split(_widget.input.dlmtr);
+		const itemIds = _ids.split(_widget.input.dlmtr);
 
 		if(itemIds.length == 2) // there's a range selected
 		{
-			var branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
+			const branch = _widget.input.getSubItems(_widget.input.getParentId(itemIds[0]));
 			// Set range of selected/unselected
 			rangeSelector(itemIds[0], itemIds[1], branch);
 		}
@@ -6708,7 +6705,7 @@ export class MailApp extends EgwApp
 					if (selFolders && selFolders.length)
 					{
 						const msg = egw.lang('Deleting %1 folders in progress ...', selFolders.length);
-						Et2Dialog.long_task(function (_val, _resp)
+						Et2Dialog.long_task((_val, _resp) =>
 						{
 							if (_val && _resp.type !== 'error')
 							{
@@ -6763,9 +6760,9 @@ export class MailApp extends EgwApp
 	 */
 	spam_actions(_action, _senders)
 	{
-		var id,fromaddress,domain, email = '';
-		var data = {};
-		var items = [];
+		let id,fromaddress,domain, email = '';
+		let data = {};
+		const items = [];
 		//if call happens from a popup this.et2 is the wrong reference --- see deleteMessages
 		const nm = this.et2.getWidgetById(this.nm_index) ??
 			window?.egw?.window?.app?.mail?.et2?.getWidgetById(this.nm_index)
@@ -6775,7 +6772,7 @@ export class MailApp extends EgwApp
 			_senders = [{id:nm.getSelection().ids[0]}];
 		}
 
-		for (var i in _senders)
+		for (const i in _senders)
 		{
 			id = _senders[i].id;
 			data = egw.dataGetUIDdata(id);
@@ -6792,7 +6789,7 @@ export class MailApp extends EgwApp
 
 		this.egw.json('mail.mail_ui.ajax_spamAction', [
 			_action.id,items
-		], function(_data){
+		], (_data) =>{
 			if (_data[1] && _data[1].length > 0)
 			{
 				egw.refresh(_data[0],'mail',_data[1],'delete');
@@ -6807,13 +6804,13 @@ export class MailApp extends EgwApp
 
 	spamTitanSetActionTitle(_action, _sender)
 	{
-		var id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
-		var email = this.egw.lang('emails');
-		var domain = this.egw.lang('domains');
-		var data = egw.dataGetUIDdata(id);
+		const id = _sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
+		let email = this.egw.lang('emails');
+		let domain = this.egw.lang('domains');
+		const data = egw.dataGetUIDdata(id);
 		if(_sender.length === 1 && data && data.data && data.data.fromaddress)
 		{
-			var fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
+			const fromaddress = data.data.fromaddress.match(/<([^\'\" <>]+)>$/);
 			email = (fromaddress && fromaddress[1]) ?fromaddress[1]:data.data.fromaddress;
 			domain = email.split('@')[1];
 		}
@@ -6892,7 +6889,7 @@ export class MailApp extends EgwApp
 
 
 		const self = this;
-		this.viewEntry(_action, _sender, true, function(etemplate){
+		this.viewEntry(_action, _sender, true, (etemplate) =>{
 			// et2 object in view
 			const et2 = etemplate.widgetContainer;
 			// iframe to load message
@@ -6939,7 +6936,7 @@ export class MailApp extends EgwApp
 					// calendar meeting mails still need to be in iframe, therefore, we calculate the height
 					// and set the iframe with a fixed height to be able to see all content without getting
 					// scrollbar becuase of scrolling issue in iframe
-					window.setTimeout(function(){frame.style.height = doc.body.scrollHeight + 'px';}, 500);
+					window.setTimeout(() =>{frame.style.height = doc.body.scrollHeight + 'px';}, 500);
 				}
 				else
 				{
@@ -7020,7 +7017,7 @@ export class MailApp extends EgwApp
 	 */
 	setSmimeAttachmentsMobile(_attachments)
 	{
-		var attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
+		const attachmentsBlock = this.et2_view.widgetContainer.getWidgetById('attachmentsBlock');
 		if (attachmentsBlock && _attachments.length > 0)
 		{
 			attachmentsBlock.set_value({content:_attachments});
@@ -7043,7 +7040,7 @@ export class MailApp extends EgwApp
 		let data = {};
 		let selected = [];
 
-		let cmprAttchObjs = function(_obj1,_obj2)
+		const cmprAttchObjs = (_obj1,_obj2) =>
 		{
 			for (let i=0;i<_obj1.length;i++)
 			{
@@ -7071,11 +7068,11 @@ export class MailApp extends EgwApp
 	 */
 	smimeAttachmentsCheckerInterval()
 	{
-		var self = this;
-		var attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
+		const self = this;
+		const attachmentArea = this.et2.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.add('loading');
-		var interval = window.setInterval(function(){
-			self.egw.json('mail.mail_ui.ajax_smimeAttachmentsChecker',null,function(_stop){
+		const interval = window.setInterval(() =>{
+			self.egw.json('mail.mail_ui.ajax_smimeAttachmentsChecker',null,(_stop) =>{
 				if (_stop)
 				{
 					window.clearInterval(interval);
@@ -7092,14 +7089,14 @@ export class MailApp extends EgwApp
 	setSmimeFlags(_data)
 	{
 		if (!_data) return;
-		var self = this;
-		var et2_object = egwIsMobile()? this.et2_view.widgetContainer: this.et2;
-		var data = _data;
-		var attachmentArea = et2_object.getWidgetById('previewAttachmentArea');
+		const self = this;
+		const et2_object = egwIsMobile()? this.et2_view.widgetContainer: this.et2;
+		const data = _data;
+		const attachmentArea = et2_object.getWidgetById('previewAttachmentArea');
 		if (attachmentArea) attachmentArea.getDOMNode().classList.remove('loading');
-		var smime_signature = et2_object.getWidgetById('smime_signature');
-		var smime_encryption = et2_object.getWidgetById('smime_encryption');
-		var mail_container = egwIsMobile()? document.getElementsByClassName('mailContent')[0] :
+		const smime_signature = et2_object.getWidgetById('smime_signature');
+		const smime_encryption = et2_object.getWidgetById('smime_encryption');
+		const mail_container = egwIsMobile()? document.getElementsByClassName('mailContent')[0] :
 				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer') :
 				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
 		smime_signature.set_disabled(!data.signed);
@@ -7134,12 +7131,12 @@ export class MailApp extends EgwApp
 		}
 		data.class = data.class ? data.class : "";
 		const smimeSignatureNode = smime_signature.getDOMNode();
-		smimeSignatureNode.onclick = function(){
+		smimeSignatureNode.onclick = () =>{
 			self.smimeCertAddToContact(data,true);
 		};
 		smimeSignatureNode.classList.add('et2_clickable');
 		const smimeEncryptionNode = smime_encryption.getDOMNode();
-		smimeEncryptionNode.onclick = function(){
+		smimeEncryptionNode.onclick = () =>{
 			self.smimeCertAddToContact(data, true);
 		};
 		smimeEncryptionNode.classList.add('et2_clickable');
@@ -7152,7 +7149,7 @@ export class MailApp extends EgwApp
 	 */
 	smimeClearFlags(_nodes)
 	{
-		for(var i=0;i<_nodes.length;i++)
+		for(let i=0;i<_nodes.length;i++)
 		{
 			_nodes[i].classList.remove(...['smime_cert_verified',
 				'smime_cert_notverified',
@@ -7174,9 +7171,9 @@ export class MailApp extends EgwApp
 			return;
 		}
 		if (!_metadata || _metadata.length < 1) return;
-		var self = this;
-		var content = this.egw.deepExtend({message:_metadata.msg}, _metadata);
-		var buttons = [
+		const self = this;
+		const content = this.egw.deepExtend({message:_metadata.msg}, _metadata);
+		const buttons = [
 
 			{label: this.egw.lang("Close"), id: "close", image:'cancelDialog'}
 		];
@@ -7191,7 +7188,7 @@ export class MailApp extends EgwApp
 			};
 			content.message2 = egw.lang('You may add this certificate into your contact, if you trust this signature.');
 		}
-		var extra = {
+		const extra = {
 			'presets[email]': _metadata.email,
 			'presets[n_given]': _metadata.certDetails.subject.commonName,
 			'presets[pubkey]': _metadata.cert,
@@ -7205,7 +7202,7 @@ export class MailApp extends EgwApp
 				if (_button_id == 'contact' && _value)
 				{
 					self.egw.json('mail.mail_ui.ajax_smimeAddCertToContact',
-					_metadata,function(_result){
+					_metadata,(_result) =>{
 						if (!_result)
 						{
 							egw.open('','addressbook','add',extra);
@@ -7232,8 +7229,8 @@ export class MailApp extends EgwApp
 	 */
 	getPreviewPaneState()
 	{
-		var previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
-		var state = false;
+		const previewPane = this.egw.preference('previewPane', 'mail') || 'vertical';
+		let state = false;
 		switch (previewPane)
 		{
 			case true:
@@ -7260,15 +7257,15 @@ export class MailApp extends EgwApp
 	modifyMessageSubjectDialog(_action, _sender)
 	{
 		_sender = _sender ? _sender : [{id:this.currentlyFocussed}];
-		var id = (_sender && _sender.uid) ? _sender.row_id:
+		const id = (_sender && _sender.uid) ? _sender.row_id:
 			_sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
-		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
-		var subject = data && data.data? data.data.subject : "";
+		const data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
+		const subject = data && data.data? data.data.subject : "";
 
 		const dialog = et2_createWidget("et2-dialog",
 		{
 			callback(_button_id, _value) {
-				var newSubject = null;
+				let newSubject = null;
 				if (_value && _value.value) newSubject = _value.value;
 
 				if (newSubject && newSubject.length>0)
@@ -7277,7 +7274,7 @@ export class MailApp extends EgwApp
 					{
 						case Et2Dialog.OK_BUTTON:
 							egw.loading_prompt('modifyMessageSubjectDialog', true);
-							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject', [id, newSubject], function (_data)
+							egw.json('mail.mail_ui.ajax_saveModifiedMessageSubject', [id, newSubject], (_data) =>
 							{
 								egw.loading_prompt('modifyMessageSubjectDialog', false);
 								if (_data && !_data.success)
@@ -7285,7 +7282,7 @@ export class MailApp extends EgwApp
 									egw.message(_data.msg, "error");
 									return;
 								}
-								var nm = app.mail.et2.getWidgetById('nm');
+								const nm = app.mail.et2.getWidgetById('nm');
 								if (nm)
 								{
 									nm.applyFilters();
@@ -7318,7 +7315,7 @@ export class MailApp extends EgwApp
 	{
 		const pref_id = _senders[0].id.split('::')[0] + '_predefined_compose_addresses';
 		const prefs = egw.deepExtend({}, egw.preference(pref_id, 'mail'));
-		let selOptions = {}
+		const selOptions = {}
 		for (const predefined in prefs) {
 			selOptions[predefined] = [];
 			for (const predefinedElement of prefs[predefined]) {
