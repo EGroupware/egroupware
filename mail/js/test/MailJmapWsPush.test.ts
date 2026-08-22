@@ -268,8 +268,7 @@ describe("MailJmap.processWsPushStates()", () =>
 				return [{
 					emailChanges: {},
 					emailCreated: {list : [email]},
-					emailUpdated: {list : []},
-					emailDestroyed: {list : []}
+					emailUpdated: {list : []}
 				}];
 			}
 		};

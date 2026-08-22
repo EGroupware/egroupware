@@ -1226,6 +1226,16 @@ export class MailJmap
 	 */
 	private async buildWsPushPayload(client : JamWebSocketClient, profileID : string, accountId : string, sinceStates : Record<string, string>) : Promise<any[]>
 	{
+		// Deliberately no "destroyed" Foo/get call: a destroyed object can never be fetched (it
+		// always resolves to notFound, never list - by JMAP semantics, not a Stalwart quirk), so
+		// that $ref() would only ever resolve to an empty list even when it works. Worse, Stalwart
+		// concretely rejects a *third* $ref() to the same preceding Foo/changes call with an
+		// "invalidResultReference" error (confirmed live: /created and /updated resolve fine,
+		// /destroyed doesn't) - and this client's all-or-nothing error handling (matching jmap-jam's
+		// own, see JamWebSocketClient.requestMany()'s docblock) then rejects the *entire* batch,
+		// silently breaking created/updated push too. Dropping the pointless destroyed call avoids
+		// both problems; Api\Mail\Jmap::getChanges() has the same fundamental Email/get-on-destroyed
+		// gap server-side (its lenient hand-rolled response parsing just doesn't throw on it).
 		const [result] = await client.requestMany((t : any) =>
 		{
 			const calls : Record<string, any> = {};
@@ -1235,7 +1245,6 @@ export class MailJmap
 				calls.mailboxChanges = mailboxChanges;
 				calls.mailboxCreated = t.Mailbox.get({accountId, ids: mailboxChanges.$ref('/created')});
 				calls.mailboxUpdated = t.Mailbox.get({accountId, ids: mailboxChanges.$ref('/updated')});
-				calls.mailboxDestroyed = t.Mailbox.get({accountId, ids: mailboxChanges.$ref('/destroyed')});
 			}
 			if (sinceStates.Email)
 			{
@@ -1249,17 +1258,13 @@ export class MailJmap
 					accountId, ids: emailChanges.$ref('/updated'),
 					properties: ['id', 'mailboxIds', 'messageId', 'keywords']
 				});
-				calls.emailDestroyed = t.Email.get({
-					accountId, ids: emailChanges.$ref('/destroyed'),
-					properties: ['id', 'mailboxIds', 'messageId']
-				});
 			}
 			return calls;
 		});
 
 		const pushPayload : any[] = [];
 		for (const [list, type] of [
-			[result.mailboxCreated?.list, 'add'], [result.mailboxUpdated?.list, 'update'], [result.mailboxDestroyed?.list, 'delete']
+			[result.mailboxCreated?.list, 'add'], [result.mailboxUpdated?.list, 'update']
 		] as [any[] | undefined, string][])
 		{
 			for (const mailbox of list || [])
@@ -1272,7 +1277,7 @@ export class MailJmap
 			}
 		}
 		for (const [list, type] of [
-			[result.emailCreated?.list, 'add'], [result.emailUpdated?.list, 'update'], [result.emailDestroyed?.list, 'delete']
+			[result.emailCreated?.list, 'add'], [result.emailUpdated?.list, 'update']
 		] as [any[] | undefined, string][])
 		{
 			for (const email of list || [])
