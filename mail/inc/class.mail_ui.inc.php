@@ -1179,86 +1179,12 @@ class mail_ui
 	 */
 	function get_actions()
 	{
-		static $accArray=array(); // buffer identity names on single request
 		// duplicated from mail_hooks
 		static $deleteOptions = array(
 			'move_to_trash'		=> 'move to trash',
 			'remove_immediately' =>	'remove immediately',
 		);
-		// todo: real hierarchical folder list
-		$lastFolderUsedForMove = null;
-		$moveactions = array();
 		$archiveFolder = $this->mail_bo->getArchiveFolder();
-		$lastFoldersUsedForMoveCont = Api\Cache::getCache(Api\Cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),$expiration=60*60*1);
-		//error_log(__METHOD__.__LINE__." StoredFolders->".array2string($lastFoldersUsedForMoveCont));
-		//error_log(__METHOD__.__LINE__.' ProfileId:'.$this->mail_bo->profileID." StoredFolders->(".count($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]).") ".array2string($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]));
-		if (is_null($accArray))
-		{
-			foreach(Mail\Account::search($only_current_user=true, false) as $acc_id => $accountObj)
-			{
-				//error_log(__METHOD__.__LINE__.array2string($accountObj));
-				if (!$accountObj->is_imap())
-				{
-					// not to be used for IMAP Foldertree, as there is no Imap host
-					continue;
-				}
-				$identity_name = Mail\Account::identity_name($accountObj,true,$GLOBALS['egw_info']['user']['acount_id']);
-				$accArray[$acc_id] = str_replace(array('<','>'),array('[',']'),$identity_name);// as angle brackets are quoted, display in Javascript messages when used is ugly, so use square brackets instead
-			}
-		}
-		if (!is_array($lastFoldersUsedForMoveCont)) $lastFoldersUsedForMoveCont=array();
-		foreach (array_keys($lastFoldersUsedForMoveCont) as $pid)
-		{
-			if ($this->mail_bo->profileID==$pid && isset($lastFoldersUsedForMoveCont[$this->mail_bo->profileID]))
-			{
-				$_folder = $this->mail_bo->icServer->getCurrentMailbox();
-				//error_log(__METHOD__.__LINE__.' '.$_folder."<->".$lastFoldersUsedForMoveCont[$this->mail_bo->profileID].function_backtrace());
-				$counter =1;
-				foreach ($lastFoldersUsedForMoveCont[$this->mail_bo->profileID] as $i => $lastFolderUsedForMoveCont)
-				{
-					$moveaction = 'move_';
-					if ($_folder!=$i)
-					{
-						$moveaction .= $lastFolderUsedForMoveCont;
-						//error_log(__METHOD__.__LINE__.'#'.$moveaction);
-						//error_log(__METHOD__.__LINE__.'#'.$currentArchiveActionKey);
-						if ($this->mail_bo->folderExists($i)) // only 10 entries per mailaccount.Control this on setting the buffered folders
-						{
-							$fS['profileID'] = $this->mail_bo->profileID;
-							$fS['profileName'] = $accArray[$this->mail_bo->profileID] ?? null;
-							$fS['shortDisplayName'] = $i;
-							$moveactions[$moveaction] = $fS;
-							$counter ++;
-						}
-						else
-						{
-							unset($lastFoldersUsedForMoveCont[$this->mail_bo->profileID][$i]);
-						}
-						//error_log(array2string($moveactions[$moveaction]));
-					}
-				}
-			}
-			elseif ($this->mail_bo->profileID!=$pid && isset($lastFoldersUsedForMoveCont[$pid]) && !empty($lastFoldersUsedForMoveCont[$pid]))
-			{
-				$counter =1;
-				foreach ($lastFoldersUsedForMoveCont[$pid] as $i => $lastFolderUsedForMoveCont)
-				{
-					//error_log(__METHOD__.__LINE__."$i => $lastFolderUsedForMoveCont");
-					if (!empty($lastFolderUsedForMoveCont)) // only 10 entries per mailaccount.Control this on setting the buffered folders
-					{
-						$moveaction = 'move_'.$lastFolderUsedForMoveCont;
-						//error_log(__METHOD__.__LINE__.'#'.$moveaction);
-						$fS = array();
-						$fS['profileID'] = $pid;
-						$fS['profileName'] = $accArray[$pid];
-						$fS['shortDisplayName'] = $i;
-						$moveactions[$moveaction] = $fS;
-						$counter ++;
-					}
-				}
-			}
-		}
-		Api\Cache::setCache(Api\Cache::INSTANCE,'email','lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']),$lastFoldersUsedForMoveCont, $expiration=60*60*1);
 		$group = 0;
 		$actions =  array(
 			'open' => array(
@@ -1343,40 +1269,11 @@ class mail_ui
 				'shortcut' =>  array('ctrl' => true, 'keyCode' => 77, 'caption' => KeyManager::shortcut_caption(KeyManager::M,false,true)),
 			)
 		);
-		$macounter=0;
-		if (!empty($moveactions))
-		{
-			//error_log(__METHOD__.__LINE__.array2string($moveactions));
-			$children=array();
-			$pID=0;
-			foreach ($moveactions as $moveaction => $lastFolderUsedForMove)
-			{
-				$group = ($pID != $lastFolderUsedForMove['profileID'] && $macounter>0? $group+1 : $group);
-				//error_log(__METHOD__.__LINE__."#$pID != ".$lastFolderUsedForMove['profileID']."#".$macounter.'#'.$groupCounter.'#');
-				$children = array_merge($children,
-					array(
-						$moveaction => array(
-							'caption' => (!empty($lastFolderUsedForMove['profileName'])?$lastFolderUsedForMove['profileName']:'('.$lastFolderUsedForMove['profileID'].')').': '.(isset($lastFolderUsedForMove['shortDisplayName'])?$lastFolderUsedForMove['shortDisplayName']:''),
-							'icon' => 'move',
-							'group' => $group,
-							'onExecute' => 'javaScript:app.mail.move2Folder',
-							'allowOnMultiple' => true,
-						)
-					)
-				);
-				$pID = $lastFolderUsedForMove['profileID'];
-				$macounter++;
-			}
-			$actions['moveto'] =	array(
-				'caption' => lang('Move selected to'),
-				'icon' => 'move',
-				'group' => $group,
-				'children' => $children,
-			);
-
-		} else {
-			$group++;
-		}
+		// "Move selected to"/"Copy selected to" quick-submenus are built entirely client-side now
+		// (see mail/js/app.ts's updateFolderQuickAction()) - the JMAP fast path for move/copy never
+		// reaches server code, so a server-side usage cache silently stopped updating for the common
+		// case.
+		$group++;
 		$spam_actions = $this->getSpamActions();
 		$group++;
 		foreach ($spam_actions as &$action)

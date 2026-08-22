@@ -287,9 +287,10 @@ export class MailApp extends EgwApp
 				var nm = this.et2.getWidgetById(this.nm_index);
 				this.mail_isMainWindow = true;
 
-				// Merge in the client-remembered "Copy selected to" quick-submenu, see
-				// rememberUsedCopyFolder()/updateCopyToAction().
-				this.updateCopyToAction();
+				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
+				// see rememberUsedFolder()/updateFolderQuickAction().
+				this.updateFolderQuickAction('move');
+				this.updateFolderQuickAction('copy');
 
 				// Stop list from focussing next row on keypress
 				let aom = egw_getObjectManager('mail').getObjectById('nm');
@@ -4678,6 +4679,10 @@ export class MailApp extends EgwApp
 		// above on failure either way - a message that never actually moved must come back, not
 		// silently vanish until the next reload reveals it.
 		Promise.resolve(this.mail_tryJmapMove(target, messages, isArchiveShortcut, classicMove) ?? classicMove())
+			.then(() =>
+			{
+				if (!isArchiveShortcut) this.rememberUsedFolder('move', target);
+			})
 			.catch((e) =>
 			{
 				this.egw.message(e?.message || this.egw.lang('Failed to move messages'), 'error');
@@ -4773,26 +4778,45 @@ export class MailApp extends EgwApp
 		// reconcile here (copy never removes/alters the source row), but still needs a message on
 		// failure - mail_handleJmapError() no longer shows one itself.
 		Promise.resolve(this.mail_tryJmapCopy(target, messages, classicCopy) ?? classicCopy())
-			.then(() => this.rememberUsedCopyFolder(target))
+			.then(() => this.rememberUsedFolder('copy', target))
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to copy messages'), 'error'));
 	}
 
 	/**
-	 * Bump the use-counter for a copy target folder, entirely client-side: stored as an implicit
-	 * preference (mail/copyFolderUsage, {"<profileID>::<folder>": count, ...}) via egw.preference()/
-	 * set_preference() - same mechanism already used for e.g. the per-profile "last folder" pref
-	 * (see onNodeSelect() above) - and immediately reflected in the "Copy selected to" quick-submenu
-	 * via updateCopyToAction(), without waiting for any server round trip. Deliberately not tracked
-	 * server-side: the JMAP fast copy path (mail_tryJmapCopy()) never touches the server's
-	 * ajax_copyMessages() at all, so a server-side counter would silently stop updating for exactly
-	 * the common case.
-	 *
-	 * @param target string "<profileID>::<folder>" copy target, as built by callCopy()
+	 * Static config for the "Move selected to"/"Copy selected to" quick-submenus - see
+	 * rememberUsedFolder()/updateFolderQuickAction(). Both kinds work identically, just with
+	 * different preference keys, action ids and captions.
 	 */
-	private rememberUsedCopyFolder(target : string) : void
+	private static readonly FOLDER_QUICK_ACTIONS = {
+		move: {
+			prefKey: 'moveFolderUsage', actionId: 'moveto', actionPrefix: 'move_',
+			caption: 'Move selected to', icon: 'move', onExecute: 'javaScript:app.mail.move2Folder'
+		},
+		copy: {
+			prefKey: 'copyFolderUsage', actionId: 'copyto', actionPrefix: 'copy_',
+			caption: 'Copy selected to', icon: 'copy', onExecute: 'javaScript:app.mail.copy2Folder'
+		},
+	};
+
+	/**
+	 * Bump the use-counter for a move/copy target folder, entirely client-side: stored as an implicit
+	 * preference (mail/moveFolderUsage or mail/copyFolderUsage, {"<profileID>::<folder>": count, ...})
+	 * via egw.preference()/set_preference() - same mechanism already used for e.g. the per-profile
+	 * "last folder" pref (see onNodeSelect() above) - and immediately reflected in the quick-submenu
+	 * via updateFolderQuickAction(), without waiting for any server round trip. Deliberately not
+	 * tracked server-side: the JMAP fast move/copy path (mail_tryJmapMove()/mail_tryJmapCopy()) never
+	 * touches the server's ajax_copyMessages() at all, so a server-side counter (what both used to be,
+	 * see mail_ui::get_actions()'s pre-195852cc34 history for move) silently stops updating for
+	 * exactly the common case.
+	 *
+	 * @param kind 'move' or 'copy'
+	 * @param target string "<profileID>::<folder>" target, as built by callMove()/callCopy()
+	 */
+	private rememberUsedFolder(kind : 'move' | 'copy', target : string) : void
 	{
 		if (!target || target.indexOf('::') < 0) return;
-		const usage : Record<string, number> = Object.assign({}, this.egw.preference('copyFolderUsage', 'mail') || {});
+		const cfg = MailApp.FOLDER_QUICK_ACTIONS[kind];
+		const usage : Record<string, number> = Object.assign({}, this.egw.preference(cfg.prefKey, 'mail') || {});
 		usage[target] = (usage[target] || 0) + 1;
 		// keep the stored list from growing without bound, well beyond the top 10 actually shown
 		const keys = Object.keys(usage);
@@ -4800,26 +4824,29 @@ export class MailApp extends EgwApp
 		{
 			keys.sort((a, b) => usage[b] - usage[a]).slice(30).forEach(k => delete usage[k]);
 		}
-		this.egw.set_preference('mail', 'copyFolderUsage', usage);
-		this.updateCopyToAction(usage);
+		this.egw.set_preference('mail', cfg.prefKey, usage);
+		this.updateFolderQuickAction(kind, usage);
 	}
 
 	/**
-	 * (Re)build the "Copy selected to" quick-submenu from the copyFolderUsage preference, showing
-	 * the 10 highest-used target folders, and merge it into the nextmatch's live action definitions.
+	 * (Re)build the "Move selected to"/"Copy selected to" quick-submenu from its usage preference,
+	 * showing the 10 highest-used target folders, and merge it into the nextmatch's live action
+	 * definitions.
 	 *
 	 * Et2Nextmatch (unlike the legacy nextmatch_widget) has no set_actions()/options.actions - actions
 	 * are pushed through its reactive `actions` property (Et2Widget.ts's `set actions()`), which feeds
 	 * Et2NextmatchActionController.initActions() -> EgwAction.updateActions(). That's a real
 	 * add-or-update merge keyed by action id (see EgwAction.ts), not a destructive replace, so handing
-	 * it just the one `copyto` key here correctly leaves every other action (open/reply/moveto/...)
-	 * untouched - no need to read back/clone the current action set first.
+	 * it just the one changed key here correctly leaves every other action (open/reply/.../the other
+	 * kind's quick-submenu) untouched - no need to read back/clone the current action set first.
 	 *
-	 * @param usage optional already-loaded copyFolderUsage preference, to avoid re-reading it
+	 * @param kind 'move' or 'copy'
+	 * @param usage optional already-loaded usage preference, to avoid re-reading it
 	 */
-	private updateCopyToAction(usage? : Record<string, number>) : void
+	private updateFolderQuickAction(kind : 'move' | 'copy', usage? : Record<string, number>) : void
 	{
-		usage = usage || this.egw.preference('copyFolderUsage', 'mail') || {};
+		const cfg = MailApp.FOLDER_QUICK_ACTIONS[kind];
+		usage = usage || this.egw.preference(cfg.prefKey, 'mail') || {};
 		const nm : any = this.et2.getWidgetById(this.nm_index);
 		if (!nm) return;
 		const currentFolder = nm.activeFilters?.selectedFolder;
@@ -4832,20 +4859,28 @@ export class MailApp extends EgwApp
 		const children = {};
 		top.forEach(target =>
 		{
+			// Always prefix with the account's own label - folder names like "Sent"/"Trash" are
+			// common across accounts, and target itself (used for storage/lookup/sorting throughout
+			// this method) is always the full "<profileID>::<folder>" string, so different accounts'
+			// folders are never confused regardless of their hierarchy separator or namespace prefix;
+			// this is purely about the caption not being ambiguous to the user.
+			const profileID = target.substring(0, target.indexOf('::'));
 			let caption = target;
 			const label = ftree?.getLabel ? ftree.getLabel(target) : null;
 			if (label) caption = label.replace(this._unseen_regexp, '');
-			children['copy_' + target] = {
+			const accountLabel = ftree?.getLabel ? ftree.getLabel(profileID) : null;
+			if (accountLabel) caption = accountLabel.replace(this._unseen_regexp, '') + ': ' + caption;
+			children[cfg.actionPrefix + target] = {
 				caption: caption,
-				icon: 'copy',
-				onExecute: 'javaScript:app.mail.copy2Folder',
+				icon: cfg.icon,
+				onExecute: cfg.onExecute,
 				allowOnMultiple: true,
 			};
 		});
 		nm.actions = {
-			copyto: {
-				caption: this.egw.lang('Copy selected to'),
-				icon: 'copy',
+			[cfg.actionId]: {
+				caption: this.egw.lang(cfg.caption),
+				icon: cfg.icon,
 				children: children,
 			}
 		};

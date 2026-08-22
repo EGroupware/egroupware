@@ -10,7 +10,6 @@
 namespace EGroupware\Mail\Ui;
 
 use EGroupware\Api;
-use EGroupware\Api\Etemplate\Widget\Nextmatch;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Mail\CustomLabels;
@@ -26,12 +25,11 @@ use mail_ui;
  *
  * Like ImportHandler, this takes the owning mail_ui as a constructor dependency rather than being
  * a zero-dependency class - see the "session dependency shape" note in mail-bo-decoupling.md.
- * flagMessages()/deleteMessages()/copyMessages() call back into `mail_ui`'s own `get_actions()`
- * (widened from private to package-default so this class could call it via
- * `$this->ui->get_actions()` - it's pure UI-action array construction, nothing security-sensitive),
- * `Mail\Ui\FolderHandler::setFolderStatus()` (via `$this->ui->folderHandler()`, package-default for
- * the same reason), and the still-`mail_ui`-static `generateRowID()`/`$delimiter` (the "Row-id
- * helpers" group, deliberately left in place - see mail-bo-decoupling.md).
+ * flagMessages()/deleteMessages() call back into `Mail\Ui\FolderHandler::setFolderStatus()` (via
+ * `$this->ui->folderHandler()`, package-default for the same reason as above), and the still-
+ * `mail_ui`-static `generateRowID()`/`$delimiter` (the "Row-id helpers" group, deliberately left in
+ * place - see mail-bo-decoupling.md). copyMessages() no longer tracks used folders server-side (the
+ * JMAP fast path never reaches this code) - see mail/js/app.ts's rememberUsedFolder().
  *
  * emptySpam()/emptyTrash() (from mail_ui's `ajax_emptySpam`/`ajax_emptyTrash`) joined this group
  * later - see doc/ai/projects/mail-folder-tree-jmap.md's "Resolved" note: `app.ts`'s
@@ -504,28 +502,6 @@ class MessageActionHandler
 			$targetProfileID = $this->ui->mail_bo->profileID;
 			$targetFolder = $archiveFolder;
 		}
-		$lastFoldersUsedForMoveCont = Api\Cache::getCache(Api\Cache::INSTANCE, 'email', 'lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']), null, [], $expiration = 60*60*1);
-		$changeFolderActions = false;
-		if (!isset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]))
-		{
-			if ($lastFoldersUsedForMoveCont[$targetProfileID] && count($lastFoldersUsedForMoveCont[$targetProfileID]) > 3)
-			{
-				$keys = array_keys($lastFoldersUsedForMoveCont[$targetProfileID]);
-				foreach ($keys as &$f)
-				{
-					if (count($lastFoldersUsedForMoveCont[$targetProfileID]) > 9)
-					{
-						unset($lastFoldersUsedForMoveCont[$targetProfileID][$f]);
-					}
-					else
-					{
-						break;
-					}
-				}
-			}
-			$lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder] = $folderName;
-			$changeFolderActions = true;
-		}
 		$filtered = false;
 		if ($_messageList == 'all' || !empty($_messageList['msg']))
 		{
@@ -658,11 +634,6 @@ class MessageActionHandler
 			$response = Api\Json\Response::get();
 			if ($error)
 			{
-				if ($changeFolderActions == false)
-				{
-					unset($lastFoldersUsedForMoveCont[$targetProfileID][$targetFolder]);
-					$changeFolderActions = true;
-				}
 				if ($_return)
 				{
 					return $error;
@@ -693,12 +664,6 @@ class MessageActionHandler
 					}
 					$response->message($msg, 'success');
 				}
-			}
-			if ($changeFolderActions == true)
-			{
-				Api\Cache::setCache(Api\Cache::INSTANCE, 'email', 'lastFolderUsedForMove'.trim($GLOBALS['egw_info']['user']['account_id']), $lastFoldersUsedForMoveCont, $expiration = 60*60*1);
-				$actionsnew = Nextmatch::egw_actions($this->ui->get_actions());
-				$response->call('app.mail.rebuildActionsOnList', $actionsnew);
 			}
 		}
 	}
