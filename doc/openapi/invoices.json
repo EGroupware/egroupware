@@ -1,0 +1,891 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware Invoices REST API",
+    "description": "REST API for managing invoices, offers and order confirmations (ZUGFeRD/XRechnung-flavoured, based on the UN/CEFACT Cross Industry Invoice model) plus their line-item positions and document-level allowances/surcharges. See doc/REST-CalDAV-CardDAV/Invoices.md for the full BT-number-to-JSON-path mapping.",
+    "version": "1.0.0",
+    "contact": {
+      "name": "EGroupware",
+      "url": "https://www.egroupware.org"
+    },
+    "license": {
+      "name": "GPL",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.html"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://example.org/egroupware/groupdav.php",
+      "description": "EGroupware GroupDAV/REST server"
+    }
+  ],
+  "security": [
+    { "basicAuth": [] },
+    { "bearerAuth": [] }
+  ],
+  "paths": {
+    "/invoices/": {
+      "get": {
+        "tags": ["Invoices"],
+        "operationId": "listInvoices",
+        "summary": "List all invoices the current user has access to",
+        "description": "Returns all invoices/offers/orders accessible to the current user. Requires the 'invoices' application right - unlike every other operation in this API, creating a NEW invoice (POST to this same collection) does NOT require it.",
+        "parameters": [
+          { "$ref": "#/components/parameters/props" },
+          { "$ref": "#/components/parameters/syncToken" },
+          { "$ref": "#/components/parameters/nresults" },
+          { "$ref": "#/components/parameters/filters_search" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json", "application/pretty+json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of invoices",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/InvoiceCollection" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" }
+        }
+      },
+      "post": {
+        "tags": ["Invoices"],
+        "operationId": "createInvoice",
+        "summary": "Create a new invoice, offer or order",
+        "description": "Creates a new invoice in 'draft' status. 'ExchangedDocument/IncludedNote' (the invoice name/title) plus seller and buyer trade party name+address are effectively required - Document::toInvoice() otherwise leaves the corresponding NOT-NULL database columns empty and the save fails. Monetary/quantity values follow the ZUGFeRD-library JSON convention: either a bare scalar, or an object with a '__value' key (e.g. 'ChargeAmount': {'__value': 10.0}) - some fields (e.g. SpecifiedTradeSettlementLineMonetarySummation/LineTotalAmount) only accept the '__value' object form. TypeCode 380=invoice, 384=corrected invoice, 381=credit note, 2=order, 1=offer/quote.",
+        "parameters": [
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string", "enum": ["return=representation"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Invoice" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Invoice created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new invoice, e.g. /egroupware/groupdav.php/invoices/42",
+                "schema": { "type": "string", "format": "uri" }
+              },
+              "ETag": { "schema": { "type": "string" } }
+            },
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Invoice" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/invoices/{id}": {
+      "get": {
+        "tags": ["Invoices"],
+        "operationId": "getInvoice",
+        "summary": "Get a single invoice",
+        "description": "Retrieves a single invoice/offer/order by its numeric id, including its 'positions' and 'allowances' arrays. A 'deleted' invoice (see deleteInvoice) is still readable this way - it is a soft delete.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json", "application/pretty+json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single invoice",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Invoice" }
+              }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "$ref": "#/components/responses/Forbidden" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Invoices"],
+        "operationId": "replaceInvoice",
+        "summary": "Replace an invoice",
+        "description": "Replaces all writable attributes of an invoice. Only invoices in 'draft' or 'imported' status may be edited - see check_access() and replaceInvoiceMetadata's description for the 'issued' exception.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Invoice" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Invoice replaced" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "description": "Not a draft/imported invoice, and the request was not a MetaData-only patch" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Invoices"],
+        "operationId": "updateInvoice",
+        "summary": "Partially update an invoice",
+        "description": "Updates only the fields present in the request body. Both a flat RFC 8984-style PatchObject key ('MetaData/Description') and a single-level nested object ({'MetaData': {...}}) are accepted. Once an invoice is no longer 'draft'/'imported', ONLY keys equal to 'MetaData' or starting with the literal prefix 'MetaData/' are allowed (e.g. {'MetaData/Description': '...'}, {'MetaData': {'Status': 'payed'}}) - any other top-level key in the same request is rejected with 403, even if MetaData keys are also present.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": true,
+                "description": "Partial invoice - flat 'MetaData/xxx' keys once issued, otherwise any Invoice attribute path",
+                "example": { "MetaData/Status": "issued" }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Invoice patched, representation returned (Prefer: return=representation)" },
+          "204": { "description": "Invoice patched" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "description": "Not a draft/imported invoice and a non-MetaData field was included" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Invoices"],
+        "operationId": "deleteInvoice",
+        "summary": "Delete (soft) an invoice",
+        "description": "Only 'draft' or 'imported' invoices may be deleted. This is a SOFT delete: it sets invoice_status='deleted' and saves - the row is not removed, and a subsequent GET by the same id still returns 200 (with MetaData/Status='deleted'), not 404. Only list views (listInvoices) hide 'deleted'/'template' status by default.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" }
+        ],
+        "responses": {
+          "204": { "description": "Invoice marked deleted" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "description": "Invoice is not in 'draft' or 'imported' status" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/invoices/{id}/positions/": {
+      "post": {
+        "tags": ["Invoice Positions"],
+        "operationId": "createPosition",
+        "summary": "Add a line-item position to an invoice",
+        "description": "Positions are auto-numbered (position_number) in creation order; existing positions are renumbered as needed to keep numbers sequential and unique.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          },
+          {
+            "name": "Prefer",
+            "in": "header",
+            "required": false,
+            "schema": { "type": "string", "enum": ["return=representation"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Position" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Position created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new position, e.g. /egroupware/groupdav.php/invoices/42/positions/7",
+                "schema": { "type": "string", "format": "uri" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "403": { "description": "Invoice is not in 'draft' or 'imported' status" }
+        }
+      }
+    },
+    "/invoices/{id}/positions/{position_id}": {
+      "get": {
+        "tags": ["Invoice Positions"],
+        "operationId": "getPosition",
+        "summary": "Get a single position",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json", "application/pretty+json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single position",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Position" } }
+            }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Invoice Positions"],
+        "operationId": "replacePosition",
+        "summary": "Replace a position",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Position" } }
+          }
+        },
+        "responses": {
+          "204": { "description": "Position replaced" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Invoice Positions"],
+        "operationId": "updatePosition",
+        "summary": "Partially update a position",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "additionalProperties": true, "description": "Partial position" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Position patched" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Invoice Positions"],
+        "operationId": "deletePosition",
+        "summary": "Delete a position",
+        "description": "Unlike deleteInvoice, this is a real (hard) delete - remaining positions are renumbered afterwards.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" }
+        ],
+        "responses": {
+          "204": { "description": "Position deleted" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    },
+    "/invoices/{id}/allowances/": {
+      "post": {
+        "tags": ["Invoice Allowances"],
+        "operationId": "createAllowance",
+        "summary": "Add a document-level allowance or surcharge",
+        "description": "Allowances/surcharges apply to the whole invoice (not a single position) - e.g. a shipping surcharge or an overall discount. They are stored the same way as positions but with a negative position_number.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Allowance" } }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Allowance created",
+            "headers": {
+              "Location": {
+                "description": "URL of the new allowance, e.g. /egroupware/groupdav.php/invoices/42/allowances/8",
+                "schema": { "type": "string", "format": "uri" }
+              }
+            }
+          },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" }
+        }
+      }
+    },
+    "/invoices/{id}/allowances/{position_id}": {
+      "get": {
+        "tags": ["Invoice Allowances"],
+        "operationId": "getAllowance",
+        "summary": "Get a single allowance/surcharge",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json", "application/pretty+json"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A single allowance",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Allowance" } } }
+          },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "put": {
+        "tags": ["Invoice Allowances"],
+        "operationId": "replaceAllowance",
+        "summary": "Replace an allowance/surcharge",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Allowance" } } }
+        },
+        "responses": {
+          "204": { "description": "Allowance replaced" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "patch": {
+        "tags": ["Invoice Allowances"],
+        "operationId": "updateAllowance",
+        "summary": "Partially update an allowance/surcharge",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" },
+          {
+            "name": "Content-Type",
+            "in": "header",
+            "required": true,
+            "schema": { "type": "string", "enum": ["application/json"] }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "type": "object", "additionalProperties": true, "description": "Partial allowance" }
+            }
+          }
+        },
+        "responses": {
+          "204": { "description": "Allowance patched" },
+          "400": { "$ref": "#/components/responses/BadRequest" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      },
+      "delete": {
+        "tags": ["Invoice Allowances"],
+        "operationId": "deleteAllowance",
+        "summary": "Delete an allowance/surcharge",
+        "description": "Deleting an allowance recomputes the invoice's charge/allowance totals and tax breakdown.",
+        "parameters": [
+          { "$ref": "#/components/parameters/id" },
+          { "$ref": "#/components/parameters/position_id" }
+        ],
+        "responses": {
+          "204": { "description": "Allowance deleted" },
+          "401": { "$ref": "#/components/responses/Unauthorized" },
+          "404": { "$ref": "#/components/responses/NotFound" }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "basicAuth": {
+        "type": "http",
+        "scheme": "basic",
+        "description": "HTTP Basic Authentication using EGroupware username and app-password."
+      },
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "HTTP Bearer Token Authentication using an OpenIDConnect/OAuth access token."
+      }
+    },
+    "schemas": {
+      "TradeParty": {
+        "type": "object",
+        "description": "Seller/buyer/other party - property names below are relative to e.g. SellerTradeParty or BuyerTradeParty.",
+        "properties": {
+          "Name": { "type": "string" },
+          "PostalTradeAddress": {
+            "type": "object",
+            "properties": {
+              "LineOne": { "type": "string" },
+              "LineTwo": { "type": "string" },
+              "PostcodeCode": { "type": "string" },
+              "CityName": { "type": "string" },
+              "CountryID": { "type": "string", "description": "ISO 3166-1 alpha-2 country code, e.g. 'DE'" }
+            }
+          },
+          "DefinedTradeContact": {
+            "type": "object",
+            "properties": {
+              "PersonName": { "type": "string" },
+              "DepartmentName": { "type": "string" },
+              "TelephoneUniversalCommunication": { "type": "string" },
+              "EmailURIUniversalCommunication": { "type": "string" }
+            }
+          },
+          "SpecifiedTaxRegistration": {
+            "type": "array",
+            "description": "VAT-ID (schemeID 'VA') / tax number (schemeID 'FC')",
+            "items": {
+              "type": "object",
+              "properties": {
+                "ID": {
+                  "type": "object",
+                  "properties": { "schemeID": { "type": "string", "enum": ["VA", "FC"] }, "__value": { "type": "string" } }
+                }
+              }
+            }
+          },
+          "ContactID": { "type": "integer", "description": "Addressbook contact id - fills the rest of this trade party from the linked contact." }
+        }
+      },
+      "Invoice": {
+        "type": "object",
+        "properties": {
+          "ExchangedDocument": {
+            "type": "object",
+            "properties": {
+              "ID": { "type": "string", "description": "Invoice number. 'DRAFT' (or omitted) while status is 'draft'; server-assigned once issued.", "readOnly": true },
+              "TypeCode": { "type": "integer", "description": "380=invoice, 384=corrected invoice, 381=credit note, 2=order, 1=offer/quote", "default": 380 },
+              "IssueDateTime": { "type": "string", "description": "YYYYMMDD" },
+              "IncludedNote": {
+                "description": "First entry is the invoice name/title; further entries are free-text notes.",
+                "oneOf": [
+                  { "type": "array", "items": { "type": "string" } },
+                  {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "Content": { "type": "string" },
+                        "SubjectCode": { "type": "string" }
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "SupplyChainTradeTransaction": {
+            "type": "object",
+            "properties": {
+              "ApplicableHeaderTradeAgreement": {
+                "type": "object",
+                "properties": {
+                  "SellerTradeParty": { "$ref": "#/components/schemas/TradeParty" },
+                  "BuyerTradeParty": { "$ref": "#/components/schemas/TradeParty" },
+                  "BuyerReference": { "type": "string" },
+                  "BuyerOrderReferencedDocument": { "type": "string", "description": "Buyer's order number" },
+                  "SellerOrderReferencedDocument": { "type": "string", "description": "Seller's order confirmation number" }
+                }
+              },
+              "ApplicableHeaderTradeSettlement": {
+                "type": "object",
+                "properties": {
+                  "InvoiceCurrencyCode": { "type": "string", "default": "EUR" },
+                  "ApplicableTradeTax": {
+                    "type": "array",
+                    "readOnly": true,
+                    "description": "Tax breakdown per rate/category - computed from the line items, not settable directly.",
+                    "items": { "$ref": "#/components/schemas/TaxBreakdown" }
+                  },
+                  "SpecifiedTradePaymentTerms": {
+                    "type": "object",
+                    "properties": {
+                      "Description": { "type": "string" },
+                      "DueDateDateTime": { "type": "string", "format": "date-time" }
+                    }
+                  },
+                  "SpecifiedTradeAllowanceCharge": {
+                    "type": "array",
+                    "readOnly": true,
+                    "description": "Document-level allowances/surcharges - use the /allowances/ sub-collection to write these.",
+                    "items": { "$ref": "#/components/schemas/Allowance" }
+                  }
+                }
+              },
+              "IncludedSupplyChainTradeLineItem": {
+                "type": "array",
+                "description": "Line-item positions - use the /positions/ sub-collection to write these individually.",
+                "items": { "$ref": "#/components/schemas/Position" }
+              }
+            }
+          },
+          "MetaData": {
+            "type": "object",
+            "properties": {
+              "Status": {
+                "type": "string",
+                "enum": ["draft", "issued", "reminder", "payed", "partial", "cancelled", "deleted", "imported", "template", "rejected"],
+                "description": "'rejected' only valid for offers/orders (TypeCode <= 2); 'payed'/'partial'/'cancelled'/'imported' only valid for real invoices (TypeCode > 2). Only specific transitions are allowed, see Bo::status_labels."
+              },
+              "Creator": { "type": "string", "readOnly": true },
+              "Created": { "type": "string", "format": "date-time", "readOnly": true },
+              "Modifier": { "type": "string", "readOnly": true },
+              "Modified": { "type": "string", "format": "date-time", "readOnly": true },
+              "Category": { "type": "object", "additionalProperties": { "type": "boolean" }, "description": "Category name(s) as keys" },
+              "Description": { "type": "string" },
+              "Path": { "type": "string", "readOnly": true, "example": "/invoices/42" },
+              "Payments": {
+                "type": "object",
+                "description": "date (Y-m-d) => amount pairs. Only stored/returned once Status is 'payed' or 'partial'.",
+                "additionalProperties": { "type": "number" }
+              },
+              "egroupware.org:customfields": { "type": "object", "additionalProperties": true }
+            }
+          }
+        },
+        "example": {
+          "ExchangedDocument": {
+            "ID": "DRAFT",
+            "TypeCode": 380,
+            "IssueDateTime": "20260313",
+            "IncludedNote": ["Test invoice"]
+          },
+          "SupplyChainTradeTransaction": {
+            "ApplicableHeaderTradeAgreement": {
+              "SellerTradeParty": { "Name": "ACME Seller GmbH", "PostalTradeAddress": { "LineOne": "Seller Street 1", "PostcodeCode": "54321", "CityName": "Hamburg", "CountryID": "DE" } },
+              "BuyerTradeParty": { "Name": "ACME Buyer Inc.", "PostalTradeAddress": { "LineOne": "Buyer Street 1", "PostcodeCode": "12345", "CityName": "Berlin", "CountryID": "DE" } }
+            },
+            "IncludedSupplyChainTradeLineItem": [
+              {
+                "SpecifiedTradeProduct": { "Name": "Widget" },
+                "SpecifiedLineTradeAgreement": { "NetPriceProductTradePrice": { "ChargeAmount": { "__value": 10.0 } } },
+                "SpecifiedLineTradeDelivery": { "BilledQuantity": 2 },
+                "SpecifiedLineTradeSettlement": {
+                  "ApplicableTradeTax": { "RateApplicablePercent": 19.0, "CategoryCode": "S" },
+                  "SpecifiedTradeSettlementLineMonetarySummation": { "LineTotalAmount": { "__value": 20.0 } }
+                }
+              }
+            ]
+          },
+          "MetaData": { "Status": "draft" }
+        }
+      },
+      "TaxBreakdown": {
+        "type": "object",
+        "readOnly": true,
+        "properties": {
+          "CategoryCode": { "type": "string", "example": "S" },
+          "RateApplicablePercent": { "type": "number" },
+          "BasisAmount": { "type": "number" },
+          "CalculatedAmount": { "type": "number" }
+        }
+      },
+      "Position": {
+        "type": "object",
+        "properties": {
+          "AssociatedDocumentLineDocument": {
+            "type": "object",
+            "properties": {
+              "LineID": { "type": "string", "description": "Numeric: line number (server-assigned if omitted). Non-numeric: a caller-supplied unique position identifier (BT-126)." },
+              "IncludedNote": { "type": "string" }
+            }
+          },
+          "SpecifiedTradeProduct": {
+            "type": "object",
+            "required": ["Name"],
+            "properties": {
+              "Name": { "type": "string" },
+              "Description": { "type": "string" },
+              "OriginTradeCountry": { "type": "object", "properties": { "ID": { "type": "string" } } }
+            }
+          },
+          "SpecifiedLineTradeAgreement": {
+            "type": "object",
+            "properties": {
+              "NetPriceProductTradePrice": {
+                "type": "object",
+                "properties": { "ChargeAmount": { "$ref": "#/components/schemas/AmountValue" } }
+              },
+              "GrossPriceProductTradePrice": {
+                "type": "object",
+                "properties": { "ChargeAmount": { "$ref": "#/components/schemas/AmountValue" } }
+              }
+            }
+          },
+          "SpecifiedLineTradeDelivery": {
+            "type": "object",
+            "properties": {
+              "BilledQuantity": { "type": "number" },
+              "BilledQuantityUnitCode": { "type": "string", "default": "C62", "description": "UN/ECE recommendation 20 unit code, e.g. C62=piece, HUR=hour, DAY=day" }
+            }
+          },
+          "SpecifiedLineTradeSettlement": {
+            "type": "object",
+            "properties": {
+              "ApplicableTradeTax": {
+                "type": "object",
+                "properties": {
+                  "RateApplicablePercent": { "type": "number" },
+                  "CategoryCode": { "type": "string", "default": "S" }
+                }
+              },
+              "SpecifiedTradeSettlementLineMonetarySummation": {
+                "type": "object",
+                "description": "Only the '__value'-wrapped object form is accepted for LineTotalAmount.",
+                "properties": { "LineTotalAmount": { "$ref": "#/components/schemas/AmountValue" } }
+              },
+              "SpecifiedTradeAllowanceCharge": {
+                "type": "array",
+                "description": "Per-position allowances/surcharges (as opposed to document-level ones, see the Allowance schema).",
+                "items": { "type": "object" }
+              }
+            }
+          }
+        },
+        "example": {
+          "SpecifiedTradeProduct": { "Name": "Widget" },
+          "SpecifiedLineTradeAgreement": { "NetPriceProductTradePrice": { "ChargeAmount": { "__value": 10.0 } } },
+          "SpecifiedLineTradeDelivery": { "BilledQuantity": 2, "BilledQuantityUnitCode": "C62" },
+          "SpecifiedLineTradeSettlement": {
+            "ApplicableTradeTax": { "RateApplicablePercent": 19.0, "CategoryCode": "S" }
+          }
+        }
+      },
+      "AmountValue": {
+        "type": "object",
+        "description": "ZUGFeRD-library value-object convention.",
+        "required": ["__value"],
+        "properties": { "__value": { "type": "number" } }
+      },
+      "Allowance": {
+        "type": "object",
+        "description": "Document-level allowance (discount) or surcharge (charge) - not tied to a single position.",
+        "properties": {
+          "ChargeIndicator": { "type": "boolean", "description": "true=surcharge, false=discount/allowance" },
+          "ActualAmount": { "$ref": "#/components/schemas/AmountValue" },
+          "CalculationPercent": { "type": "number", "description": "If set, ActualAmount is recalculated as a percentage of BasisAmount whenever the basis changes." },
+          "BasisAmount": { "type": "number" },
+          "Reason": { "type": "string" },
+          "ReasonCode": { "type": "string" },
+          "CategoryTradeTax": {
+            "type": "object",
+            "properties": {
+              "CategoryCode": { "type": "string", "default": "S" },
+              "RateApplicablePercent": { "type": "number" }
+            }
+          }
+        },
+        "example": {
+          "ChargeIndicator": true,
+          "ActualAmount": { "__value": 10.0 },
+          "Reason": "Shipping",
+          "CategoryTradeTax": { "CategoryCode": "S", "RateApplicablePercent": 19.0 }
+        }
+      },
+      "InvoiceCollection": {
+        "type": "object",
+        "properties": {
+          "responses": {
+            "type": "object",
+            "description": "Map of invoice paths to Invoice objects (or null for deleted resources during sync).",
+            "additionalProperties": {
+              "oneOf": [
+                { "$ref": "#/components/schemas/Invoice" },
+                { "type": "null" }
+              ]
+            }
+          },
+          "more-results": { "type": "boolean" },
+          "sync-token": { "type": "string" }
+        }
+      }
+    },
+    "parameters": {
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" },
+        "description": "Numeric invoice id"
+      },
+      "position_id": {
+        "name": "position_id",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "integer" },
+        "description": "Numeric position/allowance id"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "array", "items": { "type": "string" } },
+        "description": "DAV properties to return",
+        "style": "form",
+        "explode": true
+      },
+      "syncToken": {
+        "name": "sync-token",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Sync token from a previous response to receive only changes since that point."
+      },
+      "nresults": {
+        "name": "nresults",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "integer" },
+        "description": "Maximum number of invoices to return."
+      },
+      "filters_search": {
+        "name": "filters[search]",
+        "in": "query",
+        "required": false,
+        "schema": { "type": "string" },
+        "description": "Full-text search across invoice name/buyer/seller."
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "Unauthorized - missing or invalid credentials",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": { "error": { "type": "integer", "example": 401 }, "message": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "Forbidden": {
+        "description": "Forbidden - caller lacks the 'invoices' application right, or lacks edit/delete rights for the given invoice (e.g. it is not in 'draft'/'imported' status).",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": { "error": { "type": "integer", "example": 403 }, "message": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "NotFound": {
+        "description": "Not Found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": { "error": { "type": "integer", "example": 404 }, "message": { "type": "string" } }
+            }
+          }
+        }
+      },
+      "BadRequest": {
+        "description": "Bad Request - invalid field value or malformed JSON",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": { "error": { "type": "integer", "example": 400 }, "message": { "type": "string" } }
+            }
+          }
+        }
+      }
+    }
+  }
+}
