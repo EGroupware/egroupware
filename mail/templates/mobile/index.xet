@@ -108,6 +108,6 @@
 			<et2-description  id="nm[vacationrange]" class="@nm[vacationrangeclass]"></et2-description></et2-vbox>
 		</et2-hbox>
         <et2-nextmatch id="nm" onselect="app.mail.preview" template="mail.index.rows"></et2-nextmatch>
-		<et2-button  id="composeMail" class="plus_button" onclick="app.mail.compose(false);" size="large" image="plus" circle="true" noSubmit="true"></et2-button>
+		<et2-button  id="composeMail" class="plus_button" onclick="app.mail.composeMessage(false);" size="large" image="plus" circle="true" noSubmit="true"></et2-button>
 	</template>
 </overlay>

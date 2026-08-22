@@ -1200,20 +1200,20 @@ class mail_ui
 				'caption' => 'Reply',
 				'icon' => 'mail_reply',
 				'group' => ++$group,
-				'onExecute' => 'javaScript:app.mail.compose',
+				'onExecute' => 'javaScript:app.mail.composeMessage',
 				'allowOnMultiple' => false,
 				'children' => [
 					'reply' => [
 						'caption' => 'Reply',
 						'icon' => 'mail_reply',
-						'onExecute' => 'javaScript:app.mail.compose',
+						'onExecute' => 'javaScript:app.mail.composeMessage',
 						'allowOnMultiple' => false,
 						'toolbarDefault' => true,
 					],
 					'reply_all' => [
 						'caption' => 'Reply All',
 						'icon' => 'mail_replyall',
-						'onExecute' => 'javaScript:app.mail.compose',
+						'onExecute' => 'javaScript:app.mail.composeMessage',
 						'allowOnMultiple' => false,
 						'shortcut' => array('ctrl' => true, 'shift' => true, 'keyCode' => 65, 'caption' => KeyManager::shortcut_caption(KeyManager::A,true,true)),
 						'toolbarDefault' => true,
@@ -1221,7 +1221,7 @@ class mail_ui
 					'reply_attachments' => [
 						'caption' => 'Reply With Attachments',
 						'icon' => 'attach',
-						'onExecute' => 'javaScript:app.mail.compose',
+						'onExecute' => 'javaScript:app.mail.composeMessage',
 						'allowOnMultiple' => false,
 					],
 				],
@@ -1236,7 +1236,7 @@ class mail_ui
 						'icon' => 'mail_forward',
 						'group' => $group,
 						'hint' => 'forward inline',
-						'onExecute' => 'javaScript:app.mail.compose',
+						'onExecute' => 'javaScript:app.mail.composeMessage',
 						'allowOnMultiple' => false,
 						'shortcut' => array('ctrl' => true, 'keyCode' => 70, 'caption' => KeyManager::shortcut_caption(KeyManager::F,false,true)),
 						'toolbarDefault' => true
@@ -1246,7 +1246,7 @@ class mail_ui
 						'hint' => 'forward as attachment',
 						'icon' => 'mail_forward_attach',
 						'group' => $group,
-						'onExecute' => 'javaScript:app.mail.compose',
+						'onExecute' => 'javaScript:app.mail.composeMessage',
 					),
 				),
 				'hideOnMobile' => true
@@ -1256,7 +1256,7 @@ class mail_ui
 				'icon' => 'new',
 				'hint' => 'Compose as new',
 				'group' => $group,
-				'onExecute' => 'javaScript:app.mail.compose',
+				'onExecute' => 'javaScript:app.mail.composeMessage',
 				'allowOnMultiple' => false,
 			),
 			'modifysubject' => array(

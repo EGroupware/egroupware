@@ -1132,12 +1132,18 @@ export class MailApp extends EgwApp
 	/**
 	 * Compose, reply or forward a message
 	 *
+	 * Named composeMessage() rather than compose() to avoid colliding with the get compose():
+	 * MailCompose accessor below - a later same-named class member (this one) always overwrites an
+	 * earlier accessor on the prototype, which had silently made every this.compose.xxx() call
+	 * (fieldExpander, recipientsOnChange, setEtemplate, ...) throw "not a function" since this method
+	 * and that accessor were first introduced together.
+	 *
 	 * @function
 	 * @memberOf mail
 	 * @param _action _action.id is 'compose', 'composeasnew', 'reply', 'reply_all' or 'forward' (forward can be multiple messages)
 	 * @param _elems _elems[0].id is the row-id
 	 */
-	compose(_action, _elems)
+	composeMessage(_action, _elems)
 	{
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
@@ -1176,7 +1182,7 @@ export class MailApp extends EgwApp
 				}
 				else
 				{
-					return this.compose('forward',_elems);
+					return this.composeMessage('forward',_elems);
 				}
 				break;
 			case 'forward':

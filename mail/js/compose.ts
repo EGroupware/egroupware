@@ -11,7 +11,7 @@
 import type {MailApp} from "./app";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import type {IegwAppLocal} from "../../api/js/jsapi/egw_global";
-import {egw} from "../../api/js/jsapi/egw_global";
+import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 
@@ -205,10 +205,15 @@ export class MailCompose
 	/**
 	 * Show/hide all elements matching selector - several compose header rows (Cc/Bcc/Folder/Reply-to/From)
 	 * are toggled by class rather than through their own widget, see fieldExpanderInit()/fieldExpander().
+	 *
+	 * These rows are real <tr> elements with a stylesheet rule hiding them by default
+	 * (app.less: "tr.mailComposeJQueryCc, ... { display: none; }") - clearing the inline style isn't
+	 * enough to show them again (falls straight back to that rule), so "table-row" is set explicitly,
+	 * matching what jQuery's .show() used to resolve to for a <tr>.
 	 */
 	private toggleRowVisibility(selector : string, show : boolean) : void
 	{
-		document.querySelectorAll(selector).forEach((el : HTMLElement) => el.style.display = show ? '' : 'none');
+		document.querySelectorAll(selector).forEach((el : HTMLElement) => el.style.display = show ? 'table-row' : 'none');
 	}
 
 	/**
@@ -763,7 +768,7 @@ export class MailCompose
 				else
 				{
 					// Send request through framework main window, so it works even if the main window is reloaded
-					framework.egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], function (_data)
+					egw_getFramework().egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], function (_data)
 					{
 						const res = self.savingDraft_response(_data, action);
 						if (res)

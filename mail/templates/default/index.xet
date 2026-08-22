@@ -215,7 +215,7 @@
         <et2-nextmatch id="nm" onselect="app.mail.preview" template="mail.index.rows.horizontal" no_dynheight="true"></et2-nextmatch>
     </template>
     <template id="mail.index.header" template="" lang="" group="0" version="1.9.001">
-        <et2-button id="button[mailcreate]" onclick="app.mail.compose(false);" label="Compose" image="add" noSubmit="true"></et2-button>
+        <et2-button id="button[mailcreate]" onclick="app.mail.composeMessage(false);" label="Compose" image="add" noSubmit="true"></et2-button>
         <template template="api.search-button"></template>
         <et2-select id="cat_id" ariaLabel="Search" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
         <et2-select id="filter" ariaLabel="Status" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
