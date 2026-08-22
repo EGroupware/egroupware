@@ -937,6 +937,182 @@ describe("MailJmap.email2row() - suspect address field detection", () =>
 	});
 });
 
+/** {$ref} invocation stub shared by the threaded-view fakes below - see createMailboxProxyStub(). */
+function invocationStub()
+{
+	return {$ref: (_path : string) => ({})};
+}
+
+/**
+ * Stub JamClient.requestMany() for MailJmap.getThreadedRows()/getThreadMemberRows() (doc/ai/
+ * projects/mail-threaded-view.md, Phase 1) - also has to answer mailboxId()'s own, earlier
+ * Mailbox/query call (getRows()/getThreadMemberRows() both resolve the folder path before
+ * branching into threading logic at all), so responses are picked by which entity/method the
+ * production code actually invoked in a given call, not by call order.
+ */
+function createThreadedFakeClient(representatives : any[], membersByThread : Record<string, any[]>)
+{
+	return {
+		requestMany: async(buildFn : (t : any) => any) =>
+		{
+			let calledMailboxQuery = false, calledEmailQuery = false, calledThreadGet = false;
+			const t = {
+				Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+				Email: {
+					query: (_args : any) => { calledEmailQuery = true; return invocationStub(); },
+					get: (_args : any) => invocationStub(),
+				},
+				Thread: {get: (_args : any) => { calledThreadGet = true; return invocationStub(); }},
+			};
+			buildFn(t);
+			if (calledMailboxQuery)
+			{
+				return [{ids: {ids: ["mbox1"]}}];
+			}
+			if (calledEmailQuery)
+			{
+				return [{
+					ids: {ids: representatives.map((r) => r.id), total: representatives.length},
+					emails: {list: representatives},
+				}];
+			}
+			if (calledThreadGet)
+			{
+				// getThreadedRows() destructures {members}, getThreadMemberRows() destructures
+				// {emails} from this same first tuple element - both keys point at the same list
+				// so either caller's destructuring picks up what it needs.
+				const list = Object.values(membersByThread).flat();
+				return [{members: {list}, emails: {list}}];
+			}
+			throw new Error("createThreadedFakeClient(): unexpected requestMany() call shape in test");
+		}
+	};
+}
+
+/**
+ * doc/ai/projects/mail-threaded-view.md, Phase 1 - dead code in production until
+ * ProfileHandler::THREADING_ENABLED ships (nothing sets query.threaded, and no token reports
+ * supportsThreading:true yet either way), but exercised directly here via getRows()/fetchRows()'s
+ * public surface, same as the rest of this file does for row-building logic.
+ */
+describe("MailJmap.getRows() - threaded view (Phase 1)", () =>
+{
+	it("renders a single-message thread via the ordinary row shape, no is_parent/thread_id", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const email = fakeEmail({id: "email1", threadId: "t1"});
+		primeToken(jmap, "1", createThreadedFakeClient([email], {}));
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		const result = await jmap.getRows({selectedFolder: "1::INBOX", threaded: true});
+
+		assert.equal(result!.rows.length, 1);
+		assert.isUndefined(result!.rows[0].is_parent);
+		assert.notInclude(result!.rows[0].row_id, "thread:");
+	});
+
+	it("aggregates a multi-message thread: unseen if any member is unseen, is_parent, thread_count", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const representative = fakeEmail({id: "email1", threadId: "t1", keywords: {"$seen": true}});
+		const members = {
+			t1: [
+				{id: "email1", threadId: "t1", keywords: {"$seen": true}},
+				{id: "email2", threadId: "t1", keywords: {}},	// unseen
+			],
+		};
+		primeToken(jmap, "1", createThreadedFakeClient([representative], members));
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		const result = await jmap.getRows({selectedFolder: "1::INBOX", threaded: true});
+
+		const row = result!.rows[0];
+		assert.isTrue(row.is_parent);
+		assert.equal(row.thread_id, "t1");
+		assert.equal(row.thread_count, 2);
+		assert.include(row.class, "unseen",
+			"the representative alone is $seen, but the thread as a whole must show unseen " +
+			"because a member isn't - AND-folded, not just copied from the representative");
+		assert.include(row.row_id, "thread:t1");
+	});
+
+	it("marks a thread read only once every member is $seen", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const representative = fakeEmail({id: "email1", threadId: "t1", keywords: {"$seen": true}});
+		const members = {
+			t1: [
+				{id: "email1", threadId: "t1", keywords: {"$seen": true}},
+				{id: "email2", threadId: "t1", keywords: {"$seen": true}},
+			],
+		};
+		primeToken(jmap, "1", createThreadedFakeClient([representative], members));
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		const result = await jmap.getRows({selectedFolder: "1::INBOX", threaded: true});
+
+		assert.notInclude(result!.rows[0].class, "unseen");
+	});
+
+	it("falls back to the ordinary flat list when the profile doesn't support threading, even if asked for", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const email = fakeEmail({id: "email1", threadId: "t1"});
+		let threadGetCalled = false;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				let calledMailboxQuery = false;
+				const t = {
+					Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+					Email: {query: (_args : any) => invocationStub(), get: (_args : any) => invocationStub()},
+					Thread: {get: (_args : any) => { threadGetCalled = true; return invocationStub(); }},
+				};
+				buildFn(t);
+				if (calledMailboxQuery)
+				{
+					return [{ids: {ids: ["mbox1"]}}];
+				}
+				return [{ids: {ids: [email.id], total: 1}, emails: {list: [email]}}];
+			}
+		};
+		primeToken(jmap, "1", client);	// primeToken()'s default supportsThreading is falsy
+
+		const result = await jmap.getRows({selectedFolder: "1::INBOX", threaded: true});
+
+		assert.isFalse(threadGetCalled, "threaded: true must be ignored when the profile can't support it");
+		assert.isUndefined(result!.rows[0].is_parent);
+	});
+
+	it("fetchRows()'s parent_id branch expands a thread row back into its plain member rows", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const members = [
+			fakeEmail({id: "email1", subject: "First"}),
+			fakeEmail({id: "email2", subject: "Second"}),
+		];
+		primeToken(jmap, "1", createThreadedFakeClient([], {t1: members}));
+		(jmap as any).tokens["1"].supportsThreading = true;
+
+		const result : any = await jmap.fetchRows("exec", {parent_id: "1::1::mbox1::thread:t1"},
+			{selectedFolder: "1::INBOX"}, "widget", [], 0);
+
+		assert.equal(result.order.length, 2);
+		assert.notInclude(result.order.join(), "thread:",
+			"expanded rows are plain messages, not nested thread rows - RFC 8621 threads are flat");
+	});
+
+	it("still answers empty for a parent_id that isn't one of this feature's thread rows", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+
+		const result : any = await jmap.fetchRows("exec", {parent_id: "1::1::mbox1::email1"},
+			{selectedFolder: "1::INBOX"}, "widget", [], 0);
+
+		assert.deepEqual(result.order, []);
+	});
+});
+
 /**
  * A checkbox-style egw preference's stored value is the server's raw string, often literally "0"
  * for "off" - a non-empty JS string is otherwise always truthy, so a plain `!egw.preference(...)`

@@ -35,6 +35,20 @@ use mail_ui;
 class ProfileHandler
 {
 	/**
+	 * Master switch for the still-in-development threaded/conversation view
+	 * (doc/ai/projects/mail-threaded-view.md, Phase 1) - deliberately false until that work is
+	 * finished, so the feature stays completely inert (no UI, no behaviour change) while it's
+	 * built incrementally alongside other in-progress mail-app work.
+	 *
+	 * Also currently doubles as the "this account's backend doesn't support thread grouping yet"
+	 * gate for every non-real-JMAP account: Phase 1 is real-JMAP (Stalwart) only, so
+	 * jmapBootstrap() below ANDs this with "not a local/IMAP-shim account" - a plain-IMAP account
+	 * would report unsupported even if this were flipped true, until Phase 2 (IMAP THREAD support
+	 * via JmapShim, see the plan doc) adds its own capability check on top of this.
+	 */
+	const THREADING_ENABLED = false;
+
+	/**
 	 * Bootstrap payload for client-side direct JMAP access (see Mail\Imap\Stalwart::jmapBootstrap)
 	 *
 	 * Every account is JMAP-eligible (Stalwart directly, or plain IMAP via localBootstrap()), so
@@ -56,6 +70,7 @@ class ProfileHandler
 			if ((string)$icServerID === '0')
 			{
 				$bootstrap = self::localBootstrap('0');
+				$bootstrap['supportsThreading'] = false;	// fixture account is always local, see THREADING_ENABLED
 				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
 				$response->data($bootstrap);
 				return;
@@ -70,6 +85,9 @@ class ProfileHandler
 			if ($bootstrap)
 			{
 				$bootstrap['isLocal'] = $local;
+				// see THREADING_ENABLED's docblock - false for every account until Phase 1 ships,
+				// and permanently false for local/IMAP-shim accounts until Phase 2 exists
+				$bootstrap['supportsThreading'] = self::THREADING_ENABLED && !$local;
 				$bootstrap['customLabels'] = CustomLabels::getCustomLabels();
 				// account config only (no IMAP round-trip, no full special-use autodetection like
 				// Mail::getTrashFolder()/getJunkFolder() do) - good enough for

@@ -39,6 +39,11 @@ interface JmapToken
 	// directly, server-side), since there's nothing working to lose: no regression risk even if a
 	// given browser's WebSocket also doesn't connect.
 	enableWsPush : boolean;
+	// see ProfileHandler::THREADING_ENABLED's docblock (doc/ai/projects/mail-threaded-view.md,
+	// Phase 1) - false for every account until that work ships; also currently doubles as the
+	// "this account's backend doesn't support thread grouping yet" gate (Phase 1 is real-JMAP
+	// only, Phase 2 will add IMAP THREAD support for local/shim accounts on top of this).
+	supportsThreading : boolean;
 	customLabels : Record<string, {name : string, color : string, icon? : string}>;
 	trashFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Trash" - see deleteMessages()
 	junkFolder? : string;	// EGroupware "/"-joined folder path, e.g. "Junk" - null if not configured
@@ -82,6 +87,10 @@ export interface JmapGetRowsQuery
 	startdate? : string;
 	enddate? : string;
 	filter2? : string;			// truthy: "Sneak preview in list" toggle
+	// truthy: group the top-level list by JMAP thread (doc/ai/projects/mail-threaded-view.md,
+	// Phase 1). No caller sets this yet - see ProfileHandler::THREADING_ENABLED's docblock - and
+	// getRows() ignores it unless the profile's token also reports supportsThreading.
+	threaded? : boolean;
 }
 
 type EmailFilterCondition = Record<string, any>;
@@ -241,6 +250,15 @@ export class MailJmap
 		// (filter2 / mail.ShowDetails preference) is on
 		const fetchPreview = !!query.filter2;
 
+		// doc/ai/projects/mail-threaded-view.md, Phase 1 - only reachable once
+		// ProfileHandler::THREADING_ENABLED is flipped true (nothing sets query.threaded yet, and
+		// token.supportsThreading is false for every account until then either way), so this is
+		// dead code in production for now, not a behaviour change.
+		if (query.threaded && token.supportsThreading)
+		{
+			return this.getThreadedRows(client, token, profileID, mailboxId, query, start, limit, fetchPreview);
+		}
+
 		const [{ids, emails}] = await client.requestMany((t) =>
 		{
 			const ids = t.Email.query({
@@ -271,6 +289,139 @@ export class MailJmap
 			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId)),
 			total: ids.total ?? (emails.list || []).length,
 		};
+	}
+
+	/**
+	 * Top-level row list for a "group by thread" fetch (doc/ai/projects/mail-threaded-view.md,
+	 * Phase 1) - collapses the folder's messages into one representative Email per JMAP thread
+	 * (RFC 8621 Email/query's collapseThreads), then fetches every thread's member ids
+	 * (Thread/get) plus their keywords (Email/get) in one further chained JMAP request, purely to
+	 * compute the closed-row aggregate (see aggregateThreadKeywords()) - a single-message thread
+	 * skips all of that and renders via the ordinary email2row(), so the common case (most threads
+	 * in most inboxes) costs nothing extra over the flat list.
+	 *
+	 * Expanding a resulting thread-parent row is a separate fetch, handled by fetchRows()'s
+	 * `_queriedRange.parent_id` branch (getThreadMemberRows()) - RFC 8621 threads are flat, so
+	 * there is never a second level to expand.
+	 */
+	private async getThreadedRows(client : JamClient, token : JmapToken, profileID : string, mailboxId : string,
+		query : JmapGetRowsQuery, start : number, limit : number, fetchPreview : boolean) : Promise<{ rows : any[], total : number }>
+	{
+		const properties = [
+			'id', 'threadId', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
+			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+		];
+		if (fetchPreview)
+		{
+			properties.push('preview');
+		}
+		const [{ids, emails}] = await client.requestMany((t) =>
+		{
+			const ids = t.Email.query({
+				accountId: token.accountId,
+				filter: this.buildFilter(query, mailboxId),
+				sort: this.buildSort(query),
+				position: start,
+				limit,
+				calculateTotal: true,
+				collapseThreads: true,
+			});
+			const emails = t.Email.get({
+				accountId: token.accountId,
+				ids: ids.$ref('/ids'),
+				properties,
+			});
+			return {ids, emails};
+		});
+
+		const representatives = emails.list || [];
+		const total = ids.total ?? representatives.length;
+		const threadIds = Array.from(new Set(representatives.map((e : any) => e.threadId).filter(Boolean)));
+		if (!threadIds.length)
+		{
+			return {rows: representatives.map((e : any) => this.email2row(e, profileID, mailboxId)), total};
+		}
+
+		// Thread/get -> Email/get(keywords only) for every thread on this page, chained in one
+		// request via the '/list/*/emailIds' wildcard result-reference (live-verified against
+		// Stalwart, see doc/ai/projects/mail-threaded-view.md) - cheap, since only 'keywords' is
+		// requested for members other than the representative already fetched above.
+		const [{members}] = await client.requestMany((t) =>
+		{
+			const threads = t.Thread.get({accountId: token.accountId, ids: threadIds});
+			const members = t.Email.get({
+				accountId: token.accountId,
+				ids: threads.$ref('/list/*/emailIds'),
+				properties: ['id', 'threadId', 'keywords'],
+			});
+			return {members};
+		});
+
+		const membersByThread = new Map<string, { id : string, keywords? : Record<string, boolean> }[]>();
+		(members.list || []).forEach((m : any) =>
+		{
+			if (!membersByThread.has(m.threadId))
+			{
+				membersByThread.set(m.threadId, []);
+			}
+			membersByThread.get(m.threadId)!.push(m);
+		});
+
+		const rows = representatives.map((email : any) =>
+		{
+			const threadMembers = membersByThread.get(email.threadId);
+			return !threadMembers || threadMembers.length <= 1
+				? this.email2row(email, profileID, mailboxId)
+				: this.emails2threadRow(email, threadMembers, email.threadId, profileID, mailboxId);
+		});
+
+		return {rows, total};
+	}
+
+	/**
+	 * Child rows for one expanded thread-parent row (doc/ai/projects/mail-threaded-view.md, Phase
+	 * 1) - called from fetchRows()'s `_queriedRange.parent_id` branch. Every member renders via
+	 * the ordinary email2row(), so an expanded thread's messages look and behave exactly like
+	 * normal list rows.
+	 *
+	 * Order is Thread/get's own (RFC 8621: "ordered by date", ascending, oldest first) - matches
+	 * how most mail clients lay out an open conversation top-to-bottom; not tied to whatever sort
+	 * order the (hidden, per `.noVisibleHeader` on the sub-grid) parent list is using.
+	 */
+	private async getThreadMemberRows(threadId : string, selectedFolder : string, fetchPreview : boolean) :
+		Promise<{ rows : any[], total : number } | null>
+	{
+		const [profileID, folder] = selectedFolder.split('::', 2);
+		const token = await this.ensureToken(profileID);
+		if (!token || !token.supportsThreading)
+		{
+			// a thread-parent row can't exist without supportsThreading, so this is only reachable
+			// if the account/token changed mid-session - answer empty, not an error
+			return {rows: [], total: 0};
+		}
+		const client = this.clients[profileID];
+		const mailboxId = await this.mailboxId(client, token.accountId, profileID, folder);
+		const properties = [
+			'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
+			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+		];
+		if (fetchPreview)
+		{
+			properties.push('preview');
+		}
+		const [{emails}] = await client.requestMany((t) =>
+		{
+			const thread = t.Thread.get({accountId: token.accountId, ids: [threadId]});
+			const emails = t.Email.get({
+				accountId: token.accountId,
+				ids: thread.$ref('/list/*/emailIds'),
+				properties,
+			});
+			return {emails};
+		});
+
+		const rows = (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId));
+		return {rows, total: rows.length};
 	}
 
 	/**
@@ -1014,12 +1165,6 @@ export class MailJmap
 			return this.refreshRows(typeof _queriedRange.refresh === 'string' ?
 				[_queriedRange.refresh] : _queriedRange.refresh, !!_filters.filter2);
 		}
-		if (_queriedRange.parent_id)
-		{
-			// parent/children (csv_export) is unused by mail - answer empty rather than falling
-			// through to the dead classic endpoint
-			return Promise.resolve(MailJmap.emptyRowsResult());
-		}
 		// _filters.selectedFolder is only set once the user actively picks a folder in this
 		// session (see app.ts's "nm.activeFilters['selectedFolder'] = ..." call-sites) - same
 		// "not always set, read it from foldertree" situation and fallback as app.ts:588-589.
@@ -1047,6 +1192,21 @@ export class MailJmap
 		{
 			selectedFolder += '::INBOX';
 		}
+		if (_queriedRange.parent_id)
+		{
+			// doc/ai/projects/mail-threaded-view.md, Phase 1 - a thread-parent row's row_id ends
+			// in "...::thread:<threadId>" (see emails2threadRow()); any other/legacy parent_id use
+			// is unused by mail - answer empty rather than falling through to the dead classic
+			// endpoint either way.
+			const threadMatch = String(_queriedRange.parent_id).match(/thread:([^:]+)$/);
+			if (!threadMatch)
+			{
+				return Promise.resolve(MailJmap.emptyRowsResult());
+			}
+			return this.getThreadMemberRows(threadMatch[1], selectedFolder, !!_filters.filter2)
+				.then((result) : any => this.shapeFetchResult(result, selectedFolder))
+				.catch((e) => this.handleFetchRowsError(e));
+		}
 		const query : JmapGetRowsQuery = {
 			selectedFolder,
 			start: _queriedRange.start,
@@ -1066,36 +1226,46 @@ export class MailJmap
 			query.sort = _filters.sort.asc ? 'ASC' : 'DESC';
 		}
 
-		return this.getRows(query).then((result) : any =>
-		{
-			if (!result)
-			{
-				// account genuinely not reachable/JMAP-eligible right now (see
-				// ensureToken()/getRows() docblocks) - there is no working classic fallback
-				// anymore (see ProfileHandler::jmapBootstrap()'s own docblock: "the client
-				// surfaces this as an error"), so say so instead of silently rendering an empty
-				// grid with no explanation
-				this.egw.message(this.egw.lang('Unable to connect to the mail server'), 'error');
-				return MailJmap.emptyRowsResult();
-			}
-			this.enablePushOnce(selectedFolder);
-			const data : Record<string, any> = {};
-			result.rows.forEach((row) => data[row.row_id] = row);
+		return this.getRows(query).then((result) : any => this.shapeFetchResult(result, selectedFolder))
+			.catch((e) => this.handleFetchRowsError(e));
+	}
 
-			return {
-				order: result.rows.map((row) => row.row_id),
-				data,
-				total: result.total,
-				lastModification: Math.floor(Date.now() / 1000),
-				readonlys: {},
-			};
-		}).catch((e) =>
+	/**
+	 * Turn a getRows()/getThreadMemberRows() result into the shape egw.dataFetch() expects, shared
+	 * by fetchRows()'s normal-list and thread-expand (`_queriedRange.parent_id`) branches.
+	 */
+	private shapeFetchResult(result : { rows : any[], total : number } | null, selectedFolder : string) : any
+	{
+		if (!result)
 		{
-			const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
-			this.egw.message(message || this.egw.lang('Unable to connect to the mail server'), 'error');
-			console.error('MailJmap.fetchRows(): failed, resolving as an empty result', e);
+			// account genuinely not reachable/JMAP-eligible right now (see
+			// ensureToken()/getRows() docblocks) - there is no working classic fallback
+			// anymore (see ProfileHandler::jmapBootstrap()'s own docblock: "the client
+			// surfaces this as an error"), so say so instead of silently rendering an empty
+			// grid with no explanation
+			this.egw.message(this.egw.lang('Unable to connect to the mail server'), 'error');
 			return MailJmap.emptyRowsResult();
-		});
+		}
+		this.enablePushOnce(selectedFolder);
+		const data : Record<string, any> = {};
+		result.rows.forEach((row) => data[row.row_id] = row);
+
+		return {
+			order: result.rows.map((row) => row.row_id),
+			data,
+			total: result.total,
+			lastModification: Math.floor(Date.now() / 1000),
+			readonlys: {},
+		};
+	}
+
+	/** Shared fetchRows() rejection handler - see shapeFetchResult()'s docblock. */
+	private handleFetchRowsError(e : any) : any
+	{
+		const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
+		this.egw.message(message || this.egw.lang('Unable to connect to the mail server'), 'error');
+		console.error('MailJmap.fetchRows(): failed, resolving as an empty result', e);
+		return MailJmap.emptyRowsResult();
 	}
 
 	/**
@@ -2216,6 +2386,7 @@ export class MailJmap
 						access_token: data.access_token,
 						expires_at: Date.now() + Math.max(0, data.expires_in - 60) * 1000,
 						isLocal: !!data.isLocal,
+						supportsThreading: !!data.supportsThreading,
 						customLabels: data.customLabels || {},
 						trashFolder: data.trashFolder,
 						junkFolder: data.junkFolder,
@@ -3149,25 +3320,16 @@ export class MailJmap
 		return `${parts.year}-${parts.month}-${parts.day}T${parts.hour}:${parts.minute}:${parts.second}Z`;
 	}
 
-	private email2row(email : any, profileID : string, mailboxId : string) : any
+	/**
+	 * Turn a JMAP Email's `keywords` map into the flags/css-classes/status-icon shape both
+	 * email2row() and emails2threadRow() (doc/ai/projects/mail-threaded-view.md, Phase 1) render
+	 * rows from - extracted out of email2row() so the threaded-row aggregate (built from a
+	 * synthetic, OR/AND-folded `keywords` map spanning every message in a thread, see
+	 * aggregateThreadKeywords()) gets pixel-identical rendering to a normal single-message row.
+	 */
+	private keywordsToRowFlags(keywords : Record<string, boolean>) :
+		{ flags : Record<string, string>, css : string[], status_icon : string, hasFlagged : boolean }
 	{
-		const addressList = (list : { name? : string, email : string }[]) =>
-			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
-		// a real JMAP server (eg. Stalwart) parses From/To/Cc/Bcc itself - if its own parser
-		// isn't RFC 2047-aware, a sending MUA's malformed encoded-word (a literal, unencoded
-		// comma inside a quoted display name - valid per RFC 2047, but breaks a naive
-		// comma-split) trips it up in one of two ways seen so far: either the address boundary
-		// itself gets split wrong (an entry ends up with no usable email at all), or the
-		// boundary is found correctly but the display-name decode leaves stray backslashes/
-		// quotes behind (a literal "\" never legitimately appears in a decoded display name).
-		// The local IMAP shim never has this problem (JmapShim::addressListFromHeader() already
-		// re-parses raw headers unconditionally), so this only ever fires for a real server's
-		// own mistake.
-		const suspectFields = (['from', 'to', 'cc', 'bcc'] as const).filter(field =>
-			(email[field] || []).some((a : { name? : string, email? : string }) =>
-				!a.email || a.email.indexOf('@') < 0 || (a.name && a.name.indexOf('\\') >= 0)));
-
-		const keywords : Record<string, boolean> = email.keywords || {};
 		const flags : Record<string, string> = {};
 		const css = ['mail'];
 		if (keywords['$flagged'])
@@ -3231,6 +3393,92 @@ export class MailJmap
 		else if (keywords['$answered']) status_icon = 'mail_reply';
 		else if (!keywords['$seen']) status_icon = 'mail_unseen';
 
+		const hasFlagged = keywords['$flagged'] || MailJmap.CUSTOM_FLAGS.some((flag, index) =>
+			keywords['$customflag' + (index + 1)]);
+
+		return {flags, css, status_icon, hasFlagged};
+	}
+
+	/**
+	 * Fold every member message's `keywords` map of a collapsed thread into one synthetic map,
+	 * so a closed thread row renders exactly like a single email whose state is the aggregate of
+	 * its members (doc/ai/projects/mail-threaded-view.md, "Unseen (and other) rollup" section).
+	 *
+	 * $seen is AND-folded (the thread only looks "read" once every member is) - every other
+	 * keyword this class renders ($flagged/$answered/$forwarded/labels/custom flags) is OR-folded
+	 * (any member having it is enough to show it on the closed thread row). MDN keywords are
+	 * intentionally left off the aggregate: they're a per-message reply-tracking state, not
+	 * something that means anything folded across a whole thread.
+	 */
+	private aggregateThreadKeywords(members : { keywords? : Record<string, boolean> }[]) : Record<string, boolean>
+	{
+		const aggregate : Record<string, boolean> = {
+			'$seen': members.every(m => !!(m.keywords || {})['$seen']),
+		};
+		const orKeys = new Set<string>();
+		members.forEach(m => Object.keys(m.keywords || {}).forEach(k => k !== '$seen' && orKeys.add(k)));
+		orKeys.forEach(key =>
+		{
+			aggregate[key] = members.some(m => !!(m.keywords || {})[key]);
+		});
+		return aggregate;
+	}
+
+	/**
+	 * Build the closed/collapsed row for a JMAP thread with more than one member message
+	 * (doc/ai/projects/mail-threaded-view.md, Phase 1) - a single-message "thread" just uses the
+	 * ordinary email2row() instead, so the common case (most threads, most inboxes) renders
+	 * identically to today's flat list.
+	 *
+	 * @param representative the Email JMAP chose to represent the collapsed thread (Email/query's
+	 *  own collapseThreads semantics - RFC 8621 ties this to sort order, not "most recent")
+	 * @param members every message in the thread (from Thread/get's emailIds), each with at least
+	 *  {id, keywords} - used only for the aggregate rollup, not for display fields
+	 */
+	private emails2threadRow(representative : any, members : { id : string, keywords? : Record<string, boolean> }[],
+		threadId : string, profileID : string, mailboxId : string) : any
+	{
+		const row = this.email2row(representative, profileID, mailboxId);
+		const {flags, css, status_icon, hasFlagged} = this.keywordsToRowFlags(this.aggregateThreadKeywords(members));
+		return {
+			...row,
+			// the representative's own row_id/uid still end in its plain email id (from
+			// email2row() above) - replace just that trailing segment so every other piece of
+			// code that parses row_id as "account_id::profileID::mailboxId::X" keeps working
+			// unchanged, with X now identifying a thread instead of a single message
+			row_id: row.row_id.slice(0, row.row_id.lastIndexOf('::') + 2) + 'thread:' + threadId,
+			uid: 'thread:' + threadId,
+			is_parent: true,
+			thread_id: threadId,
+			thread_count: members.length,
+			flags,
+			class: css.join(' '),
+			status_icon,
+			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
+		};
+	}
+
+	private email2row(email : any, profileID : string, mailboxId : string) : any
+	{
+		const addressList = (list : { name? : string, email : string }[]) =>
+			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
+		// a real JMAP server (eg. Stalwart) parses From/To/Cc/Bcc itself - if its own parser
+		// isn't RFC 2047-aware, a sending MUA's malformed encoded-word (a literal, unencoded
+		// comma inside a quoted display name - valid per RFC 2047, but breaks a naive
+		// comma-split) trips it up in one of two ways seen so far: either the address boundary
+		// itself gets split wrong (an entry ends up with no usable email at all), or the
+		// boundary is found correctly but the display-name decode leaves stray backslashes/
+		// quotes behind (a literal "\" never legitimately appears in a decoded display name).
+		// The local IMAP shim never has this problem (JmapShim::addressListFromHeader() already
+		// re-parses raw headers unconditionally), so this only ever fires for a real server's
+		// own mistake.
+		const suspectFields = (['from', 'to', 'cc', 'bcc'] as const).filter(field =>
+			(email[field] || []).some((a : { name? : string, email? : string }) =>
+				!a.email || a.email.indexOf('@') < 0 || (a.name && a.name.indexOf('\\') >= 0)));
+
+		const keywords : Record<string, boolean> = email.keywords || {};
+		const {flags, css, status_icon, hasFlagged} = this.keywordsToRowFlags(keywords);
+
 		// mail_ui::header2gridelements()'s convention (relied on by app.ts's preview(), which
 		// concats "primary address" + "additional addresses" into one list for the preview panel):
 		// toaddress/fromaddress hold only the *first* address as a single string, any further
@@ -3239,9 +3487,6 @@ export class MailJmap
 		// goes in ccaddress/bccaddress as one string each.
 		const fromList = addressList(email.from);
 		const toList = addressList(email.to);
-
-		const hasFlagged = keywords['$flagged'] || MailJmap.CUSTOM_FLAGS.some((flag, index) =>
-			keywords['$customflag' + (index + 1)]);
 
 		return {
 			row_id: this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id,
