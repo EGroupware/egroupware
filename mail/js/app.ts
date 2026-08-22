@@ -4855,6 +4855,11 @@ export class MailApp extends EgwApp
 			.sort((a, b) => (usage[b] || 0) - (usage[a] || 0))
 			.slice(0, 10);
 		if (!top.length) return;
+		// Put the quick-submenu in the same context-menu group as "Save"/"View", below them, instead
+		// of defaulting to the top of the menu (no group set). Read the live group number off an
+		// existing sibling action rather than hardcoding it, since get_actions() computes group
+		// numbers dynamically and they can shift as that method changes.
+		const siblingGroup = nm._actionController?.actionManager?.getActionById?.('save')?.group;
 		const ftree : any = this.et2.getWidgetById(this.nm_index + '[foldertree]');
 		const children = {};
 		top.forEach(target =>
@@ -4864,8 +4869,12 @@ export class MailApp extends EgwApp
 			// this method) is always the full "<profileID>::<folder>" string, so different accounts'
 			// folders are never confused regardless of their hierarchy separator or namespace prefix;
 			// this is purely about the caption not being ambiguous to the user.
-			const profileID = target.substring(0, target.indexOf('::'));
-			let caption = target;
+			const sepIndex = target.indexOf('::');
+			const profileID = target.substring(0, sepIndex);
+			// Fallback for a folder whose tree node isn't currently loaded (lazy per-level loading) -
+			// no "<profileID>::" prefix, and run through translation like the server side's lang($folder)
+			// does, so standard folder names (INBOX, Trash, ...) still show localized.
+			let caption = this.egw.lang(target.substring(sepIndex + 2));
 			const label = ftree?.getLabel ? ftree.getLabel(target) : null;
 			if (label) caption = label.replace(this._unseen_regexp, '');
 			const accountLabel = ftree?.getLabel ? ftree.getLabel(profileID) : null;
@@ -4881,6 +4890,7 @@ export class MailApp extends EgwApp
 			[cfg.actionId]: {
 				caption: this.egw.lang(cfg.caption),
 				icon: cfg.icon,
+				...(siblingGroup !== undefined ? {group: siblingGroup} : {}),
 				children: children,
 			}
 		};
