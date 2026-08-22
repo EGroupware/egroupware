@@ -1,0 +1,233 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1320" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrowDark" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2C3E50"/>
+    </marker>
+    <marker id="arrowAmber" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#C9821B"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#3A6FB0"/>
+    </marker>
+    <marker id="arrowTeal" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#128070"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#2E8B47"/>
+    </marker>
+  </defs>
+
+  <style>
+    .title { font-size: 24px; font-weight: 700; fill: #1a1a1a; }
+    .subtitle { font-size: 14px; fill: #555; }
+    .grouplabel { font-size: 13px; font-weight: 700; fill: #444; }
+    .boxlabel { font-size: 13px; font-weight: 700; fill: #1a1a1a; }
+    .boxsub { font-size: 11px; fill: #333; }
+    .lanelabel { font-size: 14px; font-weight: 700; fill: #1a1a1a; }
+    .arrowlabel { font-size: 10.5px; fill: #444; }
+    .legend text { font-size: 11px; fill: #333; }
+  </style>
+
+  <rect x="0" y="0" width="1600" height="1320" fill="#ffffff"/>
+
+  <text x="800" y="28" text-anchor="middle" class="title">EGroupware Mail — JMAP-Centric Architecture</text>
+  <text x="800" y="48" text-anchor="middle" class="subtitle">One client-side JMAP client, two backends, three push-notification paths — all converging on MailApp.push()</text>
+
+  <!-- ===================== BROWSER GROUP ===================== -->
+  <rect x="40" y="70" width="1520" height="200" rx="10" fill="#EAF2FB" stroke="#3A6FB0" stroke-width="1.5" stroke-dasharray="6,4"/>
+  <text x="60" y="92" class="grouplabel">BROWSER (client-side TypeScript)</text>
+
+  <rect x="70" y="105" width="330" height="140" rx="6" fill="#ffffff" stroke="#3A6FB0" stroke-width="1.5"/>
+  <text x="235" y="126" text-anchor="middle" class="boxlabel">MailApp (app.ts)</text>
+  <text x="235" y="146" text-anchor="middle" class="boxsub">generic push() sink</text>
+  <text x="235" y="162" text-anchor="middle" class="boxsub">JMAP fast-path wrappers for</text>
+  <text x="235" y="176" text-anchor="middle" class="boxsub">row actions (move/copy/</text>
+  <text x="235" y="190" text-anchor="middle" class="boxsub">delete/flag)</text>
+
+  <rect x="450" y="105" width="420" height="140" rx="6" fill="#ffffff" stroke="#3A6FB0" stroke-width="2"/>
+  <text x="660" y="126" text-anchor="middle" class="boxlabel">MailJmap (jmap.ts)</text>
+  <text x="660" y="146" text-anchor="middle" class="boxsub">rows · body · attachments · flags</text>
+  <text x="660" y="162" text-anchor="middle" class="boxsub">move / copy / delete (incl. bulk)</text>
+  <text x="660" y="178" text-anchor="middle" class="boxsub">folders (list/CRUD/subscribe) · quota</text>
+  <text x="660" y="194" text-anchor="middle" class="boxsub">works identically against either backend</text>
+  <text x="660" y="210" text-anchor="middle" class="boxsub">(via the jmap-jam library)</text>
+
+  <rect x="920" y="105" width="330" height="140" rx="6" fill="#ffffff" stroke="#3A6FB0" stroke-width="1.5"/>
+  <text x="1085" y="126" text-anchor="middle" class="boxlabel">JamWebSocketClient</text>
+  <text x="1085" y="142" text-anchor="middle" class="boxsub">(jmap-jam-websocket.ts)</text>
+  <text x="1085" y="162" text-anchor="middle" class="boxsub">RFC 8887 JMAP-over-WebSocket</text>
+  <text x="1085" y="178" text-anchor="middle" class="boxsub">reconnect + backoff, heartbeat</text>
+  <text x="1085" y="194" text-anchor="middle" class="boxsub">(dead-connection detection)</text>
+
+  <rect x="1300" y="105" width="230" height="140" rx="6" fill="#ffffff" stroke="#3A6FB0" stroke-width="1.5"/>
+  <text x="1415" y="126" text-anchor="middle" class="boxlabel">Et2Tree / NextMatch</text>
+  <text x="1415" y="146" text-anchor="middle" class="boxsub">UI widgets</text>
+  <text x="1415" y="164" text-anchor="middle" class="boxsub">folder tree, message list -</text>
+  <text x="1415" y="178" text-anchor="middle" class="boxsub">fed rows/nodes straight</text>
+  <text x="1415" y="192" text-anchor="middle" class="boxsub">from MailJmap</text>
+
+  <line x1="400" y1="175" x2="448" y2="175" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <line x1="870" y1="175" x2="918" y2="175" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <line x1="1250" y1="175" x2="1298" y2="175" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+
+  <!-- ===================== BACKEND SPLIT ===================== -->
+  <text x="800" y="300" text-anchor="middle" class="subtitle" font-style="italic">MailJmap always speaks JMAP — which server actually answers depends on the account:</text>
+
+  <!-- native path -->
+  <line x1="600" y1="245" x2="330" y2="345" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <text x="420" y="305" class="arrowlabel">HTTPS JMAP (direct) +</text>
+  <text x="420" y="317" class="arrowlabel">optional RFC 8887 WebSocket</text>
+
+  <rect x="130" y="345" width="400" height="90" rx="6" fill="#FCEFDD" stroke="#C9821B" stroke-width="1.5"/>
+  <text x="330" y="378" text-anchor="middle" class="boxlabel">Stalwart</text>
+  <text x="330" y="398" text-anchor="middle" class="boxsub">native JMAP mail server</text>
+  <text x="330" y="414" text-anchor="middle" class="boxsub">(fronted by nginx, which rewrites the</text>
+  <text x="330" y="428" text-anchor="middle" class="boxsub">access_token query param into an Authorization header for WS upgrades)</text>
+
+  <!-- shim path -->
+  <line x1="720" y1="245" x2="900" y2="335" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+
+  <rect x="850" y="335" width="400" height="60" rx="6" fill="#E9F7EE" stroke="#2E8B47" stroke-width="1.5"/>
+  <text x="1050" y="358" text-anchor="middle" class="boxlabel">mail/jmap.php</text>
+  <text x="1050" y="376" text-anchor="middle" class="boxsub">stateless front controller — session/dispatch/download/upload routes</text>
+
+  <line x1="1050" y1="395" x2="1050" y2="413" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+
+  <rect x="850" y="413" width="400" height="70" rx="6" fill="#E9F7EE" stroke="#2E8B47" stroke-width="1.5"/>
+  <text x="1050" y="438" text-anchor="middle" class="boxlabel">JmapShim.php</text>
+  <text x="1050" y="456" text-anchor="middle" class="boxsub">translates JMAP calls into classic IMAP</text>
+  <text x="1050" y="470" text-anchor="middle" class="boxsub">search()/fetch()/store() — bypasses mail_ui/Api\Mail entirely</text>
+
+  <line x1="1050" y1="483" x2="1050" y2="501" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+
+  <rect x="850" y="501" width="400" height="60" rx="6" fill="#E4F5F2" stroke="#128070" stroke-width="1.5"/>
+  <text x="1050" y="527" text-anchor="middle" class="boxlabel">Dovecot</text>
+  <text x="1050" y="545" text-anchor="middle" class="boxsub">classic IMAP server (or any other non-JMAP IMAP server)</text>
+
+  <text x="330" y="595" text-anchor="middle" class="boxsub" font-style="italic">Row/folder ids: opaque JMAP ids Stalwart assigns</text>
+  <text x="1050" y="595" text-anchor="middle" class="boxsub" font-style="italic">Row/folder ids: classic base64(folder)::UID shape — identical to the pre-JMAP scheme,</text>
+  <text x="1050" y="609" text-anchor="middle" class="boxsub" font-style="italic">so every existing action handler keeps working unmodified</text>
+
+  <!-- ===================== PUSH SECTION ===================== -->
+  <rect x="20" y="640" width="1560" height="650" rx="10" fill="#FAFAFA" stroke="#999" stroke-width="1" stroke-dasharray="4,4"/>
+  <text x="800" y="668" text-anchor="middle" class="title" font-size="18">Push notifications — three paths, one destination</text>
+  <text x="800" y="688" text-anchor="middle" class="subtitle">All three call MailApp.push({app:'mail', id, type, acl}) — the UI never needs to know which path delivered the message</text>
+
+  <!-- Lane 1: webhook -->
+  <text x="50" y="735" class="lanelabel">1 · Stalwart + push-server (webhook)</text>
+
+  <rect x="50" y="750" width="160" height="60" rx="6" fill="#FCEFDD" stroke="#C9821B" stroke-width="1.5"/>
+  <text x="130" y="775" text-anchor="middle" class="boxsub" font-weight="700">Stalwart</text>
+  <text x="130" y="792" text-anchor="middle" class="boxsub">PushSubscription</text>
+
+  <line x1="210" y1="780" x2="248" y2="780" stroke="#C9821B" stroke-width="1.5" marker-end="url(#arrowAmber)"/>
+  <text x="230" y="770" text-anchor="middle" class="arrowlabel">webhook</text>
+
+  <rect x="250" y="750" width="190" height="60" rx="6" fill="#E9F7EE" stroke="#2E8B47" stroke-width="1.5"/>
+  <text x="345" y="775" text-anchor="middle" class="boxsub" font-weight="700">api/jmapPush.php</text>
+  <text x="345" y="792" text-anchor="middle" class="boxsub">webhook receiver</text>
+
+  <line x1="440" y1="780" x2="478" y2="780" stroke="#2E8B47" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <rect x="480" y="750" width="230" height="60" rx="6" fill="#E9F7EE" stroke="#2E8B47" stroke-width="1.5"/>
+  <text x="595" y="772" text-anchor="middle" class="boxsub" font-weight="700">Imap\Jmap::pushCallback()</text>
+  <text x="595" y="790" text-anchor="middle" class="boxsub">diffs JMAP state, builds envelope</text>
+
+  <line x1="710" y1="780" x2="748" y2="780" stroke="#2E8B47" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <rect x="750" y="750" width="180" height="60" rx="6" fill="#E9F7EE" stroke="#2E8B47" stroke-width="1.5"/>
+  <text x="840" y="775" text-anchor="middle" class="boxsub" font-weight="700">Api\Json\Push</text>
+  <text x="840" y="792" text-anchor="middle" class="boxsub">picks a backend</text>
+
+  <line x1="930" y1="780" x2="968" y2="780" stroke="#2E8B47" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <rect x="970" y="750" width="220" height="60" rx="6" fill="#F3E9FA" stroke="#7B3F9E" stroke-width="1.5"/>
+  <text x="1080" y="772" text-anchor="middle" class="boxsub" font-weight="700">SwoolePush\Backend</text>
+  <text x="1080" y="790" text-anchor="middle" class="boxsub">relays to browser's push WS</text>
+
+  <line x1="1190" y1="780" x2="1390" y2="905" stroke="#C9821B" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowAmber)"/>
+
+  <!-- Lane 2: direct WS -->
+  <text x="50" y="875" class="lanelabel">2 · Stalwart + direct client WebSocket (no push-server needed)</text>
+  <text x="50" y="893" class="boxsub" font-style="italic">used automatically whenever Api\Json\Push::onlyFallback() is true — push still works with nothing extra installed</text>
+
+  <rect x="50" y="910" width="160" height="60" rx="6" fill="#FCEFDD" stroke="#C9821B" stroke-width="1.5"/>
+  <text x="130" y="935" text-anchor="middle" class="boxsub" font-weight="700">Stalwart</text>
+  <text x="130" y="952" text-anchor="middle" class="boxsub">StateChange frames</text>
+
+  <line x1="210" y1="940" x2="298" y2="940" stroke="#3A6FB0" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <text x="255" y="930" text-anchor="middle" class="arrowlabel">persistent RFC 8887 WS</text>
+
+  <rect x="300" y="910" width="280" height="60" rx="6" fill="#EAF2FB" stroke="#3A6FB0" stroke-width="1.5"/>
+  <text x="440" y="935" text-anchor="middle" class="boxsub" font-weight="700">JamWebSocketClient</text>
+  <text x="440" y="952" text-anchor="middle" class="boxsub">client-side WS transport</text>
+
+  <line x1="580" y1="940" x2="618" y2="940" stroke="#3A6FB0" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+
+  <rect x="620" y="910" width="300" height="60" rx="6" fill="#EAF2FB" stroke="#3A6FB0" stroke-width="1.5"/>
+  <text x="770" y="935" text-anchor="middle" class="boxsub" font-weight="700">MailJmap.handleWsPush()</text>
+  <text x="770" y="952" text-anchor="middle" class="boxsub">diffs state, fetches the delta</text>
+
+  <line x1="920" y1="940" x2="1388" y2="940" stroke="#3A6FB0" stroke-width="1.5" marker-end="url(#arrowBlue)"/>
+  <text x="1150" y="930" text-anchor="middle" class="arrowlabel">direct call — no PHP or push-server involved</text>
+
+  <!-- Lane 3: Dovecot native -->
+  <text x="50" y="1040" class="lanelabel">3 · Dovecot IMAP-native push</text>
+
+  <rect x="50" y="1055" width="160" height="60" rx="6" fill="#E4F5F2" stroke="#128070" stroke-width="1.5"/>
+  <text x="130" y="1080" text-anchor="middle" class="boxsub" font-weight="700">Dovecot</text>
+  <text x="130" y="1097" text-anchor="middle" class="boxsub">METADATA token</text>
+
+  <line x1="210" y1="1085" x2="248" y2="1085" stroke="#128070" stroke-width="1.5" marker-end="url(#arrowTeal)"/>
+
+  <rect x="250" y="1055" width="220" height="60" rx="6" fill="#E4F5F2" stroke="#128070" stroke-width="1.5"/>
+  <text x="360" y="1077" text-anchor="middle" class="boxsub" font-weight="700">dovecot-push.lua</text>
+  <text x="360" y="1095" text-anchor="middle" class="boxsub">push-notification driver script</text>
+
+  <line x1="470" y1="1085" x2="508" y2="1085" stroke="#128070" stroke-width="1.5" marker-end="url(#arrowTeal)"/>
+  <text x="490" y="1075" text-anchor="middle" class="arrowlabel">HTTP POST</text>
+
+  <rect x="510" y="1055" width="260" height="60" rx="6" fill="#F3E9FA" stroke="#7B3F9E" stroke-width="1.5"/>
+  <text x="640" y="1077" text-anchor="middle" class="boxsub" font-weight="700">SwoolePush /push endpoint</text>
+  <text x="640" y="1095" text-anchor="middle" class="boxsub">same endpoint lane 1 uses</text>
+
+  <line x1="770" y1="1085" x2="808" y2="1085" stroke="#2E8B47" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+
+  <rect x="810" y="1055" width="180" height="60" rx="6" fill="#E9F7EE" stroke="#2E8B47" stroke-width="1.5"/>
+  <text x="900" y="1077" text-anchor="middle" class="boxsub" font-weight="700">Api\Json\Push</text>
+  <text x="900" y="1095" text-anchor="middle" class="boxsub">same as lane 1</text>
+
+  <line x1="1010" y1="1085" x2="1050" y1="1085" x2="1390" y2="975" stroke="#128070" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowTeal)"/>
+
+  <!-- shared destination -->
+  <rect x="1390" y="890" width="190" height="100" rx="8" fill="#EAF2FB" stroke="#3A6FB0" stroke-width="2"/>
+  <text x="1485" y="920" text-anchor="middle" class="boxlabel">MailApp.push()</text>
+  <text x="1485" y="940" text-anchor="middle" class="boxsub">{app:'mail', id,</text>
+  <text x="1485" y="954" text-anchor="middle" class="boxsub">type, acl}</text>
+  <text x="1485" y="972" text-anchor="middle" class="boxsub">→ folder badges,</text>
+  <text x="1485" y="984" text-anchor="middle" class="boxsub">row refresh, notify</text>
+
+  <!-- ===================== LEGEND ===================== -->
+  <text x="50" y="1180" class="grouplabel">Legend</text>
+  <line x1="50" y1="1195" x2="90" y2="1195" stroke="#2C3E50" stroke-width="1.5" marker-end="url(#arrowDark)"/>
+  <text x="98" y="1199" class="boxsub">data flow (rows, body, actions)</text>
+  <line x1="330" y1="1195" x2="370" y2="1195" stroke="#C9821B" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowAmber)"/>
+  <text x="378" y="1199" class="boxsub">push variant 1 (webhook)</text>
+  <line x1="600" y1="1195" x2="640" y2="1195" stroke="#3A6FB0" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowBlue)"/>
+  <text x="648" y="1199" class="boxsub">push variant 2 (direct WebSocket)</text>
+  <line x1="920" y1="1195" x2="960" y2="1195" stroke="#128070" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowTeal)"/>
+  <text x="968" y="1199" class="boxsub">push variant 3 (Dovecot native)</text>
+
+  <rect x="50" y="1215" width="22" height="16" fill="#FCEFDD" stroke="#C9821B" stroke-width="1.5"/>
+  <text x="80" y="1228" class="boxsub">mail server</text>
+  <rect x="200" y="1215" width="22" height="16" fill="#E9F7EE" stroke="#2E8B47" stroke-width="1.5"/>
+  <text x="230" y="1228" class="boxsub">EGroupware PHP</text>
+  <rect x="370" y="1215" width="22" height="16" fill="#EAF2FB" stroke="#3A6FB0" stroke-width="1.5"/>
+  <text x="400" y="1228" class="boxsub">browser / client-side TS</text>
+  <rect x="570" y="1215" width="22" height="16" fill="#F3E9FA" stroke="#7B3F9E" stroke-width="1.5"/>
+  <text x="600" y="1228" class="boxsub">push infrastructure (swoolepush)</text>
+  <rect x="850" y="1215" width="22" height="16" fill="#E4F5F2" stroke="#128070" stroke-width="1.5"/>
+  <text x="880" y="1228" class="boxsub">classic IMAP server</text>
+
+  <text x="50" y="1260" class="subtitle" font-style="italic">See mail/README.md and doc/ai/projects/mail-jmap-*.md for the full write-up.</text>
+</svg>
