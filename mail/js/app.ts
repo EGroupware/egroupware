@@ -60,16 +60,16 @@ export class MailApp extends EgwApp
 	nm : Et2Nextmatch = null;
 	doStatus : any = null;
 
-	mail_queuedFolders : any = [];
-	mail_queuedFoldersIndex : any = 0;
+	queuedFolders : any = [];
+	queuedFoldersIndex : any = 0;
 
-	mail_selectedMails : any = [];
-	mail_currentlyFocussed : any = '';
-	mail_previewAreaActive : any = true; // we start with the area active
+	selectedMails : any = [];
+	currentlyFocussed : any = '';
+	previewAreaActive : any = true; // we start with the area active
 
 	nm_index : any = 'nm'; // nm name of index
-	mail_fileSelectorWindow : any = null;
-	mail_isMainWindow : any = true;
+	fileSelectorWindow : any = null;
+	isMainWindow : any = true;
 
 	// Aborts the in-flight fetchBody() request when a newer selection supersedes it.
 	previewFetchAbort : AbortController = null;
@@ -285,7 +285,7 @@ export class MailApp extends EgwApp
 					self.preparePrint();
 				});
 				var nm = this.et2.getWidgetById(this.nm_index);
-				this.mail_isMainWindow = true;
+				this.isMainWindow = true;
 
 				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
 				// see rememberUsedFolder()/updateFolderQuickAction().
@@ -388,7 +388,7 @@ export class MailApp extends EgwApp
 					}
 				});
 
-				this.mail_isMainWindow = false;
+				this.isMainWindow = false;
 				this.display();
 
 				break;
@@ -408,7 +408,7 @@ export class MailApp extends EgwApp
 				{
 					this.mailvelopeAvailable(this.mailvelopeCompose);
 				}
-				this.mail_isMainWindow = false;
+				this.isMainWindow = false;
 				// add predefined addresses, but only if not already added (happens on several server-side roundtrips!)
 				//NOTE: THIS NOW HAPPENS SERVER SIDE ON LOAD
 				/*
@@ -531,11 +531,11 @@ export class MailApp extends EgwApp
 				}
 				break;
 			case 'mail.view':
-				// we need to set mail_currentlyFocused var otherwise mail
+				// we need to set currentlyFocussed var otherwise mail
 				// defined actions won't work
 				// this means mobileView() was called earlier and not this is set
 				//@ts-ignore
-				this.mail_currentlyFocussed = this.et2.mail_currentlyFocussed;
+				this.currentlyFocussed = this.et2.currentlyFocussed;
 				break;
 			case 'mail.subscribe':
 				this.subscriptionLoad();
@@ -1012,27 +1012,27 @@ export class MailApp extends EgwApp
 				// message row id (a known, not yet root-caused issue can leave something else
 				// here instead, e.g. a folder id - see feedback_et2nextmatch_mail_regression
 				// memory; dataRefreshUID() has no validation of its own)
-				if (this.mail_currentlyFocussed!='' && this.isValidRowId(this.mail_currentlyFocussed)) egw.dataRefreshUID(this.mail_currentlyFocussed);
-				for(let k = 0; k < this.mail_selectedMails.length; k++)
+				if (this.currentlyFocussed!='' && this.isValidRowId(this.currentlyFocussed)) egw.dataRefreshUID(this.currentlyFocussed);
+				for(let k = 0; k < this.selectedMails.length; k++)
 				{
-					if (this.isValidRowId(this.mail_selectedMails[k])) egw.dataRefreshUID(this.mail_selectedMails[k]);
+					if (this.isValidRowId(this.selectedMails[k])) egw.dataRefreshUID(this.selectedMails[k]);
 				}
-				//nm.refresh(this.mail_selectedMails,'delete');
+				//nm.refresh(this.selectedMails,'delete');
 			}
-			this.mail_selectedMails = [];
-			this.mail_currentlyFocussed = '';
+			this.selectedMails = [];
+			this.currentlyFocussed = '';
 			return '';
 		}
 		for(let k = 0; k < _selected.length; k++)
 		{
-			if (jQuery.inArray(_selected[k],this.mail_selectedMails)==-1)
+			if (jQuery.inArray(_selected[k],this.selectedMails)==-1)
 			{
-				this.mail_currentlyFocussed = _selected[k];
+				this.currentlyFocussed = _selected[k];
 				break;
 			}
 		}
-		this.mail_selectedMails = _selected;
-		return this.mail_currentlyFocussed;
+		this.selectedMails = _selected;
+		return this.currentlyFocussed;
 	}
 
 	/**
@@ -1051,12 +1051,12 @@ export class MailApp extends EgwApp
 				_senders = [];
 				_senders.push({id: this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if((typeof _senders == 'undefined' || _senders.length == 0) && this.mail_isMainWindow)
+			if((typeof _senders == 'undefined' || _senders.length == 0) && this.isMainWindow)
 			{
-				if(this.mail_currentlyFocussed)
+				if(this.currentlyFocussed)
 				{
 					_senders = [];
-					_senders.push({id: this.mail_currentlyFocussed});
+					_senders.push({id: this.currentlyFocussed});
 				}
 			}
 		}
@@ -1066,9 +1066,9 @@ export class MailApp extends EgwApp
 		{
 			_mode = 'view';
 		}
-		this.mail_selectedMails = [];
-		this.mail_selectedMails.push(_id);
-		this.mail_currentlyFocussed = _id;
+		this.selectedMails = [];
+		this.selectedMails.push(_id);
+		this.currentlyFocussed = _id;
 
 		var dataElem = egw.dataGetUIDdata(_id);
 		var subject = dataElem.data.subject;
@@ -1146,12 +1146,12 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
@@ -1339,7 +1339,7 @@ export class MailApp extends EgwApp
 
 		if(splitter.isDocked())
 		{
-			this.mail_previewAreaActive = false;
+			this.previewAreaActive = false;
 		}
 		this.et2.getWidgetById('mailPreview').set_disabled(_value);
 		//Dock the splitter always if we are browsing with mobile
@@ -1350,17 +1350,17 @@ export class MailApp extends EgwApp
 
 		if (_value==true)
 		{
-			if (this.mail_previewAreaActive) dock();
-			this.mail_previewAreaActive = false;
+			if (this.previewAreaActive) dock();
+			this.previewAreaActive = false;
 		}
 		else
 		{
-			if (!this.mail_previewAreaActive)
+			if (!this.previewAreaActive)
 			{
 				undock();
 				//window.setTimeout(function(){splitter.left.trigger('resize.et2_split.mailSplitter');},200);
 			}
-			this.mail_previewAreaActive = true;
+			this.previewAreaActive = true;
 		}
 	}
 
@@ -1671,9 +1671,9 @@ export class MailApp extends EgwApp
 			this.disablePreviewArea((typeof selected == 'undefined' || selected.length == 0 && previewPane == 'expand'));
 
 			// Update the internal list of selected mails, if needed
-			if(this.mail_selectedMails.indexOf(rowId) < 0)
+			if(this.selectedMails.indexOf(rowId) < 0)
 			{
-				this.mail_selectedMails.push(rowId);
+				this.selectedMails.push(rowId);
 			}
 
 			// Try to avoid sending so many request when user tries to scroll on list
@@ -1822,7 +1822,7 @@ export class MailApp extends EgwApp
 	 * @param rowId
 	 * @param onLoad called with the iframe's contentDocument once loaded, either path
 	 * @param signal aborted if a newer selection supersedes this fetch before it resolves; when
-	 *        given, the result is also dropped if rowId no longer matches mail_currentlyFocussed
+	 *        given, the result is also dropped if rowId no longer matches currentlyFocussed
 	 */
 	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal): void
 	{
@@ -1834,7 +1834,7 @@ export class MailApp extends EgwApp
 			// belt-and-suspenders alongside the abort check above, scoped to the preview-pane
 			// call site (the only one that passes a signal) - mobileView()'s single-message
 			// dialog has no comparable "currently selected" concept to check against.
-			if (signal && rowId !== this.mail_currentlyFocussed) return;
+			if (signal && rowId !== this.currentlyFocussed) return;
 			if (result.special)
 			{
 				iframe.addEventListener('load', () =>
@@ -2610,7 +2610,7 @@ export class MailApp extends EgwApp
 	refreshMessageGrid(_isPopup: boolean = false, _refreshVacationNotice: boolean = false)
 	{
 		let nm: Et2Nextmatch;
-		if (_isPopup && !this.mail_isMainWindow)
+		if (_isPopup && !this.isMainWindow)
 		{
 			nm = window.opener.etemplate2.getByApplication('mail')[0].widgetContainer.getWidgetById(this.nm_index);
 		}
@@ -2696,12 +2696,12 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
@@ -2711,7 +2711,7 @@ export class MailApp extends EgwApp
 		if (msg['all']) msg['activeFilters'] = this.getActiveFilters(_action);
 		//alert(_action.id+','+ msg);
 		this.deleteMessages(msg,'no',calledFromPopup);
-		if (calledFromPopup && this.mail_isMainWindow==false)
+		if (calledFromPopup && this.isMainWindow==false)
 		{
 			egw(window).close();
 		}
@@ -2799,7 +2799,7 @@ export class MailApp extends EgwApp
 	 * @param e the caught rejection
 	 * @param fallback the classic ajax call to run when e is NOT a JmapUserError
 	 */
-	private mail_handleJmapError(e : any, fallback : () => any) : any
+	private handleJmapError(e : any, fallback : () => any) : any
 	{
 		if (e instanceof JmapUserError)
 		{
@@ -2828,7 +2828,7 @@ export class MailApp extends EgwApp
 		if (_msg['all'])
 		{
 			return this.jmap.deleteAllMatching(this.buildJmapQuery(_msg), mode)
-				.catch((e) => this.mail_handleJmapError(e, fallback));
+				.catch((e) => this.handleJmapError(e, fallback));
 		}
 		if (!Array.isArray(_msg['msg']) || !_msg['msg'].length)
 		{
@@ -2844,7 +2844,7 @@ export class MailApp extends EgwApp
 			return null;
 		}
 		return this.jmap.deleteMessages(references, mode)
-			.catch((e) => this.mail_handleJmapError(e, fallback));
+			.catch((e) => this.handleJmapError(e, fallback));
 	}
 
 	deleteMessages(_msg,_action,_calledFromPopup)
@@ -2968,7 +2968,7 @@ export class MailApp extends EgwApp
 	 * folder-tree badge (setFolderStatus - the folder is now empty) and, if the purged folder
 	 * is the one currently displayed, refresh the grid (classic path's conditional egw.refresh()).
 	 */
-	private mail_tryJmapPurgeFolder(profileID : string, which : 'trash' | 'junk', selectedFolder : string,
+	private tryJmapPurgeFolder(profileID : string, which : 'trash' | 'junk', selectedFolder : string,
 		onSuccess : () => void, fallback : () => Promise<any>) : Promise<any>
 	{
 		return this.jmap.purgeFolder(profileID, which).then((purgedFolder) =>
@@ -2979,7 +2979,7 @@ export class MailApp extends EgwApp
 				this.refreshMessageGrid();
 			}
 			onSuccess();
-		}, (e) => this.mail_handleJmapError(e, fallback));
+		}, (e) => this.handleJmapError(e, fallback));
 	}
 
 	/**
@@ -2998,7 +2998,7 @@ export class MailApp extends EgwApp
 		const classicEmptySpam = () => egw.json('mail.mail_ui.ajax_emptySpam',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
 			function(){self.unlockTree();}).sendRequest(true);
-		this.mail_tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam)
+		this.tryJmapPurgeFolder(server[0], 'junk', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptySpam)
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty junk'), 'error'));
 
 		// Directly delete any trash cache for selected server
@@ -3034,7 +3034,7 @@ export class MailApp extends EgwApp
 		const classicEmptyTrash = () => egw.json('mail.mail_ui.ajax_emptyTrash',
 			[server[0], activeFilters['selectedFolder']? activeFilters['selectedFolder']:null],
 			function(){self.unlockTree();}).sendRequest(true);
-		this.mail_tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash)
+		this.tryJmapPurgeFolder(server[0], 'trash', activeFilters['selectedFolder'], () => self.unlockTree(), classicEmptyTrash)
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to empty trash'), 'error'));
 
 		// Directly delete any trash cache for selected server
@@ -3435,7 +3435,7 @@ export class MailApp extends EgwApp
 	refreshRows(_ids: string[]): void
 	{
 		if (!_ids?.length) return;
-		this.mail_nmOwner()?.nm.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
+		this.nmOwner()?.nm.refresh(_ids, Et2DatagridUpdateTypes.UPDATE_IN_PLACE);
 	}
 
 	/**
@@ -3450,7 +3450,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @return null if no reachable window has a message list (e.g. popup whose opener is gone)
 	 */
-	private mail_nmOwner(): { app: MailApp, nm: Et2Nextmatch } | null
+	private nmOwner(): { app: MailApp, nm: Et2Nextmatch } | null
 	{
 		for (const app of [this, window.opener?.app?.mail as MailApp])
 		{
@@ -3477,7 +3477,7 @@ export class MailApp extends EgwApp
 	patchRow(_uid: string): void
 	{
 		// Nothing anywhere renders this row - skip, rather than mark a guess no refresh can consume
-		const owner = this.mail_nmOwner();
+		const owner = this.nmOwner();
 		if (!owner) return;
 
 		const dataElem = egw.dataGetUIDdata(_uid);
@@ -3519,9 +3519,9 @@ export class MailApp extends EgwApp
 
 		if (typeof _elems === 'undefined' || _elems.length == 0)
 		{
-			if (this.mail_isMainWindow && this.mail_currentlyFocussed)
+			if (this.isMainWindow && this.currentlyFocussed)
 			{
-				data.msg = [this.mail_currentlyFocussed];
+				data.msg = [this.currentlyFocussed];
 				_elems = data;
 				data.msg = this.getFormData(_elems).msg;
 			}
@@ -3906,12 +3906,12 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
@@ -3956,12 +3956,12 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined'|| _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
@@ -3988,12 +3988,12 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
@@ -4043,9 +4043,9 @@ export class MailApp extends EgwApp
 		if (typeof calledForCompose == 'undefined' || typeof calledForCompose == 'object') calledForCompose=false;
 		if (calledForCompose===false)
 		{
-			if (this.mail_isMainWindow)
+			if (this.isMainWindow)
 			{
-				mailid = this.mail_currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
+				mailid = this.currentlyFocussed;//this.et2.getArrayMgr("content").getEntry('mail_id');
 				var p = widget.getParent();
 				var cont = p.getArrayMgr("content").data;
 				attgrid = cont[widget.id.replace(/\[filename\]/,'')];
@@ -4176,9 +4176,9 @@ export class MailApp extends EgwApp
 	{
 		let mail_id, attachments,attachment;
 
-		if (this.mail_isMainWindow)
+		if (this.isMainWindow)
 		{
-			mail_id = this.mail_currentlyFocussed || app.mail.mail_currentlyFocussed;
+			mail_id = this.currentlyFocussed || app.mail.currentlyFocussed;
 			const p = widget.getParent();
 			attachments = p.getArrayMgr("content").data;
 		}
@@ -4341,12 +4341,12 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
@@ -4405,12 +4405,12 @@ export class MailApp extends EgwApp
 				_elems = [];
 				_elems.push({id:this.et2.getArrayMgr("content").getEntry('mail_id') || ''});
 			}
-			if ((typeof _elems == 'undefined' || _elems.length==0) && this.mail_isMainWindow)
+			if ((typeof _elems == 'undefined' || _elems.length==0) && this.isMainWindow)
 			{
-				if (this.mail_currentlyFocussed)
+				if (this.currentlyFocussed)
 				{
 					_elems = [];
-					_elems.push({id:this.mail_currentlyFocussed});
+					_elems.push({id:this.currentlyFocussed});
 				}
 			}
 		}
@@ -4549,7 +4549,7 @@ export class MailApp extends EgwApp
 	 * not applicable (caller falls back to the unchanged classic call directly); otherwise a
 	 * Promise that either succeeds via JMAP or, on any failure, falls back to that same classic call.
 	 */
-	private mail_tryJmapMove(target : string, messages : any, isArchiveShortcut : boolean,
+	private tryJmapMove(target : string, messages : any, isArchiveShortcut : boolean,
 		classicMove : () => Promise<any>) : Promise<any> | null
 	{
 		if (isArchiveShortcut)
@@ -4566,7 +4566,7 @@ export class MailApp extends EgwApp
 		if (messages['all'])
 		{
 			return this.jmap.moveAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
-				.catch((e) => this.mail_handleJmapError(e, classicMove));
+				.catch((e) => this.handleJmapError(e, classicMove));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
 		{
@@ -4582,7 +4582,7 @@ export class MailApp extends EgwApp
 			return null;
 		}
 		return this.jmap.moveMessages(references, targetProfileID, targetFolderPath)
-			.catch((e) => this.mail_handleJmapError(e, classicMove));
+			.catch((e) => this.handleJmapError(e, classicMove));
 	}
 
 	/**
@@ -4606,7 +4606,7 @@ export class MailApp extends EgwApp
 			return;
 		}
 		this.jmap.setMdnFlag(references, sent)
-			.catch((e) => this.mail_handleJmapError(e, classicFallback))
+			.catch((e) => this.handleJmapError(e, classicFallback))
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to update messages'), 'error'));
 	}
 
@@ -4675,10 +4675,10 @@ export class MailApp extends EgwApp
 		}).sendRequest(true);
 
 		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
-		// unchanged for anything else (see mail_tryJmapMove()). Reconciles the optimistic removal
+		// unchanged for anything else (see tryJmapMove()). Reconciles the optimistic removal
 		// above on failure either way - a message that never actually moved must come back, not
 		// silently vanish until the next reload reveals it.
-		Promise.resolve(this.mail_tryJmapMove(target, messages, isArchiveShortcut, classicMove) ?? classicMove())
+		Promise.resolve(this.tryJmapMove(target, messages, isArchiveShortcut, classicMove) ?? classicMove())
 			.then(() =>
 			{
 				if (!isArchiveShortcut) this.rememberUsedFolder('move', target);
@@ -4717,10 +4717,10 @@ export class MailApp extends EgwApp
 	 * Cross-account copies fall through to the classic path (copyMessages()/copyAllMatching() both
 	 * throw for those). Returns null if not applicable (caller falls back to the unchanged classic
 	 * call directly); otherwise a Promise that either succeeds via JMAP or, on any failure, falls
-	 * back to that same classic call. Mirrors mail_tryJmapMove() exactly, minus the "move to
+	 * back to that same classic call. Mirrors tryJmapMove() exactly, minus the "move to
 	 * archive" shortcut concept, which doesn't apply to copy.
 	 */
-	private mail_tryJmapCopy(target : string, messages : any, classicCopy : () => Promise<any>) : Promise<any> | null
+	private tryJmapCopy(target : string, messages : any, classicCopy : () => Promise<any>) : Promise<any> | null
 	{
 		const sepIndex = target.indexOf('::');
 		const targetProfileID = sepIndex > 0 ? target.substring(0, sepIndex) : '';
@@ -4732,7 +4732,7 @@ export class MailApp extends EgwApp
 		if (messages['all'])
 		{
 			return this.jmap.copyAllMatching(this.buildJmapQuery(messages), targetProfileID, targetFolderPath)
-				.catch((e) => this.mail_handleJmapError(e, classicCopy));
+				.catch((e) => this.handleJmapError(e, classicCopy));
 		}
 		if (!Array.isArray(messages.msg) || !messages.msg.length)
 		{
@@ -4748,7 +4748,7 @@ export class MailApp extends EgwApp
 			return null;
 		}
 		return this.jmap.copyMessages(references, targetProfileID, targetFolderPath)
-			.catch((e) => this.mail_handleJmapError(e, classicCopy));
+			.catch((e) => this.handleJmapError(e, classicCopy));
 	}
 
 	/**
@@ -4774,10 +4774,10 @@ export class MailApp extends EgwApp
 		// Server response contains refresh
 
 		// Fast client-side JMAP path for the common case, falling back to the classic ajax call
-		// unchanged for anything else (see mail_tryJmapCopy()). No optimistic UI change to
+		// unchanged for anything else (see tryJmapCopy()). No optimistic UI change to
 		// reconcile here (copy never removes/alters the source row), but still needs a message on
-		// failure - mail_handleJmapError() no longer shows one itself.
-		Promise.resolve(this.mail_tryJmapCopy(target, messages, classicCopy) ?? classicCopy())
+		// failure - handleJmapError() no longer shows one itself.
+		Promise.resolve(this.tryJmapCopy(target, messages, classicCopy) ?? classicCopy())
 			.then(() => this.rememberUsedFolder('copy', target))
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to copy messages'), 'error'));
 	}
@@ -4804,7 +4804,7 @@ export class MailApp extends EgwApp
 	 * via egw.preference()/set_preference() - same mechanism already used for e.g. the per-profile
 	 * "last folder" pref (see onNodeSelect() above) - and immediately reflected in the quick-submenu
 	 * via updateFolderQuickAction(), without waiting for any server round trip. Deliberately not
-	 * tracked server-side: the JMAP fast move/copy path (mail_tryJmapMove()/mail_tryJmapCopy()) never
+	 * tracked server-side: the JMAP fast move/copy path (tryJmapMove()/tryJmapCopy()) never
 	 * touches the server's ajax_copyMessages() at all, so a server-side counter (what both used to be,
 	 * see mail_ui::get_actions()'s pre-195852cc34 history for move) silently stops updating for
 	 * exactly the common case.
@@ -6897,7 +6897,7 @@ export class MailApp extends EgwApp
 			const content = et2.getArrayMgr('content').data;
 
 			// set the current selected row
-			et2.mail_currentlyFocussed = id;
+			et2.currentlyFocussed = id;
 
 			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
 			{
@@ -6954,9 +6954,9 @@ export class MailApp extends EgwApp
 	smimeSigBtn(egw, widget)
 	{
 		let url = '';
-		if (this.mail_isMainWindow)
+		if (this.isMainWindow)
 		{
-			const content = this.egw.dataGetUIDdata(this.mail_currentlyFocussed);
+			const content = this.egw.dataGetUIDdata(this.currentlyFocussed);
 			url = content.data.smimeSigUrl;
 		}
 		else
@@ -7248,7 +7248,7 @@ export class MailApp extends EgwApp
 	 */
 	modifyMessageSubjectDialog(_action, _sender)
 	{
-		_sender = _sender ? _sender : [{id:this.mail_currentlyFocussed}];
+		_sender = _sender ? _sender : [{id:this.currentlyFocussed}];
 		var id = (_sender && _sender.uid) ? _sender.row_id:
 			_sender[0].id != 'nm'? _sender[0].id:_sender[1].id;
 		var data = (_sender && _sender.uid) ? {data:_sender} : egw.dataGetUIDdata(id);
