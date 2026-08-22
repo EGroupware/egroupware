@@ -1,6 +1,6 @@
 # Mail: threaded/conversation view
 
-## Status: Phase 1 in progress (2026-08-22) - row-building engine landed, entirely feature-flagged off
+## Status: Phase 1 in progress (2026-08-22) - row-building engine + bulk-action expansion landed, entirely feature-flagged off
 
 Ralf asked for a plan for an optional "group messages by thread" view in the mail list, using
 `Et2Nextmatch`'s existing hierarchical-row support (as used by filemanager/infolog/addressbook),
@@ -55,22 +55,65 @@ inert in production until finished.
   (`_isExpandableNextmatchRow()` falls back to a plain `rowData.is_parent === true` check with no
   settings-gate at all) - so this cut costs nothing on the engine side, it's purely "no way to
   flip it on yet outside a test/console".
-- **Bulk-action expansion is not implemented.** Ralf's decision (move/delete/flag apply to every
-  member message of a selected thread, always with multi-select-style confirmation) is recorded
-  above but not built - every existing bulk-action call site in `mail_ui.inc.php`/`jmap.ts` still
-  operates on whatever row ids are literally selected. **This must land before `THREADING_ENABLED`
-  is ever flipped true** - a thread-parent row's `row_id`/`uid` (`thread:<threadId>`) is not a real
-  JMAP email id, so today's move/delete/flag code would either silently no-op on it or throw, not
-  fall back to some safe default.
 - **No "Thread" JMAP push handling.** Flag-change pushes still target a plain message row id, not
   a thread row - a live push against a threaded view would refresh nothing today. Tracked in this
   doc's "Unseen rollup" section already; not revisited since Phase 1's UI isn't reachable yet
   anyway.
 
+### Bulk-action expansion (2026-08-22, same day) - landed
+
+Ralf's decision from above (move/delete/flag/mark-read on a selected thread row applies to every
+member message, always with the same "are you sure" treatment a real multi-select would get, even
+when only one thread row is checked) is now implemented:
+
+- `MailJmap.expandThreadRowIds(ids : string[])` (`mail/js/jmap.ts`) - the actual expansion. Reads
+  each id's already-cached row data (`egw.dataGetUIDdata()`) to spot a thread-parent row
+  (`is_parent && thread_id`, no regex on the id string needed), then batches `Thread/get` +
+  `Email/get(id)` per thread (profileID/mailboxId come straight out of the thread row's own
+  `row_id`, no folder-path lookup needed - unlike `getThreadMemberRows()`, which only ever has a
+  folder path to start from) to produce real member row ids in the exact
+  `accountId::profileID::mailboxId::emailId` shape `messageReference()` already expects. A plain
+  id (the overwhelming majority, always 100% of them today) passes straight through with no
+  network call at all. Falls back to leaving a thread id unchanged on any resolution failure -
+  `messageReference()`'s own existing try/catch and `handleJmapError()` already know what to do
+  with an id they can't use, so this doesn't need its own separate error UX.
+- Wired into all five `messageReference()`-mapping call sites in `mail/js/app.ts` -
+  `tryJmapDelete()`, `tryJmapMove()`, `tryJmapCopy()`, `flagMessages()`'s explicit-selection
+  branch, and `trySetMdnFlag()` (this last one only for consistency; an MDN flag write is always a
+  single previewed message, which can't be a thread-parent row in the first place - opening one
+  expands it instead of showing a body preview). Each converts a synchronous `try { ids.map(...) }
+  catch { return null }` into an async `.then()` chain ending in the same downstream
+  `.catch(handleJmapError)` - a parse failure now flows through that shared error handler instead
+  of an immediate `null` return, which still reaches the same classic-ajax fallback either way, one
+  microtask later (verified: no test regressions, and the change is confirmed behaviourally inert
+  while every id in a selection is a plain message id, i.e. always today).
+- `MailApp.checkAllSelected()` (`mail/js/app.ts`) gained a new gate, ahead of its existing
+  "select-all-matching-filter" dialog logic: `expandedSelectionCount(_elems) > _elems.length` (a
+  synchronous check - reads each selected row's already-cached `thread_count` directly, no round
+  trip, since counting doesn't need real member ids, only how many there are) triggers a plain
+  Yes/Cancel "this affects N messages in the selected thread(s)" confirmation before proceeding.
+  Deliberately **not** implemented by extending the existing "ALL messages in the current view"
+  dialog/messaging - that dialog answers a genuinely different question (did you mean literally
+  every message matching the current filter, not just what's loaded), and reusing its wording for
+  "your selection expands to N messages" would have been actively misleading. The two dialogs'
+  action-dispatch switch statements were identical, so that dispatch logic was extracted into a
+  shared `dispatchMailAction()` used by both (plus the third, no-confirmation-needed, fallthrough
+  path) rather than duplicated a third time.
+- Test coverage: 5 new cases for `expandThreadRowIds()` in `mail/js/test/MailJmap.test.ts`
+  (pass-through with no thread rows, real expansion, in-place expansion alongside ordinary ids,
+  fallback on no-token, and a malformed-row-data guard). `MailApp`'s side of this
+  (`expandedSelectionCount()`/`dispatchMailAction()`/`checkAllSelected()`'s new gate) has no direct
+  unit test - matching this codebase's existing precedent, there is no test harness for `app.ts`
+  methods at all yet (`mail/js/test/` only ever exercises `jmap.ts`/pure logic), so building one
+  from scratch for this alone would be disproportionate; covered instead by the full mail JS test
+  suite staying green (134 cases) plus `tsc --noEmit` clean (same one pre-existing, unrelated
+  `IegwAppLocal` error as before).
+
 Next step to make this testable end-to-end (still without any production behaviour change): flip
 `THREADING_ENABLED` to `true` locally only (never commit that flip) and drive `query.threaded: true`
-directly, the same way the live-Stalwart-verification console session in this doc did - the engine
-above is real and ready for that, independent of the UI/bulk-action work still pending.
+directly, the same way the live-Stalwart-verification console session in this doc did - both the
+row-building engine and the bulk-action expansion above are real and ready for that, independent of
+whatever UI work is still pending (the toggle itself, and Phase 2/3 below).
 
 Continuation of [[mail-jmap-modernization]] and [[mail-folder-tree-jmap]] - both established the
 precedent this design leans on hardest: **mail's row-listing is already 100% client-side JMAP**

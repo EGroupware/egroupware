@@ -1114,6 +1114,78 @@ describe("MailJmap.getRows() - threaded view (Phase 1)", () =>
 });
 
 /**
+ * doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - ralf's
+ * decision: a bulk action on a thread row applies to every member message. This is the one place
+ * that expansion actually happens (app.ts's expandedSelectionCount() only mirrors the *counting*
+ * half, off the already-cached thread_count, no round trip needed for that).
+ */
+describe("MailJmap.expandThreadRowIds() - bulk-action expansion (Phase 1)", () =>
+{
+	function primeRowData(jmap : MailJmap, rowsById : Record<string, any>) : void
+	{
+		const app = (jmap as any).app;
+		app.egw = {...egw, dataGetUIDdata: (id : string) => rowsById[id] ? {data: rowsById[id]} : undefined};
+	}
+
+	it("passes plain message row ids through unchanged (no thread rows involved)", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		primeRowData(jmap, {});
+
+		const result = await jmap.expandThreadRowIds(["1::1::mbox1::email1", "1::1::mbox1::email2"]);
+
+		assert.deepEqual(result, ["1::1::mbox1::email1", "1::1::mbox1::email2"]);
+	});
+
+	it("expands a thread-parent row id into its real member row ids", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const threadRowId = "1::1::mbox1::thread:t1";
+		primeRowData(jmap, {[threadRowId]: {is_parent: true, thread_id: "t1", thread_count: 2}});
+		primeToken(jmap, "1", createThreadedFakeClient([], {t1: [{id: "email1"}, {id: "email2"}]}));
+
+		const result = await jmap.expandThreadRowIds([threadRowId]);
+
+		assert.deepEqual(result, ["1::1::mbox1::email1", "1::1::mbox1::email2"]);
+	});
+
+	it("expands a thread row in place, keeping ordinary ids around it in order", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const threadRowId = "1::1::mbox1::thread:t1";
+		primeRowData(jmap, {[threadRowId]: {is_parent: true, thread_id: "t1", thread_count: 2}});
+		primeToken(jmap, "1", createThreadedFakeClient([], {t1: [{id: "email2"}, {id: "email3"}]}));
+
+		const result = await jmap.expandThreadRowIds(["1::1::mbox1::email1", threadRowId, "1::1::mbox1::email4"]);
+
+		assert.deepEqual(result, ["1::1::mbox1::email1", "1::1::mbox1::email2", "1::1::mbox1::email3", "1::1::mbox1::email4"]);
+	});
+
+	it("leaves a thread row id unchanged if it can't be expanded (no usable token)", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const threadRowId = "1::1::mbox1::thread:t1";
+		primeRowData(jmap, {[threadRowId]: {is_parent: true, thread_id: "t1", thread_count: 2}});
+		// no primeToken() call - ensureToken("1") resolves null (no cached token, no server to ask)
+
+		const result = await jmap.expandThreadRowIds([threadRowId]);
+
+		assert.deepEqual(result, [threadRowId]);
+	});
+
+	it("does not touch a row whose is_parent is set but with no cached thread_id", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		const rowId = "1::1::mbox1::thread:t1";
+		primeRowData(jmap, {[rowId]: {is_parent: true}});	// no thread_id - malformed/unexpected shape
+
+		const result = await jmap.expandThreadRowIds([rowId]);
+
+		assert.deepEqual(result, [rowId]);
+	});
+});
+
+/**
  * A checkbox-style egw preference's stored value is the server's raw string, often literally "0"
  * for "off" - a non-empty JS string is otherwise always truthy, so a plain `!egw.preference(...)`
  * silently treats a "0"-stored (off) preference as on. Bit both MailJmap.getMailboxChildren()'s

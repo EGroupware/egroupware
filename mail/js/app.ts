@@ -2842,17 +2842,14 @@ export class MailApp extends EgwApp
 		{
 			return null;
 		}
-		let references : JmapMessageReference[];
-		try
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - a
+		// same-tick no-op today (nothing selected is ever a thread row while
+		// ProfileHandler::THREADING_ENABLED is false), so this changes no current behaviour.
+		return this.jmap.expandThreadRowIds(_msg['msg']).then((expandedIds) =>
 		{
-			references = _msg['msg'].map((id : string) => this.jmap.messageReference(id));
-		}
-		catch (e)
-		{
-			return null;
-		}
-		return this.jmap.deleteMessages(references, mode)
-			.catch((e) => this.handleJmapError(e, fallback));
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.deleteMessages(references, mode);
+		}).catch((e) => this.handleJmapError(e, fallback));
 	}
 
 	deleteMessages(_msg,_action,_calledFromPopup?)
@@ -3182,11 +3179,30 @@ export class MailApp extends EgwApp
 	checkAllSelected(_action, _elems, _target, _confirm)
 	{
 		if (typeof _confirm == 'undefined') _confirm = false;
+		const that = this;
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - ralf's
+		// decision: a selected thread row (see emails2threadRow() in jmap.ts) applies to every one
+		// of its member messages, and always gets this same "are you sure" treatment, even when
+		// only one (thread) row is checked. Same-tick no-op today: expandedSelectionCount() only
+		// ever differs from _elems.length once a thread row (thread_count > 1) is actually
+		// selectable, which needs ProfileHandler::THREADING_ENABLED - false right now.
+		const expandedCount = this.expandedSelectionCount(_elems);
+		if (_confirm && expandedCount > _elems.length)
+		{
+			return Et2Dialog.show_dialog((_button_id) =>
+			{
+				if (_button_id === Et2Dialog.YES_BUTTON)
+				{
+					that.lockTree();
+					that.dispatchMailAction(_action, _elems, _target, false);
+				}
+			}, this.egw.lang('This action affects every message in the selected thread(s) - %1 messages in total. Continue?', expandedCount),
+				this.egw.lang('Confirm'), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
+		}
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
 		const obj_manager = egw_getObjectManager(this.appname).getObjectById(this.nm_index);
 		const tree = this.et2.getWidgetById('nm[foldertree]');
-		const that = this;
 		let rvMain = false;
 		if ((obj_manager && _elems.length>1 && obj_manager.getAllSelected() && !_action.paste) || _action.id=='readall')
 		{
@@ -3281,48 +3297,7 @@ export class MailApp extends EgwApp
 					{
 						that.lockTree();
 					}
-					switch (_action.id)
-					{
-						case "delete":
-							that.callDelete(_action, _elems, rv);
-							break;
-						case "readall":
-						case "unlabel":
-						case "label1":
-						case "label2":
-						case "label3":
-						case "label4":
-						case "label5":
-						case "customFlag1":
-						case "customFlag2":
-						case "customFlag3":
-						case "customFlag4":
-						case "customFlag5":
-						case "flagged":
-						case "read":
-						case "undelete":
-							that.callFlagMessages(_action, _elems, rv);
-							break;
-						case "drop_move_mail":
-							that.callMove(_action, _elems, _target, rv);
-							break;
-						case "drop_copy_mail":
-							that.callCopy(_action, _elems, _target, rv);
-							break;
-						default:
-							if (that.isCustomLabel(_action.id))
-							{
-								that.callFlagMessages(_action, _elems, rv);
-							}
-							else if (_action.id.substr(0, 4) == 'move')
-							{
-								that.callMove(_action, _elems, _target, rv);
-							}
-							else if (_action.id.substr(0, 4) == 'copy')
-							{
-								that.callCopy(_action, _elems, _target, rv);
-							}
-					}
+					that.dispatchMailAction(_action, _elems, _target, rv);
 				}, messageToDisplay, this.egw.lang("Confirm"), null, buttons);
 			}
 			else
@@ -3330,6 +3305,23 @@ export class MailApp extends EgwApp
 				rvMain = true;
 			}
 		}
+		this.dispatchMailAction(_action, _elems, _target, rvMain);
+	}
+
+	/**
+	 * Shared bulk-action dispatch for checkAllSelected()'s three call paths (the "select all
+	 * matching filter" dialog's Yes callback, the new thread-expansion confirmation dialog's Yes
+	 * callback, and the plain no-confirmation-needed fallthrough) - extracted so the same routing
+	 * logic isn't triplicated once the thread-confirmation dialog needed it too.
+	 *
+	 * @param rv false for a plain bounded selection, true for "apply to everything matching the
+	 *  current filter" (see callDelete()/callMove()/callCopy()/callFlagMessages()'s own
+	 *  "_allMessagesChecked" parameter) - or the string 'cancel' from the "select all matching"
+	 *  dialog's Cancel button, passed through unchanged exactly as this always did before this
+	 *  method existed as its own thing (not touched/fixed here, out of scope)
+	 */
+	private dispatchMailAction(_action, _elems, _target, rv : boolean | string)
+	{
 		switch (_action.id)
 		{
 			case "delete":
@@ -3341,8 +3333,9 @@ export class MailApp extends EgwApp
 					egw.debug('warn',"Tried to delete a mail when no mail was selected. NoOp!")
 					break
 				}
-				this.callDelete(_action, _elems,rvMain);
+				this.callDelete(_action, _elems, rv);
 				break;
+			case "readall":
 			case "unlabel":
 			case "label1":
 			case "label2":
@@ -3357,28 +3350,45 @@ export class MailApp extends EgwApp
 			case "flagged":
 			case "read":
 			case "undelete":
-				this.callFlagMessages(_action, _elems,rvMain);
+				this.callFlagMessages(_action, _elems, rv);
 				break;
 			case "drop_move_mail":
-				this.callMove(_action, _elems,_target, rvMain);
+				this.callMove(_action, _elems, _target, rv);
 				break;
 			case "drop_copy_mail":
-				this.callCopy(_action, _elems,_target, rvMain);
+				this.callCopy(_action, _elems, _target, rv);
 				break;
 			default:
 				if (this.isCustomLabel(_action.id))
 				{
-					this.callFlagMessages(_action, _elems,rvMain);
+					this.callFlagMessages(_action, _elems, rv);
 				}
-				else if (_action.id.substr(0,4)=='move')
+				else if (_action.id.substr(0, 4) == 'move')
 				{
-					this.callMove(_action, _elems,_target, rvMain);
+					this.callMove(_action, _elems, _target, rv);
 				}
-				else if (_action.id.substr(0,4)=='copy')
+				else if (_action.id.substr(0, 4) == 'copy')
 				{
-					this.callCopy(_action, _elems,_target, rvMain);
+					this.callCopy(_action, _elems, _target, rv);
 				}
 		}
+	}
+
+	/**
+	 * Sum how many real messages a selection represents once every thread-parent row (see
+	 * emails2threadRow() in jmap.ts) is expanded to its cached member count - equal to
+	 * _elems.length whenever nothing selected is a thread row, i.e. always today, while
+	 * ProfileHandler::THREADING_ENABLED is false. Reads thread_count directly off each row's
+	 * already-loaded egw.data cache entry - no JMAP round trip needed just to count, unlike the
+	 * actual expansion (MailJmap.expandThreadRowIds()) used right before the JMAP call itself.
+	 */
+	private expandedSelectionCount(_elems : any[]) : number
+	{
+		return (_elems || []).reduce((sum : number, elem : any) =>
+		{
+			const rowData = egw.dataGetUIDdata(elem?.id)?.data;
+			return sum + (rowData?.is_parent ? (rowData.thread_count || 1) : 1);
+		}, 0);
 	}
 
 	/**
@@ -3833,30 +3843,26 @@ export class MailApp extends EgwApp
 			}
 			else
 			{
-				try
+				// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" -
+				// see tryJmapDelete()'s identical comment; a thrown messageReference() below still
+				// ends up a rejected `operation`, same as the try/catch this replaced.
+				operation = this.jmap.expandThreadRowIds(_elems.msg || []).then((expandedIds) =>
 				{
-					const references = (_elems.msg || []).map(id => this.jmap.messageReference(id));
+					const references = expandedIds.map(id => this.jmap.messageReference(id));
 					if (actionId === 'unlabel')
 					{
-						operation = this.jmap.clearLabels(references);
+						return this.jmap.clearLabels(references);
 					}
-					else if (customFlag)
+					if (customFlag)
 					{
-						operation = this.jmap.setCustomFlag(references, customFlag, !actionId.startsWith('un'));
+						return this.jmap.setCustomFlag(references, customFlag, !actionId.startsWith('un'));
 					}
-					else if (systemFlagKeyword)
+					if (systemFlagKeyword)
 					{
-						operation = this.jmap.setSystemFlag(references, systemFlagKeyword, !actionId.startsWith('un'));
+						return this.jmap.setSystemFlag(references, systemFlagKeyword, !actionId.startsWith('un'));
 					}
-					else
-					{
-						operation = this.jmap.setLabel(references, actionId, labelOperation?.set ?? true);
-					}
-				}
-				catch (error)
-				{
-					operation = Promise.reject(error);
-				}
+					return this.jmap.setLabel(references, actionId, labelOperation?.set ?? true);
+				});
 			}
 			operation.then(() =>
 			{
@@ -4575,17 +4581,13 @@ export class MailApp extends EgwApp
 		{
 			return null;
 		}
-		let references : JmapMessageReference[];
-		try
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - see
+		// tryJmapDelete()'s identical comment.
+		return this.jmap.expandThreadRowIds(messages.msg).then((expandedIds) =>
 		{
-			references = messages.msg.map((id : string) => this.jmap.messageReference(id));
-		}
-		catch (e)
-		{
-			return null;
-		}
-		return this.jmap.moveMessages(references, targetProfileID, targetFolderPath)
-			.catch((e) => this.handleJmapError(e, classicMove));
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.moveMessages(references, targetProfileID, targetFolderPath);
+		}).catch((e) => this.handleJmapError(e, classicMove));
 	}
 
 	/**
@@ -4598,17 +4600,15 @@ export class MailApp extends EgwApp
 	{
 		const classicFallback = () =>
 			egw.jsonq('mail.mail_ui.ajax_flagMessages', [sent ? 'mdnsent' : 'mdnnotsent', messages, true]);
-		let references : JmapMessageReference[];
-		try
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - a
+		// same-tick no-op in practice here (this is always a single previewed message, which can't
+		// be a thread-parent row - opening one expands it instead of previewing a body), kept for
+		// consistency with the other four messageReference() call sites.
+		this.jmap.expandThreadRowIds(messages.msg || []).then((expandedIds) =>
 		{
-			references = (messages.msg || []).map((id : string) => this.jmap.messageReference(id));
-		}
-		catch (e)
-		{
-			classicFallback();
-			return;
-		}
-		this.jmap.setMdnFlag(references, sent)
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.setMdnFlag(references, sent);
+		})
 			.catch((e) => this.handleJmapError(e, classicFallback))
 			.catch((e) => this.egw.message(e?.message || this.egw.lang('Failed to update messages'), 'error'));
 	}
@@ -4741,17 +4741,13 @@ export class MailApp extends EgwApp
 		{
 			return null;
 		}
-		let references : JmapMessageReference[];
-		try
+		// doc/ai/projects/mail-threaded-view.md, "Bulk actions on collapsed thread rows" - see
+		// tryJmapDelete()'s identical comment.
+		return this.jmap.expandThreadRowIds(messages.msg).then((expandedIds) =>
 		{
-			references = messages.msg.map((id : string) => this.jmap.messageReference(id));
-		}
-		catch (e)
-		{
-			return null;
-		}
-		return this.jmap.copyMessages(references, targetProfileID, targetFolderPath)
-			.catch((e) => this.handleJmapError(e, classicCopy));
+			const references = expandedIds.map((id : string) => this.jmap.messageReference(id));
+			return this.jmap.copyMessages(references, targetProfileID, targetFolderPath);
+		}).catch((e) => this.handleJmapError(e, classicCopy));
 	}
 
 	/**

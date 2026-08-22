@@ -425,6 +425,86 @@ export class MailJmap
 	}
 
 	/**
+	 * Expand any thread-parent row ids (emails2threadRow()) in a bulk-action selection into their
+	 * real member message row ids - every other id passes through unchanged, and the whole call is
+	 * a same-tick no-op (no network) when nothing in the selection is a thread row, i.e. always
+	 * today, while ProfileHandler::THREADING_ENABLED is false.
+	 *
+	 * Called by app.ts just before turning a selection into JMAP message references
+	 * (messageReference()), so move/delete/flag/etc. always operate on real messages, never a
+	 * synthetic "thread:<id>" uid a JMAP server would reject. Ralf's decision (doc/ai/projects/
+	 * mail-threaded-view.md, "Bulk actions on collapsed thread rows"): a bulk action on a thread
+	 * row applies to every one of its member messages, same as if they'd all been selected
+	 * individually - this is the one place that expansion actually happens; app.ts's own
+	 * confirmation-count logic (expandedSelectionCount()) mirrors the *counting* half of the same
+	 * decision without needing this round trip, since thread_count is already cached on the row.
+	 */
+	async expandThreadRowIds(ids : string[]) : Promise<string[]>
+	{
+		const expandable = ids
+			.map((id) => ({id, threadId: this.threadIdOf(id)}))
+			.filter((entry) : entry is { id : string, threadId : string } => !!entry.threadId);
+		if (!expandable.length)
+		{
+			return ids;
+		}
+		const expansions = await Promise.all(expandable.map(async({id, threadId}) =>
+			({id, memberIds: await this.threadMemberRowIds(id, threadId)})));
+		const memberIdsById = new Map(expansions.map(({id, memberIds}) => [id, memberIds]));
+		return ids.flatMap((id) => memberIdsById.get(id) ?? [id]);
+	}
+
+	/** A row's thread id (emails2threadRow()), or null if it isn't a thread-parent row at all. */
+	private threadIdOf(rowId : string) : string | null
+	{
+		const data = this.egw.dataGetUIDdata(rowId)?.data;
+		return data?.is_parent && data?.thread_id ? data.thread_id : null;
+	}
+
+	/**
+	 * Real member row ids for one thread-parent row - profileID/mailboxId come straight out of the
+	 * thread row's own row_id (accountId::profileID::mailboxId::thread:<id>, see
+	 * emails2threadRow()), no folder-path lookup needed (unlike getThreadMemberRows(), used for the
+	 * sub-grid expand-on-click fetch instead, which only has a folder path to start from).
+	 *
+	 * Falls back to returning the thread row's own (synthetic) id unchanged on any failure - the
+	 * caller's existing messageReference()/handleJmapError() machinery already knows how to surface
+	 * or fall back on a row id it can't use, so this doesn't need its own separate error handling.
+	 */
+	private async threadMemberRowIds(threadRowId : string, threadId : string) : Promise<string[]>
+	{
+		const parts = threadRowId.split('::');
+		const profileID = parts[1];
+		const mailboxId = parts[2];
+		const token = await this.ensureToken(profileID);
+		const client = this.clients[profileID];
+		if (!token || !client)
+		{
+			return [threadRowId];
+		}
+		try
+		{
+			const [{emails}] = await client.requestMany((t) =>
+			{
+				const thread = t.Thread.get({accountId: token.accountId, ids: [threadId]});
+				const emails = t.Email.get({
+					accountId: token.accountId,
+					ids: thread.$ref('/list/*/emailIds'),
+					properties: ['id'],
+				});
+				return {emails};
+			});
+			return (emails.list || []).map((email : any) =>
+				this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id);
+		}
+		catch (e)
+		{
+			console.error('MailJmap.threadMemberRowIds(): failed to expand a thread row, leaving it as-is', e);
+			return [threadRowId];
+		}
+	}
+
+	/**
 	 * Get formatted quota-display data for $profileID directly via JMAP, avoiding the classic
 	 * IMAP connect+examine round-trip mail_ui::ajax_refreshQuotaDisplay() would otherwise need
 	 * (that path was the source of a real production hang/error against a flaky IMAP backend).
