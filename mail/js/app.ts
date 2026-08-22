@@ -1003,7 +1003,7 @@ export class MailApp extends EgwApp
 	 * @param _selected array of the selected mails
 	 * @param _reset bool - tell the function to reset the global vars used
 	 */
-	fetchCurrentlyFocussed(_selected, _reset) {
+	fetchCurrentlyFocussed(_selected, _reset?) {
 		// reinitialize the buffer-info on selected mails
 		if (_reset == true || typeof _selected == 'undefined')
 		{
@@ -1610,7 +1610,7 @@ export class MailApp extends EgwApp
 	 * @param nextmatch Et2Nextmatch The widget whose row was selected
 	 * @param selected Array Selected row IDs.  May be empty if user unselected all rows.
 	 */
-	preview(selected, nextmatch) {
+	preview(selected?, nextmatch?) {
 		let data:any = {};
 		let rowId = '';
 		const attachmentsBlock = this.et2.getWidgetById('attachmentsBlock');
@@ -1917,7 +1917,7 @@ export class MailApp extends EgwApp
 			};
 
 			const host = getUrlParts(external_images[0].alt);
-			const showImages = (_images, _save) =>
+			const showImages = (_images, _save?) =>
 			{
 				const save = _save || false;
 				_images.forEach((node) => {
@@ -2855,7 +2855,7 @@ export class MailApp extends EgwApp
 			.catch((e) => this.handleJmapError(e, fallback));
 	}
 
-	deleteMessages(_msg,_action,_calledFromPopup)
+	deleteMessages(_msg,_action,_calledFromPopup?)
 	{
 		let message, ftree, _foldernode, displayname;
 		if (_calledFromPopup)
@@ -3397,7 +3397,7 @@ export class MailApp extends EgwApp
 	 * @param _action
 	 * @return mixed boolean/activeFilters object
 	 */
-	getActiveFilters(_action)
+	getActiveFilters(_action?)
 	{
 		// we can NOT query global object manager for this.nm_index="nm", as we might not get the one from mail,
 		// if other tabs are open, we have to query for obj_manager for "mail" and then it's child with id "nm"
@@ -5262,7 +5262,7 @@ export class MailApp extends EgwApp
 							that._do_action(typeId, actionData['data'], ruleID);
 						}
 					};
-					Et2Dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, Et2Dialog.BUTTONS_YES_CANCEL, Et2Dialog.WARNING_MESSAGE);
+					Et2Dialog.show_dialog(callbackDeleteDialog, this.egw.lang("Do you really want to DELETE this Rule"), this.egw.lang("Delete"), {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);
 
 					break;
 				case 'add'	:
@@ -5447,7 +5447,7 @@ export class MailApp extends EgwApp
 	 *
 	 * @return {boolean} return TRUE if success, and FALSE if iframe not given
 	 */
-	loadIframe(_url, _iFrame)
+	loadIframe(_url?, _iFrame?)
 	{
 		const mailSplitter = this.et2.getWidgetById('splitter');
 		const quotaipercent = this.et2.getWidgetById('nm[quotainpercent]');
@@ -6675,7 +6675,7 @@ export class MailApp extends EgwApp
 			}
 		};
 		Et2Dialog.show_dialog(callbackDialog, this.egw.lang('Are you sure you want to delete all selected folders?'), this.egw.lang('Delete folder'), {},
-			Et2Dialog.BUTTON_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
+			Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE, undefined, this.egw);
 	}
 
 	/**

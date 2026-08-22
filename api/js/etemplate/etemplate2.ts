@@ -1103,7 +1103,7 @@ export class etemplate2
 	 * @param {et2_widget|undefined} _container container to submit, default whole template
 	 * @return {boolean} true if submit was send, false if eg. validation stoped submit
 	 */
-	submit(button, async, no_validation, _container)
+	submit(button?, async?, no_validation?, _container?)
 	{
 		const api = this._widgetContainer.egw();
 
