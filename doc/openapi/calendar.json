@@ -31,7 +31,7 @@
           "Calendar"
         ],
         "summary": "List all events of the user",
-        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
+        "description": "Returns events from the user's calendar. Without filters[start]/filters[end] only events between 100 days in the past and 365 days in the future are returned. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listEvents",
         "parameters": [
           {
@@ -58,7 +58,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -169,7 +169,7 @@
       "get": {
         "tags": ["Calendar"],
         "summary": "List all events in a given users calendar",
-        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
+        "description": "Returns events from the user's calendar. Without filters[start]/filters[end] only events between 100 days in the past and 365 days in the future are returned. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listUserEvents",
         "parameters": [
           {
@@ -199,7 +199,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -319,7 +319,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json", "application/pretty+json"]
@@ -457,7 +457,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": ["application/json"]
@@ -536,25 +536,27 @@
         "schema": {
           "type": "integer"
         },
-        "description": "Limit number of responses (only for sync-collection)"
+        "description": "Limit the number of events returned. Only honored together with the sync-token parameter: send sync-token= (empty) plus nresults=N to receive at most N events, a \"more-results\": true flag when further events exist, and a sync-token to request the next chunk. Sent on its own, nresults has no effect."
       },
       "filters_start": {
         "name": "filters[start]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "datetime"
+          "type": "string",
+          "format": "date"
         },
-        "description": "Start date of search. Example: filters[start]=2026-01-01"
+        "description": "Only return entries overlapping this start date, as YYYY-MM-DD (a full ISO 8601 date-time is also accepted). REQUIRED whenever the question refers to a time period: resolve phrases like 'this week', 'today' or 'next month' to explicit dates and pass them. Example: filters[start]=2026-01-01"
       },
       "filters_end": {
         "name": "filters[end]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "datetime"
+          "type": "string",
+          "format": "date"
         },
-        "description": "End date of search. Example: filters[start]=2026-02-01"
+        "description": "Only return entries overlapping this end date, as YYYY-MM-DD (a full ISO 8601 date-time is also accepted). Pass together with filters[start] for any time-bounded question. Example: filters[end]=2026-02-01"
       },
       "filters_search": {
         "name": "filters[search]",
@@ -563,7 +565,7 @@
         "schema": {
           "type": "string"
         },
-        "description": "Search pattern. Example: filters[search]=something"
+        "description": "Free-text pattern searched over event title, description and location. Cannot be combined with filters[linked]. Example: filters[search]=standup"
       },
       "filters_linked": {
         "name": "filters[linked]",
