@@ -263,9 +263,20 @@ class Stalwart extends Sql
 					{
 						break;
 					}
+					// $diff['aliases'] was deliberately unset above when there's no real alias change
+					// to send - but checkErrorEmailTaken() needs a real array|object to inspect/mutate
+					// regardless, so use a standalone copy instead of passing (or auto-vivifying) the
+					// possibly-absent $diff['aliases'] directly, and only merge it back into $diff (for
+					// the retry submission below) if it's now non-empty - otherwise we'd resubmit an
+					// explicit empty aliases patch, wiping the account's real aliases in Stalwart
+					$aliases_for_retry = $diff['aliases'] ?? (object)[];
 					if ($this->checkErrorEmailTaken($response['methodResponses'][0][1]['notUpdated'][$accountId] ?? null,
-						$diff['aliases'], $account['name'].'@'.$this->domain($account['domainId'])))
+						$aliases_for_retry, $account['name'].'@'.$this->domain($account['domainId'])))
 					{
+						if ($aliases_for_retry != (object)[])
+						{
+							$diff['aliases'] = $aliases_for_retry;
+						}
 						continue;   // --> try again updating it
 					}
 					// check given locale is invalid (EGroupware language and country are independent!)

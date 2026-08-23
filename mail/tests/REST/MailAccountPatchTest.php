@@ -36,7 +36,7 @@ require_once __DIR__.'/../../../api/tests/RestBase.php';
  * check entirely) and setUp()/tearDown() restore the pre-test identRealname/accUserEditable
  * values read at the start of each test, so the account's real config is never left changed.
  *
- * PATCH/GET only ever touch identRealname (ident_realname) - a display/From-header field,
+ * PATCH/GET only ever touch identRealname/identEmail/identOrg - display/From-header fields,
  * never any acc_imap_ or acc_smtp_ transport setting - so the account's working IMAP/SMTP/
  * JMAP configuration is never at risk.
  *
@@ -87,6 +87,19 @@ class MailAccountPatchTest extends RestBase
 		return $this->jsonDecode($response);
 	}
 
+	/**
+	 * Like getAccountJson(), but for a caller (eg. admin) not supported by getClient()'s
+	 * plain lid-based auth() lookup (only EGW_USER or users created via createUser()).
+	 */
+	private function getAccountJsonWithClient(\GuzzleHttp\Client $client, string $url_user, $ident_id) : array
+	{
+		$response = $client->get($this->identityUrl($url_user, $ident_id), [
+			RequestOptions::HEADERS => $this->jsonHeaders(),
+		]);
+		$this->assertHttpStatus(200, $response, 'reading current account state');
+		return $this->jsonDecode($response);
+	}
+
 	private function patchAccount(string $as_user, string $target_user, $ident_id, array $patch) : \Psr\Http\Message\ResponseInterface
 	{
 		return $this->getClient($as_user)->patch($this->identityUrl($target_user, $ident_id), [
@@ -105,16 +118,24 @@ class MailAccountPatchTest extends RestBase
 	}
 
 	/**
-	 * Restored per test: the identRealname/accUserEditable values found before the test ran.
+	 * Restored per test: the identRealname/identEmail/identOrg/accUserEditable values found
+	 * before the test ran. Read via the admin client - a test may deliberately leave
+	 * identRealname/identEmail genuinely blank at some point, and the admin GET is the only
+	 * one guaranteed to return them as-stored rather than placeholder-substituted (see
+	 * testPatchDoesNotPersistPlaceholderSubstitutedIdentityFields()).
 	 */
 	private $ident_id = self::IDENT_ID;
 	private $original_realname;
+	private $original_email;
+	private $original_org;
 	private $original_editable;
 
 	protected function setUp() : void
 	{
-		$account = $this->getAccountJson($this->organizerLid(), $this->ident_id);
+		$account = $this->getAccountJsonWithClient($this->adminClient(), $this->organizerLid(), $this->ident_id);
 		$this->original_realname = $account['identRealname'] ?? null;
+		$this->original_email = $account['identEmail'] ?? null;
+		$this->original_org = $account['identOrg'] ?? null;
 		$this->original_editable = $account['accUserEditable'] ?? null;
 	}
 
@@ -126,6 +147,8 @@ class MailAccountPatchTest extends RestBase
 			RequestOptions::HEADERS => $this->jsonHeaders(),
 			RequestOptions::BODY => $this->jsonBody(array_filter([
 				'identRealname' => $this->original_realname,
+				'identEmail' => $this->original_email,
+				'identOrg' => $this->original_org,
 				'accUserEditable' => $this->original_editable,
 			], static fn($value) => $value !== null)),
 		]);
@@ -202,5 +225,53 @@ class MailAccountPatchTest extends RestBase
 		$response = $this->patchAccount($this->organizerLid(), $this->organizerLid(), 999999999,
 			['identRealname' => 'Should Not Apply']);
 		$this->assertHttpStatus(404, $response);
+	}
+
+	/**
+	 * A genuinely blank identRealname/identEmail is transparently substituted with the
+	 * CURRENT VIEWER's own account_fullname/account_email on every read
+	 * (Credentials::from_session(), by design) - so each user of a shared/multi-user identity
+	 * sees their own name, not whoever's it happened to be last. PATCH must NOT let that
+	 * substituted display value leak into storage: patching a completely unrelated field
+	 * while identRealname/identEmail are genuinely blank must leave them blank in the
+	 * database, not permanently bake in the patching user's own name/email (see
+	 * [[project-mail-patch-identity-placeholder-bug]] / commit 550178237d).
+	 *
+	 * Verified by having a DIFFERENT authenticated viewer (admin) read the same identity
+	 * afterwards: if the bug were present, the organizer's PATCH would have persisted the
+	 * organizer's own substituted name/email into storage, and admin's GET would incorrectly
+	 * show the ORGANIZER's name/email too, instead of admin's own.
+	 */
+	public function testPatchDoesNotPersistPlaceholderSubstitutedIdentityFields()
+	{
+		// blank both fields as admin (bypasses ownership/accUserEditable checks) - this is
+		// the state the shared "Everyone" identity is meant to be in
+		$blank = $this->adminClient()->patch($this->identityUrl($this->organizerLid(), $this->ident_id), [
+			RequestOptions::HEADERS => $this->jsonHeaders(),
+			RequestOptions::BODY => $this->jsonBody(['identRealname' => '', 'identEmail' => '']),
+		]);
+		$this->assertHttpStatus(204, $blank, 'admin blanking identRealname/identEmail');
+		$this->setAccUserEditable($this->ident_id, true);
+
+		// sanity check: with the fields genuinely blank, the organizer's OWN GET must show
+		// their own substituted name/email (proves the substitution mechanism itself works,
+		// so a later mismatch can only mean the PATCH persisted it, not that substitution is
+		// broken entirely)
+		$asOrganizerBefore = $this->getAccountJson($this->organizerLid(), $this->ident_id);
+		$this->assertNotSame('', $asOrganizerBefore['identRealname'],
+			'organizer should see a substituted (non-blank) realname when the stored value is blank');
+
+		// the account owner patches a COMPLETELY unrelated field - must not touch realname/email
+		$response = $this->patchAccount($this->organizerLid(), $this->organizerLid(), $this->ident_id,
+			['identOrg' => 'PHPUnit Regression Org']);
+		$this->assertHttpStatus(204, $response, 'patching an unrelated field');
+
+		// a DIFFERENT viewer (admin) reads the SAME identity
+		$asAdmin = $this->getAccountJsonWithClient($this->adminClient(), $this->organizerLid(), $this->ident_id);
+		$this->assertSame('PHPUnit Regression Org', $asAdmin['identOrg'], 'the actually-patched field must round-trip');
+		$this->assertNotSame($asOrganizerBefore['identRealname'], $asAdmin['identRealname'],
+			'each viewer must see their OWN substituted realname - the patch must not have persisted the organizer\'s name into storage');
+		$this->assertNotSame($asOrganizerBefore['identEmail'], $asAdmin['identEmail'],
+			'each viewer must see their OWN substituted email - the patch must not have persisted the organizer\'s email into storage');
 	}
 }
