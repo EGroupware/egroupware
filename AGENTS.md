@@ -137,6 +137,13 @@ similar scope.
   expand/collapse state per user. Covers why this must happen before decoupling the overlapping
   `Api\Mail`/`mail_ui` folder groups, and the hard constraint that admin-impersonation of another
   user's mailbox (`mail_acl.inc.php`) can never move client-side.
+- `doc/ai/projects/mail-wizard-jmap-oauth.md` - Mail Wizard (`admin_mail`/`mail_wizard`)
+  test harness (Phase 1, done) plus a feature roadmap (Phase 2, not started): DNS SRV
+  discovery for JMAP/IMAP/SMTP, broader OAuth support, JMAP-only account creation without
+  touching IMAP, a Stalwart-integrated-login OAuth workaround, and splitting general-JMAP
+  vs. Stalwart-specific support. Covers the wizard's step-chaining architecture, the
+  DNS/HTTP testability seam added to `admin_mail`, and a known pre-existing environment
+  blocker for the REST test (a malformed JMAP/Stalwart endpoint URL on the dev box used).
 - `doc/ai/projects/infolog-storage-migration.md` - planned replacement of InfoLog's hand-rolled
   `infolog_so` SQL backend with the generic `Api\Storage` class, to get automatic `Api\DateTime`/
   timezone handling and built-in custom-field support instead of InfoLog's parallel

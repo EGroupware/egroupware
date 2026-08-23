@@ -990,32 +990,11 @@ class admin_mail
 		// disable some stuff for non-emailadmins (all values are preserved!)
 		if (!$this->is_admin)
 		{
-			$readonlys = array(
-				'account_id' => true, 'button[multiple]' => true, 'acc_user_editable' => true,
-				'acc_further_identities' => true,
-				'acc_imap_type' => true, 'acc_imap_logintype' => true, 'acc_domain' => true,
-				'acc_imap_admin_username' => true, 'acc_imap_admin_password' => true, 'acc_imap_admin_use_without_pw' => true,
-				'acc_smtp_type' => true, 'acc_smtp_auth_session' => true,
-			);
+			$readonlys = self::adminReadonlyFields();
 		}
 		// ensure correct values for single user mail accounts (we only hide them client-side)
-		if (!($is_multiple = Mail\Account::is_multiple($content)))
-		{
-			// we need to allow to use JMAP for single connections too, to be able to use JMAP and push
-			if ($content['acc_imap_type'] !== Mail\Imap\Jmap::class)
-			{
-				$content['acc_imap_type'] = 'EGroupware\\Api\\Mail\\Imap';
-			}
-			unset($content['acc_imap_login_type']);
-			$content['acc_smtp_type'] = 'EGroupware\\Api\\Mail\\Smtp';
-			unset($content['acc_smtp_auth_session']);
-			unset($content['notify_use_default']);
-		}
-		// copy ident_email_alias selectbox back to regular name
-		elseif (isset($content['ident_email_alias']) && !empty ($content['ident_email_alias']))
-		{
-			$content['ident_email'] = $content['ident_email_alias'];
-		}
+		$is_multiple = Mail\Account::is_multiple($content);
+		$content = self::normalizeAccountType($content, $is_multiple);
 		$edit_access = Mail\Account::check_access(Acl::EDIT, $content);
 
 		// disable notification save-default and use-default, if only one account or no edit-rights
@@ -2023,6 +2002,57 @@ class admin_mail
 	}
 
 	/**
+	 * Readonly fields for the account edit dialog, when the current user is NOT a mail-admin
+	 *
+	 * All values are preserved server-side, this only prevents the client from submitting changes.
+	 *
+	 * @return array field-name => true pairs, suitable as Etemplate readonlys
+	 */
+	protected static function adminReadonlyFields()
+	{
+		return array(
+			'account_id' => true, 'button[multiple]' => true, 'acc_user_editable' => true,
+			'acc_further_identities' => true,
+			'acc_imap_type' => true, 'acc_imap_logintype' => true, 'acc_domain' => true,
+			'acc_imap_admin_username' => true, 'acc_imap_admin_password' => true, 'acc_imap_admin_use_without_pw' => true,
+			'acc_smtp_type' => true, 'acc_smtp_auth_session' => true,
+		);
+	}
+
+	/**
+	 * Ensure correct acc_imap_type/acc_smtp_type etc. values for single- vs. multi-user mail accounts
+	 *
+	 * For a single user account we only hide the type-selection on the client, so make sure the
+	 * values are actually forced server-side too (unless it's a JMAP account, which single
+	 * connections are allowed to use as well, to be able to use JMAP and push).
+	 *
+	 * @param array $content
+	 * @param bool $is_multiple result of Mail\Account::is_multiple($content)
+	 * @return array $content with acc_imap_type/acc_smtp_type/... normalized
+	 */
+	protected static function normalizeAccountType(array $content, bool $is_multiple)
+	{
+		if (!$is_multiple)
+		{
+			// we need to allow to use JMAP for single connections too, to be able to use JMAP and push
+			if ($content['acc_imap_type'] !== Mail\Imap\Jmap::class)
+			{
+				$content['acc_imap_type'] = 'EGroupware\\Api\\Mail\\Imap';
+			}
+			unset($content['acc_imap_login_type']);
+			$content['acc_smtp_type'] = 'EGroupware\\Api\\Mail\\Smtp';
+			unset($content['acc_smtp_auth_session']);
+			unset($content['notify_use_default']);
+		}
+		// copy ident_email_alias selectbox back to regular name
+		elseif (isset($content['ident_email_alias']) && !empty ($content['ident_email_alias']))
+		{
+			$content['ident_email'] = $content['ident_email_alias'];
+		}
+		return $content;
+	}
+
+	/**
 	 * Reorder SSL types to make sure we start with TLS, SSL, STARTTLS and insecure last
 	 *
 	 * @param array $data ssl => port pairs plus other data like value for 'username'
@@ -2055,7 +2085,7 @@ class admin_mail
 
 		$url = 'https://autoconfig.thunderbird.net/v1.1/'.$domain;
 		try {
-			$xml = simplexml_load_string(file_get_contents($url) ?: '');
+			$xml = simplexml_load_string(static::ispdbHttpGet($url) ?: '');
 			if (!$xml || !$xml->emailProvider) throw new Api\Exception\NotFound();
 			$provider = array(
 				'displayName' => (string)$xml->emailProvider->displayName,
@@ -2083,7 +2113,7 @@ class admin_mail
 			// ignore own not-found exception or xml parsing execptions
 			unset($e);
 
-			if ($try_mx && ($dns = dns_get_record($domain, DNS_MX)))
+			if ($try_mx && ($dns = static::dnsQuery($domain, DNS_MX)))
 			{
 				$domain = $dns[0]['target'];
 				if (!($provider = self::mozilla_ispdb($domain, false)))
@@ -2122,7 +2152,7 @@ class admin_mail
 		$hosts['mail.'.$domain] = true;
 		if ($type == 'smtp') $hosts['send.'.$domain] = true;
 
-		if (($dns = dns_get_record($domain, DNS_MX)))
+		if (($dns = static::dnsQuery($domain, DNS_MX)))
 		{
 			//error_log(__METHOD__."('$email') dns_get_record('$domain', DNS_MX) returned ".array2string($dns));
 			// hosts for office365 are outlook|smpt.office365.com for MX *.mail.protection.outlook.com
@@ -2139,10 +2169,33 @@ class admin_mail
 		// verify hosts in dns
 		foreach(array_keys($hosts) as $host)
 		{
-			if (!dns_get_record($host, DNS_A)) unset($hosts[$host]);
+			if (!static::dnsQuery($host, DNS_A)) unset($hosts[$host]);
 		}
 		//error_log(__METHOD__."('$email') returning ".array2string($hosts));
 		return $hosts;
+	}
+
+	/**
+	 * DNS lookup, thin wrapper around dns_get_record() to allow tests to fake DNS responses
+	 *
+	 * @param string $hostname
+	 * @param int $type one of the DNS_* constants, eg. DNS_MX, DNS_A, DNS_SRV
+	 * @return array|false see dns_get_record()
+	 */
+	protected static function dnsQuery(string $hostname, int $type)
+	{
+		return dns_get_record($hostname, $type);
+	}
+
+	/**
+	 * HTTP GET, thin wrapper around file_get_contents() to allow tests to fake the ISPDB response
+	 *
+	 * @param string $url
+	 * @return string|false
+	 */
+	protected static function ispdbHttpGet(string $url)
+	{
+		return file_get_contents($url);
 	}
 
 	/**
