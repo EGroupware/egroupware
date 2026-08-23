@@ -10,6 +10,7 @@
 require_once realpath(__DIR__.'/../../api/tests/LoggedInTest.php');
 
 use EGroupware\Api;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
  * Test-only subclass exposing admin_mail's DNS/HTTP seam (dnsQuery()/ispdbHttpGet(), added
@@ -25,6 +26,8 @@ class TestableAdminMail extends admin_mail
 	public static $dnsFixtures = array();
 	/** @var array [url] => string|false */
 	public static $httpFixtures = array();
+	/** @var array [host] => Api\Mail\Jmap|\Throwable */
+	public static $jmapFixtures = array();
 
 	protected static function dnsQuery(string $hostname, int $type)
 	{
@@ -43,6 +46,17 @@ class TestableAdminMail extends admin_mail
 		}
 		return self::$httpFixtures[$url];
 	}
+
+	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null) : Api\Mail\Jmap
+	{
+		if (!array_key_exists($host, self::$jmapFixtures))
+		{
+			throw new \RuntimeException("Unstubbed jmapClient('$host') call");
+		}
+		$result = self::$jmapFixtures[$host];
+		if ($result instanceof \Throwable) throw $result;
+		return $result;
+	}
 }
 
 /**
@@ -59,12 +73,40 @@ class TestableAdminMail extends admin_mail
  * NOT covered here: autoconfig() itself (which calls these and then opens a real IMAP
  * connection) - see doc/ai/projects/mail-wizard-jmap-oauth.md for the full coverage map.
  */
+#[AllowMockObjectsWithoutExpectations]
 class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 {
 	protected function setUp() : void
 	{
 		TestableAdminMail::$dnsFixtures = array();
 		TestableAdminMail::$httpFixtures = array();
+		TestableAdminMail::$jmapFixtures = array();
+	}
+
+	/**
+	 * Build a Mail\Jmap stub bypassing its real (network-performing) constructor
+	 */
+	private function jmapStub(array $accountCapabilities=[], bool $passwordGrantSucceeds=true) : Api\Mail\Jmap
+	{
+		$mock = $this->getMockBuilder(Api\Mail\Jmap::class)
+			->disableOriginalConstructor()
+			->onlyMethods(['passwordGrant', '__get'])
+			->getMock();
+		$mock->method('passwordGrant')->willReturn($passwordGrantSucceeds ?
+			array('access_token' => 'x', 'refresh_token' => 'y', 'expires_in' => 3600) : null);
+		$mock->method('__get')->willReturnCallback(function($name) use ($accountCapabilities) {
+			return $name === 'accountCapabilities' ? $accountCapabilities : null;
+		});
+		return $mock;
+	}
+
+	private function tryJmap(array &$content) : bool
+	{
+		$ref = new ReflectionMethod(TestableAdminMail::class, 'tryJmap');
+		$ref->setAccessible(true);
+		// invokeArgs(), not invoke(): tryJmap()'s $content parameter is by-reference and
+		// invoke() silently passes it by value instead (with a deprecation warning)
+		return $ref->invokeArgs(new TestableAdminMail(), array(&$content));
 	}
 
 	private function guessHosts(string $email, string $type='imap')
@@ -286,5 +328,90 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 		$result = $this->mozillaIspdb('example.org');
 
 		$this->assertSame(array(), $result);
+	}
+
+	// --- tryJmap() ---
+
+	/**
+	 * A resolvable _jmap._tcp SRV record must be tried, and success must set acc_imap_type to
+	 * the Stalwart class plus stash the bootstrapped session's accountCapabilities for sieve().
+	 */
+	public function testTryJmapUsesSrvRecordAndSetsStalwartType()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] =
+			array(array('target' => 'jmap.example.org', 'port' => 443, 'pri' => 0, 'weight' => 0));
+		TestableAdminMail::$jmapFixtures['jmap.example.org'] =
+			$this->jmapStub(array('urn:ietf:params:jmap:sieve' => array()));
+
+		$content = array('ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org', 'acc_imap_password' => 'secret');
+		$result = $this->tryJmap($content);
+
+		$this->assertTrue($result);
+		$this->assertSame('jmap.example.org', $content['acc_imap_host']);
+		$this->assertSame(Api\Mail\Imap\Stalwart::class, $content['acc_imap_type']);
+		$this->assertSame('jmap', $content['connected']);
+		$this->assertArrayHasKey('urn:ietf:params:jmap:sieve', $content['_jmap_account_capabilities']);
+	}
+
+	/**
+	 * With no SRV record, an explicitly entered host (manual setup) must still be tried as JMAP
+	 * - this is the only path currently exercisable against egroupware.org, which has no
+	 * _jmap._tcp record published yet.
+	 */
+	public function testTryJmapTriesExplicitHostWhenNoSrvRecord()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['stalwart.example.org'] = $this->jmapStub();
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'stalwart.example.org',
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertTrue($result);
+		$this->assertSame('stalwart.example.org', $content['acc_imap_host']);
+	}
+
+	/**
+	 * A host that isn't a JMAP server at all (or otherwise fails to connect) must make tryJmap()
+	 * return false without touching acc_imap_type - so autoconfig() falls through to its
+	 * existing IMAP trial unchanged.
+	 */
+	public function testTryJmapReturnsFalseWhenNotAJmapServer()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['imap.example.org'] =
+			new Api\Exception('imap.example.org is NOT a JMAP server!');
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'imap.example.org',
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertFalse($result);
+		$this->assertArrayNotHasKey('acc_imap_type', $content);
+		$this->assertArrayNotHasKey('_jmap_account_capabilities', $content);
+	}
+
+	/**
+	 * A failed Stalwart OAuth-login workaround (passwordGrant() returning null) must NOT block
+	 * account creation - it's a live-validation nicety, the account still works via plain
+	 * password authentication.
+	 */
+	public function testTryJmapSucceedsEvenIfPasswordGrantFails()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['stalwart.example.org'] = $this->jmapStub([], false);
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'stalwart.example.org',
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertTrue($result);
+		$this->assertSame(Api\Mail\Imap\Stalwart::class, $content['acc_imap_type']);
 	}
 }

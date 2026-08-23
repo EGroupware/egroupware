@@ -174,6 +174,26 @@ class AdminMailPureLogicTest extends \PHPUnit\Framework\TestCase
 	}
 
 	/**
+	 * The carve-out must also cover Imap\Jmap SUBCLASSES like Imap\Stalwart, not just an exact
+	 * class-name match - a naive `!==` check would silently reset a Stalwart account back to
+	 * plain IMAP for a single-user account (never hit before this project, since the existing
+	 * acc_id=1 Stalwart account is multi-user). acc_smtp_type must still be reset to plain SMTP
+	 * regardless - Smtp\Stalwart is the admin-automation class (user/alias/quota management),
+	 * never a personal account's SMTP transport, and must never be auto-assigned here.
+	 */
+	public function testNormalizeAccountTypePreservesJmapSubclassButAlwaysResetsSmtpType()
+	{
+		$content = array(
+			'acc_imap_type' => Mail\Imap\Stalwart::class,
+			'acc_smtp_type' => Mail\Smtp\Stalwart::class,
+		);
+		$result = $this->callPrivateStatic('normalizeAccountType', array($content, false));
+
+		$this->assertSame(Mail\Imap\Stalwart::class, $result['acc_imap_type']);
+		$this->assertSame('EGroupware\\Api\\Mail\\Smtp', $result['acc_smtp_type']);
+	}
+
+	/**
 	 * A multi-user/"everyone" account must NOT have its acc_imap_type/acc_smtp_type touched
 	 * (they stay client-editable, eg. for LDAP-backed logins); only the
 	 * ident_email_alias -> ident_email copy applies for multi-user accounts.

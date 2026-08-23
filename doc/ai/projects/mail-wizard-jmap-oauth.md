@@ -1,6 +1,6 @@
 # Mail Wizard: test harness, then JMAP/OAuth/discovery enhancements
 
-## Status: Phase 1 (test harness) implemented (2026-08-23). Phase 2 (features) not started.
+## Status: Phase 1 (test harness) implemented AND fully validated (2026-08-23). Phase 2 Milestone A code implemented and unit-tested (2026-08-23, 90 tests green: 84 unit + 6 REST); live verification against `https://stalwart.egroupware.org` still pending (needs ralf's real credentials/action, see below). Milestone B (items 2+5) not started.
 
 Continuation of [[mail-jmap-modernization]] - that project moved mail *usage* (rows, body,
 flags, folders) onto JMAP for Stalwart, but never touched mail *account creation*. The Mail
@@ -62,9 +62,10 @@ JMAP-only account (with or without OAuth) without ever touching IMAP.
   `<= 0`, or an array containing `0` or more than one entry) - there is no separate
   bulk-creation method; the admin "manage users" list just lands in `edit()` with a target
   `account_id`/`called_for`.
-- JMAP/Stalwart involvement in the wizard today is essentially nil: one
+- JMAP/Stalwart involvement in the wizard before Phase 2 Milestone A was essentially nil: one
   `acc_imap_type !== Mail\Imap\Jmap::class` preservation check inside `edit()`'s
-  `normalizeAccountType()` (see below), no discovery/testing path at all.
+  `normalizeAccountType()` (see below), no discovery/testing path at all. Milestone A (below)
+  adds the first real JMAP discovery/connection path.
 - REST (`mail/src/ApiHandler.php extends Api\CalDAV\Handler`) has no account-creation
   endpoint; `PATCH /mail/{id}` (`put()`, `{id}` is an `ident_id`) only **edits an
   existing** account, gated: admin always allowed; non-admin only if `acc_user_editable`
@@ -126,45 +127,96 @@ injection seam); the OAuth redirect/token-exchange flow (`oauthToken()`,
 `etemplate_exec_id` via `Api\Etemplate\Request::csrfCheck()`, same limitation already
 documented in `SmimeGenerateTest.php`).
 
-### Known environment blocker for the REST test
+### Known environment blocker for the REST test - RESOLVED 2026-08-23
 
-`mail/tests/REST/MailAccountPatchTest.php` could not be live-executed against this
-session's local EGroupware instance: even a bare `GET /<user>/mail` returns
-`500 {"message": "Could not resolve host: http"}`, and `GET /mail/<id>` shows a full
-trace through `Api\Mail\Smtp\Stalwart::domainId()` → `Api\Mail\Jmap` bootstrap → a curl
-call to a URL whose host is literally the string `http` - a pre-existing, unrelated
-misconfiguration of acc_id=1's JMAP/Stalwart endpoint on this dev box, not something
-introduced by this change. The unit tests (all other files above) ran clean against the
-same environment. Whoever runs the REST test next should fix that config first, then run
-with `EGW_ADMIN_PASSWORD` set (needed for the `accUserEditable` toggling and admin-bypass
-cases).
+The `500 {"message": "Could not resolve host: http"}` blocker described here was the same
+double-scheme JMAP bootstrap bug fixed in `de56ed499a` (see [[jmap-mail-service-host-bug]]).
+Confirmed resolved: re-running `mail/tests/REST/MailAccountPatchTest.php` no longer 500s.
 
-## Phase 2 - feature roadmap (not started)
+All four unit-test files (`AdminMailPureLogicTest`, `AdminMailMailboxesTest`,
+`AdminMailHostDiscoveryTest`, `MailWizardDifferentialTest` - 28 tests total) pass clean via
+`vendor/bin/phpunit -c doc/phpunit.xml`.
 
-Each item needs its own design/approval pass before implementation - none of these are
-pre-approved by Phase 1 landing.
+With `EGW_ADMIN_PASSWORD` set, running the REST test surfaced a second, real bug (now
+fixed, see below): `ApiHandler::put()`'s catch block swallowed the true HTTP status of any
+exception, making every PATCH error look like `200 OK`. Once fixed, the true error surfaced:
+`demo`'s test identity had a stale `mailLocalAddress` (`demo@example.org`) that didn't match
+`acc_id=1`'s actual Stalwart domain (`boulder.egroupware.org`), so any identity write for
+`demo` failed Stalwart's alias-domain lookup. Fixed by PATCHing `demo`'s `mailLocalAddress`
+to `demo@boulder.egroupware.org` (a one-off test-data correction, not a code change). With
+both fixed, `MailAccountPatchTest.php` passes clean (5 tests, 18 assertions):
+`EGW_ADMIN_PASSWORD="..." vendor/bin/phpunit -c doc/phpunit.xml mail/tests/REST/MailAccountPatchTest.php`.
 
-1. **DNS discovery via SRV records** - `(jmap|imap|smtp)._tcp.<domain>`, reusing the
-   `dnsQuery()` seam (add `DNS_SRV` handling). Slots in as a new, higher-priority
-   discovery step in `autoconfig()`'s existing priority chain (before Mozilla ISPDB,
-   after OAuth-domain-match), and needs an equivalent for JMAP discovery specifically
-   since `autoconfig()` today only ever discovers IMAP.
+**Real bug fixed in `mail/src/ApiHandler.php`'s `put()`:** the catch block called
+`self::handleException($e)` without `return`ing it (unlike the two other call sites in the
+same file, which do), so any exception during `PATCH /mail/{id}` made `put()` return `null`.
+`Api\CalDAV::PUT()` passed that straight to `http_status()`, producing a malformed
+`"HTTP/1.1 "` header with no status code - the SAPI silently defaulted this to `200 OK`,
+so every real error (500s, validation failures, etc.) looked like success to any REST
+client, with the actual error visible only in the JSON body. One-line fix, pushed as
+`b73b2ae61a`.
+
+## Phase 2 - feature roadmap
+
+Original 5 items, sequenced by ralf on 2026-08-23 into two milestones after discussion:
+
+- **Milestone A** (in progress): items 1+3, scoped down to Stalwart only - get a personal JMAP
+  account working end-to-end via the wizard against `https://stalwart.egroupware.org`.
+- **Milestone B** (later, not started): items 2+5 together, validated against a FastMail test
+  account ralf already created - tackled only after Milestone A works.
+- Item 4 (Stalwart OAuth-login workaround) turned out to already be implemented
+  (`Mail\Jmap::passwordGrant()`/`oauthBaseUrl()`, used today by `Imap\Stalwart::accessToken()`
+  for already-saved accounts) - Milestone A's job is to *use* it during wizard setup for live
+  credential validation, not to design something new.
+
+1. **DNS discovery via SRV records** - `_jmap._tcp.<domain>` (JMAP only for Milestone A; IMAP/
+   SMTP SRV deferred, not needed for Stalwart), reusing the `dnsQuery()` seam (`DNS_SRV`).
+   JMAP must be probed *before* IMAP for any candidate host (not just SRV-derived ones) since
+   most JMAP servers also speak IMAP - IMAP-first probing would misclassify them. **No
+   `_jmap._tcp` record exists for `egroupware.org` yet** - the SRV lookup is implemented and
+   tested (fixture-based), but Milestone A's real-world verification exercises the manual
+   host-entry fallback instead.
 2. **Broader OAuth support** - generalize past the hardcoded Google/Microsoft domain-
    regex table in `OpenIDConnectClient::providerByDomain()`, likely via admin-configurable
    custom OAuth provider entries (endpoint/client id/secret) feeding the same
-   `oauth2content()`/`oauthToken()` machinery already in `admin_mail`.
-3. **JMAP-only account creation** - a wizard path that discovers/tests JMAP directly (via
-   the SRV lookup in #1 or a JMAP well-known/session-endpoint probe) and skips
-   IMAP/Sieve/SMTP entirely, persisting `acc_imap_type = Mail\Imap\Jmap` with a
-   JMAP-native submission path instead of a separate SMTP step.
-4. **Stalwart-integrated-login OAuth workaround** - avoid requiring a manual second login
-   at an EGroupware-integrated Stalwart instance, since Stalwart doesn't support an OAuth
-   password grant. Needs a concrete design session on the exact trust mechanism (e.g.
-   server-to-server assertion, shared secret, EGroupware acting as the OIDC provider
-   Stalwart trusts) before any code is written.
-5. **Split general-JMAP vs. Stalwart-specific support** - to support other JMAP providers
-   (e.g. FastMail), audit `api/src/Mail/Imap/Jmap.php` (currently the Stalwart-backed
-   implementation) for Stalwart-only assumptions (push/webhook wiring, the #4 login
-   workaround) and split into a general `Jmap` base + `Stalwart` subclass, consistent with
-   [[mail-bo-decoupling]]'s extraction discipline (no wrapper unless a separate consumer
-   needs it, re-check "no callers" case-insensitively for PHP method names).
+   `oauth2content()`/`oauthToken()` machinery already in `admin_mail`. Persistence should live
+   on the mail account itself, possibly as an additional JSON blob (ralf, 2026-08-23) - exact
+   shape to be designed as part of Milestone B.
+3. **JMAP-only account creation (Milestone A, Stalwart-scoped)** - a wizard path that connects
+   via JMAP directly (SRV or manual host) and skips IMAP/Sieve entirely, but **SMTP stays** -
+   no JMAP-native mail submission exists yet, so `smtp()` runs unchanged, resulting in plain
+   `EGroupware\Api\Mail\Smtp` (ralf, 2026-08-23: corrects this item's earlier text, which
+   wrongly assumed JMAP-native submission would replace SMTP). `acc_imap_type` is hardcoded to
+   `Mail\Imap\Stalwart::class` on JMAP success rather than generically detected - see item 5.
+   Sieve support/config comes from the bootstrapped JMAP session's `accountCapabilities`
+   (`urn:ietf:params:jmap:sieve`, RFC 9661), not a `ManageSieve` probe. **`Smtp\Stalwart` must
+   never be auto-assigned as `acc_smtp_type`** - it's the admin-automation class for
+   administrating a Stalwart server (user/alias/quota management via JMAP `Account/set`), not
+   a personal SMTP transport; a wizard-created personal account only ever gets plain SMTP or a
+   reported failure.
+4. **Stalwart-integrated-login OAuth workaround** - already implemented, see above. Milestone
+   A wires `Mail\Jmap::passwordGrant()` into the wizard's JMAP connection trial as a live login
+   check; actual token exchange/caching for real usage continues to happen lazily via the
+   already-shipped `Imap\Stalwart::accessToken()`, unchanged.
+5. **Split general-JMAP vs. Stalwart-specific support (Milestone B)** - to support other JMAP
+   providers (e.g. FastMail, ralf already has a test account), audit `api/src/Mail/Imap/Jmap.php`
+   (currently the Stalwart-backed implementation) for Stalwart-only assumptions (push/webhook
+   wiring, the #4 login workaround) and split into a general `Jmap` base + `Stalwart` subclass,
+   consistent with [[mail-bo-decoupling]]'s extraction discipline (no wrapper unless a separate
+   consumer needs it, re-check "no callers" case-insensitively for PHP method names). Milestone
+   A deliberately hardcodes Stalwart detection instead of pre-empting this split.
+
+### Milestone A implementation notes
+
+- `folder()`'s Horde-based special-use-folder guessing needs a real IMAP socket it won't have
+  for JMAP - skipped outright for JMAP accounts (autoconfig() goes straight to `sieve()`),
+  relying on the mail app's existing JMAP folder-role handling at usage time rather than
+  wizard-time guessing.
+- New injectable seam `jmapClient()` (mirrors `dnsQuery()`/`ispdbHttpGet()`) so
+  `TestableAdminMail` can stub JMAP connectivity in tests instead of hitting a real server.
+- Found and fixed a real pre-existing bug while implementing this: `normalizeAccountType()`'s
+  JMAP carve-out compared `acc_imap_type` with an exact `!==` match against
+  `Mail\Imap\Jmap::class`, so setting it to a *subclass* like `Mail\Imap\Stalwart::class` (as
+  Milestone A does) would have been silently reset back to plain IMAP for a single-user
+  account - never hit before since the existing acc_id=1 Stalwart account is multi-user.
+  Fixed via `is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true)`.

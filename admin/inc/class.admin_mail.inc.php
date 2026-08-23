@@ -283,6 +283,13 @@ class admin_mail
 			$connected = false;
 		}
 
+		// try JMAP first: most JMAP servers also speak IMAP, so this MUST run before the IMAP
+		// trial below, or a JMAP-capable server would always get misclassified as IMAP-only.
+		if (!isset($connected) && !empty($content['acc_imap_password']) && $this->tryJmap($content))
+		{
+			$connected = $content['connected'];
+		}
+
 		// iterate over all hosts and try to connect
 		foreach(!isset($connected) ? $hosts : [] as $host => $data)
 		{
@@ -345,6 +352,11 @@ class admin_mail
 					if (self::$debug) _egw_log_exception($e);
 				}
 			}
+		}
+		if ($connected === 'jmap')	// JMAP has no separate folder-discovery step, skip straight to sieve()
+		{
+			unset($content['button']);
+			return $this->sieve($content, lang('Successful connected to %1 server%2.', 'JMAP', ' '.lang('and logged in')));
 		}
 		if ($connected)	// continue with next wizard step: define folders
 		{
@@ -524,6 +536,18 @@ class admin_mail
 			self::SSL_NONE => array(4190, 2000),
 		);
 		$content['msg'] = $msg;
+
+		// JMAP accounts: Sieve support/config comes from the JMAP session's capabilities, not
+		// from a separate ManageSieve probe - Mail\Sieve\Jmap composes off the same JMAP
+		// connection at usage time, no separate host/port is needed.
+		if (is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true))
+		{
+			$content['acc_sieve_enabled'] = (int)isset($content['_jmap_account_capabilities']['urn:ietf:params:jmap:sieve']);
+			unset($content['_jmap_account_capabilities'], $content['button']);
+			return $this->smtp($content, $content['acc_sieve_enabled'] ?
+				lang('Sieve filters are supported via JMAP.') :
+				lang('This JMAP server does not support Sieve filters.'));
+		}
 
 		if (!empty($content['button']))
 		{
@@ -1844,6 +1868,62 @@ class admin_mail
 	}
 
 	/**
+	 * Try to connect via JMAP, before falling back to IMAP
+	 *
+	 * Sources tried: DNS SRV (_jmap._tcp.$domain, not commonly published yet) and an explicitly
+	 * entered host (manual setup) - unlike IMAP, we don't guess JMAP hostnames via ISPDB/MX.
+	 * On success sets $content['acc_imap_host'/'acc_imap_type'/'connected'] and stashes the
+	 * bootstrapped JMAP session's accountCapabilities into $content['_jmap_account_capabilities']
+	 * (a transient wizard-state key, not a persisted account field) for sieve() to read.
+	 *
+	 * @param array &$content requires 'ident_email', 'acc_imap_username', 'acc_imap_password',
+	 *  optionally an explicit 'acc_imap_host'
+	 * @return bool true if connected via JMAP
+	 */
+	protected function tryJmap(array &$content) : bool
+	{
+		list(, $domain) = explode('@', $content['ident_email']);
+		$jmap_hosts = [];
+		if (($srv = static::dnsQuery('_jmap._tcp.'.$domain, DNS_SRV)))
+		{
+			foreach($srv as $record)
+			{
+				$jmap_hosts[$record['target']] = true;
+			}
+		}
+		if (!empty($content['acc_imap_host']))
+		{
+			$jmap_hosts[$content['acc_imap_host']] = true;
+		}
+		foreach($jmap_hosts as $host => $data)
+		{
+			$content['output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying JMAP connection to $host ...\n";
+			try {
+				$accountId = null;
+				$jmap = static::jmapClient($host, $content['acc_imap_username'], $content['acc_imap_password'], $accountId);
+				$content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'JMAP', ' '.lang('and logged in'))."\n";
+
+				// live-validate the Stalwart OAuth-login workaround now, rather than only
+				// discovering a problem later at first real mail-usage
+				if (!$jmap->passwordGrant($content['acc_imap_username'], $content['acc_imap_password']))
+				{
+					$content['output'] .= "\n".lang('Could not obtain an OAuth token via the Stalwart login workaround, account will use plain password authentication.')."\n";
+				}
+				$content['acc_imap_host'] = $host;
+				$content['acc_imap_type'] = Mail\Imap\Stalwart::class;
+				$content['_jmap_account_capabilities'] = $jmap->accountCapabilities;
+				$content['connected'] = 'jmap';
+				return true;
+			}
+			catch (\Throwable $e) {
+				$content['output'] .= "\n".get_class($e).': '.$e->getMessage()."\n";
+				if (self::$debug) _egw_log_exception($e);
+			}
+		}
+		return false;
+	}
+
+	/**
 	 * Instanciate imap-client
 	 *
 	 * @param array $content
@@ -2035,11 +2115,19 @@ class admin_mail
 		if (!$is_multiple)
 		{
 			// we need to allow to use JMAP for single connections too, to be able to use JMAP and push
-			if ($content['acc_imap_type'] !== Mail\Imap\Jmap::class)
+			// deliberately a plain string comparison, NOT is_a(): normalizeAccountType() must stay
+			// callable without the Mail\Imap class hierarchy loaded (it's exercised as pure logic
+			// in AdminMailPureLogicTest without any DB session, and merely autoloading Mail\Imap
+			// eagerly touches the DB via its trailing Imap::init_static() call) - extend this list
+			// when Milestone B (general-JMAP vs. Stalwart split) adds further Imap\Jmap subclasses
+			if (!in_array($content['acc_imap_type'] ?? '', [Mail\Imap\Jmap::class, Mail\Imap\Stalwart::class], true))
 			{
 				$content['acc_imap_type'] = 'EGroupware\\Api\\Mail\\Imap';
 			}
 			unset($content['acc_imap_login_type']);
+			// acc_smtp_type is ALWAYS reset to plain SMTP here, including for JMAP/Stalwart accounts:
+			// Smtp\Stalwart is the admin-automation class for administrating a Stalwart server
+			// (user/alias/quota management), never a personal account's SMTP transport.
 			$content['acc_smtp_type'] = 'EGroupware\\Api\\Mail\\Smtp';
 			unset($content['acc_smtp_auth_session']);
 			unset($content['notify_use_default']);
@@ -2196,6 +2284,22 @@ class admin_mail
 	protected static function ispdbHttpGet(string $url)
 	{
 		return file_get_contents($url);
+	}
+
+	/**
+	 * Create and bootstrap a JMAP client, thin wrapper to allow tests to inject a stub
+	 *
+	 * @param string $host hostname or URL to bootstrap via "https://$host/.well-known/jmap"
+	 * @param string $username
+	 * @param string $password
+	 * @param string|null &$accountId on return the JMAP accountId
+	 * @return Mail\Jmap
+	 * @throws Api\Exception if $host is NOT a JMAP server
+	 * @throws Api\Exception\Http on connection or authentication failure
+	 */
+	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null) : Mail\Jmap
+	{
+		return new Mail\Jmap($host, $username, $password, $accountId);
 	}
 
 	/**
