@@ -192,6 +192,8 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
+			// report the total to REST clients, it is queried anyway to determine more-results
+			$files['total'] = array($this, 'getTotal');
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = $this->more_results = null;
@@ -300,6 +302,7 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		for($chunk=0; ($contacts =& $this->bo->search($search, $cols, $order, '', '', False, 'AND',
 			[$chunk*self::CHUNK_SIZE, self::CHUNK_SIZE], $filter)); ++$chunk)
 		{
+			$this->total = $this->bo->total;
 			// filter[tid] === null also returns no longer shared contacts, to remove them from devices, we need to mark them here as deleted
 			// to do so we need to read not deleted sharing info of potential candidates (not deleted and no regular access), as search does NOT
 			$id2key = [];
@@ -495,7 +498,36 @@ class addressbook_groupdav extends Api\CalDAV\Handler
 		// in case of JSON/REST API pass filters to report
 		if (Api\CalDAV::isJSON() && !empty($options['filters']) && is_array($options['filters']))
 		{
-			$filters += $options['filters'];    // using += to no allow overwriting existing filters
+			foreach($options['filters'] as $name => $value)
+			{
+				// CalDAV::jsonIndex() appends filters[start] / filters[end] as a time-range under an integer key
+				if (!is_string($name))
+				{
+					if (is_array($value) && ($value['name'] ?? null) === 'time-range')
+					{
+						$filters[] = $this->jsonTimeRangeFilter($value['attrs'], 'contact_modified');
+					}
+					continue;
+				}
+				switch($name)
+				{
+					case 'order':
+						$filters['order'] = $this->jsonOrderFilter($value);
+						break;
+					case 'search':
+					case 'filter':
+						$filters[$name] ??= $value;     // handled by Api\Contacts::search()
+						break;
+					default:
+						if ($name[0] !== '#')
+						{
+							// reject an unknown filter with a helpful 400, instead of an SQL error
+							$this->assertFilterColumn($name, $name);
+						}
+						$filters[$name] ??= $value;     // ??= to not allow overwriting existing filters
+						break;
+				}
+			}
 		}
 		elseif (!empty($options['filters']))
 		{

@@ -50,6 +50,15 @@
             "$ref": "#/components/parameters/filters_linked"
           },
           {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
             "name": "Accept",
             "in": "header",
             "required": true,
@@ -498,6 +507,60 @@
           }
         }
       }
+    },
+    "/timesheet/count": {
+      "get": {
+        "tags": [
+          "Timesheet"
+        ],
+        "summary": "Count timesheet entries",
+        "description": "Returns ONLY the number of timesheet entries matching the filters, as {\"total\": <n>}. Use this to answer \"how many ...\" questions instead of listing entries: it accepts the same filters[...] parameters as the listing, but transfers no entries at all, so it works on collections of any size. Combine with filters[start] and filters[end] for a time period.",
+        "operationId": "countTimesheets",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filters_search"
+          },
+          {
+            "$ref": "#/components/parameters/filters_linked"
+          },
+          {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of matching entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "number of matching entries"
+                    }
+                  },
+                  "required": [
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid filter"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -576,6 +639,35 @@
           "type": "string"
         },
         "description": "Search entries from other apps linked to the given one. Example: filters[linked]=<app-name>:<app-id>"
+      },
+      "filters_start": {
+        "name": "filters[start]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": "Only return timesheet entries on or after this date, matched against the entry start-date (ts_start), as YYYY-MM-DD. REQUIRED whenever the question refers to a time period: resolve phrases like 'this week', 'last month' or 'the last 3 months' to explicit dates and pass them. Example: filters[start]=2026-01-01"
+      },
+      "filters_end": {
+        "name": "filters[end]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": "Only return timesheet entries on or before this date, matched against the entry start-date (ts_start), as YYYY-MM-DD. A bare date covers the whole day. Pass together with filters[start] for any time-bounded question. Example: filters[end]=2026-03-31"
+      },
+      "filters_order": {
+        "name": "filters[order]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sort order as '<db-column>' optionally followed by ' ASC' or ' DESC'. Default is ts_start ASC. An unknown column is rejected with 400 and a list of the valid ones."
       }
     },
     "schemas": {

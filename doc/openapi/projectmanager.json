@@ -1,0 +1,282 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "EGroupware ProjectManager REST API",
+    "version": "1.0.0",
+    "description": "Read and count projects of the EGroupware ProjectManager application."
+  },
+  "paths": {
+    "/projectmanager/": {
+      "get": {
+        "tags": [
+          "ProjectManager"
+        ],
+        "operationId": "listProjects",
+        "summary": "List all projects the current user has access to",
+        "description": "Returns projects of the current user. Without sync-token/nresults the number of projects returned is limited by the server configuration; the response carries \"total\" with the number of matching projects and \"more-results\": true when further projects exist. To count projects use countProjects instead of listing them.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/props"
+          },
+          {
+            "$ref": "#/components/parameters/syncToken"
+          },
+          {
+            "$ref": "#/components/parameters/nresults"
+          },
+          {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
+            "$ref": "#/components/parameters/filters_search"
+          },
+          {
+            "$ref": "#/components/parameters/filters_linked"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "A list of projects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "responses": {
+                      "type": "object",
+                      "description": "path => project"
+                    },
+                    "total": {
+                      "type": "integer",
+                      "description": "number of matching projects"
+                    },
+                    "more-results": {
+                      "type": "boolean",
+                      "description": "further projects exist"
+                    },
+                    "sync-token": {
+                      "type": "string",
+                      "description": "token to request the next chunk"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid filter"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/projectmanager/count": {
+      "get": {
+        "tags": [
+          "ProjectManager"
+        ],
+        "operationId": "countProjects",
+        "summary": "Count projects",
+        "description": "Returns ONLY the number of projects matching the filters, as {\"total\": <n>}. Use this to answer \"how many ...\" questions instead of listing entries: it accepts the same filters[...] parameters as the listing, but transfers no projects at all, so it works on collections of any size. Combine with filters[start] and filters[end] for a time period.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_search"
+          },
+          {
+            "$ref": "#/components/parameters/filters_linked"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of matching projects",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "number of matching projects"
+                    }
+                  },
+                  "required": [
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid filter"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/projectmanager/{id}": {
+      "get": {
+        "tags": [
+          "ProjectManager"
+        ],
+        "operationId": "getProject",
+        "summary": "Retrieve a single project",
+        "description": "Returns one project by its numerical id or UID.",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/id"
+          },
+          {
+            "name": "Accept",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
+            },
+            "description": "Accept header for JSON or pretty-printed JSON"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The project",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Project not found"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "parameters": {
+      "id": {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Numerical project-id or its UID"
+      },
+      "props": {
+        "name": "props[]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "description": "Limit the returned properties, e.g. props[]=pm_title. Omit to get the full project."
+      },
+      "syncToken": {
+        "name": "sync-token",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Send empty to start a bounded listing; the response returns a sync-token to request the next chunk together with nresults."
+      },
+      "nresults": {
+        "name": "nresults",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "integer"
+        },
+        "description": "Maximum number of projects to return. Only evaluated together with sync-token: send sync-token= (empty) plus nresults=N to get at most N projects, a \"more-results\": true flag when further projects exist, and a sync-token for the next chunk."
+      },
+      "filters_start": {
+        "name": "filters[start]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": "Only return projects created on or after this date (pm_created), as YYYY-MM-DD. REQUIRED whenever the question refers to a time period: resolve phrases like 'this quarter' or 'the last 3 months' to explicit dates. Example: filters[start]=2026-01-01"
+      },
+      "filters_end": {
+        "name": "filters[end]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": "Only return projects created on or before this date (pm_created), as YYYY-MM-DD. A bare date covers the whole day. Example: filters[end]=2026-03-31"
+      },
+      "filters_order": {
+        "name": "filters[order]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sort order as '<db-column>' optionally followed by ' ASC' or ' DESC'. Default is pm_created ASC. An unknown column is rejected with 400 and a list of the valid ones."
+      },
+      "filters_search": {
+        "name": "filters[search]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Free-text pattern searched over the project number, title and description. Example: filters[search]=migration"
+      },
+      "filters_linked": {
+        "name": "filters[linked]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Only projects linked to the given entry, as '<app-name>:<numeric-id>'. Example: filters[linked]=infolog:123"
+      }
+    }
+  }
+}

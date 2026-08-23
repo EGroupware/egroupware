@@ -217,6 +217,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
+			// report the total to REST clients, it is queried anyway to determine more-results
+			$files['total'] = array($this, 'getTotal');
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = $this->more_results = null;
@@ -358,6 +360,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			// if $query[cols] is set, bo->search() returns an iterator, which might be empty, in which case we have to stop
 			(is_array($tasks) || $tasks->NumRows()))
 		{
+			$this->total = $this->bo->total;
 			if ($this->debug)
 			{
 				error_log(__METHOD__ . "(): called bo->search(" . json_encode($query) . ") returned ".(is_array($tasks) ? count($tasks) : $tasks->NumRows())." entries");
@@ -467,7 +470,46 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		// in case of JSON/REST API pass filters to report
 		if (Api\CalDAV::isJSON() && !empty($options['filters']) && is_array($options['filters']))
 		{
-			$filters = $options['filters'] + $filters;    // + to allow overwriting default owner filter (BO ensures ACL!)
+			// CalDAV::jsonIndex() turns filters[start]/filters[end] into a synthetic time-range
+			// element under an integer key. It has to go through _time_range_filter() to become a
+			// SQL fragment: merging it verbatim into the column filter yields "AND Array" and a 500.
+			$json_filters = $options['filters'];
+			$time_ranges = [];
+			foreach($json_filters as $key => $value)
+			{
+				if (!is_string($key))
+				{
+					if (is_array($value) && ($value['name'] ?? null) === 'time-range')
+					{
+						$time_ranges[] = $this->_time_range_filter($value['attrs']);
+					}
+					unset($json_filters[$key]);
+				}
+			}
+			foreach($json_filters as $name => $value)
+			{
+				switch($name)
+				{
+					case 'order':
+						$json_filters['order'] = $this->jsonOrderFilter($value);
+						break;
+					case 'search':
+					case 'filter':
+						break;      // handled by infolog_bo::search()
+					default:
+						if ($name[0] !== '#')
+						{
+							// reject an unknown filter with a helpful 400, instead of an SQL error
+							$this->assertFilterColumn($name, $name);
+						}
+						break;
+				}
+			}
+			$filters = $json_filters + $filters;    // + to allow overwriting default owner filter (BO ensures ACL!)
+			foreach($time_ranges as $time_range)
+			{
+				$filters[] = $time_range;
+			}
 		}
 		elseif ($options['filters'])
 		{
@@ -600,11 +642,11 @@ class infolog_groupdav extends Api\CalDAV\Handler
 		$to_or = $to_and = array();
  		if (!empty($attrs['start']))
  		{
- 			$start = (int)$this->vCalendar->_parseDateTime($attrs['start']);
+ 			$start = (int)Api\DateTime::to($this->vCalendar->_parseDateTime($attrs['start']), 'ts');
 		}
  		if (!empty($attrs['end']))
  		{
- 			$end = (int)$this->vCalendar->_parseDateTime($attrs['end']);
+ 			$end = (int)Api\DateTime::to($this->vCalendar->_parseDateTime($attrs['end']), 'ts');
 		}
 		elseif (empty($attrs['start']))
 		{
@@ -634,12 +676,14 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			($end ? " AND info_enddate <= $end" : '');*/
 
 		// no startdate AND no enddate (2. half of rfc4791#section-9.9) --> use created and due dates instead
+		// info_datecompleted is nullable, so it needs COALESCE: "NULL > 0" and "NOT NULL > 0" are both
+		// NULL, which would make an entry without any date invisible to every time-range filter
 		$to_or[] = 'NOT info_startdate > 0 AND NOT info_enddate > 0 AND ('.
 			// we have a completed date
-			"info_datecompleted > 0".(isset($start) ? " AND ($start <= info_datecompleted OR $start <= info_created)" : '').
+			"COALESCE(info_datecompleted, 0) > 0".(isset($start) ? " AND ($start <= info_datecompleted OR $start <= info_created)" : '').
 				(isset($end) ? " AND (info_datecompleted <= $end OR info_created <= $end)" : '').' OR '.
 			// we have no completed date, but always a created date
- 			"NOT info_datecompleted > 0". (isset($end) ? " AND info_created < $end" : '').
+ 			"NOT COALESCE(info_datecompleted, 0) > 0". (isset($end) ? " AND info_created < $end" : '').
 		')';
 		$sql = '('.implode(' OR ', $to_or).')';
 		if ($this->debug > 1) error_log(__FILE__ . __METHOD__.'('.array2string($attrs).") time-range=$attrs[start]-$attrs[end] --> $sql");

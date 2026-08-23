@@ -467,7 +467,7 @@
       },
       "post": {
         "tags": ["Materials"],
-        "operationId": "addAttachment",
+        "operationId": "addMaterialAttachment",
         "summary": "Add an attachment to a material",
         "description": "Redirects to the underlying WebDAV URL to actually upload the file content.",
         "responses": {

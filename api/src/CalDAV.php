@@ -1117,6 +1117,15 @@ class CalDAV extends HTTP_WebDAV_Server
 			exit;
 		}
 
+		// REST: /<app>/count reports just the number of entries matching the filters, so a client can
+		// answer "how many ..." without transferring them. Has to be checked before _parse_path(),
+		// which would take "count" for an entry-id.
+		if (($json = self::isJSON()) && preg_match('#^(/[^/]+)?/[a-zA-Z0-9_-]+/count$#', $options['path']))
+		{
+			$options['path'] = substr($options['path'], 0, -strlen('count'));
+			return $this->jsonIndex($options, $json === 'pretty', true);
+		}
+
 		$id = $app = $user = null;
 		if (!$this->_parse_path($options['path'],$id,$app,$user) || $app == 'principals')
 		{
@@ -1173,7 +1182,7 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * @param bool $pretty =false true: pretty-print JSON
 	 * @return bool|string|void
 	 */
-	protected function jsonIndex(array $options, bool $pretty)
+	protected function jsonIndex(array $options, bool $pretty, bool $count_only=false)
 	{
 		header('Content-Type: application/json; charset=utf-8');
 		$is_addressbook = strpos($options['path'], '/addressbook') !== false;
@@ -1192,17 +1201,25 @@ class CalDAV extends HTTP_WebDAV_Server
 			'root' => ['name' => null],
 		);
 
+		// a count only needs the total, which the handlers query anyway to determine more-results:
+		// ask for a single row, so no entry gets serialized
+		if ($count_only)
+		{
+			$_GET['nresults'] = 1;
+		}
 		// implement default number of matches from OpenAPI configuration, if nothing is specified in the request
 		if (!isset($_GET['nresults']))
 		{
 			$_GET['nresults'] = OpenAPI::defaultMatches();
 		}
 
-		// sync-collection report via GET parameter sync-token
-		if (isset($_GET['sync-token']))
+		// sync-collection report via GET parameter sync-token, or whenever the number of results is
+		// limited: the handlers only evaluate nresults for a sync-collection, so a plain listing was
+		// unbounded even with nresults given - an empty sync-token requests the initial full sync
+		if (isset($_GET['sync-token']) || isset($_GET['nresults']))
 		{
 			$propfind_options['root'] = ['name' => 'sync-collection'];
-			$propfind_options['other'][] = ['name' => 'sync-token', 'data' => $_GET['sync-token']];
+			$propfind_options['other'][] = ['name' => 'sync-token', 'data' => $_GET['sync-token'] ?? ''];
 			$propfind_options['other'][] = ['name' => 'sync-level', 'data' => $_GET['sync-level'] ?? 1];
 
 			// clients want's pagination
@@ -1263,6 +1280,17 @@ class CalDAV extends HTTP_WebDAV_Server
 			$nl = "\n";
 			$sp = ' ';
 		}
+		if ($count_only)
+		{
+			// the generator is lazy: it has to run for the handler to query the total
+			foreach($files['files'] as $unused)
+			{
+				unset($unused);
+			}
+			echo '{'.$nl.$tab.'"total":'.$sp.(int)self::resolveTotal($files).$nl.'}'."\n";
+			return '200 Ok';
+		}
+
 		// set start as prefix, to no have it in front of exceptions
 		$prefix = '{'.$nl.$tab.'"responses":'.$sp.'{'.$nl;
 		foreach($files['files'] as $resource)
@@ -1297,6 +1325,13 @@ class CalDAV extends HTTP_WebDAV_Server
 			$prefix = ",$nl";
 		}
 		echo "$nl$tab}";
+		// total number of entries matching the filter, so a client can answer "how many ..."
+		// without having to transfer them
+		if (isset($files['total']) && ($total = self::resolveTotal($files)) !== null)
+		{
+			echo $prefix.$tab.'"total": '.(int)$total;
+			$prefix = ",$nl";
+		}
 		// add sync-token and more-results to response
 		if (isset($files['sync-token']))
 		{
@@ -1306,6 +1341,18 @@ class CalDAV extends HTTP_WebDAV_Server
 		echo "$nl}\n";
 
 		return '200 Ok';    // not returning true
+	}
+
+	/**
+	 * Resolve the total reported by a handler, which is only known after its generator ran
+	 *
+	 * @param array $files as filled by REPORT()
+	 * @return ?int
+	 */
+	protected static function resolveTotal(array $files): ?int
+	{
+		$total = $files['total'] ?? null;
+		return is_callable($total) ? call_user_func($total) : $total;
 	}
 
 	/**
@@ -2647,6 +2694,19 @@ class CalDAV extends HTTP_WebDAV_Server
 	 * @param \Exception|\Error $e
 	 * @param bool $exit true: exit, false: do NOT exist, just return
 	 */
+	/**
+	 * Client errors an app can raise as exception-code, to be reported as such instead of a 500
+	 */
+	const CLIENT_ERROR_STATUS = [
+		400 => 'Bad Request',
+		403 => 'Forbidden',
+		404 => 'Not Found',
+		409 => 'Conflict',
+		412 => 'Precondition Failed',
+		415 => 'Unsupported Media Type',
+		422 => 'Unprocessable Entity',
+	];
+
 	public static function exception_handler($e, bool $exit=true)
 	{
 		// logging exception as regular egw_execption_hander does
@@ -2659,6 +2719,12 @@ class CalDAV extends HTTP_WebDAV_Server
 			if (is_a($e, JsParseException::class))
 			{
 				$status = '422 Unprocessable Entity';
+			}
+			// a client error carries its status as exception-code, reporting it as 500 tells the
+			// client to retry, when it should fix its request instead
+			elseif (isset(self::CLIENT_ERROR_STATUS[$code = $e->getCode()]))
+			{
+				$status = $code.' '.self::CLIENT_ERROR_STATUS[$code];
 			}
 			else
 			{

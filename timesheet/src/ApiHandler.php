@@ -80,6 +80,8 @@ class ApiHandler extends Api\CalDAV\Handler
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
+			// report the total to REST clients, it is queried anyway to determine more-results
+			$files['total'] = array($this, 'getTotal');
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = $this->more_results = null;
@@ -171,6 +173,7 @@ class ApiHandler extends Api\CalDAV\Handler
 		for($chunk=0; ($timesheets =& $this->bo->search($search, '*', $order, '', '', False, 'AND',
 			[$inital_sync_token_offset+$chunk*self::CHUNK_SIZE, $nresults ?: self::CHUNK_SIZE], $filter)); ++$chunk)
 		{
+			$this->total = $this->bo->total;
 			// read custom-fields
 			if ($this->bo->customfields)
 			{
@@ -278,8 +281,21 @@ class ApiHandler extends Api\CalDAV\Handler
 		$cols = [];
 		foreach($filter as $name => $value)
 		{
+			// CalDAV::jsonIndex() appends filters[start] / filters[end] as a time-range under an integer key
+			if (!is_string($name))
+			{
+				if (is_array($value) && ($value['name'] ?? null) === 'time-range')
+				{
+					$cols[] = $this->jsonTimeRangeFilter($value['attrs'], 'ts_start');
+				}
+				continue;
+			}
 			switch($name)
 			{
+				case 'order':
+					$cols['order'] = $this->jsonOrderFilter($value);
+					break;
+
 				case 'search':
 					$cols = array_merge($cols, $this->bo->search2criteria($value));
 					break;
@@ -327,7 +343,9 @@ class ApiHandler extends Api\CalDAV\Handler
 					}
 					else
 					{
-						$cols['ts_'.$name] = $value;
+						// reject an unknown filter with a helpful 400, instead of an SQL error
+						$this->assertFilterColumn($column='ts_'.$name, $name);
+						$cols[$column] = $value;
 					}
 					break;
 			}

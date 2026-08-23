@@ -31,7 +31,7 @@
           "Calendar"
         ],
         "summary": "List all events of the user",
-        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
+        "description": "Returns events from the user's calendar. Without filters[start]/filters[end] only events between 100 days in the past and 365 days in the future are returned. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listEvents",
         "parameters": [
           {
@@ -58,7 +58,7 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
               "enum": [
@@ -89,7 +89,9 @@
         }
       },
       "post": {
-        "tags": ["Calendar"],
+        "tags": [
+          "Calendar"
+        ],
         "summary": "Create a new event for the current user",
         "description": "Adds a new event to the calendar. The Location header in the response gives the URL of the new resource. Use `Prefer: return=representation` to get the full event in the response.",
         "operationId": "createEvent",
@@ -100,7 +102,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           },
           {
@@ -109,7 +113,9 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["return=representation"]
+              "enum": [
+                "return=representation"
+              ]
             },
             "description": "Request the server to return the full representation of the created event"
           }
@@ -167,9 +173,11 @@
     },
     "/{username}/calendar/": {
       "get": {
-        "tags": ["Calendar"],
+        "tags": [
+          "Calendar"
+        ],
         "summary": "List all events in a given users calendar",
-        "description": "Returns all events in the user's calendar. Supports filtering, pagination, and custom property selection.",
+        "description": "Returns events from the user's calendar. Without filters[start]/filters[end] only events between 100 days in the past and 365 days in the future are returned. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listUserEvents",
         "parameters": [
           {
@@ -199,10 +207,13 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
-              "enum": ["application/json", "application/pretty+json"]
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
             },
             "description": "Accept header for JSON or pretty-printed JSON"
           }
@@ -227,7 +238,9 @@
         }
       },
       "post": {
-        "tags": ["Calendar"],
+        "tags": [
+          "Calendar"
+        ],
         "summary": "Create a new event for the given user",
         "description": "Adds a new event to the calendar. The Location header in the response gives the URL of the new resource. Use `Prefer: return=representation` to get the full event in the response.",
         "operationId": "createUserEvent",
@@ -241,7 +254,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           },
           {
@@ -250,7 +265,9 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["return=representation"]
+              "enum": [
+                "return=representation"
+              ]
             },
             "description": "Request the server to return the full representation of the created event"
           }
@@ -308,7 +325,9 @@
     },
     "/calendar/{id}": {
       "get": {
-        "tags": ["Calendar"],
+        "tags": [
+          "Calendar"
+        ],
         "summary": "Get a single event",
         "description": "Retrieves a single event by ID.",
         "operationId": "getEvent",
@@ -319,10 +338,13 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
-              "enum": ["application/json", "application/pretty+json"]
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
             }
           }
         ],
@@ -346,7 +368,9 @@
         }
       },
       "put": {
-        "tags": ["Calendar"],
+        "tags": [
+          "Calendar"
+        ],
         "summary": "Replace an event",
         "description": "Replaces all attributes of an event. Requires all attributes to be specified. If the ID is a UID, it will update the existing event or create a new one if it does not exist.",
         "operationId": "replaceEvent",
@@ -360,7 +384,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           }
         ],
@@ -402,7 +428,9 @@
         }
       },
       "patch": {
-        "tags": ["Calendar"],
+        "tags": [
+          "Calendar"
+        ],
         "summary": "Partially update an event",
         "description": "Updates only the specified attributes of an event.",
         "operationId": "updateEvent",
@@ -416,7 +444,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           }
         ],
@@ -446,7 +476,9 @@
         }
       },
       "delete": {
-        "tags": ["Calendar"],
+        "tags": [
+          "Calendar"
+        ],
         "summary": "Delete an event",
         "description": "Deletes an event by ID.",
         "operationId": "deleteEvent",
@@ -457,10 +489,12 @@
           {
             "name": "Accept",
             "in": "header",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             },
             "description": "Accept header is required to avoid 404 Not Found (URL does not end with .ics)"
           }
@@ -474,6 +508,57 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/calendar/count": {
+      "get": {
+        "tags": [
+          "Calendar"
+        ],
+        "summary": "Count calendar events",
+        "description": "Returns ONLY the number of calendar events matching the filters, as {\"total\": <n>}. Use this to answer \"how many ...\" questions instead of listing entries: it accepts the same filters[...] parameters as the listing, but transfers no entries at all, so it works on collections of any size.",
+        "operationId": "countEvents",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_search"
+          },
+          {
+            "$ref": "#/components/parameters/filters_linked"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of matching entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "number of matching entries"
+                    }
+                  },
+                  "required": [
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid filter"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -536,25 +621,27 @@
         "schema": {
           "type": "integer"
         },
-        "description": "Limit number of responses (only for sync-collection)"
+        "description": "Limit the number of events returned. Only honored together with the sync-token parameter: send sync-token= (empty) plus nresults=N to receive at most N events, a \"more-results\": true flag when further events exist, and a sync-token to request the next chunk. Sent on its own, nresults has no effect."
       },
       "filters_start": {
         "name": "filters[start]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "datetime"
+          "type": "string",
+          "format": "date"
         },
-        "description": "Start date of search. Example: filters[start]=2026-01-01"
+        "description": "Only return entries overlapping this start date, as YYYY-MM-DD (a full ISO 8601 date-time is also accepted). REQUIRED whenever the question refers to a time period: resolve phrases like 'this week', 'today' or 'next month' to explicit dates and pass them. Example: filters[start]=2026-01-01"
       },
       "filters_end": {
         "name": "filters[end]",
         "in": "query",
         "required": false,
         "schema": {
-          "type": "datetime"
+          "type": "string",
+          "format": "date"
         },
-        "description": "End date of search. Example: filters[start]=2026-02-01"
+        "description": "Only return entries overlapping this end date, as YYYY-MM-DD (a full ISO 8601 date-time is also accepted). Pass together with filters[start] for any time-bounded question. Example: filters[end]=2026-02-01"
       },
       "filters_search": {
         "name": "filters[search]",
@@ -563,7 +650,7 @@
         "schema": {
           "type": "string"
         },
-        "description": "Search pattern. Example: filters[search]=something"
+        "description": "Free-text pattern searched over event title, description and location. Cannot be combined with filters[linked]. Example: filters[search]=standup"
       },
       "filters_linked": {
         "name": "filters[linked]",
@@ -578,11 +665,20 @@
     "schemas": {
       "Event": {
         "type": "object",
-        "required": ["@type", "prodId", "uid", "title", "start", "duration"],
+        "required": [
+          "@type",
+          "prodId",
+          "uid",
+          "title",
+          "start",
+          "duration"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Event"],
+            "enum": [
+              "Event"
+            ],
             "description": "Type of the resource (always 'Event')"
           },
           "prodId": {
@@ -677,7 +773,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["tentative", "confirmed", "cancelled"],
+            "enum": [
+              "tentative",
+              "confirmed",
+              "cancelled"
+            ],
             "description": "Status of the event"
           },
           "priority": {
@@ -686,12 +786,21 @@
           },
           "privacy": {
             "type": "string",
-            "enum": ["public", "private", "confidential"],
+            "enum": [
+              "public",
+              "private",
+              "confidential"
+            ],
             "description": "Privacy level of the event"
           },
           "freeBusyStatus": {
             "type": "string",
-            "enum": ["free", "busy", "busy-unavailable", "busy-tentative"],
+            "enum": [
+              "free",
+              "busy",
+              "busy-unavailable",
+              "busy-tentative"
+            ],
             "description": "Free/busy status of the event"
           },
           "description": {
@@ -731,14 +840,22 @@
           },
           "status": {
             "type": "string",
-            "enum": ["tentative", "confirmed", "cancelled"]
+            "enum": [
+              "tentative",
+              "confirmed",
+              "cancelled"
+            ]
           },
           "priority": {
             "type": "integer"
           },
           "privacy": {
             "type": "string",
-            "enum": ["public", "private", "confidential"]
+            "enum": [
+              "public",
+              "private",
+              "confidential"
+            ]
           },
           "alerts": {
             "type": "object",
@@ -757,15 +874,25 @@
       },
       "RecurrenceRule": {
         "type": "object",
-        "required": ["@type", "frequency"],
+        "required": [
+          "@type",
+          "frequency"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["RecurrenceRule"]
+            "enum": [
+              "RecurrenceRule"
+            ]
           },
           "frequency": {
             "type": "string",
-            "enum": ["daily", "weekly", "monthly", "yearly"]
+            "enum": [
+              "daily",
+              "weekly",
+              "monthly",
+              "yearly"
+            ]
           },
           "until": {
             "type": "string",
@@ -781,11 +908,16 @@
       },
       "NDay": {
         "type": "object",
-        "required": ["@type", "day"],
+        "required": [
+          "@type",
+          "day"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["NDay"]
+            "enum": [
+              "NDay"
+            ]
           },
           "day": {
             "type": "string",
@@ -795,11 +927,20 @@
       },
       "Participant": {
         "type": "object",
-        "required": ["@type", "name", "email", "kind", "roles", "participationStatus"],
+        "required": [
+          "@type",
+          "name",
+          "email",
+          "kind",
+          "roles",
+          "participationStatus"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Participant"]
+            "enum": [
+              "Participant"
+            ]
           },
           "name": {
             "type": "string"
@@ -810,7 +951,10 @@
           },
           "kind": {
             "type": "string",
-            "enum": ["individual", "group"]
+            "enum": [
+              "individual",
+              "group"
+            ]
           },
           "roles": {
             "type": "object",
@@ -828,17 +972,30 @@
           },
           "participationStatus": {
             "type": "string",
-            "enum": ["needs-action", "accepted", "declined", "tentative", "delegated", "completed", "in-process"]
+            "enum": [
+              "needs-action",
+              "accepted",
+              "declined",
+              "tentative",
+              "delegated",
+              "completed",
+              "in-process"
+            ]
           }
         }
       },
       "Alert": {
         "type": "object",
-        "required": ["@type", "trigger"],
+        "required": [
+          "@type",
+          "trigger"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Alert"]
+            "enum": [
+              "Alert"
+            ]
           },
           "trigger": {
             "$ref": "#/components/schemas/OffsetTrigger"
@@ -847,11 +1004,16 @@
       },
       "OffsetTrigger": {
         "type": "object",
-        "required": ["@type", "offset"],
+        "required": [
+          "@type",
+          "offset"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["OffsetTrigger"]
+            "enum": [
+              "OffsetTrigger"
+            ]
           },
           "offset": {
             "type": "integer",
