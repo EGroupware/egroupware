@@ -627,7 +627,7 @@ class ApiHandler extends Api\CalDAV\Handler
 	 * @return Api\Mail\Account
 	 * @throws Api\Exception\NotFound
 	 */
-	protected static function getMailAccount(int $user, ?int $ident_id=null) : Api\Mail\Account
+	protected static function getMailAccount(int $user, ?int $ident_id=null, bool $replace_placeholders=true) : Api\Mail\Account
 	{
 		if (empty($ident_id))
 		{
@@ -635,7 +635,8 @@ class ApiHandler extends Api\CalDAV\Handler
 		}
 		$identity = Api\Mail\Account::read_identity($ident_id, false, $user);
 		return Api\Mail\Account::read($identity['acc_id'],
-			!empty($GLOBALS['egw_info']['user']['apps']['admin']) && $user != $GLOBALS['egw_info']['user']['account_id'] ? $user : null);
+			!empty($GLOBALS['egw_info']['user']['apps']['admin']) && $user != $GLOBALS['egw_info']['user']['account_id'] ? $user : null,
+			$replace_placeholders);
 	}
 
 	const PASSWORD_DUMMY = '********';
@@ -782,7 +783,12 @@ class ApiHandler extends Api\CalDAV\Handler
 			return '501 Not Implemented';
 		}
 		try {
-			$account = $this->getMailAccount($user, $id);
+			// replace_placeholders=false: this account object becomes the merge-base for a partial
+			// PATCH, written straight back afterwards - if ident_realname/ident_email are empty here
+			// they must STAY empty when merged/written, not get silently replaced with the
+			// patching user's own name/email (which would permanently corrupt a shared/multi-user
+			// identity's per-viewer placeholder display for everyone else)
+			$account = $this->getMailAccount($user, $id, false);
 		}
 		catch (Api\Exception\NotFound $e) {
 			unset($e);

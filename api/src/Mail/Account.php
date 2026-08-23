@@ -250,7 +250,7 @@ class Account implements \ArrayAccess
 	 * @param int $called_for=null if set access to given user (without smtp credentials!),
 	 *	default current user AND read username/password from current users session
 	 */
-	public function __construct(array $params, $called_for=null)
+	public function __construct(array $params, $called_for=null, bool $replace_placeholders=true)
 	{
 		// tracker_mailhandling instantiates class without our database (acc_id==="tracker*")
 		if ((int)$params['acc_id'] > 0)
@@ -275,7 +275,8 @@ class Account implements \ArrayAccess
 			{
 				// get username/password from current user, let it overwrite credentials for all/no session
 				$params = Credentials::from_session(
-						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params, !isset($called_for)
+						(!isset($called_for) ? array() : array('acc_smtp_auth_session' => false)) + $params,
+						$replace_placeholders && !isset($called_for)
 					) + $params;
 
 				// check if we should use admin-credentials, if no session password exists, eg. SSO without password
@@ -1066,14 +1067,22 @@ class Account implements \ArrayAccess
 	 * @param int $acc_id
 	 * @param int $called_for =null if set admin access to given user, default current user
 	 *	AND read username/password from current users session, 0: find accounts from all users
+	 * @param bool $replace_placeholders =true false: leave an empty ident_realname/ident_email
+	 *	empty, instead of filling it with the current user's own account_fullname/account_email -
+	 *	must be false for any read whose result will be merged with a partial update and written
+	 *	back (eg. a REST PATCH), otherwise the substituted display value permanently overwrites
+	 *	the stored (deliberately empty, per-viewer-substituted) value
 	 * @return self
 	 * @throws Api\Exception\NotFound if account was not found (or not valid for current user)
 	 */
-	public static function read($acc_id, $called_for=null)
+	public static function read($acc_id, $called_for=null, bool $replace_placeholders=true)
 	{
 		//error_log(__METHOD__."($acc_id, ".array2string($called_for).")");
-		// some caching, but only for regular usage/users
-		if (!isset($called_for) && (!isset(self::$instances[$acc_id]) || self::$instances[$acc_id]->user == $GLOBALS['egw_info']['user']['account_id']))
+		// some caching, but only for regular usage/users with placeholder substitution enabled
+		// (the default, cacheable mode) - a caller explicitly suppressing it must always get a
+		// fresh, uncached instance, and must never pollute the shared cache with
+		// placeholder-suppressed data other (normal) callers would then wrongly reuse
+		if ($replace_placeholders && !isset($called_for) && (!isset(self::$instances[$acc_id]) || self::$instances[$acc_id]->user == $GLOBALS['egw_info']['user']['account_id']))
 		{
 			// act as singleton: if we already have an instance, return it
 			if (isset(self::$instances[$acc_id]))
@@ -1120,12 +1129,12 @@ class Account implements \ArrayAccess
 		$data = self::db2data($data);
 		//error_log(__METHOD__."($acc_id, $only_current_user) returning ".array2string($data));
 
-		if (!isset($called_for))
+		if ($replace_placeholders && !isset($called_for))
 		{
 			//error_log(__METHOD__."($acc_id) creating instance and caching data read from db");
 			$ret =& self::$instances[$acc_id];
 		}
-		return $ret = new Account($data, $called_for);
+		return $ret = new Account($data, $called_for, $replace_placeholders);
 	}
 
 	/**
