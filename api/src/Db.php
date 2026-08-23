@@ -1722,7 +1722,12 @@ class Db
 				if (!is_int($key) && is_array($column_definitions) && !isset($column_definitions[$key]) &&
 					(!preg_match('/^([a-z0-9_]+)\.([a-z0-9_]+)$/i',$key,$matches) || !isset($column_definitions[$matches[2]])))
 				{
-					throw new Db\Exception\InvalidSql("db::column_data_implode('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).",<pre>".print_r($column_definitions,True)."</pre><b>nothing known about column '$key'!</b>");
+					// the full arrays are valuable for debugging, but this exception message is echoed
+					// to REST/CalDAV clients, so keep the table schema and the given values out of it
+					error_log(__METHOD__."('$glue',".print_r($array,True).",'$use_key',".print_r($only,True).
+						") nothing known about column '$key', known columns: ".
+						implode(', ', array_keys((array)$column_definitions)));
+					throw new Db\Exception\InvalidSql("nothing known about column '$key'!");
 				}
 				$column_type = is_array($column_definitions) ? ($column_definitions[$col]['type'] ?? false) : False;
 				$not_null = is_array($column_definitions) && isset($column_definitions[$col]['nullable']) ? !$column_definitions[$col]['nullable'] : false;
