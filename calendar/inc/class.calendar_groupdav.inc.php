@@ -217,6 +217,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			}
 			$filter[$name] = $this->bo->now + 24*3600*($name == 'start' ? -1 : 1)*abs($value);
 		}
+		// remember the default future-limit, to tell it apart from an end-date requested by the client below
+		$default_end = $filter['end'];
 		if ($this->client_shared_uid_exceptions)	// do NOT return (non-virtual) exceptions
 		{
 			$filter['query'] = array('cal_reference' => 0);
@@ -269,8 +271,13 @@ class calendar_groupdav extends Api\CalDAV\Handler
 
 			$filter['order'] = 'cal_modified ASC';	// return oldest modifications first
 			$filter['sync-collection'] = true;
-			// no end-date / limit into the future, as unchanged entries would never be transferted later on
-			unset($filter['end']);
+			// no default end-date / limit into the future, as unchanged entries would never be transferted
+			// later on - an end-date explicitly requested by the client is kept, dropping it silently
+			// widened every filtered query issued together with a sync-token
+			if (($filter['end'] ?? null) === $default_end)
+			{
+				unset($filter['end']);
+			}
 		}
 
 		// check if we have to return the full calendar data or just the etag's

@@ -1198,11 +1198,13 @@ class CalDAV extends HTTP_WebDAV_Server
 			$_GET['nresults'] = OpenAPI::defaultMatches();
 		}
 
-		// sync-collection report via GET parameter sync-token
-		if (isset($_GET['sync-token']))
+		// sync-collection report via GET parameter sync-token, or whenever the number of results is
+		// limited: the handlers only evaluate nresults for a sync-collection, so a plain listing was
+		// unbounded even with nresults given - an empty sync-token requests the initial full sync
+		if (isset($_GET['sync-token']) || isset($_GET['nresults']))
 		{
 			$propfind_options['root'] = ['name' => 'sync-collection'];
-			$propfind_options['other'][] = ['name' => 'sync-token', 'data' => $_GET['sync-token']];
+			$propfind_options['other'][] = ['name' => 'sync-token', 'data' => $_GET['sync-token'] ?? ''];
 			$propfind_options['other'][] = ['name' => 'sync-level', 'data' => $_GET['sync-level'] ?? 1];
 
 			// clients want's pagination
