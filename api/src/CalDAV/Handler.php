@@ -129,6 +129,130 @@ abstract class Handler
 	const SYNC_TOKEN_OFFSET_DELIMITER = '_';
 
 	/**
+	 * Total number of entries matching the current filter, or null if not (yet) known
+	 *
+	 * Set by the handlers from their bo-class, after a limited query determined it anyway to
+	 * calculate $more_results. CalDAV::jsonIndex() reports it as "total" to REST clients, so a
+	 * client can answer "how many ..." without transferring the entries.
+	 *
+	 * @var ?int
+	 */
+	public $total;
+
+	/**
+	 * Get the total number of matching entries, for CalDAV::jsonIndex()
+	 *
+	 * Called after the propfind-generator ran, as $total is only known then.
+	 *
+	 * @return ?int
+	 */
+	public function getTotal(): ?int
+	{
+		// an empty collection never enters the paging loop, so $total was never assigned there
+		return $this->total ?? (isset($this->bo->total) ? (int)$this->bo->total : null);
+	}
+
+	/**
+	 * Columns which may be used as a JSON/REST filter
+	 *
+	 * Used to reject an unknown filter with a helpful "400 Bad Request", instead of passing a
+	 * non-existing column on to the database, which fails with a "500 Internal Server Error".
+	 *
+	 * @return array of column-names, empty array if the app can not tell (--> no validation)
+	 */
+	protected function jsonFilterColumns(): array
+	{
+		if (is_array($this->bo->db_cols ?? null))
+		{
+			return array_keys($this->bo->db_cols);
+		}
+		if (is_array($this->bo->so->db_cols ?? null))
+		{
+			return array_keys($this->bo->so->db_cols);
+		}
+		// Api\Contacts keeps its storage in somain
+		if (is_array($this->bo->somain->db_cols ?? null))
+		{
+			return array_keys($this->bo->somain->db_cols);
+		}
+		return [];
+	}
+
+	/**
+	 * Check a filter maps to an existing column, throwing a helpful exception if it does not
+	 *
+	 * @param string $column column the filter was mapped to
+	 * @param string $name filter-name as given by the client
+	 * @throws Api\Exception 400 naming the valid filters
+	 */
+	protected function assertFilterColumn(string $column, string $name): void
+	{
+		if (!($columns = $this->jsonFilterColumns()) || in_array($column, $columns, true))
+		{
+			return;
+		}
+		sort($columns);
+		throw new Api\Exception("Unknown filter '$name'! Valid filters are: ".implode(', ', $columns), 400);
+	}
+
+	/**
+	 * Turn the time-range CalDAV::jsonIndex() generates from filters[start] / filters[end] into SQL
+	 *
+	 * jsonIndex() appends it under an integer key, as CalDAV filters are a list, not a hash. Apps
+	 * with a single date-column can use this; calendar and InfoLog have their own, richer handling.
+	 *
+	 * @param array $attrs with keys start and/or end
+	 * @param string $column date-column to filter on, e.g. "ts_start"
+	 * @return string SQL fragment
+	 * @throws Api\Exception 400 if neither start nor end is given
+	 */
+	protected function jsonTimeRangeFilter(array $attrs, string $column): string
+	{
+		$sql = [];
+		foreach(['start' => '>=', 'end' => '<='] as $name => $op)
+		{
+			if (!empty($attrs[$name]))
+			{
+				try {
+					$date = new Api\DateTime($attrs[$name]);
+				}
+				catch (\Exception $e) {
+					throw new Api\Exception("Invalid filters[$name] '$attrs[$name]', use a date like 2026-01-31!", 400);
+				}
+				// a bare date as end means the whole day: filters[end]=2026-01-31 has to match entries
+				// from that day too, not just the ones at exactly 00:00
+				if ($name === 'end' && preg_match('/^\d{4}-\d{2}-\d{2}$/', trim($attrs[$name])))
+				{
+					$date->setTime(23, 59, 59);
+				}
+				$sql[] = $column.$op.(int)$date->format('ts');
+			}
+		}
+		if (!$sql)
+		{
+			throw new Api\Exception('filters[start] and/or filters[end] require a date like 2026-01-31!', 400);
+		}
+		return '('.implode(' AND ', $sql).')';
+	}
+
+	/**
+	 * Validate filters[order], as it is passed on as SQL
+	 *
+	 * @param string $value "<column>" optionally followed by " ASC" or " DESC"
+	 * @return string
+	 * @throws Api\Exception 400 for an unknown column or direction
+	 */
+	protected function jsonOrderFilter(string $value): string
+	{
+		if (!preg_match('/^([a-z0-9_]+\.)?([a-z0-9_]+)( +(ASC|DESC))?$/i', trim($value), $matches))
+		{
+			throw new Api\Exception("Invalid filters[order] '$value', must be '<column> [ASC|DESC]'!", 400);
+		}
+		$this->assertFilterColumn($matches[2], 'order');
+		return $matches[2].(empty($matches[4]) ? '' : ' '.strtoupper($matches[4]));
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $app 'calendar', 'addressbook' or 'infolog'

@@ -217,6 +217,8 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
+			// report the total to REST clients, it is queried anyway to determine more-results
+			$files['total'] = array($this, 'getTotal');
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = $this->more_results = null;
@@ -358,6 +360,7 @@ class infolog_groupdav extends Api\CalDAV\Handler
 			// if $query[cols] is set, bo->search() returns an iterator, which might be empty, in which case we have to stop
 			(is_array($tasks) || $tasks->NumRows()))
 		{
+			$this->total = $this->bo->total;
 			if ($this->debug)
 			{
 				error_log(__METHOD__ . "(): called bo->search(" . json_encode($query) . ") returned ".(is_array($tasks) ? count($tasks) : $tasks->NumRows())." entries");
@@ -481,6 +484,25 @@ class infolog_groupdav extends Api\CalDAV\Handler
 						$time_ranges[] = $this->_time_range_filter($value['attrs']);
 					}
 					unset($json_filters[$key]);
+				}
+			}
+			foreach($json_filters as $name => $value)
+			{
+				switch($name)
+				{
+					case 'order':
+						$json_filters['order'] = $this->jsonOrderFilter($value);
+						break;
+					case 'search':
+					case 'filter':
+						break;      // handled by infolog_bo::search()
+					default:
+						if ($name[0] !== '#')
+						{
+							// reject an unknown filter with a helpful 400, instead of an SQL error
+							$this->assertFilterColumn($name, $name);
+						}
+						break;
 				}
 			}
 			$filters = $json_filters + $filters;    // + to allow overwriting default owner filter (BO ensures ACL!)

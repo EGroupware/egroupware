@@ -265,6 +265,8 @@ class calendar_groupdav extends Api\CalDAV\Handler
 			// callback to query sync-token, after propfind_callbacks / iterator is run and
 			// stored max. modification-time in $this->sync_collection_token
 			$files['sync-token'] = array($this, 'get_sync_collection_token');
+			// report the total to REST clients, it is queried anyway to determine more-results
+			$files['total'] = array($this, 'getTotal');
 			$files['sync-token-params'] = array($path, $user);
 
 			$this->sync_collection_token = $this->more_results = null;
@@ -354,6 +356,7 @@ class calendar_groupdav extends Api\CalDAV\Handler
 				'date_format' => 'object',
 			]+$filter)); ++$chunk)
 		{
+			$this->total = $this->bo->total;
 			foreach($events as $event)
 			{
 				$no_active_participants = !$this->hasActiveParticipants($event, $filter['users'], $exceptions);
