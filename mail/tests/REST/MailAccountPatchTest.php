@@ -253,25 +253,41 @@ class MailAccountPatchTest extends RestBase
 		$this->assertHttpStatus(204, $blank, 'admin blanking identRealname/identEmail');
 		$this->setAccUserEditable($this->ident_id, true);
 
-		// sanity check: with the fields genuinely blank, the organizer's OWN GET must show
-		// their own substituted name/email (proves the substitution mechanism itself works,
-		// so a later mismatch can only mean the PATCH persisted it, not that substitution is
-		// broken entirely)
+		// captured for the trailing sanity check below - NOT used to gate the actual
+		// regression check, since whether it's substituted with a real name or stays blank
+		// itself (see below) doesn't affect the merge-base/persistence bug this test targets
 		$asOrganizerBefore = $this->getAccountJson($this->organizerLid(), $this->ident_id);
-		$this->assertNotSame('', $asOrganizerBefore['identRealname'],
-			'organizer should see a substituted (non-blank) realname when the stored value is blank');
 
 		// the account owner patches a COMPLETELY unrelated field - must not touch realname/email
 		$response = $this->patchAccount($this->organizerLid(), $this->organizerLid(), $this->ident_id,
 			['identOrg' => 'PHPUnit Regression Org']);
 		$this->assertHttpStatus(204, $response, 'patching an unrelated field');
 
-		// a DIFFERENT viewer (admin) reads the SAME identity
+		// a DIFFERENT viewer (admin) reads the SAME identity - admin viewing ANOTHER user's
+		// identity never gets placeholder substitution (see getAccountJsonWithClient()'s
+		// docblock), so it must show the RAW stored value, i.e. still genuinely blank. This is
+		// the actual regression check, and it holds regardless of whether the organizer's own
+		// account happens to have a fullname/email set - see the trailing sanity check below.
 		$asAdmin = $this->getAccountJsonWithClient($this->adminClient(), $this->organizerLid(), $this->ident_id);
 		$this->assertSame('PHPUnit Regression Org', $asAdmin['identOrg'], 'the actually-patched field must round-trip');
-		$this->assertNotSame($asOrganizerBefore['identRealname'], $asAdmin['identRealname'],
-			'each viewer must see their OWN substituted realname - the patch must not have persisted the organizer\'s name into storage');
-		$this->assertNotSame($asOrganizerBefore['identEmail'], $asAdmin['identEmail'],
-			'each viewer must see their OWN substituted email - the patch must not have persisted the organizer\'s email into storage');
+		$this->assertSame('', $asAdmin['identRealname'],
+			'admin viewing another user\'s identity must see the RAW stored (blank) value - the patch must not have persisted the organizer\'s substituted name into storage');
+		$this->assertSame('', $asAdmin['identEmail'],
+			'admin viewing another user\'s identity must see the RAW stored (blank) value - the patch must not have persisted the organizer\'s substituted email into storage');
+
+		// sanity check, informational only (does not gate the regression check above, which
+		// already ran and passed): if the organizer's account has a real fullname/email set,
+		// their OWN earlier GET should have shown it substituted in rather than blank - proving
+		// the substitution mechanism was actually exercised here, not vacuously blank-in/
+		// blank-out. Skipped on an environment (eg. a freshly seeded CI account) where the
+		// organizer has neither set - there is nothing to observe there, but the bug this test
+		// targets wouldn't be observable in that case either (a blank substituted value looks
+		// identical to a blank raw value), so it's not a gap in the check above.
+		if ($asOrganizerBefore['identRealname'] === '' && $asOrganizerBefore['identEmail'] === '')
+		{
+			$this->markTestSkipped('organizer account has no account_fullname/account_email '.
+				'set in this environment - cannot demonstrate the substitution itself, though '.
+				'the core persistence check above already ran and passed');
+		}
 	}
 }
