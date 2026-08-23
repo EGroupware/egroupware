@@ -809,7 +809,7 @@ class ApiHandler extends Api\CalDAV\Handler
 			return '204 No Content';
 		}
 		catch (\Throwable $e) {
-			self::handleException($e);
+			return self::handleException($e);
 		}
 	}
 
