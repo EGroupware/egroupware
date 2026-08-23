@@ -30,6 +30,11 @@ class OpenAPI
 	];
 
 	/**
+	 * HTTP methods of an OpenAPI path-item object, every other key (parameters, summary, description, servers, $ref) is no operation
+	 */
+	const HTTP_METHODS = ['get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace'];
+
+	/**
 	 * Scan directory for app-specific JSON files and merge them into a single OpenAPI spec
 	 *
 	 * @param bool $inline_parameters true: replace parameter references with the actual data
@@ -86,16 +91,28 @@ class OpenAPI
 		{
 			if (str_ends_with($file, ".json"))
 			{
-				// if we're authenticated only show API's of apps the user has access too or are independent of an app like "links.json"
-				if (isset($GLOBALS['egw_info']['apps'][$app=basename($file, '.json')]) &&
-					isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][$app]))
+				$app_json = json_decode(file_get_contents($base_dir.'/'.$file), true);
+
+				// if we know the installed apps, only show API's of apps the user has access too,
+				// but always keep app-independent descriptions like "links.json"
+				if (!empty($GLOBALS['egw_info']['apps']) && self::isAppSpecific($app=basename($file, '.json'), $app_json) &&
+					(!isset($GLOBALS['egw_info']['apps'][$app]) ||   // app is not installed
+						isset($GLOBALS['egw_info']['user']['apps']) && !isset($GLOBALS['egw_info']['user']['apps'][$app])))
 				{
 					continue;
 				}
-				$app_json = json_decode(file_get_contents($base_dir.'/'.$file), true);
 
 				foreach($app_json['paths'] as $path => &$methods)
 				{
+					// a path-item can contain more than operations: parameters, summary, description, servers or $ref
+					$path_parameters = $methods['parameters'] ?? [];
+					foreach(array_keys($methods) as $key)
+					{
+						if (!in_array(strtolower($key), self::HTTP_METHODS, true))
+						{
+							unset($methods[$key]);
+						}
+					}
 					foreach($methods as $method => &$data)
 					{
 						if (empty($data['operationId']) || isset($operationIds[$data['operationId']]))
@@ -110,7 +127,12 @@ class OpenAPI
 							unset($methods[$method]);
 							continue;
 						}
-						if ($inline_parameters)
+						// path-level parameters apply to all operations of that path, operation-level ones take precedence
+						if ($path_parameters)
+						{
+							$data['parameters'] = self::mergeParameters($path_parameters, $data['parameters'] ?? [], $app_json);
+						}
+						if ($inline_parameters && !empty($data['parameters']))
 						{
 							foreach ($data['parameters'] as &$parameter)
 							{
@@ -123,13 +145,16 @@ class OpenAPI
 									$parameter = $app_json['components']['parameters'][$name];
 								}
 							}
+							unset($parameter);
 						}
 					}
+					unset($data);
 					if (!$methods)
 					{
 						unset($app_json['paths'][$path]);
 					}
 				}
+				unset($methods);
 				if ($inline_parameters)
 				{
 					unset($app_json['parameters']);
@@ -145,6 +170,63 @@ class OpenAPI
 			}
 		}
 		return $json;
+	}
+
+	/**
+	 * Check if an OpenAPI description belongs to a single app, or is app-independent like "links.json"
+	 *
+	 * App-specific descriptions have at least one path under /<app>, app-independent ones use a placeholder like /{app}.
+	 *
+	 * @param string $app name of the JSON-file without extension
+	 * @param array $app_json decoded OpenAPI description
+	 * @return bool
+	 */
+	protected static function isAppSpecific(string $app, array $app_json): bool
+	{
+		foreach(array_keys($app_json['paths'] ?? []) as $path)
+		{
+			if ($path === '/'.$app || str_starts_with($path, '/'.$app.'/'))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	/**
+	 * Merge path-level parameters into the parameters of a single operation
+	 *
+	 * Operation-level parameters take precedence over path-level ones with the same name and location.
+	 *
+	 * @param array $path_parameters parameters of the path-item, applying to all its operations
+	 * @param array $parameters parameters of the operation itself
+	 * @param array $app_json decoded OpenAPI description to resolve references for the comparison
+	 * @return array
+	 */
+	protected static function mergeParameters(array $path_parameters, array $parameters, array $app_json): array
+	{
+		$merged = [];
+		foreach(array_merge($path_parameters, $parameters) as $parameter)
+		{
+			$merged[self::parameterKey($parameter, $app_json)] = $parameter;
+		}
+		return array_values($merged);
+	}
+
+	/**
+	 * Get "<name>:<in>" identifying a parameter, resolving a reference to components/parameters
+	 *
+	 * @param array $parameter
+	 * @param array $app_json
+	 * @return string
+	 */
+	protected static function parameterKey(array $parameter, array $app_json): string
+	{
+		if (isset($parameter['$ref']) && str_starts_with($parameter['$ref'], '#/components/parameters/'))
+		{
+			$parameter = $app_json['components']['parameters'][explode('/', $parameter['$ref'])[3] ?? ''] ?? $parameter;
+		}
+		return ($parameter['name'] ?? $parameter['$ref'] ?? '').':'.($parameter['in'] ?? '');
 	}
 
 	/**
