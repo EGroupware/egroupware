@@ -46,6 +46,17 @@ require_once __DIR__.'/../../../api/tests/RestBase.php';
 class MailAccountPatchTest extends RestBase
 {
 	/**
+	 * ident_id of the shared identity on acc_id=1 (Stalwart/JMAP test account, per project
+	 * memory). Not discovered via GET /{user}/mail: that bare, id-less collection URL never
+	 * reaches ApiHandler::get()'s own '/mail' case at all - Api\CalDAV::_parse_path()
+	 * requires a trailing id segment to route to any app handler, so a bare app URL falls
+	 * through to the generic sync-collection-shortcut handling instead (returns
+	 * {"responses": {}} for mail, which has no syncable "collection members" of that kind).
+	 * Hardcoded here the same way admin/tests/SmimeGenerateTest.php hardcodes acc_id=1.
+	 */
+	const IDENT_ID = 1;
+
+	/**
 	 * A second real, always-present account_lid (per doc/ai/testing.md) distinct from
 	 * EGW_USER, used only as a URL prefix - never authenticated as directly except via the
 	 * admin client.
@@ -94,23 +105,14 @@ class MailAccountPatchTest extends RestBase
 	}
 
 	/**
-	 * Discovered/restored per test: the shared identity id on the test account, and the
-	 * identRealname/accUserEditable values found before the test ran.
+	 * Restored per test: the identRealname/accUserEditable values found before the test ran.
 	 */
-	private $ident_id;
+	private $ident_id = self::IDENT_ID;
 	private $original_realname;
 	private $original_editable;
 
 	protected function setUp() : void
 	{
-		$response = $this->getClient($this->organizerLid())->get($this->url('/'.$this->organizerLid().'/mail'), [
-			RequestOptions::HEADERS => $this->jsonHeaders(),
-		]);
-		$this->assertHttpStatus(200, $response, 'discovering own identities');
-		$identities = $this->jsonDecode($response);
-		$this->assertNotEmpty($identities, 'test user must have at least one mail identity');
-		$this->ident_id = array_key_first($identities);
-
 		$account = $this->getAccountJson($this->organizerLid(), $this->ident_id);
 		$this->original_realname = $account['identRealname'] ?? null;
 		$this->original_editable = $account['accUserEditable'] ?? null;
@@ -118,10 +120,6 @@ class MailAccountPatchTest extends RestBase
 
 	protected function tearDown() : void
 	{
-		if (!isset($this->ident_id))
-		{
-			return;
-		}
 		// admin write bypasses the ownership/accUserEditable check entirely, so this always
 		// succeeds regardless of what a test left behind
 		$this->adminClient()->patch($this->identityUrl($this->organizerLid(), $this->ident_id), [

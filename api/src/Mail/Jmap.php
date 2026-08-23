@@ -104,7 +104,7 @@ class Jmap
 			$this->url = 'https://stalwart.egroupware.org/jmap/';
 		}
 
-		if (!str_starts_with($this->url, 'https://'))
+		if (!preg_match('#^https?://#', $this->url))
 		{
 			$this->authorization[$this->url] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
 
@@ -195,7 +195,7 @@ class Jmap
 	public function bootstrap(bool $use_well_known=true, ?string &$accountId=null) : string
 	{
 		$url = $this->url;
-		if (!str_starts_with($url, 'https://'))
+		if (!preg_match('#^https?://#', $url))
 		{
 			$url = 'https://'.$url;
 		}

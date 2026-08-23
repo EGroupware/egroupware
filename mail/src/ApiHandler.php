@@ -781,8 +781,11 @@ class ApiHandler extends Api\CalDAV\Handler
 		{
 			return '501 Not Implemented';
 		}
-		if (!($account = $this->getMailAccount($user, $id)))
-		{
+		try {
+			$account = $this->getMailAccount($user, $id);
+		}
+		catch (Api\Exception\NotFound $e) {
+			unset($e);
 			return '404 Not Found';
 		}
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) &&
