@@ -13,9 +13,7 @@
 namespace EGroupware\Api\Mail;
 
 use EGroupware\Api;
-
-// ToDo: make this an auto-loadable class or trait
-require_once __DIR__ . '/../../../doc/REST-CalDAV-CardDAV/api-client.php';
+use EGroupware\Api\CalDAV\RestClientTrait;
 
 /**
  * JMAP client library
@@ -34,10 +32,24 @@ require_once __DIR__ . '/../../../doc/REST-CalDAV-CardDAV/api-client.php';
  */
 class Jmap
 {
+	use RestClientTrait {
+		api as protected httpApi;
+	}
+
 	protected string $url;
 	protected string $user;
 	protected string $secret;
 	protected array $well_known;
+
+	/**
+	 * Authorization header to send, indexed by hostname (or, before bootstrap resolves a
+	 * bare "mail"/"stalwart" service-name into a full URL, by that raw value) - a single
+	 * Jmap instance can talk to more than one host (eg. the JMAP host and a different
+	 * OAuth provider host), so this stays Jmap's own concern rather than RestClientTrait's.
+	 *
+	 * @var array
+	 */
+	protected array $authorization = [];
 
 	protected string $accountId;
 	protected array $capabilities;
@@ -75,8 +87,6 @@ class Jmap
 	 */
 	public function __construct(string $host_or_url, string $user, string $secret, ?string &$accountId=null)
 	{
-		global $authorization;
-
 		$this->url = $host_or_url;
 		$this->user = $user;
 		$this->secret = $secret;
@@ -96,13 +106,13 @@ class Jmap
 
 		if (!str_starts_with($this->url, 'https://'))
 		{
-			$authorization[$this->url] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
+			$this->authorization[$this->url] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
 
 			$this->url = $this->bootstrap(true, $accountId);
 		}
 		else
 		{
-			$authorization[parse_url($this->url, PHP_URL_HOST)] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
+			$this->authorization[parse_url($this->url, PHP_URL_HOST)] = 'Authorization: Basic '.base64_encode($user.':'.$secret);
 
 			// need to bootstrap to get the JMAP accountId
 			// we need other stuff set in bootstrap e.g. the downloadUrl //if (empty($accountId))
@@ -126,7 +136,7 @@ class Jmap
 	 * @param int $follow how many redirects to follow, default 3, can be set to 0 to NOT follow
 	 * @return array|string array of decoded JSON or string body
 	 * @throws \JsonException for invalid JSON
-	 * @throws \HttpException with code=0: opening http connection, code=HTTP status, if status is NOT 2xx
+	 * @throws Api\Exception\Http with code=0: opening http connection, code=HTTP status, if status is NOT 2xx
 	 */
 	function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null, int $follow=3)
 	{
@@ -140,15 +150,19 @@ class Jmap
 				$header[] = 'Content-Type: application/json';
 			}
 		}
+		if (($auth = $this->authorization[parse_url($url, PHP_URL_HOST) ?: $url] ?? null) !== null)
+		{
+			$header[] = $auth;
+		}
 		if (!$this->log)
 		{
-			return api($url, $method, $body, $header, $response_header, $follow, only_public: false);
+			return $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false);
 		}
 		// logging request and response
 		file_put_contents($this->log, date('Y-m-d H:i:s O')." $method $url\n".implode("\n", $header)."\n\n".$body."\n\n", FILE_APPEND);
 
 		try {
-			$response = api($url, $method, $body, $header, $response_header, $follow, only_public: false);
+			$response = $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false);
 
 			file_put_contents($this->log, date('Y-m-d H:i:s O').' '.
 				implode("\n", array_map(fn($value, $key) => $key === 0 ? $value : "$key: $value", array_values($response_header), array_keys($response_header)))."\n\n".
@@ -159,7 +173,7 @@ class Jmap
 		catch (\Throwable $e) {
 			file_put_contents($this->log, date('Y-m-d H:i:s O').' '.$e->getMessage()."\n\n".$e->getTraceAsString()."\n\n", FILE_APPEND);
 
-			if ($e instanceof \HttpException)
+			if ($e instanceof Api\Exception\Http)
 			{
 				file_put_contents($this->log,
 					implode("\n", array_map(fn($value, $key) => $key === 0 ? $value : "$key: $value", array_values($e->response_headers), array_keys($e->response_headers)))."\n\n".
@@ -240,9 +254,7 @@ class Jmap
 	 */
 	public function setBearerToken(string $token)
 	{
-		global $authorization;
-
-		$authorization[parse_url($this->url, PHP_URL_HOST) ?: $this->url] = 'Authorization: Bearer '.$token;
+		$this->authorization[parse_url($this->url, PHP_URL_HOST) ?: $this->url] = 'Authorization: Bearer '.$token;
 	}
 
 	/**
@@ -675,7 +687,7 @@ class Jmap
 	 * @param string $name suggested filename, substituted into the download URL only
 	 * @param string $type expected mime-type, substituted into the download URL only
 	 * @return string raw bytes
-	 * @throws Api\Exception|\HttpException
+	 * @throws Api\Exception|Api\Exception\Http
 	 */
 	public function downloadBlob(string $blobId, string $name='blob', string $type='application/octet-stream') : string
 	{
@@ -694,7 +706,7 @@ class Jmap
 	 * @param string $raw
 	 * @param string $type mime-type, e.g. "message/rfc822"
 	 * @return string new blobId
-	 * @throws Api\Exception|\HttpException
+	 * @throws Api\Exception|Api\Exception\Http
 	 */
 	public function uploadBlob(string $raw, string $type='message/rfc822') : string
 	{

@@ -13,10 +13,10 @@ namespace EGroupware\Api\CalDAV;
 
 use EGroupware\Api;
 
-require EGW_INCLUDE_ROOT.'/doc/REST-CalDAV-CardDAV/api-client.php';
-
 class Sync
 {
+	use RestClientTrait;
+
 	protected $url;
 	protected $user;
 	protected $password;
@@ -62,12 +62,12 @@ class Sync
 			try {
 				// for iCloud try directly with GET, for others retry with GET on 400 Bad Request
 				$method = preg_match('#^https://[^.]+\.icloud\.com/#i', $this->url) ? 'GET' : 'HEAD';
-				api($this->url, $method, '', $this->header(['Accept: text/calendar']), $response_header);
+				$this->api($this->url, $method, '', $this->header(['Accept: text/calendar']), $response_header);
 			}
-			catch (\HttpException $e) {
+			catch (Api\Exception\Http $e) {
 				if ($method === 'HEAD' && $e->getCode() == 400)
 				{
-					api($this->url, 'GET', '', $this->header(['Accept: text/calendar']), $response_header);
+					$this->api($this->url, 'GET', '', $this->header(['Accept: text/calendar']), $response_header);
 				}
 				else
 				{
@@ -76,13 +76,13 @@ class Sync
 			}
 			if (preg_match('#^text/calendar(;|$)#', $response_header['content-type']) ||
 				$response_header['content-type'] === 'application/octet-stream' &&
-				str_starts_with(api($this->url, 'GET', '', $this->header(['Accept: text/calendar']), $response_header), 'BEGIN:VCALENDAR'))
+				str_starts_with($this->api($this->url, 'GET', '', $this->header(['Accept: text/calendar']), $response_header), 'BEGIN:VCALENDAR'))
 			{
 				$sync_type = 'calendar-get'.(!empty($response_header['etag']) ? '-etag' : '');
 				return $this->url;
 			}
 		}
-		catch (\HttpException $e) {
+		catch (Api\Exception\Http $e) {
 			// iCloud (caldav.icloud.com) will respond with 400 Bad Request to a HEAD request --> try CalDAV
 		}
 		try {
@@ -94,7 +94,7 @@ class Sync
 				['ns' => Api\CalDAV::CALENDARSERVER, 'name' => 'getctag'],
 			], [], $response_header);
 		}
-		catch (\HttpException $e) {
+		catch (Api\Exception\Http $e) {
 			if (in_array($e->getCode(), [200, 405]) && !parse_url(rtrim($this->url, '/'), PHP_URL_PATH))
 			{
 				$this->url = rtrim($this->url, '/').'/.well-known/caldav';
@@ -231,7 +231,7 @@ class Sync
 			}
 			$prop_xml .= "\t</prop>";
 		}
-		$xml = api($this->url, 'PROPFIND', $body=<<<EOT
+		$xml = $this->api($this->url, 'PROPFIND', $body=<<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <propfind xmlns="DAV:">
 	$prop_xml
@@ -243,7 +243,7 @@ EOT, $this->header([
 		]), $response_header);
 		if (($code=(int)explode(' ', $response_header[0])[1]) !== 207)
 		{
-			throw new \HttpException(lang('Given URL is not a CalDAV server: missing %1!', "HTTP status: 207 Multi-Status"),
+			throw new Api\Exception\Http(lang('Given URL is not a CalDAV server: missing %1!', "HTTP status: 207 Multi-Status"),
 				$code, 'PROPFIND', $this->url, $body, $response_header, $xml);
 		}
 		// SimpleXMLElement fails if toplevel namespace used a prefix :(
@@ -257,7 +257,7 @@ EOT, $this->header([
 		$simple_xml->registerXPathNamespace('CALDAV', Api\CalDAV::CALDAV);
 		if (!$simple_xml->response)
 		{
-			throw new \HttpException(lang('Given URL is not a CalDAV server: missing %1!', "XML response element"),
+			throw new Api\Exception\Http(lang('Given URL is not a CalDAV server: missing %1!', "XML response element"),
 				$code, 'PROPFIND', $this->url, $body, $response_header, $xml);
 		}
 		return $simple_xml;
@@ -278,7 +278,7 @@ EOT, $this->header([
 	 */
 	protected function sync_collection(?string &$sync_token=null, bool $yield_href_ical=false)
 	{
-		$xml = api($this->url, 'REPORT', $body=<<<EOT
+		$xml = $this->api($this->url, 'REPORT', $body=<<<EOT
 <?xml version="1.0" encoding="UTF-8"?>
 <D:sync-collection xmlns:D="DAV:">
   <D:sync-token>$sync_token</D:sync-token>
@@ -320,7 +320,7 @@ EOT, $this->header([
 				// iCloud does not send calendar-data, even if requested
 				if (!($ical = (string)$dav_children->propstat->prop->children(Api\CalDAV::CALDAV)->{'calendar-data'}))
 				{
-					$ical = api('https://'.parse_url($this->url, PHP_URL_HOST).(string)$dav_children->href,
+					$ical = $this->api('https://'.parse_url($this->url, PHP_URL_HOST).(string)$dav_children->href,
 						'GET', '', $this->header([
 							'Accept: text/calendar; charset=utf-8',
 						]));
@@ -534,15 +534,15 @@ EOT, $this->header([
 			try {
 				// for iCloud try directly with GET, for others retry with GET on 400 Bad Request
 				$method = preg_match('#^https://[^.]+\.icloud\.com/#i', $this->url) ? 'GET' : 'HEAD';
-				$response = api($this->url, $method, '', $this->header([
+				$response = $this->api($this->url, $method, '', $this->header([
 					'Accept: text/calendar',
 					'If-None-Match: '.$etag,
 				]), $response_header);
 			}
-			catch (\HttpException $e) {
+			catch (Api\Exception\Http $e) {
 				if ($method === 'HEAD' && $e->getCode() == 400)
 				{
-					$response = api($this->url, 'GET', '', $this->header([
+					$response = $this->api($this->url, 'GET', '', $this->header([
 						'Accept: text/calendar',
 						'If-None-Match: '.$etag,
 					]), $response_header);
@@ -571,7 +571,7 @@ EOT, $this->header([
 			});
 			return true;
 		};
-		$ical_class->importVCal($response ?? api($this->url, 'GET', '', $this->header([
+		$ical_class->importVCal($response ?? $this->api($this->url, 'GET', '', $this->header([
 			'Accept: text/calendar',
 		]), $response_header), -1, null, false, 0, '',
 			null, null, null, true);
