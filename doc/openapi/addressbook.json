@@ -50,6 +50,15 @@
             "$ref": "#/components/parameters/filters_linked"
           },
           {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
             "name": "Accept",
             "in": "header",
             "required": true,
@@ -83,7 +92,9 @@
         }
       },
       "post": {
-        "tags": ["Addressbook"],
+        "tags": [
+          "Addressbook"
+        ],
         "summary": "Create a new contact in the users default addressbook",
         "description": "Adds a new contact to the addressbook. The Location header in the response gives the URL of the new resource.",
         "operationId": "createContact",
@@ -94,7 +105,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json","application/json-patch+json"]
+              "enum": [
+                "application/json",
+                "application/json-patch+json"
+              ]
             }
           }
         ],
@@ -144,7 +158,9 @@
     },
     "/{username}/addressbook/": {
       "get": {
-        "tags": ["Addressbook"],
+        "tags": [
+          "Addressbook"
+        ],
         "summary": "List or search contacts in the given users addressbook",
         "description": "Returns all contacts in the user's addressbook. Supports filtering, pagination, and custom property selection.",
         "operationId": "listContacts",
@@ -173,7 +189,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json", "application/pretty+json"]
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
             },
             "description": "Accept header for JSON or pretty-printed JSON"
           }
@@ -198,7 +217,9 @@
         }
       },
       "post": {
-        "tags": ["Addressbook"],
+        "tags": [
+          "Addressbook"
+        ],
         "summary": "Create a new contact in the given users addressbook",
         "description": "Adds a new contact to the addressbook. The Location header in the response gives the URL of the new resource.",
         "operationId": "createUserContact",
@@ -212,7 +233,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json","application/json-patch+json"]
+              "enum": [
+                "application/json",
+                "application/json-patch+json"
+              ]
             }
           }
         ],
@@ -262,7 +286,9 @@
     },
     "/addressbook/{id}": {
       "get": {
-        "tags": ["Addressbook"],
+        "tags": [
+          "Addressbook"
+        ],
         "summary": "Get a single contact",
         "description": "Retrieves a single contact by ID.",
         "operationId": "getContact",
@@ -276,7 +302,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json", "application/pretty+json"]
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
             }
           }
         ],
@@ -300,7 +329,9 @@
         }
       },
       "put": {
-        "tags": ["Addressbook"],
+        "tags": [
+          "Addressbook"
+        ],
         "summary": "Replace a contact",
         "description": "Replaces all attributes of a contact. Requires all attributes to be specified. If the ID is a UID, it will update the existing contact or create a new one if it does not exist.",
         "operationId": "replaceContact",
@@ -314,7 +345,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           }
         ],
@@ -356,7 +389,9 @@
         }
       },
       "patch": {
-        "tags": ["Addressbook"],
+        "tags": [
+          "Addressbook"
+        ],
         "summary": "Partially update a contact",
         "description": "Updates only the specified attributes of a contact. To unset a field, patch its value to `null`.",
         "operationId": "updateContact",
@@ -370,7 +405,10 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json","application/json-patch+json"]
+              "enum": [
+                "application/json",
+                "application/json-patch+json"
+              ]
             }
           }
         ],
@@ -405,7 +443,9 @@
         }
       },
       "delete": {
-        "tags": ["Addressbook"],
+        "tags": [
+          "Addressbook"
+        ],
         "summary": "Delete a contact",
         "description": "Deletes a contact by ID.",
         "operationId": "deleteContact",
@@ -423,6 +463,60 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/addressbook/count": {
+      "get": {
+        "tags": [
+          "Addressbook"
+        ],
+        "summary": "Count contacts",
+        "description": "Returns ONLY the number of contacts matching the filters, as {\"total\": <n>}. Use this to answer \"how many ...\" questions instead of listing entries: it accepts the same filters[...] parameters as the listing, but transfers no entries at all, so it works on collections of any size. Combine with filters[start] and filters[end] for a time period.",
+        "operationId": "countContacts",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filters_search"
+          },
+          {
+            "$ref": "#/components/parameters/filters_linked"
+          },
+          {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_order"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of matching entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "number of matching entries"
+                    }
+                  },
+                  "required": [
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid filter"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -504,17 +598,51 @@
           "type": "string"
         },
         "description": "Search entries from other apps linked to the given one. Example: filters[linked]=<app-name>:<app-id>"
+      },
+      "filters_start": {
+        "name": "filters[start]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": "Only return contacts on or after this date, matched against the last modification (contact_modified), as YYYY-MM-DD. REQUIRED whenever the question refers to a time period: resolve phrases like 'this week', 'last month' or 'the last 3 months' to explicit dates and pass them. Example: filters[start]=2026-01-01"
+      },
+      "filters_end": {
+        "name": "filters[end]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string",
+          "format": "date"
+        },
+        "description": "Only return contacts on or before this date, matched against the last modification (contact_modified), as YYYY-MM-DD. A bare date covers the whole day. Pass together with filters[start] for any time-bounded question. Example: filters[end]=2026-03-31"
+      },
+      "filters_order": {
+        "name": "filters[order]",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "type": "string"
+        },
+        "description": "Sort order as '<db-column>' optionally followed by ' ASC' or ' DESC'. Default is contact_id ASC. An unknown column is rejected with 400 and a list of the valid ones."
       }
     },
     "schemas": {
       "Contact": {
         "type": "object",
-        "required": ["fullName"],
+        "required": [
+          "fullName"
+        ],
         "description": "Contact in JsContact format. uid is auto-generated if omitted. @type defaults to 'Card'. prodId is set by the server.",
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Card", "CardGroup"],
+            "enum": [
+              "Card",
+              "CardGroup"
+            ],
             "description": "Type of the resource. Defaults to 'Card' if omitted."
           },
           "uid": {
@@ -537,7 +665,10 @@
           },
           "kind": {
             "type": "string",
-            "enum": ["individual", "organization"],
+            "enum": [
+              "individual",
+              "organization"
+            ],
             "description": "Kind of contact (individual or organization)"
           },
           "name": {
@@ -760,7 +891,9 @@
       "CustomField": {
         "type": "object",
         "description": "A single custom field. Custom-field names are user-/admin-defined (configured under Admin >> Custom fields). For create/update (flat POST or PATCH) send only the custom-field name with its value, e.g. `\"egroupware.org:customfields/<name>\": <value>`. On read an object is returned carrying the field's `type`, `label` and always a `value` attribute holding the actual value.",
-        "required": ["value"],
+        "required": [
+          "value"
+        ],
         "properties": {
           "value": {
             "description": "The actual value of the custom field. Its JSON type depends on the custom-field's `type` (e.g. string, number or array for `select`)."
@@ -787,15 +920,30 @@
       },
       "NameComponent": {
         "type": "object",
-        "required": ["@type", "type", "value"],
+        "required": [
+          "@type",
+          "type",
+          "value"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["NameComponent"]
+            "enum": [
+              "NameComponent"
+            ]
           },
           "type": {
             "type": "string",
-            "enum": ["title", "given", "given2", "surname", "surname2", "credential", "generation", "separator"]
+            "enum": [
+              "title",
+              "given",
+              "given2",
+              "surname",
+              "surname2",
+              "credential",
+              "generation",
+              "separator"
+            ]
           },
           "value": {
             "type": "string"
@@ -804,11 +952,16 @@
       },
       "Organization": {
         "type": "object",
-        "required": ["@type", "name"],
+        "required": [
+          "@type",
+          "name"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Organization"]
+            "enum": [
+              "Organization"
+            ]
           },
           "name": {
             "type": "string"
@@ -823,11 +976,16 @@
       },
       "Title": {
         "type": "object",
-        "required": ["@type", "title"],
+        "required": [
+          "@type",
+          "title"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Title"]
+            "enum": [
+              "Title"
+            ]
           },
           "title": {
             "type": "string"
@@ -839,11 +997,16 @@
       },
       "EmailAddress": {
         "type": "object",
-        "required": ["@type", "email"],
+        "required": [
+          "@type",
+          "email"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["EmailAddress"]
+            "enum": [
+              "EmailAddress"
+            ]
           },
           "email": {
             "type": "string"
@@ -861,11 +1024,16 @@
       },
       "Phone": {
         "type": "object",
-        "required": ["@type", "phone"],
+        "required": [
+          "@type",
+          "phone"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Phone"]
+            "enum": [
+              "Phone"
+            ]
           },
           "phone": {
             "type": "string"
@@ -889,11 +1057,17 @@
       },
       "Resource": {
         "type": "object",
-        "required": ["@type", "resource", "type"],
+        "required": [
+          "@type",
+          "resource",
+          "type"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Resource"]
+            "enum": [
+              "Resource"
+            ]
           },
           "resource": {
             "type": "string"
@@ -911,11 +1085,15 @@
       },
       "Address": {
         "type": "object",
-        "required": ["@type"],
+        "required": [
+          "@type"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Address"]
+            "enum": [
+              "Address"
+            ]
           },
           "locality": {
             "type": "string"
@@ -951,15 +1129,24 @@
       },
       "StreetComponent": {
         "type": "object",
-        "required": ["@type", "type", "value"],
+        "required": [
+          "@type",
+          "type",
+          "value"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["StreetComponent"]
+            "enum": [
+              "StreetComponent"
+            ]
           },
           "type": {
             "type": "string",
-            "enum": ["name", "separator"]
+            "enum": [
+              "name",
+              "separator"
+            ]
           },
           "value": {
             "type": "string"
@@ -968,11 +1155,17 @@
       },
       "File": {
         "type": "object",
-        "required": ["@type", "href", "mediaType"],
+        "required": [
+          "@type",
+          "href",
+          "mediaType"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["File"]
+            "enum": [
+              "File"
+            ]
           },
           "href": {
             "type": "string",
@@ -985,15 +1178,23 @@
       },
       "Anniversary": {
         "type": "object",
-        "required": ["@type", "type", "date"],
+        "required": [
+          "@type",
+          "type",
+          "date"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Anniversary"]
+            "enum": [
+              "Anniversary"
+            ]
           },
           "type": {
             "type": "string",
-            "enum": ["birth"]
+            "enum": [
+              "birth"
+            ]
           },
           "date": {
             "type": "string",

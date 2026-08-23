@@ -27,7 +27,9 @@
   "paths": {
     "/infolog/": {
       "get": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "List all infolog entries",
         "description": "Returns infolog entries (tasks, notes, calls, etc.) for the user, most recently modified first. filters[start]/filters[end] match entries whose start/due date overlaps the range. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listTasks",
@@ -90,7 +92,9 @@
         }
       },
       "post": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "Create a new infolog entry for the current user",
         "description": "Adds a new infolog entry (task, note, call, etc.) to the collection. The Location header in the response gives the URL of the new resource.",
         "operationId": "createTask",
@@ -101,7 +105,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           }
         ],
@@ -146,7 +152,9 @@
     },
     "/{username}/infolog/": {
       "get": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "List all infolog entries of a given user",
         "description": "Returns infolog entries (tasks, notes, calls, etc.) for the given user, most recently modified first. filters[start]/filters[end] match entries whose start/due date overlaps the range. To bound the response size, send sync-token= (empty) together with nresults=20; the response then carries a more-results flag and a sync-token for the next chunk. If the question mentions any time period, resolve it to explicit YYYY-MM-DD dates and pass filters[start] and filters[end] as well.",
         "operationId": "listUserTasks",
@@ -184,7 +192,10 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["application/json", "application/pretty+json"]
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
             },
             "description": "Accept header for JSON or pretty-printed JSON"
           }
@@ -209,7 +220,9 @@
         }
       },
       "post": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "Create a new infolog entry for the given user",
         "description": "Adds a new infolog entry (task, note, call, etc.) to the collection. The Location header in the response gives the URL of the new resource.",
         "operationId": "createUserTask",
@@ -223,7 +236,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           }
         ],
@@ -268,7 +283,9 @@
     },
     "/infolog/{id}": {
       "get": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "Get a single infolog entry",
         "description": "Retrieves a single infolog entry by ID.",
         "operationId": "getTask",
@@ -282,7 +299,10 @@
             "required": false,
             "schema": {
               "type": "string",
-              "enum": ["application/json","application/pretty+json"]
+              "enum": [
+                "application/json",
+                "application/pretty+json"
+              ]
             },
             "description": "Accept header for JSON or pretty-printed JSON"
           }
@@ -307,7 +327,9 @@
         }
       },
       "put": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "Replace an infolog entry",
         "description": "Replaces all attributes of an infolog entry. Requires all attributes to be specified.",
         "operationId": "replaceTask",
@@ -321,7 +343,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           }
         ],
@@ -351,7 +375,9 @@
         }
       },
       "patch": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "Partially update an infolog entry",
         "description": "Updates only the specified attributes of an infolog entry.",
         "operationId": "updateTask",
@@ -365,7 +391,9 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["application/json"]
+              "enum": [
+                "application/json"
+              ]
             }
           }
         ],
@@ -395,7 +423,9 @@
         }
       },
       "delete": {
-        "tags": ["InfoLog"],
+        "tags": [
+          "InfoLog"
+        ],
         "summary": "Delete an infolog entry",
         "description": "Deletes an infolog entry by ID.",
         "operationId": "deleteTask",
@@ -413,6 +443,60 @@
           },
           "404": {
             "$ref": "#/components/responses/NotFound"
+          }
+        }
+      }
+    },
+    "/infolog/count": {
+      "get": {
+        "tags": [
+          "InfoLog"
+        ],
+        "summary": "Count InfoLog entries (tasks, notes, calls)",
+        "description": "Returns ONLY the number of InfoLog entries (tasks, notes, calls) matching the filters, as {\"total\": <n>}. Use this to answer \"how many ...\" questions instead of listing entries: it accepts the same filters[...] parameters as the listing, but transfers no entries at all, so it works on collections of any size.",
+        "operationId": "countTasks",
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/filters_order"
+          },
+          {
+            "$ref": "#/components/parameters/filters_start"
+          },
+          {
+            "$ref": "#/components/parameters/filters_end"
+          },
+          {
+            "$ref": "#/components/parameters/filters_search"
+          },
+          {
+            "$ref": "#/components/parameters/filters_linked"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Number of matching entries",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "total": {
+                      "type": "integer",
+                      "description": "number of matching entries"
+                    }
+                  },
+                  "required": [
+                    "total"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid filter"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         }
       }
@@ -528,11 +612,17 @@
     "schemas": {
       "Task": {
         "type": "object",
-        "required": ["@type", "title", "type"],
+        "required": [
+          "@type",
+          "title",
+          "type"
+        ],
         "properties": {
           "@type": {
             "type": "string",
-            "enum": ["Task"],
+            "enum": [
+              "Task"
+            ],
             "description": "Type of the resource (always 'Task')"
           },
           "id": {
@@ -545,7 +635,14 @@
           },
           "type": {
             "type": "string",
-            "enum": ["note", "task", "call", "mail", "file", "message"],
+            "enum": [
+              "note",
+              "task",
+              "call",
+              "mail",
+              "file",
+              "message"
+            ],
             "description": "Type of the infolog entry (note, task, call, etc.)"
           },
           "description": {
@@ -564,7 +661,11 @@
           },
           "status": {
             "type": "string",
-            "enum": ["tentative", "confirmed", "cancelled"],
+            "enum": [
+              "tentative",
+              "confirmed",
+              "cancelled"
+            ],
             "readOnly": true,
             "description": "Stock JSCalendar status: 'tentative' (InfoLog 'offer'), 'cancelled' (InfoLog 'deleted'/'cancelled'), 'confirmed' otherwise. Read-only / ignored on write, as it does not reflect InfoLog's real status - use 'progress' and/or 'egroupware.org:status' to change it"
           },
