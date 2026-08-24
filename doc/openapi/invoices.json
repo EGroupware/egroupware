@@ -217,7 +217,7 @@
     "/invoices/{id}/positions/": {
       "post": {
         "tags": ["Invoice Positions"],
-        "operationId": "createPosition",
+        "operationId": "createInvoicePosition",
         "summary": "Add a line-item position to an invoice",
         "description": "Positions are auto-numbered (position_number) in creation order; existing positions are renumbered as needed to keep numbers sequential and unique.",
         "parameters": [
@@ -262,7 +262,7 @@
     "/invoices/{id}/positions/{position_id}": {
       "get": {
         "tags": ["Invoice Positions"],
-        "operationId": "getPosition",
+        "operationId": "getInvoicePosition",
         "summary": "Get a single position",
         "parameters": [
           { "$ref": "#/components/parameters/id" },
@@ -287,7 +287,7 @@
       },
       "put": {
         "tags": ["Invoice Positions"],
-        "operationId": "replacePosition",
+        "operationId": "replaceInvoicePosition",
         "summary": "Replace a position",
         "parameters": [
           { "$ref": "#/components/parameters/id" },
@@ -314,7 +314,7 @@
       },
       "patch": {
         "tags": ["Invoice Positions"],
-        "operationId": "updatePosition",
+        "operationId": "updateInvoicePosition",
         "summary": "Partially update a position",
         "parameters": [
           { "$ref": "#/components/parameters/id" },
@@ -343,7 +343,7 @@
       },
       "delete": {
         "tags": ["Invoice Positions"],
-        "operationId": "deletePosition",
+        "operationId": "deleteInvoicePosition",
         "summary": "Delete a position",
         "description": "Unlike deleteInvoice, this is a real (hard) delete - remaining positions are renumbered afterwards.",
         "parameters": [
