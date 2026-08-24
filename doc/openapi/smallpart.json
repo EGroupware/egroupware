@@ -445,7 +445,7 @@
       ],
       "get": {
         "tags": ["Materials"],
-        "operationId": "listAttachments",
+        "operationId": "listMaterialAttachments",
         "summary": "List a material's attachments",
         "parameters": [{ "$ref": "#/components/parameters/accept" }],
         "responses": {
@@ -467,7 +467,7 @@
       },
       "post": {
         "tags": ["Materials"],
-        "operationId": "addAttachment",
+        "operationId": "addMaterialAttachment",
         "summary": "Add an attachment to a material",
         "description": "Redirects to the underlying WebDAV URL to actually upload the file content.",
         "responses": {
@@ -492,7 +492,7 @@
       ],
       "get": {
         "tags": ["Materials"],
-        "operationId": "getAttachment",
+        "operationId": "getMaterialAttachment",
         "summary": "Download an attachment",
         "responses": {
           "307": { "description": "Temporary redirect to the file's WebDAV URL" },
@@ -503,7 +503,7 @@
       },
       "put": {
         "tags": ["Materials"],
-        "operationId": "updateAttachment",
+        "operationId": "updateMaterialAttachment",
         "summary": "Update (replace) an attachment",
         "responses": {
           "307": { "description": "Temporary redirect to /webdav.php/... to upload the new content" },
@@ -514,7 +514,7 @@
       },
       "delete": {
         "tags": ["Materials"],
-        "operationId": "deleteAttachment",
+        "operationId": "deleteMaterialAttachment",
         "summary": "Delete an attachment",
         "responses": {
           "204": { "description": "Attachment deleted" },
