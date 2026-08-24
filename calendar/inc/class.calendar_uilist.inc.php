@@ -836,8 +836,8 @@ class calendar_uilist extends calendar_ui
 						'ts_title'		=>	$event['title'],
 						'ts_description' =>	$event['description'],
 						'ts_start'		=>	$event['start'],
-						'ts_duration'	=>	($event['end'] - $event['start']) / 60,
-						'ts_quantity'	=>	($event['end'] - $event['start']) / 3600,
+						'ts_duration'	=>	($event['end']->format('ts') - $event['start']->format('ts')) / 60,
+						'ts_quantity'	=>	($event['end']->format('ts') - $event['start']->format('ts')) / 3600,
 						'ts_owner'		=>	$GLOBALS['egw_info']['user']['account_id'],
 						'cat_id'		=>	null,
 						'pl_id'			=>	null
