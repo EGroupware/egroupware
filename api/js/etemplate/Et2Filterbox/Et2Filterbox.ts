@@ -521,6 +521,31 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		}
 		this._activeFilterTemplate = templateElement;
 		this.append(templateElement);
+		this._syncSortWidgets(templateElement);
+	}
+
+	/**
+	 * Seed the hidden sort[id]/sort[asc] widgets that filter-template.php generates
+	 * (it has no way to know the nextmatch's real current sort server-side) with
+	 * this._nextmatch's actual sort, so a first autoapply doesn't send a sort missing
+	 * its id and wipe out the ORDER BY.
+	 */
+	private _syncSortWidgets(root : HTMLElement)
+	{
+		const sort = this._nextmatch?.activeFilters?.["sort"];
+		if(!sort || typeof (<any>root).iterateOver !== "function")
+		{
+			return;
+		}
+		const mgr = new et2_arrayMgr({sort});
+		(<any>root).iterateOver((child) =>
+		{
+			if(typeof child.set_value != "undefined" && (child.id === "sort[id]" || child.id === "sort[asc]"))
+			{
+				const value = mgr.getEntry(child.id);
+				child.set_value(value == null ? '' : value);
+			}
+		}, null, et2_IInput);
 	}
 
 	render()
