@@ -4839,6 +4839,13 @@ export class MailApp extends EgwApp
 	 * it just the one changed key here correctly leaves every other action (open/reply/.../the other
 	 * kind's quick-submenu) untouched - no need to read back/clone the current action set first.
 	 *
+	 * The 'moveto'/'copyto' action ids already exist (see mail_ui::get_actions()'s placeholders,
+	 * defined directly above "Move to archive" so that's where they stay - updateActions() updates an
+	 * existing action in place rather than re-appending it, so this never needs to set the group here.
+	 * With no usage yet (top.length == 0), the action is left with no children - its 'enabled' callback
+	 * (folderQuickActionEnabled() below) then greys it out via the normal disabled styling, staying
+	 * visible since 'hideOnDisabled' defaults to false.
+	 *
 	 * @param kind 'move' or 'copy'
 	 * @param usage optional already-loaded usage preference, to avoid re-reading it
 	 */
@@ -4853,21 +4860,15 @@ export class MailApp extends EgwApp
 			.filter(target => target !== currentFolder)
 			.sort((a, b) => (usage[b] || 0) - (usage[a] || 0))
 			.slice(0, 10);
-		if (!top.length) return;
-		// Put the quick-submenu in the same context-menu group as "Save"/"View", below them, instead
-		// of defaulting to the top of the menu (no group set). Read the live group number off an
-		// existing sibling action rather than hardcoding it, since get_actions() computes group
-		// numbers dynamically and they can shift as that method changes.
-		const siblingGroup = nm._actionController?.actionManager?.getActionById?.('save')?.group;
 		const ftree : any = this.et2.getWidgetById(this.nm_index + '[foldertree]');
 		const children = {};
 		top.forEach(target =>
 		{
-			// Always prefix with the account's own label - folder names like "Sent"/"Trash" are
-			// common across accounts, and target itself (used for storage/lookup/sorting throughout
-			// this method) is always the full "<profileID>::<folder>" string, so different accounts'
-			// folders are never confused regardless of their hierarchy separator or namespace prefix;
-			// this is purely about the caption not being ambiguous to the user.
+			// Always prefix with the account's own email address - folder names like "Sent"/"Trash"
+			// are common across accounts, and target itself (used for storage/lookup/sorting
+			// throughout this method) is always the full "<profileID>::<folder>" string, so different
+			// accounts' folders are never confused regardless of their hierarchy separator or
+			// namespace prefix; this is purely about the caption not being ambiguous to the user.
 			const sepIndex = target.indexOf('::');
 			const profileID = target.substring(0, sepIndex);
 			// Fallback for a folder whose tree node isn't currently loaded (lazy per-level loading) -
@@ -4876,8 +4877,10 @@ export class MailApp extends EgwApp
 			let caption = this.egw.lang(target.substring(sepIndex + 2));
 			const label = ftree?.getLabel ? ftree.getLabel(target) : null;
 			if (label) caption = label.replace(this._unseen_regexp, '');
-			const accountLabel = ftree?.getLabel ? ftree.getLabel(profileID) : null;
-			if (accountLabel) caption = accountLabel.replace(this._unseen_regexp, '') + ': ' + caption;
+			// Use the account's bare email address, not its (possibly long) configured identity
+			// label - see mail_tree::getAccountsRootNode()'s 'email' node data.
+			const accountEmail = ftree?.getNode ? ftree.getNode(profileID)?.data?.email : null;
+			if (accountEmail) caption = accountEmail + ': ' + caption;
 			children[cfg.actionPrefix + target] = {
 				caption: caption,
 				icon: cfg.icon,
@@ -4889,10 +4892,21 @@ export class MailApp extends EgwApp
 			[cfg.actionId]: {
 				caption: this.egw.lang(cfg.caption),
 				icon: cfg.icon,
-				...(siblingGroup !== undefined ? {group: siblingGroup} : {}),
 				children: children,
 			}
 		};
+	}
+
+	/**
+	 * 'enabled' callback for the 'moveto'/'copyto' quick-submenus (see mail_ui::get_actions() and
+	 * updateFolderQuickAction() above) - grays them out via the normal disabled styling while there's
+	 * nothing to move/copy to yet, instead of leaving them permanently clickable-but-inert.
+	 *
+	 * @param _action the 'moveto'/'copyto' EgwAction itself, kept in sync by updateFolderQuickAction()
+	 */
+	folderQuickActionEnabled(_action) : boolean
+	{
+		return !!_action?.children?.length;
 	}
 
 	/**

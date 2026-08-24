@@ -1277,10 +1277,6 @@ class mail_ui
 				'shortcut' =>  array('ctrl' => true, 'keyCode' => 77, 'caption' => KeyManager::shortcut_caption(KeyManager::M,false,true)),
 			)
 		);
-		// "Move selected to"/"Copy selected to" quick-submenus are built entirely client-side now
-		// (see mail/js/app.ts's updateFolderQuickAction()) - the JMAP fast path for move/copy never
-		// reaches server code, so a server-side usage cache silently stopped updating for the common
-		// case.
 		$group++;
 		$spam_actions = $this->getSpamActions();
 		$group++;
@@ -1288,6 +1284,28 @@ class mail_ui
 		{
 			$action['group'] = $group;
 		}
+		// "Move selected to"/"Copy selected to" quick-submenus - placeholders only, their captions
+		// and children are entirely rebuilt client-side (see mail/js/app.ts's
+		// updateFolderQuickAction()), the JMAP fast path for move/copy never reaches server code, so
+		// a server-side usage cache would silently stop updating for the common case. Defined here,
+		// directly above "Move to archive" and sharing its group, purely to fix their position in the
+		// context menu - updateActions() updates an existing action id in place rather than appending
+		// it, so the client side never needs to (re)set their group. 'enabled' greys the entry out
+		// while there's nothing in it yet.
+		$actions['moveto'] = array(
+			'caption' => 'Move selected to',
+			'icon' => 'move',
+			'group' => $group,
+			'enabled' => 'javaScript:app.mail.folderQuickActionEnabled',
+			'children' => array(),
+		);
+		$actions['copyto'] = array(
+			'caption' => 'Copy selected to',
+			'icon' => 'copy',
+			'group' => $group,
+			'enabled' => 'javaScript:app.mail.folderQuickActionEnabled',
+			'children' => array(),
+		);
 		//error_log(__METHOD__.__LINE__.$archiveFolder);
 		$actions['move2'.$this->mail_bo->profileID.self::$delimiter.$archiveFolder] = array( //toarchive
 			'caption' => 'Move to archive',

@@ -505,7 +505,11 @@ class mail_tree
 					'data' => array(
 						'sieve' => $accObj->imapServer()->acc_sieve_enabled,
 						'spamfolder'=> $accObj->imapServer()->acc_folder_junk&&(strtolower($accObj->imapServer()->acc_folder_junk)!='none')?true:false,
-						'archivefolder'=> $accObj->imapServer()->acc_folder_archive&&(strtolower($accObj->imapServer()->acc_folder_archive)!='none')?true:false
+						'archivefolder'=> $accObj->imapServer()->acc_folder_archive&&(strtolower($accObj->imapServer()->acc_folder_archive)!='none')?true:false,
+						// bare email address, eg. for mail/js/app.ts's updateFolderQuickAction() -
+						// the configured identity label (this node's own Tree::LABEL) may contain
+						// name/org and is not always the account's email address
+						'email' => $accObj->ident_email ?: $accObj->acc_imap_username,
 					),
                     Tree::NOCHECKBOX => $_noCheckbox,
                     Tree::CLASS_LIST => 'mailAccount',
