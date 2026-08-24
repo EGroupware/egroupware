@@ -65,6 +65,13 @@ echo json_encode($times, JSON_PRETTY_PRINT);
 
 function php_times($account, array &$times, $prefix='php_')
 {
+	// a JMAP account has no raw IMAP socket to profile - JMAP goes over HTTP(S), not the
+	// IMAP wire protocol this function speaks
+	if (is_a($account->acc_imap_type ?? '', \EGroupware\Api\Mail\Imap\Jmap::class, true))
+	{
+		$times[$prefix.'skipped'] = 'JMAP account, no raw IMAP socket to profile';
+		return;
+	}
 	$starttime = microtime(true);
 	switch($account->acc_imap_ssl & ~emailadmin_account::SSL_VERIFY)
 	{

@@ -306,7 +306,66 @@ class Jmap extends Mail\Imap
 	 */
 	public function jmapClient()
 	{
-		return $this->jmap ?? ($this->jmap = new Mail\Jmap($this->acc_imap_host, $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId));
+		if (!isset($this->jmap))
+		{
+			$ssl = (int)$this->acc_imap_ssl;
+			$undecided = ($ssl & Mail\Account::VERIFY_MASK) === Mail\Account::VERIFY_UNDECIDED;
+			// curl (used for all JMAP HTTP calls, see RestClientTrait) verifies by default
+			// already - unlike IMAP/SMTP/Sieve, an UNDECIDED account gets a real strict attempt
+			// first, not an unverified one, so there's no separate raw-socket probe needed here
+			$verify = $undecided || ($ssl & Mail\Account::VERIFY_MASK) === Mail\Account::VERIFY_ENABLED;
+			try {
+				$this->jmap = new Mail\Jmap($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, $verify);
+				if ($undecided && $this->acc_id)
+				{
+					// the strict connection just succeeded - verification confirmed possible
+					Mail\Account::persistVerification($this->acc_id, 'acc_imap_ssl',
+						($ssl & ~Mail\Account::VERIFY_MASK) | Mail\Account::VERIFY_ENABLED);
+				}
+			}
+			catch (Api\Exception\Http $e) {
+				// only a plausible certificate-verification failure on a still-undecided
+				// account gets the fallback retry - any other failure (wrong credentials, host
+				// down, ...) must still surface normally
+				if (!$undecided || !preg_match('/certificate|ssl|tls/i', $e->getMessage()))
+				{
+					throw $e;
+				}
+				$this->jmap = new Mail\Jmap($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, false);
+				if ($this->acc_id)
+				{
+					Mail\Account::persistVerification($this->acc_id, 'acc_imap_ssl',
+						($ssl & ~Mail\Account::VERIFY_MASK) | Mail\Account::VERIFY_DISABLED);
+				}
+			}
+		}
+		return $this->jmap;
+	}
+
+	/**
+	 * Build the JMAP endpoint URL from acc_imap_host/acc_imap_ssl/acc_imap_port
+	 *
+	 * acc_imap_host is stored as a bare hostname - Mail\Jmap otherwise always defaults to
+	 * https, so an explicit "JMAP (http)" protocol choice (Mail\Account::JMAP_HTTP) needs the
+	 * scheme spelled out here to actually take effect for real (not just wizard-time) usage.
+	 *
+	 * @return string
+	 */
+	protected function jmapUrl() : string
+	{
+		// bare sentinel service-names Mail\Jmap's own constructor special-cases (the EGroupware
+		// "mail" docker-compose service, and the "stalwart"/hosting-internal shortcuts) - must be
+		// passed through UNCHANGED, never turned into eg. "https://mail", which is not a real,
+		// resolvable host and broke acc_id=1 (found live 2026-08-24)
+		if (in_array($this->acc_imap_host, ['mail', 'stalwart', 'internal.k8s.farm.egroupware.org'], true) ||
+			preg_match('#^https?://#', $this->acc_imap_host))
+		{
+			return $this->acc_imap_host;
+		}
+		$scheme = ((int)$this->acc_imap_ssl & Mail\Account::PROTOCOL_MASK) === Mail\Account::JMAP_HTTP ? 'http' : 'https';
+		$default_port = $scheme === 'http' ? 80 : 443;
+		$port = $this->acc_imap_port && (int)$this->acc_imap_port !== $default_port ? ':'.(int)$this->acc_imap_port : '';
+		return $scheme.'://'.$this->acc_imap_host.$port;
 	}
 
 	/**
@@ -1081,5 +1140,29 @@ class Jmap extends Mail\Imap
 	function pushAvailable()
 	{
 		return true;
+	}
+
+	/**
+	 * JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+	 * JMAP has no IMAP CAPABILITY concept - without this override, any hasCapability() call
+	 * falls through to Horde_Imap_Client_Socket's raw-socket capability query (Mail\Imap::
+	 * hasCapability() calls examineMailbox()/capability(), neither overridden here), which hangs
+	 * for the full connect timeout against a JMAP(S) endpoint instead of a real IMAP server -
+	 * found live 2026-08-24 (mail_ui::index()/get_actions()/get_tree_actions() all query
+	 * 'SUPPORTS_KEYWORDS' unconditionally, several times, none of them JMAP-aware).
+	 *
+	 * @param string $capability
+	 * @return bool
+	 */
+	function hasCapability($capability)
+	{
+		switch ($capability)
+		{
+			// JMAP natively supports arbitrary keywords/flags, unlike classic IMAP which needs
+			// this specific extension
+			case 'SUPPORTS_KEYWORDS':
+				return true;
+		}
+		return false;
 	}
 }

@@ -2,6 +2,9 @@
 (de)activate mail accounts	admin	en	(de)Activate mail accounts
 (no subject)	admin	en	(no subject)
 %1 %2 rights for %3 on %4 to %5	admin	en	%1 %2 rights for %3 on %4 to %5
+%1 (no encryption)	admin	en	%1 (no encryption)
+%1 (starttls)	admin	en	%1 (StartTLS)
+%1 (tls/ssl)	admin	en	%1 (TLS/SSL)
 %1 access to other data	admin	en	%1 access to other data
 %1 accounts being activated	admin	en	%1 accounts being activated
 %1 acl entries deleted.	admin	en	%1 ACL entries deleted.
@@ -327,11 +330,13 @@ direct login without password or second factor	admin	en	direct login without pas
 disable	admin	en	Disable
 disable "auto completion" of the login form	admin	en	Disable "auto completion" of the login form
 disable all	admin	en	Disable all
+disable certificate validation	admin	en	Disable certificate validation
 disable minifying of javascript and css files	admin	en	Disable minifying of JavaScript and CSS files
 disable pgp encryption (mailvelope)	admin	en	Disable PGP encryption (Mailvelope)
 disabled	admin	en	Disabled
 disabled (not recomended)	admin	en	Disabled (not recommended)
 disabled, do not show on login page	admin	en	disabled, do not show on login page
+disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.	admin	en	Disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.
 display	admin	en	Display
 displayed length of input field (set rows=1 to limit length)	admin	en	Displayed length of input field (set rows=1 to limit length)
 displaying html messages is disabled	admin	en	displaying HTML messages is disabled
@@ -547,6 +552,8 @@ invalid type "%1"!	admin	en	Invalid type "%1"!
 invalid value "%1" use yes or no!	admin	en	Invalid value "%1" use yes or no!
 invalid value "%1", use only:	admin	en	Invalid value "%1", use only:
 ip	admin	en	IP
+jmap (http, no encryption)	admin	en	JMAP (http, no encryption)
+jmap (https)	admin	en	JMAP (https)
 jobs	admin	en	Jobs
 kill	admin	en	Kill
 kill session	admin	en	Kill session
@@ -733,6 +740,7 @@ profile access rights	admin	en	Profile access rights
 profile is active	admin	en	Profile is active
 profile list	admin	en	Profile list
 profile name	admin	en	Profile name
+protocol (encryption)	admin	en	Protocol (encryption)
 qmaildotmode	admin	en	qmaildotmode
 quota settings	admin	en	Quota settings
 quota size in mbyte	admin	en	Quota size in MByte
@@ -778,7 +786,6 @@ search categories	admin	en	Search categories
 search groups	admin	en	Search groups
 search peer servers	admin	en	Search peer servers
 secret deleted, two factor authentication disabled.	admin	en	Secret deleted, two factor authentication disabled.
-secure connection	admin	en	Secure connection
 security	admin	en	Security
 select accounts for which the custom field should be readonly	admin	en	Select accounts for which the custom field should be readonly
 select accounts for which the custom field should be visible	admin	en	Select accounts the custom field should be visible for
@@ -842,7 +849,6 @@ sorry, the above users are still a member of the group %1	admin	en	Sorry, the ab
 sorry, the follow users are still a member of the group %1	admin	en	Sorry, the follow users are still a member of the group %1.
 sort the entries	admin	en	Sort the entries
 source account #%1 does not exist!	admin	en	Source account #%1 does NOT exist!
-ssl	admin	en	SSL
 standard	admin	en	Standard
 standard identity	admin	en	Standard identity
 standard imap server	admin	en	Standard IMAP server

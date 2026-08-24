@@ -840,32 +840,55 @@ export class MailApp extends EgwApp
 						tree.requestUpdate("_selectOptions");
 						tree.updateComplete.then(async () =>
 						{
-							// need to wait tree is refreshed: current and new id are there AND current folder is selected again
-							await tree.refreshItem(_id);
-							if (tree.getNode(_id) && tree.getNode(current_id))
+							try
 							{
-								if (!tree.getSelectedNode())
+								// need to wait tree is refreshed: current and new id are there AND current folder is selected again
+								await tree.refreshItem(_id);
+								if (tree.getNode(_id) && tree.getNode(current_id))
 								{
-									tree.reSelectItem(current_id);
-								}
-								else
-								{
-									// open new account
-									// need to wait new folders are loaded AND current folder is selected again
-									await tree.openItem(_id, true);
-									if (tree.getNode(_id + '::INBOX'))
+									if (!tree.getSelectedNode())
 									{
-										if (!tree.getSelectedNode())
+										tree.reSelectItem(current_id);
+									}
+									else
+									{
+										// open new account
+										// need to wait new folders are loaded AND current folder is selected again
+										await tree.openItem(_id, true);
+										if (tree.getNode(_id + '::INBOX'))
 										{
-											tree.reSelectItem(current_id);
-										}
-										else
-										{
-											this.changeFolder(_id + '::INBOX', tree, current_id);
-											tree.reSelectItem(_id + '::INBOX');
+											if (!tree.getSelectedNode())
+											{
+												tree.reSelectItem(current_id);
+											}
+											else
+											{
+												this.changeFolder(_id + '::INBOX', tree, current_id);
+												tree.reSelectItem(_id + '::INBOX');
+											}
 										}
 									}
 								}
+							}
+							catch (e)
+							{
+								// refreshItem() has no internal error-leaf fallback for a
+								// freshly-added account's placeholder node (unlike the ordinary
+								// expand-a-node path, see folderTreeAutoload()) - without this,
+								// an unhandled rejection here left the "Loading..." placeholder
+								// stuck forever with no visible error
+								const stuck = tree._selectOptions.findIndex((option: any) => option.id === "" + _id);
+								if (stuck !== -1)
+								{
+									tree._selectOptions[stuck] = {
+										...tree._selectOptions[stuck],
+										text: this.egw.lang("Error loading account %1: %2", _id, e?.message || e),
+										loading: false,
+										lazy: false,
+									};
+									tree.requestUpdate("_selectOptions");
+								}
+								console.error("mail-account 'add' push handler failed", e);
 							}
 						});
 						break;

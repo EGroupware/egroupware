@@ -70,13 +70,15 @@ class Jmap implements Connection
 	{
 		$scripts = [];
 		$activeScript = null;
+		$list = [];
 		try
 		{
-			$list = $this->jmap->jmapCall([
+			$response = $this->jmap->jmapCall([
 				['SieveScript/get', [
 					'accountId' => $this->jmap->accountId,
 				], "0"],
-			], self::USING)['methodResponses'][0][1]['list'];
+			], self::USING);
+			$list = $response['methodResponses'][0][1]['list'];
 			foreach ($list as $script)
 			{
 				$scripts[] = $script['name'];
@@ -86,7 +88,11 @@ class Jmap implements Connection
 				}
 			}
 		}
-		catch (\Exception $e) {
+		// broad on purpose: an unexpected non-array response (eg. the server rejecting
+		// SieveScript/get entirely) raises a \TypeError, not an \Exception, on the array-access
+		// above - found live 2026-08-24 saving a freshly created JMAP account, where it crashed
+		// the whole save instead of being treated like "no script yet" as intended below
+		catch (\Throwable $e) {
 			// ignore not existing script
 			$list = [];
 		}

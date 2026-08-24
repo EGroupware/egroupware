@@ -371,12 +371,12 @@ class mail_ui
 		}
 
 		// save session varchar
-		$oldicServerID =& Api\Cache::getSession('mail','activeProfileID');
+		$oldicServerID = Api\Cache::getSession('mail','activeProfileID');
 		if ($oldicServerID != self::$icServerID)
 		{
 			$this->mail_bo->openConnection(self::$icServerID);
 		}
-		if (true) $oldicServerID = self::$icServerID;
+		if (true) Api\Cache::setSession('mail', 'activeProfileID', self::$icServerID);
 		if (!Mail::storeActiveProfileIDToPref($this->mail_bo->icServer, self::$icServerID, true ))
 		{
 			throw new Api\Exception(__METHOD__." failed to change Profile to $_icServerID");
@@ -544,11 +544,20 @@ class mail_ui
 				if (Mail::$debugTimes) $starttime = microtime (true);
 				$this->mail_bo->restoreSessionData();
 				$sessionFolder = $GLOBALS['egw_info']['user']['preferences']['mail'][$this->mail_bo->profileID.'_LastFolder'] ?? null;
-				if ($sessionFolder && $this->mail_bo->folderExists($sessionFolder))
+				// folderExists()/reopen() ultimately call Horde_Imap_Client_Socket methods
+				// (mailboxExist()/openMailbox()) that neither Imap\Jmap nor Imap\Stalwart override -
+				// for a JMAP account these fall through to a REAL raw IMAP socket attempt against
+				// acc_imap_host:acc_imap_port, which for Stalwart is a JMAP(S) endpoint, not an IMAP
+				// server, hanging for the full default socket timeout (~60s, found live 2026-08-24).
+				// Folders/rows are already fully client-side JMAP for these accounts (see this
+				// method's own "no get_rows callback" comment below) - there is nothing here for a
+				// JMAP account to gain from a live server-side re-open, so it's simply skipped.
+				if ($sessionFolder && !($this->mail_bo->icServer instanceof ImapJmap) &&
+					$this->mail_bo->folderExists($sessionFolder))
 				{
 					$this->mail_bo->reopen($sessionFolder); // needed to fetch full set of capabilities
 				}
-				else
+				elseif (!$sessionFolder)
 				{
 					$sessionFolder = 'INBOX';
 				}
@@ -629,7 +638,11 @@ class mail_ui
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
 				// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
-				if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+				// JMAP natively supports arbitrary keywords/flags (unlike classic IMAP, which needs
+				// this specific extension) - treated as always true, both because it's correct and
+				// to avoid hasCapability()'s examineMailbox() call, which (like reopen() above) falls
+				// through to a raw IMAP socket attempt for a JMAP account and hangs (found live 2026-08-24)
+				if ($this->mail_bo->icServer instanceof ImapJmap || $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
 				{
 					$this->statusTypes = array_merge($this->statusTypes,array(
 						'keyword1'	=> 'important',//lang('important'),

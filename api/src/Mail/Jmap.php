@@ -78,18 +78,30 @@ class Jmap
 	protected ?string $log=null;
 
 	/**
+	 * Verify the server's TLS certificate - curl (used for all JMAP HTTP calls) verifies by
+	 * default already, unlike IMAP/SMTP/Sieve's Horde clients (see Account::sslContext()), so
+	 * this is only ever an opt-OUT, never an opt-in.
+	 *
+	 * @var bool
+	 */
+	protected bool $verify = true;
+
+	/**
 	 * Constructor
 	 *
 	 * @param string $host_or_url JMAP url, or hostname to bootstrap via "https://$host_or_url/.well-known/jmap"
 	 * @param string $user username
 	 * @param string $secret password
 	 * @param string|null &$accountId jmap accountId
+	 * @param bool $verify =true false: disable TLS certificate verification for this connection
+	 *  (Account::VERIFY_MASK's DISABLED state) - never pass false as a blanket default
 	 */
-	public function __construct(string $host_or_url, string $user, string $secret, ?string &$accountId=null)
+	public function __construct(string $host_or_url, string $user, string $secret, ?string &$accountId=null, bool $verify=true)
 	{
 		$this->url = $host_or_url;
 		$this->user = $user;
 		$this->secret = $secret;
+		$this->verify = $verify;
 
 		//$this->log = '/var/lib/egroupware/'.$_SERVER['HTTP_HOST'].'/jmap.log';
 
@@ -118,6 +130,19 @@ class Jmap
 			// we need other stuff set in bootstrap e.g. the downloadUrl //if (empty($accountId))
 			{
 				$this->bootstrap(false, $accountId);
+				// bootstrap() populates $this->apiUrl from the session document but (for this
+				// $use_well_known=false branch) does NOT update $this->url itself - jmapCall()
+				// posts to $this->url directly, so leaving it as the bare host/scheme given here
+				// (eg. "https://stalwart.egroupware.org", built by Imap\Jmap::jmapUrl() for any
+				// real, non-sentinel host) sends every JMAP method call to the server's ROOT
+				// instead of its actual JMAP API endpoint - found live 2026-08-24 via
+				// getPushSubscriptions() getting back an unrelated "Portal" SPA's HTML instead of
+				// a JMAP response. The sentinel hosts above already hardcode the correct "/jmap/"
+				// path into $this->url, which is why this went unnoticed there.
+				if ($this->apiUrl)
+				{
+					$this->url = $this->apiUrl;
+				}
 			}
 		}
 		$this->accountId = $accountId;
@@ -156,13 +181,13 @@ class Jmap
 		}
 		if (!$this->log)
 		{
-			return $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false);
+			return $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false, verify_peer: $this->verify);
 		}
 		// logging request and response
 		file_put_contents($this->log, date('Y-m-d H:i:s O')." $method $url\n".implode("\n", $header)."\n\n".$body."\n\n", FILE_APPEND);
 
 		try {
-			$response = $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false);
+			$response = $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false, verify_peer: $this->verify);
 
 			file_put_contents($this->log, date('Y-m-d H:i:s O').' '.
 				implode("\n", array_map(fn($value, $key) => $key === 0 ? $value : "$key: $value", array_values($response_header), array_keys($response_header)))."\n\n".

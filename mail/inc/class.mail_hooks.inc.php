@@ -806,6 +806,44 @@ class mail_hooks
 	}
 
 	/**
+	 * Add the current user's real (non-sentinel) Stalwart JMAP hosts to the CSP connect-src allowlist
+	 *
+	 * Mail\Imap\Stalwart::jmapBootstrap()'s docblock says its payload is "for browser clients that
+	 * want to talk to Stalwart's JMAP API directly" - the browser fetches the JMAP session straight
+	 * from the mail server, not proxied through EGroupware. That only works if this host is allowed
+	 * by our own default "connect-src 'self'" CSP (see Api\Header\ContentSecurityPolicy); a sentinel
+	 * host ('mail'/'stalwart'/...) instead resolves to a same-origin proxied URL and needs no entry.
+	 *
+	 * Found live 2026-08-24: a wizard-created account against a real external Stalwart host
+	 * (manually entered, no SRV record) left the mail app's folder tree stuck - the browser's own
+	 * JMAP session fetch was silently blocked by CSP, not by a Stalwart-side CORS problem. The plain
+	 * https(s)/http entry alone isn't enough either - the browser's own WebSocket push upgrade
+	 * (JamWebSocketClient, mail/js/jmap-jam-websocket.ts) connects to the SAME host via wss://
+	 * (or ws:// for the http variant), which needs its own separate connect-src entry (found live
+	 * the same day: the https entry alone silently fixed the session fetch but not the WS push).
+	 *
+	 * @return string[] additional connect-src origins (scheme://host), both the http(s) and the
+	 *  matching ws(s) scheme for each host
+	 */
+	public static function csp_connect_src()
+	{
+		$sources = [];
+		foreach (Mail\Account::search(true, 'params') as $params)
+		{
+			if (($params['acc_imap_type'] ?? null) !== Mail\Imap\Stalwart::class ||
+				empty($params['acc_imap_host']) ||
+				in_array($params['acc_imap_host'], ['mail', 'stalwart', 'internal.k8s.farm.egroupware.org'], true))
+			{
+				continue;
+			}
+			$is_http = ((int)$params['acc_imap_ssl'] & Mail\Account::PROTOCOL_MASK) === Mail\Account::JMAP_HTTP;
+			$sources[] = ($is_http ? 'http' : 'https').'://'.$params['acc_imap_host'];
+			$sources[] = ($is_http ? 'ws' : 'wss').'://'.$params['acc_imap_host'];
+		}
+		return array_unique($sources);
+	}
+
+	/**
 	 * Called before displaying site configuration
 	 *
 	 * @param array $config

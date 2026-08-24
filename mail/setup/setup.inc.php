@@ -39,6 +39,7 @@ $setup_info['mail']['hooks']['check_notify'] = 'mail_hooks::notification_check_m
 $setup_info['mail']['hooks']['emailadmin_edit'] = 'mail_hooks::emailadmin_edit';
 $setup_info['mail']['hooks']['status-get_actions'] = 'mail_hooks::get_status_actions';
 $setup_info['mail']['hooks']['config'] = 'mail_hooks::config';
+$setup_info['mail']['hooks']['csp-connect-src'] = 'mail_hooks::csp_connect_src';
 
 /* Dependencies for this app to work */
 $setup_info['mail']['depends'][] = array(

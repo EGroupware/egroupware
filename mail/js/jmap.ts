@@ -202,6 +202,14 @@ export class MailJmap
 	private quotaCache : Record<string, { data : Record<string, any>, expires : number }> = {};
 	private static readonly QUOTA_CACHE_TTL = 2 * 60 * 60 * 1000;
 
+	private static readonly CSP_RELOAD_KEY = 'mail_jmap_csp_reload';
+	private static cspListenerInstalled = false;
+	// the most-recently-constructed instance - the securitypolicyviolation listener below is
+	// installed (window-level) only once, but needs the CURRENT instance's this.tokens to decide
+	// whether a violation is actually one of our own accounts, so it's looked up through here
+	// rather than closing over "this" from whichever instance happened to install the listener
+	private static current : MailJmap | null = null;
+
 	get egw() : IegwAppLocal
 	{
 		return this.app.egw;
@@ -210,6 +218,56 @@ export class MailJmap
 	constructor(app : MailApp)
 	{
 		this.app = app;
+		MailJmap.current = this;
+		if (!MailJmap.cspListenerInstalled)
+		{
+			MailJmap.cspListenerInstalled = true;
+			window.addEventListener('securitypolicyviolation',
+				(e : SecurityPolicyViolationEvent) => MailJmap.current?.onCspViolation(e));
+		}
+	}
+
+	/**
+	 * Recover from a page that was loaded BEFORE this account's JMAP host was added to our own
+	 * Content-Security-Policy's connect-src allowlist (mail_hooks::csp_connect_src()) - a brand
+	 * new Stalwart account (real external host, not one of the same-origin sentinel values) is
+	 * only in that hook's answer once it exists in the DB, but the CURRENT page's CSP response
+	 * header was already sent before that; the browser then blocks this account's own session
+	 * fetch and reports it via this `securitypolicyviolation` event.
+	 *
+	 * Reacting to the EVENT directly (rather than to the resulting fetch/session promise
+	 * rejection, which was this method's first version) matters: the two are not ordered relative
+	 * to each other (the violation event is a separately browser-task-queued report, not
+	 * necessarily dispatched before the fetch's own promise settles) - checking from a
+	 * `client.session.catch()` handler could run before this event fired at all, silently missing
+	 * every violation. Confirmed live 2026-08-24: cspBlockedOrigins DID end up containing the
+	 * blocked origin, but the promise-based check that used to consult it had already run and
+	 * found it empty, so no reload was ever triggered.
+	 *
+	 * A stale CSP fixes itself with a single full window reload (the very next page load
+	 * regenerates the header from current account data) - so that is exactly what this does, at
+	 * most ONCE per browser tab (guarded via sessionStorage, survives the reload) to avoid ever
+	 * reload-looping over an account that is genuinely unreachable for some OTHER reason, and
+	 * only for a blocked host that matches one of THIS user's own mail accounts (never for some
+	 * unrelated connect-src violation, eg. from a browser extension sharing the page). Matching
+	 * on HOSTNAME alone, not the full origin: the browser's WebSocket push upgrade
+	 * (JamWebSocketClient) connects to the same host via `wss://`/`ws://`, a different scheme
+	 * than the account's own `https://`/`http://` sessionUrl, so a scheme-inclusive origin
+	 * comparison would miss that violation (found live 2026-08-24, alongside adding the matching
+	 * ws(s):// connect-src entries in mail_hooks::csp_connect_src()).
+	 */
+	private onCspViolation(e : SecurityPolicyViolationEvent) : void
+	{
+		if (e.violatedDirective?.split(' ')[0] !== 'connect-src' || !e.blockedURI) return;
+		let host : string;
+		try { host = new URL(e.blockedURI).hostname; } catch (_e) { return; }
+		const isOwnAccount = Object.values(this.tokens).some((token) =>
+		{
+			try { return new URL(token.sessionUrl).hostname === host; } catch (_e) { return false; }
+		});
+		if (!isOwnAccount || sessionStorage.getItem(MailJmap.CSP_RELOAD_KEY)) return;
+		sessionStorage.setItem(MailJmap.CSP_RELOAD_KEY, '1');
+		window.location.reload();
 	}
 
 	destroy()
@@ -2548,6 +2606,11 @@ export class MailJmap
 						// callback (see enableWsPush() below), otherwise never sent at all.
 						pushDataTypes: ['Email', 'Mailbox']
 					});
+					// a stale-CSP session-fetch failure for this client is handled by the
+					// securitypolicyviolation listener installed in the constructor (see
+					// onCspViolation()'s docblock for why that event, not this promise, is the
+					// right thing to react to) - nothing to do here beyond having set
+					// this.tokens[profileID] above, which is what that handler matches against
 					// fresh token: renew the mail server's push subscription/token again too,
 					// next time we know which folder is being viewed (see fetchRows()) - and forget
 					// any client-side WS push baseline, a fresh client means a fresh onPush()

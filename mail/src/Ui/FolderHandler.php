@@ -81,6 +81,17 @@ class FolderHandler
 	public function setFolderStatus($_folder, $force_change = false)
 	{
 		Api\Translation::add_app('mail');
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+		// unseen-counter refresh for the classic folder tree - a JMAP account's folder/unread
+		// state is already fully client-side (MailJmap), and getFolderStatus() below falls
+		// through to Horde_Imap_Client_Socket's raw-socket listMailboxes() (neither Imap\Jmap
+		// nor Imap\Stalwart override it), hanging/misconnecting against a JMAP(S) endpoint
+		// (found live 2026-08-24, same root cause as openConnection()/_getSpecialUseFolder()/
+		// getHierarchyDelimiter() elsewhere in this class of bug)
+		if ($this->ui->mail_bo->icServer instanceof Mail\Imap\Jmap)
+		{
+			return;
+		}
 		if ($_folder)
 		{
 			$this->ui->mail_bo->getHierarchyDelimiter(false);

@@ -47,13 +47,23 @@ class TestableAdminMail extends admin_mail
 		return self::$httpFixtures[$url];
 	}
 
-	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null) : Api\Mail\Jmap
+	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null, bool $verify=true) : Api\Mail\Jmap
 	{
 		if (!array_key_exists($host, self::$jmapFixtures))
 		{
 			throw new \RuntimeException("Unstubbed jmapClient('$host') call");
 		}
-		$result = self::$jmapFixtures[$host];
+		// a plain array of results = a queue (first call gets index 0, retry gets index 1, ...) -
+		// used to test the certificate-verification-failure-then-retry path, where the SAME url
+		// is called twice with different $verify values
+		if (is_array(self::$jmapFixtures[$host]) && array_is_list(self::$jmapFixtures[$host]))
+		{
+			$result = array_shift(self::$jmapFixtures[$host]);
+		}
+		else
+		{
+			$result = self::$jmapFixtures[$host];
+		}
 		if ($result instanceof \Throwable) throw $result;
 		return $result;
 	}
@@ -340,7 +350,7 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	{
 		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] =
 			array(array('target' => 'jmap.example.org', 'port' => 443, 'pri' => 0, 'weight' => 0));
-		TestableAdminMail::$jmapFixtures['jmap.example.org'] =
+		TestableAdminMail::$jmapFixtures['https://jmap.example.org'] =
 			$this->jmapStub(array('urn:ietf:params:jmap:sieve' => array()));
 
 		$content = array('ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org', 'acc_imap_password' => 'secret');
@@ -349,8 +359,89 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 		$this->assertTrue($result);
 		$this->assertSame('jmap.example.org', $content['acc_imap_host']);
 		$this->assertSame(Api\Mail\Imap\Stalwart::class, $content['acc_imap_type']);
+		$this->assertSame(admin_mail::JMAP_HTTPS | admin_mail::VERIFY_ENABLED, $content['acc_imap_ssl']);
 		$this->assertSame('jmap', $content['connected']);
 		$this->assertArrayHasKey('urn:ietf:params:jmap:sieve', $content['_jmap_account_capabilities']);
+	}
+
+	/**
+	 * A manually selected "JMAP (http)" protocol must be honored - tried over plain http, not
+	 * the https default - so a user can point the wizard at a non-standard JMAP endpoint.
+	 */
+	public function testTryJmapHonorsManualHttpProtocolSelection()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['http://stalwart.example.org'] = $this->jmapStub();
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'stalwart.example.org',
+			'acc_imap_ssl' => admin_mail::JMAP_HTTP,
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertTrue($result);
+		$this->assertSame(admin_mail::JMAP_HTTP | admin_mail::VERIFY_ENABLED, $content['acc_imap_ssl']);
+	}
+
+	/**
+	 * A manually entered non-standard port must be included in the URL tried.
+	 */
+	public function testTryJmapHonorsCustomPort()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['https://stalwart.example.org:8443'] = $this->jmapStub();
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'stalwart.example.org',
+			'acc_imap_port' => 8443,
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertTrue($result);
+	}
+
+	/**
+	 * A certificate-verification failure on the first (strict) attempt must fall back to a
+	 * lenient retry rather than failing the whole connection - the account still gets created,
+	 * just with certificate verification recorded as disabled (VERIFY_DISABLED).
+	 */
+	public function testTryJmapFallsBackToLenientOnCertificateFailure()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['https://stalwart.example.org'] = [
+			new Api\Exception\Http('SSL certificate problem: self-signed certificate', 0, 'GET', 'https://stalwart.example.org', ''),
+			$this->jmapStub(),
+		];
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'stalwart.example.org',
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertTrue($result);
+		$this->assertSame(admin_mail::JMAP_HTTPS | admin_mail::VERIFY_DISABLED, $content['acc_imap_ssl']);
+	}
+
+	/**
+	 * A non-certificate failure on the first attempt must NOT trigger the lenient retry - it's
+	 * a real error (wrong credentials, host down, ...) that must surface normally.
+	 */
+	public function testTryJmapDoesNotRetryOnNonCertificateFailure()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['https://stalwart.example.org'] =
+			new Api\Exception\Http('Unexpected HTTP status code 401: ', 401, 'GET', 'https://stalwart.example.org', '');
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'stalwart.example.org',
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertFalse($result);
 	}
 
 	/**
@@ -361,7 +452,7 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	public function testTryJmapTriesExplicitHostWhenNoSrvRecord()
 	{
 		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
-		TestableAdminMail::$jmapFixtures['stalwart.example.org'] = $this->jmapStub();
+		TestableAdminMail::$jmapFixtures['https://stalwart.example.org'] = $this->jmapStub();
 
 		$content = array(
 			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
@@ -381,7 +472,7 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	public function testTryJmapReturnsFalseWhenNotAJmapServer()
 	{
 		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
-		TestableAdminMail::$jmapFixtures['imap.example.org'] =
+		TestableAdminMail::$jmapFixtures['https://imap.example.org'] =
 			new Api\Exception('imap.example.org is NOT a JMAP server!');
 
 		$content = array(
@@ -398,12 +489,36 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	/**
 	 * A failed Stalwart OAuth-login workaround (passwordGrant() returning null) must NOT block
 	 * account creation - it's a live-validation nicety, the account still works via plain
-	 * password authentication.
+	 * password authentication. Since passwordGrant() only ever succeeds against a real Stalwart
+	 * server (a Stalwart-specific proprietary endpoint, see Mail\Jmap::passwordGrant()'s
+	 * docblock), its result doubles as a first, cheap way to tell a real Stalwart server apart
+	 * from a generic JMAP server (ralf, 2026-08-24) - acc_imap_type falls back to the more
+	 * generic Imap\Jmap::class rather than Imap\Stalwart::class when it fails.
 	 */
-	public function testTryJmapSucceedsEvenIfPasswordGrantFails()
+	public function testTryJmapFallsBackToPlainJmapIfPasswordGrantFails()
 	{
 		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
-		TestableAdminMail::$jmapFixtures['stalwart.example.org'] = $this->jmapStub([], false);
+		TestableAdminMail::$jmapFixtures['https://stalwart.example.org'] = $this->jmapStub([], false);
+
+		$content = array(
+			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',
+			'acc_imap_password' => 'secret', 'acc_imap_host' => 'stalwart.example.org',
+		);
+		$result = $this->tryJmap($content);
+
+		$this->assertTrue($result);
+		$this->assertSame(Api\Mail\Imap\Jmap::class, $content['acc_imap_type']);
+	}
+
+	/**
+	 * A successful Stalwart OAuth-login workaround confirms the server really is Stalwart, not
+	 * just some generic JMAP server - acc_imap_type must be the Stalwart-specific subclass, which
+	 * carries the admin-automation/OAuth-bootstrap capabilities the plain Jmap class doesn't.
+	 */
+	public function testTryJmapUsesStalwartClassIfPasswordGrantSucceeds()
+	{
+		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
+		TestableAdminMail::$jmapFixtures['https://stalwart.example.org'] = $this->jmapStub([], true);
 
 		$content = array(
 			'ident_email' => 'user@example.org', 'acc_imap_username' => 'user@example.org',

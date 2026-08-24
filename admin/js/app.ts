@@ -1468,7 +1468,15 @@ export class AdminApp extends EgwApp
 	 */
 	SSL_TLS = 2;
 	/**
-	 * if set, verify certifcate (currently not implemented in Horde_Imap_Client!)
+	 * JMAP over plain http (no encryption)
+	 */
+	JMAP_HTTP = 4;
+	/**
+	 * JMAP over https
+	 */
+	JMAP_HTTPS = 6;
+	/**
+	 * if set, verify certifcate - kept for backwards compatibility, same value as VERIFY_ENABLED
 	 */
 	SSL_VERIFY = 8;
 
@@ -1536,7 +1544,8 @@ export class AdminApp extends EgwApp
 	{
 		var ssl_type = _widget.get_value();
 		this.et2.getWidgetById('acc_imap_port').set_value(
-			ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 993 : 143);
+			ssl_type == this.JMAP_HTTPS ? 443 : (ssl_type == this.JMAP_HTTP ? 80 :
+			(ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 993 : 143)));
 	}
 
 	/**

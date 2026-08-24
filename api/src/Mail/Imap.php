@@ -196,6 +196,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 			'hostspec' => $this->params['acc_imap_host'],
 			'port' => $this->params['acc_imap_port'],
 			'secure' => Account::ssl2secure($this->params['acc_imap_ssl']),
+			'context' => Account::sslContext($this->params['acc_imap_ssl']),
 			'timeout' => $_timeout,
 		)+self::$default_params;
 
@@ -312,6 +313,16 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	public function login()
 	{
 		parent::login();
+
+		// one-time silent certificate-verification upgrade for an account still in
+		// VERIFY_UNDECIDED state (see Account::resolveVerification()'s docblock) - a cheap
+		// no-op once decided, so this runs on every real login without extra cost afterward
+		if ($this->acc_id && (((int)$this->acc_imap_ssl & Account::VERIFY_MASK) === Account::VERIFY_UNDECIDED))
+		{
+			$this->params['acc_imap_ssl'] = Account::resolveVerification($this->acc_id, 'acc_imap_ssl',
+				(int)$this->acc_imap_ssl, $this->acc_imap_host, (int)$this->acc_imap_port,
+				Account::ssl2secure($this->acc_imap_ssl), "a1 STARTTLS\r\n");
+		}
 
 		foreach($this->run_on_login as $key => $data)
 		{

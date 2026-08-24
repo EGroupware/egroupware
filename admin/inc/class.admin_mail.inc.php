@@ -62,9 +62,29 @@ class admin_mail
 	 */
 	const SSL_TLS = Mail\Account::SSL_TLS;
 	/**
-	 * 8: if set, verify certifcate (currently not implemented in Horde_Imap_Client!)
+	 * 4: JMAP over plain http (no encryption)
+	 */
+	const JMAP_HTTP = Mail\Account::JMAP_HTTP;
+	/**
+	 * 6: JMAP over https
+	 */
+	const JMAP_HTTPS = Mail\Account::JMAP_HTTPS;
+	/**
+	 * 8: if set, verify certifcate - kept for backwards compatibility, see VERIFY_ENABLED
 	 */
 	const SSL_VERIFY = Mail\Account::SSL_VERIFY;
+	/**
+	 * Mask for the protocol/encryption portion (bits 0-2) of acc_(imap|sieve|smtp)_ssl
+	 */
+	const PROTOCOL_MASK = Mail\Account::PROTOCOL_MASK;
+	/**
+	 * 3-state certificate-verification field (bits 3-4) - see Mail\Account's docblock for the
+	 * full design (undecided/enabled/disabled, safe one-time transition for existing accounts)
+	 */
+	const VERIFY_UNDECIDED = Mail\Account::VERIFY_UNDECIDED;
+	const VERIFY_ENABLED = Mail\Account::VERIFY_ENABLED;
+	const VERIFY_DISABLED = Mail\Account::VERIFY_DISABLED;
+	const VERIFY_MASK = Mail\Account::VERIFY_MASK;
 
 	/**
 	 * Log exception including trace to error-log, instead of just displaying the message.
@@ -87,14 +107,109 @@ class admin_mail
 	/**
 	 * Supported ssl types including none
 	 *
+	 * Kept for backwards compatibility (eg. default-value lookups); values are bare protocol
+	 * values (PROTOCOL_MASK only) - certificate verification is a separate checkbox now, NOT
+	 * baked into this dropdown's value space (that caused every option to visually appear up to
+	 * 3 times, once per verification state, found live 2026-08-24). Use self::sslTypes() to build
+	 * the actual selectbox options, which also gives each field (IMAP/Sieve/SMTP) its own labels
+	 * and, for SMTP, omits the JMAP entries entirely (not supported there yet).
+	 *
 	 * @var array
 	 */
 	public static $ssl_types = array(
-		self::SSL_TLS => 'TLS',	// SSL with minimum TLS (no SSL v.2 or v.3), requires Horde_Imap_Client-2.16.0/Horde_Socket_Client-1.1.0
-		self::SSL_SSL => 'SSL',
+		self::JMAP_HTTPS => 'JMAP (https)',
+		self::SSL_TLS => 'TLS/SSL',	// SSL with minimum TLS (no SSL v.2 or v.3), requires Horde_Imap_Client-2.16.0/Horde_Socket_Client-1.1.0
+		self::SSL_SSL => 'SSL',	// deprecated legacy alias for TLS, kept only for internal trial-loop label lookups, never shown in a selectbox (normalizeAccountType() rewrites it to SSL_TLS on every save)
 		self::SSL_STARTTLS => 'STARTTLS',
-		'no' => 'no',
+		self::JMAP_HTTP => 'JMAP (http, no encryption)',
+		'no' => 'no encryption',
 	);
+
+	/**
+	 * Build the protocol/encryption selectbox options for one field
+	 *
+	 * @param string $protocol_name eg. 'IMAP', 'Sieve', 'SMTP' - substituted into the non-JMAP labels
+	 * @param bool $with_jmap =true include the JMAP (https)/JMAP (http) entries - false for SMTP,
+	 *      which has no JMAP transport (yet), and for a classic (non-JMAP) Sieve account, where
+	 *      JMAP is not a meaningful manual choice (JMAP Sieve is always tied to the account's own
+	 *      JMAP session, never an independently configured host/port)
+	 * @return array value (int|'no') => label, in the order: JMAP (https), TLS/SSL, StartTLS,
+	 *      JMAP (http, no encryption), no encryption
+	 */
+	public static function sslTypes(string $protocol_name, bool $with_jmap=true) : array
+	{
+		$types = [];
+		if ($with_jmap) $types[self::JMAP_HTTPS] = lang('JMAP (https)');
+		$types[self::SSL_TLS] = lang('%1 (TLS/SSL)', $protocol_name);
+		$types[self::SSL_STARTTLS] = lang('%1 (StartTLS)', $protocol_name);
+		if ($with_jmap) $types[self::JMAP_HTTP] = lang('JMAP (http, no encryption)');
+		$types['no'] = lang('%1 (no encryption)', $protocol_name);
+		return $types;
+	}
+
+	/**
+	 * Merge a submitted "disable certificate validation" checkbox back into the combined
+	 * acc_(imap|sieve|smtp)_ssl value, before any other code in this request reads that field
+	 *
+	 * The checkbox is a synthetic UI-only field (acc_X_ssl_noverify), not a real DB column - it
+	 * exists only so the protocol dropdown does not have to carry the certificate-verification
+	 * state baked into its own value space (that caused every option to visually appear up to 3
+	 * times, once per verification state, found live 2026-08-24).
+	 *
+	 * Checked --> VERIFY_DISABLED (skip verification). Unchecked --> VERIFY_UNDECIDED, so the
+	 * connection-test code below decides ENABLED/DISABLED itself from the actual probe outcome -
+	 * a user cannot manually claim "verified" without EGroupware itself having confirmed it.
+	 *
+	 * @param array $content
+	 * @param string $field eg. 'acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl'
+	 * @return array $content with $field updated and $field.'_noverify' removed
+	 */
+	protected static function mergeVerifyCheckbox(array $content, string $field) : array
+	{
+		if (isset($content[$field.'_noverify']))
+		{
+			$noverify = (bool)$content[$field.'_noverify'];
+			if (isset($content[$field]) && $content[$field] !== 'no')
+			{
+				$content[$field] = ((int)$content[$field] & self::PROTOCOL_MASK) |
+					($noverify ? self::VERIFY_DISABLED : self::VERIFY_UNDECIDED);
+			}
+		}
+		unset($content[$field.'_noverify']);
+		return $content;
+	}
+
+	/**
+	 * Split the combined acc_(imap|sieve|smtp)_ssl value into a bare-protocol dropdown value
+	 * plus a "disable certificate validation" checkbox boolean, for display
+	 *
+	 * Counterpart of self::mergeVerifyCheckbox() - call right before rendering (each
+	 * $tpl->exec() call), after all connection-test logic has finished updating $field.
+	 *
+	 * @param array $content
+	 * @param string $field eg. 'acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl'
+	 * @return array $content with $field masked to a bare protocol value and $field.'_noverify' set
+	 */
+	protected static function splitVerifyCheckbox(array $content, string $field) : array
+	{
+		$ssl = $content[$field] ?? null;
+		if ($ssl !== null && $ssl !== 'no')
+		{
+			$content[$field.'_noverify'] = ((int)$ssl & self::VERIFY_MASK) === self::VERIFY_DISABLED;
+			$protocol = (int)$ssl & self::PROTOCOL_MASK;
+			// legacy SSL_SSL is displayed identically to SSL_TLS, never written again; SSL_NONE
+			// is represented by the string 'no' throughout this class, not the int 0, matching
+			// sslTypes()'s option key - an int 0 would not match any selectbox option and show blank
+			$content[$field] = $protocol === self::SSL_SSL ? self::SSL_TLS :
+				($protocol === self::SSL_NONE ? 'no' : $protocol);
+		}
+		else
+		{
+			$content[$field.'_noverify'] = false;
+		}
+		return $content;
+	}
+
 	/**
 	 * Convert ssl-type to Horde secure parameter
 	 *
@@ -115,6 +230,8 @@ class admin_mail
 		'SSL' => self::SSL_SSL,
 		'STARTTLS' => self::SSL_STARTTLS,
 		'no' => self::SSL_NONE,
+		'JMAP (https)' => self::JMAP_HTTPS,
+		'JMAP (http)' => self::JMAP_HTTP,
 	);
 
 	/**
@@ -192,6 +309,10 @@ class admin_mail
 		$content += array(
 			'ident_realname' => $GLOBALS['egw']->accounts->id2name($content['account_id'], 'account_fullname'),
 			'ident_email' => $GLOBALS['egw']->accounts->id2name($content['account_id'], 'account_email'),
+			// explicit default protocol, so the pre-selected dropdown value (TLS/SSL) always
+			// matches the default port below - the dropdown itself lists JMAP (https) first
+			// (see self::sslTypes()), but that is a display-order choice, not the default pick
+			'acc_imap_ssl' => self::SSL_TLS,
 			'acc_imap_port' => 993,
 			'manual_class' => 'emailadmin_manual',
 		);
@@ -202,8 +323,9 @@ class admin_mail
 			$readonlys['button[manual]'] = true;
 			unset($content['manual_class']);
 		}
+		$content = self::splitVerifyCheckbox($content, 'acc_imap_ssl');
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, array(
-			'acc_imap_ssl' => self::$ssl_types,
+			'acc_imap_ssl' => self::sslTypes('IMAP'),
 		), $readonlys, $content, 2);
 	}
 
@@ -214,6 +336,8 @@ class admin_mail
 	 */
 	public function autoconfig(array $content)
 	{
+		$content = self::mergeVerifyCheckbox($content, 'acc_imap_ssl');
+
 		// user pressed [Skip IMAP] --> jump to SMTP config
 		if (!empty($content['button']) && key($content['button']) === 'skip_imap')
 		{
@@ -241,7 +365,7 @@ class admin_mail
 			$hosts = array($content['acc_imap_host'] => true);
 			if ($content['acc_imap_port'] > 0 && !in_array($content['acc_imap_port'], array(143,993)))
 			{
-				$ssl_type = (string)array_search($content['acc_imap_ssl'], self::$ssl2type);
+				$ssl_type = (string)array_search((int)$content['acc_imap_ssl'] & self::PROTOCOL_MASK, self::$ssl2type);
 				if ($ssl_type === '') $ssl_type = 'insecure';
 				$hosts[$content['acc_imap_host']] = array(
 					$ssl_type => $content['acc_imap_port'],
@@ -290,6 +414,11 @@ class admin_mail
 			$connected = $content['connected'];
 		}
 
+		// captured BEFORE the trial loop overwrites acc_imap_ssl with each bare candidate
+		// protocol value - a manually pre-checked "disable certificate validation" checkbox
+		// must still apply to every candidate tried below
+		$initial_verify_state = (int)($content['acc_imap_ssl'] ?? 0) & self::VERIFY_MASK;
+
 		// iterate over all hosts and try to connect
 		foreach(!isset($connected) ? $hosts : [] as $host => $data)
 		{
@@ -306,22 +435,44 @@ class admin_mail
 			{
 				if ($ssl === 'username') continue;
 
-				$content['acc_imap_ssl'] = (int)self::$ssl2type[$ssl];
+				$content['acc_imap_ssl'] = (int)self::$ssl2type[$ssl] | $initial_verify_state;
 
 				$e = null;
 				try {
 					$content['output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying $ssl connection to $host:$port ...\n";
 					$content['acc_imap_port'] = $port;
 
-					$imap = self::imap_client($content, self::TIMEOUT);
-
-					//$content['output'] .= array2string($imap->capability());
-					$imap->login();
+					// optimistic cert verification: an undecided account tries strict
+					// verification as part of THIS SAME connection attempt first, falling back
+					// to a lenient retry only on an actual certificate failure - no separate
+					// probe connection (which risks colliding with a real mail server's per-IP
+					// concurrent-connection limits, found live 2026-08-24)
+					$verify_undecided = $initial_verify_state === self::VERIFY_UNDECIDED;
+					$attempt_verify = $verify_undecided ? true : $initial_verify_state === self::VERIFY_ENABLED;
+					try {
+						$imap = self::imap_client($content, self::TIMEOUT, $attempt_verify);
+						$imap->login();
+					}
+					catch (Horde_Imap_Client_Exception $cert_e) {
+						if (!$verify_undecided || !Mail\Account::isCertificateError($cert_e))
+						{
+							throw $cert_e;
+						}
+						$content['output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
+						$attempt_verify = false;
+						$imap = self::imap_client($content, self::TIMEOUT, false);
+						$imap->login();
+					}
 					$content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in'))."\n";
 					if (!$imap->isSecureConnection())
 					{
 						$content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
 						$content['acc_imap_ssl'] = 'no';
+					}
+					elseif ($verify_undecided)
+					{
+						$content['acc_imap_ssl'] = ((int)$content['acc_imap_ssl'] & ~self::VERIFY_MASK) |
+							($attempt_verify ? self::VERIFY_ENABLED : self::VERIFY_DISABLED);
 					}
 					//$content['output'] .= "\n\n".array2string($imap->capability());
 					$content['connected'] = $connected = true;
@@ -353,10 +504,10 @@ class admin_mail
 				}
 			}
 		}
-		if ($connected === 'jmap')	// JMAP has no separate folder-discovery step, skip straight to sieve()
+		if ($connected === 'jmap')	// continue with next wizard step: define folders, JMAP-natively
 		{
 			unset($content['button']);
-			return $this->sieve($content, lang('Successful connected to %1 server%2.', 'JMAP', ' '.lang('and logged in')));
+			return $this->folder($content, lang('Successful connected to %1 server%2.', 'JMAP', ' '.lang('and logged in')));
 		}
 		if ($connected)	// continue with next wizard step: define folders
 		{
@@ -381,7 +532,8 @@ class admin_mail
 		}
 		$readonlys['button[manual]'] = true;
 		unset($content['manual_class'], $content['button']);
-		$sel_options['acc_imap_ssl'] = self::$ssl_types;
+		$content = self::splitVerifyCheckbox($content, 'acc_imap_ssl');
+		$sel_options['acc_imap_ssl'] = self::sslTypes('IMAP');
 		$tpl->exec(static::APP_CLASS.'autoconfig', $content, $sel_options, $readonlys,
 			array_diff_key($content, ['output'=>true]), 2);
 	}
@@ -429,14 +581,23 @@ class admin_mail
 			}
 		}
 		$content['msg'] = $msg;
-		if (!isset($imap)) $imap = self::imap_client ($content);
 
 		try {
 			//_debug_array($content);
+			if (is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true))
+			{
+				$jmap = static::jmapClient($content['acc_imap_host'], $content['acc_imap_username'], $content['acc_imap_password']);
+				$folders = self::jmapMailboxes($jmap, $content);
+			}
+			else
+			{
+				if (!isset($imap)) $imap = self::imap_client ($content);
+				$folders = self::mailboxes($imap, $content);
+			}
 			$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
 				$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
 					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
-						$sel_options['acc_folder_ham'] = self::mailboxes($imap, $content);
+						$sel_options['acc_folder_ham'] = $folders;
 		}
 		catch(Exception $e) {
 			$content['msg'] = $e->getMessage();
@@ -522,6 +683,48 @@ class admin_mail
 	}
 
 	/**
+	 * Query JMAP mailboxes and detect special folders - JMAP-native equivalent of mailboxes()
+	 *
+	 * Special-use folders are matched via the standard JMAP Mailbox "role" (RFC 8621) where one
+	 * exists (sent/trash/drafts/junk/archive); "template" and "ham" have no standard role and are
+	 * matched by common name only, same as mailboxes()'s IMAP fallback.
+	 *
+	 * @param Mail\Jmap $jmap
+	 * @param array &$content=null on return values for acc_folder_(sent|trash|draft|template|junk|ham|archive)
+	 * @return array with mailbox-names as key AND value
+	 */
+	protected static function jmapMailboxes(Mail\Jmap $jmap, array &$content=null)
+	{
+		$response = $jmap->jmapCall([['Mailbox/get', ['accountId' => $jmap->accountId, 'ids' => null], '0']], Mail\Jmap::JMAP_MAIL);
+		$mailboxes = $response['methodResponses'][0][1]['list'] ?? [];
+
+		// pre-select send, trash, ... folder for user, by checking the JMAP role or common name(s)
+		foreach(array(
+			'acc_folder_sent'     => array('sent'),
+			'acc_folder_trash'    => array('trash'),
+			'acc_folder_draft'    => array('drafts'),
+			'acc_folder_template' => array('', 'templates'),
+			'acc_folder_junk'     => array('junk'),
+			'acc_folder_ham'      => array('', 'ham'),
+			'acc_folder_archive'  => array('archive'),
+		) as $name => $matches)
+		{
+			unset($content[$name]);
+			list($role, $common_name) = $matches + [null, null];
+			foreach($mailboxes as $mailbox)
+			{
+				if (empty($content[$name]) &&
+					(($role && ($mailbox['role'] ?? null) === $role) ||
+					 ($common_name && strtolower($mailbox['name']) === $common_name)))
+				{
+					$content[$name] = $mailbox['name'];
+				}
+			}
+		}
+		return array_combine(array_column($mailboxes, 'name'), array_column($mailboxes, 'name'));
+	}
+
+	/**
 	 * Step 3: Sieve
 	 *
 	 * @param array $content
@@ -536,18 +739,8 @@ class admin_mail
 			self::SSL_NONE => array(4190, 2000),
 		);
 		$content['msg'] = $msg;
-
-		// JMAP accounts: Sieve support/config comes from the JMAP session's capabilities, not
-		// from a separate ManageSieve probe - Mail\Sieve\Jmap composes off the same JMAP
-		// connection at usage time, no separate host/port is needed.
-		if (is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true))
-		{
-			$content['acc_sieve_enabled'] = (int)isset($content['_jmap_account_capabilities']['urn:ietf:params:jmap:sieve']);
-			unset($content['_jmap_account_capabilities'], $content['button']);
-			return $this->smtp($content, $content['acc_sieve_enabled'] ?
-				lang('Sieve filters are supported via JMAP.') :
-				lang('This JMAP server does not support Sieve filters.'));
-		}
+		$content = self::mergeVerifyCheckbox($content, 'acc_sieve_ssl');
+		$is_jmap = is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true);
 
 		if (!empty($content['button']))
 		{
@@ -559,6 +752,14 @@ class admin_mail
 					return $this->folder($content);
 
 				case 'continue':
+					// JMAP: nothing to test, capability was already established in autoconfig()
+					// (kept in $content, not unset - needed again if the user steps back here
+					// from smtp(), found live 2026-08-24: stepping back re-ran this JMAP branch
+					// with the capability gone, showing a false "Sieve not supported")
+					if ($is_jmap)
+					{
+						return $this->smtp($content);
+					}
 					if (!$content['acc_sieve_enabled'])
 					{
 						return $this->smtp($content);
@@ -566,6 +767,37 @@ class admin_mail
 					break;
 			}
 		}
+
+		// JMAP accounts: Sieve support/config comes from the JMAP session's capabilities
+		// (fetched during autoconfig()), not from a separate ManageSieve probe - Mail\Sieve\Jmap
+		// composes off the same JMAP connection at usage time, there is no separate host/port.
+		// Still rendered (not skipped) so the user sees the detection result and can turn it off
+		// if unwanted - it can never be turned ON if the capability wasn't detected.
+		if ($is_jmap)
+		{
+			$detected = isset($content['_jmap_account_capabilities']['urn:ietf:params:jmap:sieve']);
+			$content['acc_sieve_enabled'] = $detected &&
+				(!isset($content['acc_sieve_enabled']) || $content['acc_sieve_enabled']) ? 1 : 0;
+			$content['acc_sieve_host'] = $content['acc_imap_host'];
+			$content['acc_sieve_port'] = $content['acc_imap_port'];
+			$content['acc_sieve_ssl'] = $content['acc_imap_ssl'];
+			$readonlys['acc_sieve_host'] = $readonlys['acc_sieve_port'] = $readonlys['acc_sieve_ssl'] =
+				$readonlys['acc_sieve_ssl_noverify'] = true;
+			$readonlys['button[manual]'] = true;
+			unset($content['manual_class']);
+			if (empty($content['msg']))
+			{
+				$content['msg'] = $detected ? lang('Sieve filters are supported via JMAP.') :
+					lang('This JMAP server does not support Sieve filters.');
+			}
+
+			$content = self::splitVerifyCheckbox($content, 'acc_sieve_ssl');
+			$sel_options['acc_sieve_ssl'] = self::sslTypes('Sieve');
+			$tpl = new Etemplate('admin.mailwizard.sieve');
+			$tpl->exec(static::APP_CLASS.'sieve', $content, $sel_options, $readonlys, $content, 2);
+			return;
+		}
+
 		// first try: hide manual config
 		if (!isset($content['acc_sieve_enabled']))
 		{
@@ -579,7 +811,7 @@ class admin_mail
 			$readonlys['button[manual]'] = true;
 		}
 		// set default ssl and port
-		if (!isset($content['acc_sieve_ssl'])) $content['acc_sieve_ssl'] = key(self::$ssl_types);
+		if (!isset($content['acc_sieve_ssl'])) $content['acc_sieve_ssl'] = self::SSL_TLS;
 		if (empty($content['acc_sieve_port'])) $content['acc_sieve_port'] = $sieve_ssl2port[$content['acc_sieve_ssl']];
 
 		// check smtp connection
@@ -602,6 +834,11 @@ class admin_mail
 			{
 				$data = $sieve_ssl2port;
 			}
+			// captured BEFORE the trial loop overwrites acc_sieve_ssl with each bare candidate
+			// protocol value - a manually pre-checked "disable certificate validation" checkbox
+			// must still apply to every candidate tried below
+			$verify_undecided = ((int)$content['acc_sieve_ssl'] & self::VERIFY_MASK) === self::VERIFY_UNDECIDED;
+			$decided_verify_enabled = ((int)$content['acc_sieve_ssl'] & self::VERIFY_MASK) === self::VERIFY_ENABLED;
 			foreach($data as $ssl => $ports)
 			{
 				foreach((array)$ports as $port)
@@ -613,20 +850,49 @@ class admin_mail
 					try {
 						$content['sieve_output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying $ssl_label connection to $content[acc_sieve_host]:$port ...\n";
 						$content['acc_sieve_port'] = $port;
-						$sieve = new Horde\ManageSieve(array(
+						// optimistic cert verification: an undecided account tries strict
+						// verification as part of THIS SAME connection attempt first, falling
+						// back to a lenient retry only on an actual certificate failure - no
+						// separate probe connection (which risks colliding with a real mail
+						// server's per-IP concurrent-connection limits, found live 2026-08-24)
+						$attempt_verify = $verify_undecided ? true : $decided_verify_enabled;
+						$sieve_config = array(
 							'host' => $content['acc_sieve_host'],
 							'port' => $content['acc_sieve_port'],
-							'secure' => self::$ssl2secure[(string)array_search($content['acc_sieve_ssl'], self::$ssl2type)],
+							'secure' => self::$ssl2secure[(string)array_search((int)$content['acc_sieve_ssl'] & self::PROTOCOL_MASK, self::$ssl2type)],
+							'context' => ['ssl' => ['verify_peer' => $attempt_verify, 'verify_peer_name' => $attempt_verify]],
 							'timeout' => self::TIMEOUT,
 							'logger' => self::DEBUG_LOG ? new admin_mail_logger(self::DEBUG_LOG) : null,
-						));
-						// connect to sieve server
-						$sieve->connect();
+						);
+						try {
+							$sieve = new Horde\ManageSieve($sieve_config);
+							// connect to sieve server
+							$sieve->connect();
+						}
+						catch (Exception $cert_e) {
+							if (!$verify_undecided || !Mail\Account::isCertificateError($cert_e))
+							{
+								throw $cert_e;
+							}
+							$content['sieve_output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
+							$attempt_verify = false;
+							$sieve_config['context'] = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]];
+							$sieve = new Horde\ManageSieve($sieve_config);
+							$sieve->connect();
+						}
 						$content['sieve_output'] .= "\n".lang('Successful connected to %1 server%2.', 'Sieve','');
 						// and log in
 						$sieve->login($content['acc_imap_username'], $content['acc_imap_password']);
 						$content['sieve_output'] .= ' '.lang('and logged in')."\n";
 						$content['sieve_connected'] = true;
+
+						// record the (newly resolved, or already pre-decided eg. via the
+						// "disable certificate validation" checkbox) verification state - the
+						// trial loop above overwrote acc_sieve_ssl with a bare candidate value
+						$content['acc_sieve_ssl'] = ((int)$content['acc_sieve_ssl'] & ~self::VERIFY_MASK) |
+							($verify_undecided ?
+								($attempt_verify ? self::VERIFY_ENABLED : self::VERIFY_DISABLED) :
+								($decided_verify_enabled ? self::VERIFY_ENABLED : self::VERIFY_DISABLED));
 
 						unset($content['button']);
 						return $this->smtp($content, lang('Successful connected to %1 server%2.', 'Sieve',
@@ -646,7 +912,7 @@ class admin_mail
 			// not connected, and default ssl/port --> reset again to secure settings
 			if ($data == $sieve_ssl2port)
 			{
-				$content['acc_sieve_ssl'] = key(self::$ssl_types);
+				$content['acc_sieve_ssl'] = self::SSL_TLS;
 				$content['acc_sieve_port'] = $sieve_ssl2port[$content['acc_sieve_ssl']];
 			}
 		}
@@ -665,7 +931,8 @@ class admin_mail
 			$content['msg'] = lang('No sieve support detected, either fix configuration manually or leave it switched off.');
 			$content['acc_sieve_enabled'] = 0;
 		}
-		$sel_options['acc_sieve_ssl'] = self::$ssl_types;
+		$content = self::splitVerifyCheckbox($content, 'acc_sieve_ssl');
+		$sel_options['acc_sieve_ssl'] = self::sslTypes('Sieve', false);
 		$tpl = new Etemplate('admin.mailwizard.sieve');
 		$tpl->exec(static::APP_CLASS.'sieve', $content, $sel_options, $readonlys, $content, 2);
 	}
@@ -685,6 +952,7 @@ class admin_mail
 			self::SSL_STARTTLS => 587,
 		);
 		$content['msg'] = $msg;
+		$content = self::mergeVerifyCheckbox($content, 'acc_smtp_ssl');
 
 		if (!empty($content['button']))
 		{
@@ -710,7 +978,7 @@ class admin_mail
 		if (!isset($content['acc_smtp_username'])) $content['acc_smtp_username'] = $content['acc_imap_username'];
 		if (!isset($content['acc_smtp_password'])) $content['acc_smtp_password'] = $content['acc_imap_password'];
 		// set default ssl
-		if (!isset($content['acc_smtp_ssl'])) $content['acc_smtp_ssl'] = key(self::$ssl_types);
+		if (!isset($content['acc_smtp_ssl'])) $content['acc_smtp_ssl'] = self::SSL_TLS;
 		if (empty($content['acc_smtp_port'])) $content['acc_smtp_port'] = $smtp_ssl2port[$content['acc_smtp_ssl']];
 
 		// check smtp connection
@@ -725,7 +993,7 @@ class admin_mail
 				$hosts = array($content['acc_smtp_host'] => true);
 				if ((string)$content['acc_smtp_ssl'] !== (string)self::SSL_TLS || $content['acc_smtp_port'] != $smtp_ssl2port[$content['acc_smtp_ssl']])
 				{
-					$ssl_type = (string)array_search($content['acc_smtp_ssl'], self::$ssl2type);
+					$ssl_type = (string)array_search((int)$content['acc_smtp_ssl'] & self::PROTOCOL_MASK, self::$ssl2type);
 					$hosts[$content['acc_smtp_host']] = array(
 						$ssl_type => $content['acc_smtp_port'],
 					);
@@ -757,6 +1025,11 @@ class admin_mail
 			{
 				$hosts = $this->guess_hosts($content['ident_email'], 'smtp');
 			}
+			// captured BEFORE the trial loop overwrites acc_smtp_ssl with each bare candidate
+			// protocol value - a manually pre-checked "disable certificate validation" checkbox
+			// must still apply to every candidate tried below
+			$initial_verify_state = (int)($content['acc_smtp_ssl'] ?? 0) & self::VERIFY_MASK;
+
 			foreach($hosts as $host => $data)
 			{
 				$content['acc_smtp_host'] = $host;
@@ -768,19 +1041,27 @@ class admin_mail
 				{
 					if ($ssl === 'username') continue;
 
-					$content['acc_smtp_ssl'] = (int)self::$ssl2type[$ssl];
+					$content['acc_smtp_ssl'] = (int)self::$ssl2type[$ssl] | $initial_verify_state;
 
 					$e = null;
 					try {
 						$content['smtp_output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying $ssl connection to $host:$port ...\n";
 						$content['acc_smtp_port'] = $port;
 
+						// optimistic cert verification: an undecided account tries strict
+						// verification as part of THIS SAME connection attempt first, falling
+						// back to a lenient retry only on an actual certificate failure - no
+						// separate probe connection (which risks colliding with a real mail
+						// server's per-IP concurrent-connection limits, found live 2026-08-24)
+						$verify_undecided = $initial_verify_state === self::VERIFY_UNDECIDED;
+						$attempt_verify = $verify_undecided ? true : $initial_verify_state === self::VERIFY_ENABLED;
 						$params = [
 							'username' => $content['acc_smtp_username'],
 							'password' => $content['acc_smtp_password'],
 							'host' => $content['acc_smtp_host'],
 							'port' => $content['acc_smtp_port'],
-							'secure' => self::$ssl2secure[(string)array_search($content['acc_smtp_ssl'], self::$ssl2type)],
+							'secure' => self::$ssl2secure[(string)array_search((int)$content['acc_smtp_ssl'] & self::PROTOCOL_MASK, self::$ssl2type)],
+							'context' => ['ssl' => ['verify_peer' => $attempt_verify, 'verify_peer_name' => $attempt_verify]],
 							'timeout' => self::TIMEOUT,
 							'debug' => self::DEBUG_LOG,
 						];
@@ -788,9 +1069,22 @@ class admin_mail
 						{
 							$params['xoauth2_token'] = self::oauthToken($content, true);
 						}
-						$mail = new Horde_Mail_Transport_Smtphorde($params);
-						// create smtp connection and authenticate, if credentials given
-						$smtp = $mail->getSMTPObject();
+						try {
+							$mail = new Horde_Mail_Transport_Smtphorde($params);
+							// create smtp connection and authenticate, if credentials given
+							$smtp = $mail->getSMTPObject();
+						}
+						catch (Horde_Exception_Wrapped $cert_e) {
+							if (!$verify_undecided || !Mail\Account::isCertificateError($cert_e))
+							{
+								throw $cert_e;
+							}
+							$content['smtp_output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
+							$attempt_verify = false;
+							$params['context'] = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]];
+							$mail = new Horde_Mail_Transport_Smtphorde($params);
+							$smtp = $mail->getSMTPObject();
+						}
 						$content['smtp_output'] .= "\n".lang('Successful connected to %1 server%2.', 'SMTP',
 							(!empty($content['acc_smtp_username']) ? ' '.lang('and logged in') : ''))."\n";
 						if (!$smtp->isSecureConnection())
@@ -801,11 +1095,20 @@ class admin_mail
 							}
 							$content['acc_smtp_ssl'] = 'no';
 						}
-						// Horde_Smtp always try to use STARTTLS, adjust our ssl-parameter if successful
-						elseif (!($content['acc_smtp_ssl'] > self::SSL_NONE))
+						else
 						{
-							//error_log(__METHOD__."() new Horde_Mail_Transport_Smtphorde(".array2string($params).")->getSMTPObject()->isSecureConnection()=".array2string($smtp->isSecureConnection()));
-							$content['acc_smtp_ssl'] = self::SSL_STARTTLS;
+							// Horde_Smtp always try to use STARTTLS, adjust our ssl-parameter if successful
+							if (((int)$content['acc_smtp_ssl'] & self::PROTOCOL_MASK) <= self::SSL_NONE)
+							{
+								//error_log(__METHOD__."() new Horde_Mail_Transport_Smtphorde(".array2string($params).")->getSMTPObject()->isSecureConnection()=".array2string($smtp->isSecureConnection()));
+								$content['acc_smtp_ssl'] = self::SSL_STARTTLS | ((int)$content['acc_smtp_ssl'] & self::VERIFY_MASK);
+							}
+							// record the (newly resolved, or already pre-decided eg. via the
+							// "disable certificate validation" checkbox) verification state
+							$content['acc_smtp_ssl'] = ((int)$content['acc_smtp_ssl'] & ~self::VERIFY_MASK) |
+								($verify_undecided ?
+									($attempt_verify ? self::VERIFY_ENABLED : self::VERIFY_DISABLED) :
+									$initial_verify_state);
 						}
 						// try sending a mail to a different domain, if not authenticated, to see if that's required
 						if (empty($content['acc_smtp_username']))
@@ -871,7 +1174,8 @@ class admin_mail
 					break;
 			}
 		}
-		$sel_options['acc_smtp_ssl'] = self::$ssl_types;
+		$content = self::splitVerifyCheckbox($content, 'acc_smtp_ssl');
+		$sel_options['acc_smtp_ssl'] = self::sslTypes('SMTP', false);
 		$tpl = new Etemplate('admin.mailwizard.smtp');
 		$tpl->exec(static::APP_CLASS.'smtp', $content, $sel_options, $readonlys, $content, 2);
 	}
@@ -1025,6 +1329,13 @@ class admin_mail
 		$tpl->disableElement('notify_save_default', !$is_multiple || !$edit_access);
 		$tpl->disableElement('notify_use_default', !$is_multiple);
 
+		// merge the "disable certificate validation" checkboxes back into their combined
+		// acc_(imap|sieve|smtp)_ssl value, before eg. the 'save'/'apply' case below persists it
+		foreach (['acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl'] as $ssl_field)
+		{
+			$content = self::mergeVerifyCheckbox($content, $ssl_field);
+		}
+
 		if (!empty($content['button']))
 		{
 			$button = key($content['button']);
@@ -1115,6 +1426,17 @@ class admin_mail
 							$content = Mail\Account::write($content, !empty($content['called_for']) && $this->is_admin ?
 								$content['called_for'] : $GLOBALS['egw_info']['user']['account_id']);
 							self::fix_account_id_0($content['account_id']);
+							// self-heal our own csp-connect-src hook registration right away, so THIS
+							// account's real JMAP host is already covered by the time the client-side
+							// stale-CSP recovery (MailJmap.recoverFromStaleCsp(), mail/js/jmap.ts) reloads
+							// the page - hooks purely live in a cache, never need a schema change or
+							// admin action, same self-healing pattern already used by
+							// mail_integration.inc.php for the 'mail_import' hook
+							if (is_a($content['acc_imap_type'] ?? '', Mail\Imap\Stalwart::class, true) &&
+								!Api\Hooks::exists('csp-connect-src', 'mail'))
+							{
+								Api\Hooks::read(true);
+							}
 							$msg = lang('Account saved.');
 							// user wants default notifications
 							if ($content['acc_id'] && $content['notify_use_default'])
@@ -1325,8 +1647,9 @@ class admin_mail
 			// state - an explicit false there already exempts them from __ALL__, so nothing to do here.
 		}
 
-		$sel_options['acc_imap_ssl'] = $sel_options['acc_sieve_ssl'] =
-			$sel_options['acc_smtp_ssl'] = self::$ssl_types;
+		$sel_options['acc_imap_ssl'] = self::sslTypes('IMAP');
+		$sel_options['acc_sieve_ssl'] = self::sslTypes('Sieve');
+		$sel_options['acc_smtp_ssl'] = self::sslTypes('SMTP', false);
 
 		// admin access to account with no credentials available
 		if ($this->is_admin && (!empty($content['called_for']) || empty($content['acc_imap_host']) || $content['called_for']) ||
@@ -1347,11 +1670,26 @@ class admin_mail
 				{
 					$content += self::oauth2content($oauth);
 				}
+				// a JMAP account has no raw IMAP socket to guess folders on - acc_imap_host/port
+				// point at the JMAP(S) endpoint, not an IMAP server, so the classic path below
+				// would hang for the full IMAP connect-timeout trying to speak IMAP to eg. a
+				// JMAP-over-https port 443 (found live 2026-08-24, a personal single-user Stalwart
+				// account reaching edit() for the first time - previously only acc_id=1, a
+				// multi-user account, ever had a JMAP acc_imap_type, and multi-user accounts take
+				// the OTHER (allowFreeEntries) branch above, never reaching this code at all)
+				if (is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true))
+				{
+					$jmap = static::jmapClient($content['acc_imap_host'], $content['acc_imap_username'], $content['acc_imap_password']);
+					$folders = self::jmapMailboxes($jmap, $content);
+				}
+				else
+				{
+					$folders = self::mailboxes(self::imap_client($content));
+				}
 				$sel_options['acc_folder_sent'] = $sel_options['acc_folder_trash'] =
 					$sel_options['acc_folder_draft'] = $sel_options['acc_folder_template'] =
 					$sel_options['acc_folder_junk'] = $sel_options['acc_folder_archive'] =
-					$sel_options['notify_folders'] = $sel_options['acc_folder_ham'] =
-						self::mailboxes(self::imap_client ($content));
+					$sel_options['notify_folders'] = $sel_options['acc_folder_ham'] = $folders;
 				// Allow folder notification on INBOX for popup_only
 				if ($GLOBALS['egw_info']['user']['preferences']['notifications']['notification_chain'] == 'popup_only')
 				{
@@ -1499,6 +1837,10 @@ class admin_mail
 		// If no EPL available, show that in spamtitan blur
 		$content['spamtitan_blur'] = $GLOBALS['egw_info']['user']['apps']['stylite'] ? '' : lang('SpamTitan integration requires EPL version');
 
+		foreach (['acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl'] as $ssl_field)
+		{
+			$content = self::splitVerifyCheckbox($content, $ssl_field);
+		}
 		$tpl->exec(static::APP_CLASS.'edit', $content, $sel_options, $readonlys, $content, 2);
 	}
 
@@ -1895,22 +2237,68 @@ class admin_mail
 		{
 			$jmap_hosts[$content['acc_imap_host']] = true;
 		}
+		// manual protocol selection: respect an explicit "JMAP (http)" choice and/or a custom
+		// port, so a user can point the wizard at a non-standard JMAP endpoint (default: https).
+		// acc_imap_port may still hold add()'s IMAP-oriented seed default (993) at this point -
+		// only ever treat it as a deliberate custom JMAP port if it isn't a well-known IMAP or
+		// default-JMAP port, to avoid trying eg. "https://host:993" on the very first attempt.
+		$scheme = (int)($content['acc_imap_ssl'] ?? self::JMAP_HTTPS) === self::JMAP_HTTP ? 'http' : 'https';
+		$default_port = $scheme === 'http' ? 80 : 443;
+		$custom_port = !empty($content['acc_imap_port']) &&
+			!in_array((int)$content['acc_imap_port'], [80, 443, 993, 143], true) ? (int)$content['acc_imap_port'] : null;
+		// a manually pre-checked "disable certificate validation" checkbox skips the strict
+		// attempt entirely - a user cannot manually claim "verified", only "don't verify"
+		$initial_verify_state = (int)($content['acc_imap_ssl'] ?? 0) & self::VERIFY_MASK;
+
 		foreach($jmap_hosts as $host => $data)
 		{
-			$content['output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying JMAP connection to $host ...\n";
+			$url = preg_match('#^https?://#', $host) ? $host : $scheme.'://'.$host.($custom_port ? ':'.$custom_port : '');
+			$content['output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying JMAP connection to $url ...\n";
+			$accountId = null;
+			$verify_ssl = null;
 			try {
-				$accountId = null;
-				$jmap = static::jmapClient($host, $content['acc_imap_username'], $content['acc_imap_password'], $accountId);
+				if ($initial_verify_state === self::VERIFY_DISABLED)
+				{
+					$jmap = static::jmapClient($url, $content['acc_imap_username'], $content['acc_imap_password'], $accountId, false);
+					$verify_ssl = self::VERIFY_DISABLED;
+				}
+				else
+				{
+					try {
+						$jmap = static::jmapClient($url, $content['acc_imap_username'], $content['acc_imap_password'], $accountId);
+						$verify_ssl = self::VERIFY_ENABLED;	// strict connection succeeded
+					}
+					catch (Api\Exception\Http $e) {
+						// only a plausible certificate-verification failure gets a lenient retry -
+						// any other failure (wrong credentials, host down, ...) must still surface
+						if (!preg_match('/certificate|ssl|tls/i', $e->getMessage()))
+						{
+							throw $e;
+						}
+						$jmap = static::jmapClient($url, $content['acc_imap_username'], $content['acc_imap_password'], $accountId, false);
+						$verify_ssl = self::VERIFY_DISABLED;
+						$content['output'] .= "\n".lang('Certificate could NOT be verified - continuing without certificate verification for this account.')."\n";
+					}
+				}
 				$content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'JMAP', ' '.lang('and logged in'))."\n";
 
 				// live-validate the Stalwart OAuth-login workaround now, rather than only
-				// discovering a problem later at first real mail-usage
-				if (!$jmap->passwordGrant($content['acc_imap_username'], $content['acc_imap_password']))
+				// discovering a problem later at first real mail-usage - a real Stalwart server
+				// is the only thing that can succeed here (it's a Stalwart-specific proprietary
+				// endpoint, see Mail\Jmap::passwordGrant()'s docblock), so the result doubles as a
+				// first, cheap way to tell a real Stalwart server apart from a generic JMAP server
+				// (ralf, 2026-08-24) - Phase 2 will replace this with the same "leave the password
+				// empty to trigger a real OAuth flow" pattern already used for Google/Microsoft
+				// 365, verified against a general JMAP provider (FastMail)
+				$oauthWorked = (bool)$jmap->passwordGrant($content['acc_imap_username'], $content['acc_imap_password']);
+				if (!$oauthWorked)
 				{
 					$content['output'] .= "\n".lang('Could not obtain an OAuth token via the Stalwart login workaround, account will use plain password authentication.')."\n";
 				}
 				$content['acc_imap_host'] = $host;
-				$content['acc_imap_type'] = Mail\Imap\Stalwart::class;
+				$content['acc_imap_ssl'] = ($scheme === 'http' ? self::JMAP_HTTP : self::JMAP_HTTPS) | $verify_ssl;
+				$content['acc_imap_port'] = $custom_port ?: $default_port;
+				$content['acc_imap_type'] = $oauthWorked ? Mail\Imap\Stalwart::class : Mail\Imap\Jmap::class;
 				$content['_jmap_account_capabilities'] = $jmap->accountCapabilities;
 				$content['connected'] = 'jmap';
 				return true;
@@ -1930,14 +2318,16 @@ class admin_mail
 	 * @param int $timeout =null default use value returned by Mail\Imap::getTimeOut()
 	 * @return Horde_Imap_Client_Socket
 	 */
-	protected static function imap_client(array &$content, $timeout=null)
+	protected static function imap_client(array &$content, $timeout=null, ?bool $forceVerify=null)
 	{
+		$verify = $forceVerify ?? ((int)$content['acc_imap_ssl'] & self::VERIFY_MASK) === self::VERIFY_ENABLED;
 		$config = [
 			'username' => $content['acc_imap_username'],
 			'password' => $content['acc_imap_password'],
 			'hostspec' => $content['acc_imap_host'],
 			'port' => $content['acc_imap_port'],
-			'secure' => self::$ssl2secure[(string)array_search($content['acc_imap_ssl'], self::$ssl2type)],
+			'secure' => self::$ssl2secure[(string)array_search((int)$content['acc_imap_ssl'] & self::PROTOCOL_MASK, self::$ssl2type)],
+			'context' => ['ssl' => ['verify_peer' => $verify, 'verify_peer_name' => $verify]],
 			'timeout' => $timeout > 0 ? $timeout : Mail\Imap::getTimeOut(),
 			'debug' => self::DEBUG_LOG,
 		];
@@ -2112,6 +2502,18 @@ class admin_mail
 	 */
 	protected static function normalizeAccountType(array $content, bool $is_multiple)
 	{
+		// legacy SSL_SSL(3) is unified with SSL_TLS(2) (see Mail\Account::SSL_SSL's docblock) -
+		// never persist 3 again, for single- or multi-user accounts alike; any certificate-
+		// verification bits (outside PROTOCOL_MASK) are preserved unchanged
+		foreach(['acc_imap_ssl', 'acc_sieve_ssl', 'acc_smtp_ssl'] as $ssl_field)
+		{
+			if (isset($content[$ssl_field]) &&
+				((int)$content[$ssl_field] & Mail\Account::PROTOCOL_MASK) === Mail\Account::SSL_SSL)
+			{
+				$content[$ssl_field] = ((int)$content[$ssl_field] & ~Mail\Account::PROTOCOL_MASK) | Mail\Account::SSL_TLS;
+			}
+		}
+
 		if (!$is_multiple)
 		{
 			// we need to allow to use JMAP for single connections too, to be able to use JMAP and push
@@ -2293,13 +2695,14 @@ class admin_mail
 	 * @param string $username
 	 * @param string $password
 	 * @param string|null &$accountId on return the JMAP accountId
+	 * @param bool $verify =true false: disable TLS certificate verification for this attempt
 	 * @return Mail\Jmap
 	 * @throws Api\Exception if $host is NOT a JMAP server
 	 * @throws Api\Exception\Http on connection or authentication failure
 	 */
-	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null) : Mail\Jmap
+	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null, bool $verify=true) : Mail\Jmap
 	{
-		return new Mail\Jmap($host, $username, $password, $accountId);
+		return new Mail\Jmap($host, $username, $password, $accountId, $verify);
 	}
 
 	/**

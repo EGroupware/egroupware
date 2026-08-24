@@ -165,7 +165,7 @@ class setup_cmd_config extends setup_cmd
 				'userId@domain eg. u123@domain' => 'uidNumber',
 				'email (Standard Maildomain should be set)' => 'email',
 			)),
-			array('name' => 'acc_imap_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls')),
+			array('name' => 'acc_imap_ssl','allowed' => array(0,'no',1,'starttls',3,'ssl',2,'tls',6,'jmap',6,'jmap-https',4,'jmap-http')),
 		),
 		'--imap' => array(
 			'acc_imap_admin_username',
@@ -357,6 +357,9 @@ class setup_cmd_config extends setup_cmd
 				case 'starttls': $data[$name] = Api\Mail\Account::SSL_STARTTLS; break;
 				case 'ssl':      $data[$name] = Api\Mail\Account::SSL_SSL; break;
 				case 'tls':      $data[$name] = Api\Mail\Account::SSL_TLS; break;
+				case 'jmap':	// alias for the (recommended) https variant
+				case 'jmap-https': $data[$name] = Api\Mail\Account::JMAP_HTTPS; break;
+				case 'jmap-http': $data[$name] = Api\Mail\Account::JMAP_HTTP; break;
 			}
 		}
 		// convert 'yes', 'no' to boolean

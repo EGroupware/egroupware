@@ -42,10 +42,12 @@
 					<et2-textbox  id="acc_imap_host" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description  value="Secure connection" for="acc_imap_ssl"></et2-description>
+					<et2-description  value="Protocol (encryption)" for="acc_imap_ssl"></et2-description>
 					<et2-hbox>
 						<et2-select  id="acc_imap_ssl" onchange="app.admin.wizard_imap_ssl_onchange" class="emailadmin_ssl"></et2-select>
-						<et2-number  label="Port" id="acc_imap_port" class="emailadmin_port" precision="0"></et2-number>
+						<et2-description  value="Port" for="acc_imap_port"></et2-description>
+						<et2-number  id="acc_imap_port" class="emailadmin_port" precision="0"></et2-number>
+						<et2-checkbox  label="Disable certificate validation" id="acc_imap_ssl_noverify" onchange="if (widget.getValue()) Et2Dialog.show_dialog(function(button_id){ if (button_id !== Et2Dialog.YES_BUTTON) widget.value = false; }, 'Disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.', 'Disable certificate validation', {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);"></et2-checkbox>
 					</et2-hbox>
 				</row>
 				<row>

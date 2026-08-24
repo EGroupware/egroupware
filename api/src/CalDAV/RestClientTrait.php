@@ -90,13 +90,16 @@ trait RestClientTrait
 	 * @param array|null $response_header associative array of response headers, key 0 has HTTP status
 	 * @param int $follow how many redirects to follow, default 3, can be set to 0 to NOT follow
 	 * @param bool $only_public true: reject to connect or return results from private or reserved IP addresses
+	 * @param bool $verify_peer false: disable curl's TLS certificate verification (default true,
+	 *  curl's own default) - only ever pass false for a caller-managed, deliberate opt-out (eg.
+	 *  Mail\Jmap's per-account acc_imap_ssl verification state), never as a general default
 	 * @return array|string array of decoded JSON or string body
 	 * @throws \JsonException for invalid JSON
 	 * @throws \InvalidArgumentException if $only_public and $url or redirects resolve to a non-public IP address
 	 * @throws HttpException with code=0: opening http connection, code=HTTP status, if status is NOT 2xx
 	 */
 	public function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null,
-		int $follow=3, bool $only_public=true)
+		int $follow=3, bool $only_public=true, bool $verify_peer=true)
 	{
 		if ($url[0] === '/')
 		{
@@ -116,6 +119,11 @@ trait RestClientTrait
 		}
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($curl, CURLOPT_HEADER, true);
+		if (!$verify_peer)
+		{
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+		}
 		if ($follow > 0)
 		{
 			curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);

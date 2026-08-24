@@ -75,13 +75,17 @@
 					<et2-textbox id="acc_imap_host" maxlength="128" span="all" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row>
-                    <et2-description for="acc_imap_ssl" value="Secure connection"></et2-description>
+                    <et2-description for="acc_imap_ssl" value="Protocol (encryption)"></et2-description>
                     <et2-hbox>
                         <et2-select class="emailadmin_ssl" id="acc_imap_ssl" onchange="app.admin.wizard_imap_ssl_onchange" required="1"></et2-select>
                     </et2-hbox>
                     <et2-description for="acc_imap_port" value="Port"></et2-description>
                     <et2-number id="acc_imap_port" class="emailadmin_port" precision="0" required="1"></et2-number>
                 </row>
+				<row>
+					<et2-description></et2-description>
+					<et2-checkbox label="Disable certificate validation" id="acc_imap_ssl_noverify" onchange="if (widget.getValue()) Et2Dialog.show_dialog(function(button_id){ if (button_id !== Et2Dialog.YES_BUTTON) widget.value = false; }, 'Disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.', 'Disable certificate validation', {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);"></et2-checkbox>
+				</row>
 				<row class="emailadmin_no_single">
 					<groupbox span="all" class="emailadmin_imap_admin">
 						<caption label="IMAP administration"/>
@@ -182,10 +186,12 @@
 					<et2-textbox id="acc_sieve_host" onchange="app.admin.wizard_sieve_onchange" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description for="acc_sieve_ssl" value="Secure connection"></et2-description>
+					<et2-description for="acc_sieve_ssl" value="Protocol (encryption)"></et2-description>
 					<et2-hbox>
 						<et2-select class="emailadmin_ssl" id="acc_sieve_ssl" onchange="app.admin.wizard_sieve_ssl_onchange"></et2-select>
-						<et2-number label="Port" id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="label-on-left" precision="0"></et2-number>
+						<et2-description value="Port" for="acc_sieve_port"></et2-description>
+						<et2-number id="acc_sieve_port" onchange="app.admin.wizard_sieve_onchange" class="label-on-left" precision="0"></et2-number>
+						<et2-checkbox label="Disable certificate validation" id="acc_sieve_ssl_noverify" onchange="if (widget.getValue()) Et2Dialog.show_dialog(function(button_id){ if (button_id !== Et2Dialog.YES_BUTTON) widget.value = false; }, 'Disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.', 'Disable certificate validation', {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);"></et2-checkbox>
 					</et2-hbox>
 				</row>
 				<row height="150">
@@ -227,10 +233,12 @@
 					<et2-textbox id="acc_smtp_host" maxlength="128" placeholder="Hostname or IP" required="1"></et2-textbox>
 				</row>
 				<row class="@manual_class">
-					<et2-description for="acc_smtp_ssl" value="Secure connection"></et2-description>
+					<et2-description for="acc_smtp_ssl" value="Protocol (encryption)"></et2-description>
 					<et2-hbox>
 						<et2-select class="emailadmin_ssl" id="acc_smtp_ssl" onchange="app.admin.wizard_smtp_ssl_onchange" required="1"></et2-select>
-						<et2-number label="Port" id="acc_smtp_port" class="label-on-left" precision="0" required="1"></et2-number>
+						<et2-description value="Port" for="acc_smtp_port"></et2-description>
+						<et2-number id="acc_smtp_port" class="label-on-left" precision="0" required="1"></et2-number>
+						<et2-checkbox label="Disable certificate validation" id="acc_smtp_ssl_noverify" onchange="if (widget.getValue()) Et2Dialog.show_dialog(function(button_id){ if (button_id !== Et2Dialog.YES_BUTTON) widget.value = false; }, 'Disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.', 'Disable certificate validation', {}, Et2Dialog.BUTTONS_YES_NO, Et2Dialog.WARNING_MESSAGE);"></et2-checkbox>
 					</et2-hbox>
 				</row>
 				<row>

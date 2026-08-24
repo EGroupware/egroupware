@@ -1,6 +1,10 @@
 # Mail Wizard: test harness, then JMAP/OAuth/discovery enhancements
 
-## Status: Phase 1 (test harness) implemented AND fully validated (2026-08-23). Phase 2 Milestone A code implemented and unit-tested (2026-08-23, 90 tests green: 84 unit + 6 REST); live verification against `https://stalwart.egroupware.org` still pending (needs ralf's real credentials/action, see below). Milestone B (items 2+5) not started.
+## Status: Phase 1 and Milestone A done. Milestone A.1 done and live re-verified (2026-08-24) -
+ralf repeatedly created real working JMAP/Stalwart accounts via the wizard against
+`https://stalwart.egroupware.org`, each round surfacing a further bug fixed the same day (see
+"Milestone A.1 remaining work" below for the full list and what's genuinely still open). Milestone
+B (items 2+5) not started.
 
 Continuation of [[mail-jmap-modernization]] - that project moved mail *usage* (rows, body,
 flags, folders) onto JMAP for Stalwart, but never touched mail *account creation*. The Mail
@@ -208,10 +212,6 @@ Original 5 items, sequenced by ralf on 2026-08-23 into two milestones after disc
 
 ### Milestone A implementation notes
 
-- `folder()`'s Horde-based special-use-folder guessing needs a real IMAP socket it won't have
-  for JMAP - skipped outright for JMAP accounts (autoconfig() goes straight to `sieve()`),
-  relying on the mail app's existing JMAP folder-role handling at usage time rather than
-  wizard-time guessing.
 - New injectable seam `jmapClient()` (mirrors `dnsQuery()`/`ispdbHttpGet()`) so
   `TestableAdminMail` can stub JMAP connectivity in tests instead of hitting a real server.
 - Found and fixed a real pre-existing bug while implementing this: `normalizeAccountType()`'s
@@ -219,4 +219,178 @@ Original 5 items, sequenced by ralf on 2026-08-23 into two milestones after disc
   `Mail\Imap\Jmap::class`, so setting it to a *subclass* like `Mail\Imap\Stalwart::class` (as
   Milestone A does) would have been silently reset back to plain IMAP for a single-user
   account - never hit before since the existing acc_id=1 Stalwart account is multi-user.
-  Fixed via `is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true)`.
+  Originally fixed via `is_a()`, then changed to a plain `in_array()` allowlist in Milestone A.1
+  (see below) once `is_a()` was found to have its own, worse problem.
+- `folder()`'s original Milestone A behaviour (skip outright for JMAP, rely on the mail app's
+  live JMAP folder handling) was superseded in Milestone A.1 below - it's now a JMAP-native
+  step too, not skipped.
+
+## Milestone A.1 (2026-08-24) - live-run follow-ups
+
+Ralf ran the shipped wizard live against `https://stalwart.egroupware.org` (manual host entry,
+still no `_jmap._tcp` SRV record) and it worked end-to-end - a real account (acc_id=86) was
+created. That surfaced three follow-ups, refined over discussion into a larger scope:
+
+1. **Mail app folder tree showed "Loading..." forever** for the new account - turned out to be a
+   *separate*, genuine client-side bug, unrelated to any wizard-populated field: the live folder
+   tree already works purely via runtime JMAP (`Mailbox/get`/`Mailbox/query`), independent of the
+   wizard. Root cause: `mail/js/app.ts`'s `'mail-account'`/`'add'` push-notification handler had no
+   `.catch()` anywhere in its promise chain, so any unhandled rejection in the deeper JMAP
+   folder-bootstrap chain left the placeholder stuck forever with no visible error. Fixed by
+   wrapping the handler body in try/catch and replacing the stuck placeholder with an error
+   message on failure. **The actual underlying exception for account 86 was NOT root-caused** -
+   this defensive fix makes failures visible, but live re-verification (see below) may still
+   surface a real bug to fix once the error message is actually seen.
+2. **JMAP-native folder AND sieve detection**, matching IMAP - `folder()`/`sieve()` stay part of
+   the SAME visible step chain for JMAP as for IMAP (`autoconfig → folder → sieve → smtp → edit`),
+   using JMAP-native detection instead of Horde IMAP `LIST`/`ManageSieve`:
+   - New `admin_mail::jmapMailboxes()` queries `Mailbox/get` (`ids: null`) and maps the RFC 8621
+     `role` property to `acc_folder_*`, mirroring `mailboxes()`'s Horde-attribute mapping (roleless
+     folders like Templates/Ham fall back to common-name matching, same as the IMAP path).
+   - `sieve()` no longer fully short-circuits to `smtp()` for JMAP - it still renders, with
+     protocol/host/port shown read-only (copied from the mail-server step) and
+     `acc_sieve_enabled` derived from the JMAP session's `urn:ietf:params:jmap:sieve` capability -
+     user can turn it off, never on if undetected.
+3. **Manual JMAP protocol selection** - `Mail\Account` gained `JMAP_HTTP=4`/`JMAP_HTTPS=6` next to
+   the existing `SSL_NONE/STARTTLS/TLS/SSL` values, so a user can pick JMAP explicitly (not just
+   rely on auto-detection) and set a custom port. Legacy `SSL_SSL(3)` is unified with `SSL_TLS(2)`
+   - "nothing below TLS 1.2 makes sense or is even supported by PHP anymore" (ralf) - on read
+   (`Account::ssl2secure()`, `smtpServer()`, `smtpTransport()`; also fixed a latent bug where
+   `smtpServer()`'s switch didn't mask the verify bits at all) and on write
+   (`normalizeAccountType()` now rewrites `3`→`2` unconditionally, single- or multi-user). JMAP's
+   scheme (http vs. https) is now explicit end-to-end, not just at wizard-time: `Imap\Jmap::
+   jmapUrl()` builds `http://`/`https://` from `acc_imap_ssl` for real (post-wizard) usage too -
+   previously `Mail\Jmap` always defaulted to https regardless of any setting.
+4. **Real TLS certificate verification**, uniformly for IMAP/SMTP/Sieve/JMAP - previously a
+   complete no-op: Horde's `Horde\Socket\Client` (IMAP/SMTP/Sieve) hardcodes
+   `verify_peer=false` unless a caller passes a `context` override (nothing in this codebase ever
+   did), while curl (JMAP) verifies by default with no code path to disable it. Ralf's design: a
+   **3-state field** in bits 3-4 of `acc_(imap|sieve|smtp)_ssl`, reusing the
+   previously-defined-but-never-wired `SSL_VERIFY=8` constant as one of the three states so
+   existing rows transition safely with zero migration:
+   - `VERIFY_UNDECIDED=0` - every existing row today, never written by new code.
+   - `VERIFY_ENABLED=8` (was `SSL_VERIFY`) - verification confirmed possible, enforced from now on.
+   - `VERIFY_DISABLED=16` - verification failed (or was rejected), never enforced.
+   - New accounts (wizard): each connection-test loop (`autoconfig()`'s IMAP trial, `tryJmap()`,
+     `smtp()`'s trial, classic `sieve()`'s ManageSieve trial) probes strict verification right
+     after a successful lenient connection and sets `VERIFY_ENABLED`/`VERIFY_DISABLED` directly -
+     never leaves `VERIFY_UNDECIDED`. JMAP is the exception: curl already verifies by default, so
+     `tryJmap()`/`Imap\Jmap::jmapClient()` try strict first and only retry leniently on a
+     certificate-specific failure.
+   - Existing accounts (`VERIFY_UNDECIDED`): silently upgraded exactly once, on the next real
+     connection in normal usage - `Mail\Account::resolveVerification()` (a raw-socket probe via
+     `probeCertVerification()`, persisted via a narrow direct column update, not a full
+     `write()`/ACL-checked round-trip) is called from `Mail\Imap::login()`,
+     `Account::smtpTransport()`, and `Sieve\ManageSieve::connect()` (new override); JMAP's
+     one-time upgrade lives in `Imap\Jmap::jmapClient()`'s strict-then-lenient-retry logic instead,
+     since curl's own default already IS the strict attempt.
+   - **Not yet implemented**: a blocking "I understand the risk, disable certificate verification"
+     confirmation checkbox for the wizard's failure case - currently the wizard resolves and
+     proceeds automatically either way, just surfacing an informational message on failure. The
+     plan called for requiring explicit confirmation before proceeding on failure; this was
+     deferred given the scope already covered.
+
+**Known pre-existing landmine found, not fixed**: `Mail\Account`/`Mail\Imap` both end with an
+unconditional top-level `self::init_static()` call that runs once, the instant the class is
+autoloaded, doing `self::$db = $GLOBALS['egw']->db`. If ANY bare (non-`Api\LoggedInTest`) PHPUnit
+test in the whole suite is the first to reference either class before a real session bootstraps,
+`self::$db` becomes permanently `null` for the rest of that PHPUnit process, breaking unrelated
+later tests with `Call to a member function ... on null`. This bit an attempted new unit test file
+for `Account::sslContext()`/`resolveVerification()` (deleted; see
+[[feedback-bare-testcase-poisons-account-db]]) and is *latently* present in
+`AdminMailPureLogicTest.php`'s `normalizeAccountType()` tests too (dormant only because none of
+its current `$content` fixtures set an `acc_*_ssl` field). No general fix applied - would need
+`self::$db` to become a lazy accessor instead of a cached static property, a separate refactor.
+
+### Milestone A.1 live re-verification (2026-08-24) - bugs found and fixed
+
+Ralf ran the wizard end-to-end against `https://stalwart.egroupware.org` repeatedly, each round
+surfacing one more real bug (not the originally-suspected one) that got root-caused and fixed the
+same day:
+
+- **The real cause of the "Loading..."/SMTP-step hang**: NOT the missing `.catch()` (that was a
+  real but secondary gap, already fixed above) - the actual hang was `edit()`'s folder-selectbox
+  population unconditionally calling the classic `self::mailboxes(self::imap_client($content))`
+  (a raw IMAP socket) regardless of `acc_imap_type`, so a JMAP account's `acc_imap_host`/port
+  (pointing at a JMAP(S) endpoint, not an IMAP server) hung for the full IMAP connect-timeout
+  before showing a generic "Error when communicating with the mail server". Three earlier fix
+  attempts (shortening `probeCertVerification()`'s timeout, redesigning the wizard's own trial
+  loops to the optimistic-verify pattern below, removing an eager check from
+  `Account::smtpTransport()`) were reasonable given the evidence at the time but didn't address
+  this - documented transparently since they're real, permanent changes, just not *the* fix.
+  Fixed: `edit()` now branches on `acc_imap_type` and calls `jmapMailboxes()` instead of the
+  classic path for a JMAP account. Confirmed fixed live ("the timeout is gone").
+- **Optimistic certificate verification, redesigned per ralf's explicit correction**: "in general I
+  would always optimistically use the cert-check approach, and only handle the validation
+  failure" - the wizard's own IMAP/Sieve/SMTP/JMAP trial loops now attempt the real connection with
+  strict verification first (when `VERIFY_UNDECIDED`) and retry the SAME attempt leniently only on
+  an actual certificate-specific failure (`Mail\Account::isCertificateError()`) - no separate probe
+  connection (the original design), which risked colliding with a real mail server's per-IP
+  concurrent-connection limits. Live-confirmed: acc_id=1 (internal, self-signed) resolved to
+  `VERIFY_DISABLED`, acc_id=42 (real cert) resolved to `VERIFY_ENABLED`.
+- **`Mail\Jmap`'s sentinel-host bug**: introducing `Imap\Jmap::jmapUrl()` (for explicit http/https
+  scheme selection) broke the *existing* acc_id=1 production account by turning its sentinel host
+  value (`'mail'`, resolved server-side via `Api\Framework::getUrl('/jmap/')`) into the
+  non-resolvable literal `https://mail`. Fixed by special-casing the sentinel values
+  (`'mail'`/`'stalwart'`/`'internal.k8s.farm.egroupware.org'`) to pass through unchanged. Caught
+  immediately by ralf live-testing; high-priority same-turn fix given it broke a production
+  account.
+- **`Sieve\Jmap::listScripts()` crashed the whole account save** with an uncaught
+  `Cannot access offset of type string on string` the first time a freshly created JMAP account's
+  save handler called `retrieveRules()` (as a connection-test convenience) and Stalwart's
+  `SieveScript/get` response came back in a shape that isn't a decoded array. This is a
+  `\TypeError` (extends `\Error`, not `\Exception`) - the method's own `catch (\Exception $e)`
+  never caught it, contrary to its documented contract ("will not throw ... if there's no script
+  currently"). Fixed by broadening to `catch (\Throwable $e)`.
+- **Sieve step regression**: stepping back from `smtp()` to `sieve()` re-ran the JMAP-detection
+  branch with `_jmap_account_capabilities` already `unset()` by the forward `case 'continue':`
+  handler, showing a false "This JMAP server does NOT support Sieve". Fixed by no longer
+  unsetting it - it's harmless scratch state, same as other fields already round-tripped through
+  the wizard's `$content`.
+- **Our own CSP blocked the browser's direct-JMAP-session fetch** for any account on a real
+  external JMAP host (not one of the same-origin sentinel values) - `Mail\Imap\Stalwart::
+  jmapBootstrap()`'s "browser talks to Stalwart directly" design needs that host in our
+  `connect-src` allowlist, which nothing ever populated (confirmed live: even a bare
+  `fetch('https://www.google.com/...', {mode:'no-cors'})` failed identically from the mail page -
+  proof it was our own default `connect-src 'self'`, not a Stalwart-side CORS/reachability
+  problem). Two-part fix: (1) `mail_hooks::csp_connect_src()` (new `csp-connect-src` hook,
+  registered in `mail/setup/setup.inc.php`) returns the current user's real Stalwart hosts;
+  `admin_mail::edit()`'s save handler self-heals the hook registration
+  (`Api\Hooks::exists()`/`read(true)`, same pattern already used for `mail_import` in
+  `mail_integration.inc.php`) so it's registered the instant an account is saved, no admin
+  action needed. (2) Since the *page already open* at save-time still has the stale CSP header
+  from its own original load, `mail/js/jmap.ts` listens for `securitypolicyviolation` events and,
+  if the blocked origin matches one of the user's own JMAP accounts, does a single
+  `sessionStorage`-guarded `window.location.reload()` to pick up the fresh header - reacting to the
+  browser's own violation *event* specifically, not to the resulting fetch/session promise
+  rejection, since the two aren't guaranteed to be ordered relative to each other (confirmed live:
+  the promise-based version recorded the violation too late to act on it). Confirmed fixed live.
+- **UI polish from ralf's live-testing feedback**, not originally scoped but done alongside the
+  above since they came from the same test rounds: "Secure connection" label renamed to "Protocol
+  (encryption)"; the `$ssl_types` dropdown (previously one array shared identically across
+  IMAP/Sieve/SMTP, each verification state as a separate same-labelled entry) replaced with
+  `sslTypes($protocolName, $withJmap)` - per-field labels, ordered JMAP(https)/TLS-SSL/StartTLS/
+  JMAP(http)/no-encryption, no JMAP option for SMTP; verification state moved out of the dropdown
+  entirely into a new "Disable certificate validation" checkbox (`mergeVerifyCheckbox()`/
+  `splitVerifyCheckbox()` translate between it and the stored bitfield), placed after the port
+  field in the wizard and `edit()` (desktop + mobile templates); the port field's own label moved
+  from an inline `label=` attribute to a separate sibling widget, since the 3-item hbox (protocol
+  select + port + new checkbox) pushed the inline label above the input and broke the row layout.
+
+### Milestone A.1 - what's still actually open
+
+- The blocking "I understand the risk, disable certificate verification" *confirmation* UX for a
+  wizard-time verification failure is still not implemented - largely superseded in practice by
+  the new checkbox above (the user can proactively disable-and-retry instead of being blocked),
+  but that's a different interaction than what the original plan called for.
+- DNS SRV discovery (`_jmap._tcp.<domain>`) remains implemented + fixture-tested only, never
+  live-verified - ralf has no SRV record in his test domain and explicitly signed off on leaving
+  it untested for now (2026-08-24: "trivial enough to leave untested... I don't have the DNS
+  entries set currently").
+- No new automated test coverage was added for any of the live-testing-round fixes above
+  (`jmapMailboxes()`'s role mapping, `sieve()`'s visible-for-JMAP rendering, `sslTypes()`/the
+  merge-split checkbox helpers, the `csp-connect-src` hook) - the existing wizard suite
+  (`AdminMailPureLogicTest`/`AdminMailHostDiscoveryTest`/`AdminMailMailboxesTest`, 29 tests) still
+  passes unmodified, but doesn't exercise any of this new code.
+- Milestone B (items 2+5: broader OAuth support, general `Jmap`/Stalwart split for other
+  providers) not started, as before.

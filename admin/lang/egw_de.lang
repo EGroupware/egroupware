@@ -2,6 +2,9 @@
 (de)activate mail accounts	admin	de	E-Mail-Konten (de)aktivieren
 (no subject)	admin	de	(Kein Betreff)
 %1 %2 rights for %3 on %4 to %5	admin	de	%1 %2 Rechte für %3 auf %4 bis %5
+%1 (no encryption)	admin	de	%1 (unverschlüsselt)
+%1 (starttls)	admin	de	%1 (StartTLS)
+%1 (tls/ssl)	admin	de	%1 (TLS/SSL)
 %1 access to other data	admin	de	Zugriffsrechte %1 auf Daten anderer
 %1 accounts being activated	admin	de	%1 Konten werden aktiviert
 %1 acl entries deleted.	admin	de	%1 ACL Einträge gelöscht.
@@ -327,11 +330,13 @@ direct login without password or second factor	admin	de	Direkter Login ohne Pass
 disable	admin	de	Abschalten
 disable "auto completion" of the login form	admin	de	Automatisches Vervollständigen der Logindaten abschalten
 disable all	admin	de	Alle Video-Anleitungen deaktivieren
+disable certificate validation	admin	de	Zertifikatsprüfung deaktivieren
 disable minifying of javascript and css files	admin	de	Komprimierung von JavaScript- und CSS-Dateien deaktivieren
 disable pgp encryption (mailvelope)	admin	de	PGP-Verschlüsselung deaktivieren (Mailvelope)
 disabled	admin	de	Deaktiviert
 disabled (not recomended)	admin	de	Abgeschaltet (nicht empfohlen)
 disabled, do not show on login page	admin	de	Deaktiviert, wird auf der Anmelde-Seite nicht angezeigt
+disabling certificate validation makes this connection vulnerable to a man-in-the-middle attack - only do this if you understand and accept that risk.	admin	de	Die Zertifikatsprüfung zu deaktivieren macht diese Verbindung anfällig für einen Man-in-the-Middle-Angriff - tun Sie dies nur, wenn Sie dieses Risiko verstehen und akzeptieren.
 display	admin	de	Anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	Angezeigte Länge des Eingabefelds (setze Zeilen=1, um die Eingabe zu beschränken)
 displaying html messages is disabled	admin	de	Anzeigen von HTML-Nachrichten ist deaktiviert
@@ -547,6 +552,8 @@ invalid type "%1"!	admin	de	Ungültiger Typ "%1"!
 invalid value "%1" use yes or no!	admin	de	Ungültiger Wert "%1". Verwenden Sie Ja oder Nein!
 invalid value "%1", use only:	admin	de	Ungültiger Wert "%1". Verwenden Sie nur:
 ip	admin	de	IP
+jmap (http, no encryption)	admin	de	JMAP (http, unverschlüsselt)
+jmap (https)	admin	de	JMAP (https)
 jobs	admin	de	Jobs
 kill	admin	de	Beenden
 kill session	admin	de	Sitzung beenden
@@ -732,6 +739,7 @@ profile access rights	admin	de	Profilzugriffsrechte
 profile is active	admin	de	Profil ist aktiv
 profile list	admin	de	Profilliste
 profile name	admin	de	Profilname
+protocol (encryption)	admin	de	Protokoll (Verschlüsselung)
 qmaildotmode	admin	de	qmaildotmode
 quota settings	admin	de	Quota-Einstellungen
 quota size in mbyte	admin	de	Quota-Größe in MByte
@@ -777,7 +785,6 @@ search categories	admin	de	Kategorien durchsuchen
 search groups	admin	de	Gruppen durchsuchen
 search peer servers	admin	de	Serververbund durchsuchen
 secret deleted, two factor authentication disabled.	admin	de	Geheimnis gelöscht, 2-Faktor-Authentifizierung deaktiviert.
-secure connection	admin	de	Sichere Verbindung
 security	admin	de	Sicherheit
 select accounts for which the custom field should be readonly	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld schreibgeschützt sein soll
 select accounts for which the custom field should be visible	admin	de	Benutzer auswählen, für die dieses benutzerdefinierte Feld sichtbar sein soll
@@ -841,7 +848,6 @@ sorry, the above users are still a member of the group %1	admin	de	Diese Benutze
 sorry, the follow users are still a member of the group %1	admin	de	Die folgenden Benutzer sind noch Mitglied der Gruppe %1.
 sort the entries	admin	de	Einträge sortieren
 source account #%1 does not exist!	admin	de	Quellaccount #%1 besteht nicht!
-ssl	admin	de	Verschlüsselt (SSL)
 standard	admin	de	Vorgabe
 standard identity	admin	de	Standard Identität
 standard imap server	admin	de	Standard IMAP-Server

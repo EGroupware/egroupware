@@ -989,6 +989,25 @@ class Mail
 	{
 		//error_log( "-------------------------->open connection ".function_backtrace());
 		//error_log(__METHOD__.' ('.__LINE__.') '.' ->'.array2string($this->icServer));
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+		// getCurrentMailbox()/examineMailbox()/getHierarchyDelimiter()/getSpecialUseFolders() all
+		// call Horde_Imap_Client_Socket methods that neither Imap\Jmap nor Imap\Stalwart override -
+		// for a JMAP account these fall through to a REAL raw IMAP socket attempt against
+		// acc_imap_host:acc_imap_port, which for Stalwart is a JMAP(S) endpoint, not an IMAP
+		// server, hanging until a read/timeout error (found live 2026-08-24 via the IMAP debug
+		// log: "Connection to: imap://stalwart.egroupware.org:443/" ... "Slow Command: 20 seconds").
+		// Folders are already fully client-side JMAP for these accounts, so there's nothing here
+		// for a JMAP account to gain from opening a classic IMAP connection at all.
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			// TEMPORARY diagnostic, 2026-08-24 - confirm this guard is what was actually firing
+			// for the stalwart.egroupware.org hang, and capture the real caller - to be removed
+			// once confirmed
+			file_put_contents('/var/lib/egroupware/mailwizard-debug.log',
+				date('Y-m-d H:i:s')." openConnection() short-circuited for JMAP icServer (acc_id={$this->icServer->acc_id})\n".
+				(new \Exception())->getTraceAsString()."\n\n", FILE_APPEND);
+			return;
+		}
 		if (self::$debugTimes) $starttime = microtime (true);
 		$mailbox=null;
 		try
@@ -1156,6 +1175,18 @@ class Mail
 	 */
 	function getHierarchyDelimiter($_useCache=true)
 	{
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+		// JMAP has no IMAP-style hierarchy-delimiter concept (folder nesting is parentId
+		// references, not delimited path strings) - '/' is already this method's own fallback
+		// for every error case below, so returning it directly is consistent, and avoids
+		// getCurrentMailbox() falling through to a raw IMAP connection attempt against a JMAP(S)
+		// endpoint neither Imap\Jmap nor Imap\Stalwart guard against (found live 2026-08-24, same
+		// root cause as openConnection()/_getSpecialUseFolder() above, this time reached via
+		// FolderHandler::setFolderStatus()).
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			return '/';
+		}
 		static $HierarchyDelimiter = null;
 		if (!isset($HierarchyDelimiter)) $HierarchyDelimiter = Cache::getCache(Cache::INSTANCE,'email','HierarchyDelimiter'.trim($GLOBALS['egw_info']['user']['account_id']),null,array(),60*60*24*5);
 		if ($_useCache===false) unset($HierarchyDelimiter[$this->icServer->ImapServerId]);
@@ -4423,6 +4454,22 @@ class Mail
 			// we know that outbox is not supported, but we use this here, as we autocreate expected SpecialUseFolders in this function
 			if ($_type != 'Outbox') error_log(__METHOD__.' ('.__LINE__.') '.' Failed to retrieve Folder for '.array2string($types[$_type]).":".$e->getMessage());
 			$_folderName = false;
+		}
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+		// the existence-check/auto-create logic below calls folderExists()/createFolder(), which
+		// (like openConnection() above) fall through to Horde_Imap_Client_Socket methods neither
+		// Imap\Jmap nor Imap\Stalwart override - for a JMAP account these attempt a REAL raw IMAP
+		// login against acc_imap_host:acc_imap_port, which for Stalwart is configured as the
+		// JMAP(S) endpoint (eg. :443), not the IMAP one (eg. :993) - Stalwart\login() unconditionally
+		// tries a real IMAP XOAUTH2 login there (it's designed for accounts where acc_imap_port
+		// genuinely is the IMAP port, which a pure-JMAP wizard-created account's isn't), hanging or
+		// getting back a "400 Bad Request" from nginx (found live 2026-08-24 via a debug_backtrace()
+		// temporarily patched into Horde_Imap_Client_Socket_Connection_Base::_connect()). Special-use
+		// folders are already resolved JMAP-natively at wizard time (admin_mail::jmapMailboxes()),
+		// so the configured name can just be trusted here instead.
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			return $_folderName ?: false;
 		}
 		// do not try to autocreate configured Archive-Folder. Return false if configured folder does not exist
 		if ($_type == 'Archive') {
