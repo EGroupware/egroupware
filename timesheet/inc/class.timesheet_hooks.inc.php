@@ -174,7 +174,7 @@ class timesheet_hooks
 					'end_time'   => lang('Use current time as end time'),
 					'start_time' => lang('Start time is after last timesheet'),
 				],
-				'help'   => 'When adding a new timesheet for today: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet booked today',
+				'help'   => 'When adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet',
 				'xmlrpc' => True,
 				'admin'  => False,
 			],

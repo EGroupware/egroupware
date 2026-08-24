@@ -187,7 +187,7 @@ values for selectbox	timesheet	en	Values for select box
 view this entry	timesheet	en	View this entry
 week	timesheet	en	Week
 what should be done with unknown values?	timesheet	en	What should be done with unknown values?
-when adding a new timesheet for today: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet booked today	timesheet	en	When adding a new timesheet for today: prefill the end time with the current time, or set the start time from the end of your last timesheet booked today
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	en	When adding a new timesheet: prefill the end time with the current time, or set the start time from the end of your last timesheet.
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	en	When you merge entries into documents, they will be stored here. If no directory is provided, they will be stored in your home directory (/home/ralf)
 will be created when saving ...	common	en	Will be created when saving ...
 working time	common	en	Working time

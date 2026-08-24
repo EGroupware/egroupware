@@ -74,11 +74,11 @@ class timesheet_ui extends timesheet_bo
 			else	// new entry
 			{
 				$last_end = $GLOBALS['egw_info']['user']['preferences']['timesheet']['new_entry_default'] === 'start_time' ?
-					$this->get_last_end_today($GLOBALS['egw_info']['user']['account_id']) : null;
+					$this->get_last_end($GLOBALS['egw_info']['user']['account_id']) : null;
 
 				$this->data = array(
-					'ts_start' => $this->today,
-					'start_time' => $last_end ? $last_end->format('H:i') : '',    // force empty start-time, unless continuing from last entry today
+					'ts_start' => $last_end ? (clone $last_end)->setTime(0, 0, 0)->format() : $this->today,
+					'start_time' => $last_end ? $last_end->format('H:i') : '',    // force empty start-time, unless continuing from last entry
 					'end_time' => $last_end ? '' : Api\DateTime::to($this->now, 'H:i'),
 					'ts_owner' => $GLOBALS['egw_info']['user']['account_id'],
 					'cat_id' => (int)$_REQUEST['cat_id'],
@@ -1462,10 +1462,10 @@ class timesheet_ui extends timesheet_bo
 		unset($this->data['ts_modifier']);
 		$this->data['ts_owner'] = !(int)$this->data['ts_owner'] || !$this->check_acl(Acl::ADD,NULL,$this->data['ts_owner']) ? $this->user : $this->data['ts_owner'];
 
-		// if preference asks to continue from the last entry today, adjust the start-time accordingly,
+		// if preference asks to continue from the last entry, adjust the start-time accordingly,
 		// otherwise leave the copied start- and end-time as they are
 		$last_end = $GLOBALS['egw_info']['user']['preferences']['timesheet']['new_entry_default'] === 'start_time' ?
-			$this->get_last_end_today($GLOBALS['egw_info']['user']['account_id']) : null;
+			$this->get_last_end($GLOBALS['egw_info']['user']['account_id']) : null;
 		if ($last_end)
 		{
 			$this->data['start_time'] = $last_end->format('H:i');

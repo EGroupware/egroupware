@@ -187,7 +187,7 @@ values for selectbox	timesheet	de	Werte der Auswahlbox
 view this entry	timesheet	de	Diesen Eintrag anzeigen
 week	timesheet	de	Woche
 what should be done with unknown values?	timesheet	de	Was soll mit unbekannten Werte passieren?
-when adding a new timesheet for today: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet booked today	timesheet	de	Soll beim Anlegen eines neuen Stundenzettel für heute die Endzeit auf die aktuelle Uhrzeit gesetzt werden oder die Startzeit auf die Endzeit Ihres letzten heutigen Stundenzettels?
+when adding a new timesheet: prefill the endtime with the current time, or continue the starttime from the endtime of your last timesheet	timesheet	de	Soll beim Anlegen eines neuen Stundenzettel für heute die Endzeit auf die aktuelle Uhrzeit gesetzt werden oder die Startzeit auf die Endzeit Ihres letzten heutigen Stundenzettels?
 when you merge entries into documents, they will be stored here.  if no directory is provided, they will be stored in your home directory (/home/ralf)	timesheet	de	Wenn Sie Einträge in Dokumente einfügen, werden diese hier gespeichert. Wenn kein Verzeichnis angegeben ist, werden sie in Ihrem Home-Verzeichnis gespeichert.
 will be created when saving ...	common	de	Wird beim Speichern angelegt ...
 working time	common	de	Arbeitszeit
