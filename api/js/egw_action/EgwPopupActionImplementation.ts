@@ -135,8 +135,21 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
 			let menu = null;
 			const managerData = _selected?.[0]?.parent?.manager?.data;
-			// Special handling for nextmatch context menu - reuse the same menu
-			if(!_target && !_context.menu && managerData?.menu)
+			// Run this before the reuse check below - _addCopyPaste() can add
+			// egw_copy/egw_copy_add/... to _links (eg. once a draggable row is
+			// selected, when the cached menu was first built for a selection/context
+			// without any drag links), and the reuse check needs to know about them.
+			if(useAutoPaste)
+			{
+				this._addCopyPaste(_links, _selected);
+			}
+			// Special handling for nextmatch context menu - reuse the same menu, but
+			// only if it can actually show everything _links now wants visible.
+			// applyContext() can only toggle existing menu items, never add ones that
+			// weren't part of the original _buildMenu() call - eg. actions hidden by a
+			// restricted placeholder-popup's first build, or egw_copy* added above for
+			// a selection the cached menu didn't have when it was built.
+			if(!_target && !_context.menu && managerData?.menu && this._menuCoversLinks(managerData.menu, _links))
 			{
 				menu = managerData.menu;
 			}
@@ -147,10 +160,6 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 			}
 			else
 			{
-				if(useAutoPaste)
-				{
-					this._addCopyPaste(_links, _selected);
-				}
 				menu.applyContext(_links, _selected, _target);
 			}
 			if(!_target && !_context.menu && managerData)
@@ -590,6 +599,21 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
             firstGroup = firstGroup && firstElem;
         }
+    };
+
+    /**
+     * Whether a cached menu already has an item for every action _links wants
+     * visible right now. See the reuse check in executeImplementation() - a
+     * menu missing even one of them must be rebuilt, since applyContext() can
+     * only toggle existing items, never add new ones.
+     */
+    private _menuCoversLinks = (menu, _links) : boolean =>
+    {
+        if(typeof menu?.hasActionItem !== "function")
+        {
+            return true;
+        }
+        return Object.keys(_links).every((actionId) => !_links[actionId]?.visible || menu.hasActionItem(actionId));
     };
 
     /**

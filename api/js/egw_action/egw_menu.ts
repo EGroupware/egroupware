@@ -239,6 +239,16 @@ export class egwMenu
 	}
 
 	/**
+	 * Whether the rendered menu already has an item for the given action id.
+	 * See EgwMenuShoelace.hasActionItem() - the instance isn't rendered yet
+	 * until showAt() has run at least once, so there's nothing to find before that.
+	 */
+	public hasActionItem(actionId : string) : boolean
+	{
+		return !!this.instance?.hasActionItem(actionId);
+	}
+
+	/**
 	 * Adds a new menu item to the list and returns a reference to that object.
 	 *
 	 * @param {string} _id is a unique identifier of the menu item. You can use
