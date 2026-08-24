@@ -18,7 +18,7 @@ widgets. This can cause issues when they are used together.
 | get_\[property]()                                              | widget.\[property]                                                                                                       |
 | set_value(...)                                                 | set_value(...) remains, but is only used when loading content from a template file.                                      |
 | getValue()                                                     | getValue() remains but is only used when the etemplate is submitted.    Prefer `widget.value` for most cases.            |
-| loadingFinished(waiting : Promise[])                           | loadingFinished(waiting:Promise[]) remains for legacy compatability, but waiting for updateComplete() is the replacement |
+| loadingFinished(waiting : Promise[])                           | loadingFinished(waiting:Promise[]) remains for legacy compatibility, but waiting for updateComplete() is the replacement |
 
 ### Accessing widget internals
 
