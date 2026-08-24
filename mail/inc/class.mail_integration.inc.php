@@ -152,7 +152,7 @@ class mail_integration {
 			if (!(in_array($GLOBALS['egw_info']['user']['preferences'][$sessionLocation]['saveAsOptions'],['text_only','no_attachments']))&&is_array($_attachments))
 			{
 				// initialize mail open connection requirements
-				if (!isset($_icServerID)) $_icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
+				if (!isset($_icServerID)) $_icServerID = Api\Cache::getSession($sessionLocation,'activeProfileID');
 				$mo = Mail::getInstance(true,$_icServerID);
 				$mo->openConnection();
 				$messagePartId = $messageFolder = null;
@@ -295,7 +295,7 @@ class mail_integration {
 
 			if ($uid && $mailbox)
 			{
-				if (!isset($icServerID)) $icServerID =& Api\Cache::getSession($sessionLocation,'activeProfileID');
+				if (!isset($icServerID)) $icServerID = Api\Cache::getSession($sessionLocation,'activeProfileID');
 				$mo	= Mail::getInstance(true,$icServerID);
 				$mo->openConnection();
 				$mo->reopen($mailbox);

@@ -156,8 +156,9 @@ abstract class Framework extends Framework\Extra
 		Header\ContentSecurityPolicy::send();
 
 		// allow client-side to detect first load aka just logged in
-		$reload_count =& Cache::getSession(__CLASS__, 'framework-reload');
-		self::$extra['framework-reload'] = (int)(bool)$reload_count++;
+		$reload_count = Cache::getSession(__CLASS__, 'framework-reload');
+		self::$extra['framework-reload'] = (int)(bool)$reload_count;
+		Cache::setSession(__CLASS__, 'framework-reload', (int)$reload_count + 1);
 	}
 
 	/**

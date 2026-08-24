@@ -113,20 +113,35 @@ if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login' && !$GLOBALS['egw_inf
 // saving the egw_info array and the egw-object in the session
 if ($GLOBALS['egw_info']['flags']['currentapp'] != 'login')
 {
-	$_SESSION[Session::EGW_INFO_CACHE] = $GLOBALS['egw_info'];
-	unset($_SESSION[Session::EGW_INFO_CACHE]['flags']);	// dont save the flags, they change on each request
+	$new_info_cache = $GLOBALS['egw_info'];
+	unset($new_info_cache['flags']);	// dont save the flags, they change on each request
 
 	// dont save preferences, as Session::verify restores them from instance cache anyway
-	$_SESSION[Session::EGW_INFO_CACHE]['user']['preferences'] = array(
+	$new_info_cache['user']['preferences'] = array(
 		// we need user language as it is used before preferences get restored!
 		'common' => array('lang' => $GLOBALS['egw_info']['user']['preferences']['common']['lang']),
 	);
 
 	// dont save apps, as Session::verify restores them from instance cache anyway
-	unset($_SESSION[Session::EGW_INFO_CACHE]['apps']);
+	unset($new_info_cache['apps']);
 
 	// store only which apps user has, Session::verify restores it from egw_info[apps]
-	$_SESSION[Session::EGW_INFO_CACHE]['user']['apps'] = array_keys((array)$_SESSION[Session::EGW_INFO_CACHE]['user']['apps']);
+	$new_info_cache['user']['apps'] = array_keys((array)$new_info_cache['user']['apps']);
 
-	$_SESSION[Session::EGW_OBJECT_CACHE] = serialize($GLOBALS['egw']);
+	// Only actually rewrite the session cache if it changed. This blob is rewritten on every
+	// single request regardless of whether the underlying environment did anything different -
+	// the object-construction/DB-query savings it provides are real (see doc/ai/ session-handling
+	// research), but an unconditional write-every-request is expensive for a network-backed
+	// session store, and this is the same "only write if actually dirty" principle applied
+	// elsewhere in the session-handling rework (Api\Cache's closed-session write buffer).
+	if ($new_info_cache !== ($_SESSION[Session::EGW_INFO_CACHE] ?? null))
+	{
+		$_SESSION[Session::EGW_INFO_CACHE] = $new_info_cache;
+	}
+
+	$new_object_cache = serialize($GLOBALS['egw']);
+	if ($new_object_cache !== ($_SESSION[Session::EGW_OBJECT_CACHE] ?? null))
+	{
+		$_SESSION[Session::EGW_OBJECT_CACHE] = $new_object_cache;
+	}
 }

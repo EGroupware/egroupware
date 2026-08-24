@@ -421,7 +421,7 @@ class Db
 	{
 		$hosts = explode(';', $this->Host[0] == '@' ? getenv(substr($this->Host, 1)) : $this->Host);
 		$num_hosts = count($hosts);
-		$n =& Cache::getSession(__CLASS__, $this->Host);
+		$n = Cache::getSession(__CLASS__, $this->Host);
 		if (!isset($n)) $n = 0;
 
 		if ($next && ++$n >= $num_hosts+2)
@@ -433,6 +433,7 @@ class Db
 		{
 			$ret = $hosts[$n % $num_hosts];
 		}
+		Cache::setSession(__CLASS__, $this->Host, $n);
 		//error_log(__METHOD__."(next=".array2string($next).") n=$n returning ".array2string($ret));
 		return $ret;
 	}

@@ -861,12 +861,13 @@ class Vfs extends Vfs\Base
 	{
 		if ($session_only)
 		{
-			$session_eacls =& Cache::getSession(__CLASS__, self::SESSION_EACL);
+			$session_eacls = Cache::getSession(__CLASS__, self::SESSION_EACL);
 			$session_eacls[] = array(
 				'path'   => $url[0] == '/' ? $url : self::parse_url($url, PHP_URL_PATH),
 				'owner'  => $owner ? $owner : self::$user,
 				'rights' => $rights,
 			);
+			Cache::setSession(__CLASS__, self::SESSION_EACL, $session_eacls);
 			return true;
 		}
 		return self::_call_on_backend('eacl',array($url,$rights,$owner));
@@ -884,7 +885,7 @@ class Vfs extends Vfs\Base
 	{
 		$eacls = self::_call_on_backend('get_eacl',array($path),true);	// true = fail silent (no PHP Warning)
 
-		$session_eacls =& Cache::getSession(__CLASS__, self::SESSION_EACL);
+		$session_eacls = Cache::getSession(__CLASS__, self::SESSION_EACL);
 		if ($session_eacls)
 		{
 			// eacl is recursive, therefore we have to match all parent-dirs too

@@ -224,7 +224,7 @@ class Sharing extends \EGroupware\Api\Sharing
 	 */
 	protected static function session_mount($target, $mount)
 	{
-		$session_fstab =& Api\Cache::getSession('api', 'fstab');
+		$session_fstab = Api\Cache::getSession('api', 'fstab');
 		if(!$session_fstab)
 		{
 			$session_fstab = array();
@@ -233,6 +233,7 @@ class Sharing extends \EGroupware\Api\Sharing
 			'mount' => $mount,
 			'class' => get_called_class()
 		);
+		Api\Cache::setSession('api', 'fstab', $session_fstab);
 	}
 
 	protected static function after_login($share)
@@ -343,7 +344,7 @@ class Sharing extends \EGroupware\Api\Sharing
 	{
 		if (!isset(self::$db)) self::$db = $GLOBALS['egw']->db;
 
-		$path2tmp =& Api\Cache::getSession(__CLASS__, 'path2tmp');
+		$path2tmp = Api\Cache::getSession(__CLASS__, 'path2tmp');
 		$path = static::validate_path($path, $mode);
 
 		if (empty($name)) $name = $path;
@@ -385,6 +386,7 @@ class Sharing extends \EGroupware\Api\Sharing
 				}
 				// store temp. path in session, to be able to add more recipients
 				$path2tmp[$path] = $tmp_file;
+				Api\Cache::setSession(__CLASS__, 'path2tmp', $path2tmp);
 
 				$vfs_path = $tmp_file;
 			}

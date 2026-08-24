@@ -114,6 +114,14 @@ try {
 	);
 	include_once('./header.inc.php');
 
+	// Close the session as early as possible, so it does not block other concurrent json.php
+	// requests carrying the same session cookie for their full duration (PHP's default session
+	// locking otherwise serializes them). Anything written to the session-cache after this point
+	// (Api\Cache::setSession()/getSession()/unsetSession()) is captured by Cache's closed-session
+	// write buffer and re-applied by Cache::flush_session_writes(), registered below to run right
+	// before the response is flushed to the client (Egw::__destruct()'s pre-close callback pass).
+	Egw::on_shutdown([Api\Cache::class, 'flush_session_writes']);
+	$GLOBALS['egw']->session->commit_session();
 
 	//Create a new json handler
 	$json = new Json\Request();

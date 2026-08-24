@@ -103,10 +103,11 @@ class filemanager_ui
 	 */
 	public static function get_view()
 	{
-		$view =& Api\Cache::getSession('filemanager', 'view');
+		$view = Api\Cache::getSession('filemanager', 'view');
 		if (isset($_GET['view']))
 		{
 			$view = $_GET['view'];
+			Api\Cache::setSession('filemanager', 'view', $view);
 		}
 		if (!isset(static::$views[$view]))
 		{

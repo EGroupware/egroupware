@@ -368,6 +368,10 @@ class Session
 	 */
 	function commit_session()
 	{
+		// nothing to do if already closed, eg. by an earlier explicit commit_session() call this
+		// request - calling session_write_close() again would just trigger a PHP warning
+		if (session_status() !== PHP_SESSION_ACTIVE) return;
+
 		if (self::ERROR_LOG_DEBUG) error_log(__METHOD__."() sessionid=$this->sessionid, _SESSION[".self::EGW_SESSION_VAR.']='.array2string($_SESSION[self::EGW_SESSION_VAR]).' '.function_backtrace());
 		self::encrypt($this->kp3);
 

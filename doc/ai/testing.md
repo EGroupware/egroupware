@@ -62,12 +62,60 @@ config:
 * Ask if you don't know the proper host.
 * Make sure tests clean up after themselves, even if they fail.
 
+### Developer installs: run PHPUnit inside the Docker container, not on the host
+
+All developer installations are Docker-based. The host machine normally has PHP installed too, but it can NOT be
+used to run these tests directly: `header.inc.php`'s db_host (eg. `db`) is a Docker-internal hostname the host
+cannot resolve, and the host's copy of the source tree is not guaranteed to be the exact same paths the container
+uses. Running `vendor/bin/phpunit` natively on the host hangs instead of failing cleanly - always run it inside the
+already-installed, already-running app container instead:
+
+`docker exec egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+
+(container name may differ per install - check `docker ps`). This works because that container already has a fully
+configured, installed EGroupware instance with a working DB connection; `doc/phpunit_bootstrap.php` just connects
+into it rather than provisioning a new one.
+
+**Run one PHPUnit invocation at a time.** `doc/phpunit_bootstrap.php` unconditionally shells out to
+`doc/rpm-build/post_install.php --install-update-app <app>` for every fixture app under
+`api/tests/fixtures/apps/`, on every single run. That script's `--setup-cmd-database sub_command=create_db` step is
+not safe for concurrent execution - running several `phpunit` invocations in parallel against the same container
+races multiple installs against each other and can hang for an extremely long time (looks identical to `create_db`
+processes accumulating in `ps aux` inside the container, each with a different randomly-generated `db_pass`). If
+that happens, kill the stray `setup-cli.php`/`post_install.php` processes inside the container and retry
+sequentially.
+
+**If that same fixture-app install step is slow or fails even run alone**, it is very likely because
+`post_install.php` defaults to checking domain `'default'` in the real `header.inc.php`'s `$GLOBALS['egw_domain']`
+array - and that literal key usually does not exist (domains are keyed by their real name). Discover the real
+default domain by reading `header.inc.php` directly (`grep "\$GLOBALS\['egw_domain'\]\[" header.inc.php` - the first
+entry is conventionally the default one), then pass it via the `EGW_POST_INSTALL` environment variable, which
+`post_install.php` parses as extra CLI args:
+
+`docker exec -e EGW_POST_INSTALL="--domain your.real.domain" egroupware bash -c "cd /var/www/egroupware && vendor/bin/phpunit -c doc/phpunit.xml path/to/YourTest.php"`
+
+This is a per-dev-box environment detail (not committed anywhere), so it is worth asking the developer once and
+remembering it for the rest of the session rather than rediscovering it every time.
+
+**CI is different and does not need any of the above.** `.github/workflows/testing.yml` spins up a brand-new
+container/DB and runs the full installer from scratch on every run, since nothing persists between CI runs - there
+is no pre-existing install to connect into, no stray domain-mismatch to work around, and no risk of colliding with
+another concurrent test run.
+
 ### Admin-only functionality: dedicated admin test account
 
-`demo` (the suite-wide default session, `EGW_USER`/`EGW_PASSWORD` in `phpunit.xml`) is intentionally a
-**non-admin** account. Do not grant it admin rights to make an admin-only test pass - many other tests
-rely on `demo` genuinely lacking admin rights (broken-ACL-check regression tests, permission-boundary
-tests, etc.), and would silently stop testing anything if `demo` became an admin.
+`demo` (the suite-wide default session, `$GLOBALS['EGW_USER']`/`['EGW_PASSWORD']`, normalized by
+`doc/phpunit_bootstrap.php` from `EGW_NONADMIN_USER`/`EGW_NONADMIN_PASSWORD` in `phpunit.xml`,
+default `demo`/`guest`) is intentionally a **non-admin** account. Do not grant it admin rights to
+make an admin-only test pass - many other tests rely on `demo` genuinely lacking admin rights
+(broken-ACL-check regression tests, permission-boundary tests, etc.), and would silently stop
+testing anything if `demo` became an admin.
+
+On an install where `demo` has a real, working mailbox (eg. a shared/"Everyone" mail account like
+`acc_id=1`, which has no separate mail-password and forwards the current session password straight
+through as the IMAP/SMTP/JMAP credential - see `doc/ai/projects/mail-wizard-jmap-oauth.md`), its
+login password doubles as its live mail password. Override both via environment on such installs:
+`EGW_NONADMIN_USER="..." EGW_NONADMIN_PASSWORD="..." vendor/bin/phpunit -c doc/phpunit.xml`.
 
 Instead, `phpunit.xml` points admin-only tests at `sysop` - the real admin account every EGroupware
 install already creates during setup, not a separate test-only account:

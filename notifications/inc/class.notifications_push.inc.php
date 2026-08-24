@@ -43,7 +43,7 @@ class notifications_push implements Json\PushBackend
 		{
 			$session_reopened = session_start();
 		}
-		$already_send =& Api\Cache::getSession(__CLASS__, 'already_send');
+		$already_send = Api\Cache::getSession(__CLASS__, 'already_send');
 		$max_id = Api\Cache::getInstance(__CLASS__, 'max_id');
 
 		if (!isset($already_send))
@@ -56,6 +56,7 @@ class notifications_push implements Json\PushBackend
 				Api\Cache::setInstance(__CLASS__, 'max_id', $max_id);
 			}
 			$already_send = $max_id;
+			Api\Cache::setSession(__CLASS__, 'already_send', $already_send);
 		}
 		elseif (isset($max_id) && $max_id > $already_send)
 		{
@@ -75,6 +76,7 @@ class notifications_push implements Json\PushBackend
 				}
 				$already_send = $row['notify_id'];
 			}
+			Api\Cache::setSession(__CLASS__, 'already_send', $already_send);
 		}
 		if (!empty($session_reopened))
 		{
