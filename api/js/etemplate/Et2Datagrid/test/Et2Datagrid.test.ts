@@ -4040,7 +4040,7 @@ describe("Et2Datagrid virtual height stability", () =>
 		assert.isNotNull(firstRow, "test fixture should render the first child row");
 		const measuredRowHeight = Math.ceil(firstRow.getBoundingClientRect().height);
 
-		(child as any)._queueRequest(100, 50, "unknown-total-later:100:50");
+		(child as any)._requestQueue.queueRequest(100, 50, "unknown-total-later:100:50");
 		await child.updateComplete;
 		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
 
@@ -4095,14 +4095,14 @@ describe("Et2Datagrid virtual height stability", () =>
 		await child.reload();
 		await loaded;
 
-		const finalRequestKey = (child as any)._requestKey(100, 6);
-		(child as any)._queueRequest(100, 6, finalRequestKey);
-		(child as any)._inFlightRequestKeys.add(finalRequestKey);
+		const finalRequestKey = (child as any)._requestQueue.requestKey(100, 6);
+		(child as any)._requestQueue.queueRequest(100, 6, finalRequestKey);
+		(child as any)._requestQueue.markInFlight(finalRequestKey);
 		await (child as any)._fetchPage(100, 6, finalRequestKey);
 		await child.updateComplete;
 
-		assert.equal((child as any)._pendingPlaceholderRequests.size, 0, "resolved final-page placeholder request should be removed");
-		assert.equal((child as any)._pendingPlaceholderCount, 0, "resolved final-page placeholder count should be removed");
+		assert.equal((child as any)._requestQueue.pendingPlaceholderRequestCount, 0, "resolved final-page placeholder request should be removed");
+		assert.equal((child as any)._requestQueue.pendingPlaceholderCount, 0, "resolved final-page placeholder count should be removed");
 		assert.equal((child as any)._virtualRowCount(), childRows.length, "virtual row count should stop at the known final total");
 
 		host.remove();

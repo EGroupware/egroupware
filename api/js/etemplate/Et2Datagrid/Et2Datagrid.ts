@@ -31,6 +31,8 @@ import type {Et2DatagridColumnSelectionItem} from "./Et2DatagridColumnState";
 import {Et2DatagridColumnState} from "./Et2DatagridColumnState";
 import {Et2DatagridColumnResizeController} from "./Et2DatagridColumnResizeController";
 import {Et2RowProvider} from "./Et2RowProvider";
+import {Et2DatagridPrintController} from "./Et2DatagridPrintController";
+import {Et2DatagridRequestQueue} from "./Et2DatagridRequestQueue";
 import {styleMap} from "lit/directives/style-map.js";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_compileLegacyJS} from "../et2_core_legacyJSFunctions";
@@ -273,13 +275,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _rowsByIndex : Array<Et2DatagridRow | null> = [];
 
 	private _rowRenderVersionById : Map<string, number> = new Map();
-	/**
-	 * Rows temporarily rendered in full for print output. Keeping this separate
-	 * from `_rowsByIndex` leaves normal paging and virtualization untouched.
-	 */
-	private _printRows : Et2DatagridRow[] | null = null;
-	/** Fixed-row-height state to restore after print rows return to virtualization. */
-	private _printFixedRowHeight : boolean | null = null;
 	private _refreshPulseTimersByElement : Map<HTMLElement, number> = new Map();
 	private _refreshPulseDurationMs : number = 5000;
 	private static _browserScrollbarSpacePx : number | null = null;
@@ -304,7 +299,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	// rows/template reset so later pages and expansions do not move the scrollbar.
 	private _rowHeightSettled : boolean = false;
 	private _embeddedRowHeightSettled : boolean = false;
-	private _sparseVirtualizerLayoutActive : boolean = false;
+	_sparseVirtualizerLayoutActive : boolean = false;
 	private _sparseVirtualizerLayoutFrame : number | null = null;
 	private _measuredRowHeightByRowId : Map<string, number> = new Map();
 	private _rowWidgetsUpgradedFrame : number | null = null;
@@ -346,13 +341,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	@state()
 	private _hasFetchedOnce : boolean = false;
-
-	/**
-	 * Number of skeleton placeholder rows reserved for in-flight requests.
-	 */
-	@state()
-	private _pendingPlaceholderCount : number = 0;
-	private _pendingPlaceholderRequests : Map<string, { start : number; requestedCount : number }> = new Map();
 
 	/**
 	 * Visible column configuration, including sizing and optional hide expressions.
@@ -597,19 +585,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _lastBodyScrollAt : number = 0;
 	private _deferredEmbeddedRemeasureTimer : number | null = null;
 	private _deferredEmbeddedRemeasureChildGrids : Set<Et2Datagrid> = new Set();
-	private _inFlightRequestKeys : Set<string> = new Set();
 	private _completedRequestKeys : Set<string> = new Set();
-	private static readonly SLOW_FETCH_TIMEOUT_MS = 30000;
-	/** Every fetch currently in flight for this grid, so "give up" can abort all of them
-	 *  at once. Membership doubles as the "was this discarded?" signal for catch blocks -
-	 *  see _giveUpOnPendingFetches(). */
-	private _inFlightFetchPromises : Set<Promise<Et2DatagridPageResult> & { abort? : () => void }> = new Set();
-	private _slowFetchTimers : Set<number> = new Set();
-	/** At most one at a time - a later timer firing while this is set just no-ops. */
-	private _slowFetchDialog : Et2Dialog | null = null;
-	private _queuedRequestTimer : number | null = null;
-	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
-	private _requestDispatchDelayMs : number = 100;
+	_requestDispatchDelayMs : number = 100;
 	private _rowUpgradeObserver : MutationObserver | null = null;
 	private _rowUpgradeObservedRowsBody : HTMLElement | null = null;
 	private _rowUpgradeRangeListener : ((event : Event) => void) | null = null;
@@ -627,6 +604,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	_columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
 	private _columnResize : Et2DatagridColumnResizeController = new Et2DatagridColumnResizeController(this);
+	private readonly _printController : Et2DatagridPrintController = new Et2DatagridPrintController(this);
+	private readonly _requestQueue : Et2DatagridRequestQueue = new Et2DatagridRequestQueue(this);
+	/** Rows temporarily rendered in full for print output; see Et2DatagridPrintController. */
+	private get _printRows() : Et2DatagridRow[] | null
+	{
+		return this._printController.rows;
+	}
 	private _scrollbarSpacePx : number = 0;
 	private _customfieldColumnStateByKey : Map<string, Et2DatagridCustomfieldColumnState> = new Map();
 	private _internalExpandedRowIds : Set<string> = new Set();
@@ -904,14 +888,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			cancelAnimationFrame(this._sparseVirtualizerLayoutFrame);
 			this._sparseVirtualizerLayoutFrame = null;
 		}
-		for(const timer of this._slowFetchTimers)
-		{
-			window.clearTimeout(timer);
-		}
-		this._slowFetchTimers.clear();
-		this._slowFetchDialog?.destroy?.();
-		this._slowFetchDialog = null;
-		this._inFlightFetchPromises.clear();
+		this._requestQueue.dispose();
 		super.disconnectedCallback();
 	}
 
@@ -1259,7 +1236,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * the estimate used for tbody height. Height remains virtualizer-owned; this
 	 * method only supplies a min-height floor.
 	 */
-	private _syncRowsMinHeight()
+	_syncRowsMinHeight()
 	{
 		if(this._printRows)
 		{
@@ -1356,7 +1333,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * manually by nudging the scroll position, but keeps it scoped to view /
 	 * template switches and does not schedule a Lit render.
 	 */
-	private _scheduleVirtualizerLayoutSync()
+	_scheduleVirtualizerLayoutSync()
 	{
 		if(this._virtualizerLayoutSyncFrame !== null)
 		{
@@ -2805,132 +2782,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Queue a chunk request once and reserve placeholder capacity for its expected rows.
-	 */
-	private _queueRequest(start : number, requestedCount : number, requestKey : string)
-	{
-		if(this._queuedRequests.has(requestKey) || this._inFlightRequestKeys.has(requestKey))
-		{
-			return;
-		}
-		this._queuedRequests.set(requestKey, {start, requestedCount, requestKey});
-		this._pendingPlaceholderRequests.set(requestKey, {start, requestedCount});
-		this._pendingPlaceholderCount += this._isEmbeddedInitialLoading() ? Math.min(requestedCount, 1) : requestedCount;
-		this.requestUpdate();
-	}
-
-	/**
-	 * Debounce queued-request processing so fast scrolling can coalesce bursts.
-	 */
-	private _scheduleQueuedRequestProcessing()
-	{
-		if(this._queuedRequestTimer !== null)
-		{
-			window.clearTimeout(this._queuedRequestTimer);
-		}
-		this._queuedRequestTimer = window.setTimeout(() =>
-		{
-			this._processQueuedRequests();
-		}, this._requestDispatchDelayMs);
-	}
-
-	/**
-	 * Build a deterministic key for one fetch request using range + provider query signature.
-	 */
-	private _requestKey(start : number, requestedCount : number) : string
-	{
-		const querySignature = this.dataProvider?.getQuerySignature?.() || "";
-		return `${start}:${requestedCount}:${querySignature}`;
-	}
-
-	/**
-	 * Starts this fetch's own 60s timer. If it fires and the fetch is still pending,
-	 * show the shared dialog - but only if none is already showing (a second slow
-	 * fetch's timer firing while one dialog is already up just no-ops; that fetch is
-	 * still in _inFlightFetchPromises, so the existing dialog's "give up" covers it too).
-	 */
-	private _armSlowFetchTimer(fetchPromise : Promise<Et2DatagridPageResult> & { abort? : () => void }) : void
-	{
-		const timer = window.setTimeout(() =>
-		{
-			this._slowFetchTimers.delete(timer);
-			if(!this._inFlightFetchPromises.has(fetchPromise) || this._slowFetchDialog)
-			{
-				return;	// already settled/discarded, or another dialog is already asking
-			}
-			this._slowFetchDialog = this._showSlowFetchDialog(() => this._giveUpOnPendingFetches());
-		}, Et2Datagrid.SLOW_FETCH_TIMEOUT_MS);
-		this._slowFetchTimers.add(timer);
-	}
-
-	/**
-	 * "Give up": abort everything currently in flight and forget about it immediately -
-	 * no separate bookkeeping of what was aborted, just remove it so it's plain
-	 * untracked state, exactly as if it had never been requested. Any other fetch's
-	 * still-pending timer will find it's no longer tracked when it fires and no-op.
-	 */
-	private _giveUpOnPendingFetches() : void
-	{
-		const pending = Array.from(this._inFlightFetchPromises);
-		this._inFlightFetchPromises.clear();
-		for(const fetchPromise of pending)
-		{
-			fetchPromise.abort?.();
-		}
-	}
-
-	/**
-	 * Normal settle path (success or a real error) - a no-op if this fetch was already
-	 * removed by _giveUpOnPendingFetches(). If this was the last fetch pending and a
-	 * dialog is still up (unanswered), its question is now moot - dismiss it.
-	 */
-	private _untrackInFlightFetch(fetchPromise : Promise<Et2DatagridPageResult> & { abort? : () => void }) : void
-	{
-		this._inFlightFetchPromises.delete(fetchPromise);
-		if(this._inFlightFetchPromises.size === 0 && this._slowFetchDialog)
-		{
-			this._slowFetchDialog.destroy();
-			this._slowFetchDialog = null;
-		}
-	}
-
-	/**
-	 * Show a "still waiting?" confirmation after a slow fetch. Yes/dismiss = keep
-	 * waiting, No = give up and abort every fetch currently in flight for this grid.
-	 *
-	 * Answered via getComplete() rather than the constructor `callback` param: callback
-	 * only fires on an actual button click, but _slowFetchDialog must be cleared on
-	 * EVERY dismissal path (X, Escape, backdrop click too) or the single-dialog guard
-	 * in _armSlowFetchTimer() would permanently block any future dialog for this grid
-	 * the first time someone dismisses one without clicking Yes/No. getComplete()
-	 * resolves on every close path, covering all of them.
-	 */
-	private _showSlowFetchDialog(onGiveUp : () => void) : Et2Dialog
-	{
-		const dialog = Et2Dialog.show_dialog(
-			undefined,
-			this.egw().lang("This request is taking longer than expected. Keep waiting?"),
-			this.egw().lang("Still working"),
-			{},
-			Et2Dialog.BUTTONS_YES_NO,
-			Et2Dialog.WARNING_MESSAGE,
-			undefined,
-			this.egw()
-		);
-		dialog.getComplete().then(([button_id] : [number, object]) =>
-		{
-			this._slowFetchDialog = null;
-			if(button_id === Et2Dialog.NO_BUTTON)
-			{
-				onGiveUp();
-			}
-			// YES_BUTTON, or dismissed via X/escape/backdrop (button_id null): keep
-			// waiting - the safe default, no-op.
-		});
-		return dialog;
-	}
-
-	/**
 	 * Request one page from provider and merge rows preserving uniqueness.
 	 */
 	private async _fetchPage(start : number, requestedCount : number = 0, requestKey : string = "")
@@ -2939,8 +2790,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			if(requestKey)
 			{
-				this._inFlightRequestKeys.delete(requestKey);
-				this._pendingPlaceholderRequests.delete(requestKey);
+				this._requestQueue.forgetRequest(requestKey);
 			}
 			this._syncLoadingFromInFlight();
 			return;
@@ -2959,8 +2809,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		try
 		{
 			fetchPromise = this.dataProvider.fetchPage(start, requestedCount || this.pageSize) as any;
-			this._inFlightFetchPromises.add(fetchPromise);
-			this._armSlowFetchTimer(fetchPromise);
+			this._requestQueue.trackFetch(fetchPromise);
 
 			const response = await fetchPromise;
 			stale = (this.dataProvider?.getQuerySignature?.() || "") !== dispatchQuerySignature;
@@ -2992,7 +2841,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		catch(e)
 		{
-			if(fetchPromise && this._inFlightFetchPromises.has(fetchPromise))
+			if(fetchPromise && this._requestQueue.isTrackedFetch(fetchPromise))
 			{
 				this.fetchFailed = true;
 				this._hasFetchedOnce = true;
@@ -3001,7 +2850,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			}
 			else
 			{
-				// Already removed by a deliberate "give up" (see _giveUpOnPendingFetches())
+				// Already removed by a deliberate "give up" (see Et2DatagridRequestQueue)
 				// - discard silently.  Leave fetchFailed/fetchErrorMessage untouched, and
 				// don't let requestKey be marked completed below, so this range is retried
 				// whenever it's next requested.
@@ -3012,11 +2861,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			if(fetchPromise)
 			{
-				this._untrackInFlightFetch(fetchPromise);
+				this._requestQueue.untrackFetch(fetchPromise);
 			}
 			if(requestedCount > 0)
 			{
-				this._pendingPlaceholderCount = Math.max(0, this._pendingPlaceholderCount - requestedCount);
+				this._requestQueue.releasePlaceholder(requestedCount);
 			}
 			if(requestKey)
 			{
@@ -3027,8 +2876,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				{
 					this._completedRequestKeys.add(requestKey);
 				}
-				this._inFlightRequestKeys.delete(requestKey);
-				this._pendingPlaceholderRequests.delete(requestKey);
+				this._requestQueue.forgetRequest(requestKey);
 			}
 			this._syncLoadingFromInFlight();
 			if(this.fetchFailed)
@@ -3081,23 +2929,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._deferredEmbeddedRemeasureTimer = null;
 		}
 		this._deferredEmbeddedRemeasureChildGrids.clear();
-		this._clearQueuedRequests();
+		this._requestQueue.clear();
 		this._clearRowUpgradeQueue();
-	}
-
-	/**
-	 * Drop queued (not yet dispatched) requests and clear any scheduled dispatch timer.
-	 */
-	private _clearQueuedRequests()
-	{
-		this._queuedRequests.clear();
-		this._pendingPlaceholderRequests.clear();
-		this._pendingPlaceholderCount = 0;
-		if(this._queuedRequestTimer !== null)
-		{
-			window.clearTimeout(this._queuedRequestTimer);
-			this._queuedRequestTimer = null;
-		}
 	}
 
 	/**
@@ -3105,32 +2938,35 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _syncLoadingFromInFlight()
 	{
-		const hasInFlight = this._inFlightRequestKeys.size > 0;
+		const hasInFlight = this._requestQueue.inFlightCount > 0;
 		this.fetching = hasInFlight;
 		this.loading = hasInFlight;
 	}
 
 	/**
-	 * Dispatch all queued chunk requests in FIFO snapshot order.
+	 * Debounce queued-request processing so fast scrolling can coalesce bursts.
+	 */
+	private _scheduleQueuedRequestProcessing()
+	{
+		this._requestQueue.scheduleProcessing((start, requestedCount, requestKey) => this._dispatchQueuedRequest(start, requestedCount, requestKey));
+	}
+
+	/**
+	 * Dispatch all currently queued chunk requests in FIFO snapshot order, bypassing
+	 * the debounce timer.
 	 */
 	private _processQueuedRequests()
 	{
-		this._queuedRequestTimer = null;
-		if(!this._queuedRequests.size)
-		{
-			return;
-		}
-		const selected = Array.from(this._queuedRequests.values());
-		for(const entry of selected)
-		{
-			this._queuedRequests.delete(entry.requestKey);
-			this._inFlightRequestKeys.add(entry.requestKey);
-			this.fetching = true;
-			this.loading = true;
-			this.dispatchEvent(new CustomEvent("et2-loading-start", {bubbles: true, composed: true}));
-			this._fetchPage(entry.start, entry.requestedCount, entry.requestKey);
-		}
+		this._requestQueue.flush((start, requestedCount, requestKey) => this._dispatchQueuedRequest(start, requestedCount, requestKey));
 		this._reconcileRowRenderState();
+	}
+
+	private _dispatchQueuedRequest(start : number, requestedCount : number, requestKey : string)
+	{
+		this.fetching = true;
+		this.loading = true;
+		this.dispatchEvent(new CustomEvent("et2-loading-start", {bubbles: true, composed: true}));
+		this._fetchPage(start, requestedCount, requestKey);
 	}
 
 	/**
@@ -3396,7 +3232,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _maybePrefetchOnScroll()
 	{
 		this._restoreRowFocusAfterScroll();
-		if(this._queuedRequests.size)
+		if(this._requestQueue.queuedCount)
 		{
 			this._scheduleQueuedRequestProcessing();
 		}
@@ -3925,12 +3761,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const requestKey = this._requestKey(chunkStart, requestedCount);
-		if(this._completedRequestKeys.has(requestKey) || this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+		const requestKey = this._requestQueue.requestKey(chunkStart, requestedCount);
+		if(this._completedRequestKeys.has(requestKey) || this._requestQueue.isPendingOrQueued(requestKey))
 		{
 			return;
 		}
-		this._queueRequest(chunkStart, requestedCount, requestKey);
+		this._requestQueue.queueRequest(chunkStart, requestedCount, requestKey);
 		this._scheduleQueuedRequestProcessing();
 	}
 
@@ -4013,11 +3849,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return 1;
 		}
-		const pendingPlaceholderExtent = Math.max(
-			0,
-			...Array.from(this._pendingPlaceholderRequests.values()).map((request) => request.start + request.requestedCount)
+		const materializedCount = Math.max(
+			this._rowsByIndex.length + this._requestQueue.pendingPlaceholderCount,
+			this.rows.length,
+			this._requestQueue.pendingPlaceholderExtent
 		);
-		const materializedCount = Math.max(this._rowsByIndex.length + this._pendingPlaceholderCount, this.rows.length, pendingPlaceholderExtent);
 		return this.total === null ? materializedCount : Math.max(this.total, materializedCount);
 	}
 
@@ -4025,7 +3861,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Embedded child grids intentionally expose only one loader row until their
 	 * first data page materializes, even when the provider reports a larger total.
 	 */
-	private _isEmbeddedInitialLoading() : boolean
+	_isEmbeddedInitialLoading() : boolean
 	{
 		return this.embeddedVirtualized && this.rows.length === 0 && this._rowsByIndex.every((row) => row === null);
 	}
@@ -5871,35 +5707,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	async setPrintRows(rowIds : string[]) : Promise<void>
 	{
-		if(this._printFixedRowHeight === null)
-		{
-			this._printFixedRowHeight = this.fixedRowHeight;
-		}
-		this.fixedRowHeight = false;
-		this._printRows = (rowIds || []).map((rowId) => ({
-			id: this.dataProvider?.normalizeRowId?.(rowId, true) || String(rowId)
-		}));
-		this.classList.add("print");
-		this.requestUpdate();
-		await this.updateComplete;
-		this._syncRowsMinHeight();
-		for(let frame = 0; frame < 3; frame++)
-		{
-			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-			if((this.shadowRoot?.querySelectorAll("#rows > tr[data-row-id]").length || 0) >= rowIds.length) break;
-		}
-		const updates = Array.from(this.shadowRoot?.querySelectorAll("*") || [])
-			.map((element : any) => element.updateComplete)
-			.filter((updateComplete) => updateComplete && typeof updateComplete.then === "function");
-		await Promise.allSettled(updates);
-		// Must happen before _waitForPrintImages(): until a row's child widgets are
-		// upgraded, an avatar's `image` attribute is still the literal unresolved
-		// `$row_cont[photo]` placeholder, not a real URL - waiting for "images" to
-		// load before that resolves would just be watching the wrong src.
-		await this._waitForRowUpgradesToFinish();
-		await this._waitForPrintImages();
-		await this._waitForPrintRowsToSettle();
-		this.syncPrintFlowHeight();
+		await this._printController.setPrintRows(rowIds);
 	}
 
 	/**
@@ -5912,7 +5720,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * job can need many frames to fully drain, so this explicitly waits for that
 	 * queue to empty rather than assuming any fixed delay covers it.
 	 */
-	private async _waitForRowUpgradesToFinish(maxWaitMs = 15000) : Promise<void>
+	async _waitForRowUpgradesToFinish(maxWaitMs = 15000) : Promise<void>
 	{
 		this._upgradeRenderedRows();
 		const start = performance.now();
@@ -5923,169 +5731,16 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 	}
 
-	/**
-	 * Wait for every `<img>` inside the print rows (including ones nested in other
-	 * components' shadow roots, eg. avatar photos) to finish loading.
-	 *
-	 * Print renders rows far outside the real screen viewport (that's the whole
-	 * point - the user asked for more rows than fit on screen), but native
-	 * lazy-loading (eg. the addressbook row template's `<et2-lavatar loading="lazy">`)
-	 * never starts a fetch for an image the browser doesn't consider near-visible.
-	 * Left alone, those images simply never load - printing without a photo isn't
-	 * a settling problem, it's images that were never going to load on their own.
-	 * Force eager loading before waiting on them.
-	 *
-	 * The wait is bounded, scaled to how many images are actually pending, so a
-	 * large print job gets a proportionally longer allowance instead of timing out
-	 * on images that just haven't gotten their turn yet behind the browser's
-	 * per-host connection limit - but one genuinely broken/404 image still can't
-	 * hang printing forever.
-	 */
-	private async _waitForPrintImages(maxWaitMs? : number) : Promise<void>
-	{
-		const root = this.shadowRoot?.querySelector(".dg-body #rows");
-		if(!root)
-		{
-			return;
-		}
-		const collectImages = (node : ParentNode) : HTMLImageElement[] =>
-		{
-			const images = Array.from(node.querySelectorAll("img"));
-			for(const element of Array.from(node.querySelectorAll("*")))
-			{
-				if(element.shadowRoot)
-				{
-					images.push(...collectImages(element.shadowRoot));
-				}
-			}
-			return images;
-		};
-		const allImages = collectImages(root);
-		for(const img of allImages)
-		{
-			if(img.loading === "lazy")
-			{
-				img.loading = "eager";
-			}
-		}
-
-		const pending = allImages.filter((img) => !img.complete);
-		if(!pending.length)
-		{
-			return;
-		}
-		// The browser's per-host connection limit (typically ~6) means a large batch
-		// of images queues rather than loading in parallel, so the wait must scale
-		// with how many are pending, not just cap at a flat ceiling - a job of 1000
-		// rows is expected to take meaningfully longer than one of 200, and giving up
-		// early just means some rows print with a blank photo instead of taking the
-		// extra time to get it right. The 30-minute ceiling exists only to bound a
-		// truly pathological case (eg. a permanently stalled request), not as a limit
-		// any real print job should come close to hitting.
-		const bound = maxWaitMs ?? Math.min(1800000, Math.max(5000, pending.length * 750));
-		const waits = pending.map((img) => new Promise<void>((resolve) =>
-		{
-			img.addEventListener("load", () => resolve(), {once: true});
-			img.addEventListener("error", () => resolve(), {once: true});
-		}));
-		await Promise.race([
-			Promise.all(waits),
-			new Promise<void>((resolve) => window.setTimeout(resolve, bound))
-		]);
-	}
-
-	/**
-	 * Wait until the print rows' rendered extent stops changing.
-	 *
-	 * Row content (eg. customfield or category labels resolving async) can keep
-	 * growing for a while after every component's own `updateComplete` has already
-	 * resolved, since that only covers Lit's reactive update cycle, not whatever
-	 * caused a later, separate update to be scheduled. Printing before that settles
-	 * makes Chromium paginate against a still-changing layout, which is what produced
-	 * both inconsistent page counts and a truncated tail row between otherwise
-	 * identical print attempts. A fixed delay here previously guessed at "long enough",
-	 * which is exactly as fragile as it sounds - poll for real stability instead.
-	 */
-	private async _waitForPrintRowsToSettle(maxWaitMs = 5000, requiredStableChecks = 3, intervalMs = 150) : Promise<void>
-	{
-		const tbody = this.shadowRoot?.querySelector<HTMLElement>(".dg-body #rows");
-		if(!tbody)
-		{
-			return;
-		}
-		const start = performance.now();
-		let lastHeight = -1;
-		let stableCount = 0;
-		while(performance.now() - start < maxWaitMs)
-		{
-			await new Promise<void>((resolve) => window.setTimeout(resolve, intervalMs));
-			const height = tbody.scrollHeight;
-			if(height === lastHeight)
-			{
-				stableCount++;
-				if(stableCount >= requiredStableChecks)
-				{
-					return;
-				}
-			}
-			else
-			{
-				stableCount = 0;
-				lastHeight = height;
-			}
-		}
-	}
-
 	/** Reserve the full rendered row extent for print fragmentation. */
 	public syncPrintFlowHeight() : void
 	{
-		if(!this._printRows)
-		{
-			return;
-		}
-		const tbody = this.shadowRoot?.querySelector<HTMLTableSectionElement>(".dg-body #rows");
-		const height = tbody?.scrollHeight || 0;
-		if(!height)
-		{
-			return;
-		}
-		// The print body and table use natural flow.  Pinning either to the
-		// current row extent clips rows whose descendants settle afterwards.
-		tbody.style.height = `${height}px`;
+		this._printController.syncPrintFlowHeight();
 	}
 
 	/** Restore normal virtualized row rendering after printing. */
 	clearPrintRows() : void
 	{
-		if(!this._printRows)
-		{
-			return;
-		}
-		this._printRows = null;
-		this.fixedRowHeight = this._printFixedRowHeight ?? this.fixedRowHeight;
-		this._printFixedRowHeight = null;
-		const printContainers = this.shadowRoot?.querySelectorAll<HTMLElement>(".dg-body, .dg-body table, .dg-body #rows");
-		for(const element of Array.from(printContainers || []))
-		{
-			element.style.height = "";
-		}
-
-		this.classList.remove("print");
-		// The virtualize() directive is being re-attached to the tbody fresh (it wasn't
-		// present while _printRows rendered statically), so this is the same "new
-		// virtualizer, host has no bounds yet" bootstrap case firstUpdated()/
-		// refreshRowHeightFromCss() guard against - reuse that instead of sizing the
-		// virtualizer immediately, which risks the zero-viewport feedback loop.
-		this._sparseVirtualizerLayoutActive = false;
-		this.requestUpdate();
-		void this.updateComplete.then(() =>
-		{
-			if(this.isConnected && this._printRows === null)
-			{
-				this._syncRowsMinHeight();
-				this._scheduleVirtualizerLayoutSync();
-			}
-		});
+		this._printController.clearPrintRows();
 	}
 
 	/**
@@ -6116,7 +5771,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	clear()
 	{
-		this._clearQueuedRequests();
+		this._requestQueue.clear();
 		this._clearRows();
 		this.total = null;
 		this.loading = false;
@@ -6124,7 +5779,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this.fetchFailed = false;
 		this.fetchErrorMessage = "";
 		this._hasFetchedOnce = false;
-		this._pendingPlaceholderCount = 0;
 		this.selectedRowIds.clear();
 		this.allSelected = false;
 		this.anchorRowIndex = -1;
@@ -6137,7 +5791,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	async reload() : Promise<void>
 	{
-		this._clearQueuedRequests();
+		this._requestQueue.clear();
 		this._clearRows();
 		// A fetch dispatched for the *previous* query can still be in flight when reload()
 		// is called again (eg. two filter changes in quick succession). Its own
@@ -6148,13 +5802,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		// permanently. Forgetting about that in-flight key (the old fetch settles on its
 		// own and self-discards via the signature check) lets this reload's loadMore()
 		// call actually dispatch.
-		this._inFlightRequestKeys.clear();
+		this._requestQueue.clearInFlight();
 		this._syncLoadingFromInFlight();
 		this.total = null;
 		this.fetchFailed = false;
 		this.fetchErrorMessage = "";
 		this._hasFetchedOnce = false;
-		this._pendingPlaceholderCount = 0;
 		this.allSelected = false;
 		await this.loadMore();
 	}
@@ -6180,7 +5833,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	restoreRowsSnapshot(snapshot : Et2DatagridRowsSnapshot)
 	{
-		this._clearQueuedRequests();
+		this._requestQueue.clear();
 		this._clearRows();
 		this._rowsByIndex = snapshot.rowsByIndex.slice();
 		this.rows = this._rowsByIndex.filter(Boolean) as Et2DatagridRow[];
@@ -6535,12 +6188,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const requestKey = this._requestKey(start, requestedCount);
-		if(this._completedRequestKeys.has(requestKey) || this._inFlightRequestKeys.has(requestKey) || this._queuedRequests.has(requestKey))
+		const requestKey = this._requestQueue.requestKey(start, requestedCount);
+		if(this._completedRequestKeys.has(requestKey) || this._requestQueue.isPendingOrQueued(requestKey))
 		{
 			return;
 		}
-		this._queueRequest(start, requestedCount, requestKey);
+		this._requestQueue.queueRequest(start, requestedCount, requestKey);
 
 		this._scheduleQueuedRequestProcessing();
 	}
@@ -6578,7 +6231,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _stateTemplate() : TemplateResult | null
 	{
 		const hasTemplate = !!this.templateData?.rowTemplate || this.columns.length > 0;
-		const hasRows = this.rows.length > 0 || this._pendingPlaceholderCount > 0 || (this.total !== null && this.total > 0);
+		const hasRows = this.rows.length > 0 || this._requestQueue.pendingPlaceholderCount > 0 || (this.total !== null && this.total > 0);
 		const initialLoading = this.configurationLoading || (this.fetching && !hasRows);
 		const noTemplate = !this.configurationLoading && !hasTemplate;
 		const fetchFailed = this.fetchFailed;
