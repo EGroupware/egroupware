@@ -2116,6 +2116,11 @@ export class Et2NextmatchActionController implements ReactiveController
 	 */
 	private getActionRowId(rowElement : HTMLElement) : string
 	{
+		// virtualizer loading skeleton, not a real row - has no backing data yet
+		if(rowElement.hasAttribute("data-et2dg-placeholder"))
+		{
+			return "";
+		}
 		const rawRowId = String(rowElement.getAttribute("data-row-id") || "");
 		if(!rawRowId)
 		{
