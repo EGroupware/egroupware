@@ -51,6 +51,15 @@ class TokenSessionLimitsTest extends LoggedInTest
 		$token = $token_bo->data;
 		$this->assertNotEmpty($token['token'], 'Token::save() did not generate a token string');
 
+		// CLI test runs have no real client IP ($_SERVER['REMOTE_ADDR'] is unset), so on an
+		// install with sessions_checkip enabled (eg. a fresh CI install - it's not on this
+		// dev box, which is why this only surfaced there) Session::verify()'s IP check trips:
+		// it treats an empty/never-recorded session_ip as invalid even when getuser_ip() would
+		// also be empty. Fix it the same way a real request would - by having a real, consistent
+		// REMOTE_ADDR for both the login (which records it) and the later verify() (which checks
+		// it) - rather than relying on the ambient environment to already have sessions_checkip off.
+		$prev_remote_addr = $_SERVER['REMOTE_ADDR'] ?? null;
+		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
 		try
 		{
 			// log in using the restricted token instead of the password - tear down the
@@ -85,6 +94,15 @@ class TokenSessionLimitsTest extends LoggedInTest
 			// process are not left on a restricted, token-authenticated session
 			self::tearDownAfterClass();
 			static::load_egw($GLOBALS['EGW_USER'], $GLOBALS['EGW_PASSWORD'], $GLOBALS['EGW_DOMAIN']);
+
+			if (isset($prev_remote_addr))
+			{
+				$_SERVER['REMOTE_ADDR'] = $prev_remote_addr;
+			}
+			else
+			{
+				unset($_SERVER['REMOTE_ADDR']);
+			}
 		}
 	}
 }

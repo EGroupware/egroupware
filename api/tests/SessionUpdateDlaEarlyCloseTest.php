@@ -37,6 +37,17 @@ class SessionUpdateDlaEarlyCloseTest extends LoggedInTest
 		$sessionid = $session->sessionid;
 		$kp3 = $session->kp3;
 
+		// CLI test runs have no real client IP ($_SERVER['REMOTE_ADDR'] is unset), so on an
+		// install with sessions_checkip enabled (eg. a fresh CI install - it's not on this dev
+		// box, which is why this only surfaced there) verify()'s IP check trips: it treats an
+		// empty/never-recorded session_ip as invalid even when getuser_ip() would also be empty.
+		// LoggedInTest::setUpBeforeClass() already logged in with no REMOTE_ADDR, so session_ip
+		// is already empty in storage - fix both sides to a consistent, real-looking value while
+		// the session is still open (a direct $_SESSION write here is fine; it's only writes made
+		// AFTER the session is closed that need the tracked-write buffer).
+		$_SERVER['REMOTE_ADDR'] = '127.0.0.1';
+		$_SESSION[Session::EGW_SESSION_VAR]['session_ip'] = '127.0.0.1';
+
 		// Framework.php has its own PRE-EXISTING, unrelated commit_session() calls (eg. while
 		// serving static-ish content) that can leave writes buffered from the LoggedInTest
 		// bootstrap itself - flush those first, so the assertions below only reflect what
