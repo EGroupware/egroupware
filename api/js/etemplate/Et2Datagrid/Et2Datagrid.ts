@@ -3862,7 +3862,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return html``;
 		}
 		const visibleColumns = this._visibleColumns();
-		const columnSizes = this._columnWidths(visibleColumns);
+		const columnSizes = this._columnManager.columnWidths(visibleColumns);
 		const metaColumnWidth = this._effectiveMetaColumnWidth();
 		const content = this.expansionConfig.renderExpandedContent({
 			row: this._rowForCallback(row),
@@ -3963,7 +3963,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return this._getVirtualIndexes(rowCount);
 		}
 		const querySignature = this.dataProvider?.getQuerySignature?.() || "";
-		const columnSignature = this._columnWidths(this._visibleColumns());
+		const columnSignature = this._columnManager.columnWidths(this._visibleColumns());
 		const rowSignature = this._rowsByIndex
 			.slice(0, rowCount)
 			.map((row) => row ? String(row.id) : "")
@@ -4079,7 +4079,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		if(item.type === "expanded")
 		{
 			const querySignature = this.dataProvider?.getQuerySignature?.() || "";
-			const columnSignature = this._columnWidths(this._visibleColumns());
+			const columnSignature = this._columnManager.columnWidths(this._visibleColumns());
 			return `${structureSignature}:expanded:${item.parentRowId}:${querySignature}:${columnSignature}`;
 		}
 		const rowIndex = item.rowIndex;
@@ -4850,57 +4850,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Build CSS grid track definitions from visible column widths.
-	 */
-	_columnWidthDescriptor(raw? : string) : {
-		kind : "pixel" | "relative";
-		unit : "px" | "%" | "fr";
-		value : number | null
-	}
-	{
-		return this._columnManager.columnWidthDescriptor(raw);
-	}
-
-	/**
-	 * Normalize width to CSS grid units.
-	 */
-	private _normalizeColumnWidth(raw? : string) : string
-	{
-		return this._columnManager.normalizeColumnWidth(raw);
-	}
-
-	/**
-	 * Normalize min/max width constraints to CSS lengths.
-	 */
-	private _normalizeColumnLength(raw? : string) : string
-	{
-		return this._columnManager.normalizeColumnLength(raw);
-	}
-
-	/**
-	 * Clamp a numeric value between min and max boundaries.
-	 */
-	_clamp(value : number, min : number, max : number) : number
-	{
-		return this._columnManager.clamp(value, min, max);
-	}
-
-	/**
-	 * Convert a column length to pixels using current grid context.
-	 */
-	_columnLengthToPx(
-		raw : string | undefined,
-		totalVisibleWidthPx : number,
-		availableRelativeWidthPx : number,
-		relativeWidthUnits : number
-	) : number | null
-	{
-		return this._columnManager.columnLengthToPx(
-			raw, totalVisibleWidthPx, availableRelativeWidthPx, relativeWidthUnits, this._columnResizeFloorPx()
-		);
-	}
-
-	/**
 	 * Build aggregate width metrics for visible columns.
 	 */
 	_visibleColumnWidthMetrics(visibleColumns : Et2DatagridColumn[]) : {
@@ -4915,14 +4864,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Convert a numeric width into compact string representation.
-	 */
-	private _formatColumnWidthValue(value : number, unit : "px" | "%" | "fr") : string
-	{
-		return this._columnManager.formatColumnWidthValue(value, unit);
-	}
-
-	/**
 	 * Hard lower bound for interactive column resizing/stealing.
 	 * This does not change configured minWidth semantics.
 	 */
@@ -4930,14 +4871,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	{
 		const fontSizePx = parseFloat(getComputedStyle(this).fontSize || "16");
 		return Number.isFinite(fontSizePx) && fontSizePx > 0 ? fontSizePx : 16;
-	}
-
-	/**
-	 * Build the CSS grid-template-columns value for the given columns.
-	 */
-	private _columnWidths(columns : Et2DatagridColumn[]) : string
-	{
-		return this._columnManager.columnWidths(columns);
 	}
 
 	/**
@@ -4992,7 +4925,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const visibleColumns = this._visibleColumns();
 		if(this._body)
 		{
-			this._body.style["--column-sizes"] = this._columnWidths(visibleColumns);
+			this._body.style["--column-sizes"] = this._columnManager.columnWidths(visibleColumns);
 		}
 	}
 
@@ -6901,7 +6834,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const stateTemplate = this._stateTemplate();
 		const styles = {
 			'--column-count' : visibleColumns.length,
-			'--column-sizes': this.inheritColumnSizes ? "inherit" : this._columnWidths(visibleColumns),
+			'--column-sizes': this.inheritColumnSizes ? "inherit" : this._columnManager.columnWidths(visibleColumns),
 			'--scrollbar-space': `${this._scrollbarSpacePx}px`,
 			// A measured main-row pitch is only virtualizer state. Publish the value
 			// to row templates only when CSS must enforce a fixed-height contract.

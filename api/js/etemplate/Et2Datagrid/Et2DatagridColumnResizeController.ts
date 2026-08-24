@@ -137,21 +137,23 @@ export class Et2DatagridColumnResizeController implements ReactiveController
 		const metrics = this.host._visibleColumnWidthMetrics(visibleColumns);
 		const availableRelativeWidthPx = Math.max(0, metrics.totalVisibleWidthPx - metrics.fixedWidthPx);
 		const column = this.host.columns[columnIndex];
-		const parsedWidth = this.host._columnWidthDescriptor(column.width);
+		const parsedWidth = this.host._columnManager.columnWidthDescriptor(column.width);
 		const rootRect = root.getBoundingClientRect();
 		const headerColumnRect = headerColumn.getBoundingClientRect();
 		const startWidthPx = Math.max(1, headerColumnRect.width);
-		const minWidthPx = this.host._columnLengthToPx(
+		const minWidthPx = this.host._columnManager.columnLengthToPx(
 			column.minWidth,
 			metrics.totalVisibleWidthPx,
 			availableRelativeWidthPx,
-			metrics.relativeWidthUnits
+			metrics.relativeWidthUnits,
+			this.host._columnResizeFloorPx()
 		);
-		const maxWidthPx = this.host._columnLengthToPx(
+		const maxWidthPx = this.host._columnManager.columnLengthToPx(
 			column.maxWidth,
 			metrics.totalVisibleWidthPx,
 			availableRelativeWidthPx,
-			metrics.relativeWidthUnits
+			metrics.relativeWidthUnits,
+			this.host._columnResizeFloorPx()
 		);
 		const min = Math.max(1, this.host._columnResizeFloorPx(), minWidthPx ?? 1);
 		const max = Math.max(min, maxWidthPx ?? Number.POSITIVE_INFINITY);
@@ -187,7 +189,7 @@ export class Et2DatagridColumnResizeController implements ReactiveController
 			return;
 		}
 		const requestedWidthPx = drag.currentWidthPx + event.dx;
-		const nextWidthPx = this.host._clamp(requestedWidthPx, drag.minWidthPx, drag.maxWidthPx);
+		const nextWidthPx = this.host._columnManager.clamp(requestedWidthPx, drag.minWidthPx, drag.maxWidthPx);
 		drag.currentWidthPx = nextWidthPx;
 		this.helperWidthPx = nextWidthPx;
 		const limitState = requestedWidthPx < drag.minWidthPx ? "min"
