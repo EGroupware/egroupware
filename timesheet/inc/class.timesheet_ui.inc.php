@@ -1222,6 +1222,33 @@ class timesheet_ui extends timesheet_bo
 	}
 
 	/**
+	 * Fetch the end-time of a user's last timesheet on a given day
+	 *
+	 * Used to update the suggested start-time while editing a new entry, when the user changes
+	 * the date and the "new_entry_default" preference asks to continue from the last entry.
+	 *
+	 * @param int $ts_owner requested owner, or 0/empty to use the current user
+	 * @param string|int $date day to check
+	 * @throws Api\Exception\NoPermission if $ts_owner is given, but not one the current user
+	 *	has READ rights for (see get_last_end())
+	 */
+	public function ajax_get_last_end($ts_owner, $date)
+	{
+		try
+		{
+			$date = new Api\DateTime($date);
+		}
+		catch (\Exception $e)
+		{
+			Api\Json\Response::get()->data(null);	// $date could not be parsed
+			return;
+		}
+		$last_end = $this->get_last_end((int)$ts_owner ?: $this->user, $date);
+
+		Api\Json\Response::get()->data($last_end ? $last_end->format('H:i') : null);
+	}
+
+	/**
 	 * apply an action to multiple timesheets
 	 *
 	 * @param string/int $action 'status_to',set status to timeshhets

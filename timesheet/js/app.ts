@@ -15,6 +15,7 @@ import {egw} from "../../api/js/jsapi/egw_global";
 import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeReadonly";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
+import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
@@ -188,6 +189,45 @@ class TimesheetApp extends EgwApp
 		{
 			ts_project.placeholder = _widget.getValue() ?_widget._searchNode?.optionSearch(_widget.value)?.label : '';
 		}
+	}
+
+	/**
+	 * Date changed while editing a new entry: if the "start at end of last entry" preference
+	 * is set, fetch the end-time of the last entry on the new day and use it as the start-time
+	 *
+	 * @param {Event} _ev
+	 * @param {Et2Date} _widget
+	 */
+	ts_start_changed(_ev : Event, _widget : Et2Date)
+	{
+		const ts_id = this.et2.getValueById('ts_id');
+		const start_time = <Et2DateTime>this.et2.getWidgetById('start_time');
+		const end_time = <Et2DateTime>this.et2.getWidgetById('end_time');
+		if (ts_id || !start_time || this.egw.preference('new_entry_default', 'timesheet') !== 'start_time')
+		{
+			return;
+		}
+
+		start_time.disabled = true;
+		this.egw.loading_prompt('ts_start_changed', true, '', start_time);
+		egw.json('timesheet.timesheet_ui.ajax_get_last_end',
+			[this.et2.getValueById('ts_owner'), _widget.getValue()],
+			(last_end) =>
+			{
+				// Et2DateTimeOnly.value expects something new Date() can parse - a bare "H:i"
+				// string is not, so wrap it to match the widget's own internal dateFormat
+				start_time.value = last_end ? '1970-01-01T' + last_end + ':00Z' : '';
+				// force empty end-time, unless continuing from last entry (mirrors edit())
+				if (last_end && end_time)
+				{
+					end_time.value = '';
+				}
+			}
+		).sendRequest(true).finally(() =>
+		{
+			start_time.disabled = false;
+			this.egw.loading_prompt('ts_start_changed', false);
+		});
 	}
 
 	/**

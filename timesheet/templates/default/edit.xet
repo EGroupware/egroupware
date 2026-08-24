@@ -129,7 +129,7 @@
 				</row>
 				<row class="dialogHeader2">
 					<et2-description  value="Date" for="ts_start"></et2-description>
-					<et2-date  id="ts_start" required="1"></et2-date>
+					<et2-date  id="ts_start" required="1" onchange="app.timesheet.ts_start_changed"></et2-date>
 					<et2-description></et2-description>
 					<et2-description  value="Starttime"></et2-description>
 					<et2-date-timeonly id="start_time" freeMinuteEntry="true"></et2-date-timeonly>

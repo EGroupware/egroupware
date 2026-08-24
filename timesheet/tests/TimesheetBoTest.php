@@ -121,6 +121,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	{
 		$bo = new timesheet_bo();
 		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
 		$early_start = $bo->today + 2 * 3600;
 
 		$this->createVictimTimesheet($owner, $early_start, 8 * 60);
@@ -132,5 +133,133 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 			'get_last_end() must return an end-time when matching entries exist');
 		$this->assertSame($early_start + 8 * 60 * 60, (int)$last_end->format('ts'),
 			'get_last_end() must return the maximum of start time plus duration');
+	}
+
+	/**
+	 * get_last_end($user, $date) must only consider entries on the requested day, and
+	 * get_last_end($user) without a $date must still default to today - not to any other
+	 * day the owner happens to have entries on.
+	 */
+	public function testGetLastEndScopesToRequestedDay()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$yesterday_start = $bo->today - 24 * 3600 + 3 * 3600;
+		$today_start = $bo->today + 9 * 3600;
+
+		$this->createVictimTimesheet($owner, $yesterday_start, 45);
+		$this->createVictimTimesheet($owner, $today_start, 30);
+
+		$yesterday = new EGroupware\Api\DateTime($bo->today - 24 * 3600);
+		$last_end_yesterday = $bo->get_last_end($owner, $yesterday);
+		$this->assertInstanceOf(EGroupware\Api\DateTime::class, $last_end_yesterday,
+			'get_last_end() must find an entry on the explicitly requested day');
+		$this->assertSame($yesterday_start + 45 * 60, (int)$last_end_yesterday->format('ts'),
+			'get_last_end() with an explicit date must use that day\'s entry, not today\'s');
+
+		$last_end_today = $bo->get_last_end($owner);
+		$this->assertSame($today_start + 30 * 60, (int)$last_end_today->format('ts'),
+			'get_last_end() without a date must default to today');
+	}
+
+	/**
+	 * get_last_end() must return null, not the entry from a different day, when the owner
+	 * has no timesheets on the requested day.
+	 */
+	public function testGetLastEndReturnsNullForDayWithNoEntries()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$this->createVictimTimesheet($owner, $bo->today + 3600, 30);
+
+		$other_day = new EGroupware\Api\DateTime($bo->today - 5 * 24 * 3600);
+
+		$this->assertNull($bo->get_last_end($owner, $other_day),
+			'get_last_end() must not fall back to an entry from a different day');
+	}
+
+	/**
+	 * Call ajax_get_last_end() and pull the "data" part back out of the (process-wide
+	 * singleton) JSON response, resetting it afterwards so later calls in the same test
+	 * run don't hit Response::data()'s "only once" guard.
+	 */
+	private function callAjaxGetLastEnd(timesheet_ui $ui, $ts_owner, $date)
+	{
+		$ui->ajax_get_last_end($ts_owner, $date);
+
+		$data = null;
+		foreach (EGroupware\Api\Json\Response::get()->initResponseArray() as $part)
+		{
+			if ($part['type'] === 'data') $data = $part['data'];
+		}
+		return $data;
+	}
+
+	/**
+	 * get_last_end() itself must reject an owner the caller has no READ grant for, rather than
+	 * happily returning that owner's last end-time - this is enforced in the bo, not just by
+	 * the ajax wrapper, so any other caller gets the same protection.
+	 */
+	public function testGetLastEndRejectsOwnerWithoutGrant()
+	{
+		$bo = new timesheet_bo();
+		$victim_owner = random_int(1000000000, 2000000000);
+		$this->createVictimTimesheet($victim_owner, $bo->today + 3600, 60);
+
+		$this->expectException(EGroupware\Api\Exception\NoPermission::class);
+		$bo->get_last_end($victim_owner);
+	}
+
+	/**
+	 * ajax_get_last_end() must not leak another owner's last end-time to a caller who has no
+	 * READ grant for that owner - it must reject the request outright, instead of silently
+	 * substituting the current user (which would look like success to the caller while
+	 * quietly serving different data).
+	 */
+	public function testAjaxGetLastEndRejectsRequestForOwnerWithoutGrant()
+	{
+		$ui = new timesheet_ui();
+		$victim_owner = random_int(1000000000, 2000000000);
+		$date = new EGroupware\Api\DateTime('+5 years');
+
+		$this->createVictimTimesheet($victim_owner, $date->format('ts') + 3600, 60);
+
+		$this->expectException(EGroupware\Api\Exception\NoPermission::class);
+		$this->callAjaxGetLastEnd($ui, $victim_owner, $date->format('Y-m-d'));
+	}
+
+	/**
+	 * ajax_get_last_end() must use the current user when no owner is given (0/empty) -
+	 * only an explicitly requested owner needs the ACL check.
+	 */
+	public function testAjaxGetLastEndUsesCurrentUserWhenNoOwnerGiven()
+	{
+		$ui = new timesheet_ui();
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+		$date = new EGroupware\Api\DateTime('+5 years');
+		$start = $date->format('ts') + 3600;
+
+		$this->createVictimTimesheet($account_id, $start, 60);
+
+		$result = $this->callAjaxGetLastEnd($ui, 0, $date->format('Y-m-d'));
+
+		$this->assertSame((new EGroupware\Api\DateTime($start + 60 * 60))->format('H:i'), $result,
+			'ajax_get_last_end() must default to the current user\'s own last end-time when no owner is given');
+	}
+
+	/**
+	 * ajax_get_last_end() must return null (not throw/fatal) for a date string it can't parse,
+	 * since $date is unvalidated client input.
+	 */
+	public function testAjaxGetLastEndReturnsNullForUnparsableDate()
+	{
+		$ui = new timesheet_ui();
+		$account_id = $GLOBALS['egw_info']['user']['account_id'];
+
+		$result = $this->callAjaxGetLastEnd($ui, $account_id, 'not-a-date');
+
+		$this->assertNull($result, 'ajax_get_last_end() must tolerate unparsable client-supplied dates');
 	}
 }

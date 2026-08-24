@@ -655,19 +655,34 @@ class timesheet_bo extends Api\Storage
 	}
 
 	/**
-	 * Get the end-time of the last timesheet booked by a given user
+	 * Get the end-time of the last timesheet booked by a given user on a given day
 	 *
-	 * Considers ALL of the user's timesheets and returns the latest end-time
+	 * Considers ALL of the user's timesheets on that day and returns the latest end-time
 	 * (ts_start+ts_duration) by actual time, NOT by ts_id or ts_start row order, as entries can
 	 * be booked or edited out of chronological order.
 	 *
-	 * @param int $user account_id to check
-	 * @return Api\DateTime|null end-time of the last booked timesheet, or null if none found
+	 * @param int $user account_id to check; the caller must have READ rights for this owner,
+	 *	as we're looking at their existing entries to find the last one
+	 * @param ?Api\DateTime $date =null day to check, default today
+	 * @return Api\DateTime|null end-time of the last booked timesheet that day, or null if none found
+	 * @throws Api\Exception\NoPermission if $user is not one the current user has READ rights for
 	 */
-	function get_last_end($user)
+	function get_last_end($user, ?Api\DateTime $date=null)
 	{
+		$grant = $this->grants[$user] ?? 0;
+		if (!($grant & Acl::READ))
+		{
+			throw new Api\Exception\NoPermission("No permission to read timesheets of user #$user!");
+		}
+
+		$day_start = $date ? clone $date : new Api\DateTime($this->now);
+		$day_start->setTime(0, 0, 0);
+		$day_end = (clone $day_start)->modify('+1 day -1 second');
+
 		$last_end = $this->db->select(self::TABLE, 'MAX(ts_start + ts_duration * 60)', array(
-			'ts_owner' => $user
+			'ts_owner' => $user,
+			'ts_start BETWEEN '.$this->db->quote($day_start->format('ts'), 'int').
+				' AND '.$this->db->quote($day_end->format('ts'), 'int'),
 		), __LINE__, __FILE__, false, '', TIMESHEET_APP)->fetchColumn();
 
 		return is_null($last_end) ? null : new Api\DateTime($last_end);
