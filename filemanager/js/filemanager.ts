@@ -1240,6 +1240,9 @@ export class filemanagerAPP extends EgwApp
 	open(_action, _senders)
 	{
 		let data = egw.dataGetUIDdata(_senders[0].id);
+		// no row data: sender is a placeholder row (grid hasn't loaded it yet, eg. a
+		// double-click into a directory before the new rows finished loading) - ignore
+		if (!data?.data) return false;
 		let path = this.id2path(_senders[0].id);
 		this.et2 = this.et2 ? this.et2 : etemplate2.getById('filemanager-index').widgetContainer;
 		// try to get mime widget DOM node out of the row DOM
