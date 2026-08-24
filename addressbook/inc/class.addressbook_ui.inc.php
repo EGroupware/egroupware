@@ -226,7 +226,9 @@ class addressbook_ui extends addressbook_bo
 			Framework::message($msg ? $msg : $_GET['msg']);
 		}
 
-		//$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
+		// restore the full nm state (incl. get_rows, actions, row_id, ...) cached by the last get_rows() call,
+		// so a resubmit (eg. an action) does not fall through to the defaults below and overwrite filter2/search
+		$content['nm'] = Api\Cache::getSession('addressbook', str_replace('addressbook.', '', $template ?? 'index'));
 		if (!is_array($content['nm']))
 		{
 			$content['nm'] = array(
