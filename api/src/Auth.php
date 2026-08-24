@@ -222,14 +222,14 @@ class Auth
 		// some statics (and initialisation to make information and timecalculation a) more readable in conditions b) persistent per request
 		// if user has to be warned about an upcomming passwordchange, remember for the session, that he was informed
 		static $UserKnowsAboutPwdChange=null;
-		if (is_null($UserKnowsAboutPwdChange)) $UserKnowsAboutPwdChange =& Cache::getSession('phpgwapi','auth_UserKnowsAboutPwdChange');
+		if (is_null($UserKnowsAboutPwdChange)) $UserKnowsAboutPwdChange = Cache::getSession('phpgwapi','auth_UserKnowsAboutPwdChange');
 
 		// retrieve the timestamp regarding the last change of the password from auth system and store it with the session
 		static $alpwchange_val=null;
 		static $pwdTsChecked=null;
 		if (is_null($pwdTsChecked) && is_null($alpwchange_val) || (string)$alpwchange_val === '0')
 		{
-			$alpwchange_val =& Cache::getSession('phpgwapi','auth_alpwchange_val'); // set that one with the session stored value
+			$alpwchange_val = Cache::getSession('phpgwapi','auth_alpwchange_val'); // set that one with the session stored value
 			// initalize statics - better readability of conditions
 			if (is_null($alpwchange_val) || (string)$alpwchange_val === '0')
 			{
@@ -248,6 +248,7 @@ class Auth
 					$alpwchange_val = null;
 				}
 				//error_log(__METHOD__.__LINE__.'#'.$alpwchange_val.'# is null:'.is_null($alpwchange_val).'# is empty:'.empty($alpwchange_val).'# is set:'.isset($alpwchange_val));
+				Cache::setSession('phpgwapi', 'auth_alpwchange_val', $alpwchange_val);
 			}
 		}
 		static $passwordAgeBorder=null;
@@ -297,6 +298,7 @@ class Auth
 						strpos($_SERVER['SCRIPT_NAME'], '/home/') !== false))
 				{
 					$UserKnowsAboutPwdChange = true;
+					Cache::setSession('phpgwapi', 'auth_UserKnowsAboutPwdChange', $UserKnowsAboutPwdChange);
 				}
 				$message = lang('Your password is about to expire in %1 days, you may change your password now',round($daysLeftUntilChangeReq));
 				// user has no rights to change password --> do NOT warn, as only forced check ignores rights
