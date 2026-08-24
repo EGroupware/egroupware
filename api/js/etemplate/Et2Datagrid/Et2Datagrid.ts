@@ -19,7 +19,6 @@ import {
 	Et2DatagridRefreshResult,
 	Et2DatagridRow,
 	Et2DatagridRowCustomizer,
-	Et2DatagridSelectionDetail,
 	Et2DatagridSelectionMode,
 	Et2DatagridTemplateData,
 	Et2DatagridUpdateType,
@@ -33,6 +32,7 @@ import {Et2DatagridColumnResizeController} from "./Et2DatagridColumnResizeContro
 import {Et2RowProvider} from "./Et2RowProvider";
 import {Et2DatagridPrintController} from "./Et2DatagridPrintController";
 import {Et2DatagridRequestQueue} from "./Et2DatagridRequestQueue";
+import {Et2DatagridSelectionController} from "./Et2DatagridSelectionController";
 import {styleMap} from "lit/directives/style-map.js";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_compileLegacyJS} from "../et2_core_legacyJSFunctions";
@@ -272,7 +272,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	rows : Et2DatagridRow[] = [];
 
 	@state()
-	private _rowsByIndex : Array<Et2DatagridRow | null> = [];
+	_rowsByIndex : Array<Et2DatagridRow | null> = [];
 
 	private _rowRenderVersionById : Map<string, number> = new Map();
 	private _refreshPulseTimersByElement : Map<HTMLElement, number> = new Map();
@@ -569,15 +569,6 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 	/** Set of row ids already added, used to avoid duplicate render on incremental fetches. */
 	private displayedRowIds : Set<string> = new Set();
-	/** Set of selected row ids used to derive emitted selection payloads. */
-	private selectedRowIds : Set<string> = new Set();
-	private allSelected : boolean = false;
-	/** Anchor index for shift-range selection semantics. */
-	private anchorRowIndex : number = -1;
-	/** Keyboard/pointer active row index in currently loaded rows. */
-	private activeRowIndex : number = -1;
-	/** Active row id mirrored from `activeRowIndex` for event payload convenience. */
-	private activeRowId : string | null = null;
 	private _initialExportParts : string[] = [];
 	private _scrollListener : (() => void) | null = null;
 	private _scrollListenerBody : HTMLElement | null = null;
@@ -598,14 +589,64 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _rowUpgradeFrameBudgetMs : number = 8;
 	/** Stable source-order keys from template parsing; used to map row cells after column reordering. */
 	private _sourceColumnKeys : string[] = [];
-	private _restoreFocusAfterRender : boolean = false;
+	_restoreFocusAfterRender : boolean = false;
 	private _lastPointerToggleSelect : boolean = false;
-	private _pendingOffscreenKeyboardNavigation : boolean = false;
 	_columnManager : Et2DatagridColumnManager = new Et2DatagridColumnManager();
 	private _columnState : Et2DatagridColumnState = new Et2DatagridColumnState();
 	private _columnResize : Et2DatagridColumnResizeController = new Et2DatagridColumnResizeController(this);
 	private readonly _printController : Et2DatagridPrintController = new Et2DatagridPrintController(this);
 	private readonly _requestQueue : Et2DatagridRequestQueue = new Et2DatagridRequestQueue(this);
+	private readonly _selection : Et2DatagridSelectionController = new Et2DatagridSelectionController(this);
+
+	private get selectedRowIds() : Set<string>
+	{
+		return this._selection.selectedRowIds;
+	}
+
+	private set selectedRowIds(value : Set<string>)
+	{
+		this._selection.selectedRowIds = value;
+	}
+
+	private get allSelected() : boolean
+	{
+		return this._selection.allSelected;
+	}
+
+	private set allSelected(value : boolean)
+	{
+		this._selection.allSelected = value;
+	}
+
+	private get anchorRowIndex() : number
+	{
+		return this._selection.anchorRowIndex;
+	}
+
+	private set anchorRowIndex(value : number)
+	{
+		this._selection.anchorRowIndex = value;
+	}
+
+	private get activeRowIndex() : number
+	{
+		return this._selection.activeRowIndex;
+	}
+
+	private set activeRowIndex(value : number)
+	{
+		this._selection.activeRowIndex = value;
+	}
+
+	private get activeRowId() : string | null
+	{
+		return this._selection.activeRowId;
+	}
+
+	private set activeRowId(value : string | null)
+	{
+		this._selection.activeRowId = value;
+	}
 	/** Rows temporarily rendered in full for print output; see Et2DatagridPrintController. */
 	private get _printRows() : Et2DatagridRow[] | null
 	{
@@ -702,7 +743,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Convenience accessor for table body element.
 	 */
-	private get _rowsBody() : HTMLElement | null
+	get _rowsBody() : HTMLElement | null
 	{
 		return this.shadowRoot?.getElementById("rows") ?? null;
 	}
@@ -710,7 +751,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Convenience accessor for scroll container.
 	 */
-	private get _body() : HTMLElement | null
+	get _body() : HTMLElement | null
 	{
 		return this.shadowRoot?.querySelector(".dg-body") as HTMLElement | null;
 	}
@@ -3360,7 +3401,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Normalize a data row id for use as a stable expansion key.
 	 */
-	private _rowExpansionId(row : Et2DatagridRow) : string
+	_rowExpansionId(row : Et2DatagridRow) : string
 	{
 		return this._dataStoreRowIdFor(row.id);
 	}
@@ -3368,7 +3409,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Ask the consumer expansion hook whether a realized data row can expand.
 	 */
-	private _isRowExpandable(row : Et2DatagridRow, rowIndex : number) : boolean
+	_isRowExpandable(row : Et2DatagridRow, rowIndex : number) : boolean
 	{
 		if(!this.expansionConfig?.isExpandable)
 		{
@@ -3388,7 +3429,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Check whether a data row currently has an expanded detail row.
 	 */
-	private _isRowExpanded(row : Et2DatagridRow) : boolean
+	_isRowExpanded(row : Et2DatagridRow) : boolean
 	{
 		return this._expandedRowIds().has(this._rowExpansionId(row));
 	}
@@ -3396,7 +3437,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Update expansion state through the controlled callback or local fallback state.
 	 */
-	private _setRowExpanded(row : Et2DatagridRow, expanded : boolean)
+	_setRowExpanded(row : Et2DatagridRow, expanded : boolean)
 	{
 		const scrollTop = expanded ? null : this._body?.scrollTop ?? null;
 		const scrollVersion = this._bodyScrollVersion;
@@ -4609,7 +4650,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * Resolve row payload from the provider.  Datagrid keeps row identity and
 	 * index state; data ownership remains with the provider / datastore.
 	 */
-	private _rowDataFor(row : Et2DatagridRow | string | null | undefined) : any
+	_rowDataFor(row : Et2DatagridRow | string | null | undefined) : any
 	{
 		if(!row)
 		{
@@ -5021,7 +5062,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	/**
 	 * Toggle expansion from keyboard activation on the expander button.
 	 */
-	private _handleRowExpanderKeydown(event : KeyboardEvent) : boolean
+	_handleRowExpanderKeydown(event : KeyboardEvent) : boolean
 	{
 		const expander = (event.target as HTMLElement | null)?.closest?.(".dg-row-expander") as HTMLElement | null;
 		if(!expander || !["Enter", " ", "Spacebar"].includes(event.key))
@@ -5054,160 +5095,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _handleTableKeydown(event : KeyboardEvent)
 	{
-		if(this._handleRowExpanderKeydown(event))
-		{
-			return;
-		}
-		const key = event.key;
-		if(key === "ArrowRight" || key === "ArrowLeft")
-		{
-			if(this._handleHorizontalRowNavigation(event))
-			{
-				return;
-			}
-		}
-		if(!["ArrowUp", "ArrowDown", "PageUp", "PageDown", "Home", "End", " ", "a", "A"].includes(key))
-		{
-			return;
-		}
-		if(!this._rowsByIndex.length && this.total === null)
-		{
-			return;
-		}
-		if(["ArrowUp", "ArrowDown", "PageUp", "PageDown"].includes(key) &&
-			this.activeRowIndex >= 0 &&
-			this._hasRenderedRows() &&
-			!this._isRowIndexRendered(this.activeRowIndex))
-		{
-			event.preventDefault();
-			event.stopPropagation();
-			event.stopImmediatePropagation();
-			this._scrollActiveRowIntoViewThenReplayNavigation(key, event);
-			return;
-		}
-
-		const pageStep = Math.max(1, Math.floor((this._body?.clientHeight || 0) / 44));
-		let nextIndex = this.activeRowIndex >= 0 ? this.activeRowIndex : 0;
-		const maxIndex = Math.max(0, (this.total ?? this._rowsByIndex.length) - 1);
-		if(key === "ArrowUp") nextIndex = Math.max(0, nextIndex - 1);
-		if(key === "ArrowDown")
-		{
-			nextIndex = Math.min(maxIndex, nextIndex + 1);
-		}
-		if(key === "PageUp") nextIndex = Math.max(0, nextIndex - pageStep);
-		if(key === "PageDown")
-		{
-			nextIndex = Math.min(maxIndex, nextIndex + pageStep);
-		}
-		if(key === "Home") nextIndex = 0;
-		if(key === "End")
-		{
-			nextIndex = maxIndex;
-		}
-
-		if(key === " " || key === "Spacebar")
-		{
-			event.preventDefault();
-			event.stopPropagation();
-			event.stopImmediatePropagation();
-			this._toggleSelectionOnActiveRow();
-			return;
-		}
-		if((key === "a" || key === "A") && (event.ctrlKey || event.metaKey))
-		{
-			if(this.selectionMode === "multiple")
-			{
-				event.preventDefault();
-				event.stopPropagation();
-				event.stopImmediatePropagation();
-				this.allSelected = true;
-				this.selectedRowIds = new Set(this.rows.map((row) => row.id));
-				this._syncRowAccessibilityState();
-				this._emitSelectionChanged();
-			}
-			return;
-		}
-
-		// Prevent native page scroll on navigation keys; grid owns row navigation.
-		event.preventDefault();
-		event.stopPropagation();
-		event.stopImmediatePropagation();
-		const previous = this.activeRowIndex;
-		this._restoreFocusAfterRender = true;
-		this._moveActiveRow(nextIndex, true);
-		if(event.shiftKey && this.selectionMode === "multiple")
-		{
-			this._selectRange(this.anchorRowIndex >= 0 ? this.anchorRowIndex : previous, nextIndex);
-		}
-		else if(this.selectionMode !== "none" && !event.ctrlKey && !event.metaKey && this.activeRowId)
-		{
-			// Plain navigation (no modifier) replaces the selection with the newly active row.
-			// same as a plain click - so anything reacting to selection (e.g. a preview pane) keeps following the keyboard cursor.
-			// Must happen synchronously here, not via the capture-phase action-shortcut handler further up the dispatch chain
-			// that runs *before* _moveActiveRow() above and would act on the row that was active before this keypress, one step behind.
-			this.allSelected = false;
-			this.selectedRowIds = new Set([this.activeRowId]);
-			this.anchorRowIndex = nextIndex;
-			this._syncRowAccessibilityState();
-			this._emitSelectionChanged(true);
-		}
-	}
-
-	/**
-	 * Handle treegrid-style horizontal navigation between parent rows and child grids.
-	 */
-	private _handleHorizontalRowNavigation(event : KeyboardEvent) : boolean
-	{
-		if(this.activeRowIndex < 0)
-		{
-			return false;
-		}
-		const row = this._rowsByIndex[this.activeRowIndex];
-		if(event.key === "ArrowLeft" && this.parentRowId)
-		{
-			event.preventDefault();
-			event.stopPropagation();
-			this.dispatchEvent(new CustomEvent("et2-datagrid-leave-child-grid", {
-				detail: {
-					parentRowId: this.parentRowId
-				},
-				bubbles: true,
-				composed: true
-			}));
-			return true;
-		}
-		if(!row || !this._isRowExpandable(row, this.activeRowIndex))
-		{
-			return false;
-		}
-		if(event.key === "ArrowRight")
-		{
-			event.preventDefault();
-			event.stopPropagation();
-			if(!this._isRowExpanded(row))
-			{
-				this._setRowExpanded(row, true);
-				return true;
-			}
-			this.dispatchEvent(new CustomEvent("et2-datagrid-enter-expanded-row", {
-				detail: {
-					parentRowId: this._rowExpansionId(row),
-					rowId: row.id,
-					rowIndex: this.activeRowIndex
-				},
-				bubbles: true,
-				composed: true
-			}));
-			return true;
-		}
-		if(event.key === "ArrowLeft" && this._isRowExpanded(row))
-		{
-			event.preventDefault();
-			event.stopPropagation();
-			this._setRowExpanded(row, false);
-			return true;
-		}
-		return false;
+		this._selection.handleTableKeydown(event);
 	}
 
 	/**
@@ -5215,11 +5103,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _isRowIndexRendered(index : number) : boolean
 	{
-		if(index < 0)
-		{
-			return false;
-		}
-		return !!this._rowsBody?.querySelector(`[data-row-index="${index}"]`);
+		return this._selection.isRowIndexRendered(index);
 	}
 
 	/**
@@ -5227,57 +5111,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _hasRenderedRows() : boolean
 	{
-		return !!this._rowsBody?.querySelector("[data-row-index]");
-	}
-
-	/**
-	 * Bring an off-screen active row into view, then replay the original key action.
-	 */
-	private async _scrollActiveRowIntoViewThenReplayNavigation(key : string, sourceEvent : KeyboardEvent)
-	{
-		if(this._pendingOffscreenKeyboardNavigation)
-		{
-			return;
-		}
-		this._pendingOffscreenKeyboardNavigation = true;
-		try
-		{
-			const activeIndex = this.activeRowIndex;
-			if(activeIndex < 0)
-			{
-				return;
-			}
-			const body = this._body;
-			if(body)
-			{
-				const rowHeight = this.rowHeightEstimatePx;
-				const centeredTop = Math.max(0, Math.floor(activeIndex * rowHeight - body.clientHeight / 2));
-				body.scrollTop = centeredTop;
-			}
-			for(let i = 0; i < 24; i++)
-			{
-				await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
-				await this.updateComplete;
-				if(this._isRowIndexRendered(activeIndex))
-				{
-					break;
-				}
-			}
-			if(!this._isRowIndexRendered(activeIndex))
-			{
-				return;
-			}
-			this._handleTableKeydown(new KeyboardEvent("keydown", {
-				key,
-				shiftKey: sourceEvent.shiftKey,
-				ctrlKey: sourceEvent.ctrlKey,
-				metaKey: sourceEvent.metaKey
-			}));
-		}
-		finally
-		{
-			this._pendingOffscreenKeyboardNavigation = false;
-		}
+		return this._selection.hasRenderedRows();
 	}
 
 	/**
@@ -5380,185 +5214,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}));
 	}
 
-	/**
-	 * Toggle selected state for active row according to current selection mode.
-	 */
 	private _toggleSelectionOnActiveRow()
 	{
-		if(this.selectionMode === "none" || this.activeRowIndex < 0)
-		{
-			return;
-		}
-		const row = this._rowsByIndex[this.activeRowIndex];
-		if(!row)
-		{
-			return;
-		}
-
-		this.allSelected = false;
-		if(this.selectionMode === "single")
-		{
-			this.selectedRowIds = new Set([row.id]);
-		}
-		else
-		{
-			const next = new Set(this.selectedRowIds);
-			if(next.has(row.id))
-			{
-				next.delete(row.id);
-			}
-			else
-			{
-				next.add(row.id);
-			}
-			this.selectedRowIds = next;
-		}
-		this._syncRowAccessibilityState();
-		this._emitSelectionChanged();
+		this._selection.toggleSelectionOnActiveRow();
 	}
 
-	/**
-	 * Update selection model from pointer gesture semantics.
-	 */
 	private _updateSelectionFromPointer(rowId : string, rowIndex : number, event : MouseEvent, toggleFromPointer : boolean = false)
 	{
-		if(this.selectionMode === "none")
-		{
-			return;
-		}
-		this.allSelected = false;
-		if(this.selectionMode === "single")
-		{
-			this.selectedRowIds = new Set([rowId]);
-			this.anchorRowIndex = rowIndex;
-			this._syncRowAccessibilityState();
-			this._emitSelectionChanged(true);
-			return;
-		}
-
-		if(event.shiftKey && this.anchorRowIndex >= 0)
-		{
-			this._selectRange(this.anchorRowIndex, rowIndex);
-			return;
-		}
-
-		const toggle = event.ctrlKey || event.metaKey || toggleFromPointer;
-		if(toggle)
-		{
-			const next = new Set(this.selectedRowIds);
-			if(next.has(rowId))
-			{
-				next.delete(rowId);
-			}
-			else
-			{
-				next.add(rowId);
-			}
-			this.selectedRowIds = next;
-		}
-		else
-		{
-			this.selectedRowIds = new Set([rowId]);
-		}
-
-		this.anchorRowIndex = rowIndex;
-		this._syncRowAccessibilityState();
-		this._emitSelectionChanged(!toggle);
+		this._selection.updateSelectionFromPointer(rowId, rowIndex, event, toggleFromPointer);
 	}
 
-	/**
-	 * Select inclusive row range, used for shift-selection.
-	 */
-	private _selectRange(startIndex : number, endIndex : number)
-	{
-		if(this.selectionMode !== "multiple")
-		{
-			return;
-		}
-		this.allSelected = false;
-		const start = Math.min(startIndex, endIndex);
-		const end = Math.max(startIndex, endIndex);
-		const next = new Set<string>();
-		for(let i = start; i <= end; i++)
-		{
-			if(this._rowsByIndex[i])
-			{
-				next.add(this._rowsByIndex[i].id);
-			}
-		}
-		this.selectedRowIds = next;
-		this._syncRowAccessibilityState();
-		this._emitSelectionChanged();
-	}
-
-	/**
-	 * Move active row and optionally focus corresponding DOM row.
-	 */
 	private _moveActiveRow(index : number, focus : boolean)
 	{
-		const maxIndex = Math.max(0, (this.total ?? this._rowsByIndex.length) - 1);
-		if(index < 0 || index > maxIndex)
-		{
-			return;
-		}
-		const previousActiveRowId = this.activeRowId;
-		this.activeRowIndex = index;
-		this.activeRowId = this._rowsByIndex[index]?.id ?? null;
-		if(this.anchorRowIndex < 0)
-		{
-			this.anchorRowIndex = index;
-		}
-		this._syncRowAccessibilityState();
-
-		if(focus)
-		{
-			this._focusRowByIndex(index, 10);
-		}
-		if(this.activeRowId !== previousActiveRowId)
-		{
-			this.dispatchEvent(new CustomEvent("et2-active-row-changed", {
-				detail: {
-					activeRowId: this.activeRowId,
-					activeRowIndex: this.activeRowIndex
-				},
-				bubbles: true,
-				composed: true
-			}));
-		}
+		this._selection.moveActiveRow(index, focus);
 	}
 
-	/**
-	 * Focus row by absolute index, optionally scrolling it into view.
-	 */
 	private _focusRowByIndex(index : number, retries : number = 0, allowScroll : boolean = true)
 	{
-		const rowElement = (Array.from(this._rowsBody?.querySelectorAll("[data-row-index]") || []) as HTMLElement[])
-			.find((row) => parseInt(row.getAttribute("data-row-index") || "-1", 10) === index) || null;
-		if(rowElement)
-		{
-			// Use preventScroll so mutation-recovery focus does not hijack scrollbar drag.
-			// Explicit scrollIntoView stays opt-in via `allowScroll`.
-			rowElement.focus({preventScroll: true});
-			if(allowScroll)
-			{
-				rowElement.scrollIntoView({block: "nearest"});
-			}
-			if(this.shadowRoot?.activeElement === rowElement)
-			{
-				this._restoreFocusAfterRender = false;
-				return;
-			}
-			if(retries > 0)
-			{
-				requestAnimationFrame(() => this._focusRowByIndex(index, retries - 1, allowScroll));
-			}
-			return;
-		}
-		if(retries <= 0)
-		{
-			return;
-		}
-		requestAnimationFrame(() => this._focusRowByIndex(index, retries - 1, allowScroll));
+		this._selection.focusRowByIndex(index, retries, allowScroll);
 	}
 
 	focusFirstRow()
@@ -5615,62 +5288,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 	}
 
-	/**
-	 * Synchronize ARIA attributes and tabindex across rendered row DOM.
-	 */
 	private _syncRowAccessibilityState()
 	{
-		const rowElements = Array.from(this._rowsBody?.querySelectorAll("[data-row-index]") || []) as HTMLElement[];
-		rowElements.forEach((rowElement) =>
-		{
-			const absoluteIndex = parseInt(rowElement.getAttribute("data-row-index") || "-1", 10);
-			const rowId = rowElement.getAttribute("data-row-id") || "";
-			rowElement.setAttribute("role", "row");
-			rowElement.setAttribute("aria-selected", this.selectedRowIds.has(rowId) ? "true" : "false");
-			if(this.allSelected && !this.selectedRowIds.has(rowId))
-			{
-				rowElement.setAttribute("aria-selected", "true");
-			}
-			rowElement.setAttribute("aria-rowindex", String(Math.max(0, absoluteIndex) + 1));
-			rowElement.tabIndex = absoluteIndex === this.activeRowIndex ? 0 : -1;
-			rowElement.classList.toggle("dg-row-selected", this.allSelected || this.selectedRowIds.has(rowId));
-			rowElement.classList.toggle("dg-row-active", rowId === this.activeRowId);
-
-			const cells = Array.from(rowElement.children) as HTMLElement[];
-			cells.forEach((cell, cellIndex) =>
-			{
-				if(cell.getAttribute("data-dg-meta-cell") === "1" && this._isTileView())
-				{
-					cell.setAttribute("aria-hidden", "true");
-					return;
-				}
-				const isHeader = cell.tagName.toLowerCase() === "th";
-				cell.setAttribute("role", isHeader ? "columnheader" : "gridcell");
-				cell.setAttribute("aria-colindex", String(cellIndex + 1));
-			});
-		});
+		this._selection.syncRowAccessibilityState();
 	}
 
-	/**
-	 * Emit normalized selection detail for parent listeners.
-	 */
 	private _emitSelectionChanged(replaceSelection : boolean = false)
 	{
-		const selectedRows = this.rows.filter((row) => this.selectedRowIds.has(row.id)).map((row) => this._rowDataFor(row));
-		const detail : Et2DatagridSelectionDetail = {
-			selectedRowIds: Array.from(this.selectedRowIds),
-			allSelected: this.allSelected,
-			selectedRows,
-			activeRowId: this.activeRowId,
-			activeRowIndex: this.activeRowIndex,
-			replaceSelection
-		};
-		this.dispatchEvent(new CustomEvent("et2-selection-changed", {
-			detail,
-			bubbles: true,
-			composed: true,
-			cancelable: true
-		}));
+		this._selection.emitSelectionChanged(replaceSelection);
 	}
 
 	/**
@@ -6311,7 +5936,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		return null;
 	}
 
-	private _isTileView() : boolean
+	_isTileView() : boolean
 	{
 		return this.view === "tile";
 	}
