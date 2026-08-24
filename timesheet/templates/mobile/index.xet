@@ -18,17 +18,17 @@
 				<row class="th">
 
 				</row>
-				<row class="$row_cont[class] timesheetRow">
+				<row class="$class timesheetRow">
 					<et2-description  class="cat_$row_cont[cat_id] mobile_cat_col"></et2-description>
 					<et2-vbox>
-						<customfields-list id="$row" class="customfields" app="timesheet" disabled="true"/>
-						<et2-description  id="${row}[ts_title]" class="ts_title $row_cont[titleClass]" noLang="1"></et2-description>
+						<et2-customfields-list id="$row" class="customfields" app="timesheet" disabled="true"/>
+						<et2-description  id="${row}[ts_title]" class="ts_title" noLang="1"></et2-description>
 						<et2-description  id="${row}[ts_description]" class="ts_description" noLang="1"></et2-description>
 						<et2-link  id="${row}[ts_link]" app="" noLang="1"></et2-link>
 					</et2-vbox>
 					<et2-vbox  class="timesheet3Col">
 						<et2-hbox>
-							<et2-date-time-today  id="${row}[ts_start]" readonly="true" options=",8" align="left"></et2-date-time-today>
+							<et2-date-time-today  id="${row}[ts_start]" readonly="true" align="left"></et2-date-time-today>
 						</et2-hbox>
 
 						<et2-hbox>
@@ -41,10 +41,11 @@
 				</row>
 			</rows>
 		</grid>
+		<et2-styles src="rows.css"></et2-styles>
 	</template>
 	<template id="timesheet.index" template="" lang="" group="0" version="1.9.001">
 		<et2-description  id="plus_button_container"></et2-description>
-		<nextmatch id="nm" template="timesheet.index.rows"/>
+		<et2-nextmatch id="nm" template="timesheet.index.rows"></et2-nextmatch>
 		<et2-button  id="add" class="plus_button" onclick="egw.open('timesheet');" noSubmit="true"></et2-button>
 	</template>
 </overlay>

@@ -9,8 +9,8 @@ generated component docs for
 [`et2-datagrid`](https://etemplate.egroupware.org/components/et2-datagrid/) — this document does not
 repeat that reference material.
 
-Apps converted so far: Addressbook, Infolog, Filemanager, Mail. Apps still on the legacy widget:
-Calendar, Timesheet, Admin, Importexport, Aiassistant, Preferences, Home. Related in-flight/reference
+Apps converted so far: Addressbook, Infolog, Filemanager, Mail, Timesheet. Apps still on the legacy
+widget: Calendar, Admin, Importexport, Aiassistant, Preferences, Home. Related in-flight/reference
 docs in the same directory as the widget source: `ColumnSelectionNotes.md`,
 `Et2DatagridDirectoryMigrationPlan.md`, `NestedExpansion.md`.
 
@@ -34,6 +34,12 @@ Filemanager's conversion covers the main index (desktop + mobile skin), the tile
 jobs list (`jobs.xet`), and the shares list (`shares.xet`). `home.rows.xet` (the Home favorite-portlet
 variant) is deliberately left on the legacy widget, same shared-framework-code reason as Addressbook's
 portlet view above.
+
+Timesheet's conversion covers the main index (desktop + mobile skin) only. `index.rows.xet` (the
+Home-favorite-portlet variant, rendered through `timesheet_favorite_portlet.inc.php`) is deliberately
+left on the legacy widget, same shared-framework-code reason as Addressbook's and Filemanager's portlet
+views above — convert it together with a matching pass over other apps' favorite-portlet row
+templates, not as a one-off.
 
 ## Status
 

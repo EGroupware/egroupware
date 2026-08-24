@@ -1,0 +1,22 @@
+/**
+ * Timesheet index rows - Mobile
+ */
+.th {
+  color: black;
+  background-color: #D3DCE3;
+}
+.timesheetRow {
+  position: relative;
+}
+.ts_description {
+  height: 19px;
+  white-space: nowrap;
+  line-height: 18px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: grey;
+  display: var(--timesheet-ts-details-display, revert);
+}
+.ts_title {
+  font-weight: normal;
+}

@@ -1,0 +1,31 @@
+/**
+ * Timesheet index rows
+ */
+
+// A genuine "at least this tall, but grows for taller content" row height - unlike setting
+// --row-height (which locks every row to an exact, clipped height via Et2Datagrid's
+// fixed-row-height mode), this just overrides its default 44px min-height floor down to a smaller
+// one directly; rows with more content (title+description, customfields, ...) still grow past it.
+// Et2Datagrid's own rule is actually nested under .dg-body (".dg-body tbody > tr"), giving it the
+// same specificity as a bare "tbody > tr[data-row-id]" - match its full selector to win reliably.
+.dg-body tbody > tr[data-row-id] {
+	min-height: var(--sl-spacing-2x-large);
+}
+
+// $row_cont[titleClass] on a non-root row widget never resolves (Et2RowProvider only expands
+// placeholders on the row's own root attributes), so key off the row's own "rowSum" class instead.
+.rowSum {
+  border-top: 1px solid;
+  padding-bottom: var(--sl-spacing-small);
+	[id*='ts_quantity'], [id*='ts_duration'], .ts_title {
+		font-weight: bold;
+	}
+}
+
+.ts_title {
+	font-weight: var(--timesheet-ts-details-weight, bold);
+}
+
+.ts_description {
+	display: var(--timesheet-ts-details-display, revert);
+}

@@ -9,10 +9,6 @@
 	max-height: 80%;
 }
 
-.rowSum [id*='ts_quantity'], .rowSum [id*='ts_duration'], .timesheet_titleSum, .timesheet_titleDetails {
-	font-weight: bold;
-}
-
 table.egwGridView_grid tbody td[align=right] {
 	padding-top: 0px;
 }

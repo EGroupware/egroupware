@@ -1,0 +1,21 @@
+/**
+ * Timesheet index rows
+ */
+.dg-body tbody > tr[data-row-id] {
+  min-height: var(--sl-spacing-2x-large);
+}
+.rowSum {
+  border-top: 1px solid;
+  padding-bottom: var(--sl-spacing-small);
+}
+.rowSum [id*='ts_quantity'],
+.rowSum [id*='ts_duration'],
+.rowSum .ts_title {
+  font-weight: bold;
+}
+.ts_title {
+  font-weight: var(--timesheet-ts-details-weight, bold);
+}
+.ts_description {
+  display: var(--timesheet-ts-details-display, revert);
+}
