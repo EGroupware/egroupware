@@ -1,6 +1,6 @@
-# EGroupware development enviroment as Docker container
+# EGroupware development environment as Docker container
 
-The container and docker-compose.yml file in this directory are the easiest way to get a full development enviroment for EGroupware.
+The container and docker-compose.yml file in this directory are the easiest way to get a full development environment for EGroupware.
 
 ### It defines and uses the following volumes:
 * sources: document root of the webserver, by default $PWD/sources subdirectory, can also be your existing document root
