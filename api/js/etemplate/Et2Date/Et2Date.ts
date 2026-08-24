@@ -424,6 +424,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	{
 		super.connectedCallback();
 		this._updateValueOnChange = this._updateValueOnChange.bind(this);
+		this._handleCalendarChange = this._handleCalendarChange.bind(this);
 		this._handleShortcutButtonClick = this._handleShortcutButtonClick.bind(this);
 		// Most date widgets start hidden; defer Flatpickr construction until first interaction.
 		this.addEventListener("focusin", this.init, {once: true});
@@ -642,8 +643,9 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		}
 
 
-		// Listen for flatpickr change so we can update internal value, needed for validation
-		options.onChange = this._updateValueOnChange;
+		// Listen for flatpickr change so we can update internal value, needed for validation,
+		// and dispatch our own "change" event for onchange="" template bindings
+		options.onChange = this._handleCalendarChange;
 		options.onReady = this._onReady;
 
 		// Remove inert attribute so we can work in Et2Dialog
@@ -908,6 +910,27 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	_updateValueOnChange(selectedDates : Date[], dateStr : string, instance : Instance)
 	{
 		this.modelValue = this.getValue();
+	}
+
+	/**
+	 * flatpickr's onChange callback - fires for every real value change (a calendar pick,
+	 * clear(), or a committed setDate() call from _handleInputChange), unlike _onReady's
+	 * one-off startup call straight into _updateValueOnChange. Dispatch our own "change"
+	 * here so onchange="" template bindings see calendar picks too, not just typed-and-parsed
+	 * input (which previously only fired "change" from within _handleInputChange itself).
+	 *
+	 * @param selectedDates
+	 * @param dateStr
+	 * @param instance
+	 */
+	_handleCalendarChange(selectedDates : Date[], dateStr : string, instance : Instance)
+	{
+		this._updateValueOnChange(selectedDates, dateStr, instance);
+
+		this.updateComplete.then(() =>
+		{
+			this.dispatchEvent(new Event("change", {bubbles: true}));
+		});
 	}
 
 	_onReady(selectedDates : Date[], dateStr : string, instance : Instance)
