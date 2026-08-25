@@ -4,15 +4,21 @@ addressbook csv import	importexport	tr	Adres Defteri CSV İçe Aktarma
 addressbook vcard import	importexport	tr	Adres defteri vCard içe aktarma
 admin disabled exporting	importexport	tr	Yönetici dışa aktarmayı devre dışı bıraktı.
 all users	importexport	tr	Tüm Kullanıcılar
+automatically created by importexport	importexport	tr	İçe Aktarma | Dışa Aktarma tarafından otomatik olarak oluşturuldu
 change allowed users	importexport	tr	İzin verilen kullanıcıları değiştirme
 change owner when updating	importexport	tr	Güncelleme sırasında sahibi değiştir
 changed owner	importexport	tr	Sahibi değişti
 charset of file	importexport	tr	Dosya Karakter Kümesi (char-set)
 choose fields to export	importexport	tr	Dışa aktarılacak alanları seçin
 database values	importexport	tr	Veritabanı değerleri
+define imports|exports	common	tr	İçe aktarmaları | dışa aktarmaları tanımla
 delete files after import	importexport	tr	İçe aktardıktan sonra dosyaları silme
 deleted	importexport	tr	Silindi.
 export	importexport	tr	İhraç Et
+extra charsets for import / export	importexport	tr	İçe Aktarma | Dışa Aktarma için ek karakter kümeleri
 import	importexport	tr	İthalat
+importexport	common	tr	İçe Aktarma | Dışa Aktarma
+importexport wizard finished successfully!	importexport	tr	İçe Aktarma | Dışa Aktarma sihirbazı başarıyla tamamlandı!
 next run	importexport	tr	Sıradaki çalıştırma
+schedule import / export	common	tr	İçe Aktarma | Dışa Aktarma'yı zamanla
 translation	importexport	tr	Tercüme

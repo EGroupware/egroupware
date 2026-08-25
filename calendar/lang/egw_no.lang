@@ -37,9 +37,9 @@ after %1	calendar	no	Etter %1
 after current date	calendar	no	Etter inneværende dato
 age:	calendar	no	Alder:
 alarm	calendar	no	Alarm
-alarm added	calendar	no	Alarm lagt til
+alarm added	calendar	no	Alarm lagt til.
 alarm added automatic to new events before event start-time	calendar	no	Alarm legges automatisk til nye hendelser før starttidspunktet for hendelsen.
-alarm deleted	calendar	no	Alarm slettet
+alarm deleted	calendar	no	Alarm slettet.
 alarm for %1 at %2 in %3	calendar	no	Alarm for %1 ved %2 i %3
 alarm management	calendar	no	Alarm Styring
 alarms	calendar	no	Alarmer
@@ -106,6 +106,10 @@ days	calendar	no	Dager
 days of the week for a weekly repeated event	calendar	no	Ukedag for ukentlig repeterende hendelser
 days repeated	calendar	no	Dager gjentatt
 dayview	calendar	no	Dagvisning
+default alarm added for yourself or all participants	calendar	no	Alarmen legges automatisk inn for nye avtaler.\nFor deg selv eller for alle deltakere.
+default alarm for	calendar	no	Standardalarm for
+default alarm for regular events	calendar	no	Standardalarm for faste hendelser
+default alarm for whole-day events	calendar	no	Standardalarm for heldagsarrangementer
 default appointment length (in minutes)	calendar	no	Standard avtalelengde (i minutter)
 default calendar filter	calendar	no	Standard kalender filter
 default calendar view	calendar	no	Standard kalender visning
@@ -135,6 +139,7 @@ edit status or alarms for this particular day	calendar	no	Rediger status eller a
 edit this event	calendar	no	Endre hendelse
 edit this series of recurring events	calendar	no	Endre denne serien med repeterende hendelser
 email address migration	calendar	no	Migrering av e-postadresser
+empty = no alarm	calendar	no	tom = ingen alarm
 empty for all	calendar	no	Tøm for alle
 end	calendar	no	Slutt
 end date/time	calendar	no	Slutt Dato/Tid
@@ -311,6 +316,7 @@ resources	calendar	no	Ressurser
 role	calendar	no	Rolle
 rule	calendar	no	Regel
 sat	calendar	no	Lør
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	no	Lagre hendelse som unntak – Slett enkeltforekomst – Rediger status eller alarmer for akkurat denne dagen.
 saves the changes made	calendar	no	Lagre endringene
 saves the event ignoring the conflict	calendar	no	Lagre hendelse uten hensyn til konflikt
 scheduling conflict	calendar	no	Planleggingskonflikt

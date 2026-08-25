@@ -42,9 +42,9 @@ after %1	calendar	es-es	Después de %1
 after current date	calendar	es-es	Después de la fecha actual
 age:	calendar	es-es	Edad:
 alarm	calendar	es-es	Alarma
-alarm added	calendar	es-es	Se ha añadido una alarma
+alarm added	calendar	es-es	Se ha añadido una alarma.
 alarm added automatic to new events before event start-time	calendar	es-es	Alarma añadida automáticamente a nuevos eventos antes del evento inicial
-alarm deleted	calendar	es-es	Se ha borrado una alarma
+alarm deleted	calendar	es-es	Se ha borrado una alarma.
 alarm for %1 at %2 in %3	calendar	es-es	Alarma para %1 en %2 en %3
 alarm management	calendar	es-es	Gestión de alarmas
 alarms	calendar	es-es	Alarmas
@@ -280,6 +280,7 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 freetime	calendar	es-es	Tiempo libre
 freetime search	calendar	es-es	Buscar en el tiempo libre
 fri	calendar	es-es	Vie
+from file	calendar	es-es	De archivo
 full description	calendar	es-es	Descripción completa
 full edit dialog	calendar	es-es	Diálogo de edición completa
 fullname of person to notify	calendar	es-es	Nombre completo de la persona a la que notificar

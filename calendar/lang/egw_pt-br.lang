@@ -143,6 +143,8 @@ days	calendar	pt-br	Dias
 days of the week for a weekly repeated event	calendar	pt-br	Dias da semana para um evento semanal recorrrente
 days repeated	calendar	pt-br	Dias repetidos
 dayview	calendar	pt-br	Visão diária
+default alarm added for yourself or all participants	calendar	pt-br	O alarme é inserido automaticamente para novos compromissos.\nPara você ou para todos os participantes.
+default alarm for	calendar	pt-br	Alarme padrão para
 default alarm for regular events	calendar	pt-br	Alarme padrão para eventos regulares
 default alarm for whole-day events	calendar	pt-br	Alarme padrão para eventos de todo o dia
 default appointment length (in minutes)	calendar	pt-br	Duração padrão do compromisso (em minutos)
@@ -177,9 +179,11 @@ duration	calendar	pt-br	Duração
 duration of the meeting	calendar	pt-br	Duração do evento
 edit exception	calendar	pt-br	Editar exceção
 edit series	calendar	pt-br	Editar séries
+edit status or alarms for this particular day	calendar	pt-br	Editar status ou alarmes para este dia específico
 edit this event	calendar	pt-br	Editar este evento
 edit this series of recurring events	calendar	pt-br	Editar esta série de eventos recorrentes
 email address migration	calendar	pt-br	Migração de endereço de e-mail
+empty = no alarm	calendar	pt-br	vazio = sem alarme
 empty for all	calendar	pt-br	Vazio para todos
 end	calendar	pt-br	Fim
 end date/time	calendar	pt-br	Data/Hora do término
@@ -187,7 +191,7 @@ enddate	calendar	pt-br	Data Final
 enddate / -time of the meeting, eg. for more then one day	calendar	pt-br	Data/hora de término da reunião, por exemplo, por mais de um dia
 enddate of the export	calendar	pt-br	Data Final da exportação
 ends	calendar	pt-br	Termina
-error adding the alarm	calendar	pt-br	Erro adicionando o alarme
+error adding the alarm	calendar	pt-br	Erro adicionando o alarme.
 error notifying %1	calendar	pt-br	Erro ao notificar %1
 error saving the event!	calendar	pt-br	Erro salvando o evento!
 error: can't delete original series!	calendar	pt-br	Erro: Não é possível excluir série original!
@@ -243,6 +247,7 @@ freebusy	common	pt-br	Free / Busy
 freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	pt-br	Disponibilidade: Usuário '%1' desconhecido, senha incorreta ou não disponível para os usuários acessando o sistema.
 freetime search	calendar	pt-br	Procurar disponibilidade
 fri	calendar	pt-br	Sex
+from file	calendar	pt-br	Do arquivo
 full description	calendar	pt-br	Descrição  Completa
 full edit dialog	calendar	pt-br	Diálogo de edição completo
 fullname of person to notify	calendar	pt-br	Nome completo da pessoa a ser notificada
@@ -260,7 +265,7 @@ group(s) or user(s) whose calendars to show (if acl exists)	calendar	pt-br	Grupo
 groupmember(s) %1 not included, because you have no access.	calendar	pt-br	Membro(s) %1 não incluído(s), pois você não tem acesso.
 groups: other users can always be invited, only groups require an invite grant	admin	pt-br	Grupos: outros usuários sempre podem ser convidados, mas somente os grupos exigem uma concessão de convite.
 h	calendar	pt-br	h
-here is your requested alarm.	calendar	pt-br	Aqui está o alarme solicitado
+here is your requested alarm.	calendar	pt-br	Aqui está o alarme solicitado.
 hide private events	calendar	pt-br	Ocultar eventos privados
 hide private infos	calendar	pt-br	Ocultar informações privadas
 high priority	calendar	pt-br	Alta prioridade
@@ -296,6 +301,7 @@ ignore conflict	calendar	pt-br	Ignorar conflito
 import	calendar	pt-br	Importar
 import csv-file	common	pt-br	Importar arquivo-CSV
 imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	pt-br	Importa eventos em sua Agenda de um arquivo CSV. Entretanto na Aba de opções você pode escolher outros separadores.
+imports events into your calendar from an ical file.	calendar	pt-br	Importa eventos de um arquivo iCal para o seu calendário.
 initially year aligned	calendar	pt-br	Inicialmente ano alinhado
 insert	calendar	pt-br	Inserir
 insert in document	calendar	pt-br	Inserir em documento
@@ -439,6 +445,7 @@ resources	calendar	pt-br	Recursos
 role	calendar	pt-br	Função
 rule	calendar	pt-br	Regra
 sat	calendar	pt-br	Sáb
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	pt-br	Salvar evento como exceção - Excluir ocorrência única - Editar status ou alarmes para este dia específico.
 saves the changes made	calendar	pt-br	Salvar as alterações feitas
 saves the event ignoring the conflict	calendar	pt-br	Salvar o evento ignorando o conflito
 scheduling conflict	calendar	pt-br	Conflito de agendamento
@@ -517,6 +524,7 @@ til	calendar	pt-br	até
 timeframe	calendar	pt-br	Período
 timeframe to search	calendar	pt-br	Período a pesquisar
 timezone	calendar	pt-br	Zona de horário
+timezone of event ical file import/export	calendar	pt-br	Fuso horário do arquivo iCal de eventos: importação | exportação
 title of the event	calendar	pt-br	Título do evento
 to many might exceed your execution-time-limit	calendar	pt-br	Muitos podem exceder seu tempo limite de execução
 toggle weekend	calendar	pt-br	Alternar fim de semana

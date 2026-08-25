@@ -42,9 +42,9 @@ after %1	calendar	de	Nach dem %1
 after current date	calendar	de	Nach dem aktuellen Datum
 age:	calendar	de	Alter:
 alarm	calendar	de	Alarm
-alarm added	calendar	de	Alarm hinzugefügt
+alarm added	calendar	de	Alarm hinzugefügt.
 alarm added automatic to new events before event start-time	calendar	de	Der Alarm wird automatisch bei neuen Termin vor dem Startdatum eingefügt
-alarm deleted	calendar	de	Alarm gelöscht
+alarm deleted	calendar	de	Alarm gelöscht.
 alarm for %1 at %2 in %3	calendar	de	Alarm für %1 am %2 in %3
 alarm management	calendar	de	Alarm Management
 alarms	calendar	de	Alarme

@@ -21,6 +21,7 @@ condition	importexport	zh	条件
 copied	importexport	zh	已复制
 created	importexport	zh	创建
 database values	importexport	zh	数据库值
+define imports|exports	common	zh	定义导入 | 导出
 delete all selected definitions	importexport	zh	删除所有选择的定义
 delete files after import	importexport	zh	导入后删除文件
 deleted	importexport	zh	已删除
@@ -29,6 +30,7 @@ expert options	importexport	zh	高级选项
 export	importexport	zh	导出
 export all selected definitions	importexport	zh	导出所有选择的定义
 exported	importexport	zh	已导出
+extra charsets for import / export	importexport	zh	“导入 | 导出”的额外字符集
 false	importexport	zh	错误的
 finish	importexport	zh	完成
 general	preferences	zh	通用
@@ -45,6 +47,7 @@ preview	importexport	zh	预览
 previous	importexport	zh	上一个
 save as definition	importexport	zh	保存为默认
 schedule	common	zh	计划任务
+schedule import / export	common	zh	安排导入 | 导出
 select definition	importexport	zh	选择定义
 select plugin	importexport	zh	选择插件
 some nice text	importexport	zh	一些不错的文本

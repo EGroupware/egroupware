@@ -1,3 +1,4 @@
+%1 copied - the copy can now be edited	common	tr	%1 kopyalandı - kopya artık düzenlenebilir.
 %1 email(s) added into %2	common	tr	%1 e-posta(lar) %2'ye eklendi
 %1 more %2 selected ...	common	tr	%1 e-posta(lar) %2'ye eklendi ...
 '%1' copied to clipboard	common	tr	'%1' panoya kopyalandı
@@ -45,6 +46,7 @@ administration	common	tr	Yönetim
 advanced search	common	tr	Gelişmiş arama
 all addressbooks	groupdav	tr	Tüm adres defterleri
 all categories	common	tr	Tüm kategoriler
+all fields	common	tr	Tüm alanlar
 all files	common	tr	Tüm dosyalar
 all in one	groupdav	tr	Hepsi bir arada
 allow editing the %1	common	tr	%1'in düzenlenmesine izin ver
@@ -101,6 +103,7 @@ date+time	common	tr	Tarih+Saat
 delete category	common	tr	Kategori sil
 description	common	tr	Açýklama
 directory for storing merged documents	preferences	tr	Birleştirilmiş belgeleri saklamak için klasör
+directory successfully created.	common	tr	Dizin başarıyla oluşturuldu.
 disabled	common	tr	Engellendi
 documents	common	tr	Belgeler
 domestic	common	tr	Ev
@@ -121,6 +124,8 @@ emails	common	tr	E-postalar
 enabled	common	tr	Etkin
 enter the location of egroupware's url.<br>example: http://www.domain.com/egroupware &nbsp; or &nbsp; /egroupware<br><b>no trailing slash</b>	admin	tr	EGroupware URL'sini giriniz.\nÖrnek: https://egw.domain.com/egroupware yada /egroupware\n<b>Sonda bölü iþareti kullanmayýnýz.</b>
 enter your passphrase	common	tr	Parolanızı girin
+error copying uploaded file to vfs!	common	tr	Yüklenen dosya VFS'ye kopyalanırken hata oluştu!
+error while creating directory.	common	tr	Dizin oluşturulurken hata oluştu.
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	tr	Örnek {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - "n_prefix" alanında "Mr" için arama yapın, bulunursa Merhaba Mr. yazın, aksi takdirde Merhaba Ms. yazın.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	tr	Örnek {{LETTERPREFIX}} - Örneğin başlık boşsa, çift boşluk olmadan bir harf öneki verir
@@ -128,8 +133,10 @@ example {{nelf role}} - if field role is not empty, you will get a new line with
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	tr	Örnek {{nenvlf role}} - alan rolü boş değilse, alanın herhangi bir değeri olmadan bir LF ayarlayın
 fax number	common	tr	Fax No
 file a file	common	tr	Bir dosya saklayın
+file information	common	tr	Dosya bilgileri
 fileupload	common	tr	Dosya yükleme
 filter	common	tr	Filtre
+for group	common	tr	Grup için
 force selectbox	common	tr	Seçimn kurusunu mecburi tut
 formatted business address	common	tr	Biçimlendirilmiş iş adresi
 formatted private address	common	tr	Biçimlendirilmiş özel adres
@@ -145,6 +152,7 @@ group name	common	tr	Grup Ýsmi
 highest	common	tr	En yüksek
 history	common	tr	Tarih
 history log	common	tr	Sürüm geçmişi
+hold [%1] key to select text eg. to copy it	common	tr	Metni seçmek için [%1] tuşunu basılı tutun (örn. kopyalamak için)
 home email	common	tr	Ev E-mail
 how many days to sync in the future (default %1)	groupdav	tr	Gelecekte kaç gün senkronize edilecek (varsayılan %1)
 how many days to sync in the past (default %1)	groupdav	tr	Geçmişte kaç gün senkronize edilecek (varsayılan %1)
@@ -163,6 +171,7 @@ invalid 2-factor authentication code	common	tr	Geçersiz 2 Faktörlü Kimlik Do�
 invalid email	common	tr	Geçersiz e-posta
 invalid or expired 'remember me' token	common	tr	Geçersiz veya süresi dolmuş 'beni hatırla' belirteci
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	tr	Açık anahtarınızı Adres Defteri'nde saklamanız önerilir, böylece diğer kullanıcılar size şifreli postalar yazabilir.
+just for me	common	tr	Sadece benim için
 license	common	tr	Lisans
 light mode	common	tr	Işık modu
 link to each entry	common	tr	Her girişe bağlantı
@@ -201,6 +210,7 @@ open the online help.	common	tr	Çevrimiçi yardımı açın
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	tr	OpenIDConnect girişi başarılı, ancak '%1' kullanıcısı EGroupware'de mevcut DEĞİL VE otomatik kullanıcı oluşturma devre dışı!
 or	common	tr	ya da
 original	common	tr	Orjinal
+overwrite	common	tr	Üzerine yaz
 ownership	common	tr	Sahiplik
 parcel	common	tr	Parsel
 permission denied!	common	tr	İzin reddedildi!
@@ -227,8 +237,10 @@ preference	common	tr	Tercih
 preferences	common	tr	Tercihler
 primary group	common	tr	Ana grup
 print orientation	common	tr	Oryantasyon
+processing the file	common	tr	Dosya işleniyor
 project	common	tr	Proje
 read this list of methods.	common	tr	Method listesini oku
+remove	api	tr	Sil
 repeat password	common	tr	Şifreyi tekrarla
 save as pdf	common	tr	PDF olarak kaydet
 save as zip	common	tr	ZIP olarak kaydet
@@ -259,6 +271,7 @@ you have not entered a title	common	tr	Bir baþlýk girmediniz.
 you have not entered a valid date	common	tr	Geçerli bir tarih girmediniz.
 you have not entered a valid time of day	common	tr	Geçerli bir gün saati girmediniz.
 you have not entered participants	common	tr	Katýlýmcýlarý girmediniz.
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	tr	www.mailvelope.com adresinden veya yükle düğmesine tıklayarak Chrome ve Firefox için mevcut olan Mailvelope eklentisini yüklemeniz gerekir.
 your account has been updated with new data from your identity provider.	common	tr	Hesabınız, kimlik sağlayıcınızdan gelen yeni verilerle güncellendi.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	tr	Tarayıcınız güncel değil (JavaScript ES6 uyumlu), bazı özelliklerin çalışmadığını görebilirsiniz.
 your key has been restored successfully.	common	tr	Anahtarınız başarıyla geri yüklendi.

@@ -834,7 +834,6 @@ view this linked entry in its application	common	fa	دیدن این پیوند �
 wednesday	common	fa	چهارشنبه
 weekend	common	fa	آخر هفته
 welcome	common	fa	خوش آمدید
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fa	چه اتفاقی برای محتوای سرریز می افتد: قابل دیدن(پیش فرض)، مخفی، مروری، خودکار(مرورگر تصمیم میگیرد)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fa	وقتی بگوئید «بله» نمایه های «خانه» و «خروج» در نوار ناوبری نمایش داده خواهند شد.
 which groups	common	fa	کدام گروهها
 widget copied into clipboard	common	fa	موجودیت به تخته یادآوری رونوشت شد

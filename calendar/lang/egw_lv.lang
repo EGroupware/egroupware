@@ -33,7 +33,9 @@ after	calendar	lv	Pēc
 after %1	calendar	lv	Pēc %1
 age:	calendar	lv	Vecums:
 alarm	calendar	lv	Trauksme
+alarm added	calendar	lv	Atgādinājums pievienots.
 alarm added automatic to new events before event start-time	calendar	lv	Trauksmes signāls automātiski pievienots jauniem notikumiem pirms notikuma sākuma laika
+alarm deleted	calendar	lv	Atgādinājums dzēsts.
 alarm for %1 at %2 in %3	calendar	lv	Trauksme %1 pie %2 %3
 alarm management	calendar	lv	Trauksmes vadība
 alarms	calendar	lv	Trauksmes
@@ -56,6 +58,7 @@ calendar event	calendar	lv	Kalendārs- notikums
 calendar preferences	calendar	lv	Kalendāra izvēles
 calendar settings	admin	lv	Kalendāra uzstādījumi
 calendar-fieldname	calendar	lv	Kalendāra lauka nosaukums
+can't add alarms in the past !!!	calendar	lv	Nevar pievienot atgādinājumus par pagātnes notikumiem!
 canceled	calendar	lv	Atcelts
 category report	calendar	lv	Kategorija Pārskats
 changed event-data applied	calendar	lv	Izmainīti notikuma datu lietojumi
@@ -78,6 +81,10 @@ day	calendar	lv	Diena
 days	calendar	lv	Dienas
 days repeated	calendar	lv	Atkārtotas dienas
 dayview	calendar	lv	Dienas skats
+default alarm added for yourself or all participants	calendar	lv	Jauniem notikumiem atgādinājums tiek pievienots automātiski.\nSev vai visiem dalībniekiem.
+default alarm for	calendar	lv	Noklusējuma atgādinājums
+default alarm for regular events	calendar	lv	Noklusējuma atgādinājums regulāriem notikumiem
+default alarm for whole-day events	calendar	lv	Noklusējuma atgādinājums visas dienas notikumiem
 default calendar filter	calendar	lv	Noklusētais kalendāra filtrs
 default calendar view	calendar	lv	Noklusētais kalendāra skats
 delete series	calendar	lv	Dzēš sērijas
@@ -89,11 +96,14 @@ does not show event to other users, unless they have a private grant	calendar	lv
 download	calendar	lv	Lejupielādēt
 duration	calendar	lv	Izpildes laiks
 edit series	calendar	lv	Rediģēt sērijas
+edit status or alarms for this particular day	calendar	lv	Rediģējiet statusu vai atgādinājumus šai konkrētajai dienai
 email address migration	calendar	lv	E-pasta adrešu migrācija
+empty = no alarm	calendar	lv	tukšs = nav atgādinājuma
 empty for all	calendar	lv	Iztukšot visiem
 end date/time	calendar	lv	Beigu datums/laiks
 enddate	calendar	lv	Beigu datums
 ends	calendar	lv	Beidzas
+error adding the alarm	calendar	lv	Kļūda, pievienojot atgādinājumu
 error notifying %1	calendar	lv	Kļūda, paziņojot %1
 every user can invite other users and groups	admin	lv	Katrs lietotājs var uzaicināt citus lietotājus un grupas
 exception created - you can now edit or delete it	calendar	lv	Izņēmums izveidots - tagad to var rediģēt vai dzēst.
@@ -118,6 +128,7 @@ given url is not a caldav server: missing %1!	calendar	lv	Dotais URL nav CalDAV 
 global categories	calendar	lv	VIspārējas kategorijas
 group planner	calendar	lv	Grupu plānotājs
 h	calendar	lv	h
+here is your requested alarm.	calendar	lv	Jūsu pieprasītais atgādinājums.
 high priority	calendar	lv	Augsta prioritāte
 history	calendar	lv	Vēsture
 holiday	calendar	lv	Brīvdiena
@@ -223,10 +234,12 @@ resources	calendar	lv	Resursi
 role	calendar	lv	Loma
 rule	calendar	lv	Kārtula
 sat	calendar	lv	Sestdiena
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	lv	Saglabāt notikumu kā izņēmumu — Dzēst atsevišķu notikumu — Rediģēt statusu vai atgādinājumus šai konkrētajai dienai.
 saves the event ignoring the conflict	calendar	lv	Saglabājiet notikumu, ignorējot konfliktu
 scheduling conflict	calendar	lv	Pretrunas plānošana
 select resources	calendar	lv	Iezīmē resursus
 select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	lv	Izvēlieties, vai vēlaties, lai resursa statuss tiktu atiestatīts uz “Nav atbildes”, ja notikums tiek pārvietots vēlāk.
+select who should get the alarm	calendar	lv	Izvēlieties, kam jāsaņem atgādinājums
 send notifications	calendar	lv	Nosūtīt paziņojumus
 send notifications to users right now	calendar	lv	Nosūtīt paziņojumus dalībniekiem tieši tagad
 show %1 from %2	calendar	lv	Rādīt %1 no %2
@@ -261,6 +274,7 @@ this group that is preselected when you enter the planner. you can change it in 
 this is a single recurrence of a recurring event.	calendar	lv	Šis ir atkārtojoša pasākuma atsevišķs atkārtojums.
 this message is sent for canceled or deleted events.	calendar	lv	Šī vēstule tika nosūtīta uz atceltajiem vai izdzēstiem notikumiem.
 this message is sent for modified or moved events.	calendar	lv	Šī vēstule tika nosūtīta  uz pārveidotajiem vai pārvietotajiem notikumiem.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	lv	Šis ziņojums tiek nosūtīts, kad iestatāt atgādinājumu konkrētam notikumam. Iekļaujiet visu informāciju, kas varētu būt nepieciešama.
 this module displays the current month	calendar	lv	Šis modulis parāda patreizējo mēnesi
 thu	calendar	lv	Ceturtdiena
 title of the event	calendar	lv	Notikuma virsraksts

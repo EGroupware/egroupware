@@ -22,9 +22,9 @@ after %1	calendar	et	Pärast %1
 after current date	calendar	et	Pärast käesolevat kuupäeva
 age:	calendar	et	Vanus:
 alarm	calendar	et	Alarm
-alarm added	calendar	et	Alarm lisatud
+alarm added	calendar	et	Alarm lisatud.
 alarm added automatic to new events before event start-time	calendar	et	Alarm lisatakse automaatselt uutele üritustele enne ürituse algusaega
-alarm deleted	calendar	et	Alarm kustutatud
+alarm deleted	calendar	et	Alarm kustutatud.
 alarm for %1 at %2 in %3	calendar	et	Häire %1 jaoks aadressil %2 aastal %3
 alarm management	calendar	et	Alarmide manageerimine
 alarms	calendar	et	Alarmid
@@ -84,6 +84,10 @@ days	calendar	et	päeva
 days of the week for a weekly repeated event	calendar	et	Päevad nädalas haaratud nädala sündmuste repordis
 days repeated	calendar	et	Päevi korratakse
 dayview	calendar	et	Päevavaade
+default alarm added for yourself or all participants	calendar	et	Uute kohtumiste puhul lisatakse teade automaatselt.\nEndale või kõigile osalejatele.
+default alarm for	calendar	et	Vaikimisi teade
+default alarm for regular events	calendar	et	Vaikimisi teade korduvate sündmuste puhul
+default alarm for whole-day events	calendar	et	Vaikimisi teade kogu päeva kestvate sündmuste puhul
 default calendar filter	calendar	et	Vaikimisi kalendri filter
 default calendar view	calendar	et	Vaikimisi kalendri vaade
 default week view	calendar	et	Vaikimisi nädala vaade
@@ -104,8 +108,10 @@ download this event as ical	calendar	et	Lae alla see sündmus kui iCal
 duration	calendar	et	Kestvus
 edit exception	calendar	et	Muuda erandit
 edit series	calendar	et	Muuda seerijat
+edit status or alarms for this particular day	calendar	et	Muuda selle konkreetse päeva staatust või teateid
 edit this event	calendar	et	Muuda seda sündmust
 email address migration	calendar	et	E-posti aadressi migratsioon
+empty = no alarm	calendar	et	tühi = teadet pole
 empty for all	calendar	et	Tühi kõigijaoks
 end	calendar	et	Lõpp
 end date/time	calendar	et	Lõpu Kuupäev/Aeg
@@ -137,6 +143,7 @@ forward one month	calendar	et	Lükka edasi üks kuu
 four days view	calendar	et	Nelja päeva vaade
 freetime search	calendar	et	Vaba aja otsing
 fri	calendar	et	Ree
+from file	calendar	et	Failist
 full description	calendar	et	Täielik kirjeldus
 fullname of person to notify	calendar	et	Täisnimi persoonist kellele teatatakse
 given url is not a caldav server: missing %1!	calendar	et	Antud URL ei ole CalDAV server: puudub %1!
@@ -165,6 +172,7 @@ ical import	calendar	et	iCal Import
 ical successful imported	calendar	et	iCal täielikult imporditud
 ignore conflict	calendar	et	Ignoreeri conflikti
 import	calendar	et	Import
+imports events into your calendar from an ical file.	calendar	et	Impordib sündmused iCal-failist sinu kalendrisse.
 interval	calendar	et	Interval
 invalid email-address "%1" for user %2	calendar	et	Vigane e-mail "%1" kasutajale %2
 last	calendar	et	Viimane
@@ -198,6 +206,7 @@ no filter	calendar	et	Filtrita
 no matches found	calendar	et	Sobivaid ei leitud
 no response	calendar	et	Pole vastust
 non blocking	calendar	et	Mitte blokeerida
+notification messages for your alarms	calendar	et	Teated sinu äratuste kohta
 notify	calendar	et	Teavita
 notify all externals (non-users) about this event	calendar	et	Teavitage kõiki väliseid (mittekasutajad) sellest sündmusest.
 number of resources to be booked	calendar	et	Broneeritavate ressursside arv
@@ -236,6 +245,7 @@ reset resource status on event shifts	calendar	et	Ressursi staatuse lähtestamin
 resources	calendar	et	Resursid
 rule	calendar	et	Reegel
 sat	calendar	et	Lau
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	et	Salvesta sündmus erandina – Kustuta üksik kord – Muuda selle konkreetse päeva staatust või äratusi.
 saves the event ignoring the conflict	calendar	et	Salvestab sündmuse ignoreerib konflikti
 select a time	calendar	et	Vali aeg
 select resources	calendar	et	Vali resursid
@@ -277,10 +287,12 @@ the organizer changed the event!	calendar	et	Korraldaja muutis üritust!
 the sender "%1" is not the extern organizer "%2", proceed with caution!	calendar	et	Saatja "%1" EI ole väline korraldaja "%2", tegutsege ettevaatlikult!
 the sender "%1" is not the participant replying "%2", proceed with caution!	calendar	et	Saatja "%1" EI ole osaleja, kes vastab "%2", olge ettevaatlik!
 this is a single recurrence of a recurring event.	calendar	et	See on korduva ürituse üks kordus.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	et	See sõnum saadetakse, kui seadistad teatud sündmusele äratuse. Lisa kogu vajalik teave.
 three month	calendar	et	Kolm kuud
 thu	calendar	et	Nel
 timeframe	calendar	et	Ajavahemik
 timeframe to search	calendar	et	Ajavahemik otsingus
+timezone of event ical file import/export	calendar	et	Sündmuse ajavöönd iCal-faili import | eksport
 title of the event	calendar	et	Sündmuse pealkiri
 toggle weekend	calendar	et	Vahetage nädalavahetus
 tomorrow	calendar	et	Homme

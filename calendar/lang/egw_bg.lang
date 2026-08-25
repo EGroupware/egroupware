@@ -41,13 +41,13 @@ after	calendar	bg	След
 after %1	calendar	bg	След %1
 after current date	calendar	bg	След текущата дата
 age:	calendar	bg	Години:
-alarm	calendar	bg	Аларма / Напомняне
-alarm added	calendar	bg	Напомняне е добавено
+alarm	calendar	bg	Аларма
+alarm added	calendar	bg	Напомняне е добавено.
 alarm added automatic to new events before event start-time	calendar	bg	Напомнянето е добавена автоматично към нови събития, преди началото на събитието
-alarm deleted	calendar	bg	Напомнянето  е изтрита
+alarm deleted	calendar	bg	Напомнянето  е изтрита.
 alarm for %1 at %2 in %3	calendar	bg	Напомняне за %1 - %2 в %3
 alarm management	calendar	bg	Редактиране на напомнянията
-alarms	calendar	bg	Аларми  / Напомняния
+alarms	calendar	bg	Аларми
 all day	calendar	bg	Целия ден
 all events	calendar	bg	Всички събития
 all exceptions are converted into single events.	calendar	bg	Всички изключения са преобразувани в единични събития.
@@ -221,7 +221,7 @@ enddate	calendar	bg	Крайна дата
 enddate / -time of the meeting, eg. for more then one day	calendar	bg	Крайна дата / -час на срещата, напр. за продължителност повече от един ден
 enddate of the export	calendar	bg	Крайна дата за експорта
 ends	calendar	bg	Приключва
-error adding the alarm	calendar	bg	Грешка при добавяне на аларма
+error adding the alarm	calendar	bg	Грешка при добавяне на аларма.
 error notifying %1	calendar	bg	Грешка при уведомяването за %1
 error saving the event!	calendar	bg	Грешка при запазването на събитието!
 error: can't delete original series!	calendar	bg	Грешка: Не може да се изтрие оригинална серия!
@@ -279,6 +279,7 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 freetime	calendar	bg	Свободно време
 freetime search	calendar	bg	Търсене на свободно време
 fri	calendar	bg	Пт
+from file	calendar	bg	От файл
 full description	calendar	bg	Подробно описание
 full edit dialog	calendar	bg	Пълен диалог за редактиране
 fullname of person to notify	calendar	bg	Пълно име на лицето за известяване

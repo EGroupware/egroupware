@@ -4,6 +4,7 @@ addressbook csv import	importexport	hu	Címjegyzék CSV importálása
 addressbook vcard import	importexport	hu	Címjegyzék vCard importálása
 admin disabled exporting	importexport	hu	Az admin letiltotta az exportálást.
 all users	importexport	hu	Összes felhasználó
+automatically created by importexport	importexport	hu	Az Import | Export funkció által automatikusan létrehozva
 change allowed users	importexport	hu	Engedélyezett felhasználók módosítása
 change owner when updating	importexport	hu	Tulajdonos módosítása frissítéskor
 changed	importexport	hu	Változott
@@ -16,17 +17,22 @@ condition	importexport	hu	feltétel
 copied	importexport	hu	másolva
 created	importexport	hu	Létrehozva
 database values	importexport	hu	Adatbázis értékek
+define imports|exports	common	hu	Importok | exportok meghatározása
 delete files after import	importexport	hu	Fájlok törlése importálás után
 deleted	importexport	hu	törölve
 export	importexport	hu	exportál
 exported	importexport	hu	exportálva
+extra charsets for import / export	importexport	hu	Az Import | Export funkció által automatikusan létrehozva
 finish	importexport	hu	befejez
 general	preferences	hu	Általános
 general fields:	preferences	hu	Általános mezők:
 import	importexport	hu	Import
+importexport	common	hu	Import | Export
+importexport wizard finished successfully!	importexport	hu	Az Import | Export varázsló sikeresen befejeződött!
 load sample file	importexport	hu	Minta fájl betöltése
 next run	importexport	hu	Következő futtatás
 preview	importexport	hu	Előnézet
 previous	importexport	hu	előző
+schedule import / export	common	hu	Import | Export ütemezése
 translation	importexport	hu	Fordítás
 use default	importexport	hu	Használja az alapértelmezettet

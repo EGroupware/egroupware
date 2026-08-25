@@ -33,8 +33,9 @@ added recurrence on %1.	calendar	pt	Recorrência adicionada em %1.
 additional participants	calendar	pt	Participantes adicionais
 after current date	calendar	pt	Após data actual
 alarm	calendar	pt	Aviso
-alarm added	calendar	pt	Aviso adicionado
-alarm deleted	calendar	pt	Aviso eliminado
+alarm added	calendar	pt	Aviso adicionado.
+alarm added automatic to new events before event start-time	calendar	pt	Alarme adicionado automaticamente a novos eventos antes da hora de início do evento
+alarm deleted	calendar	pt	Aviso eliminado.
 alarm for %1 at %2 in %3	calendar	pt	Aviso para %1 às %2 em %3
 alarm management	calendar	pt	Gestor de avisos
 alarms	calendar	pt	Avisos
@@ -98,6 +99,10 @@ days	calendar	pt	Dias
 days of the week for a weekly repeated event	calendar	pt	Dias da semana para um evento repetido semanalmente
 days repeated	calendar	pt	Dias repetidos
 dayview	calendar	pt	Visualização diária
+default alarm added for yourself or all participants	calendar	pt	O alarme é inserido automaticamente para novos compromissos.\nPara si ou para todos os participantes.
+default alarm for	calendar	pt	Alarme predefinido para
+default alarm for regular events	calendar	pt	Alarme predefinido para eventos regulares
+default alarm for whole-day events	calendar	pt	Alarme predefinido para eventos que duram o dia inteiro
 default appointment length (in minutes)	calendar	pt	Duração do compromisso por omissão (em minutos)
 default calendar filter	calendar	pt	Filtro do calendário por omissão
 default calendar view	calendar	pt	Visualização do calendário por omissão
@@ -130,6 +135,7 @@ edit status or alarms for this particular day	calendar	pt	Editar o estado ou os 
 edit this event	calendar	pt	Editar este evento
 edit this series of recurring events	calendar	pt	Editar este conjunto de eventos recorrentes
 email address migration	calendar	pt	Migração de endereços de correio eletrónico
+empty = no alarm	calendar	pt	vazio = sem alarme
 empty for all	calendar	pt	Vazio para todos
 end	calendar	pt	Fim
 end date/time	calendar	pt	Data/Hora de conclusão
@@ -137,7 +143,7 @@ enddate	calendar	pt	Data de conclusão
 enddate / -time of the meeting, eg. for more then one day	calendar	pt	Data/hora de fim da reunião, ex: para mais do que um dia
 enddate of the export	calendar	pt	Data para o fim da exportação
 ends	calendar	pt	Termina
-error adding the alarm	calendar	pt	Erro ao adicionar aviso
+error adding the alarm	calendar	pt	Erro ao adicionar aviso.
 error notifying %1	calendar	pt	Erro ao notificar %1
 error: importing the ical	calendar	pt	Erro ao importar o iCal
 error: no participants selected !!!	calendar	pt	Erro: nenhum participante seleccionado!
@@ -332,6 +338,7 @@ resources	calendar	pt	Fontes
 role	calendar	pt	Papel
 rule	calendar	pt	Regra
 sat	calendar	pt	Sab
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	pt	Guardar evento como exceção - Eliminar ocorrência única - Editar o estado ou os alarmes para este dia específico.
 saves the changes made	calendar	pt	Guarda as alterações
 saves the event ignoring the conflict	calendar	pt	Guarda o evento ignorando o conflito
 scheduling conflict	calendar	pt	Conflito de agendamento

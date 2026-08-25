@@ -5,6 +5,7 @@ addressbook vcard import	importexport	id	Impor vCard buku alamat
 admin disabled exporting	importexport	id	Admin menonaktifkan ekspor.
 all users	importexport	id	Semua pengguna
 allowed users	importexport	id	Pengguna yang dibolehkan
+automatically created by importexport	importexport	id	Dibuat secara otomatis oleh Impor | Ekspor
 change allowed users	importexport	id	Mengubah pengguna yang diizinkan
 change owner when updating	importexport	id	Mengubah pemilik saat memperbarui
 changed	importexport	id	Diubah
@@ -23,6 +24,7 @@ edit conditions	importexport	id	Edit conditions
 expert options	importexport	id	Expert options
 export	importexport	id	Ekspor
 exported	importexport	id	diekspor
+extra charsets for import / export	importexport	id	Kumpulan karakter tambahan untuk Impor | Ekspor
 false	importexport	id	false
 fieldseperator	importexport	id	Pemisah field
 finish	importexport	id	selesai
@@ -31,6 +33,7 @@ general fields:	preferences	id	Field Umum:
 import	importexport	id	Impor
 import definitions	common	id	Impor definisi
 importexport	common	id	ImporEkspor
+importexport wizard finished successfully!	importexport	id	Wizard Impor | Ekspor telah selesai dengan sukses!
 load sample file	importexport	id	Muatkan berkas contoh
 manage mapping	importexport	id	Pengelolaan pemetaan
 next	importexport	id	berikutnya

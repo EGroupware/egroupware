@@ -86,6 +86,7 @@ import definitions	common	bg	Определения за Импорт
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	bg	Определения за Импорт. Внимание: Съществуващите определения с еднакви имена ще бъдат презаписани!
 imported	importexport	bg	импортиран
 importexport	common	bg	Импорт | Експорт (Внос / Износ)
+importexport wizard finished successfully!	importexport	bg	Майсторът за импорт | експорт приключи успешно!
 imports information from a csv file.  this is only a base class, and doesn't do anything on its own.	importexport	bg	Импортира информация от CSV файл. Това е само базов клас и не прави нищо самостоятелно.
 include header	importexport	bg	Включете хедър-а (заглавката)
 just me	importexport	bg	Само мен

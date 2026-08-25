@@ -30,9 +30,9 @@ after %1	calendar	zh	在%1以后
 after current date	calendar	zh	在当前日期之后
 age:	calendar	zh	年龄：
 alarm	calendar	zh	闹铃
-alarm added	calendar	zh	闹铃已增添
+alarm added	calendar	zh	闹铃已增添。
 alarm added automatic to new events before event start-time	calendar	zh	在活动开始时间之前自动为新活动添加警报
-alarm deleted	calendar	zh	闹铃以删除
+alarm deleted	calendar	zh	闹铃以删除。
 alarm for %1 at %2 in %3	calendar	zh	在%3的%1中%2闹铃
 alarm management	calendar	zh	闹铃管理
 alarms	calendar	zh	闹铃
@@ -101,6 +101,10 @@ days	calendar	zh	日
 days of the week for a weekly repeated event	calendar	zh	一个每周重复事件在星期几
 days repeated	calendar	zh	重复日
 dayview	calendar	zh	日视图
+default alarm added for yourself or all participants	calendar	zh	新日程将自动添加提醒。\n适用于您本人或所有参与者。
+default alarm for	calendar	zh	默认提醒设置
+default alarm for regular events	calendar	zh	常规活动的默认提醒
+default alarm for whole-day events	calendar	zh	全天活动的默认提醒
 default appointment length (in minutes)	calendar	zh	默认约会时间长度 (单位：分钟)
 default calendar filter	calendar	zh	默认查看范围
 default calendar view	calendar	zh	默认日历视图
@@ -124,9 +128,11 @@ duration	calendar	zh	期间
 duration of the meeting	calendar	zh	会议期间
 edit exception	calendar	zh	编辑例外
 edit series	calendar	zh	编辑系列
+edit status or alarms for this particular day	calendar	zh	编辑该特定日期的状态或提醒
 edit this event	calendar	zh	编辑这一事件
 edit this series of recurring events	calendar	zh	编辑这个系列循环日历
 email address migration	calendar	zh	电子邮件地址迁移
+empty = no alarm	calendar	zh	空 = 无提醒
 empty for all	calendar	zh	全部清空
 end	calendar	zh	终止
 end date/time	calendar	zh	终止日期/时间
@@ -324,6 +330,7 @@ resources	calendar	zh	资源
 role	calendar	zh	职务
 rule	calendar	zh	规则
 sat	calendar	zh	六
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	zh	将活动保存为例外 - 删除单次活动 - 编辑该特定日期的状态或提醒。
 saves the changes made	calendar	zh	保存所做更改
 saves the event ignoring the conflict	calendar	zh	保存时间并忽略冲突
 scheduling conflict	calendar	zh	时间表重迭

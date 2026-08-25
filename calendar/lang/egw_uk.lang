@@ -26,7 +26,9 @@ after	calendar	uk	Після
 after %1	calendar	uk	Після %1
 age:	calendar	uk	Вік:
 alarm	calendar	uk	Попередження
+alarm added	calendar	uk	Сповіщення додано.
 alarm added automatic to new events before event start-time	calendar	uk	Сигнал додається автоматично до нових подій перед початком події
+alarm deleted	calendar	uk	Сповіщення видалено.
 alarm for %1 at %2 in %3	calendar	uk	Попередження для %1 о %2 в %3
 alarm management	calendar	uk	Керування попередженнями
 alarms	calendar	uk	Попередження
@@ -52,6 +54,7 @@ calendar event	calendar	uk	Календарна подія
 calendar preferences	calendar	uk	Параметри Календарю
 calendar settings	admin	uk	Установки Календарю
 calendar-fieldname	calendar	uk	Календар - Ім'я поля
+can't add alarms in the past !!!	calendar	uk	Неможливо додати сповіщення за минулий період!
 canceled	calendar	uk	Відмінено
 category report	calendar	uk	Звіт по категоріям
 changed event-data applied	calendar	uk	Застосовано змінені дані про подію
@@ -72,6 +75,10 @@ day	calendar	uk	День
 days	calendar	uk	Дні
 days repeated	calendar	uk	Дні повтору
 dayview	calendar	uk	Вигляд Дня
+default alarm added for yourself or all participants	calendar	uk	Сповіщення автоматично додається до нових зустрічей.\nДля вас або для всіх учасників.
+default alarm for	calendar	uk	Сповіщення за замовчуванням для
+default alarm for regular events	calendar	uk	Сповіщення за замовчуванням для регулярних подій
+default alarm for whole-day events	calendar	uk	Сповіщення за замовчуванням для подій, що тривають цілий день
 default appointment length (in minutes)	calendar	uk	Типова тривалість зустрічі (в хвилинах)
 default calendar filter	calendar	uk	Типовий фільтр календарю
 default calendar view	calendar	uk	Типовий вигляд календарю
@@ -87,12 +94,15 @@ does not show event to other users, unless they have a private grant	calendar	uk
 download	calendar	uk	Зкачати
 duration	calendar	uk	Тривалість
 edit series	calendar	uk	Редагувати серію
+edit status or alarms for this particular day	calendar	uk	Редагувати статус або сповіщення для цього конкретного дня
 email address migration	calendar	uk	Перенесення адреси електронної пошти
+empty = no alarm	calendar	uk	порожньо = немає сповіщення
 empty for all	calendar	uk	Порожньо для всіх
 empty target calendar before importing	calendar	uk	Порожній цільовий календар перед імпортом
 end date/time	calendar	uk	Число/Час закінчення
 enddate	calendar	uk	Число закінчення
 ends	calendar	uk	закінчується
+error adding the alarm	calendar	uk	Помилка під час додавання нагадування.
 error notifying %1	calendar	uk	Повідомлення про помилку %1
 event details follow	calendar	uk	Подробиці події
 exceptions	calendar	uk	Виключення
@@ -213,9 +223,11 @@ reset	calendar	uk	Переввести
 reset resource status on event shifts	calendar	uk	Скидати статус ресурсу при переміщенні подій
 rule	calendar	uk	Правило
 sat	calendar	uk	Сб
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	uk	Зберегти подію як виняток — Видалити окремий випадок — Редагувати статус або сповіщення для цього конкретного дня.
 saves the event ignoring the conflict	calendar	uk	Зберігає подію, ігноруючи конфлікт
 scheduling conflict	calendar	uk	Конфлікт розкладу
 select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	uk	Виберіть, чи потрібно скидати статус ресурсу на «Немає відповіді», якщо подію буде переміщено пізніше.
+select who should get the alarm	calendar	uk	Виберіть, хто має отримати нагадування
 send notifications	calendar	uk	Надіслати сповіщення
 send notifications to users right now	calendar	uk	Надіслати сповіщення учасникам прямо зараз
 set new events to private	calendar	uk	Встановлювати нові події як особисті.

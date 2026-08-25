@@ -4,6 +4,7 @@ addressbook csv import	importexport	pt	Importação de CSV do livro de endereço
 addressbook vcard import	importexport	pt	Importação de vCard do livro de endereços
 admin disabled exporting	importexport	pt	O administrador desactivou a exportação.
 all users	importexport	pt	Todos os utilizadores
+automatically created by importexport	importexport	pt	Criado automaticamente pela Importação | Exportação
 change allowed users	importexport	pt	Alterar os utilizadores permitidos
 change owner when updating	importexport	pt	Alterar o proprietário ao atualizar
 changed	importexport	pt	Alterado/a
@@ -14,16 +15,20 @@ choose fields to export	importexport	pt	Selecionar campos para exportar
 condition	importexport	pt	Condição
 created	importexport	pt	Criado
 database values	importexport	pt	Valores da base de dados
+define imports|exports	common	pt	Definir importações | exportações
 delete files after import	importexport	pt	Eliminar ficheiros após a importação
 deleted	importexport	pt	eliminado/a
 execute	importexport	pt	Executar
 export	importexport	pt	Exportar
 export definition to use for nextmatch export	preferences	pt	Definição Exportar para usar para exportação NextMatch
+extra charsets for import / export	importexport	pt	Conjuntos de caracteres adicionais para Importação | Exportação
 false	importexport	pt	Falso
 finish	importexport	pt	fim
 general	preferences	pt	Geral
 general fields:	preferences	pt	Campos gerais:
 import	importexport	pt	Importar
+importexport	common	pt	Importação | Exportação
+importexport wizard finished successfully!	importexport	pt	O assistente de Importação | Exportação foi concluído com sucesso!
 manage mapping	importexport	pt	Gerenciar mapeamento
 next run	importexport	pt	Execução seguinte
 no custom field "%1" for %2.	importexport	pt	No campo personalizado "% 1" para% 2.
@@ -31,6 +36,7 @@ old fixed definition	preferences	pt	Definição fixa Velho
 preview	importexport	pt	Pré-visualização
 previous	importexport	pt	anterior
 schedule	common	pt	Agendar
+schedule import / export	common	pt	Agendar Importação | Exportação
 translation	importexport	pt	Tradução
 true	importexport	pt	Verdadeiro
 use default	importexport	pt	Utilizar definições por omissão

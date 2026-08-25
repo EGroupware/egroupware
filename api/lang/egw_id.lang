@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	id	%1 (%2 baru) Pesan dituliskan untuk Aplikasi '%3' dan Bahasa '%4'
 %1 active file(s) with same name as directory inactivated!	admin	id	%1 file aktif dengan nama yang sama dengan folder yang dinonaktifkan!
-%1 copied - the copy can now be edited	common	id	%1 disalin - salinan sekarang dapat diedit
+%1 copied - the copy can now be edited	common	id	%1 disalin - salinan sekarang dapat diedit.
 %1 directories %2 found!	admin	id	Direktori %1 %2 ditemukan!
 %1 email addresses inserted	common	id	%1 alamat email disisipkan.
 %1 email(s) added into %2	common	id	%1 email ditambahkan ke dalam %2
@@ -383,6 +383,7 @@ entry updated sucessfully	common	id	Entri sukses dikinikan.
 equatorial guinea	common	id	GUINEA KHATULISTIWA
 eritrea	common	id	ERITREA
 error	common	id	Error
+error copying uploaded file to vfs!	common	id	Terjadi kesalahan saat menyalin berkas yang diunggah ke VFS!
 estonia	common	id	ESTONIA
 etag	common	id	ETag
 etemplate	common	id	eTemplate
@@ -414,6 +415,7 @@ fiji	common	id	FIJI
 file	common	id	Berkas
 file '%1' not found!	common	id	Berkas '%1' tidak ditemukan!
 file a file	common	id	Menyimpan file
+file information	common	id	Informasi berkas
 file is of wrong type (%1 != %2)!	common	id	Salah tipe berkas (%1 != %2 )!
 file writen	common	id	Berkas dituliskan.
 files	common	id	Berkas
@@ -428,6 +430,7 @@ firstname	common	id	Namadepan
 fixme!	common	id	FIXME!
 floating point	common	id	Floating Point
 folder already exists.	common	id	Folder sudah ada!
+for group	common	id	Untuk grup
 force selectbox	common	id	Force SelectBox
 foreign key	common	id	Foreign Key
 forever	common	id	Selamanya
@@ -489,6 +492,7 @@ high	common	id	Tinggi
 highest	common	id	Tertinggi
 history	common	id	Sejarah
 history log	common	id	Log Riwayat
+hold [%1] key to select text eg. to copy it	common	id	Tekan dan tahan tombol [%1] untuk memilih teks, misalnya untuk menyalinnya
 holy see (vatican city state)	common	id	HOLY SEE (NEGARA KOTA VATICAN)
 home	common	id	Beranda
 home email	common	id	E-Mail rumah
@@ -549,6 +553,7 @@ jordan	common	id	YORDANIA
 july	common	id	Juli
 jun	common	id	Jun
 june	common	id	Juni
+just for me	common	id	Hanya untuk saya
 justify center	common	id	Rata Tengah
 justify full	common	id	Rata Penuh
 justify left	common	id	Rata Kiri
@@ -755,6 +760,7 @@ original	common	id	Asal-Muasal
 other	common	id	Lainnya
 overflow	common	id	Overflow
 overview	common	id	Sekilas
+overwrite	common	id	Ganti
 owner	common	id	Pemilik
 ownership	common	id	Kepemilikan
 padding	common	id	Padding
@@ -810,6 +816,7 @@ print	common	id	Cetak
 print orientation	common	id	Orientasi
 priority	common	id	Prioritas
 private	common	id	Privat
+processing the file	common	id	Memproses berkas
 programs	common	id	Program
 project	common	id	Proyek
 properties	common	id	Properti
@@ -826,6 +833,7 @@ regular	common	id	Reguler
 reject	common	id	Tolak
 remember me	common	id	Ingat saya
 remember me for %1	common	id	Ingat saya untuk %1
+remove	api	id	Hapus
 remove selected accounts	common	id	Buang akoun terpilih
 remove shortcut	common	id	Buang Shortcut
 rename	common	id	Ubah
@@ -1070,6 +1078,7 @@ yes	common	id	Ya
 yes - delete	common	id	Ya - Hapus
 yes - delete including sub-entries	common	id	Ya - Hapus berikut sub-entrinya
 you can respond by visiting:	common	id	Untuk melihatnya, kunjungi:
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	id	Anda perlu menginstal plugin Mailvelope yang tersedia untuk Chrome dan Firefox dari www.mailvelope.com atau dengan mengklik tombol “Instal”.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	id	Anda mencoba Aplikasi EGroupware: %1, namun anda tidak memiliki ijin untuk mengakses aplikasi ini!
 your account has been updated with new data from your identity provider.	common	id	Akun Anda telah diperbarui dengan data baru dari penyedia identitas Anda.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	id	Browser Anda tidak mutakhir (kompatibel dengan JavaScript ES6), Anda mungkin mengalami beberapa fitur yang tidak berfungsi.

@@ -3,9 +3,16 @@ add a new definition	importexport	lt	Pridėti naują apibrėžtį
 addressbook csv import	importexport	lt	Adresinės CSV importas
 addressbook vcard import	importexport	lt	Adresų knygos vCard importas
 admin disabled exporting	importexport	lt	Administratorius uždraudė eksportavimą.
+automatically created by importexport	importexport	lt	Automatiškai sukurta naudojant Importas | Eksportas
 change allowed users	importexport	lt	Keisti leidžiamus naudotojus
 change owner when updating	importexport	lt	Keisti savininką atnaujinant
 changed owner	importexport	lt	Pakeistas savininkas
 choose fields to export	importexport	lt	Pasirinkite eksportuojamus laukus
 database values	importexport	lt	Duomenų bazės reikšmės
+define imports|exports	common	lt	Nustatyti importą | eksportą
 delete files after import	importexport	lt	Ištrinti failus po importo
+export	importexport	lt	Eksportas
+extra charsets for import / export	importexport	lt	Papildomi simbolių rinkiniai Importas | Eksportas
+importexport	common	lt	Importas | Eksportas
+importexport wizard finished successfully!	importexport	lt	Importo | eksporto vedlys sėkmingai užbaigtas!
+schedule import / export	common	lt	Nustatyti importo | eksporto tvarkaraštį

@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	lt	%1 (%2 nauji) pranešimai, parašyti programai "%3" ir kalboms "%4
 %1 active file(s) with same name as directory inactivated!	admin	lt	%1 aktyvus (-i) failas (-ai), kurio (-ių) pavadinimas toks pat kaip aplanko, neaktyvuotas (-i)!
-%1 copied - the copy can now be edited	common	lt	%1 nukopijuota - dabar kopiją galima redaguoti
+%1 copied - the copy can now be edited	common	lt	%1 nukopijuota - dabar kopiją galima redaguoti.
 %1 directories %2 found!	admin	lt	Rastas %1 katalogas %2!
 %1 email addresses inserted	common	lt	Jkelta el. pašto adresų: %1.
 %1 email(s) added into %2	common	lt	%1 el. laiškas (-ai) įtrauktas (-i) į %2
@@ -50,6 +50,7 @@ albania	common	lt	ALBANIJA
 algeria	common	lt	ALŽYRAS
 all addressbooks	groupdav	lt	Visos adresų knygelės
 all categories	common	lt	Visos kategorijos
+all fields	common	lt	Visi laukai
 all files	common	lt	Visi failai
 all in one	groupdav	lt	Viskas viename
 allow editing the %1	common	lt	Leisti redaguoti %1
@@ -140,6 +141,7 @@ delete row	common	lt	Trinti eilutę
 denmark	common	lt	DANIJA
 description	common	lt	Apibūdinimas
 directory for storing merged documents	preferences	lt	Aplankas sujungtiems dokumentams saugoti
+directory successfully created.	common	lt	Katalogas sėkmingai sukurtas.
 djibouti	common	lt	DŽIBUTIS
 documents	common	lt	Dokumentai
 don't ask again!	common	lt	Nepaklauskite dar kartą!
@@ -164,6 +166,8 @@ email-address of the user, eg. "%1"	common	lt	Naudotojo el. pašto adresas, pvz.
 emails	common	lt	Elektroniniai laiškai
 enter your passphrase	common	lt	Įveskite savo slaptažodį
 error	common	lt	Klaida
+error copying uploaded file to vfs!	common	lt	Kilo klaida kopijuojant įkeltą failą į VFS!
+error while creating directory.	common	lt	Klaida kuriant katalogą.
 estonia	common	lt	ESTIJA
 ethiopia	common	lt	ETIOPIJA
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	lt	Pavyzdys {{IF n_prefiksas~Mr~Sveikas ponas~Sveikas ponia}} - laukelyje "n_prefix" ieškokite žodžio "Mr", jei radote, rašykite Hello Mr., kitu atveju rašykite Hello Ms.
@@ -174,12 +178,14 @@ example {{nenvlf role}} - if field role is not empty, set a lf without any value
 fax number	common	lt	Fakso numeris
 february	common	lt	Vasaris
 file a file	common	lt	Failo išsaugojimas
+file information	common	lt	Failo informacija
 files	common	lt	Failai
 fileupload	common	lt	Failų įkėlimas
 filter	common	lt	Filtras
 finland	common	lt	SUOMIJA
 first name	common	lt	Vardas
 first name of the user, eg. "%1"	common	lt	Naudotojo vardas, pvz., "%1"
+for group	common	lt	Grupei
 formatted business address	common	lt	Suformatuotas verslo adresas
 formatted private address	common	lt	Suformatuotas privatus adresas
 formatted text (html)	common	lt	Suformatuotas tekstas (HTML)
@@ -199,6 +205,7 @@ greenland	common	lt	GRENLANDIJA
 guatemala	common	lt	GVATEMALA
 history	common	lt	Istorija
 history log	common	lt	Versijos istorija
+hold [%1] key to select text eg. to copy it	common	lt	Laikykite nuspaudę klavišą [%1], kad pažymėtumėte tekstą, pvz., norėdami jį nukopijuoti
 how many days to sync in the future (default %1)	groupdav	lt	Kiek dienų sinchronizuoti ateityje (numatytoji %1)
 how many days to sync in the past (default %1)	groupdav	lt	Kiek dienų sinchronizuoti praeityje (numatytoji %1)
 how many rows to print	common	lt	Kiek eilučių spausdinti
@@ -229,6 +236,7 @@ january	common	lt	Sausis
 japan	common	lt	JAPONIJA
 july	common	lt	Liepa
 june	common	lt	Birželis
+just for me	common	lt	Tik man
 kenya	common	lt	KENIJA
 kiribati	common	lt	KIRIBATIS
 kuwait	common	lt	KUVEITAS
@@ -304,6 +312,7 @@ open	common	lt	Atviras
 open existing contact	common	lt	Atidaryti esamą kontaktą
 open the online help.	common	lt	Atidarykite internetinę pagalbą
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	lt	Prisijungimas prie „OpenIDConnect“ pavyko, bet naudotojas „%1“ NĖRA „EGroupware“ sistemoje, o automatinis naudotojo kūrimas yra išjungtas!
+overwrite	common	lt	Perrašyti
 ownership	common	lt	Nuosavybė
 pakistan	common	lt	PAKISTANAS
 panama	common	lt	PANAMA
@@ -330,8 +339,10 @@ postal	common	lt	Pašto kodas
 preference	common	lt	Pageidavimai
 print	common	lt	Spausdinti
 print orientation	common	lt	Orientavimasis
+processing the file	common	lt	Failo apdorojimas
 project	common	lt	Projektas
 qatar	common	lt	KATARAS
+remove	api	lt	Pašalinti
 repeat password	common	lt	Pakartoti slaptažodį
 save as pdf	common	lt	Išsaugoti kaip PDF
 save as zip	common	lt	Išsaugoti kaip ZIP
@@ -352,6 +363,7 @@ total: %1 successful: %2 failed: %3 skipped: %4	common	lt	Total: %1 Successful: 
 videos	common	lt	Vaizdo įrašai
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	lt	Sujungus įrašus į dokumentus, jie bus saugomi čia. Jei aplankas nenurodytas, jie bus saugomi jūsų namų kataloge (%1)
 yemen	common	lt	JEMENAS
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	lt	Reikia įdiegti „Mailvelope“ papildinį, kuris yra prieinamas „Chrome“ ir „Firefox“ naršyklėms adresu www.mailvelope.com arba paspaudus mygtuką „Įdiegti“.
 your account has been updated with new data from your identity provider.	common	lt	Jūsų paskyra buvo atnaujinta naujais jūsų tapatybės paslaugų teikėjo duomenimis.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lt	Jūsų naršyklė nėra atnaujinta (suderinama su JavaScript ES6), gali būti, kad neveiks kai kurios funkcijos.
 your key has been restored successfully.	common	lt	Jūsų raktas sėkmingai atkurtas.

@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	de	%1 (%2 neue) Texte für die Anwendung '%3' und die Sprache '%4' geschrieben
 %1 active file(s) with same name as directory inactivated!	admin	de	%1 aktive Dateien mit dem selben Ordner wurden deaktiviert!
-%1 copied - the copy can now be edited	common	de	%1 Kopie - Diese Kopie kann jetzt bearbeitet werden
+%1 copied - the copy can now be edited	common	de	%1 kopiert - Diese Kopie kann nun bearbeitet werden.
 %1 directories %2 found!	admin	de	%1 Ordner %2 gefunden!
 %1 email addresses inserted	common	de	%1 E-Mail-Adressen eingefügt.
 %1 email(s) added into %2	common	de	%1 E-Mail-Adresse(n) in %2 hinzugefügt.
@@ -1026,6 +1026,7 @@ other	common	de	Andere
 outdent	common	de	Einzug verkleinern
 overflow	common	de	Überbreite
 overview	common	de	Überblick
+overwrite	common	de	Überschreiben
 owner	common	de	Besitzer
 ownership	common	de	Besitzer
 padding	common	de	Innenabstand
@@ -1523,7 +1524,6 @@ weekend	common	de	Wochenende
 welcome	common	de	Willkommen
 western european	common	de	Westeuropäisch
 western sahara	common	de	WEST SAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	de	Was passiert mit überbreitem Inhalt: sichtbar (standard), versteckt, rollend, automatisch (der Browser entscheidet)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	de	Wenn Sie Einträge mit Platzhalter-Dokumenten zusammenführen, werden diese hier gespeichert. Wenn Sie kein Ordner angeben, werden diese in Ihrem Homeordner gespeichert (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	de	Wenn Sie dies aktivieren, werden die Start und Abmelde Symbole als Anwendungen im oberen Anwendungsbalken angezeigt.
 which groups	common	de	Welche Gruppen

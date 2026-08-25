@@ -283,6 +283,7 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 freetime	calendar	en	Freetime
 freetime search	calendar	en	Freetime Search
 fri	calendar	en	Fri
+from file	calendar	en	From file
 full description	calendar	en	Full description
 full edit dialog	calendar	en	Full edit dialog
 fullname of person to notify	calendar	en	Full name of a person to notify

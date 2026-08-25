@@ -4,6 +4,7 @@ addressbook csv import	importexport	lv	Adrešu grāmatas CSV imports
 addressbook vcard import	importexport	lv	Adrešu grāmatas vCard imports
 admin disabled exporting	importexport	lv	Administrators ir atspējojis eksportēšanu.
 all users	importexport	lv	Visi lietotāji
+automatically created by importexport	importexport	lv	Automātiski izveidots, izmantojot Importēt | Eksportēt
 change allowed users	importexport	lv	Mainīt atļautos lietotājus
 change owner when updating	importexport	lv	Mainīt īpašnieku atjaunināšanas laikā
 changed	importexport	lv	Mainīts
@@ -13,18 +14,23 @@ check all	importexport	lv	Parbaudīt visu
 choose fields to export	importexport	lv	Izvēlieties eksportējamos laukus
 created	importexport	lv	Izveidots
 database values	importexport	lv	Datubāzes vērtības
+define imports|exports	common	lv	Definēt importēšanu | eksportēšanu
 delete files after import	importexport	lv	Dzēst failus pēc importēšanas
 deleted	importexport	lv	Izdzēsts
 execute	importexport	lv	Izpildīt
 export	importexport	lv	Eksportēt
+extra charsets for import / export	importexport	lv	Papildu rakstzīmju kopas importēšanai | eksportēšanai
 false	importexport	lv	Nepatiess
 finish	importexport	lv	beigas
 general	preferences	lv	Vispārējs
 import	importexport	lv	Importēt
+importexport	common	lv	Importēt | Eksportēt
+importexport wizard finished successfully!	importexport	lv	Importēšanas | eksportēšanas vednis veiksmīgi pabeigts!
 next run	importexport	lv	Nākošais solis
 preview	importexport	lv	Priekšskatījums
 previous	importexport	lv	Iepriekšējā
 schedule	common	lv	grafiks
+schedule import / export	common	lv	Plānot importēšanu | eksportēšanu
 translation	importexport	lv	Tulkojums
 true	importexport	lv	Patiess
 use default	importexport	lv	Lietot noklusējumu

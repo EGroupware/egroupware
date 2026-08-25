@@ -1,3 +1,4 @@
+%1 copied - the copy can now be edited	common	uk	%1 скопійовано — тепер копію можна редагувати.
 %1 email addresses inserted	common	uk	Додано %1 імейл адрес.
 %1 email(s) added into %2	common	uk	%1 імейл(и) додано до %2
 %1 more %2 selected ...	common	uk	Вибрано ще %1 %2 ...
@@ -61,6 +62,7 @@ algeria	common	uk	АЛЖИР
 all	common	uk	Все
 all addressbooks	groupdav	uk	Всі адресні книги
 all categories	common	uk	Всі категорії
+all fields	common	uk	Усі поля
 all files	common	uk	Всі файли
 all in one	groupdav	uk	Все в одному
 all users	common	uk	Всі користувачі
@@ -195,6 +197,7 @@ description	common	uk	Опис
 detail	common	uk	Деталі
 details	common	uk	Деталі
 directory for storing merged documents	preferences	uk	Папка для зберігання об'єднаних документів
+directory successfully created.	common	uk	Каталог успішно створено.
 disabled	common	uk	Вимкнено
 do you also want to delete all subcategories ?	common	uk	Чи хочете ви також видалити вся підкатегорії?
 documents	common	uk	Документи
@@ -234,9 +237,11 @@ enter your passphrase	common	uk	Введіть свою парольну фра�
 entry has been deleted sucessfully	common	uk	Запис видалено успішно
 entry updated sucessfully	common	uk	Запис змінено успішно.
 error	common	uk	Помилка
+error copying uploaded file to vfs!	common	uk	Сталася помилка під час копіювання завантаженого файлу до VFS!
 error creating %1 %2 directory	common	uk	Помилка створення %1 %2 каталогу!
 error deleting %1 %2 directory	common	uk	Помилка видалення %1 %2 каталогу!
 error renaming %1 %2 directory	common	uk	Помилка переіменування %1 %2 каталогу!
+error while creating directory.	common	uk	Помилка під час створення каталогу.
 estonia	common	uk	ЕСТОНІЯ
 ethiopia	common	uk	ЕФІОПІЯ
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	uk	Приклад {{IF n_prefix~Mr~Hello Mr.~Hello Ms.}} - шукає поле "n_prefix", для "Mr", якщо знайдено, пише "Hello Mr.", інакше пише "Hello Ms.".
@@ -248,6 +253,7 @@ fax number	common	uk	номер факсу
 february	common	uk	Лютий
 fields	common	uk	Поля
 file a file	common	uk	Зберегти файл
+file information	common	uk	Інформація про файл
 files	common	uk	Файли
 fileupload	common	uk	Завантаження файлу
 filter	common	uk	Фільтр
@@ -257,6 +263,7 @@ first name of the user, eg. "%1"	common	uk	Ім'я користувача, на�
 first page	common	uk	Перша сторінка
 firstname	common	uk	Ім'я
 fixme!	common	uk	FIXME!
+for group	common	uk	Для групи
 force selectbox	common	uk	Форсувати SelectBox
 formatted business address	common	uk	Відформатована бізнес-адреса
 formatted private address	common	uk	Відформатована приватна адреса
@@ -297,6 +304,7 @@ high	common	uk	Високий
 highest	common	uk	Найвищий
 history	common	uk	Історія
 history log	common	uk	Історія версій
+hold [%1] key to select text eg. to copy it	common	uk	Утримуйте клавішу [%1], щоб виділити текст, наприклад, для його копіювання
 home	common	uk	Додому
 home email	common	uk	домашній email
 home screen	common	uk	Основний екран
@@ -340,6 +348,7 @@ january	common	uk	Січень
 japan	common	uk	ЯПОНІЯ
 july	common	uk	Липень
 june	common	uk	Червень
+just for me	common	uk	Тільки для мене
 kenya	common	uk	КЕНІЯ
 keywords	common	uk	Ключові слова
 kuwait	common	uk	КУВЕЙТ
@@ -457,6 +466,7 @@ openidconnect login successful, but user '%1' does not exist in egroupware, and 
 original	common	uk	Оригінальне
 other	common	uk	Інше
 overview	common	uk	Перегляд
+overwrite	common	uk	Перезаписати
 owner	common	uk	Власник
 ownership	common	uk	Право власності
 page was generated in %1 seconds	common	uk	Сторінка згенерована за %1 секунд
@@ -506,6 +516,7 @@ print	common	uk	Друкувати
 print orientation	common	uk	Орієнтація
 priority	common	uk	Пріоритет
 private	common	uk	Особисте
+processing the file	common	uk	Обробка файлу
 project	common	uk	Проект
 public	common	uk	публічне
 read	common	uk	Читати
@@ -513,6 +524,7 @@ read a single entry by passing the id and fieldlist.	common	uk	Прочитат�
 read this list of methods.	common	uk	Прочитати цей перелік методів
 refresh	common	uk	Поновити
 reject	common	uk	Відмовити
+remove	api	uk	Видалити
 remove this link (not the entry itself)	common	uk	Видалити це посилання (не сам запис)
 rename	common	uk	Перейменувати
 repeat password	common	uk	Повторити пароль
@@ -663,6 +675,7 @@ you have not entered participants	common	uk	Ви не ввели учасник�
 you have selected an invalid date	common	uk	Ви вибрали невірну дату!
 you have selected an invalid main category	common	uk	Ви вибрали невірну основну категорію!
 you have successfully logged out	common	uk	Ви успішно вийшли.
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	uk	Вам потрібно встановити плагін Mailvelope, доступний для Chrome та Firefox, за посиланням www.mailvelope.com або натиснувши кнопку «Встановити».
 your account has been updated with new data from your identity provider.	common	uk	Ваш обліковий запис було оновлено новими даними від вашого постачальника ідентифікаційних даних.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	uk	Ваш браузер застарілий (не сумісний з JavaScript ES6), деякі функції можуть не працювати.
 your key has been restored successfully.	common	uk	Ваш ключ успішно відновлено.

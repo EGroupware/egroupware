@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	pl	%1 (z czego %2 nowych) Komunikatów zapisanych dla Aplikacji '%3' i Języków '%4'
 %1 active file(s) with same name as directory inactivated!	admin	pl	%1 aktywne pliki o tej samej nazwie co folder nieaktywne!
-%1 copied - the copy can now be edited	common	pl	%1 skopiowano - kopię można teraz edytować
+%1 copied - the copy can now be edited	common	pl	%1 skopiowano - kopię można teraz edytować.
 %1 directories %2 found!	admin	pl	Znaleziono %1 katalogów %2!
 %1 email addresses inserted	common	pl	%1 adresów email dodane.
 %1 email(s) added into %2	common	pl	%1 email(e) dodane do %2
@@ -414,6 +414,7 @@ details	common	pl	Opis szczegółowy
 directory	common	pl	Katalog
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	pl	Katalog nie istnieje, serwer WWW nie ma do niego praw odczytu lub nie jest podkatalogiem DOCUMENT_ROOT!
 directory for storing merged documents	preferences	pl	Folder do przechowywania scalonych dokumentów
+directory successfully created.	common	pl	Katalog został pomyślnie utworzony.
 directory with documents to insert entries	preferences	pl	Folder z dokumentami do wstawienia wpisów
 disabled	common	pl	Zablokowany
 discard changes	common	pl	Porzuć zmiany
@@ -514,6 +515,7 @@ error deleting %1!	common	pl	Błąd przy usuwaniu %1!
 error enabling push	common	pl	Błąd włączenia push
 error renaming %1 %2 directory	common	pl	Błąd podczas zmiany nazwy katalogu %1 %2!
 error uploading file!	filemanager	pl	Błąd przy ładowaniu pliku!
+error while creating directory.	common	pl	Wystąpił błąd podczas tworzenia katalogu.
 error: template not found !!!	common	pl	Błąd: wzorzec nie znaleziony!
 error: webserver is not allowed to write into '%1' !!!	common	pl	Błąd: demon serwera WWW nie może zapisywać do katalogu '%1'!
 error: while saving !!!	common	pl	Błąd: podczas zapisywania!
@@ -580,6 +582,7 @@ firstname	common	pl	Imię
 fixme!	common	pl	NAPRAW MNIE!
 floating point	common	pl	Liczba zmiennoprzecinkowa
 folder already exists.	common	pl	Folder o takiej nazwie już istnieje!
+for group	common	pl	Dla grupy
 force selectbox	common	pl	Wymuś wybór z listy
 foreign key	common	pl	Klucz obcy
 forever	common	pl	Na zawsze
@@ -741,6 +744,7 @@ jordan	common	pl	JORDANIA
 july	common	pl	Lipiec
 jun	common	pl	Czer
 june	common	pl	Czerwiec
+just for me	common	pl	Tylko dla mnie
 justify center	common	pl	Wyśrodkuj
 justify full	common	pl	Wyjustuj
 justify left	common	pl	Wyrównaj do lewej
@@ -968,6 +972,7 @@ original	common	pl	Oryginalny
 other	common	pl	Inne
 overflow	common	pl	Przepełnienie
 overview	common	pl	Przegląd
+overwrite	common	pl	Zastąp
 owner	common	pl	Właściciel
 ownership	common	pl	Własność
 padding	common	pl	Wypełnienie
@@ -1040,6 +1045,7 @@ print	common	pl	Drukuj
 print orientation	common	pl	Orientacja
 priority	common	pl	Priorytet
 private	common	pl	Prywatny
+processing the file	common	pl	Przetwarzanie pliku
 programs	common	pl	Programy
 project	common	pl	Projekt
 properties	common	pl	Właściwości
@@ -1379,7 +1385,6 @@ weekend	common	pl	Weekend
 welcome	common	pl	Strona główna
 western european	common	pl	Europa Zachodnia
 western sahara	common	pl	SAHARA ZACHODNIA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pl	Co dzieje się z przepełnioną zawartością (overflow): visible (domyślne), hidden, scroll, auto
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pl	Po scaleniu wpisów w dokumenty zostaną one zapisane w tym folderze. Jeśli nie podano folderu, zostaną one zapisane w katalogu domowym (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pl	Jeżeli wybierzesz "TAK", "Powrót na stronę domową" oraz "Wylogowanie" będą pokazywane jako przyciski aplikacji na głównym pasku aplikacji.
 which groups	common	pl	Które grupy
@@ -1422,6 +1427,7 @@ you may drag files out to your desktop	common	pl	Pliki można przeciągać na pu
 you need to %1set your timezone preference%2.	common	pl	Musisz ustawić %1strefę czasową%2.
 you need to add the webserver user '%1' to the group '%2'.	common	pl	Musisz dodać użytkownika '%1' do grupy '%2'.
 you need to be an egroupware administrator to access this functionality!	common	pl	Tylko administrator EGroupware ma dostęp do tej funkcji!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	pl	Należy zainstalować wtyczkę Mailvelope dostępną dla przeglądarek Chrome i Firefox ze strony www.mailvelope.com lub klikając przycisk „Zainstaluj”.
 you need to select a file first!	common	pl	Musisz najpierw wybrać plik!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pl	Próba otworzenia aplikacji %1 nie powiodła się, gdyż nie masz uprawnień dostępu to tej aplikacji!
 your account has been updated with new data from your identity provider.	common	pl	Twoje konto zostało zaktualizowane o nowe dane od dostawcy tożsamości.

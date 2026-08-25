@@ -1,4 +1,5 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	lv	%1(%2 jauns) Ziņojumi uzrakstīti aplikācijai %3 un valodām %4'
+%1 copied - the copy can now be edited	common	lv	%1 ir kopēts — tagad kopiju var rediģēt.
 %1 email addresses inserted	common	lv	%1 e-pasta adreses pievienotas
 %1 email(s) added into %2	common	lv	%1 e-pasts(-i) pievienots(-i) uz %2
 %1 etemplates deleted	common	lv	%1 eTemplates izdzēstas.
@@ -295,6 +296,7 @@ detail	common	lv	Detaļa
 details	common	lv	Detaļas
 directory	common	lv	Direktorija
 directory for storing merged documents	preferences	lv	Apvienoto dokumentu glabāšanas mape
+directory successfully created.	common	lv	Direktorija veiksmīgi izveidota.
 disabled	common	lv	Izslēgts
 discard changes	common	lv	Atcelt izmaiņas
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	lv	Parādīts pirms ievades vai arī ievade ievietota iezīmē priekš "%s" (parakstīšanās pogas iezīme vai Attēla datnes vārds).
@@ -363,9 +365,11 @@ entry updated sucessfully	common	lv	Leraksts veiksmīgi tika atjaunināts.
 equatorial guinea	common	lv	EKVATORIĀLĀ GVINEJA
 eritrea	common	lv	ERITREJA
 error	common	lv	Kļūda
+error copying uploaded file to vfs!	common	lv	Kļūda, kopējot augšupielādēto failu uz VFS!
 error creating %1 %2 directory	common	lv	Kļūda veidojot %1 %2 direktoriju!
 error deleting %1 %2 directory	common	lv	Kļūda dzēšot %1 %2 direktoriju!
 error renaming %1 %2 directory	common	lv	Kļūda pārsaucot %1 %2 direktoriju!
+error while creating directory.	common	lv	Kļūda, izveidojot direktoriju.
 error: template not found !!!	common	lv	Kļūda: Veidne nav atrasta!
 error: webserver is not allowed to write into '%1' !!!	common	lv	Kļūda: vebserverim nav atļaut ierakstīt "%1"!
 error: writing file (no write-permission for the webserver) !!!	common	lv	Kļuda rakstot failu (vebserverim nav rakstīšanas atļaujas)!
@@ -398,6 +402,7 @@ fiji	common	lv	FIDŽI
 file	common	lv	Datne
 file a file	common	lv	Saglabāt failu
 file contains more than one etemplate, last one is shown !!!	common	lv	Datnē ir vairāk kā viena eTemplate, tiek parādīta pēdējā!
+file information	common	lv	Informācija par failu
 file writen	common	lv	Datne uzrakstīta.
 files	common	lv	Faili
 fileupload	common	lv	Datne augšupiel'
@@ -411,6 +416,7 @@ firstname	common	lv	Vārds
 fixme!	common	lv	SALABOMANI!
 floating point	common	lv	Peldošais punkts
 folder already exists.	common	lv	Aile jau pastāv!
+for group	common	lv	Grupai
 foreign key	common	lv	Ārējā atslēga
 formatted business address	common	lv	Formatēta uzņēmuma adrese
 formatted private address	common	lv	Formatēta privātā adrese
@@ -542,6 +548,7 @@ jordan	common	lv	JORDĀNIJA
 july	common	lv	Jūlijs
 jun	common	lv	Jun
 june	common	lv	Jūnijs
+just for me	common	lv	Tikai man
 justify center	common	lv	Centra izlīdzināsana
 justify full	common	lv	Pilna izlīdzināšana
 justify left	common	lv	Kreisā izlīdzināšana
@@ -741,6 +748,7 @@ original	common	lv	Orģināls
 other	common	lv	Citi
 overflow	common	lv	Pārpilde
 overview	common	lv	Pārskats
+overwrite	common	lv	Pārrakstīt
 owner	common	lv	Īpašnieks
 ownership	common	lv	Īpašumtiesības
 padding	common	lv	Papildināšana
@@ -802,6 +810,7 @@ print	common	lv	Drukāt
 print orientation	common	lv	Orientēšanās
 priority	common	lv	Prioritāte
 private	common	lv	Privātos
+processing the file	common	lv	Faila apstrāde
 project	common	lv	Projekts
 public	common	lv	Publisks
 puerto rico	common	lv	PUERTORIKO
@@ -815,6 +824,7 @@ reading	common	lv	Lasīšana
 readonly	common	lv	Tikai lasāms
 refresh	common	lv	Atsvaidzināt
 reject	common	lv	Noraidīt
+remove	api	lv	Dzēst
 remove row (can not be undone!!!)	common	lv	Dzēst rindu
 remove selected accounts	common	lv	Likvidēt izvēlētos kontus
 remove this link (not the entry itself)	common	lv	Dzēst saiti
@@ -1093,6 +1103,7 @@ you have selected an invalid date	common	lv	Jūs izvēlējāties nepareizu datum
 you have selected an invalid main category	common	lv	Jūs izvēlējāties nepareizu galveno katekoriju!
 you have successfully logged out	common	lv	Jūs veiksmīgi beidzāt darbu.
 you need to add the webserver user '%1' to the group '%2'.	common	lv	Jums ir jāpievieno web servera lietotājs '%1' grupai '%2'.
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	lv	Jums ir jāinstalē Mailvelope spraudnis, kas pieejams pārlūkprogrammām Chrome un Firefox vietnē www.mailvelope.com vai noklikšķinot uz instalēšanas pogas.
 your account has been updated with new data from your identity provider.	common	lv	Jūsu konts ir atjaunināts ar jauniem datiem no jūsu identitātes nodrošinātāja.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	lv	Jūsu pārlūkprogramma nav atjaunināta (saderīga ar JavaScript ES6), tāpēc dažas funkcijas var nedarboties.
 your code is incorrect !!!	common	lv	Kods ir nepareizs!

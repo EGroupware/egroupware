@@ -4,17 +4,23 @@ addressbook csv import	importexport	uk	Імпорт адресної книги 
 addressbook vcard import	importexport	uk	Імпорт адресної книги vCard
 admin disabled exporting	importexport	uk	Адміністратор вимкнув експорт.
 all users	importexport	uk	Всі користувачі
+automatically created by importexport	importexport	uk	Створено автоматично функцією Імпорт | Експорт
 change allowed users	importexport	uk	Зміна дозволених користувачів
 change owner when updating	importexport	uk	Зміна власника при оновленні
 changed owner	importexport	uk	Змінено власника
 charset of file	importexport	uk	Кодування файлу
 choose fields to export	importexport	uk	Виберіть поля для експорту
 database values	importexport	uk	Значення бази даних
+define imports|exports	common	uk	Налаштувати імпорт | експорт
 delete files after import	importexport	uk	Видалення файлів після імпорту
 deleted	importexport	uk	Видалено.
 export	importexport	uk	Експортувати
+extra charsets for import / export	importexport	uk	Додаткові набори символів для імпорту | експорту
 finish	importexport	uk	закінчено
 import	importexport	uk	Імпорт
+importexport	common	uk	Імпорт | Експорт
+importexport wizard finished successfully!	importexport	uk	Майстер імпорту | експорту успішно завершився!
 next run	importexport	uk	Наступний запуск
+schedule import / export	common	uk	Запланувати імпорт | експорт
 translation	importexport	uk	Переклад
 use default	importexport	uk	По замовченню

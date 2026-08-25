@@ -34,6 +34,7 @@ expert options	importexport	pl	Opcje zaawansowane
 export	importexport	pl	Eksport
 export all selected definitions	importexport	pl	eksportuj WSZYSTKIE wybrane definicje
 exported	importexport	pl	wyeksportowano
+extra charsets for import / export	importexport	pl	Dodatkowe zestawy znaków dla Import | Eksport
 false	importexport	pl	fałsz
 fieldseperator	importexport	pl	Separator pól
 finish	importexport	pl	zakończ

@@ -4,6 +4,7 @@ addressbook csv import	importexport	ko	주소록 CSV 가져오기
 addressbook vcard import	importexport	ko	주소록 vCard 가져오기
 admin disabled exporting	importexport	ko	관리자가 내보내기를 비활성화했습니다.
 all users	importexport	ko	모든 사용자
+automatically created by importexport	importexport	ko	가져오기 | 내보내기 기능에 의해 자동으로 생성됨
 change allowed users	importexport	ko	허용된 사용자 변경
 change owner when updating	importexport	ko	업데이트 시 소유자 변경
 changed	importexport	ko	변경됨
@@ -12,16 +13,21 @@ charset of file	importexport	ko	파일의 문자셋
 choose fields to export	importexport	ko	내보낼 필드를 선택하세요.
 created	importexport	ko	생성됨
 database values	importexport	ko	데이터베이스 값
+define imports|exports	common	ko	가져오기 | 내보내기 정의
 delete files after import	importexport	ko	가져오기 후 파일 삭제
 deleted	importexport	ko	삭제됨
 export	importexport	ko	내보내기
+extra charsets for import / export	importexport	ko	가져오기 | 내보내기를 위한 추가 문자 집합
 false	importexport	ko	거짓
 finish	importexport	ko	완료
 general	preferences	ko	일반
 import	importexport	ko	가져오기
+importexport	common	ko	가져오기 | 내보내기
+importexport wizard finished successfully!	importexport	ko	가져오기 | 내보내기 마법사가 성공적으로 완료되었습니다!
 next run	importexport	ko	다음 실행
 preview	importexport	ko	미리보기
 previous	importexport	ko	이전
+schedule import / export	common	ko	가져오기 | 내보내기 예약
 translation	importexport	ko	번역
 true	importexport	ko	참
 use default	importexport	ko	기본 사용

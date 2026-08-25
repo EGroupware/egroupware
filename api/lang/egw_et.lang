@@ -1,3 +1,4 @@
+%1 copied - the copy can now be edited	common	et	%1 on kopeeritud – kopeeritud teksti saab nüüd redigeerida.
 %1 email addresses inserted	common	et	%1 email aadress sisestatud
 %1 email(s) added into %2	common	et	%1 email(id) lisatud %2-sse
 %1 is not executable by the webserver !!!	common	et	%1 pole veebiserverijaoks käivitatav!
@@ -68,6 +69,7 @@ all	common	et	Kõik
 all addressbooks	groupdav	et	Kõik aadressiraamatud
 all categories	common	et	Kõik kategooriad
 all fields	common	et	Kõik väljad
+all files	common	et	Kõik failid
 all in one	groupdav	et	Kõik ühes
 all users	common	et	Kõik kasutajad
 allow editing the %1	common	et	Lubage muuta %1
@@ -118,6 +120,7 @@ bahamas	common	et	BAHAMA
 bahrain	common	et	BAHREIN
 bangladesh	common	et	BANGLADESH
 barbados	common	et	BARBADOS
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	et	Enne edasi liikumist soovitame tungivalt vaadata seda lühikest videot, et näha, kuidas Mailvelope’i pistikprogramm EGroupware’iga koos töötab.
 belarus	common	et	VALGEVENE
 belgium	common	et	BELGIA
 belize	common	et	BELIZE
@@ -310,6 +313,7 @@ epl only	common	et	Ainult EPL
 equatorial guinea	common	et	EKVATORIAALl-GUINEA
 eritrea	common	et	ERITREA
 error	common	et	Viga
+error copying uploaded file to vfs!	common	et	Viga üleslaaditud faili kopeerimisel VFS-i!
 error creating %1 %2 directory	common	et	Viga kausta %1 %2 tegemisel!
 error deleting %1 %2 directory	common	et	Viga kausta %1 %2 kustutamisel!
 error renaming %1 %2 directory	common	et	Viga kausta %1 %2 ümber nimetamisel!
@@ -333,6 +337,7 @@ field must not be empty !!!	common	et	Väli ei tohi jääda tühjaks!
 fields	common	et	Väljad
 file	common	et	Pail
 file a file	common	et	Faili salvestamine
+file information	common	et	Faili teave
 file writen	common	et	Fail kirjutatud
 files	common	et	Failid
 fileupload	common	et	Faili Üleslaadimine
@@ -345,6 +350,7 @@ first page	common	et	Esimene leht
 firstname	common	et	Eesnimi
 fixme!	common	et	PARANDA MIND!
 folder already exists.	common	et	Kaust on juba olemas!
+for group	common	et	Rühmale
 forever	common	et	Igavesti
 formatted business address	common	et	Vormindatud äriaadress
 formatted private address	common	et	Vormindatud eraisiku aadress
@@ -384,6 +390,7 @@ high	common	et	Kõrge
 highest	common	et	Kõrgeim
 history	common	et	Ajalugu
 history log	common	et	Versiooni ajalugu
+hold [%1] key to select text eg. to copy it	common	et	Hoia all klahvi [%1], et teksti valida, nt selle kopeerimiseks
 home	common	et	Kodu
 home email	common	et	Kodu email
 honduras	common	et	HONDURAS
@@ -430,6 +437,7 @@ january	common	et	Jaanuar
 japan	common	et	JAAPAN
 july	common	et	Juuli
 june	common	et	Juuni
+just for me	common	et	Ainult mulle
 key	common	et	Võti
 keywords	common	et	Märksõnad
 language	common	et	Keel
@@ -540,6 +548,7 @@ or	common	et	või
 order to navigating by tab key through the form	common	et	Tellige navigeerimine tabulaatoriga läbi vormi
 original	common	et	Originaal
 overview	common	et	Ülevaade
+overwrite	common	et	Ülekirjutamine
 owner	common	et	Omanik
 ownership	common	et	Omanikuks olemine
 page	common	et	Leht
@@ -581,6 +590,7 @@ print	common	et	Prindi
 print orientation	common	et	Orienteerumine
 priority	common	et	Prioriteet
 private	common	et	Privaatne
+processing the file	common	et	Faili töötlemine
 programs	common	et	Programmid
 project	common	et	Projekt
 properties	common	et	Omadused
@@ -590,6 +600,7 @@ readonly	common	et	Loeainult
 register	common	et	Registreeru
 regular	common	et	Regulaarne
 reject	common	et	Lükka tagasi
+remove	api	et	Kustutamine
 remove selected accounts	common	et	Eemalda märgitud kontod
 rename	common	et	Nimeta ümber
 repeat password	common	et	Parooli kordamine
@@ -775,6 +786,7 @@ you have not entered participants	common	et	Sa ei sisestanud osalejaid.
 you have selected an invalid date	common	et	Sisestasid vigase kuupäeva!
 you have selected an invalid main category	common	et	Sisestasid vigase pea kategooria!
 you have successfully logged out	common	et	Oled õnnelikult välja loginud.
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	et	Peate installima Mailvelope’i pistikprogrammi, mis on saadaval Chrome’i ja Firefoxi jaoks aadressil www.mailvelope.com või klõpsates installimisnupule.
 your account has been updated with new data from your identity provider.	common	et	Teie kontot on uuendatud teie identiteedipakkuja uute andmetega.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	et	Teie brauser ei ole ajakohane (JavaScript ES6-ga ühilduv), mõned funktsioonid ei pruugi toimida.
 your key has been restored successfully.	common	et	Teie võti on edukalt taastatud.

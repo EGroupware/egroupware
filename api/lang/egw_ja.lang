@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	ja	アプリケーション '%3' および言語 '%4' に対して %1 (%2 新しい) メッセージが書き込まれました。
 %1 active file(s) with same name as directory inactivated!	admin	ja	フォルダと同じ名前のアクティブなファイル %1 が非アクティブになりました！
-%1 copied - the copy can now be edited	common	ja	%1 をコピーしました - コピーを編集できます
+%1 copied - the copy can now be edited	common	ja	%1 をコピーしました - コピーを編集できます。
 %1 directories %2 found!	admin	ja	%1 ディレクトリ %2 が見つかりました！
 %1 email addresses inserted	common	ja	%1 個の電子メール・アドレスを挿入しました。
 %1 email(s) added into %2	common	ja	%1 の電子メールが %2 に追加されました。
@@ -413,6 +413,7 @@ details	common	ja	詳細
 directory	common	ja	ディレクトリ
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ja	Directory does not exist, is not readable by the web server or is not relative to the document root!
 directory for storing merged documents	preferences	ja	マージされた文書を保存するフォルダ
+directory successfully created.	common	ja	ディレクトリが正常に作成されました。
 directory with documents to insert entries	preferences	ja	エントリーを挿入する文書のあるフォルダ
 disabled	common	ja	不可
 discard changes	common	ja	変更を破棄
@@ -514,6 +515,7 @@ error deleting %1!	common	ja	%1 削除中にエラーが発生しました!
 error enabling push	common	ja	プッシュ有効化エラー
 error renaming %1 %2 directory	common	ja	%1 %2 フォルダの名前変更でエラーが発生しました！
 error uploading file!	filemanager	ja	ファイルのアップロード中にエラーが発生しました!
+error while creating directory.	common	ja	ディレクトリの作成中にエラーが発生しました。
 error: template not found !!!	common	ja	エラー: テンプレートが見つかりません!
 error: webserver is not allowed to write into '%1' !!!	common	ja	エラー: ウェブ・サーバーは '%1' に対する書き込みが許可されていません!!!
 error: while saving !!!	common	ja	保存中にエラーが発生しました!
@@ -581,6 +583,7 @@ firstname	common	ja	名前
 fixme!	common	ja	FIXME!
 floating point	common	ja	浮動小数
 folder already exists.	common	ja	フォルダは既に存在しています!
+for group	common	ja	グループ用
 for more than one contact in a document use the tag pagerepeat!	preferences	ja	Use the tag page repeat for more than one contact in a document!
 force	common	ja	強制
 force selectbox	common	ja	セレクトボックス
@@ -656,7 +659,7 @@ high	common	ja	高
 highest	common	ja	最高
 history	common	ja	歴史
 history log	common	ja	変更履歴
-hold [%1] key to select text eg. to copy it	common	ja	1] キーを押しながらテキストを選択します。
+hold [%1] key to select text eg. to copy it	common	ja	1] キーを押しながらテキストを選択します
 holy see (vatican city state)	common	ja	バチカン市国
 home	common	ja	ホーム
 home email	common	ja	個人電子メール
@@ -748,6 +751,7 @@ jordan	common	ja	ヨルダン
 july	common	ja	7月
 jun	common	ja	6月
 june	common	ja	6月
+just for me	common	ja	自分用
 justify center	common	ja	中央揃え
 justify full	common	ja	両端揃え
 justify left	common	ja	左揃え
@@ -997,6 +1001,7 @@ original	common	ja	Original
 other	common	ja	その他
 overflow	common	ja	オーバーフロー
 overview	common	ja	Over view
+overwrite	common	ja	上書き
 owner	common	ja	所有者
 ownership	common	ja	所有権
 padding	common	ja	パディング
@@ -1075,6 +1080,7 @@ print	common	ja	印刷
 print orientation	common	ja	ページの向き
 priority	common	ja	優先順位
 private	common	ja	プライベート
+processing the file	common	ja	ファイルを処理中
 programs	common	ja	プログラム
 project	common	ja	プロジェクト
 properties	common	ja	プロパティ
@@ -1467,7 +1473,6 @@ weekend	common	ja	週末
 welcome	common	ja	ようこそ
 western european	common	ja	西ヨーロッパ
 western sahara	common	ja	西サハラ
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ja	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ja	エントリーをドキュメントにマージすると、それらはここに保存されます。フォルダが提供されない場合、それらはホームディレクトリ(%1)に保存されます。
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ja	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 which groups	common	ja	Which groups

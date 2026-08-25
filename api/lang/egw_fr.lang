@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	fr	%1 (%2 nouveaux) messages écrits pour l'Application '%3' et les langues '%4'
 %1 active file(s) with same name as directory inactivated!	admin	fr	%1 fichier(s) actif(s) avec le même nom dans le même répertoire marqués inactifs !
-%1 copied - the copy can now be edited	common	fr	%1 copié - la copie peut maintenant être modifiée
+%1 copied - the copy can now be edited	common	fr	%1 copié - la copie peut maintenant être modifiée.
 %1 directories %2 found!	admin	fr	%1 répertoire %2 trouvé !
 %1 email addresses inserted	common	fr	%1 adresse(s) email insérée(s)
 %1 email(s) added into %2	common	fr	%1 adresse(s) email insérée(s) dans %2
@@ -594,6 +594,7 @@ floating point	common	fr	Virgule flottante
 folder already exists.	common	fr	Le dossier existe déjà.
 fontselect	common	fr	Police
 fontsizeselect	common	fr	Taille de la police
+for group	common	fr	Pour un groupe
 for more than one contact in a document use the tag pagerepeat!	preferences	fr	Utiliser l'étiquette de répétition de page pour plus d'un contact dans un document!
 force	common	fr	Forcer
 force selectbox	common	fr	Forcer la boîte de sélection
@@ -764,6 +765,7 @@ jordan	common	fr	JORDANIE
 july	common	fr	Juillet
 jun	common	fr	Jun
 june	common	fr	Juin
+just for me	common	fr	Juste pour moi
 justify center	common	fr	Centrer
 justify full	common	fr	Justifier
 justify left	common	fr	Aligner à Gauche
@@ -1021,6 +1023,7 @@ other	common	fr	Autre
 outdent	common	fr	Retrait
 overflow	common	fr	Débordement
 overview	common	fr	Vue d'ensemble
+overwrite	common	fr	Remplacer
 owner	common	fr	Propriétaire
 ownership	common	fr	Propriété
 padding	common	fr	Remplissage
@@ -1101,6 +1104,7 @@ print	common	fr	Imprimer
 print orientation	common	fr	Orientation
 priority	common	fr	Priorité
 private	common	fr	Privé
+processing the file	common	fr	Traitement du fichier
 programs	common	fr	Programmes
 project	common	fr	Projet
 properties	common	fr	Propriétés
@@ -1514,7 +1518,6 @@ weekend	common	fr	Weekend
 welcome	common	fr	Bienvenue
 western european	common	fr	Europe occidentale
 western sahara	common	fr	SAHARA OCCIDENTAL
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fr	Ce qui se passe avec un contenu débordant: visible (défaut), caché, scroll, auto (le navigateur décide)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fr	Quand vous fusionnez les entités dans des documents, ils seront stockés ici. Si aucun dossier n'est indiqué, il seront stockés dans votre dossier personnel (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fr	Si vous dites oui, les bouttons Accueil et Déconnexion sont affichés comme des applications dans la barre d'application principale.
 which groups	common	fr	Quels groupes

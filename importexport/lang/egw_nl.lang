@@ -21,6 +21,7 @@ condition	importexport	nl	conditie
 copied	importexport	nl	gekopieerd
 created	importexport	nl	Gecreëerd
 database values	importexport	nl	Databasewaarden
+define imports|exports	common	nl	Importeren | exporteren definiëren
 delete all selected definitions	importexport	nl	verwijder ALLE geselecteerde definities
 delete files after import	importexport	nl	Bestanden verwijderen na import
 deleted	importexport	nl	verwijderd
@@ -29,6 +30,7 @@ export	importexport	nl	Export
 export all selected definitions	importexport	nl	exporteer ALLE geselecteerde definities
 export definition to use for nextmatch export	preferences	nl	Export definitie om te gebruiken bij nextmatch export
 exported	importexport	nl	geexporteerd
+extra charsets for import / export	importexport	nl	Extra tekensets voor Importeren | Exporteren
 extra encodings	importexport	nl	Extra versleutelen
 false	importexport	nl	onwaar
 finish	importexport	nl	beëindig
@@ -37,6 +39,7 @@ general fields:	preferences	nl	Algemene velden:
 if you specify an export definition, it will be used when you export	preferences	nl	Als u een export definitie kiest, zal deze worden gebruikt bij de export
 import	importexport	nl	Importeren
 import definitions (attension: existing definitions with equal names will be overwritten!!!)	importexport	nl	Importdefinities (Let op: Bestaande definities met dezelfde naam worden overschreven!!!)
+importexport	common	nl	Importeren | Exporteren
 importexport wizard finished successfully!	importexport	nl	ImportExport wizard is succesvol geëindigd!
 load sample file	importexport	nl	Laad een voorbeeldbestand
 manage mapping	importexport	nl	Beheer de mappings
@@ -46,6 +49,7 @@ preview	importexport	nl	Voorbeeld
 previous	importexport	nl	vorige
 save as definition	importexport	nl	Bewaar als definitie
 schedule	common	nl	agenderen
+schedule import / export	common	nl	Importeren | Exporteren plannen
 select definition	importexport	nl	Selecteer definitie
 select plugin	importexport	nl	Selecteer plugin
 some nice text	importexport	nl	een fraaie uitleg

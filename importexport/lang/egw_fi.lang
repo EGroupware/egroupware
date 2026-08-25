@@ -48,6 +48,7 @@ export all selected definitions	importexport	fi	Vie kaikki valitut selitteet
 export definition to use for nextmatch export	preferences	fi	Vienti asetukset 'nextmatch' vientiin
 export spreadsheet	importexport	fi	Vie Spreadsheet
 exported	importexport	fi	Viety
+extra charsets for import / export	importexport	fi	Lisämerkistöt Tuonti | Vienti -toiminnolle
 false	importexport	fi	Väärin
 field labels	importexport	fi	Kentän database nimi
 field names	importexport	fi	Kentän nimi
