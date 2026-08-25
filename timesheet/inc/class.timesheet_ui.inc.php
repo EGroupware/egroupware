@@ -881,8 +881,11 @@ class timesheet_ui extends timesheet_bo
 		// (which becomes content.nm.rows) - the client resolves @expr column attributes against
 		// the widget's own content.nm scope, so a flag nested under .rows is never found and the
 		// column silently never disables.
+		// Unlike $rows (rebuilt fresh from the DB every call), $query_in round-trips across
+		// requests via session (Api\Cache::setSession() below) - a flag only ever set in the
+		// truthy branch, never cleared in the falsy one, would stick as a stale leftover value
+		// once triggered even after the condition that caused it no longer holds.
 		$query_in['no_cat_id'] = (!$have_cats || $query['cat_id']);
-		if ($query['col_filter']['ts_owner']) $query_in['ownerClass'] = 'noPrint';
 		$query_in['no_owner_col'] = $query['no_owner_col'];
 		if(is_string($query['selectcols']))
 		{
@@ -894,7 +897,6 @@ class timesheet_ui extends timesheet_bo
 		// pm_integration is already exposed at content.nm top level via the nm settings built
 		// in index(), no need to duplicate it here.
 		$query_in['no_ts_quantity'] = $query_in['no_ts_unitprice'] = $query_in['no_ts_total'] = false;
-		error_log('DEBUG selectcols='.json_encode($query['selectcols'] ?? 'UNSET'));
 		if($query['selectcols'])
 		{
 			#_debug_array($query['selectcols']);

@@ -73,7 +73,7 @@
                         <et2-nextmatch-sortheader label="Total" id="ts_total"/>
                         <et2-number  id="price" readonly="true" precision="2" align="right"></et2-number>
                     </et2-vbox>
-                    <et2-nextmatch-header-filter  id="ts_owner" class="$cont[ownerClass]" noLang="1" emptyLabel="User"/>
+                    <et2-nextmatch-header-filter  id="ts_owner" noLang="1" emptyLabel="User"/>
                     <et2-nextmatch-sortheader label="Created" id="ts_created"/>
                     <et2-nextmatch-sortheader label="ID" id="ts_id"/>
                     <et2-nextmatch-header-filter  id="ts_status" emptyLabel="Status"/>
@@ -93,7 +93,7 @@
                     <et2-number id="${row}[ts_quantity]" readonly="true" precision="3" noLang="1"></et2-number>
                     <et2-description id="${row}[ts_unitprice]" noLang="1"></et2-description>
                     <et2-number id="${row}[ts_total]" readonly="true" precision="2" noLang="1"></et2-number>
-                    <et2-select-account class="$cont[ownerClass]" id="${row}[ts_owner]"
+                    <et2-select-account id="${row}[ts_owner]"
                                         readonly="true"></et2-select-account>
                     <et2-date-time id="${row}[ts_created]" readonly="true"></et2-date-time>
                     <et2-description id="${row}[ts_id]"></et2-description>
