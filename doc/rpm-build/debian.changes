@@ -1,3 +1,9 @@
+egroupware-docker (26.8.20260825) hardy; urgency=low
+
+  * SECURITY: this release fixes one critical and multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
+
+ -- Ralf Becker <rb@egroupware.org>  Tue, 25 Aug 2026 14:52:01 +0200
+
 egroupware-docker (26.8.20260819) hardy; urgency=low
 
   * SECURITY: this release fixes multiple high level security vulnerabilities, everyone is strongly adviced to update to it!
