@@ -65,8 +65,6 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
 
     unregisterAction = function (_aoi) {
         const node = _aoi.getDOMNode();
-        //TODO jQuery replacement
-        jQuery(node).off();
 
 		// Unregister handlers
 		if(_aoi.handlers)

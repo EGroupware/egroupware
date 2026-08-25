@@ -1,4 +1,4 @@
-import {et2_IDOMNode, et2_implements_registry} from "../et2_core_interfaces";
+import {_setEt2WidgetMixin, et2_IDOMNode, et2_implements_registry} from "../et2_core_interfaces";
 import {et2_arrayMgr} from "../et2_core_arrayMgr";
 import {et2_attribute_registry, et2_registry, et2_widget} from "../et2_core_widget";
 import type {etemplate2} from "../etemplate2";
@@ -1722,6 +1722,7 @@ const Et2WidgetMixin = <T extends Constructor>(superClass : T) =>
 	return Et2WidgetClass as unknown as Constructor<Et2WidgetClass> & T;
 }
 export const Et2Widget = dedupeMixin(Et2WidgetMixin);
+_setEt2WidgetMixin(Et2Widget);
 
 /**
  * Load a Web Component

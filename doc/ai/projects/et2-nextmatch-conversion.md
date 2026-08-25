@@ -46,6 +46,51 @@ templates, not as a one-off.
 In progress. The checklist below is validated against four real conversions (see the reference
 sections for the evidence each item is based on). Expect it to grow as more apps convert.
 
+## Known gap: `ExposeMixin` doesn't recognize `Et2Nextmatch` at all
+
+`api/js/etemplate/Expose/ExposeMixin.ts` - the gallery/lightbox mixin used by `Et2VfsMime.ts`
+(filemanager's file-thumbnail widget), `Et2Link.ts`, `Et2LinkList.ts`, `Et2ImageExpose.ts`, and
+`Et2DescriptionExpose.ts` - imports the **legacy** `et2_nextmatch` class from
+`et2_extension_nextmatch.ts` purely to find the containing grid so the gallery can sync navigation
+to it (`find_nextmatch()`, line ~443, checked from 5 call sites at lines 475, 788, 864, 882, 945).
+This needs two separate fixes, not one:
+
+1. **Detection is broken for `Et2Nextmatch`.** `find_nextmatch()`'s check is
+   `current.instanceOf(et2_nextmatch)`. `et2_nextmatch` (legacy) extends `et2_DOMWidget`;
+   `Et2Nextmatch` (`api/js/etemplate/Et2Nextmatch/Et2Nextmatch.ts:92`) extends `Et2Widget(LitElement)`
+   - two unrelated class hierarchies. `ClassWithInterfaces.instanceOf()`
+   (`et2_core_inheritance.ts`) falls through to `this instanceof et2_nextmatch` for anything that
+   isn't a string or the `Et2Widget` mixin itself, which is always `false` for a real `Et2Nextmatch`
+   instance. So `find_nextmatch()` can never find a modern grid - it always returns `null` for one,
+   same as if there were no containing grid at all.
+2. **Even with detection fixed, the code that runs once `nm` is found doesn't work either.** Every
+   consumer (`read_from_nextmatch()` at line 559, plus the call sites above) reaches into
+   `nm.controller` and legacy-only internals: `.controller.getRowByNode()`, `.controller._indexMap`
+   (already flagged with no public replacement in the
+   [legacy API replacement table](#reference-legacy-api-replacement-table) below),
+   `.controller._grid.getTotalCount()`, `.controller._gridCallback()`. `Et2Nextmatch` has none of
+   these - see that same table for the real replacements (`nm?.totalCount`, the
+   `hasRow`/`getLoadedRows` gap, etc.). Fixing `instanceOf()` alone would swap a silent
+   "gallery just doesn't sync to the grid" no-op for a hard `TypeError` on `nm.controller` being
+   `undefined`.
+
+**This is not purely a future concern - it's live today.** `find_nextmatch()` already
+self-restricts to filemanager only (its own comment: "At the moment only filemanger nm would work
+as gallery, thus we disable other nestmatches ... but filemanager", enforced via a
+`nextmatch.dom_id.match(/filemanager/, 'ig')` check). Filemanager's main index and tile view are
+already converted to `Et2Nextmatch` (see the app list above). `dom_id` itself still resolves fine on
+`Et2Nextmatch` (`Et2Widget.ts:466` provides an equivalent getter), but because `instanceOf()` never
+even gets that far, gallery-to-grid sync for filemanager's own thumbnail gallery is presently dead
+code - the one app this feature was written for is the one app that broke it, simply by being
+converted.
+
+**Untangling this also pays off independently of fixing the feature**: `et2_extension_nextmatch.ts`
+is the ~4600-line legacy widget-registration file at the root of a real circular-import TDZ hazard
+(see the `et2_core_inheritance.ts`/`Et2Widget.ts` fix history) - it's only in `Et2Link`'s import
+graph at all because of this one `instanceOf()` check. Once `ExposeMixin.ts` no longer needs it,
+`Et2Link` and every other Expose consumer's dependency graph loses that edge entirely, not just the
+detection bug.
+
 ## Conversion checklist
 
 Do **not** split this across multiple commits by layer (template-only, then JS-only, etc.) — see

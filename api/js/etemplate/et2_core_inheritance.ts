@@ -10,8 +10,7 @@
 
 import {egw, IegwAppLocal} from "../jsapi/egw_global";
 import {et2_checkType, et2_no_init, et2_validateAttrib} from "./et2_core_common";
-import {et2_implements_registry} from "./et2_core_interfaces";
-import {Et2Widget} from "./Et2Widget/Et2Widget";
+import {et2_implements_registry, et2_widget_mixin} from "./et2_core_interfaces";
 
 export class ClassWithInterfaces
 {
@@ -46,7 +45,7 @@ export class ClassWithInterfaces
 				{
 						return this.implements(_class_or_interfacename);
 				}
-				if (_class_or_interfacename === Et2Widget)
+				if (_class_or_interfacename === et2_widget_mixin)
 				{
 					return true;
 				}

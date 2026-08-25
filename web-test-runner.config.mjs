@@ -5,10 +5,12 @@
  * Mocha (https://mochajs.org/) &  Chai Assertion Library (https://www.chaijs.com/api/assert/)
  * Playwright (https://playwright.dev/docs/intro) runs the tests in actual browsers.
  *
- * Test groups are discovered from each app with a js/test/ directory and are
- * named after that app.  Use `npm run jstest` to run every group, or select an
- * app with `npm run jstest -- <app>` (for example, `npm run jstest -- api`).
- * Pass a test file or glob instead to run it directly, for example:
+ * Test groups are discovered from each app with any *.test.ts file somewhere under js/
+ * (not necessarily directly in js/test/ - eg. api's tests live in per-widget
+ * js/etemplate/&lt;widget&gt;/test/ subdirectories) and are named after that app.  Use
+ * `npm run jstest` to run every group, or select an app with `npm run jstest -- <app>`
+ * (for example, `npm run jstest -- api`). Pass a test file or glob instead to run it
+ * directly, for example:
  * `npm run jstest -- api/js/etemplate/MyWidget/test/MyWidget.test.ts`.
  *
  * Trouble getting tests to run?  Try manually compiling TypeScript (source & tests), that seems to help.
@@ -18,13 +20,31 @@ import fs from 'fs';
 import {playwrightLauncher} from '@web/test-runner-playwright';
 import {esbuildPlugin} from '@web/dev-server-esbuild';
 
-// Add any test files in app/js/test/
+// True if a *.test.ts file exists anywhere under dir (recursing into subdirectories),
+// so an app is discovered regardless of how deep its test files are nested.
+function hasTestFile(dir)
+{
+	let entries;
+	try
+	{
+		entries = fs.readdirSync(dir, {withFileTypes: true});
+	}
+	catch(e)
+	{
+		return false;
+	}
+	return entries.some(entry => entry.isDirectory() ?
+		hasTestFile(`${dir}/${entry.name}`) :
+		entry.name.endsWith('.test.ts'));
+}
+
+// Add any app with a *.test.ts file somewhere under js/
 const appJS = fs.readdirSync('.')
 	.filter(
 		dir => dir !== 'kdots' && // skip kdots for now
 			fs.existsSync(`${dir}/js`) &&
-			fs.existsSync(`${dir}/js/test`) &&
-			fs.statSync(`${dir}/js/test`).isDirectory(),
+			fs.statSync(`${dir}/js`).isDirectory() &&
+			hasTestFile(`${dir}/js`),
 	)
 
 const testGroups = appJS.map(app => ({

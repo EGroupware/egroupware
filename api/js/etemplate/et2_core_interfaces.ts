@@ -14,6 +14,23 @@ import type {et2_widget} from "./et2_core_widget";
 export var et2_implements_registry : any = {};
 
 /**
+ * Reference to the Et2Widget mixin function, set by Et2Widget.ts once it has loaded.
+ *
+ * Et2Widget.ts and et2_core_inheritance.ts both transitively depend on et2_core_widget.ts
+ * (whose et2_widget class extends ClassWithAttributes from et2_core_inheritance.ts) - a
+ * static import of Et2Widget directly into et2_core_inheritance.ts creates a cycle that,
+ * depending on which module is entered first, can leave ClassWithAttributes still in its
+ * TDZ when et2_widget's class heritage clause tries to read it. Routing the reference
+ * through this already circular-dependency-safe module avoids that import edge entirely.
+ */
+export var et2_widget_mixin : Function = null;
+
+export function _setEt2WidgetMixin(mixin : Function)
+{
+	et2_widget_mixin = mixin;
+}
+
+/**
  * Checks if an object / et2_widget implements given methods
  *
  * @param obj

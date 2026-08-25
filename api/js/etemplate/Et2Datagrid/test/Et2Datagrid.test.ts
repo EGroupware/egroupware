@@ -3020,7 +3020,7 @@ describe("Et2Datagrid virtual height stability", () =>
 		);
 		assert.include(
 			cssText,
-			"min-height: max(44px, var(--row-height, 44px));",
+			"min-height: max(2em, var(--row-height, 35px));",
 			"regular rows should use the measured/configured row height as a min-height floor"
 		);
 		assert.match(
