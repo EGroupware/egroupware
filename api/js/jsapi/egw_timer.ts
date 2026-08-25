@@ -434,7 +434,7 @@ class Timer implements TimerModule
 	private startTimer(_timer : TimerState, _start? : string | Date, _offset? : number, _app_id? : string)
 	{
 		_timer.started = _start ? new Date(_start) : new Date();
-		_timer.started.setSeconds(0);	// only use full minutes, as this is what we display
+		_timer.started.setSeconds(0, 0);	// only use full minutes, as this is what we display
 		if (_timer.last && _timer.started.valueOf() < _timer.last.valueOf())
 		{
 			throw egw.lang('Start-time can not be before last stop- or pause-time %1!', formatUTCTime(_timer.last));
@@ -473,7 +473,7 @@ class Timer implements TimerModule
 	private stopTimer(_timer : TimerState, _pause? : boolean, _time? : string | Date)
 	{
 		const time = _time ? new Date(_time) : new Date();
-		time.setSeconds(0);	// only use full minutes, as this is what we display
+		time.setSeconds(0, 0);	// only use full minutes, as this is what we display
 		if (_timer.last && time.valueOf() < _timer.last.valueOf())
 		{
 			const last_time = formatUTCTime(_timer.last);
