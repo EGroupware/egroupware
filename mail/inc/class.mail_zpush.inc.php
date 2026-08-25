@@ -102,7 +102,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 		if (is_null(self::$profileID))
 		{
 			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' self::ProfileID isNUll:'.array2string(self::$profileID));
-			self::$profileID =& Api\Cache::getSession('mail','activeSyncProfileID');
+			self::$profileID = Api\Cache::getSession('mail','activeSyncProfileID');
 			if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' ActiveProfileID (after reading Cache):'.array2string(self::$profileID));
 		}
 		if (isset($GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID']))
@@ -116,6 +116,7 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			{
 				self::$profileID = (int)$GLOBALS['egw_info']['user']['preferences']['activesync']['mail-ActiveSyncProfileID'];
 			}
+			self::persist_profile_id();
 		}
 		if ($this->debugLevel>1) error_log(__METHOD__.__LINE__.' Profile Selected (after reading Prefs):'.array2string(self::$profileID));
 
@@ -128,10 +129,19 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			catch(Exception $e) {
 				unset($e);
 				self::$profileID = Mail\Account::get_default_acc_id();
+				self::persist_profile_id();
 			}
 		}
 		if ($this->debugLevel>0) error_log(__METHOD__.'::'.__LINE__.' ProfileSelected:'.self::$profileID);
 		//$this->debugLevel=0;
+	}
+
+	/**
+	 * Persist self::$profileID (mutated in-place, no longer a live session reference) back to the session
+	 */
+	private static function persist_profile_id()
+	{
+		Api\Cache::setSession('mail', 'activeSyncProfileID', self::$profileID);
 	}
 
 	/**
@@ -281,12 +291,20 @@ class mail_zpush implements activesync_plugin_write, activesync_plugin_sendmail,
 			// todo: tell mail which account to use
 			//error_log(__METHOD__.__LINE__.' create object with ProfileID:'.array2string(self::$profileID));
 			$this->mail = Mail::getInstance(false,self::$profileID,true,false,true);
-			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
+			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId))
+			{
+				self::$profileID = $this->mail->icServer->ImapServerId;
+				self::persist_profile_id();
+			}
 		}
 		else
 		{
 			//error_log(__METHOD__.__LINE__." connect with profileID: ".self::$profileID);
-			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId)) self::$profileID = $this->mail->icServer->ImapServerId;
+			if (self::$profileID == 0 && isset($this->mail->icServer->ImapServerId) && !empty($this->mail->icServer->ImapServerId))
+			{
+				self::$profileID = $this->mail->icServer->ImapServerId;
+				self::persist_profile_id();
+			}
 		}
 		$this->mail->openConnection(self::$profileID,false);
 

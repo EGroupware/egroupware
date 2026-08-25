@@ -924,6 +924,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 				{
 					self::$supports_keywords[$this->ImapServerId] = stripos(implode('', $status['flags']), '$label') !== false ||
 						in_array('\\*', $status['permflags']);	// arbitrary keyswords also allow keywords
+					self::persist_supports_keywords();
 				}
 				return $_status;
 			}
@@ -975,6 +976,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 				{
 					error_log(__METHOD__.__LINE__.' (examineServer for detection) '.$capability.'->'.array2string(self::$supports_keywords).' failed '.function_backtrace());
 					self::$supports_keywords[$this->ImapServerId]=false;
+					self::persist_supports_keywords();
 				}
 			}
 			//error_log(__METHOD__.__LINE__.' '.$capability.'->'.array2string(self::$supports_keywords).' '.function_backtrace());
@@ -1506,7 +1508,7 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 	 */
 	public static function init_static()
 	{
-		self::$supports_keywords =& Api\Cache::getSession (__CLASS__, 'supports_keywords');
+		self::$supports_keywords = Api\Cache::getSession (__CLASS__, 'supports_keywords');
 
 		// hosts from header.inc.php
 		self::$hosts_with_push = $GLOBALS['egw_info']['server']['imap_hosts_with_push'] ?? [];
@@ -1516,6 +1518,14 @@ class Imap extends Horde_Imap_Client_Socket implements Imap\PushIface
 		{
 			self::$hosts_with_push[] = $host;
 		}
+	}
+
+	/**
+	 * Persist self::$supports_keywords (mutated in-place, no longer a live session reference) back to the session
+	 */
+	private static function persist_supports_keywords()
+	{
+		Api\Cache::setSession(__CLASS__, 'supports_keywords', self::$supports_keywords);
 	}
 
 	/**
