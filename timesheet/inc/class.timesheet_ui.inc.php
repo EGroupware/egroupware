@@ -834,6 +834,8 @@ class timesheet_ui extends timesheet_bo
 				$row['titleClass'] = 'timesheet_titleSum';
 				continue;
 			}
+			$row['ts_end_time'] = $row['ts_start'] + 60 * $row['ts_duration'];
+
 			if($row['ts_quantity'])
 			{
 				$row['ts_quantity'] = round($row['ts_quantity'], 2);
@@ -874,9 +876,14 @@ class timesheet_ui extends timesheet_bo
 			if(!$row['titleClass']) $row['titleClass'] = 'timesheet_titleDetails';
 
 		}
-		$rows['no_cat_id'] = (!$have_cats || $query['cat_id']);
-		if ($query['col_filter']['ts_owner']) $rows['ownerClass'] = 'noPrint';
-		$rows['no_owner_col'] = $query['no_owner_col'];
+		// Column visibility markers for the row template's `disabled="@..."` column attributes.
+		// These must live on $query_in (which becomes content.nm at the top level), NOT $rows
+		// (which becomes content.nm.rows) - the client resolves @expr column attributes against
+		// the widget's own content.nm scope, so a flag nested under .rows is never found and the
+		// column silently never disables.
+		$query_in['no_cat_id'] = (!$have_cats || $query['cat_id']);
+		if ($query['col_filter']['ts_owner']) $query_in['ownerClass'] = 'noPrint';
+		$query_in['no_owner_col'] = $query['no_owner_col'];
 		if(is_string($query['selectcols']))
 		{
 			$query['selectcols'] = explode(',', $query['selectcols']);
@@ -884,8 +891,10 @@ class timesheet_ui extends timesheet_bo
 
 		$rows += $this->summary;
 
-		$rows['pm_integration'] = $this->pm_integration;
-		$rows['no_ts_quantity'] = $rows['no_ts_unitprice'] = $rows['no_ts_total'] = false;
+		// pm_integration is already exposed at content.nm top level via the nm settings built
+		// in index(), no need to duplicate it here.
+		$query_in['no_ts_quantity'] = $query_in['no_ts_unitprice'] = $query_in['no_ts_total'] = false;
+		error_log('DEBUG selectcols='.json_encode($query['selectcols'] ?? 'UNSET'));
 		if($query['selectcols'])
 		{
 			#_debug_array($query['selectcols']);
@@ -893,11 +902,11 @@ class timesheet_ui extends timesheet_bo
 				$query['selectcols'] = explode(',',$query['selectcols']);
 			}
 			#ts_quantity,ts_unitprice,ts_total
-			if ($query['selectcols'] && in_array('ts_quantity_quantity',$query['selectcols'])===false) $rows['no_ts_quantity'] = 1;
-			if ($query['selectcols'] && in_array('ts_unitprice', $query['selectcols'])===false) $rows['no_ts_unitprice'] = 1;
-			if ($query['selectcols'] && in_array('ts_total_price',$query['selectcols'])===false) $rows['no_ts_total'] = 1;
+			if ($query['selectcols'] && in_array('ts_quantity_quantity',$query['selectcols'])===false) $query_in['no_ts_quantity'] = 1;
+			if ($query['selectcols'] && in_array('ts_unitprice', $query['selectcols'])===false) $query_in['no_ts_unitprice'] = 1;
+			if ($query['selectcols'] && in_array('ts_total_price',$query['selectcols'])===false) $query_in['no_ts_total'] = 1;
 		}
-		$rows['no_ts_status'] = is_array($query['selectcols']) && in_array('ts_status', $query['selectcols']) === false && !$this->config_data['history'] ||
+		$query_in['no_ts_status'] = is_array($query['selectcols']) && in_array('ts_status', $query['selectcols']) === false && !$this->config_data['history'] ||
 			$query['no_status'];
 
 		if ($query['search'])

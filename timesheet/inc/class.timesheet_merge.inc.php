@@ -116,6 +116,10 @@ class timesheet_merge extends Api\Storage\Merge
 		// We have specific requirements for floats, we'll do them in Merge
 		unset($types['float']);
 
+		// Compute end-time from start+duration, before ts_start gets formatted below
+		$record->ts_end = $record->ts_start + 60 * $record->ts_duration;
+		$types['date-time'][] = 'ts_end';
+
 		$_selects = array('status' => $this->bo->status_labels);
 		foreach($_selects['status'] as &$status)
 		{
@@ -167,6 +171,7 @@ class timesheet_merge extends Api\Storage\Merge
 			) + parent::get_placeholder_list($prefix);
 
 		$fields = array('ts_id' => lang('Timesheet ID')) + $this->bo->field2label + array(
+				'ts_end'      => lang('End'),
 				'ts_total'    => lang('total'),
 				'ts_created'  => lang('Created'),
 				'ts_modified' => lang('Modified'),
