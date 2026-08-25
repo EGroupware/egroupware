@@ -92,9 +92,9 @@ class Jmap extends Mail\Imap
 	{
 		parent::__construct($params, $_adminConnection, $_timeout);
 
-		$this->jmap_accountId =& Api\Cache::getSession(__CLASS__, 'accountId:'.$this->acc_id);
-		$this->jmap_states =& Api\Cache::getSession(__CLASS__, 'states:'.$this->acc_id);
-		$this->current_folder =& Api\Cache::getSession(__CLASS__, 'currentFolder:'.$this->acc_id);
+		$this->jmap_accountId = Api\Cache::getSession(__CLASS__, 'accountId:'.$this->acc_id);
+		$this->jmap_states = Api\Cache::getSession(__CLASS__, 'states:'.$this->acc_id);
+		$this->current_folder = Api\Cache::getSession(__CLASS__, 'currentFolder:'.$this->acc_id);
 	}
 
 	/**
@@ -338,8 +338,23 @@ class Jmap extends Mail\Imap
 						($ssl & ~Mail\Account::VERIFY_MASK) | Mail\Account::VERIFY_DISABLED);
 				}
 			}
+			// $this->jmap_accountId is passed as Mail\Jmap::__construct()'s by-reference $accountId
+			// param, so bootstrap() resolving it (when it was previously empty) already mutated it
+			// in-place above - it's no longer a live session reference itself, so persist explicitly
+			$this->persist_jmap_state();
 		}
 		return $this->jmap;
+	}
+
+	/**
+	 * Persist $jmap_accountId/$jmap_states/$current_folder (mutated in-place, no longer live
+	 * session references) back to the session
+	 */
+	private function persist_jmap_state()
+	{
+		Api\Cache::setSession(__CLASS__, 'accountId:'.$this->acc_id, $this->jmap_accountId);
+		Api\Cache::setSession(__CLASS__, 'states:'.$this->acc_id, $this->jmap_states);
+		Api\Cache::setSession(__CLASS__, 'currentFolder:'.$this->acc_id, $this->current_folder);
 	}
 
 	/**
@@ -737,6 +752,7 @@ class Jmap extends Mail\Imap
 				$this->current_folder = explode('::', $acc_id_folder)[1] ?? 'INBOX',
 				$this->jmap_accountId
 			);
+			$this->persist_jmap_state();
 		}
 		catch (\Exception $e) {
 			_egw_log_exception($e);
