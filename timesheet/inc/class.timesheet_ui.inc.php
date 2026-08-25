@@ -992,7 +992,7 @@ class timesheet_ui extends timesheet_bo
 				//'actions'        => $this->get_actions(),
 				'default_cols'   => '!legacy_actions',	// switch legacy actions column and row off by default
 				'pm_integration' => $this->pm_integration,
-				'placeholder_actions' => array('add'),
+				'placeholder_actions' => array('new'),
 				'disable_autorefresh' => true,	// we have push
 			);
 		}
@@ -1094,23 +1094,20 @@ class timesheet_ui extends timesheet_bo
 				'disableClass' => 'rowNoEdit',
 			),
 */
-			'add' => array(
-				'caption' => 'Add',
+
+			'new' => array(
+				'caption' => 'New',
+				'onExecute' => 'javaScript:app.timesheet.add_action_handler',
+				'icon' => 'new',
 				'group' => $group,
-				'children' => array(
-					'new' => array(
-						'caption' => 'New',
-						'onExecute' => 'javaScript:app.timesheet.add_action_handler',
-						'icon' => 'new',
-					),
-					'copy' => array(
-						'caption' => 'Copy',
-						'url' => 'menuaction=timesheet.timesheet_ui.edit&action=copy&ts_id=$id',
-						'popup' => Link::get_registry('infolog', 'add_popup'),
-						'allowOnMultiple' => false,
-						'icon' => 'copy',
-					),
-				)
+			),
+			'copy' =>	array(
+				'caption' => 'Copy',
+				'url' => 'menuaction=timesheet.timesheet_ui.edit&action=copy&ts_id=$id',
+				'popup' => Link::get_registry('infolog', 'add_popup'),
+				'allowOnMultiple' => false,
+				'icon' => 'copy',
+				'group' => $group,
 			),
 			'cat' => Etemplate\Widget\Nextmatch::category_action(
 				'timesheet',++$group,'Change category','cat_'
