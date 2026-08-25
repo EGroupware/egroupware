@@ -62,6 +62,35 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 	get _edit() : HTMLInputElement { return this.shadowRoot.querySelector("input");}
 
+	/** Whether a deferred "change" dispatch is already scheduled - see _scheduleChangeEvent(). */
+	private _changeEventScheduled = false;
+
+	/**
+	 * Defer a "change" dispatch until after `value`'s render settles, coalescing
+	 * back-to-back calls into one event instead of one per call.
+	 *
+	 * A rapid multi-click (eg. two different breadcrumb segments before the first
+	 * click's updateComplete resolves) changes `value` more than once before either
+	 * dispatch fires. Each call read `value` fresh at dispatch time anyway, so once
+	 * `value` has changed twice, firing once still reports the current (last) value
+	 * correctly - firing once per call instead sends listeners (eg. filemanager's
+	 * path handler) two identical "change" events, each triggering its own
+	 * independent reload() of the same final path.
+	 */
+	private _scheduleChangeEvent(eventInit? : EventInit) : void
+	{
+		if(this._changeEventScheduled)
+		{
+			return;
+		}
+		this._changeEventScheduled = true;
+		this.updateComplete.then(() =>
+		{
+			this._changeEventScheduled = false;
+			this.dispatchEvent(new Event("change", eventInit));
+		});
+	}
+
 	constructor()
 	{
 		super();
@@ -131,10 +160,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 
 		if(oldValue != this.value)
 		{
-			this.updateComplete.then(() =>
-			{
-				this.dispatchEvent(new Event("change"));
-			})
+			this._scheduleChangeEvent();
 		}
 	}
 
@@ -193,10 +219,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 				this.requestUpdate("value", oldValue);
 				if(oldValue != this.value)
 				{
-					this.updateComplete.then(() =>
-					{
-						this.dispatchEvent(new Event("change"));
-					});
+					this._scheduleChangeEvent();
 				}
 			// Fall through
 			case "Escape":
@@ -248,10 +271,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
 				}
 				if(oldValue != this.value)
 				{
-					this.updateComplete.then(() =>
-					{
-						this.dispatchEvent(new Event("change"));
-					})
+					this._scheduleChangeEvent();
 				}
 			}
 			// Can still click on it when disabled I guess
@@ -372,7 +392,7 @@ export class Et2VfsPath extends Et2InputWidget(LitElement)
                                        @click=${(e) =>
                                        {
                                            this.setValue("/");
-                                           this.updateComplete.then(() => {this.dispatchEvent(new Event("change", {bubbles: true}))});
+                                           this._scheduleChangeEvent({bubbles: true});
                                        }}
                             ></et2-image>` : nothing}
                     </slot>
