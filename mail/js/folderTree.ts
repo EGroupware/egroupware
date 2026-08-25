@@ -87,12 +87,19 @@ export interface FolderTreeNode
 	 *  otherwise, so it never fights Et2Tree.ts's own openStatePreference-driven state */
 	open? : true;
 	/**
-	 * Only ever set on the account's own top-level INBOX node - MailApp.aclEnabled() (mail/js/
+	 * `acl` only ever set on the account's own top-level INBOX node - MailApp.aclEnabled() (mail/js/
 	 * app.ts) reads node.data.acl to decide whether to show the "Edit folder ACL" tree action,
 	 * matching classic mail_tree.inc.php's exact node shape (its own "Set Acl capability for
 	 * INBOX" comment) so that method needed no changes at all for the JMAP-native tree.
+	 *
+	 * `noSelect` only ever set true on a namespace-root node (see icons()'s isNamespaceRoot
+	 * param) - classic mail_tree.inc.php marked the same nodes via a dedicated
+	 * folderNoSelectClosed/folderNoSelectOpen icon, which MailApp.changeFolder() (mail/js/app.ts)
+	 * used to detect and block selection of; the JMAP-native tree instead keeps the "people" icon
+	 * for these nodes (ralf's explicit ask) and signals non-selectability via this flag instead, so
+	 * changeFolder() reads node.data.noSelect rather than guessing from the icon name.
 	 */
-	data? : {acl : boolean};
+	data? : {acl? : boolean, noSelect? : boolean};
 }
 
 // role -> bootstrap-icon name, i.e. the RIGHT-hand (already-translated) side of Api\Image::find()'s
@@ -269,6 +276,7 @@ function buildNode(mailbox : JmapMailboxNode, profileID : string, path : string,
 		// top-level INBOX, gated on isTopLevel same as `open` above (a shared/other-user
 		// mailbox's own nested INBOX is never what aclEnabled() looks up)
 		...(role === 'inbox' && isTopLevel ? {data: {acl: !!mailbox.aclCapable}} : {}),
+		...(isNamespaceRoot ? {data: {noSelect: true}} : {}),
 		...icons(role, isNamespaceRoot, egw),
 	};
 }

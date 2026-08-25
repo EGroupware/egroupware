@@ -214,6 +214,25 @@ describe("buildFolderLevel()", () =>
 		assert.notInclude(notARoot.im0, "people", "must match the literal namespace-root name only, not a substring/prefix");
 	});
 
+	/**
+	 * Regression test: a namespace root keeps its "people" icon (ralf's explicit ask, see above),
+	 * so MailApp.changeFolder() (mail/js/app.ts) can no longer detect non-selectability from the
+	 * icon name the way it does for classic mail_tree.inc.php's server-rendered NoSelect icon.
+	 * data.noSelect is the JMAP-native tree's own signal for that instead - without it,
+	 * changeFolder() treats a namespace root as a real, selectable mailbox and applies it as
+	 * selectedFolder, which is what triggered the original freeze this test guards against.
+	 */
+	it("flags a namespace root as data.noSelect, but never a regular folder", () =>
+	{
+		const [user] = build([mailbox({name: "user", role: null})]);
+		const [notARoot] = build([mailbox({name: "username", role: null})]);
+		const [inbox] = build([mailbox({role: "inbox"})]);
+
+		assert.isTrue(user.data?.noSelect);
+		assert.isUndefined(notARoot.data?.noSelect);
+		assert.isUndefined(inbox.data?.noSelect);
+	});
+
 
 	/**
 	 * Classic mail_tree.inc.php always substituted the UI-language lang() translation for a

@@ -1011,9 +1011,26 @@ class JmapShim
 		{
 			return 'INBOX';
 		}
-		$delimiter = self::namespaceDelimiter($imap, 'personal');
+		// A path under the shared/other-users namespace root ("user/..."/"shared/...", see
+		// isNamespaceRootPath()) lives in that namespace, not "personal" - its delimiter can differ
+		// (same reasoning as the $calledFor branch above, and namespaceRootsMissingFrom()'s own use
+		// of the "others" delimiter for both root names).
+		$delimiter = self::namespaceDelimiter($imap, self::isNamespaceRootPath($path) ? 'others' : 'personal');
 
 		return $delimiter === '/' ? $path : str_replace('/', $delimiter, $path);
+	}
+
+	/**
+	 * Whether $path's first "/"-segment is a shared/other-users namespace root ("user"/"shared") -
+	 * PHP counterpart of folderTree.ts's isNamespaceRootName(), same convention (case-insensitive,
+	 * matched by literal name only, not by the server's advertised NAMESPACE prefixes).
+	 *
+	 * @param string $path
+	 * @return bool
+	 */
+	private static function isNamespaceRootPath(string $path) : bool
+	{
+		return (bool)preg_match('#^(user|shared)(/|$)#i', $path);
 	}
 
 	/**

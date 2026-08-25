@@ -3134,10 +3134,14 @@ export class MailApp extends EgwApp
 		// and that leads to corruption for selected all actions
 		(this.et2.getWidgetById(this.nm_index) as Et2Nextmatch).clearSelection();
 
-		// Abort if user selected an un-selectable node
-		// Use image over anything else because...?
-		const img = _widget.getSelectedItem()?.im0 ?? "";
-		if (img.indexOf('NoSelect') !== -1)
+		// Abort if user selected an un-selectable node (a namespace root like "user"/"shared" -
+		// a structural navigation doorway, not a real mailbox). The JMAP-native tree
+		// (folderTree.ts) signals this via node.data.noSelect; classic mail_tree.inc.php's
+		// server-rendered initial tree instead uses a dedicated NoSelect icon - check both, since
+		// either tree can be what's currently selected.
+		const selectedItem = _widget.getSelectedItem();
+		const img = selectedItem?.im0 ?? "";
+		if (img.indexOf('NoSelect') !== -1 || (selectedItem?.data as {noSelect?: boolean})?.noSelect)
 		{
 			_widget.reSelectItem(_previous);
 			return;
