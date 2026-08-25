@@ -71,4 +71,38 @@ class MergeTest extends LoggedInTest
 			["Multi-line:\n1.  First line\n -> Second\n", "Multi-line:<br/>1.  First line<br/> -> Second<br/>"],
 		];
 	}
+
+	/**
+	 * Word / LibreOffice spell-check or autocorrect can wrap part of a placeholder in a
+	 * formatting tag (eg. <text:span>) whose opening or closing half lands just outside
+	 * the {{...}} markers, eg. "{{ts<text:span ...>_end}}</text:span>".  merge_string()
+	 * has to reunite the split placeholder and drop the orphaned tag half, instead of
+	 * leaving unbalanced markup behind that a target application then refuses to open.
+	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('splitPlaceholderTagProvider')]
+	public function testSplitPlaceholderTag($target, $expected)
+	{
+		$errors = [];
+		$this->merge->setReplacements(['$$ts_end$$' => 'VALUE']);
+		$result = $this->merge->merge_string($target, [1], $errors, "text/plain");
+
+		$this->assertEmpty($errors, "Errors when merging");
+		$this->assertEquals($expected, $result);
+	}
+
+	public static function splitPlaceholderTagProvider() : array
+	{
+		return [
+			// opening tag inside the markers, closing tag just outside - the real-world bug
+			['{{ts<text:span text:style-name="T1">_end}}</text:span>', 'VALUE'],
+			// symmetric case: closing tag inside, opening tag just outside
+			['<text:span text:style-name="T1">{{ts_</text:span>end}}', 'VALUE'],
+			// an unrelated tag right after the placeholder must NOT be swallowed
+			['{{ts<text:span>_end}}</text:span><text:p>next</text:p>', 'VALUE<text:p>next</text:p>'],
+			// tag fully inside the markers already worked, must keep working
+			['{{<text:span>ts_end</text:span>}}', 'VALUE'],
+			// tag fully outside the markers - already balanced, must stay untouched
+			['<text:span>{{ts_end}}</text:span>', '<text:span>VALUE</text:span>'],
+		];
+	}
 }

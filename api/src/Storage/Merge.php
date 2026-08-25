@@ -1074,25 +1074,17 @@ abstract class Merge
 		$content = $_content;
 		if (strpos($content, '{{') !== false)
 		{
-			$pattern_curly = '/{{[^{}]+}}/u';
+			// Also capture a run of tags immediately before/after the markers: Word or
+			// LibreOffice spell-check / autocorrect can wrap part of a placeholder in a
+			// formatting tag (eg. <text:span>) whose opening or closing half lands just
+			// outside {{...}}. Stripping only what's inside would then leave the other
+			// half orphaned, producing invalid XML - fix_split_placeholder_tags() below
+			// only consumes such a tag when it can pair it with one left unbalanced inside.
+			$pattern_curly = '/(?<lead>(?:<[a-zA-Z][^<>]*>)*){{(?<inner>[^{}]+)}}(?<trail>(?:<\/[a-zA-Z][^<>]*>)*)/u';
 			$guard = 0; // safety guard against pathological inputs
 			while (preg_match($pattern_curly, $content) && $guard++ < 2000)
 			{
-				$content = preg_replace_callback($pattern_curly, function ($m)
-				{
-					$inner = substr($m[0], 2, -2);
-
-					// Do NOT strip HTML for IF ... blocks – keep markup intact.
-					// Nested {{...}} inside will be converted by later iterations.
-					if (preg_match('/^\s*IF\s/i', $inner))
-					{
-						return '$$' . $inner . '$$';
-					}
-
-					// Simple placeholders / directives: strip any Word-inserted tags
-					// so {{n_fn}} corrupted by Word styling still becomes $$n_fn$$.
-					return '$$' . strip_tags($inner) . '$$';
-				}, $content);
+				$content = preg_replace_callback($pattern_curly, [$this, 'fix_split_placeholder_tags'], $content);
 			}
 		}
 		// Handle escaped placeholder markers in RTF, they won't match when escaped
@@ -1378,6 +1370,94 @@ abstract class Merge
 		}
 
 		return $content;
+	}
+
+	/**
+	 * Callback for preg_replace_callback converting {{...}} to $$...$$ in merge_string()
+	 *
+	 * Word/LibreOffice spell-check or autocorrect can wrap part of a placeholder in a
+	 * formatting tag (eg. <text:span>) whose opening or closing half lands just outside
+	 * the {{...}} markers, eg. "{{ts<text:span ...>_end}}</text:span>". Simply stripping
+	 * tags found inside the markers would then leave the other half of that tag orphaned,
+	 * producing invalid XML the target application refuses to open. $m has to come from
+	 * a match of the "(?<lead>...){{(?<inner>...)}}(?<trail>...)" pattern in merge_string(),
+	 * where lead/trail are a run of tags directly before/after the markers: here we only
+	 * consume a lead/trail tag when it pairs with a tag left unbalanced by stripping $inner,
+	 * so an unrelated neighbouring tag is never touched.
+	 *
+	 * @param array $m match with named groups 'lead', 'inner', 'trail'
+	 * @return string
+	 */
+	private function fix_split_placeholder_tags($m)
+	{
+		$lead = $m['lead'];
+		$inner = $m['inner'];
+		$trail = $m['trail'];
+
+		$opens = $closes = [];
+		preg_match_all('/<([a-zA-Z][a-zA-Z0-9:_.-]*)\b[^<>]*?(\/)?>/', $inner, $matches, PREG_SET_ORDER);
+		foreach($matches as $tag)
+		{
+			if(($tag[2] ?? '') === '/') continue;    // self-closing, already balanced
+			$opens[$tag[1]] = ($opens[$tag[1]] ?? 0) + 1;
+		}
+		preg_match_all('/<\/([a-zA-Z][a-zA-Z0-9:_.-]*)>/', $inner, $matches, PREG_SET_ORDER);
+		foreach($matches as $tag)
+		{
+			$closes[$tag[1]] = ($closes[$tag[1]] ?? 0) + 1;
+		}
+		$unclosed = [];    // opened inside, not closed inside --> pair with $trail
+		$unopened = [];    // closed inside, not opened inside --> pair with $lead
+		foreach($opens as $name => $n)
+		{
+			if(($net = $n - ($closes[$name] ?? 0)) > 0) $unclosed[$name] = $net;
+		}
+		foreach($closes as $name => $n)
+		{
+			if(($net = $n - ($opens[$name] ?? 0)) > 0) $unopened[$name] = $net;
+		}
+
+		// consume matching closing tags right after the marker, stopping at the first
+		// one that doesn't pair with an unclosed tag from inside
+		if($unclosed && $trail)
+		{
+			preg_match_all('/<\/([a-zA-Z][a-zA-Z0-9:_.-]*)>/', $trail, $tags, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
+			$cut = 0;
+			foreach($tags as $tag)
+			{
+				if($tag[0][1] !== $cut || empty($unclosed[$tag[1][0]])) break;
+				$unclosed[$tag[1][0]]--;
+				$cut += strlen($tag[0][0]);
+			}
+			$trail = substr($trail, $cut);
+		}
+		// consume matching opening tags right before the marker, stopping (scanning
+		// backwards) at the first one that doesn't pair with an unopened tag from inside
+		if($unopened && $lead)
+		{
+			preg_match_all('/<([a-zA-Z][a-zA-Z0-9:_.-]*)\b[^<>]*?\/?>/', $lead, $tags, PREG_OFFSET_CAPTURE | PREG_SET_ORDER);
+			$keep = strlen($lead);
+			for($i = count($tags) - 1; $i >= 0; $i--)
+			{
+				$tag = $tags[$i];
+				$end = $tag[0][1] + strlen($tag[0][0]);
+				if($end !== $keep || empty($unopened[$tag[1][0]])) break;
+				$unopened[$tag[1][0]]--;
+				$keep = $tag[0][1];
+			}
+			$lead = substr($lead, 0, $keep);
+		}
+
+		// Do NOT strip HTML for IF ... blocks – keep markup intact.
+		// Nested {{...}} inside will be converted by later iterations.
+		if(preg_match('/^\s*IF\s/i', $inner))
+		{
+			return $lead . '$$' . $inner . '$$' . $trail;
+		}
+
+		// Simple placeholders / directives: strip any Word-inserted tags
+		// so {{n_fn}} corrupted by Word styling still becomes $$n_fn$$.
+		return $lead . '$$' . strip_tags($inner) . '$$' . $trail;
 	}
 
 	/**
