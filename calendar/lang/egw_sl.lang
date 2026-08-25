@@ -42,9 +42,9 @@ after %1	calendar	sl	Po %1
 after current date	calendar	sl	Za trenutnim datumom
 age:	calendar	sl	Starost:
 alarm	calendar	sl	Opomnik
-alarm added	calendar	sl	Alarm dodan
+alarm added	calendar	sl	Alarm dodan.
 alarm added automatic to new events before event start-time	calendar	sl	Alarm se je samodejno dodal novim dogodkom pred začetkom dogodka
-alarm deleted	calendar	sl	Alarm zbrisan
+alarm deleted	calendar	sl	Alarm zbrisan.
 alarm for %1 at %2 in %3	calendar	sl	Opomnik za %1 ob %2 v %3
 alarm management	calendar	sl	Upravljanje opomnikov
 alarms	calendar	sl	Opomniki
@@ -217,7 +217,7 @@ enddate	calendar	sl	Končni datum
 enddate / -time of the meeting, eg. for more then one day	calendar	sl	Končni datum / -čas sestanka, npr. za več kot en dan
 enddate of the export	calendar	sl	Končni datum izvoza
 ends	calendar	sl	Konča
-error adding the alarm	calendar	sl	Napaka pri dodajanju alarma
+error adding the alarm	calendar	sl	Napaka pri dodajanju alarma.
 error notifying %1	calendar	sl	Napaka pri obveščanju %1
 error saving the event!	calendar	sl	Napaka pri shranjevanju dogodka!
 error: can't delete original series!	calendar	sl	Napaka: Izvirne serije ni mogoče izbrisati!

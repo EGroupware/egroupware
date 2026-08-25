@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	ru	%1 (%2 новых) сообщений записано для приложения '%3' и языков '%4'
 %1 active file(s) with same name as directory inactivated!	admin	ru	%1 активных файлов с именем, аналогичным имени каталога, удалены!
-%1 copied - the copy can now be edited	common	ru	%1 скопировано - теперь копию можно редактировать
+%1 copied - the copy can now be edited	common	ru	%1 скопировано - теперь копию можно редактировать.
 %1 directories %2 found!	admin	ru	%1 каталогов %2 найдено
 %1 email addresses inserted	common	ru	Вставлен адрес e-mail: %1.
 %1 email(s) added into %2	common	ru	%1 письмо(я) добавлено в %2
@@ -402,6 +402,7 @@ details	common	ru	Подробности
 directory	common	ru	Каталог
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	ru	Каталог не существует, не читаем веб-сервером или указан не относительно корня документов!
 directory for storing merged documents	preferences	ru	Папка для хранения объединенных документов
+directory successfully created.	common	ru	Каталог успешно создан.
 directory with documents to insert entries	preferences	ru	Папка с документами для вставки записей
 disabled	common	ru	Отключено
 discard changes	common	ru	Отменить изменения
@@ -498,6 +499,7 @@ error deleting %1 %2 directory	common	ru	Ошибка удаления папк�
 error deleting %1!	common	ru	Ошибка удаления %1!
 error renaming %1 %2 directory	common	ru	Ошибка переименования папки %1 %2
 error uploading file!	filemanager	ru	Ошибка загрузки файла!
+error while creating directory.	common	ru	Ошибка при создании каталога.
 error: template not found !!!	common	ru	Ошибка: Шаблон не найден!
 error: webserver is not allowed to write into '%1' !!!	common	ru	Ошибка: веб-сервер не может записывать в '%1'!
 error: while saving !!!	common	ru	Ошибка: во время сохранения!
@@ -542,6 +544,7 @@ file %1 has no content in physical filesystem %2!	admin	ru	Файл %1 не им
 file '%1' not found!	common	ru	Файл '%!' не найден!
 file a file	common	ru	Сохранить файл
 file contains more than one etemplate, last one is shown !!!	common	ru	Файл содержит больше одного е-Шаблона, показан только последний!
+file information	common	ru	Сведения о файле
 file is of wrong type (%1 != %2)!	common	ru	Файл неправильного типа (%1 !=%2)!
 file writen	common	ru	Файл записан
 files	common	ru	Файлы
@@ -557,6 +560,7 @@ firstname	common	ru	Имя
 fixme!	common	ru	Исправить!
 floating point	common	ru	С плавающей запятой
 folder already exists.	common	ru	Каталог уже существует!
+for group	common	ru	Для группы
 for more than one contact in a document use the tag pagerepeat!	preferences	ru	Используйте тэг повторения страницы для более, чем одного контакта в документе!
 force selectbox	common	ru	Принудительно Список выбора
 foreign key	common	ru	Внешний ключ
@@ -630,6 +634,7 @@ high	common	ru	Высокий
 highest	common	ru	Наивысший
 history	common	ru	История
 history log	common	ru	Хроники
+hold [%1] key to select text eg. to copy it	common	ru	Удерживайте клавишу [%1], чтобы выделить текст, например, для его копирования
 holy see (vatican city state)	common	ru	Ватикан
 home	common	ru	Домой
 home email	common	ru	домашняя почта
@@ -718,6 +723,7 @@ jordan	common	ru	Иордания
 july	common	ru	Июль
 jun	common	ru	Июнь
 june	common	ru	Июнь
+just for me	common	ru	Только для меня
 justify center	common	ru	Выровнять по центру
 justify full	common	ru	Выровнять по ширине
 justify left	common	ru	Выровнять по левому краю
@@ -956,6 +962,7 @@ original	common	ru	Оригинал
 other	common	ru	Другие
 overflow	common	ru	Переполнение
 overview	common	ru	Просмотр
+overwrite	common	ru	Перезаписать
 owner	common	ru	Владелец
 ownership	common	ru	Владение
 padding	common	ru	Набивка
@@ -1029,6 +1036,7 @@ print	common	ru	Печать
 print orientation	common	ru	Ориентация
 priority	common	ru	Приоритет
 private	common	ru	Личные
+processing the file	common	ru	Обработка файла
 programs	common	ru	Программы
 project	common	ru	Проект
 properties	common	ru	Свойства
@@ -1047,6 +1055,7 @@ register	common	ru	Зарегистрировать
 regular	common	ru	Периодический
 reject	common	ru	Отклонить
 remember me	common	ru	Запомнить меня
+remove	api	ru	Удалить
 remove row (can not be undone!!!)	common	ru	убрать Строку (НЕ может быть отменено!)
 remove selected accounts	common	ru	Удалить выбранные учетные записи
 remove shortcut	common	ru	Удалить ярлычок
@@ -1367,7 +1376,6 @@ weekend	common	ru	выходной
 welcome	common	ru	Добро пожаловать
 western european	common	ru	западноевропейский
 western sahara	common	ru	Западная Сахара
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	ru	что происходит при переполнении содержимого: видимо (по-умолчанию), скрыто, прокрутка, авто (решается браузером)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ru	Когда вы объединяете записи в документы, они будут храниться здесь. Если папка не указана, они будут храниться в вашем домашнем каталоге (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	ru	Если Вы ответите "да", кнопки "Домой" и "Выход" будут представлены в виде иконок на верхней панели.
 which groups	common	ru	Какие группы
@@ -1409,6 +1417,7 @@ you have successfully logged out	common	ru	Вы успешно вышли.
 you need to %1set your timezone preference%2.	common	ru	вы должны %1выбрать настройки часового пояса%2.
 you need to add the webserver user '%1' to the group '%2'.	common	ru	Вам необходимо добавить пользователя Веб-сервера '%1' в группу '%2'.
 you need to be an egroupware administrator to access this functionality!	common	ru	Для доступа к этим функциям вы должны быть администратором EGroupware!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	ru	Вам необходимо установить плагин Mailvelope, доступный для Chrome и Firefox, с сайта www.mailvelope.com или нажав кнопку «Установить».
 you need to select a file first!	common	ru	Сначала выберите файл!
 you need to select some entries first!	common	ru	Сначала вы должны выбрать записи
 you need to set enable logging to "%1" to create/update a log.	groupdav	ru	вам нужно включить журналирование "%1" для создания/обновления журнала.

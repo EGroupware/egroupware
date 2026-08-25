@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	sl	%1 (%2 novih) sporočil napisanih za program '%3' in jezik '%4'
 %1 active file(s) with same name as directory inactivated!	admin	sl	%1 aktivnih datotek z istim imenom, kot so inaktivirani imenik!
-%1 copied - the copy can now be edited	common	sl	Kopirano je %1 - kopijo lahko zdaj urejate
+%1 copied - the copy can now be edited	common	sl	Kopirano je %1 - kopijo lahko zdaj urejate.
 %1 directories %2 found!	admin	sl	%1 imenikov %2 najdenih!
 %1 email addresses inserted	common	sl	Vnesenih %1 E-naslovov.
 %1 email(s) added into %2	common	sl	%1 e-poštno(-a) sporočilo(-a) dodano(-a) v %2
@@ -416,6 +416,7 @@ details	common	sl	Podrobnosti
 directory	common	sl	Mapa
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sl	Mapa ne obstaja, ni berljiva s strani spletnega strežnika ali ni podana relativno na koren dokumentov (document root)!
 directory for storing merged documents	preferences	sl	Mapa za shranjevanje združenih dokumentov
+directory successfully created.	common	sl	Mapa je bila uspešno ustvarjena.
 directory with documents to insert entries	preferences	sl	Mapa z dokumenti za vstavljanje vnosov
 disabled	common	sl	Onemogočeno
 discard changes	common	sl	Razveljavi spremembe
@@ -517,6 +518,7 @@ error deleting %1!	common	sl	Napaka pri brisanju %1!
 error enabling push	common	sl	Napaka pri omogočanju potiska
 error renaming %1 %2 directory	common	sl	Napaka ob preimenovanju %1 %2 mape!
 error uploading file!	filemanager	sl	Napaka pri prenosu datoteke!
+error while creating directory.	common	sl	Napaka pri ustvarjanju mape.
 error: template not found !!!	common	sl	Napaka: ne najdem predloge!
 error: webserver is not allowed to write into '%1' !!!	common	sl	Napaka: spletni strežnik nima pravic za pisanje v '%1'!
 error: while saving !!!	common	sl	Napaka: med shranjevanjem!
@@ -584,6 +586,7 @@ firstname	common	sl	Ime
 fixme!	common	sl	POPRAVI ME!
 floating point	common	sl	Decimalna vejica
 folder already exists.	common	sl	Mapa že obstaja!
+for group	common	sl	Za skupino
 for more than one contact in a document use the tag pagerepeat!	preferences	sl	Uporabite stran z oznako za več kot en stik v dokumentu!
 force	common	sl	Vsili
 force selectbox	common	sl	Vsili izbirna polja
@@ -751,6 +754,7 @@ jordan	common	sl	JORDANIJA
 july	common	sl	Julij
 jun	common	sl	Jun
 june	common	sl	Junij
+just for me	common	sl	Samo zame
 justify center	common	sl	Poravnaj po sredini
 justify full	common	sl	Poravnaj obojestransko
 justify left	common	sl	Poravnaj levo
@@ -1004,6 +1008,7 @@ original	common	sl	Izvirnik
 other	common	sl	Ostalo
 overflow	common	sl	Prenasičenost
 overview	common	sl	Pregled
+overwrite	common	sl	Prepisati
 owner	common	sl	Lastnik
 ownership	common	sl	Lastništvo
 padding	common	sl	Odmik
@@ -1082,6 +1087,7 @@ print	common	sl	Natisni
 print orientation	common	sl	Orientacija
 priority	common	sl	Prioriteta
 private	common	sl	Zasebno
+processing the file	common	sl	Obdelava datoteke
 programs	common	sl	Programi
 project	common	sl	Projekt
 properties	common	sl	Lastnosti
@@ -1489,7 +1495,6 @@ weekend	common	sl	Vikend
 welcome	common	sl	Dobrodošli
 western european	common	sl	Zahodna evropa
 western sahara	common	sl	ZAHODNA SAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sl	Kaj se zgodi s prenasičeno vsebino: vidna (privzeto), skrij, vklopi pomikanje, samodejno (se odloči brskalnik)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sl	Ko vnose združite v dokumente, bodo ti shranjeni tukaj. Če mape ne navedete, bodo shranjeni v vašem domačem imeniku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sl	Če odgovorite z Da, bosta gumba Domov in Odjavi v orodni vrstici aplikacij.
 which groups	common	sl	Katere skupine

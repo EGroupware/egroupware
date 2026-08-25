@@ -13,6 +13,7 @@ charset of file	importexport	da	Karakterset for fil
 choose fields to export	importexport	da	Vælg felter, der skal eksporteres
 created	importexport	da	Oprettet
 database values	importexport	da	Database-værdier
+define imports|exports	common	da	Definer import | eksport
 delete files after import	importexport	da	Slet filer efter import
 deleted	importexport	da	slettet
 execute	importexport	da	Eksekvere
@@ -21,7 +22,8 @@ extra charsets for import / export	importexport	da	Ekstra tegnsæt til Import | 
 finish	importexport	da	færdig
 general	preferences	da	Generelt
 import	importexport	da	Importer
-importexport	common	da	Import / Eksport
+importexport	common	da	Import | Eksport
+importexport wizard finished successfully!	importexport	da	Import|Eksport-guiden er afsluttet uden problemer!
 next run	importexport	da	Næste kørsel
 preview	importexport	da	Snig vis
 previous	importexport	da	tidligere

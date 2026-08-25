@@ -4,6 +4,7 @@ addressbook csv import	importexport	el	Εισαγωγή βιβλίου διευ�
 addressbook vcard import	importexport	el	Εισαγωγή vCard βιβλίου διευθύνσεων
 admin disabled exporting	importexport	el	Ο διαχειριστής απενεργοποίησε την εξαγωγή.
 all users	importexport	el	Ολοι οι χρήστες
+automatically created by importexport	importexport	el	Δημιουργήθηκε αυτόματα από την Εισαγωγή | Εξαγωγή
 change allowed users	importexport	el	Αλλαγή επιτρεπόμενων χρηστών
 change owner when updating	importexport	el	Αλλαγή ιδιοκτήτη κατά την ενημέρωση
 changed	importexport	el	Έγινε αλλαγή
@@ -14,16 +15,21 @@ choose fields to export	importexport	el	Επιλέξτε πεδία για εξ�
 condition	importexport	el	κατάσταση
 created	importexport	el	Δημιουργήθηκε
 database values	importexport	el	Τιμές βάσης δεδομένων
+define imports|exports	common	el	Ορισμός εισαγωγών | εξαγωγών
 delete files after import	importexport	el	Διαγραφή αρχείων μετά την εισαγωγή
 deleted	importexport	el	διεγράφη
 execute	importexport	el	Εκτέλεση
 export	importexport	el	εξαγωγή
 exported	importexport	el	εξήχθη
+extra charsets for import / export	importexport	el	Πρόσθετοι χαρακτήρες για την Εισαγωγή | Εξαγωγή
 finish	importexport	el	τέλος
 general	preferences	el	Γενικά
 general fields:	preferences	el	Γενικά πεδία:
 import	importexport	el	Εισαγωγή
+importexport	common	el	Εισαγωγή | Εξαγωγή
+importexport wizard finished successfully!	importexport	el	Ο οδηγός εισαγωγής | εξαγωγής ολοκληρώθηκε με επιτυχία!
 next run	importexport	el	Επόμενη ενέργεια
 preview	importexport	el	Προεπισκόπηση
 previous	importexport	el	προηγούμενο
+schedule import / export	common	el	Προγραμματισμός εισαγωγής | εξαγωγής
 translation	importexport	el	Μετάφραση

@@ -1025,6 +1025,7 @@ other	common	en	Other
 outdent	common	en	Outdent
 overflow	common	en	Overflow
 overview	common	en	Over view
+overwrite	common	en	Overwrite
 owner	common	en	Owner
 ownership	common	en	Ownership
 padding	common	en	Padding
@@ -1520,7 +1521,6 @@ weekend	common	en	Weekend
 welcome	common	en	Welcome
 western european	common	en	Western european
 western sahara	common	en	WESTERN SAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	en	What happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	en	When you merge entries into documents, they will be stored here. If no folder is provided, they will be stored in your home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	en	If you say yes, the Home and Log out buttons are presented as applications in the main top application bar.
 which groups	common	en	Which groups

@@ -1,3 +1,4 @@
+%1 copied - the copy can now be edited	common	el	Το %1 αντιγράφηκε – το αντίγραφο μπορεί πλέον να επεξεργαστεί.
 %1 email addresses inserted	common	el	%1 διευθύνσεις email εισήχθησαν
 %1 email(s) added into %2	common	el	%1 email(s) που προστέθηκαν στο %2
 %1 is not executable by the webserver !!!	common	el	%1 δεν είναι εκτελέσιμο από τον webserver!
@@ -47,7 +48,7 @@ add	common	el	Προσθήκη
 add %1 category for	common	el	Προσθήκη κατηγορίας %1 για
 add a new contact	common	el	Προσθέστε μία νέα επαφή
 add category	common	el	Προσθήκη κατηγορίας
-add current	common	el	Προσθήκη προβολής στα αγαπημένα
+add current	common	el	Προβολή ως αγαπημένο
 add shortcut	common	el	Προσθήκη Συντόμευσης
 add sub	common	el	Προσθήκη υπo
 add user to responsibles	groupdav	el	Προσθήκη χρήστη στους υπεύθυνους
@@ -66,7 +67,7 @@ algeria	common	el	ΑΛΓΕΡΙΑ
 all	common	el	Ολα
 all addressbooks	groupdav	el	Όλα τα βιβλία διευθύνσεων
 all categories	common	el	Όλες οι κατηγορίες
-all fields	common	el	όλα τα πεδία
+all fields	common	el	Όλα τα πεδία
 all files	common	el	Όλα τα αρχεία
 all users	common	el	Ολοι οι χρήστες
 allow editing the %1	common	el	Επιτρέψτε την επεξεργασία του: %1
@@ -119,6 +120,7 @@ bahrain	common	el	ΜΠΑΧΡΕΪΝ
 bangladesh	common	el	ΜΠΑΓΚΛΑΝΤΕΣ
 barbados	common	el	ΜΠΑΡΜΠΑΝΤΟΣ
 bcc	common	el	Κρυφή Κοινοποίηση
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	el	Πριν προχωρήσετε, σας συνιστούμε ανεπιφύλακτα να παρακολουθήσετε αυτό το σύντομο βίντεο, για να δείτε πώς λειτουργεί η επέκταση Mailvelope με το EGroupware.
 belarus	common	el	ΛΕΥΚΟΡΩΣΙΑ
 belgium	common	el	ΒΕΛΓΙΟ
 belize	common	el	ΜΠΕΛΙΖ
@@ -330,6 +332,7 @@ entry updated sucessfully	common	el	Η καταχώρηση ενημερώθηκ
 equatorial guinea	common	el	ΙΣΗΜΕΡΙΝΗ ΓΟΥΪΝΕΑ
 eritrea	common	el	ΕΡΥΘΡΑΙΑ
 error	common	el	Σφάλμα
+error copying uploaded file to vfs!	common	el	Σφάλμα κατά την αντιγραφή του αρχείου που ανεβάσατε στο VFS!
 error creating %1 %2 directory	common	el	Σφάλμα κατά τη δημιουργία του καταλόγου %1 %2!
 error deleting %1 %2 directory	common	el	Σφάλμα κατά τη διαγραφή του καταλόγου %1 %2!
 error renaming %1 %2 directory	common	el	Σφάλμα κατά τη μετονομασία του καταλόγου %1 %2!
@@ -423,6 +426,7 @@ high	common	el	Ψηλά
 highest	common	el	Ψηλότερα
 history	common	el	Ιστορία
 history log	common	el	Ιστορικό εκδόσεων
+hold [%1] key to select text eg. to copy it	common	el	Κρατήστε πατημένο το πλήκτρο [%1] για να επιλέξετε κείμενο, π.χ. για να το αντιγράψετε
 holy see (vatican city state)	common	el	ΒΑΤΙΚΑΝΟ
 home	common	el	Αρχική Σελίδα
 home email	common	el	Email οικίας
@@ -624,7 +628,7 @@ no	common	el	Όχι
 no - cancel	common	el	Όχι-Άκυρο
 no default set	common	el	Δεν έχει οριστεί προεπιλογή
 no entries found, try again ...	common	el	δεν βρέθηκαν καταχωρήσεις, ξαναπροσπαθήστε ...
-no filters	common	el	Αφαίρεση φίλτρων
+no filters	common	el	Δεν υπάρχουν φίλτρα
 no history for this record	common	el	Δεν υπάρχει ιστορικό γι' αυτή την εγγραφή
 no matches found	common	el	Δέν βρέθηκαν όμοια.
 no response from server: your data is probably not saved	common	el	Δεν υπάρχει απάντηση από το διακομιστή: τα δεδομένα σας πιθανόν να ΜΗΝ έχουν αποθηκευτεί.
@@ -675,6 +679,7 @@ order to navigating by tab key through the form	common	el	Τάξη για πλο
 original	common	el	Αρχικός
 other	common	el	Αλλο
 overview	common	el	Επισκόπηση
+overwrite	common	el	Αντικατάσταση
 owner	common	el	Ιδιοκτήτης
 ownership	common	el	Ιδιοκτησία
 page	common	el	Σελίδα
@@ -737,6 +742,7 @@ print	common	el	Εκτύπωση
 print orientation	common	el	Προσανατολισμός
 priority	common	el	Προτεραιότητα
 private	common	el	Προσωπικό
+processing the file	common	el	Επεξεργασία του αρχείου
 programs	common	el	Προγράμματα
 project	common	el	Προβολή
 properties	common	el	Ιδιότητες
@@ -754,6 +760,7 @@ regular	common	el	Κανονικό
 reject	common	el	Απόρριψη
 remember me	common	el	Να με θυμάστε
 remember me for %1	common	el	Να με θυμάστε για το %1
+remove	api	el	Διαγραφή
 remove selected accounts	common	el	Αφαίρεση επιλεγμένων λογαριασμών
 remove shortcut	common	el	Αφαίρεση Συντόμευσης
 remove this link (not the entry itself)	common	el	Αφαιρέστε το σύνδεσμο (όχι την ίδια την καταχώρηση)

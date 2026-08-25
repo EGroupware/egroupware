@@ -48,6 +48,7 @@ export definition to use for nextmatch export	preferences	es-es	Exportar la defi
 export spreadsheet	importexport	es-es	Exportar hoja de cálculo
 exported	importexport	es-es	Exportado.
 extra %1	importexport	es-es	Extra %1
+extra charsets for import / export	importexport	es-es	Juegos de caracteres adicionales para Importación | Exportación
 extra encodings	importexport	es-es	Codificaciones adicionales
 false	importexport	es-es	Falso
 field labels	importexport	es-es	Etiquetas de campo

@@ -42,9 +42,9 @@ after %1	calendar	ru	После %1
 after current date	calendar	ru	После текущей даты
 age:	calendar	ru	Возраст:
 alarm	calendar	ru	Сигнал
-alarm added	calendar	ru	Сигнал добавлен
+alarm added	calendar	ru	Сигнал добавлен.
 alarm added automatic to new events before event start-time	calendar	ru	Сигнал, добавленный автоматически к новым событиям до их начала
-alarm deleted	calendar	ru	Сигнал удален
+alarm deleted	calendar	ru	Сигнал удален.
 alarm for %1 at %2 in %3	calendar	ru	Сигнал для %1 в %2 в %3
 alarm management	calendar	ru	Управление "Звонками"
 alarms	calendar	ru	Сигналы
@@ -222,7 +222,7 @@ enddate	calendar	ru	Дата окончания
 enddate / -time of the meeting, eg. for more then one day	calendar	ru	Завершение даты/времени встречи, напр. более чем для одного дня.
 enddate of the export	calendar	ru	Дата завершеня экспорта
 ends	calendar	ru	заканчивается
-error adding the alarm	calendar	ru	Ошибка при добавлении сигнала
+error adding the alarm	calendar	ru	Ошибка при добавлении сигнала.
 error notifying %1	calendar	ru	Ошибка при уведомлении %1
 error saving the event!	calendar	ru	Ошибка сохранения события!
 error: can't delete original series!	calendar	ru	Ошибка: Невозможно удалить исходную последовательность!
@@ -297,7 +297,7 @@ group(s) or user(s) whose calendars to show (if acl exists)	calendar	ru	Груп
 groupmember(s) %1 not included, because you have no access.	calendar	ru	Участники %1 не включены,потому что у вас нет доступа.
 groups: other users can always be invited, only groups require an invite grant	admin	ru	Группы: другие пользователи могут быть приглашены, требуется только возможность пригласить группу.
 h	calendar	ru	ч
-here is your requested alarm.	calendar	ru	Запрошенный Вами "звонок"
+here is your requested alarm.	calendar	ru	Запрошенное вами напоминание.
 hide private events	calendar	ru	Скрыть личные события
 hide private infos	calendar	ru	Скрыть личную информацию
 high priority	calendar	ru	высокий приоритет

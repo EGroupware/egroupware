@@ -57,6 +57,7 @@ calendar event	calendar	tr	Takvim Etkinliği
 calendar preferences	calendar	tr	Takvim Seçenekleri
 calendar settings	admin	tr	Takvim Ayarları
 calendar-fieldname	calendar	tr	Takvim-Alan Adı
+can't add alarms in the past !!!	calendar	tr	Geçmişe ait alarmlar eklenemez!
 canceled	calendar	tr	İptal Edildi
 category report	calendar	tr	Kategori Raporu
 changed event-data applied	calendar	tr	Değiştirilen olay verileri uygulandı
@@ -76,6 +77,10 @@ day	calendar	tr	Gün
 days	calendar	tr	Gün
 days repeated	calendar	tr	Tekrar eden gün
 dayview	calendar	tr	Günlük Görünüm
+default alarm added for yourself or all participants	calendar	tr	Yeni randevular için alarm otomatik olarak eklenir.\nKendiniz veya tüm katılımcılar için.
+default alarm for	calendar	tr	Varsayılan alarm
+default alarm for regular events	calendar	tr	Düzenli etkinlikler için varsayılan alarm
+default alarm for whole-day events	calendar	tr	Tüm gün süren etkinlikler için varsayılan alarm
 default appointment length (in minutes)	calendar	tr	Varsayılan toplantı uzunluğu (dakika olarak)
 default calendar filter	calendar	tr	Varsayılan takvim süzgeci
 default calendar view	calendar	tr	Varsayılan takvim görünümü
@@ -90,12 +95,15 @@ does not show event to other users, unless they have a private grant	calendar	tr
 download	calendar	tr	İndir
 duration	calendar	tr	Süre
 edit series	calendar	tr	Seriyi düzenle
+edit status or alarms for this particular day	calendar	tr	Bu belirli gün için durumu veya alarmları düzenle
 email address migration	calendar	tr	E-posta adresi taşıma
+empty = no alarm	calendar	tr	boş = alarm yok
 empty for all	calendar	tr	Tamamı için boş
 empty target calendar before importing	calendar	tr	İçe aktarmadan önce hedef takvimi boşaltın
 end date/time	calendar	tr	Bitiş tarih/Zaman
 enddate	calendar	tr	Bitiş tarihi
 ends	calendar	tr	Bitiyor
+error adding the alarm	calendar	tr	Alarm eklenirken hata oluştu.
 error notifying %1	calendar	tr	%1 bildirilirken hata oluştu
 event details follow	calendar	tr	Etkinlik Detayları Ektedir
 exceptions	calendar	tr	İstisnalar
@@ -215,9 +223,11 @@ reset	calendar	tr	Sıfırla
 reset resource status on event shifts	calendar	tr	Olayları taşırken kaynak durumunu sıfırlama
 rule	calendar	tr	Kural
 sat	calendar	tr	Cte
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	tr	Etkinliği istisna olarak kaydet - Tek seferlik etkinliği sil - Bu belirli gün için durumu veya alarmları düzenle.
 saves the event ignoring the conflict	calendar	tr	Çatışmayı yok sayarak olayı kaydeder
 scheduling conflict	calendar	tr	Zamanlama çakışması
 select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	tr	Daha sonra bir olay taşınırsa, kaynak durumunun “Yanıt yok” olarak sıfırlanmasını isteyip istemediğinizi seçin.
+select who should get the alarm	calendar	tr	Alarmı kimin alacağını seçin
 send notifications	calendar	tr	Bildirim gönder
 send notifications to users right now	calendar	tr	Katılımcılara hemen bildirim gönderin
 set new events to private	calendar	tr	Yeni etkinlikleri özel olarak ayarla

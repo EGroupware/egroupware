@@ -42,9 +42,9 @@ after %1	calendar	sk	Až po %1
 after current date	calendar	sk	Po súčasnom dátume
 age:	calendar	sk	Vek:
 alarm	calendar	sk	Pripomienka
-alarm added	calendar	sk	Pripomienka bola pridaná
+alarm added	calendar	sk	Pripomienka bola pridaná.
 alarm added automatic to new events before event start-time	calendar	sk	Pridaná automatická pripomienka pre nové udalosti na čas pred ich začiatkom
-alarm deleted	calendar	sk	Pripomienka bola odstránená
+alarm deleted	calendar	sk	Pripomienka bola odstránená.
 alarm for %1 at %2 in %3	calendar	sk	Pripomienka %1 %2 v %2
 alarm management	calendar	sk	Pripomienkovač
 alarms	calendar	sk	Pripomienky
@@ -222,7 +222,7 @@ enddate	calendar	sk	Dátum ukončenia
 enddate / -time of the meeting, eg. for more then one day	calendar	sk	Dátum ukončenia / -čas stretnutia, napr. keď je viacdňové
 enddate of the export	calendar	sk	Dátum ukončenia exportu
 ends	calendar	sk	končí
-error adding the alarm	calendar	sk	Chyba počas pridávania pripomienky
+error adding the alarm	calendar	sk	Chyba počas pridávania pripomienky.
 error notifying %1	calendar	sk	Chyba počas upozorňovania %1
 error saving the event!	calendar	sk	Chyba pri ukladaní udalosti!
 error: can't delete original series!	calendar	sk	Chyba: Nedá sa odstrániť originálna séria!

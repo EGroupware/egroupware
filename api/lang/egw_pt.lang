@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	pt	%1 (%2 novas) mensagens criadas para a aplicação '%3' e idiomas '%4'
 %1 active file(s) with same name as directory inactivated!	admin	pt	%1 ficheiro(s) ativo(s) com o mesmo nome da pasta inactivado(s)!
-%1 copied - the copy can now be edited	common	pt	%1 copiado - a cópia pode agora ser editada
+%1 copied - the copy can now be edited	common	pt	%1 copiado - a cópia pode agora ser editada.
 %1 directories %2 found!	admin	pt	%1 directórios %2 encontrados!
 %1 email addresses inserted	common	pt	%1 endereço(s) de correio electrónico inserido(s)
 %1 email(s) added into %2	common	pt	%1 e-mail(s) adicionado(s) a %2
@@ -374,6 +374,7 @@ detail	common	pt	Detalhe
 details	common	pt	Detalhes
 directory	common	pt	Directoria
 directory for storing merged documents	preferences	pt	Pasta para armazenar documentos fundidos
+directory successfully created.	common	pt	Diretório criado com sucesso.
 disabled	common	pt	Desactivado
 discard changes	common	pt	Ignorar alterações
 displayed in front of input or input is inserted for a '%s' in the label (label of the submitbutton or image-filename)	common	pt	Surge em frente do campo ou o campo é inserido para um(a) %s' na etiqueta (etiqueta do botão de submissão ou nome do ficheiro da imagem).
@@ -458,6 +459,7 @@ error deleting %1!	common	pt	Erro ao excluir %1!
 error enabling push	common	pt	Erro ao ativar o envio
 error renaming %1 %2 directory	common	pt	Erro ao renomear a directoria %1 %2!
 error uploading file!	filemanager	pt	O upload de arquivos de erro!
+error while creating directory.	common	pt	Erro ao criar o diretório.
 error: template not found !!!	common	pt	Erro: modelo não encontrado!
 error: webserver is not allowed to write into '%1' !!!	common	pt	Erro: O servidor Web não ter permissões de escrita no '%1'!
 error: while saving !!!	common	pt	Erro ao guardar!
@@ -496,6 +498,7 @@ file	common	pt	Ficheiro
 file '%1' not found!	common	pt	Arquivo '% 1' não encontrado!
 file a file	common	pt	Armazenar um ficheiro
 file contains more than one etemplate, last one is shown !!!	common	pt	O ficheiro contém mais do que um modelo Web. Será exibido o último!
+file information	common	pt	Informações do ficheiro
 file is of wrong type (%1 != %2)!	common	pt	Arquivo é o tipo errado (%1 != %2)!
 file too large.  maximum %1	common	pt	Ficheiro demasiado grande. Máximo de %1
 file writen	common	pt	Ficheiro editado
@@ -511,6 +514,7 @@ firstname	common	pt	Primeiro nome
 fixme!	common	pt	Corrija-me!
 floating point	common	pt	Ponto de flutuação
 folder already exists.	common	pt	Pasta já existente!
+for group	common	pt	Para o grupo
 force	common	pt	Força
 force selectbox	common	pt	Forçar caixa de selecção
 foreign key	common	pt	Chave estrangeira
@@ -666,6 +670,7 @@ jordan	common	pt	Jordânia
 july	common	pt	Julho
 jun	common	pt	Jun
 june	common	pt	Junho
+just for me	common	pt	Só para mim
 justify center	common	pt	Alinhar ao Centro
 justify full	common	pt	Justificar
 justify left	common	pt	Alinhar à Esquerda
@@ -893,6 +898,7 @@ original	common	pt	Original
 other	common	pt	Outro
 overflow	common	pt	Excedente
 overview	common	pt	Visão geral
+overwrite	common	pt	Substituir
 owner	common	pt	Dono
 ownership	common	pt	Propriedade
 padding	common	pt	Preenchimento
@@ -962,6 +968,7 @@ print	common	pt	Imprimir
 print orientation	common	pt	Orientação
 priority	common	pt	Prioridade
 private	common	pt	Privado
+processing the file	common	pt	A processar o ficheiro
 programs	common	pt	Programas
 project	common	pt	Projecto
 public	common	pt	Público
@@ -978,6 +985,7 @@ refresh	common	pt	Atualizar
 register	common	pt	Registar
 reject	common	pt	Rejeitar
 remember me	common	pt	Lembrar-se de mim
+remove	api	pt	Remover
 remove row (can not be undone!!!)	common	pt	Remover linha (não será possível anular esta acção!)
 remove selected accounts	common	pt	Eliminar contas seleccionadas
 remove shortcut	common	pt	Eliminar Atalho
@@ -1279,7 +1287,6 @@ wednesday	common	pt	Quarta
 weekend	common	pt	Fim-de-semana
 welcome	common	pt	Bem-vindo
 western sahara	common	pt	Saara Ocidental
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt	O que acontece ao conteúdo excedente: visível (por omissão), oculto, consultável utilizando a barra de deslocamento, automático (decisão do navegador)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pt	Quando funde entradas em documentos, estes são armazenados aqui. Se não for fornecida uma pasta, serão guardados no seu diretório pessoal (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt	Se disser que sim, os botões "página inicial" e "sair" serão apresentados como aplicações na barra de aplicações.
 which groups	common	pt	Que grupo(s)
@@ -1318,6 +1325,7 @@ you have selected an invalid date	common	pt	Seleccionou uma data inválida!
 you have selected an invalid main category	common	pt	Seleccionou uma categoria principal inválida!
 you have successfully logged out	common	pt	Saiu com sucesso.
 you need to add the webserver user '%1' to the group '%2'.	common	pt	É necessário adicionar o utilizador '%1' do servidor Web ao grupo '%2'.
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	pt	Tem de instalar o plugin Mailvelope, disponível para o Chrome e o Firefox em www.mailvelope.com ou clicando no botão «Instalar».
 you need to select a file first!	common	pt	Selecione um arquivo primeiro!
 your account has been updated with new data from your identity provider.	common	pt	A sua conta foi actualizada com novos dados do seu fornecedor de identidade.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	pt	O seu browser não está atualizado (compatível com JavaScript ES6), pelo que algumas das funcionalidades podem não funcionar.

@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	es-es	%1 mensajes(%2 nuevos) escritos para la aplicación '%3' e idiomas '%4'
 %1 active file(s) with same name as directory inactivated!	admin	es-es	¡%1 archivos activos con el mismo nombre como directorio inactivos!
-%1 copied - the copy can now be edited	common	es-es	%1 copiado - la copia ya puede ser editada
+%1 copied - the copy can now be edited	common	es-es	%1 copiado - la copia ya puede ser editada.
 %1 directories %2 found!	admin	es-es	¡%1 directorios %2 encontrados!
 %1 email addresses inserted	common	es-es	Se han insertado %1 direcciones de correo.
 %1 email(s) added into %2	common	es-es	Se añadieron %1 correos-e a %2
@@ -594,6 +594,7 @@ floating point	common	es-es	Coma flotante
 folder already exists.	common	es-es	¡La carpeta ya existe!
 fontselect	common	es-es	Seleccionar tipografía
 fontsizeselect	common	es-es	Seleccionar tamaño de letra
+for group	common	es-es	Para el grupo
 for more than one contact in a document use the tag pagerepeat!	preferences	es-es	¡Use la etiqueta repetición de página para más de un contacto en un documento!
 force	common	es-es	Forzar
 force selectbox	common	es-es	Forzar cuadro de selección
@@ -764,6 +765,7 @@ jordan	common	es-es	JORDANIA
 july	common	es-es	Julio
 jun	common	es-es	Jun
 june	common	es-es	Junio
+just for me	common	es-es	Solo para mí
 justify center	common	es-es	Centrar
 justify full	common	es-es	Justificado
 justify left	common	es-es	Alinear a la izquierda
@@ -1022,6 +1024,7 @@ other	common	es-es	Otros
 outdent	common	es-es	Sin sangría
 overflow	common	es-es	Desbordamiento
 overview	common	es-es	Resumen
+overwrite	common	es-es	Sobrescribir
 owner	common	es-es	Propietario
 ownership	common	es-es	Propiedad
 padding	common	es-es	Distancia del texto a la celda
@@ -1102,6 +1105,7 @@ print	common	es-es	Imprimir
 print orientation	common	es-es	Orientación
 priority	common	es-es	Prioridad
 private	common	es-es	Privado
+processing the file	common	es-es	Procesando el archivo
 programs	common	es-es	Programas
 project	common	es-es	Proyecto
 properties	common	es-es	Propiedades
@@ -1514,7 +1518,6 @@ weekend	common	es-es	Fin de semana
 welcome	common	es-es	Página principal
 western european	common	es-es	Europeo occidental
 western sahara	common	es-es	SAHARA OCCIDENTAL
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	es-es	Qué hacer con el contenido que se desborda: visible (predeterminado), oculto, desplazar, automático (decide el navegador)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	es-es	Cuando fusione entradas en documentos, se almacenarán aquí. Si no se proporciona ninguna carpeta, se almacenarán en su directorio personal (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	es-es	Si dice que sí, los botones de Inicio y Salir se presentan como aplicaciones en la barra principal de aplicaciones.
 which groups	common	es-es	Qué grupos

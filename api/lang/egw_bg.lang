@@ -1,3 +1,4 @@
+%1 copied - the copy can now be edited	common	bg	%1 е копирано – копието вече може да бъде редактирано.
 %1 directories %2 found!	admin	bg	Намерени са %1 директории %2!
 %1 email addresses inserted	common	bg	Вмъкнати %1 e-mail адреса
 %1 email(s) added into %2	common	bg	%1 имейл(и), добавен(и) в %2
@@ -122,6 +123,7 @@ bahrain	common	bg	Бахрейн
 bangladesh	common	bg	Бангладеш
 barbados	common	bg	Барбадос
 bcc	common	bg	Bcc
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	bg	Преди да продължите, силно ви препоръчваме да изгледате това кратко видео, за да видите как работи разширението Mailvelope с EGroupware.
 belarus	common	bg	Беларус
 belgium	common	bg	Белгия
 belize	common	bg	Белиз
@@ -317,6 +319,7 @@ entry updated sucessfully	common	bg	Записът беше обновен ус�
 equatorial guinea	common	bg	Екваториална Гвинея
 eritrea	common	bg	Еритрея
 error	common	bg	Грешка
+error copying uploaded file to vfs!	common	bg	Грешка при копирането на качения файл във VFS!
 error creating %1 %2 directory	common	bg	Грешка при създаване на директория %1 %2!
 error deleting %1 %2 directory	common	bg	Грешка при изтриване на директория %1 %2!
 error renaming %1 %2 directory	common	bg	Грешка при преименуване на директория %1 %2!
@@ -339,6 +342,7 @@ fields	common	bg	Полета
 fiji	common	bg	Острови Фиджи
 file	common	bg	Файл
 file a file	common	bg	Съхраняване на файл
+file information	common	bg	Информация за файла
 files	common	bg	Файлове
 fileupload	common	bg	Качване на файлове
 filter	common	bg	Филтър
@@ -349,6 +353,7 @@ first page	common	bg	Първа страница
 firstname	common	bg	Първо име
 fixme!	common	bg	ПОПРАВИ МЕ!
 folder already exists.	common	bg	Директорията вече съществува!
+for group	common	bg	За група
 force selectbox	common	bg	Принудително SelectBox
 forever	common	bg	Завинаги
 formatted business address	common	bg	Форматиран бизнес адрес
@@ -402,6 +407,7 @@ high	common	bg	Висок
 highest	common	bg	Най-висок
 history	common	bg	История
 history log	common	bg	История на версиите
+hold [%1] key to select text eg. to copy it	common	bg	Задръжте клавиша [%1], за да маркирате текст, например за да го копирате
 holy see (vatican city state)	common	bg	Ватикана
 home	common	bg	Начало
 home email	common	bg	домашен e-mail
@@ -461,6 +467,7 @@ jordan	common	bg	Йордания
 july	common	bg	Юли
 jun	common	bg	Юни
 june	common	bg	Юни
+just for me	common	bg	Само за мен
 justify center	common	bg	Центриране
 justify full	common	bg	Подравняване от край до край
 justify left	common	bg	Ляво изравняване
@@ -637,6 +644,7 @@ ordered list	common	bg	Подреден списък
 original	common	bg	Оригинал
 other	common	bg	Други
 overview	common	bg	Преглед
+overwrite	common	bg	Заместване
 owner	common	bg	Собственик
 ownership	common	bg	Собственост
 page	common	bg	Страница
@@ -698,6 +706,7 @@ print	common	bg	Печат
 print orientation	common	bg	Ориентация
 priority	common	bg	Приоритет
 private	common	bg	Личен
+processing the file	common	bg	Обработка на файла
 programs	common	bg	Програми
 project	common	bg	Проект
 properties	common	bg	Свойства
@@ -714,6 +723,7 @@ register	common	bg	Регистрация
 regular	common	bg	Стандартен
 reject	common	bg	Отхвърляне
 remember me	common	bg	Запомни ме
+remove	api	bg	Премахване
 remove selected accounts	common	bg	премахване на избраните акаунти
 remove shortcut	common	bg	Премахване на Shortcut-и
 remove this link (not the entry itself)	common	bg	Премахване на връзката (не и на записа)
@@ -938,6 +948,7 @@ you have selected an invalid main category	common	bg	Избрали сте не�
 you have successfully logged out	common	bg	Излязохте успешно.
 you need to add the webserver user '%1' to the group '%2'.	common	bg	Необходимо е да добавите потребителя на WEB сървъра '%1' към групата '%2'.
 you need to be an egroupware administrator to access this functionality!	common	bg	Необходимо е да сте администратор в EGroupware за достъп до тези функции!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	bg	Трябва да инсталирате разширението Mailvelope, което е достъпно за Chrome и Firefox на адрес www.mailvelope.com или като кликнете върху бутона „Инсталирай“.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	bg	Опитахте да отворите приложение на EGroupware: %1, но нямате права за достъп до него.
 your account has been updated with new data from your identity provider.	common	bg	Teie kontot on uuendatud teie identiteedipakkuja uute andmetega.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	bg	Teie brauser ei ole ajakohane (JavaScript ES6-ga ühilduv), mõned funktsioonid ei pruugi toimida.

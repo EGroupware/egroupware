@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	fi	%1(%2 uudet) viestit kirjoitetaan sovelluksella %3 ja kielillä %4
 %1 active file(s) with same name as directory inactivated!	admin	fi	%1 aktiivinen(t) tiedosto(t), jolla on sama nimi kuin kansiolla, poistettu käytöstä!
-%1 copied - the copy can now be edited	common	fi	%1 kopioitu - kopiota voidaan nyt muokata
+%1 copied - the copy can now be edited	common	fi	%1 kopioitu - kopiota voidaan nyt muokata.
 %1 directories %2 found!	admin	fi	%1 hakemistoja %2 löytyi!
 %1 email addresses inserted	common	fi	%1 sähköpostiosoitetta lisätty.
 %1 email(s) added into %2	common	fi	%1 sähköposti(t) lisätty %2:een
@@ -415,6 +415,7 @@ details	common	fi	Yksityiskohdat
 directory	common	fi	Hakemisto
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	fi	Hakemistoa ei ole, Web-palvelin ei voi lukea sitä tai se ei vastaa juurihakemistoa!
 directory for storing merged documents	preferences	fi	Kansio yhdistettyjen asiakirjojen tallentamista varten
+directory successfully created.	common	fi	Kansio luotu onnistuneesti.
 directory with documents to insert entries	preferences	fi	Kansio, jossa on asiakirjoja merkintöjen lisäämiseksi
 disabled	common	fi	Ei käytössä
 discard changes	common	fi	Hylkää muutokset
@@ -512,6 +513,7 @@ error deleting %1!	common	fi	Virhe poistaessa: %1!
 error enabling push	common	fi	Virhe pushin käyttöönotossa
 error renaming %1 %2 directory	common	fi	Virhe nimettäessä hakemistoa uudelleen %1 %2!
 error uploading file!	filemanager	fi	Virhe ladattaessa tiedostoa!
+error while creating directory.	common	fi	Virhe hakemiston luomisessa.
 error: template not found !!!	common	fi	Virhe: Mallipohjaa ei löytynyt!
 error: webserver is not allowed to write into '%1' !!!	common	fi	Virhe: Webpalvelin ei sallinut kirjoittaa %1!
 error: while saving !!!	common	fi	Virhe tallentaessa!
@@ -579,6 +581,7 @@ firstname	common	fi	Etunimi
 fixme!	common	fi	KORJAA MINUT!
 floating point	common	fi	Liukuva pilkku
 folder already exists.	common	fi	Kansio on jo olemassa!
+for group	common	fi	Ryhmälle
 for more than one contact in a document use the tag pagerepeat!	preferences	fi	Käytä sivuntoisto -komentoa useammalle kuin yhdelle yhteystiedolle!
 force selectbox	common	fi	Pakoita valintalaatikko
 foreign key	common	fi	Viiteavain
@@ -740,6 +743,7 @@ jordan	common	fi	JORDANIA
 july	common	fi	Heinäkuu
 jun	common	fi	Kesäkuu
 june	common	fi	Kesäkuu
+just for me	common	fi	Vain minulle
 justify center	common	fi	Keskitä
 justify full	common	fi	Tasaa molemmat reunat
 justify left	common	fi	Tasaa vasemmalle
@@ -977,6 +981,7 @@ original	common	fi	Alkuperäinen
 other	common	fi	Muu
 overflow	common	fi	Ylivuoto
 overview	common	fi	Yleiskuva
+overwrite	common	fi	Korvaa
 owner	common	fi	Omistaja
 ownership	common	fi	Omistus
 padding	common	fi	Padding
@@ -1054,6 +1059,7 @@ print	common	fi	Tulosta
 print orientation	common	fi	Orientaatio
 priority	common	fi	Tärkeys
 private	common	fi	Yksityinen
+processing the file	common	fi	Tiedostoa käsitellään
 programs	common	fi	Ohjelmat
 project	common	fi	Projekti
 properties	common	fi	Ominaisuudet
@@ -1420,7 +1426,6 @@ weekend	common	fi	Viikonloppu
 welcome	common	fi	Tervetuloa
 western european	common	fi	Western european
 western sahara	common	fi	LÄNSISAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	fi	Mitä tapahtuu ylimenevän osan kanssa: näkyvä (oletus), piilotettu, vieritys (scroll), automaattinen (selain päätää)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	fi	Kun yhdistät merkintöjä asiakirjoihin, ne tallennetaan tänne. Jos kansiota ei ole annettu, ne tallennetaan kotihakemistoosi (%1).
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	fi	Kun vastaat Kyllä, kotisivu- ja uloskirjautumispainikkeet näkyvät yläreunan valikossa, kuten sovellukset.
 which groups	common	fi	Mitkä ryhmät

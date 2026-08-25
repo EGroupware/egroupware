@@ -40,7 +40,7 @@ age:	calendar	sv	Ålder:
 alarm	calendar	sv	Larm
 alarm added	calendar	sv	Larm skapat.
 alarm added automatic to new events before event start-time	calendar	sv	Larm läggs automatiskt till nya evenemang före evenemangets starttid
-alarm deleted	calendar	sv	Larm raderat
+alarm deleted	calendar	sv	Larm raderat.
 alarm for %1 at %2 in %3	calendar	sv	Larm för %1 vid %2 i %3
 alarm management	calendar	sv	Larm hantering
 alarms	calendar	sv	Larm
@@ -122,6 +122,9 @@ days of the week for a weekly repeated event	calendar	sv	Dagar för veckovis åt
 days repeated	calendar	sv	Återkommande dagar
 dayview	calendar	sv	Dag
 default alarm added for yourself or all participants	calendar	sv	Larmet sätts automatiskt in för nya möten.\nFör dig själv eller för alla deltagare.
+default alarm for	calendar	sv	Standardlarm för
+default alarm for regular events	calendar	sv	Standardlarm för återkommande händelser
+default alarm for whole-day events	calendar	sv	Standardlarm för heldagshändelser
 default appointment length (in minutes)	calendar	sv	Mötens standard längd (i minuter)
 default calendar filter	calendar	sv	Kalenderns standard filter
 default calendar view	calendar	sv	Kalenderns standard vy
@@ -157,6 +160,7 @@ edit status or alarms for this particular day	calendar	sv	Ändra status eller la
 edit this event	calendar	sv	Ändra händelsen
 edit this series of recurring events	calendar	sv	Ändra återkommande händelser
 email address migration	calendar	sv	Migrering av e-postadresser
+empty = no alarm	calendar	sv	tom = inget larm
 empty for all	calendar	sv	Tom för alla
 empty target calendar before importing	calendar	sv	Töm målkalendern före import
 end	calendar	sv	Slut
@@ -165,7 +169,7 @@ enddate	calendar	sv	Slutdatum
 enddate / -time of the meeting, eg. for more then one day	calendar	sv	Sluttdatum/sluttid för mötet, dvs för möten längre än en dag
 enddate of the export	calendar	sv	Sista datum för export
 ends	calendar	sv	Slutar
-error adding the alarm	calendar	sv	Fel vid skapande av larm
+error adding the alarm	calendar	sv	Fel vid skapande av larm.
 error notifying %1	calendar	sv	Fel vid anmälan av %1
 error saving the event!	calendar	sv	Fel vid lagring av evenemanget!
 error: can't delete original series!	calendar	sv	Felmeddelande: Kan inte ta bort originalserien!

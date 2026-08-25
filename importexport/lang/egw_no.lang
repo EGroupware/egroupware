@@ -4,6 +4,7 @@ addressbook csv import	importexport	no	CSV-import av adressebok
 addressbook vcard import	importexport	no	Adressebok vCard-import
 admin disabled exporting	importexport	no	Administratoren har deaktivert eksport.
 all users	importexport	no	Alle brukere
+automatically created by importexport	importexport	no	Opprettet automatisk av Import | Eksport
 change allowed users	importexport	no	Endre tillatte brukere
 change owner when updating	importexport	no	Endre eier ved oppdatering
 changed	importexport	no	Endret
@@ -13,18 +14,23 @@ check all	importexport	no	Kontroller alle
 choose fields to export	importexport	no	Velg felt som skal eksporteres
 created	importexport	no	Opprettet
 database values	importexport	no	Databaseverdier
+define imports|exports	common	no	Definer import | eksport
 delete files after import	importexport	no	Slett filer etter import
 deleted	importexport	no	slettet
 execute	importexport	no	Utfør
 export	importexport	no	Eksporter
+extra charsets for import / export	importexport	no	Ekstra tegnsett for Import | Eksport
 false	importexport	no	Falsk
 finish	importexport	no	ferdig
 general	preferences	no	Generell
 import	importexport	no	Importer
+importexport	common	no	Import | Eksport
+importexport wizard finished successfully!	importexport	no	Import | Eksport-veiviseren ble fullført!
 next run	importexport	no	Neste kjøring
 preview	importexport	no	Forhåndsvis
 previous	importexport	no	Foregående
 schedule	common	no	Planlegg
+schedule import / export	common	no	Planlegg import | eksport
 translation	importexport	no	Oversetting
 true	importexport	no	Sant
 use default	importexport	no	Bruk standard

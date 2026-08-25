@@ -6,7 +6,7 @@ addressbook vcard import	importexport	cs	Import adresáře vCard
 admin disabled exporting	importexport	cs	Správce zakázal export.
 all users	importexport	cs	Všichni uživatelé
 allowed users	importexport	cs	Oprávnění uživatelé
-automatically created by importexport	importexport	cs	Automaticky vytvořeno aplikací ImportExport
+automatically created by importexport	importexport	cs	Automaticky vytvořeno aplikací Import | Export
 basic csv import	importexport	cs	Základní CSV import
 change allowed users	importexport	cs	Změna povolených uživatelů
 change owner when updating	importexport	cs	Změna vlastníka při aktualizaci
@@ -33,6 +33,7 @@ expert options	importexport	cs	Rozšířené volby
 export	importexport	cs	Exportovat
 export all selected definitions	importexport	cs	Exportovat VŠECHNY vybrané definice
 exported	importexport	cs	exportován
+extra charsets for import / export	importexport	cs	Další znakové sady pro Import | Export
 false	importexport	cs	ne
 fieldseperator	importexport	cs	Oddělovač položek
 finish	importexport	cs	Dokončit

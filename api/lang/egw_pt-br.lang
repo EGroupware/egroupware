@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	pt-br	%1 (%2 nova) Mensagens escritas para Aplicações '%3' e Idiomas '%4'
 %1 active file(s) with same name as directory inactivated!	admin	pt-br	%1 arquivo(s) ativo(s) com o mesmo nome da pasta inativado(s)!
-%1 copied - the copy can now be edited	common	pt-br	%1 copiado - a cópia agora pode ser editada
+%1 copied - the copy can now be edited	common	pt-br	%1 copiado - a cópia agora pode ser editada.
 %1 directories %2 found!	admin	pt-br	%1 %2 diretórios encontrado!
 %1 email addresses inserted	common	pt-br	%1 endereço(s) de email(s) inseridos
 %1 email(s) added into %2	common	pt-br	%1 e-mail(s) adicionado(s) em %2
@@ -561,6 +561,7 @@ fiji	common	pt-br	FIJI
 file	common	pt-br	Arquivo
 file %1 has no content in physical filesystem %2!	admin	pt-br	O arquivo %1 não tem conteúdo no sistema de arquivos físico %2!
 file contains more than one etemplate, last one is shown !!!	common	pt-br	O arquivo contém mais do que um eModelo, o último será mostrado!
+file information	common	pt-br	Informações do arquivo
 file writen	common	pt-br	Escrever no Arquivo.
 files	common	pt-br	Arquivos
 fileupload	common	pt-br	Enviar arquivo
@@ -574,6 +575,7 @@ firstname	common	pt-br	Primeiro Nome
 fixme!	common	pt-br	ATUALIZE-ME!
 floating point	common	pt-br	Ponto de flutuação
 folder already exists.	common	pt-br	Pasta já existe!
+for group	common	pt-br	Para o grupo
 force selectbox	common	pt-br	Forçar caixa de seleção
 foreign key	common	pt-br	Chave externa
 forever	common	pt-br	Para sempre
@@ -737,6 +739,7 @@ jordan	common	pt-br	JORDÂNIA
 july	common	pt-br	Julho
 jun	common	pt-br	Jun
 june	common	pt-br	Junho
+just for me	common	pt-br	Só para mim
 justify center	common	pt-br	Centralizar
 justify full	common	pt-br	Justificar
 justify left	common	pt-br	Alinhar a esquerda
@@ -986,6 +989,7 @@ original	common	pt-br	Original
 other	common	pt-br	Outro
 overflow	common	pt-br	Excesso
 overview	common	pt-br	Visão geral
+overwrite	common	pt-br	Substituir
 owner	common	pt-br	Dono
 ownership	common	pt-br	Propriedade
 padding	common	pt-br	Estofamento
@@ -1065,6 +1069,7 @@ print	common	pt-br	Imprimir
 print orientation	common	pt-br	Orientação
 priority	common	pt-br	Prioridade
 private	common	pt-br	Particular
+processing the file	common	pt-br	Processando o arquivo
 programs	common	pt-br	Programas
 project	common	pt-br	Projeto
 properties	common	pt-br	Propriedades
@@ -1441,7 +1446,6 @@ weekend	common	pt-br	Final de semana
 welcome	common	pt-br	Bem Vindo
 western european	common	pt-br	Europa Ocidental
 western sahara	common	pt-br	WESTERN SAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	pt-br	O que acontece com o conteúdo excedente: vísivel (default), oculto, scroll, auto (o navegador decide)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	pt-br	Quando você mesclar entradas em documentos, elas serão armazenadas aqui. Se nenhuma pasta for fornecida, eles serão armazenados em seu diretório pessoal (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	pt-br	Quando você escolhe sim, os botões Página Inicial e Desconectar são exibidos como aplicativos na barra de aplicativos principais.
 which groups	common	pt-br	Qual grupo
@@ -1484,6 +1488,7 @@ you have successfully logged out	common	pt-br	Você encerrou a sessão corretame
 you need to %1set your timezone preference%2.	common	pt-br	Você precisa %1set sua preferência fuso horário%2.
 you need to add the webserver user '%1' to the group '%2'.	common	pt-br	Você precisa adicionar o usuário webserver '%1' ao grupo '%2'.
 you need to be an egroupware administrator to access this functionality!	common	pt-br	Você precisa ser um administrador do EGroupware para acessar esta funcionalidade!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	pt-br	Você precisa instalar o plugin Mailvelope, disponível para Chrome e Firefox, no site www.mailvelope.com ou clicando no botão “Instalar”.
 you need to select some entries first!	common	pt-br	Você precisa selecionar algumas entradas em primeiro lugar!
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	pt-br	Você tentou abrir a aplicação: %1, mas você não possui permissão para acessá-la.
 your account has been updated with new data from your identity provider.	common	pt-br	Sua conta foi atualizada com novos dados do seu provedor de identidade.

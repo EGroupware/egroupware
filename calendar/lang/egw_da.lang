@@ -37,9 +37,9 @@ after %1	calendar	da	Efter %1
 after current date	calendar	da	Efter aktuel dato
 age:	calendar	da	Alder:
 alarm	calendar	da	Alarm
-alarm added	calendar	da	Alarm tilføjet
+alarm added	calendar	da	Alarm tilføjet.
 alarm added automatic to new events before event start-time	calendar	da	Alarm tilføjes automatisk til nye begivenheder før begivenhedens starttidspunkt
-alarm deleted	calendar	da	Alarm slettet
+alarm deleted	calendar	da	Alarm slettet.
 alarm for %1 at %2 in %3	calendar	da	Alarm for %1 ved %2 i %3
 alarm management	calendar	da	Alarm håndtering
 alarms	calendar	da	Alarmer
@@ -102,6 +102,10 @@ days	calendar	da	Dage
 days of the week for a weekly repeated event	calendar	da	Ugedage for en ugentlig gentaget aftale
 days repeated	calendar	da	Gentagne dage
 dayview	calendar	da	Vis en dag
+default alarm added for yourself or all participants	calendar	da	Alarmen indsættes automatisk for nye aftaler.\nFor dig selv eller for alle deltagere.
+default alarm for	calendar	da	Standardalarm for
+default alarm for regular events	calendar	da	Standardalarm for tilbagevendende begivenheder
+default alarm for whole-day events	calendar	da	Standardalarm for heldagsbegivenheder
 default appointment length (in minutes)	calendar	da	Standard hændelses længde (i minutter)
 default calendar filter	calendar	da	Standard kalender filter
 default calendar view	calendar	da	Standard kalender fremvisning
@@ -126,9 +130,11 @@ duration	calendar	da	Varighed
 duration of the meeting	calendar	da	Længde af møde
 edit exception	calendar	da	Rediger undtagelse
 edit series	calendar	da	Rediger rækker
+edit status or alarms for this particular day	calendar	da	Rediger status eller alarmer for netop denne dag
 edit this event	calendar	da	Rediger denne aftale
 edit this series of recurring events	calendar	da	Rediger denne række af gentagne aftaler
 email address migration	calendar	da	Migrering af e-mailadresser
+empty = no alarm	calendar	da	tom = ingen alarm
 empty for all	calendar	da	Tøm for alle
 end	calendar	da	Slut
 end date/time	calendar	da	Slut Dato/Tid
@@ -136,7 +142,7 @@ enddate	calendar	da	Slutdato
 enddate / -time of the meeting, eg. for more then one day	calendar	da	Slutdato / - tid på møde f.eks. for mere end en dag
 enddate of the export	calendar	da	Slutdato for eksporten
 ends	calendar	da	Slutter
-error adding the alarm	calendar	da	Fejl ved tilføjelse af alarm
+error adding the alarm	calendar	da	Fejl ved tilføjelse af alarm.
 error notifying %1	calendar	da	Fejl ved underretning af %1
 error: importing the ical	calendar	da	Fejl: I at importere iCal'en
 error: no participants selected !!!	calendar	da	Fejl: Ingen deltagere valgt!
@@ -173,6 +179,7 @@ four days view	calendar	da	Fire-dages view
 freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	da	Fri/optaget: Ukendt bruger ´%1´, forkert adgangskode eller ikke tilgængelig for bruger der ikke er logget ind!
 freetime search	calendar	da	Søg ledig tid
 fri	calendar	da	Fri
+from file	calendar	da	Fra fil
 full description	calendar	da	Fuld beskrivelse
 fullname of person to notify	calendar	da	Det fulde navn på personen at påminde
 given url is not a caldav server: missing %1!	calendar	da	Den angivne URL er ikke en CalDAV-server: mangler %1!
@@ -184,7 +191,7 @@ group planner	calendar	da	Gruppe planlægger
 group public only	calendar	da	Kun offentlig gruppe
 groupmember(s) %1 not included, because you have no access.	calendar	da	Gruppe medlem(mer) %1 er ikke med, fordi du ikke har adgang.
 h	calendar	da	h
-here is your requested alarm.	calendar	da	Her er din efterspurgte alarm
+here is your requested alarm.	calendar	da	Her er din efterspurgte alarm.
 hide private infos	calendar	da	Skjul privat information
 high priority	calendar	da	Høj prioritet
 history	calendar	da	Historisk
@@ -211,6 +218,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	da	Ignorér konflikt
 import	calendar	da	Importer
 import csv-file	common	da	Importer CSV-fil
+imports events into your calendar from an ical file.	calendar	da	Importerer begivenheder fra en iCal-fil til din kalender.
 interval	calendar	da	Interval
 invalid email-address "%1" for user %2	calendar	da	Forkert Email-adresse "%1" for bruger %2
 last	calendar	da	Sidste
@@ -321,6 +329,7 @@ reset resource status on event shifts	calendar	da	Nulstil ressourcestatus ved fl
 resources	calendar	da	Ressourcer
 rule	calendar	da	Regel
 sat	calendar	da	Lør
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	da	Gem begivenhed som undtagelse – Slet enkeltstående forekomst – Rediger status eller alarmer for netop denne dag.
 saves the changes made	calendar	da	Gem ændringer
 saves the event ignoring the conflict	calendar	da	Ignorér konflikt og gem aftale
 scheduling conflict	calendar	da	Aftale konflikt
@@ -384,6 +393,7 @@ thu	calendar	da	Tor
 til	calendar	da	til
 timeframe	calendar	da	Tidsramme
 timeframe to search	calendar	da	Tidsramme for søgning
+timezone of event ical file import/export	calendar	da	Tidszone for begivenhed iCal-fil import | eksport
 title of the event	calendar	da	Titlen på handlingen
 to many might exceed your execution-time-limit	calendar	da	For mange vil måske overstige din eksekvere tids begrænsning
 toggle weekend	calendar	da	Skift weekend

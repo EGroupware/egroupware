@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	cs	%1 (%2 nových) zpráv zapsaných pro aplikaci '%3' a jazyky '%4'
 %1 active file(s) with same name as directory inactivated!	admin	cs	%1 aktivní(ch) soubor(ů) se shodným názvem jako složka bylo vyřazeno!
-%1 copied - the copy can now be edited	common	cs	%1 zkopírováno - kopii lze nyní upravovat
+%1 copied - the copy can now be edited	common	cs	%1 zkopírováno - kopii lze nyní upravovat.
 %1 directories %2 found!	admin	cs	%1 složek %2 nenalezeno!
 %1 email addresses inserted	common	cs	%1 e-mailových adres vloženo.
 %1 email(s) added into %2	common	cs	%1 e-mail(y) přidán(y) do %2
@@ -586,6 +586,7 @@ firstname	common	cs	Křestní jméno
 fixme!	common	cs	OPRAV MĚ!
 floating point	common	cs	Plovoucí desetinná čárka
 folder already exists.	common	cs	Složka již existuje!
+for group	common	cs	Pro skupinu
 for more than one contact in a document use the tag pagerepeat!	preferences	cs	Pro více kontaktů v dokumentu opakujte použití zástupce!
 force	common	cs	Vynutit
 force selectbox	common	cs	Vynutit rozbalovací nabídku
@@ -753,6 +754,7 @@ jordan	common	cs	JORDÁNSKO
 july	common	cs	Červenec
 jun	common	cs	Červen
 june	common	cs	Červen
+just for me	common	cs	Jen pro mě
 justify center	common	cs	Zarovnej na střed
 justify full	common	cs	Zarovnej do bloku
 justify left	common	cs	Zarovnej nalevo
@@ -1008,6 +1010,7 @@ original	common	cs	Původní
 other	common	cs	Ostatní
 overflow	common	cs	Přetečení
 overview	common	cs	Přehled
+overwrite	common	cs	Přepsat
 owner	common	cs	Vlastník
 ownership	common	cs	Vlastnictví
 padding	common	cs	Odsazení
@@ -1087,6 +1090,7 @@ print	common	cs	Tisknout
 print orientation	common	cs	Orientace
 priority	common	cs	Priorita
 private	common	cs	Soukromé
+processing the file	common	cs	Zpracování souboru
 programs	common	cs	Programy
 project	common	cs	Projekt
 properties	common	cs	Vlastnosti
@@ -1491,7 +1495,6 @@ weekend	common	cs	Víkend
 welcome	common	cs	Vítejte
 western european	common	cs	Západoevropské
 western sahara	common	cs	ZÁPADNÍ SAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	cs	Co se stane s přetékajícím obsahem: viditelný (výchozí), skrytý,rolovat,auto(rozhoduje prohlížeč)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	cs	Když sloučíte záznamy do dokumentů, budou uloženy zde. Pokud není zadána žádná složka, budou uloženy ve vašem domovském adresáři (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	cs	Odpovíte-li ano, potom tlačítka pro hlavní stranu a odhlášení budou přítomna ve vrchní aplikační liště.
 which groups	common	cs	Které skupiny

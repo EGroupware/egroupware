@@ -59,6 +59,7 @@ export data as	importexport	ru	Экспортировать данные как
 export definition to use for nextmatch export	preferences	ru	Экспорт определения для использования при следующем экспорте
 export spreadsheet	importexport	ru	Экспорт таблицы
 exported	importexport	ru	Экспортировано.
+extra charsets for import / export	importexport	ru	Дополнительные кодировки для импорта | экспорта
 extra encodings	importexport	ru	Дополнительные кодировки
 false	importexport	ru	Ложь
 field labels	importexport	ru	Поле метки

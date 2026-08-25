@@ -37,9 +37,9 @@ after %1	calendar	hu	%1 után
 after current date	calendar	hu	Mai dátum után
 age:	calendar	hu	Kor:
 alarm	calendar	hu	Riasztás
-alarm added	calendar	hu	Riasztás hozzáadva
+alarm added	calendar	hu	Riasztás hozzáadva.
 alarm added automatic to new events before event start-time	calendar	hu	Az új eseményekhez automatikusan hozzáadott riasztás az esemény kezdési időpontja előtt.
-alarm deleted	calendar	hu	Riasztás törölve
+alarm deleted	calendar	hu	Riasztás törölve.
 alarm for %1 at %2 in %3	calendar	hu	Riasztás %1-nek %2-nél %3-ban
 alarm management	calendar	hu	Riasztás kezelés
 alarms	calendar	hu	Riasztások
@@ -116,6 +116,10 @@ days	calendar	hu	Napok
 days of the week for a weekly repeated event	calendar	hu	A hét napjai a heti ismétlődésű eseményekhez
 days repeated	calendar	hu	Mely napokon ismétlődik
 dayview	calendar	hu	Napi nézet
+default alarm added for yourself or all participants	calendar	hu	Az új időpontokhoz a riasztás automatikusan hozzáadódik.\nSaját magad számára vagy az összes résztvevő számára.
+default alarm for	calendar	hu	Alapértelmezett riasztás
+default alarm for regular events	calendar	hu	Alapértelmezett riasztás rendszeres eseményekhez
+default alarm for whole-day events	calendar	hu	Alapértelmezett riasztás egész napos eseményekhez
 default appointment length (in minutes)	calendar	hu	Alapértelmezett megbeszélés hossz (percben)
 default calendar filter	calendar	hu	Alapértelmezett naptár szűrő
 default calendar view	calendar	hu	Alapértelmezett naptár nézet
@@ -144,9 +148,11 @@ duration	calendar	hu	Időtartam
 duration of the meeting	calendar	hu	Megbeszélés hossza
 edit exception	calendar	hu	Kivétel szerkesztése
 edit series	calendar	hu	Sorozat szerkesztése
+edit status or alarms for this particular day	calendar	hu	Az adott nap állapotának vagy riasztásainak szerkesztése
 edit this event	calendar	hu	Esemény szerkesztése
 edit this series of recurring events	calendar	hu	Ismétlődő esemény szerkesztése
 email address migration	calendar	hu	E-mail cím migráció
+empty = no alarm	calendar	hu	üres = nincs riasztás
 empty for all	calendar	hu	Összes törlése
 empty target calendar before importing	calendar	hu	Üres célnaptár importálás előtt
 end	calendar	hu	Befejezés
@@ -195,6 +201,7 @@ freebusy	common	hu	Szabad / Foglalt
 freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	hu	Foglalt-szabad: Ismeretlen felhasználó: '%1', rossz jelszó vagy csak bejelentkezés után érhető el!
 freetime search	calendar	hu	Szabadidő keresés
 fri	calendar	hu	Pé
+from file	calendar	hu	Fájlból
 full description	calendar	hu	Teljes leírás
 fullname of person to notify	calendar	hu	A személy teljes neve az értesítéshez
 general fields:	calendar	hu	Általános mezők:
@@ -237,6 +244,7 @@ ignore conflict	calendar	hu	Átfedés figyelmen kivül hagyása
 import	calendar	hu	Import
 import csv-file	common	hu	CSV-Állomány Import
 imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	hu	Naptárbejegyzések importálása egy CSV állományból. Lehetősége lesz kiválasztani egyéb elválasztó karaktert is az Opciókban.
+imports events into your calendar from an ical file.	calendar	hu	Eseményeket importál egy iCal-fájlból a naptáradba.
 interval	calendar	hu	Időtartam
 invalid email-address "%1" for user %2	calendar	hu	%2 felhasználó %1 email címe érvénytelen
 invitations	calendar	hu	Meghívók
@@ -353,6 +361,7 @@ resources with conflict detection	calendar	hu	Erőforrások ütközések megjele
 role	calendar	hu	Szerep
 rule	calendar	hu	Szabály
 sat	calendar	hu	Szo
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	hu	Esemény mentése kivételként – Egyetlen alkalom törlése – Az adott nap állapotának vagy riasztásainak szerkesztése.
 saves the changes made	calendar	hu	Változások elmentése.
 saves the event ignoring the conflict	calendar	hu	Ütközés figyelmen kívül hagyása és esemény mentése
 scheduling conflict	calendar	hu	Ütemezési konfliktus
@@ -427,6 +436,7 @@ til	calendar	hu	-ig
 timeframe	calendar	hu	Időkeret
 timeframe to search	calendar	hu	Kereséshez időkeret
 timezone	calendar	hu	Időzóna
+timezone of event ical file import/export	calendar	hu	Az iCal-fájl importálásakor az esemény időzónája | exportálás
 title of the event	calendar	hu	Esemény címe
 to many might exceed your execution-time-limit	calendar	hu	Futtatási időkorlát túllépés
 toggle weekend	calendar	hu	Hétvége átkapcsolása

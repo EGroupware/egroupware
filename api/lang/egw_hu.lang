@@ -1,3 +1,4 @@
+%1 copied - the copy can now be edited	common	hu	%1 másolva – a másolatot most már szerkesztheti.
 %1 email addresses inserted	common	hu	%1 email cím beillesztve.
 %1 email(s) added into %2	common	hu	%1 e-mail(ek) hozzáadva %2-hez
 %1 file	common	hu	% file
@@ -74,7 +75,7 @@ align	common	hu	Igazítás
 all	common	hu	Összes
 all addressbooks	groupdav	hu	Minden címjegyzék
 all categories	common	hu	Minden kategória
-all fields	common	hu	Összes mező
+all fields	common	hu	Minden mező
 all files	common	hu	Minden fájl
 all in one	groupdav	hu	Mindent egyben
 all languages	common	hu	Minden nyelv
@@ -337,6 +338,7 @@ entry updated sucessfully	common	hu	Bejegyzés módosítva.
 equatorial guinea	common	hu	Egyenlítői Guinea
 eritrea	common	hu	Eritrea
 error	common	hu	Hiba
+error copying uploaded file to vfs!	common	hu	Hiba történt a feltöltött fájl VFS-be történő másolásakor!
 error creating %1 %2 directory	common	hu	%1 %2 könyvtár létrehozása során hiba lépett fel!
 error deleting %1 %2 directory	common	hu	%1 %2 könyvtár törlése során hiba lépett fel!
 error renaming %1 %2 directory	common	hu	%1 %2 könyvtár átnevezése során hiba lépett fel!
@@ -365,6 +367,7 @@ fields	common	hu	Mezők
 fiji	common	hu	Fidzsi
 file	common	hu	Állomány
 file a file	common	hu	Fájl tárolása
+file information	common	hu	Fájlinformációk
 files	common	hu	Fájlok
 fileupload	common	hu	Fájl feltöltés
 filter	common	hu	Szűrő
@@ -376,6 +379,7 @@ first page	common	hu	Első oldal
 firstname	common	hu	Vezetéknév
 fixme!	common	hu	JAVÍTS KI!
 folder already exists.	common	hu	A mappa már létezik.
+for group	common	hu	Csoport számára
 force selectbox	common	hu	Kényszerített selectbox
 forever	common	hu	Örökre
 formatted business address	common	hu	Formázott üzleti cím
@@ -431,6 +435,7 @@ high	common	hu	Sürgős
 highest	common	hu	Legmagasabb
 history	common	hu	Történelem
 history log	common	hu	Verziótörténet
+hold [%1] key to select text eg. to copy it	common	hu	Tartsa lenyomva a [%1] gombot a szöveg kijelöléséhez, pl. másolás céljából
 holy see (vatican city state)	common	hu	Vatikán
 home	common	hu	Kezdőlap
 home email	common	hu	Otthoni email
@@ -494,6 +499,7 @@ jordan	common	hu	Jordánia
 july	common	hu	Július
 jun	common	hu	Jún
 june	common	hu	Június
+just for me	common	hu	Csak nekem
 justify center	common	hu	Középre zárt
 justify full	common	hu	Sor kitöltése
 justify left	common	hu	Balra zárt
@@ -673,6 +679,7 @@ ordered list	common	hu	Számozott lista
 original	common	hu	Eredeti
 other	common	hu	Más
 overview	common	hu	Áttekintés
+overwrite	common	hu	Felülírás
 owner	common	hu	Tulajdonos
 ownership	common	hu	Tulajdonjog
 padding	common	hu	Helykitöltés
@@ -739,6 +746,7 @@ print	common	hu	Nyomtat
 print orientation	common	hu	Tájolása
 priority	common	hu	Prioritás
 private	common	hu	Privát
+processing the file	common	hu	A fájl feldolgozása
 programs	common	hu	Programok
 project	common	hu	Projekt
 public	common	hu	Nyilvános
@@ -754,6 +762,7 @@ register	common	hu	Regiszter
 regular	common	hu	Szabályos
 reject	common	hu	Visszautasít
 remember me	common	hu	Emlékezz rám
+remove	api	hu	Törlés
 remove selected accounts	common	hu	Kiválasztott hozzáférések törlése
 remove shortcut	common	hu	Gyorsbillentyű eltávolítása
 remove this link (not the entry itself)	common	hu	Hivatkozás eltávolítása (nem a bejegyzést magát)
@@ -983,6 +992,7 @@ you have selected an invalid main category	common	hu	Érvénytelen főkategóri�
 you have successfully logged out	common	hu	Sikeresen kijelentkezett a rendszerből.
 you need to add the webserver user '%1' to the group '%2'.	common	hu	A webszerver felhasználót '%1' hozzá kell adni a '%2' csoporthoz.
 you need to be an egroupware administrator to access this functionality!	common	hu	Ehhez a funkcióhoz EGroupware adminisztrátor szintű hozzáférés szükésges!
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	hu	Telepítenie kell a Mailvelope bővítményt, amely Chrome és Firefox böngészőkhöz elérhető a www.mailvelope.com oldalon, illetve a „Telepítés” gombra kattintva.
 you've tried to open the egroupware application: %1, but you have no permission to access this application.	common	hu	Megpróbáltad elindítani %1 alkalmazást, de nincs jogosultságod hozzá!
 your account has been updated with new data from your identity provider.	common	hu	A fiókját frissítették a személyazonossági szolgáltatójától kapott új adatokkal.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	hu	Böngészője nem naprakész (JavaScript ES6 kompatibilis), előfordulhat, hogy egyes funkciók nem működnek.

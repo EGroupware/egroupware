@@ -42,9 +42,9 @@ after %1	calendar	cs	Po %1
 after current date	calendar	cs	Po aktuálním datu
 age:	calendar	cs	Věk
 alarm	calendar	cs	Připomínka
-alarm added	calendar	cs	Připomínka přidána
+alarm added	calendar	cs	Připomínka přidána.
 alarm added automatic to new events before event start-time	calendar	cs	Připomínka je vytvořena automaticky pro nové události
-alarm deleted	calendar	cs	Připomínka smazána
+alarm deleted	calendar	cs	Připomínka smazána.
 alarm for %1 at %2 in %3	calendar	cs	Připomínka pro %1 v %2 v %3
 alarm management	calendar	cs	Správa připomínek
 alarms	calendar	cs	Připomínky
@@ -222,7 +222,7 @@ enddate	calendar	cs	Koncové datum
 enddate / -time of the meeting, eg. for more then one day	calendar	cs	Koncové datum/čas setkání, např. je-li vícedenní
 enddate of the export	calendar	cs	Koncové datum exportu
 ends	calendar	cs	Končí
-error adding the alarm	calendar	cs	Chyba při přidávání připomínky
+error adding the alarm	calendar	cs	Chyba při přidávání připomínky.
 error notifying %1	calendar	cs	Chyba při oznamování %1
 error saving the event!	calendar	cs	Chyba při ukládání události!
 error: can't delete original series!	calendar	cs	Chyba: není možné smazat původní řadu pravidelných opakování!
@@ -280,6 +280,7 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 freetime	calendar	cs	Volný čas
 freetime search	calendar	cs	Hledání volného času
 fri	calendar	cs	Pá
+from file	calendar	cs	Ze souboru
 full description	calendar	cs	Celý popis
 full edit dialog	calendar	cs	Úplný dialog pro úpravy
 fullname of person to notify	calendar	cs	Celé jméno osoby, která má být upozorněna

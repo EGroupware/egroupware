@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	sk	%1 (%2 nových) správ bolo napísaných pre aplikáciu '%3' a jazyky '%4'
 %1 active file(s) with same name as directory inactivated!	admin	sk	Bolo inaktivovaných %1 aktívnych súborov s rovnakým menom ako bol názov priečinku!
-%1 copied - the copy can now be edited	common	sk	%1 skopírovaný - kópia sa odteraz dá upravovať
+%1 copied - the copy can now be edited	common	sk	%1 skopírovaný - kópia sa odteraz dá upravovať.
 %1 directories %2 found!	admin	sk	Našlo sa %1 priečinkov %2!
 %1 email addresses inserted	common	sk	%1 e-mailových adries bolo vložených.
 %1 email(s) added into %2	common	sk	%1 e-mailov bolo pridaných do %2
@@ -421,6 +421,7 @@ details	common	sk	Podrobnosti
 directory	common	sk	Priečinok
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	sk	Adresár neexistuje, nie je čitateľný webserverom, alebo nesúvisí s koreňovým adresárom dokumentov!
 directory for storing merged documents	preferences	sk	Priečinok pre ukladanie zlúčených dokumentov
+directory successfully created.	common	sk	Adresár bol úspešne vytvorený.
 directory with documents to insert entries	preferences	sk	Priečinok pre dokumenty na vkladanie položiek
 disabled	common	sk	Neaktívny
 discard changes	common	sk	Zahodiť zmeny
@@ -522,6 +523,7 @@ error deleting %1!	common	sk	Chyba pri odstraňovaní %1!
 error enabling push	common	sk	Chyba pri povolení tlačenia
 error renaming %1 %2 directory	common	sk	Chyba počas premenúvania adresára %1 %2!
 error uploading file!	filemanager	sk	Chyba počas odovzdávania súboru!
+error while creating directory.	common	sk	Chyba pri vytváraní adresára.
 error: template not found !!!	common	sk	Chyba: Šablóna sa nenašla!
 error: webserver is not allowed to write into '%1' !!!	common	sk	Chyba: webserver nemá povolený zápis do '%1'!
 error: while saving !!!	common	sk	Chyba počas ukladania!
@@ -591,6 +593,7 @@ floating point	common	sk	Pohyblivá desatinná čiarka
 folder already exists.	common	sk	Priečinok už existuje!
 fontselect	common	sk	Písmo
 fontsizeselect	common	sk	Veľkosť
+for group	common	sk	Pre skupinu
 for more than one contact in a document use the tag pagerepeat!	preferences	sk	Ak chcete mať v dokumente viac než jeden kontakt, použite značku opakovania strany!
 force	common	sk	Vynútiť
 force selectbox	common	sk	Otvor výberovú ponuku
@@ -761,6 +764,7 @@ jordan	common	sk	JORDÁNSKO
 july	common	sk	Júl
 jun	common	sk	Jún
 june	common	sk	Jún
+just for me	common	sk	Len pre mňa
 justify center	common	sk	Zarovnať na Stred
 justify full	common	sk	Zarovnať do Bloku
 justify left	common	sk	Zarovnať vĽavo
@@ -1018,6 +1022,7 @@ original	common	sk	Originál
 other	common	sk	Iné
 overflow	common	sk	Pretečenie
 overview	common	sk	Prehľad
+overwrite	common	sk	Prepísať
 owner	common	sk	Vlastník
 ownership	common	sk	Vlastníctvo
 padding	common	sk	Odstup
@@ -1096,6 +1101,7 @@ print	common	sk	Tlač
 print orientation	common	sk	Orientácia
 priority	common	sk	Priorita
 private	common	sk	Súkromné
+processing the file	common	sk	Spracovávanie súboru
 programs	common	sk	Programy
 project	common	sk	Projekt
 properties	common	sk	Vlastnosti
@@ -1507,7 +1513,6 @@ weekend	common	sk	Víkend
 welcome	common	sk	Vitajte
 western european	common	sk	Západoeurópske
 western sahara	common	sk	ZÁPADNÁ SAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	sk	Čo sa stane s presahujúcim obsahom: viditeľný (predvolené), skrytý, skrolovať, automaticky (prehliadač rozhodne)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	sk	Keď zlúčite položky do dokumentov, budú uložené na tomto mieste. Ak neposkytnete priečinok, uložia sa do Vášho domovského priečinku (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	sk	Keď odpoviete áno, tlačítka Domov a Odhlásenie sa zobrazia ako aplikácie v hlavnom paneli aplikácií.
 which groups	common	sk	Ktoré skupiny

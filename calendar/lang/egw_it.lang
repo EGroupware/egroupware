@@ -42,9 +42,9 @@ after %1	calendar	it	Dopo %1
 after current date	calendar	it	Dopo la data attuale
 age:	calendar	it	Età:
 alarm	calendar	it	Sveglia
-alarm added	calendar	it	Sveglia aggiunta
+alarm added	calendar	it	Sveglia aggiunta.
 alarm added automatic to new events before event start-time	calendar	it	Allarme aggiunto automaticamente a nuovi eventi prima dell'orario di inizio
-alarm deleted	calendar	it	Sveglia cancellata
+alarm deleted	calendar	it	Sveglia cancellata.
 alarm for %1 at %2 in %3	calendar	it	Allarme per %1 a %2 in %3
 alarm management	calendar	it	Gestione Allarmi
 alarms	calendar	it	Allarmi

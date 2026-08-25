@@ -38,7 +38,7 @@ age:	calendar	id	Usia:
 alarm	calendar	id	Alarm
 alarm added	calendar	id	Alarm ditambahkan
 alarm added automatic to new events before event start-time	calendar	id	Alarm ditambahkan otomatis ke acara baru sebelum waktu mulai acara
-alarm deleted	calendar	id	Alarm dibuang
+alarm deleted	calendar	id	Alarm dibuang.
 alarm for %1 at %2 in %3	calendar	id	Alarm untuk %1 pada %2 dalam %3
 alarm management	calendar	id	Pengelolaan alarm
 alarms	calendar	id	Alarm
@@ -82,6 +82,7 @@ calendar menu	calendar	id	Menu Kalender
 calendar preferences	calendar	id	Kesukaan Kalender
 calendar settings	admin	id	Pengaturan Kalender
 calendar-fieldname	calendar	id	Nama Field Kalender
+can't add alarms in the past !!!	calendar	id	Tidak dapat menambahkan alarm untuk tanggal yang sudah berlalu!
 canceled	calendar	id	Dibatalkan
 category %1 removed because of missing rights	calendar	id	Kategori %1 dibuang karena tiada hak
 category acl	common	id	Kategori ACL
@@ -118,6 +119,10 @@ days	calendar	id	Hari
 days of the week for a weekly repeated event	calendar	id	Hari-hari untuk kegiatan yang berulang setiap minggu
 days repeated	calendar	id	Hari-hari pengulangan
 dayview	calendar	id	Tampilan Harian
+default alarm added for yourself or all participants	calendar	id	Pemberitahuan akan ditambahkan secara otomatis untuk janji temu baru.\nUntuk diri Anda sendiri atau untuk semua peserta.
+default alarm for	calendar	id	Pemberitahuan default untuk
+default alarm for regular events	calendar	id	Pemberitahuan default untuk acara rutin
+default alarm for whole-day events	calendar	id	Pemberitahuan default untuk acara sepanjang hari
 delegated	calendar	id	Didelegasikan
 delete selected events	calendar	id	Hapus kegiatan terpilih
 delete series	calendar	id	Hapus runtun
@@ -140,6 +145,7 @@ edit status or alarms for this particular day	calendar	id	Edit status atau alarm
 edit this event	calendar	id	Edit kegiatan ini
 edit this series of recurring events	calendar	id	Edit runtun kegiatan yang berulang ini
 email address migration	calendar	id	Migrasi alamat email
+empty = no alarm	calendar	id	kosong = tidak ada pemberitahuan
 empty for all	calendar	id	Kosongkan semua
 empty target calendar before importing	calendar	id	Kosongkan kalender target sebelum mengimpor
 end	calendar	id	Akhir
@@ -147,6 +153,7 @@ end date/time	calendar	id	Tanggal/Jam berakhir
 enddate	calendar	id	Tanggal berakhir
 enddate of the export	calendar	id	Tanggal akhir untuk ekspor
 ends	calendar	id	Selesai
+error adding the alarm	calendar	id	Kesalahan saat menambahkan alarm
 error notifying %1	calendar	id	Kesalahan memberitahukan %1
 event deleted	calendar	id	Kegiatan dihapus
 event details follow	calendar	id	Berikut adalah detil Kegiatan
@@ -172,6 +179,7 @@ four days view	calendar	id	Tampilan empat-harian
 freebusy	common	id	Senggang/Sibuk
 freetime search	calendar	id	Mencari waktu Senggang
 fri	calendar	id	Jum
+from file	calendar	id	Dari berkas
 full description	calendar	id	Uraian lengkap
 general fields:	calendar	id	Field Umum:
 given url is not a caldav server: missing %1!	calendar	id	URL yang diberikan bukan server CalDAV: tidak ada %1!
@@ -206,6 +214,7 @@ ical successful imported	calendar	id	iCal sukses diimpor
 ignore conflict	calendar	id	Abaikan konflik
 import	calendar	id	Impor
 import csv-file	common	id	Impor berkas-CSV
+imports events into your calendar from an ical file.	calendar	id	Mengimpor acara dari berkas iCal ke kalender Anda.
 insert in document	calendar	id	Sisipkan dalam dokumen
 interval	calendar	id	Interval
 invalid email-address "%1" for user %2	calendar	id	Alamat email "%1" untuk pengguna %2 keliru
@@ -252,6 +261,7 @@ no response	calendar	id	Tiada tanggapan
 non blocking	calendar	id	Non blocking
 not	calendar	id	Not
 not rejected	calendar	id	Tidak ditolak
+notification messages for your alarms	calendar	id	Pesan pemberitahuan untuk pemberitahuan Anda
 notify	calendar	id	Memberitahukan
 notify all externals (non-users) about this event	calendar	id	Memberitahukan semua pihak luar (bukan pengguna) tentang peristiwa ini
 number of records to read (%1)	calendar	id	Jumlah rekord yang dibaca (%1)
@@ -303,6 +313,7 @@ resources	calendar	id	Sumberdaya
 role	calendar	id	Role
 rule	calendar	id	Rule
 sat	calendar	id	Sab
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	id	Simpan acara sebagai pengecualian - Hapus kejadian tunggal - Edit status atau pemberitahuan untuk hari ini.
 saves the changes made	calendar	id	Simpan pengubahan
 saves the event ignoring the conflict	calendar	id	Simpan kegiatan - abaikan konflik
 scheduling conflict	calendar	id	Penjadualan Konflik
@@ -352,12 +363,14 @@ the sender "%1" is not the participant replying "%2", proceed with caution!	cale
 this day is shown as first day in the week or month view.	calendar	id	Hari tersebut akan ditampilkan sebagai hari pertama pada tampilann mingguan atau bulanan
 this entry is currently opened by %1!	calendar	id	Entri ini sedang dibuka oleh %1!
 this is a single recurrence of a recurring event.	calendar	id	Ini adalah pengulangan tunggal dari acara yang berulang.
+this message is sent when you set an alarm for a certain event. include all information you might need.	calendar	id	Pesan ini dikirim saat Anda mengatur Alarm untuk acara tertentu. Sertakan semua informasi yang mungkin Anda perlukan.
 three month	calendar	id	Tiga bulan
 thu	calendar	id	Kam
 til	calendar	id	hingga
 timeframe	calendar	id	Kerangka waktu
 timeframe to search	calendar	id	Kerangka waktu untuk pencarian
 timezone	calendar	id	Zona waktu
+timezone of event ical file import/export	calendar	id	Zona waktu berkas iCal acara impor | ekspor
 title of the event	calendar	id	Judul kegiatan
 toggle weekend	calendar	id	Ganti akhir pekan
 tomorrow	calendar	id	Esok

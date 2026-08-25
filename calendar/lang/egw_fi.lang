@@ -41,9 +41,9 @@ after %1	calendar	fi	%1 jälkeen
 after current date	calendar	fi	Nykyisen päivän jälkeen
 age:	calendar	fi	Ikä:
 alarm	calendar	fi	Hälytys
-alarm added	calendar	fi	Hälytys lisätty
+alarm added	calendar	fi	Hälytys lisätty.
 alarm added automatic to new events before event start-time	calendar	fi	Hälytys lisätään automaattisesti uusiin tapahtumiin ennen tapahtuman alkamisaikaa
-alarm deleted	calendar	fi	Hälytys poistettu
+alarm deleted	calendar	fi	Hälytys poistettu.
 alarm for %1 at %2 in %3	calendar	fi	Hälytys tapahtumalle %1, aika %2, paikka %3
 alarm management	calendar	fi	Hälytysten hallinta
 alarms	calendar	fi	Hälytykset
@@ -144,6 +144,10 @@ days	calendar	fi	Päivää
 days of the week for a weekly repeated event	calendar	fi	Viikonpäivät viikottain toistettavalle tapahtumalle
 days repeated	calendar	fi	Toistettavat päivät
 dayview	calendar	fi	Päivänäkymä
+default alarm added for yourself or all participants	calendar	fi	Hälytys lisätään automaattisesti uusiin tapaamisiin.\nItsellesi tai kaikille osallistujille.
+default alarm for	calendar	fi	Oletushälytys
+default alarm for regular events	calendar	fi	Oletushälytys säännöllisille tapahtumille
+default alarm for whole-day events	calendar	fi	Oletushälytys koko päivän kestäville tapahtumille
 default appointment length (in minutes)	calendar	fi	Tapaamisen oletuspituus (minuutteina)
 default calendar filter	calendar	fi	Kalenterin oletussuodin
 default calendar view	calendar	fi	Kalenterin oletusnäkymä
@@ -204,7 +208,7 @@ enddate	calendar	fi	Päättymispäivä
 enddate / -time of the meeting, eg. for more then one day	calendar	fi	Tapahtuman päättymispäivä/-aika, esim. useammalle kuin yhdelle päivälle
 enddate of the export	calendar	fi	Viennin päättymispäivä
 ends	calendar	fi	Päättyy
-error adding the alarm	calendar	fi	Virhe hälytystä lisättäessä
+error adding the alarm	calendar	fi	Virhe hälytystä lisättäessä.
 error notifying %1	calendar	fi	Virheilmoitus %1
 error: can't delete original series!	calendar	fi	Virhe: Alkuperäistä tapahtumasarjaa ei voitu poistaa!
 error: duration of event longer then recurrence interval!	calendar	fi	Virhe: Tapahtuman kesto on suurempi kuin intervalli!

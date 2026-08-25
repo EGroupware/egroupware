@@ -1,3 +1,4 @@
+%1 copied - the copy can now be edited	common	ro	%1 a fost copiat – copia poate fi acum editată.
 %1 email(s) added into %2	common	ro	%1 e-mail(uri) adăugat(e) în %2
 %1 more %2 selected ...	common	ro	%1 mai multe %2 selectate ...
 '%1' copied to clipboard	common	ro	'%1' copiat în clipboard
@@ -35,6 +36,7 @@ admin settings for %1	common	ro	Setări administrative pentru %1
 advanced search	common	ro	Căutare avansată
 all addressbooks	groupdav	ro	Toate agendele de adrese
 all categories	common	ro	Toate categoriile
+all fields	common	ro	Toate câmpurile
 all files	common	ro	Toate fișierele
 all in one	groupdav	ro	Toate într-una singură
 allow editing the %1	common	ro	Permiteți editarea lui %1
@@ -80,6 +82,7 @@ dark mode	common	ro	Mod întunecat
 date + time	common	ro	Data + Ora
 date+time	common	ro	Data+Ora
 directory for storing merged documents	preferences	ro	Folder pentru stocarea documentelor fuzionate
+directory successfully created.	common	ro	Directorul a fost creat cu succes.
 documents	common	ro	Documente
 don't ask again!	common	ro	Nu întrebați din nou!
 don't show this again	common	ro	Nu afișați acest lucru din nou
@@ -93,14 +96,18 @@ egroupware security update %1 needs to be installed!	common	ro	Actualizarea de s
 egroupware version	common	ro	Versiunea EGroupware
 emails	common	ro	Email-uri
 enter your passphrase	common	ro	Introduceți fraza dvs. de acces
+error copying uploaded file to vfs!	common	ro	Eroare la copierea fișierului încărcat în VFS!
+error while creating directory.	common	ro	Eroare la crearea directorului.
 example {{if n_prefix~mr~hello mr.~hello ms.}} - search the field "n_prefix", for "mr", if found, write hello mr., else write hello ms.	preferences	ro	Exemplu {{IF n_prefix~Mr~Bună ziua domnule ~Bună ziua doamnă}} - caută în câmpul "n_prefix", pentru "Mr", dacă se găsește, scrie Hello Mr., altfel scrie Hello Ms.
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is empty for example	preferences	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
 example {{letterprefix}} - gives a letter prefix without double spaces, if the title is emty for  example	common	ro	Exemplu {{LETTERPREFIX}} - Oferă un prefix de literă fără spații duble, dacă titlul este gol, de exemplu
 example {{nelf role}} - if field role is not empty, you will get a new line with the value of field role	preferences	ro	Exemplu {{NELF rol}} - dacă câmpul rol nu este gol, se va primi o nouă linie cu valoarea câmpului rol
 example {{nenvlf role}} - if field role is not empty, set a lf without any value of the field	preferences	ro	Exemplu {{nenvlf role}} - dacă rolul câmpului nu este gol, se stabilește un LF fără nicio valoare a câmpului
 file a file	common	ro	Stocați un fișier
+file information	common	ro	Informații despre fișier
 fileupload	common	ro	Încărcarea fișierelor
 filter	common	ro	Filtru
+for group	common	ro	Pentru grup
 formatted business address	common	ro	Adresa de afaceri formatată
 formatted private address	common	ro	Adresa privată formatată
 formatted text (html)	common	ro	Text formatat (HTML)
@@ -110,6 +117,7 @@ general fields:	preferences	ro	Câmpuri generale:
 german	common	ro	Germană
 history	common	ro	Istorie
 history log	common	ro	Istoricul versiunii
+hold [%1] key to select text eg. to copy it	common	ro	Ține apăsată tasta [%1] pentru a selecta textul, de exemplu pentru a-l copia
 how many days to sync in the future (default %1)	groupdav	ro	Câte zile să se sincronizeze în viitor (implicit %1)
 how many days to sync in the past (default %1)	groupdav	ro	Câte zile de sincronizare în trecut (implicit %1)
 how many rows to print	common	ro	Câte rânduri să se tipărească
@@ -126,6 +134,7 @@ invalid 2-factor authentication code	common	ro	Código de autenticação de 2 fa
 invalid email	common	ro	E-mail invalid
 invalid or expired 'remember me' token	common	ro	Ficha "lembre-se de mim" inválida ou vencida
 it is recommended to store your public key in addressbook, so other users can write you encrypted mails.	common	ro	É recomendável armazenar sua chave pública no Addressbook, para que outros usuários possam escrever seus e-mails criptografados.
+just for me	common	ro	Doar pentru mine
 license	common	ro	Licență
 light mode	common	ro	Mod deschis
 link to each entry	common	ro	Link către fiecare intrare
@@ -156,6 +165,7 @@ open	common	ro	Deschideți
 open existing contact	common	ro	Deschidere contact existent
 open the online help.	common	ro	Deschideți ajutorul online
 openidconnect login successful, but user '%1' does not exist in egroupware, and automatic user creating is disabled!	common	ro	Logare OpenIDConnect reușită, dar utilizatorul „%1” NU există în EGroupware, iar crearea automată de utilizatori este dezactivată!
+overwrite	common	ro	Suprascrie
 ownership	common	ro	Proprietate
 permission denied!	common	ro	Permisiune refuzată!
 permission denied! this is an administration only feature.	common	ro	Permisiune refuzată! Aceasta este o funcție rezervată administratorilor.
@@ -175,6 +185,8 @@ please type 1 more character	common	ro	Vă rugăm să introduceți încă 1 cara
 preference	common	ro	Preferințe
 preferences	common	ro	Preferințe
 print orientation	common	ro	Orientare
+processing the file	common	ro	Se procesează fișierul
+remove	api	ro	Elimină
 repeat password	common	ro	Repetarea parolei
 saved column sizes to preferences.	common	ro	Salvat dimensiunile coloanelor în preferințe.
 selection of files can only be done in one folder.  %1 files unselected.	common	ro	Selectarea fișierelor se poate face doar într-un singur dosar. %1 fișiere neselectate.
@@ -189,6 +201,7 @@ this will reset toolbar preferences for all users and set them to configured def
 toolbar settings	common	ro	Setări bara de instrumente
 videos	common	ro	Videoclipuri
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	ro	Atunci când îmbinați intrările în documente, acestea vor fi stocate aici. Dacă nu este furnizat niciun dosar, acestea vor fi stocate în directorul dvs. personal (%1)
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	ro	Trebuie să instalați pluginul Mailvelope disponibil pentru Chrome și Firefox de la www.mailvelope.com sau făcând clic pe butonul de instalare.
 your account has been updated with new data from your identity provider.	common	ro	Contul dvs. a fost actualizat cu date noi de la furnizorul dvs. de identitate.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	ro	Browserul dvs. nu este actualizat (compatibil cu JavaScript ES6), este posibil ca unele dintre caracteristici să nu funcționeze.
 your key has been restored successfully.	common	ro	Cheia dvs. a fost restaurată cu succes.

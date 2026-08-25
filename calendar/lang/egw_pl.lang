@@ -39,9 +39,9 @@ after %1	calendar	pl	Po %1
 after current date	calendar	pl	Po bieżącej dacie
 age:	calendar	pl	Wiek:
 alarm	calendar	pl	Alarm
-alarm added	calendar	pl	Alarm został dodany
+alarm added	calendar	pl	Alarm został dodany.
 alarm added automatic to new events before event start-time	calendar	pl	Alarm dodawany automatycznie do nowych zdarzeń przed czasem rozpoczęcia zdarzenia
-alarm deleted	calendar	pl	Alarm został usunięty
+alarm deleted	calendar	pl	Alarm został usunięty.
 alarm for %1 at %2 in %3	calendar	pl	Alarm dla %1 o %2 w %3
 alarm management	calendar	pl	Zarządzanie alarmami
 alarms	calendar	pl	Alarmy
@@ -125,6 +125,10 @@ days	calendar	pl	Dni
 days of the week for a weekly repeated event	calendar	pl	Dni tygodnia dla tygodniowo powtarzanych terminów
 days repeated	calendar	pl	Dni powtórzeń
 dayview	calendar	pl	Widok Dzienny
+default alarm added for yourself or all participants	calendar	pl	Alarm jest automatycznie dodawany do nowych spotkań.\nDla Ciebie lub dla wszystkich uczestników.
+default alarm for	calendar	pl	Domyślny alarm dla
+default alarm for regular events	calendar	pl	Domyślny alarm dla wydarzeń cyklicznych
+default alarm for whole-day events	calendar	pl	Domyślny alarm dla wydarzeń całodziennych
 default appointment length (in minutes)	calendar	pl	Domyślna długość spotkania (w minutach)
 default calendar filter	calendar	pl	Domyślny filtr kalendarza
 default calendar view	calendar	pl	Domyślny układ kalendarza
@@ -166,6 +170,7 @@ edit status or alarms for this particular day	calendar	pl	Edytuj status lub alar
 edit this event	calendar	pl	Edytuj termin
 edit this series of recurring events	calendar	pl	Edytuj serię terminów powtarzanych
 email address migration	calendar	pl	Migracja adresów e-mail
+empty = no alarm	calendar	pl	puste = brak alarmu
 empty for all	calendar	pl	Pusty dla wszystkich
 empty target calendar before importing	calendar	pl	Opróżnij kalendarz docelowy przed importem
 end	calendar	pl	Zakończenie
@@ -174,7 +179,7 @@ enddate	calendar	pl	Data zakończenia
 enddate / -time of the meeting, eg. for more then one day	calendar	pl	Data i czas zakończenia spotkania, np. dla terminów trwających więcej niż jeden dzień
 enddate of the export	calendar	pl	Data końcowa dla eksportu
 ends	calendar	pl	Kończy się
-error adding the alarm	calendar	pl	Błąd przy dodawaniu alarmu
+error adding the alarm	calendar	pl	Błąd przy dodawaniu alarmu.
 error notifying %1	calendar	pl	Błąd powiadamiania %1
 error: importing the ical	calendar	pl	Błąd przy importowaniu iCal
 error: no participants selected !!!	calendar	pl	Błąd: nie wybrano uczestników

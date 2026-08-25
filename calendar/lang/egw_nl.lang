@@ -38,9 +38,9 @@ after %1	calendar	nl	Na %1
 after current date	calendar	nl	Na de huidige datum
 age:	calendar	nl	Leeftijd:
 alarm	calendar	nl	Herinnering
-alarm added	calendar	nl	Herinnering toegevoegd
+alarm added	calendar	nl	Herinnering toegevoegd.
 alarm added automatic to new events before event start-time	calendar	nl	Automatisch alarm toegevoegd aan nieuwe evenementen voor aanvangstijd evenement
-alarm deleted	calendar	nl	Herinnering verwijderd
+alarm deleted	calendar	nl	Herinnering verwijderd.
 alarm for %1 at %2 in %3	calendar	nl	Herinnering voor %1 op %2 in %3
 alarm management	calendar	nl	Herinneringen beheer
 alarms	calendar	nl	Herinneringen
@@ -122,6 +122,10 @@ days	calendar	nl	Dagen
 days of the week for a weekly repeated event	calendar	nl	Dagen van de week voor een wekelijks herhalende gebeurtenis
 days repeated	calendar	nl	Dagen herhaald
 dayview	calendar	nl	Dagweergave
+default alarm added for yourself or all participants	calendar	nl	De melding wordt automatisch toegevoegd bij nieuwe afspraken.\nVoor jezelf of voor alle deelnemers.
+default alarm for	calendar	nl	Standaardmelding voor
+default alarm for regular events	calendar	nl	Standaardmelding voor terugkerende afspraken
+default alarm for whole-day events	calendar	nl	Standaardmelding voor afspraken die de hele dag duren
 default appointment length (in minutes)	calendar	nl	Standaard afspraakduur (in minuten)
 default calendar filter	calendar	nl	Standaard agendafilter
 default calendar view	calendar	nl	Standaard agendaoverzicht
@@ -213,6 +217,7 @@ freebusy	common	nl	Vrij/Bezet
 freebusy: unknown user '%1', wrong password or not available to not logged in users !!!	calendar	nl	Vrij/Bezet: onbekende gebruiker '%1', verkeerd wachtwoord of niet beschikbaar voor niet-ingelogde gebruikers!!!
 freetime search	calendar	nl	Beschikbare tijd opzoeken
 fri	calendar	nl	Vri
+from file	calendar	nl	Van bestand
 full description	calendar	nl	Volledige omschrijving
 fullname of person to notify	calendar	nl	Volledige naam van persoon om te op de hoogte te brengen
 general fields:	calendar	nl	Algemene velden:
@@ -263,6 +268,7 @@ ignore conflict	calendar	nl	Conflict negeren
 import	calendar	nl	Importeren
 import csv-file	common	nl	CSV-bstand importeren
 imports events into your calendar from a csv file. csv means 'comma separated values'. however in the options tab you can also choose other seperators.	calendar	nl	Importeer gebeurtenissen in uw agenda vanuit een CSV bestand. Maar in het Opties tabblad kunt u ook andere scheidingstekens kiezen.
+imports events into your calendar from an ical file.	calendar	nl	Importeert afspraken uit een iCal-bestand in je agenda.
 insert	calendar	nl	Voeg toe
 insert in document	calendar	nl	Invoegen in document
 interval	calendar	nl	Interval
@@ -392,6 +398,7 @@ resources with conflict detection	calendar	nl	Hulpmiddelen met conflict detectie
 role	calendar	nl	Rol
 rule	calendar	nl	Regel
 sat	calendar	nl	Zat
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	nl	Afspraak als uitzondering opslaan - Eenmalige afspraak verwijderen - Status of meldingen voor deze specifieke dag bewerken.
 saves the changes made	calendar	nl	Bewaar de aangebrachte wijzigingen
 saves the event ignoring the conflict	calendar	nl	Bewaart de gebeurtenis en negeert het conflict
 scheduling conflict	calendar	nl	Afspraak conflict
@@ -470,6 +477,7 @@ til	calendar	nl	tot
 timeframe	calendar	nl	Tijdskader
 timeframe to search	calendar	nl	Tijdskader om te zoeken
 timezone	calendar	nl	Tijdszone
+timezone of event ical file import/export	calendar	nl	Tijdzone van afspraken bij het importeren of exporteren van iCal-bestanden
 title of the event	calendar	nl	Titel van afspraak
 titles of any entries linked to the current record, excluding attached files	calendar	nl	Namen van alle invoer gelinked aan huidig record, behalve de bijgesloten bestanden
 to many might exceed your execution-time-limit	calendar	nl	Te veel kan mogelijk uw uitvoertijd van dit programme overschrijden

@@ -30,9 +30,9 @@ after %1	calendar	ko	이후 %1
 after current date	calendar	ko	오늘이후
 age:	calendar	ko	나이:
 alarm	calendar	ko	알람
-alarm added	calendar	ko	알람 추가됨
+alarm added	calendar	ko	알람 추가됨.
 alarm added automatic to new events before event start-time	calendar	ko	이벤트 시작 시간 전에 새 이벤트에 알람이 자동으로 추가됨
-alarm deleted	calendar	ko	알람 삭제됨
+alarm deleted	calendar	ko	알람 삭제됨.
 alarm for %1 at %2 in %3	calendar	ko	** %3, %1에 %2 알람
 alarm management	calendar	ko	알람관리
 alarms	calendar	ko	알람
@@ -62,6 +62,7 @@ calendar menu	calendar	ko	일정 메뉴
 calendar preferences	calendar	ko	일정 환경설정
 calendar settings	admin	ko	일정 설정
 calendar-fieldname	calendar	ko	일정-필드이름
+can't add alarms in the past !!!	calendar	ko	과거 일정에 알림을 추가할 수 없습니다!
 canceled	calendar	ko	취소됨
 category report	calendar	ko	카테고리 보고서
 changed event-data applied	calendar	ko	변경된 이벤트 데이터 적용
@@ -87,6 +88,10 @@ days	calendar	ko	일동안
 days of the week for a weekly repeated event	calendar	ko	주간반복이벤트가 적용될 요일
 days repeated	calendar	ko	일동안 반복됨
 dayview	calendar	ko	하루 보기
+default alarm added for yourself or all participants	calendar	ko	새 일정이 생성되면 알람이 자동으로 추가됩니다.\n본인 또는 모든 참가자에게 적용됩니다.
+default alarm for	calendar	ko	기본 알람
+default alarm for regular events	calendar	ko	정기 행사에 대한 기본 알람
+default alarm for whole-day events	calendar	ko	종일 행사에 대한 기본 알람
 default appointment length (in minutes)	calendar	ko	기본 약속 길이(분단위)
 default calendar filter	calendar	ko	기본 일정 필터
 default calendar view	calendar	ko	기본 일정 보기
@@ -110,9 +115,11 @@ duration	calendar	ko	기간
 duration of the meeting	calendar	ko	미팅기간
 edit exception	calendar	ko	예외 편집
 edit series	calendar	ko	연속 편집
+edit status or alarms for this particular day	calendar	ko	해당 날짜의 상태 또는 알람 편집
 edit this event	calendar	ko	이 이벤트 편집
 edit this series of recurring events	calendar	ko	이 연속된 반복 이벤트 편집
 email address migration	calendar	ko	이메일 주소 마이그레이션
+empty = no alarm	calendar	ko	비어 있음 = 알람 없음
 empty for all	calendar	ko	모두 비우기
 empty target calendar before importing	calendar	ko	가져오기 전에 대상 캘린더 비우기
 end	calendar	ko	종료
@@ -270,6 +277,7 @@ reset resource status on event shifts	calendar	ko	이벤트 이동 시 리소스
 resources	calendar	ko	리소스
 rule	calendar	ko	규칙
 sat	calendar	ko	토요일
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	ko	이벤트를 예외로 저장 - 단일 일정 삭제 - 해당 날짜의 상태 또는 알람 편집.
 saves the changes made	calendar	ko	변경사항 저장
 saves the event ignoring the conflict	calendar	ko	저장 (이벤트 충돌 무시)
 scheduling conflict	calendar	ko	일정 겹침
@@ -277,6 +285,7 @@ select a %1	calendar	ko	%1 선택
 select a time	calendar	ko	시간선택
 select resources	calendar	ko	리소스 선택
 select whether you want the resource status reset to unknown, if an event is shifted later on.	calendar	ko	이벤트가 나중에 이동하는 경우 리소스 상태를 '응답 없음'으로 초기화할지 여부를 선택합니다.
+select who should get the alarm	calendar	ko	알림을 받을 사람을 선택하세요
 send notifications	calendar	ko	알림 보내기
 send notifications to users right now	calendar	ko	지금 참가자에게 알림 보내기
 set new events to private	calendar	ko	새 개인 이벤트 설정

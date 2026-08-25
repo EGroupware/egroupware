@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	it	%1 (%2 nuovi) messaggi scritti per l'applicazione '%3' e linguaggi '%4'
 %1 active file(s) with same name as directory inactivated!	admin	it	%1 file attivi con lo stesso nome della cartella disattivata!
-%1 copied - the copy can now be edited	common	it	%1 copiato - la copia può adesso essere modificata
+%1 copied - the copy can now be edited	common	it	%1 copiato - la copia può adesso essere modificata.
 %1 directories %2 found!	admin	it	%1 cartelle trovate!
 %1 email addresses inserted	common	it	%1 indirizzi e-mail inseriti.
 %1 email(s) added into %2	common	it	%1 email aggiunte in %2.
@@ -115,6 +115,7 @@ all addressbooks	groupdav	it	Tutte le rubriche
 all categories	common	it	Tutte le categorie
 all days	common	it	Tutti i giorni
 all fields	common	it	Tutti i campi
+all files	common	it	Tutti i file
 all in one	groupdav	it	Tutto in uno
 all languages	common	it	Tutte le lingue
 all operations save the template!	common	it	Tutte le operazioni salvano il template!
@@ -416,6 +417,7 @@ details	common	it	Dettagli
 directory	common	it	Directory
 directory does not exist, is not readable by the webserver or is not relative to the document root!	common	it	La directory non esiste, non è leggibile dal server o non è relativa alla base dei documenti (docroot)!
 directory for storing merged documents	preferences	it	Cartella per la memorizzazione dei documenti uniti
+directory successfully created.	common	it	Cartella creata con successo.
 directory with documents to insert entries	preferences	it	Cartella con i documenti da inserire
 disabled	common	it	Disabilitato
 discard changes	common	it	Annulla i cambiamenti
@@ -517,6 +519,7 @@ error deleting %1!	common	it	Errore di eliminazione di %1!
 error enabling push	common	it	Errore nell'abilitazione del push
 error renaming %1 %2 directory	common	it	Errore durante la rinomina della directory %1 %2!
 error uploading file!	filemanager	it	Errore di caricamento file!
+error while creating directory.	common	it	Errore durante la creazione della directory.
 error: template not found !!!	common	it	Errore: Template non trovato!
 error: webserver is not allowed to write into '%1' !!!	common	it	Errore: il webserver non può scrivere in '%1'!
 error: while saving !!!	common	it	Errore: durante salvataggio!
@@ -584,6 +587,7 @@ firstname	common	it	Nome
 fixme!	common	it	CORREGGIMI!
 floating point	common	it	Virgola mobile
 folder already exists.	common	it	La cartella esiste già!
+for group	common	it	Per il gruppo
 for more than one contact in a document use the tag pagerepeat!	preferences	it	Usare il tag di ripetizione pagina per riportare più di un contatto in un documento!
 force	common	it	Forza
 force selectbox	common	it	Forza Casella di Selezione
@@ -751,6 +755,7 @@ jordan	common	it	GIORDANIA
 july	common	it	Luglio
 jun	common	it	Giu
 june	common	it	Giugno
+just for me	common	it	Solo per me
 justify center	common	it	Centrato
 justify full	common	it	Giustificato
 justify left	common	it	Allinea a Sinistra
@@ -1006,6 +1011,7 @@ original	common	it	Originale
 other	common	it	Altro
 overflow	common	it	Overflow
 overview	common	it	Panoramica
+overwrite	common	it	Sovrascrivi
 owner	common	it	Proprietario
 ownership	common	it	Proprietà
 padding	common	it	Padding
@@ -1085,6 +1091,7 @@ print	common	it	Stampa
 print orientation	common	it	Orientamento
 priority	common	it	Priorità
 private	common	it	Privato
+processing the file	common	it	Elaborazione del file
 programs	common	it	Programmi
 project	common	it	Progetto
 properties	common	it	Proprietà
@@ -1494,7 +1501,6 @@ weekend	common	it	Weekend
 welcome	common	it	Benvenuto
 western european	common	it	Europeo occidentale
 western sahara	common	it	SAHARA OCCIDENTALE
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	it	Cosa succede con i contenuti in eccesso: visibile (default), nascosto, scroll, auto (decide il browser)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	it	Quando si uniscono le voci in un documento, queste vengono memorizzate qui. Se non viene fornita alcuna cartella, verranno memorizzate nella propria home directory (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	it	Se dirai sì, i pulsanti Home e Logout saranno presenti come applicazioni sulla barra principale delle applicazioni.
 which groups	common	it	Quali gruppi

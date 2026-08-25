@@ -1,4 +1,4 @@
-%1 copied - the copy can now be edited	common	da	%1 kopieret - kopien kan nu redigeres
+%1 copied - the copy can now be edited	common	da	%1 kopieret - kopien kan nu redigeres.
 %1 directories %2 found!	admin	da	%1 mapper %2 fundet!
 %1 email addresses inserted	common	da	%1 e-mail adresser insat.
 %1 email(s) added into %2	common	da	%1 e-mail(e) tilføjet til %2
@@ -127,6 +127,7 @@ bahrain	common	da	Bahrain
 bangladesh	common	da	Bangladesh
 barbados	common	da	Barbados
 bcc	common	da	BCC
+before proceeding further, we do highly recommend you to watch this short video, to see how mailvelope plugin works with egroupware.	common	da	Inden du fortsætter, anbefaler vi på det kraftigste, at du ser denne korte video for at se, hvordan Mailvelope-pluginet fungerer sammen med EGroupware.
 belarus	common	da	Belarus
 belgium	common	da	Belgien
 belize	common	da	Belize
@@ -332,6 +333,7 @@ epl only	common	da	Kun for EPL
 equatorial guinea	common	da	Equatorial Guinea
 eritrea	common	da	Eritrea
 error	common	da	Fejl
+error copying uploaded file to vfs!	common	da	Der opstod en fejl ved kopiering af den uploadede fil til VFS!
 error creating %1 %2 directory	common	da	Fejl ved oprettelsen af biblioteket %1 %2!
 error deleting %1 %2 directory	common	da	Fejl ved sletningen af biblioteket %1 %2!
 error renaming %1 %2 directory	common	da	Fejl ved omdøbningen af biblioteket %1 %2!
@@ -351,6 +353,7 @@ fields	common	da	Felter
 fiji	common	da	Fiji
 file	common	da	Fil
 file a file	common	da	Gem en fil
+file information	common	da	Filoplysninger
 files	common	da	Filer
 fileupload	common	da	Upload af fil
 filter	common	da	Filter
@@ -360,6 +363,7 @@ first name of the user, eg. "%1"	common	da	fornavn på brugeren, f.eks. "%1"
 first page	common	da	Første side
 firstname	common	da	Fornavn
 fixme!	common	da	RETMIG!
+for group	common	da	Til gruppen
 force selectbox	common	da	Påtving Valgbox
 formatted business address	common	da	Formateret forretningsadresse
 formatted private address	common	da	Formateret privat adresse
@@ -415,6 +419,7 @@ high	common	da	Høj
 highest	common	da	Højeste
 history	common	da	Historie
 history log	common	da	Versionshistorik
+hold [%1] key to select text eg. to copy it	common	da	Hold [%1]-tasten nede for at markere tekst, f.eks. for at kopiere den
 holy see (vatican city state)	common	da	Vatikanet
 home	common	da	Startside
 home email	common	da	Privat e-mail
@@ -472,6 +477,7 @@ japan	common	da	Japan
 jordan	common	da	Jordan
 july	common	da	Juli
 june	common	da	Juni
+just for me	common	da	Kun til mig
 kazakstan	common	da	Kazakstan
 kenya	common	da	Kenia
 keywords	common	da	Stikord
@@ -644,6 +650,7 @@ ordered list	common	da	Nummerliste
 original	common	da	Original
 other	common	da	Anden
 overview	common	da	Oversigt
+overwrite	common	da	Overskriv
 owner	common	da	Ejer
 ownership	common	da	Ejerskab
 page	common	da	Side
@@ -704,6 +711,7 @@ print	common	da	Udskriv
 print orientation	common	da	Orientering
 priority	common	da	Prioritet
 private	common	da	Privat
+processing the file	common	da	Behandling af filen
 project	common	da	Projekt
 public	common	da	Offentlig
 puerto rico	common	da	Puerto Rico
@@ -718,6 +726,7 @@ refresh	common	da	Opdater
 reject	common	da	Afvis
 remember me	common	da	Husk mig
 remember me for %1	common	da	Husk mig for %1
+remove	api	da	Slet
 remove selected accounts	common	da	Fjern udvalgte konti
 remove this link (not the entry itself)	common	da	Fjern dette link (ikke opgaven selv)
 rename	common	da	Omdøb
@@ -931,6 +940,7 @@ you have not entered participants	common	da	Du har ikke indtastet deltagere.
 you have selected an invalid date	common	da	Du har valgt en ugyldig dato!
 you have selected an invalid main category	common	da	Du har valgt en ugyldig hovedkategori!
 you have successfully logged out	common	da	Du har logget ud.
+you need to install mailvelope plugin available for chrome and firefox from www.mailvelope.com or by clicking on install button.	common	da	Du skal installere Mailvelope-pluginet, som er tilgængeligt til Chrome og Firefox, fra www.mailvelope.com eller ved at klikke på installationsknappen.
 your account has been updated with new data from your identity provider.	common	da	Din konto er blevet opdateret med nye data fra din identitetsudbyder.
 your browser is not up-to-date (javascript es6 compatible), you may experience some of the features not working.	common	da	Din browser er ikke opdateret (JavaScript ES6-kompatibel), du kan opleve, at nogle af funktionerne ikke virker.
 your key has been restored successfully.	common	da	Din nøgle er blevet gendannet med succes.

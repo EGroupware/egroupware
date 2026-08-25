@@ -112,6 +112,10 @@ days	calendar	el	ημέρες
 days of the week for a weekly repeated event	calendar	el	Ημέρες της εβδομάδας για ένα εβδομαδιαία επαναλαμβανόμενο γεγονός
 days repeated	calendar	el	επαναλαμβανόμενες ημέρες
 dayview	calendar	el	Ημερήσια εμφάνιση
+default alarm added for yourself or all participants	calendar	el	Η ειδοποίηση προστίθεται αυτόματα στα νέα ραντεβού.\nΓια εσάς ή για όλους τους συμμετέχοντες.
+default alarm for	calendar	el	Προεπιλεγμένη ειδοποίηση για
+default alarm for regular events	calendar	el	Προεπιλεγμένη ειδοποίηση για τακτικές εκδηλώσεις
+default alarm for whole-day events	calendar	el	Προεπιλεγμένη ειδοποίηση για εκδηλώσεις που διαρκούν όλη την ημέρα
 default appointment length (in minutes)	calendar	el	προκαθορισμένο μήκος συνάντησης
 default calendar filter	calendar	el	Προκαθορισμένο φίλτρο ημερολογίου
 default calendar view	calendar	el	Προκαθορισμένη εμφάνιση ημερολογίου
@@ -200,6 +204,7 @@ freebusy: unknown user '%1', wrong password or not available to not logged in us
 freetime	calendar	el	Διαθέσιμος χρόνος
 freetime search	calendar	el	Αναζήτηση ελέυθερου χρόνου
 fri	calendar	el	Παρ
+from file	calendar	el	Από αρχείο
 full description	calendar	el	Πλήρης περιγραφή
 full edit dialog	calendar	el	Πλήρης φόρμα επεξεργασίας
 fullname of person to notify	calendar	el	Πλήρες όνομα του ατόμου να ειδοποιηθεί
@@ -245,6 +250,7 @@ if you dont set a password here, the information is available to everyone, who k
 ignore conflict	calendar	el	Αγνόηση σύμπτωσης
 import	calendar	el	Εισαγωγή
 import csv-file	common	el	Εισαγωγή CSV-Αρχείου
+imports events into your calendar from an ical file.	calendar	el	Εισάγει συμβάντα από ένα αρχείο iCal στο ημερολόγιό σας.
 insert	calendar	el	Εισαγωγή
 insert in document	calendar	el	Εισαγωγή σε αρχείο
 interval	calendar	el	Διάστημα
@@ -389,6 +395,7 @@ resources	calendar	el	Πόροι
 role	calendar	el	Ρόλος
 rule	calendar	el	Κανόνας
 sat	calendar	el	Σαβ
+save event as exception - delete single occurrence - edit status or alarms for this particular day	calendar	el	Αποθήκευση εκδήλωσης ως εξαίρεση - Διαγραφή μεμονωμένης εμφάνισης - Επεξεργασία κατάστασης ή ειδοποιήσεων για τη συγκεκριμένη ημέρα.
 saves the changes made	calendar	el	αποθηκεύει τις αλλαγές που έγιναν
 saves the event ignoring the conflict	calendar	el	Αποθηκεύει το γεγονός αγνοώντας τη σύμπτωση
 scheduling conflict	calendar	el	Προγραμματισμένη σύμπτωση
@@ -466,6 +473,7 @@ til	calendar	el	τηλ
 timeframe	calendar	el	Χρονικό όριο
 timeframe to search	calendar	el	Χρονικό όριο κατά την αναζήτηση
 timezone	calendar	el	Ζώνη ώρας
+timezone of event ical file import/export	calendar	el	Ζώνη ώρας συμβάντος: εισαγωγή | εξαγωγή αρχείου iCal
 title of the event	calendar	el	Τίτλος του γεγονότος
 to many might exceed your execution-time-limit	calendar	el	Πάρα πολλοί.Κίνδυνος υπέρβασης του χρονικού ορίου εκτέλεσης
 to-firstname	calendar	el	Στο μικρό όνομα

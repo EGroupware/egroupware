@@ -1,6 +1,6 @@
 %1 (%2 new) messages writen for application '%3' and languages '%4'	common	nl	%1 (%2 nieuwe) berichten geschreven voor applicatie '%3' en talen '%4'
 %1 active file(s) with same name as directory inactivated!	admin	nl	%1 actieve bestand(en) met dezelfde naam als de map op niet-actief gezet!
-%1 copied - the copy can now be edited	common	nl	%1 gekopieerd - de kopie kan nu worden bewerkt
+%1 copied - the copy can now be edited	common	nl	%1 gekopieerd - de kopie kan nu worden bewerkt.
 %1 directories %2 found!	admin	nl	%1 mappen van %2 gevonden
 %1 email addresses inserted	common	nl	%1 emailadres ingevoerd
 %1 email(s) added into %2	common	nl	%1 e-mail(s) toegevoegd in %2
@@ -508,6 +508,7 @@ entry updated sucessfully	common	nl	Item succesvol bijgewerkt.
 equatorial guinea	common	nl	EQUATORIAAL GUINEA
 eritrea	common	nl	ERITREA
 error	common	nl	Fout
+error copying uploaded file to vfs!	common	nl	Fout bij het kopiëren van het geüploade bestand naar VFS!
 error creating %1 %2 directory	common	nl	Error tijdens het creëren van %1 %2 directory!
 error deleting %1 %2 directory	common	nl	Error tijdens het verwijderen van %1 %2 directory!
 error deleting %1!	common	nl	Fout bij het verwijderen van %1!
@@ -581,6 +582,7 @@ firstname	common	nl	Voornaam
 fixme!	common	nl	FIXME!
 floating point	common	nl	Drijvende komma
 folder already exists.	common	nl	Map bestaat reeds.
+for group	common	nl	Voor de groep
 force selectbox	common	nl	Forceer Selectbox
 foreign key	common	nl	Foreign Key
 forever	common	nl	Voor altijd
@@ -745,6 +747,7 @@ jordan	common	nl	JORDANIË
 july	common	nl	Juli
 jun	common	nl	Jun
 june	common	nl	Juni
+just for me	common	nl	Alleen voor mij
 justify center	common	nl	Centreren
 justify full	common	nl	Uitvullen
 justify left	common	nl	Links uitlijnen
@@ -989,6 +992,7 @@ original	common	nl	Origineel
 other	common	nl	Andere
 overflow	common	nl	Overflow
 overview	common	nl	Overzicht
+overwrite	common	nl	Overschrijven
 owner	common	nl	Eigenaar
 ownership	common	nl	Eigendom
 padding	common	nl	Padding
@@ -1068,6 +1072,7 @@ print	common	nl	Afdrukken
 print orientation	common	nl	Oriëntatie
 priority	common	nl	Prioriteit
 private	common	nl	Privé
+processing the file	common	nl	Het bestand wordt verwerkt
 programs	common	nl	Programma's
 project	common	nl	Project
 properties	common	nl	Eigenschappen
@@ -1457,7 +1462,6 @@ weekend	common	nl	Weekend
 welcome	common	nl	Welkom
 western european	common	nl	West europees
 western sahara	common	nl	WESTELIJK SAHARA
-what happens with overflowing content: visible (default), hidden, scroll, auto (browser decides)	common	nl	Wat gebeurt er met overflowing content: visible (standaard), hidden, scroll, auto (browser bepaalt)
 when you merge entries into documents, they will be stored here. if no directory is provided, they will be stored in your home directory (%1)	preferences	nl	Wanneer je items samenvoegt in documenten, worden ze hier opgeslagen. Als er geen map is opgegeven, worden ze opgeslagen in je thuismap (%1)
 when you say yes the home and logout buttons are presented as applications in the main top applcation bar.	common	nl	Indien u ja antwoord worden de home en loguit knop gepresenteerd als toepassingen in de toepassingenbalk.
 which groups	common	nl	Welke groepen
