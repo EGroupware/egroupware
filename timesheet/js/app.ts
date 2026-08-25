@@ -54,7 +54,14 @@ class TimesheetApp extends EgwApp
 		if (name == 'timesheet.index')
 		{
 			this.filter_change();
-			this.filter2_change();
+
+			// Show / hide descriptions according to details filter, and sync toolbar toggle with it
+			const detailsToggle : Et2ButtonToggle = this.et2.getWidgetById('details');
+			if (this.nm && detailsToggle)
+			{
+				detailsToggle.value = this.nm.activeFilters.filter2 == '1';
+				this.filter2_change(null, detailsToggle);
+			}
 		}
 	}
 
