@@ -894,6 +894,16 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 			}
 		}
+		// The server encodes rows keyed by row id (eg. ts_id), not by a clean 0-based sequence,
+		// so PHP's json_encode emits a JSON object (`{"1": {...}, "3": {...}}`) rather than an
+		// array whenever a row is ever deleted/skipped - JSON.parse then hands back a plain
+		// object, not an array. firstUpdated()'s `this.rows.length` check requires a real array
+		// to correctly skip the initial reload when rows were already provided; normalize here
+		// rather than downstream, since every other consumer of `rows` also assumes a real array.
+		if(attrs.rows && typeof attrs.rows === "object" && !Array.isArray(attrs.rows))
+		{
+			attrs.rows = Object.values(attrs.rows);
+		}
 		super.transformAttributes(attrs);
 	}
 
@@ -1781,6 +1791,53 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * True if a col_filter value should be treated as "not set" - empty string/null/undefined,
+	 * an empty array (a multi-select column filter with nothing chosen), or a link-entry style
+	 * `{app, id}` value with no id (Et2LinkEntry reports this shape as "cleared" while still
+	 * remembering which app was last chosen, so this treats that shape as no filter here rather
+	 * than in the widget itself - if filtering by app alone is ever implemented, it'll need its
+	 * own explicit representation instead of relying on Et2LinkEntry's current "cleared" shape).
+	 */
+	private _isEmptyFilterValue(value : any) : boolean
+	{
+		if(!value)
+		{
+			return true;
+		}
+		if(Array.isArray(value))
+		{
+			return value.length === 0;
+		}
+		return typeof value === "object" && "app" in value && "id" in value && !value.id;
+	}
+
+	/**
+	 * Compare two col_filter values for equality.
+	 *
+	 * Widgets like multi-selects and link-entries hand back a fresh array/object instance
+	 * on every read, so comparing with `!==` never stabilizes and applyFilters() sees
+	 * "changed" forever even though nothing meaningful did - which, since anything that
+	 * reads filters back out of a nextmatch and re-applies them (eg. Et2Filterbox syncing
+	 * with its widgets) keeps reacting to that "change", turns into an endless reload loop.
+	 */
+	private _filterValuesEqual(a : any, b : any) : boolean
+	{
+		if(a === b)
+		{
+			return true;
+		}
+		if(this._isEmptyFilterValue(a) && this._isEmptyFilterValue(b))
+		{
+			return true;
+		}
+		if(typeof a === "object" && typeof b === "object" && a !== null && b !== null)
+		{
+			return JSON.stringify(a) === JSON.stringify(b);
+		}
+		return false;
+	}
+
+	/**
 	 * Legacy-compatible filter application entry point.
 	 * Merges updates into `activeFilters`, emits cancelable `et2-filter`, and reloads rows by default.
 	 *
@@ -1842,10 +1899,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 					for(const columnId of Object.keys(colFilter))
 					{
 						const nextValue = colFilter[columnId];
-						if(activeFilters.col_filter[columnId] !== nextValue)
+						if(!this._filterValuesEqual(activeFilters.col_filter[columnId], nextValue))
 						{
 							changed = true;
-							if(nextValue)
+							if(!this._isEmptyFilterValue(nextValue))
 							{
 								activeFilters.col_filter[columnId] = nextValue;
 							}
@@ -1857,7 +1914,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 					}
 					continue;
 				}
-				if(activeFilters[key] !== set[key])
+				if(!this._filterValuesEqual(activeFilters[key], set[key]))
 				{
 					activeFilters[key] = set[key];
 					changed = true;
