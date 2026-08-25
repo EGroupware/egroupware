@@ -1030,6 +1030,7 @@ class timesheet_ui extends timesheet_bo
 								 array('value' => 0, 'label' => lang('None'))),
 			'ts_status' => $this->status_labels + [
 				self::BILLABLE => lang('Billable').'...',
+				self::ALL_STATUS => lang('All status'),
 				'0' => lang('No status'),
 			],
 		);

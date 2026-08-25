@@ -40,8 +40,9 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	 * @param int $victim_owner owner of the fixture entry
 	 * @param int|null $start entry start timestamp, defaults to now
 	 * @param int $duration entry duration in minutes
+	 * @param int|null $status ts_status to set, or null to leave it unset (DB NULL)
 	 */
-	private function createVictimTimesheet(int $victim_owner, ?int $start = null, int $duration = 60): int
+	private function createTestTimesheet(int $victim_owner, ?int $start = null, int $duration = 60, ?int $status = null): int
 	{
 		$start ??= time();
 		$so = new EGroupware\Api\Storage\Base('timesheet', 'egw_timesheet');
@@ -55,6 +56,10 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 			'ts_modified' => time(),
 			'ts_modifier' => $victim_owner,
 		);
+		if (isset($status))
+		{
+			$so->data['ts_status'] = $status;
+		}
 		$so->save();
 
 		return $this->ts_ids[] = (int)$so->data['ts_id'];
@@ -74,7 +79,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 		// an account id the current test-user has no ACL grant for
 		$victim_owner = 999999;
 
-		$ts_id = $this->createVictimTimesheet($victim_owner);
+		$ts_id = $this->createTestTimesheet($victim_owner);
 
 		$bo = new timesheet_bo();
 		// simulate the vulnerable flow: attacker-forged in-memory data claiming
@@ -101,7 +106,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	public function testCheckAclStillAllowsEditingOwnEntry()
 	{
 		$account_id = $GLOBALS['egw_info']['user']['account_id'];
-		$ts_id = $this->createVictimTimesheet($account_id);
+		$ts_id = $this->createTestTimesheet($account_id);
 
 		$bo = new timesheet_bo();
 		$bo->data = array('ts_id' => $ts_id, 'ts_owner' => $account_id);
@@ -124,8 +129,8 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 		$bo->grants[$owner] = Acl::READ;
 		$early_start = $bo->today + 2 * 3600;
 
-		$this->createVictimTimesheet($owner, $early_start, 8 * 60);
-		$this->createVictimTimesheet($owner, $bo->today + 9 * 3600, 30);
+		$this->createTestTimesheet($owner, $early_start, 8 * 60);
+		$this->createTestTimesheet($owner, $bo->today + 9 * 3600, 30);
 
 		$last_end = $bo->get_last_end($owner);
 
@@ -148,8 +153,8 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 		$yesterday_start = $bo->today - 24 * 3600 + 3 * 3600;
 		$today_start = $bo->today + 9 * 3600;
 
-		$this->createVictimTimesheet($owner, $yesterday_start, 45);
-		$this->createVictimTimesheet($owner, $today_start, 30);
+		$this->createTestTimesheet($owner, $yesterday_start, 45);
+		$this->createTestTimesheet($owner, $today_start, 30);
 
 		$yesterday = new EGroupware\Api\DateTime($bo->today - 24 * 3600);
 		$last_end_yesterday = $bo->get_last_end($owner, $yesterday);
@@ -172,12 +177,43 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 		$bo = new timesheet_bo();
 		$owner = random_int(1000000000, 2000000000);
 		$bo->grants[$owner] = Acl::READ;
-		$this->createVictimTimesheet($owner, $bo->today + 3600, 30);
+		$this->createTestTimesheet($owner, $bo->today + 3600, 30);
 
 		$other_day = new EGroupware\Api\DateTime($bo->today - 5 * 24 * 3600);
 
 		$this->assertNull($bo->get_last_end($owner, $other_day),
 			'get_last_end() must not fall back to an entry from a different day');
+	}
+
+	/**
+	 * search() with filter ts_status => timesheet_bo::ALL_STATUS must return entries that
+	 * have any status set, while excluding both entries with no status (NULL) and deleted
+	 * entries (ts_status == DELETED_STATUS) - unlike the default/empty filter, which also
+	 * matches no-status entries, and unlike the legacy 'all' filter value, which also
+	 * matches deleted entries.
+	 *
+	 * Setup: three fixture entries for a random, isolated owner - one with a real status,
+	 * one with no status (NULL), one marked deleted. Pass criteria: search() with the
+	 * ALL_STATUS filter returns exactly the entry with a real status.
+	 */
+	public function testAllStatusFilterExcludesEntriesWithoutStatus()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+
+		$with_status_id = $this->createTestTimesheet($owner, null, 60, 1);
+		$this->createTestTimesheet($owner, null, 60, null);
+		$this->createTestTimesheet($owner, null, 60, timesheet_bo::DELETED_STATUS);
+
+		$rows = $bo->search('', true, '', '', '', false, 'AND', false,
+			array('ts_owner' => $owner, 'ts_status' => timesheet_bo::ALL_STATUS));
+
+		$this->assertIsArray($rows);
+		$this->assertCount(1, $rows,
+			'ALL_STATUS filter must return only the entry that has a status set');
+		$this->assertSame($with_status_id, (int)current($rows)['ts_id'],
+			'ALL_STATUS filter must return the entry with a real status, not the no-status or deleted one');
 	}
 
 	/**
@@ -213,7 +249,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	{
 		$bo = new timesheet_bo();
 		$victim_owner = random_int(1000000000, 2000000000);
-		$this->createVictimTimesheet($victim_owner, $bo->today + 3600, 60);
+		$this->createTestTimesheet($victim_owner, $bo->today + 3600, 60);
 
 		$this->expectException(EGroupware\Api\Exception\NoPermission::class);
 		$bo->get_last_end($victim_owner);
@@ -231,7 +267,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 		$victim_owner = random_int(1000000000, 2000000000);
 		$date = new EGroupware\Api\DateTime('+5 years');
 
-		$this->createVictimTimesheet($victim_owner, $date->format('ts') + 3600, 60);
+		$this->createTestTimesheet($victim_owner, $date->format('ts') + 3600, 60);
 
 		$this->expectException(EGroupware\Api\Exception\NoPermission::class);
 		$this->callAjaxGetLastEnd($ui, $victim_owner, $date->format('Y-m-d'));
@@ -248,7 +284,7 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 		$date = new EGroupware\Api\DateTime('+5 years');
 		$start = $date->format('ts') + 3600;
 
-		$this->createVictimTimesheet($account_id, $start, 60);
+		$this->createTestTimesheet($account_id, $start, 60);
 
 		$result = $this->callAjaxGetLastEnd($ui, 0, $date->format('Y-m-d'));
 

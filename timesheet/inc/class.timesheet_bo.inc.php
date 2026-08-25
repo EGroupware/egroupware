@@ -39,6 +39,11 @@ class timesheet_bo extends Api\Storage
 	const BILLABLE = '**billable**';
 
 	/**
+	 * Pseudo status/filter for timesheets having any status set, excluding timesheets without a status
+	 */
+	const ALL_STATUS = '**all_status**';
+
+	/**
 	 * Timesheets Api\Config data
 	 *
 	 * @var array
@@ -540,6 +545,12 @@ class timesheet_bo extends Api\Storage
 					implode(',',array_keys(array_filter($this->status_labels_config,
 						static fn($status) => !($status['invoiced'] || $status['not_to_invoice'])))).'))';
 				unset($filter['ts_status']); // no status set
+			}
+			elseif ($filter['ts_status'] == self::ALL_STATUS)
+			{
+				// all timesheets with a status set, excluding timesheets without a status and deleted ones
+				$filter[] = '(ts_status IS NOT NULL AND ts_status != '.self::DELETED_STATUS.')';
+				unset($filter['ts_status']);
 			}
 			elseif ($filter['ts_status'] !== 'all')
 			{
