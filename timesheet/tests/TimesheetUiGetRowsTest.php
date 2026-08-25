@@ -227,4 +227,46 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 		$ui->get_rrows($included, $rows, $readonlys);
 		$this->assertEmpty($included['no_ts_status'], 'status column must stay visible when included in selectcols');
 	}
+
+	/**
+	 * Regression test: get_rrows() computes 'ts_end_time' = ts_start + 60*ts_duration on
+	 * every real row, so a custom row template can display the timesheet's end time
+	 * without the DB actually storing one.
+	 *
+	 * Pass criteria: for a row with a known start+duration, ts_end_time matches exactly.
+	 */
+	public function testEndTimeComputedFromStartPlusDuration()
+	{
+		$owner = random_int(1000000000, 2000000000);
+		// Stay on today's date (only pin the time-of-day) - the default query filter
+		// ('' / no explicit startdate+enddate) only matches a "current" date range, and
+		// a fixed past/future calendar date would fall outside it and never come back.
+		$start = strtotime('today 09:00:00');
+		$duration = 45;    // minutes
+		$ts_id = $this->createTimesheet($owner, $duration);
+		// createTimesheet() above always uses time() as start; overwrite just that one
+		// column so the expected end time is deterministic instead of tied to "now".
+		$so = new EGroupware\Api\Storage\Base('timesheet', 'egw_timesheet');
+		$so->update(array('ts_id' => $ts_id, 'ts_start' => $start));
+
+		$ui = new timesheet_ui();
+		$this->grantOwnerAccess($ui, $owner);
+		$query = $this->baseQuery($owner);
+		$rows = array();
+		$readonlys = array();
+		$ui->get_rrows($query, $rows, $readonlys);
+
+		$row = null;
+		foreach ($rows as $candidate)
+		{
+			if (is_array($candidate) && ($candidate['ts_id'] ?? null) == $ts_id)
+			{
+				$row = $candidate;
+				break;
+			}
+		}
+		$this->assertNotNull($row, 'fixture row must come back from get_rrows()');
+		$this->assertSame($start + 60 * $duration, $row['ts_end_time'],
+			'ts_end_time must equal ts_start + 60*ts_duration');
+	}
 }
