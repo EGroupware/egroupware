@@ -140,6 +140,29 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 	}
 
 	/**
+	 * Set while an explicit hard reload (Et2Nextmatch.refresh() with no row ids) is in
+	 * flight, so every page fetched during that reload tells the server it knows nothing
+	 * - see fetchPage()'s use of this flag below.
+	 */
+	private _forceFreshKnownUids = false;
+
+	/**
+	 * Toggle "pretend the client has no cached rows" for page fetches.
+	 *
+	 * fetchPage() normally passes `null` as dataFetch()'s knownUids, and egw_data.ts's
+	 * dataFetch() falls back to egw.dataKnownUIDs(prefix) - which scans the shared,
+	 * otherwise never-cleared cache and finds this query's previously-loaded rows still
+	 * sitting in it. The server then legitimately omits their data as "unchanged since
+	 * last known" - correct for a normal scroll/page fetch, but wrong for an explicit
+	 * reload where the UI just cleared its own rows and has nothing to fall back on.
+	 * Callers must turn this back off once the reload's fetch(es) have settled.
+	 */
+	setForceFreshKnownUids(force : boolean) : void
+	{
+		this._forceFreshKnownUids = force;
+	}
+
+	/**
 	 * Process additional data Nextmatch sent such as new SelectOptions or flags.
 	 *
 	 * @private
@@ -595,7 +618,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 						});
 					},
 					context,
-					null
+					this._forceFreshKnownUids ? [] : null
 				);
 				// dataFetch() rejects if the underlying request failed (network error, no
 				// response, ...) - without this, a failed request never calls the success

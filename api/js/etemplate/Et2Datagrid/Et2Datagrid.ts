@@ -296,6 +296,13 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	// rows/template reset so later pages and expansions do not move the scrollbar.
 	private _rowHeightSettled : boolean = false;
 	private _embeddedRowHeightSettled : boolean = false;
+	// Whether _updateMeasuredAverageRowHeight() has measured any real rendered row
+	// for the current query yet - see _requestChunkForRowIndex()'s use of this to
+	// defer requesting rows beyond the first page until the pre-measurement height
+	// guess (_rowHeightPx's "default" 44px) has had a chance to be corrected.
+	private _hasMeasuredRowHeightSinceReload : boolean = false;
+	/** Incremented on every _clearRows() - guards that flag's bounded fallback timer below. */
+	private _rowsClearEpoch : number = 0;
 	_sparseVirtualizerLayoutActive : boolean = false;
 	private _sparseVirtualizerLayoutFrame : number | null = null;
 	private _measuredRowHeightByRowId : Map<string, number> = new Map();
@@ -2434,6 +2441,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		const heights = Array.from(this._measuredRowHeightByRowId.values());
 		const average = Math.ceil(heights.reduce((sum, height) => sum + height, 0) / heights.length);
+		// First real measurement for this query - see _requestChunkForRowIndex(), which
+		// defers requesting any page beyond the first until this flips true, so the
+		// virtualizer's range is computed from real row heights rather than the
+		// pre-measurement 44px guess (which can be smaller or larger than reality
+		// depending on the app/row content, and either way can misjudge how many rows
+		// are actually needed to fill the viewport).
+		const isFirstMeasurement = average > 0 && !this._hasMeasuredRowHeightSinceReload;
+		if(average > 0)
+		{
+			this._hasMeasuredRowHeightSinceReload = true;
+		}
 		const shouldSettle = average > 0 && this.embeddedVirtualized;
 		const rowHeightChanged = Math.abs(average - this._rowHeightPx) > 1;
 		// The first upgraded batch establishes the fixed pitch for an expandable
@@ -2458,6 +2476,14 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				this._embeddedRowHeightSettled = true;
 				this._scheduleEmbeddedVirtualizedHeightSync();
 			}
+		}
+		else if(isFirstMeasurement)
+		{
+			// The guess turned out accurate enough that no layout change is needed, but
+			// any row beyond the first page was deferred until this measurement (see
+			// _requestChunkForRowIndex()) - force one more render pass so the
+			// virtualizer re-evaluates those rows now that it's safe to fetch them.
+			this.requestUpdate();
 		}
 		if(average > 0)
 		{
@@ -2950,6 +2976,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._measuredRowHeightByRowId.clear();
 		this._rowHeightSettled = false;
 		this._embeddedRowHeightSettled = false;
+		this._hasMeasuredRowHeightSinceReload = false;
 		this._sparseVirtualizerLayoutActive = false;
 		if(this._deferredEmbeddedRemeasureTimer !== null)
 		{
@@ -2959,6 +2986,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._deferredEmbeddedRemeasureChildGrids.clear();
 		this._requestQueue.clear();
 		this._clearRowUpgradeQueue();
+		// Safety net for _requestChunkForRowIndex()'s deferral: some paths never
+		// drive a real row through _updateMeasuredAverageRowHeight() (a hidden grid,
+		// zero matching rows, a data provider that skips the normal upgrade-queue
+		// render path). Don't let those block chunk requests past the first page
+		// forever - after a couple of frames (real measurement's normal timing, via
+		// scheduleRowsUpgradedSettle()'s own 2-rAF chain, gets priority if it lands
+		// first), fall back to treating the guess as good enough. Guarded by the
+		// epoch so a fallback armed for an earlier reload can't fire after a newer
+		// one has already cleared rows again.
+		const epoch = ++this._rowsClearEpoch;
+		requestAnimationFrame(() => requestAnimationFrame(() =>
+		{
+			if(epoch === this._rowsClearEpoch && !this._hasMeasuredRowHeightSinceReload)
+			{
+				this._hasMeasuredRowHeightSinceReload = true;
+				this.requestUpdate();
+			}
+		}));
 	}
 
 	/**
@@ -3603,6 +3648,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return;
 		}
 		const chunkStart = Math.floor(rowIndex / this.pageSize) * this.pageSize;
+		if(chunkStart > 0 && !this._hasMeasuredRowHeightSinceReload && !this._usesFixedVirtualizerRowHeight())
+		{
+			// The virtualizer's range before any real row has been measured is based on
+			// _rowHeightPx's pre-measurement guess, which can overstate how many rows
+			// are actually needed to fill the viewport - eg. a reload's first render
+			// pass can ask for a second page here purely because the guess was smaller
+			// than the row content actually turns out to be, when the real (larger)
+			// measured height would have made the first page alone sufficient. Defer
+			// anything past the first page until _updateMeasuredAverageRowHeight() has
+			// measured at least one real row - it forces a re-render afterward (whether
+			// or not the estimate actually changed), which re-evaluates this same row
+			// and requests it for real if still needed once the guess is corrected.
+			// Skip the wait entirely when the row height is already authoritative
+			// (locked, or an embedded grid whose pitch already settled) - there is no
+			// guess to correct, so deferring here would just block a legitimate request
+			// forever whenever this grid never itself calls _updateMeasuredAverageRowHeight().
+			return;
+		}
 		if(!this._hasMissingRowsInChunk(chunkStart))
 		{
 			return;

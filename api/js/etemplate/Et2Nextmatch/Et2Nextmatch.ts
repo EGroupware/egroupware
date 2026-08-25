@@ -1660,6 +1660,72 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		});
 	}
 
+	/** Pending "turn the fresh-known-uids override back off" timer - see _armForceFreshKnownUids(). */
+	private _forceFreshKnownUidsIdleTimer : number | null = null;
+
+	/**
+	 * How long to keep Et2NextmatchDataProvider's fresh-known-uids override on after the
+	 * datagrid last went idle, before assuming a hard reload's page-discovery is done.
+	 *
+	 * Empirically chosen: Et2Datagrid discovers it needs another page only after measuring
+	 * how the previous one rendered (a real layout/paint round-trip, not a fixed constant),
+	 * so a plain "reset on first et2-loading-done" can fire in the gap between two pages of
+	 * the very same reload.
+	 */
+	private static readonly FORCE_FRESH_KNOWN_UIDS_IDLE_MS = 1500;
+
+	/**
+	 * Turn on Et2NextmatchDataProvider.setForceFreshKnownUids() for a hard reload and keep
+	 * it on for as many rounds of page-discovery as the reload's viewport-fill needs, not
+	 * just its first fetch.
+	 *
+	 * `et2-loading-done` fires whenever nothing is currently in flight - which can happen
+	 * *between* two pages of the same reload, once page N has landed but before the
+	 * datagrid has re-measured and decided it still needs page N+1 to fill the viewport.
+	 * Debouncing the actual turn-off (any `et2-loading-start` cancels a pending one) lets
+	 * the override survive that gap instead of leaving the next page to fall back to the
+	 * stale cache again.
+	 */
+	private _armForceFreshKnownUids() : void
+	{
+		this._dataProvider?.setForceFreshKnownUids?.(true);
+		if(this._forceFreshKnownUidsIdleTimer !== null)
+		{
+			window.clearTimeout(this._forceFreshKnownUidsIdleTimer);
+			this._forceFreshKnownUidsIdleTimer = null;
+		}
+		const cleanup = () =>
+		{
+			this._datagrid?.removeEventListener("et2-loading-done", scheduleOff);
+			this._datagrid?.removeEventListener("et2-loading-error", scheduleOff);
+			this._datagrid?.removeEventListener("et2-loading-start", cancelOff);
+		};
+		const scheduleOff = () =>
+		{
+			if(this._forceFreshKnownUidsIdleTimer !== null)
+			{
+				window.clearTimeout(this._forceFreshKnownUidsIdleTimer);
+			}
+			this._forceFreshKnownUidsIdleTimer = window.setTimeout(() =>
+			{
+				this._forceFreshKnownUidsIdleTimer = null;
+				this._dataProvider?.setForceFreshKnownUids?.(false);
+				cleanup();
+			}, Et2Nextmatch.FORCE_FRESH_KNOWN_UIDS_IDLE_MS);
+		};
+		const cancelOff = () =>
+		{
+			if(this._forceFreshKnownUidsIdleTimer !== null)
+			{
+				window.clearTimeout(this._forceFreshKnownUidsIdleTimer);
+				this._forceFreshKnownUidsIdleTimer = null;
+			}
+		};
+		this._datagrid?.addEventListener("et2-loading-done", scheduleOff);
+		this._datagrid?.addEventListener("et2-loading-error", scheduleOff);
+		this._datagrid?.addEventListener("et2-loading-start", cancelOff);
+	}
+
 	/**
 	 * Adopt an additional runtime stylesheet into the main and child datagrid row shadow roots.
 	 * The stylesheet is retained when template row styles are synchronized again.
@@ -1979,9 +2045,24 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			{
 				this.requestUpdate();
 			}
+			// A bare refresh()/applyFilters() call (no `set`) is an explicit hard reload -
+			// make every page fetched during it tell the server it knows nothing, so the
+			// server can't omit "unchanged" rows the UI just cleared and has nothing to
+			// fall back on for (see Et2NextmatchDataProvider.setForceFreshKnownUids()). A
+			// filter-driven call keeps the cheaper cache-reuse behaviour, since it's
+			// already fetching a different query.
+			const isHardReload = set === undefined;
 			if(options?.reload !== false)
 			{
+				if(isHardReload)
+				{
+					this._armForceFreshKnownUids();
+				}
 				this._datagrid?.reload();
+			}
+			else if(isHardReload)
+			{
+				this._dataProvider?.setForceFreshKnownUids?.(false);
 			}
 
 			return true;
