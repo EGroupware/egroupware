@@ -216,6 +216,42 @@ describe("Et2Nextmatch header event handling", () =>
 		assert.deepEqual(el.activeFilters.sort, {id: "title", asc: true}, "nested sort mutation should not affect internal state");
 	});
 
+	/**
+	 * Contract under test:
+	 * - applyFilters() ignores a reentrant call made from within its own synchronous "et2-filter"
+	 *   dispatch, instead of recursing forever.
+	 *
+	 * Why this matters:
+	 * - Reproduced live: a filter widget (Et2Date) whose value setter unconditionally re-fired
+	 *   "change" on a purely programmatic reset (flatpickr's clear() defaulting
+	 *   triggerChangeEvent to true) bubbled that event back into Et2Filterbox, which called back
+	 *   into this same applyFilters() before the outer call had returned - an unbounded
+	 *   synchronous loop that froze the browser tab. This guard is defense-in-depth: it protects
+	 *   against ANY widget with the same one-sided trigger-on-programmatic-set bug, not just the
+	 *   one already fixed in Et2Date.
+	 *
+	 * Pass criteria:
+	 * - The reentrant call returns false and its filter change is not applied.
+	 * - The outer call still applies and returns normally.
+	 */
+	it("ignores a reentrant applyFilters() call triggered synchronously from its own et2-filter event", () =>
+	{
+		const el = new Et2Nextmatch();
+
+		let reentrantResult : boolean | undefined;
+		el.addEventListener("et2-filter", () =>
+		{
+			reentrantResult = el.applyFilters({col_filter: {reentrant: "1"}}, {reload: false});
+		}, {once: true});
+
+		const outerResult = el.applyFilters({col_filter: {owner: "42"}}, {reload: false});
+
+		assert.isTrue(outerResult, "outer call should still apply normally");
+		assert.isFalse(reentrantResult, "reentrant call should be ignored");
+		assert.equal(el.activeFilters.col_filter.owner, "42");
+		assert.isUndefined(el.activeFilters.col_filter.reentrant, "reentrant filter must not be applied");
+	});
+
 	it("can update filter state without reloading or clearing row actions", async() =>
 	{
 		const el = new Et2Nextmatch();

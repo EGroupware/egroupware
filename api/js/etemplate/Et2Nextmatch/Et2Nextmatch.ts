@@ -463,6 +463,11 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	private _filters : Record<string, any> = {col_filter: {}};
 
 	/**
+	 * Reentrancy guard for applyFilters() - see its own docblock for why this exists.
+	 */
+	private _applyingFilters = false;
+
+	/**
 	 * Lazily created shared filterbox instance attached near the host app shell.
 	 */
 	private _filterbox : Et2Filterbox | null = null;
@@ -1778,9 +1783,25 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	/**
 	 * Legacy-compatible filter application entry point.
 	 * Merges updates into `activeFilters`, emits cancelable `et2-filter`, and reloads rows by default.
+	 *
+	 * Reentrancy: dispatching `et2-filter` below runs listeners (eg. Et2Filterbox) synchronously,
+	 * which can update a filter widget's `.value` to match the just-applied state - if that
+	 * widget's own value setter unconditionally re-fires a "change" event on a purely
+	 * programmatic set (found live in Et2Date: flatpickr's clear() defaults triggerChangeEvent
+	 * to true, unlike setDate()), the bubbled "change" reaches Et2Filterbox's own change handler,
+	 * which calls back into this same method - before this call has returned. Without a guard,
+	 * that's an unbounded synchronous loop that freezes the tab (reproduced live via mail's
+	 * folder-filter date field, and reportedly also seen from filemanager's nextmatch). The
+	 * _applyingFilters guard breaks it at the very first reentry - other widgets could have the
+	 * same one-sided trigger-on-clear bug we haven't found yet.
 	 */
 	applyFilters(set? : Record<string, any>, options? : { reload? : boolean, clearActions? : boolean })
 	{
+		if(this._applyingFilters)
+		{
+			this.egw().debug("warn", "Et2Nextmatch.applyFilters() called reentrantly while already applying - ignoring to avoid an infinite loop", set);
+			return false;
+		}
 		let changed = typeof set == "undefined";
 		if(!this._filters || typeof this._filters !== "object")
 		{
@@ -1848,51 +1869,59 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			return false;
 		}
 
-		const changeEvent = new CustomEvent("et2-filter", {
-			bubbles: true,
-			cancelable: true,
-			detail: {
-				oldFilters: previousFilters,
-				activeFilters,
-				nm: this
+		this._applyingFilters = true;
+		try
+		{
+			const changeEvent = new CustomEvent("et2-filter", {
+				bubbles: true,
+				cancelable: true,
+				detail: {
+					oldFilters: previousFilters,
+					activeFilters,
+					nm: this
+				}
+			});
+			this.dispatchEvent(changeEvent);
+			if(changeEvent.defaultPrevented)
+			{
+				return false;
 			}
-		});
-		this.dispatchEvent(changeEvent);
-		if(changeEvent.defaultPrevented)
-		{
-			return false;
-		}
-		const eventFilters = changeEvent.detail?.activeFilters;
-		if(eventFilters && typeof eventFilters === "object" && eventFilters !== this._filters)
-		{
-			this._filters = eventFilters;
-		}
-		if(!this._filters.col_filter || typeof this._filters.col_filter !== "object")
-		{
-			this._filters.col_filter = {};
-		}
-		this.egw().debug("info", "Changed nm filters", this._filters);
+			const eventFilters = changeEvent.detail?.activeFilters;
+			if(eventFilters && typeof eventFilters === "object" && eventFilters !== this._filters)
+			{
+				this._filters = eventFilters;
+			}
+			if(!this._filters.col_filter || typeof this._filters.col_filter !== "object")
+			{
+				this._filters.col_filter = {};
+			}
+			this.egw().debug("info", "Changed nm filters", this._filters);
 
-		this._updateSortHeaderState();
-		if(options?.clearActions !== false)
-		{
-			this._actionController.clearRowActionObjects();
-		}
-		this._dataProvider?.clearInitialRowRegistrations?.();
-		// Keep the root expansion ids so matching parent rows stay open after the
-		// reload, but discard every child-level cache. Child providers inherit the
-		// active filters, and a snapshot keyed only by parent row id is no longer
-		// valid once those filters change.
-		if(this._clearExpandedChildBranches())
-		{
-			this.requestUpdate();
-		}
-		if(options?.reload !== false)
-		{
-			this._datagrid?.reload();
-		}
+			this._updateSortHeaderState();
+			if(options?.clearActions !== false)
+			{
+				this._actionController.clearRowActionObjects();
+			}
+			this._dataProvider?.clearInitialRowRegistrations?.();
+			// Keep the root expansion ids so matching parent rows stay open after the
+			// reload, but discard every child-level cache. Child providers inherit the
+			// active filters, and a snapshot keyed only by parent row id is no longer
+			// valid once those filters change.
+			if(this._clearExpandedChildBranches())
+			{
+				this.requestUpdate();
+			}
+			if(options?.reload !== false)
+			{
+				this._datagrid?.reload();
+			}
 
-		return true;
+			return true;
+		}
+		finally
+		{
+			this._applyingFilters = false;
+		}
 	}
 
 	/**
