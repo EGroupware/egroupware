@@ -1140,7 +1140,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * tokens such as $cont and @labels are deliberately left for the widget's
 	 * normal content manager.
 	 */
-	_resolveRowExpression(value : string, rowData : any, rowId : string) : {value : any; rowValue? : any; fallback : boolean}
+	_resolveRowExpression(value : string, rowData : any, rowId : string) : {value : any; rowValue? : any; fallback : boolean; field? : string}
 	{
 		const normalized = this._canonicalRowExpression(value);
 		const exact = normalized.match(/^\$\[([^\]]+)\]$/) || normalized.match(/^\$([a-zA-Z_][a-zA-Z0-9_]*)$/);
@@ -1148,7 +1148,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			const field = exact[1];
 			const rowValue = this._getFieldValue(rowData, field) ?? "";
-			return {value: rowValue, rowValue, fallback: false};
+			return {value: rowValue, rowValue, fallback: false, field};
 		}
 		if(normalized === "$row" || normalized === "${row}")
 		{

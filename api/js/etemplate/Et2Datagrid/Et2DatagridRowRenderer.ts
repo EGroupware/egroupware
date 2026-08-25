@@ -600,6 +600,18 @@ export class Et2DatagridRowRenderer
 						hasDirectValue = true;
 						directValue = attributes.value;
 						delete attributes.id;
+						// Restore a plain "<row>[<field>]" id (instead of the row's resolved
+						// value, which transformAttributes() would otherwise apply) so
+						// id-based lookups that aren't row data - eg. sel_options for an
+						// <et2-select>, which live at the un-namespaced column level, not
+						// per-row - can still find the widget's field name.  Assigned
+						// directly (not via `attributes`) so the property setter always
+						// runs, even on a virtualizer-recycled element whose DOM already
+						// has an "id" attribute from a previous row.
+						if(idBinding?.field)
+						{
+							element.id = `${rowId}[${idBinding.field}]`;
+						}
 					}
 					else if(!stored?.value && !stored?.id && typeof element.id === "string" && /^[a-zA-Z_][a-zA-Z0-9_]*$/.test(element.id) &&
 						Object.prototype.hasOwnProperty.call(rowData || {}, element.id) &&
