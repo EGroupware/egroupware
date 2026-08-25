@@ -130,6 +130,12 @@ these in order, in one commit, then expect follow-up fixups.
    - a UI element that looks to be missing right after SPA-navigating into the app (as opposed to a
      full page load) may just be a stale-view artifact, not a regression — confirm on a fresh reload
      before reporting it
+   - toolbar controls that mirror an `nm` filter (a details/no-details toggle, a view-mode select,
+     etc.) show the *correct, persisted* state on a fresh page load, not just after the first click —
+     set a non-default filter value, reload, and confirm the control's displayed state already matches
+     `nm.activeFilters` before touching it. A control that looks right only after one "wasted" click is
+     a real bug class, not a quirk (Timesheet's details toggle); see
+     [Startup/lifecycle timing pitfalls](#reference-startuplifecycle-timing-pitfalls) below
    - keep [Startup/lifecycle timing pitfalls](#reference-startuplifecycle-timing-pitfalls) in mind
      while doing this — several of these bugs only show up on interaction, not on load
 
@@ -371,6 +377,19 @@ template + app JS/TS only — but that's an observed outcome for four apps, not 
   shrinking toward zero, and `.dg-header`'s `padding-right` reserves exactly that same space — if
   you're touching either of those declarations, keep them pointed at the same custom property or the
   button will start overlapping the last column again.
+- **A toolbar control that mirrors an `nm` filter (details/no-details toggle, view-mode select, ...)
+  must be explicitly synced from `nm.activeFilters` inside `et2_ready()` — nothing does this
+  automatically.** If the app's filter-changed handler is guarded by "only act if `nm` and the widget
+  argument are both truthy" and `et2_ready()` calls it with no arguments just to "initialize" the
+  display, that call silently no-ops instead of syncing anything (Timesheet's `details` toggle called
+  `this.filter2_change()` with no args at load, so the toggle's `.value` and the row-detail CSS custom
+  properties were never set from the real, already-restored `filter2` filter). The generic `EgwApp`
+  fallback (`checkNmFilterChanged`, itself only reachable a tick later via the deferred
+  `nmFilterChange`) only catches this if it detects a genuine value mismatch after the fact, which
+  produces a "works after one click" symptom instead of being correct from first paint. Infolog's
+  `et2_ready()` (`infolog/js/app.ts:75-86`) is the reference pattern: read the real value off
+  `nm.activeFilters.<key>` and pass it explicitly to both the CSS/style updater and the toolbar
+  widget's own `.value` setter, synchronously, before the page is shown as ready.
 - **`Et2Nextmatch` always renders its header row and column-selection button — there is no
   per-instance property to suppress them.** (`Et2Datagrid` itself still has internal
   `noVisibleHeader`/`noColumnSelection` properties, but those are only ever set by

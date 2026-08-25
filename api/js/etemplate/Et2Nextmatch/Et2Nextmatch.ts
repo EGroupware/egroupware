@@ -902,7 +902,13 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		// rather than downstream, since every other consumer of `rows` also assumes a real array.
 		if(attrs.rows && typeof attrs.rows === "object" && !Array.isArray(attrs.rows))
 		{
-			attrs.rows = Object.values(attrs.rows);
+			// Some apps' get_rows callbacks (eg. timesheet's get_rrows()) mix UI metadata
+			// flags into the same $rows array as real per-record data - string-keyed
+			// scalars like 'ownerClass'/'pm_integration' alongside numeric-keyed row
+			// objects - for the legacy row template to consume. A scalar surviving this
+			// normalization would be treated as a real preloaded row further down,
+			// corrupting the datagrid with fake blank rows, so only keep actual records.
+			attrs.rows = Object.values(attrs.rows).filter((row) => row && typeof row === "object");
 		}
 		super.transformAttributes(attrs);
 	}
@@ -1063,7 +1069,12 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		// Sync any sort headers that just rendered with the sort state seeded above.
 		this._updateSortHeaderState();
 
-		if(this.rows.length)
+		// A server-provided settings.total (even 0) means the initial exec already carried
+		// the authoritative row count - a genuinely empty result must not be confused with
+		// "no data was sent yet" (this.rows.length is 0 either way), or the empty-result
+		// case falls through to a redundant client fetch that can race/disagree with the
+		// filters the server actually used.
+		if(this.rows.length || typeof this.settings?.total === "number")
 		{
 			this._dataProvider.storeRows(this.rows);
 			this._applySettingsTotalToDatagrid();
