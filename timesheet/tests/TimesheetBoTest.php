@@ -182,11 +182,18 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 
 	/**
 	 * Call ajax_get_last_end() and pull the "data" part back out of the (process-wide
-	 * singleton) JSON response, resetting it afterwards so later calls in the same test
-	 * run don't hit Response::data()'s "only once" guard.
+	 * singleton) JSON response.
+	 *
+	 * Resets the singleton both before and after: before, because some earlier test
+	 * elsewhere in the same PHPUnit process may have left Response::data()'s "only once"
+	 * guard set without clearing it, which would otherwise make this call throw even
+	 * though it never added a data response of its own; after, so later calls in this
+	 * test run don't hit that same guard because of what we just added here.
 	 */
 	private function callAjaxGetLastEnd(timesheet_ui $ui, $ts_owner, $date)
 	{
+		EGroupware\Api\Json\Response::get()->initResponseArray();
+
 		$ui->ajax_get_last_end($ts_owner, $date);
 
 		$data = null;
