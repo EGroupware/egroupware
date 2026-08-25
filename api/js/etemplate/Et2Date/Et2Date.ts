@@ -721,7 +721,25 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		if(!value || value == 0 || value == "0")
 		{
 			value = "";
-			this.clear();
+			// LitFlatpickr's clear() wrapper always calls flatpickr's own clear() with no
+			// arguments, which defaults triggerChangeEvent to true - unlike setDate() below,
+			// which this same setter calls with no triggerChange arg (defaults to false).
+			// Call the underlying instance directly with triggerChange=false to keep this
+			// setter's two branches symmetric: a *programmatic* value reset (eg.
+			// Et2Nextmatch re-applying a folder's saved filter state, or a filter reset to
+			// empty) must not re-fire "change" and echo straight back into whatever set this
+			// value in the first place - real accounts hit this as an infinite loop
+			// (Et2Filterbox -> Et2Nextmatch.applyFilters() -> ... -> this setter -> clear() ->
+			// "change" -> Et2Filterbox -> applyFilters() again, forever) whenever a filter's
+			// date field legitimately resolves to empty.
+			if(this._instance)
+			{
+				this._instance.clear(false);
+			}
+			else
+			{
+				this.clear();
+			}
 			if(typeof egwIsMobile == "function" && egwIsMobile() && this._inputNode)
 			{
 				this._inputNode.value = '';
