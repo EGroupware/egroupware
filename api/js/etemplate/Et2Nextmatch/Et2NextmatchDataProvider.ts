@@ -165,9 +165,10 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 	/**
 	 * Process additional data Nextmatch sent such as new SelectOptions or flags.
 	 *
-	 * @private
+	 * Also used by Et2Nextmatch for the same scalars when they arrive mixed into the
+	 * initial `rows` attribute instead of a refresh response.
 	 */
-	private _processAdditionalData(additionalData)
+	processAdditionalData(additionalData)
 	{
 		for(let i in additionalData)
 		{
@@ -470,7 +471,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 						if(response?.rows)
 						{
 							// Nextmatch may piggyback select options / filter state on refresh responses too.
-							this._processAdditionalData(response.rows);
+							this.processAdditionalData(response.rows);
 						}
 
 						// Row payload is already stored in the central egw cache by dataFetch().
@@ -575,7 +576,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 							return;
 						}
 						// Extra data from nextmatch
-						this._processAdditionalData(resp.rows || {});
+						this.processAdditionalData(resp.rows || {});
 
 						const order : string[] = Array.isArray(resp.order) ? resp.order : [];
 						if(!order.length)

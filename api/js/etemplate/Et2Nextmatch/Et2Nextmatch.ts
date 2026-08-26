@@ -185,6 +185,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	rows : any[] = [];
 
 	/**
+	 * Non-row scalars (eg. header totals) found mixed into the initial `rows` attribute,
+	 * set aside by transformAttributes() for firstUpdated() to apply once ready.
+	 * firstUpdated() is the only reader and nulls it out once applied, so it never
+	 * outlives the first update - it does not need clearing anywhere else.
+	 */
+	private _initialAdditionalData : Record<string, any> | null = null;
+
+	/**
 	 * Legacy XET selection handler.  This intentionally does not use the DOM
 	 * `onselect` property, whose native Event callback signature conflicts with
 	 * nextmatch's legacy `(selectedRowIds, nextmatch)` contract.
@@ -917,6 +925,27 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 			// objects - for the legacy row template to consume. A scalar surviving this
 			// normalization would be treated as a real preloaded row further down,
 			// corrupting the datagrid with fake blank rows, so only keep actual records.
+			// The same scalars are how a refresh sends header totals (eg. timesheet's
+			// quantity/price sums) via processAdditionalData() - stash them so firstUpdated()
+			// can apply them the same way once the initial rows are set up, instead of just
+			// dropping them here. Only worth stashing before firstUpdated() has run: that's
+			// the only place _initialAdditionalData is ever read, and it clears the field
+			// once applied - collecting more here after that would just leak, unread.
+			if(!this.hasUpdated)
+			{
+				const additionalData : Record<string, any> = {};
+				for(const [key, value] of Object.entries(attrs.rows as Record<string, any>))
+				{
+					if(!value || typeof value !== "object")
+					{
+						additionalData[key] = value;
+					}
+				}
+				if(Object.keys(additionalData).length)
+				{
+					this._initialAdditionalData = {...(this._initialAdditionalData || {}), ...additionalData};
+				}
+			}
 			attrs.rows = Object.values(attrs.rows).filter((row) => row && typeof row === "object");
 		}
 		super.transformAttributes(attrs);
@@ -1094,6 +1123,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		else
 		{
 			await this._datagrid?.reload();
+		}
+		if(this._initialAdditionalData)
+		{
+			// Header widgets (eg. sum totals) are built from templateData/columns on the
+			// datagrid's own update cycle, which hasn't necessarily run yet at this point.
+			await this._datagrid?.updateComplete;
+			this._dataProvider.processAdditionalData(this._initialAdditionalData);
+			this._initialAdditionalData = null;
 		}
 		await this._updateRowStylesheets();
 	}
