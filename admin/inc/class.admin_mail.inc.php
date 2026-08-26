@@ -1701,6 +1701,15 @@ class admin_mail
 						$button = 'apply';
 						$msg_type = 'error';
 					}
+					finally {
+						// fix_account_id_0($account_id, true) above (storage shape, "everyone" = scalar 0)
+						// is only ever undone by the matching false-call a few lines further down the
+						// success path - if write() (or anything else in the try) throws, none of the
+						// catches above touch account_id, so it re-renders still in storage shape; the
+						// widget then shows a bogus single "0" tag instead of the "Everyone" placeholder.
+						// Idempotent, so this is a harmless no-op on the already-fixed-up success path.
+						self::fix_account_id_0($content['account_id']);
+					}
 					if ($content['acc_id']) Mail::unsetCachedObjects($content['acc_id']);
 					if (stripos($msg,'fatal error:')!==false) $msg_type = 'error';
 					Framework::refresh_opener($msg, 'mail-account', $content['acc_id'], $new_account ? 'add' : 'update', null, null, null, $msg_type);

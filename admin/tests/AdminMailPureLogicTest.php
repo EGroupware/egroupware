@@ -212,4 +212,80 @@ class AdminMailPureLogicTest extends \PHPUnit\Framework\TestCase
 		$this->assertSame('SomeLdapBackedSmtpClass', $result['acc_smtp_type']);
 		$this->assertSame('alias@example.org', $result['ident_email']);
 	}
+
+	/**
+	 * fix_account_id_0()'s $account_id parameter is by-reference - invoke() silently passes
+	 * by-ref parameters by value instead (see AdminMailHostDiscoveryTest::tryJmap() for the
+	 * same gotcha), so this wrapper takes $account_id by-reference itself, which lets
+	 * invokeArgs(..., array(&$account_id)) actually propagate the mutation back to the
+	 * caller's variable.
+	 */
+	private function fixAccountId0(&$account_id, bool $back=false)
+	{
+		$ref = new ReflectionMethod(\admin_mail::class, 'fix_account_id_0');
+		$ref->setAccessible(true);
+		return $ref->invokeArgs(null, array(&$account_id, $back));
+	}
+
+	/**
+	 * Storage shape (Mail\Account::is_multiple()'s convention: "everyone" = scalar 0) must
+	 * convert to the widget's display shape (empty array) - this is what makes the
+	 * et2-select-account "Everyone" placeholder show up instead of a literal "0" tag.
+	 */
+	public function testFixAccountId0ConvertsStorageZeroToEmptyArrayForDisplay()
+	{
+		$account_id = 0;
+		$this->fixAccountId0($account_id);
+
+		$this->assertSame(array(), $account_id);
+	}
+
+	/**
+	 * The reverse direction ($back=true), used right before Mail\Account::write().
+	 */
+	public function testFixAccountId0ConvertsEmptyArrayToStorageZero()
+	{
+		$account_id = array();
+		$this->fixAccountId0($account_id, true);
+
+		$this->assertSame(0, $account_id);
+	}
+
+	/**
+	 * Regression guard for the "Everyone account shows a bogus '0' tag after a failed save"
+	 * bug (found 2026-08-26): edit()'s save handler converts account_id to storage shape
+	 * (fix_account_id_0(..., true)) right before Mail\Account::write(), and only converts it
+	 * back ($back=false) on the success path - if write() throws, none of the catch blocks
+	 * used to undo that conversion, so the exception's re-render sent the client a raw scalar
+	 * 0 instead of an empty array, and the multi-select widget rendered it as a literal "0"
+	 * tag instead of showing the "Everyone" placeholder. Fixed with a `finally` block that
+	 * unconditionally converts back to display shape - which relies on repeated $back=false
+	 * calls being safe on an already-converted value (the success path's own call still runs
+	 * first, then finally's call is a harmless no-op). This test guards exactly that
+	 * idempotency assumption.
+	 */
+	public function testFixAccountId0DisplayConversionIsIdempotent()
+	{
+		$account_id = 0;
+		$this->fixAccountId0($account_id);
+		$this->fixAccountId0($account_id);
+
+		$this->assertSame(array(), $account_id);
+	}
+
+	/**
+	 * A real (non-"everyone") multi-account CSV string must still round-trip through both
+	 * directions unchanged in shape - only the scalar/falsy "everyone" case is special-cased.
+	 */
+	public function testFixAccountId0LeavesRealMultiAccountListIntact()
+	{
+		$account_id = '5,7,9';
+		$this->fixAccountId0($account_id);
+
+		$this->assertSame(array('5', '7', '9'), $account_id);
+
+		$this->fixAccountId0($account_id, true);
+
+		$this->assertSame(array('5', '7', '9'), $account_id);
+	}
 }
