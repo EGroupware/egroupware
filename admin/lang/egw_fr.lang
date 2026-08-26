@@ -511,7 +511,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	fr	Si vous souhaitez avoir des images sélectionnées au hasard, vous pouvez télécharger plusieurs images.
 imap admin password	admin	fr	Mot de passe de l'administrateur IMAP
 imap admin user	admin	fr	ID administrateur IMAP
-imap server	admin	fr	Serveur IMAP
 imap server closed the connection.	admin	fr	Le serveur IMAP a interrompu la connexion.
 imap server closed the connection. server responded: %s	admin	fr	Le serveur IMAP a interrompu la connexion. Réponse du serveur: %s.
 imap server hostname or ip address	admin	fr	Nom du serveur IMAP ou adresse IP

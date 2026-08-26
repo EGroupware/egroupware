@@ -202,6 +202,12 @@ export class MailJmap
 	private quotaCache : Record<string, { data : Record<string, any>, expires : number }> = {};
 	private static readonly QUOTA_CACHE_TTL = 2 * 60 * 60 * 1000;
 
+	// sessionStorage key prefix for popupCheckCert()'s debounce (one popup per account per 5min,
+	// survives a page reload within the same tab/session) - mirrors the classic
+	// mail_ui::callWizard()'s Api\Cache::getSession() 5min debounce
+	private static readonly CHECK_CERT_POPUP_KEY_PREFIX = 'mail_checkCert_popup_';
+	private static readonly CHECK_CERT_POPUP_DEBOUNCE_MS = 5 * 60 * 1000;
+
 	private static readonly CSP_RELOAD_KEY = 'mail_jmap_csp_reload';
 	private static cspListenerInstalled = false;
 	// the most-recently-constructed instance - the securitypolicyviolation listener below is
@@ -268,6 +274,43 @@ export class MailJmap
 		if (!isOwnAccount || sessionStorage.getItem(MailJmap.CSP_RELOAD_KEY)) return;
 		sessionStorage.setItem(MailJmap.CSP_RELOAD_KEY, '1');
 		window.location.reload();
+	}
+
+	/**
+	 * Open the account-edit wizard popup to diagnose why a connection just failed - client-side
+	 * counterpart of the classic mail_ui::callWizard() (mail/inc/class.mail_ui.inc.php), for the
+	 * JMAP-only folder/row-fetch path, which never round-trips through PHP's mail_ui::index() on
+	 * a failure the way the classic path does.
+	 *
+	 * Only ever called for a genuine "couldn't even talk to the server" failure (see
+	 * JmapUserError's own docblock for that distinction) - a real JMAP/business error already
+	 * has its own specific, actionable message and doesn't need this.
+	 *
+	 * Debounced exactly like callWizard() (5min per account, surviving a page reload within the
+	 * same tab via sessionStorage instead of the PHP session) - and opened under a fixed
+	 * per-account window name, so a whole burst of failures for the same account (eg. every
+	 * failing row-fetch retry) can never spawn more than one popup: a second egw.open_link() call
+	 * with the same name just refocuses the existing window rather than opening a new one.
+	 *
+	 * @param profileID
+	 */
+	private popupCheckCert(profileID : string) : void
+	{
+		const key = MailJmap.CHECK_CERT_POPUP_KEY_PREFIX + profileID;
+		const last = Number(sessionStorage.getItem(key) || 0);
+		if (Date.now() - last < MailJmap.CHECK_CERT_POPUP_DEBOUNCE_MS)
+		{
+			return;
+		}
+		sessionStorage.setItem(key, String(Date.now()));
+		// server resolves imap vs jmap itself from the account's own acc_imap_type/protocol (see
+		// admin_mail::checkCertDiagnosis()) - always 'imap' here, this path never covers SMTP
+		const url = this.egw.link('/index.php', {
+			menuaction: 'mail.mail_wizard.edit',
+			acc_id: profileID,
+			checkCert: 'imap',
+		});
+		this.egw.open_link(url, 'editMailAccount' + profileID, '600x480', undefined, true);
 	}
 
 	destroy()
@@ -853,6 +896,7 @@ export class MailJmap
 				throw new JmapUserError(message);
 			}
 			console.error('MailJmap.getMailboxChildren(): failed, caller shows an error leaf', e);
+			this.popupCheckCert(profileID);
 			return null;
 		}
 	}
@@ -987,6 +1031,7 @@ export class MailJmap
 				throw new JmapUserError(message);
 			}
 			console.error('MailJmap.getRootFolders(): failed, caller shows an error leaf', e);
+			this.popupCheckCert(profileID);
 			return null;
 		}
 	}
@@ -1405,7 +1450,7 @@ export class MailJmap
 			}
 			return this.getThreadMemberRows(threadMatch[1], selectedFolder, !!_filters.filter2)
 				.then((result) : any => this.shapeFetchResult(result, selectedFolder))
-				.catch((e) => this.handleFetchRowsError(e));
+				.catch((e) => this.handleFetchRowsError(e, selectedFolder.split('::', 1)[0]));
 		}
 		const query : JmapGetRowsQuery = {
 			selectedFolder,
@@ -1431,7 +1476,7 @@ export class MailJmap
 		}
 
 		return this.getRows(query).then((result) : any => this.shapeFetchResult(result, selectedFolder))
-			.catch((e) => this.handleFetchRowsError(e));
+			.catch((e) => this.handleFetchRowsError(e, selectedFolder.split('::', 1)[0]));
 	}
 
 	/**
@@ -1446,8 +1491,8 @@ export class MailJmap
 			// ensureToken()/getRows() docblocks) - there is no working classic fallback
 			// anymore (see ProfileHandler::jmapBootstrap()'s own docblock: "the client
 			// surfaces this as an error"), so say so instead of silently rendering an empty
-			// grid with no explanation
-			this.egw.message(this.egw.lang('Unable to connect to the mail server'), 'error');
+			// grid with no explanation - ensureToken() itself already triggered popupCheckCert()
+			this.egw.message(this.egw.lang('Connection could not be established, use the wizard to check why!'), 'error');
 			return MailJmap.emptyRowsResult();
 		}
 		this.enablePushOnce(selectedFolder);
@@ -1464,10 +1509,16 @@ export class MailJmap
 	}
 
 	/** Shared fetchRows() rejection handler - see shapeFetchResult()'s docblock. */
-	private handleFetchRowsError(e : any) : any
+	private handleFetchRowsError(e : any, profileID : string) : any
 	{
 		const message = e instanceof JmapUserError ? e.message : describeJmapError(e);
-		this.egw.message(message || this.egw.lang('Unable to connect to the mail server'), 'error');
+		if (!message)
+		{
+			// a genuine "couldn't even talk to the server" failure, not a real JMAP/business
+			// error with its own actionable message - see popupCheckCert()'s docblock
+			this.popupCheckCert(profileID);
+		}
+		this.egw.message(message || this.egw.lang('Connection could not be established, use the wizard to check why!'), 'error');
 		console.error('MailJmap.fetchRows(): failed, resolving as an empty result', e);
 		return MailJmap.emptyRowsResult();
 	}
@@ -2582,6 +2633,7 @@ export class MailJmap
 						delete this.tokens[profileID];
 						delete this.clients[profileID];
 						this.ineligibleUntil[profileID] = Date.now() + MailJmap.INELIGIBLE_RECHECK_INTERVAL;
+						this.popupCheckCert(profileID);
 						return null;
 					}
 					const token : JmapToken = {

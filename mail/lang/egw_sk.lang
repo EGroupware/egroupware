@@ -610,7 +610,7 @@ spamtitan api url	mail	sk	SpamTitan API URL
 spamtitan integration requires epl version	mail	sk	Integrácia so SpamTitan vyžaduje verziu EPL
 start new messages with mime type plain/text or html?	mail	sk	Vytvárať nové správy pomocou mime typu čistý text, alebo HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	sk	Začínať odpovedacie správy mime typom čistý text alebo HTML alebo skúsiť použiť zobrazený formát (predvolené)?
-step 1: imap - incoming mail	mail	sk	Krok 1: IMAP - prijatá pošta
+step 1: jmap/imap - incoming mail	mail	sk	Krok 1: JMAP/IMAP - prijatá pošta
 step 2: folder	mail	sk	Krok 2: Priečinok
 step 3: sieve - server side mail filtering	mail	sk	Krok 3: Sieve - filtrovanie na strane servra
 step 4: smtp - outgoing mail	mail	sk	Krok 4: SMTP - odoslaná pošta

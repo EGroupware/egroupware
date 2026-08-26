@@ -532,7 +532,7 @@ sort order	mail	pt	Ordenar
 source	mail	pt	Fonte
 sources	mail	pt	Fontes
 spamtitan integration requires epl version	mail	pt	A integração do SpamTitan requer a versão EPL
-step 1: imap - incoming mail	mail	pt	Passo 1: IMAP - e-mails recebidos
+step 1: jmap/imap - incoming mail	mail	pt	Passo 1: JMAP/IMAP - e-mails recebidos
 step 2: folder	mail	pt	Passo 2: Pasta
 step 3: sieve - server side mail filtering	mail	pt	Passo 3: Sieve - filtragem de correio do lado do servidor
 step 4: smtp - outgoing mail	mail	pt	Passo 4: SMTP - saída correio

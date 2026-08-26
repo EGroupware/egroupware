@@ -481,7 +481,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	km	ប្រសិនបើអ្នកចង់មានរូបភាពដែលបានជ្រើសរើសដោយចៃដន្យ អ្នកអាចបង្ហោះរូបភាពច្រើន។
 imap admin password	admin	km	ពាក្យសម្ងាត់អ្នកគ្រប់គ្រង IMAP
 imap admin user	admin	km	អ្នកប្រើប្រាស់គ្រប់គ្រង IMAP
-imap server	admin	km	ម៉ាស៊ីនមេ IMAP
 imap server closed the connection.	admin	km	ម៉ាស៊ីនមេ IMAP បានបិទការតភ្ជាប់។
 imap server closed the connection. server responded: %s	admin	km	ម៉ាស៊ីនមេ IMAP បានបិទការភ្ជាប់។ ម៉ាស៊ីនមេបានឆ្លើយតប៖ %s
 imap server hostname or ip address	admin	km	ឈ្មោះម៉ាស៊ីនមេ IMAP ឬអាសយដ្ឋាន ip

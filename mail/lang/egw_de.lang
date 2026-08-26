@@ -117,6 +117,7 @@ confirm	mail	de	Bestätigen
 confirm attach message	mail	de	Bestätigung beim Anhängen von E-Mails
 confirm move to folder	mail	de	Bestätigung vor dem Verschieben
 connect to profile %1	mail	de	Verbunden zu dem Profil: %1
+connection could not be established, use the wizard to check why!	mail	de	Verbindung konnte nicht hergestellt werden, bitte im Assistenten die Ursache prüfen!
 connection status	mail	de	Verbindungsstatus
 contact label	mail	de	Anzeige Kontakt
 contains	mail	de	beinhaltet
@@ -660,7 +661,7 @@ spamtitan api url	mail	de	SpamTitan API URL
 spamtitan integration requires epl version	mail	de	SpamTitan-Integration benötigt die EPL-Version
 start new messages with mime type plain/text or html?	mail	de	Sollen neue E-Mails als Text- oder HTML-Nachrichten verfasst werden?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	de	Antworten auf und weiterleiten von E-Mails im Text-, im HTML-Format oder entsprechend des Formats, in dem die E-Mail vom Sender ursprünglich verfasst wurde (Standard).
-step 1: imap - incoming mail	mail	de	1. Schritt: Posteingang (IMAP) einrichten
+step 1: jmap/imap - incoming mail	mail	de	1. Schritt: Posteingang (JMAP/IMAP) einrichten
 step 2: folder	mail	de	2. Schritt: Ordner einrichten
 step 3: sieve - server side mail filtering	mail	de	3. Schritt: Serverseitige E-Mail-Filterung (Sieve) einrichten
 step 4: smtp - outgoing mail	mail	de	4. Schritt: Postausgang (SMTP) einrichten

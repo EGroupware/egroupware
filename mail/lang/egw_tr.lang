@@ -276,7 +276,7 @@ sneak preview in list	mail	tr	Mesaj önizlemesi
 some clients fail to detect correct charset, if flowed lines are enabled.	mail	tr	Akan satırlar etkinleştirilmişse bazı istemciler doğru karakter kümesini algılayamaz
 spamtitan api url	mail	tr	SpamTitan API URL
 spamtitan integration requires epl version	mail	tr	SpamTitan entegrasyonu EPL sürümü gerektirir
-step 1: imap - incoming mail	mail	tr	Adım 1: IMAP - gelen e-posta
+step 1: jmap/imap - incoming mail	mail	tr	Adım 1: JMAP/IMAP - gelen e-posta
 step 2: folder	mail	tr	Adım 2: Klasör
 step 3: sieve - server side mail filtering	mail	tr	Adım 3: Sieve - sunucu tarafı e-posta filtreleme
 step 4: smtp - outgoing mail	mail	tr	Adım 4: SMTP - giden e-posta

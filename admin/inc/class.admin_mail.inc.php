@@ -348,7 +348,23 @@ class admin_mail
 		$tpl = new Etemplate('admin.mailwizard');
 		$sel_options = $readonlys = $hosts = [];
 
-		$connected = $content['connected'] ?? null;
+		// never trust a round-tripped 'connected' flag from a PRIOR render - it must always be
+		// freshly re-derived by THIS request's own trial loop below (or left unset, meaning
+		// "not tested this round"). A stale truthy value here previously let a user who
+		// unchecks "disable certificate validation" and clicks continue after navigating BACK
+		// to this step (eg. via folder()'s "back" button, which round-trips through add() back
+		// to here) skip the trial loop entirely (`!isset($connected) ? $hosts : []` below) and
+		// silently advance without ever re-testing the new setting - found live 2026-08-26,
+		// same root cause as the wizard_review case just below, but not fixed by it since
+		// wizard_review is only ever true for the ONE request landing here from edit()'s
+		// "Assistent" button, not for stepping back from a later step.
+		unset($content['connected']);
+		$connected = null;
+		// see edit()'s 'wizard' button case: only ever true for the ONE auto-triggered request
+		// that lands here from reviewing an existing account - unset immediately so it never
+		// carries forward and blocks a real, user-clicked "continue" on a later request
+		$wizard_review = !empty($content['wizard_review']);
+		unset($content['wizard_review']);
 		if (empty($content['acc_imap_username']))
 		{
 			$content['acc_imap_username'] = $content['ident_email'];
@@ -428,8 +444,11 @@ class admin_mail
 				$content += self::oauth2content($oauth);
 			}
 			$content['acc_imap_host'] = $host;
-			// by default we check SSL, STARTTLS and at last an insecure connection
-			if (!is_array($data)) $data = array('TLS' => 993, 'SSL' => 993, 'STARTTLS' => 143, 'insecure' => 143);
+			// by default we check TLS, STARTTLS and at last an insecure connection - no separate
+			// 'SSL' candidate: it's the same port as 'TLS' and PHP no longer supports anything
+			// below TLS 1.2 anyway, so it would only ever repeat TLS's exact outcome (confirmed
+			// live 2026-08-26: both attempts failed identically against the same unreachable port)
+			if (!is_array($data)) $data = array('TLS' => 993, 'STARTTLS' => 143, 'insecure' => 143);
 
 			foreach($data as $ssl => $port)
 			{
@@ -454,14 +473,30 @@ class admin_mail
 						$imap->login();
 					}
 					catch (Horde_Imap_Client_Exception $cert_e) {
-						if (!$verify_undecided || !Mail\Account::isCertificateError($cert_e))
+						// Horde's own connect-phase exception carries no reliable "was this a
+						// certificate problem" signal (Mail\Account::isCertificateError()'s
+						// message/details heuristic can legitimately be empty even for a real
+						// cert mismatch - PHP's stream_socket_client() gives no error string at
+						// all for some cert-verify failure modes, confirmed live 2026-08-26) - so
+						// a still-undecided account tries the lenient retry on ANY connect-phase
+						// failure (SERVER_CONNECT), not just ones that "look like" a cert error by
+						// text, and lets the retry's OWN outcome be the real signal: success
+						// proves it genuinely was the certificate; a second failure means it
+						// wasn't, and the ORIGINAL (usually more informative) exception is what
+						// the user should see, not the retry's
+						if (!$verify_undecided || $cert_e->getCode() !== Horde_Imap_Client_Exception::SERVER_CONNECT)
 						{
 							throw $cert_e;
 						}
-						$content['output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
 						$attempt_verify = false;
-						$imap = self::imap_client($content, self::TIMEOUT, false);
-						$imap->login();
+						try {
+							$imap = self::imap_client($content, self::TIMEOUT, false);
+							$imap->login();
+						}
+						catch (\Throwable $e2) {
+							throw $cert_e;
+						}
+						$content['output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
 					}
 					$content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in'))."\n";
 					if (!$imap->isSecureConnection())
@@ -469,13 +504,32 @@ class admin_mail
 						$content['output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
 						$content['acc_imap_ssl'] = 'no';
 					}
+					elseif (self::pauseForCertReview($verify_undecided, $attempt_verify))
+					{
+						// only the lenient fallback got us connected - stop here without
+						// persisting VERIFY_DISABLED and without setting $connected, so the
+						// checkCert diagnosis right below this trial loop (the `if (!$connected)`
+						// block) runs and the wizard stays on this step instead of silently
+						// advancing. Applies regardless of wizard_review (not just when
+						// reviewing an existing account): matches the original design intent -
+						// "show a warning + explicit accept-the-risk checkbox before allowing the
+						// wizard to proceed" - which a bare strict-then-lenient retry never
+						// actually implemented for ANY account, new or existing (found live
+						// 2026-08-26 while reviewing an existing account: unchecking the box and
+						// continuing showed no warning at all and just silently re-disabled
+						// verification)
+					}
 					elseif ($verify_undecided)
 					{
 						$content['acc_imap_ssl'] = ((int)$content['acc_imap_ssl'] & ~self::VERIFY_MASK) |
 							($attempt_verify ? self::VERIFY_ENABLED : self::VERIFY_DISABLED);
+						$content['connected'] = $connected = true;
+					}
+					else
+					{
+						$content['connected'] = $connected = true;
 					}
 					//$content['output'] .= "\n\n".array2string($imap->capability());
-					$content['connected'] = $connected = true;
 					break 2;
 				}
 				catch(Horde_Imap_Client_Exception $e)
@@ -504,16 +558,21 @@ class admin_mail
 				}
 			}
 		}
-		if ($connected === 'jmap')	// continue with next wizard step: define folders, JMAP-natively
+		if ($connected === 'jmap' && !$wizard_review)	// continue with next wizard step: define folders, JMAP-natively
 		{
 			unset($content['button']);
 			return $this->folder($content, lang('Successful connected to %1 server%2.', 'JMAP', ' '.lang('and logged in')));
 		}
-		if ($connected)	// continue with next wizard step: define folders
+		if ($connected && !$wizard_review)	// continue with next wizard step: define folders
 		{
 			unset($content['button']);
+			// $imap is only set if the trial loop above actually ran THIS request - a
+			// step-forward re-post with an already-connected $content['connected'] from a
+			// PRIOR request skips that loop entirely (line 423's `!isset($connected) ? $hosts :
+			// []`), so there's nothing new to report here; the security-status message was
+			// already shown when the connection was originally established.
 			return $this->folder($content, lang('Successful connected to %1 server%2.', 'IMAP', ' '.lang('and logged in')).
-				($imap->isSecureConnection() ? '' : "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.')));
+				(isset($imap) && !$imap->isSecureConnection() ? "\n".lang('Connection is NOT secure! Everyone can read eg. your credentials.') : ''));
 		}
 		// add validation error, if we can identify a field
 		if (!$connected && $e instanceof Horde_Imap_Client_Exception)
@@ -528,6 +587,25 @@ class admin_mail
 				case Horde_Imap_Client_Exception::SERVER_CONNECT:
 					Etemplate::set_validation_error('acc_imap_host', lang($e->getMessage()));
 					break;
+			}
+		}
+		// wizard-time equivalent of the checkCert popup (edit()'s $_GET['checkCert'] handling) -
+		// same diagnosis, but run right here while the user is already looking at this exact
+		// step, instead of only reactively once a live connection later fails
+		if (!$connected)
+		{
+			$diagnosis = self::checkCertDiagnosis($content, 'imap');
+			if ($diagnosis['problem'] === 'certificate')
+			{
+				// full, specific reasoning goes into the log next to the connection attempts
+				// that triggered it - the field-level validation message stays short and
+				// generic (NOT eg. "mismatch": verification can just as well fail for a
+				// self-signed or expired certificate, not only a hostname mismatch), and sits on
+				// BOTH the host and the "disable certificate validation" checkbox - the checkbox
+				// is the field the user actually needs to act on
+				$content['output'] .= "\n".$diagnosis['message']."\n";
+				Etemplate::set_validation_error('acc_imap_host', lang('Certificate error'));
+				Etemplate::set_validation_error('acc_imap_ssl_noverify', lang('Certificate error'));
 			}
 		}
 		$readonlys['button[manual]'] = true;
@@ -732,14 +810,27 @@ class admin_mail
 	 */
 	public function sieve(array $content, $msg='')
 	{
+		// no separate SSL_SSL candidate: same port as SSL_TLS, and PHP no longer supports
+		// anything below TLS 1.2 anyway, so it would only ever repeat SSL_TLS's exact outcome
+		// (confirmed live 2026-08-26: both attempts failed identically against the same
+		// unreachable port, wasting a full extra connection-timeout wait for nothing)
 		static $sieve_ssl2port = array(
 			self::SSL_TLS => 5190,
-			self::SSL_SSL => 5190,
 			self::SSL_STARTTLS => array(4190, 2000),
 			self::SSL_NONE => array(4190, 2000),
 		);
 		$content['msg'] = $msg;
 		$content = self::mergeVerifyCheckbox($content, 'acc_sieve_ssl');
+		// a legacy stored value can still literally be SSL_SSL(3) here (mergeVerifyCheckbox()
+		// only merges the verify-checkbox back in, it doesn't normalize the protocol bits) -
+		// $sieve_ssl2port above no longer has a separate SSL_SSL entry to fall back on, so this
+		// must be aliased to SSL_TLS(2) explicitly, same as splitVerifyCheckbox() already does
+		// for display
+		if (isset($content['acc_sieve_ssl']) && $content['acc_sieve_ssl'] !== 'no' &&
+			((int)$content['acc_sieve_ssl'] & self::PROTOCOL_MASK) === self::SSL_SSL)
+		{
+			$content['acc_sieve_ssl'] = ((int)$content['acc_sieve_ssl'] & ~self::PROTOCOL_MASK) | self::SSL_TLS;
+		}
 		$is_jmap = is_a($content['acc_imap_type'] ?? '', Mail\Imap\Jmap::class, true);
 
 		if (!empty($content['button']))
@@ -866,21 +957,41 @@ class admin_mail
 						);
 						try {
 							$sieve = new Horde\ManageSieve($sieve_config);
-							// connect to sieve server
+							// connect to sieve server (transport/TLS only - login() is a
+							// separate, later call, so ANY exception here is connection-phase,
+							// never an authentication failure)
 							$sieve->connect();
 						}
 						catch (Exception $cert_e) {
-							if (!$verify_undecided || !Mail\Account::isCertificateError($cert_e))
+							// see autoconfig()'s identical, more detailed comment on why this
+							// always retries leniently rather than text-sniffing the exception
+							// first (Mail\Account::isCertificateError()'s heuristic can miss a
+							// real cert mismatch entirely - confirmed live 2026-08-26)
+							if (!$verify_undecided)
 							{
 								throw $cert_e;
 							}
-							$content['sieve_output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
 							$attempt_verify = false;
 							$sieve_config['context'] = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]];
-							$sieve = new Horde\ManageSieve($sieve_config);
-							$sieve->connect();
+							try {
+								$sieve = new Horde\ManageSieve($sieve_config);
+								$sieve->connect();
+							}
+							catch (\Throwable $e2) {
+								throw $cert_e;
+							}
+							$content['sieve_output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
 						}
 						$content['sieve_output'] .= "\n".lang('Successful connected to %1 server%2.', 'Sieve','');
+						if (self::pauseForCertReview($verify_undecided, $attempt_verify))
+						{
+							// only the lenient fallback got us connected - stay on THIS step
+							// without logging in, without persisting VERIFY_DISABLED, and
+							// without advancing to smtp() - see autoconfig()'s identical, more
+							// detailed comment; the checkCert diagnosis below (the
+							// `if (!$content['sieve_connected'])` block) shows the warning
+							break 2;
+						}
 						// and log in
 						$sieve->login($content['acc_imap_username'], $content['acc_imap_password']);
 						$content['sieve_output'] .= ' '.lang('and logged in')."\n";
@@ -930,6 +1041,19 @@ class admin_mail
 			}
 			$content['msg'] = lang('No sieve support detected, either fix configuration manually or leave it switched off.');
 			$content['acc_sieve_enabled'] = 0;
+		}
+		// wizard-time equivalent of the checkCert popup, see autoconfig()'s identical comment
+		if (!$content['sieve_connected'])
+		{
+			$diagnosis = self::checkCertDiagnosis($content, 'sieve');
+			if ($diagnosis['problem'] === 'certificate')
+			{
+				// see autoconfig()'s identical comment on why the log gets the full reasoning
+				// and the field validation (host + checkbox) stays short/generic
+				$content['sieve_output'] .= "\n".$diagnosis['message']."\n";
+				Etemplate::set_validation_error('acc_sieve_host', lang('Certificate error'));
+				Etemplate::set_validation_error('acc_sieve_ssl_noverify', lang('Certificate error'));
+			}
 		}
 		$content = self::splitVerifyCheckbox($content, 'acc_sieve_ssl');
 		$sel_options['acc_sieve_ssl'] = self::sslTypes('Sieve', false);
@@ -1035,7 +1159,8 @@ class admin_mail
 				$content['acc_smtp_host'] = $host;
 				if (!is_array($data))
 				{
-					$data = array('TLS' => 465, 'SSL' => 465, 'STARTTLS' => 587, '' => 25);
+					// no separate 'SSL' candidate - see autoconfig()'s identical comment
+					$data = array('TLS' => 465, 'STARTTLS' => 587, '' => 25);
 				}
 				foreach($data as $ssl => $port)
 				{
@@ -1075,15 +1200,26 @@ class admin_mail
 							$smtp = $mail->getSMTPObject();
 						}
 						catch (Horde_Exception_Wrapped $cert_e) {
-							if (!$verify_undecided || !Mail\Account::isCertificateError($cert_e))
+							// see autoconfig()'s identical, more detailed comment on why this
+							// always retries leniently rather than text-sniffing the exception
+							// first (Mail\Account::isCertificateError()'s heuristic can miss a
+							// real cert mismatch entirely - confirmed live 2026-08-26); getSMTPObject()
+							// is connection-only (login happens separately below), so any exception
+							// here is connection-phase, never an authentication failure
+							if (!$verify_undecided)
 							{
 								throw $cert_e;
 							}
-							$content['smtp_output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
 							$attempt_verify = false;
 							$params['context'] = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false]];
-							$mail = new Horde_Mail_Transport_Smtphorde($params);
-							$smtp = $mail->getSMTPObject();
+							try {
+								$mail = new Horde_Mail_Transport_Smtphorde($params);
+								$smtp = $mail->getSMTPObject();
+							}
+							catch (\Throwable $e2) {
+								throw $cert_e;
+							}
+							$content['smtp_output'] .= "\n".lang('Certificate could NOT be verified - retrying without certificate verification.')."\n";
 						}
 						$content['smtp_output'] .= "\n".lang('Successful connected to %1 server%2.', 'SMTP',
 							(!empty($content['acc_smtp_username']) ? ' '.lang('and logged in') : ''))."\n";
@@ -1094,6 +1230,16 @@ class admin_mail
 								$content['smtp_output'] .= lang('Connection is NOT secure! Everyone can read eg. your credentials.')."\n";
 							}
 							$content['acc_smtp_ssl'] = 'no';
+						}
+						elseif (self::pauseForCertReview($verify_undecided, $attempt_verify))
+						{
+							// only the lenient fallback got us connected - stay on THIS step
+							// without sending the relay-check mail, without persisting
+							// VERIFY_DISABLED, and without advancing back to edit() - see
+							// autoconfig()'s identical, more detailed comment; the checkCert
+							// diagnosis below (the `if (!$content['smtp_connected'])` block)
+							// shows the warning
+							break 2;
 						}
 						else
 						{
@@ -1172,6 +1318,19 @@ class admin_mail
 					Etemplate::set_validation_error('acc_smtp_host', lang($e->getMessage()));
 					Etemplate::set_validation_error('acc_smtp_port', lang($e->getMessage()));
 					break;
+			}
+		}
+		// wizard-time equivalent of the checkCert popup, see autoconfig()'s identical comment
+		if (!$content['smtp_connected'])
+		{
+			$diagnosis = self::checkCertDiagnosis($content, 'smtp');
+			if ($diagnosis['problem'] === 'certificate')
+			{
+				// see autoconfig()'s identical comment on why the log gets the full reasoning
+				// and the field validation (host + checkbox) stays short/generic
+				$content['smtp_output'] .= "\n".$diagnosis['message']."\n";
+				Etemplate::set_validation_error('acc_smtp_host', lang('Certificate error'));
+				Etemplate::set_validation_error('acc_smtp_ssl_noverify', lang('Certificate error'));
 			}
 		}
 		$content = self::splitVerifyCheckbox($content, 'acc_smtp_ssl');
@@ -1302,6 +1461,19 @@ class admin_mail
 					if (self::$debug) _egw_log_exception($e);
 					Framework::window_close($e->getMessage().' ('.get_class($e).': '.$e->getCode().')');
 				}
+				// client just hit a real connection failure and opened this popup to find out why
+				// (mail/js/app.ts's popupCheckCert()) - diagnose it now, while a human is actually
+				// watching, not proactively before every ordinary connection
+				if (empty($msg) && !empty($_GET['checkCert']) &&
+					in_array($_GET['checkCert'], ['imap', 'jmap', 'smtp', 'sieve'], true) && (int)$content['acc_id'] > 0)
+				{
+					$diagnosis = self::checkCertDiagnosis($content, $_GET['checkCert']);
+					if ($diagnosis['problem'] !== 'none')
+					{
+						$msg = $diagnosis['message'];
+						$msg_type = 'error';
+					}
+				}
 			}
 		}
 		// some defaults for new accounts
@@ -1348,7 +1520,13 @@ class admin_mail
 					{
 						return $this->smtp($content);
 					}
-					// otherwise start with first step
+					// otherwise start with first step - reviewing an EXISTING, already-configured
+					// account, not setting up a new one, so autoconfig() must not silently skip
+					// straight past this step just because its connection test still succeeds
+					// (every other multi-step wizard still requires an explicit "continue" click on
+					// a passing step - especially here, where the user asked to come back and
+					// review this exact one). See autoconfig()'s own $wizard_review handling.
+					$content['wizard_review'] = true;
 					return $this->autoconfig($content);
 
 				case 'delete_identity':
@@ -2210,6 +2388,84 @@ class admin_mail
 	}
 
 	/**
+	 * Whether a just-succeeded connection attempt should PAUSE the wizard on its current step
+	 * (show the certificate diagnosis, don't persist VERIFY_DISABLED, don't advance) rather than
+	 * treat the connection as accepted - true only when verification was still undecided AND
+	 * the connection only went through because of the lenient (no-verification) fallback, ie.
+	 * the strict attempt failed and the retry is the ONLY reason we're here.
+	 *
+	 * Shared by autoconfig()/sieve()/smtp()'s otherwise-identical trial loops - a single,
+	 * grep-able source of truth for this decision, instead of three separately-maintained
+	 * copies of the same condition (found live 2026-08-26: the pause was originally wired into
+	 * autoconfig() only and silently missing from sieve()/smtp(), so unchecking "disable
+	 * certificate validation" and continuing from THOSE steps auto-advanced anyway).
+	 *
+	 * When true, the caller must `break` out of its trial loop without setting its own
+	 * "connected" flag or persisting VERIFY_DISABLED - the step's own `if (!$connected)`
+	 * checkCertDiagnosis() call (already present for the "never connected at all" case) then
+	 * naturally also covers this "connected, but only leniently" case with the exact same
+	 * validation-error/log-message code.
+	 *
+	 * @param bool $verify_undecided ($ssl & Account::VERIFY_MASK) === Account::VERIFY_UNDECIDED,
+	 *  captured before the trial loop started
+	 * @param bool $attempt_verify whether THIS successful connection attempt used strict
+	 *  certificate verification (false means the lenient fallback was what actually worked)
+	 */
+	protected static function pauseForCertReview(bool $verify_undecided, bool $attempt_verify) : bool
+	{
+		return $verify_undecided && !$attempt_verify;
+	}
+
+	/**
+	 * Resolve which host/port/ssl to diagnose for one checkCert type, and run the diagnosis -
+	 * see edit()'s checkCert GET-param handling and Mail\Account::diagnoseConnection()'s docblock
+	 * for the reasoning (on-demand only, never a proactive probe).
+	 *
+	 * @param array $content already-loaded account data (acc_imap_host/port/ssl, acc_sieve_*, or
+	 *  acc_smtp_*)
+	 * @param string $type 'imap'|'jmap'|'smtp'|'sieve' - 'imap' and 'jmap' both read the very same
+	 *  acc_imap_host/port/ssl fields (a real JMAP/Stalwart account just always resolves to an
+	 *  implicit-TLS secure mode there) - kept as two distinct accepted values purely so the
+	 *  client can be explicit about which kind of connection just failed, without the server
+	 *  having to guess from acc_imap_type
+	 * @return array see Mail\Account::diagnoseConnection()
+	 */
+	protected static function checkCertDiagnosis(array $content, string $type) : array
+	{
+		if ($type === 'smtp')
+		{
+			$host = (string)$content['acc_smtp_host'];
+			$port = (int)$content['acc_smtp_port'];
+			$secure = Mail\Account::ssl2secure((int)$content['acc_smtp_ssl']);
+			$starttls_command = "STARTTLS\r\n";
+		}
+		elseif ($type === 'sieve')
+		{
+			$host = (string)$content['acc_sieve_host'];
+			$port = (int)$content['acc_sieve_port'];
+			$secure = Mail\Account::ssl2secure((int)$content['acc_sieve_ssl']);
+			$starttls_command = "STARTTLS\r\n";
+		}
+		else
+		{
+			$host = (string)$content['acc_imap_host'];
+			$port = (int)$content['acc_imap_port'];
+			// ssl2secure() has no JMAP_HTTP/JMAP_HTTPS case (those never reach Horde) - resolve
+			// them explicitly here instead of extending it just for this diagnostic
+			if ((((int)$content['acc_imap_ssl']) & Mail\Account::PROTOCOL_MASK) === Mail\Account::JMAP_HTTPS)
+			{
+				$secure = 'tlsv1';
+			}
+			else
+			{
+				$secure = Mail\Account::ssl2secure((int)$content['acc_imap_ssl']);
+			}
+			$starttls_command = "a1 STARTTLS\r\n";
+		}
+		return Mail\Account::diagnoseConnection($host, $port, $secure, $starttls_command);
+	}
+
+	/**
 	 * Try to connect via JMAP, before falling back to IMAP
 	 *
 	 * Sources tried: DNS SRV (_jmap._tcp.$domain, not commonly published yet) and an explicitly
@@ -2271,14 +2527,29 @@ class admin_mail
 					catch (Api\Exception\Http $e) {
 						// only a plausible certificate-verification failure gets a lenient retry -
 						// any other failure (wrong credentials, host down, ...) must still surface
-						if (!preg_match('/certificate|ssl|tls/i', $e->getMessage()))
+						if (!Mail\Account::isCertificateError($e))
 						{
 							throw $e;
 						}
 						$jmap = static::jmapClient($url, $content['acc_imap_username'], $content['acc_imap_password'], $accountId, false);
 						$verify_ssl = self::VERIFY_DISABLED;
-						$content['output'] .= "\n".lang('Certificate could NOT be verified - continuing without certificate verification for this account.')."\n";
 					}
+				}
+				if (self::pauseForCertReview($initial_verify_state === self::VERIFY_UNDECIDED, $verify_ssl === self::VERIFY_ENABLED))
+				{
+					// only the lenient fallback got us connected via JMAP - this had its own,
+					// separate optimistic-verify implementation that (unlike autoconfig()'s
+					// classic IMAP trial loop) never got the "stay and show the certificate
+					// diagnosis" treatment at all, so it silently accepted the account as
+					// JMAP/Stalwart with certificate validation quietly disabled (found live
+					// 2026-08-26: this is what let Step 1 keep advancing to Step 2 even after
+					// the classic IMAP loop was fixed - JMAP is tried FIRST and never reached
+					// that fix). Don't accept this candidate; fall through to the classic IMAP
+					// trial loop below instead, which already implements the proper pause - the
+					// same host will surface the very same certificate problem there rather than
+					// being silently swallowed here.
+					$content['output'] .= "\n".lang('Certificate could NOT be verified for JMAP - trying classic IMAP instead.')."\n";
+					continue;
 				}
 				$content['output'] .= "\n".lang('Successful connected to %1 server%2.', 'JMAP', ' '.lang('and logged in'))."\n";
 

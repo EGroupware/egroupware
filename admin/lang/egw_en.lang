@@ -119,6 +119,7 @@ allow users to create identities for aliases	admin	en	Allow users to create iden
 allowed for get requests, default in modern browsers, if attribute is not set	admin	en	allowed for get requests, default in modern browsers, if attribute is not set
 allowed just as second factor	admin	en	allowed just as second factor
 alternate email address	admin	en	Alternate email address
+an unrecognized host	common	en	an unrecognized host
 and logged in	admin	en	and logged in
 anonymous user	admin	en	Anonymous user
 anonymous user (not shown in list sessions)	admin	en	Anonymous user. Not shown in sessions list
@@ -190,6 +191,7 @@ category list	admin	en	Category list
 category saved.	admin	en	Category saved.
 certificate	admin	en	Certificate
 certificate details	admin	en	Certificate details
+certificate error	common	en	Certificate error
 certificate validity in days	admin	en	Certificate validity in days
 change access	admin	en	Change access control
 change account_id	admin	en	Change account ID
@@ -225,6 +227,7 @@ configuration	admin	en	Configuration
 configuration saved.	admin	en	Configuration saved.
 connection dropped by imap server.	admin	en	Connection dropped by IMAP server.
 connection is not secure! everyone can read eg. your credentials.	admin	en	Connection is NOT secure! Everyone can read eg. your credentials.
+connection refused or timed out	common	en	connection refused or timed out
 container	admin	en	Container
 continue	admin	en	Continue
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	en	Cookie domain. Default empty uses full domain name. E.g. in Site Manager ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com.
@@ -232,6 +235,8 @@ cookie path (allows multiple egw sessions with different directories, has proble
 copy of	admin	en	Copy of
 could not append message:	admin	en	Could not append Message:
 could not complete request. reason given: %s	admin	en	Could not complete request. %s
+could not connect to "%1:%2": %3	common	en	Could not connect to "%1:%2": %3
+could not establish a tls connection to "%1:%2" - wrong port or protocol?	common	en	Could not establish a TLS connection to "%1:%2" - wrong port or protocol?
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	en	Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!
 could not open secure connection to the imap server. %s : %s.	admin	en	Could not open secure connection to the IMAP server. %s : %s.
 could not remote execute the command	admin	en	Could not remote execute the command
@@ -521,7 +526,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	en	If you wish to have randomly selected images you may upload multiple images.
 imap admin password	admin	en	IMAP admin password
 imap admin user	admin	en	IMAP admin user
-imap server	admin	en	IMAP server
 imap server closed the connection.	admin	en	IMAP server closed the connection.
 imap server closed the connection. server responded: %s	admin	en	IMAP Server closed the connection. Server Responded: %s
 imap server hostname or ip address	admin	en	IMAP server hostname or IP address
@@ -649,6 +653,7 @@ no alternate email address	admin	en	No alternate email address
 no default account found!	admin	en	No default account found!
 no encryption	admin	en	No encryption
 no forwarding email address	admin	en	No forwarding email address
+no host/port configured.	common	en	No host/port configured.
 no jobs in the database !!!	admin	en	No jobs in the database!
 no limit	admin	en	No limit
 no matches found	admin	en	No matches found!
@@ -806,6 +811,7 @@ select which location this app should appear on the navbar, lowest (left) to hig
 selectbox	admin	en	Select box
 send using this email-address	admin	en	Send using this email address
 serial number	admin	en	Serial number
+server	admin	en	Server
 server %1 has been updated	admin	en	Server %1 has been updated
 server list	admin	en	Server list
 server password	admin	en	Server password
@@ -880,6 +886,7 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	en	The login and password can not be the same.
 the loginid can not be more then 8 characters	admin	en	The login ID can not be more than 8 characters.
 the mimeparser can not parse this message.	admin	en	The MIME parser can not parse this message.
+the server "%1" answered, but presented a certificate issued for "%2" - not for "%1". this usually means a wrong hostname/dns entry, or a load-balancer routing to the wrong backend - not just an outdated certificate. disabling certificate validation lets you connect anyway, but makes the connection vulnerable to a man-in-the-middle attack - only do that if you understand and accept that risk.	common	en	The server "%1" answered, but presented a certificate issued for "%2" - NOT for "%1". This usually means a wrong hostname/DNS entry, or a load-balancer routing to the wrong backend - not just an outdated certificate. Disabling certificate validation lets you connect anyway, but makes the connection vulnerable to a man-in-the-middle attack - only do that if you understand and accept that risk.
 the testjob sends you a mail everytime it is called.	admin	en	The test job sends you a mail every time it is called.
 the text displayed to the user	admin	en	The text displayed to the user
 the two passwords are not the same	admin	en	Passwords are not the same

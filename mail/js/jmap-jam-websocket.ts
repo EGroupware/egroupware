@@ -77,6 +77,32 @@ const WEBSOCKET_CAPABILITY = "urn:ietf:params:jmap:websocket";
 // successful connection resets the counter, so a later transient blip gets the full budget again).
 const RECONNECT_DELAYS_MS = [1000, 5000, 30000];
 
+// Bounds every plain-fetch()-based HTTP call this client makes (the initial session load, and
+// every request()/requestMany() call while not on the WebSocket transport) - jmap-jam's own
+// JamClient has no timeout/AbortSignal support at all (confirmed: its fetch() calls take no
+// `signal`, and ClientConfig has no injectable fetch override), so without this, an unreachable
+// or silently-blackholing host leaves the caller waiting on the browser's own connection default
+// (commonly 60-120s+, OS/browser-dependent) - found live 2026-08-26 alongside the matching
+// server-side fix (Mail\Jmap::CONNECT_TIMEOUT). Slightly more generous than that 10s *connect-
+// only* server-side budget, since this one has to cover the full round trip (connect + TLS +
+// server processing + response), not just the TCP/TLS handshake. Does NOT cancel the underlying
+// fetch() itself (no AbortController plumbed through jmap-jam to do that) - only bounds how long
+// THIS client's caller waits for it, so the UI never hangs even though the browser's own network
+// stack may still be retrying in the background. Not applied to the WebSocket transport's own
+// per-request path (#requestOverWebSocket()) - that's already bounded at the connection level by
+// the heartbeat mechanism (heartbeatIntervalMs/heartbeatTimeoutMs).
+const HTTP_TIMEOUT_MS = 10000;
+
+/** Race `promise` against a timeout - see HTTP_TIMEOUT_MS's docblock for why this exists and its limits. */
+function withTimeout<T>(promise : Promise<T>, message : string) : Promise<T>
+{
+	return Promise.race([
+		promise,
+		new Promise<T>((_resolve, reject) =>
+			window.setTimeout(() => reject(new Error(message)), HTTP_TIMEOUT_MS)),
+	]);
+}
+
 type WebSocketRequestFrame =
 {
 	"@type" : "Request";
@@ -339,6 +365,12 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		this.#heartbeatIntervalMs = config.heartbeatIntervalMs ?? 30000;
 		this.#heartbeatTimeoutMs = config.heartbeatTimeoutMs ?? 10000;
 
+		// JamClient's own constructor already kicked off the real fetch() (no injectable seam to
+		// bound it beforehand) - replacing `this.session` here means every LATER reader (this
+		// class' own use below, and every external `await client.session`/getQuota()/
+		// resolveAclCapable() etc. in mail/js/jmap.ts) gets the timeout-bounded version; see
+		// HTTP_TIMEOUT_MS's docblock for why the underlying fetch() itself can't be cancelled
+		this.session = withTimeout(this.session, "JamWebSocketClient: session fetch timed out");
 		this.session.then((session) =>
 		{
 			const capabilities = session.capabilities as Record<string, unknown>;
@@ -346,6 +378,11 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			{
 				this.#connect();
 			}
+		}).catch(() =>
+		{
+			// nothing to do - just avoid an unhandled-rejection console warning for the (now
+			// timeout-bounded) common "server unreachable" case; every real caller of
+			// `client.session` awaits/catches it themselves
 		});
 	}
 
@@ -700,7 +737,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	{
 		if (this.transport !== "websocket")
 		{
-			return super.request([method, args], options);
+			return withTimeout(super.request([method, args], options), "JamWebSocketClient: request timed out");
 		}
 		return this.#requestOverWebSocket(method, args, options);
 	}
@@ -769,7 +806,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			// unrelated to this file's - draftsFn itself doesn't care which Proxy calls it (both just
 			// implement {entity}.{operation}(args) + $ref()), only the static DraftsProxy types
 			// differ, hence the cast.
-			return super.requestMany(draftsFn as any, options);
+			return withTimeout(super.requestMany(draftsFn as any, options), "JamWebSocketClient: requestMany timed out");
 		}
 		return this.#requestManyOverWebSocket(draftsFn, options);
 	}

@@ -71,7 +71,7 @@
 					<et2-description></et2-description>
 				</row>
 				<row class="@manual_class">
-					<et2-description for="acc_imap_host" value="IMAP server"></et2-description>
+					<et2-description for="acc_imap_host" value="Server"></et2-description>
 					<et2-textbox id="acc_imap_host" maxlength="128" span="all" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row>

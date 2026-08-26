@@ -610,7 +610,7 @@ spamtitan api url	mail	es-es	URL del API SpamTitan
 spamtitan integration requires epl version	mail	es-es	La integración de SpamTitan requiere la versión EPL
 start new messages with mime type plain/text or html?	mail	es-es	¿Comenzar nuevos mensajes con el tipo text o HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	es-es	Responda y reenvíe mensajes de correo electrónico en formato de texto, en formato HTML o según el formato en que el remitente redactó originalmente el mensaje (por defecto).
-step 1: imap - incoming mail	mail	es-es	Paso 1: IMAP - correo entrante
+step 1: jmap/imap - incoming mail	mail	es-es	Paso 1: JMAP/IMAP - correo entrante
 step 2: folder	mail	es-es	Paso 2: Carpeta
 step 3: sieve - server side mail filtering	mail	es-es	Paso 3: Sieve - filtro de correo del lado del servidor
 step 4: smtp - outgoing mail	mail	es-es	Paso 4: SMTP - correo saliente

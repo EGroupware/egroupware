@@ -248,7 +248,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	emailadmin	zh-tw	如果使用 SSL 或 TLS，您必須先載入 PHP openssl 外掛。
 imap admin password	admin	zh-tw	IMAP管理者密碼
 imap admin user	admin	zh-tw	IMAP管理者帳號
-imap server	emailadmin	zh-tw	IMAP伺服器
 imap server closed the connection.	emailadmin	zh-tw	IMAP伺服器關閉連線
 imap server closed the connection. server responded: %s	emailadmin	zh-tw	IMAP伺服器關閉連線，伺服器回應： %s
 imap server hostname or ip address	emailadmin	zh-tw	IMAP伺服器的主機名稱或是IP位址

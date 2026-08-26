@@ -610,7 +610,7 @@ spamtitan api url	mail	it	URL della API di SpamTitan
 spamtitan integration requires epl version	mail	it	L'integrazione di SpamTitan richiede la versione EPL
 start new messages with mime type plain/text or html?	mail	it	Iniziare nuovi messaggi con mime type testo o HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	it	Iniziare i messaggi di risposta con mime type testo oppure provare a usare il formato mostrato (predefinito).
-step 1: imap - incoming mail	mail	it	Primo passo: IMAP - posta in arrivo
+step 1: jmap/imap - incoming mail	mail	it	Primo passo: JMAP/IMAP - posta in arrivo
 step 2: folder	mail	it	Secondo passo: Cartella
 step 3: sieve - server side mail filtering	mail	it	Terzo passo: Sieve - filtri email a livello server
 step 4: smtp - outgoing mail	mail	it	Quarto passo: SMTP - server posta in uscita

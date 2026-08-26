@@ -573,7 +573,7 @@ source	mail	el	Πηγή
 sources	mail	el	Πηγές
 spamtitan api url	mail	el	SpamTitan API URL
 spamtitan integration requires epl version	mail	el	Η ενσωμάτωση του SpamTitan απαιτεί την έκδοση EPL
-step 1: imap - incoming mail	mail	el	Βήμα 1: IMAP - εισερχόμενα μηνύματα
+step 1: jmap/imap - incoming mail	mail	el	Βήμα 1: JMAP/IMAP - εισερχόμενα μηνύματα
 step 2: folder	mail	el	Βήμα 2: Φάκελοι
 step 3: sieve - server side mail filtering	mail	el	Βήμα 3: Sieve
 step 4: smtp - outgoing mail	mail	el	Βήμα 4: SMTP - εξερχόμενα μηνύματα

@@ -119,6 +119,7 @@ allow users to create identities for aliases	admin	de	Anwender dürfen Identitä
 allowed for get requests, default in modern browsers, if attribute is not set	admin	de	erlaubt für GET Requests, Vorgabe in modernen Browsern, wenn das Attribute nicht gesetzt ist
 allowed just as second factor	admin	de	Ausschließlich als zweiter Faktor
 alternate email address	admin	de	Zusätzliche E-Mail-Adressen
+an unrecognized host	common	de	einen unbekannten Host
 and logged in	admin	de	und eingeloggt
 anonymous user	admin	de	Anonymer Benutzer
 anonymous user (not shown in list sessions)	admin	de	Anonymer Benutzer (wird bei 'Sitzungen anzeigen' nicht angezeigt).
@@ -190,6 +191,7 @@ category list	admin	de	Kategorieliste
 category saved.	admin	de	Kategorie gespeichert.
 certificate	admin	de	Zertifikat
 certificate details	admin	de	Details des Zertifikat
+certificate error	common	de	Zertifikatsfehler
 certificate validity in days	admin	de	Gültigkeit des Zertifikats in Tagen
 change access	admin	de	Zugriffsrechte ändern
 change account_id	admin	de	Änderung der Konto-ID
@@ -225,6 +227,7 @@ configuration	admin	de	Konfiguration
 configuration saved.	admin	de	Die Konfiguration wurde erfolgreich gespeichert.
 connection dropped by imap server.	admin	de	Verbindung von IMAP-Server beendet.
 connection is not secure! everyone can read eg. your credentials.	admin	de	Die Verbindung ist NICHT sicher! Jeder kann z. B. Ihr Passwort lesen.
+connection refused or timed out	common	de	Verbindung abgelehnt oder Zeitüberschreitung
 container	admin	de	Container
 continue	admin	de	Weiter
 cookie domain (default empty means use full domain name, for sitemgr eg. ".domain.com" allows to use the same cookie for egw.domain.com and www.domain.com)	admin	de	Cookie-Domain. (Vorgabe 'leer' bedeutet den kompletten Domainnamen, für SiteMgr erlaubt z.B. ".domain.com" das gleiche Cookie für egw.domain.com und www.domain.com zu verwenden).
@@ -232,6 +235,8 @@ cookie path (allows multiple egw sessions with different directories, has proble
 copy of	admin	de	Kopie von
 could not append message:	admin	de	Diese E-Mail lässt sich nicht anzeigen:
 could not complete request. reason given: %s	admin	de	Konnte Anfrage nicht beenden. Grund: %s
+could not connect to "%1:%2": %3	common	de	Konnte keine Verbindung zu "%1:%2" herstellen: %3
+could not establish a tls connection to "%1:%2" - wrong port or protocol?	common	de	Konnte keine TLS-Verbindung zu "%1:%2" herstellen - falscher Port oder falsches Protokoll?
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	de	Konnte den privaten Schlüssel nicht aus der angegeben p12-Datei extrahieren. Entweder ist die p12-Datei kaputt oder das Passwort ist falsch!
 could not open secure connection to the imap server. %s : %s.	admin	de	Konnte keine sichere Verbindung zum IMAP Server aufbauen. %s: %s.
 could not remote execute the command	admin	de	Kann den Befehl nicht remote ausführen.
@@ -521,7 +526,6 @@ if you specify port 5190 as sieve server port, you enforce ssl for sieve (server
 if you wish to have randomly selected images you may upload multiple images.	admin	de	Wenn Sie zufällig ausgewählte Bilder haben möchten, können Sie mehrere Bilder hochladen.
 imap admin password	admin	de	IMAP Administrator Passwort
 imap admin user	admin	de	IMAP Administrator Benutzer
-imap server	admin	de	IMAP-Server
 imap server closed the connection.	admin	de	IMAP-Server hat die Verbindung beendet.
 imap server closed the connection. server responded: %s	admin	de	IMAP-Server hat die Verbindung beendet. Server Antwort: %s
 imap server hostname or ip address	admin	de	IMAP-Server Hostname oder IP-Adresse
@@ -649,6 +653,7 @@ no alternate email address	admin	de	Keine zusätzlichen E-Mail-Adressen
 no default account found!	admin	de	Kein Standard Mail-Konto gefunden!
 no encryption	admin	de	Keine Verschlüsselung
 no forwarding email address	admin	de	Keine Weiterleitungsadresse definiert
+no host/port configured.	common	de	Kein Host/Port konfiguriert.
 no jobs in the database !!!	admin	de	Keine Jobs in der Datenbank!
 no limit	admin	de	Kein Limit
 no matches found	admin	de	Keine Übereinstimmungen gefunden
@@ -805,6 +810,7 @@ select which location this app should appear on the navbar, lowest (left) to hig
 selectbox	admin	de	Auswahlfeld
 send using this email-address	admin	de	Zum Versenden wird diese E-Mail-Adresse benutzt
 serial number	admin	de	Fortlaufende Nummer
+server	admin	de	Server
 server %1 has been updated	admin	de	Server %1 wurde aktualisiert.
 server list	admin	de	Server-Liste
 server password	admin	de	Server-Passwort
@@ -878,6 +884,7 @@ the install id of an instance can be found under admin > site configuration	admi
 the login and password can not be the same	admin	de	Benutzername und Passwort dürfen nicht identisch sein.
 the loginid can not be more then 8 characters	admin	de	Der Benutzername darf nicht länger als 8 Zeichen sein.
 the mimeparser can not parse this message.	admin	de	Der MIME-Parser versteht diese Nachricht nicht.
+the server "%1" answered, but presented a certificate issued for "%2" - not for "%1". this usually means a wrong hostname/dns entry, or a load-balancer routing to the wrong backend - not just an outdated certificate. disabling certificate validation lets you connect anyway, but makes the connection vulnerable to a man-in-the-middle attack - only do that if you understand and accept that risk.	common	de	Der Server "%1" hat geantwortet, aber ein Zertifikat für "%2" präsentiert - NICHT für "%1". Das deutet meist auf einen falschen Hostnamen/DNS-Eintrag hin, oder einen Load-Balancer, der zum falschen Server weiterleitet - nicht nur auf ein abgelaufenes Zertifikat. Die Zertifikatsprüfung zu deaktivieren erlaubt trotzdem eine Verbindung, macht diese aber anfällig für einen Man-in-the-Middle-Angriff - tun Sie das nur, wenn Sie dieses Risiko verstehen und akzeptieren.
 the testjob sends you a mail everytime it is called.	admin	de	Der Test-Job sendet Ihnen jedes mal eine E-Mail wenn er aufgerufen wird.
 the text displayed to the user	admin	de	Für den Benutzer angezeigter Text
 the two passwords are not the same	admin	de	Die beiden Passwörter stimmen nicht überein

@@ -9,7 +9,7 @@
 			</columns>
 			<rows>
 				<row class="dialogHeader">
-					<et2-description  value="Step 1: IMAP - incoming mail" span="all" class="emailadmin_header"></et2-description>
+					<et2-description  value="Step 1: JMAP/IMAP - incoming mail" span="all" class="emailadmin_header"></et2-description>
 					<et2-description></et2-description>
 				</row>
 				<row>
@@ -25,7 +25,7 @@
 					<et2-password  id="acc_imap_password" maxlength="128" autocomplete="off" class="et2_required" placeholder="Leave empty to use OAuth, if supported"></et2-password>
 				</row>
 				<row class="@manual_class">
-					<et2-description  value="IMAP server" for="acc_imap_host"></et2-description>
+					<et2-description  value="Server" for="acc_imap_host"></et2-description>
 					<et2-textbox  id="acc_imap_host" maxlength="128" placeholder="Hostname or IP"></et2-textbox>
 				</row>
 				<row class="@manual_class">

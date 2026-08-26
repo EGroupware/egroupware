@@ -304,7 +304,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	sv	Om du vill använda SSL eller TLS måste PHP openssl stödet laddas
 imap admin password	admin	sv	IMAP admin lösenord
 imap admin user	admin	sv	IMAP admin användare
-imap server	admin	sv	IMAP Server
 imap server closed the connection.	admin	sv	IMAP server stängde anslutningen
 imap server closed the connection. server responded: %s	admin	sv	IMAP server stängde anslutningen. Serverna svarade: %s
 imap server hostname or ip address	admin	sv	IMAP server hostnamn eller IP adress

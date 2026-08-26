@@ -456,7 +456,6 @@ if you ignore that error as admin, you should check "%1"!	admin	sl	Če to napako
 if you specify port 5190 as sieve server port, you enforce ssl for sieve (server must support that)	admin	sl	če določite vrata 5190 s sieve strežnika, izvršite ssl za sito (strežnik mora to podpreti)
 imap admin password	admin	sl	Geslo oskrbnika IMAPa
 imap admin user	admin	sl	Uporabniško ime oskrbnika IMAP-a
-imap server	admin	sl	Strežnik IMAP
 imap server closed the connection.	admin	sl	Strežnik IMAP je prekinil povezavo.
 imap server closed the connection. server responded: %s	admin	sl	Strežnik IMAP je prekinil povezavo. Odgovor strežnika: %s
 imap server hostname or ip address	admin	sl	Ime ali IP strežnika IMAP

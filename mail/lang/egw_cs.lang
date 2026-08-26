@@ -597,7 +597,7 @@ spamtitan api url	mail	cs	SpamTitan API URL
 spamtitan integration requires epl version	mail	cs	Integrace SpamTitan vyžaduje verzi EPL
 start new messages with mime type plain/text or html?	mail	cs	Začínat psaní nových zpráv jako MIME typ plain/text nebo HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	cs	Začínat psaní nových zpráv jako MIME typ plain/text nebo HTML, nebo zkusit použít zobrazený formát (výchozí).
-step 1: imap - incoming mail	mail	cs	Krok 1: IMAP - příchozí e-mail
+step 1: jmap/imap - incoming mail	mail	cs	Krok 1: JMAP/IMAP - příchozí e-mail
 step 2: folder	mail	cs	Krok 2: Složka
 step 3: sieve - server side mail filtering	mail	cs	Krok 3: Sieve - filtrovací pravidla na straně serveru
 step 4: smtp - outgoing mail	mail	cs	Krok 4: SMTP - odchozí e-mail

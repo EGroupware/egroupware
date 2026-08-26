@@ -330,7 +330,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	zh	如果使用 SSL 或 TLS，您必须加载 PHP openssl 扩展。
 imap admin password	admin	zh	IMAP 管理者密码
 imap admin user	admin	zh	IMAP 管理者帐户
-imap server	admin	zh	IMAP 服务器
 imap server closed the connection.	admin	zh	IMAP 服务器关闭连接。
 imap server closed the connection. server responded: %s	admin	zh	IMAP 服务器关闭连接。服务器回应：%s
 imap server hostname or ip address	admin	zh	IMAP 服务器的主机名或 IP 地址

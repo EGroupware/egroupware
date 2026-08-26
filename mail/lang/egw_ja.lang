@@ -610,7 +610,7 @@ spamtitan api url	mail	ja	SpamTitan API URL
 spamtitan integration requires epl version	mail	ja	SpamTitan を利用するには EPL 版が必要
 start new messages with mime type plain/text or html?	mail	ja	新規メッセージを plain/text で作成しますか？HTMLで作成しますか？
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	ja	返信を plain/text で作成しますか？HTMLで作成しますか？表示中の形式を使用しますか（既定）？
-step 1: imap - incoming mail	mail	ja	ステップ 1: IMAP - 受信メール
+step 1: jmap/imap - incoming mail	mail	ja	ステップ 1: JMAP/IMAP - 受信メール
 step 2: folder	mail	ja	ステップ 2: フォルダ
 step 3: sieve - server side mail filtering	mail	ja	ステップ 3: Sieve - サーバー・サイドフィルタリング
 step 4: smtp - outgoing mail	mail	ja	ステップ 4: SMTP - 送信メール

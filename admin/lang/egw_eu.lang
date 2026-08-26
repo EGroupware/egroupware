@@ -167,7 +167,6 @@ host information	admin	eu	Ostalariaren informazioa
 hour<br>(0-23)	admin	eu	Ordua\n(0-23)
 icon	admin	eu	Ikonoa
 idle	admin	eu	Inaktibo
-imap server	admin	eu	IMAP Zerbitzaria
 imap server closed the connection.	admin	eu	IMAP zerbitzariak konexioa itxi du
 in mbyte	admin	eu	MByte-sen
 inbound	admin	eu	sartzen direnak

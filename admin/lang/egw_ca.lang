@@ -226,7 +226,6 @@ if no acl records for user or any group the user is a member of	admin	ca	Si no e
 if using ldap, do you want to manage homedirectory and loginshell attributes?	admin	ca	Si s'utilitza LDAP, voleu gestionar els atributs del directori d'inici i el compte?
 imap admin password	admin	ca	Contrasenya de l'administrador IMAP
 imap admin user	admin	ca	Usuari administrador IMAP
-imap server	admin	ca	Servidor IMAP
 imap server hostname or ip address	admin	ca	Servidor IMAP o adreça IP
 imap server logintyp	admin	ca	Tipus de sessió del servidor IMAP
 imap server port	admin	ca	Port del servidor IMAP

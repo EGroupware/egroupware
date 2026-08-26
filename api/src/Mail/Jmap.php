@@ -36,6 +36,20 @@ class Jmap
 		api as protected httpApi;
 	}
 
+	/**
+	 * Seconds to wait for the TCP/TLS connect phase of a JMAP HTTP call, before giving up -
+	 * deliberately short: without this, curl's own compiled-in default (commonly ~75-300s,
+	 * confirmed live 2026-08-26 against an unreachable host) made the mail wizard's JMAP
+	 * auto-detection step (admin_mail::tryJmap()) hang far longer than the comparable IMAP/TCP
+	 * probes it falls back to on failure (Mail\Account::diagnoseConnection()/
+	 * probeCertVerification() use single-digit-second stream_socket_client() timeouts). 5s
+	 * matches ralf's own guidance: this only bounds the TCP/TLS *handshake*, not the whole
+	 * request - a handshake that hasn't completed by then essentially never will, whereas a
+	 * slow-but-reachable real JMAP server answering an actual method call afterwards is
+	 * completely unaffected (no timeout on that phase at all).
+	 */
+	const CONNECT_TIMEOUT = 5;
+
 	protected string $url;
 	protected string $user;
 	protected string $secret;
@@ -181,13 +195,13 @@ class Jmap
 		}
 		if (!$this->log)
 		{
-			return $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false, verify_peer: $this->verify);
+			return $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false, verify_peer: $this->verify, connect_timeout: self::CONNECT_TIMEOUT);
 		}
 		// logging request and response
 		file_put_contents($this->log, date('Y-m-d H:i:s O')." $method $url\n".implode("\n", $header)."\n\n".$body."\n\n", FILE_APPEND);
 
 		try {
-			$response = $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false, verify_peer: $this->verify);
+			$response = $this->httpApi($url, $method, $body, $header, $response_header, $follow, only_public: false, verify_peer: $this->verify, connect_timeout: self::CONNECT_TIMEOUT);
 
 			file_put_contents($this->log, date('Y-m-d H:i:s O').' '.
 				implode("\n", array_map(fn($value, $key) => $key === 0 ? $value : "$key: $value", array_values($response_header), array_keys($response_header)))."\n\n".

@@ -119,6 +119,7 @@ confirm	mail	en	Confirm
 confirm attach message	mail	en	Confirm attach message
 confirm move to folder	mail	en	Confirm move to folder
 connect to profile %1	mail	en	Connect to profile %1
+connection could not be established, use the wizard to check why!	mail	en	Connection could not be established, use the wizard to check why!
 connection status	mail	en	Connection status
 contact label	mail	en	Contact label
 contains	mail	en	contains
@@ -673,7 +674,7 @@ spamtitan api url	mail	en	SpamTitan API URL
 spamtitan integration requires epl version	mail	en	SpamTitan integration requires EPL version
 start new messages with mime type plain/text or html?	mail	en	Start new messages with Text or HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	en	Reply to and forward emails in text format, in HTML format, or according to the format in which the email was originally composed by the sender (default).
-step 1: imap - incoming mail	mail	en	Step 1: IMAP - incoming email
+step 1: jmap/imap - incoming mail	mail	en	Step 1: JMAP/IMAP - incoming mail
 step 2: folder	mail	en	Step 2: Folder
 step 3: sieve - server side mail filtering	mail	en	Step 3: Sieve - server side email filtering
 step 4: smtp - outgoing mail	mail	en	Step 4: SMTP - outgoing email

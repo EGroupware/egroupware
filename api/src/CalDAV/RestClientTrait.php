@@ -93,13 +93,21 @@ trait RestClientTrait
 	 * @param bool $verify_peer false: disable curl's TLS certificate verification (default true,
 	 *  curl's own default) - only ever pass false for a caller-managed, deliberate opt-out (eg.
 	 *  Mail\Jmap's per-account acc_imap_ssl verification state), never as a general default
+	 * @param int|null $connect_timeout seconds to wait for the TCP/TLS connect phase specifically
+	 *  (CURLOPT_CONNECTTIMEOUT) before giving up - null (default) leaves curl's own compiled-in
+	 *  default in place (commonly ~75-300s depending on platform/build - found live 2026-08-26 to
+	 *  make an unreachable JMAP host's wizard auto-detection hang far longer than the comparable
+	 *  IMAP/TCP probes elsewhere in the mail wizard, which use single-digit-second timeouts, eg.
+	 *  Mail\Account::diagnoseConnection()/probeCertVerification()). Only bounds the connect phase,
+	 *  not the whole request - a slow-but-reachable server answering a real method call is
+	 *  unaffected.
 	 * @return array|string array of decoded JSON or string body
 	 * @throws \JsonException for invalid JSON
 	 * @throws \InvalidArgumentException if $only_public and $url or redirects resolve to a non-public IP address
 	 * @throws HttpException with code=0: opening http connection, code=HTTP status, if status is NOT 2xx
 	 */
 	public function api(string $url, string $method='GET', $body='', array $header=['Content-Type: application/json'], ?array &$response_header=null,
-		int $follow=3, bool $only_public=true, bool $verify_peer=true)
+		int $follow=3, bool $only_public=true, bool $verify_peer=true, ?int $connect_timeout=null)
 	{
 		if ($url[0] === '/')
 		{
@@ -123,6 +131,10 @@ trait RestClientTrait
 		{
 			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
 			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+		}
+		if (isset($connect_timeout))
+		{
+			curl_setopt($curl, CURLOPT_CONNECTTIMEOUT, $connect_timeout);
 		}
 		if ($follow > 0)
 		{

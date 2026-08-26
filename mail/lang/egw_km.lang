@@ -573,7 +573,7 @@ spamtitan api url	mail	km	SpamTitan API URL
 spamtitan integration requires epl version	mail	km	ការរួមបញ្ចូល SpamTitan ទាមទារកំណែ EPL
 start new messages with mime type plain/text or html?	mail	km	ចាប់ផ្តើមសារថ្មីដោយប្រើប្រភេទ MIME ធម្មតា/អត្ថបទ ឬ HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	km	ចាប់ផ្តើមសារឆ្លើយតបជាមួយនឹងប្រភេទ MIME ធម្មតា/អត្ថបទ ឬ HTML ឬព្យាយាមប្រើទម្រង់ដែលបានបង្ហាញ (លំនាំដើម)?
-step 1: imap - incoming mail	mail	km	ជំហានទី 1: IMAP - សំបុត្រចូល
+step 1: jmap/imap - incoming mail	mail	km	ជំហានទី 1: JMAP/IMAP - សំបុត្រចូល
 step 2: folder	mail	km	ជំហានទី 2: ថតឯកសារ
 step 3: sieve - server side mail filtering	mail	km	ជំហានទី 3: Sieve - ត្រងអុីមែលចំហៀងម៉ាស៊ីនមេ
 step 4: smtp - outgoing mail	mail	km	ជំហានទី 4: SMTP - សំបុត្រចេញ

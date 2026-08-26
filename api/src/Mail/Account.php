@@ -380,12 +380,29 @@ class Account implements \ArrayAccess
 	 * failure (wrong credentials, host down, ...) must still surface normally, not be masked by
 	 * a pointless lenient retry.
 	 *
+	 * Also checks a `details` property, if present (eg. Horde_Imap_Client_Exception's, populated
+	 * from Horde\Socket\Client\Exception's own `details`) - Horde's own IMAP socket code
+	 * (Horde_Imap_Client_Socket::_connect()) deliberately wraps the real
+	 * Horde\Socket\Client\Exception into a generic, translated "Error connecting to mail
+	 * server."/getCode()===SERVER_CONNECT exception, copying the ORIGINAL exception's `details`
+	 * (the raw stream_socket_client() error string, eg. "[0] stream_socket_client(): SSL
+	 * operation failed with code 1... certificate verify failed") across - checking getMessage()
+	 * alone therefore misses this generic-message case entirely (confirmed live 2026-08-26: a
+	 * real cert mismatch on an implicit-TLS IMAP connection surfaced as this exact generic
+	 * message, silently skipping the lenient retry below and the wizard's own certificate
+	 * warning as a result).
+	 *
 	 * @param \Throwable $e
 	 * @return bool
 	 */
 	public static function isCertificateError(\Throwable $e) : bool
 	{
-		return (bool)preg_match('/certificate|ssl|tls/i', $e->getMessage());
+		if (preg_match('/certificate|ssl|tls/i', $e->getMessage()))
+		{
+			return true;
+		}
+		$details = $e->details ?? null;
+		return is_string($details) && (bool)preg_match('/certificate|ssl|tls/i', $details);
 	}
 
 	/**
@@ -442,6 +459,87 @@ class Account implements \ArrayAccess
 		finally {
 			fclose($stream);
 		}
+	}
+
+	/**
+	 * Diagnose why a connection is failing right now - a real, on-demand check, meant to be
+	 * triggered only when a user is actually looking at the account-edit popup because a
+	 * connection just aborted (admin_mail::edit()'s checkCert GET param, see mail/js/app.ts) -
+	 * deliberately NOT run proactively before every ordinary connection, that's
+	 * resolveVerification()'s job, silently, in the background.
+	 *
+	 * Distinguishes two situations users otherwise conflate into "just disable certificate
+	 * validation":
+	 * - the server isn't reachable at all (wrong host/port, firewalled, down) - a "connection"
+	 *   problem, where disabling certificate validation wouldn't help at all
+	 * - the server IS reachable, but presents a certificate for a different name than expected -
+	 *   a real, security-relevant mismatch (wrong DNS/hosts entry, a load-balancer routing to the
+	 *   wrong backend, ...), not merely an outdated/self-signed certificate. The returned message
+	 *   names the actual certificate, so it reads as "this is the wrong server" rather than "this
+	 *   security check is in your way".
+	 *
+	 * @param string $host
+	 * @param int $port
+	 * @param string|false $secure Horde "secure" mode, see probeCertVerification()
+	 * @param string $starttls_command see probeCertVerification()
+	 * @return array ['problem' => 'none'|'connection'|'certificate', 'message' => string|null]
+	 */
+	public static function diagnoseConnection(string $host, int $port, $secure, string $starttls_command='') : array
+	{
+		if (!$host || !$port)
+		{
+			return ['problem' => 'connection', 'message' => lang('No host/port configured.')];
+		}
+		// step 1: plain TCP reachability - same socket for STARTTLS and implicit-TLS modes
+		$error_number = $error_string = null;
+		if (!($stream = @stream_socket_client("tcp://$host:$port", $error_number, $error_string,
+			5, STREAM_CLIENT_CONNECT)))
+		{
+			return ['problem' => 'connection', 'message' => lang('Could not connect to "%1:%2": %3',
+				$host, $port, $error_string ?: lang('connection refused or timed out'))];
+		}
+		stream_set_timeout($stream, 5);
+		if (!$secure)
+		{
+			fclose($stream);
+			return ['problem' => 'none', 'message' => null];
+		}
+		if ($secure === 'tls' && $starttls_command)
+		{
+			fgets($stream);	// discard greeting
+			fwrite($stream, $starttls_command);
+			fgets($stream);	// discard STARTTLS acknowledgement
+		}
+		// step 2: lenient upgrade, purely to read the certificate the server actually presents -
+		// verify_peer=true would abort the handshake before PHP ever exposes the peer certificate
+		stream_context_set_option($stream, 'ssl', 'capture_peer_cert', true);
+		stream_context_set_option($stream, 'ssl', 'verify_peer', false);
+		stream_context_set_option($stream, 'ssl', 'verify_peer_name', false);
+		if (stream_get_meta_data($stream)['timed_out'] ||
+			!@stream_socket_enable_crypto($stream, true, STREAM_CRYPTO_METHOD_TLS_CLIENT))
+		{
+			fclose($stream);
+			return ['problem' => 'connection', 'message' => lang('Could not establish a TLS connection to "%1:%2" - wrong port or protocol?', $host, $port)];
+		}
+		$cert = stream_context_get_params($stream)['options']['ssl']['peer_certificate'] ?? null;
+		$cn = null;
+		if ($cert && ($parsed = openssl_x509_parse($cert)))
+		{
+			$cn = $parsed['subject']['CN'] ?? $parsed['extensions']['subjectAltName'] ?? null;
+		}
+		fclose($stream);
+
+		// step 3: the actual strict check, on a FRESH connection - a stream can't be safely
+		// downgraded/re-upgraded after crypto was already enabled once above
+		if (static::probeCertVerification($host, $port, $secure, $starttls_command))
+		{
+			return ['problem' => 'none', 'message' => null];
+		}
+		return [
+			'problem' => 'certificate',
+			'message' => lang('The server "%1" answered, but presented a certificate issued for "%2" - NOT for "%1". This usually means a wrong hostname/DNS entry, or a load-balancer routing to the wrong backend - not just an outdated certificate. Disabling certificate validation lets you connect anyway, but makes the connection vulnerable to a man-in-the-middle attack - only do that if you understand and accept that risk.',
+				$host, $cn ?: lang('an unrecognized host')),
+		];
 	}
 
 	/**

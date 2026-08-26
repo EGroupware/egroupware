@@ -610,7 +610,7 @@ spamtitan api url	mail	fr	SpamTitan API URL
 spamtitan integration requires epl version	mail	fr	L'intégration de SpamTitan nécessite la version EPL
 start new messages with mime type plain/text or html?	mail	fr	Créer les nouveaux messages au format text ou HTML ?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	fr	Répondre aux courriels et les transférer au format texte, au format HTML ou selon le format dans lequel le courriel a été initialement composé par l'expéditeur (par défaut).
-step 1: imap - incoming mail	mail	fr	Etape 1 : IMAP - mail entrant
+step 1: jmap/imap - incoming mail	mail	fr	Etape 1 : JMAP/IMAP - mail entrant
 step 2: folder	mail	fr	Etape 2 : Dossier
 step 3: sieve - server side mail filtering	mail	fr	Etape 3 : Sieve, les règles de courrier côté serveur
 step 4: smtp - outgoing mail	mail	fr	Etape 4 : SMTP - mail sortant

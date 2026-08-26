@@ -403,11 +403,19 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	}
 
 	/**
-	 * A certificate-verification failure on the first (strict) attempt must fall back to a
-	 * lenient retry rather than failing the whole connection - the account still gets created,
-	 * just with certificate verification recorded as disabled (VERIFY_DISABLED).
+	 * A certificate-verification failure on the first (strict) attempt DOES try a lenient
+	 * retry internally (to tell a genuine certificate problem apart from a truly unreachable
+	 * host), but must NOT silently accept the account through it - admin_mail::
+	 * pauseForCertReview() catches exactly this case (verification still undecided, only the
+	 * lenient fallback worked) and tryJmap() defers to the classic IMAP trial loop instead,
+	 * which shows the proper certificate-diagnosis warning and lets the user explicitly decide,
+	 * rather than silently persisting VERIFY_DISABLED (found live 2026-08-26: tryJmap() had its
+	 * own, separate optimistic-verify implementation that was never wired into
+	 * pauseForCertReview() when that was introduced, so a certificate problem on a host that
+	 * also answers JMAP bypassed the classic IMAP loop's fix entirely and kept silently
+	 * advancing).
 	 */
-	public function testTryJmapFallsBackToLenientOnCertificateFailure()
+	public function testTryJmapDefersToClassicImapOnCertificateFailure()
 	{
 		TestableAdminMail::$dnsFixtures['_jmap._tcp.example.org'][DNS_SRV] = false;
 		TestableAdminMail::$jmapFixtures['https://stalwart.example.org'] = [
@@ -421,8 +429,7 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 		);
 		$result = $this->tryJmap($content);
 
-		$this->assertTrue($result);
-		$this->assertSame(admin_mail::JMAP_HTTPS | admin_mail::VERIFY_DISABLED, $content['acc_imap_ssl']);
+		$this->assertFalse($result);
 	}
 
 	/**

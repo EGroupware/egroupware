@@ -354,7 +354,6 @@ if using ldap, do you want to manage homedirectory and loginshell attributes?	ad
 if using ssl or tls, you must have the php openssl extension loaded.	admin	nl	Indien SSL of TSL wordt gebruikt, moet u de PHP openssl extensie opgeladen hebben
 imap admin password	admin	nl	IMAP beheerders wachtwoord
 imap admin user	admin	nl	IMAP beheerdersgebruiker
-imap server	admin	nl	IMAP server
 imap server closed the connection.	admin	nl	IMAP server sloot de verbinding
 imap server closed the connection. server responded: %s	admin	nl	IMAP Server sloot de verbinding. Server reageerde: %s
 imap server hostname or ip address	admin	nl	IMAP-server hostnaam of IP-adres

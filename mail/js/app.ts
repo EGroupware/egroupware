@@ -6197,7 +6197,8 @@ export class MailApp extends EgwApp
 		const hasParent = typeof item.id === "string" && item.id.indexOf('::') !== -1;
 		const [profileID, parentPath] : [string, string] = hasParent ? item.id.split('::', 2) : [item.id, ''];
 		const parentId : string | null = hasParent ? item.jmapId : null;
-		const errorLeaf = () => ({item: [buildErrorNode(profileID, parentPath, this.egw.lang('(not connected)'), egw)]});
+		const errorLeaf = () => ({item: [buildErrorNode(profileID, parentPath,
+			this.egw.lang('Connection could not be established, use the wizard to check why!'), egw)]});
 
 		if (hasParent && !parentId)
 		{

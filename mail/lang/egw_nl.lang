@@ -568,7 +568,7 @@ spamtitan api url	mail	nl	SpamTitan API URL
 spamtitan integration requires epl version	mail	nl	SpamTitan integratie vereist EPL versie
 start new messages with mime type plain/text or html?	mail	nl	Begin nieuwe berichten met tekst of HTML?
 start reply messages with mime type plain/text or html or try to use the displayed format (default)?	mail	nl	Begin antwoorden van het bericht met tekst of HTML of probeer het getoonde formaat (standaard)?
-step 1: imap - incoming mail	mail	nl	Stap 1: IMAP - Inkomende berichten
+step 1: jmap/imap - incoming mail	mail	nl	Stap 1: JMAP/IMAP - Inkomende berichten
 step 2: folder	mail	nl	Stap 2: Map
 step 3: sieve - server side mail filtering	mail	nl	Stap 3: Sieve - Filter bericihten van de server
 step 4: smtp - outgoing mail	mail	nl	Stap 4: SMTP - Uitgaande berichten
