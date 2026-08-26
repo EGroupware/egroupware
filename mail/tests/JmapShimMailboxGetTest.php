@@ -19,6 +19,8 @@
 
 namespace EGroupware\Mail;
 
+use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
+
 use EGroupware\Api\Mail\Imap;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
@@ -30,7 +32,7 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		$imap = $this->getMockBuilder(Imap::class)
 			->disableOriginalConstructor()
 			->onlyMethods(array_unique(array_merge(
-				['getNameSpaceArray', 'getUserMailboxString', 'listMailboxes', 'status', '__get', 'queryCapability'],
+				['getNameSpaceArray', 'getUserMailboxString', 'listMailboxes', 'status', '__get', 'queryCapability', 'login'],
 				$onlyMethods,
 			)))
 			->getMock();
@@ -44,6 +46,11 @@ class JmapShimMailboxGetTest extends \PHPUnit\Framework\TestCase
 		// is built with disableOriginalConstructor(), so that would fail deep in Horde's socket
 		// client with a null config array, not a meaningful assertion failure)
 		$imap->method('queryCapability')->willReturn(false);
+		// quotaFromImap() explicitly logs in before checking hasCapability('QUOTA') (post-auth-only
+		// on real servers, see that method's own comment) - stub it to a no-op for the same reason
+		// queryCapability() is stubbed above, otherwise it falls through to a real Horde login
+		// attempt with no connection params.
+		$imap->method('login')->willReturn(null);
 		// no acc_folder_* configured unless a test explicitly overrides __get()
 		$imap->method('__get')->willReturn(null);
 		return $imap;

@@ -15,7 +15,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Vfs;
-use EGroupware\Mail\JmapShim;
+use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use InvalidArgumentException;
 use addressbook_vcal;
 use calendar_ical;
@@ -375,7 +375,7 @@ class MessageDisplayHandler
 	 * fallback below only runs if this returns null (JMAP unreachable, or a case it doesn't cover).
 	 *
 	 * For S/MIME, the decrypt/verify itself is 100% server-side and never leaves the server -
-	 * JmapShim::resolveSmime()/Imap\Jmap::resolveSmimeJmap() return the rendered body plus the
+	 * JmapImap::resolveSmime()/Imap\Jmap::resolveSmimeJmap() return the rendered body plus the
 	 * decrypt/verify metadata (Api\Mail\Smime::resolveMessage()'s 'X-EGroupware-Smime' convention),
 	 * and this method pushes just the display flags (verified/not-verified/unknown-signer - same
 	 * shape the classic path pushes) to the client via Api\Json\Push, same as
@@ -411,16 +411,16 @@ class MessageDisplayHandler
 			}
 			else
 			{
-				$structure = JmapShim::structureGet($icServer, $mailbox, $uid);
+				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
 				if (!$structure)
 				{
 					return null;
 				}
-				$bodyStructure = JmapShim::bodyPartToJmap($structure, $mailbox, $uid);
-				$from = null;	// not needed: JmapShim::resolveSmime() only uses it for the
+				$bodyStructure = JmapImap::bodyPartToJmap($structure, $mailbox, $uid);
+				$from = null;	// not needed: JmapImap::resolveSmime() only uses it for the
 								// signer/sender cross-check, a nice-to-have, not a hard requirement
 			}
-			if (!$bodyStructure || !($type = JmapShim::specialCaseType($bodyStructure)))
+			if (!$bodyStructure || !($type = JmapImap::specialCaseType($bodyStructure)))
 			{
 				return null;
 			}
@@ -439,7 +439,7 @@ class MessageDisplayHandler
 			{
 				$result = $isStalwart ?
 					$icServer->resolveSmimeJmap($emailID, $bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase) :
-					JmapShim::resolveSmime((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid,
+					JmapImap::resolveSmime((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid,
 						$bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase);
 				$body = $result['body'];
 				if (($smime = $result['smime']))
@@ -457,7 +457,7 @@ class MessageDisplayHandler
 			{
 				$body = $isStalwart ?
 					$icServer->resolveTnefJmap($emailID, $bodyStructure['partId'], $htmlOptions) :
-					JmapShim::resolveTnef((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid, $bodyStructure['partId'], $htmlOptions);
+					JmapImap::resolveTnef((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid, $bodyStructure['partId'], $htmlOptions);
 			}
 
 			Api\Session::cache_control(true);

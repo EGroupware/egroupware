@@ -14,6 +14,8 @@
 
 namespace EGroupware\Mail;
 
+use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
+
 class HasAttachmentTest extends \PHPUnit\Framework\TestCase
 {
 	protected static function textOnlyMessage() : \Horde_Mime_Part

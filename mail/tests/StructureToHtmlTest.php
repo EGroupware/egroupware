@@ -13,6 +13,8 @@
 
 namespace EGroupware\Mail;
 
+use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
+
 class StructureToHtmlTest extends \PHPUnit\Framework\TestCase
 {
 	/**

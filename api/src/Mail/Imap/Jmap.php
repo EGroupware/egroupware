@@ -15,7 +15,8 @@ namespace EGroupware\Api\Mail\Imap;
 use EGroupware\Api;
 use EGroupware\Api\Mail;
 use EGroupware\SwoolePush\Tokens;
-use EGroupware\Mail\JmapShim;
+use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
+use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
 
 /**
  * Manages connection to Jmap e.g. Stalwart mail-server
@@ -302,7 +303,7 @@ class Jmap extends Mail\Imap
 	/**
 	 * Return Jmap client
 	 *
-	 * @return Mail\Jmap
+	 * @return JmapHttp
 	 */
 	public function jmapClient()
 	{
@@ -315,7 +316,7 @@ class Jmap extends Mail\Imap
 			// first, not an unverified one, so there's no separate raw-socket probe needed here
 			$verify = $undecided || ($ssl & Mail\Account::VERIFY_MASK) === Mail\Account::VERIFY_ENABLED;
 			try {
-				$this->jmap = new Mail\Jmap($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, $verify);
+				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, $verify);
 				if ($undecided && $this->acc_id)
 				{
 					// the strict connection just succeeded - verification confirmed possible
@@ -331,7 +332,7 @@ class Jmap extends Mail\Imap
 				{
 					throw $e;
 				}
-				$this->jmap = new Mail\Jmap($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, false);
+				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, false);
 				if ($this->acc_id)
 				{
 					Mail\Account::persistVerification($this->acc_id, 'acc_imap_ssl',
@@ -387,7 +388,7 @@ class Jmap extends Mail\Imap
 	 * JMAP-native S/MIME resolution for Stalwart - fetches the raw message via a real JMAP Blob
 	 * download (Mail\Jmap::downloadBlob(), the Email's own top-level blobId) instead of an IMAP
 	 * FETCH, decrypts/verifies via the existing Mail\Smime::resolveMessage() (shared with
-	 * JmapShim's local-shim equivalent), and renders via JmapShim::structureToHtml() - no
+	 * JmapShim's local-shim equivalent), and renders via JmapImap::structureToHtml() - no
 	 * mail_ui/Api\Mail\Imap IMAP connection involved at all for this path.
 	 *
 	 * @param string $emailId JMAP Email id
@@ -409,14 +410,14 @@ class Jmap extends Mail\Imap
 		$raw = $client->downloadBlob($email['blobId'], 'message.eml', 'message/rfc822');
 		$structure = Mail\Smime::resolveMessage($this->acc_id, $raw, $topLevelType, $passphrase, $fromAddress);
 		return [
-			'body' => JmapShim::structureToHtml($structure, $htmlOptions),
+			'body' => JmapImap::structureToHtml($structure, $htmlOptions),
 			'smime' => $structure->getMetadata('X-EGroupware-Smime'),
 		];
 	}
 
 	/**
 	 * JMAP-native TNEF resolution for Stalwart, for the case where the *entire* message is a
-	 * TNEF/winmail.dat blob (see JmapShim::resolveTnef()'s docblock - same scope, IMAP shim
+	 * TNEF/winmail.dat blob (see JmapImap::resolveTnef()'s docblock - same scope, IMAP shim
 	 * equivalent). Downloads that one part's blob (its blobId, from the same "attachments" JMAP
 	 * already returned) instead of an IMAP FETCH, decodes via the existing (now static, since it
 	 * never touched $this/IMAP) Mail::tnef_decoder().
@@ -442,7 +443,7 @@ class Jmap extends Mail\Imap
 		{
 			throw new Api\Exception('Could not decode TNEF data');
 		}
-		return JmapShim::structureToHtml($decoded, $htmlOptions);
+		return JmapImap::structureToHtml($decoded, $htmlOptions);
 	}
 
 	/**
@@ -480,7 +481,7 @@ class Jmap extends Mail\Imap
 	 */
 	public function mailShareSupported() : bool
 	{
-		return array_key_exists(Mail\Jmap::JMAP_MAIL_SHARE, $this->jmapClient()->accountCapabilities ?? []);
+		return array_key_exists(JmapHttp::JMAP_MAIL_SHARE, $this->jmapClient()->accountCapabilities ?? []);
 	}
 
 	/**
@@ -536,7 +537,7 @@ class Jmap extends Mail\Imap
 					'ids' => [$principalId],
 					'properties' => ['email'],
 				], '0'],
-			], [Mail\Jmap::JMAP_CORE, Mail\Jmap::JMAP_PRINCIPALS]);
+			], [JmapHttp::JMAP_CORE, JmapHttp::JMAP_PRINCIPALS]);
 			$cache[$principalId] = $response['methodResponses'][0][1]['list'][0]['email'] ?? null;
 		}
 		return $cache[$principalId];
@@ -560,7 +561,7 @@ class Jmap extends Mail\Imap
 				['Principal/query', [
 					'filter' => ['email' => $email],
 				], '0'],
-			], [Mail\Jmap::JMAP_CORE, Mail\Jmap::JMAP_PRINCIPALS]);
+			], [JmapHttp::JMAP_CORE, JmapHttp::JMAP_PRINCIPALS]);
 			$cache[$email] = $response['methodResponses'][0][1]['ids'][0] ?? null;
 		}
 		return $cache[$email];
@@ -597,7 +598,7 @@ class Jmap extends Mail\Imap
 				'ids' => [$mailboxId],
 				'properties' => ['myRights', 'shareWith'],
 			], '0'],
-		], Mail\Jmap::JMAP_MAIL);
+		], JmapHttp::JMAP_MAIL);
 		if (!($mbox = $response['methodResponses'][0][1]['list'][0] ?? null))
 		{
 			return false;
@@ -658,7 +659,7 @@ class Jmap extends Mail\Imap
 					],
 				],
 			], '0'],
-		], [...Mail\Jmap::JMAP_MAIL, Mail\Jmap::JMAP_MAIL_SHARE]);
+		], [...JmapHttp::JMAP_MAIL, JmapHttp::JMAP_MAIL_SHARE]);
 		if (!empty($response['methodResponses'][0][1]['notUpdated'][$mailboxId]))
 		{
 			throw new \Horde_Imap_Client_Exception('Mailbox/set shareWith failed: '.
@@ -701,7 +702,7 @@ class Jmap extends Mail\Imap
 					],
 				],
 			], '0'],
-		], [...Mail\Jmap::JMAP_MAIL, Mail\Jmap::JMAP_MAIL_SHARE]);
+		], [...JmapHttp::JMAP_MAIL, JmapHttp::JMAP_MAIL_SHARE]);
 		if (!empty($response['methodResponses'][0][1]['notUpdated'][$mailboxId]))
 		{
 			throw new \Horde_Imap_Client_Exception('Mailbox/set shareWith removal failed: '.
@@ -743,7 +744,7 @@ class Jmap extends Mail\Imap
 			elseif ((new Api\DateTime($subscriptions[0]['expires'])) < (new Api\DateTime('+1day')))
 			{
 				$this->jmap->updatePushSubscription($subscriptions[0]['id'], [
-					'expires' => $expires->format(Api\Mail\Jmap::DATETIME_UTC_FORMAT),
+					'expires' => $expires->format(JmapHttp::DATETIME_UTC_FORMAT),
 				]);
 			}
 
@@ -814,7 +815,7 @@ class Jmap extends Mail\Imap
 			fastcgi_finish_request();
 		}
 		$mail_account = Mail\Account::read($client_data['acc_id'], $client_data['account_id']);
-		// go through imapServer()->jmapClient() (not a plain "new Mail\Jmap(...)"), so accounts using
+		// go through imapServer()->jmapClient() (not a plain "new JmapHttp(...)"), so accounts using
 		// Imap\Stalwart authenticate with a cached Bearer token instead of checking the password again
 		$stalwart = $mail_account->imapServer();
 		$jmap = $stalwart->jmapClient();

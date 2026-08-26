@@ -1,6 +1,20 @@
 <?php
 /**
- * EGroupware Mail: local JMAP server for plain IMAP accounts
+ * EGroupware Api: local JMAP server for plain IMAP accounts - Mail\Jmap\Imap session
+ *
+ * Formerly `EGroupware\Mail\JmapShim` (mail/src/JmapShim.php) - promoted into the
+ * Api\Jmap/Api\Mail\Jmap class hierarchy (see doc/ai/projects/mail-jmap-imap-inversion.md)
+ * as this app's IMAP-backed implementation of the generic JMAP session contract, alongside
+ * `Api\Mail\Jmap\Http` (the real-JMAP-over-HTTP implementation, for Stalwart).
+ *
+ * Deliberately kept almost entirely as-is in this promotion (same static methods, same
+ * bodies) rather than deeply restructured - this class is large, intricate (MIME/S-MIME/TNEF
+ * handling, a real admin-impersonation security boundary via $calledFor, ...) and already
+ * tested; a blind mechanical rewrite risked real regressions for uncertain benefit. What's new
+ * here is a thin instance layer: a constructor holding $accountId/$calledFor and $types
+ * (satisfying Api\Jmap's lazy per-type-object contract via Imap\Mailbox/Email/Thread/Quota,
+ * see the Imap/ subdirectory) - dispatch() and every static method below are UNCHANGED and
+ * keep working exactly as before for the existing browser-facing entrypoint (mail/jmap.php).
  *
  * mail/js/jmap.ts (MailJmap) already speaks JMAP client-side for Stalwart-backed
  * accounts, talking directly to Stalwart's real JMAP server. Plain IMAP accounts
@@ -35,18 +49,67 @@
  * @link https://www.egroupware.org
  * @author Ralf Becker <rb-AT-egroupware.org>
  * @copyright (c) 2026 by EGroupware GmbH <info-AT-egroupware.org>
- * @package mail
+ * @package api
+ * @subpackage mail
  * @license https://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-namespace EGroupware\Mail;
+namespace EGroupware\Api\Mail\Jmap;
 
 use EGroupware\Api;
+use EGroupware\Api\Jmap;
 use EGroupware\Api\Mail\Account;
 use EGroupware\Api\Mail\CustomLabels;
 
-class JmapShim
+class Imap extends Jmap
 {
+	/**
+	 * type-name => concrete per-type class, satisfying Api\Jmap's lazy accessor contract
+	 * (eg. $session->mailbox) - see Imap/Mailbox.php etc, each a thin adapter delegating back
+	 * to this class's own (unchanged) static methods.
+	 *
+	 * @var array<string,class-string<Jmap\Type>>
+	 */
+	protected array $types = [
+		'mailbox' => Imap\Mailbox::class,
+		'email' => Imap\Email::class,
+		'thread' => Imap\Thread::class,
+		'quota' => Imap\Quota::class,
+	];
+
+	/**
+	 * @param string $accountId
+	 * @param string|null $calledFor account_id of the mailbox owner to impersonate (admin only,
+	 *  see mailboxSet()'s docblock's SECURITY note) - null for the caller's own mailbox
+	 */
+	public function __construct(protected string $accountId, protected ?string $calledFor=null)
+	{
+	}
+
+	/**
+	 * Request-scoped state shared between this session's per-type objects (which mailbox a
+	 * preceding Email/query's ids came from, thread maps, ...) - same $context dispatch()
+	 * already threads between calls in one batch, now shared via the owning session instead so
+	 * eg. Imap\Thread::get() can see a mailbox Imap\Email::query() remembered, matching
+	 * threadGet()'s documented fallback (see its own docblock).
+	 *
+	 * @var array
+	 */
+	public array $context = [];
+
+	/**
+	 * @return mixed accountId (matching Api\Jmap\Http's own readonly property, so per-type
+	 *  classes can treat both session flavours uniformly) or calledFor
+	 */
+	public function __get(string $name)
+	{
+		return match ($name) {
+			'accountId' => $this->accountId,
+			'calledFor' => $this->calledFor,
+			default => parent::__get($name),
+		};
+	}
+
 	/**
 	 * JMAP session-discovery object, fetched once by jmap-jam's JamClient on construction
 	 *
@@ -85,9 +148,9 @@ class JmapShim
 
 		return [
 			'capabilities' => [
-				Api\Mail\Jmap::JMAP_CORE => new \stdClass(),
+				Http::JMAP_CORE => new \stdClass(),
 				'urn:ietf:params:jmap:mail' => new \stdClass(),
-				Api\Mail\Jmap::JMAP_QUOTA => new \stdClass(),
+				Http::JMAP_QUOTA => new \stdClass(),
 			],
 			'accounts' => $accounts,
 			'primaryAccounts' => $primaryAccounts,
@@ -363,6 +426,15 @@ class JmapShim
 	 */
 	private static function quotaFromImap(\Horde_Imap_Client_Socket $imap) : array
 	{
+		// Many IMAP servers (Dovecot included) advertise a smaller, pre-authentication
+		// capability set than the real, post-login one - QUOTA is commonly post-auth-only
+		// (RFC 2087, per-user data), so checking hasCapability() before ensuring the
+		// connection is actually logged in sees the wrong (pre-auth) list and silently
+		// concludes QUOTA isn't supported even when it is. login() is safe/idempotent if the
+		// connection is already authenticated (confirmed live 2026-08-26: acc_id=42/90, both
+		// real Dovecot QUOTA-supporting accounts, showed hasCapability(QUOTA)=false without this).
+		$imap->login();
+
 		if (!$imap->hasCapability('QUOTA'))
 		{
 			return [];

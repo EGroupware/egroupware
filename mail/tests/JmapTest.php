@@ -15,6 +15,8 @@
 
 namespace EGroupware\Mail;
 
+use EGroupware\Api\Mail\Jmap\Imap as JmapShim;
+
 class JmapTest extends \PHPUnit\Framework\TestCase
 {
 	/**

@@ -3,7 +3,7 @@
  * EGroupware Mail: local JMAP server for plain IMAP accounts - HTTP entrypoint
  *
  * Thin front-controller: boots EGroupware (same technique as json.php), then hands the
- * request straight to EGroupware\Mail\JmapShim. See that class's docblock for the actual
+ * request straight to EGroupware\Api\Mail\Jmap\Imap. See that class's docblock for the actual
  * design/scope of this local JMAP shim.
  *
  * @link https://www.egroupware.org
@@ -61,14 +61,14 @@ if (connection_aborted()) exit;
 $GLOBALS['egw']->session->commit_session();
 
 use EGroupware\Api\Session;
-use EGroupware\Mail\JmapShim;
+use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 
 // Blob download (RFC 8620 §6.2): plain GET matching the "downloadUrl" template from session()
 // below, not part of the regular JSON method-call dispatch (jmap-jam calls this separately, see
-// JmapShim::download()'s docblock).
+// JmapImap::download()'s docblock).
 if ($_SERVER['REQUEST_METHOD'] !== 'POST' && isset($_GET['download']))
 {
-	JmapShim::download((string)($_GET['accountId'] ?? ''), (string)($_GET['blobId'] ?? ''),
+	JmapImap::download((string)($_GET['accountId'] ?? ''), (string)($_GET['blobId'] ?? ''),
 		(string)($_GET['name'] ?? 'download'), (string)($_GET['type'] ?? 'application/octet-stream'));
 	exit;
 }
@@ -81,7 +81,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_GET['upload']))
 	header('Content-Type: application/json; charset=utf-8');
 	try
 	{
-		JmapShim::upload((string)($_GET['accountId'] ?? ''));
+		JmapImap::upload((string)($_GET['accountId'] ?? ''));
 	}
 	catch (\Throwable $e)
 	{
@@ -125,7 +125,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST' && isset($_GET['methodCalls']))
 	try
 	{
 		echo json_encode([
-			'methodResponses' => JmapShim::dispatch((array)$_GET['methodCalls']),
+			'methodResponses' => JmapImap::dispatch((array)$_GET['methodCalls']),
 			'sessionState' => '0',
 		], JSON_UNESCAPED_SLASHES);
 	}
@@ -156,13 +156,13 @@ try
 	{
 		$request = json_decode(file_get_contents('php://input'), true, 512, JSON_THROW_ON_ERROR);
 		echo json_encode([
-			'methodResponses' => JmapShim::dispatch((array)($request['methodCalls'] ?? [])),
+			'methodResponses' => JmapImap::dispatch((array)($request['methodCalls'] ?? [])),
 			'sessionState' => '0',
 		], JSON_UNESCAPED_SLASHES);
 	}
 	else
 	{
-		echo json_encode(JmapShim::session(), JSON_UNESCAPED_SLASHES);
+		echo json_encode(JmapImap::session(), JSON_UNESCAPED_SLASHES);
 	}
 }
 catch (\Throwable $e)

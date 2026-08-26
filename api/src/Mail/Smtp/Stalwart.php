@@ -16,7 +16,7 @@ namespace EGroupware\Api\Mail\Smtp;
 
 use EGroupware\Api;
 use EGroupware\Api\Mail;
-use EGroupware\Api\Mail\Jmap;
+use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
 
 /**
  * This class trys reading mail-accounts first from Stalwart,
@@ -37,9 +37,9 @@ class Stalwart extends Sql
 	const CAPABILITIES = 'default';
 
 	/**
-	 * @var Jmap JMAP connection
+	 * @var JmapHttp JMAP connection
 	 */
-	protected Jmap $jmap;
+	protected JmapHttp $jmap;
 	/**
 	 * @var bool JMAP connection is with admin rights
 	 */
@@ -102,7 +102,7 @@ class Stalwart extends Sql
 					['x:Account/get', [
 						'ids' => [$userData['accountStatus']],
 					], 'c'],
-				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 
 				$account = current($response['methodResponses'][0][1]['list'] ?? []);
 			}
@@ -122,7 +122,7 @@ class Stalwart extends Sql
 				['x:Account/get', [
 					'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'b'],
 				], 'c'],
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 
 			$account = current($response['methodResponses'][1][1]['list'] ?? []);
 		}
@@ -226,7 +226,7 @@ class Stalwart extends Sql
 				'@type' => 'Password',
 				'secret' => $this->accounts->id2name($_uidnumber, 'account_pwd'),
 			]],
-			'memberGroupIds' => Jmap::boolPatch($this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber))),
+			'memberGroupIds' => JmapHttp::boolPatch($this->groupIds(Api\Accounts::getInstance()->memberships($_uidnumber))),
 		], fn($val) => isset($val));    // keep empty array
 		// update account in Stalwart
 		if (($userData = $this->getUserData($_uidnumber)) && !empty($userData['accountStatus']) && $_accountStatus)
@@ -256,7 +256,7 @@ class Stalwart extends Sql
 							'update' => [
 								($accountId=$userData['stalwart']['id']) => $diff,
 							]], 'a'
-						]], [Jmap::JMAP_CORE, self::USING_STALWART]);
+						]], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 
 					// check account updated
 					if(array_key_exists($userData['stalwart']['id'], $response['methodResponses'][0][1]['updated'] ?? []))
@@ -322,7 +322,7 @@ class Stalwart extends Sql
 							'new1' => $account,
 						]], 'a'
 					],
-				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 				// check new account created
 				if (!empty($response['methodResponses'][0][1]['created']['new1']['id']))
 				{
@@ -393,8 +393,8 @@ class Stalwart extends Sql
 		$domainId = $this->domainId($this->defaultDomain) ?? throw new \Exception("Domain '$this->defaultDomain' not found!");
 		$response = $this->jmapClient()->jmapCall([
 			['x:Account/query', [
-				'filter' => /*Jmap::filterConditions('AND', [
-					Jmap::filterConditions('OR', ['name' => array_diff_key($memberships, array_flip($stalwartIds))]),*/
+				'filter' => /*JmapHttp::filterConditions('AND', [
+					JmapHttp::filterConditions('OR', ['name' => array_diff_key($memberships, array_flip($stalwartIds))]),*/
 				[
 					'domainId' => $domainId,
 				],
@@ -402,7 +402,7 @@ class Stalwart extends Sql
 			['x:Account/get', [
 				'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'b'],
 			], 'c'],
-		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+		], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 		foreach($response['methodResponses'][1][1]['list'] as $group)
 		{
 			if (($key=array_search($group['name'], $memberships)) !== false ||
@@ -463,7 +463,7 @@ class Stalwart extends Sql
 		{
 			$response = $this->jmapClient()->jmapCall([
 				['x:Account/query', [
-					'filter' => Jmap::filterConditions('AND', [
+					'filter' => JmapHttp::filterConditions('AND', [
 						'domainId' => $domainId,
 						'name' => $name,
 					]),
@@ -472,7 +472,7 @@ class Stalwart extends Sql
 					'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'b'],
 				], 'c'],
 				['x:Account/query', [
-					'filter' => Jmap::filterConditions('AND', [
+					'filter' => JmapHttp::filterConditions('AND', [
 						'domainId' => $domainId,
 						'name' => self::NON_MAILBOX_GROUP_PREFIX.$name,
 					]),
@@ -480,7 +480,7 @@ class Stalwart extends Sql
 				['x:Account/get', [
 					'#ids' => ['name' => 'x:Account/query', 'path' => '/ids', 'resultOf' => 'd'],
 				], 'e'],
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 		}
 		if ($exists !== false && ($groupId = $response['methodResponses'][0][1]['ids'][0] ?? $response['methodResponses'][2][1]['ids'][0] ?? null))
 		{
@@ -492,7 +492,7 @@ class Stalwart extends Sql
 					['x:Account/set', [
 						'update' => [$groupId => $diff],
 					], 'a'],
-				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			}
 		}
 		else
@@ -502,7 +502,7 @@ class Stalwart extends Sql
 				['x:Account/set', [
 					'create' => ['new1' => $account],
 				], 'a'],
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			$groupId = $response['methodResponses'][0][1]['created']['new1']['id'] ?? throw new \Exception("Could not create group '$account_lid'!");
 			$this->db->insert(self::TABLE, [
 				'account_id' => $account_id,
@@ -531,7 +531,7 @@ class Stalwart extends Sql
 						['x:Account/set', [
 							'delete' => [$list['id']]
 						], 'a'],
-					], [Jmap::JMAP_CORE, self::USING_STALWART]);
+					], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 					if (!array_key_exists($list['id'], $response['methodResponses'][0][1]['deleted']))
 					{
 						throw new \Exception("Could not delete mailing list '$account_email'!");
@@ -598,7 +598,7 @@ class Stalwart extends Sql
 							['x:Account/set', [
 								'update' => [$object['id'] => ['aliases' => [$alias_key => null]]],
 							], 'a']
-						], [Jmap::JMAP_CORE, self::USING_STALWART]);
+						], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 						if (!array_key_exists($object['id'], $response['methodResponses'][0][1]['update']))
 						{
 							throw new \Exception("Could not update account $object[email] to remove alias '$alias_email'!");
@@ -682,7 +682,7 @@ class Stalwart extends Sql
 						'update' => [
 						'id' => ['aliases' => $aliases],
 					]], "a"],
-				], [Jmap::JMAP_CORE, self::USING_STALWART]);
+				], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			}
 		}
 		// create mailing-list
@@ -694,7 +694,7 @@ class Stalwart extends Sql
 						'new1' => $mailing_list,
 					]
 				], 'a']
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			$listId = $response['methodResponses'][0][1]['created']['new1']['id'] ??
 				throw new \Exception("Mailing list '$email' NOT created: ".json_encode($response, JSON_UNESCAPED_SLASHES));
 		}
@@ -707,7 +707,7 @@ class Stalwart extends Sql
 						$stalwart_mailing_list['id'] => ['recipients' => $mailing_list['recipients']],
 					]
 				], 'a']
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			if (!array_key_exists($stalwart_mailing_list['id'], $response['methodResponses'][0][1]['updated'] ?? []))
 			{
 				throw new \Exception("Mailing list '$mailing_list[emailAddress]' NOT updated: " . json_encode($response, JSON_UNESCAPED_SLASHES));
@@ -735,7 +735,7 @@ class Stalwart extends Sql
 			['x:MailingList/get', [
 				'#ids' => ['name' => 'x:MailingList/query', 'path' => '/ids', 'resultOf' => 'a'],
 			], 'b']
-		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+		], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 		$lists = $response['methodResponses'][1][1]['list'] ?? [];
 
 		// as we can only search field-unspecific, we have to make sure the returned lists really contain $recipient OR use it as emailAddress
@@ -771,7 +771,7 @@ class Stalwart extends Sql
 			["x:$what/query", [
 				'filter' => $filter,
 			], 'a']
-		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+		], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 
 		if ($multiple)
 		{
@@ -799,7 +799,7 @@ class Stalwart extends Sql
 			["x:$what/get", [
 				'id' => $id,
 			], 'a']
-		], [Jmap::JMAP_CORE, self::USING_STALWART]);
+		], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 
 		return $response['methodResponses'][0][1]['list'][0] ??
 			throw new \Exception("Get for $what object with id='$id' returned no result: ".
@@ -930,7 +930,7 @@ class Stalwart extends Sql
 	 * Return Jmap client
 	 *
 	 * @param bool $adminConnection true: return jmapClient with admin rights, false: jmapClient for the current user
-	 * @return Mail\Jmap
+	 * @return JmapHttp
 	 */
 	public function jmapClient(bool $adminConnection=true)
 	{
@@ -942,13 +942,13 @@ class Stalwart extends Sql
 				{
 					throw new \InvalidArgumentException("No admin username or password!");
 				}
-				$this->jmap = new Mail\Jmap($this->account->acc_smtp_host,
+				$this->jmap = new JmapHttp($this->account->acc_smtp_host,
 					$this->account->acc_imap_admin_username,
 					$this->account->acc_imap_admin_password);
 			}
 			else
 			{
-				$this->jmap = new Mail\Jmap($this->host, $this->acc_smtp_username, $this->acc_smtp_password, $this->jmap_accountId);
+				$this->jmap = new JmapHttp($this->host, $this->acc_smtp_username, $this->acc_smtp_password, $this->jmap_accountId);
 			}
 		}
 		return $this->jmap;
@@ -974,7 +974,7 @@ class Stalwart extends Sql
 				['x:Domain/query', [
 					'filter' => ['name' => $domain],
 				], 'a']
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			self::$domainIds[$domain] = $response['methodResponses'][0][1]['ids'][0] ?? null;
 			// only permanently cache returned id's, not that there was none yet
 			if (isset(self::$domainIds[$domain]))
@@ -997,7 +997,7 @@ class Stalwart extends Sql
 				['x:Domain/query', [
 					'filter' => ['id' => $domainId],
 				], 'a']
-			], [Jmap::JMAP_CORE, self::USING_STALWART]);
+			], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
 			// only permanently cache returned id's, not that there was none yet
 			if (($domain = $response['methodResponses'][0][1]['name'][0] ?? null))
 			{

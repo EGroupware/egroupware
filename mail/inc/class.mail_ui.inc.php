@@ -23,7 +23,7 @@ use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Mail\CustomLabels;
 use EGroupware\Api\Mail\FolderHelpers;
 use EGroupware\Api\Mail\Imap\Jmap as ImapJmap;
-use EGroupware\Mail\JmapShim;
+use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 use EGroupware\Mail\Tree;
 use EGroupware\Mail\Ui\AttachmentHandler;
 use EGroupware\Mail\Ui\AttachmentJmap;
@@ -2332,7 +2332,7 @@ class mail_ui
 	 * one-off repair, instead of doing this for every message regardless of whether its
 	 * addresses actually need it.
 	 *
-	 * The local IMAP shim doesn't need this at all - JmapShim::addressListFromHeader() already
+	 * The local IMAP shim doesn't need this at all - JmapImap::addressListFromHeader() already
 	 * re-parses raw headers server-side unconditionally, for every message, since it's already
 	 * making a local IMAP round-trip either way.
 	 *

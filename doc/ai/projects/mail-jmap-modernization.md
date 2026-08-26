@@ -390,7 +390,10 @@ correctly resolving a real UID first (see "bail-to-classic trap" above).
   `$icServer->ImapServerId` used as a cache key (folder/header/body/status caches) - if that silently
   became `null`, every Stalwart account's caches would collide. A real future project, but multi-session
   and foundational - needs its own `__get()`/`__isset()` proxy design, not just `__call()`, plus fixing
-  every confirmed break as part of the same change. Not started.
+  every confirmed break as part of the same change. Not started. **Superseded in scope by
+  [[mail-jmap-imap-inversion]]** (ralf's proposal, 2026-08-26) - a level-up redesign making `Api\Mail`
+  itself depend on a JMAP-shaped interface regardless of backend, rather than just decoupling
+  `Imap\Jmap` from `Imap`; that doc has the full sizing research (same 113/74-site risk applies).
 
 ## Known invariants / gotchas
 

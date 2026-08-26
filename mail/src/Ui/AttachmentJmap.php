@@ -11,7 +11,7 @@ namespace EGroupware\Mail\Ui;
 
 use EGroupware\Api;
 use EGroupware\Api\Mail;
-use EGroupware\Mail\JmapShim;
+use EGroupware\Api\Mail\Jmap\Imap as JmapImap;
 
 /**
  * The "JMAP fast path" slice of mail_ui's "Attachment/body-fetch ajax handlers" group - unlike the
@@ -278,7 +278,7 @@ class AttachmentJmap
 	 * raw bytes via JMAP (Stalwart: Imap\Jmap's jmapClient(); local IMAP: JmapShim) instead of
 	 * Mail::getMessageAttachments()'s IMAP-based enumeration + Mail::getAttachment(), decodes via
 	 * the existing (now static, transport-agnostic) Mail::tnef_decoder(), and builds the same
-	 * attachment-array shape via the new JmapShim::tnefAttachments() (ported, not a call into
+	 * attachment-array shape via the new JmapImap::tnefAttachments() (ported, not a call into
 	 * Mail::getMessageAttachments()'s equivalent loop) before handing off to the existing, generic
 	 * createAttachmentBlock() (download-link/token UI plumbing, not IMAP-specific - kept, see plan).
 	 *
@@ -327,12 +327,12 @@ class AttachmentJmap
 			}
 			else
 			{
-				$structure = JmapShim::structureGet($icServer, $mailbox, $uid);
+				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
 				if (!$structure)
 				{
 					return null;
 				}
-				$attachments = JmapShim::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
+				$attachments = JmapImap::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
 				$winmailPart = current(array_filter($attachments, static function ($a)
 				{
 					return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
@@ -342,7 +342,7 @@ class AttachmentJmap
 					return null;
 				}
 				$partID = $winmailPart['partId'];
-				$raw = JmapShim::fetchRawPart($icServer, $mailbox, $uid, $partID);
+				$raw = JmapImap::fetchRawPart($icServer, $mailbox, $uid, $partID);
 			}
 			if ($raw === null)
 			{
@@ -355,7 +355,7 @@ class AttachmentJmap
 				return null;
 			}
 
-			$attachments = JmapShim::tnefAttachments($uid, $partID, $decoded);
+			$attachments = JmapImap::tnefAttachments($uid, $partID, $decoded);
 			return self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 		}
 		catch (\Throwable $e)
@@ -418,12 +418,12 @@ class AttachmentJmap
 				{
 					return null;
 				}
-				$structure = JmapShim::structureGet($icServer, $mailbox, $uid);
+				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
 				if (!$structure)
 				{
 					return null;
 				}
-				$attachments = JmapShim::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
+				$attachments = JmapImap::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
 			}
 			$legacy = self::jmapAttachmentsToLegacy($attachments, $fetchEmbeddedImages);
 			return self::createAttachmentBlock($legacy, $rowID, $uid, $mailbox);
@@ -437,7 +437,7 @@ class AttachmentJmap
 
 	/**
 	 * Translate RFC 8621 EmailBodyPart shapes (Stalwart's real Email/get "attachments", or the local
-	 * shim's JmapShim::emailBodyFields()) into the flat shape createAttachmentBlock() expects
+	 * shim's JmapImap::emailBodyFields()) into the flat shape createAttachmentBlock() expects
 	 */
 	private static function jmapAttachmentsToLegacy(array $jmapAttachments, bool $fetchEmbeddedImages) : array
 	{
@@ -471,7 +471,7 @@ class AttachmentJmap
 	/**
 	 * Byte-returning blob fetch, backend-uniform dispatch by blobId shape - opaque (Stalwart real
 	 * JMAP Email.blobId, needs $icServer->jmapClient()->downloadBlob()) vs self-describing
-	 * base64(mailbox):uid:partId (local shim, see JmapShim::bodyPartToJmap()/download() - empty
+	 * base64(mailbox):uid:partId (local shim, see JmapImap::bodyPartToJmap()/download() - empty
 	 * partId means the whole raw message, not one part).
 	 *
 	 * $filename/$mimeType are only ever substituted into the Stalwart download URL (Mail\Jmap::
@@ -489,7 +489,7 @@ class AttachmentJmap
 	{
 		try
 		{
-			$icServer = JmapShim::imapServer($acc_id);
+			$icServer = JmapImap::imapServer($acc_id);
 			if (!$icServer)
 			{
 				return null;
@@ -503,9 +503,9 @@ class AttachmentJmap
 			{
 				return null;
 			}
-			$mailbox = JmapShim::urlsafeB64Decode($mailboxB64);
-			return $partId !== '' ? JmapShim::fetchRawPart($icServer, $mailbox, $uid, $partId) :
-				JmapShim::fetchRawMessage($icServer, $mailbox, $uid);
+			$mailbox = JmapImap::urlsafeB64Decode($mailboxB64);
+			return $partId !== '' ? JmapImap::fetchRawPart($icServer, $mailbox, $uid, $partId) :
+				JmapImap::fetchRawMessage($icServer, $mailbox, $uid);
 		}
 		catch (\Throwable $e)
 		{
@@ -517,7 +517,7 @@ class AttachmentJmap
 	/**
 	 * Resolve and fetch a message's WHOLE raw body via fetchBlobBytes() - Stalwart needs one
 	 * Email/get(['blobId']) call first (opaque, server-assigned blobId); the local shim's blobId is
-	 * self-describing and directly constructible (see JmapShim::download()).
+	 * self-describing and directly constructible (see JmapImap::download()).
 	 *
 	 * @param string $acc_id
 	 * @param string $mailbox
@@ -530,7 +530,7 @@ class AttachmentJmap
 	{
 		try
 		{
-			$icServer = JmapShim::imapServer($acc_id);
+			$icServer = JmapImap::imapServer($acc_id);
 			if (!$icServer)
 			{
 				return null;
@@ -545,7 +545,7 @@ class AttachmentJmap
 			}
 			else
 			{
-				$blobId = JmapShim::urlsafeB64Encode($mailbox).':'.$uid.':';
+				$blobId = JmapImap::urlsafeB64Encode($mailbox).':'.$uid.':';
 			}
 			return $blobId ? self::fetchBlobBytes($acc_id, $blobId) : null;
 		}
@@ -574,7 +574,7 @@ class AttachmentJmap
 		}
 		try
 		{
-			$icServer = JmapShim::imapServer($acc_id);
+			$icServer = JmapImap::imapServer($acc_id);
 			if (!$icServer instanceof Mail\Imap\Jmap)
 			{
 				return null;
@@ -617,7 +617,7 @@ class AttachmentJmap
 		}
 		try
 		{
-			$icServer = JmapShim::imapServer($acc_id);
+			$icServer = JmapImap::imapServer($acc_id);
 			if (!$icServer instanceof Mail\Imap\Jmap)
 			{
 				return false;
@@ -673,6 +673,6 @@ class AttachmentJmap
 	{
 		// generous but bounded - no legitimate address-list header gets anywhere near this,
 		// just a defensive cap against a client sending something absurd
-		return JmapShim::addressList(Mail::parseAddressList(substr($header, 0, 8000)));
+		return JmapImap::addressList(Mail::parseAddressList(substr($header, 0, 8000)));
 	}
 }
