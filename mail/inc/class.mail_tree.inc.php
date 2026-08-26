@@ -469,10 +469,22 @@ class mail_tree
 	 * @param type $_profileID = null Null means all accounts and giving profileid means fetches node for the account
 	 * @param type $_noCheckbox = false option to switch checkbox of
 	 * @param type $_openTopLevel = 0 option to either start the node opened (1) or closed (0)
+	 * @param bool $_try_connect = true whether to live-check each account's IMAP connectivity
+	 *  (Mail\Account::is_imap()'s own default) - a real login() attempt per account, which can
+	 *  block for as long as that account's server takes to answer or time out (confirmed live:
+	 *  ~20s for one account alone on this dev install). Callers building the *initial*,
+	 *  no-specific-account tree (getInitialIndexTree()) pass false - connectivity is then
+	 *  verified lazily instead, client-side, the moment that account's node is actually opened
+	 *  (mail/js/app.ts's folderTreeAutoload()/buildRootFolderData() -> MailJmap.getRootFolders(),
+	 *  which already renders a "Connection could not be established" error leaf on failure) - so
+	 *  no user-visible check is lost, only deferred to when it's actually needed. Callers asking
+	 *  for one specific account ($_profileID set, eg. the tree-node-open path itself, or
+	 *  folderManagement()/subscription()) keep the live check, since they already need a working
+	 *  connection right away.
 	 *
 	 * @return array an array of baseNodes of accounts
 	 */
-	static function getAccountsRootNode($_profileID = null, $_noCheckbox = false, $_openTopLevel = 0 )
+	static function getAccountsRootNode($_profileID = null, $_noCheckbox = false, $_openTopLevel = 0, $_try_connect = true)
 	{
 		$roots = array(Tree::ID => 0, Tree::CHILDREN => array());
 
@@ -484,7 +496,7 @@ class mail_tree
 
 			try {
 				$accObj = new Mail\Account($params);
-				if (!$accObj->is_imap()) continue;
+				if (!$accObj->is_imap($_try_connect)) continue;
 				$identity = self::getIdentityName(Mail\Account::identity_name($accObj,true, $GLOBALS['egw_info']['user']['account_id'], true));
 				// Open top level folders for active account
 				$openActiveAccount = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveProfileID'] == $acc_id?1:0;
@@ -552,11 +564,17 @@ class mail_tree
 	 * open+childless+autoloadable, so no client-side change is needed for this to keep working
 	 * (see doc/ai/projects/mail-folder-tree-jmap.md's "active-account eager expand" note).
 	 *
+	 * $_try_connect=false: this renders once per index() load/reload, so a per-account live
+	 * IMAP connect here blocks the whole page on however long the slowest configured account
+	 * takes to answer or time out (confirmed live: one account alone added ~20s). Connectivity
+	 * is checked lazily instead, client-side, the moment an account's node is actually opened -
+	 * see getAccountsRootNode()'s own docblock for where that happens and how failures surface.
+	 *
 	 * @return array an array of tree
 	 */
 	function getInitialIndexTree()
 	{
-		return self::getAccountsRootNode();
+		return self::getAccountsRootNode(null, false, 0, false);
 	}
 
 	/**

@@ -270,7 +270,11 @@ class Credentials
 					{
 						unset($results[$prefix.'password']);
 						$results[$prefix.'refresh_token'] = self::UNAVAILABLE;  // no need to make it available
-						$results[$prefix.'access_token'] = self::getAccessToken($row['cred_username'], $password, $mailserver, $acc_id, $row['account_id']);
+						// lazy: only actually refreshes the token (real HTTP request) the first time
+						// it's used as a string (Horde_(Imap|Smtp)_Password_Xoauth2::getPassword())
+						// during a real login attempt - see Credentials\AccessToken's own docblock
+						$results[$prefix.'access_token'] = new Credentials\AccessToken(
+							$row['cred_username'], $password, $mailserver, $acc_id, $row['account_id']);
 						// if no extra imap&smtp username set, set the oauth one
 						foreach(['acc_imap_', 'acc_smtp_'] as $pre)
 						{
@@ -328,7 +332,7 @@ class Credentials
 	 * @param ?int $account_id ----------- " ------------
 	 * @return string|null
 	 */
-	static protected function getAccessToken(string $username, string $refresh_token, ?string $mailserver=null, ?int $acc_id=null, ?int $account_id=null)
+	static public function getAccessToken(string $username, string $refresh_token, ?string $mailserver=null, ?int $acc_id=null, ?int $account_id=null)
 	{
 		return Api\Cache::getInstance(__CLASS__, 'access-token-'.$username.'-'.md5($refresh_token), static function() use ($acc_id, $account_id, $username, $refresh_token, $mailserver)
 		{

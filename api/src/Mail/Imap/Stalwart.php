@@ -57,6 +57,22 @@ class Stalwart extends Jmap
 		{
 			$this->setParam('xoauth2_token',
 				new \Horde_Imap_Client_Password_Xoauth2($this->acc_imap_username, $access_token));
+
+			// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]):
+			// a successful JMAP access-token grant already proves this account's credentials
+			// and connectivity - calling parent::login() (real Horde raw IMAP socket) on top of
+			// that falls through to Horde_Imap_Client_Socket, which for an account whose
+			// acc_imap_port is actually Stalwart's JMAP(S)/admin endpoint (not a real IMAP port,
+			// eg. a wizard-created pure-JMAP account) completes the TCP/TLS handshake fine, then
+			// hangs waiting for an IMAP greeting banner the peer never sends, until the
+			// connection's read-timeout (default 20s, Account::imapServer()) expires. Confirmed
+			// live 2026-08-26 against acc_id=1 (acc_imap_port=443): added ~20s to every
+			// mail_ui::index() reload via is_imap()'s connectivity check. Returning here skips
+			// that real socket attempt (and Mail\Imap::login()'s cert-verification-upgrade/
+			// run_on_login extras) whenever JMAP itself already proved login works; only an
+			// account whose JMAP token grant fails (eg. MFA required) still falls through to the
+			// real IMAP login below, same as before this fix.
+			return;
 		}
 		parent::login();
 	}
