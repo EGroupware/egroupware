@@ -131,6 +131,7 @@ copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3.
 copy selected to	mail	en	Copy selected to
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
+could not attach '%1': the original message is no longer available (deleted or moved).	mail	en	Could not attach '%1': the original message is no longer available (deleted or moved).
 could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
 could not generate certificate!	mail	en	Could not generate certificate!
 could not generate csr.	mail	en	Could not generate CSR.
