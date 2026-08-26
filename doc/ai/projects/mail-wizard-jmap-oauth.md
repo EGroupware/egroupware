@@ -167,7 +167,9 @@ Original 5 items, sequenced by ralf on 2026-08-23 into two milestones after disc
 - **Milestone A** (in progress): items 1+3, scoped down to Stalwart only - get a personal JMAP
   account working end-to-end via the wizard against `https://stalwart.egroupware.org`.
 - **Milestone B** (later, not started): items 2+5 together, validated against a FastMail test
-  account ralf already created - tackled only after Milestone A works.
+  account ralf already created - tackled only after Milestone A works. Item 2's Fastmail-specific
+  scoping/findings now live in their own doc, see [[fastmail-jmap-access]] (paused 2026-08-26,
+  waiting on a manually-provisioned OAuth client_id).
 - Item 4 (Stalwart OAuth-login workaround) turned out to already be implemented
   (`Mail\Jmap::passwordGrant()`/`oauthBaseUrl()`, used today by `Imap\Stalwart::accessToken()`
   for already-saved accounts) - Milestone A's job is to *use* it during wizard setup for live
