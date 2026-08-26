@@ -557,13 +557,18 @@ class Cache
 			self::$closed_session_writes = [];	// no session (eg. async service) to write to
 			return;
 		}
-		if (headers_sent())
-		{
-			error_log(__METHOD__."() headers already sent, can NOT reopen session to write: ".
-				json_encode(self::$closed_session_writes));
-			self::$closed_session_writes = [];
-			return;
-		}
+		// headers_sent() does NOT block this: fastcgi_finish_request() (eg.
+		// importexport_import_ui::feedback()'s explicit early-finish-then-keep-processing
+		// pattern for long-running import progress updates, unrelated to and pre-dating this
+		// write-tracking buffer) only tells the webserver the response is complete - the PHP
+		// worker keeps running and can still do storage writes just fine. The only real
+		// constraint is not sending NEW headers (eg. Set-Cookie) - this reopen never needs to,
+		// since the session's cookie was already sent earlier (this session already existed) -
+		// so disable cookie/cache-control header sending first, matching the same established
+		// pattern Session::init_handler() already uses for its own programmatic session_start()
+		// calls, rather than giving up and silently dropping the buffered writes.
+		ini_set('session.use_cookies', 0);
+		session_cache_limiter('');
 		session_name(Session::EGW_SESSION_NAME);
 		session_id($GLOBALS['egw']->session->sessionid);
 		if (!session_start())
