@@ -2756,35 +2756,46 @@ class mail_compose
 							$connection_opened = true;
 						}
 						$mail_bo->reopen($attachment['folder']);
-						switch(strtoupper($attachment['type'])) {
-							case 'MESSAGE/RFC':
-							case 'MESSAGE/RFC822':
-								$rawBody='';
-								if (isset($attachment['partID'])) {
-									$eml = $mail_bo->getAttachment($attachment['uid'],$attachment['partID'],0,false,true,$attachment['folder']);
-									$rawBody=$eml['attachment'];
-								} else {
-									$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
-								}
-								$_mailObject->addStringAttachment($rawBody, $attachment['name'], 'message/rfc822');
-								break;
-							default:
-								$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
-								if ($attachmentData['type'] == 'APPLICATION/MS-TNEF')
-								{
-									if (!is_array($tnfattachments)) $tnfattachments = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID']);
-									foreach ($tnfattachments as $k)
+						try
+						{
+							switch(strtoupper($attachment['type'])) {
+								case 'MESSAGE/RFC':
+								case 'MESSAGE/RFC822':
+									$rawBody='';
+									if (isset($attachment['partID'])) {
+										$eml = $mail_bo->getAttachment($attachment['uid'],$attachment['partID'],0,false,true,$attachment['folder']);
+										$rawBody=$eml['attachment'];
+									} else {
+										$rawBody        = $mail_bo->getMessageRawBody($attachment['uid'], $attachment['partID'],$attachment['folder']);
+									}
+									$_mailObject->addStringAttachment($rawBody, $attachment['name'], 'message/rfc822');
+									break;
+								default:
+									$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
+									if ($attachmentData['type'] == 'APPLICATION/MS-TNEF')
 									{
-										if ($k['name'] == $attachment['name'])
+										if (!is_array($tnfattachments)) $tnfattachments = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID']);
+										foreach ($tnfattachments as $k)
 										{
-											$tnfpart = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID'],$k['is_winmail']);
-											$attachmentData['attachment'] = $tnfpart['attachment'];
-											break;
+											if ($k['name'] == $attachment['name'])
+											{
+												$tnfpart = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID'],$k['is_winmail']);
+												$attachmentData['attachment'] = $tnfpart['attachment'];
+												break;
+											}
 										}
 									}
-								}
-								$_mailObject->addStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['type']);
-								break;
+									$_mailObject->addStringAttachment($attachmentData['attachment'], $attachment['name'], $attachment['type']);
+									break;
+							}
+						}
+						catch (\Exception $e)
+						{
+							// the message the attachment was taken from is gone (deleted or moved) since it was attached
+							throw new Api\Exception\WrongUserinput(lang(
+								"Could not attach '%1': the original message is no longer available (deleted or moved).",
+								$attachment['name']
+							), 0, $e);
 						}
 					}
 					// attach files not for autosaving, if size-limit is configured and attachment is bigger

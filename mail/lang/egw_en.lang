@@ -123,6 +123,7 @@ convert only mail to item (ignore possible attachments)	mail	en	Convert only ema
 copied %1 message(s) from %2 to %3	mail	en	Copied %1 message(s) from %2 to %3.
 copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
+could not attach '%1': the original message is no longer available (deleted or moved).	mail	en	Could not attach '%1': the original message is no longer available (deleted or moved).
 could not save the acl because some names are empty	mail	en	Could not save the ACL because some names are empty
 create mailboxes (create new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb	mail	en	Create mailboxes (CREATE new sub-mailboxes in any implementation-defined hierarchy, parent mailbox for the new mailb
 create new account	mail	en	Create new account

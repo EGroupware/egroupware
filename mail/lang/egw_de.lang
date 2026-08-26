@@ -121,6 +121,7 @@ convert only mail to item (ignore possible attachments)	mail	de	Konvertiere nur 
 copied %1 message(s) from %2 to %3	mail	de	%1 Nachricht(en) wurden von %2 nach %3 kopiert.
 copy to	mail	de	Kopieren
 could not append message:	mail	de	Konnte die Nachricht nicht hinzufügen:
+could not attach '%1': the original message is no longer available (deleted or moved).	mail	de	Anhang '%1' konnte nicht angefügt werden: die ursprüngliche Nachricht ist nicht mehr verfügbar (gelöscht oder verschoben).
 could not save the acl because some names are empty	mail	de	Konnte die Zugriffsrechte nicht speichern! Grund: einige Bezeichnungen waren leer
 create new account	mail	de	Konto hinzufügen
 cross account forward attachment is not allowed!	mail	de	Weiterleitung als Anhang ist nicht E-Mail-Konto-übergreifend möglich!
