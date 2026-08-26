@@ -46,7 +46,7 @@
                             <et2-nextmatch-header-filter id="ts_project" search="false" noLang="1" ariaLabel="Project" emptyLabel="All projects"/>
                         </et2-hbox>
                         <et2-hbox disabled="!@pm_integration=full">
-                            <et2-nextmatch-header-entry id="pm_id" noLang="1" placeholder="All projects" onlyApp="projectmanager"/>
+                            <et2-nextmatch-header-entry id="pm_id" noLang="1" ariaLabel="Project" placeholder="All projects" onlyApp="projectmanager"/>
                         </et2-hbox>
                         <et2-hbox>
                             <et2-nextmatch-header-entry id="linked" ariaLabel="Linked"/>
