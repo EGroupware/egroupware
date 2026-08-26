@@ -587,13 +587,11 @@ class Egw extends Egw\Base
 		{
 			define('EGW_SHUTDOWN',True);
 
-			// send json response BEFORE flushing output
-			if (Json\Request::isJSONRequest())
-			{
-				Json\Response::sendResult();
-			}
-
-			// run all on_shutdown callbacks with session in their name (eg. egw_link::save_session_cache), do NOT stop on exceptions
+			// run all on_shutdown callbacks with session in their name (eg. egw_link::save_session_cache,
+			// Api\Cache::flush_session_writes) BEFORE sending the json response below - once that has
+			// echoed real output, headers_sent() is true and session_start() refuses to reopen the
+			// session at all (regardless of session.use_cookies), so anything buffered while the
+			// session was closed early would be silently lost if this ran after, do NOT stop on exceptions
 			foreach(self::$shutdown_callbacks as $n => $data)
 			{
 				try {
@@ -610,6 +608,12 @@ class Egw extends Egw\Base
 					_egw_log_exception($ex);
 				}
 				unset(self::$shutdown_callbacks[$n]);
+			}
+
+			// send json response BEFORE flushing output
+			if (Json\Request::isJSONRequest())
+			{
+				Json\Response::sendResult();
 			}
 			// now we can close the session
 			// without closing the session fastcgi_finish_request() will NOT send output to user

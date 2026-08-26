@@ -557,16 +557,16 @@ class Cache
 			self::$closed_session_writes = [];	// no session (eg. async service) to write to
 			return;
 		}
-		// headers_sent() does NOT block this: fastcgi_finish_request() (eg.
-		// importexport_import_ui::feedback()'s explicit early-finish-then-keep-processing
-		// pattern for long-running import progress updates, unrelated to and pre-dating this
-		// write-tracking buffer) only tells the webserver the response is complete - the PHP
-		// worker keeps running and can still do storage writes just fine. The only real
-		// constraint is not sending NEW headers (eg. Set-Cookie) - this reopen never needs to,
-		// since the session's cookie was already sent earlier (this session already existed) -
-		// so disable cookie/cache-control header sending first, matching the same established
-		// pattern Session::init_handler() already uses for its own programmatic session_start()
-		// calls, rather than giving up and silently dropping the buffered writes.
+		// PHP's session_start() unconditionally refuses to (re)start a session once headers/output
+		// have been sent, regardless of session.use_cookies - so this must run before the response
+		// is flushed (Egw::__destruct() runs "session"-named on_shutdown callbacks, this one
+		// included, before Json\Response::sendResult() for exactly this reason). Cookie/cache-limiter
+		// header sending is still disabled here as defense in depth for the one legitimate case that
+		// genuinely reopens post-flush (importexport_import_ui::feedback()'s explicit
+		// fastcgi_finish_request()-then-keep-processing pattern, which only tells the webserver the
+		// response is complete - the PHP worker keeps running) - the session's cookie was already
+		// sent earlier for an existing session, so it doesn't need sending again, matching the same
+		// pattern Session::init_handler() uses for its own programmatic session_start() calls.
 		ini_set('session.use_cookies', 0);
 		session_cache_limiter('');
 		session_name(Session::EGW_SESSION_NAME);
