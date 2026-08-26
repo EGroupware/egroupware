@@ -10,7 +10,11 @@
  */
 export async function loadStylesheet(url : string) : Promise<CSSStyleSheet | null>
 {
-	const response = await fetch(url, {credentials: "same-origin"});
+	// "no-cache" (not "no-store") - still revalidates against the server's ETag/Last-Modified
+	// (a fast 304 if unchanged), it just refuses to trust a cached response's max-age blindly.
+	// These URLs have no cache-busting version query param (unlike most other template assets, which get one from PHP's CssIncludes::tags()),
+	// so a long-lived Cache-Control (seen in practice: "max-age=864000, public") would otherwise serve a stale copy for days after the underlying file changes.
+	const response = await fetch(url, {credentials: "same-origin", cache: "no-cache"});
 
 	if(response.status === 404)
 	{
