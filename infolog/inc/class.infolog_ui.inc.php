@@ -228,6 +228,10 @@ class infolog_ui
 		{
 			$show_links = $this->prefs['show_links'];
 		}
+		if($show_links == 'details')
+		{
+			$show_links = $details ? 'all' : 'none';
+		}
 		$only_app = '';
 		switch($show_links)
 		{
