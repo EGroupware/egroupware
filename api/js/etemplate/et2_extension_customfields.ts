@@ -637,6 +637,24 @@ export class et2_customfields_list extends et2_valueWidget implements et2_IDetac
 
 			switch(this.options.customfields[field_name].type)
 			{
+				case 'float':
+				case 'int':
+				case 'number':	// _setup_float / _setup_int rewrite field.type to "number" on row creation
+					// et2-number renders null via parseFloat as the literal "NaN".  Leave a
+					// never-set field alone instead of turning "not yet set" into "set as
+					// empty", but a reused widget still showing the previous entry's number
+					// (preview / CRM-view row clicks) must be cleared
+					if(value === null)
+					{
+						const widget : any = this.widgets[field_name];
+						const current = typeof widget.getValue === "function" ? widget.getValue() : widget.value;
+						if(current === "" || current === null || typeof current === "undefined")
+						{
+							continue;
+						}
+						value = "";
+					}
+					break;
 				case 'date':
 					// Date custom fields are always in Y-m-d, which seldom matches user's preference
 					// which fails when sent to date widget.  This is only used for nm rows, when possible
