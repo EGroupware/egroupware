@@ -447,9 +447,14 @@ class Open implements OpenModule
 			url = this.webserverUrl + url;
 		}
 		var mime_info : any = _mime_type ? this.get_mime_info(_mime_type, _target_app) : undefined;
+		// _link is URL-encoded (eg. namespaced menuactions like "Foo\Bar\Baz.method" have their
+		// backslashes as %5C), while mime_info.menuaction is raw - decode before comparing, or this
+		// "already wrapped?" check always misses and re-wraps an already-correct URL into itself
+		var _decoded_link : string;
+		try { _decoded_link = decodeURIComponent(_link); } catch (e) { _decoded_link = _link; }
 		if (mime_info && (mime_info.mime_url || mime_info.mime_data) && !(
 			// Don't change if already set
-			_link.includes(mime_info.menuaction) && (_link.includes(mime_info.mime_url) || _link.includes(mime_info.mime_data))
+			_decoded_link.includes(mime_info.menuaction) && (_decoded_link.includes(mime_info.mime_url) || _decoded_link.includes(mime_info.mime_data))
 		))
 		{
 			var data : any = {};
