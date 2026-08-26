@@ -78,7 +78,7 @@
 						<et2-box  class="infoDes">
 							<et2-description  id="${row}[info_des]" noLang="1" activateLinks="1"></et2-description>
 						</et2-box>
-						<et2-link-string  id="${row}[filelinks]"></et2-link-string>
+						<et2-link-string  id="${row}[filelinks]" class="$row_cont[filelinks_class]"></et2-link-string>
 					</et2-vbox>
 					<customfields-list id="$row" class="customfields"/>
 					<et2-select-cat  id="${row}[info_cat]" readonly="true"></et2-select-cat>

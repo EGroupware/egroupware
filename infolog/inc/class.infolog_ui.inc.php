@@ -228,9 +228,13 @@ class infolog_ui
 		{
 			$show_links = $this->prefs['show_links'];
 		}
+		// "only for details" is realized like the description: always fetch the data, but
+		// toggle its visibility client-side via the same CSS class, so switching the nextmatch's
+		// details filter on/off (which does NOT reload rows from the server) keeps working
+		$info['filelinks_class'] = $show_links == 'details' ? 'infoDes' : '';
 		if($show_links == 'details')
 		{
-			$show_links = $details ? 'all' : 'none';
+			$show_links = 'all';
 		}
 		$only_app = '';
 		switch($show_links)
