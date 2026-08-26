@@ -170,6 +170,7 @@ folder up	filemanager	de	Übergeordneter Ordner
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	de	Die Platzhalter für verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	de	Die Platzhalter für verknüpfte Eintrage bzw. Dateien (unter /apps/appname/id) der entsprechenden Anwendung stehen Ihnen hier auch zur Verfügung. Sie können die Platzhalter auch unter der Liste der Platzhalter der entsprechenden Anwendung einsehen
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	de	Nutzen Sie dieses Symbol für Serienbriefe. Stellen Sie den Inhalt, den Sie wiederholen möchten, zwischen zwei Symbole
+full list of placeholder names	filemanager	de	Komplette Liste der Platzhalter
 general	filemanager	de	Allgemein
 general fields:	filemanager	de	Allgemeine Platzhalter
 go home	filemanager	de	Gehe zum Heimordner
@@ -302,6 +303,7 @@ some functionalities require superuser permissions, please login here as fileman
 sqlfs statistics	filemanager	de	VFS-Statistik
 start search	filemanager	de	Suche starten
 startfolder	filemanager	de	Anfangsordner
+subscription	filemanager	de	Abonnement
 successful mounted %1 on %2.	filemanager	de	%1 erfolgreich nach %2 gemounted.
 superuser	filemanager	de	Superuser
 superuser (root)	filemanager	de	Superuser (root)
@@ -326,6 +328,7 @@ up	filemanager	de	Nach oben
 updated comment for %1	filemanager	de	Kommentar für %1 aktualisiert
 upload fields	filemanager	de	Dateien hochladen
 upload files	filemanager	de	Dateien hochladen
+use custom notification message	filemanager	de	Benutze benutzerdefinierte Nachrichten
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	de	Benutzen Sie dieses Symbol für Adressetiketten. Stellen Sie den Inhalt der wiederholt werden soll zwischen 2 Symbole.
 used space	filemanager	de	Benutzter Platz
 user color indicator	filemanager	de	Benutzer-Farbe

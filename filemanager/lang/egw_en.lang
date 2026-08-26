@@ -171,6 +171,7 @@ folder up	filemanager	en	Folder up
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available.  see the specific application for a list of available placeholders.	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. See the specific application for a list of available placeholders.
 for files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. see the specific application for a list of placeholders	filemanager	en	For files linked to an application entry (inside /apps/appname/id/) the placeholders for that application are also available. See the specific application for a list of placeholders
 for serial letter use this tag. put the content, you want to repeat between two tags.	filemanager	en	For serial letter use this tag. Put the content, you want to repeat between two Tags.
+full list of placeholder names	filemanager	en	Full list of placeholder names
 general	filemanager	en	General
 general fields:	filemanager	en	General fields:
 go home	filemanager	en	Go home
@@ -304,6 +305,7 @@ some functionalities require superuser permissions, please login here as fileman
 sqlfs statistics	filemanager	en	VFS statistics
 start search	filemanager	en	Start search
 startfolder	filemanager	en	Start folder
+subscription	filemanager	en	Subscription
 successful mounted %1 on %2.	filemanager	en	Successful mounted %1 on %2.
 superuser	filemanager	en	Superuser
 superuser (root)	filemanager	en	Superuser (root)
@@ -328,6 +330,7 @@ up	filemanager	en	Up
 updated comment for %1	filemanager	en	Updated comment for %1
 upload fields	filemanager	en	Upload fields
 upload files	filemanager	en	Upload files
+use custom notification message	filemanager	en	Use custom notification message
 use this tag for addresslabels. put the content, you want to repeat, between two tags.	filemanager	en	Use this tag for address labels. Put the content, you want to repeat, between two tags.
 used space	filemanager	en	Used space
 user color indicator	filemanager	en	User color indicator
