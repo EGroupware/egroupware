@@ -2040,7 +2040,7 @@ class Mail
 	 * $_flag (flagMessages()'s first param) => [JMAP keyword, set-or-unset]
 	 */
 	private const JMAP_FLAG_KEYWORDS = [
-		'flagged' => ['$flagged', true], 'unflagged' => ['$flagged', false],
+		'flagged' => ['$flagged', true],	// 'unflagged' is handled separately in jmapFlagMessages(), it also clears the custom flags
 		'read' => ['$seen', true], 'seen' => ['$seen', true],
 		'unread' => ['$seen', false], 'unseen' => ['$seen', false],
 		'answered' => ['$answered', true], 'forwarded' => ['$forwarded', true],
@@ -2325,6 +2325,15 @@ class Mail
 		{
 			$patch = [];
 			foreach (['$label1', '$label2', '$label3', '$label4', '$label5'] as $keyword)
+			{
+				$patch['keywords/'.$keyword] = null;
+			}
+		}
+		elseif ($_flag === 'unflagged')
+		{
+			// a colored custom flag implies $flagged, so clearing it must remove every colored keyword too
+			$patch = [];
+			foreach (['$flagged', '$customflag1', '$customflag2', '$customflag3', '$customflag4', '$customflag5'] as $keyword)
 			{
 				$patch['keywords/'.$keyword] = null;
 			}
@@ -5106,7 +5115,8 @@ class Mail
 						$this->icServer->store($folder, array('add'=>array('\\Answered'), 'ids'=> $uidsToModify));
 						break;
 					case "unflagged":
-						$this->icServer->store($folder, array('remove'=>array('\\Flagged'), 'ids'=> $uidsToModify));
+						// a colored custom flag implies \Flagged, so clearing it must remove every colored keyword too
+						$this->icServer->store($folder, array('remove'=>array('\\Flagged','$customflag1','$customflag2','$customflag3','$customflag4','$customflag5'), 'ids'=> $uidsToModify));
 						break;
 					case "unread":
 					case "unseen":
