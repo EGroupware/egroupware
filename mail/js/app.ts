@@ -3226,10 +3226,25 @@ export class MailApp extends EgwApp
 	 *		folders.  False means they're already loaded in the tree, and we don't need
 	 *		them again
 	 */
-	changeProfile(folder,_widget, getFolders) {
+	/**
+	 * @param folder bare account id (eg. "42") to switch to
+	 * @param _widget foldertree widget
+	 * @param getFolders
+	 * @param _targetFolder the tree-node id to select once the switch is done - defaults to this
+	 *  account's INBOX, but a direct click on a *specific* folder of a not-yet-active account
+	 *  (see changeFolder()'s own caller of this method) should land there, not always on INBOX -
+	 *  otherwise both the actually-clicked folder (selected client-side before this async call
+	 *  even started) and INBOX (selected below once the switch completes) end up shown as
+	 *  selected simultaneously (confirmed live 2026-08-26).
+	 */
+	changeProfile(folder,_widget, getFolders, _targetFolder?: string) {
 		if(typeof getFolders == 'undefined')
 		{
 			getFolders = true;
+		}
+		if (!_targetFolder)
+		{
+			_targetFolder = folder+"::INBOX";
 		}
 	//	alert(folder);
 		this.egw.message(this.egw.lang('Connect to Profile %1',_widget.getSelectedLabel().replace(this._unseen_regexp, '')), 'success');
@@ -3239,16 +3254,18 @@ export class MailApp extends EgwApp
 
 		this.lockTree();
 		egw.json('mail_ui::ajax_changeProfile',[folder, getFolders, this.et2.getInstanceManager().etemplate_exec_id], () => {
-			// Profile changed, select inbox
-			const inbox = folder + '::INBOX';
-                //_widget.reSelectItem(inbox);
-
 			this.unlockTree();
 		})
 			.sendRequest(true);
             _widget.finishedLazyLoading().then (() => {
-                this.changeFolder(folder+"::INBOX", _widget, '');
-                _widget.reSelectItem(folder+"::INBOX")
+                // pass "folder" (not "") as _previous - the profile switch already happened
+                // above, this call is only to select+apply _targetFolder, not to trigger another
+                // one. An empty-string _previous doesn't count as "same account" (''.split('::')
+                // is [''], which never equals server[0]), so changeFolder()'s own cross-account
+                // check would otherwise see it as yet another account change and recurse into
+                // changeProfile() again - infinite loop (confirmed live 2026-08-26).
+                this.changeFolder(_targetFolder, _widget, folder);
+                _widget.reSelectItem(_targetFolder)
             });
 
 		return true;
@@ -3293,10 +3310,20 @@ export class MailApp extends EgwApp
 		const server = _folder.split('::');
 		const previousServer = _previous?.split('::');
 		const profile_selected = (_folder.indexOf('::') === -1);
-		if ((!previousServer || server[0] != previousServer[0]) && profile_selected)
+		// Account changed - switch profile first, regardless of whether the clicked node is the
+		// bare account itself or a specific folder under it. A direct click on eg. "42::INBOX"
+		// while a different account was active must still trigger the profile switch - previously
+		// gated behind "&& profile_selected", so a direct cross-account folder click silently
+		// skipped mail_ui::ajax_changeProfile()/storeActiveProfileIDToPref(): the row list still
+		// showed the right folder (via applyFilters() below), but ActiveProfileID never persisted,
+		// so a reload reverted to the previous account.
+		if (!previousServer || server[0] != previousServer[0])
 		{
-			// changeProfile triggers a refresh, no need to do any more
-			return this.changeProfile(_folder,_widget, _widget.getSelectedNode().childsCount == 0);
+			// changeProfile triggers a refresh, no need to do any more - pass the actually-clicked
+			// folder along (unless a bare account node was clicked) so it lands there instead of
+			// always reopening INBOX, see changeProfile()'s own docblock for why that matters.
+			return this.changeProfile(server[0],_widget, _widget.getSelectedNode().childsCount == 0,
+				profile_selected ? undefined : _folder);
 		}
 
 		// Apply new selected folder to list, which updates data
@@ -3324,10 +3351,6 @@ export class MailApp extends EgwApp
 		this.refreshQuotaDisplay(server[0]);
 		this.preview();
 		this.callRefreshVacationNotice(server[0]);
-		if (previousServer && server[0] != previousServer[0])
-		{
-			egw.jsonq('mail.mail_ui.ajax_refreshFilters',[server[0]]);
-		}
 	}
 
 	/**
