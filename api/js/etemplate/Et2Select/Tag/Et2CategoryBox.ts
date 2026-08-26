@@ -6,9 +6,12 @@
  * @link https://www.egroupware.org
  */
 
-import {css, html, LitElement, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, TemplateResult} from "lit";
+import {customElement} from "lit/decorators/custom-element.js";
+import {property} from "lit/decorators/property.js";
 import {Et2Widget} from "../../Et2Widget/Et2Widget";
 import {et2_IDetachedDOM} from "../../et2_core_interfaces";
+import "../../Layout/Et2Box/Et2Box";
 import "./Et2CategoryTag";
 
 export interface Et2CategoryBoxOption
@@ -20,64 +23,46 @@ export interface Et2CategoryBoxOption
 /**
  * A horizontal row of Et2CategoryTag chips, one per {value, label} entry in `value`.
  *
- * Purely a renderer of whatever it's given - it has no opinion on how many entries justify
- * showing anything; an empty value collapses to nothing, and callers decide what (and how many)
- * entries to pass.
+ * Purely a renderer of whatever it's given - an empty value renders nothing at all, so it never
+ * leaves a stray gap in a flex-parent. The tags are declared as children of the inner
+ * <et2-hbox> in the same template, not added imperatively afterwards - that hbox sees them
+ * already present the first time it ever renders, so its own layout is correct from the start.
  */
+@customElement("et2-category-box")
 export class Et2CategoryBox extends Et2Widget(LitElement) implements et2_IDetachedDOM
 {
-	private _value : Et2CategoryBoxOption[] = [];
+	@property({type: Array}) value : Et2CategoryBoxOption[] = [];
 
 	static get styles()
 	{
 		return [
 			...super.styles,
 			css`
-            :host {
-                display: flex;
-                flex-direction: row;
-                flex-wrap: wrap;
-                gap: var(--sl-spacing-2x-small);
-            }
-            `,
+				:host {
+					display: contents;
+				}
+				et2-category-tag {
+					flex: 0 0 auto;
+					&::part(base){
+						padding: 0;
+					}
+				}
+			`,
 		];
-	}
-
-	static get properties()
-	{
-		return {
-			...super.properties,
-			value: {type: Array}
-		};
-	}
-
-	get value() : Et2CategoryBoxOption[]
-	{
-		return this._value;
-	}
-
-	set value(new_value : Et2CategoryBoxOption[])
-	{
-		const oldValue = this._value;
-		this._value = Array.isArray(new_value) ? new_value : [];
-		this.requestUpdate("value", oldValue);
-	}
-
-	set_value(new_value : Et2CategoryBoxOption[])
-	{
-		this.value = new_value;
 	}
 
 	render() : TemplateResult
 	{
-		// Nothing to show collapses the host to zero size, so an empty box doesn't leave a stray
-		// gap in a flex-parent (eg. rows.less's tr.mail et2-vbox::part(base) gap).
-		this.style.display = this._value.length ? "" : "none";
-
+		if(!this.value?.length)
+		{
+			return nothing;
+		}
 		return html`
-            ${this._value.map(item => html`
-				<et2-category-tag value=${item.value}>${item.label}</et2-category-tag>
-			`)}
+			<et2-hbox part="flexContainer">
+				${this.value.map(item => html`
+					<et2-category-tag value=${item.value}>${item.label}</et2-category-tag>
+				`)}
+			</et2-hbox>
 		`;
 	}
 
@@ -99,5 +84,3 @@ export class Et2CategoryBox extends Et2Widget(LitElement) implements et2_IDetach
 		}
 	}
 }
-
-customElements.define("et2-category-box", Et2CategoryBox);
