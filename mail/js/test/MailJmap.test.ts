@@ -533,6 +533,49 @@ describe("MailJmap.getRootFolders() - combined root + INBOX-children fetch", () 
 			"resolved INBOX id must be cached so a later mailboxId('INBOX') lookup doesn't repeat it");
 	});
 
+	/**
+	 * Real-world regression (acc_id=90, an external IMAP account): the special-use folders
+	 * (Sent, Trash, ...) sit as INBOX's own siblings and ARE individually \Subscribed, but the
+	 * server never reports bare INBOX itself as \Subscribed via LSUB - even though INBOX is
+	 * always accessible regardless of subscription state. A subscribedOnly top-level query then
+	 * comes back non-empty (so the "nothing subscribed at all" cyrus workaround never triggers)
+	 * but silently missing INBOX - and with it, every folder nested under INBOX, which the main
+	 * index tree only ever reaches via the top level's own INBOX node.
+	 */
+	it("recovers INBOX into the top level when a subscribedOnly query omits it", async() =>
+	{
+		const jmap = new MailJmap(createFakeApp());
+		let call = 0;
+		const client = {
+			requestMany: async(buildFn : (t : any) => any) =>
+			{
+				call++;
+				const invocation = () => ({$ref: (_path : string) => ({})});
+				buildFn({Mailbox: {query: (_args : any) => invocation(), get: (_args : any) => invocation()}});
+				if (call === 1)
+				{
+					return [{
+						topMailboxes: {list: [{id: "root2", name: "Sent", role: "sent"}]},
+						inboxIds: {ids: ["root1"]},
+					}];
+				}
+				if (call === 2)
+				{
+					return [{mailboxes: {list: [{id: "root1", name: "INBOX", role: "inbox"}]}}];
+				}
+				return [{mailboxes: {list: [{id: "child1", name: "Sub"}]}}];
+			},
+		};
+		primeLocalToken(jmap, "1", client);
+
+		const result = await jmap.getRootFolders("1");
+
+		assert.equal(call, 3, "root+inboxId, then the INBOX recovery fetch, then INBOX's own children");
+		assert.deepEqual(result.top.map((m : any) => m.id), ["root1", "root2"],
+			"INBOX must be present in the top level (and sorted first) despite being absent from the subscribedOnly query");
+		assert.deepEqual(result.inboxChildren.map((m : any) => m.id), ["child1"]);
+	});
+
 	it("resolves inboxChildren: null and skips the second request when INBOX can't be found", async() =>
 	{
 		const jmap = new MailJmap(createFakeApp());

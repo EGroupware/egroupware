@@ -933,7 +933,6 @@ export class MailJmap
 
 			const top = topMailboxes.list || [];
 			this.applyTemplateOutboxRoles(top, token);
-			sortTopLevel(top);
 			if (!token.isLocal)
 			{
 				await this.resolveHasChildren(client, token.accountId, top, effectiveSubscribedOnly);
@@ -941,6 +940,32 @@ export class MailJmap
 			}
 
 			const inboxId = inboxIds.ids?.[0] ?? null;
+			// A subscribedOnly top-level query can legitimately come back without INBOX: some
+			// real-world IMAP servers only ever report the auto-created special-use folders (Sent,
+			// Trash, ...) as \Subscribed via LSUB and never INBOX itself, even though INBOX is
+			// always accessible regardless of subscription state (ralf's report - acc_id=90, an
+			// external IMAP account with the special folders as INBOX's own siblings). Unlike the
+			// "server reports nothing subscribed at all" cyrus workaround (JmapShim::listChildIds()),
+			// this is a non-empty result simply missing one specific entry, so that fallback never
+			// triggers - without this, INBOX (and everything embedded under it below) would silently
+			// vanish from the tree's top level entirely, even though the folder-management dialog
+			// (which always passes subscribedOnly:false) shows it fine.
+			if (effectiveSubscribedOnly && inboxId && !top.some((m : any) => m.id === inboxId))
+			{
+				const [{mailboxes : inboxMailboxes}] = await client.requestMany((t) => ({
+					mailboxes: t.Mailbox.get({accountId: token.accountId, ids: [inboxId]}),
+				}));
+				const inboxMailbox = inboxMailboxes.list?.[0];
+				if (inboxMailbox)
+				{
+					if (!token.isLocal)
+					{
+						await this.resolveAclCapable(client, token, [inboxMailbox]);
+					}
+					top.push(inboxMailbox);
+				}
+			}
+			sortTopLevel(top);
 			if (!inboxId)
 			{
 				return {top, inboxChildren: null};
