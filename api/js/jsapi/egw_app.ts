@@ -1051,6 +1051,22 @@ export abstract class EgwApp
 			return;
 		}
 
+		// Sending emails to 2+ entries has no other confirmation anywhere in this flow - ask before
+		// actually sending, since it's not easily undone.
+		if((all || ids.length > 1) && document.documents.some(f => f.mime == "message/rfc822"))
+		{
+			const count = all ? this.egw.lang('all') : ids.length;
+			const [button_id] = await Et2Dialog.show_dialog(null,
+				this.egw.lang('You are about to send %1 emails. Continue?', count),
+				this.egw.lang('Send %1 emails?', count), null,
+				Et2Dialog.BUTTONS_YES_NO, Et2Dialog.QUESTION_MESSAGE
+			).getComplete();
+			if(button_id == Et2Dialog.NO_BUTTON)
+			{
+				return;
+			}
+		}
+
 		let vars = {
 			..._action.data.merge_data,
 			options: document.options,

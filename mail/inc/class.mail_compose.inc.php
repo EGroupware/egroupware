@@ -4045,11 +4045,22 @@ class mail_compose
 		}
 		catch (Exception $e)
 		{
-			$contact = $document_merge->contacts->read((int)$contact_id);
-			//error_log(__METHOD__.' ('.__LINE__.') '.' ID:'.$val.' Data:'.array2string($contact));
-			$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
-			$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-			$response->error(lang('Sending mail to "%1" failed', "$nfn <$email>").
+			// $contact_id is only a contacts id for addressbook's own merge - for every other app
+			// (eg. infolog) it's that app's entity id, so use its link-title rather than
+			// misreading an unrelated, coincidentally-numbered contact for the error message.
+			if($document_merge instanceof Api\Contacts\Merge)
+			{
+				$contact = $document_merge->contacts->read((int)$contact_id);
+				$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
+				$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
+				$label = "$nfn <$email>";
+			}
+			else
+			{
+				$app = $document_merge->get_app();
+				$label = $app ? Link::title($app, $contact_id) : $contact_id;
+			}
+			$response->error(lang('Sending mail to "%1" failed', $label).
 				"\n".$e->getMessage()
 			);
 		}
@@ -4061,6 +4072,12 @@ class mail_compose
 		if($results['failed'])
 		{
 			$response->error(implode(',',$results['failed']));
+		}
+		// Missing recipient address is a data problem, not a (possibly transient) send failure -
+		// report it as a plain skip in the long-task log instead of a retryable error/toast.
+		if($results['no_email'])
+		{
+			$response->generic('skipped', ['message' => implode(',',$results['no_email'])]);
 		}
 	}
 

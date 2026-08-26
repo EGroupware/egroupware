@@ -1425,6 +1425,19 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 							sendRequest(retry_index)
 						}
 					});
+					break;
+
+				// A recognised, non-retryable per-item outcome (eg. "no email address, nothing to
+				// send") - log it plainly and count it as skipped, without the retry/abort prompt
+				// used for real (potentially transient) failures above.
+				case 'skipped':
+					let skipped_div = document.createElement("DIV");
+					skipped_div.className = "message hint";
+					skipped_div.textContent = response.data?.message ?? response.data;
+					log.appendChild(skipped_div);
+
+					totals.skipped++;
+					break;
 				default:
 					if(response && typeof response === "string")
 					{

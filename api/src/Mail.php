@@ -7806,8 +7806,8 @@ class Mail
 				}
 				foreach ($SendAndMergeTocontacts as $k => $val)
 				{
-					$errorInfo = $email = '';
-					$sendOK = $openComposeWindow = $openAsDraft = null;
+					$errorInfo = $email = $nfn = '';
+					$sendOK = $openComposeWindow = $openAsDraft = $noEmailFound = null;
 					//error_log(__METHOD__.' ('.__LINE__.') '.' Id To Merge:'.$val);
 					if ((count($SendAndMergeTocontacts) > 1 || $_folder === FALSE) && $val &&
 						(is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val))) // do the merge
@@ -7826,60 +7826,75 @@ class Mail
 							}
 						}
 
-						// No addresses from placeholders?  Treat it as just a contact ID
-						if (!$email)
+						// No "to" address resolved from the placeholders (eg. entry has no linked
+						// contact, or the linked contact has no email address). For addressbook's own
+						// merge $val IS a contacts id, so a blank "to" template field has always
+						// resolved to that contact directly. For every other app $val is that app's own
+						// entity id, not a contacts id - reading it as one would silently email an
+						// unrelated, coincidentally-numbered contact, so fail this recipient instead of
+						// guessing.
+						if (!$email && $bo_merge instanceof Contacts\Merge)
 						{
 							$contact = $bo_merge->contacts->read($val);
-							//error_log(__METHOD__.' ('.__LINE__.') '.' ID:'.$val.' Data:'.array2string($contact));
 							$email = ($contact['email'] ? $contact['email'] : $contact['email_home']);
 							$nfn = ($contact['n_fn'] ? $contact['n_fn'] : $contact['n_given'].' '.$contact['n_family']);
-							if($email)
+							if ($email)
 							{
 								$mailObject->addAddress(Horde_Idna::encode($email), $nfn);
 							}
 						}
 
-						$activeMailProfiles = $this->getAccountIdentities($this->profileID);
-						$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
-						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($activeMailProfile));
-						$mailObject->setFrom($activeMailProfile['ident_email'],
-							self::generateIdentityString($activeMailProfile,false));
-
-						$mailObject->removeHeader('Message-ID');
-						$mailObject->removeHeader('Date');
-						$mailObject->clearCustomHeaders();
-						if (strpos($Subject, '{{') !== false)
+						if (!$email)
 						{
-							$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
-						}
-						//error_log(__METHOD__.' ('.__LINE__.') '.' ContentType:'.$mailObject->BodyContentType);
-						if($text_body) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-						//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
-						if($html_body) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
-
-						// add attachments from app-specific merge-class
-						foreach($bo_merge->getAttachments($val) as $file)
-						{
-							$mailObject->addAttachment($file);
-						}
-
-						//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
-						// set a higher timeout for big messages
-						@set_time_limit(120);
-						$sendOK = true;
-						try {
-							$mailObject->send();
-							$message_id = $mailObject->getHeader('Message-ID');
-							if($_folder)
-							{
-								$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
-								$importID = $id->current();
-							}
-						}
-						catch(Exception $e) {
 							$sendOK = false;
-							$errorInfo = $e->getMessage();
-							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($errorInfo));
+							$noEmailFound = true;
+							$app = $bo_merge->get_app();
+							$errorInfo = lang('No email address found for %1', $app ? Link::title($app, $val) : $val);
+						}
+						else
+						{
+							$activeMailProfiles = $this->getAccountIdentities($this->profileID);
+							$activeMailProfile = self::getStandardIdentityForProfile($activeMailProfiles,$this->profileID);
+							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($activeMailProfile));
+							$mailObject->setFrom($activeMailProfile['ident_email'],
+								self::generateIdentityString($activeMailProfile,false));
+
+							$mailObject->removeHeader('Message-ID');
+							$mailObject->removeHeader('Date');
+							$mailObject->clearCustomHeaders();
+							if (strpos($Subject, '{{') !== false)
+							{
+								$mailObject->addHeader('Subject', $bo_merge->merge_string($Subject, $val, $e, 'text/plain', array(), self::$displayCharset));
+							}
+							//error_log(__METHOD__.' ('.__LINE__.') '.' ContentType:'.$mailObject->BodyContentType);
+							if($text_body) $text_body->setContents($bo_merge->merge_string($Body, $val, $e, 'text/plain', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+							//error_log(__METHOD__.' ('.__LINE__.') '.' Result:'.$mailObject->Body.' error:'.array2string($e));
+							if($html_body) $html_body->setContents($bo_merge->merge_string($AltBody, $val, $e, 'text/html', array(), self::$displayCharset),array('encoding'=>Horde_Mime_Part::DEFAULT_ENCODING));
+
+							// add attachments from app-specific merge-class
+							foreach($bo_merge->getAttachments($val) as $file)
+							{
+								$mailObject->addAttachment($file);
+							}
+
+							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($mailObject));
+							// set a higher timeout for big messages
+							@set_time_limit(120);
+							$sendOK = true;
+							try {
+								$mailObject->send();
+								$message_id = $mailObject->getHeader('Message-ID');
+								if($_folder)
+								{
+									$id = $this->appendMessage($_folder, $mailObject->getRaw(), '');
+									$importID = $id->current();
+								}
+							}
+							catch(Exception $e) {
+								$sendOK = false;
+								$errorInfo = $e->getMessage();
+								//error_log(__METHOD__.' ('.__LINE__.') '.array2string($errorInfo));
+							}
 						}
 					}
 					elseif (!$k)	// 1. entry, further entries will fail for apps other then addressbook
@@ -7908,9 +7923,15 @@ class Mail
 						}
 						$mailObject->forceBccHeader();
 
-						// No addresses from placeholders?  Treat it as just a contact ID
+						// No "to" address resolved from the placeholders. For addressbook's own merge
+						// $val IS a contacts id, so a blank "to" template field has always resolved to
+						// that contact directly. For every other app $val is that app's own entity id,
+						// not a contacts id - reading it as one would silently draft/send to an
+						// unrelated, coincidentally-numbered contact, so leave "to" empty instead of
+						// guessing.
 						if (count($mailObject->getAddresses('to',true)) == 0 &&
-							is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)) // do the merge
+							($bo_merge instanceof Contacts\Merge) &&
+							(is_numeric($val) || $GLOBALS['egw']->accounts->name2id($val)))
 						{
 							$contact = $bo_merge->contacts->read($val);
 							//error_log(__METHOD__.' ('.__LINE__.') '.array2string($contact));
@@ -7985,12 +8006,12 @@ class Mail
 						}
 						else
 						{
-							if (!$openComposeWindow) $processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+							if (!$openComposeWindow) $processStats[$noEmailFound ? 'no_email' : 'failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 						}
 					}
 					if (isset($sendOK) && $sendOK===false && !isset($openComposeWindow))
 					{
-						$processStats['failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
+						$processStats[$noEmailFound ? 'no_email' : 'failed'][$val] = $errorInfo?$errorInfo:'Send failed to '.$nfn.'<'.$email.'> See error_log for details';
 					}
 
 				}

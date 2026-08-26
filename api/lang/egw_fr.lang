@@ -947,6 +947,7 @@ no	common	fr	Non
 no - cancel	common	fr	Non, annuler
 no column to swap with !!!	common	fr	Aucune colonne à intervertir !
 no default set	common	fr	Aucun défaut défini
+no email address found for %1	common	fr	Aucune adresse e-mail trouvée pour %1
 no entries found, try again ...	common	fr	Aucune occurence trouvée, essayez encore ...
 no file	common	fr	Pas de fichier
 no filename given or selected via browse...	common	fr	Pas de nom de fichier donné ou sélectionnée avec le navigateur ...
@@ -1270,6 +1271,7 @@ selectbox	common	fr	Boîte de sélection
 selection	common	fr	Sélection
 selection of files can only be done in one folder.  %1 files unselected.	common	fr	La sélection des fichiers ne peut se faire que dans un seul dossier. %1 fichiers non sélectionnés.
 send	common	fr	Envoyer
+send %1 emails?	common	fr	Envoyer %1 e-mails ?
 send succeeded to %1	common	fr	Envoi réussi vers %1
 senegal	common	fr	SENEGAL
 september	common	fr	Septembre
@@ -1551,6 +1553,7 @@ yes	common	fr	Oui
 yes - delete	common	fr	Oui - Supprimer.
 yes - delete including sub-entries	common	fr	Oui - Supprimer y compris les sous-éléments
 yes and allow non-admin users to do that too (recommended)	common	fr	Oui et autoriser les non-administrateurs à faire cela aussi (recommandé)
+you are about to send %1 emails. continue?	common	fr	Vous êtes sur le point d'envoyer %1 e-mails. Continuer ?
 you are not allowed to export more than %1 entries!	common	fr	Vous n'êtes pas autorisé à exporter plus que %1 éléments !
 you are required to change your password during your first login	common	fr	Il vous est demandé de changer votre mot de passe lors de votre première connexion
 you can not choose more then %1 item(s)!	common	fr	Vous ne pouvez séléctionner plus que %1 élément(s) !

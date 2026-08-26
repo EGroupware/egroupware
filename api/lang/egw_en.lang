@@ -950,6 +950,7 @@ no	common	en	No
 no - cancel	common	en	No - Cancel
 no column to swap with !!!	common	en	No column to swap with!
 no default set	common	en	No default set
+no email address found for %1	common	en	No email address found for %1
 no entries found, try again ...	common	en	No entries found, try again ...
 no file	common	en	No file
 no filename given or selected via browse...	common	en	No filename
@@ -1274,6 +1275,7 @@ selectbox	common	en	Select box
 selection	common	en	Selection
 selection of files can only be done in one folder.  %1 files unselected.	common	en	Selection of files can only be done in one folder. %1 file(s) unselected.
 send	common	en	Send
+send %1 emails?	common	en	Send %1 emails?
 send succeeded to %1	common	en	Send succeeded to %1
 senegal	common	en	SENEGAL
 september	common	en	September
@@ -1557,6 +1559,7 @@ yes	common	en	Yes
 yes - delete	common	en	Yes - Delete
 yes - delete including sub-entries	common	en	Yes - Delete including sub-entries
 yes and allow non-admin users to do that too (recommended)	common	en	Yes and allow non-admin users to do that too (recommended)
+you are about to send %1 emails. continue?	common	en	You are about to send %1 emails. Continue?
 you are not allowed to export more than %1 entries!	common	en	You are not allowed to export more than %1 entries!
 you are required to change your password during your first login	common	en	You are required to change your password during your first log in
 you can not choose more then %1 item(s)!	common	en	You can not choose more then %1 item(s)!

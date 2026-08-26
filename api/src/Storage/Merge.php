@@ -2093,7 +2093,7 @@ abstract class Merge
 	 *
 	 * @return string
 	 */
-	protected function get_app()
+	public function get_app()
 	{
 		switch($class=get_class($this))
 		{
@@ -2915,9 +2915,18 @@ abstract class Merge
 				try
 				{
 					// Special email handling so we can grab it and stick it where we want
-					$mail_folder = $document_merge->keep_emails ? (count($id_group) == 1 ? $mail_bo->getDraftFolder() : '') : FALSE;
+					// Only the genuine single-recipient "open in compose" flow (one id, open_email
+					// requested) should land in Draft - every other case results in a real send and
+					// must go to the Sent folder ('' lets Mail::importMessageToMergeAndSend() resolve
+					// it via getSentFolder()). Using count($id_group) here is wrong: with "merge
+					// individually" unchecked (the default), $id_group always has exactly one group
+					// even when it contains many real recipients
+					$mail_folder = $document_merge->keep_emails ? (count((array)$ids) == 1 && $open_email ? $mail_bo->getDraftFolder() : '') : FALSE;
 					$mail_id = '';
 					$msgs = $mail_bo->importMessageToMergeAndSend($document_merge, Api\Vfs::PREFIX . $email, $mail_ids, $mail_folder, $mail_id, $attach);
+					// Surface per-recipient failures (eg. no email address found) to the caller -
+					// ajax_merge_multiple() already knows how to report a ['failed'] entry
+					$merged[] = $msgs;
 				}
 				catch (\Exception $e)
 				{
@@ -3149,12 +3158,16 @@ abstract class Merge
 				{
 					$response->error($message . implode(", ", $result['failed']));
 				}
-				else
+				// Missing recipient address is a data problem, not a (possibly transient) send
+				// failure - report it as a plain skip in the long-task log instead of a retryable
+				// error/toast.
+				elseif($result['no_email'])
 				{
-					if($result['success'])
-					{
-						$message .= implode(", ", $result['success']);
-					}
+					$response->generic('skipped', ['message' => $message . implode(", ", $result['no_email'])]);
+				}
+				elseif($result['success'])
+				{
+					$message .= implode(", ", $result['success']);
 				}
 			}
 		}

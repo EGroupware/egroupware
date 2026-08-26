@@ -950,6 +950,7 @@ no	common	de	Nein
 no - cancel	common	de	Nicht Löschen - Abbruch
 no column to swap with !!!	common	de	Keine Spalte um damit zu tauschen!
 no default set	common	de	Keine Vorgabe gesetzt
+no email address found for %1	common	de	Keine E-Mail-Adresse gefunden für %1
 no entries found, try again ...	common	de	Keine Einträge gefunden, nochmal versuchen ...
 no file	common	de	Keine Datei
 no filename given or selected via browse...	common	de	Kein Dateiname angegeben oder mit [Browse...] ausgewählt
@@ -1274,6 +1275,7 @@ selectbox	common	de	Auswahlbox
 selection	common	de	Auswahl
 selection of files can only be done in one folder.  %1 files unselected.	common	de	Die Auswahl von Dateien kann nur in einem Ordner erfolgen. %1 Dateie(n) nicht ausgewählt.
 send	common	de	Senden
+send %1 emails?	common	de	%1 E-Mails senden?
 send succeeded to %1	common	de	Versand erfolgreich zu %1
 senegal	common	de	SENEGAL
 september	common	de	September
@@ -1557,6 +1559,7 @@ yes	common	de	Ja
 yes - delete	common	de	Einträge löschen
 yes - delete including sub-entries	common	de	Ja, lösche Einträge inklusive Untereinträge
 yes and allow non-admin users to do that too (recommended)	common	de	Ja, und erlaube nicht administrativen Benutzern das auch (empfohlen)
+you are about to send %1 emails. continue?	common	de	Sie sind dabei, %1 E-Mails zu senden. Fortfahren?
 you are not allowed to export more than %1 entries!	common	de	Sie sind nicht berechtigt mehr als %1 Datensätze zu exportieren!
 you are required to change your password during your first login	common	de	Sie müssen Ihr Passwort bei der ersten Anmeldung ändern
 you can not choose more then %1 item(s)!	common	de	Sie dürfen nicht mehr als %1 Einträge auswählen!

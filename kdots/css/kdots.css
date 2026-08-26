@@ -1402,6 +1402,29 @@ et2-toolbar[slot="main-header"]::part(list),
   background: none;
   white-space: inherit;
 }
+/* Et2Dialog.long_task(): per-item outcome log entries */
+.long_task .message {
+  white-space: break-spaces;
+  height: inherit;
+  display: list-item;
+  border: none;
+  color: initial;
+  margin: 0px;
+  padding: 0px 0px 0px 2em;
+  background-repeat: no-repeat;
+  background-size: 1em;
+  background-image: url(../../node_modules/bootstrap-icons/icons/check-lg.svg);
+  /* A per-item outcome that's neither a success nor a failure worth retrying (eg. "no
+       email address, nothing to send") - styled distinct from both */
+}
+.long_task .message.error {
+  color: darkgray;
+  background-image: none;
+}
+.long_task .message.hint {
+  color: var(--sl-color-warning-600);
+  background-image: url(../../node_modules/bootstrap-icons/icons/info-circle.svg);
+}
 /*** END WIDGETS ***/
 /*** Action styling ***/
 div.et2_egw_action_ddHelper--grid {
