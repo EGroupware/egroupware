@@ -122,5 +122,108 @@ describe("Textbox widget", () =>
 });
 
 
+/**
+ * Opt-in markdown display.
+ *
+ * Contract: `markdown` is off by default and changes nothing; when on, the value is parsed and
+ * rendered into the light DOM inside a .et2_markdown wrapper.  Precedence is
+ * href > markdown > activateLinks > plain text.
+ *
+ * Setup: the shared before() fixture and its egw() stub, plus noLang so egw().lang() can't
+ * interfere with the markdown source.
+ */
+describe("Et2Description markdown", () =>
+{
+	beforeEach(async() =>
+	{
+		await before();
+		// never translate a markdown source string
+		element.noLang = true;
+	});
+
+	it("does not render markdown by default", async() =>
+	{
+		element.value = "**bold** and # not a heading";
+
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(element);
+
+		assert.isNull(element.querySelector(".et2_markdown"), "Markdown wrapper present although markdown is off");
+		assert.isNull(element.querySelector("strong"), "Value got parsed although markdown is off");
+		assert.match(element.textContent, /\*\*bold\*\*/, "Value is no longer shown literally");
+	});
+
+	it("renders markdown when asked", async() =>
+	{
+		element.markdown = true;
+		element.value = "# Heading\n\n- one\n- two";
+
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(element);
+
+		assert.isNotNull(element.querySelector(".et2_markdown"), "No markdown wrapper");
+		assert.equal(element.querySelector(".et2_markdown h1")?.textContent, "Heading");
+		assert.lengthOf(element.querySelectorAll(".et2_markdown li"), 2, "List was not rendered");
+	});
+
+	it("re-renders when markdown is toggled at runtime", async() =>
+	{
+		element.value = "**bold**";
+
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(element);
+		assert.isNull(element.querySelector("strong"), "Parsed before markdown was turned on");
+
+		// Also covers "markdown" being in updated()'s changed-property check
+		element.markdown = true;
+
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(element);
+		assert.isNotNull(element.querySelector("strong"), "Toggling markdown did not re-render");
+	});
+
+	it("does not double-link when activateLinks is also on", async() =>
+	{
+		element.markdown = true;
+		element.activateLinks = true;
+		element.value = "see https://www.egroupware.org";
+
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(element);
+
+		assert.lengthOf(element.querySelectorAll("a"), 1, "Link got processed twice");
+		assert.isNotNull(element.querySelector(".et2_markdown a"), "Link is not inside the markdown wrapper");
+	});
+
+	it("lets href win over markdown", async() =>
+	{
+		const href = "not_real_url";
+		element.markdown = true;
+		element.href = href;
+		element.value = "**click me**";
+
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(element);
+
+		assert.isNull(element.querySelector(".et2_markdown"), "Markdown was rendered although href is set");
+		const a = element.querySelector("a");
+		assert.isNotNull(a, "Did not find A tag");
+		assert.match(a.href, new RegExp(href), "A tag had wrong href");
+	});
+
+	it("does not execute hostile markup in a markdown value", async() =>
+	{
+		element.markdown = true;
+		element.value = '<img src=x onerror=alert(1)>\n\n[x](javascript:alert(1))';
+
+		// @ts-ignore TypeScript doesn't recognize widgets as Elements
+		await elementUpdated(element);
+
+		assert.isNull(element.querySelector("img"), "An img node survived");
+		assert.isNull(element.querySelector('a[href^="javascript:"]'), "A javascript: href survived");
+	});
+});
+
+
 // Description is not an input widget, do not run inputBasicTests
 // inputBasicTests(before, "I'm a good test value", "input");

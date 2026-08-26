@@ -13,8 +13,9 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {activateLinks} from "../ActivateLinksDirective";
 import {et2_csvSplit} from "../et2_core_common";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
+import {Et2MarkdownMixin} from "../Markdown/Et2MarkdownMixin";
 
-export class Et2Description extends Et2Widget(LitElement) implements et2_IDetachedDOM
+export class Et2Description extends Et2MarkdownMixin(Et2Widget(LitElement)) implements et2_IDetachedDOM
 {
 
 	protected _value : string = "";
@@ -175,7 +176,8 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		super.updated(changedProperties);
 		// Due to how we do the rendering into the light DOM (not sure it's right) we need this after
 		// value change or it won't actually show up
-		if((changedProperties.has("value") || changedProperties.has("href") || changedProperties.has("activateLinks")) && this.parentNode)
+		if((changedProperties.has("value") || changedProperties.has("href") || changedProperties.has("activateLinks") ||
+			changedProperties.has("markdown")) && this.parentNode)
 		{
 			render(this._renderContent(), <HTMLElement><unknown>this);
 		}
@@ -196,6 +198,11 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 		if(this.href && this.value)
 		{
 			render = this.wrapLink(this.href, this.value);
+		}
+		// Markdown renders its own links, so it wins over activateLinks
+		else if(this.markdown && this.value)
+		{
+			render = this._markdownTemplate(this.value);
 		}
 		// If we want to activate links inside, do that
 		else if(this.activateLinks && this.value)
@@ -288,7 +295,7 @@ export class Et2Description extends Et2Widget(LitElement) implements et2_IDetach
 
 	getDetachedAttributes(attrs)
 	{
-		attrs.push("id", "label", "value", "class", "href", "statustext");
+		attrs.push("id", "label", "value", "class", "href", "statustext", "markdown");
 	}
 
 	getDetachedNodes() : HTMLElement[]

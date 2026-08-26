@@ -2020,6 +2020,7 @@
     href CDATA #IMPLIED
     id CDATA #IMPLIED
     label CDATA #IMPLIED
+    markdown (false|true|1) #IMPLIED
     noLang (false|true|1) #IMPLIED
     onclick CDATA #IMPLIED
     parentId CDATA #IMPLIED
@@ -2047,6 +2048,7 @@
     href CDATA #IMPLIED
     id CDATA #IMPLIED
     label CDATA #IMPLIED
+    markdown (false|true|1) #IMPLIED
     mime CDATA #IMPLIED
     mimeData CDATA #IMPLIED
     noLang (false|true|1) #IMPLIED
@@ -2570,6 +2572,7 @@
     href CDATA #IMPLIED
     id CDATA #IMPLIED
     label CDATA #IMPLIED
+    markdown (false|true|1) #IMPLIED
     noLang (false|true|1) #IMPLIED
     onclick CDATA #IMPLIED
     parentId CDATA #IMPLIED

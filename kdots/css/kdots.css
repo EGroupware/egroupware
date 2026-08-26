@@ -1292,6 +1292,116 @@ et2-toolbar[slot="main-header"]::part(list),
 .blueimp-gallery:not(.blueimp-gallery-display) {
   display: none;
 }
+/*MARKDOWN STYLING FOR NON SHADOW DOM WIDGETS*/
+/* single source of truth - the same file is inlined into the bundle by
+   api/js/etemplate/Markdown/Markdown.styles.ts for shadow-DOM widgets */
+.et2_markdown {
+  /* Et2Description's "* {white-space: pre-wrap}" reaches slotted content by inheritance -
+	   block markdown has to lay out normally instead */
+  white-space: normal;
+}
+/* Outer spacing belongs to whatever contains the widget, not to the markdown */
+.et2_markdown > :first-child {
+  margin-block-start: 0;
+}
+.et2_markdown > :last-child {
+  margin-block-end: 0;
+}
+.et2_markdown p {
+  margin-block: var(--sl-spacing-x-small);
+}
+.et2_markdown h1,
+.et2_markdown h2,
+.et2_markdown h3,
+.et2_markdown h4,
+.et2_markdown h5,
+.et2_markdown h6 {
+  margin-block: var(--sl-spacing-small) var(--sl-spacing-2x-small);
+  font-weight: var(--sl-font-weight-bold);
+  line-height: var(--sl-line-height-dense);
+}
+.et2_markdown h1 {
+  font-size: var(--sl-font-size-x-large);
+}
+.et2_markdown h2 {
+  font-size: var(--sl-font-size-large);
+}
+.et2_markdown h3,
+.et2_markdown h4 {
+  font-size: var(--sl-font-size-medium);
+}
+.et2_markdown h5,
+.et2_markdown h6 {
+  font-size: var(--sl-font-size-small);
+  color: var(--sl-color-neutral-700);
+}
+.et2_markdown strong {
+  font-weight: var(--sl-font-weight-bold);
+}
+.et2_markdown s {
+  /* ~~struck~~ reads as struck-through text */
+  text-decoration: line-through;
+}
+.et2_markdown ul,
+.et2_markdown ol {
+  margin-block: var(--sl-spacing-x-small);
+  padding-inline-start: var(--sl-spacing-large);
+}
+.et2_markdown li {
+  margin-block: var(--sl-spacing-3x-small);
+}
+/* Nested lists: no double gap against the parent item, and less indent per level */
+.et2_markdown li > ul,
+.et2_markdown li > ol {
+  margin-block: var(--sl-spacing-3x-small);
+  padding-inline-start: var(--sl-spacing-medium);
+}
+/* "Loose" list items wrap their text in <p> - don't let that add a full paragraph gap */
+.et2_markdown li > p {
+  margin-block: var(--sl-spacing-3x-small);
+}
+/* No link styling here on purpose: markdown does not create links, activateLinks does,
+   and its anchors must look the same whether or not markdown rendered the text around them. */
+.et2_markdown img {
+  /* never let an image push the widget wider than its container */
+  max-width: 100%;
+  height: auto;
+}
+.et2_markdown blockquote {
+  margin-block: var(--sl-spacing-x-small);
+  margin-inline: 0;
+  padding-inline-start: var(--sl-spacing-small);
+  /* 3x-small is the quote bar width - a panel border is too faint here */
+  border-inline-start: var(--sl-spacing-3x-small) solid var(--sl-color-neutral-300);
+  color: var(--sl-color-neutral-700);
+}
+/* No explicit text colour, so code inherits and stays readable in both themes */
+.et2_markdown code {
+  font-family: var(--sl-font-mono);
+  font-size: var(--sl-font-size-small);
+  background-color: var(--sl-color-neutral-100);
+  border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+  border-radius: var(--sl-border-radius-small);
+  padding-inline: var(--sl-spacing-3x-small);
+}
+.et2_markdown pre {
+  margin-block: var(--sl-spacing-x-small);
+  padding: var(--sl-spacing-x-small);
+  background-color: var(--sl-color-neutral-100);
+  border: var(--sl-panel-border-width) solid var(--sl-panel-border-color);
+  border-radius: var(--sl-border-radius-medium);
+  /* scroll a code block rather than reflowing it */
+  white-space: pre;
+  overflow-x: auto;
+}
+.et2_markdown pre code {
+  display: block;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  background: none;
+  white-space: inherit;
+}
 /*** END WIDGETS ***/
 /*** Action styling ***/
 div.et2_egw_action_ddHelper--grid {

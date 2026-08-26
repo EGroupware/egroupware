@@ -421,4 +421,9 @@ et2-toolbar[slot="main-header"], [slot="main-header"] et2-toolbar{
   display: none;
 }
 
+/*MARKDOWN STYLING FOR NON SHADOW DOM WIDGETS*/
+/* single source of truth - the same file is inlined into the bundle by
+   api/js/etemplate/Markdown/Markdown.styles.ts for shadow-DOM widgets */
+@import "../../../api/js/etemplate/Markdown/markdown.less";
+
 /*** END WIDGETS ***/

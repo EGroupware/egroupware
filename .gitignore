@@ -6,6 +6,8 @@
 *.min.js.map
 *.min.css
 *.min.css.map
+# generated from widgets.less - unlike the other kdots/css/src/*.css it is not committed
+kdots/css/src/widgets.css
 *.js.map
 *.sql
 *.diff
