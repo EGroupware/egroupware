@@ -247,7 +247,12 @@ class InfologApp extends EgwApp
 					{
 						filterDrawer.open = true;
 					}
-					window.setTimeout(() => dates.getWidgetById('col_filter[startdate]')?.focus());
+					// Focusing an empty date field can make it silently pick today and fire its own
+					// change, overwriting dates a favorite just applied - only focus if nm really has none.
+					if (!this.nm.activeFilters.col_filter?.startdate)
+					{
+						this.nm.updateComplete.then(() => dates.getWidgetById('col_filter[startdate]')?.focus());
+					}
 					break;
 				default:
 					dates.set_disabled(true);

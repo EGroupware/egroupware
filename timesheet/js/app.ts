@@ -19,7 +19,6 @@ import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
-import type {Et2Widget} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 
 /**
  * UI for timesheet
@@ -88,7 +87,12 @@ class TimesheetApp extends EgwApp
 				{
 					filterDrawer.open = true;
 				}
-				window.setTimeout(() => dates.getWidgetById('startdate').focus());
+				// Focusing an empty date field can make it silently pick today and fire its own
+				// change, overwriting dates a favorite just applied - only focus if nm really has none.
+				if (!this.nm.activeFilters.startdate)
+				{
+					this.nm.updateComplete.then(() => dates.getWidgetById('startdate').focus());
+				}
 			}
 		}
 		return true;

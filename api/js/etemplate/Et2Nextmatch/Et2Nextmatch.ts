@@ -1991,17 +1991,36 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		{
 			this._filters.col_filter = {};
 		}
+		// Snapshot before the full-reset branch below can replace this._filters wholesale -
+		// otherwise a "clear everything" call (set == {}) would report itself as its own
+		// oldFilters, and anything diffing oldFilters vs activeFilters (eg. egw_app.ts's
+		// nmFilterChange()) would see no keys to reset (col_filter is empty both times) and
+		// never notice that eg. `filter`/`cat_id` used to hold a value.
+		const previousFilters = {
+			...this._filters,
+			col_filter: {...(this._filters.col_filter || {})},
+			sort: this._filters.sort ? {...this._filters.sort} : undefined
+		};
 		if(typeof set !== "undefined" && typeof set === "object" && Object.keys(set).length === 0)
 		{
-			this._filters = {col_filter: {}};
+			// Explicitly blank every previously-active top-level key (not just drop them) -
+			// the server merges the filters it receives into its own session-stored copy
+			// (Nextmatch::ajax_get_rows(): `array_merge($value, $filters)`), so a key that's
+			// simply missing from the request is left holding its last known value there,
+			// not cleared. Only col_filter gets this for free, since it's always sent as its
+			// own (here empty) sub-array.
+			const blanked : Record<string, any> = {col_filter: {}};
+			for(const key of Object.keys(previousFilters))
+			{
+				if(key !== "col_filter" && key !== "sort")
+				{
+					blanked[key] = "";
+				}
+			}
+			this._filters = blanked;
 			changed = true;
 		}
 		const activeFilters = this._filters;
-		const previousFilters = {
-			...activeFilters,
-			col_filter: {...(activeFilters.col_filter || {})},
-			sort: activeFilters.sort ? {...activeFilters.sort} : undefined
-		};
 
 		if(typeof set === "object" && set !== null)
 		{

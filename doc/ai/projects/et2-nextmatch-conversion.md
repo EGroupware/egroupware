@@ -446,3 +446,33 @@ template + app JS/TS only — but that's an observed outcome for four apps, not 
   because `Et2Nextmatch` forwards its `header` part via `exportparts`. Don't reach for a
   JS/property-based toggle for this kind of "hide entirely on mobile" styling; match the existing
   CSS-only pattern instead.
+- **A filter-changed callback that `.focus()`es a date field "to help the user start typing" can
+  silently corrupt whatever filter state was just applied.** Timesheet's `filter_change()`
+  (`timesheet/js/app.ts`) and Infolog's (`infolog/js/app.ts:234-257`) both reach this same shape:
+  when the `filter`/time-range select transitions to a value that needs a custom date range, they
+  open the filter drawer and call `.focus()` on the (still empty, at that point) start-date field.
+  Focusing an empty `Et2Date`/flatpickr field can make it silently pick today and fire its own
+  `change` event; `Et2Filterbox.handleFilterChange()` reacts to that by collecting every widget's
+  current value and pushing the whole lot into `nm.applyFilters()` — clobbering real dates a
+  favorite (or any other non-empty filter apply) had *just* set, since that correct value hadn't
+  necessarily reached the drawer's own widget yet when the focus fired. It's a genuine race, not a
+  one-off: `nmFilterChange`'s listener and `Et2Filterbox`'s own listener are both bound to the same
+  `et2-filter` event with no guaranteed order, so whether the focus call runs before or after the
+  drawer has synced its widgets from the new state depends on registration order and timing, not
+  anything the callback controls. Fixed for both Timesheet and Infolog by checking
+  `nm.activeFilters.<field>` (the authoritative, already-correct value at that point) before
+  deciding to focus at all, and by tying the focus to `nm.updateComplete` instead of a bare
+  `setTimeout`. That closes the *data* corruption (`nm.activeFilters` stays correct), but a smaller,
+  separate issue remains in both apps: the filter drawer's own Start/End widgets can still show a
+  stale value in this same sequence even though the underlying query data is right — that's
+  `Et2Filterbox`'s own widget sync not landing a value into its own widget in this specific
+  reset-then-restore path, not a `filter_change()` timing problem, and is unfixed. More generally:
+  **when converting an app, audit every existing
+  filter-changed callback (`filter_change()`, `nmFilterChange()` overrides, anything hung off
+  `checkNmFilterChanged()`) for side effects — `.focus()`, `.set_disabled()`, or any other call that
+  touches a widget — that assume the *current* widget-tree state is already settled.** Before
+  conversion, such a callback usually only ran in response to genuine user interaction (the widget
+  the user just touched already has the right value). After conversion, the same callback can now
+  also fire as a reaction to a programmatic state change (a favorite, "No filters", a saved view)
+  where the rest of the widget tree may not have caught up yet - a case that either didn't exist or
+  behaved differently under the legacy nextmatch's own filter-sync plumbing.
