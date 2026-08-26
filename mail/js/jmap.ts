@@ -3589,7 +3589,8 @@ export class MailJmap
 	 * aggregateThreadKeywords()) gets pixel-identical rendering to a normal single-message row.
 	 */
 	private keywordsToRowFlags(keywords : Record<string, boolean>) :
-		{ flags : Record<string, string>, css : string[], status_icon : string, hasFlagged : boolean }
+		{ flags : Record<string, string>, css : string[], status_icon : string, hasFlagged : boolean,
+			labelTags : Array<{ value : string, label : string }> }
 	{
 		const flags : Record<string, string> = {};
 		const css = ['mail'];
@@ -3657,7 +3658,13 @@ export class MailJmap
 		const hasFlagged = keywords['$flagged'] || MailJmap.CUSTOM_FLAGS.some((flag, index) =>
 			keywords['$customflag' + (index + 1)]);
 
-		return {flags, css, status_icon, hasFlagged};
+		// Only labels, never customFlag1-5 - getRowLabelTags() only matches ids getAllLabels()
+		// knows about. Caller (email2row()/emails2threadRow(), via this shared helper) decides
+		// whether the count found justifies showing anything.
+		const labelTagsFound = this.app.getRowLabelTags(flags);
+		const labelTags = labelTagsFound.length >= 2 ? labelTagsFound : [];
+
+		return {flags, css, status_icon, hasFlagged, labelTags};
 	}
 
 	/**
@@ -3700,7 +3707,7 @@ export class MailJmap
 		threadId : string, profileID : string, mailboxId : string) : any
 	{
 		const row = this.email2row(representative, profileID, mailboxId);
-		const {flags, css, status_icon, hasFlagged} = this.keywordsToRowFlags(this.aggregateThreadKeywords(members));
+		const {flags, css, status_icon, hasFlagged, labelTags} = this.keywordsToRowFlags(this.aggregateThreadKeywords(members));
 		return {
 			...row,
 			// the representative's own row_id/uid still end in its plain email id (from
@@ -3716,6 +3723,7 @@ export class MailJmap
 			class: css.join(' '),
 			status_icon,
 			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
+			labelTags,
 		};
 	}
 
@@ -3738,7 +3746,7 @@ export class MailJmap
 				!a.email || a.email.indexOf('@') < 0 || (a.name && a.name.indexOf('\\') >= 0)));
 
 		const keywords : Record<string, boolean> = email.keywords || {};
-		const {flags, css, status_icon, hasFlagged} = this.keywordsToRowFlags(keywords);
+		const {flags, css, status_icon, hasFlagged, labelTags} = this.keywordsToRowFlags(keywords);
 
 		// mail_ui::header2gridelements()'s convention (relied on by app.ts's preview(), which
 		// concats "primary address" + "additional addresses" into one list for the preview panel):
@@ -3780,6 +3788,7 @@ export class MailJmap
 			icon: 'bug-fill',
 			flags,
 			status_icon,
+			labelTags,
 			emailTag: this.egw.preference('emailTag', 'mail') || 'onlyname',
 			// non-empty only for the rare broken-server case above - MailApp.renderMessageInto()
 			// (mail/js/app.ts) checks this to trigger repairAddressField() on demand, the same

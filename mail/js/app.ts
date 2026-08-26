@@ -587,12 +587,39 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * The 5 built-in labels aren't Categories-backed like getCustomLabels(), so their name/color
+	 * isn't available from there - mirrors the same defaults mail_ui.inc.php's action tree uses
+	 * for label1..5 (captions) and rows.less's own @labels map (colors).
+	 */
+	private static readonly BUILTIN_LABELS: CustomLabels = {
+		label1: {name: 'important', color: '#ff0080'},
+		label2: {name: 'job', color: '#ff8000'},
+		label3: {name: 'personal', color: '#008000'},
+		label4: {name: 'to do', color: '#0000ff'},
+		label5: {name: 'later', color: '#8000ff'},
+	};
+
+	/**
+	 * Every label that exists - the 5 built-ins plus whatever's configured via Categories -
+	 * with name and color, the single source used for the row label-chip line and (later) the
+	 * toolbar label dropdown.
+	 */
+	getAllLabels(): CustomLabels
+	{
+		const builtin: CustomLabels = {};
+		for (const id of Object.keys(MailApp.BUILTIN_LABELS))
+		{
+			builtin[id] = {...MailApp.BUILTIN_LABELS[id], name: this.egw.lang(MailApp.BUILTIN_LABELS[id].name)};
+		}
+		return {...builtin, ...this.getCustomLabels()};
+	}
+
+	/**
 	 * All labels represented in row flags
 	 */
 	getLabelIds()
 	{
-		return ['label1', 'label2', 'label3', 'label4', 'label5',
-			...Object.keys(this.getCustomLabels())];
+		return Object.keys(this.getAllLabels());
 	}
 
 	/**
@@ -604,15 +631,33 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Add configured custom-label colors after the static Mail label rules
+	 * Labels currently set on a row, as {value, label} pairs for Et2CategoryBox - never includes
+	 * customFlag1-5.  Callers decide whether the count found justifies displaying anything.
+	 */
+	getRowLabelTags(flags: Record<string, string>): Array<{ value: string, label: string }>
+	{
+		const labels = this.getAllLabels();
+		return Object.keys(flags)
+			.filter(id => !!labels[id])
+			.map(id => ({value: id, label: labels[id].name}));
+	}
+
+	/**
+	 * Inject every label's colors (built-in label1-5 and configured ones alike) as a row stylesheet
 	 */
 	updateCustomLabelStylesheet()
 	{
 		const style = new CSSStyleSheet();
-		const customLabels = this.getCustomLabels();
+		const customLabels = this.getAllLabels();
 		for (const labelId of Object.keys(customLabels))
 		{
 			const customLabel = customLabels[labelId];
+			// Et2CategoryTag (row label-chip line) resolves its color via --cat-<id>-color, keyed by the same name-based id used everywhere else here
+			// so it has to be added here.
+			// :host, not :root - this sheet is adopted into the datagrid's own shadow root (addRowStylesheet()), not applied document-globally.
+			style.insertRule(
+				`:host { --cat-${CSS.escape(labelId)}-color: ${customLabel.color}; }`
+			)
 			style.insertRule(
 				`tr.mail.${CSS.escape(labelId)} { --mail-left-border-color: ${customLabel.color}; }`
 			)
@@ -3553,6 +3598,8 @@ export class MailApp extends EgwApp
 		const hasFlag = !!flags.flagged ||
 			['customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'].some(f => !!flags[f]);
 		dataElem.data.flagged_icon = hasFlag ? 'unread_flagged_small' : '';
+		const labelTags = this.getRowLabelTags(flags);
+		dataElem.data.labelTags = labelTags.length >= 2 ? labelTags : [];
 
 		egw.dataStoreUID(_uid, dataElem.data, false);
 		owner.app.jmap.markOptimistic(_uid);

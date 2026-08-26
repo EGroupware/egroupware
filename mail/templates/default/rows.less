@@ -22,6 +22,16 @@
 	customFlag5: #8000ff;
 }
 
+// label1..5 aren't real Categories, so nothing defines their --cat-<id>-color the way
+// api/categories.php does for real category ids - Et2CategoryTag (reused for the row label-chip
+// line) relies on that variable existing, so define it here once, mirroring categories.php's own
+// ":root,:host {--cat-{id}-color: ...}" convention.
+:root, :host {
+	each(@labels, {
+		--cat-@{key}-color: @value;
+	});
+}
+
 tr.mail {
 	--mail-left-border-color: transparent;
 

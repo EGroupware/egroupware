@@ -94,6 +94,7 @@ import './Et2Select/Et2Select';
 import './Et2Select/SelectTypes';
 import './Et2Select/Tag/Et2Tag';
 import './Et2Select/Tag/Et2CategoryTag';
+import './Et2Select/Tag/Et2CategoryBox';
 import './Et2Select/Tag/Et2EmailTag';
 import './Et2Select/Tag/Et2ThumbnailTag';
 import './Et2Spinner/Et2Spinner';
