@@ -281,6 +281,21 @@ export class Et2RowProvider
 	}
 
 	/**
+	 * Dispose of a slotted definition node once its content has been read into a clone/template.
+	 * Destroying it clears its own widget-tree children so getWidgetById() on the host no longer
+	 * descends into this now-invisible source when resolving an id that also exists live elsewhere.
+	 */
+	private _releaseSlotSource(node : Element | null)
+	{
+		if(!node)
+		{
+			return;
+		}
+		try { (node as any).destroy?.(); } catch(e) {}
+		try { node.remove(); } catch(e) {}
+	}
+
+	/**
 	 * Resolve row/column metadata from named slots on the host element.
 	 */
 	async fromSlots() : Promise<Et2DatagridTemplateData | null>
@@ -292,6 +307,14 @@ export class Et2RowProvider
 		const noResultsSource = this._getSlotContent("noResults");
 		const templateUrl = this._templateUrl(originalRowSource);
 		const rowStylesheets = rowSource ? await this._extractRowStylesheets(rowSource, templateUrl) : [];
+
+		// The slotted "row" source is only ever read here to build a raw DOM/XML clone
+		// (rowSource, prepared.template, prepared.xml) - the live widget it was parsed into
+		// (with its own field widgets, e.g. selects) is never displayed and would otherwise
+		// sit forever as an invisible Et2Nextmatch child, shadowing real widgets by id in
+		// getWidgetById(). "columns" and "noResults" are excluded: their content (or its
+		// children) is reused directly as the live header/no-results DOM, not cloned.
+		this._releaseSlotSource(originalRowSource);
 
 		const resolvedHeader = headerSource ? this._resolveSlotHeaderElement(headerSource) : null;
 		const columnMeta = resolvedHeader ? this._extractSlotColumnMeta(resolvedHeader) : [];
@@ -305,6 +328,13 @@ export class Et2RowProvider
 		const prepared = normalizedRowElement ? await this._prepareRowTemplate(normalizedRowElement, columns, templateUrl) : null;
 		const loaderTemplate = loaderSource ? this._toTemplate(loaderSource) : null;
 		const noResultsTemplate = noResultsSource ? this._toTemplate(noResultsSource) : null;
+
+		// Same as "row" above, unless _toTemplate() returned the live node itself
+		// (an already-inert <template slot="loader">, never upgraded/connected as a widget).
+		if(loaderSource && loaderTemplate !== loaderSource)
+		{
+			this._releaseSlotSource(loaderSource);
+		}
 
 		if(!columns.length && !prepared)
 		{

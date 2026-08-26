@@ -327,6 +327,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _loggedExpansionRowHeightWarning : boolean = false;
 
 	/**
+	 * Live header widget instances built from raw (named-template) XML, keyed by column key.
+	 * A template/columns rebuild re-supplies raw XML for the same key, so we update the
+	 * existing instance in place instead of creating a new child and orphaning the old one -
+	 * otherwise getWidgetById() could keep returning a stale, disconnected header widget.
+	 */
+	private _headerWidgetsByKey : Map<string, HTMLElement> = new Map();
+
+	/**
+	 * rowTemplateId of the templateData that last populated _headerWidgetsByKey - used to tell
+	 * "same template, columns rebuilt" (reuse) apart from "different template entirely" (discard).
+	 * A template may legitimately have no id, so a separate "seeded" flag (not the id itself)
+	 * marks whether there's a previous run to compare against.
+	 */
+	private _headerWidgetsSeeded : boolean = false;
+	private _lastHeaderRowTemplateId : string | undefined = undefined;
+
+	/**
 	 * Error state set when the latest fetch failed.
 	 */
 	@state()
@@ -984,6 +1001,24 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			this._syncTemplateHandlerListeners();
 			// Capture source cell->column mapping before user reorders columns.
 			this._sourceColumnKeys = (this.templateData?.sourceColumns || this.templateData?.columns || this.columns || []).map((column) => String(column.key));
+
+			// A genuinely different row template (e.g. a different sub-type in InfoLog) means
+			// any cached header widgets belong to the old template and must not be reused just
+			// because a column happens to share a key - discard and rebuild from scratch. A
+			// same-template rebuild (column order/visibility/width change) keeps the cache so
+			// _prepareHeaderNode() below can update existing header widgets in place.
+			const rowTemplateId = this.templateData?.rowTemplateId;
+			if(this._headerWidgetsSeeded && rowTemplateId !== this._lastHeaderRowTemplateId)
+			{
+				for(const widget of this._headerWidgetsByKey.values())
+				{
+					try { (widget as any)?.destroy?.(); } catch(e) {}
+					try { widget?.remove(); } catch(e) {}
+				}
+				this._headerWidgetsByKey.clear();
+			}
+			this._headerWidgetsSeeded = true;
+			this._lastHeaderRowTemplateId = rowTemplateId;
 		}
 		if(structureChanged)
 		{
@@ -5360,20 +5395,44 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 */
 	private _prepareVisibleHeaders()
 	{
+		const seenKeys = new Set<string>();
 		for(const column of this.columns || [])
 		{
-			const prepared = this._prepareHeaderNode(column.header);
+			const key = String(column.key || "");
+			if(key)
+			{
+				seenKeys.add(key);
+			}
+			const prepared = this._prepareHeaderNode(column.header, key);
 			if(prepared && prepared !== column.header)
 			{
 				column.header = prepared;
+			}
+		}
+
+		// Drop cached widgets for columns that are no longer present (removed, not just rebuilt).
+		for(const key of Array.from(this._headerWidgetsByKey.keys()))
+		{
+			if(!seenKeys.has(key))
+			{
+				const stale = this._headerWidgetsByKey.get(key);
+				this._headerWidgetsByKey.delete(key);
+				try { (stale as any)?.destroy?.(); } catch(e) {}
+				try { stale?.remove(); } catch(e) {}
 			}
 		}
 	}
 
 	/**
 	 * Ensure headers use the widget creation pipeline when coming from XML nodes.
+	 *
+	 * A named row template is re-parsed from raw XML on every reload/swap (e.g. InfoLog
+	 * switching row templates by type), so the same column key keeps arriving as a fresh,
+	 * not-yet-upgraded XML Element. Reuse and update the existing header widget for that key
+	 * in place instead of creating another one - otherwise the old instance is never removed
+	 * from `_children` and getWidgetById() can keep returning it instead of the current header.
 	 */
-	private _prepareHeaderNode(header? : Element) : Element | null
+	private _prepareHeaderNode(header? : Element, key? : string) : Element | null
 	{
 		if(!header)
 		{
@@ -5381,13 +5440,70 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		}
 		if(header instanceof HTMLElement)
 		{
+			// Slot-sourced (or already-prepared) header - already the live widget/DOM node.
+			if(key)
+			{
+				this._headerWidgetsByKey.set(key, header);
+			}
 			return header;
 		}
 		// Legacy widget snuck in?
 		const domNode = (header as any).getDOMNode?.(this);
-		return domNode instanceof HTMLElement
-		       ? domNode
-		       : this.createElementFromNode(header, header.tagName?.toLowerCase()) as unknown as Element;
+		if(domNode instanceof HTMLElement)
+		{
+			if(key)
+			{
+				this._headerWidgetsByKey.set(key, domNode);
+			}
+			return domNode;
+		}
+
+		const tag = header.tagName?.toLowerCase();
+		const existing = key ? this._headerWidgetsByKey.get(key) : undefined;
+		if(existing && existing.tagName?.toLowerCase() === tag)
+		{
+			this._updateHeaderWidgetFromXml(existing, header);
+			return existing;
+		}
+		if(existing)
+		{
+			// Column kept its key but changed widget type - drop the old instance.
+			this._headerWidgetsByKey.delete(key);
+			try { (existing as any).destroy?.(); } catch(e) {}
+			try { existing.remove(); } catch(e) {}
+		}
+
+		const created = this.createElementFromNode(header, tag) as unknown as HTMLElement;
+		if(key)
+		{
+			this._headerWidgetsByKey.set(key, created);
+		}
+		return created;
+	}
+
+	/**
+	 * Re-apply a fresh XML header node's attributes/content onto an existing header widget.
+	 */
+	private _updateHeaderWidgetFromXml(widget : HTMLElement, header : Element)
+	{
+		const attrs = {};
+		header.getAttributeNames().forEach(attribute =>
+		{
+			attrs[attribute] = header.getAttribute(attribute);
+		});
+		delete (attrs as any).id;
+
+		const widgetAny = widget as any;
+		const children = widgetAny.getChildren?.() ?? [];
+		for(let i = children.length - 1; i >= 0; i--)
+		{
+			try { children[i].destroy?.(); } catch(e) {}
+			try { children[i].remove?.(); } catch(e) {}
+		}
+		widgetAny._children?.splice(0, widgetAny._children.length);
+
+		widgetAny.transformAttributes?.(attrs);
+		widgetAny.loadFromXML?.(header);
 	}
 
 	/**

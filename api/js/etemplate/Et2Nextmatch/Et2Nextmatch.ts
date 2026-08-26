@@ -512,6 +512,15 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	}
 
 	/**
+	 * Extend the normal widget-tree lookup with the datagrid, e.g. header widgets built from
+	 * the row template (like a sum in a column header) are Et2Datagrid's children, not ours.
+	 */
+	getWidgetById(_id : string)
+	{
+		return super.getWidgetById(_id) ?? this._datagrid?.getWidgetById(_id) ?? null;
+	}
+
+	/**
 	 * Current column definitions passed through to the datagrid.
 	 * Before a real template is parsed this can come from a placeholder templateData.
 	 */
