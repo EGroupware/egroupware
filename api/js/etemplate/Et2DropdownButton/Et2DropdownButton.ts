@@ -14,7 +14,6 @@ import {css, html, LitElement, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import shoelace from "../Styles/shoelace";
-import {ifDefined} from "lit/directives/if-defined.js";
 import {property} from "lit/decorators/property.js";
 
 /**
@@ -68,6 +67,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 
 				et2-image {
 					width: 1em;
+				}
+
+				sl-menu-item::part(label) {
+					color: var(--item-color, inherit);
 				}
             `,
 		];
@@ -146,9 +149,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 		return html`
             <sl-menu-item
                     value="${option.value}"
-                    type="${ifDefined(option.checkbox)}checkbox"
+                    type="${option.checkbox ? "checkbox" : "normal"}"
                     ?checked=${option.checked}
 					title="${!option.title || this.noLang ? option.title : this.egw().lang(option.title)}"
+					style="${option.color ? `--item-color: ${option.color}` : ''}"
             >
                 ${icon}
                 ${this.noLang ? option.label : this.egw().lang(option.label)}

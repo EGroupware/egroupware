@@ -25,6 +25,9 @@ export class EgwPopupAction extends EgwAction {
     private isChecked: EgwFnct;
     color = null;
     iconColor = null;
+    // Force this action's children into a dropdown even in a toolbar that otherwise flattens
+    // every action with children (Et2Toolbar's groupChildren=false default)
+    groupChildren = false;
 
     constructor(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
         super(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
@@ -118,6 +121,9 @@ export class EgwPopupAction extends EgwAction {
     }
     set_iconColor (_value:string){
         this.iconColor = _value;
+    }
+    set_groupChildren (_value : boolean){
+        this.groupChildren = _value;
     }
 }
 

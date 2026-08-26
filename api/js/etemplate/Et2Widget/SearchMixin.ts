@@ -19,6 +19,8 @@ export type SearchResult = {
 	title? : string;
 	// Related image or icon
 	icon? : string;
+	// Color swatch (eg. a colored dropdown-menu entry)
+	color? : string;
 	// Class applied to node
 	class? : string;
 	// Show the item, but it is not selectable.

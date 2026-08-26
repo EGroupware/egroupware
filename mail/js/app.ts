@@ -295,6 +295,8 @@ export class MailApp extends EgwApp
 				const nm = this.et2.getWidgetById(this.nm_index);
 				this.isMainWindow = true;
 
+				this.wireLabelFlagDropdowns(this.et2.getWidgetById('toolbar'));
+
 				// Merge in the client-remembered "Move selected to"/"Copy selected to" quick-submenus,
 				// see rememberUsedFolder()/updateFolderQuickAction().
 				this.updateFolderQuickAction('move');
@@ -663,6 +665,72 @@ export class MailApp extends EgwApp
 			)
 		}
 		this.nm?.addRowStylesheet(style);
+	}
+
+	/**
+	 * Fixed set of flagging options - flagged + the 5 colored custom flags, in toolbar order
+	 */
+	private static readonly FLAG_IDS = ['flagged', 'customFlag1', 'customFlag2', 'customFlag3', 'customFlag4', 'customFlag5'];
+
+	/**
+	 * Wire the "Set / Remove Labels" and "Flag / Unflag" toolbar dropdowns (mail_ui.inc.php's
+	 * get_toolbar_actions(), ids 'setLabel'/'flag') so each shows a checkmark for whichever of
+	 * its options are actually set on the currently focussed message.
+	 *
+	 * Called once per toolbar instance (list+preview's persistent 'toolbar', or a fresh
+	 * 'displayToolbar' per full-view page load) - the toolbar itself decides which of its
+	 * children exist, this only looks up the two dropdown-button ids if/when they're there
+	 * (eg. 'setLabel' is hidden entirely without SUPPORTS_KEYWORDS).
+	 *
+	 * @param toolbar the <et2-toolbar> widget instance
+	 */
+	async wireLabelFlagDropdowns(toolbar: any)
+	{
+		if (!toolbar) return;
+		// Actions are applied via a reactive property (Et2Toolbar.actions=...) - the dropdown-
+		// button children it builds from them don't exist synchronously right after that
+		// assignment, only once its own pending Lit update has actually committed.
+		await toolbar.updateComplete;
+
+		// Et2DropdownButton's `id` is its own reactive property, not reflected onto the actual
+		// HTML id attribute - a "#setLabel" CSS selector never matches it, so look up by the
+		// property instead.
+		const dropdowns: any[] = Array.from(toolbar.querySelectorAll('et2-dropdown-button'));
+		this.wireDropdownCheckedState(dropdowns.find(d => d.id === 'setLabel'), () => this.getLabelIds());
+		this.wireDropdownCheckedState(dropdowns.find(d => d.id === 'flag'), () => MailApp.FLAG_IDS);
+	}
+
+	/**
+	 * @param dropdown an <et2-dropdown-button> instance, or null/undefined if this toolbar
+	 *  doesn't have one (eg. 'setLabel' without SUPPORTS_KEYWORDS)
+	 * @param getIds returns the full set of ids this dropdown's options can match against -
+	 *  called lazily (labels can be added/removed via Categories admin after page load)
+	 */
+	private wireDropdownCheckedState(dropdown: any, getIds: () => string[])
+	{
+		if (!dropdown || dropdown._flagStateWired) return;
+		dropdown._flagStateWired = true;
+
+		// Lazy - only recomputed when the dropdown is actually opened, since each click already
+		// closes it and re-executes the existing mail_flag/flag action path unchanged, so there's
+		// no need to keep options "live" mid-interaction.
+		dropdown.dropdownNode?.addEventListener('sl-show', () => this.refreshDropdownCheckedState(dropdown, getIds()));
+	}
+
+	/**
+	 * Recompute one toolbar dropdown's checked options from the currently focussed message
+	 *
+	 * @param dropdown an <et2-dropdown-button> instance
+	 * @param ids the ids from `getIds()` that this dropdown's options can match against
+	 */
+	refreshDropdownCheckedState(dropdown: any, ids: string[])
+	{
+		const dataElem = egw.dataGetUIDdata(this.currentlyFocussed);
+		const flags = dataElem?.data?.flags || {};
+		dropdown.select_options = (dropdown.select_options || []).map(option => ({
+			...option,
+			checked: ids.includes(option.value) ? !!flags[option.value] : option.checked,
+		}));
 	}
 
 	/**
@@ -1465,6 +1533,7 @@ export class MailApp extends EgwApp
 			{
 				this.et2.getWidgetById('displayToolbar').actions = toolbaractions;
 			}
+			this.wireLabelFlagDropdowns(this.et2.getWidgetById('displayToolbar'));
 
 			// Popup content isn't fetched server-side (see mail_ui::displayMessage()) - fill it
 			// the same way the preview panel does, from the row already cached in the window

@@ -1682,7 +1682,8 @@ class mail_ui
 	{
 		$actions = $this->get_actions();
 		$arrActions = array('composeasnew', 'replies', 'forward', 'flagged', 'delete', 'print',
-			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4', 'label5','spam', 'ham');
+			'infolog', 'tracker', 'calendar', 'save', 'view', 'read', 'label1',	'label2', 'label3',	'label4', 'label5',
+			'setLabel', 'flag', 'spam', 'ham');
 		$actionsenabled = [];
 		foreach( $arrActions as &$act)
 		{
@@ -1732,6 +1733,30 @@ class mail_ui
 				case 'label5':
 					$actions['mark']['children']['setLabel']['children'][$act]['caption'] = lang('later');
 					$actionsenabled[$act]= $actions['mark']['children']['setLabel']['children'][$act];
+					break;
+				case 'setLabel':
+					// toolbar dropdown for all label options (unlabel + label1-5 + configured
+					// ones), alongside (not instead of) the flat label1-5 buttons above -
+					// groupChildren forces the dropdown even though this toolbar otherwise
+					// flattens every action with children (Et2Toolbar's default)
+					$actionsenabled[$act] = $actions['mark']['children']['setLabel'];
+					$actionsenabled[$act]['groupChildren'] = true;
+					// every option here is a toggleable label except 'unlabel' itself, which
+					// is a "remove all" command, not a state to check
+					foreach ($actionsenabled[$act]['children'] as $id => &$child)
+					{
+						if ($id !== 'unlabel') $child['checkbox'] = true;
+					}
+					break;
+				case 'flag':
+					// toolbar dropdown for all flagging options (flagged + customFlag1-5),
+					// alongside (not instead of) the flat 'flagged' button above
+					$actionsenabled[$act] = $actions['mark']['children']['flag'];
+					$actionsenabled[$act]['groupChildren'] = true;
+					foreach ($actionsenabled[$act]['children'] as &$child)
+					{
+						$child['checkbox'] = true;
+					}
 					break;
 				case 'ham':
 				case 'spam':
