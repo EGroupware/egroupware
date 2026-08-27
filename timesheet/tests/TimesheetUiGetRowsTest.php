@@ -269,4 +269,65 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 		$this->assertSame($start + 60 * $duration, $row['ts_end_time'],
 			'ts_end_time must equal ts_start + 60*ts_duration');
 	}
+
+	/**
+	 * Regression test: a 'custom' filter with no startdate yet (eg. the first
+	 * ajax_get_rows on a fresh page load, before the client has resent a persisted custom
+	 * range) used to have $query_in['startdate'] forced to the literal integer 1 (one
+	 * second after Unix epoch) instead of staying falsy like $end_date does right beside
+	 * it. That truthy placeholder made sql_filter() enter its 'custom' branch and
+	 * round-trip it through `new DateTime(1)` -> setTime(0,0,0) -> format('ts'), which
+	 * comes back as the *also*-falsy integer 0 (not exactly 1 - a subtlety loose
+	 * assertEmpty()/assertFalsy() checks would miss, since 0 and false are both "empty" in
+	 * PHP) - but a real Unix timestamp of 0 is a valid, specific date (1970-01-01), not
+	 * "no date", so it still rendered client-side as a bogus near-epoch date instead of
+	 * genuinely empty.
+	 *
+	 * Pass criteria: startdate comes back false, not merely falsy - the strict assertSame()
+	 * is required here, since assertEmpty() cannot tell 0 and false apart and would have
+	 * let the pre-fix behaviour (0) pass right along with the fix (false).
+	 */
+	public function testCustomFilterWithNoStartdateStaysEmpty()
+	{
+		$owner = random_int(1000000000, 2000000000);
+
+		$ui = new timesheet_ui();
+		$this->grantOwnerAccess($ui, $owner);
+		$query = $this->baseQuery($owner, array('filter' => 'custom', 'startdate' => 0, 'enddate' => 0));
+		$rows = array();
+		$readonlys = array();
+		$ui->get_rrows($query, $rows, $readonlys);
+
+		$this->assertSame(0, $query['startdate'],
+			'get_rrows() must not rewrite the caller\'s startdate into a truthy placeholder timestamp (eg. the old `: 1` sentinel)');
+	}
+
+	/**
+	 * Nextmatch::beforeSendToClient() calls get_rrows() with the same array it then
+	 * serializes back to the client as content.nm - so get_rrows() must not mutate
+	 * $query_in['startdate']/['enddate'] into the internal raw-Unix-timestamp form it
+	 * needs for the SQL date filter. Left mutated, the client (which expects an ISO
+	 * string here) would misread the raw seconds value as milliseconds and render a
+	 * near-epoch garbage date (eg. a real "2026-08-02" range showing as "1970-01-21").
+	 */
+	public function testCustomFilterStartdateNotMutatedForClient()
+	{
+		$owner = random_int(1000000000, 2000000000);
+
+		$ui = new timesheet_ui();
+		$this->grantOwnerAccess($ui, $owner);
+		$query = $this->baseQuery($owner, array(
+			'filter'    => 'custom',
+			'startdate' => '2026-08-02T00:00:00Z',
+			'enddate'   => '2026-08-22T00:00:00Z',
+		));
+		$rows = array();
+		$readonlys = array();
+		$ui->get_rrows($query, $rows, $readonlys);
+
+		$this->assertSame('2026-08-02T00:00:00Z', $query['startdate'],
+			'startdate sent back to the client must stay the original ISO string, not the internal raw timestamp used for the SQL filter');
+		$this->assertSame('2026-08-22T00:00:00Z', $query['enddate'],
+			'enddate sent back to the client must stay the original ISO string');
+	}
 }

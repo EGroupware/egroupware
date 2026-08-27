@@ -549,17 +549,24 @@ class timesheet_ui extends timesheet_bo
 		$end_date = false;
 
 		// Date filter
+		// Use local $start_date/$end_date, not $query_in directly: $query_in is the same
+		// array Nextmatch::beforeSendToClient() sends to the client, so mutating it here
+		// would leak the internal raw timestamp instead of the ISO string the date widgets
+		// expect.
+		$start_date = $query_in['startdate'];
 		if($query_in['filter'] === 'custom')
 		{
 			$end_date = $query_in['enddate'] ? $query_in['enddate'] : false;
-			$query_in['startdate'] = $query_in['startdate'] ? $query_in['startdate'] : 1;
+			// No real range yet (eg. first ajax_get_rows on a fresh page) - leave it falsy,
+			// sql_filter() and the summary-row logic below both handle that correctly.
+			$start_date = $start_date ? $start_date : false;
 		}
-		$date_filter = $this->date_filter($query_in['filter'],$query_in['startdate'],$end_date);
+		$date_filter = $this->date_filter($query_in['filter'],$start_date,$end_date);
 
-		if ($query_in['startdate'])
+		if ($start_date)
 		{
-			$start = explode('-',date('Y-m-d',$query_in['startdate']+12*60*60));
-			$end   = explode('-',date('Y-m-d',$end_date ? $end_date : $query_in['startdate']+7.5*24*60*60));
+			$start = explode('-',date('Y-m-d',$start_date+12*60*60));
+			$end   = explode('-',date('Y-m-d',$end_date ? $end_date : $start_date+7.5*24*60*60));
 
 			// show year-sums, if we are year-aligned (show full years)?
 			if ((int)$start[2] == 1 && (int)$start[1] == 1 && (int)$end[2] == 31 && (int)$end[1] == 12)
@@ -580,7 +587,7 @@ class timesheet_ui extends timesheet_bo
 				case 'Monday': $week_end_day = 'Sunday'; break;
 				case 'Saturday': $week_end_day = 'Friday'; break;
 			}
-			$filter_start_day = date('l',$query_in['startdate']+12*60*60);
+			$filter_start_day = date('l',$start_date+12*60*60);
 			$filter_end_day   = $end_date ? date('l',$end_date+12*60*60) : false;
 			//echo "<p align=right>prefs: $week_start_day - $week_end_day, filter: $filter_start_day - $filter_end_day</p>\n";
 			if ($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day))
@@ -588,7 +595,7 @@ class timesheet_ui extends timesheet_bo
 				$this->show_sums[] = 'week';
 			}
 			// show day-sums, if range <= 5 weeks
-			if (!$end_date || $end_date - $query_in['startdate'] < 36*24*60*60)
+			if (!$end_date || $end_date - $start_date < 36*24*60*60)
 			{
 				$this->show_sums[] = 'day';
 			}
@@ -602,6 +609,7 @@ class timesheet_ui extends timesheet_bo
 		$query_in['actions'] = $this->get_actions($query_in);
 
 		$query = $query_in;	// keep the original query
+		$query['startdate'] = $start_date;
 		$query['enddate'] = $end_date;
 
 		if ($query['no_status']) $query_in['options-selectcols']['ts_status'] = false;
@@ -978,6 +986,19 @@ class timesheet_ui extends timesheet_bo
 			'nm' => Api\Cache::getSession(TIMESHEET_APP, 'index'),
 			'msg' => $msg,
 		);
+		if (is_array($content['nm']) && $content['nm']['filter'] === 'custom')
+		{
+			// Session stores startdate/enddate as a raw Unix timestamp, but the client-side
+			// date widgets expect an ISO string - a raw value gets misread as milliseconds
+			// and renders as a near-epoch date.
+			foreach(array('startdate', 'enddate') as $field)
+			{
+				if (!empty($content['nm'][$field]) && is_numeric($content['nm'][$field]))
+				{
+					$content['nm'][$field] = Api\DateTime::to($content['nm'][$field], Api\DateTime::ET2);
+				}
+			}
+		}
 		if (!is_array($content['nm']))
 		{
 			$date_filters = array('' => 'All');

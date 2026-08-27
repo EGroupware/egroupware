@@ -777,6 +777,22 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 		if(!this._instance)
 		{
 			this.defaultDate = formatDate;
+			// Flatpickr construction is deferred until first focus/pointerdown (see
+			// connectedCallback()), so there may be no live instance to hand this value to for
+			// a long time - or _initFlatpickr() may already be mid-flight and not yet at the
+			// point where it reads defaultDate. Write the input's raw text directly too, so the
+			// field displays what was actually set right away, rather than only once Flatpickr
+			// eventually initializes and happens to pick defaultDate up.
+			const writeInputText = () =>
+			{
+				// Bail if a live instance showed up in the meantime - setDate() below will
+				// already have taken care of it with the latest value, more reliably than us.
+				if(this._inputNode && !this._instance && this.defaultDate)
+				{
+					this._inputNode.value = flatpickr.formatDate(<Date>this.defaultDate, this.getOptions().dateFormat);
+				}
+			};
+			this._inputNode ? writeInputText() : this.updateComplete.then(writeInputText);
 		}
 		else
 		{

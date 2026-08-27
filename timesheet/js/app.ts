@@ -251,6 +251,17 @@ class TimesheetApp extends EgwApp
 			var nm = this.et2.getWidgetById('nm');
 			if(nm)
 			{
+				// This is only ever sent by the server for a non-'custom' filter (see
+				// timesheet_ui::get_rows()) - a "sensible starting point" hint for if the user
+				// later switches to custom. But the request that produced this response can be
+				// stale: if nm's real filter is already 'custom' by the time this (possibly
+				// out-of-order) response arrives - eg. a slower "No filters" request's response
+				// landing after a faster, later "custom favorite" request's response - the hint
+				// is moot and must not overwrite the real dates that are already active.
+				if(nm.activeFilters.filter === 'custom')
+				{
+					return;
+				}
 				// startdate/enddate widgets are not part of every template (eg. mobile)
 				this.et2.getWidgetById('startdate')?.set_value(start);
 				this.et2.getWidgetById('enddate')?.set_value(end);
