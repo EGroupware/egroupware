@@ -1,7 +1,94 @@
 # Mail: move compose to client-side JMAP-first, S/MIME + TNEF as server-side services
 
-## Status: Step 0 done + live-verified against real Stalwart (2026-08-27), NOT yet committed.
-Companion to [[mail-jmap-imap-inversion]].
+## Status: Steps 0, 1, 3, and (out of order) the draft-save half of Step 5 done + live-verified
+against real Stalwart (2026-08-27), committed locally (not pushed - shared working copy). Companion
+to [[mail-jmap-imap-inversion]].
+
+**Step 3 (attachments) done (2026-08-27, `c549213d28`), not yet live-tested.** `sendNewEmail()`/
+`saveDraft()` now accept an attachments list, building a real `multipart/mixed` `bodyStructure` by
+hand when present - `attachments`/`htmlBody`/`textBody` are RFC 8621 §4.1.4 convenience views the
+server derives from `bodyStructure` on read, not independently settable on create, so the plain
+`htmlBody`/`textBody` shortcut only applies to the no-attachment case. New `uploadAttachment()`
+wraps jmap-jam's own `uploadBlob()` (RFC 8620 §6.3, unaffected by the WebSocket transport - blob
+upload is always a plain HTTP POST). Found (via code reading, not yet live) a real jmap-jam pitfall
+worth remembering: `uploadBlob(accountId, body, fetchInit)` shallow-spreads `fetchInit`'s own
+`headers` over its base fetch options, so passing a `Content-Type` header there would silently
+replace (not merge with) the `Authorization` header it already sets - retagging the `Blob`'s own
+`.type` instead lets `fetch()` derive `Content-Type` automatically, sidestepping the whole issue.
+`compose.ts`'s `jmapEligible()` now allows attachments except a "share instead of attach" filemode
+(a `Vfs\Sharing` link, not a real upload - out of scope) or one carried forward from an original
+message (needs reply/forward, Step 4, not built yet) - `uploadAttachmentsViaJmap()` fetches each
+classically-staged attachment's raw bytes via the same menuaction `displayUploadedFile()` already
+uses to preview one, reusing the existing upload widget/staging entirely, no new upload UI.
+
+**Step 1 done+live-verified (2026-08-27):** `MailJmap.sendNewEmail()` (`mail/js/jmap.ts`) - plain
+new-message compose, client-side, real-JMAP accounts only - plus the "jmapCompose" app-toolbar
+toggle (persisted as an implicit `mail`/`jmapCompose` preference) wiring `compose.ts`'s
+`trySendViaJmap()` into the existing compose popup's Send action as a narrowly-guarded parallel
+path (no attachments/integration/S-MIME - falls through to the unchanged classic postback
+otherwise). Confirmed working end-to-end via live WS frame inspection: `Identity/get` + `Mailbox/get`
+by role, `Email/set` create in Drafts, `EmailSubmission/set` submit with the Drafts→Sent
+`onSuccessUpdateEmail` patch, delivered correctly, Sent copy correctly placed and marked read, popup
+closes cleanly without a spurious "unsaved changes" prompt.
+
+**6 real bugs found+fixed getting there** (ralf live-testing + WS frame inspection each time):
+1. Address-widget values can be a full `"Display Name <addr>"` string (autocomplete-selected), not
+   a bare address - `{email: "Name <addr>"}` isn't a valid JMAP `EmailAddress`, Stalwart rejected
+   submission with `noRecipients`. Fixed both sides (client-side small parser; server-side switched
+   to `Api\Mail::parseAddressList()`, this codebase's existing RFC 822 parser).
+2. A 7th and 8th instance of the [[project_jmap_imap_fallthrough_cleanup]] bug class surfaced
+   live during testing (`Imap\Jmap::emailId2uid()`/`emailId2uidByPath()`, `Api\Mail::flagMessages()`)
+   - fixed. Also surfaced an important systemic discovery: `Api\Mail::getInstance()` caches a failed
+   profile as "defunct" for 5s, so ANY one unguarded-fallthrough failure also breaks other,
+   unrelated calls on the same profile for the next few seconds (eg. opening a new compose window
+   right after an unrelated flag-update failure).
+3. The `jmapCompose` toggle was silently defeated whenever a message was selected/previewed before
+   clicking Compose - the JMAP-mode flag was gated on `!settings.id`, but `settings.id` gets
+   backfilled from the current selection for unrelated reasons even for a genuine new-message
+   trigger. Fixed to gate on the caller's original intent (captured before that backfill runs).
+4. **`JamWebSocketClient.requestMany()` (`mail/js/jmap-jam-websocket.ts`) silently dropped the
+   actually-requested result on a callId collision** - Stalwart echoes the SAME callId for an
+   implicit companion method call triggered by `onSuccessUpdateEmail`/`onSuccessDestroyEmail` (eg.
+   an `Email/set` response alongside the triggering `EmailSubmission/set`), and naive
+   `Object.fromEntries()`-based "last response wins" per callId then discarded the real result -
+   found via ralf inspecting raw WS frames after a confusing generic "Failed to send message"
+   despite Stalwart's response showing success. This is very likely also what caused the original,
+   earlier-session "sent but missing from Sent folder" mystery. Fixed with a regression test
+   (`mail/js/test/JamWebSocketClient.test.ts`) - a general jmap-jam-transport-layer fix, not
+   specific to sending.
+5. `window.close()` after a successful JMAP send tripped ETemplate's own "unsaved changes"
+   `beforeunload` prompt, since the form never went through ETemplate's own `submit()`. Fixed with
+   `skip_close_prompt()`, the same mechanism `et2_widget_button.ts` already uses for this.
+
+**Step 5 (draft save/autosave) done+fixed the 9th fallthrough site (2026-08-27, `b7e41bb43f`)**:
+initially deferred ("Not sure we want to follow that up now"), but once it started surfacing on
+basically every compose session (after the WS-sharing fix made sessions live long enough to hit the
+2-minute autosave mark), ralf asked for the real fix: `MailJmap.saveDraft()` - creates a
+`$draft`-keyword Email on first save, updates it in place on later autosave ticks (tracked via
+`compose.ts`'s `jmapDraftEmailId`) instead of accumulating a new draft every 2 minutes. Same
+eligibility scope as `sendNewEmail()` (no attachments/integration/S-MIME/mailvelope), gated on the
+`jmapCompose` toggle - classic autosave/save keeps working unchanged otherwise. Refactored
+`sendNewEmail()`/`saveDraft()` onto shared private helpers (`resolveComposeContext()`, address
+parsing, `draftEmailProperties()`, `createDraftEmail()`) rather than duplicating identity/mailbox
+resolution a second time. `compose.ts`'s `saveAsDraft()` tries the JMAP path first for all three triggers (autosave, "Save as
+Draft", and "Save as Draft and Print" - `print()` only needs *a* valid row-id, and the client-side
+one built below is format-compatible, so there was no real reason to special-case it out, per ralf
+2026-08-27, `17ee5b304d`), falling back to the unchanged classic postback (now
+`saveAsDraftClassic()`) otherwise; on
+success it builds a client-side row-id and syncs `content.data.lastDrafted`/the `lastDrafted`
+widget, matching what `savingDraft_response()` already does for the classic path.
+
+**WebSocket sharing fixed (2026-08-27, `e23aca3580`)**: ralf noted the compose popup opened its own
+separate WebSocket/`MailJmap` instance instead of reusing the opener/main window's - wasteful (2
+Stalwart connections for one user session) and would matter for anything push-related.
+`MailApp.jmap` now reuses `window.opener.app.mail.jmap` when reachable+not closed (re-checked on
+every access, not cached once) - the same `window.opener.app.mail.*` pattern already used elsewhere
+in `app.ts` (`nmOwner()`, `customLabels`), mirroring how `window.egw` itself is already
+cross-window-shared. Surfaced a real subtlety: a popup runs its own separately-loaded JS bundle, so
+an error thrown by the (now possibly cross-window) jmap instance is an instance of a *different*
+realm's `JmapUserError`/`JmapUnsupportedBackendError` class - `instanceof` silently never matches
+even for a genuine one. Fixed every affected check (4 in `app.ts`, 1 in `compose.ts`) to compare
+`e?.constructor?.name` instead - same bug class as [[feedback_cross_realm_instanceof]].
 
 **Step 0 done (2026-08-27):** `Api\Mail\Jmap\Identity`/`EmailSubmission` type classes built (thin
 passthroughs, `JMAP_SUBMISSION` capability registered on `Api\Mail\Jmap\Http`). Rather than a
@@ -205,9 +292,13 @@ additive on top of it, not a parallel track.
   before. (Trade-off accepted: Phase 1 found several bugs only via live cross-backend testing, so
   the shim will get its own careful live-verification pass once built, not be assumed correct by
   analogy.)
-- **IMAP-shim draft semantics: reimport-and-replace**, not incremental update. Matches
-  `saveAsDraft()`'s existing whole-message-replace behavior exactly - no semantics change, smaller
-  first version. Revisit true incremental update later only if a real need surfaces.
+- **Draft semantics: reimport-and-replace, for BOTH backends** (revised 2026-08-27 - originally
+  decided shim-only, assuming real-JMAP could do true incremental update instead). Found live:
+  Stalwart rejects `Email/set update` touching body/header properties on an existing Email
+  ("Invalid property or value") even though the identical properties are accepted on `create` -
+  **Stalwart's blob store is write-once, an Email's content can never be modified in place, only
+  deleted** (ralf). Matches `saveAsDraft()`'s existing classic whole-message-replace behavior
+  anyway - no semantics change there, and no backend-specific branching needed either.
 - **`EmailSubmission`/blob infra designed for both compose AND `Storage/Merge.php` from day one** -
   not compose-scoped-only. Concretely: keep the `EmailSubmission`/blob-upload interface shaped
   around "submit a MIME message for delivery + Sent-folder placement", not compose-specific

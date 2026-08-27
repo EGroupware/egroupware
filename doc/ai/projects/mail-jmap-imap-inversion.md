@@ -2,6 +2,25 @@
 
 ## Status: Phase 1 committed+pushed 2026-08-26 (`d3545c57f8`). Phase 2 scoping started, no code yet.
 
+## Namespace rename done (2026-08-27, `81158a5e5a`)
+
+`Api\Jmap` was the abstract session base and `Api\Jmap\Http` the concrete, actually-used
+real-JMAP-over-HTTP session - backwards from this codebase's own established convention (`Api\Storage`
+is the concrete/main class, `Api\Storage\Base` is the abstract base) - `Api\Jmap` directly under
+`Api\` is where you look first for something usable, not further down in a subdirectory. **Swapped**
+(ralf, 2026-08-27): `api/src/Jmap.php` (`Api\Jmap`, abstract) → `api/src/Jmap/Base.php`
+(`Api\Jmap\Base`); `api/src/Jmap/Http.php` (`Api\Jmap\Http`, concrete) → `api/src/Jmap.php`
+(`Api\Jmap` directly). Cascaded into `Api\Jmap\Type`'s constructor (now accepts `Base`, since `Type`
+must accept EITHER concrete session flavour, not just the HTTP one), `Api\Mail\Jmap\Http extends
+Api\Jmap` (was `Jmap\Http`), and `Api\Mail\Jmap\Imap extends Jmap\Base` (the promoted JmapShim, NOT
+an HTTP session - was bare `Jmap`, now-wrongly-concrete after the swap). Everything else this
+session built on top (`Imap/Jmap.php`, `Smtp/Stalwart.php`, `ApiHandler.php`, `admin_mail.inc.php`,
+test files) already referenced `Api\Mail\Jmap\Http` via its own `JmapHttp` alias throughout - a
+DIFFERENT class, never affected by this swap - confirmed via a full repo grep and a runtime
+reflection check of the whole inheritance chain, plus the existing test suite (JmapTest.php 27/27,
+AdminMailHostDiscoveryTest+AdminMailMailboxesTest 29/29, all in the docker container - the local
+`phpunit` binary is still broken, see [[feedback_docker_debug_container_path]]-adjacent notes).
+
 ## Phase 2 scoping: both obvious "quick win" candidates are dead ends (2026-08-26)
 
 Before writing any Phase 2 code, screened the two highest-call-volume unmigrated methods
