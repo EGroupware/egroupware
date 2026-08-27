@@ -182,10 +182,12 @@ export class MailApp extends EgwApp
 
 	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - "jmapCompose" toolbar toggle's
-	 * state (id="jmapCompose" in index.xet). Session-only (not a preference) - deliberately reset
-	 * on every reload while this is still experimental. Read by composeMessage() to decide whether
-	 * a plain new-message Compose should send via JMAP (see MailJmap.sendNewEmail()) instead of the
-	 * classic server-side path - reply/forward/drafts stay classic regardless of this toggle.
+	 * state (id="jmapCompose" in index.xet), persisted as an implicit "mail"/"jmapCompose"
+	 * preference (restored in et2_ready()'s 'mail.index' case, saved in toggleJmapCompose()) -
+	 * same mechanism as previewPane/allowExternalIMGs/etc, easy to forget re-enabling otherwise
+	 * (ralf, 2026-08-27). Read by composeMessage() to decide whether a plain new-message Compose
+	 * should send via JMAP (see MailJmap.sendNewEmail()) instead of the classic server-side path -
+	 * reply/forward/drafts stay classic regardless of this toggle.
 	 */
 	jmapComposeEnabled = false;
 
@@ -315,6 +317,16 @@ export class MailApp extends EgwApp
 				const aom = egw_getObjectManager('mail').getObjectById('nm');
 				// @ts-ignore
 				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
+
+				// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - restore the "jmapCompose"
+				// toggle's last state (implicit preference, same mechanism as previewPane etc. just
+				// below - easy to forget re-enabling after every reload otherwise, ralf 2026-08-27)
+				const jmapComposeToggle : any = this.et2.getWidgetById('jmapCompose');
+				if (jmapComposeToggle)
+				{
+					this.jmapComposeEnabled = !!egw.preference('jmapCompose', 'mail');
+					jmapComposeToggle.value = this.jmapComposeEnabled;
+				}
 
 				const splitter = this.et2.getWidgetById('mailSplitter');
 				if (splitter && egw.preference('previewPane', 'mail') == 'expand')
@@ -7586,6 +7598,7 @@ export class MailApp extends EgwApp
 	toggleJmapCompose(_ev, _widget)
 	{
 		this.jmapComposeEnabled = !!_widget.value;
+		this.egw.set_preference('mail', 'jmapCompose', this.jmapComposeEnabled ? '1' : '');
 	}
 
 	/**
