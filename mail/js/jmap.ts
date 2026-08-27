@@ -2780,16 +2780,7 @@ export class MailJmap
 						// Same scope as the classic server-side subscription's SUBSCRIBTION_TYPES
 						// (Api\Mail\Imap\Jmap) - only relevant if enableWsPush actually registers a
 						// callback (see enableWsPush() below), otherwise never sent at all.
-						pushDataTypes: ['Email', 'Mailbox'],
-						// The local IMAP shim never advertises the WebSocket capability, so EVERY call
-						// for it rides the HTTP-transport timeout (unlike Stalwart, where that's a rare
-						// fallback against an already-warm connection) - and JmapShim's imapServer()
-						// opens a fresh raw IMAP connection per HTTP request, so one user action (eg.
-						// delete, which also fires a debounced folder-status/quota refresh) can fan out
-						// into several concurrent requests each paying that connect cost. 10s (the
-						// default, still used for Stalwart) was found live to be too tight for this -
-						// see HTTP_TIMEOUT_MS's docblock in jmap-jam-websocket.ts.
-						httpTimeoutMs: token.isLocal ? 30000 : undefined
+						pushDataTypes: ['Email', 'Mailbox']
 					});
 					// a stale-CSP session-fetch failure for this client is handled by the
 					// securitypolicyviolation listener installed in the constructor (see
@@ -3665,6 +3656,20 @@ export class MailJmap
 				if (!token.trashFolder)
 				{
 					throw new JmapUserError(this.egw.lang('No valid %1 folder configured!', this.egw.lang('trash')));
+				}
+				// Deleting something already IN Trash should destroy it directly, not move it
+				// into itself (a pointless copy+expunge round trip against the very folder it's
+				// already in) - same rule the classic path already enforces
+				// (Api\Mail::deleteMessages()/jmapDeleteMessages()'s own "already in trash, force
+				// remove_immediately" check) - found missing here live 2026-08-27 (ralf, testing
+				// while viewing Trash itself: "no need to copy/move them to Trash, just expunge
+				// would be enough" - confirmed via Dovecot push notifications showing a real
+				// MessageAppend into Trash per message followed by a MessageExpunge, for messages
+				// that were already sitting in Trash).
+				const trashMailboxId = await this.mailboxId(this.clients[profileID], token.accountId, profileID, token.trashFolder);
+				if (group[0].mailboxId === trashMailboxId)
+				{
+					return this.destroyIds(profileID, group[0].mailboxId, group.map(ref => ref.emailId));
 				}
 				return this.moveMessages(group, profileID, token.trashFolder);
 			}));

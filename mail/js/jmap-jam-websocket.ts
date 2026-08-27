@@ -77,31 +77,25 @@ const WEBSOCKET_CAPABILITY = "urn:ietf:params:jmap:websocket";
 // successful connection resets the counter, so a later transient blip gets the full budget again).
 const RECONNECT_DELAYS_MS = [1000, 5000, 30000];
 
-// Bounds every plain-fetch()-based HTTP call this client makes (the initial session load, and
-// every request()/requestMany() call while not on the WebSocket transport) - jmap-jam's own
-// JamClient has no timeout/AbortSignal support at all (confirmed: its fetch() calls take no
-// `signal`, and ClientConfig has no injectable fetch override), so without this, an unreachable
-// or silently-blackholing host leaves the caller waiting on the browser's own connection default
-// (commonly 60-120s+, OS/browser-dependent) - found live 2026-08-26 alongside the matching
-// server-side fix (Mail\Jmap::CONNECT_TIMEOUT). Slightly more generous than that 10s *connect-
-// only* server-side budget, since this one has to cover the full round trip (connect + TLS +
-// server processing + response), not just the TCP/TLS handshake. Does NOT cancel the underlying
-// fetch() itself (no AbortController plumbed through jmap-jam to do that) - only bounds how long
-// THIS client's caller waits for it, so the UI never hangs even though the browser's own network
-// stack may still be retrying in the background. Not applied to the WebSocket transport's own
-// per-request path (#requestOverWebSocket()) - that's already bounded at the connection level by
-// the heartbeat mechanism (heartbeatIntervalMs/heartbeatTimeoutMs).
+// Bounds ONLY the initial session/capability fetch (this client's constructor, below) - a real
+// connectivity check: is the server reachable at all, and does it advertise the WebSocket
+// capability worth attempting? An unreachable or silently-blackholing host would otherwise leave
+// that check waiting on the browser's own connection default (commonly 60-120s+, OS/browser-
+// dependent) - found live 2026-08-26 alongside the matching server-side connect-timeout fix
+// (Mail\Jmap::CONNECT_TIMEOUT).
 //
-// Overridable per-client via JamWebSocketClientConfig.httpTimeoutMs (see below) - this default is
-// tuned for Stalwart, where the HTTP path is a rare fallback (WS is normally open) against an
-// already-warm connection. The local IMAP shim never advertises the WebSocket capability at all
-// (see MailJmap's client construction in jmap.ts), so EVERY call for a shim account rides this
-// budget, and JmapShim's imapServer() (mail/src/JmapShim.php) opens a fresh raw IMAP connection per HTTP
-// request (PHP has no cross-request connection pooling) - one user action (eg. delete, which also
-// triggers a debounced folder-status/quota refresh) can fan out into several such concurrent
-// requests, each paying that connect cost, occasionally exceeding 10s under real network latency
-// or backend contention - found live 2026-08-27 (`MailJmap.updateKeywords()` timing out on a
-// plain IMAP/shim account's delete-to-trash). MailJmap passes a larger value for isLocal clients.
+// Deliberately NOT applied to request()/requestMany()'s HTTP-transport path (see their own
+// docblocks) - a per-request timeout there doesn't make sense: it can't cancel the underlying
+// fetch() anyway (no AbortController plumbed through jmap-jam), so it only produces a false-alarm
+// error for a request that's still legitimately working, never actually bounds server-side
+// processing time. Found live 2026-08-27: a plain-IMAP/shim account's Email/set (move-to-trash)
+// legitimately takes several real seconds of backend IMAP work (login + STORE/COPY/EXPUNGE, no
+// WebSocket to amortize it - see JmapShim's imapServer(), mail/src/JmapShim.php) - a client-side
+// request timeout there was just papering over that with a confusing, non-actionable error
+// (ralf, 2026-08-27: "request timeouts make no sense, apart from checking WS connectivity -
+// server-side connect timeout is a different story"). If a request is genuinely never going to
+// come back, that's the browser's own network stack's problem to eventually surface, not
+// something to race against here.
 const HTTP_TIMEOUT_MS = 10000;
 
 /** Race `promise` against a timeout - see HTTP_TIMEOUT_MS's docblock for why this exists and its limits. */
@@ -179,9 +173,8 @@ export type JamWebSocketClientConfig = ClientConfig &
 	 */
 	webSocketUrl? : string;
 	/**
-	 * Overrides HTTP_TIMEOUT_MS's module-level default for this client - see that constant's
-	 * docblock for why a non-WebSocket-capable backend (the local IMAP shim) typically needs a
-	 * more generous budget than Stalwart's rare WS-fallback case.
+	 * Overrides HTTP_TIMEOUT_MS's module-level default for this client's initial session/
+	 * capability fetch (see that constant's docblock) - not used anywhere else.
 	 */
 	httpTimeoutMs? : number;
 	/**
@@ -724,6 +717,11 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	 * straight back to the inherited HTTP implementation. Never falls back mid-flight (a request
 	 * already sent over the WebSocket is never silently retried over HTTP) - see #handleClose().
 	 *
+	 * No request timeout on the HTTP-transport branch - see HTTP_TIMEOUT_MS's docblock for why
+	 * (2026-08-27: it can't cancel the underlying fetch() anyway, so it only produced false-alarm
+	 * errors for requests that were still legitimately working). A genuinely dead request is left
+	 * to the browser's own network stack to eventually surface.
+	 *
 	 * Deliberately NOT declared `async` (just returns a Promise from one of two branches) - this
 	 * repo's real Babel build (see rollup.config.js: preset-env + @babel/plugin-transform-class-
 	 * properties) has two distinct miscompilation bugs for an *async* method combined with private
@@ -756,7 +754,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	{
 		if (this.transport !== "websocket")
 		{
-			return withTimeout(super.request([method, args], options), "JamWebSocketClient: request timed out", this.#httpTimeoutMs);
+			return super.request([method, args], options);
 		}
 		return this.#requestOverWebSocket(method, args, options);
 	}
@@ -824,8 +822,8 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			// jmap-jam's own requestMany() calls draftsFn with its own InvocationDraft-based proxy,
 			// unrelated to this file's - draftsFn itself doesn't care which Proxy calls it (both just
 			// implement {entity}.{operation}(args) + $ref()), only the static DraftsProxy types
-			// differ, hence the cast.
-			return withTimeout(super.requestMany(draftsFn as any, options), "JamWebSocketClient: requestMany timed out", this.#httpTimeoutMs);
+			// differ, hence the cast. No request timeout here either - see request()'s docblock.
+			return super.requestMany(draftsFn as any, options);
 		}
 		return this.#requestManyOverWebSocket(draftsFn, options);
 	}

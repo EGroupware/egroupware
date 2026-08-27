@@ -1048,8 +1048,27 @@ class Imap extends Jmap\Base
 			return null;
 		}
 		$key = $accountId.'|'.($calledFor ?? '');
-		return $servers[$key] ??= Account::read((int)$accountId, $calledFor)->imapServer($calledFor !== null ? (int)$calledFor : false);
+		// Classic Mail\Imap's own default socket timeout (Imap::getTimeOut(), 20s) is tuned for a
+		// single synchronous server-rendered request per user action - the shim's per-request-
+		// fresh-connection model (no cross-request pooling, no WebSocket to amortize it) fires
+		// several independent small requests per action instead, and under real backend I/O
+		// pressure that concurrency was enough to make a legitimately-still-working command hit
+		// that 20s ceiling and throw (found live 2026-08-27 - Dovecot's own MOVE response reported
+		// "Move completed (24.933 ... secs)" server-side, not a hang). Since the hosting farm
+		// already kills any request over 300s regardless, a shorter in-process timeout here only
+		// ever produces a false-alarm error for a request that's still legitimately working -
+		// same reasoning as the client-side request-timeout removal in jmap-jam-websocket.ts.
+		// self::IMAP_TIMEOUT comfortably exceeds that 300s ceiling so it's never the limiting factor.
+		return $servers[$key] ??= Account::read((int)$accountId, $calledFor)
+			->imapServer($calledFor !== null ? (int)$calledFor : false, self::IMAP_TIMEOUT);
 	}
+
+	/**
+	 * Socket read timeout (seconds) for connections opened via imapServer() above - see that
+	 * method's docblock for why this deliberately exceeds the hosting farm's own 300s request
+	 * kill instead of using Mail\Imap's classic 20s default.
+	 */
+	const IMAP_TIMEOUT = 600;
 
 	/**
 	 * Translate an EGroupware-canonical "/"-joined folder path to the account's real IMAP mailbox name
