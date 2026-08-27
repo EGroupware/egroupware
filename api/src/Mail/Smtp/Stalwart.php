@@ -243,7 +243,7 @@ class Stalwart extends Sql
 			{
 				unset($diff['aliases']);
 			}
-			if (($diff['memberGroupIds'] = JMAP::boolPatch(array_keys(get_object_vars($account['memberGroupIds'])), array_keys($userData['stalwart']['memberGroupIds']))) == (object)[])
+			if (($diff['memberGroupIds'] = JmapHttp::boolPatch(array_keys(get_object_vars($account['memberGroupIds'])), array_keys($userData['stalwart']['memberGroupIds']))) == (object)[])
 			{
 				unset($diff['memberGroupIds']);
 			}
