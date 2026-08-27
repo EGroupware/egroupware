@@ -608,13 +608,14 @@ export class MailCompose
 
 	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - attempt the JMAP-native draft-save
-	 * path (autosave and the plain "Save as Draft" button; "Save as Draft and Print" stays
-	 * classic for now, its print() step needs a classic row-id). See trySendViaJmap()'s own
-	 * docblock for the true/false contract - same shape here.
+	 * path (autosave, "Save as Draft", and "Save as Draft and Print" - print() only needs *a*
+	 * valid row-id, and the one built below is format-compatible with the classic path's own, so
+	 * there's no reason to exclude it). See trySendViaJmap()'s own docblock for the true/false
+	 * contract - same shape here.
 	 */
 	private async trySaveDraftViaJmap(action : string) : Promise<boolean>
 	{
-		if (action === 'button[saveAsDraftAndPrint]' || !this.jmapEligible()) return false;
+		if (!this.jmapEligible()) return false;
 
 		let result : {emailId : string, mailboxId : string};
 		try
@@ -636,7 +637,12 @@ export class MailCompose
 		content.data.lastDrafted = rowId;
 		this.et2.setArrayMgr('content', content);
 		(this.et2.getWidgetById('lastDrafted') as any)?.set_value(rowId);
-		if (action !== 'autosaving')
+		if (action === 'button[saveAsDraftAndPrint]')
+		{
+			this.print('mail::' + rowId);
+			this.egw.message(this.egw.lang('Message saved'));
+		}
+		else if (action !== 'autosaving')
 		{
 			this.egw.message(this.egw.lang('Message saved'));
 		}
