@@ -181,11 +181,26 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 	 * so a regression here should fail at this layer, not just show up as a
 	 * wrong 'total' from ajax_get_rows().
 	 *
+	 * The request created here is stored server-side via a real PHP session
+	 * (WidgetBaseTest sets Request::$request_class to Request\Session). An
+	 * earlier test's successful Nextmatch::ajax_get_rows() dispatch closes that
+	 * session (its normal, correct end-of-request commit_session() call) -
+	 * harmless for a real one-request-per-process web call, but fatal here:
+	 * every test in this file shares one long-running PHP process, so a closed
+	 * session is never implicitly reopened between tests. Reopen it explicitly
+	 * before relying on it. Without this, Etemplate\Request::read() below would
+	 * find nothing (Cache::setSession() silently no-ops on a closed session
+	 * instead of writing $_SESSION), hit its own "session expired" fallback,
+	 * and - since that fallback assumes a real web request - call exit(),
+	 * killing the whole PHPUnit process instead of just failing this test.
+	 *
 	 * @param string $expected_get_rows the get_rows callback beforeSendToClient()
 	 *	should have stored server-side for $form_name
 	 */
 	private function historyRequest($form_name, $record_id, $expected_get_rows)
 	{
+		if (session_status() !== PHP_SESSION_ACTIVE) session_start();
+
 		Etemplate::reset_request();
 		$etemplate = new Etemplate();
 		$this->assertTrue($etemplate->read(self::TEST_TEMPLATE, 'test'),
@@ -209,7 +224,9 @@ class NextmatchTest extends Etemplate\WidgetBaseTest
 		}
 		$this->assertNotEmpty($exec_id, 'history test template did not create an exec id');
 
-		$stored = Etemplate\Request::read($exec_id);
+		// $handle_not_found=false: never let a "not found" fall through to
+		// Etemplate\Request::read()'s web-request-only redirect/exit() fallback
+		$stored = Etemplate\Request::read($exec_id, false);
 		$this->assertSame($expected_get_rows, $stored->content[$form_name]['get_rows'] ?? null,
 			'HistoryLog::beforeSendToClient() did not seed the trusted get_rows into request content');
 
