@@ -61,6 +61,21 @@ export interface JmapMessageReference
 	emailId : string;
 }
 
+/**
+ * Plain new-message compose input for sendNewEmail() - see that method's docblock. Deliberately
+ * minimal (Step 1 of doc/ai/projects/mail-compose-jmap-migration.md): no reply/forward context,
+ * no attachments, no S/MIME yet.
+ */
+export interface JmapNewEmail
+{
+	to? : string;	// comma-separated addresses
+	cc? : string;
+	bcc? : string;
+	subject? : string;
+	body? : string;
+	isHtml? : boolean;
+}
+
 /** Result of MailJmap.fetchBody() - see that method's docblock */
 export type JmapBodyResult =
 	{ special : true }
@@ -3265,6 +3280,108 @@ export class MailJmap
 	 * Mail::deleteMessages()'s "remove_immediately", not "mark_as_deleted", which has no JMAP
 	 * equivalent and has been removed entirely, see plan).
 	 */
+	/**
+	 * Send a brand-new message via JMAP Email/set + EmailSubmission/set - Step 1 of
+	 * doc/ai/projects/mail-compose-jmap-migration.md: plain new-message compose only, no
+	 * reply/forward context, no attachments, no S/MIME yet.
+	 *
+	 * Real-JMAP accounts only for now - a real-JMAP profile's JamWebSocketClient talks directly
+	 * to Stalwart (see ProfileHandler::jmapBootstrap()'s $local branch), which already natively
+	 * implements Identity/EmailSubmission, so this needs zero new server-side PHP for that
+	 * backend. The IMAP-shim backend (mail/jmap.php -> Api\Mail\Jmap\Imap) has no
+	 * EmailSubmission/create support yet (doc's Step 2, not built) - callers must not route
+	 * shim-backed profiles here until that lands.
+	 *
+	 * Mirrors mail/src/ApiHandler.php's sendViaJmap() (the REST API's own JMAP send path, already
+	 * live-verified against real Stalwart 2026-08-27) - same Drafts-create-then-submit shape,
+	 * same Drafts->Sent onSuccessUpdateEmail patch incl. marking the Sent copy read.
+	 *
+	 * @param profileID
+	 * @param email
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
+	 */
+	async sendNewEmail(profileID : string, email : JmapNewEmail) : Promise<void>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) throw this.unreachableError();
+			const client = this.clients[profileID];
+
+			const [{identities, mailboxes}] = await client.requestMany((t) => ({
+				identities: t.Identity.get({accountId: token.accountId}),
+				mailboxes: t.Mailbox.get({accountId: token.accountId}),
+			}));
+			const identity = identities.list?.[0];
+			if (!identity)
+			{
+				throw new JmapUserError(this.egw.lang('No identity found for this account'));
+			}
+			const draftsId = mailboxes.list?.find((m : any) => m.role === 'drafts')?.id;
+			const sentId = mailboxes.list?.find((m : any) => m.role === 'sent')?.id;
+			if (!draftsId || !sentId)
+			{
+				throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
+			}
+
+			const addresses = (value? : string) => value
+				? value.split(',').map((address) => address.trim()).filter(Boolean).map((address) => ({email: address}))
+				: undefined;
+			const isHtml = !!email.isHtml;
+			const bodyPartType = isHtml ? 'text/html' : 'text/plain';
+
+			const [{emailSet}] = await client.requestMany((t) => ({
+				emailSet: t.Email.set({
+					accountId: token.accountId,
+					create: {
+						s1: {
+							mailboxIds: {[draftsId]: true},
+							keywords: {'$draft': true},
+							from: [{email: identity.email, name: identity.name}],
+							to: addresses(email.to),
+							cc: addresses(email.cc),
+							bcc: addresses(email.bcc),
+							subject: email.subject ?? '',
+							bodyValues: {body: {value: email.body ?? '', charset: 'utf-8'}},
+							[isHtml ? 'htmlBody' : 'textBody']: [{partId: 'body', type: bodyPartType}],
+						},
+					},
+				}),
+			}));
+			if (!emailSet.created?.s1)
+			{
+				throw new JmapUserError(describeSetError(emailSet.notCreated) ?? this.egw.lang('Failed to create message'));
+			}
+			const emailId = emailSet.created.s1.id;
+
+			const [{submission}] = await client.requestMany((t) => ({
+				submission: t.EmailSubmission.set({
+					accountId: token.accountId,
+					create: {sub1: {emailId, identityId: identity.id}},
+					onSuccessUpdateEmail: {
+						'#sub1': {
+							[`mailboxIds/${draftsId}`]: null,
+							[`mailboxIds/${sentId}`]: true,
+							'keywords/$draft': null,
+							'keywords/$seen': true,
+						},
+					},
+				}),
+			}));
+			if (!submission.created?.sub1)
+			{
+				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
+			}
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			console.error('MailJmap.sendNewEmail(): failed', e);
+			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
+		}
+	}
+
 	async deleteMessages(references : JmapMessageReference[], mode : 'trash' | 'destroy') : Promise<void>
 	{
 		if (!references.length)
