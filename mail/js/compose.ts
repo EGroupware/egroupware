@@ -567,12 +567,20 @@ export class MailCompose
 	 */
 	private jmapEligible() : boolean
 	{
-		if (!this.isJmapMode || this.app.mailvelope_editor) return false;
 		const attachments = this.et2.getArrayMgr('content').getEntry('attachments') || {};
-		if (Object.keys(attachments).length) return false;
 		const toolbar : any = this.et2.getWidgetById('composeToolbar');
 		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
 			(id) => toolbar?.getWidgetById(id)?.get_value());
+		// TEMPORARY instrumentation for the autosave-still-falls-back regression - remove once done.
+		console.log('jmapEligible() TEMP', {
+			isJmapMode: this.isJmapMode,
+			mailvelope: !!this.app.mailvelope_editor,
+			attachments,
+			toolbarFound: !!toolbar,
+			blockingToggle,
+		});
+		if (!this.isJmapMode || this.app.mailvelope_editor) return false;
+		if (Object.keys(attachments).length) return false;
 		return !blockingToggle;
 	}
 
@@ -614,7 +622,10 @@ export class MailCompose
 	 */
 	private async trySaveDraftViaJmap(action : string) : Promise<boolean>
 	{
-		if (action === 'button[saveAsDraftAndPrint]' || !this.jmapEligible()) return false;
+		const eligible = this.jmapEligible();
+		// TEMPORARY instrumentation for the autosave-still-falls-back regression - remove once done.
+		console.log('trySaveDraftViaJmap() TEMP', {action, eligible, profileID: this.currentProfileID(), jmapDraftEmailId: this.jmapDraftEmailId});
+		if (action === 'button[saveAsDraftAndPrint]' || !eligible) return false;
 
 		let result : {emailId : string, mailboxId : string};
 		try
@@ -623,6 +634,8 @@ export class MailCompose
 		}
 		catch (e)
 		{
+			// TEMPORARY instrumentation for the autosave-still-falls-back regression - remove once done.
+			console.log('trySaveDraftViaJmap() TEMP caught', e, {isUnsupportedBackend: this.isUnsupportedBackendError(e)});
 			if (this.isUnsupportedBackendError(e))
 			{
 				return false;
