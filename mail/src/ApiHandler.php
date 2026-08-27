@@ -453,13 +453,23 @@ class ApiHandler extends Api\CalDAV\Handler
 			throw new \Exception('Could not find Drafts/Sent mailbox by role for account #'.$mail_account->acc_id, 500);
 		}
 
+		// address widgets (Et2Email) can hand a client caller a full "Display Name
+		// <address@example.com>" string, not a bare address - a naive explode/wrap produced an
+		// invalid JMAP EmailAddress.email (found live 2026-08-27 in the client-side sendNewEmail()
+		// counterpart, same underlying bug) - Api\Mail::parseAddressList() is this codebase's
+		// existing, battle-tested RFC 822 parser (handles quoted personal names, real-world
+		// malformations, ...), reused here instead of hand-rolling the same parsing again.
 		$addresses = static function($value)
 		{
 			if (empty($value)) return null;
 			$list = [];
-			foreach (is_array($value) ? $value : explode(',', $value) as $address)
+			foreach (Api\Mail::parseAddressList($value) as $address)
 			{
-				if (($address = trim($address)) !== '') $list[] = ['email' => $address];
+				if (!$address->valid) continue;
+				$list[] = array_filter([
+					'email' => $address->bare_address,
+					'name' => $address->personal,
+				], static fn($v) => $v !== null && $v !== '');
 			}
 			return $list ?: null;
 		};

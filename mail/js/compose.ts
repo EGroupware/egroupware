@@ -541,16 +541,19 @@ export class MailCompose
 
 		const profileID = this.et2.getWidgetById('mailaccount')?.get_value();
 		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
+		const email = {
+			to: this.et2.getWidgetById('to')?.get_value(),
+			cc: this.et2.getWidgetById('cc')?.get_value(),
+			bcc: this.et2.getWidgetById('bcc')?.get_value(),
+			subject: this.et2.getWidgetById('subject')?.get_value(),
+			body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
+			isHtml,
+		};
+		// TEMPORARY instrumentation for the "No recipients found" regression - remove once done.
+		console.log('trySendViaJmap() TEMP', {profileID, email});
 		try
 		{
-			await this.app.jmap.sendNewEmail(String(profileID), {
-				to: this.et2.getWidgetById('to')?.get_value(),
-				cc: this.et2.getWidgetById('cc')?.get_value(),
-				bcc: this.et2.getWidgetById('bcc')?.get_value(),
-				subject: this.et2.getWidgetById('subject')?.get_value(),
-				body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
-				isHtml,
-			});
+			await this.app.jmap.sendNewEmail(String(profileID), email);
 		}
 		catch (e)
 		{

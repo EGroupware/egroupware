@@ -3354,8 +3354,19 @@ export class MailJmap
 				throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
 			}
 
+			// address widgets (Et2Email) store an autocomplete-selected entry as a full
+			// "Display Name <address@example.com>" string, not a bare address - found live
+			// 2026-08-27, Stalwart rejecting a submission with "No recipients found in email"
+			// because {email: "Name <addr>"} isn't a valid JMAP EmailAddress.email value.
+			const parseAddress = (raw : string) : {email : string, name? : string} =>
+			{
+				const match = raw.match(/^(.*)<([^<>]+)>\s*$/);
+				if (!match) return {email: raw};
+				const name = match[1].trim().replace(/^["']|["']$/g, '');
+				return name ? {email: match[2].trim(), name} : {email: match[2].trim()};
+			};
 			const addresses = (value? : string | string[]) => value
-				? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map((address) => ({email: address}))
+				? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map(parseAddress)
 				: undefined;
 			const isHtml = !!email.isHtml;
 			const bodyPartType = isHtml ? 'text/html' : 'text/plain';

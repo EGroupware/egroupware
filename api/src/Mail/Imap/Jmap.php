@@ -1061,8 +1061,13 @@ class Jmap extends Mail\Imap
 	 * @param string $messageId Message-ID header, used only if NO Horde_Imap_Client_Search_Query->emailIds()
 	 * @param string $folderId
 	 * @param string|null &$folder =null folder name on return
-	 * @return ?int
-	 * @throws \Horde_Imap_Client_Exception
+	 * @return ?int null if not found, OR if the underlying raw IMAP search itself fails - eg. a
+	 *  real IMAP-protocol account (rare, but possible for a JMAP-native account that ALSO has a
+	 *  plain-IMAP address per acc_imap_type's own history) whose connection genuinely can't be
+	 *  established - matching this method's own documented "not found" contract for callers like
+	 *  splitRowID() rather than propagating a fatal "Error when communicating with the mail
+	 *  server" (found live 2026-08-27, a JMAP(S)-only account's ajax_flagMessages() hitting this
+	 *  via splitRowID()'s emailID-only row-id resolution)
 	 */
 	protected function emailId2uid(string $emailId, string $messageId, string $folderId, ?string &$folder=null)
 	{
@@ -1075,9 +1080,17 @@ class Jmap extends Mail\Imap
 		{
 			$query->headerText('Message-ID', $messageId);
 		}
-		foreach($this->search($folder=$this->jmapClient()->folderId2path($folderId), $query) as $uid)
+		try
 		{
-			return (int)(string)$uid ?: null;    // casting direct to (int) does NOT work / gives always 1!
+			foreach($this->search($folder=$this->jmapClient()->folderId2path($folderId), $query) as $uid)
+			{
+				return (int)(string)$uid ?: null;    // casting direct to (int) does NOT work / gives always 1!
+			}
+		}
+		catch (\Horde_Imap_Client_Exception $e)
+		{
+			unset($e);
+			return null;
 		}
 		return null;
 	}
@@ -1094,7 +1107,8 @@ class Jmap extends Mail\Imap
 	 *
 	 * @param string $emailId
 	 * @param string $folderPath real IMAP folder path e.g. "INBOX/Sent"
-	 * @return ?int real IMAP UID, or null if not found
+	 * @return ?int real IMAP UID, or null if not found, OR if the underlying raw IMAP search
+	 *  itself fails - see emailId2uid()'s own docblock for why that's caught here too
 	 */
 	public function emailId2uidByPath(string $emailId, string $folderPath) : ?int
 	{
@@ -1104,9 +1118,17 @@ class Jmap extends Mail\Imap
 			return null;	// no Message-ID fallback available here (no $messageId at this point)
 		}
 		$query->emailIds($emailId);
-		foreach ($this->search($folderPath, $query) as $uid)
+		try
 		{
-			return (int)(string)$uid ?: null;
+			foreach ($this->search($folderPath, $query) as $uid)
+			{
+				return (int)(string)$uid ?: null;
+			}
+		}
+		catch (\Horde_Imap_Client_Exception $e)
+		{
+			unset($e);
+			return null;
 		}
 		return null;
 	}
