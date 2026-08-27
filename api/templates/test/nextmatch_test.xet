@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
+<!-- This template is used in automated testing -->
+<overlay>
+	<template id="api.nextmatch_test" template="" lang="" group="0" version="17.1">
+		<historylog id="history"/>
+		<historylog id="history_custom" get_rows="EGroupware\Api\Etemplate\Widget\NextmatchTest::mock_get_rows"/>
+	</template>
+</overlay>
