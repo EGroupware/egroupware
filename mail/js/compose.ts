@@ -528,13 +528,17 @@ export class MailCompose
 	 */
 	private async trySendViaJmap() : Promise<boolean>
 	{
-		if (Object.keys(this.et2.getArrayMgr('content').getEntry('attachments') || {}).length)
+		const attachments = this.et2.getArrayMgr('content').getEntry('attachments') || {};
+		const toolbar : any = this.et2.getWidgetById('composeToolbar');
+		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
+			(id) => toolbar?.getWidgetById(id)?.get_value());
+		// TEMPORARY instrumentation for the silent-classic-fallback regression - remove once done.
+		console.log('trySendViaJmap() TEMP eligibility', {isJmapMode: this.isJmapMode, attachments, toolbarFound: !!toolbar, blockingToggle});
+		if (Object.keys(attachments).length)
 		{
 			return false;
 		}
-		const toolbar : any = this.et2.getWidgetById('composeToolbar');
-		if (['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].some(
-			(id) => toolbar?.getWidgetById(id)?.get_value()))
+		if (blockingToggle)
 		{
 			return false;
 		}
