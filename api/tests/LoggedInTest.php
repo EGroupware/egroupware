@@ -14,6 +14,7 @@
 
 namespace EGroupware\Api;
 
+use PHPUnit\Framework\Attributes\Before;
 use PHPUnit\Framework\TestCase as TestCase;
 use EGroupware\Api;
 
@@ -47,6 +48,38 @@ abstract class LoggedInTest extends TestCase
 			return preg_replace('/ with data set .*/', '', $name);
 		}
 		return $name;
+	}
+
+	/**
+	 * Reopen the PHP session before each test, if a prior test closed it.
+	 *
+	 * PHPUnit runs every test - across every LoggedInTest/WidgetBaseTest subclass -
+	 * in one shared, long-running process. Plenty of normal, correct application
+	 * code commits and closes the session at the end of what it thinks is a single
+	 * web request (eg. Nextmatch::ajax_get_rows() calling
+	 * $GLOBALS['egw']->session->commit_session(), which calls session_write_close()) -
+	 * harmless for a real request, but the session then stays closed for every
+	 * later test in this process unless something reopens it. A closed session
+	 * makes Api\Cache::setSession()/getSession() silently no-op instead of
+	 * persisting, which then makes any test relying on session-backed storage (eg.
+	 * Etemplate\Request\Session, used for every WidgetBaseTest widget test) fail to
+	 * find its own just-written data - and Etemplate\Request::read()'s "not found"
+	 * fallback assumes a real web request and calls exit()/redirects, which doesn't
+	 * just fail that one test, it kills this entire shared PHPUnit process.
+	 *
+	 * Uses #[Before] rather than overriding setUp(): PHPUnit invokes every
+	 * #[Before]-attributed method up the class hierarchy automatically, regardless
+	 * of whether a subclass overrides setUp() (and whether or not it remembers to
+	 * call parent::setUp()) - the fragile alternative would be auditing every
+	 * setUp() override, in this file and any future one, forever.
+	 */
+	#[Before]
+	protected function reopenSessionIfClosed() : void
+	{
+		if (session_status() !== PHP_SESSION_ACTIVE)
+		{
+			session_start();
+		}
 	}
 
 	/**
@@ -279,7 +312,13 @@ abstract class LoggedInTest extends TestCase
 				$GLOBALS['egw']->session->sessionid = 'CLI';
 				return 'CLI';
 			}
-			die($reason ? $reason : "Wrong account or password - run tests with 'phpunit -c doc/phpunit.xml' or 'phpunit <test_dir> -c doc/phpunit.xml'\n\n");
+			// NOT die()/exit(): PHPUnit runs one shared, long-running process - killing it here
+			// (as opposed to throwing, which load_egw()'s surrounding try/catch turns into a
+			// graceful markTestSkipped()) takes down the ENTIRE suite, not just this test/class.
+			// Confirmed real: any test exercising a deliberately-wrong password (eg. a negative
+			// auth-check test, or asAdmin()/switchUser() with a stale admin password) reproduces
+			// "Fatal error: Premature end of PHP process" instead of a normal test failure.
+			throw new \Exception($reason ? $reason : "Wrong account or password - run tests with 'phpunit -c doc/phpunit.xml' or 'phpunit <test_dir> -c doc/phpunit.xml'");
 		}
 		unset($GLOBALS['egw_login_data']);
 		return $sessionid;
