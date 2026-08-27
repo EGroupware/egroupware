@@ -242,11 +242,7 @@ class InfologApp extends EgwApp
 				case 'bydate':
 				case 'duedate':
 					dates.set_disabled(false);
-					const filterDrawer = filter.closest('egw-app').filtersDrawer;
-					if (filterDrawer && !filterDrawer.open)
-					{
-						filterDrawer.open = true;
-					}
+
 					// Focusing an empty date field can make it silently pick today and fire its own
 					// change, overwriting dates a favorite just applied - only focus if nm really has none.
 					if (!this.nm.activeFilters.col_filter?.startdate)

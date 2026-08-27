@@ -82,11 +82,6 @@ class TimesheetApp extends EgwApp
 			if (!filter.value) this.nm.applyFilters({startdate: null, enddate: null}, {reload: false});
 			if (filter.value === "custom")
 			{
-				const filterDrawer = filter.closest('egw-app').filtersDrawer;
-				if (filterDrawer && !filterDrawer.open)
-				{
-					filterDrawer.open = true;
-				}
 				// Focusing an empty date field can make it silently pick today and fire its own
 				// change, overwriting dates a favorite just applied - only focus if nm really has none.
 				if (!this.nm.activeFilters.startdate)
