@@ -5064,6 +5064,18 @@ class Mail
 			if (self::$debug) error_log(__METHOD__." no messages Message(s): ".implode(',',$_messageUID));
 			return false;
 		}
+		// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): jmapFlagMessages()
+		// above already handles every JMAP-native id shape - reaching here on a JMAP icServer means
+		// a numeric/classic-style $_messageUID that has no raw IMAP connection to fall back to
+		// either (found live 2026-08-27: openMailbox() raw-socket-connecting to a JMAP(S)-only
+		// endpoint, "Error when communicating with the mail server" - and worse, that failed Horde
+		// connection attempt appears to poison the memoized Account::imapServer() instance for
+		// unrelated LATER calls too, e.g. mail_compose's own Api\Mail::getInstance() failing right
+		// after). No classic fallback possible here, same as jmapFlagMessages()'s own catch block.
+		if ($this->icServer instanceof Mail\Imap\Jmap)
+		{
+			return false;
+		}
 		$this->icServer->openMailbox($_folder ?: $this->sessionData['mailbox']);
 		$folder = $this->icServer->getCurrentMailbox();
 		if (is_array($_messageUID)&& count($_messageUID)>50)
