@@ -31,6 +31,14 @@ export class MailCompose
 	 */
 	private readonly isJmapMode : boolean = new URLSearchParams(window.location.search).get('jmap') === '1';
 
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - the JMAP Email id of this compose
+	 * session's own draft, once trySaveDraftViaJmap() has created one - passed back in as
+	 * saveDraft()'s existingEmailId on the NEXT autosave/save so it updates that same draft in
+	 * place instead of creating a new one on every autosave tick.
+	 */
+	private jmapDraftEmailId? : string;
+
 	get egw() : IegwAppLocal
 	{
 		return this.app.egw;
@@ -527,41 +535,15 @@ export class MailCompose
 	 */
 	private async trySendViaJmap() : Promise<boolean>
 	{
-		const attachments = this.et2.getArrayMgr('content').getEntry('attachments') || {};
-		const toolbar : any = this.et2.getWidgetById('composeToolbar');
-		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
-			(id) => toolbar?.getWidgetById(id)?.get_value());
-		if (Object.keys(attachments).length)
-		{
-			return false;
-		}
-		if (blockingToggle)
-		{
-			return false;
-		}
+		if (!this.jmapEligible()) return false;
 
-		const profileID = this.et2.getWidgetById('mailaccount')?.get_value();
-		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
-		const email = {
-			to: this.et2.getWidgetById('to')?.get_value(),
-			cc: this.et2.getWidgetById('cc')?.get_value(),
-			bcc: this.et2.getWidgetById('bcc')?.get_value(),
-			subject: this.et2.getWidgetById('subject')?.get_value(),
-			body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
-			isHtml,
-		};
 		try
 		{
-			await this.app.jmap.sendNewEmail(String(profileID), email);
+			await this.app.jmap.sendNewEmail(String(this.currentProfileID()), this.currentEmailFields());
 		}
 		catch (e)
 		{
-			// this.app.jmap may now be the OPENER's own instance (see MailApp.jmap's own
-			// docblock) - an error it throws is an instance of ITS realm's JmapUnsupportedBackendError
-			// class, not this popup's own separately-loaded one, so `instanceof` here would always
-			// be false even for a real match (same pitfall as feedback_cross_realm_instanceof).
-			// Compare by name instead, which survives crossing the window boundary.
-			if (e?.constructor?.name === 'JmapUnsupportedBackendError')
+			if (this.isUnsupportedBackendError(e))
 			{
 				return false;
 			}
@@ -574,6 +556,90 @@ export class MailCompose
 		// already sent successfully (found live 2026-08-27)
 		this.et2.getInstanceManager().skip_close_prompt();
 		window.close();
+		return true;
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - same eligibility scope as
+	 * trySendViaJmap()/MailJmap.sendNewEmail(): no attachments, no cross-app integration, no
+	 * S/MIME. "autosave... has the same unimplemented features as our current sending" (ralf,
+	 * 2026-08-27).
+	 */
+	private jmapEligible() : boolean
+	{
+		if (!this.isJmapMode || this.app.mailvelope_editor) return false;
+		const attachments = this.et2.getArrayMgr('content').getEntry('attachments') || {};
+		if (Object.keys(attachments).length) return false;
+		const toolbar : any = this.et2.getWidgetById('composeToolbar');
+		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
+			(id) => toolbar?.getWidgetById(id)?.get_value());
+		return !blockingToggle;
+	}
+
+	private currentProfileID() : string
+	{
+		return String(this.et2.getWidgetById('mailaccount')?.get_value());
+	}
+
+	private currentEmailFields()
+	{
+		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
+		return {
+			to: this.et2.getWidgetById('to')?.get_value(),
+			cc: this.et2.getWidgetById('cc')?.get_value(),
+			bcc: this.et2.getWidgetById('bcc')?.get_value(),
+			subject: this.et2.getWidgetById('subject')?.get_value(),
+			body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
+			isHtml,
+		};
+	}
+
+	/**
+	 * this.app.jmap may now be the OPENER's own instance (see MailApp.jmap's own docblock) - an
+	 * error it throws is an instance of ITS realm's JmapUnsupportedBackendError class, not this
+	 * popup's own separately-loaded one, so `instanceof` here would always be false even for a
+	 * real match (same pitfall as feedback_cross_realm_instanceof). Compare by name instead,
+	 * which survives crossing the window boundary.
+	 */
+	private isUnsupportedBackendError(e : any) : boolean
+	{
+		return e?.constructor?.name === 'JmapUnsupportedBackendError';
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - attempt the JMAP-native draft-save
+	 * path (autosave and the plain "Save as Draft" button; "Save as Draft and Print" stays
+	 * classic for now, its print() step needs a classic row-id). See trySendViaJmap()'s own
+	 * docblock for the true/false contract - same shape here.
+	 */
+	private async trySaveDraftViaJmap(action : string) : Promise<boolean>
+	{
+		if (action === 'button[saveAsDraftAndPrint]' || !this.jmapEligible()) return false;
+
+		let result : {emailId : string, mailboxId : string};
+		try
+		{
+			result = await this.app.jmap.saveDraft(this.currentProfileID(), this.currentEmailFields(), this.jmapDraftEmailId);
+		}
+		catch (e)
+		{
+			if (this.isUnsupportedBackendError(e))
+			{
+				return false;
+			}
+			this.egw.message(e.message || this.egw.lang('Failed to save draft'), 'error');
+			return true;
+		}
+		this.jmapDraftEmailId = result.emailId;
+		const content = this.et2.getArrayMgr('content');
+		const rowId = `${this.egw.user('account_id')}::${this.currentProfileID()}::${result.mailboxId}::${result.emailId}`;
+		content.data.lastDrafted = rowId;
+		this.et2.setArrayMgr('content', content);
+		(this.et2.getWidgetById('lastDrafted') as any)?.set_value(rowId);
+		if (action !== 'autosaving')
+		{
+			this.egw.message(this.egw.lang('Message saved'));
+		}
 		return true;
 	}
 
@@ -719,48 +785,70 @@ export class MailCompose
 
 			if (content)
 			{
-				// if we compose an encrypted message, we have to get the encrypted content
-				if (self.app.mailvelope_editor)
+				// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - try the JMAP-native
+				// draft-save path first (autosave and plain "Save as Draft"). Only ever engages
+				// when the jmapCompose toggle is on AND this compose is otherwise eligible (no
+				// attachments/integration/S-MIME/mailvelope) - "Not sure we want to follow that
+				// up now" (ralf) on the classic autosave's own raw-IMAP-fallthrough error was the
+				// reason to build this, so classic autosave/save must keep working unchanged
+				// whenever the toggle is off or this compose isn't (yet) eligible.
+				self.trySaveDraftViaJmap(action).then((handled) =>
 				{
-					self.app.mailvelope_editor.encrypt([]).then((_armored) =>
+					if (handled)
 					{
-						content['mail_plaintext'] = _armored;
-						void self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],(_data) =>{
-							const res = self.savingDraft_response(_data,action);
-							if (res)
-							{
-								_resolve();
-							}
-							else
-							{
-								_reject();
-							}
-						}).sendRequest(true);
-					}, (_err) =>
-					{
-						self.egw.message(_err.message, 'error');
-						_reject();
-					});
-					return false;
-				}
-				else
-				{
-					// Send request through framework main window, so it works even if the main window is reloaded
-					egw_getFramework().egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], (_data) =>
-					{
-						const res = self.savingDraft_response(_data, action);
-						if (res)
-						{
-							_resolve();
-						}
-						else
-						{
-							_reject();
-						}
-					}).sendRequest(true);
-				}
+						_resolve();
+						return;
+					}
+					self.saveAsDraftClassic(content, action, _resolve, _reject);
+				});
 			}
 		});
+	}
+
+	/**
+	 * The classic server-side "Save as Draft" postback - unchanged, still the ONLY path when
+	 * trySaveDraftViaJmap() isn't eligible (see its own docblock).
+	 */
+	private saveAsDraftClassic(content : any, action : string, _resolve : () => void, _reject : () => void)
+	{
+		const self = this;
+		// if we compose an encrypted message, we have to get the encrypted content
+		if (self.app.mailvelope_editor)
+		{
+			self.app.mailvelope_editor.encrypt([]).then((_armored) =>
+			{
+				content['mail_plaintext'] = _armored;
+				void self.egw.json('mail.mail_compose.ajax_saveAsDraft',[content, action],(_data) =>{
+					const res = self.savingDraft_response(_data,action);
+					if (res)
+					{
+						_resolve();
+					}
+					else
+					{
+						_reject();
+					}
+				}).sendRequest(true);
+			}, (_err) =>
+			{
+				self.egw.message(_err.message, 'error');
+				_reject();
+			});
+			return;
+		}
+		// Send request through framework main window, so it works even if the main window is reloaded
+		egw_getFramework().egw_appWindow().egw.json('mail.mail_compose.ajax_saveAsDraft', [content, action], (_data) =>
+		{
+			const res = self.savingDraft_response(_data, action);
+			if (res)
+			{
+				_resolve();
+			}
+			else
+			{
+				_reject();
+			}
+		}).sendRequest(true);
 	}
 
 	/**

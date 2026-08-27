@@ -3325,75 +3325,9 @@ export class MailJmap
 	{
 		try
 		{
-			const token = await this.ensureToken(profileID);
-			if (!token) throw this.unreachableError();
-			// IMAP-shim accounts already get a working token (folder/message browsing is
-			// JMAP-native for both backends), but Api\Mail\Jmap\Imap has no EmailSubmission/
-			// create support yet (doc's Step 2, not built) - fail distinctly so a caller like
-			// compose.ts's trySendViaJmap() can fall back to the classic send path instead of
-			// surfacing a confusing raw JMAP error.
-			if (token.isLocal)
-			{
-				throw new JmapUnsupportedBackendError(this.egw.lang('JMAP sending is not yet available for this account'));
-			}
-			const client = this.clients[profileID];
+			const {token, client, identity, draftsId, sentId} = await this.resolveComposeContext(profileID, true);
 
-			const [{identities, mailboxes}] = await client.requestMany((t) => ({
-				identities: t.Identity.get({accountId: token.accountId}),
-				mailboxes: t.Mailbox.get({accountId: token.accountId}),
-			}));
-			const identity = identities.list?.[0];
-			if (!identity)
-			{
-				throw new JmapUserError(this.egw.lang('No identity found for this account'));
-			}
-			const draftsId = mailboxes.list?.find((m : any) => m.role === 'drafts')?.id;
-			const sentId = mailboxes.list?.find((m : any) => m.role === 'sent')?.id;
-			if (!draftsId || !sentId)
-			{
-				throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
-			}
-
-			// address widgets (Et2Email) store an autocomplete-selected entry as a full
-			// "Display Name <address@example.com>" string, not a bare address - found live
-			// 2026-08-27, Stalwart rejecting a submission with "No recipients found in email"
-			// because {email: "Name <addr>"} isn't a valid JMAP EmailAddress.email value.
-			const parseAddress = (raw : string) : {email : string, name? : string} =>
-			{
-				const match = raw.match(/^(.*)<([^<>]+)>\s*$/);
-				if (!match) return {email: raw};
-				const name = match[1].trim().replace(/^["']|["']$/g, '');
-				return name ? {email: match[2].trim(), name} : {email: match[2].trim()};
-			};
-			const addresses = (value? : string | string[]) => value
-				? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map(parseAddress)
-				: undefined;
-			const isHtml = !!email.isHtml;
-			const bodyPartType = isHtml ? 'text/html' : 'text/plain';
-
-			const [{emailSet}] = await client.requestMany((t) => ({
-				emailSet: t.Email.set({
-					accountId: token.accountId,
-					create: {
-						s1: {
-							mailboxIds: {[draftsId]: true},
-							keywords: {'$draft': true},
-							from: [{email: identity.email, name: identity.name}],
-							to: addresses(email.to),
-							cc: addresses(email.cc),
-							bcc: addresses(email.bcc),
-							subject: email.subject ?? '',
-							bodyValues: {body: {value: email.body ?? '', charset: 'utf-8'}},
-							[isHtml ? 'htmlBody' : 'textBody']: [{partId: 'body', type: bodyPartType}],
-						},
-					},
-				}),
-			}));
-			if (!emailSet.created?.s1)
-			{
-				throw new JmapUserError(describeSetError(emailSet.notCreated) ?? this.egw.lang('Failed to create message'));
-			}
-			const emailId = emailSet.created.s1.id;
+			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email);
 
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
@@ -3421,6 +3355,150 @@ export class MailJmap
 			console.error('MailJmap.sendNewEmail(): failed', e);
 			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
+	}
+
+	/**
+	 * Create or update a Drafts-mailbox Email via JMAP Email/set - the autosave/"save as draft"
+	 * counterpart to sendNewEmail(), same scope limits (real-JMAP accounts only, no attachments/
+	 * S-MIME yet - see doc/ai/projects/mail-compose-jmap-migration.md's Step 1). "autosave
+	 * basically does the same as sendNewEmail(), but periodically into Drafts" (ralf, 2026-08-27).
+	 *
+	 * @param profileID
+	 * @param email
+	 * @param existingEmailId already-drafted Email id from a PREVIOUS call in this same compose
+	 *  session, updated in place instead of creating a new draft each autosave tick - undefined
+	 *  for the first save of a brand new message
+	 * @returns the drafted Email's id and its Drafts mailboxId - pass emailId back in as
+	 *  existingEmailId on the next call
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. Throws
+	 *  JmapUnsupportedBackendError for a backend without Email/create support yet (IMAP-shim,
+	 *  doc's Step 2) - same as sendNewEmail()
+	 */
+	async saveDraft(profileID : string, email : JmapNewEmail, existingEmailId? : string) : Promise<{emailId : string, mailboxId : string}>
+	{
+		try
+		{
+			const {token, client, identity, draftsId} = await this.resolveComposeContext(profileID, false);
+
+			if (existingEmailId)
+			{
+				const [{emailSet}] = await client.requestMany((t) => ({
+					emailSet: t.Email.set({
+						accountId: token.accountId,
+						update: {[existingEmailId]: this.draftEmailProperties(identity, email)},
+					}),
+				}));
+				if (!emailSet.updated || !Object.prototype.hasOwnProperty.call(emailSet.updated, existingEmailId))
+				{
+					throw new JmapUserError(describeSetError(emailSet.notUpdated) ?? this.egw.lang('Failed to save draft'));
+				}
+				return {emailId : existingEmailId, mailboxId : draftsId};
+			}
+			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email);
+			return {emailId, mailboxId : draftsId};
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			const message = describeJmapError(e);
+			console.error('MailJmap.saveDraft(): failed', e);
+			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
+		}
+	}
+
+	/**
+	 * Shared setup for sendNewEmail()/saveDraft() - resolves the account's token, identity, and
+	 * Drafts (+ optionally Sent) mailbox id. Throws JmapUnsupportedBackendError for the IMAP-shim
+	 * backend (no Email/create or EmailSubmission support yet, doc's Step 2) - callers like
+	 * compose.ts's trySendViaJmap()/trySaveDraftViaJmap() catch that distinctly to fall back to
+	 * the classic path instead of surfacing a confusing raw JMAP error. IMAP-shim accounts
+	 * already get a working token (folder/message browsing is JMAP-native for both backends), so
+	 * this can't be checked any earlier than here.
+	 */
+	private async resolveComposeContext(profileID : string, needSent : boolean)
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token) throw this.unreachableError();
+		if (token.isLocal)
+		{
+			throw new JmapUnsupportedBackendError(this.egw.lang('JMAP sending is not yet available for this account'));
+		}
+		const client = this.clients[profileID];
+
+		const [{identities, mailboxes}] = await client.requestMany((t) => ({
+			identities: t.Identity.get({accountId: token.accountId}),
+			mailboxes: t.Mailbox.get({accountId: token.accountId}),
+		}));
+		const identity = identities.list?.[0];
+		if (!identity)
+		{
+			throw new JmapUserError(this.egw.lang('No identity found for this account'));
+		}
+		const draftsId = mailboxes.list?.find((m : any) => m.role === 'drafts')?.id;
+		const sentId = needSent ? mailboxes.list?.find((m : any) => m.role === 'sent')?.id : undefined;
+		if (!draftsId || (needSent && !sentId))
+		{
+			throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
+		}
+		return {token, client, identity, draftsId, sentId};
+	}
+
+	/**
+	 * address widgets (Et2Email) store an autocomplete-selected entry as a full "Display Name
+	 * <address@example.com>" string, not a bare address - found live 2026-08-27, Stalwart
+	 * rejecting a submission with "No recipients found in email" because {email: "Name <addr>"}
+	 * isn't a valid JMAP EmailAddress.email value.
+	 */
+	private parseAddress(raw : string) : {email : string, name? : string}
+	{
+		const match = raw.match(/^(.*)<([^<>]+)>\s*$/);
+		if (!match) return {email : raw};
+		const name = match[1].trim().replace(/^["']|["']$/g, '');
+		return name ? {email : match[2].trim(), name} : {email : match[2].trim()};
+	}
+
+	private addressesToJmap(value? : string | string[])
+	{
+		return value
+			? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map((address) => this.parseAddress(address))
+			: undefined;
+	}
+
+	/** Shared Email property-set builder for a create (sendNewEmail()/saveDraft()) or update (saveDraft()) - everything except mailboxIds/keywords, which differ between the two. */
+	private draftEmailProperties(identity : any, email : JmapNewEmail) : Record<string, any>
+	{
+		const isHtml = !!email.isHtml;
+		return {
+			from: [{email : identity.email, name : identity.name}],
+			to: this.addressesToJmap(email.to),
+			cc: this.addressesToJmap(email.cc),
+			bcc: this.addressesToJmap(email.bcc),
+			subject: email.subject ?? '',
+			bodyValues: {body : {value : email.body ?? '', charset : 'utf-8'}},
+			[isHtml ? 'htmlBody' : 'textBody']: [{partId : 'body', type : isHtml ? 'text/html' : 'text/plain'}],
+		};
+	}
+
+	/** Create a new $draft-keyword Email in the Drafts mailbox - shared by sendNewEmail() and saveDraft()'s first-save case. */
+	private async createDraftEmail(token : JmapToken, client : JamClient, identity : any, draftsId : string, email : JmapNewEmail) : Promise<string>
+	{
+		const [{emailSet}] = await client.requestMany((t) => ({
+			emailSet: t.Email.set({
+				accountId: token.accountId,
+				create: {
+					s1: {
+						mailboxIds: {[draftsId]: true},
+						keywords: {'$draft': true},
+						...this.draftEmailProperties(identity, email),
+					},
+				},
+			}),
+		}));
+		if (!emailSet.created?.s1)
+		{
+			throw new JmapUserError(describeSetError(emailSet.notCreated) ?? this.egw.lang('Failed to create message'));
+		}
+		return emailSet.created.s1.id;
 	}
 
 	async deleteMessages(references : JmapMessageReference[], mode : 'trash' | 'destroy') : Promise<void>
