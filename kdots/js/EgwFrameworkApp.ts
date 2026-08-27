@@ -815,6 +815,8 @@ export class EgwFrameworkApp extends LitElement
 				this.rowCount + " " + (this.egw.link_get_registry(this.name, "entries") || this.egw.lang("entries"))
 		};
 
+		// Don't consider RAG Search type as a filter
+		delete filterValues.search_type;
 		// Don't consider sort as a filter
 		delete filterValues.sort;
 		
