@@ -498,7 +498,7 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	 * A failed Stalwart OAuth-login workaround (passwordGrant() returning null) must NOT block
 	 * account creation - it's a live-validation nicety, the account still works via plain
 	 * password authentication. Since passwordGrant() only ever succeeds against a real Stalwart
-	 * server (a Stalwart-specific proprietary endpoint, see Api\Jmap\Http::passwordGrant()'s
+	 * server (a Stalwart-specific proprietary endpoint, see Api\Jmap::passwordGrant()'s
 	 * docblock), its result doubles as a first, cheap way to tell a real Stalwart server apart
 	 * from a generic JMAP server (ralf, 2026-08-24) - acc_imap_type falls back to the more
 	 * generic Imap\Jmap::class rather than Imap\Stalwart::class when it fails.

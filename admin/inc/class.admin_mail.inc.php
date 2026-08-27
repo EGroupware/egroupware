@@ -2566,7 +2566,7 @@ class admin_mail
 				// live-validate the Stalwart OAuth-login workaround now, rather than only
 				// discovering a problem later at first real mail-usage - a real Stalwart server
 				// is the only thing that can succeed here (it's a Stalwart-specific proprietary
-				// endpoint, see Api\Jmap\Http::passwordGrant()'s docblock), so the result doubles as a
+				// endpoint, see Api\Jmap::passwordGrant()'s docblock), so the result doubles as a
 				// first, cheap way to tell a real Stalwart server apart from a generic JMAP server
 				// (ralf, 2026-08-24) - Phase 2 will replace this with the same "leave the password
 				// empty to trigger a real OAuth flow" pattern already used for Google/Microsoft

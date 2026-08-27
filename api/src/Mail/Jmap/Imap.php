@@ -61,7 +61,7 @@ use EGroupware\Api\Jmap;
 use EGroupware\Api\Mail\Account;
 use EGroupware\Api\Mail\CustomLabels;
 
-class Imap extends Jmap
+class Imap extends Jmap\Base
 {
 	/**
 	 * type-name => concrete per-type class, satisfying Api\Jmap's lazy accessor contract
@@ -98,7 +98,7 @@ class Imap extends Jmap
 	public array $context = [];
 
 	/**
-	 * @return mixed accountId (matching Api\Jmap\Http's own readonly property, so per-type
+	 * @return mixed accountId (matching Api\Jmap's own readonly property, so per-type
 	 *  classes can treat both session flavours uniformly) or calledFor
 	 */
 	public function __get(string $name)

@@ -14,7 +14,7 @@ use EGroupware\Api\Jmap;
 use EGroupware\Api\Framework;
 
 /**
- * Mail-specific wiring on top of the generic `Api\Jmap\Http` session: resolves EGroupware's own
+ * Mail-specific wiring on top of the generic `Api\Jmap` session: resolves EGroupware's own
  * sentinel hostnames ("mail", "stalwart", ...) before bootstrapping, and registers this app's
  * per-type classes (Mailbox/Email/Thread/Quota).
  *
@@ -24,7 +24,7 @@ use EGroupware\Api\Framework;
  * server this codebase talks to (Stalwart) supports all of these; would need revisiting if a real
  * non-Stalwart JMAP server without one of these extensions is ever targeted.
  */
-class Http extends Jmap\Http
+class Http extends Jmap
 {
 	/**
 	 * JMAP mail (includes core!)

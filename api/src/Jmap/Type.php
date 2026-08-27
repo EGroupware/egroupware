@@ -9,17 +9,15 @@
 
 namespace EGroupware\Api\Jmap;
 
-use EGroupware\Api\Jmap;
-
 /**
  * Abstract per-type JMAP object - RFC 8620 §5's standard get/query/set method shapes, generically.
  *
  * The default get()/query()/set() here just proxy a single method call to the owning session's
- * call() - correct as-is for any real-JMAP-shaped session (eg. Jmap\Http), since there's nothing
- * backend-specific about "ask the server" once you have a working transport. A session backed by
- * something that isn't itself JMAP (eg. an IMAP connection) has no such generic mechanism to proxy
- * to - its per-type subclasses override get()/query()/set() directly instead, with real
- * backend-specific code, rather than relying on this default.
+ * call() - correct as-is for any real-JMAP-shaped session (eg. `Api\Jmap`, real-JMAP-over-HTTP),
+ * since there's nothing backend-specific about "ask the server" once you have a working transport.
+ * A session backed by something that isn't itself JMAP (eg. an IMAP connection) has no such
+ * generic mechanism to proxy to - its per-type subclasses override get()/query()/set() directly
+ * instead, with real backend-specific code, rather than relying on this default.
  */
 abstract class Type
 {
@@ -29,7 +27,7 @@ abstract class Type
 	 */
 	const TYPE_NAME = '';
 
-	public function __construct(protected Jmap $jmap)
+	public function __construct(protected Base $jmap)
 	{
 	}
 
@@ -42,7 +40,7 @@ abstract class Type
 	{
 		return $this->jmap->call(static::TYPE_NAME.'/get', array_filter([
 			// RFC 8620 §5.1: every standard method call requires accountId - both concrete
-			// session types (Jmap\Http, Mail\Jmap\Imap) expose it via their own __get()
+			// session types (Api\Jmap, Mail\Jmap\Imap) expose it via their own __get()
 			'accountId' => $this->jmap->accountId,
 			'ids' => $ids,
 			'properties' => $properties,
