@@ -3358,16 +3358,27 @@ export class MailJmap
 	}
 
 	/**
-	 * Create or update a Drafts-mailbox Email via JMAP Email/set - the autosave/"save as draft"
-	 * counterpart to sendNewEmail(), same scope limits (real-JMAP accounts only, no attachments/
-	 * S-MIME yet - see doc/ai/projects/mail-compose-jmap-migration.md's Step 1). "autosave
-	 * basically does the same as sendNewEmail(), but periodically into Drafts" (ralf, 2026-08-27).
+	 * Create (or reimport-and-replace) a Drafts-mailbox Email via JMAP Email/set - the autosave/
+	 * "save as draft" counterpart to sendNewEmail(), same scope limits (real-JMAP accounts only,
+	 * no attachments/S-MIME yet - see doc/ai/projects/mail-compose-jmap-migration.md's Step 1).
+	 * "autosave basically does the same as sendNewEmail(), but periodically into Drafts" (ralf,
+	 * 2026-08-27).
+	 *
+	 * Reimport-and-replace, NOT an in-place Email/set update: found live 2026-08-27 that Stalwart
+	 * rejects updating body/header properties on an existing Email ("Invalid property or value")
+	 * even though the identical properties are accepted on create - Stalwart's blob store is
+	 * write-once (ralf), an Email's content can never be modified in place, only deleted, so this
+	 * uses the same reimport-and-replace semantics already decided for the IMAP-shim, uniformly
+	 * for both backends (RFC 8621 §4.6 never guaranteed arbitrary Email updates either way, only
+	 * keywords/mailboxIds are universally required). The previous draft copy is destroyed
+	 * best-effort AFTER the new one is confirmed created - a cleanup failure there must not fail
+	 * the save itself, which already succeeded.
 	 *
 	 * @param profileID
 	 * @param email
 	 * @param existingEmailId already-drafted Email id from a PREVIOUS call in this same compose
-	 *  session, updated in place instead of creating a new draft each autosave tick - undefined
-	 *  for the first save of a brand new message
+	 *  session, destroyed once its replacement is created - undefined for the first save of a
+	 *  brand new message
 	 * @returns the drafted Email's id and its Drafts mailboxId - pass emailId back in as
 	 *  existingEmailId on the next call
 	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. Throws
@@ -3380,21 +3391,20 @@ export class MailJmap
 		{
 			const {token, client, identity, draftsId} = await this.resolveComposeContext(profileID, false);
 
+			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email);
 			if (existingEmailId)
 			{
-				const [{emailSet}] = await client.requestMany((t) => ({
-					emailSet: t.Email.set({
-						accountId: token.accountId,
-						update: {[existingEmailId]: this.draftEmailProperties(identity, email)},
-					}),
-				}));
-				if (!emailSet.updated || !Object.prototype.hasOwnProperty.call(emailSet.updated, existingEmailId))
+				try
 				{
-					throw new JmapUserError(describeSetError(emailSet.notUpdated) ?? this.egw.lang('Failed to save draft'));
+					await client.requestMany((t) => ({
+						destroyed: t.Email.set({accountId: token.accountId, destroy: [existingEmailId]}),
+					}));
 				}
-				return {emailId : existingEmailId, mailboxId : draftsId};
+				catch (e)
+				{
+					console.error('MailJmap.saveDraft(): failed to clean up the previous draft copy', e);
+				}
 			}
-			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email);
 			return {emailId, mailboxId : draftsId};
 		}
 		catch (e)
