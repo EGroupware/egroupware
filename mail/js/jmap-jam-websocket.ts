@@ -91,15 +91,26 @@ const RECONNECT_DELAYS_MS = [1000, 5000, 30000];
 // stack may still be retrying in the background. Not applied to the WebSocket transport's own
 // per-request path (#requestOverWebSocket()) - that's already bounded at the connection level by
 // the heartbeat mechanism (heartbeatIntervalMs/heartbeatTimeoutMs).
+//
+// Overridable per-client via JamWebSocketClientConfig.httpTimeoutMs (see below) - this default is
+// tuned for Stalwart, where the HTTP path is a rare fallback (WS is normally open) against an
+// already-warm connection. The local IMAP shim never advertises the WebSocket capability at all
+// (see MailJmap's client construction in jmap.ts), so EVERY call for a shim account rides this
+// budget, and JmapShim's imapServer() (mail/src/JmapShim.php) opens a fresh raw IMAP connection per HTTP
+// request (PHP has no cross-request connection pooling) - one user action (eg. delete, which also
+// triggers a debounced folder-status/quota refresh) can fan out into several such concurrent
+// requests, each paying that connect cost, occasionally exceeding 10s under real network latency
+// or backend contention - found live 2026-08-27 (`MailJmap.updateKeywords()` timing out on a
+// plain IMAP/shim account's delete-to-trash). MailJmap passes a larger value for isLocal clients.
 const HTTP_TIMEOUT_MS = 10000;
 
 /** Race `promise` against a timeout - see HTTP_TIMEOUT_MS's docblock for why this exists and its limits. */
-function withTimeout<T>(promise : Promise<T>, message : string) : Promise<T>
+function withTimeout<T>(promise : Promise<T>, message : string, timeoutMs : number = HTTP_TIMEOUT_MS) : Promise<T>
 {
 	return Promise.race([
 		promise,
 		new Promise<T>((_resolve, reject) =>
-			window.setTimeout(() => reject(new Error(message)), HTTP_TIMEOUT_MS)),
+			window.setTimeout(() => reject(new Error(message)), timeoutMs)),
 	]);
 }
 
@@ -167,6 +178,12 @@ export type JamWebSocketClientConfig = ClientConfig &
 	 * (e.g. local IMAP shim) WebSocket endpoint - not otherwise used yet.
 	 */
 	webSocketUrl? : string;
+	/**
+	 * Overrides HTTP_TIMEOUT_MS's module-level default for this client - see that constant's
+	 * docblock for why a non-WebSocket-capable backend (the local IMAP shim) typically needs a
+	 * more generous budget than Stalwart's rare WS-fallback case.
+	 */
+	httpTimeoutMs? : number;
 	/**
 	 * dataTypes sent with WebSocketPushEnable once at least one onPush() callback is registered -
 	 * "*" (the default) for every JMAP data type, or an explicit list of type names (e.g.
@@ -343,6 +360,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	#transformWebSocketUrl : ((url : string) => string) | undefined;
 	#heartbeatIntervalMs : number;
 	#heartbeatTimeoutMs : number;
+	#httpTimeoutMs : number;
 	#heartbeatTimer : number | undefined;
 	#lastActivity = 0;
 	#socket : WebSocket | null = null;
@@ -364,13 +382,14 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 		this.#transformWebSocketUrl = config.transformWebSocketUrl;
 		this.#heartbeatIntervalMs = config.heartbeatIntervalMs ?? 30000;
 		this.#heartbeatTimeoutMs = config.heartbeatTimeoutMs ?? 10000;
+		this.#httpTimeoutMs = config.httpTimeoutMs ?? HTTP_TIMEOUT_MS;
 
 		// JamClient's own constructor already kicked off the real fetch() (no injectable seam to
 		// bound it beforehand) - replacing `this.session` here means every LATER reader (this
 		// class' own use below, and every external `await client.session`/getQuota()/
 		// resolveAclCapable() etc. in mail/js/jmap.ts) gets the timeout-bounded version; see
 		// HTTP_TIMEOUT_MS's docblock for why the underlying fetch() itself can't be cancelled
-		this.session = withTimeout(this.session, "JamWebSocketClient: session fetch timed out");
+		this.session = withTimeout(this.session, "JamWebSocketClient: session fetch timed out", this.#httpTimeoutMs);
 		this.session.then((session) =>
 		{
 			const capabilities = session.capabilities as Record<string, unknown>;
@@ -737,7 +756,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 	{
 		if (this.transport !== "websocket")
 		{
-			return withTimeout(super.request([method, args], options), "JamWebSocketClient: request timed out");
+			return withTimeout(super.request([method, args], options), "JamWebSocketClient: request timed out", this.#httpTimeoutMs);
 		}
 		return this.#requestOverWebSocket(method, args, options);
 	}
@@ -806,7 +825,7 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			// unrelated to this file's - draftsFn itself doesn't care which Proxy calls it (both just
 			// implement {entity}.{operation}(args) + $ref()), only the static DraftsProxy types
 			// differ, hence the cast.
-			return withTimeout(super.requestMany(draftsFn as any, options), "JamWebSocketClient: requestMany timed out");
+			return withTimeout(super.requestMany(draftsFn as any, options), "JamWebSocketClient: requestMany timed out", this.#httpTimeoutMs);
 		}
 		return this.#requestManyOverWebSocket(draftsFn, options);
 	}

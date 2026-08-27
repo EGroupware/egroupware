@@ -1725,13 +1725,14 @@ export class MailApp extends EgwApp
 		{
 			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
 			// Not this.egw.jsonq() - same reason as above.
-			this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]).then((_data) =>
+			this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]).then(async(_data) =>
 			{
 				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
 				if (_data && Array.isArray(_data.attachmentsBlock) && _data.attachmentsBlock.length)
 				{
 					data.attachmentsBlock = _data.attachmentsBlock;
 					this.setupViewAttachmentActions(data, sel_options);
+					await this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock);
 					// Update client cache to avoid re-fetching the attachment block again
 					egw.dataStoreUID(data.uid, data);
 					if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
@@ -1796,11 +1797,61 @@ export class MailApp extends EgwApp
 		if (data.attachmentsBlock)
 		{
 			this.setupViewAttachmentActions(data, sel_options);
+			this.resolveAttachmentViewUrls(rowId, data.attachmentsBlock).then((changed) =>
+			{
+				if (changed)
+				{
+					egw.dataStoreUID(data.uid, data);
+					if (!egwIsMobile() && template) template.set_value({content: data, sel_options: sel_options});
+				}
+			});
 		}
 
 		if (!egwIsMobile() && template) template.set_value({content:data, sel_options:sel_options});
 
 		return data;
+	}
+
+	/**
+	 * For attachment rows resolvable via client-side JMAP (blobId present, JMAP-native backend),
+	 * fetch the bytes directly from Stalwart/the shim and replace the row's mime_url with a local
+	 * `blob:` object URL - the same client.downloadBlob() primitive downloadOneAsFile's
+	 * client-side path already uses (saveAttachmentHandler() below), now also covering the
+	 * "click to view" path (Et2DescriptionExpose's `href`), skipping the classic
+	 * mail_ui::getAttachment() server round-trip entirely. message/rfc822 (a whole sub-message
+	 * view, not a blob render) and the vCard/iCalendar branches (server-side import with real side
+	 * effects - creates a contact/event) keep using the classic server URL.
+	 *
+	 * @return true if any row's mime_url was replaced (caller should re-render)
+	 */
+	private async resolveAttachmentViewUrls(rowId : string, attachmentsBlock : any[]) : Promise<boolean>
+	{
+		const excluded = ['message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar'];
+		let profileID : string;
+		try
+		{
+			profileID = this.jmap.messageReference(rowId).profileID;
+		}
+		catch (e)
+		{
+			return false;
+		}
+		const eligible = attachmentsBlock.filter((item) => item.blobId && !excluded.includes((item.type || '').toLowerCase()));
+		if (!eligible.length)
+		{
+			return false;
+		}
+		this.jmap.revokeAttachmentViewUrls(rowId);
+		const results = await Promise.all(eligible.map((item) =>
+			this.jmap.getAttachmentViewUrl(rowId, profileID, item.blobId, item.filename, item.type)
+				.then((url) => { item.mime_url = url; return true; })
+				.catch((e) =>
+				{
+					console.error('resolveAttachmentViewUrls(): failed for', item.filename, e);
+					return false;
+				})
+		));
+		return results.some(Boolean);
 	}
 
 	/**

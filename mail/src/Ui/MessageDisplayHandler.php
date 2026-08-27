@@ -125,7 +125,10 @@ class MessageDisplayHandler
 		$part		= $_GET['part'] ?? null;
 		$is_winmail = $_GET['is_winmail'] ?? 0;
 
-		$this->ui->mail_bo->reopen($mailbox);
+		if (!($this->ui->mail_bo->icServer instanceof Mail\Imap\Jmap))
+		{
+			$this->ui->mail_bo->reopen($mailbox);
+		}
 		$attachment = $this->ui->mail_bo->getAttachment($uid,$part,$is_winmail,false);
 		$this->ui->mail_bo->closeConnection();
 		if ($rememberServerID != $this->ui->mail_bo->profileID)

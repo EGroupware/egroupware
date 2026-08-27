@@ -2580,6 +2580,59 @@ export class MailJmap
 		}
 	}
 
+	private attachmentViewUrls : Record<string, string[]> = {};
+
+	/**
+	 * Fetch one attachment via JMAP Blob download and return a `blob:` object URL for it, for
+	 * direct use as a link/image `href` (the "click to view" path) - same client.downloadBlob()
+	 * mechanism downloadAttachment() (save) and resolveInlineImages() (cid: images) already use,
+	 * uniformly for both backends. Object URLs are tracked per rowId and revoked the next time
+	 * this row is resolved (same convention as resolveInlineImages()'s objectUrls).
+	 *
+	 * @param rowId row whose attachmentsBlock this belongs to, for object-URL lifecycle tracking
+	 * @param profileID
+	 * @param blobId as returned by mail_ui::jmapAttachmentsToLegacy() in the row's attachmentsBlock
+	 * @param filename
+	 * @param mimeType
+	 * @throws JmapUserError on any failure - caller falls back to the classic server URL
+	 */
+	async getAttachmentViewUrl(rowId : string, profileID : string, blobId : string, filename : string, mimeType : string) : Promise<string>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token)
+			{
+				throw new JmapUserError(this.egw.lang('Unable to connect to the mail server'));
+			}
+			const response = await this.clients[profileID].downloadBlob({
+				accountId: token.accountId,
+				blobId,
+				mimeType: mimeType || 'application/octet-stream',
+				fileName: filename || 'attachment',
+			});
+			const url = URL.createObjectURL(await response.blob());
+			(this.attachmentViewUrls[rowId] ??= []).push(url);
+			return url;
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.getAttachmentViewUrl(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+		}
+	}
+
+	/**
+	 * Revoke previously-created getAttachmentViewUrl() object URLs for a row, eg. before
+	 * re-resolving it - same lifecycle convention as resolveInlineImages()'s objectUrls.
+	 */
+	revokeAttachmentViewUrls(rowId : string) : void
+	{
+		(this.attachmentViewUrls[rowId] || []).forEach(url => URL.revokeObjectURL(url));
+		delete this.attachmentViewUrls[rowId];
+	}
+
 	/**
 	 * Raw message source (full RFC 5322 text, headers+body), for the "view source" action -
 	 * fetches the message as a raw text blob (client.downloadBlob() against the message's
@@ -2727,7 +2780,16 @@ export class MailJmap
 						// Same scope as the classic server-side subscription's SUBSCRIBTION_TYPES
 						// (Api\Mail\Imap\Jmap) - only relevant if enableWsPush actually registers a
 						// callback (see enableWsPush() below), otherwise never sent at all.
-						pushDataTypes: ['Email', 'Mailbox']
+						pushDataTypes: ['Email', 'Mailbox'],
+						// The local IMAP shim never advertises the WebSocket capability, so EVERY call
+						// for it rides the HTTP-transport timeout (unlike Stalwart, where that's a rare
+						// fallback against an already-warm connection) - and JmapShim's imapServer()
+						// opens a fresh raw IMAP connection per HTTP request, so one user action (eg.
+						// delete, which also fires a debounced folder-status/quota refresh) can fan out
+						// into several concurrent requests each paying that connect cost. 10s (the
+						// default, still used for Stalwart) was found live to be too tight for this -
+						// see HTTP_TIMEOUT_MS's docblock in jmap-jam-websocket.ts.
+						httpTimeoutMs: token.isLocal ? 30000 : undefined
 					});
 					// a stale-CSP session-fetch failure for this client is handled by the
 					// securitypolicyviolation listener installed in the constructor (see
