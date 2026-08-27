@@ -839,9 +839,27 @@ export class JamWebSocketClient<Config extends JamWebSocketClientConfig = JamWeb
 			throw errors;
 		}
 
-		const result = Object.fromEntries(
-			response.methodResponses.map(([, data, callId]) => [callId, data])
-		);
+		// A server can legitimately echo the SAME callId for an implicit companion method call it
+		// triggers as a side effect - eg. Stalwart returning an Email/set response tagged with the
+		// triggering EmailSubmission/set call's own callId, for an onSuccessUpdateEmail patch
+		// (RFC 8620 - the implicit call is considered part of the same client-labelled invocation).
+		// Naively keeping "last methodResponses entry wins" per callId (jmap-jam's own upstream
+		// behaviour, mirrored here before this fix) then silently discards the actual result the
+		// caller asked for in favour of that unrequested companion's - found live 2026-08-27,
+		// MailJmap.sendNewEmail()'s EmailSubmission/set result getting overwritten by Stalwart's
+		// own onSuccessUpdateEmail-triggered Email/set response, both tagged "submission" (the
+		// caller's own requestMany() key). Prefer whichever response's method actually matches
+		// what was requested for this callId; only fall back to last-wins for genuinely
+		// unrequested extras, which no caller destructures by key anyway.
+		const requestedMethodByCallId = new Map(methodCalls.map(([method, , callId]) => [callId, method]));
+		const result : Record<string, any> = {};
+		for (const [method, data, callId] of response.methodResponses)
+		{
+			if (!(callId in result) || requestedMethodByCallId.get(callId) === method)
+			{
+				result[callId] = data;
+			}
+		}
 
 		return [
 			result,

@@ -275,6 +275,41 @@ describe("JamWebSocketClient.requestMany()", () =>
 		assert.deepEqual(result.b, {list : []});
 	});
 
+	it("keeps the requested call's own result when a server echoes the same callId for an implicit companion response", async() =>
+	{
+		// eg. Stalwart tagging an onSuccessUpdateEmail-triggered Email/set response with the
+		// SAME callId as the triggering EmailSubmission/set call - naive "last response wins"
+		// per callId would otherwise silently discard the actual EmailSubmission/set result
+		// (found live 2026-08-27, see doc/ai/projects/mail-compose-jmap-migration.md)
+		(globalThis as any).WebSocket = FakeWebSocket;
+		fetchStub = stubFetch(fakeSession(true));
+
+		const client = new JamWebSocketClient({sessionUrl : "https://example.com/session", bearerToken : "tok"});
+		await client.session;
+		await flush();
+		const socket = FakeWebSocket.instances[0];
+		socket.simulateOpen();
+
+		const pending = client.requestMany((t : any) => ({
+			submission : t.EmailSubmission.set({accountId : "acc1", create : {sub1 : {emailId : "e1", identityId : "i1"}}})
+		}));
+		await flush();
+
+		const sentFrame = JSON.parse(socket.sent[0]);
+		socket.simulateMessage({
+			"@type" : "Response",
+			requestId : sentFrame.id,
+			sessionState : "state1",
+			methodResponses : [
+				["EmailSubmission/set", {created : {sub1 : {id : "S1"}}}, "submission"],
+				["Email/set", {updated : {e1 : null}}, "submission"]
+			]
+		});
+
+		const [result] = await pending;
+		assert.deepEqual(result.submission, {created : {sub1 : {id : "S1"}}});
+	});
+
 	it("resolves $ref() into a JMAP result reference pointing at the earlier call's own id", async() =>
 	{
 		(globalThis as any).WebSocket = FakeWebSocket;
