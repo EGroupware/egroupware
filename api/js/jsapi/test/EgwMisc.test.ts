@@ -158,4 +158,93 @@ describe('egw_config.js / egw_lang.js / egw_images.js', () =>
 			assert.equal(img.alt, 'alt text');
 		});
 	});
+
+	describe('mime_icon', () =>
+	{
+		it('treats an empty/falsy mime type the same as "unknown"', () =>
+		{
+			env.egw().set_images({etemplate: {mime128_unknown: '/mime/unknown.png'}});
+			assert.equal(env.egw().mime_icon(''), 'https://example.test/mime/unknown.png');
+		});
+
+		it('remaps httpd/unix-directory (Vfs::DIR_MIME_TYPE) to the generic directory icon', () =>
+		{
+			env.egw().set_images({etemplate: {mime128_directory: '/mime/dir.png'}});
+			assert.equal(env.egw().mime_icon('httpd/unix-directory'), 'https://example.test/mime/dir.png');
+		});
+
+		it('uses an app-specific navbar icon for a directory directly under /apps/<name> or /templates/<name>', () =>
+		{
+			// _mime becomes 'egw/infolog', which routes through image('navbar', 'infolog') -
+			// per the "navbar" KNOWN QUIRK above, a non-"api" app skips the global override
+			// map entirely and reads images['infolog']['navbar'] directly.
+			env.egw().set_images({infolog: {navbar: '/navbar/infolog.png'}});
+			assert.equal(env.egw().mime_icon('httpd/unix-directory', '/apps/infolog'),
+				'https://example.test/navbar/infolog.png');
+
+			assert.isNull(env.egw().mime_icon('httpd/unix-directory', '/apps/infolog/subdir'),
+				'the app-directory remap only applies to a direct 3-segment /apps/<name> path, not a nested one');
+		});
+
+		it('resolves a registered main/sub mime icon when no path is given', () =>
+		{
+			// without a _path, the thumbnail/svg fast paths below never trigger (they all
+			// require typeof _path == "string"), so this exercises the plain icon lookup
+			env.egw().set_images({etemplate: {mime128_application_pdf: '/mime/pdf.png'}});
+			assert.equal(env.egw().mime_icon('application/pdf'), 'https://example.test/mime/pdf.png');
+		});
+
+		it('falls back to the main-type-only icon when no exact main/sub icon is registered', () =>
+		{
+			env.egw().set_images({etemplate: {mime128_text: '/mime/text.png'}});
+			assert.equal(env.egw().mime_icon('text/some-obscure-subtype'), 'https://example.test/mime/text.png');
+		});
+
+		it('resolves a legacy/aliased mime type through mime_alias_map (eg. text/vcard -> text/x-vcard)', () =>
+		{
+			env.egw().set_images({etemplate: {'mime128_text_x-vcard': '/mime/vcard.png'}});
+			assert.equal(env.egw().mime_icon('text/vcard'), 'https://example.test/mime/vcard.png');
+		});
+
+		it('falls back to the generic "unknown" icon when nothing at all matches', () =>
+		{
+			env.egw().set_images({etemplate: {mime128_unknown: '/mime/unknown.png'}});
+			assert.equal(env.egw().mime_icon('application/totally-unregistered-subtype'),
+				'https://example.test/mime/unknown.png');
+		});
+
+		it('resolves image/svg+xml as a direct webdav URL when a path is given, bypassing the icon lookup entirely', () =>
+		{
+			assert.equal(env.egw().mime_icon('image/svg+xml', '/home/demo/icon.svg'),
+				'https://example.test/webdav.php/home/demo/icon.svg');
+		});
+
+		it('routes previewable raster-image/PDF/office mime types through the thumbnail service once a path is given', () =>
+		{
+			// this branch is the one genuinely gated on `typeof _path == "string"` (unlike the
+			// no-path test above for the same application/pdf mime type) - it calls this.link(),
+			// which isn't provided by egw_config/egw_lang/egw_images alone, so it's stubbed here
+			// rather than added to the shared harness (no other test in this file needs it).
+			const instance = env.egw() as any;
+			instance.link = (url : string, params : any) => url + '?path=' + params.path;
+
+			assert.equal(instance.mime_icon('application/pdf', '/home/demo/report.pdf'),
+				'/api/thumbnail.php?path=/home/demo/report.pdf');
+			assert.equal(instance.mime_icon('image/jpeg', '/home/demo/photo.jpg'),
+				'/api/thumbnail.php?path=/home/demo/photo.jpg');
+			assert.equal(instance.mime_icon('application/vnd.oasis.opendocument.text', '/home/demo/letter.odt'),
+				'/api/thumbnail.php?path=/home/demo/letter.odt',
+				'OpenDocument types must use the thumbnail service too, not just PDF/raster images');
+		});
+
+		it('does NOT route a non-previewable type (eg. a generic archive) through the thumbnail service, even with a path', () =>
+		{
+			const instance = env.egw() as any;
+			instance.link = () => { throw new Error('link() must not be called for a non-previewable mime type'); };
+			env.egw().set_images({etemplate: {mime128_application_zip: '/mime/zip.png'}});
+
+			assert.equal(instance.mime_icon('application/zip', '/home/demo/archive.zip'),
+				'https://example.test/mime/zip.png');
+		});
+	});
 });
