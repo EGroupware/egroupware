@@ -4181,11 +4181,30 @@ export class MailApp extends EgwApp
 			}
 		}
 		//alert('mailSource('+_elems[0].id+')');
-		let url = this.egw.webserverUrl+'/index.php?';
-		url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
-		url += '&id='+_elems[0].id;
-		url += '&location=display';
-		this.displayHeaderLines(url);
+		const rowId = _elems[0].id;
+		const classicSourcePopup = () =>
+		{
+			let url = this.egw.webserverUrl+'/index.php?';
+			url += 'menuaction=mail.mail_ui.saveMessage';	// todo compose for Draft folder
+			url += '&id='+rowId;
+			url += '&location=display';
+			this.displayHeaderLines(url);
+		};
+		this.jmap.fetchRawSource(rowId).then(async(text : string) =>
+		{
+			// egw.openPopup() (kdots framework) returns a Promise resolving to the actual
+			// popup Window, not the Window itself - must be awaited before touching .document
+			const popup = await egw.openPopup('about:blank', 870, 600, null, 'mail', true) as any as Window;
+			if (!popup || !popup.document)
+			{
+				classicSourcePopup();
+				return;
+			}
+			const escaped = text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+			popup.document.open();
+			popup.document.write('<pre>'+escaped+'</pre>');
+			popup.document.close();
+		}).catch((e) => this.egw.message(e.message, 'error'));
 	}
 
 	/**

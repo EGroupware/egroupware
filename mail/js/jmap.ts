@@ -2571,17 +2571,17 @@ export class MailJmap
 	}
 
 	/**
-	 * Raw message headers, for the "view header" action - fetches the whole message as a raw text
-	 * blob (client.downloadBlob() against the message's whole-message blobId, same mechanism
-	 * downloadAttachment()/PGP already use for a specific part) and slices at the first blank line
-	 * client-side, byte-identical to what Api\Mail::getMessageRawHeader() already returns - no
-	 * dedicated IMAP HEADERTEXT fetch needed.
+	 * Raw message source (full RFC 5322 text, headers+body), for the "view source" action -
+	 * fetches the message as a raw text blob (client.downloadBlob() against the message's
+	 * whole-message blobId, same mechanism downloadAttachment()/PGP already use for a specific
+	 * part), byte-identical to what Api\Mail::getMessageRawBody()/mail_ui::ajax_saveMessage()
+	 * already return - no dedicated IMAP BODY[] fetch needed.
 	 *
 	 * @param rowId
 	 * @throws JmapUserError on any failure - there's no classic fallback (see
 	 *  folderTreeAutoload()'s docblock in app.ts for why)
 	 */
-	async fetchRawHeader(rowId : string) : Promise<string>
+	async fetchRawSource(rowId : string) : Promise<string>
 	{
 		try
 		{
@@ -2610,18 +2610,30 @@ export class MailJmap
 				accountId: token.accountId,
 				blobId,
 				mimeType: 'message/rfc822',
-				fileName: 'header',
+				fileName: 'source',
 			});
-			const text = await response.text();
-			const match = text.match(/\r?\n\r?\n/);
-			return match ? text.slice(0, match.index) : text;
+			return await response.text();
 		}
 		catch (e)
 		{
 			if (e instanceof JmapUserError) throw e;
-			console.error('MailJmap.fetchRawHeader(): failed', e);
+			console.error('MailJmap.fetchRawSource(): failed', e);
 			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
 		}
+	}
+
+	/**
+	 * Raw message headers, for the "view header" action - see fetchRawSource()'s own docblock,
+	 * this just slices its result at the first blank line client-side.
+	 *
+	 * @param rowId
+	 * @throws JmapUserError on any failure - see fetchRawSource()
+	 */
+	async fetchRawHeader(rowId : string) : Promise<string>
+	{
+		const text = await this.fetchRawSource(rowId);
+		const match = text.match(/\r?\n\r?\n/);
+		return match ? text.slice(0, match.index) : text;
 	}
 
 	/**
@@ -3372,20 +3384,26 @@ export class MailJmap
 			}
 			const emailId = emailSet.created.s1.id;
 
+			// TEMPORARY instrumentation for the missing-Sent-copy regression - remove once done.
+			const onSuccessUpdateEmail = {
+				'#sub1': {
+					[`mailboxIds/${draftsId}`]: null,
+					[`mailboxIds/${sentId}`]: true,
+					'keywords/$draft': null,
+					'keywords/$seen': true,
+				},
+			};
+			console.log('sendNewEmail() TEMP submitting', {emailId, identityId: identity.id, draftsId, sentId, onSuccessUpdateEmail});
+
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
 					accountId: token.accountId,
 					create: {sub1: {emailId, identityId: identity.id}},
-					onSuccessUpdateEmail: {
-						'#sub1': {
-							[`mailboxIds/${draftsId}`]: null,
-							[`mailboxIds/${sentId}`]: true,
-							'keywords/$draft': null,
-							'keywords/$seen': true,
-						},
-					},
+					onSuccessUpdateEmail,
 				}),
 			}));
+			// TEMPORARY instrumentation for the missing-Sent-copy regression - remove once done.
+			console.log('sendNewEmail() TEMP submission result', submission);
 			if (!submission.created?.sub1)
 			{
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
