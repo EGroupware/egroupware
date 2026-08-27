@@ -13,6 +13,7 @@
 
 namespace EGroupware\Api\Etemplate\Widget;
 
+use EGroupware\Api;
 use EGroupware\Api\Etemplate;
 
 /**
@@ -37,6 +38,17 @@ class HistoryLog extends Etemplate\Widget
 	public function beforeSendToClient($cname)
 	{
 		$form_name = self::form_name($cname, $this->id);
+
+		// Historylog is a reusable, self-configuring widget: unlike nextmatch,
+		// whose callers each set content[form_name]['get_rows'] themselves,
+		// no app sets one for us. Seed the trusted default/override here, server-side, so
+		// Nextmatch::ajax_get_rows()'s generic content-vs-client-filters merge picks
+		// it up without needing to know about this widget type.
+		// $this->attrs['get_rows'] is safe to trust: attrs are populated only from
+		// the .xet template XML parsed server-side (see Widget::__construct()),
+		// never from request/session data a client could influence.
+		$value =& self::get_array(self::$request->content, $form_name, true);
+		$value['get_rows'] = $this->attrs['get_rows'] ?? Api\Storage\History::class.'::get_rows';
 
 		if(is_array(self::$request->content[$form_name]['status-widgets']))
 		{
