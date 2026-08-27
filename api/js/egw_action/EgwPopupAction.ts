@@ -28,6 +28,12 @@ export class EgwPopupAction extends EgwAction {
     // Force this action's children into a dropdown even in a toolbar that otherwise flattens
     // every action with children (Et2Toolbar's groupChildren=false default)
     groupChildren = false;
+    // Preference an et2-dropdown-button reads/stores its default selected child in (Et2DropdownButton.defaultPreference)
+    defaultPreference = "";
+    // Show only the selected child's icon on an et2-dropdown-button's main button, not its caption
+    iconOnly = false;
+    // Marks this child as the static default to preselect when there is no stored preference yet
+    toolbarDefault = false;
 
     constructor(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple) {
         super(_id, _handler, _caption, _icon, _onExecute, _allowOnMultiple)
@@ -124,6 +130,15 @@ export class EgwPopupAction extends EgwAction {
     }
     set_groupChildren (_value : boolean){
         this.groupChildren = _value;
+    }
+    set_defaultPreference (_value : string){
+        this.defaultPreference = _value;
+    }
+    set_iconOnly (_value : boolean){
+        this.iconOnly = _value;
+    }
+    set_toolbarDefault (_value : boolean){
+        this.toolbarDefault = _value;
     }
 }
 
