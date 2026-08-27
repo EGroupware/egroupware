@@ -251,7 +251,14 @@ upload (RFC 8620 §6.3) for attachments.
   `send()`'s inline hook into a standalone ajax/JSON method: given a blobId (or raw MIME) plus
   cert/passphrase context, returns the signed/encrypted result. Client calls this explicitly as a
   pre-`EmailSubmission` step when the user has S/MIME toggled on - works identically for both
-  backends since it operates on MIME/blobs, not on the IMAP connection.
+  backends since it operates on MIME/blobs, not on the IMAP connection. **Decided (2026-08-27):**
+  the endpoint uploads its own result and returns a `blobId`, not raw bytes - it's server-side PHP
+  either way (private key material), so it can call `Api\Jmap::uploadBlob()` (post-rename name)
+  itself rather than shipping the signed/encrypted MIME back to the client just for the client to
+  re-upload it. Client-side then swaps a single `application/pkcs7-mime` blobId into the
+  `Email/set` `bodyStructure` in place of the multipart structure it would otherwise build - no new
+  client-side upload path needed for the S/MIME case, reusing the same blob-reference shape
+  attachments already use.
 - **TNEF service endpoint** - extract `decode_winmail()` into a standalone callable: given a
   winmail.dat attachment reference (blobId or message+part), returns the decoded sub-attachment
   list. Called client-side only when a `winmail.dat` attachment is encountered while loading a
