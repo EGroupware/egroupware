@@ -170,9 +170,22 @@ export class MailApp extends EgwApp
 	 * Direct client-side JMAP access sub-object (gets automatically instanciated, if used)
 	 *
 	 * Uses a server's native JMAP endpoint or the local plain-IMAP shim.
+	 *
+	 * Reuses the opener's own instance (and its one WebSocket connection per account) when
+	 * called from a popup, instead of needlessly opening a second connection to the same
+	 * account - same established window.opener.app.mail.* pattern already used elsewhere in
+	 * this file (nmOwner(), customLabels, ...), matching how window.egw itself is already
+	 * shared with the opener (see nmOwner()'s own docblock) - found live 2026-08-27 (ralf).
+	 * Re-checked on every access (not cached once) so a popup that outlives its opener falls
+	 * back to building its own instance instead of reusing one tied to a now-gone window.
 	 */
 	get jmap() : MailJmap
 	{
+		const openerJmap = window.opener && !window.opener.closed ? window.opener.app?.mail?.jmap : undefined;
+		if (openerJmap)
+		{
+			return openerJmap;
+		}
 		if(!window.app._jmap)
 		{
 			window.app._jmap = new MailJmap(this);
@@ -3009,7 +3022,11 @@ export class MailApp extends EgwApp
 	 */
 	private handleJmapError(e : any, fallback : () => any) : any
 	{
-		if (e instanceof JmapUserError)
+		// compares by name, not `instanceof` - this.jmap may be a popup's OPENER's own instance
+		// (see MailApp.jmap's own docblock), so an error it throws can be an instance of a
+		// DIFFERENT window's separately-loaded JmapUserError class, which `instanceof` would
+		// never match even for a real one (same pitfall as feedback_cross_realm_instanceof)
+		if (e?.constructor?.name === 'JmapUserError')
 		{
 			throw e;
 		}
@@ -5949,7 +5966,7 @@ export class MailApp extends EgwApp
 		}).catch((e) =>
 		{
 			this._subscriptionChanges = null;
-			if (e instanceof JmapUserError)
+			if (e?.constructor?.name === 'JmapUserError')
 			{
 				this.egw.message(e.message, 'error');
 			}
@@ -6092,7 +6109,7 @@ export class MailApp extends EgwApp
 			tree.select_options = data;
 		}).catch((e) =>
 		{
-			if (e instanceof JmapUserError)
+			if (e?.constructor?.name === 'JmapUserError')
 			{
 				this.egw.message(e.message, 'error');
 			}
@@ -6413,7 +6430,7 @@ export class MailApp extends EgwApp
 			data === null ? errorLeaf() : {item: data}
 		).catch((e) =>
 		{
-			if (e instanceof JmapUserError)
+			if (e?.constructor?.name === 'JmapUserError')
 			{
 				return {item: [buildErrorNode(profileID, parentPath, e.message, egw)]};
 			}

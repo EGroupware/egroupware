@@ -15,7 +15,6 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 // needed or possible.
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
-import {JmapUnsupportedBackendError} from "./jmap";
 
 export class MailCompose
 {
@@ -557,7 +556,12 @@ export class MailCompose
 		}
 		catch (e)
 		{
-			if (e instanceof JmapUnsupportedBackendError)
+			// this.app.jmap may now be the OPENER's own instance (see MailApp.jmap's own
+			// docblock) - an error it throws is an instance of ITS realm's JmapUnsupportedBackendError
+			// class, not this popup's own separately-loaded one, so `instanceof` here would always
+			// be false even for a real match (same pitfall as feedback_cross_realm_instanceof).
+			// Compare by name instead, which survives crossing the window boundary.
+			if (e?.constructor?.name === 'JmapUnsupportedBackendError')
 			{
 				return false;
 			}
