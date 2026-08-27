@@ -30,12 +30,16 @@ export class Et2DatagridRequestQueue
 	private _inFlightRequestKeys : Set<string> = new Set();
 	private _queuedRequestTimer : number | null = null;
 	private _queuedRequests : Map<string, { start : number; requestedCount : number; requestKey : string }> = new Map();
+	private _oldestQueuedAt : number | null = null;
 
 	private _slowFetchDialog : Et2Dialog | null = null;
 	private _slowFetchTimers : Set<number> = new Set();
 	private _inFlightFetchPromises : Set<Et2DatagridFetchPromise> = new Set();
 
 	private static readonly SLOW_FETCH_TIMEOUT_MS = 30000;
+
+	/** Caps how long newer arrivals can keep bumping the debounce timer before a flush is forced. */
+	private static readonly MAX_DISPATCH_DELAY_MS = 500;
 
 	constructor(host : Et2DatagridRequestQueueHost)
 	{
@@ -95,6 +99,10 @@ export class Et2DatagridRequestQueue
 		{
 			return;
 		}
+		if(this._oldestQueuedAt === null)
+		{
+			this._oldestQueuedAt = Date.now();
+		}
 		this._queuedRequests.set(requestKey, {start, requestedCount, requestKey});
 		this._pendingPlaceholderRequests.set(requestKey, {start, requestedCount});
 		this._pendingPlaceholderCount += this.host._isEmbeddedInitialLoading() ? Math.min(requestedCount, 1) : requestedCount;
@@ -105,7 +113,8 @@ export class Et2DatagridRequestQueue
 	 * Debounce queued-request dispatch so fast scrolling can coalesce bursts. When the
 	 * debounce fires, drains every currently-queued request in FIFO order, marks each
 	 * in flight, then invokes `onDispatch` once per entry so the host can start the
-	 * actual fetch.
+	 * actual fetch. Forces an immediate flush once the oldest entry has waited
+	 * MAX_DISPATCH_DELAY_MS, so continuous newer arrivals can't defer it indefinitely.
 	 */
 	scheduleProcessing(onDispatch : (start : number, requestedCount : number, requestKey : string) => void) : void
 	{
@@ -113,7 +122,15 @@ export class Et2DatagridRequestQueue
 		{
 			window.clearTimeout(this._queuedRequestTimer);
 		}
-		this._queuedRequestTimer = window.setTimeout(() => this.flush(onDispatch), this.host._requestDispatchDelayMs);
+		const waitedMs = this._oldestQueuedAt === null ? 0 : Date.now() - this._oldestQueuedAt;
+		if(waitedMs >= Et2DatagridRequestQueue.MAX_DISPATCH_DELAY_MS)
+		{
+			this._queuedRequestTimer = null;
+			this.flush(onDispatch);
+			return;
+		}
+		const delay = Math.min(this.host._requestDispatchDelayMs, Et2DatagridRequestQueue.MAX_DISPATCH_DELAY_MS - waitedMs);
+		this._queuedRequestTimer = window.setTimeout(() => this.flush(onDispatch), delay);
 	}
 
 	/**
@@ -125,6 +142,7 @@ export class Et2DatagridRequestQueue
 	flush(onDispatch : (start : number, requestedCount : number, requestKey : string) => void) : void
 	{
 		this._queuedRequestTimer = null;
+		this._oldestQueuedAt = null;
 		if(!this._queuedRequests.size)
 		{
 			return;
@@ -265,6 +283,7 @@ export class Et2DatagridRequestQueue
 		this._queuedRequests.clear();
 		this._pendingPlaceholderRequests.clear();
 		this._pendingPlaceholderCount = 0;
+		this._oldestQueuedAt = null;
 		if(this._queuedRequestTimer !== null)
 		{
 			window.clearTimeout(this._queuedRequestTimer);

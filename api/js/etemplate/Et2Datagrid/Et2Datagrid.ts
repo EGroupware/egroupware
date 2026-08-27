@@ -1402,6 +1402,11 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	 * sizing changes. This mirrors the resize/scroll callback users triggered
 	 * manually by nudging the scroll position, but keeps it scoped to view /
 	 * template switches and does not schedule a Lit render.
+	 *
+	 * Also forces the layout module to fully reflow, not just `_hostElementSizeChanged()` -
+	 * without it, several rapid row-count-shrinking reloads can leave the virtualizer's
+	 * rendered range past the real row count, showing unresolvable placeholder rows. Both
+	 * calls reach into undocumented `@lit-labs/virtualizer` internals, hence the feature checks.
 	 */
 	_scheduleVirtualizerLayoutSync()
 	{
@@ -1416,6 +1421,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			if(typeof virtualizer?._hostElementSizeChanged === "function")
 			{
 				virtualizer._hostElementSizeChanged();
+			}
+			const layout = virtualizer?._layout;
+			if(typeof layout?._scheduleLayoutUpdate === "function" && typeof layout?.reflowIfNeeded === "function")
+			{
+				layout._scheduleLayoutUpdate();
+				layout.reflowIfNeeded();
 			}
 		});
 	}
@@ -2977,9 +2988,10 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				this.dispatchEvent(new CustomEvent("et2-loading-done", {bubbles: true, composed: true}));
 			}
 			this._reconcileRowRenderState();
+			// Not just for embedded grids - any fetch can shrink the row count.
+			this._scheduleVirtualizerLayoutSync();
 			if(this.embeddedVirtualized)
 			{
-				this._scheduleVirtualizerLayoutSync();
 				this._scheduleEmbeddedVirtualizedHeightSync();
 				void this.updateComplete.then(() =>
 				{
