@@ -64,9 +64,43 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 	@property({type: Array})
 	filters : Filter[] = [];
 
-	/* If nextmatch ID is provided, the filters will be read from the nextmatch header */
+	/**
+	 * If nextmatch ID is provided, the filters will be read from the nextmatch header.
+	 *
+	 * This uses a custom accessor instead of Lit's generated setter so _findNextmatch() runs
+	 * deterministically as soon as this is set, rather than only via willUpdate()'s batched
+	 * changedProperties diffing. The modern Et2Nextmatch hands us its own instance directly here
+	 * (see Et2Nextmatch._ensureFilterbox()) before this filterbox is even connected to the
+	 * document - relying solely on the next render pass left a window where willUpdate()'s
+	 * change-detection didn't line up with that timing and this filterbox's 'et2-filter' listener
+	 * silently never got attached at all, permanently freezing its widgets (eg. a date range
+	 * filter drawer stuck showing stale values while nm's own filters kept updating correctly
+	 * underneath). Only gate the eager call on a real Et2Nextmatch instance (not a string id) -
+	 * that path doesn't need a connected DOM to resolve (see _findNextmatch()), unlike the legacy
+	 * string-id lookup, which does and is left on willUpdate()'s existing, already-working timing.
+	 */
 	@property({type: String})
-	nextmatch : string | et2_nextmatch = null;
+	set nextmatch(value : string | et2_nextmatch)
+	{
+		const oldValue = this._nextmatchValue;
+		if(value === oldValue)
+		{
+			return;
+		}
+		this._nextmatchValue = value;
+		this.requestUpdate("nextmatch", oldValue);
+		if(value && typeof value !== "string")
+		{
+			this._findNextmatch();
+		}
+	}
+
+	get nextmatch() : string | et2_nextmatch
+	{
+		return this._nextmatchValue;
+	}
+
+	private _nextmatchValue : string | et2_nextmatch = null;
 
 	/* When copying from a nextmatch, we can leave, delete or replace column headers with text in place of the original widgets */
 	@property({type: String})
@@ -103,6 +137,7 @@ export class Et2Filterbox extends Et2InputWidget(LitElement)
 		//intercept all keydown events from reaching the nextmatch
 		document.addEventListener("keydown", this.handleKeypress, {capture: true});
 		this.addEventListener("slotchange", this.handleSlotChange);
+		this._nextmatch?.getDOMNode()?.addEventListener("et2-filter",this.handleNextmatchFilter);
 	}
 
 	disconnectedCallback()
