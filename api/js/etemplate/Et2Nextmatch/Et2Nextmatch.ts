@@ -316,6 +316,23 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	extraAttributes : string[] = [];
 
 	/**
+	 * Server-only. Name of the column to sort by initially, if the user has no
+	 * stored sort preference yet and the app didn't set one in PHP. Given
+	 * directly on the widget in the template, eg. `<nextmatch order="tr_modified" sort="DESC"/>`.
+	 * If omitted, falls back to the `row_modified` field (sorted newest first)
+	 * when the app has one set. Read via `$this->attrs['order']` in
+	 * `Nextmatch.php` - not a reactive client property, has no effect once the
+	 * widget is running in the browser.
+	 */
+	order? : string;
+
+	/**
+	 * Server-only. Direction ('ASC'|'DESC') paired with `order` above. Defaults
+	 * to 'ASC' if `order` is given without it.
+	 */
+	sort? : string;
+
+	/**
 	 * Additional nextmatch settings
 	 *
 	 * Additional customized settings for applications that can't follow the defaults.

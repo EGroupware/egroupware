@@ -43,6 +43,11 @@ use EGroupware\Api;
  * 	'cat_id'         =>		// IO category, if not 'no_cat' => True
  * 	'search'         =>		// IO search pattern
  * 	'order'          =>		// IO name of the column to sort after (optional for the sortheaders)
+ * 							// can also be given as a widget attribute directly in the template, eg.
+ * 							// <nextmatch order="tr_modified" sort="DESC"/>, used as the initial default
+ * 							// sort only if the app didn't already set one; if neither is given, falls
+ * 							// back to the 'row_modified' field (sorted newest first) when set. See the
+ * 							// matching doc-only 'order'/'sort' fields on Et2Nextmatch.ts.
  * 	'sort'           =>		// IO direction of the sort: 'ASC' or 'DESC'
  * 	'col_filter'     =>		// IO array of column-name value pairs (optional for the filterheaders)
  * 							// grid requires implementation of folowing filters in get_rows, even if not used as regular filters!
@@ -142,6 +147,23 @@ class Nextmatch extends Etemplate\Widget
 										'"/>'
 				);
 				$cfs->beforeSendToClient($cname, $expand);
+			}
+		}
+		// declarative fallback default, given directly on the widget in the template
+		// (eg. <nextmatch order="tr_modified" sort="DESC"/>) - lowest precedence: only
+		// used when neither the app's PHP code nor a stored preference already picked one
+		if (empty($value['order']))
+		{
+			if (!empty($this->attrs['order']))
+			{
+				$value['order'] = $this->attrs['order'];
+				$value['sort'] = $this->attrs['sort'] ?? 'ASC';
+			}
+			// otherwise fall back to sorting by the row's own modification field, newest first
+			elseif (!empty($value['row_modified']))
+			{
+				$value['order'] = $value['row_modified'];
+				$value['sort'] = 'DESC';
 			}
 		}
 		// Check for sort preference.  We only apply this on first load, so it can be changed
