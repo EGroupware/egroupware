@@ -194,6 +194,15 @@ export function ExposeMixin<B extends Constructor<LitElement>>(superclass : B)
 
 		protected _processUrl(url)
 		{
+			// Already-absolute URLs (blob:, data:, or any other own URI scheme - eg. a client-side
+			// object URL, never server-relative) must never get the app base URL prepended - only
+			// checking against base_url itself (as below) misses every other absolute case, found
+			// live 2026-08-27 via a blob: object URL for attachment viewing becoming
+			// ".../egroupware/blob:https://..." once double-prefixed.
+			if(/^[a-z][a-z0-9+.-]*:/i.test(url))
+			{
+				return url;
+			}
 			let base_url = egw.webserverUrl.match(/^\/ig/) ? egw(window).window.location.origin + egw.webserverUrl + '/' : egw.webserverUrl + '/';
 			if(base_url && base_url != '/' && url.indexOf(base_url) != 0)
 			{
