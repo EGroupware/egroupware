@@ -114,6 +114,7 @@ order	timesheet	de	Reihenfolge
 overwrite time	common	de	Zeit überschreiben
 overwriting start or stop time	timesheet	de	Überschreiben der Start- oder Stop-Zeit
 parent	admin	de	Übergeordnet
+partial timespan %1	timesheet	de	Teilweise %1:
 pause	common	de	Pause
 pause time	timesheet	de	Pausenzeit
 paused	timesheet	de	Pausen

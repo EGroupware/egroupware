@@ -15,11 +15,15 @@
 // $row_cont[titleClass] on a non-root row widget never resolves (Et2RowProvider only expands
 // placeholders on the row's own root attributes), so key off the row's own "rowSum" class instead.
 .rowSum {
-  border-top: 1px solid;
   padding-bottom: var(--sl-spacing-small);
 	[id*='ts_quantity'], [id*='ts_duration'], .ts_title {
 		font-weight: bold;
 	}
+}
+
+// Sum only covers part of its week/month/year (report range or "now" cuts it short)
+.rowSumPartial {
+	opacity: 0.8;
 }
 
 .ts_title {

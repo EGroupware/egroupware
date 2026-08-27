@@ -590,12 +590,16 @@ class timesheet_ui extends timesheet_bo
 			$filter_start_day = date('l',$start_date+12*60*60);
 			$filter_end_day   = $end_date ? date('l',$end_date+12*60*60) : false;
 			//echo "<p align=right>prefs: $week_start_day - $week_end_day, filter: $filter_start_day - $filter_end_day</p>\n";
-			if ($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day))
+			// A calendar month is too coarse for daily sums but rarely lands on week
+			// boundaries, so force week-sums here whenever month/year-sums are shown.
+			if (in_array('month', (array)$this->show_sums) || in_array('year', (array)$this->show_sums) ||
+				($filter_start_day == $week_start_day && (!$filter_end_day || $filter_end_day == $week_end_day)))
 			{
 				$this->show_sums[] = 'week';
 			}
-			// show day-sums, if range <= 5 weeks
-			if (!$end_date || $end_date - $start_date < 36*24*60*60)
+			// show day-sums, if range <= 5 weeks and we're not already showing month/year sums
+			if (!in_array('month', (array)$this->show_sums) && !in_array('year', (array)$this->show_sums) &&
+				(!$end_date || $end_date - $start_date < 36*24*60*60))
 			{
 				$this->show_sums[] = 'day';
 			}
@@ -802,6 +806,7 @@ class timesheet_ui extends timesheet_bo
 
 		$readonlys = array();
 		$have_cats = false;
+		$now = time();
 		foreach($rows as &$row)
 		{
 			if ($row['cat_id']) $have_cats = true;
@@ -817,6 +822,12 @@ class timesheet_ui extends timesheet_bo
 				// Set flag to avoid actions on these rows
 				$row['no_actions'] = true;
 
+				// A week/month/year-sum only covers the days that are both inside the
+				// report range and not in the future - flag it "partial" whenever its full
+				// period isn't covered, so the title/class can tell the user it's not a
+				// complete sum (eg. the first/last week of a month range, or the current,
+				// still-running week/month/year).
+				$partial = false;
 				switch($row['ts_id'])
 				{
 					case 0:	// day-sum
@@ -824,21 +835,49 @@ class timesheet_ui extends timesheet_bo
 						$row['ts_id'] = 'sum-day-'.$row['ts_start'];
 						break;
 					case -1:	// week-sum
-						$row['ts_title'] = lang('Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
+						// $start_date/$end_date come from Api\DateTime::sql_filter(), which - via
+						// DateTime::user2server() - leaves its $start/$end objects converted to
+						// server timezone *before* the final format('ts') that produces them.
+						// format('ts') just re-encodes whatever timezone the object currently
+						// displays, so period_start/period_end need the same setServer() call
+						// first, or they'd be off by the user/server timezone difference.
+						$week_start_dow = array('Monday' => 1, 'Saturday' => 6)[$week_start_day] ?? 7;	// ISO 1=Monday..7=Sunday
+						$period = new Api\DateTime($row['ts_start']);
+						$period->setTime(0, 0, 0);
+						$period->modify('-'.(((int)$period->format('N') - $week_start_dow + 7) % 7).' days');
+						$period_start = (int)$period->setServer()->format('ts');
+						$period->setUser()->modify('+6 days');
+						$period_end = (int)$period->setServer()->format('ts');
+						$partial = $period_start < $start_date || ($end_date && $period_end > $end_date) || $period_end > $now;
+						$row['ts_title'] = lang($partial ? 'Partial timespan %1' : 'Sum %1:',lang('week').' '.substr($row['ts_week'],4).'/'.substr($row['ts_week'],0,4));
 						$row['ts_id'] = 'sum-week-'.$row['ts_week'];
 						break;
 					case -2:	// month-sum
-						$row['ts_title'] = lang('Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
+						$period = new Api\DateTime();
+						$period->setDate((int)substr($row['ts_month'],0,4), (int)substr($row['ts_month'],4,2), 1);
+						$period->setTime(0, 0, 0);
+						$period_start = (int)$period->setServer()->format('ts');
+						$period->setUser()->modify('+1 month')->modify('-1 day');
+						$period_end = (int)$period->setServer()->format('ts');
+						$partial = $period_start < $start_date || ($end_date && $period_end > $end_date) || $period_end > $now;
+						$row['ts_title'] = lang($partial ? 'Partial timespan %1' : 'Sum %1:',lang(date('F',$row['ts_start'])).' '.substr($row['ts_month'],0,4));
 						$row['ts_id'] = 'sum-month-'.$row['ts_month'];
 						break;
 					case -3:	// year-sum
-						$row['ts_title'] = lang('Sum %1:',$row['ts_year']);
+						$period = new Api\DateTime();
+						$period->setDate((int)$row['ts_year'], 1, 1);
+						$period->setTime(0, 0, 0);
+						$period_start = (int)$period->setServer()->format('ts');
+						$period->setUser()->modify('+1 year')->modify('-1 day');
+						$period_end = (int)$period->setServer()->format('ts');
+						$partial = $period_start < $start_date || ($end_date && $period_end > $end_date) || $period_end > $now;
+						$row['ts_title'] = lang($partial ? 'Partial timespan %1' : 'Sum %1:',$row['ts_year']);
 						$row['ts_id'] = 'sum-year-'.$row['ts_year'];
 						break;
 				}
 				$row['ts_start'] = $row['ts_unitprice'] = '';
 				if (!$this->quantity_sum) $row['ts_quantity'] = '';
-				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete rowSum';
+				$row['class'] = 'th rowNoEdit rowNoDelete rowNoUndelete rowSum'.($partial ? ' rowSumPartial' : '');
 				$row['titleClass'] = 'timesheet_titleSum';
 				continue;
 			}

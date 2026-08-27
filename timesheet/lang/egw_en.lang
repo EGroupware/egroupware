@@ -114,6 +114,7 @@ order	timesheet	en	Order
 overwrite time	common	en	Overwrite time
 overwriting start or stop time	timesheet	en	Overwriting start or stop time
 parent	admin	en	Parent
+partial timespan %1	timesheet	en	Partial %1:
 pause	common	en	Pause
 pause time	timesheet	en	Pause time
 paused	timesheet	en	Paused

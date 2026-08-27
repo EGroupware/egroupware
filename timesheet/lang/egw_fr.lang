@@ -111,6 +111,7 @@ order	timesheet	fr	Ordre
 overwrite time	common	fr	Surcharger le temps
 overwriting start or stop time	timesheet	fr	Surcharger le temps de début ou de fin
 parent	admin	fr	Parent
+partial timespan %1	timesheet	fr	Partiel %1 :
 pause	common	fr	Pause
 pause time	timesheet	fr	Temps de pause
 paused	timesheet	fr	En pause

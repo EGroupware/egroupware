@@ -42,12 +42,12 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 	/**
 	 * Insert a timesheet row directly, owned by the given account.
 	 */
-	private function createTimesheet(int $owner, int $duration = 60): int
+	private function createTimesheet(int $owner, int $duration = 60, ?int $start = null): int
 	{
 		$so = new EGroupware\Api\Storage\Base('timesheet', 'egw_timesheet');
 		$so->data = array(
 			'ts_title'    => 'phpunit_getrows_'.bin2hex(random_bytes(6)),
-			'ts_start'    => time(),
+			'ts_start'    => $start ?? time(),
 			'ts_duration' => $duration,
 			'ts_quantity' => 1.0,
 			'ts_owner'    => $owner,
@@ -329,5 +329,135 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 			'startdate sent back to the client must stay the original ISO string, not the internal raw timestamp used for the SQL filter');
 		$this->assertSame('2026-08-22T00:00:00Z', $query['enddate'],
 			'enddate sent back to the client must stay the original ISO string');
+	}
+
+	/**
+	 * A full-month range is under the 5-week cutoff that would otherwise also turn on
+	 * day-sums, which is far too granular on top of the month total already shown - week
+	 * sums are the useful middle ground, even though a calendar month essentially never
+	 * lands on the user's configured week boundaries.
+	 */
+	public function testMonthRangeShowsWeekSumsNotDaySums()
+	{
+		$owner = random_int(1000000000, 2000000000);
+
+		$ui = new timesheet_ui();
+		$this->grantOwnerAccess($ui, $owner);
+		$query = $this->baseQuery($owner, array(
+			'filter'    => 'custom',
+			'startdate' => '2026-08-01T00:00:00Z',
+			'enddate'   => '2026-08-31T00:00:00Z',
+		));
+		$rows = array();
+		$readonlys = array();
+		$ui->get_rrows($query, $rows, $readonlys);
+
+		$this->assertContains('month', $ui->show_sums);
+		$this->assertContains('week', $ui->show_sums);
+		$this->assertNotContains('day', $ui->show_sums);
+	}
+
+	/**
+	 * A month/week/year-sum whose period isn't fully covered by the report range - either
+	 * because it's still running (the current, not-yet-finished month) or because the range
+	 * itself starts/ends mid-period - is misleading labelled just "Sum ...", as if it were a
+	 * complete total. It must say "Partial ..." instead and carry a distinct row class, so a
+	 * template/CSS can call it out.
+	 */
+	public function testPartialMonthSumIsMarkedPartial()
+	{
+		$owner = random_int(1000000000, 2000000000);
+
+		$ui = new timesheet_ui();
+		$this->grantOwnerAccess($ui, $owner);
+		// July 2026 is entirely in the past (today is 2026-08-27) - a complete month.
+		// August 2026 is the current, still-running month - necessarily partial.
+		$this->createTimesheet($owner, 60, mktime(9, 0, 0, 7, 15, 2026));
+		$this->createTimesheet($owner, 60, mktime(9, 0, 0, 8, 15, 2026));
+
+		$query = $this->baseQuery($owner, array(
+			'filter'    => 'custom',
+			'startdate' => '2026-07-01T00:00:00Z',
+			'enddate'   => '2026-08-31T00:00:00Z',
+			// summary/sum rows are only generated when ordered by ts_start (see
+			// timesheet_bo::search()) - baseQuery() otherwise leaves order/sort unset.
+			'order'     => 'ts_start',
+			'sort'      => 'ASC',
+		));
+		$rows = array();
+		$readonlys = array();
+		$ui->get_rrows($query, $rows, $readonlys);
+
+		$julySum = null;
+		$augustSum = null;
+		foreach($rows as $row)
+		{
+			if (!is_array($row)) continue;	// eg. the header-totals entry, not a real/sum row
+			if (($row['ts_id'] ?? null) === 'sum-month-202607') $julySum = $row;
+			if (($row['ts_id'] ?? null) === 'sum-month-202608') $augustSum = $row;
+		}
+
+		$this->assertNotNull($julySum, 'expected a month-sum row for July 2026');
+		$this->assertNotNull($augustSum, 'expected a month-sum row for August 2026');
+
+		$this->assertStringStartsWith('Sum', $julySum['ts_title'], 'a fully elapsed month must not be marked partial');
+		$this->assertStringNotContainsString('rowSumPartial', $julySum['class']);
+
+		$this->assertStringStartsWith('Partial', $augustSum['ts_title'], 'the current, still-running month must be marked partial');
+		$this->assertStringContainsString('rowSumPartial', $augustSum['class']);
+	}
+
+	/**
+	 * Api\DateTime::sql_filter() computes $start_date/$end_date via DateTime::user2server(),
+	 * which converts its DateTime objects to server timezone as a side effect before the
+	 * final format('ts') that produces the returned value - so format('ts') alone (without
+	 * first calling setServer()) gives a value that's off by the user/server timezone
+	 * difference. That only shows up for a user whose timezone isn't the server's, which a
+	 * UTC-timezone test user can't catch - hence pinning a non-UTC timezone here.
+	 *
+	 * Uses a named filter ('Last month'), not 'custom': a 'custom' filter's Z-suffixed ISO
+	 * dates are parsed by PHP as literal UTC, sidestepping the user-timezone conversion
+	 * entirely - a named filter's 'now'-relative computation is what actually exercises it,
+	 * and is also the path the reported bug came from (the toolbar's date-range presets).
+	 */
+	public function testPartialDetectionRespectsNonUtcUserTimezone()
+	{
+		$owner = random_int(1000000000, 2000000000);
+		$originalTz = \EGroupware\Api\DateTime::$user_timezone;
+		try
+		{
+			\EGroupware\Api\DateTime::setUserPrefs('America/Edmonton');
+
+			$ui = new timesheet_ui();
+			$this->grantOwnerAccess($ui, $owner);
+			// July 2026 is entirely in the past (today is 2026-08-27), so "Last month" must
+			// not come back partial, regardless of the user's timezone.
+			$this->createTimesheet($owner, 60, mktime(9, 0, 0, 7, 15, 2026));
+
+			$query = $this->baseQuery($owner, array(
+				'filter'    => 'Last month',
+				'order'     => 'ts_start',
+				'sort'      => 'ASC',
+			));
+			$rows = array();
+			$readonlys = array();
+			$ui->get_rrows($query, $rows, $readonlys);
+
+			$julySum = null;
+			foreach($rows as $row)
+			{
+				if (!is_array($row)) continue;
+				if (($row['ts_id'] ?? null) === 'sum-month-202607') $julySum = $row;
+			}
+
+			$this->assertNotNull($julySum, 'expected a month-sum row for July 2026');
+			$this->assertStringStartsWith('Sum', $julySum['ts_title'],
+				'a fully elapsed month must not be marked partial just because the user timezone is not UTC');
+			$this->assertStringNotContainsString('rowSumPartial', $julySum['class']);
+		}
+		finally
+		{
+			\EGroupware\Api\DateTime::$user_timezone = $originalTz;
+		}
 	}
 }
