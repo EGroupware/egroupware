@@ -31,7 +31,7 @@ class Jmap implements Connection
 	use Logic;
 
 	/**
-	 * @var Mail\Jmap
+	 * @var Mail\Jmap\Http
 	 */
 	protected $jmap;
 

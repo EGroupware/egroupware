@@ -80,7 +80,7 @@ class Stalwart extends Jmap
 	/**
 	 * Return Jmap client, using a Bearer access-token instead of Basic auth, if we have one
 	 *
-	 * @return Api\Mail\Jmap
+	 * @return Api\Mail\Jmap\Http
 	 */
 	public function jmapClient()
 	{

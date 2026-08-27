@@ -14,6 +14,7 @@ use EGroupware\Api\Framework;
 use EGroupware\Api\Acl;
 use EGroupware\Api\Etemplate;
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
 use EGroupware\Api\Auth\OpenIDConnectClient;
 use Jumbojett\OpenIDConnectClientException;
 
@@ -767,13 +768,13 @@ class admin_mail
 	 * exists (sent/trash/drafts/junk/archive); "template" and "ham" have no standard role and are
 	 * matched by common name only, same as mailboxes()'s IMAP fallback.
 	 *
-	 * @param Mail\Jmap $jmap
+	 * @param JmapHttp $jmap
 	 * @param array &$content=null on return values for acc_folder_(sent|trash|draft|template|junk|ham|archive)
 	 * @return array with mailbox-names as key AND value
 	 */
-	protected static function jmapMailboxes(Mail\Jmap $jmap, array &$content=null)
+	protected static function jmapMailboxes(JmapHttp $jmap, array &$content=null)
 	{
-		$response = $jmap->jmapCall([['Mailbox/get', ['accountId' => $jmap->accountId, 'ids' => null], '0']], Mail\Jmap::JMAP_MAIL);
+		$response = $jmap->jmapCall([['Mailbox/get', ['accountId' => $jmap->accountId, 'ids' => null], '0']], JmapHttp::JMAP_MAIL);
 		$mailboxes = $response['methodResponses'][0][1]['list'] ?? [];
 
 		// pre-select send, trash, ... folder for user, by checking the JMAP role or common name(s)
@@ -2565,7 +2566,7 @@ class admin_mail
 				// live-validate the Stalwart OAuth-login workaround now, rather than only
 				// discovering a problem later at first real mail-usage - a real Stalwart server
 				// is the only thing that can succeed here (it's a Stalwart-specific proprietary
-				// endpoint, see Mail\Jmap::passwordGrant()'s docblock), so the result doubles as a
+				// endpoint, see Api\Jmap\Http::passwordGrant()'s docblock), so the result doubles as a
 				// first, cheap way to tell a real Stalwart server apart from a generic JMAP server
 				// (ralf, 2026-08-24) - Phase 2 will replace this with the same "leave the password
 				// empty to trigger a real OAuth flow" pattern already used for Google/Microsoft
@@ -2976,13 +2977,13 @@ class admin_mail
 	 * @param string $password
 	 * @param string|null &$accountId on return the JMAP accountId
 	 * @param bool $verify =true false: disable TLS certificate verification for this attempt
-	 * @return Mail\Jmap
+	 * @return JmapHttp
 	 * @throws Api\Exception if $host is NOT a JMAP server
 	 * @throws Api\Exception\Http on connection or authentication failure
 	 */
-	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null, bool $verify=true) : Mail\Jmap
+	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null, bool $verify=true) : JmapHttp
 	{
-		return new Mail\Jmap($host, $username, $password, $accountId, $verify);
+		return new JmapHttp($host, $username, $password, $accountId, $verify);
 	}
 
 	/**

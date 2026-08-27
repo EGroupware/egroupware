@@ -8,6 +8,7 @@
  */
 
 use EGroupware\Api\Mail;
+use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
@@ -21,7 +22,7 @@ use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
  * Horde_Imap_Client_Socket and its listMailboxes()/login() methods are confirmed non-final
  * (vendor/egroupware/imap-client/lib/Horde/Imap/Client/{Socket,Base}.php), so a plain
  * PHPUnit stub can stand in for it. jmapMailboxes() is protected static and takes a
- * Mail\Jmap, reached the same way via ReflectionMethod, with a mocked jmapCall()/__get().
+ * JmapHttp, reached the same way via ReflectionMethod, with a mocked jmapCall()/__get().
  *
  * NOT covered here: folder() itself (ends in Etemplate::exec()) or how mailboxes()/
  * jmapMailboxes() are reached during a live autoconfig() run. See
@@ -133,11 +134,11 @@ class AdminMailMailboxesTest extends \PHPUnit\Framework\TestCase
 
 	/**
 	 * @param array $list JMAP Mailbox objects, each with 'name' and optional 'role'
-	 * @return Mail\Jmap
+	 * @return JmapHttp
 	 */
-	private function mockJmap(array $list) : Mail\Jmap
+	private function mockJmap(array $list) : JmapHttp
 	{
-		$jmap = $this->getMockBuilder(Mail\Jmap::class)
+		$jmap = $this->getMockBuilder(JmapHttp::class)
 			->disableOriginalConstructor()
 			->onlyMethods(['jmapCall', '__get'])
 			->getMock();
@@ -148,7 +149,7 @@ class AdminMailMailboxesTest extends \PHPUnit\Framework\TestCase
 		return $jmap;
 	}
 
-	private function jmapMailboxes(Mail\Jmap $jmap, array &$content)
+	private function jmapMailboxes(JmapHttp $jmap, array &$content)
 	{
 		$ref = new ReflectionMethod(admin_mail::class, 'jmapMailboxes');
 		return $ref->invokeArgs(null, [$jmap, &$content]);

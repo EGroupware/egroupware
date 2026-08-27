@@ -10,6 +10,7 @@
 require_once realpath(__DIR__.'/../../api/tests/LoggedInTest.php');
 
 use EGroupware\Api;
+use EGroupware\Api\Mail\Jmap\Http as JmapHttp;
 use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 
 /**
@@ -26,7 +27,7 @@ class TestableAdminMail extends admin_mail
 	public static $dnsFixtures = array();
 	/** @var array [url] => string|false */
 	public static $httpFixtures = array();
-	/** @var array [host] => Api\Mail\Jmap|\Throwable */
+	/** @var array [host] => JmapHttp|\Throwable */
 	public static $jmapFixtures = array();
 
 	protected static function dnsQuery(string $hostname, int $type)
@@ -47,7 +48,7 @@ class TestableAdminMail extends admin_mail
 		return self::$httpFixtures[$url];
 	}
 
-	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null, bool $verify=true) : Api\Mail\Jmap
+	protected static function jmapClient(string $host, string $username, string $password, ?string &$accountId=null, bool $verify=true) : JmapHttp
 	{
 		if (!array_key_exists($host, self::$jmapFixtures))
 		{
@@ -94,11 +95,11 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	}
 
 	/**
-	 * Build a Mail\Jmap stub bypassing its real (network-performing) constructor
+	 * Build a JmapHttp stub bypassing its real (network-performing) constructor
 	 */
-	private function jmapStub(array $accountCapabilities=[], bool $passwordGrantSucceeds=true) : Api\Mail\Jmap
+	private function jmapStub(array $accountCapabilities=[], bool $passwordGrantSucceeds=true) : JmapHttp
 	{
-		$mock = $this->getMockBuilder(Api\Mail\Jmap::class)
+		$mock = $this->getMockBuilder(JmapHttp::class)
 			->disableOriginalConstructor()
 			->onlyMethods(['passwordGrant', '__get'])
 			->getMock();
@@ -497,7 +498,7 @@ class AdminMailHostDiscoveryTest extends Api\LoggedInTest
 	 * A failed Stalwart OAuth-login workaround (passwordGrant() returning null) must NOT block
 	 * account creation - it's a live-validation nicety, the account still works via plain
 	 * password authentication. Since passwordGrant() only ever succeeds against a real Stalwart
-	 * server (a Stalwart-specific proprietary endpoint, see Mail\Jmap::passwordGrant()'s
+	 * server (a Stalwart-specific proprietary endpoint, see Api\Jmap\Http::passwordGrant()'s
 	 * docblock), its result doubles as a first, cheap way to tell a real Stalwart server apart
 	 * from a generic JMAP server (ralf, 2026-08-24) - acc_imap_type falls back to the more
 	 * generic Imap\Jmap::class rather than Imap\Stalwart::class when it fails.

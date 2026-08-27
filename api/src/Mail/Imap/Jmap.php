@@ -271,7 +271,7 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
-	 * @var Api\Mail\Jmap
+	 * @var Api\Mail\Jmap\Http
 	 */
 	protected $jmap;
 
