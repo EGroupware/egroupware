@@ -236,6 +236,30 @@ When a checklist or task calls for verifying UI behavior "at mobile viewport" or
   checklist item verified. If only that kind of check was possible, say so explicitly rather than reporting the item
   as covered.
 
+### Hidden/backgrounded tabs produce fake UI bugs - always verify tab visibility
+
+Browser automation tools (Claude in Chrome, the Browser pane, CDP-driven tools generally) frequently keep their
+controlled tab in a backgrounded state - `document.hidden === true` / `document.visibilityState === "hidden"` -
+even while it still accepts clicks, JS execution, and screenshots. Chrome throttles or fully pauses several
+browser-internal mechanisms for hidden tabs (`requestAnimationFrame` is paused entirely; `setTimeout` is
+throttled/delayed), and this can produce convincing-looking "stuck" UI states that **do not reproduce on a
+genuinely visible, focused tab** and are not real product bugs.
+
+* **Before trusting any repro of a "stuck", "frozen", or "never resolves" UI symptom, check
+  `document.hidden`/`document.visibilityState` on the automation tab first.** If it's hidden, the repro is not
+  trustworthy evidence on its own - re-test on a tab you've confirmed is genuinely visible before concluding
+  anything is (or isn't) broken.
+* If you can't get a genuinely visible/focused tab through the automation tooling available to you, **say so and
+  ask the user to focus a real browser tab and leave it focused** while you drive it, rather than proceeding on a
+  hidden tab and reporting the result as verified. Don't silently accept a hidden tab as "good enough."
+* `Et2Datagrid` (and its virtualized/scroll-driven rendering in general) is a repeat offender here: it has produced
+  false leads from hidden-tab testing in more than one investigation - a fully-paused `requestAnimationFrame`-driven
+  row-upgrade queue looking permanently stuck, and a `setTimeout`-based fetch-dispatch debounce appearing to
+  "starve" forever - both looked identical to real bugs but did not reproduce once re-tested on a genuinely visible,
+  focused tab. Treat any "stuck placeholder row" / "loading spinner never clears" report against this component with
+  extra suspicion until visibility is confirmed - the underlying bug, if any, may be much narrower (or different)
+  than what a hidden tab first suggests.
+
 ## When changing setup or schema code
 
 For changes involving setup, database schema, migrations, or upgrade paths:
