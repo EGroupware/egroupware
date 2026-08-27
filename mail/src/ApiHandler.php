@@ -152,6 +152,23 @@ class ApiHandler extends Api\CalDAV\Handler
 				}
 				$acc_id = $acc_id ?? Api\Mail\Account::read_identity($ident_id)['acc_id'];
 				$mail_account = Api\Mail\Account::read($acc_id);
+
+				// JMAP-native send path (real-JMAP/Stalwart accounts only, no attachments/reply
+				// yet - see doc/ai/projects/mail-compose-jmap-migration.md) - this REST endpoint
+				// is the first real consumer of Api\Mail\Jmap\Http's new Identity/EmailSubmission
+				// type classes, proven here before the compose UI itself is rewired. Everything
+				// this guard excludes still falls through to the existing classic mail_compose
+				// path below, unchanged - a parallel path, not a replacement (ralf, 2026-08-27).
+				if (is_a($mail_account->acc_imap_type, Api\Mail\Imap\Jmap::class, true) &&
+					empty($preset['reply_id']) && empty($preset['file']))
+				{
+					self::sendViaJmap($mail_account, $ident_id, $preset);
+					echo json_encode([
+						'status' => 200,
+						'message' => 'Mail successful sent',
+					], self::JSON_RESPONSE_OPTIONS);
+					return true;
+				}
 				// check if the mail-account requires a user-context / password and then just send the mail with an smtp-only account NOT saving to Sent folder
 				if (empty($mail_account->acc_imap_password) || $mail_account->acc_smtp_auth_session && empty($mail_account->acc_smtp_password))
 				{
@@ -398,6 +415,89 @@ class ApiHandler extends Api\CalDAV\Handler
 		], self::JSON_RESPONSE_OPTIONS);
 
 		return true;
+	}
+
+	/**
+	 * Send a mail via JMAP Email/set + EmailSubmission/set (real-JMAP/Stalwart accounts only)
+	 *
+	 * Creates a Drafts-mailbox Email, then submits it, patching mailboxIds Drafts->Sent and
+	 * clearing $draft on success (RFC 8621 §7.4's onSuccessUpdateEmail - functionally the same
+	 * "move the sent copy into Sent" step the classic path does via a raw IMAP APPEND).
+	 *
+	 * @param Api\Mail\Account $mail_account
+	 * @param int $ident_id
+	 * @param array $preset 'to'/'cc'/'bcc' (comma-separated or array of addresses), 'subject',
+	 *  'body', 'mimeType' ('html'|'plain')
+	 * @throws \Exception on failure
+	 */
+	protected static function sendViaJmap(Api\Mail\Account $mail_account, int $ident_id, array $preset)
+	{
+		$jmap = $mail_account->imapServer()->jmapClient();
+
+		if (!($identities = $jmap->identity->get()['list'] ?? []))
+		{
+			throw new \Exception('No JMAP identity found for account #'.$mail_account->acc_id, 500);
+		}
+		// prefer the identity matching the caller-selected ident_id's own email, else first
+		$ident_email = Api\Mail\Account::read_identity($ident_id)['ident_email'] ?? null;
+		$identity = current(array_filter($identities, static fn($i) => $i['email'] === $ident_email)) ?: $identities[0];
+
+		$drafts_id = $sent_id = null;
+		foreach ($jmap->mailbox->get()['list'] ?? [] as $mailbox)
+		{
+			if (($mailbox['role'] ?? null) === 'drafts') $drafts_id = $mailbox['id'];
+			if (($mailbox['role'] ?? null) === 'sent') $sent_id = $mailbox['id'];
+		}
+		if (!$drafts_id || !$sent_id)
+		{
+			throw new \Exception('Could not find Drafts/Sent mailbox by role for account #'.$mail_account->acc_id, 500);
+		}
+
+		$addresses = static function($value)
+		{
+			if (empty($value)) return null;
+			$list = [];
+			foreach (is_array($value) ? $value : explode(',', $value) as $address)
+			{
+				if (($address = trim($address)) !== '') $list[] = ['email' => $address];
+			}
+			return $list ?: null;
+		};
+
+		$is_html = ($preset['mimeType'] ?? 'plain') === 'html';
+		$body_key = $is_html ? 'htmlBody' : 'textBody';
+		$create = array_filter([
+			'mailboxIds' => [$drafts_id => true],
+			'keywords' => ['$draft' => true],
+			'from' => [array_filter(['email' => $identity['email'], 'name' => $identity['name'] ?? null])],
+			'to' => $addresses($preset['to'] ?? null),
+			'cc' => $addresses($preset['cc'] ?? null),
+			'bcc' => $addresses($preset['bcc'] ?? null),
+			'subject' => $preset['subject'] ?? '',
+			'bodyValues' => ['body' => ['value' => $preset['body'] ?? '', 'charset' => 'utf-8']],
+			$body_key => [['partId' => 'body', 'type' => $is_html ? 'text/html' : 'text/plain']],
+		], static fn($value) => $value !== null);
+
+		$email_set = $jmap->email->set(['s1' => $create]);
+		if (!empty($email_set['notCreated']['s1']))
+		{
+			throw new \Exception('Email/set create failed: '.json_encode($email_set['notCreated']['s1']), 500);
+		}
+		$email_id = $email_set['created']['s1']['id'];
+
+		$result = $jmap->emailSubmission->submit($email_id, $identity['id'], null, [
+			"mailboxIds/$drafts_id" => null,
+			"mailboxIds/$sent_id" => true,
+			'keywords/$draft' => null,
+			// a Sent-folder copy is a message the user themselves sent, not new/incoming mail -
+			// mark it read, matching saveAsDraft()'s own \Seen convention (found live 2026-08-27:
+			// without this the Sent copy showed up unseen)
+			'keywords/$seen' => true,
+		]);
+		if (isset($result['notCreated']))
+		{
+			throw new \Exception('EmailSubmission/set failed: '.json_encode($result['notCreated']), 500);
+		}
 	}
 
 	/**

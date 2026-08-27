@@ -1,6 +1,60 @@
 # Mail: invert `Mail\Imap`/`Mail\Jmap` - JMAP-shaped base, IMAP as an adapter
 
-## Status: Phase 1 implemented (2026-08-26), NOT yet committed (ralf: hold until this point reached)
+## Status: Phase 1 committed+pushed 2026-08-26 (`d3545c57f8`). Phase 2 scoping started, no code yet.
+
+## Phase 2 scoping: both obvious "quick win" candidates are dead ends (2026-08-26)
+
+Before writing any Phase 2 code, screened the two highest-call-volume unmigrated methods
+(`getCurrentMailbox()` 19 calls, `getMailboxes()` 12 calls) as candidate first slices. Neither
+holds up:
+
+- **`getCurrentMailbox()`/`getMailboxes()` have zero external callers.** Every call site is inside
+  `api/src/Mail.php` itself or `api/src/Mail/Imap.php`/`Imap/Cyrus.php` (admin-provisioning, already
+  out of scope). Migrating them would only swap internal plumbing inside `Mail.php` - it removes no
+  UI-facing dependency on `Api\Mail`, which is the entire point of the decided "direct call-site
+  rewiring" mechanism. Not a real slice.
+- **The methods that *do* have external callers sit one layer up** - `getFolderStatus()`/
+  `getMailBoxesRecursive()`/`getFolderArrays()`, called from `mail/src/Ui/FolderHandler.php`. But
+  `FolderHandler.php`'s own docblock says these are **classic-fallback-only paths**: the folder-tree
+  JMAP migration ([[project_mail_folder_tree_jmap]]) already made browsing/create/rename/move/
+  delete/subscribe JMAP-first client-side for *both* backends (real-JMAP over HTTP and the
+  IMAP-shim over `mail/jmap.php`) - these PHP methods only run when JMAP isn't reachable at all.
+  Worse, the actual logic here is exactly the "hardest to map" territory this doc already flagged -
+  delimiter-based path splitting, `_getNameSpaces()`/`getFolderPrefixFromNamespace()` namespace
+  handling, recursive subfolder subscribe-cascades on rename/move/delete - real IMAP-hierarchy work,
+  not a mechanical restructuring, on a low-traffic fallback path. Low ROI for a first slice.
+
+**Where real remaining server-side PHP traffic actually lives**, now that folder-tree browsing AND
+message-list browsing are both JMAP-first client-side for every backend: `mail_compose`
+(attach/send), `Storage/Merge.php` (mail-merge send), `mail_zpush.inc.php` (ActiveSync),
+`mail/src/ApiHandler.php` (REST API), `mail_integration.inc.php` (tracker/infolog/calendar
+mail-linking, [[project_tracker_mail_dependency]]), `mail_hooks.inc.php`. Screened all 6
+(2026-08-26/27):
+
+- **`mail_zpush.inc.php`** (6 hits, all `icServer->ImapServerId` property reads, no method calls) and
+  **`ApiHandler.php`** (zero `mail_bo`/`icServer` calls at all - `Mail::getInstance()` only feeds
+  `Api\Mailer` for sending) and **`mail_hooks.inc.php`** (1 property-read site) are not real
+  consumers of the raw-IMAP call sites - out of scope, nothing to migrate.
+- **`mail_compose.inc.php`** (~24 sites, every compose exercises this - highest real traffic),
+  **`mail_integration.inc.php`** (~13 sites, tracker/infolog/calendar linking), and
+  **`Storage/Merge.php`** (7 sites, smallest/most contained) are all real, but **every one of them
+  is dominated by message-body/header/attachment fetch calls** (`getMessageRawBody`/
+  `getMessageHeader`/`getMessageBody`/`getAttachment`/`getMessageAttachments`) - exactly `fetch()`'s
+  IMAP linear part-ID addressing vs JMAP's structured body-parts tree, already named above as the
+  single hardest unsolved semantic-mapping gap. None of them reduce mainly to Mailbox querying (the
+  thing Phase 1 actually solved) the way `FolderHandler.php` did.
+
+**Conclusion: Phase 1's low-hanging fruit is genuinely exhausted.** There is no remaining consumer
+where "just wire up already-built Phase 1 code" works - every real candidate needs the
+message-get/fetch JMAP mapping designed first (JMAP `Email/get` with `bodyProperties`/
+`bodyValues`/`bodyStructure` vs IMAP `fetch()`'s `$_partID`/`BODY[...]` addressing) as shared infra,
+not restructuring. `Storage/Merge.php` (smallest, most contained, only 2 of its 7 sites are
+fetch-shaped) would be the cheapest place to prove that mapping out once designed, before touching
+`mail_compose`/`mail_integration`. **Not started - this is a real design problem needing its own
+scoping session, not a continuation of Phase 1's "already-JMAP-native, zero new semantics"
+restructuring approach.** Paused here pending ralf's input.
+
+## Phase 1 summary
 
 `Api\Jmap`/`Api\Jmap\Type`/`Api\Jmap\Http` (generic) + `Api\Mail\Jmap\{Http,Mailbox,Email,Thread,
 Quota}` (real-JMAP, absorbing the old `api/src/Mail/Jmap.php` client, now deleted) +

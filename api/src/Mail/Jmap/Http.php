@@ -45,12 +45,18 @@ class Http extends Jmap\Http
 	 * IMAP usernames/emails), see https://www.rfc-editor.org/rfc/rfc9670
 	 */
 	const JMAP_PRINCIPALS = "urn:ietf:params:jmap:principals";
+	/**
+	 * JMAP submission extension (Identity + EmailSubmission - sending), see RFC 8621 §6/§7
+	 */
+	const JMAP_SUBMISSION = "urn:ietf:params:jmap:submission";
 
 	protected array $types = [
 		'mailbox' => Mailbox::class,
 		'email' => Email::class,
 		'thread' => Thread::class,
 		'quota' => Quota::class,
+		'identity' => Identity::class,
+		'emailSubmission' => EmailSubmission::class,
 	];
 
 	/**
@@ -73,7 +79,8 @@ class Http extends Jmap\Http
 			$host_or_url = 'https://stalwart.egroupware.org/jmap/';
 		}
 		parent::__construct($host_or_url, $user, $secret,
-			array_merge(self::JMAP_MAIL, [self::JMAP_QUOTA, self::JMAP_MAIL_SHARE, self::JMAP_PRINCIPALS]),
+			array_merge(self::JMAP_MAIL, [self::JMAP_QUOTA, self::JMAP_MAIL_SHARE, self::JMAP_PRINCIPALS,
+				self::JMAP_SUBMISSION]),
 			$accountId, $verify);
 	}
 
