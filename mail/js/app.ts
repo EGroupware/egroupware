@@ -181,6 +181,15 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - "jmapCompose" toolbar toggle's
+	 * state (id="jmapCompose" in index.xet). Session-only (not a preference) - deliberately reset
+	 * on every reload while this is still experimental. Read by composeMessage() to decide whether
+	 * a plain new-message Compose should send via JMAP (see MailJmap.sendNewEmail()) instead of the
+	 * classic server-side path - reply/forward/drafts stay classic regardless of this toggle.
+	 */
+	jmapComposeEnabled = false;
+
+	/**
 	 * Initialize javascript for this application
 	 *
 	 * @memberOf mail
@@ -1359,6 +1368,16 @@ export class MailApp extends EgwApp
 			default:
 				// No further client side processing needed for these
 				settings.from = _action.id;
+		}
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - only a genuinely new message
+		// (no source message id at all, however it was triggered) may take the JMAP-mode flag;
+		// compose.ts reads it back from this popup's own URL to decide its Send behaviour. Reply/
+		// forward/drafts always carry a non-empty settings.id and so never qualify, regardless of
+		// the toggle - this is deliberately conservative, not merely "action id happens to be
+		// 'compose'" (which composeMessage() itself already redirects to 'forward' for >1 elems).
+		if (this.jmapComposeEnabled && !settings.id)
+		{
+			(settings as typeof settings & {jmap? : string}).jmap = '1';
 		}
 		const compose_list = egw.getOpenWindows("mail", /^compose_/);
 		const window_name = 'compose_' + compose_list.length + '_'+ (settings.from || '') + '_' + settings.id;
@@ -7539,6 +7558,15 @@ export class MailApp extends EgwApp
 	toggleThreaded(_ev, _widget)
 	{
 		this.nm && this.nm.applyFilters({threaded: _widget.value ? '1' : ''});
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 UI toggle - see jmapComposeEnabled's
+	 * own docblock.
+	 */
+	toggleJmapCompose(_ev, _widget)
+	{
+		this.jmapComposeEnabled = !!_widget.value;
 	}
 
 	/**

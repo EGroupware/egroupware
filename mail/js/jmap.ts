@@ -68,9 +68,9 @@ export interface JmapMessageReference
  */
 export interface JmapNewEmail
 {
-	to? : string;	// comma-separated addresses
-	cc? : string;
-	bcc? : string;
+	to? : string | string[];	// comma-separated string, or an array of addresses (eg. Et2Email's .value)
+	cc? : string | string[];
+	bcc? : string | string[];
 	subject? : string;
 	body? : string;
 	isHtml? : boolean;
@@ -121,6 +121,15 @@ type EmailFilter = EmailFilterCondition | {operator : 'AND' | 'OR' | 'NOT', cond
  * given a definitive answer, so retrying elsewhere would very likely fail the same way.
  */
 export class JmapUserError extends Error {}
+
+/**
+ * sendNewEmail() throws this specifically when the account's backend doesn't support JMAP
+ * sending yet (IMAP-shim EmailSubmission emulation not built, see
+ * doc/ai/projects/mail-compose-jmap-migration.md's Step 2) - callers may catch this distinctly
+ * to silently fall back to a non-JMAP send path instead of surfacing it as a user-facing error,
+ * unlike a real JmapUserError (a genuine failure worth showing).
+ */
+export class JmapUnsupportedBackendError extends JmapUserError {}
 
 /**
  * Format one JMAP-shaped error object ({type, description?}) as a human string, or null if it
@@ -3306,6 +3315,15 @@ export class MailJmap
 		{
 			const token = await this.ensureToken(profileID);
 			if (!token) throw this.unreachableError();
+			// IMAP-shim accounts already get a working token (folder/message browsing is
+			// JMAP-native for both backends), but Api\Mail\Jmap\Imap has no EmailSubmission/
+			// create support yet (doc's Step 2, not built) - fail distinctly so a caller like
+			// compose.ts's trySendViaJmap() can fall back to the classic send path instead of
+			// surfacing a confusing raw JMAP error.
+			if (token.isLocal)
+			{
+				throw new JmapUnsupportedBackendError(this.egw.lang('JMAP sending is not yet available for this account'));
+			}
 			const client = this.clients[profileID];
 
 			const [{identities, mailboxes}] = await client.requestMany((t) => ({
@@ -3324,8 +3342,8 @@ export class MailJmap
 				throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
 			}
 
-			const addresses = (value? : string) => value
-				? value.split(',').map((address) => address.trim()).filter(Boolean).map((address) => ({email: address}))
+			const addresses = (value? : string | string[]) => value
+				? (Array.isArray(value) ? value : value.split(',')).map((address) => address.trim()).filter(Boolean).map((address) => ({email: address}))
 				: undefined;
 			const isHtml = !!email.isHtml;
 			const bodyPartType = isHtml ? 'text/html' : 'text/plain';

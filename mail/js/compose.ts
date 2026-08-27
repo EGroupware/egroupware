@@ -15,12 +15,22 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 // needed or possible.
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
+import {JmapUnsupportedBackendError} from "./jmap";
 
 export class MailCompose
 {
 	protected app : MailApp;
 	private et2 : Et2Template
 	private autosaveInterval : number;
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - set from this popup's own
+	 * "&jmap=1" URL param, added by MailApp.composeMessage() only for a genuinely new message
+	 * opened while the "jmapCompose" toolbar toggle is on (see jmapComposeEnabled's docblock).
+	 * Read once here rather than in submitAction() so a mid-edit toggle change in the (separate)
+	 * main window can't retroactively change an already-open compose window's send behaviour.
+	 */
+	private readonly isJmapMode : boolean = new URLSearchParams(window.location.search).get('jmap') === '1';
 
 	get egw() : IegwAppLocal
 	{
@@ -483,10 +493,76 @@ export class MailCompose
 			});
 			return false;
 		}
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - try the JMAP-native send path
+		// for a plain new message opened via the "jmapCompose" toggle. trySendViaJmap() itself
+		// decides eligibility (no attachments, no cross-app integration, no S/MIME) and falls
+		// back to false - never an error - for anything it can't yet handle or an
+		// unsupported-backend account; a REAL send failure is shown to the user and still
+		// resolves true, so the classic postback below never double-sends.
+		if (this.isJmapMode)
+		{
+			wait.then(() => this.trySendViaJmap()).then((sent) =>
+			{
+				if (sent) return;
+				this.et2.getInstanceManager().submit(null, 'Please wait while sending your mail');
+			});
+			return;
+		}
+
 		wait.then(() =>
 		{
 			this.et2.getInstanceManager().submit(null, 'Please wait while sending your mail');
 		});
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - attempt the JMAP-native send path.
+	 * Only ever called when isJmapMode (a genuinely new message, no reply/forward/draft context -
+	 * see MailApp.composeMessage()'s own guard for why that's guaranteed).
+	 *
+	 * @returns {Promise<boolean>} true if this send is fully handled (either actually sent via
+	 *  JMAP, or a real failure was already shown to the user) - caller must NOT also run the
+	 *  classic postback in that case, or the message could be sent twice. false if this compose
+	 *  isn't eligible (attachments/integration/S-MIME in play) or the account's backend doesn't
+	 *  support JMAP sending yet - caller falls through to the classic postback, silently.
+	 */
+	private async trySendViaJmap() : Promise<boolean>
+	{
+		if (Object.keys(this.et2.getArrayMgr('content').getEntry('attachments') || {}).length)
+		{
+			return false;
+		}
+		const toolbar : any = this.et2.getWidgetById('composeToolbar');
+		if (['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].some(
+			(id) => toolbar?.getWidgetById(id)?.get_value()))
+		{
+			return false;
+		}
+
+		const profileID = this.et2.getWidgetById('mailaccount')?.get_value();
+		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
+		try
+		{
+			await this.app.jmap.sendNewEmail(String(profileID), {
+				to: this.et2.getWidgetById('to')?.get_value(),
+				cc: this.et2.getWidgetById('cc')?.get_value(),
+				bcc: this.et2.getWidgetById('bcc')?.get_value(),
+				subject: this.et2.getWidgetById('subject')?.get_value(),
+				body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
+				isHtml,
+			});
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUnsupportedBackendError)
+			{
+				return false;
+			}
+			this.egw.message(e.message || this.egw.lang('Failed to send message'), 'error');
+			return true;
+		}
+		window.close();
+		return true;
 	}
 
 	/**

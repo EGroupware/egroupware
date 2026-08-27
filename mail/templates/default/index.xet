@@ -225,6 +225,10 @@
         <!-- doc/ai/projects/mail-threaded-view.md, Phase 1 - hidden by default, MailApp.updateThreadingToggle()
              reveals it only for a profile whose JMAP bootstrap reports supportsThreading (nothing does, yet) -->
         <et2-button-toggle id="threaded" icon="diagram-2" offIcon="list-ul" statustext="Group messages by thread" onchange="app.mail.toggleThreaded" style="display:none"></et2-button-toggle>
+        <!-- doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - experimental, real-JMAP accounts
+             only: when on, a plain new-message Compose sends via JMAP Email/set+EmailSubmission/set
+             instead of the classic server-side path. Reply/forward/drafts stay classic regardless. -->
+        <et2-button-toggle id="jmapCompose" icon="jmap" statustext="Compose new messages using JMAP directly (experimental, real-JMAP accounts only)" onchange="app.mail.toggleJmapCompose"></et2-button-toggle>
         <et2-dropdown id="mail.index.vacationnotice" disabled="true" class="vacationnotice" hoist="true" toggleOnHover="true">
             <et2-hbox slot="trigger">
                 <et2-description value="on vacation" onclick="app.mail.editVacation"></et2-description>
