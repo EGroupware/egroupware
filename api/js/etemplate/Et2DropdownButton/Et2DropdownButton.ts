@@ -10,7 +10,7 @@
 
 
 import {SlButtonGroup, SlDropdown} from "@shoelace-style/shoelace";
-import {css, html, LitElement, TemplateResult} from "lit";
+import {css, html, LitElement, nothing, PropertyValues, TemplateResult} from "lit";
 import {Et2WidgetWithSelectMixin} from "../Et2Select/Et2WidgetWithSelectMixin";
 import {SelectOption} from "../Et2Select/FindSelectOptions";
 import shoelace from "../Styles/shoelace";
@@ -72,6 +72,12 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 				sl-menu-item::part(label) {
 					color: var(--item-color, inherit);
 				}
+
+				/* Leave the label in the accessibility tree, but hide it visually */
+				:host([iconOnly]) #main::part(label) {
+					position: absolute;
+					left: -999px;
+				}
             `,
 		];
 	}
@@ -85,6 +91,24 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 
 	@property()
 	placement:string = "bottom-end";
+
+	/**
+	 * Name of a preference to read/store the default selected option in.
+	 *
+	 * When set, the option matching the stored preference value
+	 * (falling back to whichever option is marked `default: true`)
+	 * is preselected on load, and every user selection is written back to the same preference
+	 * - so the main/left part of the button becomes a quick-action for "whatever was last picked",
+	 * instead of doing nothing until the user has opened the menu at least once.
+	 */
+	@property()
+	defaultPreference : string = "";
+
+	/**
+	 * Show only the selected option's icon on the main button, not its text label
+	 */
+	@property({type: Boolean, reflect: true})
+	iconOnly : boolean = false;
 
 	// Make sure imports stay
 	private _group : SlButtonGroup;
@@ -104,6 +128,48 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 
 		// Rebind click to just the main button, not the whole thing
 		this.removeEventListener("click", this._handleClick);
+
+		// Et2Toolbar assigns select_options before appending us to the DOM,
+		// so the willUpdate() driven by that assignment can run before egw() is reliably resolvable
+		// - resolve again once connected, as a safety net. _resolveDefault() is idempotent (guarded by _value).
+		this._resolveDefault();
+	}
+
+	willUpdate(changedProperties : PropertyValues<this>)
+	{
+		super.willUpdate(changedProperties);
+
+		if(changedProperties.has("select_options") || changedProperties.has("defaultPreference"))
+		{
+			this._resolveDefault();
+		}
+	}
+
+	/**
+	 * Resolve the default selected option from defaultPreference: a stored preference value
+	 * first, falling back to whichever option is marked `default: true`.
+	 *
+	 * No-op unless defaultPreference is set, options are loaded, and nothing has been
+	 * selected yet this session (avoids clobbering an active user selection).
+	 */
+	protected _resolveDefault()
+	{
+		if(!this.defaultPreference || !this.select_options?.length || this._value || !this.egw())
+		{
+			return;
+		}
+
+		const stored = this.egw().preference(this.defaultPreference, this.egw().getAppName());
+		let option = stored ? this.select_options.find((o : SelectOption) => o.value === stored) : undefined;
+		if(!option)
+		{
+			option = this.select_options.find((o : SelectOption) => o.default);
+		}
+		if(option)
+		{
+			this._value = option.value;
+			this.label = this.noLang ? option.label : this.egw().lang(option.label);
+		}
 	}
 
 	protected _renderOptions()
@@ -111,6 +177,10 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 		// We have our own render, so we can handle it internally
 	}
 
+	protected get _selectedOption() : SelectOption
+	{
+		return (this.select_options || []).find((o : SelectOption) => o.value === this._value);
+	}
 
 	render() : TemplateResult
 	{
@@ -118,12 +188,17 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 		{
 			return html``;
 		}
+		const selected = this.iconOnly ? this._selectedOption : undefined;
+		const icon = selected?.icon;
 		return html`
             <sl-button-group>
                 <sl-button size="${egwIsMobile() ? "large" : "medium"}" id="main" part="main" exportparts="base"
                            ?disabled=${this.disabled}
                            @click=${this._handleClick}
                 >
+                    ${this.iconOnly && icon ? html`
+                        <et2-image slot="prefix" src=${icon}
+                                   style=${selected?.iconColor ? `color: ${selected.iconColor}` : nothing}></et2-image>` : nothing}
                     ${this.label}
                 </sl-button>
                 <sl-dropdown placement=${this.placement} hoist part="dropdown">
@@ -144,7 +219,8 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 	_optionTemplate(option : SelectOption) : TemplateResult
 	{
 		let icon = option.icon ? html`
-            <et2-image slot="prefix" src=${option.icon} icon></et2-image>` : '';
+            <et2-image slot="prefix" src=${option.icon} icon
+                       style=${option.iconColor ? `color: ${option.iconColor}` : nothing}></et2-image>` : '';
 
 		return html`
             <sl-menu-item
@@ -162,6 +238,11 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 	protected _handleSelect(ev)
 	{
 		this._value = ev.detail.item.value;
+
+		if(this.defaultPreference)
+		{
+			this.egw().set_preference(this.egw().getAppName(), this.defaultPreference, this._value);
+		}
 
 		// Trigger a change event
 		this.dispatchEvent(new Event("change"));

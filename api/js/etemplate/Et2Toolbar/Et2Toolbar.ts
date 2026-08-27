@@ -310,6 +310,14 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 					{
 						info['color'] = root.children[id].color;
 					}
+					if(root.children[id].iconColor)
+					{
+						info['iconColor'] = root.children[id].iconColor;
+					}
+					if(root.children[id].toolbarDefault)
+					{
+						info['default'] = true;
+					}
 					if(root.children[id].checkbox)
 					{
 						info['checkbox'] = root.children[id].checkbox;
@@ -357,22 +365,12 @@ export class Et2Toolbar extends Et2InputWidget(Et2Box)
 						dropdown.closest("et2-toolbar").handleAction(ev, action);
 					}
 				}.bind(action),
-				image: action.iconUrl || ''
+				image: action.iconUrl || '',
+				defaultPreference: action.defaultPreference || '',
+				iconOnly: !!action.iconOnly
 			}, this);
 
 			dropdown.select_options = Object.values(children);
-
-			//Set default selected action
-			if(typeof action.children != 'undefined')
-			{
-				for(let child in action.children)
-				{
-					if(action.children[child].default)
-					{
-						dropdown.label = action.children[child].caption;
-					}
-				}
-			}
 
 			dropdown.onclick = function(selected, dropdown)
 			{

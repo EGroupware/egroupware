@@ -1459,6 +1459,7 @@ class mail_ui
 								'icon' => 'tag_message',
 								'onExecute' => 'javaScript:app.mail.flag',
 								'shortcut' => KeyManager::shortcut(KeyManager::_0, true, true),
+								'toolbarDefault' => true,
 							),
 							'label1' => array(
 								'group' => ++$group,
@@ -1741,6 +1742,7 @@ class mail_ui
 					// flattens every action with children (Et2Toolbar's default)
 					$actionsenabled[$act] = $actions['mark']['children']['setLabel'];
 					$actionsenabled[$act]['groupChildren'] = true;
+					$actionsenabled[$act]['defaultPreference'] = 'defaultLabel';
 					// every option here is a toggleable label except 'unlabel' itself, which
 					// is a "remove all" command, not a state to check
 					foreach ($actionsenabled[$act]['children'] as $id => &$child)
@@ -1753,6 +1755,8 @@ class mail_ui
 					// alongside (not instead of) the flat 'flagged' button above
 					$actionsenabled[$act] = $actions['mark']['children']['flag'];
 					$actionsenabled[$act]['groupChildren'] = true;
+					$actionsenabled[$act]['defaultPreference'] = 'defaultFlag';
+					$actionsenabled[$act]['iconOnly'] = true;
 					foreach ($actionsenabled[$act]['children'] as &$child)
 					{
 						$child['checkbox'] = true;

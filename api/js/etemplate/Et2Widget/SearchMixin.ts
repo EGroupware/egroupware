@@ -21,6 +21,11 @@ export type SearchResult = {
 	icon? : string;
 	// Color swatch (eg. a colored dropdown-menu entry)
 	color? : string;
+	// Color applied to the option's icon itself (distinct from color, which only tints the text label)
+	iconColor? : string;
+	// Marks this as the static/configured default, used as a fallback when there is no stored
+	// user preference yet (see Et2DropdownButton.defaultPreference)
+	default? : boolean;
 	// Class applied to node
 	class? : string;
 	// Show the item, but it is not selectable.
