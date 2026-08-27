@@ -61,12 +61,6 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 			"type": "string",
 			"default": "user_ts,owner,status,new_value,old_value",
 			"description": "Columns to display.  Default is user_ts,owner,status,new_value,old_value"
-		},
-		"get_rows": {
-			"name": "get_rows",
-			"type": "string",
-			"default": "EGroupware\\Api\\Storage\\History::get_rows",
-			"description": "Method to get rows"
 		}
 	};
 
@@ -95,7 +89,7 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 	
 	private div: JQuery;
 	private innerDiv: JQuery;
-	private _filters: { appname: string; record_id: string; get_rows: string; };
+	private _filters: { appname: string; record_id: string; };
 	private dataview: et2_dataview;
 	private controller: et2_dataview_controller;
 	private fields: any;
@@ -171,10 +165,11 @@ export class et2_historylog extends et2_valueWidget implements et2_IDataProvider
 		{
 			return;
 		}
+		// get_rows is intentionally not sent - the server always determines it itself,
+		// from the trusted template attribute (see HistoryLog::beforeSendToClient()), never from the client.
 		this._filters = {
 			record_id: this.options.value.id,
-			appname: this.options.value.app,
-			get_rows: this.options.get_rows
+			appname: this.options.value.app
 		};
 
 		// Warn if status_id is the same as history id, that causes overlap and missing labels
