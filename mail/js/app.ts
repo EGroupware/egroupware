@@ -1310,6 +1310,14 @@ export class MailApp extends EgwApp
 	 */
 	composeMessage(_action, _elems)
 	{
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - captured BEFORE the backfill
+		// below (which fills _elems from the currently-selected/previewed message for unrelated
+		// reasons, even for a genuine "new blank message" trigger) - settings.id further down
+		// reflects that backfilled value, not the caller's original intent, so it's the wrong
+		// thing to gate the JMAP-mode flag on (found live 2026-08-27: a message merely being
+		// selected/previewed silently defeated the jmapCompose toggle with no visible symptom
+		// other than the classic send path's own unrelated errors).
+		const noSourceGiven = typeof _elems == 'undefined' || _elems.length == 0;
 		if (typeof _elems == 'undefined' || _elems.length==0)
 		{
 			if (this.et2 && this.et2.getArrayMgr("content").getEntry('mail_id'))
@@ -1382,12 +1390,15 @@ export class MailApp extends EgwApp
 				settings.from = _action.id;
 		}
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - only a genuinely new message
-		// (no source message id at all, however it was triggered) may take the JMAP-mode flag;
-		// compose.ts reads it back from this popup's own URL to decide its Send behaviour. Reply/
-		// forward/drafts always carry a non-empty settings.id and so never qualify, regardless of
-		// the toggle - this is deliberately conservative, not merely "action id happens to be
-		// 'compose'" (which composeMessage() itself already redirects to 'forward' for >1 elems).
-		if (this.jmapComposeEnabled && !settings.id)
+		// (the caller passed no source elems at all) may take the JMAP-mode flag; compose.ts reads
+		// it back from this popup's own URL to decide its Send behaviour. Gated on noSourceGiven
+		// (captured before the backfill above), NOT settings.id - that gets backfilled from the
+		// currently-selected/previewed message for unrelated reasons even on a genuine "new blank
+		// message" trigger, which would otherwise silently defeat this toggle whenever any message
+		// happened to be selected (found live 2026-08-27). Reply/forward/drafts are never reached
+		// via a no-elems call in the first place, so this stays conservative without needing
+		// settings.id as a second check.
+		if (this.jmapComposeEnabled && noSourceGiven)
 		{
 			(settings as typeof settings & {jmap? : string}).jmap = '1';
 		}
