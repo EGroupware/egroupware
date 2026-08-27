@@ -352,7 +352,11 @@ class Db
 		// on connection failure re-try with an other host
 		// remembering in session which host we used last time
 		$use_host_from_session = true;
-		while(($host = $this->get_host(!$use_host_from_session)))
+		// bound retries locally, independent of get_host()'s session-persisted counter: that counter silently fails to persist when there's no active PHP session
+		// (eg. setup-cli.php creating the DB before any session can exist), which without this cap turns the loop below into an infinite reconnect-and-fail spin
+		$max_tries = count(explode(';', $this->Host[0] == '@' ? getenv(substr($this->Host, 1)) : $this->Host)) + 2;
+		$tries = 0;
+		while ($tries++ < $max_tries && ($host = $this->get_host(!$use_host_from_session)))
 		{
 			try {
 				//error_log(__METHOD__."() this->Host(s)=$this->Host, n=$n --> host=$host");
