@@ -539,7 +539,7 @@ export class MailCompose
 
 		try
 		{
-			await this.app.jmap.sendNewEmail(String(this.currentProfileID()), this.currentEmailFields());
+			await this.app.jmap.sendNewEmail(String(this.currentProfileID()), await this.currentEmailFields());
 		}
 		catch (e)
 		{
@@ -560,16 +560,23 @@ export class MailCompose
 	}
 
 	/**
-	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - same eligibility scope as
-	 * trySendViaJmap()/MailJmap.sendNewEmail(): no attachments, no cross-app integration, no
-	 * S/MIME. "autosave... has the same unimplemented features as our current sending" (ralf,
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1/3 - no cross-app integration, no
+	 * S/MIME yet. Attachments are eligible as of Step 3 EXCEPT: a "share instead of attach"
+	 * filemode (a Vfs\Sharing link, not a real attachment upload - out of scope) or one carried
+	 * forward from an original message (has uid+partID/folder - needs reply/forward, Step 4, not
+	 * built yet). "autosave... has the same unimplemented features as our current sending" (ralf,
 	 * 2026-08-27).
 	 */
 	private jmapEligible() : boolean
 	{
 		if (!this.isJmapMode || this.app.mailvelope_editor) return false;
-		const attachments = this.et2.getArrayMgr('content').getEntry('attachments') || {};
-		if (Object.keys(attachments).length) return false;
+		const attachments : any[] = Object.values(this.et2.getArrayMgr('content').getEntry('attachments') || {});
+		if (attachments.length)
+		{
+			const filemode = this.et2.getWidgetById('filemode')?.get_value();
+			if (filemode && filemode !== 'attach') return false;
+			if (attachments.some((a) => a.uid && (a.partID || a.folder))) return false;
+		}
 		const toolbar : any = this.et2.getWidgetById('composeToolbar');
 		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
 			(id) => toolbar?.getWidgetById(id)?.get_value());
@@ -581,9 +588,38 @@ export class MailCompose
 		return String(this.et2.getWidgetById('mailaccount')?.get_value());
 	}
 
-	private currentEmailFields()
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 3 - fetch each classically-staged
+	 * attachment's raw bytes (same menuaction displayUploadedFile() already uses to preview one)
+	 * and upload it as a JMAP blob. Reuses the existing upload widget/staging entirely - no new
+	 * upload UI, just a new step between "already staged server-side" and "referenced by blobId
+	 * in the JMAP Email".
+	 */
+	private async uploadAttachmentsViaJmap(profileID : string) : Promise<any[]>
+	{
+		const attachments : any[] = Object.values(this.et2.getArrayMgr('content').getEntry('attachments') || {});
+		const etemplateExecId = this.et2.getInstanceManager().etemplate_exec_id;
+		return Promise.all(attachments.map(async(attachment) =>
+		{
+			const url = this.egw.link('/index.php', {
+				menuaction: 'mail.mail_compose.getAttachment',
+				tmpname: attachment.tmp_name,
+				etemplate_exec_id: etemplateExecId,
+			});
+			const response = await fetch(url, {credentials: 'same-origin'});
+			if (!response.ok)
+			{
+				throw new Error(this.egw.lang('Failed to read attachment %1', attachment.name));
+			}
+			const blob = await response.blob();
+			return this.app.jmap.uploadAttachment(profileID, blob, attachment.name, attachment.type);
+		}));
+	}
+
+	private async currentEmailFields()
 	{
 		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
+		const hasAttachments = Object.keys(this.et2.getArrayMgr('content').getEntry('attachments') || {}).length > 0;
 		return {
 			to: this.et2.getWidgetById('to')?.get_value(),
 			cc: this.et2.getWidgetById('cc')?.get_value(),
@@ -591,6 +627,7 @@ export class MailCompose
 			subject: this.et2.getWidgetById('subject')?.get_value(),
 			body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
 			isHtml,
+			attachments: hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID()) : undefined,
 		};
 	}
 
@@ -620,7 +657,7 @@ export class MailCompose
 		let result : {emailId : string, mailboxId : string};
 		try
 		{
-			result = await this.app.jmap.saveDraft(this.currentProfileID(), this.currentEmailFields(), this.jmapDraftEmailId);
+			result = await this.app.jmap.saveDraft(this.currentProfileID(), await this.currentEmailFields(), this.jmapDraftEmailId);
 		}
 		catch (e)
 		{

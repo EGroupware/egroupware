@@ -64,7 +64,7 @@ export interface JmapMessageReference
 /**
  * Plain new-message compose input for sendNewEmail() - see that method's docblock. Deliberately
  * minimal (Step 1 of doc/ai/projects/mail-compose-jmap-migration.md): no reply/forward context,
- * no attachments, no S/MIME yet.
+ * no S/MIME yet.
  */
 export interface JmapNewEmail
 {
@@ -74,6 +74,16 @@ export interface JmapNewEmail
 	subject? : string;
 	body? : string;
 	isHtml? : boolean;
+	attachments? : JmapAttachment[];
+}
+
+/** An already-uploaded (see MailJmap.uploadAttachment()) attachment, ready to reference by blobId. */
+export interface JmapAttachment
+{
+	blobId : string;
+	name : string;
+	type : string;
+	size : number;
 }
 
 /** Result of MailJmap.fetchBody() - see that method's docblock */
@@ -3478,6 +3488,9 @@ export class MailJmap
 	private draftEmailProperties(identity : any, email : JmapNewEmail) : Record<string, any>
 	{
 		const isHtml = !!email.isHtml;
+		const bodyPart = {partId : 'body', type : isHtml ? 'text/html' : 'text/plain'};
+		const attachments = email.attachments ?? [];
+
 		return {
 			from: [{email : identity.email, name : identity.name}],
 			to: this.addressesToJmap(email.to),
@@ -3485,8 +3498,68 @@ export class MailJmap
 			bcc: this.addressesToJmap(email.bcc),
 			subject: email.subject ?? '',
 			bodyValues: {body : {value : email.body ?? '', charset : 'utf-8'}},
-			[isHtml ? 'htmlBody' : 'textBody']: [{partId : 'body', type : isHtml ? 'text/html' : 'text/plain'}],
+			// attachments/htmlBody/textBody are RFC 8621 §4.1.4 convenience VIEWS the server
+			// derives from bodyStructure on read - not independently settable on create, so
+			// plain (no-attachment) messages use the htmlBody/textBody shortcut, but as soon as
+			// there's an attachment the full multipart/mixed bodyStructure has to be built by
+			// hand instead (a mix of both shapes isn't meaningful).
+			...(attachments.length
+				? {
+					bodyStructure: {
+						type: 'multipart/mixed',
+						subParts: [
+							bodyPart,
+							...attachments.map((a) => ({
+								blobId: a.blobId, type: a.type, name: a.name, size: a.size, disposition: 'attachment',
+							})),
+						],
+					},
+				}
+				: {[isHtml ? 'htmlBody' : 'textBody']: [bodyPart]}),
 		};
+	}
+
+	/**
+	 * Upload a file as a JMAP blob, for use as an Email attachment (draftEmailProperties()
+	 * expects the result shape directly) - doc/ai/projects/mail-compose-jmap-migration.md's Step
+	 * 3. Thin wrapper over jmap-jam's own uploadBlob() (RFC 8620 §6.3, unchanged for the
+	 * WebSocket transport - blob upload is always a plain HTTP POST, not a JMAP method call).
+	 *
+	 * @param profileID
+	 * @param blob file contents
+	 * @param name original filename
+	 * @param type MIME type
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. Throws
+	 *  JmapUnsupportedBackendError for the IMAP-shim backend (no blob storage concept yet, doc's
+	 *  Step 2/3) - same as sendNewEmail()
+	 */
+	async uploadAttachment(profileID : string, blob : Blob, name : string, type : string) : Promise<JmapAttachment>
+	{
+		try
+		{
+			const token = await this.ensureToken(profileID);
+			if (!token) throw this.unreachableError();
+			if (token.isLocal)
+			{
+				throw new JmapUnsupportedBackendError(this.egw.lang('JMAP sending is not yet available for this account'));
+			}
+			// jmap-jam's uploadBlob(accountId, body, fetchInit) spreads fetchInit's own keys
+			// (incl. "headers") over its base fetch() options SHALLOWLY - passing a "headers"
+			// override here would silently replace, not merge with, the Authorization/Accept
+			// headers it already sets, breaking the upload. Relying on the Blob's own .type
+			// instead (below) - fetch() derives the Content-Type header from it automatically
+			// when the body is a Blob and no explicit header is given.
+			const contentType = type || 'application/octet-stream';
+			const body = blob.type === contentType ? blob : blob.slice(0, blob.size, contentType);
+			const response = await this.clients[profileID].uploadBlob(token.accountId, body);
+			return {blobId: response.blobId, name, type: contentType, size: response.size ?? blob.size};
+		}
+		catch (e)
+		{
+			if (e instanceof JmapUserError) throw e;
+			console.error('MailJmap.uploadAttachment(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Failed to upload attachment %1', name));
+		}
 	}
 
 	/** Create a new $draft-keyword Email in the Drafts mailbox - shared by sendNewEmail() and saveDraft()'s first-save case. */
