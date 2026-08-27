@@ -532,8 +532,6 @@ export class MailCompose
 		const toolbar : any = this.et2.getWidgetById('composeToolbar');
 		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
 			(id) => toolbar?.getWidgetById(id)?.get_value());
-		// TEMPORARY instrumentation for the silent-classic-fallback regression - remove once done.
-		console.log('trySendViaJmap() TEMP eligibility', {isJmapMode: this.isJmapMode, attachments, toolbarFound: !!toolbar, blockingToggle});
 		if (Object.keys(attachments).length)
 		{
 			return false;
@@ -553,8 +551,6 @@ export class MailCompose
 			body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
 			isHtml,
 		};
-		// TEMPORARY instrumentation for the "No recipients found" regression - remove once done.
-		console.log('trySendViaJmap() TEMP', {profileID, email});
 		try
 		{
 			await this.app.jmap.sendNewEmail(String(profileID), email);
@@ -568,6 +564,11 @@ export class MailCompose
 			this.egw.message(e.message || this.egw.lang('Failed to send message'), 'error');
 			return true;
 		}
+		// the form still carries its unsent-draft content as far as ETemplate's own dirty-tracking
+		// is concerned - it never went through ETemplate's own submit(), so closing now would
+		// otherwise trip the "unsaved changes" beforeunload prompt despite the message having
+		// already sent successfully (found live 2026-08-27)
+		this.et2.getInstanceManager().skip_close_prompt();
 		window.close();
 		return true;
 	}

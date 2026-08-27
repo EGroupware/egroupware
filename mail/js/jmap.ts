@@ -3395,26 +3395,20 @@ export class MailJmap
 			}
 			const emailId = emailSet.created.s1.id;
 
-			// TEMPORARY instrumentation for the missing-Sent-copy regression - remove once done.
-			const onSuccessUpdateEmail = {
-				'#sub1': {
-					[`mailboxIds/${draftsId}`]: null,
-					[`mailboxIds/${sentId}`]: true,
-					'keywords/$draft': null,
-					'keywords/$seen': true,
-				},
-			};
-			console.log('sendNewEmail() TEMP submitting', {emailId, identityId: identity.id, draftsId, sentId, onSuccessUpdateEmail});
-
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
 					accountId: token.accountId,
 					create: {sub1: {emailId, identityId: identity.id}},
-					onSuccessUpdateEmail,
+					onSuccessUpdateEmail: {
+						'#sub1': {
+							[`mailboxIds/${draftsId}`]: null,
+							[`mailboxIds/${sentId}`]: true,
+							'keywords/$draft': null,
+							'keywords/$seen': true,
+						},
+					},
 				}),
 			}));
-			// TEMPORARY instrumentation for the missing-Sent-copy regression - remove once done.
-			console.log('sendNewEmail() TEMP submission result', submission);
 			if (!submission.created?.sub1)
 			{
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
