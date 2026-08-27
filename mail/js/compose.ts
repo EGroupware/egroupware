@@ -786,6 +786,8 @@ export class MailCompose
 	saveAsDraft(_egw_action, _action)
 	{
 		const self = this;
+		// TEMPORARY instrumentation for the double-saveAsDraft regression - remove once done.
+		console.log('saveAsDraft() TEMP called', {_egw_action, _action, stack: new Error().stack});
 		return new Promise<void>((_resolve, _reject) =>{
 			const content = self.et2.getArrayMgr('content').data;
 			let action = _action;
