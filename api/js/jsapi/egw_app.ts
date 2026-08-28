@@ -368,7 +368,7 @@ export abstract class EgwApp
 
 		// If there are filters set and we get 0 rows, open the filter drawer
 		const nm = _ev.target ?? null;
-		const emptyFilter = (v : any) => typeof v == "object" ? Object.values(v).filter(emptyFilter).length : v;
+		const emptyFilter = (v : any) => typeof v == "object" && v ? Object.values(v).filter(emptyFilter).length : v;
 		if(Object.values(activeFilters).filter(emptyFilter).length !== 0)
 		{
 			const filterDrawer = nm?.closest('egw-app')?.filtersDrawer;
