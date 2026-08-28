@@ -94,7 +94,8 @@ export class Et2Iframe extends Et2Widget(LitElement)
 			else
 			{
 				// Load the new page, but display a loader
-				let loader = jQuery('<div class="et2_iframe loading"/>');
+				let loader = document.createElement('div');
+				loader.className = 'et2_iframe loading';
 				this.__getIframeNode().before(loader);
 				window.setTimeout(function() {
 					this.__getIframeNode().removeAttribute('srcdoc');

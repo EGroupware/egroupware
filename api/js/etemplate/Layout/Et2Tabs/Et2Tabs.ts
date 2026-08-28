@@ -602,9 +602,6 @@ export class Et2Tabs extends Et2InputWidget(SlTabGroup) implements et2_IResizeab
 	}
 	/**
 	 * Set up for printing
-	 *
-	 * @return {undefined|Deferred} Return a jQuery Deferred object if not done setting up
-	 *  (waiting for data)
 	 */
 	beforePrint()
 	{

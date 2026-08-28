@@ -15,6 +15,7 @@ import {SlCard} from "@shoelace-style/shoelace";
 import interact from "@interactjs/interactjs";
 import type {InteractEvent} from "@interactjs/core/InteractEvent";
 import {egw} from "../../jsapi/egw_global";
+import {deepExtend} from "../../jsapi/egw_utils";
 import {css, html, TemplateResult} from "lit";
 import {classMap} from "lit/directives/class-map.js";
 import {HasSlotController} from "../Et2Widget/slot";
@@ -234,7 +235,7 @@ export class Et2Portlet extends Et2Widget(SlCard)
 		}
 
 		// Add in defaults, but let provided actions override them
-		this.actions = jQuery.extend(true, {}, defaults, actions);
+		this.actions = deepExtend({}, defaults, actions);
 	}
 
 	/**

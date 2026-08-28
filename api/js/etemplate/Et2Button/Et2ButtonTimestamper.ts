@@ -185,7 +185,7 @@ export class Et2ButtonTimestamper extends Et2Button
 		{
 			widget = target;
 		}
-		else if(typeof target == 'string' && target.indexOf('#') < 0 && jQuery('#'+this.target).is('input'))
+		else if(typeof target == 'string' && target.indexOf('#') < 0 && document.getElementById(this.target)?.tagName == 'INPUT')
 		{
 			input = this.target;
 		}
