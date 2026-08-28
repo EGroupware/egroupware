@@ -212,6 +212,13 @@ export class EgwFrameworkApp extends LitElement
 	/** We've loaded something other than our set url via load(...), on refresh go back */
 	private _offUrl : boolean = false;
 
+	/**
+	 * Content finished loading while this tab was not the active one, so children were
+	 * never resized against their real (visible) dimensions. Do one resize the next time
+	 * this tab is shown, then clear the flag - normal shows shouldn't pay for an extra resize.
+	 */
+	private _resizeNeededOnShow : boolean = false;
+
 	constructor()
 	{
 		super();
@@ -456,11 +463,18 @@ export class EgwFrameworkApp extends LitElement
 				{
 					window.performance.mark("mark_egw_app_contents_end_" + this.name);
 				}
-				// Nextmatches that were hidden need a resize (admin, other apps seem to be fine)
-				this.querySelectorAll(":scope > [id]").forEach((node) =>
+				// Nextmatches that were hidden need a resize (admin, other apps seem to be fine).
+				// If this tab isn't the active one right now, resizing against its real
+				// dimensions is pointless (and can measure a hidden/0-size container) - just
+				// remember to do it once when the tab is actually shown instead.
+				if(this.hasAttribute("active"))
 				{
-					etemplate2.getById(node.id)?.resize(undefined);
-				});
+					this._resizeChildren();
+				}
+				else
+				{
+					this._resizeNeededOnShow = true;
+				}
 			})
 			.catch((e) =>
 			{
@@ -478,6 +492,18 @@ export class EgwFrameworkApp extends LitElement
 				}
 			});
 		return this.loadingPromise
+	}
+
+	/**
+	 * Resize direct child etemplates (nextmatches that were hidden need this to pick up
+	 * their real dimensions - admin, other apps seem to be fine without it).
+	 */
+	private _resizeChildren() : void
+	{
+		this.querySelectorAll(":scope > [id]").forEach((node) =>
+		{
+			etemplate2.getById(node.id)?.resize(undefined);
+		});
 	}
 
 	// Wait for the nodes to fire a "load" event, when all are done then we're done loading
@@ -1107,6 +1133,50 @@ export class EgwFrameworkApp extends LitElement
 		await this.updateComplete;
 		[this.rightSplitter, this.leftSplitter].forEach(splitter => void resetPanel(splitter));
 
+		// Content finished loading while we were hidden - children were never resized against
+		// real dimensions. Resize now that we're visible again.
+		//
+		// Do NOT defer this with requestAnimationFrame(), even though it's tempting to assume
+		// freshly-unhidden layout needs a frame to "settle": it doesn't. The `active` attribute
+		// (which makes the ::slotted(egw-app[active]) CSS rule in EgwFramework.styles.ts apply
+		// and this element actually take up space) was already set synchronously, before this
+		// event handler ran - by EgwFramework.showTab(), which sets the attribute before
+		// tabs.show()/updateComplete().then() ever dispatch "sl-tab-show". Any layout-reading
+		// call after that point (jQuery .height()/.innerHeight(), offsetHeight, etc., all used
+		// by the widgets' own resize()) forces the browser to synchronously flush style+layout
+		// first, so it always sees the final, correct geometry - there's no "transitional" state
+		// to wait out. This was confirmed empirically: calling _resizeChildren() with zero delay,
+		// in the same synchronous tick as setting the tab active, produces the correct size every
+		// time.
+		//
+		// Worse, waiting on requestAnimationFrame() here actively breaks this in the exact
+		// "loaded while hidden" scenario it's meant to fix: rAF callbacks are fully suspended
+		// (not merely throttled) for a document/window that isn't visible - e.g. the user
+		// switched to another application or minimized the window during the ~10s the content
+		// took to load in the background. If that happens to be true right as this handler
+		// runs, `await` on a double rAF can stall indefinitely, so _resizeChildren() never
+		// executes - leaving the layout squashed until *something else* forces a resize. A
+		// manual window resize appears to "fix" it only because that goes through a
+		// setTimeout()-based debounce (etemplate2.resize()'s event branch) instead of rAF -
+		// setTimeout still fires (just coarsened) in a backgrounded tab, where rAF does not.
+		// Guard on hasAttribute("active") too, not just the flag: this handler can be a *stale*
+		// invocation. It fires (with `await this.updateComplete` above) for the "sl-tab-show"
+		// that happened when this tab was FIRST switched to - and while content is still loading,
+		// this.updateComplete keeps getting extended by load()'s own this.requestUpdate() calls
+		// as data streams in, so that original await can stay pending for the tab's *entire*
+		// load time. If the user switches away before load finishes, this stale call only
+		// resumes once loading completes - which is also exactly when load() sets
+		// _resizeNeededOnShow = true (having seen hasAttribute("active") already false). Without
+		// this guard, that stale resume would consume the flag and resize while genuinely hidden
+		// (a no-op - the widgets' own resize() bails out on !this.div.is(':visible')), permanently
+		// losing the deferred resize: the real "sl-tab-show" for when the user actually switches
+		// back later finds the flag already spent and does nothing.
+		if(this._resizeNeededOnShow && this.hasAttribute("active"))
+		{
+			this._resizeNeededOnShow = false;
+			this._resizeChildren();
+		}
+
 		// Say that panels have changed
 		this.dispatchEvent(new CustomEvent(this.leftCollapsed ? "hide" : "show",
 			{bubbles: true, composed: true, detail: {name: this.name, side: this.leftPanelInfo.side}}
@@ -1290,7 +1360,7 @@ export class EgwFrameworkApp extends LitElement
 		}
 		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
 		let button : symbol | TemplateResult = nothing;
-		if(this.hasSlotController.test("filter"))
+		if(this.hasSlotController?.test("filter"))
 		{
 			button = html`
                 <et2-button-icon nosubmit
@@ -1317,14 +1387,14 @@ export class EgwFrameworkApp extends LitElement
 
 	protected _filterTemplate()
 	{
-		if(!this.nextmatch && !this.hasSlotController.test("filter"))
+		if(!this.nextmatch && !this.hasSlotController?.test("filter"))
 		{
 			return nothing;
 		}
 
 		// Drawer label includes row count
 		const info = this.getFilterInfo(this.filters?.value ?? {}, this);
-		const hasCustomFilter = this.hasSlotController.test("filter");
+		const hasCustomFilter = this.hasSlotController?.test("filter");
 		const hasFiltersSet = info.icon == "filter-circle-fill";
 
 		return html`

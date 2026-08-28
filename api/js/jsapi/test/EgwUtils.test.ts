@@ -259,20 +259,23 @@ describe('egw_utils.js (utils)', () =>
 			assert.equal(dim.h, 75);
 		});
 
-		it('KNOWN BUG: only restores display:none on browsers with computedStyleMap() ' +
-			'(Chromium) - a `this.styles` typo (should be `this.style`) means the ' +
-			'correct capture branch never runs, silently falling through to the ' +
-			'computedStyleMap()-based branch; on Firefox (no computedStyleMap) neither ' +
-			'branch captures anything, so the element is left visible afterwards', () =>
+		it('restores the element\'s own inline display:none afterwards, on every browser', () =>
 		{
+			// Regression test for a `this.styles` typo (should be `this.style`) that used
+			// to make the capture branch below never run, silently falling through to a
+			// computedStyleMap()-based branch instead. That branch captured the *computed*
+			// style (e.g. "none" from a stylesheet rule) rather than the element's actual
+			// inline style, then wrote it back as a literal inline style - baking a
+			// permanent `display:none` onto elements whose hidden state came from CSS
+			// (e.g. a stylesheet selector like `:not([active])`), which no later attribute
+			// change could ever undo since inline styles beat stylesheet rules.
 			const el = env.window.document.createElement('div');
 			el.style.display = 'none';
 			env.window.document.body.appendChild(el);
 
 			env.egw().getHiddenDimensions(el);
 
-			const usesComputedStyleMap = typeof (env.window as any).Element.prototype.computedStyleMap === 'function';
-			assert.equal(el.style.display, usesComputedStyleMap ? 'none' : '');
+			assert.equal(el.style.display, 'none');
 		});
 	});
 

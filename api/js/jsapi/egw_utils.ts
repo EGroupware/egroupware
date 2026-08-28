@@ -571,7 +571,7 @@ class Utils implements UtilsModule
 		var oldProps : any[] = [];
 		$hiddenParents.each(function() {
 			var old : any = {};
-			if ((<any>this).styles)
+			if ((<any>this).style)
 			{
 				for (var name in props)
 				{
