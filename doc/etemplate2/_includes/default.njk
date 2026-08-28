@@ -40,6 +40,9 @@
     {# EGroupware #}
     <link rel="stylesheet" href="{{ assetUrl('styles/etemplate2.css') }}" />
     <!-- Breaks page scrolling <link rel="stylesheet" href="{{ assetUrl('styles/kdots.css') }}" /> -->
+    {# etemplate2.js (and chunks it imports, e.g. cropper.min.js) expect a global jQuery -
+       load it as a blocking classic script so it runs before the deferred module below #}
+    <script src="{{ assetUrl('scripts/vendor/bower-asset/jquery/dist/jquery.min.js') }}"></script>
     <script src="{{ assetUrl('scripts/sub/dir/etemplate/etemplate2.js') }}" type="module" id="egw_script_id"></script>
     <link rel="stylesheet" href="{{assetUrl("styles/bootstrap-icons.min.css")}}" />
     <link rel="stylesheet" href="{{assetUrl("styles/diff2html.min.css")}}" />
