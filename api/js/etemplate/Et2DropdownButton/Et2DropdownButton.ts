@@ -28,6 +28,8 @@ import {property} from "lit/decorators/property.js";
  * Menu options are passed via the select_options.  They are normally the same
  * as for a select box, but the title can also be full HTML if needed.
  *
+ * @slot prefix - Content placed before the main button's label
+ * @slot suffix - Content placed after the main button's label
  */
 export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 {
@@ -46,8 +48,8 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 
                 :host, sl-menu {
                     /**
-					Adapt shoelace color variables to what we want 
-					Maybe some logical variables from etemplate2.css here? 
+					Adapt shoelace color variables to what we want
+					Maybe some logical variables from etemplate2.css here?
 					*/
                     --sl-color-primary-50: var(--sl-input-background-color-hover);
                     --sl-color-primary-100: var(--gray-10);
@@ -71,6 +73,13 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 
                 et2-image {
                     width: 1em;
+                }
+
+                ::slotted(et2-image[slot="prefix"]), ::slotted(et2-image[slot="suffix"]) {
+                    width: 20px;
+                    height: 20px;
+                    display: flex;
+                    font-size: 20px !important;
                 }
 
                 sl-menu-item::part(label) {
@@ -210,7 +219,9 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
                     ${this.iconOnly && icon ? html`
                         <et2-image slot="prefix" src=${icon}
                                    style=${selected?.iconColor ? `color: ${selected.iconColor}` : nothing}></et2-image>` : nothing}
+                    <slot name="prefix" slot="prefix"></slot>
                     ${this.label}
+                    <slot name="suffix" slot="suffix"></slot>
                 </sl-button>
                 <sl-dropdown placement=${this.placement} hoist part="dropdown">
                     <slot name="trigger" slot="trigger">
