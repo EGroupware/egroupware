@@ -65,6 +65,32 @@ class TimesheetApp extends EgwApp
 	}
 
 	/**
+	 * Set the split Save button's main label to match its current value
+	 * ("save", "save_new" or "save_reset") - the icon stays the same regardless, it's declared
+	 * once in the template.  Et2DropdownButton's own defaultPreference handles reading/storing
+	 * which option is selected - it just doesn't update the label for us on selection.
+	 */
+	private updateSaveSplitLabel(widget)
+	{
+		const option = (widget.select_options || []).find(o => o.value == widget.value);
+		widget.label = this.egw.lang(option?.label || 'Save');
+	}
+
+	/**
+	 * Save split button was clicked (main part, using its current default) or a menu item was
+	 * picked - either way, submit the form with the chosen action.
+	 *
+	 * @param {Event} _ev
+	 * @param {Et2DropdownButton} _widget
+	 */
+	save_split_action(_ev : Event, _widget)
+	{
+		const action = _widget.value || 'save';
+		this.updateSaveSplitLabel(_widget);
+		(<HTMLElement><unknown>this.et2.getWidgetById('button[' + action + ']'))?.click();
+	}
+
+	/**
 	 * Enable or disable the date filter
 	 *
 	 * If the filter is set to something that needs dates, we open the

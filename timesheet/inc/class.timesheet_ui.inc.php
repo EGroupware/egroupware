@@ -207,6 +207,7 @@ class timesheet_ui extends timesheet_bo
 					// fall through
 				case 'save':
 				case 'save_new':
+				case 'save_reset':
 				case 'apply':
 					if ($this->data['ts_quantity'] === '' && $this->data['ts_duration'])	// set the quantity (in h) from the duration (in min)
 					{
@@ -295,7 +296,12 @@ class timesheet_ui extends timesheet_bo
 							}, $content['events']));
 						}
 					}
-					Framework::refresh_opener($msg, 'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
+					// Apply/Save & New/Save & Reset keep the dialog open, so $content['msg'] below already
+					// shows the message locally - passing it to refresh_opener too would double it up
+					// (opener and dialog end up being the same window whenever this isn't a real separate
+					// popup, e.g. a plain page load or a single-window/inline theme).
+					Framework::refresh_opener(in_array($button, array('apply', 'save_new', 'save_reset')) ? '' : $msg,
+						'timesheet', $this->data['ts_id'], $content['ts_id'] ? 'edit' : 'add');
 					if ($button == 'apply') break;
 					if ($button == 'save_new')
 					{
@@ -309,7 +315,7 @@ class timesheet_ui extends timesheet_bo
 								Link::link(TIMESHEET_APP,$content['link_to']['to_id'],$link['app'],$link['id'],$link['remark']);
 							}
 						}
-						// create a new entry
+						// create a new entry, continuing from the end of the current one
 						$this->data['ts_start'] += 60 * $this->data['ts_duration'];
 						foreach(array('ts_id', 'ts_title', 'ts_description', 'ts_duration', 'ts_quantity',
 									  'ts_modified', 'ts_modifier', 'link_to', 'events') as $name)
@@ -322,6 +328,20 @@ class timesheet_ui extends timesheet_bo
 						{
 							unset($this->data['pm_id']);
 						}
+						break;
+					}
+					if ($button == 'save_reset')
+					{
+						$msg .= ', '.lang('creating new entry');		// giving some feedback to the user
+
+						// keep ONLY the date/time, continuing from the end of the current entry -
+						// everything else resets to the same defaults a fresh "Add" would use
+						$this->data = array(
+							'ts_start'  => $this->data['ts_start'] + 60 * $this->data['ts_duration'],
+							'ts_owner'  => $GLOBALS['egw_info']['user']['account_id'],
+							'ts_status' => $GLOBALS['egw_info']['user']['preferences']['timesheet']['predefined_status'],
+							'events'    => [],
+						);
 						break;
 					}
 					// fall-through for save
@@ -453,14 +473,16 @@ class timesheet_ui extends timesheet_bo
 		// or the preserved project-blur comming from the current selected project
 		$content['ts_title_blur'] = $preserv['ts_title_blur'] ? $preserv['ts_title_blur'] : $content['ts_project_blur'];
 		$readonlys = array(
-			'button[delete]'   => !$this->data['ts_id'] || !$this->check_acl(Acl::DELETE) ||
+			'button[delete]'     => !$this->data['ts_id'] || !$this->check_acl(Acl::DELETE) ||
 				$this->data['ts_status'] == self::DELETED_STATUS ||$only_admin_edit ,
-			'button[undelete]' => $this->data['ts_status'] != self::DELETED_STATUS,
-			'button[edit]'     => !$view || !$this->check_acl(Acl::EDIT) || $only_admin_edit,
-			'button[save]'     => $view,
-			'button[save_new]' => $view,
-			'button[apply]'    => $view,
-			'tabs[events]'     => empty($this->data['events']), // hide events tab, if we have none
+			'button[undelete]'   => $this->data['ts_status'] != self::DELETED_STATUS,
+			'button[edit]'       => !$view || !$this->check_acl(Acl::EDIT) || $only_admin_edit,
+			'button[save]'       => $view,
+			'button[save_new]'   => $view,
+			'button[save_reset]' => $view,
+			'save_split'         => $view,
+			'button[apply]'      => $view,
+			'tabs[events]'       => empty($this->data['events']), // hide events tab, if we have none
 		);
 
 		if ($view)

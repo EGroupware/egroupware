@@ -22,6 +22,12 @@ table.egwGridView_grid tbody td[align=right] {
 #timesheet-edit.et2_container {
 }
 
+/* Match the split Save button's box to the surrounding Edit/Apply/Cancel buttons */
+#timesheet-edit_save_split {
+	max-width: 125px;
+	min-width: fit-content;
+}
+
 /* add # sign behind the ts_id */
 #timesheet-edit_ts_id:before { content:"#"}
 
