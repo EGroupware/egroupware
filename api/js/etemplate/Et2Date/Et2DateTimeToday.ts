@@ -13,6 +13,8 @@ import {Et2DateReadonly} from "./Et2DateReadonly";
 /**
  * Widget displays date/time with different formatting relative to today
  * If the date is today, we show just the time, otherwise just the date.
+ *
+ * @category display
  */
 export class Et2DateTimeToday extends Et2DateReadonly
 {

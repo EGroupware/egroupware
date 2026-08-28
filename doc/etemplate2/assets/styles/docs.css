@@ -757,6 +757,14 @@ pre:hover .copy-code-button--copied {
   margin: 1.5rem 0 0.5rem 0;
 }
 
+/* Component category labels (Layout, Input / Forms, ...) */
+#sidebar nav h3 {
+  font-size: var(--sl-font-size-medium);
+  font-weight: var(--sl-font-weight-semibold);
+  border-bottom: solid var(--docs-border-width) var(--docs-border-color);
+  margin: 1rem 0 0.25rem 0;
+}
+
 #sidebar ul {
   padding: 0;
   margin: 0;

@@ -32,21 +32,57 @@
     <h2>Reference</h2>
     <ul>
 	  <li><a href="/reference/mime-click-behavior">Mime-type click behavior</a></li>
+	  <li><a href="/reference/filemanager/">Filemanager widgets</a></li>
+	  <li><a href="/reference/nextmatch/">Nextmatch widgets</a></li>
+	  <li><a href="/reference/custom-fields/">Custom fields widgets</a></li>
+	  <li><a href="/reference/linking-system/">Linking system widgets</a></li>
     </ul>
   </li>
   <li>
     <h2>Components</h2>
     <ul>
     <li><em><a href="/components/sandbox">Sandbox</a></em></li>
-      {% for component in meta.components %}
+      {% for category in widgetTaxonomy.categories %}
         <li>
-          {% if component.tagName %}
-          <a href="/components/{{ component.tagName }}">
-            {{ component.name | classNameToComponentName }}
-          </a>
-          {% else %}
-            {{ component.name }}
-          {% endif %}
+          <h3>
+            {% if category.icon %}<i class="bi {{ category.icon }}"></i>{% endif %}
+            {{ category.name }}
+          </h3>
+          <ul>
+            {% for entry in category.entries %}
+              {% set href = "/mixins/" + (entry.base.name | slugify) if not entry.base.tagName else "/components/" + entry.base.tagName %}
+              <li>
+                <a href="{{ href }}">{{ entry.base.name | classNameToComponentName }}</a>
+
+                {% if entry.variations.length %}
+                  <ul class="variations">
+                    {% for v in entry.variations %}
+                      <li>
+                        <a href="/components/{{ v.tagName }}">{{ v.name | classNameToComponentName }}</a>
+                        {% if v.associated.length %}
+                          <ul class="associated-widgets">
+                            {% for assoc in v.associated %}
+                              <li><a href="/components/{{ assoc.tagName }}">{{ assoc.name | classNameToComponentName }}</a></li>
+                            {% endfor %}
+                          </ul>
+                        {% endif %}
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+
+                {% if entry.base.associated.length %}
+                  <ul class="associated-widgets">
+                    {% for assoc in entry.base.associated %}
+                      <li>
+                        <a href="/components/{{ assoc.tagName }}">{{ assoc.name | classNameToComponentName }}</a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                {% endif %}
+              </li>
+            {% endfor %}
+          </ul>
         </li>
       {% endfor %}
     </ul>

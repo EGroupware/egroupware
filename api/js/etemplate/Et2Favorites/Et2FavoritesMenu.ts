@@ -184,7 +184,6 @@ export class Et2FavoritesMenu extends Et2Widget(LitElement)
 	 *
 	 * @param currentState
 	 * @return {Promise<void>}
-	 * @private
 	 */
 	public async highlightFavorite(currentState)
 	{

@@ -1,0 +1,137 @@
+
+{% extends "default.njk" %}
+
+
+{% block content %}
+  {% if mixin and mixin.name %}
+
+  {# Header #}
+  <header class="component-header">
+    <h1>{{ mixin.name | classNameToComponentName }}</h1>
+
+    <div class="component-header__tag">
+      <code>{{ mixin.name }}</code>
+      <sl-badge variant="neutral" pill>Mixin / Controller</sl-badge>
+    </div>
+  </header>
+
+  <p class="component-summary">
+    {% if mixin.summary %}
+      {{ mixin.summary | markdownInline | safe }}
+    {% endif %}
+    {% if mixin.description %}
+      <h2>Overview</h2>
+      {{ mixin.description | markdown | safe}}
+    {% endif %}
+  </p>
+
+  {# Markdown content #}
+  {% if mixin.content %}
+  {{ mixin.content | markdown | safe }}
+  {% endif %}
+
+  {# Consumed by #}
+  {% if mixin.consumedBy.length %}
+    <h2>Used by</h2>
+    <p>This mixin is applied by the following widgets.</p>
+    <ul>
+      {% for consumer in mixin.consumedBy %}
+        <li>
+          {% if consumer.tagName %}
+            <a href="/components/{{ consumer.tagName }}">{{ consumer.name | classNameToComponentName }}</a>
+          {% else %}
+            {{ consumer.name }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  {# Own properties #}
+  {% if mixin.ownProperties.length %}
+    <h2>Properties</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="table-name">Name</th>
+          <th class="table-description">Description</th>
+          <th class="table-type">Type</th>
+          <th class="table-default">Default</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prop in mixin.ownProperties %}
+          <tr>
+            <td><code class="nowrap {%if prop.deprecated %} deprecated {% endif %}">{{ prop.name }}</code></td>
+            <td>
+              {{ prop.description | markdownInline | safe }}
+              {% if prop.deprecated %}
+                <br /><small>{{ prop.deprecated }}</small>
+              {% endif %}
+            </td>
+            <td>
+              {% if prop.type.text %}
+                <code>{{ prop.type.text | markdownInline | safe }}</code>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td>
+              {% if prop.default %}
+                <code>{{ prop.default | markdownInline | safe }}</code>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  {# Own methods #}
+  {% if mixin.ownMethods.length %}
+    <h2>Methods</h2>
+
+    <table>
+      <thead>
+        <tr>
+          <th class="table-name">Name</th>
+          <th class="table-description">Description</th>
+          <th class="table-arguments">Arguments</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for method in mixin.ownMethods %}
+          <tr>
+            <td class="nowrap">
+              <code class="{% if method.deprecated %} deprecated {% endif %}">{{ method.name }}()</code>
+            </td>
+            <td>
+              {{ method.description | markdownInline | safe }}
+              {% if method.deprecated %}
+                <br /><small>{{ method.deprecated | markdownInline | safe }}</small>
+              {% endif %}
+            </td>
+            <td>
+              {% if method.parameters.length %}
+                <code>
+                  {% for param in method.parameters %}
+                    {{ param.name }}: {{ param.type.text }}{% if not loop.last %},{% endif %}
+                  {% endfor %}
+                </code>
+              {% else %}
+                -
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  {% else %}
+    This mixin is not correctly documented
+  {% endif %}
+{% endblock %}

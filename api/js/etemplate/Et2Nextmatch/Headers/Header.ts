@@ -9,6 +9,7 @@ import {customElement} from "lit/decorators/custom-element.js";
  *
  * This is the webComponent counterpart of legacy `et2_nextmatch_header`.
  *
+ * @category data-grid
  * @csspart base - Header caption element.
  * @csspart label - Header label text.
  */

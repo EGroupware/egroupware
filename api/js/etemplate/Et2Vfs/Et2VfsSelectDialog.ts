@@ -57,6 +57,9 @@ import {SearchMixin, SearchResult, SearchResultElement, SearchResultsInterface} 
 
 type Constructor<T = {}> = new (...args : any[]) => T;
 
+/**
+ * @related Et2Dialog
+ */
 export class Et2VfsSelectDialog
 	extends SearchMixin<Constructor<any> & typeof LitElement, FileInfo, FileResultsInterface>(Et2InputWidget(LitElement))
 {

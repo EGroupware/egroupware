@@ -1140,9 +1140,8 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	/**
 	 * The interactive (form) element.
 	 * This is an et2-textbox, which causes some problems with flatpickr
-	 * @protected
 	 */
-	get _inputNode() : Et2Textbox | HTMLInputElement
+	protected get _inputNode() : Et2Textbox | HTMLInputElement
 	{
 		if(typeof egwIsMobile == "function" && egwIsMobile())
 		{
@@ -1157,7 +1156,7 @@ export class Et2Date extends Et2InputWidget(LitFlatpickr)
 	/**
 	 * The holder of value for flatpickr
 	 */
-	get _valueNode() : Et2Textbox
+	protected get _valueNode() : Et2Textbox
 	{
 		return this.shadowRoot?.querySelector('et2-textbox');
 	}

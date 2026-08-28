@@ -68,6 +68,8 @@ const formatDate = function(date : Date, options = {units: "YmdHis"})
  * time scale being dealt with, unless the units property is set.
  *
  * This is a stripped-down read-only widget used in nextmatch
+ *
+ * @category display
  */
 export class Et2DateSince extends Et2DateReadonly
 {

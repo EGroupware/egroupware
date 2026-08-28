@@ -12,6 +12,8 @@ import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
 
 /**
  * Show a nicely formatted diff
+ *
+ * @category display
  */
 @customElement("et2-diff")
 export class Et2Diff extends Et2InputWidget(LitElement)

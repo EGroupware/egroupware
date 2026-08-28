@@ -9,6 +9,69 @@ const customElementsManifestShoelace = require('../custom-elements-shoelace.json
 module.exports.customElementsManifest = customElementsManifest;
 
 //
+// Every LitElement has this, but it was only ever hand-added as a hardcoded extra row in
+// component.njk's "own properties" table - which only rendered when a widget had at least one
+// other own property, so it silently disappeared from any widget/variation whose own properties
+// list was empty (e.g. Et2SelectCountry). Tagging it with inheritedFrom here instead routes it
+// through the normal own/inherited split, so every widget gets it the same way: grouped under a
+// "LitElement" ancestor in the collapsed Inherited properties section.
+//
+const LIT_UPDATE_COMPLETE_PROPERTY = {
+	kind: 'field',
+	name: 'updateComplete',
+	description: 'A read-only promise that resolves when the component has finished updating.',
+	type: {text: 'Promise<boolean>'},
+	inheritedFrom: {name: 'LitElement', module: 'lit'}
+};
+
+//
+// Splits a members/attributes array into what a class declares itself ("own") vs. what it only
+// inherits (grouped by ancestor, via the inheritedFrom field the manifest already provides on
+// every inherited entry). Used to keep widget pages from repeating the same wall of inherited
+// id/label/statustext/... properties on every single subclass page.
+//
+// `private` was already excluded from the docs; `protected` wasn't, even though it's just as
+// much an internal implementation detail (e.g. Et2Date's `_inputNode`/`_valueNode` - real widget
+// internals, not part of the public API a template author or extending widget's author needs).
+function isPublicPrivacy(member)
+{
+	return member.privacy !== 'private' && member.privacy !== 'protected';
+}
+
+function splitOwnAndInherited(members)
+{
+	// declaration.attributes?.concat(...undefined...) can leave a literal `undefined` element in
+	// the array when a component has no Shoelace superclass - filter it out before inspecting
+	// .inheritedFrom on each entry.
+	members = (members || []).filter(Boolean);
+	const own = members.filter(m => !m.inheritedFrom);
+	const byAncestor = new Map();
+	members.filter(m => m.inheritedFrom).forEach(m =>
+	{
+		const key = m.inheritedFrom.name;
+		if (!byAncestor.has(key))
+		{
+			byAncestor.set(key, {name: key, module: m.inheritedFrom.module, members: []});
+		}
+		byAncestor.get(key).members.push(m);
+	});
+	return {own, inherited: [...byAncestor.values()]};
+}
+
+//
+// Sort by not deprecated and name - module-level so both getAllComponents() and getAllMixins()
+// can use it.
+//
+function compareNotDeprecatedAndName(a, b)
+{
+	if (a.deprecated && !b.deprecated) return 1;
+	if (!a.deprecated && b.deprecated) return -1;
+	if (a.name[0] === '_' && b.name[0] !== '_') return 1;
+	if (a.name[0] !== '_' && b.name[0] === '_') return -1;
+	return a.name.localeCompare(b.name);
+}
+
+//
 // Gets all components from custom-elements.json and returns them in a more documentation-friendly format.
 //
 module.exports.getAllComponents = function ()
@@ -37,17 +100,6 @@ module.exports.getAllComponents = function ()
 		if (debug) console.log("getSlClass("+superclass.name+") returning ", sl_class ? sl_class.name+" with attributes: "+sl_class.attributes?.map(attribute => attribute.name).join(", ") : "undefined");
 		return sl_class;
 	}
-	//
-	// Sort by not deprecated and name
-	//
-	const compareNotDeprecatedAndName = function(a, b)
-	{
-		if (a.deprecated && !b.deprecated) return 1;
-		if (!a.deprecated && b.deprecated) return -1;
-		if (a.name[0] === '_' && b.name[0] !== '_') return 1;
-		if (a.name[0] !== '_' && b.name[0] === '_') return -1;
-		return a.name.localeCompare(b.name);
-	}
 	const debug='';	// set to declaration.name to get more logging for that component
 	const allComponents = [];
 
@@ -71,19 +123,23 @@ module.exports.getAllComponents = function ()
 
 				// Remove members that are private or don't have a description
 				//
-				let members = declaration.members?.filter(member => member.description && member.privacy !== 'private') || [];
+				let members = declaration.members?.filter(member => member.description && isPublicPrivacy(member)) || [];
 				// add non-private and not overwritten Shoelace superclass members
 				if (debug === declaration.name) console.log("found members: "+members.map(member => member.name).join(", "));
 				if (sl_class)
 				{
-					const sl_members = sl_class.members?.filter(member =>
-						member.description && member.privacy !== 'private' && !members.find(egw => member.name === egw.name))/*.map(member => {
-							return {...member, inheritedFrom: {name: sl_class.name, module: "@shoelace-style/shoelace"}};
-						})*/;
+					// Tag these as inherited-from-Shoelace (was previously commented out, so every
+					// Shoelace-merged member silently counted as "own" - e.g. Et2ButtonTimestamper
+					// only declares target/format/timezone but showed all of SlButton's properties
+					// as its own, because they carried no inheritedFrom for splitOwnAndInherited to
+					// find). Confirmed against real data before fixing, not assumed.
+					const sl_members = (sl_class.members?.filter(member =>
+						member.description && isPublicPrivacy(member) && !members.find(egw => member.name === egw.name)) || [])
+						.map(member => ({...member, inheritedFrom: {name: sl_class.name, module: "@shoelace-style/shoelace"}}));
 					if (debug === declaration.name)  console.log("adding members from "+sl_class.name+": "+sl_members.map(member => member.name).join(", "));
 					members = members.concat(sl_members);
 				}
-				let methods = members?.filter(prop => prop.kind === 'method' && prop.privacy !== 'private') || [];
+				let methods = members?.filter(prop => prop.kind === 'method' && isPublicPrivacy(prop)) || [];
 				if (debug === declaration.name) console.log("found methods: "+methods.map(method => method.name).join(", "));
 				// add non-private and not overwritten Shoelace superclass methods
 				/* ToDo disabled, as it gives an error later (only copies 8 files and generates none)
@@ -107,17 +163,29 @@ module.exports.getAllComponents = function ()
 						prop.attribute = attribute.name || attribute.fieldName;
 					}
 
-					return prop.kind === 'field' && prop.privacy !== 'private';
+					return prop.kind === 'field' && isPublicPrivacy(prop);
 				}).sort(compareNotDeprecatedAndName);
+				properties.push(LIT_UPDATE_COMPLETE_PROPERTY);
 				if (debug === declaration.name) console.log("found properties: "+properties.map(property => property.name).join(", "));
+				const attributes = declaration.attributes?.concat(sl_class?.attributes?.filter(attribute => !declaration.attributes.find(attr => attr.name === attribute.name))
+					.map(attribute => {
+						return {...attribute, inheritedFrom: {name: sl_class.name, module: "@shoelace-style/shoelace"}};
+					}) || []);
 				allComponents.push({
 					...declaration,
 					methods,
 					properties,
-					attributes: declaration.attributes?.concat(sl_class?.attributes?.filter(attribute => !declaration.attributes.find(attr => attr.name === attribute.name))
-						.map(attribute => {
-							return {...attribute, inheritedFrom: {name: sl_class.name, module: "@shoelace-style/shoelace"}};
-						}))
+					attributes,
+					// Own vs. inherited split (grouped by ancestor) - the manifest already tags every
+					// inherited member/attribute with inheritedFrom, this just partitions on it so
+					// component.njk can render "own" in full and "inherited" collapsed per-ancestor
+					// instead of repeating the whole inherited wall of text on every subclass page.
+					ownProperties: splitOwnAndInherited(properties).own,
+					inheritedProperties: splitOwnAndInherited(properties).inherited,
+					ownMethods: splitOwnAndInherited(methods).own,
+					inheritedMethods: splitOwnAndInherited(methods).inherited,
+					ownAttributes: splitOwnAndInherited(attributes).own,
+					inheritedAttributes: splitOwnAndInherited(attributes).inherited
 				});
 				if (debug === declaration.name) console.log("added attributes", allComponents[allComponents.length - 1].attributes);
 			}
@@ -179,6 +247,57 @@ module.exports.getAllComponents = function ()
 		}
 		return 0;
 	});
+};
+
+//
+// Gets all mixins/controllers (declarations with no tagName - Et2InputWidget, FilterMixin, ...)
+// in the same documentation-friendly shape as getAllComponents(), for the "Controllers & Mixins"
+// sidebar category. Kept as a SEPARATE function rather than widening getAllComponents()'s own
+// customElement-only gate, so _data/components.json and every existing consumer of it (the
+// default_component.njk pagination, meta.components, ...) is unaffected - mixins get a home
+// without changing the shape or contents of the data those already depend on.
+//
+module.exports.getAllMixins = function ()
+{
+	const allMixins = [];
+
+	customElementsManifest.modules?.forEach(module =>
+	{
+		module.declarations?.forEach(declaration =>
+		{
+			if (declaration.kind !== 'mixin')
+			{
+				return;
+			}
+
+			declaration.path = module.path.replace(/^src\//, 'dist/').replace(/\.ts$/, '.js');
+
+			const members = declaration.members?.filter(member => member.description && isPublicPrivacy(member)) || [];
+			const methods = members.filter(prop => prop.kind === 'method' && isPublicPrivacy(prop)).sort(compareNotDeprecatedAndName);
+			const properties = members.filter(prop => prop.kind === 'field' && isPublicPrivacy(prop)).sort(compareNotDeprecatedAndName);
+
+			allMixins.push({
+				...declaration,
+				methods,
+				properties,
+				ownProperties: splitOwnAndInherited(properties).own,
+				inheritedProperties: splitOwnAndInherited(properties).inherited,
+				ownMethods: splitOwnAndInherited(methods).own,
+				inheritedMethods: splitOwnAndInherited(methods).inherited
+			});
+		});
+	});
+
+	allMixins.forEach(mixin =>
+	{
+		const docPath = path.join('..', '..', path.dirname(mixin.path), mixin.name + ".md");
+		if (fs.existsSync(path.resolve(docPath)))
+		{
+			mixin.content = fs.readFileSync(docPath, 'utf8');
+		}
+	});
+
+	return allMixins.sort((a, b) => a.name.localeCompare(b.name));
 };
 
 module.exports.getShoelaceVersion = function ()

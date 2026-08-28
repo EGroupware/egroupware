@@ -173,7 +173,6 @@ export class Et2Email extends Et2InputWidget(LitElement) implements SearchMixinI
 	/**
 	 * When user is typing, we wait this long for them to be finished before we start the search
 	 * @type {number}
-	 * @protected
 	 * @internal
 	 */
 	public static SEARCH_TIMEOUT : number = 500;

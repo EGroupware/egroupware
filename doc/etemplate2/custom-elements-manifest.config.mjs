@@ -26,7 +26,20 @@ function replace(string, terms)
 }
 
 export default {
-	globs: ["api/js/etemplate/**/Et2*.ts","api/js/etemplate/Et2Nextmatch/**/*.ts"],
+	// The base glob only matches files whose basename starts with "Et2" - several real mixins
+	// don't (SearchMixin.ts x2, SelectAccountMixin.ts, RowLimitedMixin.ts, ExposeMixin.ts), so they
+	// were invisible to the analyzer entirely, not just misclassified. Et2Nextmatch/** was already
+	// special-cased for the same reason (FilterMixin.ts); listing the other known non-Et2-prefixed
+	// mixin files explicitly here does the same for them without widening to whole directories.
+	globs: [
+		"api/js/etemplate/**/Et2*.ts",
+		"api/js/etemplate/Et2Nextmatch/**/*.ts",
+		"api/js/etemplate/Et2Widget/SearchMixin.ts",
+		"api/js/etemplate/Et2Select/SearchMixin.ts",
+		"api/js/etemplate/Et2Select/SelectAccountMixin.ts",
+		"api/js/etemplate/Layout/RowLimitedMixin.ts",
+		"api/js/etemplate/Expose/ExposeMixin.ts"
+	],
 	/** Globs to exclude */
 	exclude: ["api/js/etemplate/**/test/*","api/js/etemplate/**/Et2*Readonly.ts","api/js/etemplate/**/Et2*Mobile.ts"],//, 'et2_*.ts', '**/test/*', '**/*.styles.ts', '**/*.test.ts'],
 	dev: false,
@@ -38,6 +51,80 @@ export default {
 			packageLinkPhase({customElementsManifest})
 			{
 				customElementsManifest.package = {name, description, version, author, homepage, license};
+			}
+		},
+
+		// Explicit `@category` override for the docs sidebar taxonomy - lets a widget's author
+		// override the automatic mixin-based Input/Display categorization when it's wrong (e.g.
+		// Et2Diff carries the Et2InputWidget mixin for API consistency but is a read-only diff
+		// viewer, not a real input). Values match widget-taxonomy.cjs's CATEGORY_TAG_VALUES:
+		// layout, input, display, media, navigation, dialogs, data-grid. Kept as its own small,
+		// focused plugin rather than reviving the (disabled) generic multi-tag block below.
+		{
+			name: 'egroupware-category-tag',
+			analyzePhase({ts, node, moduleDoc})
+			{
+				if (node.kind !== ts.SyntaxKind.ClassDeclaration || !node.name)
+				{
+					return;
+				}
+				const className = node.name.getText();
+				const classDoc = moduleDoc?.declarations?.find(declaration => declaration.name === className);
+				if (!classDoc)
+				{
+					return;
+				}
+				node.jsDoc?.forEach(jsDoc =>
+				{
+					jsDoc?.tags?.forEach(tag =>
+					{
+						if (tag.tagName.getText() === 'category')
+						{
+							classDoc.category = tag.comment?.toString().trim();
+						}
+					});
+				});
+			}
+		},
+
+		// Explicit `@related <ClassName>` tag(s) - for cases where two widgets share a
+		// naming/conceptual kinship but not a real inheritance relationship, so the automatic
+		// Related-family detection (same source directory + shared name substring) can't find
+		// them. E.g. Et2VfsSelectDialog is "a dialog" in the conceptual sense but actually
+		// extends SearchMixin(Et2InputWidget(LitElement)), not Et2Dialog - there's no class
+		// hierarchy to detect automatically, and changing what it extends just to satisfy a
+		// docs grouping would be a real (and risky) behavior change to the widget itself.
+		// widget-taxonomy.cjs symmetrizes this: tagging one side makes both pages list each
+		// other, so `@related` only needs to be added once, on whichever side is more obvious.
+		// Multiple `@related` tags on one class are all collected.
+		{
+			name: 'egroupware-related-tag',
+			analyzePhase({ts, node, moduleDoc})
+			{
+				if (node.kind !== ts.SyntaxKind.ClassDeclaration || !node.name)
+				{
+					return;
+				}
+				const className = node.name.getText();
+				const classDoc = moduleDoc?.declarations?.find(declaration => declaration.name === className);
+				if (!classDoc)
+				{
+					return;
+				}
+				node.jsDoc?.forEach(jsDoc =>
+				{
+					jsDoc?.tags?.forEach(tag =>
+					{
+						if (tag.tagName.getText() === 'related')
+						{
+							const value = tag.comment?.toString().trim();
+							if (value)
+							{
+								classDoc.relatedTags = (classDoc.relatedTags || []).concat(value);
+							}
+						}
+					});
+				});
 			}
 		},
 

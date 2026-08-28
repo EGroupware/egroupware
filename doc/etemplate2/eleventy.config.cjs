@@ -4,7 +4,8 @@ const path = require('path');
 const {execSync} = require('child_process');
 const lunr = require('lunr');
 const {capitalCase} = require('change-case');
-const {customElementsManifest, getAllComponents, getShoelaceVersion} = require('./_utilities/cem.cjs');
+const {customElementsManifest, getAllComponents, getAllMixins, getShoelaceVersion} = require('./_utilities/cem.cjs');
+const {buildTaxonomy, FEATURE_AREAS} = require('./_utilities/widget-taxonomy.cjs');
 const egwFlavoredMarkdown = require('./_utilities/markdown.cjs');
 const activeLinks = require('./_utilities/active-links.cjs');
 const anchorHeadings = require('./_utilities/anchor-headings.cjs');
@@ -21,7 +22,48 @@ const replacer = require('./_utilities/replacer.cjs');
 const assetsDir = 'assets';
 const cdndir = 'cdn';
 const npmdir = 'dist';
+
+// Every documented mixin/controller lists which widgets consume it (reverse of "this component's
+// mixins", already on each component) so a reader landing on Et2InputWidget's page can jump to
+// every input widget, and vice versa - see doc/ai/projects/etemplate-docs-sidebar-grouping.md.
+function attachConsumedBy(components, mixins)
+{
+	mixins.forEach(mixin =>
+	{
+		mixin.consumedBy = components
+			.filter(c => (c.mixins || []).some(m => m.name === mixin.name))
+			.map(c => ({name: c.name, tagName: c.tagName}));
+	});
+}
+
+// Walks the computed taxonomy and copies belongsTo/related back onto the matching component
+// object (by name), so component.njk can render a "Related" section at the end of the page
+// without needing to know anything about the taxonomy tree shape itself - just its own data.
+function attachTaxonomyMetadata(components, taxonomy)
+{
+	const byName = new Map(components.map(c => [c.name, c]));
+	function visit(node)
+	{
+		const component = byName.get(node.name);
+		if (component)
+		{
+			component.belongsTo = node.belongsTo;
+			component.related = node.related;
+		}
+		(node.associated || []).forEach(visit);
+	}
+	taxonomy.categories.forEach(cat => cat.entries.forEach(entry =>
+	{
+		visit(entry.base);
+		entry.variations.forEach(visit);
+	}));
+}
+
 let allComponents = getAllComponents();
+let allMixins = getAllMixins();
+attachConsumedBy(allComponents, allMixins);
+let widgetTaxonomy = buildTaxonomy(allComponents, allMixins);
+attachTaxonomyMetadata(allComponents, widgetTaxonomy);
 let hasBuiltSearchIndex = false;
 
 // Write component data to file, 11ty will pick it up and create pages - the name & location are important
@@ -30,6 +72,8 @@ if (!fs.existsSync("_data"))
 	fs.mkdirSync("_data");
 }
 fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
+fs.writeFileSync("_data/mixins.json", JSON.stringify(allMixins));
+fs.writeFileSync("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
 
 // Put it here too, since addPassthroughCopy() ignores it
 fs.copyFileSync("../dist/custom-elements.json", "assets/custom-elements.json");
@@ -52,6 +96,8 @@ module.exports = async function (eleventyConfig)
 		image: 'images/logo.svg',
 		version: customElementsManifest.package.version,
 		components: allComponents,
+		mixins: allMixins,
+		widgetTaxonomy: widgetTaxonomy,
 		shoelaceVersion: getShoelaceVersion(),
 		cdndir,
 		npmdir
@@ -81,6 +127,10 @@ module.exports = async function (eleventyConfig)
 	eleventyConfig.addPassthroughCopy({"../../chunks": "assets/scripts/chunks"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css": "assets/styles/bootstrap-icons.min.css"});
+	// The CSS above references fonts/bootstrap-icons.woff(2) by relative path - without also
+	// copying the font files themselves, the glyphs never render (confirmed: sidebar category
+	// icons showed as broken/tofu characters until this was added).
+	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/fonts": "assets/styles/fonts"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/*/doc/*": "assets/components/"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/diff2html/bundles/css/diff2html.min.css": "assets/styles/diff2html.min.css"});
 
@@ -127,6 +177,42 @@ module.exports = async function (eleventyConfig)
 		}
 		return component;
 	});
+
+	// Resolves an "inheritedFrom" ancestor to a documented page, for linking from the collapsed
+	// "Inherited ..." sections back to whatever actually documents the member in full. Checks (in
+	// order): a real Shoelace ancestor (links out to shoelace.style, since we don't document
+	// Shoelace's own API) - an exact widget-name match - then a mixin match, retrying with a
+	// "+ Mixin" suffix since a TS mixin factory's produced class name (what inheritedFrom.name
+	// reports, e.g. "Et2WidgetWithSelect") doesn't always match the mixin's own declared name
+	// (e.g. "Et2WidgetWithSelectMixin"). Returns null (render as plain text) if nothing matches.
+	// `module` is the ancestor's inheritedFrom.module, used only to detect the Shoelace case.
+	eleventyConfig.addNunjucksGlobal('findAncestorDoc', (name, module) =>
+	{
+		if (module === '@shoelace-style/shoelace')
+		{
+			// e.g. "SlButton" -> "button", "SlFormatBytes" -> "format-bytes" - matches Shoelace's
+			// own component page URLs (the tag name minus its "sl-" prefix).
+			const slug = name.replace(/^Sl/, '').replace(/([a-z0-9])([A-Z])/g, '$1-$2').toLowerCase();
+			return {type: 'shoelace', name, url: `https://shoelace.style/components/${slug}`};
+		}
+		const widget = allComponents.find(c => c.name === name);
+		if (widget)
+		{
+			return {type: 'component', tagName: widget.tagName, name: widget.name};
+		}
+		const mixin = allMixins.find(m => m.name === name || m.name === name + 'Mixin');
+		if (mixin)
+		{
+			return {type: 'mixin', name: mixin.name};
+		}
+		return null;
+	});
+
+	// True when a "Belongs to" value is one of the 4 recognized feature-area subsystems (as
+	// opposed to rule 4's actual-inheritance-parent case, e.g. "Et2Select") - lets component.njk
+	// link to that subsystem's Reference overview page instead of falling through to
+	// findAncestorDoc (which wouldn't find a real component/mixin for a subsystem label anyway).
+	eleventyConfig.addNunjucksGlobal('isFeatureArea', value => Object.values(FEATURE_AREAS).includes(value));
 
 	//
 	// Custom markdown syntaxes
@@ -308,11 +394,17 @@ module.exports = async function (eleventyConfig)
 		// Re-read component markdown + manifest into components.json for the page render.
 		// Cheap, and also runs when only a .md doc changed so its content is refreshed.
 		allComponents = getAllComponents();
+		allMixins = getAllMixins();
+		attachConsumedBy(allComponents, allMixins);
+		widgetTaxonomy = buildTaxonomy(allComponents, allMixins);
+		attachTaxonomyMetadata(allComponents, widgetTaxonomy);
 		if (!fs.existsSync("_data"))
 		{
 			fs.mkdirSync("_data");
 		}
 		fs.writeFileSync("_data/components.json", JSON.stringify(allComponents));
+		fs.writeFileSync("_data/mixins.json", JSON.stringify(allMixins));
+		fs.writeFileSync("_data/widgetTaxonomy.json", JSON.stringify(widgetTaxonomy));
 	});
 
 	//

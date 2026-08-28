@@ -104,7 +104,6 @@ export declare class SearchMixinInterface<DataType extends SearchResult, Results
 	 * Deal with search results, processing & updating based on what the search returned
 	 *
 	 * @param {Results} results
-	 * @protected
 	 */
 	protected processResults<DataType>(results : Results) : DataType[]
 
@@ -146,36 +145,6 @@ type Constructor<T = {}> = new (...args : any[]) => T;
 /**
  * @summary Strongly typed mixin for asking the server for values that match a string the user types in and displaying those
  * matches for the user to choose from.
- *
- * # How to use this mixin:
- * ## Extend:
- * export class MySearchingWidget extends SearchMixin(...)
- *
- * ## Override:
- * These methods must be overridden:
- * searchResultSelected() - Called when the user has selected a search result. You need to call super.selectionChanged(), then
- * update your value from `this.selectedResults`.
- *
- * ```ts
- * protected searchResultSelected() {
- * 	super.searchResultSelected();
- * 	this.value = this.selectedResults[0];
- * }
- * ```
- * Other methods can be overridden if needed.
- *
- * ## Render:
- * ```
- * render() {
- * return html`
- * 	...
- * 	${this.searchInputTemplate()}
- * 	...
- * 	${this.searchResultsTemplate()}
- * 	...
- * `;
- * }
- * Call `searchInputTemplate()` and `searchResultsTemplate()` from your `render()` method
  *
  *
  * @param {T} superClass
@@ -300,7 +269,6 @@ export const SearchMixin = <T extends Constructor<Et2InputWidgetInterface &
 		 *
 		 * @param search
 		 * @returns {boolean}
-		 * @protected
 		 */
 		public searchMatch<DataType extends SearchResult>(search : string, searchOptions : Object, option : DataType) : boolean
 		{

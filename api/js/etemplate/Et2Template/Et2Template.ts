@@ -275,9 +275,7 @@ export class Et2Template extends Et2Widget(LitElement)
 	 * node and goes through it, creating widgets.  This is normally called automatically when the
 	 * template is added to the DOM, but if you want to re-load or not put it in the DOM you need to call load() yourself.
 	 *
-	 *
 	 * @returns {Promise<void>}
-	 * @protected
 	 */
 	public async load(newContent? : object,
 					  newSelectOptions? : { [widgetID : string] : SelectOption[] },
