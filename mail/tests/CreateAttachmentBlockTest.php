@@ -26,13 +26,51 @@ require_once realpath(__DIR__.'/../../api/tests/AppTest.php');
  * pure string-parsing plus an in-memory Mail::getInstance() lookup for an already-configured
  * account - no IMAP connection is made merely to obtain a profileID); the folder/uid segments are
  * never dereferenced by the attachment fixtures below since they all carry their own 'blobId'.
+ *
+ * The EGW_USER (doc/phpunit.xml) test account has no real mail account of its own in general -
+ * nothing provisions one, and CI's docker-compose stack runs no IMAP/SMTP server at all - so
+ * relying on Mail\Account::get_default_acc_id() made every test in this class fail with
+ * "Account not found!" the moment that assumption didn't hold, as it did not in CI. A throwaway
+ * account row is created once for the class instead: acc_smtp_type=Smtp::class makes
+ * Mail\Account::is_imap() return true without ever trying to connect (its own short-circuit for
+ * that type), so Mail::getInstance()'s account lookup succeeds without any real IMAP/SMTP
+ * server - matching this class's own "no IMAP connection" guarantee even where no mail server
+ * exists at all.
  */
 class CreateAttachmentBlockTest extends \EGroupware\Api\AppTest
 {
+	private static ?int $fixtureAccId = null;
+
+	public static function setUpBeforeClass() : void
+	{
+		parent::setUpBeforeClass();
+
+		self::$fixtureAccId = (int)Api\Mail\Account::write([
+			'acc_name'          => 'phpunit-CreateAttachmentBlockTest-fixture',
+			'acc_imap_host'     => 'phpunit-fixture.invalid',
+			'acc_imap_username' => 'phpunit-fixture',
+			'acc_imap_type'     => Api\Mail\Imap::class,
+			'acc_smtp_type'     => Api\Mail\Smtp::class,
+			'acc_smtp_host'     => 'phpunit-fixture.invalid',
+			'account_id'        => $GLOBALS['egw_info']['user']['account_id'],
+			'ident_realname'    => 'PHPUnit Fixture',
+			'ident_email'       => 'phpunit-fixture@example.invalid',
+		])['acc_id'];
+	}
+
+	public static function tearDownAfterClass() : void
+	{
+		if (self::$fixtureAccId)
+		{
+			Api\Mail\Account::delete(self::$fixtureAccId);
+			self::$fixtureAccId = null;
+		}
+		parent::tearDownAfterClass();
+	}
+
 	private function rowID() : string
 	{
-		$acc_id = Api\Mail\Account::get_default_acc_id();
-		return 'mail::'.$GLOBALS['egw_info']['user']['account_id'].'::'.$acc_id.'::'.base64_encode('INBOX').'::1';
+		return 'mail::'.$GLOBALS['egw_info']['user']['account_id'].'::'.self::$fixtureAccId.'::'.base64_encode('INBOX').'::1';
 	}
 
 	private function attachment(string $mimeType, string $name, array $overrides = array()) : array
