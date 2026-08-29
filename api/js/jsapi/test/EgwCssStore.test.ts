@@ -169,10 +169,59 @@ describe('egw_css.js (css) / egw_store.js (store)', () =>
 				assert.equal(instance.getSessionItem('appB', 'mykey'), 'valueB');
 			});
 
-			it('the underlying sessionStorage key is "application-key"', () =>
+			it('the underlying sessionStorage key is "application-key" while no user is known', () =>
 			{
 				env.egw().setSessionItem('myapp', 'mykey', 'myvalue');
 				assert.equal(env.window.sessionStorage.getItem('myapp-mykey'), 'myvalue');
+			});
+		});
+
+		describe('keys are namespaced per user & instance', () =>
+		{
+			/**
+			 * egw_store.js reads the user off the global egw at call time, the user module
+			 * is not loaded in this harness - so fake just what mapKey() asks for.
+			 */
+			function login(account_id, domain = 'default')
+			{
+				(env.window as any).egw.user = (field) => ({account_id: account_id, domain: domain})[field];
+			}
+
+			it('the underlying key gets the user and instance appended', () =>
+			{
+				login(42);
+				env.egw().setSessionItem('myapp', 'mykey', 'myvalue');
+				assert.equal(env.window.sessionStorage.getItem('myapp-mykey-42@default'), 'myvalue');
+			});
+
+			it('the next user in the same tab does not read the previous one\'s session item', () =>
+			{
+				login(42);
+				env.egw().setSessionItem('api', 'fw_tab_apps', 'user 42 tabs');
+
+				// logout & login as someone else, sessionStorage survives that
+				login(43);
+				assert.isNull(env.egw().getSessionItem('api', 'fw_tab_apps'));
+			});
+
+			it('the same account_id on another instance does not read it either', () =>
+			{
+				login(42, 'first');
+				env.egw().setLocalStorageItem('myapp', 'mykey', 'myvalue');
+
+				login(42, 'second');
+				assert.isNull(env.egw().getLocalStorageItem('myapp', 'mykey'));
+			});
+
+			it('the user gets his own value back', () =>
+			{
+				login(42);
+				env.egw().setSessionItem('myapp', 'mykey', 'mine');
+				login(43);
+				env.egw().setSessionItem('myapp', 'mykey', 'theirs');
+
+				login(42);
+				assert.equal(env.egw().getSessionItem('myapp', 'mykey'), 'mine');
 			});
 		});
 
@@ -198,7 +247,7 @@ describe('egw_css.js (css) / egw_store.js (store)', () =>
 				assert.isNull(instance.getLocalStorageItem('myapp', 'mykey'));
 			});
 
-			it('the underlying localStorage key is "application-key"', () =>
+			it('the underlying localStorage key is "application-key" while no user is known', () =>
 			{
 				env.egw().setLocalStorageItem('myapp', 'mykey', 'myvalue');
 				assert.equal(env.window.localStorage.getItem('myapp-mykey'), 'myvalue');
