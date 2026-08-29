@@ -687,6 +687,7 @@ abstract class Ajax extends Api\Framework
 	 * 				'icon_or_star' => url of bullet images, or false for none
 	 *  			'item_link' => url or false (lang_item contains complete html)
 	 *  			'target' => target attribute fragment, ' target="..."'
+	 *  			'hint' => translated tooltip of the item, only if the app declared one
 	 *			),
 	 *			// more entries
 	 *		),
@@ -758,6 +759,13 @@ abstract class Ajax extends Api\Framework
 						$var['icon_or_star'] = $item_link['icon'] ? Api\Image::find($app,$item_link['icon']) : False;
 					}
 					$var['lang_item'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['text'] : lang($item_link['text']);
+					// tooltip of the item: everything else an app puts in the entry is dropped here, so
+					// without this a sidebox entry has no way to say more than its label. The client falls
+					// back to the label when there is none, see EgwFrameworkApp._applicationSubMenuItemTemplate()
+					if (!empty($item_link['hint']))
+					{
+						$var['hint'] = isset($item_link['no_lang']) && $item_link['no_lang'] ? $item_link['hint'] : lang($item_link['hint']);
+					}
 					$var['item_link'] = $item_link['link'];
 					if ($item_link['target'])
 					{
