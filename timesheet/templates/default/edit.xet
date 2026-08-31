@@ -181,16 +181,15 @@
 					<et2-hbox  orient="0" span="all">
 						<et2-hbox>
 							<et2-button  hideOnReadonly="true" statustext="Edit this entry" label="Edit" id="button[edit]" image="edit"></et2-button>
-							<et2-dropdown-button  id="save_split" statustext="Saves the changes made" defaultPreference="save_button_default" onclick="app.timesheet.save_split_action" onchange="app.timesheet.save_split_action">
-								<et2-image slot="prefix" src="save"></et2-image>
-								<option value="save" default="true">Save</option>
-								<option value="save_new">Save &amp; New</option>
-								<option value="save_reset">Save &amp; Reset</option>
-							</et2-dropdown-button>
-							<et2-button  hideOnReadonly="true" label="Save" id="button[save]" image="save" style="display:none" tabindex="-1"></et2-button>
-							<et2-button  hideOnReadonly="true" label="Save &amp; New" id="button[save_new]" image="save_new" style="display:none" tabindex="-1"></et2-button>
-							<et2-button  hideOnReadonly="true" label="Save &amp; Reset" id="button[save_reset]" image="reload" style="display:none" tabindex="-1"></et2-button>
-							<et2-button  hideOnReadonly="true" statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply"></et2-button>
+                            <et2-dropdown-button id="save_split" statustext="Saves the changes made" defaultPreference="save_button_default" onclick="app.timesheet.save_split_action" onchange="app.timesheet.save_split_action">
+                                <et2-image slot="prefix" src="save_new"/>
+                                <option value="save_new" default="save_new">Save &amp; New</option>
+                                <option value="save_reset">Save &amp; Reset</option>
+                            </et2-dropdown-button>
+                            <et2-button hideOnReadonly="true" label="Save" id="button[save]" image="save" tabindex="-1"/>
+                            <et2-button hideOnReadonly="true" label="Save &amp; New" id="button[save_new]" image="save_new" style="display:none" tabindex="-1"/>
+                            <et2-button hideOnReadonly="true" label="Save &amp; Reset" id="button[save_reset]" image="reload" style="display:none" tabindex="-1"/>
+                            <et2-button  hideOnReadonly="true" statustext="Applies the changes made" label="Apply" id="button[apply]" image="apply"></et2-button>
 							<et2-button  statustext="closes the window without saving the changes" label="Cancel" id="button[cancel]" onclick="window.close();" image="cancel"></et2-button>
 							<html id="js"/>
 						</et2-hbox>
