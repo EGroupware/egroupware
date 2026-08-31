@@ -2403,6 +2403,47 @@ class mail_ui
 	}
 
 	/**
+	 * S/MIME sign/encrypt an about-to-be-sent/saved message's body - doc/ai/projects/
+	 * mail-compose-jmap-migration.md's Step 6 (send-side S/MIME, 2026-08-31 follow-up). See
+	 * JmapImap::smimeEncryptEmailProperties()'s own docblock for the design; this just wires it to
+	 * a blob upload (AttachmentJmap::uploadBlobBytes(), same backend-uniform scheme) so the client
+	 * gets back a plain blobId to swap into Email/set's bodyStructure in place of the multipart
+	 * structure it would otherwise build.
+	 *
+	 * @param string $_accId numeric acc_id, as a string (JmapImap's own dispatch() convention)
+	 * @param array $_email JMAP-shaped Email properties (same shape Email/set 'create' takes)
+	 * @param string $_type Mail\Smime::TYPE_SIGN|TYPE_ENCRYPT|TYPE_SIGN_ENCRYPT
+	 * @param string|null $_passphrase falls back to the session-cached passphrase if not given
+	 * @return void {blobId, type} on success; {needsPassphrase: true, message} if the sender's own
+	 *  S/MIME passphrase still needs prompting (same message compose's existing smimePassDialog()
+	 *  already shows - the client wiring to trigger that from THIS endpoint isn't built yet); or
+	 *  {error: message} for anything else (no certificate found, ...)
+	 */
+	function ajax_smimeEncryptEmailProperties($_accId, array $_email, $_type, $_passphrase=null)
+	{
+		$response = Api\Json\Response::get();
+		try
+		{
+			$result = JmapImap::smimeEncryptEmailProperties($_accId, $_email, $_type, (string)$_passphrase);
+			$blobId = AttachmentJmap::uploadBlobBytes($_accId, $result['raw'], $result['type']);
+			if (!$blobId)
+			{
+				throw new Api\Exception('Failed to store the signed/encrypted message');
+			}
+			$response->data(['blobId' => $blobId, 'type' => $result['type']]);
+		}
+		catch (Mail\Smime\PassphraseMissing $e)
+		{
+			$response->data(['needsPassphrase' => true, 'message' => $e->getMessage()]);
+		}
+		catch (\Exception $e)
+		{
+			_egw_log_exception($e);
+			$response->data(['error' => $e->getMessage()]);
+		}
+	}
+
+	/**
 	 * move folder
 	 *
 	 * @param string _folderName  folder to vove

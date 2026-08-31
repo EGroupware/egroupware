@@ -2170,6 +2170,87 @@ class Imap extends Jmap\Base
 	}
 
 	/**
+	 * S/MIME sign/encrypt an about-to-be-sent/saved message (doc/ai/projects/
+	 * mail-compose-jmap-migration.md's Step 6, "send-side" S/MIME - the send-side counterpart to
+	 * resolveSmime()'s already-built read-side decrypt). Backend-uniform since 2026-08-31
+	 * (readUploadedBlob() now resolves both a real-JMAP account's own opaque blobIds and the
+	 * shim's self-describing ones) - builds a full Api\Mailer from the given (not-yet-sent) Email
+	 * properties via buildMailerFromEmailProperties(), signs/encrypts/both via the exact same
+	 * Api\Mailer::smimeEncrypt()/Mail\Smime primitives classic mail_compose::_encrypt() already
+	 * uses, then serializes just the resulting body ENTITY back to raw bytes - not the whole
+	 * message; From/To/Subject/etc. stay as separate JMAP Email properties untouched by this, only
+	 * the body's own MIME shape changes (to multipart/signed or application/pkcs7-mime, either one
+	 * a single already-fully-formed MIME entity - Horde_Mime_Part::toString() serializes a
+	 * multipart's own boundary-delimited structure inline same as a leaf part, so this works
+	 * identically for TYPE_SIGN's multipart/signed as for TYPE_ENCRYPT's single opaque blob).
+	 *
+	 * The caller uploads the returned raw bytes as a blob (AttachmentJmap::uploadBlobBytes(), same
+	 * backend-uniform scheme as this method's own attachment-resolving half) and swaps that single
+	 * blobId into Email/set's bodyStructure in place of the multipart structure it would otherwise
+	 * build - decided 2026-08-27, see this doc's own "New pieces needed" section.
+	 *
+	 * @param string $accountId
+	 * @param array $email JMAP-shaped Email properties (same shape Email/set 'create' and
+	 *  buildMailerFromEmailProperties() already take) - from/to/cc/bcc/subject/bodyValues/
+	 *  textBody/htmlBody/attachments
+	 * @param string $type Api\Mail\Smime::TYPE_SIGN|TYPE_ENCRYPT|TYPE_SIGN_ENCRYPT
+	 * @param string $passphrase = '' falls back to the session-cached passphrase, same as
+	 *  Smime::resolveMessage()
+	 * @return array{type: string, raw: string} $type is the resulting body entity's own MIME type
+	 *  (for the caller to set on the blobId-only bodyStructure part it builds from $raw)
+	 * @throws Api\Mail\Smime\PassphraseMissing no cached/given passphrase was enough to unlock the
+	 *  sender's own private key
+	 * @throws \Exception no certificate found for the sender or a recipient
+	 */
+	public static function smimeEncryptEmailProperties(string $accountId, array $email, string $type, string $passphrase='') : array
+	{
+		$mailer = self::buildMailerFromEmailProperties($accountId, $email);
+
+		$sender = (string)($email['from'][0]['email'] ?? '');
+		$recipients = array_values(array_filter(array_map(
+			static fn($address) => $address['email'] ?? null,
+			array_merge((array)($email['to'] ?? []), (array)($email['cc'] ?? []), (array)($email['bcc'] ?? [])))));
+
+		$AB = new \addressbook_bo();
+		$params = [];
+		if (in_array($type, [Api\Mail\Smime::TYPE_SIGN, Api\Mail\Smime::TYPE_SIGN_ENCRYPT], true))
+		{
+			$senderCert = $AB->get_smime_keys($sender);
+			if (!$senderCert)
+			{
+				throw new \Exception(lang("S/MIME Encryption failed because no certificate has been found for sender address: %1", $sender));
+			}
+			$params['senderPubKey'] = $senderCert[strtolower($sender)];
+			$acc_smime = Api\Mail\Smime::get_acc_smime($accountId, $passphrase);
+			$params['senderPrivKey'] = $acc_smime['pkey'] ?? null;
+			$params['passphrase'] = $passphrase;
+			// extracerts also holds retired own certificates kept around to still decrypt old mail
+			// (see Smime::decryptWithCandidates()) - only actual CA/intermediate certificates
+			// (not belonging to our own key) belong in the chain sent with outgoing signed mail,
+			// same filter classic mail_compose::_encrypt() applies
+			$params['extracerts'] = !empty($acc_smime['extracerts']) ?
+				array_values(array_filter($acc_smime['extracerts'],
+					fn($c) => !Api\Mail\Smime::isOwnCertificate($c, $acc_smime['pkey'], $passphrase))) : null;
+		}
+		if (in_array($type, [Api\Mail\Smime::TYPE_ENCRYPT, Api\Mail\Smime::TYPE_SIGN_ENCRYPT], true))
+		{
+			$params['recipientsCerts'] = $AB->get_smime_keys($recipients);
+			$missing = array_filter($recipients, fn($r) => empty($params['recipientsCerts'][strtolower($r)]));
+			if ($missing)
+			{
+				throw new \Exception('S/MIME Encryption failed because no certificate has been found for following addresses: '.implode('|', $missing));
+			}
+		}
+
+		if (!$mailer->smimeEncrypt($type, $params))
+		{
+			throw new Api\Mail\Smime\PassphraseMissing(lang('You need to enter your S/MIME passphrase to send this message.'));
+		}
+		$base = $mailer->getBasePart();
+		return ['type' => $base->getType(), 'raw' => $base->toString(['headers' => true])];
+	}
+
+	/**
 	 * Add a non-inline attachment part, working around a real Horde_Mime_Part limitation for
 	 * message/rfc822 specifically - found live 2026-08-31: a forward-as-attachment's carried
 	 * message never showed up in the RECIPIENT's own "Attachments" list after actually being sent
@@ -2760,14 +2841,32 @@ class Imap extends Jmap\Base
 			$path = self::uploadPath(substr($blobId, strlen('upload:')));
 			return is_file($path) ? file_get_contents($path) : null;
 		}
+		$icServer = self::imapServer($accountId);
+		if ($icServer instanceof Api\Mail\Imap\Jmap)
+		{
+			// Stalwart's own opaque blobId (eg. an attachment already sitting on its blob store from
+			// a prior Email/get or upload) - never matches the shim-scheme parse below, so route it
+			// through the real JMAP download instead. Added (2026-08-31) for
+			// buildMailerFromEmailProperties()'s planned S/MIME sign/encrypt caller - this method and
+			// its only caller so far were shim-only (a real-JMAP account never reaches this class for
+			// its normal Email/set/EmailSubmission/set traffic, see class docblock), but a uniform
+			// sign/encrypt endpoint needs both backends' attachment bytes resolvable here.
+			try
+			{
+				return $icServer->jmapClient()->downloadBlob($blobId, 'attachment', 'application/octet-stream');
+			}
+			catch (\Throwable $e)
+			{
+				return null;
+			}
+		}
 		[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
-		$imap = ($mailboxB64 !== null && $uid) ? self::imapServer($accountId) : null;
-		if (!$imap)
+		if (!$icServer || $mailboxB64 === null || !$uid)
 		{
 			return null;
 		}
 		$mailbox = self::urlsafeB64Decode($mailboxB64);
-		return $partId !== '' ? self::fetchRawPart($imap, $mailbox, $uid, $partId) : self::fetchRawMessage($imap, $mailbox, $uid);
+		return $partId !== '' ? self::fetchRawPart($icServer, $mailbox, $uid, $partId) : self::fetchRawMessage($icServer, $mailbox, $uid);
 	}
 
 	/**

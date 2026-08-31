@@ -354,12 +354,38 @@ for anyone forwarding a specific attachment extracted from a winmail.dat/TNEF bl
 the real `Mail::tnef_decoder()` static decoder, the same one `getMessageAttachments()`/
 `getAttachment()` already use for the equivalent classic-IMAP-side decode.
 
-**Still not built: S/MIME sign/encrypt on send (phasing Step 6)** - `compose.ts`'s `jmapEligible()`
-still treats `smime_sign`/`smime_encrypt` as a hard `blockingToggle`, forcing the full classic
-postback whenever either is on. The reusable piece already exists (`Api\Mailer::smimeEncrypt()`,
-operating on an already-built Mailer - the same shape `buildMailerFromEmailProperties()` already
-constructs for the shim's send path) but wiring a standalone sign/encrypt endpoint + client call
-before `EmailSubmission/set` is unstarted.
+**S/MIME sign/encrypt on send (phasing Step 6) - server-side primitive + endpoint built
+(2026-08-31), NOT client-wired, NOT live-tested.** New `JmapImap::smimeEncryptEmailProperties()`:
+builds a full `Api\Mailer` from JMAP Email properties via the existing (now-backend-uniform, see
+below) `buildMailerFromEmailProperties()`, signs/encrypts via the same `Api\Mailer::
+smimeEncrypt()`/`Mail\Smime` primitives classic `mail_compose::_encrypt()` already uses, then
+serializes just the resulting body ENTITY (`multipart/signed` or `application/pkcs7-mime`, both
+single self-contained MIME entities via `Horde_Mime_Part::toString()` - `_base`'s own encoded
+bytes, not the whole message) back to raw bytes. Exposed as `mail.mail_ui.
+ajax_smimeEncryptEmailProperties()`, which uploads that as a blob (`AttachmentJmap::
+uploadBlobBytes()`, new backend-uniform upload-side counterpart to `fetchBlobBytes()` - Stalwart
+via `Api\Jmap::uploadBlob()`, shim via new `Imap::uploadBytes()`) and returns the blobId, per the
+2026-08-27 design decision: the client swaps that single blobId into `Email/set`'s bodyStructure
+in place of the multipart structure it would otherwise build.
+
+Backend-uniform only as of this same session: `buildMailerFromEmailProperties()`'s attachment-blob
+resolution (`readUploadedBlob()`) previously only understood `upload:<token>` or the shim's own
+`mailboxB64:uid:partId` blobId shapes - silently dropping any attachment on a real-JMAP/Stalwart
+account (whose blobIds are opaque, server-assigned tokens). `readUploadedBlob()` now checks for a
+Stalwart `icServer` first and routes through `jmapClient()->downloadBlob()` in that case (ralf,
+explicitly chosen over a separate uniform builder in `mail/src/Ui`, since this makes the existing
+shim-only method genuinely uniform rather than adding a parallel one).
+
+**Deliberately NOT built here** (this is a server-side-only slice, matching the "small testable
+slices" principle - the exact `Email/set` bodyStructure wire-format integration, passphrase-prompt
+UX, and live Stalwart+shim verification are all still open questions for a security-critical send
+path, not guessed at blind): `compose.ts`'s `jmapEligible()` still treats `smime_sign`/
+`smime_encrypt` as a hard `blockingToggle`, forcing the full classic postback whenever either is
+on - nothing calls the new endpoint yet. No PHPUnit coverage either (real sign/encrypt needs an
+actual configured S/MIME certificate + private key, unlike `ImapBuildMailerTest.php`'s pure-ish
+approach - a viable test fixture wasn't set up this session). `PassphraseMissing` on this endpoint
+also has no client-side prompt wired up yet - compose's existing `app.mail.smimePassDialog()` is
+send-flow-coupled (submits via `MailCompose.submitAction()`) and not directly reusable as-is.
 
 Companion to [[mail-jmap-imap-inversion]].
 
