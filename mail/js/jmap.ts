@@ -2577,7 +2577,7 @@ export class MailJmap
 					mimeType: attachment.type,
 					fileName: attachment.name || 'image',
 				});
-				const blob = await response.blob();
+				const blob = MailJmap.withKnownType(await response.blob(), attachment.type);
 				const url = URL.createObjectURL(blob);
 				this.inlineImageBlobs.set(url, blob);
 				urlByCid.set(cid, url);
@@ -2861,7 +2861,7 @@ export class MailJmap
 					mimeType: attachment.type,
 					fileName: attachment.name || 'image',
 				});
-				const url = URL.createObjectURL(await response.blob());
+				const url = URL.createObjectURL(MailJmap.withKnownType(await response.blob(), attachment.type));
 				this.objectUrls[rowId].push(url);
 				img.src = url;
 			}
@@ -2901,7 +2901,7 @@ export class MailJmap
 				mimeType: mimeType || 'application/octet-stream',
 				fileName: filename || 'attachment',
 			});
-			url = URL.createObjectURL(await response.blob());
+			url = URL.createObjectURL(MailJmap.withKnownType(await response.blob(), mimeType));
 		}
 		catch (e)
 		{
@@ -2956,7 +2956,7 @@ export class MailJmap
 				mimeType: mimeType || 'application/octet-stream',
 				fileName: filename || 'attachment',
 			});
-			const url = URL.createObjectURL(await response.blob());
+			const url = URL.createObjectURL(MailJmap.withKnownType(await response.blob(), mimeType));
 			(this.attachmentViewUrls[rowId] ??= []).push(url);
 			return url;
 		}
@@ -3961,6 +3961,25 @@ export class MailJmap
 	}
 
 	/**
+	 * `Response.blob()` derives the Blob's own `.type` from the response's `Content-Type` header -
+	 * not safe to trust for a `<img src="blob:...">`/view-link URL: found live 2026-08-31 that
+	 * Stalwart's own blob-download endpoint can send back a MALFORMED header for a type containing
+	 * "+" - jmap-jam's own `downloadBlob()` URL-templating does a naive string-substitution of our
+	 * `mimeType` into the request URL's query string with no `encodeURIComponent()` at all, and a
+	 * raw "+" there gets decoded back as a literal space server-side (the classic query-string
+	 * "+"-means-space convention) - "image/svg+xml" round-trips as "image/svg xml", which Chrome
+	 * then refuses to render as an image even though the actual bytes are perfectly valid. Every
+	 * caller here already KNOWS the correct mime type (it's the exact same value sent as the
+	 * request's own hint), so enforcing it ourselves sidesteps the whole class of "the response's
+	 * own Content-Type doesn't match what we asked for" problem, not just this one encoding bug -
+	 * and costs nothing extra when the header happens to already be right.
+	 */
+	private static withKnownType(blob : Blob, mimeType : string) : Blob
+	{
+		return (mimeType && blob.type !== mimeType) ? new Blob([blob], {type: mimeType}) : blob;
+	}
+
+	/**
 	 * Build the "original message" attribution block + quoted body for a reply, from
 	 * fetchForReply()'s result - ported from mail_compose.inc.php's getReplyData() (the attribution
 	 * fieldset + `<blockquote>`/plain '>' quoting), with 2 deliberate simplifications for this
@@ -4269,7 +4288,7 @@ export class MailJmap
 			mimeType: type || 'application/octet-stream',
 			fileName: name,
 		});
-		return URL.createObjectURL(await response.blob());
+		return URL.createObjectURL(MailJmap.withKnownType(await response.blob(), type));
 	}
 
 	/**
