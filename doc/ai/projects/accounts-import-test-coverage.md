@@ -1,6 +1,6 @@
 # Api\Accounts\Import test coverage (LDAP/ADS account sync)
 
-## Status: Phase 1 + 2 + 3 + 4 DONE and green (2026-08-31), 32 tests total in `api/tests/Accounts/`, stable
+## Status: ALL 5 PHASES DONE and green (2026-08-31), 37 tests total in `api/tests/Accounts/`, stable
 across reruns. Phase 1: harness (`ImportTestCase.php` + `Fixtures/FakeLdapAccountsBackend.php` +
 `Fixtures/FakeContactsSource.php`) + `ImportInitialUsersTest.php` (5 tests: 3 config-validation error
 paths + create + no-op-rerun). Phase 2: `Fixtures/FakeAdsAccountsBackend.php` + `ImportGroupsTest.php`
@@ -16,10 +16,12 @@ pair) + `ImportDnRegexpTest.php` (1 test, pins down a behavior Ralf later confir
 table with careful skip-if-real-job-exists + cancel-in-finally safety). Phase 4: `ImportAliasesTest.php`
 (5 tests: add/remove diffing against a real `Api\Mail\Smtp\Sql` backend, dry_run log-only, LDIF export
 for `ldap`+`ads` sources - `univention`'s LDIF variant not covered, same attribute-switch pattern as the
-other two, lower priority). All against the real test DB with fixture-backed LDAP/ADS/contacts sources,
-no live LDAP/ADS server. Found+fixed **four real production bugs** along the way, plus a `$save_state`
-testability parameter added mid-Phase-3 (see below) - see "Bugs found" for detail. Not started: write-back
-(Phase 5, separate follow-up per Ralf).
+other two, lower priority). Phase 5: `ImportWritebackTest.php` (5 tests: the
+`account_import_update_source` push-to-source path via `hookEditAccount()` - guard/no-op cases,
+`addaccount`, `editaccount`, `deleteaccount`; `editaccountcontact` not covered, see "Phase 5" below).
+All against the real test DB with fixture-backed LDAP/ADS/contacts sources, no live LDAP/ADS server.
+Found+fixed **four real production bugs** along the way, plus a `$save_state` testability parameter
+added mid-Phase-3 - see "Bugs found" for detail.
 
 ## Two things flagged as suspicious, confirmed intentional by Ralf (2026-08-31)
 
@@ -81,6 +83,50 @@ The same reasoning and pattern applies to `Import::groups()`'s own (separate) gr
 (`$GLOBALS['egw']->db->select(Sql::TABLE, ..., ['account_type' => 'g'], ...)`, equally unscoped) -
 `ImportDeletionDetectionTest` covers both user- and group-level candidate detection this way. See
 [[feedback_test_detection_not_execution_for_unscoped_destructive_paths]] for the general principle.
+
+## Phase 5: write-back (`hookEditAccount()`) testability
+
+`Import::hookEditAccount()` is a plain `public static function` - no `Import` instance involved at all, so
+`ImportTestCase::buildImport()`'s reflection-based harness (built for `run()`) doesn't apply here. Instead
+`ImportWritebackTest.php` defines `TestableWritebackImport extends Import`, overriding just the 2 factory
+methods (`accountsFactory()`/`contactsFactory()`) to return fixture-backed frontends instead of building
+real, live-connecting ones - and calls `TestableWritebackImport::hookEditAccount($data)` directly. This is
+exactly the seam the early `self::`->`static::` tweak (approved by Ralf back in Phase 1 planning) was for:
+`hookEditAccount()`'s internal calls are `static::accountsFactory(...)`, so late static binding correctly
+dispatches to the subclass's override when called via `TestableWritebackImport::`. No `ReflectionClass`
+needed for the `Import` side at all here - just inheritance.
+
+Two things needed for this that Phases 1-4 never touched:
+
+- **`FakeLdapAccountsBackend`'s `save()`/`delete()`/`name2id()`/`id2name()`**, stubbed "not implemented"
+  through Phase 1-4 (the pull-sync path never calls them on the *source* backend), are now implemented for
+  real - incl. `save()` simulating "LDAP/AD assigns a new uidNumber/UUID/DN on create" when no `account_id`
+  is given, exactly the shape `hookEditAccount()`'s `addaccount` case exercises.
+- **`hookEditAccount()` reads config via `Api\Config::read('phpgwapi')` directly - NOT
+  `$GLOBALS['egw_info']['server']`** like `run()` does. `ImportTestCase::setImportConfig()` has zero effect
+  on it. Found this by two tests initially passing for the wrong reason (they asserted "nothing happened",
+  and happened to pass because this box's *real* `account_import_update_source` was already off - not
+  because the test's own config override was doing anything). `Api\Config`'s cache (`self::$configs`) is
+  `private static` with no public setter for arbitrary overrides (`Api\Config::save_value()` would write to
+  the real shared DB config row - same class of risk flagged elsewhere in this project), so
+  `ImportWritebackTest` reaches it via `ReflectionProperty` instead, with the same backup/restore-in-tearDown
+  discipline as `setImportConfig()`.
+
+**A same-value gotcha, found via a real assertion failure, not by reasoning ahead of time:** for an
+already-synced account being edited, the SQL `account_id` and the source's own id must be **the same
+number** - `hookEditAccount()`'s "was this a formerly-local account?" check
+(`Api\Accounts::getInstance()->id2name($account['account_id'], 'account_uuid')`) looks the caller-supplied
+id up in the REAL SQL table, not some independent source-side id space. An earlier draft of
+`testEditAccountUpdatesExistingSourceEntry` used two different ids (a realistic-looking but wrong
+assumption, given `Import::run()`'s own pull-sync side has a comment explicitly tolerating SQL/source id
+mismatch right after a fresh `addaccount`) and silently exercised the wrong branch ("treat as new") instead
+of the intended "update existing" one.
+
+Not covered: `editaccountcontact` (contact-data write-back, going through `Api\Contacts::backendSave()`
+instead of the accounts backend) - left for a future pass; also note its own exception-recovery branch
+recurses via `self::hookEditAccount(...)` (not `static::`), which would silently reset late static binding
+back to the real `Import` class mid-call if ever exercised through a subclass like this one - a real trap
+for testing that specific branch, not yet worked around.
 
 ## Bugs found while building the harness
 
@@ -432,4 +478,10 @@ Group by what's under test:
   telling way - empty attribute values, because a brand-new account has nothing in SQL yet to diff). Not
   covered: `univention`'s LDIF variant (same attribute-switch pattern as `ldap`/`ads`, lower priority -
   would follow the same shape as the two done).
-- **Phase 5 (separate follow-up, out of this round's scope):** write-back (`hookEditAccount`).
+- **Phase 5: DONE.** `ImportWritebackTest` (`TestableWritebackImport` subclass overriding
+  `accountsFactory()`/`contactsFactory()`, no `Import` instance/harness needed since
+  `hookEditAccount()` is a plain static method) - guard/no-op cases (`account_import_update_source`
+  off; the `caller_method` self-loop guard), `addaccount` (incl. the real uuid/dn write-back into
+  SQL), `editaccount` (update of an already-synced entry), `deleteaccount`. See "Phase 5: write-back
+  testability" above for the `Api\Config` reflection gotcha and the same-id gotcha found along the
+  way. Not covered: `editaccountcontact`.

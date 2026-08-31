@@ -33,6 +33,9 @@ class FakeLdapAccountsBackend
 	/** @var array<int, array<int, string>> group account_id => [(member account_id) => account_lid] */
 	private array $memberOf;
 
+	/** @var int next auto-assigned account_id for save()'s "LDAP assigns a new uidNumber" simulation - Phase 5 (write-back) only */
+	private int $nextId = 800000;
+
 	/**
 	 * @param array $accounts account_id => normalized account array, as Accounts\Sql::read() would return
 	 * @param array $memberOf group_account_id => [member_account_id => account_lid] pairs, for members()/memberships()
@@ -101,24 +104,62 @@ class FakeLdapAccountsBackend
 		return $this->memberOf[$account_id] ?? [];
 	}
 
+	/**
+	 * Used by Import::run() pull-sync only for the "1 or 2 comma/semicolon-separated
+	 * default_group_lid names" resolution against $this->accounts_sql (the destination), never on
+	 * this (source) backend - but IS used on this backend by Import::hookEditAccount() (the
+	 * account_import_update_source write-back path, Phase 5).
+	 */
 	function name2id($name, $which = 'account_lid', $account_type = null)
 	{
-		throw new \Exception(__METHOD__.'() not (yet) implemented in fixture - Import never calls this on the source backend');
+		foreach ($this->accounts as $account_id => $account)
+		{
+			if (($account[$which] ?? null) === $name &&
+				(!isset($account_type) || ($account_type === 'g') === ($account_id < 0)))
+			{
+				return $account_id;
+			}
+		}
+		return false;
 	}
 
 	function id2name($account_id, $which = 'account_lid')
 	{
-		throw new \Exception(__METHOD__.'() not (yet) implemented in fixture - Import never calls this on the source backend');
+		return $this->accounts[$account_id][$which] ?? false;
 	}
 
+	/**
+	 * Simulates "LDAP/AD assigns a new uidNumber/entryUUID/DN on create" - if $data carries no
+	 * account_id (Import::hookEditAccount()'s 'addaccount' case deliberately unsets it before
+	 * calling save(), exactly to trigger this), one is auto-assigned, along with a fixture
+	 * account_uuid/account_dn if not already set. Mutates $data by reference, same contract as the
+	 * real Ldap/Ads/Sql backends' save().
+	 *
+	 * @param array $data
+	 * @return int|false the (possibly newly-assigned) account_id, or false - never fails here
+	 */
 	function save(&$data)
 	{
-		throw new \Exception(__METHOD__.'() not (yet) implemented in fixture - only needed for the account_import_update_source write-back path');
+		if (empty($data['account_id']))
+		{
+			$is_group = ($data['account_type'] ?? 'u') === 'g';
+			$id = $this->nextId++;
+			$data['account_id'] = $is_group ? -$id : $id;
+		}
+		$data['account_uuid'] ??= 'fixture-uuid-'.$data['account_id'];
+		$data['account_dn'] ??= 'uid='.($data['account_lid'] ?? $data['account_id']).',ou=people,dc=example,dc=org';
+		$this->accounts[$data['account_id']] = $data;
+		return $data['account_id'];
 	}
 
 	function delete($account_id)
 	{
-		throw new \Exception(__METHOD__.'() not (yet) implemented in fixture - only needed for the account_import_update_source write-back path');
+		if (!isset($this->accounts[$account_id]))
+		{
+			return false;
+		}
+		unset($this->accounts[$account_id]);
+		return true;
 	}
 
 	function set_memberships($groups, $account_id)

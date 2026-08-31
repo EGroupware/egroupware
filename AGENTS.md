@@ -165,14 +165,18 @@ similar scope.
   table - Ralf's call: verify candidate-detection, not execution), and `run()`'s `$save_state=false`
   testability parameter (non-test `run()` calls otherwise persist `account_import_lastrun` to real
   config on every call, even under `dry_run`, and drifted this shared box's real value before the
-  parameter existed). Phases 1-4 DONE and green in `api/tests/Accounts/` (32 tests covering config
+  parameter existed). ALL 5 PHASES DONE and green in `api/tests/Accounts/` (37 tests covering config
   validation, users+groups create/update/rerun incl. primary-group remap and the Ads `getMembers()`
   path, local-groups membership preservation, dry-run deletion-candidate detection incl. the
   `anonymous` carve-out, incremental sync, the `dn_regexp` sharp edge, `installAsyncJob()`'s
-  frequency->cron-shape mapping, and alias sync incl. LDIF export); found+fixed **four real production
-  bugs** along the way (see the doc's "Bugs found" section) plus confirmed two initially-suspicious
-  behaviors as intentional by design (`dn_regexp` delete-candidate interaction; `firstRunToday()` never
-  reading `account_import_time`). Only Phase 5 (write-back, separate follow-up per Ralf) remains.
+  frequency->cron-shape mapping, alias sync incl. LDIF export, and the `account_import_update_source`
+  write-back path via `hookEditAccount()` - the last one via a plain `Import` subclass overriding its
+  2 factory methods, no reflection needed since `hookEditAccount()` is a static method; `Api\Config`
+  reads its own separate static cache there, needing its own reflection-based override, distinct from
+  `run()`'s `$GLOBALS['egw_info']['server']` path). Found+fixed **four real production bugs** along the
+  way (see the doc's "Bugs found" section) plus confirmed two initially-suspicious behaviors as
+  intentional by design (`dn_regexp` delete-candidate interaction; `firstRunToday()` never reading
+  `account_import_time`). `editaccountcontact` (part of write-back) not covered.
 
 ## Security and data handling
 
