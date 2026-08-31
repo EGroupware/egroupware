@@ -26,6 +26,7 @@ import type {StateChange} from "./jmap-jam-websocket";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
 import {formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {convert as htmlToText} from "html-to-text";
 
 interface JmapToken
 {
@@ -95,6 +96,15 @@ export interface JmapAttachment
 	name : string;
 	type : string;
 	size : number;
+}
+
+/**
+ * A re-uploaded inline image (resolveOutgoingInlineImages()'s own result) - same shape as
+ * JmapAttachment plus the fresh Content-ID the rewritten body's `src="cid:..."` now references.
+ */
+interface JmapInlineImage extends JmapAttachment
+{
+	cid : string;
 }
 
 /**
@@ -2411,10 +2421,15 @@ export class MailJmap
 			const useHtml = htmlParts.length > 0;
 			const part = useHtml ? htmlParts[0] : textParts[0];
 			const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
-			const body = useHtml ? DOMPurify.sanitize(raw, {
+			const sanitized = useHtml ? DOMPurify.sanitize(raw, {
 				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
 				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
 			}) : raw;
+			// unlike the message-view path (resolveInlineImages()), the quoted body here is a plain
+			// string, not yet attached to any DOM/iframe - resolve straight into real blob: URLs
+			// before it's ever inserted into the compose editor, no defer-then-patch-after-render
+			// step needed at all.
+			const body = useHtml ? await this.resolveInlineCidImages(sanitized, email.attachments || [], token, ref.profileID) : sanitized;
 
 			// RFC 5322 §3.6.4: the new reply's References is the original's own References (if
 			// any) with the original's own Message-Id appended - NOT a straight copy of the
@@ -2452,6 +2467,121 @@ export class MailJmap
 			console.error('MailJmap.fetchForReply(): failed', e);
 			return null;
 		}
+	}
+
+	/**
+	 * blob: URLs created here for a quoted body's inline images (resolveInlineCidImages() below)
+	 * need their ACTUAL Blob object again later if the message is ever sent/saved
+	 * (resolveOutgoingInlineImages() re-uploads them as real JMAP blobs, since a blob: URL is
+	 * meaningless to anyone but this browser tab) - found live 2026-08-31: fetch()-ing a blob:
+	 * URL back is blocked by this deployment's own CSP (`connect-src` doesn't allow it, even
+	 * though `<img src="blob:...">` display itself is fine - that's `img-src`, a different
+	 * directive) - `TypeError: Failed to fetch. Refused to connect because it violates the
+	 * document's Content Security Policy.` Keeping the Blob itself around avoids ever needing to
+	 * fetch the URL back at all, sidestepping the CSP question entirely rather than needing it
+	 * loosened. Entries deliberately stay for the whole compose session, not removed after one
+	 * send/save - resolveOutgoingInlineImages() only ever rewrites a COPY of the body for the
+	 * outgoing payload, never the live editor widget itself (still showing "src=blob:..."
+	 * unchanged), so the same URL needs to keep resolving on every later autosave/send too.
+	 * Naturally bounded to this one compose session's own images either way - not an unbounded
+	 * per-account cache like objectUrls (message-view row re-renders).
+	 */
+	private inlineImageBlobs = new Map<string, Blob>();
+
+	/**
+	 * Cache of already-uploaded inline images (resolveOutgoingInlineImages()), keyed the same way
+	 * as inlineImageBlobs above. Without this, EVERY autosave tick would re-upload the same image
+	 * as a brand-new JMAP blob (found live 2026-08-31, ralf: "we probably already have to upload
+	 * inline images to JMAP blob store and cache their Ids") - saveDraft()'s own "destroy the
+	 * previous draft copy" step only destroys the previous draft Email object, not any blob it
+	 * referenced, so each fresh re-upload would silently orphan the one before it, relying purely
+	 * on the server's own GC for blobs no Email references any more. Reusing the same blobId/cid
+	 * across every save of one compose session means only the LATEST draft ever references it (no
+	 * accumulation) - the one remaining, unavoidable case (never sent, popup just closed before
+	 * ever autosaving even once) is no different from the SAME already-accepted risk for the
+	 * draft Email object itself, which isn't specially cleaned up on close either - JMAP has no
+	 * blob-delete primitive to call even if we wanted to (RFC 8620 §6's Upload has no matching
+	 * Destroy; a blob's lifetime is normally governed by whether anything still references it).
+	 */
+	private inlineImageUploads = new Map<string, JmapInlineImage>();
+
+	/**
+	 * Resolve `cid:` inline-image references in a quoted reply/forward body into real `blob:`
+	 * URLs, matching classic getReplyData()'s own BodyHandler::resolveInlineImages() (which does
+	 * the same job via a mail_ui::displayImage() menuaction link, or a data: URI for small
+	 * images) - browsers have no native support for the "cid:" scheme outside a real MIME message
+	 * context, so left unresolved these would just show as broken images once quoted into the
+	 * compose editor. Only handles `src="cid:..."` (the dominant case for an inline image) - the
+	 * classic implementation also handles CSS `url(cid:...)`/`background="cid:..."`, deliberately
+	 * not ported here (rare in practice, e.g. an old-style HTML signature background).
+	 *
+	 * downloadBlob() already works uniformly for both backends here (Stalwart's blobId downloads
+	 * directly; the shim's blobId is self-describing, resolved via its own mail/jmap.php "download"
+	 * branch - same as resolveInlineImages()'s own docblock for the message-VIEW's identical
+	 * problem) - confirmed live against the shim 2026-08-31.
+	 */
+	private async resolveInlineCidImages(html : string, attachments : any[], token : JmapToken, profileID : string) : Promise<string>
+	{
+		// see resolveInlineImages()'s own docblock for why cid: values need bracket-stripping
+		const stripCidBrackets = (cid : string) => cid.trim().replace(/^</, '').replace(/>$/, '');
+		const byCid = new Map<string, any>();
+		for (const a of attachments)
+		{
+			if (a.cid)
+			{
+				byCid.set(stripCidBrackets(a.cid), a);
+			}
+		}
+		if (!byCid.size)
+		{
+			return html;
+		}
+		const srcCidRegex = /\bsrc\s*=\s*(["'])cid:([^"']+)\1/gi;
+		const cids = new Set<string>();
+		for (const match of html.matchAll(srcCidRegex))
+		{
+			cids.add(decodeURIComponent(match[2]));
+		}
+		if (!cids.size)
+		{
+			return html;
+		}
+		const client = this.clients[profileID];
+		const urlByCid = new Map<string, string>();
+		await Promise.all(Array.from(cids).map(async(cid) =>
+		{
+			const attachment = byCid.get(stripCidBrackets(cid));
+			if (!attachment)
+			{
+				return;
+			}
+			try
+			{
+				const response = await client.downloadBlob({
+					accountId: token.accountId,
+					blobId: attachment.blobId,
+					mimeType: attachment.type,
+					fileName: attachment.name || 'image',
+				});
+				const blob = await response.blob();
+				const url = URL.createObjectURL(blob);
+				this.inlineImageBlobs.set(url, blob);
+				urlByCid.set(cid, url);
+			}
+			catch (e)
+			{
+				console.error('MailJmap.resolveInlineCidImages(): failed for', cid, e);
+			}
+		}));
+		if (!urlByCid.size)
+		{
+			return html;
+		}
+		return html.replace(srcCidRegex, (full, quote, rawCid) =>
+		{
+			const url = urlByCid.get(decodeURIComponent(rawCid));
+			return url ? `src=${quote}${url}${quote}` : full;
+		});
 	}
 
 	/**
@@ -3949,14 +4079,57 @@ export class MailJmap
 	}
 
 	/** Shared Email property-set builder for a create (sendNewEmail()/saveDraft()) or update (saveDraft()) - everything except mailboxIds/keywords, which differ between the two. */
-	private draftEmailProperties(identity : any, email : JmapNewEmail) : Record<string, any>
+	private draftEmailProperties(identity : any, email : JmapNewEmail, inlineImages : JmapInlineImage[] = []) : Record<string, any>
 	{
 		const isHtml = !!email.isHtml;
-		const bodyPart = {partId : 'body', type : isHtml ? 'text/html' : 'text/plain'};
 		const attachments = email.attachments ?? [];
 		const to = this.addressesToJmap(email.to);
 		const cc = this.addressesToJmap(email.cc);
 		const bcc = this.addressesToJmap(email.bcc);
+
+		const bodyValues : Record<string, {value : string, charset : string}> = {
+			body: {value: email.body ?? '', charset: 'utf-8'},
+		};
+		let bodyContainer : Record<string, any>;
+		if (isHtml)
+		{
+			// classic createMessage() always sends a real multipart/alternative for an HTML
+			// compose - setBody() with a converted plain-text version, THEN setHtmlBody(html,
+			// null, false) ("false" = don't auto-generate one, a real one was already supplied -
+			// mail_compose.inc.php:2750/2766). Found live 2026-08-31 (ralf): this was missing
+			// entirely - every JMAP-native HTML send this whole session only ever sent a bare
+			// text/html part, no plain-text alternative at all. Naive client-side conversion for
+			// now (ralf: "sufficient for now, we can later look into a decent library") - NOT the
+			// sophisticated server-side Api\Mail\Html::convertHTMLToText() engine classic uses for
+			// this same purpose (also used for signature conversion) - that stays server-side,
+			// out of scope here.
+			bodyValues.bodyText = {value: MailJmap.htmlToPlainText(email.body ?? ''), charset: 'utf-8'};
+			bodyContainer = {
+				type: 'multipart/alternative',
+				subParts: [
+					{partId: 'bodyText', type: 'text/plain'},
+					{partId: 'body', type: 'text/html'},
+				],
+			};
+		}
+		else
+		{
+			bodyContainer = {partId: 'body', type: 'text/plain'};
+		}
+
+		const inlineImageParts = inlineImages.map((a) => ({
+			blobId: a.blobId, type: a.type, name: a.name, size: a.size, cid: a.cid, disposition: 'inline',
+		}));
+		// with inline images, body(+alternative)+images nest in their own multipart/related (RFC
+		// 2387) first - this is what lets a mail client tell "this image belongs inline in the
+		// body" apart from a real attachment purely from MIME structure, regardless of the
+		// disposition header (some clients don't honour disposition alone). Regular attachments
+		// (if any) then wrap THAT as one sibling of an outer multipart/mixed, never flattened
+		// into the same list.
+		if (inlineImageParts.length)
+		{
+			bodyContainer = {type: 'multipart/related', subParts: [bodyContainer, ...inlineImageParts]};
+		}
 
 		return {
 			from: [{email : identity.email, name : identity.name}],
@@ -3970,26 +4143,45 @@ export class MailJmap
 			subject: email.subject ?? '',
 			...(email.inReplyTo?.length ? {inReplyTo: email.inReplyTo} : {}),
 			...(email.references?.length ? {references: email.references} : {}),
-			bodyValues: {body : {value : email.body ?? '', charset : 'utf-8'}},
+			bodyValues,
 			// attachments/htmlBody/textBody are RFC 8621 §4.1.4 convenience VIEWS the server
-			// derives from bodyStructure on read - not independently settable on create, so
-			// plain (no-attachment) messages use the htmlBody/textBody shortcut, but as soon as
-			// there's an attachment the full multipart/mixed bodyStructure has to be built by
-			// hand instead (a mix of both shapes isn't meaningful).
-			...(attachments.length
+			// derives from bodyStructure on read - not independently settable on create, so the
+			// textBody shortcut only applies to the plain-text, no-attachment, no-inline-image
+			// case now - HTML always needs the real bodyStructure (for its own multipart/
+			// alternative), same as an attachment or inline image forcing it for either mode.
+			...(isHtml || attachments.length || inlineImageParts.length
 				? {
-					bodyStructure: {
-						type: 'multipart/mixed',
-						subParts: [
-							bodyPart,
-							...attachments.map((a) => ({
-								blobId: a.blobId, type: a.type, name: a.name, size: a.size, disposition: 'attachment',
-							})),
-						],
-					},
+					bodyStructure: attachments.length
+						? {
+							type: 'multipart/mixed',
+							subParts: [
+								bodyContainer,
+								...attachments.map((a) => ({
+									blobId: a.blobId, type: a.type, name: a.name, size: a.size, disposition: 'attachment',
+								})),
+							],
+						}
+						: bodyContainer,
 				}
-				: {[isHtml ? 'htmlBody' : 'textBody']: [bodyPart]}),
+				: {textBody: [bodyContainer]}),
 		};
+	}
+
+	/**
+	 * HTML->plain-text conversion for draftEmailProperties()'s multipart/alternative, via the
+	 * `html-to-text` npm package (ralf, 2026-08-31: "there is a npm package html-to-text which
+	 * does exactly what we need, incl. configurable handling of links and inline images, we
+	 * probably want to wire that in directly" - superseding an initial naive DOMParser-based
+	 * version built the same day). Pure-JS (htmlparser2-based), no Node-only APIs, bundles fine
+	 * for the browser same as this file's other npm deps. `wordwrap: 78` matches the conventional
+	 * mail line-length (RFC 2822-ish, same ballpark classic Api\Mail\Html::convertHTMLToText()
+	 * wraps to) - NOT that same sophisticated server-side engine (entity/charset edge cases,
+	 * quoting conventions tuned for this codebase specifically), which stays server-side,
+	 * untouched, only used for signature conversion.
+	 */
+	private static htmlToPlainText(html : string) : string
+	{
+		return htmlToText(html, {wordwrap: 78});
 	}
 
 	/**
@@ -4059,9 +4251,92 @@ export class MailJmap
 		return URL.createObjectURL(await response.blob());
 	}
 
+	/**
+	 * Inline images resolveInlineCidImages() (fetchForReply()'s quoted body) already turned into
+	 * real `blob:` URLs are only ever valid within the browser tab/session that created them -
+	 * meaningless once actually SENT to a recipient, or stored server-side in a draft's own
+	 * bodyValues (found live 2026-08-31, ralf: "sending has to re-wire and reference as
+	 * attachments" - the display-side fix alone wasn't the whole story). Re-uploads each one as a
+	 * real JMAP blob (same client.uploadBlob() primitive uploadAttachment() wraps, but working
+	 * directly off the already-resolved token/client here rather than re-resolving them from a
+	 * profileID) under a fresh Content-ID, and rewrites the body's `src="blob:..."` back to
+	 * `src="cid:..."` - draftEmailProperties() then nests these in a proper multipart/related
+	 * alongside the body, same MIME shape classic Mail::processURL2InlineImages() produces for its
+	 * own equivalent problem (there, resolving normal http(s) image URLs pasted/left in the body).
+	 * Only ever resolves a URL this same instance's inlineImageBlobs map actually has the Blob
+	 * for (see that field's own docblock for why - CSP blocks fetch()-ing a blob: URL back) - a
+	 * blob: URL from anywhere else (there shouldn't be one - nothing plausibly puts one in a mail
+	 * compose body other than this class itself) is left untouched rather than dropped/attempted.
+	 */
+	private async resolveOutgoingInlineImages(token : JmapToken, client : JamClient, html : string) : Promise<{body : string, inlineImages : JmapInlineImage[]}>
+	{
+		const blobUrlRegex = /\bsrc\s*=\s*(["'])(blob:[^"']+)\1/gi;
+		const urls = new Set<string>();
+		for (const match of html.matchAll(blobUrlRegex))
+		{
+			urls.add(match[2]);
+		}
+		if (!urls.size)
+		{
+			return {body: html, inlineImages: []};
+		}
+		const extensionByType : Record<string, string> = {
+			'image/png': '.png', 'image/jpeg': '.jpg', 'image/gif': '.gif',
+			'image/webp': '.webp', 'image/bmp': '.bmp', 'image/svg+xml': '.svg',
+		};
+		const cidByUrl = new Map<string, string>();
+		const inlineImages : JmapInlineImage[] = [];
+		let index = 0;
+		await Promise.all(Array.from(urls).map(async(url) =>
+		{
+			const cached = this.inlineImageUploads.get(url);
+			if (cached)
+			{
+				cidByUrl.set(url, cached.cid);
+				inlineImages.push(cached);
+				return;
+			}
+			const blob = this.inlineImageBlobs.get(url);
+			if (!blob)
+			{
+				return;
+			}
+			try
+			{
+				const type = blob.type || 'application/octet-stream';
+				const name = `inline-image-${++index}${extensionByType[type] ?? ''}`;
+				const response = await client.uploadBlob(token.accountId, blob);
+				const cid = `${crypto.randomUUID()}@${window.location.hostname}`;
+				const inlineImage : JmapInlineImage = {blobId: response.blobId, type, name, size: response.size ?? blob.size, cid};
+				this.inlineImageUploads.set(url, inlineImage);
+				cidByUrl.set(url, cid);
+				inlineImages.push(inlineImage);
+				// deliberately NOT deleted/revoked here - this rewrite only ever touches a COPY of
+				// the body for the outgoing payload, never the live editor widget itself (still
+				// showing "src=blob:..." unchanged), so the SAME blob: URL needs to keep resolving
+				// on every later send/autosave of this same compose session too, not just this one
+			}
+			catch (e)
+			{
+				console.error('MailJmap.resolveOutgoingInlineImages(): failed for', url, e);
+			}
+		}));
+		if (!cidByUrl.size)
+		{
+			return {body: html, inlineImages: []};
+		}
+		const body = html.replace(blobUrlRegex, (full, quote, url) =>
+		{
+			const cid = cidByUrl.get(url);
+			return cid ? `src=${quote}cid:${cid}${quote}` : full;
+		});
+		return {body, inlineImages};
+	}
+
 	/** Create a new $draft-keyword Email in the Drafts mailbox - shared by sendNewEmail() and saveDraft()'s first-save case. */
 	private async createDraftEmail(token : JmapToken, client : JamClient, identity : any, draftsId : string, email : JmapNewEmail) : Promise<string>
 	{
+		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
 		const [{emailSet}] = await client.requestMany((t) => ({
 			emailSet: t.Email.set({
 				accountId: token.accountId,
@@ -4069,7 +4344,7 @@ export class MailJmap
 					s1: {
 						mailboxIds: {[draftsId]: true},
 						keywords: {'$draft': true},
-						...this.draftEmailProperties(identity, email),
+						...this.draftEmailProperties(identity, {...email, body}, inlineImages),
 					},
 				},
 			}),

@@ -71,6 +71,20 @@ export class MailCompose
 	 */
 	private replyThreadingHeaders : {inReplyTo : string[] | null, references : string[] | null} | null = null;
 
+	/**
+	 * Cache of already-uploaded locally-staged attachments (uploadAttachmentsViaJmap()), keyed by
+	 * the attachment's own tmp_name - a stable id for one staged file across this whole compose
+	 * session. Without this, EVERY autosave tick (and the final send too, if it happens after at
+	 * least one autosave) would re-fetch+re-upload the same file as a brand-new JMAP blob (found
+	 * live 2026-08-31, ralf: "the same [as inline images] is also true for attachments, we need to
+	 * cache their blobIds, to not upload them over and over again and also use them for
+	 * submission") - same reasoning as MailJmap's own inlineImageUploads cache. A
+	 * carryForwardAttachments() entry (jmapBlobId already set) never reaches this cache at all -
+	 * it's already a stable, permanent reference to the original message's own blob, nothing to
+	 * upload or remember.
+	 */
+	private uploadedAttachmentBlobs = new Map<string, {blobId : string, name : string, type : string, size : number}>();
+
 	get egw() : IegwAppLocal
 	{
 		return this.app.egw;
@@ -1171,6 +1185,11 @@ export class MailCompose
 			{
 				return {blobId: attachment.jmapBlobId, name: attachment.name, type: attachment.type, size: attachment.size};
 			}
+			const cached = this.uploadedAttachmentBlobs.get(attachment.tmp_name);
+			if (cached)
+			{
+				return cached;
+			}
 			const url = this.egw.link('/index.php', {
 				menuaction: 'mail.mail_compose.getAttachment',
 				tmpname: attachment.tmp_name,
@@ -1182,7 +1201,9 @@ export class MailCompose
 				throw new Error(this.egw.lang('Failed to read attachment %1', attachment.name));
 			}
 			const blob = await response.blob();
-			return this.app.jmap.uploadAttachment(profileID, blob, attachment.name, attachment.type);
+			const uploaded = await this.app.jmap.uploadAttachment(profileID, blob, attachment.name, attachment.type);
+			this.uploadedAttachmentBlobs.set(attachment.tmp_name, uploaded);
+			return uploaded;
 		}));
 	}
 

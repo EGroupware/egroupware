@@ -2,11 +2,123 @@
 
 ## Status: Steps 0, 1, 3, and (out of order) the draft-save half of Step 5 done + live-verified
 against real Stalwart (2026-08-27); Step 4's reply, reply-all, reply-with-attachments (incl.
-attachment carry-forward), single-message inline forward, and forward-as-attachment (single or
-multiple messages) are ALL done + live-verified (2026-08-31). Not yet built: inline-image
-resolution for the quoted body, and "forward as attachment merged into an already-open compose
-popup" (the `setCompose()` case - deliberately deferred, see its own write-up below). Companion to
+attachment carry-forward), single-message inline forward, forward-as-attachment (single or
+multiple messages), and inline-image resolution for the quoted body (incl. its own send/draft-save
+side - blob re-upload, caching, and now a proper text/plain alternative) are ALL done +
+live-verified (2026-08-31, incl. against the IMAP-shim backend - see its own write-up below). Step
+4 is now functionally complete except reply-all/forward into an already-open compose popup (the
+`setCompose()` case, deliberately deferred - see its own write-up below). **Not yet tested: a
+plain-text-mode JMAP-native send/save, at all, this whole session** - flagged by ralf, still
+outstanding. Next up: Step 2 (IMAP-shim EmailSubmission emulation) - the shim can bootstrap/quote/
+carry-forward attachments via JMAP already, but sending still falls back to classic there entirely,
+since `EmailSubmission/set` was never built for it. Companion to
 [[mail-jmap-imap-inversion]].
+
+**HTML sends were missing a text/plain alternative entirely, built 2026-08-31, not yet
+live-tested.** Confirmed via `mail_compose.inc.php`'s own `createMessage()`: classic ALWAYS builds
+a real `multipart/alternative` for an HTML compose - `$_mailObject->setBody($this->
+convertHTMLToText($body, true, true))` (plain-text version, via the same ~260-line
+`Api\Mail\Html::convertHTMLToText()` engine also used for signature conversion) followed by
+`setHtmlBody($body, null, false)` - the trailing `false` meaning "don't auto-generate an
+alternative, a real one was already supplied." Every JMAP-native HTML send/save this whole session
+was missing this - `draftEmailProperties()` only ever sent a bare `text/html` part (or the
+`htmlBody` RFC 8621 §4.1.4 convenience-view shortcut for the no-attachment case), no plain-text
+counterpart at all. Fixed: `draftEmailProperties()` now always builds a real `multipart/alternative`
+(text/plain + text/html) for HTML mode - the `textBody`-shortcut path now only applies to the
+plain-text, no-attachment, no-inline-image case (HTML always needs the real bodyStructure now, same
+as an attachment/inline image already forced it for either mode). Conversion itself
+(`MailJmap.htmlToPlainText()`) went through two iterations same day: a first pass was a naive
+DOMParser-based version (ralf: "I think we should keep that client-side, for now something like
+[naive] is sufficient, we can later look into a decent library"), immediately superseded once ralf
+found the `html-to-text` npm package ("does exactly what we need, incl. configurable handling of
+links and inline images, we probably want to wire that in directly") - now a thin wrapper over
+`html-to-text`'s own `convert()` (pure-JS/htmlparser2-based, no Node-only APIs, bundles for the
+browser the same as this file's other npm deps - `@types/html-to-text` added as a devDependency
+since the package ships no types of its own), `wordwrap: 78`. Still NOT the sophisticated
+server-side `Api\Mail\Html::convertHTMLToText()` engine classic uses for this same purpose (entity/
+charset edge cases, quoting conventions tuned for this codebase specifically) - that stays
+server-side, untouched, only used for signature conversion. Full nesting once inline images/
+attachments are added too: `multipart/mixed` (attachments) > `multipart/related` (inline images) >
+`multipart/alternative` (text/plain + text/html) - each layer only appears when actually needed for
+that specific message.
+
+**Send/draft-save side of inline images built + live-verified 2026-08-31** (real `multipart/related`
+sent with a correct `Content-ID`/`Content-Disposition: inline` image part, confirmed from the raw
+Sent-folder source). The display-side fix below (resolveInlineCidImages())
+is only half the story - a `blob:` URL is only ever valid within the browser tab that created it,
+so sending/saving one verbatim just gives the recipient a broken image (ralf: "sending has to
+re-wire and reference as attachments"). New `MailJmap.resolveOutgoingInlineImages()` (called from
+`createDraftEmail()`, shared by send AND draft-save) re-uploads each `blob:`-referenced image as a
+real JMAP blob under a fresh Content-ID and rewrites `src="blob:..."` back to `src="cid:..."`;
+`draftEmailProperties()` nests the result in a proper `multipart/related` alongside the body
+(wrapped in `multipart/mixed` too if there are also regular attachments). Real bug found+fixed
+live: the first attempt tried `fetch(blobUrl)` to get the bytes back and was blocked by this
+deployment's own CSP (`connect-src` doesn't allow `blob:`, even though `<img src="blob:...">`
+display itself is fine under the separate `img-src` directive) -
+`TypeError: Failed to fetch. Refused to connect because it violates the document's Content
+Security Policy.` Fixed by keeping the actual `Blob` object around from the moment it's first
+created (`inlineImageBlobs`, a new `MailJmap` field) instead of ever needing to fetch the URL back
+- sidesteps the CSP question entirely rather than needing it loosened. Second issue, caught before
+live-testing rather than found live: `resolveOutgoingInlineImages()` would otherwise re-upload the
+SAME image as a brand-new blob on every autosave tick (ralf: "we probably already have to upload
+inline images to JMAP blob store and cache their Ids, so we remember to... re-use them for the
+submission") - `saveDraft()`'s own "destroy the previous draft copy" step only destroys the
+previous draft Email, not any blob it referenced, so each fresh re-upload would silently orphan
+the one before it. Fixed with a second new field, `inlineImageUploads` (keyed the same way as
+`inlineImageBlobs`), caching the uploaded `{blobId, cid, ...}` for reuse by every later
+autosave/send of the same compose session - not deleted/revoked after one use, since later calls
+re-read the SAME still-`blob:`-referencing widget content each time (this rewrite only ever
+touches a COPY of the body for the outgoing payload, never the live editor widget itself).
+Confirmed (ralf): Stalwart runs its own job cleaning up unreferenced blobs, so the one remaining
+edge case (compose closed before ever autosaving even once) needs no special handling - JMAP has
+no blob-delete primitive to call anyway (RFC 8620 §6's Upload has no matching Destroy).
+**Same problem, same fix, also applied to regular (locally-staged) attachments** (ralf: "the same
+is also true for attachments") - `compose.ts`'s `uploadAttachmentsViaJmap()` gained its own
+analogous cache, `uploadedAttachmentBlobs` (keyed by the attachment's own stable `tmp_name`) -
+carryForwardAttachments() entries (`jmapBlobId` already set) never reach this cache at all, since
+they're already a stable, permanent reference to the original message's own blob with nothing to
+upload in the first place.
+
+**Inline-image resolution for the quoted body built + live-verified 2026-08-31 (against the
+shim backend, on real test mail with inline images).** Browsers have no native support for the
+`cid:` URI scheme outside a real MIME message context - left unresolved, an inline image in a
+quoted reply/forward would just show as a broken image once inserted into the compose editor.
+Classic `getReplyData()`'s own fix is `BodyHandler::resolveInlineImages()` (a `mail_ui::
+displayImage()` menuaction link, or a `data:` URI for small images). New
+`MailJmap.resolveInlineCidImages()` does the equivalent client-side: replaces `src="cid:..."`
+references in the quoted HTML with real `blob:` URLs via the same `downloadBlob()` call
+`resolveInlineImages()` (the message-VIEW's own identical problem) already uses - confirmed
+uniform across both backends there already (Stalwart's blobId downloads directly; the shim's is
+self-describing, resolved via its own `mail/jmap.php` "download" branch). Unlike the message-view
+path, no defer-then-patch-after-render dance is needed here at all: `fetchForReply()`'s quoted
+body is still a plain string at this point, not yet attached to any DOM/iframe, so resolution
+happens directly on the string before it's ever inserted into the editor. Only handles `src="cid:
+..."` (the dominant case) - deliberately not porting classic's CSS `url(cid:...)`/`background=
+"cid:..."` handling too (rare in practice, e.g. an old-style HTML signature background).
+
+**Confirmed working against the IMAP-shim backend 2026-08-31 (no code change needed)**: ralf
+tested reply against a shim account (acc_id=42) and initially suspected server-side classic
+fallback, since NO shim (`jmap.php`) request showed in the compose popup's own Network tab.
+Root cause: `MailApp.jmap` reuses `window.opener.app.mail.jmap` (the WebSocket-sharing fix from
+earlier this session) - so `fetchForReply()`'s function body, its `fetch()` calls, and its
+`console.log()` output all execute in the **opener (main list) window's** own JS realm, not the
+popup's - diagnostic logging (added, then removed once confirmed) showed the fetch actually
+succeeding via `jmap.php` (isLocal path), visible only in the opener tab's own DevTools. Nothing
+was broken - a devtools-visibility gotcha, not a bug.
+
+**Known gap, deliberately deferred (ralf, 2026-08-31): carry-forward attachments break if SEND
+falls back to classic on a shim account.** `EmailSubmission/set` was never built for the shim
+(phasing's own Step 2, still not started) - `resolveComposeContext()` throws
+`JmapUnsupportedBackendError` for `token.isLocal`, so `trySendViaJmap()` correctly falls through to
+the unchanged classic postback send for a shim account. That's fine for plain reply/reply-all/
+inline-forward (no attachments, just widget text) - but for reply-with-attachments/forward, the
+carried attachments are shaped `{jmapBlobId, tmp_name:"jmap:"+blobId}`, which matches NEITHER of
+classic `createMessage()`'s two recognized attachment shapes (`{uid,folder,partID}` or
+`{file:<real path>}`) - it falls into the "non-vfs file" branch and calls
+`basename($attachment['file'])` with `file` undefined, producing a bogus path instead of the real
+attachment. Ralf: not worth fixing now, since the plan is to remove classic-send-fallback entirely
+once JMAP-native sending is added to the shim (making this whole gap moot) - just tracked here for
+now, revisit once Step 2 (shim EmailSubmission) happens.
 
 **Reply-all built + live-verified 2026-08-31 (ralf: "tested reply-all with a few recipients, works
 fine")**: `_action.id === 'reply_all'` is now JMAP-mode
