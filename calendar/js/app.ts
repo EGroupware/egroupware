@@ -147,6 +147,7 @@ export class CalendarApp extends EgwApp
 
 	//
 	private _grants : any;
+	private _sortablejs : any;
 	/**
 	 * Constructor
 	 *
@@ -977,8 +978,9 @@ export class CalendarApp extends EgwApp
 		let daily = document.querySelector('#calendar-view_view .calendar_calGridHeader > div');
 		let weekly = document.querySelector('#calendar-view_view tbody');
 		let sortable = state.view == 'day' ? daily : weekly;
+		this._sortablejs?.destroy();
 
-		let sortablejs = Sortable.create(sortable, {
+		this._sortablejs = Sortable.create(sortable, {
 			ghostClass: 'srotable_cal_wk_ph',
 			draggable: state.view == 'day' ? '.calendar_calDayColHeader' : '.view_row',
 			handle: state.view == 'day' ? '.blue_title' : '.calendar_calGridHeader',
