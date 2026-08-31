@@ -162,13 +162,24 @@ public blob-download endpoint `client.downloadBlob()` hits) only ever understood
 self-describing `mailbox:uid:partId` blobId shape, never the `upload:<token>` shape a fresh
 `Imap::upload()` produces - re-downloading a fresh upload's own bytes 404'd ("Failed to download
 blob"). Fixed by delegating to the already-`upload:`-aware `readUploadedBlob()` for that shape.
-**Known remaining gaps, not yet addressed**: "Attach from VFS" (`selectFromVFSForCompose`/
-`vfsUpload()`) still does a full classic postback in JMAP mode - only the `<file>`/paperclip path
-got this treatment. **No test coverage added** for any of this session's new code (Step 2's shim
-methods, this attachment-upload rework, `reuploadAttachmentForAccount()`, "compose as new" below) -
-everything was verified live only; `buildMailerFromEmailProperties()` is the highest-value target
-for PHPUnit coverage if/when this gets picked up (pure-ish transform, and where the real
-body-vs-attachment bug above actually lived).
+**"Attach from VFS" gap RESOLVED (2026-08-31, `62a3288eb4`)**: `vfsUpload()`/
+`selectFromVFSForCompose()` now go through `MailCompose`'s own attachment-resolution path
+(`attachment.jmapVfsPath`) instead of a classic postback - a bare path reference is passed through
+untouched (zero bytes moved client-side, ralf's explicit design call) for the shim, which reads it
+directly server-side at message-build time (`Api\Mail\Jmap\Imap::buildMailerFromEmailProperties()`);
+only a real-JMAP target does the WebDAV-fetch-then-upload round trip, via
+`MailJmap.uploadVfsAttachment()`, cached per path/target-account pair the same way
+`reuploadAttachmentForAccount()` already caches cross-account blob reuploads.
+
+**Test coverage: partially added (2026-08-31, `0d06e43872`)** - 8 PHPUnit tests for
+`buildMailerFromEmailProperties()` (`ImapBuildMailerTest.php`), the shim's core message-building
+transform and the piece where the real body-vs-attachment bug above actually lived: a direct
+regression test for that bug, plus the `upload:<token>` and `vfsPath` attachment shapes,
+from/threading-header handling, and empty Cc/Bcc omission. Still NOT covered (needs a live or
+mocked `Horde_Imap_Client_Socket`): `appendRawMessage()`, `emailSet()`'s `'create'` handling,
+`emailSubmissionSet()`, and the `mailbox:uid:partId` blobId branch of
+`download()`/`readUploadedBlob()` - everything else from this session (Step 2's remaining shim
+methods, `reuploadAttachmentForAccount()`, "compose as new" below) is still live-verified only.
 
 **"Compose as new" (`composeasnew`) built + live-verified 2026-08-31** (ralf: "I run into a mail
 reply/forward mode we missed before... most clients call it Compose as new") - a distinct compose
