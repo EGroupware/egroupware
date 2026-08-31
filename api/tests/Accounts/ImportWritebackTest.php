@@ -9,10 +9,12 @@
 namespace EGroupware\Api\Accounts\Tests;
 
 require_once __DIR__.'/ImportTestCase.php';
+require_once __DIR__.'/Fixtures/FakeContactsSoAccounts.php';
 
 use EGroupware\Api;
 use EGroupware\Api\Accounts\Import;
 use EGroupware\Api\Accounts\Tests\Fixtures\FakeLdapAccountsBackend;
+use EGroupware\Api\Accounts\Tests\Fixtures\FakeContactsSoAccounts;
 
 /**
  * Covers doc/ai/projects/accounts-import-test-coverage.md's Phase 5: Import::hookEditAccount(),
@@ -32,8 +34,13 @@ use EGroupware\Api\Accounts\Tests\Fixtures\FakeLdapAccountsBackend;
  * implemented for real here, incl. save()'s "LDAP/AD assigns a new uidNumber/UUID/DN on create"
  * simulation - exactly the shape hookEditAccount()'s 'addaccount' case exercises.
  *
- * Only 'addaccount'/'editaccount'/'deleteaccount' are covered - 'editaccountcontact' (contact-data
- * write-back, going through Api\Contacts::backendSave() instead) is left for a future pass.
+ * 'addaccount'/'editaccount'/'deleteaccount'/'editaccountcontact' are covered. NOT covered:
+ * 'editaccountcontact''s GUID-validation-failure recovery branch (the nested
+ * `self::hookEditAccount([...'location'=>'addaccount'...])` / `self::hookEditAccount([...])` calls
+ * in its catch block) - those use `self::`, not `static::`, which is a *non-forwarding* call in PHP:
+ * it resets late static binding back to the literal `Import` class for that nested invocation, so
+ * `TestableWritebackImport`'s factory overrides would NOT apply there and it would try to build a
+ * real, live-connecting Ldap/Ads object. Not worked around; this recovery branch remains untested.
  */
 class ImportWritebackTest extends ImportTestCase
 {
@@ -308,6 +315,78 @@ class ImportWritebackTest extends ImportTestCase
 		]);
 
 		$this->assertFalse($backend->name2id($account_lid), 'The account should have been removed from the (fake) source');
+	}
+
+	/**
+	 * Fixture helper: build the Api\Contacts frontend object hookEditAccount() expects back from
+	 * contactsFactory() ($contacts->backendSave()), wrapping the given fake so_accounts backend -
+	 * without running Api\Contacts::__construct() (which would build a REAL, live-connecting
+	 * Contacts\Ldap so_accounts object - see FakeContactsSoAccounts's docblock). contact_repository
+	 * defaults to 'sql' (its own class-declared default, still applied by
+	 * newInstanceWithoutConstructor() even though __construct() never runs) - only
+	 * account_repository needs setting explicitly, to make Contacts\Storage::save()'s "contact_repository
+	 * != account_repository" routing condition pick the so_accounts branch.
+	 */
+	private function fakeContactsFrontend(FakeContactsSoAccounts $soAccounts, string $accountRepository = 'ldap') : Api\Contacts
+	{
+		$frontend = (new \ReflectionClass(Api\Contacts::class))->newInstanceWithoutConstructor();
+		$frontend->account_repository = $accountRepository;
+		$frontend->so_accounts = $soAccounts;
+		return $frontend;
+	}
+
+	/**
+	 * Locally-edited contact data (n_given/n_family/etc.) for an account already synced to the
+	 * source must be pushed to the source, keyed by the source's own uid (NOT the SQL contact id -
+	 * "id is the uid for LDAP or ADS!", per hookEditAccount()'s own comment).
+	 */
+	public function testEditAccountContactPushesContactDataToSource() : void
+	{
+		$so_accounts = new FakeContactsSoAccounts();
+		TestableWritebackImport::$contactsOverride = $this->fakeContactsFrontend($so_accounts);
+
+		$this->setRealImportConfig([
+			'account_import_source' => 'ldap',
+			'account_import_update_source' => true,
+		]);
+
+		$uid = 'uid=import_test_wb_contact,ou=people,dc=example,dc=org';
+		TestableWritebackImport::hookEditAccount([
+			'location' => 'editaccountcontact',
+			'uid' => $uid,
+			'account_id' => 123456,    // just needs to be non-empty for the top-level guard
+			'n_given' => 'Changed',
+			'n_family' => 'Contact',
+		]);
+
+		$this->assertArrayHasKey($uid, $so_accounts->saved, 'The contact data should have been pushed to the (fake) source, keyed by its uid');
+		$this->assertSame('Changed', $so_accounts->saved[$uid]['n_given']);
+		$this->assertSame('Contact', $so_accounts->saved[$uid]['n_family']);
+	}
+
+	/**
+	 * A backend save() failure must surface as a thrown Exception, not be silently swallowed.
+	 */
+	public function testEditAccountContactThrowsOnBackendError() : void
+	{
+		$so_accounts = new FakeContactsSoAccounts();
+		$so_accounts->nextSaveResult = 'simulated backend failure';
+		TestableWritebackImport::$contactsOverride = $this->fakeContactsFrontend($so_accounts);
+
+		$this->setRealImportConfig([
+			'account_import_source' => 'ldap',
+			'account_import_update_source' => true,
+		]);
+
+		$this->expectException(\Exception::class);
+		$this->expectExceptionMessage('simulated backend failure');
+
+		TestableWritebackImport::hookEditAccount([
+			'location' => 'editaccountcontact',
+			'uid' => 'uid=import_test_wb_contact_err,ou=people,dc=example,dc=org',
+			'account_id' => 123456,
+			'n_given' => 'Changed',
+		]);
 	}
 }
 

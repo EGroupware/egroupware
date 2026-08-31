@@ -165,18 +165,22 @@ similar scope.
   table - Ralf's call: verify candidate-detection, not execution), and `run()`'s `$save_state=false`
   testability parameter (non-test `run()` calls otherwise persist `account_import_lastrun` to real
   config on every call, even under `dry_run`, and drifted this shared box's real value before the
-  parameter existed). ALL 5 PHASES DONE and green in `api/tests/Accounts/` (37 tests covering config
+  parameter existed). ALL 5 PHASES DONE and green in `api/tests/Accounts/` (39 tests covering config
   validation, users+groups create/update/rerun incl. primary-group remap and the Ads `getMembers()`
   path, local-groups membership preservation, dry-run deletion-candidate detection incl. the
   `anonymous` carve-out, incremental sync, the `dn_regexp` sharp edge, `installAsyncJob()`'s
-  frequency->cron-shape mapping, alias sync incl. LDIF export, and the `account_import_update_source`
-  write-back path via `hookEditAccount()` - the last one via a plain `Import` subclass overriding its
-  2 factory methods, no reflection needed since `hookEditAccount()` is a static method; `Api\Config`
-  reads its own separate static cache there, needing its own reflection-based override, distinct from
-  `run()`'s `$GLOBALS['egw_info']['server']` path). Found+fixed **four real production bugs** along the
-  way (see the doc's "Bugs found" section) plus confirmed two initially-suspicious behaviors as
-  intentional by design (`dn_regexp` delete-candidate interaction; `firstRunToday()` never reading
-  `account_import_time`). `editaccountcontact` (part of write-back) not covered.
+  frequency->cron-shape mapping, alias sync incl. LDIF export, and the full
+  `account_import_update_source` write-back path via `hookEditAccount()` incl. `editaccountcontact` -
+  the write-back tests use a plain `Import` subclass overriding its 2 factory methods (no reflection
+  needed for `Import` itself, since `hookEditAccount()` is a static method), plus 2 *more*
+  reflection-based seams found along the way: `Api\Config` reads its own separate private static
+  cache (distinct from `run()`'s `$GLOBALS['egw_info']['server']` path), and `Api\Contacts`'s
+  constructor needed the same `newInstanceWithoutConstructor()` bypass as `Api\Accounts` did. Only
+  `editaccountcontact`'s GUID-recovery sub-branch stays untested - a structural limitation (it
+  recurses via `self::`, not `static::`, which resets late static binding), not a scope choice.
+  Found+fixed **four real production bugs** along the way (see the doc's "Bugs found" section) plus
+  confirmed two initially-suspicious behaviors as intentional by design (`dn_regexp` delete-candidate
+  interaction; `firstRunToday()` never reading `account_import_time`).
 
 ## Security and data handling
 

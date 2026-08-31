@@ -1,6 +1,6 @@
 # Api\Accounts\Import test coverage (LDAP/ADS account sync)
 
-## Status: ALL 5 PHASES DONE and green (2026-08-31), 37 tests total in `api/tests/Accounts/`, stable
+## Status: ALL 5 PHASES DONE and green (2026-08-31), 39 tests total in `api/tests/Accounts/`, stable
 across reruns. Phase 1: harness (`ImportTestCase.php` + `Fixtures/FakeLdapAccountsBackend.php` +
 `Fixtures/FakeContactsSource.php`) + `ImportInitialUsersTest.php` (5 tests: 3 config-validation error
 paths + create + no-op-rerun). Phase 2: `Fixtures/FakeAdsAccountsBackend.php` + `ImportGroupsTest.php`
@@ -16,9 +16,11 @@ pair) + `ImportDnRegexpTest.php` (1 test, pins down a behavior Ralf later confir
 table with careful skip-if-real-job-exists + cancel-in-finally safety). Phase 4: `ImportAliasesTest.php`
 (5 tests: add/remove diffing against a real `Api\Mail\Smtp\Sql` backend, dry_run log-only, LDIF export
 for `ldap`+`ads` sources - `univention`'s LDIF variant not covered, same attribute-switch pattern as the
-other two, lower priority). Phase 5: `ImportWritebackTest.php` (5 tests: the
+other two, lower priority). Phase 5: `ImportWritebackTest.php` (7 tests: the
 `account_import_update_source` push-to-source path via `hookEditAccount()` - guard/no-op cases,
-`addaccount`, `editaccount`, `deleteaccount`; `editaccountcontact` not covered, see "Phase 5" below).
+`addaccount`, `editaccount`, `deleteaccount`, `editaccountcontact` (success + backend-error);
+`editaccountcontact`'s GUID-recovery sub-branch not covered, structurally untestable via this
+harness - see "Phase 5" below for why).
 All against the real test DB with fixture-backed LDAP/ADS/contacts sources, no live LDAP/ADS server.
 Found+fixed **four real production bugs** along the way, plus a `$save_state` testability parameter
 added mid-Phase-3 - see "Bugs found" for detail.
@@ -122,11 +124,33 @@ assumption, given `Import::run()`'s own pull-sync side has a comment explicitly 
 mismatch right after a fresh `addaccount`) and silently exercised the wrong branch ("treat as new") instead
 of the intended "update existing" one.
 
-Not covered: `editaccountcontact` (contact-data write-back, going through `Api\Contacts::backendSave()`
-instead of the accounts backend) - left for a future pass; also note its own exception-recovery branch
-recurses via `self::hookEditAccount(...)` (not `static::`), which would silently reset late static binding
-back to the real `Import` class mid-call if ever exercised through a subclass like this one - a real trap
-for testing that specific branch, not yet worked around.
+### `editaccountcontact` (added after Phase 5's initial pass)
+
+Goes through `Api\Contacts::backendSave()` (= `Contacts\Storage::save()`) instead of the accounts backend,
+which routes to `$this->so_accounts->save()` when `contact_repository != account_repository` and the
+contact's `id` looks like a non-numeric source-side uid - the normal case for a `sql`-contacts /
+`ldap`-accounts install. `Contacts\Storage::__construct()` would normally build `$this->so_accounts` as a
+real, live-connecting `Contacts\Ldap` (same problem class as `Accounts\Ldap` - see "Why not mock the LDAP
+protocol" above), so `ImportWritebackTest` builds the `Api\Contacts` frontend via
+`ReflectionClass::newInstanceWithoutConstructor()` too (a **second**, contacts-specific reflection
+bypass, distinct from the `Api\Accounts` one used for `addaccount`/`editaccount`/`deleteaccount`),
+setting only `account_repository` and `so_accounts` (`contact_repository` already defaults to `'sql'` via
+the class's own declared property default, which - like `Api\Accounts`'s `backend` property earlier - still
+applies even without the constructor running). `so_accounts` itself is `Fixtures/FakeContactsSoAccounts.php`
+- a minimal `Api\Storage\Base`-shaped fake (public `$data`, `save()` reading it and returning
+falsy-on-success), since `Contacts\Storage::save()` calls `$this->so_accounts->save()` with no arguments,
+Storage-base-class style, not by passing the contact array as a parameter. 2 tests: successful push (data
+lands in the fake, keyed by its uid - "id is the uid for LDAP or ADS!", per `hookEditAccount()`'s own
+comment) and a backend-error case (asserts the resulting `Exception` and its message).
+
+**Deliberately NOT covered:** the GUID-validation-failure recovery sub-branch inside `editaccountcontact`'s
+`catch (Api\Exception\AssertionFailed $e)` block - it recurses via `self::hookEditAccount(...)` (not
+`static::`), and `self::` is a **non-forwarding** call in PHP: it resets late static binding back to the
+literal `Import` class for that nested invocation, so `TestableWritebackImport`'s factory overrides would
+NOT apply there - it would try to build a real, live-connecting `Ldap`/`Ads` object. This isn't a scope
+choice, it's a structural limitation of the subclass-override testing approach for this one specific
+branch; would need a different technique (e.g. changing those 2 `self::` calls to `static::` too, mirroring
+the earlier `accountsFactory`/`contactsFactory` tweak) to become testable.
 
 ## Bugs found while building the harness
 
@@ -482,6 +506,8 @@ Group by what's under test:
   `accountsFactory()`/`contactsFactory()`, no `Import` instance/harness needed since
   `hookEditAccount()` is a plain static method) - guard/no-op cases (`account_import_update_source`
   off; the `caller_method` self-loop guard), `addaccount` (incl. the real uuid/dn write-back into
-  SQL), `editaccount` (update of an already-synced entry), `deleteaccount`. See "Phase 5: write-back
-  testability" above for the `Api\Config` reflection gotcha and the same-id gotcha found along the
-  way. Not covered: `editaccountcontact`.
+  SQL), `editaccount` (update of an already-synced entry), `deleteaccount`, and `editaccountcontact`
+  (success + backend-error, via a second fixture - `Fixtures/FakeContactsSoAccounts.php`). See
+  "Phase 5: write-back testability" above for the `Api\Config` reflection gotcha, the same-id
+  gotcha, and why `editaccountcontact`'s GUID-recovery sub-branch specifically stays untested (a
+  structural `self::`-vs-`static::` limitation, not a scope choice).
