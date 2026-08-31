@@ -1025,6 +1025,9 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					else if(this.event_wrapper.has(columns[c][i].div).length == 0)
 					{
 						columns[c][i].div.appendTo(this.event_wrapper);
+					} else {
+						// Something's gone wrong, redraw the grid
+						this.getParent()._drawGrid();
 					}
 					columns[c][i].div.css('top', '');
 					columns[c][i].div.css('height', '');
@@ -1055,6 +1058,10 @@ export class et2_calendar_daycol extends et2_valueWidget implements et2_IDetache
 					{
 						columns[c][i].div.appendTo(this.event_wrapper);
 						this.getParent().resizeTimes();
+					}
+					else if(this.event_wrapper.has(columns[c][i].div).length == 0)
+					{
+						columns[c][i].div.appendTo(this.event_wrapper);
 					}
 					top = this._time_to_position(columns[c][i].options.value.start_m);
 					height = this._time_to_position(columns[c][i].options.value.end_m)-top;
