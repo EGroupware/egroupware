@@ -494,6 +494,19 @@ window.app = {classes: {}};
 				var params = JSON.parse(egw_script.getAttribute('data-message')) || [''];
 				egw(window).message.apply(egw(window), params);
 			}
+			// call a method on a top-window app object once it's ready, eg. set via
+			// Framework::set_extra('app', 'call', ['app' => 'admin', 'method' => '...', 'args' => [...]])
+			// - targets window.top, as this page (like this one's own bootstrap) may be loaded
+			// inside an iframe that never instantiates its own app objects
+			if (egw_script.getAttribute('data-app-call'))
+			{
+				var app_call = JSON.parse(egw_script.getAttribute('data-app-call'));
+				var call_target = window.top.app && window.top.app[app_call.app];
+				if (call_target && typeof call_target[app_call.method] === 'function')
+				{
+					call_target[app_call.method].apply(call_target, app_call.args || []);
+				}
+			}
 			// hide location bar for mobile browsers
 			if (egw_script.getAttribute('data-mobile'))
 			{

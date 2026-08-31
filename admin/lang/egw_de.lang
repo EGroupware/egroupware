@@ -745,6 +745,8 @@ profile is active	admin	de	Profil ist aktiv
 profile list	admin	de	Profilliste
 profile name	admin	de	Profilname
 protocol (encryption)	admin	de	Protokoll (Verschlüsselung)
+push server is not working	admin	de	Push-Server funktioniert NICHT
+push server is working	admin	de	Push-Server funktioniert
 qmaildotmode	admin	de	qmaildotmode
 quota settings	admin	de	Quota-Einstellungen
 quota size in mbyte	admin	de	Quota-Größe in MByte

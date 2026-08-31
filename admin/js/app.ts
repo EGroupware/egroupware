@@ -2068,19 +2068,74 @@ export class AdminApp extends EgwApp
 	}
 
 	/**
-	 * Show a delayed push-test message send via push from the server
-	 *
-	 * Message needs to be delayed, as the push is quicker than the error-message send in the request!
-	 *
-	 * @param message
-	 * @param type
-	 * @param delay
+	 * Token of the currently-running push round-trip test, or null if none is running - set by
+	 * pushTestStart(), consumed by pushTestMessage(). Correlating on a token (rather than
+	 * assuming the synchronous response or the async push reliably finishes first) is required
+	 * because that ordering is not deterministic - it can go either way: on a slow/production
+	 * setup the push can lag behind, but on a fast local one the push can arrive via the
+	 * WebSocket before this page's own JS has even finished loading enough to call
+	 * pushTestStart() (found live testing this feature - the push landed ~150ms after the
+	 * request, well before the page's own module bootstrap had run). pushTestPending buffers
+	 * that early-arrival case so pushTestStart() can still resolve it as a success.
 	 */
-	pushTestMessage(message : string, type : "help" | "info" | "error" | "warning" | "success" | undefined, delay : number)
+	private pushTestToken : string = null;
+	private pushTestTimer : number = null;
+	private pushTestPending : { token : string, message : string } = null;
+
+	/**
+	 * Start a push round-trip test (swoolepush/test.php): waits up to `timeout` ms for the
+	 * matching-token push (pushTestMessage()) to arrive, showing the failure message only if it
+	 * doesn't - no message is shown before that, only ever one of the two final outcomes.
+	 * Resolves immediately if that push already arrived and is sitting in pushTestPending.
+	 *
+	 * @param token random token identifying this test run, echoed back by the matching push
+	 * @param timeout ms to wait for the matching push before declaring failure
+	 * @param failure_message
+	 */
+	pushTestStart(token : string, timeout : number, failure_message : string)
 	{
-		window.setTimeout(() => {
-			egw.message(message, type || 'info');
-		}, delay || 200);
+		if (this.pushTestPending && this.pushTestPending.token === token)
+		{
+			egw.message(this.pushTestPending.message, 'success');
+			this.pushTestPending = null;
+			return;
+		}
+		this.pushTestPending = null;
+		this.pushTestToken = token;
+
+		window.clearTimeout(this.pushTestTimer);
+		this.pushTestTimer = window.setTimeout(() =>
+		{
+			if (this.pushTestToken === token)
+			{
+				this.pushTestToken = null;
+				egw.message(failure_message, 'error');
+			}
+		}, timeout);
+	}
+
+	/**
+	 * Push arrived for a push-test (swoolepush/test.php). If pushTestStart() for this exact
+	 * token already ran, shows success right away; if it hasn't run yet (the push can arrive
+	 * before this page's own JS bootstrap has, see pushTestToken's docs), buffers it in
+	 * pushTestPending for pushTestStart() to pick up. A token matching neither is a stale push
+	 * left over from an earlier, already-resolved run and is ignored.
+	 *
+	 * @param token
+	 * @param message
+	 */
+	pushTestMessage(token : string, message : string)
+	{
+		if (token === this.pushTestToken)
+		{
+			window.clearTimeout(this.pushTestTimer);
+			this.pushTestToken = null;
+			egw.message(message, 'success');
+		}
+		else if (!this.pushTestToken)
+		{
+			this.pushTestPending = { token, message };
+		}
 	}
 
 	/**
