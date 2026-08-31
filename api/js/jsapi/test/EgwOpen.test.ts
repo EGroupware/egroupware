@@ -152,6 +152,34 @@ describe('egw_open.js (open)', () =>
 			assert.equal(url, '/index.php');
 			assert.equal(data.path, 'https://example.test/some/file.pdf');
 		});
+
+		/**
+		 * Regression test (found live 2026-08-31, mail-compose-jmap-migration.md): a caller can
+		 * already have built the correct, specific URL for its own context (eg. mail's own
+		 * AttachmentJmap::createAttachmentBlock() resolving a proper mail_ui.displayMessage popup
+		 * for a message/rfc822 attachment) - the OLD "already wrapped?" check only recognized a
+		 * link matching THIS mime type's own registry entry, so a different, unrelated registry
+		 * entry for the SAME mime type (eg. mail_hooks.inc.php's own message/rfc822 entry, meant
+		 * for importing a VFS-stored .eml file, not viewing a mail attachment) silently overwrote
+		 * an already-correct link for a completely different menuaction.
+		 */
+		it('leaves an already-resolved menuaction URL alone, even when the mime registry has an unrelated entry for the same type', () =>
+		{
+			const instance = env.egw();
+			sinon.stub(instance, 'link_handler');
+			env.stubs.get_mime_info.returns({
+				menuaction: 'mail.mail_ui.importMessageFromVFS2DraftAndDisplay',
+				mime_id: 'formData[file]', mime_data: 'formData[data]',
+			});
+
+			instance.open_link(
+				'https://example.test/index.php?menuaction=mail.mail_ui.displayMessage&mode=display&id=mail%3A%3A1%3A%3AINBOX%3A%3A42',
+				undefined, undefined, undefined, false, 'message/rfc822');
+
+			assert.isFalse(env.stubs.link.called, 'egw.link() must not be called - nothing to rebuild');
+			const url = (<sinon.SinonStub>instance.link_handler).firstCall.args[0];
+			assert.equal(url, 'https://example.test/index.php?menuaction=mail.mail_ui.displayMessage&mode=display&id=mail%3A%3A1%3A%3AINBOX%3A%3A42');
+		});
 	});
 
 	describe('mailto: handling (via open_link)', () =>

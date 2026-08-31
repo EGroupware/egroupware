@@ -453,8 +453,21 @@ class Open implements OpenModule
 		var _decoded_link : string;
 		try { _decoded_link = decodeURIComponent(_link); } catch (e) { _decoded_link = _link; }
 		if (mime_info && (mime_info.mime_url || mime_info.mime_data) && !(
-			// Don't change if already set
-			_decoded_link.includes(mime_info.menuaction) && (_decoded_link.includes(mime_info.mime_url) || _decoded_link.includes(mime_info.mime_data))
+			// Don't change if already set - either matching THIS mime_info's own target
+			// specifically (original check), or ANY already-resolved menuaction URL at all
+			// (broadened 2026-08-31, found live: a caller can already have built the CORRECT,
+			// specific URL for its own context - eg. mail's own AttachmentJmap::
+			// createAttachmentBlock() resolving a proper mail_ui.displayMessage popup for a
+			// message/rfc822 attachment - only to have it silently overwritten here by a
+			// DIFFERENT, unrelated mime-type registry entry for the same type registered by some
+			// other app for a different purpose (eg. mail_hooks.inc.php's own message/rfc822
+			// entry, meant for importing a VFS-stored .eml file, not viewing a mail attachment) -
+			// the two menuactions never textually matched, so the original narrower check missed
+			// it. A link that already specifies SOME menuaction is, by definition, already
+			// resolved by its caller; there's nothing left for the generic type-based registry
+			// lookup to usefully "fix" about it.
+			_decoded_link.includes('menuaction=') ||
+			(_decoded_link.includes(mime_info.menuaction) && (_decoded_link.includes(mime_info.mime_url) || _decoded_link.includes(mime_info.mime_data)))
 		))
 		{
 			var data : any = {};
