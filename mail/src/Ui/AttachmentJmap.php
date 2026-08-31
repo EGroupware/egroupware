@@ -530,6 +530,40 @@ class AttachmentJmap
 	}
 
 	/**
+	 * Byte-uploading counterpart of fetchBlobBytes() above, same backend-uniform dispatch by
+	 * account type - groundwork for a planned S/MIME sign/encrypt-on-send endpoint (not built yet):
+	 * turning a server-side-built signed/encrypted MIME entity into a real, independently-
+	 * referenceable blobId the client could swap into Email/set's bodyStructure, same as any other
+	 * attachment blob.
+	 *
+	 * @param string $acc_id
+	 * @param string $bytes
+	 * @param string $type mime-type
+	 * @return ?string new blobId, or null on any failure
+	 */
+	public static function uploadBlobBytes(string $acc_id, string $bytes, string $type='application/octet-stream') : ?string
+	{
+		try
+		{
+			$icServer = JmapImap::imapServer($acc_id);
+			if (!$icServer)
+			{
+				return null;
+			}
+			if ($icServer instanceof Mail\Imap\Jmap)
+			{
+				return $icServer->jmapClient()->uploadBlob($bytes, $type);
+			}
+			return JmapImap::uploadBytes($bytes, $type)['blobId'];
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+			return null;
+		}
+	}
+
+	/**
 	 * Resolve and fetch a message's WHOLE raw body via fetchBlobBytes() - Stalwart needs one
 	 * Email/get(['blobId']) call first (opaque, server-assigned blobId); the local shim's blobId is
 	 * self-describing and directly constructible (see JmapImap::download()).

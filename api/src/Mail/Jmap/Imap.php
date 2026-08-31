@@ -2701,15 +2701,29 @@ class Imap extends Jmap\Base
 	{
 		$type = $_SERVER['CONTENT_TYPE'] ?? 'application/octet-stream';
 		$bytes = file_get_contents('php://input');
+
+		echo json_encode(array_merge(['accountId' => $accountId], self::uploadBytes($bytes, $type)),
+			JSON_UNESCAPED_SLASHES);
+	}
+
+	/**
+	 * Pure half of upload() above - write raw bytes to temp storage, return the "upload:<token>"
+	 * blobId. Split out so server-side callers with bytes already in hand (no HTTP request to read
+	 * from) can reuse the exact same temp-storage scheme without a round-trip through this class's
+	 * own HTTP endpoint - see AttachmentJmap::uploadBlobBytes()'s backend-uniform dispatch
+	 * (groundwork for a planned S/MIME sign/encrypt-on-send endpoint, not built yet).
+	 *
+	 * @param string $bytes
+	 * @param string $type mime-type, purely informational (stored temp files have no metadata of
+	 *  their own - see readUploadedBlob(), which never needs the type back)
+	 * @return array{blobId: string, type: string, size: int}
+	 */
+	public static function uploadBytes(string $bytes, string $type='application/octet-stream') : array
+	{
 		$token = bin2hex(random_bytes(16));
 		file_put_contents(self::uploadPath($token), $bytes);
 
-		echo json_encode([
-			'accountId' => $accountId,
-			'blobId' => 'upload:'.$token,
-			'type' => $type,
-			'size' => strlen($bytes),
-		], JSON_UNESCAPED_SLASHES);
+		return ['blobId' => 'upload:'.$token, 'type' => $type, 'size' => strlen($bytes)];
 	}
 
 	/**
