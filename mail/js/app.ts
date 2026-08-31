@@ -1429,20 +1429,23 @@ export class MailApp extends EgwApp
 		// currently-selected/previewed message for unrelated reasons even on a genuine "new blank
 		// message" trigger, which would otherwise silently defeat this toggle whenever any message
 		// happened to be selected (found live 2026-08-27).
-		// Step 4, first slice (2026-08-27): a genuine single reply ("reply", never "reply_all" -
-		// that one still needs the classic per-recipient own-address filtering logic, not built
-		// yet) is ALSO eligible - compose.ts's bootstrapReply() only OVERWRITES the classic
-		// server-rendered recipient/subject/body once its own JMAP fetch succeeds, so there's no
-		// "server skipped computing it" risk unlike the blank-new-compose case.
+		// Step 4, first slice (2026-08-27): a genuine single reply ("reply") is ALSO eligible -
+		// compose.ts's bootstrapReply() only OVERWRITES the classic server-rendered recipient/
+		// subject/body once its own JMAP fetch succeeds, so there's no "server skipped computing
+		// it" risk unlike the blank-new-compose case.
 		// 'reply_attachments' added 2026-08-31 (attachment carry-forward slice) - same reasoning,
 		// bootstrapReply() also carries the original message's own attachments client-side now.
+		// 'reply_all' added 2026-08-31 too, once bootstrapReply() gained the classic per-recipient
+		// own-address filtering logic it originally needed (getIdentities()'s email list across
+		// every identity, not just the one selected).
 		// Single-message INLINE forward added 2026-08-31 too - checked via settings.from/mode
 		// (already normalized by the switch above) rather than _action.id directly, since forward/
 		// forwardinline/forwardasattach all reach this point only for the single-message inline
 		// case (a batch forward or forwardasattach returns early via egw.openWithinWindow(), never
 		// reaching here at all - see the switch above).
 		const jmapEligibleForward = settings.from === 'forward' && settings.mode === 'forwardinline';
-		if (this.jmapComposeEnabled && (noSourceGiven || _action.id === 'reply' || _action.id === 'reply_attachments' || jmapEligibleForward))
+		if (this.jmapComposeEnabled && (noSourceGiven || _action.id === 'reply' || _action.id === 'reply_attachments' ||
+			_action.id === 'reply_all' || jmapEligibleForward))
 		{
 			(settings as typeof settings & {jmap? : string}).jmap = '1';
 		}

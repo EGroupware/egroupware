@@ -401,8 +401,11 @@ class mail_compose
 		// never adds jmap=1 for a batch/forwardasattach forward, which takes a completely
 		// different egw.openWithinWindow() path - see app.ts's own gating) - same skip, same
 		// mechanism as reply_attachments, just without setting to/cc/threading-headers.
+		// 'reply_all' added 2026-08-31 too - same skip; MailCompose.bootstrapReply() computes
+		// to/cc client-side via the account's own identities (all of them, not just the selected
+		// one), matching getReplyData()'s own mode='all' 3-loop algorithm.
 		$jmapReplySkip = ($_GET['jmap'] ?? null) === '1' &&
-			in_array($_GET['from'] ?? null, ['reply', 'reply_attachments', 'forward'], true) && $replyID;
+			in_array($_GET['from'] ?? null, ['reply', 'reply_attachments', 'reply_all', 'forward'], true) && $replyID;
 		if(!empty($_GET['from']) && $replyID && !$jmapReplySkip)
 		{
 			$_content = array_merge((array)$_content, $this->getComposeFrom(

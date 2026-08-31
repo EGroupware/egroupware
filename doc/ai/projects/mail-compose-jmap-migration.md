@@ -1,13 +1,49 @@
 # Mail: move compose to client-side JMAP-first, S/MIME + TNEF as server-side services
 
 ## Status: Steps 0, 1, 3, and (out of order) the draft-save half of Step 5 done + live-verified
-against real Stalwart (2026-08-27); Step 4's reply, reply-with-attachments (incl. attachment
-carry-forward), single-message inline forward, and forward-as-attachment (single or multiple
-messages) are ALL done + live-verified (2026-08-31), all still uncommitted (not pushed - shared
-working copy). Not yet built: inline-image resolution for the quoted body, reply-all, and
-"forward as attachment merged into an already-open compose popup" (the `setCompose()` case - see
-its own write-up below for why that's architecturally separate). Companion to
+against real Stalwart (2026-08-27); Step 4's reply, reply-all, reply-with-attachments (incl.
+attachment carry-forward), single-message inline forward, and forward-as-attachment (single or
+multiple messages) are ALL done + live-verified (2026-08-31). Not yet built: inline-image
+resolution for the quoted body, and "forward as attachment merged into an already-open compose
+popup" (the `setCompose()` case - deliberately deferred, see its own write-up below). Companion to
 [[mail-jmap-imap-inversion]].
+
+**Reply-all built + live-verified 2026-08-31 (ralf: "tested reply-all with a few recipients, works
+fine")**: `_action.id === 'reply_all'` is now JMAP-mode
+eligible too (`app.ts` gating, `$jmapReplySkip` extended). Reuses `bootstrapReply()`'s whole
+fetch/quote/threading-header/identity-matching machinery unchanged - only the to/cc computation
+differs, matching classic `getReplyData()`'s own mode='all' 3-loop algorithm exactly: the
+reply-to-or-from target is ALWAYS included in `to` (not just replyTo-if-present like plain reply -
+if Reply-To differs from From, BOTH end up in `to`, same as classic), original `to` (minus the
+account's own addresses) also goes into `to`, original `cc` (same exclusions, plus anything already
+in `to`) goes into `cc`. `selectIdentityForRecipients()` (already fetching every identity for
+identity-matching) now also returns that list so `bootstrapReply()` can build the "own addresses"
+exclusion set from it (every identity's email, not just the currently-selected one) - no extra JMAP
+round-trip needed. No attachment carry-forward for reply-all, matching classic (only
+`reply_attachments` carries attachments, never combined with 'all' in the classic code either -
+confirmed: `getComposeFrom()`'s `reply_attachments` case always calls `getReplyData('attachments',
+...)`, never `'all'`).
+
+**Merge-into-already-open-popup, deliberately deferred (researched 2026-08-31, not built)**: a
+multi-message or forward-as-attachment action, when a compose popup is ALREADY open,
+`egw.openWithinWindow()` shows a picker and, if an existing popup is chosen, calls a LIVE JS method
+directly into that OTHER already-loaded window (`popups[i].app['mail']['setCompose'](...)`) instead
+of a URL/page load - server-side this decodes `appendix_data` (`mail_compose.inc.php:356-377`) into
+the SAME classic uid/folder-addressed `.eml`-attachment mechanism (`_get_uids_as_attachments()`,
+`addMessageAttachment(..., 'MESSAGE/RFC822', ...)`) my JMAP blobId-based forward-as-attachment
+already replaces for the fresh-popup case. No existing precedent for one window reaching DOWN into
+an already-open popup's JMAP state (only the reverse - a compose popup reaching UP to
+`window.opener.app.mail.jmap`) - `MailCompose.isJmapMode` is `private readonly`, would need new
+public cross-window state exposed. Ralf: defer rather than build now. The picker's own "New" option
+still correctly takes the JMAP-aware fresh-popup path (`openUp()`) - only "merge into an existing
+one" stays classic-only.
+
+**Unrelated latent bug found, deliberately left as-is**: `egw.openWithinWindow()`'s own `openUp()`
+switches to a raw POST `<form>` submission when the built URL exceeds 2083 chars, bypassing
+`$_GET` entirely - `$jmapReplySkip` (reads `$_GET['jmap']`) would silently miss that case, falling
+back to the slower classic path (never breaks, just loses the speed-up) - could already affect the
+shipped multi-message forward-as-attachment given enough forwarded messages. Ralf: not worth fixing
+for this edge case.
 
 **Forward-as-attachment built + live-verified 2026-08-31**: one or more messages, each
 attached whole as `message/rfc822` rather than quoted inline - matches classic

@@ -707,26 +707,31 @@ export class MailCompose
 	 * attachments, just not setting To" - bootstrapReply()'s own `mode` param controls the
 	 * remaining differences (subject prefix, to/cc, threading headers). "forwardasattach" (added
 	 * 2026-08-31 too, one or more messages, dispatches to bootstrapForwardAsAttachment() instead -
-	 * no quoted body at all, just the whole message(s) attached as message/rfc822). Reply-all isn't
-	 * JMAP-mode eligible yet, and "merge this forward into an already-open compose window"
-	 * (egw.openWithinWindow()'s own multi-popup picker calling that OTHER window's live
-	 * setCompose(), not a URL load at all) is architecturally out of scope here - composeMessage()
-	 * still sets "&jmap=1" for that case (harmless: it only matters if openWithinWindow() actually
-	 * opens a fresh popup instead), but isJmapMode is fixed at that OTHER window's own original
-	 * load time and unrelated to this action, so it's a no-op there, same as before this slice.
+	 * no quoted body at all, just the whole message(s) attached as message/rfc822). "reply_all"
+	 * (added 2026-08-31 too) reuses the exact same fetch/quote/threading-header/identity-matching
+	 * machinery as plain reply - only the to/cc computation differs (bootstrapReply()'s own `mode`
+	 * param), matching classic getReplyData()'s own mode='all' 3-loop algorithm: reply-to-or-from
+	 * (both, if they differ) + original to (minus the account's own addresses) into `to`, original
+	 * cc (same exclusions, plus anything already in `to`) into `cc`. "Merge this forward into an
+	 * already-open compose window" (egw.openWithinWindow()'s own multi-popup picker calling that
+	 * OTHER window's live setCompose(), not a URL load at all) is architecturally out of scope here
+	 * - composeMessage() still sets "&jmap=1" for that case (harmless: it only matters if
+	 * openWithinWindow() actually opens a fresh popup instead), but isJmapMode is fixed at that
+	 * OTHER window's own original load time and unrelated to this action, so it's a no-op there,
+	 * same as before this slice.
 	 */
 	private async bootstrapCompose() : Promise<void>
 	{
 		if (!this.isJmapMode) return;
 		const params = new URLSearchParams(window.location.search);
-		const from = params.get('from') as 'reply' | 'reply_attachments' | 'forward' | null;
+		const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | null;
 		if (from === 'forward' && params.get('mode') === 'forwardasattach')
 		{
 			await this.bootstrapForwardAsAttachment((params.get('id') || '').split(',').filter(Boolean));
 		}
 		else
 		{
-			const sourceId = (from === 'reply' || from === 'reply_attachments' || from === 'forward') ? params.get('id') : null;
+			const sourceId = (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward') ? params.get('id') : null;
 			if (sourceId)
 			{
 				await this.bootstrapReply(sourceId, from);
@@ -783,7 +788,7 @@ export class MailCompose
 	 *  2026-08-31: "same thing as reply with attachments, just not setting To") - matching
 	 *  classic's own getForwardData() non-asmail branch, which populates attachments unconditionally.
 	 */
-	private async bootstrapReply(sourceId : string, mode : 'reply' | 'reply_attachments' | 'forward') : Promise<void>
+	private async bootstrapReply(sourceId : string, mode : 'reply' | 'reply_attachments' | 'reply_all' | 'forward') : Promise<void>
 	{
 		const context = await this.app.jmap.fetchForReply(sourceId);
 		if (!context)
@@ -798,7 +803,7 @@ export class MailCompose
 		this.isReplyCompose = true;
 		this.replyThreadingHeaders = isForward ? null : {inReplyTo: context.inReplyTo, references: context.references};
 
-		await this.selectIdentityForRecipients(context);
+		const identities = await this.selectIdentityForRecipients(context);
 
 		let subject : string;
 		if (isForward)
@@ -809,9 +814,41 @@ export class MailCompose
 		}
 		else
 		{
-			const to = (context.replyTo?.length ? context.replyTo : context.from)
-				.map((a) => a.name ? `${a.name} <${a.email}>` : a.email);
-			this.et2.getWidgetById('to')?.set_value(to);
+			const formatAddress = (a : {name? : string, email : string}) => a.name ? `${a.name} <${a.email}>` : a.email;
+			if (mode === 'reply_all')
+			{
+				// matches getReplyData()'s own 3-loop mode='all' logic exactly: the primary
+				// reply-to-or-from target is ALWAYS included (unlike plain reply, which only ever
+				// uses replyTo when present) - if Reply-To differs from From, both end up in `to`,
+				// same as classic. original to/cc are added minus anything already in `to`/`cc`
+				// and minus any of the account's OWN addresses (across every identity, not just
+				// the currently-selected one) - never reply to/cc yourself.
+				const ownEmails = new Set(identities.map((i) => String(i.email).toLowerCase()));
+				const seen = new Set<string>();
+				const to : {name? : string, email : string}[] = [];
+				const cc : {name? : string, email : string}[] = [];
+				const addUnique = (list : {name? : string, email : string}[], target : {name? : string, email : string}[]) =>
+				{
+					for (const a of list)
+					{
+						const key = a.email.toLowerCase();
+						if (ownEmails.has(key) || seen.has(key)) continue;
+						seen.add(key);
+						target.push(a);
+					}
+				};
+				if (context.replyTo?.length) addUnique(context.replyTo, to);
+				addUnique(context.from, to);
+				addUnique(context.to, to);
+				addUnique(context.cc, cc);
+				this.et2.getWidgetById('to')?.set_value(to.map(formatAddress));
+				if (cc.length) this.et2.getWidgetById('cc')?.set_value(cc.map(formatAddress));
+			}
+			else
+			{
+				const to = (context.replyTo?.length ? context.replyTo : context.from).map(formatAddress);
+				this.et2.getWidgetById('to')?.set_value(to);
+			}
 			// "Re: " is hardcoded, not translated, matching the classic getReplyData()'s own convention
 			subject = /^re:/i.test(context.subject.trim()) ? context.subject : 'Re: ' + context.subject;
 		}
@@ -998,7 +1035,11 @@ export class MailCompose
 	 * Silently does nothing if identities can't be fetched either - same
 	 * never-worth-blocking-compose-on philosophy as applySignatureForCurrentIdentity().
 	 */
-	private async selectIdentityForRecipients(context : JmapReplyContext) : Promise<void>
+	/**
+	 * Returns the fetched identities list (empty on failure) - also used by bootstrapReply()'s
+	 * 'reply_all' mode to filter the account's own addresses out of the computed to/cc.
+	 */
+	private async selectIdentityForRecipients(context : JmapReplyContext) : Promise<any[]>
 	{
 		let identities : any[];
 		try
@@ -1007,15 +1048,17 @@ export class MailCompose
 		}
 		catch (e)
 		{
-			return;
+			return [];
 		}
 		const recipientEmails = new Set([...context.to, ...context.cc].map((a) => a.email.toLowerCase()));
 		const matches = identities.filter((i) => recipientEmails.has(i.email.toLowerCase()));
-		if (!matches.length) return;
-
-		const [, currentIdentId] = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '').split(':', 2);
-		const preferred = matches.find((i) => i.id === currentIdentId) ?? matches[0];
-		this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferred.id}`);
+		if (matches.length)
+		{
+			const [, currentIdentId] = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '').split(':', 2);
+			const preferred = matches.find((i) => i.id === currentIdentId) ?? matches[0];
+			this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferred.id}`);
+		}
+		return identities;
 	}
 
 	/**
