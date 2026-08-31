@@ -1902,6 +1902,11 @@ class mail_ui
 			// Send mail ID so client JS can populate header/address/attachments and dispatch
 			// actions - everything else here is chrome, not message content.
 			'mail_id' => $rowID,
+			// non-empty only for a message/rfc822 SUB-part (eg. a bounce/NDM's own original
+			// message) - app.ts's display() uses this to fetch+render that nested message's own
+			// content client-side (JmapImap::parseBlobAsEmail()) instead of $rowID's own (the
+			// CONTAINING message).
+			'part' => $partID,
 			'displayToolbaractions' => json_encode($this->getDisplayToolbarActions()),
 			'image_proxy' => self::image_proxy(),
 			'emailTag' => $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname',
@@ -2379,6 +2384,22 @@ class mail_ui
 	function ajax_fetchMessageDetails($_rowid)
 	{
 		Api\Json\Response::get()->data($this->attachmentHandler()->fetchMessageDetails($_rowid));
+	}
+
+	/**
+	 * Parse a message/rfc822 attachment's own blob as a standalone message (doc/ai/projects/
+	 * mail-compose-jmap-migration.md's follow-up, 2026-08-31) - see JmapImap::parseBlobAsEmail()'s
+	 * own docblock for why this exists at all (JMAP has no "parse this blob as a real Email" verb).
+	 * Called client-side (mail/js/jmap.ts's fetchBodyFromMessagePart()) to view a nested message
+	 * (eg. a bounce/NDM's own original message) without needing a live IMAP connection at all.
+	 *
+	 * @param string $_accId numeric acc_id, as a string (JmapImap's own dispatch() convention)
+	 * @param string $_blobId
+	 * @return void
+	 */
+	function ajax_parseBlobAsEmail($_accId, $_blobId)
+	{
+		Api\Json\Response::get()->data(JmapImap::parseBlobAsEmail($_accId, $_blobId));
 	}
 
 	/**

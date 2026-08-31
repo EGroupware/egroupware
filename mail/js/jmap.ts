@@ -2395,6 +2395,72 @@ export class MailJmap
 	}
 
 	/**
+	 * View a message/rfc822 SUB-PART (eg. a bounce/NDM's own original message) as if it were its
+	 * own standalone message - doc/ai/projects/mail-compose-jmap-migration.md's follow-up
+	 * (2026-08-31, ralf: "go ahead with that server-side blob-parse approach"). JMAP has no "parse
+	 * this blob as a real Email" verb (Email/get only ever works on a real, listed email id) -
+	 * mail_ui::displayMessage()'s own classic body-loading path needs a real numeric IMAP UID,
+	 * which a raw IMAP EMAILID search can't always resolve reliably against Stalwart (the "20s
+	 * timeout, empty body" symptom found live getting here) - and unlike fetchBody() above (a
+	 * normal top-level message), there was no JMAP-native equivalent for this specific case at all.
+	 *
+	 * Two steps: (1) a NORMAL Email/get on the CONTAINING message (rowId) to find the sub-part's
+	 * own blobId by partID - already listed in its own `attachments` property, no new server work
+	 * needed for this part; (2) Api\Mail\Jmap\Imap::parseBlobAsEmail() (mail.mail_ui.
+	 * ajax_parseBlobAsEmail) parses that blob's raw bytes AS A STANDALONE MESSAGE server-side
+	 * (Horde_Mime_Part::parseMessage(), no live IMAP connection needed at all) and returns
+	 * JMAP-shaped Email properties, reused directly by assembleBodyHtml() - the exact same shape
+	 * fetchBody() already builds, so the caller (app.ts's loadMessageBody()) can't tell the
+	 * difference.
+	 */
+	async fetchBodyFromMessagePart(rowId : string, partID : string, htmlOptions? : string) : Promise<JmapBodyResult>
+	{
+		try
+		{
+			const ref = this.messageReference(rowId);
+			const token = await this.ensureToken(ref.profileID);
+			if (!token)
+			{
+				return {special: true};
+			}
+			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			if (token.isLocal)
+			{
+				args.mailboxId = ref.mailboxId;
+			}
+			const emails = token.isLocal ?
+				await this.emailGetViaCacheableGet(this.clients[ref.profileID], args) :
+				(await this.clients[ref.profileID].requestMany((t) => ({
+					emails: t.Email.get(args) as any,
+				})))[0].emails;
+			const email = (emails.list || [])[0];
+			const attachment = (email?.attachments || []).find((a : any) => String(a.partId) === String(partID));
+			if (!attachment?.blobId)
+			{
+				return {special: true};
+			}
+			const parsed : any = await this.egw.request('mail.mail_ui.ajax_parseBlobAsEmail', [token.accountId, attachment.blobId]);
+			if (!parsed)
+			{
+				return {special: true};
+			}
+			return {
+				special: false,
+				html: this.assembleBodyHtml(parsed, htmlOptions),
+				attachments: parsed.attachments || [],
+				profileID: ref.profileID,
+				accountId: token.accountId,
+				isLocal: token.isLocal,
+			};
+		}
+		catch (e)
+		{
+			console.error('MailJmap.fetchBodyFromMessagePart(): failed, falling back to the server-rendered body', e);
+			return {special: true};
+		}
+	}
+
+	/**
 	 * Fetch the original message's headers + raw body content for a client-side reply
 	 * (doc/ai/projects/mail-compose-jmap-migration.md's Step 4, first slice: single reply only,
 	 * no attachments/inline-images/threading-headers yet). Deliberately NOT fetchBody() - that

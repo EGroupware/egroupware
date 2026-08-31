@@ -1636,6 +1636,23 @@ export class MailApp extends EgwApp
 			{
 				this.renderPopupMessage(details, rowId);
 			}
+
+			// Body: same JMAP-native fast path the main preview pane already has
+			// (loadMessageBody(), falling back to the classic server-rendered iframe src for
+			// special-case messages or any fetch failure) - this standalone popup never had it at
+			// all before (2026-08-31 follow-up), relying purely on the .xet template's own
+			// server-rendered mailDisplayBodySrc iframe src, which needs a real IMAP UID and can
+			// hang/return empty against Stalwart for some messages (found live via a bounce/NDM's
+			// own nested original message, content.part - a message/rfc822 SUB-part with no real
+			// row-id of its own to fetch normally).
+			const bodyIframe = this.et2.getWidgetById('mailDisplayBodySrc');
+			if (rowId && bodyIframe)
+			{
+				this.loadMessageBody(bodyIframe, rowId, (doc) =>
+				{
+					this.resolveExternalImages(doc);
+				}, undefined, content.part || undefined);
+			}
 		}
 	}
 
@@ -2144,12 +2161,22 @@ export class MailApp extends EgwApp
 	 * @param signal aborted if a newer selection supersedes this fetch before it resolves; when
 	 *        given, the result is also dropped if rowId no longer matches currentlyFocussed
 	 */
-	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal): void
+	/**
+	 * @param partID non-empty only for a message/rfc822 SUB-part (eg. a bounce/NDM's own original
+	 *  message, mail_ui::displayMessage()'s own `part` GET param, threaded through as content.part)
+	 *  - routes through MailJmap.fetchBodyFromMessagePart() instead of fetchBody(), since a
+	 *  sub-part has no real, independently-addressable row-id of its own to fetch normally.
+	 */
+	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal,
+		partID?: string): void
 	{
 		//we now fire the request so increase inFlight request by one
 		this.inFlightRequests += 1;
 		const iframe = iframeWidget.getDOMNode() as HTMLIFrameElement;
-		this.jmap.fetchBody(rowId, undefined, signal).then((result) =>
+		const fetchPromise = partID ?
+			this.jmap.fetchBodyFromMessagePart(rowId, partID) :
+			this.jmap.fetchBody(rowId, undefined, signal);
+		fetchPromise.then((result) =>
 		{
 			//a request returned so we have one less in flight.
 			// Sanity checked to never have negative requests in flight
@@ -2168,7 +2195,10 @@ export class MailApp extends EgwApp
 					doc.documentElement.dataset.rowId = rowId;
 					onLoad(doc);
 				}, {once: true});
-				iframeWidget.set_src(egw.link('/index.php', {menuaction: 'mail.mail_ui.loadEmailBody', _messageID: rowId}));
+				iframeWidget.set_src(egw.link('/index.php', {
+					menuaction: 'mail.mail_ui.loadEmailBody', _messageID: rowId,
+					...(partID ? {_partID: partID} : {}),
+				}));
 				return;
 			}
 			// explicit cast, not relying on control-flow narrowing of the "special" discriminant -
