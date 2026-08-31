@@ -1861,8 +1861,6 @@ class mail_ui
 		$preventRedirect   = isset($_requesteddata['mode']) && in_array($_requesteddata['mode'], ['display', 'print']);
 
 		$hA = Mail::splitRowID($rowID);
-		$uid = $hA['msgUID'];
-		$mailbox = $hA['folder'];
 		$icServerID = $hA['profileID'];
 		$rememberServerID = $this->mail_bo->profileID;
 		if ($icServerID && $icServerID != $this->mail_bo->profileID)
@@ -1873,14 +1871,31 @@ class mail_ui
 		if (!empty($_requesteddata['tryastext'])) $htmlOptions  = "only_if_no_text";
 		if (!empty($_requesteddata['tryashtml'])) $htmlOptions  = "always_display";
 
-		if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
+		// $hA['is_jmap'] === true means "folder"/"msgUID" are ONLY resolvable via a real, live raw
+		// IMAP EMAILID search (Imap\Jmap::emailId2uid(), see RowIdParts' own docblock) - the exact
+		// "time-consuming fallback" this whole mail JMAP modernization project set out to avoid.
+		// Found live 2026-08-31 (forward-as-attachment's own message-view popup, mail-compose-
+		// jmap-migration.md): that search can come back empty against Stalwart even for a message
+		// that opens perfectly fine via a direct Email/get - and neither $uid nor $mailbox is
+		// actually used for anything beyond THIS classic Drafts/Templates redirect + error-message
+		// text, since $content['mail_id'] below is always the original, unresolved $rowID anyway
+		// (the client's own JMAP-native fetch re-derives everything from it). So for a JMAP-native
+		// row, skip this whole slow, unreliable block entirely and trust the client-side flow -
+		// the one known trade-off (ralf, 2026-08-31, explicitly accepted): a Draft/Template message
+		// opened this way shows in read-only "display" mode instead of redirecting to compose.
+		if (!$hA['is_jmap'])
 		{
-			$response = Api\Json\Response::get();
-			$response->call('app.mail.printForCompose', $rowID);
-		}
-		if (!$preventRedirect && ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox)))
-		{
-			Egw::redirect_link('/index.php',array('menuaction'=>'mail.mail_compose.compose','id'=>$rowID,'from'=>'composefromdraft'));
+			$uid = $hA['msgUID'];
+			$mailbox = $hA['folder'];
+			if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
+			{
+				$response = Api\Json\Response::get();
+				$response->call('app.mail.printForCompose', $rowID);
+			}
+			if (!$preventRedirect && ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox)))
+			{
+				Egw::redirect_link('/index.php',array('menuaction'=>'mail.mail_compose.compose','id'=>$rowID,'from'=>'composefromdraft'));
+			}
 		}
 
 		$content = [
@@ -1891,7 +1906,7 @@ class mail_ui
 			'image_proxy' => self::image_proxy(),
 			'emailTag' => $GLOBALS['egw_info']['user']['preferences']['mail']['emailTag'] ?? 'onlyname',
 		];
-		if (!$uid || !$mailbox)
+		if (!$hA['is_jmap'] && (!$uid || !$mailbox))
 		{
 			$content['msg'] = lang("ERROR: Message could not be displayed.").' '.
 				lang("In Mailbox: %1, with ID: %2, and PartID: %3",$mailbox,$uid,$partID);
