@@ -707,6 +707,27 @@ export class MailCompose
 	 */
 	private async displayJmapBlobAttachment(attgrid : any) : Promise<void>
 	{
+		// Forward-as-attachment (see JmapAttachment.sourceRowId's own docblock, 2026-08-31 follow-
+		// up) - the carried entry IS the original message itself, not something to download as a
+		// generic blob at all. mail_ui::displayMessage() (the same JMAP-native message-view popup
+		// used everywhere else - ralf: "we could probably use our mail view popup, it does the same
+		// thing and we fixed it to work client-side") needs a real row-id, not a bare blobId (ralf:
+		// "I believe it does not understand the blobIds given") - matches app.displayAttachment()'s
+		// own MESSAGE/RFC822 case exactly. Found live 2026-08-31: without this, the click
+		// unexpectedly ended up at mail.mail_ui.importMessageFromVFS2DraftAndDisplay (a classic
+		// VFS-import menuaction) instead - the actual triggering mechanism was never pinned down,
+		// but this bypasses it entirely by never reaching a generic blob-download/click-dispatch
+		// path for this case at all.
+		if (attgrid.jmapSourceRowId)
+		{
+			const url = egw.link('/index.php', {
+				menuaction: 'mail.mail_ui.displayMessage',
+				mode: 'display',
+				id: attgrid.jmapSourceRowId,
+			});
+			egw.openPopup(url, 870, egw_getWindowOuterHeight(), 'maildisplayMessage_' + attgrid.jmapSourceRowId);
+			return;
+		}
 		const url = await this.app.jmap.downloadBlobUrl(attgrid.jmapProfileID, attgrid.jmapBlobId, attgrid.name, attgrid.type);
 		egw.openPopup(url, 800, 600, 'maildisplayAttachment_' + attgrid.tmp_name);
 	}
@@ -1153,6 +1174,7 @@ export class MailCompose
 
 		const attachments = messages.map((m) => ({
 			blobId: m.blobId,
+			sourceRowId: m.sourceRowId,
 			name: (m.subject || this.egw.lang('no subject')) + '.eml',
 			type: 'message/rfc822',
 			size: m.size,
@@ -1188,6 +1210,10 @@ export class MailCompose
 			// differ from currentProfileID() later if the user switches identity, kept per-row
 			// so displayUploadedFile() always downloads from the right place.
 			jmapProfileID: profileID,
+			// forward-as-attachment only (see JmapAttachment.sourceRowId's own docblock) - lets
+			// displayJmapBlobAttachment() open the ORIGINAL message's own display popup directly
+			// instead of downloading the blob.
+			...(a.sourceRowId ? {jmapSourceRowId: a.sourceRowId} : {}),
 			name: a.name,
 			type: a.type,
 			size: a.size,

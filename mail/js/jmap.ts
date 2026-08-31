@@ -104,6 +104,14 @@ export interface JmapAttachment
 {
 	blobId? : string;
 	vfsPath? : string;
+	/**
+	 * Forward-as-attachment only (fetchForForwardAsAttachment()) - the ORIGINAL message's own
+	 * classic row-id (mail::profileID::folder::uid), never the blobId. Never sent to the server -
+	 * a purely client-side hint so compose.ts's carryForwardAttachments() can open that message's
+	 * own display popup directly on click, since mail_ui::displayMessage() has no concept of a
+	 * bare blobId at all.
+	 */
+	sourceRowId? : string;
 	name : string;
 	type : string;
 	size : number;
@@ -2611,7 +2619,8 @@ export class MailJmap
 	 * bodyStructure (same content-addressed cross-reference carryForwardAttachments() already
 	 * relies on) - no download+reupload round-trip needed.
 	 */
-	async fetchForForwardAsAttachment(rowId : string) : Promise<{subject : string, blobId : string, size : number, profileID : string} | null>
+	async fetchForForwardAsAttachment(rowId : string) :
+		Promise<{subject : string, blobId : string, size : number, profileID : string, sourceRowId : string} | null>
 	{
 		try
 		{
@@ -2634,7 +2643,12 @@ export class MailJmap
 			{
 				return null;
 			}
-			return {subject: email.subject || '', blobId: email.blobId, size: email.size || 0, profileID: ref.profileID};
+			// sourceRowId (the classic mail::profileID::folder::uid row-id, NOT the blobId) is kept
+			// alongside the blobId purely so compose.ts's carryForwardAttachments() can open THIS
+			// message's own display popup directly on click (mail_ui::displayMessage() needs a real
+			// row-id, same as app.displayAttachment()'s own MESSAGE/RFC822 case - it has no concept
+			// of a bare blobId at all) - see displayJmapBlobAttachment()'s own docblock.
+			return {subject: email.subject || '', blobId: email.blobId, size: email.size || 0, profileID: ref.profileID, sourceRowId: rowId};
 		}
 		catch (e)
 		{
