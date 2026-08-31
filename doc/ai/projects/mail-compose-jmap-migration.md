@@ -12,7 +12,10 @@ live-verified (2026-08-31, incl. against the IMAP-shim backend - see its own wri
 JMAP already, but sending still falls back to classic there entirely, since `EmailSubmission/set`
 was never built for it.
 
-**Real bug found live-testing plain-text mode for the first time this session (2026-08-31)**:
+**Plain-text-mode JMAP-native send confirmed live-verified 2026-08-31** (bare `text/plain` part,
+no unnecessary `multipart/alternative` - correctly uses the `textBody` shortcut, matching classic
+behavior for this case). One real bug found getting there, while live-testing plain-text mode for
+the first time this session:
 Toggling the "HTML" checkbox off/on used to trigger a full classic postback
    (`case 'mimeType': this.et2.getInstanceManager().submit();`, pre-existing/unchanged) - for a
    JMAP-mode reply/forward specifically, that reload re-runs `bootstrapReply()` from scratch (same
