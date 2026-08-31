@@ -289,28 +289,28 @@ original, disposition-less bytes - re-viewing it proves nothing about the fix).
    view POPUP for perfectly normal TOP-LEVEL messages too: unlike the main list's own JMAP-native
    preview pane ("we fixed it to work client-side"), `app.ts`'s `display()` never actually called
    `loadMessageBody()` at all, relying purely on this same classic iframe `src`.
-   **Solution (ralf, explicitly chosen over a client-side MIME parser or a plain-text fallback):
-   expose server-side parsing as its own read-only operation**, since JMAP has no "parse this blob
-   as if it were a real Email" verb (`Email/get` only works on a real, listed email id) even though
-   both backends are already fully CAPABLE of parsing arbitrary RFC822 content (that's what they do
-   internally for every message already). New `Imap::parseRawMessageAsEmail()` (pure: raw bytes in,
-   JMAP-shaped Email properties out, reusing `Horde_Mime_Part::parseMessage()` - the same primitive
-   `ImapBuildMailerTest.php`'s own tests already use) + `parseBlobAsEmail()` (fetches the blob
-   first, via the already-existing backend-uniform `AttachmentJmap::fetchBlobBytes()`), exposed as
-   `mail_ui::ajax_parseBlobAsEmail()`. Client-side, `MailJmap.fetchBodyFromMessagePart()` looks up
-   the sub-part's own blobId (a normal `Email/get` on the CONTAINING message, already-listed in its
-   own `attachments` property) then calls that endpoint, returning the exact same `JmapBodyResult`
-   shape `fetchBody()` already produces - reused directly by `assembleBodyHtml()`, so `app.ts`'s
-   `loadMessageBody()` (now also wired into `display()`, extended with an optional `partID`) can't
-   tell the difference between a top-level message and a parsed sub-part. Attachments WITHIN a
-   parsed nested message are listed but not independently downloadable yet (a synthetic `"parsed:"`
-   blobId reference) - a narrow, deliberate limitation for this first version, not a bug. 4 new
-   PHPUnit tests for `parseRawMessageAsEmail()` (plain text, multipart/alternative, the actual
-   bounce/NDM shape with a nested `message/rfc822` - itself a regression test for a real bug found
-   writing these: Horde's own `parseMessage()` decomposes a nested message/rfc822's OWN internal
-   structure too, unlike a live IMAP BODYSTRUCTURE fetch, so a naive flat `partIterator()` walk
-   double-counted its inner body as a second attachment - fixed with a manual recursive walk that
-   never descends into a non-multipart leaf).
+   **First attempt (2026-08-31, superseded same day)**: expose server-side parsing as its own
+   read-only operation, since JMAP has no "parse this blob as if it were a real Email" verb
+   (`Email/get` only works on a real, listed email id) even though both backends are already fully
+   CAPABLE of parsing arbitrary RFC822 content. `Imap::parseRawMessageAsEmail()` (pure: raw bytes
+   in, JMAP-shaped Email properties out, reusing `Horde_Mime_Part::parseMessage()`) +
+   `parseBlobAsEmail()` (fetches the blob first via `AttachmentJmap::fetchBlobBytes()`), exposed as
+   `mail_ui::ajax_parseBlobAsEmail()`, with 4 PHPUnit tests. Live-tested against a real bounce/NDM
+   and it silently fell through to the classic `loadEmailBody` fallback (no console error - one of
+   `fetchBodyFromMessagePart()`'s own early-return checks failed quietly).
+   **Final approach (ralf, same day, "I'm thinking as the body of the NDM is empty, your first
+   suggestion to simply display the whole part as text might have been the best approach" -
+   live-confirmed, "ok, I see now the headers as text, let's leave it like that")**: the nested
+   original message's body is routinely empty/near-empty anyway (the MTA only forwards headers, or
+   a truncated snippet), so the structured-parse round-trip bought nothing. Deleted the server-side
+   parse machinery entirely (`parseBlobAsEmail()`/`parseRawMessageAsEmail()`,
+   `ajax_parseBlobAsEmail()`, `ParseRawMessageAsEmailTest.php`). `MailJmap.fetchBodyFromMessagePart()`
+   now looks up the sub-part's own blobId (a normal `Email/get` on the CONTAINING message,
+   already-listed in its own `attachments` property), then downloads it client-side and renders it
+   as plain `<pre>` text - the same `downloadPartText()`/`textToHtml()` mechanism `fetchBody()`
+   already uses for its own PGP body path, no PHP round-trip at all. Nested attachments are
+   no longer independently listed at all (a narrower limitation than the first attempt's, but this
+   whole case is a fallback view for an edge case, not the common path).
 
 Companion to [[mail-jmap-imap-inversion]].
 

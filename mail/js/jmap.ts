@@ -2395,25 +2395,24 @@ export class MailJmap
 	}
 
 	/**
-	 * View a message/rfc822 SUB-PART (eg. a bounce/NDM's own original message) as if it were its
-	 * own standalone message - doc/ai/projects/mail-compose-jmap-migration.md's follow-up
-	 * (2026-08-31, ralf: "go ahead with that server-side blob-parse approach"). JMAP has no "parse
-	 * this blob as a real Email" verb (Email/get only ever works on a real, listed email id) -
-	 * mail_ui::displayMessage()'s own classic body-loading path needs a real numeric IMAP UID,
-	 * which a raw IMAP EMAILID search can't always resolve reliably against Stalwart (the "20s
-	 * timeout, empty body" symptom found live getting here) - and unlike fetchBody() above (a
-	 * normal top-level message), there was no JMAP-native equivalent for this specific case at all.
+	 * View a message/rfc822 SUB-PART (eg. a bounce/NDM's own original message) - doc/ai/projects/
+	 * mail-compose-jmap-migration.md's follow-up (2026-08-31). JMAP has no "parse this blob as a
+	 * real Email" verb (Email/get only ever works on a real, listed email id) - mail_ui::
+	 * displayMessage()'s own classic body-loading path needs a real numeric IMAP UID, which a raw
+	 * IMAP EMAILID search can't always resolve reliably against Stalwart (the "20s timeout, empty
+	 * body" symptom found live getting here) - and unlike fetchBody() above (a normal top-level
+	 * message), there was no JMAP-native equivalent for this specific case at all.
 	 *
-	 * Two steps: (1) a NORMAL Email/get on the CONTAINING message (rowId) to find the sub-part's
-	 * own blobId by partID - already listed in its own `attachments` property, no new server work
-	 * needed for this part; (2) Api\Mail\Jmap\Imap::parseBlobAsEmail() (mail.mail_ui.
-	 * ajax_parseBlobAsEmail) parses that blob's raw bytes AS A STANDALONE MESSAGE server-side
-	 * (Horde_Mime_Part::parseMessage(), no live IMAP connection needed at all) and returns
-	 * JMAP-shaped Email properties, reused directly by assembleBodyHtml() - the exact same shape
-	 * fetchBody() already builds, so the caller (app.ts's loadMessageBody()) can't tell the
-	 * difference.
+	 * A first version parsed the sub-part's raw bytes into full JMAP-shaped Email properties
+	 * server-side (headers/body/attachments). Dropped (ralf, 2026-08-31, live-tested against a real
+	 * bounce/NDM): the nested original message's own body is routinely empty/near-empty anyway (the
+	 * MTA only forwards headers, or a truncated snippet), so the structured-parse round-trip bought
+	 * nothing - just dump the sub-part's raw bytes as plain text instead, same mechanism as the PGP
+	 * path above (downloadPartText() + textToHtml()): a NORMAL Email/get on the CONTAINING message
+	 * (rowId) finds the sub-part's own blobId by partID (already listed in its own `attachments`
+	 * property), then a client-side blob download - no PHP round-trip needed at all.
 	 */
-	async fetchBodyFromMessagePart(rowId : string, partID : string, htmlOptions? : string) : Promise<JmapBodyResult>
+	async fetchBodyFromMessagePart(rowId : string, partID : string) : Promise<JmapBodyResult>
 	{
 		try
 		{
@@ -2421,6 +2420,7 @@ export class MailJmap
 			const token = await this.ensureToken(ref.profileID);
 			if (!token)
 			{
+				console.warn('MailJmap.fetchBodyFromMessagePart(): no token, falling back', {rowId, partID});
 				return {special: true};
 			}
 			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
@@ -2437,17 +2437,16 @@ export class MailJmap
 			const attachment = (email?.attachments || []).find((a : any) => String(a.partId) === String(partID));
 			if (!attachment?.blobId)
 			{
+				console.warn('MailJmap.fetchBodyFromMessagePart(): no matching attachment for partID, falling back', {
+					rowId, partID, attachments: email?.attachments,
+				});
 				return {special: true};
 			}
-			const parsed : any = await this.egw.request('mail.mail_ui.ajax_parseBlobAsEmail', [token.accountId, attachment.blobId]);
-			if (!parsed)
-			{
-				return {special: true};
-			}
+			const text = await this.downloadPartText(ref.profileID, token, attachment);
 			return {
 				special: false,
-				html: this.assembleBodyHtml(parsed, htmlOptions),
-				attachments: parsed.attachments || [],
+				html: this.wrapDocument(MailJmap.textToHtml(text)),
+				attachments: [],
 				profileID: ref.profileID,
 				accountId: token.accountId,
 				isLocal: token.isLocal,
