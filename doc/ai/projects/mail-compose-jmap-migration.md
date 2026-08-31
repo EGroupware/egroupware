@@ -3,14 +3,197 @@
 ## Status: Steps 0, 1, 3, and (out of order) the draft-save half of Step 5 done + live-verified
 against real Stalwart (2026-08-27); Step 4's reply, reply-all, reply-with-attachments (incl.
 attachment carry-forward), single-message inline forward, forward-as-attachment (single or
-multiple messages), and inline-image resolution for the quoted body (incl. its own send/draft-save
-side - blob re-upload, caching, and now a proper text/plain alternative) are ALL done +
-live-verified (2026-08-31, incl. against the IMAP-shim backend - see its own write-up below). Step
-4 is now functionally complete except reply-all/forward into an already-open compose popup (the
-`setCompose()` case, deliberately deferred - see its own write-up below). Next up: Step 2
-(IMAP-shim EmailSubmission emulation) - the shim can bootstrap/quote/carry-forward attachments via
-JMAP already, but sending still falls back to classic there entirely, since `EmailSubmission/set`
-was never built for it.
+multiple messages), "compose as new", and inline-image resolution for the quoted body (incl. its
+own send/draft-save side - blob re-upload, caching, and now a proper text/plain alternative) are
+ALL done + live-verified (2026-08-31, incl. against the IMAP-shim backend - see its own write-up
+below). **Step 2 (IMAP-shim EmailSubmission emulation) is now done + live-verified too
+(2026-08-31)** - see its own write-up and the "Step 2 live-testing fixes" section below for the 4
+real bugs found getting there. Step 4 is now functionally complete except reply-all/forward into an
+already-open compose popup (the `setCompose()` case, deliberately deferred - see its own write-up
+below).
+
+**Step 2 (IMAP-shim EmailSubmission emulation) built + live-verified 2026-08-31 - real SMTP
+send + real mailbox mutation, confirmed working (draft-save, actual send, Bcc handling, old-draft
+cleanup, attachments).** Full design write-up below; the 4 bugs found live-testing it are their own
+section further down ("Step 2 live-testing fixes"). `mail/js/jmap.ts`'s `resolveComposeContext()`
+no longer throws `JmapUnsupportedBackendError` for `token.isLocal` at all, so `sendNewEmail()`/
+`saveDraft()` now route shim accounts through this new server-side code instead of falling back to
+classic. `uploadAttachment()`'s own `token.isLocal` throw was ALSO removed once the shim's own
+`Imap::upload()` blob endpoint was confirmed working - see "Direct-to-JMAP attachment upload"
+below for the full story (a genuinely new locally-staged attachment is fully JMAP-native for both
+backends now, no remaining classic-fallback gap here).
+
+**Design, from research + a live design discussion with ralf**: plain IMAP has no "create a
+message from JSON properties" or "submit an existing message" capability at all - both had to be
+built from scratch server-side, in `Api\Mail\Jmap\Imap` (there is no real JMAP server to pass
+through to for the shim, unlike `Api\Mail\Jmap\Http`'s pure-passthrough `EmailSubmission`/
+`Identity` classes for Stalwart).
+- **`Email/set` 'create'** (previously silently dropped `$args['create']` entirely - `emailSet()`
+  only ever handled update/destroy) - new `Imap::buildMailerFromEmailProperties()` translates RFC
+  8621 Email properties (to/cc/bcc/subject/inReplyTo/references/bodyValues + either the
+  htmlBody/textBody shortcut or a full bodyStructure) into `Api\Mailer` builder calls
+  (`setFrom()`/`addAddress()`/`setBody()`/`setHtmlBody(html, null, false)`/`addStringAttachment()`/
+  `addEmbeddedImage()`), the shim's own equivalent of classic `mail_compose::createMessage()`.
+  `bodyStructure` is walked with a single generic recursive walker (a leaf with a `blobId` is an
+  attachment/inline image, a leaf with a `partId` and no `blobId` is body text, looked up in
+  `bodyValues`) - correctly handles every nesting depth `draftEmailProperties()` (mail/js/jmap.ts)
+  can produce (multipart/mixed > multipart/related > multipart/alternative) without needing
+  separate cases per shape. The finished Mailer's `getRaw()` gets appended into the target mailbox
+  via a new `Imap::appendRawMessage()` helper, extracted (no behaviour change) from the existing
+  `Email/import`/`emailImport()`'s own append logic so both can share it without a wasteful
+  "upload as a blob, then immediately read it straight back" round trip.
+- **`EmailSubmission/set`** (didn't exist in `Imap::dispatch()`'s switch at all - fell through to
+  `Unsupported method` for every shim account). Ralf's explicit design call, after discussion: reuse
+  the SAME message already created by `Email/set create` for both the actual SMTP transmission and
+  the Sent-folder copy, rather than rebuilding it a second time from the client's original create-
+  time properties (nothing server-side retains those anyway once the message is stored) - re-fetch
+  the Draft's own JMAP properties via the EXISTING `emailGet()` (identical to any other `Email/get`
+  call), rebuild via the same `buildMailerFromEmailProperties()`, `send()`, THEN reuse that SAME
+  Mailer's own `getRaw()` (not a second rebuild) for the Sent copy - guaranteeing it always exactly
+  matches what was actually transmitted, mirroring classic `mail_compose::send()`'s own
+  `$mail->send(); ... $mail->getRaw()` sequence exactly. Old Draft is deleted outright afterward
+  (not "moved" - the freshly re-serialized, just-sent Mailer's own bytes are the correct copy, not
+  necessarily byte-identical to the stored draft).
+- **Bcc handling** (ralf raised this explicitly, a real correctness/privacy question): a compliant
+  JMAP server strips `Bcc:` from what's actually transmitted (while still using those addresses as
+  SMTP envelope recipients) but keeps the full header in the Sent-folder copy of the same Email
+  object - standard email convention, not JMAP-specific. Found the exact existing mechanism for
+  this already used by classic `mail_compose.inc.php`: `Api\Mailer::forceBccHeader()` ("normally
+  Bcc is only added to recipients while sending, but not added visible as header... should only be
+  called AFTER calling send, or when NOT calling send at all") - confirmed classic calls it
+  identically: right before `getRaw()`+`appendMessage()` for a pure draft-save (no `send()` at
+  all), or right AFTER `$mail->send()` for an actual send. `emailSubmissionSet()` follows the exact
+  same ordering: `send()` first (Horde's own already-correct Bcc-stripping-for-transmission kicks
+  in automatically, same as classic has always relied on), `forceBccHeader()` after, then
+  `getRaw()` for the Sent copy.
+- **`from`/identity bug caught before live-testing**: the first draft of
+  `buildMailerFromEmailProperties()` took an explicit `$identityId` param and resolved it via
+  `Account::read_identity()` - but RFC 8621's Email object has no separate "identity" concept of
+  its own, and `draftEmailProperties()` (mail/js/jmap.ts) always sets a real `from` property
+  directly from whichever identity the "From" dropdown actually has selected. Using
+  `$identityId`/the account's own default identity instead would have silently ignored the user's
+  own "From" selection for every shim send. Fixed: `buildMailerFromEmailProperties()` now reads
+  `$email['from']` directly when present (both for the original create AND the resubmit, since
+  `emailSubmissionSet()`'s own re-fetch via `emailGet()` naturally carries the Draft's already-
+  stored From header through unchanged) - the `$identityId` param was removed entirely, not just
+  left unused.
+- **No `mailboxId` on EmailSubmission/set** (not a standard property, the client doesn't send one) -
+  the Draft's current mailbox, its Sent target, and the flags to set on the Sent copy are all
+  derived from `onSuccessUpdateEmail`'s own patch object instead (`mailboxIds/<id>: null` = "the
+  mailbox being removed from", i.e. wherever it currently lives; `mailboxIds/<id>: true` = target;
+  `keywords/<x>: true` = flags for the Sent copy) - reusing data the client already sends for this
+  exact purpose rather than inventing a new, non-standard field.
+
+**Live-tested 2026-08-31, all green**: draft-save (create + `$seen`/`$draft` flags + old-draft
+destroy-on-resave), an actual self-addressed send (Sent-folder copy headers/body correct, Bcc
+present in storage but NOT in the actually-received copy, old Draft deleted afterward), and sending
+with a genuinely new locally-staged attachment (see "Direct-to-JMAP attachment upload" below).
+
+**Step 2 live-testing fixes (2026-08-31)** - 4 real bugs, found in immediate sequence against a
+shim account, fixed as they came up:
+1. `appendRawMessage()` (the new helper `emailSet()`'s 'create' handling and
+   `emailSubmissionSet()` both call) was extracted with the WRONG type hint on its `$mailbox`
+   param - `\Horde_Imap_Client_Mailbox`, when `hordeMailbox()` (the only thing that ever produces
+   the value passed in) actually returns a plain `string`. First error hit on the very first
+   SaveAsDraft test. Fixed the type hint (and its docblock) to `string`.
+2. Immediately next: `Argument #3 ($raw) must be of type string, resource given` -
+   `Api\Mailer::getRaw()` defaults to `$stream=true` (returns a stream resource, for
+   `Horde_Mime_Mail`'s own internal use), but `appendRawMessage()` needs a plain string. Fixed both
+   call sites (`emailSet()`'s create handling, `emailSubmissionSet()`'s Sent-folder append) to call
+   `getRaw(false)`.
+3. Saved drafts showed up unread. Classic `mail_compose.inc.php` always saves a draft with
+   `'\Seen \Draft'` flags (never leaves it unread) - `mail/js/jmap.ts`'s `createDraftEmail()` only
+   ever sent `keywords: {'$draft': true}`, missing `$seen`. Fixed by adding `'$seen': true` too -
+   this is a client-side gap affecting both backends equally, not shim-specific (real JMAP has the
+   same "IMAP APPEND with no `\Seen` flag creates an unread message" semantics).
+4. Repeated SaveAsDraft clicks kept accumulating NEW drafts instead of replacing the old one.
+   `saveDraft()`'s own "destroy the previous draft copy" `Email/set destroy` call never included the
+   shim's own local-only `mailboxId` extension (real JMAP needs no such hint to resolve an id to
+   destroy; the shim does, to know which IMAP folder to search) - `emailSet()` threw
+   `InvalidArgumentException` for it, silently swallowed by `saveDraft()`'s own best-effort
+   `catch`. Fixed by passing `mailboxId: draftsId` on that destroy call, but ONLY for `token.isLocal`
+   accounts (a real JMAP server might reject an argument it doesn't recognize).
+5. The actual send test's Sent-folder copy was badly malformed: an empty leading
+   `application/octet-stream` part, then the text/plain AND text/html bodies both showing up as
+   separate `Content-Disposition: attachment; filename=attachment` parts instead of a real message
+   body - and the message never arrived (almost certainly rejected as malformed/spam).
+   `buildMailerFromEmailProperties()`'s `$collect()` walker used `empty($part['blobId'])` as its
+   "is this body text or an attachment" test, but `bodyPartToJmap()` (`emailGet()`'s own RFC
+   8621-correct behaviour) sets a `blobId` on EVERY part, body text included - RFC 8621 gives every
+   body part a blobId for individual-part download, not just attachments. So whenever the email
+   came from a re-fetch (`emailSubmissionSet()`'s path, which calls `emailGet()`), both real body
+   parts fell into the attachments bucket instead of `setBody()`/`setHtmlBody()`. Fixed by dropping
+   the `blobId`-emptiness check entirely - `isset($bodyValues[$partId])` alone is the correct,
+   already-exclusive signal (`emailBodyFields()` only ever populates `bodyValues` for the text/html
+   body partIds, explicitly excluding them from its own attachments loop).
+
+**Direct-to-JMAP attachment upload built + live-verified 2026-08-31 (ralf: "yes, go ahead with (a)
+for both backends")** - a genuinely NEW locally-selected attachment (paperclip button or drag/drop)
+now uploads straight to its JMAP blob store the moment it's added, for BOTH backends, never through
+the classic chunked-upload-to-EGroupware-temp-storage-then-postback path at all (that postback -
+`this.et2.getInstanceManager().submit()` - was found live to silently discard unsent body/mimeType
+edits by re-running `bootstrapReply()` from scratch, same class of bug already fixed for the
+mimeType toggle). `uploadAttachment()`'s `token.isLocal` throw was removed too (the shim gained a
+matching `Api\Mail\Jmap\Imap::upload()` blob endpoint in Step 2), so both real-JMAP (straight to
+Stalwart) and the shim (to `Imap::upload()`) now share one code path -
+`MailCompose.uploadLocalAttachmentViaJmap()` calling `MailJmap.uploadAttachment()`.
+**Real debugging detour**: the first attempt was written entirely against the WRONG widget class -
+`api/js/etemplate/et2_widget_file.ts` (the legacy `et2_file`, registered for the literal `<file>`
+XET tag) - and relied on returning `false` from its `onStart()` to cancel the upload. That never
+took effect; the browser's own network-request initiator stack (traced live by ralf, pointing at
+`Et2File.ts`) revealed the `<file>` XET tag is actually pre-processed into `<et2-file>`, the MODERN
+`Et2File` custom element, whose cancellation contract is completely different: `resumableFileAdded()`
+fires a cancelable `et2-add` CustomEvent per file (`event.detail` is that file's own `FileInfo`,
+`.file` the native browser `File`) and checks `event.preventDefault()`, not a return value. Rewrote
+`uploadStart()` against the real contract once this was found - confirmed working via DND and the
+toolbar paperclip button both.
+**Follow-up gap found+fixed the same day**: the user is free to switch the "From" identity to a
+*different account* after attachments are already uploaded - a blobId only ever exists on the
+account it was uploaded to, meaningless (or outright rejected) referenced under a different
+account's `Email/set create` (ralf: "we need to fix this before we can send the mail"). Fixed in
+`uploadAttachmentsViaJmap()`: an attachment's own `jmapProfileID` (set by both
+`carryForwardAttachments()` and the new direct-upload path) is compared against the compose's
+current target account at send/save time - a mismatch triggers `MailJmap.
+reuploadAttachmentForAccount()` (download from the original account, upload fresh to the new one),
+cached per source/target pair so switching back and forth doesn't re-upload on every autosave.
+Surfaced one more shim bug live-testing this exact cross-account scenario (DND-attach on a
+non-JMAP/shim account, switch to a real-JMAP identity, send): `Api\Mail\Jmap\Imap::download()` (the
+public blob-download endpoint `client.downloadBlob()` hits) only ever understood the
+self-describing `mailbox:uid:partId` blobId shape, never the `upload:<token>` shape a fresh
+`Imap::upload()` produces - re-downloading a fresh upload's own bytes 404'd ("Failed to download
+blob"). Fixed by delegating to the already-`upload:`-aware `readUploadedBlob()` for that shape.
+**Known remaining gaps, not yet addressed**: "Attach from VFS" (`selectFromVFSForCompose`/
+`vfsUpload()`) still does a full classic postback in JMAP mode - only the `<file>`/paperclip path
+got this treatment. **No test coverage added** for any of this session's new code (Step 2's shim
+methods, this attachment-upload rework, `reuploadAttachmentForAccount()`, "compose as new" below) -
+everything was verified live only; `buildMailerFromEmailProperties()` is the highest-value target
+for PHPUnit coverage if/when this gets picked up (pure-ish transform, and where the real
+body-vs-attachment bug above actually lived).
+
+**"Compose as new" (`composeasnew`) built + live-verified 2026-08-31** (ralf: "I run into a mail
+reply/forward mode we missed before... most clients call it Compose as new") - a distinct compose
+mode from a browser client's own naming this project's earlier Step 4 mapping had missed entirely.
+New `MailCompose.bootstrapComposeAsNew()` re-fetches the source message via `MailJmap.
+fetchForReply()` (reused as-is - it already returns everything needed) and copies its
+to/cc/bcc/subject/mimeType/body/attachments **verbatim**, matching classic `getDraftData()`'s own
+"reopen this message as if it were still being composed" behaviour: unlike a reply/forward, there
+is no quoting/attribution (`quoteOriginalMessage()` never runs here) and no RFC 5322 threading
+headers (this is a fresh message, not a reply-thread continuation) - and, uniquely to this mode, the
+original's own Bcc is carried forward too (`JmapReplyContext` gained a `bcc` field, fetched but used
+only by this caller). A non-empty body skips signature insertion entirely (matching classic's own
+`$suppressSigOnTop = true` for this case - the content already carries whatever signature it
+originally had). Gated the same way as reply/forward (`app.ts`'s `composeMessage()`, `mail_compose.
+inc.php`'s `$jmapReplySkip`).
+**Real bug found live, same day, also affecting reply-all's own cc population**:
+`fieldExpanderInit()` (the "..." expander that hides an empty Cc/Bcc/Folder/Reply-to row) runs
+ONCE, early, right after the popup's own template load - it judges each row's visibility from
+whatever value that row's widget has AT THAT MOMENT, which for a client-only JMAP bootstrap is
+still empty (the actual to/cc/bcc population happens later, async, after this already ran). A
+client-populated Cc/Bcc value stayed hidden behind its own expander despite having real content in
+it (ralf: "it's something is set there... we should also show them if we put an address there").
+Fixed by re-running `fieldExpanderInit()` (already a public method, no new logic needed) right after
+`bootstrapComposeAsNew()`/`bootstrapReply()`'s `reply_all` branch populate cc/bcc - it re-evaluates
+every row against its now-current value.
 
 **Plain-text-mode JMAP-native send confirmed live-verified 2026-08-31** (bare `text/plain` part,
 no unnecessary `multipart/alternative` - correctly uses the `textBody` shortcut, matching classic
@@ -142,19 +325,11 @@ popup's - diagnostic logging (added, then removed once confirmed) showed the fet
 succeeding via `jmap.php` (isLocal path), visible only in the opener tab's own DevTools. Nothing
 was broken - a devtools-visibility gotcha, not a bug.
 
-**Known gap, deliberately deferred (ralf, 2026-08-31): carry-forward attachments break if SEND
-falls back to classic on a shim account.** `EmailSubmission/set` was never built for the shim
-(phasing's own Step 2, still not started) - `resolveComposeContext()` throws
-`JmapUnsupportedBackendError` for `token.isLocal`, so `trySendViaJmap()` correctly falls through to
-the unchanged classic postback send for a shim account. That's fine for plain reply/reply-all/
-inline-forward (no attachments, just widget text) - but for reply-with-attachments/forward, the
-carried attachments are shaped `{jmapBlobId, tmp_name:"jmap:"+blobId}`, which matches NEITHER of
-classic `createMessage()`'s two recognized attachment shapes (`{uid,folder,partID}` or
-`{file:<real path>}`) - it falls into the "non-vfs file" branch and calls
-`basename($attachment['file'])` with `file` undefined, producing a bogus path instead of the real
-attachment. Ralf: not worth fixing now, since the plan is to remove classic-send-fallback entirely
-once JMAP-native sending is added to the shim (making this whole gap moot) - just tracked here for
-now, revisit once Step 2 (shim EmailSubmission) happens.
+**Gap above RESOLVED by Step 2 (2026-08-31)**: now that `EmailSubmission/set` exists for the shim
+and `uploadAttachment()`'s `token.isLocal` throw is gone too, a shim send/save never falls back to
+classic at all for reply-with-attachments/forward - the `{jmapBlobId, tmp_name}` shape is handled
+JMAP-natively end to end, so the classic `createMessage()` mismatch described below can no longer
+be reached. Left here for the historical record of what the gap was before Step 2 landed.
 
 **Reply-all built + live-verified 2026-08-31 (ralf: "tested reply-all with a few recipients, works
 fine")**: `_action.id === 'reply_all'` is now JMAP-mode
@@ -831,10 +1006,12 @@ step starts.
    into a minimal new compose.ts flow (or a throwaway test harness first, if that's faster to
    verify against Stalwart before touching the real UI). Working result: send a plain email from
    the browser through the new path against the Stalwart test account, verify delivery + Sent copy.
-2. **IMAP-shim `EmailSubmission` emulation** (the one genuinely new substantial backend piece -
-   locate draft MIME → `Api\Mailer::send()` via `Api\Mail\Smtp` → `emailImport()` a Sent-copy →
-   Drafts cleanup) + shim `Identity` synthesis from `Mail\Account`. Working result: same plain-text
-   new-message send, now working against an IMAP-shim test account too.
+2. **DONE + live-verified 2026-08-31.** IMAP-shim `EmailSubmission` emulation (the one genuinely
+   new substantial backend piece - locate draft MIME → `Api\Mailer::send()` via `Api\Mail\Smtp` →
+   `emailImport()` a Sent-copy → Drafts cleanup) + shim `Identity` synthesis from `Mail\Account`.
+   Working result: same plain-text new-message send, now working against an IMAP-shim test account
+   too - see the "Step 2" write-up and its own "live-testing fixes" section near the top of this doc
+   for the design and the 5 bugs found getting there.
 3. **Attachments**: blob upload for real-JMAP (already exists via `Api\Jmap\Http::uploadBlob()`,
    just needs client wiring) then the new shim blob scheme. Working result: send with an attached
    file, both backends.

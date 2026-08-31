@@ -88,7 +88,7 @@
 				<et2-textarea  rows="40" cols="120" width="100%" span="all" height="100%" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
 			</et2-hbox>
 			<et2-vbox  class="et2_file mailUploadSection" disabled="@no_griddata">
-				<et2-vbox>
+				<et2-vbox id="filemodeRow">
 					<et2-select  id="filemode" label="Send files as" onchange="app.mail.compose.checkSharingFilemode"></et2-select>
 					<et2-date  id="expiration" label="Expiration" placeholder="EPL only" dataFormat="Y-m-d"></et2-date>
 					<et2-password  id="password" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!" placeholder="password protect"></et2-password>
@@ -105,7 +105,7 @@
 							<et2-description  id="${row}[tmp_name]"></et2-description>
 							<et2-description  class="useEllipsis et2_link" id="${row}[name]" onclick="app.mail.compose.displayUploadedFile" noLang="1"></et2-description>
 							<vfs-size align="right" id="${row}[size]" />
-							<et2-button-icon  id="delete[$row_cont[tmp_name]]" value="Delete" image="delete"></et2-button-icon>
+							<et2-button-icon  id="delete[$row_cont[tmp_name]]" value="Delete" image="delete" onclick="app.mail.compose.deleteAttachment"></et2-button-icon>
 						</row>
 					</rows>
 				</grid>

@@ -89,10 +89,21 @@ export interface JmapNewEmail
 	references? : string[];
 }
 
-/** An already-uploaded (see MailJmap.uploadAttachment()) attachment, ready to reference by blobId. */
+/**
+ * An attachment ready to reference in an Email/set create - either an already-uploaded blob
+ * (MailJmap.uploadAttachment()), or (shim-only, 2026-08-31 VFS-attach follow-up) a `vfsPath`
+ * left on the EGroupware server entirely, read directly by
+ * Api\Mail\Jmap\Imap::buildMailerFromEmailProperties() at message-build time - no client
+ * round-trip at all (ralf: "leave the attachment on the EGroupware server and add it later we
+ * construct the mail, no round-trip via the client"). Exactly one of blobId/vfsPath is ever set;
+ * a real-JMAP account never receives a vfsPath-shaped entry (Stalwart has no VFS concept) -
+ * compose.ts's uploadAttachmentsViaJmap() resolves a `vfsPath` marker to a real uploaded blobId
+ * via MailJmap.uploadVfsAttachment() first, whenever the target account isn't the shim.
+ */
 export interface JmapAttachment
 {
-	blobId : string;
+	blobId? : string;
+	vfsPath? : string;
 	name : string;
 	type : string;
 	size : number;
@@ -141,6 +152,8 @@ export interface JmapReplyContext
 	from : JmapEmailAddress[];
 	to : JmapEmailAddress[];
 	cc : JmapEmailAddress[];
+	/** Only fetched/used by "compose as new" (MailCompose.bootstrapComposeAsNew()) - a reply/forward never reuses the original's own Bcc. */
+	bcc : JmapEmailAddress[];
 	replyTo : JmapEmailAddress[] | null;
 	subject : string;
 	date : string;
@@ -2396,7 +2409,7 @@ export class MailJmap
 			const args : any = {
 				accountId: token.accountId,
 				ids: [ref.emailId],
-				properties: ['from', 'to', 'cc', 'replyTo', 'subject', 'sentAt', 'receivedAt',
+				properties: ['from', 'to', 'cc', 'bcc', 'replyTo', 'subject', 'sentAt', 'receivedAt',
 					'messageId', 'references', 'bodyStructure', 'textBody', 'htmlBody', 'bodyValues',
 					'attachments'],
 				fetchAllBodyValues: true,
@@ -2451,6 +2464,7 @@ export class MailJmap
 				from: email.from || [],
 				to: email.to || [],
 				cc: email.cc || [],
+				bcc: email.bcc || [],
 				replyTo: email.replyTo || null,
 				subject: email.subject || '',
 				date: this.jmapUtcToUserTz(email.sentAt || email.receivedAt),
@@ -3700,12 +3714,12 @@ export class MailJmap
 	 * doc/ai/projects/mail-compose-jmap-migration.md: plain new-message compose only, no
 	 * reply/forward context, no attachments, no S/MIME yet.
 	 *
-	 * Real-JMAP accounts only for now - a real-JMAP profile's JamWebSocketClient talks directly
-	 * to Stalwart (see ProfileHandler::jmapBootstrap()'s $local branch), which already natively
-	 * implements Identity/EmailSubmission, so this needs zero new server-side PHP for that
-	 * backend. The IMAP-shim backend (mail/jmap.php -> Api\Mail\Jmap\Imap) has no
-	 * EmailSubmission/create support yet (doc's Step 2, not built) - callers must not route
-	 * shim-backed profiles here until that lands.
+	 * Originally real-JMAP-only (a real-JMAP profile's JamWebSocketClient talks directly to
+	 * Stalwart, see ProfileHandler::jmapBootstrap()'s $local branch, which already natively
+	 * implements Identity/EmailSubmission - zero new server-side PHP needed for that backend) -
+	 * the IMAP-shim backend (mail/jmap.php -> Api\Mail\Jmap\Imap) gained its own Email/create +
+	 * EmailSubmission emulation in Step 2 (Imap::emailSet()/emailSubmissionSet()), so this now
+	 * works for both backends uniformly.
 	 *
 	 * Mirrors mail/src/ApiHandler.php's sendViaJmap() (the REST API's own JMAP send path, already
 	 * live-verified against real Stalwart 2026-08-27) - same Drafts-create-then-submit shape,
@@ -3775,9 +3789,9 @@ export class MailJmap
 	 *  brand new message
 	 * @returns the drafted Email's id and its Drafts mailboxId - pass emailId back in as
 	 *  existingEmailId on the next call
-	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. Throws
-	 *  JmapUnsupportedBackendError for a backend without Email/create support yet (IMAP-shim,
-	 *  doc's Step 2) - same as sendNewEmail()
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. IMAP-shim accounts
+	 *  gained Email/create support in Step 2 (Api\Mail\Jmap\Imap::emailSet()), so this no longer
+	 *  throws JmapUnsupportedBackendError for token.isLocal the way it used to.
 	 */
 	async saveDraft(profileID : string, email : JmapNewEmail, existingEmailId? : string) : Promise<{emailId : string, mailboxId : string}>
 	{
@@ -3791,7 +3805,16 @@ export class MailJmap
 				try
 				{
 					await client.requestMany((t) => ({
-						destroyed: t.Email.set({accountId: token.accountId, destroy: [existingEmailId]}),
+						// the IMAP-shim's Email/set requires our own local-only 'mailboxId' extension
+						// to know which folder to search for the id to destroy (a real JMAP server
+						// needs no such hint, and may reject an argument it doesn't recognize) - the
+						// previous draft copy is always in Drafts, since createDraftEmail() above is
+						// the only thing that ever creates one
+						destroyed: t.Email.set({
+							accountId: token.accountId,
+							destroy: [existingEmailId],
+							...(token.isLocal ? {mailboxId: draftsId} : {}),
+						}),
 					}));
 				}
 				catch (e)
@@ -3987,12 +4010,12 @@ export class MailJmap
 
 	/**
 	 * Shared setup for sendNewEmail()/saveDraft() - resolves the account's token, identity, and
-	 * Drafts (+ optionally Sent) mailbox id. Throws JmapUnsupportedBackendError for the IMAP-shim
-	 * backend (no Email/create or EmailSubmission support yet, doc's Step 2) - callers like
-	 * compose.ts's trySendViaJmap()/trySaveDraftViaJmap() catch that distinctly to fall back to
-	 * the classic path instead of surfacing a confusing raw JMAP error. IMAP-shim accounts
-	 * already get a working token (folder/message browsing is JMAP-native for both backends), so
-	 * this can't be checked any earlier than here.
+	 * Drafts (+ optionally Sent) mailbox id. IMAP-shim accounts gained Email/create +
+	 * EmailSubmission emulation (doc/ai/projects/mail-compose-jmap-migration.md's Step 2,
+	 * Api\Mail\Jmap\Imap::emailSet()/emailSubmissionSet()) - no more unconditional
+	 * JmapUnsupportedBackendError here for token.isLocal. uploadAttachment() also gained a
+	 * matching shim endpoint (Api\Mail\Jmap\Imap::upload()) the same step, so a shim compose with
+	 * a genuinely new locally-staged attachment is fully JMAP-native too now.
 	 *
 	 * @param profileID compose.ts's currentProfileID() - the "From" dropdown's raw
 	 *  "acc_id:ident_id" value (mail_compose.inc.php's own convention), NOT a bare acc_id
@@ -4001,10 +4024,6 @@ export class MailJmap
 	{
 		const token = await this.ensureToken(profileID);
 		if (!token) throw this.unreachableError();
-		if (token.isLocal)
-		{
-			throw new JmapUnsupportedBackendError(this.egw.lang('JMAP sending is not yet available for this account'));
-		}
 		const client = this.clients[profileID];
 
 		// getIdentities() (not Identity/get over this backend's own wire connection - see that
@@ -4158,7 +4177,8 @@ export class MailJmap
 							subParts: [
 								bodyContainer,
 								...attachments.map((a) => ({
-									blobId: a.blobId, type: a.type, name: a.name, size: a.size, disposition: 'attachment',
+									...(a.vfsPath ? {vfsPath: a.vfsPath} : {blobId: a.blobId}),
+									type: a.type, name: a.name, size: a.size, disposition: 'attachment',
 								})),
 							],
 						}
@@ -4197,9 +4217,11 @@ export class MailJmap
 	 * @param blob file contents
 	 * @param name original filename
 	 * @param type MIME type
-	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. Throws
-	 *  JmapUnsupportedBackendError for the IMAP-shim backend (no blob storage concept yet, doc's
-	 *  Step 2/3) - same as sendNewEmail()
+	 * @throws JmapUserError on any failure - see unreachableError()'s docblock. IMAP-shim accounts
+	 *  gained a matching blob-upload endpoint in Step 2 (Api\Mail\Jmap\Imap::upload()), so this no
+	 *  longer throws JmapUnsupportedBackendError for token.isLocal the way it used to - the
+	 *  jam-client's uploadBlob() call below already routes to the right place either way (straight
+	 *  to Stalwart for a real-JMAP account, to Imap::upload() for the shim).
 	 */
 	async uploadAttachment(profileID : string, blob : Blob, name : string, type : string) : Promise<JmapAttachment>
 	{
@@ -4207,10 +4229,6 @@ export class MailJmap
 		{
 			const token = await this.ensureToken(profileID);
 			if (!token) throw this.unreachableError();
-			if (token.isLocal)
-			{
-				throw new JmapUnsupportedBackendError(this.egw.lang('JMAP sending is not yet available for this account'));
-			}
 			// jmap-jam's uploadBlob(accountId, body, fetchInit) spreads fetchInit's own keys
 			// (incl. "headers") over its base fetch() options SHALLOWLY - passing a "headers"
 			// override here would silently replace, not merge with, the Authorization/Accept
@@ -4252,6 +4270,68 @@ export class MailJmap
 			fileName: name,
 		});
 		return URL.createObjectURL(await response.blob());
+	}
+
+	/**
+	 * A carry-forward or freshly-uploaded attachment's blobId only ever exists on the ACCOUNT it
+	 * was uploaded to/read from (sourceProfileID) - meaningless, or outright invalid, referenced in
+	 * an Email/set create under a DIFFERENT account (ralf, 2026-08-31: "the user is free to change
+	 * the Identity after uploading attachments, in which case they might be on the wrong server, we
+	 * need to fix this before we can send the mail"). compose.ts's uploadAttachmentsViaJmap() calls
+	 * this whenever an attachment's own jmapProfileID no longer matches the compose's current
+	 * target account - downloads the original bytes (same primitive downloadBlobUrl() uses, minus
+	 * the object-URL wrapping) and re-uploads them fresh to the target account, producing a new
+	 * blobId valid there.
+	 */
+	async reuploadAttachmentForAccount(sourceProfileID : string, blobId : string, name : string, type : string,
+		targetProfileID : string) : Promise<JmapAttachment>
+	{
+		const token = await this.ensureToken(sourceProfileID);
+		if (!token) throw this.unreachableError();
+		const response = await this.clients[sourceProfileID].downloadBlob({
+			accountId: token.accountId,
+			blobId,
+			mimeType: type || 'application/octet-stream',
+			fileName: name,
+		});
+		const blob = await response.blob();
+		return this.uploadAttachment(targetProfileID, blob, name, type);
+	}
+
+	/**
+	 * Public isLocal check for compose.ts's own cross-account attachment resolution - a VFS-path
+	 * attachment (uploadVfsAttachment() below) only ever needs a real upload when the target
+	 * account is real-JMAP; the shim reads the path directly server-side instead, so
+	 * compose.ts's uploadAttachmentsViaJmap() needs to know which case it's in without reaching
+	 * into this class's own private ensureToken()/JmapToken shape.
+	 */
+	async isLocalAccount(profileID : string) : Promise<boolean>
+	{
+		const token = await this.ensureToken(profileID);
+		return !!token?.isLocal;
+	}
+
+	/**
+	 * Upload a VFS-path attachment (compose.ts's vfsUpload(), 2026-08-31 follow-up) to a target
+	 * account's JMAP blob store - only ever called when the target is real-JMAP (isLocalAccount()
+	 * false); the shim reads the VFS path directly server-side at message-build time instead
+	 * (Api\Mail\Jmap\Imap::buildMailerFromEmailProperties()), no round-trip via the client at all
+	 * (ralf: "leave the attachment on the EGroupware server and add it later we construct the
+	 * mail, no round-trip via the client"). Same WebDAV URL construction egw_links.ts's own
+	 * link()-based VFS download fallback uses (egw.link('/webdav.php') + path, ralf) - each path
+	 * SEGMENT individually percent-encoded (encoding the whole path would also escape the '/'
+	 * separators) since neither `link()` nor that existing fallback encode it themselves.
+	 */
+	async uploadVfsAttachment(vfsPath : string, name : string, type : string, targetProfileID : string) : Promise<JmapAttachment>
+	{
+		const url = this.egw.link('/webdav.php') + vfsPath.split('/').map(encodeURIComponent).join('/');
+		const response = await fetch(url, {credentials: 'same-origin'});
+		if (!response.ok)
+		{
+			throw new JmapUserError(this.egw.lang('Failed to read attachment %1', name));
+		}
+		const blob = await response.blob();
+		return this.uploadAttachment(targetProfileID, blob, name, type || blob.type || 'application/octet-stream');
 	}
 
 	/**
@@ -4346,7 +4426,9 @@ export class MailJmap
 				create: {
 					s1: {
 						mailboxIds: {[draftsId]: true},
-						keywords: {'$draft': true},
+						// classic mail_compose always saved drafts as '\Seen \Draft' (never left
+						// unread) - match that here too, for both real-JMAP and shim backends
+						keywords: {'$draft': true, '$seen': true},
 						...this.draftEmailProperties(identity, {...email, body}, inlineImages),
 					},
 				},

@@ -404,8 +404,12 @@ class mail_compose
 		// 'reply_all' added 2026-08-31 too - same skip; MailCompose.bootstrapReply() computes
 		// to/cc client-side via the account's own identities (all of them, not just the selected
 		// one), matching getReplyData()'s own mode='all' 3-loop algorithm.
+		// 'composeasnew' added 2026-08-31 too - MailCompose.bootstrapComposeAsNew() re-fetches the
+		// source message via JMAP and copies its to/cc/bcc/subject/body/attachments verbatim
+		// (classic getDraftData()'s own behaviour - no quoting/attribution, no threading headers,
+		// unlike a reply/forward).
 		$jmapReplySkip = ($_GET['jmap'] ?? null) === '1' &&
-			in_array($_GET['from'] ?? null, ['reply', 'reply_attachments', 'reply_all', 'forward'], true) && $replyID;
+			in_array($_GET['from'] ?? null, ['reply', 'reply_attachments', 'reply_all', 'forward', 'composeasnew'], true) && $replyID;
 		if(!empty($_GET['from']) && $replyID && !$jmapReplySkip)
 		{
 			$_content = array_merge((array)$_content, $this->getComposeFrom(

@@ -1444,8 +1444,11 @@ export class MailApp extends EgwApp
 		// case (a batch forward or forwardasattach returns early via egw.openWithinWindow(), never
 		// reaching here at all - see the switch above).
 		const jmapEligibleForward = settings.from === 'forward' && settings.mode === 'forwardinline';
+		// 'composeasnew' added 2026-08-31 - MailCompose.bootstrapComposeAsNew() only OVERWRITES the
+		// classic server-rendered to/cc/bcc/subject/body once its own JMAP fetch succeeds, same
+		// "no risk of the server having skipped computing it" reasoning as reply/forward above.
 		if (this.jmapComposeEnabled && (noSourceGiven || _action.id === 'reply' || _action.id === 'reply_attachments' ||
-			_action.id === 'reply_all' || jmapEligibleForward))
+			_action.id === 'reply_all' || _action.id === 'composeasnew' || jmapEligibleForward))
 		{
 			(settings as typeof settings & {jmap? : string}).jmap = '1';
 		}

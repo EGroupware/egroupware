@@ -16,7 +16,7 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
 import {MailJmap} from "./jmap";
-import type {JmapReplyContext} from "./jmap";
+import type {JmapAttachment, JmapReplyContext} from "./jmap";
 
 export class MailCompose
 {
@@ -72,18 +72,24 @@ export class MailCompose
 	private replyThreadingHeaders : {inReplyTo : string[] | null, references : string[] | null} | null = null;
 
 	/**
-	 * Cache of already-uploaded locally-staged attachments (uploadAttachmentsViaJmap()), keyed by
-	 * the attachment's own tmp_name - a stable id for one staged file across this whole compose
-	 * session. Without this, EVERY autosave tick (and the final send too, if it happens after at
-	 * least one autosave) would re-fetch+re-upload the same file as a brand-new JMAP blob (found
-	 * live 2026-08-31, ralf: "the same [as inline images] is also true for attachments, we need to
-	 * cache their blobIds, to not upload them over and over again and also use them for
-	 * submission") - same reasoning as MailJmap's own inlineImageUploads cache. A
-	 * carryForwardAttachments() entry (jmapBlobId already set) never reaches this cache at all -
-	 * it's already a stable, permanent reference to the original message's own blob, nothing to
-	 * upload or remember.
+	 * Cache of already-uploaded locally-staged attachments (uploadAttachmentsViaJmap()). Two
+	 * distinct key shapes share this one map:
+	 * - a classically-staged (VFS-attach) file's own tmp_name - a stable id for one staged file
+	 *   across this whole compose session. Without this, EVERY autosave tick (and the final send
+	 *   too, if it happens after at least one autosave) would re-fetch+re-upload the same file as a
+	 *   brand-new JMAP blob (found live 2026-08-31, ralf: "the same [as inline images] is also true
+	 *   for attachments, we need to cache their blobIds, to not upload them over and over again and
+	 *   also use them for submission") - same reasoning as MailJmap's own inlineImageUploads cache.
+	 * - "<sourceProfileID>:<blobId>-><targetProfileID>" for a carry-forward/direct-JMAP-upload
+	 *   attachment RE-uploaded to a different account after an identity switch (ralf, 2026-08-31:
+	 *   "the user is free to change the Identity after uploading attachments, in which case they
+	 *   might be on the wrong server") - same "don't redo it on every autosave" reasoning, this time
+	 *   for uploadAttachmentsViaJmap()'s own reuploadAttachmentForAccount() call. A carry-forward
+	 *   entry whose jmapProfileID still matches the current target account never reaches this cache
+	 *   at all - it's already a stable, permanent reference to the original message's own blob,
+	 *   nothing to upload or remember.
 	 */
-	private uploadedAttachmentBlobs = new Map<string, {blobId : string, name : string, type : string, size : number}>();
+	private uploadedAttachmentBlobs = new Map<string, JmapAttachment>();
 
 	get egw() : IegwAppLocal
 	{
@@ -129,9 +135,30 @@ export class MailCompose
 	}
 
 	/**
-	 * Visible attachment box in compose dialog as soon as the file starts to upload
+	 * Visible attachment box in compose dialog as soon as the file starts to upload.
+	 *
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 2/3 follow-up (ralf, 2026-08-31: "yes,
+	 * go ahead with (a) for both backends") - in JMAP mode, a newly selected/dropped file must
+	 * NEVER go through the classic chunked upload into EGroupware's own temp storage at all: that
+	 * flow only ever becomes usable again after a postback merges it into
+	 * content['attachments']/$request->preserv (mail_compose.inc.php), and that same postback
+	 * (this.et2.getInstanceManager().submit(), see uploadFinish()'s old code) is what was found
+	 * live to silently reset unsent body/mimeType edits by re-running bootstrapReply() from
+	 * scratch.
+	 *
+	 * The `<file>` XET tag is pre-processed into `<et2-file>` (the MODERN Et2File.ts custom
+	 * element, NOT the legacy et2_widget_file.ts class an earlier version of this fix was wrongly
+	 * written against - found live 2026-08-31 via the browser's own network-request initiator
+	 * stack, which pointed straight at Et2File.ts). Et2File.resumableFileAdded() fires this once
+	 * PER FILE via a cancelable "et2-add" CustomEvent (`event.detail` is that file's own FileInfo,
+	 * `.file` the native browser File) - calling `event.preventDefault()` here makes it call
+	 * `file.cancel()` right after, before ever reaching `resumable.upload()`. Each canceled file is
+	 * instead handed to uploadLocalAttachmentViaJmap(), which uploads the raw browser File straight
+	 * to wherever it actually needs to end up (Stalwart directly for a real-JMAP account,
+	 * Api\Mail\Jmap\Imap::upload() for the shim - same jam-client uploadBlob() primitive
+	 * resolveOutgoingInlineImages() already uses for inline images).
 	 */
-	uploadStart()
+	uploadStart(event? : CustomEvent) : void
 	{
 		const boxAttachment = this.et2.getWidgetById('attachments');
 		if (boxAttachment)
@@ -139,7 +166,36 @@ export class MailCompose
 			const groupbox = boxAttachment.getParent();
 			if (groupbox) groupbox.set_disabled(false);
 		}
-		return true;
+		if (this.isJmapMode && event)
+		{
+			const file : File = (event.detail as any)?.file;
+			event.preventDefault();
+			if (file)
+			{
+				void this.uploadLocalAttachmentViaJmap(file);
+			}
+		}
+	}
+
+	/**
+	 * Upload one genuinely new, locally-selected file straight to its JMAP blob store (see
+	 * uploadStart()'s own docblock) and merge the result into the compose - carryForwardAttachments()
+	 * already builds the row + un-hides the attachments UI from exactly this {blobId,name,type,size}
+	 * shape (Step 4's carry-forward slice), and MailJmap.uploadAttachment()'s own return shape
+	 * matches it directly, so no adapter is needed here.
+	 */
+	private async uploadLocalAttachmentViaJmap(file : File) : Promise<void>
+	{
+		const profileID = this.currentProfileID();
+		try
+		{
+			const uploaded = await this.app.jmap.uploadAttachment(profileID, file, file.name, file.type || 'application/octet-stream');
+			this.carryForwardAttachments([uploaded], profileID);
+		}
+		catch (e)
+		{
+			this.egw.message(e?.message || this.egw.lang('Failed to upload attachment %1', file.name), 'error');
+		}
 	}
 
 	/**
@@ -186,14 +242,48 @@ export class MailCompose
 	 * @param {widget object} _widget
 	 * @param {window object} _window
 	 */
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 2/3 follow-up (ralf, 2026-08-31: "the
+	 * VFS attachments are the biggest showstopper now for our testers") - in JMAP mode, a
+	 * VFS-selected file NEVER goes through the classic postback at all, matching the paperclip/DND
+	 * attachment path's own reasoning (that postback was found to silently discard unsent body/
+	 * mimeType edits). Unlike a locally-picked file, nothing is uploaded/fetched HERE at all - a
+	 * bare `jmapVfsPath` marker entry is merged in immediately (mergeAttachmentEntries(), same tail
+	 * carryForwardAttachments() uses), and uploadAttachmentsViaJmap() resolves it for whichever
+	 * account actually ends up sending, at send/save time - see its own docblock for why (ralf:
+	 * "for the shim it would be better to leave the attachment on the EGroupware server... no
+	 * round-trip via the client", vs. real-JMAP which has no VFS concept and needs a real upload).
+	 * `_widget.selectedResults` (SearchMixin's own live selection state, each element's `.value` a
+	 * full FileInfo) is used for name/mime - `_widget.getValue()`'s own reduced value only ever
+	 * keeps the bare paths (Et2VfsSelectDialog's own searchResultSelected() override).
+	 */
 	vfsUpload(_egw, _widget, _window)
 	{
 		if (!_widget || Object.keys(_widget).length === 0) return;
-		if (Object.keys(_widget.getValue() || {}).length > 0)
+		const paths : string[] = _widget.getValue() || [];
+		if (!paths.length) return;
+		if (!this.isJmapMode)
 		{
 			this.addAttachmentPlaceholder();
 			this.et2.getInstanceManager().submit();
+			return;
 		}
+		const infoByPath = new Map<string, any>((_widget.selectedResults || [])
+			.map((el : any) => [el.value?.path, el.value])
+			.filter(([path] : [string, any]) => !!path));
+		this.mergeAttachmentEntries(paths.map((path) =>
+		{
+			const info = infoByPath.get(path);
+			return {
+				tmp_name: 'vfs:' + path,
+				jmapVfsPath: path,
+				name: info?.label || path.split('/').pop() || path,
+				type: info?.mime || 'application/octet-stream',
+				size: 0,
+				filemode_icon: 'attach',
+				filemode_title: '',
+			};
+		}));
 	}
 
 	/**
@@ -811,14 +901,18 @@ export class MailCompose
 	{
 		if (!this.isJmapMode) return;
 		const params = new URLSearchParams(window.location.search);
-		const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | null;
+		const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | null;
 		if (from === 'forward' && params.get('mode') === 'forwardasattach')
 		{
 			await this.bootstrapForwardAsAttachment((params.get('id') || '').split(',').filter(Boolean));
 		}
-		else
+		else if (from === 'composeasnew' && params.get('id'))
 		{
-			const sourceId = (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward') ? params.get('id') : null;
+			await this.bootstrapComposeAsNew(params.get('id'));
+		}
+		else if (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward')
+		{
+			const sourceId = params.get('id');
 			if (sourceId)
 			{
 				await this.bootstrapReply(sourceId, from);
@@ -827,6 +921,10 @@ export class MailCompose
 			{
 				await this.bootstrapSignature();
 			}
+		}
+		else
+		{
+			await this.bootstrapSignature();
 		}
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the widget set_value() calls
 		// above (recipient/subject/body/signature) mark the form dirty exactly like a real user
@@ -930,6 +1028,14 @@ export class MailCompose
 				addUnique(context.cc, cc);
 				this.et2.getWidgetById('to')?.set_value(to.map(formatAddress));
 				if (cc.length) this.et2.getWidgetById('cc')?.set_value(cc.map(formatAddress));
+				// fieldExpanderInit() (app.ts's own post-load call) already ran BEFORE this bootstrap
+				// ever populated cc - it only shows a header row whose widget already has a value AT
+				// THAT TIME, so a client-only-populated cc stays hidden behind its "..." expander
+				// despite having an address in it now (found live 2026-08-31, ralf: "it's something
+				// is set there... we should also show them if we put an address there"). Re-running
+				// it now re-evaluates every row (cc/bcc/folder/replyto/from) against their CURRENT
+				// values.
+				if (cc.length) this.fieldExpanderInit();
 			}
 			else
 			{
@@ -947,6 +1053,66 @@ export class MailCompose
 		await this.applySignatureForCurrentIdentity(quoted, this.isReplyCompose);
 
 		if ((mode === 'reply_attachments' || isForward) && context.attachments.length)
+		{
+			this.carryForwardAttachments(context.attachments, context.profileID);
+		}
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 follow-up (ralf, 2026-08-31: "I run
+	 * into a mail reply/forward mode we missed before... called Compose in EGroupware, most
+	 * clients call it Compose as new") - re-fetches the source message via JMAP and copies its
+	 * to/cc/bcc/subject/mimeType/body/attachments verbatim, matching classic getDraftData()'s own
+	 * "reopen this message as if it were still being composed" behaviour: unlike bootstrapReply(),
+	 * there is no quoting/attribution (quoteOriginalMessage() never runs here) and no RFC 5322
+	 * threading headers (this is a fresh message, not a reply-thread continuation) - the original's
+	 * own Bcc is carried forward too (JmapReplyContext.bcc exists only for this caller; a real
+	 * reply/forward never reuses the original's Bcc).
+	 *
+	 * mail_compose.inc.php's own "$jmapReplySkip" guard already skips the classic
+	 * getComposeFrom()/getDraftData() fetch for this case too.
+	 */
+	private async bootstrapComposeAsNew(sourceId : string) : Promise<void>
+	{
+		const context = await this.app.jmap.fetchForReply(sourceId);
+		if (!context)
+		{
+			this.egw.message(this.egw.lang('Failed to load original message'), 'error');
+			return;
+		}
+		this.isReplyCompose = false;
+		this.replyThreadingHeaders = null;
+
+		const formatAddress = (a : {name? : string, email : string}) => a.name ? `${a.name} <${a.email}>` : a.email;
+		this.et2.getWidgetById('to')?.set_value(context.to.map(formatAddress));
+		if (context.cc.length) this.et2.getWidgetById('cc')?.set_value(context.cc.map(formatAddress));
+		if (context.bcc.length) this.et2.getWidgetById('bcc')?.set_value(context.bcc.map(formatAddress));
+		this.et2.getWidgetById('subject')?.set_value(context.subject);
+		// fieldExpanderInit() (app.ts's own post-load call) already ran BEFORE this bootstrap ever
+		// populated cc/bcc - it only shows a header row whose widget already has a value AT THAT
+		// TIME, so a client-only-populated cc/bcc stays hidden behind its "..." expander despite
+		// having an address in it now (found live 2026-08-31). Re-running it re-evaluates every
+		// row (cc/bcc/folder/replyto/from) against their CURRENT values.
+		if (context.cc.length || context.bcc.length) this.fieldExpanderInit();
+
+		const isHtml = context.mimeType === 'html';
+		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
+
+		// classic getComposeFrom()'s own "$suppressSigOnTop = true" for a non-empty body - the
+		// original content already carries whatever signature it originally had, so inserting a
+		// fresh one on top/below would duplicate it. An empty body (rare - normally only a
+		// genuinely blank draft) falls through to the same signature-insertion a brand new compose
+		// gets.
+		if (context.body.trim())
+		{
+			this.currentBodyWidget()?.set_value(context.body);
+		}
+		else
+		{
+			await this.applySignatureForCurrentIdentity('', false);
+		}
+
+		if (context.attachments.length)
 		{
 			this.carryForwardAttachments(context.attachments, context.profileID);
 		}
@@ -1013,26 +1179,39 @@ export class MailCompose
 	 * `jmapBlobId` is the new marker `uploadAttachmentsViaJmap()` checks to skip the
 	 * fetch+reupload step for a row that's already a ready-to-use JMAP blob reference.
 	 */
-	private carryForwardAttachments(attachments : {blobId : string, name : string, type : string, size : number}[], profileID : string) : void
+	private carryForwardAttachments(attachments : JmapAttachment[], profileID : string) : void
+	{
+		this.mergeAttachmentEntries(attachments.map((a) => ({
+			tmp_name: 'jmap:' + a.blobId,
+			jmapBlobId: a.blobId,
+			// the account the blob actually lives on (the message being replied to) - may
+			// differ from currentProfileID() later if the user switches identity, kept per-row
+			// so displayUploadedFile() always downloads from the right place.
+			jmapProfileID: profileID,
+			name: a.name,
+			type: a.type,
+			size: a.size,
+			// plain "attach" filemode's own icon, matching what a genuine upload gets server-side
+			// (mail_compose.inc.php's own filemode_icon computation) - never per-mimetype
+			filemode_icon: 'attach',
+			filemode_title: '',
+		})));
+	}
+
+	/**
+	 * Shared "merge these already-row-shaped attachment entries into content.attachments and make
+	 * the whole attachments UI actually visible" tail - factored out of carryForwardAttachments()
+	 * (doc/ai/projects/mail-compose-jmap-migration.md's Step 4 carry-forward slice) so
+	 * attachVfsFilesForCompose() (VFS-selected files, 2026-08-31 follow-up) can reuse the identical
+	 * UI-sync logic for its own differently-shaped (`jmapVfsPath` instead of `jmapBlobId`) rows,
+	 * without duplicating any of the widget-visibility fixes below.
+	 */
+	private mergeAttachmentEntries(entries : any[]) : void
 	{
 		const content = this.et2.getArrayMgr('content');
 		content.data.attachments = [
 			...(content.data.attachments || []),
-			...attachments.map((a) => ({
-				tmp_name: 'jmap:' + a.blobId,
-				jmapBlobId: a.blobId,
-				// the account the blob actually lives on (the message being replied to) - may
-				// differ from currentProfileID() later if the user switches identity, kept per-row
-				// so displayUploadedFile() always downloads from the right place.
-				jmapProfileID: profileID,
-				name: a.name,
-				type: a.type,
-				size: a.size,
-				// plain "attach" filemode's own icon, matching what a genuine upload gets server-side
-				// (mail_compose.inc.php's own filemode_icon computation) - never per-mimetype
-				filemode_icon: 'attach',
-				filemode_title: '',
-			})),
+			...entries,
 		];
 		this.et2.setArrayMgr('content', content);
 		content.data.attachmentsBlockTitle = content.data.attachments.length + ' ' + this.egw.lang('Attachments');
@@ -1098,6 +1277,52 @@ export class MailCompose
 		this.et2.getWidgetById('attachmentsSummaryName')?.set_value(content.data.attachments[0].name);
 		const moreCount = content.data.attachments.length - 1;
 		this.et2.getWidgetById('attachmentsMoreText')?.set_value(moreCount > 0 ? '+' + moreCount : '');
+	}
+
+	/**
+	 * Attachments grid's own "Delete" button (id="delete[<tmp_name>]", the bracket substituted
+	 * per-row in the .xet) - without an onclick, a bracketed-id button submits the whole form,
+	 * server-side dispatched by mail_compose.inc.php's own `$_content['attachments']['delete']`
+	 * filter-by-tmp_name handling (classic mode keeps using exactly that, unchanged). In JMAP mode
+	 * (ralf, 2026-08-31: "Deleting attachments during compose should be straight forward just
+	 * removing them from the array they are tracked and the UI") this instead removes the row
+	 * client-side only - no postback at all, same reasoning as every other JMAP-mode attachment
+	 * path this session (a postback would re-run bootstrapReply()/lose unsent edits).
+	 */
+	deleteAttachment(widget : any) : boolean
+	{
+		if (!this.isJmapMode) return true;
+		const match = /^delete\[(.*)\]$/.exec(String(widget?.id ?? ''));
+		const tmpName = match?.[1];
+		if (!tmpName) return true;
+		const content = this.et2.getArrayMgr('content');
+		content.data.attachments = (content.data.attachments || []).filter((a : any) => a.tmp_name !== tmpName);
+		this.et2.setArrayMgr('content', content);
+		const attachmentsWidget = this.et2.getWidgetById('attachments');
+		attachmentsWidget?.set_value({content: content.data.attachments});
+		const detailsWidget : any = attachmentsWidget?.getParent();
+		if (content.data.attachments.length)
+		{
+			content.data.attachmentsBlockTitle = content.data.attachments.length + ' ' + this.egw.lang('Attachments');
+			if (detailsWidget) detailsWidget.title = content.data.attachmentsBlockTitle;
+			this.et2.getWidgetById('attachmentsSummaryName')?.set_value(content.data.attachments[0].name);
+			const moreCount = content.data.attachments.length - 1;
+			this.et2.getWidgetById('attachmentsMoreText')?.set_value(moreCount > 0 ? '+' + moreCount : '');
+		}
+		else
+		{
+			// last attachment removed - re-collapse back to the initial "no attachments" state
+			// (mirrors the disabled/collapsed start state carryForwardAttachments()/
+			// mergeAttachmentEntries() un-hide from - see their own docblocks for why both
+			// ancestors need touching directly rather than relying on @no_griddata/@attachments
+			// re-evaluating).
+			this.et2.getWidgetById('attachmentsSummaryName')?.set_value('');
+			this.et2.getWidgetById('attachmentsMoreText')?.set_value('');
+			detailsWidget?.set_disabled(true);
+			const uploadSectionWidget : any = detailsWidget?.getParent();
+			uploadSectionWidget?.set_disabled(true);
+		}
+		return false;
 	}
 
 	/**
@@ -1251,12 +1476,54 @@ export class MailCompose
 		const etemplateExecId = this.et2.getInstanceManager().etemplate_exec_id;
 		return Promise.all(attachments.map(async(attachment) =>
 		{
-			// carryForwardAttachments() (Step 4, attachment carry-forward slice) - already a real
-			// JMAP blob on this same account (from the message being replied to), no
-			// download+reupload round-trip needed, unlike a genuinely locally-staged file below.
+			// carryForwardAttachments() (Step 4, attachment carry-forward slice; also
+			// uploadLocalAttachmentViaJmap()'s own direct-upload result) - already a real JMAP blob,
+			// but only ever valid on the account it was uploaded to/read from (jmapProfileID) - the
+			// user is free to switch the "From" identity to a DIFFERENT account after attaching
+			// (ralf, 2026-08-31: "they might be on the wrong server, we need to fix this before we
+			// can send"), so only take the no-reupload-needed shortcut when the current target
+			// account still matches. Otherwise re-upload it fresh to the NEW target account
+			// (cached per source-blob/target-account pair, so switching back and forth during the
+			// same compose session doesn't re-upload on every autosave).
 			if (attachment.jmapBlobId)
 			{
-				return {blobId: attachment.jmapBlobId, name: attachment.name, type: attachment.type, size: attachment.size};
+				if (attachment.jmapProfileID === profileID)
+				{
+					return {blobId: attachment.jmapBlobId, name: attachment.name, type: attachment.type, size: attachment.size};
+				}
+				const reuploadKey = attachment.jmapProfileID + ':' + attachment.jmapBlobId + '->' + profileID;
+				const cachedReupload = this.uploadedAttachmentBlobs.get(reuploadKey);
+				if (cachedReupload)
+				{
+					return cachedReupload;
+				}
+				const reuploaded = await this.app.jmap.reuploadAttachmentForAccount(
+					attachment.jmapProfileID, attachment.jmapBlobId, attachment.name, attachment.type, profileID);
+				this.uploadedAttachmentBlobs.set(reuploadKey, reuploaded);
+				return reuploaded;
+			}
+			// vfsUpload() (VFS-attach follow-up, 2026-08-31) - a bare path reference, nothing
+			// uploaded anywhere yet. The shim reads it directly server-side at message-build time
+			// (Api\Mail\Jmap\Imap::buildMailerFromEmailProperties(), zero bytes moved via the
+			// client - ralf's explicit design call), so only a real-JMAP target actually needs the
+			// WebDAV-fetch-then-upload round trip, cached per path/target-account pair like the
+			// jmapBlobId case above.
+			if (attachment.jmapVfsPath)
+			{
+				if (await this.app.jmap.isLocalAccount(profileID))
+				{
+					return {vfsPath: attachment.jmapVfsPath, name: attachment.name, type: attachment.type, size: attachment.size};
+				}
+				const vfsReuploadKey = 'vfs:' + attachment.jmapVfsPath + '->' + profileID;
+				const cachedVfsUpload = this.uploadedAttachmentBlobs.get(vfsReuploadKey);
+				if (cachedVfsUpload)
+				{
+					return cachedVfsUpload;
+				}
+				const vfsUploaded = await this.app.jmap.uploadVfsAttachment(
+					attachment.jmapVfsPath, attachment.name, attachment.type, profileID);
+				this.uploadedAttachmentBlobs.set(vfsReuploadKey, vfsUploaded);
+				return vfsUploaded;
 			}
 			const cached = this.uploadedAttachmentBlobs.get(attachment.tmp_name);
 			if (cached)

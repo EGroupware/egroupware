@@ -223,8 +223,23 @@ class Imap extends Jmap\Base
 					case 'Email/import':
 						$result = self::emailImport($accountId, $args);
 						break;
+					case 'EmailSubmission/set':
+						// doc/ai/projects/mail-compose-jmap-migration.md's Step 2 - see
+						// emailSubmissionSet()'s own docblock for the full emulation
+						$result = self::emailSubmissionSet($accountId, $args);
+						break;
 					case 'Quota/get':
 						$result = self::quotaGet($accountId, $args);
+						break;
+					case 'Identity/get':
+						// Identity::synthesize() (Api\Mail\Jmap\Identity), the same implementation
+						// Http's own Identity/get uses - see that class's own docblock for why
+						// this is never a real per-backend passthrough. accountId "0" is the
+						// DB-free demo fixture (see this class's own docblock) - no real
+						// identities to synthesize, same "skip real work" pattern quotaGet() etc.
+						// already use for it.
+						$result = $accountId === '0' ? ['accountId' => '0', 'state' => '0', 'list' => [], 'notFound' => []]
+							: Identity::synthesize((int)$accountId, $args['ids'] ?? null);
 						break;
 					default:
 						throw new \Exception("Unsupported method '$method'");
@@ -1722,12 +1737,67 @@ class Imap extends Jmap\Base
 			$destroyed[] = $id;
 		}
 
+		// 'create' (doc/ai/projects/mail-compose-jmap-migration.md's Step 2) - unlike update/
+		// destroy above, each entry carries its OWN target mailbox (mailboxIds, RFC 8621 §4.1.1),
+		// same convention emailImport() already uses just above - so this runs independently of
+		// the single-mailboxId requirement below, which only ever applied to update/destroy.
+		// Builds the actual message via buildMailerFromEmailProperties() (the shim's own
+		// mail_compose::createMessage() equivalent) then appends the finished raw bytes - the
+		// shim has no native "create a message from JSON properties" capability, unlike a real
+		// JMAP server, so this is fundamentally new work, not a passthrough.
+		$created = [];
+		$notCreated = [];
+		if (!empty($args['create']) && $accountId !== '0')
+		{
+			$imapForCreate = self::imapServer($accountId);
+			foreach ((array)$args['create'] as $creationId => $email)
+			{
+				$creationId = (string)$creationId;
+				try
+				{
+					$target = array_key_first(array_filter((array)($email['mailboxIds'] ?? [])));
+					$createFolder = $target !== null ? self::folderPath((string)$target) : '';
+					if ($createFolder === '')
+					{
+						$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['mailboxIds']];
+						continue;
+					}
+					$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
+					// visible in the stored copy (a draft, or later moved/copied into Sent) - see
+					// forceBccHeader()'s own docblock: "normally Bcc is only added to recipients
+					// while sending, but not added visible as header" - not sending here at all,
+					// so make it visible immediately, matching mail_compose::saveAsDraft()'s own
+					// identical call before its own getRaw()+appendMessage()
+					$mailer->forceBccHeader();
+					$raw = $mailer->getRaw(false);
+
+					$flags = [];
+					foreach ((array)($email['keywords'] ?? []) as $keyword => $set)
+					{
+						if ($set && ($flag = self::importKeywordToFlag(strtolower((string)$keyword))) !== null)
+						{
+							$flags[] = $flag;
+						}
+					}
+					$createMailbox = self::hordeMailbox($imapForCreate, $createFolder);
+					$appended = self::appendRawMessage($imapForCreate, $createMailbox, $raw, $flags);
+					$created[$creationId] = ['id' => $appended['id'], 'threadId' => $appended['id'], 'size' => $appended['size']];
+				}
+				catch (\Throwable $e)
+				{
+					$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+				}
+			}
+		}
+
 		if ($accountId === '0')
 		{
 			return [
 				'accountId' => $accountId,
 				'oldState' => '0',
 				'newState' => '0',
+				'created' => (object)$created,
+				'notCreated' => (object)$notCreated,
 				'updated' => (object)$updated,
 				'notUpdated' => (object)$notUpdated,
 				'destroyed' => $destroyed,
@@ -1735,59 +1805,66 @@ class Imap extends Jmap\Base
 			];
 		}
 
-		$mailboxId = (string)($args['mailboxId'] ?? '');
-		$folder = self::folderPath($mailboxId);
-		if ($folder === '')
+		// only update/destroy (never create, handled independently above) need a single shared
+		// mailboxId - skip resolving/requiring one at all for a create-only request
+		if ($updated || $notUpdated || $destroyed || $notDestroyed)
 		{
-			throw new \InvalidArgumentException('Email/set requires mailboxId for the local IMAP shim');
-		}
-		$imap = self::imapServer($accountId);
-		$mailbox = self::hordeMailbox($imap, $folder);
-		// Remove first so replacing a custom flag never leaves two selected if the
-		// following add fails.
-		foreach ([['remove', $remove], ['add', $add]] as [$operation, $operations])
-		{
-			foreach ($operations as $keyword => $ids)
+			$mailboxId = (string)($args['mailboxId'] ?? '');
+			$folder = self::folderPath($mailboxId);
+			if ($folder === '')
 			{
-				$imap->store($mailbox, [
-					$operation => [$keyword],
+				throw new \InvalidArgumentException('Email/set requires mailboxId for the local IMAP shim');
+			}
+			$imap = self::imapServer($accountId);
+			$mailbox = self::hordeMailbox($imap, $folder);
+			// Remove first so replacing a custom flag never leaves two selected if the
+			// following add fails.
+			foreach ([['remove', $remove], ['add', $add]] as [$operation, $operations])
+			{
+				foreach ($operations as $keyword => $ids)
+				{
+					$imap->store($mailbox, [
+						$operation => [$keyword],
+						'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+					]);
+				}
+			}
+			// same primitive Mail::moveMessages()'s same-account branch uses (api/src/Mail.php),
+			// called directly - a server-internal IMAP COPY+move, no message bytes handled by us
+			foreach ($moves as $targetFolder => $ids)
+			{
+				$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+				$imap->copy($mailbox, $targetMailbox, [
+					'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
+					'move' => true,
+				]);
+			}
+			// same IMAP COPY primitive, without 'move' - the message stays in $mailbox too, see
+			// MailJmap.copyMessages()
+			foreach ($copies as $targetFolder => $ids)
+			{
+				$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+				$imap->copy($mailbox, $targetMailbox, [
 					'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
 				]);
 			}
-		}
-		// same primitive Mail::moveMessages()'s same-account branch uses (api/src/Mail.php),
-		// called directly - a server-internal IMAP COPY+move, no message bytes handled by us
-		foreach ($moves as $targetFolder => $ids)
-		{
-			$targetMailbox = self::hordeMailbox($imap, $targetFolder);
-			$imap->copy($mailbox, $targetMailbox, [
-				'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
-				'move' => true,
-			]);
-		}
-		// same IMAP COPY primitive, without 'move' - the message stays in $mailbox too, see
-		// MailJmap.copyMessages()
-		foreach ($copies as $targetFolder => $ids)
-		{
-			$targetMailbox = self::hordeMailbox($imap, $targetFolder);
-			$imap->copy($mailbox, $targetMailbox, [
-				'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
-			]);
-		}
-		if ($destroyed)
-		{
-			// same primitive Mail::deleteMessages()'s "remove_immediately" mode uses
-			$imap->store($mailbox, [
-				'add' => ['\\Deleted'],
-				'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $destroyed)),
-			]);
-			$imap->expunge($mailbox);
+			if ($destroyed)
+			{
+				// same primitive Mail::deleteMessages()'s "remove_immediately" mode uses
+				$imap->store($mailbox, [
+					'add' => ['\\Deleted'],
+					'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $destroyed)),
+				]);
+				$imap->expunge($mailbox);
+			}
 		}
 
 		return [
 			'accountId' => $accountId,
 			'oldState' => '0',
 			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
 			'updated' => (object)$updated,
 			'notUpdated' => (object)$notUpdated,
 			'destroyed' => $destroyed,
@@ -1848,28 +1925,375 @@ class Imap extends Jmap\Base
 					}
 				}
 
-				$ret = $imap->append($mailbox, [['data' => $raw, 'flags' => $flags]]);
-				$uid = is_object($ret) && isset($ret->ids) ? (string)current($ret->ids) : null;
-				if ($uid === null || $uid === '')
-				{
-					// server didn't report UIDPLUS-style ids (append() returned plain true) - same
-					// fallback Mail::appendMessage() uses: the just-appended message is always the
-					// newest by arrival, found directly rather than via Api\Mail (see class docblock)
-					$sorted = $imap->search($mailbox, new \Horde_Imap_Client_Search_Query(), [
-						'sort' => [\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_ARRIVAL],
-					]);
-					$uid = (string)(array_values($sorted['match']->ids ?? [])[0] ?? '');
-				}
-				if ($uid === '')
-				{
-					throw new \Exception('IMAP server did not report the new message UID');
-				}
-
-				$created[$creationId] = ['id' => $uid, 'blobId' => $blobId, 'threadId' => $uid, 'size' => strlen($raw)];
+				$appended = self::appendRawMessage($imap, $mailbox, $raw, $flags);
+				$created[$creationId] = ['id' => $appended['id'], 'blobId' => $blobId, 'threadId' => $appended['id'], 'size' => $appended['size']];
 				if (str_starts_with($blobId, 'upload:'))
 				{
 					@unlink(self::uploadPath(substr($blobId, strlen('upload:'))));
 				}
+			}
+			catch (\Throwable $e)
+			{
+				$notCreated[$creationId] = ['type' => 'serverFail', 'description' => $e->getMessage()];
+			}
+		}
+
+		return [
+			'accountId' => $accountId,
+			'oldState' => '0',
+			'newState' => '0',
+			'created' => (object)$created,
+			'notCreated' => (object)$notCreated,
+		];
+	}
+
+	/**
+	 * Append a raw RFC822 message to a mailbox and resolve the assigned UID - the core of
+	 * emailImport() above, extracted (doc/ai/projects/mail-compose-jmap-migration.md's Step 2) so
+	 * emailSet()'s new 'create' handling and emailSubmissionSet() (both needing to append a
+	 * message they just BUILT in memory via Api\Mailer, not one already uploaded as a blob) can
+	 * reuse it directly, without a wasteful "upload as a blob, then immediately read it straight
+	 * back via readUploadedBlob()" round trip.
+	 *
+	 * @param \Horde_Imap_Client_Socket $imap
+	 * @param string $mailbox real IMAP mailbox name (hordeMailbox()'s own return type, despite the
+	 *  confusingly-named \Horde_Imap_Client_Mailbox class elsewhere in this API - append()/store()
+	 *  etc. all accept a plain string here, not an instance of that class)
+	 * @param string $raw raw RFC822 message bytes
+	 * @param string[] $flags IMAP flags to set on the new message, e.g. ['\Seen']
+	 * @return array{id: string, size: int}
+	 * @throws \Exception if the server never reports a UID for the new message (should not happen)
+	 */
+	private static function appendRawMessage(\Horde_Imap_Client_Socket $imap, string $mailbox, string $raw, array $flags=[]) : array
+	{
+		$ret = $imap->append($mailbox, [['data' => $raw, 'flags' => $flags]]);
+		$uid = is_object($ret) && isset($ret->ids) ? (string)current($ret->ids) : null;
+		if ($uid === null || $uid === '')
+		{
+			// server didn't report UIDPLUS-style ids (append() returned plain true) - same
+			// fallback Mail::appendMessage() uses: the just-appended message is always the
+			// newest by arrival, found directly rather than via Api\Mail (see class docblock)
+			$sorted = $imap->search($mailbox, new \Horde_Imap_Client_Search_Query(), [
+				'sort' => [\Horde_Imap_Client::SORT_REVERSE, \Horde_Imap_Client::SORT_ARRIVAL],
+			]);
+			$uid = (string)(array_values($sorted['match']->ids ?? [])[0] ?? '');
+		}
+		if ($uid === '')
+		{
+			throw new \Exception('IMAP server did not report the new message UID');
+		}
+		return ['id' => $uid, 'size' => strlen($raw)];
+	}
+
+	/**
+	 * Build an Api\Mailer instance from RFC 8621 Email properties (to/cc/bcc/subject/inReplyTo/
+	 * references/bodyValues + either the htmlBody/textBody convenience shortcut or a full
+	 * bodyStructure) - doc/ai/projects/mail-compose-jmap-migration.md's Step 2, the shim's own
+	 * equivalent of classic mail_compose::createMessage(). Used by both emailSet()'s new 'create'
+	 * handling (building a Draft/Email to store) and emailSubmissionSet() (re-fetching an existing
+	 * Draft's own properties via emailGet() and resending them). Doesn't call send()/getRaw()
+	 * itself - callers decide what to do with the finished Mailer (store as a draft, or actually
+	 * send it), same separation classic mail_compose::send()/saveAsDraft() already have around
+	 * their own shared createMessage() call.
+	 *
+	 * bodyStructure is walked the same way mail/js/jmap.ts's own draftEmailProperties() builds it
+	 * client-side: multipart/mixed (attachments) > multipart/related (inline images) >
+	 * multipart/alternative (text/plain+text/html) - each layer only present when actually
+	 * needed - so a bare recursive "does this leaf's partId have a bodyValues entry (body text) or
+	 * not (attachment/inline, use its blobId)" walk correctly finds everything regardless of how
+	 * many of those layers are actually present for a given message.
+	 *
+	 * @param string $accountId numeric EGroupware acc_id, as a string (dispatch()'s own convention)
+	 * @param array $email RFC 8621 Email property set - either a create-shape (client-supplied) or
+	 *  Email/get's own read-shape (re-fetched from an existing message) - both are handled
+	 *  identically here, only the properties this method actually reads matter. `from` (if
+	 *  present) always wins over the account's own default identity - the client's own
+	 *  draftEmailProperties() (mail/js/jmap.ts) always sets it explicitly from whichever identity
+	 *  the "From" dropdown actually has selected, and RFC 8621's Email object has no separate
+	 *  "identity" concept of its own to fall back on anyway - emailSubmissionSet()'s own re-fetch
+	 *  via emailGet() naturally carries this same value through unchanged, since it's just the
+	 *  Draft's own already-stored From header, reparsed like any other message's.
+	 */
+	private static function buildMailerFromEmailProperties(string $accountId, array $email) : Api\Mailer
+	{
+		$mailer = new Api\Mailer((int)$accountId);
+
+		if (!empty($email['from'][0]['email']))
+		{
+			$mailer->setFrom($email['from'][0]['email'], $email['from'][0]['name'] ?? $email['from'][0]['email']);
+		}
+
+		foreach (['to', 'cc', 'bcc'] as $type)
+		{
+			foreach ((array)($email[$type] ?? []) as $address)
+			{
+				if (!empty($address['email']))
+				{
+					$mailer->addAddress($address['email'], $address['name'] ?? '', $type);
+				}
+			}
+		}
+		$mailer->addHeader('Subject', (string)($email['subject'] ?? ''));
+
+		foreach (['inReplyTo' => 'In-Reply-To', 'references' => 'References'] as $prop => $header)
+		{
+			if (!empty($email[$prop]))
+			{
+				$mailer->addHeader($header, implode(' ', array_map(
+					fn($id) => '<'.trim((string)$id, '<>').'>', (array)$email[$prop])));
+			}
+		}
+
+		$bodyValues = (array)($email['bodyValues'] ?? []);
+		$textBody = null;
+		$htmlBody = null;
+		$attachments = [];
+		$collect = function(array $part) use (&$collect, &$textBody, &$htmlBody, &$attachments, $bodyValues)
+		{
+			if (!empty($part['subParts']))
+			{
+				foreach ((array)$part['subParts'] as $subPart)
+				{
+					$collect((array)$subPart);
+				}
+				return;
+			}
+			$partId = $part['partId'] ?? null;
+			$type = strtolower((string)($part['type'] ?? ''));
+			// bodyValues presence alone is the correct signal, NOT blobId emptiness - a real
+			// Email/get response (emailBodyFields()/bodyPartToJmap()) sets blobId on EVERY part,
+			// body text included (RFC 8621 gives every part a blobId for individual download), and
+			// bodyValues is only ever populated for the text/html body partIds to begin with
+			// (emailBodyFields() explicitly excludes them from its own attachments loop) - so this
+			// can never collide with a genuine attachment/inline part
+			if ($partId !== null && isset($bodyValues[$partId]))
+			{
+				$value = (string)($bodyValues[$partId]['value'] ?? '');
+				if ($type === 'text/html')
+				{
+					$htmlBody = $value;
+				}
+				elseif ($type === 'text/plain')
+				{
+					$textBody = $value;
+				}
+				return;
+			}
+			// 'vfsPath' (2026-08-31, VFS-attach follow-up, ralf: "leave the attachment on the
+			// EGroupware server... no round-trip via the client") - a bare VFS path reference the
+			// client never uploaded/downloaded at all, read directly below via the Vfs stream
+			// wrapper, same as classic mail_compose::getComposeFrom()'s own
+			// "vfs://default".$path staged-attachment handling.
+			if (!empty($part['blobId']) || !empty($part['vfsPath']))
+			{
+				$attachments[] = $part;
+			}
+		};
+		if (!empty($email['bodyStructure']))
+		{
+			$collect((array)$email['bodyStructure']);
+		}
+		else
+		{
+			foreach (['textBody', 'htmlBody'] as $prop)
+			{
+				foreach ((array)($email[$prop] ?? []) as $part)
+				{
+					$collect((array)$part);
+				}
+			}
+		}
+
+		if ($textBody !== null)
+		{
+			$mailer->setBody($textBody);
+		}
+		if ($htmlBody !== null)
+		{
+			// false = don't auto-generate an alternative - a real one was already supplied above
+			// if the client sent one, matching classic mail_compose::createMessage()'s own
+			// "setBody() then setHtmlBody($body, null, false)" convention exactly
+			$mailer->setHtmlBody($htmlBody, null, false);
+		}
+
+		foreach ($attachments as $part)
+		{
+			$vfsPath = (string)($part['vfsPath'] ?? '');
+			$name = (string)($part['name'] ?? 'attachment');
+			$type = (string)($part['type'] ?? 'application/octet-stream');
+			// 'vfsPath' (2026-08-31, VFS-attach follow-up) - opened as a resource via Api\Vfs::fopen()
+			// (ensures the 'vfs://' stream wrapper is actually registered, unlike a plain fopen()
+			// on Vfs::PREFIX.$path) and fed straight into Api\Mailer::addAttachment()/
+			// addEmbeddedImage() as a resource, never read into a PHP string first (ralf:
+			// "file_get_contents() can easily get over PHP's memory-limit" - both methods already
+			// accept "an open file-handle", same as Vfs::fopen() itself returns).
+			if ($vfsPath !== '')
+			{
+				$handle = Api\Vfs::fopen($vfsPath, 'r');
+				if (!$handle)
+				{
+					continue;
+				}
+				if (($part['disposition'] ?? '') === 'inline' && !empty($part['cid']))
+				{
+					$mailer->addEmbeddedImage($handle, trim((string)$part['cid'], '<>'), $name, $type);
+				}
+				else
+				{
+					$mailer->addAttachment($handle, $name, $type);
+				}
+				continue;
+			}
+			$blobId = (string)($part['blobId'] ?? '');
+			$raw = $blobId !== '' ? self::readUploadedBlob($accountId, $blobId) : null;
+			if ($raw === null)
+			{
+				continue;
+			}
+			if (($part['disposition'] ?? '') === 'inline' && !empty($part['cid']))
+			{
+				// addEmbeddedImage() only accepts a path or an open resource, never a raw string
+				// (unlike addStringAttachment() below) - a php://temp stream avoids a real temp
+				// file just to satisfy that
+				$stream = fopen('php://temp', 'r+');
+				fwrite($stream, $raw);
+				rewind($stream);
+				$mailer->addEmbeddedImage($stream, trim((string)$part['cid'], '<>'), $name, $type);
+			}
+			else
+			{
+				$mailer->addStringAttachment($raw, $name, $type);
+			}
+		}
+
+		return $mailer;
+	}
+
+	/**
+	 * EmailSubmission/set (RFC 8621 §7) for the local IMAP shim - doc/ai/projects/
+	 * mail-compose-jmap-migration.md's Step 2. A real JMAP server (Stalwart, via Http.php's own
+	 * pure passthrough EmailSubmission class) handles this natively; plain IMAP has no concept of
+	 * it at all, so this emulates it end to end:
+	 *
+	 * 1. Re-fetch the already-created Draft's own JMAP properties via emailGet() - the exact same
+	 *    properties Email/get would return for any other message, NOT a second, separate rebuild
+	 *    from whatever the client originally sent to Email/set create (nothing server-side retains
+	 *    that once the message is already stored).
+	 * 2. Rebuild an Api\Mailer from those properties (buildMailerFromEmailProperties(), shared
+	 *    with Email/set's own 'create' handling above).
+	 * 3. Actually send it, THEN reuse that SAME Mailer's own getRaw() (not a second rebuild) for
+	 *    the Sent-folder copy - guaranteeing it always exactly matches what was actually
+	 *    transmitted, mirroring classic mail_compose::send()'s own "$mail->send(); ... [later]
+	 *    $mail->forceBccHeader(); $mail->getRaw()" sequence exactly (Bcc is only ever visible in
+	 *    the stored/Sent copy, never in what's actually transmitted to recipients - Horde's own
+	 *    send() already strips it from the wire while still using it for the SMTP envelope, same
+	 *    as classic compose has always relied on - forceBccHeader() only needs to run afterward,
+	 *    for the copy we store).
+	 * 4. Append that raw copy into the target (Sent) mailbox and delete the old Draft outright -
+	 *    NOT a "move" of the draft's own stored bytes, since the just-transmitted Mailer's own
+	 *    getRaw() is the correct, authoritative copy.
+	 *
+	 * `mailboxId` isn't a standard EmailSubmission/set property and the client doesn't send one -
+	 * the Draft's current mailbox is derived from `onSuccessUpdateEmail`'s own patch instead (its
+	 * `mailboxIds/<id>: null` entry - "the mailbox this message is being removed from" - by
+	 * construction, that's always wherever it currently lives; this is also where the target
+	 * (`mailboxIds/<id>: true`) and keyword patches for the Sent copy come from). A bare
+	 * EmailSubmission/set with no onSuccessUpdateEmail at all is valid per RFC 8621 but not
+	 * something this codebase's own client ever sends, so isn't supported here - fails with
+	 * invalidProperties instead of guessing a fallback mailbox.
+	 */
+	public static function emailSubmissionSet(string $accountId, array $args) : array
+	{
+		$created = [];
+		$notCreated = [];
+		if ($accountId === '0')
+		{
+			return ['accountId' => $accountId, 'oldState' => '0', 'newState' => '0',
+				'created' => (object)$created, 'notCreated' => (object)$notCreated];
+		}
+		$imap = self::imapServer($accountId);
+
+		foreach ((array)($args['create'] ?? []) as $creationId => $submission)
+		{
+			$creationId = (string)$creationId;
+			try
+			{
+				$emailId = (string)($submission['emailId'] ?? '');
+				if ($emailId === '' || !ctype_digit($emailId))
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['emailId']];
+					continue;
+				}
+				$patch = (array)($args['onSuccessUpdateEmail']['#'.$creationId] ?? []);
+				$sourceFolder = null;
+				$targetFolder = null;
+				$sentFlags = [];
+				foreach ($patch as $path => $value)
+				{
+					if (str_starts_with((string)$path, 'mailboxIds/'))
+					{
+						$folder = self::folderPath(substr((string)$path, strlen('mailboxIds/')));
+						if ($value === true)
+						{
+							$targetFolder = $folder;
+						}
+						elseif ($value === null)
+						{
+							$sourceFolder = $folder;
+						}
+						continue;
+					}
+					if (str_starts_with((string)$path, 'keywords/') && $value === true)
+					{
+						$keyword = strtolower(substr((string)$path, strlen('keywords/')));
+						if (($flag = self::importKeywordToFlag($keyword)) !== null)
+						{
+							$sentFlags[] = $flag;
+						}
+					}
+				}
+				if ($sourceFolder === null)
+				{
+					$notCreated[$creationId] = ['type' => 'invalidProperties', 'properties' => ['onSuccessUpdateEmail']];
+					continue;
+				}
+
+				$emailContext = [];
+				$fetched = self::emailGet($accountId, [
+					'ids' => [$emailId],
+					'mailboxId' => base64_encode($sourceFolder),
+					'properties' => ['from', 'to', 'cc', 'bcc', 'subject', 'inReplyTo', 'references',
+						'bodyStructure', 'textBody', 'htmlBody', 'bodyValues'],
+				], $emailContext);
+				$email = ($fetched['list'] ?? [])[0] ?? null;
+				if (!$email)
+				{
+					$notCreated[$creationId] = ['type' => 'notFound'];
+					continue;
+				}
+
+				$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
+				$mailer->send();
+				// only now - see this method's own docblock for why not before send()
+				$mailer->forceBccHeader();
+				$raw = $mailer->getRaw(false);
+
+				if ($targetFolder !== null)
+				{
+					$targetMailbox = self::hordeMailbox($imap, $targetFolder);
+					self::appendRawMessage($imap, $targetMailbox, $raw, $sentFlags);
+				}
+				// remove the old Draft outright (matches classic mail_compose::send()'s own
+				// deleteMessages(..., 'remove_immediately') cleanup after a successful
+				// send-from-draft)
+				$sourceMailbox = self::hordeMailbox($imap, $sourceFolder);
+				$imap->store($sourceMailbox, [
+					'add' => ['\\Deleted'],
+					'ids' => new \Horde_Imap_Client_Ids([(int)$emailId]),
+				]);
+				$imap->expunge($sourceMailbox);
+
+				$created[$creationId] = ['id' => $creationId, 'sendAt' => gmdate('Y-m-d\TH:i:s\Z'), 'undoStatus' => 'final'];
 			}
 			catch (\Throwable $e)
 			{
@@ -2180,22 +2604,29 @@ class Imap extends Jmap\Base
 	 * header is otherwise unused/ignored by this shim, same as the JSON POST dispatch).
 	 *
 	 * @param string $accountId
-	 * @param string $blobId see bodyPartToJmap() - base64($mailbox).':'.$uid.':'.$partId
+	 * @param string $blobId see bodyPartToJmap() - base64($mailbox).':'.$uid.':'.$partId - OR a
+	 *  freshly-uploaded, not-yet-imported "upload:<token>" blob (see upload()/readUploadedBlob())
+	 *  - needed so a genuinely new local attachment can be re-downloaded (e.g.
+	 *  MailJmap.reuploadAttachmentForAccount(), after an identity switch moves it to a different
+	 *  account) BEFORE it's ever actually imported into a message - found live 2026-08-31,
+	 *  "Failed to download blob" - this method only ever knew the mailbox:uid:partId shape.
 	 * @param string $name suggested filename for Content-Disposition
 	 * @param string $type Content-Type to send
 	 */
 	public static function download(string $accountId, string $blobId, string $name, string $type) : void
 	{
-		[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
-		$imap = ($mailboxB64 !== null && $uid) ? self::imapServer($accountId) : null;
-		if (!$imap)
+		if (str_starts_with($blobId, 'upload:'))
 		{
-			http_response_code(404);
-			return;
+			$bytes = self::readUploadedBlob($accountId, $blobId);
 		}
-		$mailbox = self::urlsafeB64Decode($mailboxB64);
-
-		$bytes = $partId !== '' ? self::fetchRawPart($imap, $mailbox, $uid, $partId) : self::fetchRawMessage($imap, $mailbox, $uid);
+		else
+		{
+			[$mailboxB64, $uid, $partId] = array_pad(explode(':', $blobId, 3), 3, null);
+			$imap = ($mailboxB64 !== null && $uid) ? self::imapServer($accountId) : null;
+			$bytes = $imap ? ($partId !== '' ?
+				self::fetchRawPart($imap, self::urlsafeB64Decode($mailboxB64), $uid, $partId) :
+				self::fetchRawMessage($imap, self::urlsafeB64Decode($mailboxB64), $uid)) : null;
+		}
 		if ($bytes === null)
 		{
 			http_response_code(404);
