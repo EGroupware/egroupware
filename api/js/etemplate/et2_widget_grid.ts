@@ -1120,7 +1120,10 @@ export class et2_grid extends et2_DOMWidget implements et2_IDetachedDOM, et2_IAl
 		for(; i < this.rowData.length; i++)
 		{
 			if(this.rowData[i].part != 'body') continue;
-			const content = this.getArrayMgr('content').getEntry(i);
+			// getEntry() short-circuits and returns the whole content array when passed
+			// the number 0 (its explodeKey() falsy-check treats numeric 0 as "no key"),
+			// so row index 0 must be passed as a string to be looked up correctly.
+			const content = this.getArrayMgr('content').getEntry(String(i));
 			if(content)
 			{
 				// Add a new action object to the object manager
