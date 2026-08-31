@@ -264,6 +264,17 @@ export class MailCompose
 				void this.updateSignatureForIdentity();
 				return;
 			}
+			// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 (ralf, 2026-08-31: "I think
+			// we want the server-side roundtrip to go away") - the classic full postback below was
+			// actively DESTRUCTIVE for a JMAP-mode reply/forward specifically: the reload re-runs
+			// bootstrapReply() from scratch (same URL, still "&jmap=1&from=reply&id=..."), which
+			// resets mimeType back to the ORIGINAL message's own mimeType, silently discarding the
+			// user's own toggle (found live 2026-08-31).
+			if (widgetId === 'mimeType' && this.isJmapMode)
+			{
+				this.switchMimeTypeClientSide(!!_widget.getValue());
+				return;
+			}
 			switch (widgetId)
 			{
 				case 'mimeType':
@@ -276,6 +287,68 @@ export class MailCompose
 					}
 			}
 		}
+	}
+
+	/**
+	 * Last HTML<->plain conversion this popup did (switchMimeTypeClientSide()) - "before" is the
+	 * body right before that conversion ran, "after" is what it produced. Lets toggling straight
+	 * back restore the ORIGINAL content instead of running a second, lossy conversion on top of
+	 * an already-degraded result (ralf, 2026-08-31: "if I'm not happy with the conversion... [and
+	 * toggle back] instead another conversion makes it even worse, so we should store the state
+	 * before and after... check the text has not changed, and simply return the version before").
+	 * Cleared (or replaced) the moment the CURRENT body no longer matches `after` - the user
+	 * edited since converting, so there's nothing meaningful left to "undo" back to.
+	 */
+	private lastMimeTypeConversion : {before : string, after : string} | null = null;
+
+	/**
+	 * JMAP-mode HTML/plain mimeType toggle (submitOnChange()'s own early-return above) - converts
+	 * the CURRENT body and swaps which container is visible, entirely client-side. Reusing
+	 * MailJmap.htmlToPlainText() (html-to-text npm package) for HTML->plain; plain->HTML is a
+	 * simple `<pre>`-wrapped, escaped roundtrip - good enough to switch back and forth without
+	 * losing content, not a polished HTML authoring experience (nobody switches TO plain text
+	 * and then back expecting rich formatting to reappear either way, outside the "undo" case
+	 * lastMimeTypeConversion already covers).
+	 */
+	private switchMimeTypeClientSide(toHtml : boolean) : void
+	{
+		const fromWidget = this.et2.getWidgetById(toHtml ? 'mail_plaintext' : 'mail_htmltext');
+		const toWidget = this.et2.getWidgetById(toHtml ? 'mail_htmltext' : 'mail_plaintext');
+		const currentBody = String(fromWidget?.get_value() ?? '');
+
+		let newBody : string;
+		if (this.lastMimeTypeConversion?.after === currentBody)
+		{
+			newBody = this.lastMimeTypeConversion.before;
+			this.lastMimeTypeConversion = null;
+		}
+		else
+		{
+			newBody = toHtml
+				? '<pre>' + MailJmap.escapeHtml(currentBody) + '</pre>'
+				: MailJmap.htmlToPlainText(currentBody);
+			this.lastMimeTypeConversion = {before: currentBody, after: newBody};
+		}
+		toWidget?.set_value(newBody);
+
+		// the "which body container is visible" swap is normally driven by the is_plain/is_html
+		// content flags, but those are one-shot expression bindings only re-evaluated on a fresh
+		// server render (same non-reactivity already seen elsewhere in this file) - toggle the
+		// containers directly instead. mail_htmltext sits inside an <et2-ai> wrapper (2 levels to
+		// the actual mailComposeHtmlContainer box), mail_plaintext doesn't (1 level) - walk up by
+		// class name instead of a hardcoded depth so this doesn't silently break if either
+		// wrapping ever changes.
+		const findContainer = (widgetId : string, className : string) : any =>
+		{
+			let widget : any = this.et2.getWidgetById(widgetId);
+			while (widget && !widget.getDOMNode?.()?.classList?.contains(className))
+			{
+				widget = widget.getParent?.();
+			}
+			return widget;
+		};
+		findContainer('mail_htmltext', 'mailComposeHtmlContainer')?.set_disabled(!toHtml);
+		findContainer('mail_plaintext', 'mailComposeTextContainer')?.set_disabled(toHtml);
 	}
 
 	/**

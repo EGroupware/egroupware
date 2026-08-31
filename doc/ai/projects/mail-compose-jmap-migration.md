@@ -7,12 +7,45 @@ multiple messages), and inline-image resolution for the quoted body (incl. its o
 side - blob re-upload, caching, and now a proper text/plain alternative) are ALL done +
 live-verified (2026-08-31, incl. against the IMAP-shim backend - see its own write-up below). Step
 4 is now functionally complete except reply-all/forward into an already-open compose popup (the
-`setCompose()` case, deliberately deferred - see its own write-up below). **Not yet tested: a
-plain-text-mode JMAP-native send/save, at all, this whole session** - flagged by ralf, still
-outstanding. Next up: Step 2 (IMAP-shim EmailSubmission emulation) - the shim can bootstrap/quote/
-carry-forward attachments via JMAP already, but sending still falls back to classic there entirely,
-since `EmailSubmission/set` was never built for it. Companion to
-[[mail-jmap-imap-inversion]].
+`setCompose()` case, deliberately deferred - see its own write-up below). Next up: Step 2
+(IMAP-shim EmailSubmission emulation) - the shim can bootstrap/quote/carry-forward attachments via
+JMAP already, but sending still falls back to classic there entirely, since `EmailSubmission/set`
+was never built for it.
+
+**Real bug found live-testing plain-text mode for the first time this session (2026-08-31)**:
+Toggling the "HTML" checkbox off/on used to trigger a full classic postback
+   (`case 'mimeType': this.et2.getInstanceManager().submit();`, pre-existing/unchanged) - for a
+   JMAP-mode reply/forward specifically, that reload re-runs `bootstrapReply()` from scratch (same
+   URL, still `&jmap=1&from=reply&id=...`), silently resetting `mimeType` back to the ORIGINAL
+   message's own mimeType and discarding the user's own toggle entirely. Fixed (ralf: "I think we
+   want the server-side roundtrip to go away"): `submitOnChange()` now handles `mimeType` entirely
+   client-side when `isJmapMode`, same treatment identity-switching already got earlier - new
+   `switchMimeTypeClientSide()` converts the current body (`MailJmap.htmlToPlainText()` for
+   HTML->plain, a plain `<pre>`-wrapped escape for plain->HTML) and toggles which body container
+   is visible directly (that swap is normally driven by `is_plain`/`is_html` content flags, one-shot
+   expression bindings that don't react to a client-only mimeType change either).
+   **Also solves a longstanding, previously-unfixable UX complaint for free** (ralf: "if I'm not
+   happy with the conversion, I (un)check the HTML checkbox again and expect it to go back to the
+   previous display, but instead another conversion makes it even worse") - new
+   `lastMimeTypeConversion` field remembers the last conversion's `{before, after}` pair; toggling
+   straight back (without editing in between) restores the exact pre-conversion content instead of
+   running a second, further-degrading conversion on top of an already-lossy result.
+
+**Known open issue, not yet root-caused**: clicking a carried-forward `message/rfc822` attachment's
+filename in the compose attachments list (`displayUploadedFile()`'s own `jmapBlobId` branch,
+`displayJmapBlobAttachment()`) unexpectedly ended up navigating to
+`mail.mail_ui.importMessageFromVFS2DraftAndDisplay` (a real, pre-existing menuaction registered via
+`mail_hooks.inc.php`'s MIME-type registry for `message/rfc822` specifically -
+`formData[file]`/`formData[data]`/`formData[type]=message/rfc822`) - NOT anything
+`displayJmapBlobAttachment()` itself calls. That import path expects a real VFS-stored file, which
+a bare JMAP blob reference isn't - timed out server-side, then showed a confusing "Zielordner
+Drafts existiert nicht" confirm dialog. Root mechanism not yet found (checked `Et2Description`'s
+own `_handleClick()` - `open_link()` only fires if `mimeData`/`href` are set, and neither is bound
+anywhere in this row template) - something ELSE is routing `message/rfc822`-typed rows through this
+registry, specific to that one MIME type (this whole carry-forward mechanism already works fine
+for image/PDF/other types, confirmed live). Needs more investigation before a fix.
+
+Companion to [[mail-jmap-imap-inversion]].
 
 **HTML sends were missing a text/plain alternative entirely, built 2026-08-31, not yet
 live-tested.** Confirmed via `mail_compose.inc.php`'s own `createMessage()`: classic ALWAYS builds

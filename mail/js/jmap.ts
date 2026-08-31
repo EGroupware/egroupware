@@ -3929,7 +3929,8 @@ export class MailJmap
 			: start + before + sigSource + inbetween + body;
 	}
 
-	private static escapeHtml(text : string) : string
+	/** Also used by compose.ts's client-side mimeType (HTML/plain) toggle handler. */
+	static escapeHtml(text : string) : string
 	{
 		const div = document.createElement('div');
 		div.textContent = text;
@@ -4177,9 +4178,11 @@ export class MailJmap
 	 * mail line-length (RFC 2822-ish, same ballpark classic Api\Mail\Html::convertHTMLToText()
 	 * wraps to) - NOT that same sophisticated server-side engine (entity/charset edge cases,
 	 * quoting conventions tuned for this codebase specifically), which stays server-side,
-	 * untouched, only used for signature conversion.
+	 * untouched, only used for signature conversion. Also used by compose.ts's client-side
+	 * mimeType (HTML/plain) toggle handler, converting the CURRENT body when the user switches
+	 * modes mid-compose - not just this method's own original send-time purpose.
 	 */
-	private static htmlToPlainText(html : string) : string
+	static htmlToPlainText(html : string) : string
 	{
 		return htmlToText(html, {wordwrap: 78});
 	}
