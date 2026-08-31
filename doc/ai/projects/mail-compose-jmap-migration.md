@@ -217,19 +217,100 @@ Toggling the "HTML" checkbox off/on used to trigger a full classic postback
    straight back (without editing in between) restores the exact pre-conversion content instead of
    running a second, further-degrading conversion on top of an already-lossy result.
 
-**Known open issue, not yet root-caused**: clicking a carried-forward `message/rfc822` attachment's
-filename in the compose attachments list (`displayUploadedFile()`'s own `jmapBlobId` branch,
-`displayJmapBlobAttachment()`) unexpectedly ended up navigating to
-`mail.mail_ui.importMessageFromVFS2DraftAndDisplay` (a real, pre-existing menuaction registered via
-`mail_hooks.inc.php`'s MIME-type registry for `message/rfc822` specifically -
-`formData[file]`/`formData[data]`/`formData[type]=message/rfc822`) - NOT anything
-`displayJmapBlobAttachment()` itself calls. That import path expects a real VFS-stored file, which
-a bare JMAP blob reference isn't - timed out server-side, then showed a confusing "Zielordner
-Drafts existiert nicht" confirm dialog. Root mechanism not yet found (checked `Et2Description`'s
-own `_handleClick()` - `open_link()` only fires if `mimeData`/`href` are set, and neither is bound
-anywhere in this row template) - something ELSE is routing `message/rfc822`-typed rows through this
-registry, specific to that one MIME type (this whole carry-forward mechanism already works fine
-for image/PDF/other types, confirmed live). Needs more investigation before a fix.
+**`.eml` misrouting bug: RESOLVED 2026-08-31** (originally left open, root mechanism never found
+despite two investigation passes). Rather than keep chasing the actual triggering mechanism for
+`mail.mail_ui.importMessageFromVFS2DraftAndDisplay`, sidestepped it entirely (ralf: "we could
+probably use our mail view popup, it does the same thing and we fixed it to work client-side") -
+`displayJmapBlobAttachment()` now opens `mail_ui::displayMessage()` directly for a forward-as-
+attachment entry (which IS the original message itself, not a generic blob) via a new
+`jmapSourceRowId` field threaded through `fetchForForwardAsAttachment()`/`carryForwardAttachments()`
+- matching `app.displayAttachment()`'s own existing `MESSAGE/RFC822` case exactly, no blob download
+involved at all for this case anymore. **2 more real bugs found live getting this actually working
+end to end**:
+1. `mail_ui::displayMessage()` unconditionally accessed `Mail\RowIdParts`' lazy `msgUID`/`folder`
+   keys - for a Stalwart opaque-id row this forces `Imap\Jmap::emailId2uid()`, a real raw IMAP
+   `EMAILID` search (exactly the "time-consuming fallback" `RowIdParts`' own docblock says JMAP-
+   native callers should never have to pay for). That search came back empty against Stalwart even
+   for a message that opens fine via a direct `Email/get`, causing a long timeout then a false
+   "message could not be displayed" error - despite `$uid` never being used for anything beyond
+   that one check (`$content['mail_id']` is always the original, unresolved row-id regardless).
+   Fixed by skipping the whole classic-resolution block (Drafts/Templates redirect + the error-
+   check) entirely for a JMAP-native row (`$hA['is_jmap']`) - one accepted trade-off (ralf): a
+   Draft/Template message opened this way shows read-only instead of redirecting to compose, not
+   reachable via forward-as-attachment in practice.
+2. Even once the popup opened and loaded correctly, the forwarded message never showed up in the
+   RECIPIENT's own "Attachments" list at all once actually delivered - `Horde_Mime_Part::
+   addMimeHeaders()` hard-codes "message/* parts require no additional header information" (RFC
+   2046 [5.2.1]) and unconditionally skips `Content-Disposition` for ANY part whose primary type is
+   "message", regardless of which `Api\Mailer` method builds it. New `Rfc822AttachmentPart` (a
+   narrow `Horde_Mime_Part` subclass re-adding just that one header, reusing the same header object
+   `setDisposition()` already populated) + `Imap::addAttachmentPart()`, a small shared helper both
+   attachment-processing branches now go through - transparent for every other type, only
+   `message/rfc822` takes the new path. Regression test added
+   (`ImapBuildMailerTest::testMessageRfc822AttachmentGetsAttachmentDisposition`).
+Both confirmed live: the popup opens correctly and the attachment shows up in the recipient's inbox
+for a newly-forwarded test message (an already-sent message from before this fix keeps its
+original, disposition-less bytes - re-viewing it proves nothing about the fix).
+
+**3 more rounds of "same symptom, different mechanism" chasing a real bounce/NDM's own nested
+`.eml`, all resolved 2026-08-31**:
+1. **Root cause finally found, in shared framework code**: `Et2Description._handleClick()`
+   (`api/js/etemplate/Et2Description/Et2Description.ts`) passes the widget's own `mime` attribute
+   to `egw.open_link()` on every click, even when `href`/`mimeData` already resolved to a perfectly
+   correct, caller-specific URL. `open_link()` (`api/js/jsapi/egw_open.ts`) then unconditionally
+   looks up the GENERIC, type-keyed mime registry for that type and - unless the already-provided
+   link happens to textually match *that specific* registry entry's own menuaction - silently
+   overwrites it. Broadened the "already wrapped, don't touch it" check: a link that already
+   specifies ANY menuaction is, by definition, already resolved by its caller. Ran the entire JS
+   suite (1342 tests, both browsers) since this is genuinely shared, app-wide code - all green.
+   Regression test added to `EgwOpen.test.ts`.
+2. **Same symptom persisted for the bounce/NDM case specifically - a real, DIFFERENT mechanism**:
+   `AttachmentJmap::createAttachmentBlock()` unconditionally tries to register a `mime_data` token
+   (`Api\Link::set_data()`, for `AttachmentJmap::fetchBlobBytes()`) whenever a `blobId` is present -
+   for `message/rfc822` specifically that succeeds, so the correctly-built `mime_url` (from this
+   same method's own dedicated `MESSAGE/RFC822` switch case) never got set at all, entirely unused.
+   `Et2Description._handleClick()` prefers `mimeData` over `href`, and a bare token isn't a URL, so
+   fix (1) above didn't help this specific case. `message/rfc822` (and, same "dedicated special
+   popup" reasoning, vcard/calendar) now always take the `mime_url` branch regardless of whether
+   `mime_data` ended up set - matching `mail/js/app.ts`'s own `resolveAttachmentViewUrls()`, which
+   already excludes exactly these types from its own client-side `mime_url` resolution for the same
+   reason. Regression test added to `CreateAttachmentBlockTest.php` - the existing
+   `testForwardedMessageOpensMailDisplayNotDownload()` only ever checked `windowName` (set
+   unconditionally regardless of this bug), never which of `mime_url`/`mime_data` actually
+   survived.
+3. **Routing now correct (opens instantly, no more timeout) - but the body/iframe stayed empty**:
+   the body iframe (`mail_ui::displayMessage()`'s own server-rendered `mailDisplayBodySrc` `src=`)
+   always goes through the classic `MessageDisplayHandler::get_load_email_data()`, which needs a
+   real numeric IMAP UID - `Mail::splitRowID()`'s raw IMAP EMAILID search can't always resolve that
+   reliably against Stalwart (confirmed live: a 20s timeout, then an empty response). Unlike fixes
+   (1)/(2) in Step 4's own earlier `.eml` chain, this method genuinely NEEDED that UID for normal
+   body rendering (its own narrow JMAP-native fast path, `tryJmapNativeSpecialCase()`, is scoped
+   only to S/MIME/TNEF) - and it turned out this silently affected the standalone desktop message-
+   view POPUP for perfectly normal TOP-LEVEL messages too: unlike the main list's own JMAP-native
+   preview pane ("we fixed it to work client-side"), `app.ts`'s `display()` never actually called
+   `loadMessageBody()` at all, relying purely on this same classic iframe `src`.
+   **Solution (ralf, explicitly chosen over a client-side MIME parser or a plain-text fallback):
+   expose server-side parsing as its own read-only operation**, since JMAP has no "parse this blob
+   as if it were a real Email" verb (`Email/get` only works on a real, listed email id) even though
+   both backends are already fully CAPABLE of parsing arbitrary RFC822 content (that's what they do
+   internally for every message already). New `Imap::parseRawMessageAsEmail()` (pure: raw bytes in,
+   JMAP-shaped Email properties out, reusing `Horde_Mime_Part::parseMessage()` - the same primitive
+   `ImapBuildMailerTest.php`'s own tests already use) + `parseBlobAsEmail()` (fetches the blob
+   first, via the already-existing backend-uniform `AttachmentJmap::fetchBlobBytes()`), exposed as
+   `mail_ui::ajax_parseBlobAsEmail()`. Client-side, `MailJmap.fetchBodyFromMessagePart()` looks up
+   the sub-part's own blobId (a normal `Email/get` on the CONTAINING message, already-listed in its
+   own `attachments` property) then calls that endpoint, returning the exact same `JmapBodyResult`
+   shape `fetchBody()` already produces - reused directly by `assembleBodyHtml()`, so `app.ts`'s
+   `loadMessageBody()` (now also wired into `display()`, extended with an optional `partID`) can't
+   tell the difference between a top-level message and a parsed sub-part. Attachments WITHIN a
+   parsed nested message are listed but not independently downloadable yet (a synthetic `"parsed:"`
+   blobId reference) - a narrow, deliberate limitation for this first version, not a bug. 4 new
+   PHPUnit tests for `parseRawMessageAsEmail()` (plain text, multipart/alternative, the actual
+   bounce/NDM shape with a nested `message/rfc822` - itself a regression test for a real bug found
+   writing these: Horde's own `parseMessage()` decomposes a nested message/rfc822's OWN internal
+   structure too, unlike a live IMAP BODYSTRUCTURE fetch, so a naive flat `partIterator()` walk
+   double-counted its inner body as a second attachment - fixed with a manual recursive walk that
+   never descends into a non-multipart leaf).
 
 Companion to [[mail-jmap-imap-inversion]].
 
