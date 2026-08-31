@@ -2826,13 +2826,18 @@ class mail_compose
 									$attachmentData	= $mail_bo->getAttachment($attachment['uid'], $attachment['partID'],0,false);
 									if ($attachmentData['type'] == 'APPLICATION/MS-TNEF')
 									{
-										if (!is_array($tnfattachments)) $tnfattachments = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID']);
-										foreach ($tnfattachments as $k)
+										// mail_bo has no decode_winmail() method (never existed - this whole
+										// branch fataled before this fix) - Mail::tnef_decoder() is the real,
+										// already-existing static TNEF decoder (see api/src/Mail.php's own
+										// getMessageAttachments()/getAttachment() for the same pattern), given
+										// the raw winmail.dat bytes already fetched above
+										if (!is_array($tnfattachments)) $tnfattachments = Mail::tnef_decoder($attachmentData['attachment'])?->getParts() ?? [];
+										foreach ($tnfattachments as $part)
 										{
-											if ($k['name'] == $attachment['name'])
+											if (Mail::attachmentName($part) == $attachment['name'])
 											{
-												$tnfpart = $mail_bo->decode_winmail($attachment['uid'], $attachment['partID'],$k['is_winmail']);
-												$attachmentData['attachment'] = $tnfpart['attachment'];
+												$attachmentData['attachment'] = $part->getContents();
+												$attachmentData['type'] = $part->getType();
 												break;
 											}
 										}
