@@ -76,12 +76,12 @@ class Import
 				throw new \InvalidArgumentException("Invalid account_import_source='{$GLOBALS['egw_info']['server']['account_import_source']}'!");
 			}
 
-			$this->contacts = ($frontend = self::contactsFactory($source))->so_accounts ?: $frontend->somain;
-			$this->contacts_sql_frontend = self::contactsFactory('sql');
+			$this->contacts = ($frontend = static::contactsFactory($source))->so_accounts ?: $frontend->somain;
+			$this->contacts_sql_frontend = static::contactsFactory('sql');
 			$this->contacts_sql = $this->contacts_sql_frontend->so_accounts ?: $this->contacts_sql_frontend->somain;
 
-			$this->accounts = self::accountsFactory($source)->backend;
-			$this->frontend_sql = self::accountsFactory('sql');
+			$this->accounts = static::accountsFactory($source)->backend;
+			$this->frontend_sql = static::accountsFactory('sql');
 			$this->accounts_sql = $this->frontend_sql->backend;
 
 			$this->files2attrs = [
@@ -134,7 +134,7 @@ class Import
 
 			if ($backup_repo !== $account_repository)
 			{
-				$GLOBALS['egw']->accounts = self::accountsFactory($account_repository);
+				$GLOBALS['egw']->accounts = static::accountsFactory($account_repository);
 			}
 			$cache[$account_repository] = new Api\Contacts();
 
@@ -182,12 +182,19 @@ class Import
 	 * @param bool $initial_import true: initial sync, false: incremental sync
 	 * @param bool $dry_run true: only log what would be done, but do NOT make any changes
 	 * @param null|string $export_ldif null or "aliases" to create ldif file which changes between aliases define in SQL database and AD
+	 * @param bool $save_state true (default): persist 'account_import_lastrun' and (re)install the periodic
+	 *   async job as usual; false: skip both persistent side effects, regardless of $dry_run - for tests that
+	 *   run against a fixture-backed source and must not touch this install's real config/cron state
 	 * @return array with int values for keys 'created', 'updated', 'uptodate', 'errors' and string 'result'
 	 * @throws \Exception also gets logged as level "fatal"
 	 * @throws \InvalidArgumentException if not correctly configured
 	 */
-	public function run(bool $initial_import=true, bool $dry_run=false, ?string $export_ldif=null)
+	public function run(bool $initial_import=true, bool $dry_run=false, ?string $export_ldif=null, bool $save_state=true)
 	{
+		// remember the caller's frontend, to restore it below - $GLOBALS['egw']->accounts gets
+		// temporarily swapped to the source backend by accountsFactory()/contactsFactory() calls
+		// further down (incl. ones triggered via the addaccount/editaccount hooks we fire)
+		$frontend = $GLOBALS['egw']->accounts;
 		try {
 			// determine from where we migrate to what
 			if (!in_array($source = $GLOBALS['egw_info']['server']['account_import_source'], ['ldap', 'ads', 'univention']))
@@ -557,6 +564,14 @@ class Import
 					// if enabled, import aliases
 					if ($alias_import)
 					{
+						// the account_id cache was last invalidated (if at all) right after the
+						// ACCOUNT save above, before the contact save just above here created/updated
+						// account_email - without this, aliasImport()'s Api\Mail\Smtp\Sql::setUserData()
+						// sees the stale (pre-contact) cached email, wrongly decides it differs from
+						// the real one, and re-saves the account via Api\Accounts::save() - which
+						// then tries to re-create the contact we just created, crashing on the
+						// account_id unique constraint
+						Api\Accounts::cache_invalidate($account_id);
 						$this->aliasImport($account_id, $contact, $source, $ldif ?? null, $dry_run);
 					}
 					// if requested, also set memberships
@@ -661,7 +676,10 @@ class Import
 			}
 
 			$last_run = max($start_import-1, $last_modified);
-			Api\Config::save_value('account_import_lastrun', $last_run, 'phpgwapi');
+			if ($save_state)
+			{
+				Api\Config::save_value('account_import_lastrun', $last_run, 'phpgwapi');
+			}
 			$str = gmdate('Y-m-d H:i:s', $last_run). ' UTC';
 			if (!$errors && !$dry_run)
 			{
@@ -684,7 +702,7 @@ class Import
 			}
 			$this->logger($result, 'info');
 
-			if (!$dry_run && $initial_import && self::installAsyncJob((float)$GLOBALS['egw_info']['server']['account_import_frequency'] ?? 0.0,
+			if ($save_state && !$dry_run && $initial_import && self::installAsyncJob((float)$GLOBALS['egw_info']['server']['account_import_frequency'] ?? 0.0,
 					$GLOBALS['egw_info']['server']['account_import_time'] ?? null))
 			{
 				$this->logger('Async job for periodic import installed', 'info');
@@ -993,8 +1011,8 @@ class Import
 			{
 				if ($dry_run)
 				{
-					$this->logger("Dry-run: would delete group '$group[account_lid]' (#$sql_id)", 'detail');
-					$delete++;
+					$this->logger("Dry-run: would delete group '$account_lid' (#$account_id)", 'detail');
+					$deleted++;
 				}
 				elseif ($this->deleteAccount($account_id, $account_lid))
 				{
@@ -1352,7 +1370,7 @@ class Import
 				unset($data['account_id']);
 				// fall through
 			case 'editaccount':
-				$accounts = self::accountsFactory($config['account_import_source']);
+				$accounts = static::accountsFactory($config['account_import_source']);
 				$account = array_filter($data, fn($key) => !in_array($key, ['location']), ARRAY_FILTER_USE_KEY);
 				// check if one tries to save a former local account --> treat it like creating a new one in AD/LDAP
 				if (!isset($new_account_id) && !Api\Accounts::getInstance()->id2name($account['account_id'], 'account_uuid'))
@@ -1385,7 +1403,7 @@ class Import
 				break;
 
 			case 'editaccountcontact':
-				$contacts = self::contactsFactory($config['account_import_source']);
+				$contacts = static::contactsFactory($config['account_import_source']);
 				try {
 					// id is the uid for LDAP or ADS!
 					$contact = ['id' => $data['uid']]+ array_filter($data, fn($key) => !in_array($key, ['location']), ARRAY_FILTER_USE_KEY);
@@ -1417,7 +1435,7 @@ class Import
 				break;
 
 			case 'deleteaccount':
-				$accounts = self::accountsFactory($config['account_import_source']);
+				$accounts = static::accountsFactory($config['account_import_source']);
 				if (($account_id = $accounts->backend->name2id($data['account_lid'])))
 				{
 					$accounts->backend->delete($account_id);

@@ -156,6 +156,23 @@ similar scope.
   `setTimeout`-driven virtualizer/scroll/debounce code fixed in commit `303d783a0f`. Work through
   items one at a time; convert to a documented limitation instead of skipping silently when a real
   test isn't feasible for a given spot.
+- `doc/ai/projects/accounts-import-test-coverage.md` - test coverage for `Api\Accounts\Import`
+  (LDAP/ADS/Univention account sync) across its 3 run modes and full config-option space, without a
+  live LDAP/AD server. Covers the code map, config-option interaction matrix, why LDAP-protocol mocking
+  is the wrong boundary (mock the backend-object contract instead), the testability obstacles found
+  (no DI seam, `self::`-bound factories, process-static caches, the `hookEditAccount` feedback loop),
+  why deletion tests are dry-run-only (the real query is unscoped against the whole shared accounts
+  table - Ralf's call: verify candidate-detection, not execution), and `run()`'s `$save_state=false`
+  testability parameter (non-test `run()` calls otherwise persist `account_import_lastrun` to real
+  config on every call, even under `dry_run`, and drifted this shared box's real value before the
+  parameter existed). Phases 1-4 DONE and green in `api/tests/Accounts/` (32 tests covering config
+  validation, users+groups create/update/rerun incl. primary-group remap and the Ads `getMembers()`
+  path, local-groups membership preservation, dry-run deletion-candidate detection incl. the
+  `anonymous` carve-out, incremental sync, the `dn_regexp` sharp edge, `installAsyncJob()`'s
+  frequency->cron-shape mapping, and alias sync incl. LDIF export); found+fixed **four real production
+  bugs** along the way (see the doc's "Bugs found" section) plus confirmed two initially-suspicious
+  behaviors as intentional by design (`dn_regexp` delete-candidate interaction; `firstRunToday()` never
+  reading `account_import_time`). Only Phase 5 (write-back, separate follow-up per Ralf) remains.
 
 ## Security and data handling
 

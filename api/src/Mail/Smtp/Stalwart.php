@@ -60,7 +60,7 @@ class Stalwart extends Sql
 	function updateGroup($data)
 	{
 		$this->group($data['account_id'], $data['account_lid'],
-			$data['account_email'] ?? Api\Accounts::id2name($data['account_id']));
+			$data['account_email'] ?? Api\Accounts::id2name($data['account_id'], 'account_email'));
 
 		parent::updateGroup($data);
 	}
