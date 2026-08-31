@@ -77,6 +77,20 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * [year, month] for a month described relative to "now" (eg. 'first day of last month').
+	 *
+	 * Used instead of hardcoded calendar months so partial-month tests keep working no
+	 * matter what day they happen to run on - a literal month/year pair goes stale the
+	 * moment "now" moves past it (see the two partial-detection tests below, which used
+	 * to hardcode July/August 2026 against a "today is 2026-08-27" comment).
+	 */
+	private function relativeMonth(string $modify): array
+	{
+		$ts = strtotime($modify);
+		return array((int)date('Y', $ts), (int)date('n', $ts));
+	}
+
+	/**
 	 * Build a minimal, valid $query array for get_rrows(), scoped to one owner so it
 	 * never sees another test's or user's real data.
 	 */
@@ -370,15 +384,26 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 
 		$ui = new timesheet_ui();
 		$this->grantOwnerAccess($ui, $owner);
-		// July 2026 is entirely in the past (today is 2026-08-27) - a complete month.
-		// August 2026 is the current, still-running month - necessarily partial.
-		$this->createTimesheet($owner, 60, mktime(9, 0, 0, 7, 15, 2026));
-		$this->createTimesheet($owner, 60, mktime(9, 0, 0, 8, 15, 2026));
+		// "Last month" is always entirely in the past - a complete month. "Next month" is
+		// always entirely in the future - necessarily partial. The *current* calendar month
+		// is NOT safe to use here: a month-sum's period_end is midnight of its last calendar
+		// day (see timesheet_ui::get_rrows()), so once "now" reaches that day, the current
+		// month stops being flagged partial - which is exactly what broke this test when it
+		// used to hardcode a fixed "current" month against a "today is ..." comment.
+		list($completeYear, $completeMonth) = $this->relativeMonth('first day of last month');
+		list($partialYear, $partialMonth) = $this->relativeMonth('first day of next month');
+		$this->createTimesheet($owner, 60, mktime(9, 0, 0, $completeMonth, 15, $completeYear));
+		$this->createTimesheet($owner, 60, mktime(9, 0, 0, $partialMonth, 15, $partialYear));
+
+		// get_rrows()'s month-alignment check wants 'enddate' anchored on the *last* day of
+		// the covered month (like the date-range widget sends it), not the 1st of the
+		// following month - otherwise it isn't "month-aligned" and no month-sums are shown.
+		$partialMonthLastDay = (int)date('t', mktime(0, 0, 0, $partialMonth, 1, $partialYear));
 
 		$query = $this->baseQuery($owner, array(
 			'filter'    => 'custom',
-			'startdate' => '2026-07-01T00:00:00Z',
-			'enddate'   => '2026-08-31T00:00:00Z',
+			'startdate' => sprintf('%04d-%02d-01T00:00:00Z', $completeYear, $completeMonth),
+			'enddate'   => sprintf('%04d-%02d-%02dT00:00:00Z', $partialYear, $partialMonth, $partialMonthLastDay),
 			// summary/sum rows are only generated when ordered by ts_start (see
 			// timesheet_bo::search()) - baseQuery() otherwise leaves order/sort unset.
 			'order'     => 'ts_start',
@@ -388,23 +413,25 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 		$readonlys = array();
 		$ui->get_rrows($query, $rows, $readonlys);
 
-		$julySum = null;
-		$augustSum = null;
+		$completeSumId = sprintf('sum-month-%04d%02d', $completeYear, $completeMonth);
+		$partialSumId = sprintf('sum-month-%04d%02d', $partialYear, $partialMonth);
+		$completeSum = null;
+		$partialSum = null;
 		foreach($rows as $row)
 		{
 			if (!is_array($row)) continue;	// eg. the header-totals entry, not a real/sum row
-			if (($row['ts_id'] ?? null) === 'sum-month-202607') $julySum = $row;
-			if (($row['ts_id'] ?? null) === 'sum-month-202608') $augustSum = $row;
+			if (($row['ts_id'] ?? null) === $completeSumId) $completeSum = $row;
+			if (($row['ts_id'] ?? null) === $partialSumId) $partialSum = $row;
 		}
 
-		$this->assertNotNull($julySum, 'expected a month-sum row for July 2026');
-		$this->assertNotNull($augustSum, 'expected a month-sum row for August 2026');
+		$this->assertNotNull($completeSum, "expected a month-sum row for $completeSumId");
+		$this->assertNotNull($partialSum, "expected a month-sum row for $partialSumId");
 
-		$this->assertStringStartsWith('Sum', $julySum['ts_title'], 'a fully elapsed month must not be marked partial');
-		$this->assertStringNotContainsString('rowSumPartial', $julySum['class']);
+		$this->assertStringStartsWith('Sum', $completeSum['ts_title'], 'a fully elapsed month must not be marked partial');
+		$this->assertStringNotContainsString('rowSumPartial', $completeSum['class']);
 
-		$this->assertStringStartsWith('Partial', $augustSum['ts_title'], 'the current, still-running month must be marked partial');
-		$this->assertStringContainsString('rowSumPartial', $augustSum['class']);
+		$this->assertStringStartsWith('Partial', $partialSum['ts_title'], 'a not-yet-started month must be marked partial');
+		$this->assertStringContainsString('rowSumPartial', $partialSum['class']);
 	}
 
 	/**
@@ -430,9 +457,10 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 
 			$ui = new timesheet_ui();
 			$this->grantOwnerAccess($ui, $owner);
-			// July 2026 is entirely in the past (today is 2026-08-27), so "Last month" must
-			// not come back partial, regardless of the user's timezone.
-			$this->createTimesheet($owner, 60, mktime(9, 0, 0, 7, 15, 2026));
+			// "Last month" (relative to now) is always entirely in the past, so it must not
+			// come back partial, regardless of the user's timezone.
+			list($lastYear, $lastMonth) = $this->relativeMonth('first day of last month');
+			$this->createTimesheet($owner, 60, mktime(9, 0, 0, $lastMonth, 15, $lastYear));
 
 			$query = $this->baseQuery($owner, array(
 				'filter'    => 'Last month',
@@ -443,17 +471,18 @@ class TimesheetUiGetRowsTest extends \EGroupware\Api\AppTest
 			$readonlys = array();
 			$ui->get_rrows($query, $rows, $readonlys);
 
-			$julySum = null;
+			$lastMonthSumId = sprintf('sum-month-%04d%02d', $lastYear, $lastMonth);
+			$lastMonthSum = null;
 			foreach($rows as $row)
 			{
 				if (!is_array($row)) continue;
-				if (($row['ts_id'] ?? null) === 'sum-month-202607') $julySum = $row;
+				if (($row['ts_id'] ?? null) === $lastMonthSumId) $lastMonthSum = $row;
 			}
 
-			$this->assertNotNull($julySum, 'expected a month-sum row for July 2026');
-			$this->assertStringStartsWith('Sum', $julySum['ts_title'],
+			$this->assertNotNull($lastMonthSum, "expected a month-sum row for $lastMonthSumId");
+			$this->assertStringStartsWith('Sum', $lastMonthSum['ts_title'],
 				'a fully elapsed month must not be marked partial just because the user timezone is not UTC');
-			$this->assertStringNotContainsString('rowSumPartial', $julySum['class']);
+			$this->assertStringNotContainsString('rowSumPartial', $lastMonthSum['class']);
 		}
 		finally
 		{
