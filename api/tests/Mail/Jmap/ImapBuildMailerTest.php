@@ -167,6 +167,41 @@ class ImapBuildMailerTest extends Api\LoggedInTest
 	}
 
 	/**
+	 * Regression test for a bug found live 2026-08-31: forward-as-attachment's carried
+	 * message/rfc822 entry was actually sent (confirmed from the raw Sent-folder source), but with
+	 * NO Content-Disposition header at all - so it never showed up as a visible "Attachments"
+	 * block anywhere. addStringAttachment() (the path a `blobId`-shaped attachment always takes)
+	 * does call setDisposition('attachment') unconditionally - this test exists to pin down exactly
+	 * where that gets lost for a message/rfc822-typed attachment specifically.
+	 */
+	public function testMessageRfc822AttachmentGetsAttachmentDisposition()
+	{
+		$nested = "From: nested-from@example.org\r\nTo: nested-to@example.org\r\nSubject: nested\r\n"
+			."Date: Mon, 1 Jan 2026 00:00:00 +0000\r\nMessage-ID: <nested@example.org>\r\n\r\nnested body\r\n";
+		$blobId = $this->uploadBlob($nested);
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'Fwd as attachment',
+			'bodyValues' => ['body' => ['value' => 'body text']],
+			'bodyStructure' => [
+				'type' => 'multipart/mixed',
+				'subParts' => [
+					['partId' => 'body', 'type' => 'text/plain'],
+					['blobId' => $blobId, 'type' => 'message/rfc822', 'name' => 'nested.eml', 'disposition' => 'attachment'],
+				],
+			],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+		$structure = $this->parse($raw);
+
+		$rfc822 = $this->findPart($structure, fn($p) => $p->getType() === 'message/rfc822');
+		$this->assertNotNull($rfc822, 'message/rfc822 part missing entirely');
+		$this->assertSame('attachment', $rfc822->getDisposition(),
+			'message/rfc822 attachment must have Content-Disposition: attachment, found live 2026-08-31 that it was silently missing');
+	}
+
+	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md's VFS-attach follow-up (2026-08-31, ralf:
 	 * "leave the attachment on the EGroupware server... no round-trip via the client") -
 	 * buildMailerFromEmailProperties() must read a `vfsPath` attachment directly off the Vfs

@@ -2140,7 +2140,7 @@ class Imap extends Jmap\Base
 				}
 				else
 				{
-					$mailer->addAttachment($handle, $name, $type);
+					self::addAttachmentPart($mailer, $handle, $name, $type);
 				}
 				continue;
 			}
@@ -2162,11 +2162,55 @@ class Imap extends Jmap\Base
 			}
 			else
 			{
-				$mailer->addStringAttachment($raw, $name, $type);
+				self::addAttachmentPart($mailer, $raw, $name, $type);
 			}
 		}
 
 		return $mailer;
+	}
+
+	/**
+	 * Add a non-inline attachment part, working around a real Horde_Mime_Part limitation for
+	 * message/rfc822 specifically - found live 2026-08-31: a forward-as-attachment's carried
+	 * message never showed up in the RECIPIENT's own "Attachments" list after actually being sent
+	 * and received. Root cause: Horde_Mime_Part::addMimeHeaders() hard-codes "message/* parts
+	 * require no additional header information" (RFC 2046 [5.2.1]) and unconditionally skips
+	 * Content-Disposition (among others) for ANY part whose primary type is "message" - correct
+	 * per that RFC's strict reading, but real-world MUAs/JMAP servers commonly rely on a real
+	 * "Content-Disposition: attachment; filename=..." to recognize a forwarded message as an
+	 * attachment at all. `addStringAttachment()`/`addAttachment()` both hit this same restriction
+	 * regardless of which one is used - not fixable by calling them differently. Api\Mail\Jmap\
+	 * Rfc822AttachmentPart (this file's own end) re-adds the header Horde drops, only for
+	 * message/rfc822 - built manually here (mirroring what addStringAttachment()/addAttachment()
+	 * do internally) since neither lets a caller substitute the Horde_Mime_Part subclass they
+	 * construct internally.
+	 *
+	 * @param Api\Mailer $mailer
+	 * @param string|resource $content raw bytes, or an open file-handle (Api\Vfs::fopen()'s own
+	 *  return type) - same duck-typed contract Horde_Mime_Part::setContents() itself accepts
+	 * @param string $name attachment filename
+	 * @param string $type MIME type
+	 */
+	private static function addAttachmentPart(Api\Mailer $mailer, $content, string $name, string $type) : void
+	{
+		if (strtolower($type) !== 'message/rfc822')
+		{
+			if (is_resource($content))
+			{
+				$mailer->addAttachment($content, $name, $type);
+			}
+			else
+			{
+				$mailer->addStringAttachment($content, $name, $type);
+			}
+			return;
+		}
+		$part = new Rfc822AttachmentPart();
+		$part->setType($type);
+		$part->setContents($content);
+		$part->setName($name);
+		$part->setDisposition('attachment');
+		$mailer->addMimePart($part);
 	}
 
 	/**
@@ -3286,5 +3330,32 @@ class Imap extends Jmap\Base
 			'list' => $list,
 			'notFound' => array_values(array_diff($ids, $found)),
 		];
+	}
+}
+
+/**
+ * Horde_Mime_Part deliberately omits Content-Disposition (and Content-Transfer-Encoding, Content-
+ * Language, Content-Description, ...) for ANY part whose primary type is "message" -
+ * addMimeHeaders(): "message/* parts require no additional header information" (RFC 2046
+ * [5.2.1]), a hard-coded early return with no override hook in Horde's own public API. Correct per
+ * that RFC's strict reading, but real-world mail clients/JMAP servers commonly rely on a real
+ * Content-Disposition to recognize a forwarded message/rfc822 as an attachment at all - found live
+ * 2026-08-31 (Imap::addAttachmentPart()'s own docblock has the full story) that without it, a
+ * forward-as-attachment's carried message never showed up in the recipient's own "Attachments"
+ * list once actually delivered. This re-adds JUST that one header, reusing the exact same header
+ * object setDisposition()/setDispositionParameter() already populated (never rebuilt from
+ * scratch) - used ONLY for message/rfc822 attachments, via Imap::addAttachmentPart().
+ */
+class Rfc822AttachmentPart extends \Horde_Mime_Part
+{
+	public function addMimeHeaders($options = array())
+	{
+		$headers = parent::addMimeHeaders($options);
+		$cd = $this->_headers['content-disposition'];
+		if (!$cd->isDefault())
+		{
+			$headers->addHeaderOb($cd);
+		}
+		return $headers;
 	}
 }
