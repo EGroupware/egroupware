@@ -487,6 +487,89 @@ class MessageDisplayHandler
 		}
 	}
 
+	/**
+	 * Lean JSON-shaped counterpart to tryJmapNativeSpecialCase() above, for MailJmap.fetchBody()'s
+	 * client-first fast path (mail_ui::ajax_resolveSpecialCaseBody()) - doc/ai/projects/
+	 * mail-compose-jmap-migration.md's "read-side extraction" follow-up (2026-08-31). Same
+	 * underlying resolveSmime()/resolveTnef() primitives as tryJmapNativeSpecialCase(), just
+	 * self-contained (rowId in, JSON-shaped result out - no reliance on $this->ui->mail_bo already
+	 * being switched to the right profile, same reasoning as AttachmentJmap::resolveWinmailJmap())
+	 * and with no classic-page HTML wrapping/CSP headers/Push calls. Deliberately does NOT accept a
+	 * fresh passphrase from the client - only ever uses an already session-cached one (see
+	 * Smime::resolveMessage()'s own fallback). If decryption still needs one, this returns null and
+	 * the caller falls back to the classic path, which has the actual passphrase-prompt UI - a
+	 * dedicated fast-path passphrase dialog is a follow-up, not built here.
+	 *
+	 * @param string $rowId
+	 * @param string $htmlOptions
+	 * @return ?array {type: 'smime'|'tnef', body: string, smime: ?array} or null if not a
+	 *  resolvable special case (JMAP unreachable, a passphrase is needed, TNEF decode failed, ...)
+	 */
+	public function resolveSpecialCaseBody(string $rowId, string $htmlOptions='') : ?array
+	{
+		$idParts = Mail::splitRowID($rowId);
+		$uid = $idParts['msgUID'];
+		$mailbox = $idParts['folder'];
+		$profileID = $idParts['profileID'];
+		if (!$uid || !$mailbox || !$profileID)
+		{
+			return null;
+		}
+		try
+		{
+			$icServer = Mail\Account::read((int)$profileID)->imapServer();
+			$isStalwart = $icServer instanceof Mail\Imap\Jmap;
+
+			if ($isStalwart)
+			{
+				if (empty($idParts['emailID']))
+				{
+					return null;
+				}
+				$email = $icServer->jmapClient()->emailGet($idParts['emailID'], ['bodyStructure', 'from']);
+				$bodyStructure = $email['bodyStructure'] ?? null;
+				$from = $email['from'][0]['email'] ?? null;
+			}
+			else
+			{
+				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
+				if (!$structure)
+				{
+					return null;
+				}
+				$bodyStructure = JmapImap::bodyPartToJmap($structure, $mailbox, $uid);
+				$from = null;	// nice-to-have signer/sender cross-check only, see tryJmapNativeSpecialCase()
+			}
+			if (!$bodyStructure || !($type = JmapImap::specialCaseType($bodyStructure)))
+			{
+				return null;
+			}
+
+			if ($type === 'smime')
+			{
+				$result = $isStalwart ?
+					$icServer->resolveSmimeJmap($idParts['emailID'], $bodyStructure['type'], (string)$from, $htmlOptions) :
+					JmapImap::resolveSmime((string)$profileID, base64_encode($mailbox), $uid, $bodyStructure['type'], (string)$from, $htmlOptions);
+				return ['type' => 'smime', 'body' => $result['body'], 'smime' => $result['smime']];
+			}
+			// 'tnef'
+			$body = $isStalwart ?
+				$icServer->resolveTnefJmap($idParts['emailID'], $bodyStructure['partId'], $htmlOptions) :
+				JmapImap::resolveTnef((string)$profileID, base64_encode($mailbox), $uid, $bodyStructure['partId'], $htmlOptions);
+			return ['type' => 'tnef', 'body' => $body, 'smime' => null];
+		}
+		catch (\Throwable $e)
+		{
+			// PassphraseMissing (no cached passphrase yet - client falls back to the classic path's
+			// actual prompt UI) or any other failure (JMAP unreachable, decode failure, ...)
+			if (!($e instanceof Mail\Smime\PassphraseMissing))
+			{
+				_egw_log_exception($e);
+			}
+			return null;
+		}
+	}
+
 	public function get_load_email_data($uid, $partID, $mailbox, $htmlOptions=null, $smimePassphrase='', $emailID=null)
 	{
 		// seems to be needed, as if we open a mail from notification popup that is

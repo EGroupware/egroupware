@@ -323,6 +323,44 @@ original, disposition-less bytes - re-viewing it proves nothing about the fix).
    no longer independently listed at all (a narrower limitation than the first attempt's, but this
    whole case is a fallback view for an edge case, not the common path).
 
+**S/MIME/TNEF read-side "fast path" extraction (2026-08-31)**: `MailJmap.fetchBody()` used to bail
+straight to the classic full-page iframe load (`mail.mail_ui.loadEmailBody`) for S/MIME/TNEF
+messages (`isSpecialCase()`/`SPECIAL_CASE_TYPES`). That classic fallback was, underneath, already
+JMAP-native for both (`MessageDisplayHandler::tryJmapNativeSpecialCase()` →
+`JmapImap::resolveSmime()`/`Imap\Jmap::resolveSmimeJmap()` for decrypt+verify,
+`JmapImap::resolveTnef()`/`Imap\Jmap::resolveTnefJmap()` for TNEF decode, both backends,
+passphrase via `Mail\Smime\PassphraseMissing` + session-cached `smime_passphrase`) - it just wasn't
+reachable except via a whole extra page load. New `MessageDisplayHandler::resolveSpecialCaseBody()`
+is a lean, self-contained (rowId in, JSON out - own `Mail\Account::read()`/`imapServer()`
+resolution, same pattern `AttachmentJmap::resolveWinmailJmap()` already used, not dependent on
+`$this->ui->mail_bo` already being on the right profile) counterpart reusing the exact same
+`resolveSmime()`/`resolveTnef()` primitives, exposed as `mail.mail_ui.ajax_resolveSpecialCaseBody()`.
+`fetchBody()` now calls it for any special-case message and only falls back to the classic iframe
+load if it returns null. S/MIME verify/encryption badges (`app.mail.setSmimeFlags()`, previously
+server-`Push`ed) now travel back in the same JSON response and get applied client-side in
+`app.ts`'s `loadMessageBody()`.
+
+**Deliberately NOT built here**: a fast-path passphrase-entry dialog. `resolveSpecialCaseBody()`
+only ever uses an already session-cached passphrase (`Smime::resolveMessage()`'s own fallback) -
+the FIRST time a given session decrypts an S/MIME message (no cached passphrase yet), this still
+falls back to the classic path, whose iframe-embedded form is the only passphrase-prompt UI that
+exists. A dedicated fast-path dialog (mirroring compose's own `app.mail.smimePassDialog()`, which
+is itself send-flow-coupled and not reusable as-is) is a follow-up if this round-trip proves worth
+avoiding in practice.
+
+**Also fixed same session**: `mail_compose.inc.php`'s classic forward-attachment path called a
+`decode_winmail()` method on `Api\Mail` that never existed (a live fatal error waiting to happen
+for anyone forwarding a specific attachment extracted from a winmail.dat/TNEF blob) - repointed to
+the real `Mail::tnef_decoder()` static decoder, the same one `getMessageAttachments()`/
+`getAttachment()` already use for the equivalent classic-IMAP-side decode.
+
+**Still not built: S/MIME sign/encrypt on send (phasing Step 6)** - `compose.ts`'s `jmapEligible()`
+still treats `smime_sign`/`smime_encrypt` as a hard `blockingToggle`, forcing the full classic
+postback whenever either is on. The reusable piece already exists (`Api\Mailer::smimeEncrypt()`,
+operating on an already-built Mailer - the same shape `buildMailerFromEmailProperties()` already
+constructs for the shim's send path) but wiring a standalone sign/encrypt endpoint + client call
+before `EmailSubmission/set` is unstarted.
+
 Companion to [[mail-jmap-imap-inversion]].
 
 **HTML sends were missing a text/plain alternative entirely, built 2026-08-31, not yet

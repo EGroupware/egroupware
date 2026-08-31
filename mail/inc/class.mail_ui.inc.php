@@ -2387,6 +2387,22 @@ class mail_ui
 	}
 
 	/**
+	 * JMAP-native S/MIME/TNEF body resolution for MailJmap.fetchBody()'s client-first fast path -
+	 * doc/ai/projects/mail-compose-jmap-migration.md's "read-side extraction" follow-up
+	 * (2026-08-31). Lean JSON counterpart of MessageDisplayHandler::tryJmapNativeSpecialCase()
+	 * (the classic full-page iframe route) - see MessageDisplayHandler::resolveSpecialCaseBody()'s
+	 * own docblock for why this never collects a fresh passphrase from the client.
+	 *
+	 * @param string $_rowid
+	 * @param string|null $_htmlOptions
+	 * @return void
+	 */
+	function ajax_resolveSpecialCaseBody($_rowid, $_htmlOptions=null)
+	{
+		Api\Json\Response::get()->data($this->messageDisplayHandler()->resolveSpecialCaseBody($_rowid, (string)$_htmlOptions));
+	}
+
+	/**
 	 * move folder
 	 *
 	 * @param string _folderName  folder to vove

@@ -193,6 +193,8 @@ export type JmapBodyResult =
 		profileID : string;
 		accountId : string;
 		isLocal : boolean;
+		/** only set for a resolveSpecialCaseBody() S/MIME result - see fetchBody()'s docblock */
+		smime? : any;
 	};
 
 export interface JmapGetRowsQuery
@@ -2360,9 +2362,34 @@ export class MailJmap
 					emails: t.Email.get(args) as any,
 				}), signal ? {fetchInit: {signal}} : undefined))[0].emails;
 			const email = (emails.list || [])[0];
-			if (!email || this.isSpecialCase(email.bodyStructure))
+			if (!email)
 			{
 				return {special: true};
+			}
+			if (this.isSpecialCase(email.bodyStructure))
+			{
+				// S/MIME/TNEF: decrypt/decode is 100% server-side either way (private key material,
+				// binary-format decoding) - mail.mail_ui.ajax_resolveSpecialCaseBody() is the lean
+				// JSON counterpart of the classic full-page iframe fallback (MessageDisplayHandler::
+				// tryJmapNativeSpecialCase()), reusing the exact same resolveSmime()/resolveTnef()
+				// primitives. Returns null for anything it can't handle (meeting invites/text-calendar
+				// - unrelated to S/MIME/TNEF and never routed here server-side either, a still-missing
+				// passphrase - no fast-path prompt UI yet, JMAP unreachable, ...), in which case this
+				// falls back to the classic iframe load exactly as before.
+				const resolved = await this.egw.request('mail.mail_ui.ajax_resolveSpecialCaseBody', [rowId, htmlOptions || '']);
+				if (!resolved)
+				{
+					return {special: true};
+				}
+				return {
+					special: false,
+					html: this.wrapDocument(resolved.body),
+					attachments: email.attachments || [],
+					profileID: ref.profileID,
+					accountId: token.accountId,
+					isLocal: token.isLocal,
+					smime: resolved.smime,
+				};
 			}
 			// PGP/MIME: no server involvement needed at all (see SPECIAL_CASE_TYPES' docblock) -
 			// the "body" is the raw ciphertext/armored-text of multipart/encrypted's 2nd sub-part,

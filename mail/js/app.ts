@@ -2204,6 +2204,10 @@ export class MailApp extends EgwApp
 			// explicit cast, not relying on control-flow narrowing of the "special" discriminant -
 			// this project's tsconfig has strictNullChecks off, where that narrowing doesn't hold
 			const fast = result as Extract<JmapBodyResult, { special : false }>;
+			// only set for a resolveSpecialCaseBody() S/MIME result (MailJmap.fetchBody()'s fast
+			// path for S/MIME/TNEF) - smimeClearFlags() already ran for any other message via the
+			// normal pre-load reset, same as the classic per-page-load path's own setSmimeFlags().
+			if (fast.smime) this.setSmimeFlags(fast.smime);
 			iframe.addEventListener('load', () =>
 			{
 				const doc = iframe.contentWindow.document;
