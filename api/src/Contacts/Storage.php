@@ -660,8 +660,10 @@ class Storage
 	{
 		//error_log(__METHOD__.'('.array2string($criteria,true).','.array2string($only_keys).",'$order_by','$extra_cols','$wildcard','$empty','$op',".array2string($start).','.array2string($filter,true).",'$join')");
 
-		// add hidden user filter for non-admins
+		// add hidden user filter for non-admins, but not if caller explicitly filtered for
+		// account_id === null (contacts NOT linked to any account, eg. to exclude accounts entirely)
 		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) && empty($filter['owner']) &&
+			!(is_array($filter) && array_key_exists('account_id', $filter) && is_null($filter['account_id'])) &&
 			($account_id_filter = Api\Accounts::hidden2account_id(false, $filter['account_id'] ?? null)))
 		{
 			$filter['account_id'] = $account_id_filter;
