@@ -218,7 +218,22 @@ class AttachmentJmap
 						break;
 				}
 				// we either use mime_data for server-side supported mime-types or mime_url for client-side or download
-				if (empty($attachmentHTML[$key]['mime_data']) || preg_match('#^(application|text)/xml$#i', $attachmentHTML[$key]['type']))
+				// message/rfc822 (and vcard/calendar) always get their OWN dedicated popup URL via
+				// $linkData/$linkView above (mail_ui.displayMessage, or an app's own view_popup) -
+				// same "special, not a generic blob view" types mail/js/app.ts's own
+				// resolveAttachmentViewUrls() excludes from its client-side mime_url resolution.
+				// Never route these through mime_data (Api\Link::set_data()) - found live
+				// 2026-08-31: a message/rfc822 attachment's own valid AttachmentJmap::
+				// fetchBlobBytes() mime_data token was silently misrouted client-side (egw_open.ts's
+				// open_link(), once given a `mime` type alongside it) through mail_hooks.inc.php's
+				// own, completely unrelated message/rfc822 registry entry
+				// (importMessageFromVFS2DraftAndDisplay, meant for importing a VFS-stored .eml file)
+				// instead of actually resolving the token - $linkData's own correct URL was built
+				// above but then silently discarded since mime_data (once non-empty) always took
+				// priority over mime_url for the actual navigation.
+				if (empty($attachmentHTML[$key]['mime_data']) || preg_match('#^(application|text)/xml$#i', $attachmentHTML[$key]['type'])
+					|| in_array(strtolower($attachmentHTML[$key]['type']),
+						['message/rfc822', 'text/vcard', 'text/x-vcard', 'text/calendar', 'text/x-vcalendar'], true))
 				{
 					$attachmentHTML[$key]['mime_url'] = Api\Egw::link('/index.php', $linkData);
 

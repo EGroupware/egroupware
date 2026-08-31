@@ -105,6 +105,33 @@ class CreateAttachmentBlockTest extends \EGroupware\Api\AppTest
 	}
 
 	/**
+	 * Regression test for a bug found live 2026-08-31: every attachment fixture here carries a real
+	 * 'blobId' (see this class' own docblock), which routes createAttachmentBlock() into setting a
+	 * 'mime_data' token (Api\Link::set_data(), for AttachmentJmap::fetchBlobBytes()) UNCONDITIONALLY
+	 * - before this fix, that token then took priority over the correctly-built 'mime_url'
+	 * (mail_ui::displayMessage) client-side (Et2Description._handleClick()'s own
+	 * "mimeData || href" preference), and egw_open.ts's open_link() - given a `mime` type alongside
+	 * a bare, non-URL mime_data token - resolved it through mail_hooks.inc.php's own, completely
+	 * UNRELATED message/rfc822 registry entry (mail.mail_ui.importMessageFromVFS2DraftAndDisplay,
+	 * meant for importing a VFS-stored .eml file) instead. The PRECEDING test only ever checked
+	 * 'windowName' (set unconditionally, regardless of this bug) - never actually checking which of
+	 * mime_url/mime_data survives, so it never caught this at all.
+	 *
+	 * Pass criteria: message/rfc822 (and, same "dedicated special popup" reasoning, vcard/calendar)
+	 * must always end up with a real 'mime_url' and NO 'mime_data', even when a blobId is present -
+	 * never routed through the generic, type-keyed mime_data mechanism.
+	 */
+	public function testForwardedMessageNeverGetsMimeDataToken()
+	{
+		$result = $this->block(array($this->attachment('message/rfc822', 'fwd.eml')));
+
+		$this->assertArrayNotHasKey('mime_data', $result[0],
+			'message/rfc822 must never carry a mime_data token, even with a real blobId present');
+		$this->assertStringContainsString('mail_ui.displayMessage', $result[0]['mime_url'] ?? '',
+			'message/rfc822 must have a real mime_url pointing at mail_ui.displayMessage');
+	}
+
+	/**
 	 * Pass criteria: a text/calendar attachment opens a calendar-specific popup (windowName
 	 * prefixed 'displayEvent_'), distinguishing it from the generic download fallback and from
 	 * the vCard branch below.
