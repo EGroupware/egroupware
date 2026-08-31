@@ -34,13 +34,12 @@ use EGroupware\Api\Accounts\Tests\Fixtures\FakeContactsSoAccounts;
  * implemented for real here, incl. save()'s "LDAP/AD assigns a new uidNumber/UUID/DN on create"
  * simulation - exactly the shape hookEditAccount()'s 'addaccount' case exercises.
  *
- * 'addaccount'/'editaccount'/'deleteaccount'/'editaccountcontact' are covered. NOT covered:
- * 'editaccountcontact''s GUID-validation-failure recovery branch (the nested
- * `self::hookEditAccount([...'location'=>'addaccount'...])` / `self::hookEditAccount([...])` calls
- * in its catch block) - those use `self::`, not `static::`, which is a *non-forwarding* call in PHP:
- * it resets late static binding back to the literal `Import` class for that nested invocation, so
- * `TestableWritebackImport`'s factory overrides would NOT apply there and it would try to build a
- * real, live-connecting Ldap/Ads object. Not worked around; this recovery branch remains untested.
+ * 'addaccount'/'editaccount'/'deleteaccount'/'editaccountcontact' are covered, including
+ * 'editaccountcontact''s GUID-validation-failure recovery branch (its nested
+ * `self::hookEditAccount([...])` calls used to be non-forwarding `self::` - which resets late
+ * static binding back to the literal `Import` class mid-call, so `TestableWritebackImport`'s
+ * factory overrides would silently not apply there - changed to `static::` specifically to make
+ * this branch testable, same reasoning as the original `accountsFactory`/`contactsFactory` tweak).
  */
 class ImportWritebackTest extends ImportTestCase
 {
@@ -387,6 +386,71 @@ class ImportWritebackTest extends ImportTestCase
 			'account_id' => 123456,
 			'n_given' => 'Changed',
 		]);
+	}
+
+	/**
+	 * The GUID-recovery branch: a contact save() rejected because its id isn't a valid GUID (per
+	 * the source backend - simulated here) means the account behind it is still local, not yet
+	 * synced. hookEditAccount() reacts by pushing a brand-new 'addaccount' for it first, reading
+	 * back the uuid the source assigned, then retrying 'editaccountcontact' with that uuid as the
+	 * id - which must succeed this time. Exercises the SAME nested-call path this project's
+	 * self::->static:: fix (see class docblock) was made specifically to make testable.
+	 */
+	public function testEditAccountContactRecoversFromInvalidGuidByCreatingNewAccount() : void
+	{
+		$account_lid = 'import_test_wb_'.substr(md5(random_bytes(8)), 0, 8);
+		$placeholder_uid = 'local-placeholder-'.$account_lid;    // not a "real" GUID
+
+		// a genuinely local account: no account_uuid on file yet
+		$local_account = [
+			'account_lid' => $account_lid,
+			'account_type' => 'u',
+			'account_status' => 'A',
+			'account_firstname' => 'Writeback',
+			'account_lastname' => 'Recover',
+		];
+		$local_id = (new Api\Accounts('sql'))->save($local_account);
+		$this->assertNotEmpty($local_id, 'Pre-condition: could not create the local account');
+		$this->deleteAfterTest($local_id);
+		Api\Accounts::cache_invalidate($local_id);
+
+		$accounts_backend = new FakeLdapAccountsBackend();
+		TestableWritebackImport::$accountsOverride = $this->fakeAccountsFrontend($accounts_backend);
+
+		$so_accounts = new FakeContactsSoAccounts();
+		$so_accounts->invalidGuidId = $placeholder_uid;
+		TestableWritebackImport::$contactsOverride = $this->fakeContactsFrontend($so_accounts);
+
+		$this->setRealImportConfig([
+			'account_import_source' => 'ldap',
+			'account_import_update_source' => true,
+		]);
+
+		TestableWritebackImport::hookEditAccount([
+			'location' => 'editaccountcontact',
+			'uid' => $placeholder_uid,
+			'account_id' => $local_id,
+			'account_lid' => $account_lid,
+			'account_type' => 'u',
+			'n_given' => 'Recovered',
+		]);
+
+		// the nested 'addaccount' must have created a new entry on the (fake) source ...
+		$new_fake_id = $accounts_backend->name2id($account_lid);
+		$this->assertNotFalse($new_fake_id, 'The account should have been pushed to the source as new');
+		$new_uuid = $accounts_backend->read($new_fake_id)['account_uuid'];
+		$this->assertNotEmpty($new_uuid);
+
+		// ... and written that uuid back into the real SQL account ...
+		$this->assertSame($new_uuid, $this->realAccountRead($local_id)['account_uuid'],
+			"The newly-assigned uuid must be written back into the real SQL account row");
+
+		// ... and the RETRIED editaccountcontact call must have succeeded, keyed by the new uuid
+		// (not the original placeholder, which would have kept throwing)
+		$this->assertArrayNotHasKey($placeholder_uid, $so_accounts->saved);
+		$this->assertArrayHasKey($new_uuid, $so_accounts->saved,
+			'The retried contact save should have landed under the new uuid');
+		$this->assertSame('Recovered', $so_accounts->saved[$new_uuid]['n_given']);
 	}
 }
 

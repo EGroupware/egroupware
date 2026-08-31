@@ -1419,7 +1419,7 @@ class Import
 					}
 					// trying to change a local contact or account into an AD account
 					// --> first create new AD account
-					self::hookEditAccount([
+					static::hookEditAccount([
 						'location' => 'addaccount',
 					]+array_filter($data, fn($key) => str_starts_with($key, 'account_'), ARRAY_FILTER_USE_KEY));
 					if (!($uuid = Api\Accounts::getInstance()->id2name($data['account_id'], 'account_uuid')))
@@ -1427,7 +1427,7 @@ class Import
 						throw new \Exception('Error creating new account in '.$config['account_import_source']);
 					}
 					// --> rerun hook with correct uid/uuid
-					self::hookEditAccount([
+					static::hookEditAccount([
 						'location' => 'editaccountcontact',
 						'uid' => $uuid,
 					]+$data);

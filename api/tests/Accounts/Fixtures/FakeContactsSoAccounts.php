@@ -8,6 +8,8 @@
 
 namespace EGroupware\Api\Accounts\Tests\Fixtures;
 
+use EGroupware\Api\Exception\AssertionFailed;
+
 /**
  * Stands in for the real Api\Contacts\Ldap object Api\Contacts\Storage's constructor would assign
  * to $this->so_accounts (`new $class()` where $class = 'EGroupware\Api\Contacts\'.ucfirst($account_repository)`
@@ -30,8 +32,21 @@ class FakeContactsSoAccounts
 	/** @var int|string|false what save() should return next - falsy (0/false) = success, truthy = "error" */
 	public $nextSaveResult = 0;
 
+	/**
+	 * @var string|null if set, save() throws Api\Exception\AssertionFailed("'$id' is NOT a valid
+	 *      GUID!") when $this->data['id'] equals this value - simulates a real Contacts\Ldap/Ads
+	 *      backend rejecting a non-GUID id (eg. a still-local contact's id), the specific trigger
+	 *      for Import::hookEditAccount()'s 'editaccountcontact' GUID-recovery branch. Any OTHER id
+	 *      (eg. the corrected uid the recovery branch retries with) saves normally.
+	 */
+	public ?string $invalidGuidId = null;
+
 	function save()
 	{
+		if ($this->invalidGuidId !== null && $this->data['id'] === $this->invalidGuidId)
+		{
+			throw new AssertionFailed("'{$this->data['id']}' is NOT a valid GUID!");
+		}
 		if ($this->nextSaveResult)
 		{
 			return $this->nextSaveResult;

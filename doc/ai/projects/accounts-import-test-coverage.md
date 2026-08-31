@@ -1,6 +1,6 @@
 # Api\Accounts\Import test coverage (LDAP/ADS account sync)
 
-## Status: ALL 5 PHASES DONE and green (2026-08-31), 39 tests total in `api/tests/Accounts/`, stable
+## Status: ALL 5 PHASES DONE and green (2026-08-31), 40 tests total in `api/tests/Accounts/`, stable
 across reruns. Phase 1: harness (`ImportTestCase.php` + `Fixtures/FakeLdapAccountsBackend.php` +
 `Fixtures/FakeContactsSource.php`) + `ImportInitialUsersTest.php` (5 tests: 3 config-validation error
 paths + create + no-op-rerun). Phase 2: `Fixtures/FakeAdsAccountsBackend.php` + `ImportGroupsTest.php`
@@ -16,11 +16,11 @@ pair) + `ImportDnRegexpTest.php` (1 test, pins down a behavior Ralf later confir
 table with careful skip-if-real-job-exists + cancel-in-finally safety). Phase 4: `ImportAliasesTest.php`
 (5 tests: add/remove diffing against a real `Api\Mail\Smtp\Sql` backend, dry_run log-only, LDIF export
 for `ldap`+`ads` sources - `univention`'s LDIF variant not covered, same attribute-switch pattern as the
-other two, lower priority). Phase 5: `ImportWritebackTest.php` (7 tests: the
+other two, lower priority). Phase 5: `ImportWritebackTest.php` (8 tests: the
 `account_import_update_source` push-to-source path via `hookEditAccount()` - guard/no-op cases,
-`addaccount`, `editaccount`, `deleteaccount`, `editaccountcontact` (success + backend-error);
-`editaccountcontact`'s GUID-recovery sub-branch not covered, structurally untestable via this
-harness - see "Phase 5" below for why).
+`addaccount`, `editaccount`, `deleteaccount`, `editaccountcontact` (success + backend-error +
+GUID-validation-failure recovery) - see "Phase 5" below, incl. a correction to an earlier claim in
+this doc about why the recovery branch was thought to be untestable).
 All against the real test DB with fixture-backed LDAP/ADS/contacts sources, no live LDAP/ADS server.
 Found+fixed **four real production bugs** along the way, plus a `$save_state` testability parameter
 added mid-Phase-3 - see "Bugs found" for detail.
@@ -139,18 +139,50 @@ the class's own declared property default, which - like `Api\Accounts`'s `backen
 applies even without the constructor running). `so_accounts` itself is `Fixtures/FakeContactsSoAccounts.php`
 - a minimal `Api\Storage\Base`-shaped fake (public `$data`, `save()` reading it and returning
 falsy-on-success), since `Contacts\Storage::save()` calls `$this->so_accounts->save()` with no arguments,
-Storage-base-class style, not by passing the contact array as a parameter. 2 tests: successful push (data
+Storage-base-class style, not by passing the contact array as a parameter. 3 tests: successful push (data
 lands in the fake, keyed by its uid - "id is the uid for LDAP or ADS!", per `hookEditAccount()`'s own
-comment) and a backend-error case (asserts the resulting `Exception` and its message).
+comment), a backend-error case (asserts the resulting `Exception` and its message), and the
+GUID-validation-failure recovery path (below).
 
-**Deliberately NOT covered:** the GUID-validation-failure recovery sub-branch inside `editaccountcontact`'s
-`catch (Api\Exception\AssertionFailed $e)` block - it recurses via `self::hookEditAccount(...)` (not
-`static::`), and `self::` is a **non-forwarding** call in PHP: it resets late static binding back to the
-literal `Import` class for that nested invocation, so `TestableWritebackImport`'s factory overrides would
-NOT apply there - it would try to build a real, live-connecting `Ldap`/`Ads` object. This isn't a scope
-choice, it's a structural limitation of the subclass-override testing approach for this one specific
-branch; would need a different technique (e.g. changing those 2 `self::` calls to `static::` too, mirroring
-the earlier `accountsFactory`/`contactsFactory` tweak) to become testable.
+### Correction: the GUID-recovery sub-branch, and a `self::`-vs-`static::` misunderstanding
+
+This doc originally claimed the recovery sub-branch inside `editaccountcontact`'s
+`catch (Api\Exception\AssertionFailed $e)` block was **structurally untestable**, because it recurses via
+`self::hookEditAccount(...)` rather than `static::`, and `self::` was believed to be a "non-forwarding"
+call that resets late static binding. **That claim was wrong**, confirmed with a small standalone script
+(`Sub::foo()` calling `self::bar()`, `bar()` overridden in `Sub`): the OVERRIDDEN `bar()` did NOT run
+(confirming `self::` ignores subclass method overrides, correctly, per the ORIGINAL `self::`->`static::`
+fix's own reasoning), but `static::class` **inside** the non-overridden call still correctly reported
+`Sub`, not `Base` - late static binding is forwarded through `self::` calls (and `parent::` calls) exactly
+like `static::` calls; a *literal* class-name call (`Import::hookEditAccount()`) would be the actual
+non-forwarding case, not a `self::` one. Verified in this project too: writing
+`testEditAccountContactRecoversFromInvalidGuidByCreatingNewAccount` (see below) and running it BEFORE
+changing those 2 `self::` calls to `static::` - it already passed. The reason the recovery branch is
+testable has nothing to do with those 2 calls at all: `hookEditAccount()` itself is never overridden by
+`TestableWritebackImport` (only `accountsFactory()`/`contactsFactory()` are), so whether the recursive call
+to it uses `self::` or `static::`, the exact same method body runs either way, and the `static::` calls
+*inside* that body (to `accountsFactory()`/`contactsFactory()`) correctly late-static-bind to
+`TestableWritebackImport`'s overrides regardless - because THOSE calls already use `static::` (the original,
+genuinely-necessary Phase 1 fix) and late static binding propagates through the `self::`-called
+`hookEditAccount()` frame transparently.
+
+Changed those 2 calls to `static::` anyway (Ralf asked for it after this was found) - it's inert today
+(no behavior change, confirmed by testing both ways) but is better style/more defensive: if
+`hookEditAccount()` itself were ever overridden by a future subclass, `static::` would correctly dispatch
+to that override where `self::` would silently ignore it. The test itself
+(`testEditAccountContactRecoversFromInvalidGuidByCreatingNewAccount`) exercises the full recovery flow:
+a local account (no `account_uuid` yet) gets an `editaccountcontact` push rejected by the fake source
+(`Api\Exception\AssertionFailed("'...' is NOT a valid GUID!")`), which triggers a nested `addaccount` push
+(landing on the fake accounts backend, uuid/dn written back to the real SQL row - same mechanics as
+`testAddAccountPushesNewAccountAndStoresUuidDn`), followed by a retry of `editaccountcontact` using the
+newly-assigned uuid, which succeeds.
+
+**Lesson for future PHP work in this codebase:** `self::`/`parent::`/`static::` calls are ALL "forwarding"
+calls for late static binding (`static::` inside the called code still resolves to the original calling
+class) - the *only* thing `self::` vs `static::` changes is which class's version of the called method
+runs, when that method has been redeclared (overridden) in a subclass. `self::` always uses the literal
+defining class's own declaration; `static::` uses the late-static-bound (possibly overridden) one. Only an
+explicit, literal class-name call (e.g. `Import::hookEditAccount()`) is non-forwarding.
 
 ## Bugs found while building the harness
 
@@ -502,12 +534,13 @@ Group by what's under test:
   telling way - empty attribute values, because a brand-new account has nothing in SQL yet to diff). Not
   covered: `univention`'s LDIF variant (same attribute-switch pattern as `ldap`/`ads`, lower priority -
   would follow the same shape as the two done).
-- **Phase 5: DONE.** `ImportWritebackTest` (`TestableWritebackImport` subclass overriding
-  `accountsFactory()`/`contactsFactory()`, no `Import` instance/harness needed since
-  `hookEditAccount()` is a plain static method) - guard/no-op cases (`account_import_update_source`
-  off; the `caller_method` self-loop guard), `addaccount` (incl. the real uuid/dn write-back into
-  SQL), `editaccount` (update of an already-synced entry), `deleteaccount`, and `editaccountcontact`
-  (success + backend-error, via a second fixture - `Fixtures/FakeContactsSoAccounts.php`). See
-  "Phase 5: write-back testability" above for the `Api\Config` reflection gotcha, the same-id
-  gotcha, and why `editaccountcontact`'s GUID-recovery sub-branch specifically stays untested (a
-  structural `self::`-vs-`static::` limitation, not a scope choice).
+- **Phase 5: DONE, fully, including the GUID-recovery sub-branch.** `ImportWritebackTest`
+  (`TestableWritebackImport` subclass overriding `accountsFactory()`/`contactsFactory()`, no
+  `Import` instance/harness needed since `hookEditAccount()` is a plain static method) -
+  guard/no-op cases (`account_import_update_source` off; the `caller_method` self-loop guard),
+  `addaccount` (incl. the real uuid/dn write-back into SQL), `editaccount` (update of an
+  already-synced entry), `deleteaccount`, and `editaccountcontact` (success + backend-error +
+  GUID-validation-failure recovery, via a second fixture - `Fixtures/FakeContactsSoAccounts.php`).
+  See "Phase 5: write-back testability" above for the `Api\Config` reflection gotcha and the
+  same-id gotcha, and "Correction: the GUID-recovery sub-branch" for a `self::`-vs-`static::`
+  misunderstanding this doc originally had (the branch was testable all along).
