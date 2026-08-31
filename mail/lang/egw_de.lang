@@ -53,6 +53,7 @@ always respond / auto-responder	mail	de	Immer antworten / Auto-Responder
 always show html emails	mail	de	HTML-E-Mails immer anzeigen
 always show notifiction	mail	de	Benachrichtigungen immer anzeigen
 an error happend while trying to remove acl rights from the account %1!	mail	de	Ein Fehler trat auf beim Versuch die Zugriffsrechte vom Konto %1 zu entfernen!
+and %1 more	mail	de	und %1 weitere
 and the rule with priority %1, now got the priority %2	mail	de	Die Regel mit Priorität %1 hat jetzt die Priorität %2
 answered	mail	de	Beantwortet
 any of	mail	de	mit einem
@@ -257,6 +258,7 @@ failed to delete folder %1	mail	de	Löschen des Ordners %1 fehlgeschlagen
 failed to delete messages	mail	de	Löschen der Nachrichten fehlgeschlagen
 failed to empty junk	mail	de	Leeren des Spam-Ordners fehlgeschlagen
 failed to empty trash	mail	de	Leeren des Papierkorbs fehlgeschlagen
+failed to load original message(s)	mail	de	Laden der ursprünglichen Nachricht(en) fehlgeschlagen
 failed to move %1 ! reason: %2	mail	de	Verschieben von %1 fehlgeschlagen! Grund: %2
 failed to move folder %1	mail	de	Verschieben des Ordners %1 fehlgeschlagen
 failed to move messages	mail	de	Verschieben der Nachrichten fehlgeschlagen

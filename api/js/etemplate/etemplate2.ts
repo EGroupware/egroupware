@@ -808,10 +808,7 @@ export class etemplate2
 					this._widgetContainer.updateComplete.then(async() =>
 					{
 						// Clear dirty now that it's all loaded
-						this.widgetContainer.iterateOver((_widget) =>
-						{
-							_widget.resetDirty();
-						}, this, et2_IInput);
+						this.resetDirty();
 						egw.debug("log", "Finished loading %s, triggering load event", _name);
 
 						if(typeof window.framework != 'undefined' && typeof window.framework.et2_loadingFinished != 'undefined')
@@ -914,6 +911,24 @@ export class etemplate2
 		}, this);
 
 		return dirty;
+	}
+
+	/**
+	 * Clear dirty (unsaved) state on every input widget in this template
+	 *
+	 * load() already calls this once itself, right after the initial template load finishes -
+	 * that's why server-rendered initial content is never mistaken for a user edit. Anything that
+	 * fills in values programmatically *after* that point (eg. a client-side bootstrap step
+	 * populating widgets from an API response, doc/ai/projects/mail-compose-jmap-migration.md's
+	 * Step 4 reply prefill) needs to call this again itself for the same reason - a plain
+	 * set_value() looks exactly like a real user edit to the dirty tracker either way.
+	 */
+	public resetDirty()
+	{
+		this.widgetContainer?.iterateOver((_widget) =>
+		{
+			_widget.resetDirty();
+		}, this, et2_IInput);
 	}
 
 	/**

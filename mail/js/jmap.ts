@@ -25,6 +25,7 @@ import {JamWebSocketClient} from "./jmap-jam-websocket";
 import type {StateChange} from "./jmap-jam-websocket";
 import DOMPurify from "../../api/js/etemplate/Et2Image/dompurify-shim";
 import {isNamespaceRootName, sortTopLevel} from "./folderTree";
+import {formatDateTime} from "../../api/js/etemplate/Et2Date/Et2Date";
 
 interface JmapToken
 {
@@ -75,6 +76,16 @@ export interface JmapNewEmail
 	body? : string;
 	isHtml? : boolean;
 	attachments? : JmapAttachment[];
+	/**
+	 * RFC 8621 threading headers - Step 4's reply first slice sets both from the message being
+	 * replied to (MailJmap.fetchForReply()'s messageId/references): inReplyTo is that message's
+	 * own messageId; references is RFC 5322 §3.6.4-correct (that message's own references, if
+	 * any, with its own messageId appended - NOT a straight copy of its references, which is
+	 * what the classic getReplyData() does and is missing that append step for a message that's
+	 * itself already part of a thread).
+	 */
+	inReplyTo? : string[];
+	references? : string[];
 }
 
 /** An already-uploaded (see MailJmap.uploadAttachment()) attachment, ready to reference by blobId. */
@@ -84,6 +95,60 @@ export interface JmapAttachment
 	name : string;
 	type : string;
 	size : number;
+}
+
+/**
+ * RFC 8621 §6.1 Identity - see MailJmap.getIdentities(). Always synthesized server-side from
+ * EGroupware's own Mail\Account (Api\Mail\Jmap\Identity::synthesize(), same implementation for
+ * both backends) rather than a real per-backend passthrough - textSignature/htmlSignature are
+ * already merge-resolved (placeholders substituted) and, for textSignature, already converted
+ * from the always-HTML-authored source - see composeBodyWithSignature()'s docblock for how to
+ * combine either variant with a compose body.
+ */
+export interface JmapIdentity
+{
+	id : string;
+	name : string;
+	email : string;
+	replyTo : {name? : string; email : string}[] | null;
+	bcc : {name? : string; email : string}[] | null;
+	textSignature : string;
+	htmlSignature : string;
+	mayDelete : boolean;
+}
+
+/** RFC 8621 EmailAddress shape (from/to/cc/replyTo properties) */
+export type JmapEmailAddress = {name? : string; email : string};
+
+/**
+ * Result of MailJmap.fetchForReply() - doc/ai/projects/mail-compose-jmap-migration.md's Step 4,
+ * first slice (single reply only, no attachments/inline-images/threading-headers yet). `body` is
+ * the raw sanitized body FRAGMENT (not fetchBody()'s full wrapDocument()-wrapped display HTML) in
+ * whichever of `mimeType`'s shape it's in - ready for quoteOriginalMessage() to wrap.
+ */
+export interface JmapReplyContext
+{
+	from : JmapEmailAddress[];
+	to : JmapEmailAddress[];
+	cc : JmapEmailAddress[];
+	replyTo : JmapEmailAddress[] | null;
+	subject : string;
+	date : string;
+	mimeType : 'html' | 'plain';
+	body : string;
+	profileID : string;
+	/** RFC 5322 §3.6.4-correct threading headers for the NEW reply - see JmapNewEmail's own docblock. */
+	inReplyTo : string[] | null;
+	references : string[] | null;
+	/**
+	 * The original message's own non-inline attachments (blobId-ready, RFC 8621's own `attachments`
+	 * convenience property already excludes the primary text/html body - no bodyStructure walking
+	 * needed), filtered the same way the classic getForwardData() filters `getMessageAttachments()`:
+	 * a cid-referenced inline image is excluded UNLESS its own disposition is 'attachment'. Only
+	 * used by "reply with attachments" ($_GET['from'] === 'reply_attachments') - a plain reply
+	 * ignores this list entirely, matching the classic code's own behaviour.
+	 */
+	attachments : JmapAttachment[];
 }
 
 /** Result of MailJmap.fetchBody() - see that method's docblock */
@@ -2298,6 +2363,142 @@ export class MailJmap
 		}
 	}
 
+	/**
+	 * Fetch the original message's headers + raw body content for a client-side reply
+	 * (doc/ai/projects/mail-compose-jmap-migration.md's Step 4, first slice: single reply only,
+	 * no attachments/inline-images/threading-headers yet). Deliberately NOT fetchBody() - that
+	 * method's `html` is the full wrapDocument()-wrapped, message-*display*-shaped result; this
+	 * one returns the sanitized body FRAGMENT plus the address/subject/date fields a reply needs
+	 * that fetchBody() never fetches at all.
+	 *
+	 * @return null on any failure - caller falls back to the classic server-rendered reply
+	 */
+	async fetchForReply(rowId : string) : Promise<JmapReplyContext | null>
+	{
+		try
+		{
+			const ref = this.messageReference(rowId);
+			const token = await this.ensureToken(ref.profileID);
+			if (!token)
+			{
+				return null;
+			}
+			const args : any = {
+				accountId: token.accountId,
+				ids: [ref.emailId],
+				properties: ['from', 'to', 'cc', 'replyTo', 'subject', 'sentAt', 'receivedAt',
+					'messageId', 'references', 'bodyStructure', 'textBody', 'htmlBody', 'bodyValues',
+					'attachments'],
+				fetchAllBodyValues: true,
+			};
+			if (token.isLocal)
+			{
+				args.mailboxId = ref.mailboxId;
+			}
+			const emails = token.isLocal ?
+				await this.emailGetViaCacheableGet(this.clients[ref.profileID], args) :
+				(await this.clients[ref.profileID].requestMany((t) => ({
+					emails: t.Email.get(args) as any,
+				})))[0].emails;
+			const email = (emails.list || [])[0];
+			if (!email)
+			{
+				return null;
+			}
+
+			const htmlParts : any[] = email.htmlBody || [];
+			const textParts : any[] = email.textBody || [];
+			const useHtml = htmlParts.length > 0;
+			const part = useHtml ? htmlParts[0] : textParts[0];
+			const raw = part ? (email.bodyValues?.[part.partId]?.value || '') : '';
+			const body = useHtml ? DOMPurify.sanitize(raw, {
+				FORBID_TAGS: ['script', 'meta', 'base', 'object', 'embed', 'applet', 'iframe'],
+				ALLOWED_URI_REGEXP: /^(?:(?:https?|mailto|tel|cid|data):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i,
+			}) : raw;
+
+			// RFC 5322 §3.6.4: the new reply's References is the original's own References (if
+			// any) with the original's own Message-Id appended - NOT a straight copy of the
+			// original's References (missing that append step would drop the original itself out
+			// of the thread for any client that only reads References, not In-Reply-To).
+			const originalMessageId : string[] = email.messageId || [];
+			const inReplyTo = originalMessageId.length ? originalMessageId : null;
+			const references = originalMessageId.length ? [...(email.references || []), ...originalMessageId] : null;
+
+			// same filter as classic getForwardData(): a cid-referenced inline image is excluded
+			// unless it's ALSO explicitly marked disposition=attachment - everything else server-set
+			// `attachments` lists (RFC 8621 §4.1.4, already excludes the primary text/html body) is
+			// a real attachment.
+			const attachments : JmapAttachment[] = (email.attachments || [])
+				.filter((a : any) => !(a.cid && /^image\//i.test(a.type || '')) || a.disposition === 'attachment')
+				.map((a : any) => ({blobId: a.blobId, name: a.name || '', type: a.type || 'application/octet-stream', size: a.size || 0}));
+
+			return {
+				from: email.from || [],
+				to: email.to || [],
+				cc: email.cc || [],
+				replyTo: email.replyTo || null,
+				subject: email.subject || '',
+				date: this.jmapUtcToUserTz(email.sentAt || email.receivedAt),
+				mimeType: useHtml ? 'html' : 'plain',
+				body,
+				profileID: ref.profileID,
+				inReplyTo,
+				references,
+				attachments,
+			};
+		}
+		catch (e)
+		{
+			console.error('MailJmap.fetchForReply(): failed', e);
+			return null;
+		}
+	}
+
+	/**
+	 * Just enough to attach a whole message as a message/rfc822 file - for "Forward as attachment"
+	 * (compose.ts's bootstrapForwardAsAttachment(), $_GET['mode']==='forwardasattach'), one call per
+	 * forwarded message (classic getForwardData()'s asmail branch does the same, one
+	 * addMessageAttachment() call per $replyIds entry). Deliberately NOT fetching body/textBody/
+	 * htmlBody/bodyValues at all - forward-as-attachment has no quoted body, unlike fetchForReply().
+	 * `blobId` here is RFC 8621 §4.1.1's Email.blobId (the raw RFC 5322 octets, top-level on the
+	 * Email object) - same as fetchRawSource()'s own "view source" feature already uses, but this
+	 * skips fetchRawSource()'s own downloadBlob()+.text() step entirely: the blobId is directly
+	 * reusable as a message/rfc822 JmapAttachment reference in a NEW Email/set create's
+	 * bodyStructure (same content-addressed cross-reference carryForwardAttachments() already
+	 * relies on) - no download+reupload round-trip needed.
+	 */
+	async fetchForForwardAsAttachment(rowId : string) : Promise<{subject : string, blobId : string, size : number, profileID : string} | null>
+	{
+		try
+		{
+			const ref = this.messageReference(rowId);
+			const token = await this.ensureToken(ref.profileID);
+			if (!token)
+			{
+				return null;
+			}
+			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['subject', 'blobId', 'size']};
+			if (token.isLocal)
+			{
+				args.mailboxId = ref.mailboxId;
+			}
+			const [{emails}] = await this.clients[ref.profileID].requestMany((t) => ({
+				emails: t.Email.get(args) as any,
+			}));
+			const email = (emails.list || [])[0];
+			if (!email?.blobId)
+			{
+				return null;
+			}
+			return {subject: email.subject || '', blobId: email.blobId, size: email.size || 0, profileID: ref.profileID};
+		}
+		catch (e)
+		{
+			console.error('MailJmap.fetchForForwardAsAttachment(): failed', e);
+			return null;
+		}
+	}
+
 	/** Depth-first walk of bodyStructure/subParts for any SPECIAL_CASE_TYPES / winmail.dat match */
 	private isSpecialCase(part : any) : boolean
 	{
@@ -3388,14 +3589,14 @@ export class MailJmap
 	{
 		try
 		{
-			const {token, client, identity, draftsId, sentId} = await this.resolveComposeContext(profileID, true);
+			const {token, client, identity, submissionIdentityId, draftsId, sentId} = await this.resolveComposeContext(profileID, true);
 
 			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email);
 
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
 					accountId: token.accountId,
-					create: {sub1: {emailId, identityId: identity.id}},
+					create: {sub1: {emailId, identityId: submissionIdentityId}},
 					onSuccessUpdateEmail: {
 						'#sub1': {
 							[`mailboxIds/${draftsId}`]: null,
@@ -3480,6 +3681,180 @@ export class MailJmap
 	}
 
 	/**
+	 * Fetch every identity configured for this account (name, email, and both signature variants),
+	 * for the compose "From" dropdown + signature insertion - works uniformly for both backends.
+	 *
+	 * Deliberately NOT a direct-to-backend JMAP call via `this.clients[profileID]` (unlike almost
+	 * everything else in this class) - a real-JMAP account's client talks straight to Stalwart
+	 * over WS/HTTP, with no EGroupware PHP in the loop at all for a normal Identity/get, but we
+	 * never sync identity/signature data to Stalwart (see Api\Mail\Jmap\Identity's own docblock) -
+	 * found live 2026-08-27: calling Identity/get that way returned Stalwart's own auto-
+	 * provisioned per-alias identities, opaque non-numeric ids ('b', 'c', ...) that can never
+	 * match EGroupware's own numeric ident_id either, and no signatures at all.
+	 *
+	 * Goes straight to the local shim's own endpoint (mail/jmap.php -> Imap::dispatch()'s
+	 * Identity/get case -> Identity::synthesize(), already shared with Http's own Identity/get)
+	 * for EVERY account regardless of backend - not through a client instance at all, since a
+	 * real-JMAP account's own client is wired to Stalwart's URL, not the shim's (ralf, 2026-08-27:
+	 * routing through "our already server-side shim" this way means later syncing identities to
+	 * Stalwart natively only needs changing the shim's own Identity/get handling, zero client
+	 * changes here).
+	 */
+	async getIdentities(profileID : string) : Promise<JmapIdentity[]>
+	{
+		try
+		{
+			const response = await fetch(this.egw.link('/mail/jmap.php'), {
+				method: 'POST',
+				credentials: 'same-origin',
+				headers: {'Content-Type': 'application/json'},
+				body: JSON.stringify({methodCalls: [['Identity/get', {accountId: profileID}, 'c0']]}),
+			});
+			if (!response.ok)
+			{
+				throw new Error('HTTP ' + response.status);
+			}
+			const {methodResponses} = await response.json();
+			const [method, result] = methodResponses?.[0] ?? [];
+			if (method === 'error')
+			{
+				throw result;
+			}
+			return result?.list ?? [];
+		}
+		catch (e)
+		{
+			console.error('MailJmap.getIdentities(): failed', e);
+			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Unable to connect to the mail server'));
+		}
+	}
+
+	/**
+	 * Combine a compose body with an identity's signature, honouring the classic
+	 * insertSignatureAtTopOfMessage/disableRulerForSignatureSeparation prefs
+	 * (mail_compose.inc.php:1246-1297, ported 1:1 for the placement math) - pure string
+	 * composition, no JMAP call involved, no widget/DOM access either (caller sets the result into
+	 * the html- or text-edit-widget itself).
+	 *
+	 * Callers MUST pass the body WITHOUT any previously-inserted signature every time (eg. their
+	 * own pristine copy from before the first insertion) - never the result of a PREVIOUS call to
+	 * this function. On identity switch, re-run this against that same original body with the
+	 * newly-selected identity's signature; there is no relocate-an-already-inserted-signature step
+	 * here, unlike the classic server-side implementation's fragile `<!-- HTMLSIGBEGIN/END -->`
+	 * marker search-and-replace (doc/ai/projects/mail-compose-jmap-migration.md's Step 4 section) -
+	 * holding the pristine body client-side makes that whole mechanism unnecessary, not just moved.
+	 *
+	 * Simplification vs. the classic implementation: skips the "does the signature's own markup
+	 * already start with a block-level HTML element" check that conditionally wraps it in an extra
+	 * `<div>` - a minor rendering nicety for the ruler/spacing, not core placement behaviour;
+	 * revisit if a visual regression shows up in testing.
+	 *
+	 * @param body current body, WITHOUT any signature
+	 * @param mimeType 'html' | 'plain' - selects which of signature's two variants is used
+	 * @param signature identity.htmlSignature/identity.textSignature (JmapIdentity) - both already
+	 *  merge-resolved (and, for textSignature, already HTML-to-plain-text converted) server-side
+	 * @param options.placement 'top' | 'below' | 'none' - matches insertSignatureAtTopOfMessage's
+	 *  '1' / '0'-or-unset / 'no_belowaftersend' values respectively ('none': don't insert now -
+	 *  eg. append fresh only right before send, entirely the caller's own concern, this function
+	 *  just returns body unchanged)
+	 * @param options.disableRuler mailPreferences.disableRulerForSignatureSeparation, or true if
+	 *  the signature is empty (matches the classic default - no separator with nothing to separate)
+	 * @param options.isReply true for reply/forward (never adds an empty leading line above an
+	 *  existing quoted body) - false (default) for new-message compose
+	 */
+	static composeBodyWithSignature(
+		body : string,
+		mimeType : 'html' | 'plain',
+		signature : Pick<JmapIdentity, 'htmlSignature' | 'textSignature'>,
+		options : {placement : 'top' | 'below' | 'none', disableRuler? : boolean, isReply? : boolean}
+	) : string
+	{
+		const sigSource = mimeType === 'html' ? signature.htmlSignature : signature.textSignature;
+		if (options.placement === 'none' || !sigSource)
+		{
+			return body;
+		}
+		const disableRuler = !!options.disableRuler;
+
+		let start : string, before : string, inbetween : string;
+		if (mimeType === 'html')
+		{
+			start = '<p><br/></p>\n';
+			before = disableRuler ? '' : '<hr class="ruler" style="border:1px dotted silver; width:100%;">';
+			inbetween = '';
+		}
+		else
+		{
+			before = disableRuler ? '\r\n' : '\r\n-- \r\n';
+			start = inbetween = '\r\n';
+		}
+		// if there's already a body and this isn't a reply/forward, don't add an empty line above it
+		if (body && !options.isReply)
+		{
+			start = '';
+		}
+
+		return options.placement === 'below'
+			? start + body + before + sigSource
+			: start + before + sigSource + inbetween + body;
+	}
+
+	private static escapeHtml(text : string) : string
+	{
+		const div = document.createElement('div');
+		div.textContent = text;
+		return div.innerHTML;
+	}
+
+	/**
+	 * Build the "original message" attribution block + quoted body for a reply, from
+	 * fetchForReply()'s result - ported from mail_compose.inc.php's getReplyData() (the attribution
+	 * fieldset + `<blockquote>`/plain '>' quoting), with 2 deliberate simplifications for this
+	 * first slice (doc/ai/projects/mail-compose-jmap-migration.md's Step 4): no nested-quote-depth
+	 * tracking or word-wrap for plain-text (a single flat '> ' prefix per line instead), and no
+	 * "strip the original message's own trailing signature from the quote" heuristic (RFC 3676
+	 * §4.3) - both nice-to-haves, not load-bearing for a first working version.
+	 *
+	 * @param context fetchForReply()'s result - context.mimeType decides whether the reply is
+	 *  HTML or plain: a reply adopts the ORIGINAL message's mimeType, same as the classic
+	 *  implementation - not the user's own new-compose mimeType preference
+	 */
+	quoteOriginalMessage(context : JmapReplyContext) : string
+	{
+		const formatAddress = (a : JmapEmailAddress) => a.name ? `${a.name} <${a.email}>` : a.email;
+		const formatList = (addresses : JmapEmailAddress[]) => addresses.map(formatAddress).join(', ');
+		// context.date is jmapUtcToUserTz()'s intermediate shape (already timezone-shifted, but
+		// still a bare "Z"-suffixed ISO string, not human-readable) - formatDateTime() (Et2Date.ts)
+		// reads a Date's *UTC* getters to apply the user's actual dateformat/timeformat
+		// preference, which is exactly what that intermediate shape is meant to feed (same
+		// convention the row grid's own date column relies on) - found live 2026-08-27, the raw
+		// ISO string was showing up verbatim in the quoted attribution block.
+		const attributionLines : [string, string][] = [
+			['from', context.from.length ? formatList(context.from) : ''],
+			['to', context.to.length ? formatList(context.to) : ''],
+			['cc', context.cc.length ? formatList(context.cc) : ''],
+			['date', context.date ? formatDateTime(new Date(context.date)) : ''],
+		];
+
+		if (context.mimeType === 'html')
+		{
+			const lines = attributionLines
+				.filter(([, value]) => value)
+				.map(([label, value]) => `${MailJmap.escapeHtml(this.egw.lang(label))}: ${MailJmap.escapeHtml(value)}`)
+				.join('<br>');
+			return `<fieldset class="originalMessage"><legend>${MailJmap.escapeHtml(this.egw.lang('original message'))}</legend>${lines}</fieldset>` +
+				`<blockquote type="cite">${context.body}</blockquote><br>`;
+		}
+
+		const attribution = attributionLines
+			.filter(([, value]) => value)
+			.map(([label, value]) => `${this.egw.lang(label)}: ${value}`)
+			.join('\r\n');
+		const quotedLines = context.body.split('\n').map((line) => '> ' + line.replace(/\r$/, '')).join('\r\n');
+		return attribution + '\r\n\r\n' + quotedLines;
+	}
+
+	/**
 	 * Shared setup for sendNewEmail()/saveDraft() - resolves the account's token, identity, and
 	 * Drafts (+ optionally Sent) mailbox id. Throws JmapUnsupportedBackendError for the IMAP-shim
 	 * backend (no Email/create or EmailSubmission support yet, doc's Step 2) - callers like
@@ -3487,6 +3862,9 @@ export class MailJmap
 	 * the classic path instead of surfacing a confusing raw JMAP error. IMAP-shim accounts
 	 * already get a working token (folder/message browsing is JMAP-native for both backends), so
 	 * this can't be checked any earlier than here.
+	 *
+	 * @param profileID compose.ts's currentProfileID() - the "From" dropdown's raw
+	 *  "acc_id:ident_id" value (mail_compose.inc.php's own convention), NOT a bare acc_id
 	 */
 	private async resolveComposeContext(profileID : string, needSent : boolean)
 	{
@@ -3498,11 +3876,26 @@ export class MailJmap
 		}
 		const client = this.clients[profileID];
 
-		const [{identities, mailboxes}] = await client.requestMany((t) => ({
-			identities: t.Identity.get({accountId: token.accountId}),
-			mailboxes: t.Mailbox.get({accountId: token.accountId}),
-		}));
-		const identity = identities.list?.[0];
+		// getIdentities() (not Identity/get over this backend's own wire connection - see that
+		// method's own docblock for why) + matched against the "From" dropdown's own selected
+		// ident_id - found live 2026-08-27: this used to just take identities.list?.[0] from the
+		// direct-to-Stalwart call, silently ignoring whichever identity the user actually
+		// selected (every send/draft always went out under Stalwart's own first auto-provisioned
+		// identity, regardless of the "From" dropdown) - ident_id-matching only became possible
+		// once identities came from EGroupware's own synthesis at all (Stalwart's own ids are
+		// opaque and never matched ident_id either).
+		const [accId, identId] = profileID.split(':', 2);
+		let identities : any[], mailboxes : any, stalwartIdentities : any;
+		[identities, [{mailboxes, stalwartIdentities}]] = await Promise.all([
+			this.getIdentities(accId),
+			client.requestMany((t) => ({
+				mailboxes: t.Mailbox.get({accountId: token.accountId}),
+				// needed only to resolve submissionIdentityId below, but cheap enough to always
+				// fetch alongside mailboxes in the same round-trip rather than branching on needSent
+				stalwartIdentities: t.Identity.get({accountId: token.accountId}),
+			})),
+		]);
+		const identity = identities.find((i) => i.id === identId) ?? identities[0];
 		if (!identity)
 		{
 			throw new JmapUserError(this.egw.lang('No identity found for this account'));
@@ -3513,7 +3906,25 @@ export class MailJmap
 		{
 			throw new JmapUserError(this.egw.lang('Could not find Drafts/Sent folder'));
 		}
-		return {token, client, identity, draftsId, sentId};
+		// EmailSubmission/set's identityId is validated by Stalwart itself against ITS OWN Identity
+		// objects (opaque ids like 'b'/'c') - EGroupware's synthesized identity.id (a plain numeric
+		// ident_id) is never one of those, so passing it straight through gets the whole submission
+		// rejected with a terse "Identity not found." (found live 2026-08-31, no client-side string
+		// match for it - it's Stalwart's own SetError description, surfaced via describeSetError()).
+		// Match Stalwart's own identity by email instead, the only field guaranteed to line up
+		// between the two unsynced systems - only needed for an actual send, not a draft-only save.
+		let submissionIdentityId : string | undefined;
+		if (needSent)
+		{
+			const submissionIdentity = stalwartIdentities.list?.find(
+				(i : any) => i.email?.toLowerCase() === identity.email?.toLowerCase());
+			if (!submissionIdentity)
+			{
+				throw new JmapUserError(this.egw.lang('No matching mail server identity found for %1', identity.email));
+			}
+			submissionIdentityId = submissionIdentity.id;
+		}
+		return {token, client, identity, submissionIdentityId, draftsId, sentId};
 	}
 
 	/**
@@ -3543,13 +3954,22 @@ export class MailJmap
 		const isHtml = !!email.isHtml;
 		const bodyPart = {partId : 'body', type : isHtml ? 'text/html' : 'text/plain'};
 		const attachments = email.attachments ?? [];
+		const to = this.addressesToJmap(email.to);
+		const cc = this.addressesToJmap(email.cc);
+		const bcc = this.addressesToJmap(email.bcc);
 
 		return {
 			from: [{email : identity.email, name : identity.name}],
-			to: this.addressesToJmap(email.to),
-			cc: this.addressesToJmap(email.cc),
-			bcc: this.addressesToJmap(email.bcc),
+			...(to?.length ? {to} : {}),
+			// addressesToJmap() returns [] (not undefined) for an empty array/string input - an
+			// empty cc/bcc array is still a present JMAP property, so the shim emitted a blank
+			// "Cc:"/"Bcc:" header for every message instead of omitting the header entirely
+			// (found live 2026-08-31, once sending moved client-side).
+			...(cc?.length ? {cc} : {}),
+			...(bcc?.length ? {bcc} : {}),
 			subject: email.subject ?? '',
+			...(email.inReplyTo?.length ? {inReplyTo: email.inReplyTo} : {}),
+			...(email.references?.length ? {references: email.references} : {}),
 			bodyValues: {body : {value : email.body ?? '', charset : 'utf-8'}},
 			// attachments/htmlBody/textBody are RFC 8621 §4.1.4 convenience VIEWS the server
 			// derives from bodyStructure on read - not independently settable on create, so
@@ -3613,6 +4033,30 @@ export class MailJmap
 			console.error('MailJmap.uploadAttachment(): failed', e);
 			throw new JmapUserError(describeJmapError(e) ?? this.egw.lang('Failed to upload attachment %1', name));
 		}
+	}
+
+	/**
+	 * Download a carry-forward attachment's blob (compose.ts's carryForwardAttachments() - a bare
+	 * JMAP blobId reference, no classic message-part uid/partID/folder or locally-staged tmp_name
+	 * addressing at all) and return an object URL for it. Neither of compose.ts's
+	 * displayUploadedFile() existing branches apply to this shape - one expects a real tmp_name to
+	 * fetch via the classic getAttachment() menuaction, the other (app.displayAttachment())
+	 * expects a classic mail_id + partID to fetch via mail_ui.getAttachment - this is the
+	 * JMAP-native equivalent (same jmap-jam downloadBlob() the inline-cid-image resolution already
+	 * uses). Caller decides how to display it (compose.ts opens it in a sized egw.openPopup(), same
+	 * convention as the classic branches) - never revoked, matches the popup's own lifetime.
+	 */
+	async downloadBlobUrl(profileID : string, blobId : string, name : string, type : string) : Promise<string>
+	{
+		const token = await this.ensureToken(profileID);
+		if (!token) throw this.unreachableError();
+		const response = await this.clients[profileID].downloadBlob({
+			accountId: token.accountId,
+			blobId,
+			mimeType: type || 'application/octet-stream',
+			fileName: name,
+		});
+		return URL.createObjectURL(await response.blob());
 	}
 
 	/** Create a new $draft-keyword Email in the Drafts mailbox - shared by sendNewEmail() and saveDraft()'s first-save case. */

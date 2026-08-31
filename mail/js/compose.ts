@@ -15,6 +15,8 @@ import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 // needed or possible.
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
+import {MailJmap} from "./jmap";
+import type {JmapReplyContext} from "./jmap";
 
 export class MailCompose
 {
@@ -23,11 +25,12 @@ export class MailCompose
 	private autosaveInterval : number;
 
 	/**
-	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - set from this popup's own
-	 * "&jmap=1" URL param, added by MailApp.composeMessage() only for a genuinely new message
-	 * opened while the "jmapCompose" toolbar toggle is on (see jmapComposeEnabled's docblock).
-	 * Read once here rather than in submitAction() so a mid-edit toggle change in the (separate)
-	 * main window can't retroactively change an already-open compose window's send behaviour.
+	 * doc/ai/projects/mail-compose-jmap-migration.md - set from this popup's own "&jmap=1" URL
+	 * param, added by MailApp.composeMessage() for a genuinely new blank message (Step 1) or a
+	 * single reply (Step 4, first slice - never reply_all/forward yet) opened while the
+	 * "jmapCompose" toolbar toggle is on (see jmapComposeEnabled's docblock). Read once here
+	 * rather than in submitAction() so a mid-edit toggle change in the (separate) main window
+	 * can't retroactively change an already-open compose window's send behaviour.
 	 */
 	private readonly isJmapMode : boolean = new URLSearchParams(window.location.search).get('jmap') === '1';
 
@@ -38,6 +41,35 @@ export class MailCompose
 	 * place instead of creating a new one on every autosave tick.
 	 */
 	private jmapDraftEmailId? : string;
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the exact decorated substring
+	 * MailJmap.composeBodyWithSignature() last inserted into the body widget, tracked so a later
+	 * identity switch (updateSignatureForIdentity()) can strip it back out by plain substring
+	 * match before recomposing with the new identity's signature - no marker/regex relocate hack
+	 * needed (see that function's own docblock for why holding this client-side removes the need
+	 * for the classic implementation's fragile one). Empty once nothing has been auto-inserted
+	 * yet, or once it could no longer be located (the user edited around/inside it - left alone
+	 * rather than guessed at, never silently duplicated).
+	 */
+	private insertedSignatureBlock : string = '';
+	private signaturePlacement : 'top' | 'below' | 'none' = 'below';
+
+	/**
+	 * Set once by bootstrapReply() - kept so a later identity switch (updateSignatureForIdentity())
+	 * still passes isReply through to composeBodyWithSignature() (the quoted body is already
+	 * non-empty by then, so the "no leading blank line above a non-empty new-compose body" rule
+	 * must not apply).
+	 */
+	private isReplyCompose : boolean = false;
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - RFC 5322 threading headers (In-
+	 * Reply-To/References) for a reply, set once by bootstrapReply() from MailJmap.fetchForReply()'s
+	 * result and included in every currentEmailFields() call thereafter (send AND every
+	 * save/autosave) - null for a plain new-message compose.
+	 */
+	private replyThreadingHeaders : {inReplyTo : string[] | null, references : string[] | null} | null = null;
 
 	get egw() : IegwAppLocal
 	{
@@ -72,6 +104,8 @@ export class MailCompose
 				void this.saveAsDraft(null, 'autosaving');
 			}
 		}, 120000);
+
+		void this.bootstrapCompose();
 	}
 
 	private handleEtemplateClear(event)
@@ -206,6 +240,16 @@ export class MailCompose
 		if (_widget && Object.keys(_widget).length > 0)
 		{
 			const widgetId = typeof _widget.id !== 'undefined' ? _widget.id : undefined;
+			// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - identity switch handled
+			// entirely client-side when the JMAP toggle is on (MailJmap.getIdentities()/
+			// composeBodyWithSignature()), no server round-trip at all - mail_compose::compose()'s
+			// own "$jmapModeNewCompose" guard already skips server-side signature pre-fill for
+			// this same case, so there's nothing stale server-side to fight with here either way.
+			if (widgetId === 'mailaccount' && this.isJmapMode)
+			{
+				void this.updateSignatureForIdentity();
+				return;
+			}
 			switch (widgetId)
 			{
 				case 'mimeType':
@@ -400,6 +444,15 @@ export class MailCompose
 	{
 		const attgrid = this.et2.getArrayMgr("content").getEntry('attachments')[widget.id.replace(/\[name]/,'')];
 
+		// carryForwardAttachments() (Step 4, attachment carry-forward slice) - a bare JMAP blobId
+		// reference, no classic tmp_name/uid/partID/folder addressing at all, so neither branch
+		// below applies (found live 2026-08-31: the classic-upload branch crashed on
+		// attgrid.file.replace(), since carry-forward entries have no .file at all).
+		if (attgrid.jmapBlobId)
+		{
+			void this.displayJmapBlobAttachment(attgrid);
+			return;
+		}
 		if (attgrid.uid && (attgrid.partID||attgrid.folder))
 		{
 			this.app.displayAttachment(tag_info, widget, true);
@@ -460,6 +513,25 @@ export class MailCompose
 				break;
 		}
 		egw.openPopup(egw.link('/index.php', get_param), width, height, windowName);
+	}
+
+	/**
+	 * displayUploadedFile()'s JMAP-blob counterpart (carryForwardAttachments() entries) - opens a
+	 * sized egw.openPopup() showing the downloaded blob, same convention as displayUploadedFile()'s
+	 * own classic branches (never a plain browser tab). Deliberately NOT the Expose lightbox the
+	 * message-view/preview uses for images - compose has never used Expose for its own attachment
+	 * list (classic locally-staged or message-part attachments don't either, confirmed in
+	 * app.displayAttachment()), so this stays consistent with compose's existing behaviour;
+	 * unifying compose's OWN attachment clicks with Expose (ralf, 2026-08-31: "it would be nice if
+	 * we can make that consistent, so images open in expose everywhere") is a separate follow-up,
+	 * not done here. Doesn't attempt the classic vcard/calendar import-into-popup special cases
+	 * (those need server-side parsing of the actual file content, not just a raw blob URL) - out of
+	 * scope for a carried-forward attachment, which is always a plain file.
+	 */
+	private async displayJmapBlobAttachment(attgrid : any) : Promise<void>
+	{
+		const url = await this.app.jmap.downloadBlobUrl(attgrid.jmapProfileID, attgrid.jmapBlobId, attgrid.name, attgrid.type);
+		egw.openPopup(url, 800, 600, 'maildisplayAttachment_' + attgrid.tmp_name);
 	}
 
 	/**
@@ -561,21 +633,48 @@ export class MailCompose
 
 	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1/3 - no cross-app integration, no
-	 * S/MIME yet. Attachments are eligible as of Step 3 EXCEPT: a "share instead of attach"
-	 * filemode (a Vfs\Sharing link, not a real attachment upload - out of scope) or one carried
-	 * forward from an original message (has uid+partID/folder - needs reply/forward, Step 4, not
-	 * built yet). "autosave... has the same unimplemented features as our current sending" (ralf,
-	 * 2026-08-27).
+	 * S/MIME yet, for an actual SEND. Attachments are eligible as of Step 3 EXCEPT: a "share
+	 * instead of attach" filemode (a Vfs\Sharing link, not a real attachment upload - out of
+	 * scope) or one carried forward from an original message (has uid+partID/folder - needs
+	 * reply/forward, Step 4, not fully built yet). "autosave... has the same unimplemented
+	 * features as our current sending" (ralf, 2026-08-27) - true for attachments, but NOT for the
+	 * integration/S-MIME toggle check below (see forSend's docblock - found live 2026-08-27 via a
+	 * confirmed, reproducible case: to_infolog checked -> autosave fell back to the classic path
+	 * -> crashed, the same raw-IMAP-fallthrough bug class as elsewhere in this codebase, since
+	 * Api\Mail::appendMessage()/folderExists() are unguarded raw IMAP calls with no JMAP-native
+	 * fast path - a JMAP-only account's classic draft-save can never actually work, so falling
+	 * back to it for a toggle that doesn't even affect the SAVED DRAFT's own content was
+	 * strictly worse than just not blocking on it).
+	 *
+	 * @param forSend true (the default, matching trySendViaJmap()'s use) also checks the
+	 *  composeToolbar's integration/S-MIME toggles - those affect what gets built at SEND time
+	 *  only, not a draft's own JMAP representation, so trySaveDraftViaJmap() passes false: a
+	 *  draft with, say, "create an InfoLog entry" checked is still just plain body+recipients as
+	 *  far as the SAVED draft itself is concerned - that toggle only matters again once actually
+	 *  sent (still classic-only, unaffected by this).
 	 */
-	private jmapEligible() : boolean
+	private jmapEligible(forSend : boolean = true) : boolean
 	{
-		if (!this.isJmapMode || this.app.mailvelope_editor) return false;
+		if (!this.isJmapMode || this.app.mailvelope_editor)
+		{
+			return false;
+		}
 		const attachments : any[] = Object.values(this.et2.getArrayMgr('content').getEntry('attachments') || {});
 		if (attachments.length)
 		{
 			const filemode = this.et2.getWidgetById('filemode')?.get_value();
-			if (filemode && filemode !== 'attach') return false;
-			if (attachments.some((a) => a.uid && (a.partID || a.folder))) return false;
+			if (filemode && filemode !== 'attach')
+			{
+				return false;
+			}
+			if (attachments.some((a) => a.uid && (a.partID || a.folder)))
+			{
+				return false;
+			}
+		}
+		if (!forSend)
+		{
+			return true;
 		}
 		const toolbar : any = this.et2.getWidgetById('composeToolbar');
 		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
@@ -586,6 +685,427 @@ export class MailCompose
 	private currentProfileID() : string
 	{
 		return String(this.et2.getWidgetById('mailaccount')?.get_value());
+	}
+
+	private currentBodyWidget()
+	{
+		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
+		return this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext');
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4, first slice - dispatches to
+	 * bootstrapReply() for a JMAP-mode single reply/reply-with-attachments/inline-forward
+	 * (identified purely from this popup's own URL params, same technique isJmapMode already uses
+	 * - "&from=reply&id=<rowId>", added by MailApp.composeMessage() only when the "jmapCompose"
+	 * toggle is on), else the existing bootstrapSignature() for a genuinely new blank compose.
+	 * "reply_attachments" (added 2026-08-31, attachment carry-forward slice) is the same reply
+	 * plus carrying the original message's own attachments along - matching the classic code's own
+	 * `getForwardData()` + `getReplyData()` fallthrough composition of the same two features.
+	 * "forward" (added 2026-08-31 too, single-message inline forward only) reuses that exact same
+	 * fetch+quote+attachment-carry-forward machinery again - ralf: "same thing as reply with
+	 * attachments, just not setting To" - bootstrapReply()'s own `mode` param controls the
+	 * remaining differences (subject prefix, to/cc, threading headers). "forwardasattach" (added
+	 * 2026-08-31 too, one or more messages, dispatches to bootstrapForwardAsAttachment() instead -
+	 * no quoted body at all, just the whole message(s) attached as message/rfc822). Reply-all isn't
+	 * JMAP-mode eligible yet, and "merge this forward into an already-open compose window"
+	 * (egw.openWithinWindow()'s own multi-popup picker calling that OTHER window's live
+	 * setCompose(), not a URL load at all) is architecturally out of scope here - composeMessage()
+	 * still sets "&jmap=1" for that case (harmless: it only matters if openWithinWindow() actually
+	 * opens a fresh popup instead), but isJmapMode is fixed at that OTHER window's own original
+	 * load time and unrelated to this action, so it's a no-op there, same as before this slice.
+	 */
+	private async bootstrapCompose() : Promise<void>
+	{
+		if (!this.isJmapMode) return;
+		const params = new URLSearchParams(window.location.search);
+		const from = params.get('from') as 'reply' | 'reply_attachments' | 'forward' | null;
+		if (from === 'forward' && params.get('mode') === 'forwardasattach')
+		{
+			await this.bootstrapForwardAsAttachment((params.get('id') || '').split(',').filter(Boolean));
+		}
+		else
+		{
+			const sourceId = (from === 'reply' || from === 'reply_attachments' || from === 'forward') ? params.get('id') : null;
+			if (sourceId)
+			{
+				await this.bootstrapReply(sourceId, from);
+			}
+			else
+			{
+				await this.bootstrapSignature();
+			}
+		}
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the widget set_value() calls
+		// above (recipient/subject/body/signature) mark the form dirty exactly like a real user
+		// edit would, unlike the classic path's server-rendered initial content, which is the
+		// dirty-tracker's own clean baseline from the start - found live 2026-08-27 (ralf: closing
+		// a freshly-opened, untouched reply popup showed the "unsaved changes" prompt).
+		// etemplate2.resetDirty() (extracted from load()'s own identical post-load reset, ralf's
+		// suggestion) resets every input widget's dirty flag back to clean once this bootstrap's
+		// own programmatic population is done, so only a REAL subsequent user edit trips the
+		// prompt again.
+		// carryForwardAttachments() (if it ran) rebuilds the attachments grid's rows via
+		// set_value(), which creates brand new row widgets (incl. an et2_IInput delete button per
+		// row) - that rebuild's own child-widget creation/upgrade isn't awaited by set_value()
+		// itself (a plain void-returning legacy et2_grid method, no updateComplete to await), so a
+		// resetDirty() called immediately after can run BEFORE those new widgets finish settling,
+		// missing them entirely - they never get their clean baseline, so the close-prompt trips
+		// even though nothing was actually edited (found live 2026-08-31, reply-with-attachments
+		// only - every other set_value() call in this method targets an already-existing widget,
+		// no comparable gap). One extra macrotask is enough for anything already queued to finish.
+		await new Promise((resolve) => setTimeout(resolve, 0));
+		this.et2.getInstanceManager().resetDirty();
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - fetches the original message via
+	 * JMAP (MailJmap.fetchForReply()) and populates subject/body (+ recipients/threading-headers
+	 * for an actual reply) for all three JMAP-mode "compose from an existing message" cases:
+	 * plain reply, reply-with-attachments, and single-message inline forward.
+	 * mail_compose::compose()'s own matching "$jmapReplySkip" guard already skipped the classic
+	 * getComposeFrom()/getReplyData() fetch+derive entirely for all three (found live 2026-08-27:
+	 * that raw IMAP fetch could take ~20s against this account's backend, with no real safety-net
+	 * value either - if the JMAP fetch fails, the same backend's classic IMAP fetch failing/being
+	 * just as slow is at least as likely, not a genuinely independent fallback) - so unlike
+	 * bootstrapSignature()'s new-compose case, there is now NO server-rendered content behind this
+	 * at all. A JMAP failure here is surfaced as a visible error rather than silently leaving a
+	 * blank compose that looks like an intentional new message (missing "Re:"/"[FWD]", no
+	 * recipient, no quote) - never worth risking that being mistaken for done.
+	 *
+	 * @param mode 'reply': recipients + threading headers set, no attachments carried. 'forward':
+	 *  same fetch/quote/identity-matching, but no recipients or threading headers - forwarding
+	 *  isn't a reply-thread continuation - and "[FWD] " subject prefix instead of "Re: ", matching
+	 *  classic getForwardData()'s own convention (which, for its own inline mode, is itself built
+	 *  by calling getReplyData() for the body/quote and then discarding its to/cc/in-reply-to
+	 *  side effects - the same composition this reuses). 'reply_attachments': same as 'reply' plus
+	 *  attachment carry-forward. Attachments are ALSO carried forward for 'forward' (ralf,
+	 *  2026-08-31: "same thing as reply with attachments, just not setting To") - matching
+	 *  classic's own getForwardData() non-asmail branch, which populates attachments unconditionally.
+	 */
+	private async bootstrapReply(sourceId : string, mode : 'reply' | 'reply_attachments' | 'forward') : Promise<void>
+	{
+		const context = await this.app.jmap.fetchForReply(sourceId);
+		if (!context)
+		{
+			this.egw.message(this.egw.lang('Failed to load original message(s)'), 'error');
+			return;
+		}
+		const isForward = mode === 'forward';
+		// classic mail_compose.inc.php's own $isReply flag (getComposeFrom()) is set for an inline
+		// forward too, not just a true reply - it really means "quote-style compose", governing
+		// signature placement (applySignatureForCurrentIdentity() below), not literally "is a reply".
+		this.isReplyCompose = true;
+		this.replyThreadingHeaders = isForward ? null : {inReplyTo: context.inReplyTo, references: context.references};
+
+		await this.selectIdentityForRecipients(context);
+
+		let subject : string;
+		if (isForward)
+		{
+			// always prepended, no "already has [FWD]" dedup check - matches getForwardData()'s
+			// own unconditional "[FWD] " . ... (unlike reply's own "don't double up Re:" check)
+			subject = '[FWD] ' + context.subject;
+		}
+		else
+		{
+			const to = (context.replyTo?.length ? context.replyTo : context.from)
+				.map((a) => a.name ? `${a.name} <${a.email}>` : a.email);
+			this.et2.getWidgetById('to')?.set_value(to);
+			// "Re: " is hardcoded, not translated, matching the classic getReplyData()'s own convention
+			subject = /^re:/i.test(context.subject.trim()) ? context.subject : 'Re: ' + context.subject;
+		}
+		this.et2.getWidgetById('subject')?.set_value(subject);
+
+		const isHtml = context.mimeType === 'html';
+		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
+		const quoted = this.app.jmap.quoteOriginalMessage(context);
+		await this.applySignatureForCurrentIdentity(quoted, this.isReplyCompose);
+
+		if ((mode === 'reply_attachments' || isForward) && context.attachments.length)
+		{
+			this.carryForwardAttachments(context.attachments, context.profileID);
+		}
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - "Forward as attachment"
+	 * ($_GET['mode']==='forwardasattach'), one or more source messages, each attached whole as a
+	 * message/rfc822 file rather than quoted inline - matches classic getForwardData()'s own asmail
+	 * branch (one addMessageAttachment(..., 'MESSAGE/RFC822', ...) call per forwarded message), but
+	 * via MailJmap.fetchForForwardAsAttachment()'s blobId reference instead of a classic
+	 * uid/partID/folder-addressed attachment - no quoted body, no to/cc/threading-headers at all
+	 * (a forward-as-attachment is otherwise a genuinely blank new message).
+	 *
+	 * Subject for multiple messages: classic getForwardData() overwrites sessionData['subject']
+	 * once per loop iteration, so its own final subject is just the LAST message's own subject -
+	 * an accident of the loop, not a deliberate design (ralf, 2026-08-31: use the FIRST message's
+	 * subject instead here, a small deliberate improvement over that classic quirk).
+	 */
+	private async bootstrapForwardAsAttachment(sourceIds : string[]) : Promise<void>
+	{
+		if (!sourceIds.length)
+		{
+			this.egw.message(this.egw.lang('Failed to load original message(s)'), 'error');
+			return;
+		}
+		const results = await Promise.all(sourceIds.map((id) => this.app.jmap.fetchForForwardAsAttachment(id)));
+		const messages = results.filter((r) : r is NonNullable<typeof r> => r !== null);
+		if (!messages.length)
+		{
+			this.egw.message(this.egw.lang('Failed to load original message(s)'), 'error');
+			return;
+		}
+
+		this.isReplyCompose = true;
+		const subject = '[FWD] ' + messages[0].subject;
+		this.et2.getWidgetById('subject')?.set_value(subject);
+
+		const attachments = messages.map((m) => ({
+			blobId: m.blobId,
+			name: (m.subject || this.egw.lang('no subject')) + '.eml',
+			type: 'message/rfc822',
+			size: m.size,
+		}));
+		this.carryForwardAttachments(attachments, messages[0].profileID);
+
+		// no quoted body - still apply the normal new-message signature (classic getForwardData()
+		// never suppresses it for this mode either, $suppressSigOnTop stays false)
+		await this.applySignatureForCurrentIdentity('', this.isReplyCompose);
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4, attachment carry-forward slice -
+	 * populate the attachments grid straight from the original message's own blobIds (already
+	 * uploaded, on the SAME account - see MailJmap.fetchForReply()'s own docblock for why no
+	 * download+reupload round-trip is needed here, unlike Step 3's uploadAttachmentsViaJmap()
+	 * for a genuinely locally-staged file), mirroring checkSharingFilemode()'s own established
+	 * "mutate the array manager, then re-push into the grid widget" pattern rather than the
+	 * classic postback-based getAttachment()/addAttachment() cycle.
+	 *
+	 * Each row still needs a `tmp_name`-shaped id (the grid template's delete button embeds it,
+	 * `delete[$row_cont[tmp_name]]`) for the classic per-row delete mechanism to keep working
+	 * unchanged - a synthetic "jmap:<blobId>" stands in for a real staged-file tmp_name.
+	 * `jmapBlobId` is the new marker `uploadAttachmentsViaJmap()` checks to skip the
+	 * fetch+reupload step for a row that's already a ready-to-use JMAP blob reference.
+	 */
+	private carryForwardAttachments(attachments : {blobId : string, name : string, type : string, size : number}[], profileID : string) : void
+	{
+		const content = this.et2.getArrayMgr('content');
+		content.data.attachments = [
+			...(content.data.attachments || []),
+			...attachments.map((a) => ({
+				tmp_name: 'jmap:' + a.blobId,
+				jmapBlobId: a.blobId,
+				// the account the blob actually lives on (the message being replied to) - may
+				// differ from currentProfileID() later if the user switches identity, kept per-row
+				// so displayUploadedFile() always downloads from the right place.
+				jmapProfileID: profileID,
+				name: a.name,
+				type: a.type,
+				size: a.size,
+				// plain "attach" filemode's own icon, matching what a genuine upload gets server-side
+				// (mail_compose.inc.php's own filemode_icon computation) - never per-mimetype
+				filemode_icon: 'attach',
+				filemode_title: '',
+			})),
+		];
+		this.et2.setArrayMgr('content', content);
+		content.data.attachmentsBlockTitle = content.data.attachments.length + ' ' + this.egw.lang('Attachments');
+		const attachmentsWidget = this.et2.getWidgetById('attachments');
+		attachmentsWidget?.set_value({content: content.data.attachments});
+		// found live 2026-08-31: rows DID render into the DOM correctly (set_value() above works
+		// fine), but stayed invisible - two separate ancestors both start disabled/collapsed for
+		// an initial empty/no-attachments content and never got un-disabled: the et2-details
+		// itself (Shoelace SlDetails under the hood, "!@attachments") AND, one level further up,
+		// the WHOLE "et2_file mailUploadSection" box ("@no_griddata", server-computed as
+		// `empty($content['attachments'])` - mail_compose.inc.php:1423) wrapping the attachments
+		// details AND the filemode/expiration/password row below it. uploadStart() only ever
+		// un-disables the et2-details (never had to touch the outer box, since a real upload's own
+		// postback re-renders the whole popup with both flags correctly re-evaluated from
+		// non-empty content from the start) - this client-only population never gets that server
+		// re-render. `disabled`/`title` are one-shot expression bindings evaluated only at initial
+		// render, not reactive to a later array-manager mutation either - set them directly on the
+		// widgets instead of relying on @attachments/@no_griddata/@attachmentsBlockTitle
+		// re-evaluating.
+		const detailsWidget : any = attachmentsWidget?.getParent();
+		detailsWidget?.set_disabled(false);
+		const uploadSectionWidget : any = detailsWidget?.getParent();
+		uploadSectionWidget?.set_disabled(false);
+		if (detailsWidget)
+		{
+			// toggleOnHover="true" already reveals the body on hover - it should stay CLOSED on
+			// load (ralf, 2026-08-31: "it should only open on hover, not permanent on first load"),
+			// so `title`/`open` are deliberately left alone here.
+			detailsWidget.title = content.data.attachmentsBlockTitle;
+		}
+		// un-disabling the whole "mailUploadSection" box above also exposes its OTHER child, the
+		// "Send files as" filemode/expiration/password row (filemodeRow) - re-hide that one
+		// specifically, it's not meaningful for carry-forward attachments (they're bare JMAP blob
+		// references, not real VFS-shareable files) and jmapEligible() requires filemode==='attach'
+		// to stay eligible, so exposing a control that could change it away would be actively
+		// misleading here.
+		this.et2.getWidgetById('filemodeRow')?.set_disabled(true);
+		// the collapsed-details "summary" preview grid has NO id (deliberately, in the original
+		// classic template - giving it one would create its OWN array-manager namespace/perspective
+		// (et2_core_widget.ts's checkCreateNamespace(): any widget WITH an id always gets one),
+		// breaking its row template's root-scoped "@attachments[0][...]" bindings, which are meant
+		// to read the TRUE root content regardless of nesting - found live 2026-08-31 after trying
+		// exactly that and getting a permanently empty summary for BOTH this slice and (if left in)
+		// classic reply_attachments/forward). A direct loadFromXML() rebuild (found by walking the
+		// unnamed tree instead of getWidgetById()) was tried next, but stayed empty too - this
+		// grid's own getArrayMgr('content') is apparently NOT the same live instance
+		// this.et2.setArrayMgr('content', content) updates (etemplate2's own controller-level
+		// managers vs. the actual widget tree's delegated ones aren't the same object, it seems -
+		// unconfirmed without deeper framework digging, and not worth more time chasing for a
+		// purely cosmetic preview). Given direct set_value()-style population only reliably works
+		// for widgets THIS code populates by explicit argument (the real "attachments" grid above),
+		// not via array-manager re-evaluation - simplest robust fix: hide the classic (permanently
+		// stale-for-this-case) preview outright, in favour of a plain, fully JS-driven replacement.
+		const summaryBox : any = detailsWidget?.getChildren()
+			?.find((c : any) => c.getDOMNode?.()?.getAttribute?.('slot') === 'summary');
+		const summaryGrid : any = summaryBox?.getChildren?.()?.[0];
+		summaryGrid?.set_disabled(true);
+		// 1st attachment's own name (replacing the classic grid's job above, since it's hidden),
+		// growing to fill the row (attachmentsSummaryName, "flex:1" in the .xet) - plus the same
+		// "+N" convention as app.ts's own attachmentsBlock preview (`attachmentsBlockTitle =
+		// _data.length > 1 ? \`+${_data.length-1}\` : ''`, for a RECEIVED message's attachment
+		// list), right-aligned and bold, the count only - not the filename.
+		this.et2.getWidgetById('attachmentsSummaryName')?.set_value(content.data.attachments[0].name);
+		const moreCount = content.data.attachments.length - 1;
+		this.et2.getWidgetById('attachmentsMoreText')?.set_value(moreCount > 0 ? '+' + moreCount : '');
+	}
+
+	/**
+	 * Select the identity the original message was actually addressed to - matching one of the
+	 * account's own identity email addresses against the reply target's To/Cc - rather than
+	 * leaving whatever identity was last used/configured as default. Neither the classic
+	 * mail_compose.inc.php nor Step 1's new-compose path do this at all
+	 * (get_preferred_identity() only ever honours the 'last-used'/'default' preference, never the
+	 * message actually being replied to) - genuinely useful for an account with several
+	 * aliases/identities (eg. a 13-identity test account), replying "as" whichever address
+	 * actually received the message rather than whichever identity happened to be selected last.
+	 *
+	 * Two edge cases (ralf, 2026-08-27):
+	 * - No address matches at all (eg. the user was only bcc'ed) - do nothing, leaving the
+	 *   widget's already-classically-rendered value, which is itself already the "last-used"
+	 *   identity (mail_compose.inc.php's LastSignatureIDUsed preference, read back as the default
+	 *   for every new compose unless a different `defaultIdentity` pref is configured).
+	 * - More than one identity matches (eg. several aliases were all on the To/Cc) - prefer
+	 *   keeping the current (again, "last-used") selection if it happens to be among the matches,
+	 *   closest to previous behaviour, rather than an arbitrary pick among equally-valid matches.
+	 *
+	 * Silently does nothing if identities can't be fetched either - same
+	 * never-worth-blocking-compose-on philosophy as applySignatureForCurrentIdentity().
+	 */
+	private async selectIdentityForRecipients(context : JmapReplyContext) : Promise<void>
+	{
+		let identities : any[];
+		try
+		{
+			identities = await this.app.jmap.getIdentities(context.profileID);
+		}
+		catch (e)
+		{
+			return;
+		}
+		const recipientEmails = new Set([...context.to, ...context.cc].map((a) => a.email.toLowerCase()));
+		const matches = identities.filter((i) => recipientEmails.has(i.email.toLowerCase()));
+		if (!matches.length) return;
+
+		const [, currentIdentId] = String(this.et2.getWidgetById('mailaccount')?.get_value() ?? '').split(':', 2);
+		const preferred = matches.find((i) => i.id === currentIdentId) ?? matches[0];
+		this.et2.getWidgetById('mailaccount')?.set_value(`${context.profileID}:${preferred.id}`);
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - bootstrap the signature for a
+	 * genuinely new blank compose opened with the JMAP toggle on. mail_compose::compose()'s own
+	 * "$jmapModeNewCompose" guard already skipped server-side signature insertion for exactly
+	 * this case (mirroring mail_ui::displayMessage()'s "minimal content, client fetches/builds
+	 * the rest" pattern rather than pre-computing this server-side), so the body widget starts
+	 * with whatever the template itself set (normally empty) - passed through as the pristine
+	 * base rather than assumed empty, in case that ever changes.
+	 */
+	private async bootstrapSignature() : Promise<void>
+	{
+		if (!this.isJmapMode) return;
+		await this.applySignatureForCurrentIdentity(String(this.currentBodyWidget()?.get_value() ?? ''));
+	}
+
+	/**
+	 * "From"/identity dropdown's change handler while isJmapMode (see submitOnChange()) - re-
+	 * derive the pristine (signature-stripped) body from the widget by plain substring match
+	 * against insertedSignatureBlock (the exact text bootstrapSignature()/this method's own
+	 * previous run inserted), then insert the newly-selected identity's signature. Deliberately
+	 * NOT the classic marker/regex relocate hack - see composeBodyWithSignature()'s docblock.
+	 */
+	private async updateSignatureForIdentity() : Promise<void>
+	{
+		if (!this.isJmapMode) return;
+		const current = String(this.currentBodyWidget()?.get_value() ?? '');
+		let pristine = current;
+		if (this.insertedSignatureBlock)
+		{
+			if (this.signaturePlacement === 'below' && current.endsWith(this.insertedSignatureBlock))
+			{
+				pristine = current.slice(0, current.length - this.insertedSignatureBlock.length);
+			}
+			else if (this.signaturePlacement === 'top' && current.startsWith(this.insertedSignatureBlock))
+			{
+				pristine = current.slice(this.insertedSignatureBlock.length);
+			}
+			// else: can't confidently locate the previously-inserted signature (the user edited
+			// around/inside it) - leave the current value as pristine rather than guessing; this
+			// skips re-insertion once instead of risking a corrupted/duplicated signature
+		}
+		await this.applySignatureForCurrentIdentity(pristine, this.isReplyCompose);
+	}
+
+	/**
+	 * Fetch the "From" dropdown's currently-selected identity (value is "acc_id:ident_id", same
+	 * shape mail_compose.inc.php's own compose() splits server-side) and insert its signature
+	 * into pristineBody via MailJmap.composeBodyWithSignature(), tracking the inserted substring
+	 * (insertedSignatureBlock/signaturePlacement) for a later updateSignatureForIdentity() call.
+	 * Silently does nothing on any failure (no account selected yet, identity fetch failed, ...) -
+	 * signature insertion is a nice-to-have for this first slice, never worth blocking compose on.
+	 *
+	 * @param pristineBody body WITHOUT any signature - for a reply this is the already-quoted
+	 *  (attribution + blockquote) body, not empty
+	 * @param isReply passed straight through to composeBodyWithSignature() - never add an empty
+	 *  leading line above an already-non-empty (quoted) body
+	 */
+	private async applySignatureForCurrentIdentity(pristineBody : string, isReply : boolean = false) : Promise<void>
+	{
+		const mailaccountValue = this.et2.getWidgetById('mailaccount')?.get_value();
+		const [profileID, identId] = String(mailaccountValue ?? '').split(':', 2);
+		if (!profileID) return;
+
+		let identities : any[];
+		try
+		{
+			identities = await this.app.jmap.getIdentities(profileID);
+		}
+		catch (e)
+		{
+			console.error('MailCompose.applySignatureForCurrentIdentity(): failed to fetch identities', e);
+			return;
+		}
+		const identity = identities.find((i) => i.id === identId) ?? identities[0];
+		if (!identity) return;
+
+		const mimeType : 'html' | 'plain' = this.et2.getWidgetById('mimeType')?.get_value() !== false ? 'html' : 'plain';
+		const insertPref = this.egw.preference('insertSignatureAtTopOfMessage', 'mail');
+		const placement : 'top' | 'below' | 'none' =
+			insertPref === '1' ? 'top' : insertPref === 'no_belowaftersend' ? 'none' : 'below';
+		const disableRuler = !!this.egw.preference('disableRulerForSignatureSeparation', 'mail');
+
+		const result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply});
+		this.signaturePlacement = placement;
+		this.insertedSignatureBlock = placement === 'below' ? result.slice(pristineBody.length) :
+			placement === 'top' ? result.slice(0, result.length - pristineBody.length) : '';
+
+		this.currentBodyWidget()?.set_value(result);
 	}
 
 	/**
@@ -601,6 +1121,13 @@ export class MailCompose
 		const etemplateExecId = this.et2.getInstanceManager().etemplate_exec_id;
 		return Promise.all(attachments.map(async(attachment) =>
 		{
+			// carryForwardAttachments() (Step 4, attachment carry-forward slice) - already a real
+			// JMAP blob on this same account (from the message being replied to), no
+			// download+reupload round-trip needed, unlike a genuinely locally-staged file below.
+			if (attachment.jmapBlobId)
+			{
+				return {blobId: attachment.jmapBlobId, name: attachment.name, type: attachment.type, size: attachment.size};
+			}
 			const url = this.egw.link('/index.php', {
 				menuaction: 'mail.mail_compose.getAttachment',
 				tmpname: attachment.tmp_name,
@@ -628,6 +1155,10 @@ export class MailCompose
 			body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
 			isHtml,
 			attachments: hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID()) : undefined,
+			// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - set once by bootstrapReply(),
+			// undefined for a plain new-message compose
+			inReplyTo: this.replyThreadingHeaders?.inReplyTo ?? undefined,
+			references: this.replyThreadingHeaders?.references ?? undefined,
 		};
 	}
 
@@ -652,7 +1183,7 @@ export class MailCompose
 	 */
 	private async trySaveDraftViaJmap(action : string) : Promise<boolean>
 	{
-		if (!this.jmapEligible()) return false;
+		if (!this.jmapEligible(false)) return false;
 
 		let result : {emailId : string, mailboxId : string};
 		try

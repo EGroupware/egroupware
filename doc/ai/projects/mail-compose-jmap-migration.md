@@ -1,8 +1,193 @@
 # Mail: move compose to client-side JMAP-first, S/MIME + TNEF as server-side services
 
 ## Status: Steps 0, 1, 3, and (out of order) the draft-save half of Step 5 done + live-verified
-against real Stalwart (2026-08-27), committed locally (not pushed - shared working copy). Companion
-to [[mail-jmap-imap-inversion]].
+against real Stalwart (2026-08-27); Step 4's reply, reply-with-attachments (incl. attachment
+carry-forward), single-message inline forward, and forward-as-attachment (single or multiple
+messages) are ALL done + live-verified (2026-08-31), all still uncommitted (not pushed - shared
+working copy). Not yet built: inline-image resolution for the quoted body, reply-all, and
+"forward as attachment merged into an already-open compose popup" (the `setCompose()` case - see
+its own write-up below for why that's architecturally separate). Companion to
+[[mail-jmap-imap-inversion]].
+
+**Forward-as-attachment built + live-verified 2026-08-31**: one or more messages, each
+attached whole as `message/rfc822` rather than quoted inline - matches classic
+`getForwardData()`'s own asmail branch (one `addMessageAttachment(..., 'MESSAGE/RFC822', ...)` call
+per forwarded message), but via a JMAP blobId reference instead of a classic uid/partID/folder
+address. New `MailJmap.fetchForForwardAsAttachment()` fetches just `subject`/`blobId`/`size` per
+message (RFC 8621 §4.1.1's `Email.blobId` - the raw RFC 5322 octets, top-level on the Email object,
+already used by `fetchRawSource()`'s "view source" feature) - no quoted-body fetch at all, unlike
+`fetchForReply()`. `compose.ts`'s new `bootstrapForwardAsAttachment()` builds one
+`{blobId, name: subject+'.eml', type:'message/rfc822', size}` `JmapAttachment` per message and
+reuses `carryForwardAttachments()` unchanged - same blobId-reference-not-reupload mechanism, same
+UI. No quoted body, no to/cc/threading-headers at all (a forward-as-attachment is otherwise a
+genuinely blank new message) - still applies the normal new-message signature though (classic never
+suppresses it for this mode either). Subject for multiple messages: classic's own loop overwrites
+`sessionData['subject']` once per message, so ITS final subject is just the LAST message's own
+subject - an accident of the loop, not deliberate; this uses the FIRST message's subject instead
+(ralf, 2026-08-31, a deliberate small improvement over that classic quirk).
+
+**Reachability, architecturally distinct from everything else in Step 4**: `composeMessage()`'s own
+`case 'forward'/'forwardinline'/'forwardasattach'` branch, for `_elems.length>1 || _action.id ===
+'forwardasattach'`, calls `egw.openWithinWindow()` (`api/js/jsapi/egw_open.ts`) instead of the plain
+`egw().open()` every other JMAP-mode path uses, and **returns before ever reaching the shared
+jmap-gating code** further down `composeMessage()` - so that branch now sets its own
+`settings.jmap='1'` flag directly, gated on `jmapComposeEnabled`, before its own `return`.
+`egw.openWithinWindow()` itself: if NO compose popup is already open, it falls through to the exact
+same `egw.open()` URL-param mechanism (so `jmap=1` behaves identically to every other case here); if
+one or more ARE already open, it shows a picker and, if an existing one is chosen, calls a live JS
+method (`popups[i].app['mail']['setCompose'](...)`) directly into that ALREADY-LOADED window instead
+of a URL/page load at all - that other window's own `isJmapMode` was fixed at ITS OWN original load
+time and is completely unrelated to this new forward action, so the `jmap=1` flag is simply never
+read in that case (a structurally different "merge attachments into a live, already-running
+popup's JS state" problem, out of scope of anything built in Step 4 so far - always falls back to
+the unchanged classic path in that specific case).
+
+**Step 4 first slice (reply) done+live-verified (2026-08-31)**: `MailCompose.bootstrapReply()` +
+`MailJmap.fetchForReply()`/`quoteOriginalMessage()`/`selectIdentityForRecipients()` - client-side
+`Email/get` fetch of the original message, quoted-attribution block, RFC 5322 §3.6.4 threading
+headers, and identity-for-recipient matching, all replacing `getReplyData()`'s server-side
+computation for JMAP-mode reply. `mail_compose.inc.php` skips `getComposeFrom()`'s classic raw-IMAP
+fetch entirely for this case (`$jmapReplySkip`) rather than keeping it as a "safety net" - ralf,
+after measuring it added ~20s to every reply open for no benefit: "there's no reason to assume the
+JMAP side would fail, but IMAP somehow succeeds." Threading headers are RFC 5322-*more correct* than
+the classic path, not just a port: `In-Reply-To` = original's own `messageId`; `References` =
+original's own `references` (if any) *with its own messageId appended* - `getReplyData()` is missing
+that append step for a message that's itself already part of a thread.
+5 real bugs found+fixed via live testing:
+1. Client-side `set_value()` calls during bootstrap mark the form dirty exactly like a real user
+   edit (unlike classic server-rendered content, which the dirty-tracker treats as its clean
+   baseline) - closing an untouched reply popup wrongly showed the "unsaved changes" prompt. Fixed
+   by extracting a new shared public `Et2Template`/`etemplate2.resetDirty()` method (per ralf's
+   request: "maybe that code fragment in etemplate2.ts should be extracted in a small helper" -
+   both `load()`'s own pre-existing internal reset-after-load and `bootstrapCompose()`'s new
+   client-side-fill case now call the same method).
+2. `MailJmap.jmapUtcToUserTz()`'s output (a "Z"-suffixed ISO string encoding LOCAL time, meant only
+   to feed a UTC-getter-based formatter) was showing up verbatim, un-formatted, in the reply quote's
+   attribution block. Fixed by wrapping with `Et2Date.ts`'s exported `formatDateTime()` - the one
+   place in the client-side API that does user-preference date formatting (ralf independently
+   arrived at the same diagnosis before the fix landed: "I was about to suggest the Et2Date widget
+   can do the formatting, nothing else e.g. in the client-side api deals with date-formatting
+   client-side").
+3. **Regression, unrelated to today's reply work**: previewing/opening a message via the JMAP-native
+   fast path no longer marked it read - `app.ts`'s `preview()`/`openMessage()` both carried a
+   long-stale comment ("When body is requested, mail is marked as read by the mail server") that
+   assumed the classic raw-IMAP fetch's implicit `\Seen`-on-fetch side effect; the JMAP-native
+   `fetchBody()` (a pure `Email/get`) has none. Fixed by adding a real
+   `jmap.setSystemFlag([...], '$seen', true)` call at both sites (ralf: "I beleave we forgot setting
+   unseen messages to seen, if they were loaded into preview or view-popup purly client-side").
+4. **Send failure, "Identity not found." red toast, no matching string anywhere client-side** -
+   `EmailSubmission/set`'s `identityId` is validated by Stalwart against *its own* Identity objects
+   (opaque ids like `'b'`/`'c'`), but `resolveComposeContext()`'s `identity.id` had become
+   EGroupware's own synthesized `ident_id` (a plain numeric string) once identity resolution moved
+   to `getIdentities()` for display/signature purposes - Stalwart legitimately rejected the
+   submission with its own terse `SetError` description, surfaced unmodified via
+   `describeSetError()`. Fixed by resolving a *second*, separate id in `resolveComposeContext()`:
+   Stalwart's own native `Identity/get` (direct-to-backend, only fetched when `needSent`), matched
+   against the display identity **by email address** (the only field guaranteed to line up between
+   the two unsynced systems) - `sendNewEmail()` now passes that `submissionIdentityId`, while
+   `createDraftEmail()`/`draftEmailProperties()` keep using the EGroupware-synthesized identity for
+   the actual `from`/signature content. `saveDraft()` (never calls `EmailSubmission/set`) is
+   unaffected and doesn't pay for the extra fetch.
+5. Empty `Cc`/`Bcc` still produced a real, blank `Cc:`/`Bcc:` header in the sent copy -
+   `addressesToJmap()` returns `[]` (not `undefined`) for an empty array/string input, and an empty
+   array is still a *present* JMAP `Email` property. Fixed in `draftEmailProperties()` by omitting
+   `to`/`cc`/`bcc` from the object entirely when the resolved list is empty, instead of always
+   including the (possibly-empty) result.
+Not yet built: inline-image resolution for the quoted body, reply-all, forward (inline/as-
+attachment) - see the mapping below, still accurate for what's left.
+
+**Attachment carry-forward built + live-verified 2026-08-31**: "Reply With Attachments"
+(`_action.id === 'reply_attachments'`, a real existing menu item under Reply,
+`mail_ui.inc.php:1242`) is now JMAP-mode eligible too (`app.ts`'s `composeMessage()` gating, and
+`$jmapReplySkip` in `mail_compose.inc.php` extended to cover it alongside plain `reply` - same
+"skip the always-discarded classic raw-IMAP fetch" reasoning). `MailJmap.fetchForReply()` now also
+fetches the `attachments` property (RFC 8621 §4.1.4's own server-computed convenience list, already
+excludes the primary text/html body - no manual `bodyStructure` tree walk needed) and filters it
+exactly like classic `getForwardData()` filters `getMessageAttachments()`: a cid-referenced inline
+image is excluded unless its own disposition is `attachment`. Genuinely no download+reupload
+round-trip needed at all - Stalwart's blobs are content-addressed and referenceable by `blobId`
+directly in a new `Email/set create`'s `bodyStructure`, as long as the blob belongs to the same
+account, which it does (same original message, same mailbox). `compose.ts`'s new
+`carryForwardAttachments()` pushes each into the attachments grid's own array-manager entry
+(mirroring `checkSharingFilemode()`'s already-established "mutate array manager, re-push into grid
+widget" pattern, not a new mechanism) with a synthetic `tmp_name` (`"jmap:" + blobId"`, since the
+grid row template's delete button embeds `tmp_name` as its row key) and a `jmapBlobId` marker field;
+`uploadAttachmentsViaJmap()` now checks for that marker and passes the blob straight through instead
+of fetching+reuploading it (only a genuinely locally-staged file, without the marker, still goes
+through the classic-upload-widget fetch+reupload path).
+
+**7 more real bugs found+fixed via live testing, getting the attachments UI actually visible/usable**:
+1. `displayUploadedFile()` (compose.ts) crashed clicking a carried-forward attachment -
+   `attgrid.file.replace()`, since carry-forward entries have no `.file` at all (that's a classic
+   locally-staged-upload field). Added a `jmapBlobId` branch, downloading the blob directly
+   (`MailJmap.downloadBlobUrl()`, same `downloadBlob()` primitive the inline-cid-image resolution
+   already uses) and opening it in a sized `egw.openPopup()` - same convention `displayUploadedFile()`
+   already uses for every other type, deliberately NOT the Expose lightbox the message-view/preview
+   uses (compose has never used Expose for its own attachment list, confirmed in
+   `app.displayAttachment()` too - unifying that is a separate follow-up ralf flagged as "would be
+   nice", not done here).
+2. Both the attachments `<et2-details>` AND, one level up, the whole `.et2_file.mailUploadSection`
+   box (`@no_griddata`, `empty($content['attachments'])` server-side) start disabled for an
+   initially-empty content - `uploadStart()`'s existing un-disable only ever touched the details, since
+   a real upload always re-renders the whole popup from non-empty content anyway. `set_disabled(false)`
+   on both directly, since `disabled` is a one-shot expression evaluated only at initial render, not
+   reactive to a later array-manager mutation.
+3. Un-disabling the whole box also exposed its OTHER child, the "Send files as" filemode/expiration/
+   password row - meaningless (and actively misleading, since `jmapEligible()` requires
+   `filemode==='attach'`) for bare JMAP blob references. Gave it `id="filemodeRow"` and explicitly
+   re-disabled it.
+4. The collapsed-details summary preview (a single static row, `@attachments[0][...]`-bound) stayed
+   permanently empty no matter what - traced all the way to `et2_core_widget.ts`'s
+   `checkCreateNamespace()`: ANY widget with an `id` always gets its own array-manager
+   perspective/namespace, and expandName()'s single-`@` prefix resolves relative to *that* namespace,
+   not the true document root - so simply giving the grid an id (to reach it via `getWidgetById()`)
+   silently broke its own root-scoped bindings. Reverted that id; a plain `loadFromXML()` rebuild via
+   tree-walking (no id) also didn't help (this grid's own delegated array manager apparently isn't the
+   same live instance `this.et2.setArrayMgr('content', ...)` updates - not confirmed why, not worth
+   more digging for a cosmetic preview). Ended up just hiding that classic grid outright
+   (`set_disabled(true)`, found via tree-walking from the id="attachments" grid's own existing id, no
+   new id added) and replacing it with two new, fully JS-driven sibling widgets:
+   `attachmentsSummaryName` (filename, grows via `style="flex:1"`, not bold) and `attachmentsMoreText`
+   (a `+N` badge, `align="right" class="et2_bold"`, same convention as `app.ts`'s own
+   `attachmentsBlockTitle = _data.length > 1 ? \`+${_data.length-1}\` : ''` for a received message's
+   own attachment preview).
+5. `detailsWidget.open = true` (forcing the details open on load) was wrong - ralf: "it should only
+   open on hover, not permanent on first load" (`toggleOnHover="true"` already does that natively).
+   Removed.
+6. Hiding `filemodeRow` collapsed the gap between the attachments details box and the editor below it
+   (that row's own height/margin was the only spacing there). Added an explicit `margin-bottom` to
+   `.attachments` in the template's own `<styles>` block instead of relying on filemodeRow for it.
+7. Adding attachments via `carryForwardAttachments()`'s `set_value()` creates brand-new row widgets
+   (incl. an `et2_IInput` delete button per row) asynchronously - `set_value()` itself doesn't await
+   their creation/upgrade, so `bootstrapCompose()`'s trailing `resetDirty()` call could run before they
+   settle and never give them a clean baseline, tripping the close-prompt on an untouched popup. Fixed
+   by deferring that final `resetDirty()` call by one macrotask (`await new Promise(r =>
+   setTimeout(r, 0))`).
+
+Removing a carried-forward attachment via the grid's "Delete" button was NOT separately verified -
+still relies on the classic full-postback deletion cycle unchanged (`mail_compose.inc.php`'s generic
+`$_content['attachments']['delete']` filter-by-`tmp_name` handling), which should work since it only
+ever filters whatever `$_content['attachments']` the client currently holds - not confirmed live.
+
+**Single-message inline forward built + live-verified 2026-08-31**: reuses the exact same
+`bootstrapReply()`/`fetchForReply()`/`quoteOriginalMessage()`/`selectIdentityForRecipients()`/
+`carryForwardAttachments()` machinery as reply-with-attachments - ralf: "same thing as reply with
+attachments, just not setting To" (and, worth noting explicitly since forward-as-attachment/batch-
+forward take a completely different code path in `composeMessage()` - "obviously only true for the
+inline forward, not forward as attachment"). `bootstrapReply()` gained a `mode : 'reply' |
+'reply_attachments' | 'forward'` param: `forward` skips setting `to`/`cc` and the RFC 5322 threading
+headers (forwarding isn't a reply-thread continuation), uses classic `getForwardData()`'s own
+unconditional `"[FWD] " + subject` prefix instead of "Re: ", and always carries attachments forward
+(matching classic's own non-asmail `getForwardData()` branch, which populates attachments
+unconditionally - no "reply_attachments"-style separate menu action needed for forward, it's just
+what inline forward always does). `app.ts`'s `composeMessage()` gates JMAP-mode on
+`settings.from === 'forward' && settings.mode === 'forwardinline'` (checked post-switch, since that's
+already normalized regardless of which of `forward`/`forwardinline`/`forwardasattach` triggered it -
+a batch or forwardasattach forward returns early via `egw.openWithinWindow()` before ever reaching
+that check). `mail_compose.inc.php`'s `$jmapReplySkip` extended to `forward` too. classic
+`getForwardData()`'s own composition (call `getReplyData()` for body/quote, then discard its
+to/cc/in-reply-to side effects) is exactly why this shift-of-machinery reuse works cleanly. No new
+bugs found - fell out of the reply-with-attachments work basically for free.
 
 **Step 3 (attachments) done (2026-08-27, `c549213d28`), not yet live-tested.** `sendNewEmail()`/
 `saveDraft()` now accept an attachments list, building a real `multipart/mixed` `bodyStructure` by
@@ -89,6 +274,124 @@ an error thrown by the (now possibly cross-window) jmap instance is an instance 
 realm's `JmapUserError`/`JmapUnsupportedBackendError` class - `instanceof` silently never matches
 even for a genuine one. Fixed every affected check (4 in `app.ts`, 1 in `compose.ts`) to compare
 `e?.constructor?.name` instead - same bug class as [[feedback_cross_realm_instanceof]].
+
+**Step 4 mapped, not yet built (2026-08-27)** - ralf: "reply/forward is more complicated as it might
+sound... nothing we want to just start" - classic `mail_compose.inc.php` researched in depth before
+any client-side design commitment. Key findings:
+- **Signature**: `Mail\Account::read_identity($id)['ident_signature']` (one HTML string per
+  identity) run through `Mail::merge()` for placeholder substitution (eg. sender's own name) -
+  server-side contact-data resolution, can't fully move client-side. Placement governed by two
+  plain prefs (`insertSignatureAtTopOfMessage`: below/above/append-at-send-only,
+  `disableRulerForSignatureSeparation`).
+- **The actual fragility**: identity switching mid-compose is today a full server postback
+  (`mail_compose.inc.php:730-862`) that has to *relocate* the already-rendered signature inside the
+  edited body via `<!-- HTMLSIGBEGIN/END -->` comment markers, falling back to a fuzzy
+  `preg_quote()`+regex match of the cleaned old signature text if the markers got broken by editing,
+  and silently giving up (stale/duplicate signature left behind) if even that fails.
+- **Reply's "extra header"**: not a one-liner - a real From/To/Cc/Date block wrapped in
+  `<fieldset class="originalMessage"><legend>original message</legend>...`, built in
+  `getReplyData()` (`Api\Html::fieldset()`).
+- **Reply-with-attachments vs forward**: only ONE attachment-carry-forward mechanism exists in the
+  whole file. `reply_attachments` is a PHP `switch` fallthrough - calls `getForwardData()` first
+  purely for its side effect of populating `$this->sessionData['attachments']`, then falls through
+  into `getReplyData()` which overwrites body/headers but leaves attachments alone. Not two
+  features, one mechanism composed via a fallthrough trick.
+- **Plain-text signatures**: always authored as HTML - `convertHTMLToText()` (thin wrapper around
+  the shared, non-trivial ~260-line `Api\Mail\Html::convertHTMLToText()` engine used all over the
+  mail app, not signature-specific) converts at compose-open time for plain-text mode, including the
+  same `Mail::merge()` contact-data resolution.
+
+**Proposed client-side architecture** (pending ralf's review before implementation starts):
+1. **Decided (2026-08-27, ralf)**: `Identity/get` (RFC 8621 §6.2 already defines `textSignature`/
+   `htmlSignature` natively) always routes through EGroupware's own `Account::identities()`-based
+   synthesis - for BOTH backends, not just the shim - rather than ever passing through to
+   Stalwart's native Identity/get. Confirmed live: we don't sync any identity/signature data to
+   Stalwart today (`Api\Mail\Smtp\Stalwart`'s account provisioning only pushes the mailbox's
+   `description`/full name, `Stalwart.php:218` - no email/replyTo/bcc/signature, no concept of
+   EGroupware's multiple-identities-per-mailbox model), so Stalwart's own Identity/get would return
+   nothing usable anyway. This also resolves the "does Stalwart support our above/below signature
+   placement preference" worry from a different angle than expected: RFC 8621's Identity object has
+   no placement/position field at all, on *any* JMAP server - a JMAP server only ever hands back
+   signature *text*; where that text goes in the composed body is entirely a *client* decision when
+   building the `Email/set` create. Our client-side compose was always going to implement that
+   placement logic itself regardless of backend, so there's no dependency on server support for it
+   either way.
+   **Code-shape consequence**: `Api\Mail\Jmap\Identity` (`api/src/Mail/Jmap/Identity.php`) is
+   currently a bare `Type` subclass with no overrides - `get()` falls through to `Type`'s generic
+   implementation, a genuine passthrough to Stalwart via `$this->jmap->call()`. Needs an actual
+   `get()` override (declining `set()`, identities aren't user-editable through compose) that
+   synthesizes RFC 8621 Identity objects from `Account::identities()` unconditionally, for both
+   backends - the same implementation Step 2's shim Identity class was going to need anyway, so
+   Steps 0 and 2's Identity pieces merge into one shared implementation rather than two. Clean
+   escape hatch if Stalwart-native sync ever happens later: remove the override, it reverts to
+   being a real passthrough - no other code needs to change.
+   Also directly solves the HTML→plain-text signature conversion problem (`Api\Mail\Html::
+   convertHTMLToText()`, needs server-side `Mail::merge()` contact-data resolution) for free -
+   since this is server-side PHP synthesizing the response either way, it can just call the
+   existing converter and return both `htmlSignature` and pre-converted `textSignature` in the same
+   response, no separate conversion endpoint needed.
+2. **Identity switching stops needing the marker-relocate hack entirely** (not just "port it
+   client-side") - once the client holds the raw signature text per identity, switching identity is
+   "re-run the same compose function against the *original* body already held in memory," no
+   regex search-and-replace of rendered HTML at all. This eliminates the single most fragile piece
+   of the classic implementation outright.
+3. Port the reply attribution fieldset-block shape 1:1 from `getReplyData()`'s actual output -
+   independent of signature logic, don't conflate the two.
+4. One shared client-side `carryForwardAttachments(originalEmailId)` helper (blob-based, reusing
+   Step 3's upload/blobId flow), called from both reply-with-attachments and forward - matching the
+   classic code's real shared-mechanism shape instead of the fallthrough-trick composition.
+5. Plain-text signature conversion **stays a server-side concern**, same class of decision as
+   S/MIME/TNEF (mature shared utility, merge-field resolution needs server-side contact data, no UX
+   reason for it to be interactive) - concretely, `Identity/get` returns the server-pre-converted
+   `textSignature` alongside `htmlSignature`, so the client never calls a conversion endpoint at
+   all, just picks whichever variant matches the current compose mimeType.
+
+**Future phase, beyond Step 9 (ralf, 2026-08-27): eliminate the ETemplate postback cycle from
+compose entirely.** Once send/save/draft/attachments/identity-switch are all JMAP-driven
+client-side (Steps 1-5 complete), routing any of it through a server round-trip is vestigial - keep
+`.xet` templates purely as a widget-tree/layout definition (as any other ETemplate2 screen does),
+but stop using `mail_compose.compose()`'s current job of pre-computing reply/forward content
+(quoting, attribution header, signature, attachment list) server-side into the initial content
+array. Instead: the compose window opens with an essentially empty/generic template shell, and
+client JS populates everything after the JMAP fetches (`Identity/get`, `Email/get` for reply/
+forward) resolve - the compose *type* (`from=reply`/`forward`/`composefromdraft`/etc.) becomes a
+client-side JMAP fetch parameter instead of driving server-side branching in `getComposeFrom()`.
+One structural piece likely can't fully disappear: opening the popup at all still needs some
+initial PHP hit to produce a URL for `egw.openPopup()` - but that hit could return the *same*
+static, content-free template every time, regardless of compose type. Positioned as its own phase
+after Step 4 proves client-side quoting/signature/attachments for real, likely right alongside or
+just before Step 9 (retire classic compose) - not something to fold into Step 4 itself.
+
+**Refinement (ralf, 2026-08-27, via Nathan)**: even that residual server hit may not be needed on
+every open - `Et2Template` can be instantiated directly client-side and populated via its own
+`load(newContent, ...)` method (confirmed real: `api/js/etemplate/Et2Template/Et2Template.ts:282`,
+`public async load(newContent?, newSelectOptions?, newReadonlys?, newModifications?)`) - so compose
+could supply data straight from JMAP fetches instead of a server-computed content array. `load()`'s
+own docblock: "Asks the server if we don't have that template on the client yet" - so the template
+*definition* (the `.xet`'s compiled widget-tree shape) may still need one fetch the first time, but
+gets cached client-side after that; only the *data* needs to come from somewhere on every open, and
+that's the part JMAP fetches replace. Not yet researched: how to construct/attach the `Et2Template`
+instance itself outside the normal server-rendered-page bootstrap flow, or whether any precedent for
+that already exists elsewhere in the codebase - worth investigating properly once this phase is
+actually reached, not blocking anything now.
+
+**First slice already built ahead of this phase (2026-08-27)**: `mail_compose::compose()` got a
+narrow, single-purpose version of this idea now, pulled forward specifically for the identity/
+signature piece rather than waiting for the full future phase - see the "Identity/get routing
+decided" note above. A new `$jmapModeNewCompose` guard (`$actionToProcess === 'compose'` - i.e.
+`getComposeFrom()` was never invoked, a genuinely blank new message - `&& $_GET['jmap'] === '1'`)
+skips the classic signature-insertion block entirely, mirroring `mail_ui::displayMessage()`'s
+existing "minimal content, client builds the rest" pattern for exactly that one piece. Client-side,
+`MailCompose.bootstrapSignature()` (called from `setEtemplate()`) and `updateSignatureForIdentity()`
+(replacing the classic full-postback `submitOnChange` handler for the "From" dropdown when
+`isJmapMode`) now own signature insertion entirely - `MailJmap.getIdentities()` +
+`composeBodyWithSignature()` (`mail/js/jmap.ts`), tracked via a plain substring
+(`insertedSignatureBlock`/`signaturePlacement`) rather than the classic marker/regex relocate hack,
+since the client already holds enough state to just strip its own last insertion back out safely
+(falls back to leaving content untouched, never guesses/duplicates, if it can't confidently locate
+it - eg. the user edited in/around it). 10 new unit tests
+(`mail/js/test/ComposeBodyWithSignature.test.ts`), full JS suite still 155/155, PHP suites still
+56/56 - not yet live-tested in the browser.
 
 **Step 0 done (2026-08-27):** `Api\Mail\Jmap\Identity`/`EmailSubmission` type classes built (thin
 passthroughs, `JMAP_SUBMISSION` capability registered on `Api\Mail\Jmap\Http`). Rather than a
@@ -369,3 +672,11 @@ step starts.
    of time. Any regression found along the way is debugged by opening the same mail in both compose
    windows and comparing directly, made possible precisely because the classic path was never
    touched/removed earlier.
+10. **Eliminate the ETemplate postback cycle from compose** (ralf, 2026-08-27, future phase - see
+    its own write-up above near Step 4's mapping): once nothing about compose depends on server-side
+    processing anymore, stop having `mail_compose.compose()` pre-compute reply/forward content into
+    the initial ETemplate content array - the popup opens with a generic, content-free template
+    shell instead, and client JS populates everything from JMAP fetches. `.xet` templates keep their
+    role as pure layout/widget-tree definitions; they stop being a request/response transport.
+    Positioned after Step 4 proves client-side quoting/signature/attachments, likely alongside or
+    just before Step 9.

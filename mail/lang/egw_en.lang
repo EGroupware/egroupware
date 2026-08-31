@@ -263,6 +263,7 @@ failed to delete folder %1	mail	en	Failed to delete folder %1
 failed to delete messages	mail	en	Failed to delete messages
 failed to empty junk	mail	en	Failed to empty junk
 failed to empty trash	mail	en	Failed to empty trash
+failed to load original message(s)	mail	en	Failed to load original message(s)
 failed to move %1 ! reason: %2	mail	en	Failed to move %1! Reason: %2
 failed to move folder %1	mail	en	Failed to move folder %1
 failed to move messages	mail	en	Failed to move messages

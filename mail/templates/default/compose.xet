@@ -91,7 +91,7 @@
         <et2-vbox class="mailComposeBodySection">
             <et2-vbox class="et2_file mailUploadSection" disabled="@no_griddata">
                 <et2-details toggleAlign="left" title="@attachmentsBlockTitle" toggleOnHover="true" class="attachments" hoist="true" disabled="!@attachments">
-                    <et2-hbox slot="summary">
+                    <et2-hbox slot="summary" width="100%">
                         <grid class="previewAttachmentArea egwGridView_grid">
                             <columns>
                                 <column width="3%"/>
@@ -108,6 +108,8 @@
                                 </row>
                             </rows>
                         </grid>
+                        <et2-description id="attachmentsSummaryName" class="useEllipsis" style="flex:1"></et2-description>
+                        <et2-description id="attachmentsMoreText" class="et2_bold" align="right"></et2-description>
                     </et2-hbox>
                     <grid id="attachments" class="previewAttachmentArea egwGridView_grid">
                         <columns>
@@ -128,7 +130,7 @@
 						</rows>
 					</grid>
 				</et2-details>
-				<et2-hbox>
+				<et2-hbox id="filemodeRow">
 					<et2-select  id="filemode" label="Send files as" onchange="app.mail.compose.checkSharingFilemode"></et2-select>
 					<et2-hbox>
 						<et2-description  value="Expiration" style="align-self: center;"></et2-description>
@@ -155,6 +157,17 @@
             }
             #mail-compose .mailComposeBodySection, #mail-compose .mailComposeBody {
             flex: 1 1 auto;
+            }
+            /*
+             carryForwardAttachments() (mail/js/compose.ts) hides filemodeRow for a JMAP-mode
+             reply-with-attachments compose (its "Send files as" picker doesn't apply to bare JMAP
+             blob references) - that row's own height/margin used to be the only gap between the
+             attachments details box and the editor below it, so hiding it collapsed that gap
+             entirely (found live 2026-08-31). Give the details box its own margin instead, so the
+             gap survives regardless of filemodeRow's visibility.
+            */
+            #mail-compose .attachments {
+            margin-bottom: 0.5em;
             }
         </styles>
     </template>

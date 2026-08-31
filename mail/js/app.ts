@@ -1282,6 +1282,15 @@ export class MailApp extends EgwApp
 			this.reduceCounterWithoutServerRoundtrip();
 			// not needed, as an explizit read flags the message as seen anyhow
 			//egw.jsonq('mail.mail_ui.ajax_flagMessages',['read', messages, false]);
+			// Same JMAP-native-fast-path gap as preview()'s own identical block - see that one's
+			// comment for why this needs a real setSystemFlag() call now, not just a UI update
+			// (found live 2026-08-27, ralf).
+			try
+			{
+				this.jmap.setSystemFlag([this.jmap.messageReference(_id)], '$seen', true)
+					.catch((e) => console.error('openMessage(): failed to mark message as read', e));
+			}
+			catch (e) { /* non-JMAP row id - classic fallback already handled this server-side */ }
 		}
 	}
 
@@ -1383,6 +1392,17 @@ export class MailApp extends EgwApp
 						for(let j = 1; j < _elems.length; j++)
 						settings.id = settings.id + ',' + _elems[j].id;
 					}
+					// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 (2026-08-31) - this
+					// branch returns before the shared jmap-gating block further down ever runs, so
+					// it has to set its own flag here. Harmless either way: egw.openWithinWindow()
+					// only reaches a real page load (where isJmapMode reads this back) when no
+					// compose popup is already open; if one IS open, it calls that OTHER window's
+					// own live setCompose() instead, whose isJmapMode was already fixed at ITS OWN
+					// original load time - this flag is simply never read in that case.
+					if (this.jmapComposeEnabled)
+					{
+						(settings as typeof settings & {jmap? : string}).jmap = '1';
+					}
 					return egw.openWithinWindow("mail", "setCompose", {
 						data:{
 							emails:{
@@ -1402,16 +1422,27 @@ export class MailApp extends EgwApp
 				// No further client side processing needed for these
 				settings.from = _action.id;
 		}
-		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - only a genuinely new message
-		// (the caller passed no source elems at all) may take the JMAP-mode flag; compose.ts reads
-		// it back from this popup's own URL to decide its Send behaviour. Gated on noSourceGiven
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - a genuinely new message (the
+		// caller passed no source elems at all) may take the JMAP-mode flag; compose.ts reads it
+		// back from this popup's own URL to decide its Send behaviour. Gated on noSourceGiven
 		// (captured before the backfill above), NOT settings.id - that gets backfilled from the
 		// currently-selected/previewed message for unrelated reasons even on a genuine "new blank
 		// message" trigger, which would otherwise silently defeat this toggle whenever any message
-		// happened to be selected (found live 2026-08-27). Reply/forward/drafts are never reached
-		// via a no-elems call in the first place, so this stays conservative without needing
-		// settings.id as a second check.
-		if (this.jmapComposeEnabled && noSourceGiven)
+		// happened to be selected (found live 2026-08-27).
+		// Step 4, first slice (2026-08-27): a genuine single reply ("reply", never "reply_all" -
+		// that one still needs the classic per-recipient own-address filtering logic, not built
+		// yet) is ALSO eligible - compose.ts's bootstrapReply() only OVERWRITES the classic
+		// server-rendered recipient/subject/body once its own JMAP fetch succeeds, so there's no
+		// "server skipped computing it" risk unlike the blank-new-compose case.
+		// 'reply_attachments' added 2026-08-31 (attachment carry-forward slice) - same reasoning,
+		// bootstrapReply() also carries the original message's own attachments client-side now.
+		// Single-message INLINE forward added 2026-08-31 too - checked via settings.from/mode
+		// (already normalized by the switch above) rather than _action.id directly, since forward/
+		// forwardinline/forwardasattach all reach this point only for the single-message inline
+		// case (a batch forward or forwardasattach returns early via egw.openWithinWindow(), never
+		// reaching here at all - see the switch above).
+		const jmapEligibleForward = settings.from === 'forward' && settings.mode === 'forwardinline';
+		if (this.jmapComposeEnabled && (noSourceGiven || _action.id === 'reply' || _action.id === 'reply_attachments' || jmapEligibleForward))
 		{
 			(settings as typeof settings & {jmap? : string}).jmap = '1';
 		}
@@ -1970,6 +2001,21 @@ export class MailApp extends EgwApp
 			this.patchRow(rowId);
 			// reduce counter without server roundtrip
 			this.reduceCounterWithoutServerRoundtrip();
+			// The comment above ("marked as read by the mail server") is only true for the classic
+			// fallback path (a raw, non-.PEEK IMAP FETCH BODY[] implicitly sets \Seen server-side) -
+			// loadMessageBody()'s JMAP-native fast path (MailJmap.fetchBody(), a pure Email/get with
+			// no side effects) never actually does, so this block used to only update the local UI
+			// to match a server-side change that, for a JMAP-native account, never happened - the
+			// message reverted to unseen on the next reload (found live 2026-08-27, ralf). Send the
+			// real JMAP patch here too - messageReference() throws for a non-JMAP row id (classic-
+			// only account), where the classic fallback already handled this server-side, so this
+			// is skipped rather than erroring.
+			try
+			{
+				this.jmap.setSystemFlag([this.jmap.messageReference(rowId)], '$seen', true)
+					.catch((e) => console.error('preview(): failed to mark message as read', e));
+			}
+			catch (e) { /* non-JMAP row id - classic fallback already handled this server-side */ }
 			if (typeof data.dispositionnotificationto != 'undefined' && data.dispositionnotificationto &&
 				typeof data.flags.mdnsent == 'undefined' && typeof data.flags.mdnnotsent == 'undefined')
 			{

@@ -381,7 +381,29 @@ class mail_compose
 
 		// Process different places we can use as a start for composing an email
 		$actionToProcess = 'compose';
-		if(!empty($_GET['from']) && $replyID)
+		// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 (ralf, 2026-08-27): for a
+		// JMAP-mode single reply, skip getComposeFrom()'s classic fetch+derive entirely - it's a
+		// raw IMAP fetch, found live to take ~20s against this account's backend, and the client
+		// already does its own JMAP-based fetch+derive instead (MailCompose.bootstrapReply()),
+		// proven working. No real safety-net value in running the classic computation "just in
+		// case" either - if the client's JMAP fetch fails, the same backend's classic IMAP fetch
+		// failing (or being just as slow) is at least as likely, not a genuinely independent
+		// fallback (ralf: "there's no reason to assume the JMAP side would fail, but IMAP somehow
+		// succeeds"). Leaves $actionToProcess at its 'compose' default so the existing
+		// $jmapModeNewCompose guard below (originally for blank new-compose) picks this up
+		// identically - a skipped reply looks like a blank compose from the server's own
+		// perspective either way.
+		// 'reply_attachments' added 2026-08-31 (attachment-carry-forward slice) - same skip, same
+		// reasoning; MailCompose.bootstrapReply() carries the original message's non-inline
+		// attachments client-side via blobId reference, no re-upload needed (see
+		// MailJmap.fetchForReply()'s own docblock).
+		// 'forward' added 2026-08-31 too, single-message INLINE forward only (composeMessage()
+		// never adds jmap=1 for a batch/forwardasattach forward, which takes a completely
+		// different egw.openWithinWindow() path - see app.ts's own gating) - same skip, same
+		// mechanism as reply_attachments, just without setting to/cc/threading-headers.
+		$jmapReplySkip = ($_GET['jmap'] ?? null) === '1' &&
+			in_array($_GET['from'] ?? null, ['reply', 'reply_attachments', 'forward'], true) && $replyID;
+		if(!empty($_GET['from']) && $replyID && !$jmapReplySkip)
 		{
 			$_content = array_merge((array)$_content, $this->getComposeFrom(
 				// Parameters needed for fetching appropriate data
@@ -411,6 +433,14 @@ class mail_compose
 			unset($_GET['id']);
 			unset($_GET['mode']);
 			//error_log(__METHOD__.__LINE__.array2string($_content));
+		}
+		elseif ($jmapReplySkip)
+		{
+			unset($_GET['from']);
+			unset($_GET['reply_id']);
+			unset($_GET['part_id']);
+			unset($_GET['id']);
+			unset($_GET['mode']);
 		}
 
 		$composeCache = array();
@@ -1243,7 +1273,20 @@ class mail_compose
 		if (stripos($content['body'],'<html><head></head><body>')!==false) $content['body'] = str_ireplace(array('<html><head></head><body>','</body></html>'),array('',''),$content['body']);
 		//error_log(__METHOD__.__LINE__.array2string($this->mailPreferences));
 		$blockElements = array('address','blockquote','center','del','dir','div','dl','fieldset','form','h1','h2','h3','h4','h5','h6','hr','ins','isindex','menu','noframes','noscript','ol','p','pre','table','ul');
-		if ($this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend' &&
+		// doc/ai/projects/mail-compose-jmap-migration.md, future-phase idea pulled forward for the
+		// signature piece (ralf, 2026-08-27): for a genuinely new blank compose, or a JMAP-mode
+		// single reply ($jmapReplySkip above), opened with the JMAP toggle on, skip server-side
+		// signature insertion entirely - the client populates it itself
+		// (MailCompose.bootstrapSignature()/bootstrapReply(), MailJmap.getIdentities()/
+		// composeBodyWithSignature()/quoteOriginalMessage()), the same "minimal content, client
+		// fetches/builds the rest" pattern mail_ui::displayMessage()/loadEmailBody() already use
+		// for message display. $actionToProcess stays 'compose' (its untouched default) whenever
+		// getComposeFrom() above was never called at all (both cases: no $_GET['from'] at all, or
+		// $jmapReplySkip deliberately skipped calling it) - reply-all/forward/drafts still get the
+		// classic signature insertion below unconditionally, no client-side equivalent exists for
+		// those yet.
+		$jmapModeNewCompose = $actionToProcess === 'compose' && ($_GET['jmap'] ?? null) === '1';
+		if (!$jmapModeNewCompose && $this->mailPreferences['insertSignatureAtTopOfMessage']!='no_belowaftersend' &&
 			!(isset($_POST['mySigID']) && !empty($_POST['mySigID']) ) && !$suppressSigOnTop
 		)
 		{
