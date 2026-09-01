@@ -509,7 +509,7 @@ export class MailJmap
 			return this.getThreadedRows(client, token, profileID, mailboxId, query, start, limit, fetchPreview);
 		}
 
-		const [{ids, emails}, role] = await Promise.all([
+		const [[{ids, emails}], role] = await Promise.all([
 			client.requestMany((t) =>
 			{
 				const ids = t.Email.query({
