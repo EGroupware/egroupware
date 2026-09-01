@@ -288,4 +288,58 @@ class AdminMailPureLogicTest extends \PHPUnit\Framework\TestCase
 
 		$this->assertSame(array('5', '7', '9'), $account_id);
 	}
+
+	/**
+	 * Regression guard for "stepping through the wizard for a multi-user account overwrites the
+	 * shared identity's email for every user" (found live 2026-09-02): autoconfig() defaults
+	 * ident_email from acc_imap_username purely to satisfy the wizard's required-field
+	 * validation when a multi-user account has no email yet, marking it via
+	 * ident_email_defaulted - normalizeAccountType() must strip that default back out again for
+	 * a multi-user account, since it must never actually reach the shared identity.
+	 */
+	public function testNormalizeAccountTypeStripsDefaultedIdentEmailWhenMultiple()
+	{
+		$content = array(
+			'acc_imap_username' => 'shared@example.org',
+			'ident_email' => 'shared@example.org',
+			'ident_email_defaulted' => true,
+		);
+		$result = $this->callPrivateStatic('normalizeAccountType', array($content, true));
+
+		$this->assertSame('', $result['ident_email']);
+		$this->assertArrayNotHasKey('ident_email_defaulted', $result);
+	}
+
+	/**
+	 * The admin may go on to deliberately type a real, different shared email over Step 1's
+	 * defaulted value - that must still be saved, not stripped just because the marker is set.
+	 */
+	public function testNormalizeAccountTypeKeepsDeliberatelyChangedIdentEmailWhenMultiple()
+	{
+		$content = array(
+			'acc_imap_username' => 'shared@example.org',
+			'ident_email' => 'real-shared-address@example.org',
+			'ident_email_defaulted' => true,
+		);
+		$result = $this->callPrivateStatic('normalizeAccountType', array($content, true));
+
+		$this->assertSame('real-shared-address@example.org', $result['ident_email']);
+	}
+
+	/**
+	 * The same default is fine to actually persist for a single-user (personal) account - only
+	 * the multi-user case is dangerous (see the two tests above).
+	 */
+	public function testNormalizeAccountTypeKeepsDefaultedIdentEmailWhenNotMultiple()
+	{
+		$content = array(
+			'acc_imap_username' => 'someone@example.org',
+			'ident_email' => 'someone@example.org',
+			'ident_email_defaulted' => true,
+		);
+		$result = $this->callPrivateStatic('normalizeAccountType', array($content, false));
+
+		$this->assertSame('someone@example.org', $result['ident_email']);
+		$this->assertArrayNotHasKey('ident_email_defaulted', $result);
+	}
 }

@@ -370,6 +370,19 @@ class admin_mail
 		{
 			$content['acc_imap_username'] = $content['ident_email'];
 		}
+		// mirror of the above: a multi-user ("everyone") account's standard identity often has no
+		// email address configured yet (set later, once real per-user identities exist) - the
+		// username commonly IS the email address, so default to it instead of leaving the
+		// wizard's required "Email address" field blank and unsubmittable (found live 2026-09-02,
+		// reviewing such an account via edit()'s "Wizard" button). Purely to satisfy THIS step's
+		// validation though - a multi-user account's identity must NOT actually get this value
+		// persisted (it would overwrite the shared identity's email for every user of the
+		// account), so normalizeAccountType() strips it again on save via this marker.
+		elseif (empty($content['ident_email']) && strpos($content['acc_imap_username'], '@') !== false)
+		{
+			$content['ident_email'] = $content['acc_imap_username'];
+			$content['ident_email_defaulted'] = true;
+		}
 		// supported oauth provider or mail-server of them for custom domains
 		if (($oauth = OpenIDConnectClient::providerByDomain($content['acc_imap_username'], $content['acc_imap_host'])))
 		{
@@ -2939,6 +2952,21 @@ class admin_mail
 		{
 			$content['ident_email'] = $content['ident_email_alias'];
 		}
+		// undo autoconfig()'s "default ident_email from acc_imap_username, so the wizard's
+		// required field isn't blank" fallback for a MULTI-user account specifically - that
+		// default only exists to satisfy Step 1's validation, and must never actually reach the
+		// shared identity: it would overwrite the email for every user of the account, once real
+		// per-user identities/emails exist. Only strip it if it's still exactly the value we
+		// defaulted it to (checked via both the marker AND the value itself, since the admin may
+		// have gone on to deliberately type a real, different shared email over Step 1's field,
+		// which must still be saved) - see autoconfig()'s matching comment (found live 2026-09-02).
+		if ($is_multiple && !empty($content['ident_email_defaulted']) &&
+			($content['ident_email'] ?? null) === ($content['acc_imap_username'] ?? null))
+		{
+			$content['ident_email'] = '';
+			unset($content['ident_email_alias']);
+		}
+		unset($content['ident_email_defaulted']);
 		return $content;
 	}
 
