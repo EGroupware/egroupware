@@ -630,6 +630,18 @@ export class MailCompose
 			void this.displayJmapBlobAttachment(attgrid);
 			return;
 		}
+		// vfsUpload()'s bare jmapVfsPath marker entry - same gap as jmapBlobId above (no .file, no
+		// tmp_name pointing at a real classic-upload temp file), found live 2026-09-01 (a tester
+		// could no longer view a VFS-attached file to confirm the right one was picked, "that was
+		// working before" the JMAP-native VFS-attach rework). The file is already sitting in VFS -
+		// no blob/upload round-trip needed at all, just open it directly via WebDAV, same URL
+		// construction MailJmap.uploadVfsAttachment() already uses for the same path.
+		if (attgrid.jmapVfsPath)
+		{
+			const url = this.egw.link('/webdav.php') + attgrid.jmapVfsPath.split('/').map(encodeURIComponent).join('/');
+			egw.openPopup(url, 800, 600, 'maildisplayAttachment_' + attgrid.tmp_name);
+			return;
+		}
 		if (attgrid.uid && (attgrid.partID||attgrid.folder))
 		{
 			this.app.displayAttachment(tag_info, widget, true);
