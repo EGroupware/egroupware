@@ -30,6 +30,7 @@ class Hooks
 		{
 			Credentials::changepassword($hook_data);
 		}
+		// ToDo: Jmap/Stalwart need to "know" about changed passwords to sync them to Stalwart
 	}
 
     /**

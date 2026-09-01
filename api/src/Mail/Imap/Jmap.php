@@ -316,7 +316,7 @@ class Jmap extends Mail\Imap
 			// first, not an unverified one, so there's no separate raw-socket probe needed here
 			$verify = $undecided || ($ssl & Mail\Account::VERIFY_MASK) === Mail\Account::VERIFY_ENABLED;
 			try {
-				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, $verify);
+				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, $verify, $this->acc_id ?: null);
 				if ($undecided && $this->acc_id)
 				{
 					// the strict connection just succeeded - verification confirmed possible
@@ -332,7 +332,7 @@ class Jmap extends Mail\Imap
 				{
 					throw $e;
 				}
-				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, false);
+				$this->jmap = new JmapHttp($this->jmapUrl(), $this->acc_imap_username, $this->acc_imap_password, $this->jmap_accountId, false, $this->acc_id ?: null);
 				if ($this->acc_id)
 				{
 					Mail\Account::persistVerification($this->acc_id, 'acc_imap_ssl',

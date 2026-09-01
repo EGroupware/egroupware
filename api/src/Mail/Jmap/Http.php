@@ -60,14 +60,26 @@ class Http extends Jmap
 	];
 
 	/**
+	 * EGroupware's own mail account id (acc_id) this session belongs to - NOT Stalwart's own
+	 * opaque JMAP accountId (that's $this->accountId, inherited). Only known when the caller
+	 * passes it (see jmapClient() in Mail\Imap\Jmap/Smtp\Stalwart) - null for connections opened
+	 * without account context (eg. admin_mail.inc.php's host-discovery probes, before an account
+	 * even exists). Needed by Identity::get() to resolve EGroupware's own identities/signatures,
+	 * since we never sync that data to Stalwart itself (see Identity's own docblock).
+	 */
+	public readonly ?int $acc_id;
+
+	/**
 	 * @param string $host_or_url JMAP url, or hostname/sentinel to bootstrap from
 	 * @param string $user username
 	 * @param string $secret password
 	 * @param string|null &$accountId jmap accountId
 	 * @param bool $verify =true false: disable TLS certificate verification for this connection
+	 * @param int|null $acc_id EGroupware's own mail account id, if already known by the caller
 	 */
-	public function __construct(string $host_or_url, string $user, string $secret, ?string &$accountId=null, bool $verify=true)
+	public function __construct(string $host_or_url, string $user, string $secret, ?string &$accountId=null, bool $verify=true, ?int $acc_id=null)
 	{
+		$this->acc_id = $acc_id;
 		// EGroupware Mail "mail" service (the local JMAP-over-IMAP shim's own endpoint)
 		if ($host_or_url === 'mail')
 		{
