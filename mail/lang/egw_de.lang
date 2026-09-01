@@ -563,6 +563,10 @@ rule priority position	mail	de	Priorität/Reihenfolge
 rule with priority	mail	de	Regel mit Priorität
 rules	mail	de	Regeln
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für die Absenderadresse gefunden wurde: %1
+s/mime encryption failed	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen
+s/mime encryption failed because no certificate has been found for following addresses: %1	mail	de	Die S/MIME-Verschlüsselung ist fehlgeschlagen, weil kein Zertifikat für folgende Adressen gefunden wurde: %1
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat stimmt nicht mit dem Zertifikat Ihres Kontos überein - bitte auf doppelte Adressbucheinträge für diese Adresse prüfen.
+the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	de	Das im Adressbuch für %1 gespeicherte S/MIME-Zertifikat ist ungültig - bitte auf doppelte oder fehlerhafte Adressbucheinträge für diese Adresse prüfen.
 save all	mail	de	Alle speichern
 save all attachments to filemanager	mail	de	Alle Anhänge im Dateimanager speichern
 save as calendar	mail	de	Als Termin speichern

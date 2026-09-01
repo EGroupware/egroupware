@@ -240,6 +240,16 @@ export class JmapUserError extends Error {}
 export class JmapUnsupportedBackendError extends JmapUserError {}
 
 /**
+ * sendNewEmail() throws this when S/MIME sign/encrypt was requested (a smimeType given) but no
+ * passphrase - given or session-cached (Smime::resolveMessage()'s own fallback, same as the
+ * read-side resolveSpecialCaseBody()) - was enough to unlock the sender's own private key. Caught
+ * by MailCompose.trySendViaJmap() to show the SAME smimePassDialog() the classic path already
+ * uses. Compare by constructor name, not instanceof - this.app.jmap may be the OPENER window's own
+ * instance (see MailCompose.isUnsupportedBackendError()'s own docblock for why).
+ */
+export class JmapSmimePassphraseError extends JmapUserError {}
+
+/**
  * Format one JMAP-shaped error object ({type, description?}) as a human string, or null if it
  * doesn't actually look like a JMAP/HTTP error object (eg. a plain fetch-failure Error/TypeError -
  * jmap-jam's own signal for "couldn't even talk to the server", left as the existing silent-
@@ -3833,15 +3843,25 @@ export class MailJmap
 	 *
 	 * @param profileID
 	 * @param email
+	 * @param smimeType Api\Mail\Smime::TYPE_SIGN|TYPE_ENCRYPT|TYPE_SIGN_ENCRYPT (see
+	 *  MailCompose.SMIME_TYPE_*), or undefined for a normal, unsigned/unencrypted send - see
+	 *  smimeEncryptBody()'s own docblock for the server round-trip this triggers
+	 * @param passphrase only meaningful together with a signing smimeType - falls back to the
+	 *  session-cached passphrase server-side if not given (same as the read-side
+	 *  resolveSpecialCaseBody())
 	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
+	 * @throws JmapSmimePassphraseError smimeType needs signing and no passphrase (given or
+	 *  session-cached) was enough to unlock the sender's own private key
 	 */
-	async sendNewEmail(profileID : string, email : JmapNewEmail) : Promise<void>
+	async sendNewEmail(profileID : string, email : JmapNewEmail, smimeType? : string, passphrase? : string) : Promise<void>
 	{
 		try
 		{
 			const {token, client, identity, submissionIdentityId, draftsId, sentId} = await this.resolveComposeContext(profileID, true);
 
-			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email);
+			const bodyOverride = smimeType ?
+				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase) : undefined;
+			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email, bodyOverride);
 
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
@@ -3869,6 +3889,51 @@ export class MailJmap
 			console.error('MailJmap.sendNewEmail(): failed', e);
 			throw new JmapUserError(message ?? this.egw.lang('Account not reachable'));
 		}
+	}
+
+	/**
+	 * S/MIME sign/encrypt an about-to-be-sent message's body - doc/ai/projects/
+	 * mail-compose-jmap-migration.md's Step 6 (send-side S/MIME, 2026-09-01 client wiring). Server-
+	 * side is 100% of the actual work (private key material never leaves the server) - this builds
+	 * the SAME Email properties createDraftEmail() would otherwise send straight to Email/set
+	 * (resolveOutgoingInlineImages() + draftEmailProperties(), so an HTML body's inline images are
+	 * already real cid:-referenced blob attachments, not dangling client-only blob: URLs, by the
+	 * time the server signs/encrypts it), hands them to mail.mail_ui.
+	 * ajax_smimeEncryptEmailProperties() (JmapImap::smimeEncryptEmailProperties()'s own docblock has
+	 * the full design), and returns the blobId+type createDraftEmail() swaps into bodyStructure in
+	 * place of the multipart structure it would otherwise build.
+	 *
+	 * @param profileID EGroupware's own mail account id (acc_id) - NEVER token.accountId: for a
+	 *  real-JMAP/Stalwart account that's Stalwart's own opaque JMAP accountId (eg. "b"), which
+	 *  Api\Mail\Smime::get_acc_smime()/Credentials::read() have no way to resolve back to an
+	 *  EGroupware account - found live 2026-09-01 via get_acc_smime() returning false outright
+	 *  ("no error anywhere... doesn't matter if correct or wrong passphrase" - it never even got
+	 *  that far, the credential lookup itself silently found nothing for accountId "b").
+	 * @param token
+	 * @param client
+	 * @param identity
+	 * @param email
+	 * @param smimeType Api\Mail\Smime::TYPE_SIGN|TYPE_ENCRYPT|TYPE_SIGN_ENCRYPT
+	 * @param passphrase
+	 * @throws JmapSmimePassphraseError
+	 * @throws JmapUserError no certificate found, or any other failure
+	 */
+	private async smimeEncryptBody(profileID : string, token : JmapToken, client : JamClient, identity : any, email : JmapNewEmail,
+		smimeType : string, passphrase? : string) : Promise<{type : string, blobId : string}>
+	{
+		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
+		const emailProperties = this.draftEmailProperties(identity, {...email, body}, inlineImages);
+		const result : any = await this.egw.request('mail.mail_ui.ajax_smimeEncryptEmailProperties',
+			[profileID, emailProperties, smimeType, passphrase || '']);
+		if (result?.needsPassphrase)
+		{
+			throw new JmapSmimePassphraseError(result.message || this.egw.lang('You need to enter your S/MIME passphrase to send this message.'));
+		}
+		if (!result?.blobId)
+		{
+			throw new JmapUserError(result?.error || this.egw.lang('Failed to sign/encrypt message'));
+		}
+		return {type: result.type, blobId: result.blobId};
 	}
 
 	/**
@@ -4541,10 +4606,30 @@ export class MailJmap
 		return {body, inlineImages};
 	}
 
-	/** Create a new $draft-keyword Email in the Drafts mailbox - shared by sendNewEmail() and saveDraft()'s first-save case. */
-	private async createDraftEmail(token : JmapToken, client : JamClient, identity : any, draftsId : string, email : JmapNewEmail) : Promise<string>
+	/**
+	 * Create a new $draft-keyword Email in the Drafts mailbox - shared by sendNewEmail() and
+	 * saveDraft()'s first-save case.
+	 *
+	 * @param bodyOverride S/MIME follow-up (2026-09-01) - when given (sendNewEmail() only, via
+	 *  smimeEncryptBody()), replaces draftEmailProperties()'s own bodyValues/textBody/bodyStructure
+	 *  entirely with a SINGLE opaque blobId-referenced part (the already-signed/encrypted body
+	 *  entity) - from/to/cc/bcc/subject/inReplyTo/references stay exactly as draftEmailProperties()
+	 *  would otherwise build them, only the body's own MIME shape changes.
+	 */
+	private async createDraftEmail(token : JmapToken, client : JamClient, identity : any, draftsId : string, email : JmapNewEmail,
+		bodyOverride? : {type : string, blobId : string}) : Promise<string>
 	{
-		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
+		const {body, inlineImages} = bodyOverride ?
+			{body: email.body ?? '', inlineImages: [] as JmapInlineImage[]} :
+			await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
+		const properties : any = this.draftEmailProperties(identity, {...email, body}, inlineImages);
+		if (bodyOverride)
+		{
+			delete properties.bodyValues;
+			delete properties.textBody;
+			delete properties.htmlBody;
+			properties.bodyStructure = {type: bodyOverride.type, blobId: bodyOverride.blobId};
+		}
 		const [{emailSet}] = await client.requestMany((t) => ({
 			emailSet: t.Email.set({
 				accountId: token.accountId,
@@ -4554,7 +4639,7 @@ export class MailJmap
 						// classic mail_compose always saved drafts as '\Seen \Draft' (never left
 						// unread) - match that here too, for both real-JMAP and shim backends
 						keywords: {'$draft': true, '$seen': true},
-						...this.draftEmailProperties(identity, {...email, body}, inlineImages),
+						...properties,
 					},
 				},
 			}),

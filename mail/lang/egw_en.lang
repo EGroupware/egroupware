@@ -575,6 +575,10 @@ rule priority position	mail	en	Rule priority position
 rule with priority	mail	en	rule with priority
 rules	mail	en	Rules
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
+s/mime encryption failed	mail	en	S/MIME encryption failed
+s/mime encryption failed because no certificate has been found for following addresses: %1	mail	en	S/MIME Encryption failed because no certificate has been found for following addresses: %1
+the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.
+the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
 save all	mail	en	Save all
 save all attachments to filemanager	mail	en	Save all to File Manager
 save as calendar	mail	en	Save as Calendar

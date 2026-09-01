@@ -376,16 +376,38 @@ Stalwart `icServer` first and routes through `jmapClient()->downloadBlob()` in t
 explicitly chosen over a separate uniform builder in `mail/src/Ui`, since this makes the existing
 shim-only method genuinely uniform rather than adding a parallel one).
 
-**Deliberately NOT built here** (this is a server-side-only slice, matching the "small testable
-slices" principle - the exact `Email/set` bodyStructure wire-format integration, passphrase-prompt
-UX, and live Stalwart+shim verification are all still open questions for a security-critical send
-path, not guessed at blind): `compose.ts`'s `jmapEligible()` still treats `smime_sign`/
-`smime_encrypt` as a hard `blockingToggle`, forcing the full classic postback whenever either is
-on - nothing calls the new endpoint yet. No PHPUnit coverage either (real sign/encrypt needs an
-actual configured S/MIME certificate + private key, unlike `ImapBuildMailerTest.php`'s pure-ish
-approach - a viable test fixture wasn't set up this session). `PassphraseMissing` on this endpoint
-also has no client-side prompt wired up yet - compose's existing `app.mail.smimePassDialog()` is
-send-flow-coupled (submits via `MailCompose.submitAction()`) and not directly reusable as-is.
+**Client wiring built (2026-09-01), NOT YET LIVE-TESTED against either backend.**
+`jmapEligible()`'s `blockingToggle` no longer includes `smime_sign`/`smime_encrypt` - S/MIME is
+handled inside `trySendViaJmap()` itself now. `MailJmap.sendNewEmail()` gained `smimeType`/
+`passphrase` params: when a `smimeType` is given, new `smimeEncryptBody()` resolves inline images
+(`resolveOutgoingInlineImages()`, so an HTML body's `cid:` images are already real blob
+attachments, not dangling client-only `blob:` URLs, before the server ever signs/encrypts
+anything) and builds the SAME Email properties `createDraftEmail()` would otherwise send
+(`draftEmailProperties()`), hands them to `ajax_smimeEncryptEmailProperties()`, and returns
+`{type, blobId}`. `createDraftEmail()` gained an optional `bodyOverride` param that, when given,
+drops `bodyValues`/`textBody`/`htmlBody` entirely and sets `bodyStructure: {type, blobId}` - a
+single opaque part - in their place; `from`/`to`/`cc`/`bcc`/`subject`/`inReplyTo`/`references`
+stay exactly as `draftEmailProperties()` would otherwise build them, only the body's own MIME
+shape changes. Drafts stay unaffected (unsigned/unencrypted, matching classic - S/MIME only
+applies at actual send time, same reasoning `jmapEligible(forSend)`'s own docblock already gives
+for the cross-app-integration toggles).
+
+**Passphrase UX reuses the existing dialog rather than building a new one**: a still-needed
+passphrase throws new `JmapSmimePassphraseError` (compared by `constructor.name`, not
+`instanceof`, same cross-realm reasoning as `isUnsupportedBackendError()` - `this.app.jmap` can be
+the opener window's own instance), caught in `trySendViaJmap()` to call `this.app.
+smimePassDialog()` - the SAME dialog the classic path already shows, unmodified. Works because
+that dialog's own submit handler already just sets the `smime_passphrase` widget value and calls
+`this.compose.submitAction(false)` again - `trySendViaJmap()` re-reads that widget on the retry, no
+new retry loop needed. Both the compose popup's own `app`/`et2` and that dialog's `self.et2`/
+`self.compose` resolve to the SAME window-local instances (each popup gets its own full app
+registry), so no cross-window widget-lookup mismatch.
+
+**Still open**: live verification against a real Stalwart account and the IMAP-shim account with
+actual configured S/MIME certs (sign-only, encrypt-only, sign+encrypt, each with and without
+attachments/inline images) - not done yet, deliberately left for ralf to test. No PHPUnit coverage
+either (real sign/encrypt needs an actual configured S/MIME certificate + private key, unlike
+`ImapBuildMailerTest.php`'s pure-ish approach - a viable test fixture wasn't set up this session).
 
 Companion to [[mail-jmap-imap-inversion]].
 

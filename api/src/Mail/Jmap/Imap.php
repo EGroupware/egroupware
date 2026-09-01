@@ -2213,41 +2213,118 @@ class Imap extends Jmap\Base
 
 		$AB = new \addressbook_bo();
 		$params = [];
-		if (in_array($type, [Api\Mail\Smime::TYPE_SIGN, Api\Mail\Smime::TYPE_SIGN_ENCRYPT], true))
-		{
-			$senderCert = $AB->get_smime_keys($sender);
-			if (!$senderCert)
-			{
-				throw new \Exception(lang("S/MIME Encryption failed because no certificate has been found for sender address: %1", $sender));
-			}
-			$params['senderPubKey'] = $senderCert[strtolower($sender)];
-			$acc_smime = Api\Mail\Smime::get_acc_smime($accountId, $passphrase);
-			$params['senderPrivKey'] = $acc_smime['pkey'] ?? null;
-			$params['passphrase'] = $passphrase;
-			// extracerts also holds retired own certificates kept around to still decrypt old mail
-			// (see Smime::decryptWithCandidates()) - only actual CA/intermediate certificates
-			// (not belonging to our own key) belong in the chain sent with outgoing signed mail,
-			// same filter classic mail_compose::_encrypt() applies
-			$params['extracerts'] = !empty($acc_smime['extracerts']) ?
-				array_values(array_filter($acc_smime['extracerts'],
-					fn($c) => !Api\Mail\Smime::isOwnCertificate($c, $acc_smime['pkey'], $passphrase))) : null;
-		}
+		// ENCRYPT's recipient-cert check first, deliberately - independent of signing/passphrase,
+		// so a missing recipient cert throws BEFORE the passphrase is ever written to the session
+		// cache below (nothing to unwind yet in that case)
 		if (in_array($type, [Api\Mail\Smime::TYPE_ENCRYPT, Api\Mail\Smime::TYPE_SIGN_ENCRYPT], true))
 		{
 			$params['recipientsCerts'] = $AB->get_smime_keys($recipients);
 			$missing = array_filter($recipients, fn($r) => empty($params['recipientsCerts'][strtolower($r)]));
 			if ($missing)
 			{
-				throw new \Exception('S/MIME Encryption failed because no certificate has been found for following addresses: '.implode('|', $missing));
+				throw new \Exception(lang('S/MIME Encryption failed because no certificate has been found for following addresses: %1',
+					implode(', ', $missing)));
+			}
+			foreach ($params['recipientsCerts'] as $certEmail => $cert)
+			{
+				self::assertValidSmimeCert($cert, $certEmail);
 			}
 		}
-
-		if (!$mailer->smimeEncrypt($type, $params))
+		if (!in_array($type, [Api\Mail\Smime::TYPE_SIGN, Api\Mail\Smime::TYPE_SIGN_ENCRYPT], true))
 		{
-			throw new Api\Mail\Smime\PassphraseMissing(lang('You need to enter your S/MIME passphrase to send this message.'));
+			// TYPE_ENCRYPT only - no signing, no passphrase/private key involved at all
+			if (!$mailer->smimeEncrypt($type, $params))
+			{
+				throw new \Exception(lang('S/MIME encryption failed'));
+			}
+			$base = $mailer->getBasePart();
+			return ['type' => $base->getType(), 'raw' => $base->toString(['headers' => true])];
+		}
+
+		$senderCert = $AB->get_smime_keys($sender);
+		if (!$senderCert)
+		{
+			throw new \Exception(lang("S/MIME Encryption failed because no certificate has been found for sender address: %1", $sender));
+		}
+		$params['senderPubKey'] = $senderCert[strtolower($sender)];
+		self::assertValidSmimeCert($params['senderPubKey'], $sender);
+		// Api\Mailer::smimeEncrypt() unconditionally OVERWRITES $params['passphrase'] with whatever
+		// is session-cached, if anything is - a stale/empty/different-account value there would
+		// silently clobber a correctly-given passphrase otherwise (found live 2026-09-01: "keeps
+		// popping up... doesn't matter if correct or wrong passphrase" - no exception anywhere,
+		// verifyPassphrase() just cleanly failed against the WRONG value). Classic mail_compose::
+		// send() avoids this by writing the freshly-typed passphrase into that same session slot
+		// before calling _encrypt() - mirrored here exactly, including the same smime_pass_exp
+		// preference-driven expiry. UNLIKE classic though, this write is unwound (unsetSession() in
+		// the catch below) on ANY failure from this point on, not just left there for its own full
+		// expiry to silently poison a later attempt within that window (found live 2026-09-01,
+		// ralf: "we must not cache the passphrase before it proved ok").
+		if ($passphrase !== '')
+		{
+			Api\Cache::setSession('mail', 'smime_passphrase', $passphrase,
+				(int)($GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp'] ?? 10) * 60);
+		}
+		try
+		{
+			$acc_smime = Api\Mail\Smime::get_acc_smime($accountId, $passphrase);
+			// The addressbook's own stored copy of the SENDER's "own" certificate (get_smime_keys()
+			// above) is a SEPARATE record from the account's own p12 (acc_smime) - normally the same
+			// certificate, but nothing enforces that, and addressbook_bo::get_keys() has no
+			// deterministic tie-break when more than one contact shares the same email (silently
+			// keeps whichever the search happens to return last, and falls back to a stale legacy
+			// inline pubkey field if a contact's own stored file can't be read) - found live
+			// 2026-09-01: three OTHER contacts sharing ralf's email had unreadable cert files
+			// (VFS fopen failures) and none was his real one (contact #46) - openssl_pkcs7_sign()
+			// only ever surfaced this as an opaque "Could not S/MIME sign message.", not naming
+			// which contact/cert was actually wrong. Fail clearly here instead, before ever
+			// attempting to sign with a cert that doesn't even belong to this key.
+			if (!empty($acc_smime['pkey']) && !openssl_x509_check_private_key($params['senderPubKey'], [$acc_smime['pkey'], $passphrase]))
+			{
+				throw new \Exception(lang("The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.", $sender));
+			}
+			$params['senderPrivKey'] = $acc_smime['pkey'] ?? null;
+			$params['passphrase'] = $passphrase;
+			// extracerts also holds retired own certificates kept around to still decrypt old mail
+			// (see Smime::decryptWithCandidates()) - only actual CA/intermediate certificates (not
+			// belonging to our own key) belong in the chain sent with outgoing signed mail, same
+			// filter classic mail_compose::_encrypt() applies
+			$params['extracerts'] = !empty($acc_smime['extracerts']) ?
+				array_values(array_filter($acc_smime['extracerts'],
+					fn($c) => !Api\Mail\Smime::isOwnCertificate($c, $acc_smime['pkey'], $passphrase))) : null;
+
+			if (!$mailer->smimeEncrypt($type, $params))
+			{
+				throw new Api\Mail\Smime\PassphraseMissing(lang('You need to enter your S/MIME passphrase to send this message.'));
+			}
+		}
+		catch (\Throwable $e)
+		{
+			Api\Cache::unsetSession('mail', 'smime_passphrase');
+			throw $e;
 		}
 		$base = $mailer->getBasePart();
 		return ['type' => $base->getType(), 'raw' => $base->toString(['headers' => true])];
+	}
+
+	/**
+	 * Fail clearly (naming the exact address) if a certificate addressbook_bo::get_smime_keys()
+	 * returned isn't actually a parseable X.509 certificate - found live 2026-09-01: a contact
+	 * whose own stored cert FILE is unreadable (VFS fopen failure) can still fall through to a
+	 * stale legacy inline pubkey-field value that "matches" the storage regexp without being valid
+	 * X.509 at all, which openssl_pkcs7_sign()/openssl_pkcs7_encrypt() would otherwise only ever
+	 * surface as an opaque "Could not S/MIME sign/encrypt message." with no indication of which
+	 * certificate, or why.
+	 *
+	 * @param string $cert
+	 * @param string $email
+	 * @throws \Exception
+	 */
+	private static function assertValidSmimeCert(string $cert, string $email) : void
+	{
+		if (!openssl_x509_parse($cert))
+		{
+			throw new \Exception(lang("The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.", $email));
+		}
 	}
 
 	/**

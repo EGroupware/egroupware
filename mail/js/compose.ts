@@ -20,6 +20,13 @@ import type {JmapAttachment, JmapReplyContext} from "./jmap";
 
 export class MailCompose
 {
+	// Mirror Api\Mail\Smime::TYPE_SIGN/TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT's exact string values -
+	// passed through to MailJmap.sendNewEmail()'s smimeType, ultimately reaching
+	// JmapImap::smimeEncryptEmailProperties() unchanged, so these must stay byte-for-byte in sync.
+	private static readonly SMIME_TYPE_SIGN = 'smime_sign';
+	private static readonly SMIME_TYPE_ENCRYPT = 'smime_encrypt';
+	private static readonly SMIME_TYPE_SIGN_ENCRYPT = 'smime_sign_encrypt';
+
 	protected app : MailApp;
 	private et2 : Et2Template
 	private autosaveInterval : number;
@@ -802,10 +809,11 @@ export class MailCompose
 		}
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - try the JMAP-native send path
 		// for a plain new message opened via the "jmapCompose" toggle. trySendViaJmap() itself
-		// decides eligibility (no attachments, no cross-app integration, no S/MIME) and falls
-		// back to false - never an error - for anything it can't yet handle or an
-		// unsupported-backend account; a REAL send failure is shown to the user and still
-		// resolves true, so the classic postback below never double-sends.
+		// decides eligibility (no attachments carried forward from another message, no
+		// cross-app integration) and falls back to false - never an error - for anything it can't
+		// yet handle or an unsupported-backend account; a REAL send failure is shown to the user
+		// and still resolves true, so the classic postback below never double-sends. S/MIME
+		// (2026-09-01) is handled inside trySendViaJmap() itself, not a bail condition anymore.
 		if (this.isJmapMode)
 		{
 			// trySendViaJmap() never goes through ETemplate's own submit() (no form postback at
@@ -837,11 +845,19 @@ export class MailCompose
 	 * Only ever called when isJmapMode (a genuinely new message, no reply/forward/draft context -
 	 * see MailApp.composeMessage()'s own guard for why that's guaranteed).
 	 *
+	 * S/MIME (2026-09-01 follow-up): sign/encrypt/both is passed through to MailJmap.sendNewEmail()
+	 * as an explicit smimeType, rather than being a jmapEligible() blocker - see this doc's
+	 * send-side S/MIME write-up. A still-needed passphrase throws JmapSmimePassphraseError, caught
+	 * here to show the SAME smimePassDialog() the classic path already uses (it re-invokes
+	 * submitAction() itself once a passphrase is entered, so this method doesn't need its own retry
+	 * loop).
+	 *
 	 * @returns {Promise<boolean>} true if this send is fully handled (either actually sent via
-	 *  JMAP, or a real failure was already shown to the user) - caller must NOT also run the
-	 *  classic postback in that case, or the message could be sent twice. false if this compose
-	 *  isn't eligible (attachments/integration/S-MIME in play) or the account's backend doesn't
-	 *  support JMAP sending yet - caller falls through to the classic postback, silently.
+	 *  JMAP, a real failure was already shown to the user, or a passphrase prompt was shown) -
+	 *  caller must NOT also run the classic postback in that case, or the message could be sent
+	 *  twice. false if this compose isn't eligible (attachments/integration in play) or the
+	 *  account's backend doesn't support JMAP sending yet - caller falls through to the classic
+	 *  postback, silently.
 	 */
 	private async trySendViaJmap() : Promise<boolean>
 	{
@@ -849,13 +865,25 @@ export class MailCompose
 
 		try
 		{
-			await this.app.jmap.sendNewEmail(String(this.currentProfileID()), await this.currentEmailFields());
+			const toolbar : any = this.et2.getWidgetById('composeToolbar');
+			const signed = !!toolbar?.getWidgetById('smime_sign')?.get_value();
+			const encrypted = !!toolbar?.getWidgetById('smime_encrypt')?.get_value();
+			const smimeType = signed && encrypted ? MailCompose.SMIME_TYPE_SIGN_ENCRYPT :
+				signed ? MailCompose.SMIME_TYPE_SIGN : encrypted ? MailCompose.SMIME_TYPE_ENCRYPT : undefined;
+			const passphrase = this.et2.getWidgetById('smime_passphrase')?.get_value();
+			await this.app.jmap.sendNewEmail(String(this.currentProfileID()), await this.currentEmailFields(),
+				smimeType, passphrase);
 		}
 		catch (e)
 		{
 			if (this.isUnsupportedBackendError(e))
 			{
 				return false;
+			}
+			if (e?.constructor?.name === 'JmapSmimePassphraseError')
+			{
+				this.app.smimePassDialog(e.message);
+				return true;
 			}
 			this.egw.message(e.message || this.egw.lang('Failed to send message'), 'error');
 			return true;
@@ -876,16 +904,17 @@ export class MailCompose
 	 * scope) or one carried forward from an original message (has uid+partID/folder - needs
 	 * reply/forward, Step 4, not fully built yet). "autosave... has the same unimplemented
 	 * features as our current sending" (ralf, 2026-08-27) - true for attachments, but NOT for the
-	 * integration/S-MIME toggle check below (see forSend's docblock - found live 2026-08-27 via a
-	 * confirmed, reproducible case: to_infolog checked -> autosave fell back to the classic path
+	 * cross-app integration toggle check below (see forSend's docblock - found live 2026-08-27 via
+	 * a confirmed, reproducible case: to_infolog checked -> autosave fell back to the classic path
 	 * -> crashed, the same raw-IMAP-fallthrough bug class as elsewhere in this codebase, since
 	 * Api\Mail::appendMessage()/folderExists() are unguarded raw IMAP calls with no JMAP-native
 	 * fast path - a JMAP-only account's classic draft-save can never actually work, so falling
 	 * back to it for a toggle that doesn't even affect the SAVED DRAFT's own content was
-	 * strictly worse than just not blocking on it).
+	 * strictly worse than just not blocking on it). S/MIME (2026-09-01) is no longer one of these
+	 * blocking toggles at all - see trySendViaJmap()'s own docblock.
 	 *
 	 * @param forSend true (the default, matching trySendViaJmap()'s use) also checks the
-	 *  composeToolbar's integration/S-MIME toggles - those affect what gets built at SEND time
+	 *  composeToolbar's cross-app integration toggles - those affect what gets built at SEND time
 	 *  only, not a draft's own JMAP representation, so trySaveDraftViaJmap() passes false: a
 	 *  draft with, say, "create an InfoLog entry" checked is still just plain body+recipients as
 	 *  far as the SAVED draft itself is concerned - that toggle only matters again once actually
@@ -915,7 +944,10 @@ export class MailCompose
 			return true;
 		}
 		const toolbar : any = this.et2.getWidgetById('composeToolbar');
-		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar', 'smime_sign', 'smime_encrypt'].find(
+		// smime_sign/smime_encrypt used to be here too (2026-08-31 - 2026-09-01) - now handled by
+		// trySendViaJmap() itself (MailJmap.sendNewEmail()'s smimeType param), see this doc's own
+		// send-side S/MIME write-up
+		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar'].find(
 			(id) => toolbar?.getWidgetById(id)?.get_value());
 		return !blockingToggle;
 	}
