@@ -2390,16 +2390,31 @@ class mail_ui
 	 * JMAP-native S/MIME/TNEF body resolution for MailJmap.fetchBody()'s client-first fast path -
 	 * doc/ai/projects/mail-compose-jmap-migration.md's "read-side extraction" follow-up
 	 * (2026-08-31). Lean JSON counterpart of MessageDisplayHandler::tryJmapNativeSpecialCase()
-	 * (the classic full-page iframe route) - see MessageDisplayHandler::resolveSpecialCaseBody()'s
-	 * own docblock for why this never collects a fresh passphrase from the client.
+	 * (the classic full-page iframe route). `$_passphrase` (2026-09-01 follow-up) - see
+	 * MessageDisplayHandler::resolveSpecialCaseBody()'s own docblock for why the classic path's
+	 * passphrase-prompt fallback isn't usable for a Stalwart-opaque-id row; a still-needed
+	 * passphrase now shapes a distinct {needsPassphrase, message} response instead, same
+	 * convention ajax_smimeEncryptEmailProperties() already uses on the send side.
 	 *
 	 * @param string $_rowid
 	 * @param string|null $_htmlOptions
+	 * @param string|null $_passphrase
+	 * @param int|null $_passExpMinutes how long to remember $_passphrase for, explicit (see
+	 *  resolveSpecialCaseBody()'s own docblock for why not the 'smime_pass_exp' preference)
 	 * @return void
 	 */
-	function ajax_resolveSpecialCaseBody($_rowid, $_htmlOptions=null)
+	function ajax_resolveSpecialCaseBody($_rowid, $_htmlOptions=null, $_passphrase=null, $_passExpMinutes=null)
 	{
-		Api\Json\Response::get()->data($this->messageDisplayHandler()->resolveSpecialCaseBody($_rowid, (string)$_htmlOptions));
+		try
+		{
+			$result = $this->messageDisplayHandler()->resolveSpecialCaseBody($_rowid, (string)$_htmlOptions, (string)$_passphrase,
+				$_passExpMinutes !== null ? (int)$_passExpMinutes : 10);
+			Api\Json\Response::get()->data($result);
+		}
+		catch (Mail\Smime\PassphraseMissing $e)
+		{
+			Api\Json\Response::get()->data(['needsPassphrase' => true, 'message' => $e->getMessage()]);
+		}
 	}
 
 	/**
@@ -2414,17 +2429,20 @@ class mail_ui
 	 * @param array $_email JMAP-shaped Email properties (same shape Email/set 'create' takes)
 	 * @param string $_type Mail\Smime::TYPE_SIGN|TYPE_ENCRYPT|TYPE_SIGN_ENCRYPT
 	 * @param string|null $_passphrase falls back to the session-cached passphrase if not given
+	 * @param int|null $_passExpMinutes how long to remember $_passphrase for, explicit (see
+	 *  JmapImap::smimeEncryptEmailProperties()'s own docblock for why not the 'smime_pass_exp'
+	 *  preference)
 	 * @return void {blobId, type} on success; {needsPassphrase: true, message} if the sender's own
 	 *  S/MIME passphrase still needs prompting (same message compose's existing smimePassDialog()
-	 *  already shows - the client wiring to trigger that from THIS endpoint isn't built yet); or
-	 *  {error: message} for anything else (no certificate found, ...)
+	 *  already shows); or {error: message} for anything else (no certificate found, ...)
 	 */
-	function ajax_smimeEncryptEmailProperties($_accId, array $_email, $_type, $_passphrase=null)
+	function ajax_smimeEncryptEmailProperties($_accId, array $_email, $_type, $_passphrase=null, $_passExpMinutes=null)
 	{
 		$response = Api\Json\Response::get();
 		try
 		{
-			$result = JmapImap::smimeEncryptEmailProperties($_accId, $_email, $_type, (string)$_passphrase);
+			$result = JmapImap::smimeEncryptEmailProperties($_accId, $_email, $_type, (string)$_passphrase,
+				$_passExpMinutes !== null ? (int)$_passExpMinutes : 10);
 			$blobId = AttachmentJmap::uploadBlobBytes($_accId, $result['raw'], $result['type']);
 			if (!$blobId)
 			{

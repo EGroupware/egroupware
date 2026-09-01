@@ -2167,15 +2167,31 @@ export class MailApp extends EgwApp
 	 *  - routes through MailJmap.fetchBodyFromMessagePart() instead of fetchBody(), since a
 	 *  sub-part has no real, independently-addressable row-id of its own to fetch normally.
 	 */
-	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal,
+	/** Shared by loadMessageBody()'s {special:true} result and its own catch() fallback below. */
+	private loadClassicBody(iframeWidget: any, iframe: HTMLIFrameElement, rowId: string, onLoad: (doc: Document) => void,
 		partID?: string): void
+	{
+		iframe.addEventListener('load', () =>
+		{
+			const doc = iframe.contentWindow.document;
+			doc.documentElement.dataset.rowId = rowId;
+			onLoad(doc);
+		}, {once: true});
+		iframeWidget.set_src(egw.link('/index.php', {
+			menuaction: 'mail.mail_ui.loadEmailBody', _messageID: rowId,
+			...(partID ? {_partID: partID} : {}),
+		}));
+	}
+
+	private loadMessageBody(iframeWidget: any, rowId: string, onLoad: (doc: Document) => void, signal?: AbortSignal,
+		partID?: string, passphrase?: string, passExpMinutes?: number): void
 	{
 		//we now fire the request so increase inFlight request by one
 		this.inFlightRequests += 1;
 		const iframe = iframeWidget.getDOMNode() as HTMLIFrameElement;
 		const fetchPromise = partID ?
 			this.jmap.fetchBodyFromMessagePart(rowId, partID) :
-			this.jmap.fetchBody(rowId, undefined, signal);
+			this.jmap.fetchBody(rowId, undefined, signal, passphrase, passExpMinutes);
 		fetchPromise.then((result) =>
 		{
 			//a request returned so we have one less in flight.
@@ -2189,16 +2205,7 @@ export class MailApp extends EgwApp
 			if (signal && rowId !== this.currentlyFocussed) return;
 			if (result.special)
 			{
-				iframe.addEventListener('load', () =>
-				{
-					const doc = iframe.contentWindow.document;
-					doc.documentElement.dataset.rowId = rowId;
-					onLoad(doc);
-				}, {once: true});
-				iframeWidget.set_src(egw.link('/index.php', {
-					menuaction: 'mail.mail_ui.loadEmailBody', _messageID: rowId,
-					...(partID ? {_partID: partID} : {}),
-				}));
+				this.loadClassicBody(iframeWidget, iframe, rowId, onLoad, partID);
 				return;
 			}
 			// explicit cast, not relying on control-flow narrowing of the "special" discriminant -
@@ -2217,6 +2224,27 @@ export class MailApp extends EgwApp
 				onLoad(doc);
 			}, {once: true});
 			iframe.srcdoc = fast.html;
+		}).catch((e) =>
+		{
+			this.inFlightRequests = Math.max(0, this.inFlightRequests - 1);
+			if (signal?.aborted) return;
+			if (signal && rowId !== this.currentlyFocussed) return;
+			// MailJmap.fetchBody()'s own JMAP-native S/MIME resolver needs a passphrase it doesn't
+			// have (2026-09-01 follow-up, ralf: "if the passphrase is missing it should throw and
+			// client-side should ask the passphrase") - the classic fallback below is NOT a usable
+			// substitute for this specific case: it pays the exact "20s timeout, empty response"
+			// raw-IMAP-EMAILID-search cost this whole JMAP-native path exists to avoid for a
+			// Stalwart-opaque-id row (MessageDisplayHandler::loadEmailBody() resolves folder/msgUID
+			// unconditionally before ever reaching the S/MIME resolver). Prompt and retry the SAME
+			// fast path with the entered passphrase instead of falling through.
+			if (e?.constructor?.name === 'JmapSmimePassphraseError')
+			{
+				this.smimeViewPassDialog(e.message, (enteredPassphrase, enteredExpMinutes) =>
+					this.loadMessageBody(iframeWidget, rowId, onLoad, signal, partID, enteredPassphrase, enteredExpMinutes));
+				return;
+			}
+			console.error('MailApp.loadMessageBody(): fetch failed, falling back to the server-rendered body', e);
+			this.loadClassicBody(iframeWidget, iframe, rowId, onLoad, partID);
 		});
 	}
 
@@ -7359,6 +7387,14 @@ export class MailApp extends EgwApp
 					const toolbar = self.et2.getWidgetById('composeToolbar');
 					if(typeof toolbar.value==="object")toolbar.value.action = 'send'
 					else toolbar.value = {action:'send'};
+					// egw.set_preference()'s own jsonq() send can still be in flight when the very
+					// next request (this same submitAction() -> trySendViaJmap()) already needs the
+					// value - found live 2026-09-01 (ralf: "I have not seen the cache-timeout in the
+					// passphrase dialog been send to server-side, nor it been used there"). Stashed
+					// on the compose instance instead, read explicitly by trySendViaJmap() - the
+					// preference write stays too, purely so the NEXT time this dialog opens it
+					// pre-fills with whatever was last entered.
+					self.compose.smimePassExpMinutes = _value.pass_exp;
 					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
 					self.compose.submitAction(false);
 				}
@@ -7372,7 +7408,58 @@ export class MailApp extends EgwApp
 				content:{
 					value: '',
 					message: _msg,
-					'exp_min': pass_exp
+					// widget id is "pass_exp" (password.xet) - "exp_min" here never actually bound
+					// to it, so the field silently fell back to its own placeholder="10" every time
+					// regardless of what was last entered (found live 2026-09-01, ralf: "duration is
+					// still not saved as a preference, or at least not restored from there" - the
+					// preference itself was fine, this dialog just never actually read it into the
+					// field)
+					'pass_exp': pass_exp
+			}},
+			template: egw.webserverUrl+'/api/templates/default/password.xet',
+			resizable: false
+		},undefined);
+		document.body.append(dialog as any);
+	}
+
+	/**
+	 * S/MIME passphrase dialog for VIEWING a message (loadMessageBody()'s own JmapSmimePassphraseError
+	 * catch, 2026-09-01 follow-up) - same "etemplate.password" template/shape as smimePassDialog()
+	 * above, but generic: calls back with the entered passphrase/expiry instead of assuming a
+	 * compose-send retry, since loadMessageBody() itself already knows exactly how to retry (same
+	 * rowId/iframe/onLoad/signal/partID it was first called with).
+	 *
+	 * @param {string} _msg message
+	 * @param {function} _onSubmit called with (passphrase, passExpMinutes) once the user submits
+	 */
+	smimeViewPassDialog(_msg, _onSubmit : (passphrase : string, passExpMinutes : number) => void)
+	{
+		const pass_exp = egw.preference('smime_pass_exp', 'mail');
+		const dialog = loadWebComponent("et2-dialog", {
+			callback(_button_id, _value)
+			{
+				if (_button_id == 'send' && _value)
+				{
+					egw.set_preference('mail', 'smime_pass_exp', _value.pass_exp);
+					_onSubmit(_value.value, _value.pass_exp);
+				}
+			},
+			title: egw.lang('Request for passphrase'),
+			buttons: [
+				{label: this.egw.lang("Send"), id: "send", image:'send', "class": "ui-priority-primary", "default": true},
+				{label: this.egw.lang("Cancel"), id: "cancel", image:'cancelDialog'}
+			],
+			value:{
+				content:{
+					value: '',
+					message: _msg,
+					// widget id is "pass_exp" (password.xet) - "exp_min" here never actually bound
+					// to it, so the field silently fell back to its own placeholder="10" every time
+					// regardless of what was last entered (found live 2026-09-01, ralf: "duration is
+					// still not saved as a preference, or at least not restored from there" - the
+					// preference itself was fine, this dialog just never actually read it into the
+					// field)
+					'pass_exp': pass_exp
 			}},
 			template: egw.webserverUrl+'/api/templates/default/password.xet',
 			resizable: false

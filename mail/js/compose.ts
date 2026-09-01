@@ -59,6 +59,16 @@ export class MailCompose
 	private bootstrapping = false;
 
 	/**
+	 * Set by MailApp.smimePassDialog()'s submit handler (public so that dialog, a sibling class,
+	 * can reach it) - how long to remember the just-entered S/MIME passphrase for, read by
+	 * trySendViaJmap() on the retry. Explicit, not the 'smime_pass_exp' preference: ralf, 2026-09-
+	 * 01, "I have not seen the cache-timeout in the passphrase dialog been send to server-side,
+	 * nor it been used there" - egw.set_preference()'s own jsonq() send can still be in flight when
+	 * the very next request (this same retry) already needs the value.
+	 */
+	public smimePassExpMinutes? : number;
+
+	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - the JMAP Email id of this compose
 	 * session's own draft, once trySaveDraftViaJmap() has created one - passed back in as
 	 * saveDraft()'s existingEmailId on the NEXT autosave/save so it updates that same draft in
@@ -872,7 +882,7 @@ export class MailCompose
 				signed ? MailCompose.SMIME_TYPE_SIGN : encrypted ? MailCompose.SMIME_TYPE_ENCRYPT : undefined;
 			const passphrase = this.et2.getWidgetById('smime_passphrase')?.get_value();
 			await this.app.jmap.sendNewEmail(String(this.currentProfileID()), await this.currentEmailFields(),
-				smimeType, passphrase);
+				smimeType, passphrase, this.smimePassExpMinutes);
 		}
 		catch (e)
 		{

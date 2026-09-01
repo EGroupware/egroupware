@@ -2341,7 +2341,7 @@ export class MailJmap
 	 * failure (unreachable profile, network error) also resolves {special:true}, for the same
 	 * fallback reason.
 	 */
-	async fetchBody(rowId: string, htmlOptions?: string, signal?: AbortSignal): Promise<JmapBodyResult>
+	async fetchBody(rowId: string, htmlOptions?: string, signal?: AbortSignal, passphrase?: string, passExpMinutes?: number): Promise<JmapBodyResult>
 	{
 		try
 		{
@@ -2383,10 +2383,31 @@ export class MailJmap
 				// JSON counterpart of the classic full-page iframe fallback (MessageDisplayHandler::
 				// tryJmapNativeSpecialCase()), reusing the exact same resolveSmime()/resolveTnef()
 				// primitives. Returns null for anything it can't handle (meeting invites/text-calendar
-				// - unrelated to S/MIME/TNEF and never routed here server-side either, a still-missing
-				// passphrase - no fast-path prompt UI yet, JMAP unreachable, ...), in which case this
-				// falls back to the classic iframe load exactly as before.
-				const resolved = await this.egw.request('mail.mail_ui.ajax_resolveSpecialCaseBody', [rowId, htmlOptions || '']);
+				// - unrelated to S/MIME/TNEF and never routed here server-side either, JMAP
+				// unreachable, ...), in which case this falls back to the classic iframe load exactly
+				// as before. A still-needed passphrase throws JmapSmimePassphraseError instead (2026-
+				// 09-01 follow-up: the classic fallback pays the exact "20s timeout, empty response"
+				// raw-IMAP-EMAILID-search cost this whole path exists to avoid for a Stalwart row, so
+				// it's not actually usable as a passphrase-prompt fallback) - caller shows its own
+				// dialog and retries with the passphrase, same as the send-side flow.
+				const resolved = await this.egw.request('mail.mail_ui.ajax_resolveSpecialCaseBody',
+					[rowId, htmlOptions || '', passphrase || '', passExpMinutes ?? null]);
+				if (resolved?.needsPassphrase)
+				{
+					// Smime::resolveMessage() throws the exact same "Authentication failure!" message
+					// whether no passphrase was ever tried or a wrong one was given - no distinction.
+					// Classic's own smimePassphraseFormHtml() papers over this by showing a fixed,
+					// neutral message on the dialog itself rather than the raw exception text - found
+					// live 2026-09-01 (ralf: "I did not enter a passphrase, just clicked on the
+					// encrypted mail" and still saw "Authentication failure!", confusingly implying a
+					// failed attempt that never happened). Mirrored here: only show the server's own
+					// message on an actual RETRY (this call was given a passphrase and it still
+					// failed) - the first-ever prompt (no passphrase attempted yet) always gets the
+					// neutral wording instead.
+					throw new JmapSmimePassphraseError(passphrase ?
+						(resolved.message || this.egw.lang('You need to enter your S/MIME passphrase to view this message.')) :
+						this.egw.lang('This message is smime encrypted and password protected.'));
+				}
 				if (!resolved)
 				{
 					return {special: true};
@@ -2421,6 +2442,7 @@ export class MailJmap
 		}
 		catch (e)
 		{
+			if (e instanceof JmapSmimePassphraseError) throw e;
 			if (signal?.aborted)
 			{
 				// caller ignores an aborted request's result - skip the noisy log
@@ -3853,14 +3875,15 @@ export class MailJmap
 	 * @throws JmapSmimePassphraseError smimeType needs signing and no passphrase (given or
 	 *  session-cached) was enough to unlock the sender's own private key
 	 */
-	async sendNewEmail(profileID : string, email : JmapNewEmail, smimeType? : string, passphrase? : string) : Promise<void>
+	async sendNewEmail(profileID : string, email : JmapNewEmail, smimeType? : string, passphrase? : string,
+		passExpMinutes? : number) : Promise<void>
 	{
 		try
 		{
 			const {token, client, identity, submissionIdentityId, draftsId, sentId} = await this.resolveComposeContext(profileID, true);
 
 			const bodyOverride = smimeType ?
-				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase) : undefined;
+				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase, passExpMinutes) : undefined;
 			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email, bodyOverride);
 
 			const [{submission}] = await client.requestMany((t) => ({
@@ -3919,12 +3942,12 @@ export class MailJmap
 	 * @throws JmapUserError no certificate found, or any other failure
 	 */
 	private async smimeEncryptBody(profileID : string, token : JmapToken, client : JamClient, identity : any, email : JmapNewEmail,
-		smimeType : string, passphrase? : string) : Promise<{type : string, blobId : string}>
+		smimeType : string, passphrase? : string, passExpMinutes? : number) : Promise<{type : string, blobId : string}>
 	{
 		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
 		const emailProperties = this.draftEmailProperties(identity, {...email, body}, inlineImages);
 		const result : any = await this.egw.request('mail.mail_ui.ajax_smimeEncryptEmailProperties',
-			[profileID, emailProperties, smimeType, passphrase || '']);
+			[profileID, emailProperties, smimeType, passphrase || '', passExpMinutes ?? null]);
 		if (result?.needsPassphrase)
 		{
 			throw new JmapSmimePassphraseError(result.message || this.egw.lang('You need to enter your S/MIME passphrase to send this message.'));

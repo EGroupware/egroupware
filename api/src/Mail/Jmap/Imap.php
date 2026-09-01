@@ -2202,7 +2202,8 @@ class Imap extends Jmap\Base
 	 *  sender's own private key
 	 * @throws \Exception no certificate found for the sender or a recipient
 	 */
-	public static function smimeEncryptEmailProperties(string $accountId, array $email, string $type, string $passphrase='') : array
+	public static function smimeEncryptEmailProperties(string $accountId, array $email, string $type, string $passphrase='',
+		int $passExpMinutes=10) : array
 	{
 		$mailer = self::buildMailerFromEmailProperties($accountId, $email);
 
@@ -2237,8 +2238,7 @@ class Imap extends Jmap\Base
 			{
 				throw new \Exception(lang('S/MIME encryption failed'));
 			}
-			$base = $mailer->getBasePart();
-			return ['type' => $base->getType(), 'raw' => $base->toString(['headers' => true])];
+			return self::extractSmimeBodyBlob($mailer->getBasePart());
 		}
 
 		$senderCert = $AB->get_smime_keys($sender);
@@ -2254,15 +2254,18 @@ class Imap extends Jmap\Base
 		// popping up... doesn't matter if correct or wrong passphrase" - no exception anywhere,
 		// verifyPassphrase() just cleanly failed against the WRONG value). Classic mail_compose::
 		// send() avoids this by writing the freshly-typed passphrase into that same session slot
-		// before calling _encrypt() - mirrored here exactly, including the same smime_pass_exp
-		// preference-driven expiry. UNLIKE classic though, this write is unwound (unsetSession() in
-		// the catch below) on ANY failure from this point on, not just left there for its own full
-		// expiry to silently poison a later attempt within that window (found live 2026-09-01,
-		// ralf: "we must not cache the passphrase before it proved ok").
+		// before calling _encrypt() - mirrored here, but with $passExpMinutes given EXPLICITLY by
+		// the caller rather than read from the 'smime_pass_exp' preference: found live 2026-09-01
+		// (ralf: "I have not seen the cache-timeout in the passphrase dialog been send to
+		// server-side, nor it been used there") that egw.set_preference()'s own jsonq() send can
+		// still be in flight when this very request already needs the value. UNLIKE classic
+		// though, this write is unwound (unsetSession() in the catch below) on ANY failure from
+		// this point on, not just left there for its own full expiry to silently poison a later
+		// attempt within that window (found live 2026-09-01, ralf: "we must not cache the
+		// passphrase before it proved ok").
 		if ($passphrase !== '')
 		{
-			Api\Cache::setSession('mail', 'smime_passphrase', $passphrase,
-				(int)($GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp'] ?? 10) * 60);
+			Api\Cache::setSession('mail', 'smime_passphrase', $passphrase, max(1, $passExpMinutes) * 60);
 		}
 		try
 		{
@@ -2302,8 +2305,51 @@ class Imap extends Jmap\Base
 			Api\Cache::unsetSession('mail', 'smime_passphrase');
 			throw $e;
 		}
-		$base = $mailer->getBasePart();
-		return ['type' => $base->getType(), 'raw' => $base->toString(['headers' => true])];
+		// the 'smime_pass_exp' PREFERENCE itself is persisted client-side (smimePassDialog()'s own
+		// egw.set_preference() call, mail/js/app.ts) - no server-side duplicate here, which would
+		// only add an inconsistent second write path gated differently (always-on-submit
+		// client-side vs only-on-confirmed-sign/encrypt here)
+		return self::extractSmimeBodyBlob($mailer->getBasePart());
+	}
+
+	/**
+	 * Extract the signed/encrypted body ENTITY's raw content for upload as a blob - found live
+	 * 2026-09-01 that `toString(['headers' => true])` (the default) DOUBLE-WRAPS: it bakes the
+	 * part's own Content-Type/Content-Transfer-Encoding HEADERS in as literal text ahead of the
+	 * body, so the client's later `bodyStructure: {type, blobId}` swap ends up nesting one
+	 * complete MIME entity (headers, blank line, base64 body) inside another - the received
+	 * message's body was an unreadable "Content-Type: application/pkcs7-mime..." text blob, not
+	 * real PKCS7 ciphertext. `getContents()` is correct here instead: `Horde_Crypt_Smime::
+	 * encryptMIMEPart()`/`signAndEncryptMIMEPart()` build the resulting part via
+	 * `setContents($base64text, ['encoding' => 'base64'])`, and `Horde_Mime_Part::setContents()`
+	 * transfer-DECODES immediately on the way in (`_transferDecode()`) - so `_contents` (what
+	 * `getContents()` returns) is already the raw, unencoded CMS/DER bytes, no headers, no
+	 * transfer-encoding artifact - exactly the shape every other attachment blob already uses
+	 * (`Api\Jmap::uploadBlob($rawBytes, $type)`), letting the JMAP server pick transfer-encoding
+	 * itself when it assembles the final message.
+	 *
+	 * TYPE_SIGN (multipart/signed, sign-only, no encrypt) is deliberately NOT supported yet and
+	 * fails clearly here rather than silently sending a broken message:
+	 * `Horde_Crypt_Smime::signMIMEPart()` returns a genuine multipart container (two real
+	 * sub-parts: the original content and the detached signature) with `protocol`/`micalg`
+	 * Content-Type parameters - RFC 8621 §4.1.4's `EmailBodyPart.type` is bare "type/subtype" only,
+	 * with no way to carry those (or the boundary Horde will pick when it serializes the multipart)
+	 * through a `{type, blobId}` bodyStructure swap. Needs the EmailBodyPart `headers` override
+	 * (RFC 8621 §4.1.4) to inject the full parameterized Content-Type explicitly - a separate,
+	 * not-yet-designed follow-up. sign+encrypt (TYPE_SIGN_ENCRYPT) and encrypt-only (TYPE_ENCRYPT)
+	 * both produce a single opaque application/pkcs7-mime leaf, unaffected by this gap.
+	 *
+	 * @param \Horde_Mime_Part $base
+	 * @return array{type: string, raw: string}
+	 * @throws \Exception TYPE_SIGN's multipart/signed result - not yet supported
+	 */
+	private static function extractSmimeBodyBlob(\Horde_Mime_Part $base) : array
+	{
+		if ($base->getPrimaryType() === 'multipart')
+		{
+			throw new \Exception(lang('S/MIME signing without encryption is not yet supported for JMAP-native send - use sign+encrypt or encrypt-only, or send via the classic compose path.'));
+		}
+		return ['type' => $base->getType(), 'raw' => $base->getContents()];
 	}
 
 	/**

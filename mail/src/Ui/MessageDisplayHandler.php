@@ -494,24 +494,38 @@ class MessageDisplayHandler
 	 * underlying resolveSmime()/resolveTnef() primitives as tryJmapNativeSpecialCase(), just
 	 * self-contained (rowId in, JSON-shaped result out - no reliance on $this->ui->mail_bo already
 	 * being switched to the right profile, same reasoning as AttachmentJmap::resolveWinmailJmap())
-	 * and with no classic-page HTML wrapping/CSP headers/Push calls. Deliberately does NOT accept a
-	 * fresh passphrase from the client - only ever uses an already session-cached one (see
-	 * Smime::resolveMessage()'s own fallback). If decryption still needs one, this returns null and
-	 * the caller falls back to the classic path, which has the actual passphrase-prompt UI - a
-	 * dedicated fast-path passphrase dialog is a follow-up, not built here.
+	 * and with no classic-page HTML wrapping/CSP headers/Push calls. `$passphrase` (2026-09-01
+	 * follow-up, ralf: "if the passphrase is missing it should throw and client-side should ask
+	 * the passphrase" - the classic path's own passphrase-prompt fallback turned out unusable for
+	 * a Stalwart-opaque-id row: MailJmap.fetchBody() falling back to it pays the exact "20s
+	 * timeout, empty response" raw-IMAP-EMAILID-search cost this whole JMAP-native path exists to
+	 * avoid, since the classic loadEmailBody() entry point resolves folder/msgUID unconditionally
+	 * before ever reaching this class at all) falls back to the session-cached one, same as
+	 * resolveSmime()/resolveSmimeJmap()'s own default - only meaningful for 'smime' (TNEF has no
+	 * passphrase concept). A still-needed passphrase now propagates as a genuine
+	 * Mail\Smime\PassphraseMissing throw instead of collapsing to null, so the caller
+	 * (mail_ui::ajax_resolveSpecialCaseBody()) can shape a distinct {needsPassphrase, message}
+	 * response - MailJmap.fetchBody()'s own client-side retry loop, mirroring the send-side
+	 * JmapSmimePassphraseError flow.
 	 *
 	 * @param string $rowId
 	 * @param string $htmlOptions
+	 * @param string $passphrase
+	 * @param int $passExpMinutes how long to remember $passphrase for (session-cached, same
+	 *  'smime_passphrase' slot Api\Mailer::smimeEncrypt()'s own send-side reads/writes) - only
+	 *  meaningful together with a non-empty $passphrase; explicit, not read from the
+	 *  'smime_pass_exp' preference (found live 2026-09-01, ralf: never actually reached the
+	 *  server in time to matter - egw.set_preference()'s own jsonq() send can still be in flight
+	 *  when the very next request already needs the value)
 	 * @return ?array {type: 'smime'|'tnef', body: string, smime: ?array} or null if not a
-	 *  resolvable special case (JMAP unreachable, a passphrase is needed, TNEF decode failed, ...)
+	 *  resolvable special case (JMAP unreachable, TNEF decode failed, ...)
+	 * @throws Mail\Smime\PassphraseMissing no cached/given passphrase was enough to decrypt
 	 */
-	public function resolveSpecialCaseBody(string $rowId, string $htmlOptions='') : ?array
+	public function resolveSpecialCaseBody(string $rowId, string $htmlOptions='', string $passphrase='', int $passExpMinutes=10) : ?array
 	{
 		$idParts = Mail::splitRowID($rowId);
-		$uid = $idParts['msgUID'];
-		$mailbox = $idParts['folder'];
 		$profileID = $idParts['profileID'];
-		if (!$uid || !$mailbox || !$profileID)
+		if (!$profileID)
 		{
 			return null;
 		}
@@ -522,6 +536,13 @@ class MessageDisplayHandler
 
 			if ($isStalwart)
 			{
+				// deliberately never touches $idParts['msgUID']/['folder'] - RowIdParts resolves
+				// those lazily via a real IMAP EMAILID search (Imap\Jmap::emailId2uid()), the exact
+				// "20s timeout" cost this whole JMAP-native path exists to avoid. Found live
+				// 2026-09-01: reading them unconditionally at the top of this method (matching the
+				// old plain-array-shaped callers RowIdParts was built to stay compatible with) paid
+				// that cost on every single call, Stalwart or not - ralf: S/MIME body "not shown",
+				// turned out to be this method itself taking ~20s and returning null every time.
 				if (empty($idParts['emailID']))
 				{
 					return null;
@@ -532,6 +553,12 @@ class MessageDisplayHandler
 			}
 			else
 			{
+				$uid = $idParts['msgUID'];
+				$mailbox = $idParts['folder'];
+				if (!$uid || !$mailbox)
+				{
+					return null;
+				}
 				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
 				if (!$structure)
 				{
@@ -548,8 +575,20 @@ class MessageDisplayHandler
 			if ($type === 'smime')
 			{
 				$result = $isStalwart ?
-					$icServer->resolveSmimeJmap($idParts['emailID'], $bodyStructure['type'], (string)$from, $htmlOptions) :
-					JmapImap::resolveSmime((string)$profileID, base64_encode($mailbox), $uid, $bodyStructure['type'], (string)$from, $htmlOptions);
+					$icServer->resolveSmimeJmap($idParts['emailID'], $bodyStructure['type'], (string)$from, $htmlOptions, $passphrase) :
+					JmapImap::resolveSmime((string)$profileID, base64_encode($mailbox), $uid, $bodyStructure['type'], (string)$from, $htmlOptions, $passphrase);
+				// only cache on CONFIRMED success (resolveSmime()/resolveSmimeJmap() would have
+				// thrown PassphraseMissing above otherwise) - same "never cache before it's proved
+				// ok" principle as the send-side smimeEncryptEmailProperties(). The 'smime_pass_exp'
+				// PREFERENCE (as opposed to this session-cached passphrase) is persisted client-side
+				// instead (smimeViewPassDialog()'s own egw.set_preference() call, MailApp/app.ts) -
+				// no server-side duplicate here, which would only add an inconsistent second write
+				// path gated differently (always-on-submit client-side vs only-on-confirmed-decrypt
+				// here).
+				if ($passphrase !== '')
+				{
+					Api\Cache::setSession('mail', 'smime_passphrase', $passphrase, max(1, $passExpMinutes) * 60);
+				}
 				return ['type' => 'smime', 'body' => $result['body'], 'smime' => $result['smime']];
 			}
 			// 'tnef'
@@ -558,14 +597,15 @@ class MessageDisplayHandler
 				JmapImap::resolveTnef((string)$profileID, base64_encode($mailbox), $uid, $bodyStructure['partId'], $htmlOptions);
 			return ['type' => 'tnef', 'body' => $body, 'smime' => null];
 		}
+		catch (Mail\Smime\PassphraseMissing $e)
+		{
+			// propagate distinctly - mail_ui::ajax_resolveSpecialCaseBody() shapes this into a
+			// {needsPassphrase, message} response for MailJmap.fetchBody()'s own retry loop
+			throw $e;
+		}
 		catch (\Throwable $e)
 		{
-			// PassphraseMissing (no cached passphrase yet - client falls back to the classic path's
-			// actual prompt UI) or any other failure (JMAP unreachable, decode failure, ...)
-			if (!($e instanceof Mail\Smime\PassphraseMissing))
-			{
-				_egw_log_exception($e);
-			}
+			_egw_log_exception($e);
 			return null;
 		}
 	}

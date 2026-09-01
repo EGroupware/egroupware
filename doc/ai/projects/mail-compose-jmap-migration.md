@@ -340,13 +340,53 @@ load if it returns null. S/MIME verify/encryption badges (`app.mail.setSmimeFlag
 server-`Push`ed) now travel back in the same JSON response and get applied client-side in
 `app.ts`'s `loadMessageBody()`.
 
-**Deliberately NOT built here**: a fast-path passphrase-entry dialog. `resolveSpecialCaseBody()`
-only ever uses an already session-cached passphrase (`Smime::resolveMessage()`'s own fallback) -
-the FIRST time a given session decrypts an S/MIME message (no cached passphrase yet), this still
-falls back to the classic path, whose iframe-embedded form is the only passphrase-prompt UI that
-exists. A dedicated fast-path dialog (mirroring compose's own `app.mail.smimePassDialog()`, which
-is itself send-flow-coupled and not reusable as-is) is a follow-up if this round-trip proves worth
-avoiding in practice.
+**Performance bug found+fixed live 2026-09-01** (ralf: S/MIME body "not shown" on a real
+sign+encrypt send/receive round trip - `page_generation_time: 20.07` on the network tab gave it
+away): `resolveSpecialCaseBody()` read `$idParts['msgUID']`/`['folder']` unconditionally at the
+top, before even checking whether the row is a Stalwart one - `Mail::splitRowID()` returns a
+`RowIdParts` object (`api/src/Mail/RowIdParts.php`) where those two keys are resolved LAZILY, on
+first read, via a real IMAP EMAILID search (`Imap\Jmap::emailId2uid()`) specifically because that
+search is the exact "20s timeout" cost this whole JMAP-native migration exists to avoid - for a
+Stalwart row neither key is ever actually needed (only `emailID` is), so simply reading them
+paid that cost on every single call regardless of backend. Fixed: checks `profileID`/backend type
+first, only touches `msgUID`/`folder` inside the shim branch where they're genuinely used.
+
+**Fast-path passphrase dialog built same day**, once the performance bug above made clear the
+classic fallback isn't just slower but genuinely unusable as a passphrase-prompt substitute for a
+Stalwart row (`loadEmailBody()`'s own `Mail::splitRowID()` read has the exact same
+lazy-key-forcing bug, one level up - see below). `resolveSpecialCaseBody()` now takes an explicit
+`$passphrase`/`$passExpMinutes`, propagating a still-needed one as a real
+`Mail\Smime\PassphraseMissing` throw (`mail.mail_ui.ajax_resolveSpecialCaseBody()` shapes it into
+`{needsPassphrase, message}`, same convention `ajax_smimeEncryptEmailProperties()` already used
+send-side) instead of collapsing it into a bare `null`. `MailJmap.fetchBody()` throws a
+`JmapSmimePassphraseError` on that signal; `MailApp.loadMessageBody()` catches it, shows a new
+`smimeViewPassDialog()` (same `etemplate.password` eTemplate/dialog shape as compose's own
+`smimePassDialog()`, but generic - calls back with `(passphrase, passExpMinutes)` instead of
+assuming a compose-send retry), and retries the SAME fast path with the entered passphrase - only
+on confirmed decrypt success does `resolveSpecialCaseBody()` cache it
+(`Api\Cache::setSession('mail', 'smime_passphrase', ...)`) for next time, same "never cache before
+it's proved ok" principle as the send-side.
+
+**`loadEmailBody()` has the SAME lazy-key-forcing performance bug**, one level up from
+`resolveSpecialCaseBody()`: it reads `$uidA['folder']`/`$uidA['msgUID']` unconditionally before
+ever calling `get_load_email_data()`/`tryJmapNativeSpecialCase()`, which is why the classic
+fallback isn't a viable passphrase-prompt substitute (it pays the 20s cost - or times out
+entirely - before it can even attempt the S/MIME resolver). NOT fixed here (the fast-path dialog
+above sidesteps needing it to work for S/MIME) - `get_load_email_data()`'s own signature and its
+`mail/profile.php`/`mail_ui.inc.php` external callers make this a wider-blast-radius refactor than
+`resolveSpecialCaseBody()`'s own version was, deliberately left as a known follow-up rather than
+risking it blind.
+
+**Passphrase-remember-duration was never actually reaching the server on the send side either**
+(ralf: "I have not seen the cache-timeout in the passphrase dialog been send to server-side, nor
+it been used there") - `smimePassDialog()`'s own `egw.set_preference('mail', 'smime_pass_exp',
+...)` call is `jsonq()`-queued, which can still be in flight when the very next request (the send
+retry) already reads `$GLOBALS['egw_info']['user']['preferences']['mail']['smime_pass_exp']`
+server-side - a race, not a hard guarantee. Both `smimeEncryptEmailProperties()` (send) and
+`resolveSpecialCaseBody()` (view) now take an explicit `$passExpMinutes` instead: the dialogs
+stash the entered value (`MailCompose.smimePassExpMinutes` for send, threaded straight through
+the view-side retry call for view) and pass it as a real request parameter. The preference write
+stays too, purely so the dialog pre-fills with whatever was last entered.
 
 **Also fixed same session**: `mail_compose.inc.php`'s classic forward-attachment path called a
 `decode_winmail()` method on `Api\Mail` that never existed (a live fatal error waiting to happen

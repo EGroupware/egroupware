@@ -577,6 +577,7 @@ rules	mail	en	Rules
 s/mime encryption failed because no certificate has been found for sender address: %1	mail	en	S/MIME Encryption failed because no certificate has been found for sender address: %1
 s/mime encryption failed	mail	en	S/MIME encryption failed
 s/mime encryption failed because no certificate has been found for following addresses: %1	mail	en	S/MIME Encryption failed because no certificate has been found for following addresses: %1
+s/mime signing without encryption is not yet supported for jmap-native send - use sign+encrypt or encrypt-only, or send via the classic compose path.	mail	en	S/MIME signing without encryption is not yet supported for JMAP-native send - use sign+encrypt or encrypt-only, or send via the classic compose path.
 the s/mime certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 does not match your account's own certificate - check for duplicate address book entries for this address.
 the s/mime certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.	mail	en	The S/MIME certificate stored in the address book for %1 is not valid - check for duplicate/broken address book entries for this address.
 save all	mail	en	Save all
@@ -775,6 +776,7 @@ you can select what info to be displayed on email tag	mail	en	You can select wha
 you can use $$start$$ for the above start date and $$end$$ for the end date.	mail	en	You can use $$start$$ for the above start date and $$end$$ for the end date.
 you may add this certificate into your contact, if you trust this signature.	mail	en	You may add this certificate into your contact, if you trust this signature.
 you need to enter your s/mime passphrase to send this message.	mail	en	You need to enter your S/MIME passphrase to send this message.
+you need to enter your s/mime passphrase to view this message.	mail	en	You need to enter your S/MIME passphrase to view this message.
 you need to install mailvelope plugin available for chrome and firefox from %1.	mail	en	You need to install Mailvelope plugin available for Chrome and Firefox from %1.
 you need to save the message as draft first before to be able to save it into vfs	mail	en	You need to save the message as draft first before to be able to save it into VFS
 you need to select some folders first (by clicking on them)!	mail	en	You need to select some folders first (by clicking on them)!
