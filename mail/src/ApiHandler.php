@@ -153,12 +153,14 @@ class ApiHandler extends Api\CalDAV\Handler
 				$acc_id = $acc_id ?? Api\Mail\Account::read_identity($ident_id)['acc_id'];
 				$mail_account = Api\Mail\Account::read($acc_id);
 
-				// JMAP-native send path (real-JMAP/Stalwart accounts only, no attachments/reply
-				// yet - see doc/ai/projects/mail-compose-jmap-migration.md) - this REST endpoint
-				// is the first real consumer of Api\Mail\Jmap\Http's new Identity/EmailSubmission
-				// type classes, proven here before the compose UI itself is rewired. Everything
-				// this guard excludes still falls through to the existing classic mail_compose
-				// path below, unchanged - a parallel path, not a replacement (ralf, 2026-08-27).
+				// JMAP-native send path (real-JMAP/Stalwart accounts only) - see doc/ai/projects/
+				// mail-compose-jmap-migration.md. Attachments ARE supported (sendViaJmap()
+				// consolidated onto Api\Mailer + Api\Mail\Jmap\Transport 2026-09-02); a reply
+				// still falls through to the classic mail_compose path below (importing the
+				// replied-to .eml into Drafts first isn't wired into this path yet) -
+				// $preset['file'] is realistically never set here anyway (prepareAttachments()
+				// only populates it in $do_compose mode, already returned above), kept as a
+				// defensive guard rather than a real exclusion.
 				if (is_a($mail_account->acc_imap_type, Api\Mail\Imap\Jmap::class, true) &&
 					empty($preset['reply_id']) && empty($preset['file']))
 				{
@@ -418,95 +420,75 @@ class ApiHandler extends Api\CalDAV\Handler
 	}
 
 	/**
-	 * Send a mail via JMAP Email/set + EmailSubmission/set (real-JMAP/Stalwart accounts only)
+	 * Send a mail via Api\Mailer, for the lean/direct REST-API send path (see this method's only
+	 * call site - a reply, which needs an existing-.eml-into-Drafts import first, still falls
+	 * through to the full mail_compose path instead)
 	 *
-	 * Creates a Drafts-mailbox Email, then submits it, patching mailboxIds Drafts->Sent and
-	 * clearing $draft on success (RFC 8621 §7.4's onSuccessUpdateEmail - functionally the same
-	 * "move the sent copy into Sent" step the classic path does via a raw IMAP APPEND).
+	 * Consolidated 2026-09-02 onto plain Api\Mailer, letting Mail\Account::smtpTransport() pick
+	 * the right transport itself (Api\Mail\Jmap\Transport, RFC 8621 §7 EmailSubmission, whenever
+	 * acc_smtp_ssl is configured for JMAP submission - same as any other Api\Mailer caller for
+	 * this account, see smtpTransport()'s own docblock) - this method used to hand-build the JMAP
+	 * Email/set + EmailSubmission/set calls itself, unconditionally, which meant attachments were
+	 * silently dropped (never read from $preset at all) and only ever a single body type was sent
+	 * (no multipart/alternative plain-text fallback for an HTML body). Api\Mailer/Horde_Mime_Mail
+	 * already builds a real, correct MIME message from structured calls (setBody()/setHtmlBody()/
+	 * addAttachment()); Api\Mail\Jmap\Transport::send() parses that back into the JMAP Email shape
+	 * (plain+html bodyValues, attachments as blobs) and does the same Drafts-create/submit/
+	 * move-to-Sent dance this method used to do by hand, when that transport is the one selected.
 	 *
 	 * @param Api\Mail\Account $mail_account
 	 * @param int $ident_id
 	 * @param array $preset 'to'/'cc'/'bcc' (comma-separated or array of addresses), 'subject',
-	 *  'body', 'mimeType' ('html'|'plain')
+	 *  'body', 'mimeType' ('html'|'plain'), optional 'attachments' (prepareAttachments()'s
+	 *  non-compose shape: [{name, type, file (a real readable path or vfs:// URI), size}, ...])
 	 * @throws \Exception on failure
 	 */
 	protected static function sendViaJmap(Api\Mail\Account $mail_account, int $ident_id, array $preset)
 	{
-		$jmap = $mail_account->imapServer()->jmapClient();
-
-		if (!($identities = $jmap->identity->get()['list'] ?? []))
+		$identity = Api\Mail\Account::read_identity($ident_id, true, null, $mail_account);
+		if (empty($identity['ident_email']))
 		{
-			throw new \Exception('No JMAP identity found for account #'.$mail_account->acc_id, 500);
-		}
-		// prefer the identity matching the caller-selected ident_id's own email, else first
-		$ident_email = Api\Mail\Account::read_identity($ident_id)['ident_email'] ?? null;
-		$identity = current(array_filter($identities, static fn($i) => $i['email'] === $ident_email)) ?: $identities[0];
-
-		$drafts_id = $sent_id = null;
-		foreach ($jmap->mailbox->get()['list'] ?? [] as $mailbox)
-		{
-			if (($mailbox['role'] ?? null) === 'drafts') $drafts_id = $mailbox['id'];
-			if (($mailbox['role'] ?? null) === 'sent') $sent_id = $mailbox['id'];
-		}
-		if (!$drafts_id || !$sent_id)
-		{
-			throw new \Exception('Could not find Drafts/Sent mailbox by role for account #'.$mail_account->acc_id, 500);
+			throw new \Exception('Identity #'.$ident_id.' not found', 404);
 		}
 
-		// address widgets (Et2Email) can hand a client caller a full "Display Name
-		// <address@example.com>" string, not a bare address - a naive explode/wrap produced an
-		// invalid JMAP EmailAddress.email (found live 2026-08-27 in the client-side sendNewEmail()
-		// counterpart, same underlying bug) - Api\Mail::parseAddressList() is this codebase's
-		// existing, battle-tested RFC 822 parser (handles quoted personal names, real-world
-		// malformations, ...), reused here instead of hand-rolling the same parsing again.
-		$addresses = static function($value)
+		$mailer = new Api\Mailer($mail_account);
+		// overrides whatever default identity the constructor resolved - the caller may have
+		// explicitly selected a DIFFERENT (non-default/"further") identity than the account's own
+		$mailer->setFrom($identity['ident_email'], $identity['ident_realname'] ?? '');
+		foreach (['to', 'cc', 'bcc'] as $field)
 		{
-			if (empty($value)) return null;
-			$list = [];
-			foreach (Api\Mail::parseAddressList($value) as $address)
+			if (!empty($preset[$field]))
 			{
-				if (!$address->valid) continue;
-				$list[] = array_filter([
-					'email' => $address->bare_address,
-					'name' => $address->personal,
-				], static fn($v) => $v !== null && $v !== '');
+				$mailer->addAddress($preset[$field], '', $field);
 			}
-			return $list ?: null;
-		};
-
-		$is_html = ($preset['mimeType'] ?? 'plain') === 'html';
-		$body_key = $is_html ? 'htmlBody' : 'textBody';
-		$create = array_filter([
-			'mailboxIds' => [$drafts_id => true],
-			'keywords' => ['$draft' => true],
-			'from' => [array_filter(['email' => $identity['email'], 'name' => $identity['name'] ?? null])],
-			'to' => $addresses($preset['to'] ?? null),
-			'cc' => $addresses($preset['cc'] ?? null),
-			'bcc' => $addresses($preset['bcc'] ?? null),
-			'subject' => $preset['subject'] ?? '',
-			'bodyValues' => ['body' => ['value' => $preset['body'] ?? '', 'charset' => 'utf-8']],
-			$body_key => [['partId' => 'body', 'type' => $is_html ? 'text/html' : 'text/plain']],
-		], static fn($value) => $value !== null);
-
-		$email_set = $jmap->email->set(['s1' => $create]);
-		if (!empty($email_set['notCreated']['s1']))
-		{
-			throw new \Exception('Email/set create failed: '.json_encode($email_set['notCreated']['s1']), 500);
 		}
-		$email_id = $email_set['created']['s1']['id'];
-
-		$result = $jmap->emailSubmission->submit($email_id, $identity['id'], null, [
-			"mailboxIds/$drafts_id" => null,
-			"mailboxIds/$sent_id" => true,
-			'keywords/$draft' => null,
-			// a Sent-folder copy is a message the user themselves sent, not new/incoming mail -
-			// mark it read, matching saveAsDraft()'s own \Seen convention (found live 2026-08-27:
-			// without this the Sent copy showed up unseen)
-			'keywords/$seen' => true,
-		]);
-		if (isset($result['notCreated']))
+		$mailer->addHeader('Subject', $preset['subject'] ?? '');
+		if (($preset['mimeType'] ?? 'plain') === 'html')
 		{
-			throw new \Exception('EmailSubmission/set failed: '.json_encode($result['notCreated']), 500);
+			// $alternative=true (default): also generates a plain-text alternative
+			// automatically - the hand-built version this replaces never sent one at all
+			$mailer->setHtmlBody($preset['body'] ?? '');
+		}
+		else
+		{
+			$mailer->setBody($preset['body'] ?? '');
+		}
+		foreach ($preset['attachments'] ?? [] as $attachment)
+		{
+			$mailer->addAttachment($attachment['file'], $attachment['name'] ?? null, $attachment['type'] ?? null);
+		}
+
+		try {
+			// no explicit transport - $mail_account->smtpTransport() already returns
+			// Api\Mail\Jmap\Transport whenever acc_smtp_ssl is configured for JMAP submission
+			// (same selection IMAP/Sieve already use for their own protocols), same as any other
+			// Api\Mailer caller for this account. An account that predates the wizard's JMAP
+			// submission choice keeps whatever classic SMTP config it was already using - it
+			// being JMAP-native on the IMAP side alone does NOT force JMAP submission here.
+			$mailer->send();
+		}
+		catch (\Horde_Mail_Exception $e) {
+			throw new \Exception('JMAP send failed: '.$e->getMessage(), 500, $e);
 		}
 	}
 

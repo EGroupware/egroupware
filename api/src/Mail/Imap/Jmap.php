@@ -427,19 +427,7 @@ class Jmap extends Mail\Imap
 	 */
 	protected function jmapUrl() : string
 	{
-		// bare sentinel service-names Mail\Jmap's own constructor special-cases (the EGroupware
-		// "mail" docker-compose service, and the "stalwart"/hosting-internal shortcuts) - must be
-		// passed through UNCHANGED, never turned into eg. "https://mail", which is not a real,
-		// resolvable host and broke acc_id=1 (found live 2026-08-24)
-		if (in_array($this->acc_imap_host, ['mail', 'stalwart', 'internal.k8s.farm.egroupware.org'], true) ||
-			preg_match('#^https?://#', $this->acc_imap_host))
-		{
-			return $this->acc_imap_host;
-		}
-		$scheme = ((int)$this->acc_imap_ssl & Mail\Account::PROTOCOL_MASK) === Mail\Account::JMAP_HTTP ? 'http' : 'https';
-		$default_port = $scheme === 'http' ? 80 : 443;
-		$port = $this->acc_imap_port && (int)$this->acc_imap_port !== $default_port ? ':'.(int)$this->acc_imap_port : '';
-		return $scheme.'://'.$this->acc_imap_host.$port;
+		return Mail\Account::jmapUrl($this->acc_imap_host, (int)$this->acc_imap_port, (int)$this->acc_imap_ssl);
 	}
 
 	/**

@@ -112,8 +112,7 @@ class admin_mail
 	 * values (PROTOCOL_MASK only) - certificate verification is a separate checkbox now, NOT
 	 * baked into this dropdown's value space (that caused every option to visually appear up to
 	 * 3 times, once per verification state, found live 2026-08-24). Use self::sslTypes() to build
-	 * the actual selectbox options, which also gives each field (IMAP/Sieve/SMTP) its own labels
-	 * and, for SMTP, omits the JMAP entries entirely (not supported there yet).
+	 * the actual selectbox options, which also gives each field (IMAP/Sieve/SMTP) its own labels.
 	 *
 	 * @var array
 	 */
@@ -130,10 +129,11 @@ class admin_mail
 	 * Build the protocol/encryption selectbox options for one field
 	 *
 	 * @param string $protocol_name eg. 'IMAP', 'Sieve', 'SMTP' - substituted into the non-JMAP labels
-	 * @param bool $with_jmap =true include the JMAP (https)/JMAP (http) entries - false for SMTP,
-	 *      which has no JMAP transport (yet), and for a classic (non-JMAP) Sieve account, where
-	 *      JMAP is not a meaningful manual choice (JMAP Sieve is always tied to the account's own
-	 *      JMAP session, never an independently configured host/port)
+	 * @param bool $with_jmap =true include the JMAP (https)/JMAP (http) entries - false only for a
+	 *      classic (non-JMAP) Sieve account, where JMAP is not a meaningful manual choice (JMAP
+	 *      Sieve is always tied to the account's own JMAP session, never an independently
+	 *      configured host/port). SMTP DOES support a JMAP submission transport (Mail\Jmap\
+	 *      Transport, RFC 8621 §7 EmailSubmission), selected the same way as IMAP/Sieve.
 	 * @return array value (int|'no') => label, in the order: JMAP (https), TLS/SSL, StartTLS,
 	 *      JMAP (http, no encryption), no encryption
 	 */
@@ -1113,6 +1113,42 @@ class admin_mail
 			$content['smtp_output'] = '';
 			unset($content['manual_class']);
 
+			// JMAP submission (RFC 8621 §7) - a deliberate manual protocol choice, not something
+			// auto-detected via ISPDB/host-guessing like classic SMTP below, and (unlike classic
+			// SMTP) not something worth trying several host/port candidates for - it's either the
+			// same JMAP server the account already uses for IMAP (the common case, acc_smtp_host
+			// left empty), or an explicitly typed different one. Mail\Jmap\Transport::
+			// testConnection() verifies everything a real send() would need (session, Drafts/Sent
+			// mailbox, an Identity) without sending anything.
+			if ((((int)($content['acc_smtp_ssl'] ?? 0)) & self::PROTOCOL_MASK) === self::JMAP_HTTP ||
+				(((int)($content['acc_smtp_ssl'] ?? 0)) & self::PROTOCOL_MASK) === self::JMAP_HTTPS)
+			{
+				if (empty($content['acc_smtp_host'])) $content['acc_smtp_host'] = $content['acc_imap_host'];
+				if (empty($content['acc_smtp_port']))
+				{
+					$content['acc_smtp_port'] = ((int)$content['acc_smtp_ssl'] & self::PROTOCOL_MASK) === self::JMAP_HTTP ? 80 : 443;
+				}
+				$content['smtp_output'] .= "\n".Api\DateTime::to('now', 'H:i:s').": Trying JMAP connection to ".
+					Mail\Account::jmapUrl($content['acc_smtp_host'], (int)$content['acc_smtp_port'], (int)$content['acc_smtp_ssl'])." ...\n";
+				try {
+					(new Mail\Account($content))->smtpTransport()->testConnection();
+					$content['smtp_output'] .= "\n".lang('Successful connected to %1 server%2.', 'JMAP', '')."\n";
+					$content['smtp_connected'] = true;
+					unset($content['button']);
+					return $this->edit($content, lang('Successful connected to %1 server%2.', 'JMAP', ''));
+				}
+				catch (\Horde_Mail_Exception $e) {
+					$content['smtp_output'] .= "\n".$e->getMessage()."\n";
+					Etemplate::set_validation_error('acc_smtp_host', lang($e->getMessage()));
+					if (self::$debug) _egw_log_exception($e);
+				}
+				$content = self::splitVerifyCheckbox($content, 'acc_smtp_ssl');
+				$sel_options['acc_smtp_ssl'] = self::sslTypes('SMTP');
+				$tpl = new Etemplate('admin.mailwizard.smtp');
+				$tpl->exec(static::APP_CLASS.'smtp', $content, $sel_options, $readonlys, $content, 2);
+				return;
+			}
+
 			if (!empty($content['acc_smtp_host']))
 			{
 				$hosts = array($content['acc_smtp_host'] => true);
@@ -1335,7 +1371,7 @@ class admin_mail
 			}
 		}
 		$content = self::splitVerifyCheckbox($content, 'acc_smtp_ssl');
-		$sel_options['acc_smtp_ssl'] = self::sslTypes('SMTP', false);
+		$sel_options['acc_smtp_ssl'] = self::sslTypes('SMTP');
 		$tpl = new Etemplate('admin.mailwizard.smtp');
 		$tpl->exec(static::APP_CLASS.'smtp', $content, $sel_options, $readonlys, $content, 2);
 	}
@@ -1848,7 +1884,7 @@ class admin_mail
 
 		$sel_options['acc_imap_ssl'] = self::sslTypes('IMAP');
 		$sel_options['acc_sieve_ssl'] = self::sslTypes('Sieve');
-		$sel_options['acc_smtp_ssl'] = self::sslTypes('SMTP', false);
+		$sel_options['acc_smtp_ssl'] = self::sslTypes('SMTP');
 
 		// admin access to account with no credentials available
 		if ($this->is_admin && (!empty($content['called_for']) || empty($content['acc_imap_host']) || $content['called_for']) ||

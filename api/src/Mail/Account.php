@@ -371,6 +371,34 @@ class Account implements \ArrayAccess
 	}
 
 	/**
+	 * Build a JMAP endpoint URL from a host/port/ssl triple (any of acc_imap_*, acc_smtp_*)
+	 *
+	 * Shared between Imap\Jmap::jmapUrl() (real usage) and Transport\Jmap (submission) - moved
+	 * here instead of duplicated, since both need the exact same sentinel/scheme handling.
+	 *
+	 * @param string $host bare hostname, or an already-schemed URL, or one of EGroupware's own
+	 *  sentinel service-names ('mail', 'stalwart', 'internal.k8s.farm.egroupware.org') - those
+	 *  MUST be passed through unchanged, never turned into eg. "https://mail", which is not a
+	 *  real, resolvable host (broke acc_id=1 in production, found live 2026-08-24)
+	 * @param int $port 0/falsy to always use the scheme's default port
+	 * @param int $ssl raw acc_(imap|smtp)_ssl value - only the JMAP_HTTP/JMAP_HTTPS protocol
+	 *  bits matter here, JMAP_HTTP selects http, anything else (incl. JMAP_HTTPS) selects https
+	 * @return string
+	 */
+	public static function jmapUrl(string $host, int $port, int $ssl) : string
+	{
+		if (in_array($host, ['mail', 'stalwart', 'internal.k8s.farm.egroupware.org'], true) ||
+			preg_match('#^https?://#', $host))
+		{
+			return $host;
+		}
+		$scheme = ($ssl & self::PROTOCOL_MASK) === self::JMAP_HTTP ? 'http' : 'https';
+		$default_port = $scheme === 'http' ? 80 : 443;
+		$portStr = $port && $port !== $default_port ? ':'.$port : '';
+		return $scheme.'://'.$host.$portStr;
+	}
+
+	/**
 	 * Heuristic: does this exception's message look like a TLS certificate verification failure
 	 * (as opposed to a real connection/auth failure)?
 	 *
@@ -825,13 +853,23 @@ class Account implements \ArrayAccess
 	/**
 	 * Get Horde mail transport object
 	 *
-	 * @return Horde_Mail_Transport_Smtphorde
+	 * @return Horde_Mail_Transport_Smtphorde|Jmap\Transport
 	 */
 	public function smtpTransport()
 	{
 		if (!isset($this->smtpTransport))
 		{
 			$params = $this->getParamOverwrites();
+
+			// JMAP submission (RFC 8621 §7) - selected via acc_smtp_ssl's protocol bits, same as
+			// acc_imap_ssl/acc_sieve_ssl already select JMAP for their own protocols, NOT via
+			// acc_smtp_type (that stays the unrelated account-provisioning selector)
+			if (((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK) === self::JMAP_HTTP ||
+				((int)$params['acc_smtp_ssl'] & self::PROTOCOL_MASK) === self::JMAP_HTTPS)
+			{
+				return $this->smtpTransport = new Jmap\Transport($this);
+			}
+
 			$secure = false;
 			switch($params['acc_smtp_ssl'] & self::PROTOCOL_MASK)
 			{

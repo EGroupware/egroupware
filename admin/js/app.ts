@@ -1558,7 +1558,8 @@ export class AdminApp extends EgwApp
 	{
 		var ssl_type = _widget.get_value();
 		this.et2.getWidgetById('acc_smtp_port').set_value(
-			ssl_type == 'no' ? 25 : (ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 465 : 587));
+			ssl_type == this.JMAP_HTTPS ? 443 : (ssl_type == this.JMAP_HTTP ? 80 :
+			(ssl_type == 'no' ? 25 : (ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 465 : 587))));
 	}
 
 	/**
