@@ -2443,12 +2443,18 @@ class mail_ui
 		{
 			$result = JmapImap::smimeEncryptEmailProperties($_accId, $_email, $_type, (string)$_passphrase,
 				$_passExpMinutes !== null ? (int)$_passExpMinutes : 10);
-			$blobId = AttachmentJmap::uploadBlobBytes($_accId, $result['raw'], $result['type']);
+			// TYPE_SIGN (see smimeEncryptEmailProperties()'s own docblock): $result['raw'] is the
+			// WHOLE raw message, not just a body entity - uploaded with a whole-message type so the
+			// client knows to create/send it via Email/import instead of the {type, blobId}
+			// bodyStructure swap the 'type' shape below uses
+			$blobId = AttachmentJmap::uploadBlobBytes($_accId, $result['raw'], !empty($result['whole']) ? 'message/rfc822' : $result['type']);
 			if (!$blobId)
 			{
 				throw new Api\Exception('Failed to store the signed/encrypted message');
 			}
-			$response->data(['blobId' => $blobId, 'type' => $result['type']]);
+			$response->data(!empty($result['whole']) ?
+				['blobId' => $blobId, 'whole' => true] :
+				['blobId' => $blobId, 'type' => $result['type']]);
 		}
 		catch (Mail\Smime\PassphraseMissing $e)
 		{

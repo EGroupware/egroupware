@@ -443,11 +443,39 @@ new retry loop needed. Both the compose popup's own `app`/`et2` and that dialog'
 `self.compose` resolve to the SAME window-local instances (each popup gets its own full app
 registry), so no cross-window widget-lookup mismatch.
 
-**Still open**: live verification against a real Stalwart account and the IMAP-shim account with
-actual configured S/MIME certs (sign-only, encrypt-only, sign+encrypt, each with and without
-attachments/inline images) - not done yet, deliberately left for ralf to test. No PHPUnit coverage
-either (real sign/encrypt needs an actual configured S/MIME certificate + private key, unlike
-`ImapBuildMailerTest.php`'s pure-ish approach - a viable test fixture wasn't set up this session).
+**Live-verified 2026-09-01/02**: sign+encrypt and encrypt-only both confirmed end-to-end against
+real Stalwart (send, receive, decrypt round-trip). encrypt-only/sign+encrypt live verification
+against the IMAP-shim account is still outstanding.
+
+**Sign-only (TYPE_SIGN) built 2026-09-02** - was deliberately deferred (see `extractSmimeBodyBlob()`'s
+old docblock): `multipart/signed`'s `protocol`/`micalg`/`boundary` Content-Type parameters can't be
+expressed via a `{type, blobId}` bodyStructure leaf the way TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT's opaque
+`application/pkcs7-mime` can - RFC 8621 §4.1.4's `EmailBodyPart.type` is bare "type/subtype" only,
+and confirmed via the RFC text itself that `headers` MUST NOT be given on `Email/set create` at all
+(no override escape hatch either). Fix: `smimeEncryptEmailProperties()` now returns the WHOLE raw
+message (`Api\Mailer::getRaw()`) for TYPE_SIGN instead of just the body entity
+(`{whole: true, raw}` vs the existing `{type, raw}`); the client (`MailJmap.importWholeMessageDraft()`)
+uploads it as one blob and creates the Draft via `Email/import` (RFC 8621 §4.8, stores raw bytes
+verbatim) instead of `Email/set create`. Both backends' native `Email/import` handle this
+uniformly - no Stalwart-side PHP changes needed.
+
+The IMAP-shim's own `emailSubmissionSet()` (send emulation) needed one more fix: it normally
+*rebuilds* the Mailer from the draft's `emailGet()` properties at send time (so the Sent-copy always
+matches what's actually transmitted) - safe for an opaque encrypted blob, but rebuilding a
+`multipart/signed` body would silently produce a different (unsigned) body and invalidate the
+signature regardless (which covers the exact byte-for-byte MIME framing of the content part). Now
+detects a `multipart/signed` top-level bodyStructure and, in that case only, keeps the rebuilt
+Mailer's headers/addresses (safe to rebuild) but injects the ORIGINAL stored raw bytes as the base
+part (`Horde_Mime_Part::parseMessage()` + `Mailer::setBasePart()`) instead of letting
+`buildMailerFromEmailProperties()` reconstruct the body - `Horde_Mime_Mail::send()` still handles
+Bcc-stripping-for-the-wire-but-not-storage automatically either way. Not yet live-tested against
+either backend - next up for ralf to verify.
+
+**Still open**: live verification of all three S/MIME types against the IMAP-shim account
+specifically (only Stalwart has been tested so far), and sign-only's own first live test against
+either backend. No PHPUnit coverage either (real sign/encrypt needs an actual configured S/MIME
+certificate + private key, unlike `ImapBuildMailerTest.php`'s pure-ish approach - a viable test
+fixture wasn't set up this session).
 
 Companion to [[mail-jmap-imap-inversion]].
 

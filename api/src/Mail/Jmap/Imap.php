@@ -2177,17 +2177,25 @@ class Imap extends Jmap\Base
 	 * shim's self-describing ones) - builds a full Api\Mailer from the given (not-yet-sent) Email
 	 * properties via buildMailerFromEmailProperties(), signs/encrypts/both via the exact same
 	 * Api\Mailer::smimeEncrypt()/Mail\Smime primitives classic mail_compose::_encrypt() already
-	 * uses, then serializes just the resulting body ENTITY back to raw bytes - not the whole
-	 * message; From/To/Subject/etc. stay as separate JMAP Email properties untouched by this, only
-	 * the body's own MIME shape changes (to multipart/signed or application/pkcs7-mime, either one
-	 * a single already-fully-formed MIME entity - Horde_Mime_Part::toString() serializes a
-	 * multipart's own boundary-delimited structure inline same as a leaf part, so this works
-	 * identically for TYPE_SIGN's multipart/signed as for TYPE_ENCRYPT's single opaque blob).
+	 * uses.
 	 *
-	 * The caller uploads the returned raw bytes as a blob (AttachmentJmap::uploadBlobBytes(), same
-	 * backend-uniform scheme as this method's own attachment-resolving half) and swaps that single
-	 * blobId into Email/set's bodyStructure in place of the multipart structure it would otherwise
-	 * build - decided 2026-08-27, see this doc's own "New pieces needed" section.
+	 * TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT both produce a single opaque application/pkcs7-mime leaf - for
+	 * those, only the resulting body ENTITY's raw bytes are returned (not the whole message);
+	 * From/To/Subject/etc. stay as separate JMAP Email properties untouched by this, only the
+	 * body's own MIME shape changes. The caller uploads those bytes as a blob
+	 * (AttachmentJmap::uploadBlobBytes()) and swaps that single blobId into Email/set's
+	 * bodyStructure in place of the multipart structure it would otherwise build - decided
+	 * 2026-08-27, see this doc's own "New pieces needed" section.
+	 *
+	 * TYPE_SIGN produces a genuine multipart/signed (two real sub-parts plus `protocol`/`micalg`
+	 * Content-Type parameters) - unlike the leaf case above, that can't be expressed via a
+	 * `{type, blobId}` bodyStructure swap (RFC 8621 §4.1.4's EmailBodyPart.type is bare
+	 * "type/subtype" only, and `headers` MUST NOT be given on Email/set create at all, so there is
+	 * no spec-compliant way to inject the missing parameters). For TYPE_SIGN this returns the WHOLE
+	 * raw message (Mailer::getRaw()) instead, for the caller to upload as a blob and create/send via
+	 * Email/import (RFC 8621 §4.8) rather than Email/set create + EmailSubmission/set's own
+	 * rebuild-from-properties path - see extractSmimeBodyBlob()'s docblock for why any
+	 * reconstruction of the body would invalidate the signature.
 	 *
 	 * @param string $accountId
 	 * @param array $email JMAP-shaped Email properties (same shape Email/set 'create' and
@@ -2196,8 +2204,8 @@ class Imap extends Jmap\Base
 	 * @param string $type Api\Mail\Smime::TYPE_SIGN|TYPE_ENCRYPT|TYPE_SIGN_ENCRYPT
 	 * @param string $passphrase = '' falls back to the session-cached passphrase, same as
 	 *  Smime::resolveMessage()
-	 * @return array{type: string, raw: string} $type is the resulting body entity's own MIME type
-	 *  (for the caller to set on the blobId-only bodyStructure part it builds from $raw)
+	 * @return array{type: string, raw: string}|array{whole: true, raw: string} the latter shape
+	 *  only for TYPE_SIGN - see above
 	 * @throws Api\Mail\Smime\PassphraseMissing no cached/given passphrase was enough to unlock the
 	 *  sender's own private key
 	 * @throws \Exception no certificate found for the sender or a recipient
@@ -2309,6 +2317,21 @@ class Imap extends Jmap\Base
 		// egw.set_preference() call, mail/js/app.ts) - no server-side duplicate here, which would
 		// only add an inconsistent second write path gated differently (always-on-submit
 		// client-side vs only-on-confirmed-sign/encrypt here)
+		if ($type === Api\Mail\Smime::TYPE_SIGN)
+		{
+			// multipart/signed can't be expressed via a single {type, blobId} bodyStructure leaf
+			// like TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT's opaque application/pkcs7-mime below - RFC 8621
+			// §4.1.4's EmailBodyPart.type is bare "type/subtype" only (no boundary/protocol/micalg
+			// params), and headers MUST NOT be given on Email/set create at all (RFC 8621 explicit),
+			// so there's no spec-compliant way to inject them. Returning the WHOLE raw message
+			// instead (Mailer::getRaw(), same top-level-headers + base-part serialization classic
+			// mail_compose::send() already relies on for its own Sent-folder copy) - the caller
+			// uploads this as a blob and creates/sends it via Email/import (RFC 8621 §4.8) instead
+			// of Email/set create + EmailSubmission/set's rebuild-from-properties path, since ANY
+			// reconstruction of a multipart/signed body invalidates its signature (the signature
+			// covers the exact byte-for-byte MIME framing of the content part).
+			return ['whole' => true, 'raw' => $mailer->getRaw(false)];
+		}
 		return self::extractSmimeBodyBlob($mailer->getBasePart());
 	}
 
@@ -2328,26 +2351,23 @@ class Imap extends Jmap\Base
 	 * (`Api\Jmap::uploadBlob($rawBytes, $type)`), letting the JMAP server pick transfer-encoding
 	 * itself when it assembles the final message.
 	 *
-	 * TYPE_SIGN (multipart/signed, sign-only, no encrypt) is deliberately NOT supported yet and
-	 * fails clearly here rather than silently sending a broken message:
-	 * `Horde_Crypt_Smime::signMIMEPart()` returns a genuine multipart container (two real
-	 * sub-parts: the original content and the detached signature) with `protocol`/`micalg`
-	 * Content-Type parameters - RFC 8621 §4.1.4's `EmailBodyPart.type` is bare "type/subtype" only,
-	 * with no way to carry those (or the boundary Horde will pick when it serializes the multipart)
-	 * through a `{type, blobId}` bodyStructure swap. Needs the EmailBodyPart `headers` override
-	 * (RFC 8621 §4.1.4) to inject the full parameterized Content-Type explicitly - a separate,
-	 * not-yet-designed follow-up. sign+encrypt (TYPE_SIGN_ENCRYPT) and encrypt-only (TYPE_ENCRYPT)
-	 * both produce a single opaque application/pkcs7-mime leaf, unaffected by this gap.
+	 * Only ever called for TYPE_ENCRYPT/TYPE_SIGN_ENCRYPT (see smimeEncryptEmailProperties()'s own
+	 * docblock) - TYPE_SIGN's multipart/signed result takes a completely different path (the WHOLE
+	 * message, via Email/import) since `Horde_Crypt_Smime::signMIMEPart()` returns a genuine
+	 * multipart container (two real sub-parts plus `protocol`/`micalg` Content-Type parameters) that
+	 * can't be expressed via this method's single-leaf `{type, blobId}` bodyStructure swap at all.
+	 * The multipart check below is defense-in-depth only (should never trigger given the caller
+	 * already branches on $type first).
 	 *
 	 * @param \Horde_Mime_Part $base
 	 * @return array{type: string, raw: string}
-	 * @throws \Exception TYPE_SIGN's multipart/signed result - not yet supported
+	 * @throws \Exception $base unexpectedly turned out to be multipart
 	 */
 	private static function extractSmimeBodyBlob(\Horde_Mime_Part $base) : array
 	{
 		if ($base->getPrimaryType() === 'multipart')
 		{
-			throw new \Exception(lang('S/MIME signing without encryption is not yet supported for JMAP-native send - use sign+encrypt or encrypt-only, or send via the classic compose path.'));
+			throw new \Exception(lang('Internal error building the S/MIME message.'));
 		}
 		return ['type' => $base->getType(), 'raw' => $base->getContents()];
 	}
@@ -2521,6 +2541,27 @@ class Imap extends Jmap\Base
 				}
 
 				$mailer = self::buildMailerFromEmailProperties($accountId, (array)$email);
+				// a genuinely-signed draft (see smimeEncryptEmailProperties()'s own TYPE_SIGN
+				// docblock - the Email/import path used to create such a draft in the first place)
+				// must be sent/stored with its EXACT stored body bytes, never rebuilt from
+				// properties: buildMailerFromEmailProperties()'s own bodyStructure walk has no
+				// concept of multipart/signed and would silently re-derive a completely different
+				// (unsigned) body, and ANY reconstruction of a multipart/signed body invalidates its
+				// signature anyway (it covers the exact byte-for-byte MIME framing of the content
+				// part). From/To/Cc/Bcc/Subject/threading headers above are still safely rebuilt from
+				// properties as usual - Horde_Mime_Mail::send() already strips Bcc from the wire
+				// transmission while keeping it for the stored copy, same as any other message - only
+				// the BODY needs the untouched original.
+				if (($email['bodyStructure']['type'] ?? '') === 'multipart/signed')
+				{
+					$sourceMailboxForRaw = self::hordeMailbox($imap, $sourceFolder);
+					$rawStored = self::fetchRawMessage($imap, $sourceMailboxForRaw, $emailId);
+					if ($rawStored === null)
+					{
+						throw new \Exception("Message '$emailId' not found in '$sourceFolder'!");
+					}
+					$mailer->setBasePart(\Horde_Mime_Part::parseMessage($rawStored, ['forcemime' => true]));
+				}
 				$mailer->send();
 				// only now - see this method's own docblock for why not before send()
 				$mailer->forceBccHeader();

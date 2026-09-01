@@ -3884,7 +3884,12 @@ export class MailJmap
 
 			const bodyOverride = smimeType ?
 				await this.smimeEncryptBody(profileID, token, client, identity, email, smimeType, passphrase, passExpMinutes) : undefined;
-			const emailId = await this.createDraftEmail(token, client, identity, draftsId, email, bodyOverride);
+			// TYPE_SIGN's "whole" shape needs Email/import, not Email/set create - see
+			// importWholeMessageDraft()'s own docblock
+			const emailId = bodyOverride && 'whole' in bodyOverride ?
+				await this.importWholeMessageDraft(token, client, draftsId, bodyOverride.blobId) :
+				await this.createDraftEmail(token, client, identity, draftsId, email,
+					bodyOverride as {type : string, blobId : string} | undefined);
 
 			const [{submission}] = await client.requestMany((t) => ({
 				submission: t.EmailSubmission.set({
@@ -3942,7 +3947,8 @@ export class MailJmap
 	 * @throws JmapUserError no certificate found, or any other failure
 	 */
 	private async smimeEncryptBody(profileID : string, token : JmapToken, client : JamClient, identity : any, email : JmapNewEmail,
-		smimeType : string, passphrase? : string, passExpMinutes? : number) : Promise<{type : string, blobId : string}>
+		smimeType : string, passphrase? : string,
+		passExpMinutes? : number) : Promise<{type : string, blobId : string} | {whole : true, blobId : string}>
 	{
 		const {body, inlineImages} = await this.resolveOutgoingInlineImages(token, client, email.body ?? '');
 		const emailProperties = this.draftEmailProperties(identity, {...email, body}, inlineImages);
@@ -3956,7 +3962,9 @@ export class MailJmap
 		{
 			throw new JmapUserError(result?.error || this.egw.lang('Failed to sign/encrypt message'));
 		}
-		return {type: result.type, blobId: result.blobId};
+		// TYPE_SIGN's multipart/signed result comes back as a WHOLE raw message blob instead of a
+		// single body-entity one - see ajax_smimeEncryptEmailProperties()'s own PHP-side docblock
+		return result.whole ? {whole: true, blobId: result.blobId} : {type: result.type, blobId: result.blobId};
 	}
 
 	/**
@@ -4672,6 +4680,38 @@ export class MailJmap
 			throw new JmapUserError(describeSetError(emailSet.notCreated) ?? this.egw.lang('Failed to create message'));
 		}
 		return emailSet.created.s1.id;
+	}
+
+	/**
+	 * Create a Drafts-mailbox Email directly from a whole already-built raw message blob, via
+	 * Email/import (RFC 8621 §4.8) - sendNewEmail()'s TYPE_SIGN path only (see smimeEncryptBody()'s
+	 * own docblock for why a genuine multipart/signed body needs this instead of
+	 * createDraftEmail()'s {type, blobId} bodyStructure swap: its signature covers the exact
+	 * byte-for-byte MIME framing of the content part, which Email/set create's structured
+	 * properties have no way to reproduce faithfully - Email/import stores the given raw bytes
+	 * verbatim instead of reconstructing anything from properties).
+	 */
+	private async importWholeMessageDraft(token : JmapToken, client : JamClient, draftsId : string, blobId : string) : Promise<string>
+	{
+		const [{emailImport}] = await client.requestMany((t) => ({
+			emailImport: t.Email.import({
+				accountId: token.accountId,
+				emails: {
+					s1: {
+						blobId,
+						mailboxIds: {[draftsId]: true},
+						// classic mail_compose always saved drafts as '\Seen \Draft' (never left
+						// unread) - match createDraftEmail()'s own convention exactly
+						keywords: {'$draft': true, '$seen': true},
+					},
+				},
+			}),
+		}));
+		if (!emailImport.created?.s1)
+		{
+			throw new JmapUserError(describeSetError(emailImport.notCreated) ?? this.egw.lang('Failed to create message'));
+		}
+		return emailImport.created.s1.id;
 	}
 
 	async deleteMessages(references : JmapMessageReference[], mode : 'trash' | 'destroy') : Promise<void>
