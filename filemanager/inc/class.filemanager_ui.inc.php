@@ -995,7 +995,17 @@ class filemanager_ui
 			$store_query = array_diff_key ($query, array_flip(array('rows','actions','action_links','placeholder_actions')));
 			// Don't store mime filter from expose, just in case user reloads and the UI can't remove it
 			unset($store_query['col_filter']['mime']);
-			Api\Cache::setSession('filemanager', 'index', $store_query);
+			// filemanager_favorite_portlet::get_rows() reuses this method directly to render Home
+			// favorites, with its own 'get_rows' callback name - without keying on that (same check
+			// already used a few lines down for the 'nm_view' preference), both the portlet and the
+			// real index page would store under the same literal 'index' key, so whichever renders
+			// last silently overwrites the other's cached settings, incl. columnselection_pref.
+			// Match the portlet specifically (not "anything that isn't the real index"): this method
+			// also runs for AnonymousList::get_rows() (share links) and any future caller with a
+			// different 'get_rows' name - those aren't known to collide with anything, so they must
+			// keep writing to 'index' exactly as before, unchanged by this fix.
+			$session_key = $query['get_rows'] === 'filemanager.filemanager_favorite_portlet.get_rows' ? 'home' : 'index';
+			Api\Cache::setSession('filemanager', $session_key, $store_query);
 		}
 
 		// Change template to match selected view

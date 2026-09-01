@@ -46,6 +46,12 @@ class addressbook_favorite_portlet extends home_favorite_portlet
 			'template'	=> 'addressbook.index.rows',
 			'default_cols'   => 'n_fileas_n_given_n_family_n_family_n_given_org_name_n_family_n_given_n_fileas,'.
 				'tel_work_tel_cell_tel_home,url_email_email_home',
+			// get_rows() reuses addressbook_ui::get_rows() directly, which caches the full
+			// query in the session keyed by 'main-template' (see class.addressbook_ui.inc.php's
+			// $what computation) - without this, that key collapses to the same 'index' the real
+			// Addressbook index page uses, so whichever renders last (this portlet or the real
+			// index) silently overwrites the other's cached settings, incl. columnselection_pref.
+			'main-template'	=> 'home',
 		);
 	}
 
