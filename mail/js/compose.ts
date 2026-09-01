@@ -778,9 +778,19 @@ export class MailCompose
 		// resolves true, so the classic postback below never double-sends.
 		if (this.isJmapMode)
 		{
+			// trySendViaJmap() never goes through ETemplate's own submit() (no form postback at
+			// all), so its "please wait" spinner never fired here - found live 2026-09-01
+			// (ralf: "before the rework of compose, on submission we had a spinner... this is no
+			// longer the case"). Same 'et2_submit_spinner' id/message ETemplate's own submit()
+			// uses, so a fall-through to the classic postback below just keeps it showing.
+			this.egw.loading_prompt('et2_submit_spinner', true, this.egw.lang('Please wait while sending your mail'));
 			wait.then(() => this.trySendViaJmap()).then((sent) =>
 			{
-				if (sent) return;
+				if (sent)
+				{
+					this.egw.loading_prompt('et2_submit_spinner', false);
+					return;
+				}
 				this.et2.getInstanceManager().submit(null, 'Please wait while sending your mail');
 			});
 			return;
