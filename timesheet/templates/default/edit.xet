@@ -181,7 +181,7 @@
 					<et2-hbox  orient="0" span="all">
 						<et2-hbox>
 							<et2-button  hideOnReadonly="true" statustext="Edit this entry" label="Edit" id="button[edit]" image="edit"></et2-button>
-                            <et2-dropdown-button id="save_split" statustext="Saves the changes made" defaultPreference="save_button_default" onclick="app.timesheet.save_split_action" onchange="app.timesheet.save_split_action">
+                            <et2-dropdown-button id="save_split" statustext="Saves the changes made" defaultPreference="save_new" onclick="app.timesheet.save_split_action" onchange="app.timesheet.save_split_action">
                                 <et2-image slot="prefix" src="save_new"/>
                                 <option value="save_new" default="save_new">Save &amp; New</option>
                                 <option value="save_reset">Save &amp; Reset</option>
