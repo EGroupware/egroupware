@@ -148,6 +148,9 @@ export class CalendarApp extends EgwApp
 	//
 	private _grants : any;
 	private _sortablejs : any;
+
+	// Only bind the framework "show" listener (see _handleAppShow()) once
+	private _appShowBound : boolean = false;
 	/**
 	 * Constructor
 	 *
@@ -250,6 +253,20 @@ export class CalendarApp extends EgwApp
 			return;
 		}
 
+		// Widgets that size themselves based on available space (eg. the
+		// per-owner timegrids in day/week view, which split the container
+		// height evenly) can't measure anything useful while this tab is
+		// hidden (display:none reports 0 height).  If loading finishes, or
+		// finishes fetching more rows, while we're on a different tab, those
+		// widgets are left with a wrong or minimal height and nothing
+		// resizes them again on its own.  Catch the framework's "show" event
+		// and size them again, now that we actually have real dimensions.
+		if(!this._appShowBound && _et2.DOMContainer?.parentNode)
+		{
+			this._appShowBound = true;
+			_et2.DOMContainer.parentNode.addEventListener('show', jQuery.proxy(this._handleAppShow, this));
+		}
+
 		// Re-init sidebox, since it was probably initialized too soon
 		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
 		if(sidebox.length == 0 && egw_getFramework() != null)
@@ -338,6 +355,25 @@ export class CalendarApp extends EgwApp
 
 		// Record the templates for the views so we can switch between them
 		this._et2_view_init(_et2,_name);
+	}
+
+	/**
+	 * Framework has shown our tab again (see the "show" listener bound in et2_ready()).
+	 *
+	 * Re-run the same resize used by setState() when switching views, in case anything
+	 * sized itself (or tried to, and gave up) while this tab was hidden.
+	 */
+	private _handleAppShow()
+	{
+		var view = CalendarApp.views[this.state.view];
+		if(!view) return;
+		for(var i = 0; i < view.etemplates.length; i++)
+		{
+			if(typeof view.etemplates[i] !== 'string')
+			{
+				view.etemplates[i].resize();
+			}
+		}
 	}
 
 	/**
