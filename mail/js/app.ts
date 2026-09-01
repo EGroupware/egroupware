@@ -7553,7 +7553,7 @@ export class MailApp extends EgwApp
 		const smime_signature = et2_object.getWidgetById('smime_signature');
 		const smime_encryption = et2_object.getWidgetById('smime_encryption');
 		const mail_container = egwIsMobile()? document.getElementsByClassName('mailContent')[0] :
-				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer') :
+				egw(window).is_popup() ? document.getElementsByClassName('mailDisplayContainer')[0] :
 				et2_object.getWidgetById('mailPreviewContainer').getDOMNode();
 		smime_signature.set_disabled(!data.signed);
 		smime_encryption.set_disabled(!data.encrypted);

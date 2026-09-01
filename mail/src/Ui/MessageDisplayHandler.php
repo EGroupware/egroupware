@@ -336,8 +336,21 @@ class MessageDisplayHandler
 	}
 
 	/**
-	 * S/MIME passphrase-request form, shown by get_load_email_data() (both the classic and the new
-	 * JMAP-native path, see tryJmapNativeSpecialCase()) when Mail\Smime\PassphraseMissing is thrown
+	 * S/MIME passphrase-missing fallback, shown by get_load_email_data() (both the classic and the
+	 * JMAP-native path, see tryJmapNativeSpecialCase()) when Mail\Smime\PassphraseMissing is thrown -
+	 * only reached as a fallback (the JMAP-native fetchBody() fast path throws
+	 * JmapSmimePassphraseError distinctly, see resolveSpecialCaseBody(), so its own
+	 * MailApp.loadMessageBody() already shows the dialog directly in the normal case and never even
+	 * reaches this classic iframe navigation at all).
+	 *
+	 * Used to render its own separate raw <form>, a second, differently-styled passphrase UI that
+	 * showed up AT THE SAME TIME as that dialog (found live 2026-09-02, ralf: "the display popup
+	 * show's it's own template in the body/iframe... PLUS the passphrase dialog also shown by the
+	 * preview", "display already showed the 'unified' passphrase dialog, we can simply remove the
+	 * old one") - MailApp.loadMessageBody()'s own JMAP-fast-path attempt already runs independently
+	 * of this classic iframe navigation and already shows the (only) dialog either way, and its
+	 * retry goes through that same fast path directly (resolveSpecialCaseBody()) rather than back
+	 * through here, so there is nothing left for this classic fallback to render.
 	 *
 	 * @param Mail\Smime\PassphraseMissing $e
 	 * @return string
@@ -350,23 +363,7 @@ class MessageDisplayHandler
 			mail_ui::callWizard($e->getMessage().' '.lang('Please configure your S/MIME certificate in Encryption tab located at Edit Account dialog.'), true, 'error');
 		}
 		Framework::message($e->getMessage());
-		$configs = Api\Config::read('mail');
-		// do NOT include any default CSS
-		return $this->get_email_header().
-			'<div class="smime-message">'.lang("This message is smime encrypted and password protected.").'</div>'.
-			'<form id="smimePasswordRequest" method="post">'.
-					'<div class="bg-style"></div>'.
-					'<div>'.
-						'<input type="password" placeholder="'.lang("Please enter password").'" name="smime_passphrase"/>'.
-						'<input type="submit" value="'.lang("submit").'"/>'.
-						'<div style="margin-top:10px;position:relative;text-align:center;margin-left:-15px;">'.
-							lang("Remember the password for ").
-								'<input name="smime_pass_exp" type="number" max="480" min="1" placeholder="'.
-								(is_array($configs) && $configs['smime_pass_exp'] ? $configs['smime_pass_exp'] : "10").
-								'" value="'.$this->ui->mail_bo->mailPreferences['smime_pass_exp'].'"/> '.lang("minutes.").
-						'</div>'.
-					'</div>'.
-			'</form>';
+		return $this->get_email_header();
 	}
 
 	/**
@@ -414,6 +411,10 @@ class MessageDisplayHandler
 			}
 			else
 			{
+				// only resolved here (never for the Stalwart branch above) - see get_load_email_data()'s
+				// own docblock for why $uid/$mailbox may arrive as closures
+				$uid = $uid instanceof \Closure ? $uid() : $uid;
+				$mailbox = $mailbox instanceof \Closure ? $mailbox() : $mailbox;
 				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
 				if (!$structure)
 				{
@@ -428,22 +429,22 @@ class MessageDisplayHandler
 				return null;
 			}
 
-			if ($smimePassphrase)
-			{
-				if ($this->ui->mail_bo->mailPreferences['smime_pass_exp'] != $_POST['smime_pass_exp'])
-				{
-					$GLOBALS['egw']->preferences->add('mail', 'smime_pass_exp', $_POST['smime_pass_exp']);
-					$GLOBALS['egw']->preferences->save_repository();
-				}
-				Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase, (int)($_POST['smime_pass_exp']?:10) * 60);
-			}
-
 			if ($type === 'smime')
 			{
 				$result = $isStalwart ?
 					$icServer->resolveSmimeJmap($emailID, $bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase) :
 					JmapImap::resolveSmime((string)$this->ui->mail_bo->profileID, base64_encode($mailbox), $uid,
 						$bodyStructure['type'], (string)$from, $htmlOptions, (string)$smimePassphrase);
+				// only cache on CONFIRMED success (resolveSmime()/resolveSmimeJmap() would have
+				// thrown PassphraseMissing above otherwise) - same "never cache before it's proved
+				// ok" principle as resolveSpecialCaseBody()/smimeEncryptEmailProperties(). The
+				// 'smime_pass_exp' preference itself is persisted client-side only
+				// (smimeViewPassDialog()'s own egw.set_preference() call) - no server-side duplicate
+				// here, see resolveSpecialCaseBody()'s docblock for why.
+				if ($smimePassphrase !== '')
+				{
+					Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase, (int)($_POST['smime_pass_exp']?:10) * 60);
+				}
 				$body = $result['body'];
 				if (($smime = $result['smime']))
 				{
@@ -610,24 +611,43 @@ class MessageDisplayHandler
 		}
 	}
 
+	/**
+	 * @param string|\Closure $uid real IMAP UID, or (2026-09-01 follow-up) a closure resolving to
+	 *  one - loadEmailBody() passes a closure over Mail::splitRowID()'s own lazy RowIdParts result
+	 *  for a Stalwart-opaque-id row, so this never pays RowIdParts' own "real IMAP EMAILID search"
+	 *  cost (the exact "20s timeout" this whole JMAP-native S/MIME/TNEF path exists to avoid)
+	 *  unless tryJmapNativeSpecialCase() below actually falls through to the classic path, which
+	 *  genuinely needs a real UID. mail/profile.php and mail_ui.inc.php's own direct callers always
+	 *  pass a plain string, unaffected.
+	 * @param string|\Closure $mailbox same deferred-resolution treatment as $uid
+	 */
 	public function get_load_email_data($uid, $partID, $mailbox, $htmlOptions=null, $smimePassphrase='', $emailID=null)
 	{
-		// seems to be needed, as if we open a mail from notification popup that is
-		// located in a different folder, we experience: could not parse message
-		$this->ui->mail_bo->reopen($mailbox);
-		$this->ui->mailbox = $mailbox;
-		$this->ui->uid = $uid;
 		$this->ui->partID = $partID;
 		$bufferHtmlOptions = $this->ui->mail_bo->htmlOptions;
 		if (empty($htmlOptions)) $htmlOptions = $this->ui->mail_bo->htmlOptions;
 
 		// JMAP-native S/MIME/TNEF (see plan) - returns null for anything else (meeting invites,
-		// no usable JMAP access, ...) to fall through to the classic IMAP-based path unchanged
+		// no usable JMAP access, ...) to fall through to the classic IMAP-based path unchanged.
+		// Deliberately called BEFORE reopen()/resolving $uid/$mailbox below (2026-09-01 follow-up) -
+		// its own Stalwart branch needs neither at all, and reopen() itself is real IMAP-connection
+		// work a Stalwart account has no business paying for either.
 		if (($jmapHtml = $this->tryJmapNativeSpecialCase($uid, $partID, $mailbox, $htmlOptions, $smimePassphrase, $emailID)) !== null)
 		{
 			$this->ui->mail_bo->htmlOptions = $bufferHtmlOptions;
 			return $jmapHtml;
 		}
+
+		// only reached once the JMAP-native attempt above has already had its (lazy-key-free, for
+		// a Stalwart row) chance - genuinely classic code from here on, which really does need a
+		// real IMAP UID/mailbox, so resolving them now is not a regression
+		$uid = $uid instanceof \Closure ? $uid() : $uid;
+		$mailbox = $mailbox instanceof \Closure ? $mailbox() : $mailbox;
+		// seems to be needed, as if we open a mail from notification popup that is
+		// located in a different folder, we experience: could not parse message
+		$this->ui->mail_bo->reopen($mailbox);
+		$this->ui->mailbox = $mailbox;
+		$this->ui->uid = $uid;
 
 		// fetching structure now, to supply it to getMessageBody and getMessageAttachment, so it does not get fetched twice
 		try
@@ -758,14 +778,31 @@ class MessageDisplayHandler
 		if(Mail::$debug) error_log(__METHOD__."->".print_r($_messageID,true).",$_partID,$_htmloptions");
 		if (empty($_messageID)) return "";
 		$uidA = Mail::splitRowID($_messageID);
-		$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
-		$messageID = $uidA['msgUID'];
 		$icServerID = $uidA['profileID'];
-		//something went wrong. there is a $_messageID but no $messageID: means $_messageID is crippeled
-		if (empty($messageID)) return "";
 		if ($icServerID && $icServerID != $this->ui->mail_bo->profileID)
 		{
 			$this->ui->changeProfile($icServerID);
+		}
+
+		if ($uidA['is_jmap'])
+		{
+			// Stalwart opaque-id row: never touch 'folder'/'msgUID' here - RowIdParts only resolves
+			// those via a real IMAP EMAILID search (Imap\Jmap::emailId2uid()), the exact "20s
+			// timeout" cost this whole JMAP-native path exists to avoid, and get_load_email_data()/
+			// tryJmapNativeSpecialCase() normally never need them at all for such a row. 'emailID'
+			// is eager (no IMAP call), so it stands in for the old "$_messageID is crippled" check.
+			if (empty($uidA['emailID'])) return "";
+			$messageID = fn() => $uidA['msgUID'];
+			$folder = fn() => $uidA['folder'];
+		}
+		else
+		{
+			// classic IMAP row: resolving 'folder'/'msgUID' is cheap here (plain base64_decode/cast,
+			// see Imap::splitRowID()), so just do it eagerly like before
+			$folder = $uidA['folder']; // all messages in one set are supposed to be within the same folder
+			$messageID = $uidA['msgUID'];
+			//something went wrong. there is a $_messageID but no $messageID: means $_messageID is crippeled
+			if (empty($messageID)) return "";
 		}
 
 		$bodyResponse = $this->get_load_email_data($messageID,$_partID,$folder,$_htmloptions, $_POST['smime_passphrase'] ?? null, $uidA['emailID'] ?? null);
