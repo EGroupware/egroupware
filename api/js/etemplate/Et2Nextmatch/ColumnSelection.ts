@@ -83,6 +83,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 
 	private __columns : any[] = [];
 	private __autoRefresh : number | false = false;
+	private __pendingValueIds : Set<string> | null = null;
 	private sort : Sortable;
 
 	constructor(...args : any[])
@@ -252,6 +253,7 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 	set columns(new_columns)
 	{
 		this.__columns = new_columns;
+		this._applyPendingValue();
 		this.requestUpdate();
 	}
 
@@ -291,9 +293,41 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		return value;
 	}
 
+	/**
+	 * Pre-check the given column (and customfield) ids, e.g. to restore a
+	 * previously saved selection (see Et2Nextmatch.beforePrint()).
+	 *
+	 * Ids are matched against `columns[].id` / `customFields[].id`, so they use
+	 * the same space-stripped encoding as those (Et2DatagridColumnState.encodeSelectionId()).
+	 */
 	set value(new_value)
 	{
-		// TODO?  Only here to avoid error right now
+		this.__pendingValueIds = new Set((Array.isArray(new_value) ? new_value : []).map((id) => String(id)));
+		this._applyPendingValue();
+		this.requestUpdate();
+	}
+
+	/**
+	 * Apply __pendingValueIds (if any) as the checked state of __columns.
+	 *
+	 * Deferred out of the value/columns setters because either can run first
+	 * when the dialog template is bound, and both need the other's data.
+	 */
+	private _applyPendingValue()
+	{
+		if(!this.__pendingValueIds || !this.__columns?.length)
+		{
+			return;
+		}
+		const ids = this.__pendingValueIds;
+		this.__columns = this.__columns.map((column) => ({
+			...column,
+			visibility: ids.has(String(column.id)),
+			customFields: (column.customFields || []).map((field) => ({
+				...field,
+				visibility: ids.has(String(field.id))
+			}))
+		}));
 	}
 
 	private get _autoRefreshNode() : Et2Select
