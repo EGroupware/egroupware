@@ -121,6 +121,16 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	protected _link_list : LinkInfo[] = [];
 	protected _loadingPromise : Promise<LinkInfo[]> = Promise.resolve([]);
 	protected _loading = false;
+	/**
+	 * Identifies the request currently in flight, so a request for something else can replace
+	 * it and its (now obsolete) answer can be discarded when it arrives.
+	 */
+	protected _loadingRequest = "";
+	/**
+	 * Identifies the entry _link_list was collected for, so links from a previous entry are
+	 * not kept when this widget gets re-used for another one.
+	 */
+	protected _loadedFor = "";
 
 	constructor()
 	{
@@ -339,12 +349,6 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		{
 			return;
 		}
-		if(this._loading)
-		{
-			// Already waiting
-			return;
-		}
-		this._loading = true;
 
 		if(typeof not_saved_links === "undefined")
 		{
@@ -358,10 +362,38 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			limit: [offset, /* num_rows: */this.limit]
 		};
 
+		// Inside a nextmatch row the entry ID arrives after the row is rendered, and the same
+		// widget is re-used for other entries while scrolling or on refresh.  Both change what
+		// we have to ask for while an earlier request may still be running, so requests are
+		// identified: an identical one is not repeated, a different one replaces the running
+		// one, and a late answer to a replaced request is discarded instead of being shown for
+		// (or mixed into) the entry we now display.
+		const entry = JSON.stringify([_value.to_app, _value.to_id, _value.only_app, _value.show_deleted]);
+		const request = JSON.stringify([entry, offset]);
+		if(this._loading && this._loadingRequest === request)
+		{
+			// Already waiting for exactly this
+			return;
+		}
+		if(this._loadedFor !== entry)
+		{
+			// Whatever we collected so far belongs to a different entry
+			this._link_list = [];
+			this._totalResults = 0;
+			this._loadedFor = entry;
+		}
+		this._loading = true;
+		this._loadingRequest = request;
+
 		this._loadingPromise = <Promise<LinkInfo[]>>(this.egw().jsonq('EGroupware\\Api\\Etemplate\\Widget\\Link::ajax_link_list', [_value]))
 			.then(_value =>
 			{
-				if(typeof _value.total)
+				if(this._loadingRequest !== request)
+				{
+					// Superseded while we were waiting, the newer request provides the links
+					return this._link_list;
+				}
+				if(typeof _value?.total !== "undefined")
 				{
 					this._totalResults = _value.total;
 					delete _value.total;
@@ -380,12 +412,25 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 				}
 				this._loading = false;
 				this.requestUpdate();
+				return this._link_list;
 			})
 	}
 
 	protected _hasEntryId() : boolean
 	{
-		return !!this.entryId && (typeof this.entryId !== "string" || this.entryId.indexOf("$row") === -1);
+		if(!this.entryId)
+		{
+			return false;
+		}
+		if(typeof this.entryId !== "string")
+		{
+			return true;
+		}
+		// Row templates are rendered with their placeholders still in place and only get the
+		// actual entry ID afterwards, when the row is bound to its data.  Depending on where
+		// the row comes from that placeholder is "$row_cont[ts_id]", "${row}[ts_id]" or the
+		// shorthand "$ts_id" - none of them is something we can ask the server about.
+		return !this.entryId.startsWith("$") && !this.entryId.includes("${") && !this.entryId.includes("$row");
 	}
 
 	getDetachedAttributes(_attrs : string[])
