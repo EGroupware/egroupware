@@ -312,6 +312,9 @@ export class MailJmap
 	private clients : Record<string, JamWebSocketClient> = {};
 	private refreshTimers : Record<string, number> = {};
 	private ineligibleUntil : Record<string, number> = {};
+	// keyed by "profileID::mailboxId" - a mailbox's JMAP role never changes once assigned, so this
+	// is never invalidated (see mailboxRole()'s own docblock)
+	private mailboxRoleCache : Record<string, string | null> = {};
 	// whether enablePushOnce() has already (fire-and-forget) registered client-side WS push for the
 	// profile's current token - reset whenever ensureToken() obtains a fresh token. Only relevant
 	// when token.enableWsPush is true; the classic server-side path is handled entirely by
@@ -506,34 +509,38 @@ export class MailJmap
 			return this.getThreadedRows(client, token, profileID, mailboxId, query, start, limit, fetchPreview);
 		}
 
-		const [{ids, emails}] = await client.requestMany((t) =>
-		{
-			const ids = t.Email.query({
-				accountId: token.accountId,
-				filter: this.buildFilter(query, mailboxId),
-				sort: this.buildSort(query),
-				position: start,
-				limit,
-				calculateTotal: true,
-			});
-			const properties = [
-				'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
-				'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
-			];
-			if (fetchPreview)
+		const [{ids, emails}, role] = await Promise.all([
+			client.requestMany((t) =>
 			{
-				properties.push('preview');
-			}
-			const emails = t.Email.get({
-				accountId: token.accountId,
-				ids: ids.$ref('/ids'),
-				properties,
-			});
-			return {ids, emails};
-		});
+				const ids = t.Email.query({
+					accountId: token.accountId,
+					filter: this.buildFilter(query, mailboxId),
+					sort: this.buildSort(query),
+					position: start,
+					limit,
+					calculateTotal: true,
+				});
+				const properties = [
+					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
+					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+				];
+				if (fetchPreview)
+				{
+					properties.push('preview');
+				}
+				const emails = t.Email.get({
+					accountId: token.accountId,
+					ids: ids.$ref('/ids'),
+					properties,
+				});
+				return {ids, emails};
+			}),
+			this.mailboxRole(client, token.accountId, profileID, mailboxId),
+		]);
+		const showRecipient = MailJmap.RECIPIENT_SHOWN_ROLES.includes(role as string);
 
 		return {
-			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId)),
+			rows: (emails.list || []).map((email : any) => this.email2row(email, profileID, mailboxId, showRecipient)),
 			total: ids.total ?? (emails.list || []).length,
 		};
 	}
@@ -551,6 +558,10 @@ export class MailJmap
 	 * `_queriedRange.parent_id` branch (getThreadMemberRows()) - RFC 8621 threads are flat, so
 	 * there is never a second level to expand.
 	 */
+	// TODO (Phase 2, dead code in production for now - token.supportsThreading is false everywhere):
+	// this and emails2threadRow() below don't resolve/pass email2row()'s showRecipient param, so a
+	// threaded Sent/Drafts/Templates view would show the sender instead of the recipient once
+	// threading actually ships - see getRows()'s own mailboxRole() call for the pattern to reuse.
 	private async getThreadedRows(client : JamClient, token : JmapToken, profileID : string, mailboxId : string,
 		query : JmapGetRowsQuery, start : number, limit : number, fetchPreview : boolean) : Promise<{ rows : any[], total : number }>
 	{
@@ -2195,9 +2206,13 @@ export class MailJmap
 					// in (see JmapShim::emailGet())
 					args.mailboxId = refs[0].mailboxId;
 				}
-				const [{emails}] = await this.clients[profileID].requestMany((t) => ({
-					emails: t.Email.get(args) as any,
-				}));
+				const [[{emails}], role] = await Promise.all([
+					this.clients[profileID].requestMany((t) => ({
+						emails: t.Email.get(args) as any,
+					})),
+					this.mailboxRole(this.clients[profileID], token.accountId, profileID, refs[0].mailboxId),
+				]);
+				const showRecipient = MailJmap.RECIPIENT_SHOWN_ROLES.includes(role as string);
 				const byId : Record<string, any> = {};
 				(emails.list || []).forEach((email : any) => byId[email.id] = email);
 				refs.forEach(ref =>
@@ -2205,7 +2220,7 @@ export class MailJmap
 					const email = byId[ref.emailId];
 					if (email)
 					{
-						const row = this.email2row(email, ref.profileID, ref.mailboxId);
+						const row = this.email2row(email, ref.profileID, ref.mailboxId, showRecipient);
 						data[row.row_id] = row;
 						order.push(row.row_id);
 					}
@@ -5190,7 +5205,36 @@ export class MailJmap
 		};
 	}
 
-	private email2row(email : any, profileID : string, mailboxId : string) : any
+	/**
+	 * Resolve a mailbox's JMAP role (RFC 8621 §2, "sent"/"drafts"/"templates"/"trash"/...), cached
+	 * per profileID+mailboxId since a role never changes once assigned - see email2row()'s own
+	 * `showRecipient` param, mail_ui::header2gridelements()'s old classic equivalent.
+	 */
+	private async mailboxRole(client : JamClient, accountId : string, profileID : string, mailboxId : string) : Promise<string | null>
+	{
+		const cacheKey = profileID + '::' + mailboxId;
+		if (!(cacheKey in this.mailboxRoleCache))
+		{
+			const [{mailbox}] = await client.requestMany((t) => ({
+				mailbox: t.Mailbox.get({accountId, ids: [mailboxId], properties: ['role']}),
+			}));
+			this.mailboxRoleCache[cacheKey] = mailbox.list?.[0]?.role ?? null;
+		}
+		return this.mailboxRoleCache[cacheKey];
+	}
+
+	/** See email2row()'s own `showRecipient` param docblock. */
+	private static readonly RECIPIENT_SHOWN_ROLES = ['sent', 'drafts', 'templates'];
+
+	/**
+	 * @param showRecipient true for a Sent/Drafts/Templates mailbox - mail_ui::header2gridelements()'s
+	 *  old convention (lost during the JMAP migration, found live 2026-09-02, ralf: "In Sent folder
+	 *  we used to show the recipient's address, not the sender"): the unified `address` field (the
+	 *  grid's single "From" column) shows the recipient instead, since you already know you're the
+	 *  sender in those mailboxes. Only `address` swaps - `fromaddress`/`toaddress` themselves stay
+	 *  correct either way, same as the classic code only ever touched `data['address']`.
+	 */
+	private email2row(email : any, profileID : string, mailboxId : string, showRecipient : boolean = false) : any
 	{
 		const addressList = (list : { name? : string, email : string }[]) =>
 			(list || []).map(a => a.name ? `${a.name} <${a.email}>` : a.email);
@@ -5230,7 +5274,7 @@ export class MailJmap
 			additionaltoaddress: toList.slice(1),
 			ccaddress: addressList(email.cc),
 			bccaddress: addressList(email.bcc),
-			address: fromList[0] || '',
+			address: (showRecipient ? toList[0] : fromList[0]) || '',
 			date: this.jmapUtcToUserTz(email.sentAt || email.receivedAt),
 			modified: this.jmapUtcToUserTz(email.receivedAt),
 			size: email.size,
