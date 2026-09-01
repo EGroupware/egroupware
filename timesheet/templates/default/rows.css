@@ -21,3 +21,6 @@
 .ts_description {
   display: var(--timesheet-ts-details-display, revert);
 }
+.ts_links {
+  display: var(--timesheet-ts-details-display-inline, inline);
+}

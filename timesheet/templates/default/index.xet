@@ -86,6 +86,7 @@
                         <et2-link  id="${row}[ts_link]" app="" noLang="1"></et2-link>
                         <et2-description  id="${row}[ts_title]" class="ts_title" noLang="1"></et2-description>
                         <et2-description  id="${row}[ts_description]" class="ts_description" noLang="1"></et2-description>
+                        <et2-link-string class="ts_links" application="timesheet" entryId="$row_cont[ts_id]" onlyApp="!projectmanager"></et2-link-string>
                     </et2-vbox>
                     <et2-select-cat class="noWrap" id="${row}[cat_id]" readonly="true"></et2-select-cat>
                     <et2-date-duration id="${row}[ts_duration]" readonly="true" align="right" displayFormat="hm" selectUnit="false"></et2-date-duration>

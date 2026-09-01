@@ -136,6 +136,9 @@ class TimesheetApp extends EgwApp
 			this.nm.style.setProperty("--timesheet-ts-details-weight", show ? "bold" : "normal");
 			// Show / hide descriptions
 			this.nm.style.setProperty("--timesheet-ts-details-display", show ? "flex" : "none");
+			// Show / hide the linked entries.  Separate property because that list is inline
+			// and must not become a flex container - see .ts_links in rows.less
+			this.nm.style.setProperty("--timesheet-ts-details-display-inline", show ? "inline" : "none");
 		}
 	}
 

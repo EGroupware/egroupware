@@ -33,3 +33,10 @@
 .ts_description {
 	display: var(--timesheet-ts-details-display, revert);
 }
+
+// Linked entries are part of the details too, but they render as one inline, comma-separated
+// list, so they need their own display value: the "flex" the block details use above would
+// blockify each link and put the whole list on a single unwrappable line.
+.ts_links {
+	display: var(--timesheet-ts-details-display-inline, inline);
+}
