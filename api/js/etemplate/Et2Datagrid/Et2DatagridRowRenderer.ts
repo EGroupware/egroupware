@@ -31,6 +31,21 @@ export class Et2DatagridRowRenderer
 	private _rowUpgradeRangeListener : ((event : Event) => void) | null = null;
 	private _rowUpgradeScheduled : boolean = false;
 	private _rowUpgradeFrameHandle : number | null = null;
+	/**
+	 * Rows upgraded per frame, alongside the time budget below.
+	 *
+	 * Measured hydration is ~0.03ms/row, so this count - not the 8ms budget - is what
+	 * actually governs, and it drips a viewport in over several frames (~4 frames for
+	 * 30 rows) while those rows sit visibly in `.loading`. Raising it is a real
+	 * time-to-settled win but NOT a safe standalone change: the drip is what currently
+	 * makes the row-upgrade queue drain, refill, and drain again as the virtualizer
+	 * mounts rows, so scheduleRowsUpgradedSettle() runs several times and the last
+	 * measurement lands on fully laid-out rows. Draining in one frame yields a single
+	 * early settle, and Et2Datagrid._updateMeasuredAverageRowHeight() then locks in a
+	 * too-short row height with nothing left to correct it - measured here as a parent
+	 * scroll range of 7035px against a 19931px baseline. Make that settle re-measure
+	 * until stable first, then raise this.
+	 */
 	private _rowUpgradeBatchSize : number = 8;
 	/** Per-frame time budget (ms) for row widget upgrades to avoid long tasks on the main thread. */
 	private _rowUpgradeFrameBudgetMs : number = 8;
