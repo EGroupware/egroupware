@@ -527,16 +527,18 @@ class Link extends Link\Storage
 			$ids = array();
 			if (is_array($id))
 			{
-				if (($not_only = $only_app[0] == '!'))
+				if (($not_only = !empty($only_app) && $only_app[0] == '!'))
 				{
-					$only_app = substr(1,$only_app);
+					$only_app = substr($only_app, 1);
 				}
 				foreach (array_reverse($id) as $link)
 				{
 					if (is_array($link)  // check for unlink-marker
 						&&  !($only_app && $not_only == ($link['app'] == $only_app)))
 					{
-						$ids[$link['link_id']] = $only_app ? $link['id'] : $link;
+						// only a positive $only_app gives a single known app for every link, and can
+						// therefore reduce them to their IDs - a negated one keeps mixed apps
+						$ids[$link['link_id']] = $only_app && !$not_only ? $link['id'] : $link;
 					}
 				}
 			}
@@ -560,7 +562,9 @@ class Link extends Link\Storage
 			$app_ids = array();
 			foreach($ids as $link)
 			{
-				$app_ids[$only_app ? $only_app : $link['app']][] = is_array($link) ? $link['id'] : $link;
+				// links are only reduced to bare IDs for a positive $only_app - anything else
+				// (no filter, or a negated one) keeps mixed apps, which "!projectmanager" is not
+				$app_ids[is_array($link) ? $link['app'] : $only_app][] = is_array($link) ? $link['id'] : $link;
 			}
 			foreach($app_ids as $appname => $a_ids)
 			{
