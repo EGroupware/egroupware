@@ -9,6 +9,7 @@ export interface Et2DatagridRequestQueueHost extends HTMLElement
 	egw() : any;
 	requestUpdate() : void;
 	_requestDispatchDelayMs : number;
+	embeddedVirtualized : boolean;
 	_isEmbeddedInitialLoading() : boolean;
 }
 
@@ -115,9 +116,26 @@ export class Et2DatagridRequestQueue
 	 * in flight, then invokes `onDispatch` once per entry so the host can start the
 	 * actual fetch. Forces an immediate flush once the oldest entry has waited
 	 * MAX_DISPATCH_DELAY_MS, so continuous newer arrivals can't defer it indefinitely.
+	 *
+	 * The very first request out of an idle queue skips the wait: with nothing in
+	 * flight and no timer already armed there is nothing for it to coalesce with, so
+	 * the delay is pure latency on every list open and every filter change. Note the
+	 * debounce never merges adjacent ranges into one request - duplicate keys are
+	 * already collapsed by queueRequest() regardless of timing - so what it actually
+	 * buys is not dispatching ranges the user has since scrolled past, and that only
+	 * arises once a request is in flight or a timer is pending. Both of those still
+	 * take the debounced path below.
+	 *
+	 * Embedded (`embedded-virtualized`) child grids are excluded. Their height
+	 * reservation latches a fixed row pitch off the first settle and is coupled to
+	 * *when* rows land relative to the parent's virtualizer layout, so arriving
+	 * earlier measurably destabilizes the shared scrollport. They also aren't what
+	 * the delay costs a user - nobody waits on a child branch the way they wait on a
+	 * list opening - so they keep the original timing until that coupling is fixed.
 	 */
 	scheduleProcessing(onDispatch : (start : number, requestedCount : number, requestKey : string) => void) : void
 	{
+		const timerWasArmed = this._queuedRequestTimer !== null;
 		if(this._queuedRequestTimer !== null)
 		{
 			window.clearTimeout(this._queuedRequestTimer);
@@ -129,7 +147,16 @@ export class Et2DatagridRequestQueue
 			this.flush(onDispatch);
 			return;
 		}
-		const delay = Math.min(this.host._requestDispatchDelayMs, Et2DatagridRequestQueue.MAX_DISPATCH_DELAY_MS - waitedMs);
+		const isFirstOfBurst = !this.host.embeddedVirtualized
+			&& !timerWasArmed
+			&& this._inFlightRequestKeys.size === 0
+			&& this._queuedRequests.size <= 1;
+		// Still routed through the timer rather than flushing inline: scheduleProcessing()
+		// can be reached from _renderVirtualRow() during Lit's render, and dispatching
+		// sets reactive state on the host.
+		const delay = isFirstOfBurst
+					  ? 0
+					  : Math.min(this.host._requestDispatchDelayMs, Et2DatagridRequestQueue.MAX_DISPATCH_DELAY_MS - waitedMs);
 		this._queuedRequestTimer = window.setTimeout(() => this.flush(onDispatch), delay);
 	}
 
