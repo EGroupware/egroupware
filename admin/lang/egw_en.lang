@@ -222,6 +222,7 @@ comma-separated ip addresses white-listed from above blocking (:optional number 
 command scheduled to run at %1	admin	en	Command scheduled to run at %1
 command was run %1 on %2	admin	en	Command was run %1 on %2
 commercial: all sorts of companies	admin	en	Commercial: all sorts of companies
+common name	admin	en	Common name
 config password or md5 hash from the header.inc.php	admin	en	Config password or MD5 hash from the header.inc.php.
 configuration	admin	en	Configuration
 configuration saved.	admin	en	Configuration saved.
@@ -606,6 +607,7 @@ list current sessions	admin	en	List current sessions
 list of current users	admin	en	List of current users
 log user-agent and action of changes in history-log of entries	admin	en	Log user-agent and action of changes in history-log of entries
 logged out	admin	en	Logged out
+locality	admin	en	Locality
 login history	admin	en	Login history
 login id	admin	en	Login ID
 login message	admin	en	Login message
@@ -692,6 +694,7 @@ openapi configuration	admin	en	OpenAPI configuration
 operating system	admin	en	Operating system
 order	admin	en	Order
 organisation	admin	en	Organisation
+organizational unit	admin	en	Organizational unit
 other security configuration	admin	en	Other security configuration
 outbound	admin	en	Outbound
 own categories	admin	en	Own categories
@@ -764,6 +767,7 @@ remote instance saved	admin	en	Remote instance saved.
 remove	admin	en	Remove
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category. Are you sure? Users in these groups may no longer have access:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	en	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
+repeat passphrase	admin	en	Repeat passphrase
 requested	admin	en	Requested
 required pear class mail/mimedecode.php not found.	admin	en	Required PEAR class Mail/mimeDecode.php not found.
 required to embed egroupware via iframe eg. for lti	admin	en	required to embed EGroupware via iframe eg. for LTI
@@ -864,6 +868,7 @@ standard smtp-server	admin	en	Standard SMTP server
 start	admin	en	Start
 start testjob!	admin	en	Start test job!
 starts with	admin	en	Starts with
+state or province	admin	en	State or province
 strictly required, user can not login without	admin	en	Strictly required, user can not login without
 submit changes	admin	en	Submit changes
 submit displayed information?	admin	en	Submit displayed information

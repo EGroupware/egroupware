@@ -343,14 +343,14 @@
 				<row>
 					<et2-groupbox summary="Certificate details">
 						<et2-vbox>
-							<et2-textbox id="countryName" maxlength="2" placeholder="Country name (2 letter code, eg. DE)"></et2-textbox>
-							<et2-textbox id="stateOrProvinceName" placeholder="State or province name"></et2-textbox>
-							<et2-textbox id="localityName" placeholder="Locality name"></et2-textbox>
-							<et2-textbox id="organizationName" placeholder="Organization name"></et2-textbox>
-							<et2-textbox id="organizationalUnitName" placeholder="Organizational unit name"></et2-textbox>
-							<et2-textbox id="commonName" placeholder="Common name"></et2-textbox>
-							<et2-textbox id="emailAddress" placeholder="Email address"></et2-textbox>
-							<et2-textbox id="validity" type="integer" label="Certificate validity in days" placeholder="3650"></et2-textbox>
+							<et2-textbox id="countryName" maxlength="2" label="Country" placeholder="DE" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox id="stateOrProvinceName" label="State or province" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox id="localityName" label="Locality" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox id="organizationName" label="Organisation" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox id="organizationalUnitName" label="Organizational unit" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox id="commonName" label="Common name" class="et2-label-fixed"></et2-textbox>
+							<et2-textbox id="emailAddress" label="Email address" class="et2-label-fixed"></et2-textbox>
+							<et2-number id="validity" precision="0" label="Certificate validity in days" placeholder="3650" width="5em"></et2-number>
 						</et2-vbox>
 					</et2-groupbox>
 				</row>
@@ -358,8 +358,8 @@
 					<et2-groupbox summary="passphrase">
 						<et2-description value="Enter a passphrase if you would like to protect your private key by password."></et2-description>
 						<et2-vbox>
-							<et2-password id="passphrase" placeholder="Enter a passphrase"></et2-password>
-							<et2-password id="passphraseConf" placeholder="Repeat the passphrase"></et2-password>
+							<et2-password id="passphrase" label="Passphrase" class="et2-label-fixed"></et2-password>
+							<et2-password id="passphraseConf" label="Repeat passphrase" class="et2-label-fixed"></et2-password>
 						</et2-vbox>
 					</et2-groupbox>
 				</row>

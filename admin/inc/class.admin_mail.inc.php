@@ -1567,7 +1567,18 @@ class admin_mail
 									$imap = $account->imapServer(true);
 									if ($imap) $imap->checkAdminConnection();
 								}
-								catch(\Horde_Imap_Client_Exception $e) {
+								// \Throwable, not just \Horde_Imap_Client_Exception: this is an
+								// unrelated, purely informational side-check - it must never abort
+								// the rest of this save (S/MIME key storage, Mail\Account::write())
+								// regardless of what a failed admin-connection attempt throws. Found
+								// live 2026-09-01 for a JMAP account (whose acc_imap_port is the
+								// JMAP(S) endpoint, not a real IMAP port - see Mail\Imap\Jmap::
+								// checkAdminConnection()) where the raw-IMAP-protocol attempt
+								// against the wrong port/protocol did NOT throw a plain
+								// \Horde_Imap_Client_Exception, so it fell through uncaught here and
+								// aborted the whole save via the generic catch further down,
+								// silently skipping the S/MIME-key block right below.
+								catch(\Throwable $e) {
 									Api\Json\Response::get()->message(lang('Checking admin credentials failed').': '.$e->getMessage(), 'info');
 								}
 							}
@@ -1598,7 +1609,7 @@ class admin_mail
 							// SMIME SAVE
 							if (isset($content['smimeKeyUpload']))
 							{
-								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl, $content['called_for']);
+								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl, $content['called_for'], $this->is_admin);
 								unset($content['smimeKeyUpload']);
 							}
 							self::fix_account_id_0($content['account_id'], true);
@@ -1676,7 +1687,7 @@ class admin_mail
 							// smime (private) key uploaded by user himself
 							if (!empty($content['smimeKeyUpload']))
 							{
-								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl);
+								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl, null, $this->is_admin);
 								unset($content['smimeKeyUpload']);
 							}
 						}
@@ -1757,7 +1768,7 @@ class admin_mail
 
 		// SMIME IMPORT: CA-signed certificate for the already stored private key
 		if (!empty($content['smimeCertUpload']['tmp_name']) &&
-			($cred_id = self::import_smime_cert($content, $tpl, $account_id)))
+			($cred_id = self::import_smime_cert($content, $tpl, $account_id, $this->is_admin)))
 		{
 			$content['acc_smime_cred_id'] = $cred_id;
 			$msg = lang('Certificate imported.');
@@ -2113,9 +2124,14 @@ class admin_mail
 	 * @param array $content
 	 * @param Etemplate $tpl
 	 * @param int $account_id =null account to save smime key for, default current user
+	 * @param bool $is_admin =false whether the CURRENT (session) user has admin app rights -
+	 *  addressbook_bo::set_keys() only lets an admin session unlock the 'pubkey' field (and, as a
+	 *  side effect, the whole own-account self-edit gate, see Contacts::check_perms()) in the
+	 *  site's own_account_acl config; passing false here from a non-admin self-service save is a
+	 *  harmless no-op, not a downgrade
 	 * @return int cred_id or null on error
 	 */
-	private static function save_smime_key(array $content, Etemplate $tpl, $account_id=null)
+	private static function save_smime_key(array $content, Etemplate $tpl, $account_id=null, bool $is_admin=false)
 	{
 		if (($pkcs12 = file_get_contents($content['smimeKeyUpload']['tmp_name'])))
 		{
@@ -2126,9 +2142,9 @@ class admin_mail
 				$smime = new Mail\Smime;
 				$email = $smime->getEmailFromKey($cert_info['cert']);
 				$AB_bo = new addressbook_bo();
-				$AB_bo->set_smime_keys(array(
+				self::reportSmimeAddressbookResult($AB_bo->set_smime_keys(array(
 					$email => $cert_info['cert']
-				));
+				), $is_admin));
 				// save private key
 				if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
 				return Mail\Credentials::write($content['acc_id'], $email, $pkcs12, Mail\Credentials::SMIME, $account_id);
@@ -2136,6 +2152,29 @@ class admin_mail
 			$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
 		}
 		return null;
+	}
+
+	/**
+	 * Surface addressbook_bo::set_keys()/set_smime_keys()'s result instead of silently
+	 * discarding it, found live 2026-09-01: all three S/MIME save paths below called
+	 * set_smime_keys() for its side effect only, so a failed addressbook write (most commonly
+	 * Contacts::check_perms()'s own-account gate requiring own_account_acl to be non-empty
+	 * first, see set_keys()'s docblock) left the certificate silently absent from the contact,
+	 * with the private-key save (Mail\Credentials::write(), unrelated storage) succeeding right
+	 * next to it and no error shown at all.
+	 *
+	 * @param string|false|int $result see addressbook_bo::set_keys()'s return doc
+	 */
+	private static function reportSmimeAddressbookResult($result)
+	{
+		if ($result === false)
+		{
+			Api\Json\Response::get()->message(lang('Could not store the S/MIME certificate in the addressbook - check permissions.'), 'error');
+		}
+		elseif (is_string($result))
+		{
+			Api\Json\Response::get()->message($result, 'info');
+		}
 	}
 
 	/**
@@ -2173,13 +2212,55 @@ class admin_mail
 		}
 		$content = array('acc_id' => $_data['acc_id'], 'smime_gen_dn' => json_encode($_data));
 		$tpl = new Etemplate();
-		if (!($cred_id = self::generate_smime_key($content, $tpl, $account_id)))
+		if (!($cred_id = self::generate_smime_key($content, $tpl, $account_id, $this->is_admin)))
 		{
 			$response->message(Etemplate::get_validation_errors('smimeGenerate') ?:
 				lang('Could not generate certificate!'), 'error');
 			return;
 		}
 		$response->data(array('acc_smime_cred_id' => $cred_id));
+	}
+
+	/**
+	 * Ajax entry point for prefilling the "Create self-signed certificate"/"Export CSR" DN-entry
+	 * dialog from the target account owner's own addressbook contact, so the user doesn't have
+	 * to retype details EGroupware already has - found live 2026-09-01: every field was always
+	 * blank regardless of the account owner's own AB entry.
+	 *
+	 * Uses the exact same access check as ajax_smimeCreateKeypair() - the dialog only ever asks
+	 * for these defaults right before offering to create a certificate for the same account, so
+	 * the same "who may act on behalf of whom" rule applies.
+	 *
+	 * @param array $_data 'acc_id', optional 'called_for'
+	 * @param string $etemplate_exec_id
+	 */
+	public function ajax_smimeCertDefaults($_data, $etemplate_exec_id)
+	{
+		Api\Etemplate\Request::csrfCheck($etemplate_exec_id, __METHOD__, func_get_args());
+
+		$response = Api\Json\Response::get();
+		if (empty($_data['acc_id']) ||
+			!($account_id = self::verifySmimeAccountAccess($_data['acc_id'], $_data['called_for'] ?? null, $this->is_admin)))
+		{
+			$response->data(array());
+			return;
+		}
+		$AB_bo = new addressbook_bo();
+		if (!($contact = $AB_bo->read('account:'.$account_id)))
+		{
+			$response->data(array());
+			return;
+		}
+		$response->data(array_filter(array(
+			'commonName' => $contact['n_fn'] ?? null,
+			'emailAddress' => $contact['email'] ?? $contact['email_home'] ?? null,
+			'organizationName' => $contact['org_name'] ?? null,
+			'organizationalUnitName' => $contact['org_unit'] ?? null,
+			'localityName' => $contact['adr_one_locality'] ?? null,
+			'stateOrProvinceName' => $contact['adr_one_region'] ?? null,
+			// already a 2-letter ISO code in storage, unlike adr_one_countryname (the full name)
+			'countryName' => $contact['adr_one_countrycode'] ?? null,
+		)));
 	}
 
 	/**
@@ -2228,9 +2309,10 @@ class admin_mail
 	 *  as collected by the "Create certificate" dialog
 	 * @param Etemplate $tpl
 	 * @param int $account_id account to store the key for
+	 * @param bool $is_admin =false see save_smime_key()'s docblock
 	 * @return int|null cred_id or null on error
 	 */
-	private static function generate_smime_key(array $content, Etemplate $tpl, $account_id)
+	private static function generate_smime_key(array $content, Etemplate $tpl, $account_id, bool $is_admin=false)
 	{
 		$dn = json_decode($content['smime_gen_dn'] ?? '', true) ?: array();
 		$passphrase = !empty($dn['passphrase']) ? $dn['passphrase'] : null;
@@ -2256,7 +2338,7 @@ class admin_mail
 			return null;
 		}
 		$AB_bo = new addressbook_bo();
-		$AB_bo->set_smime_keys(array($dn['emailAddress'] => $cert_data['cert']));
+		self::reportSmimeAddressbookResult($AB_bo->set_smime_keys(array($dn['emailAddress'] => $cert_data['cert']), $is_admin));
 		return Mail\Credentials::write($content['acc_id'], $dn['emailAddress'], $p12, Mail\Credentials::SMIME, $account_id);
 	}
 
@@ -2284,9 +2366,10 @@ class admin_mail
 	 *  'acc_smime_cred_id'
 	 * @param Etemplate $tpl
 	 * @param int $account_id
+	 * @param bool $is_admin =false see save_smime_key()'s docblock
 	 * @return int|null new cred_id or null on error
 	 */
-	private static function import_smime_cert(array $content, Etemplate $tpl, $account_id)
+	private static function import_smime_cert(array $content, Etemplate $tpl, $account_id, bool $is_admin=false)
 	{
 		if (empty($content['acc_smime_cred_id']))
 		{
@@ -2368,7 +2451,7 @@ class admin_mail
 		$smime = new Mail\Smime;
 		$email = $smime->getEmailFromKey($cert);
 		$AB_bo = new addressbook_bo();
-		$AB_bo->set_smime_keys(array($email => $cert));
+		self::reportSmimeAddressbookResult($AB_bo->set_smime_keys(array($email => $cert), $is_admin));
 		return Mail\Credentials::write($content['acc_id'], $email, $p12, Mail\Credentials::SMIME, $account_id,
 			$content['acc_smime_cred_id']);
 	}

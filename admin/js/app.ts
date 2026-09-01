@@ -1570,8 +1570,13 @@ export class AdminApp extends EgwApp
 	wizard_sieve_ssl_onchange(_event, _widget)
 	{
 		var ssl_type = _widget.get_value();
+		// Sieve config for a JMAP account comes from the JMAP session itself, not a separate
+		// ManageSieve connection - selecting "JMAP (https/http)" here must default to the JMAP
+		// port (443/80), same as wizard_imap_ssl_onchange(), not the ManageSieve-specific
+		// 5190/4190 defaults - found live 2026-09-01.
 		this.et2.getWidgetById('acc_sieve_port').set_value(
-			ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 5190 : 4190);
+			ssl_type == this.JMAP_HTTPS ? 443 : (ssl_type == this.JMAP_HTTP ? 80 :
+			(ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 5190 : 4190)));
 		this.wizard_sieve_onchange(_event, _widget);
 	}
 
@@ -1784,6 +1789,11 @@ export class AdminApp extends EgwApp
 	 * Open the certificate-details dialog and, on confirm, ask the server to
 	 * generate a new S/MIME private key + (self-signed) certificate.
 	 *
+	 * Prefills the dialog from the target account owner's own addressbook
+	 * contact (ajax_smimeCertDefaults()) - found live 2026-09-01, every field
+	 * was previously always blank regardless of what EGroupware already knew
+	 * about that user.
+	 *
 	 * @param action 'selfsigned' just creates and stores the certificate.
 	 *  'csrkey' does the same, then immediately downloads a CSR for the new
 	 *  key (called from smime_exportCsr() when no key is stored yet), so a
@@ -1791,6 +1801,26 @@ export class AdminApp extends EgwApp
 	 *  "Import certificate".
 	 */
 	private smime_generateKey(action : 'selfsigned'|'csrkey')
+	{
+		var self = this;
+		var acc_id = self.et2.getArrayMgr("content").getEntry('acc_id');
+		var called_for = self.et2.getArrayMgr("content").getEntry('called_for');
+
+		egw.json('admin.admin_mail.ajax_smimeCertDefaults',
+			[{acc_id: acc_id, called_for: called_for}, self.et2.getInstanceManager().etemplate_exec_id],
+			function(_defaults)
+			{
+				self.smime_showGenerateKeyDialog(action, acc_id, called_for, _defaults || {});
+			}
+		).sendRequest(true);
+	}
+
+	/**
+	 * Build and show the certificate-details dialog, prefilled with _defaults -
+	 * split out of smime_generateKey() since fetching those defaults is async
+	 * (see there).
+	 */
+	private smime_showGenerateKeyDialog(action : 'selfsigned'|'csrkey', acc_id, called_for, _defaults : object)
 	{
 		var self = this;
 		let dialog = new Et2Dialog("mail");
@@ -1822,10 +1852,9 @@ export class AdminApp extends EgwApp
 				}
 				if (!isValid) return false;
 
-				var acc_id = self.et2.getArrayMgr("content").getEntry('acc_id');
 				var data = Object.assign({}, _value, {
 					acc_id: acc_id,
-					called_for: self.et2.getArrayMgr("content").getEntry('called_for'),
+					called_for: called_for,
 				});
 				egw.json('admin.admin_mail.ajax_smimeCreateKeypair',
 					[data, self.et2.getInstanceManager().etemplate_exec_id],
@@ -1837,6 +1866,17 @@ export class AdminApp extends EgwApp
 						}
 						self.smimeKeyCreated = true;
 						self.smime_setKeyState(true);
+						// keep the outer form's own data model in sync too - this ajax call
+						// runs outside the normal edit()/save flow, so without this a
+						// subsequent Apply/Save still submits the OLD (empty)
+						// acc_smime_cred_id, and the server re-derives hide_smime_upload as
+						// if no key existed yet, undoing smime_setKeyState() above (found
+						// live 2026-09-01: buttons reverted to their pre-creation state
+						// after Apply, only fixed by reopening the wizard). acc_smime_cred_id
+						// has no widget of its own (a pure round-tripped content value), so
+						// there's no set_value() to call - et2_arrayMgr has no public setter
+						// either, mutate its data object directly.
+						self.et2.getArrayMgr('content').data.acc_smime_cred_id = _data.acc_smime_cred_id;
 
 						if (action == 'csrkey')
 						{
@@ -1856,9 +1896,7 @@ export class AdminApp extends EgwApp
 				{label: this.egw.lang("Cancel"), id: "cancel", image: "cancel"}
 			],
 			value: {
-				content: {
-					value: ''
-				}
+				content: _defaults
 			},
 			template: 'admin.mailaccount.smimecertgen',
 			resizable: false,

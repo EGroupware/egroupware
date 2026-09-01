@@ -124,6 +124,55 @@ class Jmap extends Mail\Imap
 	}
 
 	/**
+	 * JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): master/admin-user
+	 * credential checking (Dovecot's "user%master" login syntax, see adminConnection() above) is
+	 * a classic-IMAP-protocol concept - without this override, checkAdminConnection() falls
+	 * through to the inherited Mail\Imap implementation, which unconditionally builds a raw
+	 * Horde_Imap_Client_Socket against acc_imap_host/acc_imap_port. For a JMAP account those hold
+	 * the JMAP(S) endpoint (eg. port 443), not a real IMAP port, so the check always speaks the
+	 * wrong protocol and fails confusingly - found live 2026-09-01, also observed to abort the
+	 * whole account save (S/MIME key storage included) until admin_mail::edit()'s own
+	 * try/catch around this call was separately broadened to \Throwable.
+	 *
+	 * Checks the credentials via JMAP instead (the actual protocol/port this account uses), the
+	 * same way real usage already authenticates admin credentials to sync account information
+	 * with Stalwart. Merely authenticating as the admin username's OWN mailbox would only prove
+	 * the credentials are valid, not that they carry master/impersonation rights - ordinary,
+	 * non-master credentials would pass that check too. Instead, this authenticates as a
+	 * DIFFERENT mailbox (the account's own configured username, or the one explicitly given via
+	 * $_username) using the exact "<impersonated-user>%<admin-username>" master-login syntax
+	 * adminConnection() already builds for real usage - only genuine master credentials can
+	 * authenticate as a mailbox other than their own, so a successful connection here confirms
+	 * both validity AND admin rights in one round trip.
+	 *
+	 * @param string|bool $_username =true impersonate this mailbox, or $this->acc_imap_username
+	 *  if true (matches the base class' own contract)
+	 * @throws Api\Exception no username available to check admin rights against
+	 * @throws Api\Exception\Http authentication failed (wrong credentials, or valid credentials
+	 *  without master/impersonation rights)
+	 */
+	public function checkAdminConnection($_username=true)
+	{
+		if (!$this->acc_imap_administration)
+		{
+			return;
+		}
+		$impersonate = is_string($_username) ? $_username : $this->acc_imap_username;
+		if (empty($impersonate))
+		{
+			throw new Api\Exception(lang('No username to check admin credentials against.'));
+		}
+		$adminUsername = $impersonate.self::MASTER_SEPARATOR.$this->acc_imap_admin_username;
+		$verify = ((int)$this->acc_imap_ssl & Mail\Account::VERIFY_MASK) !== Mail\Account::VERIFY_DISABLED;
+		$accountId = null;
+		// constructing JmapHttp already performs the real JMAP session bootstrap (an authenticated
+		// HTTP request) - nothing further needs to be called to complete the check, and there's no
+		// session state worth persisting for this one-off attempt (unlike jmapClient()'s cached
+		// $this->jmap, $accountId here is a throwaway local)
+		new JmapHttp($this->jmapUrl(), $adminUsername, $this->acc_imap_admin_password, $accountId, $verify);
+	}
+
+	/**
 	 * Create mailbox string from given mailbox-name and user-name
 	 *
 	 * Admin connection in Dovecot is always for a given user, we can simply use INBOX here.
@@ -183,40 +232,49 @@ class Jmap extends Mail\Imap
 	 * returns information about a user
 	 * currently only supported information is the current quota
 	 *
-	 * @param string $_username
-	 * @return array userdata
+	 * JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): the previous
+	 * implementation called getStorageQuotaRoot('INBOX'), the raw-IMAP QUOTA extension, against
+	 * acc_imap_host/acc_imap_port - for a JMAP account those are the JMAP(S) endpoint, not a
+	 * real IMAP port, so it hung for the full connect/read timeout instead of failing fast
+	 * (found live 2026-09-01: opening the account-edit wizard for a JMAP account took ~30s for
+	 * exactly this reason, since admin_mail::edit() unconditionally calls
+	 * Mail\Account::getUserData() on every open, admin-configured or not).
+	 *
+	 * Uses the real JMAP Quota type (RFC 9425, Mail\Jmap\Quota, already exposed via
+	 * jmapClient()->getQuota()) via this account's own already-established JMAP connection
+	 * instead - $_username is unused: unlike the classic-IMAP master-login path this overrides,
+	 * a JMAP session always reports the quota for whichever account it authenticated as (this
+	 * account's own configured username). Fetching a DIFFERENT ($_username) user's quota via a
+	 * separate master-login JMAP connection isn't implemented - no reported need for it, and the
+	 * classic-IMAP path being replaced here never worked reliably for that case either (it hit
+	 * this exact same protocol-mismatch hang before even getting that far).
+	 *
+	 * @param string $_username unused, see above
+	 * @return array userdata, empty if the server doesn't advertise the quota capability or has
+	 *  no storage ("octets") quota configured
 	 */
 	function getUserData($_username)
 	{
-		if (isset($this->username)) $bufferUsername = $this->username;
-		if (isset($this->loginName)) $bufferLoginName = $this->loginName;
-		$this->username = $this->loginName = $_username;
-
-		// now disconnect to be able to reestablish the connection with the targetUser while we go on
+		unset($_username);
 		try
 		{
-			$this->adminConnection();
+			$storage = current(array_filter($this->jmapClient()->getQuota() ?: [],
+				static fn($q) => ($q['resourceType'] ?? null) === 'octets')) ?: null;
 		}
-		catch (\Exception $e)
+		catch (\Throwable $e)
 		{
-			// error_log(__METHOD__.__LINE__." Could not establish admin Connection!".$e->getMessage());
-			unset($e);
 			return array();
 		}
-
-		$userData = array();
-		// we are authenticated with master but for current user
-		if(($quota = $this->getStorageQuotaRoot('INBOX')))
+		if (!$storage)
 		{
-			$userData['quotaLimit'] = (int) ($quota['QMAX'] / 1024);
-			$userData['quotaUsed'] = (int) ($quota['USED'] / 1024);
+			return array();
 		}
-		$this->username = $bufferUsername;
-		$this->loginName = $bufferLoginName;
-		$this->disconnect();
-
-		//error_log(__METHOD__."('$_username') getStorageQuotaRoot('INBOX')=".array2string($quota).' returning '.array2string($userData));
-		return $userData;
+		// RFC 9425 "used"/"hardLimit" are in bytes - QMAX/USED (the classic IMAP shape this
+		// replaces) are in KB, keep that same unit for callers
+		return array(
+			'quotaLimit' => (int)(($storage['hardLimit'] ?? 0) / 1024),
+			'quotaUsed' => (int)(($storage['used'] ?? 0) / 1024),
+		);
 	}
 
 	/**

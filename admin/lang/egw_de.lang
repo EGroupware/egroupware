@@ -222,6 +222,7 @@ comma-separated ip addresses white-listed from above blocking (:optional number 
 command scheduled to run at %1	admin	de	Ausführung des Befehls eingeplant am/um %1
 command was run %1 on %2	admin	de	Kommando wurde um %1 auf %2 ausgeführt
 commercial: all sorts of companies	admin	de	Kommerziell: alle Arten von Firmen
+common name	admin	de	Allgemeiner Name
 config password or md5 hash from the header.inc.php	admin	de	Konfigurationspasswort oder MD5 Hash von der header.inc.php Datei
 configuration	admin	de	Konfiguration
 configuration saved.	admin	de	Die Konfiguration wurde erfolgreich gespeichert.
@@ -606,6 +607,7 @@ list current sessions	admin	de	Aktive Sitzungen anzeigen
 list of current users	admin	de	Liste der gegenwärtigen Benutzer
 log user-agent and action of changes in history-log of entries	admin	de	Protokolliere Browser-Typ und -Aktion von Änderungen in der Historie der Einträge
 logged out	admin	de	Abgemeldet
+locality	admin	de	Ort
 login history	admin	de	Login-Kontrolle
 login id	admin	de	Benutzername
 login message	admin	de	Meldung der Anmelde-Seite
@@ -691,6 +693,7 @@ openapi configuration	admin	de	OpenAPI Konfiguration
 operating system	admin	de	Betriebssystem
 order	admin	de	Reihenfolge
 organisation	admin	de	Organisation
+organizational unit	admin	de	Abteilung
 other security configuration	admin	de	Andere sicherheitsrelevante Konfigurationen
 outbound	admin	de	Ausgehend
 own categories	admin	de	Eigene Kategorien
@@ -763,6 +766,7 @@ remote instance saved	admin	de	Remote Instanz gespeichert.
 remove	admin	de	Entfernen
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
+repeat passphrase	admin	de	Passphrase wiederholen
 requested	admin	de	Angefordert
 required pear class mail/mimedecode.php not found.	admin	de	Die benötigte PEAR-Klasse Mail/mimeDecode.php wurde nicht gefunden.
 required to embed egroupware via iframe eg. for lti	admin	de	Notwendig um EGroupware per iFrame einzubetten z.B. für LTI
@@ -863,6 +867,7 @@ standard smtp-server	admin	de	Standard SMTP-Server
 start	admin	de	Start
 start testjob!	admin	de	Test-Job starten!
 starts with	admin	de	Startet mit
+state or province	admin	de	Bundesland/Provinz
 strictly required, user can not login without	admin	de	Unbedingt benötigt, Benutzer können sich ohne nicht mehr anmelden
 submit changes	admin	de	Änderungen speichern
 submit displayed information?	admin	de	Angezeigte Informationen übertragen
