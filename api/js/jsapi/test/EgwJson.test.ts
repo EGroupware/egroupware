@@ -440,6 +440,49 @@ describe('egw_jsonq.js (jsonq)', () =>
 		assert.equal(await p2, 'result-two');
 	});
 
+	it('rejects only the failing job\'s promise, leaving a sibling job in the same batch to resolve normally', async() =>
+	{
+		// Companion to QueueIsolationTest.php: Api\Json\Request::parseRequest()'s
+		// api.queue loop isolates one job throwing server-side into that job's own
+		// {type: 'error', data: <message>} entry (Msg::error()) instead of aborting
+		// the whole batch - this is the client-side half, turning that entry into a
+		// rejection for just that job's own promise.
+		const pOk = env.egw().jsonq('menu.ok', [1]);
+		const pFails = env.egw().jsonq('menu.fails', [2]);
+
+		await wait(150);
+
+		const jobs = JSON.parse(env.fetchCalls[0].init.body).request.parameters[0];
+		const okUid = Object.keys(jobs).find(uid => jobs[uid].menuaction === 'menu.ok');
+		const failsUid = Object.keys(jobs).find(uid => jobs[uid].menuaction === 'menu.fails');
+
+		env.fetchCalls[0].resolve({
+			response: [{
+				type: 'data',
+				data: {
+					[okUid]: [{type: 'data', data: 'ok-result'}],
+					[failsUid]: [{type: 'error', data: 'boom'}]
+				}
+			}]
+		});
+
+		assert.equal(await pOk, 'ok-result');
+		let rejection;
+		try
+		{
+			await pFails;
+		}
+		catch (e)
+		{
+			rejection = e;
+		}
+		// Not assert.instanceOf(rejection, Error): jsonq() is constructed inside
+		// the iframe's own realm (see the AbortSignal comment above), so a plain
+		// instanceOf check against this file's own Error would fail cross-realm.
+		assert.equal(rejection.constructor.name, 'Error');
+		assert.equal(rejection.message, 'boom');
+	});
+
 	it('calls callbeforesend just before the batch is sent, allowing parameters to be modified', async() =>
 	{
 		const callbeforesend = sinon.stub().callsFake((params : any[]) => { params.push('extra'); });

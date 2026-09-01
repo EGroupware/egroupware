@@ -131,7 +131,21 @@ class Request
 			foreach($parameters[0] as $uid => $data)
 			{
 				//error_log("$uid: menuaction=$data[menuaction], parameters=".array2string($data['parameters']));
-				$this->handleRequest($data['menuaction'], (array)$data['parameters']);
+				try {
+					$this->handleRequest($data['menuaction'], (array)$data['parameters']);
+				}
+				// one queued job failing must NOT abort the whole batch and strand every other
+				// job's promise unresolved on the client - isolate it and report it as that job's
+				// own response instead (see Jsonq.jsonqSend() "error" handling on the client side)
+				catch (\Throwable $e)
+				{
+					$headline = null;
+					if (function_exists('_egw_log_exception'))
+					{
+						_egw_log_exception($e, $headline);
+					}
+					$response->error($headline ? $headline."\n\n".$e->getMessage() : $e->getMessage());
+				}
 				$responses[$uid] = $response->initResponseArray();
 				//error_log("responses[$uid]=".array2string($responses[$uid]));
 			}

@@ -138,6 +138,13 @@ class Jsonq implements JsonqModule
 									// Data was packed in response
 									job.resolve(value.data);
 								}
+								else if(value.type && value.type === "error")
+								{
+									// This job threw server-side inside an api.queue batch (see
+									// Api\Json\Request::parseRequest()) - reject just this job's own
+									// promise, the other queued jobs still resolve independently
+									job.reject(new Error(value.data));
+								}
 								else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
 								{
 									// Just raw data
@@ -195,8 +202,9 @@ class Jsonq implements JsonqModule
 			parameters: _parameters ? [].concat(_parameters) : [],
 			callbeforesend: _callbeforesend && _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
 		};
-		let promise : any = new Promise(resolve => {
+		let promise : any = new Promise((resolve, reject) => {
 			this.#jsonqQueue[uid].resolve = resolve;
+			this.#jsonqQueue[uid].reject = reject;
 		});
 		// make it chainable in the *current* document's realm: our caller may well be a popup
 		// whose own realm is gone, and a reaction belonging to a destroyed document is never
