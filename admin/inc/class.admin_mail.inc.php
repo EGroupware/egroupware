@@ -1857,6 +1857,44 @@ class admin_mail
 				lang('Required to export or import a certificate for this key'));
 		}
 
+		// Opportunistic addressbook resync (found live 2026-09-02, ralf: "we should check it has a
+		// matching public key, and show a warning it's not matching und the user should simply save
+		// the mail-account to update/refresh the public key") - only for the CURRENT user's own
+		// account: an admin editing someone ELSE's account via "called_for" has no way to know that
+		// other user's passphrase, so can neither decrypt-to-compare nor fix anything here anyway.
+		// Covers exactly the case found live: an addressbook-write ACL failure (since fixed)
+		// silently left the addressbook holding a stale certificate after a key rotation, with no
+		// other way to notice (get_acc_smime()'s own OWN account/credential lookup is unaffected -
+		// only OTHER code reading the addressbook's separate copy, eg. outgoing signing/encryption's
+		// own get_smime_keys() call, was silently using the stale one) or fix it short of
+		// generating/importing a whole new certificate. Only actually decrypts (and only actually
+		// writes, if genuinely mismatched) when a passphrase happens to be available right now -
+		// either just given on this very save, or still session-cached from recent S/MIME use
+		// (Smime::get_acc_smime()'s own fallback) - silently skipped otherwise, self-healing on
+		// whichever later save/view happens to have one available.
+		//
+		// Deliberately does NOT gate on $content['acc_smime_cred_id'] - unlike its neighbours just
+		// above, that's only ever populated as a side effect of an upload/generate/import action IN
+		// THIS SAME REQUEST (see the 3 assignments above), never hydrated from storage on a plain
+		// page load (found live 2026-09-02: opening the account showed no warning at all, even with
+		// the passphrase already session-cached) - get_acc_smime() below is the authoritative check
+		// either way, so there's nothing worth pre-filtering on here.
+		if ($account_id == $GLOBALS['egw_info']['user']['account_id'])
+		{
+			$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], '', $account_id);
+			if (!empty($acc_smime['cert']))
+			{
+				$smime = new Mail\Smime();
+				$email = $smime->getEmailFromKey($acc_smime['cert']);
+				$AB_bo = new addressbook_bo();
+				$stored = $AB_bo->get_smime_keys($email)[strtolower($email)] ?? null;
+				if ($stored === null || trim($stored) !== trim($acc_smime['cert']))
+				{
+					self::reportSmimeAddressbookResult($AB_bo->set_smime_keys([$email => $acc_smime['cert']], $this->is_admin));
+				}
+			}
+		}
+
 		// Uploading a p12 only makes sense without an existing key - smimeGenerate itself is
 		// fully hidden (not just grayed) once readonly, via its hideOnReadonly="true" template
 		// attribute (Et2Button/ButtonMixin.ts); export/delete only make sense with one; export

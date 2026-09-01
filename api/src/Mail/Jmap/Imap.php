@@ -2317,6 +2317,10 @@ class Imap extends Jmap\Base
 		// egw.set_preference() call, mail/js/app.ts) - no server-side duplicate here, which would
 		// only add an inconsistent second write path gated differently (always-on-submit
 		// client-side vs only-on-confirmed-sign/encrypt here)
+		if ($passphrase !== '')
+		{
+			Api\Mail\Smime::resyncAddressbookCert((int)$accountId, $passphrase);
+		}
 		if ($type === Api\Mail\Smime::TYPE_SIGN)
 		{
 			// multipart/signed can't be expressed via a single {type, blobId} bodyStructure leaf

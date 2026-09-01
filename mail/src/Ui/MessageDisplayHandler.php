@@ -444,6 +444,7 @@ class MessageDisplayHandler
 				if ($smimePassphrase !== '')
 				{
 					Api\Cache::setSession('mail', 'smime_passphrase', $smimePassphrase, (int)($_POST['smime_pass_exp']?:10) * 60);
+					Mail\Smime::resyncAddressbookCert((int)$this->ui->mail_bo->profileID, (string)$smimePassphrase);
 				}
 				$body = $result['body'];
 				if (($smime = $result['smime']))
@@ -589,6 +590,7 @@ class MessageDisplayHandler
 				if ($passphrase !== '')
 				{
 					Api\Cache::setSession('mail', 'smime_passphrase', $passphrase, max(1, $passExpMinutes) * 60);
+					Mail\Smime::resyncAddressbookCert((int)$profileID, $passphrase);
 				}
 				return ['type' => 'smime', 'body' => $result['body'], 'smime' => $result['smime']];
 			}

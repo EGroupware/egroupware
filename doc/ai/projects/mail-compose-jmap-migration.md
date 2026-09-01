@@ -471,11 +471,47 @@ part (`Horde_Mime_Part::parseMessage()` + `Mailer::setBasePart()`) instead of le
 Bcc-stripping-for-the-wire-but-not-storage automatically either way. Not yet live-tested against
 either backend - next up for ralf to verify.
 
-**Still open**: live verification of all three S/MIME types against the IMAP-shim account
-specifically (only Stalwart has been tested so far), and sign-only's own first live test against
-either backend. No PHPUnit coverage either (real sign/encrypt needs an actual configured S/MIME
-certificate + private key, unlike `ImapBuildMailerTest.php`'s pure-ish approach - a viable test
-fixture wasn't set up this session).
+**Sign-only LIVE-VERIFIED end-to-end 2026-09-02** against real Stalwart, after fixing two more real
+bugs found getting there (both genuine `Api\Mailer`/addressbook bugs, not JMAP-layer bugs - see
+their own project-doc-adjacent commits):
+
+1. **`Api\Mailer::getRaw()` double-wrap bug** - the actual root cause of a garbled received body
+   (rendered like a bounce/NDM): `getRaw()` only re-synced the message's top-level headers
+   (Content-Type/Message-ID/Date/etc.) from the base MIME part when `getBasePart()` THREW (ie. no
+   base part set yet) - but `smimeEncrypt()` sets `$this->_base` DIRECTLY
+   (`$this->_base = $smime->signMIMEPart(...)`), bypassing that check entirely, so for TYPE_SIGN
+   (which calls `getRaw()` right after `smimeEncrypt()`, with no real `send()` in between) the sync
+   never happened at all - the signed multipart's own content ended up nested, headers and all, as
+   the "body" of an outer envelope still carrying whatever `$this->_headers` had BEFORE signing
+   (missing Content-Type entirely, defaulting to `text/plain`). New `Api\Mailer::$_headersSynced`
+   flag tracks whether `_send()` (a real send, or `getRaw()`'s own null-transport fallback) has
+   actually run against the CURRENT `$_base`, reset to `false` by `smimeEncrypt()` whenever it
+   reassigns `$_base` - `getRaw()` now checks that flag instead of `getBasePart()`'s throw.
+   encrypt-only/sign+encrypt were never affected (they extract the body entity directly via
+   `getBasePart()`/`getContents()`, never call `getRaw()` at all).
+
+2. **Addressbook cert desync, unrelated to the migration itself but blocking real-world testing**:
+   `addressbook_bo::get_smime_keys()`/`set_smime_keys()` are a SEPARATE store (a VFS-file-backed
+   contact field) from `Mail\Smime::get_acc_smime()`'s own account credential/p12 - normally the
+   same certificate, kept in sync only by `admin_mail.inc.php`'s cert-generate/import/upload calls
+   to `set_smime_keys()`. Found live: an addressbook-write ACL failure during a real key rotation
+   (since separately fixed) left the addressbook holding the OLD certificate indefinitely, with
+   nothing to notice or fix it - outgoing signing kept embedding the stale cert (invalid signature
+   for recipients) and encrypting-to-self kept using the stale PUBLIC key (silently "worked" only
+   because the account's own retained `extracerts` happened to still include that exact old key).
+   Two fixes, both silently self-healing whenever the passphrase happens to be available (ralf:
+   session-write instability elsewhere - separate, actively-changing work - made relying on
+   `get_acc_smime()`'s session-cached-passphrase fallback alone unreliable):
+   - `admin_mail::edit()`: opportunistic check+resync on every view/save of the CURRENT user's own
+     mail account (ralf: "if there is a p12 for the current user (not admin impersonated), we
+     should check it has a matching public key... user should simply save the mail-account to
+     update/refresh").
+   - New shared `Mail\Smime::resyncAddressbookCert()`, called at the moment a passphrase is
+     actually PROVEN to work (decrypt success in `resolveSpecialCaseBody()`/
+     `tryJmapNativeSpecialCase()`, sign/encrypt success in `smimeEncryptEmailProperties()`) -
+     immune to session-cache timing entirely, since the passphrase is still a local variable there.
+     Deliberately silent (no toast) unlike the account-settings version, since it fires from
+     otherwise-unrelated view/send actions.
 
 Companion to [[mail-jmap-imap-inversion]].
 

@@ -50,6 +50,24 @@ class Mailer extends Horde_Mime_Mail
 	protected $cc;
 	protected $bcc;
 	protected $replyto;
+
+	/**
+	 * Whether _send() (a real send, or getRaw()'s own null-transport fallback) has actually run yet
+	 * and therefore synced $this->_headers' Content-Type/MIME-Version/Message-ID/Date/User-Agent
+	 * from the base part - see getRaw()'s own docblock for why this can't just check whether $_base
+	 * is set: smimeEncrypt() sets it DIRECTLY ($this->_base = $smime->signMIMEPart(...)), bypassing
+	 * _send() entirely, so getRaw()'s OLD "does getBasePart() throw" check never caught that case at
+	 * all - found live 2026-09-02 via a genuinely double-wrapped sign-only send (JmapImap::
+	 * smimeEncryptEmailProperties()'s TYPE_SIGN path calls getRaw() right after smimeEncrypt(), with
+	 * no real send() in between): the outgoing message's own top-level headers ended up as
+	 * whatever $this->_headers already had (From/To/Subject only - no Content-Type, no Message-ID)
+	 * concatenated with the base part's own content with ITS OWN headers suppressed, so mail clients
+	 * saw a bare (wrongly implied text/plain) top-level entity whose "body" was the base part's
+	 * lower-level content with no Content-Type of its own to make sense of.
+	 *
+	 * @var bool
+	 */
+	private $_headersSynced = false;
 	/**
 	 * Translates between interal Horde_Mail_Rfc822_List attributes and header names
 	 *
@@ -766,6 +784,7 @@ class Mailer extends Horde_Mime_Mail
 
 		/* Remember the basepart */
 		$this->_base = $basepart;
+		$this->_headersSynced = true;
     }
 
 	/**
@@ -795,19 +814,22 @@ class Mailer extends Horde_Mime_Mail
 	 * $this->send(new Horde_Mail_Transport_Null()),
 	 * if no base-part is set, because send is not called before.
 	 *
+	 * Checks $this->_headersSynced, NOT whether getBasePart() throws (found live 2026-09-02: a
+	 * genuinely double-wrapped sign-only message - smimeEncrypt() sets $this->_base DIRECTLY, so
+	 * getBasePart() never throws even though $this->_headers was never actually synced with it,
+	 * silently skipping the null-transport send() below entirely) - see $_headersSynced's own
+	 * docblock for the full story.
+	 *
      * @param  boolean $stream  If true, return a stream resource, otherwise
      * @return stream|string  The raw email data.
      */
 	function getRaw($stream=true)
 	{
-		try {
-			$this->getBasePart();
-		}
-		catch(Horde_Mail_Exception $e)
+		if (!$this->_headersSynced)
 		{
-			unset($e);
 			self::checkSetRequiredHeaders($this->_headers);
 			parent::send(new Horde_Mail_Transport_Null(), true);	// true: keep Message-ID
+			$this->_headersSynced = true;
 		}
 		// code copied from Horde_Mime_Mail::getRaw(), as there is no way to inject charset in
 		// _headers->toString(), which is required to encode headers containing non-ascii chars correct
@@ -1214,6 +1236,12 @@ class Mailer extends Horde_Mime_Mail
 				$this->_base = $smime->signAndEncryptMIMEPart($this->_base, $sign_params, $encrypt_params);
 				break;
 		}
+		// $this->_headers was, if anything, only ever synced (by the getBasePart()-throws fallback
+		// above, or an earlier real send()) against the PRE-sign/encrypt $_base - now stale against
+		// the NEW one just assigned above, so a subsequent getRaw() must re-sync (see
+		// $_headersSynced's own docblock for the live bug this fixes: a genuinely double-wrapped
+		// sign-only message, since getRaw()'s OLD check never noticed $_base had changed under it)
+		$this->_headersSynced = false;
 		return true;
 	}
 }

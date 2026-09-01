@@ -643,4 +643,58 @@ class Smime extends Horde_Crypt_Smime
 		}
 		return false;
 	}
+
+	/**
+	 * Opportunistically resync the addressbook's own separate copy of this account's S/MIME
+	 * certificate (addressbook_bo::get_smime_keys()/set_smime_keys(), a VFS-file-backed contact
+	 * field - NOT the same storage as get_acc_smime()'s own Credentials/p12) - call this whenever
+	 * $passphrase is already in hand as a plain variable, right after it's been PROVEN to work
+	 * (a confirmed decrypt, or a confirmed sign/encrypt), rather than depending on
+	 * get_acc_smime()'s own session-cached-passphrase fallback surviving to a LATER, separate
+	 * request (found live 2026-09-02: session write/close instability elsewhere in the codebase -
+	 * unrelated, actively-changing work - made that fallback an unreliable trigger for
+	 * admin_mail::edit()'s own equivalent check, which only ever runs on a later account-settings
+	 * page load).
+	 *
+	 * Covers the case found live 2026-09-02: an addressbook-write ACL failure (since fixed) left
+	 * the addressbook holding a stale certificate indefinitely after a key rotation, silently
+	 * breaking outgoing signing (embeds the wrong cert - recipients see an unverifiable signature)
+	 * and encryption to this account's own address (encrypts under a possibly-retired public key)
+	 * with no other way to notice or fix it short of generating/importing a whole new certificate.
+	 *
+	 * Deliberately silent (no message shown, all failures swallowed) - unlike
+	 * admin_mail::edit()'s own resync (shown while the user is looking at S/MIME settings anyway),
+	 * this fires from otherwise-unrelated actions (viewing/sending mail), where a random "public
+	 * key added to addressbook" toast would be surprising and where a failure here should never
+	 * block the actual view/send that triggered it.
+	 *
+	 * @param int $acc_id
+	 * @param string $passphrase already-confirmed-working passphrase
+	 * @param int|null $account_id see get_acc_smime()'s own docblock - only needed when acting on
+	 *  behalf of another user
+	 * @return void
+	 */
+	public static function resyncAddressbookCert(int $acc_id, string $passphrase, ?int $account_id=null) : void
+	{
+		try
+		{
+			$acc_smime = self::get_acc_smime($acc_id, $passphrase, $account_id);
+			if (empty($acc_smime['cert']))
+			{
+				return;
+			}
+			$smime = new self();
+			$email = $smime->getEmailFromKey($acc_smime['cert']);
+			$AB_bo = new \addressbook_bo();
+			$stored = $AB_bo->get_smime_keys($email)[strtolower($email)] ?? null;
+			if ($stored === null || trim($stored) !== trim($acc_smime['cert']))
+			{
+				$AB_bo->set_smime_keys([$email => $acc_smime['cert']]);
+			}
+		}
+		catch (\Throwable $e)
+		{
+			_egw_log_exception($e);
+		}
+	}
 }
