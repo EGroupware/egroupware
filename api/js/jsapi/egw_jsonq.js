@@ -99,6 +99,16 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 									// Data was packed in response
 									job.resolve(value.data);
 								}
+								else if(value.type && value.type === "error")
+								{
+									// This job threw server-side inside an api.queue batch (see
+									// Api\Json\Request::parseRequest()) - reject just this job's own
+									// promise, the other queued jobs still resolve independently
+									if (typeof job.reject === 'function')
+									{
+										job.reject(new Error(value.data));
+									}
+								}
 								else if (value && typeof value.type === "undefined" && typeof value.data === "undefined")
 								{
 									// Just raw data
@@ -155,8 +165,9 @@ egw.extend('jsonq', egw.MODULE_GLOBAL, function()
 				parameters: _parameters ? [].concat(_parameters) : [],
 				callbeforesend: _callbeforesend && _sender ? _callbeforesend.bind(_sender) : _callbeforesend,
 			};
-			let promise = new Promise(resolve => {
+			let promise = new Promise((resolve, reject) => {
 				jsonq_queue[uid].resolve = resolve;
+				jsonq_queue[uid].reject = reject;
 			});
 			if (typeof _callback === 'function')
 			{
