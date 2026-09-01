@@ -35,6 +35,23 @@ export class MailCompose
 	private readonly isJmapMode : boolean = new URLSearchParams(window.location.search).get('jmap') === '1';
 
 	/**
+	 * True for the duration of bootstrapCompose() (and everything it awaits) - guards
+	 * submitOnChange()'s 'mailaccount' branch against a real race found live 2026-09-01:
+	 * selectIdentityForRecipients() (called from bootstrapReply()/bootstrapComposeAsNew()) sets
+	 * the mailaccount widget's value, which - like any other programmatic set_value() - fires a
+	 * genuine 'change' event (Et2Select dispatches one regardless of whether the change was user-
+	 * or code-driven), triggering this SAME submitOnChange() un-awaited, concurrently with
+	 * bootstrap's own later mimeType/quote/signature setup. Both paths end up calling
+	 * applySignatureForCurrentIdentity(), which writes into whichever body widget mimeType
+	 * currently resolves to - whichever finishes last wins, so the side-effect path could clobber
+	 * a correctly-quoted reply body with an empty-pristine, wrong-mimeType-targeted one (reported:
+	 * "I got HTML for a plain-text original mail, while I should have gotten plain-text"). The
+	 * bootstrap methods already handle identity/signature/mimeType/quote insertion coherently on
+	 * their own - this flag simply skips the redundant, racy side-effect while one is in flight.
+	 */
+	private bootstrapping = false;
+
+	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - the JMAP Email id of this compose
 	 * session's own draft, once trySaveDraftViaJmap() has created one - passed back in as
 	 * saveDraft()'s existingEmailId on the NEXT autosave/save so it updates that same draft in
@@ -351,7 +368,8 @@ export class MailCompose
 			// this same case, so there's nothing stale server-side to fight with here either way.
 			if (widgetId === 'mailaccount' && this.isJmapMode)
 			{
-				void this.updateSignatureForIdentity();
+				// bootstrapping guard - see its own docblock (a real race, not just belt-and-suspenders)
+				if (!this.bootstrapping) void this.updateSignatureForIdentity();
 				return;
 			}
 			// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 (ralf, 2026-08-31: "I think
@@ -943,31 +961,39 @@ export class MailCompose
 	private async bootstrapCompose() : Promise<void>
 	{
 		if (!this.isJmapMode) return;
-		const params = new URLSearchParams(window.location.search);
-		const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | null;
-		if (from === 'forward' && params.get('mode') === 'forwardasattach')
+		this.bootstrapping = true;
+		try
 		{
-			await this.bootstrapForwardAsAttachment((params.get('id') || '').split(',').filter(Boolean));
-		}
-		else if (from === 'composeasnew' && params.get('id'))
-		{
-			await this.bootstrapComposeAsNew(params.get('id'));
-		}
-		else if (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward')
-		{
-			const sourceId = params.get('id');
-			if (sourceId)
+			const params = new URLSearchParams(window.location.search);
+			const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | null;
+			if (from === 'forward' && params.get('mode') === 'forwardasattach')
 			{
-				await this.bootstrapReply(sourceId, from);
+				await this.bootstrapForwardAsAttachment((params.get('id') || '').split(',').filter(Boolean));
+			}
+			else if (from === 'composeasnew' && params.get('id'))
+			{
+				await this.bootstrapComposeAsNew(params.get('id'));
+			}
+			else if (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward')
+			{
+				const sourceId = params.get('id');
+				if (sourceId)
+				{
+					await this.bootstrapReply(sourceId, from);
+				}
+				else
+				{
+					await this.bootstrapSignature();
+				}
 			}
 			else
 			{
 				await this.bootstrapSignature();
 			}
 		}
-		else
+		finally
 		{
-			await this.bootstrapSignature();
+			this.bootstrapping = false;
 		}
 		// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the widget set_value() calls
 		// above (recipient/subject/body/signature) mark the form dirty exactly like a real user
