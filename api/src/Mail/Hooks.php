@@ -23,6 +23,9 @@ class Hooks
 	 * Password changed hook --> unset cached objects, as password might be used for email connection
 	 *
 	 * @param array $hook_data
+	 * @param int $hook_data['account_id'] numerical id
+	 * @param string $hook_data['old_passwd'] cleartext old password
+	 * @param string $hook_data['new_passwd'] cleartext new password
 	 */
 	public static function changepassword($hook_data)
 	{
@@ -30,7 +33,8 @@ class Hooks
 		{
 			Credentials::changepassword($hook_data);
 		}
-		// ToDo: Jmap/Stalwart need to "know" about changed passwords to sync them to Stalwart
+		// let eg. Smtp\Stalwart know about the changed password, to sync it
+		self::run_plugin_hooks('changePassword', $hook_data);
 	}
 
     /**

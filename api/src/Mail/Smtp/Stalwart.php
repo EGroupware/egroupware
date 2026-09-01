@@ -66,6 +66,39 @@ class Stalwart extends Sql
 	}
 
 	/**
+	 * Hook called when an (existing) account is edited --> sync it to Stalwart
+	 *
+	 * Mail\Smtp::updateAccount() (the base class this extends) is a plain no-op stub - Stalwart
+	 * needs to actually sync changed account data (incl. the password, via setUserData()'s own
+	 * "credentials" handling - see changePassword()'s docblock for why that's the right value to
+	 * send), same as it does for account creation.
+	 *
+	 * Deliberately does NOT just reuse addAccount()'s own mailLocalAddress computation
+	 * ($data['account_email'] ?: Api\Accounts::email($firstname, $lastname, $lid, ...)) for an
+	 * account that's already provisioned in Stalwart: that computation returns null whenever
+	 * account_email is unset on the core account AND email_address_format is configured 'none'
+	 * (confirmed live on this install, for accounts incl. real ones like "test3") - setUserData()
+	 * then silently no-ops on empty($_mailLocalAddress), so nothing (not just the password) would
+	 * ever sync for such an account. Reusing the address Stalwart itself already has on file
+	 * avoids re-deriving it at all for the (normal) "account already exists there" case.
+	 *
+	 * @param array $data values for keys 'account_email', 'account_firstname', 'account_lastname', 'account_lid', 'account_id'
+	 * @return bool
+	 */
+	function updateAccount($data)
+	{
+		$account_id = !empty($data['account_id']) ? $data['account_id'] :
+			$this->accounts->name2id($data['account_lid'], 'account_lid', 'u');
+
+		if (($userData = $this->getUserData($account_id)) && !empty($userData['stalwart']['id']))
+		{
+			return $this->setUserData($account_id, [], [], null, self::MAIL_ENABLED, $userData['mailLocalAddress'], null);
+		}
+		// not (yet) provisioned in Stalwart at all - fall back to addAccount()'s own derivation
+		return $this->addAccount($data);
+	}
+
+	/**
 	 * Get the data of a given user
 	 *
 	 * Multiple accounts may match, if an email address is specified.
@@ -356,6 +389,46 @@ class Stalwart extends Sql
 		));*/
 
 		return true;
+	}
+
+	/**
+	 * Hook called when a user's password gets changed --> sync it to Stalwart, if he already has an account there
+	 *
+	 * Uses the SAME already-hashed egw_accounts.account_pwd value setUserData() sends as the account's
+	 * "credentials" secret on create/update (Api\Auth::change_password() writes the new password to
+	 * that column and invalidates the accounts cache BEFORE firing the "changepassword" hook, so this
+	 * always sees the new one) - not the hook's cleartext $data['new_passwd'], for consistency with
+	 * that existing convention (and so nothing here ever needs to handle a cleartext credential itself).
+	 *
+	 * @param array $data
+	 * @param int $data['account_id'] numerical id
+	 * @return void
+	 */
+	function changePassword(array $data)
+	{
+		if (empty($data['account_id']) || !($userData = $this->getUserData($data['account_id'])) ||
+			empty($userData['stalwart']['id']))
+		{
+			return;    // no (yet existing) Stalwart account to sync the new password to
+		}
+		$response = $this->jmapClient()->jmapCall([
+			['x:Account/set', [
+				'update' => [
+					$userData['stalwart']['id'] => [
+						'credentials' => (object)["0" => [    // otherwise PHP's json_encode encodes it as JSON array
+							'@type' => 'Password',
+							'secret' => $this->accounts->id2name($data['account_id'], 'account_pwd'),
+						]],
+					],
+				]], 'a'
+			],
+		], [JmapHttp::JMAP_CORE, self::USING_STALWART]);
+
+		if (!array_key_exists($userData['stalwart']['id'], $response['methodResponses'][0][1]['updated'] ?? []))
+		{
+			throw new \Exception("Error updating password for account #{$data['account_id']} in Stalwart: ".
+				json_encode($response, JSON_UNESCAPED_SLASHES));
+		}
 	}
 
 	/**
