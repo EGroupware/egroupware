@@ -955,7 +955,14 @@ class DataStorage implements DataStorageModule
 	constructor(_wnd : Window)
 	{
 		egw.registerJSONPlugin(function(this : any, type, res, req) {
-			if ((typeof res.data.uid != 'undefined') &&
+			// registered globally, so it sees every "data"-typed response app-wide - res.data is
+			// legitimately null for plenty of endpoints that just don't happen to use this {uid,
+			// data} caching convention (eg. mail.mail_ui.ajax_resolveSpecialCaseBody(), which
+			// returns null when it has nothing to resolve yet) - found live 2026-09-01, crashed
+			// resolveSpecialCaseBody()'s own response handling with "Cannot read properties of
+			// null (reading 'uid')".
+			if (res.data &&
+				(typeof res.data.uid != 'undefined') &&
 				(typeof res.data.data != 'undefined'))
 			{
 				// Store it, which will call all registered listeners
