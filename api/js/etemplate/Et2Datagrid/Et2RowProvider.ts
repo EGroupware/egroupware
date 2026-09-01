@@ -614,37 +614,48 @@ export class Et2RowProvider
 			styleNodes.unshift(rowNode as HTMLElement);
 		}
 
-		const sheets : CSSStyleSheet[] = [];
-		for(const styleNode of styleNodes)
+		// Start every node's work before awaiting any of it, so several <et2-styles src=...>
+		// on one row template fetch concurrently instead of in series. Each node still
+		// resolves to its own sheets in source order, and the flatten below preserves that.
+		const perNode = styleNodes.map((styleNode) =>
 		{
 			const inlineCss = styleNode.getAttribute("value") || styleNode.textContent || "";
-			if(inlineCss.trim())
-			{
-				try
-				{
-					const sheet = new CSSStyleSheet();
-					await sheet.replace(inlineCss);
-					sheets.push(sheet);
-				}
-				catch(e)
-				{
-					this.host.egw?.()?.debug?.("error", "Et2RowProvider: failed to parse row template styles", {
-						error: e
-					});
-				}
-			}
-
 			const src = styleNode.getAttribute("src") || "";
-			if(src)
-			{
-				const sheet = await loadStylesheet(resolveEt2StylesSrc(src, this.host.egw?.(), templateUrl));
-				if(sheet)
-				{
-					sheets.push(sheet);
-				}
-			}
-
 			styleNode.remove();
+			return this._loadStyleNodeSheets(inlineCss, src, templateUrl);
+		});
+		return (await Promise.all(perNode)).flat();
+	}
+
+	/**
+	 * Resolve one <et2-styles> node's inline CSS and/or `src` into stylesheets,
+	 * keeping inline before src as the node itself declares them.
+	 */
+	private async _loadStyleNodeSheets(inlineCss : string, src : string, templateUrl : string) : Promise<CSSStyleSheet[]>
+	{
+		const sheets : CSSStyleSheet[] = [];
+		if(inlineCss.trim())
+		{
+			try
+			{
+				const sheet = new CSSStyleSheet();
+				await sheet.replace(inlineCss);
+				sheets.push(sheet);
+			}
+			catch(e)
+			{
+				this.host.egw?.()?.debug?.("error", "Et2RowProvider: failed to parse row template styles", {
+					error: e
+				});
+			}
+		}
+		if(src)
+		{
+			const sheet = await loadStylesheet(resolveEt2StylesSrc(src, this.host.egw?.(), templateUrl));
+			if(sheet)
+			{
+				sheets.push(sheet);
+			}
 		}
 		return sheets;
 	}
