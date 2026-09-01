@@ -346,10 +346,52 @@ after every (re)load:
   fill in by widget id to seed the dialog) and `et2-column-selection-apply`'s `values` (the dialog's
   full raw result, unfiltered). `Et2Nextmatch`'s column-selection handlers forward `content`/`values`
   to `Et2NextmatchAutoRefresh.seedColumnSelection()`/`.applyColumnSelection()`, which read/write
-  `autoRefresh` and persist a changed value to the preference above. The select isn't visually disabled for
-  `disable_autorefresh` apps (legacy's dialog grayed it out) - a submitted value is just silently
-  ignored instead; closing that gap needs a way for `Et2Nextmatch` to reach into the dialog's
-  widgets, which isn't currently exposed by `openColumnSelection()`.
+  `autoRefresh` and persist a changed value to the preference above. `openColumnSelection()`'s
+  `et2-column-selection-items` event now also carries `modifications` and `sel_options` objects
+  (same by-widget-id pattern as `content`, matching the standard eTemplate dialog `value` keys) that
+  listeners fill in to reach into the dialog's widgets - eg. gray one out, hide it, or populate its
+  options - without `Et2Datagrid` needing to know about any of them. `seedColumnSelection()` uses
+  `modifications` to hide the `autoRefresh` select entirely for `disable_autorefresh` apps (there's
+  nothing to configure, so unlike legacy's grayed-out-but-visible dialog it isn't shown at all)
+  instead of silently accepting and dropping a submitted value.
+
+- **Admin "save as default/force/reset"** (the `default_preference` select next to `autoRefresh`):
+  was completely dead in the modern flow until fixed here (2026-09-01) - not just unreachable for
+  `disable_autorefresh` apps, but non-functional for everyone, and visible to non-admins too. Two
+  independent problems, both now fixed:
+  - **Not admin-gated**: legacy's dialog hid this select via `readonlys: {default_preference: !apps.admin}`;
+    the modern `.xet` field had no equivalent. `Et2Nextmatch._handleColumnSelectionItems()` now hides
+    it via `modifications` (the same mechanism used for `disable_autorefresh` above) when
+    `egw().user('apps')?.admin` is falsy.
+  - **Selecting a value did nothing**: `Nextmatch::validate()` (~line 1347) has an equivalent
+    save/force/reset block, but it's unreachable - `Et2Datagrid.openColumnSelection()`'s dialog never
+    does a real form submit (`dialog.getComplete()` returns values purely client-side), so `validate()`
+    never runs for this dialog. Even discounting that, `validate()` reads field names
+    (`nm_col_preference`/`nm_autorefresh`) from the *original 2013* programmatic-widget implementation
+    (commit `5e84ddd935`) that the 2022 static-template rewrite (commit `4318d1c0a5`) renamed to
+    `default_preference`/`autoRefresh` without updating - and even if the names matched, it writes
+    columns under the legacy `nextmatch-<pref>` comma-separated-name key, which
+    `Et2Datagrid._loadColumnPreferencesIfNeeded()` never reads (it reads its own generated
+    `<owner>-<rowTemplateId>-prefs` key, in a JSON array-of-`{key,width,hidden,customFields}` shape).
+    Do not treat `validate()`'s block as a reference for what the client currently sends or what key
+    columns belong under - it's vestigial.
+
+    Fixed with a new, dedicated ajax method, `Nextmatch::ajax_set_admin_default($exec_id, $form_name,
+    array $prefs, $action)` - admin-gated AND `exec_id`-gated (resolves the real widget/app via
+    `Etemplate\Request::read($exec_id, false)` + `Template::instance()->getElementById()`, the same
+    pattern `ajax_get_rows()` uses, rather than trusting a client-supplied app name). `$prefs` is a
+    flat preference-name => value map built entirely client-side, since each preference's key/format
+    is owned by whichever widget reads it back - not by this PHP method. `Et2Datagrid.openColumnSelection()`
+    fires it only when `values.default_preference` is truthy (unlike legacy, which re-saved the admin's
+    own selection as their personal preference on *every* submit regardless of what they picked), via
+    a new private `_maybeSaveColumnSelectionAsAdminDefault()`, using `_columnPreferenceKeyValue()`
+    (factored out of `_persistColumnPreferences()` so both write the exact same key/shape) for its own
+    columns entry. Other widgets contribute their own key/value pairs through a third by-widget-id
+    bucket on `et2-column-selection-apply`'s detail, `adminPrefs` (same pattern as `content`/
+    `modifications`/`sel_options` on the `-items` event) - `Et2NextmatchAutoRefresh.applyColumnSelection()`
+    adds the autorefresh interval, `Et2Nextmatch._handleColumnSelectionApply()` adds lettersearch
+    visibility, both unconditionally (whether they're actually used is `Et2Datagrid`'s call). Tests:
+    `Et2Datagrid.test.ts`'s "admin save-as-default action" describe block.
 
 ## Reference: settings allow-list
 

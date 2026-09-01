@@ -201,14 +201,27 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 
 	/**
 	 * Seed the column-selection dialog's `autoRefresh` field with the current
-	 * value, via the `et2-column-selection-items` event's `content` object.
+	 * value, via the `et2-column-selection-items` event's `content` object. Apps
+	 * that opted out via `disable_autorefresh` have nothing to configure here, so
+	 * the field is hidden via `modifications` instead of shown disabled (legacy's
+	 * dialog grayed it out, but there's no reason to show admins a dead control) -
+	 * either way, a submitted value must not be silently accepted and dropped.
+	 *
+	 * The admin-only `default_preference` select ("set as default"/"reset"/"force")
+	 * saves the autorefresh interval as part of the same action
+	 * (`Et2Datagrid._maybeSaveColumnSelectionAsAdminDefault()` /
+	 * `Nextmatch::ajax_set_admin_default()`), so it's hidden right along with
+	 * `autoRefresh` - there'd be nothing meaningful for it to save for these apps either.
 	 */
-	seedColumnSelection(content : Record<string, any>) : void
+	seedColumnSelection(content : Record<string, any>, modifications : Record<string, any>) : void
 	{
-		if(!this.host.settings.disable_autorefresh)
+		if(this.host.settings.disable_autorefresh)
 		{
-			content.autoRefresh = this.interval || "";
+			modifications.autoRefresh = {hidden: true};
+			modifications.default_preference = {hidden: true};
+			return;
 		}
+		content.autoRefresh = this.interval || "";
 	}
 
 	/**
@@ -217,8 +230,14 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 	 * restart the timer against it. Always stores the literal value, including
 	 * `0` for "off" - unsetting the preference instead would fall through to any
 	 * admin-configured default and silently undo the user's choice.
+	 *
+	 * Also contributes this interval's own preference key/value into `adminPrefs`
+	 * (unconditionally - whether it's actually used is `Et2Datagrid`'s call, based
+	 * on whether the admin picked anything from `default_preference`), the bucket
+	 * bundled into one admin save-as-default/force/reset action alongside the
+	 * column selection itself.
 	 */
-	applyColumnSelection(values : Record<string, any> | undefined) : void
+	applyColumnSelection(values : Record<string, any> | undefined, adminPrefs? : Record<string, any>) : void
 	{
 		if(this.host.settings.disable_autorefresh || typeof values?.autoRefresh === "undefined")
 		{
@@ -226,6 +245,10 @@ export class Et2NextmatchAutoRefresh implements ReactiveController
 		}
 		const seconds = parseInt(values.autoRefresh) || 0;
 		this.host.egw().set_preference(this.host._getAppName(), this.preferenceKey, seconds);
+		if(adminPrefs)
+		{
+			adminPrefs[this.preferenceKey] = seconds;
+		}
 		this.restart();
 	}
 }

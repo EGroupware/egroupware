@@ -3252,7 +3252,7 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 	/**
 	 * Add letter search as a pseudo-column in the root column chooser.
 	 */
-	private _handleColumnSelectionItems = (event : CustomEvent<{ columns : Et2DatagridColumnSelectionItem[], content? : Record<string, any> }>) =>
+	private _handleColumnSelectionItems = (event : CustomEvent<{ columns : Et2DatagridColumnSelectionItem[], content? : Record<string, any>, modifications? : Record<string, any> }>) =>
 	{
 		if(this._eventSourceDatagrid(event) !== this._datagrid)
 		{
@@ -3260,7 +3260,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 		if(event.detail.content)
 		{
-			this._autoRefresh.seedColumnSelection(event.detail.content);
+			this._autoRefresh.seedColumnSelection(event.detail.content, event.detail.modifications || {});
+		}
+		// Admin-only - it saves the current settings as the default/forced/reset value for
+		// every user of the app, not just this user's own preference (matches legacy's dialog,
+		// which gated the same select the same way).
+		if(!this.egw().user?.('apps')?.admin && event.detail.modifications)
+		{
+			event.detail.modifications.default_preference = {hidden: true};
 		}
 		if(!this.lettersearch)
 		{
@@ -3278,15 +3285,19 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 
 	/**
 	 * Consume the letter-search pseudo-column, and persist a changed autorefresh
-	 * interval, before real grid columns are applied.
+	 * interval, before real grid columns are applied. Also contributes this widget's
+	 * preference key/value pairs (autorefresh, lettersearch) into `adminPrefs`, the
+	 * bucket `Et2Datagrid._maybeSaveColumnSelectionAsAdminDefault()` bundles into one
+	 * admin save-as-default/force/reset action when `values.default_preference` is set -
+	 * unconditional, since that method (not this one) decides whether it's actually used.
 	 */
-	private _handleColumnSelectionApply = (event : CustomEvent<{ selectedOrder : string[], values : Record<string, any> }>) =>
+	private _handleColumnSelectionApply = (event : CustomEvent<{ selectedOrder : string[], values : Record<string, any>, adminPrefs? : Record<string, any> }>) =>
 	{
 		if(this._eventSourceDatagrid(event) !== this._datagrid)
 		{
 			return;
 		}
-		this._autoRefresh.applyColumnSelection(event.detail?.values);
+		this._autoRefresh.applyColumnSelection(event.detail?.values, event.detail?.adminPrefs);
 		if(!this.lettersearch)
 		{
 			return;
@@ -3300,6 +3311,10 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		}
 		this._lettersearchVisible = nextVisible;
 		this.egw().set_preference(this.egw().app_name(), this._lettersearchPreferenceKey, nextVisible);
+		if(event.detail?.adminPrefs)
+		{
+			event.detail.adminPrefs[this._lettersearchPreferenceKey] = nextVisible;
+		}
 		if(!nextVisible && this._filters.searchletter)
 		{
 			this.applyFilters({searchletter: false});

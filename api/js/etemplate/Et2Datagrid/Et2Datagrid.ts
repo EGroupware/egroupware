@@ -2836,19 +2836,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 
 
 	/**
-	 * Persist current column state for later restore.
+	 * Current column state in the shape read back by `_loadColumnPreferencesIfNeeded()`,
+	 * plus the preference key/app it belongs under. Shared by the regular per-user save
+	 * (`_persistColumnPreferences()`) and the admin save-as-default/force/reset action
+	 * (`_maybeSaveColumnSelectionAsAdminDefault()`) so both write the exact key/shape the
+	 * loader actually reads - there is no other, legacy-compatible column format.
 	 */
-	_persistColumnPreferences()
+	private _columnPreferenceKeyValue() : { key : string, app : string, value : any[] } | null
 	{
 		if(this._isColumnPersistenceDisabled())
 		{
-			return;
+			return null;
 		}
 		const key = this._columnPreferenceName();
 		const app = this.getInstanceManager?.()?.app || this.egw()?.app_name?.();
 		if(!key || !app)
 		{
-			return;
+			return null;
 		}
 		const value = (this.columns || []).map((column) => ({
 			key: String(column.key),
@@ -2872,9 +2876,22 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 				return Object.keys(visibility).filter((name) => visibility[name] === true);
 			})()
 		}));
+		return {key, app, value};
+	}
+
+	/**
+	 * Persist current column state for later restore.
+	 */
+	_persistColumnPreferences()
+	{
+		const kv = this._columnPreferenceKeyValue();
+		if(!kv)
+		{
+			return;
+		}
 		try
 		{
-			this.egw()?.set_preference?.(app, key, value);
+			this.egw()?.set_preference?.(kv.app, kv.key, kv.value);
 		}
 		catch(e)
 		{
@@ -4491,10 +4508,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		);
 		// `nm_column_selection.xet` can carry other widgets besides the column
 		// list (eg. Et2Nextmatch's autorefresh select) - listeners fill in `content`
-		// to seed those by widget id, rather than Et2Datagrid needing to know about
-		// each one, so the template can grow new fields without changes here.
-		const itemsDetail : { columns : Et2DatagridColumnSelectionItem[], content : Record<string, any> } = {columns, content: {}};
-		this.dispatchEvent(new CustomEvent<{ columns : Et2DatagridColumnSelectionItem[], content : Record<string, any> }>("et2-column-selection-items", {
+		// to seed those by widget id, `modifications` to eg. disable them, and
+		// `sel_options` to populate a select's options, rather than Et2Datagrid
+		// needing to know about each one, so the template can grow new fields
+		// without changes here.
+		const itemsDetail : { columns : Et2DatagridColumnSelectionItem[], content : Record<string, any>, modifications : Record<string, any>, sel_options : Record<string, any> } = {
+			columns,
+			content: {},
+			sel_options: {},
+			modifications: {}
+		};
+		this.dispatchEvent(new CustomEvent<{ columns : Et2DatagridColumnSelectionItem[], content : Record<string, any>, modifications : Record<string, any>, sel_options : Record<string, any> }>("et2-column-selection-items", {
 			detail: itemsDetail,
 			bubbles: true,
 			composed: true
@@ -4508,7 +4532,9 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			isModal: true,
 			value: {
 				content: itemsDetail.content,
+				sel_options: itemsDetail.sel_options,
 				modifications: {
+					...itemsDetail.modifications,
 					columns: {
 						columns: columns
 					}
@@ -4525,9 +4551,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			.map((value) => this._columnState.decodeSelectionId(String(value)));
 		// `values` carries everything else the template returned (by widget id),
 		// unfiltered - same reasoning as `content` above, listeners pick out
-		// whatever fields they care about.
-		const applyDetail = {selectedOrder, values: (value as any) || {}};
-		this.dispatchEvent(new CustomEvent<{ selectedOrder : string[], values : Record<string, any> }>("et2-column-selection-apply", {
+		// whatever fields they care about. `adminPrefs` is a third by-widget-id bucket,
+		// this time for listeners to contribute their own preference-key/value pair to
+		// `_maybeSaveColumnSelectionAsAdminDefault()`'s bundle below (eg. Et2NextmatchAutoRefresh
+		// adds its autorefresh interval) - same reasoning as `et2-column-selection-items`'
+		// `content`/`modifications`/`sel_options`.
+		const applyDetail : { selectedOrder : string[], values : Record<string, any>, adminPrefs : Record<string, any> } = {
+			selectedOrder,
+			values: (value as any) || {},
+			adminPrefs: {}
+		};
+		this.dispatchEvent(new CustomEvent<{ selectedOrder : string[], values : Record<string, any>, adminPrefs : Record<string, any> }>("et2-column-selection-apply", {
 			detail: applyDetail,
 			bubbles: true,
 			composed: true
@@ -4544,6 +4578,52 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			composed: true
 		}));
 		this._persistColumnPreferences();
+		this._maybeSaveColumnSelectionAsAdminDefault(applyDetail);
+	}
+
+	/**
+	 * Admin-only "save as default/force/reset" action from the column-selection dialog's
+	 * `default_preference` select - fires only when the admin actually picked something,
+	 * not on every regular save (unlike the legacy dialog's equivalent, which re-saved the
+	 * admin's own column selection as their personal preference on every submit regardless).
+	 * Bundles this grid's own column-preference key/value with whatever other listeners
+	 * (eg. Et2NextmatchAutoRefresh's autorefresh interval) added to `adminPrefs` during the
+	 * `et2-column-selection-apply` dispatch above, and hands them to the server as one
+	 * exec_id-scoped, admin-gated action - `egw().set_preference()` (used for the regular
+	 * per-user save just above) has no concept of preference level (user/default/forced),
+	 * so this can't reuse it. Must use this grid's own current column-preference key/value,
+	 * not the legacy 'nextmatch-<pref>' string format `Nextmatch::validate()`'s dead
+	 * equivalent block wrote - that key is never read back by `_loadColumnPreferencesIfNeeded()`.
+	 */
+	private _maybeSaveColumnSelectionAsAdminDefault(applyDetail : { values : Record<string, any>, adminPrefs : Record<string, any> })
+	{
+		const action = applyDetail.values?.default_preference;
+		if(!action)
+		{
+			return;
+		}
+		const owner = ((this.getRootNode() as ShadowRoot)?.host as any) || this;
+		const execId = owner.getInstanceManager?.()?.etemplate_exec_id;
+		const formName = owner.id || owner.getAttribute?.("id");
+		if(!execId || !formName)
+		{
+			return;
+		}
+		const prefs : Record<string, any> = {...applyDetail.adminPrefs};
+		const columnsKV = this._columnPreferenceKeyValue();
+		if(columnsKV)
+		{
+			prefs[columnsKV.key] = columnsKV.value;
+		}
+		if(!Object.keys(prefs).length)
+		{
+			return;
+		}
+		this.egw().json(
+			"EGroupware\\Api\\Etemplate\\Widget\\Nextmatch::ajax_set_admin_default",
+			[execId, formName, prefs, String(action)],
+			null, this, true, this
+		).sendRequest();
 	}
 
 	/**

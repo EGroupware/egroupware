@@ -1438,6 +1438,85 @@ class Nextmatch extends Etemplate\Widget
 	}
 
 	/**
+	 * Save one or more preferences as the default, forced, or reset (deleted) value for
+	 * every user of the nextmatch's app - the admin-only "save as default/force/reset"
+	 * action from the column-selection dialog's `default_preference` select.
+	 *
+	 * Reachable only via ajax: the modern `Et2Datagrid`-based column-selection dialog no
+	 * longer does a real form submit, so it never reaches self::validate() - that method
+	 * still has an equivalent block, kept for whatever legacy path might still submit a
+	 * real form, but it's unreachable from the current dialog and, since 2022's rewrite to
+	 * a static `.xet` template, reads field names (`nm_col_preference`/`nm_autorefresh`)
+	 * that no longer match what the client actually submits (`default_preference`/`autoRefresh`)
+	 * - do not use it as a reference for what the client currently sends.
+	 *
+	 * $prefs is built entirely client-side (see `Et2Datagrid._maybeSaveColumnSelectionAsAdminDefault()`),
+	 * because the preference key/format each setting is read back under is owned by whichever
+	 * widget reads it - eg. columns use `Et2Datagrid`'s own generated key in its own JSON shape,
+	 * NOT the plain comma-separated column-name string under the legacy 'nextmatch-<pref>' key
+	 * that self::validate()'s block writes and which is no longer read by anything.
+	 *
+	 * $app is deliberately NOT a parameter - it's resolved from the real widget the exec_id's
+	 * request resolves to, not trusted from the client, so an admin session can't be tricked
+	 * into forcing preferences for an app it never actually had this dialog open for.
+	 *
+	 * @param string $exec_id identifies the calling eTemplate request
+	 * @param string $form_name full id of the nextmatch widget within that request
+	 * @param array $prefs preference-name => value pairs to save
+	 * @param string $action 'default'|'reset'|'force'
+	 */
+	public static function ajax_set_admin_default($exec_id, $form_name, array $prefs, $action)
+	{
+		if (empty($GLOBALS['egw_info']['user']['apps']['admin']) || empty($prefs) ||
+			!($request = Etemplate\Request::read($exec_id, false)))
+		{
+			return;
+		}
+		$template = Template::instance($request->template['name'], $request->template['template_set'],
+			$request->template['version'], $request->template['load_via']);
+		$widget = $template ? ($template->getElementById($form_name, 'et2-nextmatch') ??
+			$template->getElementById($form_name, 'nextmatch')) : null;
+		if (!$widget || empty($widget->attrs['template']))
+		{
+			return;
+		}
+		list($app) = explode('.', $widget->attrs['template']);
+		if (!$app)
+		{
+			return;
+		}
+
+		$pref_level = $action === 'force' ? 'forced' : 'default';
+
+		// Clear any forced value first, or an existing forced pref would still win over the new default
+		if ($pref_level !== 'forced')
+		{
+			foreach ($prefs as $name => $value)
+			{
+				$GLOBALS['egw']->preferences->delete($app, $name, 'forced');
+			}
+			$GLOBALS['egw']->preferences->save_repository(true, 'forced');
+		}
+
+		$GLOBALS['egw']->preferences->read_repository(true);
+		foreach ($prefs as $name => $value)
+		{
+			$GLOBALS['egw']->preferences->add($app, $name, $value, $pref_level);
+		}
+		$GLOBALS['egw']->preferences->save_repository(true, $pref_level);
+		$GLOBALS['egw']->preferences->read(true);
+
+		if ($action === 'reset')
+		{
+			// Clear the current user's own override too, so they immediately see the new default
+			foreach ($prefs as $name => $value)
+			{
+				$GLOBALS['egw']->preferences->delete_preference($app, $name);
+			}
+		}
+	}
+
+	/**
 	 * Run a given method on all children
 	 *
 	 * Reimplemented to add namespace, and make sure row template gets included

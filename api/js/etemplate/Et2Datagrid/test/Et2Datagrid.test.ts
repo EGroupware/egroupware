@@ -4538,3 +4538,93 @@ describe("Et2Datagrid data loading", () =>
 		host.remove();
 	});
 });
+
+describe("Et2Datagrid admin save-as-default action", () =>
+{
+	function withStubbedJson(run : (calls : any[][]) => void)
+	{
+		const calls : any[][] = [];
+		const stub = (...args : any[]) =>
+		{
+			calls.push(args);
+			return {sendRequest: () => {}};
+		};
+		// `Et2Widget.egw()` may return either the shared `egw` mock object (called via
+		// `window.egw()`) or `window.egw` itself, used directly as a fallback in test
+		// environments - Object.assign()'d from `egw` once at module load, so it no longer
+		// shares references with it. Stub both so this works regardless of which path
+		// resolves in a given run.
+		const originalOnEgw = (egw as any).json;
+		const originalOnWindowEgw = (window.egw as any).json;
+		(egw as any).json = stub;
+		(window.egw as any).json = stub;
+		try
+		{
+			run(calls);
+		}
+		finally
+		{
+			(egw as any).json = originalOnEgw;
+			(window.egw as any).json = originalOnWindowEgw;
+		}
+	}
+
+	it("does not call the server when the admin did not pick a default_preference action", () =>
+	{
+		const el = createDatagrid();
+		el.id = "nm";
+		el.setInstanceManager({etemplate_exec_id: "exec123", app: "addressbook"} as any);
+		el.columnPreferenceName = "test-columns";
+		el.columns = [{key: "name", title: "Name"}] as any;
+
+		withStubbedJson((calls) =>
+		{
+			(el as any)._maybeSaveColumnSelectionAsAdminDefault({values: {}, adminPrefs: {}});
+			assert.equal(calls.length, 0, "no default_preference action should not call the server");
+		});
+	});
+
+	it("bundles adminPrefs with this grid's own column preference when an action is picked", () =>
+	{
+		const el = createDatagrid();
+		el.id = "nm";
+		el.setInstanceManager({etemplate_exec_id: "exec123", app: "addressbook"} as any);
+		el.columnPreferenceName = "test-columns";
+		el.columns = [{key: "name", title: "Name"}] as any;
+
+		withStubbedJson((calls) =>
+		{
+			(el as any)._maybeSaveColumnSelectionAsAdminDefault({
+				values: {default_preference: "force"},
+				adminPrefs: {"nextmatch-test-autorefresh": 300}
+			});
+			assert.equal(calls.length, 1, "a picked action should call the server exactly once");
+			const [menuaction, params] = calls[0];
+			assert.equal(menuaction, "EGroupware\\Api\\Etemplate\\Widget\\Nextmatch::ajax_set_admin_default");
+			const [execId, formName, prefs, action] = params;
+			assert.equal(execId, "exec123");
+			assert.equal(formName, "nm");
+			assert.equal(action, "force");
+			assert.equal(prefs["nextmatch-test-autorefresh"], 300, "other widgets' contributed prefs should be included");
+			assert.property(prefs, "test-columns", "this grid's own column preference should be included");
+		});
+	});
+
+	it("does not call the server without a resolvable exec_id", () =>
+	{
+		const el = createDatagrid();
+		el.id = "nm";
+		// No setInstanceManager() call - getInstanceManager() falls through to null.
+		el.columnPreferenceName = "test-columns";
+		el.columns = [{key: "name", title: "Name"}] as any;
+
+		withStubbedJson((calls) =>
+		{
+			(el as any)._maybeSaveColumnSelectionAsAdminDefault({
+				values: {default_preference: "default"},
+				adminPrefs: {}
+			});
+			assert.equal(calls.length, 0, "an unresolvable exec_id must not reach the server");
+		});
+	});
+});
