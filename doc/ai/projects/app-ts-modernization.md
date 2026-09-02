@@ -36,6 +36,10 @@ clearly-scoped change elsewhere (e.g. an import path).
 | infolog | done | See below |
 | timesheet | done | See below |
 | addressbook | done | Large file (1826 lines, 98 `var`, 12 jQuery uses, 31 TS errors) - see below. Also covers `addressbook/js/CRM.ts` (the CRM-sidebox view class `app.ts` loads via `import "./CRM"`) as a judgment-call companion-file inclusion, not a separate request. |
+| tracker | done | 558 lines, 3 `var`, 2 jQuery uses, 12 TS errors - see below. `tracker/` is its own nested git repo (see note below), not part of the main `egroupware` repo - commit/push separately. |
+| status | done | 848 lines, 0 `var`, 3 jQuery uses (incl. 2x `jQuery.extend`), 7 TS errors - see below. `status/` is also its own nested git repo - same note. |
+
+**Nested git repos:** `tracker/` and `status/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
 ## Workflow used per file
 
@@ -406,3 +410,188 @@ out).
   object's method with a no-op, no `this` used) -> `app_obj.push = (pushData) => false;`.
 - The `jQuery(...).on('clear', function(){...}.bind(this))` callback above, converted together with its
   jQuery removal.
+
+## tracker/js/app.ts (done)
+
+558 lines, 3 `var`, 2 jQuery uses, 12 TS errors (baseline count includes some multi-line detail lines).
+
+### Legacy widget imports
+
+- `et2_nextmatch`/`et2_button`/`et2_selectbox` are **real, distinct legacy implementations** (not
+  zero-member shims - `et2_nextmatch extends et2_DOMWidget`, `et2_button extends et2_baseWidget`), *and*
+  this file passes them as **runtime values** to `iterateOver(_callback, _context, _type)`'s `_type`
+  filter parameter (an `instanceof`-style check), not just as TS type annotations. Left all three as
+  value imports, unconverted - swapping to their web-component namesakes (`Et2Nextmatch`/`Et2Button`/
+  `Et2Select`) would silently *broaden* the `instanceof` match (a subclass instance also passes an
+  `instanceof` check against its superclass), a real behavior change, not just a type-safety one. This
+  is a new "goal 1 doesn't apply" reason distinct from timesheet's `et2_grid` (no replacement exists at
+  all) - here a replacement exists, but using it would change matching semantics.
+- `et2_template` was imported but **never referenced anywhere in the file** - a genuinely dead import,
+  removed entirely.
+- `et2_htmlarea`/`et2_checkbox`/`et2_selectAccount` (all only used for type casts) -> `import type`.
+  `et2_selectAccount` turned out to already be a plain `export type et2_selectAccount = Et2SelectAccount`
+  alias (not a class) in its own source file - the previous value import was doubly wrong.
+- `import "./Et2TrackerAssigned.ts"` (a side-effect-only import registering the custom element) needed
+  to stay *as well as* gaining a companion `import type {Et2TrackerAssigned} from "./Et2TrackerAssigned"`
+  for the type - `import type` alone would have been fully erased at compile time, silently dropping the
+  `customElements.define()` registration this file depends on. (Also: the `.ts` extension had to be
+  dropped from the *type* import specifically - `TS2691`, import paths can't end in `.ts` - even though
+  the pre-existing side-effect import spells it out with `.ts` and doesn't error.)
+- `egw` ambient-global import removed, same as every other file in this pass.
+
+### TS errors fixed (12 total, some multi-line)
+
+- **0-arg `this.filter_change()` call**: same optional-params fix as infolog/timesheet.
+- **`this.nm.activeFilters.startdate = null`**: unlike every other app converted so far, tracker's `nm`
+  is **evidence of genuinely still being the legacy `et2_nextmatch`**, not `Et2Nextmatch` - confirmed by
+  `viewEntry()` a few methods down, which calls `nm.getController()._indexMap` and gets back
+  jQuery-wrapped row nodes (`.find()`/`.removeClass()`), APIs that only exist on the legacy
+  implementation. Casting to `Et2Nextmatch` here (the pattern used everywhere else) would have been
+  actively *wrong*, not just unverified - used `<any>` instead, with a comment explaining why this app
+  differs.
+- **`filter.closest('egw-app').filtersDrawer`**: `.closest()` on an `Element` returns generic `Element`;
+  `filtersDrawer` is a real getter on `EgwFrameworkApp` (`kdots/js/EgwFrameworkApp.ts`), the framework
+  shell custom element behind the `egw-app` tag. Added a type-only import and cast.
+- **`this.et2.node.baseURI`**: a **real, previously-silent bug**, not just a typing gap - `Et2Template`
+  (the type of `this.et2`) extends `Et2Widget(LitElement)`, i.e. it *is* an `HTMLElement`/`Node` itself
+  and has `.baseURI` natively; there's no `.node` sub-property and never has been since `Et2Template`
+  became a real custom element. `typeof this.et2.node !== 'undefined'` has therefore always evaluated to
+  `false`, meaning `edit_popup()`'s entire body (focusing the popup window, resizing it for
+  mail-composed trackers) has been dead code. Fixed by reading `this.et2.baseURI` directly - restores
+  the original intent, not just silences the type error. No other file in the repo references `.et2.node`
+  (checked), so this wasn't a load-bearing pattern used elsewhere.
+- **`et2-link-list` querySelectorAll results typed as generic `Element`**: `this.et2.querySelectorAll(...)`
+  (where `this.et2` is strongly-typed `Et2Template`) returns real `Element[]`, unlike the *other*,
+  untyped `widget.getInstanceManager().widgetContainer.querySelectorAll(...)` chain two lines above
+  (which resolves through the effectively-`any` `getInstanceManager()` return type and so never
+  errored). Used the generic-argument form, `querySelectorAll<Et2LinkList>(...)`, rather than a cast.
+- **`Et2TrackerAssigned` type not found**: see the import fix above.
+- **`viewEntry()` override not assignable to `EgwApp.viewEntry()`** (`TS2416`): the base method's
+  inferred return type is `Promise<Et2Dialog>` (from its docblock/body), but tracker's override called
+  `super.viewEntry(...)` and discarded the result, so its own inferred return type was `void` - not
+  assignable. Fixed by capturing `super.viewEntry(...)`'s return value and `return`-ing it at the end of
+  the override, *after* the synchronous unseen-class cleanup that has to keep running immediately
+  (unchanged execution order/timing - `return`-ing a promise doesn't await it).
+- **`dialog.getComplete()`'s destructured `value` typed as generic `Object`**: `Et2Dialog.getComplete()`
+  is declared `Promise<[number, Object]>` - too generic for `value.reply_message`. Annotated the
+  destructured callback params directly (`([button, value] : [number, any])`) rather than touching the
+  shared dialog class.
+
+### jQuery removed
+
+- `jQuery('#tracker_index_col_filter_tr_tracker__chzn').hide()` -> `document.getElementById(...)` +
+  `style.display = 'none'`.
+- `nm_indexes[i].row._nodes[0].find('.tracker_unseen')` / `node.removeClass(...)` in `viewEntry()` -
+  **left untouched**, see "Not touched" below.
+
+### function/closures -> arrow functions
+
+- The `iterateOver(function(widget) {...}, this, et2_selectbox)` callbacks (`et2_ready()`'s
+  `'tracker.escalations'` case, `getState()`) explicitly pass `this` as `iterateOver`'s own `_context`
+  argument - but since that `this` is always *exactly* the same object the arrow function's lexical
+  `this` would already resolve to (both come from the same enclosing method), converting to an arrow is
+  safe and makes the now-redundant explicit `_context` argument harmless rather than necessary. This is
+  a useful refinement on the goal-6 exception: passing `otherThis` explicitly to `.call()`/as a context
+  argument only blocks arrow conversion when that `otherThis` is *not* the lexically-enclosing `this`
+  (e.g. `tabLinkHandler`'s tab object in addressbook's `refreshCallback` case) - when it *is* the same
+  object, the explicit binding was just belt-and-braces already, and an arrow is equivalent.
+- `tprint()`'s `popup.onload = function(){this.print();}` relies on the browser setting `this` to
+  `popup` when it fires the `onload` event - genuinely the goal-6 exception. Rather than leaving it as a
+  commented plain `function`, rewrote it to reference the already-in-scope `popup` closure variable
+  directly (`popup.onload = () => popup.print();`) - cleaner than either option alone, and removes the
+  dynamic-`this` dependency entirely instead of just documenting it.
+
+### Not touched (out of scope)
+
+- `viewEntry()`'s jQuery-object row lookup (`nm_indexes[i].row._nodes[0].find(...)`/`.removeClass(...)`)
+  is tied to legacy `et2_nextmatch`'s own internal row representation (its `_indexMap`/`row._nodes`
+  structure appears to store rows as jQuery-wrapped nodes, not raw DOM elements) - not a simple
+  `jQuery(x).method()` call that swaps 1:1 to a native API without deeper research into that internal
+  contract, and it wasn't flagged as a TS error either. Left alone rather than guess.
+- `comment_add_vfs()`'s `Promise.all([wait, wait])` (where `wait` is already an array of promises) looks
+  like a real bug - almost certainly meant `Promise.all(wait)` - `Promise.all` on an array containing two
+  non-thenable arrays resolves immediately rather than waiting for the actual link-list updates. Not
+  fixed: this line isn't touched by any of the 6 goals (no `var`, jQuery, TS error, or `function(){}`
+  involved), so it's outside this pass's scope per `doc/ai/modernization.md`'s "don't turn an unrelated
+  bugfix into a drive-by cleanup" rule - flagged here for whoever picks it up next.
+- `multiple_assigned()`'s `_widget.getParent()._children[0]` accesses the same `private _children` field
+  as addressbook's fixed cases, but doesn't error here (the containing expression's type resolves
+  loosely enough that TS doesn't catch it) - left alone since goal 3 only covers the file's *actual*
+  reported errors, not every instance of a pattern already fixed elsewhere.
+
+## status/js/app.ts (done)
+
+848 lines, 0 `var` (already clean), 3 jQuery uses, 7 TS errors, 9 `egw.json(...).sendRequest()` sites (all
+async, none kept sync), and the heaviest concentration of `let self = this` + `function(){}` closures
+found in this pass so far (`_controllRingTone()` alone nests 3 levels of them).
+
+### Legacy widget imports
+
+- `et2_grid`/`et2_button` (both only used for type casts, both real distinct legacy implementations with
+  no web-component replacement - `et2_grid` confirmed already in the timesheet section) -> `import type`,
+  same reasoning as timesheet, not renamed to `Et2Grid`/`Et2Button`.
+- `egw` ambient-global import removed, same as every other file.
+
+### TS errors fixed (7 total)
+
+- **`getDOMWidgetById('end')`/`getDOMWidgetById('add')`'s `.set_disabled(...)`**: the exact same
+  `Et2Template.getDOMWidgetById()` return-type bug (`typeof Et2Widget` instead of an instance) found and
+  worked around in `addressbook/js/CRM.ts` - same `<any>` cast fix applied here, two more confirmed
+  occurrences of that shared framework bug.
+- **`app.rocketchat?.isRCActive(...)`/`.restapi_call(...)`** (3 call sites: `isOnline()`, twice in
+  `makeCall()`): the familiar `app` / `{[propName:string]: EgwApp}` EPL-blind-spot pattern
+  (`app.stylite` in infolog, `app.status` in addressbook) - `rocketchat` is EPL's Rocket.Chat
+  integration app. Same `<any>` cast pattern.
+- **`app.status.openCall(...)`** (`videoconference_countdown_join()`): same root cause, but since
+  `openCall()` is defined on *this very class* (`statusApp`), cast to `<statusApp>` instead of `<any>` -
+  more precise than the generic EPL-blind-spot workaround, since we actually know the real shape here.
+
+### jQuery removed
+
+- `jQuery('body').one('click', function(){...})` (`et2_ready()`, ring-tone unlock on first user
+  interaction) -> `document.body.addEventListener('click', () => {...}, {once: true})` - native
+  `{once: true}` is the direct equivalent of jQuery's `.one()`.
+- `jQuery.extend(true, fav[f], _content[i])` / `jQuery.extend(true, list[l], _content[i])`
+  (`mergeContent()`) -> `egw.deepExtend(fav[f], _content[i])` / `egw.deepExtend(list[l], _content[i])`,
+  per `doc/ai/modernization.md`'s `deepExtend()` rule - dropped the `true` first argument since
+  `deepExtend()` is unconditionally a deep merge, unlike jQuery's signature.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+All 9 sites were async (`sendRequest()`/`sendRequest(true)`, nothing genuinely synchronous) -
+straightforward swaps across `handle_actions()`, `refresh()`, `makeCall()`, `receivedCall()`,
+`videoconference_invite()`, `videoconference_endMeeting()`, `inviteToCall()`, `videoconference_countdown_join()`,
+and `vc_deleteRecording()`.
+
+### function/closures -> arrow functions
+
+- Removed **7** separate `let self = this;` declarations (`et2_ready()`, `push()`, `add_to_fav()`,
+  `refresh()`, `makeCall()`, `scheduled_receivedCall()`, `receivedCall()`, `_controllRingTone()`,
+  `didNotPickUp()`, `_phoneMissedCallback()` - several methods each had their own) by converting every
+  `function(){...self...}` closure that used them to an arrow function referencing `this` directly.
+  Checked each one first for genuine dynamic-`this` needs (Dialog `callback:`, `Et2Dialog.show_dialog()`
+  callbacks, `setTimeout`/`Promise.then()` callbacks) - all of them only ever read `self`, never relied
+  on their own call-time `this`, so all were safe to convert.
+- **One genuine exception found**, inside `_controllRingTone()`: its `initiate()` method called
+  `this.stop()` where `this` was deliberately the *returned `{start, stop, initiate}` object* (a sibling
+  method call, object-literal-method style) - not the outer `self`/app instance. A naive arrow-conversion
+  here would have broken it (an arrow's `this` would resolve to the app instance, which has no `.stop()`
+  method). Fixed by pulling `stop` out as its own named `const stop = () => {...}` *before* the returned
+  object literal, referencing it directly from both `start`'s `setTimeout` callback and `initiate()` -
+  avoids the self-reference problem entirely while still converting every function to an arrow.
+- `dialog.transformAttributes({callback: ...})` and `Et2Dialog.show_dialog(callback, ...)` callbacks
+  across `add_to_fav()`, `makeCall()`, `scheduled_receivedCall()`, `receivedCall()`,
+  `videoconference_invite()`, `videoconference_endMeeting()`, `didNotPickUp()`, `_phoneMissedCallback()` -
+  all confirmed (via `Et2Dialog.ts`'s own `_callback.call(this, ...)`/`this.callback(...)` invocation
+  sites) to bind `this` to the *dialog*, not the app - exactly why every one of them already used
+  `self`/closured variables instead of `this`. Confirms (again) that a manual `self =
+  this`/`that = this` capture already present in code being touched is reliable evidence the enclosing
+  callback mechanism rebinds `this` - and that arrow conversion is *safe precisely because* of that
+  existing workaround, not despite it.
+- `onclick: function() { window.focus(); }` (2x, `Notification` options in `scheduled_receivedCall()`/
+  `receivedCall()`) -> `onclick: () => window.focus()` - no `this` used, converted for consistency even
+  though native `Notification.onclick`'s own dynamic-`this` contract was never actually relied upon here.
+
+### Not touched (out of scope)
+
+- No new "not touched" findings beyond what's already covered above for this file.
