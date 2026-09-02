@@ -156,6 +156,9 @@ class pdf_player extends HTMLElement {
 	 */
 	private __buildPDFView(_value)
 	{
+		this.__pdfViewState.pdf?.destroy();
+		this.__pdfViewState.pdf = null;
+		this._canvas?.remove();
 		this._canvas = document.createElement('canvas');
 		this._wrapper.appendChild(this._canvas);
 		let longTask = pdfjs.getDocument(_value);
@@ -377,6 +380,13 @@ class pdf_player extends HTMLElement {
 		this.__playing = false;
 		this._paused = true;
 		window.clearInterval(this.__playingInterval);
+	}
+
+	disconnectedCallback()
+	{
+		window.clearInterval(this.__playingInterval);
+		this.__pdfViewState.pdf?.destroy();
+		this.__pdfViewState.pdf = null;
 	}
 
 	/**
