@@ -329,8 +329,11 @@ export class MailApp extends EgwApp
 
 				// Stop list from focussing next row on keypress
 				const aom = egw_getObjectManager('mail').getObjectById('nm');
-				// @ts-ignore
-				aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
+				if (aom)
+				{
+					// @ts-ignore
+					aom.flags = egwSetBit(aom.flags, EGW_AO_FLAG_DEFAULT_FOCUS, false);
+				}
 
 				// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - restore the "jmapCompose"
 				// toggle's last state (implicit preference, same mechanism as previewPane etc. just
