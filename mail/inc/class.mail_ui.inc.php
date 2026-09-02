@@ -130,7 +130,9 @@ class mail_ui
 	 */
 	var $statusTypes = array(
 		''		=> 'any status',// lang('any status')
-		'flagged'	=> 'flagged',	// lang('flagged')
+		//flagged is deliberately not here: it lives in the app-header flag filter
+		// (flagFilterOptions()), together with the colored custom flags sharing its keyword
+		// 'flagged'
 		'unseen'	=> 'unread',	// lang('unread')
 		'answered'	=> 'replied',	// lang('replied')
 		'seen'		=> 'read',		// lang('read')
@@ -150,6 +152,74 @@ class mail_ui
 			$statusTypes[$id] = $customLabel['name'];
 		}
 		return $statusTypes;
+	}
+
+	/**
+	 * The colored custom flags, beyond plain "flagged", as id => caption + color
+	 *
+	 * Single source for both the flagging actions that SET one of them (get_actions()) and the
+	 * app-header filter that filters the list FOR one of them (flagFilterOptions()) - the two
+	 * deliberately offer the same set of flags.
+	 */
+	const CUSTOM_FLAGS = array(
+		'customFlag1' => array('caption' => 'red',    'color' => '#ff0000'),
+		'customFlag2' => array('caption' => 'orange', 'color' => '#ff8000'),
+		'customFlag3' => array('caption' => 'green',  'color' => '#008000'),
+		'customFlag4' => array('caption' => 'blue',   'color' => '#0000ff'),
+		'customFlag5' => array('caption' => 'purple', 'color' => '#8000ff'),
+	);
+
+	/**
+	 * Can the active account store arbitrary keywords, ie. the labels and the colored custom flags?
+	 *
+	 * JMAP natively supports arbitrary keywords/flags (unlike classic IMAP, which needs a specific
+	 * extension) - true for a JMAP account without asking, both because it's correct and to avoid
+	 * hasCapability()'s examineMailbox() call, which for a JMAP account falls through to a raw IMAP
+	 * socket attempt against a JMAP(S) endpoint and hangs for the full connect timeout (found live
+	 * 2026-08-24).
+	 *
+	 * Deliberately not remembered in a property: changeProfile() swaps $this->mail_bo mid-request,
+	 * so a cached answer could be the previous account's. Repeated calls are cheap anyway - the
+	 * classic-IMAP branch answers from Mail\Imap::$supports_keywords, probed once per account and
+	 * then kept in the session.
+	 *
+	 * @return bool
+	 */
+	private function supportsKeywords(): bool
+	{
+		return $this->mail_bo->icServer instanceof ImapJmap ||
+			$this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS');
+	}
+
+	/**
+	 * Options of the app-header flag filter
+	 *
+	 * The same flags the toolbar's flagging dropdown sets, but here to filter the list for them.
+	 *
+	 * Labels stay untranslated, like the flagging actions' captions: et2-dropdown-button runs
+	 * every option label through egw.lang() itself.
+	 *
+	 * @return array[] select-options with icon and iconColor, as et2-dropdown-button renders them
+	 */
+	private function flagFilterOptions(): array
+	{
+		$options = array(
+			array('value' => '', 'label' => 'any flag', 'icon' => 'flag'),
+			array('value' => 'flagged', 'label' => 'flagged', 'icon' => 'unread_flagged_small'),
+		);
+		if ($this->supportsKeywords())
+		{
+			foreach (self::CUSTOM_FLAGS as $id => $customFlag)
+			{
+				$options[] = array(
+					'value' => $id,
+					'label' => $customFlag['caption'],
+					'icon' => 'unread_flagged_small',
+					'iconColor' => $customFlag['color'],
+				);
+			}
+		}
+		return $options;
 	}
 
 	/**All mime types in mail-attachments
@@ -584,6 +654,10 @@ class mail_ui
 							// auto-applies (see Et2Nextmatch.ts's FILTER_VALUE_SETTINGS), so it needs to
 							// be listed here like selectedFolder already is
 							'extra_attributes' => ['selectedFolder', 'threaded'],   // I non-standard attributes send via ajax_get_rows
+							// the app-header flag filter (flagFilterOptions()), ANDed with 'filter' above.
+							// Seeded even when empty, so egw_app::nmFilterChange() has a key to reflect
+							// back into the header widget - that is what gives it its initial icon.
+							'col_filter'     => ['flagFilter' => ''],
 						);
 					}
 //					if (Api\Header\UserAgent::mobile())
@@ -637,12 +711,9 @@ class mail_ui
 				//$zendtime = microtime(true) - $zstarttime;
 				//error_log(__METHOD__.__LINE__. " time used: ".$zendtime);
 				$content[self::$nm_index]['selectedFolder'] = $this->mail_bo->profileID.self::$delimiter.(!empty($this->mail_bo->sessionData['mailbox'])?$this->mail_bo->sessionData['mailbox']:'INBOX');
-				// since we are connected,(and selected the folder) we check for capabilities SUPPORTS_KEYWORDS to eventually add the keyword filters
-				// JMAP natively supports arbitrary keywords/flags (unlike classic IMAP, which needs
-				// this specific extension) - treated as always true, both because it's correct and
-				// to avoid hasCapability()'s examineMailbox() call, which (like reopen() above) falls
-				// through to a raw IMAP socket attempt for a JMAP account and hangs (found live 2026-08-24)
-				if ($this->mail_bo->icServer instanceof ImapJmap || $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+				// since we are connected,(and selected the folder) we can check whether the server
+				// stores arbitrary keywords, to eventually add the keyword filters
+				if ($this->supportsKeywords())
 				{
 					$this->statusTypes = array_merge($this->statusTypes,array(
 						'keyword1'	=> 'important',//lang('important'),
@@ -684,6 +755,9 @@ class mail_ui
 				//error_log(__METHOD__.__LINE__.array2string($GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType']));
 				$content[self::$nm_index]['cat_id'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ActiveSearchType'];
 				$sel_options['filter'] = $this->statusTypes;
+				// app-header flag filter: an own criterion ANDed with the status filter above
+				// (a col_filter, see the initial nm content), not one of its options
+				$sel_options['flagFilter'] = $this->flagFilterOptions();
 				$sel_options['filter2'] = array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list'));
 				$content[self::$nm_index]['filter2'] = $GLOBALS['egw_info']['user']['preferences']['mail']['ShowDetails'];
 				// doc/ai/projects/mail-threaded-view.md, Phase 1 UI toggle - same mechanism as
@@ -1450,7 +1524,7 @@ class mail_ui
 						'icon' => 'tag_message',
 						'group' => ++$group,
 						// note this one is NOT a real CAPABILITY reported by the server, but added by selectMailbox
-						'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
+						'enabled' => $this->supportsKeywords(),
 						'hideOnDisabled' => true,
 						'children' => array(
 							'unlabel' => array(
@@ -1517,55 +1591,11 @@ class mail_ui
 								'shortcut' => KeyManager::shortcut(KeyManager::F, true, true),
 								'toolbarDefault' => true
 							),
-							'customFlag1' => array(
-								'group' => ++$group,
-								'caption' => 'red',
-								'iconColor' => '#ff0000',
-								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.flag',
-								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
-								'hideOnDisabled' => true,
-							),
-							'customFlag2' => array(
-								'group' => $group,
-								'caption' => 'orange',
-								'iconColor' => '#ff8000',
-								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.flag',
-								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
-								'hideOnDisabled' => true,
-							),
-							'customFlag3' => array(
-								'group' => $group,
-								'caption' => 'green',
-								'iconColor' => '#008000',
-								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.flag',
-								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
-								'hideOnDisabled' => true,
-							),
-							'customFlag4' => array(
-								'group' => $group,
-								'caption' => 'blue',
-								'iconColor' => '#0000ff',
-								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.flag',
-								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
-								'hideOnDisabled' => true,
-							),
-							'customFlag5' => array(
-								'group' => $group,
-								'caption' => 'purple',
-								'iconColor' => '#8000ff',
-								'icon' => 'unread_flagged_small',
-								'onExecute' => 'javaScript:app.mail.flag',
-								'enabled' => $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'),
-								'hideOnDisabled' => true,
-							),
 						),
 					),
 					'read' => array(
-						'group' => $group,
+						// same group as the customFlag1-5 entries appended below
+						'group' => ++$group,
 						'caption' => 'Read / Unread',
 						'icon' => 'kmmsgread',
 						'onExecute' => 'javaScript:app.mail.flag',
@@ -1596,6 +1626,20 @@ class mail_ui
 				//'onExecute' => 'javaScript:app.mail.mail_dragStart',
 			)
 		);
+		// the colored custom flags the app-header flag filter offers too (flagFilterOptions()),
+		// here to set the flag rather than to filter for it
+		foreach (self::CUSTOM_FLAGS as $id => $customFlag)
+		{
+			$actions['mark']['children']['flag']['children'][$id] = array(
+				'group' => $actions['mark']['children']['flag']['children']['flagged']['group'] + 1,
+				'caption' => $customFlag['caption'],
+				'iconColor' => $customFlag['color'],
+				'icon' => 'unread_flagged_small',
+				'onExecute' => 'javaScript:app.mail.flag',
+				'enabled' => $this->supportsKeywords(),
+				'hideOnDisabled' => true,
+			);
+		}
 		foreach (CustomLabels::getCustomLabels() as $id => $customLabel)
 		{
 			$actions['mark']['children']['setLabel']['children'][$id] = array(
@@ -2615,7 +2659,7 @@ class mail_ui
 			unset($this->searchTypes['']);
 			unset($this->searchTypes['quickwithcc']);
 		}
-		if ( $this->mail_bo->icServer->hasCapability('SUPPORTS_KEYWORDS'))
+		if ($this->supportsKeywords())
 		{
 			$this->statusTypes = array_merge($this->statusTypes,array(
 				'keyword1'	=> 'important',//lang('important'),
@@ -2640,6 +2684,7 @@ class mail_ui
 		$response = Api\Json\Response::get();
 		$response->call('app.mail.refreshCatIdOptions',$this->searchTypes);
 		$response->call('app.mail.refreshFilterOptions',$this->statusTypes);
+		$response->call('app.mail.refreshFlagFilterOptions', $this->flagFilterOptions());
 		$response->call('app.mail.refreshFilter2Options',array(''=>lang('No Sneak Preview in list'),1=>lang('Sneak Preview in list')));
 
 	}

@@ -221,6 +221,12 @@
         <template template="api.search-button"></template>
         <et2-select id="cat_id" ariaLabel="Search" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
         <et2-select id="filter" ariaLabel="Status" class="et2-label-fixed" onchange="app.mail.changeNmFilter"/>
+        <!-- the same colored-flag list as the toolbar's flagging dropdown, but filtering the list
+             instead of setting the flag - a col_filter, so it ANDs with the "Status" filter above
+             rather than replacing it (options come from mail_ui::flagFilterOptions()) -->
+        <et2-dropdown-button id="flagFilter" label="Filter by flag" statustext="Filter by flag"
+                             iconOnly="true" onchange="app.mail.changeNmFilter"
+                             onclick="app.mail.changeNmFilter"></et2-dropdown-button>
         <et2-button-toggle id="details" icon="card-text" statustext="Sneak preview in list" onchange="app.mail.toggleDetails"></et2-button-toggle>
         <!-- doc/ai/projects/mail-threaded-view.md, Phase 1 - hidden by default, MailApp.updateThreadingToggle()
              reveals it only for a profile whose JMAP bootstrap reports supportsThreading (nothing does, yet) -->

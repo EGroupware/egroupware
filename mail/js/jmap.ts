@@ -207,6 +207,9 @@ export interface JmapGetRowsQuery
 	cat_id? : string;			// search-type, see mail_ui::$searchTypes
 	search? : string;
 	filter? : string;			// status filter, see mail_ui::$statusTypes
+	// app-header flag filter, ANDed with `filter` above: '' | 'flagged' | 'customFlag1'-'customFlag5',
+	// see mail_ui::flagFilterOptions(). Arrives as nextmatch's col_filter[flagFilter].
+	flagFilter? : string;
 	startdate? : string;
 	enddate? : string;
 	filter2? : string;			// truthy: "Sneak preview in list" toggle
@@ -1612,6 +1615,7 @@ export class MailJmap
 			cat_id: _filters.cat_id,
 			search: _filters.search,
 			filter: _filters.filter,
+			flagFilter: _filters.col_filter?.flagFilter,
 			startdate: _filters.startdate,
 			enddate: _filters.enddate,
 			filter2: _filters.filter2,
@@ -3409,7 +3413,7 @@ export class MailJmap
 		switch (status)
 		{
 			case 'flagged':
-				conditions.push({hasKeyword: '$flagged'});
+				conditions.push(this.flaggedFilter());
 				break;
 			case 'unseen':
 				conditions.push({notKeyword: '$seen'});
@@ -3443,7 +3447,36 @@ export class MailJmap
 			}
 		}
 
+		// The app-header flag filter is a criterion of its own, ANDed with the status filter
+		// above rather than one of its values - 'flagged' used to be a status filter option and
+		// is still honored as one there, for favorites saved before it moved here.
+		const flagFilter = query.flagFilter || '';
+		if (flagFilter.toLowerCase() === 'flagged')
+		{
+			conditions.push(this.flaggedFilter());
+		}
+		else if (MailJmap.CUSTOM_FLAGS.some(flag => flag.toLowerCase() === flagFilter.toLowerCase()))
+		{
+			conditions.push({hasKeyword: this.customFlagKeyword(flagFilter)});
+		}
+
 		return conditions.length === 1 ? conditions[0] : {operator: 'AND', conditions};
+	}
+
+	/**
+	 * "Is this message flagged?" as a filter, matching exactly what the row's flag icon shows
+	 * (email2row()'s hasFlagged): setting a colored custom flag also sets $flagged, but a
+	 * message flagged before it did carries only the customflag keyword.
+	 */
+	private flaggedFilter() : EmailFilter
+	{
+		return {
+			operator: 'OR',
+			conditions: [
+				{hasKeyword: '$flagged'},
+				...MailJmap.CUSTOM_FLAGS.map(flag => ({hasKeyword: this.customFlagKeyword(flag)}))
+			]
+		};
 	}
 
 	/** Resolve a custom-label id case-insensitively. */

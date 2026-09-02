@@ -2746,6 +2746,29 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Refresh the app-header flag filter's options for the active server, whose colored custom
+	 * flags need the server to support arbitrary keywords - called from mail_ui::ajax_refreshFilters()
+	 *
+	 * @param {Array} _data select-options as mail_ui::flagFilterOptions() builds them
+	 */
+	refreshFlagFilterOptions(_data)
+	{
+		if (_data == null) return;
+		if (!this.et2 && !this.checkET2()) return;
+
+		const flagFilter = this.et2.getWidgetById('flagFilter');
+		if (!flagFilter) return;
+		// the option filtered for may not exist on the new server - fall back to "any flag",
+		// and let the list drop the now-stale filter with it
+		if (!_data.some(option => option.value == flagFilter.value))
+		{
+			flagFilter.set_value('');
+			this.changeNmFilter(null, flagFilter);
+		}
+		flagFilter.set_select_options(_data);
+	}
+
+	/**
 	 * refreshCatIdOptions, function to call with appropriate data to refresh the filter options for the active server
 	 *
 	 * @param {object} _data
@@ -4135,9 +4158,9 @@ export class MailApp extends EgwApp
 	}
 
 	/**
-	 * Hide a row from an active status filter if its just-updated flags no longer match it.
+	 * Hide a row from the active filters if its just-updated flags no longer match them.
 	 *
-	 * Checks the row's actual resulting flags against the filter, rather than inferring a match
+	 * Checks the row's actual resulting flags against the filters, rather than inferring a match
 	 * from which action id was clicked - e.g. switching between customFlag colors while viewing the
 	 * "flagged" filter is a set on the new color and (usually) an unset on the old one, but the row
 	 * stays flagged throughout and must never be deleted for either half of that switch; a plain
@@ -4145,57 +4168,71 @@ export class MailApp extends EgwApp
 	 * action id, since both the customFlag being set AND the one being unset map to the same
 	 * 'flagged' filter name.
 	 *
+	 * The status filter and the app-header flag filter are independent criteria the list ANDs
+	 * together (MailJmap.buildFilter()), so the row has to keep matching both of them to stay.
+	 *
 	 * @param {type} _uid mail uid
 	 * @param {type} _filters activefilters
 	 * @param {type} _flags the row's flags, already updated to reflect this action
 	 */
 	updateFilterData(_uid, _filters, _flags)
 	{
-		if (!_filters?.filter) return;
-		const uid = _uid.replace('mail::','');
-		let matches;
-		switch (_filters.filter)
+		if (this.matchesStatusFilter(_filters?.filter, _flags) === false ||
+			this.matchesFlagFilter(_filters?.col_filter?.flagFilter, _flags) === false)
 		{
+			egw.refresh('', 'mail', _uid.replace('mail::', ''), 'delete');
+		}
+	}
+
+	/**
+	 * Does a row's flags match an active status filter?
+	 *
+	 * @param {string} _filter active status filter, see mail_ui::$statusTypes
+	 * @param {object} _flags the row's flags
+	 * @return {boolean|null} null if there is no status filter this action could ever affect
+	 */
+	private matchesStatusFilter(_filter, _flags) : boolean | null
+	{
+		if (!_filter) return null;
+		switch (_filter)
+		{
+			// still honoured although 'flagged' moved to the flag filter, for favorites saved
+			// while it was a status filter option - and with the same meaning it has there
 			case 'flagged':
-				matches = !!_flags.flagged;
-				break;
+				return this.matchesFlagFilter('flagged', _flags);
 			case 'seen':
-				matches = !!_flags.read;
-				break;
+				return !!_flags.read;
 			case 'unseen':
-				matches = !_flags.read;
-				break;
+				return !_flags.read;
 			case 'keyword1':
-				matches = !!_flags.label1;
-				break;
 			case 'keyword2':
-				matches = !!_flags.label2;
-				break;
 			case 'keyword3':
-				matches = !!_flags.label3;
-				break;
 			case 'keyword4':
-				matches = !!_flags.label4;
-				break;
 			case 'keyword5':
-				matches = !!_flags.label5;
-				break;
+				return !!_flags['label' + _filter.slice(-1)];
 			default:
 				// custom labels use their own id as both the flag key and the filter value
-				if (this.isCustomLabel(_filters.filter))
-				{
-					matches = !!_flags[_filters.filter];
-				} else
-				{
-					// a filter this action can never affect (e.g. 'deleted') - nothing to check
-					return;
-				}
-				break;
+				if (this.isCustomLabel(_filter)) return !!_flags[_filter];
+				// a filter this action can never affect (e.g. 'deleted') - nothing to check
+				return null;
 		}
-		if (!matches)
-		{
-			egw.refresh('','mail',uid, 'delete');
-		}
+	}
+
+	/**
+	 * Does a row's flags match the active app-header flag filter?
+	 *
+	 * @param {string} _flagFilter '' | 'flagged' | 'customFlag1'-'customFlag5', see mail_ui::flagFilterOptions()
+	 * @param {object} _flags the row's flags
+	 * @return {boolean|null} null if no flag filter is active
+	 */
+	private matchesFlagFilter(_flagFilter, _flags) : boolean | null
+	{
+		if (!_flagFilter) return null;
+		// "flagged" means the same thing here as the row's flag icon:  'flagged' itself, or any colored custom flag -
+		// setting one of those sets 'flagged' too, but a message flagged before it did
+		// or one that got a customFlag set in a different mail client may still carry only the custom flag
+		return _flagFilter === 'flagged' ?
+			MailApp.FLAG_IDS.some(flag => !!_flags[flag]) : !!_flags[_flagFilter];
 	}
 
 	/**
@@ -4218,6 +4255,7 @@ export class MailApp extends EgwApp
 			cat_id: filters.cat_id,
 			search: filters.search,
 			filter: filters.filter,
+			flagFilter: filters.col_filter?.flagFilter,
 			startdate: filters.startdate,
 			enddate: filters.enddate,
 		};

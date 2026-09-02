@@ -3183,6 +3183,16 @@ class Mail
 					$imapStatusFilter->flag($criteria, $set=true);
 					$queryValid = $statusQueryValid =true;
 					break;
+				// the colored custom flags of mail's app-header flag filter (mail_ui::CUSTOM_FLAGS),
+				// stored as keywords the same way the labels above are
+				case 'CUSTOMFLAG1':
+				case 'CUSTOMFLAG2':
+				case 'CUSTOMFLAG3':
+				case 'CUSTOMFLAG4':
+				case 'CUSTOMFLAG5':
+					$imapStatusFilter->flag('$customflag'.substr($criteria, -1), $set=true);
+					$queryValid = $statusQueryValid =true;
+					break;
 				case 'READ':
 					$imapStatusFilter->flag('SEEN', $set=true);
 					$queryValid = $statusQueryValid =true;

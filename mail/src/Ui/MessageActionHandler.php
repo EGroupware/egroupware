@@ -125,6 +125,21 @@ class MessageActionHandler
 	}
 
 	/**
+	 * Status criteria of a "select all matching filter" request, for Mail::createIMAPFilter()
+	 *
+	 * Two independent criteria the list ANDs together: the status filter, plus the app-header
+	 * flag filter (nextmatch's col_filter[flagFilter], see mail_ui::flagFilterOptions()) - which
+	 * is where the 'flagged' status option moved to, so it has to reach the IMAP query from here.
+	 *
+	 * @param array $query activeFilters as sent by the client
+	 * @return string[] zero, one or two status criteria
+	 */
+	private static function statusCriteria(array $query) : array
+	{
+		return array_values(array_filter([$query['filter'] ?? '', $query['col_filter']['flagFilter'] ?? '']));
+	}
+
+	/**
 	 * flag messages as read, unread, flagged, ...
 	 *
 	 * @param string $_flag name of the flag
@@ -140,6 +155,7 @@ class MessageActionHandler
 		Api\Translation::add_app('mail');
 		$alreadyFlagged = false;
 		$flag2check = '';
+		$filteredByFlag = false;
 		$filter2toggle = $query = [];
 		if ($_messageList == 'all' || !empty($_messageList['msg']))
 		{
@@ -167,7 +183,7 @@ class MessageActionHandler
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
-					if (!empty($query['search']) || !empty($query['filter']) || ($query['cat_id'] == 'bydate' && (!empty($query['startdate']) || !empty($query['enddate']))))
+					if (!empty($query['search']) || self::statusCriteria($query) || ($query['cat_id'] == 'bydate' && (!empty($query['startdate']) || !empty($query['enddate']))))
 					{
 						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->ui->mail_bo->profileID]))
 						{
@@ -222,23 +238,21 @@ class MessageActionHandler
 					// should be affected serverside. here.
 					$messageList = $messageListForToggle = [];
 					$flag2check = ($_flag == 'read' ? 'seen' : $_flag);
-					if (in_array($_flag, ['read', 'flagged']) &&
-						!($flag2check == $query['filter'] || stripos($query['filter'], $flag2check) !== false))
+					$statusCriteria = self::statusCriteria($query);
+					// is the list already filtered by the very flag we are toggling? then the
+					// toggle has only one direction to go, see the elseif branch below
+					$filteredByFlag = (bool)array_filter(
+						$statusCriteria,
+						static fn($criterion) => $criterion == $flag2check || stripos($criterion, $flag2check) !== false
+					);
+					if (in_array($_flag, ['read', 'flagged']) && !$filteredByFlag)
 					{
-						$filter2toggle['status'] = ['un'.$_flag];
-						if ($query['filter'])
-						{
-							$filter2toggle['status'][] = $query['filter'];
-						}
+						$filter2toggle['status'] = array_merge(['un'.$_flag], $statusCriteria);
 						$reverse = 1;
 						$rByUid = true;
 						$_sRt = $this->ui->mail_bo->getSortedList($folder, $sort = 0, $reverse, $filter2toggle, $rByUid, false);
 						$messageListForToggle = $_sRt['match']->ids;
-						$filter['status'] = [$_flag];
-						if ($query['filter'])
-						{
-							$filter['status'][] = $query['filter'];
-						}
+						$filter['status'] = array_merge([$_flag], $statusCriteria);
 						$reverse = 1;
 						$rByUid = true;
 						$_sR = $this->ui->mail_bo->getSortedList($folder, $sort = 0, $reverse, $filter, $rByUid, false);
@@ -256,15 +270,15 @@ class MessageActionHandler
 						$alreadyFlagged = true;
 					}
 					elseif (!empty($filter) &&
-						(!in_array($_flag, ['read', 'flagged']) ||
-							(in_array($_flag, ['read', 'flagged']) &&
-								($flag2check == $query['filter'] || stripos($query['filter'], $flag2check) !== false))))
+						(!in_array($_flag, ['read', 'flagged']) || $filteredByFlag))
 					{
-						if ($query['filter'])
+						if ($statusCriteria)
 						{
-							$filter['status'] = $query['filter'];
+							$filter['status'] = $statusCriteria;
 							// since we toggle and we toggle by the filtered flag we must must change _flag
-							$_flag = ($query['filter'] == 'unseen' && $_flag == 'read' ? 'read' : ($query['filter'] == 'seen' && $_flag == 'read' ? 'unread' : ($_flag == $query['filter'] ? 'un'.$_flag : $_flag)));
+							$_flag = in_array('unseen', $statusCriteria) && $_flag == 'read' ? 'read' :
+								(in_array('seen', $statusCriteria) && $_flag == 'read' ? 'unread' :
+									(in_array($_flag, $statusCriteria) ? 'un'.$_flag : $_flag));
 						}
 						$rByUid = true;
 						$reverse = 1;
@@ -329,7 +343,7 @@ class MessageActionHandler
 			{
 				$response->call('egw.refresh', lang('flagged %1 messages as %2 in %3', $_messageList['msg'], lang(($flag[$_flag] ?: $_flag)), lang($folder)), 'mail', $_messageList['msg'], 'update');
 			}
-			elseif ((isset($_messageList['all']) && $_messageList['all']) || ($query['filter'] && ($flag2check == $query['filter'] || stripos($query['filter'], $flag2check) !== false)))
+			elseif ((isset($_messageList['all']) && $_messageList['all']) || $filteredByFlag)
 			{
 				$this->ui->folderHandler()->setFolderStatus([$profileID."::".$folder], true);
 				$response->call('egw.refresh', lang('flagged %1 messages as %2 in %3', (isset($_messageList['all']) && $_messageList['all'] ? lang('all') : count($_messageList['msg'])), lang(($flag[$_flag] ?: $_flag)), lang($folder)), 'mail');
@@ -370,7 +384,7 @@ class MessageActionHandler
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
-					if (!empty($query['search']) || !empty($query['filter']) || ($query['cat_id'] == 'bydate' && (!empty($query['startdate']) || !empty($query['enddate']))))
+					if (!empty($query['search']) || self::statusCriteria($query) || ($query['cat_id'] == 'bydate' && (!empty($query['startdate']) || !empty($query['enddate']))))
 					{
 						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->ui->mail_bo->profileID]))
 						{
@@ -393,7 +407,7 @@ class MessageActionHandler
 							'filterName' => lang('subject'),
 							'type' => $query['cat_id'] ?: 'subject',
 							'string' => $query['search'],
-							'status' => (string)$query['filter'],
+							'status' => self::statusCriteria($query),
 						];
 						if ($query['enddate'] || $query['startdate'])
 						{
@@ -515,7 +529,7 @@ class MessageActionHandler
 				if (isset($_messageList['activeFilters']) && $_messageList['activeFilters'])
 				{
 					$query = $_messageList['activeFilters'];
-					if (!empty($query['search']) || !empty($query['filter']) || ($query['cat_id'] == 'bydate' && (!empty($query['startdate']) || !empty($query['enddate']))))
+					if (!empty($query['search']) || self::statusCriteria($query) || ($query['cat_id'] == 'bydate' && (!empty($query['startdate']) || !empty($query['enddate']))))
 					{
 						if (is_null(Mail::$supportsORinQuery) || !isset(Mail::$supportsORinQuery[$this->ui->mail_bo->profileID]))
 						{
@@ -539,7 +553,7 @@ class MessageActionHandler
 							'filterName' => lang('subject'),
 							'type' => ($query['cat_id'] ?: 'subject'),
 							'string' => $query['search'],
-							'status' => (!empty($query['filter']) ? $query['filter'] : 'any'),
+							'status' => self::statusCriteria($query) ?: 'any',
 						];
 						if ($query['enddate'] || $query['startdate'])
 						{

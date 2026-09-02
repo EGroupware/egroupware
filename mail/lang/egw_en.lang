@@ -58,6 +58,7 @@ always show notifiction	mail	en	Always show notification
 an error happend while trying to remove acl rights from the account %1!	mail	en	An error happend while trying to remove ACL rights from the account %1!
 and the rule with priority %1, now got the priority %2	mail	en	And the rule with priority %1, now got the priority %2
 answered	mail	en	Answered
+any flag	mail	en	any flag
 any of	mail	en	any of
 any status	mail	en	any status
 append	mail	en	append
@@ -84,6 +85,7 @@ be aware by adding all selected files as %1 mode, it will also change all existi
 be aware that all attachments will be sent as %1!	mail	en	Be aware that all attachments will be sent as %1!
 before reply, visible during compose	mail	en	Before reply, visible during compose
 blacklisted mails are marked as spam	mail	en	Blacklisted emails are marked as spam
+blue	mail	en	Blue
 but check shared folders	mail	en	but check shared folders
 by date	mail	en	By date
 by default 'http://' is just replaced with 'https://'. feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.	mail	en	By default 'http://' is just replaced with 'https://'. Feel free to configure 'https://proxy.egroupware.org/' to also load images only available via http.
@@ -282,6 +284,7 @@ file rejected, no %2. is:%1	mail	en	File rejected, no %2. Is: %1
 filemanager	mail	en	Filemanager
 filemode has been switched to %1	mail	en	Filemode has been switched to: %1
 files	mail	en	Files
+filter by flag	mail	en	Filter by flag
 flag / unflag	mail	en	Flag / Unflag
 flag or unflag a mail	mail	en	Flag or unflag a email
 flagged	mail	en	Flagged
@@ -314,6 +317,7 @@ general	admin	en	General
 general settings	mail	en	General settings
 get acl rights failed from imap server!	mail	en	Get ACL rights failed from IMAP server!
 greater than	mail	en	Greater than
+green	mail	en	Green
 group messages by thread	mail	en	Group messages by thread
 ham folder	mail	en	Ham folder
 handling of external http images / mixed content in mails	mail	en	Handling of external images / mixed content in emails
@@ -483,6 +487,7 @@ only store message in inbox, do not send vacation notice	mail	en	Only store mess
 open in html mode	mail	en	Open in HTML mode
 open in text mode	mail	en	Open in Text mode
 open with collabora office	mail	en	Open with Collabora Online
+orange	mail	en	Orange
 organisation	admin	en	Organisation
 organization	mail	en	Organisation
 organization | real name email	mail	en	Organisation | Real name [Email]
@@ -516,6 +521,7 @@ printview	mail	en	Printview
 private key created, downloading csr...	mail	en	Private key created, downloading CSR...
 processing of file %1 failed. failed to meet basic restrictions.	mail	en	Processing of file %1 failed. Failed to meet basic restrictions.
 provide a default vacation text, (used on new vacation messages when there was no message set up previously)	admin	en	Provide a default vacation text, (used on new vacation messages when there was no message set up previously)
+purple	mail	en	Purple
 push notifications	mail	en	Push notifications
 quicksearch	mail	en	Quicksearch
 quicksearch (with cc)	mail	en	Quicksearch (+Copy)
@@ -532,6 +538,7 @@ real name organization email	mail	en	Real name Organisation [Email]
 reason!	mail	en	reason!
 receive notification	mail	en	Receive notification
 recursively	mail	en	Recursively
+red	mail	en	Red
 refresh time in minutes	mail	en	Refresh time in minutes
 refused to delete folder inbox	mail	en	refused to delete folder Inbox
 refused to delete folder with subfolders	mail	en	refused to delete folder with subfolders

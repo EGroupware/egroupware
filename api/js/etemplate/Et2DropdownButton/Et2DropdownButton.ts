@@ -259,7 +259,9 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
 
 	protected _handleSelect(ev)
 	{
-		this._value = ev.detail.item.value;
+		// through the setter, not _value directly: iconOnly renders the selected option's own
+		// icon, so the main button has to re-render when the selection changes
+		this.value = ev.detail.item.value;
 
 		if(this.defaultPreference)
 		{
