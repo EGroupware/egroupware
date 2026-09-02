@@ -51,6 +51,10 @@ function createFakeClient(email : Record<string, any>, capture : { properties? :
 	return {
 		requestMany: async(buildFn : (t : any) => any) =>
 		{
+			// fetchRows()/getRows() also resolve the mailbox's role (see mailboxRole()) in a
+			// second, parallel requestMany() call, to decide showRecipient - none of this fake's
+			// callers assert on that, so a fixed non-special role is enough
+			let calledMailboxGet = false;
 			const t = {
 				Email: {
 					get: (args : any) =>
@@ -58,9 +62,16 @@ function createFakeClient(email : Record<string, any>, capture : { properties? :
 						capture.properties = args.properties;
 						return null;
 					}
+				},
+				Mailbox: {
+					get: (_args : any) => { calledMailboxGet = true; return null; }
 				}
 			};
 			buildFn(t);
+			if (calledMailboxGet)
+			{
+				return [{mailbox: {list: [{role: null}]}}];
+			}
 			// A real JMAP server only returns the requested properties - filter the fixture the
 			// same way, so a fix that (correctly) stops requesting 'preview' is actually exercised,
 			// instead of the assertion passing/failing based on the fixture alone.
@@ -1000,9 +1011,14 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
 	return {
 		requestMany: async(buildFn : (t : any) => any) =>
 		{
-			let calledMailboxQuery = false, calledEmailQuery = false, calledThreadGet = false;
+			let calledMailboxQuery = false, calledMailboxGet = false, calledEmailQuery = false, calledThreadGet = false;
 			const t = {
-				Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+				Mailbox: {
+					query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); },
+					// mailboxRole() (getRows()'s flat, non-threaded branch) - none of this fake's
+					// callers assert on the resolved role, so a fixed non-special one is enough
+					get: (_args : any) => { calledMailboxGet = true; return invocationStub(); },
+				},
 				Email: {
 					query: (_args : any) => { calledEmailQuery = true; return invocationStub(); },
 					get: (_args : any) => invocationStub(),
@@ -1010,6 +1026,10 @@ function createThreadedFakeClient(representatives : any[], membersByThread : Rec
 				Thread: {get: (_args : any) => { calledThreadGet = true; return invocationStub(); }},
 			};
 			const returned = buildFn(t);
+			if (calledMailboxGet)
+			{
+				return [{mailbox: {list: [{role: null}]}}];
+			}
 			if (calledMailboxQuery)
 			{
 				return [{ids: {ids: ["mbox1"]}}];
@@ -1296,13 +1316,22 @@ describe("MailJmap.getRows() - threaded view (Phase 1)", () =>
 		const client = {
 			requestMany: async(buildFn : (t : any) => any) =>
 			{
-				let calledMailboxQuery = false;
+				let calledMailboxQuery = false, calledMailboxGet = false;
 				const t = {
-					Mailbox: {query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); }},
+					Mailbox: {
+						query: (_args : any) => { calledMailboxQuery = true; return invocationStub(); },
+						// mailboxRole() (getRows()'s flat, non-threaded branch, since threading
+						// falls back here) - not asserted on, a fixed non-special role is enough
+						get: (_args : any) => { calledMailboxGet = true; return invocationStub(); },
+					},
 					Email: {query: (_args : any) => invocationStub(), get: (_args : any) => invocationStub()},
 					Thread: {get: (_args : any) => { threadGetCalled = true; return invocationStub(); }},
 				};
 				buildFn(t);
+				if (calledMailboxGet)
+				{
+					return [{mailbox: {list: [{role: null}]}}];
+				}
 				if (calledMailboxQuery)
 				{
 					return [{ids: {ids: ["mbox1"]}}];
