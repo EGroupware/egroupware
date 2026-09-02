@@ -51,6 +51,13 @@ clearly-scoped change elsewhere (e.g. an import path).
 | rag | done | 72 -> 73 lines. `rag/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import and 1 TS error needed fixing - see below. |
 | preferences | done | 62 -> 62 lines, main repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import, a leftover unnecessary `@ts-ignore`, and 1 TS error needed fixing - see below. |
 | openid | done | 33 -> 34 lines. `openid/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import and 1 TS error needed fixing - see below. |
+| projectmanager | done | `projectmanager/js/app.ts`, 1239 -> 1315 lines. `projectmanager/` is its own nested git repo. 11 `var`, 14 jQuery hits, 12 `function(){}`, 3 `sendRequest()`, 10 TS errors - see below. |
+| invoices | done | `invoices/js/app.ts`, 828 -> 838 lines. `invoices/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`/`self`/`that`; only legacy-widget-import cleanup and 13 TS errors needed fixing - see below. |
+| rocketchat | done | `rocketchat/js/app.ts`, 626 -> 668 lines. `rocketchat/` is its own nested git repo. 3 `var`, ~14 jQuery hits, 4 TS errors, 4 `egw.json(...).sendRequest()` sites, 8 `function(){}`/`self` closures - see below. |
+| news_admin | done | `news_admin/js/app.ts`, 438 lines. `news_admin/` is its own nested git repo. 36 `var`, 9 jQuery hits, 11 TS errors, 0 `sendRequest()`, 4 `function(){}`/1 `var that` closure - see below. |
+| policy | done | `policy/js/app.ts`, 389 -> 403 lines. `policy/` is its own nested git repo. Already 0 `var` (all `let` already); 5 jQuery hits, 4 TS errors, 5 `sendRequest()` sites, 13 `function(){}`/4 `var self` closures - see below. |
+| importexport | done | `importexport/js/app.ts`, 325 -> 336 lines, main repo. 10 `var`, 13 jQuery hits (incl. a side-effect `import "jquery.min.js"`), 12 TS errors, 0 `sendRequest()`, 2 `jQuery.proxy(function(){...}, this)` closures - see below. |
+| stylite | done | `stylite/js/app.ts`, 1054 -> 1099 lines. `stylite/` is its own nested git repo. 2 `var`, 8 jQuery hits, 20 TS errors, 2 `egw.json(...).sendRequest()` sites, 31 `function(`/5 `self`/`that` closures - see below. |
 
 **Nested git repos:** `tracker/` and `status/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
@@ -965,3 +972,139 @@ Smallest file in this batch (33 -> 34 lines). Baseline: already 0 `var`/jQuery/`
 `function(){}` - only 1 TS error (`import {app} from ".../egw_global"`, `TS2305`) and the ambient-global
 import needed fixing. `(<AdminApp>app.admin)?.enableAppToolbar(et2, name)` was already correctly typed
 via the existing `import type {AdminApp} from "../../admin/js/app"` - no change needed there.
+
+## projectmanager/js/app.ts (done)
+
+1239 -> 1315 lines. `projectmanager/` is its own nested git repo (same shape as `tracker`/`status` -
+`cd` into it to see/commit/push). Baseline: 11 `var`, 14 jQuery hits, 12 `function(){}`, 3
+`sendRequest()` (all async, none genuinely synchronous), 10 TS errors.
+
+### Legacy widget imports
+
+- `et2_nextmatch` (`et2_extension_nextmatch.ts`) and `et2_gantt` (`et2_widget_gantt.ts`) both stayed
+  **value** imports, unconverted - both are real, distinct legacy implementations (not zero-member
+  compat shims), and this file passes both as runtime `instanceof`-style filter values to
+  `iterateOver(_callback, _context, _type)` all over the file (`show()`, `setState()`, `getState()`,
+  `getNextmatch()`), plus `et2_nextmatch` is also used as a real `instanceOf(et2_nextmatch)` runtime
+  check in `element_add_app_change_handler()`. Same reasoning as tracker's/admin's identical exception.
+- `Et2LinkAdd` and `EgwFrameworkApp`/`FilterInfo` were imported as *value* imports despite being used
+  only as type annotations (`widget : Et2LinkAdd`, `fwApp : EgwFrameworkApp`, `: FilterInfo` return
+  type) - switched all three to `import type`, same reasoning as every other file in this project.
+  `EgwApp`, `etemplate2` correctly stayed value imports (`extends EgwApp`,
+  `etemplate2.getByApplication(...)`).
+- `import {egw, egw_getFramework} from ".../egw_global"` removed entirely - the familiar
+  ambient-global fix (ambient `var egw`/`function egw_getFramework()` inside `egw_global.d.ts`'s
+  `declare global {}`, not real exported module members).
+
+### TS errors fixed (10 total)
+
+- **`register_app_refresh(...)` - `TS2304: Cannot find name`**: unlike `egw`/`egw_getFramework`, this
+  one is a *genuinely undeclared* ambient global - `window.register_app_refresh` is set at runtime by
+  `api/js/jsapi/jsapi.js`, but (unlike `egw_getFramework`) never gets a matching `declare function` in
+  `egw_global.d.ts`, and no other `.ts` file in the repo calls it. Rather than add it to the shared
+  `.d.ts` (out of scope) or cast to `<any>` at the one call site, added a small local
+  `declare function register_app_refresh(...)` at the top of this file - a legitimate, file-scoped
+  ambient declaration that doesn't touch the shared file.
+- **`app.projectmanager.show()`/`.show_filemanager()`/`.linkHandler()` don't exist on type `EgwApp`**
+  (4 sites: `et2_ready()` x3, `linkHandler()`'s own retry `setTimeout`): `app` is typed
+  `{classes: any, [propName: string]: EgwApp}`, so `app.projectmanager` widens back to the *base*
+  `EgwApp` type even though it's genuinely this same `ProjectmanagerApp` instance - the familiar
+  EPL-blind-spot-shaped gap, but here for the app's own class rather than a sibling app. Rather than
+  `<any>`-cast (the usual EPL-blind-spot fix, appropriate when the real shape is genuinely unknown),
+  cast to `<ProjectmanagerApp>app.projectmanager` at each site instead - more precise, matching
+  status/js/app.ts's established refinement ("cast to `<statusApp>` instead of `<any>` - more precise,
+  since we actually know the real shape here"). Deliberately did **not** replace these with `this.X()` -
+  even though `this` is normally the same object, `app.projectmanager` and `this` could theoretically
+  diverge if the app were torn down and recreated while an old closure (e.g. the `linkHandler()` retry
+  timeout) was still pending, so the cast preserves the original global-registry lookup instead of
+  silently changing what's being called.
+- **`this.et2._inst`** (2 sites: `p_element_delete()`, `erole_refresh()`'s default case) - same
+  `getInstanceManager()` fix as every other file in this project.
+- **`nm.instanceOf(...)` doesn't exist on type `Et2WidgetClass | et2_widget`**
+  (`element_add_app_change_handler()`): `getParent()`'s return type is a union where only the legacy
+  `et2_widget` side declares `instanceOf()`. Typed the walking variable `let nm : any` instead of
+  casting at every step of the `while` loop - simplest fix for a loop that reassigns `nm` on each
+  iteration while climbing the widget tree.
+
+### jQuery removed
+
+- `jQuery.proxy(this.linkHandler, this)` (constructor, passed to `register_app_refresh()`) ->
+  `this.linkHandler.bind(this)` - the direct native equivalent for proxying an existing method
+  reference (as opposed to wrapping an inline function, which gets an arrow instead elsewhere in this
+  project).
+- `jQuery(et2.DOMContainer).one('clear', function(){...})` (`et2_ready()`) ->
+  `et2.DOMContainer.addEventListener('clear', () => {...}, {once: true})` - confirmed `'clear'` is a
+  real native event, dispatched by `etemplate2.clear()` itself (`this.DOMContainer.dispatchEvent(new
+  Event("clear", {bubbles: true}))` in `etemplate2.ts`), not a jQuery-only concept, same as admin's
+  `'show.et2_nextmatch'` finding elsewhere in this project.
+- `jQuery(et2.DOMContainer).siblings('.et2_container').length` (`et2_ready()`) ->
+  `Array.from(et2.DOMContainer.parentElement?.children ?? []).some(el => el !== et2.DOMContainer &&
+  el.matches('.et2_container'))` - no native one-liner for "has a sibling matching selector", so a
+  small manual scan over `parentElement.children`, same class of manual-walk fix as addressbook's
+  `.nextAll()` conversion.
+- `jQuery(et2.DOMContainer).hide()` / `jQuery(this.views[view].etemplate.DOMContainer).hide()` /
+  `jQuery(this.views[what].etemplate.DOMContainer).show()` (3x, `et2_ready()`/`show()`) -> direct
+  `.style.display = 'none'` / `= ''` on the already-native `DOMContainer` (`HTMLElement`, confirmed via
+  `etemplate2.ts`'s own `get DOMContainer()` getter - never actually jQuery-wrapped).
+- `jQuery.isEmptyObject(state.state)` (`setState()`) -> `Object.keys(state.state ?? {}).length === 0`,
+  the established repo-wide swap.
+- `jQuery.isArray(pm_id)` (`add_new()`) -> `Array.isArray(pm_id)`.
+- `jQuery(target).closest('div').parent('div').find('table.egwLinkMoreOptions')` +
+  `jQuery(element).css('display')`/`.fadeIn('medium')`/`.fadeOut('medium')` (`toggleDiv()`) -> a manual
+  `.closest('div')` + parent-is-a-`<div>` check + `.querySelector(...)`, and a plain
+  `getComputedStyle(element).display`/`style.display` toggle (drops the fade animation - same accepted
+  tradeoff as admin's `fadeToggle()` case, documented in a comment). Also corrected the stale
+  `@param {string} target jQuery selector` JSDoc tag while touching this method: `target` is actually
+  never populated at all at runtime - `Et2Widget._handleClick()` (`api/js/etemplate/Et2Widget/
+  Et2Widget.ts`) only ever invokes `onclick` handlers with `(event, widget)`, so `toggleDiv`'s 3rd
+  parameter is always `undefined` in practice (a pre-existing, out-of-scope latent bug, not touched
+  beyond documenting it and guarding it defensively with `target instanceof Element`).
+- `jQuery('a:contains("...")', sidebox.parentsUntil('#egw_fw_sidemenu,#tdSidebox').last())` +
+  `.off('click.projectmanager')`/`.on('click.projectmanager', click)` (`_bind_sidebox()`), plus the two
+  related `.off('.projectmanager')` teardown call sites (`destroy()`, and the `'clear'` handler in
+  `et2_ready()`) - the biggest rewrite in this file. `sidebox` itself is typed `JQuery` in the shared,
+  out-of-scope `api/js/jsapi/egw_app.ts` (`sidebox : JQuery`), so this couldn't be a 1:1 mechanical
+  swap. Replaced with: a new `_findSideboxLink(label)` helper that manually walks
+  `sideboxNode.parentElement` up to the `#egw_fw_sidemenu`/`#tdSidebox` boundary (native equivalent of
+  `.parentsUntil(selector).last()`) and then scans that container's `<a>` elements for one whose
+  `textContent` includes the translated label (native equivalent of `:contains()`); a new
+  `_sideboxClickHandlers : Map<HTMLElement, EventListener>` instance field that `_bind_sidebox()`
+  populates via `addEventListener`/`removeEventListener` instead of jQuery's namespaced
+  `off()`/`on()`; and a new `_clearSideboxHandlers()` helper (used by both `destroy()` and the
+  `'clear'` handler) that unbinds and forgets everything the map is tracking. This is a deliberate
+  behavior refinement, not just a mechanical swap: the original `.off('.projectmanager')` calls swept
+  *any* element carrying that jQuery namespace, while the new tracked-map approach only ever removes
+  handlers this file itself added - functionally equivalent for every actual call site in this file
+  (nothing else binds a `'click.projectmanager'`-namespaced handler), but more precise. Same
+  handler-tracking-field pattern as admin's `_adminIframeLoadHandler`.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+All 3 sites were async (`sendRequest(true)`), no genuinely synchronous ones present - straightforward
+swaps: `show()`'s gantt-project-data fetch (callback -> `.then()`), `ignore_action()`'s and
+`change_status()`'s fire-and-forget calls (both had `_callback: null` already, so the swap simplified to
+a bare `egw.request(menuaction, params)` with no `.then()` needed).
+
+### function/closures -> arrow functions
+
+- All 12 `function(...) {...}` expressions converted to arrow functions - `_bind_sidebox()` click
+  callbacks (`et2_ready()` x2), the `'clear'` event callback, the gantt-project `.map()` callback, the
+  `egw.request().then()` callback, 6x `iterateOver(function(...){...}, this, ...)` callbacks across
+  `show()`/`setState()`/`getState()`/`getNextmatch()`, and `linkHandler()`'s retry `setTimeout`
+  callback. None needed their own dynamic `this` - the `iterateOver()` calls were verified against
+  `et2_core_widget.ts`'s implementation (`_callback.call(_context, this)`), confirming the explicit
+  `this` passed as `_context` is always the same object an arrow's lexical `this` would already resolve
+  to (same established refinement as tracker's `iterateOver()` conversions). No `var self`/`var that`
+  closures were present to remove.
+
+### Not touched (out of scope)
+
+- `toggleDiv()`'s `target` parameter being permanently `undefined` at runtime (see above) - a
+  pre-existing, unrelated latent bug, documented via the corrected JSDoc and a defensive
+  `instanceof Element` guard, not "fixed" (no call site was changed to actually pass a target).
+- `p_element_delete()`'s `content`/`id` being read unconditionally after an `if(template)` block that's
+  the only place either is assigned (so both are `undefined` - and immediately throw on
+  `content.data['caller']` - whenever `template` is falsy) is exactly the same latent fragility
+  addressbook's `_confirmdialog_callback()` var-hoisting note flagged elsewhere in this project;
+  preserved as-is (hoisted the `let content, id;` declarations above the `if`, matching `var`'s
+  original hoisting behavior) rather than "fixing" the underlying fragility.
