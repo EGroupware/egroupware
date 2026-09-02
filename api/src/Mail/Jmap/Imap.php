@@ -2044,6 +2044,35 @@ class Imap extends Jmap\Base
 			}
 		}
 
+		// S/MIME encrypt-only/sign+encrypt body swap (createDraftEmail()'s bodyOverride, see
+		// smimeEncryptEmailProperties()'s own docblock) - a bare {type, blobId} bodyStructure with
+		// no subParts and no bodyValues at all is meant to BE the entire message body verbatim
+		// (already-encrypted application/pkcs7-mime bytes), not one attachment among others.
+		// Falling through to the generic $collect()/addAttachmentPart() path below (its only path
+		// for a blobId part with no matching bodyValues entry) wraps it in a fresh multipart/mixed
+		// alongside an unwanted, always-added empty placeholder body part instead - found live
+		// 2026-09-02, ralf: a received shim-sent encrypted mail showed exactly that shape
+		// (multipart/mixed containing an empty application/octet-stream leaf, a second empty
+		// "attachment" leaf, and the REAL pkcs7-mime bytes as a THIRD, attachment-dispositioned
+		// part) instead of the message's own top-level Content-Type simply BEING
+		// application/pkcs7-mime. setBasePart() bypasses all of that - nothing else in this method
+		// applies to this shape anyway (no bodyValues, no attachments to add), hence the early
+		// return. A real Stalwart/JMAP account never reaches this at all (Email/set create is
+		// handled natively there, this method is shim-only).
+		if (!empty($email['bodyStructure']) && empty($email['bodyStructure']['subParts']) &&
+			!empty($email['bodyStructure']['blobId']))
+		{
+			$raw = self::readUploadedBlob($accountId, (string)$email['bodyStructure']['blobId']);
+			if ($raw !== null)
+			{
+				$part = new \Horde_Mime_Part();
+				$part->setType((string)$email['bodyStructure']['type']);
+				$part->setContents($raw);
+				$mailer->setBasePart($part);
+				return $mailer;
+			}
+		}
+
 		$bodyValues = (array)($email['bodyValues'] ?? []);
 		$textBody = null;
 		$htmlBody = null;
