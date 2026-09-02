@@ -340,6 +340,19 @@ export class MailJmap
 	// JmapShim::MDN_HEADER_PROPERTY (mail/src/JmapShim.php), which echoes this same key back for
 	// local-shim accounts; a real JMAP server (Stalwart) does so natively per spec
 	private static readonly MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
+	// same RFC 8621 header-property mechanism, used to detect a message that's ENTIRELY an S/MIME
+	// signature/encryption wrapper (no real user-facing attachments at all) so the row-list
+	// attachment icon isn't shown for it - see email2row()'s use of this
+	// Bare form (no ":asText"/":asRaw" suffix), unlike MDN_HEADER_PROPERTY above - verified live
+	// 2026-09-02 against a real JMAP server (Stalwart): header:content-type:asText always comes
+	// back null (Content-Type is a "structured" RFC 5322 header - "asText", meant for unstructured
+	// free-text headers, isn't valid/supported for it there), and header:content-type:asRaw comes
+	// back MISSING from the response entirely rather than under that exact key - RFC 8621 §4.1.3
+	// says the bare form ("header:content-type") IS "asRaw" by default, and Stalwart echoes
+	// properties back under their CANONICAL key, collapsing the explicit ":asRaw" suffix away. The
+	// bare form's raw, undecoded value is all isSmimeWrapperOnly() needs anyway (plain ASCII
+	// type/param text, never RFC 2047-encoded).
+	private static readonly CONTENT_TYPE_HEADER_PROPERTY = 'header:content-type';
 	// JMAP Quota extension (RFC 9425) - matches Mail\Jmap::JMAP_QUOTA (api/src/Mail/Jmap.php)
 	private static readonly JMAP_QUOTA = 'urn:ietf:params:jmap:quota';
 	// Per-profile cache of getQuota()'s formatted result - refreshQuotaDisplay() (app.ts)
@@ -526,6 +539,7 @@ export class MailJmap
 				const properties = [
 					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
 					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+				MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 				];
 				if (fetchPreview)
 				{
@@ -571,6 +585,7 @@ export class MailJmap
 		const properties = [
 			'id', 'threadId', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
 			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+			MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 		];
 		if (fetchPreview)
 		{
@@ -682,6 +697,7 @@ export class MailJmap
 		const properties = [
 			'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
 			'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+			MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 		];
 		if (fetchPreview)
 		{
@@ -2192,6 +2208,7 @@ export class MailJmap
 				const properties = [
 					'id', 'keywords', 'size', 'receivedAt', 'sentAt', 'subject',
 					'from', 'to', 'cc', 'bcc', 'hasAttachment', MailJmap.MDN_HEADER_PROPERTY,
+				MailJmap.CONTENT_TYPE_HEADER_PROPERTY,
 				];
 				if (fetchPreview)
 				{
@@ -5304,6 +5321,33 @@ export class MailJmap
 	private static readonly RECIPIENT_SHOWN_ROLES = ['sent', 'drafts', 'templates'];
 
 	/**
+	 * True when the top-level Content-Type header (fetched via CONTENT_TYPE_HEADER_PROPERTY, same
+	 * RFC 8621 header-property mechanism as MDN_HEADER_PROPERTY) shows the ENTIRE message is
+	 * nothing but an S/MIME signature/encryption wrapper - a single application/(x-)pkcs7-mime
+	 * part (encrypted, or opaque-signed), or multipart/signed with an application/(x-)pkcs7-
+	 * signature protocol (detached-signed) - matching Api\Mail\Smime's own $SMIME_TYPES list
+	 * (api/src/Mail/Smime.php). Both Stalwart's native `hasAttachment` and the local shim's
+	 * structureHasAttachment() (api/src/Mail/Jmap/Imap.php) count the wrapper part itself as an
+	 * attachment (it carries Content-Disposition: attachment/inline, same as a real one) - showing
+	 * a paperclip icon for a message with no actual user-facing attachment, which is confusing
+	 * (2026-09-02, ralf: "we should NOT show an attachment icon ... for s/mime signed or encrypted
+	 * messages, not having real attachments"). Deliberately message-list-only: a signed message
+	 * whose signed payload is itself multipart/mixed with a genuine extra attachment would still
+	 * lose the icon under this check - detecting that would need a full bodyStructure fetch at
+	 * list time, the exact per-row IMAP/JMAP cost this project has consistently avoided elsewhere.
+	 */
+	private static isSmimeWrapperOnly(contentTypeHeader : string) : boolean
+	{
+		const type = (contentTypeHeader || '').split(';')[0].trim().toLowerCase();
+		if (type === 'application/pkcs7-mime' || type === 'application/x-pkcs7-mime')
+		{
+			return true;
+		}
+		return type === 'multipart/signed' &&
+			/protocol\s*=\s*"?application\/(x-)?pkcs7-signature"?/i.test(contentTypeHeader || '');
+	}
+
+	/**
 	 * @param showRecipient true for a Sent/Drafts/Templates mailbox - mail_ui::header2gridelements()'s
 	 *  old convention (lost during the JMAP migration, found live 2026-09-02, ralf: "In Sent folder
 	 *  we used to show the recipient's address, not the sender"): the unified `address` field (the
@@ -5340,6 +5384,8 @@ export class MailJmap
 		// goes in ccaddress/bccaddress as one string each.
 		const fromList = addressList(email.from);
 		const toList = addressList(email.to);
+		const hasAttachment = !!email.hasAttachment &&
+			!MailJmap.isSmimeWrapperOnly(email[MailJmap.CONTENT_TYPE_HEADER_PROPERTY]);
 
 		return {
 			row_id: this.app.egw.user('account_id') + '::' + profileID + '::' + mailboxId + '::' + email.id,
@@ -5361,8 +5407,8 @@ export class MailJmap
 			dispositionnotificationto: email[MailJmap.MDN_HEADER_PROPERTY] || '',
 			// Kept for the preview's attachment-presence check.  Row templates use
 			// the individual image values below instead of a legacy html widget.
-			attachments: email.hasAttachment ? 'attach' : '',
-			attachment_icon: email.hasAttachment ? 'attach' : '',
+			attachments: hasAttachment ? 'attach' : '',
+			attachment_icon: hasAttachment ? 'attach' : '',
 			flagged_icon: hasFlagged ? 'unread_flagged_small' : '',
 			// no attachment-list preview block for Phase 1 (see class docblock) - but app.ts's
 			// preview() unconditionally reads data.attachmentsBlock[0], so this must at

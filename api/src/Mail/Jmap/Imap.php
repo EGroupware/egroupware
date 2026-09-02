@@ -1478,6 +1478,9 @@ class Imap extends Jmap\Base
 		// MDN (read-receipt) prompt detection - MailJmap.email2row() reads this same property
 		// name back verbatim, matching how a real JMAP server echoes header:X:form property keys
 		$wantMdn = !$properties || in_array(self::MDN_HEADER_PROPERTY, $properties, true);
+		// message-list attachment-icon S/MIME-wrapper detection - MailJmap.email2row() reads this
+		// same property name back verbatim, see its isSmimeWrapperOnly()
+		$wantContentType = !$properties || in_array(self::CONTENT_TYPE_HEADER_PROPERTY, $properties, true);
 		// whole-message blobId (RFC 8621 top-level Email.blobId) - MailJmap.fetchRawHeader()'s
 		// "view header" fast path, no extra IMAP work needed (same self-describing scheme
 		// bodyPartToJmap() uses per-part, just with an empty partId - see download())
@@ -1536,6 +1539,10 @@ class Imap extends Jmap\Base
 			$query->headers('mdn', ['Disposition-Notification-To', 'Return-Receipt-To', 'X-Confirm-Reading-To'],
 				['cache' => true, 'peek' => true]);
 		}
+		if ($wantContentType)
+		{
+			$query->headers('contenttype', ['Content-Type'], ['cache' => true, 'peek' => true]);
+		}
 
 		$results = $imap->fetch($mailbox, $query, [
 			'ids' => new \Horde_Imap_Client_Ids(array_map('intval', $ids)),
@@ -1556,7 +1563,7 @@ class Imap extends Jmap\Base
 			if (($data = $results[(int)$id] ?? null))
 			{
 				/** @var \Horde_Imap_Client_Data_Fetch $data */
-				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId);
+				$email = self::emailFromFetch($imap, $mailbox, $id, $data, $wantPreview, (bool)$wantBody, $wantMdn, $wantBlobId, $wantContentType);
 				if ($wantThreadId)
 				{
 					$email['threadId'] = $threadMap[$id] ?? $id;
@@ -2733,9 +2740,11 @@ class Imap extends Jmap\Base
 	 *  $query->headers('mdn', ...) call, see emailGet())
 	 * @param bool $wantBlobId true adds the whole-message 'blobId' field (RFC 8621 top-level
 	 *  Email.blobId) - no extra IMAP work, same self-describing scheme bodyPartToJmap() uses
+	 * @param bool $wantContentType true adds the CONTENT_TYPE_HEADER_PROPERTY field (needs a
+	 *  preceding $query->headers('contenttype', ...) call, see emailGet())
 	 * @return array
 	 */
-	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false) : array
+	public static function emailFromFetch(\Horde_Imap_Client_Socket $imap, string $mailbox, string $uid, \Horde_Imap_Client_Data_Fetch $data, bool $wantPreview = true, bool $wantBody = false, bool $wantMdn = false, bool $wantBlobId = false, bool $wantContentType = false) : array
 	{
 		$envelope = $data->getEnvelope();
 		$structure = $data->getStructure();
@@ -2767,6 +2776,12 @@ class Imap extends Jmap\Base
 			$email[self::MDN_HEADER_PROPERTY] = $mdnHeaders ? self::firstHeaderValue($mdnHeaders,
 				['Disposition-Notification-To', 'Return-Receipt-To', 'X-Confirm-Reading-To']) : null;
 		}
+		if ($wantContentType)
+		{
+			$contentTypeHeaders = $data->getHeaders('contenttype', \Horde_Imap_Client_Data_Fetch::HEADER_PARSE);
+			$email[self::CONTENT_TYPE_HEADER_PROPERTY] = $contentTypeHeaders ?
+				self::firstHeaderValue($contentTypeHeaders, ['Content-Type']) : null;
+		}
 		if ($wantBody && $structure)
 		{
 			$email += self::emailBodyFields($imap, $mailbox, $uid, $structure);
@@ -2780,6 +2795,14 @@ class Imap extends Jmap\Base
 	 * how a real JMAP server echoes "header:X:form" property keys verbatim.
 	 */
 	const MDN_HEADER_PROPERTY = 'header:disposition-notification-to:asText';
+
+	/**
+	 * Same RFC 8621 §4.1.3 header-property mechanism, for the top-level Content-Type header -
+	 * MailJmap.email2row()'s isSmimeWrapperOnly() reads this to suppress the row-list attachment
+	 * icon for a message that's entirely an S/MIME signature/encryption wrapper. Bare form (no
+	 * ":asText"/":asRaw" suffix) - see mail/js/jmap.ts's own copy of this constant for why.
+	 */
+	const CONTENT_TYPE_HEADER_PROPERTY = 'header:content-type';
 
 	/**
 	 * First non-empty value among a priority list of header names, decoded (RFC 2047) and trimmed -
