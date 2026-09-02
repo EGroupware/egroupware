@@ -17,11 +17,26 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 {
 	private host : Et2Nextmatch;
 	/**
-	 * No-op UID listeners keeping a row's central egw-cache entry alive (immune to its 5min
-	 * idle eviction) for as long as the row belongs to this query - covers both preloaded rows
-	 * (storeRows()) and rows added/updated via a single-row refresh (_refreshSingleRow()).
+	 * UIDs this provider is holding in egw's central cache for the current query.
+	 *
+	 * Et2Datagrid stores only row ids; the row *data* lives in the central cache and is
+	 * read back through getRowData(), so anything the grid can still render has to stay
+	 * cached. That cache evicts entries older than 5min which have no registered
+	 * listener, so each retained row gets one - all of them the single shared
+	 * `_rowKeepAlive` below rather than a closure per row, and all of them tracked here
+	 * so releaseRetainedRows() can hand them back when the query changes or the host
+	 * goes away. Covers preloaded rows (storeRows()), fetched pages (fetchPage()), and
+	 * rows added/updated by a single-row refresh (_refreshSingleRow()).
 	 */
-	private _initialRowRegistrations : Map<string, Function> = new Map();
+	private _retainedRowUids : Set<string> = new Set();
+
+	/**
+	 * The one listener registered for every retained row. Its only job is to exist:
+	 * egw's cache sweep skips any uid that has a listener. Shared deliberately - a
+	 * fresh closure per row is what made this leak, since each captured its whole
+	 * fetch page and egw's registry appends without deduping.
+	 */
+	private readonly _rowKeepAlive : () => void = () => {};
 	/** Tracks one in-flight refresh promise per normalized row id so concurrent callers share one server request. */
 	private _inFlightRefreshes : Map<string, Promise<Et2DatagridRefreshResult>> = new Map();
 
@@ -125,18 +140,47 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 
 	hostDisconnected() : void
 	{
-		this.clearInitialRowRegistrations();
+		this.releaseRetainedRows();
 	}
 
-	/** Release the UID listeners used to retain this query's rows (preloaded or refreshed-in). */
-	clearInitialRowRegistrations() : void
+	/**
+	 * Retain one row's cache entry for this query, if it is not retained already.
+	 */
+	private _retainRow(uid : string, execId : string, widgetId : string) : void
+	{
+		if(!uid || this._retainedRowUids.has(uid))
+		{
+			return;
+		}
+		this._retainedRowUids.add(uid);
+		this.host.egw().dataRegisterUID?.(uid, this._rowKeepAlive, this.host, execId, widgetId);
+	}
+
+	/**
+	 * Release every row this query was holding in egw's cache, letting the normal
+	 * eviction sweep reclaim them. Called when the query changes or the host detaches -
+	 * both points where the grid has dropped its rows, so nothing can still be rendered
+	 * from them. Only this provider's own listeners are removed, by passing both the
+	 * shared callback and the host as context.
+	 */
+	releaseRetainedRows() : void
 	{
 		const egw = this.host.egw();
-		for(const [uid, callback] of this._initialRowRegistrations)
+		for(const uid of this._retainedRowUids)
 		{
-			egw.dataUnregisterUID?.(uid, callback, this.host);
+			egw.dataUnregisterUID?.(uid, this._rowKeepAlive, this.host);
 		}
-		this._initialRowRegistrations.clear();
+		this._retainedRowUids.clear();
+	}
+
+	/**
+	 * Kept as the previous name for this operation, which Et2Nextmatch calls on filter
+	 * changes and row replacement.
+	 * @deprecated use releaseRetainedRows()
+	 */
+	clearInitialRowRegistrations() : void
+	{
+		this.releaseRetainedRows();
 	}
 
 	/**
@@ -376,14 +420,9 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 				// Initial rows are supplied directly rather than through fetchPage(),
 				// so they otherwise have no UID registration. The global store expires
 				// unregistered entries after five minutes while the virtualizer still
-				// retains their ids. A no-op registration gives them the same lifetime
-				// as fetched rows without duplicating row data in another cache.
-				if(!this._initialRowRegistrations.has(uid))
-				{
-					const callback = () => {};
-					this._initialRowRegistrations.set(uid, callback);
-					egw.dataRegisterUID?.(uid, callback, this.host, execId, widgetId);
-				}
+				// retains their ids. A keep-alive registration gives them the same
+				// lifetime as fetched rows without duplicating row data in another cache.
+				this._retainRow(uid, execId, widgetId);
 			}
 		});
 	}
@@ -477,7 +516,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 						// Row payload is already stored in the central egw cache by dataFetch().
 						const refreshedRow = this._cachedRow(normalizedId);
 						const rowExists = typeof response?.total === "number" ? response.total >= 1 : !!refreshedRow;
-						if(rowExists && refreshedRow && !this._initialRowRegistrations.has(normalizedId))
+						if(rowExists && refreshedRow)
 						{
 							// Unlike a normal page fetch (fetchPage(), which registers a keep-alive
 							// listener per row via egw.dataRegisterUID() - see storeRows()), this path
@@ -491,9 +530,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 							// so it would render with no data (bare avatar, blank subject/date) the
 							// first time it finally does. Give it the same keep-alive registration as
 							// any other row so its data survives until actually rendered.
-							const keepAlive = () => {};
-							this._initialRowRegistrations.set(normalizedId, keepAlive);
-							this.host.egw().dataRegisterUID?.(normalizedId, keepAlive, this.host, execId, widgetId);
+							this._retainRow(normalizedId, execId, widgetId);
 						}
 						resolve(rowExists && refreshedRow ? {
 							rows: [refreshedRow],
@@ -589,29 +626,60 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 						}
 
 						const rowsByIndex : Array<Et2DatagridRow | null> = new Array(order.length).fill(null);
+						// Each entry's listener exists only to deliver that row once. Leaving
+						// them registered pinned the whole fetch response in memory (every
+						// closure captures rowsByIndex/resp/resolve), blocked egw's cache
+						// sweep for good, and - because dataRegisterUID appends without
+						// deduping - stacked another dead listener on the same uid on every
+						// reload, all of them re-run on each later push for that row. So swap
+						// them for the shared keep-alive as soon as the page is delivered.
+						const deliveryListeners : Array<{ uid : string; callback : Function }> = [];
+						const retainDeliveredRows = () =>
+						{
+							const egw = this.host.egw();
+							for(const {uid: listenerUid, callback} of deliveryListeners)
+							{
+								egw.dataUnregisterUID?.(listenerUid, callback, this.host);
+							}
+							deliveryListeners.length = 0;
+							for(const row of rowsByIndex)
+							{
+								if(row)
+								{
+									this._retainRow(row.id, execId, widgetId);
+								}
+							}
+						};
 						let pending = order.length;
 						order.forEach((uid, index) =>
 						{
 							// dataRegisterUID can return out-of-order; capture by original position.
+							const deliverRow = (data : any, resolvedUid : string) =>
+							{
+								const rowData = data || {};
+								const rowId = this._rowIdFromData(rowData, String(resolvedUid || uid));
+								this.host.egw().dataStoreUID?.(rowId, rowData, true);
+								rowsByIndex[index] = {
+									id: rowId
+								};
+								pending--;
+								if(pending <= 0)
+								{
+									resolve({
+										rows: rowsByIndex.filter(Boolean) as Et2DatagridRow[],
+										total: typeof resp.total !== "undefined" ? resp.total : null
+									});
+									// Deferred a microtask: this can be running inside egw's own
+									// iteration over this uid's listener list (dataStoreUID calls
+									// them in place), and removing entries from under that loop
+									// would skip its neighbours.
+									void Promise.resolve().then(retainDeliveredRows);
+								}
+							};
+							deliveryListeners.push({uid, callback: deliverRow});
 							this.host.egw().dataRegisterUID(
 								uid,
-								(data : any, resolvedUid : string) =>
-								{
-									const rowData = data || {};
-									const rowId = this._rowIdFromData(rowData, String(resolvedUid || uid));
-									this.host.egw().dataStoreUID?.(rowId, rowData, true);
-									rowsByIndex[index] = {
-										id: rowId
-									};
-									pending--;
-									if(pending <= 0)
-									{
-										resolve({
-											rows: rowsByIndex.filter(Boolean) as Et2DatagridRow[],
-											total: typeof resp.total !== "undefined" ? resp.total : null
-										});
-									}
-								},
+								deliverRow,
 								this.host,
 								execId,
 								widgetId
