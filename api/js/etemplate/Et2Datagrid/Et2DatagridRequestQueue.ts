@@ -126,12 +126,18 @@ export class Et2DatagridRequestQueue
 	 * arises once a request is in flight or a timer is pending. Both of those still
 	 * take the debounced path below.
 	 *
-	 * Embedded (`embedded-virtualized`) child grids are excluded. Their height
-	 * reservation latches a fixed row pitch off the first settle and is coupled to
-	 * *when* rows land relative to the parent's virtualizer layout, so arriving
-	 * earlier measurably destabilizes the shared scrollport. They also aren't what
-	 * the delay costs a user - nobody waits on a child branch the way they wait on a
-	 * list opening - so they keep the original timing until that coupling is fixed.
+	 * Embedded (`embedded-virtualized`) child grids are excluded, and the reason is not
+	 * understood. Retried after both known height bugs were fixed - the nested branch
+	 * height that stopped propagating past one level, and the branch reservation that
+	 * shared a property with the virtualizer - and removing this still regresses
+	 * Et2Datagrid.test.ts > "renders later child rows and following parent rows through
+	 * the shared scrollport", reproducibly on clean full-suite runs. So something else
+	 * still couples an embedded child's fetch arrival to the parent's virtualizer
+	 * layout. Two things to know before retrying: the failure only shows under
+	 * full-suite load, so running that one file proves nothing, and it is
+	 * Firefox-flakier than Chromium. Cost of keeping it, measured in
+	 * Et2Datagrid.perfRegression.benchmark.ts: embedded grids wait the full delay,
+	 * 101ms against a top-level 8-13ms.
 	 */
 	scheduleProcessing(onDispatch : (start : number, requestedCount : number, requestKey : string) => void) : void
 	{
