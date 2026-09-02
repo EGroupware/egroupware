@@ -494,14 +494,14 @@ export class Et2NextmatchActionController implements ReactiveController
 		{
 			return;
 		}
-		const rowIds = this.allSelected
-		               ? rowsBodies.flatMap((rowsBody) => Array.from(rowsBody.querySelectorAll("[data-row-id]")))
-						   .map((row) => this.getActionRowId(row as HTMLElement))
-						   .filter(Boolean) as string[]
-		               : Array.from(selectedSet);
+		// One querySelectorAll pass per rows body instead of a querySelector per row id -
+		// this runs on every selection change (click, arrow key, select-all), so a lookup
+		// scanning the DOM once per selected/visible row was O(n) scans of O(n) rows each.
+		const renderedRowsById = this.buildRenderedRowIndex(rowsBodies);
+		const rowIds = this.allSelected ? Array.from(renderedRowsById.keys()) : Array.from(selectedSet);
 		for(const rowId of rowIds)
 		{
-			const rowElement = this.findRenderedRowByActionId(rowId, rowsBodies) ||
+			const rowElement = renderedRowsById.get(rowId) ||
 			                   (!this.allSelected ? this._selectionProxyRow(rowId) : null);
 			if(!rowElement)
 			{
@@ -511,6 +511,26 @@ export class Et2NextmatchActionController implements ReactiveController
 			rowObject?.setSelected(this.allSelected || selectedSet.has(rowId));
 			rowObject?.setFocused(rowId === activeRowId);
 		}
+	}
+
+	/**
+	 * Index every rendered row (root + child grids) by action/datastore row id.
+	 */
+	private buildRenderedRowIndex(rowsBodies : HTMLElement[]) : Map<string, HTMLElement>
+	{
+		const index = new Map<string, HTMLElement>();
+		for(const rowsBody of rowsBodies)
+		{
+			for(const rowElement of Array.from(rowsBody.querySelectorAll("[data-row-id]")) as HTMLElement[])
+			{
+				const rowId = this.getActionRowId(rowElement);
+				if(rowId && !index.has(rowId))
+				{
+					index.set(rowId, rowElement);
+				}
+			}
+		}
+		return index;
 	}
 
 	/**
@@ -1542,22 +1562,6 @@ export class Et2NextmatchActionController implements ReactiveController
 			rowsBodies.unshift(primaryRowsBody);
 		}
 		return rowsBodies;
-	}
-
-	/**
-	 * Find a rendered parent or child row by action/datastore row id.
-	 */
-	private findRenderedRowByActionId(rowId : string, rowsBodies : HTMLElement[] = this.getRowsBodies()) : HTMLElement | null
-	{
-		for(const rowsBody of rowsBodies)
-		{
-			const rowElement = rowsBody.querySelector(`[data-row-id="${CSS.escape(rowId)}"]`) as HTMLElement | null;
-			if(rowElement)
-			{
-				return rowElement;
-			}
-		}
-		return null;
 	}
 
 	/**
