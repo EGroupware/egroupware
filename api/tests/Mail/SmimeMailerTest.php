@@ -108,6 +108,75 @@ class SmimeMailerTest extends Api\LoggedInTest
 	}
 
 	/**
+	 * Reproduces emailSubmissionSet()'s own multipart/signed resend step ENTIRELY in-process (no
+	 * IMAP/SMTP at all) - sign a message, get its raw bytes (simulating what got stored in Drafts),
+	 * parse THOSE bytes fresh and set them as a NEW mailer's base part (exactly what
+	 * emailSubmissionSet() does when resending a signed draft), then re-serialize and verify.
+	 *
+	 * Regression test for two real bugs found live 2026-09-02 via a real shim-sent signed message
+	 * that verified successfully in-process but arrived flagged "verification failed - this
+	 * message may have been tampered with" once actually transmitted through emailSubmissionSet()'s
+	 * resend step:
+	 *
+	 * 1. signMIMEPart() signs the content part while it still carries a stale STATUS_BASEPART flag
+	 *    (left over from getBasePart()'s own earlier "build the initial unsigned message" step),
+	 *    which bakes an extra "MIME-Version: 1.0" header into what gets signed - a header a nested
+	 *    sub-part should never carry per RFC 2045. A freshly re-parsed copy of the exact same
+	 *    content naturally has no such in-memory-only flag, so it correctly omits that header -
+	 *    different bytes than what was actually signed. Fixed by clearing the flag before signing.
+	 * 2. Horde_Mime_Mail::send()'s own flowed-text handling sets a mixed-case "DelSp" Content-Type
+	 *    parameter; Horde_Mime_Part::parseMessage() lowercases parameter names on read. Same
+	 *    "signed bytes vs. reparsed bytes" divergence, fixed by normalizing parameter name casing
+	 *    before signing.
+	 */
+	public function testResendingAStoredSignedMessageKeepsAValidSignature()
+	{
+		$sender = (new Smime())->generate_certificate(self::SENDER_DN, null, null, 30);
+
+		$original = $this->newMailer();
+		$this->assertTrue($original->smimeEncrypt(Smime::TYPE_SIGN, [
+			'senderPubKey' => $sender['cert'],
+			'senderPrivKey' => $sender['privkey'],
+			'passphrase' => '',
+			'extracerts' => null,
+		]));
+		$stored = $original->getRaw(false);
+
+		// exactly emailSubmissionSet()'s own sequence: fresh mailer, parse the stored bytes, set as
+		// base part (with the metadata flag fix), send (here: to a null transport, since we only
+		// care about getRaw()'s own post-send output, same as getRaw()'s own null-transport
+		// fallback), then verify
+		$resend = $this->newMailer();
+		$parsedBase = \Horde_Mime_Part::parseMessage($stored, ['forcemime' => true]);
+		$parsedBase->setMetadata('X-EGroupware-Smime-signed', true);
+		$resend->setBasePart($parsedBase);
+		$resend->send(new \Horde_Mail_Transport_Null(), true);
+		$resent = $resend->getRaw(false);
+
+		// the wrapper's own preamble text (before the first boundary) is harmlessly different
+		// (not part of what's actually signed - see signMIMEPart()'s own hardcoded string vs.
+		// toString()'s generic multipart fallback text for an empty _contents), so align there
+		// before comparing - everything from the first boundary onward must be byte-identical
+		$align = fn(string $s) => substr($s, strpos($s, '--=_'));
+		$this->assertSame($align($stored), $align($resent),
+			're-sending an already-signed stored message must reproduce its signed content byte-for-byte');
+
+		$resentStructure = \Horde_Mime_Part::parseMessage($resent);
+		$resolved = Smime::resolveMessage(self::ACC_ID, $resent, $resentStructure->getType());
+		$metadata = $resolved->getMetadata('X-EGroupware-Smime');
+		// NOT asserting verify===true - a self-signed test cert has no trust anchor, so
+		// verifySignature() legitimately returns verify=false even for a genuinely intact
+		// signature (see this class' own docblock). What actually distinguishes "structurally
+		// valid signature, just untrusted CA" from "signature broken" is whether a cert was
+		// extracted at all - verifySignature() THROWS (metadata['cert'] never gets set) when the
+		// cryptographic check itself fails, exactly the "tampered with" live bug being reproduced
+		// here.
+		$this->assertNotEmpty($metadata['cert'] ?? '',
+			're-sending an already-signed stored message must not invalidate its signature: '.
+			($metadata['msg'] ?? '(no message)'));
+	}
+
+	/**
 	 * A signed message with non-ASCII body content must stay 7-bit clean end to end (quoted-
 	 * printable-encoded, not bare 8bit) - a relay/content-scanning proxy along the way is not
 	 * guaranteed to be 8bit-clean, and even a single altered byte in the signed content

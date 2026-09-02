@@ -1199,6 +1199,37 @@ class Mailer extends Horde_Mime_Mail
 			{
 				return false;
 			}
+			// Horde_Crypt_Smime::signMIMEPart() signs $this->_base->toString(['headers' => true])
+			// AS IS - if $this->_base still carries the STATUS_BASEPART flag from an earlier
+			// "build the initial unsigned message" step (getBasePart()'s own null-transport
+			// fallback just above calls Horde_Mime_Mail::send(), which does $basepart->isBasePart(true)
+			// on exactly this object), addMimeHeaders() bakes in a "MIME-Version: 1.0" header for
+			// $this->_base itself (Horde_Mime_Part.php: "if ($this->_status & self::STATUS_BASEPART)
+			// ... addHeaderOb(Horde_Mime_Headers_MimeVersion::create())") - a header a NESTED
+			// sub-part should never carry per RFC 2045 (MIME-Version is message-top-level only), and
+			// $this->_base becomes exactly that once signMIMEPart() wraps it inside a
+			// multipart/signed envelope below. As long as the SAME PHP object instance is used
+			// throughout (the common case: sign, then immediately send/getRaw()), the stale flag
+			// stays consistent and this is invisible. Found live 2026-09-02 via a real shim-sent
+			// signed message that verified successfully in-process but arrived flagged "this
+			// message may have been tampered with": emailSubmissionSet()'s own resend step stores
+			// the signed message, then re-parses it fresh from those raw bytes
+			// (Horde_Mime_Part::parseMessage() - which has no way to infer an in-memory-only status
+			// flag from raw text) to resend it, and a freshly-parsed sub-part naturally has no
+			// STATUS_BASEPART flag at all - correctly omitting "MIME-Version" per RFC 2045, but
+			// DIFFERENT bytes than what was actually signed, invalidating the signature outright.
+			// Clearing the flag before signing makes the signed bytes match what ANY reparse of the
+			// same content (fresh or original) will always produce.
+			$this->_base->isBasePart(false);
+			// Same "must match what a reparse always produces" reasoning for Content-Type
+			// parameter NAME casing: Horde_Mime_Mail::send()'s own flowed-text handling calls
+			// setContentTypeParameter('DelSp', 'Yes') (mixed case, verbatim), which
+			// setContentTypeParameter() stores AS GIVEN - but MIME parameter names are
+			// case-insensitive (RFC 2045), and Horde_Mime_Part::parseMessage() lowercases them on
+			// read, so a fresh reparse of the very same stored bytes reports "delsp", not "DelSp".
+			// Found live 2026-09-02 as the SECOND divergence behind the exact same
+			// tampered-with-signature bug above, once the STATUS_BASEPART one was fixed.
+			self::lowercaseContentTypeParameterNames($this->_base);
 		}
 
 		if (!isset($params['recipientsCerts']) && ($type == Mail\Smime::TYPE_ENCRYPT || $type == Mail\Smime::TYPE_SIGN_ENCRYPT))
@@ -1243,5 +1274,31 @@ class Mailer extends Horde_Mime_Mail
 		// sign-only message, since getRaw()'s OLD check never noticed $_base had changed under it)
 		$this->_headersSynced = false;
 		return true;
+	}
+
+	/**
+	 * Recursively lowercase every Content-Type parameter NAME on $part and its descendants -
+	 * see smimeEncrypt()'s own call site for why (MIME parameter names are case-insensitive per
+	 * RFC 2045, but Horde_Mime_Part::parseMessage() lowercases them on read while
+	 * setContentTypeParameter() stores whatever case it's given - a part signed with a
+	 * mixed-case parameter name reparses with a different one).
+	 *
+	 * @param \Horde_Mime_Part $part
+	 */
+	private static function lowercaseContentTypeParameterNames(\Horde_Mime_Part $part) : void
+	{
+		foreach ($part->getAllContentTypeParameters() as $name => $value)
+		{
+			$lower = strtolower($name);
+			if ($lower !== $name)
+			{
+				$part->setContentTypeParameter($name, null);
+				$part->setContentTypeParameter($lower, $value);
+			}
+		}
+		foreach ($part->getParts() as $child)
+		{
+			self::lowercaseContentTypeParameterNames($child);
+		}
 	}
 }
