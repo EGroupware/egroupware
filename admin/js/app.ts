@@ -16,7 +16,6 @@ import type {egwAction, egwActionObject} from '../../api/js/egw_action/egw_actio
 // et2_nextmatch is a real, distinct legacy widget implementation, passed as a runtime
 // instanceof-filter value to iterateOver() below - see doc/ai/projects/app-ts-modernization.md.
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import type {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
 import type {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Select/Et2SelectAccount";
 import type {EgwAction} from "../../api/js/egw_action/EgwAction";
 import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
@@ -25,7 +24,6 @@ import type {LitElement} from "lit";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import type {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
-import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
 // egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
 // via tsconfig's "**/*.d.ts") - no import needed or possible.
 
@@ -77,6 +75,13 @@ export class AdminApp extends EgwApp
 	 * never written back via a widget.
 	 */
 	private smimeKeyCreated : boolean = false;
+
+	/**
+	 * Handler bound to the admin.index iframe's "load" event (et2_ready()'s 'admin.index'
+	 * case) - kept as an instance field so it can be removed again before re-adding, the
+	 * native equivalent of jQuery's off('load.admin').bind('load.admin', ...) namespacing.
+	 */
+	private _adminIframeLoadHandler : () => void = () => {};
 
 	/**
 	 * Constructor
@@ -131,7 +136,7 @@ export class AdminApp extends EgwApp
 		switch(_name)
 		{
 			case 'admin.index':
-				var iframe = this.iframe = this.et2.getWidgetById('iframe');
+				const iframe = this.iframe = this.et2.getWidgetById('iframe');
 				this.accounts = this.et2.getWidgetById('nm');
 				this.groups = this.et2.getWidgetById('groups');
 				this.groups.set_disabled(true);
@@ -139,16 +144,20 @@ export class AdminApp extends EgwApp
 				this.tree = this.et2.getWidgetById('tree');
 				if (iframe)
 				{
-					var self = this;
-					jQuery(iframe.getDOMNode()).off('load.admin')
-						.bind('load.admin', function(){
-							if (this.contentDocument?.location.href.match(/(\/admin\/|\/admin\/index.php|menuaction=admin.admin_ui.index)/))
-							{
-								this.contentDocument.location.href = 'about:blank';	// stops redirect from admin/index.php
-								self.load();	// load own top-level index aka user-list
-							}
+					// iframe is a fresh DOM node every time this case runs, but keep the
+					// removeEventListener-before-addEventListener pattern (native equivalent
+					// of jQuery's off()+bind()) in case the widget/node is ever reused.
+					const iframeNode = iframe.getDOMNode();
+					iframeNode.removeEventListener('load', this._adminIframeLoadHandler);
+					this._adminIframeLoadHandler = () =>
+					{
+						if (iframeNode.contentDocument?.location.href.match(/(\/admin\/|\/admin\/index.php|menuaction=admin.admin_ui.index)/))
+						{
+							iframeNode.contentDocument.location.href = 'about:blank';	// stops redirect from admin/index.php
+							this.load();	// load own top-level index aka user-list
 						}
-					);
+					};
+					iframeNode.addEventListener('load', this._adminIframeLoadHandler);
 				}
 				if( this.ajax_target && this.et2.getArrayMgr('content').getEntry('ajax_target'))
 				{
@@ -158,12 +167,12 @@ export class AdminApp extends EgwApp
 
 			case 'admin.customfield_edit':
 				// Load settings appropriate to currently set type
-				var widget = _et2.widgetContainer.getWidgetById('cf_type');
+				const widget = _et2.widgetContainer.getWidgetById('cf_type');
 				this.cf_type_change(null,widget);
 				break;
 
 			case 'admin.cmds':
-				var selected = this.et2.getWidgetById('nm').getSelection();
+				const selected = this.et2.getWidgetById('nm').getSelection();
 				if (selected && selected.ids.length == 1)
 				{
 					this.cmds_onselect(selected.ids);
@@ -234,7 +243,7 @@ export class AdminApp extends EgwApp
 		{
 			(<EgwFrameworkApp>this.et2.closest("egw-app"))?.hideLeft();
 		}
-		var ajax : any = false;
+		let ajax : any = false;
 		if (_url)
 		{
 			// Try to load it without the iframe
@@ -246,12 +255,19 @@ export class AdminApp extends EgwApp
 				{
 					// Node has children already?  Check for loading over an
 					// existing etemplate, and remove it first
-					jQuery(this.ajax_target.getDOMNode().children).each(function() {
-						var old = etemplate2.getById(this.id);
+					Array.from(this.ajax_target.getDOMNode().children).forEach((child : HTMLElement) =>
+					{
+						const old = etemplate2.getById(child.id);
 						if(old) old.clear();
 					});
-					jQuery(this.ajax_target.getDOMNode()).empty();
+					this.ajax_target.getDOMNode().replaceChildren();
 				}
+				// NOT converted to egw.request(): that helper always constructs its JsonRequest
+				// with _context set to the calling egw instance (see Json.request() in
+				// egw_json.ts), and can't take a _callback at all - both incompatible with the
+				// null-context + _ajax_load_callback combination this relies on (see comment
+				// below: a non-null context would flow into et2_load's response-type plugin
+				// dispatch as a fallback `this`, breaking template loading).
 				this.egw.json(
 					framework.activeApp.getMenuaction('ajax_exec', _url),
 					// It's important that the context is null, or etemplate2
@@ -263,10 +279,10 @@ export class AdminApp extends EgwApp
 			{
 				this.iframe.set_src(_url);
 			}
-			var m = _url.match(/menuaction=([^&]+)(?:.*appname=(\w+))?/);
+			const m = _url.match(/menuaction=([^&]+)(?:.*appname=(\w+))?/);
 			if(m && m.length >= 2)
 			{
-				var app = m[2] ? m[2] : m[1].split('.')[0];
+				const app = m[2] ? m[2] : m[1].split('.')[0];
 				this.tree.set_value('/apps/'+app+'/'+m[1]);
 			}
 		}
@@ -284,7 +300,10 @@ export class AdminApp extends EgwApp
 		this.groups.set_disabled(true);
 		this.ajax_target.set_disabled(!ajax);
 
-		const nm = <Et2Nextmatch>this.nm;
+		// admin.index still uses the legacy <nextmatch> tag (not <et2-nextmatch>), so this.nm
+		// here is genuinely et2_nextmatch at runtime, not the Et2Nextmatch web component - same
+		// situation as tracker/js/app.ts (see doc/ai/projects/app-ts-modernization.md).
+		const nm = <et2_nextmatch>this.nm;
 		// disable app-toolbar, if not accounts or groups (!_url) for now
 		this.showAppToolbar(!nm.disabled ? 'admin.index.header' : '');
 
@@ -322,15 +341,15 @@ export class AdminApp extends EgwApp
 		{
 			case 'admin':
 				// if iframe is used --> refresh it
-				var iframe_node = this.iframe ? this.iframe.getDOMNode() : undefined;
-				var iframe_url = iframe_node ? iframe_node.contentDocument.location.href : undefined;
+				const iframe_node = this.iframe ? this.iframe.getDOMNode() : undefined;
+				const iframe_url = iframe_node ? iframe_node.contentDocument.location.href : undefined;
 				if (_id && iframe_url != 'about:blank')
 				{
-					var refresh_done = false;
+					let refresh_done = false;
 					// Try for intelligent et2 refresh inside iframe
 					if(iframe_node && iframe_node.contentWindow && iframe_node.contentWindow.etemplate2)
 					{
-						var templates = iframe_node.contentWindow.etemplate2.getByApplication('admin');
+						const templates = iframe_node.contentWindow.etemplate2.getByApplication('admin');
 						for(let i = 0; i < templates.length; i++)
 						{
 							templates[i].refresh(_msg, _app, _id, _type);
@@ -346,10 +365,10 @@ export class AdminApp extends EgwApp
 				else
 				{
 					// No iframe, but if there's a nm in the current view, refresh it
-					let et2s = etemplate2.getByApplication('admin');
+					const et2s = etemplate2.getByApplication('admin');
 					for(let i = 0; i < et2s.length; i++)
 					{
-						let nm = <et2_nextmatch>et2s[i].widgetContainer.getWidgetById('nm');
+						const nm = <et2_nextmatch>et2s[i].widgetContainer.getWidgetById('nm');
 						if(nm)
 						{
 							nm.refresh(undefined, undefined);
@@ -367,8 +386,8 @@ export class AdminApp extends EgwApp
 				// group deleted, added or updated
 				if (_id < 0)
 				{
-					var tree = this.et2.getWidgetById('tree');
-					var nm = this.et2.getWidgetById('nm');
+					const tree = this.et2.getWidgetById('tree');
+					let nm = this.et2.getWidgetById('nm');
 					switch(_type)
 					{
 						case 'delete':
@@ -379,14 +398,16 @@ export class AdminApp extends EgwApp
 						default:	// add, update, edit, null
 							if (nm)
 							{
-								var activeFilters = nm.activeFilters;
+								const activeFilters = nm.activeFilters;
 								nm.getInstanceManager().submit();
-								var nm = this.et2.getWidgetById('nm');
+								// re-fetch (widget may have been recreated) - reassign, not redeclare,
+								// same 'nm' as declared above (switch cases share one block scope)
+								nm = this.et2.getWidgetById('nm');
 								nm.applyFilters(activeFilters);
 							}
 
 					}
-					var refreshTree = this.et2.getWidgetById('tree');
+					const refreshTree = this.et2.getWidgetById('tree');
 					if (refreshTree) refreshTree.refreshItem('/groups');
 					return false;	// --> no regular refresh
 				}
@@ -457,8 +478,8 @@ export class AdminApp extends EgwApp
 	 */
 	iframe_location(_action, _senders)
 	{
-		var id = _senders[0].id.split('::');
-		var url = _action.data.url.replace(/(%24|\$)id/, id[1]);
+		const id = _senders[0].id.split('::');
+		const url = _action.data.url.replace(/(%24|\$)id/, id[1]);
 
 		this.load(url);
 	}
@@ -475,7 +496,10 @@ export class AdminApp extends EgwApp
 		// Insert the content, etemplate will load into it
 		if(typeof _data === "string" || typeof _data[0] !== "undefined")
 		{
-			jQuery(this.ajax_target.getDOMNode()).append(typeof _data === 'string' ? _data : _data[0]);
+			// jQuery(...).append(htmlString) parses+inserts HTML; native Element.append(string)
+			// would insert it as a literal text node instead - insertAdjacentHTML is the native
+			// equivalent that still parses markup (the loaded etemplate's HTML).
+			this.ajax_target.getDOMNode().insertAdjacentHTML('beforeend', typeof _data === 'string' ? _data : _data[0]);
 		}
 		else if(typeof _data.DOMNodeID == "string")
 		{
@@ -491,7 +515,7 @@ export class AdminApp extends EgwApp
 	 */
 	linkHandler(_url)
 	{
-		var matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/);
+		const matches = _url.match(/menuaction=admin.admin_ui.index.*&load=([^&]+)/);
 		if (_url !='about:blank' && (this.iframe != null && !_url.match('menuaction=admin.admin_ui.index') || matches))
 		{
 			if (matches)
@@ -518,14 +542,14 @@ export class AdminApp extends EgwApp
 	 */
 	run(_id, _widget)
 	{
-		var link = _widget.getUserData(_id, 'link');
+		let link = _widget.getUserData(_id, 'link');
 
 		this.groups.set_disabled(true);
 
 		if (_id == '/accounts' || _id.substr(0, 8) == '/groups/')
 		{
 			this.load();
-			var parts = _id.split('/');
+			const parts = _id.split('/');
 			this.nm.applyFilters({ filter: parts[2] ? parts[2] : '', search: ''});
 			this.showAppToolbar('admin.index.header');
 		}
@@ -578,7 +602,10 @@ export class AdminApp extends EgwApp
 				}
 				// Find a nextmatch in ajax_target
 				let nm = null;
-				this.ajax_target?.querySelector('et2-template')?.iterateOver(function(_widget)
+				// _context (3rd iterateOver arg below) is always the same object an arrow
+				// function's lexical `this` would resolve to here, so the explicit binding is
+				// just belt-and-braces - safe to convert (see tracker/js/app.ts precedent).
+				this.ajax_target?.querySelector('et2-template')?.iterateOver((_widget) =>
 				{
 					if(!_widget.disabled)
 					{
@@ -597,7 +624,11 @@ export class AdminApp extends EgwApp
 		this.nm.set_disabled(true);
 		this.groups.set_disabled(false);
 		this.showAppToolbar('admin.index.group.header')
-		jQuery(this.et2.parentNode).trigger('show.et2_nextmatch');
+		// et2_extension_nextmatch.ts listens via jQuery(...).on('show.et2_nextmatch', ...), which
+		// internally just addEventListener()s the base type 'show' (the ".et2_nextmatch" part is a
+		// jQuery-only namespace used for filtering jQuery's own trigger()/off(), not part of the
+		// native event type) - dispatching a plain native 'show' event still reaches that handler.
+		this.et2.parentNode.dispatchEvent(new Event('show'));
 	}
 
 	/**
@@ -631,7 +662,7 @@ export class AdminApp extends EgwApp
 				break;
 
 			case 'delete':
-				this.egw.json('admin_account::ajax_delete_group', [account_id, _action.data, this.et2.getInstanceManager().etemplate_exec_id]).sendRequest();
+				this.egw.request('admin_account::ajax_delete_group', [account_id, _action.data, this.et2.getInstanceManager().etemplate_exec_id]);
 				break;
 			default:
 				if (!_action.data.url)
@@ -781,14 +812,14 @@ export class AdminApp extends EgwApp
 	 */
 	acl(_action, _senders)
 	{
-		var ids = [];
-		for(var i=0; i < _senders.length; ++i)
+		const ids = [];
+		for(let i=0; i < _senders.length; ++i)
 		{
 			ids.push(_senders[i].id.split('::').pop());	// remove "admin::" prefix
 		}
 
 		// For edit, set some data from the list since it's already there
-		var content = _senders[0].id ? jQuery.extend({}, egw.dataGetUIDdata(_senders[0].id).data) : {};
+		let content : any = _senders[0].id ? {...egw.dataGetUIDdata(_senders[0].id).data} : {};
 
 		switch(_action.id)
 		{
@@ -809,25 +840,27 @@ export class AdminApp extends EgwApp
 
 	_acl_delete(ids)
 	{
-		var app = egw.app_name();	// can be either admin or preferences!
+		let app = egw.app_name();	// can be either admin or preferences!
 		if(app != 'admin')
 		{
 			app = 'preferences';
 		}
-		var className = app + '_acl';
-		var callback = function(_button_id, _value)
+		const className = app + '_acl';
+		const callback = (_button_id, _value) =>
 		{
 			if(_button_id != Et2Dialog.OK_BUTTON)
 			{
 				return;
 			}
 
-			var request = egw.json(className + '::ajax_change_acl', [ids, null, _value, this.et2._inst.etemplate_exec_id], this._acl_callback, this, false, this)
+			// 5th (_async) argument is false, same synchronous effect as sendRequest(false) -
+			// egw.request() is always async, so there's no equivalent swap for this one.
+			egw.json(className + '::ajax_change_acl', [ids, null, _value, this.et2.getInstanceManager().etemplate_exec_id], this._acl_callback, this, false, this)
 				.sendRequest();
-		}.bind(this);
+		};
 
-		var modifications : any = {};
-		var dialog_options = {
+		const modifications : any = {};
+		const dialog_options = {
 			callback: callback,
 			title: this.egw.lang('Delete'),
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
@@ -883,11 +916,11 @@ export class AdminApp extends EgwApp
 			app = 'preferences';
 		}
 		// Get by ID, since this.et2 isn't always the ACL list
-		var et2 = etemplate ?? etemplate2.getById('admin-acl')?.widgetContainer ?? etemplate2.getById('acl-edit')?.widgetContainer;
-		var className = app + '_acl';
-		var acl_rights : any = {};
-		var readonlys : any = {acl: {}};
-		var modifications : any = {};
+		const et2 = etemplate ?? etemplate2.getById('admin-acl')?.widgetContainer ?? etemplate2.getById('acl-edit')?.widgetContainer;
+		const className = app + '_acl';
+		let acl_rights : any = {};
+		const readonlys : any = {acl: {}};
+		const modifications : any = {};
 
 		// Select options are already here, just pull them and pass along
 		sel_options = {
@@ -926,7 +959,9 @@ export class AdminApp extends EgwApp
 			{
 				// These are the apps the account has access to
 				// Fetch current values from server
-				this.egw.json(className+'::ajax_get_app_list', [content.acl_account], function(data) {content.apps = data;},this,false,this)
+				// 5th (_async) argument is false, same synchronous effect as sendRequest(false) -
+				// egw.request() is always async, so there's no equivalent swap for this one.
+				this.egw.json(className+'::ajax_get_app_list', [content.acl_account], (data) => {content.apps = data;},this,false,this)
 					.sendRequest();
 			}
 			else
@@ -938,7 +973,7 @@ export class AdminApp extends EgwApp
 					sel_options.acl_appname.push({value: app, label: app});
 				}
 				// Sort list
-				sel_options.acl_appname.sort(function(a, b)
+				sel_options.acl_appname.sort((a, b) =>
 				{
 					if(a.label > b.label) return 1;
 					if(a.label < b.label) return -1;
@@ -951,12 +986,12 @@ export class AdminApp extends EgwApp
 		{
 			// Load checkboxes & their values
 			content.acl_rights = content.acl_rights ? parseInt(content.acl_rights) : null;
-			jQuery.extend(content, {acl: [], right: [], label: []});
+			Object.assign(content, {acl: [], right: [], label: []});
 
 			// Use this to make sure we get correct app translations
 			let app_egw = egw(content.acl_appname, window);
 
-			for(var right in acl_rights[content.acl_appname])
+			for(let right in acl_rights[content.acl_appname])
 			{
 				// only user himself is allowed to grant private (16) rights
 				if(right == '16' && content['acl_account'] != egw.user('account_id'))
@@ -986,7 +1021,7 @@ export class AdminApp extends EgwApp
 			}));
 		})
 
-		var dialog_options = {
+		const dialog_options = {
 			callback: (_button_id, _value) =>
 			{
 				this.acl_dialog = null;
@@ -1024,32 +1059,35 @@ export class AdminApp extends EgwApp
 								{
 									// Changed the account or location, remove previous or we
 									// get a new line instead of an edit
-									this.egw.json(className + '::ajax_change_acl', [content.id, 0, [], this.et2._inst.etemplate_exec_id], null, this, false, this)
+									// 5th (_async) argument is false, same synchronous effect as
+									// sendRequest(false) - egw.request() is always async, so
+									// there's no equivalent swap for this one.
+									this.egw.json(className + '::ajax_change_acl', [content.id, 0, [], this.et2.getInstanceManager().etemplate_exec_id], null, this, false, this)
 										.sendRequest();
 								}
 							id.push(acl_id);
 							});
 						});
 					}
-					var rights = 0;
-					for(var i in _value.acl)
+					let rights = 0;
+					for(let i in _value.acl)
 					{
 						rights += parseInt(_value.acl[i]) * (_button_id == "remove" ? -1 : 1);
 					}
 					if(typeof _value.apps != 'undefined' && !_value.acl_appname)
 					{
 						rights = 1;
-						var removed = [];
+						const removed = [];
 
 						// Loop through all apps, remove the ones with no permission
-						for(var idx in sel_options.filter2)
+						for(let idx in sel_options.filter2)
 						{
-							var app = sel_options.filter2[idx].value || false;
+							const app = sel_options.filter2[idx].value || false;
 							if(!app)
 							{
 								continue;
 							}
-							var run_id = app + ":" + _value.acl_account + ":run";
+							const run_id = app + ":" + _value.acl_account + ":run";
 							if(_value.apps.indexOf(app) < 0 && (content.apps.indexOf(app) >= 0 || content.apps.length == 0))
 							{
 								removed.push(run_id);
@@ -1063,11 +1101,16 @@ export class AdminApp extends EgwApp
 						// Remove any removed
 						if(removed.length > 0)
 						{
-							this.egw.json(className + '::ajax_change_acl', [removed, 0, [], this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback, this, false, this)
+							// 5th (_async) argument is false, same synchronous effect as
+							// sendRequest(false) - egw.request() is always async, so there's no
+							// equivalent swap for this one.
+							this.egw.json(className + '::ajax_change_acl', [removed, 0, [], this.et2.getInstanceManager().etemplate_exec_id], callback ? callback : this._acl_callback, this, false, this)
 								.sendRequest();
 						}
 					}
-					this.egw.json(className + '::ajax_change_acl', [id, rights, _value, this.et2._inst.etemplate_exec_id], callback ? callback : this._acl_callback, this, false, this)
+					// 5th (_async) argument is false, same synchronous effect as sendRequest(false)
+					// - egw.request() is always async, so there's no equivalent swap for this one.
+					this.egw.json(className + '::ajax_change_acl', [id, rights, _value, this.et2.getInstanceManager().etemplate_exec_id], callback ? callback : this._acl_callback, this, false, this)
 						.sendRequest();
 				}
 			},
@@ -1119,7 +1162,7 @@ export class AdminApp extends EgwApp
 	 */
 	acl_reopen_dialog(input, widget)
 	{
-		let content = {};
+		let content : any = {};
 		let et2 = undefined;
 		let callback = undefined;
 		if(this.acl_dialog != null)
@@ -1181,12 +1224,15 @@ export class AdminApp extends EgwApp
 	 * @@param {widget} button add/apply pressed button
 	 */
 	check_owner(button) {
-		var select_owner = this.et2.getWidgetById('owner');
-		var diff = [];
+		const select_owner = this.et2.getWidgetById('owner');
+		const diff = [];
+		// declared here (not inside the if below) since it's read after that block ends -
+		// let/const are block-scoped, unlike var's function-wide hoisting
+		let owner;
 
 		if (typeof select_owner != 'undefined')
 		{
-			var owner = select_owner.value;
+			owner = select_owner.value;
 		}
 
 		if(typeof owner != 'object')
@@ -1196,7 +1242,7 @@ export class AdminApp extends EgwApp
 		// No owner probably means selectbox is read-only, so no need to check
 		if(owner == null) return true;
 
-		var all_users = owner.indexOf('0') >= 0;
+		const all_users = owner.indexOf('0') >= 0;
 
 		// If they checked all users, uncheck the others
 		if(all_users) {
@@ -1205,12 +1251,12 @@ export class AdminApp extends EgwApp
 		}
 
 		// Find out what changed
-		var cat_original_owner = this.et2.getArrayMgr('content').getEntry('owner');
+		const cat_original_owner = this.et2.getArrayMgr('content').getEntry('owner');
 		if (cat_original_owner)
 		{
-			var selected_groups = select_owner.value.toString();
+			const selected_groups = select_owner.value.toString();
 
-			for(var i =0;i < cat_original_owner.length;i++)
+			for(let i =0;i < cat_original_owner.length;i++)
 			{
 				if (selected_groups.search(cat_original_owner[i]) < 0)
 				{
@@ -1220,22 +1266,26 @@ export class AdminApp extends EgwApp
 
 			if (diff.length > 0)
 			{
-				var removed_cat_label = jQuery.map(select_owner.options.select_options, function (val, i)
+				// jQuery.map() drops null/undefined callback results from the output array -
+				// .map().filter() is the native equivalent (Object.values() first since
+				// select_options may be a plain object, not an array, same as jQuery.map()
+				// accepts both)
+				const removed_cat_label = Object.values(select_owner.options.select_options).map((val : any) =>
 				{
-					for (var j=0; j <= diff.length;j++)
+					for (let j=0; j <= diff.length;j++)
 					{
 						if (diff[j] == val.value)
 						{
 							return val.label;
 						}
 					}
-				});
+				}).filter(label => typeof label !== 'undefined');
 
 				// Somebody will lose permission, give warning.
 				if(removed_cat_label)
 				{
-					var msg = this.egw.lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:');
-					return Et2Dialog.confirm(button, msg + removed_cat_label.join(','));
+					const msg = this.egw.lang('Removing access for groups may cause problems for data in this category.  Are you sure?  Users in these groups may no longer have access:');
+					return Et2Dialog.confirm(button, msg + removed_cat_label.join(','), '');
 				}
 			}
 		}
@@ -1249,7 +1299,7 @@ export class AdminApp extends EgwApp
 	 */
 	change_icon(widget)
 	{
-		var img = widget.getRoot().getWidgetById('icon_url');
+		const img = widget.getRoot().getWidgetById('icon_url');
 
 		if (img)
 		{
@@ -1265,8 +1315,8 @@ export class AdminApp extends EgwApp
 	 */
 	account(_action, _senders)
 	{
-		var params = jQuery.extend({}, this.egw.link_get_registry('addressbook', 'edit'));
-		var popup = <string>this.egw.link_get_registry('addressbook', 'edit_popup');
+		const params : any = {...this.egw.link_get_registry('addressbook', 'edit')};
+		const popup = <string>this.egw.link_get_registry('addressbook', 'edit_popup');
 
 		switch(_action.id)
 		{
@@ -1298,15 +1348,14 @@ export class AdminApp extends EgwApp
 	 */
 	submit_statistic(form, submit_url)
 	{
-		var that = this;
-		var submit = function()
+		const submit = () =>
 		{
 			// submit to egroupware.org
-			var method=form.method;
+			const method=form.method;
 			form.method='POST';
-			var action = form.action;
+			const action = form.action;
 			form.action=submit_url;
-			var target = form.target;
+			const target = form.target;
 			form.target='_blank';
 			form.submit();
 
@@ -1314,7 +1363,7 @@ export class AdminApp extends EgwApp
 			form.method=method;
 			form.action=action;
 			form.target=target;
-			that.et2.getInstanceManager().submit('submit');
+			this.et2.getInstanceManager().submit('submit');
 		};
 
 		// Safari does NOT allow to call form.submit() outside of onclick callback
@@ -1328,7 +1377,7 @@ export class AdminApp extends EgwApp
 		}
 		else
 		{
-			Et2Dialog.show_dialog(function(_button)
+			Et2Dialog.show_dialog((_button) =>
 				{
 					if(_button == Et2Dialog.YES_BUTTON)
 					{
@@ -1348,12 +1397,12 @@ export class AdminApp extends EgwApp
 	 */
 	cf_type_change(e,widget)
 	{
-		var root = widget.getRoot();
-		var attributes = widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+']')||{};
+		const root = widget.getRoot();
+		const attributes = widget.getArrayMgr('content').getEntry('attributes['+widget.getValue()+']')||{};
 		root.getWidgetById('cf_values').set_statustext(widget.egw().lang(widget.getArrayMgr('content').getEntry('options['+widget.getValue()+']')||''));
-		jQuery(root.getWidgetById('cf_len').getDOMNode()).toggle(attributes.cf_len && true);
-		jQuery(root.getWidgetById('cf_rows').getDOMNode()).toggle(attributes.cf_rows && true);
-		jQuery(root.getWidgetById('cf_values').getParentDOMNode()).toggle(attributes.cf_values && true);
+		root.getWidgetById('cf_len').getDOMNode().style.display = attributes.cf_len ? '' : 'none';
+		root.getWidgetById('cf_rows').getDOMNode().style.display = attributes.cf_rows ? '' : 'none';
+		root.getWidgetById('cf_values').getParentDOMNode().style.display = attributes.cf_values ? '' : 'none';
 	}
 
 	/**
@@ -1362,22 +1411,25 @@ export class AdminApp extends EgwApp
 	 */
 	cf_type_delete(e, widget)
 	{
-		var callback = function(button, value)
+		// This callback's `this` is deliberately rebound to `widget` (via .bind(widget) below,
+		// used as the dialog's transformAttributes() callback contract) - NOT the enclosing
+		// AdminApp instance, so it can't be an arrow function (that would silently capture the
+		// wrong `this`). See doc/ai/projects/app-ts-modernization.md's documented goal-6 exception.
+		const callback = function(button, value)
 		{
 			if(button === Et2Dialog.YES_BUTTON)
 			{
-				var values = jQuery.extend(
-					{},
-					this.getInstanceManager().getValues(this.getRoot()),
-					value,
-					{appname: this.getRoot().getArrayMgr('content').getEntry('content_types[appname]')}
-				);
-				egw.json('admin.admin_customfields.ajax_delete_type', [values, this.getInstanceManager().etemplate_exec_id]).sendRequest();
+				const values = {
+					...this.getInstanceManager().getValues(this.getRoot()),
+					...value,
+					appname: this.getRoot().getArrayMgr('content').getEntry('content_types[appname]')
+				};
+				egw.request('admin.admin_customfields.ajax_delete_type', [values, this.getInstanceManager().etemplate_exec_id]);
 
 				// Immediately remove the type
-				var types = this.getRoot().getWidgetById('types');
-				var options = types.options.select_options;
-				var key;
+				const types = this.getRoot().getWidgetById('types');
+				const options = types.options.select_options;
+				let key;
 				for(key in options)
 				{
 					if(options.hasOwnProperty(key) && key === types.getValue())
@@ -1398,7 +1450,10 @@ export class AdminApp extends EgwApp
 		{
 			import(egw.link('/policy/js/app.min.js?' + ((new Date).valueOf() / 86400000 | 0).toString())).then(() =>
 			{
-				if(typeof app.policy === 'undefined' || typeof app.policy.confirm === 'undefined')
+				// policy is its own nested-git-repo app (like tracker/status), invisible to
+				// this file's types - same EPL/stylite-blind-spot pattern as app.stylite
+				// elsewhere in this project, see doc/ai/projects/app-ts-modernization.md.
+				if(typeof app.policy === 'undefined' || typeof (<any>app.policy).confirm === 'undefined')
 				{
 					app.policy = new app.classes.policy();
 				}
@@ -1431,19 +1486,19 @@ export class AdminApp extends EgwApp
 	 */
 	emailadminActiveAccounts(_action, _selected)
 	{
-		var menuaction = 'admin.admin_mail.ajax_activeAccounts';
-		var accounts = [];
-		var msg1 = egw.lang('%1 accounts being activated', ""+Object.keys(_selected).length);
+		const menuaction = 'admin.admin_mail.ajax_activeAccounts';
+		const accounts = [];
+		const msg1 = egw.lang('%1 accounts being activated', ""+Object.keys(_selected).length);
 
-		for (var i=0;i< Object.keys(_selected).length;i++)
+		for (let i=0;i< Object.keys(_selected).length;i++)
 		{
-			accounts[i] = [{id:_selected[i]['id'].split('::')[1],quota:"", domain:"", status:_action.id == 'active'?_action.id:''}, this.et2._inst.etemplate_exec_id];
+			accounts[i] = [{id:_selected[i]['id'].split('::')[1],quota:"", domain:"", status:_action.id == 'active'?_action.id:''}, this.et2.getInstanceManager().etemplate_exec_id];
 		}
-		var callbackDialog = function (btn){
+		const callbackDialog = (btn) => {
 			if(btn === Et2Dialog.YES_BUTTON)
 			{
 				// long task dialog for de/activation accounts
-				Et2Dialog.long_task(function(_val, _resp)
+				Et2Dialog.long_task((_val, _resp) =>
 				{
 					if(_val && _resp.type !== 'error')
 					{
@@ -1491,22 +1546,50 @@ export class AdminApp extends EgwApp
 	SSL_VERIFY = 8;
 
 	/**
+	 * jQuery outerWidth(true)/outerHeight(true) equivalent: border-box size (offsetWidth/Height,
+	 * no scrollbar-exclusion difference for this use) plus margin.
+	 */
+	private static _outerSize(el : HTMLElement) : { width : number, height : number }
+	{
+		const cs = getComputedStyle(el);
+		return {
+			width: el.offsetWidth + parseFloat(cs.marginLeft || '0') + parseFloat(cs.marginRight || '0'),
+			height: el.offsetHeight + parseFloat(cs.marginTop || '0') + parseFloat(cs.marginBottom || '0')
+		};
+	}
+
+	/**
+	 * jQuery width()/height() equivalent: content-box size only (no padding/border/margin).
+	 */
+	private static _contentSize(el : HTMLElement) : { width : number, height : number }
+	{
+		const cs = getComputedStyle(el);
+		return {
+			width: el.clientWidth - parseFloat(cs.paddingLeft || '0') - parseFloat(cs.paddingRight || '0'),
+			height: el.clientHeight - parseFloat(cs.paddingTop || '0') - parseFloat(cs.paddingBottom || '0')
+		};
+	}
+
+	/**
 	 * Resize window methode
 	 *
 	 * @returns {undefined}
 	 */
 	wizard_popup_resize()
 	{
-		var $main_div = jQuery('#popupMainDiv');
-		var $et2 = jQuery('.et2_container');
-		var w = {
+		const main_div = document.getElementById('popupMainDiv');
+		const et2_container = document.querySelector<HTMLElement>('.et2_container');
+		const w = {
 			width: egw_getWindowInnerWidth(),
 			height: egw_getWindowInnerHeight()
 		};
 		// Use et2_container for width since #popupMainDiv is full width, but we still need
 		// to take padding/margin into account
-		var delta_width = w.width - ($et2.outerWidth(true) + ($main_div.outerWidth(true) - $main_div.width()));
-		var delta_height = w.height - ($et2.outerHeight(true) + ($main_div.outerHeight(true) - $main_div.height()));
+		const et2_outer = AdminApp._outerSize(et2_container);
+		const main_div_outer = AdminApp._outerSize(main_div);
+		const main_div_content = AdminApp._contentSize(main_div);
+		const delta_width = w.width - (et2_outer.width + (main_div_outer.width - main_div_content.width));
+		const delta_height = w.height - (et2_outer.height + (main_div_outer.height - main_div_content.height));
 		if(delta_width != 0 || delta_height != 0)
 		{
 			window.resizeTo(egw_getWindowOuterWidth() - delta_width,egw_getWindowOuterHeight() - delta_height);
@@ -1518,7 +1601,13 @@ export class AdminApp extends EgwApp
 	 */
 	wizard_manual()
 	{
-		jQuery('.emailadmin_manual').fadeToggle();// not sure how to to this et2-isch
+		// jQuery's fadeToggle() animates the show/hide; there's no native one-liner for that
+		// without adding CSS transitions, so this drops the animation and just toggles display
+		// (not sure how to do this et2-isch, per the original comment here)
+		document.querySelectorAll<HTMLElement>('.emailadmin_manual').forEach(el =>
+		{
+			el.style.display = el.style.display === 'none' ? '' : 'none';
+		});
 		this.wizard_popup_resize(); // popup needs to be resized after toggling
 	}
 
@@ -1532,13 +1621,14 @@ export class AdminApp extends EgwApp
 	{
 		// we need to do a manual asynchronious submit to show progress animation
 		// default synchronious submit stops animation!
-		if (this.et2._inst.submit('button[continue]', true))	// true = async submit
+		if (this.et2.getInstanceManager().submit('button[continue]', true))	// true = async submit
 		{
-			var sieve_enabled = this.et2.getWidgetById('acc_sieve_enabled');
+			const sieve_enabled = this.et2.getWidgetById('acc_sieve_enabled');
 			if (!sieve_enabled || sieve_enabled.get_value())
 			{
-				jQuery('#admin-mailwizard_output').hide();
-				jQuery('td.emailadmin_progress').show();
+				const output = document.getElementById('admin-mailwizard_output');
+				if(output) output.style.display = 'none';
+				document.querySelectorAll<HTMLElement>('td.emailadmin_progress').forEach(td => td.style.display = '');
 			}
 		}
 		return false;
@@ -1552,7 +1642,7 @@ export class AdminApp extends EgwApp
 	 */
 	wizard_imap_ssl_onchange(_event, _widget)
 	{
-		var ssl_type = _widget.get_value();
+		const ssl_type = _widget.get_value();
 		this.et2.getWidgetById('acc_imap_port').set_value(
 			ssl_type == this.JMAP_HTTPS ? 443 : (ssl_type == this.JMAP_HTTP ? 80 :
 			(ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 993 : 143)));
@@ -1566,7 +1656,7 @@ export class AdminApp extends EgwApp
 	 */
 	wizard_smtp_ssl_onchange(_event, _widget)
 	{
-		var ssl_type = _widget.get_value();
+		const ssl_type = _widget.get_value();
 		this.et2.getWidgetById('acc_smtp_port').set_value(
 			ssl_type == this.JMAP_HTTPS ? 443 : (ssl_type == this.JMAP_HTTP ? 80 :
 			(ssl_type == 'no' ? 25 : (ssl_type == this.SSL_SSL || ssl_type == this.SSL_TLS ? 465 : 587))));
@@ -1580,7 +1670,7 @@ export class AdminApp extends EgwApp
 	 */
 	wizard_sieve_ssl_onchange(_event, _widget)
 	{
-		var ssl_type = _widget.get_value();
+		const ssl_type = _widget.get_value();
 		// Sieve config for a JMAP account comes from the JMAP session itself, not a separate
 		// ManageSieve connection - selecting "JMAP (https/http)" here must default to the JMAP
 		// port (443/80), same as wizard_imap_ssl_onchange(), not the ManageSieve-specific
@@ -1622,7 +1712,7 @@ export class AdminApp extends EgwApp
 	 */
 	change_folders(_event, _widget)
 	{
-		var use_default = this.et2.getWidgetById('notify_use_default');
+		const use_default = this.et2.getWidgetById('notify_use_default');
 		if (use_default) use_default.set_value(false);
 	}
 
@@ -1768,7 +1858,7 @@ export class AdminApp extends EgwApp
 	 */
 	private smime_setKeyState(hasKey : boolean)
 	{
-		var setReadonly = (id : string, readonly : boolean) =>
+		const setReadonly = (id : string, readonly : boolean) =>
 		{
 			let widget : any = this.et2.getWidgetById(id);
 			if (!widget) return;
@@ -1789,7 +1879,7 @@ export class AdminApp extends EgwApp
 	 */
 	smime_certFileChanged(_event, _widget)
 	{
-		var hasFile = !!(_widget && _widget.value && Object.keys(_widget.value).length > 0);
+		const hasFile = !!(_widget && _widget.value && Object.keys(_widget.value).length > 0);
 		let button : any = this.et2.getWidgetById('smime_import_cert');
 		if (!button) return;
 		if (typeof button.set_readonly === 'function') button.set_readonly(!hasFile);
@@ -1828,17 +1918,15 @@ export class AdminApp extends EgwApp
 	 */
 	private smime_generateKey(action : 'selfsigned'|'csrkey')
 	{
-		var self = this;
-		var acc_id = self.et2.getArrayMgr("content").getEntry('acc_id');
-		var called_for = self.et2.getArrayMgr("content").getEntry('called_for');
+		const acc_id = this.et2.getArrayMgr("content").getEntry('acc_id');
+		const called_for = this.et2.getArrayMgr("content").getEntry('called_for');
 
-		egw.json('admin.admin_mail.ajax_smimeCertDefaults',
-			[{acc_id: acc_id, called_for: called_for}, self.et2.getInstanceManager().etemplate_exec_id],
-			function(_defaults)
-			{
-				self.smime_showGenerateKeyDialog(action, acc_id, called_for, _defaults || {});
-			}
-		).sendRequest(true);
+		egw.request('admin.admin_mail.ajax_smimeCertDefaults',
+			[{acc_id: acc_id, called_for: called_for}, this.et2.getInstanceManager().etemplate_exec_id]
+		).then((_defaults) =>
+		{
+			this.smime_showGenerateKeyDialog(action, acc_id, called_for, _defaults || {});
+		});
 	}
 
 	/**
@@ -1848,18 +1936,24 @@ export class AdminApp extends EgwApp
 	 */
 	private smime_showGenerateKeyDialog(action : 'selfsigned'|'csrkey', acc_id, called_for, _defaults : object)
 	{
-		var self = this;
+		// this dialog's callback (below) has its own dynamic `this` (bound to the dialog itself
+		// by Et2Dialog's transformAttributes()/show_dialog() contract - see the goal-6 exception
+		// documented in doc/ai/projects/app-ts-modernization.md's status/js/app.ts section), so an
+		// arrow function here would capture the wrong `this` - self is kept as the stable
+		// reference back to this AdminApp instance for the callback (and its own nested callback)
+		// to use instead.
+		const self = this;
 		let dialog = new Et2Dialog("mail");
 		dialog.transformAttributes({
 			callback(_button_id, _value)
 			{
 				if(_button_id != 'create' || !_value) return;
 
-				var isValid = true;
-				var required = ['countryName', 'emailAddress'];
-				var widget;
+				let isValid = true;
+				const required = ['countryName', 'emailAddress'];
+				let widget;
 				// check the required fields
-				for(var i = 0; i < required.length; i++)
+				for(let i = 0; i < required.length; i++)
 				{
 					if(_value[required[i]])
 					{
@@ -1872,49 +1966,51 @@ export class AdminApp extends EgwApp
 				// check mismatch passphrase
 				if (_value.passphrase && _value.passphrase !== _value.passphraseConf)
 				{
-					var passphraseConf = this.eTemplate.widgetContainer.getWidgetById('passphraseConf');
+					const passphraseConf = this.eTemplate.widgetContainer.getWidgetById('passphraseConf');
 					passphraseConf.set_validation_error('Confirm passphrase is not match!');
 					isValid = false;
 				}
 				if (!isValid) return false;
 
-				var data = Object.assign({}, _value, {
+				const data = Object.assign({}, _value, {
 					acc_id: acc_id,
 					called_for: called_for,
 				});
-				egw.json('admin.admin_mail.ajax_smimeCreateKeypair',
-					[data, self.et2.getInstanceManager().etemplate_exec_id],
-					function(_data)
+				// (_data) => {...self...} below: safe to convert to an arrow despite the
+				// enclosing callback()'s own dynamic `this` (=dialog), because the body only
+				// ever reads the closured `self` (=this AdminApp instance), never its own `this`.
+				egw.request('admin.admin_mail.ajax_smimeCreateKeypair',
+					[data, self.et2.getInstanceManager().etemplate_exec_id]
+				).then((_data) =>
+				{
+					if (!_data || !_data.acc_smime_cred_id)
 					{
-						if (!_data || !_data.acc_smime_cred_id)
-						{
-							return;
-						}
-						self.smimeKeyCreated = true;
-						self.smime_setKeyState(true);
-						// keep the outer form's own data model in sync too - this ajax call
-						// runs outside the normal edit()/save flow, so without this a
-						// subsequent Apply/Save still submits the OLD (empty)
-						// acc_smime_cred_id, and the server re-derives hide_smime_upload as
-						// if no key existed yet, undoing smime_setKeyState() above (found
-						// live 2026-09-01: buttons reverted to their pre-creation state
-						// after Apply, only fixed by reopening the wizard). acc_smime_cred_id
-						// has no widget of its own (a pure round-tripped content value), so
-						// there's no set_value() to call - et2_arrayMgr has no public setter
-						// either, mutate its data object directly.
-						self.et2.getArrayMgr('content').data.acc_smime_cred_id = _data.acc_smime_cred_id;
-
-						if (action == 'csrkey')
-						{
-							self.egw.message(self.egw.lang('Private key created, downloading CSR...'));
-							self.et2.getInstanceManager().postSubmit(self.et2.getWidgetById('smime_export_csr'));
-						}
-						else
-						{
-							self.egw.message(self.egw.lang('Self-signed certificate created.'));
-						}
+						return;
 					}
-				).sendRequest(true);
+					self.smimeKeyCreated = true;
+					self.smime_setKeyState(true);
+					// keep the outer form's own data model in sync too - this ajax call
+					// runs outside the normal edit()/save flow, so without this a
+					// subsequent Apply/Save still submits the OLD (empty)
+					// acc_smime_cred_id, and the server re-derives hide_smime_upload as
+					// if no key existed yet, undoing smime_setKeyState() above (found
+					// live 2026-09-01: buttons reverted to their pre-creation state
+					// after Apply, only fixed by reopening the wizard). acc_smime_cred_id
+					// has no widget of its own (a pure round-tripped content value), so
+					// there's no set_value() to call - et2_arrayMgr has no public setter
+					// either, mutate its data object directly.
+					self.et2.getArrayMgr('content').data.acc_smime_cred_id = _data.acc_smime_cred_id;
+
+					if (action == 'csrkey')
+					{
+						self.egw.message(self.egw.lang('Private key created, downloading CSR...'));
+						self.et2.getInstanceManager().postSubmit(self.et2.getWidgetById('smime_export_csr'));
+					}
+					else
+					{
+						self.egw.message(self.egw.lang('Self-signed certificate created.'));
+					}
+				});
 			},
 			title: egw.lang(action == 'csrkey' ? 'Create private key and export CSR' : 'Create self-signed certificate'),
 			buttons: [
@@ -1947,15 +2043,15 @@ export class AdminApp extends EgwApp
 	 */
 	login_background_update(node, widget)
 	{
-		var taglist = widget._parent._children[0];
-		egw.json('admin.admin_config.ajax_upload_anon_images',
-			[widget.get_value(), taglist.get_value()],
-			function(_data){
-				if(_data && typeof _data.type == "undefined")
-				{
-					taglist.set_value(_data);
-				}
-		}).sendRequest();
+		const taglist = widget._parent._children[0];
+		egw.request('admin.admin_config.ajax_upload_anon_images',
+			[widget.get_value(), taglist.get_value()]
+		).then((_data) => {
+			if(_data && typeof _data.type == "undefined")
+			{
+				taglist.set_value(_data);
+			}
+		});
 		widget.value = {};
 	}
 
@@ -1967,8 +2063,8 @@ export class AdminApp extends EgwApp
 	 */
 	cmds_onselect(node)
 	{
-		var splitter = this.et2.getWidgetById('splitter');
-		var cmds_preview = this.et2.getWidgetById('cmds_preview');
+		const splitter = this.et2.getWidgetById('splitter');
+		const cmds_preview = this.et2.getWidgetById('cmds_preview');
 		if (node.length != 1)
 		{
 			splitter.dock();
@@ -1979,9 +2075,9 @@ export class AdminApp extends EgwApp
 		{
 			splitter.undock();
 		}
-		var data = egw.dataGetUIDdata(node[0]);
-		var policy_preview = this.et2.getWidgetById('policy_preview');
-		var id = node[0].replace('admin::', '');
+		const data = egw.dataGetUIDdata(node[0]);
+		const policy_preview = this.et2.getWidgetById('policy_preview');
+		const id = node[0].replace('admin::', '');
 
 		if (app.policy)
 		{
@@ -2006,7 +2102,7 @@ export class AdminApp extends EgwApp
 	/**
 	 * ACL button clicked
 	 *
-	 * @param {jQuery.Event} _ev
+	 * @param {Event} _ev
 	 * @param {et2_button} _widget
 	 */
 	aclGroup(_ev, _widget)
@@ -2037,15 +2133,15 @@ export class AdminApp extends EgwApp
 	/**
 	 * Delete button clicked
 	 *
-	 * @param {jQuery.Event} _ev
+	 * @param {Event} _ev
 	 * @param {et2_button} _widget
 	 */
 	deleteGroup(_ev, _widget)
 	{
-		let account_id = this.et2.getArrayMgr('content').getEntry('account_id');
-		let egw = this.egw;
+		const account_id = this.et2.getArrayMgr('content').getEntry('account_id');
+		const egw = this.egw;
 
-		Et2Dialog.show_dialog(function(button)
+		Et2Dialog.show_dialog((button) =>
 		{
 			if(button == Et2Dialog.YES_BUTTON)
 			{
@@ -2058,34 +2154,41 @@ export class AdminApp extends EgwApp
 	/**
 	 * Field changed, call server validation
 	 *
-	 * @param {jQuery.Event} _ev
+	 * @param {Event} _ev
 	 * @param {et2_button} _widget
 	 */
 	changeGroup(_ev, _widget)
 	{
-		let account_id = this.et2.getArrayMgr('content').getEntry('account_id');
-		let data = {account_id: account_id};
+		const account_id = this.et2.getArrayMgr('content').getEntry('account_id');
+		const data = {account_id: account_id};
 		data[_widget.id] = _widget.getValue();
 
-		this.egw.json('EGroupware\\Admin\\Groups::ajax_check', [data], function(_msg)
+		this.egw.request('EGroupware\\Admin\\Groups::ajax_check', [data]).then((_msg) =>
 		{
 			if (_msg)
 			{
 				egw(window).message(_msg, 'error');	// context gets lost :(
 				_widget.getDOMNode().focus();
 			}
-		}, this).sendRequest();
+		});
 	}
 
 	/**
 	 * Clickhandler to copy given text or widget content to clipboard
+	 *
+	 * _widget can be a legacy et2 widget, a web-component (Et2Widget/LitElement), or a plain
+	 * DOM element (see admin/templates/default/token.edit.xet's two call sites) - genuinely
+	 * heterogeneous, hence `any` rather than a specific widget type; the typeof checks below
+	 * are the existing runtime-shape guards for that (same idiom as
+	 * et2_core_baseWidget.ts's egw_getFormValue()).
+	 *
 	 * @param _widget
 	 * @param _text default widget content
 	 */
-	copyClipboard(_widget : et2_DOMWidget, _text? : string, _event? : Event)
+	copyClipboard(_widget : any, _text? : string, _event? : Event)
 	{
-		let value = _text || (typeof _widget.get_value === 'function' ? _widget.get_value() : _widget.options.value);
-		let node = _widget.getDOMNode() !== _widget ? _widget.getDOMNode() : _widget;
+		const value = _text || (typeof _widget.get_value === 'function' ? _widget.get_value() : _widget.options.value);
+		const node = _widget.getDOMNode() !== _widget ? _widget.getDOMNode() : _widget;
 		this.egw.copyTextToClipboard(value, node, _event).then((success) =>
 		{
 			if(success !== false)

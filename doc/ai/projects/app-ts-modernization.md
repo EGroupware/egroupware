@@ -38,6 +38,13 @@ clearly-scoped change elsewhere (e.g. an import path).
 | addressbook | done | Large file (1826 lines, 98 `var`, 12 jQuery uses, 31 TS errors) - see below. Also covers `addressbook/js/CRM.ts` (the CRM-sidebox view class `app.ts` loads via `import "./CRM"`) as a judgment-call companion-file inclusion, not a separate request. |
 | tracker | done | 558 lines, 3 `var`, 2 jQuery uses, 12 TS errors - see below. `tracker/` is its own nested git repo (see note below), not part of the main `egroupware` repo - commit/push separately. |
 | status | done | 848 lines, 0 `var`, 3 jQuery uses (incl. 2x `jQuery.extend`), 7 TS errors - see below. `status/` is also its own nested git repo - same note. |
+| admin | done | Largest file in this series (2227 -> 2330 lines), ~96 `var`, 21 jQuery uses, 14 TS errors, 13 `sendRequest()` sites, 17 `function(`/`self`/`that` closures - see below. |
+| developer | done | Small (57 lines). `developer/` is its own nested git repo. |
+| esyncpro | done | Small (77 lines). `esyncpro/` is its own nested git repo. |
+| aitools | done | Small (92 lines). `aitools/` is its own nested git repo. Note: that repo's working tree also has an unrelated stray change to `src/Hooks.php` (a commented-out trigger check in `notifyAll()`) - not part of this pass, not touched, flagged for the user separately. |
+| bookmarks | done | 218 lines. `bookmarks/` is its own nested git repo. |
+| collabora | done | Largest of this batch (961 lines). `collabora/` is its own nested git repo. |
+| filemanager | in progress | Only the companion `filemanager/js/filemanager.ts` done (part of the main repo, not `filemanager/js/app.ts` itself, which hasn't been started) - included since `filemanager.ts` is filemanager's app-controller-equivalent file. 3 of its remaining 6 `function(...)` sites look like missed goal-6 conversions rather than genuine this-binding exceptions (no `this` used inside, two are already called with an explicit `null` context) - flagged, not yet fixed. |
 
 **Nested git repos:** `tracker/` and `status/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
@@ -595,3 +602,247 @@ and `vc_deleteRecording()`.
 ### Not touched (out of scope)
 
 - No new "not touched" findings beyond what's already covered above for this file.
+
+## admin/js/app.ts (done)
+
+Largest file done so far (2227 -> 2330 lines). Baseline: ~96 `var`s, 21 jQuery uses, 14 TS errors,
+13 `egw.json(...).sendRequest()` call sites, 17 `function(`/`var self`/`var that` closures. A
+previous partial attempt had already fixed some `_inst` sites and most of the legacy-widget import
+goal before this pass picked it up fresh.
+
+### Legacy widget imports
+
+- Imports were already mostly converted by the prior partial attempt: `Et2SelectAccount`,
+  `EgwAction`, `EgwActionObject`, `Et2Button`, `LitElement`, `Et2Template`, `EgwFrameworkApp`,
+  `egwAction`/`egwActionObject` were all already `import type` (type-only usage confirmed for each -
+  casts/annotations, never instantiated). `Et2Dialog`, `etemplate2`, `loadWebComponent` correctly
+  stayed value imports (`new Et2Dialog(...)`, `Et2Dialog.confirm()`/`.show_dialog()`,
+  `etemplate2.getById()`, `loadWebComponent("et2-dialog", ...)`). `import {egw}`/ambient-global import
+  was already absent (comment-only, matching every other file in this pass).
+- `et2_nextmatch` (`et2_extension_nextmatch.ts`) stayed a **value** import, unconverted - it's a real,
+  distinct legacy widget implementation (not a compat shim), and this file passes it as a runtime
+  `instanceof`-style filter value to `iterateOver(_callback, _context, _type)` in `getNextmatch()`,
+  same reasoning as tracker's `et2_nextmatch`/`et2_button`/`et2_selectbox`.
+- **`et2_DOMWidget`** (was `import type`, used only as `copyClipboard(_widget : et2_DOMWidget, ...)`'s
+  param type) - removed entirely and the param retyped `any` (see TS-errors section below): the type
+  was actively wrong for how the method is really called, not just incomplete.
+- **`Et2Nextmatch`** (was `import type`, used only for one cast in `load()`) - removed entirely: the
+  cast itself was wrong (see next section) - `admin.index.xet` still uses the legacy `<nextmatch
+  id="nm">` tag, not `<et2-nextmatch>`, so `this.nm`/`this.accounts` are genuinely `et2_nextmatch` at
+  runtime here, the same situation as tracker/js/app.ts, not the `Et2Nextmatch` web component the rest
+  of this project's apps (infolog/timesheet/addressbook) use.
+
+### TS errors fixed (14 total)
+
+- **`this.et2._inst`** (6 sites: `_acl_delete()`'s dialog callback, 3x in `_acl_dialog()`,
+  `emailadminActiveAccounts()`, `wizard_detect()`) - same `getInstanceManager()` fix as every other
+  file in this pass. One site (`_acl_delete()`'s callback, originally `var callback = function(...)
+  {...}.bind(this)`) had been silently exempt from the TS baseline count because a plain `function`
+  expression's `this` types as implicit `any` - converting it to an arrow function (goal 6) made the
+  same pre-existing `_inst` access newly type-checked, so it needed the identical fix as part of that
+  conversion, not a separate one.
+- **`Et2Nextmatch.disabled`/`.resize()` don't exist** (`load()`, 3 sites): the cast at `const nm =
+  <Et2Nextmatch>this.nm` was simply the wrong type - see the import-removal note above. Both members
+  are real on the legacy `et2_nextmatch` (`disabled` inherited from the base widget chain, `resize()`
+  its own method using `this.dataview.resize(...)`) - fixed by casting to `<et2_nextmatch>` instead,
+  with a comment explaining why (admin.index.xet not yet migrated to `<et2-nextmatch>`).
+- **`content.tabs` doesn't exist on type `{}`** (`acl_reopen_dialog()`): `let content = {};` inferred
+  an empty-object type with no properties; `delete(content.tabs)` a few lines later doesn't type-check
+  against it. Fixed with an explicit `let content : any = {};` (the value is reassigned from
+  `this.acl_dialog.get_value()`, an untyped field, right after anyway).
+- **`Et2Dialog.confirm()` "Expected 3-4 arguments, but got 2"** (`check_owner()`): the static method's
+  signature is `confirm(_senders, _dialogMsg, _titleMsg, _postSubmit?)` - only the 4th param is
+  optional, but the call site only ever passed 2 args (relying on the method's own internal
+  `typeof _titleMsg != "undefined"` runtime check to treat a missing 3rd arg as `''`). Rather than
+  touch the shared `Et2Dialog.ts` signature, passed an explicit `''` as the 3rd arg at the one call
+  site - matches the runtime behavior exactly, no shared-file change.
+- **`app.policy.confirm` doesn't exist on type `EgwApp`** (`cf_type_delete()`): `policy` is its own
+  nested-git-repo app (like `tracker`/`status`, see their notes above), invisible to this file's
+  types - the same EPL/stylite-blind-spot pattern as `app.stylite`/`app.status`/`app.rocketchat`
+  elsewhere in this project. Cast to `<any>` at the one `.confirm` read (the `app.policy` reads either
+  side of it don't error, since `EgwApp` itself is a valid read of the indexed `app` type).
+- **`_widget.get_value` doesn't exist on `et2_DOMWidget`, plus a `getDOMNode()`/`_widget`
+  `HTMLElement`-vs-`et2_DOMWidget` "no overlap" comparison** (`copyClipboard()`, 3 errors): the
+  declared param type was simply wrong for how the method is actually called -
+  `admin/templates/default/token.edit.xet`'s two call sites pass an `<et2-textbox>` custom element
+  (`this` from its own `onclick`) and a raw `document.querySelector()` result (which, for that same
+  `<et2-textbox>` id, is *also* the live web-component instance, not a plain inert `Element`, since
+  Et2Widget-based components host their behavior directly on the DOM node) - never a legacy
+  `et2_DOMWidget`. The method's own body already runtime-guards with `typeof _widget.get_value ===
+  'function'`, the same idiom `et2_core_baseWidget.ts`'s `egw_getFormValue()` uses for the same
+  "widget may or may not have this method" uncertainty - retyped the param `any` to match that
+  already-defensive runtime shape instead of forcing an incorrect static type, and removed the now
+  fully unused `et2_DOMWidget` import (see above).
+
+### jQuery removed
+
+- `jQuery(iframe.getDOMNode()).off('load.admin').bind('load.admin', function(){...})` (`et2_ready()`'s
+  `admin.index` case) -> `removeEventListener`/`addEventListener('load', ...)` on the iframe's own DOM
+  node, with the handler stored in a new private `_adminIframeLoadHandler` instance field so it can be
+  removed again before re-adding (the native equivalent of jQuery's per-namespace `off()`/`bind()`,
+  kept even though the iframe node is actually fresh on every call in practice). The handler itself was
+  also converted `function(){...this...}` -> arrow function referencing the iframe node directly
+  (`iframeNode`) instead of relying on jQuery's `this`-as-target-element binding.
+- `jQuery(ajax_target.getDOMNode().children).each(function(){...})` + a following
+  `jQuery(ajax_target.getDOMNode()).empty()` (`load()`) -> `Array.from(...).forEach(...)` +
+  `.replaceChildren()` (the native no-arg equivalent of jQuery's `.empty()`).
+- `jQuery(this.ajax_target.getDOMNode()).append(htmlString)` (`_ajax_load_callback()`) ->
+  `.insertAdjacentHTML('beforeend', htmlString)` - **not** native `Element.append(string)`, which would
+  insert the string as a literal text node instead of parsing it as markup (the loaded etemplate's own
+  HTML), unlike jQuery's `.append()`.
+- `jQuery(this.et2.parentNode).trigger('show.et2_nextmatch')` (`group_list()`) ->
+  `this.et2.parentNode.dispatchEvent(new Event('show'))`. The listening side
+  (`et2_extension_nextmatch.ts`, shared/out-of-scope) uses `jQuery(...).on('show.et2_nextmatch', ...)`
+  - jQuery's dot-namespace is a jQuery-only bookkeeping concept for filtering its own
+  `trigger()`/`off()` calls, not part of the real native event type; jQuery's `.on()` still just calls
+  `addEventListener('show', ...)` under the hood, so a plain native `'show'` event still reaches that
+  handler.
+- `jQuery.extend({}, x)` (2x, `acl()`'s row-click content default, `account()`'s registry params) ->
+  object-spread `{...x}`, per `doc/ai/modernization.md`'s shallow-clone rule.
+- `jQuery.extend(content, {...})` (`_acl_dialog()`) -> `Object.assign(content, {...})` (shallow merge
+  into an existing target, same rule).
+- `jQuery.map(select_owner.options.select_options, function(val, i){...})` (`check_owner()`) ->
+  `Object.values(...).map(...).filter(label => typeof label !== 'undefined')` -
+  `Object.values()` handles select_options being a plain object rather than an array (same as
+  `jQuery.map()` accepting both), and the `.filter()` reproduces jQuery.map()'s behavior of dropping
+  `null`/`undefined` callback results from the output array (the callback here has no `return` on some
+  paths).
+- `jQuery(...).toggle(bool)` (3x, `cf_type_change()`) -> `el.style.display = bool ? '' : 'none'`.
+- `jQuery('#popupMainDiv')`/`jQuery('.et2_container')` + their `.outerWidth(true)`/`.outerHeight(true)`/
+  `.width()`/`.height()` calls (`wizard_popup_resize()`) -> `document.getElementById`/
+  `document.querySelector` + two new small private static helpers, `_outerSize()` (offsetWidth/Height +
+  margin, jQuery's `outerWidth(true)`/`outerHeight(true)` equivalent) and `_contentSize()` (clientWidth/
+  Height minus padding, jQuery's `.width()`/`.height()` equivalent) - the original combined expression
+  (`et2_outer + (main_div_outer - main_div_content)`, i.e. et2's border-box+margin size plus main_div's
+  own padding+border+margin) is preserved exactly, just factored through named helpers instead of
+  jQuery's dimension API.
+- `jQuery('.emailadmin_manual').fadeToggle()` (`wizard_manual()`, original comment: "not sure how to to
+  this et2-isch") -> plain `style.display` toggle over `document.querySelectorAll(...)`. This drops the
+  fade *animation* (no native one-liner equivalent without adding CSS transitions, out of scope for a
+  TS-only pass) but preserves the show/hide behavior - documented in a comment, same as the pattern
+  Ralf's already accepted for other hard-to-replicate jQuery effects in this project.
+- `jQuery('#admin-mailwizard_output').hide()` / `jQuery('td.emailadmin_progress').show()`
+  (`wizard_detect()`) -> `style.display = 'none'` / `style.display = ''` over
+  `getElementById`/`querySelectorAll`.
+- 3 stale `@param {jQuery.Event}` JSDoc tags (`aclGroup()`/`deleteGroup()`/`changeGroup()`) corrected to
+  `{Event}`.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+- 6 of the 13 sites were genuinely async (explicit `sendRequest(true)`, or no `_async` arg at all,
+  which defaults to async) with no other complication - converted to `egw.request(...).then(...)`:
+  `group()`'s delete case, `cf_type_delete()`'s type-delete request, `smime_generateKey()`,
+  `smime_showGenerateKeyDialog()`'s keypair-creation request, `login_background_update()`, and
+  `changeGroup()`.
+- **6 sites use a `false` passed as the 5th (`_async`) argument to `egw.json(...)` itself**, rather
+  than to `sendRequest()` - functionally identical to `sendRequest(false)` (per `JsonRequest`'s
+  constructor: `sendRequest()`'s own arg only *overrides* the constructor's `_async` when given, so a
+  bare `.sendRequest()` after `egw.json(..., false, ...)` stays synchronous) - **kept as
+  `egw.json(...).sendRequest()`**, each with a comment pointing out the 5th-arg mechanism, since
+  `egw.request()` is always async and there's no equivalent swap: `_acl_delete()`'s callback,
+  `_acl_dialog()`'s `ajax_get_app_list` fetch, and 3 more inside `_acl_dialog()`'s save callback
+  (`ajax_change_acl`, called up to 3 times depending on what changed).
+- `deleteGroup()`'s `.sendRequest(false)` (already explicitly commented `// false = synchronious
+  request` before this pass) - **kept as-is**, the original/simplest form of the same exception.
+- **`load()`'s ajax-template-load request was deliberately left unconverted despite being async
+  (`sendRequest(true)` with a callback)** - `egw.request()` cannot replicate it: `Json.request()`
+  (`egw_json.ts`) always constructs its `JsonRequest` with `_context` set to the calling egw instance
+  (`new JsonRequest(_menuaction, _parameters, null, this, true, this, this, self)`), and takes no
+  `_callback` parameter at all - both incompatible with this call's `[..., this._ajax_load_callback,
+  null, true, this]`, whose `null` context is called out in the code's own pre-existing comment as
+  load-bearing ("It's important that the context is null, or etemplate2 won't load the template
+  properly") - a non-null context would flow into `handleResponse()`'s `et2_load`-type response-plugin
+  dispatch as a fallback `this` (`plugin.context ? plugin.context : this.context`), which is exactly
+  what that comment warns against. Documented in a new comment at the call site. This is a new category
+  of `sendRequest()` conversion exception beyond "genuinely synchronous" - a callback+null-context
+  combination `egw.request()`'s fixed `(menuaction, params) => Promise` shape structurally cannot
+  reproduce.
+
+### function/closures -> arrow functions
+
+- `_acl_delete()`'s `var callback = function(_button_id, _value){...}.bind(this)` -> arrow function
+  (drops the now-redundant `.bind(this)`); `_acl_dialog()`'s `ajax_get_app_list` callback and its
+  `sel_options.acl_appname.sort(function(a,b){...})` comparator -> arrows (neither used `this`).
+- `getNextmatch()`'s `iterateOver(function(_widget){...}, this, et2_nextmatch)` -> arrow, per the
+  tracker-established refinement: the explicit `this` passed as `_context` is always the same object
+  an arrow's lexical `this` would resolve to here (both come from the same enclosing method), so the
+  explicit binding was just belt-and-braces already.
+- `submit_statistic()`'s `var that = this` + `var submit = function(){...that...}` and its own
+  `Et2Dialog.show_dialog(function(_button){...submit()...})` callback -> both converted to arrows,
+  `that` removed entirely (arrow's own `this` used directly).
+- `emailadminActiveAccounts()`'s `var callbackDialog = function(btn){...}` and its nested
+  `Et2Dialog.long_task(function(_val,_resp){...})` callback -> arrows (neither used `this`).
+- `smime_generateKey()`'s `var self = this` + `function(_defaults){...self...}` callback -> the
+  `function` converted to an arrow using `this` directly and `self` removed entirely, since this
+  method's own enclosing scope has no other non-arrow frame between it and the callback (unlike the
+  next case).
+- **`smime_showGenerateKeyDialog()`'s `var self = this` was *kept*, not removed**, despite converting
+  its own nested `function(_data){...self...}` callback to an arrow - a genuine exception, but a subtle
+  one: the *immediately* enclosing scope here is `dialog.transformAttributes({callback(_button_id,
+  _value){...}})`'s `callback` **method** (ES6 concise-method syntax, not `function(...)` and not an
+  arrow - already correctly left alone, since Et2Dialog's `transformAttributes()`/`show_dialog()`
+  callback contract binds that method's own `this` to the *dialog*, the same documented contract as
+  status's/addressbook's Dialog-callback exception). Converting the *inner* `function(_data){...}` to
+  an arrow is safe **only** because it keeps using `self` (never its own `this`) - if `self` had been
+  removed and replaced with bare `this`, the arrow's lexical `this` would resolve through the enclosing
+  `callback` method to the *dialog*, not this `AdminApp` instance, silently breaking
+  `self.smimeKeyCreated`/`self.smime_setKeyState(...)`/etc. This is a new nested-scope wrinkle on the
+  established "an existing `self`/`that` capture is reliable evidence of a dynamic-`this` contract"
+  rule: it's evidence for the *enclosing* frame's contract, and an inner callback nested inside that
+  frame still needs its own `self`-style indirection even after becoming an arrow, if the immediately
+  enclosing scope isn't itself arrow/lexically-transparent for `this`.
+- `login_background_update()`'s `function(_data){...}` callback -> arrow (no `this` used).
+- `changeGroup()`'s `function(_msg){...}` callback (originally passed an explicit `_context` of `this`
+  as `egw.json()`'s 4th arg, but never referenced `this` in its body) -> arrow, converted together with
+  its `egw.request()` swap above.
+- `deleteGroup()`'s `Et2Dialog.show_dialog(function(button){...})` callback -> arrow (uses only
+  closured `egw`/`account_id`/`_widget`, never its own `this`).
+- **`cf_type_delete()`'s outer `var callback = function(button, value){...}.bind(widget)` was *kept* as
+  a plain `function`** - a genuine, explicitly-documented goal-6 exception: `.bind(widget)` deliberately
+  rebinds `this` to the `widget` parameter (used via `this.eTemplate`/`this.getRoot()`/`this.getInstanceManager()`
+  inside), not the enclosing `AdminApp` instance - an arrow function ignores `.bind()`'s `this`-argument
+  entirely, so converting this one would silently break every `this.*` reference inside it. Its own
+  inner pieces (the `for` loop, the delete-type request) were still modernized (`var`->`let`/`const`,
+  `jQuery.extend`->spread, `sendRequest()`->`egw.request()`), just not the outer function's own
+  keyword/binding.
+
+### Not touched (out of scope)
+
+- `load()`'s `ajax_exec` request (see above) - left as `egw.json(...).sendRequest()`, a new documented
+  exception category (callback + load-bearing null-context, not just synchronicity).
+- The dead code at the tail of `observer()`'s `case 'admin':` (an unconditional `if`/`else` above it
+  already returns in both branches, so `this.egw.invalidate_account(...)` and everything below it can
+  never execute) - pre-existing, not touched by any of the 6 goals (no `var`, jQuery, TS error, or
+  `function(){}` uniquely required deleting it), so left alone per `doc/ai/modernization.md`'s "don't
+  turn an unrelated bugfix into a drive-by cleanup" rule. `var`s inside it were still converted to
+  `let`/`const` for goal 2 (including fixing a `var nm` redeclared a second time in the same
+  now-block-scoped `switch` body - changed to a plain reassignment, not a second declaration, since
+  `let`/`const` don't allow redeclaring the same binding the way `var` silently permitted) - flagged
+  here for whoever eventually looks at deleting it.
+- `admin.index.xet` still using the legacy `<nextmatch>` tag rather than `<et2-nextmatch>` (see the
+  import-removal note above) - a template migration, out of scope for an app.ts-only pass.
+
+## developer/js/app.ts, esyncpro/js/app.ts, aitools/js/app.ts, bookmarks/js/app.ts, collabora/js/app.ts (done)
+
+These five are each their own nested git repo (same shape as `tracker`/`status` - root `.gitignore`
+excludes them, `cd` into each to see/commit/push). All five are much smaller than the files above
+(57-961 lines) and came out of the same pass together. Verified for all five: `var`, jQuery,
+`egw.json(...).sendRequest()`, and `function(...)`/`var self`/`var that` all at 0 (no undocumented
+exceptions), and 0 TS errors each (`node_modules/.bin/tsc --noEmit -p tsconfig.json`, filtered to each
+file's own path). Unlike the larger files above, the specific per-fix root causes for these five weren't
+individually written up here - flag any of these for a closer look if a bug surfaces in one later,
+rather than assuming the reasoning was captured.
+
+`aitools/`'s working tree also has an unrelated, unstaged change to `src/Hooks.php` (comments out
+`notifyAll()`'s trigger-check condition) - confirmed not part of this pass, left untouched.
+
+## filemanager/js/filemanager.ts (in progress - not filemanager/js/app.ts itself)
+
+`filemanager/js/filemanager.ts` (1944 lines, part of the main repo) is filemanager's app-controller
+companion file - `filemanager/js/app.ts` itself has not been started yet. `var`/jQuery/`sendRequest`
+(bar one confirmed-genuine `sendRequest(false)`) all cleared and file is TS-clean, but goal 6 is
+incomplete: 3 of the 6 remaining `function(...)` sites look like missed conversions rather than
+documented exceptions - none reference `this`, and two are already invoked with an explicit `null`
+context passed to `iterateOver()`, so an arrow function would behave identically. One of the six (the
+file-upload-conflict-dialog callback, which relies on a framework-bound `this.my_data`) is a genuine,
+correctly-kept exception. Not fixed yet - flagged for follow-up.

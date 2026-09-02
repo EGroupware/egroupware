@@ -8,19 +8,29 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
+import {EgwApp} from "../../api/js/jsapi/egw_app";
+import type {PushData} from "../../api/js/jsapi/egw_app";
 import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
 import type {Et2DatagridUpdateType, Et2DatagridView} from "../../api/js/etemplate/Et2Datagrid/Et2Datagrid.types";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+// et2_file is a real, distinct legacy widget implementation (not a shim), passed as a runtime
+// instanceof-filter value to iterateOver() below - see doc/ai/projects/app-ts-modernization.md.
 import {et2_file} from "../../api/js/etemplate/et2_widget_file";
-import {egw} from "../../api/js/jsapi/egw_global";
-import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import type {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+// et2_textbox/et2_checkbox are also passed as runtime instanceof-filter values to iterateOver()
+// below, alongside being used as cast types - so they stay value imports, like et2_file above.
 import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
+import {et2_checkbox} from "../../api/js/etemplate/et2_widget_checkbox";
 import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
+// egwAction is used both as a type and as a runtime `instanceof` check below - value import needed.
 import {egwAction} from "../../api/js/egw_action/egw_action";
+import type {egwActionObject} from "../../api/js/egw_action/egw_action";
 import type {Et2VfsUpload} from "../../api/js/etemplate/Et2Vfs/Et2VfsUpload";
-import {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
+import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
+// egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 const VIEW_ROW : Et2DatagridView = "row";
 const VIEW_TILE : Et2DatagridView = "tile";
@@ -82,7 +92,8 @@ export class filemanagerAPP extends EgwApp
 		{
 			if(lists[i].app == 'filemanager' && lists[i].widgetContainer.getWidgetById('path'))
 			{
-				this.path_widget[lists[i].uniqueId] = lists[i].widgetContainer.getWidgetById('path');
+				// uniqueId is private on etemplate2 with no public accessor
+				this.path_widget[(<any>lists[i]).uniqueId] = lists[i].widgetContainer.getWidgetById('path');
 			}
 		}
 	}
@@ -117,7 +128,8 @@ export class filemanagerAPP extends EgwApp
 				this.changeMountScheme();
 				return;
 			case 'filemanager.jobs':
-				app.admin.enableAppToolbar(et2,name);
+				// app.admin is typed generically as EgwApp; enableAppToolbar() is AdminApp-specific
+				(<any>app.admin).enableAppToolbar(et2,name);
 				return;
 			case 'filemanager.index':
 				if(egwIsMobile && egwIsMobile())
@@ -153,9 +165,9 @@ export class filemanagerAPP extends EgwApp
 		{
 			this.path_widget[et2.DOMContainer.id] = path_widget;
 			// Bind to removal to remove from list
-			et2.DOMContainer.addEventListener('clear', function(e)
+			et2.DOMContainer.addEventListener('clear', (e) =>
 			{
-				if (app.filemanager && app.filemanager.path_widget) delete app.filemanager.path_widget[e.target.id];
+				if (this.path_widget) delete this.path_widget[(<HTMLElement>e.target).id];
 			});
 		}
 
@@ -292,7 +304,8 @@ export class filemanagerAPP extends EgwApp
 		// NM used to have path as a child widget, but now path is outside so we do some extra stuff.
 		// Update the path widget without dispatching a change event; super.setState() applies the
 		// restored filters once below.
-		for(var etemplate_name in this.path_widget) break;
+		let etemplate_name;
+		for(etemplate_name in this.path_widget) break;
 		let dir = path;
 		if(dir === "~")
 		{
@@ -399,7 +412,7 @@ export class filemanagerAPP extends EgwApp
 	 * @param filter_fields List of filter field names eg: [owner, cat_id]
 	 * @return boolean True if the nextmatch filters might include the entry, false if not
 	 */
-	_push_field_filter(pushData : PushData, nm : Et2Nextmatch, filter_fields : string[]) : boolean
+	_push_field_filter(pushData : PushData, nm : et2_nextmatch | Et2Nextmatch, filter_fields : string[]) : boolean
 	{
 		return pushData.id && this.dirname(<string>pushData.id) === this.get_path();
 	}
@@ -630,13 +643,13 @@ export class filemanagerAPP extends EgwApp
 			widget.value = widgetValue;
 			value["conflict"] = _conflict;
 			widget.requestUpdate("loading");
-			egw.json(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}],
-				this._upload_callback, this, true, this
-			).sendRequest().finally(() =>
-			{
-				widget.loading = false;
-				widget.requestUpdate("loading", true);
-			});
+			egw.request(_target, ['upload', value, _path, {ui_path: this.egw.window.location.pathname}])
+				.then(data => this._upload_callback(data))
+				.finally(() =>
+				{
+					widget.loading = false;
+					widget.requestUpdate("loading", true);
+				});
 		}
 	}
 
@@ -658,23 +671,23 @@ export class filemanagerAPP extends EgwApp
 		}
 
 		let props = widget.getInstanceManager().getValues(widget.getRoot());
-		egw.json('filemanager_ui::ajax_action', [action == 'save_as' ? 'upload' : 'link', widget.getValue(), path, props],
-			function(_data)
+		egw.request('filemanager_ui::ajax_action', [action == 'save_as' ? 'upload' : 'link', widget.getValue(), path, props])
+			.then((_data) =>
 			{
-				app.filemanager._upload_callback(_data);
+				// app.filemanager is typed generically as EgwApp; _upload_callback is filemanagerAPP-specific
+				(<filemanagerAPP>app.filemanager)._upload_callback(_data);
 
 				// Remove successful
 				const widgetValue = widget.getValue();
 				const value = {};
 				widget.value = widgetValue;
-				for(var file in _data.uploaded)
+				for(const file in _data.uploaded)
 				{
 					delete widgetValue[file];
 				}
 				widget.value = widgetValue;
 				opener.egw_refresh('','filemanager',null,null,'filemanager');
-			}, app.filemanager, true, this
-		).sendRequest(true);
+			});
 		return true;
 	}
 
@@ -732,9 +745,8 @@ export class filemanagerAPP extends EgwApp
 								uploaded[this.my_data.file].name = _value;
 								delete uploaded[this.my_data.file].confirm;
 								// send overwrite-confirmation and/or rename request to server
-								egw.json('filemanager_ui::ajax_action', [this.my_data.action, uploaded, this.my_data.path, this.my_data.props],
-									that._upload_callback, that, true, that
-								).sendRequest();
+								egw.request('filemanager_ui::ajax_action', [this.my_data.action, uploaded, this.my_data.path, this.my_data.props])
+									.then(data => that._upload_callback(data));
 								return;
 							case "cancel":
 								// Remove that file from every file widget...
@@ -748,8 +760,9 @@ export class filemanagerAPP extends EgwApp
 						this.egw.lang('Do you want to overwrite existing file %1 in directory %2?', _data.uploaded[file].name, _data.path),
 					this.egw.lang('File %1 already exists', _data.uploaded[file].name),
 					_data.uploaded[file].name, buttons, file);
-				// setting required data for callback in as my_data
-				dialog.my_data = {
+				// setting required data for callback in as my_data - not a real Et2Dialog property,
+				// just an ad-hoc data bag the show_prompt() callback below reads back via "this.my_data"
+				(<any>dialog).my_data = {
 					action: _data.action,
 					file: file,
 					path: _data.path,
@@ -832,7 +845,7 @@ export class filemanagerAPP extends EgwApp
 				clipboard.type = clipboard.type.concat(drag[k].actionObj.dragType);
 			}
 		}
-		clipboard.type = jQuery.unique(clipboard.type);
+		clipboard.type = [...new Set(clipboard.type)];
 		// egwAction is a circular structure and can't be stringified so just take what we want
 		// Hopefully that's enough for the action handlers
 		for(let k in _elems)
@@ -903,15 +916,14 @@ export class filemanagerAPP extends EgwApp
 	 */
 	createdir(action, selected)
 	{
-		let self = this;
-		Et2Dialog.show_prompt(function(button, dir)
+		Et2Dialog.show_prompt((button, dir) =>
 		{
 			if(button && dir)
 			{
-				let path = self.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
+				let path = this.get_path(action && action.parent ? action.parent.data.nextmatch.getInstanceManager().uniqueId : false);
 				if(action && action instanceof egwAction)
 				{
-					let paths = self._elems2paths(selected);
+					let paths = this._elems2paths(selected);
 					if(paths[0])
 					{
 						path = paths[0];
@@ -922,11 +934,11 @@ export class filemanagerAPP extends EgwApp
 						let data = egw.dataGetUIDdata(selected[0].id || 'filemanager::' + path);
 						if(data && data.data.mime != 'httpd/unix-directory')
 						{
-							path = self.dirname(path);
+							path = this.dirname(path);
 						}
 					}
 				}
-				self._do_action('createdir', egw.encodePathComponent(dir), false, path);
+				this._do_action('createdir', egw.encodePathComponent(dir), false, path);
 			}
 		}, 'New directory', 'Create directory');
 	}
@@ -936,12 +948,11 @@ export class filemanagerAPP extends EgwApp
 	 */
 	symlink()
 	{
-		let self = this;
-		Et2Dialog.show_prompt(function(button, target)
+		Et2Dialog.show_prompt((button, target) =>
 		{
 			if(button && target)
 			{
-				self._do_action('symlink', target);
+				this._do_action('symlink', target);
 			}
 		}, 'Link target', 'Create link');
 	}
@@ -957,9 +968,18 @@ export class filemanagerAPP extends EgwApp
 	_do_action(_type, _selected, _sync?, _path?)
 	{
 		if (typeof _path == 'undefined') _path = this.get_path();
-		egw.json('filemanager_ui::ajax_action', [_type, _selected, _path],
-			this._do_action_callback, this, !_sync, this
-		).sendRequest();
+		if (_sync)
+		{
+			// Genuinely synchronous request - egw.request() is always async
+			egw.json('filemanager_ui::ajax_action', [_type, _selected, _path],
+				this._do_action_callback, this, false, this
+			).sendRequest(false);
+		}
+		else
+		{
+			egw.request('filemanager_ui::ajax_action', [_type, _selected, _path])
+				.then(data => this._do_action_callback(data));
+		}
 	}
 
 	/**
@@ -1000,17 +1020,15 @@ export class filemanagerAPP extends EgwApp
 			}
 
 			// Multiple file download for those that support it
-			let $a = jQuery(a)
-				.prop('href', url)
-				.prop('download', data ? data.data.name : "")
-				.appendTo(this.et2.getDOMNode());
+			a.href = url;
+			a.download = data ? data.data.name : "";
+			this.et2.getDOMNode().appendChild(a);
 
-			window.setTimeout(jQuery.proxy(function() {
-				let evt = document.createEvent('MouseEvent');
-				evt.initMouseEvent('click', true, true, window, 1, 0, 0, 0, 0, false, false, false, false, 0, null);
-				this[0].dispatchEvent(evt);
-				this.remove();
-			}, $a), 100*i);
+			window.setTimeout(() =>
+			{
+				a.click();
+				a.remove();
+			}, 100*i);
 		}
 		return false;
 	}
@@ -1039,7 +1057,8 @@ export class filemanagerAPP extends EgwApp
 	 */
 	change_dir(_dir, widget?)
 	{
-		for(var etemplate_name in this.path_widget) break;
+		let etemplate_name;
+		for(etemplate_name in this.path_widget) break;
 		if (widget) etemplate_name = widget.getInstanceManager().uniqueId;
 
 		// Make sure everything is in place for changing directory
@@ -1179,7 +1198,7 @@ export class filemanagerAPP extends EgwApp
 	 */
 	updateTileColumns(nm? : Et2Nextmatch)
 	{
-		nm = nm || this.nm;
+		nm = nm || <Et2Nextmatch>this.nm;
 		if(!nm)
 		{
 			return;
@@ -1246,15 +1265,17 @@ export class filemanagerAPP extends EgwApp
 		let path = this.id2path(_senders[0].id);
 		this.et2 = this.et2 ? this.et2 : etemplate2.getById('filemanager-index').widgetContainer;
 		// try to get mime widget DOM node out of the row DOM
-		let mime_dom = jQuery(_senders[0].iface.getDOMNode()).find("et2-vfs-mime");
-		let fe = egw.file_editor_prefered_mimes();
+		let mime_dom : HTMLElement = _senders[0].iface.getDOMNode().querySelector("et2-vfs-mime");
+		// egw.get_file_editor_prefered_mimes() needs the actual mime type - see note on the
+		// ambient-global "egw" import at the top of the file
+		let fe : any = egw.file_editor_prefered_mimes(data.data.mime);
 
 		// symlinks dont have mime 'http/unix-directory', but server marks all directories with class 'isDir'
 		if (data.data.mime == 'httpd/unix-directory' || data.data['class'] && data.data['class'].split(/ +/).indexOf('isDir') != -1)
 		{
 			this.change_dir(path,_action.parent.data.nextmatch || this.et2);
 		}
-		else if(data.data.mime.match(MIME_REGEX) && mime_dom.length>0)
+		else if(data.data.mime.match(MIME_REGEX) && mime_dom)
 		{
 			mime_dom.click();
 		}
@@ -1335,12 +1356,12 @@ export class filemanagerAPP extends EgwApp
 			             id: _action.id + '_target',
 			             caption: target_dir,
 			             path: target_dir,
-			             enabled: _target && _target.iface && jQuery(_target.iface.getDOMNode()).hasClass('isDir') &&
+			             enabled: _target && _target.iface && _target.iface.getDOMNode().classList.contains('isDir') &&
 				             (dir && dir.data && dir.data.class && dir.data.class.indexOf('noEdit') === -1 || !dir)
 		             });
 
 		// Last 10 folders
-		let previous_dsts = jQuery.extend([], <any><unknown>egw.preference('drop_history', this.appname));
+		let previous_dsts = [...(<string[]>egw.preference('drop_history', this.appname) || [])];
 		let action_index = 0;
 		for (let i = 0; i < 10; i++)
 		{
@@ -1449,7 +1470,7 @@ export class filemanagerAPP extends EgwApp
 		}
 
 		// Remember the target for next time
-		let previous_dsts = jQuery.extend([], egw.preference('drop_history', this.appname));
+		let previous_dsts = [...(<string[]>egw.preference('drop_history', this.appname) || [])];
 		previous_dsts.unshift(dst);
 		previous_dsts = Array.from(new Set(previous_dsts)).slice(0, 9);
 		egw.set_preference(this.appname, 'drop_history', previous_dsts);
@@ -1510,9 +1531,8 @@ export class filemanagerAPP extends EgwApp
 	 */
 	filedrop(row_uid, files) : boolean
 	{
-		let self = this;
 		let data = egw.dataGetUIDdata(row_uid);
-		files = files || window.event.dataTransfer.files;
+		files = files || (<DragEvent>window.event).dataTransfer.files;
 
 		const path = typeof data != 'undefined' && data.data.mime == "httpd/unix-directory" ? data.data.path : this.get_path();
 		const widget = <Et2VfsUpload>this.et2.getWidgetById('upload');
@@ -1578,7 +1598,7 @@ export class filemanagerAPP extends EgwApp
 	/**
 	 * Row or filename in select-file dialog clicked
 	 *
-	 * @param {jQuery.event} event
+	 * @param {Event} event
 	 * @param {et2_widget} widget
 	 */
 	select_clicked(event, widget) : boolean
@@ -1648,8 +1668,9 @@ export class filemanagerAPP extends EgwApp
 
 				default:
 					widget.set_label('Superuser');
-					widget.onclick = function(){
-						jQuery('.superuser').css('display','inline');
+					widget.onclick = () =>
+					{
+						document.querySelectorAll<HTMLElement>('.superuser').forEach(el => el.style.display = 'inline');
 					};
 			}
 		}
@@ -1780,8 +1801,8 @@ export class filemanagerAPP extends EgwApp
 	view_link(_action, _senders) : boolean
 	{
 		let id = egw.dataGetUIDdata(_senders[0].id).data.share_id;
-		egw.json('stylite_filemanager::ajax_view_link', [id],
-			this._share_link_callback, this, true, this).sendRequest();
+		egw.request('stylite_filemanager::ajax_view_link', [id])
+			.then(data => this._share_link_callback(data));
 		return true;
 	}
 
@@ -1808,23 +1829,15 @@ export class filemanagerAPP extends EgwApp
 
 		if (url)
 		{
-			let elem = jQuery(document.createElement('div'));
-			let range;
-			elem.text(url);
-			elem.appendTo('body');
-			if (document.selection)
-			{
-				range = document.body.createTextRange();
-				range.moveToElementText(elem);
-				range.select();
-			}
-			else if (window.getSelection)
-			{
-				range = document.createRange();
-				range.selectNode(elem[0]);
-				window.getSelection().removeAllRanges();
-				window.getSelection().addRange(range);
-			}
+			// document.selection/createTextRange were IE-only fallbacks for browsers with no
+			// window.getSelection() - no longer needed, every currently-supported browser has it.
+			const elem = document.createElement('div');
+			elem.textContent = url;
+			document.body.appendChild(elem);
+			const range = document.createRange();
+			range.selectNode(elem);
+			window.getSelection().removeAllRanges();
+			window.getSelection().addRange(range);
 
 			let successful = false;
 			try {
@@ -1859,7 +1872,7 @@ export class filemanagerAPP extends EgwApp
 		// placeholder, which still offers mkdir/paste/share) - nothing to edit
 		let data = egw.dataGetUIDdata(_senders[0]?.id);
 		if (!data?.data?.mime) return false;
-		let fe = egw.file_editor_prefered_mimes(data.data.mime);
+		let fe : any = egw.file_editor_prefered_mimes(data.data.mime);
 		return !!(fe?.mime && typeof fe.mime[data.data.mime] !== "undefined");
 	}
 
