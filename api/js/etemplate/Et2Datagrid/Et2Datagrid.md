@@ -922,7 +922,7 @@ nodes for the same row identity, and enqueues them.
 
 `processRowUpgradeQueue()` ([Et2DatagridRowRenderer.ts:334](Et2DatagridRowRenderer.ts#L334))
 processes a bounded batch per animation frame
-(≤ 8 rows, 8 ms budget) so input/paint stay smooth. For each row it calls
+(8 ms budget, with a 64-row ceiling as a backstop) so input/paint stay smooth. For each row it calls
 `applyRowElementAttributes()`.
 
 `applyRowElementAttributes()` ([Et2DatagridRowRenderer.ts:465](Et2DatagridRowRenderer.ts#L465))
@@ -941,9 +941,12 @@ is the hydration core. It:
 - re-runs the row customizer and finally removes the `loading` class.
 
 Once the queue drains, `scheduleRowsUpgradedSettle()`
-([Et2DatagridRowRenderer.ts:390](Et2DatagridRowRenderer.ts#L390))
-waits two animation frames for upgraded widgets to paint, updates the measured average row height,
-and dispatches `et2-row-widgets-upgraded` so height-reservation consumers (embedded height sync, the
+([Et2DatagridRowRenderer.ts](Et2DatagridRowRenderer.ts))
+samples the average row height every two animation frames until two consecutive samples agree
+(bounded by `MAX_SETTLE_PASSES`), then commits it via `_updateMeasuredAverageRowHeight()`
+and dispatches `et2-row-widgets-upgraded`. The convergence check matters because that commit
+latches an embedded grid's row pitch permanently - measuring while freshly hydrated widgets are
+still growing would fix a too-short pitch for good so height-reservation consumers (embedded height sync, the
 min-height sync) can react.
 
 ### Refresh and reload

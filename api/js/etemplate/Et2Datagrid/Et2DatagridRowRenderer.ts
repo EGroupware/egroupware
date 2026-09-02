@@ -32,25 +32,34 @@ export class Et2DatagridRowRenderer
 	private _rowUpgradeScheduled : boolean = false;
 	private _rowUpgradeFrameHandle : number | null = null;
 	/**
-	 * Rows upgraded per frame, alongside the time budget below.
+	 * Hard ceiling on rows upgraded per frame, as a backstop against a pathological
+	 * row template - `_rowUpgradeFrameBudgetMs` below is the real governor.
 	 *
-	 * Measured hydration is ~0.03ms/row, so this count - not the 8ms budget - is what
-	 * actually governs, and it drips a viewport in over several frames (~4 frames for
-	 * 30 rows) while those rows sit visibly in `.loading`. Raising it is a real
-	 * time-to-settled win but NOT a safe standalone change: the drip is what currently
-	 * makes the row-upgrade queue drain, refill, and drain again as the virtualizer
-	 * mounts rows, so scheduleRowsUpgradedSettle() runs several times and the last
-	 * measurement lands on fully laid-out rows. Draining in one frame yields a single
-	 * early settle, and Et2Datagrid._updateMeasuredAverageRowHeight() then locks in a
-	 * too-short row height with nothing left to correct it - measured here as a parent
-	 * scroll range of 7035px against a 19931px baseline. Make that settle re-measure
-	 * until stable first, then raise this.
+	 * Measured hydration is ~0.03ms/row, so a low count cap yields the frame with
+	 * almost all of its budget unspent and drips a viewport in over several frames
+	 * (~4 frames for 30 rows) while those rows sit visibly in `.loading`. This was 8,
+	 * which the time budget never reached. Raising it depends on
+	 * scheduleRowsUpgradedSettle() below sampling until row heights hold still:
+	 * draining the queue in one frame produces a single early settle, and the
+	 * committing half of the measurement latches an embedded grid's row pitch for
+	 * good, so before that convergence check existed this locked in a too-short
+	 * height with nothing left to correct it.
 	 */
-	private _rowUpgradeBatchSize : number = 8;
+	private _rowUpgradeBatchSize : number = 64;
 	/** Per-frame time budget (ms) for row widget upgrades to avoid long tasks on the main thread. */
 	private _rowUpgradeFrameBudgetMs : number = 8;
 	private _rowWidgetsUpgradedFrame : number | null = null;
 	private _rowWidgetsUpgradeSettling : boolean = false;
+	/** Previous pass's sampled row-height average, for the settle's convergence check. */
+	private _lastSettleSampleHeight : number | null = null;
+	private _settlePassesRemaining : number = 0;
+	/**
+	 * Upper bound on sample-and-compare passes per settle. Each costs two frames, so
+	 * this caps a never-converging row at ~10 frames before the height is committed
+	 * anyway - long enough for widgets that load asynchronously, short enough that a
+	 * pathological row does not leave height reservation pending indefinitely.
+	 */
+	private static readonly MAX_SETTLE_PASSES = 5;
 
 	private _refreshPulseTimersByElement : Map<HTMLElement, number> = new Map();
 	private _refreshPulseDurationMs : number = 5000;
@@ -401,6 +410,16 @@ export class Et2DatagridRowRenderer
 	 * Wait for upgraded row widgets to paint, update the measured row-height
 	 * average, then notify height consumers that row layout is stable enough for
 	 * reservation calculations.
+	 *
+	 * "Stable enough" is checked rather than assumed. Freshly hydrated widgets keep
+	 * growing for a frame or two after their row is in the DOM, and the measurement
+	 * this hands to Et2Datagrid._updateMeasuredAverageRowHeight() is, for an embedded
+	 * grid, latched as a fixed row pitch that is never revised - so a measurement
+	 * taken while rows are still growing is permanent. Sample on successive frame
+	 * pairs until two consecutive samples agree (within a pixel of rounding), then
+	 * commit. Bounded by MAX_SETTLE_PASSES so a row that genuinely never stops
+	 * resizing - an image without intrinsic dimensions, a live-updating widget -
+	 * cannot keep the settle pending forever.
 	 */
 	scheduleRowsUpgradedSettle()
 	{
@@ -409,34 +428,62 @@ export class Et2DatagridRowRenderer
 			return;
 		}
 		this._rowWidgetsUpgradeSettling = true;
+		this._lastSettleSampleHeight = null;
+		this._settlePassesRemaining = Et2DatagridRowRenderer.MAX_SETTLE_PASSES;
+		this.scheduleSettlePass();
+	}
+
+	/**
+	 * Run one sample-and-compare pass two frames from now, finishing the settle once
+	 * the sampled average holds still (or the pass budget runs out).
+	 */
+	private scheduleSettlePass()
+	{
 		this._rowWidgetsUpgradedFrame = requestAnimationFrame(() =>
 		{
 			this._rowWidgetsUpgradedFrame = requestAnimationFrame(() =>
 			{
 				this._rowWidgetsUpgradedFrame = null;
-				this.host._updateMeasuredAverageRowHeight();
-				this._rowWidgetsUpgradeSettling = false;
-				this.host.dispatchEvent(new CustomEvent("et2-row-widgets-upgraded", {
-					bubbles: true,
-					composed: true,
-					detail: {
-						averageRowHeight: this.host._rowHeightPx,
-						rowHeightLocked: this.host._rowHeightLocked
-					}
-				}));
-				if(this.host.embeddedVirtualized || this.host._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade)
+				const sample = this.host._sampleRenderedRowHeightAverage();
+				// A null sample means nothing measurable, or a height that is already
+				// fixed - either way there is nothing left to converge on.
+				const settled = sample === null
+					|| (this._lastSettleSampleHeight !== null && Math.abs(sample - this._lastSettleSampleHeight) <= 1);
+				this._lastSettleSampleHeight = sample;
+				if(!settled && --this._settlePassesRemaining > 0)
 				{
-					this.host._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade = false;
-					this.host._scheduleEmbeddedVirtualizedHeightSync();
+					this.scheduleSettlePass();
+					return;
 				}
-				else if(this.host.total == this.host.rows.length)
-				{
-					// Updates are done. If all rows are loaded, ensure height covers
-					// upgraded content. Do not do this for partial data sets.
-					this.host._scheduleRowsMinHeightSync();
-				}
+				this.finishRowsUpgradedSettle();
 			});
 		});
+	}
+
+	/** Commit the settled row height and notify the consumers that reserve space from it. */
+	private finishRowsUpgradedSettle()
+	{
+		this.host._updateMeasuredAverageRowHeight();
+		this._rowWidgetsUpgradeSettling = false;
+		this.host.dispatchEvent(new CustomEvent("et2-row-widgets-upgraded", {
+			bubbles: true,
+			composed: true,
+			detail: {
+				averageRowHeight: this.host._rowHeightPx,
+				rowHeightLocked: this.host._rowHeightLocked
+			}
+		}));
+		if(this.host.embeddedVirtualized || this.host._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade)
+		{
+			this.host._embeddedVirtualizedHeightSyncPendingAfterRowUpgrade = false;
+			this.host._scheduleEmbeddedVirtualizedHeightSync();
+		}
+		else if(this.host.total == this.host.rows.length)
+		{
+			// Updates are done. If all rows are loaded, ensure height covers
+			// upgraded content. Do not do this for partial data sets.
+			this.host._scheduleRowsMinHeightSync();
+		}
 	}
 
 	/**

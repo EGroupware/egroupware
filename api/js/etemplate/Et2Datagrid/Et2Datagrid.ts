@@ -2456,23 +2456,23 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	}
 
 	/**
-	 * Update sampled row-height average from the currently realized, upgraded
-	 * data rows. Samples are retained by row id so scrolling through mixed-height
-	 * rows converges instead of replacing the estimate with only the current
-	 * viewport slice.
+	 * Measure currently realized rows into the per-row sample map and return the
+	 * running average, without committing it as the row height.
+	 *
+	 * Split out from _updateMeasuredAverageRowHeight() so the settle pass can check
+	 * whether row heights have stopped moving *before* anything acts on a value -
+	 * for an embedded grid the commit half latches a fixed pitch that can never be
+	 * revised, so it must not run on rows that are still growing. Returns null when
+	 * there is nothing to measure, or when the height is already fixed and further
+	 * sampling would be pointless.
 	 */
-	_updateMeasuredAverageRowHeight() : number | null
+	_sampleRenderedRowHeightAverage() : number | null
 	{
-		if(this._rowHeightLocked)
+		if(this._rowHeightLocked || this._usesFixedVirtualizerRowHeight())
 		{
-			return this._rowHeightPx;
+			return null;
 		}
-		if(this._usesFixedVirtualizerRowHeight())
-		{
-			return this._rowHeightPx;
-		}
-		const rows = this._measurableRenderedRows();
-		for(const row of rows)
+		for(const row of this._measurableRenderedRows())
 		{
 			const rowId = row.getAttribute("data-row-id") || "";
 			const height = Math.ceil(row.getBoundingClientRect().height);
@@ -2486,7 +2486,35 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 			return null;
 		}
 		const heights = Array.from(this._measuredRowHeightByRowId.values());
-		const average = Math.ceil(heights.reduce((sum, height) => sum + height, 0) / heights.length);
+		return Math.ceil(heights.reduce((sum, height) => sum + height, 0) / heights.length);
+	}
+
+	/**
+	 * Update sampled row-height average from the currently realized, upgraded
+	 * data rows. Samples are retained by row id so scrolling through mixed-height
+	 * rows converges instead of replacing the estimate with only the current
+	 * viewport slice.
+	 *
+	 * This is the committing half: it applies the measurement as the row height and,
+	 * for an embedded grid, latches that pitch permanently. Call it only once row
+	 * heights have stopped changing - see _sampleRenderedRowHeightAverage() and
+	 * Et2DatagridRowRenderer.scheduleRowsUpgradedSettle().
+	 */
+	_updateMeasuredAverageRowHeight() : number | null
+	{
+		if(this._rowHeightLocked)
+		{
+			return this._rowHeightPx;
+		}
+		if(this._usesFixedVirtualizerRowHeight())
+		{
+			return this._rowHeightPx;
+		}
+		const average = this._sampleRenderedRowHeightAverage();
+		if(average === null)
+		{
+			return null;
+		}
 		// First real measurement for this query - see _requestChunkForRowIndex(), which
 		// defers requesting any page beyond the first until this flips true, so the
 		// virtualizer's range is computed from real row heights rather than the
