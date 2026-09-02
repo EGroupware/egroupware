@@ -1727,6 +1727,61 @@ export class MailApp extends EgwApp
 	}
 
 	/**
+	 * Resolve a JMAP-native row's attachmentsBlock: fetch the raw JMAP attachment metadata
+	 * client-side first (MailJmap.fetchAttachmentsMetadata()), and when it contains a TNEF/
+	 * winmail.dat entry, splice that entry's own server-decoded sub-attachments into the
+	 * displayed list IN PLACE OF the one raw entry - preserving any OTHER, non-TNEF attachments
+	 * in the same message untouched (doc/ai/projects/mail-compose-jmap-migration.md's
+	 * attachment-listing follow-up, 2026-09-02: a TNEF meeting invite mixed in among ordinary
+	 * attachments used to be shown as an inert winmail.dat instead of its unpacked .ics - the
+	 * classic Api\Mail::getMessageAttachments() path already handled this; the JMAP-native path,
+	 * added later, never gained the same TNEF-awareness since attachment listing there only ever
+	 * dealt with "the whole message is TNEF", never "one attachment among several is").
+	 *
+	 * Falls back to the classic single ajax_fetchAttachments() round trip (no client-fetched
+	 * metadata) whenever the client-side JMAP metadata fetch itself fails (non-JMAP-native
+	 * account, or any other error) - same "PHP re-derives everything itself" fallback
+	 * ajax_fetchAttachments()/resolveAttachmentsJmap() always had.
+	 *
+	 * @return {attachmentsBlock: any[]} - same response shape ajax_fetchAttachments() itself returns
+	 */
+	private async resolveJmapAttachmentsBlock(rowId : string) : Promise<{attachmentsBlock : any[]}>
+	{
+		const metadata = await this.jmap.fetchAttachmentsMetadata(rowId);
+		if (metadata === null)
+		{
+			return this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]);
+		}
+		const isTnef = (a : any) => (a.type || '').toLowerCase() === 'application/ms-tnef' ||
+			(a.name || '').toLowerCase() === 'winmail.dat';
+		const tnefIndex = metadata.findIndex(isTnef);
+		if (tnefIndex === -1)
+		{
+			return this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId, metadata]);
+		}
+		const tnefEntry = metadata[tnefIndex];
+		const siblings = metadata.filter((_, i) => i !== tnefIndex);
+		const [siblingsResult, tnefResult] = await Promise.all([
+			siblings.length ? this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId, siblings])
+				: Promise.resolve({attachmentsBlock: []}),
+			this.egw.request('mail.mail_ui.ajax_resolveWinmail', [rowId, tnefEntry.partId, tnefEntry.blobId]),
+		]);
+		if (!Array.isArray(tnefResult) || !tnefResult.length)
+		{
+			// decoding failed (or it turned out not to be real TNEF after all) - fall back to the
+			// classic full-list resolution rather than silently dropping the winmail.dat entry
+			return this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]);
+		}
+		// siblings omits the TNEF entry, so splitting its (equally TNEF-less) result array at the
+		// TNEF entry's own original position gives exactly the "everything before"/"everything
+		// after" halves to splice the decoded sub-attachments in between
+		const resolved = siblingsResult?.attachmentsBlock || [];
+		const merged = [...resolved.slice(0, tnefIndex), ...tnefResult, ...resolved.slice(tnefIndex)];
+		merged.forEach((item, index) => item.attachment_number = index);
+		return {attachmentsBlock: merged};
+	}
+
+	/**
 	 * Resolve a row's data (from cache, or a caller-supplied object) and fill the given
 	 * template with it: address concat, on-demand attachmentsBlock resolution (winmail.dat or
 	 * JMAP rows missing a resolved block - see mail/js/jmap.ts), then template.set_value().
@@ -1783,7 +1838,7 @@ export class MailApp extends EgwApp
 		{
 			if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.add('loading');
 			// Not this.egw.jsonq() - same reason as above.
-			this.egw.request('mail.mail_ui.ajax_fetchAttachments', [rowId]).then(async(_data) =>
+			this.resolveJmapAttachmentsBlock(rowId).then(async(_data) =>
 			{
 				if (attachmentsBlock) attachmentsBlock.getDOMNode().classList.remove('loading');
 				if (_data && Array.isArray(_data.attachmentsBlock) && _data.attachmentsBlock.length)

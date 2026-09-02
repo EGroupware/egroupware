@@ -302,62 +302,94 @@ class AttachmentJmap
 	 * fetch, when the user actually clicks to download one of these files. Making that JMAP-native
 	 * too is a further step, not done here.
 	 *
+	 * $partID/$blobId (2026-09-02 follow-up, doc/ai/projects/mail-compose-jmap-migration.md's
+	 * attachment-listing follow-up): when the CALLER already knows which attachment is the TNEF
+	 * one - the normal case now, since MailJmap.fetchAttachmentsMetadata() (mail/js/jmap.ts) lists
+	 * ALL of a message's attachments client-side, and the client itself spots a
+	 * application/ms-tnef/winmail.dat entry among possibly several sibling attachments - the
+	 * "search the whole attachments list for one" step above is skipped entirely, going straight
+	 * to the blob fetch via the existing backend-uniform fetchBlobBytes() (rather than this
+	 * method's own bespoke Stalwart-downloadBlob()-vs-shim-fetchRawPart() branching, needed only
+	 * for the "search the list ourselves" fallback path). The returned array is still only ever
+	 * the TNEF's own unpacked sub-attachments - splicing them into the display list in place of
+	 * the one raw winmail.dat entry (preserving any OTHER, non-TNEF sibling attachments in the
+	 * same message) is the caller's job, see renderMessageInto() in mail/js/app.ts.
+	 *
 	 * @param string $rowID
+	 * @param string|null $partID the TNEF attachment's own partId, when already known - see above
+	 * @param string|null $blobId the TNEF attachment's own blobId, when already known - see above
 	 * @return array|null null if not applicable/failed - caller falls through to the classic
 	 *  resolveAttachmentsBlock() path
 	 */
-	public static function resolveWinmailJmap($rowID) : ?array
+	public static function resolveWinmailJmap($rowID, ?string $partID=null, ?string $blobId=null) : ?array
 	{
 		$idParts = Mail::splitRowID($rowID);
-		$uid = $idParts['msgUID'];
-		$mailbox = $idParts['folder'];
 		$acc_id = $idParts['profileID'];
-		if (!$uid || !$mailbox || !$acc_id)
+		if (!$acc_id)
 		{
 			return null;
 		}
+		// $uid/$mailbox deliberately left unresolved here - see resolveAttachmentsJmap()'s own
+		// comment on the same pattern. Only the local-shim branch below (real IMAP either way)
+		// actually needs them; the $partID/$blobId fast path and the Stalwart-search branch don't
+		// touch either, so a Stalwart row never pays for the lazy IMAP-EMAILID search to get here.
+		$uid = $mailbox = null;
 
 		try
 		{
-			$icServer = Mail\Account::read((int)$acc_id)->imapServer();
-			$isStalwart = $icServer instanceof Mail\Imap\Jmap;
-
-			if ($isStalwart)
+			if ($partID !== null && $blobId !== null)
 			{
-				if (empty($idParts['emailID']))
-				{
-					return null;
-				}
-				$email = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments']);
-				$winmailPart = current(array_filter($email['attachments'] ?? [], static function ($a)
-				{
-					return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
-				})) ?: null;
-				if (!$winmailPart)
-				{
-					return null;
-				}
-				$partID = $winmailPart['partId'];
-				$raw = $icServer->jmapClient()->downloadBlob($winmailPart['blobId'], 'winmail.dat', 'application/ms-tnef');
+				$raw = self::fetchBlobBytes($acc_id, $blobId, 'winmail.dat', 'application/ms-tnef');
 			}
 			else
 			{
-				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
-				if (!$structure)
+				$icServer = Mail\Account::read((int)$acc_id)->imapServer();
+				$isStalwart = $icServer instanceof Mail\Imap\Jmap;
+
+				if ($isStalwart)
 				{
-					return null;
+					if (empty($idParts['emailID']))
+					{
+						return null;
+					}
+					$email = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments']);
+					$winmailPart = current(array_filter($email['attachments'] ?? [], static function ($a)
+					{
+						return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
+					})) ?: null;
+					if (!$winmailPart)
+					{
+						return null;
+					}
+					$partID = $winmailPart['partId'];
+					$raw = $icServer->jmapClient()->downloadBlob($winmailPart['blobId'], 'winmail.dat', 'application/ms-tnef');
 				}
-				$attachments = JmapImap::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
-				$winmailPart = current(array_filter($attachments, static function ($a)
+				else
 				{
-					return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
-				})) ?: null;
-				if (!$winmailPart)
-				{
-					return null;
+					// no such win for the local shim - it's real IMAP either way, so resolve normally
+					$uid = $idParts['msgUID'];
+					$mailbox = $idParts['folder'];
+					if (!$uid || !$mailbox)
+					{
+						return null;
+					}
+					$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
+					if (!$structure)
+					{
+						return null;
+					}
+					$attachments = JmapImap::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
+					$winmailPart = current(array_filter($attachments, static function ($a)
+					{
+						return strtolower($a['type'] ?? '') === 'application/ms-tnef' || strtolower($a['name'] ?? '') === 'winmail.dat';
+					})) ?: null;
+					if (!$winmailPart)
+					{
+						return null;
+					}
+					$partID = $winmailPart['partId'];
+					$raw = JmapImap::fetchRawPart($icServer, $mailbox, $uid, $partID);
 				}
-				$partID = $winmailPart['partId'];
-				$raw = JmapImap::fetchRawPart($icServer, $mailbox, $uid, $partID);
 			}
 			if ($raw === null)
 			{
@@ -370,7 +402,13 @@ class AttachmentJmap
 				return null;
 			}
 
-			$attachments = JmapImap::tnefAttachments($uid, $partID, $decoded);
+			// tnefAttachments() embeds $uid into each sub-attachment's "is_winmail" composite
+			// fingerprint (uid@partID@mimeId) - for a Stalwart row $uid is deliberately never
+			// resolved above, so emailID substitutes as the per-message identifier; per-file
+			// download of one of these unpacked sub-attachments already isn't JMAP-native for
+			// Stalwart either way (see this method's own docblock scope note), so this only keeps
+			// the fingerprint unique, not functional, for that still-unimplemented step
+			$attachments = JmapImap::tnefAttachments($uid ?? $idParts['emailID'] ?? '', $partID, $decoded);
 			return self::createAttachmentBlock($attachments, $rowID, $uid, $mailbox);
 		}
 		catch (\Throwable $e)
@@ -390,10 +428,19 @@ class AttachmentJmap
 	 *  not supported here - falls through to the classic path, see caller
 	 * @param bool $fetchEmbeddedImages true: also include inline/cid parts, matching
 	 *  Mail::getMessageAttachments()'s parameter of the same name
+	 * @param array|null $jmapAttachments RFC 8621 EmailBodyPart[] the CLIENT already fetched
+	 *  itself (MailJmap.fetchAttachmentsMetadata(), mail/js/jmap.ts) - when given, this method's
+	 *  own Email/get round trip (Stalwart) resp. structureGet()/emailBodyFields() round trip (the
+	 *  local shim) is skipped entirely, going straight to jmapAttachmentsToLegacy() /
+	 *  createAttachmentBlock() (doc/ai/projects/mail-compose-jmap-migration.md's attachment-listing
+	 *  follow-up, 2026-09-02: the row list itself is already fetched client-side, so the metadata
+	 *  for its attachments can be too - only createAttachmentBlock()'s Link::set_data() tokens
+	 *  genuinely need a PHP round trip). $uid/$mailbox are then left unresolved the same way the
+	 *  Stalwart branch below already deliberately does, for the same reason (see its own comment).
 	 * @return array|null null if not applicable/failed - caller falls through to
 	 *  resolveAttachmentsBlock()
 	 */
-	public static function resolveAttachmentsJmap(string $rowID, ?string $partID=null, bool $fetchEmbeddedImages=false) : ?array
+	public static function resolveAttachmentsJmap(string $rowID, ?string $partID=null, bool $fetchEmbeddedImages=false, ?array $jmapAttachments=null) : ?array
 	{
 		if ($partID !== null)
 		{
@@ -408,37 +455,45 @@ class AttachmentJmap
 
 		try
 		{
-			$icServer = Mail\Account::read((int)$acc_id)->imapServer();
-			$isStalwart = $icServer instanceof Mail\Imap\Jmap;
-
-			if ($isStalwart)
+			if ($jmapAttachments !== null)
 			{
-				if (empty($idParts['emailID']))
-				{
-					return null;
-				}
-				$attachments = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments'])['attachments'] ?? [];
-				// $uid/$mailbox deliberately left unresolved here - a Stalwart opaque-id row's
-				// msgUID/folder cost a real IMAP EMAILID search (Mail\Imap\Jmap::emailId2uid()) to
-				// resolve, and createAttachmentBlock() only actually needs them for its
-				// classic-fallback branch (blobId missing) or dead/unused URL params - see there
+				$attachments = $jmapAttachments;
 				$uid = $mailbox = null;
 			}
 			else
 			{
-				// no such win for the local shim - it's real IMAP either way, so resolve normally
-				$uid = $idParts['msgUID'];
-				$mailbox = $idParts['folder'];
-				if (!$uid || !$mailbox)
+				$icServer = Mail\Account::read((int)$acc_id)->imapServer();
+				$isStalwart = $icServer instanceof Mail\Imap\Jmap;
+
+				if ($isStalwart)
 				{
-					return null;
+					if (empty($idParts['emailID']))
+					{
+						return null;
+					}
+					$attachments = $icServer->jmapClient()->emailGet($idParts['emailID'], ['attachments'])['attachments'] ?? [];
+					// $uid/$mailbox deliberately left unresolved here - a Stalwart opaque-id row's
+					// msgUID/folder cost a real IMAP EMAILID search (Mail\Imap\Jmap::emailId2uid()) to
+					// resolve, and createAttachmentBlock() only actually needs them for its
+					// classic-fallback branch (blobId missing) or dead/unused URL params - see there
+					$uid = $mailbox = null;
 				}
-				$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
-				if (!$structure)
+				else
 				{
-					return null;
+					// no such win for the local shim - it's real IMAP either way, so resolve normally
+					$uid = $idParts['msgUID'];
+					$mailbox = $idParts['folder'];
+					if (!$uid || !$mailbox)
+					{
+						return null;
+					}
+					$structure = JmapImap::structureGet($icServer, $mailbox, $uid);
+					if (!$structure)
+					{
+						return null;
+					}
+					$attachments = JmapImap::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
 				}
-				$attachments = JmapImap::emailBodyFields($icServer, $mailbox, $uid, $structure)['attachments'];
 			}
 			$legacy = self::jmapAttachmentsToLegacy($attachments, $fetchEmbeddedImages);
 			return self::createAttachmentBlock($legacy, $rowID, $uid, $mailbox);

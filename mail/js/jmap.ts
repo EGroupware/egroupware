@@ -2538,6 +2538,50 @@ export class MailJmap
 	}
 
 	/**
+	 * Fetch a message's raw attachment metadata (RFC 8621 EmailBodyPart shape: partId/type/name/
+	 * size/cid/disposition/blobId) directly via JMAP, client-side - the exact Email/get round trip
+	 * mail_ui::ajax_fetchAttachments()'s own AttachmentJmap::resolveAttachmentsJmap() used to make
+	 * server-side on every call (doc/ai/projects/mail-compose-jmap-migration.md's attachment-listing
+	 * follow-up, 2026-09-02). The caller passes the result straight through to ajax_fetchAttachments()
+	 * so that PHP call can skip its own now-redundant Email/get, and can inspect it beforehand to
+	 * detect a TNEF/winmail.dat entry itself - see renderMessageInto() in app.ts.
+	 *
+	 * Only the raw metadata moves here - createAttachmentBlock()'s Link::set_data() download
+	 * tokens, popup URLs and collabora/invoice detection stay server-side (PHP-session-dependent,
+	 * not derivable from JMAP metadata alone - see ajax_fetchAttachments()'s own docblock).
+	 *
+	 * @return null on any failure - caller falls back to the classic (server-side JMAP) path
+	 */
+	async fetchAttachmentsMetadata(rowId : string) : Promise<any[] | null>
+	{
+		try
+		{
+			const ref = this.messageReference(rowId);
+			const token = await this.ensureToken(ref.profileID);
+			if (!token)
+			{
+				return null;
+			}
+			const args : any = {accountId: token.accountId, ids: [ref.emailId], properties: ['attachments']};
+			if (token.isLocal)
+			{
+				args.mailboxId = ref.mailboxId;
+			}
+			const emails = token.isLocal ?
+				await this.emailGetViaCacheableGet(this.clients[ref.profileID], args) :
+				(await this.clients[ref.profileID].requestMany((t) => ({
+					emails: t.Email.get(args) as any,
+				})))[0].emails;
+			return (emails.list || [])[0]?.attachments || [];
+		}
+		catch (e)
+		{
+			console.error('MailJmap.fetchAttachmentsMetadata(): failed, falling back to the server-side JMAP fetch', e);
+			return null;
+		}
+	}
+
+	/**
 	 * Fetch the original message's headers + raw body content for a client-side reply
 	 * (doc/ai/projects/mail-compose-jmap-migration.md's Step 4, first slice: single reply only,
 	 * no attachments/inline-images/threading-headers yet). Deliberately NOT fetchBody() - that
