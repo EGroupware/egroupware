@@ -732,6 +732,11 @@ export class filemanagerAPP extends EgwApp
 				{
 					buttons.shift();
 				}
+				// Et2Dialog.show_prompt()'s internal wrapper invokes this callback via
+				// "_callback.call(this, ...)" with its own "this" (carrying "my_data") - an arrow
+				// function here would ignore that and capture the outer method's "this" instead, so
+				// this must stay a plain function. Same for the nested iterateOver() callback below,
+				// which is likewise called with an explicit "this" as its context argument.
 				let dialog = Et2Dialog.show_prompt(function(_button_id, _value)
 					{
 						let uploaded = {};
@@ -1388,7 +1393,7 @@ export class filemanagerAPP extends EgwApp
 
 		// Create paste action
 		// This injects the clipboard data and calls the original handler
-		let paste_exec = function(action, selected) {
+		let paste_exec = (action, selected) => {
 			// Add in clipboard as a sender
 			let clipboard = JSON.parse(egw.getSessionItem('phpgwapi', 'egw_clipboard'));
 
@@ -1608,7 +1613,7 @@ export class filemanagerAPP extends EgwApp
 			let path = null;
 			// Cannot do this, there are multiple widgets named path
 			// widget.getRoot().getWidgetById("path");
-			widget.getRoot().iterateOver(function(widget) {
+			widget.getRoot().iterateOver((widget) => {
 				if(widget.id == "path") path = widget;
 			},null, et2_textbox);
 			// this is the old filemanager.select UI
@@ -1634,7 +1639,7 @@ export class filemanagerAPP extends EgwApp
 		else
 		{
 			let file = widget.value.name;
-			widget.getParent().iterateOver(function(widget)
+			widget.getParent().iterateOver((widget) =>
 			{
 				if(widget.options.selected_value == file)
 				{
@@ -1688,7 +1693,7 @@ export class filemanagerAPP extends EgwApp
 		else
 		{
 			// This is shown if stylite code is there, but the app is not available
-			Et2Dialog.show_dialog(function(_button)
+			Et2Dialog.show_dialog((_button) =>
 				{
 					if(_button == Et2Dialog.YES_BUTTON)
 					{

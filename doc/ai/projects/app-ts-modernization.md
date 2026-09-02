@@ -44,7 +44,7 @@ clearly-scoped change elsewhere (e.g. an import path).
 | aitools | done | Small (92 lines). `aitools/` is its own nested git repo. Note: that repo's working tree also has an unrelated stray change to `src/Hooks.php` (a commented-out trigger check in `notifyAll()`) - not part of this pass, not touched, flagged for the user separately. |
 | bookmarks | done | 218 lines. `bookmarks/` is its own nested git repo. |
 | collabora | done | Largest of this batch (961 lines). `collabora/` is its own nested git repo. |
-| filemanager | in progress | Only the companion `filemanager/js/filemanager.ts` done (part of the main repo, not `filemanager/js/app.ts` itself, which hasn't been started) - included since `filemanager.ts` is filemanager's app-controller-equivalent file. 3 of its remaining 6 `function(...)` sites look like missed goal-6 conversions rather than genuine this-binding exceptions (no `this` used inside, two are already called with an explicit `null` context) - flagged, not yet fixed. |
+| filemanager | done | `filemanager/js/app.ts` (19 lines) was already fully modern - just an import + `app.classes.filemanager` registration, nothing to change. `filemanager/js/filemanager.ts` (the real app-controller file it delegates to) is also done - see below. |
 
 **Nested git repos:** `tracker/` and `status/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
@@ -836,13 +836,24 @@ rather than assuming the reasoning was captured.
 `aitools/`'s working tree also has an unrelated, unstaged change to `src/Hooks.php` (comments out
 `notifyAll()`'s trigger-check condition) - confirmed not part of this pass, left untouched.
 
-## filemanager/js/filemanager.ts (in progress - not filemanager/js/app.ts itself)
+## filemanager/js/app.ts and filemanager/js/filemanager.ts (done)
 
-`filemanager/js/filemanager.ts` (1944 lines, part of the main repo) is filemanager's app-controller
-companion file - `filemanager/js/app.ts` itself has not been started yet. `var`/jQuery/`sendRequest`
-(bar one confirmed-genuine `sendRequest(false)`) all cleared and file is TS-clean, but goal 6 is
-incomplete: 3 of the 6 remaining `function(...)` sites look like missed conversions rather than
-documented exceptions - none reference `this`, and two are already invoked with an explicit `null`
-context passed to `iterateOver()`, so an arrow function would behave identically. One of the six (the
-file-upload-conflict-dialog callback, which relies on a framework-bound `this.my_data`) is a genuine,
-correctly-kept exception. Not fixed yet - flagged for follow-up.
+`filemanager/js/app.ts` (19 lines) is just an import + `app.classes.filemanager` registration - the
+real code lives in `filemanager/js/filemanager.ts` (1944 lines, `filemanagerAPP`), loaded that way
+specifically "to ensure proper loading/cache-invalidation for Collabora extending filemanagerAPP"
+(the file's own comment) - `collabora/js/app.ts` (done separately, its own nested repo) subclasses
+`filemanagerAPP`. Nothing needed changing in `app.ts` itself.
+
+`filemanager.ts`: `var`/jQuery/`sendRequest` (bar one confirmed-genuine `sendRequest(false)`) all
+cleared, file TS-clean. Goal 6 finished in a follow-up pass: 3 of 6 `function(...)` sites flagged
+earlier as likely-missed conversions were confirmed safe and converted to arrows (`paste_exec`, and
+two `iterateOver(function(widget){...}, null, ...)` callbacks - none referenced `this`, and the latter
+two were already invoked with an explicit `null` context, so behavior is identical either way; also
+converted a third, similarly-`this`-free `Et2Dialog.show_dialog(function(_button){...})` callback found
+in the same pass). The remaining 2 (`Et2Dialog.show_prompt()`'s callback and its nested
+`iterateOver()` callback, both reading `this.my_data`) are a genuine, verified exception - confirmed by
+reading `Et2Dialog.show_prompt()`'s implementation (`api/js/etemplate/Et2Dialog/Et2Dialog.ts`), which
+wraps the callback and invokes it via `_callback.call(this, ...)` with its own `this` (carrying
+`my_data`) - an arrow function would ignore that `.call()`-supplied context entirely and capture the
+outer method's `this` instead, a real behavior change. Added a comment explaining why, matching the
+project's established convention for documented exceptions.
