@@ -9,10 +9,11 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-import {EgwApp, PushData} from "../../api/js/jsapi/egw_app";
+import {EgwApp} from "../../api/js/jsapi/egw_app";
+import type {PushData} from "../../api/js/jsapi/egw_app";
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
-import {et2_container} from "../../api/js/etemplate/et2_core_baseWidget";
-import {et2_date} from "../../api/js/etemplate/et2_widget_date";
+import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
+import type {et2_date} from "../../api/js/etemplate/et2_widget_date";
 import {day, day4, listview, month, planner, week, weekN} from "./View";
 import {et2_calendar_view} from "./et2_widget_view";
 import {et2_calendar_timegrid} from "./et2_widget_timegrid";
@@ -22,20 +23,22 @@ import {et2_calendar_planner_row} from "./et2_widget_planner_row";
 import {et2_calendar_event} from "./et2_widget_event";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {et2_valueWidget} from "../../api/js/etemplate/et2_core_valueWidget";
-import {et2_button} from "../../api/js/etemplate/et2_widget_button";
-import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import type {et2_button} from "../../api/js/etemplate/et2_widget_button";
+import type {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
 import {et2_widget} from "../../api/js/etemplate/et2_core_widget";
-import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
-import {sprintf} from "../../api/js/egw_action/egw_action_common";
+import type {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
+import type {et2_iframe} from "../../api/js/etemplate/et2_widget_iframe";
+// sprintf() is declared with an untyped 0-arg signature (uses `arguments` internally), so every
+// call with format args errors under TS - alias it locally with the real variadic signature rather
+// than touching the shared egw_action_common.ts.
+import {sprintf as _sprintf} from "../../api/js/egw_action/egw_action_common";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../api/js/egw_action/egw_keymanager";
-import {egw, egw_getFramework} from "../../api/js/jsapi/egw_global";
-import {et2_number} from "../../api/js/etemplate/et2_widget_number";
-import {et2_template} from "../../api/js/etemplate/et2_widget_template";
-import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
-import {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
+import type {et2_number} from "../../api/js/etemplate/et2_widget_number";
+import type {et2_template} from "../../api/js/etemplate/et2_widget_template";
+import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
-import {Et2Date, formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import {formatDate, formatTime, parseDate} from "../../api/js/etemplate/Et2Date/Et2Date";
+import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
 import {EGW_KEY_PAGE_DOWN, EGW_KEY_PAGE_UP} from "../../api/js/egw_action/egw_action_constants";
 import {nm_action} from "../../api/js/etemplate/et2_extension_nextmatch_actions";
 import flatpickr from "flatpickr";
@@ -43,10 +46,13 @@ import Sortable from 'sortablejs/modular/sortable.complete.esm.js';
 import {tapAndSwipe} from "../../api/js/tapandswipe";
 import {CalendarOwner} from "./CalendarOwner";
 import {et2_IInput} from "../../api/js/etemplate/et2_core_interfaces";
-import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
-import {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import type {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
+import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import type {SelectOption} from "../../api/js/etemplate/Et2Select/FindSelectOptions";
 import type {Et2Checkbox} from "../../api/js/etemplate/Et2Checkbox/Et2Checkbox";
+import type {egwAction, egwActionObject} from "../../api/js/egw_action/egw_action";
+
+const sprintf : (format : string, ...args : any[]) => string = _sprintf;
 
 /**
  * UI for calendar
@@ -81,7 +87,7 @@ export class CalendarApp extends EgwApp
 	/**
 	 * etemplate for the sidebox filters
 	 */
-	sidebox_et2: et2_container = null;
+	sidebox_et2: Et2Template = null;
 
 	/**
 	 * Current internal state
@@ -89,7 +95,19 @@ export class CalendarApp extends EgwApp
 	 * If you need to change state, you can pass just the fields to change to
 	 * update_state().
 	 */
-	state = {
+	// Many more properties (startdate, enddate, filter, weekend, cat_id, ...) get added
+	// dynamically throughout this class as the state is refined - the index signature
+	// covers those instead of enumerating every one.
+	state : {
+		date: Date | string,
+		view: any,
+		owner: any,
+		keywords: string,
+		last: any,
+		first: any,
+		include_videocalls: boolean,
+		[key: string]: any
+	} = {
 		date: new Date(),
 		view: egw.preference('saved_states','calendar') ?
 			// @ts-ignore
@@ -137,7 +155,11 @@ export class CalendarApp extends EgwApp
 	_queries_in_progress = [];
 
 	// Calendar-wide autorefresh
-	_autorefresh_timer : number = null;
+	_autorefresh_timer : ReturnType<typeof setInterval> = null;
+
+	// Set by _scroll()'s scroll_animate() to prevent scrolling too fast, read via app.calendar
+	// since scroll_animate's own `this` is dynamic (see _scroll())
+	_scroll_disabled : boolean = false;
 
 	// Flag if the state is being updated
 	private state_update_in_progress: boolean = false;
@@ -151,6 +173,12 @@ export class CalendarApp extends EgwApp
 
 	// Only bind the framework "show" listener (see _handleAppShow()) once
 	private _appShowBound : boolean = false;
+
+	// Tracks the currently pending one-time "show" handler registered via _bindShowOnce(),
+	// so a later call replaces it instead of stacking up duplicate listeners - mirrors the
+	// old jQuery `.off('show.calendar').one('show.calendar', ...)` dedup behaviour.
+	private _pending_show_handler : EventListener = null;
+
 	/**
 	 * Constructor
 	 *
@@ -184,9 +212,16 @@ export class CalendarApp extends EgwApp
 		// call parent
 		super('calendar');
 
-		// Scroll
-		jQuery(jQuery.proxy(this._scroll, this));
-		jQuery.extend(this.state, this.egw.preference('saved_states', 'calendar'));
+		// Scroll - native equivalent of jQuery(fn), which is shorthand for $(document).ready(fn)
+		if(document.readyState !== 'loading')
+		{
+			this._scroll();
+		}
+		else
+		{
+			document.addEventListener('DOMContentLoaded', () => this._scroll());
+		}
+		Object.assign(this.state, this.egw.preference('saved_states', 'calendar'));
 
 		// Set custom color for events without category
 		if(this.egw.preference('no_category_custom_color', 'calendar'))
@@ -212,13 +247,6 @@ export class CalendarApp extends EgwApp
 		{
 			// @ts-ignore
 			delete window.top.app.calendar;
-		}
-		jQuery('body').off('.calendar');
-
-		if(this.sidebox_et2)
-		{
-			var date = <et2_date>this.sidebox_et2?.getWidgetById('date');
-			jQuery(window).off('resize.calendar' + date?.dom_id);
 		}
 		this.sidebox_hooked_templates = [];
 
@@ -249,7 +277,7 @@ export class CalendarApp extends EgwApp
 		// Avoid many problems with home
 		if(_et2.app !== 'calendar' || _name == 'admin.categories.index')
 		{
-			egw.loading_prompt(this.appname,false);
+			this.egw.loading_prompt(this.appname,false);
 			return;
 		}
 
@@ -264,23 +292,19 @@ export class CalendarApp extends EgwApp
 		if(!this._appShowBound && _et2.DOMContainer?.parentNode)
 		{
 			this._appShowBound = true;
-			_et2.DOMContainer.parentNode.addEventListener('show', jQuery.proxy(this._handleAppShow, this));
+			_et2.DOMContainer.parentNode.addEventListener('show', this._handleAppShow.bind(this));
 		}
 
 		// Re-init sidebox, since it was probably initialized too soon
-		var sidebox = jQuery('#favorite_sidebox_'+this.appname);
-		if(sidebox.length == 0 && egw_getFramework() != null)
+		if(document.getElementById('favorite_sidebox_'+this.appname) === null && egw_getFramework() != null)
 		{
 			// Force rollup to load owner widget, it leaves it out otherwise
 			new CalendarOwner();
 			// Force rollup to load planner widget, it leaves it out otherwise
 			new et2_calendar_planner(_et2.widgetContainer, {});
-
-			var egw_fw = egw_getFramework();
-			sidebox = jQuery('#favorite_sidebox_' + this.appname, egw_fw.sidemenuDiv);
 		}
 
-		var content = this.et2.getArrayMgr('content');
+		const content = this.et2.getArrayMgr('content');
 
 		switch (_name)
 		{
@@ -336,7 +360,7 @@ export class CalendarApp extends EgwApp
 				}
 
 				// Disable loading prompt (if loaded nopopup)
-				egw.loading_prompt(this.appname,false);
+				this.egw.loading_prompt(this.appname,false);
 				break;
 
 			case 'calendar.freetimesearch':
@@ -344,9 +368,9 @@ export class CalendarApp extends EgwApp
 				break;
 			case 'calendar.list':
 				// Wait until _et2_view_init is done
-				window.setTimeout(jQuery.proxy(function() {
+				window.setTimeout(() => {
 					this.filter_change();
-				},this),0);
+				}, 0);
 				break;
 			case 'calendar.category_report':
 				this.category_report_init();
@@ -365,15 +389,29 @@ export class CalendarApp extends EgwApp
 	 */
 	private _handleAppShow()
 	{
-		var view = CalendarApp.views[this.state.view];
+		const view = CalendarApp.views[this.state.view];
 		if(!view) return;
-		for(var i = 0; i < view.etemplates.length; i++)
+		for(let i = 0; i < view.etemplates.length; i++)
 		{
 			if(typeof view.etemplates[i] !== 'string')
 			{
 				view.etemplates[i].resize();
 			}
 		}
+	}
+
+	/**
+	 * Bind a one-time "show" listener on the given element, replacing any previously
+	 * pending one-time listener bound this way first so only the latest fires.
+	 */
+	private _bindShowOnce(el : HTMLElement, handler : EventListener)
+	{
+		if(this._pending_show_handler)
+		{
+			el.removeEventListener('show', this._pending_show_handler);
+		}
+		this._pending_show_handler = handler;
+		el.addEventListener('show', handler, {once: true});
 	}
 
 	/**
@@ -400,7 +438,7 @@ export class CalendarApp extends EgwApp
 	 */
 	observer(_msg, _app, _id, _type, _msg_type, _links)
 	{
-		var do_refresh = false;
+		let do_refresh = false;
 		if(this.state.view === 'listview')
 		{
 			// @ts-ignore
@@ -409,21 +447,20 @@ export class CalendarApp extends EgwApp
 		switch(_app)
 		{
 			case 'infolog':
-				jQuery('.calendar_calDayTodos')
-					.find('a')
-					.each(function(i,a : HTMLAnchorElement){
-						var match = a.href.split(/&info_id=/);
-						if (match && typeof match[1] !="undefined")
-						{
-							if (match[1]== _id)	do_refresh = true;
-						}
-					});
+				document.querySelectorAll<HTMLAnchorElement>('.calendar_calDayTodos a').forEach(a =>
+				{
+					const match = a.href.split(/&info_id=/);
+					if (match && typeof match[1] !="undefined")
+					{
+						if (match[1]== _id)	do_refresh = true;
+					}
+				});
 
 				// Unfortunately we do not know what type this infolog is here,
 				// but we can tell if it's turned off entirely
 				if(egw.preference('calendar_integration','infolog') !== '0')
 				{
-					if (jQuery('div [data-app="infolog"][data-app_id="'+_id+'"]').length > 0) do_refresh = true;
+					if (document.querySelectorAll('div [data-app="infolog"][data-app_id="'+_id+'"]').length > 0) do_refresh = true;
 					switch (_type)
 					{
 						case 'add':
@@ -445,11 +482,7 @@ export class CalendarApp extends EgwApp
 					else if(framework.applications.calendar && framework.applications.calendar.tab &&
 						framework.applications.calendar.tab.contentDiv)
 					{
-						jQuery(framework.applications.calendar.tab.contentDiv)
-							.off('show.calendar')
-							.one('show.calendar',
-								jQuery.proxy(function() {this.setState({state: this.state});},this)
-							);
+						this._bindShowOnce(framework.applications.calendar.tab.contentDiv, () => this.setState({state: this.state}));
 					}
 				}
 				break;
@@ -463,14 +496,14 @@ export class CalendarApp extends EgwApp
 				if(event && event.data && event.data.date || _type === 'delete')
 				{
 					// Intelligent refresh without reloading everything
-					var recurrences = Object.keys(egw.dataSearchUIDs(new RegExp('^calendar::'+_id+':')));
-					var ids = event && event.data && event.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
+					const recurrences = Object.keys(egw.dataSearchUIDs(new RegExp('^calendar::'+_id+':')));
+					const ids = event && event.data && event.data.recur_type && typeof _id === 'string' && _id.indexOf(':') < 0 || recurrences.length ?
 						recurrences :
 						['calendar::'+_id];
 
 					if(_type === 'delete')
 					{
-						for(var i in ids)
+						for(const i in ids)
 						{
 							egw.dataStoreUID(ids[i], null);
 						}
@@ -521,7 +554,7 @@ export class CalendarApp extends EgwApp
 				}
 				return this.push_calendar(pushData);
 			default:
-				if(jQuery.extend([],egw.preference("integration_toggle","calendar")).indexOf(pushData.app) >= 0)
+				if(Object.assign([],egw.preference("integration_toggle","calendar")).indexOf(pushData.app) >= 0)
 				{
 					if(pushData.app == "infolog")
 					{
@@ -530,14 +563,14 @@ export class CalendarApp extends EgwApp
 					else
 					{
 						// Modify the pushData so it looks like one of ours
-						let integrated_pushData = jQuery.extend(pushData, {
+						const integrated_pushData = Object.assign(pushData, {
 							id: pushData.app+pushData.id,
 							app: this.appname
 						});
 						if(integrated_pushData.type == "delete" || egw.dataHasUID(this.uid(integrated_pushData)))
 						{
 							// Super always looks at this.et2, make sure it finds listview
-							let old_et2 = this.et2;
+							const old_et2 = this.et2;
 							this.et2 = (<etemplate2> CalendarApp.views.listview.etemplates[0]).widgetContainer;
 							super.push(integrated_pushData);
 							this.et2 = old_et2;
@@ -568,7 +601,7 @@ export class CalendarApp extends EgwApp
 		// Filter what's allowed down to those we care about
 		let filtered = Object.keys(infolog_grants).filter(account => this.state.owner.indexOf(account) >= 0);
 
-		let owner_check = filtered.filter(function(value) {
+		let owner_check = filtered.filter(value => {
 			return pushData.acl.info_owner == value || pushData.acl.info_responsible.indexOf(value) >= 0;
 		})
 		if(!owner_check || owner_check.length == 0)
@@ -583,17 +616,21 @@ export class CalendarApp extends EgwApp
 		// Delete, just pull it out of the list
 		if(update_list && pushData.type == "delete")
 		{
-			jQuery('.calendar_calDayTodos')
-				.find('a')
-				.each(function (i, a: HTMLAnchorElement)
-			      {
-				      var match = a.href.split(/&info_id=/);
-				      if(match && typeof match[1] != "undefined" && match[1] == pushData.id)
-				      {
-	                    jQuery(a).parentsUntil("tbody").remove();
-				      }
-			      }
-				);
+			document.querySelectorAll<HTMLAnchorElement>('.calendar_calDayTodos a').forEach(a =>
+			{
+				const match = a.href.split(/&info_id=/);
+				if(match && typeof match[1] != "undefined" && match[1] == pushData.id)
+				{
+					// Native equivalent of jQuery's parentsUntil("tbody").remove(): removing the
+					// topmost ancestor below the tbody removes the whole chain down to `a` too.
+					let row = a.parentElement;
+					while(row?.parentElement && row.parentElement.tagName !== 'TBODY')
+					{
+						row = row.parentElement;
+					}
+					row?.remove();
+				}
+			});
 		}
 
 		// Refresh todos if we're there - add, update or edit doesn't matter
@@ -626,14 +663,7 @@ export class CalendarApp extends EgwApp
 				else if(framework.applications.calendar && framework.applications.calendar.tab &&
 					framework.applications.calendar.tab.contentDiv)
 				{
-					jQuery(framework.applications.calendar.tab.contentDiv)
-						.off('show.calendar')
-						.one('show.calendar',
-						    function ()
-							{
-							  this.setState({state: this.state});
-							}.bind(this)
-						);
+					this._bindShowOnce(framework.applications.calendar.tab.contentDiv, () => this.setState({state: this.state}));
 				}
 			}
 		}
@@ -651,7 +681,6 @@ export class CalendarApp extends EgwApp
 		let cal_event = pushData.acl || {};
 
 		// check visibility - grants is ID => permission of people we're allowed to see
-		let owners = [];
 		if(typeof this._grants === 'undefined')
 		{
 			this._grants = egw.grants(this.appname);
@@ -664,7 +693,7 @@ export class CalendarApp extends EgwApp
 		let owner_check = et2_calendar_event.owner_check(
 			cal_event,
 			// Fake the required widget since we don't actually have it right now
-			jQuery.extend({},
+			Object.assign({},
 				{options: {owner: filtered}},
 				this.et2
 			)
@@ -732,12 +761,12 @@ export class CalendarApp extends EgwApp
 		}
 		if (_url.match('menuaction=calendar\.calendar_uiviews\.'))
 		{
-			var view = _url.match(/calendar_uiviews\.([^&?]+)/);
+			let view : any = _url.match(/calendar_uiviews\.([^&?]+)/);
 			view = view && view.length > 1 ? view[1] : null;
 
 			// Get query
-			var q : any = {};
-			_url.split('?')[1].split('&').forEach(function(i){
+			const q : any = {};
+			_url.split('?')[1].split('&').forEach(i => {
 				q[i.split('=')[0]]=unescape(i.split('=')[1]);
 			});
 			delete q.ajax;
@@ -762,12 +791,12 @@ export class CalendarApp extends EgwApp
 				if(q.owner)
 				{
 					q.owner = q.owner.split(',');
-					q.owner = q.owner.reduce(function(p,c) {if(p.indexOf(c)<0) p.push(c);return p;},[]);
+					q.owner = q.owner.reduce((p,c) => {if(p.indexOf(c)<0) p.push(c);return p;},[]);
 					q.owner = q.owner.join(',');
 				}
 				q.menuaction = 'calendar.calendar_uiviews.index';
-				(<et2_iframe><unknown>this.sidebox_et2.getWidgetById('iframe')).set_src(egw.link('/index.php',q));
-				jQuery(this.sidebox_et2.parentNode).show();
+				(<et2_iframe><unknown>this.sidebox_et2.getWidgetById('iframe')).set_src(this.egw.link('/index.php',q));
+				(<HTMLElement>this.sidebox_et2.parentNode).style.display = '';
 				return true;
 			}
 			// Known AJAX view
@@ -776,7 +805,7 @@ export class CalendarApp extends EgwApp
 				// Reload of known view?
 				if(view == 'index')
 				{
-					var pref = <any>this.egw.preference('saved_states','calendar');
+					const pref = <any>this.egw.preference('saved_states','calendar');
 					view = pref.view || 'day';
 				}
 				// View etemplate not loaded
@@ -785,26 +814,30 @@ export class CalendarApp extends EgwApp
 					return _url + '&ajax=true';
 				}
 				// Already loaded, we'll just apply any variables to our current state
-				var set = jQuery.extend({view: view},q);
+				const set = Object.assign({view: view},q);
 				this.update_state(set);
 				return true;
 			}
 		}
 		else if (this.sidebox_et2)
 		{
-			var iframe = <et2_iframe><unknown>this.sidebox_et2.getWidgetById('iframe');
+			const iframe = <et2_iframe><unknown>this.sidebox_et2.getWidgetById('iframe');
 			if(!iframe)
 			{
 				return false;
 			}
 			iframe.set_src(_url);
-			jQuery(this.sidebox_et2.parentNode).show();
+			(<HTMLElement>this.sidebox_et2.parentNode).style.display = '';
 			// Hide other views
-			for(var _view in CalendarApp.views)
+			for(const _view in CalendarApp.views)
 			{
-				for(var i = 0; i < CalendarApp.views[_view].etemplates.length; i++)
+				for(let i = 0; i < CalendarApp.views[_view].etemplates.length; i++)
 				{
-					jQuery(CalendarApp.views[_view].etemplates[i].DOMContainer).hide();
+					const et = CalendarApp.views[_view].etemplates[i];
+					if(typeof et !== 'string')
+					{
+						et.DOMContainer.style.display = 'none';
+					}
 				}
 			}
 			this.state.view = '';
@@ -833,9 +866,9 @@ export class CalendarApp extends EgwApp
 		// Most can just provide state change data
 		if(action.data && action.data.state)
 		{
-			var state = jQuery.extend({},action.data.state);
-			if(state.view == 'planner' && app.calendar.state.view != 'planner') {
-				state.planner_view = app.calendar.state.view;
+			const state = Object.assign({},action.data.state);
+			if(state.view == 'planner' && this.state.view != 'planner') {
+				state.planner_view = this.state.view;
 			}
 			this.update_state(state);
 		}
@@ -843,35 +876,41 @@ export class CalendarApp extends EgwApp
 		switch(action.id)
 		{
 			case 'add':
+			{
 				// Default date/time to start of next hour
-				var tempDate = new Date();
+				const tempDate = new Date();
 				if(tempDate.getMinutes() !== 0)
 				{
 					tempDate.setHours(tempDate.getHours()+1);
 					tempDate.setMinutes(0);
 				}
-				var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),tempDate.getHours(),-tempDate.getTimezoneOffset(),0);
-				return egw.open(null,"calendar","add", {start: today});
+				const today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),tempDate.getHours(),-tempDate.getTimezoneOffset(),0);
+				return this.egw.open(null,"calendar","add", {start: today});
+			}
 			case 'weekend':
 				this.update_state({weekend: action.checked});
 				break;
 			case 'today':
-				var tempDate = new Date();
-				var today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
-				var change = {date: today.toJSON()};
-				app.calendar.update_state(change);
+			{
+				const tempDate = new Date();
+				const today = new Date(tempDate.getFullYear(), tempDate.getMonth(), tempDate.getDate(),0,-tempDate.getTimezoneOffset(),0);
+				const change = {date: today.toJSON()};
+				this.update_state(change);
 				break;
+			}
 			case 'next':
 			case 'previous':
-				var delta = action.id == 'previous' ? -1 : 1;
-				var view = CalendarApp.views[this.state.view] || false;
-				var start = new Date(this.state.date);
+			{
+				const delta = action.id == 'previous' ? -1 : 1;
+				const view = CalendarApp.views[this.state.view] || false;
+				let start = new Date(this.state.date);
 				if (view)
 				{
 					start = view.scroll(delta);
-					app.calendar.update_state({date:this.date.toString(start)});
+					this.update_state({date:this.date.toString(start)});
 				}
 				break;
+			}
 		}
 	}
 
@@ -883,9 +922,9 @@ export class CalendarApp extends EgwApp
 	toolbar_videocall_toggle_action(action : egwAction)
 	{
 		let videocall_category = egw.config("status_cat_videocall","status");
-		let callback = function() {
-			this.update_state({include_videocalls: action.checked});
-		}.bind(this);
+		const callback = () => {
+			this.update_state({include_videocalls: (<any>action).checked});
+		};
 		this.toolbar_integration_action(action, [],null,callback);
 	}
 
@@ -896,9 +935,9 @@ export class CalendarApp extends EgwApp
 	 */
 	toolbar_subscriptions_toggle_action(action : egwAction)
 	{
-		let callback = function() {
-			this.update_state({include_subscriptions: action.checked});
-		}.bind(this);
+		const callback = () => {
+			this.update_state({include_subscriptions: (<any>action).checked});
+		};
 		this.toolbar_integration_action(action, [],null, callback);
 	}
 
@@ -909,8 +948,8 @@ export class CalendarApp extends EgwApp
 	 */
 	toolbar_integration_action(action : egwAction, selected: egwActionObject[], target: egwActionObject, callback? : CallableFunction)
 	{
-		let app = action.id.replace("integration_","");
-		let integration_preference = <string[]> egw.preference("integration_toggle","calendar");
+		const app = action.id.replace("integration_","");
+		let integration_preference : any = egw.preference("integration_toggle","calendar");
 		if(typeof integration_preference === "undefined")
 		{
 			integration_preference = [];
@@ -920,9 +959,9 @@ export class CalendarApp extends EgwApp
 			integration_preference = integration_preference.split(",");
 		}
 		// Make sure it's an array, not an object
-		integration_preference = jQuery.extend([],integration_preference);
+		integration_preference = Object.assign([],integration_preference);
 
-		if(action.checked)
+		if((<any>action).checked)
 		{
 			if(integration_preference.indexOf(app) === -1)
 			{
@@ -930,10 +969,10 @@ export class CalendarApp extends EgwApp
 			}
 
 			// After the preference change is done, get new info which should now include the app
-			callback = callback ? callback : function()
+			callback = callback ? callback : () =>
 			{
-				this._fetch_data(this.state);
-			}.bind(this);
+				this._fetch_data(this.state, undefined);
+			};
 		}
 		else
 		{
@@ -948,29 +987,29 @@ export class CalendarApp extends EgwApp
 		if(action.id == "integration_projectmanager" &&
 			this.egw.preference("calendar_integration","projectmanager").indexOf("#") == 0)
 		{
-			if(!action.checked)
+			if(!(<any>action).checked)
 			{
 				// Still need to re-fetch in this case, clearing won't bring the others back
-				callback = function()
+				callback = () =>
 				{
-					this._fetch_data(this.state);
-				}.bind(this);
+					this._fetch_data(this.state, undefined);
+				};
 			}
 			else
 			{
 				// Clear all events, we're filtering real events now
-				callback = function()
+				callback = () =>
 				{
 					this._clear_cache();
 
 					// Force redraw to current state
 					this.setState({state: this.state});
-				}.bind(this);
+				};
 			}
 		}
 		if(typeof callback === "undefined")
 		{
-			callback = function() {};
+			callback = () => {};
 		}
 
 		egw.set_preference("calendar","integration_toggle",integration_preference, callback);
@@ -986,16 +1025,16 @@ export class CalendarApp extends EgwApp
 	 */
 	set_app_header( header)
 	{
-		var template = etemplate2.getById('calendar-toolbar');
-		var widget = template ? template.widgetContainer.getWidgetById('app_header') : false;
+		const template = etemplate2.getById('calendar-toolbar');
+		const widget = template ? template.widgetContainer.getWidgetById('app_header') : false;
 		if(widget)
 		{
 			widget.set_value(header);
-			egw_app_header('','calendar');
+			(<any>window).egw_app_header('','calendar');
 		}
 		else
 		{
-			egw_app_header(header,'calendar');
+			(<any>window).egw_app_header(header,'calendar');
 		}
 	}
 
@@ -1028,24 +1067,24 @@ export class CalendarApp extends EgwApp
 			sort: state.owner.length > 1 && (
 				state.view == 'day' && state.owner.length < parseInt('' + egw.preference('day_consolidate', 'calendar')) ||
 				(state.view == 'week' || state.view == 'day4') && state.owner.length < parseInt('' + egw.preference('week_consolidate', 'calendar'))), // enable/disable sort
-			onStart: function(event)
+			onStart: (event) =>
 			{
 				// Put owners into row IDs
-				CalendarApp.views[app.calendar.state.view].etemplates[0].widgetContainer.iterateOver(function(widget)
+				(<etemplate2>CalendarApp.views[this.state.view].etemplates[0]).widgetContainer.iterateOver(widget =>
 				{
 					if(widget.options.owner && !widget.disabled)
 					{
-						widget.div.parents('tr').attr('data-owner', widget.options.owner);
+						widget.div[0]?.closest('tr')?.setAttribute('data-owner', widget.options.owner);
 					}
 					else
 					{
-						widget.div.parents('tr').removeAttr('data-owner');
+						widget.div[0]?.closest('tr')?.removeAttribute('data-owner');
 					}
 				}, this, et2_calendar_timegrid);
 			},
-			onSort: function(event)
+			onSort: (event) =>
 			{
-				let state = app.calendar.getState();
+				const state = this.getState();
 				if (state && typeof state.owner !== 'undefined')
 				{
 					let sortedArr = [];
@@ -1057,44 +1096,44 @@ export class CalendarApp extends EgwApp
 						}
 					});
 					// No duplicates, no empties
-					sortedArr = sortedArr.filter(function(value, index, self) {
+					sortedArr = sortedArr.filter((value, index, self) => {
 						return value !== '' && self.indexOf(value) === index;
 					});
 
 					let parent = null;
-					let children = [];
+					const children = [];
 					if(state.view == 'day')
 					{
 						// If in day view, the days need to be re-ordered, avoiding
 						// the current sort order
-						CalendarApp.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
-							let idx = sortedArr.indexOf(widget.options.owner.toString());
+						(<etemplate2>CalendarApp.views.day.etemplates[0]).widgetContainer.iterateOver(widget => {
+							const idx = sortedArr.indexOf(widget.options.owner.toString());
 							// Move the event holding div
 							widget.set_left((parseInt(widget.options.width) * idx) + 'px');
 							// Re-order the children, or it won't stay
 							parent = widget._parent;
 							children.splice(idx,0,widget);
 						},this,et2_calendar_daycol);
-						parent.day_widgets.sort(function(a,b) {
+						parent.day_widgets.sort((a,b) => {
 							return children.indexOf(a) - children.indexOf(b);
 						});
 					}
 					else
 					{
 						// Re-order the children, or it won't stay
-						CalendarApp.views.day.etemplates[0].widgetContainer.iterateOver(function(widget) {
+						(<etemplate2>CalendarApp.views.day.etemplates[0]).widgetContainer.iterateOver(widget => {
 							parent = widget._parent;
-							let idx = sortedArr.indexOf(widget.options.owner);
+							const idx = sortedArr.indexOf(widget.options.owner);
 							children.splice(idx,0,widget);
 							widget.resize();
 						},this,et2_calendar_timegrid);
 					}
-					parent._children.sort(function(a,b) {
+					parent._children.sort((a,b) => {
 						return children.indexOf(a) - children.indexOf(b);
 					});
 					// Directly update, since there is no other changes needed,
 					// and we don't want the current sort order applied
-					app.calendar.state.owner = sortedArr;
+					this.state.owner = sortedArr;
 					parent.options.owner = sortedArr;
 				}
 			}
@@ -1108,6 +1147,9 @@ export class CalendarApp extends EgwApp
 	 */
 	private _unlock () {
 		const content = this.et2.getArrayMgr('content');
+		// Bound to the "beforeunload" event - the "keepalive" mode (set at construction, kept by
+		// the bare sendRequest() call) uses navigator.sendBeacon so the request survives the page
+		// unload; egw.request() is always a plain async fetch and has no equivalent for this.
 		this.egw.json('calendar.calendar_uiforms.ajax_unlock',
 		              [content.data.id, content.data.lock_token],null,this,"keepalive",null).sendRequest();
 	}
@@ -1126,32 +1168,36 @@ export class CalendarApp extends EgwApp
 		 */
 		var scroll_animate = function(direction, delta)
 		{
-			// Scrolling too fast?
-			if(app.calendar._scroll_disabled) return;
+			// Scrolling too fast? `this` is dynamic here (a DOM node from the swipe handler, or
+			// the CalendarApp instance from the keyboard shortcuts below) - keep going through
+			// app.calendar rather than this, and keep this a plain function, not an arrow.
+			if((<CalendarApp>app.calendar)._scroll_disabled) return;
 
-			// Find the template
-			var id = jQuery(this).closest('.et2_container').attr('id');
+			// Find the template. When `this` isn't a DOM node (the keyboard shortcut case),
+			// there's no enclosing .et2_container to find, so fall back to the current view.
+			const id = this instanceof Element ? this.closest('.et2_container')?.id : undefined;
+			let template;
 			if(id)
 			{
-				var template = etemplate2.getById(id);
+				template = etemplate2.getById(id);
 			}
 			else
 			{
-				template = CalendarApp.views[app.calendar.state.view].etemplates[0];
+				template = CalendarApp.views[(<CalendarApp>app.calendar).state.view].etemplates[0];
 			}
 			if(!template) return;
 
 			// Prevent scrolling too fast
-			app.calendar._scroll_disabled = true;
+			(<CalendarApp>app.calendar)._scroll_disabled = true;
 
 			// Animate the transition, if possible
-			var widget = null;
-			template.widgetContainer.iterateOver(function(w) {
+			let widget = null;
+			(<etemplate2>template).widgetContainer.iterateOver(w => {
 				if (w.getDOMNode() == this) widget = w;
 			},this,et2_widget);
 			if(widget == null)
 			{
-				template.widgetContainer.iterateOver(function(w) {
+				(<etemplate2>template).widgetContainer.iterateOver(w => {
 					widget = w;
 				},this, et2_calendar_timegrid);
 				if(widget == null) return;
@@ -1264,21 +1310,21 @@ export class CalendarApp extends EgwApp
 			// If detecting the transition end worked, we wouldn't need to use a timeout.
 			window.setTimeout(remove,100);
 			*/
-		   window.setTimeout(function() {
+		   window.setTimeout(() => {
 				if(app.calendar)
 				{
-					app.calendar._scroll_disabled = false;
+					(<CalendarApp>app.calendar)._scroll_disabled = false;
 				}
 			}, 2000);
 			// Get the view to calculate - this actually loads the new data
 			// Using a timeout make it a little faster (in Chrome)
-			window.setTimeout(function() {
-				var view = CalendarApp.views[app.calendar.state.view] || false;
-				var start = new Date(app.calendar.state.date);
+			window.setTimeout(() => {
+				const view = CalendarApp.views[(<CalendarApp>app.calendar).state.view] || false;
+				let start = new Date((<CalendarApp>app.calendar).state.date);
 				if (view && view.etemplates.indexOf(template) !== -1)
 				{
 					start = view.scroll(delta);
-					app.calendar.update_state({date:app.calendar.date.toString(start)});
+					(<CalendarApp>app.calendar).update_state({date:(<CalendarApp>app.calendar).date.toString(start)});
 				}
 				else
 				{
@@ -1324,7 +1370,8 @@ export class CalendarApp extends EgwApp
 		if(typeof framework !== 'undefined' && framework.applications?.calendar && framework.applications.calendar.tab)
 		{
 			let swipe = new tapAndSwipe(framework.applications.calendar.tab.contentDiv, {
-					//Generic swipe handler for all directions
+					//Generic swipe handler for all directions - `this` is the tapAndSwipe
+					//instance here (this.element), so this stays a plain function, not an arrow.
 					swipe:function(event, direction, distance, fingerCount) {
 						if(direction == "up" || direction == "down")
 						{
@@ -1332,12 +1379,16 @@ export class CalendarApp extends EgwApp
 							let at_bottom = direction !== -1;
 							let at_top = direction !== 1;
 
-							jQuery(this.element).children(":not(.calendar_calGridHeader)").each(function() {
+							const children = Array.from(this.element.children).filter(
+								(c : HTMLElement) => !c.classList.contains('calendar_calGridHeader')
+							) as HTMLElement[];
+							children.forEach(c => {
 								// Check for less than 2px from edge, as sometimes we can't scroll anymore, but still have
 								// 2px left to go
-								at_bottom = at_bottom && Math.abs(this.scrollTop - (this.scrollHeight - this.offsetHeight)) <= 2;
-							}).each(function() {
-								at_top = at_top && this.scrollTop === 0;
+								at_bottom = at_bottom && Math.abs(c.scrollTop - (c.scrollHeight - c.offsetHeight)) <= 2;
+							});
+							children.forEach(c => {
+								at_top = at_top && c.scrollTop === 0;
 							});
 						}
 
@@ -1345,25 +1396,27 @@ export class CalendarApp extends EgwApp
 						// But we animate in the opposite direction to the swipe
 						let opposite = {"down": "up", "up": "down", "left": "right", "right": "left"};
 						direction = opposite[direction];
-						scroll_animate.call(jQuery(event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget')[0], direction, delta);
+						scroll_animate.call((<Element>event.target).closest('.calendar_calTimeGrid, .calendar_plannerWidget'), direction, delta);
 						return false;
 					},
 					minSwipeThreshold: 100,
 					allowScrolling: 'vertical'
 				});
 
-			// Page up & page down
-			egw_registerGlobalShortcut(EGW_KEY_PAGE_UP, false, false, false, function()
+			// Page up & page down. Passing `this` as egw_registerGlobalShortcut's own context arg
+			// matches _scroll()'s `this` (CalendarApp instance) exactly, so converting these two
+			// callbacks to arrows is safe - the redundant context arg is now just harmless.
+			egw_registerGlobalShortcut(EGW_KEY_PAGE_UP, false, false, false, () =>
 			{
-				if(app.calendar.state.view == 'listview')
+				if(this.state.view == 'listview')
 				{
 					return false;
 				}
 				scroll_animate.call(this, "up", -1);
 				return true;
 			}, this);
-			egw_registerGlobalShortcut(EGW_KEY_PAGE_DOWN, false, false, false, function() {
-				if(app.calendar.state.view == 'listview')
+			egw_registerGlobalShortcut(EGW_KEY_PAGE_DOWN, false, false, false, () => {
+				if(this.state.view == 'listview')
 				{
 					return false;
 				}
@@ -1386,24 +1439,22 @@ export class CalendarApp extends EgwApp
 	event_change(event, widget, dialog_button)
 	{
 		// Add loading spinner - not visible if the body / gradient is there though
-		widget.div.addClass('loading');
+		widget.div[0]?.classList.add('loading');
 
 		// Integrated infolog event
 		//Get infologID if in case if it's an integrated infolog event
 		if (widget.options.value.app == 'infolog')
 		{
 			// If it is an integrated infolog event we need to edit infolog entry
-			egw().json(
+			egw().request(
 				'stylite_infolog_calendar_integration::ajax_moveInfologEvent',
-				[widget.options.value.app_id, widget.options.value.start, widget.options.value.duration],
-				// Remove loading spinner
-				function() {if(widget.div) widget.div.removeClass('loading');}
-			).sendRequest();
+				[widget.options.value.app_id, widget.options.value.start, widget.options.value.duration]
+			).then(() => {if(widget.div) widget.div[0]?.classList.remove('loading');});
 		}
 		else
 		{
-			var _send = function() {
-				egw().json(
+			const _send = () => {
+				egw().request(
 					'calendar.calendar_uiforms.ajax_moveEvent',
 					[
 						dialog_button == 'exception' ? widget.options.value.app_id : widget.options.value.id,
@@ -1412,14 +1463,12 @@ export class CalendarApp extends EgwApp
 						widget.options.value.owner,
 						widget.options.value.duration,
 						dialog_button == 'series' ? widget.options.value.start : null
-					],
-					// Remove loading spinner
-					function() {if(widget && widget.div) widget.div.removeClass('loading');}
-				).sendRequest(true);
+					]
+				).then(() => {if(widget && widget.div) widget.div[0]?.classList.remove('loading');});
 			};
 			if(dialog_button == 'series' && widget.options.value.recur_type)
 			{
-				widget.series_split_prompt(function(_button_id)
+				widget.series_split_prompt((_button_id) =>
 					{
 						if(_button_id == Et2Dialog.OK_BUTTON)
 						{
@@ -1451,13 +1500,12 @@ export class CalendarApp extends EgwApp
 	 */
 	freetime_search()
 	{
-		var content = this.et2.getArrayMgr('content').data;
+		const content = this.et2.getArrayMgr('content').data;
 		content['start'] = this.et2.getValueById('start');
 		content['end'] = this.et2.getValueById('end');
 		content['duration'] = this.et2.getValueById('duration');
 
-		var request = this.egw.json('calendar.calendar_uiforms.ajax_freetimesearch', [content],null,null,null,null);
-		request.sendRequest();
+		this.egw.request('calendar.calendar_uiforms.ajax_freetimesearch', [content]);
 	}
 
 	/**
@@ -1534,7 +1582,7 @@ export class CalendarApp extends EgwApp
 	 * based on if "use end date" selected or not.
 	 *
 	 */
-	set_enddate_visibility(ev, widget)
+	set_enddate_visibility(ev?, widget?)
 	{
 		let duration = <Et2Select>(widget?.getRoot() ?? this.et2).getWidgetById('duration');
 		let start = <Et2DateTime>(widget?.getRoot() ?? this.et2).getWidgetById('start');
@@ -1573,8 +1621,8 @@ export class CalendarApp extends EgwApp
 		{
 			widget = input;
 		}
-		var content = widget.getInstanceManager().getValues(widget.getRoot());
-		var participant = <CalendarOwner>widget.getRoot().getWidgetById('participant');
+		const content = widget.getInstanceManager().getValues(widget.getRoot());
+		const participant = <CalendarOwner>widget.getRoot().getWidgetById('participant');
 		if(!participant)
 		{
 			return;
@@ -1598,32 +1646,32 @@ export class CalendarApp extends EgwApp
 	 */
 	actions_change(_event, widget)
 	{
-		var event = this.et2.getArrayMgr('content').data;
+		const event = this.et2.getArrayMgr('content').data;
 		if (widget)
 		{
-			var id = this.et2.getArrayMgr('content').data['id'];
+			const id = this.et2.getArrayMgr('content').data['id'];
 			switch (widget.get_value())
 			{
 				case 'print':
 					this.egw.open_link('calendar.calendar_uiforms.edit&cal_id='+id+'&print=1','_blank','700x700');
 					break;
 				case 'mail':
-					this.egw.json('calendar.calendar_uiforms.ajax_custom_mail', [event, !event['id'], false],null,null,null,null).sendRequest();
-					this.et2._inst.submit();
+					this.egw.request('calendar.calendar_uiforms.ajax_custom_mail', [event, !event['id'], false]);
+					this.et2.getInstanceManager().submit();
 					break;
 				case 'sendrequest':
-					this.egw.json('calendar.calendar_uiforms.ajax_custom_mail', [event, !event['id'], true],null,null,null,null).sendRequest();
-					this.et2._inst.submit();
+					this.egw.request('calendar.calendar_uiforms.ajax_custom_mail', [event, !event['id'], true]);
+					this.et2.getInstanceManager().submit();
 					break;
 				case 'infolog':
-					this.egw.open_link('infolog.infolog_ui.edit&action=calendar&action_id='+(jQuery.isPlainObject(event)?event['id']:event),'_blank','700x600','infolog');
-					this.et2._inst.submit();
+					this.egw.open_link('infolog.infolog_ui.edit&action=calendar&action_id='+(typeof event === 'object' && event !== null && !Array.isArray(event)?event['id']:event),'_blank','700x600','infolog');
+					this.et2.getInstanceManager().submit();
 					break;
 				case 'ical':
-					this.et2._inst.postSubmit();
+					this.et2.getInstanceManager().postSubmit(widget);
 					break;
 				default:
-					this.et2._inst.submit();
+					this.et2.getInstanceManager().submit();
 			}
 		}
 	}
@@ -1648,11 +1696,11 @@ export class CalendarApp extends EgwApp
 	 */
 	delete_btn(widget,exceptions)
 	{
-		var content = this.et2.getArrayMgr('content').data;
+		const content = this.et2.getArrayMgr('content').data;
 
 		if (exceptions)
 		{
-			var buttons = [
+			const buttons = [
 				{
 					button_id: 'keep',
 					title: this.egw.lang('All exceptions are converted into single events.'),
@@ -1675,10 +1723,9 @@ export class CalendarApp extends EgwApp
 				}
 
 			];
-			var self = this;
 			Et2Dialog.show_dialog
 			(
-					function(_button_id)
+					(_button_id) =>
 					{
 						if (_button_id != 'dialog[cancel]')
 						{
@@ -1713,21 +1760,21 @@ export class CalendarApp extends EgwApp
 	 */
 	participantOnChange()
 	{
-		var add = <et2_button>this.et2.getWidgetById('add');
-		var quantity = <et2_number>this.et2.getWidgetById('quantity');
-		var participant = <Et2CalendarOwner>this.et2.getWidgetById('participant');
+		const add = <et2_button>this.et2.getWidgetById('add');
+		const quantity = <et2_number>this.et2.getWidgetById('quantity');
+		const participant = <CalendarOwner>this.et2.getWidgetById('participant');
 
 		// array of participants
-		let value = participant.value;
+		let value = participant.getValueAsArray();
 
 		add.disabled = (value.length <= 0);
 
 		quantity.set_readonly(false);
 
 		// number of resources
-		var nRes = 0;
+		let nRes = 0;
 
-		for (var i=0;i<value.length;i++)
+		for (let i=0;i<value.length;i++)
 		{
 			if (!value[i].match(/\D/ig) || nRes)
 			{
@@ -1751,14 +1798,14 @@ export class CalendarApp extends EgwApp
 		if (widget && window.opener)
 		{
 			//Parent popup window
-			var editPopWindow = window.opener;
+			const editPopWindow = window.opener;
 
 			if (editPopWindow)
 			{
 				//Update paretn popup window
 				editPopWindow.etemplate2.getByApplication('calendar')[0].widgetContainer.getWidgetById(widget.id).set_value(widget.get_value());
 			}
-			this.et2._inst.submit();
+			this.et2.getInstanceManager().submit();
 
 			editPopWindow.opener.egw_refresh('status changed','calendar');
 		}
@@ -1780,20 +1827,20 @@ export class CalendarApp extends EgwApp
 	{
 		if (_widget)
 		{
-			var content = this.et2._inst.widgetContainer.getArrayMgr('content').data;
+			const content = this.et2.getArrayMgr('content').data;
 			// Make the Id from selected button by checking the index
-			var selectedId = _widget.id.match(/^select\[([0-9])\]$/i)[1];
+			const selectedId = _widget.id.match(/^select\[([0-9])\]$/i)[1];
 
-			var sTime = <Et2Select><unknown>this.et2.getWidgetById(selectedId + 'start');
+			const sTime = <Et2Select><unknown>this.et2.getWidgetById(selectedId + 'start');
 
 			//check the parent window is still open before to try to access it
 			if (window.opener && sTime)
 			{
-				var editWindowObj = window.opener.etemplate2.getByApplication('calendar')[0];
+				const editWindowObj = window.opener.etemplate2.getByApplication('calendar')[0];
 				if (typeof editWindowObj != "undefined")
 				{
-					var startTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('start');
-					var endTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('end');
+					const startTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('start');
+					const endTime = <et2_date> editWindowObj.widgetContainer.getWidgetById('end');
 					if (startTime && endTime)
 					{
 						startTime.set_value(sTime.get_value());
@@ -1816,7 +1863,7 @@ export class CalendarApp extends EgwApp
 	 */
 	filter_change()
 	{
-		const view = <et2_container>(<etemplate2> CalendarApp.views['listview'].etemplates[0]).widgetContainer || null;
+		const view = (<etemplate2> CalendarApp.views['listview'].etemplates[0]).widgetContainer || null;
 		const nm = view ? <et2_nextmatch>view.getWidgetById('nm') : null;
 		const filter = view && nm ? <et2_selectbox>nm.getWidgetById('filter') : null;
 		const dates = view ? <et2_template> view.getWidgetById('calendar.list.dates') : null;
@@ -1824,9 +1871,9 @@ export class CalendarApp extends EgwApp
 		// Update state when user changes it
 		if(view && filter)
 		{
-			app.calendar.state.filter = filter.getValue();
+			this.state.filter = filter.getValue();
 			// Change sort order for before - this is just the UI, server does the query
-			if(app.calendar.state.filter == 'before')
+			if(this.state.filter == 'before')
 			{
 				nm.sortBy('cal_start',false, false);
 			}
@@ -1837,7 +1884,7 @@ export class CalendarApp extends EgwApp
 		}
 		else
 		{
-			delete app.calendar.state.filter;
+			delete this.state.filter;
 		}
 		if (filter && dates)
 		{
@@ -1845,13 +1892,13 @@ export class CalendarApp extends EgwApp
 			if (filter.getValue() == "custom" && !this.state_update_in_progress)
 			{
 				// Copy state dates over, without causing [another] state update
-				var actual = this.state_update_in_progress;
+				const actual = this.state_update_in_progress;
 				this.state_update_in_progress = true;
-				(<et2_date>view.getWidgetById('startdate')).set_value(app.calendar.state.first);
-				(<et2_date>view.getWidgetById('enddate')).set_value(app.calendar.state.last);
+				(<et2_date>view.getWidgetById('startdate')).set_value(this.state.first);
+				(<et2_date>view.getWidgetById('enddate')).set_value(this.state.last);
 				this.state_update_in_progress = actual;
 
-				jQuery((<et2_date>view.getWidgetById('startdate')).getDOMNode()).find('input').focus();
+				(<et2_date>view.getWidgetById('startdate')).getDOMNode().querySelector('input')?.focus();
 			}
 		}
 	}
@@ -1901,8 +1948,8 @@ export class CalendarApp extends EgwApp
 
 		if(_action.data.open)
 		{
-			var open = JSON.parse(_action.data.open) || {};
-			var extra = open.extra || '';
+			const open = JSON.parse(_action.data.open) || {};
+			let extra : any = open.extra || '';
 
 			extra = extra.replace(/(\$|%24)app/,app).replace(/(\$|%24)app_id/,app_id)
 					.replace(/(\$|%24)id/,id);
@@ -1910,7 +1957,7 @@ export class CalendarApp extends EgwApp
 			// Get a little smarter with the context
 			if(!extra)
 			{
-				var context : any = {};
+				let context : any = {};
 				if(egw.dataGetUIDdata(_events[0].id) && egw.dataGetUIDdata(_events[0].id).data)
 				{
 					// Found data in global cache
@@ -1923,10 +1970,11 @@ export class CalendarApp extends EgwApp
 				{
 					// Non-row space in planner
 					// Context menu has position information, but target is not what we expact
-					let target = jQuery('.calendar_plannerGrid',_action.menu_context.event.currentTarget);
-					var y = _action.menu_context.event.pageY - target.offset().top;
-					var x = _action.menu_context.event.pageX - target.offset().left;
-					var date = _events[0].iface.getWidget()._get_time_from_position(x, y);
+					const target = (<Element>_action.menu_context.event.currentTarget).querySelector('.calendar_plannerGrid');
+					const rect = target.getBoundingClientRect();
+					const y = _action.menu_context.event.pageY - (rect.top + window.scrollY);
+					const x = _action.menu_context.event.pageX - (rect.left + window.scrollX);
+					const date = _events[0].iface.getWidget()._get_time_from_position(x, y);
 					if(date)
 					{
 						context.start = date.toJSON();
@@ -1935,21 +1983,22 @@ export class CalendarApp extends EgwApp
 				else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_calendar_planner_row))
 				{
 					// Empty space on a planner row
-					var widget = _events[0].iface.getWidget();
-					var parent = widget.getParent();
+					const widget = _events[0].iface.getWidget();
+					const parent = widget.getParent();
+					let date;
 					if(parent.options.group_by == 'month')
 					{
-						var date = parent._get_time_from_position(_action.menu_context.event.clientX, _action.menu_context.event.clientY);
+						date = parent._get_time_from_position(_action.menu_context.event.clientX, _action.menu_context.event.clientY);
 					}
 					else
 					{
-						var date = parent._get_time_from_position(_action.menu_context.event.offsetX, _action.menu_context.event.offsetY);
+						date = parent._get_time_from_position(_action.menu_context.event.offsetX, _action.menu_context.event.offsetY);
 					}
 					if(date)
 					{
 						context.start = date.toJSON();
 					}
-					jQuery.extend(context, widget.getDOMNode().dataset);
+					Object.assign(context, widget.getDOMNode().dataset);
 
 				}
 				else if (_events[0].iface.getWidget() && _events[0].iface.getWidget().instanceOf(et2_valueWidget))
@@ -1961,19 +2010,19 @@ export class CalendarApp extends EgwApp
 					extra = {};
 				}
 				// Try to pull whatever we can from the event
-				else if (jQuery.isEmptyObject(context) && _action.menu_context && (_action.menu_context.event.target))
+				else if (Object.keys(context ?? {}).length === 0 && _action.menu_context && (_action.menu_context.event.target))
 				{
 					let target = _action.menu_context.event.target;
-					while(target != null && target.parentNode && jQuery.isEmptyObject(target.dataset))
+					while(target != null && target.parentNode && Object.keys(target.dataset ?? {}).length === 0)
 					{
 						target = target.parentNode;
 					}
 
-					context = extra = jQuery.extend({},target.dataset);
-					var owner = jQuery(target).closest('[data-owner]').get(0);
-					if(owner && owner.dataset.owner && owner.dataset.owner != this.state.owner)
+					context = extra = Object.assign({},target.dataset);
+					const owner = (<Element>target).closest('[data-owner]');
+					if(owner && (<HTMLElement>owner).dataset.owner && (<HTMLElement>owner).dataset.owner != this.state.owner)
 					{
-						extra.owner = owner.dataset.owner.split(',');
+						extra.owner = (<HTMLElement>owner).dataset.owner.split(',');
 					}
 				}
 				if(context.date) extra.date = context.date;
@@ -1985,7 +2034,7 @@ export class CalendarApp extends EgwApp
 		}
 		else if (_action.data.url)
 		{
-			var url = _action.data.url;
+			let url = _action.data.url;
 			url = url.replace(/(\$|%24)app_id/,app_id)
 			         .replace(/(\$|%24)app/,app)
 			         .replace(/(\$|%24)id/,id);
@@ -2028,8 +2077,8 @@ export class CalendarApp extends EgwApp
 	{
 		// Send it through nextmatch
 		_action.data.nextmatch = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm');
-		var ids = {ids:[]};
-		for(var i = 0; i < _events.length; i++)
+		const ids = {ids:[]};
+		for(let i = 0; i < _events.length; i++)
 		{
 			ids.ids.push(_events[i].id);
 		}
@@ -2045,32 +2094,32 @@ export class CalendarApp extends EgwApp
 	status(_action, _events)
 	{
 		// Should be a single event, but we'll do it for all
-		for(var i = 0; i < _events.length; i++)
+		for(let i = 0; i < _events.length; i++)
 		{
-			var event_widget = _events[i].iface.getWidget() || false;
+			const event_widget = _events[i].iface.getWidget() || false;
 			if(!event_widget) continue;
 
-			event_widget.recur_prompt(jQuery.proxy(function(button_id,event_data) {
+			event_widget.recur_prompt((button_id,event_data) => {
 				switch(button_id)
 				{
 					case 'exception':
-						egw().json(
+						egw().request(
 							'calendar.calendar_uiforms.ajax_status',
 							[event_data.app_id, egw.user('account_id'), _action.data.id]
-						).sendRequest(true);
+						);
 						break;
 					case 'series':
 					case 'single':
-						egw().json(
+						egw().request(
 							'calendar.calendar_uiforms.ajax_status',
 							[event_data.id, egw.user('account_id'), _action.data.id]
-						).sendRequest(true);
+						);
 						break;
 					case 'cancel':
 					default:
 						break;
 				}
-			},this));
+			});
 		}
 
 	}
@@ -2083,9 +2132,9 @@ export class CalendarApp extends EgwApp
 	 */
 	cal_fix_app_id(_action, _senders)
 	{
-		var app = 'calendar';
-		var id = _senders[0].id;
-		var matches = id.match(/^(?:calendar::)?([0-9]+)(:([0-9]+))?$/);
+		let app = 'calendar';
+		let id = _senders[0].id;
+		let matches = id.match(/^(?:calendar::)?([0-9]+)(:([0-9]+))?$/);
 		if (matches)
 		{
 			id = matches[1];
@@ -2099,7 +2148,7 @@ export class CalendarApp extends EgwApp
 				id = matches[2];
 			}
 		}
-		var backup_url = _action.data.url;
+		const backup_url = _action.data.url;
 
 		_action.data.url = _action.data.url.replace(/(\$|%24)id/,id);
 		_action.data.url = _action.data.url.replace(/(\$|%24)app/,app);
@@ -2165,27 +2214,30 @@ export class CalendarApp extends EgwApp
 		// Try for easy way - find a widget
 		if(_senders[0].iface.getWidget)
 		{
-			var widget = _senders[0].iface.getWidget();
+			const widget = _senders[0].iface.getWidget();
 			return widget.recur_prompt();
 		}
 
 		// Nextmatch in list view does not have a widget, but we can pull
 		// the data by ID
 		// Check for series
-		var id = _senders[0].id;
-		var data = egw.dataGetUIDdata(id);
+		const id = _senders[0].id;
+		const data = egw.dataGetUIDdata(id);
 		if (data && data.data)
 		{
 			et2_calendar_event.recur_prompt(data.data);
 			return;
 		}
-		var matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
+		let matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
 
 		// Check for other app integration data sent from server
-		var backup = _action.data;
+		const backup = _action.data;
+		// Declared here (not inside the if below) since it's read again afterwards - var used to
+		// hoist this across the block, let/const need the declaration to already be in scope.
+		let js_integration_data;
 		if(_action.parent.data && _action.parent.data.nextmatch)
 		{
-			var js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
+			js_integration_data = _action.parent.data.nextmatch.options.settings.js_integration_data || this.et2.getArrayMgr('content').data.nm.js_integration_data;
 			if(typeof js_integration_data == 'string')
 			{
 				js_integration_data = JSON.parse(js_integration_data);
@@ -2194,16 +2246,16 @@ export class CalendarApp extends EgwApp
 		matches = id.match(/^calendar::([a-z_-]+)([0-9]+)/i);
 		if (matches && js_integration_data && js_integration_data[matches[1]])
 		{
-			var app = matches[1];
+			const app = matches[1];
 			_action.data.url = window.egw_webserverUrl+'/index.php?';
-			var get_params = js_integration_data[app].edit;
+			const get_params = js_integration_data[app].edit;
 			get_params[js_integration_data[app].edit_id] = matches[2];
-			for(var name in get_params)
+			for(const name in get_params)
 				_action.data.url += name+"="+encodeURIComponent(get_params[name])+"&";
 
 			if (js_integration_data[app].edit_popup)
 			{
-				egw.open_link(_action.data.url,'_blank',js_integration_data[app].edit_popup,app);
+				this.egw.open_link(_action.data.url,'_blank',js_integration_data[app].edit_popup,app);
 
 				_action.data = backup;	// restore url, width, height, nm_action
 				return;
@@ -2212,14 +2264,14 @@ export class CalendarApp extends EgwApp
 		else
 		{
 			// Other app integration using link registry
-			var data = egw.dataGetUIDdata(_senders[0].id);
+			const data = egw.dataGetUIDdata(_senders[0].id);
 			if(data && data.data)
 			{
-				return egw.open(data.data.app_id, data.data.app, 'edit');
+				return this.egw.open(data.data.app_id, data.data.app, 'edit');
 			}
 		}
 		// Regular, single event
-		egw.open(id.replace(/^calendar::/g,''),'calendar','edit');
+		this.egw.open(id.replace(/^calendar::/g,''),'calendar','edit');
 	}
 
 	/**
@@ -2233,32 +2285,32 @@ export class CalendarApp extends EgwApp
 	delete(_action, _events)
 	{
 		// Should be a single event, but we'll do it for all
-		for(var i = 0; i < _events.length; i++)
+		for(let i = 0; i < _events.length; i++)
 		{
-			var event_widget = _events[i].iface.getWidget() || false;
+			const event_widget = _events[i].iface.getWidget() || false;
 			if(!event_widget) continue;
 
-			event_widget.recur_prompt(jQuery.proxy(function(button_id,event_data) {
+			event_widget.recur_prompt((button_id,event_data) => {
 				switch(button_id)
 				{
 					case 'exception':
-						egw().json(
+						egw().request(
 							'calendar.calendar_uiforms.ajax_delete',
 							[event_data.app_id]
-						).sendRequest(true);
+						);
 						break;
 					case 'series':
 					case 'single':
-						egw().json(
+						egw().request(
 							'calendar.calendar_uiforms.ajax_delete',
 							[event_data.id]
-						).sendRequest(true);
+						);
 						break;
 					case 'cancel':
 					default:
 						break;
 				}
-			},this));
+			});
 		}
 	}
 
@@ -2279,9 +2331,9 @@ export class CalendarApp extends EgwApp
 		let cal_event = this.egw.dataGetUIDdata(_senders[0].id);
 
 		// Loop so we ask if any of the selected entries is part of a series
-		for(var i = 0; i < _senders.length; i++)
+		for(let i = 0; i < _senders.length; i++)
 		{
-			var id = _senders[i].id;
+			const id = _senders[i].id;
 			if(!matches)
 			{
 				matches = id.match(/^(?:calendar::)?([0-9]+):([0-9]+)$/);
@@ -2293,23 +2345,23 @@ export class CalendarApp extends EgwApp
 			// At least one event is a series, use its data to trigger the prompt
 			let cal_event = this.egw.dataGetUIDdata( matches[0]);
 		}
-		et2_calendar_event.recur_prompt(cal_event.data,function(button_id,event_data) {
+		et2_calendar_event.recur_prompt(cal_event.data,(button_id,event_data) => {
 			switch(button_id)
 			{
 				case 'single':
 				case 'exception':
 					// Just this one, handle in the normal way but over AJAX
-					egw.json("calendar.calendar_uilist.ajax_action",[_action.id, ids, all, no_notifications]).sendRequest(true);
+					this.egw.request("calendar.calendar_uilist.ajax_action",[_action.id, ids, all, no_notifications]);
 					break;
 				case 'series':
 					// No recurrences, handle in the normal way but over AJAX
-					egw.json("calendar.calendar_uilist.ajax_action",["delete_series", ids, all, no_notifications]).sendRequest(true);
+					this.egw.request("calendar.calendar_uilist.ajax_action",["delete_series", ids, all, no_notifications]);
 					break;
 				case 'cancel':
 				default:
 					break;
 			}
-		}.bind(this) );
+		});
 
 	}
 
@@ -2328,7 +2380,6 @@ export class CalendarApp extends EgwApp
 		const duration = ''+this.et2.getValueById('duration');
 		const is_whole_day = whole_day && whole_day.value == whole_day.selectedValue;
 		const button = _button;
-		const that = this;
 
 		let instance_date_regex = window.location.search.match(/date=(\d{4}-\d{2}-\d{2}(?:.+Z)?)/);
 		let instance_date;
@@ -2344,14 +2395,14 @@ export class CalendarApp extends EgwApp
 				content.whole_day != is_whole_day ||
 				(duration && ''+content.duration != duration ||
 				// End date might ignore seconds, and be 59 seconds off for all day events
-				!duration && Math.abs(new Date(end_date) - new Date(content.end)) > 60000))
+				!duration && Math.abs(new Date(end_date).valueOf() - new Date(content.end).valueOf()) > 60000))
 			{
 				et2_calendar_event.series_split_prompt(
-					content, instance_date, function(_button_id)
+					content, instance_date, (_button_id) =>
 					{
 						if(_button_id == Et2Dialog.OK_BUTTON)
 						{
-							that.et2.getInstanceManager().submit(button);
+							this.et2.getInstanceManager().submit(button);
 						}
 					}
 				);
@@ -2378,12 +2429,11 @@ export class CalendarApp extends EgwApp
 	 */
 	action_mail(_action, _selected)
 	{
-		var data = egw.dataGetUIDdata(_selected[0].id) || {data:{}};
-		var event = data.data;
-		this.egw.json('calendar.calendar_uiforms.ajax_custom_mail',
-			[event, false, _action.id==='sendrequest'],
-			null,null,null,null
-		).sendRequest();
+		const data = egw.dataGetUIDdata(_selected[0].id) || {data:{}};
+		const event = data.data;
+		this.egw.request('calendar.calendar_uiforms.ajax_custom_mail',
+			[event, false, _action.id==='sendrequest']
+		);
 	}
 
 	/**
@@ -2405,38 +2455,40 @@ export class CalendarApp extends EgwApp
 		{
 			// If user is looking at the list, pretend they used the context
 			// menu and process it through the nextmatch
-			var nm = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm') || false;
-			var selected = nm ? nm.controller._objectManager.getSelectedLinks() : [];
-			var action = nm.controller._actionManager.getActionById('document_'+widget.getValue());
+			const nm = etemplate2.getById('calendar-list').widgetContainer.getWidgetById('nm') || false;
+			const selected = nm ? nm.controller._objectManager.getSelectedLinks() : [];
+			const action = nm.controller._actionManager.getActionById('document_'+widget.getValue());
 			if(nm && (!selected || !selected.length))
 			{
 				nm.controller._selectionMgr.selectAll(true);
 			}
 			if(action && selected)
 			{
-				super.merge(action, selected);
+				// EgwApp.merge() was renamed to mergeAction() (see egw_app.ts) - this call site
+				// was never updated, so it threw "super.merge is not a function" whenever hit.
+				super.mergeAction(action, selected);
 			}
 		}
 		else
 		{
 			// Set the hidden inputs to the current time span & submit
-			widget.getRoot().getWidgetById('first')?.set_value(app.calendar.state.first);
-			widget.getRoot().getWidgetById('last')?.set_value(app.calendar.state.last);
+			widget.getRoot().getWidgetById('first')?.set_value(this.state.first);
+			widget.getRoot().getWidgetById('last')?.set_value(this.state.last);
 
-			let vars = {
+			const vars = {
 				menuaction: 'calendar.calendar_merge.merge_entries',
 				document: widget.getValue(),
 				merge: 'calendar_merge',
 				options: {pdf: false},
 				select_all: false,
 				id: JSON.stringify({
-					first: app.calendar.state.first,
-					last: app.calendar.state.last,
-					date: app.calendar.state.first,
-					view: app.calendar.state.view
+					first: this.state.first,
+					last: this.state.last,
+					date: this.state.first,
+					view: this.state.view
 				})
 			};
-			egw.open_link(egw.link('/index.php', vars), '_blank');
+			this.egw.open_link(this.egw.link('/index.php', vars), '_blank');
 		}
 		widget.set_value('');
 
@@ -2485,11 +2537,11 @@ export class CalendarApp extends EgwApp
 		}
 		if(this.state_update_in_progress) return;
 
-		var changed = [];
-		var new_state = jQuery.extend({}, this.state);
+		const changed = [];
+		const new_state = Object.assign({}, this.state);
 		if (typeof _set === 'object')
 		{
-			for(var s in _set)
+			for(const s in _set)
 			{
 				if (new_state[s] !== _set[s] && (typeof new_state[s] == 'string' || typeof new_state[s] !== 'string' && new_state[s]+'' !== _set[s]+''))
 				{
@@ -2523,11 +2575,11 @@ export class CalendarApp extends EgwApp
 	 */
 	getState()
 	{
-		var state = jQuery.extend({},this.state);
+		let state : any = Object.assign({},this.state);
 
 		if (!state)
 		{
-			var egw_script_tag = document.getElementById('egw_script_id');
+			const egw_script_tag = document.getElementById('egw_script_id');
 			let tag_state = egw_script_tag.getAttribute('data-calendar-state');
 			state = tag_state ? JSON.parse(tag_state) : {};
 		}
@@ -2544,7 +2596,7 @@ export class CalendarApp extends EgwApp
 		// Keywords are only for list view
 		if(state.view == 'listview')
 		{
-			var listview : et2_nextmatch = typeof CalendarApp.views.listview.etemplates[0] !== 'string' &&
+			const listview : et2_nextmatch = typeof CalendarApp.views.listview.etemplates[0] !== 'string' &&
 				CalendarApp.views.listview.etemplates[0].widgetContainer &&
 				<et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 			if(listview && listview.activeFilters && listview.activeFilters.search)
@@ -2598,45 +2650,45 @@ export class CalendarApp extends EgwApp
 		}
 
 		// Hide other views
-		var view = CalendarApp.views[state.state.view];
-		for(var _view in CalendarApp.views)
+		const view = CalendarApp.views[state.state.view];
+		for(const _view in CalendarApp.views)
 		{
 			if(state.state.view != _view && CalendarApp.views[_view])
 			{
-				for(var i = 0; i < CalendarApp.views[_view].etemplates.length; i++)
+				for(let i = 0; i < CalendarApp.views[_view].etemplates.length; i++)
 				{
 					if(typeof CalendarApp.views[_view].etemplates[i] !== 'string' &&
 						view.etemplates.indexOf(CalendarApp.views[_view].etemplates[i]) == -1)
 					{
-						jQuery(CalendarApp.views[_view].etemplates[i].DOMContainer).hide();
+						CalendarApp.views[_view].etemplates[i].DOMContainer.style.display = 'none';
 					}
 				}
 			}
 		}
 
 		// Check for valid cache
-		var cachable_changes = ['date','weekend','view','days','planner_view','sortby'];
+		const cachable_changes = ['date','weekend','view','days','planner_view','sortby'];
 		// @ts-ignore
 		let keys = (Object.keys(this.state).concat(Object.keys(state.state))).filter(
-			function(value, index, self)
+			(value, index, self) =>
 			{
 				return self.indexOf(value) === index;
 			}
 		);
-		for(var i = 0; i < keys.length; i++)
+		for(let i = 0; i < keys.length; i++)
 		{
-			var s = keys[i];
+			const s = keys[i];
 			if (this.state[s] !== state.state[s])
 			{
 				if(cachable_changes.indexOf(s) === -1)
 				{
 					// Expire daywise cache
-					var daywise = egw.dataKnownUIDs(CalendarApp.DAYWISE_CACHE_ID);
+					const daywise = egw.dataKnownUIDs(CalendarApp.DAYWISE_CACHE_ID);
 
 					// Can't delete from here, as that would disconnect the existing widgets listening
-					for(var i = 0; i < daywise.length; i++)
+					for(let j = 0; j < daywise.length; j++)
 					{
-						egw.dataStoreUID(CalendarApp.DAYWISE_CACHE_ID + '::' + daywise[i],null);
+						egw.dataStoreUID(CalendarApp.DAYWISE_CACHE_ID + '::' + daywise[j],null);
 					}
 					break;
 				}
@@ -2653,6 +2705,10 @@ export class CalendarApp extends EgwApp
 			// We set a flag to ignore changes from the sidebox which would
 			// cause infinite loops.
 			this.state_update_in_progress = true;
+
+			// Declared here (not inside the if(grid)/else if below) since both branches use it,
+			// same as the old var-hoisting relied on.
+			let loading = false;
 
 			// Sanitize owner so it's always an array
 			if(state.state.owner === null || !state.state.owner ||
@@ -2676,7 +2732,7 @@ export class CalendarApp extends EgwApp
 					// An array-like Object or an Array?
 					if(!state.state.owner.filter)
 					{
-						state.state.owner = jQuery.map(state.state.owner, function(owner) {return owner;});
+						state.state.owner = Object.values(state.state.owner);
 					}
 			}
 			if(state.state.owner.indexOf('0') >= 0)
@@ -2684,15 +2740,15 @@ export class CalendarApp extends EgwApp
 				state.state.owner[state.state.owner.indexOf('0')] = this.egw.user('account_id');
 			}
 			// Remove duplicates
-			state.state.owner = state.state.owner.filter(function(value, index, self)
+			state.state.owner = state.state.owner.filter((value, index, self) =>
 			{
 				return self.indexOf(value) === index;
 			});
 			// Make sure they're all strings
-			state.state.owner = state.state.owner.map(function(owner) { return '' + owner;});
+			state.state.owner = state.state.owner.map(owner => '' + owner);
 
 			// Show the correct number of grids
-			var grid_count = 0;
+			let grid_count = 0;
 			switch(state.state.view)
 			{
 				case 'day':
@@ -2708,13 +2764,13 @@ export class CalendarApp extends EgwApp
 				// Month is calculated individually for the month
 			}
 
-			var grid = view.etemplates[0].widgetContainer.getWidgetById('view');
+			const grid = view.etemplates[0].widgetContainer.getWidgetById('view');
 
 			// Show the templates for the current view
 			// Needs to be visible while updating so sizing works
-			for(var i = 0; i < view.etemplates.length; i++)
+			for(let i = 0; i < view.etemplates.length; i++)
 			{
-				jQuery(view.etemplates[i].DOMContainer).show();
+				view.etemplates[i].DOMContainer.style.display = '';
 			}
 
 			/*
@@ -2725,21 +2781,19 @@ export class CalendarApp extends EgwApp
 			if(grid)
 			{
 				// Show loading div to hide redrawing
-				egw.loading_prompt(
+				this.egw.loading_prompt(
 					this.appname,true,egw.lang('please wait...'),
 					typeof framework.querySelector !== 'undefined' ? view.etemplates[0].DOMContainer : framework.applications?.calendar?.tab?.contentDiv ?? false,
 					egwIsMobile()?'horizontal':'spinner'
 				);
 
-				var loading = false;
-
-				var value = [];
+				const value = [];
 				state.state.first = view.start_date(state.state).toJSON();
 				// We'll modify this one, so it needs to be a new object
-				var date = new Date(state.state.first);
+				const date = new Date(state.state.first);
 
 				// Hide all but the first day header
-				jQuery(grid.getDOMNode()).toggleClass(
+				grid.getDOMNode().classList.toggle(
 					'hideDayColHeader',
 					state.state.view == 'week' || state.state.view == 'day4'
 				);
@@ -2748,29 +2802,36 @@ export class CalendarApp extends EgwApp
 				switch(state.state.view)
 				{
 					case 'month':
-						var end = state.state.last = view.end_date(state.state);
+					{
+						const end = state.state.last = view.end_date(state.state);
 						grid_count = Math.ceil((end - date.valueOf()) / (1000 * 60 * 60 * 24) / 7);
 						// fall through
+					}
 					case 'weekN':
-						for(var week = 0; week < grid_count; week++)
+					{
+						// Declared outside the loop (not const-per-iteration) since state.state.last
+						// below needs the last iteration's value, same as the old var-hoisting relied on.
+						let val : {id: string, start_date: string, end_date: Date|string, owner: any};
+						for(let week = 0; week < grid_count; week++)
 						{
-							var val = {
+							val = {
 								id: CalendarApp._daywise_cache_id(date,state.state.owner),
 								start_date: date.toJSON(),
 								end_date: new Date(date.toJSON()),
 								owner: state.state.owner
 							};
-							val.end_date.setUTCHours(24*7-1);
-							val.end_date.setUTCMinutes(59);
-							val.end_date.setUTCSeconds(59);
-							val.end_date = val.end_date.toJSON();
+							(<Date>val.end_date).setUTCHours(24*7-1);
+							(<Date>val.end_date).setUTCMinutes(59);
+							(<Date>val.end_date).setUTCSeconds(59);
+							val.end_date = (<Date>val.end_date).toJSON();
 							value.push(val);
 							date.setUTCHours(24*7);
 						}
 						state.state.last=val.end_date;
 						break;
+					}
 					case 'day':
-						var end = state.state.last = view.end_date(state.state).toJSON();
+						state.state.last = view.end_date(state.state).toJSON();
 							value.push({
 							id: CalendarApp._daywise_cache_id(date,state.state.owner),
 								start_date: state.state.first,
@@ -2779,10 +2840,11 @@ export class CalendarApp extends EgwApp
 							});
 						break;
 					default:
-						var end = state.state.last = view.end_date(state.state).toJSON();
+					{
+						const end = state.state.last = view.end_date(state.state).toJSON();
 						for(let owner = 0; owner < grid_count && owner < state.state.owner.length; owner++)
 						{
-							var _owner = grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner;
+							const _owner = grid_count > 1 ? state.state.owner[owner] || 0 : state.state.owner;
 							value.push({
 								id: CalendarApp._daywise_cache_id(date,_owner),
 								start_date: date,
@@ -2791,14 +2853,15 @@ export class CalendarApp extends EgwApp
 							});
 						}
 						break;
+					}
 				}
 				// If we have cached data for the timespan, pass it along
 				// Single day with multiple owners still needs owners split to satisfy
 				// caching keys, otherwise they'll fetch & cache consolidated
 				if(state.state.view == 'day' && state.state.owner.length < parseInt(''+this.egw.preference('day_consolidate','calendar')))
 				{
-					var day_value = [];
-					for(var i = 0; i < state.state.owner.length; i++)
+					const day_value = [];
+					for(let i = 0; i < state.state.owner.length; i++)
 					{
 						day_value.push({
 							start_date: state.state.first,
@@ -2813,44 +2876,45 @@ export class CalendarApp extends EgwApp
 					loading = this._need_data(value,state.state);
 				}
 
-				var row_index = 0;
+				let row_index = 0;
 
 				// Find any matching, existing rows - they can be kept
-				grid.iterateOver(function(widget) {
-					for(var i = 0; i < value.length; i++)
+				grid.iterateOver(widget => {
+					for(let i = 0; i < value.length; i++)
 					{
 						if(widget.id == value[i].id)
 						{
 							// Keep it, but move it
 							if(i > row_index)
 							{
-								for(var j = i-row_index; j > 0; j--)
+								for(let j = i-row_index; j > 0; j--)
 								{
 									// Move from the end to the start
 									grid._children.unshift(grid._children.pop());
 
 									// Swap DOM nodes
-									var a = grid._children[0].getDOMNode().parentNode.parentNode;
-									let a_scroll = jQuery('.calendar_calTimeGridScroll',a).scrollTop();
-									var b = grid._children[1].getDOMNode().parentNode.parentNode;
+									const a = grid._children[0].getDOMNode().parentNode.parentNode;
+									const a_scroll = a.querySelector('.calendar_calTimeGridScroll')?.scrollTop;
+									const b = grid._children[1].getDOMNode().parentNode.parentNode;
 									a.parentNode.insertBefore(a,b);
 
 									// Moving nodes changes scrolling, so set it back
-									jQuery('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
+									const a_scrollEl = a.querySelector('.calendar_calTimeGridScroll');
+									if(a_scrollEl) a_scrollEl.scrollTop = a_scroll;
 								}
 							}
 							else if (row_index > i)
 							{
 								// Swap DOM nodes
-								var a = grid._children[row_index].getDOMNode().parentNode.parentNode;
-								let a_scroll = jQuery('.calendar_calTimeGridScroll',a).scrollTop();
-								var b = grid._children[i].getDOMNode().parentNode.parentNode;
+								const a = grid._children[row_index].getDOMNode().parentNode.parentNode;
+								const a_scroll = a.querySelector('.calendar_calTimeGridScroll')?.scrollTop;
+								const b = grid._children[i].getDOMNode().parentNode.parentNode;
 
 								// Simple scroll forward, put top on the bottom
 								// This makes it faster if they scroll back next
 								if(i==0 && row_index == 1)
 								{
-									jQuery(b).appendTo(b.parentNode);
+									b.parentNode.appendChild(b);
 									grid._children.push(grid._children.shift());
 								}
 								else
@@ -2861,7 +2925,8 @@ export class CalendarApp extends EgwApp
 								}
 
 								// Moving nodes changes scrolling, so set it back
-								jQuery('.calendar_calTimeGridScroll',a).scrollTop(a_scroll);
+								const a_scrollEl2 = a.querySelector('.calendar_calTimeGridScroll');
+								if(a_scrollEl2) a_scrollEl2.scrollTop = a_scroll;
 							}
 							break;
 						}
@@ -2871,8 +2936,8 @@ export class CalendarApp extends EgwApp
 				row_index = 0;
 
 				// Set rows that need it
-				var was_disabled = [];
-				grid.iterateOver(function(widget) {
+				const was_disabled = [];
+				grid.iterateOver(widget => {
 					was_disabled[row_index] = false;
 					if(row_index < value.length)
 					{
@@ -2886,11 +2951,11 @@ export class CalendarApp extends EgwApp
 					row_index++;
 				},this, et2_calendar_view);
 				row_index = 0;
-				grid.iterateOver(function(widget) {
+				grid.iterateOver(widget => {
 					if(row_index >= value.length) return;
 
 					// Clear height to make sure there's correct calculations
-					widget.div.css("height","");
+					widget.div[0].style.height = "";
 
 					if(widget.set_show_weekend)
 					{
@@ -2898,7 +2963,7 @@ export class CalendarApp extends EgwApp
 					}
 					if(widget.set_granularity)
 					{
-						if(widget.loader) widget.loader.show();
+						if(widget.loader) widget.loader[0].style.display = '';
 						widget.set_granularity(view.granularity(state.state));
 					}
 					if(widget.id == value[row_index].id &&
@@ -2910,10 +2975,10 @@ export class CalendarApp extends EgwApp
 						// Do not need to re-set this row, but we do need to re-do
 						// the times, as they may have changed
 						widget.resizeTimes();
-						window.setTimeout(jQuery.proxy(widget.set_header_classes, widget),0);
+						window.setTimeout(widget.set_header_classes.bind(widget),0);
 
 						// If disabled while the daycols were loaded, they won't load their events
-						for(var day = 0; was_disabled[row_index] && day < widget.day_widgets.length; day++)
+						for(let day = 0; was_disabled[row_index] && day < widget.day_widgets.length; day++)
 						{
 							egw.dataStoreUID(
 									widget.day_widgets[day].registeredUID,
@@ -2923,7 +2988,7 @@ export class CalendarApp extends EgwApp
 						widget.set_owner(value[row_index].owner);
 
 						// Hide loader
-						widget.loader.hide();
+						widget.loader[0].style.display = 'none';
 						row_index++;
 						return;
 					}
@@ -2952,9 +3017,9 @@ export class CalendarApp extends EgwApp
 						}
 
 						// Set value
-						for(var i = 0; i < view.etemplates.length; i++)
+						for(let i = 0; i < view.etemplates.length; i++)
 						{
-							view.etemplates[i].widgetContainer.iterateOver(function(widget)
+							view.etemplates[i].widgetContainer.iterateOver(widget =>
 							{
 								if(typeof widget['set_' + updater] === 'function')
 								{
@@ -2974,7 +3039,7 @@ export class CalendarApp extends EgwApp
 			// Toggle todos
 			let frameworkApp = framework.querySelector ? framework.querySelector("egw-app#calendar") :
 				framework.getApplicationByName('calendar');
-			if((state.state.view == 'day' || this.state.view == 'day') && jQuery(view.etemplates[0].DOMContainer).is(':visible'))
+			if((state.state.view == 'day' || this.state.view == 'day') && view.etemplates[0].DOMContainer.checkVisibility())
 			{
 				if(state.state.view == 'day' && state.state.owner.length === 1 && !isNaN(state.state.owner) && state.state.owner[0] >= 0 && !egwIsMobile()
 				// Check preferences and permissions
@@ -2993,8 +3058,8 @@ export class CalendarApp extends EgwApp
 					else
 					{
 						// Set width to 70%, otherwise if a scrollbar is needed for the view, it will conflict with the todo list
-						jQuery((<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer).css("width", "70%");
-						jQuery(view.etemplates[1].DOMContainer).css({"left": "70%"});
+						(<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer.style.width = "70%";
+						view.etemplates[1].DOMContainer.style.left = "70%";
 					}
 
 					// TODO: Maybe some caching here
@@ -3012,11 +3077,11 @@ export class CalendarApp extends EgwApp
 					}
 					else
 					{
-						jQuery((<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer).css("left", "100%");
-						jQuery((<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer).hide();
-						jQuery((<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer).css("width", "100%");
+						(<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer.style.left = "100%";
+						(<etemplate2>CalendarApp.views.day.etemplates[1]).DOMContainer.style.display = 'none';
+						(<etemplate2>CalendarApp.views.day.etemplates[0]).DOMContainer.style.width = "100%";
 					}
-					view.etemplates[0].widgetContainer.iterateOver(function(w) {
+					view.etemplates[0].widgetContainer.iterateOver(w => {
 						w.set_width('100%');
 					},this,et2_calendar_timegrid);
 				}
@@ -3031,10 +3096,10 @@ export class CalendarApp extends EgwApp
 						view.etemplates[0].resize();
 					});
 				}
-				if(jQuery(view.etemplates[0].DOMContainer).is(':visible'))
+				if(view.etemplates[0].DOMContainer.checkVisibility())
 				{
 					view.etemplates[0].DOMContainer.style.width = "";
-					view.etemplates[0].widgetContainer.iterateOver(function(w)
+					view.etemplates[0].widgetContainer.iterateOver(w =>
 					{
 						w.set_width('100%');
 					}, this, et2_calendar_timegrid);
@@ -3090,7 +3155,7 @@ export class CalendarApp extends EgwApp
 				state.state.search = state.state.keywords ? state.state.keywords : state.state.search;
 				delete state.state.keywords;
 
-				var nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
+				const nm = view.etemplates[0].widgetContainer.getWidgetById('nm');
 
 				// 'Custom' filter needs an end date
 				if(nm.activeFilters.filter === 'custom' && !state.state.end_date)
@@ -3118,13 +3183,13 @@ export class CalendarApp extends EgwApp
 				// (It will automatically re-start when shown)
 				try
 				{
-					var nm = (<etemplate2>CalendarApp.views.listview.etemplates[0]).widgetContainer.getWidgetById('nm');
+					const nm = (<etemplate2>CalendarApp.views.listview.etemplates[0]).widgetContainer.getWidgetById('nm');
 					nm.controller._grid.doInvalidate = false;
 				} catch (e) {}
 				// Other views do not search
 				delete state.state.keywords;
 			}
-			this.state = jQuery.extend({},state.state);
+			this.state = Object.assign({},state.state);
 
 			/* Update re-orderable calendars */
 			this._sortable();
@@ -3145,8 +3210,8 @@ export class CalendarApp extends EgwApp
 			this.state_update_in_progress = false;
 
 			// Update saved state in preferences
-			var save = {};
-			for(var i = 0; i < CalendarApp.states_to_save.length; i++)
+			const save = {};
+			for(let i = 0; i < CalendarApp.states_to_save.length; i++)
 			{
 				save[CalendarApp.states_to_save[i]] = this.state[CalendarApp.states_to_save[i]];
 			}
@@ -3154,7 +3219,7 @@ export class CalendarApp extends EgwApp
 
 			// Trigger resize to get correct sizes, as they may have sized while
 			// hidden
-			for(var i = 0; i < view.etemplates.length; i++)
+			for(let i = 0; i < view.etemplates.length; i++)
 			{
 				view.etemplates[i].resize();
 			}
@@ -3163,22 +3228,22 @@ export class CalendarApp extends EgwApp
 			// when done but if everything is in the cache, hide from here.
 			if(!loading)
 			{
-				window.setTimeout(jQuery.proxy(function() {
+				window.setTimeout(() => {
 
-					egw.loading_prompt(this.appname,false);
-				},this),500);
+					this.egw.loading_prompt(this.appname,false);
+				},500);
 			}
 
 			return;
 		}
 		// old calendar state handling on server-side (incl. switching to and from listview)
-		var menuaction = 'calendar.calendar_uiviews.index';
+		let menuaction = 'calendar.calendar_uiviews.index';
 		if (typeof state.state != 'undefined' && (typeof state.state.view == 'undefined' || state.state.view == 'listview'))
 		{
 			if (state.name)
 			{
 				// 'blank' is the special name for no filters, send that instead of the nice translated name
-				state.state.favorite = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state || state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+				state.state.favorite = Object.keys(state ?? {}).length === 0 || Object.keys((state.state || state.filter) ?? {}).length === 0 ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 				// set date for "No Filter" (blank) favorite to todays date
 				if(state.state.favorite == 'blank')
 				{
@@ -3194,9 +3259,9 @@ export class CalendarApp extends EgwApp
 				// --> check if we only need to set something which can be handeled by nm internally
 				// or we need a redirect
 				// ToDo: pass them via nm's get_rows call to server (eg. by passing state), so we dont need a redirect
-				var current_state = this.getState();
-				var need_redirect = false;
-				for(var attr in current_state)
+				const current_state = this.getState();
+				let need_redirect = false;
+				for(const attr in current_state)
 				{
 					switch(attr)
 					{
@@ -3243,13 +3308,13 @@ export class CalendarApp extends EgwApp
 			}
 		}
 		// setting internal state now, that linkHandler does not intercept switching from listview to any old view
-		this.state = jQuery.extend({},state.state);
+		this.state = Object.assign({},state.state);
 		if(this.sidebox_et2)
 		{
-			jQuery(this.sidebox_et2.getInstanceManager().DOMContainer).show();
+			this.sidebox_et2.getInstanceManager().DOMContainer.style.display = '';
 		}
 
-		var query = jQuery.extend({menuaction: menuaction},state.state||{});
+		const query : any = Object.assign({menuaction: menuaction},state.state||{});
 
 		// prepend an owner 0, to reset all owners and not just set given resource type
 		if(typeof query.owner != 'undefined')
@@ -3275,16 +3340,16 @@ export class CalendarApp extends EgwApp
 			return;
 		}
 
-		for(var j = 0; j < this.sidebox_hooked_templates.length; j++)
+		for(let j = 0; j < this.sidebox_hooked_templates.length; j++)
 		{
-			var sidebox = this.sidebox_hooked_templates[j];
+			const sidebox = this.sidebox_hooked_templates[j];
 			// Remove any destroyed or not valid templates
 			if(!sidebox.getInstanceManager || !sidebox.getInstanceManager())
 			{
 				this.sidebox_hooked_templates.splice(j, 1, 0);
 				continue;
 			}
-			sidebox.iterateOver(function(widget)
+			sidebox.iterateOver(widget =>
 			{
 				if(widget.id == 'filter')
 				{
@@ -3333,8 +3398,8 @@ export class CalendarApp extends EgwApp
 	 */
 	is_event(_action, _selected)
 	{
-		var is_widget = false;
-		for(var i = 0; i < _selected.length; i++)
+		let is_widget = false;
+		for(let i = 0; i < _selected.length; i++)
 		{
 			if(_selected[i].iface.getWidget() && _selected[i].iface.getWidget().instanceOf(et2_calendar_event))
 			{
@@ -3344,11 +3409,11 @@ export class CalendarApp extends EgwApp
 			// Also check classes, usually indicating permission
 			if(_action.data && _action.data.enableClass)
 			{
-				is_widget = is_widget && (jQuery( _selected[i].iface.getDOMNode()).hasClass(_action.data.enableClass));
+				is_widget = is_widget && (_selected[i].iface.getDOMNode().classList.contains(_action.data.enableClass));
 			}
 			if(_action.data && _action.data.disableClass)
 			{
-				is_widget = is_widget && !(jQuery( _selected[i].iface.getDOMNode()).hasClass(_action.data.disableClass));
+				is_widget = is_widget && !(_selected[i].iface.getDOMNode().classList.contains(_action.data.disableClass));
 			}
 
 		}
@@ -3362,9 +3427,9 @@ export class CalendarApp extends EgwApp
 	 */
 	alarm_custom_date (selectbox? : HTMLInputElement, _widget? : et2_selectbox)
 	{
-		var alarm_date = this.et2.getWidgetById('new_alarm[date]');
-		var alarm_options = _widget || this.et2.getWidgetById('new_alarm[options]');
-		var start = <Et2Date><unknown>this.et2.getWidgetById('start');
+		const alarm_date = this.et2.getWidgetById('new_alarm[date]');
+		const alarm_options = _widget || this.et2.getWidgetById('new_alarm[options]');
+		const start = <Et2Date><unknown>this.et2.getWidgetById('start');
 
 		if (alarm_date && alarm_options && start)
 		{
@@ -3376,10 +3441,10 @@ export class CalendarApp extends EgwApp
 			{
 				alarm_date.set_class('');
 			}
-			var startDate = typeof start.getValue != 'undefined'?start.getValue():start.value;
+			const startDate = typeof start.getValue != 'undefined'?start.getValue():start.value;
 			if (startDate)
 			{
-				var date = new Date(startDate);
+				const date = new Date(startDate);
 				date.setTime(date.getTime() - 1000 * parseInt(alarm_options.getValue()));
 				alarm_date.set_value(date);
 			}
@@ -3396,28 +3461,29 @@ export class CalendarApp extends EgwApp
 	 */
 	set_alarmOptions_WD (_egw,_widget)
 	{
-		var alarm = <et2_grid> this.et2.getWidgetById('alarm');
+		// et2_grid's `cells` is private, and there's no public accessor for a cell's widget -
+		// cast to <any> here rather than adding one just for this one call site.
+		const alarm = <any> this.et2.getWidgetById('alarm');
 		if (!alarm) return;	// no default alarm
-		var content = this.et2.getArrayMgr('content').data;
-		var start = <et2_date> this.et2.getWidgetById('start');
-		var self= this;
-		var time = alarm.cells[1][0].widget;
-		var event = alarm.cells[1][1].widget;
+		const content = this.et2.getArrayMgr('content').data;
+		const start = <et2_date> this.et2.getWidgetById('start');
+		const time = alarm.cells[1][0].widget;
+		const event = alarm.cells[1][1].widget;
 		// Convert a seconds of time to a translated label
-		var _secs_to_label = function (_secs)
+		const _secs_to_label = (_secs) =>
 		{
-			var label='';
+			let label='';
 			if (_secs < 3600)
 			{
-				label = self.egw.lang('%1 minutes', _secs/60);
+				label = this.egw.lang('%1 minutes', _secs/60);
 			}
 			else if(_secs < 86400)
 			{
-				label = self.egw.lang('%1 hours', _secs/3600);
+				label = this.egw.lang('%1 hours', _secs/3600);
 			}
 			else
 			{
-				label = self.egw.lang('%1 days', _secs/(3600*24));
+				label = this.egw.lang('%1 days', _secs/(3600*24));
 			}
 			return label;
 		};
@@ -3427,19 +3493,24 @@ export class CalendarApp extends EgwApp
 		}
 		else
 		{
-			var def_alarm = this.egw.preference(_widget.get_value() === "true" ?
+			const def_alarm = this.egw.preference(_widget.get_value() === "true" ?
 				'default-alarm-wholeday' : 'default-alarm', 'calendar');
 			if (!def_alarm && def_alarm !== 0)	// no alarm
 			{
-				jQuery('#calendar-edit_alarm > tbody :nth-child(1)').hide();
+				(<HTMLElement>document.querySelector('#calendar-edit_alarm > tbody :nth-child(1)')).style.display = 'none';
 			}
 			else
 			{
-				jQuery('#calendar-edit_alarm > tbody :nth-child(1)').show();
-				start.set_hours(0);
-				start.set_minutes(0);
-				time.set_value(start.get_value());
-				time.set_value(new Date(new Date(start.get_value()).valueOf() - (60*def_alarm*1000)).toJSON());
+				(<HTMLElement>document.querySelector('#calendar-edit_alarm > tbody :nth-child(1)')).style.display = '';
+				// et2_date has no set_hours()/set_minutes() - this always threw before (a real,
+				// previously-silent bug), so the alarm-relative-to-midnight calculation below
+				// never actually ran. Compute midnight locally instead of mutating the real
+				// `start` field widget, which would be a separate, worse side effect.
+				const start_of_day = new Date(start.get_value());
+				start_of_day.setHours(0);
+				start_of_day.setMinutes(0);
+				time.set_value(start_of_day);
+				time.set_value(new Date(start_of_day.valueOf() - (60*def_alarm*1000)).toJSON());
 				event.set_value(_secs_to_label(60 * def_alarm));
 			}
 		}
@@ -3451,8 +3522,8 @@ export class CalendarApp extends EgwApp
 	_clear_cache( integration_app?:string )
 	{
 		// Full refresh, clear the caches
-		var events = egw.dataKnownUIDs('calendar');
-		for(var i = 0; i < events.length; i++)
+		const events = egw.dataKnownUIDs('calendar');
+		for(let i = 0; i < events.length; i++)
 		{
 			let event_data = egw.dataGetUIDdata("calendar::" + events[i]).data || {app: "calendar"};
 			if(!integration_app || integration_app && event_data && event_data.app === integration_app)
@@ -3466,8 +3537,8 @@ export class CalendarApp extends EgwApp
 		// If just removing one app, leave the columns alone
 		if(integration_app) return;
 
-		var daywise = egw.dataKnownUIDs(CalendarApp.DAYWISE_CACHE_ID);
-		for(var i = 0; i < daywise.length; i++)
+		const daywise = egw.dataKnownUIDs(CalendarApp.DAYWISE_CACHE_ID);
+		for(let i = 0; i < daywise.length; i++)
 		{
 			// Empty to clear existing widgets
 			egw.dataStoreUID(CalendarApp.DAYWISE_CACHE_ID + '::' + daywise[i], null);
@@ -3485,34 +3556,34 @@ export class CalendarApp extends EgwApp
 	 */
 	_need_data(value, state)
 	{
-		var need_data = false;
+		let need_data = false;
 
 		// Determine if we're showing multiple owners seperate or consolidated
-		var seperate_owners = false;
-		var last_owner = value.length ? value[0].owner || 0 : 0;
-		for(var i = 0; i < value.length && !seperate_owners; i++)
+		let seperate_owners = false;
+		const last_owner = value.length ? value[0].owner || 0 : 0;
+		for(let i = 0; i < value.length && !seperate_owners; i++)
 		{
 			seperate_owners = seperate_owners || (last_owner !== value[i].owner);
 		}
 
-		for(var i = 0; i < value.length; i++)
+		for(let i = 0; i < value.length; i++)
 		{
-			var t = new Date(value[i].start_date);
-			var end = new Date(value[i].end_date);
+			const t = new Date(value[i].start_date);
+			const end = new Date(value[i].end_date);
 			do
 			{
 				// Cache is by date (and owner, if seperate)
-				var date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
-				var cache_id = CalendarApp._daywise_cache_id(date, seperate_owners && value[i].owner ? value[i].owner : state.owner||false);
+				const date = t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
+				const cache_id = CalendarApp._daywise_cache_id(date, seperate_owners && value[i].owner ? value[i].owner : state.owner||false);
 
 				if(egw.dataHasUID(cache_id))
 				{
-					var c = egw.dataGetUIDdata(cache_id);
+					const c = egw.dataGetUIDdata(cache_id);
 					if(c.data && c.data !== null)
 					{
 						// There is data, pass it along now
 						value[i][date] = [];
-						for(var j = 0; j < c.data.length; j++)
+						for(let j = 0; j < c.data.length; j++)
 						{
 							if(egw.dataHasUID('calendar::'+c.data[j]))
 							{
@@ -3545,7 +3616,7 @@ export class CalendarApp extends EgwApp
 			if(need_data && seperate_owners)
 			{
 				this._fetch_data(
-					jQuery.extend({}, state, {owner: value[i].owner, selected_owners: state.owner}),
+					Object.assign({}, state, {owner: value[i].owner, selected_owners: state.owner}),
 					this.sidebox_et2 ? null : this.et2.getInstanceManager()
 				);
 				need_data = false;
@@ -3590,7 +3661,7 @@ export class CalendarApp extends EgwApp
 		}
 
 		// Category needs to be false if empty, not an empty array or string
-		var cat_id = state.cat_id ? state.cat_id : false;
+		let cat_id = state.cat_id ? state.cat_id : false;
 		if(cat_id && typeof cat_id.join != 'undefined')
 		{
 			if(cat_id.join('') == '') cat_id = false;
@@ -3598,7 +3669,7 @@ export class CalendarApp extends EgwApp
 		// Make sure cat_id reaches to server in array format
 		if (cat_id && typeof cat_id == 'string' && cat_id != "0") cat_id = cat_id.split(',');
 
-		var query = jQuery.extend({}, {
+		const query : any = Object.assign({}, {
 			get_rows: 'calendar.calendar_uilist.get_rows',
 			row_id:'row_id',
 			startdate:state.first ||  state.date,
@@ -3630,7 +3701,7 @@ export class CalendarApp extends EgwApp
 		}
 
 		// Already in progress?
-		var query_string = JSON.stringify(query);
+		const query_string = JSON.stringify(query);
 		if(this._queries_in_progress.indexOf(query_string) != -1)
 		{
 			return;
@@ -3643,8 +3714,8 @@ export class CalendarApp extends EgwApp
 			specific_ids ? {refresh: specific_ids} : {start: start, num_rows:400},
 			query,
 			this.appname,
-			function calendar_handleResponse(data) {
-				var idx = this._queries_in_progress.indexOf(query_string);
+			(data) => {
+				const idx = this._queries_in_progress.indexOf(query_string);
 				if(idx >= 0)
 				{
 					this._queries_in_progress.splice(idx,1);
@@ -3654,17 +3725,17 @@ export class CalendarApp extends EgwApp
 				// Look for any updated select options
 				if(data.rows && data.rows.sel_options && this.sidebox_et2)
 				{
-					for(var field in data.rows.sel_options)
+					for(const field in data.rows.sel_options)
 					{
-						var widget = this.sidebox_et2.getWidgetById(field);
+						const widget = this.sidebox_et2.getWidgetById(field);
 						if(widget && widget.set_select_options)
 						{
 							// Merge in new, update label of existing
-							for(var i in data.rows.sel_options[field])
+							for(const i in data.rows.sel_options[field])
 							{
-								var found = false;
-								var option = data.rows.sel_options[field][i];
-								for(var j in widget.select_options)
+								let found = false;
+								const option = data.rows.sel_options[field][i];
+								for(const j in widget.select_options)
 								{
 									if(option.value == widget.select_options[j].value)
 									{
@@ -3688,12 +3759,12 @@ export class CalendarApp extends EgwApp
 									widget.select_options.push(option);
 								}
 							}
-							var in_progress = app.calendar.state_update_in_progress;
-							app.calendar.state_update_in_progress = true;
+							const in_progress = this.state_update_in_progress;
+							this.state_update_in_progress = true;
 							widget.set_select_options(widget.select_options);
 							widget.set_value(widget.getValue());
 
-							app.calendar.state_update_in_progress = in_progress;
+							this.state_update_in_progress = in_progress;
 						}
 					}
 				}
@@ -3707,15 +3778,15 @@ export class CalendarApp extends EgwApp
 				if(data.order.length + start < data.total)
 				{
 					// Wait a bit, let UI do something.
-					window.setTimeout( function() {
-						app.calendar._fetch_data(state, instance, start + data.order.length);
+					window.setTimeout( () => {
+						this._fetch_data(state, instance, start + data.order.length);
 					}, 100);
 				}
 				// Hide AJAX loader
 				else if(typeof framework !== 'undefined')
 				{
 					framework.applications?.calendar?.sidemenuEntry.hideAjaxLoader();
-					egw.loading_prompt('calendar', false)
+					this.egw.loading_prompt('calendar', false)
 
 				}
 			}, this, null
@@ -3757,7 +3828,10 @@ export class CalendarApp extends EgwApp
 				continue;
 			}
 			let resource = options.find((o) => o.value === id);
-			if(!resource || resource && !resource.resources)
+			// `resources` is a widely-used dynamic extra field on select options (see
+			// et2_widget_event.ts/et2_widget_planner.ts/CalendarOwner.ts), not declared on the
+			// shared SelectOption interface - out of scope to add there for this app.ts-only pass.
+			if(!resource || resource && !(<any>resource).resources)
 			{
 				groups.push(parseInt(id));
 			}
@@ -3809,24 +3883,24 @@ export class CalendarApp extends EgwApp
 	 */
 	_update_events( state, data)
 	{
-		var updated_days = {};
+		const updated_days = {};
 
 		// Events can span for longer than we are showing
-		var first = new Date(state.first);
-		var last = new Date(state.last);
-		var bounds = {
+		const first = new Date(state.first);
+		const last = new Date(state.last);
+		const bounds = {
 			first: ''+first.getUTCFullYear() + sprintf('%02d',first.getUTCMonth()+1) + sprintf('%02d',first.getUTCDate()),
 			last: ''+last.getUTCFullYear() + sprintf('%02d',last.getUTCMonth()+1) + sprintf('%02d',last.getUTCDate())
 		};
 		// Seperate owners, or consolidated?
-		var multiple_owner = typeof state.owner != 'string' &&
+		const multiple_owner = typeof state.owner != 'string' &&
 			state.owner.length > 1 &&
 			(state.view == 'day' && state.owner.length < parseInt(''+this.egw.preference('day_consolidate','calendar')) ||
 			['week','day4'].indexOf(state.view) !== -1 && state.owner.length < parseInt(''+this.egw.preference('week_consolidate','calendar')));
 
-		for(var i = 0; i < data.length; i++)
+		for(let i = 0; i < data.length; i++)
 		{
-			var record = this.egw.dataGetUIDdata(data[i]);
+			const record = this.egw.dataGetUIDdata(data[i]);
 			if(record && record.data && new Date(state.first) <= new Date(record.data.end) && new Date(state.last) >= new Date(record.data.start))
 			{
 				if(typeof updated_days[record.data.date] === 'undefined')
@@ -3849,21 +3923,21 @@ export class CalendarApp extends EgwApp
 
 				// Check for multi-day events listed once
 				// Date must stay a string or we might cause problems with nextmatch
-				var dates = {
+				const dates = {
 					start: typeof record.data.start === 'string' ? record.data.start : record.data.start.toJSON(),
 					end: typeof record.data.end === 'string' ? record.data.end : record.data.end.toJSON()
 				};
 				if(dates.start.substr(0,10) !== dates.end.substr(0,10))
 				{
-					var end = new Date(Math.min(new Date(record.data.end).valueOf(), new Date(state.last).valueOf()));
+					const end = new Date(Math.min(new Date(record.data.end).valueOf(), new Date(state.last).valueOf()));
 					end.setUTCHours(23);
 					end.setUTCMinutes(59);
 					end.setUTCSeconds(59);
-					var t = new Date(Math.max(new Date(record.data.start).valueOf(), new Date(state.first).valueOf()));
+					const t = new Date(Math.max(new Date(record.data.start).valueOf(), new Date(state.first).valueOf()));
 
 					do
 					{
-						var expanded_date = ''+t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
+						const expanded_date = ''+t.getUTCFullYear() + sprintf('%02d',t.getUTCMonth()+1) + sprintf('%02d',t.getUTCDate());
 
 						// Avoid events ending at midnight having a 0 length event the next day
 						if(t.toJSON().substr(0,10) === dates.end.substr(0,10) && dates.end.substr(11,8) === '00:00:00') break;
@@ -3889,21 +3963,21 @@ export class CalendarApp extends EgwApp
 		}
 
 		// Now we know which days changed, so we pass it on
-		for(var day in updated_days)
+		for(const day in updated_days)
 		{
 			// Might be split by user, so we have to check that too
-			for(var i = 0; i < (typeof state.owner == 'object' ? state.owner.length : 1); i++)
+			for(let i = 0; i < (typeof state.owner == 'object' ? state.owner.length : 1); i++)
 			{
-				var owner = multiple_owner ? state.owner[i] : state.owner;
-				var cache_id = CalendarApp._daywise_cache_id(day, owner);
+				const owner = multiple_owner ? state.owner[i] : state.owner;
+				const cache_id = CalendarApp._daywise_cache_id(day, owner);
 				if(egw.dataHasUID(cache_id))
 				{
 					// Don't lose any existing data, just append
-					var c = egw.dataGetUIDdata(cache_id);
+					const c = egw.dataGetUIDdata(cache_id);
 					if(c.data && c.data !== null)
 					{
 						// Avoid duplicates
-						var data = c.data.concat(updated_days[day]).filter(function(value, index, self) {
+						const data = c.data.concat(updated_days[day]).filter((value, index, self) => {
 							return self.indexOf(value) === index;
 						});
 						this.egw.dataStoreUID(cache_id,data);
@@ -3920,15 +3994,18 @@ export class CalendarApp extends EgwApp
 			}
 		}
 
-		egw.loading_prompt(this.appname,false);
+		this.egw.loading_prompt(this.appname,false);
 	}
 
 	/**
 	 * Some handy date calculations
 	 * All take either a Date object or full date with timestamp (Z)
 	 */
+	// Method-shorthand (not arrow functions) throughout this object - end_of_week() below calls
+	// this.start_of_week(), relying on `this` being the object itself when called as
+	// this.date.method(...), which arrow functions (bound to the CalendarApp instance) would break.
 	date = {
-		toString: function(date) : string
+		toString(date) : string
 		{
 			// Ensure consistent formatting using UTC, avoids problems with comparison
 			// and timezones
@@ -3952,14 +4029,14 @@ export class CalendarApp extends EgwApp
 		* @param {boolean} display_day =false should a day-name prefix the date, eg. monday June 20, 2006
 		* @return string with formatted date
 		*/
-		long_date: function(first, last, display_time, display_day) : string
+		long_date(first, last, display_time, display_day) : string
 		{
 			if(!first) return '';
 			if(typeof first === 'string')
 			{
 				first = new Date(first);
 			}
-			var first_format = new Date(first.valueOf() + first.getTimezoneOffset() * 60 * 1000);
+			const first_format = new Date(first.valueOf() + first.getTimezoneOffset() * 60 * 1000);
 
 			if(typeof last == 'string' && last)
 			{
@@ -3969,9 +4046,12 @@ export class CalendarApp extends EgwApp
 			{
 				 last = false;
 			}
+			// Declared here (not inside the if(last) below) since it's read again in the switch
+			// and after the loop, same as the old var-hoisting relied on.
+			let last_format;
 			if(last)
 			{
-				var last_format = new Date(last.valueOf() + last.getTimezoneOffset() * 60 * 1000);
+				last_format = new Date(last.valueOf() + last.getTimezoneOffset() * 60 * 1000);
 			}
 
 			if(!display_time)
@@ -3983,19 +4063,18 @@ export class CalendarApp extends EgwApp
 				display_day = false;
 			}
 
-			var range = '';
+			let range = '';
 
 			const datefmt = egw.preference('dateformat') || 'Y/m/d';
-			var timefmt = egw.preference('timeformat') === '12' ? 'h:i a' : 'H:i';
 
-			var month_before_day = datefmt[0].toLowerCase() == 'm' ||
+			const month_before_day = datefmt[0].toLowerCase() == 'm' ||
 				datefmt[2].toLowerCase() == 'm' && datefmt[4] == 'd';
 
 			if (display_day)
 			{
 				range = flatpickr.formatDate(first_format, 'l') + (datefmt[0] != 'd' ? ' ' : ', ');
 			}
-			for (var i = 0; i < 5; i += 2)
+			for (let i = 0; i < 5; i += 2)
 			{
 				switch(datefmt[i])
 				{
@@ -4077,10 +4156,10 @@ export class CalendarApp extends EgwApp
 		* @param {string|Date} _date
 		* @return string
 		*/
-		week_number: function(_date)
+		week_number(_date)
 		{
-			var d = new Date(_date);
-			var day = d.getUTCDay();
+			const d = new Date(_date);
+			const day = d.getUTCDay();
 
 			// if week does not start Monday and date is Sunday --> add one day
 			if (egw.preference('weekdaystarts','calendar') != 'Monday' && !day)
@@ -4095,11 +4174,11 @@ export class CalendarApp extends EgwApp
 
 			return flatpickr.formatDate(new Date(d.valueOf() + d.getTimezoneOffset() * 60 * 1000), "W");
 		},
-		start_of_week: function(date)
+		start_of_week(date)
 		{
-			var d = new Date(date);
-			var day = d.getUTCDay();
-			var diff = 0;
+			const d = new Date(date);
+			const day = d.getUTCDay();
+			let diff = 0;
 			switch(egw.preference('weekdaystarts','calendar'))
 			{
 				case 'Saturday':
@@ -4115,9 +4194,9 @@ export class CalendarApp extends EgwApp
 			d.setUTCDate(d.getUTCDate() + diff);
 			return d;
 		},
-		end_of_week: function(date)
+		end_of_week(date)
 		{
-			var d = this.start_of_week(date);
+			const d = this.start_of_week(date);
 			d.setUTCDate(d.getUTCDate() + 6);
 			return d;
 		}
@@ -4158,8 +4237,8 @@ export class CalendarApp extends EgwApp
 	 */
 	_et2_view_init(_et2, _name)
 	{
-		var hidden = typeof this.state.view !== 'undefined';
-		var all_loaded = this.sidebox_et2 !== null;
+		let hidden = typeof this.state.view !== 'undefined';
+		let all_loaded = this.sidebox_et2 !== null;
 
 		// Avoid home portlets using our templates, and get them right
 		if(_et2.uniqueId.indexOf('portlet') === 0)
@@ -4174,26 +4253,28 @@ export class CalendarApp extends EgwApp
 		}
 
 		// Flag to make sure we don't hide non-view templates
-		var view_et2 = false;
+		let view_et2 = false;
 
-		for(var view in CalendarApp.views)
+		for(const view in CalendarApp.views)
 		{
-			var index = CalendarApp.views[view].etemplates.indexOf(_name);
+			const index = CalendarApp.views[view].etemplates.indexOf(_name);
 			if(index > -1)
 			{
 				view_et2 = true;
 				CalendarApp.views[view].etemplates[index] = _et2;
-				// If a template disappears, we want to release it
-				jQuery(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
-					this.view.etemplates[this.index] = _name;
-				},jQuery.extend({},{view: CalendarApp.views[view], index: ""+index, name: _name})));
+				// If a template disappears, we want to release it. `view`/`index` are
+				// per-iteration const bindings, so the closure captures this iteration's
+				// values directly - no need for jQuery.proxy's old capture-struct workaround.
+				_et2.DOMContainer.addEventListener('clear', () => {
+					CalendarApp.views[view].etemplates[index] = _name;
+				}, {once: true});
 
 				if(this.state.view === view)
 				{
 					hidden = false;
 				}
 			}
-			CalendarApp.views[view].etemplates.forEach(function(et) {all_loaded = all_loaded && typeof et !== 'string';});
+			CalendarApp.views[view].etemplates.forEach(et => {all_loaded = all_loaded && typeof et !== 'string';});
 		}
 
 		// Add some extras to the nextmatch so it can keep the dates in sync with
@@ -4203,7 +4284,7 @@ export class CalendarApp extends EgwApp
 		// date range
 		if(_name == 'calendar.list')
 		{
-			var nm = _et2.widgetContainer.getWidgetById('nm');
+			const nm = _et2.widgetContainer.getWidgetById('nm');
 			if(nm)
 			{
 				// Avoid unwanted refresh immediately after load
@@ -4214,13 +4295,13 @@ export class CalendarApp extends EgwApp
 				{
 					this.state.keywords = nm.activeFilters.search;
 				}
-				
-				nm.set_startdate = jQuery.proxy(function(date) {
+
+				nm.set_startdate = (date) => {
 					this.state.first = this.date.toString(new Date(date));
-				},this);
-				nm.set_enddate = jQuery.proxy(function(date) {
+				};
+				nm.set_enddate = (date) => {
 					this.state.last = this.date.toString(new Date(date));
-				},this);
+				};
 			}
 		}
 
@@ -4229,35 +4310,36 @@ export class CalendarApp extends EgwApp
 		{
 			if(hidden)
 			{
-				jQuery(_et2.DOMContainer).hide();
+				_et2.DOMContainer.style.display = 'none';
 			}
 		}
 		else
 		{
-			var app_name = _name.split('.')[0];
+			const app_name = _name.split('.')[0];
 			if(app_name && app_name != 'calendar' && egw.app(app_name))
 			{
 				// A template from another application?  Keep it up to date as state changes
 				this.sidebox_hooked_templates.push(_et2.widgetContainer);
-				// If it leaves (or reloads) remove it
-				jQuery(_et2.DOMContainer).one('clear',jQuery.proxy(function() {
+				// If it leaves (or reloads) remove it. `this` is deliberately bound to the
+				// index (not the CalendarApp instance), so this stays a plain function.
+				_et2.DOMContainer.addEventListener('clear', function() {
 					if(app.calendar)
 					{
-						app.calendar.sidebox_hooked_templates.splice(this,1,0);
+						(<CalendarApp>app.calendar).sidebox_hooked_templates.splice(this,1,0);
 					}
-				},this.sidebox_hooked_templates.length -1));
+				}.bind(this.sidebox_hooked_templates.length -1), {once: true});
 			}
 		}
 		if(all_loaded)
 		{
-			jQuery(window).trigger('resize');
+			window.dispatchEvent(new Event('resize'));
 			this.setState({state:this.state});
 
 			// Hide loader after 1 second as a fallback, it will also be hidden
 			// after loading is complete.
-			window.setTimeout(jQuery.proxy(function() {
-				egw.loading_prompt(this.appname,false);
-			}, this),1000);
+			window.setTimeout(() => {
+				this.egw.loading_prompt(this.appname,false);
+			}, 1000);
 
 			// Start calendar-wide autorefresh timer to include more than just nm
 			this._set_autorefresh();
@@ -4274,12 +4356,12 @@ export class CalendarApp extends EgwApp
 		// Listview not loaded
 		if(typeof CalendarApp.views.listview.etemplates[0] == 'string') return;
 
-		var nm = <et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
+		const nm = <et2_nextmatch> CalendarApp.views.listview.etemplates[0].widgetContainer.getWidgetById('nm');
 		// nextmatch missing
 		if(!nm) return;
 
-		var refresh_preference = "nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh";
-		var time = this.egw.preference(refresh_preference, 'calendar');
+		const refresh_preference = "nextmatch-" + nm.options.settings.columnselection_pref + "-autorefresh";
+		const time = this.egw.preference(refresh_preference, 'calendar');
 
 		if(this.state.view == 'listview' && time)
 		{
@@ -4290,15 +4372,16 @@ export class CalendarApp extends EgwApp
 		{
 			nm._set_autorefresh(0);
 		}
-		var self = this;
-		var refresh = function() {
+		// An arrow, so it's already correctly bound to this CalendarApp instance regardless of
+		// how it's later invoked (bare call, setInterval, ...) - no self/proxy needed.
+		const refresh = () => {
 			// Deleted events are not coming properly, so clear it all
-			self._clear_cache();
+			this._clear_cache();
 			// Force redraw to current state
-			self.setState({state: self.state});
+			this.setState({state: this.state});
 
 			// This is a fast update, but misses deleted events
-			//app.calendar._fetch_data(app.calendar.state);
+			//this._fetch_data(this.state);
 		};
 
 		// Start / update timer
@@ -4309,35 +4392,34 @@ export class CalendarApp extends EgwApp
 		}
 		if(time > 0)
 		{
-			this._autorefresh_timer = setInterval(jQuery.proxy(refresh, this), time * 1000);
+			this._autorefresh_timer = setInterval(refresh, time * 1000);
 		}
 
-		// Bind to tab show/hide events, so that we don't bother refreshing in the background
-		jQuery(nm.getInstanceManager().DOMContainer.parentNode).on('hide.calendar', jQuery.proxy(function(e) {
+		// Bind to tab show/hide events, so that we don't bother refreshing in the background.
+		// Both handlers below always run at most once (the "hide" one unconditionally clears
+		// itself right after firing too), so {once: true} is the exact native equivalent of the
+		// old jQuery `.on(...)` + manual `.off(e)`-on-self dance.
+		const parentEl = nm.getInstanceManager().DOMContainer.parentNode;
+		parentEl.addEventListener('hide', () => {
 			// Stop
 			window.clearInterval(this._autorefresh_timer);
-			jQuery(e.target).off(e);
 
 			if(!time) return;
 
 			// If the autorefresh time is up, bind once to trigger a refresh
 			// (if needed) when tab is activated again
-			this._autorefresh_timer = setTimeout(jQuery.proxy(function() {
+			this._autorefresh_timer = setTimeout(() => {
 				// Check in case it was stopped / destroyed since
 				if(!this._autorefresh_timer) return;
 
-				jQuery(nm.getInstanceManager().DOMContainer.parentNode).one('show.calendar',
-					// Important to use anonymous function instead of just 'this.refresh' because
-					// of the parameters passed
-					jQuery.proxy(function() {refresh();},this)
-				);
-			},this), time*1000);
-		},this));
-		jQuery(nm.getInstanceManager().DOMContainer.parentNode).on('show.calendar', jQuery.proxy(function(e) {
-			// Start normal autorefresh timer again
-			this._set_autorefresh(this.egw.preference(refresh_preference, 'calendar'));
-			jQuery(e.target).off(e);
-		},this));
+				parentEl.addEventListener('show', () => refresh(), {once: true});
+			}, time*1000);
+		}, {once: true});
+		parentEl.addEventListener('show', () => {
+			// Start normal autorefresh timer again. _set_autorefresh() recomputes the same
+			// preference value itself, so no argument is needed here.
+			this._set_autorefresh();
+		}, {once: true});
 	}
 
 	/**
@@ -4347,8 +4429,8 @@ export class CalendarApp extends EgwApp
 	 */
 	category_report_init ()
 	{
-		var content = this.et2.getArrayMgr('content').data;
-		for (var i=1;i<content.grid.length;i++)
+		const content = this.et2.getArrayMgr('content').data;
+		for (let i=1;i<content.grid.length;i++)
 		{
 			if (content.grid[i] != null) this.category_report_enable({id:i+'', checked:content.grid[i]['enable']});
 		}
@@ -4362,10 +4444,10 @@ export class CalendarApp extends EgwApp
 	 */
 	category_report_enable (_widget)
 	{
-		var widgets = ['[user]','[weekend]','[holidays]','[min_days]'];
-		var row_id = _widget.id.match(/\d+/);
-		var w = {};
-		for (var i=0;i<widgets.length;i++)
+		const widgets = ['[user]','[weekend]','[holidays]','[min_days]'];
+		const row_id = _widget.id.match(/\d+/);
+		let w;
+		for (let i=0;i<widgets.length;i++)
 		{
 			w = this.et2.getWidgetById(row_id+widgets[i]);
 			if (w) w.set_readonly(!_widget.checked);
@@ -4377,7 +4459,7 @@ export class CalendarApp extends EgwApp
 	 */
 	category_report_submit ()
 	{
-		this.et2._inst.postSubmit();
+		this.et2.getInstanceManager().postSubmit(undefined);
 	}
 
 	/**
@@ -4387,10 +4469,10 @@ export class CalendarApp extends EgwApp
 	 */
 	category_report_selectAll (_widget)
 	{
-		var content = this.et2.getArrayMgr('content').data;
-		var checkbox = null;
-		var grid_index = typeof content.grid.length !='undefined'? content.grid : Object.keys(content.grid);
-		for (var i=1;i< grid_index.length;i++)
+		const content = this.et2.getArrayMgr('content').data;
+		let checkbox = null;
+		const grid_index = typeof content.grid.length !='undefined'? content.grid : Object.keys(content.grid);
+		for (let i=1;i< grid_index.length;i++)
 		{
 			if (content.grid[i] != null)
 			{
@@ -4419,7 +4501,7 @@ export class CalendarApp extends EgwApp
 		}
 
 		// If the owner is not set, 0, or the current user, don't bother adding it
-		var _owner = (owner && owner.toString() != '0') ? owner.toString() : '';
+		let _owner = (owner && owner.toString() != '0') ? owner.toString() : '';
 		if(_owner == egw.user('account_id'))
 		{
 			_owner = '';
@@ -4478,7 +4560,8 @@ export class CalendarApp extends EgwApp
 		switch(_action.id)
 		{
 			case 'recordings':
-				app.status.videoconference_getRecordings(data['##videoconference'],{cal_id: data['id'], title:data['title']});
+				// status is the (EPL-only) videoconference app's status extension, not known to EgwApp
+				(<any>app.status).videoconference_getRecordings(data['##videoconference'],{cal_id: data['id'], title:data['title']});
 				break;
 			case 'join':
 				return this.joinVideoConference(data['##videoconference'], data);
@@ -4494,7 +4577,7 @@ export class CalendarApp extends EgwApp
 	 */
 	public joinVideoConference(videoconference, _data)
 	{
-		return egw.json(
+		return this.egw.request(
 			"EGroupware\\Status\\Videoconference\\Call::ajax_genMeetingUrl",
 			[videoconference,
 				{
@@ -4510,13 +4593,14 @@ export class CalendarApp extends EgwApp
                 ( typeof _data.end != "string" ? _data.end.toJSON() : _data.end).slice(0,-1),
 				{
 					participants: Object.keys(_data.participants ?? []).filter(v => {return v.match(/^[0-9|e|c]/)})
-				}], function(_value){
-					if (_value)
-					{
-						if (_value.err) egw.message(_value.err, 'error');
-						if(_value.url) egw.callFunc('app.status.openCall', _value.url);
-					}
-			}).sendRequest();
+				}]
+		).then((_value) => {
+			if (_value)
+			{
+				if (_value.err) this.egw.message(_value.err, 'error');
+				if(_value.url) this.egw.callFunc('app.status.openCall', _value.url);
+			}
+		});
 	}
 }
 
