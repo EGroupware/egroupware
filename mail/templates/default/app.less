@@ -578,9 +578,19 @@ et2-details.details {width: 100%}
 }
 #mail-index_toolbar {
 	height: 2.95em;
-}
-#mail-index_toolbar::part(buttons) {
-    --upper-tint: none;
+
+	&::part(buttons) {
+		--upper-tint: none;
+	}
+
+	#mail-index_toolbar_setLabel {
+		&::part(base) {
+			padding: 0;
+		}
+		&::part(trigger__base){
+			padding: var(--sl-spacing-small);
+		}
+	}
 }
 
 #mail-index_previewAttachmentArea {

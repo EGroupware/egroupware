@@ -492,6 +492,12 @@ et2-details.details {
 #mail-index_toolbar::part(buttons) {
   --upper-tint: none;
 }
+#mail-index_toolbar #mail-index_toolbar_setLabel::part(base) {
+  padding: 0;
+}
+#mail-index_toolbar #mail-index_toolbar_setLabel::part(trigger__base) {
+  padding: var(--sl-spacing-small);
+}
 #mail-index_previewAttachmentArea {
   background-color: #f0f0f0;
   max-height: 3.6em;

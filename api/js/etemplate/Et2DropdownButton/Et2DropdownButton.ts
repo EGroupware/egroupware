@@ -225,7 +225,7 @@ export class Et2DropdownButton extends Et2WidgetWithSelectMixin(LitElement)
                 </sl-button>
                 <sl-dropdown placement=${this.placement} hoist part="dropdown">
                     <slot name="trigger" slot="trigger">
-                        <sl-button exportparts="base" part="trigger" size="${egwIsMobile() ? "large" : "medium"}"
+                        <sl-button exportparts="base, base:trigger__base" part="trigger" size="${egwIsMobile() ? "large" : "medium"}"
                                    slot="trigger" caret
                                ?disabled=${this.disabled}></sl-button>
                     </slot>
