@@ -293,6 +293,10 @@
 					<et2-password id="smime_passphrase" maxlength="128" autocomplete="off" placeholder="Only if the private key (new upload, or already stored) is passphrase-protected"></et2-password>
 				</row>
 				<row valign="top">
+					<et2-description></et2-description>
+					<et2-checkbox id="smime_no_passphrase" label="Do NOT ask passphrase" onchange="app.admin.smime_noPassphraseChanged" statustext="Removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again"></et2-checkbox>
+				</row>
+				<row valign="top">
 					<et2-description  value="Upload your certificate .p12/.pfx file"></et2-description>
 					<file id="smimeKeyUpload" accept=".p12,.pfx"/>
 				</row>

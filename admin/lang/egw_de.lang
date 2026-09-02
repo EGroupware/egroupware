@@ -192,6 +192,7 @@ category saved.	admin	de	Kategorie gespeichert.
 certificate	admin	de	Zertifikat
 certificate details	admin	de	Details des Zertifikat
 certificate error	common	de	Zertifikatsfehler
+certificate passphrase removed.	admin	de	Passphrase des Zertifikats entfernt.
 certificate validity in days	admin	de	Gültigkeit des Zertifikats in Tagen
 change access	admin	de	Zugriffsrechte ändern
 change account_id	admin	de	Änderung der Konto-ID
@@ -240,6 +241,7 @@ could not connect to "%1:%2": %3	common	de	Konnte keine Verbindung zu "%1:%2" he
 could not establish a tls connection to "%1:%2" - wrong port or protocol?	common	de	Konnte keine TLS-Verbindung zu "%1:%2" herstellen - falscher Port oder falsches Protokoll?
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	de	Konnte den privaten Schlüssel nicht aus der angegeben p12-Datei extrahieren. Entweder ist die p12-Datei kaputt oder das Passwort ist falsch!
 could not open secure connection to the imap server. %s : %s.	admin	de	Konnte keine sichere Verbindung zum IMAP Server aufbauen. %s: %s.
+could not rebuild the certificate without a passphrase!	admin	de	Zertifikat konnte nicht ohne Passphrase neu erstellt werden!
 could not remote execute the command	admin	de	Kann den Befehl nicht remote ausführen.
 country	admin	de	Land
 country selection	admin	de	Länderauswahl
@@ -347,6 +349,7 @@ display	admin	de	Anzeigen
 displayed length of input field (set rows=1 to limit length)	admin	de	Angezeigte Länge des Eingabefelds (setze Zeilen=1, um die Eingabe zu beschränken)
 displaying html messages is disabled	admin	de	Anzeigen von HTML-Nachrichten ist deaktiviert
 displaying plain messages is disabled	admin	de	Anzeigen von Text-Nachrichten ist deaktiviert
+do not ask passphrase	admin	de	Nicht nach Passphrase fragen
 do not delete the category and return back to the list	admin	de	Kategorie NICHT löschen und zurück zur Liste gehen
 do not generate email addresses	admin	de	Keine E-Mail-Adressen erzeugen
 do not offer introduction video	admin	de	Einführungsvideo nicht anbieten
@@ -764,6 +767,7 @@ remote administration instances	admin	de	Remote Administration
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	de	Die Remote Administration muss von der Remote-Instanz (unter Admin -> Konfiguration der Anwendung) freigegeben werden!
 remote instance saved	admin	de	Remote Instanz gespeichert.
 remove	admin	de	Entfernen
+removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again	admin	de	Entfernt die Passphrase vom privaten Schlüssel (weiterhin durch Ihr Anmeldepasswort geschützt), sodass beim Signieren, Ver- und Entschlüsseln nie mehr danach gefragt wird
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	de	Sind Sie sicher? Den Zugriff für Gruppen zu nehmen kann zu Problemen mit den Daten dieser Kategorie führen. Benutzer dieser Gruppen haben möglicherweise keinen Zugriff mehr:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	de	Das Umbenennen des Benutzers 'anonymous' verhindert die Dateifreigabe und Collabora Online Office!
 repeat passphrase	admin	de	Passphrase wiederholen

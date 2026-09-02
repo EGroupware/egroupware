@@ -1593,6 +1593,11 @@ class admin_mail
 
 				case 'save':
 				case 'apply':
+					// set whenever a new p12 upload or a certificate import already rebuilt/stored
+					// the key this request - the "strip passphrase from the ALREADY-stored key"
+					// action further below must not also fire in that case (that key was already
+					// built with the right passphrase state by whichever of those just ran)
+					$smime_key_touched = false;
 					try {
 						// save none-standard identity for current user
 						if ($content['acc_id'] && $content['acc_id'] !== 'new' &&
@@ -1658,6 +1663,7 @@ class admin_mail
 							// SMIME SAVE
 							if (isset($content['smimeKeyUpload']))
 							{
+								$smime_key_touched = true;
 								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl, $content['called_for'], $this->is_admin);
 								unset($content['smimeKeyUpload']);
 							}
@@ -1736,6 +1742,7 @@ class admin_mail
 							// smime (private) key uploaded by user himself
 							if (!empty($content['smimeKeyUpload']))
 							{
+								$smime_key_touched = true;
 								$content['acc_smime_cred_id'] = self::save_smime_key($content, $tpl, null, $this->is_admin);
 								unset($content['smimeKeyUpload']);
 							}
@@ -1816,11 +1823,25 @@ class admin_mail
 		}
 
 		// SMIME IMPORT: CA-signed certificate for the already stored private key
-		if (!empty($content['smimeCertUpload']['tmp_name']) &&
-			($cred_id = self::import_smime_cert($content, $tpl, $account_id, $this->is_admin)))
+		if (!empty($content['smimeCertUpload']['tmp_name']))
+		{
+			$smime_key_touched = true;
+			if (($cred_id = self::import_smime_cert($content, $tpl, $account_id, $this->is_admin)))
+			{
+				$content['acc_smime_cred_id'] = $cred_id;
+				$msg = lang('Certificate imported.');
+			}
+		}
+		// SMIME: strip the passphrase off the ALREADY-stored key, without uploading/importing
+		// anything new this request - a new upload/import above (either SAVE branch, or the
+		// import just above) already applies the SAME checkbox itself, see save_smime_key()/
+		// import_smime_cert(), so this must not also fire in that case - the key was already
+		// (re)built with the right passphrase state
+		if (empty($smime_key_touched) && !empty($content['smime_no_passphrase']) && !empty($content['acc_smime_cred_id']) &&
+			($cred_id = self::stripSmimePassphrase($content, $tpl, $account_id, $this->is_admin)))
 		{
 			$content['acc_smime_cred_id'] = $cred_id;
-			$msg = lang('Certificate imported.');
+			$msg = lang('Certificate passphrase removed.');
 		}
 		unset($content['smimeCertUpload'], $content['smimeIntermediateUpload'], $content['smime_passphrase']);
 
@@ -1842,8 +1863,12 @@ class admin_mail
 			{
 				// proactively tell the user their key needs a passphrase (Export CSR/p12, Import
 				// certificate) BEFORE they hit a confusing error, instead of only after the fact
-				$content['smime_needs_passphrase'] = !empty($content['acc_smime_password']) &&
-					Mail\Smime::isPassphraseProtected($content['acc_smime_password']);
+				$smime_protected = Mail\Smime::isPassphraseProtected($content['acc_smime_password']);
+				$content['smime_needs_passphrase'] = !empty($content['acc_smime_password']) && $smime_protected;
+				// "Do NOT ask passphrase" checkbox's own displayed state - reflects the ALREADY-
+				// stored key's real state, not any separately-persisted flag (see
+				// stripSmimePassphrase()'s docblock: cheap enough to just check every time)
+				$content['smime_no_passphrase'] = !empty($content['acc_smime_password']) && !$smime_protected;
 
 				// do NOT send smime private key to client side, it's unnecessary and binary blob breaks json encoding
 				$content['acc_smime_password'] = Mail\Credentials::UNAVAILABLE;
@@ -2225,6 +2250,14 @@ class admin_mail
 			$cert_info = Mail\Smime::extractCertPKCS12($pkcs12, $content['smime_passphrase']);
 			if (is_array($cert_info) && !empty($cert_info['cert']))
 			{
+				// "Do NOT ask passphrase" checked - re-export with no passphrase instead of
+				// storing the uploaded p12 unchanged, see stripSmimePassphrase()'s docblock for
+				// why nothing else needs to change for this to actually stop future prompts
+				if (!empty($content['smime_no_passphrase']))
+				{
+					$pkcs12 = Mail\Smime::build_pkcs12($cert_info['pkey'], $cert_info['cert'],
+						$content['smime_passphrase'], '', $cert_info['extracerts'] ?? []) ?: $pkcs12;
+				}
 				// save public key
 				$smime = new Mail\Smime;
 				$email = $smime->getEmailFromKey($cert_info['cert']);
@@ -2234,6 +2267,12 @@ class admin_mail
 				), $is_admin));
 				// save private key
 				if (!isset($account_id)) $account_id = $GLOBALS['egw_info']['user']['account_id'];
+				// a session-cached passphrase (Smime::resolveMessage()/get_acc_smime()'s silent
+				// fallback, see their own docblocks) is for the OLD key material - never valid for
+				// whatever just got stored here, whether that needs a different passphrase or none
+				// at all (found live 2026-09-02: stripping a key's passphrase left the mail view
+				// still failing on a stale cached value for up to smime_pass_exp minutes)
+				Api\Cache::unsetSession('mail', 'smime_passphrase');
 				return Mail\Credentials::write($content['acc_id'], $email, $pkcs12, Mail\Credentials::SMIME, $account_id);
 			}
 			$tpl->set_validation_error('smimeKeyUpload', lang('Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!'));
@@ -2426,6 +2465,9 @@ class admin_mail
 		}
 		$AB_bo = new addressbook_bo();
 		self::reportSmimeAddressbookResult($AB_bo->set_smime_keys(array($dn['emailAddress'] => $cert_data['cert']), $is_admin));
+		// see save_smime_key()'s identical comment - a session-cached passphrase is for the OLD
+		// key material, never valid for this newly generated one
+		Api\Cache::unsetSession('mail', 'smime_passphrase');
 		return Mail\Credentials::write($content['acc_id'], $dn['emailAddress'], $p12, Mail\Credentials::SMIME, $account_id);
 	}
 
@@ -2516,8 +2558,12 @@ class admin_mail
 		}
 		$extracerts = array_values(array_unique(array_merge($extracerts, $acc_smime['extracerts'] ?? [])));
 		// re-apply the same passphrase as the container password too, so the re-combined p12 keeps
-		// the same protection level it had before (see matching comment in generate_smime_key())
-		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase, $passphrase, $extracerts)))
+		// the same protection level it had before (see matching comment in generate_smime_key()) -
+		// UNLESS the "Do NOT ask passphrase" checkbox is checked, in which case the new container
+		// gets no passphrase regardless of what protected the old one (see stripSmimePassphrase()'s
+		// docblock for why every future sign/encrypt/decrypt already tolerates that transparently)
+		$exportPassword = !empty($content['smime_no_passphrase']) ? '' : $passphrase;
+		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $cert, $passphrase, $exportPassword, $extracerts)))
 		{
 			$tpl->set_validation_error('smimeCertUpload', lang('Certificate does not match the stored private key!'));
 			return null;
@@ -2539,6 +2585,64 @@ class admin_mail
 		$email = $smime->getEmailFromKey($cert);
 		$AB_bo = new addressbook_bo();
 		self::reportSmimeAddressbookResult($AB_bo->set_smime_keys(array($email => $cert), $is_admin));
+		// see save_smime_key()'s identical comment - a session-cached passphrase might now be
+		// wrong (a renewed certificate keeps the SAME private key, so usually still valid, but
+		// the checkbox above may have JUST changed whether one is needed at all)
+		Api\Cache::unsetSession('mail', 'smime_passphrase');
+		return Mail\Credentials::write($content['acc_id'], $email, $p12, Mail\Credentials::SMIME, $account_id,
+			$content['acc_smime_cred_id']);
+	}
+
+	/**
+	 * Re-export the ALREADY-stored S/MIME key with no passphrase, without a new upload/import -
+	 * the "Do NOT ask passphrase" checkbox's own save action, for the case where the user just
+	 * checks the box (edit()'s SMIME section calls this only when neither save_smime_key() nor
+	 * import_smime_cert() already ran this request, since both apply the same checkbox already).
+	 *
+	 * The private key becomes unencrypted WITHIN the p12 container - still protected at rest by
+	 * Mail\Credentials' own encryption of the whole stored blob (see Credentials::encrypt_
+	 * openssl_aes(), though for an admin-managed/shared account or SAML/OIDC login that falls
+	 * back to a site-wide secret rather than the account owner's own login password - a real,
+	 * if narrower, guarantee than for an ordinary personal account). No other code needs to
+	 * change for this to actually stop prompting: Smime::get_acc_smime()/resolveMessage() and
+	 * Jmap\Imap::smimeEncryptEmailProperties() already call get_acc_smime() unconditionally, even
+	 * with an empty passphrase, and openssl_pkcs12_read()/openssl_pkey_get_private() already
+	 * succeed against a passphrase-less p12/PEM given '' - PassphraseMissing is only ever thrown
+	 * when that attempt genuinely fails (found/designed 2026-09-02, see doc/ai/projects/ for the
+	 * research this is based on).
+	 *
+	 * @param array $content 'smime_passphrase' to unlock the stored private key, needs existing
+	 *  'acc_smime_cred_id'
+	 * @param Etemplate $tpl
+	 * @param int $account_id
+	 * @param bool $is_admin =false see save_smime_key()'s docblock
+	 * @return int|null new cred_id or null on error
+	 */
+	private static function stripSmimePassphrase(array $content, Etemplate $tpl, $account_id, bool $is_admin=false)
+	{
+		$passphrase = $content['smime_passphrase'] ?: '';
+		$acc_smime = Mail\Smime::get_acc_smime($content['acc_id'], $passphrase, $account_id);
+		if (empty($acc_smime['pkey']) || !openssl_pkey_get_private($acc_smime['pkey'], $passphrase))
+		{
+			$tpl->set_validation_error('smime_passphrase', self::smimePassphraseError($passphrase));
+			return null;
+		}
+		if (!($p12 = Mail\Smime::build_pkcs12($acc_smime['pkey'], $acc_smime['cert'], $passphrase, '',
+			$acc_smime['extracerts'] ?? [])))
+		{
+			$tpl->set_validation_error('smime_passphrase', lang('Could not rebuild the certificate without a passphrase!'));
+			return null;
+		}
+		$smime = new Mail\Smime;
+		$email = $smime->getEmailFromKey($acc_smime['cert']);
+		$AB_bo = new addressbook_bo();
+		self::reportSmimeAddressbookResult($AB_bo->set_smime_keys(array($email => $acc_smime['cert']), $is_admin));
+		// THE fix this method exists for in the first place: without this, a session-cached
+		// passphrase from before the key was stripped keeps silently overriding the client's own
+		// (now correct) empty-string attempt in Smime::resolveMessage()/get_acc_smime() - found
+		// live 2026-09-02, the passphrase dialog kept popping up for up to smime_pass_exp minutes
+		// after successfully removing the passphrase
+		Api\Cache::unsetSession('mail', 'smime_passphrase');
 		return Mail\Credentials::write($content['acc_id'], $email, $p12, Mail\Credentials::SMIME, $account_id,
 			$content['acc_smime_cred_id']);
 	}

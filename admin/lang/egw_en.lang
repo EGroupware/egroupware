@@ -192,6 +192,7 @@ category saved.	admin	en	Category saved.
 certificate	admin	en	Certificate
 certificate details	admin	en	Certificate details
 certificate error	common	en	Certificate error
+certificate passphrase removed.	admin	en	Certificate passphrase removed.
 certificate validity in days	admin	en	Certificate validity in days
 change access	admin	en	Change access control
 change account_id	admin	en	Change account ID
@@ -240,6 +241,7 @@ could not connect to "%1:%2": %3	common	en	Could not connect to "%1:%2": %3
 could not establish a tls connection to "%1:%2" - wrong port or protocol?	common	en	Could not establish a TLS connection to "%1:%2" - wrong port or protocol?
 could not extract private key from given p12 file. either the p12 file is broken or password is wrong!	admin	en	Could not extract private key from given p12 file. Either the p12 file is broken or password is wrong!
 could not open secure connection to the imap server. %s : %s.	admin	en	Could not open secure connection to the IMAP server. %s : %s.
+could not rebuild the certificate without a passphrase!	admin	en	Could not rebuild the certificate without a passphrase!
 could not remote execute the command	admin	en	Could not remote execute the command
 country	admin	en	Country
 country selection	admin	en	Country selection
@@ -347,6 +349,7 @@ display	admin	en	Display
 displayed length of input field (set rows=1 to limit length)	admin	en	Displayed length of input field (set rows=1 to limit length)
 displaying html messages is disabled	admin	en	displaying HTML messages is disabled
 displaying plain messages is disabled	admin	en	displaying text messages is disabled
+do not ask passphrase	admin	en	Do NOT ask passphrase
 do not delete the category and return back to the list	admin	en	Do NOT delete the category and return back to the list
 do not generate email addresses	admin	en	Do not generate email addresses
 do not offer introduction video	admin	en	Do not offer introduction video
@@ -765,6 +768,7 @@ remote administration instances	admin	en	Remote administration
 remote administration need to be enabled in the remote instance under admin > site configuration!	admin	en	Remote administration need to be enabled in the remote instance under Admin > Site configuration!
 remote instance saved	admin	en	Remote instance saved.
 remove	admin	en	Remove
+removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again	admin	en	Removes the passphrase from the private key (still protected by your login password) so signing, encrypting and decrypting never asks for it again
 removing access for groups may cause problems for data in this category.  are you sure?  users in these groups may no longer have access:	admin	en	Removing access for groups may cause problems for data in this category. Are you sure? Users in these groups may no longer have access:
 renaming user 'anonymous' will break file sharing and collabora online office!	admin	en	Renaming user 'anonymous' will break file sharing and Collabora Online Office!
 repeat passphrase	admin	en	Repeat passphrase

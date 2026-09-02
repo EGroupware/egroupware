@@ -8,20 +8,26 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
+import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {egw} from "../../api/js/jsapi/egw_global.js";
-import {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
+import type {egwAction, egwActionObject} from '../../api/js/egw_action/egw_action';
+// et2_nextmatch is a real, distinct legacy widget implementation, passed as a runtime
+// instanceof-filter value to iterateOver() below - see doc/ai/projects/app-ts-modernization.md.
 import {et2_nextmatch} from "../../api/js/etemplate/et2_extension_nextmatch";
-import {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
-import {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Select/Et2SelectAccount";
-import {EgwAction} from "../../api/js/egw_action/EgwAction";
-import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
+import type {et2_DOMWidget} from "../../api/js/etemplate/et2_core_DOMWidget";
+import type {Et2SelectAccount} from "../../api/js/etemplate/Et2Select/Select/Et2SelectAccount";
+import type {EgwAction} from "../../api/js/egw_action/EgwAction";
+import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
 import type {Et2Button} from "../../api/js/etemplate/Et2Button/Et2Button";
-import {LitElement} from "lit";
+import type {LitElement} from "lit";
 import {loadWebComponent} from "../../api/js/etemplate/Et2Widget/Et2Widget";
 import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
+import type {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+// egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * UI for Admin
@@ -187,13 +193,15 @@ export class AdminApp extends EgwApp
 			const nm = _et2.widgetContainer.getWidgetById('nm');
 			if (nm && nm !== this.nm && nm !== this.nm2)
 			{
-				this.nm2?.getDOMNode()?.removeEventListner('et2-filter', this.nmFilterChange);
+				this.nm2?.getDOMNode()?.removeEventListener('et2-filter', this.nmFilterChange);
 				this.nm2 = nm;
 				this.nm2.getDOMNode().addEventListener('et2-filter', this.nmFilterChange);
 				// update values in toolbar
 				window.setTimeout(() =>
 				{
-					this.nmFilterChange({detail: { activeFilters: nm.activeFilters}});
+					// Synthetic event, same pattern (and same pre-existing type gap) as EgwApp's own
+					// nmFilterChange({detail: ...}) call in et2_ready()
+					this.nmFilterChange(<any>{detail: { activeFilters: nm.activeFilters}});
 				});
 			}
 			header.closest('egw-app')?.append(header);
@@ -224,7 +232,7 @@ export class AdminApp extends EgwApp
 		// check for mobile framework and close the sidebox/-bar
 		if(window.matchMedia("(max-width: 600px)").matches)
 		{
-			this.et2.closest("egw-app")?.hideLeft();
+			(<EgwFrameworkApp>this.et2.closest("egw-app"))?.hideLeft();
 		}
 		var ajax : any = false;
 		if (_url)
@@ -276,13 +284,14 @@ export class AdminApp extends EgwApp
 		this.groups.set_disabled(true);
 		this.ajax_target.set_disabled(!ajax);
 
+		const nm = <Et2Nextmatch>this.nm;
 		// disable app-toolbar, if not accounts or groups (!_url) for now
-		this.showAppToolbar(!this.nm.disabled ? 'admin.index.header' : '');
+		this.showAppToolbar(!nm.disabled ? 'admin.index.header' : '');
 
-		if(!this.nm.disabled)
+		if(!nm.disabled)
 		{
 			// If nm was just re-enabled, resize it _after_ ajax_target gets hidden
-			this.ajax_target.updateComplete.then(() => this.nm.resize())
+			this.ajax_target.updateComplete.then(() => nm.resize())
 
 			// If user list is shown, show the toolbar
 			this.showAppToolbar('admin.index.header');
@@ -554,13 +563,14 @@ export class AdminApp extends EgwApp
 
 	getNextmatch()
 	{
-		switch(app.admin?.tree?.value.toString())
+		const admin = <AdminApp>app.admin;
+		switch(admin?.tree?.value.toString())
 		{
 			case "/groups":
-				return app.admin.groups;
+				return admin.groups;
 			case "/accounts":
 			case "":
-				return app.admin.nm;
+				return admin.nm;
 			default:
 				if(!this.iframe?.disabled)
 				{
@@ -1784,6 +1794,21 @@ export class AdminApp extends EgwApp
 		if (!button) return;
 		if (typeof button.set_readonly === 'function') button.set_readonly(!hasFile);
 		else button.readonly = !hasFile;
+	}
+
+	/**
+	 * Checking "Do NOT ask passphrase" needs the CURRENT passphrase to unlock whatever key is
+	 * being uploaded/is already stored, before it can be re-exported without one server-side -
+	 * make that requirement visible instead of a confusing validation failure after submit.
+	 *
+	 * @param _event
+	 * @param _widget the smime_no_passphrase checkbox
+	 */
+	smime_noPassphraseChanged(_event, _widget)
+	{
+		let passphrase : any = this.et2.getWidgetById('smime_passphrase');
+		if (!passphrase) return;
+		passphrase.required = !!(_widget && _widget.getValue());
 	}
 
 	/**

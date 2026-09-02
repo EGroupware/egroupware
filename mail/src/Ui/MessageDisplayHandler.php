@@ -478,6 +478,14 @@ class MessageDisplayHandler
 		}
 		catch (Mail\Smime\PassphraseMissing $e)
 		{
+			// whatever passphrase was actually attempted (explicitly given, or the session-cached
+			// one Smime::resolveMessage()/get_acc_smime() silently fell back to, see their own
+			// docblocks) just failed - a cached value can no longer be assumed good (eg. the key
+			// was just changed to no longer need one at all, or need a DIFFERENT one), so it must
+			// not keep being retried for the rest of its TTL. Mirrors the send-side
+			// smimeEncryptEmailProperties()'s identical self-heal (Jmap\Imap.php, found live
+			// 2026-09-01) - never mirrored to this view-side path until now (found live 2026-09-02).
+			Api\Cache::unsetSession('mail', 'smime_passphrase');
 			return $this->smimePassphraseFormHtml($e);
 		}
 		catch (\Throwable $e)
@@ -602,6 +610,10 @@ class MessageDisplayHandler
 		}
 		catch (Mail\Smime\PassphraseMissing $e)
 		{
+			// a stale/wrong cached passphrase must not keep being silently retried for the rest
+			// of its TTL - same self-heal as tryJmapNativeSpecialCase()'s identical catch above
+			// and the send-side smimeEncryptEmailProperties() (found live 2026-09-02)
+			Api\Cache::unsetSession('mail', 'smime_passphrase');
 			// propagate distinctly - mail_ui::ajax_resolveSpecialCaseBody() shapes this into a
 			// {needsPassphrase, message} response for MailJmap.fetchBody()'s own retry loop
 			throw $e;
@@ -680,6 +692,9 @@ class MessageDisplayHandler
 		}
 		catch(Mail\Smime\PassphraseMissing $e)
 		{
+			// same self-heal as the other two S/MIME view-side catches above (found live
+			// 2026-09-02) - a stale/wrong cached passphrase must not keep being silently retried
+			Api\Cache::unsetSession('mail', 'smime_passphrase');
 			return $this->smimePassphraseFormHtml($e);
 		}
 		$calendar_part = null;
