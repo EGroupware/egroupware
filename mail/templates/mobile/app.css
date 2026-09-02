@@ -1000,9 +1000,13 @@ et2-vbox.addresses::part(base) {
 et2-vbox.addresses et2-hbox::part(base) {
   align-items: center;
 }
+/* in flow, so its header reserves the avatar's height:
+   absolutely positioned it added no height at all,
+   and a mail showing just a single address row (a draft without recipient)
+   collapsed to less than the avatar, which then overlapped the message body */
 .mailPreviewHeaders et2-lavatar {
   margin-top: 3px;
-  position: absolute;
+  align-self: flex-start;
 }
 et2-searchbox#mail-index_nm_search {
   width: 100%;

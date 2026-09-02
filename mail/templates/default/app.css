@@ -601,6 +601,7 @@ div.mailDisplayHeaders div.mail_extraEmails.visible {
 }
 .mailPreviewHeaders et2-lavatar {
   flex: 0 0 auto;
+  align-self: center;
 }
 div.mailPreviewHeaders div.mail_extraEmails {
   display: inline-block;
@@ -929,8 +930,8 @@ et2-image.smime_cert_unknownemail svg {
 .previewWrapper .firstColumnTitle {
   max-width: 7em;
   justify-content: flex-end;
-  min-width: 7em;
-  color: darkgrey;
+  min-width: 5em;
+  color: var(--sl-color-neutral-700, darkgrey);
 }
 .mailPreviewHeaders et2-select-email::part(combobox) {
   border: none;
@@ -987,10 +988,6 @@ et2-vbox.addresses::part(base) {
 }
 et2-vbox.addresses et2-hbox::part(base) {
   align-items: center;
-}
-.mailPreviewHeaders et2-lavatar {
-  margin-top: 3px;
-  position: absolute;
 }
 et2-searchbox#mail-index_nm_search {
   width: 100%;
