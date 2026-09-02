@@ -108,6 +108,38 @@ class SmimeMailerTest extends Api\LoggedInTest
 	}
 
 	/**
+	 * A signed message with non-ASCII body content must stay 7-bit clean end to end (quoted-
+	 * printable-encoded, not bare 8bit) - a relay/content-scanning proxy along the way is not
+	 * guaranteed to be 8bit-clean, and even a single altered byte in the signed content
+	 * invalidates the signature entirely. Note: investigated live 2026-09-02 as a possible cause
+	 * of a real shim-sent signed message arriving flagged as "verification failed" - this specific
+	 * property already held (Horde_Mime_Part's own default encoding logic already picks
+	 * quoted-printable for 8-bit text regardless of the 'encode' option given to toString()), so
+	 * it did NOT explain that incident; kept as a genuine defensive assertion regardless.
+	 */
+	public function testSignOnlyWithNonAsciiBodyStays7bitClean()
+	{
+		$sender = (new Smime())->generate_certificate(self::SENDER_DN, null, null, 30);
+
+		$mailer = $this->newMailer();
+		$mailer->setBody("Mit freundlichen Grüßen\n");
+		$this->assertTrue($mailer->smimeEncrypt(Smime::TYPE_SIGN, [
+			'senderPubKey' => $sender['cert'],
+			'senderPrivKey' => $sender['privkey'],
+			'passphrase' => '',
+			'extracerts' => null,
+		]));
+
+		$raw = $mailer->getRaw(false);
+
+		// quoted-printable/7bit encoding escapes non-ASCII bytes as literal "=XX" sequences - the
+		// transmitted bytes themselves must all be within the 7-bit ASCII range, or a relay that
+		// isn't 8bit-clean could alter them and invalidate the signature
+		$this->assertMatchesRegularExpression('/^[\x00-\x7F]*$/', $raw,
+			'a signed message must be 7-bit clean throughout, not contain raw non-ASCII bytes');
+	}
+
+	/**
 	 * TYPE_ENCRYPT: the resulting body entity must be a single opaque application/pkcs7-mime leaf
 	 * (extractSmimeBodyBlob()'s own single-leaf assumption for the {type, blobId} bodyStructure
 	 * swap) that the recipient can decrypt back to the original content.
