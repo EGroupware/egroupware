@@ -2117,6 +2117,17 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
+		// Establish that this really is our direct child before touching it or the
+		// event. The event is composed and bubbles, so a descendant's report passes
+		// through here too; forcing our pitch onto a grandchild would overwrite the
+		// pitch its own parent gave it.
+		if(!this._expandedRowForDirectChildGrid(childGrid))
+		{
+			return;
+		}
+		// Ours to handle, so it stops here whatever we conclude about the height -
+		// otherwise an ancestor picks it up and treats our child as its own.
+		event.stopPropagation();
 		// The parent pitch is authoritative once it has settled. Lock the child
 		// before its reported total is converted into an expanded-row height.
 		childGrid.setRowHeightEstimate(this.rowHeightEstimatePx, childGrid.embeddedVirtualized);
@@ -2124,20 +2135,34 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		// the authoritative reservation for this event. Observer/deferred paths
 		// still derive height from the child when no event value is available.
 		const reportedHeight = Number(event.detail?.height);
-		if(!this._remeasureDirectEmbeddedChildGrid(
+		this._remeasureDirectEmbeddedChildGrid(
 			childGrid,
 			false,
 			Number.isFinite(reportedHeight) && reportedHeight > 0 ? reportedHeight : undefined
-		))
-		{
-			return;
-		}
-		event.stopPropagation();
+		);
+		// Unconditional, and deliberately not gated on the remeasure above reporting a
+		// change. That reports whether *this child's* height moved, but our own
+		// reserved height covers our rows plus every branch we host, so it is stale as
+		// soon as a descendant grew - even when this child's own number is unchanged
+		// because it had already applied it. Skipping the recompute here is what left a
+		// middle grid reporting its pre-expansion height to its parent indefinitely.
 		if(this.embeddedVirtualized)
 		{
 			this._scheduleEmbeddedVirtualizedHeightSync();
 		}
 	};
+
+	/**
+	 * The expanded row hosting `childGrid`, but only when this grid is its *direct*
+	 * parent - the row has to belong to this grid's own shadow root. A deeper
+	 * descendant's row belongs to some intermediate grid's root instead, and is that
+	 * grid's business, not ours.
+	 */
+	private _expandedRowForDirectChildGrid(childGrid : Et2Datagrid) : HTMLElement | null
+	{
+		const expandedRow = childGrid.closest("tr[data-dg-expanded-row]") as HTMLElement | null;
+		return expandedRow && expandedRow.getRootNode() === this.shadowRoot ? expandedRow : null;
+	}
 
 	/**
 	 * Remeasure the expanded row containing one direct child grid.
@@ -2152,8 +2177,8 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		reportedHeight? : number
 	) : boolean
 	{
-		const expandedRow = childGrid.closest("tr[data-dg-expanded-row]") as HTMLElement | null;
-		if(!expandedRow || expandedRow.getRootNode() !== this.shadowRoot)
+		const expandedRow = this._expandedRowForDirectChildGrid(childGrid);
+		if(!expandedRow)
 		{
 			return false;
 		}
