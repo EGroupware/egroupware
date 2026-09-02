@@ -900,7 +900,10 @@ describe("Et2Datagrid row rendering", () =>
 		assert.isNotNull(row, "row should render");
 		row!.removeAttribute("data-et2dg-upgraded-for");
 		row!.setAttribute("data-et2dg-upgrade-queued", "1");
-		(el as any)._rowUpgradeQueue.length = 0;
+		// Clear through the real code path rather than poking the backing array: a stale
+		// marker arises when the queue is dropped (structural change) while the row element
+		// stays in the DOM carrying its attribute.
+		(el as any)._clearRowUpgradeQueue();
 
 		(el as any)._upgradeRenderedRows();
 		assert.equal(row!.getAttribute("data-et2dg-upgrade-queued"), "1", "row should be requeued");

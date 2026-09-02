@@ -26,6 +26,20 @@ export class Et2DatagridRowRenderer
 	private host : Et2Datagrid;
 
 	private _rowUpgradeQueue : HTMLElement[] = [];
+	/**
+	 * Membership mirror of `_rowUpgradeQueue`, so re-scanning the rendered rows can test
+	 * "already queued?" in constant time. A linear scan per candidate made
+	 * upgradeRenderedRows() quadratic, which is invisible at viewport size but not on the
+	 * unvirtualized print path, where every row is realized at once.
+	 */
+	private _rowUpgradeQueued : Set<HTMLElement> = new Set();
+	/**
+	 * Read position in `_rowUpgradeQueue`. Draining with shift() re-indexed the whole
+	 * array per row - again fine for a viewport, quadratic for a large print run - so the
+	 * queue is consumed by advancing this instead, and compacted once the dead prefix
+	 * outgrows the live remainder.
+	 */
+	private _rowUpgradeQueueHead : number = 0;
 	private _rowUpgradeObserver : MutationObserver | null = null;
 	private _rowUpgradeObservedRowsBody : HTMLElement | null = null;
 	private _rowUpgradeRangeListener : ((event : Event) => void) | null = null;
@@ -72,9 +86,16 @@ export class Et2DatagridRowRenderer
 	}
 
 	/** Live reference to the pending-upgrade queue (tests inspect/mutate this directly). */
+	/**
+	 * Rows still waiting to be upgraded, oldest first.
+	 *
+	 * A copy of the live remainder, not the backing array: that one keeps an already-consumed
+	 * prefix (see `_rowUpgradeQueueHead`) which is not pending work. Use clearRowUpgradeQueue()
+	 * to empty the queue - mutating what this returns changes nothing.
+	 */
 	get rowUpgradeQueue() : HTMLElement[]
 	{
-		return this._rowUpgradeQueue;
+		return this._rowUpgradeQueue.slice(this._rowUpgradeQueueHead);
 	}
 
 	/** The rows container currently observed for upgrade/focus-recovery purposes. */
@@ -92,7 +113,7 @@ export class Et2DatagridRowRenderer
 	/** Whether upgrade work (queued, scheduled, or settling) is still outstanding. */
 	get hasPendingWork() : boolean
 	{
-		return this._rowUpgradeScheduled || this._rowUpgradeQueue.length > 0 || this._rowWidgetsUpgradeSettling;
+		return this._rowUpgradeScheduled || this.pendingRowUpgradeCount > 0 || this._rowWidgetsUpgradeSettling;
 	}
 
 	/**
@@ -305,16 +326,19 @@ export class Et2DatagridRowRenderer
 			}
 			if(rowElement.getAttribute("data-et2dg-upgrade-queued") === "1")
 			{
-				if(this._rowUpgradeQueue.includes(rowElement))
+				if(this._rowUpgradeQueued.has(rowElement))
 				{
 					continue;
 				}
+				// Attribute says queued but the queue disagrees: a stale marker carried over
+				// on a recycled node. Drop it and queue the element for real.
 				rowElement.removeAttribute("data-et2dg-upgrade-queued");
 			}
 			rowElement.setAttribute("data-et2dg-upgrade-queued", "1");
 			this._rowUpgradeQueue.push(rowElement);
+			this._rowUpgradeQueued.add(rowElement);
 		}
-		if(this._rowUpgradeQueue.length)
+		if(this.pendingRowUpgradeCount)
 		{
 			this.scheduleRowUpgradeQueue();
 		}
@@ -326,6 +350,8 @@ export class Et2DatagridRowRenderer
 	clearRowUpgradeQueue()
 	{
 		this._rowUpgradeQueue.length = 0;
+		this._rowUpgradeQueued.clear();
+		this._rowUpgradeQueueHead = 0;
 		this._rowUpgradeScheduled = false;
 		if(this._rowUpgradeFrameHandle !== null)
 		{
@@ -362,10 +388,15 @@ export class Et2DatagridRowRenderer
 		// 8ms is a pragmatic balance between throughput and UI responsiveness.
 		const budgetUntil = performance.now() + this._rowUpgradeFrameBudgetMs;
 		let processed = 0;
-		while(this._rowUpgradeQueue.length && processed < this._rowUpgradeBatchSize && performance.now() < budgetUntil)
+		while(this.pendingRowUpgradeCount && processed < this._rowUpgradeBatchSize && performance.now() < budgetUntil)
 		{
-			const rowElement = this._rowUpgradeQueue.shift();
-			if(!rowElement || !rowElement.isConnected)
+			const rowElement = this._rowUpgradeQueue[this._rowUpgradeQueueHead++];
+			if(!rowElement)
+			{
+				continue;
+			}
+			this._rowUpgradeQueued.delete(rowElement);
+			if(!rowElement.isConnected)
 			{
 				continue;
 			}
@@ -396,13 +427,36 @@ export class Et2DatagridRowRenderer
 			}
 			processed++;
 		}
-		if(this._rowUpgradeQueue.length)
+		this.compactRowUpgradeQueue();
+		if(this.pendingRowUpgradeCount)
 		{
 			this.scheduleRowUpgradeQueue();
 		}
 		else
 		{
 			this.scheduleRowsUpgradedSettle();
+		}
+	}
+
+	/** Rows still waiting to be upgraded, ie. the live remainder after the read position. */
+	private get pendingRowUpgradeCount() : number
+	{
+		return this._rowUpgradeQueue.length - this._rowUpgradeQueueHead;
+	}
+
+	/** Drop the consumed prefix once it is no longer the smaller half of the array. */
+	private compactRowUpgradeQueue()
+	{
+		if(this._rowUpgradeQueueHead >= this._rowUpgradeQueue.length)
+		{
+			this._rowUpgradeQueue.length = 0;
+			this._rowUpgradeQueueHead = 0;
+			return;
+		}
+		if(this._rowUpgradeQueueHead > 32 && this._rowUpgradeQueueHead * 2 >= this._rowUpgradeQueue.length)
+		{
+			this._rowUpgradeQueue = this._rowUpgradeQueue.slice(this._rowUpgradeQueueHead);
+			this._rowUpgradeQueueHead = 0;
 		}
 	}
 
