@@ -40,6 +40,11 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 {
 	protected static $server_tz;
 
+	// setTimezones() also overwrites this egw-config value (separate from PHP's own default
+	// timezone, which $server_tz above already tracks) - restore it too, or it leaks into
+	// whatever test class runs next in the same PHPUnit process.
+	protected static $server_config_tz;
+
 	protected $bo;
 	protected $zpush;
 
@@ -50,11 +55,13 @@ class ZpushTaskTest extends \EGroupware\Api\AppTest
 		parent::setUpBeforeClass();
 
 		static::$server_tz = date_default_timezone_get();
+		static::$server_config_tz = $GLOBALS['egw_info']['server']['server_timezone'] ?? null;
 	}
 
 	public static function tearDownAfterClass() : void
 	{
 		date_default_timezone_set(static::$server_tz);
+		$GLOBALS['egw_info']['server']['server_timezone'] = static::$server_config_tz;
 
 		parent::tearDownAfterClass();
 	}

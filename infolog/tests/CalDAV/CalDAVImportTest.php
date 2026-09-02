@@ -129,6 +129,14 @@ class CalDAVImportTest extends CalDAVTest
 		], $response_headers);
 		$this->assertContains($status, [200, 201], "Expected HTTP status [200,201], got $status");
 
+		// The server-side resource already exists once we get here, regardless of whether the
+		// ETag below parses cleanly - track it for cleanup before any assertion that could throw,
+		// so a broken/missing ETag doesn't leak the PUT'd resource.
+		if (!in_array($caldav_name, $this->created_tasks, true))
+		{
+			$this->created_tasks[] = $caldav_name;
+		}
+
 		// In direct runRequest mode response headers are often unavailable under CLI.
 		$info_id = 0;
 		if (!empty($response_headers['ETag']))
@@ -139,10 +147,6 @@ class CalDAVImportTest extends CalDAVTest
 		if ($require_info_id && !empty($response_headers['ETag']))
 		{
 			$this->assertGreaterThan(0, $info_id, 'Expected numeric info_id in ETag header');
-		}
-		if (!in_array($caldav_name, $this->created_tasks, true))
-		{
-			$this->created_tasks[] = $caldav_name;
 		}
 		return $info_id;
 	}

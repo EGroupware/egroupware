@@ -64,8 +64,22 @@ class SearchCustomFieldFilterTest extends \EGroupware\Api\AppTest
 	{
 		parent::setUpBeforeClass();
 
-		Customfields::update(self::$select_cf);
-		Customfields::update(self::$text_cf);
+		// PHPUnit never calls tearDownAfterClass() when setUpBeforeClass() itself throws - if the
+		// 2nd Customfields::update() call fails after the 1st already succeeded, that first custom
+		// field definition would otherwise be left permanently defined on the infolog app with no
+		// cleanup path at all. Clean up whatever got created so far before rethrowing.
+		try
+		{
+			Customfields::update(self::$select_cf);
+			Customfields::update(self::$text_cf);
+		}
+		catch (\Throwable $e)
+		{
+			$fields = Customfields::get('infolog');
+			unset($fields[self::SELECT_CF], $fields[self::TEXT_CF]);
+			Customfields::save('infolog', $fields);
+			throw $e;
+		}
 	}
 
 	public static function tearDownAfterClass() : void

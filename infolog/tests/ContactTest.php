@@ -28,6 +28,11 @@ class ContactTest extends \EGroupware\Api\AppTest
 	// Infolog under test
 	protected $info_id = null;
 
+	// Parent infolog under test, only used by testSubEntry() - tracked separately from
+	// $info_id (the sub-entry) so tearDown() can clean up both regardless of which
+	// assertion in testSubEntry() throws first
+	protected $parent_info_id = null;
+
 	protected function setUp() : void
 	{
 		$this->ui = new \infolog_ui();
@@ -46,6 +51,11 @@ class ContactTest extends \EGroupware\Api\AppTest
 		{
 			$this->bo->delete($this->info_id);
 			$this->bo->delete($this->info_id);
+		}
+		if($this->parent_info_id)
+		{
+			$this->bo->delete($this->parent_info_id);
+			$this->bo->delete($this->parent_info_id);
 		}
 		$this->bo = null;
 
@@ -181,7 +191,7 @@ class ContactTest extends \EGroupware\Api\AppTest
 		$parent = $this->getTestInfolog($content);
 
 		// Skipping notifications - save initial state
-		$parent_id = $this->bo->write($parent, true, true, true, true);
+		$parent_id = $this->parent_info_id = $this->bo->write($parent, true, true, true, true);
 
 		// Mock the etemplate call to check sub gets parent's contact
 		$sub = array();

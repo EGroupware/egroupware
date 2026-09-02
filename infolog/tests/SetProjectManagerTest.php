@@ -527,21 +527,29 @@ class SetProjectManagerTest extends \EGroupware\Api\AppTest
 		$first_pm_id = $this->pm_id;
 		$this->pm_bo->data = array();
 		$this->makeProject('2');
-		$info['old_pm_id'] = $first_pm_id;
-		$info['pm_id'] = $this->pm_id;
-		$this->bo->write($info);
 
-		// Check infolog has pm_id properly set
-		$this->assertEquals($this->pm_id, $info['pm_id']);
+		// Everything from here on uses the just-created 2nd project ($this->pm_id). Wrapped in
+		// try/finally starting right here (not just around the later re-check block) so that if
+		// ANY assertion/call below throws, the finally still deletes project #2 and restores
+		// $this->pm_id to $first_pm_id - otherwise the outer tearDown() (which only ever cleans up
+		// the CURRENT $this->pm_id) would delete project #2 but leave the original "TEST" project
+		// (only reachable via the now-lost local $first_pm_id) leaked in the DB.
+		try
+		{
+			$info['old_pm_id'] = $first_pm_id;
+			$info['pm_id'] = $this->pm_id;
+			$this->bo->write($info);
 
-		// Force links to run notification now so we get valid testing - it
-		// usually waits until Egw::on_shutdown();
-		Api\Link::run_notifies();
+			// Check infolog has pm_id properly set
+			$this->assertEquals($this->pm_id, $info['pm_id']);
 
-		// Now load it again
-		$info = $this->bo->read($this->info_id);
+			// Force links to run notification now so we get valid testing - it
+			// usually waits until Egw::on_shutdown();
+			Api\Link::run_notifies();
 
-		try {
+			// Now load it again
+			$info = $this->bo->read($this->info_id);
+
 			// Check infolog has pm_id properly set
 			$this->assertEquals($this->pm_id, $info['pm_id'], 'Project did not change');
 

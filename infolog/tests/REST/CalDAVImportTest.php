@@ -58,6 +58,10 @@ class CalDAVImportTest extends RestBase
 		$response = $this->postResource($this->collection(), $fields, $this->ownerUser());
 		$this->assertHttpStatus([200, 201], $response, 'creating infolog task');
 
+		// Unlike the CalDAV equivalent (tracked by caldav_name, known independent of the ETag), the
+		// only handle we have on a REST-created resource is this numeric id - if it fails to parse
+		// (Location/ETag malformed), there's no way to identify the resource for cleanup at all, and
+		// the assertion below is what surfaces that as a test failure rather than reordering fixing it.
 		$id = (int)$this->resourceIdFromResponse($response, 'infolog');
 		$this->assertGreaterThan(0, $id, 'Expected numeric id in Location/ETag header');
 		$this->created_tasks[] = $id;

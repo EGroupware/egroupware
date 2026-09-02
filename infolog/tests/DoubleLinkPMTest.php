@@ -62,10 +62,22 @@ class DoubleLinkPMTest extends \EGroupware\Api\EtemplateTest
 			$this->purgeStaleProjectFixture($this->pm_bo, $number);
 		}
 
-		$this->makeProject("1");
+		// PHPUnit never calls tearDown() when setUp() itself throws - if the 2nd makeProject()
+		// fails after the 1st already succeeded, the 1st project's id is already tracked in
+		// $this->pm_id (set inside makeProject()) but nothing would ever call deleteProject() to
+		// clean it up. Catch and clean up whatever got created so far before rethrowing.
+		try
+		{
+			$this->makeProject("1");
 
-		// Make another project, we need 2
-		$this->makeProject("2");
+			// Make another project, we need 2
+			$this->makeProject("2");
+		}
+		catch (\Throwable $e)
+		{
+			$this->deleteProject();
+			throw $e;
+		}
 	}
 
 	protected function tearDown() : void

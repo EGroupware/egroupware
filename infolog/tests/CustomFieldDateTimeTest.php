@@ -160,17 +160,21 @@ class CustomFieldDateTimeTest extends \EGroupware\Api\AppTest
 	 */
 	public function testDateTimeCustomFieldAllDayPreservedAcrossTimezoneChange()
 	{
+		// try/finally starts right after this first tz mutation (not just around the later
+		// read()) so that if makeInfolog() itself throws before the 2nd tz change below, the
+		// client tz preference still gets restored instead of leaking 'Europe/Berlin' into
+		// whatever test runs next in the same PHPUnit process.
 		$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = 'Europe/Berlin';
-		Api\DateTime::init();
-
-		$midnight = new Api\DateTime('2026-03-10 00:00:00', Api\DateTime::$user_timezone);
-		$info_id = $this->makeInfolog(array($this->cfKey() => $midnight));
-
-		$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = 'Pacific/Auckland';
 		Api\DateTime::init();
 
 		try
 		{
+			$midnight = new Api\DateTime('2026-03-10 00:00:00', Api\DateTime::$user_timezone);
+			$info_id = $this->makeInfolog(array($this->cfKey() => $midnight));
+
+			$GLOBALS['egw_info']['user']['preferences']['common']['tz'] = 'Pacific/Auckland';
+			Api\DateTime::init();
+
 			$saved = $this->bo->read($info_id, true, 'object');
 
 			$this->assertEquals('2026-03-10', $saved[$this->cfKey()]->format('Y-m-d'),
