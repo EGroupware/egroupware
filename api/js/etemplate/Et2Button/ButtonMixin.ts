@@ -239,6 +239,14 @@ so we force the button images to be square*/
 		else
 		{
 			this.__image = this.egw().image(new_image);
+			// Fall back to treating a bare name as a Bootstrap Icons name directly - same
+			// reasoning as Et2Image.parse_href(): many of our own icon names ARE Bootstrap
+			// icon names, and this keeps the button's icon visible when egw().image()'s
+			// name->file map isn't available (eg. nothing ever called egw.set_images()).
+			if(!this.__image && new_image && new_image.indexOf('/') === -1)
+			{
+				this.__image = '/node_modules/bootstrap-icons/icons/' + new_image + '.svg';
+			}
 		}
 		this.requestUpdate("image", oldValue);
 	}

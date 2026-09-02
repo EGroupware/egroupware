@@ -202,6 +202,11 @@ class Preferences implements PreferencesModule
 			const request = this.json('EGroupware\\Api\\Framework::ajax_get_preference', [_app], _callback, _context);
 			const promise = request.sendRequest(typeof _callback !== 'undefined', 'GET');
 			if (typeof self.#prefs[_app] === 'undefined') self.#prefs[_app] = promise;
+			// A synchronous (no _callback) request whose underlying XHR failed leaves
+			// sendRequest() with nothing to return (see its synchronous-error branch in
+			// egw_json.ts) - self.#prefs[_app] is still undefined here. Bail out instead of
+			// falling through to index into it below, which throws.
+			if (typeof self.#prefs[_app] === 'undefined') return _callback === true ? Promise.resolve(undefined) : undefined;
 			if (_callback === true) return promise.then(() => this.preference(_name, _app));
 			if (typeof _callback === 'function') return false;
 		}

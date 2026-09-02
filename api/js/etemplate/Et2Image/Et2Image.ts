@@ -309,6 +309,15 @@ export class Et2Image extends Et2Widget(LitElement) implements et2_IDetachedDOM
 		{
 			return src;
 		}
+		// Fall back to treating a bare name as a Bootstrap Icons name directly - many of our
+		// own icon names ARE Bootstrap icon names, and this keeps the widget visible when
+		// egw().image()'s name->file map isn't available (eg. nothing ever called
+		// egw.set_images(), as happens outside of a real logged-in EGroupware session).
+		// render() already knows how to turn this exact path into a CSS icon class.
+		if(img_href && img_href.indexOf('/') === -1)
+		{
+			return '/node_modules/bootstrap-icons/icons/' + img_href + '.svg';
+		}
 		return "";
 	}
 

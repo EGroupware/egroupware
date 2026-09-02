@@ -235,7 +235,12 @@ class Message implements MessageModule
 			// undefined, so the handler threw a TypeError on every hide.  This path has no
 			// registry to clean up (it never set dataset.hash either), so there is nothing to do.
 			self.#wnd.document.body.append(alert);
-			message = alert.updateComplete.then(() =>
+			// The real (Lit-based) <egw-message> element may not be upgraded yet - eg. this can
+			// run before the script defining it has finished evaluating, in which case `alert`
+			// is a plain, un-upgraded HTMLElement and .updateComplete is undefined. Wait for the
+			// definition first so this doesn't throw; whenDefined() resolves immediately if it's
+			// already registered.
+			message = self.#wnd.customElements.whenDefined("egw-message").then(() => alert.updateComplete).then(() =>
 			{
 				alert.toast();
 				return alert;

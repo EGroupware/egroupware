@@ -22,6 +22,17 @@ export default css`
 		flex-wrap: nowrap;
 	}
 
+	/**
+	 * The "list" slot's own assigned et2-file-item(s) must stack vertically regardless of the
+	 * row layout above - et2-file-item's :host is display:contents, so without this its
+	 * file-item boxes flatten straight into the surrounding row and end up side-by-side instead
+	 * of as a list, whenever more than one is slotted in (eg. display="list" without multiple).
+	 */
+	slot[name="list"] {
+		display: flex;
+		flex-direction: column;
+	}
+
 	.file__file-list {
 		width: 100%;
 		max-width: calc(100vw - var(--sl-spacing-large));
