@@ -513,6 +513,30 @@ their own project-doc-adjacent commits):
      Deliberately silent (no toast) unlike the account-settings version, since it fires from
      otherwise-unrelated view/send actions.
 
+**PHPUnit coverage added 2026-09-02** (`api/tests/Mail/SmimeMailerTest.php`) for the sign/encrypt
+send-side chain: `Api\Mailer::smimeEncrypt()`/`getRaw()` + `Mail\Smime::resolveMessage()`/
+`decrypt()` round-trips, using real certificates generated on the fly
+(`Smime::generate_certificate()`, same pattern as `SmimeTest.php`'s own pure-openssl tests) rather
+than a stored account credential - `acc_id=1` is only ever used to satisfy `Api\Mailer`'s
+constructor, same precedent as `Jmap/ImapBuildMailerTest.php`. Includes a regression test for the
+`getRaw()` double-wrap bug above, live-verified to actually fail against the pre-fix code.
+
+**IMAP-shim encrypt-only/sign+encrypt: found + fixed a real bug investigating live testing there**
+(ralf: "look into" whether it actually works against the shim account - it hadn't been tried,
+only against Stalwart). `buildMailerFromEmailProperties()` routed `createDraftEmail()`'s
+`{type: application/pkcs7-mime, blobId}` body-swap through the generic
+`$collect()`/`addAttachmentPart()` attachment path (no matching `bodyValues` entry), and
+`Api\Mailer::_send()` unconditionally wraps that together with an always-truthy empty placeholder
+body part in a fresh `multipart/mixed` container - confirmed via a real shim-sent encrypted mail:
+`multipart/mixed` containing an empty `application/octet-stream` leaf, a second empty
+"attachment" leaf, and the real pkcs7-mime bytes as a THIRD, attachment-dispositioned part,
+instead of the message's own top-level Content-Type simply being `application/pkcs7-mime`. Fixed:
+this shape (a bodyStructure with no `subParts` and a `blobId`) is now detected early and set
+directly as the Mailer's base part via `setBasePart()`, bypassing the attachment path entirely.
+Stalwart is unaffected (`Email/set create` is handled natively there). Regression test added to
+`Jmap/ImapBuildMailerTest.php`. **Still not live-tested against the shim account** - this fix is
+unverified against a real send, only against the PHPUnit structural assertion.
+
 Companion to [[mail-jmap-imap-inversion]].
 
 **HTML sends were missing a text/plain alternative entirely, built 2026-08-31, not yet
