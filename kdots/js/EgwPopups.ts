@@ -89,7 +89,11 @@ export class EgwPopups
 	{
 		if(_wnd instanceof Et2Dialog)
 		{
-			this._popups.splice(this._popups.indexOf(_wnd), 1);
+			const index = this._popups.indexOf(_wnd);
+			if(index !== -1)
+			{
+				this._popups.splice(index, 1);
+			}
 			_wnd.modal?.deactivate();
 			return (<Et2Dialog>_wnd).hide();
 		}

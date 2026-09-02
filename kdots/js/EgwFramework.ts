@@ -745,6 +745,12 @@ export class EgwFramework extends LitElement
 						this.popups.close(dialog);
 					}
 				});
+				// Catch-all: a footer button other than Cancel closes the dialog by calling
+				// hide() directly (Et2Dialog._onClick()), without ever dispatching
+				// sl-request-close. sl-after-hide fires on every real close regardless of
+				// how it was triggered, so use it to guarantee the dialog is untracked -
+				// _garbage_collector() never reclaims Et2Dialog entries on its own.
+				dialog.addEventListener("sl-after-hide", () => this.popups.close(dialog));
 			});
 
 			// Put the dialog in the correct app so it can inherit application styles & be removed if app closes
