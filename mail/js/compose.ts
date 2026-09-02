@@ -873,6 +873,8 @@ export class MailCompose
 	{
 		if (!this.jmapEligible()) return false;
 
+		let sent : {emailId : string, mailboxId : string};
+		let email : Awaited<ReturnType<typeof this.currentEmailFields>>;
 		try
 		{
 			const toolbar : any = this.et2.getWidgetById('composeToolbar');
@@ -881,8 +883,9 @@ export class MailCompose
 			const smimeType = signed && encrypted ? MailCompose.SMIME_TYPE_SIGN_ENCRYPT :
 				signed ? MailCompose.SMIME_TYPE_SIGN : encrypted ? MailCompose.SMIME_TYPE_ENCRYPT : undefined;
 			const passphrase = this.et2.getWidgetById('smime_passphrase')?.get_value();
-			await this.app.jmap.sendNewEmail(String(this.currentProfileID()), await this.currentEmailFields(),
-				smimeType, passphrase, this.smimePassExpMinutes);
+			email = await this.currentEmailFields();
+			sent = await this.app.jmap.sendNewEmail(String(this.currentProfileID()), email,
+				smimeType, passphrase, this.smimePassExpMinutes, this.jmapDraftEmailId);
 		}
 		catch (e)
 		{
@@ -898,6 +901,17 @@ export class MailCompose
 			this.egw.message(e.message || this.egw.lang('Failed to send message'), 'error');
 			return true;
 		}
+		// the message is ALREADY sent successfully at this point - any failure below is a
+		// best-effort follow-up, never reported as a send failure (the user's mail did go out)
+		try
+		{
+			await this.integrateSentMessage(sent, email);
+		}
+		catch (e)
+		{
+			console.error('MailCompose.integrateSentMessage(): failed', e);
+			this.egw.message(e?.message || this.egw.lang('Failed to create linked entry'), 'error');
+		}
 		// the form still carries its unsent-draft content as far as ETemplate's own dirty-tracking
 		// is concerned - it never went through ETemplate's own submit(), so closing now would
 		// otherwise trip the "unsaved changes" beforeunload prompt despite the message having
@@ -908,29 +922,74 @@ export class MailCompose
 	}
 
 	/**
-	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1/3 - no cross-app integration, no
-	 * S/MIME yet, for an actual SEND. Attachments are eligible as of Step 3 EXCEPT: a "share
-	 * instead of attach" filemode (a Vfs\Sharing link, not a real attachment upload - out of
-	 * scope) or one carried forward from an original message (has uid+partID/folder - needs
-	 * reply/forward, Step 4, not fully built yet). "autosave... has the same unimplemented
-	 * features as our current sending" (ralf, 2026-08-27) - true for attachments, but NOT for the
-	 * cross-app integration toggle check below (see forSend's docblock - found live 2026-08-27 via
-	 * a confirmed, reproducible case: to_infolog checked -> autosave fell back to the classic path
-	 * -> crashed, the same raw-IMAP-fallthrough bug class as elsewhere in this codebase, since
-	 * Api\Mail::appendMessage()/folderExists() are unguarded raw IMAP calls with no JMAP-native
-	 * fast path - a JMAP-only account's classic draft-save can never actually work, so falling
-	 * back to it for a toggle that doesn't even affect the SAVED DRAFT's own content was
-	 * strictly worse than just not blocking on it). S/MIME (2026-09-01) is no longer one of these
-	 * blocking toggles at all - see trySendViaJmap()'s own docblock.
+	 * JMAP-native send's own equivalent of classic mail_compose::sendMessage()'s to_infolog/
+	 * to_tracker/to_calendar cross-app-integration popup (2026-09-02 follow-up - previously one of
+	 * jmapEligible()'s own blocking checks, see its docblock). createMessage() - the classic
+	 * PHP code that normally drives this - never runs for a JMAP-native send at all: it needs a
+	 * classic Api\Mailer's own getRaw() output, which nothing here ever builds.
 	 *
-	 * @param forSend true (the default, matching trySendViaJmap()'s use) also checks the
-	 *  composeToolbar's cross-app integration toggles - those affect what gets built at SEND time
-	 *  only, not a draft's own JMAP representation, so trySaveDraftViaJmap() passes false: a
-	 *  draft with, say, "create an InfoLog entry" checked is still just plain body+recipients as
-	 *  far as the SAVED draft itself is concerned - that toggle only matters again once actually
-	 *  sent (still classic-only, unaffected by this).
+	 * A no-op if none of the three toggles are checked. Otherwise fetches the just-sent message's
+	 * raw source via MailJmap.fetchRawSource() (a synthetic rowId built from `sent`'s own
+	 * emailId/mailboxId - the exact same row-id shape every other mail row already uses) and hands
+	 * everything off to the new mail.mail_compose.ajax_integrateSent(), which does the actual
+	 * Link::set_data()/Framework::popup() work server-side - see its own docblock. That popup opens
+	 * itself via the framework's own JSON-response-apply mechanism (Framework::popup() calls
+	 * Json\Response::get()->apply('egw.open_link', ...) for a JSON request), so this method never
+	 * needs to open anything client-side itself.
+	 *
+	 * `email.attachments` (currentEmailFields()'s own already-JMAP-resolved shape - {blobId,...} or
+	 * {vfsPath,...}, per uploadAttachmentsViaJmap()) is reused as-is: it's exactly what actually got
+	 * sent, already re-uploaded to the CORRECT target account if the user switched identity, so the
+	 * server-side resolver needs no separate per-row profileID at all - just the one `profileID`
+	 * the whole message was sent from.
 	 */
-	private jmapEligible(forSend : boolean = true) : boolean
+	private async integrateSentMessage(sent : {emailId : string, mailboxId : string},
+		email : {to : any, cc : any, bcc : any, subject : string, body : string, isHtml : boolean, attachments? : any[]}) : Promise<void>
+	{
+		const toolbar : any = this.et2.getWidgetById('composeToolbar');
+		const appKeys = ['to_infolog', 'to_tracker', 'to_calendar'].filter(
+			(id) => toolbar?.getWidgetById(id)?.get_value());
+		if (!appKeys.length)
+		{
+			return;
+		}
+
+		const profileID = String(this.currentProfileID());
+		const rowId = 'mail::' + this.egw.user('account_id') + '::' + profileID + '::' + sent.mailboxId + '::' + sent.emailId;
+		const eml = await this.app.jmap.fetchRawSource(rowId);
+		const entryId = (this.et2.getWidgetById('to_integrate_ids')?.get_value() || [])[0];
+
+		await this.egw.request('mail.mail_compose.ajax_integrateSent', [{
+			appKeys,
+			entryId,
+			mailaddresses: {to: email.to, cc: email.cc, bcc: email.bcc},
+			subject: email.subject,
+			body: email.body,
+			isHtml: email.isHtml,
+			attachments: email.attachments || [],
+			eml,
+			profileID,
+		}]);
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 1/3 - no S/MIME check here (2026-09-01,
+	 * handled inside trySendViaJmap() itself - MailJmap.sendNewEmail()'s smimeType param, see its
+	 * own docblock) and no cross-app-integration check here either (2026-09-02 follow-up -
+	 * to_infolog/to_tracker/to_calendar no longer block JMAP eligibility at all, see
+	 * integrateSentMessage()). Attachments are eligible as of Step 3 EXCEPT: a "share instead of
+	 * attach" filemode (a Vfs\Sharing link, not a real attachment upload - out of scope) or one
+	 * carried forward from an original message the OLD way (has uid+partID/folder - this shouldn't
+	 * arise for anything compose.ts's own JMAP-mode bootstrap builds, which always produces
+	 * jmapBlobId/jmapVfsPath rows instead; it's a safety net for content mail_compose.inc.php still
+	 * renders classically server-side that this popup's own bootstrap doesn't yet override - true
+	 * draft-continuation now HAS a JMAP bootstrap too, see bootstrapDraft(), 2026-09-02).
+	 *
+	 * The `forSend` param this method used to take is gone (2026-09-02) - it only ever gated the
+	 * now-removed cross-app-integration block, and every other check here applies identically to a
+	 * send or a draft save.
+	 */
+	private jmapEligible() : boolean
 	{
 		if (!this.isJmapMode || this.app.mailvelope_editor)
 		{
@@ -949,17 +1008,7 @@ export class MailCompose
 				return false;
 			}
 		}
-		if (!forSend)
-		{
-			return true;
-		}
-		const toolbar : any = this.et2.getWidgetById('composeToolbar');
-		// smime_sign/smime_encrypt used to be here too (2026-08-31 - 2026-09-01) - now handled by
-		// trySendViaJmap() itself (MailJmap.sendNewEmail()'s smimeType param), see this doc's own
-		// send-side S/MIME write-up
-		const blockingToggle = ['to_tracker', 'to_infolog', 'to_calendar'].find(
-			(id) => toolbar?.getWidgetById(id)?.get_value());
-		return !blockingToggle;
+		return true;
 	}
 
 	private currentProfileID() : string
@@ -1007,7 +1056,7 @@ export class MailCompose
 		try
 		{
 			const params = new URLSearchParams(window.location.search);
-			const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | null;
+			const from = params.get('from') as 'reply' | 'reply_attachments' | 'reply_all' | 'forward' | 'composeasnew' | 'composefromdraft' | null;
 			if (from === 'forward' && params.get('mode') === 'forwardasattach')
 			{
 				await this.bootstrapForwardAsAttachment((params.get('id') || '').split(',').filter(Boolean));
@@ -1015,6 +1064,10 @@ export class MailCompose
 			else if (from === 'composeasnew' && params.get('id'))
 			{
 				await this.bootstrapComposeAsNew(params.get('id'));
+			}
+			else if (from === 'composefromdraft' && params.get('id'))
+			{
+				await this.bootstrapDraft(params.get('id'));
 			}
 			else if (from === 'reply' || from === 'reply_attachments' || from === 'reply_all' || from === 'forward')
 			{
@@ -1214,6 +1267,62 @@ export class MailCompose
 		// fresh one on top/below would duplicate it. An empty body (rare - normally only a
 		// genuinely blank draft) falls through to the same signature-insertion a brand new compose
 		// gets.
+		if (context.body.trim())
+		{
+			this.currentBodyWidget()?.set_value(context.body);
+		}
+		else
+		{
+			await this.applySignatureForCurrentIdentity('', false);
+		}
+
+		if (context.attachments.length)
+		{
+			this.carryForwardAttachments(context.attachments, context.profileID);
+		}
+	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md - true draft continuation (2026-09-02, ralf:
+	 * "what apart from the toggle would make it not eligible" -> jmapEligible()'s classic
+	 * uid/folder-attachment guard exists mainly for THIS case). Identical to bootstrapComposeAsNew()
+	 * (same fetchForReply() re-fetch, same "copy verbatim, no quoting/threading-headers" shape -
+	 * classic getDraftData()'s own behaviour) with exactly one addition: `this.jmapDraftEmailId` is
+	 * set to the draft's own emailId UP FRONT, so the FIRST save/send in this new session deletes
+	 * the ORIGINAL draft afterward - MailJmap.saveDraft()'s/sendNewEmail()'s own
+	 * existingDraftEmailId param already implements exactly this "create new, then destroy the
+	 * previous copy" cleanup for ordinary same-session autosave; resuming an old draft is just
+	 * priming that same mechanism with a PRE-EXISTING id instead of one this session created itself.
+	 *
+	 * mail_ui::displayMessage()'s own classic Drafts/Templates redirect (mail_ui.inc.php) now
+	 * appends `&jmap=1` for a JMAP-native row too (2026-09-02 follow-up - previously skipped
+	 * outright, since resolving "is this a Drafts folder" needed the same costly per-message
+	 * EMAILID search this whole project avoids; fixed there by checking the folder's cheap JMAP
+	 * `role` property instead, keyed by the already-eager folderID) when the jmapCompose preference
+	 * is on - mail_compose.inc.php's own $jmapReplySkip already recognizes 'composefromdraft' too.
+	 */
+	private async bootstrapDraft(sourceId : string) : Promise<void>
+	{
+		const context = await this.app.jmap.fetchForReply(sourceId);
+		if (!context)
+		{
+			this.egw.message(this.egw.lang('Failed to load original message'), 'error');
+			return;
+		}
+		this.isReplyCompose = false;
+		this.replyThreadingHeaders = null;
+		this.jmapDraftEmailId = this.app.jmap.messageReference(sourceId).emailId;
+
+		const formatAddress = (a : {name? : string, email : string}) => a.name ? `${a.name} <${a.email}>` : a.email;
+		this.et2.getWidgetById('to')?.set_value(context.to.map(formatAddress));
+		if (context.cc.length) this.et2.getWidgetById('cc')?.set_value(context.cc.map(formatAddress));
+		if (context.bcc.length) this.et2.getWidgetById('bcc')?.set_value(context.bcc.map(formatAddress));
+		this.et2.getWidgetById('subject')?.set_value(context.subject);
+		if (context.cc.length || context.bcc.length) this.fieldExpanderInit();
+
+		const isHtml = context.mimeType === 'html';
+		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
+
 		if (context.body.trim())
 		{
 			this.currentBodyWidget()?.set_value(context.body);
@@ -1743,7 +1852,7 @@ export class MailCompose
 	 */
 	private async trySaveDraftViaJmap(action : string) : Promise<boolean>
 	{
-		if (!this.jmapEligible(false)) return false;
+		if (!this.jmapEligible()) return false;
 
 		let result : {emailId : string, mailboxId : string};
 		try

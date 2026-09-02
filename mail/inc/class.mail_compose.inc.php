@@ -409,8 +409,13 @@ class mail_compose
 		// source message via JMAP and copies its to/cc/bcc/subject/body/attachments verbatim
 		// (classic getDraftData()'s own behaviour - no quoting/attribution, no threading headers,
 		// unlike a reply/forward).
+		// 'composefromdraft' added 2026-09-02 - MailCompose.bootstrapDraft() re-fetches the draft
+		// via JMAP and copies its to/cc/bcc/subject/body/attachments verbatim, same as
+		// 'composeasnew', but ALSO captures the draft's own emailId (jmapDraftEmailId) so
+		// saving/sending replaces it instead of leaving an orphaned copy behind - see
+		// MailJmap.saveDraft()'s/sendNewEmail()'s own existingDraftEmailId param.
 		$jmapReplySkip = ($_GET['jmap'] ?? null) === '1' &&
-			in_array($_GET['from'] ?? null, ['reply', 'reply_attachments', 'reply_all', 'forward', 'composeasnew'], true) && $replyID;
+			in_array($_GET['from'] ?? null, ['reply', 'reply_attachments', 'reply_all', 'forward', 'composeasnew', 'composefromdraft'], true) && $replyID;
 		if(!empty($_GET['from']) && $replyID && !$jmapReplySkip)
 		{
 			$_content = array_merge((array)$_content, $this->getComposeFrom(
@@ -2990,6 +2995,117 @@ class mail_compose
 			return self::wrapBlockWithPreferredFont("<ul><li>".implode("</li>\n<li>", $links)."</li></ul>\n", lang('Download attachments'), 'attachmentLinks');
 		}
 		return lang('Download attachments').":\n- ".implode("\n- ", $links)."\n";
+	}
+
+	/**
+	 * JMAP-native send's own equivalent of sendMessage()'s to_infolog/to_tracker/to_calendar
+	 * cross-app-integration popup (mail/js/compose.ts's trySendViaJmap()/integrateSentMessage(),
+	 * 2026-09-02 - previously a jmapEligible() blocker, see its own docblock in compose.ts).
+	 * sendMessage()'s own version of this block (below, `if($_formData['composeToolbar']
+	 * ['to_infolog'] || ...)`) runs right after building a classic Api\Mailer and reads
+	 * $this->sessionData - neither exists for a JMAP-native send at all, so every input here is
+	 * client-supplied instead.
+	 *
+	 * Attachments are pre-resolved to real temp files HERE, the one genuinely new piece - by the
+	 * time get_integrate_data() (mail_integration.inc.php, called from mail_integration::integrate()
+	 * once the popup this method opens actually loads) runs, every attachment already looks exactly
+	 * like a classic upload (a real, already-existing `file` path), so that method needs no
+	 * JMAP-awareness of its own at all.
+	 *
+	 * @param array $params {
+	 *   appKeys: string[] one or more of 'to_infolog','to_tracker','to_calendar' (composeToolbar's
+	 *     own checkbox ids - matches sendMessage()'s substr($app_key,3) convention for the app name),
+	 *   entryId: ?string 'app:id' of an existing entry to link into (to_integrate_ids's first tag),
+	 *   mailaddresses: array{to?:array,cc?:array,bcc?:array} - 'from' is added here, server-side,
+	 *     from the sending account's own identity (matching sendMessage()'s $activeMailProfile
+	 *     fallback - compose.ts has no separate "from identity" field to read one from at all),
+	 *   subject: string,
+	 *   body: string - isHtml decides whether this needs convertHTMLToText() first,
+	 *   isHtml: bool,
+	 *   attachments: array[] {name,type,size,blobId?,vfsPath?} - MailCompose.currentEmailFields()'s
+	 *     own already-uploaded-to-THIS-account shape (uploadAttachmentsViaJmap()'s output, the exact
+	 *     same array the message itself was actually sent with) - no jmapProfileID per row needed,
+	 *     unlike createMessage()'s own jmapBlobId/jmapVfsPath branches, since re-upload-to-the-
+	 *     right-account already happened client-side before send,
+	 *   eml: string raw RFC 5322 source of the just-sent message (MailJmap.fetchRawSource()),
+	 *   profileID: string acc_id (mail account, not EGroupware account_id) the message was sent from,
+	 * }
+	 */
+	function ajax_integrateSent(array $params)
+	{
+		$profileID = (int)($params['profileID'] ?? 0);
+		$activeMailProfile = Mail\Account::read($profileID);
+
+		$attachments = [];
+		foreach ((array)($params['attachments'] ?? []) as $attachment)
+		{
+			if (!empty($attachment['blobId']))
+			{
+				$bytes = AttachmentJmap::fetchBlobBytes((string)$profileID, $attachment['blobId'],
+					$attachment['name'] ?? 'attachment', $attachment['type'] ?? 'application/octet-stream');
+				if ($bytes === null) continue;	// gone/expired - best-effort, skip rather than abort the whole integration
+				$file = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'mail_integrate_');
+				file_put_contents($file, $bytes);
+				$attachment['file'] = $file;
+			}
+			elseif (!empty($attachment['vfsPath']))
+			{
+				Vfs::load_wrapper('vfs');
+				$attachment['file'] = Vfs::PREFIX.$attachment['vfsPath'];
+			}
+			else
+			{
+				continue;
+			}
+			$attachments[] = $attachment;
+		}
+
+		$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'mail_integrate_');
+		file_put_contents($eml, (string)($params['eml'] ?? ''));
+
+		$mailaddresses = (array)($params['mailaddresses'] ?? []);
+		if (!empty($activeMailProfile['ident_email']))
+		{
+			$mailaddresses['from'] = Mail\Html::decodeMailHeader($activeMailProfile['ident_email']);
+		}
+
+		$body = (string)($params['body'] ?? '');
+		if (!empty($params['isHtml']))
+		{
+			$body = $this->convertHTMLToText($body);
+		}
+
+		$entryId = null;
+		if (!empty($params['entryId']))
+		{
+			[, $entryId] = explode(':', (string)$params['entryId']) + [null, null];
+		}
+
+		foreach ((array)($params['appKeys'] ?? []) as $app_key)
+		{
+			if (!in_array($app_key, ['to_infolog', 'to_tracker', 'to_calendar'], true)) continue;
+
+			$app_name = substr($app_key, 3);
+			$hook = Api\Hooks::single(['location' => 'mail_import'], $app_name);
+			if (empty($hook['menuaction'])) continue;
+
+			$target = [
+				'menuaction' => $hook['menuaction'],
+				'egw_data' => Link::set_data(null, 'mail_integration::integrate', [
+					$mailaddresses,
+					(string)($params['subject'] ?? ''),
+					$body,
+					$attachments,
+					false,	// date
+					$eml,
+					(string)$profileID,
+				], true),
+				'app' => $app_name,
+			];
+			if ($entryId) $target['entry_id'] = $entryId;
+
+			Framework::popup(Egw::link('/index.php', $target), '_blank', $hook['popup'] ?? '640x480');
+		}
 	}
 
 	/**

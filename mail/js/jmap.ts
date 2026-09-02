@@ -3980,12 +3980,24 @@ export class MailJmap
 	 * @param passphrase only meaningful together with a signing smimeType - falls back to the
 	 *  session-cached passphrase server-side if not given (same as the read-side
 	 *  resolveSpecialCaseBody())
+	 * @param passExpMinutes
+	 * @param existingDraftEmailId a PRE-EXISTING draft this send is replacing (MailCompose.
+	 *  bootstrapDraft()'s own jmapDraftEmailId, true draft-continuation) - destroyed after a
+	 *  successful send, same "create new, then clean up the old copy" shape saveDraft()'s own
+	 *  same-named param already uses for ordinary same-session autosave. Without this, resuming an
+	 *  old draft and sending it would leave the ORIGINAL draft orphaned in the Drafts folder - only
+	 *  the freshly-created one (this call's own emailId, moved Drafts->Sent above) ever gets
+	 *  cleaned up automatically.
 	 * @throws JmapUserError on any failure - see unreachableError()'s docblock
 	 * @throws JmapSmimePassphraseError smimeType needs signing and no passphrase (given or
 	 *  session-cached) was enough to unlock the sender's own private key
+	 * @return the just-sent message's own {emailId, mailboxId} (the Sent folder it landed in) -
+	 *  MailCompose's own cross-app-integration follow-up (to_infolog/to_tracker/to_calendar) needs
+	 *  both to fetch the message's raw source afterward (fetchRawSource(), keyed by a synthetic
+	 *  rowId built from exactly these two values)
 	 */
 	async sendNewEmail(profileID : string, email : JmapNewEmail, smimeType? : string, passphrase? : string,
-		passExpMinutes? : number) : Promise<void>
+		passExpMinutes? : number, existingDraftEmailId? : string) : Promise<{emailId : string, mailboxId : string}>
 	{
 		try
 		{
@@ -4018,6 +4030,26 @@ export class MailJmap
 			{
 				throw new JmapUserError(describeSetError(submission.notCreated) ?? this.egw.lang('Failed to send message'));
 			}
+			if (existingDraftEmailId)
+			{
+				try
+				{
+					await client.requestMany((t) => ({
+						// same shim mailboxId requirement as saveDraft()'s own identical cleanup -
+						// see its docblock
+						destroyed: t.Email.set({
+							accountId: token.accountId,
+							destroy: [existingDraftEmailId],
+							...(token.isLocal ? {mailboxId: draftsId} : {}),
+						}),
+					}));
+				}
+				catch (e)
+				{
+					console.error('MailJmap.sendNewEmail(): failed to clean up the previous draft copy', e);
+				}
+			}
+			return {emailId, mailboxId : sentId};
 		}
 		catch (e)
 		{

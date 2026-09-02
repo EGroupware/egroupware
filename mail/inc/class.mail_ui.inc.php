@@ -1920,26 +1920,47 @@ class mail_ui
 		// "time-consuming fallback" this whole mail JMAP modernization project set out to avoid.
 		// Found live 2026-08-31 (forward-as-attachment's own message-view popup, mail-compose-
 		// jmap-migration.md): that search can come back empty against Stalwart even for a message
-		// that opens perfectly fine via a direct Email/get - and neither $uid nor $mailbox is
-		// actually used for anything beyond THIS classic Drafts/Templates redirect + error-message
-		// text, since $content['mail_id'] below is always the original, unresolved $rowID anyway
-		// (the client's own JMAP-native fetch re-derives everything from it). So for a JMAP-native
-		// row, skip this whole slow, unreliable block entirely and trust the client-side flow -
-		// the one known trade-off (ralf, 2026-08-31, explicitly accepted): a Draft/Template message
-		// opened this way shows in read-only "display" mode instead of redirecting to compose.
+		// that opens perfectly fine via a direct Email/get. Originally (2026-08-31) this whole
+		// block was skipped outright for a JMAP-native row - a Draft/Template message opened this
+		// way just showed read-only instead of redirecting to compose - since $uid/$mailbox (the
+		// classic isDraftFolder()/isTemplateFolder() check's own inputs) were the only reason to
+		// resolve them at all. Fixed 2026-09-02: $hA['folderID'] is EAGER (no per-message search,
+		// just the row-id string itself, see RowIdParts) and a folder's ROLE is a single, cheap
+		// JMAP Mailbox/get away (Imap::mailboxGet()'s own "explicit ids" branch is one batched
+		// LIST, not the slow full-account scan) - no need for the real folder NAME or per-message
+		// UID at all to answer "is this a Drafts/Templates folder".
 		if (!$hA['is_jmap'])
 		{
 			$uid = $hA['msgUID'];
 			$mailbox = $hA['folder'];
-			if (($this->mail_bo->isDraftFolder($mailbox)) && $_requesteddata['mode'] == 'print')
+			$isDraftOrTemplate = $this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox);
+			$isDraft = $this->mail_bo->isDraftFolder($mailbox);
+		}
+		else
+		{
+			$role = null;
+			if (!empty($hA['folderID']))
 			{
-				$response = Api\Json\Response::get();
-				$response->call('app.mail.printForCompose', $rowID);
+				$icServer = $this->mail_bo->icServer;
+				$role = $icServer instanceof ImapJmap ?
+					($icServer->jmapClient()->mailbox->get([$hA['folderID']], ['role'])['list'][0]['role'] ?? null) :
+					(JmapImap::mailboxGet((string)$icServerID, ['ids' => [$hA['folderID']]])['list'][0]['role'] ?? null);
 			}
-			if (!$preventRedirect && ($this->mail_bo->isDraftFolder($mailbox) || $this->mail_bo->isTemplateFolder($mailbox)))
-			{
-				Egw::redirect_link('/index.php',array('menuaction'=>'mail.mail_compose.compose','id'=>$rowID,'from'=>'composefromdraft'));
-			}
+			$isDraftOrTemplate = in_array($role, ['drafts', 'templates'], true);
+			$isDraft = $role === 'drafts';
+		}
+		if ($isDraft && $_requesteddata['mode'] == 'print')
+		{
+			$response = Api\Json\Response::get();
+			$response->call('app.mail.printForCompose', $rowID);
+		}
+		if (!$preventRedirect && $isDraftOrTemplate)
+		{
+			// jmap=1 (only when the user's own "jmapCompose" preference is on) so compose.ts's
+			// own bootstrapDraft() takes over client-side instead of the classic getDraftData()
+			// fetch - mail_compose.inc.php's own $jmapReplySkip already recognizes 'composefromdraft'
+			$jmap = !empty($GLOBALS['egw_info']['user']['preferences']['mail']['jmapCompose']) ? ['jmap' => '1'] : [];
+			Egw::redirect_link('/index.php', ['menuaction' => 'mail.mail_compose.compose', 'id' => $rowID, 'from' => 'composefromdraft'] + $jmap);
 		}
 
 		$content = [
@@ -2345,14 +2366,22 @@ class mail_ui
 	 * from winmail.dat and will response expected structure back
 	 * to client in order to display them.
 	 *
+	 * $_partId/$_blobId (2026-09-02): the specific TNEF attachment's own partId/blobId, when the
+	 * client already found it itself via MailJmap.fetchAttachmentsMetadata() (mail/js/jmap.ts) -
+	 * see AttachmentJmap::resolveWinmailJmap()'s own docblock. Both must be given together (a
+	 * classic/mixed-account row falls through to the classic resolveAttachmentsBlock() path either
+	 * way, which has no use for either).
+	 *
 	 * @param type $_rowid row id from nm
+	 * @param ?string $_partId
+	 * @param ?string $_blobId
 	 *
 	 */
-	function ajax_resolveWinmail ($_rowid)
+	function ajax_resolveWinmail ($_rowid, $_partId=null, $_blobId=null)
 	{
 		$response = Api\Json\Response::get();
 
-		$attachments = AttachmentJmap::resolveWinmailJmap($_rowid) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid);
+		$attachments = AttachmentJmap::resolveWinmailJmap($_rowid, $_partId, $_blobId) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid);
 		if (!empty($attachments))
 		{
 			$response->data($attachments);
@@ -2373,13 +2402,20 @@ class mail_ui
 	 * isn't something the JMAP metadata alone can provide. The preview panel (app.ts's
 	 * preview()) calls this on demand, once, for whichever single row is being previewed.
 	 *
+	 * $_attachments (2026-09-02 follow-up): the RFC 8621 EmailBodyPart[] the client already
+	 * fetched itself via MailJmap.fetchAttachmentsMetadata() - when given, AttachmentJmap::
+	 * resolveAttachmentsJmap() skips its own now-redundant Email/get round trip. renderMessageInto()
+	 * (mail/js/app.ts) only ever passes the NON-TNEF attachments here, having already routed any
+	 * TNEF/winmail.dat entry to ajax_resolveWinmail() above instead - see its own docblock.
+	 *
 	 * @param string $_rowid row id from nm
+	 * @param ?array $_attachments
 	 * @return void
 	 */
-	function ajax_fetchAttachments($_rowid)
+	function ajax_fetchAttachments($_rowid, $_attachments=null)
 	{
 		Api\Json\Response::get()->data([
-			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid),
+			'attachmentsBlock' => AttachmentJmap::resolveAttachmentsJmap($_rowid, null, false, $_attachments) ?? $this->attachmentHandler()->resolveAttachmentsBlock($_rowid),
 		]);
 	}
 
