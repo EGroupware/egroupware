@@ -187,7 +187,7 @@ class timesheet_ui extends timesheet_bo
 			$referer = $content['referer'];
 			$content['ts_project_blur'] = $content['pm_id'] ? Link::title('projectmanager', $content['pm_id']) : '';
 			$this->data = $content;
-			foreach(array('button','view','referer','tabs','start_time') as $key)
+			foreach(array('button','view','referer','tabs','start_time','ignore_conflicts','conflict_button') as $key)
 			{
 				unset($this->data[$key]);
 			}
@@ -242,6 +242,26 @@ class timesheet_ui extends timesheet_bo
 						}
 					}
 					if ($etpl->validation_errors()) break;	// the user need to fix the error, before we can save the entry
+
+					// conflicts() works in Api\DateTime objects and expects the start in server
+					// time, while $this->data holds user-time until save() converts it
+					if (empty($content['ignore_conflicts']) && !empty($this->data['ts_start']) &&
+						($ts_conflicts = $this->conflicts(array(
+							'ts_start' => (new Api\DateTime($this->data['ts_start']))->setServer(),
+						) + $this->data)))
+					{
+						// legacy <grid> auto-repeat indexes its content rows by grid row number, so the
+						// first repeated row after the header row is $content['conflicts'][1], not [0]
+						$content['conflicts'] = array(false);
+						foreach($ts_conflicts as $conflict)
+						{
+							$conflict['ts_start'] = $conflict['ts_start']->setUser()->format('ts');
+							$content['conflicts'][] = $conflict;
+						}
+						$content['has_conflicts'] = true;
+						$content['conflict_button'] = $button;
+						break;	// don't save - let the user ignore the conflict or re-edit
+					}
 
 					// account for changed project --> remove old one from links and add new one
 					if ((int) $this->data['pm_id'] != (int) $this->data['old_pm_id'])
@@ -384,6 +404,9 @@ class timesheet_ui extends timesheet_bo
 			'pm_integration'   => $this->pm_integration,
 			'no_ts_status'     => !$this->status_labels && ($this->data['ts_status'] != self::DELETED_STATUS),
 			'tabs'             => $_GET['tabs'] ?? 'general',
+			'conflicts'        => $content['conflicts'] ?? [],
+			'has_conflicts'    => $content['has_conflicts'] ?? false,
+			'conflict_button'  => $content['conflict_button'] ?? null,
 		));
 		$links = array();
 		// create links specified in the REQUEST (URL)

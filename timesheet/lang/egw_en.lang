@@ -73,6 +73,7 @@ if you specify a directory (full vfs path) here, %1 displays an action for each 
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	en	If you specify a document (full VFS path) here, %1 displays an extra document icon for each entry. That icon allows to download the specified document with the data inserted.
 if you specify an export definition, it will be used when you export	timesheet	en	If you specify an export definition, it will be used when you export
 ignore	timesheet	en	Ignore
+ignore conflict	timesheet	en	Ignore conflict
 import options	timesheet	en	Import options
 imports entries into the timesheet from a csv file.	timesheet	en	Imports entries into Time Sheet from a CSV file
 insert	timesheet	en	Insert
@@ -128,6 +129,7 @@ quantity	timesheet	en	Quantity
 readable	timesheet	en	Readable
 recorded	timesheet	en	Recorded
 recovered	timesheet	en	recovered
+re-edit timesheet	timesheet	en	Re-edit timesheet
 replacements for inserting entries into documents	timesheet	en	Replacements for inserting entries into documents
 restore this entry	timesheet	en	Restore this entry
 save & new	timesheet	en	Save & New
@@ -135,6 +137,7 @@ save & reset	timesheet	en	Save & Reset
 saves the changes made	timesheet	en	Saves the changes made
 saves the changes made and leaves	timesheet	en	Saves the changes made and leaves
 saves this entry and add a new one	timesheet	en	Saves this entry and add a new one
+scheduling conflict	timesheet	en	Scheduling conflict
 select a price	timesheet	en	Select a price
 select a project	timesheet	en	Select a project
 select a status of the timesheet	timesheet	en	Select a status of the timesheet
@@ -164,6 +167,7 @@ the following document-types are supported:	timesheet	en	The following document-
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	en	The name used internally, <= 20 chars, changing it makes existing data unavailable
 the text displayed to the user	timesheet	en	Text displayed to the user
 this month	timesheet	en	This month
+this timesheet overlaps with the following existing entries:	timesheet	en	This timesheet overlaps with the following existing entries:
 this week	timesheet	en	This week
 this year	timesheet	en	This year
 ticket modified by %1 at %2	timesheet	en	Ticket modified by %1 at %2

@@ -73,6 +73,7 @@ if you specify a directory (full vfs path) here, %1 displays an action for each 
 if you specify a document (full vfs path) here, %1 displays an extra document icon for each entry. that icon allows to download the specified document with the data inserted.	timesheet	de	Wenn Sie hier den Ordner (vollständiger Pfad im virtuellen Dateisystem VFS) angeben, zeigt %1 ein einzelnes Dokument-Symbol für jeden Eintrag. Dieses Symbol erlaubt es das angegebene Dokument herunterzuladen mit den %1 Daten eingefügt.
 if you specify an export definition, it will be used when you export	timesheet	de	Wenn Sie eine Export-Definition angeben wird diese beim Export angewendet.
 ignore	timesheet	de	Ignorieren
+ignore conflict	timesheet	de	Konflikt ignorieren
 import options	timesheet	de	Import Optionen
 imports entries into the timesheet from a csv file.	timesheet	de	Importiert Einträge für den Stundenzettel aus einer CSV-Datei.
 insert	timesheet	de	Einfügen
@@ -128,6 +129,7 @@ quantity	timesheet	de	Menge
 readable	timesheet	de	Lesbar
 recorded	timesheet	de	Aufgenommen
 recovered	timesheet	de	wiederhergestellt
+re-edit timesheet	timesheet	de	Stundenzettel erneut bearbeiten
 replacements for inserting entries into documents	timesheet	de	Platzhalter für das Einfügen in Dokumente
 restore this entry	timesheet	de	Diesen Eintrag wiederherstellen
 save & new	timesheet	de	Speichern & Neu
@@ -135,6 +137,7 @@ save & reset	timesheet	de	Speichern & Zurücksetzen
 saves the changes made	timesheet	de	Speichert die Änderungen
 saves the changes made and leaves	timesheet	de	Änderungen  speichern und beenden
 saves this entry and add a new one	timesheet	de	Speichert diesen Eintrag und fügt einen neuen hinzu
+scheduling conflict	timesheet	de	Terminüberschneidung
 select a price	timesheet	de	Preis auswählen
 select a project	timesheet	de	Projekt auswählen
 select a status of the timesheet	timesheet	de	Einen Status auswählen
@@ -164,6 +167,7 @@ the following document-types are supported:	timesheet	de	Die folgenden Dokumentt
 the name used internaly (<= 20 chars), changeing it makes existing data unavailible	timesheet	de	Dieser Name wird nur intern benutzt (<= 20 Zeichen), Änderungen führen dazu, das bestehende Daten nicht mehr angezeigt werden können.
 the text displayed to the user	timesheet	de	Der Text wird dem Benutzer angezeigt
 this month	timesheet	de	Diesen Monat
+this timesheet overlaps with the following existing entries:	timesheet	de	Dieser Stundenzettel überschneidet sich mit folgenden bestehenden Einträgen:
 this week	timesheet	de	Diese Woche
 this year	timesheet	de	Dieses Jahr
 ticket modified by %1 at %2	timesheet	de	Ticket geändert von %1 am %2

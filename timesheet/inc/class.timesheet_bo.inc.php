@@ -700,6 +700,58 @@ class timesheet_bo extends Api\Storage
 	}
 
 	/**
+	 * Find other timesheets of the same owner overlapping the given start/duration
+	 *
+	 * Automatic "working time" entries (Events::workingTimeCat()) are excluded on both
+	 * sides: a working-time entry never gets reported as a conflict, and is never itself
+	 * checked for conflicts (it intentionally spans the whole booked work period).
+	 *
+	 * $ts['ts_start'] must already be in server time (as stored in the db) - this method
+	 * does no timezone conversion itself, to avoid double-converting a caller that already
+	 * did (see TimesheetBoTest::testConflictsExpectsStartInServerTime).
+	 *
+	 * @param array $ts candidate data: ts_owner, ts_start (Api\DateTime, server time),
+	 *	ts_duration (minutes), optionally ts_id (excluded from the search, eg. when editing)
+	 *	and cat_id
+	 * @return array ts_id => array with ts_id, ts_title, ts_start (Api\DateTime, server
+	 *	time), ts_duration, ordered by ts_start
+	 */
+	function conflicts(array $ts)
+	{
+		if (empty($ts['ts_owner']) || empty($ts['ts_start']) || (int)($ts['ts_duration'] ?? 0) <= 0 ||
+			(int)($ts['cat_id'] ?? 0) === (int)Events::workingTimeCat())
+		{
+			return array();
+		}
+		if (!(($this->grants[$ts['ts_owner']] ?? 0) & Acl::READ))
+		{
+			return array();	// can't see the owner's other entries
+		}
+		$start = $ts['ts_start'];
+		$end = (clone $start)->add((int)$ts['ts_duration'].' minutes');
+
+		$where = array(
+			'ts_owner' => $ts['ts_owner'],
+			'(ts_status != '.self::DELETED_STATUS.' OR ts_status IS NULL)',
+			'(cat_id != '.(int)Events::workingTimeCat().' OR cat_id IS NULL)',
+			'ts_start < '.$this->db->quote($end->format('ts'), 'int'),
+			'ts_start + ts_duration * 60 > '.$this->db->quote($start->format('ts'), 'int'),
+		);
+		if (!empty($ts['ts_id']))
+		{
+			$where[] = 'ts_id != '.(int)$ts['ts_id'];
+		}
+		$conflicts = array();
+		foreach($this->db->select(self::TABLE, 'ts_id,ts_title,ts_start,ts_duration', $where,
+			__LINE__, __FILE__, false, 'ORDER BY ts_start', TIMESHEET_APP) as $row)
+		{
+			$row['ts_start'] = new Api\DateTime($row['ts_start'], Api\DateTime::$server_timezone);
+			$conflicts[$row['ts_id']] = $row;
+		}
+		return $conflicts;
+	}
+
+	/**
 	 * read a timesheet entry
 	 *
 	 * @param int $ts_id

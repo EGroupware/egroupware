@@ -41,8 +41,9 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 	 * @param int|null $start entry start timestamp, defaults to now
 	 * @param int $duration entry duration in minutes
 	 * @param int|null $status ts_status to set, or null to leave it unset (DB NULL)
+	 * @param int|null $cat_id category to set, or null to leave it unset (DB default)
 	 */
-	private function createTestTimesheet(int $victim_owner, ?int $start = null, int $duration = 60, ?int $status = null): int
+	private function createTestTimesheet(int $victim_owner, ?int $start = null, int $duration = 60, ?int $status = null, ?int $cat_id = null): int
 	{
 		$start ??= time();
 		$so = new EGroupware\Api\Storage\Base('timesheet', 'egw_timesheet');
@@ -59,6 +60,10 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 		if (isset($status))
 		{
 			$so->data['ts_status'] = $status;
+		}
+		if (isset($cat_id))
+		{
+			$so->data['cat_id'] = $cat_id;
 		}
 		$so->save();
 
@@ -183,6 +188,178 @@ class TimesheetBoTest extends \EGroupware\Api\AppTest
 
 		$this->assertNull($bo->get_last_end($owner, $other_day),
 			'get_last_end() must not fall back to an entry from a different day');
+	}
+
+	/**
+	 * Build a server-time Api\DateTime from a raw ts int, matching what conflicts() expects.
+	 */
+	private function serverTime(int $ts): EGroupware\Api\DateTime
+	{
+		return new EGroupware\Api\DateTime($ts, EGroupware\Api\DateTime::$server_timezone);
+	}
+
+	/**
+	 * conflicts() must find another entry of the same owner whose start/duration overlaps
+	 * the candidate, and must not flag a non-overlapping one.
+	 */
+	public function testConflictsFindsOverlappingEntry()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$start = $bo->today + 9 * 3600;
+
+		$overlapping_id = $this->createTestTimesheet($owner, $start, 60);
+		$this->createTestTimesheet($owner, $start + 2 * 3600, 60); // does not overlap
+
+		$conflicts = $bo->conflicts(array(
+			'ts_owner'    => $owner,
+			'ts_start'    => $this->serverTime($start + 30 * 60),
+			'ts_duration' => 60,
+		));
+
+		$this->assertArrayHasKey($overlapping_id, $conflicts,
+			'conflicts() must report the overlapping entry');
+		$this->assertCount(1, $conflicts,
+			'conflicts() must not report the non-overlapping entry');
+	}
+
+	/**
+	 * An overlapping entry tagged with the automatic "working time" category must never be
+	 * reported as a conflict.
+	 */
+	public function testConflictsExcludesWorkingTimeEntry()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$start = $bo->today + 9 * 3600;
+		$working_time_cat = EGroupware\Timesheet\Events::workingTimeCat();
+
+		$this->createTestTimesheet($owner, $start, 8 * 60, null, $working_time_cat);
+
+		$conflicts = $bo->conflicts(array(
+			'ts_owner'    => $owner,
+			'ts_start'    => $this->serverTime($start + 30 * 60),
+			'ts_duration' => 60,
+		));
+
+		$this->assertSame(array(), $conflicts,
+			'conflicts() must never report an automatic working-time entry as a conflict');
+	}
+
+	/**
+	 * A candidate entry that is itself the automatic "working time" category must never
+	 * trigger a conflict check, even though it overlaps a normal entry.
+	 */
+	public function testConflictsSkipsCheckForWorkingTimeCandidate()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$start = $bo->today + 9 * 3600;
+		$working_time_cat = EGroupware\Timesheet\Events::workingTimeCat();
+
+		$this->createTestTimesheet($owner, $start, 60);
+
+		$conflicts = $bo->conflicts(array(
+			'ts_owner'    => $owner,
+			'ts_start'    => $this->serverTime($start),
+			'ts_duration' => 8 * 60,
+			'cat_id'      => $working_time_cat,
+		));
+
+		$this->assertSame(array(), $conflicts,
+			'conflicts() must skip the check entirely for a working-time candidate');
+	}
+
+	/**
+	 * A deleted entry that would otherwise overlap must not be reported.
+	 */
+	public function testConflictsExcludesDeletedEntry()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$start = $bo->today + 9 * 3600;
+
+		$this->createTestTimesheet($owner, $start, 60, timesheet_bo::DELETED_STATUS);
+
+		$conflicts = $bo->conflicts(array(
+			'ts_owner'    => $owner,
+			'ts_start'    => $this->serverTime($start),
+			'ts_duration' => 60,
+		));
+
+		$this->assertSame(array(), $conflicts,
+			'conflicts() must not report a deleted entry as a conflict');
+	}
+
+	/**
+	 * conflicts() compares against the raw db values and therefore expects ts_start as an
+	 * Api\DateTime already holding server time - the caller has to convert (eg. via
+	 * ->setServer()), as content arrays hold user-time. Pinned here because "fixing" the
+	 * conversion inside conflicts() would double-convert it for timesheet_ui, which already
+	 * converts before calling.
+	 */
+	public function testConflictsExpectsStartInServerTime()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$start = $bo->today + 9 * 3600;
+		$user_timezone = EGroupware\Api\DateTime::$user_timezone->getName();
+
+		$overlapping_id = $this->createTestTimesheet($owner, $start, 60);
+
+		// a user timezone far enough from the server's that a user-time start can not overlap
+		EGroupware\Api\DateTime::setUserPrefs('Pacific/Kiritimati');	// UTC+14
+		try
+		{
+			$server_time = $this->serverTime($start);
+			$user_time = (clone $server_time)->setUser();
+			$this->assertNotEquals($server_time->format('ts'), $user_time->format('ts'),
+				'test needs a user timezone offset from the server one');
+
+			$this->assertArrayHasKey($overlapping_id, $bo->conflicts(array(
+				'ts_owner'    => $owner,
+				'ts_start'    => $server_time,
+				'ts_duration' => 60,
+			)), 'conflicts() must match on a server-time ts_start');
+
+			$this->assertSame(array(), $bo->conflicts(array(
+				'ts_owner'    => $owner,
+				'ts_start'    => $user_time,
+				'ts_duration' => 60,
+			)), 'conflicts() must not convert ts_start itself - an unconverted user-time Api\DateTime does not overlap');
+		}
+		finally
+		{
+			EGroupware\Api\DateTime::setUserPrefs($user_timezone);
+		}
+	}
+
+	/**
+	 * Editing an existing entry (passing its own ts_id) must never conflict with itself.
+	 */
+	public function testConflictsExcludesOwnTsId()
+	{
+		$bo = new timesheet_bo();
+		$owner = random_int(1000000000, 2000000000);
+		$bo->grants[$owner] = Acl::READ;
+		$start = $bo->today + 9 * 3600;
+
+		$ts_id = $this->createTestTimesheet($owner, $start, 60);
+
+		$conflicts = $bo->conflicts(array(
+			'ts_id'       => $ts_id,
+			'ts_owner'    => $owner,
+			'ts_start'    => $this->serverTime($start),
+			'ts_duration' => 60,
+		));
+
+		$this->assertSame(array(), $conflicts,
+			'conflicts() must exclude the entry being edited from its own overlap check');
 	}
 
 	/**

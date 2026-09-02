@@ -109,7 +109,39 @@
 	<template id="timesheet.edit.events.change" template="" lang="" group="0" version="1.7.002">
 		<et2-date-time  id="time" required="true"/>
 	</template>
+	<template id="timesheet.edit.conflicts" template="" lang="" group="0" version="1.9.002">
+		<et2-dialog title="Scheduling conflict" open="@has_conflicts" buttons=""
+		            destroyOnClose="false" isModal="true">
+			<et2-description value="This timesheet overlaps with the following existing entries:"></et2-description>
+			<grid width="100%" id="conflicts">
+				<columns>
+					<column/>
+					<column/>
+					<column/>
+				</columns>
+				<rows>
+					<row class="th">
+						<et2-description value="Title"></et2-description>
+						<et2-description value="Starttime"></et2-description>
+						<et2-description value="Duration"></et2-description>
+					</row>
+					<row id="timesheet-conflict::$row_cont[ts_id]">
+						<et2-description id="${row}[ts_title]"></et2-description>
+						<et2-date-time id="${row}[ts_start]" readonly="true"></et2-date-time>
+						<et2-date-duration id="${row}[ts_duration]" readonly="true" displayFormat="hm"></et2-date-duration>
+					</row>
+				</rows>
+			</grid>
+			<et2-button slot="footer" label="Ignore conflict" image="check" noSubmit="true"
+			            id="ignoreConflict" onclick="app.timesheet.ignoreConflict(event, widget);"></et2-button>
+			<et2-button slot="footer" label="Re-edit timesheet" image="edit" noSubmit="true"
+			            onclick="widget.closest('et2-dialog').close();"></et2-button>
+		</et2-dialog>
+		<et2-textbox type="hidden" id="ignore_conflicts"></et2-textbox>
+		<et2-textbox type="hidden" id="conflict_button"></et2-textbox>
+	</template>
 	<template id="timesheet.edit" template="" lang="" group="0" version="1.9.002">
+		<template id="timesheet.edit.conflicts"/>
 		<grid width="100%">
 			<columns>
 				<column width="100"/>

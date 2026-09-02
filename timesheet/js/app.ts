@@ -91,6 +91,18 @@ class TimesheetApp extends EgwApp
 	}
 
 	/**
+	 * "Ignore conflict" button in the scheduling-conflict dialog: flip the bypass flag and
+	 * re-click whichever save-family button originally triggered the conflict check
+	 */
+	ignoreConflict(_ev : Event, _widget)
+	{
+		const button = this.et2.getValueById('conflict_button') || 'save';
+		// type="hidden" gives a legacy et2_textbox, which only picks up a value via set_value()
+		this.et2.getWidgetById('ignore_conflicts').set_value('1');
+		(<HTMLElement><unknown>this.et2.getWidgetById('button[' + button + ']'))?.click();
+	}
+
+	/**
 	 * Enable or disable the date filter
 	 *
 	 * If the filter is set to something that needs dates, we open the
