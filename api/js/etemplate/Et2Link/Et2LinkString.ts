@@ -18,6 +18,7 @@ import {et2_IDetachedDOM} from "../et2_core_interfaces";
 import {property} from "lit/decorators/property.js";
 import {customElement} from "lit/decorators/custom-element.js";
 import {repeat} from "lit/directives/repeat.js";
+import {Et2LazyLoadController} from "../Et2Widget/Et2LazyLoadController";
 
 /**
  * Display a list of entries in a comma separated list
@@ -131,6 +132,16 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 	 * not kept when this widget gets re-used for another one.
 	 */
 	protected _loadedFor = "";
+	/**
+	 * Fetching the links is pointless while we're not being displayed - in a nextmatch row
+	 * that's a link lookup plus a title for every row on the page, all thrown away.  This
+	 * tells us when we start being rendered, so the request can wait until then.
+	 */
+	protected _visibility = new Et2LazyLoadController(this, () => this._loadDeferred());
+	/**
+	 * Arguments of the get_links() call that is waiting for us to be displayed, if any.
+	 */
+	protected _deferredLoad : { not_saved_links : LinkInfo[], offset : number } | null = null;
 
 	constructor()
 	{
@@ -230,6 +241,12 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 		{
 			// Something changed, and we have the information needed to get the matching links
 			this.get_links();
+		}
+		if(this._deferredLoad)
+		{
+			// Re-rendering can be what makes us visible, and that's not something the observer
+			// in _visibility is guaranteed to report before this update is done
+			this._loadDeferred();
 		}
 	}
 
@@ -382,6 +399,14 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 			this._totalResults = 0;
 			this._loadedFor = entry;
 		}
+		if(!this._visibility.ready)
+		{
+			// Nobody can see the answer, so don't ask - _loadDeferred() picks this up as soon
+			// as we're displayed, with whatever entry we show by then
+			this._deferredLoad = {not_saved_links: not_saved_links, offset: offset};
+			return;
+		}
+		this._deferredLoad = null;
 		this._loading = true;
 		this._loadingRequest = request;
 
@@ -414,6 +439,24 @@ export class Et2LinkString extends Et2Widget(LitElement) implements et2_IDetache
 				this.requestUpdate();
 				return this._link_list;
 			})
+	}
+
+	/**
+	 * Run the request that was waiting for us to be displayed
+	 *
+	 * Deliberately goes through get_links() again instead of sending the request it built at
+	 * the time: while we were hidden the row may have been re-used for a different entry, and
+	 * get_links() decides against the entry we show now.
+	 */
+	protected _loadDeferred()
+	{
+		if(!this._deferredLoad || !this._visibility.ready)
+		{
+			return;
+		}
+		const deferred = this._deferredLoad;
+		this._deferredLoad = null;
+		this.get_links(deferred.not_saved_links, deferred.offset);
 	}
 
 	protected _hasEntryId() : boolean

@@ -118,5 +118,112 @@ describe("Et2LinkString", () =>
 
 			assert.deepEqual(element._link_list.map(l => l.id), ["2"]);
 		});
+
+		/**
+		 * Asking the server costs a link lookup plus a title for every entry, so a list nobody
+		 * can see must not ask.  Being hidden is not visible in the widget's own attributes -
+		 * the timesheet list switches its rows' link lists off with a CSS custom property set
+		 * on the nextmatch - so the widget has to go by whether it is being rendered.
+		 */
+		describe("that is not being displayed", () =>
+		{
+			// Long enough for the IntersectionObserver to report a change
+			const observed = () => new Promise(resolve => setTimeout(resolve, 50));
+
+			const hiddenRow = async() =>
+			{
+				// Mirrors how the timesheet list hides its links: display comes from a custom
+				// property set further up, which the widget itself knows nothing about
+				const row = await fixture<HTMLElement>(html`
+                    <div style="--links-display:none">
+                        <et2-link-string application="timesheet"
+                                         style="display:var(--links-display, inline)"></et2-link-string>
+                    </div>`);
+				const element = <any>row.querySelector("et2-link-string");
+				await element.updateComplete;
+				stubRequests(element);
+
+				return {
+					element: element,
+					show: () => row.style.setProperty("--links-display", "inline")
+				};
+			};
+
+			it("does not request links", async() =>
+			{
+				const {element} = await hiddenRow();
+
+				element.entryId = "12";
+				await observed();
+
+				assert.isEmpty(requests, "asked for links nobody can see");
+			});
+
+			it("requests them once it is displayed", async() =>
+			{
+				const {element, show} = await hiddenRow();
+
+				element.entryId = "12";
+				await observed();
+				show();
+				await observed();
+
+				assert.deepEqual(requests.map(r => r.to_id), ["12"]);
+
+				requests[0].resolve({1: {app: "infolog", id: "1", link_id: 1}});
+				await observed();
+
+				assert.deepEqual(element._link_list.map(l => l.id), ["1"]);
+			});
+
+			it("requests the entry it has by then, not the one it was hidden with", async() =>
+			{
+				const {element, show} = await hiddenRow();
+
+				element.entryId = "12";
+				await observed();
+				// Row re-used for another entry while still hidden
+				element.entryId = "13";
+				await observed();
+
+				assert.isEmpty(requests);
+
+				show();
+				await observed();
+
+				assert.deepEqual(requests.map(r => r.to_id), ["13"]);
+			});
+
+			it("keeps a late answer out when it gets another entry while hidden", async() =>
+			{
+				const row = await fixture<HTMLElement>(html`
+                    <div>
+                        <et2-link-string application="timesheet"></et2-link-string>
+                    </div>`);
+				const element = <any>row.querySelector("et2-link-string");
+				await element.updateComplete;
+				stubRequests(element);
+
+				element.entryId = "12";
+				await rendered();
+				assert.lengthOf(requests, 1);
+
+				// Hidden while that request is still running, then re-used for another entry
+				row.style.display = "none";
+				element.entryId = "13";
+				await observed();
+				assert.lengthOf(requests, 1, "asked while hidden");
+
+				row.style.display = "";
+				await observed();
+				assert.deepEqual(requests.map(r => r.to_id), ["12", "13"]);
+
+				requests[0].resolve({1: {app: "infolog", id: "1", link_id: 1}});
+				requests[1].resolve({2: {app: "infolog", id: "2", link_id: 2}});
+				await observed();
+
+				assert.deepEqual(element._link_list.map(l => l.id), ["2"]);
+			});
+		});
 	});
 });
