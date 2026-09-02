@@ -534,8 +534,32 @@ instead of the message's own top-level Content-Type simply being `application/pk
 this shape (a bodyStructure with no `subParts` and a `blobId`) is now detected early and set
 directly as the Mailer's base part via `setBasePart()`, bypassing the attachment path entirely.
 Stalwart is unaffected (`Email/set create` is handled natively there). Regression test added to
-`Jmap/ImapBuildMailerTest.php`. **Still not live-tested against the shim account** - this fix is
-unverified against a real send, only against the PHPUnit structural assertion.
+`Jmap/ImapBuildMailerTest.php`. **Live-verified 2026-09-02**: ralf sent a real sign+encrypt
+message to himself via the shim account, received it correctly.
+
+**Sign-only via the shim: two more real bugs found + fixed 2026-09-02, live verification pending.**
+After the
+double-wrap and encoding fixes above, a real shim-sent sign-only message STILL arrived flagged
+"verification failed - this message may have been tampered with" - reproduced entirely in-process
+(no IMAP/SMTP needed - see `SmimeMailerTest::testResendingAStoredSignedMessageKeepsAValidSignature()`)
+by byte-comparing the originally-signed message against the same message after
+`emailSubmissionSet()`'s own parse-then-reserialize resend step:
+1. `signMIMEPart()` signs the content part while it still carries a stale `STATUS_BASEPART` flag
+   (left over from `getBasePart()`'s own earlier "build the initial unsigned message" step) -
+   `Horde_Mime_Part::addMimeHeaders()` bakes an extra "MIME-Version: 1.0" header into what gets
+   signed whenever that flag is set, a header a nested sub-part should never carry per RFC 2045.
+   A freshly re-parsed copy of the same content has no such in-memory-only flag, so it correctly
+   omits that header - different signed bytes the moment a signed message is stored then
+   re-parsed. Fixed by clearing the flag right before signing.
+2. `Horde_Mime_Mail::send()`'s own flowed-text handling sets a mixed-case "DelSp" Content-Type
+   parameter name; `Horde_Mime_Part::parseMessage()` lowercases parameter names on read
+   (case-insensitive per RFC 2045, but still a byte-level difference). Fixed by normalizing all
+   Content-Type parameter names to lowercase, recursively, right before signing.
+
+Both fixed in `Api\Mailer::smimeEncrypt()` rather than the forked Horde packages
+(`vendor/egroupware/*`) to avoid a package release cycle for what's ultimately a narrow
+interaction between two Horde quirks - ralf confirmed those packages ARE real, separately
+releasable git repos if a Horde-level fix is ever preferred instead.
 
 Companion to [[mail-jmap-imap-inversion]].
 
