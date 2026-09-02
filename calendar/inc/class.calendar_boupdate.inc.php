@@ -3536,7 +3536,7 @@ class calendar_boupdate extends calendar_bo
 		if (is_numeric($age) && $age > 0)	// just make sure bogus values dont delete everything
 		{
 			$cutoff = new DateTime('now', DateTime::$server_timezone);
-			$cutoff->modify(sprintf('-%s days', 365 * (float)$age));
+			$cutoff->modify('-'.round(365 * (float)$age).' days');
 			$this->so->purge($cutoff);
 		}
 	}
