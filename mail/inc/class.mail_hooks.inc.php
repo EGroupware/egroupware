@@ -858,48 +858,4 @@ class mail_hooks
 			]
 		];
 	}
-
-	/**
-	 * options for attachments block actions
-	 * @return string[][]
-	 */
-	public static function attachmentsBlockActions()
-	{
-		$actions = [
-			'downloadOneAsFile' => [
-				'id'    => 'downloadOneAsFile',
-				'label' => 'Download',
-				'icon'  => 'fileexport',
-				'value' => 'downloadOneAsFile'
-			],
-			'saveOneToVfs'      => [
-				'id'    => 'saveOneToVfs',
-				'label' => 'Save in Filemanager',
-				'icon'  => 'filemanager/navbar',
-				'value' => 'saveOneToVfs'
-			],
-			'saveAllToVfs'      => [
-				'id'    => 'saveAllToVfs',
-				'label' => 'Save all to Filemanager',
-				'icon'  => 'mail/save_all',
-				'value' => 'saveAllToVfs'
-			],
-			'downloadAllToZip'  => [
-				'id'    => 'downloadAllToZip',
-				'label' => 'Save as ZIP',
-				'icon'  => 'mail/save_zip',
-				'value' => 'downloadAllToZip'
-			]
-		];
-		if (!empty($GLOBALS['egw_info']['user']['apps']['collabora']))
-		{
-			$actions['collabora'] = [
-				'id'    => 'collabora',
-				'label' => 'Open with Collabora',
-				'icon'  => 'open',
-				'value' => 'collabora'
-			];
-		}
-		return $actions;
-	}
 }
