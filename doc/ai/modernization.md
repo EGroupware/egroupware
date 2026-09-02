@@ -19,6 +19,22 @@ found them, and prefer the modern form for anything new.
   mechanical one.
 - **No `var` keyword.** Don't use the old `var` keyword in new code. even if it is used in surrounding code.
   Use modern `const` or `let` keywords
+- **Prefer arrow functions over `function(...) {...}` expressions and `var self = this`/`var that =
+  this` closures**, wherever the enclosing scope's `this` should just flow through naturally - not only
+  in jQuery removal (above), any plain callback/closure. Skip this where the code genuinely needs its
+  own dynamic `this` (an explicit `.call(otherThis, ...)`/`.apply(...)`, or a callback contract that
+  depends on being invoked as a method to get its `this`, e.g. some framework `callback:`/
+  `refreshCallback:` hooks) - converting those to an arrow would silently capture the wrong `this`
+  instead of just failing loudly, so check first. See `doc/ai/projects/app-ts-modernization.md` for
+  worked examples of both the conversion and the exception.
+- **Replace legacy `et2_*` widget imports with their web-component (`Et2*`) counterparts** (e.g.
+  `et2_selectbox`/`et2_widget_selectbox` -> `Et2Select`/`Et2Select/Et2Select.ts`) when you're already
+  touching the import or its usages - many legacy names are now zero-member compat shims
+  (`class et2_selectbox extends Et2Select {}`) kept only for old imports, not separate implementations.
+  Check first whether the widget has no real web-component replacement yet (e.g. `et2_grid`, which is
+  still the actual implementation, not a shim) - don't force a migration that doesn't exist. Whenever a
+  widget/type is only ever used as a TS type (an annotation or cast, never instantiated or called as a
+  value), import it with `import type {...}` instead of a value import.
 - **`egw.request()`, `egw.jsonq()`, and `egw.json(...).sendRequest()` serve different purposes -
   picking the right one is not "always prefer X".**
   - **`egw.request(menuaction, params).then(data => ...)`** - a single, immediate, non-queued request.
@@ -42,6 +58,14 @@ found them, and prefer the modern form for anything new.
   a *shallow* clone/merge (`jQuery.extend({}, x)` / `jQuery.extend(target, extra)`), use `{...x}` spread
   or `Object.assign(target, extra)` instead - don't reach for `deepExtend()` there, it does more work
   than needed.
+- **Don't leave new TS compiler errors on a file you're already editing.** Check with
+  `node_modules/.bin/tsc --noEmit -p tsconfig.json`, filtered to that file's own path - the whole-repo
+  build has thousands of pre-existing errors in other files, so only the lines you're actually touching
+  matter; don't go hunt down unrelated ones. A surprising number of "real" errors turn out to be the
+  same handful of repo-wide gaps (a `private` field that's accessed from outside its class all over the
+  codebase anyway, a shared widget's untyped/mistyped property) - see `doc/ai/projects/
+  app-ts-modernization.md` for the recurring root causes and the fixes/casts already established for
+  each, so you're not rediscovering them from scratch.
 
 ## Server-side (PHP)
 

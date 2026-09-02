@@ -87,7 +87,7 @@ class InfologApp extends EgwApp
 
 				// Enable decrypt on hover
 				if (this.egw.user('apps').stylite) {
-					this.mailvelopeAvailable(function () {
+					this.mailvelopeAvailable(() => {
 						egw.applyFunc('app.stylite.decrypt_hover', [nm]);
 					});
 				}
@@ -385,7 +385,7 @@ class InfologApp extends EgwApp
 	 */
 	actionCallback(_action)
 	{
-		egw.json("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]).sendRequest(true);
+		egw.request("infolog.infolog_ui.ajax_action", [_action, this._action_ids, this._action_all]);
 	}
 
 	/**

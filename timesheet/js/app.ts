@@ -8,17 +8,17 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-import '../../api/js/jsapi/egw_global';
-
 import {EgwApp} from '../../api/js/jsapi/egw_app';
-import {egw} from "../../api/js/jsapi/egw_global";
 import {Et2DateTimeReadonly} from "../../api/js/etemplate/Et2Date/Et2DateTimeReadonly";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
 import {Et2DateTime} from "../../api/js/etemplate/Et2Date/Et2DateTime";
 import type {Et2Date} from "../../api/js/etemplate/Et2Date/Et2Date";
-import {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
+import type {et2_grid} from "../../api/js/etemplate/et2_widget_grid";
 import type {Et2ButtonToggle} from "../../api/js/etemplate/Et2Button/Et2ButtonToggle";
 import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
+import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatch";
+// egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * UI for timesheet
@@ -111,20 +111,21 @@ class TimesheetApp extends EgwApp
 	 * @param ev
 	 * @param filter
 	 */
-	filter_change(ev : Event, filter : Et2Select)
+	filter_change(ev? : Event, filter? : Et2Select)
 	{
 		const dates = this.et2.getWidgetById('timesheet.index.dates');
 		if (filter && dates)
 		{
+			const nm = <Et2Nextmatch>this.nm;
 			dates.set_disabled(filter.value !== "custom");
-			if (!filter.value) this.nm.applyFilters({startdate: null, enddate: null}, {reload: false});
+			if (!filter.value) nm.applyFilters({startdate: null, enddate: null}, {reload: false});
 			if (filter.value === "custom")
 			{
 				// Focusing an empty date field can make it silently pick today and fire its own
 				// change, overwriting dates a favorite just applied - only focus if nm really has none.
-				if (!this.nm.activeFilters.startdate)
+				if (!nm.activeFilters.startdate)
 				{
-					this.nm.updateComplete.then(() => dates.getWidgetById('startdate').focus());
+					nm.updateComplete.then(() => dates.getWidgetById('startdate').focus());
 				}
 			}
 		}
@@ -142,15 +143,16 @@ class TimesheetApp extends EgwApp
 	{
 		if (this.nm && filter2)
 		{
+			const nm = <Et2Nextmatch>this.nm;
 			const show = typeof filter2.value === "boolean" ? filter2.value : filter2.value == '1';
 			// Rows render inside Et2Datagrid's shadow DOM, so use a custom property (see rows.css)
 			// instead of egw.css(), which only reaches the light DOM.
-			this.nm.style.setProperty("--timesheet-ts-details-weight", show ? "bold" : "normal");
+			nm.style.setProperty("--timesheet-ts-details-weight", show ? "bold" : "normal");
 			// Show / hide descriptions
-			this.nm.style.setProperty("--timesheet-ts-details-display", show ? "flex" : "none");
+			nm.style.setProperty("--timesheet-ts-details-display", show ? "flex" : "none");
 			// Show / hide the linked entries.  Separate property because that list is inline
 			// and must not become a flex container - see .ts_links in rows.less
-			this.nm.style.setProperty("--timesheet-ts-details-display-inline", show ? "inline" : "none");
+			nm.style.setProperty("--timesheet-ts-details-display-inline", show ? "inline" : "none");
 		}
 	}
 
@@ -165,7 +167,7 @@ class TimesheetApp extends EgwApp
 	 */
 	add_action_handler(action, selected)
 	{
-		var nm = action.data?.nextmatch || false;
+		const nm = action.data?.nextmatch || false;
 		if(nm)
 		{
 			this.add_with_extras(nm);
@@ -180,10 +182,10 @@ class TimesheetApp extends EgwApp
 	 */
 	add_with_extras(widget)
 	{
-		var nm = widget.getRoot().getWidgetById('nm');
-		var nm_value = nm.getValue() || {};
+		const nm = widget.getRoot().getWidgetById('nm');
+		const nm_value = nm.getValue() || {};
 
-		var extras : any = {};
+		const extras : any = {};
 		if (nm_value.cat_id)
 		{
 			extras.cat_id = nm_value.cat_id;
@@ -226,12 +228,13 @@ class TimesheetApp extends EgwApp
 	pm_id_changed(_egw, _widget)
 	{
 		// Update price list
-		var ts_pricelist = _widget.getRoot().getWidgetById('pl_id');
-		egw.json('projectmanager_widget::ajax_get_pricelist',[_widget.getValue()],function(value) {
+		const ts_pricelist = _widget.getRoot().getWidgetById('pl_id');
+		egw.request('projectmanager_widget::ajax_get_pricelist', [_widget.getValue()]).then(value =>
+		{
 			ts_pricelist.set_select_options(value||{})
-		}).sendRequest(true);
+		});
 
-		var ts_project = this.et2.getWidgetById('ts_project');
+		const ts_project = this.et2.getWidgetById('ts_project');
 		if (ts_project)
 		{
 			ts_project.placeholder = _widget.getValue() ?_widget._searchNode?.optionSearch(_widget.value)?.label : '';
@@ -257,20 +260,19 @@ class TimesheetApp extends EgwApp
 
 		start_time.disabled = true;
 		this.egw.loading_prompt('ts_start_changed', true, '', start_time);
-		egw.json('timesheet.timesheet_ui.ajax_get_last_end',
-			[this.et2.getValueById('ts_owner'), _widget.getValue()],
-			(last_end) =>
+		egw.request('timesheet.timesheet_ui.ajax_get_last_end',
+			[this.et2.getValueById('ts_owner'), _widget.getValue()]
+		).then((last_end) =>
+		{
+			// Et2DateTimeOnly.value expects something new Date() can parse - a bare "H:i"
+			// string is not, so wrap it to match the widget's own internal dateFormat
+			start_time.value = last_end ? '1970-01-01T' + last_end + ':00Z' : '';
+			// force empty end-time, unless continuing from last entry (mirrors edit())
+			if (last_end && end_time)
 			{
-				// Et2DateTimeOnly.value expects something new Date() can parse - a bare "H:i"
-				// string is not, so wrap it to match the widget's own internal dateFormat
-				start_time.value = last_end ? '1970-01-01T' + last_end + ':00Z' : '';
-				// force empty end-time, unless continuing from last entry (mirrors edit())
-				if (last_end && end_time)
-				{
-					end_time.value = '';
-				}
+				end_time.value = '';
 			}
-		).sendRequest(true).finally(() =>
+		}).finally(() =>
 		{
 			start_time.disabled = false;
 			this.egw.loading_prompt('ts_start_changed', false);
@@ -284,7 +286,7 @@ class TimesheetApp extends EgwApp
 	{
 		if(this && this.et2)
 		{
-			var nm = this.et2.getWidgetById('nm');
+			const nm = this.et2.getWidgetById('nm');
 			if(nm)
 			{
 				// This is only ever sent by the server for a non-'custom' filter (see
@@ -381,7 +383,7 @@ class TimesheetApp extends EgwApp
 		{
 			ids.push(_senders[i].id.split("::").pop());
 		}
-		egw.json("timesheet.timesheet_ui.ajax_action",[_action.id, ids, all]).sendRequest(true);
+		egw.request("timesheet.timesheet_ui.ajax_action", [_action.id, ids, all]);
 	}
 
 	/**
@@ -408,23 +410,25 @@ class TimesheetApp extends EgwApp
 			// start-time set end-time as max
 			if (0+tse_type & 1)
 			{
-				time.set_max((<Et2DateTimeReadonly><any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
+				// Et2DateTimeReadonly's "value" is only declared via Lit's old-style static
+				// properties() (no typed class field), so TS doesn't know it exists - <any> needed.
+				time.set_max((<any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
 					n => (parseInt(n)+1).toString()))).value);
 			}
 			// stop- or pause-time, set start-time as min
 			else
 			{
-				time.set_min((<Et2DateTimeReadonly><any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
+				time.set_min((<any>grid.getWidgetById(_widget.id.replace(/^(\d+)/,
 					n => (parseInt(n)-1).toString()))).value);
 			}
 		});
 		// Set attributes.  They can be set in any way, but this is convenient.
 		dialog.transformAttributes({
 			callback: (_button, _values) => {
-				const change = (new Date(_widget.value)).valueOf() - (new Date(_values.time)).valueOf();
+				const change = (new Date((<any>_widget).value)).valueOf() - (new Date(_values.time)).valueOf();
 				if (_button === Et2Dialog.OK_BUTTON && change)
 				{
-					_widget.value = _values.time;
+					(<any>_widget).value = _values.time;
 					egw.request('timesheet.EGroupware\\Timesheet\\Events.ajax_updateTime',
 						[tse_id, new Date((new Date(_values.time)).valueOf() + egw.getTimezoneOffset() * 60000)])
 						.then(_data =>
@@ -438,7 +442,7 @@ class TimesheetApp extends EgwApp
 			template: 'timesheet.edit.events.change',
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
-				content: { time: _widget.value }
+				content: { time: (<any>_widget).value }
 			}
 		});
 		// Add to DOM, dialog will auto-open

@@ -9,22 +9,24 @@
  * @license http://opensource.org/licenses/gpl-license.php GPL - GNU General Public License
  */
 
-import {EgwApp, PushData} from '../../api/js/jsapi/egw_app';
+import {EgwApp} from '../../api/js/jsapi/egw_app';
+import type {PushData} from '../../api/js/jsapi/egw_app';
 import {etemplate2} from "../../api/js/etemplate/etemplate2";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
-import {et2_selectbox} from "../../api/js/etemplate/et2_widget_selectbox";
+import type {Et2Select} from "../../api/js/etemplate/Et2Select/Et2Select";
 import "./CRM";
-import {egw} from "../../api/js/jsapi/egw_global";
-import {LitElement} from "lit";
-import {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2SelectCountry";
-
-import {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
+import type {LitElement} from "lit";
+import type {Et2SelectCountry} from "../../api/js/etemplate/Et2Select/Select/Et2SelectCountry";
+import type {Et2SelectState} from "../../api/js/etemplate/Et2Select/Select/Et2SelectState";
 import type {EgwAction} from "../../api/js/egw_action/EgwAction";
-import {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
-import {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
+import type {EgwActionObject} from "../../api/js/egw_action/EgwActionObject";
+import type {Et2Template} from "../../api/js/etemplate/Et2Template/Et2Template";
 import {et2_createWidget} from "../../api/js/etemplate/et2_core_widget";
-import {Et2TreeDropdown} from "../../api/js/etemplate/Et2Tree/Et2TreeDropdown";
+import type {Et2TreeDropdown} from "../../api/js/etemplate/Et2Tree/Et2TreeDropdown";
 import {egw_getActionManager} from "../../api/js/egw_action/egw_action";
+import type {egwAction, egwActionObject} from "../../api/js/egw_action/egw_action";
+// egw/app are ambient globals (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * Object to call app.addressbook.openCRMview with
@@ -99,7 +101,7 @@ class AddressbookApp extends EgwApp
 				const content : any = this.et2.getArrayMgr('content').data;
 				// stop automatic focus on first input field n_fn / full name
 				const focus_prefix = () => {
-					document.querySelector('table.editname').style.display = 'inline';
+					document.querySelector<HTMLElement>('table.editname').style.display = 'inline';
 					this.et2.getWidgetById('n_prefix')?.focus();
 					return false;
 				};
@@ -126,7 +128,7 @@ class AddressbookApp extends EgwApp
 				// Call check value if the AB got opened with presets
 				if (window.location.href.match(/&presets\[email\]/g) && content.presets_fields)
 				{
-					for(var i=0;i< content.presets_fields.length;i++)
+					for(let i=0;i< content.presets_fields.length;i++)
 					{
 						this.check_value(this.et2.getWidgetById(content.presets_fields),0);
 					}
@@ -160,16 +162,16 @@ class AddressbookApp extends EgwApp
 	observer(_msg, _app, _id, _type, _msg_type, _links)
 	{
 		// Edit to the current entry
-		var state = this.getState();
+		const state = this.getState();
 		if(_app === 'addressbook' && state && state.type && state.type === 'view' && state.id === _id)
 		{
-			var content = egw.dataGetUIDdata('addressbook::'+_id);
+			const content = egw.dataGetUIDdata('addressbook::'+_id);
 			if (content.data)
 			{
-				var view = etemplate2.getById('addressbook-view');
+				const view = etemplate2.getById('addressbook-view');
 				if(view)
 				{
-					view.widgetContainer._children[0].set_value({content:content.data});
+					(<any>view.widgetContainer.getChildren()[0]).set_value({content:content.data});
 				}
 			}
 			return false;
@@ -177,10 +179,10 @@ class AddressbookApp extends EgwApp
 		else if(_app === 'calendar')
 		{
 			// Event changed, update any [known] contacts participating
-			var content = egw.dataGetUIDdata(_app+'::'+_id);
+			const content = egw.dataGetUIDdata(_app+'::'+_id);
 			if (content && content.data && content.data.participant_types && content.data.participant_types.c)
 			{
-				for(var contact in content.data.participant_types.c)
+				for(const contact in content.data.participant_types.c)
 				{
 					// Refresh handles checking to see if the contact is known,
 					// and updating it directly
@@ -192,8 +194,8 @@ class AddressbookApp extends EgwApp
 			{
 				// No data on the event, we'll have to reload if calendar column is visible
 				// to get the updated information
-				var nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
-				var visible = nm ? (nm.getValue().selectcols || []) : [];
+				const nm = etemplate2.getById('addressbook-index').widgetContainer.getWidgetById('nm');
+				let visible = nm ? (nm.getValue().selectcols || []) : [];
 				if(typeof visible === 'string') visible = visible.split(',');
 				if(visible.indexOf('calendar_calendar') > -1)
 				{
@@ -256,7 +258,7 @@ class AddressbookApp extends EgwApp
 	 * Change handler for contact / org selectbox
 	 *
 	 * @param {Event} _ev
-	 * @param {et2_selectbox} widget
+	 * @param {Et2Select} widget
 	 */
 	change_grouped_view(_ev : Event, widget)
 	{
@@ -308,7 +310,7 @@ class AddressbookApp extends EgwApp
 		}
 		if(!extras.crm_list)
 		{
-			extras.crm_list = <string>egw.preference('crm_list', 'addressbook');
+			extras.crm_list = <CrmParams["crm_list"]>egw.preference('crm_list', 'addressbook');
 		}
 		const title_app = extras.crm_list == "tracker" ? " (" + egw.lang(extras.crm_list) + ")" : "";
 		extras.title = ((_action.id.match(/\-organisation/) || extras.crm_list?.endsWith("-organisation")) && data.org_name != "")
@@ -357,8 +359,13 @@ class AddressbookApp extends EgwApp
 						contact_id: contact_id,
 						etag: (new Date).valueOf()/86400000|0	// cache for a day, better then no invalidation
 					}),
+					// No current caller of refreshCallback was found in-repo, but tabLinkHandler()
+					// spreads this whole object onto the tab (kdots/js/EgwFramework.ts), so if/when
+					// something does invoke it as tab.refreshCallback(), "this" needs to be that tab
+					// object (for its "appName") - keep as a plain function so an arrow doesn't
+					// pre-emptively capture the wrong "this" here.
 					refreshCallback: function() {
-						etemplate2.getById("addressbook-view-"+this.appName)?.app_obj.addressbook.view_set_list();
+						(<any>etemplate2.getById("addressbook-view-"+this.appName))?.app_obj.addressbook.view_set_list();
 					},
 					id: contact_id + '-'+crm_list
 				});
@@ -373,11 +380,14 @@ class AddressbookApp extends EgwApp
 	 */
 	view_set_list(filter)
 	{
-		// Find the infolog list
-		var list = etemplate2.getById(
-			jQuery(this.et2.getInstanceManager().DOMContainer).nextAll('.et2_container').attr('id')
-		);
-		var nm = list ? list.widgetContainer.getWidgetById('nm') : null;
+		// Find the infolog list - the next sibling matching .et2_container
+		let sibling : Element = this.et2.getInstanceManager().DOMContainer.nextElementSibling;
+		while(sibling && !sibling.matches('.et2_container'))
+		{
+			sibling = sibling.nextElementSibling;
+		}
+		const list = etemplate2.getById(sibling?.id);
+		const nm = list ? list.widgetContainer.getWidgetById('nm') : null;
 		if(nm)
 		{
 			nm.applyFilters(filter);
@@ -392,8 +402,8 @@ class AddressbookApp extends EgwApp
 	view_actions(_action, _widget)
 	{
 
-		var et2 = _widget.getInstanceManager();
-		var id = et2.widgetContainer.getArrayMgr('content').data.id;
+		const et2 = _widget.getInstanceManager();
+		const id = et2.widgetContainer.getArrayMgr('content').data.id;
 
 		switch(_widget.id)
 		{
@@ -411,7 +421,7 @@ class AddressbookApp extends EgwApp
 				framework.activeApp?.tab?.closeButton?.click();
 				break;
 			default:	// submit all other buttons back to server
-				et2.widgetContainer._inst.submit();
+				et2.submit();
 				break;
 		}
 	}
@@ -423,36 +433,36 @@ class AddressbookApp extends EgwApp
 	 */
 	view_calendar(_action, _senders)
 	{
-		var extras : any = {
+		const extras : any = {
 			filter: 'all',
 			cat_id: '',
 			owner: []
 		};
-		var orgs = [];
-		for(var i = 0; i < _senders.length; i++)
+		const orgs = [];
+		for(let i = 0; i < _senders.length; i++)
 		{
 			// Remove UID prefix for just contact_id
-			var ids = _senders[i].id.split('::');
+			const ids = _senders[i].id.split('::');
 			ids.shift();
-			ids = ids.join('::');
+			const id = ids.join('::');
 
 			// Orgs need to get all the contact IDs first
-			if (ids.substr(0,9) == 'org_name:')
+			if (id.substr(0,9) == 'org_name:')
 			{
-				orgs.push(ids);
+				orgs.push(id);
 			}
 			else
 			{
 				// Check to see if this is a user account, we prefer to use
 				// account ID in calendar
-				var data = this.egw.dataGetUIDdata(_senders[i].id);
+				const data = this.egw.dataGetUIDdata(_senders[i].id);
 				if(data && data.data && data.data.account_id)
 				{
 					extras.owner.push(data.data.account_id);
 				}
 				else
 				{
-					extras.owner.push('c'+ids);
+					extras.owner.push('c'+id);
 				}
 			}
 		}
@@ -460,17 +470,16 @@ class AddressbookApp extends EgwApp
 		if(orgs.length > 0)
 		{
 			// Get organisation contacts, then show infolog list
-			this.egw.json('addressbook.addressbook_ui.ajax_organisation_contacts',
-				[orgs],
-				function(contacts) {
-					for(var i = 0; i < contacts.length; i++)
+			this.egw.request('addressbook.addressbook_ui.ajax_organisation_contacts', [orgs])
+				.then(contacts =>
+				{
+					for(let i = 0; i < contacts.length; i++)
 					{
 						extras.owner.push('c'+contacts[i]);
 					}
 					extras.owner = extras.owner.join(',');
 					this.egw.open('','calendar','list',extras,'calendar');
-				},this,true,this
-			).sendRequest();
+				});
 		}
 		else
 		{
@@ -497,14 +506,14 @@ class AddressbookApp extends EgwApp
 		}
 		else
 		{
-			var ids = egw.user('account_id')+',';
-			for (var i = 0; i < _senders.length; i++)
+			let ids = egw.user('account_id')+',';
+			for (let i = 0; i < _senders.length; i++)
 			{
 				// Remove UID prefix for just contact_id
-				var id = _senders[i].id.split('::');
+				const id = _senders[i].id.split('::');
 				ids += "c" + id[1] + ((i < _senders.length - 1) ? "," : "");
 			}
-			var extra = {};
+			const extra = {};
 			extra[_action.data && _action.data.url && _action.data.url.indexOf('owner') > 0 ? 'owner' : 'participants'] = ids;
 			if (_action.id === 'schedule_call') extra['videoconference'] = 1;
 
@@ -520,40 +529,39 @@ class AddressbookApp extends EgwApp
 	 */
 	view_infolog(_action, _senders)
 	{
-		var extras = {
+		const extras = {
 			action: 'addressbook',
 			action_id: [],
 			action_title: _senders.length > 1 ? this.egw.lang('selected contacts') : ''
 		};
-		var orgs = [];
-		for(var i = 0; i < _senders.length; i++)
+		const orgs = [];
+		for(let i = 0; i < _senders.length; i++)
 		{
 			// Remove UID prefix for just contact_id
-			var ids = _senders[i].id.split('::');
+			const ids = _senders[i].id.split('::');
 			ids.shift();
-			ids = ids.join('::');
+			const id = ids.join('::');
 
 			// Orgs need to get all the contact IDs first
-			if (ids.substr(0,9) == 'org_name:')
+			if (id.substr(0,9) == 'org_name:')
 			{
-				orgs.push(ids);
+				orgs.push(id);
 			}
 			else
 			{
-				extras.action_id.push(ids);
+				extras.action_id.push(id);
 			}
 		}
 
 		if(orgs.length > 0)
 		{
 			// Get organisation contacts, then show infolog list
-			this.egw.json('addressbook.addressbook_ui.ajax_organisation_contacts',
-				[orgs],
-				function(contacts) {
+			this.egw.request('addressbook.addressbook_ui.ajax_organisation_contacts', [orgs])
+				.then(contacts =>
+				{
 					extras.action_id = extras.action_id.concat(contacts);
 					this.egw.open('','infolog','list',extras,'infolog');
-				},this,true,this
-			).sendRequest();
+				});
 		}
 		else
 		{
@@ -592,19 +600,20 @@ class AddressbookApp extends EgwApp
 	*/
 	action(_action : egwAction, _selected : egwActionObject[])
 	{
-		let all = _action.parent.data.nextmatch?.getSelection().all;
-		let no_notifications = _action.parent.getActionById("no_notifications")?.checked || false;
-		let ids = [];
+		const all = _action.parent.data.nextmatch?.getSelection().all;
+		// "checked" is set dynamically at runtime (via updateAction()), not part of EgwAction's declared shape
+		const no_notifications = (<any>_action.parent.getActionById("no_notifications"))?.checked || false;
+		const ids = [];
 		// Loop so we get just the app's ID
-		for(var i = 0; i < _selected.length; i++)
+		for(let i = 0; i < _selected.length; i++)
 		{
-			var id = _selected[i].id;
+			const id = _selected[i].id;
 			ids.push(id.split("::").pop());
 		}
 		switch(_action.id)
 		{
 			case 'delete':
-				egw.json("addressbook.addressbook_ui.ajax_action",[_action.id, ids, all, no_notifications]).sendRequest(true);
+				egw.request("addressbook.addressbook_ui.ajax_action",[_action.id, ids, all, no_notifications]);
 				break;
 		}
 	}
@@ -612,7 +621,7 @@ class AddressbookApp extends EgwApp
 	/**
 	 * [More...] in phones clicked: copy allways shown phone numbers to phone popup
 	 *
-	 * @param {jQuery.event} _event
+	 * @param {Event} _event
 	 * @param {et2_widget} _widget
 	 */
 	showphones(_event, _widget)
@@ -623,7 +632,7 @@ class AddressbookApp extends EgwApp
 			tel_cell: 'tel_cell2',
 			tel_fax:  'tel_fax2'
 		});
-		jQuery('table.editphones').css('display','inline');
+		document.querySelectorAll<HTMLElement>('table.editphones').forEach(t => t.style.display = 'inline');
 
 		_event.stopPropagation();
 		return false;
@@ -632,7 +641,7 @@ class AddressbookApp extends EgwApp
 	/**
 	 * [OK] in phone popup clicked: copy phone numbers back to always shown ones
 	 *
-	 * @param {jQuery.event} _event
+	 * @param {Event} _event
 	 * @param {et2_widget} _widget
 	 */
 	hidephones(_event, _widget)
@@ -643,7 +652,7 @@ class AddressbookApp extends EgwApp
 			tel_cell2: 'tel_cell',
 			tel_fax2:  'tel_fax'
 		});
-		jQuery('table.editphones').css('display','none');
+		document.querySelectorAll<HTMLElement>('table.editphones').forEach(t => t.style.display = 'none');
 
 		_event.stopPropagation();
 		return false;
@@ -656,17 +665,17 @@ class AddressbookApp extends EgwApp
 	 */
 	_copyvalues(what)
 	{
-		for(var name in what)
+		for(const name in what)
 		{
-			var src = this.et2.getWidgetById(name);
-			var dst = this.et2.getWidgetById(what[name]);
+			const src = this.et2.getWidgetById(name);
+			const dst = this.et2.getWidgetById(what[name]);
 			if (src && dst) dst.set_value(src.get_value ? src.get_value() : src.value);
 		}
 		// change tel_prefer according to what
-		var tel_prefer = this.et2.getWidgetById('tel_prefer');
+		const tel_prefer = this.et2.getWidgetById('tel_prefer');
 		if (tel_prefer)
 		{
-			var val = tel_prefer.get_value ? tel_prefer.get_value() : tel_prefer.value;
+			const val = tel_prefer.get_value ? tel_prefer.get_value() : tel_prefer.value;
 			if (typeof what[val] != 'undefined') tel_prefer.set_value(what[val]);
 		}
 	}
@@ -679,17 +688,19 @@ class AddressbookApp extends EgwApp
 	 */
 	_confirmdialog_callback(_data)
 	{
-		var confirmdialog = function(_title, _value, _buttons, _egw_or_appname?)
+		// Referenced from confirmdialog()'s dialog callback below - declared up here (rather than
+		// inside the "if" below, where it's populated) so it stays in scope for that closure.
+		let content = [];
+		const confirmdialog = (_title, _value, _buttons, _egw_or_appname?) =>
 		{
-			let dialog = new Et2Dialog(_egw_or_appname);
+			const dialog = new Et2Dialog(_egw_or_appname);
 			dialog.transformAttributes({
-				callback: function(_buttons, _value)
+				callback: (_buttons, _value) =>
 				{
 					if(_buttons == Et2Dialog.OK_BUTTON)
 					{
-						var id = '';
-						//var content = this.template.widgetContainer.getArrayMgr('content').data;
-						for(var row in _value.grid)
+						let id = '';
+						for(const row in _value.grid)
 						{
 							if(_value.grid[row].confirm == "true" && typeof content[row] != 'undefined')
 							{
@@ -714,9 +725,7 @@ class AddressbookApp extends EgwApp
 
 		if (_data.msg && _data.doublicates)
 		{
-			var content = [];
-
-			for(var id in _data.doublicates)
+			for(const id in _data.doublicates)
 			{
 				content.push({"confirm":id,"name":_data.doublicates[id]});
 			}
@@ -724,7 +733,7 @@ class AddressbookApp extends EgwApp
 		}
 		if (typeof _data.fileas_options == 'object' && this.et2)
 		{
-			var selbox = <et2_selectbox>this.et2.getWidgetById('fileas_type');
+			const selbox = <Et2Select>this.et2.getWidgetById('fileas_type');
 			if (selbox)
 			{
 				selbox.set_select_options(_data.fileas_sel_options);
@@ -751,21 +760,22 @@ class AddressbookApp extends EgwApp
 			this.account_change(null, widget);
 		}
 
-		var values = this.et2._inst.getValues(this.et2);
+		const values = this.et2.getInstanceManager().getValues(this.et2);
 
 		if(widget.id.match(/n_/))
 		{
-			var value = '';
+			let value = '';
 			if (values.n_prefix) value += values.n_prefix+" ";
 			if (values.n_given)  value += values.n_given+" ";
 			if (values.n_middle) value += values.n_middle+" ";
 			if (values.n_family) value += values.n_family+" ";
 			if (values.n_suffix) value += values.n_suffix;
 
-			var name = this.et2.getWidgetById("n_fn");
+			const name = this.et2.getWidgetById("n_fn");
 			if (typeof name != 'undefined')	name.set_value(value);
 		}
-		egw.json('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id],this._confirmdialog_callback,this,true,this).sendRequest();
+		this.egw.request('addressbook.addressbook_ui.ajax_check_values', [values, widget.id, own_id])
+			.then(data => this._confirmdialog_callback(data));
 	}
 
 	/**
@@ -776,7 +786,7 @@ class AddressbookApp extends EgwApp
 	 */
 	regionSetCountry(event, country : Et2SelectCountry)
 	{
-		(<Et2SelectState><any>this.et2.getWidgetById(country.id.replace('countrycode', 'region')))?.set_country_code(country.value);
+		(<Et2SelectState><any>this.et2.getWidgetById(country.id.replace('countrycode', 'region')))?.set_country_code(country.getValue());
 	}
 
 	/**
@@ -789,29 +799,28 @@ class AddressbookApp extends EgwApp
 	{
 		if(!owner || typeof owner == 'object')
 		{
-			var filter = this.et2.getWidgetById('filter');
+			const filter = this.et2.getWidgetById('filter');
 			owner = filter.getValue()||egw.preference('add_default','addressbook');
 		}
-		var contacts = [];
+		const contacts = [];
 		const nm = this.et2.getWidgetById('nm');
 		if(nm.getSelection().all)
 		{
 			// Action says all contacts selected, better ask the server for _all_ the IDs
-			var fetching = this._fetchAllSelected(nm, jQuery.proxy(
-				function(contacts) {
-					this._add_new_list_prompt(owner, contacts);
-				}, this));
+			const fetching = this._fetchAllSelected(nm, (allContacts) =>
+			{
+				this._add_new_list_prompt(owner, allContacts);
+			});
 			if (fetching) return;
 		}
 		if(selected && selected.length)
 		{
-			for(var i = 0; i < selected.length; i++)
+			for(let i = 0; i < selected.length; i++)
 			{
 				// Remove UID prefix for just contact_id
-				var ids = selected[i].id.split('::');
+				const ids = selected[i].id.split('::');
 				ids.shift();
-				ids = ids.join('::');
-				contacts.push(ids);
+				contacts.push(ids.join('::'));
 			}
 		}
 		this._add_new_list_prompt(owner, contacts);
@@ -827,13 +836,14 @@ class AddressbookApp extends EgwApp
 	_add_new_list_prompt(owner, contacts)
 	{
 		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
-		const lists = filter.select_options.find(elem => elem.value === 'lists')?.item ?? filter.select_options;
-		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
-		let callback = function(button, values) {
+		const lists = filter.select_options.find(elem => elem.value === 'lists')?.children ?? filter.select_options;
+		const owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
+		const callback = (button, values) =>
+		{
 			if(button == Et2Dialog.OK_BUTTON)
 			{
-				egw.json('addressbook.addressbook_ui.ajax_set_list', [0, values.name, values.owner, contacts],
-					function(result)
+				this.egw.request('addressbook.addressbook_ui.ajax_set_list', [0, values.name, values.owner, contacts])
+					.then(result =>
 					{
 						if(typeof result == 'object')
 						{
@@ -853,12 +863,12 @@ class AddressbookApp extends EgwApp
 							});
 						}
 						// Add to actions
-						var addressbook_actions = egw_getActionManager('addressbook',false);
-						var dist_lists = null;
+						const addressbook_actions = egw_getActionManager('addressbook',false);
+						let dist_lists = null;
 						if(addressbook_actions && (dist_lists = addressbook_actions.getActionById('to_list')))
 						{
-							var id = 'to_list_' + result;
-							var action = dist_lists.addAction(
+							const id = 'to_list_' + result;
+							const action = dist_lists.addAction(
 								'popup',
 								id,
 								values.name
@@ -866,8 +876,7 @@ class AddressbookApp extends EgwApp
 							action.setDefaultExecute(action.parent.onExecute.functionToPerform);
 							action.updateAction({group: 1});
 						}
-					}
-				).sendRequest(true);
+					});
 			}
 		};
 
@@ -915,31 +924,31 @@ class AddressbookApp extends EgwApp
 	 */
 	rename_list(action, selected)
 	{
-		let owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
+		const owner_options = this.et2.getArrayMgr('sel_options').getEntry('filter') || {};
 		const filter = <Et2TreeDropdown>this.et2.getWidgetById('filter2')
 		const lists = filter.select_options.find(elem => elem.value === 'lists')?.children ??
 			filter.select_options ?? [];
 		const selectedID = filter.getValue() || 0;
 		const value = lists.find(distributionList => distributionList.value == selectedID);
-		const self =this;
 		if (!value)
 		{
 			egw.message(egw.lang('No Distribution list found to rename'), 'warning')
 			return;
 		}
 		let data = null;
+		// Genuinely synchronous - must complete before the dialog below reads data.owner
 		egw.json('addressbook.addressbook_ui.ajax_get_list_owner', selectedID,
 			(result: { owner: string, id: string }) =>
 			{
 				data = result
 			})
 			.sendRequest(false)
-		const callback = function (button, values)
+		const callback = (button, values) =>
 		{
 			if (button == Et2Dialog.OK_BUTTON)
 			{
-				egw.json('addressbook.addressbook_ui.ajax_set_list', [selectedID, values.name, values.owner],
-					function (result)
+				this.egw.request('addressbook.addressbook_ui.ajax_set_list', [selectedID, values.name, values.owner])
+					.then(() =>
 					{
 						value.label = values.name;
 						filter.value = selectedID;
@@ -949,8 +958,7 @@ class AddressbookApp extends EgwApp
 								filter.dispatchEvent(new Event("change", {bubbles: true}));
 							});
 
-					}
-				).sendRequest(true);
+					});
 			}
 		}
 
@@ -961,7 +969,7 @@ class AddressbookApp extends EgwApp
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			value: {
 				content: {
-					name: value.label || value.text,
+					name: value.label || (<any>value).text,
 					owner: data.owner
 				},
 				sel_options: {
@@ -981,10 +989,10 @@ class AddressbookApp extends EgwApp
 	 */
 	filter2_onchange(_ev : Event|undefined)
 	{
-		var filter = this.et2.getWidgetById('filter');
-		var filter2 = this.et2.getWidgetById('filter2');
-		var widget = this.et2.getWidgetById('nm');
-		var filter2_val = filter2.get_value();
+		const filter = this.et2.getWidgetById('filter');
+		const filter2 = this.et2.getWidgetById('filter2');
+		const widget = this.et2.getWidgetById('nm');
+		const filter2_val = filter2.get_value();
 
 		if(filter2_val == 'add')
 		{
@@ -1018,8 +1026,9 @@ class AddressbookApp extends EgwApp
 	 */
 	nm_compare_field()
 	{
-		var field = this.et2?.getWidgetById('filter2');
-		if (field) var val = field.get_value();
+		const field = this.et2?.getWidgetById('filter2');
+		let val;
+		if (field) val = field.get_value();
 		if (val)
 		{
 			return (_action) =>
@@ -1028,7 +1037,7 @@ class AddressbookApp extends EgwApp
 				let value;
 				if(field)
 				{
-					value = jQuery(field).val();
+					value = field.value;
 				}
 				else
 				{
@@ -1055,14 +1064,14 @@ class AddressbookApp extends EgwApp
 	 */
 	adv_search(filters)
 	{
-		var index = window.opener.etemplate2.getById('addressbook-index');
+		const index = window.opener.etemplate2.getById('addressbook-index');
 		if(!index)
 		{
 			alert('Could not find index');
 			egw(window).close();
 			return false;
 		}
-		var nm = index.widgetContainer.getWidgetById('nm');
+		const nm = index.widgetContainer.getWidgetById('nm');
 		if(!index)
 		{
 			window.opener.egw.message('Could not find list', 'error');
@@ -1083,21 +1092,21 @@ class AddressbookApp extends EgwApp
 	 */
 	adb_mail_vcard(_action, _elems)
 	{
-		var link = {'preset[type]':[], 'preset[file]':[]};
-		var content = {data:{files:{file:[], type:[]}}};
-		var nm = this.et2.getWidgetById('nm');
-		if(this._fetchAllSelected(nm, jQuery.proxy(function(ids) {
-			this.adb_mail_vcard(_action, ids.map(function(num) {return {id:'addressbook::'+num};}));
-		}, this)))
+		const link = {'preset[type]':[], 'preset[file]':[]};
+		const content = {data:{files:{file:[], type:[]}}};
+		const nm = this.et2.getWidgetById('nm');
+		if(this._fetchAllSelected(nm, (ids) =>
+		{
+			this.adb_mail_vcard(_action, ids.map((num) => { return {id:'addressbook::'+num}; }));
+		}))
 		{
 			return;
 		}
 
-		for (var i = 0; i < _elems.length; i++)
+		for (let i = 0; i < _elems.length; i++)
 		{
-			var idToUse = _elems[i].id;
-			var idToUseArray = idToUse.split('::');
-			idToUse = idToUseArray[1];
+			const idToUseArray = _elems[i].id.split('::');
+			const idToUse = idToUseArray[1];
 			link['preset[type]'].push("text/vcard; charset="+(egw.preference('vcard_charset', 'addressbook') || 'utf-8'));
 			link['preset[file]'].push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
 			content.data.files.file.push("vfs://default/apps/addressbook/"+idToUse+"/.entry");
@@ -1105,7 +1114,7 @@ class AddressbookApp extends EgwApp
 		}
 		egw.openWithinWindow("mail", "setCompose", content, link, /mail.mail_compose.compose/);
 
-		for (var index in content)
+		for (const index in content)
 		{
 			if (content[index].file.length > 0)
 			{
@@ -1123,7 +1132,7 @@ class AddressbookApp extends EgwApp
 	 */
 	mailCheckbox(action)
 	{
-		var preferences = {
+		const preferences = {
 			business: action.getManager().getActionById('email_business').checked ? true : false,
 			private: action.getManager().getActionById('email_home').checked ? true : false
 		};
@@ -1253,16 +1262,16 @@ class AddressbookApp extends EgwApp
 		}
 
 		// Check for all selected, don't resolve until all done
-		let nm = this.et2.getWidgetById('nm');
-		let all = new Promise((resolve) =>
+		const nm = this.et2.getWidgetById('nm');
+		const all = new Promise<any[]>((resolve) =>
 		{
-			let fetching = this._fetchAllSelected(nm, ids => {resolve(ids.map(function(num) {return {id: 'addressbook::' + num};}))});
+			const fetching = this._fetchAllSelected(nm, ids => {resolve(ids.map(num => { return {id: 'addressbook::' + num}; }))});
 			if(!fetching)
 			{
 				resolve(selected);
 			}
 		});
-		let awaited = await all;
+		const awaited = await all;
 
 		// Go through selected & pull email addresses from data
 		let emails = [];
@@ -1360,15 +1369,15 @@ class AddressbookApp extends EgwApp
 	getState()
 	{
 		// Most likely we're in the list view
-		var state = super.getState();
+		let state = super.getState();
 
-		if(jQuery.isEmptyObject(state))
+		if(Object.keys(state ?? {}).length === 0)
 		{
 			// Not in a list view.  Try to find contact ID
-			var etemplates = etemplate2.getByApplication('addressbook');
-			for(var i = 0; i < etemplates.length; i++)
+			const etemplates = etemplate2.getByApplication('addressbook');
+			for(let i = 0; i < etemplates.length; i++)
 			{
-				var content = etemplates[i].widgetContainer.getArrayMgr("content");
+				const content = etemplates[i].widgetContainer.getArrayMgr("content");
 				if(content && content.getEntry('id'))
 				{
 					state = {app: 'addressbook', id: content.getEntry('id'), type: 'view'};
@@ -1393,7 +1402,7 @@ class AddressbookApp extends EgwApp
 	 */
 	setState(state, template?)
 	{
-		var current_state = this.getState();
+		const current_state = this.getState();
 
 		// State should be an object, not a string, but we'll parse
 		if(typeof state == "string")
@@ -1412,11 +1421,11 @@ class AddressbookApp extends EgwApp
 		{
 			// Redirect to list
 			// 'blank' is the special name for no filters, send that instead of the nice translated name
-			var safe_name = jQuery.isEmptyObject(state) || jQuery.isEmptyObject(state.state||state.filter) ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
+			const safe_name = Object.keys(state ?? {}).length === 0 || Object.keys(state.state||state.filter||{}).length === 0 ? 'blank' : state.name.replace(/[^A-Za-z0-9-_]/g, '_');
 			egw.open('',this.appname,'list',{'favorite': safe_name},this.appname);
 			return false;
 		}
-		else if (jQuery.isEmptyObject(state))
+		else if (Object.keys(state ?? {}).length === 0)
 		{
 			const nm = index?.widgetContainer?.getWidgetById("nm");
 
@@ -1444,7 +1453,7 @@ class AddressbookApp extends EgwApp
 			// Clear advanced search, which is in session and etemplate
 			const advancedSearchPromise = new Promise<void>((resolve) =>
 			{
-				egw.json('addressbook.addressbook_ui.ajax_clear_advanced_search', [], resolve, this).sendRequest(true);
+				egw.request('addressbook.addressbook_ui.ajax_clear_advanced_search', []).then(resolve);
 			});
 
 			Promise.all([groupedPromise, advancedSearchPromise]).then(() =>
@@ -1466,7 +1475,7 @@ class AddressbookApp extends EgwApp
 
 			// Check to see if it's not there
 			if(options && (options.find &&
-				!options.find(function(e) {return e.value === state.state.grouped_view;}) ||
+				!options.find((e) => e.value === state.state.grouped_view) ||
 				typeof options.find === 'undefined' && !options[state.state.grouped_view]
 			))
 			{
@@ -1493,7 +1502,7 @@ class AddressbookApp extends EgwApp
 	/**
 	 * Field changed, call server validation
 	 *
-	 * @param {jQuery.Event} _ev
+	 * @param {Event} _ev
 	 * @param {et2_button} _widget
 	 */
 	account_change(_ev, _widget)
@@ -1505,8 +1514,8 @@ class AddressbookApp extends EgwApp
 			case 'n_family':
 			case 'n_given':
 			case 'account_passwd_2':
-				var values = this.et2._inst.getValues(this.et2);
-				var data = {
+				const values = this.et2.getInstanceManager().getValues(this.et2);
+				const data = {
 					account_id: this.et2.getArrayMgr('content').data.account_id,
 					account_lid: values.account_lid,
 					account_firstname: values.n_given,
@@ -1517,14 +1526,14 @@ class AddressbookApp extends EgwApp
 				};
 
 				this.egw.message('');
-				this.egw.json('admin_account::ajax_check', [data, _widget.id], function(_msg)
+				this.egw.request('admin_account::ajax_check', [data, _widget.id]).then(_msg =>
 				{
 					if (_msg && typeof _msg == 'string')
 					{
 						egw(window).message(_msg, 'error');	// context get's lost :(
 						_widget.getDOMNode().focus();
 					}
-				}, this).sendRequest();
+				});
 				break;
 		}
 	}
@@ -1557,7 +1566,7 @@ class AddressbookApp extends EgwApp
 		// multiple selection is not supported
 		if (_selected.length>1) return false;
 
-		var url = this.getGeolocationConfig();
+		const url = this.getGeolocationConfig();
 
 		// exit if no url or invalide url given
 		if (!url || typeof url === 'undefined' || typeof url !== 'string')
@@ -1565,21 +1574,21 @@ class AddressbookApp extends EgwApp
 			egw.debug('warn','no url or invalid url given as geoLocationUrl');
 			return false;
 		}
-		var content = egw.dataGetUIDdata(_selected[0].id);
+		const content = egw.dataGetUIDdata(_selected[0].id);
 
 		// Selected, but data not found
 		if(!content || typeof content.data === 'undefined') return false;
 
-		var type = _action.id === 'business'?'one':'two';
-		var addrs = [
+		const type = _action.id === 'business'?'one':'two';
+		const addrs = [
 			content.data['adr_'+type+'_street'],
 			content.data['adr_'+type+'_locality'],
 			content.data['adr_'+type+'_postalcode']
 		];
 
-		var fields = '';
+		let fields = '';
 		// Replcae placeholders with acctual values
-		for (var i=0;i < addrs.length; i++)
+		for (let i=0;i < addrs.length; i++)
 		{
 			fields += addrs[i] ? addrs[i] : '';
 		}
@@ -1598,8 +1607,8 @@ class AddressbookApp extends EgwApp
 	 */
 	geoLocationUrl(_dest_data, _dest_type,_src_data, _src_type)
 	{
-		var dest_type = _dest_type || 'one';
-		var url = this.getGeolocationConfig();
+		const dest_type = _dest_type || 'one';
+		let url = this.getGeolocationConfig();
 
 		// exit if no url or invalide url given
 		if (!url || typeof url === 'undefined' || typeof url !== 'string')
@@ -1609,7 +1618,7 @@ class AddressbookApp extends EgwApp
 		}
 
 		// array of placeholders with their representing values
-		var	addrs = [
+		const addrs = [
 
 			[ // source address
 				{id:'r0',val:_src_type === 'browser'?_src_data.latitude:_src_data['adr_'+_src_type+'_street']},
@@ -1625,7 +1634,7 @@ class AddressbookApp extends EgwApp
 			]
 		];
 
-		var src_param : any = url.match(/{{%rs=.*%rs}}/ig);
+		let src_param : any = url.match(/{{%rs=.*%rs}}/ig);
 		if (src_param[0])
 		{
 			src_param = src_param[0].replace(/{{%rs=/,'');
@@ -1633,7 +1642,7 @@ class AddressbookApp extends EgwApp
 			url = url.replace(/{{%rs=.*%rs}}/, src_param);
 		}
 
-		var d_param = url.match(/{{%d=.*%d}}/ig);
+		let d_param = url.match(/{{%d=.*%d}}/ig);
 		if (d_param[0])
 		{
 			d_param = d_param[0].replace(/{{%d=/,'');
@@ -1642,9 +1651,9 @@ class AddressbookApp extends EgwApp
 		}
 
 		// Replcae placeholders with acctual values
-		for (var j=0;j<addrs.length;j++)
+		for (let j=0;j<addrs.length;j++)
 		{
-			for (var i=0;i < addrs[j].length; i++)
+			for (let i=0;i < addrs[j].length; i++)
 			{
 				url = url.replace('%'+addrs[j][i]['id'], addrs[j][i]['val']? addrs[j][i]['val'] : "");
 			}
@@ -1660,27 +1669,27 @@ class AddressbookApp extends EgwApp
 	 */
 	geoLocationExec(_action, _selected)
 	{
-		var content = egw.dataGetUIDdata(_selected[0].id);
-		var geolocation_src = egw.preference('geolocation_src','addressbook');
-		var self = this;
+		const content = egw.dataGetUIDdata(_selected[0].id);
+		const geolocation_src = egw.preference('geolocation_src','addressbook');
 
 		if (geolocation_src === 'browser' && navigator.geolocation)
 		{
-			navigator.geolocation.getCurrentPosition(function(position){
+			navigator.geolocation.getCurrentPosition((position) =>
+			{
 				if (position && position.coords)
 				{
-					var url = self.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', position.coords, 'browser');
+					const url = this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', position.coords, 'browser');
 					window.open(url,'_blank');
 				}
 			});
 		}
 		else
 		{
-			egw.json('addressbook.addressbook_ui.ajax_get_contact', [egw.user('account_id')],function(_data){
-				var url = self.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', _data, geolocation_src === 'browser'?'one':geolocation_src);
+			this.egw.request('addressbook.addressbook_ui.ajax_get_contact', [egw.user('account_id')]).then(_data =>
+			{
+				const url = this.geoLocationUrl(content.data,_action.id === 'business'?'one':'two', _data, geolocation_src === 'browser'?'one':geolocation_src);
 				window.open(url,'_blank');
-			}).sendRequest();
-
+			});
 		}
 	}
 
@@ -1693,8 +1702,8 @@ class AddressbookApp extends EgwApp
 	{
 		// This default url should be identical to the first value of geolocation_url array
 		// defined in addressbook_hooks::config
-		var default_url = 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1';
-		var geo_url = egw.config('geolocation_url');
+		const default_url = 'https://maps.here.com/directions/drive{{%rs=/%rs}}%r0,%t0,%z0,%c0{{%d=/%d}}%r1,%t1,%z1+%c1';
+		const geo_url = egw.config('geolocation_url');
 		return geo_url || default_url;
 	}
 
@@ -1706,8 +1715,9 @@ class AddressbookApp extends EgwApp
 	 */
 	can_merge(action, selected)
 	{
-		return selected.filter(function (row) {
-			var data = egw.dataGetUIDdata(row.id);
+		return selected.filter((row) =>
+		{
+			const data = egw.dataGetUIDdata(row.id);
 			return data && data.data.account_id;
 		}).length <= 1;
 	}
@@ -1723,10 +1733,10 @@ class AddressbookApp extends EgwApp
 	 */
 	is_share_enabled(_action, _entries, _target)
 	{
-		var enabled = true;
-		for( var i = 0; i < _entries.length; i++)
+		const enabled = true;
+		for( let i = 0; i < _entries.length; i++)
 		{
-			let id = _entries[i].id.split('::');
+			const id = _entries[i].id.split('::');
 			if(isNaN(id[1]))
 			{
 				return false;
@@ -1745,7 +1755,8 @@ class AddressbookApp extends EgwApp
 		// ATM we're not supporting status in mobile theme
 		if (egwIsMobile()) return false;
 
-		let list = app.status ? app.status.getEntireList() : {};
+		// app.status is stylite/EPL-only and not typed here - see feedback_epl_stylite_blind_spot
+		let list = app.status ? (<any>app.status).getEntireList() : {};
 		for (let sel in _selected)
 		{
 			if (sel == '0' && _selected[sel]['id'] == 'nm') continue;
@@ -1788,11 +1799,11 @@ class AddressbookApp extends EgwApp
 		}
 		if (_action.id == 'invite')
 		{
-			app.status.inviteToCall(data, egw.getSessionItem('status', 'videoconference-session'));
+			(<any>app.status).inviteToCall(data, egw.getSessionItem('status', 'videoconference-session'));
 		}
 		else
 		{
-			app.status.makeCall(data);
+			(<any>app.status).makeCall(data);
 		}
 	}
 
@@ -1808,17 +1819,17 @@ class AddressbookApp extends EgwApp
 
 		if (value)
 		{
-			this.egw.json('addressbook.addressbook_ui.ajax_check_shared', [{
+			this.egw.request('addressbook.addressbook_ui.ajax_check_shared', [{
 				contact: this.et2.getInstanceManager().getValues(this.et2),	// for sharing policy
 				shared_values: value,
 				shared_writable: this.et2.getInputWidgetById('shared_writable').get_value()
-			}], _data => {
+			}]).then(_data => {
 				if (Array.isArray(_data) && _data.length)
 				{
 					// remove not allowed entries
 					shared.set_value(value.filter(val => _data.indexOf(val) === -1));
 				}
-			}).sendRequest();
+			});
 		}
 	}
 }
