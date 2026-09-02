@@ -115,6 +115,16 @@ export class et2_countdown extends et2_valueWidget {
 		}, 1000);
 	}
 
+	destroy()
+	{
+		if(this.timer)
+		{
+			clearInterval(this.timer);
+			this.timer = null;
+		}
+		super.destroy();
+	}
+
 	private _updateTimer()
 	{
 		let now = new Date();
