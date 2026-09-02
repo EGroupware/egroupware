@@ -20,6 +20,7 @@ use EGroupware\Api\Mail;
 use EGroupware\Api\Mail\AddressList;
 use EGroupware\Api\Mail\BodyDecoding;
 use EGroupware\Api\Vfs;
+use EGroupware\Mail\Ui\AttachmentJmap;
 use EGroupware\Mail\Ui\BodyHandler;
 
 /**
@@ -1565,6 +1566,10 @@ class mail_compose
 		if (isset($content['to'])) $content['to'] = self::resolveEmailAddressList($content['to']);
 		$content['html_toolbar'] = empty(Mail::$mailConfig['html_toolbar']) ?
 			implode(',', Etemplate\Widget\HtmlArea::$toolbar_default_list) : implode(',', Mail::$mailConfig['html_toolbar']);
+		// mail/js/compose.ts's own size-limit warning (JMAP-mode local/VFS attachment uploads never
+		// go through the classic uploadForCompose postback above at all, so that check never runs
+		// for them) - same config value/default as classic, just exposed for the client to read
+		$content['attachmentLimitMb'] = Api\Config::read('mail')['attachment_limit_mb'] ?: self::$maxAttachmentSizeDefault;
 
 		//Allow other apps to hook into mail_compose
 		$readonlys = [];
@@ -2864,10 +2869,50 @@ class mail_compose
 						{
 							continue;
 						}
+						// JMAP-mode reply/forward attachment carry-forward (mail/js/compose.ts's
+						// carryForwardAttachments()/mergeAttachmentEntries()) - a bare {jmapBlobId,
+						// jmapProfileID} reference, no uid/folder (not addressed via classic IMAP)
+						// and no real local `file` (never downloaded client-side at all, see
+						// MailJmap.fetchForReply()'s own docblock for why) - reached whenever
+						// trySendViaJmap() (compose.ts) itself couldn't complete the send (a
+						// blocking cross-app toggle, or an account whose backend doesn't support
+						// JMAP-native send yet) and falls through to this classic postback instead.
+						// Found live 2026-09-02 investigating a "attachments are always sent as
+						// sharing links, not real attachments" bug report: without this branch,
+						// isset($attachment['file']) is false, parse_url(null, ...) warns, and
+						// addAttachment() is handed a bogus temp_dir/'' path - silently dropping the
+						// attachment (or erroring) instead of sending it. Fetched via the same
+						// backend-uniform blob-fetch primitive the TNEF-as-attachment fix uses.
+						if (!empty($attachment['jmapBlobId']))
+						{
+							$bytes = AttachmentJmap::fetchBlobBytes(
+								(string)($attachment['jmapProfileID'] ?? $mail_bo->profileID),
+								$attachment['jmapBlobId'], $attachment['name'] ?? 'attachment',
+								$attachment['type'] ?? 'application/octet-stream');
+							if ($bytes === null)
+							{
+								throw new Api\Exception\WrongUserinput(lang(
+									"Could not attach '%1': the original message is no longer available (deleted or moved).",
+									$attachment['name']
+								));
+							}
+							$_mailObject->addStringAttachment($bytes, $attachment['name'], $attachment['type']);
+							continue;
+						}
 						if (isset($attachment['file']) && parse_url($attachment['file'],PHP_URL_SCHEME) == 'vfs')
 						{
 							Vfs::load_wrapper('vfs');
 							$tmp_path = $attachment['file'];
+						}
+						// mail/js/compose.ts's vfsUpload() (JMAP mode, VFS-selected file) - a bare
+						// {jmapVfsPath} reference, no `file` set at all (nothing uploaded/fetched
+						// client-side, see vfsUpload()'s own docblock) - same fallback-to-classic
+						// reachability as the jmapBlobId case above, but the file already IS a real
+						// VFS path, so it just needs the same vfs:// prefix the branch above expects.
+						elseif (!empty($attachment['jmapVfsPath']))
+						{
+							Vfs::load_wrapper('vfs');
+							$tmp_path = Vfs::PREFIX.$attachment['jmapVfsPath'];
 						}
 						else	// non-vfs file has to be in temp_dir
 						{

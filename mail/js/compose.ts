@@ -1330,6 +1330,7 @@ export class MailCompose
 			...entries,
 		];
 		this.et2.setArrayMgr('content', content);
+		this.warnAttachmentSizeLimit(content.data.attachments);
 		content.data.attachmentsBlockTitle = content.data.attachments.length + ' ' + this.egw.lang('Attachments');
 		const attachmentsWidget = this.et2.getWidgetById('attachments');
 		attachmentsWidget?.set_value({content: content.data.attachments});
@@ -1393,6 +1394,45 @@ export class MailCompose
 		this.et2.getWidgetById('attachmentsSummaryName')?.set_value(content.data.attachments[0].name);
 		const moreCount = content.data.attachments.length - 1;
 		this.et2.getWidgetById('attachmentsMoreText')?.set_value(moreCount > 0 ? '+' + moreCount : '');
+	}
+
+	/**
+	 * Classic mail_compose.inc.php's own size-limit switch (attachment_limit_mb,
+	 * mail_compose.inc.php:508-546) only ever runs for a classic uploadForCompose postback - a
+	 * JMAP-mode local/VFS upload never goes through that at all (found 2026-09-02 investigating a
+	 * "attachments are always sent as sharing links, not real attachments" bug report: the
+	 * mirror-image gap - this path had NO size awareness whatsoever). Unlike classic, this can't
+	 * cleanly auto-switch to a real VFS share link the same way (that requires the file to actually
+	 * exist in VFS already - a bare uploaded JMAP blob never does, see this method's own caller,
+	 * mergeAttachmentEntries(), and its docblock on why filemodeRow is hidden for exactly this
+	 * reason) - so this only WARNS, using the exact same translated message classic already shows,
+	 * rather than silently pretending to downgrade filemode the way classic does.
+	 *
+	 * `attachmentLimitMb` (server-computed, same default as classic's own
+	 * self::$maxAttachmentSizeDefault) is exposed via mail_compose::compose()'s own $content, read
+	 * fresh each call rather than cached once - the popup never reloads after this, but reading a
+	 * possibly-absent value defensively costs nothing here.
+	 */
+	private warnAttachmentSizeLimit(attachments : any[]) : void
+	{
+		const limitMb = Number(this.et2.getArrayMgr('content').getEntry('attachmentLimitMb')) || 25;
+		const totalMb = MailCompose.totalAttachmentSizeMb(attachments);
+		if (totalMb > limitMb)
+		{
+			this.egw.message(this.egw.lang('The total size of the attachments exceeds the limit of %1 MB', limitMb), 'warning');
+		}
+	}
+
+	/**
+	 * Pure/testable half of warnAttachmentSizeLimit() above: sum of every attachment's own `size`
+	 * (bytes), converted to MB. A VFS-selected entry (vfsUpload()) carries a `size: 0` placeholder -
+	 * its real size is never learned client-side - so it never contributes to the running total
+	 * either way, same as classic's own size check only ever summing what it actually knows.
+	 */
+	static totalAttachmentSizeMb(attachments : {size? : number}[]) : number
+	{
+		const totalBytes = (attachments || []).reduce((sum, a) => sum + (Number(a?.size) || 0), 0);
+		return totalBytes / (1024 * 1024);
 	}
 
 	/**

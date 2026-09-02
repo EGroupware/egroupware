@@ -705,6 +705,7 @@ the imap server need to meet certain requirements and be configured for it:	mail
 the message sender has requested a response to indicate that you have read this message. would you like to send a receipt?	mail	de	Der Absender hat eine Empfangsbestätigung angefordert, um sicher zu stellen, dass Sie diese E-Mail gelesen haben. Möchten Sie eine Empfangsbestätigung senden?
 the mimeparser can not parse this message.	mail	de	Der MIME-Parser versteht diese Nachricht nicht.
 the rule with priority %1 successfully saved!	mail	de	Die Regel mit Priorität %1 wurde erfolgreich gespeichert!
+the total size of the attachments exceeds the limit of %1 mb	mail	de	Die Größe der Anhänge überschreitet %1 MB
 the total size of the attachments exceeds the limit of %1 mb. switched to download link	mail	de	Die Größe der Anhänge überschreitet %1 MB. Es wurde auf "Link zum Herunterladen" umgestellt.
 then	mail	de	dann
 there is no imap server configured.	mail	de	Es ist kein IMAP-Server konfiguriert.
