@@ -2820,6 +2820,14 @@ export class Et2Nextmatch extends Et2Widget(LitElement) implements et2_IInput
 		this._subgridColumnSnapshots.delete(parentRowId);
 		this._childDataProviders.delete(parentRowId);
 		this._childGridRowsSnapshots.delete(parentRowId);
+		// Release this branch's rows from egw's central cache - otherwise they stay
+		// pinned by their keep-alive listener (see Et2NextmatchDataProvider) for the
+		// rest of the page's life, since a full releaseRetainedRows() only happens on
+		// an actual query change, not on a plain row collapse.
+		const childBranchKey = typeof this._dataProvider.toProviderRowId === "function"
+		                        ? this._dataProvider.toProviderRowId(parentRowId)
+		                        : parentRowId;
+		this._dataProvider.releaseRetainedRowsForBranch(childBranchKey);
 	}
 
 	/**

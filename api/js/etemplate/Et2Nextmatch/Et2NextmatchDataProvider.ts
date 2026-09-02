@@ -31,6 +31,14 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 	private _retainedRowUids : Set<string> = new Set();
 
 	/**
+	 * Same uids as _retainedRowUids, grouped by the branch that retained them ("" for
+	 * the root query, otherwise a child grid's toProviderRowId()-normalized parent row
+	 * id). Lets releaseRetainedRowsForBranch() release exactly one collapsed subgrid's
+	 * rows instead of only being able to release everything at once.
+	 */
+	private _retainedRowUidsByBranch : Map<string, Set<string>> = new Map();
+
+	/**
 	 * The one listener registered for every retained row. Its only job is to exist:
 	 * egw's cache sweep skips any uid that has a listener. Shared deliberately - a
 	 * fresh closure per row is what made this leak, since each captured its whole
@@ -145,14 +153,25 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 
 	/**
 	 * Retain one row's cache entry for this query, if it is not retained already.
+	 *
+	 * @param branchKey Groups this uid for releaseRetainedRowsForBranch() - "" for the
+	 * root query, or a child grid's branch key for rows fetched under an expanded
+	 * parent row.
 	 */
-	private _retainRow(uid : string, execId : string, widgetId : string) : void
+	private _retainRow(uid : string, execId : string, widgetId : string, branchKey : string = "") : void
 	{
 		if(!uid || this._retainedRowUids.has(uid))
 		{
 			return;
 		}
 		this._retainedRowUids.add(uid);
+		let branchUids = this._retainedRowUidsByBranch.get(branchKey);
+		if(!branchUids)
+		{
+			branchUids = new Set();
+			this._retainedRowUidsByBranch.set(branchKey, branchUids);
+		}
+		branchUids.add(uid);
 		this.host.egw().dataRegisterUID?.(uid, this._rowKeepAlive, this.host, execId, widgetId);
 	}
 
@@ -171,6 +190,32 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 			egw.dataUnregisterUID?.(uid, this._rowKeepAlive, this.host);
 		}
 		this._retainedRowUids.clear();
+		this._retainedRowUidsByBranch.clear();
+	}
+
+	/**
+	 * Release the rows retained by one collapsed subgrid branch, without disturbing
+	 * rows held by the root query or by any other still-expanded branch.
+	 *
+	 * Without this, collapsing an expanded row only dropped Et2Nextmatch's own
+	 * snapshots/child-provider entry (see _forgetExpandedBranch()) - the branch's rows
+	 * stayed pinned in egw's central cache via their keep-alive listener for the rest
+	 * of the page's life, since the only other release path is a full query change.
+	 */
+	releaseRetainedRowsForBranch(branchKey : string) : void
+	{
+		const branchUids = this._retainedRowUidsByBranch.get(branchKey);
+		if(!branchUids)
+		{
+			return;
+		}
+		const egw = this.host.egw();
+		for(const uid of branchUids)
+		{
+			egw.dataUnregisterUID?.(uid, this._rowKeepAlive, this.host);
+			this._retainedRowUids.delete(uid);
+		}
+		this._retainedRowUidsByBranch.delete(branchKey);
 	}
 
 	/**
@@ -589,6 +634,10 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 			num_rows: pageSize,
 			...rangeOverrides
 		};
+		// Rows fetched for an expanded child grid must be released as a unit when that
+		// row collapses (see releaseRetainedRowsForBranch()), not lumped in with the
+		// root query's rows.
+		const branchKey = rangeOverrides.parent_id !== undefined ? String(rangeOverrides.parent_id) : "";
 
 		// Not async/await here: an async function always adopts a returned thenable's
 		// *resolution* into a brand-new Promise object, discarding any extra property
@@ -646,7 +695,7 @@ export class Et2NextmatchDataProvider implements Et2DatagridDataProvider, Reacti
 							{
 								if(row)
 								{
-									this._retainRow(row.id, execId, widgetId);
+									this._retainRow(row.id, execId, widgetId, branchKey);
 								}
 							}
 						};
