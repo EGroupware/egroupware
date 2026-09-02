@@ -873,6 +873,248 @@ wraps the callback and invokes it via `_callback.call(this, ...)` with its own `
 outer method's `this` instead, a real behavior change. Added a comment explaining why, matching the
 project's established convention for documented exceptions.
 
+## calendar/js/app.ts (done)
+
+The largest file in this project by line count, and by far the most `var`/jQuery usage of any file here
+- 4525 lines, 253 `var`, ~90 jQuery uses, 97 TS errors, 14 `sendRequest()` sites (smallpart has more TS
+errors - 167 - but far less `var`/jQuery to modernize). Several genuinely new categories of goal-6
+exception turned up that weren't seen in any smaller file. Browser-verified (see bottom of this
+section), not just tsc/build-clean.
+
+### Legacy widget imports
+
+- `et2_date`, `et2_selectbox`, `et2_nextmatch`, `et2_button`, `et2_template`, `et2_grid`, `et2_iframe`,
+  `et2_number` - all used only for type casts/annotations in this file -> `import type`. `et2_grid` and
+  `et2_iframe`/`et2_button`/`et2_number`/`et2_nextmatch` are genuine distinct legacy implementations with
+  no (or an unsafe-to-substitute) web-component equivalent, same reasoning as timesheet's `et2_grid` and
+  tracker's `et2_nextmatch`/`et2_button` - `import type` still applies since this file only ever uses
+  them as types, never as runtime values.
+- `et2_widget`, `et2_valueWidget`, `et2_IInput` - kept as **value** imports: all three are passed as
+  genuine runtime `instanceOf`/`iterateOver`-type-filter arguments. `et2_IInput` looked like it might be
+  interface-only but is actually dual-declared (`export interface et2_IInput {...}` + `export const
+  et2_IInput = "et2_IInput"`) specifically so it can be used this way - confirmed via
+  `et2_core_inheritance.ts`'s `instanceOf()` and the same pattern already used elsewhere in
+  `et2_extension_nextmatch.ts` itself.
+- `et2_container` removed entirely (not even `import type`): `sidebox_et2`'s declared type was stale -
+  `etemplate2.widgetContainer` is really `Et2Template` (confirmed in `etemplate2.ts`), not the legacy
+  `et2_container`. Retyped the field as `Et2Template` (newly imported, type-only) and dropped the one
+  now-unnecessary `<et2_container>` cast, which TS was already flagging as a mistake (TS2352).
+- `egw`/`egw_getFramework` import removed - the familiar ambient-global fix from every prior file in
+  this series.
+- `egwAction`/`egwActionObject` had no import at all (`TS2304`) - added `import type` from
+  `api/js/egw_action/egw_action.ts`, same as addressbook.
+- `Et2CalendarOwner` (used in `participantOnChange()`) doesn't exist anywhere in the repo - a typo for
+  the already-imported `CalendarOwner` (this file's own `./CalendarOwner.ts`, confirmed by every other
+  cast in the file correctly using `CalendarOwner`). Fixed the cast; not an import problem.
+
+### TS errors fixed (97 total) - selected highlights, not exhaustive
+
+- **`app.calendar.X` (`state`, `update_state`, `_scroll_disabled`, `date`, `merge`,
+  `state_update_in_progress`, `_fetch_data`, `sidebox_hooked_templates`, `videoconference_getRecordings`,
+  ~35 sites)**: the familiar `app`-typed-as-`{[propName:string]: EgwApp}` blind spot, but here it's the
+  app referencing **itself** by name instead of `this` - mostly leftover habit/inconsistency from before
+  arrow functions were used (the same method often mixes `this.state` and `app.calendar.state` in the
+  same block). Resolved case by case:
+  - Where the reference is in a plain class method (no nested non-arrow function breaking `this`):
+    replaced with `this.X` directly (`toolbar_action`, `filter_change`, `sidebox_merge`,
+    `_fetch_data`'s response handler, etc.) - a real fix, not just casting the error away.
+  - Where `this` is genuinely dynamic (see `scroll_animate` below) and can't be relied on: cast to
+    `<CalendarApp>app.calendar` at each site instead, since `app.calendar` *is* this exact class - a more
+    precise version of the `<statusApp>app.status` pattern from `status/js/app.ts`.
+  - `_scroll_disabled` had no class field at all (silently bolted on at runtime) - added a real declared
+    field (`_scroll_disabled : boolean = false;`).
+  - `videoconference_getRecordings` on `app.status` is EPL's Rocket.Chat/videoconference status
+    extension - same "other app's EPL extension, cast to `<any>`" pattern as infolog/addressbook/status.
+- **`this.state` field typing**: `state = {date: new Date(), view: ..., owner: ..., ...}` was too
+  narrowly inferred (e.g. `date: Date` made `typeof this.state.date == "string"` narrow to `never`).
+  Added an explicit type with `date: Date | string` and a `[key: string]: any` index signature (the
+  state object accumulates many more ad-hoc properties - `startdate`, `filter`, `weekend`, `cat_id`, ...
+  - throughout the class; enumerating all of them wasn't worth it for an app.ts-only pass). One
+    root-cause fix that resolved ~6 separate errors.
+- **`super.merge(action, selected)` in `sidebox_merge()`** (`TS2339`, `Property 'merge' does not exist on
+  type 'EgwApp'`): not a typing gap - a **real, previously-silent bug**. `git log -p` on
+  `api/js/jsapi/egw_app.ts` shows `EgwApp.merge()` was renamed to `mergeAction()` (and made `async`) at
+  some point; this call site was never updated, so `super.merge(...)` would throw
+  `TypeError: ... .merge is not a function` the moment a user tries "merge to document" from listview.
+  Fixed to `super.mergeAction(action, selected)` - the real fix, not a cast.
+- **`et2_date.set_hours`/`.set_minutes()` in `set_alarmOptions_WD()`**: these methods don't exist on
+  `Et2Date` (confirmed - grepped the whole repo, no such methods anywhere) - another **real,
+  previously-silent bug**: every call to `set_alarmOptions_WD()` that reached this branch has always
+  thrown and aborted before setting the alarm time/label. Rather than just `<any>`-casting past it,
+  computed a local midnight-based `Date` and used that for the alarm-relative-to-midnight calculation
+  instead of mutating the real `start` field widget (which is what the original, broken code appeared to
+  intend, but would have been a separate, worse side effect - clobbering the user's actual event start
+  time - had the method calls not been broken all along). Documented the reasoning inline since this is
+  a judgment call, not a mechanical fix.
+- **`et2_grid`'s `cells` (private, no public accessor)** in `set_alarmOptions_WD()`: unlike
+  `_children`/`_inst` elsewhere, `et2_widget_grid.ts` has no public way to reach a cell's widget at all -
+  cast the `alarm` variable itself to `<any>` rather than adding an accessor to the shared file.
+- **`participant.value` (protected) in `participantOnChange()`**: same class of fix as addressbook's
+  `Et2SelectCountry.value` - swapped to the public `getValueAsArray()` accessor (which also fixed the
+  paired "`.length` doesn't exist" errors, since `.value`'s declared type has no array shape).
+- **`sprintf()`'s untyped 0-arg signature**: `egw_action_common.ts` declares `export function sprintf()
+  {...}` (relies on `arguments` internally, no typed params) - every call with format args errors under
+  TS. This isn't calendar-specific (confirmed the same function is called with args from
+  `smallpart/js/app.ts` too), so rather than touch the shared file, aliased it once at the top:
+  `import {sprintf as _sprintf} from ...; const sprintf : (format: string, ...args: any[]) => string =
+  _sprintf;` - a single 2-line fix instead of `<any>`-casting all 10 call sites individually.
+- **`_autorefresh_timer`'s type**: `setInterval()`/`setTimeout()` return `NodeJS.Timeout` here rather
+  than `number` (an ambient-types resolution quirk, not calendar-specific) - retyped the field
+  `ReturnType<typeof setInterval>` instead of forcing `number`.
+- **Redeclared `var` inside `switch` blocks (no per-case braces)**: `toolbar_action()`'s `case 'add'`/
+  `case 'today'` both declared `tempDate`/`today`, and `setState()`'s `case 'month'`/`case 'day'`/
+  `default` all declared `end` - all in the *same* switch's shared block scope, which is fine for `var`
+  but is a redeclaration error for `let`/`const`. Wrapped each case body in its own `{ }` block (doesn't
+  affect the intentional `case 'month':` fallthrough into `case 'weekN':`, since fallthrough only cares
+  about the absence of `break`, not braces).
+- **Several "declared inside an `if`, read again in a sibling branch or after a loop" var-hoisting
+  cases** (`cal_open()`'s `js_integration_data`, `setState()`'s `val`/`loading`/`last_format`) - same
+  "needed care" treatment as addressbook's `content` fix: hoisted the bare declaration above the
+  conditional/loop, matching the exact scope `var` was already relying on, with a comment explaining why.
+
+### jQuery removed (~90 uses) - the trickiest category in this file
+
+Most were the same mechanical swaps as every prior file (`.hide()`/`.show()` -> `style.display`,
+`.css()` -> `style.*`, `.toggleClass()`/`.hasClass()` -> `classList`, `jQuery.extend()` ->
+`Object.assign()`, `jQuery.map()` -> `Object.values()`, `jQuery.isEmptyObject()` ->
+`Object.keys(x??{}).length===0`, `:visible` -> `.checkVisibility()`, `jQuery(fn)` (the `$(document)
+.ready(fn)` shorthand) -> a `document.readyState` check). Three patterns were new to this file:
+
+- **jQuery's dot-namespaced custom events as a dedup/pub-sub mechanism** (`'show.calendar'`,
+  `'hide.calendar'`), used in `observer()`, `push_infolog()`, and `_set_autorefresh()`:
+  - Two sites did `.off('show.calendar').one('show.calendar', fn)` purely to make sure only the
+    *latest* queued handler fires if the method runs again before the tab becomes visible. Replaced with
+    a small private helper, `_bindShowOnce(el, handler)`, backed by one tracked field
+    (`_pending_show_handler`) that removes any previous handler before adding the new one with
+    `{once: true}` - a faithful native equivalent, not just a syntax swap.
+  - `_set_autorefresh()`'s `'hide.calendar'`/`'show.calendar'` handlers both **unconditionally**
+    self-removed (`jQuery(e.target).off(e)`) immediately after running every time - i.e. they were
+    already behaviorally identical to `.one()`/`{once: true}`, just implemented the hard way. Simplified
+    to plain `addEventListener(type, handler, {once: true})`, no tracking needed.
+  - `destroy()`'s `jQuery('body').off('.calendar')` and a `jQuery(window).off('resize.calendar'+id)` in
+    the same method are both **dead code** - `git log -S` on the corresponding `.on(...)` binds shows the
+    live handlers they were meant to clean up were removed from the codebase in 2022, but the cleanup
+    calls were never removed. Deleted both (and the now-fully-unused surrounding `if` block/local var)
+    rather than "converting" no-op cleanup for handlers that no longer exist.
+- **`widget.div`/`widget.loader` are jQuery objects** (set by `et2_widget_timegrid.ts`/
+  `et2_widget_view.ts`, outside this pass's scope) - `.css("height","")` -> `.div[0].style.height=""`,
+  `.loader.show()`/`.hide()` -> `.loader[0].style.display = ''/'none'`, i.e. unwrap via `[0]` rather than
+  touching the widget files that create these jQuery-wrapped properties.
+- **`_scroll()`'s `scroll_animate` function relies on `jQuery(this)` silently failing** when `this` isn't
+  a DOM node (see the goal-6 section below - `this` is sometimes the `CalendarApp` instance, sometimes a
+  DOM element) - replaced with an explicit `this instanceof Element ? this.closest(...) : undefined`,
+  which is clearer than relying on jQuery's forgiving-selector-engine side effect and behaves identically.
+
+### `egw.json(...).sendRequest()` -> `egw.request()` (14 sites)
+
+13 of 14 were straightforward async swaps (several combined with a `function` -> arrow conversion for
+the callback, same as prior files). One - `_unlock()`, bound to `beforeunload` - is a **new exception
+category**, not literally `sendRequest(false)`: it's constructed with `"keepalive"` as the async mode
+(`egw.json(url, params, null, this, "keepalive", null)`), which makes `sendRequest()` use
+`navigator.sendBeacon` under the hood specifically so the request survives the page unload - functionally
+the same *purpose* as the doc's `sendRequest(false)` exception (an unload handler that can't rely on a
+normal async round trip), just a different mechanism. `egw.request()` has no keepalive/sendBeacon mode,
+so there's no equivalent swap - left as-is with a comment explaining why, generalizing the existing
+exception rather than adding a contradictory one.
+
+### function/closures -> arrow functions
+
+The large majority converted cleanly (many `iterateOver(function(w){...}, this, SomeType)` calls where
+the explicit context arg equals the arrow's lexical `this` anyway, per the tracker/addressbook precedent
+of that being safe). Two new exception shapes worth recording:
+
+- **`scroll_animate` (`_scroll()`)**: called with `this` = the `CalendarApp` instance from the keyboard
+  shortcuts (`scroll_animate.call(this, ...)`) *and* with `this` = a plain DOM element from the swipe
+  handler (`scroll_animate.call(event.target.closest(...), ...)`) - two genuinely different, both
+  load-bearing, `this` values depending on the call site. Left as a plain `function`, matching goal 6's
+  documented exception, with a comment. The *nested* callbacks inside it that don't use `this` at all
+  were still converted to arrows for consistency, same as addressbook's no-context-needed predicates.
+- **`_et2_view_init()`'s `jQuery.proxy(function(){...}, <index>)`**: `this` here is deliberately bound to
+  a plain number (a splice index), not any object - a `jQuery.proxy(fn, otherThis)` case where
+  `otherThis` is neither the enclosing method's `this` nor a widget, just data smuggled through the
+  binding mechanism. Kept as a plain function, converted to `fn.bind(index)` for the jQuery removal
+  (goal 4) without touching the binding itself (goal 6 exception).
+- Also worth noting: several `var view`/`index`/`name` values were captured into an ad-hoc
+  `jQuery.extend({}, {view, index, name})` "context object" purely to survive `var`'s lack of
+  per-iteration scoping inside a `for...in` loop (a workaround now-obsolete once those loop variables
+  became `const`/`let`, which *do* get a fresh per-iteration binding) - removed the whole capture-object
+  workaround and let the closure reference `view`/`index` directly, converting that callback to a
+  faithful `{once: true}`-bound arrow in the same edit.
+
+### Not touched (out of scope) - confirmed pre-existing, not introduced by this pass
+
+- **`cal_delete()`'s shadowed `cal_event`**: `let cal_event = ...` at the method's top, then a *second*,
+  separate `let cal_event = ...` declared inside `if(matches){...}` - shadows the outer binding within
+  that block only, so the intended update to the series-level event data is silently discarded once the
+  block ends. A real logic bug, but untouched by any of the 6 goals (it was already valid `let`, not
+  `var`) - flagged here, not fixed.
+- **`comment_add_vfs()`-style `Promise.all([wait,wait])` equivalents**: none found in this file (checked,
+  unlike tracker) - no new finding of that shape here.
+- A pre-existing, unrelated bug surfaced during browser verification (see below): `_update_events()`'s
+  `multiple_owner` computation (`typeof state.owner != 'string' && state.owner.length > 1 && ...`) throws
+  if `state.owner` is ever `undefined` (`typeof undefined != 'string'` is `true`, so the `&&` chain
+  proceeds to `undefined.length`). Confirmed byte-for-byte identical logic in the pre-modernization
+  source (only `var` -> `const`), so this is not a regression - flagged for whoever next touches
+  `_update_events()`.
+
+### Browser verification
+
+Built (`rollup -c`) and exercised live against a real EGroupware instance (day/week/multi-week/list/
+planner views via the toolbar and via direct `update_state()` calls, Today/Previous navigation, the
+weekend toggle, and switching away to another app and back). Confirmed via a `git stash`/rebuild/reload
+round-trip that the one console error seen throughout (`et2_calendar_event._update`: "The provided
+string color doesn't have a correct format", in `et2_widget_event.ts`, unrelated to this file) reproduces
+identically on the pre-modernization code - a pre-existing bug, not a regression. No other errors
+surfaced under normal navigation; the `state.owner` bug above only appeared when driving `update_state()`
+directly from the console with a partial, hand-built state object, not through any real UI path.
+
+### Follow-up: bare `egw.X` vs `this.egw.X` (not part of the 6-goal pass, a separate ask)
+
+After the pass above, went through this file's ~98 remaining bare `egw.` call sites (as opposed to
+`this.egw.`) by hand, checking each against its module's registration
+(`MODULE_GLOBAL`/`MODULE_WND_LOCAL`/`MODULE_APP_LOCAL` in the relevant `api/js/jsapi/egw_*.ts` file) -
+this is *not* a purely stylistic distinction: `egw(appname, wnd)` (what produces `this.egw`, per
+`EgwApp`'s constructor) returns a real, distinct clone via `egw_core.ts`'s `createEgwInstance()`, with
+window/app-local modules merged in on top of the shared base object bare `egw` resolves to. Found and
+fixed **19 genuinely miscategorized sites** (used bare `egw.X` where the module is `MODULE_WND_LOCAL`,
+so `this.egw.X` is the correct/safe one) across three modules:
+
+- **`loading_prompt`** (`Message` class, `egw_message.ts`) - 7 sites (`et2_ready()` x2, `setState()`,
+  two `window.setTimeout()` arrows, `_update_events()`, `_fetch_data()`'s response handler). One of
+  these - `et2_ready()`'s handling of `'calendar.edit'`/`'calendar.add'` - runs *inside the add/edit
+  popup itself*; a popup adopts its opener's `window.egw` (a documented, previously-hit real bug - see
+  `et2-reconnect-egw-rejoin-fix` memory), so the bare version there could plausibly have been
+  hiding/showing the wrong window's loading spinner.
+- **`open`/`open_link`/`link`** (`Open` class, `egw_open.ts`) - 7 sites across `linkHandler()`,
+  `toolbar_action()`'s `'add'` case, `cal_open()` (x3), and `sidebox_merge()` (x2 on one line) - these
+  decide what window a new popup opens relative to.
+- **`request`/`message`/`callFunc`** (`Json` class, `egw_json.ts`) - 5 sites: `cal_delete()`'s two
+  `egw.request(...)` calls, and `joinVideoConference()`'s `egw.request(...)`/`egw.message(...)`/
+  `egw.callFunc(...)`. Every *other* `.request()`/`.json()`/`.jsonq()` call in this file already
+  correctly used `this.egw` - these 5 were the only exceptions.
+
+Left the other ~79 sites as bare `egw.X` - confirmed genuinely safe either way, not just untouched out
+of caution:
+- `dataGetUIDdata`/`dataStoreUID`/`dataHasUID`/`dataKnownUIDs`/`dataSearchUIDs`/`dataDeleteUID` all live
+  on `DataStorage` (`egw_data.ts`), registered `MODULE_GLOBAL` - one shared cache regardless of which
+  egw object you go through. (`dataFetch` is the one data-family method on the *app-local* `Data` class,
+  and its one call site already correctly used `this.egw.dataFetch(...)`.)
+- `preference`/`set_preference`/`user`/`lang`/`config`/`grants`/`app` are all on `MODULE_GLOBAL` classes.
+- `egw.jsonq(...)` (`push_calendar()`) - `Jsonq` is `MODULE_GLOBAL` too (a deliberately shared queue,
+  matching this doc's own note that it's a distinct, non-window-scoped mechanism from `.request()`).
+
+**Verified before/after** for each of the three fixed modules, not just tsc/build-clean: rebuilt and
+re-exercised the day/week view switches (`loading_prompt`, already covered above); spied on
+`this.egw.open`/`.link`/`.open_link` from the console and confirmed `toolbar_action({id:'add'})` and
+`sidebox_merge()` (with a fake merge-target widget) call them with the expected arguments; spied on
+`this.egw.request`/`.message`/`.callFunc` and confirmed `joinVideoConference()` (called directly with
+fake video-conference data) invokes them correctly for both the success and error-response branches.
+`cal_delete()`'s two sites weren't separately live-tested (reaching them requires clicking through a
+real delete-confirmation dialog against live data, which risks actually deleting something) - relied
+instead on tsc plus the structurally-identical arrow-function verification from the other four sites.
+No new console errors after the fix; the one pre-existing color-format error was still the only one seen.
+
+
 ## resources/js/app.ts, webauthn/js/app.ts, guacamole/js/app.ts, rag/js/app.ts, preferences/js/app.ts, openid/js/app.ts (done)
 
 Six small files done together in one pass (main repo: `resources`, `preferences`; own nested git repos:
@@ -1749,245 +1991,3 @@ while doing the mechanical goal-6 conversion, not merely a cosmetic rewrite).
 
 - Nothing else found - the file's remaining logic (`_shouldCallCustomOAuth()`, `chatPopupLookup()`,
   `_userStatusNum2String()`, `onLogout()`, `isRCActive()`) was already free of all 6 goals' issues.
-
-## calendar/js/app.ts (done)
-
-The largest file in this project by line count, and by far the most `var`/jQuery usage of any file here
-- 4525 lines, 253 `var`, ~90 jQuery uses, 97 TS errors, 14 `sendRequest()` sites (smallpart has more TS
-errors - 167 - but far less `var`/jQuery to modernize). Several genuinely new categories of goal-6
-exception turned up that weren't seen in any smaller file. Browser-verified (see bottom of this
-section), not just tsc/build-clean.
-
-### Legacy widget imports
-
-- `et2_date`, `et2_selectbox`, `et2_nextmatch`, `et2_button`, `et2_template`, `et2_grid`, `et2_iframe`,
-  `et2_number` - all used only for type casts/annotations in this file -> `import type`. `et2_grid` and
-  `et2_iframe`/`et2_button`/`et2_number`/`et2_nextmatch` are genuine distinct legacy implementations with
-  no (or an unsafe-to-substitute) web-component equivalent, same reasoning as timesheet's `et2_grid` and
-  tracker's `et2_nextmatch`/`et2_button` - `import type` still applies since this file only ever uses
-  them as types, never as runtime values.
-- `et2_widget`, `et2_valueWidget`, `et2_IInput` - kept as **value** imports: all three are passed as
-  genuine runtime `instanceOf`/`iterateOver`-type-filter arguments. `et2_IInput` looked like it might be
-  interface-only but is actually dual-declared (`export interface et2_IInput {...}` + `export const
-  et2_IInput = "et2_IInput"`) specifically so it can be used this way - confirmed via
-  `et2_core_inheritance.ts`'s `instanceOf()` and the same pattern already used elsewhere in
-  `et2_extension_nextmatch.ts` itself.
-- `et2_container` removed entirely (not even `import type`): `sidebox_et2`'s declared type was stale -
-  `etemplate2.widgetContainer` is really `Et2Template` (confirmed in `etemplate2.ts`), not the legacy
-  `et2_container`. Retyped the field as `Et2Template` (newly imported, type-only) and dropped the one
-  now-unnecessary `<et2_container>` cast, which TS was already flagging as a mistake (TS2352).
-- `egw`/`egw_getFramework` import removed - the familiar ambient-global fix from every prior file in
-  this series.
-- `egwAction`/`egwActionObject` had no import at all (`TS2304`) - added `import type` from
-  `api/js/egw_action/egw_action.ts`, same as addressbook.
-- `Et2CalendarOwner` (used in `participantOnChange()`) doesn't exist anywhere in the repo - a typo for
-  the already-imported `CalendarOwner` (this file's own `./CalendarOwner.ts`, confirmed by every other
-  cast in the file correctly using `CalendarOwner`). Fixed the cast; not an import problem.
-
-### TS errors fixed (97 total) - selected highlights, not exhaustive
-
-- **`app.calendar.X` (`state`, `update_state`, `_scroll_disabled`, `date`, `merge`,
-  `state_update_in_progress`, `_fetch_data`, `sidebox_hooked_templates`, `videoconference_getRecordings`,
-  ~35 sites)**: the familiar `app`-typed-as-`{[propName:string]: EgwApp}` blind spot, but here it's the
-  app referencing **itself** by name instead of `this` - mostly leftover habit/inconsistency from before
-  arrow functions were used (the same method often mixes `this.state` and `app.calendar.state` in the
-  same block). Resolved case by case:
-  - Where the reference is in a plain class method (no nested non-arrow function breaking `this`):
-    replaced with `this.X` directly (`toolbar_action`, `filter_change`, `sidebox_merge`,
-    `_fetch_data`'s response handler, etc.) - a real fix, not just casting the error away.
-  - Where `this` is genuinely dynamic (see `scroll_animate` below) and can't be relied on: cast to
-    `<CalendarApp>app.calendar` at each site instead, since `app.calendar` *is* this exact class - a more
-    precise version of the `<statusApp>app.status` pattern from `status/js/app.ts`.
-  - `_scroll_disabled` had no class field at all (silently bolted on at runtime) - added a real declared
-    field (`_scroll_disabled : boolean = false;`).
-  - `videoconference_getRecordings` on `app.status` is EPL's Rocket.Chat/videoconference status
-    extension - same "other app's EPL extension, cast to `<any>`" pattern as infolog/addressbook/status.
-- **`this.state` field typing**: `state = {date: new Date(), view: ..., owner: ..., ...}` was too
-  narrowly inferred (e.g. `date: Date` made `typeof this.state.date == "string"` narrow to `never`).
-  Added an explicit type with `date: Date | string` and a `[key: string]: any` index signature (the
-  state object accumulates many more ad-hoc properties - `startdate`, `filter`, `weekend`, `cat_id`, ...
-  - throughout the class; enumerating all of them wasn't worth it for an app.ts-only pass). One
-    root-cause fix that resolved ~6 separate errors.
-- **`super.merge(action, selected)` in `sidebox_merge()`** (`TS2339`, `Property 'merge' does not exist on
-  type 'EgwApp'`): not a typing gap - a **real, previously-silent bug**. `git log -p` on
-  `api/js/jsapi/egw_app.ts` shows `EgwApp.merge()` was renamed to `mergeAction()` (and made `async`) at
-  some point; this call site was never updated, so `super.merge(...)` would throw
-  `TypeError: ... .merge is not a function` the moment a user tries "merge to document" from listview.
-  Fixed to `super.mergeAction(action, selected)` - the real fix, not a cast.
-- **`et2_date.set_hours`/`.set_minutes()` in `set_alarmOptions_WD()`**: these methods don't exist on
-  `Et2Date` (confirmed - grepped the whole repo, no such methods anywhere) - another **real,
-  previously-silent bug**: every call to `set_alarmOptions_WD()` that reached this branch has always
-  thrown and aborted before setting the alarm time/label. Rather than just `<any>`-casting past it,
-  computed a local midnight-based `Date` and used that for the alarm-relative-to-midnight calculation
-  instead of mutating the real `start` field widget (which is what the original, broken code appeared to
-  intend, but would have been a separate, worse side effect - clobbering the user's actual event start
-  time - had the method calls not been broken all along). Documented the reasoning inline since this is
-  a judgment call, not a mechanical fix.
-- **`et2_grid`'s `cells` (private, no public accessor)** in `set_alarmOptions_WD()`: unlike
-  `_children`/`_inst` elsewhere, `et2_widget_grid.ts` has no public way to reach a cell's widget at all -
-  cast the `alarm` variable itself to `<any>` rather than adding an accessor to the shared file.
-- **`participant.value` (protected) in `participantOnChange()`**: same class of fix as addressbook's
-  `Et2SelectCountry.value` - swapped to the public `getValueAsArray()` accessor (which also fixed the
-  paired "`.length` doesn't exist" errors, since `.value`'s declared type has no array shape).
-- **`sprintf()`'s untyped 0-arg signature**: `egw_action_common.ts` declares `export function sprintf()
-  {...}` (relies on `arguments` internally, no typed params) - every call with format args errors under
-  TS. This isn't calendar-specific (confirmed the same function is called with args from
-  `smallpart/js/app.ts` too), so rather than touch the shared file, aliased it once at the top:
-  `import {sprintf as _sprintf} from ...; const sprintf : (format: string, ...args: any[]) => string =
-  _sprintf;` - a single 2-line fix instead of `<any>`-casting all 10 call sites individually.
-- **`_autorefresh_timer`'s type**: `setInterval()`/`setTimeout()` return `NodeJS.Timeout` here rather
-  than `number` (an ambient-types resolution quirk, not calendar-specific) - retyped the field
-  `ReturnType<typeof setInterval>` instead of forcing `number`.
-- **Redeclared `var` inside `switch` blocks (no per-case braces)**: `toolbar_action()`'s `case 'add'`/
-  `case 'today'` both declared `tempDate`/`today`, and `setState()`'s `case 'month'`/`case 'day'`/
-  `default` all declared `end` - all in the *same* switch's shared block scope, which is fine for `var`
-  but is a redeclaration error for `let`/`const`. Wrapped each case body in its own `{ }` block (doesn't
-  affect the intentional `case 'month':` fallthrough into `case 'weekN':`, since fallthrough only cares
-  about the absence of `break`, not braces).
-- **Several "declared inside an `if`, read again in a sibling branch or after a loop" var-hoisting
-  cases** (`cal_open()`'s `js_integration_data`, `setState()`'s `val`/`loading`/`last_format`) - same
-  "needed care" treatment as addressbook's `content` fix: hoisted the bare declaration above the
-  conditional/loop, matching the exact scope `var` was already relying on, with a comment explaining why.
-
-### jQuery removed (~90 uses) - the trickiest category in this file
-
-Most were the same mechanical swaps as every prior file (`.hide()`/`.show()` -> `style.display`,
-`.css()` -> `style.*`, `.toggleClass()`/`.hasClass()` -> `classList`, `jQuery.extend()` ->
-`Object.assign()`, `jQuery.map()` -> `Object.values()`, `jQuery.isEmptyObject()` ->
-`Object.keys(x??{}).length===0`, `:visible` -> `.checkVisibility()`, `jQuery(fn)` (the `$(document)
-.ready(fn)` shorthand) -> a `document.readyState` check). Three patterns were new to this file:
-
-- **jQuery's dot-namespaced custom events as a dedup/pub-sub mechanism** (`'show.calendar'`,
-  `'hide.calendar'`), used in `observer()`, `push_infolog()`, and `_set_autorefresh()`:
-  - Two sites did `.off('show.calendar').one('show.calendar', fn)` purely to make sure only the
-    *latest* queued handler fires if the method runs again before the tab becomes visible. Replaced with
-    a small private helper, `_bindShowOnce(el, handler)`, backed by one tracked field
-    (`_pending_show_handler`) that removes any previous handler before adding the new one with
-    `{once: true}` - a faithful native equivalent, not just a syntax swap.
-  - `_set_autorefresh()`'s `'hide.calendar'`/`'show.calendar'` handlers both **unconditionally**
-    self-removed (`jQuery(e.target).off(e)`) immediately after running every time - i.e. they were
-    already behaviorally identical to `.one()`/`{once: true}`, just implemented the hard way. Simplified
-    to plain `addEventListener(type, handler, {once: true})`, no tracking needed.
-  - `destroy()`'s `jQuery('body').off('.calendar')` and a `jQuery(window).off('resize.calendar'+id)` in
-    the same method are both **dead code** - `git log -S` on the corresponding `.on(...)` binds shows the
-    live handlers they were meant to clean up were removed from the codebase in 2022, but the cleanup
-    calls were never removed. Deleted both (and the now-fully-unused surrounding `if` block/local var)
-    rather than "converting" no-op cleanup for handlers that no longer exist.
-- **`widget.div`/`widget.loader` are jQuery objects** (set by `et2_widget_timegrid.ts`/
-  `et2_widget_view.ts`, outside this pass's scope) - `.css("height","")` -> `.div[0].style.height=""`,
-  `.loader.show()`/`.hide()` -> `.loader[0].style.display = ''/'none'`, i.e. unwrap via `[0]` rather than
-  touching the widget files that create these jQuery-wrapped properties.
-- **`_scroll()`'s `scroll_animate` function relies on `jQuery(this)` silently failing** when `this` isn't
-  a DOM node (see the goal-6 section below - `this` is sometimes the `CalendarApp` instance, sometimes a
-  DOM element) - replaced with an explicit `this instanceof Element ? this.closest(...) : undefined`,
-  which is clearer than relying on jQuery's forgiving-selector-engine side effect and behaves identically.
-
-### `egw.json(...).sendRequest()` -> `egw.request()` (14 sites)
-
-13 of 14 were straightforward async swaps (several combined with a `function` -> arrow conversion for
-the callback, same as prior files). One - `_unlock()`, bound to `beforeunload` - is a **new exception
-category**, not literally `sendRequest(false)`: it's constructed with `"keepalive"` as the async mode
-(`egw.json(url, params, null, this, "keepalive", null)`), which makes `sendRequest()` use
-`navigator.sendBeacon` under the hood specifically so the request survives the page unload - functionally
-the same *purpose* as the doc's `sendRequest(false)` exception (an unload handler that can't rely on a
-normal async round trip), just a different mechanism. `egw.request()` has no keepalive/sendBeacon mode,
-so there's no equivalent swap - left as-is with a comment explaining why, generalizing the existing
-exception rather than adding a contradictory one.
-
-### function/closures -> arrow functions
-
-The large majority converted cleanly (many `iterateOver(function(w){...}, this, SomeType)` calls where
-the explicit context arg equals the arrow's lexical `this` anyway, per the tracker/addressbook precedent
-of that being safe). Two new exception shapes worth recording:
-
-- **`scroll_animate` (`_scroll()`)**: called with `this` = the `CalendarApp` instance from the keyboard
-  shortcuts (`scroll_animate.call(this, ...)`) *and* with `this` = a plain DOM element from the swipe
-  handler (`scroll_animate.call(event.target.closest(...), ...)`) - two genuinely different, both
-  load-bearing, `this` values depending on the call site. Left as a plain `function`, matching goal 6's
-  documented exception, with a comment. The *nested* callbacks inside it that don't use `this` at all
-  were still converted to arrows for consistency, same as addressbook's no-context-needed predicates.
-- **`_et2_view_init()`'s `jQuery.proxy(function(){...}, <index>)`**: `this` here is deliberately bound to
-  a plain number (a splice index), not any object - a `jQuery.proxy(fn, otherThis)` case where
-  `otherThis` is neither the enclosing method's `this` nor a widget, just data smuggled through the
-  binding mechanism. Kept as a plain function, converted to `fn.bind(index)` for the jQuery removal
-  (goal 4) without touching the binding itself (goal 6 exception).
-- Also worth noting: several `var view`/`index`/`name` values were captured into an ad-hoc
-  `jQuery.extend({}, {view, index, name})` "context object" purely to survive `var`'s lack of
-  per-iteration scoping inside a `for...in` loop (a workaround now-obsolete once those loop variables
-  became `const`/`let`, which *do* get a fresh per-iteration binding) - removed the whole capture-object
-  workaround and let the closure reference `view`/`index` directly, converting that callback to a
-  faithful `{once: true}`-bound arrow in the same edit.
-
-### Not touched (out of scope) - confirmed pre-existing, not introduced by this pass
-
-- **`cal_delete()`'s shadowed `cal_event`**: `let cal_event = ...` at the method's top, then a *second*,
-  separate `let cal_event = ...` declared inside `if(matches){...}` - shadows the outer binding within
-  that block only, so the intended update to the series-level event data is silently discarded once the
-  block ends. A real logic bug, but untouched by any of the 6 goals (it was already valid `let`, not
-  `var`) - flagged here, not fixed.
-- **`comment_add_vfs()`-style `Promise.all([wait,wait])` equivalents**: none found in this file (checked,
-  unlike tracker) - no new finding of that shape here.
-- A pre-existing, unrelated bug surfaced during browser verification (see below): `_update_events()`'s
-  `multiple_owner` computation (`typeof state.owner != 'string' && state.owner.length > 1 && ...`) throws
-  if `state.owner` is ever `undefined` (`typeof undefined != 'string'` is `true`, so the `&&` chain
-  proceeds to `undefined.length`). Confirmed byte-for-byte identical logic in the pre-modernization
-  source (only `var` -> `const`), so this is not a regression - flagged for whoever next touches
-  `_update_events()`.
-
-### Browser verification
-
-Built (`rollup -c`) and exercised live against a real EGroupware instance (day/week/multi-week/list/
-planner views via the toolbar and via direct `update_state()` calls, Today/Previous navigation, the
-weekend toggle, and switching away to another app and back). Confirmed via a `git stash`/rebuild/reload
-round-trip that the one console error seen throughout (`et2_calendar_event._update`: "The provided
-string color doesn't have a correct format", in `et2_widget_event.ts`, unrelated to this file) reproduces
-identically on the pre-modernization code - a pre-existing bug, not a regression. No other errors
-surfaced under normal navigation; the `state.owner` bug above only appeared when driving `update_state()`
-directly from the console with a partial, hand-built state object, not through any real UI path.
-
-### Follow-up: bare `egw.X` vs `this.egw.X` (not part of the 6-goal pass, a separate ask)
-
-After the pass above, went through this file's ~98 remaining bare `egw.` call sites (as opposed to
-`this.egw.`) by hand, checking each against its module's registration
-(`MODULE_GLOBAL`/`MODULE_WND_LOCAL`/`MODULE_APP_LOCAL` in the relevant `api/js/jsapi/egw_*.ts` file) -
-this is *not* a purely stylistic distinction: `egw(appname, wnd)` (what produces `this.egw`, per
-`EgwApp`'s constructor) returns a real, distinct clone via `egw_core.ts`'s `createEgwInstance()`, with
-window/app-local modules merged in on top of the shared base object bare `egw` resolves to. Found and
-fixed **19 genuinely miscategorized sites** (used bare `egw.X` where the module is `MODULE_WND_LOCAL`,
-so `this.egw.X` is the correct/safe one) across three modules:
-
-- **`loading_prompt`** (`Message` class, `egw_message.ts`) - 7 sites (`et2_ready()` x2, `setState()`,
-  two `window.setTimeout()` arrows, `_update_events()`, `_fetch_data()`'s response handler). One of
-  these - `et2_ready()`'s handling of `'calendar.edit'`/`'calendar.add'` - runs *inside the add/edit
-  popup itself*; a popup adopts its opener's `window.egw` (a documented, previously-hit real bug - see
-  `et2-reconnect-egw-rejoin-fix` memory), so the bare version there could plausibly have been
-  hiding/showing the wrong window's loading spinner.
-- **`open`/`open_link`/`link`** (`Open` class, `egw_open.ts`) - 7 sites across `linkHandler()`,
-  `toolbar_action()`'s `'add'` case, `cal_open()` (x3), and `sidebox_merge()` (x2 on one line) - these
-  decide what window a new popup opens relative to.
-- **`request`/`message`/`callFunc`** (`Json` class, `egw_json.ts`) - 5 sites: `cal_delete()`'s two
-  `egw.request(...)` calls, and `joinVideoConference()`'s `egw.request(...)`/`egw.message(...)`/
-  `egw.callFunc(...)`. Every *other* `.request()`/`.json()`/`.jsonq()` call in this file already
-  correctly used `this.egw` - these 5 were the only exceptions.
-
-Left the other ~79 sites as bare `egw.X` - confirmed genuinely safe either way, not just untouched out
-of caution:
-- `dataGetUIDdata`/`dataStoreUID`/`dataHasUID`/`dataKnownUIDs`/`dataSearchUIDs`/`dataDeleteUID` all live
-  on `DataStorage` (`egw_data.ts`), registered `MODULE_GLOBAL` - one shared cache regardless of which
-  egw object you go through. (`dataFetch` is the one data-family method on the *app-local* `Data` class,
-  and its one call site already correctly used `this.egw.dataFetch(...)`.)
-- `preference`/`set_preference`/`user`/`lang`/`config`/`grants`/`app` are all on `MODULE_GLOBAL` classes.
-- `egw.jsonq(...)` (`push_calendar()`) - `Jsonq` is `MODULE_GLOBAL` too (a deliberately shared queue,
-  matching this doc's own note that it's a distinct, non-window-scoped mechanism from `.request()`).
-
-**Verified before/after** for each of the three fixed modules, not just tsc/build-clean: rebuilt and
-re-exercised the day/week view switches (`loading_prompt`, already covered above); spied on
-`this.egw.open`/`.link`/`.open_link` from the console and confirmed `toolbar_action({id:'add'})` and
-`sidebox_merge()` (with a fake merge-target widget) call them with the expected arguments; spied on
-`this.egw.request`/`.message`/`.callFunc` and confirmed `joinVideoConference()` (called directly with
-fake video-conference data) invokes them correctly for both the success and error-response branches.
-`cal_delete()`'s two sites weren't separately live-tested (reaching them requires clicking through a
-real delete-confirmation dialog against live data, which risks actually deleting something) - relied
-instead on tsc plus the structurally-identical arrow-function verification from the other four sites.
-No new console errors after the fix; the one pre-existing color-format error was still the only one seen.
-
