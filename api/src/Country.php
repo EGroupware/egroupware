@@ -648,6 +648,22 @@ class Country
 	);
 
 	/**
+	 * List of AU states and territories as code => name pairs
+	 *
+	 * @var array
+	 */
+	protected static $au_states_array = array(
+		'NSW' => 'New South Wales',
+		'VIC' => 'Victoria',
+		'QLD' => 'Queensland',
+		'WA'  => 'Western Australia',
+		'SA'  => 'South Australia',
+		'TAS' => 'Tasmania',
+		'ACT' => 'Australian Capital Territory',
+		'NT'  => 'Northern Territory'
+	);
+
+	/**
 	 * List of CA states as 2-letter code => name pairs
 	 *
 	 * @var array
@@ -717,6 +733,8 @@ class Country
 				return self::$de_states_array;
 			case 'at':
 				return self::$at_states_array;
+			case 'au':
+				return self::$au_states_array;
 			case 'ch':
 				return self::$ch_states_array;
 			case 'ca':
