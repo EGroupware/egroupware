@@ -91,9 +91,6 @@
     z-index: 1;
     width: 100%;
   }
-  #addressbook-edit .custom_country {
-    display: none;
-  }
   #addressbook-index table.egwGridView_outer tbody span[id^='addressbook-index_'][id$='line1]'] {
     font-size: 12pt;
     overflow: hidden;

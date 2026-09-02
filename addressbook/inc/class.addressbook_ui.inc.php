@@ -2263,9 +2263,9 @@ class addressbook_ui extends addressbook_bo
 				}
 			}
 
-			// hide region for address format 'postcode_city'
-			if (($row['addr_format']  = $this->addr_format_by_country($row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
-			if (($row['addr_format2'] = $this->addr_format_by_country($row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
+			// hide region for address format 'postcode_city', prefer the country-code as the name is not always selected
+			if (($row['addr_format']  = $this->addr_format_by_country(($row['adr_one_countrycode'] ?? '') ?: $row['adr_one_countryname']))=='postcode_city') unset($row['adr_one_region']);
+			if (($row['addr_format2'] = $this->addr_format_by_country(($row['adr_two_countrycode'] ?? '') ?: $row['adr_two_countryname']))=='postcode_city') unset($row['adr_two_region']);
 
 			// respect category permissions
 			if(!empty($row['cat_id']))
@@ -2810,9 +2810,9 @@ class addressbook_ui extends addressbook_bo
 		// Registry has view_id as contact_id, so set it (custom fields uses it)
 		$content['contact_id'] = $content['id'];
 
-		// how to display addresses
-		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
-		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
+		// how to display addresses, prefer the country-code as the name is not submitted by all templates
+		$content['addr_format']  = $this->addr_format_by_country(($content['adr_one_countrycode'] ?? '') ?: $content['adr_one_countryname']);
+		$content['addr_format2'] = $this->addr_format_by_country(($content['adr_two_countrycode'] ?? '') ?: $content['adr_two_countryname']);
 
 		// Country codes
 		foreach(array('adr_one', 'adr_two') as $c_prefix)
@@ -3332,9 +3332,9 @@ class addressbook_ui extends addressbook_bo
 		$readonlys['button[delete]'] = !$content['owner'] || !$this->check_perms(Acl::DELETE,$content);
 		$readonlys['button[edit]'] = false;
 
-		// how to display addresses
-		$content['addr_format']  = $this->addr_format_by_country($content['adr_one_countryname']);
-		$content['addr_format2'] = $this->addr_format_by_country($content['adr_two_countryname']);
+		// how to display addresses, prefer the country-code as the name is not submitted by all templates
+		$content['addr_format']  = $this->addr_format_by_country(($content['adr_one_countrycode'] ?? '') ?: $content['adr_one_countryname']);
+		$content['addr_format2'] = $this->addr_format_by_country(($content['adr_two_countrycode'] ?? '') ?: $content['adr_two_countryname']);
 
 		$sel_options['fileas_type'][$content['fileas_type']] = $this->fileas($content);
 		$sel_options['owner'] = $this->get_addressbooks();
