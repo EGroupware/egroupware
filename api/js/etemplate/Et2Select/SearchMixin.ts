@@ -212,6 +212,14 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 				  :host([search]) sl-option.no-match {
 					display: none;
 				}
+
+				/* Nothing to show yet (no local options, nothing searched) - don't render an empty dropdown panel */
+
+				  :host([dropdown-empty]) ::part(listbox) {
+					border: none;
+					box-shadow: none;
+					padding: 0;
+				}
 				/* Different cursor for editable tags */
 				:host([allowfreeentries]):not([readonly]) .search_tag::part(base)  {
 					cursor: text;
@@ -430,6 +438,8 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 		update(changedProperties)
 		{
 			super.update(changedProperties);
+
+			this._updateEmptyState();
 
 			// Update any tags if edit mode changes
 			if(changedProperties.has("editModeEnabled") || changedProperties.has("readonly"))
@@ -787,12 +797,24 @@ export const Et2WithSearchMixin = dedupeMixin(<T extends Constructor<LitElement>
 			this._searchInputNode?.removeEventListener("change", this._handleSearchChange);
 		}
 
+		/**
+		 * Toggle an attribute so CSS can suppress the dropdown panel's border/shadow/padding
+		 * when there's nothing to show - eg. a search-only widget (no local options) before
+		 * anything has been typed or searched
+		 */
+		protected _updateEmptyState()
+		{
+			const empty = this.searchEnabled && this.select_options.length === 0 && !this._searchInputNode?.value;
+			this.toggleAttribute("dropdown-empty", empty);
+		}
+
 		_handleMenuShow()
 		{
 			if(this.readonly)
 			{
 				return;
 			}
+			this._updateEmptyState();
 			this.setAttribute("open", "");
 
 			// Move search (& menu) if there's no value
