@@ -185,6 +185,14 @@ similar scope.
   `self::` calls ARE forwarding for late static binding (unlike a literal `ClassName::` call) -
   only method *resolution* differs between `self::` (always the literal defining class's own
   declaration) and `static::` (the possibly-overridden, late-static-bound one).
+- `doc/ai/projects/app-ts-modernization.md` - per-app modernization pass over each app's
+  `$app/js/app.ts`: legacy `et2_*` widget imports -> web-component imports (`import type` when the
+  widget is only ever used as a TS type), `var` -> `const`/`let`, fixing the file's own TS errors, and
+  removing jQuery in favor of native DOM APIs. One app at a time; covers the workflow used to isolate a
+  file's real TS errors from the ~5000 pre-existing repo-wide ones, and the specific fixes found so far
+  (the `Et2WidgetClass#_inst` private-field break with its `getInstanceManager()` replacement, the
+  `EgwApp.nm : Et2Nextmatch | et2_nextmatch` union needing a per-method cast, and the `app.stylite`-is-
+  untyped-EPL problem). infolog done; other apps not started.
 
 ## Security and data handling
 
