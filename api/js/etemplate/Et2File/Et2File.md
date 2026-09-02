@@ -58,12 +58,15 @@ not do that
 Use the `display` attribute for different ways of showing results
 ```html:preview
 <et2-file display="large" label="Large">
-<et2-file-item slot="list" size="654321000" display="large" closable>Large file (default)</et2-file-item>
+<et2-file-item slot="list" image="https://images.unsplash.com/photo-1529778873920-4da4926a72c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" size="654321000" display="large" closable>kitten.jpg</et2-file-item>
 </et2-file>
 <et2-file display="small" label="Small">
-<et2-file-item slot="list" size="654321000" display="small" closable>Small file</et2-file-item>
+<et2-file-item slot="list" image="https://images.unsplash.com/photo-1591871937573-74dbba515c4c?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" size="654321000" display="small" closable>kitten2.jpg</et2-file-item>
 </et2-file>
 <et2-file display="list" label="List">
 <et2-file-item slot="list" size="1234567" display="list" closable>File(s) shown as list</et2-file-item>
+<et2-file-item slot="list" image="file-earmark-pdf" size="654321000" display="list" closable>annual-report.pdf</et2-file-item>
+<et2-file-item slot="list" image="file-earmark-image" size="87654" display="list" closable>vacation-photo.jpg</et2-file-item>
+<et2-file-item slot="list" image="file-earmark-spreadsheet" size="45210" display="list" closable>budget.xlsx</et2-file-item>
 </et2-file>
 ```
