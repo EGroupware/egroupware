@@ -245,7 +245,7 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
 
                 window.addEventListener('et2_video.onYoutubeIframeAPIReady', function(){
                     self._createYoutubePlayer(self.options.video_src);
-                });
+                }, {once: true});
 			}
 			else
             {
@@ -635,6 +635,13 @@ export class et2_video  extends et2_baseWidget implements et2_IDOMNode
     private _isYoutube() : boolean
     {
         return !!this.options.src_type.match('youtube');
+    }
+
+    destroy()
+    {
+        window.clearInterval(this._youtubeOntimeUpdateIntrv);
+        this.youtube?.destroy();
+        super.destroy();
     }
 
     private _onStateChangeYoutube(_data)
