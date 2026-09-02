@@ -58,9 +58,10 @@ clearly-scoped change elsewhere (e.g. an import path).
 | policy | done | `policy/js/app.ts`, 389 -> 403 lines. `policy/` is its own nested git repo. Already 0 `var` (all `let` already); 5 jQuery hits, 4 TS errors, 5 `sendRequest()` sites, 13 `function(){}`/4 `var self` closures - see below. |
 | importexport | done | `importexport/js/app.ts`, 325 -> 336 lines, main repo. 10 `var`, 13 jQuery hits (incl. a side-effect `import "jquery.min.js"`), 12 TS errors, 0 `sendRequest()`, 2 `jQuery.proxy(function(){...}, this)` closures - see below. |
 | stylite | done | `stylite/js/app.ts`, 1054 -> 1099 lines. `stylite/` is its own nested git repo. 2 `var`, 8 jQuery hits, 20 TS errors, 2 `egw.json(...).sendRequest()` sites, 31 `function(`/5 `self`/`that` closures - see below. |
-
+| smallpart | done | Most TS errors of any file in this project (4028 lines, 1 `var` - a comment only, 24 jQuery uses, 167 TS errors) - see below. `smallpart/` is also its own nested git repo - same note. |
 | calendar | done | Largest file in this project by line count, and by far the most `var`/jQuery usage of any file here (4525 lines, 253 `var`, ~90 jQuery uses, 97 TS errors, 14 `sendRequest()` sites) - see below. |
-**Nested git repos:** `tracker/` and `status/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
+
+**Nested git repos:** `tracker/`, `status/` and `smallpart/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`, `/smallpart/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
 ## Workflow used per file
 
@@ -1114,7 +1115,6 @@ real delete-confirmation dialog against live data, which risks actually deleting
 instead on tsc plus the structurally-identical arrow-function verification from the other four sites.
 No new console errors after the fix; the one pre-existing color-format error was still the only one seen.
 
-
 ## resources/js/app.ts, webauthn/js/app.ts, guacamole/js/app.ts, rag/js/app.ts, preferences/js/app.ts, openid/js/app.ts (done)
 
 Six small files done together in one pass (main repo: `resources`, `preferences`; own nested git repos:
@@ -1991,3 +1991,393 @@ while doing the mechanical goal-6 conversion, not merely a cosmetic rewrite).
 
 - Nothing else found - the file's remaining logic (`_shouldCallCustomOAuth()`, `chatPopupLookup()`,
   `_userStatusNum2String()`, `onLogout()`, `isRCActive()`) was already free of all 6 goals' issues.
+
+## smallpart/js/app.ts (done)
+
+Largest file in this project by far: 4028 lines baseline (4056 after), 1 `var` (a comment mentioning
+"var", no actual `var` declarations), 24 jQuery uses, 167 TS errors, 14 `egw.json(...).sendRequest()`
+sites, ~28 `function(...)` occurrences.
+
+### Legacy widget imports
+
+- Zero-member shims renamed to their web-component counterparts, same pattern as infolog/addressbook:
+  `et2_selectbox` -> `Et2Select` (reused the file's existing `Et2Select` value import rather than adding
+  a new one), `et2_template` -> `Et2Template`.
+- `et2_checkbox` (`class et2_checkbox extends Et2Checkbox {}`, another zero-member shim) -> `Et2Checkbox`,
+  kept as a **value** import (not `import type`) because it's passed as a runtime value to
+  `iterateOver(_callback, _context, _type)`'s `_type` filter parameter in 3 places (`et2_ready()`'s
+  question-init, `childrenChecked()`, `checkMaxAnswers()`) - see the genuine-bug writeup below for why
+  this rename was load-bearing, not just cosmetic.
+- `et2_selectbox_ro` and `et2_taglist` are plain type aliases in their own source files
+  (`export type et2_selectbox_ro = Et2SelectReadonly`, etc - the same "doubly wrong value import"
+  pattern tracker found for `et2_selectAccount`) - switched to `import type`, kept their original names
+  (minimal-footprint, matching tracker's precedent).
+- **`et2_tabbox` correction (2026-09-02 follow-up)**: originally lumped in with the two aliases above and
+  kept under its own alias name. The user asked to verify in the *browser* (not the .xet source) whether
+  smallpart's tabs are really the modern `Et2Tabs` before removing the import outright. Checked
+  `customElements.get('et2-tabbox').name` and the live widget's `.constructor.name` on the running
+  page - both `Et2Tabs`. Unlike `et2_button`/`et2_box` below, `et2_widget_tabs.ts` has **no**
+  `et2_register_widget()` call at all (confirmed by reading the whole file) - it is *purely* the
+  `@deprecated` type alias, with zero surviving legacy implementation; `Et2Tabs` itself
+  `customElements.define("et2-tabbox", Et2Tabs)`, i.e. it took over the legacy tag name directly rather
+  than registering a new `et2-tabs` tag. Import switched to `import type {Et2Tabs} from
+  ".../Layout/Et2Tabs/Et2Tabs"` and the one cast site updated - see the corrected bug-fix entry below,
+  since this also reversed an earlier misdiagnosis.
+- `et2_grid`, `et2_widget`, `et2_inputWidget`, `et2_DOMWidget`, `et2_video`, `et2_countdown`,
+  `et2_arrayMgr` are genuinely distinct legacy implementations (own base classes, no web-component
+  replacement) and only used as types here -> `import type`, no rename, same reasoning as timesheet's/
+  status's `et2_grid`. `et2_countdown` re-confirmed live on 2026-09-02: `getDOMWidgetById('timer')`'s
+  `.constructor.name` on a running test-taking page is literally `"et2_countdown"` (not even an
+  `HTMLElement` - no `.tagName`), i.e. still a plain legacy JS object, not a custom element.
+- **`et2_button`/`et2_box`/`et2_details`/`et2_description`/`et2_textbox` correction (2026-09-02
+  follow-up, resolved)**: the original entry claimed these had "no web-component replacement", matching
+  `et2_grid`. Wrong for all five - discovered while re-checking `et2_tabbox` prompted a full re-audit of
+  every remaining `et2_*` import. `Et2Box`/`Et2Description` **do** exist and, checked live, are what
+  every actual `et2-box`/`et2-description` element on the page resolves to (`document.querySelectorAll` +
+  `.constructor.name` over the whole live student-comments page: every single instance was the modern
+  class, zero legacy ones). Switched both, plus `et2_description`'s two cast sites (`questionTime()`'s
+  `task`/`volume`) and `et2_box`'s one cast site (`smallpart.student.comments_list`'s parent, live-confirmed
+  `Et2VBox` - which extends `Et2Box`).
+  `et2_details`'s one cast site (`questionTime()`'s `task.getParent()`) was initially left alone since the
+  live parent was `Et2VBox`, not `Et2Details` - but tracing *why* resolved it for real: `video[video_question]`
+  (the only definition of that widget id, in `student.index.xet`) is wrapped in a plain `<et2-vbox>`, with
+  no `<details>` anywhere nearby - the `et2_details` cast was simply wrong from the start, not a
+  modernization-era regression. Retyped to `Et2VBox` (already imported for another cast) and dropped the
+  now-unused `et2_details` import entirely.
+  `et2_button`/`et2_textbox` were initially left as "plausibly still legacy" on the theory that widgets
+  inside a still-legacy `et2_grid` row stay legacy - **that theory itself was wrong**, found by tracing the
+  actual widget-factory resolution code rather than guessing further: `et2_core_widget.ts`'s
+  `createElementFromNode()` (called directly by `et2_widget_grid.ts`'s own row-rendering code, e.g. line
+  467) resolves a cell's class purely from `_node.nodeName.toLowerCase()` - the *literal* tag string
+  written in the `.xet` - checking the legacy `et2_registry` (keyed by short unprefixed names like
+  `"textbox"`/`"button"`/`"int"`) first, and falling through to `customElements.get(_nodeName)` (the
+  *exact* tag as written) whenever that lookup misses. Every grid cell in `question.xet` (and every
+  standalone widget in every other `.xet` this file touches) is written with the modern `et2-` prefix
+  (`<et2-checkbox>`, `<et2-textbox>`, `<et2-number>`, `<et2-button>`) - and an "et2-"-prefixed tag can
+  never match a legacy registry keyed by unprefixed names, so it *always* falls through to the modern
+  customElements branch, **regardless of grid nesting**. This generalizes (and explains) the original
+  `et2_checkbox`/`Et2Checkbox` bug-fix below: it was never really about "checkbox has no legacy
+  registration" specifically, it's that grid-nesting was never the deciding factor for *any* widget here.
+  `et2_grid` itself stays genuinely legacy for the opposite reason: `question.xet` writes the *unprefixed*
+  `<grid id="answers">`, which does match the legacy registry directly.
+  Verified every remaining `et2_button`/`et2_textbox` cast site against its defining `.xet` tag this way:
+  `button[import]`/`button[save]`/`button[apply]` are `<et2-button>` (`course.xet`/`question.xet`) ->
+  `Et2Button`; `revertMarks`/`deleteMarks` are `<et2-button-icon>` (`student.index.xet`) -> `Et2ButtonIcon`
+  (a `ButtonMixin(SlIconButton)` sibling of `Et2Button`, not a subclass of it - `Et2Button` itself would
+  have been the wrong modern class here too); `course_groups`/`${row}[participant_group]`/`${row}[score]`
+  are all `<et2-number>` (extends `Et2Textbox`) and `marks`/`answer_data[marks]` are `<et2-textbox>` - all
+  -> `Et2Textbox`. All casts and the two method-param types (`changeCourseGroups`/`confirmOverwrite`/
+  `checkMinAnswers`'s `_widget`) updated; `et2_button`/`et2_textbox` imports removed entirely.
+  **This also uncovered a real, previously-invisible runtime bug**: `defaultPoints()`'s
+  `(<et2_textbox>w).set_blur(default_points)` called a method that only ever existed on the *legacy*
+  `et2_textbox` (a jQuery-based `placeholder`-attribute setter with a pre-HTML5 fallback, confirmed via
+  `et2_widget_textbox.ts`) - since the real runtime widget is `Et2Number`/`Et2Textbox` (per the tracing
+  above), this call has always been `w.set_blur is not a function`, silently throwing whenever a teacher
+  actually used "Score per answer" assessment and the per-answer score placeholder was recalculated. Fixed
+  by setting `.placeholder` directly (the modern, native equivalent - browsers have supported the HTML5
+  placeholder attribute natively for over a decade, so the old fallback branch was already dead weight).
+  Not verified against a live multiplechoice question with real answer rows (none was reachable in this
+  dev instance's existing test data, and the "Add" control on the course's test/question list didn't
+  respond in this environment) - confidence here rests on the widget-factory source trace, which is
+  read directly off the code that makes the decision, not inferred from behavior.
+- `et2_smallpart_videobar`, `et2_smallpart_cl_measurement_L` are the app's own custom widgets, used as
+  genuine runtime **values** (static property/method access - `et2_smallpart_videobar
+  .course_options_cognitive_load_measurement`, `et2_smallpart_cl_measurement_L.MODE_CALIBRATION`) - kept
+  as value imports, unchanged.
+- `et2_smallpart_videooverlay`, `et2_smallpart_videooverlay_slider_controller` (both the app's own
+  widgets, only used for casts) -> `import type`. Confirmed safe despite each having its own
+  side-effect-registration side file: `et2_smallpart_videooverlay`'s registration is still covered by the
+  existing `import './et2_widget_videooverlay'` side-effect import in this same file;
+  `et2_smallpart_videooverlay_slider_controller`'s registration is covered transitively, since
+  `et2_widget_videooverlay.ts` (side-effect-imported here) itself already side-effect-imports the
+  slider-controller module.
+- `SmallPartFlagTime` (already had a side-effect import at the top for its custom-element registration) -
+  its separate class import switched to `import type`, side-effect import kept, same pattern as tracker's
+  `Et2TrackerAssigned`.
+- `SmallPartMediaRecorder`, `Et2File`, `SmallPartLiveFeedbackReport` had no import at all - the first two
+  were genuine `TS2304: Cannot find name` errors (see below) and the third was a case-mismatched typo
+  (`smallPartLiveFeedbackReport`, never resolving to the real exported `SmallPartLiveFeedbackReport`) -
+  all three added as `import type` (only ever used for casts).
+- `import {egw} from ".../egw_global"` removed - the familiar ambient-global fix.
+- `MarksWithArea` (from the app's own `./mark_helpers`, only used as a type) split off from the existing
+  `MarkArea` (a real value, static methods) into its own `import type`, and `PushData` similarly split
+  off from the existing `EgwApp` value import - same "type-only symbol riding along on a value import"
+  pattern addressbook's entry established for non-`et2_*` symbols too.
+
+### TS errors fixed (167 total)
+
+By far the largest batch in this project; grouping by root cause:
+
+- **`this.et2.getDOMWidgetById()`'s `typeof Et2Widget | null` return-type bug** (the same bug CRM.ts and
+  status found) accounted for the single biggest chunk - roughly 60 of the 167 errors, spread across
+  ~50 call sites. Two different fixes depending on what the existing code already did:
+  - Sites with **no cast at all**, directly chaining a property/method onto the raw result
+    (`this.et2.getDOMWidgetById('x').set_disabled(...)`) -> wrapped in a single `<any>` cast, matching
+    status's exact precedent (`(<any>this.et2.getDOMWidgetById('add')).set_disabled(true)`) rather than
+    the `<unknown>` dance, since there's no more-specific widget type to reach for at these call sites.
+  - Sites that **already had a specific-type cast** (`<et2_smallpart_cl_measurement_L>this.et2
+    .getDOMWidgetById(...)`, `<et2_grid>...`, `<et2_countdown>...`, etc) -> inserted `<unknown>` in the
+    middle (`<Type><unknown>this.et2.getDOMWidgetById(...)`), the established CRM.ts/
+    `et2_widget_placeholder.ts` workaround.
+- **`querySelectorAll(...)` returning generic `Element`** (dozens of sites): used the generic-argument
+  form (`querySelectorAll<HTMLElement>(...)`) wherever the preceding call was itself properly typed;
+  where the preceding call was untyped/`any` (e.g. chained off another `getDOMWidgetById()`/
+  `getWidgetById()` result), putting the generic directly on it re-triggered the exact TS2347 "untyped
+  function calls may not accept type arguments" pattern from infolog's `getDOMNode()` note - fixed the
+  same way infolog did, by typing the intermediate variable/casting the source first instead of putting
+  `<T>` on the untyped call itself (one spot needed `Array.from<HTMLElement>(x.querySelectorAll(...))`
+  instead, for the same reason).
+- **`getElementsByClassName(...)[0]`/`querySelector(...)` needing `.style`/`.hidden`/`.disabled`/
+  `.dataset`/`.contentWindow`**: same generic-argument or `<HTMLElement>`/`<HTMLOptionElement>` cast
+  pattern as above, applied per call site.
+- **`et2_countdown`'s `onAlarm`/`.timer`**: `onAlarm` is declared only via the widget's dynamic
+  `_attributes` registration object (`onAlarm: {type: "js", ...}`), never as a real class field, so TS
+  can't see it even after a correct `<et2_countdown>` cast - worked around with a local `<any>` cast,
+  same class of gap as `app.stylite`/`et2_grid.cells` elsewhere in this project. `.timer` is a genuinely
+  `private` field with no public reset/stop accessor on the class - `<any>` cast, no shared-widget
+  change.
+- **`et2_smallpart_videooverlay`'s `_elementSlider` is `private`**: has a public `getElementSlider()`
+  accessor already defined on the class (confirmed by grep) - swapped all 4 direct `._elementSlider`
+  accesses to `.getElementSlider()` instead of casting.
+- **`et2_grid.cells` and `et2_widget._children` are `private`/`protected`**: `_children` ->
+  `getChildren()` (established pattern); `cells` has no public accessor at all -> `<any>` cast.
+- **`SmallPartMediaRecorder`'s `disableMediaSelectors`/`uploadingIsfinished`**: `disableMediaSelectors`
+  is a Lit reactive property declared only via `static get properties()`-style registration (same class
+  of gap as `et2_countdown.onAlarm`), `uploadingIsfinished` is `private` - both `<any>` cast, no
+  shared-widget change.
+- **Two genuinely fictional type names**: `pseudoFunction` (cast target for a jQuery custom-selector
+  callback) and `et2_widget_video_recorder` (cast target for the `lf_recorder` widget, used at 2 call
+  sites) don't exist anywhere in the repo - the first was simply removed (the cast was doing nothing
+  valid anyway), the second was replaced with the widget's real class name, `SmallPartMediaRecorder`
+  (confirmed via the template: `<smallpart-media-recorder id="lf_recorder">`, and the class's own
+  `record()` method matching the call site).
+- **Mistyped widget casts in `student_playControl()`**: `volume` and `playback` were both cast to
+  `et2_smallpart_videobar` (evidently copy-pasted from the neighboring `videobar` line) even though
+  they're a `<et2-description>` label and an `<et2-select>` dropdown respectively per the template -
+  retyped to `et2_description`/`Et2Select`, which is what their actual usage (`.set_value()`,
+  `.select_options`) already expected. (`et2_description` itself was later corrected to `Et2Description`
+  - see the import-list correction above.)
+- **`CommentType` missing three real fields**: `comment_cat_sub`, `account_lid` (a login-id, distinct
+  from the numeric `account_id`, used to build vfs attachment paths) and `comment_updated` (a
+  `DateTime`, used by the "new comments" filter) are all genuinely read/written throughout the file but
+  were never declared on the file's own `CommentType` interface - added all three as optional fields,
+  rather than casting every access site individually.
+- **Fixing the `Et2Template` import unlocked two previously-hidden errors**: once the import resolved
+  (previously `TS2304: Cannot find name`), TS could properly type-check `container.addEventListener
+  ("sl-show", (event) => {...})` for the first time - `event.target` surfaced as `EventTarget` (needing
+  an `Element` cast for `.localName`) and a `NodeListOf<Element>` spread surfaced a `[Symbol.iterator]`
+  gap (fixed with `Array.from(...)` instead of `[...x]`) - both previously masked because the whole
+  expression was `any` while the import was broken, the reverse of the usual "one fix resolves many
+  cascading errors" pattern - here one fix revealed two new, real ones.
+- Assorted one-off casts/type-widenings: `let courses/old_videos/group_options/options/tags/rows`
+  retyped from an under-specified `Array<object>`/`{}` to `Array<any>`/a concrete element type to match
+  how they're actually used; `student_playControl(_status: string)` widened to `string|Et2Select`
+  (confirmed via the template: `onchange="app.smallpart.student_playControl(widget)"` on the playback
+  `<et2-select>`, vs. plain string ids from every `<et2-button-icon onclick=...>`); `questionTime()`'s
+  `_widget` param retyped from legacy `et2_inputWidget` to `Et2InputWidgetInterface` (confirmed via the
+  template's `<et2-date-duration onchange="app.smallpart.questionTime">` bindings - a modern widget, not
+  legacy).
+
+### Genuine bugs found and fixed
+
+- **`iterateOver(..., et2_checkbox)` always matched zero widgets** (3 call sites: `et2_ready()`'s
+  question-init, `childrenChecked()`, `checkMaxAnswers()`'s readonly-disable loop) - this is what made
+  converting `et2_checkbox` from a type-only import to a **value** import matter, not just cosmetics.
+  `et2_checkbox` (`class et2_checkbox extends Et2Checkbox {}`) is never actually registered anywhere
+  (`et2_widget_checkbox.ts` has no `et2_register_widget()` call) and never instantiated - confirmed via
+  `et2_createWidget()`/the XML-parsing widget factory, which falls back to the `et2-checkbox` custom
+  element (a real `Et2Checkbox` instance) whenever no legacy registry entry exists for the tag.
+  `Et2WidgetClass.iterateOver()`'s `_type` filter does a plain `this instanceof _type` check for a
+  function/class argument (confirmed in `Et2Widget.ts`) - so `instanceof et2_checkbox` is **always
+  false** for any real widget, since real widgets are always `Et2Checkbox` instances, never
+  `et2_checkbox`. Net effect: the whole `max_answers` (max number of checked multiple-choice answers)
+  feature has been silently non-functional - `childrenChecked()` always returned 0, so
+  `checkMaxAnswers()` could never detect "too many checked" or disable the remaining checkboxes. Fixed
+  by using `Et2Checkbox` (the real class) as the `_type` filter value at all 3 sites, which is also what
+  the type-only-import analysis called for anyway. **(2026-09-02 follow-up: this generalizes** - it was
+  never about checkbox specifically having no legacy registration, it's that `createElementFromNode()`
+  resolves purely off the literal `.xet` tag string, and every widget tag in this app's templates is
+  already written with the modern `et2-` prefix; see the `et2_button`/`et2_textbox` correction below for
+  the full mechanism trace.)
+- **`defaultPoints()`'s `(<et2_textbox>w).set_blur(default_points)` called a method that doesn't exist on
+  the real runtime widget** (found 2026-09-02, while re-verifying `et2_textbox`'s import classification):
+  `set_blur()` is legacy-`et2_textbox`-only (a jQuery placeholder-attribute setter with a dead pre-HTML5
+  fallback, confirmed in `et2_widget_textbox.ts`) - the answer-score field it's called on
+  (`${row}[score]` in `question.xet`) is written `<et2-number>`, which - per the widget-factory trace
+  below - is always the modern `Et2Number`/`Et2Textbox`, which has no `set_blur()` at all. This has
+  silently thrown `TypeError` whenever a teacher used "Score per answer" assessment and the per-answer
+  score placeholder got recalculated - a real, previously-invisible bug, not a modernization-era
+  regression. Fixed by setting the modern `.placeholder` property directly.
+- **`course_selection.change(course_selection.getDOMNode(), course_selection, 'manage')`**
+  (`pushParticipants()`, triggered when the current user is kicked/unsubscribed from a course they're
+  viewing): `.change()` doesn't exist anywhere on `Et2Select`/`Et2InputWidget` (confirmed via grep
+  across the whole hierarchy) - would throw `TypeError` at runtime. The sibling method
+  `courseSelection(_node, _widget)` (used everywhere else for this exact "navigate away because
+  'manage' was selected" flow) takes 2 args and checks `_widget.getValue() === 'manage'`. Fixed by
+  setting the value first and calling the real method: `course_selection.set_value('manage');
+  this.courseSelection(course_selection.getDOMNode(), course_selection);`.
+- **RETRACTED (2026-09-02) - `(<et2_tabbox>...).show("participants_tab")` was never actually broken.**
+  The original entry here claimed `.show()` "doesn't exist on `Et2Tabs` either" and swapped it for
+  `setActiveTab(...)`. Re-investigated while fixing `et2_tabbox` above: `.show()` genuinely exists on
+  `Et2Tabs` at runtime (inherited from the Shoelace `SlTabGroup` mixin base - confirmed live,
+  `typeof widget.show === 'function'`) - TS just can't see it through the mixin function's return type,
+  the same class of blind spot as `et2_countdown.onAlarm`/`app.stylite` elsewhere in this project.
+  Worse, `setActiveTab()` (the method the "fix" swapped to) is itself marked `@deprecated use
+  this.show(name: string)` in `Et2Tabs.ts`'s own source, and its string-argument branch just calls
+  `this.show(tab)` internally - so the swap didn't fix a bug, it silently traded a correct, preferred
+  call for a working-but-deprecated wrapper around the exact same call, based on a TS error that should
+  have been worked around with a cast instead. Reverted to `.show("participants_tab")` with a `<any>`
+  cast (matching the established pattern for this class of gap) and a comment pointing at `Et2Tabs.ts`'s
+  own `@ts-ignore` on the identical call, so a future pass doesn't re-introduce the same swap.
+- **`self.et2`/`self.egw` referring to the global `Window.self`, not the app instance**: two spots
+  (`livefeedback_sessionRefreshed()`, and one branch of `livefeedbackCommentSubmit()`'s `.then()`) used
+  `self.xxx` without ever declaring a local `self`/`that` - both are plain top-level methods/arrow
+  callbacks with no enclosing closure providing that binding, so `self` fell through to the ambient
+  `Window.self`, which has no `.et2`/`.egw`. Both would throw at runtime whenever invoked (a
+  push-notification handler and a livefeedback-session-ended callback, respectively). Fixed by using
+  `this` directly - both are directly-invoked/arrow contexts where `this` is already correctly the app
+  instance.
+
+### jQuery removed (24 uses)
+
+- The dominant pattern by far was `jQuery(smallpartApp.commentRowsQuery, container)` (jQuery-wrapped
+  comment-row elements, used with `.filter()`/`.each()`/`.find()` across 8 different comment-filtering
+  methods) -> `container.querySelectorAll(commentRowsQuery)` (or a combined selector string for the
+  simple class-based `.filter()` calls, e.g. `commentRowsQuery + ':not(.cat-lf, .cat-lfc)'`), with
+  `.each(function(){...this...})` callbacks converted to `.forEach(row => {...row...})` arrows in the
+  same edit (satisfying goal 6 together, same combined pattern used repeatedly elsewhere in this
+  project).
+- `student_searchFilter()`'s custom `jQuery.expr[':'].containsCaseInsensitive` pseudo-selector
+  registration has no native equivalent at all (browsers have no API for registering custom CSS
+  pseudo-selectors) - rewrote the whole per-row "does this row contain a case-insensitively-matching,
+  optionally-class-restricted descendant" check as a plain `Array.from(row.querySelectorAll('*'))
+  .some(...)` walk, preserving the exact same matching semantics (including the "unless search-all is
+  checked, only `.et2_smallpart_comment` elements count" restriction) rather than trying to keep the
+  selector-string API shape.
+- `jQuery.extend(target, source)` (2-arg, shallow) -> `Object.assign(target, source)` (4 sites);
+  `jQuery.extend([], data)` (shallow-copy-into-array) -> `[...data]` (2 sites) - none of these were the
+  3-arg `jQuery.extend(true, ...)` deep-merge form this project's `egw.deepExtend()` rule targets, so
+  `Object.assign`/spread is the correct native equivalent here, not `deepExtend()`.
+- `student_onmouseoverFilter()`'s `jQuery(elem).on('mouseenter', fn).on('mouseleave', fn)`/
+  `.off('mouseenter mouseleave')` toggle (enabling/disabling a pause-on-hover behavior) needed more than
+  a 1:1 rename: native `removeEventListener` requires the *same* function reference used in
+  `addEventListener`, but the original per-call `function(){}` literals were recreated fresh every time
+  the method ran, so a naive rewrite would silently leak listeners on "off". Fixed by hoisting the two
+  handlers out as stable, `this`-bound class-field arrow functions (`private _onmouseoverEnter = () =>
+  {...}`) so add/remove always target the same reference.
+- `_student_highlightSelectedComment()`'s `jQuery(node).find(...)`/`.addClass()`/`.removeClass()`/
+  `[0].scrollTop` -> plain `querySelector`/`querySelectorAll(...).forEach(...)`/`classList.add`/
+  `.remove`/`.scrollTop` on the raw elements (no more `[0]` indexing needed once it's not jQuery-wrapped).
+- `jQuery(_widget.parentNode).closest('tr')` -> native `.closest('tr')` (already exists on `Element`,
+  just needed a cast since `parentNode` is typed `Node`); `.siblings().removeClass(...)` has no native
+  one-liner - replaced with `Array.from(tr.parentElement.children).filter(el => el !== tr)
+  .forEach(...)`, same "manual walk, no 1:1 equivalent" reasoning as addressbook's `.nextAll()` fix.
+- `jQuery('.scoreCol').hide()`/`.show()` -> `document.querySelectorAll('.scoreCol').forEach(el =>
+  el.style.display = 'none'/'')`.
+- `jQuery(window).on('resize', function(){self._student_resize()})` -> `window.addEventListener
+  ('resize', () => {this._student_resize()})`, done together with removing the now-unnecessary
+  `let self = this` (see below).
+- Six stale `JQuery.Event` **type annotations** (actual TS param types on 6 onchange/onclick handler
+  methods, not JSDoc comments here) corrected to `Event` - confirmed none of the 6 method bodies ever
+  read the event param at all.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+- 11 of 14 sites were plain async (`sendRequest()` with no args, the default) - straightforward swaps.
+- 3 sites are genuinely **not** swappable: `sendRequest('keepalive')` (not `sendRequest(false)`, but the
+  same "no equivalent in `egw.request()`" situation) - used exactly where the `beforeunload` handler
+  needs the request to survive page unload via the fetch keepalive flag (`record_watched()`,
+  `set_video_position()`, and one inline CLM-measurement call, all reachable from the `beforeunload`
+  listener). `egw.request()` has no keepalive option at all, only plain async - kept as
+  `egw.json(...).sendRequest('keepalive')` with a comment explaining why, extending this project's
+  sync/async exception to cover the keepalive variant too.
+
+### function/closures -> arrow functions
+
+- Removed **6** `let self = this`/`const self = this` declarations: 5 because their only uses were
+  inside plain functions or arrows that never actually needed dynamic `this` (the `resize`/
+  `beforeunload` handlers above; `student_playVideo()`'s two `play_video(...)` callbacks - confirmed via
+  `et2_widget_videobar.ts`'s own `play_video()` that `ended_callback.call()` passes no `this` and
+  `_onTagCallback.call(this, ...)` passes the *video DOM element*, neither of which the callback bodies
+  ever read, so converting to arrows changes nothing observable; `_student_fetchAccountData()`'s nested
+  `egw.accountData(..., function(_d){...})` pair, whose 5th-arg `_context` (`egw(window)`) is likewise
+  never read inside; `_student_commentsFiltering()`'s callbacks, which were already arrows using `self`
+  redundantly) - and 1 that was entirely **dead** code (`student_livefeedbackSubCatClick()` - `self` was
+  declared but never referenced anywhere in the method), removed outright, same as addressbook's
+  `rename_list()` finding.
+- `Et2Dialog.show_prompt(function(button, nickname){...this.user...this.changeNickname()...}
+  .bind(this), ...)` (`changeNickname()`) - already explicitly `.bind(this)`-locked (a real, deliberate
+  goal-6 exception marker), so the dialog's own `_callback.call(this_dialog, ...)` rebinding was already
+  neutralized by the bind. Converted to a plain arrow function and dropped the now-redundant
+  `.bind(this)` - same result, less code, matching tracker's `tprint()` precedent of removing the
+  dynamic-`this` dependency entirely rather than just documenting it.
+- `iterateOver(function(_widget){...this...}, this, ...)` (3 sites: `et2_ready()`'s question-init,
+  `childrenChecked()`, `checkMaxAnswers()`) - `this` is passed explicitly as `iterateOver`'s own
+  `_context` argument and is the *same* object an arrow's lexical `this` would resolve to (both from the
+  same enclosing method) - the exact refinement tracker's entry already established. Converted to
+  arrows.
+- `confirmOverwrite()`'s `dialog.transformAttributes({callback: function(_button){...widget...}})` -
+  body only touches the closured `widget` local, never `this` - converted to arrow despite the
+  dialog-callback `this`-rebinding contract, since nothing depends on it here.
+- **8 confirmed, documented exceptions remain**: `dialog.transformAttributes({callback:
+  function(...){...self...}})`/`Et2Dialog.show_dialog(function(...){...self...})` pairs across
+  `_student_setPostCLQuestions()`, `_student_clm_l_start()`, `student_deleteComment()`,
+  `livefeedback_timerStop()` (5 sites), `videobar.set_marking_enabled(true, function(){...self...})` (2
+  sites, confirmed via `et2_widget_videobar.ts`'s own `this.marking_callback(...)` invocation, which
+  rebinds `this` to the videobar), and one `setTimeout(function(){this.querySelector(...)}.bind(d), ...)`
+  with an explicit `.bind(d)` - all verified via the same "manual `self`/explicit `.bind()` already
+  present is reliable evidence of real `this`-rebinding" reasoning as status's entry. The 4 methods with
+  a dialog-callback exception still needed a live `self` capture for exactly that one nested callback
+  each, so `let self = this` had to stay there (with a one-line comment explaining why) even where the
+  *surrounding* arrow-based code in the same method no longer needed it.
+
+### Not touched (out of scope)
+
+- `livefeedback_timerStart()`/`livefeedback_timerOnPulse()`'s `let lf_report = this.et2
+  .getWidgetById('lf_report')` and its `.sessionStartTime`/`.sessionEndTime`/`.comments` property
+  assignments don't error (the containing expression resolves loosely enough that TS doesn't flag it) -
+  left alone, matching tracker's precedent that goal 3 only covers the file's actual reported errors,
+  not every instance of an already-fixed-elsewhere pattern.
+- `mergeVideo()`'s `const that = app.smallpart;` with its own pre-existing developer comment ("not sure
+  why this is not defined/the window, binding it in the constructor also did not help") - only the
+  *type* was fixed (cast to `<smallpartApp>`); the underlying self-reference-via-global-registry pattern
+  itself was left exactly as-is, not refactored, since it already works correctly at runtime and isn't
+  part of any of the 6 goals.
+
+### Two more genuine bugs found via live browser testing (2026-09-02, post-completion)
+
+Neither is a modernization-goal fix (not TS/jQuery/var/sendRequest/closure related) and neither is in
+`app.ts` - both were found by actually clicking through the live app after the pass above, and fixed as
+small, clearly-scoped exceptions to the "app.ts only" rule since they're real crashes, not style issues:
+
+- **`et2_ready()`'s unguarded `.getWidgetById('smallpart.student.comments_list').getWidgetById
+  ('add_comment').hidden = ...`** threw `Cannot set properties of null (setting 'hidden')` - the inner
+  `getWidgetById('add_comment')` lookup, scoped to a lazily-loaded named sub-template, can legitimately
+  return `null`. Pre-existing (confirmed via `git show HEAD` - present before this whole project's pass
+  even started), not introduced by any of the above. Fixed with a null-guard (`if (widget) widget.hidden
+  = ...`), and applied the same guard to the sibling `add_comment`-in-`playControlBar` lookup one line
+  above for consistency (same pattern, same file, same block).
+- **`MultiVideo.play()` in `api/js/etemplate/CustomHtmlElements/multi-video.ts`** (a shared, cross-app
+  widget - not smallpart's own code, but the video player smallpart's `et2_widget_videobar.ts` sits on
+  top of) - `return this.__getActiveVideo()[0]?.node?.play();` silently returns `undefined` (via the
+  optional-chain short-circuit) whenever there's no active video node to play - which is exactly what
+  happens when a course's video material is missing/broken (as this dev instance's "Test from mp4"
+  course happened to be). Every caller (`et2_widget_video.ts`'s `play_video()`, and
+  `et2_smallpart_videobar.play_video()` on top of that) unconditionally chains `.then()` onto the result,
+  assuming the native `HTMLMediaElement.play()` contract (always a Promise) - so a missing video crashed
+  with `Cannot read properties of undefined (reading 'then')` on every attempt to resume playback (e.g.
+  clicking "Cancel" on the add-comment form, which calls `student_cancelAndContinue()` ->
+  `student_playVideo()` -> `play_video()`). Fixed at the root cause by making `play()` always return a
+  Promise: `?? Promise.resolve()`. Verified live (traced the actual DOM element - `videobar.video[0]`'s
+  `tagName` is `MULTI-VIDEO`, not a native `<video>`, confirming this exact code path) and reproduced the
+  crash and its fix end-to-end (add comment -> Cancel -> previously crashed, now resumes cleanly).
+
+### Tests
+
+Reviewed for a suitably pure, standalone piece of logic to regression-test (the "genuine bug found"
+angle this project's workflow calls out) - none of the fixed bugs are pure functions:
+`checkMaxAnswers()`/`childrenChecked()` (the `Et2Checkbox` `iterateOver` bug) and
+`courseSelection()`/`changeCourseGroups()` (the two nonexistent-method bugs) are all methods tightly
+coupled to `this.et2`'s live widget tree, exactly the kind of heavyweight DOM-fixture test this
+project's workflow says not to force. No test file added, consistent with every other app.ts done in
+this project so far (none of which added one either).
