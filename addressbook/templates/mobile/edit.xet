@@ -68,32 +68,24 @@
 					<et2-description></et2-description>
 					<et2-textbox  statustext="address line 2" id="adr_one_street2" maxlength="64" autocomplete="address-line2"></et2-textbox>
 				</row>
-				<row disabled="@addr_format=city_state_postcode">
+				<row>
 					<et2-description  for="adr_one_locality" value="city"></et2-description>
 					<et2-textbox  statustext="City" id="adr_one_locality" maxlength="64" autocomplete="address-level2"></et2-textbox>
 				</row>
-				<row disabled="@addr_format=city_state_postcode">
+				<row>
 					<et2-description  value="ZIP Code"></et2-description>
 					<et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" width="35%" maxlength="64" autocomplete="postal-code"></et2-textbox>
 				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<et2-description  value="City"></et2-description>
+				<row>
 					<et2-hbox>
-						<et2-textbox  statustext="City" id="adr_one_locality" maxlength="64" autocomplete="address-level2"></et2-textbox>
-						<et2-textbox  statustext="State" id="adr_one_region" maxlength="64" autocomplete="address-level1"></et2-textbox>
-						<et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" maxlength="64" autocomplete="postal-code"></et2-textbox>
+						<et2-description  value="Region" disabled="@addr_format=city_state_postcode"></et2-description>
+						<et2-description  value="State" disabled="!@addr_format=city_state_postcode"></et2-description>
 					</et2-hbox>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<et2-description  value="Region"></et2-description>
 					<et2-textbox  statustext="State" id="adr_one_region" maxlength="64" autocomplete="address-level1"></et2-textbox>
 				</row>
 				<row>
-					<et2-description  for="adr_one_countryname" value="country"></et2-description>
-					<et2-vbox  width="100%">
-						<et2-select-country  class="countrySelect" id="adr_one_countrycode" onchange="app.addressbook.show_custom_country(this);" autocomplete="country" emptyLabel="Select one"></et2-select-country>
-						<et2-textbox  id="adr_one_countryname" class="custom_country" autocomplete="country-name"></et2-textbox>
-					</et2-vbox>
+					<et2-description  for="adr_one_countrycode" value="country"></et2-description>
+					<et2-select-country  class="countrySelect" id="adr_one_countrycode" allowFreeEntries="true" autocomplete="country" emptyLabel="Select one"></et2-select-country>
 				</row>
 				<row>
 					<et2-description  for="role" value="Role"></et2-description>
@@ -199,31 +191,24 @@
 					<et2-description></et2-description>
 					<et2-textbox  statustext="address line 2" id="adr_two_street2" maxlength="64" autocomplete="section-two address-line2" ></et2-textbox>
 				</row>
-				<row disabled="@addr_format=city_state_postcode">
+				<row>
 					<et2-description  for="adr_two_locality" value="city"></et2-description>
-					<et2-hbox>
-						<et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" width="20%" maxlength="64" autocomplete="section-two postal-code" ></et2-textbox>
-						<et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" width="80%" autocomplete="section-two address-level2" ></et2-textbox>
-					</et2-hbox>
-				</row>
-				<row disabled="@addr_format=city_state_postcode">
-					<et2-description  value="Region"></et2-description>
-					<et2-textbox  statustext="State" id="adr_two_region" maxlength="64" autocomplete="section-two address-level1" ></et2-textbox>
-				</row>
-				<row disabled="!@addr_format=city_state_postcode">
-					<et2-description  value="City"></et2-description>
-					<et2-hbox>
-						<et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" autocomplete="section-two address-level2" ></et2-textbox>
-						<et2-textbox  statustext="State" id="adr_two_region" maxlength="64" autocomplete="section-two address-level1"></et2-textbox>
-						<et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" maxlength="64" autocomplete="section-two postal-code" ></et2-textbox>
-					</et2-hbox>
+					<et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" autocomplete="section-two address-level2" ></et2-textbox>
 				</row>
 				<row>
-					<et2-description  for="adr_two_countryname" value="country"></et2-description>
-					<et2-vbox  width="100%">
-						<et2-select-country  class="countrySelect" id="adr_two_countrycode" onchange="app.addressbook.show_custom_country(this);" autocomplete="section-two country" emptyLabel="Select one"></et2-select-country>
-						<et2-textbox  id="adr_two_countryname" class="custom_country" autocomplete="section-two country-name" ></et2-textbox>
-					</et2-vbox>
+					<et2-description  value="ZIP Code"></et2-description>
+					<et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" width="35%" maxlength="64" autocomplete="section-two postal-code" ></et2-textbox>
+				</row>
+				<row>
+					<et2-hbox>
+						<et2-description  value="Region" disabled="@addr_format2=city_state_postcode"></et2-description>
+						<et2-description  value="State" disabled="!@addr_format2=city_state_postcode"></et2-description>
+					</et2-hbox>
+					<et2-textbox  statustext="State" id="adr_two_region" maxlength="64" autocomplete="section-two address-level1"></et2-textbox>
+				</row>
+				<row>
+					<et2-description  for="adr_two_countrycode" value="country"></et2-description>
+					<et2-select-country  class="countrySelect" id="adr_two_countrycode" allowFreeEntries="true" autocomplete="section-two country" emptyLabel="Select one"></et2-select-country>
 				</row>
 			</rows>
 		</grid>

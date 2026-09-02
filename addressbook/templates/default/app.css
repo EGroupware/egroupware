@@ -105,7 +105,7 @@ div.addressbook_edit_general_picture img {
 #addressbook-edit_adr_two_locality,
 #addressbook-edit_adr_one_postalcode,
 #addressbook-edit_adr_two_postalcode{
-	
+
 }
 div.city_state_postcode #addressbook-edit_adr_two_postalcode,
 div.city_state_postcode #addressbook-edit_adr_one_postalcode {margin-right: 5px !important;}

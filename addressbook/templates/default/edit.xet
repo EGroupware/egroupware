@@ -62,18 +62,24 @@
                     <et2-description></et2-description>
                     <et2-textbox  statustext="address line 2" id="adr_one_street2" tabindex="12" maxlength="64" autocomplete="address-line2"></et2-textbox>
                 </row>
-                <row disabled="@addr_format=city_state_postcode">
+                <row>
                     <et2-description  for="tel_assistent" value="Assistent phone"></et2-description>
                     <et2-url-phone  id="tel_assistent" tabindex="23"></et2-url-phone>
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            set_value="tel_assistent" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_one_locality" value="city"></et2-description>
-                    <et2-hbox  class="city_state_postcode">
-                        <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="5em" maxlength="64" autocomplete="postal-code"></et2-textbox>
-                        <et2-textbox  statustext="City" id="adr_one_locality" tabindex="14" maxlength="64" autocomplete="address-level2"></et2-textbox>
-                    </et2-hbox>
+                    <et2-box>
+                        <et2-hbox  class="city_state_postcode" disabled="@addr_format=city_state_postcode">
+                            <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="13" width="5em" maxlength="64" autocomplete="postal-code"></et2-textbox>
+                            <et2-textbox  statustext="City" id="adr_one_locality" tabindex="14" maxlength="64" autocomplete="address-level2"></et2-textbox>
+                        </et2-hbox>
+                        <et2-hbox  class="city_state_postcode" disabled="!@addr_format=city_state_postcode">
+                            <et2-textbox  statustext="City" id="adr_one_locality" tabindex="13" maxlength="64" autocomplete="address-level2"></et2-textbox>
+                            <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" tabindex="14" width="5em" maxlength="64" autocomplete="postal-code"></et2-textbox>
+                        </et2-hbox>
+                    </et2-box>
                 </row>
-                <row disabled="@addr_format=city_state_postcode">
+                <row>
                     <et2-description  for="tel_fax" value="fax"></et2-description>
                     <et2-url-fax  id="tel_fax" tabindex="24" autocomplete="fax"></et2-url-fax>
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
@@ -81,41 +87,16 @@
                     <et2-description  for="adr_one_countryname" value="country"></et2-description>
                     <et2-select-country  id="adr_one_countrycode" tabindex="15" allowFreeEntries="true" autocomplete="country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
                 </row>
-                <row disabled="@addr_format=city_state_postcode">
+                <row>
                     <et2-description  for="tel_other" value="Other phone"></et2-description>
                     <et2-url-phone  id="tel_other" tabindex="25" autocomplete="tel"></et2-url-phone>
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            set_value="tel_other" ro_true="&amp;hearts;" />
-                    <et2-description  value="Region"></et2-description>
-                    <et2-select-state  class="city_state_postcode" statustext="State" allowFreeEntries="true" id="adr_one_region" tabindex="16" maxlength="64" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
-                </row>
-                <row disabled="!@addr_format=city_state_postcode">
-                    <et2-description  for="tel_assistent" value="Assistent phone"></et2-description>
-                    <et2-url-phone  id="tel_assistent" tabindex="23"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_assistent" ro_true="&amp;hearts;" />
-                    <et2-description  value="City"></et2-description>
                     <et2-hbox>
-                        <et2-textbox  statustext="City" id="adr_one_locality" maxlength="64" tabindex="13" autocomplete="address-level2"></et2-textbox>
-                        <et2-select-state  statustext="State" id="adr_one_region" tabindex="14" allowFreeEntries="true" width="130" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
-                        <et2-textbox  statustext="ZIP Code" id="adr_one_postalcode" width="5em" maxlength="64" tabindex="15" autocomplete="postal-code"></et2-textbox>
+                        <et2-description  value="Region" disabled="@addr_format=city_state_postcode"></et2-description>
+                        <et2-description  value="State" disabled="!@addr_format=city_state_postcode"></et2-description>
                     </et2-hbox>
-                </row>
-                <row disabled="!@addr_format=city_state_postcode">
-                    <et2-description  for="tel_fax" value="fax"></et2-description>
-                    <et2-url-fax  id="tel_fax" tabindex="24" autocomplete="fax"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_fax" ro_true="&amp;hearts;" />
-                    <et2-description  for="adr_one_countryname" value="country"></et2-description>
-                    <et2-select-country  tabindex="16" id="adr_one_countrycode" allowFreeEntries="true" autocomplete="country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
-                </row>
-                <row disabled="!@addr_format=city_state_postcode">
-                    <et2-description  for="tel_other" value="Other Phone"></et2-description>
-                    <et2-url-phone  id="tel_other" tabindex="25" autocomplete="tel"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_other" ro_true="&amp;hearts;" />
-                    <et2-description></et2-description>
-                    <et2-description></et2-description>
+                    <et2-select-state  class="city_state_postcode" statustext="State" allowFreeEntries="true" id="adr_one_region" tabindex="16" maxlength="64" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
                 </row>
                 <row>
                     <et2-description  for="tel_car" value="car phone"></et2-description>
@@ -219,19 +200,25 @@
                     <et2-textbox  statustext="address line 2" id="adr_two_street2" tabindex="34" maxlength="64" autocomplete="section-two address-line2"></et2-textbox>
                     <et2-description></et2-description>
                 </row>
-                <row disabled="@addr_format=city_state_postcode">
+                <row>
                     <et2-description  for="tel_fax_home" value="fax"></et2-description>
                     <et2-url-fax  id="tel_fax_home" tabindex="29" autocomplete="section-two fax tel"></et2-url-fax>
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
                            set_value="tel_fax_home" ro_true="&amp;hearts;" />
                     <et2-description  for="adr_two_locality" value="city"></et2-description>
-                    <et2-hbox  class="city_state_postcode">
-                        <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="5em" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
-                        <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" autocomplete="section-two address-level2"></et2-textbox>
-                    </et2-hbox>
+                    <et2-box>
+                        <et2-hbox  class="city_state_postcode" disabled="@addr_format2=city_state_postcode">
+                            <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" tabindex="34" width="5em" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
+                            <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" tabindex="36" autocomplete="section-two address-level2"></et2-textbox>
+                        </et2-hbox>
+                        <et2-hbox  class="city_state_postcode" disabled="!@addr_format2=city_state_postcode">
+                            <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" tabindex="34" autocomplete="section-two address-level2"></et2-textbox>
+                            <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" width="5em" maxlength="64" tabindex="36" autocomplete="section-two postal-code"></et2-textbox>
+                        </et2-hbox>
+                    </et2-box>
                     <et2-description></et2-description>
                 </row>
-                <row disabled="@addr_format=city_state_postcode">
+                <row>
                     <et2-description  for="tel_pager" value="pager" autocomplete="section-two pager tel"></et2-description>
                     <et2-url-phone  id="tel_pager" tabindex="30"></et2-url-phone>
                     <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
@@ -240,42 +227,15 @@
                     <et2-select-country  tabindex="37" id="adr_two_countrycode" allowFreeEntries="true" autocomplete="section-two country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
                     <et2-description></et2-description>
                 </row>
-                <row disabled="@addr_format=city_state_postcode">
+                <row>
                     <et2-description  for="bday" value="Birthday"></et2-description>
                     <et2-date  id="bday" tabindex="31" dataFormat="Y-m-d" yearRange="c-90:c+2"></et2-date>
                     <et2-description></et2-description>
-                    <et2-description  value="Region"></et2-description>
-                    <et2-select-state  statustext="State" id="adr_two_region" tabindex="38" allowFreeEntries="true" maxlength="64" class="city_state_postcode" countryCode="$cont[adr_two_countrycode]" emptyLabel="Select one"></et2-select-state>
-                    <et2-description></et2-description>
-                </row>
-                <row disabled="!@addr_format=city_state_postcode">
-                    <et2-description  for="tel_fax_home" value="fax"></et2-description>
-                    <et2-url-fax  id="tel_fax_home" autocomplete="fax tel"></et2-url-fax>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_fax_home" ro_true="&amp;hearts;" />
-                    <et2-description  value="City"></et2-description>
                     <et2-hbox>
-                        <et2-textbox  statustext="City" id="adr_two_locality" maxlength="64" autocomplete="section-two address-level2"></et2-textbox>
-                        <et2-select-state  statustext="State" id="adr_two_region" allowFreeEntries="true" width="130" autocomplete="section-two address-level1" countryCode="$cont[adr_one_countrycode]" emptyLabel="Select one"></et2-select-state>
-                        <et2-textbox  statustext="ZIP Code" id="adr_two_postalcode" width="5em" maxlength="64" autocomplete="section-two postal-code"></et2-textbox>
+                        <et2-description  value="Region" disabled="@addr_format2=city_state_postcode"></et2-description>
+                        <et2-description  value="State" disabled="!@addr_format2=city_state_postcode"></et2-description>
                     </et2-hbox>
-                    <et2-description></et2-description>
-                </row>
-                <row disabled="!@addr_format=city_state_postcode">
-                    <et2-description  for="tel_pager" value="pager"></et2-description>
-                    <et2-url-phone  id="tel_pager"></et2-url-phone>
-                    <radio statustext="select phone number as prefered way of contact" id="tel_prefer"
-                           set_value="tel_pager" ro_true="&amp;hearts;" />
-                    <et2-description  for="adr_two_countryname" value="country"></et2-description>
-                    <et2-select-country  id="adr_two_countrycode" allowFreeEntries="true" autocomplete="section-two country" onchange="app.addressbook.regionSetCountry" emptyLabel="Select one"></et2-select-country>
-                    <et2-description></et2-description>
-                </row>
-                <row disabled="!@addr_format=city_state_postcode">
-                    <et2-description  for="bday" value="Birthday"></et2-description>
-                    <et2-date  id="bday" dataFormat="Y-m-d" ></et2-date>
-                    <et2-description></et2-description>
-                    <et2-description></et2-description>
-                    <et2-description></et2-description>
+                    <et2-select-state  statustext="State" id="adr_two_region" tabindex="38" allowFreeEntries="true" maxlength="64" class="city_state_postcode" countryCode="$cont[adr_two_countrycode]" emptyLabel="Select one"></et2-select-state>
                     <et2-description></et2-description>
                 </row>
                 <row>
