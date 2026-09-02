@@ -43,7 +43,33 @@
     {# etemplate2.js (and chunks it imports, e.g. cropper.min.js) expect a global jQuery -
        load it as a blocking classic script so it runs before the deferred module below #}
     <script src="{{ assetUrl('scripts/vendor/bower-asset/jquery/dist/jquery.min.js') }}"></script>
-    <script src="{{ assetUrl('scripts/sub/dir/etemplate/etemplate2.js') }}" type="module" id="egw_script_id"></script>
+    {# egw.min.js is the real EGroupware bootstrap (see Api\Framework::header()) - it must carry
+       the "egw_script_id" id so egw.js's `document.getElementById('egw_script_id')` finds it and
+       reads data-url as window.egw_webserverUrl, instead of leaving it null. It also pulls in
+       the egw_debug/egw_links/egw_images/... modules that etemplate2.js alone doesn't bundle. #}
+    <script src="{{ assetUrl('scripts/sub/dir/jsapi/egw.min.js') }}" type="module" id="egw_script_id" data-url="{{ assetUrl('') }}"></script>
+    {# Docs-only, runtime-patched - nothing in the actual app tree is touched. This site has no
+       PHP backend, so every ajax call any widget example makes is expected to fail; without
+       this, each failure pops a user-facing "request returned with an error" toast and logs
+       redundant console noise, neither of which helps a reader of the docs. JsonRequest itself
+       isn't exported anywhere (api/js/jsapi/egw_json.ts), so grab its prototype off a throwaway
+       instance (egw().json() just builds one, no request is sent) and no-op its error handler.
+       A type="module" script, so it runs in document order strictly between egw.min.js above
+       (which builds window.egw) and etemplate2.js below (whose widgets start making requests). #}
+    <script type="module">
+      Object.getPrototypeOf(window.egw().json('__docs_noop__', [])).handleError = () => {};
+    </script>
+    {# Registers <egw-message> (see kdots/js/EgwFrameworkMessage.ts) - egw().message()'s
+       no-framework fallback creates one directly and awaits its .updateComplete, which throws
+       if the real element was never defined. That throw is fatal when it happens inside a
+       widget's constructor (eg. Et2Email, via egw().preference() failing for an uncached app),
+       since the whole element aborts construction before Lit ever attaches a shadow root.
+       Must load (and therefore register egw-message) BEFORE etemplate2.js below: that module
+       synchronously upgrades every custom element already sitting in the static HTML - including
+       a widget whose constructor calls egw().message() - as part of its own evaluation, which is
+       too early for a script that's merely later in document order to have registered anything. #}
+    <script src="{{ assetUrl('scripts/sub/kdots/app.min.js') }}" type="module"></script>
+    <script src="{{ assetUrl('scripts/sub/dir/etemplate/etemplate2.js') }}" type="module"></script>
     <link rel="stylesheet" href="{{assetUrl("styles/bootstrap-icons.min.css")}}" />
     <link rel="stylesheet" href="{{assetUrl("styles/diff2html.min.css")}}" />
 

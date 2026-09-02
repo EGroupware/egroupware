@@ -126,6 +126,42 @@ module.exports = async function (eleventyConfig)
 	// Etemplate2
 	eleventyConfig.addPassthroughCopy({"../../chunks": "assets/scripts/chunks"});
 	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/etemplate2.js": "assets/scripts/sub/dir/etemplate/etemplate2.js"});
+	// egw.min.js is the real bootstrap that normally runs *before* etemplate2.js on every
+	// EGroupware page (see Api\Framework::header()) - it seeds window.egw_webserverUrl from the
+	// egw_script_id tag's data-url attribute and pulls in the egw_debug/egw_links/egw_images/...
+	// modules that etemplate2.js's own bundle doesn't include. Without it, egw().webserverUrl
+	// stays null and egw().debug()/link_app_list()/getSessionItem() etc. don't exist - see
+	// default.njk's egw_script_id script tag.
+	eleventyConfig.addPassthroughCopy({"../../api/js/jsapi/egw.min.js": "assets/scripts/sub/dir/jsapi/egw.min.js"});
+	eleventyConfig.addPassthroughCopy({"../../api/js/jsapi/egw.min.js.map": "assets/scripts/sub/dir/jsapi/egw.min.js.map"});
+	// kdots/js/app.min.js's own top-level logic no-ops here (no <egw-framework> element exists),
+	// but importing it registers <egw-message> (kdots/js/EgwFrameworkMessage.ts, via a
+	// @customElement decorator side effect) as a real custom element. Without it,
+	// egw().message()'s no-framework fallback does `document.createElement("egw-message")` and
+	// gets a plain, undefined HTMLElement - `.updateComplete` is undefined on it, and awaiting
+	// that throws synchronously. That's fatal when it happens inside a widget's own constructor
+	// (eg. Et2Email calling egw().preference() for an app whose prefs need a - failing, no PHP
+	// backend here - ajax fetch): the constructor throws before Lit ever attaches a shadow root,
+	// so the widget silently never renders at all. Destination path is 2 levels deep to match
+	// this file's own relative `../../chunks/...` import.
+	eleventyConfig.addPassthroughCopy({"../../kdots/js/app.min.js": "assets/scripts/sub/kdots/app.min.js"});
+	eleventyConfig.addPassthroughCopy({"../../kdots/js/app.min.js.map": "assets/scripts/sub/kdots/app.min.js.map"});
+	// Static skin/content CSS for the HtmlArea (TinyMCE) widget - resolved at runtime as
+	// `${egw().webserverUrl}/api/js/etemplate/Et2HtmlArea/skins/ui/...` (Et2HtmlArea.ts). The
+	// dynamic tinymce.php stylesheet and the image-upload ajax endpoint need a real PHP backend
+	// and stay unavailable in the docs site; this only covers what's a static file.
+	eleventyConfig.addPassthroughCopy({"../../api/js/etemplate/Et2HtmlArea/skins/ui": "assets/api/js/etemplate/Et2HtmlArea/skins/ui"});
+	// api/tinymce.php normally generates the editor's content-area CSS from the user's font
+	// preference (see Api\Etemplate\Widget\HtmlArea::contentCss()) - there's no PHP backend here
+	// to run it, so serve TinyMCE's own stock default content CSS at that URL instead (query
+	// string is ignored by the static file server). Static, but far better than a 404 that
+	// aborts TinyMCE's own init - see Et2HtmlArea.ts's contentCss()/skinUrl().
+	eleventyConfig.addPassthroughCopy({"../../node_modules/tinymce/skins/content/default/content.css": "assets/api/tinymce.php"});
+	// Et2HtmlArea.ts computes TinyMCE's base_url as `${webserverUrl}/node_modules/tinymce` - it
+	// lazy-fetches plugin i18n files (eg. the "help" plugin's keynav locale) from under there at
+	// runtime, and a 404 on one of those aborts the rest of TinyMCE's own init silently (no
+	// toolbar/editor renders at all). Mirror the whole package so any such fetch resolves.
+	eleventyConfig.addPassthroughCopy({"../../node_modules/tinymce": "assets/node_modules/tinymce"});
 	eleventyConfig.addPassthroughCopy({"../../node_modules/bootstrap-icons/font/bootstrap-icons.min.css": "assets/styles/bootstrap-icons.min.css"});
 	// The CSS above references fonts/bootstrap-icons.woff(2) by relative path - without also
 	// copying the font files themselves, the glyphs never render (confirmed: sidebar category
