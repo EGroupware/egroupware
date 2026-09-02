@@ -922,7 +922,7 @@ nodes for the same row identity, and enqueues them.
 
 `processRowUpgradeQueue()` ([Et2DatagridRowRenderer.ts:334](Et2DatagridRowRenderer.ts#L334))
 processes a bounded batch per animation frame
-(≤ 8 rows, 8 ms budget) so input/paint stay smooth. For each row it calls
+(8 ms budget, with a 64-row ceiling as a backstop) so input/paint stay smooth. For each row it calls
 `applyRowElementAttributes()`.
 
 `applyRowElementAttributes()` ([Et2DatagridRowRenderer.ts:465](Et2DatagridRowRenderer.ts#L465))
