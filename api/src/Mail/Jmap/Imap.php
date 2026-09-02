@@ -2593,7 +2593,20 @@ class Imap extends Jmap\Base
 					{
 						throw new \Exception("Message '$emailId' not found in '$sourceFolder'!");
 					}
-					$mailer->setBasePart(\Horde_Mime_Part::parseMessage($rawStored, ['forcemime' => true]));
+					$parsedBase = \Horde_Mime_Part::parseMessage($rawStored, ['forcemime' => true]);
+					// Api\Mailer::send()'s own "sign needs 7bit encoding" safety check
+					// ($this->_base->getMetadata('X-EGroupware-Smime-signed')) only ever sees metadata
+					// set on THIS EXACT object instance - signMIMEPart() set it on the ORIGINAL part
+					// that's long gone by now, and parseMessage() above built a completely fresh
+					// object with no memory of it. Found live 2026-09-02 (ralf: a real shim-sent
+					// signed message arrived flagged "verification failed - this message may have
+					// been tampered with", not merely an untrusted self-signed CA): without this,
+					// Horde_Mime_Part::send()'s own SMTP-transport encode selection falls through to
+					// its 8BITMIME-capability check instead, re-encoding the (already correctly
+					// quoted-printable-encoded, per what was actually signed) content as raw 8bit -
+					// different bytes than what the signature covers, breaking it outright.
+					$parsedBase->setMetadata('X-EGroupware-Smime-signed', true);
+					$mailer->setBasePart($parsedBase);
 				}
 				$mailer->send();
 				// only now - see this method's own docblock for why not before send()
