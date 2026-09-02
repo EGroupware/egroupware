@@ -58,8 +58,16 @@ export class Et2DatagridRowRenderer
 	 * committing half of the measurement latches an embedded grid's row pitch for
 	 * good, so before that convergence check existed this locked in a too-short
 	 * height with nothing left to correct it.
+	 *
+	 * Back at 8 for now. 64 broke filemanager's expandable subgrids: expanding a row
+	 * produced no scrollbar when the parent's own rows had not needed one, and rows
+	 * drew over each other. _setRowExpanded() has no height sync of its own - the only
+	 * caller of _scheduleRowsMinHeightSync() is the upgrade settle - so reserving space
+	 * for an expanded branch depended on the drip making that settle run over and over.
+	 * Draining in one frame runs it once and the gap shows. Give expansion its own
+	 * height sync, then raise this again.
 	 */
-	private _rowUpgradeBatchSize : number = 64;
+	private _rowUpgradeBatchSize : number = 8;
 	/** Per-frame time budget (ms) for row widget upgrades to avoid long tasks on the main thread. */
 	private _rowUpgradeFrameBudgetMs : number = 8;
 	private _rowWidgetsUpgradedFrame : number | null = null;

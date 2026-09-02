@@ -3119,6 +3119,91 @@ describe("Et2Datagrid virtual height stability", () =>
 	 * Pass: the parent body still has a scrollbar-sized scroll range after the
 	 * child grid reports its height.
 	 */
+	/**
+	 * Contract: expanding a row into an embedded child grid taller than the remaining
+	 * viewport must give the parent a scroll range, even when the parent's own rows
+	 * fitted without one. Reported from filemanager: expanding a subgrid produced no
+	 * scrollbar, and rows drew on top of each other because the reserved height never
+	 * grew to cover the expanded branch.
+	 *
+	 * Setup: a parent grid with few enough rows to fit its viewport (asserted, so the
+	 * fixture cannot silently start out scrollable), then one row expanded into an
+	 * asynchronously loaded 50-row embedded child.
+	 *
+	 * Pass: after the child load and height sync settle, the parent body's scrollHeight
+	 * exceeds its clientHeight.
+	 */
+	it("gives a non-scrollable parent a scroll range when an expanded child needs one", async() =>
+	{
+		const host = document.createElement("div");
+		host.style.height = "400px";
+		host.style.width = "800px";
+		document.body.appendChild(host);
+
+		const childRows = Array.from({length: 50}, (_v, index) => ({id: `child-newscroll-${index}`, label: `Child ${index}`}));
+		const childRowData = new Map(childRows.map((row) => [row.id, row]));
+		const columns = [{key: "label", title: "Label", width: "1fr"}] as any;
+		const childProvider = createDatagridDataProvider({
+			fetchPage: async(start : number, pageSize : number) => ({
+				rows: childRows.slice(start, start + pageSize),
+				total: 50
+			}),
+			getRowData: (rowId : string) => childRowData.get(rowId),
+			getQuerySignature: () => "expanded-child-new-scroll"
+		});
+		const parent = createDatagrid();
+		parent.style.height = "100%";
+		parent.columns = columns;
+		parent.templateData = {columns} as any;
+		// Few enough rows that the parent starts without a scrollbar.
+		parent.setInitialRows(Array.from({length: 3}, (_v, index) => ({
+			id: `row-${index}`,
+			label: `Parent ${index}`,
+			is_parent: index === 0
+		})));
+		parent.total = 3;
+		host.appendChild(parent);
+		await parent.updateComplete;
+		await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+
+		const parentBody = parent.shadowRoot!.querySelector(".dg-body") as HTMLElement;
+		assert.isAtMost(parentBody.scrollHeight, parentBody.clientHeight + 1,
+			"fixture precondition: parent must start without a scroll range");
+
+		parent.expansionConfig = {
+			isExpandable: (row) => !!row?.data?.is_parent,
+			renderExpandedContent: () => html`
+				<et2-datagrid
+						embedded-virtualized
+						no-visible-header
+						.columns=${columns}
+						.templateData=${{columns} as any}
+						.dataProvider=${childProvider as any}
+				></et2-datagrid>
+			`,
+			expandedRowIds: new Set(["row-0"])
+		};
+		await parent.updateComplete;
+		const expandedRow = await waitForExpandedRow(parent, "row-0");
+		const child = expandedRow!.querySelector("et2-datagrid") as Et2Datagrid;
+		const loaded = new Promise<void>((resolve) =>
+		{
+			child.addEventListener("et2-loading-done", () => resolve(), {once: true});
+		});
+		await child.reload();
+		await loaded;
+		// Give the height-reservation passes room to settle.
+		for(let i = 0; i < 40 && parentBody.scrollHeight <= parentBody.clientHeight; i++)
+		{
+			await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
+		}
+
+		assert.isAbove(parentBody.scrollHeight, parentBody.clientHeight,
+			"expanding a tall child must give the parent a scroll range");
+
+		host.remove();
+	});
+
 	it("preserves the parent scrollbar when expanding a row in an already scrollable grid", async() =>
 	{
 		const host = document.createElement("div");
