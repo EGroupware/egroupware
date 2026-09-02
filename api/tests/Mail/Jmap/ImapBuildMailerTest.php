@@ -318,4 +318,50 @@ class ImapBuildMailerTest extends Api\LoggedInTest
 		$this->assertMatchesRegularExpression(
 			'/^References: <first@example\.org> <original-message-id@example\.org>/mi', $raw);
 	}
+
+	/**
+	 * doc/ai/projects/mail-compose-jmap-migration.md's S/MIME encrypt-only/sign+encrypt design
+	 * (2026-08-27): createDraftEmail()'s bodyOverride swaps a `{type: 'application/pkcs7-mime',
+	 * blobId}` single opaque leaf in for bodyValues/textBody/htmlBody entirely - no bodyValues at
+	 * all, so $collect()'s own convention (a blobId part IS an attachment unless its partId has a
+	 * matching bodyValues entry) routes it into $attachments, not setBody()/setHtmlBody().
+	 *
+	 * Investigated live 2026-09-02 (ralf: "look into" whether encrypt-only/sign+encrypt actually
+	 * work against the IMAP-shim account, not yet live-tested there) - found here instead: the
+	 * resulting message's own base part is NOT the pkcs7-mime entity directly. Api\Mailer::_send()
+	 * (called by getRaw()'s own null-transport fallback, since buildMailerFromEmailProperties()
+	 * never touches $_base directly) always wraps $this->_parts in a fresh multipart/mixed
+	 * container together with $body - a plain `new Horde_Mime_Part()` built unconditionally even
+	 * when neither _body nor _htmlBody was ever set, and `if ($body) {...}` is unconditionally true
+	 * for that object regardless of its (empty) actual content, PHP objects being truthy
+	 * unconditionally. So a Stalwart-shaped {type, blobId} swap - meant to be encrypted mail's
+	 * ENTIRE body, not one attachment among others - ends up nested one level deeper than intended:
+	 * `multipart/mixed` containing a blank leading text/plain leaf PLUS the real pkcs7-mime part,
+	 * rather than the message's own top-level Content-Type simply BEING application/pkcs7-mime.
+	 *
+	 * Not yet fixed - filed here as a real, reproducible finding for the next S/MIME follow-up
+	 * (buildMailerFromEmailProperties() likely needs its own single-opaque-leaf special case,
+	 * mirroring smimeEncryptEmailProperties()'s TYPE_SIGN "whole message" special case, rather than
+	 * relying on the generic attachment path for this shape).
+	 */
+	public function testSmimeEncryptedBodyOverrideDoesNotProduceOpaqueTopLevelPart()
+	{
+		$blobId = $this->uploadBlob('opaque pkcs7-mime bytes (would be real ciphertext live)');
+		$email = [
+			'from' => [['email' => 'sender@example.org']],
+			'to' => [['email' => 'recipient@example.org']],
+			'subject' => 'S/MIME encrypted',
+			'bodyStructure' => ['type' => 'application/pkcs7-mime', 'blobId' => $blobId],
+		];
+		$raw = $this->invokeBuildMailer($email)->getRaw(false);
+		$structure = $this->parse($raw);
+
+		// documents the CURRENT (undesired) behaviour - update this test once fixed, rather than
+		// silently starting to fail
+		$this->assertEquals('multipart/mixed', strtolower($structure->getType()),
+			'known bug: the message is not yet top-level application/pkcs7-mime directly');
+		$pkcs7Part = $this->findPart($structure, fn($p) => strtolower($p->getType()) === 'application/pkcs7-mime');
+		$this->assertNotNull($pkcs7Part, 'the pkcs7-mime part must exist SOMEWHERE in the structure');
+		$this->assertSame('opaque pkcs7-mime bytes (would be real ciphertext live)', $pkcs7Part->getContents());
+	}
 }
