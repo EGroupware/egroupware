@@ -319,6 +319,12 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 	private _embeddedChildScrollSettleTimer : number | null = null;
 	private _embeddedSelfScrollSyncFrame : number | null = null;
 	private _rowsMinHeightFrame : number | null = null;
+	/**
+	 * Scroll extent an expanded branch needs, in px, rendered as a spacer rather than
+	 * written onto the virtualizer's own element. See _expandedBranchSpacerTemplate().
+	 */
+	@state()
+	private _expandedBranchReservePx : number = 0;
 	private _virtualizerLayoutSyncFrame : number | null = null;
 	private _reconnectStuckVirtualizerScheduled : boolean = false;
 	private _templateHandlerListeners : Map<string, EventListener> = new Map();
@@ -1339,12 +1345,15 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		const estimatedVirtualizerHeight = virtualizerHeight || renderedRowsHeight
 		                                  ? 0
 		                                  : this._virtualRowCount() * this.rowHeightEstimatePx;
+		// Deliberately no expanded-branch term: that reservation is the spacer's job
+		// now (see _syncRowsMinHeightForExpandedRow()). Including it here wrote it back
+		// onto the property the virtualizer also owns, which is what made the extent
+		// depend on write order.
 		const height = Math.max(
 			virtualizerHeight || 0,
 			deterministicVirtualHeight,
 			renderedRowsHeight || 0,
-			estimatedVirtualizerHeight || 0,
-			this._cachedExpandedRowsMinHeightFloor(Math.max(virtualizerHeight || 0, estimatedVirtualizerHeight || 0))
+			estimatedVirtualizerHeight || 0
 		);
 		const value = height > 0 ? `${Math.ceil(height)}px` : "";
 		if(rowsBody.style.minHeight !== value)
@@ -2325,14 +2334,51 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		{
 			return;
 		}
-		const explicitHeight = parseFloat(rowsBody.style.height || rowsBody.style.minHeight || "") || 0;
-		const estimatedHeight = this._virtualRowCount() * this.rowHeightEstimatePx;
-		const requiredHeight = Math.ceil(this._cachedExpandedRowsMinHeightFloor(Math.max(explicitHeight, estimatedHeight)));
+		// Computed from data only - row count x pitch plus each open branch's measured
+		// extra. Deliberately not seeded from #rows' current height/min-height as it
+		// used to be: that property is written by the virtualizer too, so reading it
+		// back both made the result depend on write order and double-counted the branch
+		// (measured 1916px where the true extent was 1628px).
+		const requiredHeight = Math.ceil(
+			this._cachedExpandedRowsMinHeightFloor(this._virtualRowCount() * this.rowHeightEstimatePx)
+		);
+		if(!this.embeddedVirtualized)
+		{
+			// Published as state and bound onto the <table> in render(). The old code
+			// wrote it onto #rows.style.min-height - the one property @lit-labs/virtualizer
+			// also owns, and the virtualizer counts an expanded row as a single ordinary
+			// item, so whichever wrote last decided the scroll extent. Observed
+			// oscillating 658 -> 917 -> 695 -> 1916 -> 1657 across one expansion, and
+			// landing low often enough to leave filemanager with no scrollbar and rows
+			// drawn over each other. The table is in flow, is not sized by the
+			// virtualizer, and has no other writer, so the scrollport extent becomes
+			// max(natural table height, this floor) with one owner for each term.
+			if(this._expandedBranchReservePx !== requiredHeight)
+			{
+				this._expandedBranchReservePx = requiredHeight;
+			}
+			return;
+		}
+		// An embedded grid's extent is dictated by the host height its parent applies
+		// (see _embeddedVirtualizedContentHeight(), which already includes this same
+		// branch floor), so it keeps the existing floor write rather than growing
+		// itself - a floor of its own would fight that height and add an inner
+		// scrollbar.
 		const currentMinHeight = parseFloat(rowsBody.style.minHeight || "") || 0;
 		if(requiredHeight > currentMinHeight)
 		{
 			rowsBody.style.minHeight = `${requiredHeight}px`;
 		}
+	}
+
+	/** Scroll extent an open branch needs, as a floor for the row table. */
+	private _expandedBranchTableStyles() : Record<string, string | undefined>
+	{
+		return {
+			minHeight: !this.embeddedVirtualized && !this._printRows && this._expandedBranchReservePx > 0
+					   ? `${this._expandedBranchReservePx}px`
+					   : undefined
+		};
 	}
 
 	/**
@@ -3088,6 +3134,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 		this._completedRequestKeys.clear();
 		this._expandedRowHeightByParentRowId.clear();
 		this._expandedVirtualItemHeights.clear();
+		this._expandedBranchReservePx = 0;
 		this._virtualItems = [];
 		this._virtualItemsSignature = "";
 		this._measuredRowHeightByRowId.clear();
@@ -5763,6 +5810,7 @@ export class Et2Datagrid extends Et2Widget(LitElement)
 						part="table"
 						role="grid"
 						tabindex="-1"
+						style=${styleMap(this._expandedBranchTableStyles())}
 						aria-label=${this.getAttribute("aria-label") || this.getAttribute("label") || "Data grid"}
 						aria-multiselectable=${String(this.selectionMode === "multiple")}
 						aria-colcount=${String((visibleColumns.length || this.columns.length || 1) + 1)}
