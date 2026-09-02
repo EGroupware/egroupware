@@ -98,7 +98,17 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 		super.connectedCallback();
 		this.updateComplete.then(() =>
 		{
-			this.sort = Sortable.create(this.shadowRoot.querySelector('sl-menu'), {
+			if(!this.isConnected)
+			{
+				return;
+			}
+			const menu = this.shadowRoot.querySelector('sl-menu');
+			if(!menu)
+			{
+				return;
+			}
+			this.sort?.destroy();
+			this.sort = Sortable.create(menu, {
 				ghostClass: 'ui-fav-sortable-placeholder',
 				draggable: 'sl-menu-item.column',
 				dataIdAttr: 'value',
@@ -106,6 +116,13 @@ export class Et2ColumnSelection extends Et2InputWidget(LitElement)
 				delay: 25
 			});
 		});
+	}
+
+	disconnectedCallback()
+	{
+		super.disconnectedCallback();
+		this.sort?.destroy();
+		this.sort = undefined;
 	}
 
 	protected render() : TemplateResult
