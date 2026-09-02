@@ -14,11 +14,16 @@ require_once __DIR__ . '/LoggedInTest.php';
 
 /**
  * When the PHP session is closed early (eg. by json.php, to not block other concurrent
- * requests), any Cache::setSession()/getSession()/unsetSession() write must NOT touch
- * $_SESSION directly - $_SESSION is reloaded from storage the next time session_start()
- * runs, silently discarding anything written to it while closed. Cache buffers such
- * writes instead (Cache::$closed_session_writes) and Cache::flush_session_writes()
- * reopens the session and re-applies them.
+ * requests), a Cache::setSession()/getSession()/unsetSession() write must survive an eventual
+ * session_start() reload (which otherwise reloads $_SESSION fresh from storage, discarding
+ * anything written to it in the meantime) - Cache buffers such writes (Cache::
+ * $closed_session_writes) and Cache::flush_session_writes() reopens the session and re-applies
+ * them. Writes are ALSO applied to $_SESSION immediately (not just buffered) so that a
+ * getSession() call later in the SAME still-closed request sees them correctly too (found live
+ * 2026-09-02: Mail\Smime's session-cached passphrase, set and re-read within one json.php
+ * request, silently returned null - see testSameRequestReadAfterWriteWhileClosed()). This is
+ * safe specifically because flush_session_writes() always replays every buffered write back
+ * into $_SESSION after reopening it, regardless of what was in $_SESSION in between.
  *
  * This is the mechanism a naive raw `$_SESSION[...] = ...` write (like the one that broke
  * Collabora editing in 2022, see Session::update_dla()) bypasses entirely - these tests
@@ -40,13 +45,13 @@ class CacheSessionWriteTrackingTest extends LoggedInTest
 		$GLOBALS['egw']->session->commit_session();
 		$this->assertNotSame(PHP_SESSION_ACTIVE, session_status());
 
-		// writes made while closed must not touch $_SESSION directly
+		// writes made while closed are also applied to $_SESSION immediately (see class docblock)
 		Cache::setSession($app, 'set_while_closed', 'value-while-closed');
-		$this->assertArrayNotHasKey('set_while_closed', $_SESSION[Session::EGW_APPSESSION_VAR][$app] ?? []);
+		$this->assertSame('value-while-closed', $_SESSION[Session::EGW_APPSESSION_VAR][$app]['set_while_closed'] ?? null);
 
 		Cache::unsetSession($app, 'open_before_close');
-		$this->assertArrayHasKey('open_before_close', $_SESSION[Session::EGW_APPSESSION_VAR][$app] ?? [],
-			'unsetSession() must not touch $_SESSION directly while closed either');
+		$this->assertArrayNotHasKey('open_before_close', $_SESSION[Session::EGW_APPSESSION_VAR][$app] ?? [],
+			'unsetSession() must apply to $_SESSION immediately while closed too');
 
 		Cache::flush_session_writes();
 		$this->assertSame(PHP_SESSION_ACTIVE, session_status(),
@@ -74,6 +79,33 @@ class CacheSessionWriteTrackingTest extends LoggedInTest
 
 		$this->assertNotSame(PHP_SESSION_ACTIVE, session_status(),
 			'flush_session_writes() reopened the session even though nothing was buffered');
+
+		// re-open for any tests running after this one
+		$GLOBALS['egw']->session->verify($GLOBALS['egw']->session->sessionid, $GLOBALS['egw']->session->kp3);
+	}
+
+	/**
+	 * A getSession() call must see a setSession()/unsetSession() write made moments earlier in
+	 * the SAME still-closed request - not just after an eventual flush_session_writes() reopen.
+	 * Real-world case that surfaced this (2026-09-02): Mail\Smime caches the user's S/MIME
+	 * passphrase via setSession() then re-reads it via getSession() within one json.php send
+	 * request (both while the session stays closed the whole time) - the passphrase was silently
+	 * lost, so the user got re-prompted for it on every send.
+	 */
+	public function testSameRequestReadAfterWriteWhileClosed()
+	{
+		$app = __CLASS__;
+
+		$GLOBALS['egw']->session->commit_session();
+		$this->assertNotSame(PHP_SESSION_ACTIVE, session_status());
+
+		Cache::setSession($app, 'passphrase', 'secret-value');
+		$this->assertSame('secret-value', Cache::getSession($app, 'passphrase'),
+			'setSession() then getSession() in the same closed-session request must round-trip');
+
+		Cache::unsetSession($app, 'passphrase');
+		$this->assertNull(Cache::getSession($app, 'passphrase'),
+			'unsetSession() then getSession() in the same closed-session request must see the removal');
 
 		// re-open for any tests running after this one
 		$GLOBALS['egw']->session->verify($GLOBALS['egw']->session->sessionid, $GLOBALS['egw']->session->kp3);

@@ -615,24 +615,26 @@ class Cache
 		{
 			return false;
 		}
+		// Written to $_SESSION unconditionally (not just while PHP_SESSION_ACTIVE): a closed
+		// session's $_SESSION is otherwise stale for the rest of THIS request too (not just
+		// across a later reopen), eg. a json.php request setSession()-ing then getSession()-ing
+		// the same value while the session stays closed the whole time (real example:
+		// Mail\Smime's cached passphrase) would read back null. Safe to do even though the
+		// session is closed: nothing re-reads $_SESSION from storage until flush_session_writes()
+		// (or a real session_start()) does, and that always replays every buffered write back in
+		// afterwards regardless of what $_SESSION held in between - see flush_session_writes().
+		$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
 		if (session_status() !== PHP_SESSION_ACTIVE)
 		{
 			self::recordClosedSessionWrite($app, $location, $data);
 		}
-		else
-		{
-			$_SESSION[Session::EGW_APPSESSION_VAR][$app][$location] = $data;
-		}
 
 		if ($expiration > 0)
 		{
+			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] = time()+$expiration;
 			if (session_status() !== PHP_SESSION_ACTIVE)
 			{
 				self::recordClosedSessionWrite(self::SESSION_EXPIRATION_PREFIX.$app, $location, time()+$expiration);
-			}
-			else
-			{
-				$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] = time()+$expiration;
 			}
 		}
 
@@ -717,12 +719,11 @@ class Cache
 		if (isset($_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]) &&
 			$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location] < time())
 		{
-			if (session_status() === PHP_SESSION_ACTIVE)
-			{
-				unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location],
-					$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]);
-			}
-			else
+			// see setSession()'s comment: $_SESSION is unset unconditionally, not just while
+			// PHP_SESSION_ACTIVE, so a same-request read while still closed sees it too
+			unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location],
+				$_SESSION[Session::EGW_APPSESSION_VAR][self::SESSION_EXPIRATION_PREFIX.$app][$location]);
+			if (session_status() !== PHP_SESSION_ACTIVE)
 			{
 				self::recordClosedSessionWrite($app, $location, null);
 				self::recordClosedSessionWrite(self::SESSION_EXPIRATION_PREFIX.$app, $location, null);
@@ -732,11 +733,8 @@ class Cache
 		{
 			return false;
 		}
-		if (session_status() === PHP_SESSION_ACTIVE)
-		{
-			unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]);
-		}
-		else
+		unset($_SESSION[Session::EGW_APPSESSION_VAR][$app][$location]);
+		if (session_status() !== PHP_SESSION_ACTIVE)
 		{
 			self::recordClosedSessionWrite($app, $location, null);
 		}
