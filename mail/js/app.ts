@@ -25,6 +25,7 @@ import type {Et2Nextmatch} from "../../api/js/etemplate/Et2Nextmatch/Et2Nextmatc
 import {MailCompose} from "./compose";
 import {isPreferenceOn, JmapBodyResult, JmapMessageReference, JmapUserError, MailJmap} from "./jmap";
 import {renderAttachmentIndex} from "./attachmentIndex";
+import {attachmentSaveUrl, downloadAttachments} from "./attachmentDownload";
 import {buildErrorNode, buildFolderLevel, FolderTreeNode} from "./folderTree";
 // egw/egw_getFramework are ambient globals (declare global {} in egw_global.d.ts,
 // unconditionally included via tsconfig's "**/*.d.ts") - no import needed or possible.
@@ -2074,6 +2075,12 @@ export class MailApp extends EgwApp
 				label: 'Download',
 				icon: 'fileexport',
 				value: 'downloadOneAsFile'
+			},
+			{
+				id: 'downloadAllAsFiles',
+				label: 'Download all attachments',
+				icon: 'file-earmark-arrow-down',
+				value: 'downloadAllAsFiles'
 			},
 			{
 				id: 'saveOneToVfs',
@@ -4687,21 +4694,26 @@ export class MailApp extends EgwApp
 				});
 				break;
 
+			case 'downloadAllAsFiles':
+				this.downloadAllAttachments(Object.values(attachments ?? {}));
+				break;
+
 			case 'downloadOneAsFile':
 			case 'downloadAllToZip':
 				attachment = attachments[row_id];
 				const classicDownload = () =>
 				{
-					let url = this.egw.webserverUrl+'/index.php?';
-					url += new URLSearchParams({
-						menuaction: action === 'downloadOneAsFile' ?
-							'mail.mail_ui.getAttachment' : 'mail.mail_ui.download_zip',
-						mode: 'save',
-						id: attachment.mail_id,
-						part: attachment.partID,
-						is_winmail: attachment.winmailFlag,
-						smime_type: attachment.smime_type ?? ''
-					}).toString();
+					// same per-attachment save URL "Download all attachments" uses for its
+					// classic path, see downloadAllAttachments() below
+					const url = action === 'downloadOneAsFile' ? attachmentSaveUrl(this.egw, attachment) :
+						this.egw.webserverUrl + '/index.php?' + new URLSearchParams({
+							menuaction: 'mail.mail_ui.download_zip',
+							mode: 'save',
+							id: attachment.mail_id,
+							part: attachment.partID,
+							is_winmail: attachment.winmailFlag,
+							smime_type: attachment.smime_type ?? ''
+						}).toString();
 					etemplate2.prototype.download(url);
 				};
 				// Fast client-side JMAP path for a single attachment with a known blobId (set by
@@ -4762,6 +4774,36 @@ export class MailApp extends EgwApp
 				egw.open_link(attachments[row_id].invoice_data, '_blank', '', action, true, attachments[row_id].type);
 				break;
 		}
+	}
+
+	/**
+	 * "Download all attachments": save every attachment of the message as its own file, the
+	 * download counterpart to "Save all attachments to Filemanager" (and the per-file
+	 * alternative to "Save as ZIP").
+	 *
+	 * The loop itself lives in mail/js/attachmentDownload.ts (standalone, so it stays
+	 * unit-testable without importing MailApp) and reports nothing itself - the outcome for all
+	 * files is summarized in a single message here, instead of one message per attachment.
+	 *
+	 * Note browsers ask for permission the first time a site saves several files at once; if the
+	 * user denies it, only the first file arrives, which JS cannot detect - the count in the
+	 * success message is what makes such a partial result visible.
+	 *
+	 * @param attachments attachmentsBlock rows of the message
+	 */
+	private downloadAllAttachments(attachments : any[]) : void
+	{
+		downloadAttachments(attachments, {egw: this.egw, jmap: this.jmap}).then(({downloaded, failed}) =>
+		{
+			if (failed.length)
+			{
+				this.egw.message(this.egw.lang('Could not download %1', failed.join(', ')), 'error');
+			}
+			else if (downloaded > 1)
+			{
+				this.egw.message(this.egw.lang('%1 attachments downloaded', downloaded), 'success');
+			}
+		});
 	}
 
 	/**

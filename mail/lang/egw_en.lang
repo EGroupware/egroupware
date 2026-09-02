@@ -4,6 +4,7 @@
 (no subject)	mail	en	(no subject)
 (not connected)	mail	en	(not connected)
 %1 attachments	mail	en	%1 attachments
+%1 attachments downloaded	mail	en	%1 attachments downloaded
 %1 for all users	mail	en	%1 for all users
 %1 has been added to blacklisted email addresses	mail	en	%1 has been added to blacklisted email addresses
 %1 has been added to whiltelisted email addresses	mail	en	%1 has been added to whiltelisted email addresses
@@ -134,6 +135,7 @@ copy to	mail	en	Copy to
 could not append message:	mail	en	Could not append Message:
 could not attach '%1': the original message is no longer available (deleted or moved).	mail	en	Could not attach '%1': the original message is no longer available (deleted or moved).
 could not decrypt stored private key, wrong passphrase?	mail	en	Could not decrypt stored private key, wrong passphrase?
+could not download %1	mail	en	Could not download %1
 could not generate certificate!	mail	en	Could not generate certificate!
 could not generate csr.	mail	en	Could not generate CSR.
 could not read uploaded certificate!	mail	en	Could not read uploaded certificate!
@@ -206,6 +208,7 @@ don't use draft folder	mail	en	Don't use draft folder
 don't use sent	mail	en	Don't use Sent
 don't use template folder	mail	en	Don't use Template Folder
 don't use trash	mail	en	Don't use Trash
+download all attachments	mail	en	Download all attachments
 download attachments	mail	en	Download attachments
 draft	mail	en	Draft
 draft folder	mail	en	Draft Folder
