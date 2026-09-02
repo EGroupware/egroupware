@@ -45,6 +45,12 @@ clearly-scoped change elsewhere (e.g. an import path).
 | bookmarks | done | 218 lines. `bookmarks/` is its own nested git repo. |
 | collabora | done | Largest of this batch (961 lines). `collabora/` is its own nested git repo. |
 | filemanager | done | `filemanager/js/app.ts` (19 lines) was already fully modern - just an import + `app.classes.filemanager` registration, nothing to change. `filemanager/js/filemanager.ts` (the real app-controller file it delegates to) is also done - see below. |
+| resources | done | 159 -> 160 lines, main repo. 0 `var`, 1 jQuery use, 4 TS errors, 0 `sendRequest()`, 1 `function(){}.bind(this)` - see below. |
+| webauthn | done | 161 -> 163 lines. `webauthn/` is its own nested git repo. 0 `var`/jQuery/`sendRequest()`, 4 TS errors, 1 `function(){}` - see below. |
+| guacamole | done | 109 -> 107 lines. `guacamole/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import/redundant `declare global` cleanup and 2 TS errors needed fixing - see below. |
+| rag | done | 72 -> 73 lines. `rag/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import and 1 TS error needed fixing - see below. |
+| preferences | done | 62 -> 62 lines, main repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import, a leftover unnecessary `@ts-ignore`, and 1 TS error needed fixing - see below. |
+| openid | done | 33 -> 34 lines. `openid/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import and 1 TS error needed fixing - see below. |
 
 **Nested git repos:** `tracker/` and `status/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
@@ -858,3 +864,104 @@ wraps the callback and invokes it via `_callback.call(this, ...)` with its own `
 `my_data`) - an arrow function would ignore that `.call()`-supplied context entirely and capture the
 outer method's `this` instead, a real behavior change. Added a comment explaining why, matching the
 project's established convention for documented exceptions.
+
+## resources/js/app.ts, webauthn/js/app.ts, guacamole/js/app.ts, rag/js/app.ts, preferences/js/app.ts, openid/js/app.ts (done)
+
+Six small files done together in one pass (main repo: `resources`, `preferences`; own nested git repos:
+`webauthn`, `guacamole`, `rag`, `openid` - same shape as `tracker`/`status`/etc., `cd` into each to
+see/commit/push). All six were already close to fully modern - none had `var`, jQuery, `sendRequest()`,
+or a `function(){}`/`self`/`that` closure needing conversion except one apiece in `resources`/`webauthn`
+- most of the work was the by-now-familiar ambient-global import removal (`egw`/`app` are declared in
+`egw_global.d.ts`'s `declare global {}`, unconditionally included via tsconfig's `**/*.d.ts` - importing
+them from `egw_global` is both wrong for TS, `TS2305`, and unnecessary) plus a handful of small
+per-file TS-error fixes. None of the six use any legacy `et2_*` widget imports at all, so goal 1 was a
+no-op for this batch.
+
+### resources/js/app.ts
+
+Baseline: 0 `var`, 1 jQuery use, 4 TS errors, 0 `sendRequest()`, 1 `function(){}.bind(this)`.
+
+- Removed `import {egw} from ".../egw_global"` (unused named import, `egw` is ambient) - same fix as
+  every other file below.
+- **`app.calendar.state`/`.update_state()` don't exist on type `EgwApp`** (3 sites: `view_calendar()`'s
+  `show_calendar` closure, `sidebox_change()`'s `owner` merge, and its `update_state()` call): `app` is
+  typed `{classes: any, [propName: string]: EgwApp}`, so `app.calendar` types as plain `EgwApp` - the
+  same EPL/stylite-blind-spot-shaped gap as `app.stylite`/`app.status`/`app.rocketchat`/`app.policy`
+  elsewhere in this project, except `calendar` is a real main-repo app with its own exported, properly
+  typed class (`export class CalendarApp extends EgwApp` in `calendar/js/app.ts`, confirmed to declare
+  both `state` and `update_state()`). Rather than the usual `<any>` cast, imported `import type
+  {CalendarApp} from "../../calendar/js/app"` and cast `<CalendarApp>app.calendar` at each site - matches
+  an existing precedent already in the codebase (`calendar/js/et2_widget_planner.ts:2004` does the exact
+  same `<CalendarApp>app.calendar` cast), and is more precise than a blanket `<any>` since a real typed
+  class already exists.
+- jQuery: `jQuery.extend([], app.calendar.state.owner) || []` (`sidebox_change()`) -> spread,
+  `[...((<CalendarApp>app.calendar).state.owner || [])]` - also drops the now-visibly-dead `|| []` after
+  the original `jQuery.extend()` call (that call always returns its own first-arg target, so the
+  fallback could never actually fire; the new spread's own `|| []` on the *input* replaces it correctly).
+- `view_calendar()`'s `let show_calendar = function(res_ids) {...}.bind(this);` -> arrow function
+  (`const show_calendar = (res_ids) => {...};`), dropping the now-redundant `.bind(this)` - the callback
+  only ever reads `this.egw`/enclosing locals, never relies on being invoked as a method.
+
+### webauthn/js/app.ts
+
+Baseline: 0 `var`/jQuery/`sendRequest()`, 4 TS errors, 1 `function(){}`.
+
+- Removed `import { app } from '../../api/js/jsapi/egw_global'` (ambient-global fix).
+- **`navigator.credentials.create()`'s resolved `data` typed as generic `Credential`** (3 errors:
+  `.rawId`, `.response.clientDataJSON`, `.response.attestationObject` don't exist on that base type):
+  annotated the `.then()` callback param as `(data : PublicKeyCredential)` for the first (registration
+  always resolves a `PublicKeyCredential` per the WebAuthn spec), which fixed `.rawId`/`.id`/`.type`.
+  `.response` still typed as the more generic base `AuthenticatorResponse` (which only declares
+  `clientDataJSON`, not `attestationObject`) even off a `PublicKeyCredential` - added a second,
+  file-local cast (`const response = <AuthenticatorAttestationResponse>data.response`) with a comment
+  explaining why (registration/`create()` always returns an *attestation* response, DOM lib's typing is
+  just more generic than the runtime guarantee), used for both `.clientDataJSON`/`.attestationObject`
+  reads instead of casting at each property access.
+- `register()`'s `Uint8Array.from(..., function(c){ return c.charCodeAt(0); })` -> arrow
+  (`(c) => c.charCodeAt(0)`) - matches the two sibling `Uint8Array.from()` calls a few lines above/below
+  that already used an arrow for the identical mapper.
+
+### guacamole/js/app.ts
+
+Baseline: already 0 `var`/jQuery/`sendRequest()`/`function(){}` - only 2 TS errors and the ambient-global
+import needed fixing.
+
+- Removed `import {egw, app} from "../../api/js/jsapi/egw_global"` (`TS2305` x2, ambient-global fix) -
+  **and** the file's own local `declare global { var framework; }`, which duplicated `framework`'s
+  existing ambient declaration in `egw_global.d.ts` (`var framework : any;`) - not itself a TS error
+  (compatible redeclaration), but dead weight once the file was already being touched for the identical
+  fix on `egw`/`app`, so folded into one comment covering all three ambient globals rather than leaving
+  a redundant local re-declaration behind.
+
+### rag/js/app.ts
+
+Baseline: already 0 `var`/jQuery/`sendRequest()`/`function(){}` - only 1 TS error (`import {app} from
+".../egw_global"`, `TS2305`) and the ambient-global import needed fixing. `et2_ready()`'s
+`super.et2_ready.apply(this, arguments)` and `search()`'s `this.nm.applyFilters(...)` were already
+clean/typed with no errors, nothing else to change.
+
+### preferences/js/app.ts
+
+Baseline: already 0 `var`/jQuery/`sendRequest()`/`function(){}` - only 1 TS error and the ambient-global
+import needed fixing.
+
+- Removed `import {egw} from "../../api/js/jsapi/egw_global"` - this one was a genuinely **unused**
+  import even before the ambient-global fix (only `this.egw`, the instance property, is used in the
+  file; the bare `egw` global was never referenced) - same ambient-global reasoning applies regardless.
+- Removed a leftover `// @ts-ignore` sitting directly above `app.classes.preferences = PreferencesApp;`
+  - with `app` correctly resolving as the ambient global (same as every other file in this batch, none
+    of which needed a `@ts-ignore` for their own `app.classes.X = ...` line), the suppressed error no
+    longer exists, so the directive was pure vestigial noise, not a documented exception for anything
+    in the 6 goals - removed rather than left in place.
+- `Et2Dialog` (imported as a value, `import {Et2Dialog} from ".../Et2Dialog/Et2Dialog"`) is never
+  referenced anywhere in the file - a pre-existing, unrelated dead import (not a legacy `et2_*` name
+  needing goal-1 conversion, already the modern web-component class) - left alone, out of scope for
+  this pass (`noUnusedLocals` isn't enabled in this repo's `tsconfig.json`, so it wasn't flagged as a
+  TS error either).
+
+### openid/js/app.ts
+
+Smallest file in this batch (33 -> 34 lines). Baseline: already 0 `var`/jQuery/`sendRequest()`/
+`function(){}` - only 1 TS error (`import {app} from ".../egw_global"`, `TS2305`) and the ambient-global
+import needed fixing. `(<AdminApp>app.admin)?.enableAppToolbar(et2, name)` was already correctly typed
+via the existing `import type {AdminApp} from "../../admin/js/app"` - no change needed there.

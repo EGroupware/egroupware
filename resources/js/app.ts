@@ -10,7 +10,9 @@
 
 import {EgwApp} from "../../api/js/jsapi/egw_app";
 import {fetchAll} from "../../api/js/etemplate/et2_extension_nextmatch_actions.js";
-import {egw} from "../../api/js/jsapi/egw_global";
+import type {CalendarApp} from "../../calendar/js/app";
+// egw is an ambient global (declare global {} in egw_global.d.ts, unconditionally included
+// via tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * UI for resources
@@ -59,15 +61,15 @@ class resourcesApp extends EgwApp
 		let nm = _action.parent.data.nextmatch;
 		let selection = nm.getSelection();
 
-		let show_calendar = function(res_ids) {
+		const show_calendar = (res_ids) => {
 			egw(window).message(this.egw.lang('%1 resource(s) View calendar',res_ids.length));
-			let current_owners = (app.calendar ? app.calendar.state.owner || [] : []).join(',');
+			let current_owners = (app.calendar ? (<CalendarApp>app.calendar).state.owner || [] : []).join(',');
 			if(current_owners)
 			{
 				current_owners += ',';
 			}
 			this.egw.open_link('calendar.calendar_uiviews.index&view=planner&sortby=user&owner='+current_owners+'r'+res_ids.join(',r')+'&ajax=true');
-		}.bind(this);
+		};
 
 		if(selection && selection.all)
 		{
@@ -98,7 +100,7 @@ class resourcesApp extends EgwApp
 		if(ev[0] != 'r') {
 			widget.setSubChecked(ev,widget.getValue()[ev].value || false);
 		}
-		let owner = jQuery.extend([],app.calendar.state.owner) || [];
+		let owner = [...((<CalendarApp>app.calendar).state.owner || [])];
 		for(let i = owner.length-1; i >= 0; i--)
 		{
 			if(owner[i][0] == 'r')
@@ -116,7 +118,7 @@ class resourcesApp extends EgwApp
 				owner.push(key);
 			}
 		}
-		app.calendar.update_state({owner: owner});
+		(<CalendarApp>app.calendar).update_state({owner: owner});
 	}
 
 	/**
