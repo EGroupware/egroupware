@@ -632,6 +632,9 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
             this._addCopyPaste(_links, _selected);
         }
 
+        // Automatically add a "Link" action, right below Paste, for apps that support linking
+        this._addLinkAction(_links, _selected);
+
         for (const k in _links) {
 			_links[k].actionObj.appendToTree(tree);
 		}
@@ -944,6 +947,79 @@ export class EgwPopupActionImplementation implements EgwActionImplementation {
                     }
                 }
             }
+        }
+    };
+
+    /**
+     * Automatically add a "Link" action to the popup menu, for any entry whose app supports
+     * linking - gated on egw.link_get_registry(), same synchronous, pre-loaded capability check
+     * Et2Nextmatch already uses for its own link-related UI. Mail is excluded purely by this
+     * capability check (its search_link() hook registers neither 'query' nor 'title'), no
+     * hardcoded app-name exception needed.
+     *
+     * The gate is per-APP, not per-row: a selection comes from one nextmatch/app, so either all
+     * of it qualifies or none of it does. Individual per-entry failures (eg. no edit-rights on
+     * one particular selected entry) are only discovered - and reported - once the user actually
+     * tries to link/unlink, inside LinkAction.
+     *
+     * @param {object[]} _links Actions for inclusion in the menu
+     * @param {EgwActionObject[]} _selected Currently selected entries
+     */
+    private _addLinkAction = (_links, _selected : EgwActionObject[]) =>
+    {
+        const app = (_selected[0]?.id || "").split("::")[0];
+        if(!app || !(window.egw.link_get_registry?.(app, 'query') || window.egw.link_get_registry?.(app, 'title')))
+        {
+            return;
+        }
+
+        const mgr = _selected[0].manager;
+        let link_action = mgr.getActionById('egw_link');
+        if(link_action == null)
+        {
+            link_action = mgr.addAction('popup', 'egw_link', window.egw.lang('Link'), window.egw.image('link'),
+                (action, selected) =>
+                {
+                    // Dynamic import, not a static one: a static import of Et2Dialog's widget
+                    // graph from here re-triggers the et2_core_widget circular-import TDZ class
+                    // of bug ("Et2Widget accessed before initialization" in Et2Image.ts) - this
+                    // module is foundational enough (imported before most et2 widgets exist yet)
+                    // that pulling in the whole dialog/widget graph at its top level reorders
+                    // initialization. Deferring the import until the action actually runs avoids
+                    // it entirely, and only loads the dialog code for users who use "Link".
+                    import("../etemplate/Et2Link/LinkAction").then(async({LinkAction}) =>
+                    {
+                        // "Select all" only ever materializes the visible/virtualized rows into
+                        // `selected` (Et2NextmatchActionController keeps allSelected as a separate
+                        // flag, exactly because a virtualized grid never instantiates an action
+                        // object for every un-rendered row) - so acting on `selected` as-is here
+                        // would silently only (un)link whatever happened to be on screen. Resolve
+                        // the real full id list the same way addressbook/js/app.ts's own
+                        // _fetchAllSelected() does for its bulk actions.
+                        const nextmatch : any = mgr.data?.nextmatch;
+                        const selection = nextmatch?.getSelection?.();
+                        let effectiveSelected = selected;
+                        if(selection?.all && typeof nextmatch.fetchAllIds === "function")
+                        {
+                            const rowApp = (selected[0]?.id || "").split("::")[0];
+                            const ids : string[] = await nextmatch.fetchAllIds();
+                            effectiveSelected = ids.map((id) => ({id: rowApp + "::" + id}));
+                        }
+                        LinkAction.open(window.egw, effectiveSelected);
+                    });
+                }, true);
+            link_action.group = 2.5;
+            link_action.order = 9.5;
+        }
+
+        if(typeof _links[link_action.id] == 'undefined')
+        {
+            _links[link_action.id] = {
+                "actionObj": link_action,
+                "enabled": true,
+                "visible": true,
+                "cnt": 0
+            };
         }
     };
     private _context: any;

@@ -570,7 +570,15 @@ export class Et2Dialog extends Et2Widget(SlDialog)
 	_onClick(ev : MouseEvent)
 	{
 		// @ts-ignore
-		this._button_id = ev.target?.getAttribute("button_id") ? parseInt(ev.target?.getAttribute("button_id")) : (ev.target?.getAttribute("id") || null);
+		const rawButtonId : string = ev.target?.getAttribute("button_id");
+		// Only the built-in Et2Dialog.*_BUTTON constants are numbers - a caller-defined custom
+		// button (eg. a "dont_ask_again"-style extra action, see egw_timer.ts) can use any
+		// non-numeric string as its button_id. parseInt() used to run unconditionally, silently
+		// turning any such string into NaN and making it indistinguishable from any OTHER custom
+		// string id to a callback comparing `button === "..."` - only parseInt() an actually
+		// numeric value, keep anything else as the original string.
+		// @ts-ignore
+		this._button_id = rawButtonId ? (/^-?\d+$/.test(rawButtonId) ? parseInt(rawButtonId) : rawButtonId) : (ev.target?.getAttribute("id") || null);
 
 		// we need to consider still buttons used in dialogs that may actually submit and have server-side interactions(eg.vfsSelect)
 		if(!ev.target?.getInstanceManager()?._etemplate_exec_id)

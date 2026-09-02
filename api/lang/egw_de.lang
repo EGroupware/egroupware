@@ -12,6 +12,7 @@
 %1 more...	common	de	%1 mehr ...
 %1 not implemented for %2!	common	de	%1 ist nicht implementiert für '%2'
 %1 proxy of %2	common	de	%1 beauftragt von %2
+%1 selected entries	common	de	%1 ausgewählte Einträge
 %1 setting "%2" = %3 disallows access via http!	admin	de	%1 Einstellung "%2" = %3 verbietet den Zugriff über http!
 %1 to sync	groupdav	de	%1 zum synchronisieren
 %1, duplicate id	common	de	%1, doppelte ID
@@ -339,6 +340,8 @@ copy to clipboard	common	de	In die Zwischenablage kopieren
 costa rica	common	de	COSTA RICA
 cote d ivoire	common	de	COTE D IVOIRE
 could not contact server. operation timed out!	common	de	Konnte Server nicht kontaktieren. Zeitüberschreitung!
+could not link: %1	common	de	Konnte nicht verknüpfen: %1
+could not unlink: %1	common	de	Konnte nicht lösen: %1
 create	common	de	Erstellen
 create a new table for the application	common	de	Neue Tabelle für die Anwendung anlegen
 create directory	common	de	Ordner erstellen
@@ -813,6 +816,7 @@ link is appended to mail allowing recipients to download or modify up to date ve
 link is appended to mail allowing recipients to download up to date version of files	common	de	Link wird an die E-Mail angefügt und erlaubt Adressaten den aktuellen Inhalt der an gehangenen Dateien herunter zu laden
 link target %1 not found!	common	de	Keine Verknüpfung zu %1 gefunden!
 link title of current record	common	de	Link-Titel des aktuellen Datensatzes
+link to	common	de	Verknüpfen mit
 link to each entry	common	de	Verknüpfung zum einzelnen Eintrag
 linkapps	common	de	Verknüpfung Anwendungen
 linked	common	de	Verknüpft
@@ -975,6 +979,7 @@ norway	common	de	NORWEGEN
 not	common	de	nicht
 not a user yet? register now	common	de	Noch kein Benutzer? Registrieren Sie sich jetzt.
 not assigned	common	de	Nicht zugewiesen
+not linked	common	de	Nicht verknüpft
 not null	common	de	NOT NULL
 not readable %1 entry of user %2	common	de	Nicht lesbarer %1 Eintrag des Benutzers %2
 not supported by current application!	common	de	Für diese Anwendung nicht möglich!
@@ -1133,6 +1138,7 @@ reject	common	de	Zurückweisen
 remember me	common	de	An mich erinnern
 remember me for %1	common	de	An mich erinnern für %1
 remove	api	de	Entfernen
+remove	common	de	Entfernen
 remove row (can not be undone!!!)	common	de	Löscht eine Zeile (NICHT rückgängig zu machen)
 remove selected accounts	common	de	Ausgewählte Benutzer entfernen
 remove shortcut	common	de	Abkürzung entfernen
@@ -1472,6 +1478,7 @@ united states	common	de	VEREINIGTE STAATEN VON AMERIKA
 united states minor outlying islands	common	de	UNITED STATES MINOR OUTLYING ISLANDS
 unknown	common	de	Unbekannt
 unlink	common	de	Lösen
+unlinked	common	de	Gelöst
 update	common	de	Aktualisieren
 update a single entry by passing the fields.	common	de	Aktualisiert einen einzelnen Eintrag über seine Felder
 update from version '%s' to	common	de	Update von Version '%s' auf
