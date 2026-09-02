@@ -10,10 +10,9 @@
  */
 
 
-import "../../vendor/bower-asset/jquery/dist/jquery.min.js";
-//import "../../vendor/bower-asset/jquery-ui/jquery-ui.js";
 import {EgwApp} from '../../api/js/jsapi/egw_app';
-import {egw} from "../../api/js/jsapi/egw_global";
+// egw is an ambient global (declare global {} in egw_global.d.ts, unconditionally included via
+// tsconfig's "**/*.d.ts") - no import needed or possible.
 
 /**
  * JS for Import/Export
@@ -60,18 +59,23 @@ class ImportExportApp extends EgwApp
 			if(!this.et2.getArrayMgr("content").getEntry("definition"))
 			{
 				// et2 doesn't understand a disabled button in the normal sense
-				jQuery(this.et2.getDOMWidgetById('export').getDOMNode()).attr('disabled','disabled');
-				jQuery(this.et2.getDOMWidgetById('preview').getDOMNode()).attr('disabled','disabled');
+				// getDOMWidgetById() is typed as returning "typeof Et2Widget" (the mixin function)
+				// instead of a widget instance - a known framework typing bug (see
+				// doc/ai/projects/app-ts-modernization.md) - <any> cast to work around it
+				(<any>this.et2.getDOMWidgetById('export')).getDOMNode().setAttribute('disabled', 'disabled');
+				(<any>this.et2.getDOMWidgetById('preview')).getDOMNode().setAttribute('disabled', 'disabled');
 			}
 			if(!this.et2.getArrayMgr("content").getEntry("filter"))
 			{
-				jQuery('input[value="filter"]').parent().hide();
+				document.querySelectorAll<HTMLElement>('input[value="filter"]').forEach(el => {
+					if(el.parentElement) el.parentElement.style.display = 'none';
+				});
 			}
 
 			// Disable / hide definition filter if not selected
 			if(this.et2.getArrayMgr("content").getEntry("selection") != 'filter')
 			{
-				jQuery('div.filters').hide();
+				document.querySelectorAll<HTMLElement>('div.filters').forEach(el => el.style.display = 'none');
 			}
 		}
 		else if(_name == "importexport.import_dialog")
@@ -105,55 +109,56 @@ class ImportExportApp extends EgwApp
 
 	export_preview(event, widget)
 	{
-		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
+		const preview = (<any>widget.getRoot().getWidgetById('preview_box')).getDOMNode();
 		// TD gets the class too
-		preview.parent().show();
-		jQuery('.content', preview).empty()
-			.append('<div class="loading" style="width:100%;height:100%"></div>');
+		if(preview.parentElement) preview.parentElement.style.display = '';
+		const content = preview.querySelector('.content');
+		if(content)
+		{
+			content.replaceChildren();
+			content.insertAdjacentHTML('beforeend', '<div class="loading" style="width:100%;height:100%"></div>');
+		}
 
-		preview
-			.show(100, jQuery.proxy(function()
-			{
-				widget.clicked = true;
-				widget.getInstanceManager().submit(false, true);
-				widget.clicked = false;
-			}, this));
+		// jQuery's animated .show(100, callback) has no simple native equivalent (a CSS-transition
+		// based rewrite is out of scope for this pass) - show immediately and run the callback right
+		// away instead of after the 100ms animation
+		preview.style.display = '';
+		widget.clicked = true;
+		widget.getInstanceManager().submit(false, true);
+		widget.clicked = false;
 		return false;
 	}
 
 	import_preview(event, widget)
 	{
-		var test = widget.getRoot().getWidgetById('dry-run');
+		const test = widget.getRoot().getWidgetById('dry-run');
 		if(test.getValue() == test.options.unselected_value)
 		{
 			return true;
 		}
 
 		// Show preview
-		var preview = jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode());
+		const preview = (<any>widget.getRoot().getWidgetById('preview_box')).getDOMNode();
 		// TD gets the class too
-		preview.show();
-		jQuery('.content', preview).empty().text(this.egw.lang("Please wait..."));
-		preview
-			.removeClass("hideme")
-			.addClass('loading')
-			.show(100, jQuery.proxy(function()
-			{
-				widget.clicked = true;
-				widget.getInstanceManager().submit(false, true);
-				widget.clicked = false;
-				jQuery(widget.getRoot().getWidgetById('preview_box').getDOMNode())
-					.removeClass('loading');
-			}, this));
+		preview.style.display = '';
+		const content = preview.querySelector('.content');
+		if(content) content.textContent = this.egw.lang("Please wait...");
+		preview.classList.remove("hideme");
+		preview.classList.add('loading');
+		// jQuery's animated .show(100, callback) dropped, see export_preview() above
+		widget.clicked = true;
+		widget.getInstanceManager().submit(false, true);
+		widget.clicked = false;
+		preview.classList.remove('loading');
 		return false;
 	}
 
 	closePreview()
 	{
-		const preview = jQuery(this.et2.getWidgetById("preview_box"));
+		const preview = this.et2.getWidgetById("preview_box");
 
 		// TD gets the class too
-		preview.hide();
+		if(preview) (<HTMLElement>(<unknown>preview)).style.display = 'none';
 	}
 
 	progressUpdate(progress : ProgressUpdate)
@@ -183,17 +188,23 @@ class ImportExportApp extends EgwApp
 
 	_doProgressUpdate(progress : ProgressUpdate)
 	{
-		const progress_box = this.et2.getDOMWidgetById("progress_box")
+		// getDOMWidgetById() is typed as returning "typeof Et2Widget" (the mixin function) instead
+		// of a widget instance - same known framework typing bug as et2_ready() above - <any> cast
+		const progress_box = <any>this.et2.getDOMWidgetById("progress_box");
 		progress_box.classList.remove("hideme");
 
-		const preview_box = this.et2.getDOMWidgetById("preview_box")
+		const preview_box = <any>this.et2.getDOMWidgetById("preview_box");
 		preview_box.classList.add("hideme");
 
-		const record = progress_box.getWidgetById("progress_record");
+		// progress_record/sl-progress-bar/import_log are all read/write dynamically at runtime with
+		// no matching typed widget shape (progress_record's .value isn't declared anywhere,
+		// sl-progress-bar isn't an etemplate widget at all) - <any> cast, same as other framework
+		// gaps documented in doc/ai/projects/app-ts-modernization.md
+		const record : any = progress_box.getWidgetById("progress_record");
 		record.value = progress.label || "";
 
 		// sl-progress-bar is not an etemplate widget and chokes the server processing if we put it in the xet
-		let bar = progress_box.querySelector("sl-progress-bar");
+		let bar : any = progress_box.querySelector("sl-progress-bar");
 		if(!bar)
 		{
 			bar = document.createElement("sl-progress-bar");
@@ -205,7 +216,7 @@ class ImportExportApp extends EgwApp
 
 		if(progress.log)
 		{
-			const log = this.et2.getDOMWidgetById("import_log")
+			const log : any = <any>this.et2.getDOMWidgetById("import_log");
 			log.value = log.value + "\n" + progress.log;
 			// Try to scroll to bottom
 			const text = log.shadowRoot.querySelector("textarea");
@@ -215,7 +226,7 @@ class ImportExportApp extends EgwApp
 
 	_closeProgress()
 	{
-		const progress_box = this.et2.getDOMWidgetById("progress_box")
+		const progress_box = <any>this.et2.getDOMWidgetById("progress_box");
 		progress_box.classList.add("hideme");
 	}
 
@@ -232,8 +243,8 @@ class ImportExportApp extends EgwApp
 			return;
 		}
 
-		var id = selected[0].id || null;
-		var data = egw.dataGetUIDdata(id).data;
+		const id = selected[0].id || null;
+		const data = egw.dataGetUIDdata(id).data;
 		if(!data || !data.type)
 		{
 			return;
@@ -252,7 +263,7 @@ class ImportExportApp extends EgwApp
 	 */
 	allowed_users_change(event, widget)
 	{
-		var value = widget.getValue();
+		let value = widget.getValue();
 
 		// Only 1 selected, no checking needed
 		if(value == null || value.length <= 1)
@@ -263,11 +274,11 @@ class ImportExportApp extends EgwApp
 		// Don't jump it to the top, it's weird
 		widget.selected_first = false;
 
-		var index = null;
-		var specials = ['', 'all']
-		for(var i = 0; i < specials.length; i++)
+		let index = null;
+		const specials = ['', 'all']
+		for(let i = 0; i < specials.length; i++)
 		{
-			var special = specials[i];
+			const special = specials[i];
 			if((index = value.indexOf(special)) >= 0)
 			{
 				if(value.indexOf(special) == value.length - 1)

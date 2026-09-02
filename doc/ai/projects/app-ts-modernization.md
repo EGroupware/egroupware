@@ -52,8 +52,8 @@ clearly-scoped change elsewhere (e.g. an import path).
 | preferences | done | 62 -> 62 lines, main repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import, a leftover unnecessary `@ts-ignore`, and 1 TS error needed fixing - see below. |
 | openid | done | 33 -> 34 lines. `openid/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`; only the ambient-global import and 1 TS error needed fixing - see below. |
 | projectmanager | done | `projectmanager/js/app.ts`, 1239 -> 1315 lines. `projectmanager/` is its own nested git repo. 11 `var`, 14 jQuery hits, 12 `function(){}`, 3 `sendRequest()`, 10 TS errors - see below. |
-| invoices | done | `invoices/js/app.ts`, 828 -> 838 lines. `invoices/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`/`self`/`that`; only legacy-widget-import cleanup and 13 TS errors needed fixing - see below. |
-| rocketchat | done | `rocketchat/js/app.ts`, 626 -> 668 lines. `rocketchat/` is its own nested git repo. 3 `var`, ~14 jQuery hits, 4 TS errors, 4 `egw.json(...).sendRequest()` sites, 8 `function(){}`/`self` closures - see below. |
+| invoices | done | `invoices/js/app.ts`, 828 -> 837 lines. `invoices/` is its own nested git repo. Already 0 `var`/jQuery/`sendRequest()`/`function(){}`/`self`/`that`; only legacy-widget-import cleanup and 13 TS errors needed fixing - see below. |
+| rocketchat | done | `rocketchat/js/app.ts`, 626 -> 669 lines. `rocketchat/` is its own nested git repo. 3 `var`, ~14 jQuery hits, 4 TS errors, 4 `egw.json(...).sendRequest()` sites, 8 `function(){}`/`self` closures - see below. |
 | news_admin | done | `news_admin/js/app.ts`, 438 lines. `news_admin/` is its own nested git repo. 36 `var`, 9 jQuery hits, 11 TS errors, 0 `sendRequest()`, 4 `function(){}`/1 `var that` closure - see below. |
 | policy | done | `policy/js/app.ts`, 389 -> 403 lines. `policy/` is its own nested git repo. Already 0 `var` (all `let` already); 5 jQuery hits, 4 TS errors, 5 `sendRequest()` sites, 13 `function(){}`/4 `var self` closures - see below. |
 | importexport | done | `importexport/js/app.ts`, 325 -> 336 lines, main repo. 10 `var`, 13 jQuery hits (incl. a side-effect `import "jquery.min.js"`), 12 TS errors, 0 `sendRequest()`, 2 `jQuery.proxy(function(){...}, this)` closures - see below. |
@@ -1108,3 +1108,643 @@ a bare `egw.request(menuaction, params)` with no `.then()` needed).
   addressbook's `_confirmdialog_callback()` var-hoisting note flagged elsewhere in this project;
   preserved as-is (hoisted the `let content, id;` declarations above the `if`, matching `var`'s
   original hoisting behavior) rather than "fixing" the underlying fragility.
+
+## news_admin/js/app.ts (done)
+
+438 lines. `news_admin/` is its own nested git repo (root `.gitignore` excludes it) - commit/push
+separately. Baseline: 36 `var`, 9 jQuery uses, 11 TS errors, 0 `sendRequest()` sites, 4
+`function(){}`/1 `var that = this` closure. Structurally very close to `infolog/js/app.ts` (same
+author/era) - most fixes reused that file's exact established patterns.
+
+### Legacy widget imports
+
+No legacy `et2_*` widget imports at all - only `EgwApp` (base class), `nm_open_popup` (a plain function,
+not a widget class, imported from `et2_extension_nextmatch_actions`), and `Et2Dialog` (instantiated/
+static methods called: `Et2Dialog.show_dialog()`, `.YES_BUTTON`, `.BUTTONS_YES_NO_CANCEL`,
+`.WARNING_MESSAGE`) - all three already correct value imports, nothing to change. `news_admin.index.xet`
+still uses the legacy `<nextmatch id="nm">` tag (confirmed via `grep`), but since this file never
+imports/casts an `et2_nextmatch` type (only calls `getWidgetById('nm')`/`getRoot().getWidgetById('nm')`
+with no type annotation), that template fact didn't end up mattering for this file.
+
+### TS errors fixed (11 total)
+
+- **`document.getElementById(ab_id)`/`(info_cc)` typed as generic `HTMLElement`** (7 errors,
+  `add_email_from_ab()`): the code treats the first as a `<select>` (`.options`, `.value`) and the second
+  as a text input (`.value` accumulation) - cast to `<HTMLSelectElement>`/`<HTMLInputElement>`
+  respectively at the point of assignment, matching the "cast at the query, not scattered at each
+  access" style used elsewhere in this project.
+- **`ab.onchange()` called with 0 arguments** (`TS2554`): `HTMLElement.onchange`'s declared type takes an
+  `Event` param. The call is deliberately 0-arg at runtime (JS doesn't enforce arg count) - rather than
+  synthesize an `Event` that changes nothing about behavior, cast the call itself to `<any>`
+  (`(<any>ab).onchange();`) to preserve the exact existing runtime call.
+- **`this.et2._inst`** (`edit_actions()`, 1 site): the familiar `getInstanceManager()` fix, same as every
+  other file in this project.
+
+### jQuery removed
+
+- `jQuery('#delete_sub').get(0) || jQuery('[id*="delete_sub"]').get(0)` (2x, `confirm_delete_2()`/
+  `confirm_delete()`) -> `document.getElementById('delete_sub') || document.querySelector<HTMLElement>(
+  '[id*="delete_sub"]')`.
+- `jQuery(_senders[i].iface.node).hasClass(...)` / `jQuery(_senders[i].iface.getDOMNode()).hasClass(...)`
+  -> `.node.classList.contains(...)` / `.getDOMNode().classList.contains(...)`.
+- `jQuery("tr.hiddenRow").css("display", ...)` (2x, `add_email_from_ab()`) ->
+  `document.querySelectorAll<HTMLElement>(...).forEach(row => row.style.display = ...)`, the exact
+  pattern already established in `infolog/js/app.ts`.
+- `jQuery('#news_admin-edit-print').bind('load'/'DOMSubtreeModified')/.unbind(...)` + `var that = this`
+  (`news_admin_print_preview_onload()`) -> plain `addEventListener`/`removeEventListener` +
+  arrow functions closing over `this` directly - copied verbatim from `infolog/js/app.ts`'s
+  `infolog_print_preview_onload()`, which has the identical structure (same original author).
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+None present in this file - nothing to do for this goal.
+
+### function/closures -> arrow functions
+
+- `confirm_delete_2()`'s `var callbackDeleteDialog = function (button_id) {...}` -> arrow (empty
+  YES_BUTTON branch, no `this` used).
+- The 3 `function(){}` expressions inside `news_admin_print_preview_onload()`'s jQuery calls were
+  converted together with the jQuery removal above (arrow functions replacing both the jQuery binding
+  and the `var that = this` capture in one edit).
+
+### Not touched (out of scope)
+
+- No additional findings beyond what's covered above.
+
+## policy/js/app.ts (done)
+
+389 -> 403 lines. `policy/` is its own nested git repo - commit/push separately. Baseline: already 0
+`var` (all declarations were `let` already); 5 jQuery hits, 4 TS errors, 5 `egw.json(...).sendRequest()`
+sites, 13 `function(...){}` expressions incl. 4 separate `let self = this;` closures.
+
+### Legacy widget imports
+
+- `et2_nextmatch` stayed a **value** import, unconverted - same reasoning as tracker's/admin's
+  `et2_nextmatch`: it's a real, distinct legacy implementation, and this file passes it as a runtime
+  `instanceof`-style filter value to `iterateOver(_callback, _context, _type)` in
+  `_override_print_dialogs()`, not just as a TS type annotation.
+- `etemplate2` and `Et2Dialog` were already correct value imports (`etemplate2.getById(...)`, `new
+  Et2Dialog(...)`/static `Et2Dialog.YES_BUTTON`/`BUTTONS_YES_NO`/`OK_BUTTON`). Nothing else to change -
+  no `import type` conversions were needed in this file at all.
+
+### TS errors fixed (4 total)
+
+- **`app.policy.setup_cmds_template` doesn't exist on type `EgwApp`** (2 sites, `setup_cmds_template()`'s
+  deferred-retry callback): `app`'s indexed type (`{[propName:string]: EgwApp}`) doesn't know about this
+  app's own extra methods - cast to `<policyAPP>` (the file's own class) at both read sites, same
+  "we actually know the real shape here" reasoning `status/js/app.ts`'s `<statusApp>` cast used for
+  `app.status.openCall()`.
+- **`app.admin._acl_dialog` doesn't exist on type `EgwApp`** (`acl()`): `admin` is a different, real
+  main-repo app (not EPL), but still hits the same `app`-indexing blind spot since `AdminApp`'s extra
+  methods aren't imported/visible here. `<any>` cast at the one call site (unlike the `app.policy` case
+  above, there was no reason to believe the real shape locally, so the generic EPL-blind-spot-style cast
+  was used instead of importing `AdminApp`'s type across nested-repo boundaries).
+- **`this.appname` inside `private static _acl_callback(_data)`** (`TS2339`, "does not exist on type
+  `typeof policyAPP`"): a genuine mismatch between the method's `static` declaration and how it's
+  actually invoked - `acl()` passes `policyAPP._acl_callback` as `egw.json()`'s callback with an
+  *instance* (`this`) as the context argument, and `JsonRequest` invokes callbacks via
+  `this.callback.call(this.context, res)` (confirmed by reading `egw_json.ts`), so `this` inside
+  `_acl_callback` is always a `policyAPP` instance at runtime, never the class itself. Fixed with an
+  explicit `this : policyAPP` parameter type (TS's documented way to declare a function's real calling
+  convention) instead of leaving the misleading default `static` `this` type - a comment explains the
+  actual invocation path.
+
+### jQuery removed
+
+- `jQuery('#policy-edit_tabs').addClass('inactive_blur')` -> `document.getElementById(...)
+  ?.classList.add(...)`.
+- `jQuery('body').on('load', 'form', callback)` (`setup_cmds_template()`'s deferred-retry path) -> a
+  manual delegated listener (`document.body.addEventListener('load', event => { if (event.target
+  instanceof Element && event.target.closest('form')) callback(); })`). Documented in a comment that
+  this - like the original jQuery version - practically never fires in real browsers, since `'load'`
+  doesn't bubble on `<form>` elements; the `setTimeout(callback, 1000)` fallback right below it is what
+  actually does the work. Preserved rather than "fixed" (e.g. by switching to a capture-phase listener,
+  which would be a real behavior change from "never fires" to "sometimes fires") since that's out of
+  scope for a mechanical jQuery-removal pass.
+- `jQuery.extend({}, egw.dataGetUIDdata(...).data)` (`acl()`, shallow clone) -> object-spread `{...}`.
+- `jQuery.extend(action.data, value)` (`confirm()`, shallow merge into existing target) ->
+  `Object.assign(action.data, value)`.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+- 4 of 5 sites were genuinely async - converted to `egw.request(...).then(...)`:
+  `policyEditDialog()`'s save-dialog callback (`sendRequest(true)`), `action()`'s delete/enable/disable
+  case (bare `sendRequest()`), and both of `dry_run()`'s calls (its own `ajax_dryRun` fetch and the
+  nested execute-confirmation dialog's `ajax_action` call, both bare `sendRequest()`).
+- `acl()`'s delete-case call (`egw.json(className+'::ajax_change_acl', [ids],
+  policyAPP._acl_callback,this,**false**,this)`) - **kept as `egw.json(...).sendRequest()`**, a new
+  confirmed instance of admin's already-documented "5th arg to `egw.json()` itself is `false`" exception
+  category: the explicit `false` 5th argument (not a `sendRequest()` argument) makes the request
+  synchronous regardless of the bare `.sendRequest()` call after it - commented at the call site.
+
+### function/closures -> arrow functions
+
+- `add()`'s `let self = this` + `function(_data){...self...}` callback -> arrow using `this` directly,
+  `self` removed.
+- `setup_cmds_template()`'s retry `function(){}` (the deferred callback) -> arrow, converted together
+  with its jQuery removal above.
+- `policyEditDialog()`'s `cb = _callback || function(){}`, `run_callback = function(){}` (later
+  reassigned to `function(_data){...}.bind(this)`), and the dialog's own `callback: function(_button_id,
+  _value){...self...}` -> all converted to arrows. The dialog callback needed a closer look: it's the
+  actual `transformAttributes({callback: ...})` value that `Et2Dialog` invokes via `.call(dialogThis,
+  ...)`, and the *original* code already used `self` (not `this`) inside it precisely because of that -
+  but since this callback has no *further* nested non-arrow scope between it and `policyEditDialog()`'s
+  own `this` (unlike admin's `smime_showGenerateKeyDialog()` case, which has an intervening
+  method-syntax `callback(...)` frame), converting the whole thing to an arrow and replacing `self` with
+  `this` is safe: an arrow's lexical `this` here resolves to exactly what `self` already captured.
+  `run_callback`'s own `.bind(this)` became redundant and was dropped for the same reason.
+- `action()`'s `let self = this` (used in 3 separate `function(_data){...self...}` callbacks across the
+  `edit`/`delete-enable-disable`/`default` cases) -> all 3 converted to arrows using `this` directly,
+  `self` removed.
+- `refreshPolicies()`'s `let self = this` (its `.forEach()` callback was *already* an arrow function,
+  just referencing `self` unnecessarily instead of `this`) -> `self` removed, callback now reads `this`
+  directly.
+- `confirm()`'s `let callback = function(_button, value){...}` (passed as `Et2Dialog`'s `callback:`, but
+  never referenced `this` in its body - only closured `action`/`senders`/`target`) -> arrow, safe
+  regardless of `Et2Dialog`'s own `this`-rebinding contract since the body never depended on it.
+- `_override_print_dialogs()`'s `iterateOver(function(nm){...}, this, et2_nextmatch)` outer callback and
+  the `nm._create_print_dialog = function(value, callback){...}` it assigns (plus its inner
+  `Object.keys(...).map(function(key){...})`) -> all 3 converted to arrows. The outer one follows the
+  by-now-established `iterateOver()` refinement (explicit `this` context argument is always the same
+  object an arrow's lexical `this` would resolve to here); the inner two never used `this` at all.
+
+### Not touched (out of scope)
+
+- No additional findings beyond what's covered above.
+
+## importexport/js/app.ts (done)
+
+325 -> 336 lines, **main repo** (not a nested git repo, unlike most other files in this project).
+Baseline: 10 `var`, 13 jQuery hits (including a top-of-file side-effect `import
+"../../vendor/bower-asset/jquery/dist/jquery.min.js"`), 12 TS errors, 0 `egw.json(...).sendRequest()`
+sites, 2 `jQuery.proxy(function(){...}, this)` closures.
+
+### Legacy widget imports
+
+- No legacy `et2_*` widget imports - only `EgwApp` (base class) and, previously, a broken `import {egw}
+  from ".../egw_global"` (see below). Nothing to convert for goal 1.
+- Removed the side-effect `import "../../vendor/bower-asset/jquery/dist/jquery.min.js"` entirely once
+  all jQuery usage was gone (see jQuery section) - also dropped the adjacent dead, already-commented-out
+  `//import ".../jquery-ui.js"` line, since it only existed to explain the jQuery import being removed.
+- `import {egw} from ".../egw_global"` removed - the familiar ambient-global fix (`egw`/`app` are
+  declared in `egw_global.d.ts`'s `declare global {}`, unconditionally included via tsconfig, so the
+  import was both wrong for TS - `TS2305`, no such export - and unnecessary), matching every other file
+  in this project.
+
+### TS errors fixed (12 total)
+
+- **`this.et2.getDOMWidgetById(...)` typed as `typeof Et2Widget` instead of an instance** (9 sites
+  across `et2_ready()`, `export_preview()`, `import_preview()`, `_doProgressUpdate()`,
+  `_closeProgress()`): the same `getDOMWidgetById()` framework return-type bug documented in
+  `addressbook/js/CRM.ts`'s section above (a likely typo for `Et2Widget | null` in
+  `Et2Template.ts`/`et2_core_baseWidget.ts`). The established workaround elsewhere casts through
+  `<unknown>` to a *specific* widget subclass (`<Et2Nextmatch><unknown>...`, `<Et2Select><unknown>...`),
+  but this file only ever calls generic DOM-ish members (`.getDOMNode()`, `.classList`, `.querySelector`,
+  `.insertBefore`) with no single concrete widget subtype to name, and `Et2Widget` itself turned out to
+  be **unusable as a cast target** - it's a mixin *function* (`export const Et2Widget =
+  dedupeMixin(...)`) with no matching type/interface declaration anywhere in the codebase, so even
+  `<Et2Widget><unknown>...` fails with `TS2749: 'Et2Widget' refers to a value, but is being used as a
+  type here` (confirmed this is a **pre-existing, repo-wide instance of the same gap** -
+  `et2_core_widget.ts`'s own `getWidgetById(): Et2Widget | et2_widget | null` declaration and
+  `egw_app.ts` both already have this exact error in the baseline whole-repo `tsc` output; the one place
+  it "works", `Et2Filterbox.ts`'s `(element : Et2Widget) => {...}`, is silently covered by a pre-existing
+  `@ts-ignore` one line above it, not a real fix). Used a plain `<any>` cast instead at all 9 sites -
+  consistent with this project's established fallback for framework properties with no real matching
+  type anywhere (`app.stylite`/`_children`/etc.) - with a comment explaining the root cause once per
+  method.
+- **`progress_record`'s `.value`, `sl-progress-bar`'s `.indeterminate`/`.value`, `import_log`'s
+  `.value`/`.shadowRoot`** (`_doProgressUpdate()`): none of these are declared anywhere in the widget
+  type hierarchy (`sl-progress-bar` isn't an etemplate widget at all, per the code's own existing
+  comment) - `<any>`-typed locals (`record`/`bar`/`log`), same reasoning as the `getDOMWidgetById()` cast
+  above, documented together in one comment.
+
+### jQuery removed
+
+- `jQuery(...).attr('disabled','disabled')` (2x, `et2_ready()`) -> `.getDOMNode().setAttribute(
+  'disabled', 'disabled')` (kept the literal attribute-string form rather than switching to the
+  `.disabled = true` boolean property, to stay a 1:1 behavioral swap).
+- `jQuery('input[value="filter"]').parent().hide()` -> `document.querySelectorAll<HTMLElement>(
+  'input[value="filter"]').forEach(el => { if(el.parentElement) el.parentElement.style.display =
+  'none'; })` - jQuery's `.parent()` operates over *all* matched elements, so the native replacement
+  iterates too rather than assuming a single match.
+- `jQuery('div.filters').hide()` -> `document.querySelectorAll<HTMLElement>('div.filters').forEach(el
+  => el.style.display = 'none')`, the by-now-standard pattern from `infolog/js/app.ts` onward.
+- `jQuery(...).parent().show()` / `.empty().append(htmlString)` (`export_preview()`) ->
+  `.parentElement.style.display = ''` / `.replaceChildren()` + `.insertAdjacentHTML('beforeend',
+  htmlString)` (native `.append(string)` would insert literal text, not parsed markup - same
+  distinction `admin/js/app.ts`'s section already documented for the identical jQuery `.append()` swap).
+- `jQuery(...).show()` / `.empty().text(...)` / `.removeClass()`/`.addClass()` (`import_preview()`) ->
+  `.style.display = ''` / direct `.textContent =` assignment / `.classList.remove()`/`.add()`.
+- `jQuery(this.et2.getWidgetById("preview_box")).hide()` (`closePreview()`) -> `.style.display =
+  'none'` on the widget cast to `HTMLElement` (the widget's declared type is a union with the legacy
+  `et2_widget`, which has no `.style`, but at runtime this is always the modern web-component instance).
+- **`.show(100, callback)`'s 100ms animation was dropped, not reproduced** (`export_preview()`/
+  `import_preview()`) - jQuery's animated show has no simple native one-liner equivalent (a real
+  CSS-transition-based rewrite is out of scope for a mechanical jQuery-removal pass), so both methods now
+  show immediately and invoke the callback body right away instead of after the animation completes.
+  Same category of documented, intentional behavior-simplification as `admin/js/app.ts`'s already-noted
+  `.fadeToggle()` drop ("not sure how to do this et2-ish" in the original code's own comment there).
+  Commented at both call sites.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+None present in this file - nothing to do for this goal.
+
+### function/closures -> arrow functions
+
+- Both `jQuery.proxy(function(){...}, this)` callbacks (`export_preview()`/`import_preview()`) were
+  removed entirely along with the `.show(100, callback)` animation calls they were passed to (see
+  jQuery section above) - their bodies (`widget.clicked = true/false` +
+  `widget.getInstanceManager().submit(...)`) now just run inline in the method body instead of inside a
+  callback, since there's no longer an animation to wait for.
+
+### Not touched (out of scope)
+
+- No additional findings beyond what's covered above.
+
+## stylite/js/app.ts (done)
+
+`stylite/js/app.ts`, 1054 -> 1099 lines. `stylite/` is its own nested git repo (root `.gitignore`
+excludes it) - same commit/push-separately note as `tracker`/`status`/etc. Baseline: 2 `var`, 8 jQuery
+hits, 20 TS errors, 2 `egw.json(...).sendRequest()` sites, 31 `function(...) {...}` expressions, 5
+`let self`/`let that` closures.
+
+### Legacy widget imports
+
+- `et2_nextmatch`: `stylite.calls.xet`'s `nm` widget still uses the legacy `<nextmatch id="nm">` tag,
+  not `<et2-nextmatch>` - so `this.et2?.getWidgetById('nm')` genuinely IS a legacy `et2_nextmatch`
+  instance at runtime here, same situation as `tracker`/`admin`'s `et2_nextmatch`. Unlike those two,
+  though, it's only ever used for type casts in this file (never passed as a runtime `instanceof`
+  filter), so switched to `import type {et2_nextmatch}` - kept the legacy name (a cast to the
+  web-component `Et2Nextmatch` would be wrong here), just made the import type-only.
+- `et2_selectbox` (`class et2_selectbox extends Et2Select {}` compat shim): **kept as a value import,
+  unconverted** - `et2_ready()`'s `'stylite.placetel.sipUser'` case passes it as a runtime
+  `instanceof`-style filter value to `iterateOver(_callback, _context, et2_selectbox)`, exactly the
+  tracker/admin precedent (a real behavior change to broaden the match if swapped to `Et2Select`).
+- `et2_textbox` (real legacy implementation, `extends et2_inputWidget`, no shim/replacement) - only used
+  for one type-union cast (`et2_selectbox|et2_textbox`) with no runtime filter usage anywhere - switched
+  to `import type`, same reasoning as timesheet's `et2_grid`.
+- `et2_DOMWidget` (real legacy abstract base class) - only used for type casts, never instantiated -
+  switched to `import type`.
+- `et2_button` (real legacy implementation, `extends et2_baseWidget`, no shim) -> **replaced with
+  `import type {Et2Button}`**: unlike `et2_selectbox` above, it's only ever used as a type annotation
+  here (`placetelIntegration()`'s `_widget` param), never a runtime filter value, and the one live
+  caller (`stylite/templates/default/config.xet`) already passes an `<et2-button>` web component -
+  `config.old.xet` (the only template still using the old-style button that would produce a real legacy
+  `et2_button` instance) is unreferenced from any PHP/template/JS in the repo, confirmed dead.
+- `et2_image` (`export type et2_image = Et2Image` deprecated alias) -> `import type {Et2Image}` directly
+  (only used as a type, `showQRCode()`'s `_widget` param).
+- `et2_tree`: the old import (`.../et2_widget_tree`) pointed at a module that **no longer exists at
+  all** - the tree widget has fully migrated to the `Et2Tree` web component with no compat shim left
+  behind, so the import was simply broken (`TS2307`), not just stale. Fixed to `import type {Et2Tree}
+  from ".../Et2Tree/Et2Tree"` (only used as a type, `pm_calendar_integration_sidebox_tree_change()`'s
+  `widget` param).
+- `et2_taglist` (`export type et2_taglist = Et2Select` deprecated alias) -> `import type {Et2Select}`
+  directly (only used as a type, `pm_calendar_integration_sidebox_taglist_change()`'s `taglist` param) -
+  reuses the same `Et2Select` type import already needed for `et2_tree`'s neighbor conversion above.
+- `Et2Textarea` was already imported from its real web-component path, but as a *value* import despite
+  being used only for one type cast (`mailvelopeCompose()`) - switched to `import type`.
+- `egw`/`egw_getFramework` from `egw_global` removed entirely - the familiar ambient-global fix (see
+  `mail/js/app.ts`'s identical comment, reused verbatim here since this file also uses both names).
+- `EgwApp`, `etemplate2`, `egw_getAppObjectManager`, `Et2Dialog`, `EplLinkSearch`, `StyliteGantt` were
+  all already correct as value imports (extended/instantiated/called directly) - untouched.
+
+### TS errors fixed (20 total)
+
+- **`egw_fw_class_application` (`TS2304`, plus cascading `TS2341`/`TS2339` on the same line)**:
+  `callHistory()`'s `refreshCallback` cast `(<egw_fw_class_application><unknown>this).appName` referenced
+  a type name that doesn't exist anywhere in the repo. This is the exact same shape as addressbook's
+  `openCRMview()` `refreshCallback` case (see that section above) - no in-repo caller of
+  `callHistory()`'s `refreshCallback` was found either, but `tabLinkHandler()`/the tab-opening machinery
+  spreads the options object onto the tab, so `this.appName` needs to stay whatever the eventual caller
+  invokes it as. Since `refreshCallback` stays a plain `function` (goal 6 exception, see below), `this`
+  is already implicit `any` inside it - the bogus cast was simply unnecessary. Removed it (`this.appName`
+  directly) and cast just the `.app_obj.stylite` access to `<any>`, identical to addressbook's fix.
+- **`copyClipboard()`'s `_widget.get_value` doesn't exist on `et2_DOMWidget`** (2 sites): same root cause
+  as admin's `copyClipboard()` - the declared type was simply wrong. The one real caller
+  (`stylite.placetel.sipUser.xet`) passes an `<et2-description>` web component, never a legacy
+  `et2_DOMWidget`; the method's own `typeof _widget.get_value === 'function'` check is already the
+  defensive runtime guard for that uncertainty. Retyped the param `any`, matching admin's exact fix.
+- **`Et2Dialog.getComplete()`'s destructured `value.number`** (`callDialog()`): same `Promise<[number,
+  Object]>` gap tracker hit - annotated the destructured callback params `[button, value] : [number,
+  any]` instead of touching the shared dialog class.
+- **`this.et2._inst`** (5 sites: `toggleEncrypt()`'s dialog callback, 4x in `mailvelopeCompose()`) - same
+  `getInstanceManager()` fix as every other file in this project. One of the `mailvelopeCompose()` sites
+  (`self.et2._inst.submit = function() {...}`) is itself installing a NEW function as the etemplate2
+  instance's `.submit()` method - fixing `_inst` there didn't change the fact that inner function has to
+  stay a plain `function` (see goal 6 below).
+- **`editor.value` protected on `Et2InputWidgetInterface`** (`mailvelopeCompose()`): considered
+  `editor.getValue()` (the public accessor, used elsewhere in this project for the same protected-`value`
+  pattern), but rejected it here - `getValue()` returns `null` while the widget is `readonly`/`disabled`,
+  which `info_des` may genuinely be at this point, so swapping would risk silently breaking the
+  PGP-quote-parsing logic that follows. Cast through `<any>` instead to keep reading the raw field with
+  identical runtime behavior, with a comment explaining why `getValue()` wasn't used.
+- **`integration_preference.split(",")` - `Property 'split' does not exist on type 'never'`**
+  (`_pm_calendar_integration_sidebox_change_project()`): the initial cast `<string[]>this.egw
+  .preference(...)` was simply too narrow for what the following code already handles - a
+  `typeof integration_preference == "string"` check on a value statically typed `string[]` narrows to
+  `never` inside that branch (a `string[]` can never satisfy `typeof x === "string"`). Widened the cast
+  to `<string[]|string>`, matching what the code's own runtime branching already assumes.
+- **`action.checked = true`** (`Property 'checked' does not exist on type 'EgwAction'`) and
+  **`app.calendar.update_state(state)`** (`Property 'update_state' does not exist on type 'EgwApp'`):
+  same two established blind-spot patterns as elsewhere in this project - `checked` is set dynamically
+  via `updateAction()` at runtime, not on `EgwAction`'s static type (same as addressbook's
+  `_action.parent.getActionById(...).checked` fix); `app.calendar` types as a generic `EgwApp` (the
+  indexed-type gap), even though `calendar` is a first-party app here, not an EPL one - same `<any>`-cast
+  pattern as `app.stylite`/`app.status`/`app.rocketchat`/`app.policy` elsewhere. Both cast to `<any>` at
+  their one call site each.
+- **`action.execute()` - "Expected 1-2 arguments, but got 0"**: `EgwAction.execute(_senders, _target?)`
+  (`api/js/egw_action/EgwAction.ts`) has no default for `_senders`, but was being called with 0 args
+  (relying on it being `undefined` at runtime either way). Passed an explicit `action.execute(undefined)`
+  to preserve the exact pre-existing runtime behavior while satisfying the argument-count check, rather
+  than touching the shared `EgwAction` class.
+- **A new cascading error surfaced only after converting `addPhoneUser()`'s `.then(function(_data)
+  {...}.bind(this))` to a plain arrow `.then((_data) => {...})`**: with the `.bind(this)` gone,
+  `Promise.all([...]).then(...)`'s callback parameter now type-checks precisely against the tuple type
+  `[any, any]` (from the two `Promise.all()` members) instead of losing precision through `.bind()`'s
+  looser return type - `_data.title`/`.content`/`.sel_options`/`.template` (read after `_data = _data[0]`
+  narrows it to a single element) then no longer matched. Added an explicit `(_data : any)` parameter
+  annotation rather than fighting the tuple inference, since the code's own `Array.isArray(_data)` check
+  already treats `_data` as possibly either shape.
+
+### jQuery removed
+
+- `copyClipboard()`'s `jQuery(_widget.getDOMNode()).val(value).select()` / the `jQuery(...)
+  .appendTo(...).val(value).select()` + `input.remove()` pair -> plain `HTMLInputElement` `.value`
+  assignment, `.select()`, and native `Element.appendChild()`/`.remove()` - same conditional structure
+  preserved exactly (including the pre-existing, slightly redundant inner ternary), just jQuery-free.
+- `mailvelopeCompose()`'s `jQuery((<et2_DOMWidget>this.et2.getWidgetById('encrypt')).getDOMNode())
+  .addClass('toolbar_toggle')` -> `.getDOMNode()?.classList.add('toolbar_toggle')`.
+- `mailvelopeGetCheckRecipients()`'s `jQuery.map(_emails, function(_email, _account_id) { return
+  _email; })` -> `Object.values(_emails)`, the established repo-wide swap for this exact pattern.
+- `updateRules()`'s `jQuery.extend({test: this.firewallTestData()}, _rules)` (shallow, no `true` first
+  arg) -> `Object.assign({test: this.firewallTestData()}, _rules)`, per `doc/ai/modernization.md`'s
+  shallow-merge rule.
+- 3 stale `@param {jQuery.Event}`/`{egwAction|jQuery.Event}` JSDoc tags (`toggleEncrypt()`,
+  `onchangeResponsible()`, `firewallAction()`) corrected to `{Event}`/`{egwAction|Event}`.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+Both sites (`voicemail()`'s 'delete' and 'call' cases, `EGroupware\Stylite\Calls::ajax_action`) were
+bare `sendRequest()` (async by default, fire-and-forget, no callback) - straightforward 1:1 swaps to
+`egw.request(...)`. No genuinely synchronous site in this file.
+
+### function/closures -> arrow functions
+
+- 27 of the 31 `function(...) {...}` expressions converted to arrow functions across `et2_ready()`,
+  `voicemail()`, `addPhoneUser()`, `keyTypeChange()`, `showQRCode()`, `placetelIntegration()`,
+  `mailvelopeOnSubmit()`, `mailvelopeGetCheckRecipients()`, `onchangeResponsible()`,
+  `decrypt_hover()` (the `.mailvelopeOpenKeyring().then()` chain and `close:`), `firewallAction()`, and
+  `firewallTest()`. Most already used an explicit `.bind(this)` to force `this` to the enclosing method's
+  `this` (overriding `Et2Dialog`'s own dialog-`this` callback contract, confirmed via the same
+  `Et2Dialog.ts` invocation sites this project has verified repeatedly) - converting to an arrow
+  preserves that exact forced binding since an arrow's lexical `this` resolves to the same value the
+  `.bind(this)` was forcing it to. The rest (`iterateOver()` callbacks, plain `.then()`/`.catch()`
+  callbacks with no `.bind()` at all) were checked to confirm they never relied on their own dynamic
+  `this` before converting.
+- 4 genuine exceptions kept as plain `function`, each with a comment explaining why:
+  - `callHistory()`'s `refreshCallback: function() {...}` - same addressbook `openCRMview()` precedent
+    (no confirmed in-repo caller, but the tab-opening machinery may invoke it as `tab.refreshCallback()`,
+    needing `this.appName` from the tab object).
+  - `mailvelopeCompose()`'s `self.et2.getInstanceManager().submit = function() {...}` - installed as the
+    etemplate2 instance's own `.submit()` method, so it needs its own call-time `arguments` (forwarded
+    via `.apply()`) - an arrow would capture `mailvelopeCompose()`'s `arguments` instead. Its own `this`
+    will be rebound to the etemplate2 instance when later invoked as `instance.submit(...)`, which is
+    exactly why it reads the closured `self` (the app instance) rather than `this`. This is the same
+    nested-scope wrinkle admin's `smime_showGenerateKeyDialog()` documented: an outer frame can become
+    arrow-transparent while an inner one genuinely can't, and the inner one still needs `self`-style
+    indirection because of it.
+  - `decrypt_hover()`'s `open: function(event, tooltip) {... this.clientHeight ...}` - **verified**, not
+    just inferred: `TooltipOptions.open` (`api/js/jsapi/egw_tooltip.ts`) is explicitly typed `(this:
+    Node, ...) => any`, and the function genuinely reads that `this` (`this.clientHeight`). Its sibling
+    `close:` callback, which never reads `this` at all, WAS converted to an arrow - only `open` needed to
+    stay plain.
+  - `var self`/`var that` closures: 5 found (`mailvelopeCompose()`, `mailvelopeOnSubmit()`,
+    `mailvelopeGetCheckRecipients()`, `onchangeResponsible()`, `decrypt_hover()`). 3 removed entirely
+    (their functions all converted to arrows using `this` directly - `mailvelopeOnSubmit()`,
+    `mailvelopeGetCheckRecipients()`, `onchangeResponsible()`). 2 kept, both for the same reason: a
+    nested plain-`function` inside them (documented above) can't use `this` for the app instance, so the
+    enclosing `self` capture is still needed even though the outer functions around it became arrows
+    (`mailvelopeCompose()`'s `self`, `decrypt_hover()`'s `self`).
+
+### Not touched (out of scope)
+
+- No further out-of-scope findings beyond what's already documented above (the `et2_DOMWidget`/
+  `et2_button` type gaps and `egw_fw_class_application` typo were all fixed as part of the required TS
+  cleanup, not skipped).
+
+## invoices/js/app.ts (done)
+
+828 -> 837 lines. `invoices/` is its own nested git repo. Already fully modern on 5 of the 6 goals
+before this pass: 0 `var`, 0 jQuery, 0 `egw.json(...).sendRequest()`, 0 `function(...) {...}`
+expressions, 0 `var self`/`var that` closures. Only legacy-widget-import cleanup (goal 1) and 13 TS
+errors (goal 3) needed fixing.
+
+### Legacy widget imports
+
+- `import {app, egw} from "../../api/js/jsapi/egw_global"` removed - the familiar ambient-global fix
+  used throughout this project (`egw`/`app` are declared `var` inside `declare global {}` in
+  `egw_global.d.ts`, unconditionally included via tsconfig's `**/*.d.ts`), even though this file uses
+  both as real values (`egw.open_link(...)`, `egw.link(...)`, `app.classes.invoices = ...`) - ambient
+  globals don't need or allow an import either way.
+- `import {EgwApp, PushData} from '../../api/js/jsapi/egw_app'` split: `EgwApp` stayed a value import
+  (`extends EgwApp`), `PushData` (only used as `push(pushData : PushData)`'s param type) switched to
+  `import type`.
+- `et2_grid` (only used for 2 type casts, `<et2_grid>this.et2.getWidgetById(...)`) was already
+  `import type` - correctly left alone, same "no web-component replacement exists" reasoning as
+  timesheet's/status's `et2_grid`. Every other widget import (`Et2LinkEntry`, `Et2Number`, `Et2Select`,
+  `Et2InputWidgetInterface`, `Et2Textbox`, `Et2Button`, `Et2Date`) was already correctly `import type`
+  (type-only usage confirmed for each); `etemplate2` correctly stayed a value import
+  (`etemplate2.getByTemplate(...)`).
+- Added a new `import type {EgwFrameworkApp} from "../../kdots/js/EgwFrameworkApp"` for a TS-error fix
+  (see below) - not a legacy-widget migration, but the same "type-only, so `import type`" reasoning.
+
+### TS errors fixed (13 total)
+
+- **`template?.iterateOver(...)`'s missing 2nd arg + `template?.content`'s missing property** (2
+  errors, `setTradepartyByContact()`): `template` walks up the widget tree via repeated
+  `.getParent()`/`.getRoot()` calls and gets reassigned to `null`, ending up typed as a
+  `Et2WidgetClass | et2_widget` union that has no `.content` member and makes `iterateOver()`'s
+  `_context` argument (required, not optional - `iterateOver(_callback, _context, _type?)` in
+  `et2_core_widget.ts`) newly visible as missing. One root-cause fix for both: retyped the `let
+  template = ...` declaration itself as `let template : any = ...` (with a comment explaining why),
+  rather than casting at each of the several places `template` is used - matches the "type loosely at
+  the declaration, once" style used for similar widget-tree-walking locals elsewhere in this project.
+- **`_positions.invoice_charge_total`/`invoice_allowance_total`/`invoice_line_total` (on `_positions`)
+  and the same 3 properties on `_invoice`** (6 errors, `updatePositions()`): the method's params were
+  declared `_positions : Array<object>` and `_invoice : object`, but the body attaches/reads extra named
+  properties directly on both (a legacy array-as-dict pattern from the server push payload, plus
+  `_positions.unshift(...)`/`_positions[0]` array usage) - `object`/`Array<object>` don't have an index
+  signature, so property-by-name access always fails even though bracket access with a *dynamic* string
+  key silently doesn't error under this repo's `noImplicitAny: false`. Retyped both params `any` -
+  they're genuinely loosely-shaped push data, not a case where a real interface was just missing.
+- **`_widget.valueAsNumber` doesn't exist on `Et2Button`** (`positionAllowance()`): the param is typed
+  `Et2Button|Et2Number`, but this specific branch (`_widget.id` matching the `[percent]` field) only
+  ever reaches this code with the `Et2Number` percent widget, never the button - cast to
+  `<Et2Number>_widget` at that one access, same single-cast-at-usage pattern used throughout this
+  project for a param typed as a union of "whichever widget triggered this handler".
+- **`this.nm.activeFilters.startdate = null`** (`dateFilterChange()`): `invoices/templates/default/
+  index.xet` still uses the legacy `<nextmatch id="nm">` tag (not `<et2-nextmatch>`), so `this.nm` is
+  genuinely `et2_nextmatch` at runtime here - **exactly** tracker's own precedent for this identical
+  line/property (`et2_nextmatch`'s `ActiveFilters` interface has no `startdate` member at all, unlike
+  the web-component `Et2Nextmatch`'s `Record<string, any>`, so even the "cast to the legacy type"
+  fix used elsewhere in this app wouldn't help) - used `<any>` instead, with the same comment style
+  tracker used.
+- **`filter.closest('egw-app').filtersDrawer`** (`dateFilterChange()`): `.closest()` returns generic
+  `Element`; `filtersDrawer` is a real getter on `EgwFrameworkApp` (`kdots/js/EgwFrameworkApp.ts`) -
+  added the type-only import and cast, identical to tracker's fix for the same line shape.
+
+### Not touched (out of scope)
+
+- Nothing else needed touching - the file was already clean on goals 2, 4, 5, and 6 before this pass.
+
+## rocketchat/js/app.ts (done)
+
+626 -> 669 lines. `rocketchat/` is its own nested git repo. Baseline: 3 `var`, ~14 jQuery hits
+(incl. `jQuery.ajax`/`jQuery.extend`), 4 TS errors, 4 `egw.json(...).sendRequest()` sites, 8
+`function(...) {...}`/`var self`/`let self` closures - the heaviest closure-capture concentration
+since status/app.ts.
+
+### Legacy widget imports
+
+No legacy `et2_*` widgets at all in this file - `Et2Dialog` and `rocketchat_realtime_api` were already
+correct value imports (both instantiated/called: `new Et2Dialog(...)`, `Et2Dialog.alert()`/
+`.show_dialog()`, `new rocketchat_realtime_api(...)`), `statusApp` was already a correct `import type`
+(only ever used for `<statusApp>app.status` casts). Only change: `import {egw, app} from
+".../egw_global"` removed - the standard ambient-global fix (see infolog's/invoices's write-ups) - even
+though this file calls `egw(window)` (the callable-interface form) and assigns `app.classes.rocketchat`
+as real values; ambient globals cover both without an import either way.
+
+### TS errors fixed (4 total)
+
+- **`egw`/`app` "no exported member"** (2 errors): the ambient-global import fix above.
+- **`_resolve()` "Expected 1 arguments, but got 0"** (2 errors, `_isRocketchatLoaded()` and
+  `getUpdates()`'s inner `checkApi()`): both are `new Promise((_resolve, _reject) => {...})` calls with
+  no explicit type argument, so TS infers the executor's `resolve` from usage - and without an explicit
+  `void`-inclusive type argument, `resolve()` requires an argument even where the code's own logic
+  legitimately resolves with nothing. Fixed by giving each `Promise` an explicit type argument matching
+  what it's actually resolved with: `Promise<string|void>` for `_isRocketchatLoaded()` (resolves either
+  `"setup"`/`'setup'` or nothing), `Promise<void>` for `checkApi()` (never resolves with a value).
+
+### A `function(...)` conversion that fixed a real latent bug, not just a type/style issue
+
+`_isRocketchatLoaded()`'s `return new Promise (function(_resolve, _reject){...})` used a plain
+`function` expression as the Promise executor - which is called directly by the `Promise` constructor
+(`executor(resolve, reject)`), never as a method, so its own `this` was always `undefined` in this
+ES-module's (implicitly strict-mode) scope. Every `this.chatbox`/`this.mainframe`/`this.install_info()`
+access inside therefore always threw, landing in the `catch(e){ _resolve('setup'); }` block - meaning
+this method has always unconditionally resolved `"setup"` regardless of whether the Rocket.Chat iframe
+actually shows a setup wizard. Converting to an arrow function (`(_resolve, _reject) => {...}`) makes
+`this` correctly resolve to the `RocketchatApp` instance, restoring the evidently-intended DOM check -
+same class of finding as tracker's `edit_popup()`/`this.et2.node` fix (a real bug surfaced and fixed
+while doing the mechanical goal-6 conversion, not merely a cosmetic rewrite).
+
+### jQuery removed
+
+- `jQuery('#rocketchat-index')` passed as `loading_prompt()`'s `_node` argument (2x) -> the plain
+  selector string `'#rocketchat-index'` passed directly - `egw_message.ts`'s `loading_prompt(_id, _stat,
+  _msg, _node, _mode)` already accepts `string|JQuery|HTMLElement` for `_node` and does
+  `document.querySelector(_node)` itself when given a string, so wrapping it in `jQuery(...)` first was
+  pure overhead.
+- `jQuery(this.mainframe).on('load', function(){...})` / `jQuery(this.chatbox).on('load',
+  function(){...})` (`et2_ready()`) -> `this.mainframe.addEventListener('load', () => {...})` /
+  `this.chatbox.addEventListener('load', () => {...})`, done together with converting every nested
+  `function(){...self...}` callback inside to an arrow using `this` directly (see below) - the whole
+  `var self = this` capture in `et2_ready()` was removed as a result.
+- `jQuery('.setup-wizard', frame.contentWindow.document).length > 0` / `jQuery('[class*="SetupWizard"]',
+  ...).length > 0` / `jQuery('body', ...).length > 0` (`_isRocketchatLoaded()`) ->
+  `frame.contentWindow.document.querySelectorAll(...).length > 0`, mechanical 1:1 swaps.
+- `jQuery('.setup-wizard', frame.contentWindow.document)` used bare as an `if(...)` condition
+  (`messageHandler()`, **not** `.length`-checked like the 3 uses above) -> **a behavior fix, not just a
+  mechanical swap**: a jQuery object is *always* truthy regardless of match count, so this condition was
+  always true whenever `frame`/`frame.contentWindow` existed, unconditionally re-attaching the
+  setup-wizard click handler on every single `message` event regardless of whether the setup wizard was
+  actually showing. Replaced with `frame.contentWindow.document.querySelector('.setup-wizard')` (truthy
+  only on an actual match), documented with a comment. Also replaced the `.off().on('click', ...)`
+  jQuery idiom it guarded with a persisted `private _setupWizardClickHandler` arrow-function class
+  field plus `removeEventListener`/`addEventListener` (the native equivalent of jQuery's
+  namespaced-rebind pattern), matching admin/app.ts's established `_adminIframeLoadHandler` precedent -
+  needed because `messageHandler()` can fire repeatedly, and plain `addEventListener` without a matching
+  `removeEventListener` would otherwise pile up duplicate handlers. The handler body's own
+  `this.postMessage(...)` was also a **second latent bug** fixed the same way as the Promise-executor
+  one above: jQuery's `.on('click', function(e){...})` binds `this` to the clicked DOM element, not the
+  app, so `this.postMessage` would have thrown if ever reached - now correctly `this` = the
+  `RocketchatApp` instance via the stored arrow-function field.
+- `jQuery.extend({externalCommand: _cmd}, _params)` (`postMessage()`) -> object-spread
+  `{externalCommand: _cmd, ..._params}`, per the shallow-merge rule (`jQuery.extend(target, extra)` with
+  only 2 args is a shallow merge, not `deepExtend()`'s territory).
+- `jQuery('span.fw_avatar_stat', '#topmenu_info_user_avatar').attr({class, title})` /
+  `jQuery('tr#'+id+' span.stat1', '#egw_fw_sidebar_r').attr({class, title})`
+  (`_subscriptionsInterval()`) -> `document.querySelectorAll<HTMLElement>('#topmenu_info_user_avatar
+  span.fw_avatar_stat')...forEach(el => {el.className = ...; el.title = ...;})` (context+selector
+  combined into one native selector string, matching jQuery's `jQuery(selector, context)` semantics),
+  same pattern for the sidebar row selector.
+- `jQuery('#rc_status_select').val(...).trigger('liszt:updated')` -> `document.getElementById(...)` (cast
+  to `HTMLSelectElement`) + `.value = ...` + `.dispatchEvent(new Event('liszt:updated'))` - a plain
+  native event, not jQuery's dot-namespace convention (`liszt:updated` is the real event name the
+  chosen/liszt select-replacement library listens for).
+- `jQuery.ajax(url + 'api/info').done(...).fail(...)` (`getUpdates()`'s `checkApi()`) -> `fetch(url +
+  'api/info').then(...)`/`.catch(...)`, with an explicit `if (!_response.ok) throw _response;` before
+  parsing JSON - `fetch()` only rejects on network failure, not on a non-2xx HTTP status, unlike
+  jQuery's `.fail()`, so the manual check preserves the original "any non-2xx counts as failure"
+  behavior.
+- `jQuery(framework.activeApp.tab.closeButton).trigger('click')` (`close_app()`) ->
+  `framework.activeApp.tab.closeButton.click()` (native `Element.click()` is the direct equivalent for
+  simulating a click, no `dispatchEvent()` ceremony needed).
+- `jQuery.ajax({url, success(...), error(...)})` (`install()`) -> `fetch('/rocketchat/').then(async
+  (_response) => {...}).catch(() => {...})`, checking `_response.status` inside `.then()` (matching the
+  original success/error split by status code) and reading the error body via `await _response.text()`
+  only on the non-2xx path.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+- 3 of the 4 sites were genuinely async with no complications - converted to
+  `egw.request(...).then(...)`: `handle_actions()`'s `'linkto'`/`'unlinkto'` link/unlink calls (both
+  originally passed `self`/`true`/`self` as context/async/sender - all now unnecessary, `egw.request()`
+  always uses the calling `this` and is always async), and `getUpdates()`'s `ajax_getServerUrl` fetch.
+- `restapi_call()`'s `sendRequest(true,'POST', (_err) => {...})` **kept as-is**, a new documented
+  exception: `egw.request()` has no error-callback parameter at all (only `(menuaction, params) =>
+  Promise`), and this call needs one both to show a custom `egw.message()` instead of the framework's
+  default error dialog, and to `_reject()` the wrapping `Promise` - `egw.request()`'s own promise never
+  rejects on a server-side error (it only ever resolves, per `Json.request()`'s implementation), so
+  there's no way to reproduce the `_reject()` half via `.catch()` either.
+
+### function/closures -> arrow functions
+
+- `et2_ready()`'s `var self = this` plus every `function(){...self...}` inside both switch cases
+  (the `'load'` handlers and their nested `._isRocketchatLoaded().then(...)` success/error callbacks,
+  including one more level of nested `window.setTimeout(function(){...})`) -> all converted to arrows
+  using `this` directly; `self` removed entirely. None of these relied on their own dynamic `this` -
+  they were only ever invoked as plain callbacks (jQuery `.on()`/`.then()`/`setTimeout`), never as a
+  method or via `.call()`/`.apply()`.
+- `_isRocketchatLoaded()`'s executor - see the dedicated bug-fix note above.
+- `handle_actions()`'s outer `const self = this` removed - after converting both nested `egw.json(...)`
+  callbacks to arrows (done together with their `egw.request()` swap above), `self` had no remaining
+  uses. The `dialog.transformAttributes({callback(button, value){...}})` **concise method itself was
+  kept as-is** (documented as a goal-6 exception: `Et2Dialog`'s callback contract binds `this` to the
+  dialog, the same precedent already established for admin/status/rocketchat's own `linkto`/`unlinkto`
+  dialogs).
+- `_subscriptionsInterval()`'s `const self = this` - **a pure "belt-and-braces" alias, not a real
+  `this`-binding fix**: every use of `self` in this method was already inside an arrow function
+  (`window.setInterval(() => ...)`, `.then((_data) => ...)`, `.subscribeToNotifyLogged('user-status',
+  (_data) => ...)`), so `self` and `this` were always identical values - removed the declaration and
+  replaced all `self.` reads with `this.` directly, same "redundant self" finding as addressbook's
+  `rename_list()`.
+- `notifyMe()`'s `let self = this` plus its `onclick() {...self...}` concise-method Notification
+  callback -> `onclick: () => {...}` using `this` directly, `self` removed. `egw_notification.ts`'s
+  `notification()` assigns `options.onclick` straight onto a real `Notification` instance's own
+  `.onclick` property, which *would* normally bind `this` to that instance when it fires - but the body
+  here never used `this` (only `self`), so this is the exact same documented exception status/app.ts
+  already established for the identical `Notification.onclick` pattern: safe to convert since the
+  dynamic-`this` contract was never actually relied upon.
+- `install()`'s `var w = window` (kept, just `var`->`const` - still needed inside the converted
+  callback), `var self = this` (removed), and its `install_info(function(){...self...})` callback ->
+  arrow using `this` directly. This one's conversion is *necessary*, not just stylistic:
+  `install_info()` invokes its `_callback` via a bare `callback.call()` with **no thisArg**, so a plain
+  `function`'s own `this` would always be `undefined` regardless of caller - only an arrow (whose `this`
+  is fixed to `install()`'s own lexical scope, unaffected by `.call()`'s thisArg) reliably works here.
+
+### Not touched (out of scope)
+
+- Nothing else found - the file's remaining logic (`_shouldCallCustomOAuth()`, `chatPopupLookup()`,
+  `_userStatusNum2String()`, `onLogout()`, `isRCActive()`) was already free of all 6 goals' issues.
