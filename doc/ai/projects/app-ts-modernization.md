@@ -41,7 +41,7 @@ clearly-scoped change elsewhere (e.g. an import path).
 | admin | done | Largest file in this series (2227 -> 2330 lines), ~96 `var`, 21 jQuery uses, 14 TS errors, 13 `sendRequest()` sites, 17 `function(`/`self`/`that` closures - see below. |
 | developer | done | Small (57 lines). `developer/` is its own nested git repo. |
 | esyncpro | done | Small (77 lines). `esyncpro/` is its own nested git repo. |
-| aitools | done | Small (92 lines). `aitools/` is its own nested git repo. Note: that repo's working tree also has an unrelated stray change to `src/Hooks.php` (a commented-out trigger check in `notifyAll()`) - not part of this pass, not touched, flagged for the user separately. |
+| aitools | done | Small (92 lines). `aitools/` is its own nested git repo. Note: that repo's working tree also has an unrelated stray change to `src/Hooks.php` (a commented-out trigger check in `notifyAll()`) - Ralf's own in-progress work, not part of this pass, not touched. |
 | bookmarks | done | 218 lines. `bookmarks/` is its own nested git repo. |
 | collabora | done | Largest of this batch (961 lines). `collabora/` is its own nested git repo. |
 | filemanager | done | `filemanager/js/app.ts` (19 lines) was already fully modern - just an import + `app.classes.filemanager` registration, nothing to change. `filemanager/js/filemanager.ts` (the real app-controller file it delegates to) is also done - see below. |
@@ -834,7 +834,8 @@ individually written up here - flag any of these for a closer look if a bug surf
 rather than assuming the reasoning was captured.
 
 `aitools/`'s working tree also has an unrelated, unstaged change to `src/Hooks.php` (comments out
-`notifyAll()`'s trigger-check condition) - confirmed not part of this pass, left untouched.
+`notifyAll()`'s trigger-check condition) - confirmed to be Ralf's own in-progress work, not part of
+this pass, left untouched.
 
 ## filemanager/js/app.ts and filemanager/js/filemanager.ts (done)
 
