@@ -46,6 +46,18 @@ export interface FilesModule
 	 * @param _cssFiles full url of file to include
 	 */
 	includeCSS(_cssFiles : string|string[]) : void;
+
+	/**
+	 * Show the "new updates available" notice once (main window only, not popups)
+	 *
+	 * Called immediately when window.egw_import() (see the Files constructor) has to skip a
+	 * rebuilt file to avoid loading a 2nd, ABI-incompatible module copy, or later by the
+	 * periodic build-epoch poll in egw.js.
+	 */
+	notifyUpdateAvailable() : void;
+
+	/** Whether notifyUpdateAvailable() has already shown its notice in this window */
+	readonly updateAvailableNotified : boolean;
 }
 
 declare global
@@ -148,6 +160,12 @@ class Files implements FilesModule
 
 	#wnd : Window;
 
+	// urls already handed to window.egw_import() below, keyed with their cache-busting
+	// timestamp stripped, so a mid-session rebuild can't load a 2nd, ABI-incompatible copy
+	// of an already-resident module into this window
+	#imported : {[key : string] : string} = {};
+	#updateAvailableNotified = false;
+
 	constructor(_wnd : Window)
 	{
 		this.#wnd = _wnd;
@@ -166,6 +184,57 @@ class Files implements FilesModule
 		this.#files = strip_egw_url(this.#files);
 		// resolve bundles and replace .min.js with .js
 		this.#files = files_from_bundles(this.#files);
+
+		// Allow egw.json to load JS into popups, in THIS window's own realm - a dynamic
+		// import() must run in the importing window's realm, which is why this is assigned
+		// directly on `_wnd` here (at Files construction, which happens for every window/popup
+		// egw.js's bootstrap runs in) rather than left for a caller to reach via egw(wnd).files.
+		//
+		// De-dupes by url with any cache-busting timestamp stripped: once a file's been
+		// imported here, a later "reload" of the same file (eg. an ajax_exec response whose js
+		// include got a new mtime cache-buster because rollup rebuilt it while this window sat
+		// open) resolves to the already-imported url instead of fetching+evaluating a 2nd copy.
+		// Without this, the 2nd copy's classes never win their customElements.define() (guarded
+		// in egw.js), so constructing one directly crashes with "Failed to construct
+		// 'HTMLElement': Illegal constructor" the moment a Lit-based widget (Et2Widget et al)
+		// is built from it. When we do skip a stale-version reload this way, let the user know
+		// a page reload would pick up the new one.
+		const egw_import = (url : string) : Promise<any> =>
+		{
+			const key = removeTS(url);
+			if (typeof this.#imported[key] === 'undefined')
+			{
+				this.#imported[key] = url;
+			}
+			else if (this.#imported[key] !== url)
+			{
+				// someone rebuilt while this window was open - keep the already-loaded
+				// version running, but let the user know a reload would pick up the new one
+				this.notifyUpdateAvailable();
+			}
+			return import(this.#imported[key]);
+		};
+		// also reachable straight off window.egw_import (not just egw(wnd).files): a bare
+		// egw(window) call - as used by egw.js's periodic build-epoch poll - doesn't reliably
+		// have every MODULE_WND_LOCAL module merged in yet (a pre-existing quirk, independent
+		// of this change - eg. the "tooltip" module has the same gap)
+		(<any>egw_import).notifyUpdateAvailable = () => this.notifyUpdateAvailable();
+		Object.defineProperty(egw_import, 'updateAvailableNotified', {get: () => this.#updateAvailableNotified});
+		(<any>_wnd).egw_import = egw_import;
+	}
+
+	notifyUpdateAvailable = () : void =>
+	{
+		if (!this.#updateAvailableNotified && this.#wnd.opener == null)
+		{
+			this.#updateAvailableNotified = true;
+			egw(this.#wnd).message(egw.lang('New updates available. Reload when convenient to get the latest updates.'), 'info');
+		}
+	}
+
+	get updateAvailableNotified() : boolean
+	{
+		return this.#updateAvailableNotified;
 	}
 
 	/**

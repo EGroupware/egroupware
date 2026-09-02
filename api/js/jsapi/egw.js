@@ -330,13 +330,20 @@ window.app = {classes: {}};
 		{
 			let build_check_interval = window.setInterval(function ()
 			{
+				// window.egw_import() (see egw_files.ts) may already have notified - a
+				// stale-version reload was caught sooner than 12h - stop polling once that's happened
+				if (window.egw_import.updateAvailableNotified)
+				{
+					window.clearInterval(build_check_interval);
+					return;
+				}
 				fetch(window.egw_webserverUrl+'/api/js/build-epoch.json', {cache: 'no-store'})
 					.then(r => r.json())
 					.then(data =>
 					{
 						if (data.epoch && data.epoch - window.egw_buildEpoch > 12*3600000) // 12 hours
 						{
-							egw(window).message(egw.lang('New updates available. Reload when convenient to get the latest updates.'), 'info');
+							window.egw_import.notifyUpdateAvailable();
 							window.clearInterval(build_check_interval);
 						}
 					})
@@ -589,16 +596,6 @@ window.egw_rejoin = function ()
 			window.setTimeout(retry, 1000);
 		}
 	}, 500);
-}
-/**
- * Allow egw.json to load JS into popups
- *
- * @param url
- * @returns {Promise<*>}
- */
-window.egw_import = function (url)
-{
-	return import(url);
 }
 /**
  * Run a JSON request in *this* window's realm, calling back with the parsed response
