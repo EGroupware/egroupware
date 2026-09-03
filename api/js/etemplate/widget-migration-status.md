@@ -22,6 +22,24 @@ webcomponent's existence does **not** by itself mean the legacy path is dead; it
 dead once the legacy type name is removed from the `et2_register_widget()` call (see the
 `button`/`old-button` pattern below, which is already prepared for that cutover).
 
+**The `api/etemplate.php` preprocessor** rewrites many legacy tag names to their `et2-*`
+webcomponent equivalent server-side, before the browser (and `et2_createWidget()`) ever sees them
+— see `ADD_ET2_PREFIX_LEGACY_REGEXP` (unconditional) and `ADD_ET2_PREFIX_REGEXP`
+(`box`/`hbox`/`vbox`/`vfs-select`, skipped only for templates with `<overlay legacy="true">`, of
+which there are exactly two live ones: `api/templates/default/show_replacements.xet` and
+`smallpart/templates/default/student.index.xet`). When a type is on one of these lists, its
+legacy `et2_registry` entry is provably unreachable at runtime and it can be treated the same as
+a 1a case, **provided none of its aliases are an `old-*` cutover-staging name** — those are
+deliberately excluded from the rewrite (an explicit "give me the old behaviour" escape hatch) and
+several are genuinely still used (`old-box` in 6 templates, `old-int` in smallpart), which is why
+`box`/`hbox`/`number` stay real legacy files despite their base names being auto-rewritten
+everywhere else. **Also note:** a plain `grep -r` in this checkout silently skips every
+`.gitignore`d app directory (`smallpart/`, `kanban/`, `tracker/`, `stylite/`, `rocketchat/`,
+`records/`, `projectmanager/`, and more) even though they're present on disk — any "0 usage"
+claim in this doc was re-verified with `find ... | xargs grep`, which doesn't have that blind
+spot; anyone re-running these checks should do the same, and also exclude `*.old.xet` backup
+files (created by this file's own `--in-place` CLI conversion mode, never live-served).
+
 ---
 
 ## Core widgets — `api/js/etemplate/`
@@ -52,18 +70,18 @@ dead once the legacy type name is removed from the `et2_register_widget()` call 
 | `textbox`, `hidden` | `et2_widget_textbox.ts` | Yes (`et2-textbox`) | 1b-kept-dependency | Real, large impl. Imported by legacy `et2_widget_number.ts` (`et2_number extends et2_textbox`). |
 | `textbox_ro` | `et2_widget_textbox.ts` | Yes (`et2-textbox_ro`) | 1b-kept-dependency | Imported by legacy `et2_widget_number.ts` (`et2_number_ro extends et2_textbox_ro`). |
 | `vfs-size` | `et2_widget_vfs.ts` | Yes (`et2-vfs-size`) | 1b-kept-dependency | `et2_vfsSize extends et2_description`, real impl. Imported by legacy `et2_widget_file.ts`. |
-| `vbox`, `box`, `old-box` | `et2_widget_box.ts` | Yes (`et2-box`, `et2-vbox`) | 1c-orphaned | `et2_box` real impl; `et2-box`/`et2-vbox` (`Layout/Et2Box/Et2Box.ts`) are independent. No legacy importer besides the bulk bundle. |
-| `details` | `et2_widget_box.ts` | Yes (`et2-details`) | 1c-orphaned | `et2_details extends et2_box`, real impl; `Layout/Et2Details/Et2Details.ts` is independent. |
-| `hbox`, `old-hbox` | `et2_widget_hbox.ts` | Yes (`et2-hbox`) | 1c-orphaned | Real impl (`Layout/Et2Box/Et2Box.ts`'s `Et2HBox` is independent). No legacy importer besides the bulk bundle. |
-| `htmlarea_ro` | `et2_widget_html.ts` | Yes (`et2-htmlarea_ro`) | 1c-orphaned | `Et2HtmlAreaReadonly` is independent. No legacy importer of `et2_html` (for this type) besides the bulk bundle. |
-| `iframe` | `et2_widget_iframe.ts` | Yes (`et2-iframe`) | 1c-orphaned | Real impl (191 lines); `Et2Iframe/*` independent. No legacy importer besides the bulk bundle. |
-| `int`, `integer`, `float`, `old-int` | `et2_widget_number.ts` | Yes (`et2-number`) | 1c-orphaned | `et2_number extends et2_textbox`, real impl; `Et2Number` independent. No legacy importer besides the bulk bundle. |
-| `int_ro`, `integer_ro`, `float_ro` | `et2_widget_number.ts` | Yes (`et2-number_ro`) | 1c-orphaned | Same as above, readonly variant. |
-| `portlet` | `et2_widget_portlet.ts` | Yes (`et2-portlet`) | 1c-orphaned | Real impl (435 lines); `Et2Portlet` independent. No legacy importer besides the bulk bundle. |
-| `searchbox` | `et2_widget_textbox.ts` | Yes (`et2-searchbox`) | 1c-orphaned | `Et2Searchbox extends Et2Textbox` (webcomponent) is fully independent; `et2_extension_nextmatch.ts` already uses the new `Et2Searchbox` webcomponent directly via `loadWebComponent()`, not this legacy class. |
-| `toolbar` | `et2_widget_toolbar.ts` | Yes (`et2-toolbar`) | 1c-orphaned | Real 911-line impl; `Et2Toolbar` independent. No legacy importer besides the bulk bundle. |
-| `vfs-mode` | `et2_widget_vfs.ts` | Yes (`et2-vfs-mode`) | 1c-orphaned | `Et2VfsMode` independent. No legacy importer besides the bulk bundle. |
-| `vfs-upload` | `et2_widget_vfs.ts` | Yes (`et2-vfs-upload`) | 1c-orphaned | `Et2VfsUpload extends Et2File` (webcomponent), fully independent. No legacy importer besides the bulk bundle. |
+| `vbox`, `box`, `old-box` | `et2_widget_box.ts` | Yes (`et2-box`, `et2-vbox`) | 1c-orphaned | `et2_box` real impl; `et2-box`/`et2-vbox` (`Layout/Et2Box/Et2Box.ts`) are independent. `box`/`vbox` are preprocessor-rewritten almost everywhere, but `old-box` (the explicit legacy escape hatch, never rewritten) is genuinely used in 6 live templates incl. `home/templates/default/index.xet` — file must stay. |
+| `details` | `et2_widget_box.ts` | Yes (`et2-details`) | 1c-orphaned | `et2_details extends et2_box`, real impl; `Layout/Et2Details/Et2Details.ts` is independent. Preprocessor-rewritten unconditionally (own dedicated regex) — moot anyway since the file stays for `old-box`. |
+| `hbox`, `old-hbox` | `et2_widget_hbox.ts` | Yes (`et2-hbox`) | 1c-orphaned | Real impl (`Layout/Et2Box/Et2Box.ts`'s `Et2HBox` is independent). `hbox` is preprocessor-rewritten *except* for `<overlay legacy="true">` templates — `smallpart/templates/default/student.index.xet` is one and uses bare `<hbox>` — file must stay. |
+| `htmlarea_ro` | `et2_widget_html.ts` | Yes (`et2-htmlarea_ro`) | 1c-orphaned | `Et2HtmlAreaReadonly` is independent. No legacy importer of `et2_html` (for this type) besides the bulk bundle. Not in the preprocessor's rewrite list at all (only bare `htmlarea` is) — file stays regardless since `html`/`htmlarea` (other types in the same file) are still fully legacy. |
+| `iframe` | `et2_widget_iframe.ts` | Yes (`et2-iframe`) | 1c-orphaned | Real impl (191 lines); `Et2Iframe/*` independent. **Not in the preprocessor's rewrite list at all** (unlike its siblings toolbar/searchbox/etc.) despite 8 live `.xet` files using `<iframe>` — looks like an oversight rather than a deliberate exclusion; worth double-checking `Et2Iframe` is a complete replacement and then either adding `iframe` to `ADD_ET2_PREFIX_LEGACY_REGEXP` or reducing this file the way `et2_widget_dialog.ts` stayed real. |
+| `int`, `integer`, `float`, `old-int` | `et2_widget_number.ts` | Yes (`et2-number`) | 1c-orphaned | `et2_number extends et2_textbox`, real impl; `Et2Number` independent. `int`/`integer`/`float` are preprocessor-rewritten unconditionally, but `old-int` (the legacy escape hatch) is genuinely used by `smallpart/templates/default/student.index.xet` — file must stay. |
+| `int_ro`, `integer_ro`, `float_ro` | `et2_widget_number.ts` | Yes (`et2-number_ro`) | 1c-orphaned | Same as above, readonly variant; moot anyway since the file stays for `old-int`. |
+| `portlet` | `et2_widget_portlet.d.ts` (generated) | Yes (`et2-portlet`) | 1a-generated | Was: real impl (435 lines). Zero live `.xet` usage anywhere (only hit was a stale `.old.xet` backup) and not preprocessor-rewritten either — genuinely dead. Deleted 2026-09-03, folded into the same generated-shim mechanism as the 1a batch (only needed to satisfy `etemplate2.ts`'s bulk-import side effect — nothing imports the class itself). |
+| `searchbox` | `et2_widget_textbox.ts` | Yes (`et2-searchbox`) | 1c-orphaned | `Et2Searchbox extends Et2Textbox` (webcomponent) is fully independent; `et2_extension_nextmatch.ts` already uses the new `Et2Searchbox` webcomponent directly via `loadWebComponent()`, not this legacy class. Preprocessor-rewritten unconditionally — moot anyway since the file stays for `textbox`/`textbox_ro`. |
+| `toolbar` | `et2_widget_toolbar.d.ts` (generated) | Yes (`et2-toolbar`) | 1a-generated | Was: real 911-line impl. `toolbar` is preprocessor-rewritten unconditionally (8 live `.xet` files), no `old-toolbar` escape hatch exists. Deleted 2026-09-03. |
+| `vfs-mode` | `et2_widget_vfs.ts` | Yes (`et2-vfs-mode`) | 1c-orphaned | `Et2VfsMode` independent. **Not in the preprocessor's rewrite list** (unlike its sibling `vfs-upload`) despite 2 live `.xet` files using `<vfs-mode>` — same likely-oversight pattern as `iframe`. File stays regardless since `vfs`/`vfs-size` (other types in the same file) are still fully legacy. |
+| `vfs-upload` | `et2_widget_vfs.ts` | Yes (`et2-vfs-upload`) | 1c-orphaned | `Et2VfsUpload extends Et2File` (webcomponent), fully independent. Preprocessor-rewritten unconditionally — moot anyway since the file stays for `vfs`/`vfs-size`/`vfs-mode`. |
 | `checkbox` | `et2_widget_checkbox.d.ts` (generated) | Yes (`et2-checkbox`) | 1a-generated | Was: entire file `class et2_checkbox extends Et2Checkbox {}`, marked `@deprecated`. |
 | `date`, `date_ro`, `date_duration`, `date_duration_ro`, `date_range` | `et2_widget_date.d.ts` (generated) | Yes (`et2-date`, `et2-date_ro`, `et2-date-duration`, `et2-date-duration_ro`, `et2-date-range`) | 1a-generated | Was: trivial `@deprecated` subclasses of `Et2Date/*`. |
 | `dialog`, `legacy_dialog` | `et2_widget_dialog.ts` | Yes (`et2-dialog`, `legacy-dialog`) | 1a-shim | File's own doc comment: "Just a stub that wraps Et2Dialog"; only compat glue remains. Kept as a real file — has actual behaviour (custom constructor, attribute-registry generation, its own `customElements.define`), not a bare re-export. |
@@ -156,9 +174,9 @@ depend on them (i.e. everything marked 1b/1c/2 above) are gone:
 | State | Count (rows) |
 |---|---|
 | 1a — shim | 1 |
-| 1a — generated | 11 |
+| 1a — generated | 13 |
 | 1b — kept for a dependent | 6 |
-| 1c — orphaned legacy | 16 |
+| 1c — orphaned legacy | 14 |
 | 2 — not yet migrated | 34 |
 | n/a — infrastructure | 8 (one of which, `et2_extension_itempicker_actions.ts`, is outright dead code) |
 
