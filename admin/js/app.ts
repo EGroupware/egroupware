@@ -84,6 +84,21 @@ export class AdminApp extends EgwApp
 	private _adminIframeLoadHandler : () => void = () => {};
 
 	/**
+	 * Get the real <iframe> DOM node for an iframe widget
+	 *
+	 * Et2Iframe (the webcomponent) keeps its actual <iframe> inside a shadow root -
+	 * widget.getDOMNode() (inherited, unoverridden) returns the <et2-iframe> host element
+	 * instead, which has neither a `load` event nor `contentDocument`/`contentWindow`.
+	 * __getIframeNode() is Et2Iframe's own accessor for the real node. Falls back to
+	 * getDOMNode() for the legacy et2_iframe widget, where that already *is* the real iframe.
+	 */
+	private static realIframeNode(widget : any) : HTMLIFrameElement
+	{
+		if(!widget) return null;
+		return (typeof widget.__getIframeNode === 'function' ? widget.__getIframeNode() : widget.getDOMNode()) || null;
+	}
+
+	/**
 	 * Constructor
 	 *
 	 * @memberOf app.classes.admin
@@ -142,12 +157,12 @@ export class AdminApp extends EgwApp
 				this.groups.set_disabled(true);
 				this.ajax_target = this.et2.getWidgetById('ajax_target');
 				this.tree = this.et2.getWidgetById('tree');
-				if (iframe)
+				// iframe is a fresh DOM node every time this case runs, but keep the
+				// removeEventListener-before-addEventListener pattern (native equivalent
+				// of jQuery's off()+bind()) in case the widget/node is ever reused.
+				const iframeNode = iframe && AdminApp.realIframeNode(iframe);
+				if (iframeNode)
 				{
-					// iframe is a fresh DOM node every time this case runs, but keep the
-					// removeEventListener-before-addEventListener pattern (native equivalent
-					// of jQuery's off()+bind()) in case the widget/node is ever reused.
-					const iframeNode = iframe.getDOMNode();
 					iframeNode.removeEventListener('load', this._adminIframeLoadHandler);
 					this._adminIframeLoadHandler = () =>
 					{
@@ -225,7 +240,7 @@ export class AdminApp extends EgwApp
 	 */
 	load(_url? : string)
 	{
-		if (this.iframe && this.iframe.getDOMNode().contentDocument?.location.href
+		if (this.iframe && AdminApp.realIframeNode(this.iframe)?.contentDocument?.location.href
 			.match(/menuaction=admin.admin_statistics.submit.+required=true/) && ( !_url ||
 			!_url.match(/statistics=(postpone|canceled|submitted)/)))
 		{
@@ -290,9 +305,10 @@ export class AdminApp extends EgwApp
 		{
 			this.egw.app_header('');
 			// blank iframe, to not keep something running there
-			if(this.iframe && this.iframe.getDOMNode())
+			const iframeNode = this.iframe && AdminApp.realIframeNode(this.iframe);
+			if(iframeNode)
 			{
-				this.iframe.getDOMNode().contentDocument.location.href = 'about:blank';
+				iframeNode.contentDocument.location.href = 'about:blank';
 			}
 		}
 		this.iframe.set_disabled(!_url || ajax);
@@ -341,7 +357,7 @@ export class AdminApp extends EgwApp
 		{
 			case 'admin':
 				// if iframe is used --> refresh it
-				const iframe_node = this.iframe ? this.iframe.getDOMNode() : undefined;
+				const iframe_node = this.iframe ? AdminApp.realIframeNode(this.iframe) : undefined;
 				const iframe_url = iframe_node ? iframe_node.contentDocument.location.href : undefined;
 				if (_id && iframe_url != 'about:blank')
 				{
