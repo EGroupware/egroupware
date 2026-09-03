@@ -3,6 +3,7 @@ import {Et2Nextmatch} from "../Et2Nextmatch";
 import {Et2NextmatchActionController, resolveActionApiGetters} from "../Et2NextmatchActionController";
 import {EgwPopupActionImplementation} from "../../../egw_action/EgwPopupActionImplementation";
 import {egw_getActionManager, egw_getObjectManager} from "../../../egw_action/egw_action";
+import {Et2Dialog} from "../../Et2Dialog/Et2Dialog";
 import * as sinon from "sinon";
 
 const egwStub = {
@@ -1345,6 +1346,70 @@ describe("Et2Nextmatch action setup", () =>
 		el.executeAction("view_org", undefined, {nmAction: "submit"});
 
 		assert.deepEqual(el.value.selected, ["99"], "omitted selection should use the nextmatch current selection");
+	});
+
+	/**
+	 * Contract under test:
+	 * - Several apps (eg. tracker, infolog) still declare an "open_popup" action's popup as a
+	 *   plain, CSS-toggled element (`<et2-box id="foo_popup" class="action_popup prompt">`) left
+	 *   over from the legacy `<nextmatch>` widget, instead of a real `<et2-dialog>`.
+	 * - openActionPopup() must upgrade that element into a real dialog and open it - like
+	 *   nm_open_popup() already does for the few actions whose onExecute calls it directly -
+	 *   instead of failing to find a dialog API on it and silently falling through to a real
+	 *   form submit.
+	 *
+	 * Setup strategy:
+	 * - Build a minimal non-dialog popup element (plain box, ".promptheader" title, one
+	 *   "et2-button" child) named "<action id>_popup", matching the affected templates.
+	 * - Execute the action as "open_popup".
+	 *
+	 * Pass criteria:
+	 * - The instance manager's submit() is never called.
+	 * - The popup element is upgraded in place into an Et2Dialog and shown.
+	 */
+	it("upgrades a legacy non-dialog action popup instead of falling through to submit", () =>
+	{
+		const el = new Et2Nextmatch();
+		el.id = "nm";
+		const submit = sinon.spy();
+		el.setInstanceManager({
+			submit,
+			DOMContainer: document.body,
+			app: "tracker",
+			uniqueId: "nm_legacy_popup_uid"
+		} as any);
+
+		const popup = document.createElement("div");
+		popup.id = "admin_popup";
+		popup.className = "action_popup prompt";
+		const header = document.createElement("div");
+		header.className = "promptheader";
+		popup.append(header);
+		popup.append(document.createElement("et2-button"));
+		document.body.append(popup);
+
+		const action : any = {id: "admin", data: {}};
+		const controller : any = (el as any)._actionController;
+		controller.actionManager = {
+			getActionById: (id) => id === "admin" ? action : null,
+			getActionsByAttr: () => []
+		};
+
+		try
+		{
+			const handled = el.executeAction("admin", {ids: ["tracker::10"], all: false}, {nmAction: "open_popup"});
+
+			assert.isTrue(handled, "open_popup action should report itself as handled");
+			assert.isFalse(submit.called, "a legacy non-dialog popup must not fall through to a real submit");
+
+			const upgraded = document.body.querySelector("#admin_popup");
+			assert.instanceOf(upgraded, Et2Dialog, "plain popup element should be upgraded into a real dialog");
+			assert.isTrue((upgraded as any).open, "upgraded dialog should be shown");
+		}
+		finally
+		{
+			document.body.querySelector("#admin_popup")?.remove();
+		}
 	});
 
 	/**

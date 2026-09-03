@@ -16,6 +16,9 @@ import {
 } from "../../egw_action/egw_action_constants";
 import type {ReactiveController} from "lit";
 import type {Et2Nextmatch} from "./Et2Nextmatch";
+import {Et2Dialog} from "../Et2Dialog/Et2Dialog";
+import {nm_open_popup} from "../et2_extension_nextmatch_actions.js";
+import {et2_warnOnce} from "../Et2Widget/Et2Widget";
 
 /**
  * Minimal AOI base used by Et2Nextmatch.
@@ -1464,6 +1467,23 @@ export class Et2NextmatchActionController implements ReactiveController
 
 	/**
 	 * Open a configured action popup/dialog for the selected provider row ids.
+	 *
+	 * The popup markup is normally a real `<et2-dialog>`, shown directly. Some apps still
+	 * declare it as a plain, CSS-toggled element (eg. `<et2-box class="action_popup prompt">`)
+	 * left over from the legacy `<nextmatch>` widget. For those, delegate to nm_open_popup()
+	 * (et2_extension_nextmatch_actions.js), which upgrades the element into a real dialog in
+	 * place - the same upgrade already relied on by the handful of actions whose onExecute
+	 * calls nm_open_popup() directly. This keeps both paths behaving identically instead of
+	 * silently falling through to a real form submit when the popup never opens.
+	 *
+	 * nm_open_popup() is deliberately given `selectedIds` (plain row id strings) rather than
+	 * richer `EgwActionObject` senders: it treats an object sender as a legacy
+	 * `et2_dataview_controller_selection`-style row with a `_context._widget` back-reference,
+	 * which modern Et2Nextmatch row objects don't have (`_context` is the row element itself) -
+	 * passing real senders would silently clobber the `action.data.nextmatch` we just set below
+	 * and break the resulting submit. A plain id array is exactly what the legacy `<nextmatch>`
+	 * widget's own default open_popup handling already passes it, so this matches existing,
+	 * working behaviour.
 	 */
 	private openActionPopup(action : EgwAction, selectedIds : string[]) : boolean
 	{
@@ -1479,22 +1499,20 @@ export class Et2NextmatchActionController implements ReactiveController
 		}
 		action.data.nextmatch = this.host;
 		(popup as any).selectedIds = selectedIds;
-		if(typeof (popup as any).show === "function")
+
+		if(popup instanceof Et2Dialog)
 		{
 			(popup as any).show();
 			return true;
 		}
-		if(typeof (popup as any).open === "boolean")
-		{
-			(popup as any).open = true;
-			return true;
-		}
-		if(typeof (popup as any).showModal === "function")
-		{
-			(popup as any).showModal();
-			return true;
-		}
-		return false;
+
+		et2_warnOnce(this.host, "legacy-action-popup:" + popup.id,
+			`Action popup #${popup.id} is a plain element, not an <et2-dialog>; upgrading it at ` +
+			"runtime for backwards compatibility. Please change its template to a real <et2-dialog>.",
+			popup
+		);
+		nm_open_popup(action, selectedIds);
+		return true;
 	}
 
 	/**
