@@ -84,21 +84,6 @@ export class AdminApp extends EgwApp
 	private _adminIframeLoadHandler : () => void = () => {};
 
 	/**
-	 * Get the real <iframe> DOM node for an iframe widget
-	 *
-	 * Et2Iframe (the webcomponent) keeps its actual <iframe> inside a shadow root -
-	 * widget.getDOMNode() (inherited, unoverridden) returns the <et2-iframe> host element
-	 * instead, which has neither a `load` event nor `contentDocument`/`contentWindow`.
-	 * __getIframeNode() is Et2Iframe's own accessor for the real node. Falls back to
-	 * getDOMNode() for the legacy et2_iframe widget, where that already *is* the real iframe.
-	 */
-	private static realIframeNode(widget : any) : HTMLIFrameElement
-	{
-		if(!widget) return null;
-		return (typeof widget.__getIframeNode === 'function' ? widget.__getIframeNode() : widget.getDOMNode()) || null;
-	}
-
-	/**
 	 * Constructor
 	 *
 	 * @memberOf app.classes.admin
@@ -160,7 +145,7 @@ export class AdminApp extends EgwApp
 				// iframe is a fresh DOM node every time this case runs, but keep the
 				// removeEventListener-before-addEventListener pattern (native equivalent
 				// of jQuery's off()+bind()) in case the widget/node is ever reused.
-				const iframeNode = iframe && AdminApp.realIframeNode(iframe);
+				const iframeNode = iframe?.iframe;
 				if (iframeNode)
 				{
 					iframeNode.removeEventListener('load', this._adminIframeLoadHandler);
@@ -240,7 +225,7 @@ export class AdminApp extends EgwApp
 	 */
 	load(_url? : string)
 	{
-		if (this.iframe && AdminApp.realIframeNode(this.iframe)?.contentDocument?.location.href
+		if (this.iframe && this.iframe.iframe?.contentDocument?.location.href
 			.match(/menuaction=admin.admin_statistics.submit.+required=true/) && ( !_url ||
 			!_url.match(/statistics=(postpone|canceled|submitted)/)))
 		{
@@ -305,7 +290,7 @@ export class AdminApp extends EgwApp
 		{
 			this.egw.app_header('');
 			// blank iframe, to not keep something running there
-			const iframeNode = this.iframe && AdminApp.realIframeNode(this.iframe);
+			const iframeNode = this.iframe && this.iframe.iframe;
 			if(iframeNode)
 			{
 				iframeNode.contentDocument.location.href = 'about:blank';
@@ -357,7 +342,7 @@ export class AdminApp extends EgwApp
 		{
 			case 'admin':
 				// if iframe is used --> refresh it
-				const iframe_node = this.iframe ? AdminApp.realIframeNode(this.iframe) : undefined;
+				const iframe_node = this.iframe ? this.iframe.iframe : undefined;
 				const iframe_url = iframe_node ? iframe_node.contentDocument.location.href : undefined;
 				if (_id && iframe_url != 'about:blank')
 				{
