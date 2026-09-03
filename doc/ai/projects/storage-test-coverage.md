@@ -246,8 +246,28 @@ column to the `test` fixture for zero real-world payoff).
       - Also documented (not fixed): `update()`'s docblock claims `merge=false` reduces
         `$this->data` to just `$fields` - the actual code leaves `$this->data` untouched. Locked
         down via test + comment, not "corrected" to match the docblock.
-- [ ] **Phase 2 - `History.php` + `Tracking.php`**: `changed_fields()`, notification dispatch via
-      mock, `History::search()`/`add()`/`delete()`/`needs_diff()`, `track()` contract.
+- [x] **Phase 2 - `History.php` + `Tracking.php`**. 41 new tests, all green:
+      - `api/tests/Storage/HistoryTest.php` (commit `e04d8e1ac7`, 23 tests) - `add()`/`delete()`/
+        `delete_field()`, `search()`'s no-record_id guard + filter-key prefixing + order/sort
+        SQL-safety + DateTime round-trip, `needs_diff()` full matrix, `get_rows()` basic shape +
+        private-CF filtering. Deferred: `get_rows()`'s filemanager-merge branch (too much VFS
+        setup), `share_email`/sharing-integration in `add()`.
+      - `api/tests/Storage/TrackingBehaviorTest.php` + extended `TestTracking.php` (commit
+        `6952bbfffc`, 18 tests) - `changed_fields()` full matrix, `track()`'s new-entry-never-writes-
+        history contract (confirmed true) + `$skip_notification`, `do_notifications()` orchestration
+        (self-suppression, dedup, `assignment_changed`, copy-address filtering) via a
+        `TestTrackingNotifyRecorder` mock. Deferred: group-member expansion, `$check2pref`/
+        `'assignment'`-only preference paths (needs real preference-row fixtures on a shared DB,
+        judged too risky for this pass), the missing-try/finally regression test (item 9).
+      - **Found, not fixed**: `History::needs_diff()`'s PGP guard (`strpos($value, BEGIN_PGP) == 0`)
+        uses loose comparison, and `strpos()` returns `false` on no-match - `false == 0` is `true`
+        in PHP, so "starts with the PGP marker" and "PGP marker absent entirely" both pass the
+        check. Locked down via test, not corrected.
+      - **Testing-infrastructure gotchas worth remembering** (not Tracking.php bugs):
+        `do_notifications()`'s self-notify suppression reads `$this->user`, only ever set by
+        `track()` - a direct `do_notifications()` call must set it manually. Real accounts on this
+        shared dev box commonly have no email configured - pick an account with a real email for
+        notification tests, don't grab an arbitrary "other" account.
 - [ ] **Phase 3 - `Customfields.php` gaps**: `format()`, reordering logic, `save()` deletion
       semantics, `getSerial()`.
 - [ ] **Phase 4 - `Merge.php` gaps**: command placeholders (IF/NELF/LETTERPREFIX/pagerepeat),
