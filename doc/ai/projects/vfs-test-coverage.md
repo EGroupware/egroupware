@@ -190,14 +190,15 @@ the commercial offering. Phases are listed in dependency order (facade/mount-tab
 everything else builds on them) but Phase 6/7's EPL halves carry equal priority to their core
 counterparts, not "do this last if time allows".
 
-**Phase 1 in progress** (2026-09-03):
-- `api/tests/Vfs/PathHelpersTest.php` - DONE, green (45 tests): `parse_url/concat/build_url/
+**Phase 1 DONE** (2026-09-03), committed `705510147c`:
+- `api/tests/Vfs/PathHelpersTest.php` - green (45 tests): `parse_url/concat/build_url/
   basename/dirname/mode2int/int2mode/hsize/int_size`, all pure-function, bare `TestCase`.
-- `api/tests/Vfs/FacadeTest.php` - DONE, green (24 tests): mkdir/rmdir/touch/unlink/copy/rename/
+- `api/tests/Vfs/FacadeTest.php` - green (31 tests): mkdir/rmdir/touch/unlink/copy/rename/
   remove/stat/lstat/is_dir/is_link/file_exists/clearstatcache/chmod/chown/chgrp/is_readable/
-  is_writable/is_executable/eacl/get_eacl/scheme2class/load_wrapper. Deliberately mounts its own
-  scratch `sqlfs://` area per test (see "Local dev environment gotchas" below) rather than relying
-  on whatever `/`/`/home` happen to be mounted to.
+  is_writable/is_executable/eacl/get_eacl/scheme2class/load_wrapper/find/lock/unlock/checkLock.
+  Deliberately mounts its own scratch `sqlfs://` area per test (see "Local dev environment gotchas"
+  below) rather than relying on whatever `/`/`/home` happen to be mounted to. 76 tests total, 213
+  assertions.
 - **Real bug found + fixed**: `Vfs::get_eacl()` (`api/src/Vfs.php:884-911`) crashed with a
   `TypeError` (`usort(): Argument #1 ($array) must be of type array, false given`) whenever the
   backend has no persisted eACL for a path AND a session-only eACL needs merging in - `$eacls[] =
@@ -245,5 +246,5 @@ and NOT present in CI):
    mount-point back to the real test user after creating it, matching the existing
    `StreamWrapperBase::mountMerge()` convention.
 
-**Next**: `lock()`/`unlock()`/`checkLock()` and `find()` weren't covered in this pass (deferred, not
-forgotten) - Phase 1 could use a follow-up for those before moving to Phase 2 (mount table).
+**Next**: Phase 2 (`Vfs\Base` mount table - `mount()`/`umount()` persistence, `resolve_url()`,
+`resolve_url_cache`/`symlink_cache`, `scheme2class()`/`load_wrapper()` edge cases).

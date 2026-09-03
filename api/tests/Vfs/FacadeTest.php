@@ -425,4 +425,140 @@ class FacadeTest extends LoggedInTest
 		$this->assertTrue(Vfs::load_wrapper('sqlfs'));
 		$this->assertTrue(in_array('sqlfs', stream_get_wrappers()));
 	}
+
+	// ---------------------------------------------------------------
+	// find()
+	// ---------------------------------------------------------------
+
+	public function testFindReturnsAllEntries() : void
+	{
+		$file1 = $this->getFilename('_f1');
+		file_put_contents(Vfs::PREFIX . $file1, 'x');
+		$subdir = $this->getFilename('_dir');
+		Vfs::mkdir($subdir);
+		$file2 = $subdir . '/f2';
+		file_put_contents(Vfs::PREFIX . $file2, 'y');
+
+		$found = Vfs::find($this->test_root);
+		$this->assertContains($file1, $found);
+		$this->assertContains($subdir, $found);
+		$this->assertContains($file2, $found);
+	}
+
+	public function testFindTypeFilter() : void
+	{
+		$file = $this->getFilename('_f');
+		file_put_contents(Vfs::PREFIX . $file, 'x');
+		$dir = $this->getFilename('_d');
+		Vfs::mkdir($dir);
+
+		$files_only = Vfs::find($this->test_root, ['type' => 'f']);
+		$this->assertContains($file, $files_only);
+		$this->assertNotContains($dir, $files_only);
+
+		$dirs_only = Vfs::find($this->test_root, ['type' => 'd']);
+		$this->assertContains($dir, $dirs_only);
+		$this->assertNotContains($file, $dirs_only);
+	}
+
+	public function testFindMaxdepth() : void
+	{
+		$sub = $this->getFilename('_sub');
+		Vfs::mkdir($sub);
+		$deep = $sub . '/deep';
+		Vfs::mkdir($deep);
+		$deep_file = $deep . '/f.txt';
+		file_put_contents(Vfs::PREFIX . $deep_file, 'x');
+
+		// maxdepth=1: only test_root's direct children, not anything nested further
+		$shallow = Vfs::find($this->test_root, ['maxdepth' => 1]);
+		$this->assertContains($sub, $shallow);
+		$this->assertNotContains($deep, $shallow);
+		$this->assertNotContains($deep_file, $shallow);
+
+		$all = Vfs::find($this->test_root);
+		$this->assertContains($deep_file, $all);
+	}
+
+	public function testFindNamePattern() : void
+	{
+		$txt = $this->getFilename('_match.txt');
+		file_put_contents(Vfs::PREFIX . $txt, 'x');
+		$log = $this->getFilename('_nomatch.log');
+		file_put_contents(Vfs::PREFIX . $log, 'x');
+
+		$found = Vfs::find($this->test_root, ['name' => '*.txt']);
+		$this->assertContains($txt, $found);
+		$this->assertNotContains($log, $found);
+	}
+
+	// ---------------------------------------------------------------
+	// lock / unlock / checkLock
+	// ---------------------------------------------------------------
+
+	public function testLockUnlock() : void
+	{
+		$file = $this->files[] = $this->getFilename();
+		file_put_contents(Vfs::PREFIX . $file, 'x');
+
+		$token = null;
+		$timeout = 3600;
+		$owner = null;
+		$scope = 'exclusive';
+		$type = 'write';
+		$this->assertTrue(Vfs::lock($file, $token, $timeout, $owner, $scope, $type));
+		$this->assertNotEmpty($token);
+
+		$lock = Vfs::checkLock($file);
+		$this->assertIsArray($lock);
+		$this->assertEquals('exclusive', $lock['scope']);
+		$this->assertEquals('write', $lock['type']);
+
+		$this->assertTrue(Vfs::unlock($file, $token));
+		$this->assertFalse(Vfs::checkLock($file));
+	}
+
+	public function testLockExclusiveRejectsSecondLock() : void
+	{
+		$file = $this->files[] = $this->getFilename();
+		file_put_contents(Vfs::PREFIX . $file, 'x');
+
+		$token1 = null;
+		$timeout1 = 3600;
+		$owner1 = null;
+		$scope1 = 'exclusive';
+		$type1 = 'write';
+		$this->assertTrue(Vfs::lock($file, $token1, $timeout1, $owner1, $scope1, $type1));
+
+		$token2 = null;
+		$timeout2 = 3600;
+		$owner2 = null;
+		$scope2 = 'exclusive';
+		$type2 = 'write';
+		$this->assertFalse(Vfs::lock($file, $token2, $timeout2, $owner2, $scope2, $type2));
+
+		Vfs::unlock($file, $token1);
+	}
+
+	public function testLockRequiresWriteAccess() : void
+	{
+		$file = $this->files[] = $this->getFilename();
+		file_put_contents(Vfs::PREFIX . $file, 'x');
+		Vfs::chmod($file, 0400);
+
+		$token = null;
+		$timeout = 3600;
+		$owner = null;
+		$scope = 'exclusive';
+		$type = 'write';
+		try
+		{
+			$this->assertFalse(Vfs::lock($file, $token, $timeout, $owner, $scope, $type));
+		}
+		finally
+		{
+			// restore write access so this session's own tearDown() can remove it
+			Vfs::chmod($file, 0700);
+		}
+	}
 }
