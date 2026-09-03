@@ -21,7 +21,7 @@ import {et2_file} from "../../api/js/etemplate/et2_widget_file";
 import type {et2_selectbox} from "../../api/js/etemplate/legacy-shims/et2_widget_selectbox";
 // et2_textbox/et2_checkbox are also passed as runtime instanceof-filter values to iterateOver()
 // below, alongside being used as cast types - so they stay value imports, like et2_file above.
-import {et2_textbox} from "../../api/js/etemplate/et2_widget_textbox";
+import {et2_textbox} from "../../api/js/etemplate/legacy-shims/et2_widget_textbox";
 import {et2_checkbox} from "../../api/js/etemplate/legacy-shims/et2_widget_checkbox";
 import {MIME_REGEX} from "../../api/js/etemplate/Expose/ExposeMixin";
 // egwAction is used both as a type and as a runtime `instanceof` check below - value import needed.

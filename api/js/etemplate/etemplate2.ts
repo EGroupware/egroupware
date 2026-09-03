@@ -147,7 +147,7 @@ import './et2_widget_box';
 import './legacy-shims/et2_widget_hbox';
 import './et2_widget_button';
 import './et2_widget_entry';
-import './et2_widget_textbox';
+import './legacy-shims/et2_widget_textbox';
 import './legacy-shims/et2_widget_number';
 import './legacy-shims/et2_widget_selectbox';
 import './et2_widget_radiobox';

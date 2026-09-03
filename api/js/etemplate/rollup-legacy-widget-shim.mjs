@@ -79,6 +79,11 @@ export const SHIM_MANIFEST = {
         {legacyName: 'et2_number', targetModule: './Et2Textbox/Et2Number', targetExport: 'Et2Number'},
         {legacyName: 'et2_number_ro', targetModule: './Et2Textbox/Et2NumberReadonly', targetExport: 'Et2NumberReadonly'}
     ],
+    et2_widget_textbox: [
+        {legacyName: 'et2_textbox', targetModule: './Et2Textbox/Et2Textbox', targetExport: 'Et2Textbox'},
+        {legacyName: 'et2_textbox_ro', targetModule: './Et2Textbox/Et2TextboxReadonly', targetExport: 'Et2TextboxReadonly'},
+        {legacyName: 'et2_searchbox', targetModule: './Et2Textbox/Et2Searchbox', targetExport: 'Et2Searchbox'}
+    ],
     et2_widget_date: [
         {legacyName: 'et2_date', targetModule: './Et2Date/Et2Date', targetExport: 'Et2Date'},
         {legacyName: 'et2_date_duration', targetModule: './Et2Date/Et2DateDuration', targetExport: 'Et2DateDuration'},
