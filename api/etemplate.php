@@ -259,6 +259,23 @@ function send_template()
 				return $tag . '></et2-number>';
 			}, $str);
 
+		// fix already-converted <et2-textbox type="int(eger)?|float" .../> --> <et2-number precision=.../>
+		// (et2-textbox has no styling for numeric input and was never meant to be used that way -
+		// this is the et2-prefixed equivalent of the type="int(eger)?|float" case handled above,
+		// for templates that were hand-written/converted using et2-textbox instead of the bare tag)
+		$str = preg_replace_callback('#<et2-textbox([^>]*)></et2-textbox>#', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			if (empty($attrs['type']) || !in_array($attrs['type'], ['int', 'integer', 'float'], true))
+			{
+				return $matches[0];
+			}
+			$float = $attrs['type'] === 'float';
+			unset($attrs['type']);
+			if (!$float) $attrs['precision'] = '0';
+			return '<et2-number'.stringAttrs($attrs).'></et2-number>';
+		}, $str);
+
 		// replace just description, as they often contain >, like label="> %s"
 		$str = preg_replace('#<description\s*/>#', '<et2-description></et2-description>', $str);
 		$str = preg_replace('#<description\s(.*?")\s*/>#s', '<et2-description $1></et2-description>', $str);
