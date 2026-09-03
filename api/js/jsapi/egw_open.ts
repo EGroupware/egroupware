@@ -139,7 +139,7 @@ export interface OpenModule
 	 * @param _extra url parameters as query-string or object, array values are sent as "name[]"
 	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
 	 */
-	openComposePost(_extra : string|object, _check_popup_blocker? : boolean) : void;
+	openComposePost(_extra : string|object, _check_popup_blocker? : boolean) : Promise<void>;
 
 	/**
 	 * This function helps to append content/ run commands into an already
@@ -814,16 +814,21 @@ class Open implements OpenModule
 	 * Called as egw(app,wnd).openComposePost(...) - needs self.#wnd to create the form in the
 	 * document of the window it was called for, hence the self-capture pattern.
 	 */
-	openComposePost = ((self : Open) => function(this : any, _extra : string|object, _check_popup_blocker? : boolean) : void
+	openComposePost = ((self : Open) => async function(this : any, _extra : string|object, _check_popup_blocker? : boolean) : Promise<void>
 	{
-		const popup : any = egw.open('', 'mail', 'add', '', 'compose__', 'mail', _check_popup_blocker);
+		// A framework's openPopup() is async (kdots' awaits the open_popups_in preference first),
+		// so egw.open() hands back a promise, NOT the window - await it before reading its name.
+		const popup : any = await egw.open('', 'mail', 'add', '', 'compose__', 'mail', _check_popup_blocker);
 		if (!popup)	// popup blocked or blocker-warning dialog shown instead
 		{
 			return;
 		}
+		// With open_popups_in=same_window the "popup" is an Et2Dialog, not a window we can post
+		// into - post into a new window then, instead of dropping the parameters silently.
+		const target = typeof popup.name === "string" && popup.name ? popup.name : '_blank';
 		const doc = self.#wnd.document;
 		const form = doc.createElement('form');
-		form.target = popup.name;
+		form.target = target;
 		form.action = "index.php?menuaction=mail.mail_compose.compose";
 		form.method = "post";
 
