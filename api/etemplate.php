@@ -283,6 +283,23 @@ function send_template()
 			return '<et2-number'.stringAttrs($attrs).'></et2-number>';
 		}, $str);
 
+		// strip a redundant type="int(eger)?|float" left over on an already-<et2-number> tag
+		// (eg. from a hand-edit that renamed the tag but not the now-meaningless type attribute) -
+		// otherwise it wins over the tag name (see Et2Widget.createElementFromNode()) and routes
+		// straight back to the legacy et2_number class despite the tag already being et2-number
+		$str = preg_replace_callback('#<et2-number([^>]*)></et2-number>#', static function (array $matches)
+		{
+			$attrs = parseAttrs($matches[1]);
+			if (empty($attrs['type']) || !in_array($attrs['type'], ['int', 'integer', 'float'], true))
+			{
+				return $matches[0];
+			}
+			$float = $attrs['type'] === 'float';
+			unset($attrs['type']);
+			if (!$float && !isset($attrs['precision'])) $attrs['precision'] = '0';
+			return '<et2-number'.stringAttrs($attrs).'></et2-number>';
+		}, $str);
+
 		// replace just description, as they often contain >, like label="> %s"
 		$str = preg_replace('#<description\s*/>#', '<et2-description></et2-description>', $str);
 		$str = preg_replace('#<description\s(.*?")\s*/>#s', '<et2-description $1></et2-description>', $str);
