@@ -18,33 +18,37 @@ this doc's gap list accounts for that and focuses on what's genuinely underteste
 at the low level (`Db::quote()`'s exact matrix in isolation, not just "some `save()` calls happened
 to quote things correctly").
 
-## Two real bugs found during mapping - not yet fixed, flagged for a decision
+## Three real bugs found during mapping/Phase 1 - all FIXED (commit `38e19c288d`)
 
-1. **`_connect()`'s capability-reuse gap** (`Db.php:452-623`). Confirmed still live by re-reading the
-   current code. `_connect()` only calls `set_capabilities()` (line 555) when opening a genuinely NEW
-   ADOdb connection (`!isset(self::$ADOdb)` or differing connection params); when reusing the pooled
-   `self::$ADOdb` link (line 596, `$this->Link_ID = self::$ADOdb;`), `set_capabilities()` is never
-   called on `$this` - `$this->capabilities` stays at the class-default array (including the
-   MySQL-wrong `CAPABILITY_CAST_AS_VARCHAR => 'CAST(%s AS varchar)'` instead of the MySQL-corrected
-   `'CAST(%s AS char)'`). Already forced a real workaround this session in
-   `api/tests/Storage/SearchTest.php`. Reachable any time a second `new Db(...)` is constructed
-   against the same connection params within one process.
-2. **`Db\Schema::RefreshTable()`'s transaction leak** (`api/src/Db/Schema.php:668-793`) - the SAME bug
-   class, same mechanism, as the already-fixed, already-CI-breaking
-   `Customfields::getSerial()` bug (see storage-test-coverage.md Phase 3). Its `!$Ok` failure path
-   (line 787-791) calls `transaction_abort()` (ADOdb `FailTrans()` - only flags failure) then
-   `return False;` **without ever calling `transaction_commit()`** to finalize/rollback via
-   `CompleteTrans()`. Leaves the transaction open on `$GLOBALS['egw_setup']->db` indefinitely.
-   Reachable during any schema upgrade that hits `RefreshTable()` (column/index/PK changes) and fails
-   partway through (rename/create/copy/drop). Only one call site checked so far - a broader grep for
-   the same `transaction_abort()`-without-following-`transaction_commit()` pattern across the repo is
-   worth doing before considering this exhaustively found.
+1. **`_connect()`'s capability-reuse gap** (`Db.php:452-623`) - `_connect()` only called
+   `set_capabilities()` when opening a genuinely NEW ADOdb connection; reusing the pooled
+   `self::$ADOdb` link skipped it (and never populated `$this->ServerInfo` either), silently leaving
+   `$this->capabilities` at the generic defaults (including the MySQL-wrong
+   `CAPABILITY_CAST_AS_VARCHAR => 'CAST(%s AS varchar)'`). Already forced a workaround this session in
+   `api/tests/Storage/SearchTest.php`, now removed. **Fixed**: the reuse branch now calls
+   `$this->ServerInfo = $this->Link_ID->ServerInfo(); $this->set_capabilities(...)` too, matching the
+   new-connection branch.
+2. **`Db\Schema::RefreshTable()`'s transaction leak** (`api/src/Db/Schema.php`) - the SAME bug class,
+   same mechanism, as the already-fixed `Customfields::getSerial()` bug: its `!$Ok` failure path called
+   `transaction_abort()` (only flags failure) then `return False;` without ever calling
+   `transaction_commit()` to finalize/rollback. Grepped the whole repo for `transaction_abort()` calls
+   after fixing - only 4 exist total, all correct now. **Fixed**: added the missing
+   `transaction_commit()` call.
+3. **mysqli exception mode was silently OFF** in this runtime - ADOdb's vendored mysqli driver
+   constructor explicitly calls `mysqli_report(MYSQLI_REPORT_OFF)`, undoing PHP 8.1+'s own
+   exception-throwing default (with a code comment referencing that very PHP version change). This
+   made `query()`'s `catch(\mysqli_sql_exception $e)` block - and its error-code-based
+   `InvalidSql`-vs-generic-`Db\Exception` classification - dead code; every failure fell through the
+   generic `!$rs` fallback, which also never populated `$e->details` (only `getMessage()` had the
+   SQL). **Fixed**: re-enabled `mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT)` from
+   `_connect()` right after the connection object is constructed (before the real connect call, so it
+   takes effect), and fixed the fallback path to also set `$e->details`.
 
-Both are real, concrete, reproducible - not speculative. Given #2 is the identical bug class that
-already broke CI once this session (see `5c4a592de8`), the same fix (add the missing
-`transaction_commit()` call) is the obvious remedy. #1 needs a judgment call: fix `_connect()` first
-(e.g. call `set_capabilities()` unconditionally, or copy `$GLOBALS['egw']->db->capabilities` in the
-reuse branch), or write a regression test documenting current behavior first.
+Verified no regressions: a full `api/tests/` run (963 tests) produces byte-identical results (963
+tests, 3 errors, 37 failures - all pre-existing, unrelated to this project) with and without these
+changes, confirmed via a `git stash` A/B comparison. `invoices/tests/` (67 tests) unaffected too.
+`api/tests/Db/QuoteTest.php`'s two error-classification tests, which had locked down the OLD
+(mysqli-not-throwing) behavior, were updated to assert the new correct behavior instead.
 
 ## Per-group inventory and gaps
 
