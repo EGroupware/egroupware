@@ -70,7 +70,7 @@ files (created by this file's own `--in-place` CLI conversion mode, never live-s
 | `textbox`, `hidden` | `et2_widget_textbox.ts` | Yes (`et2-textbox`) | 1b-kept-dependency | Real, large impl. Imported by legacy `et2_widget_number.ts` (`et2_number extends et2_textbox`). |
 | `textbox_ro` | `et2_widget_textbox.ts` | Yes (`et2-textbox_ro`) | 1b-kept-dependency | Imported by legacy `et2_widget_number.ts` (`et2_number_ro extends et2_textbox_ro`). |
 | `vfs-size` | `et2_widget_vfs.ts` | Yes (`et2-vfs-size`) | 1b-kept-dependency | `et2_vfsSize extends et2_description`, real impl. Imported by legacy `et2_widget_file.ts`. |
-| `vbox`, `box`, `old-box` | `et2_widget_box.ts` | Yes (`et2-box`, `et2-vbox`) | 1c-orphaned | `et2_box` real impl; `et2-box`/`et2-vbox` (`Layout/Et2Box/Et2Box.ts`) are independent. `box`/`vbox` are preprocessor-rewritten almost everywhere, but `old-box` (the explicit legacy escape hatch, never rewritten) is genuinely used in 6 live templates incl. `home/templates/default/index.xet` — file must stay. |
+| `vbox`, `box`, `old-box` | `et2_widget_box.ts` | Yes (`et2-box`, `et2-vbox`) | 1c-orphaned | `et2_box` real impl; `et2-box`/`et2-vbox` (`Layout/Et2Box/Et2Box.ts`) are independent - **but not a full replacement**, see "`old-box` auto-repeat" below. `box`/`vbox` are preprocessor-rewritten almost everywhere, but `old-box` (the explicit legacy escape hatch, never rewritten) is genuinely used in 6 live templates incl. `home/templates/default/index.xet` — file must stay. |
 | `details` | `et2_widget_box.ts` | Yes (`et2-details`) | 1c-orphaned | `et2_details extends et2_box`, real impl; `Layout/Et2Details/Et2Details.ts` is independent. Preprocessor-rewritten unconditionally (own dedicated regex) — moot anyway since the file stays for `old-box`. |
 | `hbox`, `old-hbox` | `et2_widget_hbox.ts` | Yes (`et2-hbox`) | 1c-orphaned | Real impl (`Layout/Et2Box/Et2Box.ts`'s `Et2HBox` is independent). `hbox` is preprocessor-rewritten *except* for `<overlay legacy="true">` templates — `smallpart/templates/default/student.index.xet` is one and uses bare `<hbox>` — file must stay. |
 | `htmlarea_ro` | `et2_widget_html.ts` | Yes (`et2-htmlarea_ro`) | 1c-orphaned | `Et2HtmlAreaReadonly` is independent. No legacy importer of `et2_html` (for this type) besides the bulk bundle. Not in the preprocessor's rewrite list at all (only bare `htmlarea` is) — file stays regardless since `html`/`htmlarea` (other types in the same file) are still fully legacy. |
@@ -111,6 +111,50 @@ files (created by this file's own `--in-place` CLI conversion mode, never live-s
 | `—` (no `et2_register_widget` call) | `et2_extension_nextmatch_actions.js` | n/a | n/a-infrastructure (shared) | Free functions (`nm_action`, `nm_open_popup`, `fetchAll`). Used by both legacy (`et2_extension_nextmatch_controller.ts`) **and** modern app code (`infolog/js/app.ts`, `calendar/js/app.ts`, `resources/js/app.ts`, `api/js/jsapi/egw_app.ts`). |
 | `—` (no `et2_register_widget` call) | `et2_extension_nextmatch_controller.ts` | n/a | n/a-infrastructure (legacy-only) | Data/row controller for legacy nextmatch. Only imported by `et2_extension_nextmatch.ts`; `Et2Nextmatch` uses its own `Et2NextmatchActionController`/`Et2NextmatchDataProvider` instead. |
 | `—` (no `et2_register_widget` call) | `et2_extension_nextmatch_rowProvider.ts` | n/a | n/a-infrastructure (legacy-only) | Only imported by `et2_extension_nextmatch.ts`. Superseded on the webcomponent side by `Et2Datagrid/Et2RowProvider.ts`. |
+
+---
+
+## `old-box` auto-repeat — a real feature gap, not just an unconverted template
+
+Checked 2026-09-03 whether `Et2Box`/`Et2HBox`/`Et2VBox` (`Layout/Et2Box/Et2Box.ts`) have any
+equivalent to `et2_box`'s `type="old-box"` auto-repeat feature, before considering `box`/`hbox`
+for the same generated-shim treatment as the 1a batch. They don't, confirmed at two levels:
+
+- **`Et2Box.ts` itself**: a plain `<slot>`-based flex wrapper. No `loadFromXML` override, no
+  array-manager awareness, no repeat/loop logic of any kind.
+- **The base `Et2Widget.loadFromXML()`** (`Et2Widget/Et2Widget.ts:932`, what `et2-box`/`et2-vbox`
+  and plain `box`/`vbox` all actually run) - a plain linear loop that creates each child element
+  exactly once. No `$`-in-id detection, no array-manager row-switching.
+
+So the mechanism (`et2_widget_box.ts:56-125`) only exists inside `et2_box`'s own
+`type === "old-box"` special case: the *last* direct child whose `id` contains `$` **and** whose
+tag is `box`/`grid`/`et2-box`/a registered custom element is treated as a repeat template — for
+every remaining content-array row beyond the widget's other static children, every array manager's
+"current row" is pointed at that index and a fresh copy of the template child is instantiated.
+Converting `old-box` to `et2-box` without this would not degrade gracefully - the templated child
+would render **once**, with a literal unexpanded `${row}`-style id and no row data, silently
+dropping the rest of the list.
+
+**Where it's genuinely used** (the *only* thing keeping `et2_widget_box.ts` alive - `box`/`vbox`
+themselves are preprocessor-rewritten everywhere else):
+
+| Template | Repeated child |
+|---|---|
+| `home/templates/default/index.xet` (`id="portlets"`) | `<et2-portlet id="$row_cont[id]" .../>` — the home page's portlet list. Source has its own comment: `<!-- Box wrapper needed to get box to auto-repeat -->`. |
+| `api/templates/default/show_replacements.xet` (3x: `placeholders`, `common`, `user`) | `<box id="${row}"><template template="api.show_replacements.placeholder_list"/></box>` — one repeat group per placeholder category. |
+| `stylite/templates/default/link_search.search.xet` (`id="apps"`) | `<et2-box id="${row}"><template id="@app" .../></et2-box>` — one box per app in the link-search dialog. |
+
+`timesheet/templates/default/timer.xet`'s two `old-box` usages (`specific_timer`, `overall_timer`)
+are self-closing with no children at all - they use `old-box` as a plain leaf widget, unrelated to
+auto-repeat.
+
+**Likely correct migration path** (not attempted - real template-redesign work, left as a future
+project): this framework's actual modern answer to "repeat N widgets from content-array data" is
+`<grid>` (native per-row content-array iteration) or `<et2-nextmatch>`/`<et2-datagrid>` for richer
+cases, not `<box>`. `old-box`'s auto-repeat looks like a lightweight workaround for cases where a
+full `<grid>` felt like overkill. Adding repeat support to `Et2Box` itself would mean baking this
+legacy, array-manager-specific mechanism into a generic layout primitive - the more likely fix is
+converting these three templates' repeat groups to use `<grid>` (or equivalent) instead.
 
 ---
 
