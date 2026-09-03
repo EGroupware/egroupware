@@ -176,8 +176,13 @@ class HtmlArea extends Etemplate\Widget
 		if (!$this->is_readonly($cname, $form_name))
 		{
 			$value = self::get_array($content, $form_name);
+			// mode can be bound to content, eg. mode="@tr_edit_mode" in tracker.
+			// expand_widget() only commits expanded attrs when the *type* is expandable,
+			// so $this->attrs['mode'] is still the unexpanded "@tr_edit_mode" here.
+			$mode = self::expand_name($this->attrs['mode'] ?? '', $expand['c'] ?? null, $expand['row'] ?? null,
+				$expand['c_'] ?? null, $expand['row_'] ?? null, $expand['cont'] ?? []);
 			// only purify for html, mode "ascii" is NO html and content get lost!
-			if ($this->attrs['mode'] != 'ascii')
+			if ($mode != 'ascii')
 			{
 				$value = Api\Html\HtmLawed::purify(
 					self::get_array($content, $form_name),
