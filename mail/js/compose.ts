@@ -158,6 +158,34 @@ export class MailCompose
 	 */
 	private uploadedAttachmentBlobs = new Map<string, JmapAttachment>();
 
+	/**
+	 * Count of classic (non-JMAP) attachment uploads currently in flight - incremented per file in
+	 * uploadStart(), reset to 0 once uploadFinish() fires for the batch. Found live 2026-09-03:
+	 * clicking Send/Save-as-Draft while a large attachment was still uploading silently sent/saved
+	 * the mail WITHOUT it, since the file only lands in content.attachments once uploadFinish()'s
+	 * own postback (mail_compose::compose()'s uploadForCompose merge) comes back - there was no
+	 * error, no attachment. waitForPendingUploads() gates submitAction()/saveAsDraft() on this,
+	 * same "wait" pattern integrateSubmit() already uses for cross-app integration pickers.
+	 */
+	private pendingAttachmentUploads = 0;
+	private pendingUploadWaiters : Array<() => void> = [];
+
+	private waitForPendingUploads() : Promise<void>
+	{
+		if(this.pendingAttachmentUploads <= 0)
+		{
+			return Promise.resolve();
+		}
+		return new Promise<void>((resolve) => { this.pendingUploadWaiters.push(resolve); });
+	}
+
+	private resolvePendingUploadWaiters() : void
+	{
+		const waiters = this.pendingUploadWaiters;
+		this.pendingUploadWaiters = [];
+		waiters.forEach((resolve) => resolve());
+	}
+
 	get egw() : IegwAppLocal
 	{
 		return this.app.egw;
@@ -242,6 +270,10 @@ export class MailCompose
 				void this.uploadLocalAttachmentViaJmap(file);
 			}
 		}
+		else
+		{
+			this.pendingAttachmentUploads++;
+		}
 	}
 
 	/**
@@ -274,6 +306,8 @@ export class MailCompose
 	 */
 	uploadFinish(_event, _file_count, _path)
 	{
+		this.pendingAttachmentUploads = 0;
+		this.resolvePendingUploadWaiters();
 		// path is probably not needed when uploading for file; maybe it is when from vfs
 		if(typeof _path == 'undefined')
 		{
@@ -836,6 +870,9 @@ export class MailCompose
 		// bootstrapCompose()'s async carryForwardAttachments() to the punch, silently sending/
 		// saving with no attachments at all. Every branch below already gates on `wait`.
 		wait = wait.then(() => this.bootstrapPromise);
+		// waitForPendingUploads()'s own docblock - a fast Send/Save click can also beat a
+		// still-uploading classic (non-JMAP) attachment's own postback merge to the punch.
+		wait = wait.then(() => this.waitForPendingUploads());
 
 		if (this.app.mailvelope_editor)
 		{
@@ -2108,8 +2145,10 @@ export class MailCompose
 		return new Promise<void>((_resolve, _reject) =>{
 			// bootstrapPromise's own docblock - autosave's 2-minute interval is in no realistic
 			// danger, but an explicit, fast "Save as Draft" click could otherwise beat
-			// bootstrapCompose()'s async carryForwardAttachments() to the punch
-			void self.bootstrapPromise.then(() =>
+			// bootstrapCompose()'s async carryForwardAttachments() to the punch. Also wait for any
+			// still-in-flight classic (non-JMAP) attachment upload - see waitForPendingUploads()'s
+			// own docblock.
+			void self.bootstrapPromise.then(() => self.waitForPendingUploads()).then(() =>
 			{
 				const content = self.et2.getArrayMgr('content').data;
 				let action = _action;

@@ -171,6 +171,26 @@ only a real-JMAP target does the WebDAV-fetch-then-upload round trip, via
 `MailJmap.uploadVfsAttachment()`, cached per path/target-account pair the same way
 `reuploadAttachmentForAccount()` already caches cross-account blob reuploads.
 
+**Classic-mode attachment race FIXED (2026-09-03)**: the direct-to-JMAP fix above only ever engages
+for `isJmapMode` compose. Everyone else (the default) still goes through the old chunked-upload-
+then-postback path - `uploadStart()` just reveals the attachments box, the browser upload runs via
+`Et2File`'s own resumable/chunked transfer, and only once it finishes does `uploadFinish()` fire a
+SEPARATE `getInstanceManager().submit()` postback whose response is what actually merges the file
+into `content.attachments` (`mail_compose.inc.php`'s `uploadForCompose`→`attachments` merge). There
+was no synchronization between that postback and the user's own Send/Save-as-Draft click: clicking
+either one before the postback lands took a snapshot of `content.attachments` that simply didn't
+have the new file yet - sent/saved successfully, silently missing the attachment, no error anywhere
+(`sendOK` only checks body/subject/recipients). "Save as draft first" appeared to "fix" it only
+because users naturally waited for the file to visibly appear in the attachments grid - which is the
+same postback completing - before clicking Send. Fixed in `mail/js/compose.ts` by tracking
+`pendingAttachmentUploads` (incremented per file in `uploadStart()`'s classic/non-JMAP branch, reset
+in `uploadFinish()`) and gating `submitAction()`/`saveAsDraft()` on `waitForPendingUploads()` before
+either builds its payload - same "wait for a promise before submitting" pattern `integrateSubmit()`
+already uses for cross-app integration pickers. This only covers the browser-upload window; the
+(much shorter) postback-round-trip tail after `uploadFinish()` fires is not separately gated, since
+`etemplate2.submit()` doesn't expose a completion promise to hook into cheaply and the residual race
+window there is negligible in practice.
+
 **Test coverage: partially added (2026-08-31, `0d06e43872`)** - 8 PHPUnit tests for
 `buildMailerFromEmailProperties()` (`ImapBuildMailerTest.php`), the shim's core message-building
 transform and the piece where the real body-vs-attachment bug above actually lived: a direct
