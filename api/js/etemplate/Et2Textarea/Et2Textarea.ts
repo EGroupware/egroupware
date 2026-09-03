@@ -13,9 +13,10 @@ import {css} from "lit";
 import {Et2InputWidget} from "../Et2InputWidget/Et2InputWidget";
 import {SlTextarea} from "@shoelace-style/shoelace";
 import shoelace from "../Styles/shoelace";
+import {Et2MarkdownEditMixin} from "../Markdown/Et2MarkdownEditMixin";
 
 
-export class Et2Textarea extends Et2InputWidget(SlTextarea)
+export class Et2Textarea extends Et2MarkdownEditMixin(Et2InputWidget(SlTextarea))
 {
 	static get styles()
 	{
@@ -138,6 +139,19 @@ export class Et2Textarea extends Et2InputWidget(SlTextarea)
 	get _inputNode()
 	{
 		return this.shadowRoot?.querySelector("textarea");
+	}
+
+	/**
+	 * Wrap Shoelace's textarea in the markdown editor when markdown is enabled.
+	 *
+	 * The early return matters more than the wrapping: with markdown off this has to be exactly
+	 * what Shoelace renders today, so no existing textarea changes in any way.
+	 */
+	render()
+	{
+		const source = super.render();
+
+		return this.markdown ? this._markdownShellTemplate(source) : source;
 	}
 }
 

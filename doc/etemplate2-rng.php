@@ -56,6 +56,31 @@ $overwrites = [
 			'tabindex' => 'int',    // not reported, probably because DOM attributeq
 		],
 	],
+	// the analyzer does not resolve members contributed by a mixin, so the markdown attributes
+	// have to be declared here.  Class names, so everything descending from them inherits:
+	// Et2Description covers et2-label, et2-textbox_ro, et2-textarea_ro and et2-number_ro.
+	'Et2Description' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+		],
+	],
+	'Et2HtmlAreaReadonly' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+		],
+	],
+	'Et2Textarea' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+			'markdownMode' => "'edit' | 'split' | 'preview'",
+		],
+	],
+	'Et2HtmlArea' => [
+		'.attrs' => [
+			'markdown' => 'boolean',
+			'markdownMode' => "'edit' | 'split' | 'preview'",
+		],
+	],
 	'et2-textbox' => [
 			'.children' => ['.quantity' => 'optional', 'et2-image'],
 	],

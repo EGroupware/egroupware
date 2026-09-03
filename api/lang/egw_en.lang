@@ -219,6 +219,7 @@ browser %1 %2 is not recommended. you may experience issues and not working feat
 brunei darussalam	common	en	BRUNEI DARUSSALAM
 bulgaria	common	en	BULGARIA
 bulgarian	common	en	Bulgarian
+bullet list	common	en	Bullet list
 bullist	common	en	Bullist
 burkina faso	common	en	BURKINA FASO
 burundi	common	en	BURUNDI
@@ -664,6 +665,12 @@ guyana	common	en	GUYANA
 h	common	en	h
 haiti	common	en	HAITI
 hbox	common	en	HBox
+heading 1	common	en	Heading 1
+heading 2	common	en	Heading 2
+heading 3	common	en	Heading 3
+heading 4	common	en	Heading 4
+heading 5	common	en	Heading 5
+heading 6	common	en	Heading 6
 heard island and mcdonald islands	common	en	HEARD ISLAND AND MCDONALD ISLANDS
 height	common	en	Height
 height of row (in % or pixel)	common	en	Height of row (in % or pixel)
@@ -863,6 +870,7 @@ maldives	common	en	MALDIVES
 mali	common	en	MALI
 malta	common	en	MALTA
 march	common	en	March
+markdown view: %1	common	en	Markdown view: %1
 marshall islands	common	en	MARSHALL ISLANDS
 martinique	common	en	MARTINIQUE
 mauritania	common	en	MAURITANIA
@@ -997,6 +1005,7 @@ november	common	en	November
 now	common	en	Now
 number of colums the field/cell should span or 'all' for the remaining columns, css-class name (for the td tag)	common	en	Number of columns the field/cell should span or 'all' for the remaining columns, CSS-class name (for the TD tag)
 number of rows/cols in a v/hbox, cellpadding, cellspacing	common	en	Number of rows/cols in a V/HBox, Cellpadding, Cellspacing
+numbered list	common	en	Numbered list
 numbers	common	en	numbers
 numlist	common	en	Numlist
 october	common	en	October
@@ -1102,6 +1111,7 @@ preference	common	en	Preference
 preferences	common	en	Preferences
 preferences for the %1 template set	preferences	en	Preferences for the %1 template set
 prev	common	en	Prev
+preview	common	en	Preview
 preview with entry	common	en	Preview with entry
 previous	common	en	Previous
 previous page	common	en	Previous page
@@ -1121,6 +1131,7 @@ public	common	en	Public
 puerto rico	common	en	PUERTO RICO
 qatar	common	en	QATAR
 quick add	common	en	Quick add
+quote	common	en	Quote
 radiobutton	common	en	Radio button
 read	common	en	Read
 read a single entry by passing the id and fieldlist.	common	en	Read a single entry by passing the ID and field list.
@@ -1351,6 +1362,7 @@ spain	common	en	SPAIN
 span	common	en	Span
 span, class	common	en	Span, Class
 special characters	common	en	special characters
+split view	common	en	Split view
 spreadsheets	common	en	Spreadsheets
 sri lanka	common	en	SRI LANKA
 stack	common	en	Stack
@@ -1400,6 +1412,7 @@ tabs	common	en	Tabs
 taiwan	common	en	TAIWAN/TAIPEI
 tajikistan	common	en	TAJIKISTAN
 tanzania, united republic of	common	en	TANZANIA, UNITED REPUBLIC OF
+task list	common	en	Task list
 template	common	en	Template
 template deleted	common	en	Template deleted.
 template saved	common	en	Template saved.

@@ -446,3 +446,80 @@ inputBasicTests(async() =>
 	sinon.stub(element, "egw").returns(window.egw as any);
 	return element;
 }, "Rich text value", "tinymce-editor");
+/**
+ * Contract under test: markdown is a plain-text feature, confined to mode="ascii".
+ *
+ * Setup: real et2-htmlarea / et2-htmlarea_ro widgets in a fixture, against the TinyMCE stub
+ * already installed by this file.
+ *
+ * Pass criteria: with mode="ascii" and markdown set, the editor gains the markdown shell and the
+ * readonly twin renders parsed HTML.  In every rich-text mode the markdown attribute must change
+ * nothing at all - that is the guarantee the whole design rests on, so a failure here means
+ * markdown has leaked into the WYSIWYG path.
+ */
+describe("Et2HtmlArea markdown in ascii mode", () =>
+{
+	it("wraps the ascii textarea in the markdown shell", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`
+			<et2-htmlarea mode="ascii" markdown value="# Heading"></et2-htmlarea>
+		`);
+
+		assert.exists(element.shadowRoot.querySelector(".markdown-shell"), "Shell should be rendered");
+		assert.exists(element.shadowRoot.querySelector(".markdown-view"), "View switcher should be rendered");
+		assert.exists(element.shadowRoot.querySelector("textarea"), "Source should stay editable");
+		assert.notExists(element.shadowRoot.querySelector("tinymce-editor"), "ascii must never load TinyMCE");
+	});
+
+	it("leaves ascii mode untouched without the markdown attribute", async() =>
+	{
+		const element = await fixture<Et2HtmlArea>(html`
+			<et2-htmlarea mode="ascii" value="# Heading"></et2-htmlarea>
+		`);
+
+		assert.notExists(element.shadowRoot.querySelector(".markdown-shell"), "No shell without markdown");
+		assert.exists(element.shadowRoot.querySelector("textarea"), "Plain textarea as before");
+	});
+
+	it("ignores markdown in rich text modes", async() =>
+	{
+		for(const mode of ["", "simple", "extended", "advanced"])
+		{
+			const element = await fixture<Et2HtmlArea>(html`
+				<et2-htmlarea mode=${mode} markdown value="# Heading"></et2-htmlarea>
+			`);
+
+			assert.notExists(element.shadowRoot.querySelector(".markdown-shell"),
+				`mode="${mode}" must not get the markdown shell`);
+			assert.exists(element.shadowRoot.querySelector("tinymce-editor"),
+				`mode="${mode}" must still render TinyMCE`);
+		}
+	});
+
+	it("renders markdown readonly only for ascii", async() =>
+	{
+		const ascii = await fixture<HTMLElement>(html`
+			<et2-htmlarea_ro mode="ascii" markdown value="# Heading"></et2-htmlarea_ro>
+		`);
+		const asciiContent = ascii.shadowRoot.querySelector("[part='readonly-content']");
+		assert.exists(asciiContent?.querySelector("h1"), "ascii + markdown should render parsed markdown");
+
+		const rich = await fixture<HTMLElement>(html`
+			<et2-htmlarea_ro markdown value="# Heading"></et2-htmlarea_ro>
+		`);
+		const richContent = rich.shadowRoot.querySelector("[part='readonly-content']");
+		assert.notExists(richContent?.querySelector("h1"), "html mode must not parse markdown");
+		assert.equal(richContent?.textContent?.trim(), "# Heading", "html mode shows the value as-is");
+	});
+
+	it("keeps markdown in the detached attributes so nextmatch rows survive recycling", async() =>
+	{
+		const element = await fixture<any>(html`
+			<et2-htmlarea_ro mode="ascii" markdown value="# Heading"></et2-htmlarea_ro>
+		`);
+		const attrs : string[] = [];
+		element.getDetachedAttributes(attrs);
+
+		assert.include(attrs, "markdown");
+	});
+});

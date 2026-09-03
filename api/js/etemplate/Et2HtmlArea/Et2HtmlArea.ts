@@ -62,6 +62,7 @@ import "tinymce/plugins/visualchars";
 import "tinymce/plugins/wordcount";
 import "@tinymce/tinymce-webcomponent";
 import "./Et2HtmlAreaReadonly";
+import {Et2MarkdownEditMixin} from "../Markdown/Et2MarkdownEditMixin";
 
 type TinyMceConfig = RawEditorOptions;
 type TinyMceUploadHandler = NonNullable<TinyMceConfig["images_upload_handler"]>;
@@ -127,9 +128,13 @@ type TinyMceSetupHook = (editor : TinyMceEditor) => void;
  * @csspart form-control - The form control wrapper containing label, editor, and help text.
  * @csspart form-control-input - The editor wrapper.
  * @csspart readonly-content - The readonly value container when `readonly` is set.
+ * @csspart markdown-shell - Wraps source and preview, only when `markdown` is on in ascii mode.
+ * @csspart markdown-view - The edit / split / preview switcher.
+ * @csspart markdown-preview - The rendered markdown pane.
+ * @csspart markdown-popup - The format popup shown over a selection.
  */
 @customElement("et2-htmlarea")
-export class Et2HtmlArea extends Et2InputWidget(LitElement)
+export class Et2HtmlArea extends Et2MarkdownEditMixin(Et2InputWidget(LitElement))
 {
 	static get styles()
 	{
@@ -1244,7 +1249,7 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
 
 		if(this._isAsciiMode)
 		{
-			return html`
+			const source = html`
                 <textarea
                         id=${this._editorId}
                         .value=${this.value ?? ""}
@@ -1255,6 +1260,10 @@ export class Et2HtmlArea extends Et2InputWidget(LitElement)
                         @change=${this._handleAsciiChange}
                 ></textarea>
 			`;
+
+			// markdown is a plain-text feature: only ascii mode holds markdown source, and the
+			// TinyMCE branch below is deliberately left alone so `markdown` cannot affect it
+			return this.markdown ? this._markdownShellTemplate(source) : source;
 		}
 
 		const configPath = this._publishConfig();

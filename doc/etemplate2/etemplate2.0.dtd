@@ -638,6 +638,8 @@
 
 <!ATTLIST htmlarea
     mode CDATA #IMPLIED
+    markdown (false|true|1) #IMPLIED
+    markdownMode (edit|split|preview) #IMPLIED
     height CDATA #IMPLIED
     width CDATA #IMPLIED
     value CDATA #IMPLIED
@@ -4288,6 +4290,8 @@
     id CDATA #IMPLIED
     inputmode (none|text|decimal|numeric|tel|search|email|url) #IMPLIED
     label CDATA #IMPLIED
+    markdown (false|true|1) #IMPLIED
+    markdownMode (edit|split|preview) #IMPLIED
     maxlength CDATA #IMPLIED
     minlength CDATA #IMPLIED
     name CDATA #IMPLIED

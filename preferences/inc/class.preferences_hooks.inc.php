@@ -518,6 +518,20 @@ class preferences_hooks
 				'values' => Api\Etemplate\Widget\HtmlArea::get_toolbar_as_selOptions(),
 				'help'   => 'You may select features to be enabled in toolbar. Selecting any of the tools from here means seleted "Feature of the editor" preference would be ignored.',
 				'admin'  => true
+			),
+			'markdown_view' => array(
+				'type'   => 'select',
+				'label'  => 'Markdown view',
+				'name'   => 'markdown_view',
+				'values' => array(
+					'edit'    => lang('Editor only'),
+					'split'   => lang('Editor and preview'),
+					'preview' => lang('Preview only'),
+				),
+				'help'   => 'Which view markdown-enabled text fields open in. Switching the view in a field updates this.',
+				'xmlrpc' => True,
+				'admin'  => False,
+				'default' => 'edit',
 			)
 		);
 		// disable thumbnails, if no size configured by admin
