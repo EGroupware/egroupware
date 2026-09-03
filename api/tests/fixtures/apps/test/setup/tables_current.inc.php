@@ -19,11 +19,15 @@ $phpgw_baseline = array(
 			't_modifier' => array('type' => 'int','meta' => 'account','precision' => '4'),
 			't_modified' => array('type' => 'timestamp','meta' => 'timestamp','default' => 'current_timestamp', 'nullable' => false),
 			't_start' => array('type' => 'int','meta' => 'timestamp','precision' => '8'),
-			't_end' => array('type' => 'timestamp','meta' => 'timestamp')
+			't_end' => array('type' => 'timestamp','meta' => 'timestamp'),
+			't_uniq' => array('type' => 'varchar','precision' => '80','nullable' => True,
+				'comment' => 'nullable unique column, for Storage\Base::not_unique()/read() unique-key-fallback tests'),
+			't_active' => array('type' => 'bool','nullable' => True,'default' => '1',
+				'comment' => 'bool column, for Storage\Base::db2data() bool-conversion tests')
 		),
 		'pk' => array('t_id'),
 		'fk' => array(),
 		'ix' => array('t_modified'),
-		'uc' => array()
+		'uc' => array('t_uniq')
 	)
 );

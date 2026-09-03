@@ -44,8 +44,17 @@ class BaseTest extends TestCase
 		));
 		require(__DIR__.'/../../../header.inc.php');
 
+		// $GLOBALS['EGW_DOMAIN'] is literally "default" (doc/phpunit.xml), which is never a real
+		// key in $GLOBALS['egw_domain'] - resolve it the same way LoggedInTest::load_egw() /
+		// Api/src/loader.php do, via Session::search_instance()'s fallback-to-first-domain logic,
+		// instead of indexing $GLOBALS['egw_domain'] directly (which throws "No DB host set!" on
+		// any install where the domain isn't literally named "default").
+		$default_domain = null;
+		$domain = Api\Session::search_instance(null, $GLOBALS['EGW_DOMAIN'], $default_domain,
+			array($_SERVER['HTTP_HOST'] ?? '', $_SERVER['SERVER_NAME'] ?? ''), $GLOBALS['egw_domain']);
+
 		$GLOBALS['egw'] = new stdClass();
-		$GLOBALS['egw']->db = self::$db = new Api\Db($GLOBALS['egw_domain'][$GLOBALS['EGW_DOMAIN']]);
+		$GLOBALS['egw']->db = self::$db = new Api\Db($GLOBALS['egw_domain'][$domain]);
 		self::$db->connect();
 	}
 
@@ -83,7 +92,14 @@ class BaseTest extends TestCase
 		$this->assertEquals($data['t_modifier'], $row['t_modifier']);
 		$this->assertEquals(Api\DateTime::user2server($start), $row['t_start']);
 		$this->assertEquals(Api\DateTime::user2server($end, Api\DateTime::DATABASE), $row['t_end']);
-		$this->assertEqualsWithDelta(new DateTime('now'), new DateTime($row['t_modified']), 1);
+		// Compare against the DB server's OWN clock (via a fresh NOW() query), not PHP's - the DB
+		// connection's session timezone is whatever the DB server defaults to (Db::setTimeZone()
+		// is unused dead code, called nowhere), which can differ from the PHP process's timezone
+		// by whole hours on a dev box where the db/app containers have different host timezones.
+		// t_modified is a raw DB default (current_timestamp), so it's only meaningfully comparable
+		// against another value from that same DB connection/clock.
+		$db_now = new DateTime(self::$db->query('SELECT NOW() AS now', __LINE__, __FILE__)->fetch()['now']);
+		$this->assertEqualsWithDelta($db_now, new DateTime($row['t_modified']), 5);
 
 		return $this->storage->data;
 	}
@@ -100,6 +116,10 @@ class BaseTest extends TestCase
 		unset($read['t_modified'], $read['user_timezone_read']);
 		// set as ts, but read as is in DB
 		$data['t_end'] = Api\DateTime::to($data['t_end'], Api\DateTime::DATABASE);
+		// not set in testSaveInternalState()'s $data - insert() must apply the column defaults
+		// (t_uniq is nullable with no default => null, t_active defaults to true)
+		$data['t_uniq'] = null;
+		$data['t_active'] = true;
 		$this->assertEquals($data, $read);
 	}
 
