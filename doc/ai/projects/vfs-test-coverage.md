@@ -264,6 +264,40 @@ other session/tab using this environment. All `MountTableTest`/`FacadeTest` moun
 `$persistent_mount`, writing to `Api\Preferences` instead) would be safe to test in a follow-up,
 since it only touches the test's own account.
 
-**Next**: Phase 3 (core stream-wrapper deep coverage - `Vfs\StreamWrapper` router +
-`Vfs\Sqlfs\StreamWrapper` backend: symlink creation, extended-ACL storage, `propfind`/`proppatch`
-storage side, stat-cache behavior).
+**Phase 3 DONE** (2026-09-03): `api/tests/Vfs/SqlfsBackendTest.php` - green (6 tests, own scratch
+mount like `FacadeTest`). Symlink creation and `propfind`/`proppatch` storage were already
+reasonably covered (`StreamWrapperBase::testSymlinkFromFolder`/`testSymlinkSelfReferential`,
+`ProppatchTest.php`), so this file targets the genuine remaining gaps:
+- **eACL enforcement, not just storage**: `testEaclGrantChangesAccessDecision` - `FacadeTest`'s
+  eACL tests only checked `eacl()`/`get_eacl()` round-trip; this confirms a grant actually flips
+  `Vfs::check_access()`'s decision for a user who otherwise has zero owner/group/other access, and
+  that revoking flips it back.
+- **Dangling symlink**: `Vfs::symlink()` doesn't require the target to exist (confirmed by reading
+  `Sqlfs\StreamWrapper::symlink()`, `Sqlfs/StreamWrapper.php:1432-1464` - no check on `$target`);
+  `is_link()`=true, `file_exists()`=false, `readlink()` returns the raw (nonexistent) target string.
+- **Multi-hop symlink chain**: A -> B -> real file resolves correctly through `file_get_contents()`.
+- **Real finding, not a bug**: a two-node A<->B symlink cycle. `Vfs::symlink()`'s creation-time
+  check (`api/src/Vfs.php:2273-2293`) only rejects a link nested inside its own target's directory
+  tree - it does NOT catch a true two-node cycle, since neither path is a prefix of the other.
+  Confirmed this does NOT hang: `Vfs\StreamWrapper::check_symlink_components()`'s bounded
+  `MAX_SYMLINK_DEPTH=10` hop counter (`StreamWrapper.php:54,905-940`) catches it after 10 hops,
+  logging "maximum symlink depth exceeded, might be a circular symlink!" and returning false/null.
+  Not treated as a bug to fix - the depth guard is exactly the safety net this class of gap is
+  supposed to fall through to, and it works.
+- **Real finding, asymmetric caching**: `chmod()` changes are visible via a facade `Vfs::stat()`
+  read immediately, with NO explicit `Vfs::clearstatcache()` call needed - but `chown()` changes are
+  NOT, despite both patching `Sqlfs\StreamWrapper::$stat_cache` directly in place the same way
+  (`StreamWrapper.php:1026` for chown, `:1131` for chmod). Confirmed live via a diagnostic run:
+  `chown()` genuinely returns `true` and the new owner IS persisted (a later `clearstatcache()` +
+  `stat()` shows it correctly) - the facade-level staleness is real, not a false read. Root cause
+  not chased further (plausibly PHP's own native `stat()` cache, consulted by the core
+  `Vfs\StreamWrapper::url_stat()` at `StreamWrapper.php:757`, behaving differently for `chmod()` vs.
+  `chown()` at the PHP-engine level) - documented and regression-tested
+  (`testChownRequiresExplicitClearstatcacheUnlikeChmod`) rather than assumed away. Practical
+  takeaway for any future code: always call `Vfs::clearstatcache()` after `Vfs::chown()` before
+  relying on a subsequent `Vfs::stat()` read in the same request - `chmod()` doesn't need it, but
+  don't rely on that being true for `chown()`/`chgrp()` too without checking.
+
+**Next**: Phase 4 (secondary Api/Vfs wrappers - `Links\StreamWrapper` ACL-by-linked-entry,
+`Filesystem\StreamWrapper` fixed user/group/mode enforcement, `Sqlfs\Utils` admin/maintenance;
+`Sharing\StreamWrapper` gap-fill only, already reasonably covered).
