@@ -121,6 +121,27 @@ export interface OpenModule
 	_check_popupBlocker(_link : string, _target? : string, _popup? : string, _target_app? : string) : boolean;
 
 	/**
+	 * Check if url parameters are too long to be sent as a GET request
+	 *
+	 * Array values are counted as one "name[]=value" pair per element, as that is how they get sent.
+	 *
+	 * @param _extra url parameters as query-string or object
+	 * @return true if they have to be sent via POST, false if a GET url is fine
+	 */
+	urlParamsTooLong(_extra : string|object) : boolean;
+
+	/**
+	 * Open a mail compose window with given parameters sent as POST request
+	 *
+	 * Necessary for parameters too long for a GET url (see urlParamsTooLong()), eg. a preset body
+	 * containing a whole mail, which the webserver would answer with "414 Request-URI Too Large".
+	 *
+	 * @param _extra url parameters as query-string or object, array values are sent as "name[]"
+	 * @param _check_popup_blocker TRUE check if browser pop-up blocker is on/off, FALSE no check
+	 */
+	openComposePost(_extra : string|object, _check_popup_blocker? : boolean) : void;
+
+	/**
 	 * This function helps to append content/ run commands into an already
 	 * opened popup window. Popup windows now are getting stored in framework
 	 * object and can be retrieved/closed from framework.
@@ -203,6 +224,71 @@ function mailto(uri : string) : void
 			return;
 		}
 	}
+}
+
+/**
+ * Maximum length of url parameters we send as a GET request.
+ *
+ * According to microsoft, IE 10/11 can only accept a url with 2083 characters.
+ * WebServers and other browsers also have a url length limit:
+ * Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k.
+ * Above that the request has to be sent with POST instead,
+ * otherwise the webserver answers with "414 Request-URI Too Large".
+ */
+const MAX_URL_PARAMS_LENGTH = 2083;
+
+/**
+ * Length of the query-string given url parameters would generate
+ *
+ * Array values are counted as one "name[]=value" pair per element, as that is how they get sent.
+ */
+function urlParamsLength(_extra : string|object) : number
+{
+	if (typeof _extra === "string")
+	{
+		return _extra.length;
+	}
+	let len = 0;
+	for(const [name, value] of Object.entries(_extra || {}))
+	{
+		if (Array.isArray(value))
+		{
+			value.forEach(val => len += (name + '[]=' + val + '&').length);
+		}
+		else if (value)
+		{
+			len += (name + '=' + value + '&').length;
+		}
+	}
+	return len;
+}
+
+/**
+ * Flatten url parameters into the name/value pairs a form has to post
+ *
+ * Array values become one "name[]" pair per element, so PHP receives them as array again -
+ * JSON encoding them would arrive as a single string value instead.
+ */
+function urlParamsPairs(_extra : string|object) : [string, string][]
+{
+	const pairs : [string, string][] = [];
+	if (typeof _extra === "string")
+	{
+		new URLSearchParams(_extra).forEach((value, name) => pairs.push([name, value]));
+		return pairs;
+	}
+	for(const [name, value] of Object.entries(_extra || {}))
+	{
+		if (Array.isArray(value))
+		{
+			value.forEach(val => pairs.push([name + '[]', val]));
+		}
+		else if (typeof value !== "undefined" && value !== null)
+		{
+			pairs.push([name, <string>value]);
+		}
+	}
+	return pairs;
 }
 
 class Open implements OpenModule
@@ -710,6 +796,52 @@ class Open implements OpenModule
 	}
 
 	/**
+	 * Check if url parameters are too long to be sent as a GET request
+	 *
+	 * Doesn't touch this class's own state and takes no dynamic `this`,
+	 * so a plain arrow function field is enough (a prototype method would
+	 * not survive egw.extend()'s enumerable-only merge).
+	 */
+	urlParamsTooLong = (_extra : string|object) : boolean => urlParamsLength(_extra) > MAX_URL_PARAMS_LENGTH;
+
+	/**
+	 * Open a mail compose window with given parameters sent as POST request
+	 *
+	 * We open an empty compose popup and post a temporary <form> into it, as parameters too long
+	 * for a GET url make the webserver answer with "414 Request-URI Too Large" (see
+	 * urlParamsTooLong()).
+	 *
+	 * Called as egw(app,wnd).openComposePost(...) - needs self.#wnd to create the form in the
+	 * document of the window it was called for, hence the self-capture pattern.
+	 */
+	openComposePost = ((self : Open) => function(this : any, _extra : string|object, _check_popup_blocker? : boolean) : void
+	{
+		const popup : any = egw.open('', 'mail', 'add', '', 'compose__', 'mail', _check_popup_blocker);
+		if (!popup)	// popup blocked or blocker-warning dialog shown instead
+		{
+			return;
+		}
+		const doc = self.#wnd.document;
+		const form = doc.createElement('form');
+		form.target = popup.name;
+		form.action = "index.php?menuaction=mail.mail_compose.compose";
+		form.method = "post";
+
+		for(const [name, value] of urlParamsPairs(_extra))
+		{
+			const input = doc.createElement('input');
+			input.type = 'hidden';
+			input.name = name;
+			input.value = value;
+			form.appendChild(input);
+		}
+		doc.body.appendChild(form);
+		form.submit();
+		// Remove the form after submit
+		form.remove();
+	})(this);
+
+	/**
 	 * This function helps to append content/ run commands into an already
 	 * opened popup window. Popup windows now are getting stored in framework
 	 * object and can be retrieved/closed from framework.
@@ -723,63 +855,12 @@ class Open implements OpenModule
 	{
 		var popups : any[] = (<any>window).framework.popups_get(_app, _regexp);
 
-		var openUp = function (_app : string, _extra : any) {
+		var openUp = (_app : string, _extra : any) => {
 
-			var len = 0;
-			if (typeof _extra == "string")
+			// parameters too long for a GET url have to be posted into the compose window
+			if (egw.urlParamsTooLong(_extra))
 			{
-				len = _extra.length;
-			}
-			else if (typeof _extra == "object")
-			{
-				for (var i in _extra)
-				{
-					if (Array.isArray(_extra[i]))
-					{
-						var tmp = '';
-						for (var j in _extra[i])
-						{
-							tmp += i+'[]='+_extra[i][j]+'&';
-
-						}
-						len += tmp.length;
-					}
-					else if(_extra[i])
-					{
-						len += _extra[i].length;
-					}
-				}
-			}
-
-			// According to microsoft, IE 10/11 can only accept a url with 2083 characters
-			// therefore we need to send request to compose window with POST method
-			// instead of GET. We create a temporary <Form> and will post emails.
-			// ** WebServers and other browsers also have url length limit:
-			// Firefox:~ 65k, Safari:80k, Chrome: 2MB, Apache: 4k, Nginx: 4k
-			if (len > 2083)
-			{
-				var popup : any = egw.open('','mail','add','','compose__','mail', _check_popup_blocker);
-				const tmpForm = document.createElement('form');
-				for (var i in _extra)
-				{
-					const input = document.createElement('input');
-					input.name = i;
-					input.type = 'text';
-					input.value = Array.isArray(_extra[i]) ? JSON.stringify(_extra[i]) : _extra[i];
-					tmpForm.appendChild(input);
-				}
-
-				// Set the temporary form's attributes
-				tmpForm.target = popup.name;
-				(<any>tmpForm).action = "index.php?menuaction=mail.mail_compose.compose";
-				tmpForm.method = "post";
-				const tmpSubmitInput = document.createElement('input');
-				tmpSubmitInput.type = 'submit';
-				tmpForm.appendChild(tmpSubmitInput);
-				document.body.appendChild(tmpForm);
-				tmpForm.submit();
-				// Remove the form after submit
-				tmpForm.remove();
+				egw.openComposePost(_extra, _check_popup_blocker);
 			}
 			else
 			{

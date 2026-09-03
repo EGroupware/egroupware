@@ -1679,12 +1679,23 @@ export class CalendarApp extends EgwApp
 	/**
 	 * open mail compose popup window
 	 *
+	 * The preset body is the event description, which can be a whole mail
+	 * (event created from a mail) and thus too long for a GET url - the webserver
+	 * would answer with "414 Request-URI Too Large" - so it gets posted instead.
+	 *
 	 * @param {Array} vars
 	 * @todo need to provide right mail compose from server to custom_mail function
 	 */
 	custom_mail (vars)
 	{
-		this.egw.open_link(this.egw.link("/index.php",vars),'_blank','700x700');
+		if (this.egw.urlParamsTooLong(vars))
+		{
+			this.egw.openComposePost(vars);
+		}
+		else
+		{
+			this.egw.open_link(this.egw.link("/index.php",vars),'_blank','700x700');
+		}
 	}
 
 	/**

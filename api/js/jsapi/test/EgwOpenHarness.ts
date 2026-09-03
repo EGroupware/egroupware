@@ -32,10 +32,14 @@
  * openDialog() - the real network layer has its own thorough coverage in
  * EgwJson.test.ts.
  *
+ * `HTMLFormElement.prototype.submit` is stubbed in the iframe's realm
+ * (`env.formSubmits`), so the long-parameters form-POST path
+ * (openComposePost(), also used by openWithinWindow()) can be asserted on
+ * without the browser actually navigating anything.
+ *
  * Deliberately NOT exercised anywhere in the test suite built on this
  * harness: assigning to a real window's `location.href` (link_handler's
- * no-framework fallback) and openWithinWindow's long-content form-POST
- * path (real navigation / form submission).
+ * no-framework fallback).
  */
 import {createEgwCoreEnv, EgwCoreEnv} from "./EgwCoreHarness";
 import * as sinon from "sinon";
@@ -63,6 +67,25 @@ export interface EgwOpenEnv extends EgwCoreEnv
 		app_name : sinon.SinonStub;
 	};
 	jsonCalls : JsonCall[];
+
+	/** Every form.submit() the module ran, in order (see FormSubmit) */
+	formSubmits : FormSubmit[];
+}
+
+/**
+ * A recorded form.submit() - captured at submit time, as the module removes
+ * the form from the document again right afterwards.
+ */
+export interface FormSubmit
+{
+	form : HTMLFormElement;
+	action : string;
+	method : string;
+	target : string;
+	/** the form's inputs as name/value pairs, in document order */
+	params : [string, string][];
+	/** was the form part of the document when it got submitted? */
+	connected : boolean;
 }
 
 export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv>
@@ -145,6 +168,20 @@ export async function createEgwOpenEnv(prefs : object = {}) : Promise<EgwOpenEnv
 	(env.window as any).Et2Dialog = Et2DialogStub;
 
 	env.window.open = sinon.stub() as any;
+
+	// Capture form.submit() instead of letting the browser navigate/open anything.
+	env.formSubmits = [];
+	(<any>env.window).HTMLFormElement.prototype.submit = function(this : HTMLFormElement)
+	{
+		env.formSubmits.push({
+			form: this,
+			action: this.getAttribute('action'),
+			method: this.getAttribute('method'),
+			target: this.getAttribute('target'),
+			params: Array.from(this.querySelectorAll('input')).map(input => [input.name, input.value]),
+			connected: this.isConnected
+		});
+	};
 
 	// What egw.js's bootstrap normally sets before any window-local module runs.
 	env.egw.top = env.window;

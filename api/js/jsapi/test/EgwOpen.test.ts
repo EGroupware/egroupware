@@ -9,9 +9,12 @@
  * the chooser's callback directly invocable, as if a button had been
  * clicked). See EgwOpenHarness for what else is stubbed and why.
  *
+ * Also covers urlParamsTooLong()/openComposePost() and openWithinWindow()
+ * routing long parameters through them - the form submission itself is
+ * captured by the harness (env.formSubmits) instead of navigating.
+ *
  * NOT covered (documented residual risk, see EgwOpenHarness docblock):
- * link_handler()'s no-framework fallback (real navigation), and
- * openWithinWindow()'s long-content form-POST path (real form submission).
+ * link_handler()'s no-framework fallback (real navigation).
  */
 import {assert} from "@open-wc/testing";
 import * as sinon from "sinon";
@@ -44,6 +47,8 @@ describe('egw_open.js (open)', () =>
 		assert.isFunction(instance.close);
 		assert.isFunction(instance._check_popupBlocker);
 		assert.isFunction(instance.openWithinWindow);
+		assert.isFunction(instance.urlParamsTooLong);
+		assert.isFunction(instance.openComposePost);
 	});
 
 	describe('open_link()', () =>
@@ -615,6 +620,167 @@ describe('egw_open.js (open)', () =>
 				// callback persists it before the switch on _button_id
 				assert.isTrue(env.stubs.set_preference.calledOnce);
 			});
+		});
+	});
+
+	/**
+	 * Regression coverage for "calender: long description -> 414
+	 * Request-URI Too Large": an event created from a mail carries the whole mail as its
+	 * description, which calendar presets as the compose body. Sent as a GET url that
+	 * exceeds the webserver's request-line limit (nginx/Apache: 4k), so anything above
+	 * MAX_URL_PARAMS_LENGTH (2083) has to be POSTed into the compose window instead.
+	 *
+	 * Setup: `open` is stubbed to return a named fake popup (the harness' window.open
+	 * stub returns undefined, and openComposePost needs the popup's name as form target),
+	 * and the harness stubs HTMLFormElement.prototype.submit, recording every submit in
+	 * env.formSubmits. So each test asserts on WHICH path was taken (open() called with
+	 * url params vs. a recorded form submit) and what the form carried.
+	 */
+	describe('urlParamsTooLong() / openComposePost()', () =>
+	{
+		/** What egw.open('','mail','add',...) hands back: the (blank) compose popup */
+		function stubComposePopup(instance : any) : sinon.SinonStub
+		{
+			return sinon.stub(instance, 'open').returns({name: 'compose__'});
+		}
+
+		/** n characters of body, ie. what a mail-turned-event-description looks like */
+		function body(n : number) : string
+		{
+			return 'x'.repeat(n);
+		}
+
+		it('counts a string as its own length, and an object as its "name=value&" pairs', () =>
+		{
+			const instance = env.egw();
+
+			// 'preset[body]=' (13) + 100 = 113, plus the trailing '&' = 114
+			assert.isFalse(instance.urlParamsTooLong({'preset[body]': body(100)}));
+			assert.isTrue(instance.urlParamsTooLong({'preset[body]': body(2083)}));
+			assert.isFalse(instance.urlParamsTooLong(body(2083)));
+			assert.isTrue(instance.urlParamsTooLong(body(2084)));
+			// empty / missing values must not blow up or count
+			assert.isFalse(instance.urlParamsTooLong({}));
+			assert.isFalse(instance.urlParamsTooLong({'preset[body]': '', 'preset[subject]': null}));
+		});
+
+		it('counts each element of an array value, as each is sent as its own "name[]=value" pair', () =>
+		{
+			const instance = env.egw();
+			const recipient = 'First Last <first.last@example.com>';
+			// one 'preset[bcc][]=<recipient>&' pair per recipient is what gets counted,
+			// so derive how many of them fit into MAX_URL_PARAMS_LENGTH (2083) rather
+			// than hard-coding a count that breaks if the sample address changes
+			const perRecipient = ('preset[bcc][]=' + recipient + '&').length;
+			const fits = Math.floor(2083 / perRecipient);
+
+			assert.isFalse(instance.urlParamsTooLong({'preset[bcc]': new Array(fits).fill(recipient)}));
+			assert.isTrue(instance.urlParamsTooLong({'preset[bcc]': new Array(fits + 1).fill(recipient)}));
+		});
+
+		it('posts a form into a new compose popup, targeting it, and removes the form again', () =>
+		{
+			const instance = env.egw();
+			const openStub = stubComposePopup(instance);
+
+			instance.openComposePost({'preset[subject]': 'Team meeting', 'preset[body]': body(3000)});
+
+			// the blank popup the form gets posted into
+			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', undefined));
+
+			assert.equal(env.formSubmits.length, 1, 'exactly one form submitted');
+			const submit = env.formSubmits[0];
+			assert.equal(submit.method, 'post');
+			assert.equal(submit.action, 'index.php?menuaction=mail.mail_compose.compose');
+			assert.equal(submit.target, 'compose__', 'form has to target the popup that was just opened');
+			assert.isTrue(submit.connected, 'form must be in the document to be submittable');
+			assert.deepEqual(submit.params, [
+				['preset[subject]', 'Team meeting'],
+				['preset[body]', body(3000)]
+			]);
+			// no leftover form in the document
+			assert.isFalse(submit.form.isConnected);
+			assert.isNull(env.window.document.querySelector('form'));
+		});
+
+		it('sends each element of an array value as its own "name[]" input, so PHP receives an array', () =>
+		{
+			const instance = env.egw();
+			stubComposePopup(instance);
+			const bcc = ['A A <a@example.com>', 'B B <b@example.com>'];
+
+			instance.openComposePost({'preset[bcc]': bcc, 'preset[body]': body(3000)});
+
+			const params = env.formSubmits[0].params;
+			assert.deepEqual(params.filter(([name]) => name === 'preset[bcc][]'), [
+				['preset[bcc][]', bcc[0]],
+				['preset[bcc][]', bcc[1]]
+			], 'one input per recipient - a single JSON-encoded input would arrive as one bogus address');
+		});
+
+		it('splits a query-string _extra into inputs', () =>
+		{
+			const instance = env.egw();
+			stubComposePopup(instance);
+
+			instance.openComposePost('preset[subject]=Team+meeting&preset[bcc][]=a%40example.com');
+
+			assert.deepEqual(env.formSubmits[0].params, [
+				['preset[subject]', 'Team meeting'],
+				['preset[bcc][]', 'a@example.com']
+			]);
+		});
+
+		it('does nothing but open the popup when the popup was blocked', () =>
+		{
+			const instance = env.egw();
+			// what open() returns when the popup-blocker warning dialog is shown instead
+			const openStub = sinon.stub(instance, 'open').returns(undefined);
+
+			instance.openComposePost({'preset[body]': body(3000)}, true);
+
+			assert.isTrue(openStub.calledOnce);
+			assert.equal(env.formSubmits.length, 0, 'no form to submit without a target popup');
+		});
+
+		it('passes _check_popup_blocker on to open()', () =>
+		{
+			const instance = env.egw();
+			const openStub = stubComposePopup(instance);
+
+			instance.openComposePost({'preset[body]': body(3000)}, true);
+
+			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', true));
+		});
+
+		it('openWithinWindow() posts instead of opening a GET url when the parameters are too long', () =>
+		{
+			const instance = env.egw();
+			const openStub = stubComposePopup(instance);
+			(env.window as any).framework = {popups_get: sinon.stub().returns([])};
+			const extra = {'preset[bcc]': ['a@example.com'], 'preset[body]': body(3000)};
+
+			instance.openWithinWindow('mail', 'setCompose', {}, extra, /mail.mail_compose.compose/);
+
+			// NOT the GET path: open() must not be handed the parameters as url params
+			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', '', 'compose__', 'mail', undefined));
+			assert.equal(env.formSubmits.length, 1);
+			assert.deepEqual(env.formSubmits[0].params, [
+				['preset[bcc][]', 'a@example.com'],
+				['preset[body]', body(3000)]
+			]);
+		});
+
+		it('openWithinWindow() keeps using the GET url for short parameters', () =>
+		{
+			const instance = env.egw();
+			const openStub = sinon.stub(instance, 'open');
+			(env.window as any).framework = {popups_get: sinon.stub().returns([])};
+
+			instance.openWithinWindow('mail', 'setCompose', {}, {'preset[body]': body(100)}, /mail.mail_compose.compose/);
+
+			assert.isTrue(openStub.calledOnceWith('', 'mail', 'add', {'preset[body]': body(100)}, 'mail', 'mail', undefined));
+			assert.equal(env.formSubmits.length, 0);
 		});
 	});
 });
