@@ -24,16 +24,22 @@ dead once the legacy type name is removed from the `et2_register_widget()` call 
 
 **The `api/etemplate.php` preprocessor** rewrites many legacy tag names to their `et2-*`
 webcomponent equivalent server-side, before the browser (and `et2_createWidget()`) ever sees them
-— see `ADD_ET2_PREFIX_LEGACY_REGEXP` (unconditional) and `ADD_ET2_PREFIX_REGEXP`
-(`box`/`hbox`/`vbox`/`vfs-select`, skipped only for templates with `<overlay legacy="true">`, of
-which there are exactly two live ones: `api/templates/default/show_replacements.xet` and
-`smallpart/templates/default/student.index.xet`). When a type is on one of these lists, its
-legacy `et2_registry` entry is provably unreachable at runtime and it can be treated the same as
-a 1a case, **provided none of its aliases are an `old-*` cutover-staging name** — those are
-deliberately excluded from the rewrite (an explicit "give me the old behaviour" escape hatch) and
-several are genuinely still used (`old-box` in 6 templates, `old-int` in smallpart), which is why
-`box`/`hbox`/`number` stay real legacy files despite their base names being auto-rewritten
-everywhere else. **Also note:** a plain `grep -r` in this checkout silently skips every
+— see `ADD_ET2_PREFIX_LEGACY_REGEXP` and `ADD_ET2_PREFIX_REGEXP` (`box`/`hbox`/`vbox`/`vfs-select`).
+Both are now **unconditional** — `<overlay legacy="true">`, which used to skip the second one, was
+removed 2026-09-03. `api/templates/default/show_replacements.xet` was the last live template using
+it, and turned out
+to need zero XET changes to drop it, since the thing it was actually protecting
+(`old-box`'s auto-repeat, see below) was never affected by the flag in the first place — `old-box`
+was, and still is, unconditionally excluded from both regexes regardless. When a type is on one of
+these lists, its legacy `et2_registry` entry is provably unreachable at runtime and it can be
+treated the same as a 1a case, **provided none of its aliases are an `old-*` cutover-staging name**
+— those are deliberately excluded from the rewrite (an explicit "give me the old behaviour" escape
+hatch) and some are genuinely still used (`old-box` in 6 templates, `old-int` in smallpart), which
+is why `box`/`number` stay real legacy files despite their base names being auto-rewritten
+everywhere else. `old-hbox`, unlike `old-box`/`old-int`, has zero usage anywhere and `et2_hbox` has
+no auto-repeat-style special case — with `legacy="true"` gone repo-wide, `hbox` may now be fully
+unreachable and a candidate for the same 1a-generated treatment; not yet re-verified/acted on.
+**Also note:** a plain `grep -r` in this checkout silently skips every
 `.gitignore`d app directory (`smallpart/`, `kanban/`, `tracker/`, `stylite/`, `rocketchat/`,
 `records/`, `projectmanager/`, and more) even though they're present on disk — any "0 usage"
 claim in this doc was re-verified with `find ... | xargs grep`, which doesn't have that blind
@@ -72,7 +78,7 @@ files (created by this file's own `--in-place` CLI conversion mode, never live-s
 | `vfs-size` | `et2_widget_vfs.ts` | Yes (`et2-vfs-size`) | 1b-kept-dependency | `et2_vfsSize extends et2_description`, real impl. Imported by legacy `et2_widget_file.ts`. |
 | `vbox`, `box`, `old-box` | `et2_widget_box.ts` | Yes (`et2-box`, `et2-vbox`) | 1c-orphaned | `et2_box` real impl; `et2-box`/`et2-vbox` (`Layout/Et2Box/Et2Box.ts`) are independent - **but not a full replacement**, see "`old-box` auto-repeat" below. `box`/`vbox` are preprocessor-rewritten almost everywhere, but `old-box` (the explicit legacy escape hatch, never rewritten) is genuinely used in 6 live templates incl. `home/templates/default/index.xet` — file must stay. |
 | `details` | `et2_widget_box.ts` | Yes (`et2-details`) | 1c-orphaned | `et2_details extends et2_box`, real impl; `Layout/Et2Details/Et2Details.ts` is independent. Preprocessor-rewritten unconditionally (own dedicated regex) — moot anyway since the file stays for `old-box`. |
-| `hbox`, `old-hbox` | `et2_widget_hbox.ts` | Yes (`et2-hbox`) | 1c-orphaned | Real impl (`Layout/Et2Box/Et2Box.ts`'s `Et2HBox` is independent). `hbox` is preprocessor-rewritten *except* for `<overlay legacy="true">` templates — `smallpart/templates/default/student.index.xet` is one and uses bare `<hbox>` — file must stay. |
+| `hbox`, `old-hbox` | `et2_widget_hbox.ts` | Yes (`et2-hbox`) | 1c-orphaned | Real impl (`Layout/Et2Box/Et2Box.ts`'s `Et2HBox` is independent, including its align-cell behaviour - via CSS `:host([align])`/`::slotted([align])` selectors instead of JS-computed wrapper divs). `hbox` was previously blocked by `smallpart/templates/default/student.index.xet`'s `<overlay legacy="true">`, now gone (2026-09-03, see above) - **no other blocker exists**: `old-hbox` has zero usage anywhere, and unlike `old-box`, `et2_hbox` has no `getType()`-branching special case at all. Likely a genuine 1a-generated candidate now; not yet re-verified/acted on. |
 | `htmlarea_ro` | `et2_widget_html.ts` | Yes (`et2-htmlarea_ro`) | 1c-orphaned | `Et2HtmlAreaReadonly` is independent. No legacy importer of `et2_html` (for this type) besides the bulk bundle. Not in the preprocessor's rewrite list at all (only bare `htmlarea` is) — file stays regardless since `html`/`htmlarea` (other types in the same file) are still fully legacy. |
 | `iframe` | `legacy-shims/et2_widget_iframe.d.ts` (generated) | Yes (`et2-iframe`) | 1a-generated | Was: real impl (191 lines). **Fixed 2026-09-03**: was genuinely just forgotten - added to `ADD_ET2_PREFIX_LEGACY_REGEXP`, and `Et2Iframe/Et2Iframe` was missing from `etemplate2.ts`'s webcomponent bulk-import (so `customElements.define("et2-iframe", ...)` never ran). Giving it its first live traffic surfaced two real bugs, fixed along the way: `Et2Iframe.ts` called a non-existent `.attribute()` DOM method (should be `.setAttribute()`) and wrote to the deprecated `.options` getter instead of its own reactive properties, and a third one found live-testing admin (`Et2Iframe.__getIframeNode()` crashing when called before the component's first render, from `transformAttributes()` during initial widget-tree construction). `mail/js/app.ts`'s body-loading code (`loadMessageBody`/`preparePrint`/mailvelope integration, ~8 call sites) assumed `widget.getDOMNode()`/`document.querySelector()` reach a real `<iframe>` directly, which doesn't hold once the real iframe lives inside `Et2Iframe`'s shadow root - centralized into a `getBodyIframe()`/`realIframeNode()` helper. Live-verified against a real HTML newsletter body and admin. Deleted 2026-09-03 - no `old-iframe` escape hatch existed, and its only real consumers (`calendar/js/app.ts`, `smallpart/js/app.ts`) used `import type` only. |
 | `int`, `integer`, `float`, `old-int` | `et2_widget_number.ts` | Yes (`et2-number`) | 1c-orphaned | `et2_number extends et2_textbox`, real impl; `Et2Number` independent. `int`/`integer`/`float` are preprocessor-rewritten unconditionally, but `old-int` (the legacy escape hatch) is genuinely used by `smallpart/templates/default/student.index.xet` — file must stay. |
@@ -141,7 +147,7 @@ themselves are preprocessor-rewritten everywhere else):
 | Template | Repeated child |
 |---|---|
 | `home/templates/default/index.xet` (`id="portlets"`) | `<et2-portlet id="$row_cont[id]" .../>` — the home page's portlet list. Source has its own comment: `<!-- Box wrapper needed to get box to auto-repeat -->`. |
-| `api/templates/default/show_replacements.xet` (3x: `placeholders`, `common`, `user`) | `<box id="${row}"><template template="api.show_replacements.placeholder_list"/></box>` — one repeat group per placeholder category. |
+| `api/templates/default/show_replacements.xet` (3x: `placeholders`, `common`, `user`) | Now `<et2-box id="${row}"><et2-template template="..."></et2-template></et2-box>` — one repeat group per placeholder category. Was still `<box id="${row}">` (and the file still had `<overlay legacy="true">`) as of this section being written; both were dropped the same day, live-verified via addressbook's "Show replacements" dialog before and after - see the `api/etemplate.php` preprocessor note above. Confirms the repeat mechanism doesn't care whether the repeated child ends up a legacy `et2_box` or a real `Et2Box` instance. |
 | `stylite/templates/default/link_search.search.xet` (`id="apps"`) | `<et2-box id="${row}"><template id="@app" .../></et2-box>` — one box per app in the link-search dialog. |
 
 `timesheet/templates/default/timer.xet`'s two `old-box` usages (`specific_timer`, `overall_timer`)
