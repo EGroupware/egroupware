@@ -496,10 +496,23 @@ export class AdminApp extends EgwApp
 		// Insert the content, etemplate will load into it
 		if(typeof _data === "string" || typeof _data[0] !== "undefined")
 		{
-			// jQuery(...).append(htmlString) parses+inserts HTML; native Element.append(string)
-			// would insert it as a literal text node instead - insertAdjacentHTML is the native
-			// equivalent that still parses markup (the loaded etemplate's HTML).
-			this.ajax_target.getDOMNode().insertAdjacentHTML('beforeend', typeof _data === 'string' ? _data : _data[0]);
+			// jQuery(...).append(htmlString) parses the markup in a detached, context-free
+			// fragment first, then moves the resulting nodes in - insertAdjacentHTML() instead
+			// parses directly in ajax_target's live DOM context. ajax_target sits inside
+			// admin.index's own <form id="admin-index">, and per the HTML5 parsing spec a
+			// <form> start tag is dropped when a form pointer is already active - so
+			// insertAdjacentHTML() here silently ate the loaded template's own
+			// <form id="$appname-...-config"> wrapper (verified live), which is exactly the
+			// node a later et2_load response looks up by DOMNodeID, causing
+			// "Could not find target node" for every admin ajax_target screen. Parse into a
+			// detached container first (matching jQuery's actual behavior) so a <form> in the
+			// loaded HTML survives.
+			const container = document.createElement('div');
+			container.innerHTML = typeof _data === 'string' ? _data : _data[0];
+			while(container.firstChild)
+			{
+				this.ajax_target.getDOMNode().appendChild(container.firstChild);
+			}
 		}
 		else if(typeof _data.DOMNodeID == "string")
 		{

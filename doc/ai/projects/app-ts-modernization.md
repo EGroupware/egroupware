@@ -701,10 +701,54 @@ goal before this pass picked it up fresh.
 - `jQuery(ajax_target.getDOMNode().children).each(function(){...})` + a following
   `jQuery(ajax_target.getDOMNode()).empty()` (`load()`) -> `Array.from(...).forEach(...)` +
   `.replaceChildren()` (the native no-arg equivalent of jQuery's `.empty()`).
-- `jQuery(this.ajax_target.getDOMNode()).append(htmlString)` (`_ajax_load_callback()`) ->
-  `.insertAdjacentHTML('beforeend', htmlString)` - **not** native `Element.append(string)`, which would
-  insert the string as a literal text node instead of parsing it as markup (the loaded etemplate's own
-  HTML), unlike jQuery's `.append()`.
+- `jQuery(this.ajax_target.getDOMNode()).append(htmlString)` (`_ajax_load_callback()`) - **caused a real
+  regression, found and fixed after the fact** (see "Regression found post-merge" below). The first
+  attempt swapped this for `.insertAdjacentHTML('beforeend', htmlString)`, reasoned only about the
+  text-node-vs-markup-parsing difference from native `Element.append(string)` and missed a second,
+  unrelated difference: jQuery's `.append(htmlString)` parses the markup in a detached, context-free
+  fragment before moving the resulting nodes in, while `insertAdjacentHTML()` parses directly in the
+  live DOM context. The final fix parses into a detached `<div>` first (matching jQuery's actual
+  behavior) and moves its children in via `appendChild()` in a loop - see below for why that distinction
+  mattered here specifically.
+
+#### Regression found post-merge: "Could not find target node" on every admin ajax_target screen
+
+Reported by Ralf: opening any app's site-configuration from Admin (originally noticed via calendar's,
+confirmed to affect every app's, plus other admin screens like the password-reset dialog) rendered a
+blank content pane with a console error `Could not find target node admin-site-config` (or
+`admin-<other-screen>`). Root-caused live against a running instance (`boulder.egroupware.org`) rather
+than by re-reading the diff, since static analysis of the diff alone didn't turn up the cause - the
+`_ajax_load_callback()`/`load()` logic itself was (correctly) unchanged by the modernization pass, so
+the bug had to be in a behavior difference of one of the jQuery->native swaps, not in changed control
+flow:
+
+- `admin.index`'s `ajax_target` container lives inside `admin.index`'s own `<form id="admin-index">`
+  wrapper (confirmed via `ajax_target.getDOMNode().closest('form')` in a live console).
+- The server's ajax response for an admin screen load includes a `<form id="$appname-...-config">...
+  </form>` fragment (confirmed via a live network capture) - the exact node a *separate*, generic
+  `et2_load`-type response item then looks up by that same id via `document.getElementById()`
+  (`etemplate2.ts`, shared/out of scope for this pass) to mount the real template content into.
+- `insertAdjacentHTML('beforeend', htmlString)` parses `htmlString` using the target element's own
+  position in the live document as parsing context. Per the HTML5 parsing spec, a `<form>` start tag is
+  ignored when a "form pointer" is already active (i.e. an ancestor `<form>` exists) - nested forms
+  aren't valid HTML, so the browser silently drops the inner `<form id="...">` open tag while keeping
+  its children unwrapped. Verified live with a minimal repro
+  (`node.insertAdjacentHTML('beforeend', '<form id="probe"><input></form>')` inside `ajax_target` ->
+  `document.getElementById('probe')` is `null`, the `<input>` lands as a bare child of `ajax_target`
+  instead) and confirmed the fix (parse into a detached `<div>` first, no form pointer active there,
+  then `appendChild()` each resulting child node into the live DOM - `appendChild()` moves an
+  already-built node without re-parsing/re-validating nesting) resolves it, also verified live.
+- This is why none of the earlier `jQuery(...).append()` -> `insertAdjacentHTML()` swaps elsewhere in
+  this whole project (`collabora/js/app.ts`, `importexport/js/app.ts`) hit the same bug: both of those
+  insert small, hardcoded, `<form>`-free markup (a bare `<iframe>`, a bare loading `<div>`), which the
+  nested-form parsing restriction never applies to regardless of context. The bug only bites when the
+  inserted markup can itself contain a `<form>` **and** the insertion target lives inside an ancestor
+  `<form>` - both true here, true nowhere else in this project.
+- General takeaway for future `jQuery(...).append(htmlString)` -> native swaps: `insertAdjacentHTML()`
+  is only a safe substitute when either the inserted markup is known not to contain a `<form>`, or the
+  insertion point is known not to be inside one. Otherwise, parse into a detached container first (a
+  `document.createElement('div')` + `.innerHTML = htmlString`, then move its children in) to match
+  jQuery's actual (detached-fragment-first) behavior.
 - `jQuery(this.et2.parentNode).trigger('show.et2_nextmatch')` (`group_list()`) ->
   `this.et2.parentNode.dispatchEvent(new Event('show'))`. The listening side
   (`et2_extension_nextmatch.ts`, shared/out-of-scope) uses `jQuery(...).on('show.et2_nextmatch', ...)`

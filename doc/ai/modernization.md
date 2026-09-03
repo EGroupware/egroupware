@@ -17,6 +17,18 @@ found them, and prefer the modern form for anything new.
   `doc/ai/projects/jsapi-modernization.md`'s jQuery-removal table for the common swaps and the few
   cases (jQuery UI dialogs, arbitrary-method-by-name dispatch) that need a real rewrite rather than a
   mechanical one.
+- **`jQuery(target).append(htmlString)` -> `insertAdjacentHTML('beforeend', htmlString)` is only a safe
+  swap when either the markup being inserted can't contain a `<form>`, or `target` is known not to live
+  inside an ancestor `<form>` already.** Unlike jQuery, which parses the HTML in a detached, context-free
+  fragment before moving the resulting nodes into the live document, `insertAdjacentHTML()` parses
+  directly in the live target's own DOM context - and per the HTML5 parsing spec, a `<form>` start tag
+  is silently dropped when a "form pointer" (an ancestor `<form>`) is already active, since nested forms
+  aren't valid HTML. This caused a real, live-verified regression (see
+  `doc/ai/projects/app-ts-modernization.md`'s admin/js/app.ts section, "Regression found post-merge")
+  where a loaded template's own `<form id="...">` wrapper silently vanished, breaking a later
+  `document.getElementById()` lookup by that id. When in doubt, parse into a detached container first
+  (`document.createElement('div')` + `.innerHTML = htmlString`, then move its children into the real
+  target via `appendChild()` in a loop) to match jQuery's actual behavior.
 - **No `var` keyword.** Don't use the old `var` keyword in new code. even if it is used in surrounding code.
   Use modern `const` or `let` keywords
 - **Prefer arrow functions over `function(...) {...}` expressions and `var self = this`/`var that =
