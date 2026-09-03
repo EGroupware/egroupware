@@ -335,11 +335,27 @@ exists.
       - Corrected an earlier mapping claim along the way (see the `expression()` section above) -
         zero real call sites of `->expression(` exist anywhere in this tracked repo, despite an
         earlier finding claiming `Api\Mail\Account` used it directly.
+- [x] **Phase 5 (final) - remaining low/medium-priority gaps**: `concat()`, `to_timestamp()`/
+      `from_timestamp()`, `query()`'s empty-string short-circuit, the global (bare `true`)
+      `log_updates` mode, and the `get_last_insert_id()`/`index_names()` echo-quirks. 7 new tests,
+      all green.
+      - `api/tests/Db/MiscTest.php` (commit `70341d0132`) - `concat()` (the one portability function
+        needing a live connection, proven via a real query round trip), `to_timestamp()`/
+        `from_timestamp()`'s round trip through a real connection, `query('')`'s `0`-immediately
+        short-circuit, `log_updates === true`'s global (no table-name filtering) debug-backtrace
+        logging, `index_names()`'s confirmed-reachable "not yet implemented" echo+empty-array
+        quirk on this MySQL environment (documented, not fixed), and `get_last_insert_id()`'s
+        echo-based sentinel path confirmed **unreachable** for mysqli (`mysqli_insert_id()` never
+        returns strict `false`, only an int - dead code for this DB type, documented not forced).
+      - **Found, not a `Db.php` bug** - a real sharp edge in test-writing itself, worth remembering:
+        `get_last_insert_id()` (like `mysqli_insert_id()`) reflects only the *most recent* query on
+        the connection - any intervening query, even a harmless `SELECT`, resets it to `0`. Must be
+        called immediately after `insert()`, not after a follow-up read to fetch the new row.
 
-## Project status: all 4 phases done
+## Project status: all 5 phases done
 
-`api/tests/Db/` went from 0 dedicated tests (plus the pre-existing 12-test `SchemaTest.php`) to 128
-tests across 8 files. **4 real bugs found, all fixed**: `_connect()`'s capability-reuse gap,
+`api/tests/Db/` went from 0 dedicated tests (plus the pre-existing 12-test `SchemaTest.php`) to 135
+tests across 9 files. **4 real bugs found, all fixed**: `_connect()`'s capability-reuse gap,
 `Db\Schema::RefreshTable()`'s transaction leak, mysqli's silently-disabled exception mode, and
 `get_table_definitions()`'s non-functional cache. Every fix verified via a `git stash` A/B comparison
 against the full `api/tests/` suite (963-1009 tests across runs, growing as other concurrent sessions
