@@ -698,7 +698,13 @@ class Customfields implements \IteratorAggregate
 		{
 			return $values['last'];
 		}
+		// transaction_abort() (ADOdb FailTrans()) only flags the transaction to fail - it does NOT
+		// itself commit/rollback, that only happens in transaction_commit() (ADOdb CompleteTrans()).
+		// Without this call the transaction_begin() above stays open indefinitely on this shared
+		// connection, holding its locks for the rest of the process - see setup/admin_account.php
+		// for the same transaction_abort()-then-transaction_commit() idiom used correctly.
 		self::$db->transaction_abort();
+		self::$db->transaction_commit();
 		throw new Api\Db\Exception("Could not generate serial number for custom-field #$id!");
 	}
 }
