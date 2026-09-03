@@ -346,6 +346,28 @@ class Widget
 	}
 
 	/**
+	 * Registry is complete, but could not be cached by scanForWidgets() yet, see there
+	 *
+	 * @var boolean
+	 */
+	static protected $registry_not_cached = false;
+
+	/**
+	 * Store the registry in the instance cache, if scanForWidgets() had to postpone that
+	 *
+	 * Must only be called once all widget-class files finished including, as PHP runs their
+	 * registerWidget() calls at the very end of the file.
+	 */
+	protected static function cacheWidgetRegistry()
+	{
+		if (self::$registry_not_cached)
+		{
+			self::$registry_not_cached = false;
+			Api\Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
+		}
+	}
+
+	/**
 	 * Try to discover all widgets, as names don't always match tags (eg:
 	 * listbox is in menupopup)
 	 *
@@ -355,14 +377,36 @@ class Widget
 	 *
 	 * The list is cached for an hour, to avoid rescanning the filesystem but
 	 * also to make sure the list is always available, even when calling static
-	 * functions of widgets.
+	 * functions of widgets. Caching can be postponed until the registry is known to be
+	 * complete, see the comment about widget files still being included below.
 	 */
 	public static function scanForWidgets()
 	{
+		// already scanned, only the caching was postponed --> nothing to rescan
+		if (self::$registry_not_cached)
+		{
+			self::cacheWidgetRegistry();
+			return self::$widget_registry;
+		}
 		$widget_registry = Api\Cache::getInstance('etemplate', 'widget_registry');
 
 		if (!$widget_registry)	// not in instance cache --> rescan from filesystem
 		{
+			// If the first etemplate class autoloaded by a request is a Widget subclass, PHP loads
+			// this file - and runs the scan below - while that subclass file is still being included.
+			// include_once() is a no-op for a file which is already being included, so the file's
+			// registerWidget() call at its very end only runs after we returned, which would leave us
+			// caching an incomplete registry (eg. without 'template' for the usual Api\Etemplate entry).
+			$mid_include = false;
+			$widget_dir = __DIR__.DIRECTORY_SEPARATOR.'Widget'.DIRECTORY_SEPARATOR;
+			foreach(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS) as $frame)
+			{
+				if (isset($frame['file']) && strpos($frame['file'], $widget_dir) === 0)
+				{
+					$mid_include = true;
+					break;
+				}
+			}
 			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator(__DIR__.'/Widget')) as $path)
 			{
 				if(strpos($path, 'tests/') !== FALSE)
@@ -401,9 +445,9 @@ class Widget
 					}
 				}
 			}
-			if (self::$widget_registry['htmlarea'] === Api\Etemplate\Widget\HtmlArea::class)
-			Api\Cache::setInstance('etemplate', 'widget_registry', self::$widget_registry, 3600);
-			else error_log(__METHOD__."() wrong class for Htmlarea: ".function_backtrace ());
+			// postpone caching until the file(s) we were called from finished including and registered
+			self::$registry_not_cached = true;
+			if (!$mid_include) self::cacheWidgetRegistry();
 		}
 		else
 		{
@@ -421,6 +465,10 @@ class Widget
 	 */
 	public static function factory($type, $xml, $id=null)
 	{
+		// all includes finished by now, so cache the registry, if scanForWidgets() had to postpone it
+		// (before we add resolved classes below, which must not be cached, as they depend on the request)
+		if (self::$registry_not_cached) self::cacheWidgetRegistry();
+
 		$class_name =& self::$widget_registry[$type];
 
 		if (!isset($class_name))
