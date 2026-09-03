@@ -903,7 +903,7 @@ export class MailCompose
 			const smimeType = signed && encrypted ? MailCompose.SMIME_TYPE_SIGN_ENCRYPT :
 				signed ? MailCompose.SMIME_TYPE_SIGN : encrypted ? MailCompose.SMIME_TYPE_ENCRYPT : undefined;
 			const passphrase = this.et2.getWidgetById('smime_passphrase')?.get_value();
-			email = await this.currentEmailFields();
+			email = await this.currentEmailFields(true);
 			sent = await this.app.jmap.sendNewEmail(String(this.currentProfileID()), email,
 				smimeType, passphrase, this.smimePassExpMinutes, this.jmapDraftEmailId);
 		}
@@ -997,13 +997,15 @@ export class MailCompose
 	 * handled inside trySendViaJmap() itself - MailJmap.sendNewEmail()'s smimeType param, see its
 	 * own docblock) and no cross-app-integration check here either (2026-09-02 follow-up -
 	 * to_infolog/to_tracker/to_calendar no longer block JMAP eligibility at all, see
-	 * integrateSentMessage()). Attachments are eligible as of Step 3 EXCEPT: a "share instead of
-	 * attach" filemode (a Vfs\Sharing link, not a real attachment upload - out of scope) or one
-	 * carried forward from an original message the OLD way (has uid+partID/folder - this shouldn't
-	 * arise for anything compose.ts's own JMAP-mode bootstrap builds, which always produces
-	 * jmapBlobId/jmapVfsPath rows instead; it's a safety net for content mail_compose.inc.php still
-	 * renders classically server-side that this popup's own bootstrap doesn't yet override - true
-	 * draft-continuation now HAS a JMAP bootstrap too, see bootstrapDraft(), 2026-09-02).
+	 * integrateSentMessage()). A "share instead of attach" filemode is no longer a blocker either
+	 * (2026-09-03 - see currentEmailFields()'s own `forSend` handling and
+	 * mail_compose::ajax_getAttachmentLinksBody()) - the only remaining attachment-shape blocker is
+	 * one carried forward from an original message the OLD way (has uid+partID/folder - this
+	 * shouldn't arise for anything compose.ts's own JMAP-mode bootstrap builds, which always
+	 * produces jmapBlobId/jmapVfsPath rows instead; it's a safety net for content
+	 * mail_compose.inc.php still renders classically server-side that this popup's own bootstrap
+	 * doesn't yet override - true draft-continuation now HAS a JMAP bootstrap too, see
+	 * bootstrapDraft(), 2026-09-02).
 	 *
 	 * The `forSend` param this method used to take is gone (2026-09-02) - it only ever gated the
 	 * now-removed cross-app-integration block, and every other check here applies identically to a
@@ -1016,17 +1018,9 @@ export class MailCompose
 			return false;
 		}
 		const attachments : any[] = Object.values(this.et2.getArrayMgr('content').getEntry('attachments') || {});
-		if (attachments.length)
+		if (attachments.length && attachments.some((a) => a.uid && (a.partID || a.folder)))
 		{
-			const filemode = this.et2.getWidgetById('filemode')?.get_value();
-			if (filemode && filemode !== 'attach')
-			{
-				return false;
-			}
-			if (attachments.some((a) => a.uid && (a.partID || a.folder)))
-			{
-				return false;
-			}
+			return false;
 		}
 		return true;
 	}
@@ -1491,12 +1485,12 @@ export class MailCompose
 			detailsWidget.title = content.data.attachmentsBlockTitle;
 		}
 		// un-disabling the whole "mailUploadSection" box above also exposes its OTHER child, the
-		// "Send files as" filemode/expiration/password row (filemodeRow) - re-hide that one
-		// specifically, it's not meaningful for carry-forward attachments (they're bare JMAP blob
-		// references, not real VFS-shareable files) and jmapEligible() requires filemode==='attach'
-		// to stay eligible, so exposing a control that could change it away would be actively
-		// misleading here.
-		this.et2.getWidgetById('filemodeRow')?.set_disabled(true);
+		// "Send files as" filemode/expiration/password row (filemodeRow) - left enabled here
+		// (2026-09-03): a non-'attach' filemode is no longer a jmapEligible() blocker, and
+		// mail_compose::ajax_getAttachmentLinksBody() resolves a carry-forward attachment's bare
+		// {jmapBlobId,...} reference into a real temp file (AttachmentJmap::fetchBlobBytes()) before
+		// generating its share link, same as any other JMAP-mode attachment shape - see
+		// currentEmailFields()'s own `forSend` handling.
 		// the collapsed-details "summary" preview grid has NO id (deliberately, in the original
 		// classic template - giving it one would create its OWN array-manager namespace/perspective
 		// (et2_core_widget.ts's checkCreateNamespace(): any widget WITH an id always gets one),
@@ -1529,15 +1523,23 @@ export class MailCompose
 
 	/**
 	 * Classic mail_compose.inc.php's own size-limit switch (attachment_limit_mb,
-	 * mail_compose.inc.php:508-546) only ever runs for a classic uploadForCompose postback - a
-	 * JMAP-mode local/VFS upload never goes through that at all (found 2026-09-02 investigating a
+	 * mail_compose.inc.php:508-546) only ever ran for a classic uploadForCompose postback - a
+	 * JMAP-mode local/VFS upload never went through that at all (found 2026-09-02 investigating a
 	 * "attachments are always sent as sharing links, not real attachments" bug report: the
-	 * mirror-image gap - this path had NO size awareness whatsoever). Unlike classic, this can't
-	 * cleanly auto-switch to a real VFS share link the same way (that requires the file to actually
-	 * exist in VFS already - a bare uploaded JMAP blob never does, see this method's own caller,
-	 * mergeAttachmentEntries(), and its docblock on why filemodeRow is hidden for exactly this
-	 * reason) - so this only WARNS, using the exact same translated message classic already shows,
-	 * rather than silently pretending to downgrade filemode the way classic does.
+	 * mirror-image gap - this path had NO size awareness whatsoever).
+	 *
+	 * Originally (2026-09-02) this only WARNED, since auto-switching cleanly needs the file to
+	 * exist somewhere `_getAttachmentLinks()` can share from, and a bare uploaded JMAP blob never
+	 * did. That gap closed 2026-09-03 alongside the "Share-as-link attachments" fix: `filemodeRow`
+	 * is no longer force-disabled for a carry-forward attachment, and
+	 * `mail_compose::ajax_getAttachmentLinksBody()`'s `resolveJmapAttachmentsToFiles()` already
+	 * downloads ANY JMAP-mode attachment shape (`{jmapBlobId,...}`/`{jmapVfsPath,...}`) into a real
+	 * file before sharing it - `_getAttachmentLinks()` itself already knows how to share straight
+	 * from a plain temp-dir path, exactly like a classic upload does, no VFS requirement at all.
+	 * With that plumbing in place, this now matches classic's own auto-switch exactly (same
+	 * message wording, `Vfs\Sharing::LINK`) instead of only warning - `currentEmailFields()`'s own
+	 * `forSend` handling picks the new filemode up automatically on the next send, same as if the
+	 * user had chosen it manually.
 	 *
 	 * `attachmentLimitMb` (server-computed, same default as classic's own
 	 * self::$maxAttachmentSizeDefault) is exposed via mail_compose::compose()'s own $content, read
@@ -1548,7 +1550,17 @@ export class MailCompose
 	{
 		const limitMb = Number(this.et2.getArrayMgr('content').getEntry('attachmentLimitMb')) || 25;
 		const totalMb = MailCompose.totalAttachmentSizeMb(attachments);
-		if (totalMb > limitMb)
+		if (totalMb <= limitMb)
+		{
+			return;
+		}
+		const filemodeWidget = this.et2.getWidgetById('filemode');
+		if (!filemodeWidget || !filemodeWidget.get_value() || filemodeWidget.get_value() === 'attach')
+		{
+			filemodeWidget?.set_value('link');
+			this.egw.message(this.egw.lang('The total size of the attachments exceeds the limit of %1 MB. Switched to download link', limitMb), 'warning');
+		}
+		else
 		{
 			this.egw.message(this.egw.lang('The total size of the attachments exceeds the limit of %1 MB', limitMb), 'warning');
 		}
@@ -1834,18 +1846,48 @@ export class MailCompose
 		}));
 	}
 
-	private async currentEmailFields()
+	/**
+	 * @param forSend true for an actual send (trySendViaJmap()); false for a draft save
+	 *  (trySaveDraftViaJmap()/autosave). Only a send resolves a non-'attach' filemode into real
+	 *  Vfs\Sharing links (mail_compose::ajax_getAttachmentLinksBody(), 2026-09-03) - matching
+	 *  classic createMessage()'s own `$_autosaving` guard on the identical logic: a stored draft
+	 *  keeps its attachments as real (JMAP-blob-backed) attachments, only the message actually
+	 *  transmitted gets them replaced with links, generated fresh each time it's actually sent.
+	 */
+	private async currentEmailFields(forSend : boolean = false)
 	{
 		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
 		const hasAttachments = Object.keys(this.et2.getArrayMgr('content').getEntry('attachments') || {}).length > 0;
+		let body = this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value();
+		let attachments = hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID()) : undefined;
+
+		const filemode = this.et2.getWidgetById('filemode')?.get_value();
+		if (forSend && attachments?.length && filemode && filemode !== 'attach')
+		{
+			body = await this.egw.request('mail.mail_compose.ajax_getAttachmentLinksBody', [{
+				profileID: this.currentProfileID(),
+				body,
+				isHtml,
+				filemode,
+				attachments,
+				to: this.et2.getWidgetById('to')?.get_value(),
+				cc: this.et2.getWidgetById('cc')?.get_value(),
+				bcc: this.et2.getWidgetById('bcc')?.get_value(),
+				expiration: this.et2.getWidgetById('expiration')?.get_value(),
+				password: this.et2.getWidgetById('password')?.get_value(),
+			}]);
+			// shared as links INSTEAD of attached, matching classic's own semantics exactly
+			attachments = undefined;
+		}
+
 		return {
 			to: this.et2.getWidgetById('to')?.get_value(),
 			cc: this.et2.getWidgetById('cc')?.get_value(),
 			bcc: this.et2.getWidgetById('bcc')?.get_value(),
 			subject: this.et2.getWidgetById('subject')?.get_value(),
-			body: this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value(),
+			body,
 			isHtml,
-			attachments: hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID()) : undefined,
+			attachments,
 			// doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - set once by bootstrapReply(),
 			// undefined for a plain new-message compose
 			inReplyTo: this.replyThreadingHeaders?.inReplyTo ?? undefined,

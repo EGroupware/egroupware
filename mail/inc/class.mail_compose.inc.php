@@ -3031,20 +3031,30 @@ class mail_compose
 	 *   profileID: string acc_id (mail account, not EGroupware account_id) the message was sent from,
 	 * }
 	 */
-	function ajax_integrateSent(array $params)
+	/**
+	 * Resolve MailCompose.uploadAttachmentsViaJmap()'s output shape ({blobId,name,type,size} an
+	 * already-uploaded JMAP blob, or {vfsPath,name,type,size} a bare VFS path never downloaded
+	 * client-side) into a REAL local `file` path each - the one thing every classic-style consumer
+	 * below (mail_integration::get_integrate_data(), _getAttachmentLinks()) actually needs, neither
+	 * of which knows anything about JMAP blobs/VFS paths. Shared by ajax_integrateSent() and
+	 * ajax_getAttachmentLinksBody() (2026-09-03).
+	 *
+	 * @param array $attachments {blobId?,vfsPath?,name?,type?,size?}[]
+	 * @param int $profileID acc_id (for resolving a blobId - blobs are per-account)
+	 * @return array same shape, `file` added; entries that couldn't be resolved (eg. an
+	 *  expired/deleted blob) are dropped, best-effort
+	 */
+	private function resolveJmapAttachmentsToFiles(array $attachments, int $profileID) : array
 	{
-		$profileID = (int)($params['profileID'] ?? 0);
-		$activeMailProfile = Mail\Account::read($profileID);
-
-		$attachments = [];
-		foreach ((array)($params['attachments'] ?? []) as $attachment)
+		$resolved = [];
+		foreach ($attachments as $attachment)
 		{
 			if (!empty($attachment['blobId']))
 			{
 				$bytes = AttachmentJmap::fetchBlobBytes((string)$profileID, $attachment['blobId'],
 					$attachment['name'] ?? 'attachment', $attachment['type'] ?? 'application/octet-stream');
-				if ($bytes === null) continue;	// gone/expired - best-effort, skip rather than abort the whole integration
-				$file = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'mail_integrate_');
+				if ($bytes === null) continue;	// gone/expired - best-effort, skip
+				$file = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'mail_link_');
 				file_put_contents($file, $bytes);
 				$attachment['file'] = $file;
 			}
@@ -3057,8 +3067,93 @@ class mail_compose
 			{
 				continue;
 			}
-			$attachments[] = $attachment;
+			$resolved[] = $attachment;
 		}
+		return $resolved;
+	}
+
+	/**
+	 * JMAP-native equivalent of createMessage()'s own filemode!=='attach' handling (the
+	 * `_getAttachmentLinks()` call + html/plain splice logic right after it) -
+	 * MailCompose.jmapEligible() (compose.ts) used to treat any filemode other than "attach" as a
+	 * blocker, forcing a classic-postback fallback purely to get this share-link generation
+	 * (doc/ai/projects/mail-compose-jmap-migration.md, "Share-as-link attachments" backlog item,
+	 * 2026-09-03). compose.ts's own uploadAttachmentsViaJmap() already normalizes every attachment
+	 * shape (a locally-staged upload, an already-uploaded JMAP blob, a bare VFS path) into
+	 * {blobId|vfsPath,...} BEFORE calling this - resolveJmapAttachmentsToFiles() turns those back
+	 * into real files, then the resolved attachment is discarded from the actual JMAP Email
+	 * (MailCompose.currentEmailFields() never includes it once this ran) - matching classic's own
+	 * "shared as a link INSTEAD of an attachment" semantics exactly, not "both".
+	 *
+	 * Unlike classic's createMessage(), there is no `$_autosaving` guard here - JMAP-mode compose
+	 * already keeps draft-save and send on separate code paths (currentEmailFields()'s own
+	 * `forSend` param), so this is only ever called for an actual send, never an autosave/manual
+	 * draft save (which still uploads the real blob normally, same as classic's own stored-draft
+	 * copy does - a link is only ever generated once, for the message that's actually transmitted).
+	 *
+	 * @param array $params {
+	 *   profileID: string acc_id (mail account, for resolving a blobId attachment),
+	 *   body: string current, already-final (signature/quote already inserted client-side) body,
+	 *   isHtml: bool,
+	 *   filemode: string one of Vfs\Sharing::{LINK,READONLY,WRITABLE} ('attach' is a no-op below),
+	 *   attachments: array[] {name,type,size,blobId?,vfsPath?} - MailCompose.uploadAttachmentsViaJmap()'s
+	 *     own output shape,
+	 *   to/cc/bcc: string[] recipient addresses - passed to Vfs\Sharing::create() as share recipients,
+	 *   expiration: ?string, password: ?string,
+	 * }
+	 * @return string $params['body'] with the attachment-links block spliced in (or appended, since
+	 *  a JMAP-mode body never contains classic's own placeholder markup - kept for parity anyway) -
+	 *  unchanged if filemode is 'attach' or nothing could be resolved
+	 */
+	public function ajax_getAttachmentLinksBody(array $params) : string
+	{
+		$body = (string)($params['body'] ?? '');
+		$filemode = (string)($params['filemode'] ?? Vfs\Sharing::ATTACH);
+		if ($filemode === Vfs\Sharing::ATTACH || empty($params['attachments']))
+		{
+			return $body;
+		}
+		$profileID = (int)($params['profileID'] ?? 0);
+		$attachments = $this->resolveJmapAttachmentsToFiles((array)$params['attachments'], $profileID);
+		if (!$attachments)
+		{
+			return $body;
+		}
+		$isHtml = !empty($params['isHtml']);
+		$recipients = array_unique(array_merge((array)($params['to'] ?? []), (array)($params['cc'] ?? []),
+			(array)($params['bcc'] ?? [])));
+		$attachment_links = $this->_getAttachmentLinks($attachments, $filemode, $isHtml, $recipients,
+			$params['expiration'] ?? null, $params['password'] ?? null);
+
+		if (empty($attachment_links))
+		{
+			return $body;
+		}
+		// same placeholder-matching createMessage() uses, kept for parity though a JMAP-mode body
+		// (TinyMCE-composed, no classic etemplate markup) realistically only ever hits the final
+		// plain-append fallback below
+		static $attachment_block = '<fieldset class="attachments mceNonEditable"';
+		if ($isHtml && strpos($body, $attachment_block) !== false)
+		{
+			$body = preg_replace('#'.$attachment_block.'[^>]*>.*</fieldset>#', $attachment_links, $body);
+		}
+		elseif ($isHtml && strpos($body, '<!-- HTMLSIGBEGIN -->') !== false)
+		{
+			$body = str_replace('<!-- HTMLSIGBEGIN -->', $attachment_links.'<!-- HTMLSIGBEGIN -->', $body);
+		}
+		else
+		{
+			$body .= $attachment_links;
+		}
+		return $body;
+	}
+
+	function ajax_integrateSent(array $params)
+	{
+		$profileID = (int)($params['profileID'] ?? 0);
+		$activeMailProfile = Mail\Account::read($profileID);
+
+		$attachments = $this->resolveJmapAttachmentsToFiles((array)($params['attachments'] ?? []), $profileID);
 
 		$eml = tempnam($GLOBALS['egw_info']['server']['temp_dir'], 'mail_integrate_');
 		file_put_contents($eml, (string)($params['eml'] ?? ''));

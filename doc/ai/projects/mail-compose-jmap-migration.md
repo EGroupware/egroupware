@@ -367,15 +367,17 @@ on confirmed decrypt success does `resolveSpecialCaseBody()` cache it
 (`Api\Cache::setSession('mail', 'smime_passphrase', ...)`) for next time, same "never cache before
 it's proved ok" principle as the send-side.
 
-**`loadEmailBody()` has the SAME lazy-key-forcing performance bug**, one level up from
-`resolveSpecialCaseBody()`: it reads `$uidA['folder']`/`$uidA['msgUID']` unconditionally before
+**`loadEmailBody()` had the SAME lazy-key-forcing performance bug**, one level up from
+`resolveSpecialCaseBody()`: it read `$uidA['folder']`/`$uidA['msgUID']` unconditionally before
 ever calling `get_load_email_data()`/`tryJmapNativeSpecialCase()`, which is why the classic
-fallback isn't a viable passphrase-prompt substitute (it pays the 20s cost - or times out
-entirely - before it can even attempt the S/MIME resolver). NOT fixed here (the fast-path dialog
-above sidesteps needing it to work for S/MIME) - `get_load_email_data()`'s own signature and its
-`mail/profile.php`/`mail_ui.inc.php` external callers make this a wider-blast-radius refactor than
-`resolveSpecialCaseBody()`'s own version was, deliberately left as a known follow-up rather than
-risking it blind.
+fallback wasn't a viable passphrase-prompt substitute (it paid the 20s cost - or timed out
+entirely - before it could even attempt the S/MIME resolver). Left as a known follow-up when this
+was first written, but **fixed the same day, `cec0df7f34`** ("fix classic loadEmailBody() 20s
+Stalwart lookup, S/MIME passphrase caching race, popup badge color") - `loadEmailBody()` now
+branches on `$uidA['is_jmap']` and passes `$messageID`/`$folder` as closures for a Stalwart row
+(only calling them for the genuinely-classic code path past `tryJmapNativeSpecialCase()` in
+`get_load_email_data()`), matching `resolveSpecialCaseBody()`'s own fix - re-verified live 2026-09-03
+(this section had gone stale, still describing it as unfixed after the fact).
 
 **Passphrase-remember-duration was never actually reaching the server on the send side either**
 (ralf: "I have not seen the cache-timeout in the passphrase dialog been send to server-side, nor
@@ -1510,13 +1512,12 @@ acc_id=1): signed and encrypted messages both now correctly suppress the icon
 attachment (`multipart/mixed`, real .txt attachment) is unaffected (`isSmimeWrapperOnly=false` →
 icon still shown) - confirming no regression for ordinary attachments.
 
-**Not live-tested**: the local IMAP shim side - this environment's phpunit test user ("nonadmin")
-has no accessible plain-IMAP/shim account (`Account::search()` only returns acc_id=1 Stalwart and
-acc_id=62, which fails to even connect: "Horde_Imap_Client requires a username"). Relying on
-code-review parity instead: `emailGet()`'s new `$wantContentType`/`$query->headers('contenttype',
-...)` and `emailFromFetch()`'s new branch are structurally identical to the already-shipped,
-already-tested `$wantMdn`/MDN-header code paths, just a different header name - same
-`getHeaders(..., HEADER_PARSE)` + `firstHeaderValue()` call shape throughout.
+**Shim side live-verified too (2026-09-03, ralf)**: confirmed working against a real IMAP-shim
+account in the browser - icon correctly suppressed for S/MIME messages there as well, matching the
+Stalwart behaviour above. (Previously only code-review parity with the shipped/tested
+`$wantMdn`/MDN-header path - no accessible shim account in the phpunit test environment at the
+time this was written - `emailGet()`'s `$wantContentType`/`$query->headers('contenttype', ...)`
+and `emailFromFetch()`'s branch turned out to work as expected.)
 
 **Known accepted limitation** (deliberate, matches this project's per-row-listing cost discipline
 elsewhere): only suppresses the icon when the ENTIRE message is nothing but the S/MIME wrapper. A
@@ -1602,13 +1603,27 @@ throws `WrongUserinput` instead of producing a broken or empty attachment.
   this doc's earlier TNEF/S-MIME live-test sections for the same pattern already used twice this
   session.
 
-**Not done / deliberately out of scope**: materializing a JMAP blob into a real VFS-shareable file
-so JMAP-mode compose could genuinely auto-switch to a share link the way classic does (a real
-feature, not a bug fix); enforcing the size limit as a hard block rather than a warning; the classic
-size-limit switch's own directory-attachment handling (`is_dir($upload['file'])`,
-`mail_compose.inc.php:531-536`) has no client-side-VFS-attach equivalent to port at all, since the
-new VFS picker only ever selects files, never a whole directory (unverified against every VFS
-picker widget still in use, but no directory-selection code path was found in `compose.ts`).
+**"Materializing a JMAP blob into VFS" turned out unnecessary - DONE 2026-09-03 anyway, via
+Share-as-link attachments**: the assumption above was that auto-switching needed a real VFS file to
+share from. It doesn't - `_getAttachmentLinks()` already shares straight from a plain temp-dir path
+(`parse_url($attachment['file'],PHP_URL_SCHEME) != 'vfs'` falls back to
+`$GLOBALS['egw_info']['server']['temp_dir'].'/'.basename($path)`, the exact same convention a
+classic upload already relies on), and `ajax_getAttachmentLinksBody()`'s
+`resolveJmapAttachmentsToFiles()` (see "Share-as-link attachments" above) already downloads any
+JMAP-mode attachment shape into exactly such a temp file before sharing it - no VFS materialization
+step needed at all. With that plumbing in place, `warnAttachmentSizeLimit()` now auto-switches
+`filemode` to `Vfs\Sharing::LINK` when the total exceeds `attachmentLimitMb` (same message wording
+as classic, "...Switched to download link") instead of only warning - `currentEmailFields()`'s
+`forSend` handling picks up the new filemode on the next send automatically, same as if the user
+had chosen it manually. Not separately live-tested (would need staging >25MB of attachments via
+browser automation) - relies on the same, already-verified, `ajax_getAttachmentLinksBody()` path.
+
+**Still not done / deliberately out of scope**: enforcing the size limit as a hard block rather than
+a warning; the classic size-limit switch's own directory-attachment handling
+(`is_dir($upload['file'])`, `mail_compose.inc.php:531-536`) has no client-side-VFS-attach equivalent
+to port at all, since the new VFS picker only ever selects files, never a whole directory
+(unverified against every VFS picker widget still in use, but no directory-selection code path was
+found in `compose.ts`).
 
 ## `jmapEligible()` blockers survey + to_infolog/to_tracker/to_calendar cross-app integration (2026-09-02, DONE, live-verified vs Stalwart)
 
@@ -1621,10 +1636,8 @@ dependency? Answered and then implemented the one real server-side blocker:
    `openpgp`-mode body at all (classic's `createMessage()` has a dedicated `case 'openpgp':
    $_mailObject->setOpenPgpBody(...)` branch with no JMAP-native equivalent) - just an unwritten
    body-mode branch, no new server capability needed. NOT implemented this round.
-2. **`filemode !== 'attach'`** (share-as-link chosen) - needs one new, small, low-risk server
-   endpoint: `_getAttachmentLinks()`'s actual link-generation (`Vfs\Sharing::create()`/
-   `share2link()`) is pure PHP/VFS work with no dependency on a classic `Api\Mailer` object at all.
-   NOT implemented this round.
+2. **`filemode !== 'attach'`** (share-as-link chosen) - **implemented 2026-09-03**, see its own
+   write-up below ("Share-as-link attachments").
 3. **A classic `{uid, partID/folder}`-shaped attachment row** - a safety net for content
    `mail_compose.inc.php` still renders classically server-side that compose.ts's own JMAP
    bootstrap never took over. The one concretely identified case: true draft continuation (editing
@@ -1690,41 +1703,108 @@ a real `$_GET['app']`/`$_GET['rowid']` context this test doesn't simulate) conta
 mailaddresses (including the server-filled `from`), subject, body, attachment, and raw eml path;
 checking multiple app keys at once (`to_infolog`+`to_tracker`) correctly opens a popup per key.
 
-**Not live-tested**: an actual end-to-end browser run (checking a toggle, sending, and confirming a
-real InfoLog/Tracker/Calendar entry gets created and pre-filled correctly) - the PHPUnit test
-verifies every piece up to and including the popup URL/stored token, but not what happens once a
-browser actually navigates there. Also not tested: the shim backend (only Stalwart was accessible
-to this environment's test user, same limitation as the S/MIME icon fix above), and the
-`to_integrate_ids` "link into an existing entry" path (`entryId` handling was implemented per the
-classic code's own convention but not exercised by the live test).
-
 Live-tested by ralf against a real InfoLog entry (2026-09-02): confirmed working once his own
 "Save mail as" preference (`saveAsOptions`) was set to `add_raw`/`no_attachments` - the raw `.eml`
 is only ever attached for those two option values, pre-existing/shared logic
 (`mail_integration.inc.php:244-256`), unrelated to this feature; the default (`text`) never included
 it, for classic sends either.
 
-### Follow-up backlog items found during that live test (NOT fixed, out of scope for this feature)
+**Shim backend confirmed working too (2026-09-03, ralf)** - a real end-to-end browser run against
+the IMAP-shim backend (toggle checked, sent, InfoLog/Tracker/Calendar entry created and pre-filled
+correctly) worked fine, same as the Stalwart case above. `to_integrate_ids` "link into an existing
+entry" path still only PHPUnit-verified, not separately exercised live.
 
-- **"Zielordner Drafts existiert nicht" opening the attached .eml** (clicking the InfoLog-attached
-  `.eml` opens `mail.mail_ui.importMessageFromVFS2DraftAndDisplay`, which imports the file into the
-  CURRENTLY ACTIVE mail profile's Drafts folder so it can be displayed like a real message - a
-  generic "view a standalone .eml" mechanism, also used for double-clicking an `.eml` in
-  filemanager, NOT specific to this feature). Root cause: `Api\Mail::folderExists($draftFolder,
-  true)` calls `$this->icServer->mailboxExist($folder)` - for a Stalwart account this is a raw IMAP
-  call inherited unguarded from the base Horde IMAP class, the exact same "JMAP/IMAP fallthrough"
-  bug class already tracked/partially patched elsewhere in this codebase (10 other sites fixed,
-  systemic fix deferred) - compounded here by `getDraftFolder()` resolving a classic folder NAME
-  Stalwart has no reason to actually have (it tracks folders by ROLE, not name). Not fixed - this
-  whole "import a standalone .eml into Drafts to display it" mechanism has no JMAP-native path at
-  all, a separate, deeper gap than this feature's own scope.
-- **Shim backend: displaying an .eml from filemanager takes a long time** (ralf, pre-existing report,
-  logged for later - not investigated this session). Same `importMessageFromVFS2DraftAndDisplay()`
-  mechanism as above - unlike the Stalwart case this technically WORKS on the shim (real IMAP
-  underneath), but does a full classic round trip (parse the file, open a connection, check the
-  folder, append, redirect, re-fetch) with no JMAP-native shortcut at all, likely explaining the
-  slowness. Same underlying gap as the Stalwart failure above - a JMAP-native rewrite of this whole
-  "view a standalone .eml" mechanism would likely fix both at once.
+### FIXED (2026-09-03): Share-as-link attachments (jmapEligible() blocker #2)
+
+Previously, choosing a "Send files as" mode other than `attach` (Vfs\Sharing's `link`/`share_ro`/
+`share_rw`) made `jmapEligible()` return `false` unconditionally, forcing the WHOLE send to fall
+back to the classic postback just to get share-link generation - even though every other aspect of
+the compose (recipients, body, other attachments) was otherwise fully JMAP-eligible.
+
+**Fix**: new `mail_compose::ajax_getAttachmentLinksBody()` - a JMAP-native equivalent of
+`createMessage()`'s own `$attachment_links = $this->_getAttachmentLinks(...)` call plus the
+html/plain splice-into-body logic right after it (same placeholder-matching kept for parity, though
+a JMAP-mode TinyMCE-composed body realistically only ever hits the final plain-append case, never
+classic's own `<fieldset class="attachments...`/`<!-- HTMLSIGBEGIN -->` markers). Attachments arrive
+in `MailCompose.uploadAttachmentsViaJmap()`'s own already-normalized shape (`{blobId,...}` or
+`{vfsPath,...}`) - a new shared helper, `resolveJmapAttachmentsToFiles()` (extracted from
+`ajax_integrateSent()`'s own identical inline resolution loop, itself refactored to call it too, no
+behaviour change there), turns each into a real local `file` path (`AttachmentJmap::
+fetchBlobBytes()` + a temp file, or `Vfs::PREFIX.$vfsPath` directly) - the one thing
+`_getAttachmentLinks()` actually needs; it has no idea what a JMAP blob is.
+
+Client side (`mail/js/compose.ts`): `jmapEligible()` no longer treats a non-'attach' filemode as a
+blocker at all. `currentEmailFields()` gained a `forSend` param (true only from `trySendViaJmap()`,
+matching classic `createMessage()`'s own `$_autosaving` guard on this exact logic - a draft save
+still uploads/keeps real attachments, only an actual transmitted send gets them replaced with
+links, generated fresh each send) - when `forSend` and the filemode isn't `attach`, it calls the new
+endpoint, replaces `body` with its result, and drops `attachments` entirely (shared as links
+INSTEAD of attached, matching classic's exact semantics, not "both"). `mergeAttachmentEntries()`'s
+carry-forward population no longer force-disables `filemodeRow` either - that disabling predated
+this fix and assumed a carry-forward `{jmapBlobId,...}` attachment could never be shared as a link;
+it now can, via the exact same blob-to-temp-file resolution as any other JMAP-mode attachment shape.
+
+**Live-verified 2026-09-03** (throwaway PHPUnit test against the real Stalwart test account,
+acc_id=1): a real uploaded JMAP blob correctly produced a genuine `Vfs\Sharing` link
+(`http://.../share.php/<token>`) spliced into the HTML body alongside the original content;
+`filemode='attach'` confirmed as a true no-op (body unchanged). **Not yet live-tested via browser**
+(the client-side wiring itself - widget reads + the `egw.request()` call - follows the exact same
+structure already proven working for `ajax_integrateSent()`, so risk here is low, but an actual
+click-through send with a real attachment set to "Share as link" hasn't been done).
+
+### FIXED (2026-09-03): "Zielordner Drafts existiert nicht" opening an attached/standalone .eml
+
+Original report: clicking the InfoLog-attached `.eml` opens `mail.mail_ui.
+importMessageFromVFS2DraftAndDisplay`, which imports the file into the CURRENTLY ACTIVE mail
+profile's Drafts folder so it can be displayed like a real message - a generic "view a standalone
+.eml" mechanism (also used for double-clicking an `.eml` in filemanager), NOT specific to this
+feature. Root cause: `ImportHandler::importMessageToFolder()` called `Api\Mail::folderExists($_folder,
+true)` (-> `$this->icServer->mailboxExist($folder)`) and `Api\Mail::appendMessage()` (->
+`$this->icServer->append()`) unconditionally - both raw-IMAP-socket calls inherited unguarded from
+the base Horde class, the exact same "JMAP/IMAP fallthrough" bug class already tracked/partially
+patched elsewhere in this codebase (10 other sites fixed, systemic fix deferred) - for a Stalwart
+account these hang/misconnect against the JMAP(S) endpoint exactly like every other site in that
+class. Also explains the SECOND, previously-separate report below: on the local IMAP shim these
+calls technically work (real IMAP underneath) but pay a full classic round trip (parse the file,
+open a connection, check the folder, append, redirect, re-fetch) - both reports turned out to be the
+same underlying gap.
+
+**Fix** (`mail/src/Ui/ImportHandler.php`): `importMessageToFolder()` now branches on `$icServer
+instanceof Mail\Imap\Jmap` (true for BOTH Stalwart and the shim - `Imap\Stalwart extends Imap\Jmap`)
+and materializes the message via genuine `Email/import` (RFC 8621 §4.8) instead: `jmapClient()->
+uploadBlob($mailObject->getRaw(false), 'message/rfc822')` (a plain string, NOT the default
+stream - `uploadBlob()` requires a string body) then `jmapClient()->emailImport($blobId, $_folder)`
+- both already existed and are uniformly available for either backend via the same `jmapClient()`
+(the shim's own local JMAP dispatcher implements the identical HTTP-JMAP surface, see
+`Api\Mail\Jmap\Imap`). `getMailboxId($_folder)` is called explicitly first (needed for the returned
+rowID anyway) so a genuinely-missing folder still gets the same
+"Destination Folder %2 does not exist" message as the classic path, rather than a raw JMAP
+exception. Changed the method's return contract from a bare uid to a ready-to-use rowID string
+(`mail::accountID::profileID::mailboxId::emailId` for JMAP, unchanged `Api\Mail::createRowID()`
+shape for classic) - callers no longer need to know which shape applies; both callers
+(`ImportHandler::importMessageFromVFS2DraftAndDisplay()` and `mail_ui::importMessage()`) updated
+accordingly.
+
+**Live-verified 2026-09-03** (throwaway PHPUnit test against the real Stalwart test account,
+acc_id=1): a real `.eml` imported via `importMessageToFolder()` returned a correct
+`mail::12795::1::d::eyaaaabg`-shaped rowID; re-fetching that exact emailID via `emailGet()`
+confirmed the subject matches what was imported. Also confirmed the resulting rowID renders
+correctly via `mail.mail_ui.displayMessage&mode=display` (the real redirect target) - no
+"Zielordner ... existiert nicht" error, no hang.
+
+**Residual, separate, LOW-priority gap noticed while testing** (not fixed, likely never hit in
+real usage): reaching `mail_ui::displayMessage()` via a bare top-level navigation (not a real
+popup) surfaced that `mail.mail_ui.loadEmailBody`'s server-rendered body iframe (`get_load_email_data()`)
+still falls through to genuinely classic raw-IMAP resolution for an ORDINARY (non-S/MIME/non-TNEF)
+message on a JMAP account - `tryJmapNativeSpecialCase()` only short-circuits the special-case
+types, returning `null` for a plain message, and the code past it needs a real IMAP UID/mailbox. In
+real usage this is very likely never reached at all: `app.ts`'s `loadMessageBody()` already fetches
+every message body (special-case or not) via the genuine JMAP-native `MailJmap.fetchBody()`
+client-side, and only falls back to this server-rendered iframe if THAT throws - which is why this
+has apparently never surfaced as "Stalwart mail bodies are slow/broken" despite the underlying
+fallthrough existing. Only reachable via a bare/JS-less navigation (like this test) or a genuine
+`fetchBody()` failure. Not chased further - out of scope for this fix, and a proper fix would mean
+extending `resolveSpecialCaseBody()`'s own "client-first fast path" pattern to ordinary bodies too.
 
 ## Backlog: "Undo Send" - abortable send with pre-uploaded draft (2026-09-02, NOT STARTED, ralf)
 
@@ -1892,3 +1972,18 @@ message), but worth remembering: this environment's acc_id=1 is a SHARED mailbox
 accounts, and live poking of a real user's real mail account - even read-only JS console queries -
 can have real side effects when compose windows and autosave are involved. Cleanup of the duplicate
 drafts was offered but not yet done (pending ralf's go-ahead).
+
+### Follow-up: bootstrapDraft()/bootstrapComposeAsNew() de-duplication (2026-09-03, DONE, live-verified)
+
+The two functions were nearly line-for-line identical (ralf noticed while reviewing the fix above)
+- their only real difference was `bootstrapDraft()` additionally setting `this.jmapDraftEmailId` so
+the first save/send in the new session deletes the original draft. Refactored so
+`bootstrapComposeAsNew()` now returns `Promise<JmapReplyContext | null>` (`null` on a failed fetch,
+error already shown) instead of `void`, and `bootstrapDraft()` is now a 4-line wrapper that calls it
+and only sets `jmapDraftEmailId` when it got a real context back - preserves the exact original
+"only mark this session responsible for deleting the old draft if the load actually succeeded"
+semantics, removes ~30 lines of duplication. Live-verified both paths on the same source message
+(`mail::5::1::d::fkiaaabks`): "Verfassen" (composeasnew) and "Öffnen" (composefromdraft, confirmed
+`jmapDraftEmailId` correctly set to `"fkiaaabks"`) - both populate the attachment, no console errors.
+Committed + pushed to master, `597d61a341` (together with the bootstrapPromise/setBodyValue fixes
+above).

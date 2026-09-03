@@ -2265,10 +2265,10 @@ class mail_ui
 			$importFailed = false;
 			try
 			{
-				$messageUid = $this->importHandler()->importMessageToFolder($file,$destination,$importID);
+				$rowId = $this->importHandler()->importMessageToFolder($file,$destination,$importID);
 			    $linkData = array
 			    (
-					'id' => $this->createRowID($destination, $messageUid, true),
+					'id' => $rowId,
 			    );
 			}
 			catch (Api\Exception\WrongUserinput $e)

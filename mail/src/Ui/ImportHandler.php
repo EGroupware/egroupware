@@ -48,9 +48,12 @@ class ImportHandler
 	 *      folder, but will hold modifications if folder is modified
 	 * @param string $importID ID for the imported message, used by attachments to identify them
 	 *      unambiguously
-	 * @return mixed $messageUID or exception
+	 * @return string a ready-to-use rowID (NOT a bare uid) - for a classic account this is built
+	 *  via Api\Mail::createRowID() same as before, for a JMAP account it's built directly here
+	 *  (needs the resolved mailboxId, not just a uid) - see the JMAP-FALLTHROUGH-GUARD below
+	 * @throws Api\Exception\WrongUserinput
 	 */
-	public function importMessageToFolder($_formData, &$_folder, $importID='')
+	public function importMessageToFolder($_formData, &$_folder, $importID='') : string
 	{
 		$importfailed = false;
 		if (empty($_formData['file']))
@@ -91,6 +94,38 @@ class ImportHandler
 			{
 				$_folder = 'INBOX';
 			}
+			$icServer = $this->ui->mail_bo->icServer;
+			// JMAP-FALLTHROUGH-GUARD (see [[project_jmap_imap_fallthrough_cleanup]]): folderExists()/
+			// appendMessage() below fall through to Horde_Imap_Client_Socket's raw-socket methods,
+			// unguarded for a JMAP account (same bug class as elsewhere in this project - hangs or
+			// misconnects against a JMAP(S) endpoint; a JMAP account never has a raw IMAP connection
+			// to append to in the first place) - materialize via genuine Email/import (RFC 8621 §4.8)
+			// instead, uniformly available for both Stalwart and the local shim via jmapClient()
+			// (found live 2026-09-03, ralf: clicking an InfoLog-attached .eml on a Stalwart account
+			// failed with "Zielordner Drafts existiert nicht").
+			if ($importfailed === false && $icServer instanceof Mail\Imap\Jmap)
+			{
+				try
+				{
+					$jmap = $icServer->jmapClient();
+					$mailboxId = $jmap->mailbox->getMailboxId($_folder);
+					if (!$mailboxId)
+					{
+						throw new Api\Exception\WrongUserinput(lang("Import of message %1 failed. Destination Folder %2 does not exist.", $_formData['name'], $_folder));
+					}
+					$blobId = $jmap->uploadBlob($mailObject->getRaw(false), 'message/rfc822');
+					$emailId = $jmap->emailImport($blobId, $_folder);
+				}
+				catch (Api\Exception\WrongUserinput $e)
+				{
+					throw $e;
+				}
+				catch (\Exception $e)
+				{
+					throw new Api\Exception\WrongUserinput(lang("Import of message %1 failed. Could not save message to folder %2 due to: %3", $_formData['name'], $_folder, $e->getMessage()));
+				}
+				return 'mail::'.$GLOBALS['egw_info']['user']['account_id'].'::'.$this->ui->mail_bo->profileID.'::'.$mailboxId.'::'.$emailId;
+			}
 			if ($importfailed === false)
 			{
 				if ($this->ui->mail_bo->folderExists($_folder, true))
@@ -116,7 +151,7 @@ class ImportHandler
 		{
 			throw new Api\Exception\WrongUserinput($alert_msg);
 		}
-		return $messageUid;
+		return $this->ui->createRowID($_folder, $messageUid, true);
 	}
 
 	/**
@@ -172,10 +207,10 @@ class ImportHandler
 		}
 		try
 		{
-			$messageUid = $this->importMessageToFolder($formData, $draftFolder, $importID);
+			$rowId = $this->importMessageToFolder($formData, $draftFolder, $importID);
 			$linkData = [
 				'menuaction' => $mode == 'display' ? 'mail.mail_ui.displayMessage' : 'mail.mail_compose.composeFromDraft',
-				'id' => $this->ui->createRowID($draftFolder, $messageUid, true),
+				'id' => $rowId,
 				'deleteDraftOnClose' => 1,
 			];
 			if ($mode != 'display')
