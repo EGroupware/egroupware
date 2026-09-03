@@ -132,9 +132,15 @@ keyword special cases.
 
 A separate, lower-level variadic WHERE-fragment builder: interleaves raw string literals, arrays
 (AND'ed via `column_data_implode()`), and a boolean/null "skip the next 2 arguments" gate
-(`$ignore_next`). Non-obvious calling convention, worth testing directly. Confirmed as a real,
-directly-used API surface this session - `Api\Mail\Account::search()`/`identities()` call
-`$db->expression()` directly, not just internally via `insert`/`update`/`delete`/`select`.
+(`$ignore_next`). Non-obvious calling convention, worth testing directly regardless of caller count.
+
+**CORRECTION**: an earlier finding this session claimed `Api\Mail\Account::search()`/`identities()`
+call `$db->expression()` directly - re-checked via `grep -rn "->expression(" .` (excluding `vendor/`)
+while implementing Phase 3, and there are **zero real call sites anywhere in this tracked repo**.
+`expression()` is only used internally by `insert()`/`update()`/`delete()`/`select()`. The earlier
+claim was wrong (possibly conflated with something else, or an EPL-only blind spot never confirmed) -
+still worth testing directly given its non-obvious calling convention and internal reuse, just not for
+the "directly-used by app code" reason originally given.
 
 ### `column_data_implode()` (1702-1791) - shared engine under every write/where-clause
 
@@ -281,7 +287,22 @@ exists.
       worked around with one real connected `Db` instance whose `->Type`/`->ServerInfo` get
       overridden per test case. **No bugs found** - one quirk documented (not a bug): `to_varchar()`
       has no mysql-specific branch, unlike `to_double()`/`to_int()`.
-- [ ] **Phase 3 - `insert()`/`update()`/`delete()` edge cases + `column_data_implode()` +
-      `expression()`**.
+- [x] **Phase 3 - `insert()`/`update()`/`delete()` edge cases + `column_data_implode()` +
+      `expression()`**. 21 new tests, all green.
+      - `api/tests/Db/InsertUpdateDeleteTest.php` (commit `073f4a9d14`, 8 tests) - `insert()`'s
+        `$where`-driven REPLACE-vs-check-then-update decision tree (confirmed REPLACE's
+        destructive DELETE+INSERT semantics vs. the non-unique-`$where` path's genuine partial
+        update), multi-row bulk insert, `delete()`'s `$limit`, `log_updates` as a table-name array,
+        `update()`'s raw-SQL-fragment integer-key passthrough. **No bugs found**.
+      - `api/tests/Db/ExpressionTest.php` (commit `c1ea1270c9`, 13 tests) - `column_data_implode()`'s
+        OR-NULL expansion, the `$only` param's three modes, single-element-array-to-scalar
+        optimization, integer-key raw-SQL-fragment passthrough (confirmed as the SAME mechanism
+        `SaveDeleteTest::testUpdateWithRawSqlFragment` already exercises via `Storage\Base::update()`
+        - traced the call chain, same underlying code path), the unrecognized-column `InvalidSql`
+        guard, qualified `table.column` key handling; `expression()`'s string/array interleaving and
+        skip-next-2-arguments gate. **No bugs found**. Also corrected an earlier mapping claim (see
+        the `expression()` section above) that turned out to be wrong - zero real call sites of
+        `->expression(` exist anywhere in this tracked repo, despite an earlier finding claiming
+        `Api\Mail\Account` used it directly.
 - [ ] **Phase 4 - `union()`, transactions/locking, `set_app()`/`get_table_definitions()` cache
       isolation, introspection (`affected_rows()` etc.), `strip_array_keys()`**.
