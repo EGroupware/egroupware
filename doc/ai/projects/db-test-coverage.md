@@ -352,10 +352,27 @@ exists.
         the connection - any intervening query, even a harmless `SELECT`, resets it to `0`. Must be
         called immediately after `insert()`, not after a follow-up read to fetch the new row.
 
-## Project status: all 5 phases done
+- [x] **Api\Db\Pdo addition (post-Phase-5)** - a small, related class outside `Db.php` itself:
+      `api/src/Db/Pdo.php` (179 lines), a standalone PDO-connection helper extended directly by
+      `Api\Vfs\Sqlfs\StreamWrapper` (the filemanager SQL-filesystem backend) and used by z-push's
+      `SqlStateMaschine`. Brought into this project's scope on request, as a small addition before
+      moving on to a separate, larger Vfs/stream-wrappers testing effort. `api/tests/Db/PdoTest.php`
+      (commit `1428ba13bd`, 7 tests, 1 environment-gated skip) - `_pdo_timestamp()`'s numeric/
+      non-numeric conversion, `_pdo_boolean()`'s mysql-vs-other-engine branches (via reflection on
+      the process-static `$pdo_type`, saved/restored in `tearDown()`), `connection()`/`_pdo()`
+      against a real live connection (verifies the returned `\PDO` actually works and the
+      mysql-specific static properties get set correctly), the `ONLY_FULL_GROUP_BY` sql_mode clear
+      (skipped - this environment's MariaDB 11.8.9 is outside the 5.7-10.0 range the code targets,
+      not forced), `reconnect()` genuinely opening a new `\PDO` instance rather than returning the
+      cached one. **No bugs found.** Deliberately out of scope, documented: the Galera-cluster-
+      failover retry and the password-revealing-exception-avoidance fallback, both needing a
+      genuinely broken/unreachable connection to trigger safely - matches this project's precedent
+      for `Db::query()`'s connection-drop-and-retry scenario.
 
-`api/tests/Db/` went from 0 dedicated tests (plus the pre-existing 12-test `SchemaTest.php`) to 135
-tests across 9 files. **4 real bugs found, all fixed**: `_connect()`'s capability-reuse gap,
+## Project status: all 5 phases done, plus the Api\Db\Pdo addition
+
+`api/tests/Db/` went from 0 dedicated tests (plus the pre-existing 12-test `SchemaTest.php`) to 142
+tests across 10 files. **4 real bugs found, all fixed**: `_connect()`'s capability-reuse gap,
 `Db\Schema::RefreshTable()`'s transaction leak, mysqli's silently-disabled exception mode, and
 `get_table_definitions()`'s non-functional cache. Every fix verified via a `git stash` A/B comparison
 against the full `api/tests/` suite (963-1009 tests across runs, growing as other concurrent sessions
