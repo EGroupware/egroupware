@@ -3525,9 +3525,22 @@ class calendar_boupdate extends calendar_bo
     }
 
 	/**
+	 * Id of the async job used to continue a purge that did not finish within the time-limit
+	 */
+	const PURGE_CONTINUE_ID = 'calendar_purge_continue';
+
+	/**
+	 * Maximum time in seconds a single purge() run is allowed to take
+	 */
+	const PURGE_TIME_LIMIT = 300;	// 5 minutes
+
+	/**
 	 * Delete events that are more than $age years old
 	 *
-	 * Purges old events from the database
+	 * Purges old events from the database, oldest (lowest cal_id) first. As purging
+	 * everything could take a long time, a single run is limited to self::PURGE_TIME_LIMIT
+	 * seconds. If that is not enough to purge everything, an async job is (re-)scheduled
+	 * to continue the purge on the next async tick, until everything is purged.
 	 *
 	 * @param int|float $age How many years old the event must be before it is deleted
 	 */
@@ -3537,7 +3550,16 @@ class calendar_boupdate extends calendar_bo
 		{
 			$cutoff = new DateTime('now', DateTime::$server_timezone);
 			$cutoff->modify('-'.round(365 * (float)$age).' days');
-			$this->so->purge($cutoff);
+			$more = $this->so->purge($cutoff, self::PURGE_TIME_LIMIT);
+
+			// (re-)schedule an async job to continue the purge on the next async tick, resp.
+			// cancel a previously scheduled one, if we are done
+			$async = new Api\Asyncservice();
+			$async->cancel_timer(self::PURGE_CONTINUE_ID);
+			if ($more)
+			{
+				$async->set_timer(time()+1, self::PURGE_CONTINUE_ID, 'calendar.calendar_boupdate.purge', $age);
+			}
 		}
 	}
 
