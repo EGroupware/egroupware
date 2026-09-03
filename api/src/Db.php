@@ -854,6 +854,7 @@ class Db
 					1064,   // You have an error in your SQL syntax
 					1062,   // Duplicate entry
 					1054,   // Unknown column 'X' in ...
+					1146,   // Table 'X' doesn't exist
 				]))
 				{
 					$e = new Db\Exception\InvalidSql($e->getMessage(), $e->getCode(), $e);
