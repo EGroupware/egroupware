@@ -578,13 +578,6 @@ export class MailApp extends EgwApp
 					}
 				}
 				break;
-			case 'mail.view':
-				// we need to set currentlyFocussed var otherwise mail
-				// defined actions won't work
-				// this means mobileView() was called earlier and not this is set
-				//@ts-ignore
-				this.currentlyFocussed = this.et2.currentlyFocussed;
-				break;
 			case 'mail.subscribe':
 				this.subscriptionLoad();
 				break;
@@ -3843,8 +3836,12 @@ export class MailApp extends EgwApp
 		{
 			case "delete":
 				//If in main Window (nm view) and we have no selection, do not try to
-				// delete anything
-				if (!this.egw.is_popup() && _elems.length === 0 && !_elems.all
+				// delete anything - except while the mobile message view is open (et2_view),
+				// where the message it shows is the target and there is no list selection at
+				// all: a single tap runs the "open" action without selecting the row.
+				// callDelete() resolves that message from currentlyFocussed and closes the view.
+				if (!this.egw.is_popup() && typeof this.et2_view == 'undefined'
+					&& _elems.length === 0 && !_elems.all
 					&& !this.nm?.getSelection()?.all && this.nm?.getSelection()?.ids?.length === 0)
 				{
 					egw.debug('warn',"Tried to delete a mail when no mail was selected. NoOp!")
@@ -7419,6 +7416,18 @@ export class MailApp extends EgwApp
 		};
 
 		if (id){
+			// Every mail action backfills its target from currentlyFocussed when the toolbar hands
+			// it an empty selection - Et2Toolbar always does (action.execute([])) - and a single
+			// tap on mobile runs the "open" action WITHOUT selecting the row, so nothing else
+			// ever sets it. Has to be the app instance, like openMessage() does for the desktop
+			// popup: this used to be stashed on the view template's widget container instead and
+			// copied over by et2_ready()'s own 'mail.view' case, which no longer runs at all
+			// (Et2Dialog loads its template with _no_et2_ready), leaving every action in the
+			// mobile message view - read/unread, flag, label, delete, reply, forward - a
+			// silent no-op on an empty message id.
+			this.selectedMails = [id];
+			this.currentlyFocussed = id;
+
 			const content = egw.dataGetUIDdata(id);
 			content.data['toolbar'] = this.et2.getArrayMgr('sel_options').getEntry('toolbar');
 			if (content.data.toaddress||content.data.fromaddress)
@@ -7455,9 +7464,6 @@ export class MailApp extends EgwApp
 			const attachment:Et2Details = document.querySelector('.attachments');
 			// Content
 			const content = et2.getArrayMgr('content').data;
-
-			// set the current selected row
-			et2.currentlyFocussed = id;
 
 			if (content.attachmentsBlock.length>0 && content.attachmentsBlock[0].filename)
 			{
