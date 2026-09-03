@@ -1535,11 +1535,6 @@ class calendar_uiforms extends calendar_ui
 		{
 			$body = $event['description'];
 		}
-		// respect user preference about html mail
-		if ($GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] != 'text')
-		{
-			$body = '<pre>'.$body.'</pre>';
-		}
 		//error_log(__METHOD__.print_r($event,true));
 		$boical = new calendar_ical();
 		// we need to pass $event[id] so iCal class reads event again,
@@ -1558,6 +1553,7 @@ class calendar_uiforms extends calendar_ui
 			'mimeType'		  => $GLOBALS['egw_info']['user']['preferences']['mail']['composeOptions'] != 'text' ? 'html' : 'plain',
 			'preset[subject]' => $event['title'],
 			'preset[body]'    => $body,
+			'preset[mimeType]' => 'plain',
 			'preset[name]'    => 'event.ics',
 			'preset[file]'    => $ics_file,
 			'preset[type]'    => 'text/calendar'.($asrequest?'; method=REQUEST':''),

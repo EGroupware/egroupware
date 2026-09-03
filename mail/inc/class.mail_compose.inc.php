@@ -322,6 +322,33 @@ class mail_compose
 	}
 
 	/**
+	 * Merge a typed preset body into the compose body, converting both to HTML when necessary
+	 *
+	 * @param array $content compose content with body and mimeType
+	 * @param array $preset preset with body and optional mimeType
+	 */
+	private static function mergePresetBody(array &$content, array &$preset) : void
+	{
+		$presetMimeType = $preset['mimeType'] ?? null;
+		// Without a declared type, retain the legacy merge for callers with an existing body
+		if (($presetMimeType && $content['mimeType'] !== $presetMimeType) ||
+			(!$presetMimeType && !empty($content['body'])))
+		{
+			if ($presetMimeType === 'plain')
+			{
+				// Preserve plain text literally when converting it for the HTML editor
+				$preset['body'] = Mail\Html::convertTextToHtml(Api\Html::htmlspecialchars($preset['body'], true));
+			}
+			elseif (!empty($content['body']))
+			{
+				$content['body'] = '<pre>'.$content['body']."</pre>\n";
+			}
+			$content['mimeType'] = $preset['mimeType'] = 'html';
+		}
+		$content['body'] = $preset['body'].($content['body'] ?? '');
+	}
+
+	/**
 	 * Compose dialog
 	 *
 	 * @var ?array $_content =null etemplate content array
@@ -1131,26 +1158,13 @@ class mail_compose
 						$_content[$name]=$content[$name]=$_REQUEST['preset'][$name];
 					}
 					//skip if already processed by "preset Routines"
-					if ($alreadyProcessed[$name] || empty($_REQUEST['preset'][$name]))
+					if (!empty($alreadyProcessed[$name]) || empty($_REQUEST['preset'][$name]))
 					{
 						continue;
 					}
-					if ($name === 'body' && !empty($content['body']))
+					if ($name === 'body')
 					{
-						// if preset body has different mimeType the (reply-)body --> convert all to html
-						if ($content['mimeType'] !== $_REQUEST['preset']['mimeType'])
-						{
-							if ($_REQUEST['preset']['mimeType'] === 'plain')
-							{
-								$_REQUEST['preset']['body'] = Mail\Html::convertTextToHtml($_REQUEST['preset']['body']);
-							}
-							else
-							{
-								$content['body'] = '<pre>'.$content['body']."</pre>\n";
-							}
-							$content['mimeType'] = $_REQUEST['preset']['mimeType'] = 'html';
-						}
-						$content['body'] = $_REQUEST['preset']['body'].$content['body'];
+						self::mergePresetBody($content, $_REQUEST['preset']);
 					}
 					else
 					{

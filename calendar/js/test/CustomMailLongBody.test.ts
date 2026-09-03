@@ -45,6 +45,7 @@ function composeVars(body : string) : object
 		mimeType: 'html',
 		'preset[subject]': 'Team meeting',
 		'preset[body]': body,
+		'preset[mimeType]': 'plain',
 		'preset[bcc]': ['A A <a@example.com>', 'B B <b@example.com>'],
 		'preset[name]': 'event.ics',
 		'preset[file]': '/tmp/ics4711',
@@ -53,15 +54,15 @@ function composeVars(body : string) : object
 	};
 }
 
-/** A mail body of the size that used to break: <pre>-wrapped description of a real mail */
+/** A mail body of the size that used to break: the plain-text description of a real mail */
 /** custom_mail() does not await egw.openComposePost(), so let its popup/form steps settle */
 function flushMicrotasks() : Promise<void>
 {
 	return new Promise(resolve => setTimeout(resolve, 0));
 }
 
-const MAIL_SIZED_BODY = '<pre>' + 'Sehr geehrte Damen und Herren, '.repeat(200) + '</pre>';
-const SHORT_BODY = '<pre>Kurze Beschreibung</pre>';
+const MAIL_SIZED_BODY = 'Sehr geehrte Damen und Herren, '.repeat(200);
+const SHORT_BODY = 'Kurze Beschreibung';
 
 describe('CalendarApp.custom_mail()', () =>
 {
@@ -70,8 +71,10 @@ describe('CalendarApp.custom_mail()', () =>
 	let egw : any;
 	let CalendarAppClass : typeof CalendarApp;
 
-	before(async() =>
+	before(async function()
 	{
+		// Chromium can need more than the global 3s timeout to load calendar's complete widget tree
+		this.timeout(10000);
 		CalendarAppClass = (await import(APP_SOURCE)).CalendarApp;
 	});
 
@@ -108,6 +111,7 @@ describe('CalendarApp.custom_mail()', () =>
 		assert.equal(submit.action, 'index.php?menuaction=mail.mail_compose.compose');
 		const params = new Map(submit.params);
 		assert.equal(params.get('preset[body]'), MAIL_SIZED_BODY, 'body must be posted in full, not truncated');
+		assert.equal(params.get('preset[mimeType]'), 'plain', 'calendar must declare the preset body as plain text');
 		assert.equal(params.get('preset[subject]'), 'Team meeting');
 		// the ics attachment is passed by temp-file path and must survive the switch to POST
 		assert.equal(params.get('preset[file]'), '/tmp/ics4711');
