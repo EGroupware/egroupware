@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE overlay PUBLIC "-//EGroupware GmbH//eTemplate 2.0//EN" "https://www.egroupware.org/etemplate2.0.dtd">
-<overlay legacy="true">
-    <template id="api.show_replacements.placeholder_list">
+<overlay>
+    <et2-template  id="api.show_replacements.placeholder_list">
         <et2-description  id="title" class="title"></et2-description>
         <grid id="placeholders" width="100%">
             <columns>
@@ -15,30 +15,30 @@
                 </row>
             </rows>
         </grid>
-    </template>
-    <template id="api.show_replacements" template="" lang="" group="0" version="21.1.001">
-        <vbox>
+    </et2-template>
+    <et2-template  id="api.show_replacements" template="" lang="" group="0" version="21.1.001">
+        <et2-vbox>
             <et2-description  value="Placeholders" class="group title"></et2-description>
             <old-box id="placeholders">
-                <box id="${row}">
-                    <template template="api.show_replacements.placeholder_list"/>
-                </box>
+                <et2-box  id="${row}">
+                    <et2-template  template="api.show_replacements.placeholder_list"></et2-template>
+                </et2-box>
             </old-box>
-            <template template="@extra_template"/>
+            <et2-template  template="@extra_template"></et2-template>
             <et2-description  value="Common" class="group title"></et2-description>
             <old-box id="common">
-                <box id="${row}">
-                    <template template="api.show_replacements.placeholder_list"/>
-                </box>
+                <et2-box  id="${row}">
+                    <et2-template  template="api.show_replacements.placeholder_list"></et2-template>
+                </et2-box>
             </old-box>
             <et2-description  value="Current user" class="group title"></et2-description>
             <old-box id="user">
-                <box id="${row}">
-                    <template template="api.show_replacements.placeholder_list"/>
-                </box>
+                <et2-box  id="${row}">
+                    <et2-template  template="api.show_replacements.placeholder_list"></et2-template>
+                </et2-box>
             </old-box>
-        </vbox>
-        <styles>
+        </et2-vbox>
+        <et2-styles>
             body {
             overflow-y: auto;
             }
@@ -69,6 +69,6 @@
             table#api-show_replacements_placeholders > tbody > tr > td:first-child {
             padding-right: 5em;
             }
-        </styles>
-    </template>
+        </et2-styles>
+    </et2-template>
 </overlay>

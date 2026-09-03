@@ -12,11 +12,11 @@
 
 use EGroupware\Api;
 
-// add et2- prefix to following widgets/tags, if NO <overlay legacy="true"
+// add et2- prefix to following widgets/tags (box/hbox/vbox/vfs-select)
 const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
-// unconditional of legacy add et2- prefix to this widgets
+// add et2- prefix to this (larger) set of widgets
 const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|link|link-[a-z]+|favorites|htmlarea|styles))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
@@ -505,18 +505,15 @@ function send_template()
 			return "<et2-ai{$span}><$tag $attrs></$tag></et2-ai>";
 		}, $str);
 
-		// ^^^^^^^^^^^^^^^^ above widgets get transformed independent of legacy="true" set in overlay ^^^^^^^^^^^^^^^^^^
-
-		// eTemplate marked as legacy --> replace only some widgets (eg. requiring jQueryUI) with web-components
-		if (!preg_match('/<overlay[^>]* legacy="true"/', $str))
-		{
-			$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches) {
-				return '<' . $matches[2] . 'et2-' . $matches[3] .
-					// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
-					(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .
-						'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
-			}, $str);
-		}
+		// box/hbox/vbox/vfs-select --> et2-box/et2-hbox/et2-vbox/et2-vfs-select
+		// (used to be skipped for <overlay legacy="true">, an escape hatch no template needs any more -
+		// api/templates/default/show_replacements.xet was the last one, see widget-migration-status.md)
+		$str = preg_replace_callback(ADD_ET2_PREFIX_REGEXP, static function (array $matches) {
+			return '<' . $matches[2] . 'et2-' . $matches[3] .
+				// web-components must not be self-closing (no "<et2-button .../>", but "<et2-button ...></et2-button>")
+				(substr($matches[ADD_ET2_PREFIX_LAST_GROUP], -1) === '/' ? substr($matches[ADD_ET2_PREFIX_LAST_GROUP], 0, -1) .
+					'></et2-' . $matches[3] : $matches[ADD_ET2_PREFIX_LAST_GROUP]) . '>';
+		}, $str);
 
 		// change all attribute-names of new et2-* widgets to camelCase, and other attribute modifications for all web-components
 		$str = preg_replace_callback('#<(et2|records)-([a-z-]+)\s(.*?")\s*/?>#s', static function(array $matches)
