@@ -1766,7 +1766,7 @@ and whether "continue editing" after abort needs to restore any state beyond sim
 SECOND time, matching `saveDraft()`'s own now-established "create new, clean up old copy" pattern
 would handle that cleanly if reused here too).
 
-## OPEN BUG: carried-forward/freshly-uploaded attachments sometimes silently missing (2026-09-02, NOT ROOT-CAUSED, live-investigated at length)
+## FIXED: carried-forward/freshly-uploaded attachments sometimes silently missing (2026-09-02 investigated, 2026-09-03 root-caused + fixed)
 
 Real, reproduced-live symptom (ralf, via `composeasnew` off a real Sent message with a real
 attachment - NOT specific to the new draft-continuation feature, which shares the same code and
@@ -1801,15 +1801,86 @@ intervening draft-save acts as an incidental delay that lets the race resolve, w
 compose-then-send hits the race window every time. Not yet confirmed - investigate together with the
 above, likely the same fix will address both.
 
-**Not implemented**: a defensive mitigation was proposed but not yet built - cross-check the
-row's own already-known `hasAttachment`/`attachments==='attach'` flag (available client-side before
-compose even opens, from the original row's own list data) against what bootstrap actually receives,
-and retry the fetch once on a mismatch. This would paper over the race without root-causing it;
-worth doing as a stopgap if the actual race proves hard to pin down, but finding and fixing the real
-timing issue (in whatever JMAP session/token setup runs at compose bootstrap) would be the better
-fix if it can be found with proper instrumentation (console.time/timestamps around ensureToken()/
-fetchForReply() at real bootstrap time, not simulated afterward - this session's live debugging
-could never catch the race in the act, only prove the two halves work correctly in isolation).
+### Root cause (2026-09-03) - not actually a nondeterministic race at all
+
+Two hypotheses from the day before were directly tested and conclusively ruled out against the
+real Stalwart account, via raw curl JMAP calls (no browser needed):
+- **Server-side concurrency corruption** - fired 8 concurrent `Email/get` calls at a freshly-created
+  attachment message, repeated 5x. Every response was either fully correct
+  (`hasAttachment`/`attachments` always right) or an explicit `urn:ietf:params:jmap:error:limit`
+  rejection (`maxConcurrentRequests` exceeded, from the session document) - Stalwart never once
+  returned a partially-wrong result. Rules out any theory involving Stalwart silently mangling data
+  under load.
+- **Missing-capability timing** - a request declaring `using: ["urn:ietf:params:jmap:core"]` only
+  (i.e. `urn:ietf:params:jmap:mail` not yet loaded into `this.capabilities` at request time) doesn't
+  silently drop mail-specific properties like `attachments` while keeping `subject` - Stalwart
+  rejects the WHOLE method call outright (`unknownMethod`, capability required). This also can't
+  explain "subject fine, attachments empty".
+
+With both server-side theories eliminated, the actual bug turned out to be much simpler, and
+client-side only: **`MailCompose.bootstrapCompose()` is deliberately fire-and-forget from
+`setEtemplate()`** (`void this.bootstrapCompose()`, so opening the compose popup doesn't block on
+it) - **and nothing ever awaited it before submitAction()/saveAsDraft() read `content.attachments`
+to build the outgoing message.** `carryForwardAttachments()` (correct, per the day-before
+verification) only finishes populating `content.attachments` once its own `fetchForReply()` network
+round trip resolves - a real compose popup opening cold (fresh JMAP client, fresh WebSocket/session
+setup, THEN the actual Email/get) can take a perceptible moment. Click Send (or "Save as Draft")
+before that finishes and whatever's in `content.attachments` at that exact moment - still empty -
+is what gets sent/saved, silently. Explains the second report exactly: an intervening draft-save
+gives bootstrap enough extra wall-clock time to finish before the actual send happens afterward,
+while a direct compose-then-send-immediately hits the empty window far more often. Not a "race" in
+the sense of nondeterministic corruption - just a missing wait.
+
+**Fix** (`mail/js/compose.ts`): new `bootstrapPromise` field, set to `bootstrapCompose()`'s own
+promise in `setEtemplate()` (was fire-and-forget `void`). `submitAction()` chains it into the
+existing `wait` gate (already used uniformly by all three send branches - mailvelope, JMAP-native,
+classic postback - so one change covers all of them); `saveAsDraft()` wraps its whole body in
+`bootstrapPromise.then(...)`. Autosave's own 2-minute interval was never in realistic danger; this
+matters for a user clicking Send or "Save as Draft" quickly after opening compose.
+
+Live-verified 2026-09-03 for the "click Send immediately" scenario this fix targets - but ralf's own
+live repro the same day (`composeasnew` via the real "Verfassen" popup) turned out to hit a SECOND,
+entirely separate, deterministic bug that this fix does not touch at all - see below.
+
+### Second bug (2026-09-03) - TinyMCE editor-not-ready throw aborts the whole bootstrap function
+
+ralf's repro was not timing-sensitive at all: right-clicking a Drafts-folder message with a real
+attachment and choosing "Verfassen" (`from=composeasnew`) reliably opened a compose popup with NO
+attachments, waiting several seconds made no difference, and calling
+`MailJmap.fetchForReply(sourceId)` manually from the console on that SAME already-loaded popup
+correctly returned the attachment - proving the fetch itself was fine and ruling out timing/race
+entirely for this bug. The nearly-identical `bootstrapDraft()` (same fetch, same body, same
+attachment-carry-forward) worked correctly for the identical source message when reached via a plain
+URL navigation instead of a popup.
+
+The console (previously not checked on the failing popup) showed the actual cause: an uncaught
+`TypeError: Cannot read properties of undefined (reading 'serialize')`, thrown synchronously from
+inside TinyMCE's own `getContent()`/`setContent()`, at the exact point `bootstrapComposeAsNew()`
+calls `this.currentBodyWidget()?.set_value(context.body)`. `Et2HtmlArea`'s TinyMCE editor
+initializes asynchronously - the editor object is assigned (`_handleTinyMceSetup()`) well before its
+`init` event fires, and `_syncValueToEditor()`'s readiness check (`this._tinyMceEditor?.setContent`)
+only confirms the object exists, not that its iframe body is actually attached yet. Calling
+`set_value()` in that gap throws, and since `bootstrapComposeAsNew()`/`bootstrapDraft()`/
+`bootstrapReply()` have no try/catch around it, the throw aborts the async function right there -
+skipping every step after it, most visibly `carryForwardAttachments()`. A real popup
+(`window.open()`) loses this race far more easily than a direct URL navigation because it gets less
+main-thread/rendering priority for its TinyMCE iframe setup - explaining exactly why
+`composefromdraft` "worked" in isolation while the real `composeasnew` popup didn't, even though
+the two functions are otherwise near-identical.
+
+`Et2HtmlArea` already exposes the right fix point for this: its own `tinymce` property is a promise
+that resolves on the editor's `init` event (a documented "compatibility bridge", `resolvePromise`
+pattern already built for exactly this kind of caller). **Fix** (`mail/js/compose.ts`): new
+`setBodyValue(html)` helper - awaits `widget.tinymce` when present (a no-op for the plaintext
+textarea widget, which has no such property) before calling `set_value()`. Replaces the three direct
+`currentBodyWidget()?.set_value(...)` call sites: `bootstrapComposeAsNew()`, `bootstrapDraft()`, and
+the shared `applySignatureForCurrentIdentity()` (which `bootstrapReply()`/`bootstrapSignature()`/
+`updateSignatureForIdentity()` all funnel through) - covering every bootstrap path, not just the one
+ralf hit.
+
+Live-verified 2026-09-03 via the actual repro: right-click the same Drafts message -> "Verfassen" ->
+real popup (not a direct URL nav) -> `content.attachments` correctly populated
+(`mail_2mjmosokb2sb1DiOAPt.png`), no console exceptions.
 
 **Process note**: while investigating this live in ralf's own browser, several of my own read-only
 diagnostic actions (opening the draft repeatedly via right-click "Öffnen"/double-click, trying to

@@ -59,6 +59,22 @@ export class MailCompose
 	private bootstrapping = false;
 
 	/**
+	 * bootstrapCompose()'s own promise (Promise.resolve() until setEtemplate() actually starts it) -
+	 * 2026-09-03, root-causing the "attachments sometimes silently missing" investigation from the
+	 * day before: bootstrapCompose() is deliberately fire-and-forget from setEtemplate() (`void
+	 * this.bootstrapCompose()`), and NOTHING previously stopped submitAction()/saveAsDraft() from
+	 * reading content.attachments before its own async carryForwardAttachments() call (a real
+	 * network round trip) had actually finished populating it - if the user hits Send (or an
+	 * explicit "Save as Draft" click, autosave's own 2-minute interval is in no realistic danger)
+	 * before that completes, whatever's in content.attachments AT THAT MOMENT (still empty) is what
+	 * gets sent/saved, silently. This isn't a genuine race in the nondeterministic-timing sense -
+	 * multiple live attempts to catch bootstrap's OWN fetch/populate returning wrong data all came
+	 * back correct; the actual bug is simply that nothing ever waited for it. Both submitAction()
+	 * and saveAsDraft() now await this before reading current form state.
+	 */
+	private bootstrapPromise : Promise<void> = Promise.resolve();
+
+	/**
 	 * Set by MailApp.smimePassDialog()'s submit handler (public so that dialog, a sibling class,
 	 * can reach it) - how long to remember the just-entered S/MIME passphrase for, read by
 	 * trySendViaJmap() on the retry. Explicit, not the 'smime_pass_exp' preference: ralf, 2026-09-
@@ -159,7 +175,7 @@ export class MailCompose
 			}
 		}, 120000);
 
-		void this.bootstrapCompose();
+		this.bootstrapPromise = this.bootstrapCompose();
 	}
 
 	private handleEtemplateClear(event)
@@ -796,6 +812,10 @@ export class MailCompose
 		{
 			return false;
 		}
+		// bootstrapPromise's own docblock - a fast Send/Save click can otherwise beat
+		// bootstrapCompose()'s async carryForwardAttachments() to the punch, silently sending/
+		// saving with no attachments at all. Every branch below already gates on `wait`.
+		wait = wait.then(() => this.bootstrapPromise);
 
 		if (this.app.mailvelope_editor)
 		{
@@ -1023,6 +1043,30 @@ export class MailCompose
 	}
 
 	/**
+	 * Found live 2026-09-03, root-causing the "attachments sometimes silently missing" investigation
+	 * further: Et2HtmlArea's TinyMCE editor initializes asynchronously (its own `tinymce` property is
+	 * a promise that resolves on the underlying editor's "init" event - see Et2HtmlArea.ts). Calling
+	 * set_value() on it before that resolves throws SYNCHRONOUSLY inside TinyMCE's own internal
+	 * getContent()/setContent() ("TypeError: Cannot read properties of undefined (reading
+	 * 'serialize')"), because the editor's iframe body doesn't exist yet - this uncaught throw aborts
+	 * whichever async bootstrap* function called it right there, silently skipping every step after
+	 * (most visibly, carryForwardAttachments() in bootstrapComposeAsNew()/bootstrapDraft(), and
+	 * bootstrapReply()'s own attachment carry-forward via applySignatureForCurrentIdentity()).
+	 * Reproduced specifically via a real "Verfassen" popup (window.open(), not a direct URL
+	 * navigation) - popups get less main-thread priority for iframe setup than a full navigation,
+	 * making the race easy to lose there and easy to win via direct navigation, which is why
+	 * composefromdraft looked "fine" in isolation while composeasnew didn't; both call paths share
+	 * this same gap. The plaintext body widget is a plain textarea with no such promise - awaiting an
+	 * unrelated `.tinymce` there is a no-op.
+	 */
+	private async setBodyValue(html : string) : Promise<void>
+	{
+		const widget : any = this.currentBodyWidget();
+		if (widget?.tinymce) await widget.tinymce;
+		widget?.set_value(html);
+	}
+
+	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4, first slice - dispatches to
 	 * bootstrapReply() for a JMAP-mode single reply/reply-with-attachments/inline-forward
 	 * (identified purely from this popup's own URL params, same technique isJmapMode already uses
@@ -1235,14 +1279,17 @@ export class MailCompose
 	 *
 	 * mail_compose.inc.php's own "$jmapReplySkip" guard already skips the classic
 	 * getComposeFrom()/getDraftData() fetch for this case too.
+	 *
+	 * @return the fetched context, or null if the fetch failed (an error was already shown) -
+	 *  bootstrapDraft() uses this to know whether it's safe to go on and set jmapDraftEmailId
 	 */
-	private async bootstrapComposeAsNew(sourceId : string) : Promise<void>
+	private async bootstrapComposeAsNew(sourceId : string) : Promise<JmapReplyContext | null>
 	{
 		const context = await this.app.jmap.fetchForReply(sourceId);
 		if (!context)
 		{
 			this.egw.message(this.egw.lang('Failed to load original message'), 'error');
-			return;
+			return null;
 		}
 		this.isReplyCompose = false;
 		this.replyThreadingHeaders = null;
@@ -1269,7 +1316,7 @@ export class MailCompose
 		// gets.
 		if (context.body.trim())
 		{
-			this.currentBodyWidget()?.set_value(context.body);
+			await this.setBodyValue(context.body);
 		}
 		else
 		{
@@ -1280,19 +1327,24 @@ export class MailCompose
 		{
 			this.carryForwardAttachments(context.attachments, context.profileID);
 		}
+		return context;
 	}
 
 	/**
 	 * doc/ai/projects/mail-compose-jmap-migration.md - true draft continuation (2026-09-02, ralf:
 	 * "what apart from the toggle would make it not eligible" -> jmapEligible()'s classic
-	 * uid/folder-attachment guard exists mainly for THIS case). Identical to bootstrapComposeAsNew()
-	 * (same fetchForReply() re-fetch, same "copy verbatim, no quoting/threading-headers" shape -
-	 * classic getDraftData()'s own behaviour) with exactly one addition: `this.jmapDraftEmailId` is
-	 * set to the draft's own emailId UP FRONT, so the FIRST save/send in this new session deletes
-	 * the ORIGINAL draft afterward - MailJmap.saveDraft()'s/sendNewEmail()'s own
-	 * existingDraftEmailId param already implements exactly this "create new, then destroy the
-	 * previous copy" cleanup for ordinary same-session autosave; resuming an old draft is just
-	 * priming that same mechanism with a PRE-EXISTING id instead of one this session created itself.
+	 * uid/folder-attachment guard exists mainly for THIS case). Delegates entirely to
+	 * bootstrapComposeAsNew() (same fetchForReply() re-fetch, same "copy verbatim, no
+	 * quoting/threading-headers" shape - classic getDraftData()'s own behaviour) with exactly one
+	 * addition: `this.jmapDraftEmailId` is set to the draft's own emailId once that succeeds, so the
+	 * FIRST save/send in this new session deletes the ORIGINAL draft afterward -
+	 * MailJmap.saveDraft()'s/sendNewEmail()'s own existingDraftEmailId param already implements
+	 * exactly this "create new, then destroy the previous copy" cleanup for ordinary same-session
+	 * autosave; resuming an old draft is just priming that same mechanism with a PRE-EXISTING id
+	 * instead of one this session created itself. Guarded on bootstrapComposeAsNew()'s own context
+	 * return (null on a failed fetch, already surfaced as an error there) - setting jmapDraftEmailId
+	 * after a failed load would wrongly mark this session as "responsible" for deleting the real
+	 * original draft despite never having loaded its content.
 	 *
 	 * mail_ui::displayMessage()'s own classic Drafts/Templates redirect (mail_ui.inc.php) now
 	 * appends `&jmap=1` for a JMAP-native row too (2026-09-02 follow-up - previously skipped
@@ -1303,39 +1355,9 @@ export class MailCompose
 	 */
 	private async bootstrapDraft(sourceId : string) : Promise<void>
 	{
-		const context = await this.app.jmap.fetchForReply(sourceId);
-		if (!context)
-		{
-			this.egw.message(this.egw.lang('Failed to load original message'), 'error');
-			return;
-		}
-		this.isReplyCompose = false;
-		this.replyThreadingHeaders = null;
+		const context = await this.bootstrapComposeAsNew(sourceId);
+		if (!context) return;
 		this.jmapDraftEmailId = this.app.jmap.messageReference(sourceId).emailId;
-
-		const formatAddress = (a : {name? : string, email : string}) => a.name ? `${a.name} <${a.email}>` : a.email;
-		this.et2.getWidgetById('to')?.set_value(context.to.map(formatAddress));
-		if (context.cc.length) this.et2.getWidgetById('cc')?.set_value(context.cc.map(formatAddress));
-		if (context.bcc.length) this.et2.getWidgetById('bcc')?.set_value(context.bcc.map(formatAddress));
-		this.et2.getWidgetById('subject')?.set_value(context.subject);
-		if (context.cc.length || context.bcc.length) this.fieldExpanderInit();
-
-		const isHtml = context.mimeType === 'html';
-		this.et2.getWidgetById('mimeType')?.set_value(isHtml);
-
-		if (context.body.trim())
-		{
-			this.currentBodyWidget()?.set_value(context.body);
-		}
-		else
-		{
-			await this.applySignatureForCurrentIdentity('', false);
-		}
-
-		if (context.attachments.length)
-		{
-			this.carryForwardAttachments(context.attachments, context.profileID);
-		}
 	}
 
 	/**
@@ -1725,7 +1747,7 @@ export class MailCompose
 		this.insertedSignatureBlock = placement === 'below' ? result.slice(pristineBody.length) :
 			placement === 'top' ? result.slice(0, result.length - pristineBody.length) : '';
 
-		this.currentBodyWidget()?.set_value(result);
+		await this.setBodyValue(result);
 	}
 
 	/**
@@ -2017,34 +2039,40 @@ export class MailCompose
 	{
 		const self = this;
 		return new Promise<void>((_resolve, _reject) =>{
-			const content = self.et2.getArrayMgr('content').data;
-			let action = _action;
-			if (_egw_action && _action !== 'autosaving')
+			// bootstrapPromise's own docblock - autosave's 2-minute interval is in no realistic
+			// danger, but an explicit, fast "Save as Draft" click could otherwise beat
+			// bootstrapCompose()'s async carryForwardAttachments() to the punch
+			void self.bootstrapPromise.then(() =>
 			{
-				action = _egw_action.id;
-			}
-
-			Object.assign(content, {...self.et2.getInstanceManager().getValues(self.et2, true), attachments: content.attachments});
-
-			if (content)
-			{
-				// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - try the JMAP-native
-				// draft-save path first (autosave and plain "Save as Draft"). Only ever engages
-				// when the jmapCompose toggle is on AND this compose is otherwise eligible (no
-				// attachments/integration/S-MIME/mailvelope) - "Not sure we want to follow that
-				// up now" (ralf) on the classic autosave's own raw-IMAP-fallthrough error was the
-				// reason to build this, so classic autosave/save must keep working unchanged
-				// whenever the toggle is off or this compose isn't (yet) eligible.
-				self.trySaveDraftViaJmap(action).then((handled) =>
+				const content = self.et2.getArrayMgr('content').data;
+				let action = _action;
+				if (_egw_action && _action !== 'autosaving')
 				{
-					if (handled)
+					action = _egw_action.id;
+				}
+
+				Object.assign(content, {...self.et2.getInstanceManager().getValues(self.et2, true), attachments: content.attachments});
+
+				if (content)
+				{
+					// doc/ai/projects/mail-compose-jmap-migration.md, Step 1 - try the JMAP-native
+					// draft-save path first (autosave and plain "Save as Draft"). Only ever engages
+					// when the jmapCompose toggle is on AND this compose is otherwise eligible (no
+					// attachments/integration/S-MIME/mailvelope) - "Not sure we want to follow that
+					// up now" (ralf) on the classic autosave's own raw-IMAP-fallthrough error was the
+					// reason to build this, so classic autosave/save must keep working unchanged
+					// whenever the toggle is off or this compose isn't (yet) eligible.
+					self.trySaveDraftViaJmap(action).then((handled) =>
 					{
-						_resolve();
-						return;
-					}
-					self.saveAsDraftClassic(content, action, _resolve, _reject);
-				});
-			}
+						if (handled)
+						{
+							_resolve();
+							return;
+						}
+						self.saveAsDraftClassic(content, action, _resolve, _reject);
+					});
+				}
+			});
 		});
 	}
 
