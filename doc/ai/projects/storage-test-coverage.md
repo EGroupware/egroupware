@@ -8,6 +8,20 @@ the real gaps. Comparable in scope to
 [accounts-import-test-coverage.md](accounts-import-test-coverage.md) - expect this to span more
 than one session.
 
+**STATUS: All 5 phases done** (2026-09-03). `api/tests/Storage/` went from 92 tests to 259, all
+green except the pre-existing `EGW_ADMIN_PASSWORD`-dependent `ContactsTest`. Along the way: fixed
+two broken/fragile pre-existing tests (`BaseTest`'s domain resolution, its `t_modified` clock-skew
+assertion); extended the `egw_test` fixture three times (uc column, bool column, JSON column);
+found and fixed one real CI-breaking production bug (`Customfields::getSerial()` leaking an open DB
+transaction on its error path - see Phase 3); found and documented (deliberately not fixed) several
+more real quirks/bugs across `Db.php`, `Storage\Base`, `Storage\History`, `Storage\Merge`,
+`Storage\Customfields`, and `Storage\RowsIterator` - see each phase below for specifics. Corrected
+one of this doc's own earlier findings mid-project (`Json`/`JsonCF`/`JsonTrait` were wrongly called
+"zero usage" - they're used by the gitignored `invoices/` app, a real blind spot in the original
+grep). Everything is pushed to `origin/master` as of commit `5c4a592de8` (the getSerial() fix) with
+Phase 5's three commits (`25f70f4996`, `469b53910f`, `a7fd4b48bd`) plus this doc's remaining updates
+still local-only pending the next push.
+
 ## Starting state (found, not assumed - see `git log -- api/tests/Storage/`)
 
 Already committed and passing before this project started:
@@ -360,7 +374,26 @@ out of scope here.
         losing anything (`8f4babf8dc`); the last one merged cleanly on top and verified via
         `git status`/`git log` before committing (`31b583c737`). No work was lost across either
         collision.
-- [ ] **Phase 5**: `JsonTrait`/`Json`/`JsonCF` (real usage confirmed via `invoices/` - do the
-      pure-array trait tests AND a live-DB round-trip test, per the usage-correction note above),
-      `Db2DataIterator` (incl. the documented data2db/db2data question - still unconfirmed as used
-      anywhere, lower priority), `RowsIterator` (still unconfirmed as used anywhere, lower priority).
+- [x] **Phase 5**. `egw_test` fixture extended again (`t_json` text column, test app v17.1.002 ->
+      17.1.003, commit `25f70f4996`). 30 new tests landed across three files, all green:
+      - `api/tests/Storage/JsonTest.php` (commit `469b53910f`, 16 tests) - `data2db()`/`db2data()`
+        round-trip incl. `column_preg` filtering and existing-key-wins merge order, magic accessors,
+        a real live `save()`/`read()` round trip through `Json` against `t_json` (verified via a raw
+        SQL row check too, not just `read()`), `JsonCF` composing `JsonTrait` correctly through the
+        `Base`->`Api\Storage`/`Customfields` hierarchy via reflection (a full `JsonCF` live round
+        trip is deferred - needs a customfields extra_table fixture the `test` app doesn't have).
+        No new bugs found - `Json`/`JsonCF`/`JsonTrait` behave exactly as documented.
+      - `api/tests/Storage/Db2DataIteratorTest.php` + `RowsIteratorTest.php` (commit `a7fd4b48bd`,
+        14 tests) - full iteration correctness, `total` exposure, `$rs=null` safety,
+        `IteratorAggregate` unwrapping, the already-known `data2db`-not-`db2data` discrepancy locked
+        down as a regression test (not fixed); `RowsIterator`'s full chunk-boundary/rewind/
+        key-column/non-row-stripping/constructor-throw matrix.
+      - **Found, not fixed**: `RowsIterator::next()` increments `$this->start` by `CHUNK_SIZE`
+        immediately after *every* successful `get_rows()` call, including the first - so `key()`'s
+        value for page 1's first row is already `500`, not `0`, one `CHUNK_SIZE` ahead of what the
+        class docblock implies. No confirmed caller anywhere in this checkout, so left as
+        documented-not-changed behavior per this project's established practice for unconfirmed-
+        usage classes.
+      - Two more near-miss shared-checkout collisions this phase, both caught and recovered cleanly
+        the same way as earlier phases (verified via `git show --stat` after each commit) - no work
+        lost, either the agents' own or other concurrent sessions'.
