@@ -17,7 +17,7 @@ const ADD_ET2_PREFIX_REGEXP = '#<((/?)([vh]?box)|vfs-select)(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LAST_GROUP = 4;
 
 // add et2- prefix to this (larger) set of widgets
-const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|link|link-[a-z]+|favorites|htmlarea|styles))(/?|\s[^>]*)>#m';
+const ADD_ET2_PREFIX_LEGACY_REGEXP = '#<((/?)(template|tabbox|description|searchbox|textbox|hidden|toolbar|label|avatar|lavatar|image|appicon|colorpicker|checkbox|file|iframe|url(-email|-phone|-fax)?|vfs-mime|vfs-uid|vfs-gid|vfs-select|vfs-name|vfs-upload|link|link-[a-z]+|favorites|htmlarea|styles))(/?|\s[^>]*)>#m';
 const ADD_ET2_PREFIX_LEGACY_LAST_GROUP = 5;
 
 // switch evtl. set output-compression off, as we can't calculate a Content-Length header with transparent compression
@@ -259,16 +259,23 @@ function send_template()
 				return $tag . '></et2-number>';
 			}, $str);
 
-		// fix already-converted <et2-textbox type="int(eger)?|float" .../> --> <et2-number precision=.../>
-		// (et2-textbox has no styling for numeric input and was never meant to be used that way -
-		// this is the et2-prefixed equivalent of the type="int(eger)?|float" case handled above,
-		// for templates that were hand-written/converted using et2-textbox instead of the bare tag)
+		// fix already-converted <et2-textbox type="int(eger)?|float|hidden" .../> -->
+		// <et2-number precision=.../> or <et2-hidden .../>
+		// (et2-textbox has no styling/behaviour for any of these - it was never meant to be
+		// used that way; this is the et2-prefixed equivalent of the type="int(eger)?|float"
+		// case handled above, for templates that were hand-written/converted using
+		// et2-textbox instead of the bare tag)
 		$str = preg_replace_callback('#<et2-textbox([^>]*)></et2-textbox>#', static function (array $matches)
 		{
 			$attrs = parseAttrs($matches[1]);
-			if (empty($attrs['type']) || !in_array($attrs['type'], ['int', 'integer', 'float'], true))
+			if (empty($attrs['type']) || !in_array($attrs['type'], ['int', 'integer', 'float', 'hidden'], true))
 			{
 				return $matches[0];
+			}
+			if ($attrs['type'] === 'hidden')
+			{
+				unset($attrs['type']);
+				return '<et2-hidden'.stringAttrs($attrs).'></et2-hidden>';
 			}
 			$float = $attrs['type'] === 'float';
 			unset($attrs['type']);
