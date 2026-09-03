@@ -19,8 +19,9 @@ import "./Et2PortletList";
 import "./Et2PortletNote";
 import './Et2PortletWeather';
 import "../../calendar/js/Et2PortletCalendar";
-import Sortable from "sortablejs/modular/sortable.complete.esm.js";
+import type Sortable from "sortablejs/modular/sortable.complete.esm.js";
 import {Et2Dialog} from "../../api/js/etemplate/Et2Dialog/Et2Dialog";
+import type {egwAction} from "../../api/js/egw_action/egw_action";
 
 /**
  * JS for home application
@@ -190,10 +191,10 @@ export class HomeApp extends EgwApp
 	/**
 	 * Add a new portlet from the context menu
 	 */
-	add(action, source)
+	add(action, source?)
 	{
 		// Basic portlet attributes
-		let attrs = {
+		let attrs : any = {
 			id: this._create_id(),
 			class: action.data.class,
 			settings: {}
@@ -210,14 +211,14 @@ export class HomeApp extends EgwApp
 		// Try to put it about where the menu was opened
 		if(action.menu_context)
 		{
-			let $portlet_container = jQuery(this.portlet_container.getDOMNode());
-			attrs.row = Math.max(1, Math.round((action.menu_context.posy - $portlet_container.offset().top) / HomeApp.GRID) + 1);
+			const portlet_container_top = this.portlet_container.getDOMNode().getBoundingClientRect().top + window.scrollY;
+			attrs.row = Math.max(1, Math.round((action.menu_context.posy - portlet_container_top) / HomeApp.GRID) + 1);
 			// Use "auto" col to avoid any overlap or overflow
 			attrs.col = "auto";
 		}
 
 		let portlet = <Et2Portlet>loadWebComponent(this.get_portlet_tag(action), attrs, this.portlet_container);
-		portlet.loadingFinished();
+		portlet.loadingFinished([]);
 
 		// Get actual attributes & settings, since they're not available client side yet
 		portlet.update_settings(attrs).then((result) =>
@@ -243,10 +244,8 @@ export class HomeApp extends EgwApp
 			return this.add(action);
 		}
 
-		let $portlet_container = jQuery(this.portlet_container.getDOMNode());
-
 		// Basic portlet attributes
-		let attrs = {
+		let attrs : any = {
 			id: this._create_id(),
 			class: action.data.class || action.id.substr(5),
 			dropped_data: []
@@ -255,7 +254,8 @@ export class HomeApp extends EgwApp
 		// Try to find where the drop was
 		if(action != null && action.ui && action.ui.position)
 		{
-			attrs.row = Math.max(1, Math.round((action.ui.position.top - $portlet_container.offset().top) / HomeApp.GRID));
+			const portlet_container_top = this.portlet_container.getDOMNode().getBoundingClientRect().top + window.scrollY;
+			attrs.row = Math.max(1, Math.round((action.ui.position.top - portlet_container_top) / HomeApp.GRID));
 			// Use "auto" col to avoid any overlap or overflow
 			attrs.col = "auto";
 		}
@@ -274,7 +274,7 @@ export class HomeApp extends EgwApp
 		}
 
 		let portlet = <Et2Portlet>loadWebComponent(this.get_portlet_tag(action), attrs, this.portlet_container);
-		portlet.loadingFinished();
+		portlet.loadingFinished([]);
 
 		// Get actual attributes & settings, since they're not available client side yet
 		portlet.update_settings(attrs);
@@ -297,10 +297,10 @@ export class HomeApp extends EgwApp
 		if(selected[0].id == 'home.index')
 		{
 			// Set all
-			this.portlet_container.iterateOver(function(portlet)
+			this.portlet_container.iterateOver((portlet) =>
 			{
 				portlet_ids.push(portlet.id);
-			}, this, et2_portlet);
+			}, this, Et2Portlet);
 		}
 		else
 		{
@@ -323,12 +323,12 @@ export class HomeApp extends EgwApp
 			action.set_enabled(false);
 
 			// Pass them to server
-			egw.json('home_ui::ajax_set_default', ['delete', portlet_ids, group]).sendRequest(true);
+			egw.request('home_ui::ajax_set_default', ['delete', portlet_ids, group]);
 			return;
 		}
 		let dialog = et2_createWidget("dialog", {
 			// If you use a template, the second parameter will be the value of the template, as if it were submitted.
-			callback: function(button_id, value)
+			callback: (button_id, value) =>
 			{
 				if(button_id != Et2Dialog.OK_BUTTON)
 				{
@@ -336,7 +336,7 @@ export class HomeApp extends EgwApp
 				}
 
 				// Pass them to server
-				egw.json('home_ui::ajax_set_default', ['add', portlet_ids, value.group || false]).sendRequest(true);
+				egw.request('home_ui::ajax_set_default', ['add', portlet_ids, value.group || false]);
 			},
 			buttons: Et2Dialog.BUTTONS_OK_CANCEL,
 			title: action.caption,
@@ -392,7 +392,7 @@ export class HomeApp extends EgwApp
 		}
 		// Prefer a specific match
 		let _class = app.classes.home[classname] ||
-			(typeof customElements.get(classname) != "undefined" ? customElements.get(classname).class : false) ||
+			(typeof customElements.get(classname) != "undefined" ? (<any>customElements.get(classname)).class : false) ||
 			// If it has a nextmatch, use favorite base class
 			(portlet.getWidgetById('nm') ? Et2PortletFavorite : false) ||
 			// Fall back to base class
@@ -470,7 +470,7 @@ export class HomeApp extends EgwApp
 				{
 					span = Math.max(
 						1,
-						Math.min(span, (maxColumn - (parseInt(Object.keys(col_map[row]).at(-1)) || col)))
+						Math.min(span, (maxColumn - (parseInt(Object.keys(col_map[row]).slice(-1)[0]) || col)))
 					);
 				}
 				// Set column to auto to avoid overlap

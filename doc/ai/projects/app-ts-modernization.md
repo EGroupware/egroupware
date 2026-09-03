@@ -60,6 +60,7 @@ clearly-scoped change elsewhere (e.g. an import path).
 | stylite | done | `stylite/js/app.ts`, 1054 -> 1099 lines. `stylite/` is its own nested git repo. 2 `var`, 8 jQuery hits, 20 TS errors, 2 `egw.json(...).sendRequest()` sites, 31 `function(`/5 `self`/`that` closures - see below. |
 | smallpart | done | Most TS errors of any file in this project (4028 lines, 1 `var` - a comment only, 24 jQuery uses, 167 TS errors) - see below. `smallpart/` is also its own nested git repo - same note. |
 | calendar | done | Largest file in this project by line count, and by far the most `var`/jQuery usage of any file here (4525 lines, 253 `var`, ~90 jQuery uses, 97 TS errors, 14 `sendRequest()` sites) - see below. |
+| home | done | `home/js/app.ts`, 538 -> 538 lines, main repo. 0 `var`, 2 jQuery hits, 11 TS errors, 2 `sendRequest()` sites, 2 live `function(` occurrences (plus a dead, fully commented-out gridster-era block that doesn't count) - see below. Found and fixed a genuine live `ReferenceError` crash in `set_default()`. |
 
 **Nested git repos:** `tracker/`, `status/` and `smallpart/` (and presumably other apps) are checked out as their own independent git repositories inside the main `egroupware` working tree - the root `.gitignore` explicitly excludes them (`/tracker/`, `status/`, `/smallpart/`) so the main repo never sees their contents. `git status`/`git diff` run from the repo root show nothing for files under these paths even when they're genuinely modified - `cd` into the app directory first (each has its own `.git/`) to see/commit/push those changes. Matches the existing `feedback_git_installs_independent_trees` memory ("don't composer-update root to pull an app-repo fix").
 
@@ -2455,3 +2456,159 @@ angle this project's workflow calls out) - none of the fixed bugs are pure funct
 coupled to `this.et2`'s live widget tree, exactly the kind of heavyweight DOM-fixture test this
 project's workflow says not to force. No test file added, consistent with every other app.ts done in
 this project so far (none of which added one either).
+
+## home/js/app.ts (done)
+
+538 -> 538 lines, main repo (not a nested git repo). Baseline: 0 `var` (already clean), 2 jQuery hits, 11
+TS errors, 2 `egw.json(...).sendRequest()` sites, 2 live `function(` occurrences, 0 `self`/`that`
+closure-captures. Small/modest file, comparable to timesheet/tracker - but it hid a genuine, previously
+unreachable runtime crash (see below), which only surfaced by actually clicking the feature live per this
+project's now-standard verify-live discipline.
+
+### Legacy widget imports
+
+- **`et2_portlet`** (`set_default()`'s "select all" branch, `iterateOver(_callback, this, et2_portlet)`)
+  had **no import at all** (`TS2304: Cannot find name`) - and this is the classification-trap lesson
+  playing out for real, not just in theory. `et2_widget_portlet.ts` does define a real, distinct legacy
+  `et2_portlet extends et2_valueWidget` class, registered under the *unprefixed* short name `"portlet"`.
+  But `home/templates/default/index.xet` writes the tag as `<et2-portlet ...>` (prefixed) for every real
+  portlet on the page, and `Et2Portlet.ts` (`api/js/etemplate/Et2Portlet/Et2Portlet.ts`, `extends
+  Et2Widget(SlCard)` - a completely unrelated class hierarchy from the legacy one) registers
+  `customElements.define("et2-portlet", Et2Portlet)`. So every actual portlet widget on the page is an
+  `Et2Portlet` instance, never an instance of legacy `et2_portlet` - meaning `iterateOver(..., et2_portlet)`
+  could never have matched anything even if `et2_portlet` had been imported. The right fix per the
+  classification-trap lesson isn't to add the legacy import (goal 1 would then immediately want it
+  replaced anyway, since a real `.xet`-driven check shows it's dead weight) - it's to use the already-
+  imported modern `Et2Portlet` class instead, which is what the `instanceof`-style filter is actually
+  supposed to match. See "Genuine bugs found and fixed" below - this was live-verified as a real crash,
+  not just a hypothetical.
+- **`Sortable`** (`sortablejs`'s default export, used only for one field's type annotation, `private
+  sortable : Sortable`) - the field itself is never assigned or read anywhere in the file (dead field,
+  left alone per this project's restraint principle - it's not one of the 6 goals to prune unused fields,
+  and removing it risks guessing wrong about a future/external use). Switched the import to `import type
+  Sortable from "sortablejs/modular/sortable.complete.esm.js"` since it's genuinely type-only here.
+- **`egwAction`** (`get_portlet_tag(action : egwAction)`'s param type) had no import (`TS2304`) - same
+  real, concrete exported class from `api/js/egw_action/egw_action.ts` every other app in this project has
+  found - added `import type {egwAction}`. (`egwActionObject` only appears in a JSDoc `@param` comment on
+  `set_default()`, never a real type annotation, so it needed no import.)
+- `et2_createWidget`, `EgwApp`, `etemplate2`, `Et2Portlet`, `Et2PortletFavorite`, `loadWebComponent`, and
+  `Et2Dialog` were all already correctly value imports (each is instantiated/called as a value somewhere
+  in the file: `et2_createWidget("dialog", ...)`, `extends EgwApp`, `etemplate2.getByApplication()`, `new
+  _class(...)` where `_class` can resolve to `Et2Portlet`/`Et2PortletFavorite`, `loadWebComponent(...)`,
+  `Et2Dialog.OK_BUTTON`/`.BUTTONS_OK_CANCEL`) - nothing to change on any of them. The side-effect-only
+  imports (`Et2PortletLink`/`List`/`Note`/`Weather`, `calendar/js/Et2PortletCalendar`) that register their
+  custom elements also stayed as-is.
+
+### TS errors fixed (11 total)
+
+- **`attrs.row`/`attrs.col` don't exist** (4 sites, 2 each in `add()` and `add_from_drop()`): both
+  methods build an `attrs` object literal from a fixed initial shape (`{id, class, settings}` /
+  `{id, class, dropped_data}`) and then conditionally bolt on `row`/`col` a few lines later depending on
+  whether the action carries position info. There's no shared interface for this ad-hoc, dynamically-grown
+  bag of properties (checked `Et2Portlet.ts` - it reads `attrs.row`/`attrs.col`/`attrs.settings` just as
+  loosely, no formal type either) - annotated both locals `let attrs : any = {...}` rather than inventing
+  a one-off interface for a shape that's only ever used internally in these two methods.
+- **`portlet.loadingFinished()` called with 0 args, expects 1** (2 sites): `Et2Widget.loadingFinished
+  (promises : Promise<any>[])` (`api/js/etemplate/Et2Widget/Et2Widget.ts:1226`) defensively handles
+  `promises === undefined` at runtime (`if(typeof promises === "undefined") promises = [];`) - the
+  deprecated-vs-preferred trap's sibling case: not a deprecated-alternative-method situation, but the
+  same underlying shape (a shared widget method that's runtime-safe with 0 args but not typed that way).
+  Rather than widen the shared method's signature (out of scope, same reasoning as every prior pass that
+  left `Et2Widget`/`Et2Template` alone), passed `portlet.loadingFinished([])` at both call sites - matches
+  what the method does internally anyway.
+- **`this.add(action)` called with 1 arg, `add()` expects 2** (`add_from_drop()`'s "actions got confused
+  drop vs popup" fallback): `add(action, source)`'s `source` param is never referenced anywhere in `add()`'s
+  own body (confirmed by reading the whole method) - made it optional (`add(action, source?)`) rather than
+  force the fallback call site to pass a placeholder, same pattern as `filter_change(ev?, filter?)` in
+  every earlier app in this project.
+- **`et2_portlet` (`TS2304`)**: see "Legacy widget imports" above and "Genuine bugs found and fixed" below
+  - fixed by swapping to `Et2Portlet`, not by adding the legacy import.
+- **`egwAction` (`TS2304`)**: see "Legacy widget imports" above.
+- **`customElements.get(classname).class` doesn't exist on `CustomElementConstructor`**
+  (`_get_portlet_code()`): checked whether any `Et2Portlet*` subclass defines a static `class` property
+  anywhere in the repo (`grep -rn "static class"` across `home/js/*.ts` and `calendar/js/Et2PortletCalendar.ts`)
+  - none do, so this fallback branch is dead at runtime regardless of the type error (confirmed
+  `_get_portlet_code()` itself has zero callers anywhere in the repo - see "Not touched" below). Cast to
+  `<any>` rather than invent a real shape for a codepath nothing reaches.
+- **`Object.keys(col_map[row]).at(-1)` - `Array.prototype.at()` needs `lib: es2022`** (`_do_ordering()`):
+  this repo's `tsconfig.json` targets `es2020` (`lib: ["es2020", "dom"]`), a shared, repo-wide setting -
+  out of scope to bump for one file. Swapped to the `es2020`-safe equivalent, `Object.keys(col_map[row])
+  .slice(-1)[0]`, same negative-last-element semantics without needing the newer lib.
+
+### jQuery removed
+
+- `jQuery(this.portlet_container.getDOMNode()).offset().top` (2x, `add()`/`add_from_drop()`, used to find
+  the portlet container's page-relative top offset for placing a newly-added portlet near the menu/drop
+  position) -> `this.portlet_container.getDOMNode().getBoundingClientRect().top + window.scrollY`. jQuery's
+  `.offset()` is page/document-relative (accounts for scroll); `getBoundingClientRect()` alone is
+  viewport-relative, so the native replacement needs the explicit `+ window.scrollY` to match - a
+  same-value swap, not just a same-shaped one.
+
+### `egw.json(...).sendRequest()` -> `egw.request()`
+
+Both sites (`set_default()`'s "remove default" and "add default" branches) were fire-and-forget async
+(`sendRequest(true)`) - straightforward 1:1 swaps to `egw.request(...)`, no genuinely-synchronous calls in
+this file.
+
+### function/closures -> arrow functions
+
+- `set_default()`'s `iterateOver(function(portlet) {...}, this, et2_portlet)` callback explicitly passes
+  `this` as `iterateOver`'s own `_context` argument - the same tracker-established exception-to-the-
+  exception: since that `this` is exactly the same object the arrow's lexical `this` would already resolve
+  to (both come from `set_default()` itself), converting to an arrow is safe, and the callback never used
+  `this` anyway (only the closured `portlet_ids` and the `portlet` param). Converted together with the
+  `et2_portlet` -> `Et2Portlet` bug fix above (same line).
+- The dialog's `callback: function(button_id, value) {...}` (`set_default()`'s "add default" branch) -
+  checked first that the body never uses `this` (only `button_id`, `value`, and the closured
+  `portlet_ids`/`group`/`egw` - all locals/globals, no `this.` anywhere) - safe to convert regardless of
+  whatever `this` `Et2Dialog` itself binds the callback to, same reasoning as addressbook's dialog-callback
+  conversions.
+- The two `function(){...}` occurrences inside the fully commented-out gridster-era block at the bottom of
+  the file (`init: function(portlet) {...}` and its nested `getCurrentPosition(function(position) {...})`)
+  are inside a `/* ... */` block comment, not live code - don't count toward goal 6 and weren't touched
+  (nothing to convert; it's not code).
+
+### Genuine bugs found and fixed
+
+- **`set_default()`'s "select all" branch threw `ReferenceError: et2_portlet is not defined` on every
+  click, unconditionally** - confirmed live in the browser (not just from reading the TS error). This is
+  the "Set as default" context-menu action available when right-clicking the general portlet background
+  (as opposed to a specific portlet), which takes the `selected[0].id == 'home.index'` branch and is
+  therefore the *only* way to reach `iterateOver(..., et2_portlet)` at runtime. Verified the crash on the
+  unmodified code first (git-stashed the fix, rebuilt, reloaded, clicked "Set as default" from the
+  background context menu -> `ReferenceError: et2_portlet is not defined` at `set_default`, confirmed via
+  console stack trace), then restored the fix and confirmed the same click no longer throws and instead
+  proceeds to build `portlet_ids` and open the confirmation dialog. This means the entire "set all
+  portlets as default for a group" admin feature was completely non-functional before this fix - it could
+  never have collected any portlet IDs (or even gotten that far without crashing) since the file was
+  written with the `et2-portlet` tag prefix in `index.xet` (i.e., probably since `Et2Portlet` was
+  introduced as a web component, given `iterateOver`'s `_type` filter would have simply matched nothing,
+  silently, before this specific `ReferenceError` was even possible - `et2_portlet` being *unimported* is
+  what turns a silent no-op into a hard crash, and TS's `TS2304` for that exact name is what surfaced it
+  here).
+
+### Not touched (out of scope)
+
+- **`set_default()`'s dialog renders empty** - only discovered *because* the crash above is now fixed
+  (the dialog is created a few lines after the now-working `iterateOver` call, so it was previously
+  unreachable from the "select all" path - though it's reachable from the per-portlet "remove default"-less
+  branch too, and behaves the same there). Live-verified: `et2_createWidget("dialog", {template:
+  "home.set_default", buttons: Et2Dialog.BUTTONS_OK_CANCEL, ...})` does create a `<legacy-dialog>` element
+  (confirmed via `document.querySelector('legacy-dialog')`), but its content stays genuinely empty - no
+  title, no OK/Cancel buttons, no rendered `<et2-vbox>`/`<et2-description>`/`<et2-select-account>` from the
+  `home.set_default` sub-template that's defined right in `home/templates/default/index.xet` (confirmed the
+  template markup itself is fine and inline in the same file, not a separate lazy-fetched template - no
+  network request for it ever fires, consistent with that). This isn't a goal-1-through-6 issue (no TS
+  error, no jQuery, no `var`, nothing this pass's mechanical checks would catch) and digging into *why*
+  `et2_createWidget("dialog", {...})` fails to populate a templated legacy dialog is a much larger
+  investigation into `Et2Dialog`/legacy-dialog-factory internals, well beyond an app.ts-scoped pass -
+  flagged here as a real, currently-live bug for whoever picks up the dialog/legacy-widget-factory code
+  next, not fixed.
+- **`_get_portlet_code()`** has zero callers anywhere in the repo (checked `home/js/`, `api/js/`,
+  `calendar/js/`, and any `.php` references) - likely dead code, same shape as addressbook's
+  `refreshCallback` finding. Left in place rather than deleted: it's not blocking any of the 6 goals (its
+  one `<any>`-cast fix above was mechanical), and per this project's restraint principle, deleting a whole
+  method on a "looks unused" read is a bigger, less certain call than removing a single dead import line.
+- The two-portlet-container jQuery `.offset()` fix and the `attrs : any` typing both touch the same two
+  methods (`add()`/`add_from_drop()`) - no interaction/ordering issue between them, but noting it since a
+  future re-read of the diff might wonder why both changes land in the same few lines.
