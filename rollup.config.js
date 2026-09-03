@@ -18,6 +18,7 @@ import { readFileSync, readdirSync, statSync, unlinkSync, writeFileSync  } from 
 import terser from 'terser';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import { legacyWidgetShimPlugin } from './api/js/etemplate/rollup-legacy-widget-shim.mjs';
 
 // Best practice: use this
 //rimraf.sync('./dist/');
@@ -87,7 +88,11 @@ const config = {
         dir: '.',
         sourcemap: true
     },
-    plugins: [{
+    plugins: [
+    // must run before the extensionless .ts/.js resolver below, so it can
+    // synthesize the legacy et2_widget_*.ts shims that no longer exist on disk
+    legacyWidgetShimPlugin(),
+    {
         resolveId (id, parentId) {
             // Delegate bare specifiers to node_modules resolver
             if (isBareSpecifier(id))

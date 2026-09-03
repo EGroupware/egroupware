@@ -19,6 +19,7 @@
 import fs from 'fs';
 import {playwrightLauncher} from '@web/test-runner-playwright';
 import {esbuildPlugin} from '@web/dev-server-esbuild';
+import {legacyWidgetShimDevServerPlugin} from './api/js/etemplate/webtest-legacy-widget-shim.mjs';
 
 // True if a *.test.ts file exists anywhere under dir (recursing into subdirectories),
 // so an app is discovered regardless of how deep its test files are nested.
@@ -133,6 +134,10 @@ export default {
 	...(cliFiles.length ? {files: cliFiles} : {groups: testGroups}),
 
 	plugins: [
+		// must run before esbuildPlugin, so it can synthesize the legacy et2_widget_*.ts
+		// shims (eg. et2_widget_selectbox, pulled in by et2_extension_nextmatch.ts) that
+		// no longer exist on disk - see rollup-legacy-widget-shim.mjs for the rollup side
+		legacyWidgetShimDevServerPlugin(),
 		{
 			name: "mock-modules",
 			resolveImport({source})

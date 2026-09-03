@@ -10,6 +10,7 @@ the current set of Lit-based `Et2*` webcomponents (`api/js/etemplate/Et2*/`, reg
 | State | Meaning |
 |---|---|
 | **1a – shim** | A webcomponent exists. The `et2_*.ts` file's class is trivial — it only extends/re-exports the webcomponent for backwards compatibility (old `type="..."`/class-name still resolves, but there's no real legacy code left to remove other than the file itself). |
+| **1a – generated** | Same as 1a-shim, but the file itself has been deleted (2026-09-03). The trivial re-export is synthesized at build/type-check/test time from a single manifest — see [`rollup-legacy-widget-shim.mjs`](./rollup-legacy-widget-shim.mjs) (wired into `rollup.config.js`), its `.d.ts` sibling kept alongside for `tsc`/IDEs, and [`webtest-legacy-widget-shim.mjs`](./webtest-legacy-widget-shim.mjs) (wired into `web-test-runner.config.mjs`) for the browser-test dev server. `et2_widget_dialog.ts` stayed a real 1a-shim file — it has actual behaviour beyond a bare re-export. |
 | **1b – kept for a dependent** | A webcomponent exists, but the legacy file still holds real implementation code, because at least one *other still-legacy* file imports/extends it. |
 | **1c – orphaned legacy** | A webcomponent exists (as a fully independent re-implementation), the legacy file still holds real implementation code, but nothing else in the legacy tree imports it any more — only `etemplate2.ts`'s bulk bundle import keeps it alive/registered. Safe-ish to remove once nothing renders `type="<old-name>"` any more. |
 | **2 – not migrated** | No webcomponent equivalent exists yet. |
@@ -63,18 +64,18 @@ dead once the legacy type name is removed from the `et2_register_widget()` call 
 | `toolbar` | `et2_widget_toolbar.ts` | Yes (`et2-toolbar`) | 1c-orphaned | Real 911-line impl; `Et2Toolbar` independent. No legacy importer besides the bulk bundle. |
 | `vfs-mode` | `et2_widget_vfs.ts` | Yes (`et2-vfs-mode`) | 1c-orphaned | `Et2VfsMode` independent. No legacy importer besides the bulk bundle. |
 | `vfs-upload` | `et2_widget_vfs.ts` | Yes (`et2-vfs-upload`) | 1c-orphaned | `Et2VfsUpload extends Et2File` (webcomponent), fully independent. No legacy importer besides the bulk bundle. |
-| `checkbox` | `et2_widget_checkbox.ts` | Yes (`et2-checkbox`) | 1a-shim | Entire file: `class et2_checkbox extends Et2Checkbox {}`, marked `@deprecated`. |
-| `date`, `date_ro`, `date_duration`, `date_duration_ro`, `date_range` | `et2_widget_date.ts` | Yes (`et2-date`, `et2-date_ro`, `et2-date-duration`, `et2-date-duration_ro`, `et2-date-range`) | 1a-shim | File is entirely trivial `@deprecated` subclasses of `Et2Date/*`. |
-| `dialog`, `legacy_dialog` | `et2_widget_dialog.ts` | Yes (`et2-dialog`, `legacy-dialog`) | 1a-shim | File's own doc comment: "Just a stub that wraps Et2Dialog"; only compat glue remains. |
-| `diff` | `et2_widget_diff.ts` | Yes (`et2-diff`) | 1a-shim | Entire file: `class et2_diff extends Et2Diff {}`. |
-| `—` (no `et2_register_widget` call) | `et2_widget_htmlarea.ts` | Yes (`et2-htmlarea`) | 1a-shim | `class et2_htmlarea extends Et2HtmlArea {}`. |
-| `—` (no `et2_register_widget` call) | `et2_widget_image.ts` | Yes (`et2-image`, `et2-appicon`, `et2-avatar`, `et2-lavatar`) | 1a-shim | Pure `@deprecated` type re-exports to `Et2Image`, `Et2AppIcon`, `Et2Avatar`, `Et2LAvatar`. |
-| `—` (no `et2_register_widget` call) | `et2_widget_link.ts` | Yes (`et2-link`, `et2-link-to`, `et2-link-apps`, `et2-link-entry`, `et2-link-entry_ro`, `et2-link-string`) | 1a-shim | Pure `@deprecated` type re-exports to the `Et2Link/*` family. |
-| `—` (type alias, no `et2_register_widget` call) | `et2_widget_selectAccount.ts` | Yes (`et2-select-account`, `et2-select-account_ro`) | 1a-shim | Pure `@deprecated` type re-exports. |
-| `—` (no `et2_register_widget` call) | `et2_widget_selectbox.ts` | Yes (`et2-select`, `et2-select_ro`) | 1a-shim | `class et2_selectbox extends Et2Select {}` + a type re-export for the readonly variant. |
-| `—` (type alias, no `et2_register_widget` call) | `et2_widget_tabs.ts` | Yes (`et2-tabbox`, `et2-tab`, `et2-tab-panel`) | 1a-shim | Pure `@deprecated` type re-export. |
-| `—` (type aliases, no `et2_register_widget` call) | `et2_widget_taglist.ts` | Yes (`et2-select`, `et2-select-account`, `et2-email-tag`, `et2-category-tag`, `et2-thumbnail-tag`, `et2-select-state`) | 1a-shim | 6 pure `@deprecated` type re-exports (account/email/category/thumbnail/state taglist variants). |
-| `—` (no `et2_register_widget` call) | `et2_widget_template.ts` | Yes (`et2-template`) | 1a-shim | `class et2_template extends Et2Template {}`, empty body. |
+| `checkbox` | `et2_widget_checkbox.d.ts` (generated) | Yes (`et2-checkbox`) | 1a-generated | Was: entire file `class et2_checkbox extends Et2Checkbox {}`, marked `@deprecated`. |
+| `date`, `date_ro`, `date_duration`, `date_duration_ro`, `date_range` | `et2_widget_date.d.ts` (generated) | Yes (`et2-date`, `et2-date_ro`, `et2-date-duration`, `et2-date-duration_ro`, `et2-date-range`) | 1a-generated | Was: trivial `@deprecated` subclasses of `Et2Date/*`. |
+| `dialog`, `legacy_dialog` | `et2_widget_dialog.ts` | Yes (`et2-dialog`, `legacy-dialog`) | 1a-shim | File's own doc comment: "Just a stub that wraps Et2Dialog"; only compat glue remains. Kept as a real file — has actual behaviour (custom constructor, attribute-registry generation, its own `customElements.define`), not a bare re-export. |
+| `diff` | `et2_widget_diff.d.ts` (generated) | Yes (`et2-diff`) | 1a-generated | Was: entire file `class et2_diff extends Et2Diff {}`. |
+| `—` (no `et2_register_widget` call) | `et2_widget_htmlarea.d.ts` (generated) | Yes (`et2-htmlarea`) | 1a-generated | Was: `class et2_htmlarea extends Et2HtmlArea {}`. |
+| `—` (no `et2_register_widget` call) | `et2_widget_image.d.ts` (generated) | Yes (`et2-image`, `et2-appicon`, `et2-avatar`, `et2-lavatar`) | 1a-generated | Was: pure `@deprecated` type re-exports to `Et2Image`, `Et2AppIcon`, `Et2Avatar`, `Et2LAvatar`. |
+| `—` (no `et2_register_widget` call) | `et2_widget_link.d.ts` (generated) | Yes (`et2-link`, `et2-link-to`, `et2-link-apps`, `et2-link-entry`, `et2-link-entry_ro`, `et2-link-string`) | 1a-generated | Was: pure `@deprecated` type re-exports to the `Et2Link/*` family. |
+| `—` (type alias, no `et2_register_widget` call) | `et2_widget_selectAccount.d.ts` (generated) | Yes (`et2-select-account`, `et2-select-account_ro`) | 1a-generated | Was: pure `@deprecated` type re-exports. |
+| `—` (no `et2_register_widget` call) | `et2_widget_selectbox.d.ts` (generated) | Yes (`et2-select`, `et2-select_ro`) | 1a-generated | Was: `class et2_selectbox extends Et2Select {}` + a type re-export for the readonly variant. |
+| `—` (type alias, no `et2_register_widget` call) | `et2_widget_tabs.d.ts` (generated) | Yes (`et2-tabbox`, `et2-tab`, `et2-tab-panel`) | 1a-generated | Was: pure `@deprecated` type re-export. |
+| `—` (type aliases, no `et2_register_widget` call) | `et2_widget_taglist.d.ts` (generated) | Yes (`et2-select`, `et2-select-account`, `et2-email-tag`, `et2-category-tag`, `et2-thumbnail-tag`, `et2-select-state`) | 1a-generated | Was: 6 pure `@deprecated` type re-exports (account/email/category/thumbnail/state taglist variants). |
+| `—` (no `et2_register_widget` call) | `et2_widget_template.d.ts` (generated) | Yes (`et2-template`) | 1a-generated | Was: `class et2_template extends Et2Template {}`, empty body. |
 | `—` | `et2_widget_description.ts` | n/a | n/a-infrastructure | No `et2_register_widget` call. 441-line real impl, now serves only as the base class `et2_widget_vfs.ts` extends for `vfs-size`/`vfs-mode`. The `et2-description` webcomponent is an unrelated, separate Lit implementation. |
 | `—` | `et2_widget_dynheight.ts` | n/a | n/a-infrastructure | jQuery resize-helper utility, no `et2_register_widget` call. Still used by legacy `et2_extension_nextmatch.ts`. |
 
@@ -154,7 +155,8 @@ depend on them (i.e. everything marked 1b/1c/2 above) are gone:
 
 | State | Count (rows) |
 |---|---|
-| 1a — shim | 12 |
+| 1a — shim | 1 |
+| 1a — generated | 11 |
 | 1b — kept for a dependent | 6 |
 | 1c — orphaned legacy | 16 |
 | 2 — not yet migrated | 34 |
