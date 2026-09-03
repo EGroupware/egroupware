@@ -33,7 +33,7 @@ import type {et2_iframe} from "../../api/js/etemplate/legacy-shims/et2_widget_if
 // than touching the shared egw_action_common.ts.
 import {sprintf as _sprintf} from "../../api/js/egw_action/egw_action_common";
 import {egw_registerGlobalShortcut, egw_unregisterGlobalShortcut} from "../../api/js/egw_action/egw_keymanager";
-import type {et2_number} from "../../api/js/etemplate/et2_widget_number";
+import type {et2_number} from "../../api/js/etemplate/legacy-shims/et2_widget_number";
 import type {et2_template} from "../../api/js/etemplate/legacy-shims/et2_widget_template";
 import type {Et2Textbox} from "../../api/js/etemplate/Et2Textbox/Et2Textbox";
 import "./SidemenuDate";
