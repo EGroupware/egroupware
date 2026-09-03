@@ -19,6 +19,8 @@ export type SearchResult = {
 	title? : string;
 	// Related image or icon
 	icon? : string;
+	//whether we should try to inline the icon as a svg
+	inlineIcon? : boolean;
 	// Color swatch (eg. a colored dropdown-menu entry)
 	color? : string;
 	// Color applied to the option's icon itself (distinct from color, which only tints the text label)

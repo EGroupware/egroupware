@@ -11,6 +11,7 @@
 
 import './egw_core';
 import {deepExtend} from './egw_utils';
+import type {SelectOption} from '../etemplate/Et2Select/FindSelectOptions'
 
 export interface LinksModule
 {
@@ -787,7 +788,8 @@ class Links implements LinksModule
 		// need to load common translations for app-names
 		this.langRequire(window, [{app: 'common', lang: this.preference('lang')}], () =>
 		{
-			let options : any[] = [];
+			const darkmode:boolean = !!document.documentElement?.dataset?.darkmode
+			let options : SelectOption[] = [];
 			const apps = this.link_app_list('add');
 			for(let app in apps)
 			{
@@ -798,7 +800,8 @@ class Links implements LinksModule
 				options.push({
 					value: app,
 					label: this.lang(this.link_get_registry(app, 'entry') || apps[app]),
-					icon: this.image('navbar', app)
+					icon: (darkmode? this.image('navbarDark', app):false) || this.image('navbar',app),
+					inlineIcon: true,
 				});
 			}
 			select.select_options = options;
