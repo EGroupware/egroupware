@@ -2405,3 +2405,45 @@ POST): move-to-Trash dropped from 7.4s to 560ms, permanent delete (already-in-Tr
 branch) to 536ms - both confirmed via the UI itself, not just the fast response: the moved message
 showed up in Papierkorb afterward, and the permanently-deleted one was actually gone (not just
 missing from the row that already disappeared optimistically).
+
+## FIXED (2026-09-03): switching identity mid-compose didn't remove the prior signature once the widget had been focused/edited - TinyMCE re-serializes its own DOM on mere focus
+
+Ralf's report: "Changing identity while composing an email doesn't remove the prior signature when
+there is already something written (just clicking in the message field already causes this)."
+
+`updateSignatureForIdentity()` (`mail/js/compose.ts`) located the previously-inserted signature by
+an exact string match (`current.endsWith(this.insertedSignatureBlock)`/`startsWith(...)`) against
+the HTML-mode body widget's *current* `get_value()` - deliberately falling back to leaving the body
+untouched whenever that match failed, per its own comment ("can't confidently locate... skips
+re-insertion rather than risking a corrupted/duplicated signature"). That fallback was meant for
+genuine user edits in/around the signature, but reproduced live with ZERO typing at all: a fresh
+compose's widget value matched exactly (339 chars) until a single click placed the cursor inside the
+editor, after which `get_value()` already returned different content (334 chars) - TinyMCE
+re-serializes its own DOM on focus/interaction, not just on real edits. Confirmed this is why the
+classic (pre-JMAP) implementation never hit it: it only ever parsed its own `<!-- HTMLSIGBEGIN/END
+-->` marker out of a single form-submitted snapshot at send/postback time, never compared two
+separately-captured client-side reads across an intervening focus event (ralf's own observation,
+confirmed against `mail_compose.inc.php`'s marker handling).
+
+**Fix**: for HTML mode, the inserted signature block (ruler + signature, matching the exact
+boundaries the old string-slice tracking used) is now wrapped in `<div id="mail-compose-signature">`
+(`MailJmap.SIGNATURE_MARKER_ID`, `mail/js/jmap.ts`'s `composeBodyWithSignature()`) instead of tracked
+as a raw string. `updateSignatureForIdentity()` locates/removes it via `DOMParser` + `getElementById`
+- immune to whatever TinyMCE normalizes elsewhere in the document, since only the marker element's
+own `id` attribute needs to survive verbatim, not the surrounding markup's exact bytes. Deliberately
+NOT a repeat of the classic implementation's HTML *comment* marker: TinyMCE's own content-sanitizer
+can (and does) strip comments, but preserves real elements' `id`/`data-*` attributes. Plain-text mode
+is unaffected by any of this (a `<textarea>` doesn't re-serialize anything) and keeps the original
+placement/length-tracked substring match unchanged.
+
+The marker is intentionally left in place for a saved/reopened draft (so a later identity switch on
+that reopened draft can still find it) and only stripped - unwrapped, not deleted, keeping the actual
+signature content - right before building the fields for an actual send (`currentEmailFields(true)`),
+matching the classic implementation's own "keep the marker across postbacks, strip only right before
+building the real mail object" behaviour.
+
+**Live-verified**: fresh compose → click into the body (the exact zero-typing repro) → switch
+identity → old signature (`digital ROCK`) fully gone, new identity's signature correctly inserted,
+exactly one marker in the DOM. Typed a second time with real text above the signature, switched
+identity again: typed text preserved, signature swapped cleanly again, still exactly one marker, no
+duplication either time.

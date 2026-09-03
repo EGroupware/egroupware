@@ -4239,6 +4239,23 @@ export class MailJmap
 	}
 
 	/**
+	 * `id` of the `<div>` wrapping an HTML-mode inserted signature (ruler + signature markup, plus
+	 * 'top' placement's own leading/trailing spacing) - lets a later identity switch
+	 * (compose.ts's updateSignatureForIdentity()) locate and remove exactly that element via
+	 * DOMParser instead of a raw-string offset match. Found live 2026-09-03 (ralf: "changing
+	 * identity while composing doesn't remove the prior signature... just clicking in the message
+	 * field already causes this"): TinyMCE re-serializes its own DOM on mere focus/interaction, no
+	 * typing needed - e.g. one observed case shrank by 5 bytes from a single click placing the
+	 * cursor inside the editor. That silently broke the previous exact-suffix/prefix string match
+	 * this method's own docblock used to describe (`current.endsWith(previousSignatureBlock)`),
+	 * which is why a real DOM element with a stable `id` is used now instead of the classic
+	 * server-side implementation's `<!-- HTMLSIGBEGIN/END -->` HTML *comment* marker - TinyMCE's
+	 * own content-sanitizer can (and does) strip comments, but preserves a real element's `id`/
+	 * `data-*` attributes, so it survives the same re-serialization that breaks byte-exact matching.
+	 */
+	static readonly SIGNATURE_MARKER_ID = 'mail-compose-signature';
+
+	/**
 	 * Combine a compose body with an identity's signature, honouring the classic
 	 * insertSignatureAtTopOfMessage/disableRulerForSignatureSeparation prefs
 	 * (mail_compose.inc.php:1246-1297, ported 1:1 for the placement math) - pure string
@@ -4249,9 +4266,11 @@ export class MailJmap
 	 * own pristine copy from before the first insertion) - never the result of a PREVIOUS call to
 	 * this function. On identity switch, re-run this against that same original body with the
 	 * newly-selected identity's signature; there is no relocate-an-already-inserted-signature step
-	 * here, unlike the classic server-side implementation's fragile `<!-- HTMLSIGBEGIN/END -->`
-	 * marker search-and-replace (doc/ai/projects/mail-compose-jmap-migration.md's Step 4 section) -
-	 * holding the pristine body client-side makes that whole mechanism unnecessary, not just moved.
+	 * here - holding the pristine body client-side makes that whole mechanism unnecessary, not just
+	 * moved. For HTML mode, the inserted block is wrapped in a `<div id="SIGNATURE_MARKER_ID">` so
+	 * the caller can find/remove it via DOM query on the next switch (see SIGNATURE_MARKER_ID's own
+	 * docblock) rather than a raw string match - plain-text mode has no such wrapping (nothing to
+	 * mark up), the caller still tracks placement/length for that case.
 	 *
 	 * Simplification vs. the classic implementation: skips the "does the signature's own markup
 	 * already start with a block-level HTML element" check that conditionally wraps it in an extra
@@ -4303,9 +4322,17 @@ export class MailJmap
 			start = '';
 		}
 
-		return options.placement === 'below'
-			? start + body + before + sigSource
-			: start + before + sigSource + inbetween + body;
+		if (options.placement === 'below')
+		{
+			const block = mimeType === 'html'
+				? `<div id="${this.SIGNATURE_MARKER_ID}">${before}${sigSource}</div>`
+				: before + sigSource;
+			return start + body + block;
+		}
+		const block = mimeType === 'html'
+			? `<div id="${this.SIGNATURE_MARKER_ID}">${start}${before}${sigSource}${inbetween}</div>`
+			: start + before + sigSource + inbetween;
+		return block + body;
 	}
 
 	/** Also used by compose.ts's client-side mimeType (HTML/plain) toggle handler. */

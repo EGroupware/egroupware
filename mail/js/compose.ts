@@ -110,14 +110,19 @@ export class MailCompose
 	private jmapDraftEmailId? : string;
 
 	/**
-	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - the exact decorated substring
-	 * MailJmap.composeBodyWithSignature() last inserted into the body widget, tracked so a later
-	 * identity switch (updateSignatureForIdentity()) can strip it back out by plain substring
-	 * match before recomposing with the new identity's signature - no marker/regex relocate hack
-	 * needed (see that function's own docblock for why holding this client-side removes the need
-	 * for the classic implementation's fragile one). Empty once nothing has been auto-inserted
-	 * yet, or once it could no longer be located (the user edited around/inside it - left alone
-	 * rather than guessed at, never silently duplicated).
+	 * doc/ai/projects/mail-compose-jmap-migration.md, Step 4 - PLAIN-TEXT mode only: the exact
+	 * decorated substring MailJmap.composeBodyWithSignature() last inserted into the body widget,
+	 * tracked so a later identity switch (updateSignatureForIdentity()) can strip it back out by
+	 * plain substring match before recomposing with the new identity's signature. Empty once
+	 * nothing has been auto-inserted yet, or once it could no longer be located (the user edited
+	 * around/inside it - left alone rather than guessed at, never silently duplicated).
+	 *
+	 * HTML mode does NOT use this - found live 2026-09-03 (ralf: "changing identity while composing
+	 * an email doesn't remove the prior signature... just clicking in the message field already
+	 * causes this") that TinyMCE re-serializes its own DOM on mere focus, no typing needed, which
+	 * silently broke this exact substring match for the rich-text widget. HTML mode instead locates
+	 * the inserted block via MailJmap.SIGNATURE_MARKER_ID (a real DOM element id, immune to that
+	 * re-serialization) - see updateSignatureForIdentity()'s own docblock.
 	 */
 	private insertedSignatureBlock : string = '';
 	private signaturePlacement : 'top' | 'below' | 'none' = 'below';
@@ -1767,18 +1772,41 @@ export class MailCompose
 	}
 
 	/**
-	 * "From"/identity dropdown's change handler while isJmapMode (see submitOnChange()) - re-
-	 * derive the pristine (signature-stripped) body from the widget by plain substring match
-	 * against insertedSignatureBlock (the exact text bootstrapSignature()/this method's own
-	 * previous run inserted), then insert the newly-selected identity's signature. Deliberately
-	 * NOT the classic marker/regex relocate hack - see composeBodyWithSignature()'s docblock.
+	 * "From"/identity dropdown's change handler while isJmapMode (see submitOnChange()) - re-derive
+	 * the pristine (signature-stripped) body, then insert the newly-selected identity's signature.
+	 *
+	 * HTML mode: locates the previously-inserted block by DOM id (MailJmap.SIGNATURE_MARKER_ID),
+	 * not by matching the widget's current serialized HTML against a string captured earlier -
+	 * found live 2026-09-03 (ralf's report) that TinyMCE re-serializes its own DOM on mere focus
+	 * (no typing needed), which broke that match almost immediately. A real DOM element's `id`
+	 * survives that re-serialization even though the surrounding markup's exact bytes don't, so
+	 * removing by id stays reliable regardless of what TinyMCE has normalized elsewhere.
+	 *
+	 * Plain-text mode: unaffected by that (a plain `<textarea>` doesn't re-serialize anything), so
+	 * still uses the original plain substring match against insertedSignatureBlock/
+	 * signaturePlacement - see that field's own docblock.
 	 */
 	private async updateSignatureForIdentity() : Promise<void>
 	{
 		if (!this.isJmapMode) return;
-		const current = String(this.currentBodyWidget()?.get_value() ?? '');
+		const widget = this.currentBodyWidget();
+		const current = String(widget?.get_value() ?? '');
+		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
+
 		let pristine = current;
-		if (this.insertedSignatureBlock)
+		if (isHtml)
+		{
+			const doc = new DOMParser().parseFromString(current, 'text/html');
+			const marker = doc.getElementById(MailJmap.SIGNATURE_MARKER_ID);
+			if (marker)
+			{
+				marker.remove();
+				pristine = doc.body.innerHTML;
+			}
+			// else: no marker found (nothing auto-inserted yet, or the user deleted/edited around
+			// it) - leave the current value as pristine rather than guessing at a removal
+		}
+		else if (this.insertedSignatureBlock)
 		{
 			if (this.signaturePlacement === 'below' && current.endsWith(this.insertedSignatureBlock))
 			{
@@ -1834,9 +1862,14 @@ export class MailCompose
 		const disableRuler = !!this.egw.preference('disableRulerForSignatureSeparation', 'mail');
 
 		const result = MailJmap.composeBodyWithSignature(pristineBody, mimeType, identity, {placement, disableRuler, isReply});
-		this.signaturePlacement = placement;
-		this.insertedSignatureBlock = placement === 'below' ? result.slice(pristineBody.length) :
-			placement === 'top' ? result.slice(0, result.length - pristineBody.length) : '';
+		// HTML mode locates the inserted block via MailJmap.SIGNATURE_MARKER_ID instead (DOM id,
+		// not a tracked substring) - see updateSignatureForIdentity()'s own docblock for why.
+		if (mimeType === 'plain')
+		{
+			this.signaturePlacement = placement;
+			this.insertedSignatureBlock = placement === 'below' ? result.slice(pristineBody.length) :
+				placement === 'top' ? result.slice(0, result.length - pristineBody.length) : '';
+		}
 
 		await this.setBodyValue(result);
 	}
@@ -1940,6 +1973,22 @@ export class MailCompose
 		const isHtml = this.et2.getWidgetById('mimeType')?.get_value() !== false;
 		const hasAttachments = Object.keys(this.et2.getArrayMgr('content').getEntry('attachments') || {}).length > 0;
 		let body = this.et2.getWidgetById(isHtml ? 'mail_htmltext' : 'mail_plaintext')?.get_value();
+		// only for the actual outgoing message, not a saved draft - the widget itself keeps the
+		// marker (unwrapping here only affects this local copy), so a draft reopened later can
+		// still locate it for a clean identity-switch signature swap (updateSignatureForIdentity()).
+		// Matches the classic implementation's own "keep the marker across postbacks, strip only
+		// right before building the actual mail object" behaviour (mail_compose.inc.php's own
+		// `<!-- HTMLSIGBEGIN/END -->` handling), just with a DOM element instead of a comment.
+		if (forSend && isHtml && typeof body === 'string' && body.includes(MailJmap.SIGNATURE_MARKER_ID))
+		{
+			const doc = new DOMParser().parseFromString(body, 'text/html');
+			const marker = doc.getElementById(MailJmap.SIGNATURE_MARKER_ID);
+			if (marker)
+			{
+				marker.replaceWith(...Array.from(marker.childNodes));
+				body = doc.body.innerHTML;
+			}
+		}
 		let attachments = hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID()) : undefined;
 
 		const filemode = this.et2.getWidgetById('filemode')?.get_value();
