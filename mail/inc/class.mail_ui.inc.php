@@ -162,11 +162,11 @@ class mail_ui
 	 * deliberately offer the same set of flags.
 	 */
 	const CUSTOM_FLAGS = array(
-		'customFlag1' => array('caption' => 'red',    'color' => '#ff0000'),
-		'customFlag2' => array('caption' => 'orange', 'color' => '#ff8000'),
-		'customFlag3' => array('caption' => 'green',  'color' => '#008000'),
-		'customFlag4' => array('caption' => 'blue',   'color' => '#0000ff'),
-		'customFlag5' => array('caption' => 'purple', 'color' => '#8000ff'),
+		'customFlag1' => array('caption' => 'red',    'color' => 'var(--sl-color-red-600, #ff0000)'),
+		'customFlag2' => array('caption' => 'orange', 'color' => 'var(--sl-color-orange-600, #ff8000)'),
+		'customFlag3' => array('caption' => 'green',  'color' => 'var(--sl-color-green-600, #008000)'),
+		'customFlag4' => array('caption' => 'blue',   'color' => 'var(--sl-color-blue-600, #0000ff)'),
+		'customFlag5' => array('caption' => 'purple', 'color' => 'var(--sl-color-violet-600, #8000ff)'),
 	);
 
 	/**

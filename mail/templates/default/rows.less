@@ -15,11 +15,11 @@
 	label5: #8000ff;
 };
 @customFlags: {
-	customFlag1: #ff0000;
-	customFlag2: #ff8000;
-	customFlag3: #008000;
-	customFlag4: #0000ff;
-	customFlag5: #8000ff;
+	customFlag1: var(--sl-color-red-600, #ff0000);
+	customFlag2: var(--sl-color-orange-600, #ff8000);
+	customFlag3: var(--sl-color-green-600, #008000);
+	customFlag4: var(--sl-color-blue-600, #0000ff);
+	customFlag5: var(--sl-color-violet-600, #8000ff);
 }
 
 // label1..5 aren't real Categories, so nothing defines their --cat-<id>-color the way
