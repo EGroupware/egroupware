@@ -88,7 +88,11 @@
 				<et2-textarea  rows="40" cols="120" width="100%" span="all" height="100%" name="mail_plaintext" id="mail_plaintext" noLang="1" resizeRatio="0"></et2-textarea>
 			</et2-hbox>
 			<et2-vbox  class="et2_file mailUploadSection" disabled="@no_griddata">
-				<et2-vbox id="filemodeRow">
+				<!-- no id here: an id on the box would namespace its children, so the select would
+				     post as filemodeRow[filemode] on a classic postback and the server would read
+				     $content['filemode'] as missing - treating every attachment as a share link
+				     (found via a 3rd-party (achelper) patch, 2026-09-03) -->
+				<et2-vbox class="filemodeRow">
 					<et2-select  id="filemode" label="Send files as" onchange="app.mail.compose.checkSharingFilemode"></et2-select>
 					<et2-date  id="expiration" label="Expiration" placeholder="EPL only" dataFormat="Y-m-d"></et2-date>
 					<et2-password  id="password" statustext="Only makes sense, if you transport password through a different channel / outside of this mail to recipients!" placeholder="password protect"></et2-password>

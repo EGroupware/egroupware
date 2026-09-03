@@ -1865,6 +1865,71 @@ fallthrough existing. Only reachable via a bare/JS-less navigation (like this te
 `fetchBody()` failure. Not chased further - out of scope for this fix, and a proper fix would mean
 extending `resolveSpecialCaseBody()`'s own "client-first fast path" pattern to ordinary bodies too.
 
+## FIXED (2026-09-03): the ACTUAL root cause of achelper's "all attachments sent as links" report - `filemodeRow`'s `id` namespaced the classic postback
+
+Found the real, primary root cause via a 3rd-party patch (achelper's own developer, using their
+own Claude session) against a fork of this repo - the `explicitShareModeChosen` hardening above was
+a legitimate, independent safety net, but NOT the actual mechanism behind their report.
+
+**Root cause**: `53bc6ba94e` (2026-08-31, THIS project's own "Step 4: JMAP-native reply..." commit)
+gave the `<et2-hbox>`/`<et2-vbox>` wrapping the "Send files as" (`filemode`) select an
+`id="filemodeRow"`, purely so `compose.ts` could find and disable it by id at the time. Verified
+directly against `Et2Widget.checkCreateNamespace()`
+(`api/js/etemplate/Et2Widget/Et2Widget.ts:1581`): `if (typeof entry === 'object' && entry !== null
+|| this.id)` - a non-empty `id` ALONE (regardless of whether the content array actually has a key by
+that name) makes a widget open its own array-manager "perspective" for its children. So
+`filemodeRow`'s child `<et2-select id="filemode">` got scoped under `content['filemodeRow']
+['filemode']` instead of top-level `content['filemode']` - invisible to JMAP-mode's own
+`getWidgetById('filemode')?.get_value()` (that reads the live widget instance directly, unaffected
+by array-manager namespacing - which is exactly why this went unnoticed for a week: it ONLY breaks
+a CLASSIC form postback, never a JMAP-native send). On a classic postback, `$_formData['filemode']`
+came back genuinely missing - and `createMessage()`'s `elseif ($_formData['filemode'] ==
+Vfs\Sharing::ATTACH)` branch (the ONLY one that actually embeds a plain `{file,...}`-shaped
+attachment) requires an exact string match, so "missing" silently meant "share as link", matching
+`_getAttachmentLinks()`'s own `if ($filemode == Vfs\Sharing::ATTACH) return '';` guard failing the
+same way - links generated, nothing actually attached. achelper's own hook-driven compose (business
+data from InfoLog/PDF templates, its own custom `mode`/`template` GET params, not this project's
+`from`/`id`) never engages ANY of the JMAP-mode bootstrap paths at all (see the hook-survival
+write-up below) - it always goes through a genuinely classic postback, hitting this bug on every
+single send with any attachment.
+
+The same patch also found a second, independent, more far-reaching bug in the SAME
+`mail_compose_prepare` hook-merge block (`mail_compose.inc.php`, right after the `Api\Hooks::
+process()` call): `$preserv = array_merge($readonlys, $hook['preserv']);` and `$sel_options =
+array_merge($readonlys, $hook['sel_options']);` both merged onto `$readonlys` instead of `$preserv`/
+`$sel_options` themselves - a copy-paste bug (present since long before this migration project,
+unrelated to `53bc6ba94e`) that silently discarded EVERY field `compose()` had already built into
+`$preserv` (attachments, composeID, is_html/is_plain, mimeType, serverID, mode, in-reply-to,
+references, ...) and every `$sel_options` entry the hook itself didn't happen to echo back - for
+ANY compose where ANY app has a `mail_compose_prepare` hook registered, hook-driven or not.
+
+**Fix** (ported the applicable parts of the 3rd-party patch, verified against this codebase first):
+- `mail/templates/{default,mobile}/compose.xet`: `id="filemodeRow"` -> `class="filemodeRow"` (no
+  code depended on the id specifically - JMAP-mode compose already reads `filemode` directly, and
+  the earlier "Share-as-link attachments" fix removed the only `getWidgetById('filemodeRow')` call).
+- `mail_compose.inc.php`'s hook-merge block: `$preserv`/`$sel_options` now correctly merge onto
+  themselves (`array_merge($preserv, $hook['preserv'] ?? [])` etc, `?? []` added defensively too).
+- `compose()`'s own content-prep: an empty `$content['filemode']` now explicitly defaults to
+  `Vfs\Sharing::ATTACH` before rendering (same defensive pattern as the adjacent `if
+  (empty($content['priority'])) $content['priority']=3;`).
+- `createMessage()`: a fail-safe at the very top, `if (empty($_formData['filemode'])) {
+  $_formData['filemode'] = Vfs\Sharing::ATTACH; }` - the actual point of consequence, so ANY future
+  way `filemode` could end up missing (a different template bug, a hook, a stale form) can never
+  again silently mean "share as link" instead of "attach".
+
+**Not ported**: the patch's `api/js/jsapi/egw.js` change (a guard against `data-etemplate`
+bootstrapping the same form twice, attributed to "a stale, non-cache-busted app bundle pulling in a
+2nd copy of the chunk from an older build") - plausible for their own deployment/build pipeline, but
+speculative and unverified against this one; and its `mail/js/app.ts` import fix, which references
+`acemailstor` (achelper's own 3rd-party app, not present in this repo) and is irrelevant here.
+
+**Live-verified 2026-09-03**: after the `.xet` change, a fresh compose's `filemode` widget's own
+parent now has no `id` (only `class="filemodeRow"`), confirming the array-manager perspective is no
+longer created for it. Not separately re-verified via an actual classic-postback send (would need
+forcing `jmapCompose` off or another `jmapEligible()`-blocking scenario to exercise
+`createMessage()`'s classic path directly) - the `createMessage()`/`compose()` fail-safes are
+straightforward enough (`empty()` checks, no branching logic) that this is considered low-risk.
+
 ## Backlog: `mail_compose_prepare` hook survival for a fully client-driven compose (2026-09-03, DESIGN SKETCH ONLY, ralf)
 
 A 3rd-party developer (achelper, see the "achelper hook" cross-reference in the regression write-up

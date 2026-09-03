@@ -130,7 +130,11 @@
 						</rows>
 					</grid>
 				</et2-details>
-				<et2-hbox id="filemodeRow">
+				<!-- no id here: an id on the box would namespace its children, so the select would
+				     post as filemodeRow[filemode] on a classic postback and the server would read
+				     $content['filemode'] as missing - treating every attachment as a share link
+				     (found via a 3rd-party (achelper) patch, 2026-09-03) -->
+				<et2-hbox class="filemodeRow">
 					<et2-select  id="filemode" label="Send files as" onchange="app.mail.compose.checkSharingFilemode"></et2-select>
 					<et2-hbox>
 						<et2-description  value="Expiration" style="align-self: center;"></et2-description>
@@ -159,12 +163,12 @@
             flex: 1 1 auto;
             }
             /*
-             carryForwardAttachments() (mail/js/compose.ts) hides filemodeRow for a JMAP-mode
-             reply-with-attachments compose (its "Send files as" picker doesn't apply to bare JMAP
-             blob references) - that row's own height/margin used to be the only gap between the
-             attachments details box and the editor below it, so hiding it collapsed that gap
-             entirely (found live 2026-08-31). Give the details box its own margin instead, so the
-             gap survives regardless of filemodeRow's visibility.
+             filemodeRow's own height/margin used to be the only gap between the attachments
+             details box and the editor below it - back when carryForwardAttachments() (mail/js/
+             compose.ts) still hid that row for a JMAP-mode reply-with-attachments compose, hiding
+             it collapsed that gap entirely (found live 2026-08-31; filemodeRow is no longer ever
+             hidden as of the 2026-09-03 "Share-as-link attachments" fix, but the details box keeps
+             its own margin regardless, rather than depending on a sibling row always being there).
             */
             #mail-compose .attachments {
             margin-bottom: 0.5em;

@@ -1474,6 +1474,14 @@ class mail_compose
 		{
 			unset($sel_options['filemode'][Vfs\Sharing::ATTACH]);
 		}
+		// an unset filemode must mean "real attachment": createMessage() compares against the
+		// non-empty string Vfs\Sharing::ATTACH, so an empty value would silently turn every
+		// attachment into a share link (attachments from a mail_compose_prepare hook never set it) -
+		// found via a 3rd-party (achelper) patch, 2026-09-03
+		elseif (empty($content['filemode']))
+		{
+			$content['filemode'] = Vfs\Sharing::ATTACH;
+		}
 		if (empty($content['priority'])) $content['priority']=3;
 		//$GLOBALS['egw_info']['flags']['currentapp'] = 'mail';//should not be needed
 		$etpl = new Etemplate('mail.compose');
@@ -1587,10 +1595,16 @@ class mail_compose
 
 		foreach ($temp as $hook){
 			if($hook){
-				$content =  array_merge($content,	$hook['content']);
-				$readonlys = array_merge($readonlys,$hook['readonlys']);
-				$preserv = array_merge($readonlys,	$hook['preserv']);
-				$sel_options = array_merge($readonlys,	$hook['sel_options']);
+				// merge INTO the existing arrays: this used to merge $hook['preserv']/['sel_options']
+				// on top of $readonlys instead of $preserv/$sel_options themselves - a copy-paste bug
+				// that silently discarded everything compose() had already preserved (attachments,
+				// mode, mimeType, ...) and every sel_option the hook itself didn't echo back, for
+				// EVERY compose with any mail_compose_prepare hook registered - found via a 3rd-party
+				// (achelper) patch, 2026-09-03
+				$content =  array_merge($content,	$hook['content'] ?? []);
+				$readonlys = array_merge($readonlys,$hook['readonlys'] ?? []);
+				$preserv = array_merge($preserv,	$hook['preserv'] ?? []);
+				$sel_options = array_merge($sel_options,	$hook['sel_options'] ?? []);
 			}
 
 		}
@@ -2657,6 +2671,14 @@ class mail_compose
 	 */
 	function createMessage(Api\Mailer $_mailObject, array $_formData, array $_identity, $_autosaving=false)
 	{
+		// fail-safe: the filemode select can be missing from the postback (eg. an id-namespacing
+		// bug in an older compose.xet - fixed 2026-09-03 - or a mail_compose_prepare hook that never
+		// touches it) - missing must mean "attach", never "share link" (found via a 3rd-party
+		// (achelper) patch, 2026-09-03)
+		if (empty($_formData['filemode']))
+		{
+			$_formData['filemode'] = Vfs\Sharing::ATTACH;
+		}
 		if (substr($_formData['body'], 0, 27) == '-----BEGIN PGP MESSAGE-----')
 		{
 			$_formData['mimeType'] = 'openpgp';
