@@ -375,6 +375,63 @@ itself (which byte-range offset gets computed and handed to `fseek()`) - that's 
 `HTTP_WebDAV_Server` base class, outside this project's Vfs-layer scope, and worth a note if a
 real chunked-upload bug ever surfaces (the Vfs-layer mechanism itself is now confirmed sound).
 
-**Next**: Phase 6 (EPL/Stylite wrappers - `S3`, `S3direct`, `Merge`, `Versioning`, `Links`, `Vlinks`
-in `stylite/src/Vfs/`) and Phase 7 (`fsck` consistency-check mechanism, core + EPL hook consumers).
-Both confirmed priority, not deferred - see Status section above.
+**Phase 6 STARTED** (2026-09-03) - `S3\StreamWrapper` basic coverage done; `S3direct`, `Merge`,
+`Versioning`, EPL `Links`, `Vlinks` still to do (see below, this phase needs at least one more
+session).
+
+- **Corrected assumption - no AsyncAws mocking needed for basic CRUD**: the original Phase 6 plan
+  above assumed S3 wrapper testing would need mocking AsyncAws's HTTP client. Reading
+  `S3/StreamWrapper.php::stream_open()` (`:111-119`) shows it's a pure pass-through to the inherited
+  `Vfs\Sqlfs\StreamWrapper` whenever the local blob file can be opened directly - S3 upload is an
+  ASYNC background job (`installAsyncJob(self::class.'::s3Sync', ...)`, only installed on
+  `stream_close()`, `:242-244`), never awaited synchronously. The S3-specific branch in
+  `stream_open()` only engages when the local blob is missing but the DB row still exists (a
+  re-download-from-S3 case) - not exercised yet, deferred, genuinely needs either a live upload to
+  have happened first or a mocked `AsyncAws\S3\S3Client` (constructible with an injectable
+  `HttpClientInterface` - `AbstractApi::__construct($config, $credentialProvider, $httpClient,
+  $logger)` - and injectable into `StorageTrait::_s3client()`'s static `$clients` cache via
+  reflection, the same technique used for `Api\Json\Push::$backend` in Phase 5. `symfony/http-client`
+  ships `MockHttpClient`/`MockResponse` already in vendor, ready to use for that follow-up).
+- **This environment's S3 storages ARE configured** (real minio credentials at `http://minio:9000`,
+  confirmed via reflection on `S3\StreamWrapper`'s `$storages` property) - my earlier assumption
+  that basic writes were failing because of missing/broken S3 config was wrong. The actual cause of
+  my first failed attempt was the same "root-created scratch mount has no owner/group mode bits"
+  gotcha from Phase 1/3 (see there) - I'd forgotten the `chown()`/`chmod()` step in a quick probe.
+  Once fixed, basic CRUD via a `stylite.s3://` scratch mount works exactly like plain `sqlfs://`.
+  The pre-existing `/home/demo` default-mount failure (still reproducing as of this writing) is a
+  separate, still-uninvestigated issue - NOT chased further here, since every test in this project
+  uses its own scratch mount anyway.
+- **Real finding, fixed in the test not the app**: `S3\StreamWrapper::unlink()` (`:742-806`) is a
+  SOFT delete - `fs_active=false` plus `fs_s3_flags |= FLAG_TO_DELETE`, the row stays in
+  `egw_sqlfs` queued for real purging by a housekeeping job after `$retention_time` (30 days,
+  intentional production behavior for S3-backed storage, not a bug). A naive
+  `Vfs::remove()`/`Vfs::unlink()`-based tearDown (the pattern every other scratch-mount test in this
+  project uses) therefore leaves permanent garbage rows in this shared dev DB on every run, and also
+  makes the final `Vfs::rmdir()` fail ("dir is not empty!", since it doesn't filter by `fs_active`).
+  `S3StreamWrapperTest`'s `tearDown()` hard-deletes the whole scratch subtree directly via
+  `Api\Db::delete()` instead. Found + cleaned up 7 orphaned rows left behind by earlier debugging in
+  this same session (confirmed zero orphans remain after the fixed test's own run).
+- `stylite/tests/Vfs/S3StreamWrapperTest.php` (3 tests): basic read/write/update/delete works;
+  `fs_s3_flags` resets to `0` ("not yet synced, local-only") after a normal write+close; the
+  transient `FLAG_FILE_OPEN` bit is set while a file is open for writing and cleared again on close.
+- **Confirmed NOT a cross-pollution problem in this combination**: ran the full community+EPL Vfs
+  suite together (135 tests) - no new failures beyond the same 5 pre-existing ones. `S3\StreamWrapper`
+  alone doesn't reference `Links`, so the `LinksParent` monkey-patch risk documented for EPL's Links/
+  Vlinks wrappers doesn't apply here - still worth re-checking once an actual Links/Vlinks test file
+  exists and runs in the same process as the community Links tests.
+
+**Still to do for Phase 6**: `S3direct\StreamWrapper` (different implementation from `S3`,
+`implements StreamWrapperIfaceNoDir` directly rather than extending `Sqlfs\StreamWrapper` - own stat
+cache, per the original mapping - needs separate investigation, not assumed similar to `S3`);
+`Merge`/`Versioning` (both extend `S3\StreamWrapper` - likely share its "async upload, sync local
+CRUD" shape, worth confirming rather than assuming); EPL `Links\StreamWrapper` (1306 lines - a
+genuinely different, richer implementation than the community one, with its own alphabet/hash-based
+virtual directory caching system: `alphabet2cache`/`hashes2cache`/`entry2cache`/`app2cache`/
+`virtual_parent` - deserves its own dedicated mapping pass); `Vlinks\StreamWrapper` (thin subclass of
+the community `Links\StreamWrapper`, shares the `LinksParent` monkey-patch, no logic of its own
+beyond the scheme constant - lower priority once Links(EPL) itself is understood). The
+`AsyncAws\S3\S3Client` mock (described above) will be needed once any of these touch the
+re-download-from-S3 code path or actual upload verification.
+
+**Next**: continue Phase 6, then Phase 7 (`fsck` consistency-check mechanism, core + EPL hook
+consumers). Both confirmed priority, not deferred - see Status section above.
