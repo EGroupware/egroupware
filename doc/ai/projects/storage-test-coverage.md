@@ -288,6 +288,20 @@ column to the `test` fixture for zero real-world payoff).
       - `update_links()` (create-on-set, remove-on-change-away).
       - Deferred: `handle_files()`/`handle_file()` (VFS side-effects, judged too much fixture setup
         for this pass).
+      - **Found AND FIXED** (unlike the other findings in this doc, which are documented but left
+        alone): `getSerial()`'s "no matching row" error path called `transaction_abort()`
+        (ADOdb `FailTrans()` - only flags the transaction to fail) and threw, without ever calling
+        `transaction_commit()` (ADOdb `CompleteTrans()` - the only thing that actually issues
+        COMMIT/ROLLBACK). This left the transaction open indefinitely on the shared connection.
+        Latent until this test suite existed - nothing had ever exercised this error path before.
+        Landed on the shared dev box's origin/master by another concurrent session's push, it
+        broke CI for real: the leaked transaction on the long-lived PHPUnit CI process cascaded
+        into "Lock wait timeout exceeded" across ~57 unrelated later tests (two full CI runs,
+        IDs `33728241471`/`33728610034`, both red with identical 33-errors/24-failures signatures).
+        Fixed in commit `6ddde910bb` (add the missing `transaction_commit()` call, matching the
+        working `transaction_abort()`-then-`transaction_commit()` idiom already used correctly
+        elsewhere, e.g. `setup/admin_account.php`). Verified via a live `information_schema.
+        innodb_trx` check that no transaction remains open on the connection after the fix.
       - **Found, not fixed**: (1) `format()`'s `htmlarea` branch only converts *opening*
         `<br>`/`<p>` tags to CRLF - the regex never matches a leading `/`, so closing tags get
         silently dropped by the trailing `strip_tags()` with no separator (consecutive
