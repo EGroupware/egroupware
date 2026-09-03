@@ -1747,10 +1747,49 @@ it now can, via the exact same blob-to-temp-file resolution as any other JMAP-mo
 **Live-verified 2026-09-03** (throwaway PHPUnit test against the real Stalwart test account,
 acc_id=1): a real uploaded JMAP blob correctly produced a genuine `Vfs\Sharing` link
 (`http://.../share.php/<token>`) spliced into the HTML body alongside the original content;
-`filemode='attach'` confirmed as a true no-op (body unchanged). **Not yet live-tested via browser**
-(the client-side wiring itself - widget reads + the `egw.request()` call - follows the exact same
-structure already proven working for `ajax_integrateSent()`, so risk here is low, but an actual
-click-through send with a real attachment set to "Share as link" hasn't been done).
+`filemode='attach'` confirmed as a true no-op (body unchanged).
+
+### Regression report + hardening (2026-09-03, same day): "all attachments now sent as links"
+
+A 3rd-party developer (achelper, a PDF-workflow app integrating via the `mail_compose_prepare` hook
+- see its own write-up further below) reported that, after this fix, EVERY attachment in their
+hook-driven compose (a plain classic `{file,name,type,size}`-shaped array injected server-side, no
+`filemode` set by their own code at all) now gets sent as a share link instead of a real attachment.
+
+Investigated at length without finding an actual bug in the conversion logic itself - it was
+verified to match classic `createMessage()`'s own long-standing "`filemode != attach` -> link only,
+never both" semantics EXACTLY (that gating condition, `elseif ($_formData['filemode'] ==
+Vfs\Sharing::ATTACH)`, predates this whole JMAP migration project, confirmed via `git log -L` back
+to at least 2024) - and a fresh compose's `filemode` widget was confirmed live to default to
+`'attach'` (the first `Vfs\Sharing::$modes` entry), not empty/falsy. Could not conclusively
+reproduce achelper's exact scenario (no live access to their app), so could not pin down exactly
+HOW `filemode` ends up resolving away from `'attach'` for their case without the user ever touching
+the "Send files as" dropdown - candidates considered and ruled out: `warnAttachmentSizeLimit()`'s
+new auto-switch (only ever called from client-driven `mergeAttachmentEntries()`, never for
+server-rendered/hook-injected attachments), a `composeCache` "sticky" filemode (not part of that
+cache), and `checkSharingFilemode()`'s own early-return on `no_griddata` (achelper's own
+`forward`-mode branch correctly sets `no_griddata = false` when it injects attachments, so the
+filemode row IS enabled for that case, ruling out a hidden-control explanation too).
+
+Given the mechanism couldn't be pinned down with confidence but the regression is real and active,
+applied a hardening fix that's safe regardless of the exact root cause: `MailCompose.
+explicitShareModeChosen` (new boolean, default `false`) - only ever set `true` inside
+`checkSharingFilemode()`'s genuine `onchange` branch (a real user click, confirmed by the existing
+"Filemode has been switched to %1" alert already gating that same branch) or by
+`warnAttachmentSizeLimit()`'s own auto-switch (EGroupware's own deliberate choice, treated the
+same as a real user pick). `currentEmailFields()`'s share-as-link conversion now ALSO requires this
+flag, in addition to `filemode !== 'attach'` - a non-'attach' value the user never consciously chose
+(from ANY source: a hook, a stale default, a rendering quirk) is now treated as `'attach'`
+regardless of what it actually is. This can only make the feature MORE conservative than before
+(strictly narrows an already-narrow condition) - the only behavior it removes is a legitimate
+account-level "always default to link mode" preference silently taking effect without the user
+re-clicking it each compose, which no persisted-default mechanism was found to actually exist for.
+
+**Not yet live-verified against achelper's own reproduction** - ralf to confirm with the 3rd-party
+developer once this ships. If attachments STILL become links after this, that would newly prove
+`explicitShareModeChosen` itself is somehow getting set `true` incorrectly (a more specific, now
+much narrower bug to chase) rather than the original open-ended "why is filemode not attach"
+question.
 
 ### FIXED (2026-09-03): "Zielordner Drafts existiert nicht" opening an attached/standalone .eml
 
@@ -1805,6 +1844,79 @@ has apparently never surfaced as "Stalwart mail bodies are slow/broken" despite 
 fallthrough existing. Only reachable via a bare/JS-less navigation (like this test) or a genuine
 `fetchBody()` failure. Not chased further - out of scope for this fix, and a proper fix would mean
 extending `resolveSpecialCaseBody()`'s own "client-first fast path" pattern to ordinary bodies too.
+
+## Backlog: `mail_compose_prepare` hook survival for a fully client-driven compose (2026-09-03, DESIGN SKETCH ONLY, ralf)
+
+A 3rd-party developer (achelper, see the "achelper hook" cross-reference in the regression write-up
+above) asked whether their `mail_compose_prepare` hook - used to pre-fill a new compose window's
+`to`/`cc`/`subject`/`mail_htmltext`/`attachments`/`mailaccount` from business data (an InfoLog
+entry, a PDF template, ...) - still works, and how it would need to change once compose stops
+calling the server at all (a longer-term item on this project's own feature list, not yet built).
+
+### Current status: unaffected, verified by static analysis (no code change needed today)
+
+`mail_compose_prepare` fires unconditionally near the end of `mail_compose::compose()`
+(`mail_compose.inc.php:1581`, `Api\Hooks::process(['location' => 'mail_compose_prepare', ...])`),
+which still runs in full for EVERY compose today, `jmapCompose` or not - only reply/forward/draft
+population is skipped server-side for JMAP mode (`$jmapReplySkip`), and that skip is itself gated on
+`$_GET['from']` being one of THIS project's own dispatch values (`reply`/`forward`/`composeasnew`/
+`composefromdraft`/etc, `mail_compose.inc.php:417-418`). A 3rd-party hook driven by its OWN distinct
+`$_GET` params (achelper uses `mode`/`template`/`info_id`, never `from`/`id`) never trips any of
+those branches, so `$_GET['mode']` is never unset and the hook always runs exactly as before.
+Client-side, `bootstrapCompose()`'s dispatcher only recognizes `from`/`id`; with neither set it
+falls to `bootstrapSignature()`, which touches only the body (inserting the current identity's
+signature on top of whatever's already there - expected for ANY new compose, hook-driven or not)
+and never overwrites `to`/`cc`/`subject`/`attachments`/`mailaccount`. So whatever the hook wrote
+into `$content` server-side survives to render untouched, same as always.
+
+### The real, forward-looking problem
+
+`mail_compose_prepare` only exists as a hook point because `compose()` still fully renders
+server-side today. A genuinely-new compose that skips that render entirely (the roadmap item) has
+nothing left to fire `Api\Hooks::process()` during - the hook would simply never run.
+
+### Proposed design: extract the prepare step into its own thin JSON endpoint, not a new client API
+
+Rejected alternative: a new client-side hook API (e.g. `app.mail.registerComposePrepareHook(cb)`)
+that 3rd parties register a JS callback with. Pushes a real rewrite onto every existing integration
+(achelper included) for zero functional gain, and fragments "prepare a new compose" across however
+many apps happen to implement it in JS instead of PHP.
+
+Better: extract just the "`$_GET` -> resolve business data -> `Hooks::process('mail_compose_prepare',
+...)` -> mutated `{content, readonlys, sel_options}`" step out of `compose()` into a small, standalone
+method (eg. `mail_compose::ajax_prepareCompose()`), callable as its OWN lightweight JSON round trip
+- no Etemplate rendering, no classic content-preparation cruft, just today's exact hook contract
+returned as JSON. The client's own bootstrap calls it ONCE, early (in parallel with or just before
+its own JMAP-native population), and merges the returned `content` into the widgets it's about to
+set - **zero code changes needed for existing hook implementations** like achelper's, since the hook
+itself still receives and returns the exact same shape it always has.
+
+### Optimization (ralf, 2026-09-03): skip the round trip entirely when nothing implements the hook
+
+Most installs have NO app registered for `mail_compose_prepare` at all - paying a whole extra HTTP
+round trip on every single compose-open for a hook that will do nothing is wasteful. `Api\Hooks::
+count('mail_compose_prepare')` (`api/src/Hooks.php:177`, a cheap in-memory lookup against the
+already-loaded hook registry, no DB query) tells us this cheaply. Plan: compute it ONCE, server-side,
+as part of whatever minimal bootstrap payload a fully-client-driven compose window still needs at
+load (eg. a `hasComposePrepareHook: true/false` flag alongside translations/preferences/etc, exactly
+the kind of thing that page already has to convey somehow) - `bootstrapCompose()` only calls the new
+endpoint when that flag is true, making the round trip's cost strictly opt-in to installs that
+actually use this integration point (achelper's, or any other).
+
+### Open questions (not yet decided)
+
+- Exact shape/timing of the "minimal bootstrap payload" a fully-client-driven compose window would
+  still need server-side at all (translations, preferences, sel_options for identity/mailaccount,
+  the `hasComposePrepareHook` flag above, ...) - this depends entirely on the shape of the "compose
+  no longer calls the server" feature itself, which hasn't been designed yet.
+- Merge ordering: does the hook's returned `content` apply BEFORE or interleaved with
+  `bootstrapCompose()`'s own dispatch (reply/forward/draft/composeasnew)? Today's server-side
+  ordering (hook runs LAST, right before render, so it can see/override everything) suggests "hook
+  result wins", but this needs an explicit decision once real client-driven reply/forward population
+  and hook-driven population can genuinely collide (not possible today, since they're mutually
+  exclusive by `$_GET` param name as described above).
+- Whether `ajax_prepareCompose()` needs its own auth/CSRF story distinct from the rest of
+  `mail_compose`'s existing ajax_* methods (probably not - same session, same app).
 
 ## Backlog: "Undo Send" - abortable send with pre-uploaded draft (2026-09-02, NOT STARTED, ralf)
 

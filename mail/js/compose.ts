@@ -59,6 +59,23 @@ export class MailCompose
 	private bootstrapping = false;
 
 	/**
+	 * Guards the "share as link instead of attach" conversion in currentEmailFields() (2026-09-03
+	 * follow-up, ralf: a 3rd-party achelper hook reported ALL its attachments now being sent as
+	 * links instead of real attachments, right after jmapEligible() stopped treating a non-'attach'
+	 * filemode as a blocker). Investigated at length without finding a code bug in the conversion
+	 * logic itself (it matches classic createMessage()'s own long-standing "filemode != attach ->
+	 * link, never both" semantics exactly) - but couldn't rule out `filemode` resolving away from
+	 * 'attach' at send time WITHOUT the user ever consciously choosing that in the UI (a
+	 * hook-injected/cached/otherwise-unintended default) - previously harmless, since jmapEligible()
+	 * unconditionally forced a full classic-postback fallback for ANY non-'attach' filemode,
+	 * masking whatever value it actually was. Safe-by-construction fix: only ever convert to a
+	 * share link when a REAL user interaction is behind the current filemode - set true only inside
+	 * checkSharingFilemode()'s genuine onchange branch, or by warnAttachmentSizeLimit()'s own
+	 * auto-switch (which is EGroupware's own deliberate choice, equivalent to a real user pick).
+	 */
+	private explicitShareModeChosen = false;
+
+	/**
 	 * bootstrapCompose()'s own promise (Promise.resolve() until setEtemplate() actually starts it) -
 	 * 2026-09-03, root-causing the "attachments sometimes silently missing" investigation from the
 	 * day before: bootstrapCompose() is deliberately fire-and-forget from setEtemplate() (`void
@@ -360,6 +377,9 @@ export class MailCompose
 
 		if (typeof _node != 'undefined')
 		{
+			// real onchange (a genuine user click, not the load-time call with _node omitted) -
+			// see explicitShareModeChosen's own docblock
+			this.explicitShareModeChosen = true;
 			const mode = _widget.get_value();
 			const mode_label = _widget.select_options.filter(option => option.value == mode)[0]?.label;
 			void Et2Dialog.alert(this.egw.lang('Be aware that all attachments will be sent as %1!', mode_label),
@@ -1558,6 +1578,9 @@ export class MailCompose
 		if (!filemodeWidget || !filemodeWidget.get_value() || filemodeWidget.get_value() === 'attach')
 		{
 			filemodeWidget?.set_value('link');
+			// EGroupware's own deliberate auto-switch counts as "explicitly chosen" too - see
+			// explicitShareModeChosen's own docblock
+			this.explicitShareModeChosen = true;
 			this.egw.message(this.egw.lang('The total size of the attachments exceeds the limit of %1 MB. Switched to download link', limitMb), 'warning');
 		}
 		else
@@ -1853,6 +1876,8 @@ export class MailCompose
 	 *  classic createMessage()'s own `$_autosaving` guard on the identical logic: a stored draft
 	 *  keeps its attachments as real (JMAP-blob-backed) attachments, only the message actually
 	 *  transmitted gets them replaced with links, generated fresh each time it's actually sent.
+	 *  ALSO gated on `explicitShareModeChosen` (see its own docblock) - a non-'attach' filemode the
+	 *  user never consciously picked is treated as 'attach' here regardless of its actual value.
 	 */
 	private async currentEmailFields(forSend : boolean = false)
 	{
@@ -1862,7 +1887,7 @@ export class MailCompose
 		let attachments = hasAttachments ? await this.uploadAttachmentsViaJmap(this.currentProfileID()) : undefined;
 
 		const filemode = this.et2.getWidgetById('filemode')?.get_value();
-		if (forSend && attachments?.length && filemode && filemode !== 'attach')
+		if (forSend && attachments?.length && filemode && filemode !== 'attach' && this.explicitShareModeChosen)
 		{
 			body = await this.egw.request('mail.mail_compose.ajax_getAttachmentLinksBody', [{
 				profileID: this.currentProfileID(),
