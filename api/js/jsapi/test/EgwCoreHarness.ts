@@ -44,8 +44,12 @@ export interface EgwCoreEnv
  * @param prefs extra properties to seed onto the initial `window.egw` stub,
  *   merged the same way egw_core.js merges "prefs" into the real object
  *   (eg. `{webserverUrl: '...'}`)
+ * @param src url to load into the throwaway iframe. The default "about:blank" is
+ *   all anything purely egw-state needs; pass a real, same-origin url (eg.
+ *   "/api/js/jsapi/test/blank.html?cd=yes") when the code under test reads
+ *   document.location, since "about:blank" has neither a query nor a port.
  */
-export async function createEgwCoreEnv(prefs : object = {}) : Promise<EgwCoreEnv>
+export async function createEgwCoreEnv(prefs : object = {}, src : string = 'about:blank') : Promise<EgwCoreEnv>
 {
 	const iframe = document.createElement('iframe');
 	// Browsers replace an iframe's initial document asynchronously after
@@ -53,7 +57,7 @@ export async function createEgwCoreEnv(prefs : object = {}) : Promise<EgwCoreEnv
 	// contentDocument/contentWindow before that settles can silently be
 	// discarded (observed as the harness hanging in Firefox). Setting
 	// `src` explicitly and waiting for `load` sidesteps that.
-	iframe.src = 'about:blank';
+	iframe.src = src;
 	const ready = new Promise<void>(resolve => iframe.addEventListener('load', () => resolve(), {once: true}));
 	document.body.appendChild(iframe);
 	await ready;

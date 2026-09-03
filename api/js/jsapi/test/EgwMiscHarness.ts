@@ -14,9 +14,9 @@ export interface EgwMiscEnv extends EgwCoreEnv
 {
 }
 
-export async function createEgwMiscEnv(prefs : object = {}) : Promise<EgwMiscEnv>
+export async function createEgwMiscEnv(prefs : object = {}, src? : string) : Promise<EgwMiscEnv>
 {
-	const base = await createEgwCoreEnv(Object.assign({webserverUrl: 'https://example.test'}, prefs));
+	const base = await createEgwCoreEnv(Object.assign({webserverUrl: 'https://example.test'}, prefs), src);
 	const env = base as EgwMiscEnv;
 
 	await loadScript(env.window.document, '/vendor/bower-asset/jquery/dist/jquery.min.js');

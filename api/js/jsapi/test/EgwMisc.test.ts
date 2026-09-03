@@ -9,9 +9,8 @@
  * (EgwPreferences.test.ts, EgwUser.test.ts, EgwLinks.test.ts) since they
  * interact with each other and need a real (controllable) network layer.
  *
- * NOT covered (documented residual risk): config's install_mailto_handler()
- * (real dialog/localStorage side effects, gated on a URL query param) and
- * lang's langRequire()/langRequireApp() (dynamic import() side effects).
+ * NOT covered (documented residual risk): lang's langRequire()/langRequireApp()
+ * (dynamic import() side effects).
  */
 import {assert} from "@open-wc/testing";
 import {createEgwMiscEnv, EgwMiscEnv} from "./EgwMiscHarness";
@@ -51,6 +50,71 @@ describe('egw_config.js / egw_lang.js / egw_images.js', () =>
 			assert.isNull(env.egw().config('whatever', 'nosuchapp'));
 			env.egw().set_configs({someapp: {}});
 			assert.isUndefined(env.egw().config('missing_key', 'someapp'));
+		});
+
+		/**
+		 * set_configs() offers EGroupware as the browser's mailto-handler, which is the one
+		 * thing in this file that reads document.location - so these get a realm with a real
+		 * url (query string and port) instead of the shared "about:blank" one, and stub out
+		 * the actual registration.
+		 *
+		 * Both browsers we test in reach the registration, by different routes: Firefox is
+		 * asked for confirmation through Et2Dialog first (stubbed here to answer "yes"),
+		 * everything else registers straight away.
+		 */
+		describe('mailto-handler registration', () =>
+		{
+			let mailtoEnv : EgwMiscEnv;
+			let registered : string[];
+
+			const stubRegisterProtocolHandler = (_handler : (_scheme : string, _url : string) => void) =>
+				Object.defineProperty(mailtoEnv.window.navigator, 'registerProtocolHandler',
+					{value: _handler, configurable: true, writable: true});
+
+			beforeEach(async() =>
+			{
+				mailtoEnv = await createEgwMiscEnv({}, '/api/js/jsapi/test/blank.html?cd=yes');
+				mailtoEnv.window.sessionStorage.removeItem('asked-mailto-handler');
+				mailtoEnv.window.localStorage.removeItem('asked-mailto-handler');
+				(<any>mailtoEnv.window).egw_webserverUrl = '/egroupware';
+				(<any>mailtoEnv.window).Et2Dialog = {
+					YES_BUTTON: 1, NO_BUTTON: 0, CANCEL_BUTTON: -1, BUTTONS_YES_NO_CANCEL: 3,
+					show_dialog: (_callback : Function) => _callback(1)
+				};
+				registered = [];
+				stubRegisterProtocolHandler((_scheme, _url) => registered.push(_url));
+			});
+
+			afterEach(() =>
+			{
+				mailtoEnv.destroy();
+			});
+
+			it('offers a handler url on the document\'s own origin, port included', () =>
+			{
+				mailtoEnv.egw().set_configs({phpgwapi: {}});
+
+				assert.lengthOf(registered, 1, 'expected exactly one registerProtocolHandler() call');
+				// the browser refuses a handler url from another origin, and an install is rarely
+				// on the default port - so building the url from location.hostname, which drops
+				// the port, makes every one of those installs cross-origin to itself.
+				assert.equal(new URL(registered[0]).origin, mailtoEnv.window.location.origin);
+			});
+
+			it('does not let a browser refusing the handler abort set_configs()', () =>
+			{
+				stubRegisterProtocolHandler(() =>
+				{
+					throw new DOMException('Can only register custom handler in the document\'s origin.', 'SecurityError');
+				});
+
+				// api/config.php sends set_configs() and set_link_registry() as two statements of
+				// a single module, so anything escaping here aborts that module before the link
+				// registry is ever set - which alerts on every egw.open() for the rest of the session.
+				mailtoEnv.egw().set_configs({phpgwapi: {max_lang_time: 123}});
+
+				assert.equal(mailtoEnv.egw().config('max_lang_time'), 123);
+			});
 		});
 	});
 

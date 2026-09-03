@@ -59,11 +59,24 @@ class Config implements ConfigModule
 		{
 			const _ask_mailto_handler = () => {
 				let url : string = (<any>window).egw_webserverUrl;
-				if (url[0] === '/') url = document.location.protocol+'//'+document.location.hostname+(url !== '/' ? url : '');
-				// 3rd "title" arg is from an older spec version - current TS DOM
-				// lib types only declare 2, but browsers still accept (and some
-				// older ones still use) a 3rd; keep it, matching the original.
-				(<any>navigator.registerProtocolHandler)('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
+				// location.host, NOT location.hostname: registerProtocolHandler rejects a handler
+				// url whose origin differs from the document's, and .hostname drops the port, so
+				// an install not served on the default port would always hand it a foreign origin.
+				if (url[0] === '/') url = document.location.protocol+'//'+document.location.host+(url !== '/' ? url : '');
+				try
+				{
+					// 3rd "title" arg is from an older spec version - current TS DOM
+					// lib types only declare 2, but browsers still accept (and some
+					// older ones still use) a 3rd; keep it, matching the original.
+					(<any>navigator.registerProtocolHandler)('mailto', url+'/index.php?menuaction=mail.mail_compose.compose&preset[mailto]=%s', 'Mail');
+				}
+				catch (e)
+				{
+					// registering is a nice-to-have and browsers reject it for reasons we cannot
+					// fix here (insecure context, user disabled handler registration, ...), so log
+					// it and carry on instead of letting it escape into whatever called us.
+					console.warn('Could not register EGroupware as mailto-handler', e);
+				}
 				// remember not to ask again for this "session"
 				window.sessionStorage.setItem('asked-mailto-handler', 'yes');
 			};
@@ -133,7 +146,18 @@ class Config implements ConfigModule
 
 		if (this.config('install_mailto_handler') !== 'disabled')
 		{
-			this.install_mailto_handler();
+			try
+			{
+				this.install_mailto_handler();
+			}
+			catch (e)
+			{
+				// installing the handler is optional, our caller is not: api/config.php sends
+				// set_configs() and set_link_registry() as two statements of a single module, so
+				// anything thrown here aborts that module before the link-registry is ever set,
+				// making every later egw.open() alert "link registry is NOT defined!".
+				console.error('Failed to install mailto-handler', e);
+			}
 		}
 	}
 }

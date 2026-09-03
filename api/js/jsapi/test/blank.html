@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<!--
+	Empty, same-origin document to load into a test's throwaway iframe when the code
+	under test reads document.location: the default "about:blank" realm has neither a
+	query string nor a port, so anything gated on a URL parameter never runs there and
+	an origin built from the location cannot be told apart from a wrong one.
+
+	See createEgwCoreEnv()'s "src" parameter in EgwCoreHarness.ts.
+-->
+<html lang="en">
+<head><meta charset="utf-8"><title>test realm</title></head>
+<body></body>
+</html>
