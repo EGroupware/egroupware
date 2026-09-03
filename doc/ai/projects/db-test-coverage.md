@@ -304,5 +304,43 @@ exists.
         the `expression()` section above) that turned out to be wrong - zero real call sites of
         `->expression(` exist anywhere in this tracked repo, despite an earlier finding claiming
         `Api\Mail\Account` used it directly.
-- [ ] **Phase 4 - `union()`, transactions/locking, `set_app()`/`get_table_definitions()` cache
-      isolation, introspection (`affected_rows()` etc.), `strip_array_keys()`**.
+- [x] **Phase 4 - `union()`, transactions/locking, `set_app()`/`get_table_definitions()` cache
+      isolation, introspection (`affected_rows()` etc.), `strip_array_keys()`**. 25 new tests, all
+      green.
+      - `api/tests/Db/UnionTransactionTest.php` (commit `3c6590aabc`, 13 tests) - `union()`'s
+        single-select DISTINCT-string-surgery and multi-select UNION/dedup branches,
+        `transaction_begin()`/`commit()`/`abort()` pairing, `row_lock()`/`commit_lock()`/
+        `rollback_lock()`'s lock-write-commit/rollback flow, `strip_array_keys()`. **No bugs found**.
+      - `api/tests/Db/CacheIsolationTest.php` (commit `aba42bde65`, 12 tests) - `set_app()`'s
+        global-db-protection guard, `get_table_definitions()`'s cross-app isolation and `$app===true`
+        fallback, `affected_rows()`, `get_last_insert_id()`, `table_names()`, `pkey_columns()` (incl.
+        a genuine composite PK), `metadata()`.
+      - **Found AND FIXED** (commit `04cf08438f`) - a real, previously-undiscovered performance bug:
+        `get_table_definitions()`'s docblock claims its results are "shared between all db-instances
+        via a static var" (`self::$all_app_data`), but the common code path's caching was completely
+        non-functional. `$app_data =& self::$all_app_data[$app];` establishes an alias, but a later
+        `$app_data =& $phpgw_baseline;` **rebinds** `$app_data` to a different zval entirely instead
+        of writing through the alias - `self::$all_app_data[$app]` stayed `null` forever. The
+        function still returned correct data every call (via the disconnected local `$app_data`),
+        which is exactly why this went undetected by any correctness-only test - only visible via
+        reflection into the static cache. Practical impact: `tables_current.inc.php` got
+        `include()`'d and its top-level array-literal code re-executed on **every single call**, for
+        every app, in every request - called by every `Storage\Base`/`Api\Storage` construction.
+        Fixed with a plain value-copy (`$app_data = $phpgw_baseline;`) instead of a second reference
+        assignment - the same idiom the neighboring `$app===true` branch already used correctly via
+        a different code shape. Verified via a full `api/tests/` `git stash` A/B comparison (1009
+        tests): **zero regressions**, and two previously-failing VFS tests
+        (`SharingBackendTest::testLinksReadonly`/`testMergeReadonly`) started passing, plausibly
+        because the bug's redundant work was contributing to timing/resource flakiness under load.
+      - Corrected an earlier mapping claim along the way (see the `expression()` section above) -
+        zero real call sites of `->expression(` exist anywhere in this tracked repo, despite an
+        earlier finding claiming `Api\Mail\Account` used it directly.
+
+## Project status: all 4 phases done
+
+`api/tests/Db/` went from 0 dedicated tests (plus the pre-existing 12-test `SchemaTest.php`) to 128
+tests across 8 files. **4 real bugs found, all fixed**: `_connect()`'s capability-reuse gap,
+`Db\Schema::RefreshTable()`'s transaction leak, mysqli's silently-disabled exception mode, and
+`get_table_definitions()`'s non-functional cache. Every fix verified via a `git stash` A/B comparison
+against the full `api/tests/` suite (963-1009 tests across runs, growing as other concurrent sessions
+add their own tests) - zero regressions each time, two incidental flaky-test fixes as a bonus.
