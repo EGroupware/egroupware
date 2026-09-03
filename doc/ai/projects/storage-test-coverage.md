@@ -268,8 +268,37 @@ column to the `test` fixture for zero real-world payoff).
         `track()` - a direct `do_notifications()` call must set it manually. Real accounts on this
         shared dev box commonly have no email configured - pick an account with a real email for
         notification tests, don't grab an arbitrary "other" account.
-- [ ] **Phase 3 - `Customfields.php` gaps**: `format()`, reordering logic, `save()` deletion
-      semantics, `getSerial()`.
+- [x] **Phase 3 - `Customfields.php` gaps**. Extended `api/tests/Storage/CustomfieldsTest.php`
+      (32 tests total now, all green - 12 marked "risky" by PHPUnit, all pre-existing
+      `format()`-side-effect noise, not a real problem, see below). Two parallel agents landed on
+      the same file concurrently and had to reconcile - handled cleanly, see commits
+      `70c0b85cc8` and `0b9699eff7`.
+      - `format()` - all type branches (`select-account` incl. multi-value, `checkbox`, `select`/
+        `radio` incl. unknown-value fallback and `values['@']` file-reference reuse, `date`/
+        `date-time`, `htmlarea`, link-type default branch via `Api\Link::title()`).
+      - `get_options_from_file()` remaining branches (wrong extension, malformed JSON,
+        `header.inc.php` guard).
+      - `get_link_types()`, `get_account_cfs()`, `get_email_cfs()`.
+      - `update()`'s `cf_order` renumbering-by-10s logic.
+      - `save()`'s deletion semantics (a CF omitted from the array gets deleted).
+      - `getSerial()` (increment, zero-padding preservation, `Api\Db\Exception` on missing row) -
+        note the assertion was hardened to check a *relative* `+1` increment rather than hardcoded
+        absolute values, after one transient flake under concurrent shared-DB test activity
+        (an `Api\Cache` race, not a `getSerial()` bug - see commit `0b9699eff7`).
+      - `update_links()` (create-on-set, remove-on-change-away).
+      - Deferred: `handle_files()`/`handle_file()` (VFS side-effects, judged too much fixture setup
+        for this pass).
+      - **Found, not fixed**: (1) `format()`'s `htmlarea` branch only converts *opening*
+        `<br>`/`<p>` tags to CRLF - the regex never matches a leading `/`, so closing tags get
+        silently dropped by the trailing `strip_tags()` with no separator (consecutive
+        `<p>A</p><p>B</p>` blocks get one CRLF between them, not two). (2)
+        `get_options_from_file()`'s explicit `"header.inc.php"` basename check is dead code in
+        practice - any real `header.inc.php` already fails the preceding `.json`-extension check
+        first. (3) `format()` unconditionally calls `restore_error_handler()` with no matching
+        `set_error_handler()` anywhere in the method - a real global-state side effect, correctly
+        flagged "risky" by PHPUnit on every test that calls it; left as-is/documented rather than
+        worked around, since suppressing PHPUnit's risky-detection would hide the same real issue
+        from future callers.
 - [ ] **Phase 4 - `Merge.php` gaps**: command placeholders (IF/NELF/LETTERPREFIX/pagerepeat),
       number/date formatting, `is_implemented()`, `contact_replacements()`, `replace()`'s plain +
       YAML paths. Document `merge()`/`merge_file()` (real office documents) as a separate,
