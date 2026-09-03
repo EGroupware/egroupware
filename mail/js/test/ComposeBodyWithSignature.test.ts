@@ -8,38 +8,42 @@ const SIG = {htmlSignature: HTML_SIG, textSignature: TEXT_SIG};
 
 describe("MailJmap.composeBodyWithSignature() - html mode", () =>
 {
-	it("appends below a new-message body, with the ruler, no leading blank line since body is empty", () =>
+	it("appends below an empty new-message body, with the ruler and a leading blank line", () =>
 	{
 		const result = MailJmap.composeBodyWithSignature("", "html", SIG, {placement: "below"});
 		assert.equal(result,
-			'<p><br/></p>\n' + '' + '<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG);
+			'<p><br/></p>\n' + '<div id="mail-compose-signature">' +
+			'<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG + '</div>');
 	});
 
 	it("does not add a leading blank line above an existing new-message body (not a reply)", () =>
 	{
 		const result = MailJmap.composeBodyWithSignature("existing body", "html", SIG, {placement: "below"});
 		assert.equal(result,
-			'existing body' + '<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG);
+			'existing body' + '<div id="mail-compose-signature">' +
+			'<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG + '</div>');
 	});
 
 	it("adds the leading blank line above a reply's quoted body even though it's non-empty", () =>
 	{
 		const result = MailJmap.composeBodyWithSignature("quoted", "html", SIG, {placement: "below", isReply: true});
 		assert.equal(result,
-			'<p><br/></p>\n' + 'quoted' + '<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG);
+			'<p><br/></p>\n' + 'quoted' + '<div id="mail-compose-signature">' +
+			'<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG + '</div>');
 	});
 
 	it("places the signature above the body when placement is 'top'", () =>
 	{
 		const result = MailJmap.composeBodyWithSignature("body", "html", SIG, {placement: "top", isReply: true});
 		assert.equal(result,
-			'<p><br/></p>\n' + '<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG + '' + 'body');
+			'<div id="mail-compose-signature">' + '<p><br/></p>\n' +
+			'<hr class="ruler" style="border:1px dotted silver; width:100%;">' + HTML_SIG + '</div>' + 'body');
 	});
 
 	it("omits the <hr> ruler when disableRuler is set", () =>
 	{
 		const result = MailJmap.composeBodyWithSignature("body", "html", SIG, {placement: "below", disableRuler: true});
-		assert.equal(result, 'body' + HTML_SIG);
+		assert.equal(result, 'body' + '<div id="mail-compose-signature">' + HTML_SIG + '</div>');
 	});
 
 	it("does nothing (returns body unchanged) when placement is 'none'", () =>
