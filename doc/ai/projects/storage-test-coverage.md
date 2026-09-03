@@ -299,9 +299,39 @@ column to the `test` fixture for zero real-world payoff).
         flagged "risky" by PHPUnit on every test that calls it; left as-is/documented rather than
         worked around, since suppressing PHPUnit's risky-detection would hide the same real issue
         from future callers.
-- [ ] **Phase 4 - `Merge.php` gaps**: command placeholders (IF/NELF/LETTERPREFIX/pagerepeat),
-      number/date formatting, `is_implemented()`, `contact_replacements()`, `replace()`'s plain +
-      YAML paths. Document `merge()`/`merge_file()` (real office documents) as a separate,
-      lower-priority follow-up phase.
+- [x] **Phase 4 - `Merge.php` gaps**. 44 new tests landed across two commits (three parallel agents
+      touched `MergeTest.php`/`TestMerge.php` this phase - all reconciled cleanly, no lost work; see
+      the collision notes below).
+      - `31b583c737` - `$$IF field~compare~then~else$$` (match/no-match/`EMPTY`/bare-placeholder
+        args), `$$NELF$$`/`$$NENVLF$$`, `$$LETTERPREFIX$$`/`$$LETTERPREFIXCUSTOM$$`, `$$pagerepeat$$`
+        with 2+ ids, `Merge::number_format()`, `/date$$`/`/time$$` auto-placeholders,
+        `is_implemented()`'s full mimetype/extension matrix.
+      - `8f4babf8dc` - `get_app()`/`get_app_class()`/`get_app_replacements()`, `contact_replacements()`,
+        `cf_link_to_expand()` (`select-account` single + multi-value), `get_links()` (via reflection,
+        real `Api\Link` fixture), `replace()`'s YAML `$$name/regex/replacement$$` transform.
+      - **Found and fixed a real latent bug** (not just documented - this one blocked the tests
+        themselves from running at all): `TestMerge`'s fixture had a `private $replacements`
+        property that shadowed `Merge.php`'s same-named *dynamic* property (`Merge.php` never
+        declares `$replacements` as a real class property, only sets it transiently inside
+        `process_commands()`) - `Merge`'s own methods couldn't write to it, throwing "Cannot access
+        private property," but only once a test actually exercised `$$IF`/`$$NELF`/`$$NENVLF`/
+        `$$LETTERPREFIXCUSTOM$$` (no prior test did). Renamed the fixture's field to
+        `$testReplacements`.
+      - **Found, not forced**: `$$pagerepeat$$`'s "missing tag" error path is unreachable for
+        `text/plain` specifically - an early performance short-circuit returns unconverted content
+        with no placeholders at all, and `text/plain`'s own "nohead" auto-detection silently treats
+        any placeholder-bearing template as an implicit repeat block instead of erroring. Documented,
+        not faked with an artificial test.
+      - Deferred: `:decimals,thousands$$`/`:FORMAT$$` numeric/date placeholder variants (only run
+        inside `replace()`'s `$is_xml`-gated block - unreachable from `text/plain`, this file's
+        convention), `get_all_links()` (too many Stylite-conditional branches for this pass),
+        `merge()`/`merge_file()`/`download()` against real `.odt`/`.docx` fixtures (separate,
+        lower-priority follow-up phase - not attempted).
+      - **Collision notes**: three agents worked this file/pair concurrently at different points.
+        One extracted only its own already-green additions into a standalone commit and restored
+        the other's in-progress work byte-for-byte rather than risk landing broken shared code or
+        losing anything (`8f4babf8dc`); the last one merged cleanly on top and verified via
+        `git status`/`git log` before committing (`31b583c737`). No work was lost across either
+        collision.
 - [ ] **Phase 5 - zero-usage classes**: `JsonTrait` pure-array tests, `Db2DataIterator` (incl. the
       documented data2db/db2data question), `RowsIterator`.
