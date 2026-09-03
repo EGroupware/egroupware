@@ -9,7 +9,14 @@ the real gaps. Comparable in scope to
 than one session.
 
 **STATUS: All 5 phases done** (2026-09-03). `api/tests/Storage/` went from 92 tests to 259, all
-green except the pre-existing `EGW_ADMIN_PASSWORD`-dependent `ContactsTest`. Along the way: fixed
+green - **including `ContactsTest`**: it was never actually environment-limited, `EGW_ADMIN_PASSWORD`
+just needs to be passed through explicitly on every `docker exec` call
+(`docker exec -e EGW_ADMIN_PASSWORD="$EGW_ADMIN_PASSWORD" egroupware ...`) since `docker exec` does
+NOT forward host env vars by default even when the var is set in the calling shell - a real gap in
+this project's own testing methodology throughout most of this session, not a genuine limitation of
+the box. Corrected after the fact; every "pre-existing `EGW_ADMIN_PASSWORD`-unavailable" note
+elsewhere in this doc (and in `invoices/tests/BoTest.php`'s file-access tests) was wrong for the same
+reason - re-verified clean with the flag. Along the way: fixed
 two broken/fragile pre-existing tests (`BaseTest`'s domain resolution, its `t_modified` clock-skew
 assertion); extended the `egw_test` fixture three times (uc column, bool column, JSON column);
 found and fixed one real CI-breaking production bug (`Customfields::getSerial()` leaking an open DB
@@ -37,8 +44,8 @@ Already committed and passing before this project started:
   `text/plain` (full) and `text/html` (currently **skipped**, see file comment), plus the
   split-placeholder-tag bug regression.
 - `api/tests/Storage/ContactsTest.php` - one `Api\Contacts`/`Storage`-adjacent ACL regression test
-  (needs `EGW_ADMIN_PASSWORD` for its admin-fixture setup - not runnable on a box without that env
-  var, unrelated to this project).
+  (needs `EGW_ADMIN_PASSWORD` for its admin-fixture setup, passed through explicitly on `docker exec`
+  - see the STATUS note above).
 
 **Genuinely zero coverage**: `History.php`, `Base2.php`, `Db2DataIterator.php`, `RowsIterator.php`,
 `Json.php`, `JsonCF.php`, `JsonTrait.php`, and most of `Base.php`'s/`Tracking.php`'s own surface
