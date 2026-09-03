@@ -170,6 +170,10 @@ export default {
 
 				const mockModule = {
 					"diff2html/lib/types": "/api/js/etemplate/test/Diff2HtmlTypesStub.ts",
+					// diff2html's own ESM build imports the Node-only @profoundlogic/hogan package
+					// (no browser field, no dist/ despite its own comment) - see Diff2HtmlStub.ts's
+					// own docblock for why a stub is needed here rather than the real package.
+					"diff2html": "/api/js/etemplate/test/Diff2HtmlStub.ts",
 				};
 				return mockModule[source];
 			}
