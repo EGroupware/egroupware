@@ -3574,7 +3574,7 @@ export class CalendarApp extends EgwApp
 		const last_owner = value.length ? value[0].owner || 0 : 0;
 		for(let i = 0; i < value.length && !seperate_owners; i++)
 		{
-			seperate_owners = seperate_owners || (last_owner !== value[i].owner);
+			seperate_owners = seperate_owners || (last_owner !== (value[i].owner || 0));
 		}
 
 		for(let i = 0; i < value.length; i++)
